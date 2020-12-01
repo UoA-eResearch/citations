@@ -52,6 +52,13 @@
             text-shadow: 2px 2px #000000;
             font-weight: normal;
         }
+
+        .small {
+            text-align: center;
+            font-size: .7rem;
+            margin: 10px;
+            color: gray;
+        }
     </style>
 </head>
 
@@ -60,6 +67,7 @@
     <div id="network"></div>
     <div id="controls">
         <div id="timeline"></div>
+        <div class="small">Hover over the timeline to filter the network graph by year</div>
         Colour by
         <select id="color">
             <option value="citation_count" selected>Citation count</option>
@@ -82,6 +90,7 @@
             <option value="inst">Institution</option>
             <option value="field">Field</option>
         </select>
+        <div class="small"><a href="https://github.com/UoA-eResearch/citations">GitHub</a></div>
     </div>
 
     <script type="text/javascript">
