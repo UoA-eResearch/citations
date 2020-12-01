@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/3d-force-graph@1.67.4/dist/3d-force-graph.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.1.0/chroma.min.js"
+        integrity="sha512-yocoLferfPbcwpCMr8v/B0AB4SWpJlouBwgE0D3ZHaiP1nuu5djZclFEIj9znuqghaZ3tdCMRrreLoM8km+jIQ=="
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <title>Giovanni's citation network</title>
+    <style>
+        html,
+        body,
+        #network {
+            height: 100%;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .tooltip {
+            background-color: gray;
+            padding: 5px;
+        }
+
+        #controls {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            background-color: white;
+            padding: 20px;
+        }
+
+        #title {
+            position: absolute;
+            top: 30;
+            left: 0;
+            right: 0;
+            margin: auto;
+            z-index: 1000;
+            width: 50%;
+            text-align: center;
+            color: white;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.8);
+            font-family: Arial, Helvetica, sans-serif;
+            text-shadow: 2px 2px #000000;
+            font-weight: normal;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="title">Giovanni's citation network <span id="year"></span></h1>
+    <div id="network"></div>
+    <div id="controls">
+        <div id="timeline"></div>
+        Colour by
+        <select id="color">
+            <option value="citation_count" selected>Citation count</option>
+            <option value="n_authors">Number of authors</option>
+            <option value="n_inst">Number of institutions</option>
+            <option value="field">Primary field</option>
+        </select><br><br>
+        Size by
+        <select id="size">
+            <option value="">Constant</option>
+            <option value="citation_count" selected>Citation count</option>
+            <option value="n_authors">Number of authors</option>
+            <option value="n_inst">Number of institutions</option>
+            <option value="n_fields">Number of fields</option>
+        </select><br><br>
+        Group by
+        <select id="group">
+            <option value="paper" selected>Paper</option>
+            <option value="author">Author</option>
+            <option value="inst">Institution</option>
+            <option value="field">Field</option>
+        </select>
+    </div>
+
+    <script type="text/javascript">
+        function uniq(arr) {
+            return [...new Set(arr)]
+        }
+        function colorscale(arr) {
+            var breaks = chroma.limits(uniq(arr), 'q', 12);
+            var scale = chroma.scale('Spectral').domain(breaks.reverse());
+            console.log(breaks, scale);
+            return scale
+        }
+        function getEdges(nodes) {
+            if (window.group == "field") return []
+            var visible_nodes = nodes.map(n => n.id)
+            var edges = [];
+            for (var node of nodes) {
+                for (var rid in node.references) {
+                    rid = parseInt(rid);
+                    if (visible_nodes.includes(rid)) {
+                        edges.push({ source: node.id, target: rid, count: node.references[rid] })
+                    }
+                }
+            }
+            return edges
+        }
+        $.getJSON("data.json", function (data) {
+            console.log(data);
+            window.data = data;
+            window.current_data = data;
+            window.paper_lookup = {}
+            var time_data = {}
+            for (var node of data) {
+                var d = node.date_published.slice(0, 4)
+                if (!time_data[d]) time_data[d] = 0;
+                time_data[d]++;
+                paper_lookup[node.id] = node
+                var tmp = {}
+                for (var rid of node.references) {
+                    tmp[rid] = 1
+                }
+                node.references = tmp;
+                if (node.authors) {
+                    node.n_authors = node.authors.length;
+                    node.n_inst = uniq(node.authors.map(a => a.DAfN)).length;
+                }
+                if (node.fields) {
+                    node.field = node.fields[0].DFN;
+                    node.n_fields = node.fields.length;
+                }
+            }
+
+            console.log(time_data)
+
+            var plotData = [
+                {
+                    x: Object.keys(time_data),
+                    y: Object.values(time_data),
+                    type: 'bar'
+                }
+            ];
+
+            var layout = {
+                title: 'Citations over time',
+                height: 300,
+                width: 300,
+                margin: {
+                    pad: 0,
+                    l: 40,
+                    r: 40,
+                    t: 70,
+                    b: 40
+                }
+            }
+
+            Plotly.newPlot('timeline', plotData, layout);
+            window.year = 2021
+            $("#timeline").on('plotly_hover', function (event, data) {
+                var id = event.target.id;
+                var d = data.points[0].x || data.points[0].label;
+                console.log(d)
+                window.year = d
+                var filtered_data = window.current_data.filter(n => n.date_published.slice(0, 4) <= d)
+                console.log(filtered_data)
+                var visible_nodes = filtered_data.map(n => n.id)
+                $("#year").text("as at " + d);
+                graph.graphData({
+                    nodes: filtered_data,
+                    links: getEdges(filtered_data)
+                })
+            });
+
+            var scale = colorscale(data.map(n => n.citation_count))
+
+            window.elem = document.getElementById("network")
+            window.graph = ForceGraph3D()(elem)
+                .graphData({
+                    nodes: data,
+                    links: getEdges(data)
+                })
+                .enableNodeDrag(false)
+                .nodeVal('citation_count')
+                .nodeColor(n => scale(n.citation_count).css())
+                .nodeLabel(node => `<div class="tooltip"><b>${node.title + " (" + node.date_published + ")"}</b><br>
+                                ${node.authors.map(a => a.DAfN ? a.DAuN + " (" + a.DAfN + ")" : a.DAuN).join(",")}<br>
+                                ${node.fields.map(f => f.DFN).join(",")}<br>
+                                Citation count: ${node.citation_count}<br>
+                                </div>
+                            `)
+                .onNodeHover(node => elem.style.cursor = node ? 'pointer' : null)
+                .onNodeClick(node => {
+                    // Aim at node from outside it
+                    const distance = 40;
+                    const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
+
+                    graph.cameraPosition(
+                        { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
+                        node, // lookAt ({ x, y, z })
+                        3000  // ms transition duration
+                    );
+                })
+
+            $("#color").change(function () {
+                console.log(this.value)
+                var data = graph.graphData().nodes;
+                if (this.value == "field") {
+                    var values = uniq(data.map(n => n[this.value])).sort()
+                    var scale = colorscale(values.keys())
+                    graph.nodeColor(n => scale(values.indexOf(n[this.value])).css())
+                } else {
+                    var scale = colorscale(data.map(n => n[this.value]))
+                    graph.nodeColor(n => scale(n[this.value]).css())
+                }
+            })
+            $("#size").change(function () {
+                console.log(this.value)
+                graph.nodeVal(this.value);
+            })
+            $("#group").change(function () {
+                console.log(this.value)
+                window.group = this.value;
+                if (this.value == "paper") {
+                    window.current_data = data;
+                    var filtered_data = data.filter(n => n.date_published.slice(0, 4) <= d)
+                    graph.graphData({
+                        nodes: filtered_data,
+                        links: getEdges(filtered_data)
+                    }).nodeLabel(node => `<div class="tooltip"><b>${node.title + " (" + node.date_published + ")"}</b><br>
+                            ${node.authors.map(a => a.DAfN ? a.DAuN + " (" + a.DAfN + ")" : a.DAuN).join(",")}<br>
+                            ${node.fields.map(f => f.DFN).join(",")}<br>
+                            Citation count: ${node.citation_count}<br>
+                            </div>
+                        `)
+                    return;
+                }
+                if (this.value == "author") {
+                    var objkey = "authors"
+                    var subkey = "AuId"
+                    var namekey = "DAuN"
+                } else if (this.value == "inst") {
+                    var objkey = "authors"
+                    var subkey = "AfId"
+                    var namekey = "DAfN"
+                } else if (this.value == "field") {
+                    var objkey = "fields"
+                    var subkey = "FId"
+                    var namekey = "DFN"
+                }
+                var groupedData = {};
+                for (var node of data) {
+                    if (!node[objkey]) continue;
+                    var seen_ids_this_node = {}
+                    for (var obj of node[objkey]) {
+                        var id = obj[subkey]
+                        if (!id || seen_ids_this_node[id]) continue
+                        seen_ids_this_node[id] = true
+                        if (!groupedData[id]) {
+                            groupedData[id] = {
+                                id: id,
+                                citation_count: 0,
+                                name: obj[namekey],
+                                date_published: node.date_published,
+                                references: {}
+                            }
+                        }
+                        groupedData[id].citation_count += node.citation_count
+                        if (groupedData[id].date_published > node.date_published) groupedData[id].date_published = node.date_published;
+                        for (var ref in node.references) {
+                            ref = parseInt(ref)
+                            var paper = paper_lookup[ref];
+                            if (!paper[objkey]) continue
+                            for (var other of paper[objkey]) {
+                                var otherId = other[subkey]
+                                if (!otherId) continue
+                                if (!groupedData[id].references[otherId]) groupedData[id].references[otherId] = 0;
+                                groupedData[id].references[otherId]++;
+                            }
+                        }
+                    }
+                }
+                console.log(groupedData)
+                groupedData = Object.values(groupedData)
+                if (window.year) {
+                    groupedData = groupedData.filter(n => n.date_published.slice(0, 4) <= window.year)
+                }
+                console.log(groupedData)
+                graph.graphData({
+                    nodes: groupedData,
+                    links: getEdges(groupedData)
+                }).nodeLabel(n => `<div class="tooltip">${n.name}<br>Citations: ${n.citation_count}</div>`)
+                    .linkAutoColorBy(e => e.count)
+                    .linkWidth(e => e.count)
+                window.current_data = groupedData;
+            })
+        });
+    </script>
+</body>
+
+</html>
