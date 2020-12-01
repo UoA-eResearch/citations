@@ -26,9 +26,10 @@ citations = req(f"Or({ids})")["entities"] # Request all papers citing any of the
 print(len(citations))
 
 known_ids = set([node["Id"] for node in papers + citations])
-nodes = []
+print(len(known_ids))
+nodes = {}
 for e in papers + citations:
-    nodes.append({
+    nodes[e["Id"]] = {
         "id": e["Id"],
         "date_published": e["D"],
         "citation_count": e["CC"],
@@ -37,7 +38,8 @@ for e in papers + citations:
         "authors": e["AA"],
         "fields": e.get("F"),
         "references": [rid for rid in e.get("RId",[]) if rid in known_ids]
-    })
+    }
+nodes = list(nodes.values())
 
 with open("data.json", "w") as f:
     json.dump(nodes, f)
