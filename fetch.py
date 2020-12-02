@@ -10,7 +10,7 @@ def req(query):
         "expr": query,
         "model": "latest",
         "count": 10000,
-        "attributes": "Id,Ty,DN,Y,D,CC,ECC,DOI,AA.DAuN,AA.AuId,AA.DAfN,AA.AfId,F.DFN,F.FId,J.JN,J.JId,Pt,RId",
+        "attributes": "Id,DN,D,CC,ECC,DOI,AA.DAuN,AA.AuId,AA.DAfN,AA.AfId,F.DFN,F.FId,J.JN,J.JId,RId,S",
     }, headers={
         "Ocp-Apim-Subscription-Key": "2e889aa457224e7c94b9517d890f29ae",
         "Content-Type": "application/json"
@@ -37,6 +37,9 @@ for e in papers + citations:
         "title": e["DN"],
         "authors": e["AA"],
         "fields": e.get("F"),
+        "journal": e.get("J"),
+        "DOI": e.get("DOI"),
+        "source": e.get("S"),
         "references": [rid for rid in e.get("RId",[]) if rid in known_ids]
     }
 nodes = list(nodes.values())
