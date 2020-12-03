@@ -109,7 +109,7 @@
 </head>
 
 <body>
-    <h1 id="title"><span id="subtitle">Giovanni's citation network</span> <span id="year"></span></h1>
+    <h1 id="title"><span id="subtitle"><span id="name">Giovanni</span>'s citation network</span> <span id="year"></span></h1>
     <div id="network"></div>
     <div id="controls">
         <div id="timeline"></div>
@@ -167,11 +167,13 @@
         const urlParams = new URLSearchParams(window.location.search);
         var data = urlParams.get('data');
         if (!data) {
-            data = "giovanni"
-        }
-        if (data == "Decolonizing_Methodologies") {
+            data = "Giovanni"
+        } else if (data == "Decolonizing_Methodologies") {
             $("#subtitle").text("Influence of Decolonizing Methodologies")
             document.title = "Influence of Decolonizing Methodologies"
+        } else {
+            $("#name").text(data)
+            document.title = $("#subtitle").text
         }
         $.getJSON(data + "/data.json", function (data) {
             console.log(data);
