@@ -19,7 +19,7 @@
         integrity="sha512-yocoLferfPbcwpCMr8v/B0AB4SWpJlouBwgE0D3ZHaiP1nuu5djZclFEIj9znuqghaZ3tdCMRrreLoM8km+jIQ=="
         crossorigin="anonymous"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <title>Giovanni's citation network</title>
+    <title>Citation network explorer</title>
     <style>
         html,
         body,
@@ -75,6 +75,22 @@
             margin: 10px;
             color: gray;
         }
+
+        #spinner {
+            position: absolute;
+            right: 60px;
+            top: 100px;
+        }
+
+        #alert {
+            display: none;
+            position: absolute;
+            top: 30%;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 60%;
+        }
     </style>
 </head>
 
@@ -125,8 +141,16 @@
             </div>
         </div>
     </div>
+    <div id="spinner" class="spinner-border text-primary" role="status"></div>
+    <div id="alert" class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        Sorry - I don't know how to handle that kind of request (<span id="requestdetails"></span>) just yet
+    </div>
 
     <script type="text/javascript">
+        const BASE_URL = "https://api.labs.cognitive.microsoft.com/academic/v1.0/";
+        const INTERPRET_URL = BASE_URL + "interpret";
+        const EVALUATE_URL = BASE_URL + "evaluate";
         $.ajaxSetup({
             headers: {
                 'Ocp-Apim-Subscription-Key': '2e889aa457224e7c94b9517d890f29ae'
@@ -136,18 +160,68 @@
             resolver: 'custom',
             events: {
                 search: function (qry, callback) {
-                    $.getJSON('https://api.labs.cognitive.microsoft.com/academic/v1.0/interpret', {
+                    $.getJSON(INTERPRET_URL, {
                         "query": qry,
                         "complete": 1
                     }, function (results) {
                         console.log(results);
                         var retval = []
                         for (var r of results.interpretations) {
-                            retval.push({text: $(r.parse).text(), value: r.rules[0].output.value})
+                            retval.push({ text: $(r.parse).text(), value: r.rules[0].output.value })
                         }
                         callback(retval)
                     });
                 }
+            }
+        })
+        function makeEvalRequest(query, callback) {
+            $.getJSON(EVALUATE_URL, {
+                expr: query,
+                model: "latest",
+                count: 10000,
+                attributes: "Id,DN,D,CC,ECC,DOI,AA.DAuN,AA.AuId,AA.DAfN,AA.AfId,F.DFN,F.FId,J.JN,J.JId,RId,S",
+            }, callback)
+        }
+        function human_readable(nodes) {
+            for (var n of nodes) {
+                n.id = n.Id;
+                n.date_published = n.D;
+                n.citation_count = n.CC;
+                n.estimated_citation_count = n.ECC;
+                n.title = n.DN;
+                n.authors = n.AA;
+                n.fields = n.F;
+                n.journal = n.J;
+                n.source = n.S;
+                n.references = {}
+                for (var rid of n.RId) {
+                    n.references[rid] = 1
+                }
+            }
+            return nodes
+        }
+        $('.autocomplete').on("autocomplete.select", function (e, item) {
+            console.log(item.value)
+            $("#spinner").show();
+            if (item.value.startsWith("Ti==")) { // paper search
+                makeEvalRequest(item.value, function (main) {
+                    console.log(main);
+                    $("#subtitle").text("Influence of " + main.entities[0].DN)
+                    makeEvalRequest("RId=" + main.entities[0].Id, function (citations) { // papers citing this paper
+                        citations.entities.push(main.entities[0]);
+                        window.current_data = human_readable(citations.entities);
+                        console.log(current_data)
+                        graph.graphData({
+                            nodes: current_data,
+                            links: getEdges(current_data)
+                        })
+                        $("#spinner").hide();
+                    })
+                });
+            } else {
+                $("#alert").show();
+                $("#requestdetails").text(item.value);
+                $("#spinner").hide();
             }
         });
         function uniq(arr) {
@@ -179,10 +253,8 @@
             data = "Giovanni"
         } else if (data == "Decolonizing_Methodologies") {
             $("#subtitle").text("Influence of Decolonizing Methodologies")
-            document.title = "Influence of Decolonizing Methodologies"
         } else {
             $("#name").text(data)
-            document.title = $("#subtitle").text
         }
         $.getJSON(data + "/data.json", function (data) {
             console.log(data);
@@ -303,6 +375,7 @@
                         ${links}<br>`);
                     $("#modal").modal('show')
                 })
+            $("#spinner").hide();
 
             $("#color").change(function () {
                 console.log(this.value)
