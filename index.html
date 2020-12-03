@@ -87,7 +87,7 @@
             /* 15% from the top and centered */
             padding: 20px;
             border: 1px solid #888;
-            width: 80%;
+            width: 50%;
             /* Could be more or less, depending on screen size */
         }
 
@@ -258,6 +258,7 @@
                         node, // lookAt ({ x, y, z })
                         3000  // ms transition duration
                     );
+                    $(".tooltip").remove()
                     var doilink = "https://doi.org/" + node.DOI;
                     var links = [];
                     for (var s of node.source) {
@@ -275,7 +276,6 @@
                             Citation count: ${node.citation_count}<br>
                             <a href="${doilink}">${doilink}</a><br>
                             ${links}<br>
-                            <iframe src="${node.source[0].U}" width=800 height=600></iframe>
                         </div>
                     </div>`).appendTo("body")
                     $(".close").click(function () {
