@@ -178,8 +178,9 @@
             $.post(EVALUATE_URL, {
                 expr: query,
                 model: "latest",
-                count: 10000,
+                count: 5000,
                 attributes: "Id,DN,D,CC,ECC,DOI,AA.DAuN,AA.AuId,AA.DAfN,AA.AfId,F.DFN,F.FId,J.JN,J.JId,RId,S",
+                timeout: 60
             }, callback)
         }
         function human_readable(nodes) {
@@ -261,10 +262,24 @@
                         $("#spinner").hide();
                     });
                 });
-            } else {
-                $("#alert").show();
-                $("#requestdetails").text(item.value);
-                $("#spinner").hide();
+            } else { // Might be a field
+                makeEvalRequest(item.value, function (main) { // get this paper's ID and name
+                    console.log(main);
+                    $("#subtitle").text(item.value)
+                    window.current_data = human_readable(main.entities);
+                    console.log(current_data)
+                    graph.graphData({
+                        nodes: current_data,
+                        links: getEdges(current_data)
+                    })
+                    var time_data = summarise_by_year(current_data);
+                    console.log(time_data);
+                    Plotly.restyle("timeline", {
+                        x: [Object.keys(time_data)],
+                        y: [Object.values(time_data)],
+                    });
+                    $("#spinner").hide();
+                });
             }
         });
         function uniq(arr) {
