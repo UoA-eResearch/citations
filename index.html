@@ -133,6 +133,7 @@
         <select id="group">
             <option value="paper" selected>Paper</option>
             <option value="author">Author</option>
+            <option value="journal">Journal</option>
             <option value="inst">Institution</option>
             <option value="field">Field</option>
         </select>
@@ -187,6 +188,10 @@
                     node.field = node.fields[0].DFN;
                     node.n_fields = node.fields.length;
                 }
+                if (node.journal) {
+                    node.journal.JN = node.journal.JN.toUpperCase()
+                    node.journals = [node.journal]
+                }
             }
 
             console.log(time_data)
@@ -231,6 +236,14 @@
 
             var scale = colorscale(data.map(n => n.citation_count))
 
+            function generateHTMLTooltip(node) {
+                return `<b>${node.title + " (" + node.date_published + ")"}</b><br>
+                            ${node.authors.map(a => a.DAfN ? a.DAuN + " (" + a.DAfN + ")" : a.DAuN).join(",")}<br>
+                            ${node.journal ? node.journal.JN : ""}<br>
+                            ${node.fields.map(f => f.DFN).join(",")}<br>
+                            Citation count: ${node.citation_count}<br>`
+            }
+
             window.elem = document.getElementById("network")
             window.graph = ForceGraph3D()(elem)
                 .graphData({
@@ -240,13 +253,7 @@
                 .enableNodeDrag(false)
                 .nodeVal('citation_count')
                 .nodeColor(n => scale(n.citation_count).css())
-                .nodeLabel(node => `<div class="tooltip"><b>${node.title + " (" + node.date_published + ")"}</b><br>
-                                ${node.authors.map(a => a.DAfN ? a.DAuN + " (" + a.DAfN + ")" : a.DAuN).join(",")}<br>
-                                ${node.journal ? node.journal.JN.toUpperCase() : ""}<br>
-                                ${node.fields.map(f => f.DFN).join(",")}<br>
-                                Citation count: ${node.citation_count}<br>
-                                </div>
-                            `)
+                .nodeLabel(node => `<div class="tooltip">${generateHTMLTooltip(node)}</div>`)
                 .onNodeHover(node => elem.style.cursor = node ? 'pointer' : null)
                 .onNodeClick(node => {
                     // Aim at node from outside it
@@ -269,11 +276,7 @@
                     $(`<div id="modal" class="modal">
                         <div class="modal-content">
                             <span class="close">&times;</span>
-                            <b>${node.title + " (" + node.date_published + ")"}</b><br>
-                            ${node.authors.map(a => a.DAfN ? a.DAuN + " (" + a.DAfN + ")" : a.DAuN).join(",")}<br>
-                            ${node.journal ? node.journal.JN.toUpperCase() : ""}<br>
-                            ${node.fields.map(f => f.DFN).join(",")}<br>
-                            Citation count: ${node.citation_count}<br>
+                            ${generateHTMLTooltip(node)}
                             <a href="${doilink}">${doilink}</a><br>
                             ${links}<br>
                         </div>
@@ -308,12 +311,7 @@
                     graph.graphData({
                         nodes: filtered_data,
                         links: getEdges(filtered_data)
-                    }).nodeLabel(node => `<div class="tooltip"><b>${node.title + " (" + node.date_published + ")"}</b><br>
-                            ${node.authors.map(a => a.DAfN ? a.DAuN + " (" + a.DAfN + ")" : a.DAuN).join(",")}<br>
-                            ${node.fields.map(f => f.DFN).join(",")}<br>
-                            Citation count: ${node.citation_count}<br>
-                            </div>
-                        `)
+                    }).nodeLabel(node => `<div class="tooltip">${generateHTMLTooltip(node)}</div>`)
                     return;
                 }
                 if (this.value == "author") {
@@ -328,6 +326,10 @@
                     var objkey = "fields"
                     var subkey = "FId"
                     var namekey = "DFN"
+                } else if (this.value == "journal") {
+                    var objkey = "journals"
+                    var subkey = "JId"
+                    var namekey = "JN"
                 }
                 var groupedData = {};
                 for (var node of data) {
@@ -363,17 +365,18 @@
                 }
                 console.log(groupedData)
                 groupedData = Object.values(groupedData)
+                window.current_data = groupedData;
+                var filteredData = groupedData;
                 if (window.year) {
-                    groupedData = groupedData.filter(n => n.date_published.slice(0, 4) <= window.year)
+                    filteredData = filteredData.filter(n => n.date_published.slice(0, 4) <= window.year)
                 }
-                console.log(groupedData)
+                console.log(filteredData)
                 graph.graphData({
-                    nodes: groupedData,
-                    links: getEdges(groupedData)
+                    nodes: filteredData,
+                    links: getEdges(filteredData)
                 }).nodeLabel(n => `<div class="tooltip">${n.name}<br>Citations: ${n.citation_count}</div>`)
                     .linkAutoColorBy(e => e.count)
                     .linkWidth(e => e.count)
-                window.current_data = groupedData;
             })
         });
     </script>
