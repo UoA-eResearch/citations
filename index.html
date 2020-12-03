@@ -223,6 +223,12 @@
                             nodes: current_data,
                             links: getEdges(current_data)
                         })
+                        var time_data = summarise_by_year(current_data);
+                        console.log(time_data);
+                        Plotly.restyle("timeline", {
+                            x: [Object.keys(time_data)],
+                            y: [Object.values(time_data)],
+                        });
                         $("#spinner").hide();
                     })
                 });
@@ -246,6 +252,12 @@
                             nodes: current_data,
                             links: getEdges(current_data)
                         })
+                        var time_data = summarise_by_year(current_data);
+                        console.log(time_data);
+                        Plotly.restyle("timeline", {
+                            x: [Object.keys(time_data)],
+                            y: [Object.values(time_data)],
+                        });
                         $("#spinner").hide();
                     });
                 });
@@ -287,16 +299,21 @@
         } else {
             $("#name").text(data)
         }
-        $.getJSON(data + "/data.json", function (data) {
-            console.log(data);
-            window.data = data;
-            window.current_data = data;
-            window.paper_lookup = {}
+        function summarise_by_year(data) {
             var time_data = {}
             for (var node of data) {
                 var d = node.date_published.slice(0, 4)
                 if (!time_data[d]) time_data[d] = 0;
                 time_data[d]++;
+            }
+            return time_data;
+        }
+        $.getJSON(data + "/data.json", function (data) {
+            console.log(data);
+            window.data = data;
+            window.current_data = data;
+            window.paper_lookup = {}
+            for (var node of data) {
                 paper_lookup[node.id] = node
                 var tmp = {}
                 for (var rid of node.references) {
@@ -317,6 +334,7 @@
                 }
             }
 
+            var time_data = summarise_by_year(data);
             console.log(time_data)
 
             var plotData = [
