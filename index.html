@@ -44,6 +44,13 @@
             padding: 20px;
         }
 
+        #search {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            width: 20%;
+        }
+
         #title {
             position: absolute;
             top: 30;
@@ -75,6 +82,7 @@
     <h1 id="title"><span id="subtitle"><span id="name">Giovanni</span>'s citation network</span> <span id="year"></span>
     </h1>
     <div id="network"></div>
+    <select id="search" placeholder="type to search..." class="form-control autocomplete"></select>
     <div id="controls">
         <div id="timeline"></div>
         <div class="small">Hover over the timeline to filter the network graph by year</div>
@@ -101,8 +109,6 @@
             <option value="inst">Institution</option>
             <option value="field">Field</option>
         </select><br><br>
-        Search:
-        <input class="form-control autocomplete" type="text" autocomplete="off" />
         <div class="small"><a href="https://github.com/UoA-eResearch/citations">GitHub</a></div>
     </div>
     <div id="modal" class="modal" tabindex="-1" role="dialog">
@@ -135,6 +141,11 @@
                         "complete": 1
                     }, function (results) {
                         console.log(results);
+                        var retval = []
+                        for (var r of results.interpretations) {
+                            retval.push({text: $(r.parse).text(), value: r.rules[0].output.value})
+                        }
+                        callback(retval)
                     });
                 }
             }
