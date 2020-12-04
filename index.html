@@ -47,8 +47,8 @@
         #search {
             position: absolute;
             right: 10px;
-            top: 10px;
-            width: 20%;
+            top: 80px;
+            width: 40%;
         }
 
         #title {
@@ -79,7 +79,7 @@
         #spinner {
             position: absolute;
             right: 60px;
-            top: 100px;
+            top: 130px;
         }
 
         #alert {
@@ -158,6 +158,10 @@
                 'Ocp-Apim-Subscription-Key': '2e889aa457224e7c94b9517d890f29ae'
             }
         });
+        $('.autocomplete').bind("paste", function(e){
+            var self = $(this);
+            setTimeout(function(){self.trigger("keydown");}, 0);
+        });
         $(".autocomplete").autoComplete({
             resolver: 'custom',
             events: {
@@ -212,7 +216,7 @@
             $("#alert").hide();
         });
         $('.autocomplete').on("autocomplete.select", function (e, item) {
-            console.log(item.value)
+            console.log(item)
             $("#spinner").show();
             if (item.value.startsWith("Ti==")) { // paper search
                 makeEvalRequest(item.value, function (main) { // get this paper's ID and name
@@ -267,7 +271,7 @@
             } else { // Might be a field
                 makeEvalRequest(item.value, function (main) { // get this paper's ID and name
                     console.log(main);
-                    $("#subtitle").text(item.value)
+                    $("#subtitle").text(item.text)
                     window.current_data = human_readable(main.entities);
                     console.log(current_data)
                     graph.graphData({
