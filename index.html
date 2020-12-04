@@ -310,11 +310,13 @@
         const urlParams = new URLSearchParams(window.location.search);
         var data = urlParams.get('data');
         if (!data) {
-            data = "Giovanni"
+            data = "data/Giovanni.json"
         } else if (data == "Decolonizing_Methodologies") {
             $("#subtitle").text("Influence of Decolonizing Methodologies")
+            data = "Decolonizing_Methodologies/data.json"
         } else {
             $("#name").text(data)
+            data = `data/${data}.json`
         }
         function summarise_by_year(data) {
             var time_data = {}
@@ -325,7 +327,7 @@
             }
             return time_data;
         }
-        $.getJSON(data + "/data.json", function (data) {
+        $.getJSON(data, function (data) {
             console.log(data);
             window.data = data;
             window.current_data = data;
