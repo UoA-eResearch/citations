@@ -166,7 +166,10 @@
             resolver: 'custom',
             events: {
                 search: function (qry, callback) {
-                    $.getJSON(INTERPRET_URL, {
+                    if (window.lastXHR) {
+                        window.lastXHR.abort();
+                    }
+                    window.lastXHR = $.getJSON(INTERPRET_URL, {
                         "query": qry,
                         "complete": 1
                     }, function (results) {
@@ -216,6 +219,7 @@
             $("#alert").hide();
         });
         $('.autocomplete').on("autocomplete.select", function (e, item) {
+            if (!item) return;
             console.log(item)
             $("#spinner").show();
             if (item.value.startsWith("Ti==")) { // paper search
