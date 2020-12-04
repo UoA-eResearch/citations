@@ -388,6 +388,7 @@
                     }
                 });
 
+                if (window.year == d.x) return;
                 window.year = d.x;
                 console.log(year)
                 var filtered_data = window.current_data.filter(n => n.date_published.slice(0, 4) <= year)
@@ -424,6 +425,7 @@
                     }
                 });
                 console.log(d)
+                if (window.year == d.x) return;
                 window.year = d.x
                 var filtered_data = window.current_data.filter(n => n.date_published.slice(0, 4) <= year)
                 console.log(filtered_data)
