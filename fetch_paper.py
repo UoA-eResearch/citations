@@ -3,7 +3,9 @@
 import pandas as pd
 import json
 import requests
-from pprint import pprint
+import sys
+
+id = sys.argv[1]
 
 def req(query):
     r = requests.post("https://api.labs.cognitive.microsoft.com/academic/v1.0/evaluate", json={
@@ -17,18 +19,16 @@ def req(query):
     })
     return r.json()
 
-papers = req(f"Composite(AA.AuId=569916477)")["entities"] # Fetch papers
-print(len(papers))
-ids = [node["Id"] for node in papers] # Extract just paper ids
-ids = ",".join([f"RId={id}" for id in ids]) # Create a query referencing each paper id
+main = req(f"Id={id}")["entities"]
+print(main)
 
-citations = req(f"Or({ids})")["entities"] # Request all papers citing any of these ids
+citations = req(f"RId={id}")["entities"]
 print(len(citations))
 
-known_ids = set([node["Id"] for node in papers + citations])
+known_ids = set([node["Id"] for node in citations])
 print(len(known_ids))
 nodes = {}
-for e in papers + citations:
+for e in main + citations:
     nodes[e["Id"]] = {
         "id": e["Id"],
         "date_published": e["D"],

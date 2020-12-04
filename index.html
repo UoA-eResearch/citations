@@ -101,7 +101,7 @@
     <select id="search" placeholder="type to search..." class="form-control autocomplete"></select>
     <div id="controls">
         <div id="timeline"></div>
-        <div class="small">Hover over the timeline to filter the network graph by year</div>
+        <div class="small">Hover over the timeline to filter the network graph by year<br>Click to hold</div>
         Colour by
         <select id="color">
             <option value="citation_count" selected>Citation count</option>
@@ -151,6 +151,8 @@
         const BASE_URL = "https://api.labs.cognitive.microsoft.com/academic/v1.0/";
         const INTERPRET_URL = BASE_URL + "interpret";
         const EVALUATE_URL = BASE_URL + "evaluate";
+        const DEFAULT_COLOR = '#1f77b4';
+        const HIGHLIGHT_COLOR = '#e377c2'
         $.ajaxSetup({
             headers: {
                 'Ocp-Apim-Subscription-Key': '2e889aa457224e7c94b9517d890f29ae'
@@ -203,10 +205,10 @@
             }
             return nodes
         }
-        function capitalize(s){
-            return s.toLowerCase().replace( /\b./g, function(a){ return a.toUpperCase(); } );
+        function capitalize(s) {
+            return s.toLowerCase().replace(/\b./g, function (a) { return a.toUpperCase(); });
         };
-        $("#alert_close").click(function() {
+        $("#alert_close").click(function () {
             $("#alert").hide();
         });
         $('.autocomplete').on("autocomplete.select", function (e, item) {
@@ -234,11 +236,11 @@
                     })
                 });
             } else if (item.value.startsWith("Composite(AA")) { // author search
-                makeEvalRequest(item.value, function(main) { // get papers by this author
+                makeEvalRequest(item.value, function (main) { // get papers by this author
                     console.log(main);
                     var authorname = capitalize(item.value.replace("Composite(AA.AuN=='", "").replace("')", ""));
                     var ids = main.entities.map(n => "RId=" + n.Id).join(",");
-                    makeEvalRequest(`Or(${ids})`, function(citations) {
+                    makeEvalRequest(`Or(${ids})`, function (citations) {
                         $("#subtitle").text(authorname + "'s citation network");
                         var all_papers = {} // deduplicate
                         for (var n of main.entities) {
@@ -356,6 +358,9 @@
                 {
                     x: Object.keys(time_data),
                     y: Object.values(time_data),
+                    marker: {
+                        color: Object.keys(time_data).map(k => DEFAULT_COLOR)
+                    },
                     type: 'bar'
                 }
             ];
@@ -375,15 +380,59 @@
 
             Plotly.newPlot('timeline', plotData, layout);
             window.year = 2021
+            window.freeze = false;
             $("#timeline").on('plotly_hover', function (event, data) {
-                var id = event.target.id;
-                var d = data.points[0].x || data.points[0].label;
-                console.log(d)
-                window.year = d
-                var filtered_data = window.current_data.filter(n => n.date_published.slice(0, 4) <= d)
+                if (window.freeze) return;
+                console.log(data)
+                var d = data.points[0]
+                var colors = Object.keys(d.data.x).map(k => DEFAULT_COLOR); // all colors for series
+                colors[d.pointNumber] = HIGHLIGHT_COLOR
+                Plotly.restyle('timeline', {
+                    marker: {
+                        color: colors
+                    }
+                });
+
+                window.year = d.x;
+                console.log(year)
+                var filtered_data = window.current_data.filter(n => n.date_published.slice(0, 4) <= year)
                 console.log(filtered_data)
-                var visible_nodes = filtered_data.map(n => n.id)
-                $("#year").text("as at " + d);
+                $("#year").text("as at " + year);
+                graph.graphData({
+                    nodes: filtered_data,
+                    links: getEdges(filtered_data)
+                })
+            }).on("plotly_unhover", function(event, data) {
+                if (window.freeze) return;
+                console.log(data)
+                var d = data.points[0]
+                var colors = Object.keys(d.data.x).map(k => DEFAULT_COLOR); // all colors for series
+                colors[d.pointNumber] = DEFAULT_COLOR
+                Plotly.restyle('timeline', {
+                    marker: {
+                        color: colors
+                    }
+                });
+                $("#year").text("");
+                graph.graphData({
+                    nodes: current_data,
+                    links: getEdges(current_data)
+                })
+            }).on("plotly_click", function (event, data) {
+                window.freeze = !window.freeze;
+                var d = data.points[0]
+                var colors = Object.keys(d.data.x).map(k => DEFAULT_COLOR); // all colors for series
+                colors[d.pointNumber] = HIGHLIGHT_COLOR
+                Plotly.restyle('timeline', {
+                    marker: {
+                        color: colors
+                    }
+                });
+                console.log(d)
+                window.year = d.x
+                var filtered_data = window.current_data.filter(n => n.date_published.slice(0, 4) <= year)
+                console.log(filtered_data)
+                $("#year").text("as at " + year);
                 graph.graphData({
                     nodes: filtered_data,
                     links: getEdges(filtered_data)
