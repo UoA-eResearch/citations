@@ -218,6 +218,23 @@
         $("#alert_close").click(function () {
             $("#alert").hide();
         });
+        function update() {
+            console.log(current_data)
+            graph.graphData({
+                nodes: current_data,
+                links: getEdges(current_data)
+            })
+            var time_data = summarise_by_year(current_data);
+            console.log(time_data);
+            Plotly.restyle("timeline", {
+                x: [Object.keys(time_data)],
+                y: [Object.values(time_data)],
+                marker: {
+                    color: Object.keys(time_data).map(n => DEFAULT_COLOR)
+                }
+            });
+            $("#spinner").hide();
+        }
         $('.autocomplete').on("autocomplete.select", function (e, item) {
             if (!item) return;
             console.log(item)
@@ -229,18 +246,7 @@
                         $("#subtitle").text("Influence of " + main.entities[0].DN)
                         citations.entities.push(main.entities[0]);
                         window.current_data = human_readable(citations.entities);
-                        console.log(current_data)
-                        graph.graphData({
-                            nodes: current_data,
-                            links: getEdges(current_data)
-                        })
-                        var time_data = summarise_by_year(current_data);
-                        console.log(time_data);
-                        Plotly.restyle("timeline", {
-                            x: [Object.keys(time_data)],
-                            y: [Object.values(time_data)],
-                        });
-                        $("#spinner").hide();
+                        update();
                     })
                 });
             } else if (item.value.startsWith("Composite(AA")) { // author search
@@ -258,18 +264,7 @@
                             all_papers[n.Id] = n;
                         }
                         window.current_data = human_readable(Object.values(all_papers));
-                        console.log(current_data)
-                        graph.graphData({
-                            nodes: current_data,
-                            links: getEdges(current_data)
-                        })
-                        var time_data = summarise_by_year(current_data);
-                        console.log(time_data);
-                        Plotly.restyle("timeline", {
-                            x: [Object.keys(time_data)],
-                            y: [Object.values(time_data)],
-                        });
-                        $("#spinner").hide();
+                        update();
                     });
                 });
             } else { // Might be a field
@@ -277,18 +272,7 @@
                     console.log(main);
                     $("#subtitle").text(item.text)
                     window.current_data = human_readable(main.entities);
-                    console.log(current_data)
-                    graph.graphData({
-                        nodes: current_data,
-                        links: getEdges(current_data)
-                    })
-                    var time_data = summarise_by_year(current_data);
-                    console.log(time_data);
-                    Plotly.restyle("timeline", {
-                        x: [Object.keys(time_data)],
-                        y: [Object.values(time_data)],
-                    });
-                    $("#spinner").hide();
+                    update();
                 });
             }
         });
