@@ -13,7 +13,7 @@ Citation network analysis using [Microsoft Academic](https://www.microsoft.com/e
 ### Sample datasets
 
 #### Authors
-[Daniel J. Exeter](https://uoa-eresearch.github.io/citations/?data=Dan) 2749 nodes 8977 links  
+[Daniel J. Exeter](https://uoa-eresearch.github.io/citations/?data=Dan) 1083 nodes 2153 links  
 [David O'Sullivan](https://uoa-eresearch.github.io/citations/?data=David) 4517 nodes 14225 links  
 [Giovanni Coco](https://uoa-eresearch.github.io/citations/?data=Giovanni) 2063 nodes 10293 links  
 [Mark Gahegan](https://uoa-eresearch.github.io/citations/?data=Mark) 2749 nodes 8977 links  
