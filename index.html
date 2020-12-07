@@ -179,6 +179,7 @@
                         for (var r of results.interpretations) {
                             retval.push({ text: $(r.parse).text(), value: r.rules[0].output.value })
                         }
+                        window.autocomplete_options = retval;
                         callback(retval)
                     });
                 }
@@ -277,6 +278,11 @@
                 });
             }
         });
+        $(".autocomplete").on("autocomplete.freevalue", function (e, item) {
+            console.log(item, autocomplete_options);
+            $(".autocomplete").autoComplete('set', autocomplete_options[0])
+            $(".autocomplete").blur()
+        })
         function uniq(arr) {
             return [...new Set(arr)]
         }
