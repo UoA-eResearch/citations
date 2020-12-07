@@ -15,6 +15,7 @@
     <script src="https://unpkg.com/@deck.gl/carto@^8.2.0/dist.min.js"></script>
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
         html,
         body {
@@ -22,60 +23,26 @@
             height: 100vh;
             margin: 0;
         }
+
+        #controls {
+            position: absolute;
+            right: 30px;
+            bottom: 40px;
+            z-index: 9999;
+            background-color: white;
+            padding: 10px;
+        }
     </style>
 </head>
 
 <body>
+    <div id="controls">
+        <label for="brush">Enable brushing</label>: <input type="checkbox" id="brush"><br>
+        <div id="timeline"></div>
+    </div>
     <script>
-        function buildDescString(d) {
-            console.log(d);
-            return `<b>${d.name}</b><br>
-            ${d.geo[0].formatted_address}<br>
-            Citations: ${d.n_citations}<br>
-            Papers: ${d.n_papers}<br>
-            `;
-        }
-
-        var scale = chroma.scale('Spectral').domain([100, 0])
-        var arcscale = chroma.scale('Spectral').domain([10, 0])
-
-        $.getJSON("institutions.json", function (data) {
-            console.warn("No lls for ", data.filter(d => !d.geo[0]))
-            data = data.filter(d => d.geo[0])
-            console.log(data)
-            var lookup = {}
-            for (var d of data) {
-                d.position = [d.geo[0].geometry.location.lng, d.geo[0].geometry.location.lat]
-                lookup[d.id] = d
-            }
-            var edges = [];
-            for (var d of data) {
-                for (var l in d.links) {
-                    l = parseInt(l)
-                    if (lookup[l]) {
-                        edges.push({from: d.position, to: lookup[l].position, count: d.links[l]})
-                    }
-                }
-            }
-            console.log(edges)
-            var map = new deck.DeckGL({
-                mapStyle: deck.carto.BASEMAP.DARK_MATTER,
-                initialViewState: {
-                    longitude: 0,
-                    latitude: 0,
-                    zoom: 1,
-                    pitch: 40
-                },
-                controller: true,
-                getTooltip: ({ object }) => object && {
-                    html: buildDescString(object),
-                    /*
-                    style: {
-                        "background-color": "white",
-                        "color": "black"
-                    }
-                    */
-                },
+        function updateLayers() {
+            map.setProps({
                 layers: [
                     new deck.ScatterplotLayer({
                         id: "institutions",
@@ -88,7 +55,12 @@
                         getPosition: d => d.position,
                         getFillColor: d => scale(d.n_citations).rgb(),
                         pickable: true,
-                        getRadius: d => d.n_citations
+                        getRadius: d => d.n_citations,
+                        brushingEnabled: window.brushingEnabled,
+                        brushingRadius: 5e5,
+                        getFilterValue: d => d.year_published,
+                        filterRange: window.filterRange,
+                        extensions: [new deck.BrushingExtension(), new deck.DataFilterExtension()]
                     }),
                     new deck.ArcLayer({
                         id: 'arc',
@@ -99,9 +71,200 @@
                         getTargetPosition: e => e.to,
                         getSourceColor: e => arcscale(e.count).rgb().concat(20),
                         getTargetColor: e => arcscale(e.count).rgb().concat(20),
-                        getWidth: e => e.count
+                        getWidth: e => e.count,
+                        brushingEnabled: window.brushingEnabled,
+                        brushingRadius: 5e5,
+                        getFilterValue: d => d.year_published,
+                        filterRange: window.filterRange,
+                        extensions: [new deck.BrushingExtension(), new deck.DataFilterExtension()]
                     })
                 ]
+            });
+        }
+        $("#brush").change(function () {
+            console.log("brush", this.checked);
+            window.brushingEnabled = this.checked;
+            updateLayers();
+        })
+        function buildDescString(d) {
+            console.log(d);
+            return `<b>${d.name}</b><br>
+            ${d.geo[0].formatted_address}<br>
+            Citations: ${d.n_citations}<br>
+            Papers: ${d.n_papers}<br>
+            `;
+        }
+        
+        function summarise_by_year(data) {
+            var time_data = {}
+            for (var node of data) {
+                var d = node.year_published;
+                if (!time_data[d]) time_data[d] = 0;
+                time_data[d]++;
+            }
+            return time_data;
+        }
+        const DEFAULT_COLOR = '#1f77b4';
+        const HIGHLIGHT_COLOR = '#e377c2'
+
+        var scale = chroma.scale('Spectral').domain([100, 0])
+        var arcscale = chroma.scale('Spectral').domain([10, 0])
+
+        $.getJSON("institutions.json", function (data) {
+            console.warn("No lls for ", data.filter(d => !d.geo[0]))
+            data = data.filter(d => d.geo[0] && d.date_published)
+            console.log(data)
+            window.data = data;
+            var lookup = {}
+            for (var d of data) {
+                d.position = [d.geo[0].geometry.location.lng, d.geo[0].geometry.location.lat]
+                d.year_published = parseInt(d.date_published.slice(0, 4))
+                lookup[d.id] = d
+            }
+
+
+
+            var time_data = summarise_by_year(data);
+            console.log(time_data)
+
+            var plotData = [
+                {
+                    x: Object.keys(time_data),
+                    y: Object.values(time_data),
+                    marker: {
+                        color: Object.keys(time_data).map(k => DEFAULT_COLOR)
+                    },
+                    type: 'bar'
+                }
+            ];
+
+            var layout = {
+                title: 'Citations over time',
+                height: 300,
+                width: 300,
+                margin: {
+                    pad: 0,
+                    l: 40,
+                    r: 40,
+                    t: 70,
+                    b: 40
+                }
+            }
+
+            Plotly.newPlot('timeline', plotData, layout);
+            
+            window.freeze = false;
+            $("#timeline").on('plotly_hover', function (event, data) {
+                if (window.freeze) return;
+                var d = data.points[0]
+                var colors = Object.keys(d.data.x).map(k => DEFAULT_COLOR); // all colors for series
+                colors[d.pointNumber] = HIGHLIGHT_COLOR
+                Plotly.restyle('timeline', {
+                    marker: {
+                        color: colors
+                    }
+                });
+                console.log(d.x)
+                window.filterRange = [d.x, d.x];
+                updateLayers();
+            }).on("plotly_unhover", function(event, data) {
+                if (window.freeze) return;
+                var d = data.points[0]
+                var colors = Object.keys(d.data.x).map(k => DEFAULT_COLOR); // all colors for series
+                colors[d.pointNumber] = DEFAULT_COLOR
+                Plotly.restyle('timeline', {
+                    marker: {
+                        color: colors
+                    }
+                });
+                window.filterRange = fullRange;
+                updateLayers();
+            }).on("plotly_click", function (event, data) {
+                window.freeze = !window.freeze;
+                var d = data.points[0]
+                var colors = Object.keys(d.data.x).map(k => DEFAULT_COLOR); // all colors for series
+                colors[d.pointNumber] = HIGHLIGHT_COLOR
+                Plotly.restyle('timeline', {
+                    marker: {
+                        color: colors
+                    }
+                });
+                console.log(d.x)
+                window.filterRange = [d.x, d.x];
+                updateLayers();
+            });
+
+            var edges = [];
+            for (var d of data) {
+                for (var l in d.links) {
+                    l = parseInt(l)
+                    if (lookup[l]) {
+                        edges.push({ from: d.position, to: lookup[l].position, count: d.links[l], year_published: d.year_published})
+                    }
+                }
+            }
+            window.edges = edges;
+            console.log(edges)
+
+            window.filterRange = [Math.min(...Object.keys(time_data)), Math.max(...Object.keys(time_data))];
+            window.fullRange = window.filterRange;
+            window.brushingEnabled = false;
+
+            window.layers = [
+                new deck.ScatterplotLayer({
+                    id: "institutions",
+                    data: data,
+                    opacity: 0.5,
+                    autoHighlight: true,
+                    radiusScale: 10,
+                    radiusMinPixels: 2,
+                    wrapLongitude: true,
+                    getPosition: d => d.position,
+                    getFillColor: d => scale(d.n_citations).rgb(),
+                    pickable: true,
+                    getRadius: d => d.n_citations,
+                    brushingEnabled: brushingEnabled,
+                    brushingRadius: 5e5,
+                    getFilterValue: d => d.year_published,
+                    filterRange: window.filterRange,
+                    extensions: [new deck.BrushingExtension(), new deck.DataFilterExtension()]
+                }),
+                new deck.ArcLayer({
+                    id: 'arc',
+                    data: edges,
+                    widthUnits: "pixels",
+                    //widthMinPixels: .2,
+                    getSourcePosition: e => e.from,
+                    getTargetPosition: e => e.to,
+                    getSourceColor: e => arcscale(e.count).rgb().concat(20),
+                    getTargetColor: e => arcscale(e.count).rgb().concat(20),
+                    getWidth: e => e.count,
+                    brushingEnabled: brushingEnabled,
+                    brushingRadius: 5e5,
+                    getFilterValue: e => e.year_published,
+                    filterRange: window.filterRange,
+                    extensions: [new deck.BrushingExtension(), new deck.DataFilterExtension()]
+                })
+            ]
+            window.map = new deck.DeckGL({
+                mapStyle: deck.carto.BASEMAP.DARK_MATTER,
+                initialViewState: {
+                    longitude: 0,
+                    latitude: 0,
+                    zoom: 2,
+                    pitch: 40
+                },
+                controller: true,
+                getTooltip: ({ object }) => object && {
+                    html: buildDescString(object),
+                    /*
+                    style: {
+                        "background-color": "white",
+                        "color": "black"
+                    }
+                    */
+                },
+                layers: layers
             });
         });
     </script>
