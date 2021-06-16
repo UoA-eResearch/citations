@@ -92,6 +92,15 @@
             margin: auto;
             width: 60%;
         }
+
+        #legend {
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: 1fr;
+            grid-template-rows: 1fr 1fr;
+            text-align: center;
+            font-size: .7rem;
+        }
     </style>
 </head>
 
@@ -109,7 +118,7 @@
             <option value="n_authors">Number of authors</option>
             <option value="n_inst">Number of institutions</option>
             <option value="field">Primary field</option>
-        </select><br><br>
+        </select><div id="legend"></div><br>
         Size by
         <select id="size">
             <option value="">Constant</option>
@@ -290,6 +299,10 @@
             var breaks = chroma.limits(uniq(arr), 'q', 12);
             var scale = chroma.scale('Spectral').domain(breaks.reverse());
             console.log(breaks, scale);
+            $("#legend").empty()
+            for (i of breaks.reverse()) {
+                $("#legend").append(`<div>${Math.round(i)}</div><div style="background: ${scale(i)}"></div>`)
+            }
             return scale
         }
         function getEdges(nodes) {
