@@ -5,47 +5,29 @@ import json
 import requests
 from pprint import pprint
 import sys
+from tqdm.auto import tqdm
 
 id = sys.argv[1]
 
-def req(query):
-    r = requests.post("https://api.labs.cognitive.microsoft.com/academic/v1.0/evaluate", json={
-        "expr": query,
-        "model": "latest",
-        "count": 10000,
-        "attributes": "Id,DN,D,CC,ECC,DOI,AA.DAuN,AA.AuId,AA.DAfN,AA.AfId,F.DFN,F.FId,J.JN,J.JId,RId,S",
-    }, headers={
-        "Ocp-Apim-Subscription-Key": "2e889aa457224e7c94b9517d890f29ae",
-        "Content-Type": "application/json"
-    })
-    return r.json()
+params = {
+    "per-page": 200,
+    "mailto": "nick.young@auckland.ac.nz"
+}
 
-papers = req(f"Composite(AA.AuId={id})")["entities"] # Fetch papers
-print(len(papers))
-ids = [node["Id"] for node in papers] # Extract just paper ids
-ids = ",".join([f"RId={id}" for id in ids]) # Create a query referencing each paper id
+response = requests.get("https://api.openalex.org/works?filter=author.id:" + id, params=params).json()
+pprint(response["meta"])
+seed_works = response["results"]
+print(len(seed_works))
 
-citations = req(f"Or({ids})")["entities"] # Request all papers citing any of these ids
-print(len(citations))
+citing_works = []
 
-known_ids = set([node["Id"] for node in papers + citations])
-print(len(known_ids))
-nodes = {}
-for e in papers + citations:
-    nodes[e["Id"]] = {
-        "id": e["Id"],
-        "date_published": e["D"],
-        "citation_count": e["CC"],
-        "estimated_citation_count": e["ECC"],
-        "title": e["DN"],
-        "authors": e["AA"],
-        "fields": e.get("F"),
-        "journal": e.get("J"),
-        "DOI": e.get("DOI"),
-        "source": e.get("S"),
-        "references": [rid for rid in e.get("RId",[]) if rid in known_ids]
-    }
-nodes = list(nodes.values())
+for w in tqdm(seed_works):
+    response = requests.get(w["cited_by_api_url"], params=params).json()
+    pprint(response["meta"])
+    citing_works.extend(response["results"])
+
+works = seed_works + citing_works
+print(len(works))
 
 with open("data.json", "w") as f:
-    json.dump(nodes, f)
+    json.dump(works, f)
