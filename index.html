@@ -159,16 +159,9 @@
     </div>
 
     <script type="text/javascript">
-        const BASE_URL = "https://api.labs.cognitive.microsoft.com/academic/v1.0/";
-        const INTERPRET_URL = BASE_URL + "interpret";
-        const EVALUATE_URL = BASE_URL + "evaluate";
+        const AUTOCOMPLETE_URL = "https://api.openalex.org/autocomplete";
         const DEFAULT_COLOR = '#1f77b4';
         const HIGHLIGHT_COLOR = '#e377c2'
-        $.ajaxSetup({
-            headers: {
-                'Ocp-Apim-Subscription-Key': '2e889aa457224e7c94b9517d890f29ae'
-            }
-        });
         $('.autocomplete').bind("paste", function(e){
             var self = $(this);
             setTimeout(function(){self.trigger("keydown");}, 0);
@@ -180,50 +173,21 @@
                     if (window.lastXHR) {
                         window.lastXHR.abort();
                     }
-                    window.lastXHR = $.getJSON(INTERPRET_URL, {
-                        "query": qry,
-                        "complete": 1
+                    window.lastXHR = $.getJSON(AUTOCOMPLETE_URL, {
+                        "author_hint": "institution",
+                        "q": qry,
+                        "mailto": "nick.young@auckland.ac.nz"
                     }, function (results) {
                         console.log(results);
-                        var retval = []
-                        for (var r of results.interpretations) {
-                            retval.push({ text: $(r.parse).text(), value: r.rules[0].output.value })
+                        for (var r of results.results) {
+                            r["text"] = `${r.entity_type}: ${r.display_name}, ${r.hint}`
                         }
-                        window.autocomplete_options = retval;
-                        callback(retval)
+                        window.autocomplete_options = results.results;
+                        callback(results.results)
                     });
                 }
             }
         })
-        function makeEvalRequest(query, callback) {
-            $.post(EVALUATE_URL, {
-                expr: query,
-                model: "latest",
-                count: 3000,
-                attributes: "Id,DN,D,CC,ECC,DOI,AA.DAuN,AA.AuId,AA.DAfN,AA.AfId,F.DFN,F.FId,J.JN,J.JId,RId,S",
-                timeout: 60
-            }, callback)
-        }
-        function human_readable(nodes) {
-            for (var n of nodes) {
-                n.id = n.Id;
-                n.date_published = n.D;
-                n.citation_count = n.CC;
-                n.estimated_citation_count = n.ECC;
-                n.title = n.DN;
-                n.authors = n.AA;
-                n.fields = n.F;
-                n.journal = n.J;
-                n.source = n.S;
-                n.references = {}
-                if (n.RId) {
-                    for (var rid of n.RId) {
-                        n.references[rid] = 1
-                    }
-                }
-            }
-            return nodes
-        }
         function capitalize(s) {
             return s.toLowerCase().replace(/\b./g, function (a) { return a.toUpperCase(); });
         };
@@ -251,41 +215,22 @@
             if (!item) return;
             console.log(item)
             $("#spinner").show();
-            if (item.value.startsWith("Ti==")) { // paper search
-                makeEvalRequest(item.value, function (main) { // get this paper's ID and name
-                    console.log(main);
-                    makeEvalRequest("RId=" + main.entities[0].Id, function (citations) { // papers citing this paper
-                        $("#subtitle").text("Influence of " + main.entities[0].DN)
-                        citations.entities.push(main.entities[0]);
-                        window.current_data = human_readable(citations.entities);
-                        update();
-                    })
-                });
-            } else if (item.value.startsWith("Composite(AA")) { // author search
-                makeEvalRequest(item.value, function (main) { // get papers by this author
-                    console.log(main);
-                    var authorname = capitalize(item.value.replace("Composite(AA.AuN=='", "").replace("')", ""));
-                    var ids = main.entities.map(n => "RId=" + n.Id).join(",");
-                    makeEvalRequest(`Or(${ids})`, function (citations) {
-                        $("#subtitle").text(authorname + "'s citation network");
-                        var all_papers = {} // deduplicate
-                        for (var n of main.entities) {
-                            all_papers[n.Id] = n;
-                        }
-                        for (var n of citations.entities) {
-                            all_papers[n.Id] = n;
-                        }
-                        window.current_data = human_readable(Object.values(all_papers));
-                        update();
-                    });
-                });
-            } else { // Might be a field
-                makeEvalRequest(item.value, function (main) { // get this paper's ID and name
-                    console.log(main);
-                    $("#subtitle").text(item.text)
-                    window.current_data = human_readable(main.entities);
+            if (item.entity_type == "author") {
+                $("#subtitle").text(item.display_name + "'s citation network");
+                var id = item.id.replace("https://openalex.org/")
+                $.getJSON("https://api.openalex.org/works", {
+                    "filter": "author.id:" + id,
+                    "per-page": 200,
+                    "mailto": "nick.young@auckland.ac.nz"
+                }, function(result) {
+                    console.log(result)
+                    window.current_data = result.results;
                     update();
-                });
+                })
+            } else {
+                $("#alert").show();
+                $("#requestdetails").text(item.entity_type);
+                $("#spinner").hide();
             }
         });
         $(".autocomplete").on("autocomplete.freevalue", function (e, item) {
