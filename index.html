@@ -19,6 +19,7 @@
         integrity="sha512-yocoLferfPbcwpCMr8v/B0AB4SWpJlouBwgE0D3ZHaiP1nuu5djZclFEIj9znuqghaZ3tdCMRrreLoM8km+jIQ=="
         crossorigin="anonymous"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" referrerpolicy="no-referrer"></script>
     <title>Citation network explorer</title>
     <style>
         html,
@@ -105,7 +106,7 @@
 </head>
 
 <body>
-    <h1 id="title"><span id="subtitle"><span id="name">Giovanni</span>'s citation network</span> <span id="year"></span>
+    <h1 id="title"><span id="subtitle"><span id="name">Dan</span>'s citation network</span> <span id="year"></span>
     </h1>
     <div id="network"></div>
     <select id="search" placeholder="type to search..." class="form-control autocomplete"></select>
@@ -114,7 +115,7 @@
         <div class="small">Hover over the timeline to filter the network graph by year<br>Click to hold</div>
         Colour by
         <select id="color">
-            <option value="citation_count" selected>Citation count</option>
+            <option value="cited_by_count" selected>Citation count</option>
             <option value="n_authors">Number of authors</option>
             <option value="n_inst">Number of institutions</option>
             <option value="field">Primary field</option>
@@ -122,7 +123,7 @@
         Size by
         <select id="size">
             <option value="">Constant</option>
-            <option value="citation_count" selected>Citation count</option>
+            <option value="cited_by_count" selected>Citation count</option>
             <option value="n_authors">Number of authors</option>
             <option value="n_inst">Number of institutions</option>
             <option value="n_fields">Number of fields</option>
@@ -310,10 +311,9 @@
             var visible_nodes = nodes.map(n => n.id)
             var edges = [];
             for (var node of nodes) {
-                for (var rid in node.references) {
-                    rid = parseInt(rid);
+                for (var rid of node.referenced_works) {
                     if (visible_nodes.includes(rid)) {
-                        edges.push({ source: node.id, target: rid, count: node.references[rid] })
+                        edges.push({ source: node.id, target: rid })
                     }
                 }
             }
@@ -322,7 +322,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         var data = urlParams.get('data');
         if (!data) {
-            data = "data/Giovanni.json"
+            data = "data/Dan.json"
         } else if (data == "Decolonizing_Methodologies") {
             $("#subtitle").text("Influence of Decolonizing Methodologies")
             data = "Decolonizing_Methodologies/data.json"
@@ -333,7 +333,7 @@
         function summarise_by_year(data) {
             var time_data = {}
             for (var node of data) {
-                var d = node.date_published.slice(0, 4)
+                var d = node.publication_year;
                 if (!time_data[d]) time_data[d] = 0;
                 time_data[d]++;
             }
@@ -343,26 +343,15 @@
             console.log(data);
             window.data = data;
             window.current_data = data;
+            // Used for grouping
             window.paper_lookup = {}
+            // Quick built in summary stats for colorscale/size changes
             for (var node of data) {
                 paper_lookup[node.id] = node
-                var tmp = {}
-                for (var rid of node.references) {
-                    tmp[rid] = 1
-                }
-                node.references = tmp;
-                if (node.authors) {
-                    node.n_authors = node.authors.length;
-                    node.n_inst = uniq(node.authors.map(a => a.DAfN)).length;
-                }
-                if (node.fields) {
-                    node.field = node.fields[0].DFN;
-                    node.n_fields = node.fields.length;
-                }
-                if (node.journal) {
-                    node.journal.JN = node.journal.JN.toUpperCase()
-                    node.journals = [node.journal]
-                }
+                node.n_authors = node.authorships.length;
+                node.n_inst = uniq(node.authorships.map(a => a.institutions.length ? a.institutions[0].display_name : "")).length
+                node.n_fields = node.concepts.length
+                node.field = node.concepts[0].display_name
             }
 
             var time_data = summarise_by_year(data);
@@ -393,7 +382,7 @@
             }
 
             Plotly.newPlot('timeline', plotData, layout);
-            window.year = 2021
+            window.year = 2023
             window.freeze = false;
             $("#timeline").on('plotly_hover', function (event, data) {
                 if (window.freeze) return;
@@ -410,7 +399,7 @@
                 if (window.year == d.x) return;
                 window.year = d.x;
                 console.log(year)
-                var filtered_data = window.current_data.filter(n => n.date_published.slice(0, 4) <= year)
+                var filtered_data = window.current_data.filter(n => n.publication_year <= year)
                 console.log(filtered_data)
                 $("#year").text("as at " + year);
                 graph.graphData({
@@ -446,7 +435,7 @@
                 console.log(d)
                 if (window.year == d.x) return;
                 window.year = d.x
-                var filtered_data = window.current_data.filter(n => n.date_published.slice(0, 4) <= year)
+                var filtered_data = window.current_data.filter(n => n.publication_year <= year)
                 console.log(filtered_data)
                 $("#year").text("as at " + year);
                 graph.graphData({
@@ -455,17 +444,18 @@
                 })
             });
 
-            var scale = colorscale(data.map(n => n.citation_count))
+            var scale = colorscale(data.map(n => n.cited_by_count))
 
             function generateHTMLTooltip(node, include_title = true) {
+                console.log(node)
                 result = ""
                 if (include_title) {
-                    result += `<b>${node.title} (${node.date_published})</b><br>`;
+                    result += `<b>${node.title} (${node.publication_date})</b><br>`;
                 }
-                result += `${node.authors.map(a => a.DAfN ? a.DAuN + " (" + a.DAfN + ")" : a.DAuN).join(",")}<br>
-                            ${node.journal ? node.journal.JN : ""}<br>
-                            ${node.fields.map(f => f.DFN).join(",")}<br>
-                            Citation count: ${node.citation_count}<br>`
+                result += `${node.authorships.map(a => a.institutions.length ? a.author.display_name + " (" + a.institutions[0].display_name + ")" : a.author.display_name).join(",")}<br>
+                            ${node.primary_location.source ? node.primary_location.source.display_name : node.primary_location.landing_page_url}<br>
+                            ${node.concepts.map(c => c.display_name).join(",")}<br>
+                            Citation count: ${node.cited_by_count}<br>`
                 return result;
             }
 
@@ -476,8 +466,8 @@
                     links: getEdges(data)
                 })
                 .enableNodeDrag(false)
-                .nodeVal('citation_count')
-                .nodeColor(n => scale(n.citation_count).css())
+                .nodeVal('cited_by_count')
+                .nodeColor(n => scale(n.cited_by_count).css())
                 .nodeLabel(node => `<div class="nodetooltip">${generateHTMLTooltip(node)}</div>`)
                 .onNodeHover(node => elem.style.cursor = node ? 'pointer' : null)
                 .onNodeClick(node => {
@@ -491,17 +481,10 @@
                         3000  // ms transition duration
                     );
                     $(".nodetooltip").remove()
-                    var doilink = "https://doi.org/" + node.DOI;
-                    var links = [];
-                    for (var s of node.source) {
-                        s.domain = (new URL(s.U)).hostname.replace('www.', '')
-                        links.push(`<a href="${s.U}">${s.domain}</a>`);
-                    }
-                    links = links.join(" | ")
-                    $("#modal-title").text(`${node.title} (${node.date_published}))`);
+                    var doilink = node.doi;
+                    $("#modal-title").text(`${node.title} (${node.publication_date}))`);
                     $("#modal-body").html(`${generateHTMLTooltip(node, false)}
-                        <a href="${doilink}">${doilink}</a><br>
-                        ${links}<br>`);
+                        <a href="${doilink}">${doilink}</a><br>`);
                     $("#modal").modal('show')
                 })
             $("#spinner").hide();
@@ -527,7 +510,7 @@
                 window.group = this.value;
                 if (this.value == "paper") {
                     window.current_data = data;
-                    var filtered_data = data.filter(n => n.date_published.slice(0, 4) <= d)
+                    var filtered_data = data.filter(n => n.publication_year <= d)
                     graph.graphData({
                         nodes: filtered_data,
                         links: getEdges(filtered_data)
@@ -535,50 +518,48 @@
                     return;
                 }
                 if (this.value == "author") {
-                    var objkey = "authors"
-                    var subkey = "AuId"
-                    var namekey = "DAuN"
+                    var objkey = "authorships"
+                    var subkey = "author.id"
+                    var namekey = "author.display_name"
                 } else if (this.value == "inst") {
-                    var objkey = "authors"
-                    var subkey = "AfId"
-                    var namekey = "DAfN"
+                    var objkey = "authorships"
+                    var subkey = "institutions[0].id"
+                    var namekey = "institutions[0].display_name"
                 } else if (this.value == "field") {
-                    var objkey = "fields"
-                    var subkey = "FId"
-                    var namekey = "DFN"
+                    var objkey = "concepts"
+                    var subkey = "id"
+                    var namekey = "display_name"
                 } else if (this.value == "journal") {
-                    var objkey = "journals"
-                    var subkey = "JId"
-                    var namekey = "JN"
+                    var objkey = "locations"
+                    var subkey = "source.id"
+                    var namekey = "source.display_name"
                 }
                 var groupedData = {};
                 for (var node of data) {
-                    if (!node[objkey]) continue;
                     var seen_ids_this_node = {}
                     for (var obj of node[objkey]) {
-                        var id = obj[subkey]
+                        var id = _.get(obj, subkey)
                         if (!id || seen_ids_this_node[id]) continue
                         seen_ids_this_node[id] = true
                         if (!groupedData[id]) {
                             groupedData[id] = {
                                 id: id,
-                                citation_count: 0,
-                                name: obj[namekey],
-                                date_published: node.date_published,
-                                references: {}
+                                cited_by_count: 0,
+                                name: _.get(obj, namekey),
+                                date_published: node.publication_date,
+                                referenced_works: []
                             }
                         }
-                        groupedData[id].citation_count += node.citation_count
-                        if (groupedData[id].date_published > node.date_published) groupedData[id].date_published = node.date_published;
-                        for (var ref in node.references) {
-                            ref = parseInt(ref)
+                        groupedData[id].cited_by_count += node.cited_by_count
+                        if (groupedData[id].publication_date > node.publication_date) groupedData[id].publication_date = node.publication_date;
+                        for (var ref of node.referenced_works) {
                             var paper = paper_lookup[ref];
+                            if (!paper) continue
                             if (!paper[objkey]) continue
                             for (var other of paper[objkey]) {
-                                var otherId = other[subkey]
+                                var otherId = _.get(other, subkey)
                                 if (!otherId) continue
-                                if (!groupedData[id].references[otherId]) groupedData[id].references[otherId] = 0;
-                                groupedData[id].references[otherId]++;
+                                if (!groupedData[id].referenced_works.includes(otherId)) groupedData[id].referenced_works.push(otherId)
                             }
                         }
                     }
@@ -594,7 +575,7 @@
                 graph.graphData({
                     nodes: filteredData,
                     links: getEdges(filteredData)
-                }).nodeLabel(n => `<div class="nodetooltip">${n.name}<br>Citations: ${n.citation_count}</div>`)
+                }).nodeLabel(n => `<div class="nodetooltip">${n.name}<br>Citations: ${n.cited_by_count}</div>`)
                     .linkAutoColorBy(e => e.count)
                     .linkWidth(e => e.count)
             })
