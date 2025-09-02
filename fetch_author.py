@@ -9,7 +9,7 @@ from tqdm.auto import tqdm
 import time
 
 authors = {
-    "Dan": "A4352911678",
+    "Dan": "a5055846959",
     "Mark": "A4341954224",
     "Giovanni": "A4358613644",
     "Quinn": "A2899969917"
