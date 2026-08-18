@@ -111,19 +111,75 @@
             </span>
         </div>
         <div id="ai-settings" class="hidden">
-            <label>Claude API key
-                <input id="ai-key" type="password" placeholder="sk-ant-…" autocomplete="off">
-            </label>
-            <label>Model
-                <select id="ai-model">
-                    <option value="claude-opus-5" selected>Claude Opus 5</option>
-                    <option value="claude-sonnet-5">Claude Sonnet 5</option>
-                    <option value="claude-haiku-4-5">Claude Haiku 4.5</option>
+            <label>Provider
+                <select id="ai-provider">
+                    <option value="anthropic" selected>Anthropic API</option>
+                    <option value="bedrock">Amazon Bedrock</option>
+                    <option value="foundry">Azure AI Foundry</option>
+                    <option value="openai">OpenAI-compatible (local)</option>
                 </select>
             </label>
+            <div class="provider-fields" data-provider="anthropic">
+                <label>Claude API key
+                    <input id="ai-key" type="password" placeholder="sk-ant-…" autocomplete="off">
+                </label>
+                <label>Model
+                    <select id="ai-model">
+                        <option value="claude-opus-5" selected>Claude Opus 5</option>
+                        <option value="claude-sonnet-5">Claude Sonnet 5</option>
+                        <option value="claude-haiku-4-5">Claude Haiku 4.5</option>
+                    </select>
+                </label>
+                <div class="hint">Your key is stored only in this browser (localStorage) and sent directly to the
+                    Anthropic API. Get one at console.anthropic.com.</div>
+            </div>
+            <div class="provider-fields hidden" data-provider="bedrock">
+                <label>AWS region
+                    <input id="bedrock-region" placeholder="us-east-1" autocomplete="off">
+                </label>
+                <label>Access key ID
+                    <input id="bedrock-access-key" autocomplete="off">
+                </label>
+                <label>Secret access key
+                    <input id="bedrock-secret-key" type="password" autocomplete="off">
+                </label>
+                <label>Session token (optional, for STS/Cognito)
+                    <input id="bedrock-session-token" type="password" autocomplete="off">
+                </label>
+                <label>Model ID
+                    <input id="bedrock-model" placeholder="anthropic.claude-opus-5" autocomplete="off">
+                </label>
+                <div class="hint">Credentials stay in this browser and sign requests directly to the Bedrock
+                    runtime (needs bedrock:InvokeModel). Prefer short-lived STS/Cognito credentials over
+                    long-lived IAM keys.</div>
+            </div>
+            <div class="provider-fields hidden" data-provider="foundry">
+                <label>Resource endpoint
+                    <input id="foundry-resource" placeholder="my-resource.azure.anthropic.com" autocomplete="off">
+                </label>
+                <label>API key
+                    <input id="foundry-key" type="password" autocomplete="off">
+                </label>
+                <label>Model
+                    <input id="foundry-model" placeholder="claude-opus-5" autocomplete="off">
+                </label>
+                <div class="hint">Claude on Azure AI Foundry. If requests are blocked by the browser, enable
+                    CORS for this origin on your resource.</div>
+            </div>
+            <div class="provider-fields hidden" data-provider="openai">
+                <label>Base URL
+                    <input id="openai-base" placeholder="http://localhost:11434/v1" autocomplete="off">
+                </label>
+                <label>API key (optional)
+                    <input id="openai-key" type="password" autocomplete="off">
+                </label>
+                <label>Model
+                    <input id="openai-model" placeholder="e.g. llama3.3, qwen3, gpt-oss:20b" autocomplete="off">
+                </label>
+                <div class="hint">Any OpenAI-compatible server (Ollama, LM Studio, vLLM…). Pick a model that
+                    supports tool calling. For Ollama on another origin, set OLLAMA_ORIGINS.</div>
+            </div>
             <label class="checkbox-label"><input id="ai-tts" type="checkbox"> Speak replies aloud</label>
-            <div class="hint">Your key is stored only in this browser (localStorage) and sent directly to the
-                Anthropic API. Get one at console.anthropic.com.</div>
         </div>
         <div id="ai-messages">
             <div class="ai-msg assistant">Hi! Ask me about papers, authors, institutions or topics — or tell me what

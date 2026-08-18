@@ -42,11 +42,25 @@ GPU-accelerated visualisation, and a built-in AI assistant.
 
 ### AI setup
 
-Open ✦ Ask AI → ⚙ settings and paste a Claude API key from
-[console.anthropic.com](https://console.anthropic.com). The key is stored only in your browser's
-localStorage and sent directly to the Anthropic API (no server in between). Model defaults to
-Claude Opus 5; server-side refusal fallback is enabled for Opus 5-class models. Without a key,
-only simple typed commands work (“show map”, “load *author name*”).
+Open ✦ Ask AI → ⚙ settings and pick a provider. All credentials are stored only in your
+browser's localStorage and requests go directly from the browser to the provider (no server in
+between). Without a configured provider, only simple typed commands work (“show map”,
+“load *author name*”).
+
+- **Anthropic API** (default) — paste a Claude API key from
+  [console.anthropic.com](https://console.anthropic.com). Model defaults to Claude Opus 5;
+  server-side refusal fallback is enabled for Opus 5-class models.
+- **Amazon Bedrock** — AWS region + credentials (access key / secret / optional session token)
+  with `bedrock:InvokeModel` permission; requests are SigV4-signed in the browser straight to the
+  Bedrock runtime (which supports CORS). Prefer short-lived STS/Cognito credentials. Model ID
+  e.g. `anthropic.claude-opus-5`.
+- **Azure AI Foundry** — your resource endpoint (e.g. `my-resource.azure.anthropic.com`) and API
+  key; model e.g. `claude-opus-5`. If the browser blocks requests, enable CORS for your origin on
+  the resource.
+- **OpenAI-compatible (local)** — any OpenAI-compatible server (Ollama, LM Studio, vLLM, …):
+  base URL (e.g. `http://localhost:11434/v1`), optional key, and a model that supports tool
+  calling. Tool-use quality varies by model — larger tool-capable models work best. For Ollama
+  served on a different origin, set `OLLAMA_ORIGINS`.
 
 ## Running locally
 

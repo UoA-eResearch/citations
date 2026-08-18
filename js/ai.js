@@ -169,20 +169,76 @@ const TOOLS = [
 export function initAI(app) {
     let AnthropicSDK = null;
     let client = null;
-    let clientKey = null;
+    let clientSig = null;
     let messages = [];
     let busy = false;
 
     // ---------- settings ----------
-    const keyInput = $("ai-key");
-    const modelSelect = $("ai-model");
+    // One-time migration from the original single-provider keys.
+    if (localStorage.getItem("anthropic_api_key") && !localStorage.getItem("cne_ai-key")) {
+        localStorage.setItem("cne_ai-key", localStorage.getItem("anthropic_api_key"));
+    }
+    if (localStorage.getItem("ai_model") && !localStorage.getItem("cne_ai-model")) {
+        localStorage.setItem("cne_ai-model", localStorage.getItem("ai_model"));
+    }
+    const PERSISTED = [
+        "ai-provider", "ai-key", "ai-model",
+        "bedrock-region", "bedrock-access-key", "bedrock-secret-key", "bedrock-session-token", "bedrock-model",
+        "foundry-resource", "foundry-key", "foundry-model",
+        "openai-base", "openai-key", "openai-model",
+    ];
+    for (const id of PERSISTED) {
+        const el = $(id);
+        const stored = localStorage.getItem("cne_" + id);
+        if (stored !== null && stored !== "") el.value = stored;
+        el.addEventListener("change", () => {
+            localStorage.setItem("cne_" + id, el.value.trim());
+            client = null; // any credential/model change invalidates the cached client
+        });
+    }
+    const providerSelect = $("ai-provider");
+    function updateProviderFields() {
+        for (const el of document.querySelectorAll("#ai-settings .provider-fields")) {
+            el.classList.toggle("hidden", el.dataset.provider !== providerSelect.value);
+        }
+    }
+    providerSelect.addEventListener("change", updateProviderFields);
+    updateProviderFields();
+
     const ttsCheck = $("ai-tts");
-    keyInput.value = localStorage.getItem("anthropic_api_key") || "";
-    modelSelect.value = localStorage.getItem("ai_model") || "claude-opus-5";
     ttsCheck.checked = localStorage.getItem("ai_tts") === "1";
-    keyInput.addEventListener("change", () => localStorage.setItem("anthropic_api_key", keyInput.value.trim()));
-    modelSelect.addEventListener("change", () => localStorage.setItem("ai_model", modelSelect.value));
     ttsCheck.addEventListener("change", () => localStorage.setItem("ai_tts", ttsCheck.checked ? "1" : "0"));
+
+    // Active provider configuration, or null if required fields are missing.
+    function getConfig() {
+        const provider = providerSelect.value;
+        const v = id => $(id).value.trim();
+        if (provider === "anthropic") {
+            if (!v("ai-key")) return null;
+            return { provider, key: v("ai-key"), model: v("ai-model") || "claude-opus-5" };
+        }
+        if (provider === "bedrock") {
+            if (!v("bedrock-region") || !v("bedrock-access-key") || !v("bedrock-secret-key")) return null;
+            return {
+                provider, region: v("bedrock-region"),
+                accessKey: v("bedrock-access-key"), secretKey: v("bedrock-secret-key"),
+                sessionToken: v("bedrock-session-token"),
+                model: v("bedrock-model") || "anthropic.claude-opus-5",
+            };
+        }
+        if (provider === "foundry") {
+            if (!v("foundry-resource") || !v("foundry-key")) return null;
+            return {
+                provider, resource: v("foundry-resource").replace(/^https?:\/\//, "").replace(/\/+$/, ""),
+                key: v("foundry-key"), model: v("foundry-model") || "claude-opus-5",
+            };
+        }
+        if (provider === "openai") {
+            if (!v("openai-base") || !v("openai-model")) return null;
+            return { provider, base: v("openai-base").replace(/\/+$/, ""), key: v("openai-key"), model: v("openai-model") };
+        }
+        return null;
+    }
 
     // ---------- panel ----------
     const panel = $("ai-panel");
@@ -225,19 +281,124 @@ export function initAI(app) {
         speechSynthesis.speak(new SpeechSynthesisUtterance(plain));
     }
 
-    // ---------- Claude ----------
-    async function ensureClient() {
-        const key = keyInput.value.trim();
-        if (!key) return null;
-        if (!AnthropicSDK) {
+    // ---------- provider clients ----------
+    async function ensureClient(cfg) {
+        const sig = JSON.stringify(cfg);
+        if (client && clientSig === sig) return client;
+        if (cfg.provider === "anthropic") {
             const mod = await import(SDK_URL);
             AnthropicSDK = mod.default;
+            client = new AnthropicSDK({ apiKey: cfg.key, dangerouslyAllowBrowser: true });
+        } else if (cfg.provider === "bedrock") {
+            const mod = await import("https://esm.sh/@anthropic-ai/bedrock-sdk");
+            const Ctor = mod.AnthropicBedrockMantle || mod.AnthropicBedrock;
+            client = new Ctor({
+                awsRegion: cfg.region,
+                providerChainResolver: async () => ({
+                    accessKeyId: cfg.accessKey,
+                    secretAccessKey: cfg.secretKey,
+                    ...(cfg.sessionToken ? { sessionToken: cfg.sessionToken } : {}),
+                }),
+                dangerouslyAllowBrowser: true,
+            });
+        } else if (cfg.provider === "foundry") {
+            const mod = await import("https://esm.sh/@anthropic-ai/foundry-sdk");
+            const Ctor = mod.AnthropicFoundry || mod.default;
+            client = new Ctor({ apiKey: cfg.key, resource: cfg.resource, dangerouslyAllowBrowser: true });
+        } else {
+            client = { openaiCompatible: true }; // plain fetch adapter, no SDK
         }
-        if (!client || clientKey !== key) {
-            client = new AnthropicSDK({ apiKey: key, dangerouslyAllowBrowser: true });
-            clientKey = key;
-        }
+        clientSig = sig;
         return client;
+    }
+
+    // One request through whichever provider is active, always returning
+    // Anthropic-shaped { content, stop_reason }.
+    async function sendRequest(cfg, c) {
+        if (cfg.provider === "openai") return openaiCreate(cfg);
+        const params = { model: cfg.model, max_tokens: 4096, system: SYSTEM, tools: TOOLS, messages };
+        if (cfg.provider === "anthropic") {
+            params.system = [{ type: "text", text: SYSTEM, cache_control: { type: "ephemeral" } }];
+            if (/^claude-(opus-5|fable-5)/.test(cfg.model)) {
+                // Server-side refusal fallback — Claude API only (not Bedrock/Foundry).
+                return c.beta.messages.create({
+                    ...params,
+                    betas: ["server-side-fallback-2026-07-01"],
+                    fallbacks: "default",
+                });
+            }
+        }
+        return c.messages.create(params);
+    }
+
+    // ---------- OpenAI-compatible adapter ----------
+    function toOpenAIMessages() {
+        const out = [{ role: "system", content: SYSTEM }];
+        for (const m of messages) {
+            if (typeof m.content === "string") {
+                out.push({ role: m.role, content: m.content });
+                continue;
+            }
+            if (m.role === "user") {
+                for (const b of m.content) {
+                    if (b.type === "tool_result") {
+                        out.push({
+                            role: "tool", tool_call_id: b.tool_use_id,
+                            content: typeof b.content === "string" ? b.content : JSON.stringify(b.content),
+                        });
+                    }
+                }
+            } else {
+                const text = m.content.filter(b => b.type === "text").map(b => b.text).join("\n");
+                const toolCalls = m.content.filter(b => b.type === "tool_use").map(b => ({
+                    id: b.id, type: "function",
+                    function: { name: b.name, arguments: JSON.stringify(b.input || {}) },
+                }));
+                const msg = { role: "assistant", content: text || null };
+                if (toolCalls.length) msg.tool_calls = toolCalls;
+                out.push(msg);
+            }
+        }
+        return out;
+    }
+
+    async function openaiCreate(cfg) {
+        const res = await fetch(cfg.base + "/chat/completions", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+                ...(cfg.key ? { authorization: "Bearer " + cfg.key } : {}),
+            },
+            body: JSON.stringify({
+                model: cfg.model,
+                max_tokens: 4096,
+                messages: toOpenAIMessages(),
+                tools: TOOLS.map(t => ({
+                    type: "function",
+                    function: { name: t.name, description: t.description, parameters: t.input_schema },
+                })),
+                tool_choice: "auto",
+            }),
+        });
+        if (!res.ok) throw new Error(`${res.status}: ${(await res.text()).slice(0, 300)}`);
+        const data = await res.json();
+        const m = data.choices?.[0]?.message || {};
+        const content = [];
+        if (m.content) {
+            content.push({ type: "text", text: typeof m.content === "string" ? m.content : JSON.stringify(m.content) });
+        }
+        for (const tc of m.tool_calls || []) {
+            let input = {};
+            try {
+                input = JSON.parse(tc.function?.arguments || "{}");
+            } catch { /* leave empty input */ }
+            content.push({
+                type: "tool_use",
+                id: tc.id || "call_" + Math.random().toString(36).slice(2),
+                name: tc.function?.name, input,
+            });
+        }
+        return { content, stop_reason: m.tool_calls?.length ? "tool_use" : "end_turn" };
     }
 
     function trimHistory() {
@@ -248,36 +409,26 @@ export function initAI(app) {
     }
 
     async function runTurn(userText) {
-        const c = await ensureClient();
-        if (!c) {
+        const cfg = getConfig();
+        if (!cfg) {
             await fallbackParser(userText);
+            return;
+        }
+        let c;
+        try {
+            c = await ensureClient(cfg);
+        } catch (err) {
+            console.error(err);
+            addMsg("error", `Could not load the ${cfg.provider} client: ${err.message}`);
             return;
         }
         messages.push({ role: "user", content: userText });
         trimHistory();
-        const model = modelSelect.value;
         const thinkingEl = addMsg("thinking", "Thinking…");
         let finalText = "";
         try {
             for (let iteration = 0; iteration < 12; iteration++) {
-                const params = {
-                    model,
-                    max_tokens: 4096,
-                    system: [{ type: "text", text: SYSTEM, cache_control: { type: "ephemeral" } }],
-                    tools: TOOLS,
-                    messages,
-                };
-                let response;
-                if (/^claude-(opus-5|fable-5)/.test(model)) {
-                    // Server-side refusal fallback (recommended default for Opus 5-class models).
-                    response = await c.beta.messages.create({
-                        ...params,
-                        betas: ["server-side-fallback-2026-07-01"],
-                        fallbacks: "default",
-                    });
-                } else {
-                    response = await c.messages.create(params);
-                }
+                const response = await sendRequest(cfg, c);
                 messages.push({ role: "assistant", content: response.content });
                 for (const block of response.content) {
                     if (block.type === "text" && block.text.trim()) {
@@ -314,7 +465,7 @@ export function initAI(app) {
             }
             if (finalText) speak(finalText);
         } catch (err) {
-            handleAPIError(err);
+            handleAPIError(err, cfg);
         } finally {
             thinkingEl.remove();
         }
@@ -325,17 +476,20 @@ export function initAI(app) {
         return s.length > 90 ? s.slice(0, 88) + "…" : s;
     }
 
-    function handleAPIError(err) {
+    function handleAPIError(err, cfg) {
         console.error(err);
-        if (AnthropicSDK && err instanceof AnthropicSDK.AuthenticationError) {
-            addMsg("error", "That API key was rejected — check it in ⚙ settings.");
+        const status = err?.status;
+        if (status === 401 || status === 403 || (AnthropicSDK && err instanceof AnthropicSDK.AuthenticationError)) {
+            addMsg("error", "Authentication failed — check the credentials in ⚙ settings.");
             $("ai-settings").classList.remove("hidden");
-        } else if (AnthropicSDK && err instanceof AnthropicSDK.RateLimitError) {
-            addMsg("error", "Rate limited by the Anthropic API — wait a moment and try again.");
-        } else if (AnthropicSDK && err instanceof AnthropicSDK.APIError) {
-            addMsg("error", `Anthropic API error ${err.status ?? ""}: ${err.message}`);
+        } else if (status === 429 || (AnthropicSDK && err instanceof AnthropicSDK.RateLimitError)) {
+            addMsg("error", "Rate limited — wait a moment and try again.");
+        } else if (err instanceof TypeError && cfg?.provider === "openai") {
+            addMsg("error", `Could not reach ${cfg.base} — is the server running, and does it allow CORS from this origin (e.g. OLLAMA_ORIGINS for Ollama)?`);
+        } else if (err instanceof TypeError) {
+            addMsg("error", `Network/CORS error talking to the ${cfg?.provider ?? ""} endpoint: ${err.message}. The endpoint may not allow browser requests from this origin.`);
         } else {
-            addMsg("error", "Request failed: " + (err?.message || err));
+            addMsg("error", `Request failed${status ? ` (${status})` : ""}: ` + (err?.message || err));
         }
         // Drop any dangling tool_use turn so the next request is valid.
         while (messages.length && messages[messages.length - 1].role === "assistant") messages.pop();
@@ -360,7 +514,7 @@ export function initAI(app) {
                 return;
             }
         }
-        addMsg("error", "Add a Claude API key in ⚙ settings to unlock the full AI assistant. Without one I only understand simple commands like “show map” or “load <author name>”.");
+        addMsg("error", "Configure an AI provider in ⚙ settings (Anthropic API, Amazon Bedrock, Azure AI Foundry, or a local OpenAI-compatible server) to unlock the full assistant. Without one I only understand simple commands like “show map” or “load <author name>”.");
         $("ai-settings").classList.remove("hidden");
     }
 

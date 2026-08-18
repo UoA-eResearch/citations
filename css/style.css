@@ -489,10 +489,21 @@ a {
     color: var(--ink-2);
 }
 
-#ai-settings input[type="password"],
+#ai-settings input:not([type="checkbox"]),
 #ai-settings select {
     width: 100%;
     margin-top: 3px;
+}
+
+#ai-settings {
+    max-height: 45vh;
+    overflow-y: auto;
+}
+
+.provider-fields {
+    border-left: 2px solid var(--grid);
+    padding-left: 10px;
+    margin: 6px 0 10px;
 }
 
 .checkbox-label {
