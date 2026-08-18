@@ -5,6 +5,9 @@ import { escapeHTML } from "./config.js";
 import { PLOT_IDS } from "./views/viewplots.js";
 
 const SDK_URL = "https://esm.sh/@anthropic-ai/sdk";
+// Preferred zero-config backend: used automatically when it answers and the
+// user hasn't picked a provider of their own.
+const DEFAULT_OPENAI_BASE = "https://ai.cer-sandbox.cloud.edu.au/v1";
 const $ = id => document.getElementById(id);
 
 const SYSTEM = `You are the built-in assistant of the Citation Network Explorer, a web app that visualises
@@ -209,6 +212,25 @@ export function initAI(app) {
     ttsCheck.checked = localStorage.getItem("ai_tts") === "1";
     ttsCheck.addEventListener("change", () => localStorage.setItem("ai_tts", ttsCheck.checked ? "1" : "0"));
 
+    // If the user hasn't configured anything, fall back to the shared CER sandbox
+    // endpoint when it is reachable. Not persisted, so it re-probes each load and
+    // quietly reverts to the Anthropic default if the endpoint goes away.
+    const probe = (async function probeDefaultEndpoint() {
+        if (localStorage.getItem("cne_ai-provider") || $("ai-key").value.trim()) return;
+        try {
+            const res = await fetch(DEFAULT_OPENAI_BASE + "/models", { signal: AbortSignal.timeout(5000) });
+            if (!res.ok) return;
+            const models = ((await res.json()).data || []).map(m => m.id).filter(Boolean);
+            if (!models.length) return;
+            $("openai-models").innerHTML = models.map(m => `<option value="${escapeHTML(m)}">`).join("");
+            if (!$("openai-base").value.trim()) $("openai-base").value = DEFAULT_OPENAI_BASE;
+            if (!$("openai-model").value.trim()) $("openai-model").value = models[0];
+            $("openai-status").textContent = `Connected to the CER sandbox — using ${models[0]}.`;
+            providerSelect.value = "openai";
+            updateProviderFields();
+        } catch { /* unreachable — keep the Anthropic API default */ }
+    })();
+
     // Active provider configuration, or null if required fields are missing.
     function getConfig() {
         const provider = providerSelect.value;
@@ -409,6 +431,7 @@ export function initAI(app) {
     }
 
     async function runTurn(userText) {
+        await probe; // a question asked during startup still gets the auto-configured endpoint
         const cfg = getConfig();
         if (!cfg) {
             await fallbackParser(userText);

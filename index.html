@@ -168,16 +168,20 @@
             </div>
             <div class="provider-fields hidden" data-provider="openai">
                 <label>Base URL
-                    <input id="openai-base" placeholder="http://localhost:11434/v1" autocomplete="off">
+                    <input id="openai-base" placeholder="https://ai.cer-sandbox.cloud.edu.au/v1" autocomplete="off">
                 </label>
                 <label>API key (optional)
                     <input id="openai-key" type="password" autocomplete="off">
                 </label>
                 <label>Model
-                    <input id="openai-model" placeholder="e.g. llama3.3, qwen3, gpt-oss:20b" autocomplete="off">
+                    <input id="openai-model" list="openai-models" placeholder="e.g. nemotron_3_nano_omni, llama3.3"
+                        autocomplete="off">
+                    <datalist id="openai-models"></datalist>
                 </label>
-                <div class="hint">Any OpenAI-compatible server (Ollama, LM Studio, vLLM…). Pick a model that
-                    supports tool calling. For Ollama on another origin, set OLLAMA_ORIGINS.</div>
+                <div id="openai-status" class="hint"></div>
+                <div class="hint">Any OpenAI-compatible server — the CER sandbox
+                    (ai.cer-sandbox.cloud.edu.au), Ollama, LM Studio, vLLM… Pick a model that supports tool
+                    calling. For Ollama on another origin, set OLLAMA_ORIGINS.</div>
             </div>
             <label class="checkbox-label"><input id="ai-tts" type="checkbox"> Speak replies aloud</label>
         </div>

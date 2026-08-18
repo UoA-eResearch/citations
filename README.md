@@ -42,9 +42,14 @@ GPU-accelerated visualisation, and a built-in AI assistant.
 
 ### AI setup
 
-Open ✦ Ask AI → ⚙ settings and pick a provider. All credentials are stored only in your
-browser's localStorage and requests go directly from the browser to the provider (no server in
-between). Without a configured provider, only simple typed commands work (“show map”,
+**No setup needed on the CER network:** if `ai.cer-sandbox.cloud.edu.au` is reachable, the app
+detects it on load and uses it automatically (its first advertised model), so the assistant just
+works. Otherwise it falls back to the Anthropic API and waits for you to add credentials.
+
+To choose a different backend, open ✦ Ask AI → ⚙ settings and pick a provider. All credentials
+are stored only in your browser's localStorage and requests go directly from the browser to the
+provider (no server in between). Picking a provider yourself is remembered and disables the
+sandbox auto-detection. With no provider available, only simple typed commands work (“show map”,
 “load *author name*”).
 
 - **Anthropic API** (default) — paste a Claude API key from
@@ -57,10 +62,11 @@ between). Without a configured provider, only simple typed commands work (“sho
 - **Azure AI Foundry** — your resource endpoint (e.g. `my-resource.azure.anthropic.com`) and API
   key; model e.g. `claude-opus-5`. If the browser blocks requests, enable CORS for your origin on
   the resource.
-- **OpenAI-compatible (local)** — any OpenAI-compatible server (Ollama, LM Studio, vLLM, …):
-  base URL (e.g. `http://localhost:11434/v1`), optional key, and a model that supports tool
-  calling. Tool-use quality varies by model — larger tool-capable models work best. For Ollama
-  served on a different origin, set `OLLAMA_ORIGINS`.
+- **OpenAI-compatible** — the CER sandbox (`https://ai.cer-sandbox.cloud.edu.au/v1`, the default
+  when reachable) or any other OpenAI-compatible server (Ollama, LM Studio, vLLM, …): base URL,
+  optional key, and a model that supports tool calling — the model box autocompletes from the
+  server's `/v1/models`. Tool-use quality varies by model. For Ollama served on a different
+  origin, set `OLLAMA_ORIGINS`.
 
 ## Running locally
 
