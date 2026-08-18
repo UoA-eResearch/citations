@@ -2,530 +2,158 @@
 <html lang="en">
 
 <head>
-    <!-- CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-
-    <!-- jQuery and JS bundle w/ Popper.js -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
-        crossorigin="anonymous"></script>
-    <script
-        src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@v2.3.7/dist/latest/bootstrap-autocomplete.min.js"></script>
-
-    <script src="https://unpkg.com/3d-force-graph@1.67.4/dist/3d-force-graph.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.1.0/chroma.min.js"
-        integrity="sha512-yocoLferfPbcwpCMr8v/B0AB4SWpJlouBwgE0D3ZHaiP1nuu5djZclFEIj9znuqghaZ3tdCMRrreLoM8km+jIQ=="
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" referrerpolicy="no-referrer"></script>
-    <title>Citation network explorer</title>
-    <style>
-        html,
-        body,
-        #network {
-            height: 100%;
-            width: 100%;
-            padding: 0;
-            margin: 0;
-            overflow: hidden;
-        }
-
-        .nodetooltip {
-            background-color: gray;
-            padding: 5px;
-        }
-
-        #controls {
-            position: absolute;
-            right: 10px;
-            bottom: 10px;
-            background-color: white;
-            padding: 20px;
-        }
-
-        #search {
-            position: absolute;
-            right: 10px;
-            top: 80px;
-            width: 40%;
-        }
-
-        #title {
-            position: absolute;
-            top: 30;
-            left: 0;
-            right: 0;
-            margin: auto;
-            z-index: 1000;
-            font-size: 1.3rem;
-            width: 50%;
-            text-align: center;
-            color: white;
-            border-radius: 5px;
-            padding: 10px;
-            background-color: rgba(0, 0, 0, 0.8);
-            font-family: Arial, Helvetica, sans-serif;
-            text-shadow: 2px 2px #000000;
-            font-weight: normal;
-        }
-
-        .small {
-            text-align: center;
-            font-size: .7rem;
-            margin: 10px;
-            color: gray;
-        }
-
-        #spinner {
-            position: absolute;
-            right: 60px;
-            top: 130px;
-        }
-
-        #alert {
-            display: none;
-            position: absolute;
-            top: 30%;
-            left: 0;
-            right: 0;
-            margin: auto;
-            width: 60%;
-        }
-
-        #legend {
-            display: grid;
-            grid-auto-flow: column;
-            grid-auto-columns: 1fr;
-            grid-template-rows: 1fr 1fr;
-            text-align: center;
-            font-size: .7rem;
-        }
-    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Citation Network Explorer</title>
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <h1 id="title"><span id="subtitle"><span id="name">Dan</span>'s citation network</span> <span id="year"></span>
-    </h1>
-    <div id="network"></div>
-    <select id="search" placeholder="type to search..." class="form-control autocomplete"></select>
-    <div id="controls">
-        <div id="timeline"></div>
-        <div class="small">Hover over the timeline to filter the network graph by year<br>Click to hold</div>
-        Colour by
-        <select id="color">
-            <option value="cited_by_count" selected>Citation count</option>
-            <option value="n_authors">Number of authors</option>
-            <option value="n_inst">Number of institutions</option>
-            <option value="field">Primary field</option>
-        </select><div id="legend"></div><br>
-        Size by
-        <select id="size">
-            <option value="">Constant</option>
-            <option value="cited_by_count" selected>Citation count</option>
-            <option value="n_authors">Number of authors</option>
-            <option value="n_inst">Number of institutions</option>
-            <option value="n_fields">Number of fields</option>
-        </select><br><br>
-        Group by
-        <select id="group">
-            <option value="paper" selected>Paper</option>
-            <option value="author">Author</option>
-            <option value="journal">Journal</option>
-            <option value="inst">Institution</option>
-            <option value="field">Field</option>
-        </select><br><br>
-        <div class="small"><a href="https://github.com/UoA-eResearch/citations">GitHub</a></div>
-    </div>
-    <div id="modal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 id="modal-title" class="modal-title" id="exampleModalLongTitle"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="modal-body" class="modal-body">
-                </div>
+    <header id="topbar">
+        <div id="brand">Citation Network Explorer</div>
+        <div id="search-wrap">
+            <input id="search" type="text" placeholder="Search authors, papers, institutions, topics, journals…"
+                autocomplete="off" spellcheck="false">
+            <div id="search-results" class="hidden"></div>
+        </div>
+        <nav id="view-switcher" role="tablist">
+            <button data-view="3d" class="active" title="3D GPU force simulation (cosmos.gl) — drag to rotate, scroll to zoom">3D</button>
+            <button data-view="2d" title="2D GPU force layout (cosmos.gl)">2D</button>
+            <button data-view="map" title="World map of institutions and collaborations">Map</button>
+            <button data-view="canvas" title="Task-adaptive multi-axis canvas (time × topics × geography)">Canvas</button>
+            <button data-view="plots" title="Analytics dashboard">Plots</button>
+        </nav>
+        <button id="ai-toggle" title="Ask the AI assistant (text or voice)">✦ Ask AI</button>
+    </header>
+
+    <main id="viz">
+        <div id="view-3d" class="view"></div>
+        <div id="view-2d" class="view hidden"></div>
+        <div id="view-map" class="view hidden"></div>
+        <div id="view-canvas" class="view hidden"></div>
+        <div id="view-plots" class="view hidden">
+            <div id="plots-grid"></div>
+        </div>
+
+        <div id="entity-banner" class="overlay hidden"></div>
+
+        <aside id="canvas-controls" class="overlay hidden">
+            <div class="panel-title">Canvas axes</div>
+            <label>Task
+                <select id="canvas-task"></select>
+            </label>
+            <label>X axis
+                <select id="canvas-x"></select>
+            </label>
+            <label>Y axis
+                <select id="canvas-y"></select>
+            </label>
+            <label>Z axis
+                <select id="canvas-z"></select>
+            </label>
+            <div class="hint">The canvas reorganises itself per task — pick axes here or just ask the AI.</div>
+        </aside>
+
+        <aside id="controls" class="overlay">
+            <div class="panel-title">Display <button id="controls-collapse" title="Collapse">–</button></div>
+            <div id="controls-body">
+                <label id="group-label">Group by
+                    <select id="group">
+                        <option value="paper" selected>Paper</option>
+                        <option value="author">Author</option>
+                        <option value="inst">Institution</option>
+                        <option value="journal">Journal</option>
+                        <option value="topic">Topic</option>
+                        <option value="field">Field</option>
+                    </select>
+                </label>
+                <label>Colour by
+                    <select id="color">
+                        <option value="cited_by_count" selected>Citation count</option>
+                        <option value="publication_year">Year</option>
+                        <option value="n_authors">Number of authors</option>
+                        <option value="n_inst">Number of institutions</option>
+                        <option value="field">Field</option>
+                    </select>
+                </label>
+                <label>Size by
+                    <select id="size">
+                        <option value="">Constant</option>
+                        <option value="cited_by_count" selected>Citation count</option>
+                        <option value="n_authors">Number of authors</option>
+                        <option value="n_inst">Number of institutions</option>
+                    </select>
+                </label>
+                <div id="legend"></div>
             </div>
+        </aside>
+
+        <div id="timeline-wrap" class="overlay">
+            <div id="timeline"></div>
+            <div class="hint">Drag across bars to filter years · double-click to reset</div>
+        </div>
+
+        <div id="tooltip" class="hidden"></div>
+
+        <div id="loading" class="hidden">
+            <div class="spinner"></div>
+            <div id="loading-text">Loading…</div>
+        </div>
+    </main>
+
+    <aside id="ai-panel" class="hidden">
+        <div class="panel-header">
+            <span>AI assistant</span>
+            <span class="panel-header-btns">
+                <button id="ai-settings-btn" title="Settings">⚙</button>
+                <button id="ai-close" title="Close">×</button>
+            </span>
+        </div>
+        <div id="ai-settings" class="hidden">
+            <label>Claude API key
+                <input id="ai-key" type="password" placeholder="sk-ant-…" autocomplete="off">
+            </label>
+            <label>Model
+                <select id="ai-model">
+                    <option value="claude-opus-5" selected>Claude Opus 5</option>
+                    <option value="claude-sonnet-5">Claude Sonnet 5</option>
+                    <option value="claude-haiku-4-5">Claude Haiku 4.5</option>
+                </select>
+            </label>
+            <label class="checkbox-label"><input id="ai-tts" type="checkbox"> Speak replies aloud</label>
+            <div class="hint">Your key is stored only in this browser (localStorage) and sent directly to the
+                Anthropic API. Get one at console.anthropic.com.</div>
+        </div>
+        <div id="ai-messages">
+            <div class="ai-msg assistant">Hi! Ask me about papers, authors, institutions or topics — or tell me what
+                to display, e.g. <em>“show Giovanni Coco's network on a map”</em>, <em>“show ideation over time on
+                the canvas”</em>, <em>“where are the authors from and how has that shifted over time?”</em>,
+                <em>“what are the differing opinions around this work?”</em>. Use the mic button to talk.</div>
+        </div>
+        <form id="ai-form">
+            <button type="button" id="ai-mic" title="Voice input">🎤</button>
+            <textarea id="ai-input" rows="1" placeholder="Ask anything…"></textarea>
+            <button type="submit" id="ai-send" title="Send">➤</button>
+        </form>
+    </aside>
+
+    <div id="modal-backdrop" class="hidden">
+        <div id="modal">
+            <div class="panel-header"><span id="modal-title"></span><button id="modal-close" title="Close">×</button>
+            </div>
+            <div id="modal-body"></div>
         </div>
     </div>
-    <div id="spinner" class="spinner-border text-primary" role="status"></div>
-    <div id="alert" class="alert alert-danger alert-dismissible">
-        <a id="alert_close" href="#" class="close">&times;</a>
-        Sorry - I don't know how to handle that kind of request (<span id="requestdetails"></span>) just yet
-    </div>
 
-    <script type="text/javascript">
-        const AUTOCOMPLETE_URL = "https://api.openalex.org/autocomplete";
-        const DEFAULT_COLOR = '#1f77b4';
-        const HIGHLIGHT_COLOR = '#e377c2'
-        $('.autocomplete').bind("paste", function(e){
-            var self = $(this);
-            setTimeout(function(){self.trigger("keydown");}, 0);
-        });
-        $(".autocomplete").autoComplete({
-            resolver: 'custom',
-            events: {
-                search: function (qry, callback) {
-                    if (window.lastXHR) {
-                        window.lastXHR.abort();
-                    }
-                    window.lastXHR = $.getJSON(AUTOCOMPLETE_URL, {
-                        "author_hint": "institution",
-                        "q": qry,
-                        "mailto": "nick.young@auckland.ac.nz"
-                    }, function (results) {
-                        console.log(results);
-                        for (var r of results.results) {
-                            r["text"] = `${r.entity_type}: ${r.display_name}, ${r.hint}`
-                        }
-                        window.autocomplete_options = results.results;
-                        callback(results.results)
-                    });
-                }
-            }
-        })
-        function capitalize(s) {
-            return s.toLowerCase().replace(/\b./g, function (a) { return a.toUpperCase(); });
-        };
-        $("#alert_close").click(function () {
-            $("#alert").hide();
-        });
-        function update() {
-            console.log(current_data)
-            graph.graphData({
-                nodes: current_data,
-                links: getEdges(current_data)
-            })
-            var time_data = summarise_by_year(current_data);
-            console.log(time_data);
-            Plotly.restyle("timeline", {
-                x: [Object.keys(time_data)],
-                y: [Object.values(time_data)],
-                marker: {
-                    color: Object.keys(time_data).map(n => DEFAULT_COLOR)
-                }
-            });
-            $("#spinner").hide();
-        }
-        $('.autocomplete').on("autocomplete.select", function (e, item) {
-            if (!item) return;
-            console.log(item)
-            $("#spinner").show();
-            if (item.entity_type == "author") {
-                $("#subtitle").text(item.display_name + "'s citation network");
-                var id = item.id.replace("https://openalex.org/")
-                $.getJSON("https://api.openalex.org/works", {
-                    "filter": "author.id:" + id,
-                    "per-page": 200,
-                    "mailto": "nick.young@auckland.ac.nz"
-                }, function(result) {
-                    console.log(result)
-                    window.current_data = result.results;
-                    update();
-                })
-            } else {
-                $("#alert").show();
-                $("#requestdetails").text(item.entity_type);
-                $("#spinner").hide();
-            }
-        });
-        $(".autocomplete").on("autocomplete.freevalue", function (e, item) {
-            console.log(item, autocomplete_options);
-            $(".autocomplete").autoComplete('set', autocomplete_options[0])
-            $(".autocomplete").blur()
-        })
-        function uniq(arr) {
-            return [...new Set(arr)]
-        }
-        function colorscale(arr) {
-            var breaks = chroma.limits(uniq(arr), 'q', 12);
-            var scale = chroma.scale('Spectral').domain(breaks.reverse());
-            console.log(breaks, scale);
-            $("#legend").empty()
-            for (i of breaks.reverse()) {
-                $("#legend").append(`<div>${Math.round(i)}</div><div style="background: ${scale(i)}"></div>`)
-            }
-            return scale
-        }
-        function getEdges(nodes) {
-            if (window.group == "field") return []
-            var visible_nodes = nodes.map(n => n.id)
-            var edges = [];
-            for (var node of nodes) {
-                for (var rid of node.referenced_works) {
-                    if (visible_nodes.includes(rid)) {
-                        edges.push({ source: node.id, target: rid })
-                    }
-                }
-            }
-            return edges
-        }
-        const urlParams = new URLSearchParams(window.location.search);
-        var data = urlParams.get('data');
-        if (!data) {
-            data = "data/Dan.json"
-        } else if (data == "Decolonizing_Methodologies") {
-            $("#subtitle").text("Influence of Decolonizing Methodologies")
-            data = "Decolonizing_Methodologies/data.json"
-        } else {
-            $("#name").text(data)
-            data = `data/${data}.json`
-        }
-        function summarise_by_year(data) {
-            var time_data = {}
-            for (var node of data) {
-                var d = node.publication_year;
-                if (!time_data[d]) time_data[d] = 0;
-                time_data[d]++;
-            }
-            return time_data;
-        }
-        $.getJSON(data, function (data) {
-            console.log(data);
-            window.data = data;
-            window.current_data = data;
-            // Used for grouping
-            window.paper_lookup = {}
-            // Quick built in summary stats for colorscale/size changes
-            for (var node of data) {
-                paper_lookup[node.id] = node
-                node.n_authors = node.authorships.length;
-                node.n_inst = uniq(node.authorships.map(a => a.institutions.length ? a.institutions[0].display_name : "")).length
-                node.n_fields = node.concepts.length
-                node.field = node.concepts[0].display_name
-            }
+    <div id="toasts"></div>
 
-            var time_data = summarise_by_year(data);
-            console.log(time_data)
-
-            var plotData = [
-                {
-                    x: Object.keys(time_data),
-                    y: Object.values(time_data),
-                    marker: {
-                        color: Object.keys(time_data).map(k => DEFAULT_COLOR)
-                    },
-                    type: 'bar'
-                }
-            ];
-
-            var layout = {
-                title: 'Citations over time',
-                height: 300,
-                width: 300,
-                margin: {
-                    pad: 0,
-                    l: 40,
-                    r: 40,
-                    t: 70,
-                    b: 40
-                }
-            }
-
-            Plotly.newPlot('timeline', plotData, layout);
-            window.year = 2023
-            window.freeze = false;
-            $("#timeline").on('plotly_hover', function (event, data) {
-                if (window.freeze) return;
-                console.log(data)
-                var d = data.points[0]
-                var colors = Object.keys(d.data.x).map(k => DEFAULT_COLOR); // all colors for series
-                colors[d.pointNumber] = HIGHLIGHT_COLOR
-                Plotly.restyle('timeline', {
-                    marker: {
-                        color: colors
-                    }
-                });
-
-                if (window.year == d.x) return;
-                window.year = d.x;
-                console.log(year)
-                var filtered_data = window.current_data.filter(n => n.publication_year <= year)
-                console.log(filtered_data)
-                $("#year").text("as at " + year);
-                graph.graphData({
-                    nodes: filtered_data,
-                    links: getEdges(filtered_data)
-                })
-            }).on("plotly_unhover", function(event, data) {
-                if (window.freeze) return;
-                console.log(data)
-                var d = data.points[0]
-                var colors = Object.keys(d.data.x).map(k => DEFAULT_COLOR); // all colors for series
-                colors[d.pointNumber] = DEFAULT_COLOR
-                Plotly.restyle('timeline', {
-                    marker: {
-                        color: colors
-                    }
-                });
-                $("#year").text("");
-                graph.graphData({
-                    nodes: current_data,
-                    links: getEdges(current_data)
-                })
-            }).on("plotly_click", function (event, data) {
-                window.freeze = !window.freeze;
-                var d = data.points[0]
-                var colors = Object.keys(d.data.x).map(k => DEFAULT_COLOR); // all colors for series
-                colors[d.pointNumber] = HIGHLIGHT_COLOR
-                Plotly.restyle('timeline', {
-                    marker: {
-                        color: colors
-                    }
-                });
-                console.log(d)
-                if (window.year == d.x) return;
-                window.year = d.x
-                var filtered_data = window.current_data.filter(n => n.publication_year <= year)
-                console.log(filtered_data)
-                $("#year").text("as at " + year);
-                graph.graphData({
-                    nodes: filtered_data,
-                    links: getEdges(filtered_data)
-                })
-            });
-
-            var scale = colorscale(data.map(n => n.cited_by_count))
-
-            function generateHTMLTooltip(node, include_title = true) {
-                console.log(node)
-                result = ""
-                if (include_title) {
-                    result += `<b>${node.title} (${node.publication_date})</b><br>`;
-                }
-                result += `${node.authorships.map(a => a.institutions.length ? a.author.display_name + " (" + a.institutions[0].display_name + ")" : a.author.display_name).join(",")}<br>
-                            ${node.primary_location.source ? node.primary_location.source.display_name : node.primary_location.landing_page_url}<br>
-                            ${node.concepts.map(c => c.display_name).join(",")}<br>
-                            Citation count: ${node.cited_by_count}<br>`
-                return result;
-            }
-
-            window.elem = document.getElementById("network")
-            window.graph = ForceGraph3D()(elem)
-                .graphData({
-                    nodes: data,
-                    links: getEdges(data)
-                })
-                .enableNodeDrag(false)
-                .nodeVal('cited_by_count')
-                .nodeColor(n => scale(n.cited_by_count).css())
-                .nodeLabel(node => `<div class="nodetooltip">${generateHTMLTooltip(node)}</div>`)
-                .onNodeHover(node => elem.style.cursor = node ? 'pointer' : null)
-                .onNodeClick(node => {
-                    // Aim at node from outside it
-                    const distance = 40;
-                    const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
-
-                    graph.cameraPosition(
-                        { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
-                        node, // lookAt ({ x, y, z })
-                        3000  // ms transition duration
-                    );
-                    $(".nodetooltip").remove()
-                    var doilink = node.doi;
-                    $("#modal-title").text(`${node.title} (${node.publication_date}))`);
-                    $("#modal-body").html(`${generateHTMLTooltip(node, false)}
-                        <a href="${doilink}">${doilink}</a><br>`);
-                    $("#modal").modal('show')
-                })
-            $("#spinner").hide();
-
-            $("#color").change(function () {
-                console.log(this.value)
-                var data = graph.graphData().nodes;
-                if (this.value == "field") {
-                    var values = uniq(data.map(n => n[this.value])).sort()
-                    var scale = colorscale(values.keys())
-                    graph.nodeColor(n => scale(values.indexOf(n[this.value])).css())
-                } else {
-                    var scale = colorscale(data.map(n => n[this.value]))
-                    graph.nodeColor(n => scale(n[this.value]).css())
-                }
-            })
-            $("#size").change(function () {
-                console.log(this.value)
-                graph.nodeVal(this.value);
-            })
-            $("#group").change(function () {
-                console.log(this.value)
-                window.group = this.value;
-                if (this.value == "paper") {
-                    window.current_data = data;
-                    var filtered_data = data.filter(n => n.publication_year <= d)
-                    graph.graphData({
-                        nodes: filtered_data,
-                        links: getEdges(filtered_data)
-                    }).nodeLabel(node => `<div class="nodetooltip">${generateHTMLTooltip(node)}</div>`)
-                    return;
-                }
-                if (this.value == "author") {
-                    var objkey = "authorships"
-                    var subkey = "author.id"
-                    var namekey = "author.display_name"
-                } else if (this.value == "inst") {
-                    var objkey = "authorships"
-                    var subkey = "institutions[0].id"
-                    var namekey = "institutions[0].display_name"
-                } else if (this.value == "field") {
-                    var objkey = "concepts"
-                    var subkey = "id"
-                    var namekey = "display_name"
-                } else if (this.value == "journal") {
-                    var objkey = "locations"
-                    var subkey = "source.id"
-                    var namekey = "source.display_name"
-                }
-                var groupedData = {};
-                for (var node of data) {
-                    var seen_ids_this_node = {}
-                    for (var obj of node[objkey]) {
-                        var id = _.get(obj, subkey)
-                        if (!id || seen_ids_this_node[id]) continue
-                        seen_ids_this_node[id] = true
-                        if (!groupedData[id]) {
-                            groupedData[id] = {
-                                id: id,
-                                cited_by_count: 0,
-                                name: _.get(obj, namekey),
-                                date_published: node.publication_date,
-                                referenced_works: []
-                            }
-                        }
-                        groupedData[id].cited_by_count += node.cited_by_count
-                        if (groupedData[id].publication_date > node.publication_date) groupedData[id].publication_date = node.publication_date;
-                        for (var ref of node.referenced_works) {
-                            var paper = paper_lookup[ref];
-                            if (!paper) continue
-                            if (!paper[objkey]) continue
-                            for (var other of paper[objkey]) {
-                                var otherId = _.get(other, subkey)
-                                if (!otherId) continue
-                                if (!groupedData[id].referenced_works.includes(otherId)) groupedData[id].referenced_works.push(otherId)
-                            }
-                        }
-                    }
-                }
-                console.log(groupedData)
-                groupedData = Object.values(groupedData)
-                window.current_data = groupedData;
-                var filteredData = groupedData;
-                if (window.year) {
-                    filteredData = filteredData.filter(n => n.date_published.slice(0, 4) <= window.year)
-                }
-                console.log(filteredData)
-                graph.graphData({
-                    nodes: filteredData,
-                    links: getEdges(filteredData)
-                }).nodeLabel(n => `<div class="nodetooltip">${n.name}<br>Citations: ${n.cited_by_count}</div>`)
-                    .linkAutoColorBy(e => e.count)
-                    .linkWidth(e => e.count)
-            })
-        });
-    </script>
+    <!-- UMD dependencies (order matters; module scripts below run after these) -->
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
+    <script src="vendor/cosmos-gl/cosmos.min.js"></script>
+    <script src="https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.js"></script>
+    <script src="https://unpkg.com/deck.gl@9/dist.min.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 
 </html>
