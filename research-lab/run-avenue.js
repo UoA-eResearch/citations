@@ -3,11 +3,23 @@ export const meta = {
   description: 'Execute one research lead end-to-end: scope, build, run, adversarially review, write up',
   phases: [
     { title: 'Scope', detail: 'preregistration-style analysis plan + data access check' },
-    { title: 'Build', detail: 'implement pipeline, smoke-test on sample' },
-    { title: 'Execute', detail: 'full run, results and figures' },
-    { title: 'Review', detail: 'two adversarial reviewers try to refute' },
-    { title: 'Write-up', detail: 'report.md incorporating review verdicts' },
+    { title: 'Build', detail: 'implement pipeline, smoke-test on sample', model: 'fable' },
+    { title: 'Execute', detail: 'full run, results and figures', model: 'fable' },
+    { title: 'Review', detail: 'two adversarial reviewers try to refute', model: 'fable' },
+    { title: 'Write-up', detail: 'report.md incorporating review verdicts', model: 'fable' },
   ],
+}
+
+// Model policy: Fable 5.1 first; if an agent dies on a terminal error (e.g. usage limit → null result), retry that stage on Opus 5.
+const PRIMARY_MODEL = 'fable'
+const FALLBACK_MODEL = 'opus'
+async function run(prompt, opts) {
+  let r = await agent(prompt, { ...opts, model: PRIMARY_MODEL })
+  if (r == null) {
+    log(`${opts.label}: ${PRIMARY_MODEL} agent returned no result (terminal error / usage limit) — retrying on ${FALLBACK_MODEL}`)
+    r = await agent(prompt, { ...opts, model: FALLBACK_MODEL })
+  }
+  return r
 }
 
 // Invoke with: Workflow({ scriptPath: 'research-lab/run-avenue.js', args: <one lead object from leads.json> })
@@ -69,7 +81,7 @@ const BUILD_SCHEMA = {
     blockers: { type: 'string', description: 'empty if none; otherwise what stops a full run' },
   },
 }
-const build = await agent(`You are implementing the analysis pipeline for a scoped research project. Read ${RUN_DIR}/plan.md first — it is the authoritative analysis plan.
+const build = await run(`You are implementing the analysis pipeline for a scoped research project. Read ${RUN_DIR}/plan.md first — it is the authoritative analysis plan.
 ${leadBrief}
 ${HW}
 ${ENV}
@@ -96,7 +108,7 @@ const EXEC_SCHEMA = {
     notes: { type: 'string' },
   },
 }
-const results = await agent(`You are executing the full analysis for a research project. Read ${RUN_DIR}/plan.md and ${RUN_DIR}/code/README.md, then run the full pipeline per its README.
+const results = await run(`You are executing the full analysis for a research project. Read ${RUN_DIR}/plan.md and ${RUN_DIR}/code/README.md, then run the full pipeline per its README.
 ${HW}
 ${ENV}
 Build notes from the previous stage: ${build.summary}
@@ -127,7 +139,7 @@ const lenses = [
   `data-and-code: re-run key computations yourself from ${RUN_DIR}/code, check for bugs that flip the result, verify figures match the underlying numbers, check data quality/coverage assumptions and the selection-function treatment`,
 ]
 const reviews = await parallel(lenses.map((lens, i) => () =>
-  agent(`You are an adversarial reviewer. Your job is to REFUTE this study if you can. Default to skepticism.
+  run(`You are an adversarial reviewer. Your job is to REFUTE this study if you can. Default to skepticism.
 Study dir: ${RUN_DIR} (read plan.md, deviations.md, results/, code/). Executor's summary:
 ${execSummary}
 Your lens: ${lens}
@@ -138,7 +150,7 @@ const liveReviews = reviews.filter(Boolean)
 const refuted = liveReviews.filter(r => r.fatal).length >= 1
 
 phase('Write-up')
-const writeup = await agent(`You are writing up a completed research project. Study dir: ${RUN_DIR} (read plan.md, results/, deviations.md).
+const writeup = await run(`You are writing up a completed research project. Study dir: ${RUN_DIR} (read plan.md, results/, deviations.md).
 Executor summary:
 ${execSummary}
 Adversarial review verdicts: ${JSON.stringify(liveReviews)}
