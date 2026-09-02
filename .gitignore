@@ -129,3 +129,9 @@ dmypy.json
 .pyre/
 
 .vscode
+
+# research-lab run scratch (venvs, raw data, mocks) — keep plan/code/results/report
+research-lab/runs/*/venv/
+research-lab/runs/*/data/
+research-lab/runs/*/logs/
+research-lab/runs/*/code/__pycache__/
