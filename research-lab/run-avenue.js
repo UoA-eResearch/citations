@@ -113,7 +113,7 @@ ${HW}
 ${ENV}
 Build notes from the previous stage: ${build.summary}
 Full-run estimate from the builder: ${build.full_run_estimate}
-Tasks:
+${lead.exec_notes ? 'ORCHESTRATOR NOTES (state left by earlier execution attempts — act on these first):\n' + lead.exec_notes + '\n' : ''}Tasks:
 1. Run the full pipeline (background + polling for long stages). Monitor for failures; fix minor issues in place (record every deviation from plan.md in ${RUN_DIR}/deviations.md).
 2. Save results to ${RUN_DIR}/results/ (tables as CSV/JSON, figures as PNG/SVG). Every figure needs axes, units, and a caption file.
 3. Run the statistical tests named in plan.md, including any correction for multiple comparisons it specifies, and apply plan.md's preregistered success/refutation criteria.
