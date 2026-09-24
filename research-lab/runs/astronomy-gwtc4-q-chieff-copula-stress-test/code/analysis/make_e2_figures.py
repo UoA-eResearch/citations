@@ -223,6 +223,115 @@ preregistered primary-mass bins [2, 20), [20, 40), [40, 200) Msun, for the real 
 null mocks at least as extreme as observed. Bins are assigned by the median m1 under the same measure, so bin
 populations differ between measures; the null mocks do not reproduce the real point-estimate mass distribution
 (F14), which limits how far these point-estimate comparisons can be trusted.""")
+    # ---- F16: mass-binned copula scan (D22) -------------------------------------------------------------------
+    mbp = TAB / "e2_rhoscan_mbin_full.csv"
+    if mbp.exists():
+        mb = pd.read_csv(mbp)
+        mb["rho_true"] = mb["rho_true"].round(2)
+        realm = mb[mb.kind == "real"].iloc[0]
+        labels = ["m1 < 20 Msun", "20 <= m1 < 40", "m1 >= 40 Msun"]
+        fig, (a1, a2) = plt.subplots(1, 2, figsize=(10, 3.3), gridspec_kw={"width_ratios": [1, 1.25]})
+        nullm = mb[(mb.kind == "mock") & (mb.rho_true == 0.0)]
+        for b in range(3):
+            v = nullm[f"rho_hat_b{b}"].values
+            a1.plot([np.quantile(v, 0.16), np.quantile(v, 0.84)], [b, b], color=BLUE, lw=5, alpha=0.35, solid_capstyle="round")
+            a1.plot([np.quantile(v, 0.025), np.quantile(v, 0.975)], [b, b], color=BLUE, lw=1.2, alpha=0.6)
+            a1.plot([np.median(v)], [b], "o", color=BLUE, ms=5)
+            a1.plot([realm[f"rho_hat_b{b}"]], [b], "D", color=ORANGE, ms=6.5)
+        a1.set_yticks(range(3))
+        a1.set_yticklabels(labels)
+        a1.invert_yaxis()
+        a1.set_xlabel("rho_hat in the mass bin")
+        a1.set_title("real catalog (orange) vs 200 null mocks (68% / 95%)")
+        grid_r = sorted(mb[mb.kind == "mock"].rho_true.unique())
+        for b, col in zip(range(3), (BLUE, AQUA, "#4a3aa7")):
+            med = [mb[(mb.kind == "mock") & (mb.rho_true == g)][f"rho_hat_b{b}"].median() for g in grid_r]
+            a2.plot(grid_r, med, "o-", color=col, lw=1.6, ms=4, label=labels[b])
+        a2.plot([-0.7, 0.3], [-0.7, 0.3], color=MUTED, lw=0.8, zorder=0)
+        a2.set(xlabel="true copula rho of the mock population (all bins)", ylabel="median rho_hat")
+        a2.legend(fontsize=7.5, loc="upper left")
+        a2.set_title("estimator response per bin")
+        fig.suptitle("D22: no mass-localised q-chi_eff dependence", fontsize=10)
+        fig.savefig(FIG / "full_F16_mass_binned_scan.png")
+        plt.close(fig)
+        caption("F16_mass_binned_scan", f"""
+F16 (D22, exploratory). Gaussian copula with a separate dependence parameter in each preregistered primary-mass bin,
+scanned on a 17^3 grid with all other hyperparameters at the null population. Left: the real catalog's per-bin
+rho_hat (orange) against the distribution over 200 zero-correlation mock catalogs (blue: median, central 68% and 95%).
+Right: median per-bin rho_hat against the true (common) rho of the calibration mocks; grey line rho_hat = rho_true.
+The two lower-mass bins are unbiased; the m1 >= 40 Msun bin carries a ~-0.3 offset that the null calibration absorbs.
+Likelihood ratio against zero dependence in every bin: {realm.lr_zero:.2f} (95% of null mocks larger); for
+heterogeneity between bins: {realm.lr_het:.2f}.""")
+    # ---- F17: how the PE prior moves per-event medians (D29) --------------------------------------------------
+    import sys as _sys
+    _sys.path.insert(0, str(RUN / "code" / "src"))
+    from io_utils import read_sample_table
+    posts, _ = read_sample_table(RUN / "data" / "processed" / "sample_table_full.h5")
+    qp, cp, ql, cl = [], [], [], []
+    for n in sorted(posts):
+        d = posts[n]
+        q, c, lp = d["mass_ratio"].values, d["chi_eff"].values, d["ln_prior"].values
+        w = np.exp(-(lp - lp.max())); w = np.minimum(w, np.quantile(w, 0.995)); w /= w.sum()
+        def wmed(x):
+            o = np.argsort(x); return x[o][min(np.searchsorted(np.cumsum(w[o]), 0.5), len(x) - 1)]
+        qp.append(np.median(q)); cp.append(np.median(c)); ql.append(wmed(q)); cl.append(wmed(c))
+    qp, cp, ql, cl = map(np.array, (qp, cp, ql, cl))
+    from scipy.stats import kendalltau
+    fig, ax = plt.subplots(figsize=(6.6, 4.6))
+    big = np.abs(qp - ql) > 0.06
+    for i in range(len(qp)):
+        ax.annotate("", xy=(qp[i], cp[i]), xytext=(ql[i], cl[i]),
+                    arrowprops=dict(arrowstyle="-|>", color=ORANGE if big[i] else "#b9b8b0", lw=1.2 if big[i] else 0.6,
+                                    mutation_scale=7))
+    ax.scatter(ql, cl, s=10, color=BLUE, zorder=3, label=f"prior removed (likelihood medians): tau = {kendalltau(ql, cl).statistic:+.3f}")
+    ax.scatter(qp, cp, s=10, color=INK, zorder=3, label=f"PE-prior posterior medians: tau = {kendalltau(qp, cp).statistic:+.3f}")
+    ax.plot([], [], color=ORANGE, lw=1.2, label="events whose q median moves by > 0.06")
+    ax.set(xlabel="mass ratio q (per-event median)", ylabel="chi_eff (per-event median)", xlim=(0.15, 1.0))
+    ax.legend(fontsize=7.5, loc="lower left", framealpha=0.9, frameon=True)
+    ax.set_title("the isotropic-spin PE prior drags high-chi_eff events to lower q")
+    fig.savefig(FIG / "full_F17_prior_shift.png")
+    plt.close(fig)
+    caption("F17_prior_shift", f"""
+F17 (D29). Per-event medians of mass ratio q and chi_eff for the 153 BBHs, before (blue: prior removed, i.e. posterior
+samples reweighted by 1/pi_PE) and after (black: the released posterior medians) the parameter-estimation prior acts;
+arrows point from the former to the latter. Orange arrows: events whose q median moves by more than 0.06 -- mostly
+high-chi_eff events (GW190517_055101, GW231028_153006, GW190620_030421, GW170729, ...) pulled to lower q, because the
+isotropic-spin prior allows large chi_eff only at unequal masses. The rank correlation of the medians roughly doubles
+({kendalltau(ql, cl).statistic:+.3f} -> {kendalltau(qp, cp).statistic:+.3f}) without any population correlation.""")
+
+    # ---- F18: observed tau vs every simulated hypothesis (v3b mocks, D29) -------------------------------------
+    v3p = TAB / "e2_tau_full_v3.csv"
+    if v3p.exists():
+        v3 = pd.read_csv(v3p)
+        v3["rho_true"] = v3["rho_true"].round(2)
+        realv = v3[v3.kind == "real"].iloc[0]
+        sets = [("null (rho = 0)", 0.0), ("copula rho = -0.2", -0.2), ("copula rho = -0.4", -0.4), ("copula rho = -0.6", -0.6),
+                ("copula rho = +0.2", 0.2), ("LVK width effect", -9.0), ("PLP mean shift", -8.0)]
+        fig, axes = plt.subplots(1, 2, figsize=(10.5, 3.6), sharey=True)
+        for ax, M in zip(axes, ("post", "flattheta")):
+            for yi, (lab, code) in enumerate(sets):
+                v = v3[(v3.kind == "mock") & np.isclose(v3.rho_true, code)][f"tau_{M}"].values
+                ax.plot([np.quantile(v, 0.025), np.quantile(v, 0.975)], [yi, yi], color=BLUE, lw=1.2, alpha=0.6)
+                ax.plot([np.quantile(v, 0.16), np.quantile(v, 0.84)], [yi, yi], color=BLUE, lw=5, alpha=0.35, solid_capstyle="round")
+                ax.plot([np.median(v)], [yi], "o", color=BLUE, ms=4.5)
+            ax.axvline(realv[f"tau_{M}"], color=ORANGE, lw=2, label=f"real catalog ({realv[f'tau_{M}']:+.3f})")
+            ax.set_title(f"medians: {SHORT[M]}")
+            ax.set_xlabel("Kendall tau(q, chi_eff) of per-event medians")
+            ax.legend(fontsize=7.5, loc="lower right")
+        axes[0].set_yticks(range(len(sets)))
+        axes[0].set_yticklabels([s[0] for s in sets], fontsize=8)
+        axes[0].invert_yaxis()
+        fig.suptitle("E2 against physical mock PE (v3b): what each hypothesis predicts (median, 68%, 95%)", fontsize=10)
+        fig.savefig(FIG / "full_F18_e2_hypotheses_v3.png")
+        plt.close(fig)
+        caption("F18_e2_hypotheses_v3", """
+F18 (D29). Distribution of the point-estimate Kendall tau in mock catalogs built with physical mock PE (v3b: Gaussian
+measurement noise in ln chirp mass, symmetric mass ratio, chi_eff and ln distance with each donor event's covariance,
+resampled to the PE prior; validated against the real catalog in var_tot and measurement widths) under each simulated
+hypothesis: no dependence, Gaussian copulas with rho = -0.6 ... +0.2, the LVK Linear-model width effect, and the
+PowerLaw+Peak mean shift (40-200 catalogs each; dots medians, bars 68% and 95%). Orange: the real catalog. Left, the
+preregistered statistic (PE-prior posterior medians): the real value lies beyond every simulated hypothesis. Right,
+the same statistic with the PE prior removed: the real value is unremarkable.""")
     print("figures written; primary measure:", prim, "| passing:", passing)
 
 

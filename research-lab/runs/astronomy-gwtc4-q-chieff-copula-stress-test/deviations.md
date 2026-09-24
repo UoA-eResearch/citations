@@ -364,3 +364,189 @@ flattheta, +1.8 flatx, +3.1 pop; fraction of mocks with a residual at least as l
 and full-likelihood statistics disagree for the real catalog in a way they never do for the mocks: either dependence
 structure a single global Gaussian copula cannot represent, or measurement structure (parameter-dependent likelihood
 shapes) the location-family mock kernels do not emulate. Not resolved by E1/E2; see D22.
+
+### D22. Exploratory: mass-localised dependence (Gaussian copula with a rho per preregistered E5 mass bin)
+Motivation: the point-estimate anticorrelation is concentrated below 20 Msun (F15: tau FPR 0.01 under two measures).
+Model `copula_gauss_mbin_plp` (piecewise-constant rho in m1 < 20, 20-40, >= 40 Msun, bins assigned by each sample's
+own m1, normalised for every m1; equal rhos reproduce `copula_gauss_plp` to 3e-14). 17^3-point likelihood scan
+(rho in -0.8 ... +0.8) with all other hyperparameters at the null population, identical for real data and all 360
+mocks (`analysis/e2_rho_scan_mbin.py`). Real catalog: rho_hat = -0.10 / -0.60 / +0.20 per bin with fixed-marginal
+posterior means +0.05 / -0.14 / +0.20 and P(rho < 0) = 0.44 / 0.59 / 0.24; LR against rho = 0 everywhere 0.61, LR for
+bin heterogeneity 0.55. The likelihood is flat in all three bins: the low-mass point-estimate anomaly has no
+counterpart in those events' full likelihoods. Null FPRs: see D22 outcome below.
+
+### D23. Exploratory: is the point-estimate tau carried by well- or poorly-measured events?
+`analysis/tau_by_precision.py`: events split at the median 90% width of chi_eff (or of q), tau within each half, real
+vs the 200 null mocks, under the flatx and pop measures -- 12 comparisons. Inconclusive: flatx/chi-width split has
+tau_good = -0.173 (null -0.072 [-0.232, +0.076], FPR 0.125) and tau_poor = +0.034 (FPR 0.415); the most extreme
+comparison (pop measure, q-width split: tau_good = -0.095 vs null +0.060, FPR 0.020; poor-minus-good difference FPR
+0.010) is unremarkable given 12 comparisons. The precision split neither confirms nor excludes a measurement origin
+for the point-estimate / full-likelihood discrepancy of D21.
+
+### D24. E1 inside the LVK configuration: Frank and Gaussian copulas on the LVK parametric marginals
+**Recorded 2026-09-25 09:58 NZST, before either fit was run.** The best-evidence model of the whole study is
+the LVK configuration (Broken Power Law + 2 Peaks masses; lvk_bpl2p_* ln Z -4598.8 ... -4600.6, vs -4603 for
+PowerLaw+Peak and -4611.7 for the spline-marginal copulas). E1 was run only with PowerLaw+Peak masses and spline
+marginals, so it is repeated inside the LVK configuration: `copula_frank_lvk` / `copula_gauss_lvk` = the LVK null model
+`lvk_bpl2p_null` (BPL+2P masses, power-law pairing with its own m2 taper, truncated-normal chi_eff with no
+q-dependence, Table 6/10 priors) plus a Frank (the LVK's App. B.6 construction, theta ~ U(-20, 20) = their kappa prior)
+or Gaussian copula between u = F(q|m1) and v = F(chi_eff). New code: the truncated-normal CDF in `chi_sector`
+(matches scipy to 6e-17); both copula densities integrate to 1.0000 on the LVK marginals. Pre-stated reading:
+E1-LVK = ln Z(copula) - ln Z(`lvk_bpl2p_null` = -4599.62) against the same ln 3 threshold; the Frank theta posterior
+is also compared with the paper's kappa_q,eff = -2.1 (+2.4/-2.9), P(kappa < 0) = 0.92 (a second reproduction check).
+Note: with rigid parametric marginals a copula can absorb marginal misfit (the confound the flexible-marginal E1 is
+designed to remove), so a positive E1-LVK would not by itself overturn E1.
+
+**D22 outcome (2026-09-25 10:07).** Null (200 mocks) and response (40 per rho_true): per-bin rho_hat tracks rho_true in
+the two lower-mass bins without bias (e.g. rho_true = -0.2: -0.20, -0.20) and with a ~-0.3 offset in the m1 >= 40 bin
+(null median -0.35), which the calibration absorbs. Real catalog vs null: bin m1 < 20 rho_hat -0.10 (null 0.00
+[-0.20, +0.20], FPR 0.445; profile-LR FPR 0.755); 20-40: -0.60 (null 0.00 [-0.30, +0.20], FPR 0.085; profile-LR FPR
+0.680 -- the profile is flat); >= 40: +0.20 (null -0.35 [-0.80, +0.42], FPR 0.275; LR FPR 0.760). LR against zero
+dependence in every bin: 95% of null mocks exceed the real value; LR for heterogeneity: 84.5%. No mass-localised
+dependence. That the real catalog carries less dependence signal than most null mocks (also 79% for the global scan)
+suggests the mock likelihoods are somewhat narrower than the real ones (clipped kernel weights); the direction is
+conservative for the no-dependence conclusion.
+
+## 2026-09-25 -- independent adversarial review (methodology lens) and response
+
+### D26. Review findings accepted; the headline verdict is withdrawn
+An independent reviewer (fresh context, CPU-only, scratch computations under /tmp/review_methodology/) returned
+"refuted" for the verdict. Assessment of each point (the reviewer's numbers were spot-checked against our files):
+1. ACCEPTED. The preregistered E2 primary is Kendall tau on posterior point estimates (plan sec 4 item 5, sec 7). Its
+   like-for-like version (D21 "post": mocks reweighted to the PE prior) gives FPR 0/200 (m1-partial -0.216; below the
+   null median in all three E5 mass bins). With E1 = -0.20 < ln 3 and FPR <= 5%, plan sec 7 yields INDETERMINATE
+   (E1 and E2 disagree). "CONFIRMED" was reached only by replacing the statistic (D21 fallback to the D20 rho scan).
+2. ACCEPTED. The D21 rule was written at 09:35 with its outcome foreseeable: the v1 tau_post FPR (0.000, 09:05), the
+   rho-scan FPR (0.24, 09:21) and the PE-prior over-representation of m1 >= 40 Msun (ppc_mass 09:28) were known. The
+   rule is re-labelled post hoc; "pre-committed" in D21 overstated its independence from the data.
+3. ACCEPTED. The plug-in rho scan is not nuisance-orthogonal: over 20 posterior draws of the fixed marginals the real
+   catalog's rho_hat ranges -0.34 ... +0.32 (sd 0.15 = the null sd), so its FPR is not well defined (0.01-0.48).
+4. ACCEPTED (two defects in stage 04, the first also noted but not acted on in our own D21 reasoning):
+   (a) Jacobian -- the kernel bank weights samples by 1/pi_PE (flat in theta) but uses their x-density as a
+   likelihood under a prior flat in x = (ln m1, logit q, chi_eff, ln z); every mock likelihood is therefore the donor
+   likelihood times m1 q (1-q) z, suppressed at q -> 1 (per-event median likelihood mass at q > 0.9: real 59%, mock
+   32%). (b) Point reflection -- x_obs = x_true + dev with samples x_obs - dev mirrors every donor likelihood; a paired
+   test shifts rho_hat by +0.061 +/- 0.019. Symptom: all 200 null mocks have var_tot 1.9-2.8 at their own generating
+   population vs 0.70 for the real catalog. E2 (both statistics), D22 and the joint check (D21) are not calibrated.
+5. ACCEPTED. The joint tau-vs-rho_hat residual is a property of the defective mocks until they are rebuilt.
+6. ACCEPTED in substance. E1 has no usable null calibration (2 refits, run with the cut at K = 2000 where every null
+   mock violates var_tot < 1). ln BF = -0.20 reflects a small likelihood gain (0.3-0.9 nats) against the prior-volume
+   cost of rho; the rho posterior (median +0.33, P(rho < 0) ~ 0.06-0.08) mildly favours POSITIVE dependence, in
+   tension with the Linear model's negative mean slope under the same masses -- unexplained. D24 (LVK-marginal copulas,
+   running) is treated as a validation gate for the copula sector.
+7. ACCEPTED. A single global Gaussian copula detects monotone dependence only; it cannot test the width (heteroscedastic)
+   effect the LVK reports. Conclusions are restricted accordingly; a width-alternative mock set is added (D27).
+8. ACCEPTED for the width attribution (nautilus 0.830 vs NUTS 0.676 on the same model; one fit per configuration); the
+   mean-shift attribution (0.985-0.995 vs 0.80-0.84, ln BF +3.44 vs -0.98) is large enough to survive. Repeat seeds are
+   queued (D28).
+9. ACCEPTED. The primary E1/E2 configuration (PowerLaw+Peak) fails the plan's reproduction gate; only the LVK
+   configuration passes it -- the reason D24 matters.
+10. NOTED. The LVK paper already runs a copula (Frank kappa); the defensible novel result at present is the E3/E4
+   mass-model dependence of the mean shift.
+Response: (i) the verdict is restated as preregistered -- INDETERMINATE; (ii) the mocks are rebuilt with both defects
+fixed and a posterior-predictive nuisance, and validated against the real catalog BEFORE any FPR is quoted (D27);
+(iii) the hierarchical E2 statistic is replaced by a nuisance-integrated scan applied identically to real and mock
+catalogs (D27); (iv) repeat sampler seeds for the ablation (D28).
+
+### D25. Waveform-systematics control (plan sec 5-6; not run until now)
+`analysis/build_waveform_variant.py` rebuilds the same 153 events from a single waveform family (same PE-prior
+treatment): phenom = IMRPhenomXPHM (O1-O3) + IMRPhenomXPHM-SpinTaylor (O4a); eob = SEOBNRv4PHM (57 of 69 O1-O3,
+12 fall back to IMRPhenomXPHM) + SEOBNRv5PHM (O4a). Real catalog, same fixed marginals as D20
+(`analysis/e2_rho_scan.py --sample-table`, `analysis/wf_tau.py`):
+| samples | rho_hat | P(rho<0) | var_tot | tau post / flattheta / flatx / pop |
+|---|---|---|---|---|
+| Mixed (baseline) | +0.074 | 0.38 | 0.68 | -0.217 / -0.106 / -0.057 / -0.102 |
+| IMRPhenom family | -0.358 | 0.84 | 1.05 | -0.254 / -0.130 / -0.090 / -0.134 |
+| SEOBNR family | -0.053 | 0.60 | 0.70 | -0.175 / -0.075 / -0.041 / -0.085 |
+The hierarchical dependence estimate moves by 0.43 between the Mixed and IMRPhenom samples -- about three null
+standard deviations -- with the marginals held fixed. The sign of a q-chi_eff dependence estimate in GWTC-4.0 is not
+robust to the waveform family; point-estimate tau moves less (-0.175 ... -0.254 under the PE prior) but in the same
+order. Any dependence claim at the |rho| ~ 0.2-0.4 level is within waveform systematics.
+
+### D27. Rebuilding the mock catalogs (response to D26 items 3-5, 7)
+Validation targets (`analysis/validate_mocks.py`, `results/tables/mock_validation_full.json`), all under the
+flat-internal measure (each catalog reweighted from its own stored prior), 30 null mocks per set:
+| catalog | median per-event likelihood mass at q > 0.9 | events with > 50% | median 90% width q / chi_eff | var_tot |
+|---|---|---|---|---|
+| real | 0.68 | 81% | 0.48 / 0.52 | 0.89 [0.71, 1.06] at 20 posterior draws (0.70 at the median) |
+| v1 (stage 04) | 0.38 | 41% | 0.59 / 0.59 | 2.17 [1.92, 2.47] |
+| v2 (Jacobian + orientation + 4-D donor matching + posterior-draw nuisance, `analysis/mock_catalogs_v2.py`) | 0.44 | 42% | 0.69 / 0.66 | 2.27 [1.94, 2.61] |
+v2 fixes the two construction defects but still fails: translating a real likelihood's shape to another location in
+(ln m1, logit q, chi_eff, ln z) cannot reproduce the q -> 1 pile-up, because mass-ratio likelihoods are not a location
+family in any of these coordinates -- the waveform measures the symmetric mass ratio eta = q/(1+q)^2, flat at q = 1,
+and a near-equal-mass likelihood shape moved to lower q is smeared over a wider q range (widths grow, pile-up
+vanishes, var_tot stays ~2.3). v2 is therefore not used for any FPR.
+v3 (`analysis/mock_catalogs_v3.py`) uses the standard population-study mock PE instead: Gaussian measurement noise in
+y = (ln Mc_det, eta, chi_eff, ln d_L) with each donor's likelihood covariance (samples reweighted to a prior flat in
+y), donors matched in (ln Mc_det, ln d_L) (which set the SNR), observed eta allowed beyond 1/4, the mock likelihood
+N(y | y_obs, Sigma) truncated to eta <= 1/4 and |chi_eff| < 1, and the stored prior the exact Jacobian
+|dy/dtheta| = (1-q) / (m1 (1+q)^3) * (d d_L/dz) / d_L (verified by finite differences to 7e-5; transforms round-trip to
+1e-14). The q -> 1 pile-up then arises from d eta/dq = 0 at q = 1, as for real signals. Same populations as v2
+(posterior draws; null, calibration, width and mean alternatives). FPRs are quoted only if v3 passes validation.
+
+### D26b. Second independent review (data-and-code lens): "fixable-issues"
+Scratch code /tmp/review_code/. Findings and response:
+1-2. Kernel measure and reflection (independent confirmation of D26 item 4). Zero-shift unit test: a mock built from an
+   event's own kernel must reproduce the event's population-informed posterior; stage-04 kernel rms errors over 10
+   events q 0.120, ln z 0.335 (GW190412: q -0.25); with weights pi_flatx/pi_PE and obs = x_true - e, samples = obs + dev:
+   q 0.015, ln m1 0.017, ln z 0.023, no bias. Real prior-removed posteriors have median skewness ln m1 +0.33, logit q
+   +1.13, ln z -0.50; stage-04 mocks the mirror (-0.44, -1.09, +0.54). Addressed by D27 (v2 applies both fixes; v3b
+   replaces translated kernels by physical mock PE).
+3. The real-catalog rho_hat = +0.074 is a low Monte Carlo draw of the 2000-sample subsample: all 10 000 samples give
+   +0.145; 12 subsamples give +0.100 +/- 0.047 [+0.047, +0.196]; the rho-scan FPR is 0.24 +/- ~0.1 (0.13-0.31 across
+   variants and mock versions). ACCEPTED; the MC spread is quoted and the D27 statistic uses several subsamples.
+4. The hierarchical copula statistic leans POSITIVE (posterior median +0.33; scan +0.07 ... +0.15) while the
+   point-estimate tau is negative with FPR <= 0.035 under three of four measures: the two E2 statistics disagree in
+   sign. ACCEPTED (same as D26 item 6); per-event profile slopes: rho is pushed positive by a few high-q, high-chi_eff
+   events (GW231028_153006, GW190620_030421, GW190805_211137, GW170729) and negative by GW190412 and GW231226_101520.
+5. Mocks are ~2x more informative about q than the real catalog (between-event sd of population-informed E[q] real
+   0.035 vs mocks 0.060-0.094), even with the corrected kernel -- the location-family shortcoming v3b addresses.
+6. The Gaussian-copula profile is sensitive to marginal misfit: delta-function "posteriors" at the population-informed
+   medians (tau = -0.103) give rho_hat = +0.65, because for shrunk normal scores the profile peaks at |rho| =
+   sqrt(1 - 2 s^2) irrespective of rank structure; real pooled E[x^2] = 0.89, E[y^2] = 1.02 (modest misfit).
+7. Minor, kept visible: beta_q prior U(-4, 12) vs LVK U(-2, 7); Linear-model intercept anchoring (D14).
+Verified by the reviewer: exact reproduction of the rho scan; copula density and orientation; the selection formula
+(matches the Zenodo usage note: pdet = sum weights exp(lnp - lnpdraw) / total_generated); the analytic PE prior equals
+bilby's stored log_prior terms (residual 0.0000 on GW240109, GW230601), chi_eff|q table vs 420 000 pooled prior
+samples (mean ln offset <= 0.006); LVK BPL+2P implementation against arXiv:2508.18083 App. B eqs. B18-B23 and Tables 6
+and 10; the evidence table; the slope credibilities; the 153-event sample.
+
+**D27 validation outcome (2026-09-25 10:42).** v3 (flat-in-y samples) matched the q width (0.475) but had var_tot 9.2:
+a prior flat in eta has zero density at q = 1, so samples near equal mass were sparse and the hierarchical reweighting
+diverged there. v3b importance-resamples each mock event's flat-in-y likelihood samples (12 000 accepted draws) to the
+donor event's analytic PE prior (resampling ESS median 2200, 5th percentile ~580) and stores ln pi_PE -- each mock
+event then carries a posterior formed exactly like a released LVK posterior. v3b null (30 mocks) vs real:
+likelihood mass at q > 0.9 0.59 (real 0.68), events with > 50% 70% (81%), 90% widths q 0.46 (0.48) / chi_eff 0.55
+(0.52), var_tot 0.96 [0.72, 1.19] (0.89 [0.71, 1.06]). var_tot and both widths match; the q -> 1 pile-up is reproduced
+at ~87% of the real level. v3b is used for E2; the point-estimate m1 >= 40 check comes from the E2 run itself.
+
+### D24 outcome, Frank copula (2026-09-25 10:33)
+`copula_frank_lvk` (18 dims, 25 min): ln Z = -4601.72 vs `lvk_bpl2p_null` -4599.62 -> E1-LVK-frank ln BF = -2.10
+(Savage-Dickey -2.07). Best-fit ln L -4567.24 vs -4567.09: the dependence parameter does not improve the fit; the Bayes
+factor is the Occam cost of the U(-20, 20) prior. theta (= the paper's kappa_q,eff): median -0.51, 68% [-2.57, +1.47],
+90% [-3.94, +2.73], P(theta < 0) = 0.60. Paper: -2.1 (+2.4/-2.9), P(kappa < 0) = 0.92. Partial reproduction: the 90%
+intervals overlap and the lean has the same sign, but our posterior is centred closer to zero.
+
+### D29. E2 against the validated v3b mocks, and the mechanism behind the posterior-median anticorrelation
+`analysis/e2_tau.py --mock-dir data/mocks/v3` (200 null + 4 x 40 copula calibration + 40 width + 40 mean-shift mocks;
+`results/tables/e2_tau_full_v3.{csv,json}`). Observed tau vs v3b null median [95%], FPR one-sided / two-sided:
+post -0.217 vs -0.045 [-0.181, +0.045], 0.000 / 0.000; flattheta -0.106 vs -0.020 [-0.143, +0.072], 0.085 / 0.130;
+flatx -0.057 vs +0.006 [-0.091, +0.134], 0.135 / 0.290; pop -0.102 vs -0.043 [-0.159, +0.060], 0.160 / 0.325.
+Point-estimate m1 >= 40 check (observed vs null 95%): post 0.386 vs [0.183, 0.359] (narrow fail), flattheta 0.392 vs
+[0.202, 0.392] (at the bound), flatx and pop fail. Calibration and power (median tau under post): copula rho_true -0.6
+-0.103, -0.4 -0.083, -0.2 -0.074, +0.2 -0.038; LVK width alternative -0.060 (power at the null 5% quantile 0.00 under
+post, <= 0.075 under any measure); PowerLaw+Peak mean-shift alternative -0.121 (power 0.20-0.53 by measure). The
+observed posterior-median tau (-0.217) is more extreme than EVERY simulated catalog under every simulated hypothesis
+(null, copula rho down to -0.6, the LVK width effect, the PLP mean shift): it is not measuring q-chi_eff dependence of
+any modelled kind. The likelihood-based point-estimate measures are unremarkable (FPR 0.085-0.16).
+Mechanism (all 10 000 samples per event): tau(q_lik, chi_lik) = -0.106, tau(q_post, chi_lik) = -0.188,
+tau(q_lik, chi_post) = -0.142, tau(q_post, chi_post) = -0.219 -- the prior-induced part is carried mostly by the q
+medians. The events whose q median the PE prior moves most are high-chi_eff events dragged to lower q: GW190517_055101
+(q 0.774 -> 0.618, chi_eff 0.636 -> 0.491), GW231028_153006 (0.753 -> 0.639), GW190620_030421 (0.699 -> 0.606), GW170729
+(0.641 -> 0.549), GW230928_215827, GW230825_041334, GW191127_050227. The isotropic-spin PE prior only allows large
+chi_eff at unequal masses (h(chi_eff | q) is widest at small q), and along the mass-ratio-spin degeneracy a
+high-chi_eff event is pulled to lower q -- manufacturing "high chi_eff at low q" in posterior medians without any
+population correlation. The largest chi_eff shifts are negative-chi_eff events pulled toward zero (GW190521 -0.53 ->
+-0.14, GW231223_032836, GW231230_170116, GW191109_010717). The v3b mocks reproduce the likelihood-level structure
+(var_tot, widths) but the prior-induced tau shift only at a quarter of the real size (-0.025 vs -0.11), so the
+posterior-median statistic remains uncalibratable.

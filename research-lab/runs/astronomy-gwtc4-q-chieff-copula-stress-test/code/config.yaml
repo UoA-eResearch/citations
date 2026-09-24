@@ -170,7 +170,7 @@ modes:
     # found injections (total_generated rescaled) to keep the mock arm cheap;
     # the real-data fits (stage 03) and the full nautilus mock refits use all.
     map_injection_subsample: 150000
-    model_set: [baseline_plp_both, baseline_plp_mean, baseline_plp_width, baseline_plp_null, copula_gauss_plp, copula_indep_plp, baseline_bpq_both, baseline_bpq_null, baseline_splm1_both, baseline_splm1_null, copula_gauss_splm1, lvk_bpl2p_both, lvk_bpl2p_null, lvk_bpl2p_mean, lvk_bpl2p_width, abl_plp_m2taper_both, abl_plp_lvkspin_both, abl_bpl2p_sharedtaper_both, abl_bpl2p_plpspin_both]   # copula_indep_splm1 dropped (D18)   # copula_frank_plp dropped (D16)
+    model_set: [baseline_plp_both, baseline_plp_mean, baseline_plp_width, baseline_plp_null, copula_gauss_plp, copula_indep_plp, baseline_bpq_both, baseline_bpq_null, baseline_splm1_both, baseline_splm1_null, copula_gauss_splm1, lvk_bpl2p_both, lvk_bpl2p_null, lvk_bpl2p_mean, lvk_bpl2p_width, abl_plp_m2taper_both, abl_plp_lvkspin_both, abl_bpl2p_sharedtaper_both, abl_bpl2p_plpspin_both, copula_frank_lvk, copula_gauss_lvk]   # copula_indep_splm1 dropped (D18)   # copula_frank_plp dropped (D16)
 
 grids:
   # Normalization grids (match gwpopulation.models.mass defaults so the
@@ -234,6 +234,9 @@ priors:
   ln_sigma_chi_eff_0: [-5.0, 0.0]   # LVK Table 10: ln sigma_eff|q ~ U(-5, 0) (used by the lvk_* models)
   # copula dependence parameters
   gaussian_copula_rho: [-0.95, 0.95]
+  rho_b0: [-0.95, 0.95]     # D22 mass-binned copula: m1 < 20 Msun
+  rho_b1: [-0.95, 0.95]     #                          20 <= m1 < 40
+  rho_b2: [-0.95, 0.95]     #                          m1 >= 40
   frank_copula_theta: [-20.0, 20.0]
   # generalized (broken power-law) pairing function
   pairing_q_break: [0.3, 0.9]

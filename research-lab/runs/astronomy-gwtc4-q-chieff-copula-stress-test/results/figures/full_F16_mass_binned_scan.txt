@@ -1,0 +1,7 @@
+F16 (D22, exploratory). Gaussian copula with a separate dependence parameter in each preregistered primary-mass bin,
+scanned on a 17^3 grid with all other hyperparameters at the null population. Left: the real catalog's per-bin
+rho_hat (orange) against the distribution over 200 zero-correlation mock catalogs (blue: median, central 68% and 95%).
+Right: median per-bin rho_hat against the true (common) rho of the calibration mocks; grey line rho_hat = rho_true.
+The two lower-mass bins are unbiased; the m1 >= 40 Msun bin carries a ~-0.3 offset that the null calibration absorbs.
+Likelihood ratio against zero dependence in every bin: 0.61 (95% of null mocks larger); for
+heterogeneity between bins: 0.55.

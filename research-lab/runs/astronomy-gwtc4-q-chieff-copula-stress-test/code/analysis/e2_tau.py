@@ -142,13 +142,14 @@ def _mock_row(task):
         m1, q, chi, z = (np.asarray(g[c]) for c in COLS)
         ln_native = np.asarray(g["ln_prior"])
         kern = np.asarray(g["kernel_event"]).astype(int)
-        true, obs = np.asarray(g["true"]), np.asarray(g["observed"])
+        true = np.asarray(g["true"])
+        obs = np.asarray(g["observed"]) if "observed" in g else None      # v3b mocks store observed_y instead
     ln_pe = np.empty_like(m1)
     for e in range(m1.shape[0]):
         ln_pe[e] = ln_pe_prior(m1[e], q[e], z[e], chi[e], _G["zprior"][kern[e]], table)
     row = catalog_stats(m1, q, chi, z, ln_native, ln_pe, dict(kind="mock", rho_true=rho, mock=int(key.split("_")[1])))
     row["tau_true"] = tau(true[:, 1], true[:, 2])
-    row["tau_obspt"] = tau(obs[:, 1], obs[:, 2])
+    row["tau_obspt"] = tau(obs[:, 1], obs[:, 2]) if obs is not None else np.nan
     row["frac_m1ge40_true"] = float(np.mean(true[:, 0] >= 40))
     return row
 
@@ -158,6 +159,7 @@ def main():
     ap.add_argument("--mode", default="full")
     ap.add_argument("--workers", type=int, default=16)
     ap.add_argument("--config", default=str(HERE.parent / "config.yaml"))
+    ap.add_argument("--mock-dir", default=None, help="alternative mock directory (D27: data/mocks/v3); outputs are tagged by its name")
     args = ap.parse_args()
     _init(args.config, args.mode)
     cfg = _G["cfg"]
@@ -181,11 +183,19 @@ def main():
     # ---- mock catalogs -----------------------------------------------------------------------------------------
     import h5py
     rhos = [0.0] + list(cfg.rho_true_grid)
+    mdir = Path(args.mock_dir) if args.mock_dir else None
+    tag = f"_{mdir.name}" if mdir else ""
     tasks = []
     for rho in rhos:
-        path = cfg.mocks_path(rho)
+        path = mdir / f"mocks_full_rho{rho:+.2f}.h5" if mdir else cfg.mocks_path(rho)
         with h5py.File(path, "r") as f:
             tasks += [(rho, str(path), k) for k in sorted(k for k in f if k.startswith("mock_"))]
+    if mdir:                                   # alternative-hypothesis sets (power); rho_true codes -9 (width), -8 (mean)
+        for alt, code in (("width", -9.0), ("mean", -8.0)):
+            path = mdir / f"mocks_full_{alt}.h5"
+            if path.exists():
+                with h5py.File(path, "r") as f:
+                    tasks += [(code, str(path), k) for k in sorted(k for k in f if k.startswith("mock_"))]
     print(f"{len(tasks)} mock catalogs over rho_true = {rhos}", flush=True)
     rows = [real]
     # 'spawn', not fork: the parent has already initialised JAX (real-catalog statistics), and forking a process
@@ -197,7 +207,7 @@ def main():
                 print(f"  {i + 1}/{len(tasks)} done", flush=True)
     df = pd.DataFrame(rows).sort_values(["kind", "rho_true", "mock"])
     tables = cfg.path("tables_dir")
-    df.to_csv(tables / f"e2_tau_{args.mode}.csv", index=False)
+    df.to_csv(tables / f"e2_tau_{args.mode}{tag}.csv", index=False)
 
     # ---- summary: FPR, calibration curve, marginal check per measure --------------------------------------------
     out = {"n_events": len(names), "measures": list(MEASURES), "observed": {k: v for k, v in real.items()
@@ -229,7 +239,11 @@ def main():
     out["null_diagnostics"] = {k: dict(median=float(null[k].median()), p16=float(null[k].quantile(0.16)),
                                        p84=float(null[k].quantile(0.84)))
                                for k in ("tau_true", "tau_obspt", "frac_m1ge40_true") + tuple(f"tau_{M}" for M in MEASURES)}
-    with open(tables / f"e2_tau_{args.mode}.json", "w") as f:
+    for alt, code in (("width", -9.0), ("mean", -8.0)):
+        a = df[(df.kind == "mock") & np.isclose(df.rho_true, code)]
+        if len(a):
+            out.setdefault("power", {})[alt] = {M: dict(median=float(a[f"tau_{M}"].median()), frac_below_null_p5=float(np.mean(a[f"tau_{M}"] < df[(df.kind == "mock") & (df.rho_true == 0.0)][f"tau_{M}"].quantile(0.05)))) for M in MEASURES}
+    with open(tables / f"e2_tau_{args.mode}{tag}.json", "w") as f:
         json.dump(out, f, indent=2)
     for M in MEASURES:
         s = out["stats"][f"tau_{M}"]

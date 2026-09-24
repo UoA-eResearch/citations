@@ -43,6 +43,12 @@ MODEL_SPECS = {
     "lvk_bpl2p_mean":  dict(**LVK_BPL2P, fixed={"sigma_chi_eff_1": 0.0}),
     "lvk_bpl2p_width": dict(**LVK_BPL2P, fixed={"mu_chi_eff_1": 0.0}),
     "lvk_bpl2p_null":  dict(**LVK_BPL2P, fixed=dict(NULL_SPIN)),
+    # D22 (exploratory): Gaussian copula with a separate rho in each preregistered E5 primary-mass bin
+    "copula_gauss_mbin_plp": dict(**{**COPULA_PLP, "copula": "gaussian_mbin", "m_edges": (20.0, 40.0)}, fixed={}),
+    # D24: E1 inside the LVK configuration -- the LVK null model (BPL+2P masses, power-law pairing, truncated-normal
+    # chi_eff with no q-dependence) plus a copula between u = F(q|m1) and v = F(chi_eff); Frank = the LVK's App. B.6
+    "copula_frank_lvk": dict(**{**LVK_BPL2P, "copula": "frank"}, fixed=dict(NULL_SPIN)),
+    "copula_gauss_lvk": dict(**{**LVK_BPL2P, "copula": "gaussian"}, fixed=dict(NULL_SPIN)),
     # D17 ablations: which ingredient of the LVK configuration removes the chi_eff-mean shift? Each variant changes
     # ONE ingredient relative to baseline_plp_both (PLP masses, shared taper, uniform sigma_0) or lvk_bpl2p_both.
     "abl_plp_m2taper_both":     dict(**{**BASE_PLP, "m2_taper": "separate"}, fixed={}),          # PLP + separate m2 taper
@@ -63,6 +69,8 @@ BF_COMPARISONS = [
     ("E4b", "baseline_splm1_both", "baseline_splm1_null", "mean + width slopes vs null (spline m1)"),
     ("E4c", "baseline_bpq_both", "baseline_plp_both", "broken pairing vs power-law pairing"),
     ("E4d", "baseline_splm1_both", "baseline_plp_both", "spline m1 vs PowerLaw+Peak m1"),
+    ("E1-LVK-frank", "copula_frank_lvk", "lvk_bpl2p_null", "Frank copula dependence vs independence (LVK marginals)"),
+    ("E1-LVK-gauss", "copula_gauss_lvk", "lvk_bpl2p_null", "Gaussian copula dependence vs independence (LVK marginals)"),
     ("E3a-LVK", "lvk_bpl2p_mean", "lvk_bpl2p_null", "chi_eff mean slope only vs null (LVK BPL+2P masses)"),
     ("E3b-LVK", "lvk_bpl2p_width", "lvk_bpl2p_null", "chi_eff width slope only vs null (LVK BPL+2P masses)"),
     ("E3c-LVK", "lvk_bpl2p_both", "lvk_bpl2p_null", "mean + width slopes vs null (LVK BPL+2P masses)"),
@@ -97,6 +105,8 @@ def component_params(spec: dict, n_mass_nodes: int, n_marg_nodes: int) -> list[s
         names += ["gaussian_copula_rho"]
     elif spec.get("copula") == "frank":
         names += ["frank_copula_theta"]
+    elif spec.get("copula") == "gaussian_mbin":
+        names += [f"rho_b{k}" for k in range(len(spec["m_edges"]) + 1)]
     names += ["lamb"]
     return [n for n in names if n not in spec.get("fixed", {})]
 

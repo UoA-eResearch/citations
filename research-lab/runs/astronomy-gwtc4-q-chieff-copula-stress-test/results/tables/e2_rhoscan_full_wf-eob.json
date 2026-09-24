@@ -1,0 +1,14 @@
+{
+  "sample_table": "../data/processed/sample_table_full_wf-eob.h5",
+  "rho_hat": -0.053348744141179745,
+  "lnl_max": -4581.933598581343,
+  "lnl_rho0": -4581.96787282965,
+  "lr0": 0.06854849661431217,
+  "post_mean": -0.06366914300495254,
+  "post_median": -0.07381382469797244,
+  "p_rho_neg": 0.5967620711025255,
+  "at_edge": false,
+  "var_tot_at_hat": 0.7005716537940756,
+  "var_tot_at_0": 0.6686082406492108,
+  "n_eff_at_hat": 64645.519629939525
+}

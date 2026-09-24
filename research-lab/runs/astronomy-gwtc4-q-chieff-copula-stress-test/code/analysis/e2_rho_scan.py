@@ -66,9 +66,14 @@ def main():
     ap.add_argument("--mode", default="full")
     ap.add_argument("--backend", default="gpu")
     ap.add_argument("--chunk", type=int, default=77)
+    ap.add_argument("--sample-table", default=None, help="alternative real-catalog sample table (D25); real catalog only")
+    ap.add_argument("--tag", default="", help="output suffix for --sample-table runs")
     args = ap.parse_args()
     cfg = load_config(mode=args.mode, config_path=str(HERE.parent / "config.yaml"))
     tables = cfg.path("tables_dir")
+    if args.sample_table:
+        alt = Path(args.sample_table)
+        cfg.sample_table_path = lambda: alt          # load_event_arrays reads the real catalog from here
     ref = load_json(cfg.fit_dir("copula_indep_plp") / "summary.json")
     base = {n: q["median"] for n, q in ref["quantiles"].items()}
     base.update(ref.get("fixed", {}))
@@ -105,6 +110,11 @@ def main():
         print(f"REAL: rho_hat={r['rho_hat']:+.3f} LR0={r['lr0']:.3f} post mean {r['post_mean']:+.3f} "
               f"P(rho<0)={r['p_rho_neg']:.3f} var_tot@hat={r['var_tot_at_hat']:.2f} n_eff={r['n_eff_at_hat']:.0f} "
               f"({time.time() - t0:.1f}s incl. compile)", flush=True)
+        if args.sample_table:
+            out = {"sample_table": str(args.sample_table), **{k: (float(v) if not isinstance(v, (bool, np.bool_)) else bool(v)) for k, v in r.items()}}
+            json.dump(out, open(tables / f"e2_rhoscan_{args.mode}_{args.tag}.json", "w"), indent=2)
+            print(json.dumps(out), flush=True)
+            return
         for rho in [0.0] + list(cfg.rho_true_grid):
             with h5py.File(cfg.mocks_path(rho), "r") as fh:
                 keys = sorted(k for k in fh if k.startswith("mock_"))

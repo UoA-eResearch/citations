@@ -272,7 +272,14 @@ def chi_sector(q, chi, p, spec, G: Grids, need_cdf: bool):
         mu = p["mu_chi_eff_0"] + p["mu_chi_eff_1"] * (q - 1.0)
         sigma_0 = jnp.exp(p["ln_sigma_chi_eff_0"]) if "ln_sigma_chi_eff_0" in p else p["sigma_chi_eff_0"]
         sigma = sigma_0 * jnp.exp(p["sigma_chi_eff_1"] * (q - 1.0))
-        return log_truncnorm(chi, mu, sigma, -1.0, 1.0), None
+        lp = log_truncnorm(chi, mu, sigma, -1.0, 1.0)
+        if not need_cdf:
+            return lp, None
+        # D24: CDF of the truncated normal, for copulas on the LVK parametric marginals (slopes fixed to 0 there,
+        # so v = F(chi_eff) is the marginal CDF)
+        lo, hi = ndtr((-1.0 - mu) / sigma), ndtr((1.0 - mu) / sigma)
+        v = (ndtr((chi - mu) / sigma) - lo) / jnp.maximum(hi - lo, 1e-300)
+        return lp, jnp.clip(v, 1e-6, 1 - 1e-6)
     if spec["spin"] == "spline":
         f = jnp.stack([p[f"fchi_{k}"] for k in range(G.n_marginal_nodes)])
         log_grid = G.j["S_chi"] @ f
@@ -288,12 +295,18 @@ def chi_sector(q, chi, p, spec, G: Grids, need_cdf: bool):
     raise ValueError(spec["spin"])
 
 
-def log_copula(u, v, p, spec):
+def log_copula(u, v, p, spec, m1=None):
     fam = spec.get("copula")
     if fam is None:
         return jnp.zeros_like(u)
-    if fam == "gaussian":
-        rho = jnp.clip(p["gaussian_copula_rho"], -0.995, 0.995)
+    if fam in ("gaussian", "gaussian_mbin"):
+        if fam == "gaussian":
+            rho = jnp.clip(p["gaussian_copula_rho"], -0.995, 0.995)
+        else:   # D22: piecewise-constant rho in primary-mass bins (edges spec["m_edges"]); normalised for every m1
+            rho = p["rho_b0"] * jnp.ones_like(u)
+            for k, edge in enumerate(spec["m_edges"]):
+                rho = jnp.where(m1 >= edge, p[f"rho_b{k + 1}"], rho)
+            rho = jnp.clip(rho, -0.995, 0.995)
         x, y = ndtri(u), ndtri(v)
         return -0.5 * jnp.log(1 - rho**2) - (rho**2 * (x**2 + y**2) - 2 * rho * x * y) / (2 * (1 - rho**2))
     if fam == "frank":
@@ -322,7 +335,7 @@ def log_population(d: dict, p: dict, spec: dict, G: Grids):
     lc, v = chi_sector(q, chi, p, spec, G, need_cdf)
     lp = lp + lq + lc + log_p_z(z, p, G)
     if need_cdf:
-        lp = lp + log_copula(u, v, p, spec)
+        lp = lp + log_copula(u, v, p, spec, m1=m1)
     return lp
 
 

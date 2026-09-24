@@ -292,7 +292,7 @@ def write_captions(cfg, out, diag, logger):
             f"F3 (E1). Posterior density of the Gaussian-copula dependence parameter rho (x axis, dimensionless, "
             "rank-correlation-like; negative = anticorrelation) for the PowerLaw+Peak and spline-m1 mass models, with "
             f"the uniform prior (dotted) and the Savage-Dickey ln BF in the legend. Nested-sampling ln BF(dependence vs "
-            f"independence) = {e1:+.2f} (title). Step curve / top axis: Frank-copula theta posterior."),
+            f"independence) = {e1:+.2f} (title)."),
         "F4_bf_table": (
             "F4. Natural-log Bayes factors (x axis) from nautilus nested sampling for every preregistered model "
             "comparison (E1 copula dependence vs independence; E3 mean/width decomposition; E4 pairing-function and "

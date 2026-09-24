@@ -15,6 +15,7 @@ from __future__ import annotations
 import logging
 
 import argparse
+import os
 import json
 import sys
 import time
@@ -123,7 +124,10 @@ def main():
     model_set = args.models.split(",") if args.models else list(cfg.mode_value("model_set"))
     nuts_models = [] if args.skip_nuts else [m for m in cfg.raw["sampler"].get("nuts_models", []) if m in model_set]
 
-    todo = [m for m in model_set if args.force or not (cfg.fit_dir(m) / "summary.json").exists()]
+    # D28: SEED_TAG=<k> refits with a different nautilus seed into fits/<mode>/<model>__seed<k> (main fits untouched)
+    seed_tag = os.environ.get("SEED_TAG", "")
+    fdir = (lambda m: cfg.fit_dir(f"{m}__seed{seed_tag}")) if seed_tag else cfg.fit_dir
+    todo = [m for m in model_set if args.force or not (fdir(m) / "summary.json").exists()]
     todo_nuts = [m for m in nuts_models if args.force or not (cfg.fit_dir(m) / "summary_nuts.json").exists()]
     if not todo and not todo_nuts:
         logger.info("all fits present, skipping (use --force to redo)")
@@ -141,7 +145,7 @@ def main():
         chunk = int(cfg.raw["run"][gs.chunk_key])
         G = Grids(cfg, cfg.mode_value("mass_spline_nodes"), cfg.mode_value("marginal_spline_nodes"))
         for model in sorted(set(todo) | set(todo_nuts), key=model_set.index):
-            fit_dir = cfg.fit_dir(model)
+            fit_dir = fdir(model)
             spec, pnames, fixed, prior = build_model(model, cfg)
             lik = HierarchicalLikelihood(spec, pnames, fixed, ev, inj, G, max_variance=cfg.max_variance,
                                          enforce_injection_convergence=bool(lik_cfg["enforce_injection_convergence"]),
@@ -161,7 +165,7 @@ def main():
             logger.info("likelihood timing: compile %.1fs, %.3f s/point (%d points); finite fraction at prior draws %.2f",
                         t_compile, t_eval / len(test), len(test), np.isfinite(vals).mean())
             if model in todo:
-                res = run_nautilus(lik, prior, cfg, fit_dir, cfg.seed_for(f"nautilus_{model}"), chunk, args.force, logger)
+                res = run_nautilus(lik, prior, cfg, fit_dir, cfg.seed_for(f"nautilus_{model}{seed_tag}"), chunk, args.force, logger)
                 aux_fn = lik.make_batched_aux(chunk)
                 _, aux = aux_fn(res["eq_points"])
                 np.savez(fit_dir / "posterior.npz", samples=res["eq_points"], log_l=res["eq_log_l"],
