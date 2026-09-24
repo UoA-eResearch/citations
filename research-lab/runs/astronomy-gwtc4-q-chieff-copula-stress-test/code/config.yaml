@@ -1,0 +1,293 @@
+# Central configuration for the q-chi_eff copula stress-test pipeline.
+# All paths are relative to the run directory
+# (/mnt/citations/research-lab/runs/astronomy-gwtc4-q-chieff-copula-stress-test).
+#
+# `run.mode` selects the `modes.smoke` or `modes.full` block below for every
+# runtime-cost knob (sample size, live points, #mocks ...). Every pipeline
+# script also accepts --mode smoke|full on the command line.
+
+run:
+  seed: 20260902
+  mode: smoke
+  # JAX backend for the fit / mock stages: auto | cpu | gpu.
+  #   auto -> use the GPU if `nvidia-smi` reports >= gpu_min_free_mib free
+  #           (after optionally stopping the vllm container), else CPU.
+  backend: auto
+  # NOTE: modes.smoke.backend = cpu below overrides this for smoke runs, so a
+  # smoke test never stops the vllm container (pass --backend gpu to override).
+  # Stop/start the `vllm` docker container around GPU-heavy stages
+  # (authorized by the user; see README "GPU protocol"). Set false to never
+  # touch docker (the pipeline then only uses the GPU if it is already free).
+  manage_vllm: true
+  gpu_min_free_mib: 20000
+  # jax vmap chunk size for batched likelihood evaluation (nautilus vectorized
+  # calls). Memory per point ~ 8 bytes * (N_events*K + M_injections) * ~6.
+  likelihood_chunk_cpu: 8
+  likelihood_chunk_gpu: 128
+
+paths:
+  raw_pe_dir: data/raw/pe_samples
+  raw_injections_dir: data/raw/injections
+  sample_dir: data/sample
+  processed_dir: data/processed
+  mocks_dir: data/mocks
+  results_dir: results
+  figures_dir: results/figures
+  tables_dir: results/tables
+  fits_dir: results/fits
+  logs_dir: logs
+
+data_sources:
+  # Event catalogs, in priority order for de-duplication (an event that
+  # appears in several catalogs is taken from the first one listed).
+  # GWTC-4.0 = O4a; GWTC-3-confident = O3b; GWTC-2.1-confident = O1-O3a.
+  # Together they are the cumulative O1-O4a confident set used by the LVK
+  # GWTC-4.0 population paper (arXiv:2508.18083).
+  catalogs:
+    - name: GWTC-4.0
+      eventapi: https://gwosc.org/eventapi/json/GWTC-4.0/
+      preferred_pe_group: "C00:Mixed"
+      # PE prior in luminosity distance: read from the file's priors/analytic
+      # block (GWTC-4.0 uses bilby UniformSourceFrame).
+      redshift_prior: from_file
+    - name: GWTC-3-confident
+      eventapi: https://gwosc.org/eventapi/json/GWTC-3-confident/
+      preferred_pe_group: "C01:Mixed"
+      # `_mixed_cosmo` releases are reweighted to a prior uniform in comoving
+      # volume and source-frame time (release notes, Zenodo 8177023).
+      redshift_prior: uniform_comoving_source_frame
+    - name: GWTC-2.1-confident
+      eventapi: https://gwosc.org/eventapi/json/GWTC-2.1-confident/
+      preferred_pe_group: "C01:Mixed"
+      redshift_prior: uniform_comoving_source_frame
+  # Zenodo serves ~0.4-0.9 MB/s per connection and scales with parallel
+  # streams (measured 2.7 MB/s with 4, 7 MB/s with 8): ~23 GB of PE files
+  # take ~1 h with 12 threads.
+  download_threads: 12
+  # O1-O4a cumulative sensitivity injections (Zenodo record verified live
+  # 2026-09-02, see plan.md sec 8): semi-analytic O1/O2 + real O3/O4a mixture,
+  # cartesian spins.
+  # The O1/O2 events re-released in GWTC-2.1-confident carry far=None on the
+  # eventapi; their FARs (all < 0.02/yr) are taken from GWTC-1-confident so
+  # that the cumulative sample matches the LVK population paper (10 O1/O2 +
+  # 36 O3a + 23 O3b = 69 BBHs from GWTC-3.0, plus 84 O4a = 153).
+  far_fallback_catalogs:
+    - https://gwosc.org/eventapi/json/GWTC-1-confident/
+  zenodo_injection_record: https://zenodo.org/api/records/16740128
+  injection_file_key: mixture-semi_o1_o2-real_o3_o4a-cartesian_spins_20250503134659UTC.hdf
+  injection_file_size_bytes: 624783664
+  # Component-spin draw distribution of each injection component (needed to
+  # convert the recorded 9-D draw density to chi_eff). o3: isotropic tilts,
+  # magnitudes uniform on [0, 0.998]; o4a and the semi-analytic O1/O2 set:
+  # Essick 2025 (arXiv:2508.10638) truncated-Gaussian magnitudes (sigma 0.5)
+  # with 30% aligned ((1+cos t)^3/4) + 70% isotropic tilts. Both verified on
+  # the file (selection.spin_draw_check; results in injection_check_<mode>.json).
+  injection_spin_families: {o1o2_semi: essick2025, o3: isotropic_uniform, o4a: essick2025}
+
+sample:
+  far_threshold_per_yr: 1.0
+  # O1/O2 semi-analytic injections carry no FAR; they count as found when
+  # their semianalytic network SNR exceeds this (Essick 2023 convention,
+  # value from the Zenodo metadata example).
+  semianalytic_snr_threshold: 10.0
+  # BBH control (plan sec 5), pinned to the LVK GWTC-4.0 population paper
+  # (arXiv:2508.18083 sec 3.2.2 and sec 6): the `bbh_mass_quantile` (1%)
+  # lower limit of BOTH component-mass posteriors must exceed the floor
+  # (3 Msun). This removes GW170817, GW190425, GW190814, GW190917, GW200105,
+  # GW200115, GW200210_092254, GW230529 and similar NS-containing candidates.
+  # `exclude_events`: events the paper excludes explicitly -- GW190814
+  # (ambiguous NSBH/BBH, also fails the mass cut) and GW230630_070659
+  # (data-quality concerns; it has no public PE release either).
+  bbh_mass2_source_floor_msun: 3.0
+  bbh_mass_quantile: 0.01
+  exclude_events: [GW190814, GW230630_070659]
+  # Events that the paper counts as BBH although the 1% lower limit of m2_source in the
+  # public GWTC-2.1 `_mixed_cosmo` samples is < 3 Msun (2.77 and 2.67 Msun): the paper
+  # inherits the GWTC-3.0 population-paper classification for O1-O3 events ("GWTC-3.0
+  # included 76 candidates with FAR < 1/yr: 69 BBH, 4 NSBH, 2 BNS, and GW190814", sec
+  # 3.2.1) and its cumulative BBH count is 69 + 84 = 153, which requires both. See
+  # deviations.md D9. They bypass the mass cut only (FAR / exclusion list still apply).
+  force_include_events: [GW190924_021846, GW190725_174728]
+  chi_eff_column: chi_eff                # NOT chi_eff_infinity (plan sec 5)
+  # chi_eff PE prior: single-spin magnitudes uniform on [0, a_max] (read per
+  # event from the analytic prior block; fallback below), isotropic tilts.
+  default_spin_amax: 0.99
+  chieff_prior_mc_samples: 2000000
+  chieff_prior_q_grid: 80
+  chieff_prior_chi_grid: 401
+
+modes:
+  smoke:
+    # smoke mode: N smallest-file BBH candidates per catalog (exercises every
+    # catalog / file-layout code path with ~5 min of download). CPU only.
+    backend: cpu
+    n_events_per_catalog: {"GWTC-4.0": 2, "GWTC-3-confident": 1, "GWTC-2.1-confident": 1}
+    max_posterior_samples_per_event: 300
+    injection_slice: 10000            # random subset of found injections
+    nlive: 100
+    n_networks: 1
+    posterior_n_eff: 300
+    n_mock_catalogs: 4
+    n_mock_catalogs_per_rho: 2
+    rho_true_grid: [-0.4, 0.2]
+    n_mock_full_refits: 1
+    numpyro_num_warmup: 60
+    numpyro_num_samples: 80
+    mass_spline_nodes: 5
+    marginal_spline_nodes: 5
+    n_ppc_draws: 20
+    # 4 events x 300 samples cannot satisfy the LVK variance cut; disable it in
+    # smoke mode only (the injection n_eff > 4N cut stays on).
+    max_variance: 1.0e+9
+    # coarser normalisation grids (the (n_q x n_m1) grid dominates the cost of
+    # one likelihood evaluation when there are only a handful of events)
+    grid_overrides: {n_m1: 300, n_q: 150, n_z: 500}
+    map_injection_subsample: null
+    model_set: [baseline_plp_both, baseline_plp_null, copula_gauss_plp, copula_indep_plp,
+                baseline_bpq_both, copula_indep_splm1]
+  full:
+    backend: auto                     # GPU if free (stops vllm, see README), else CPU
+    n_events_per_catalog: null        # all events passing the sample cuts
+    # all stored samples (the sample table keeps <= 10000 per event); the LVK ln L variance
+    # cut scales as 1/K and bites the whole prior at K = 4000 (deviations.md D11-D12)
+    max_posterior_samples_per_event: 10000
+    injection_slice: null             # all found injections
+    nlive: 1000
+    n_networks: 2      # was 4 (D16: 33-dim nautilus runs took 3-4 h each; README knob 1)
+    posterior_n_eff: 4000
+    n_mock_catalogs: 200
+    n_mock_catalogs_per_rho: 40
+    rho_true_grid: [-0.6, -0.4, -0.2, 0.2]
+    n_mock_full_refits: 4
+    numpyro_num_warmup: 250
+    numpyro_num_samples: 500
+    mass_spline_nodes: 14             # 12 nodes over ln(2..100) -> 14 over ln(2..300), same node spacing (D13)
+    marginal_spline_nodes: 12
+    n_ppc_draws: 300
+    max_variance: 1.0                 # LVK convention
+    grid_overrides: {}
+    # MAP statistics on the ~440 mock catalogs use a random subsample of the
+    # found injections (total_generated rescaled) to keep the mock arm cheap;
+    # the real-data fits (stage 03) and the full nautilus mock refits use all.
+    map_injection_subsample: 150000
+    model_set: [baseline_plp_both, baseline_plp_mean, baseline_plp_width, baseline_plp_null, copula_gauss_plp, copula_indep_plp, baseline_bpq_both, baseline_bpq_null, baseline_splm1_both, baseline_splm1_null, copula_gauss_splm1, lvk_bpl2p_both, lvk_bpl2p_null, lvk_bpl2p_mean, lvk_bpl2p_width, abl_plp_m2taper_both, abl_plp_lvkspin_both, abl_bpl2p_sharedtaper_both, abl_bpl2p_plpspin_both]   # copula_indep_splm1 dropped (D18)   # copula_frank_plp dropped (D16)
+
+grids:
+  # Normalization grids (match gwpopulation.models.mass defaults so the
+  # jax re-implementation can be checked against it).
+  # m1 grid extended to 300 Msun (was 100): the GWTC-4.0 sample contains GW231123 (m1 ~ 135 Msun,
+  # 1% lower limit 110 Msun) and the LVK GWTC-4.0 mass models pin m_high = 300 Msun (deviations.md D13);
+  # n_m1 raised so that the linear grid keeps ~0.15 Msun resolution near mmin.
+  m1_min: 2.0
+  m1_max: 300.0
+  n_m1: 2000
+  n_q: 500
+  q_min: 0.001
+  n_chi: 401
+  z_max: 3.0
+  n_z: 1500
+  # spline node ranges for the flexible marginals
+  q_node_range: [0.05, 1.0]
+  chi_node_range: [-1.0, 1.0]
+
+# Hyper-prior specification shared by every model. Uniform bounds follow the
+# LVK GWTC-3/4 PowerLaw+Peak conventions. Spline node log-densities use a
+# Gaussian random-walk prior (first node ~ N(0, spline_first_sigma), successive
+# differences ~ N(0, spline_step_sigma)) -- identical for the dependence and
+# independence copula fits, so E1 isolates the dependence parameter.
+priors:
+  alpha: [-4.0, 12.0]
+  beta: [-4.0, 12.0]
+  mmin: [2.0, 10.0]
+  mmax: [30.0, 300.0]     # was [30, 100]; GW231123 requires mmax > 110 (D13)
+  lam: [0.0, 1.0]
+  mpp: [20.0, 50.0]
+  sigpp: [1.0, 10.0]
+  delta_m: [0.0, 10.0]
+  lamb: [-4.0, 10.0]
+  # correlated truncated-normal chi_eff sector == the LVK GWTC-4.0 "Linear"
+  # (q, chi_eff) model (arXiv:2508.18083 App. B.7, priors from its Table 10):
+  #   mu(q) = mu_0 + mu_1 (q - 1),  ln sigma(q) = ln sigma_0 + sigma_1 (q - 1)
+  #   mu_0 ~ U(-1, 1), delta mu ~ U(-2, 2), delta ln sigma ~ U(-12, 4);
+  #   sigma_0 uniform on [0.02, 1] (LVK: ln sigma_0 ~ U(-5, 0); this intercept
+  #   prior is shared by every E3 variant and cancels in the E3 Bayes factors).
+  mu_chi_eff_0: [-1.0, 1.0]
+  mu_chi_eff_1: [-2.0, 2.0]
+  sigma_chi_eff_0: [0.02, 1.0]
+  sigma_chi_eff_1: [-12.0, 4.0]
+  sigma_chi_eff_floor: 0.02
+  # LVK GWTC-4.0 Broken Power Law + 2 Peaks (arXiv:2508.18083 Table 6, D15). The Dir(1,1,1) mixing fractions and
+  # the triangular m1,low / m2,low priors (eq. B17) are realised through unit-cube parameters (dir_u*, mmin*_u);
+  # m_high is pinned at 300 Msun (= grids.m1_max). beta keeps the shared [-4, 12] box (LVK: U(-2, 7)).
+  alpha_1: [-4.0, 12.0]
+  alpha_2: [-4.0, 12.0]
+  m_break: [20.0, 50.0]
+  mu_1: [5.0, 20.0]
+  sigma_1: [0.05, 10.0]     # LVK U(0, 10); a 0.05 Msun floor keeps the truncated normal finite
+  mu_2: [25.0, 60.0]
+  sigma_2: [0.05, 10.0]
+  dir_u0: [0.0, 1.0]
+  dir_u1: [0.0, 1.0]
+  mmin_u: [0.0, 1.0]
+  mmin2_u: [0.0, 1.0]
+  delta_m2: [0.0, 10.0]
+  ln_sigma_chi_eff_0: [-5.0, 0.0]   # LVK Table 10: ln sigma_eff|q ~ U(-5, 0) (used by the lvk_* models)
+  # copula dependence parameters
+  gaussian_copula_rho: [-0.95, 0.95]
+  frank_copula_theta: [-20.0, 20.0]
+  # generalized (broken power-law) pairing function
+  pairing_q_break: [0.3, 0.9]
+  pairing_dbeta: [-6.0, 6.0]
+  spline_first_sigma: 1.5
+  spline_step_sigma: 1.0
+
+likelihood:
+  # LVK-style Monte Carlo convergence cuts: total variance of ln L < max_variance
+  # and injection effective sample size n_eff > 4 N_events (Farr 2019).
+  max_variance: 1.0
+  enforce_injection_convergence: true
+  # How the convergence cuts enter the sampled likelihood: 'hard' (ln L = -inf outside the
+  # region, LVK convention) or 'penalty' (ln L - penalty_scale * [max(0, ln var_tot/max_variance)
+  # + max(0, ln 4N/n_eff)]: finite and monotonically decreasing outside the region, effective cut
+  # at var_tot ~ 1.001, so that nested sampling can find the region from prior draws where the hard
+  # cut leaves 0/256 finite points at full scale). See deviations.md D11.
+  cut_mode: penalty
+  penalty_scale: 1000.0
+  # Gradient mode for the MAP fits (mock statistics) and NUTS: 'forward'
+  # (jacfwd; gather-only, fast on the GPU) or 'reverse' (jax.grad; the VJPs of
+  # ~1e6 gathers become atomics-bound scatter-adds on the GPU). Both give the
+  # same gradient (checked by the gpucheck stage).
+  gradient_mode: auto     # auto = forward on the GPU, reverse on the CPU
+
+sampler:
+  engine: nautilus          # evidence + posterior for every model
+  f_live: 0.01
+  n_shell: 1
+  nuts_models: [baseline_plp_both]   # additionally cross-checked with numpyro NUTS
+  nuts_max_tree_depth: 6             # posterior-shape cross-check only; bounds the cost per iteration
+
+mocks:
+  rho_true_grid: [-0.6, -0.4, -0.2, 0.2]   # calibration curve in addition to rho=0 (modes.* may override)
+  kernel_neighbors: 5
+  kernel_weight_clip_quantile: 0.995
+
+diagnostics:
+  mass_bin_edges_full: [2.0, 20.0, 40.0, 200.0]
+  mass_bin_edges_smoke: [2.0, 30.0, 200.0]
+  # Acceptance gate (plan sec 4.1) against arXiv:2508.18083 sec 6.5.1. For its
+  # Linear (q, chi_eff) model the paper quotes credibility levels rather than
+  # intervals: P(delta mu_eff|q < 0) = 0.82 and P(delta ln sigma_eff|q < 0) = 0.95
+  # (GWTC-3.0 had P(delta mu < 0) = 0.98). The gate passes when our
+  # baseline_plp_both posterior reproduces both within the tolerances below.
+  # The paper's Frank copula (truncated-Gaussian marginals, BPL+2-peaks masses)
+  # gives kappa_q,eff = -2.1 (+2.4 / -2.9), P(kappa < 0) = 0.92: reported as a
+  # cross-check only (our copula_frank_plp has spline marginals).
+  reference_p_mu1_negative: 0.82
+  reference_p_lnsigma1_negative: 0.95
+  gate_tolerance_p_mu1: 0.15
+  gate_tolerance_p_lnsigma1: 0.10
+  reference_frank_kappa: {median: -2.1, p5: -5.0, p95: 0.3, p_negative: 0.92}
+  loo_min_ess: 50
+
+logging:
+  level: INFO

@@ -1,0 +1,4 @@
+F12. Point-estimate rank correlation (x: Kendall tau of per-event medians under the stated measure) against the
+hierarchical estimator (y: rho_hat from the likelihood scan) for all 360 mock catalogs, coloured by the true copula
+rho, and the real catalog (star). In mocks the two statistics track each other; the real catalog's position shows
+whether its point estimates and its full likelihoods tell the same story.

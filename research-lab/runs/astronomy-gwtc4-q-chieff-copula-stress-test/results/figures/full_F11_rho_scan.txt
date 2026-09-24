@@ -1,0 +1,7 @@
+F11 (E2, hierarchical statistic; deviations D20). Left: rho_hat, the maximum of the selection-corrected Gaussian-copula
+likelihood scanned in rho with all other hyperparameters fixed at the null population, for 40 mock catalogs at each
+rho_true in (-0.6, -0.4, -0.2, +0.2) and 200 at rho_true = 0 (violins; grey line rho_hat = rho_true). The estimator is
+unbiased under the real selection function and real-event PE scatter. Orange: the real catalog, rho_hat = +0.074.
+Right: the rho_true = 0 distribution of rho_hat with the real value; FPR = fraction of null mocks with rho_hat at
+least as large (0.24) and with a likelihood-ratio statistic against rho = 0 at least as large
+(0.79).

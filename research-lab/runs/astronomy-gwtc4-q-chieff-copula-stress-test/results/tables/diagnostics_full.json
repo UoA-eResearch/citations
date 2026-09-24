@@ -1,0 +1,544 @@
+{
+  "mode": "full",
+  "sddr_ln_bf_dependence_copula_gauss_plp": -0.14675188683786028,
+  "rho_quantiles_copula_gauss_plp": {
+    "p5": -0.05273190993917723,
+    "p16": 0.10431202289973877,
+    "median": 0.33493122514295837,
+    "p84": 0.5406577055204689,
+    "p95": 0.6659642855617046
+  },
+  "sddr_ln_bf_dependence_copula_gauss_splm1": -0.5304890221589017,
+  "rho_quantiles_copula_gauss_splm1": {
+    "p5": -0.2034347336352139,
+    "p16": -0.013697879560269067,
+    "median": 0.24775978009062316,
+    "p84": 0.49013586164121314,
+    "p95": 0.6925421407688803
+  },
+  "comparisons": [
+    {
+      "endpoint": "E1",
+      "model": "copula_gauss_plp",
+      "reference": "copula_indep_plp",
+      "description": "Gaussian copula dependence vs independence (PLP m1)",
+      "ln_bf": -0.20065933978912653
+    },
+    {
+      "endpoint": "E3a",
+      "model": "baseline_plp_mean",
+      "reference": "baseline_plp_null",
+      "description": "chi_eff mean slope only vs null",
+      "ln_bf": 3.441609234783755
+    },
+    {
+      "endpoint": "E3b",
+      "model": "baseline_plp_width",
+      "reference": "baseline_plp_null",
+      "description": "chi_eff width slope only vs null",
+      "ln_bf": 1.8408196513255461
+    },
+    {
+      "endpoint": "E3c",
+      "model": "baseline_plp_both",
+      "reference": "baseline_plp_null",
+      "description": "mean + width slopes vs null",
+      "ln_bf": 2.8819873232077953
+    },
+    {
+      "endpoint": "E4a",
+      "model": "baseline_bpq_both",
+      "reference": "baseline_bpq_null",
+      "description": "mean + width slopes vs null (broken pairing)",
+      "ln_bf": 2.6632396546519885
+    },
+    {
+      "endpoint": "E4b",
+      "model": "baseline_splm1_both",
+      "reference": "baseline_splm1_null",
+      "description": "mean + width slopes vs null (spline m1)",
+      "ln_bf": 1.3167677712071963
+    },
+    {
+      "endpoint": "E4c",
+      "model": "baseline_bpq_both",
+      "reference": "baseline_plp_both",
+      "description": "broken pairing vs power-law pairing",
+      "ln_bf": 0.032278346631755994
+    },
+    {
+      "endpoint": "E4d",
+      "model": "baseline_splm1_both",
+      "reference": "baseline_plp_both",
+      "description": "spline m1 vs PowerLaw+Peak m1",
+      "ln_bf": -4.402582333286773
+    },
+    {
+      "endpoint": "E3a-LVK",
+      "model": "lvk_bpl2p_mean",
+      "reference": "lvk_bpl2p_null",
+      "description": "chi_eff mean slope only vs null (LVK BPL+2P masses)",
+      "ln_bf": -0.9839480124792317
+    },
+    {
+      "endpoint": "E3b-LVK",
+      "model": "lvk_bpl2p_width",
+      "reference": "lvk_bpl2p_null",
+      "description": "chi_eff width slope only vs null (LVK BPL+2P masses)",
+      "ln_bf": 0.837866541504809
+    },
+    {
+      "endpoint": "E3c-LVK",
+      "model": "lvk_bpl2p_both",
+      "reference": "lvk_bpl2p_null",
+      "description": "mean + width slopes vs null (LVK BPL+2P masses)",
+      "ln_bf": -0.9335611703645554
+    }
+  ],
+  "E1_ln_bf_dependence": -0.20065933978912653,
+  "baseline_mu_chi_eff_1": {
+    "p5": -0.7533452892230212,
+    "p16": -0.6357232769686297,
+    "median": -0.4658472413611505,
+    "p84": -0.3012652403150077,
+    "p95": -0.18186352379792134
+  },
+  "baseline_sigma_chi_eff_1": {
+    "p5": -3.6242581604850392,
+    "p16": -2.986710249239046,
+    "median": -1.717675596809901,
+    "p84": 0.08269145808228717,
+    "p95": 1.664344984929684
+  },
+  "baseline_mu_chi_eff_1_nuts": {
+    "p5": -0.9473148015678153,
+    "p16": -0.7493808188014734,
+    "median": -0.5643106488965794,
+    "p84": -0.3460211721940014,
+    "p95": -0.21570834000208472
+  },
+  "baseline_p_mu1_negative": 0.9945419103313841,
+  "baseline_p_lnsigma1_negative": 0.8302144249512671,
+  "baseline_p_mu1_negative_nuts": 0.998,
+  "baseline_p_lnsigma1_negative_nuts": 0.676,
+  "gate": {
+    "status": "FAIL",
+    "p_mu1_negative": {
+      "ours": 0.9945419103313841,
+      "reference": 0.82,
+      "tolerance": 0.15,
+      "ok": false
+    },
+    "p_lnsigma1_negative": {
+      "ours": 0.8302144249512671,
+      "reference": 0.95,
+      "tolerance": 0.1,
+      "ok": false
+    },
+    "note": "LVK Linear model uses Broken Power Law + 2 Peaks masses; the plan's baseline uses PowerLaw+Peak (plan sec 4.1)"
+  },
+  "slope_credibilities_by_model": [
+    {
+      "model": "baseline_plp_both",
+      "log_z": -4603.017805990574,
+      "p_mu1_negative": 0.9945419103313841,
+      "p_lnsigma1_negative": 0.8302144249512671,
+      "mu1_median": -0.4658472413611505,
+      "lnsigma1_median": -1.717675596809901
+    },
+    {
+      "model": "baseline_bpq_both",
+      "log_z": -4602.985527643942,
+      "p_mu1_negative": 0.995463823996371,
+      "p_lnsigma1_negative": 0.8707189838965752,
+      "mu1_median": -0.45696595617604086,
+      "lnsigma1_median": -1.9499527180167462
+    },
+    {
+      "model": "baseline_splm1_both",
+      "log_z": -4607.420388323861,
+      "p_mu1_negative": 0.9853626081170991,
+      "p_lnsigma1_negative": 0.8278997560434687,
+      "mu1_median": -0.4025309327794515,
+      "lnsigma1_median": -1.6548283809077518
+    },
+    {
+      "model": "lvk_bpl2p_both",
+      "log_z": -4600.551663512176,
+      "p_mu1_negative": 0.8018951732306782,
+      "p_lnsigma1_negative": 0.8889546935149542,
+      "mu1_median": -0.16211477309822842,
+      "lnsigma1_median": -2.093746525500247
+    },
+    {
+      "model": "abl_plp_m2taper_both",
+      "log_z": -4603.281827982965,
+      "p_mu1_negative": 0.9854227405247813,
+      "p_lnsigma1_negative": 0.7784256559766763,
+      "mu1_median": -0.4137399408764161,
+      "lnsigma1_median": -1.4214326625146363
+    },
+    {
+      "model": "abl_plp_lvkspin_both",
+      "log_z": -4601.609653047142,
+      "p_mu1_negative": 0.9926122931442081,
+      "p_lnsigma1_negative": 0.8820921985815603,
+      "mu1_median": -0.4711353283322016,
+      "lnsigma1_median": -2.0224774100068146
+    },
+    {
+      "model": "abl_bpl2p_sharedtaper_both",
+      "log_z": -4600.816224446566,
+      "p_mu1_negative": 0.8395796847635727,
+      "p_lnsigma1_negative": 0.94430823117338,
+      "mu1_median": -0.2095244703279897,
+      "lnsigma1_median": -2.229311526987903
+    },
+    {
+      "model": "abl_bpl2p_plpspin_both",
+      "log_z": -4601.6925643483955,
+      "p_mu1_negative": 0.8032073933134004,
+      "p_lnsigma1_negative": 0.773851590106007,
+      "mu1_median": -0.15784645119186202,
+      "lnsigma1_median": -1.6432471210729869
+    }
+  ],
+  "lvk_bpl2p_p_mu1_negative": 0.8018951732306782,
+  "lvk_bpl2p_p_lnsigma1_negative": 0.8889546935149542,
+  "lvk_bpl2p_mu_chi_eff_1": {
+    "p5": -0.4875573430718,
+    "p16": -0.3487596720398183,
+    "median": -0.16211477309822842,
+    "p84": 0.03439991397103554,
+    "p95": 0.17944341935121133
+  },
+  "lvk_bpl2p_sigma_chi_eff_1": {
+    "p5": -3.697881340290347,
+    "p16": -3.1659631189262756,
+    "median": -2.093746525500247,
+    "p84": -0.5640198638176505,
+    "p95": 1.9403052802595662
+  },
+  "gate_lvk_masses": {
+    "status": "PASS",
+    "p_mu1_negative": {
+      "ours": 0.8018951732306782,
+      "reference": 0.82,
+      "tolerance": 0.15,
+      "ok": true
+    },
+    "p_lnsigma1_negative": {
+      "ours": 0.8889546935149542,
+      "reference": 0.95,
+      "tolerance": 0.1,
+      "ok": true
+    },
+    "note": "Linear spin model on the LVK Broken Power Law + 2 Peaks mass model (D15)"
+  },
+  "loo": {
+    "n_events": 153,
+    "n_reliable": 153,
+    "n_sign_flip": 0,
+    "full_rho_p5_50_95": [
+      -0.05273190993917723,
+      0.33493122514295837,
+      0.6659642855617046
+    ],
+    "n_changes_zero_exclusion": 1,
+    "most_influential": "GW231226_101520"
+  },
+  "e2_tau_measure_check": {
+    "passing": [],
+    "primary": null,
+    "frac_m1ge40": {
+      "post": {
+        "observed": 0.38562091503267976,
+        "null_median": 0.24836601307189543,
+        "null_p2p5": 0.18284313725490195,
+        "null_p97p5": 0.3075163398692811,
+        "frac_null_ge_observed": 0.0
+      },
+      "flattheta": {
+        "observed": 0.39215686274509803,
+        "null_median": 0.28104575163398693,
+        "null_p2p5": 0.21552287581699348,
+        "null_p97p5": 0.35294117647058826,
+        "frac_null_ge_observed": 0.0
+      },
+      "flatx": {
+        "observed": 0.35947712418300654,
+        "null_median": 0.2549019607843137,
+        "null_p2p5": 0.1830065359477124,
+        "null_p97p5": 0.3204248366013072,
+        "frac_null_ge_observed": 0.0
+      },
+      "pop": {
+        "observed": 0.17647058823529413,
+        "null_median": 0.11764705882352941,
+        "null_p2p5": 0.06535947712418301,
+        "null_p97p5": 0.16993464052287582,
+        "frac_null_ge_observed": 0.015
+      }
+    }
+  },
+  "e5_mass_bins": [
+    {
+      "measure": "post",
+      "m1_lo": 2.0,
+      "m1_hi": 20.0,
+      "n_obs": 35,
+      "n_null_median": 37.0,
+      "tau_obs": -0.2403361344537815,
+      "null_median": -0.07197598912715186,
+      "null_p16": -0.20320448179271702,
+      "null_p84": 0.04928544626105598,
+      "fpr_one_sided": 0.095
+    },
+    {
+      "measure": "post",
+      "m1_lo": 20.0,
+      "m1_hi": 40.0,
+      "n_obs": 59,
+      "n_null_median": 77.0,
+      "tau_obs": -0.1420222092343658,
+      "null_median": -0.01073676416142165,
+      "null_p16": -0.10231411576298322,
+      "null_p84": 0.06416184754212917,
+      "fpr_one_sided": 0.065
+    },
+    {
+      "measure": "post",
+      "m1_lo": 40.0,
+      "m1_hi": 200.0,
+      "n_obs": 59,
+      "n_null_median": 38.0,
+      "tau_obs": -0.1373465809468147,
+      "null_median": -0.0032089814772327,
+      "null_p16": -0.14545004420866486,
+      "null_p84": 0.10959964012595586,
+      "fpr_one_sided": 0.19
+    },
+    {
+      "measure": "pop",
+      "m1_lo": 2.0,
+      "m1_hi": 20.0,
+      "n_obs": 42,
+      "n_null_median": 43.0,
+      "tau_obs": -0.1265969802555168,
+      "null_median": 0.1191919191919191,
+      "null_p16": 0.020077930087180777,
+      "null_p84": 0.2386178917448267,
+      "fpr_one_sided": 0.005
+    },
+    {
+      "measure": "pop",
+      "m1_lo": 20.0,
+      "m1_hi": 40.0,
+      "n_obs": 84,
+      "n_null_median": 91.0,
+      "tau_obs": -0.1118760757314974,
+      "null_median": -0.04499690390494985,
+      "null_p16": -0.11212955465587043,
+      "null_p84": 0.04150631109106923,
+      "fpr_one_sided": 0.16
+    },
+    {
+      "measure": "pop",
+      "m1_lo": 40.0,
+      "m1_hi": 200.0,
+      "n_obs": 27,
+      "n_null_median": 18.0,
+      "tau_obs": -0.1225071225071225,
+      "null_median": -0.0849673202614379,
+      "null_p16": -0.22818025455796345,
+      "null_p84": 0.1523809523809524,
+      "fpr_one_sided": 0.39
+    },
+    {
+      "measure": "flattheta",
+      "m1_lo": 2.0,
+      "m1_hi": 20.0,
+      "n_obs": 33,
+      "n_null_median": 35.5,
+      "tau_obs": -0.3560606060606061,
+      "null_median": -0.1108628525830066,
+      "null_p16": -0.23539784946236555,
+      "null_p84": 0.022337381916329252,
+      "fpr_one_sided": 0.015
+    },
+    {
+      "measure": "flattheta",
+      "m1_lo": 20.0,
+      "m1_hi": 40.0,
+      "n_obs": 60,
+      "n_null_median": 74.5,
+      "tau_obs": -0.047457627118644,
+      "null_median": 0.0046576899570628,
+      "null_p16": -0.07799677682197267,
+      "null_p84": 0.09099422401371073,
+      "fpr_one_sided": 0.255
+    },
+    {
+      "measure": "flattheta",
+      "m1_lo": 40.0,
+      "m1_hi": 200.0,
+      "n_obs": 60,
+      "n_null_median": 43.0,
+      "tau_obs": 0.03954802259887,
+      "null_median": 0.029924002494719548,
+      "null_p16": -0.09281964493114309,
+      "null_p84": 0.12762341386130274,
+      "fpr_one_sided": 0.48
+    },
+    {
+      "measure": "flatx",
+      "m1_lo": 2.0,
+      "m1_hi": 20.0,
+      "n_obs": 37,
+      "n_null_median": 38.0,
+      "tau_obs": -0.1861861861861861,
+      "null_median": -0.13992471290289,
+      "null_p16": -0.24786891961085505,
+      "null_p84": -0.01967834101382485,
+      "fpr_one_sided": 0.33
+    },
+    {
+      "measure": "flatx",
+      "m1_lo": 20.0,
+      "m1_hi": 40.0,
+      "n_obs": 61,
+      "n_null_median": 75.0,
+      "tau_obs": -0.0163934426229508,
+      "null_median": 0.018974152724152697,
+      "null_p16": -0.06711029088496183,
+      "null_p84": 0.09434714936300218,
+      "fpr_one_sided": 0.335
+    },
+    {
+      "measure": "flatx",
+      "m1_lo": 40.0,
+      "m1_hi": 200.0,
+      "n_obs": 55,
+      "n_null_median": 39.0,
+      "tau_obs": 0.072053872053872,
+      "null_median": 0.06500303291060669,
+      "null_p16": -0.05702691511387163,
+      "null_p84": 0.16919683319683307,
+      "fpr_one_sided": 0.49
+    }
+  ],
+  "E2": {
+    "tau_by_measure": {
+      "post": {
+        "observed": -0.217062263501892,
+        "fpr_one_sided": 0.0,
+        "fpr_two_sided": 0.0,
+        "null_median": -0.019177846577227382,
+        "rho_true_matching_median": null
+      },
+      "pop": {
+        "observed": -0.10216718266253871,
+        "fpr_one_sided": 0.035,
+        "fpr_two_sided": 0.095,
+        "null_median": 0.003525971792225663,
+        "rho_true_matching_median": -0.3925257731958763
+      },
+      "flattheta": {
+        "observed": -0.10577915376676988,
+        "fpr_one_sided": 0.06,
+        "fpr_two_sided": 0.11,
+        "null_median": -0.00911592707258342,
+        "rho_true_matching_median": -0.4382222222222222
+      },
+      "flatx": {
+        "observed": -0.057103543171654635,
+        "fpr_one_sided": 0.215,
+        "fpr_two_sided": 0.38,
+        "null_median": -0.003009975920192639,
+        "rho_true_matching_median": -0.24634146341463417
+      }
+    },
+    "tau_primary_measure": null,
+    "rho_scan": {
+      "fixed_marginals_from": "copula_indep_plp posterior median",
+      "rho_grid": [
+        -0.95,
+        0.95,
+        77
+      ],
+      "observed": {
+        "rho_hat": 0.07352584349840231,
+        "lr0": 0.06952223420739756,
+        "post_mean": 0.08078955980742197,
+        "post_median": 0.06348853300034044,
+        "p_rho_neg": 0.38040197049031366,
+        "var_tot_at_hat": 0.6762159464154234
+      },
+      "fpr": {
+        "rho_hat_as_extreme": 0.24,
+        "lr0_ge_observed": 0.79,
+        "n_null": 200
+      },
+      "response_curve": [
+        {
+          "rho_true": 0.0,
+          "n": 200,
+          "rho_hat_median": -0.036217499334888374,
+          "rho_hat_p16": -0.16590258760393622,
+          "rho_hat_p84": 0.10630652780802313,
+          "rho_hat_mean": -0.032946514878954,
+          "lr0_median": 0.41605724666101196,
+          "frac_rho_hat_as_extreme": 0.24,
+          "n_at_edge": 0
+        },
+        {
+          "rho_true": -0.6,
+          "n": 40,
+          "rho_hat_median": -0.5924744698161626,
+          "rho_hat_p16": -0.6715743622595298,
+          "rho_hat_p84": -0.4894411404814194,
+          "rho_hat_mean": -0.5834064907212844,
+          "lr0_median": 16.5914618751126,
+          "frac_rho_hat_as_extreme": 0.0,
+          "n_at_edge": 0
+        },
+        {
+          "rho_true": -0.4,
+          "n": 40,
+          "rho_hat_median": -0.41246374272715175,
+          "rho_hat_p16": -0.5259537213881121,
+          "rho_hat_p84": -0.23117039379809487,
+          "rho_hat_mean": -0.3881158006942642,
+          "lr0_median": 7.03998212065153,
+          "frac_rho_hat_as_extreme": 0.0,
+          "n_at_edge": 0
+        },
+        {
+          "rho_true": -0.2,
+          "n": 40,
+          "rho_hat_median": -0.18794684839538645,
+          "rho_hat_p16": -0.28579245094919076,
+          "rho_hat_p84": -0.05236377579853438,
+          "rho_hat_mean": -0.18061405203606487,
+          "lr0_median": 1.6033504439278659,
+          "frac_rho_hat_as_extreme": 0.025,
+          "n_at_edge": 0
+        },
+        {
+          "rho_true": 0.2,
+          "n": 40,
+          "rho_hat_median": 0.18644036778950585,
+          "rho_hat_p16": -0.009505038558359758,
+          "rho_hat_p84": 0.29310087253286177,
+          "rho_hat_mean": 0.13954335290302525,
+          "lr0_median": 1.657159273458774,
+          "frac_rho_hat_as_extreme": 0.65,
+          "n_at_edge": 0
+        }
+      ]
+    }
+  },
+  "E2_decision_basis": "rho scan (no tau measure passed the D21 check)",
+  "E2_fpr": 0.24,
+  "verdict": "CONFIRMED (artifact-consistent): ln BF < ln 3 and E2 FPR = 0.24 > 5% [rho scan (no tau measure passed the D21 check)]"
+}

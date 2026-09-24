@@ -135,3 +135,7 @@ research-lab/runs/*/venv/
 research-lab/runs/*/data/
 research-lab/runs/*/logs/
 research-lab/runs/*/code/__pycache__/
+# research-lab fit binaries (nautilus checkpoints, posterior arrays: ~1.9 GB) -- keep summary.json only
+research-lab/runs/*/results/fits/**/*.h5
+research-lab/runs/*/results/fits/**/*.npz
+research-lab/runs/*/results/tables/*.npy

@@ -1,0 +1,163 @@
+{
+  "mode": "smoke",
+  "sddr_ln_bf_dependence_copula_gauss_plp": -0.12033780853070464,
+  "rho_quantiles_copula_gauss_plp": {
+    "p5": -0.6653396960698309,
+    "p16": -0.44679453556185467,
+    "median": 0.09010368954851533,
+    "p84": 0.6392890168474447,
+    "p95": 0.8111374090816257
+  },
+  "comparisons": [
+    {
+      "endpoint": "E1",
+      "model": "copula_gauss_plp",
+      "reference": "copula_indep_plp",
+      "description": "Gaussian copula dependence vs independence (PLP m1)",
+      "ln_bf": -0.1728227905342692
+    },
+    {
+      "endpoint": "E3c",
+      "model": "baseline_plp_both",
+      "reference": "baseline_plp_null",
+      "description": "mean + width slopes vs null",
+      "ln_bf": 0.07233293192989265
+    },
+    {
+      "endpoint": "E4c",
+      "model": "baseline_bpq_both",
+      "reference": "baseline_plp_both",
+      "description": "broken pairing vs power-law pairing",
+      "ln_bf": -0.8638474452423281
+    }
+  ],
+  "E1_ln_bf_dependence": -0.1728227905342692,
+  "baseline_mu_chi_eff_1": {
+    "p5": -1.72517564002554,
+    "p16": -1.2122008520875533,
+    "median": 0.04616796829819836,
+    "p84": 1.1994832848451962,
+    "p95": 1.7318426084117307
+  },
+  "baseline_sigma_chi_eff_1": {
+    "p5": -11.478368090533996,
+    "p16": -10.30982909373949,
+    "median": -6.096670109110855,
+    "p84": -0.44811410048781336,
+    "p95": 1.9189273897705763
+  },
+  "baseline_mu_chi_eff_1_nuts": {
+    "p5": -1.9612521950238886,
+    "p16": -1.4483688485809734,
+    "median": 0.11441527862512235,
+    "p84": 1.5046179867939262,
+    "p95": 1.9364718750600804
+  },
+  "baseline_p_mu1_negative": 0.4852941176470588,
+  "baseline_p_lnsigma1_negative": 0.8588235294117647,
+  "baseline_p_mu1_negative_nuts": 0.4625,
+  "baseline_p_lnsigma1_negative_nuts": 0.4375,
+  "gate": {
+    "status": "FAIL",
+    "p_mu1_negative": {
+      "ours": 0.4852941176470588,
+      "reference": 0.82,
+      "tolerance": 0.15,
+      "ok": false
+    },
+    "p_lnsigma1_negative": {
+      "ours": 0.8588235294117647,
+      "reference": 0.95,
+      "tolerance": 0.1,
+      "ok": true
+    },
+    "note": "LVK Linear model uses Broken Power Law + 2 Peaks masses; the plan's baseline uses PowerLaw+Peak (plan sec 4.1)"
+  },
+  "loo": {
+    "n_events": 4,
+    "n_reliable": 0,
+    "n_sign_flip": 3,
+    "full_rho_p5_50_95": [
+      -0.6653396960698309,
+      0.09010368954851533,
+      0.8111374090816257
+    ],
+    "n_changes_zero_exclusion": 1,
+    "most_influential": "GW190805_211137"
+  },
+  "ppc": [
+    {
+      "m1_lo": 2.0,
+      "m1_hi": 30.0,
+      "n_events": 3,
+      "tau_obs": NaN,
+      "pred_p5": NaN,
+      "pred_p50": NaN,
+      "pred_p95": NaN,
+      "p_value_two_sided": NaN
+    },
+    {
+      "m1_lo": 30.0,
+      "m1_hi": 200.0,
+      "n_events": 1,
+      "tau_obs": NaN,
+      "pred_p5": NaN,
+      "pred_p50": NaN,
+      "pred_p95": NaN,
+      "p_value_two_sided": NaN
+    }
+  ],
+  "E2": {
+    "n_mocks_rho0": 4,
+    "tau_obs": -0.3333333333333334,
+    "rho_map_obs": -0.5696142996515777,
+    "lr_obs": 0.5256539624548111,
+    "ln_bf_dep_obs": -0.1728227905342692,
+    "fpr_tau": 0.25,
+    "fpr_rho_map": 0.5,
+    "fpr_lr": 1.0,
+    "fpr_tau_two_sided": 0.5,
+    "mock_ln_bf_dep_rho0": [
+      -0.6751125493209482
+    ],
+    "calibration_curve": [
+      {
+        "rho_true": 0.0,
+        "n": 4,
+        "frac_tau_as_extreme": 0.25,
+        "frac_rho_map_as_extreme": 0.5,
+        "tau_median": 0.0,
+        "rho_map_median": -0.3577184389953873,
+        "tau_p16": -0.3466666666666668,
+        "tau_p84": 0.1733333333333334,
+        "rho_map_p16": -0.9395576035391521,
+        "rho_map_p84": 0.28403240394800555
+      },
+      {
+        "rho_true": -0.4,
+        "n": 2,
+        "frac_tau_as_extreme": 0.5,
+        "frac_rho_map_as_extreme": 0.5,
+        "tau_median": -0.3333333333333334,
+        "rho_map_median": -2.0711683841989625e-05,
+        "tau_p16": -0.5600000000000002,
+        "tau_p84": -0.10666666666666672,
+        "rho_map_p16": -0.6460053357388293,
+        "rho_map_p84": 0.6459639123711454
+      },
+      {
+        "rho_true": 0.2,
+        "n": 2,
+        "frac_tau_as_extreme": 0.0,
+        "frac_rho_map_as_extreme": 0.0,
+        "tau_median": 0.6666666666666669,
+        "rho_map_median": 0.9499981,
+        "tau_p16": 0.6666666666666669,
+        "tau_p84": 0.6666666666666669,
+        "rho_map_p16": 0.9499981,
+        "rho_map_p84": 0.9499981
+      }
+    ]
+  },
+  "verdict": "CONFIRMED (artifact-consistent): ln BF < ln 3 and FPR > 5%"
+}

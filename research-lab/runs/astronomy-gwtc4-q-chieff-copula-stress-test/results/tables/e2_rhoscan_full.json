@@ -1,0 +1,78 @@
+{
+  "fixed_marginals_from": "copula_indep_plp posterior median",
+  "rho_grid": [
+    -0.95,
+    0.95,
+    77
+  ],
+  "observed": {
+    "rho_hat": 0.07352584349840231,
+    "lr0": 0.06952223420739756,
+    "post_mean": 0.08078955980742197,
+    "post_median": 0.06348853300034044,
+    "p_rho_neg": 0.38040197049031366,
+    "var_tot_at_hat": 0.6762159464154234
+  },
+  "fpr": {
+    "rho_hat_as_extreme": 0.24,
+    "lr0_ge_observed": 0.79,
+    "n_null": 200
+  },
+  "response_curve": [
+    {
+      "rho_true": 0.0,
+      "n": 200,
+      "rho_hat_median": -0.036217499334888374,
+      "rho_hat_p16": -0.16590258760393622,
+      "rho_hat_p84": 0.10630652780802313,
+      "rho_hat_mean": -0.032946514878954,
+      "lr0_median": 0.41605724666101196,
+      "frac_rho_hat_as_extreme": 0.24,
+      "n_at_edge": 0
+    },
+    {
+      "rho_true": -0.6,
+      "n": 40,
+      "rho_hat_median": -0.5924744698161626,
+      "rho_hat_p16": -0.6715743622595298,
+      "rho_hat_p84": -0.4894411404814194,
+      "rho_hat_mean": -0.5834064907212844,
+      "lr0_median": 16.5914618751126,
+      "frac_rho_hat_as_extreme": 0.0,
+      "n_at_edge": 0
+    },
+    {
+      "rho_true": -0.4,
+      "n": 40,
+      "rho_hat_median": -0.41246374272715175,
+      "rho_hat_p16": -0.5259537213881121,
+      "rho_hat_p84": -0.23117039379809487,
+      "rho_hat_mean": -0.3881158006942642,
+      "lr0_median": 7.03998212065153,
+      "frac_rho_hat_as_extreme": 0.0,
+      "n_at_edge": 0
+    },
+    {
+      "rho_true": -0.2,
+      "n": 40,
+      "rho_hat_median": -0.18794684839538645,
+      "rho_hat_p16": -0.28579245094919076,
+      "rho_hat_p84": -0.05236377579853438,
+      "rho_hat_mean": -0.18061405203606487,
+      "lr0_median": 1.6033504439278659,
+      "frac_rho_hat_as_extreme": 0.025,
+      "n_at_edge": 0
+    },
+    {
+      "rho_true": 0.2,
+      "n": 40,
+      "rho_hat_median": 0.18644036778950585,
+      "rho_hat_p16": -0.009505038558359758,
+      "rho_hat_p84": 0.29310087253286177,
+      "rho_hat_mean": 0.13954335290302525,
+      "lr0_median": 1.657159273458774,
+      "frac_rho_hat_as_extreme": 0.65,
+      "n_at_edge": 0
+    }
+  ]
+}

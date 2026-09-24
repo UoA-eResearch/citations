@@ -1,0 +1,4 @@
+endpoint,model,reference,description,ln_bf
+E1,copula_gauss_plp,copula_indep_plp,Gaussian copula dependence vs independence (PLP m1),-0.1728227905342692
+E3c,baseline_plp_both,baseline_plp_null,mean + width slopes vs null,0.07233293192989265
+E4c,baseline_bpq_both,baseline_plp_both,broken pairing vs power-law pairing,-0.8638474452423281

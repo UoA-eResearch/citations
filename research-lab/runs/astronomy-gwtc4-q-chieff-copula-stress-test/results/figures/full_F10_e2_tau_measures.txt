@@ -1,0 +1,8 @@
+F10 (E2, point-estimate statistic). Histograms: Kendall tau between per-event medians of mass ratio q and effective
+spin chi_eff (dimensionless) in 200 mock catalogs with zero intrinsic q-chi_eff dependence (null population =
+copula_indep_plp posterior median, real O1-O4a selection, real-event PE scatter). Orange line: the real GWTC-4.0
+catalog (153 BBHs). Each panel computes the medians under a different measure, applied identically to real and
+mock samples (deviations D21): the PE prior, the fitted null population, flat in (m1, q, chi_eff, z), flat in the
+mock generator's internal coordinates. FPR = fraction of null mocks at least as extreme as observed. The primary
+panel (None) is fixed by the pre-committed D21 rule (null mocks must reproduce the observed fraction of events with
+point-estimate m1 >= 40 Msun); measures passing that check: none.
