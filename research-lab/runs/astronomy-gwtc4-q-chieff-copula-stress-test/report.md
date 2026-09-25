@@ -3,7 +3,7 @@
 *A preregistered stress test on 153 binary black holes — and why the honest answer is "not established"*
 
 Run directory: `research-lab/runs/astronomy-gwtc4-q-chieff-copula-stress-test` · Preregistration: [`plan.md`](plan.md) ·
-Every departure from it: [`deviations.md`](deviations.md) (D1–D29) · Draft of 2026-09-25, revised after independent review
+Every departure from it: [`deviations.md`](deviations.md) (D1–D30) · Draft of 2026-09-25, revised after independent review
 
 ## Abstract
 
@@ -19,18 +19,20 @@ samples and the O1–O4a sensitivity injections, with two primary endpoints:
 
 - **E1 is inconclusive.** It gives ln BF = −0.20. The copula posterior mildly favours *positive* dependence (median
   ρ = +0.33, P(ρ < 0) = 0.08).
-- **E2's preregistered statistic is strongly negative, but it does not measure the population.** The point-estimate
-  Kendall τ = −0.217 has a false-positive rate (FPR) of 0.010 against validated mock catalogs. No more than 2.5% of
-  catalogs from strongly anticorrelated populations or the LVK width effect reach it, and 10% of those from the
-  PowerLaw+Peak mean shift.
-- **Most of that signal comes from the PE prior.** The isotropic-spin prior drags high-χ_eff events to lower q medians
+- **E2's preregistered statistic is strongly negative, but it cannot be calibrated as a population measurement.**
+  The point-estimate Kendall τ = −0.217 has a false-positive rate (FPR) of 0.010 against validated mock catalogs
+  (posterior means, the plan's literal choice, give −0.237 and the same FPR). No more than 2.5% of catalogs from
+  strongly anticorrelated populations or the LVK width effect reach it, and 10% of those from the PowerLaw+Peak mean
+  shift.
+- **About half of that signal comes from the PE prior.** The isotropic-spin prior drags high-χ_eff events to lower q medians
   (Figure F17). In the real catalog this shifts τ by −0.11. In simulated catalogs the same prior shifts it by about
-  −0.03, and none of 880 reaches −0.11, so the statistic cannot be calibrated with simulated measurements. With the
-  prior removed, τ = −0.106 has FPR 0.19.
-- **Every statistic that can be calibrated finds nothing.** The hierarchical copula estimate ρ̂ = +0.17 has FPR 0.33,
-  and its Bayes factor for dependence is smaller than in 66% of null catalogs (Figure F19).
+  −0.03, and none of 880 reaches −0.11, so the statistic cannot be calibrated with Gaussian mock PE. With the prior
+  removed, τ = −0.106 has FPR 0.19.
+- **Every statistic that can be calibrated is consistent with no dependence,** under the detection-consistent mock
+  model, though with low power against |ρ| ≤ 0.4. The hierarchical copula estimate ρ̂ = +0.17 has FPR 0.33, and its
+  Bayes factor for dependence is smaller than in 66% of null catalogs (Figure F19).
 
-Four results hold up under two independent adversarial reviews:
+Four results survive three independent adversarial reviews; the second was revised downward after recalibration:
 
 1. **The Linear-model "mean shift" follows the mass model.** The LVK Linear model's evidence for a χ_eff mean that
    falls with q is present with PowerLaw+Peak masses: P(δμ < 0) = 0.995, ln BF = +3.4. It disappears with the LVK's
@@ -46,14 +48,16 @@ Four results hold up under two independent adversarial reviews:
    GW170729 from 0.64 to 0.55. This doubles the rank correlation of the medians, from −0.106 to −0.219. The statistic
    also has no power against the width effect the LVK report.
 4. **A strong anticorrelation is disfavoured,** as is dependence localised in one mass range: a single-ρ Gaussian
-   copula with ρ ≲ −0.5 does not fit, and only 2.5% of mock catalogs with ρ = −0.4 or −0.6 reach the observed ρ̂.
+   copula with ρ ≲ −0.5 does not fit under PowerLaw+Peak masses with spline marginals, and only 2.5% of mock catalogs
+   with ρ = −0.4 or −0.6 reach the observed ρ̂.
 
-The study also documents five failure modes of common shortcuts, each caught and quantified here:
+The study also documents six failure modes of common shortcuts, each caught and quantified here:
 
 - mock catalogs whose detection is decided by the true parameters while the measurement noise is drawn independently,
   which biased our dependence estimate by −0.14 (Figure F20);
 - mock PE built by translating likelihood shapes;
 - MAP optimisation of the Monte Carlo selection-corrected likelihood;
+- a bounded penalty for Monte Carlo variance, which one repeat of a fit exploited through a single-sample spike (D28);
 - plug-in parametric bootstraps;
 - comparing point estimates taken under different measures.
 
@@ -96,7 +100,7 @@ systematics control (D25).
 
 **PE priors.** The priors are uniform in detector-frame component masses, uniform in source-frame comoving volume, and
 isotropic spins with magnitudes up to 0.99. They are evaluated analytically at every sample. An independent reviewer
-checked that they reproduce bilby's stored prior terms exactly.
+checked that they reproduce bilby's stored prior terms (to four decimals on two events).
 
 **Selection.** The LVK O1–O4a cumulative sensitivity injections, with 1.07 million found injections. The draw density
 is converted with each run component's spin family (D2). The reviewer checked this against the Zenodo usage formula.
@@ -107,7 +111,7 @@ is converted with each run component's spin family (D2). The reviewer checked th
 event. The LVK convergence criteria (variance < 1, injection effective sample size > 4N) are applied as a steep penalty
 (D11).
 
-**Models.** 23 population models are fitted with nautilus.
+**Models.** 21 population models are fitted with nautilus (two more were dropped for runtime; §6).
 
 | Sector | Variants |
 |---|---|
@@ -125,13 +129,17 @@ the real selection function. Measurement scatter went through four versions (D27
   donor's covariance and the physical bound η ≤ 1/4, and samples are resampled to the PE prior.
 - **v3c:** v3b with the detection probability P_det(θ) in each mock event's likelihood. v3b decides detection from the
   true parameters and draws the noise independently, so the standard likelihood is inconsistent with it (§4.4).
-  v3c is used for every false-positive rate in this report.
+  v3c is used for every headline false-positive rate in this report.
+- **v3d (diagnostic):** v3c with donors also matched in spin. It fails validation and is used only to test the
+  PE-prior mechanism (§4.4).
 
-No false-positive rate is quoted from a mock set that fails validation against the real catalog.
+No headline false-positive rate is quoted from a mock set that fails validation against the real catalog; numbers
+from v1, v3b and v3d appear only as history or as labelled sensitivity checks.
 
 **E2 statistics.**
 
-- **Point estimates (preregistered primary).** Kendall τ between per-event medians of q and χ_eff. It is computed
+- **Point estimates (preregistered primary).** Kendall τ between per-event medians of q and χ_eff (the plan specified
+  posterior means; medians were used without a logged deviation until D30, and means give the same FPR). It is computed
   under four measures, applied identically to real and mock samples (D21).
 - **Hierarchical statistic.** A likelihood scan in the copula ρ (D20). After review it became nuisance-integrated
   (D27): the likelihood is averaged over 16 posterior draws of the other hyperparameters, identically for the real
@@ -173,8 +181,10 @@ follows the mass shape: 0.985–0.995 for PLP-family models and 0.80–0.84 for 
 or the spin-width prior. This split is far larger than sampler noise.
 
 The width credibility moves with the σ₀ prior: 0.88–0.94 for log-uniform and 0.77–0.87 for uniform. Treat that
-attribution as tentative. On the same model nautilus and NUTS give 0.830 and 0.676, so the width credibility carries a
-sampler systematic of about ±0.1 (D26 item 8; seeds in D28).
+attribution as tentative. On the same model nautilus and NUTS give 0.830 and 0.676. Repeated nautilus seeds agree to 0.01
+(D28), so this 0.15 difference is not sampler noise: the NUTS cross-check samples the likelihood without the Monte
+Carlo variance penalty, so it targets a slightly different distribution. Treat the width credibility as uncertain at
+that level.
 
 ![F2](results/figures/full_F2_baseline_slopes.png)
 
@@ -205,7 +215,7 @@ marginals, fitted to the same 153 events. It gives ln BF(dependence vs independe
 the κ ∈ [−20, 20] prior.
 
 κ has a median of −0.51 with a 90% interval of [−3.9, +2.7], and P(κ < 0) = 0.60. The paper reports −2.1
-(90% [−5.0, +0.3]) with P(κ < 0) = 0.92. The intervals overlap and the lean has the same sign, but ours is centred
+(+2.4/−2.9) with P(κ < 0) = 0.92. The intervals overlap and the lean has the same sign, but ours is centred
 closer to zero.
 
 The Gaussian-copula twin gives ln BF = **−0.98** (Savage–Dickey −0.84). Its median ρ is −0.09 with a 90% interval of
@@ -217,7 +227,7 @@ marginal and mass model, like the Linear-model mean shift.
 
 ![F3](results/figures/full_F3_copula_rho.png)
 
-### 4.4 E2: the preregistered statistic is a prior effect, not a population measurement
+### 4.4 E2: the preregistered statistic is dominated by the PE prior and cannot be calibrated
 
 **Mock catalogs (D27, D27c).** The original mock catalogs, and a version with their construction defects fixed,
 failed validation against the real catalog. Both translate real likelihood shapes to new locations. Mass-ratio
@@ -252,7 +262,8 @@ alternative-hypothesis catalogs:
 | flat internal coordinates | −0.057 | −0.007 [−0.102, +0.094] | 0.190 / 0.410 |
 | population-informed | −0.102 | −0.063 [−0.168, +0.049] | 0.185 / 0.475 |
 
-The preregistered statistic sits at or beyond the edge of every simulated hypothesis, not just the null:
+The preregistered statistic sits in the 2.5% tail of every simulated hypothesis except the PowerLaw+Peak mean shift,
+where it is in the 10% tail:
 
 | Simulated hypothesis | Median τ, PE-prior medians | Catalogs with τ ≤ −0.217 |
 |---|---|---|
@@ -284,12 +295,13 @@ isotropic-spin prior h(χ_eff | q) admits large χ_eff only at unequal masses. A
 high-χ_eff event is pulled toward lower q, producing "high χ_eff at low q" in posterior medians with no population
 correlation.
 
-**The mocks cannot reproduce this prior effect (D29b–d).** In the real catalog the PE prior shifts τ by −0.111, from
-−0.106 to −0.217. In the mocks it shifts τ by about −0.03, under every hypothesis and in every mock version. None of
+**The mocks cannot reproduce this prior effect (D29b–d, Figure F21).** In the real catalog the PE prior shifts τ by −0.111, from
+−0.106 to −0.217. In the mocks it shifts τ by about −0.03, under every hypothesis and in every mock version tested (v3b, v3c, v3d). None of
 880 v3b and v3c catalogs reaches −0.111; the most extreme is −0.083.
 
 The Gaussian measurement model is not itself at fault. A noise-free Gaussian twin of each real event, built with that
-event's own covariance, reproduces the real catalog's shift exactly (−0.120 against −0.120).
+event's own covariance, reproduces the real catalog's shift to three decimals (−0.120 against −0.120), although the
+twins' τ values themselves are offset (−0.258 and −0.138 against −0.218 and −0.098).
 
 The shift is carried by the high-spin events:
 
@@ -301,16 +313,23 @@ The shift is carried by the high-spin events:
 - **Matching donors in spin as well (v3d).** This restores the tilt but makes the likelihoods about 25% too narrow, so
   the mocks fail validation. The shift is still only −0.031.
 
-The real catalog has only 17 high-spin events, and no Gaussian mock construction we built reproduces both their tilt
+These are largely the events that pull the copula ρ positive (§4.3): GW231028_153006, GW190620_030421,
+GW190805_211137 and GW170729. Their likelihoods put high χ_eff at fairly high q, which pushes ρ up. The PE prior moves
+their medians to lower q, which pushes τ down. This accounts for part of the sign disagreement between the
+hierarchical and posterior-median statistics; the prior-removed τ (−0.106) is still negative while ρ̂ is positive.
+
+The real catalog has only 17–18 high-spin events (depending on the sample subset), and no Gaussian mock construction we built reproduces both their tilt
 and their breadth. So the preregistered statistic cannot be calibrated even with validated mocks. Its FPR of 0.010
 reflects the mocks' weak prior response, not the population.
 
 ![F17](results/figures/full_F17_prior_shift.png)
 
+![F21](results/figures/full_F21_prior_mechanism.png)
+
 **The hierarchical statistic (D27, D27c, Figure F19).** The Gaussian-copula likelihood is averaged over 16 posterior
 draws of the other hyperparameters and maximised in ρ, identically for the real catalog and every mock. Under the v3c
-mock-PE model it is calibrated: the null median is +0.002, and ρ_true = −0.6, −0.4 and +0.2 give medians of −0.48,
-−0.26 and +0.14.
+mock-PE model it is null-centred and monotone, with an attenuated response: the null median is +0.002, and
+ρ_true = −0.6, −0.4, −0.2 and +0.2 give medians of −0.48, −0.26, −0.06 and +0.14.
 
 | Statistic | Real catalog | v3c null median [68%] | FPR |
 |---|---|---|---|
@@ -324,7 +343,7 @@ The discriminating fact is on the other side: only 2.5% of catalogs with ρ_true
 strong anticorrelation is disfavoured. The mean-shift and width alternatives are not excluded: 12.5% and 32.5% of
 their catalogs reach it. The calibration does not hinge on the mocks' weak prior response. Against the spin-matched
 v3d mocks, which carry the real events' degeneracy tilt, the same statistic gives FPR 0.25 and a Bayes-factor FPR of
-0.65.
+0.65 (a sensitivity check only; v3d fails validation).
 
 ![F19](results/figures/full_F19_rho_scan_int_v3c.png)
 
@@ -349,7 +368,7 @@ against v3b, the real catalog's ρ̂ would have looked like mild evidence of *po
 
 The same 153 events were rebuilt from single waveform families, with the same PE-prior treatment.
 
-| Posterior samples | ρ̂, calibrated scan | ρ̂, fixed-nuisance scan | τ, PE-prior medians |
+| Posterior samples | ρ̂, calibrated scan | ρ̂, fixed-nuisance scan (superseded) | τ, PE-prior medians |
 |---|---|---|---|
 | Mixed (preferred release) | +0.17 | +0.07 | −0.217 |
 | IMRPhenomXPHM / -SpinTaylor | −0.03 | **−0.36** | −0.254 |
@@ -377,13 +396,15 @@ power.
 
 - **E1:** ln BF = −0.20, below ln 3.
 - **E2 (preregistered point-estimate statistic):** FPR 0.010 against the validated, detection-consistent v3c mocks
-  (0/200 against v1 and v3b). It also sits at or beyond the edge of every simulated alternative, because it is
-  dominated by a PE-prior effect the mocks cannot reproduce.
+  (0/200 against v1 and v3b; posterior means give the same FPR, D30). It also sits in the 2.5% tail of every simulated
+  alternative except the PowerLaw+Peak mean shift (10%), because it is dominated by a PE-prior effect the mocks
+  cannot reproduce.
 
 Per plan §7, E1 < ln 3 with E2 FPR ≤ 5% is "indeterminate: E1 and E2 disagree". The substantive reading is stronger
 than a tie. Once the PE prior is removed from the point estimates (FPR 0.19), and in the calibrated hierarchical
-statistic (FPR 0.33) and its Bayes factor (0.66), nothing distinguishes the real catalog from a population without
-q–χ_eff dependence. An earlier draft of this report called the result "artifact-consistent" by
+statistic (FPR 0.33) and its Bayes factor (0.66), the real catalog is consistent with a population without q–χ_eff
+dependence under the detection-consistent mock model. Those statistics have low power against |ρ| ≤ 0.4, so this is
+consistency, not a constraint; only a strong anticorrelation (ρ ≤ −0.4) is disfavoured. An earlier draft of this report called the result "artifact-consistent" by
 substituting the hierarchical ρ scan for the preregistered statistic under a rule written with its outcome
 foreseeable. Independent review rejected that, rightly (D26).
 
@@ -397,7 +418,8 @@ foreseeable. Independent review rejected that, rightly (D26).
 2. **Waveform systematics are as large as the statistical uncertainty.** The same events give dependence estimates
    from +0.17 to −0.03 depending on the waveform family (calibrated statistic).
 3. **Point-estimate correlations are fragile.** They depend strongly on the measure, and half the posterior-median
-   signal is prior-induced.
+   signal is prior-induced. Part of the sign disagreement between the point-estimate and hierarchical statistics
+   traces to a handful of high-spin events whose likelihoods sit at high q and whose PE-prior medians sit at low q.
 4. **Calibrating these statistics is harder than the literature's shortcuts assume.** Mock PE that translates real
    likelihood shapes cannot reproduce the q → 1 pile-up. Mass-ratio likelihoods are not a location family in any of
    the usual coordinates, because the waveform measures the symmetric mass ratio η, which is flat at q = 1.
@@ -406,7 +428,8 @@ foreseeable. Independent review rejected that, rightly (D26).
    event's likelihood removes the bias. This is a concrete, quantified case of the inconsistency Essick & Fishbach
    (2024) warn about.
 6. **Other shortcuts fail in specific ways.** MAP optimisation of the Monte Carlo likelihood exploits injection
-   sparsity. Plug-in bootstraps are not orthogonal to the nuisance parameters.
+   sparsity. A finite variance penalty lets a sampler trade a bounded cost for an unbounded single-event gain.
+   Plug-in bootstraps are not orthogonal to the nuisance parameters.
 
 **What it does not establish:**
 
@@ -429,11 +452,14 @@ foreseeable. Independent review rejected that, rightly (D26).
 
 1. **E2 calibration.** The false-positive rates rest on v3c. It is validated and detection-consistent, but its mock
    PE is Gaussian and its P_det is a smoothed estimate from the injections. It reproduces only about a quarter of the
-   real PE-prior effect, so the preregistered statistic remains uncalibrated.
+   real PE-prior shift in τ, so the preregistered statistic remains uncalibrated.
 2. **E1 null calibration.** E1 itself is not mock-calibrated. The calibrated proxy is the scan's Bayes factor, which
    integrates over a fixed 16-draw ensemble of the other hyperparameters rather than over their full posterior.
-3. **Sampler noise.** Each configuration was fitted once, and nautilus and NUTS disagree on the width credibility by
-   about 0.15 (D28 repeats seeds).
+3. **Sampler noise and a penalty loophole.** Three nautilus seeds agree to 0.07 nats in ln Z and 0.012 in the slope
+   credibilities (D28). One repeat found a Monte Carlo likelihood spike, where a single posterior sample of one event
+   dominates its integral. The finite variance penalty (D11) is bounded and cannot suppress such a spike; the LVK
+   hard cut would. Screening every fit shows no other fit is affected. Nautilus and NUTS still differ by 0.15 on the
+   width credibility, because they sample slightly different likelihoods.
 4. **The variance cut is active.** The Monte Carlo variance cut bites, with var_tot at the 99th percentile about 0.99.
    Its effect is similar across models but not zero.
 5. **Dropped fits.** The E1c independence twin (D18) and the PLP Frank copula (D16) were dropped for runtime.
@@ -445,5 +471,5 @@ foreseeable. Independent review rejected that, rightly (D26).
 
 The code is in `code/`, with the pipeline in `src/` and the 2026-09-25 statistics, mock builders, validation and
 figures in `analysis/`. Every departure from the plan, with timing and rationale, is in `deviations.md`. The reviews'
-scratch code is referenced from D26 and D26b. The nested-sampling checkpoints (1.9 GB) are regenerable and not
+scratch code is referenced from D26 and D26b. The nested-sampling checkpoints (about 1.6 GB) are regenerable and not
 committed.

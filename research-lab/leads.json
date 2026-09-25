@@ -544,7 +544,7 @@
    "risks": "The copula authors or another group publishes the same GWTC-4 test first (crowded, fast-moving space); result may be indeterminate (moderate Bayes factors) rather than decisive; must reproduce LVK selection-effect treatment exactly or the comparison is invalid.",
    "status": "deep dive \u00b7 report (revised after review)",
    "report_url": "runs/astronomy-gwtc4-q-chieff-copula-stress-test/report.html",
-   "headline": "Indeterminate: against detection-consistent mock catalogs every calibratable statistic finds no q-chi_eff dependence (hierarchical FPR 0.33); the posterior-median anticorrelation is largely a spin-prior effect (tau -0.22 -> -0.11), the Linear-model mean shift follows the mass model (P 0.995 -> 0.80), and waveform choice moves the dependence estimate by about one posterior sd."
+   "headline": "Indeterminate: against detection-consistent mock catalogs every calibratable statistic is consistent with no q-chi_eff dependence (hierarchical FPR 0.33, low power); the posterior-median anticorrelation is about half a spin-prior effect (tau -0.22 -> -0.11) and cannot be calibrated, the Linear-model mean shift follows the mass model (P 0.995 -> 0.80), and waveform choice moves the dependence estimate by about one posterior sd."
   },
   {
    "id": "astronomy-gaia-sb1-tess-synchronization-boundary",

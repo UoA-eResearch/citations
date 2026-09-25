@@ -733,3 +733,52 @@ Sensitivity check (reviewer's point (ii)): the integrated hierarchical scan agai
 which carries the spin-dependent degeneracy tilt: null -0.013 [-0.394, +0.243]; rho_true -0.6 -0.534, -0.4 -0.396,
 -0.2 -0.282, +0.2 +0.086; PLP mean shift -0.667; real +0.174 -> FPR 0.245 (v3c 0.325), LR0 0.535 (0.555), ln BF_flat
 0.645 (0.655). The hierarchical calibration does not hinge on the mocks' prior response.
+
+### D28. Sampler repeatability: three nautilus seeds for four configurations (2026-09-25 11:07-14:10)
+`code/run_gpu_final.sh`: `SEED_TAG=2` and `3` refits of baseline_plp_both, lvk_bpl2p_both, abl_plp_lvkspin_both and
+abl_bpl2p_plpspin_both (fits/full/<model>__seed<k>); `code/analysis/seed_spread.py` -> `results/tables/seed_spread_full.*`
+(credibilities from nautilus' weighted posterior points). Ranges over the three seeds:
+| configuration | ln Z | P(delta mu < 0) | P(delta ln sigma < 0) |
+|---|---|---|---|
+| PLP masses, Linear spin | 0.065 | 0.9943 / 0.9944 / 0.9951* | 0.831 / 0.821 / 0.828* |
+| LVK BPL+2P, Linear spin | 0.015 | 0.797 / 0.788 / 0.790 | 0.888 / 0.892 / 0.888 |
+| PLP masses, LVK spin priors | 0.037 | 0.994 / 0.994 / 0.996 | 0.875 / 0.879 / 0.881 |
+| BPL+2P masses, PLP spin priors | 0.017 | 0.803 / 0.801 / 0.799 | 0.773 / 0.771 / 0.778 |
+Sampler noise is <= 0.07 nats in ln Z and <= 0.012 in the credibilities, far below the mass-model split (0.99 vs
+0.80). The 0.15 nautilus-NUTS difference in the PLP width credibility (0.830 vs 0.676, D26 item 8) is therefore not
+nautilus seed noise: the NUTS cross-check samples the likelihood without the Monte Carlo variance penalty
+(loglike_soft) and with a depth-6 tree, so it targets a slightly different distribution.
+(*) **A Monte Carlo likelihood spike (seed 3, PLP).** Seed 3 found a point with ln L = -4521.1, 50 nats above every
+other fit's maximum (-4571.7 ... -4571.9): at mu_chi_eff_1 = +1.49, sigma_chi_eff_1 = +2.55 (a razor-thin chi_eff peak
+at low q) one posterior sample of GW231230_170116 dominates that event's Monte Carlo integral (ln L_i +442). The D11
+penalty, 1000 ln(var_tot), is bounded -- var_tot saturates near 1.4 when one sample dominates, so the penalty tops
+out at ~340 nats and the spike nets +50. The LVK hard cut (var_tot < 1) would exclude it. The spike carries 1.0% of
+seed 3's posterior weight (one point 0.9%); it collapses the equal-weight resample to 114 samples and moves ln Z by
+< 0.07. With the spike region (mu_chi_eff_1 > 1 and sigma_chi_eff_1 > 2) removed, seed 3 agrees with seeds 1-2
+(values marked *). Screening every fit in fits/full (largest single-point weight share; max ln L minus median):
+only this one is affected (all others <= 0.07% and 5-9 nats), so no reported number changes. Lesson: a finite
+penalty on a Monte Carlo likelihood must grow faster than the per-event gain it can be traded against, or be
+combined with a per-event effective-sample-size cut; repeated seeds are what exposed it.
+
+### D30. The preregistered point estimate is the posterior MEAN; the analysis used medians (logged 2026-09-25 15:35)
+plan.md sec 4 item 5 specifies "Kendall's tau on posterior-mean point estimates"; every E2 point-estimate statistic
+since stage 04 used posterior medians, and the change was never logged (caught by the final audit). Computed as
+specified (`code/analysis/e2_tau_means.py`, `results/tables/e2_tau_means_v3c.json`; 4000 samples per event, v3c null
+of 200): means under the PE prior tau = -0.237 vs null -0.082 [-0.211, +0.015], FPR 0.010 (medians: -0.216 vs
+-0.074 [-0.206, +0.025], FPR 0.010); prior removed -0.117 vs -0.053 [-0.186, +0.048], FPR 0.145 (medians 0.215).
+The E2 decision (FPR <= 5%) and the verdict are the same under either point estimate.
+
+### Final audit (2026-09-25 12:35-12:44; Fable 5.1 subagent) -- response
+Numbers verified against the tables to stated precision; corrected: 21 (not 23) models fitted; the width-credibility
+sampler difference is 0.15 (not "about +-0.1"); the dangling "D28" references now point to D28 above; three (not two)
+independent reviews; checkpoints 1.6 GB; the twin's tau shift matches the real one to three decimals (Kendall tau is
+discrete, both equal -1396/11628 -- a coincidence of the independently computed values, not a shared computation);
+17-18 high-spin events depending on the sample subset. Wording corrected (all accepted): "about half" (not "most")
+of the posterior-median signal is prior-induced; the preregistered statistic "cannot be calibrated as a population
+measurement with Gaussian mock PE" (not "does not measure the population"); "consistent with no dependence under the
+v3c mock-PE model, with low power against |rho| <= 0.4" (not "finds nothing"); the posterior-median tau lies in the
+<= 2.5% tail of every hypothesis except the PLP mean shift (10%), not "at or beyond the edge of every hypothesis"; the
+high-spin events account for part, not all, of the sign disagreement (the prior-removed tau is still negative while
+rho_hat is positive); "rho <~ -0.5 does not fit" holds for PLP masses with spline marginals; v3d numbers are labelled
+sensitivity-only; the fixed-nuisance waveform column is labelled superseded; the attenuated response at rho -0.2 is
+quoted. v1-era E2 sections of summary_full.md are labelled superseded.

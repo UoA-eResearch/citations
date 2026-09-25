@@ -607,5 +607,5 @@
   },
   "E2_decision_basis": "tau of PE-prior posterior medians vs v3c detection-consistent physical mock PE (D27c)",
   "E2_fpr": 0.01,
-  "verdict": "INDETERMINATE: E1 ln BF = -0.20 < ln 3 but E2 FPR = 0.010 <= 5% [tau of PE-prior posterior medians vs v3c detection-consistent physical mock PE (D27c)] -- E1 and E2 disagree (plan sec 7); the E2 statistic sits at or beyond the edge of every simulated hypothesis and is dominated by a PE-prior effect the mocks cannot reproduce (D29, D27c)"
+  "verdict": "INDETERMINATE: E1 ln BF = -0.20 < ln 3 but E2 FPR = 0.010 <= 5% [tau of PE-prior posterior medians vs v3c detection-consistent physical mock PE (D27c)] -- E1 and E2 disagree (plan sec 7); the E2 statistic sits in the <= 2.5% tail of every simulated hypothesis except the PLP mean shift (10%) and is dominated by a PE-prior effect the mocks cannot reproduce (D29, D27c)"
 }

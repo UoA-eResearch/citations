@@ -48,7 +48,7 @@ scout (done) ──► leads.json ──► human picks leads from the plot
 
 | Lead | Status | Report |
 |---|---|---|
-| `astronomy-gwtc4-q-chieff-copula-stress-test` — is the q–χ_eff anticorrelation in GWTC-4.0 real? | Draft, revised after two independent adversarial reviews. Preregistered verdict: **indeterminate**. | [report.html](runs/astronomy-gwtc4-q-chieff-copula-stress-test/report.html) · [deviations log](runs/astronomy-gwtc4-q-chieff-copula-stress-test/deviations.md) |
+| `astronomy-gwtc4-q-chieff-copula-stress-test` — is the q–χ_eff anticorrelation in GWTC-4.0 real? | Revised after three independent reviews and recalibrated against detection-consistent mocks. Preregistered verdict: **indeterminate**; every calibratable statistic is consistent with no dependence (low power). | [report.html](runs/astronomy-gwtc4-q-chieff-copula-stress-test/report.html) · [deviations log](runs/astronomy-gwtc4-q-chieff-copula-stress-test/deviations.md) |
 
 Lessons from the first deep dive, to carry into the next ones (details in its deviations log, D19–D29 and D27c):
 

@@ -301,6 +301,7 @@ isotropic-spin prior allows large chi_eff only at unequal masses. The rank corre
         f18_one(tag, lab_mocks)
     f19_int_scan()
     f20_dag_trap()
+    f21_prior_mechanism()
     print("figures written; primary measure:", prim, "| passing:", passing)
 
 
@@ -427,6 +428,52 @@ per-event likelihood contains P_det(theta); the standard hierarchical likelihood
 detection and PE share the same data, omits it (Essick & Fishbach, arXiv:2310.02017). Scanning rho at each mock's true
 population: with the standard likelihood (grey) rho_hat is biased by about -0.14 with a long negative tail; with P_det in
 each event's likelihood (blue) the bias vanishes; with noise-free events (green) the estimator is unbiased and tight.""")
+
+
+def f21_prior_mechanism():
+    up, sc, sd = TAB / "prior_response_unit_test.csv", TAB / "prior_shift_surface_v3c.json", TAB / "prior_shift_surface_v3d.json"
+    if not (up.exists() and sc.exists() and sd.exists()):
+        return
+    u = pd.read_csv(up)
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(10.5, 3.6))
+    hi = u.real_chi_flat > 0.3
+    a1.scatter(u.real_chi_flat[~hi], u.real_eta_chi_corr[~hi], s=14, color=MUTED, alpha=0.7, label="real events")
+    a1.scatter(u.real_chi_flat[hi], u.real_eta_chi_corr[hi], s=18, color=ORANGE, label="real events, chi_eff > 0.3")
+    a1.axhline(np.median(u.real_eta_chi_corr[hi]), color=ORANGE, lw=1.2, ls="--")
+    a1.axhline(0.20, color=BLUE, lw=1.2, ls="--", label="v3c donor kernels of chi_eff > 0.3 mocks (median)")
+    a1.set(xlabel="chi_eff median (prior removed)", ylabel="likelihood correlation of eta and chi_eff")
+    a1.set_ylim(-1.05, 1.25)
+    a1.legend(fontsize=7, loc="upper left")
+    a1.set_title("the mass-ratio-spin ridge tilts at high spin")
+    a2.scatter(u.real_chi_flat, u.real_dq, s=14, color=ORANGE, label="real events", zorder=3)
+    a2.scatter(u.real_chi_flat, u.gauss_dq, s=14, facecolors="none", edgecolors=INK, lw=0.7, label="Gaussian twin (own covariance)")
+    for path, col, lab in ((sc, BLUE, "v3c mocks (bin means)"), (sd, AQUA, "v3d mocks, spin-matched (bin means)")):
+        j = json.load(open(path))
+        cb = {}
+        for r in j["surface"]:
+            if r["mock_dq"] is None:
+                continue
+            c = tuple(r["chi"])
+            cb.setdefault(c, []).append((r["mock_dq"], r["mock_n_per_cat"]))
+        xs, ys = [], []
+        for (c0, c1), v in sorted(cb.items()):
+            w = np.array([n for _, n in v]); d = np.array([x for x, _ in v])
+            xs.append(np.clip((c0 + c1) / 2, -0.3, 0.6)); ys.append(float(np.sum(w * d) / np.sum(w)))
+        a2.plot(xs, ys, "o-", color=col, lw=1.6, ms=5, label=lab)
+    a2.axhline(0, color=INK, lw=0.6)
+    a2.set(xlabel="chi_eff median (prior removed)", ylabel="q median shift from the PE prior")
+    a2.legend(fontsize=7, loc="lower left")
+    a2.set_title("prior-induced q shift per event")
+    fig.savefig(FIG / "full_F21_prior_mechanism.png")
+    plt.close(fig)
+    caption("F21_prior_mechanism", """
+F21 (D29b-d). Why mock catalogs under-reproduce the PE-prior effect on the posterior-median statistic. Left: the
+correlation between eta (symmetric mass ratio) and chi_eff in each real event's likelihood, against its chi_eff; the
+ridge tilts strongly at high spin (orange dashed: median for chi_eff > 0.3), but high-spin v3c mock events borrow
+kernels from donors matched only in chirp mass and distance (blue dashed). Right: the shift of each event's q median
+caused by the PE prior. Real events (orange) and their noise-free Gaussian twins built with each event's own
+covariance (open circles) agree; v3c mocks (blue, mean per chi_eff bin) move far less at high spin; spin-matched v3d
+mocks (green) move more but still less than the real events, because their likelihoods are too narrow.""")
 
 
 if __name__ == "__main__":

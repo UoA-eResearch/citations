@@ -1,0 +1,7 @@
+F21 (D29b-d). Why mock catalogs under-reproduce the PE-prior effect on the posterior-median statistic. Left: the
+correlation between eta (symmetric mass ratio) and chi_eff in each real event's likelihood, against its chi_eff; the
+ridge tilts strongly at high spin (orange dashed: median for chi_eff > 0.3), but high-spin v3c mock events borrow
+kernels from donors matched only in chirp mass and distance (blue dashed). Right: the shift of each event's q median
+caused by the PE prior. Real events (orange) and their noise-free Gaussian twins built with each event's own
+covariance (open circles) agree; v3c mocks (blue, mean per chi_eff bin) move far less at high spin; spin-matched v3d
+mocks (green) move more but still less than the real events, because their likelihoods are too narrow.

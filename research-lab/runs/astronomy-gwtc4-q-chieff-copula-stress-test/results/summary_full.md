@@ -1,6 +1,6 @@
 # q-chi_eff copula stress test: results summary (full mode)
 
-Events: 153; verdict (plan sec 7 logic): **INDETERMINATE: E1 ln BF = -0.20 < ln 3 but E2 FPR = 0.010 <= 5% [tau of PE-prior posterior medians vs v3c detection-consistent physical mock PE (D27c)] -- E1 and E2 disagree (plan sec 7); the E2 statistic sits at or beyond the edge of every simulated hypothesis and is dominated by a PE-prior effect the mocks cannot reproduce (D29, D27c)**
+Events: 153; verdict (plan sec 7 logic): **INDETERMINATE: E1 ln BF = -0.20 < ln 3 but E2 FPR = 0.010 <= 5% [tau of PE-prior posterior medians vs v3c detection-consistent physical mock PE (D27c)] -- E1 and E2 disagree (plan sec 7); the E2 statistic sits in the <= 2.5% tail of every simulated hypothesis except the PLP mean shift (10%) and is dominated by a PE-prior effect the mocks cannot reproduce (D29, D27c)**
 
 ## Preregistered endpoints
 
@@ -53,7 +53,7 @@ Events: 153; verdict (plan sec 7 logic): **INDETERMINATE: E1 ln BF = -0.20 < ln 
 
 ## LOO: 0 of 153 single-event removals flip the sign of the median rho; 1 change whether the 90% interval excludes 0; most influential event: GW231226_101520
 
-## E2 point-estimate tau by measure (D21; like-for-like, 200 null mocks)
+## E2 point-estimate tau by measure against the v1 mocks (D21; SUPERSEDED by the v3c numbers above, D27c)
 
 | measure | observed tau | null median | FPR one-sided | FPR two-sided | passes marginal check |
 |---|---|---|---|---|---|
@@ -62,7 +62,7 @@ Events: 153; verdict (plan sec 7 logic): **INDETERMINATE: E1 ln BF = -0.20 < ln 
 | flattheta | -0.106 | -0.009 | 0.060 | 0.110 | no |
 | flatx | -0.057 | -0.003 | 0.215 | 0.380 | no |
 
-## Hierarchical rho scan: estimator response (D20)
+## Hierarchical rho scan, plug-in, v1 mocks (D20; SUPERSEDED by the integrated scan vs v3c above, D27c)
 
 * rho_true = +0.00 (n=200): rho_hat median -0.036 [-0.166, +0.106]
 * rho_true = -0.60 (n=40): rho_hat median -0.592 [-0.672, -0.489]

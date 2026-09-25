@@ -309,7 +309,8 @@ def main():
             verdict = f"REFUTED candidate: ln BF = {e1:+.2f} >= ln 3 and E2 FPR = {e2_value:.3f} <= 5% [{e2_basis}]; check E4"
         else:
             verdict = (f"INDETERMINATE: E1 ln BF = {e1:+.2f} < ln 3 but E2 FPR = {e2_value:.3f} <= 5% [{e2_basis}] -- E1 and E2 "
-                       "disagree (plan sec 7); the E2 statistic sits at or beyond the edge of every simulated hypothesis and is "
+                       "disagree (plan sec 7); the E2 statistic sits in the <= 2.5% tail of every simulated hypothesis except the PLP "
+                       "mean shift (10%) and is "
                        "dominated by a PE-prior effect the mocks cannot reproduce (D29, D27c)")
     diag["verdict"] = verdict
     save_json(diag, out_json)
@@ -367,18 +368,18 @@ def main():
                   f"the median rho; {diag['loo']['n_changes_zero_exclusion']} change whether the 90% interval excludes 0; "
                   f"most influential event: {diag['loo']['most_influential']}"]
     if fpr:
-        lines += ["", "## E2 point-estimate tau by measure (D21; like-for-like, 200 null mocks)", "",
+        lines += ["", "## E2 point-estimate tau by measure against the v1 mocks (D21; SUPERSEDED by the v3c numbers above, D27c)", "",
                   "| measure | observed tau | null median | FPR one-sided | FPR two-sided | passes marginal check |", "|---|---|---|---|---|---|"]
         for M, r in fpr.items():
             lines.append(f"| {M} | {r['observed']:+.3f} | {r['null_median']:+.3f} | {r['fpr_one_sided']:.3f} | "
                          f"{r['fpr_two_sided']:.3f} | {'yes' if M in passing else 'no'} |")
     if scan:
-        lines += ["", "## Hierarchical rho scan: estimator response (D20)", ""]
+        lines += ["", "## Hierarchical rho scan, plug-in, v1 mocks (D20; SUPERSEDED by the integrated scan vs v3c above, D27c)", ""]
         for r in scan["response_curve"]:
             lines.append(f"* rho_true = {r['rho_true']:+.2f} (n={r['n']}): rho_hat median {r['rho_hat_median']:+.3f} "
                          f"[{r['rho_hat_p16']:+.3f}, {r['rho_hat_p84']:+.3f}]")
     if "e5_mass_bins" in diag and prim_measure:
-        lines += ["", f"## E5 per-mass-bin tau vs the null mocks ({prim_measure} medians)", ""]
+        lines += ["", f"## E5 per-mass-bin tau vs the v1 null mocks ({prim_measure} medians; v1 mocks are invalid, D26 -- indicative only)", ""]
         for r in diag["e5_mass_bins"]:
             if r["measure"] == prim_measure:
                 lines.append(f"* m1 in [{r['m1_lo']:.0f}, {r['m1_hi']:.0f}) (n={r['n_obs']}; null n~{r['n_null_median']:.0f}): observed "
