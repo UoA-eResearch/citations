@@ -1,0 +1,83 @@
+{
+  "ensemble_size": 16,
+  "mock_dir": "/mnt/citations/research-lab/runs/astronomy-gwtc4-q-chieff-copula-stress-test/data/mocks/v3",
+  "observed": {
+    "rho_hat": 0.1744647171388634,
+    "lr0": 0.4825298946379917,
+    "p_rho_neg": 0.2670486509738006,
+    "post_mean": 0.13576514825469588,
+    "single_rho_hat_sd": 0.1568659733458789,
+    "rho_hat_mc_sd": 0.017222429863646978
+  },
+  "fpr": {
+    "rho_hat_as_extreme": 0.09,
+    "rho_hat_two_sided": 0.22,
+    "lr0_ge_observed": 0.515,
+    "n_null": 200
+  },
+  "sets": {
+    "mean": {
+      "n": 40,
+      "rho_hat_median": -0.4575253553278501,
+      "rho_hat_p16": -0.6205304612496257,
+      "rho_hat_p84": -0.27823235073968533,
+      "lr0_median": 3.18406690779193,
+      "power_lr0_gt_null95": 0.35,
+      "power_rho_neg_beyond_null5": 0.15
+    },
+    "rho+0.00": {
+      "n": 200,
+      "rho_hat_median": -0.13830685062662618,
+      "rho_hat_p16": -0.405789992712311,
+      "rho_hat_p84": 0.11662559744777617,
+      "lr0_median": 0.5005214265675022,
+      "power_lr0_gt_null95": 0.05,
+      "power_rho_neg_beyond_null5": 0.05
+    },
+    "rho+0.20": {
+      "n": 40,
+      "rho_hat_median": -0.01067860295708732,
+      "rho_hat_p16": -0.3478809356147561,
+      "rho_hat_p84": 0.12533150582392452,
+      "lr0_median": 0.19767555561429617,
+      "power_lr0_gt_null95": 0.025,
+      "power_rho_neg_beyond_null5": 0.05
+    },
+    "rho-0.20": {
+      "n": 40,
+      "rho_hat_median": -0.21596722189629247,
+      "rho_hat_p16": -0.4590767485439146,
+      "rho_hat_p84": 0.017377455206783892,
+      "lr0_median": 0.7230071646336,
+      "power_lr0_gt_null95": 0.025,
+      "power_rho_neg_beyond_null5": 0.025
+    },
+    "rho-0.40": {
+      "n": 40,
+      "rho_hat_median": -0.37731385838691617,
+      "rho_hat_p16": -0.5673051138198091,
+      "rho_hat_p84": -0.09591589819835623,
+      "lr0_median": 2.0850608109130917,
+      "power_lr0_gt_null95": 0.2,
+      "power_rho_neg_beyond_null5": 0.1
+    },
+    "rho-0.60": {
+      "n": 40,
+      "rho_hat_median": -0.4484653571759721,
+      "rho_hat_p16": -0.6357767983656444,
+      "rho_hat_p84": -0.2102186218647459,
+      "lr0_median": 2.4441697041938824,
+      "power_lr0_gt_null95": 0.375,
+      "power_rho_neg_beyond_null5": 0.125
+    },
+    "width": {
+      "n": 40,
+      "rho_hat_median": -0.17355084520355127,
+      "rho_hat_p16": -0.3635245660743108,
+      "rho_hat_p84": 0.09766962187902473,
+      "lr0_median": 0.6105501069696402,
+      "power_lr0_gt_null95": 0.075,
+      "power_rho_neg_beyond_null5": 0.025
+    }
+  }
+}

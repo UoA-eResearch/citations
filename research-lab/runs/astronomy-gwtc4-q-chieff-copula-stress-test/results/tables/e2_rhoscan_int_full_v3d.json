@@ -1,0 +1,100 @@
+{
+  "ensemble_size": 16,
+  "mock_dir": "/mnt/citations/research-lab/runs/astronomy-gwtc4-q-chieff-copula-stress-test/data/mocks/v3d",
+  "observed": {
+    "rho_hat": 0.1744647171388634,
+    "lr0": 0.4825298946379917,
+    "p_rho_neg": 0.2670486509738157,
+    "ln_bf_flat": -0.8644968332600911,
+    "post_mean": 0.1357651482546868,
+    "single_rho_hat_sd": 0.1568659733458789,
+    "rho_hat_mc_sd": 0.017222429863563843
+  },
+  "fpr": {
+    "rho_hat_as_extreme": 0.245,
+    "rho_hat_two_sided": 0.52,
+    "lr0_ge_observed": 0.535,
+    "ln_bf_flat_ge_observed": 0.645,
+    "p_rho_neg_le_observed": 0.295,
+    "n_null": 200
+  },
+  "sets": {
+    "mean": {
+      "n": 40,
+      "rho_hat_median": -0.6667500844960995,
+      "rho_hat_p16": -0.884508099300291,
+      "rho_hat_p84": 0.07598154499847803,
+      "lr0_median": 1.973539863307451,
+      "ln_bf_flat_median": -0.0600274599291879,
+      "p_rho_neg_median": 0.8501118700244725,
+      "power_lr0_gt_null95": 0.325,
+      "power_rho_neg_beyond_null5": 0.55
+    },
+    "rho+0.00": {
+      "n": 200,
+      "rho_hat_median": -0.013091768961778438,
+      "rho_hat_p16": -0.39442926741943984,
+      "rho_hat_p84": 0.2433651597952579,
+      "lr0_median": 0.5803850880502068,
+      "ln_bf_flat_median": -0.713290095402499,
+      "p_rho_neg_median": 0.5276751498782806,
+      "power_lr0_gt_null95": 0.05,
+      "power_rho_neg_beyond_null5": 0.05
+    },
+    "rho+0.20": {
+      "n": 40,
+      "rho_hat_median": 0.08642166287004838,
+      "rho_hat_p16": -0.33398774896654804,
+      "rho_hat_p84": 0.37557129016982627,
+      "lr0_median": 0.8016986045386147,
+      "ln_bf_flat_median": -0.5250687672428285,
+      "p_rho_neg_median": 0.41293863831209676,
+      "power_lr0_gt_null95": 0.1,
+      "power_rho_neg_beyond_null5": 0.075
+    },
+    "rho-0.20": {
+      "n": 40,
+      "rho_hat_median": -0.28248380791142713,
+      "rho_hat_p16": -0.5634126695894137,
+      "rho_hat_p84": -0.007007451154227298,
+      "lr0_median": 1.0530542196238457,
+      "ln_bf_flat_median": -0.5369434936378639,
+      "p_rho_neg_median": 0.8098920418217984,
+      "power_lr0_gt_null95": 0.175,
+      "power_rho_neg_beyond_null5": 0.125
+    },
+    "rho-0.40": {
+      "n": 40,
+      "rho_hat_median": -0.39551288169970134,
+      "rho_hat_p16": -0.647871724628745,
+      "rho_hat_p84": -0.20359471806082693,
+      "lr0_median": 2.153947793633961,
+      "ln_bf_flat_median": -0.17966011196676845,
+      "p_rho_neg_median": 0.9021561706114335,
+      "power_lr0_gt_null95": 0.275,
+      "power_rho_neg_beyond_null5": 0.2
+    },
+    "rho-0.60": {
+      "n": 40,
+      "rho_hat_median": -0.5342817978390965,
+      "rho_hat_p16": -0.7563101201242435,
+      "rho_hat_p84": -0.2674890755699098,
+      "lr0_median": 3.2188447452963374,
+      "ln_bf_flat_median": 0.24853696918717105,
+      "p_rho_neg_median": 0.9360497837450956,
+      "power_lr0_gt_null95": 0.45,
+      "power_rho_neg_beyond_null5": 0.375
+    },
+    "width": {
+      "n": 40,
+      "rho_hat_median": 0.013244865232035236,
+      "rho_hat_p16": -0.4354678545185478,
+      "rho_hat_p84": 0.4332205305834063,
+      "lr0_median": 0.5882012351448793,
+      "ln_bf_flat_median": -0.5183580064203852,
+      "p_rho_neg_median": 0.5101074258931245,
+      "power_lr0_gt_null95": 0.15,
+      "power_rho_neg_beyond_null5": 0.1
+    }
+  }
+}

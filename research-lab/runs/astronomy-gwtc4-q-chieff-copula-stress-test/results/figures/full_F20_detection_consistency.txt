@@ -1,0 +1,6 @@
+F20 (D27c). The detection-consistency trap. The v3b mock catalogs draw each event's true parameters from the found
+injections (detection decided by the true parameters) and add PE noise independently. For such data the correct
+per-event likelihood contains P_det(theta); the standard hierarchical likelihood, correct for real events whose
+detection and PE share the same data, omits it (Essick & Fishbach, arXiv:2310.02017). Scanning rho at each mock's true
+population: with the standard likelihood (grey) rho_hat is biased by about -0.14 with a long negative tail; with P_det in
+each event's likelihood (blue) the bias vanishes; with noise-free events (green) the estimator is unbiased and tight.

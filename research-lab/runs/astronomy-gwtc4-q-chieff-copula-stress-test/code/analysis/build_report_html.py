@@ -27,7 +27,9 @@ def caption_for(src: str) -> str:
 def tiles() -> str:
     import csv
     d = json.load(open(TAB / "diagnostics_full.json"))
-    t3 = json.load(open(TAB / "e2_tau_full_v3.json"))
+    t3 = json.load(open(TAB / "e2_tau_full_v3c.json"))
+    ri = json.load(open(TAB / "e2_rhoscan_int_full_v3c.json"))
+    wfi = {f: json.load(open(TAB / f"e2_rhoscan_int_full_wf-{f}.json")) for f in ("phenom", "eob")}
     sc = {r["model"]: r for r in csv.DictReader(open(TAB / "slope_credibilities_full.csv"))}
     wf = {f: json.load(open(TAB / f"e2_rhoscan_full_wf-{f}.json")) for f in ("phenom",)}
     base_scan = json.load(open(TAB / "e2_rhoscan_full.json"))["observed"]["rho_hat"]
@@ -35,11 +37,14 @@ def tiles() -> str:
     items = [
         ("Copula dependence, ln BF", f"{e1:+.2f}", "E1 · threshold ln 3 = 1.10 · LVK-marginal Frank copula: -2.10"),
         ("Posterior-median τ(q, χeff)", f"{t3['observed']['tau_post']:+.2f} → {t3['observed']['tau_flattheta']:+.2f}",
-         "PE prior on → off · prior on: beyond every simulated hypothesis"),
+         f"PE prior on → off · FPR {t3['stats']['tau_post']['fpr_one_sided']:.3f} → {t3['stats']['tau_flattheta']['fpr_one_sided']:.2f} "
+         "vs detection-consistent mocks; prior-dominated"),
+        ("Hierarchical ρ̂ (calibrated)", f"{ri['observed']['rho_hat']:+.2f}",
+         f"FPR {ri['fpr']['rho_hat_as_extreme']:.2f} · Bayes-factor FPR {ri['fpr']['ln_bf_flat_ge_observed']:.2f} · typical of no dependence"),
         ("Mean-shift credibility", f"{float(sc['baseline_plp_both']['p_mu1_negative']):.3f} → {float(sc['lvk_bpl2p_both']['p_mu1_negative']):.2f}",
          "PowerLaw+Peak → LVK Broken Power Law + 2 Peaks masses"),
-        ("Waveform systematic in ρ̂", f"Δ {abs(base_scan - wf['phenom']['rho_hat']):.2f}",
-         f"Mixed {base_scan:+.2f} vs IMRPhenom {wf['phenom']['rho_hat']:+.2f} · null sd ≈ 0.15"),
+        ("Waveform systematic in ρ̂", f"Δ {abs(ri['observed']['rho_hat'] - wfi['phenom']['rho_hat']):.2f}",
+         f"calibrated scan: Mixed {ri['observed']['rho_hat']:+.2f} vs IMRPhenom {wfi['phenom']['rho_hat']:+.2f} · posterior sd of ρ 0.22"),
         ("Preregistered verdict", "indeterminate", "plan §7 · E1 and E2 disagree; see §4.7"),
     ]
     cells = "".join(f'<div class="tile"><div class="tile-label">{html.escape(a)}</div>'
@@ -118,7 +123,9 @@ h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing:
 .subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
 .meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
 .meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
-.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(185px, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 1040px; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
 .tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
 .tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
 .tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }

@@ -16,7 +16,9 @@ Outputs: results/tables/e2_rhoscan_mbin_full.csv, results/tables/e2_rhoscan_mbin
 from __future__ import annotations
 
 import argparse
+import contextlib
 import json
+import os
 import sys
 import time
 from pathlib import Path
@@ -64,14 +66,22 @@ def main():
     ap.add_argument("--backend", default="gpu")
     ap.add_argument("--chunk", type=int, default=256)
     ap.add_argument("--limit", type=int, default=0, help="only the first N mocks per rho_true (testing)")
+    ap.add_argument("--mock-dir", default=None,
+                    help="D27c: calibrate against physical mocks (e.g. data/mocks/v3c; null set only); outputs tagged by its name")
+    ap.add_argument("--shared-gpu", action="store_true",
+                    help="run beside another GPU job: no vllm handling, memory capped and not preallocated (use --chunk 77)")
     args = ap.parse_args()
+    if args.shared_gpu:
+        os.environ.update(JAX_PLATFORMS="cuda", XLA_PYTHON_CLIENT_PREALLOCATE="false", XLA_PYTHON_CLIENT_MEM_FRACTION="0.13")
+    tag = f"_{Path(args.mock_dir).name}" if args.mock_dir else ""
     cfg = load_config(mode=args.mode, config_path=str(HERE.parent / "config.yaml"))
     tables = cfg.path("tables_dir")
     ref = load_json(cfg.fit_dir("copula_indep_plp") / "summary.json")
     base = {n: q["median"] for n, q in ref["quantiles"].items()}
     base.update(ref.get("fixed", {}))
 
-    with GPUSession(cfg, args.backend) as gs:
+    with (contextlib.nullcontext(type("S", (), {"platform": "cuda (shared)"})) if args.shared_gpu
+          else GPUSession(cfg, args.backend)) as gs:
         import h5py
         import jax
         jax.config.update("jax_enable_x64", True)
@@ -100,9 +110,11 @@ def main():
         print("REAL: " + " ".join(f"rho_hat_b{b}={r[f'rho_hat_b{b}']:+.2f} (mean {r[f'post_mean_b{b}']:+.2f}, "
                                   f"P<0 {r[f'p_neg_b{b}']:.2f})" for b in range(NB))
               + f" | LR_zero={r['lr_zero']:.2f} LR_het={r['lr_het']:.2f} ({time.time() - t0:.1f}s incl. compile)", flush=True)
-        for rho in [0.0] + list(cfg.rho_true_grid):
+        rho_list = [0.0] if args.mock_dir else [0.0] + list(cfg.rho_true_grid)
+        for rho in rho_list:
             t1 = time.time()
-            with h5py.File(cfg.mocks_path(rho), "r") as fh:
+            mpath = Path(args.mock_dir) / "mocks_full_rho+0.00.h5" if args.mock_dir else cfg.mocks_path(rho)
+            with h5py.File(mpath, "r") as fh:
                 keys = sorted(k for k in fh if k.startswith("mock_"))
                 if args.limit:
                     keys = keys[: args.limit]
@@ -117,7 +129,7 @@ def main():
                   + f" | LR_het median {sub.lr_het.median():.2f} ({time.time() - t1:.0f}s)", flush=True)
 
     df = pd.DataFrame(rows)
-    df.to_csv(tables / f"e2_rhoscan_mbin_{args.mode}.csv", index=False)
+    df.to_csv(tables / f"e2_rhoscan_mbin_{args.mode}{tag}.csv", index=False)
     real = df[df.kind == "real"].iloc[0]
     null = df[(df.kind == "mock") & (df.rho_true == 0.0)]
     out = {"grid": [float(GRID[0]), float(GRID[-1]), len(GRID)], "bins_msun": [[2, 20], [20, 40], [40, 1e9]],
@@ -135,11 +147,11 @@ def main():
                                    fpr_lr_zero_b=float(np.mean(null[f"lr_zero_b{b}"] >= real[f"lr_zero_b{b}"])),
                                    observed_p_neg=float(real[f"p_neg_b{b}"])))
     out["response"] = []
-    for rho in [0.0] + list(cfg.rho_true_grid):
+    for rho in rho_list:
         m = df[(df.kind == "mock") & np.isclose(df.rho_true, rho)]
         out["response"].append(dict(rho_true=rho, n=int(len(m)), **{f"rho_hat_b{b}_median": float(m[f"rho_hat_b{b}"].median())
                                                                     for b in range(NB)}))
-    with open(tables / f"e2_rhoscan_mbin_{args.mode}.json", "w") as f:
+    with open(tables / f"e2_rhoscan_mbin_{args.mode}{tag}.json", "w") as f:
         json.dump(out, f, indent=2)
     print(json.dumps({k: out[k] for k in ("fpr", "per_bin")}, indent=1), flush=True)
 

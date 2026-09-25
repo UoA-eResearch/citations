@@ -15,7 +15,9 @@ Outputs: results/tables/e2_rhoscan_int_full.csv / .json
 from __future__ import annotations
 
 import argparse
+import contextlib
 import json
+import os
 import sys
 import time
 from pathlib import Path
@@ -48,7 +50,9 @@ def summarize(L):                       # L: (K, n_rho) log-likelihoods
             rh = RHO[i] + 0.5 * (y0 - y2) / den * (RHO[1] - RHO[0])
     w = np.exp(Li - Li.max()); w /= w.sum()
     single = RHO[np.argmax(L, axis=1)]
-    return dict(rho_hat=float(rh), lr0=float(2 * (Li.max() - Li[i0])), p_rho_neg=float(w[RHO < 0].sum()),
+    # E1 analogue within the scan: Bayes factor of a flat prior on rho over the grid (~U(-0.95, 0.95)) against rho = 0
+    ln_bf = float(logsumexp(Li) - np.log(len(RHO)) - Li[i0])
+    return dict(rho_hat=float(rh), lr0=float(2 * (Li.max() - Li[i0])), p_rho_neg=float(w[RHO < 0].sum()), ln_bf_flat=ln_bf,
                 post_mean=float(np.sum(w * RHO)), single_rho_hat_sd=float(single.std()),
                 single_rho_hat_min=float(single.min()), single_rho_hat_max=float(single.max()))
 
@@ -58,15 +62,26 @@ def main():
     ap.add_argument("--mock-dir", default=None)
     ap.add_argument("--backend", default="gpu")
     ap.add_argument("--chunk", type=int, default=308)
+    ap.add_argument("--sample-table", default=None,
+                    help="alternative real-catalog sample table (waveform variants, D25): real catalog only, no mocks")
+    ap.add_argument("--tag", default="", help="output suffix for --sample-table runs")
+    ap.add_argument("--shared-gpu", action="store_true",
+                    help="run beside another GPU job: no vllm handling, memory capped and not preallocated (use --chunk 77)")
     args = ap.parse_args()
+    if args.shared_gpu:
+        os.environ.update(JAX_PLATFORMS="cuda", XLA_PYTHON_CLIENT_PREALLOCATE="false", XLA_PYTHON_CLIENT_MEM_FRACTION="0.13")
     cfg = load_config(mode="full", config_path=str(HERE.parent / "config.yaml"))
+    if args.sample_table:
+        alt = Path(args.sample_table)
+        cfg.sample_table_path = lambda: alt          # load_event_arrays reads the real catalog from here
     mock_dir = Path(args.mock_dir) if args.mock_dir else cfg.path("mocks_dir") / "v2"
     tables = cfg.path("tables_dir")
     post = np.load(cfg.fit_dir("copula_indep_plp") / "posterior.npz", allow_pickle=True)
     pn = [str(x) for x in post["names"]]
     ens = post["samples"][np.random.default_rng(20260925).choice(len(post["samples"]), K_ENS, replace=False)]
 
-    with GPUSession(cfg, args.backend) as gs:
+    with (contextlib.nullcontext(type("S", (), {"platform": "cuda (shared)"})) if args.shared_gpu
+          else GPUSession(cfg, args.backend)) as gs:
         import h5py
         import jax
         jax.config.update("jax_enable_x64", True)
@@ -105,6 +120,12 @@ def main():
         r = {k: float(np.median([x[k] for x in subs])) for k in subs[0]}
         r["rho_hat_mc_sd"] = float(np.std([x["rho_hat"] for x in subs]))
         rows.append(dict(kind="real", set="real", mock=-1, **r))
+        if args.sample_table:
+            out = {"sample_table": str(args.sample_table), "ensemble_size": K_ENS, **{k: float(v) for k, v in r.items()},
+                   "subsamples": [x["rho_hat"] for x in subs]}
+            json.dump(out, open(tables / f"e2_rhoscan_int_full_{args.tag}.json", "w"), indent=2)
+            print(json.dumps(out), flush=True)
+            return
         for path in sorted(mock_dir.glob("mocks_full_*.h5")):
             tag = path.stem.replace("mocks_full_", "")
             t1 = time.time()
@@ -119,22 +140,25 @@ def main():
                   f"{sub.rho_hat.quantile(0.84):+.3f}] LR0 median {sub.lr0.median():.2f} ({time.time() - t1:.0f}s)", flush=True)
 
     df = pd.DataFrame(rows)
-    tag = mock_dir.name
-    df.to_csv(tables / f"e2_rhoscan_int_full_{tag}.csv", index=False)
+    out_tag = mock_dir.name
+    df.to_csv(tables / f"e2_rhoscan_int_full_{out_tag}.csv", index=False)
     real = df[df.kind == "real"].iloc[0]
     null = df[df.set == "rho+0.00"]
     out = {"ensemble_size": K_ENS, "mock_dir": str(mock_dir), "observed": {k: float(real[k]) for k in
-           ("rho_hat", "lr0", "p_rho_neg", "post_mean", "single_rho_hat_sd", "rho_hat_mc_sd")},
+           ("rho_hat", "lr0", "p_rho_neg", "ln_bf_flat", "post_mean", "single_rho_hat_sd", "rho_hat_mc_sd")},
            "fpr": {"rho_hat_as_extreme": float(np.mean(null.rho_hat >= real.rho_hat) if real.rho_hat >= 0 else np.mean(null.rho_hat <= real.rho_hat)),
                    "rho_hat_two_sided": float(np.mean(np.abs(null.rho_hat - null.rho_hat.median()) >= abs(real.rho_hat - null.rho_hat.median()))),
-                   "lr0_ge_observed": float(np.mean(null.lr0 >= real.lr0)), "n_null": int(len(null))},
+                   "lr0_ge_observed": float(np.mean(null.lr0 >= real.lr0)),
+                   "ln_bf_flat_ge_observed": float(np.mean(null.ln_bf_flat >= real.ln_bf_flat)),
+                   "p_rho_neg_le_observed": float(np.mean(null.p_rho_neg <= real.p_rho_neg)), "n_null": int(len(null))},
            "sets": {}}
     for tag, sub in df[df.kind == "mock"].groupby("set"):
         out["sets"][tag] = dict(n=int(len(sub)), rho_hat_median=float(sub.rho_hat.median()), rho_hat_p16=float(sub.rho_hat.quantile(0.16)),
                                 rho_hat_p84=float(sub.rho_hat.quantile(0.84)), lr0_median=float(sub.lr0.median()),
+                                ln_bf_flat_median=float(sub.ln_bf_flat.median()), p_rho_neg_median=float(sub.p_rho_neg.median()),
                                 power_lr0_gt_null95=float(np.mean(sub.lr0 > null.lr0.quantile(0.95))),
                                 power_rho_neg_beyond_null5=float(np.mean(sub.rho_hat < null.rho_hat.quantile(0.05))))
-    json.dump(out, open(tables / f"e2_rhoscan_int_full_{tag}.json", "w"), indent=2)
+    json.dump(out, open(tables / f"e2_rhoscan_int_full_{out_tag}.json", "w"), indent=2)
     print(json.dumps(out, indent=1), flush=True)
 
 

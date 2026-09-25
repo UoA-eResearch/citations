@@ -550,3 +550,186 @@ population correlation. The largest chi_eff shifts are negative-chi_eff events p
 -0.14, GW231223_032836, GW231230_170116, GW191109_010717). The v3b mocks reproduce the likelihood-level structure
 (var_tot, widths) but the prior-induced tau shift only at a quarter of the real size (-0.025 vs -0.11), so the
 posterior-median statistic remains uncalibratable.
+D29 addendum (10:50): the quarter-size prior shift in v3b is not a population effect -- v3b null mocks have as many
+high-chi_eff events as the real catalog (likelihood median > 0.3: 22 [13, 36] vs 17; > 0.2: 38 vs 30) and similar
+chi_eff uncertainty (median posterior sd 0.153 vs 0.136). Working hypothesis (untested): the prior acts along the
+mass-ratio-spin degeneracy, which in real posteriors is curved and parameter-dependent; a Gaussian in (eta, chi_eff)
+represents it only linearly. Injection-based PE (full waveform inference on simulated signals) would test this.
+
+### D24 outcome, Gaussian copula (2026-09-25 10:59)
+`copula_gauss_lvk` (18 dims, 26 min): ln Z = -4600.60 vs `lvk_bpl2p_null` -4599.62 -> E1-LVK-gauss ln BF = -0.98 (Savage-Dickey
+-0.84); best-fit ln L -4567.15 vs -4567.09 (no gain). rho: median -0.088, 90% [-0.53, +0.37], P(rho < 0) = 0.61.
+Inside the gate-passing LVK configuration both copula families find no dependence (ln BF -2.10 Frank, -0.98 Gaussian)
+with a slight negative lean (P < 0 ~ 0.6), whereas under PowerLaw+Peak masses with spline marginals the lean was
+positive (median +0.33): the sign of a weak dependence estimate follows the marginal/mass model, like the Linear-model
+mean shift.
+
+### D27 outcome: nuisance-integrated rho scan against v3b (2026-09-25 11:07)
+`analysis/e2_rho_scan_int.py --mock-dir data/mocks/v3` (`results/tables/e2_rhoscan_int_full_v3.{csv,json}`; a naming bug
+that wrote the JSON as `..._width.json` was fixed and the file renamed). Real catalog, 5 subsamples of 2000 samples per
+event: rho_hat_int = +0.198, +0.170, +0.145, +0.174, +0.182 -> +0.174 (MC sd 0.017), LR0 0.48, P(rho < 0) = 0.27,
+single-draw spread across the 16-draw ensemble 0.16. Mock sets, median rho_hat_int [16%, 84%] / LR0 median:
+null (200) -0.138 [-0.406, +0.117] / 0.50; rho_true +0.2: -0.011 [-0.348, +0.125]; -0.2: -0.216 [-0.459, +0.017];
+-0.4: -0.377 [-0.567, -0.096] / 2.09; -0.6: -0.448 [-0.636, -0.210] / 2.44; LVK width: -0.174 [-0.364, +0.098];
+PLP mean shift: -0.458 [-0.621, -0.278] / 3.18. FPR of the observed value (null rho_hat >= +0.174): 0.09; two-sided
+about the null median 0.22; LR0 >= observed 0.52. Power (LR0 above the null 95%): rho -0.6 0.38, mean shift 0.35,
+width 0.075. Taken at face value the real catalog sits on the positive side of the null, but the null itself is
+biased by -0.14 -- see D27c before reading anything into this.
+
+### D27c. The v3b null bias of the hierarchical statistic: diagnosis (2026-09-25 11:10-11:25)
+`analysis/e2_rho_scan_oracle.py` scans v3b mocks at their TRUE generating hyperparameters (which a real catalog does
+not have), median [16%, 84%]:
+| variant | null (rho 0) | rho_true -0.4 | rho_true +0.2 |
+|---|---|---|---|
+| (a) plug-in at the true nuisance | -0.140 [-0.625, +0.130] (80) | -0.477 [-0.661, -0.144] | +0.047 [-0.458, +0.208] |
+| (b) 16-draw ensemble translated to the true nuisance | -0.089 [-0.530, +0.170] | -0.255 [-0.521, -0.089] | +0.045 [-0.183, +0.267] |
+| (c) noise-free: each event a delta function at its true parameters | +0.002 [-0.075, +0.077] (200) | | |
+The bias is not the foreign nuisance ensemble (it survives at the truth, (a)) and not the estimator (noise-free events
+give an unbiased, tight rho_hat, (c)): it enters with the mock measurement / selection model. Hypothesis: v3b decides
+detection from the TRUE parameters (it draws found injections) and adds PE noise independently, so a v3b event's data
+are (y_obs, detected) and its likelihood is N(y_obs | y(theta), Sigma) * P_det(theta). The standard hierarchical
+likelihood -- correct for real events, whose detection is a function of the same data as their PE -- omits the P_det
+factor inside each event's integral: the inconsistency described by Essick & Fishbach (ApJ, doi:10.3847/1538-4357/ad1604;
+arXiv:2310.02017, "DAGnabbit!"). v3b's distance widths are large (sd of ln d_L 0.42) and P_det varies strongly across
+them, and within a posterior P_det also rises with chi_eff (x1.6 from -0.4 to +0.6) and with q at fixed chirp mass
+(0.18 at q = 0.3 to 0.28 at q = 0.9; `analysis/pdet_grid.py`, a density-ratio estimate from the found injections).
+Test (d): analyse the v3b mocks with the likelihood matching their generation (P_det(theta) inside each integral).
+Outcome (d) (`--pdet`, `results/tables/e2_rhoscan_oracle_v3_pdet.csv`): null -0.015 [-0.306, +0.278] at the truth
+(80 mocks; standard likelihood on the same mocks -0.140 [-0.625, +0.130]), centred ensemble -0.033 [-0.337, +0.326];
+rho_true -0.4: -0.331 [-0.597, +0.015]; +0.2: +0.166 [-0.132, +0.286]. With the detection factor in each event's integral the null bias vanishes and
+the sampling distribution becomes symmetric. Noise-free calibration (c): rho_true -0.4 -> -0.387 [-0.431, -0.345],
++0.2 -> +0.186 [+0.106, +0.299] (slope ~1). CONFIRMED: v3b is DAG-inconsistent; every v3b calibration of a
+likelihood-based statistic is biased, and the point-estimate calibrations (D29) inherit posteriors without the
+detection information. Remedy, v3c (`PDET=1 analysis/mock_catalogs_v3.py` -> `data/mocks/v3c`): the same true events
+and noise draws as v3b (same seeds), with P_det(theta) included in the PE importance weights, so each mock posterior
+is N(y_obs | y(theta), Sigma) P_det(theta) pi_PE(theta) and the standard hierarchical likelihood is exact for the
+mocks, as it is for real events. v3c is validated like v3b and replaces it for every E2 number
+(`code/run_v3c_followup.sh`).
+
+### D27c outcome: E2 against the detection-consistent v3c mocks (2026-09-25 11:35-11:46)
+Generation (`PDET=1`, three processes, 12 min): PE-resampling ESS median 2000-2140, 5th percentile 343-393.
+Validation (30 null mocks, `results/tables/mock_validation_full.json` key `v3c`): likelihood mass at q > 0.9 0.60
+(real 0.68), events with > 50% 69% (81%), 90% widths q 0.44 (0.48) / chi_eff 0.55 (0.52), var_tot 0.89 [0.67, 1.16]
+(0.89 [0.71, 1.06]). Passes on the same criteria as v3b.
+**Hierarchical statistic** (`results/tables/e2_rhoscan_int_full_v3c.{csv,json}`, F19): null (200) rho_hat_int
++0.002 [-0.308, +0.354], LR0 median 0.63, ln BF_flat median -0.66 -- the -0.14 bias is gone. Response: rho_true
+-0.6 -0.484, -0.4 -0.262, -0.2 -0.060, +0.2 +0.142; PLP mean shift -0.279 [-0.658, +0.084]; LVK width -0.045.
+Real catalog +0.174 (MC sd 0.017): FPR one-sided 0.325, two-sided 0.595; LR0 >= observed 0.555; E1 analogue ln BF_flat
+= -0.86, null >= observed 0.655 (the first mock-calibrated E1-type number in this study). Fraction of each
+alternative's mocks with rho_hat >= the real value: rho -0.6 0.025, -0.4 0.025, -0.2 0.15, mean shift 0.125, width
+0.325, rho +0.2 0.45. Power (LR0 above the null 95%): rho -0.6 0.45, -0.4 0.275, mean shift 0.20, width 0.10.
+**Point-estimate statistic** (`results/tables/e2_tau_full_v3c.{csv,json}`, F18 v3c): observed vs v3c null median [95%],
+FPR one-/two-sided: post -0.217 vs -0.074 [-0.206, +0.025], 0.010 / 0.015; flattheta -0.106 vs -0.052 [-0.173, +0.050],
+0.190 / 0.380; flatx -0.057 vs -0.007 [-0.102, +0.094], 0.190 / 0.410; pop -0.102 vs -0.063 [-0.168, +0.049], 0.185 /
+0.475. The m1 >= 40 point-estimate check now passes under all four measures (post 0.386 vs null 95% [0.275, 0.490]).
+Fraction of each hypothesis's mocks with tau_post <= -0.217: null 0.010, rho -0.2 0.025, -0.4 0.025, -0.6 0.000,
++0.2 0.000, width 0.000, mean shift 0.100.
+**Why the preregistered statistic still cannot be calibrated.** The PE-prior shift tau_post - tau_flattheta is -0.111
+in the real catalog but about -0.03 in every mock set under every hypothesis, for v3b and v3c alike (v3c null -0.024,
+95% [-0.055, +0.019]; no mock in either version reaches -0.111). Gaussian mock PE -- detection-consistent or not --
+responds to the PE prior about four times more weakly than real posteriors, so the tail of the preregistered
+statistic is set by a property of real PE the mocks lack (D29 addendum: most likely the curved, parameter-dependent
+mass-ratio-spin degeneracy). v3c also moves the null of the prior-free measures negative (flattheta -0.020 -> -0.052);
+the P_det tilt is mostly in distance (D27c review (a)), so this acts through the source-frame sector (not isolated).
+**Reading.** Every statistic that can be calibrated -- the hierarchical rho scan, its Bayes-factor analogue and the
+prior-removed point estimates -- puts the real catalog in the bulk of a no-dependence population (FPR 0.19-0.66);
+strong anticorrelation (rho <= -0.4) is disfavoured (2.5% of such mocks reach the real rho_hat). The preregistered
+posterior-median tau has FPR 0.010 against v3c but lies beyond (or in the 2.5-10% tail of) every simulated hypothesis
+and is dominated by a prior response the mocks cannot reproduce. Per plan sec. 7 the verdict stays indeterminate
+(E1 < ln 3, preregistered E2 FPR <= 5%). v3b numbers (D27 outcome, D29) are superseded by v3c for every FPR.
+Correction to D25 (2026-09-25 ~11:48): "about three null standard deviations" used the null sd of the plug-in scan
+against the invalid v1 mocks (0.15). Against detection-consistent mocks the plug-in scan's null 68% half-width is about
+0.3 (D27c test (d)), and the nested-sampling posterior sd of rho is 0.22; the 0.43 waveform shift is therefore about
+twice the statistical uncertainty. The conclusion (dependence claims at |rho| <~ 0.4 are within waveform systematics)
+stands; the report is corrected.
+D25 addendum (2026-09-25 ~11:53): the waveform variants on the calibrated, nuisance-integrated scan
+(`e2_rho_scan_int.py --sample-table ... --tag wf-*`, `results/tables/e2_rhoscan_int_full_wf-{phenom,eob}.json`; same
+16-draw ensemble, 5 subsamples each): Mixed +0.174 (MC sd 0.017), IMRPhenom -0.035 (0.024), SEOBNR +0.067 (0.025);
+ln BF_flat -0.86 / -1.06 / -1.35. The waveform shift on the calibrated statistic is 0.21 -- about one posterior sd of
+rho (0.22), and every variant lies inside the v3c null's 68% range. The fixed-nuisance plug-in scan's 0.43 was
+inflated by its sensitivity to the plug-in nuisance (D26 item 3). The report's "robust result 2" is weakened
+accordingly: waveform systematics are comparable to, not larger than, the statistical uncertainty.
+
+### D29b-d. Why the mocks under-reproduce the PE-prior shift of tau (2026-09-25 11:53-11:59)
+The D29 addendum's working hypothesis was that the real mass-ratio-spin degeneracy is curved and a Gaussian in
+(eta, chi_eff) cannot represent it. Tested and refined:
+- **D29b, zero-shift unit test** (`analysis/prior_response_unit_test.py`, `results/tables/prior_response_unit_test.*`):
+  every real event gets a noise-free Gaussian twin at its own likelihood mean with its OWN covariance (the v3 kernel,
+  donor = itself). Catalog tau under the PE prior / prior removed: real -0.218 / -0.098 (shift -0.120), twins -0.258 /
+  -0.138 (shift -0.120). Per-event prior-induced q-median shifts agree (corr 0.82, slope 1.03). The twins' prior-free
+  q medians are 0.12 lower on average than the real ones (the Gaussian in eta does not reproduce the pile-up at q = 1
+  exactly), but the Gaussian kernel reproduces the prior RESPONSE. Curvature is not the explanation.
+- **D29c, spread of q medians** (`analysis/qmedian_dispersion_ppc.py`, `results/tables/qmedian_dispersion_ppc_v3c.*`):
+  sd of the prior-free q medians across events real 0.110 vs v3c null 0.111 [0.096, 0.130]; the mocks' tau shift is
+  uncorrelated with it (corr 0.03). What differs is the mean prior-induced q shift: real -0.016 vs null -0.010
+  [-0.014, -0.007] (P = 0.000).
+- **D29d, response surface vs occupancy** (`analysis/prior_shift_surface.py`, `results/tables/prior_shift_surface_v3c.json`):
+  the real catalog has FEWER events in the high-chi_eff / high-q corner than the null mocks (chi_flat > 0.3 and
+  q_flat > 0.65: 11 vs median 17), but real events with chi_eff > 0.3 shift by dq = -0.070 on average vs -0.017 for
+  mock events in the same region (bins: real -0.058 ... -0.079, mocks -0.018 ... -0.021; low-chi_eff bins agree).
+  The real likelihoods' eta-chi_eff correlation depends on the spin: median +0.43 for the 17 events with
+  chi_eff > 0.3, +0.09 otherwise; v3 mock events with chi_eff > 0.3 carry donor kernels with median +0.20 (donors are
+  matched in (ln Mc_det, ln d_L) only). chi_eff likelihood widths match (0.236 both).
+Refined mechanism: at high spin the likelihood ridge tilts toward (high q, high chi_eff); the isotropic PE prior,
+which disfavours large chi_eff at q ~ 1, pushes such events down the ridge to lower q. v3's donor kernels do not
+carry the spin-dependent tilt, so their high-spin events barely respond. Test: v3d (v3c with donors matched in all
+four coordinates, `PDET=1 DONOR_KEY=4d`), launched 11:59; if v3d reproduces the real tau shift, the preregistered
+statistic becomes calibratable.
+
+### D27c review: independent adversarial review of the D27c chain (2026-09-25 11:45-12:03; Fable 5.1 subagent)
+Scratch code: /home/ubuntu/.claude/jobs/14121cdb/tmp/review_d27c/ (outside the repo). Findings and response:
+(a) DAG argument CONFIRMED: for v3b/v3c p(y_obs, det | theta) = N(y_obs | y(theta), Sigma) P_det(theta), and both the
+    numerator P_det and the denominator alpha(Lambda) are required (no double counting); the code computes exactly this.
+    Residual: the donor choice depends on theta_true and P(j | theta) is omitted (empirically inert). CORRECTION
+    ACCEPTED: the P_det factor acts almost entirely on distance -- median tilt of v3b posteriors -0.35 in ln d_L
+    (0.8 sd), +0.08 sd in q, +0.02 sd in chi_eff. D27c's "P_det rises with chi_eff and q within a posterior" is true of
+    P_det but is not the operative channel; the bias runs through the d_L / z / source-mass sector.
+(b) P_det grid: Jacobian and draw-density convention consistent with the selection term. The 1-bin smoothing inflates
+    P_det by ~35% (alpha_grid / alpha_inj = 1.35; 0.91 / 1.10 / 1.38 / 2.93 for 0 / 0.5 / 1 / 2 bins); harmless because
+    only within-event relative values enter (smoothing 1 -> 0.5 or 2 moves P_det-weighted event means by <= 0.02 sd
+    typical). Sparse cells add noise, not directional bias. ACCEPTED; pdet_grid.py docstring updated.
+(c) The P_det oracle does not pass for a wrong reason: response slope 0.83 (noise-free 0.93-0.97), null sd 0.346 vs
+    0.338 (no wash-out); P_det-weight ESS median 1030 of 2000 (min 29, three events < 100). CONFIRMED.
+(d) v3c resampling CONFIRMED (true events, observed y, donors identical to v3b; stored ln_prior = ln pi_PE exactly;
+    reweighted samples reproduce N * P_det to 0.01-0.02 in means).
+(e) Like-for-like CONFIRMED; low-severity asymmetries (mock samples resampled with replacement at ESS 5th pct 343,
+    which widens the mock null -- conservative; real tau shift -0.109 ... -0.115 for K = 2000 / 4000 / 10000).
+(f) Prior-shift comparison fair (real shift -0.103 ... -0.129 over K, seed, clipping). CORRECTION ACCEPTED: "the mocks
+    respond ~4x more weakly" overstates it -- mean per-event |dq| is 0.024 real vs 0.016-0.018 mock (1.4x); what
+    differs is the concentration of the shift in high-chi_eff events (corr(dq, chi_post) -0.50 real vs -0.11 ... -0.18
+    mock; D29d: dq of chi_eff > 0.3 events -0.070 real vs -0.017 mock). The reviewer independently traced it to donor
+    matching in (ln Mc_det, ln d_L) only (real |chi| > 0.3 events r(eta, chi) = +0.20, chi > 0.3 +0.36; mock donors
+    +0.06) and recommended chi_eff-matched donors before asserting "uncalibratable with Gaussian mock PE" -- v3d
+    (D29d, launched 11:59) is that test.
+(g) Every quoted number matches the CSV / JSON outputs; one 95% bracket was unlabeled (fixed).
+Overall (reviewer): steps 1-4 correct and correctly implemented; the reading is supported but overstated in two ways,
+both ACCEPTED: (i) "in the bulk of the null" is nearly automatic for a statistic this weak (LR0 0.48, null sd 0.37,
+power 0.275 at rho -0.4) -- the only discriminating fact is that 1/40 of rho <= -0.4 mocks reach +0.174; (ii) the
+mocks' failure to reproduce the spin-structured prior response is a mock-validation failure the hierarchical
+calibration may inherit too -- report wording becomes "calibrated under the v3c mock-PE model", and v3d re-tests both
+statistics. Verdict "indeterminate" appropriate either way.
+
+### D22 outcome against v3c (2026-09-25 12:08)
+`e2_rho_scan_mbin.py --mock-dir data/mocks/v3c` (200 null, `results/tables/e2_rhoscan_mbin_full_v3c.{csv,json}`):
+LR_zero = 0.61 exceeded by 91% of v3c null catalogs (v1: 95%), LR_het = 0.55 by 79% (v1: 84.5%); per-bin rho_hat FPR
+0.51 / 0.22 / 0.345, per-bin LR FPR 0.87 / 0.72 / 0.615. No mass-localised dependence under valid mocks. The per-bin
+null spreads are wide (68% ranges ~[-0.4, +0.7]): the binned statistic has little power.
+
+### D29d outcome: v3d (donors matched in all four coordinates) does not reproduce the prior shift (2026-09-25 12:13-12:20)
+`PDET=1 DONOR_KEY=4d` -> `data/mocks/v3d` (440 catalogs; PE-resampling ESS median ~2500). Validation (30 null):
+likelihood mass at q > 0.9 0.67 (real 0.68), events > 50% 76% (81%), 90% widths q 0.35 (0.48) / chi_eff 0.42 (0.52),
+var_tot 0.78 [0.62, 1.06] (0.89 [0.71, 1.06]); prior-free q medians too high (mean 0.753 vs 0.691, fraction > 0.8
+0.39 vs 0.15; P = 0.000). v3d FAILS validation (widths ~25% too narrow): matching donors on (eta, chi_eff) sacrifices
+the SNR match that sets the widths. No FPR is quoted from v3d.
+Prior response (`qmedian_dispersion_ppc_v3d.json`, `prior_shift_surface_v3d.json`): the concentration of the q shift
+in high-spin events is now reproduced (tau(dq, chi) -0.265 [-0.386, -0.121] vs real -0.207), but the tau shift is
+not: -0.031 [-0.057, -0.005] vs real -0.118 (P = 0.000). dq of chi_eff > 0.3 events: real -0.070, v3d -0.027, v3c
+-0.017. So the gap has two parts: the spin-dependent degeneracy tilt (fixed by 4-D matching) and the breadth of the
+high-spin likelihoods (real high-spin events are broad; v3d's are too narrow). With 17 high-spin donors among 153
+real events no Gaussian mock construction here reproduces both. Per the reviewer's criterion ("if not, the
+Gaussian-PE attribution stands"): the preregistered posterior-median statistic remains uncalibratable with Gaussian
+mock PE. For the record, tau_post against v3d: FPR 0.000 (null -0.068, 95% [-0.161, +0.038]); tau_flattheta 0.085.
+Sensitivity check (reviewer's point (ii)): the integrated hierarchical scan against v3d (`e2_rhoscan_int_full_v3d.*`),
+which carries the spin-dependent degeneracy tilt: null -0.013 [-0.394, +0.243]; rho_true -0.6 -0.534, -0.4 -0.396,
+-0.2 -0.282, +0.2 +0.086; PLP mean shift -0.667; real +0.174 -> FPR 0.245 (v3c 0.325), LR0 0.535 (0.555), ln BF_flat
+0.645 (0.655). The hierarchical calibration does not hinge on the mocks' prior response.

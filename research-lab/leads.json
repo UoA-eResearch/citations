@@ -542,9 +542,9 @@
     "Write up: Bayes-factor table, calibration curves, and direct reconciliation with the LVK, symbolic-regression, and binned-GP conclusions; release code and results tables."
    ],
    "risks": "The copula authors or another group publishes the same GWTC-4 test first (crowded, fast-moving space); result may be indeterminate (moderate Bayes factors) rather than decisive; must reproduce LVK selection-effect treatment exactly or the comparison is invalid.",
-   "status": "deep dive \u00b7 draft report",
+   "status": "deep dive \u00b7 report (revised after review)",
    "report_url": "runs/astronomy-gwtc4-q-chieff-copula-stress-test/report.html",
-   "headline": "Artifact-consistent: no copula dependence once marginals are flexible (ln BF -0.20; calibrated rho_hat +0.07, 24% of null mocks as extreme); the Linear-model mean shift follows the mass model (P 0.995 PowerLaw+Peak vs 0.80 LVK Broken Power Law + 2 Peaks)."
+   "headline": "Indeterminate: against detection-consistent mock catalogs every calibratable statistic finds no q-chi_eff dependence (hierarchical FPR 0.33); the posterior-median anticorrelation is largely a spin-prior effect (tau -0.22 -> -0.11), the Linear-model mean shift follows the mass model (P 0.995 -> 0.80), and waveform choice moves the dependence estimate by about one posterior sd."
   },
   {
    "id": "astronomy-gaia-sb1-tess-synchronization-boundary",

@@ -281,21 +281,36 @@ def main():
     scan_json = tables / f"e2_rhoscan_{cfg.mode}.json"
     scan = load_json(scan_json) if scan_json.exists() else None
     diag["E2"] = {"tau_by_measure": fpr, "tau_primary_measure": prim_measure, "rho_scan": scan}
-    fpr_tau_primary = fpr[prim_measure]["fpr_one_sided"] if prim_measure else None
-    fpr_rho = scan["fpr"]["rho_hat_as_extreme"] if scan else None
-    # plan sec 7: the tau statistic is the preregistered primary; if no measure passes the D21 validity check the
-    # E2 decision rests on the hierarchical statistic
-    e2_value, e2_basis = ((fpr_tau_primary, f"tau ({prim_measure} medians)") if fpr_tau_primary is not None
-                          else (fpr_rho, "rho scan (no tau measure passed the D21 check)"))
+    # D26 (post-review): the preregistered E2 statistic is Kendall tau of PE-prior posterior medians ("post"), calibrated
+    # against the validated physical-mock-PE catalogs when available -- the detection-consistent v3c (D27c), else v3b (D27);
+    # no statistic switching (the D21 fallback to the rho scan is withdrawn). The other measures and the rho scan are
+    # reported as diagnostics only.
+    v3tag = "v3c" if (tables / f"e2_tau_{cfg.mode}_v3c.json").exists() else "v3"
+    v3lab = {"v3c": "v3c detection-consistent physical mock PE (D27c)", "v3": "v3b physical mock PE (D27/D29)"}[v3tag]
+    v3p = tables / f"e2_tau_{cfg.mode}_{v3tag}.json"
+    e2v3 = load_json(v3p) if v3p.exists() else None
+    ri_p = tables / f"e2_rhoscan_int_{cfg.mode}_{v3tag}.json"
+    if ri_p.exists():
+        ri = load_json(ri_p)
+        diag["E2_rho_scan_int"] = dict(mocks=v3tag, observed=ri["observed"], fpr=ri["fpr"],
+                                       null=ri["sets"].get("rho+0.00"))
+    if e2v3 is not None:
+        e2_value, e2_basis = e2v3["stats"]["tau_post"]["fpr_one_sided"], f"tau of PE-prior posterior medians vs {v3lab}"
+        diag["E2_v3"] = {M: dict(observed=e2v3["stats"][f"tau_{M}"]["observed"], fpr_one_sided=e2v3["stats"][f"tau_{M}"]["fpr_one_sided"],
+                                 fpr_two_sided=e2v3["stats"][f"tau_{M}"]["fpr_two_sided"]) for M in ("post", "pop", "flattheta", "flatx")}
+    else:
+        e2_value, e2_basis = (fpr["post"]["fpr_one_sided"] if "post" in fpr else None), "tau of PE-prior posterior medians vs v1 mocks (invalid, D26)"
     diag["E2_decision_basis"], diag["E2_fpr"] = e2_basis, e2_value
     verdict = "indeterminate"
     if np.isfinite(e1) and e2_value is not None and np.isfinite(e2_value):
         if e1 < LN3 and e2_value > 0.05:
-            verdict = f"CONFIRMED (artifact-consistent): ln BF < ln 3 and E2 FPR = {e2_value:.2f} > 5% [{e2_basis}]"
+            verdict = f"CONFIRMED (artifact-consistent): ln BF = {e1:+.2f} < ln 3 and E2 FPR = {e2_value:.3f} > 5% [{e2_basis}]"
         elif e1 >= LN3 and e2_value <= 0.05:
-            verdict = f"REFUTED candidate: ln BF >= ln 3 and E2 FPR = {e2_value:.2f} <= 5% [{e2_basis}]; check E4"
+            verdict = f"REFUTED candidate: ln BF = {e1:+.2f} >= ln 3 and E2 FPR = {e2_value:.3f} <= 5% [{e2_basis}]; check E4"
         else:
-            verdict = f"indeterminate: E1 ln BF = {e1:+.2f}, E2 FPR = {e2_value:.2f} [{e2_basis}]"
+            verdict = (f"INDETERMINATE: E1 ln BF = {e1:+.2f} < ln 3 but E2 FPR = {e2_value:.3f} <= 5% [{e2_basis}] -- E1 and E2 "
+                       "disagree (plan sec 7); the E2 statistic sits at or beyond the edge of every simulated hypothesis and is "
+                       "dominated by a PE-prior effect the mocks cannot reproduce (D29, D27c)")
     diag["verdict"] = verdict
     save_json(diag, out_json)
 
@@ -307,12 +322,14 @@ def main():
              f" (threshold ln 3 = {LN3:.2f}); SDDR cross-check = "
              f"{diag.get('sddr_ln_bf_dependence_copula_gauss_plp', np.nan):+.2f}",
              f"* E2 decision basis: {e2_basis}; FPR = {e2_value}",
-             f"* E2 tau under the D21 primary measure ({prim_measure}): "
-             + (f"observed {fpr[prim_measure]['observed']:+.3f}, FPR one-sided {fpr[prim_measure]['fpr_one_sided']:.3f}, "
-                f"two-sided {fpr[prim_measure]['fpr_two_sided']:.3f}" if prim_measure else "no measure passed the D21 check"),
-             (f"* E2 hierarchical rho scan (D20): rho_hat = {scan['observed']['rho_hat']:+.3f}, "
-              f"FPR(rho_hat) = {scan['fpr']['rho_hat_as_extreme']:.2f}, FPR(LR vs rho=0) = {scan['fpr']['lr0_ge_observed']:.2f}"
-              if scan else "* E2 rho scan: not run"),
+             ((f"* E2 vs {v3tag} by measure (FPR one-sided): " + ", ".join(f"{M} {r['observed']:+.3f} ({r['fpr_one_sided']:.3f})"
+                                                                     for M, r in diag["E2_v3"].items())) if "E2_v3" in diag else "* E2 v3: not run"),
+             ((f"* Hierarchical rho scan (nuisance-integrated, {v3tag} mocks): rho_hat = {diag['E2_rho_scan_int']['observed']['rho_hat']:+.3f}, "
+               f"FPR {diag['E2_rho_scan_int']['fpr']['rho_hat_as_extreme']:.3f}; ln BF(flat rho) = "
+               f"{diag['E2_rho_scan_int']['observed']['ln_bf_flat']:+.2f}, FPR {diag['E2_rho_scan_int']['fpr']['ln_bf_flat_ge_observed']:.3f}")
+              if "E2_rho_scan_int" in diag else "* integrated rho scan: not run"),
+             (f"* Hierarchical rho scan (diagnostic; plug-in, v1 mocks): rho_hat = {scan['observed']['rho_hat']:+.3f}, "
+              f"FPR(rho_hat) = {scan['fpr']['rho_hat_as_extreme']:.2f}" if scan else "* rho scan: not run"),
              "", "## Bayes-factor table", ""]
     for c in comps:
         lines.append(f"* {c['endpoint']}: ln BF = {c['ln_bf']:+.2f} ({c['description']})")

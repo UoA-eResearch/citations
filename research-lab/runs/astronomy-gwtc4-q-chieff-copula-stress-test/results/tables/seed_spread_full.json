@@ -1,0 +1,91 @@
+{
+  "abl_bpl2p_plpspin_both": {
+    "log_z": {
+      "values": [
+        -4601.6926
+      ],
+      "range": 0.0
+    },
+    "p_mu1_negative": {
+      "values": [
+        0.8032
+      ],
+      "range": 0.0
+    },
+    "p_lnsigma1_negative": {
+      "values": [
+        0.7739
+      ],
+      "range": 0.0
+    }
+  },
+  "abl_plp_lvkspin_both": {
+    "log_z": {
+      "values": [
+        -4601.6097,
+        -4601.5893
+      ],
+      "range": 0.020393916855937277
+    },
+    "p_mu1_negative": {
+      "values": [
+        0.9926,
+        0.9955
+      ],
+      "range": 0.002931612491440694
+    },
+    "p_lnsigma1_negative": {
+      "values": [
+        0.8821,
+        0.8836
+      ],
+      "range": 0.001525101549501251
+    }
+  },
+  "baseline_plp_both": {
+    "log_z": {
+      "values": [
+        -4603.0178,
+        -4602.9997
+      ],
+      "range": 0.018132685589989705
+    },
+    "p_mu1_negative": {
+      "values": [
+        0.9945,
+        0.9961
+      ],
+      "range": 0.001522050308222389
+    },
+    "p_lnsigma1_negative": {
+      "values": [
+        0.8302,
+        0.8071
+      ],
+      "range": 0.023080353610553717
+    }
+  },
+  "lvk_bpl2p_both": {
+    "log_z": {
+      "values": [
+        -4600.5517,
+        -4600.5373
+      ],
+      "range": 0.014333860038277635
+    },
+    "p_mu1_negative": {
+      "values": [
+        0.8019,
+        0.7973
+      ],
+      "range": 0.00458362868666129
+    },
+    "p_lnsigma1_negative": {
+      "values": [
+        0.889,
+        0.8893
+      ],
+      "range": 0.0003441994739756815
+    }
+  }
+}

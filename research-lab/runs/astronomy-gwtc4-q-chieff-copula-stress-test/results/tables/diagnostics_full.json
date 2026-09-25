@@ -74,6 +74,20 @@
       "ln_bf": -4.402582333286773
     },
     {
+      "endpoint": "E1-LVK-frank",
+      "model": "copula_frank_lvk",
+      "reference": "lvk_bpl2p_null",
+      "description": "Frank copula dependence vs independence (LVK marginals)",
+      "ln_bf": -2.104645143928792
+    },
+    {
+      "endpoint": "E1-LVK-gauss",
+      "model": "copula_gauss_lvk",
+      "reference": "lvk_bpl2p_null",
+      "description": "Gaussian copula dependence vs independence (LVK marginals)",
+      "ln_bf": -0.977335638218392
+    },
+    {
       "endpoint": "E3a-LVK",
       "model": "lvk_bpl2p_mean",
       "reference": "lvk_bpl2p_null",
@@ -538,7 +552,60 @@
       ]
     }
   },
-  "E2_decision_basis": "rho scan (no tau measure passed the D21 check)",
-  "E2_fpr": 0.24,
-  "verdict": "CONFIRMED (artifact-consistent): ln BF < ln 3 and E2 FPR = 0.24 > 5% [rho scan (no tau measure passed the D21 check)]"
+  "E2_rho_scan_int": {
+    "mocks": "v3c",
+    "observed": {
+      "rho_hat": 0.1744647171388634,
+      "lr0": 0.4825298946379917,
+      "p_rho_neg": 0.26704865097379976,
+      "ln_bf_flat": -0.8644968332591816,
+      "post_mean": 0.13576514825469674,
+      "single_rho_hat_sd": 0.1568659733458789,
+      "rho_hat_mc_sd": 0.017222429863646978
+    },
+    "fpr": {
+      "rho_hat_as_extreme": 0.325,
+      "rho_hat_two_sided": 0.595,
+      "lr0_ge_observed": 0.555,
+      "ln_bf_flat_ge_observed": 0.655,
+      "p_rho_neg_le_observed": 0.32,
+      "n_null": 200
+    },
+    "null": {
+      "n": 200,
+      "rho_hat_median": 0.002359916657457466,
+      "rho_hat_p16": -0.3082288404227342,
+      "rho_hat_p84": 0.3536006801295246,
+      "lr0_median": 0.6316604659668883,
+      "ln_bf_flat_median": -0.6572744870036331,
+      "p_rho_neg_median": 0.4755395004365054,
+      "power_lr0_gt_null95": 0.05,
+      "power_rho_neg_beyond_null5": 0.05
+    }
+  },
+  "E2_v3": {
+    "post": {
+      "observed": -0.217062263501892,
+      "fpr_one_sided": 0.01,
+      "fpr_two_sided": 0.015
+    },
+    "pop": {
+      "observed": -0.10216718266253871,
+      "fpr_one_sided": 0.185,
+      "fpr_two_sided": 0.475
+    },
+    "flattheta": {
+      "observed": -0.10577915376676988,
+      "fpr_one_sided": 0.19,
+      "fpr_two_sided": 0.38
+    },
+    "flatx": {
+      "observed": -0.057103543171654635,
+      "fpr_one_sided": 0.19,
+      "fpr_two_sided": 0.41
+    }
+  },
+  "E2_decision_basis": "tau of PE-prior posterior medians vs v3c detection-consistent physical mock PE (D27c)",
+  "E2_fpr": 0.01,
+  "verdict": "INDETERMINATE: E1 ln BF = -0.20 < ln 3 but E2 FPR = 0.010 <= 5% [tau of PE-prior posterior medians vs v3c detection-consistent physical mock PE (D27c)] -- E1 and E2 disagree (plan sec 7); the E2 statistic sits at or beyond the edge of every simulated hypothesis and is dominated by a PE-prior effect the mocks cannot reproduce (D29, D27c)"
 }

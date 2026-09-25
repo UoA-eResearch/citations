@@ -1,0 +1,121 @@
+{
+  "real": {
+    "tau_post": -0.21826625386996906,
+    "tau_flat": -0.09821121431028554,
+    "tau_qpost_chiflat": -0.18610251117991058,
+    "dq_median": -0.01265423279937905,
+    "dq_mean": -0.01702183780655702,
+    "dchi_median": 0.0006295193374289271,
+    "tau_dq_vs_chi_flat": -0.22875816993464057,
+    "prior_shift_tau": -0.12005503955968352
+  },
+  "gauss": {
+    "tau_post": -0.2583419332645339,
+    "tau_flat": -0.13828689370485037,
+    "tau_qpost_chiflat": -0.22875816993464057,
+    "dq_median": -0.012443018697330666,
+    "dq_mean": -0.014581900749260199,
+    "dchi_median": 0.0017377174898440886,
+    "tau_dq_vs_chi_flat": -0.19229446164430689,
+    "prior_shift_tau": -0.12005503955968355
+  },
+  "agreement": {
+    "q_flat_corr": 0.8989030155124492,
+    "chi_flat_corr": 0.9837334667544717,
+    "dq_corr": 0.8205531339578483,
+    "dq_slope_real_on_gauss": 1.0331387142754493,
+    "q_flat_mean_diff": 0.12051946586704676
+  },
+  "largest_missed_shifts": [
+    {
+      "event": "GW191127_050227",
+      "real_chi_flat": 0.25,
+      "real_q_flat": 0.548,
+      "real_dq": -0.082,
+      "gauss_q_flat": 0.338,
+      "gauss_dq": 0.036,
+      "real_eta_chi_corr": 0.136
+    },
+    {
+      "event": "GW190725_174728",
+      "real_chi_flat": -0.088,
+      "real_q_flat": 0.622,
+      "real_dq": -0.089,
+      "gauss_q_flat": 0.41,
+      "gauss_dq": -0.034,
+      "real_eta_chi_corr": -0.883
+    },
+    {
+      "event": "GW230723_101834",
+      "real_chi_flat": -0.228,
+      "real_q_flat": 0.72,
+      "real_dq": -0.077,
+      "gauss_q_flat": 0.586,
+      "gauss_dq": -0.026,
+      "real_eta_chi_corr": 0.101
+    },
+    {
+      "event": "GW231028_153006",
+      "real_chi_flat": 0.52,
+      "real_q_flat": 0.754,
+      "real_dq": -0.115,
+      "gauss_q_flat": 0.54,
+      "gauss_dq": -0.067,
+      "real_eta_chi_corr": 0.434
+    },
+    {
+      "event": "GW190517_055101",
+      "real_chi_flat": 0.647,
+      "real_q_flat": 0.781,
+      "real_dq": -0.162,
+      "gauss_q_flat": 0.616,
+      "gauss_dq": -0.116,
+      "real_eta_chi_corr": 0.682
+    },
+    {
+      "event": "GW230820_212515",
+      "real_chi_flat": 0.345,
+      "real_q_flat": 0.649,
+      "real_dq": -0.074,
+      "gauss_q_flat": 0.438,
+      "gauss_dq": -0.03,
+      "real_eta_chi_corr": 0.376
+    },
+    {
+      "event": "GW230702_185453",
+      "real_chi_flat": 0.033,
+      "real_q_flat": 0.508,
+      "real_dq": -0.059,
+      "gauss_q_flat": 0.399,
+      "gauss_dq": -0.022,
+      "real_eta_chi_corr": -0.464
+    },
+    {
+      "event": "GW200216_220804",
+      "real_chi_flat": 0.116,
+      "real_q_flat": 0.622,
+      "real_dq": -0.012,
+      "gauss_q_flat": 0.407,
+      "gauss_dq": 0.019,
+      "real_eta_chi_corr": 0.049
+    },
+    {
+      "event": "GW230601_224134",
+      "real_chi_flat": -0.135,
+      "real_q_flat": 0.724,
+      "real_dq": -0.035,
+      "gauss_q_flat": 0.589,
+      "gauss_dq": -0.004,
+      "real_eta_chi_corr": 0.055
+    },
+    {
+      "event": "GW230825_041334",
+      "real_chi_flat": 0.429,
+      "real_q_flat": 0.727,
+      "real_dq": -0.09,
+      "gauss_q_flat": 0.602,
+      "gauss_dq": -0.064,
+      "real_eta_chi_corr": 0.462
+    }
+  ]
+}

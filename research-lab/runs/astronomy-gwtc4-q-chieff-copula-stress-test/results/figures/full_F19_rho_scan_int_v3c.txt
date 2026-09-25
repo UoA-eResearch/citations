@@ -1,0 +1,6 @@
+F19 (D27c). The hierarchical E2 statistic: the Gaussian-copula likelihood averaged over a fixed 16-draw posterior
+ensemble of the independence model's other hyperparameters, maximised in rho. Left: response to the true rho in 40
+mock catalogs per value (200 at rho = 0), for the detection-inconsistent v3b mocks (grey) and the consistent v3c mocks
+(blue); black line rho_hat = rho_true. Middle: the v3c null distribution and the real catalog (orange, median of five
+2000-sample subsamples). Right: the Bayes factor of a flat prior on rho against rho = 0 computed from the same scan, an
+E1 analogue with a mock null calibration.

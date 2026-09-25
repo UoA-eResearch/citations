@@ -7,6 +7,8 @@ E4a,baseline_bpq_both,baseline_bpq_null,mean + width slopes vs null (broken pair
 E4b,baseline_splm1_both,baseline_splm1_null,mean + width slopes vs null (spline m1),1.3167677712071963
 E4c,baseline_bpq_both,baseline_plp_both,broken pairing vs power-law pairing,0.032278346631755994
 E4d,baseline_splm1_both,baseline_plp_both,spline m1 vs PowerLaw+Peak m1,-4.402582333286773
+E1-LVK-frank,copula_frank_lvk,lvk_bpl2p_null,Frank copula dependence vs independence (LVK marginals),-2.104645143928792
+E1-LVK-gauss,copula_gauss_lvk,lvk_bpl2p_null,Gaussian copula dependence vs independence (LVK marginals),-0.977335638218392
 E3a-LVK,lvk_bpl2p_mean,lvk_bpl2p_null,chi_eff mean slope only vs null (LVK BPL+2P masses),-0.9839480124792317
 E3b-LVK,lvk_bpl2p_width,lvk_bpl2p_null,chi_eff width slope only vs null (LVK BPL+2P masses),0.837866541504809
 E3c-LVK,lvk_bpl2p_both,lvk_bpl2p_null,mean + width slopes vs null (LVK BPL+2P masses),-0.9335611703645554

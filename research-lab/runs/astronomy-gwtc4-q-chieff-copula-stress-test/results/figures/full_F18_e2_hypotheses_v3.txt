@@ -1,7 +1,4 @@
-F18 (D29). Distribution of the point-estimate Kendall tau in mock catalogs built with physical mock PE (v3b: Gaussian
-measurement noise in ln chirp mass, symmetric mass ratio, chi_eff and ln distance with each donor event's covariance,
-resampled to the PE prior; validated against the real catalog in var_tot and measurement widths) under each simulated
+F18 (v3b). Distribution of the point-estimate Kendall tau in mock catalogs built with physical mock PE (v3b: Gaussian measurement noise in ln chirp mass, symmetric mass ratio, chi_eff and ln distance with each donor event's covariance, resampled to the PE prior; validated against the real catalog in var_tot and measurement widths, but detection-inconsistent (D27c)) under each simulated
 hypothesis: no dependence, Gaussian copulas with rho = -0.6 ... +0.2, the LVK Linear-model width effect, and the
 PowerLaw+Peak mean shift (40-200 catalogs each; dots medians, bars 68% and 95%). Orange: the real catalog. Left, the
-preregistered statistic (PE-prior posterior medians): the real value lies beyond every simulated hypothesis. Right,
-the same statistic with the PE prior removed: the real value is unremarkable.
+preregistered statistic (PE-prior posterior medians); right, the same statistic with the PE prior removed.

@@ -223,15 +223,15 @@ preregistered primary-mass bins [2, 20), [20, 40), [40, 200) Msun, for the real 
 null mocks at least as extreme as observed. Bins are assigned by the median m1 under the same measure, so bin
 populations differ between measures; the null mocks do not reproduce the real point-estimate mass distribution
 (F14), which limits how far these point-estimate comparisons can be trusted.""")
-    # ---- F16: mass-binned copula scan (D22) -------------------------------------------------------------------
-    mbp = TAB / "e2_rhoscan_mbin_full.csv"
+    # ---- F16: mass-binned copula scan (D22; calibrated against the v3c mocks, D27c) ------------------------------
+    mbp = TAB / "e2_rhoscan_mbin_full_v3c.csv"
     if mbp.exists():
         mb = pd.read_csv(mbp)
-        mb["rho_true"] = mb["rho_true"].round(2)
+        mbj = json.load(open(TAB / "e2_rhoscan_mbin_full_v3c.json"))
         realm = mb[mb.kind == "real"].iloc[0]
         labels = ["m1 < 20 Msun", "20 <= m1 < 40", "m1 >= 40 Msun"]
-        fig, (a1, a2) = plt.subplots(1, 2, figsize=(10, 3.3), gridspec_kw={"width_ratios": [1, 1.25]})
-        nullm = mb[(mb.kind == "mock") & (mb.rho_true == 0.0)]
+        fig, (a1, a2) = plt.subplots(1, 2, figsize=(10, 3.3), gridspec_kw={"width_ratios": [1.2, 1]})
+        nullm = mb[mb.kind == "mock"]
         for b in range(3):
             v = nullm[f"rho_hat_b{b}"].values
             a1.plot([np.quantile(v, 0.16), np.quantile(v, 0.84)], [b, b], color=BLUE, lw=5, alpha=0.35, solid_capstyle="round")
@@ -242,26 +242,23 @@ populations differ between measures; the null mocks do not reproduce the real po
         a1.set_yticklabels(labels)
         a1.invert_yaxis()
         a1.set_xlabel("rho_hat in the mass bin")
-        a1.set_title("real catalog (orange) vs 200 null mocks (68% / 95%)")
-        grid_r = sorted(mb[mb.kind == "mock"].rho_true.unique())
-        for b, col in zip(range(3), (BLUE, AQUA, "#4a3aa7")):
-            med = [mb[(mb.kind == "mock") & (mb.rho_true == g)][f"rho_hat_b{b}"].median() for g in grid_r]
-            a2.plot(grid_r, med, "o-", color=col, lw=1.6, ms=4, label=labels[b])
-        a2.plot([-0.7, 0.3], [-0.7, 0.3], color=MUTED, lw=0.8, zorder=0)
-        a2.set(xlabel="true copula rho of the mock population (all bins)", ylabel="median rho_hat")
-        a2.legend(fontsize=7.5, loc="upper left")
-        a2.set_title("estimator response per bin")
+        a1.set_title(f"real catalog (orange) vs {len(nullm)} v3c null catalogs (68% / 95%)")
+        a2.hist(nullm.lr_zero, bins=30, color=BLUE, alpha=0.85, edgecolor="white", linewidth=0.4)
+        a2.axvline(realm.lr_zero, color=ORANGE, lw=2)
+        a2.text(0.97, 0.95, f"P(null >= real) = {mbj['fpr']['lr_zero_ge_observed']:.2f}", transform=a2.transAxes,
+                ha="right", va="top", fontsize=8)
+        a2.set(xlabel="likelihood ratio against zero dependence in every bin", ylabel="null catalogs")
+        a2.set_title("joint test")
         fig.suptitle("D22: no mass-localised q-chi_eff dependence", fontsize=10)
         fig.savefig(FIG / "full_F16_mass_binned_scan.png")
         plt.close(fig)
         caption("F16_mass_binned_scan", f"""
 F16 (D22, exploratory). Gaussian copula with a separate dependence parameter in each preregistered primary-mass bin,
 scanned on a 17^3 grid with all other hyperparameters at the null population. Left: the real catalog's per-bin
-rho_hat (orange) against the distribution over 200 zero-correlation mock catalogs (blue: median, central 68% and 95%).
-Right: median per-bin rho_hat against the true (common) rho of the calibration mocks; grey line rho_hat = rho_true.
-The two lower-mass bins are unbiased; the m1 >= 40 Msun bin carries a ~-0.3 offset that the null calibration absorbs.
-Likelihood ratio against zero dependence in every bin: {realm.lr_zero:.2f} (95% of null mocks larger); for
-heterogeneity between bins: {realm.lr_het:.2f}.""")
+rho_hat (orange) against the distribution over 200 zero-correlation v3c (detection-consistent) mock catalogs (blue:
+median, central 68% and 95%). Right: the likelihood ratio against zero dependence in every bin, {realm.lr_zero:.2f} for
+the real catalog ({mbj['fpr']['lr_zero_ge_observed']:.0%} of null catalogs larger); for heterogeneity between bins the
+ratio is {realm.lr_het:.2f} ({mbj['fpr']['lr_het_ge_observed']:.0%} larger).""")
     # ---- F17: how the PE prior moves per-event medians (D29) --------------------------------------------------
     import sys as _sys
     _sys.path.insert(0, str(RUN / "code" / "src"))
@@ -299,40 +296,137 @@ high-chi_eff events (GW190517_055101, GW231028_153006, GW190620_030421, GW170729
 isotropic-spin prior allows large chi_eff only at unequal masses. The rank correlation of the medians roughly doubles
 ({kendalltau(ql, cl).statistic:+.3f} -> {kendalltau(qp, cp).statistic:+.3f}) without any population correlation.""")
 
-    # ---- F18: observed tau vs every simulated hypothesis (v3b mocks, D29) -------------------------------------
-    v3p = TAB / "e2_tau_full_v3.csv"
-    if v3p.exists():
-        v3 = pd.read_csv(v3p)
-        v3["rho_true"] = v3["rho_true"].round(2)
-        realv = v3[v3.kind == "real"].iloc[0]
-        sets = [("null (rho = 0)", 0.0), ("copula rho = -0.2", -0.2), ("copula rho = -0.4", -0.4), ("copula rho = -0.6", -0.6),
-                ("copula rho = +0.2", 0.2), ("LVK width effect", -9.0), ("PLP mean shift", -8.0)]
-        fig, axes = plt.subplots(1, 2, figsize=(10.5, 3.6), sharey=True)
-        for ax, M in zip(axes, ("post", "flattheta")):
-            for yi, (lab, code) in enumerate(sets):
-                v = v3[(v3.kind == "mock") & np.isclose(v3.rho_true, code)][f"tau_{M}"].values
-                ax.plot([np.quantile(v, 0.025), np.quantile(v, 0.975)], [yi, yi], color=BLUE, lw=1.2, alpha=0.6)
-                ax.plot([np.quantile(v, 0.16), np.quantile(v, 0.84)], [yi, yi], color=BLUE, lw=5, alpha=0.35, solid_capstyle="round")
-                ax.plot([np.median(v)], [yi], "o", color=BLUE, ms=4.5)
-            ax.axvline(realv[f"tau_{M}"], color=ORANGE, lw=2, label=f"real catalog ({realv[f'tau_{M}']:+.3f})")
-            ax.set_title(f"medians: {SHORT[M]}")
-            ax.set_xlabel("Kendall tau(q, chi_eff) of per-event medians")
-            ax.legend(fontsize=7.5, loc="lower right")
-        axes[0].set_yticks(range(len(sets)))
-        axes[0].set_yticklabels([s[0] for s in sets], fontsize=8)
-        axes[0].invert_yaxis()
-        fig.suptitle("E2 against physical mock PE (v3b): what each hypothesis predicts (median, 68%, 95%)", fontsize=10)
-        fig.savefig(FIG / "full_F18_e2_hypotheses_v3.png")
-        plt.close(fig)
-        caption("F18_e2_hypotheses_v3", """
-F18 (D29). Distribution of the point-estimate Kendall tau in mock catalogs built with physical mock PE (v3b: Gaussian
-measurement noise in ln chirp mass, symmetric mass ratio, chi_eff and ln distance with each donor event's covariance,
-resampled to the PE prior; validated against the real catalog in var_tot and measurement widths) under each simulated
+    # ---- F18: observed tau vs every simulated hypothesis (v3b D29; v3c D27c) -----------------------------------
+    for tag, lab_mocks in (("v3", "v3b"), ("v3c", "v3c")):
+        f18_one(tag, lab_mocks)
+    f19_int_scan()
+    f20_dag_trap()
+    print("figures written; primary measure:", prim, "| passing:", passing)
+
+
+V3_DESC = {"v3b": "v3b: Gaussian measurement noise in ln chirp mass, symmetric mass ratio, chi_eff and ln distance with each "
+                  "donor event's covariance, resampled to the PE prior; validated against the real catalog in var_tot and "
+                  "measurement widths, but detection-inconsistent (D27c)",
+           "v3c": "v3c: as v3b, with the detection probability P_det(theta) included in each mock event's likelihood so the "
+                  "mocks are consistent with the standard hierarchical likelihood (D27c; Essick & Fishbach, arXiv:2310.02017)"}
+SETS_H = [("null (rho = 0)", 0.0), ("copula rho = -0.2", -0.2), ("copula rho = -0.4", -0.4), ("copula rho = -0.6", -0.6),
+          ("copula rho = +0.2", 0.2), ("LVK width effect", -9.0), ("PLP mean shift", -8.0)]
+
+
+def f18_one(tag, lab_mocks):
+    v3p = TAB / f"e2_tau_full_{tag}.csv"
+    if not v3p.exists():
+        return
+    v3 = pd.read_csv(v3p)
+    v3["rho_true"] = v3["rho_true"].round(2)
+    realv = v3[v3.kind == "real"].iloc[0]
+    fig, axes = plt.subplots(1, 2, figsize=(10.5, 3.6), sharey=True)
+    for ax, M in zip(axes, ("post", "flattheta")):
+        for yi, (lab, code) in enumerate(SETS_H):
+            v = v3[(v3.kind == "mock") & np.isclose(v3.rho_true, code)][f"tau_{M}"].values
+            ax.plot([np.quantile(v, 0.025), np.quantile(v, 0.975)], [yi, yi], color=BLUE, lw=1.2, alpha=0.6)
+            ax.plot([np.quantile(v, 0.16), np.quantile(v, 0.84)], [yi, yi], color=BLUE, lw=5, alpha=0.35, solid_capstyle="round")
+            ax.plot([np.median(v)], [yi], "o", color=BLUE, ms=4.5)
+        ax.axvline(realv[f"tau_{M}"], color=ORANGE, lw=2, label=f"real catalog ({realv[f'tau_{M}']:+.3f})")
+        ax.set_title(f"medians: {SHORT[M]}")
+        ax.set_xlabel("Kendall tau(q, chi_eff) of per-event medians")
+        ax.legend(fontsize=7.5, loc="lower right")
+    axes[0].set_yticks(range(len(SETS_H)))
+    axes[0].set_yticklabels([s_[0] for s_ in SETS_H], fontsize=8)
+    axes[0].invert_yaxis()
+    fig.suptitle(f"E2 against physical mock PE ({lab_mocks}): what each hypothesis predicts (median, 68%, 95%)", fontsize=10)
+    fig.savefig(FIG / f"full_F18_e2_hypotheses_{tag}.png")
+    plt.close(fig)
+    caption(f"F18_e2_hypotheses_{tag}", f"""
+F18 ({lab_mocks}). Distribution of the point-estimate Kendall tau in mock catalogs built with physical mock PE ({V3_DESC[lab_mocks]}) under each simulated
 hypothesis: no dependence, Gaussian copulas with rho = -0.6 ... +0.2, the LVK Linear-model width effect, and the
 PowerLaw+Peak mean shift (40-200 catalogs each; dots medians, bars 68% and 95%). Orange: the real catalog. Left, the
-preregistered statistic (PE-prior posterior medians): the real value lies beyond every simulated hypothesis. Right,
-the same statistic with the PE prior removed: the real value is unremarkable.""")
-    print("figures written; primary measure:", prim, "| passing:", passing)
+preregistered statistic (PE-prior posterior medians); right, the same statistic with the PE prior removed.""")
+
+
+def f19_int_scan():
+    p = TAB / "e2_rhoscan_int_full_v3c.csv"
+    if not p.exists():
+        return
+    d = pd.read_csv(p)
+    j = json.load(open(TAB / "e2_rhoscan_int_full_v3c.json"))
+    b = pd.read_csv(TAB / "e2_rhoscan_int_full_v3.csv") if (TAB / "e2_rhoscan_int_full_v3.csv").exists() else None
+    real = d[d.kind == "real"].iloc[0]
+    fig, (a1, a2, a3) = plt.subplots(1, 3, figsize=(12, 3.5), gridspec_kw={"width_ratios": [1.25, 1, 1]})
+    cal = [("rho-0.60", -0.6), ("rho-0.40", -0.4), ("rho-0.20", -0.2), ("rho+0.00", 0.0), ("rho+0.20", 0.2)]
+    for src, col, off, lab in ((b, MUTED, -0.03, "v3b (detection-inconsistent)"), (d, BLUE, 0.03, "v3c (consistent)")):
+        if src is None:
+            continue
+        data = [src[(src.kind == "mock") & (src.set == t)].rho_hat.values for t, _ in cal]
+        parts = a1.violinplot(data, positions=[x + off for _, x in cal], widths=0.07, showmedians=True, showextrema=False)
+        for bd in parts["bodies"]:
+            bd.set_facecolor(col); bd.set_alpha(0.4); bd.set_edgecolor("none")
+        parts["cmedians"].set_color(col)
+        a1.plot([], [], color=col, lw=6, alpha=0.5, label=lab)
+    a1.plot([-0.7, 0.3], [-0.7, 0.3], color=INK, lw=0.7, zorder=0)
+    a1.axhline(real.rho_hat, color=ORANGE, lw=2, label=f"real catalog {real.rho_hat:+.2f}")
+    a1.set(xlabel="true copula rho of the mock population", ylabel="rho_hat_int (nuisance-integrated scan)", xlim=(-0.72, 0.32))
+    a1.legend(fontsize=7.5, loc="upper left")
+    a1.set_title("calibration")
+    null = d[(d.kind == "mock") & (d.set == "rho+0.00")]
+    a2.hist(null.rho_hat, bins=np.linspace(-0.95, 0.95, 39), color=BLUE, alpha=0.85, edgecolor="white", linewidth=0.4)
+    a2.axvline(real.rho_hat, color=ORANGE, lw=2)
+    a2.text(0.03, 0.95, f"P(null >= real) = {j['fpr']['rho_hat_as_extreme']:.2f}", transform=a2.transAxes, va="top", fontsize=8)
+    a2.set(xlabel="rho_hat_int", ylabel=f"null mocks ({len(null)})")
+    a2.set_title("null distribution (v3c)")
+    a3.hist(null.ln_bf_flat, bins=30, color=BLUE, alpha=0.85, edgecolor="white", linewidth=0.4)
+    a3.axvline(real.ln_bf_flat, color=ORANGE, lw=2)
+    a3.text(0.97, 0.95, f"P(null >= real) = {j['fpr']['ln_bf_flat_ge_observed']:.2f}", transform=a3.transAxes, va="top", ha="right", fontsize=8)
+    a3.set(xlabel="ln BF(flat rho vs rho = 0) within the scan", ylabel="null mocks")
+    a3.set_title("E1 analogue: Bayes factor for dependence")
+    fig.savefig(FIG / "full_F19_rho_scan_int_v3c.png")
+    plt.close(fig)
+    caption("F19_rho_scan_int_v3c", f"""
+F19 (D27c). The hierarchical E2 statistic: the Gaussian-copula likelihood averaged over a fixed 16-draw posterior
+ensemble of the independence model's other hyperparameters, maximised in rho. Left: response to the true rho in 40
+mock catalogs per value (200 at rho = 0), for the detection-inconsistent v3b mocks (grey) and the consistent v3c mocks
+(blue); black line rho_hat = rho_true. Middle: the v3c null distribution and the real catalog (orange, median of five
+2000-sample subsamples). Right: the Bayes factor of a flat prior on rho against rho = 0 computed from the same scan, an
+E1 analogue with a mock null calibration.""")
+
+
+def f20_dag_trap():
+    files = [("v3b, standard likelihood", "e2_rhoscan_oracle_v3.csv", MUTED),
+             ("v3b, P_det in each event's likelihood", "e2_rhoscan_oracle_v3_pdet.csv", BLUE),
+             ("no measurement noise", "e2_rhoscan_oracle_v3_noiseless.csv", AQUA)]
+    have = [(lab, pd.read_csv(TAB / f), c) for lab, f, c in files if (TAB / f).exists()]
+    if len(have) < 3:
+        return
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(10, 3.5), gridspec_kw={"width_ratios": [1.2, 1]})
+    for k, (lab, df, col) in enumerate(have):
+        grid = sorted(df.rho_true.round(2).unique())
+        data = [df[np.isclose(df.rho_true, g)].rho_hat_truth.values for g in grid]
+        parts = a1.violinplot(data, positions=[g + (k - 1) * 0.05 for g in grid], widths=0.045, showmedians=True, showextrema=False)
+        for bd in parts["bodies"]:
+            bd.set_facecolor(col); bd.set_alpha(0.5); bd.set_edgecolor("none")
+        parts["cmedians"].set_color(col)
+        a1.plot([], [], color=col, lw=6, alpha=0.6, label=lab)
+        nul = df[np.isclose(df.rho_true, 0.0)].rho_hat_truth
+        a2.hist(nul, bins=np.linspace(-0.95, 0.95, 39), histtype="step", lw=1.8, color=col, density=True,
+                label=f"{lab}: median {nul.median():+.3f}")
+    a1.plot([-0.5, 0.3], [-0.5, 0.3], color=INK, lw=0.7, zorder=0)
+    a1.set(xlabel="true copula rho", ylabel="rho_hat at the true nuisance", xlim=(-0.55, 0.32))
+    a1.legend(fontsize=7.5, loc="upper left")
+    a1.set_title("same mock events, three likelihoods")
+    a2.axvline(0, color=INK, lw=0.7, ymax=0.68)
+    a2.set_ylim(0, a2.get_ylim()[1] * 1.45)
+    a2.set(xlabel="rho_hat at the true nuisance (null mocks)", ylabel="density")
+    a2.legend(fontsize=7, loc="upper left")
+    a2.set_title("null (rho = 0)")
+    fig.savefig(FIG / "full_F20_detection_consistency.png")
+    plt.close(fig)
+    caption("F20_detection_consistency", """
+F20 (D27c). The detection-consistency trap. The v3b mock catalogs draw each event's true parameters from the found
+injections (detection decided by the true parameters) and add PE noise independently. For such data the correct
+per-event likelihood contains P_det(theta); the standard hierarchical likelihood, correct for real events whose
+detection and PE share the same data, omits it (Essick & Fishbach, arXiv:2310.02017). Scanning rho at each mock's true
+population: with the standard likelihood (grey) rho_hat is biased by about -0.14 with a long negative tail; with P_det in
+each event's likelihood (blue) the bias vanishes; with noise-free events (green) the estimator is unbiased and tight.""")
 
 
 if __name__ == "__main__":

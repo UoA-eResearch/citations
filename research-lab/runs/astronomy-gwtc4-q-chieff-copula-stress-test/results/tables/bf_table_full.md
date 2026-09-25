@@ -8,6 +8,8 @@
 | E4b | baseline_splm1_both | baseline_splm1_null | +1.32 | mean + width slopes vs null (spline m1) |
 | E4c | baseline_bpq_both | baseline_plp_both | +0.03 | broken pairing vs power-law pairing |
 | E4d | baseline_splm1_both | baseline_plp_both | -4.40 | spline m1 vs PowerLaw+Peak m1 |
+| E1-LVK-frank | copula_frank_lvk | lvk_bpl2p_null | -2.10 | Frank copula dependence vs independence (LVK marginals) |
+| E1-LVK-gauss | copula_gauss_lvk | lvk_bpl2p_null | -0.98 | Gaussian copula dependence vs independence (LVK marginals) |
 | E3a-LVK | lvk_bpl2p_mean | lvk_bpl2p_null | -0.98 | chi_eff mean slope only vs null (LVK BPL+2P masses) |
 | E3b-LVK | lvk_bpl2p_width | lvk_bpl2p_null | +0.84 | chi_eff width slope only vs null (LVK BPL+2P masses) |
 | E3c-LVK | lvk_bpl2p_both | lvk_bpl2p_null | -0.93 | mean + width slopes vs null (LVK BPL+2P masses) |
@@ -33,3 +35,5 @@
 | abl_plp_lvkspin_both | 13 | -4601.61 | -4571.84 | 29011/44127 | 1.00 | 0.71/0.96 | 7.7 |
 | abl_bpl2p_sharedtaper_both | 17 | -4600.82 | -4563.93 | 25955/42460 | 1.00 | 0.68/0.93 | 22.9 |
 | abl_bpl2p_plpspin_both | 19 | -4601.69 | -4563.95 | 25465/44514 | 1.00 | 0.64/0.93 | 31.9 |
+| copula_frank_lvk | 18 | -4601.72 | -4567.24 | 26061/46149 | 1.00 | 0.63/0.93 | 24.8 |
+| copula_gauss_lvk | 18 | -4600.60 | -4567.15 | 26402/45786 | 1.00 | 0.63/0.94 | 25.9 |

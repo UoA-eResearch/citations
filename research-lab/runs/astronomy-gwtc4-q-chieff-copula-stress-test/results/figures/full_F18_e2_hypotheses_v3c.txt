@@ -1,0 +1,4 @@
+F18 (v3c). Distribution of the point-estimate Kendall tau in mock catalogs built with physical mock PE (v3c: as v3b, with the detection probability P_det(theta) included in each mock event's likelihood so the mocks are consistent with the standard hierarchical likelihood (D27c; Essick & Fishbach, arXiv:2310.02017)) under each simulated
+hypothesis: no dependence, Gaussian copulas with rho = -0.6 ... +0.2, the LVK Linear-model width effect, and the
+PowerLaw+Peak mean shift (40-200 catalogs each; dots medians, bars 68% and 95%). Orange: the real catalog. Left, the
+preregistered statistic (PE-prior posterior medians); right, the same statistic with the PE prior removed.
