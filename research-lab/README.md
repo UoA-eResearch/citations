@@ -51,6 +51,7 @@ scout (done) ──► leads.json ──► human picks leads from the plot
 | `astronomy-gwtc4-q-chieff-copula-stress-test` — is the q–χ_eff anticorrelation in GWTC-4.0 real? | Revised after three independent reviews and recalibrated against detection-consistent mocks. Preregistered verdict: **indeterminate**; every calibratable statistic is consistent with no dependence (low power). | [report.html](runs/astronomy-gwtc4-q-chieff-copula-stress-test/report.html) · [deviations log](runs/astronomy-gwtc4-q-chieff-copula-stress-test/deviations.md) |
 | `bioinformatics-vep-acmg-calibration-drift` — do the ClinGen PP3/BP4 predictor thresholds still hold on variants classified since? | Revised after independent review. Thresholds hold on ClinVar as a whole; weakest in expert-curated disease genes (BayesDel Supporting/Moderate fall short on expert-panel labels); post-2022 ClinVar trends are composition. | [report.html](runs/bioinformatics-vep-acmg-calibration-drift/report.html) · [deviations log](runs/bioinformatics-vep-acmg-calibration-drift/deviations.md) |
 | `climate-earth-record-margin-obs` — are heat records being broken by growing margins in station data? | Revised after independent review. Record-shattering (2003–2025) is **not yet visible** beyond mean warming: not distinguishable from a no-warming climate network-wide, new 30-year records ~20% below a steady-warming null (not established); outside the US new records are ~1.8× the no-warming rate. | [report.html](runs/climate-earth-record-margin-obs/report.html) · [deviations log](runs/climate-earth-record-margin-obs/deviations.md) |
+| `health-econ-wastewater-flusight-value` — does influenza wastewater improve state flu-hospitalisation forecasts? | Revised after independent review. **No detectable gain** at an assumed 10-day reporting delay (relative WIS 0.995 [0.946, 1.045], 16 best-covered states; nothing added to the FluSight ensemble); exploratory: the signal is not ahead of admissions, and value appears only with reporting within days. | [report.html](runs/health-econ-wastewater-flusight-value/report.html) · [deviations log](runs/health-econ-wastewater-flusight-value/deviations.md) |
 
 Lessons from the first deep dive, to carry into the next ones (details in its deviations log, D19–D29 and D27c):
 
@@ -76,3 +77,7 @@ Lessons from the first deep dive, to carry into the next ones (details in its de
 - **When units share events, resample the events too.** Heatwaves set records at hundreds of stations in the same year;
   a bootstrap over places alone gave intervals 1.6–3.6× too narrow. Resample places and years (two-way), and check the
   interval's coverage on synthetic worlds whose dependence is measured from the data.
+- **Verify real-time data rules against the hub's own forecasts.** The FluSight hub README's description of `as_of`
+  would have leaked a week of future admissions; matching the hub baseline's median to candidate vintages settled it.
+- **For "does source X add forecast value", run a positive and a negative control first, and scan the reporting lag.**
+  Flu wastewater went from no value at a 10-day delay to a 6% gain at an (unreachable) 0-day delay.

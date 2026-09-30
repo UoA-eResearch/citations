@@ -2305,7 +2305,10 @@
     "Write up as a full manuscript with reproducible pipeline; include a null-result framing plan since a well-identified null is also publishable."
    ],
    "risks": "The 2025 medRxiv flu-wastewater surveillance paper or an unposted CDC analysis may already cover part of this; mitigated by scoping to hub-benchmarked probabilistic skill and RSV extension. Wastewater state coverage is uneven pre-2023, shrinking the evaluable panel. Effect may be null - still publishable but at a lower-tier venue.",
-   "plain_summary": "Flu virus levels in sewage rise before hospital admissions do, and the US runs a public flu-forecasting challenge (FluSight). This study would test whether adding wastewater data to a standard forecasting model improves its predictions of flu hospitalisations, scored the same way the challenge scores its entries."
+   "plain_summary": "Flu virus levels in sewage track flu in the community, and the US runs a public flu-forecasting challenge (FluSight). This study tested whether adding sewage data to a strong forecasting model improves its predictions of flu hospitalisations, using only data available at the time. Deep dive done: if sewage results take about ten days to arrive, they add nothing measurable; follow-up analyses suggest they would only help if reported within days.",
+   "status": "deep dive \u00b7 report (revised after review)",
+   "report_url": "runs/health-econ-wastewater-flusight-value/report.html",
+   "headline": "No detectable gain: with state influenza-A wastewater usable 10 days after collection (assumed), paired real-time quantile-regression forecasts with vs without wastewater give relative WIS 0.995 [0.946, 1.045] in the 16 best-covered states (2023-26; inconclusive by the preregistered 5% rule) and add nothing to the FluSight ensemble (0.992 [0.964, 1.020], contradicted). Exploratory: the signal leads admissions by 0-1 weeks, not 2, and value rises as reporting speeds up (0.94 [0.88, 0.99] at an unreachable 0-day lag)."
   },
   {
    "id": "health-econ-gbd-revision-calibration",

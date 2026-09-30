@@ -1,0 +1,32 @@
+[
+ [
+  "Forecast gain from wastewater",
+  "none detected",
+  "relative WIS 0.995 [0.946, 1.045] · 16 best-covered states · 10-day delay assumed"
+ ],
+ [
+  "Added to the FluSight ensemble",
+  "×0.992",
+  "[0.964, 1.020] · any gain under 5%"
+ ],
+ [
+  "Pipeline checks",
+  "pass",
+  "detects a real leading signal (0.82) · nothing from another state's data (1.00) · no leakage"
+ ],
+ [
+  "Our model without wastewater",
+  "≈ FluSight ensemble",
+  "relative WIS 0.98 · 0.67 against the FluSight baseline"
+ ],
+ [
+  "If results were instant (exploratory)",
+  "×0.94",
+  "[0.88, 0.99] · 2 days: ×0.96, interval includes 1 · 10 days: ×1.00"
+ ],
+ [
+  "Verdict",
+  "no gain at a 10-day delay",
+  "exploratory: reporting speed, not the signal, looks like the limit"
+ ]
+]

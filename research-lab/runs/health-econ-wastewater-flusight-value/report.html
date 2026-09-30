@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wastewater and Flu Forecasts</title>
+<meta name="description" content="Are heat records being broken by growing margins? A preregistered test of record-shattering heat in 2,013 long-running weather stations, 1951-2025.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Health economics &amp; forecasting</div>
+  <h1>Does sewage data improve flu hospital forecasts?</h1>
+  <p class="subtitle">A preregistered, real-time test of influenza wastewater in FluSight-style forecasts, 2023–24 to 2025–26</p>
+  <div class="meta">
+    <span>Draft · 2026-10-01 · revised after independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/health-econ-wastewater-flusight-value/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/health-econ-wastewater-flusight-value/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/health-econ-wastewater-flusight-value/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Forecast gain from wastewater</div><div class="tile-value text">none detected</div><div class="tile-note">relative WIS 0.995 [0.946, 1.045] · 16 best-covered states · 10-day delay assumed</div></div><div class="tile"><div class="tile-label">Added to the FluSight ensemble</div><div class="tile-value">×0.992</div><div class="tile-note">[0.964, 1.020] · any gain under 5%</div></div><div class="tile"><div class="tile-label">Pipeline checks</div><div class="tile-value text">pass</div><div class="tile-note">detects a real leading signal (0.82) · nothing from another state&#x27;s data (1.00) · no leakage</div></div><div class="tile"><div class="tile-label">Our model without wastewater</div><div class="tile-value">≈ FluSight ensemble</div><div class="tile-note">relative WIS 0.98 · 0.67 against the FluSight baseline</div></div><div class="tile"><div class="tile-label">If results were instant (exploratory)</div><div class="tile-value">×0.94</div><div class="tile-note">[0.88, 0.99] · 2 days: ×0.96, interval includes 1 · 10 days: ×1.00</div></div><div class="tile"><div class="tile-label">Verdict</div><div class="tile-value text">no gain at a 10-day delay</div><div class="tile-note">exploratory: reporting speed, not the signal, looks like the limit</div></div></section>
+<main>
+<h2>In plain terms</h2>
+<p>Flu virus in sewage is now measured at over a thousand US treatment plants. Sewage levels rise and fall with flu in
+the community, so they might help predict hospital admissions in the coming weeks. The CDC's public challenge,
+FluSight, scores such predictions weekly.</p>
+<p>We tested that hope for three flu seasons, focusing on the 16 states whose sewage sites cover at least half the
+population. Each week we built two forecasting models that were identical except that one also saw the state's sewage
+data. Both used only data that would have been available at the time, and we scored them the way FluSight scores its
+entries. We wrote the plan down before looking at any hospital data.</p>
+<p>What we found:</p>
+<ul>
+<li><strong>If sewage results take about ten days to become usable, as we assumed, they add nothing measurable.</strong> Forecast
+  accuracy with and without them differed by about 1% or less. If there is a benefit, it is smaller than about 5%.
+  Sewage data also did not improve the official FluSight ensemble forecast.</li>
+<li><strong>Our follow-up analyses point to timing.</strong> Sewage levels move roughly in step with hospital admissions, not two
+  weeks ahead of them. By the time a sample has been tested and reported, the hospital numbers already tell much the
+  same story.</li>
+<li><strong>Faster reporting might help.</strong> With results usable within about two days, the follow-up analysis suggests forecasts
+  roughly 4% more accurate, though that is not certain. With instant results, which is impossible in practice, the gain
+  would be 6–7%. It is mostly for the current and next week.</li>
+</ul>
+<p>We found no evidence that more sites help; reporting speed looks important. The timing analyses were not in the
+original plan, so they point to what to test next.</p>
+<h2>Abstract</h2>
+<p><strong>Question.</strong> Does adding state-level influenza A wastewater data to a probabilistic forecasting model improve 1–4-week
+forecasts of weekly confirmed influenza hospital admissions? Earlier work shows correlation and lead time, but no
+state-level, real-time, hub-benchmarked test of the <em>marginal</em> value of flu wastewater was found.</p>
+<p><strong>Design</strong> (preregistered, <code>plan.md</code>, committed before any hospital data were downloaded).</p>
+<ul>
+<li><strong>Paired models.</strong> Two linear quantile-regression models, identical except for three state wastewater features, were
+  refit every week for the 85 FluSight rounds from October 2023 to May 2026.</li>
+<li><strong>Real-time data.</strong> Hospital data came from the FluSight hub's weekly vintages. Wastewater samples counted as usable
+  10 days after collection, an assumption: real delays are not published.</li>
+<li><strong>Scoring.</strong> Weighted interval score (WIS) against final data.</li>
+<li><strong>Primary panel.</strong> State-seasons with at least 50% of the population covered by wastewater sites: 16 states, 36
+  state-seasons, 4,052 forecasts.</li>
+<li><strong>Uncertainty.</strong> A two-way bootstrap over states and 4-week blocks of forecast dates.</li>
+<li><strong>Validation.</strong> The pipeline detects a real leading signal (positive control: relative WIS 0.82 [0.76, 0.88]) and
+  finds nothing in mismatched wastewater (negative control: 1.00 [0.95, 1.05]).</li>
+</ul>
+<p><strong>Results.</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Hypothesis</th>
+<th>Relative WIS (with / without wastewater) [95%]</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H1: at least 5% better, coverage ≥ 50%</td>
+<td>0.995 [0.946, 1.045]</td>
+<td>inconclusive (no detectable gain)</td>
+</tr>
+<tr>
+<td>H2: the same, coverage ≥ 20% (42 locations)</td>
+<td>0.987 [0.940, 1.038]</td>
+<td>inconclusive (no detectable gain)</td>
+</tr>
+<tr>
+<td>H3: gain grows with coverage</td>
+<td>slope −0.05 [−0.15, +0.05] per unit coverage</td>
+<td>inconclusive</td>
+</tr>
+<tr>
+<td>H4: adds value to the FluSight ensemble</td>
+<td>0.992 [0.964, 1.020]</td>
+<td>contradicted: any gain is under 5%</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Sensitivity analyses.</strong> All six give relative WIS between 0.98 and 1.05.</li>
+<li><strong>Benchmarks.</strong> The base model is as accurate as the FluSight ensemble (0.98 [0.92, 1.08]) and much better than the
+  FluSight baseline (0.67), so the test is against a strong comparator.</li>
+</ul>
+<p><strong>Exploratory analyses</strong> (not preregistered) suggest why:</p>
+<ul>
+<li><strong>No two-week lead.</strong> The state wastewater signal leads admissions by 0–1 weeks, not 2 (bootstrap peak at lead 0 in
+  78% of draws, never at 2).</li>
+<li><strong>Value tracks the reporting delay.</strong> Relative WIS rises steadily with the delay:</li>
+<li>0.937 [0.882, 0.991] if samples were usable on the day of collection, an unreachable bound;</li>
+<li>0.96 at 2 days, whose interval includes 1;</li>
+<li>0.98 at 5–7 days;</li>
+<li>1.00 at 10 days or more.</li>
+</ul>
+<p>For influenza hospital forecasting, wastewater appears to be useful mainly as a fast nowcast. A preregistered test with
+measured reporting delays is the natural next step.</p>
+<h2>1. Background and the gap</h2>
+<ul>
+<li><strong>The signal is real.</strong> Influenza A RNA concentrations in wastewater track clinical influenza:</li>
+<li>WastewaterSCAN (Boehm et al. 2023, JAMA);</li>
+<li>a 2025 IDWeek analysis of all US states, reporting a two-week lead and r = 0.93;</li>
+<li>a California comparison of surveillance streams (medRxiv 2025).</li>
+<li><strong>Forecast value is shown mainly for COVID-19.</strong> Examples are a US retrospective multi-model study (arXiv:2512.01074),
+  EpiFlow (arXiv:2608.06671, Virginia) and CDC's wastewater-informed COVID models.</li>
+<li><strong>For influenza, correlation is not forecast value.</strong> A forecaster already sees last week's hospital admissions. The
+  question is whether wastewater adds information beyond them, when the data arrive at their real speed.</li>
+<li>On the FluSight hub, CDC's own influenza models use hospital and emergency-department data but not wastewater.</li>
+<li>Two models (MIGHTE) use a national wastewater series, without a published with/without comparison.</li>
+<li><strong>Why it matters.</strong> Wastewater programmes cost money, and CDC is deciding how to use them in respiratory forecasting.</li>
+</ul>
+<h2>2. Data</h2>
+<ul>
+<li><strong>Hospital admissions.</strong> Weekly confirmed influenza admissions by state (NHSN), from the FluSight hub's
+  <code>target-data/time-series.csv</code>. It holds 96 weekly vintages from September 2023 to July 2026.</li>
+<li><strong>Real-time data.</strong> Each forecast round uses the vintage released by its Wednesday due date, with data through the
+    previous Saturday. The preregistered rule misread how the older vintages are labelled; the corrected rule is in
+    <code>deviations.md</code> D2, verified against the FluSight baseline's own real-time forecasts.</li>
+<li><strong>Missing vintages.</strong> Four of the 85 rounds lack that week's vintage and use the one before.</li>
+<li><strong>Scoring truth</strong> is the latest vintage.</li>
+<li><strong>Wastewater.</strong> CDC NWSS influenza A sample data (data.cdc.gov ymmh-divb): 330,015 samples from 1,493 sites,
+  September 2021 to September 2026. It covers the state and local health-department, CDC–Verily and WastewaterSCAN
+  programmes.</li>
+<li><strong>Availability.</strong> Samples count as usable 10 days after collection. Public vintages do not exist, and the file's
+    update field holds a single refresh date, so real delays could not be measured; 5 and 17 days are sensitivity
+    analyses.</li>
+<li><strong>Coverage</strong> (Figure F1). The population served by sites that reported in the two weeks before the data cut-off, as a
+  share of the state population.</li>
+<li>At least 50% in 9, 13 and 14 states in 2023–24, 2024–25 and 2025–26: AZ, CA, DC, DE, HI, IL, MN, MO, NE, NJ, NV,
+    NY, OR, RI, UT and VA.</li>
+<li>At least 20% in 23, 35 and 38 states.</li>
+<li><strong>Comparators.</strong> FluSight-baseline and FluSight-ensemble forecasts from the hub.</li>
+</ul>
+<figure><a href="results/figures/F1_coverage.png"><img src="results/figures/F1_coverage.png" alt="F1"></a><figcaption>F1. Wastewater coverage by state and season: the population served by sites that reported influenza A in the two weeks before each forecast&#x27;s data cut-off, as a share of the state population, averaged over the season&#x27;s forecast dates. Dashed red: the 50% threshold of the primary panel; dotted orange: the 20% threshold of the secondary panel.</figcaption></figure>
+<h2>3. Methods</h2>
+<p><strong>Targets.</strong> For each state and round, y = log((admissions + 1) / population × 100,000). The model forecasts its change
+from the last observed week to each target week: hub horizons 0–3, one to four weeks beyond the latest data.</p>
+<p><strong>Base features:</strong></p>
+<ul>
+<li>the current level;</li>
+<li>the last two weekly changes;</li>
+<li>a seasonal sine and cosine.</li>
+</ul>
+<p><strong>Wastewater features:</strong></p>
+<ul>
+<li><strong>Site signal.</strong> Each site × programme series gets a weekly mean of log10 concentration, centred on the series' own
+  median over the windows available at the time.</li>
+<li><strong>State signal.</strong> The population-weighted mean of the centred site series.</li>
+<li><strong>Features:</strong></li>
+<li>the latest weekly value;</li>
+<li>the last two weekly changes.</li>
+</ul>
+<p><strong>Fitting.</strong> Linear quantile regression at FluSight's 23 quantile levels.</p>
+<ul>
+<li>One model per horizon, pooled over states.</li>
+<li>Refit every round on all state-weeks since September 2022 that have wastewater features, with the same lags.</li>
+<li>Both models use the same training rows.</li>
+</ul>
+<p><strong>Evaluation.</strong></p>
+<ul>
+<li><strong>Score.</strong> WIS on counts, FluSight's standard.</li>
+<li><strong>Relative WIS.</strong> Ratio of mean WIS, with / without wastewater, over identical forecast tasks.</li>
+<li><strong>Intervals.</strong> A two-way bootstrap over states and 4-week blocks of forecast dates, with 5,000 draws. Flu waves are
+  shared across states, and the previous deep dive showed that resampling places alone gives intervals that are too
+  narrow.</li>
+</ul>
+<p><strong>Decision rule</strong> (preregistered).</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Verdict</th>
+<th>Condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Supported</td>
+<td>estimate ≤ 0.95 and upper bound &lt; 1</td>
+</tr>
+<tr>
+<td>Contradicted</td>
+<td>lower bound &gt; 0.95</td>
+</tr>
+<tr>
+<td>Inconclusive</td>
+<td>otherwise</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Validation before scoring the hypotheses</strong> (<code>deviations.md</code> D3).</p>
+<ul>
+<li><strong>Positive control.</strong> The wastewater features were replaced by a noisy copy of next week's final admissions. The
+  pipeline found the gain: 0.820 [0.759, 0.883].</li>
+<li><strong>Negative control.</strong> Each state was given another state's wastewater. Nothing: 0.997 [0.951, 1.053].</li>
+<li><strong>Leakage assertions.</strong> On 12 random rounds, every hospital vintage was released by the due date, and the wastewater
+  signal recomputed from only the samples collected by the cut-off is identical to the one used.</li>
+</ul>
+<h2>4. Results</h2>
+<h3>4.1 Wastewater does not improve the forecasts (H1, H2)</h3>
+<p>Table 1. Relative WIS, with / without wastewater, 95% two-way bootstrap intervals.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Analysis</th>
+<th>Locations</th>
+<th>Forecasts</th>
+<th>Relative WIS</th>
+<th>Equal-weight across states</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Primary panel (coverage ≥ 50%)</td>
+<td>16</td>
+<td>4,052</td>
+<td>0.995 [0.946, 1.045]</td>
+<td>1.002 [0.955, 1.055]</td>
+</tr>
+<tr>
+<td>Secondary panel (coverage ≥ 20%)</td>
+<td>42</td>
+<td>10,793</td>
+<td>0.987 [0.940, 1.038]</td>
+<td>0.995 [0.951, 1.042]</td>
+</tr>
+</tbody>
+</table></div>
+<p>The two models' forecasts are nearly indistinguishable (Figure F2), and so are their interval coverages:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Model</th>
+<th>50% interval coverage</th>
+<th>95% interval coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>With wastewater</td>
+<td>45.6%</td>
+<td>90.9%</td>
+</tr>
+<tr>
+<td>Without wastewater</td>
+<td>46.0%</td>
+<td>90.7%</td>
+</tr>
+</tbody>
+</table></div>
+<p>There is no gain at any horizon, in any season, or in holiday-free weeks:</p>
+<ul>
+<li>by horizon, 0.985 (horizon 0), 0.999, 0.997 and 0.995;</li>
+<li>by season, 0.957 in 2023–24, 0.977 in 2024–25 and 1.026 in 2025–26;</li>
+<li>excluding holiday weeks, 0.980.</li>
+</ul>
+<p>In rising weeks the estimate is 0.967 [0.898, 1.028], in falling or flat weeks 1.038; neither excludes 1.</p>
+<p>More detail (<code>results/tables/review_checks.csv</code>):</p>
+<ul>
+<li><strong>Many small wins, a few larger losses.</strong> The wastewater model has the lower WIS in 55.0% of paired forecasts (56.8%
+  at horizon 0, 52.8% at horizon 3), yet the mean ratio is about 1. Its mean WIS differences are −1.5 and −2.2 in
+  2023–24 and 2024–25 but +2.1 in 2025–26, the best-covered season.</li>
+<li><strong>Tasks without wastewater.</strong> 96 of the 4,052 primary forecasts (2.4%; DC in parts of 2023–24 and 2024–25, NE in
+  four rounds) had no wastewater features and use the base forecast in both models.</li>
+<li><strong>The interval does not hinge on one resampling choice.</strong></li>
+<li>Resampling only states gives [0.966, 1.021]; only dates gives [0.966, 1.023]; resampling both, as preregistered,
+    gives [0.946, 1.045].</li>
+<li>California carries 22% of the base model's WIS, and the equal-weight version (1.002 [0.955, 1.055]) is not driven
+    by it.</li>
+<li><strong>Pooling is not the cause.</strong> The reviewer trained both models on the 16 primary states only and obtained 1.010
+  [0.949, 1.066].</li>
+</ul>
+<p>Under the preregistered rule H1 and H2 are "inconclusive", not "contradicted", only because the lower bounds (0.946
+and 0.940) fall just below 0.95. If a benefit exists at a 10-day delay, it is smaller than about 5%.</p>
+<figure><a href="results/figures/F2_example.png"><img src="results/figures/F2_example.png" alt="F2"></a><figcaption>F2. Two example seasons: forecasts one week beyond the latest hospital data (hub horizon 1) from the model without (grey) and with (blue) state wastewater features, made in real time each week. Thick bars: 50% intervals; thin bars: 95% intervals; dots: medians. The two models are almost indistinguishable.</figcaption></figure>
+<figure><a href="results/figures/F3_relative_wis.png"><img src="results/figures/F3_relative_wis.png" alt="F3"></a><figcaption>F3. Relative weighted interval score (WIS) of the forecast model with state wastewater features against the identical model without them, with 95% two-way bootstrap intervals (states and 4-week blocks of forecast dates resampled). Dashed red line: the preregistered 5% improvement. Primary panel unless stated; wastewater usable 10 days after sample collection unless stated. Bottom: the pipeline&#x27;s positive control (a noisy copy of next week&#x27;s admissions, which it detects) and negative control (another state&#x27;s wastewater, which gives nothing).</figcaption></figure>
+<h3>4.2 Coverage, the ensemble, and robustness (H3, H4, sensitivity)</h3>
+<ul>
+<li><strong>H3.</strong> Across 141 state-seasons with wastewater features, the log WIS ratio does not fall detectably with coverage:
+  slope −0.047 [−0.149, +0.045] per unit coverage.</li>
+<li><strong>H4.</strong> Averaging the FluSight ensemble with the wastewater model instead of the base model changes WIS by 0.992
+  [0.964, 1.020] in the primary panel. The gain is under 5%, so H4 is contradicted.</li>
+<li>A 50/50 average halves any effect of the wastewater model, so this 5% threshold is stricter than H1's.</li>
+<li>Averaging with either model improves on the ensemble alone by 3–4%, not significantly: 0.959 [0.912, 1.024] with
+    the wastewater model and 0.966 [0.930, 1.018] with the base model.</li>
+<li><strong>Sensitivity analyses</strong> (Figure F3), primary panel:</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Analysis</th>
+<th>Relative WIS [95%]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wastewater usable after 5 days</td>
+<td>0.981 [0.937, 1.031]</td>
+</tr>
+<tr>
+<td>Wastewater usable after 17 days</td>
+<td>1.005 [0.944, 1.069]</td>
+</tr>
+<tr>
+<td>Flow- and population-normalised concentration</td>
+<td>1.007</td>
+</tr>
+<tr>
+<td>Level feature only</td>
+<td>1.005</td>
+</tr>
+<tr>
+<td>Base model trained on all state-weeks</td>
+<td>1.009</td>
+</tr>
+<tr>
+<td>CDC's wastewater viral activity levels instead of concentrations</td>
+<td>1.045</td>
+</tr>
+</tbody>
+</table></div>
+<h3>4.3 Benchmarks</h3>
+<p>On the same forecasts, primary panel (Figure F6):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Against FluSight baseline</th>
+<th>Against FluSight ensemble</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Base model</td>
+<td>0.671 [0.569, 0.758]</td>
+<td>0.984 [0.919, 1.082]</td>
+</tr>
+<tr>
+<td>Wastewater model</td>
+<td>0.668</td>
+<td>0.979 [0.899, 1.104]</td>
+</tr>
+<tr>
+<td>FluSight ensemble</td>
+<td>0.682</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p>The comparison is therefore between two strong forecasters, not a weak model that any extra data would improve.</p>
+<figure><a href="results/figures/F6_benchmarks.png"><img src="results/figures/F6_benchmarks.png" alt="F6"></a><figcaption>F6. The forecasting model used here against FluSight&#x27;s own forecasts on the same tasks (primary panel, horizons 0-3). Without wastewater it is already about as accurate as the FluSight ensemble and a third better than the FluSight baseline, so the wastewater test is against a strong model, not a straw man.</figcaption></figure>
+<h3>4.4 Exploratory: why no gain, and when there would be one</h3>
+<p>These analyses were not preregistered; they were run after the results above (<code>deviations.md</code> D3).</p>
+<ul>
+<li><strong>Wastewater leads admissions by 0–1 weeks, not 2</strong> (Figure F5). In final data with no reporting delay, over the
+  primary state-seasons:</li>
+<li>the correlation between the weekly state wastewater signal and log admissions peaks at a lead of 0–1 weeks (0.75);</li>
+<li>for week-to-week changes it peaks at 0 weeks (0.25).</li>
+</ul>
+<p>A bootstrap over state-seasons (<code>leadlag_bootstrap.csv</code>) puts the peak at lead 0 in 78.5% of draws, lead 1 in
+  12.9%, lead −1 in 8.6%, and never at lead 2. Correlation at lead 0 exceeds that at lead 2 by 0.086 [0.014, 0.165]. It
+  cannot be separated from lead 1 (0.030 [−0.030, 0.091]).</p>
+<p>The two-week lead reported from correlation analyses is not seen at state level with this signal.
+- <strong>So timeliness looks decisive</strong> (Figure F4). At the due date, the hospital data run to the previous Saturday, four
+  days earlier. A wastewater sample usable 10 days after collection is older than that. Varying the delay:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Days from collection until usable</th>
+<th>0</th>
+<th>2</th>
+<th>5</th>
+<th>7</th>
+<th>10</th>
+<th>17</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Relative WIS, primary panel</td>
+<td>0.937 [0.882, 0.991]</td>
+<td>0.962</td>
+<td>0.981</td>
+<td>0.983</td>
+<td>0.995</td>
+<td>1.005</td>
+</tr>
+<tr>
+<td>Relative WIS, secondary panel</td>
+<td>0.930 [0.895, 0.971]</td>
+<td>0.943</td>
+<td>0.970</td>
+<td>0.977</td>
+<td>0.987</td>
+<td>0.997</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>Only the 0-day row (both panels) and the secondary panel at 2 days (0.943 [0.913, 0.976]) exclude 1.</li>
+<li>The gain concentrates at horizon 0, the week in progress: 0.919 [0.851, 1.019] at 0 days.</li>
+<li>A 0-day delay means samples collected up to the due date itself, partly inside the week being forecast. It is an
+    unreachable bound.</li>
+<li>A 2–5-day turnaround is plausible for rapid programmes; WastewaterSCAN, 29% of samples, publishes within a few
+    days.</li>
+</ul>
+<figure><a href="results/figures/F4_timeliness.png"><img src="results/figures/F4_timeliness.png" alt="F4"></a><figcaption>F4. Exploratory (not preregistered): the value of wastewater appears to depend on how quickly results arrive. Relative WIS of the with-wastewater model in the primary panel when samples become usable 0 to 17 days after collection (forecasts are due on Wednesdays; the hospital data then run to the previous Saturday). At 0 days the latest sample is from the due date itself, an unreachable bound. The gain is largest for the current and next week (horizons 0 and 1); the all-horizon interval includes 1 except at 0 days.</figcaption></figure>
+<figure><a href="results/figures/F5_leadlag.png"><img src="results/figures/F5_leadlag.png" alt="F5"></a><figcaption>F5. Exploratory: how far the state wastewater signal leads hospital admissions, in final data with no reporting delay, over the primary-panel state-seasons. Both correlations peak at a lead of 0-1 weeks, not the two weeks reported in correlation studies (a bootstrap over state-seasons never puts the peak at 2 weeks).</figcaption></figure>
+<h2>5. Discussion</h2>
+<p><strong>What this study establishes:</strong></p>
+<ol>
+<li><strong>No detectable gain under the assumed delay.</strong> With state influenza A wastewater usable 10 days after collection,
+   a standard forecasting model gains nothing detectable, even in the best-covered states, and neither does the
+   FluSight ensemble. The 95% interval excludes gains larger than about 5%.</li>
+<li><strong>Correlation is not forecast value.</strong> A strong correlation, even a lead in correlation analyses, does not by itself
+   improve a forecaster that already sees recent hospital data.</li>
+</ol>
+<p><strong>What the exploratory analyses suggest</strong> (not preregistered):</p>
+<ol start="3">
+<li><strong>Timeliness is the likely limitation.</strong> At state level the wastewater signal leads confirmed admissions by 0–1
+   weeks, not 2, and hospital data arrive within four days. Wastewater can only add information if it arrives about as
+   fast.</li>
+<li><strong>Fast reporting may have value.</strong>
+   - With results usable within about two days, the exploratory estimate is a 4% gain in the primary panel, whose
+     interval includes no gain, and 6% in the wider panel.
+   - With instant results, which are unreachable, the gain is 6–7%.
+   - The gain is mostly for the current and next week.</li>
+</ol>
+<p>This is worth a preregistered test with measured reporting delays. The data cannot rank timeliness against coverage:
+   H3 is inconclusive.</p>
+<p><strong>What it does not establish:</strong></p>
+<ul>
+<li><strong>The real reporting delays.</strong> NWSS publishes no vintages, so the 10-day assumption could not be checked. Delays
+  differ by programme (WastewaterSCAN is faster than many state laboratories). Where they are shorter, the realised
+  value is larger.</li>
+<li><strong>Every use of wastewater.</strong> Other models (non-linear, sub-state, using wastewater to anticipate season onset before
+  hospital data rise) might extract more. Wastewater may also be most valuable where hospital reporting is weak or
+  delayed, which was not the case in 2023–2026.</li>
+<li><strong>Other pathogens.</strong> RSV and COVID-19 have different lead structures.</li>
+</ul>
+<h2>6. Limitations</h2>
+<ol>
+<li><strong>Reporting delay assumed.</strong> The main analysis rests on an assumed 10-day availability lag (§4.4 spans 0–17 days).</li>
+<li><strong>One model family.</strong> Linear quantile regression with three wastewater features. It is as accurate as the FluSight
+   ensemble without wastewater, but a model designed around wastewater could do better.</li>
+<li><strong>Small panel.</strong> 16 states in the primary panel; intervals are about ±5%. With 16 clusters, percentile bootstrap
+   intervals may slightly under-cover.</li>
+<li><strong>Wastewater heterogeneity and censoring.</strong> Series from different laboratories and methods are combined only after
+   centring each on its own median. Method changes within a series are not modelled.
+   - 70% of all samples are non-detects, recorded at exactly half the detection limit, and 93% of series are mostly
+     non-detects. So each series' median is largely its detection limit, and the "anomaly" measures how far above that
+     limit the signal is.
+   - In the primary states in December–February, 24% of samples are non-detects: 33% for state and local programmes,
+     5% for WastewaterSCAN.
+   - A censoring-aware model might extract more signal than this linear one.</li>
+<li><strong>Exploratory timeliness analysis.</strong> The lag curve was not preregistered; the preregistered lags (5, 10, 17 days) are
+   part of it and follow the same pattern.</li>
+</ol>
+<h2>7. Reproducibility</h2>
+<p>The code is in <code>code/</code>:</p>
+<ul>
+<li><code>load_ww.py</code>, <code>ww_coverage.py</code>: wastewater data and coverage;</li>
+<li><code>pipeline.py</code>: real-time paired forecasts, with all variants;</li>
+<li><code>score.py</code>: WIS and relative WIS;</li>
+<li><code>analyze.py</code>: H3, H4, benchmarks, breakdowns;</li>
+<li><code>validate_leakage.py</code>: leakage checks;</li>
+<li><code>explore_leadlag.py</code>, <code>explore_timeliness.py</code>: the exploratory analyses;</li>
+<li><code>review_checks.py</code>: checks requested by the independent review;</li>
+<li><code>make_figures.py</code>, <code>build_report_html.py</code>: presentation.</li>
+</ul>
+<p>Tables are in <code>results/tables/</code> and figures in <code>results/figures/</code>. All data are open (data.cdc.gov and the FluSight
+hub); raw data and forecasts are not committed.</p>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: GWOSC / Zenodo public releases. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/health-econ-wastewater-flusight-value/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>
