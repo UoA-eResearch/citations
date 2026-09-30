@@ -1,0 +1,32 @@
+[
+ [
+  "Pre-replication signal (exploratory keywords)",
+  "AUC 0.53",
+  "[0.515, 0.553] · 0.5 = chance · target was 0.65"
+ ],
+ [
+  "After a failed replication",
+  "3-4× more",
+  "'failed to replicate' language; predicts outcome at AUC 0.63"
+ ],
+ [
+  "Citing sentences expressing doubt",
+  "2.6%",
+  "[1.4%, 6.2%] of contexts · 300 labelled blind"
+ ],
+ [
+  "Preregistered classifiers",
+  "failed",
+  "validation F1 0.12 / 0.30 (bar 0.5) · both fail the positive control"
+ ],
+ [
+  "Findings studied",
+  "1,075",
+  "first replication failed for 524 · 787,384 citation contexts"
+ ],
+ [
+  "Verdict",
+  "faint at most",
+  "preregistered test uninformative; exploratory signal far below useful"
+ ]
+]

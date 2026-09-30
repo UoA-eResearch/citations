@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Citations and Replication</title>
+<meta name="description" content="Are heat records being broken by growing margins? A preregistered test of record-shattering heat in 2,013 long-running weather stations, 1951-2025.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Metascience</div>
+  <h1>Does the literature see replication failures coming?</h1>
+  <p class="subtitle">A preregistered test of whether citing language before a replication predicts its outcome, 1,075 replicated findings</p>
+  <div class="meta">
+    <span>Draft · 2026-10-01 · revised after independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/metascience-citation-context-replication/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/metascience-citation-context-replication/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/metascience-citation-context-replication/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Pre-replication signal (exploratory keywords)</div><div class="tile-value text">AUC 0.53</div><div class="tile-note">[0.515, 0.553] · 0.5 = chance · target was 0.65</div></div><div class="tile"><div class="tile-label">After a failed replication</div><div class="tile-value">3-4× more</div><div class="tile-note">&#x27;failed to replicate&#x27; language; predicts outcome at AUC 0.63</div></div><div class="tile"><div class="tile-label">Citing sentences expressing doubt</div><div class="tile-value">2.6%</div><div class="tile-note">[1.4%, 6.2%] of contexts · 300 labelled blind</div></div><div class="tile"><div class="tile-label">Preregistered classifiers</div><div class="tile-value text">failed</div><div class="tile-note">validation F1 0.12 / 0.30 (bar 0.5) · both fail the positive control</div></div><div class="tile"><div class="tile-label">Findings studied</div><div class="tile-value">1,075</div><div class="tile-note">first replication failed for 524 · 787,384 citation contexts</div></div><div class="tile"><div class="tile-label">Verdict</div><div class="tile-value text">faint at most</div><div class="tile-note">preregistered test uninformative; exploratory signal far below useful</div></div></section>
+<main>
+<h2>In plain terms</h2>
+<p>Many published findings, especially in psychology, fail when other scientists repeat the study. When researchers cite
+a paper, the surrounding sentence often shows what they think of it: "as shown by…", "consistent with…", or "this has
+been questioned…". If scientists doubted a finding before anyone re-tested it, those doubts might show up in that
+language, giving a cheap early warning for shaky results.</p>
+<p>We tested this on 1,075 findings that were later re-tested, about half of them successfully. For each we gathered the
+sentences in which other papers cited it before the re-test. The plan was written down before any data were collected.</p>
+<p>What we found:</p>
+<ul>
+<li><strong>Doubt is rare.</strong> Only about 3% of citing sentences (between 1% and 6%) question the cited finding.</li>
+<li><strong>The planned measuring tools failed.</strong> A classifier trained on a published dataset flagged 44% of all sentences as
+  negative, mostly ordinary "however…" statements. A local AI model missed most real doubts. Neither could even
+  detect the wave of "failed to replicate" remarks that follows a failed re-test, so their results cannot answer the
+  question.</li>
+<li><strong>A simple search does work after the fact.</strong> Searching for phrases like "failed to replicate" finds that wave. Once a
+  failed re-test is published, such phrases become three to four times more common.</li>
+<li><strong>Before the re-test, it gives only a faint hint.</strong> Findings that later failed already drew slightly more of these
+  phrases (14% of them had at least one, against 7%). But as a predictor it barely beats a coin toss, scoring 0.53 where
+  0.5 is chance and 1 is perfect.</li>
+</ul>
+<p>So the research literature records replication failures once they happen. Its citing language gives, at most, a faint
+advance warning.</p>
+<h2>Abstract</h2>
+<p><strong>Question.</strong> Does reproducibility-oriented negative sentiment in the contexts citing a finding, before its first
+replication, predict whether that replication fails? Replicability can be predicted from paper text, markets and
+surveys. Citation contexts, the community's running commentary, had not been tested against known outcomes at scale.</p>
+<p><strong>Design</strong> (preregistered, <code>plan.md</code>, committed before any citation context was collected).</p>
+<ul>
+<li><strong>Outcomes.</strong> FORRT's FLoRA database: 2,116 replicated original findings with DOIs.</li>
+<li><strong>Citation contexts.</strong> 787,384 contexts from 815,570 citing papers, from Semantic Scholar. Replication papers
+  themselves are excluded.</li>
+<li><strong>Primary sample.</strong> 1,075 originals with at least 5 citing papers with contexts before their first replication; 524
+  failed.</li>
+<li><strong>Classifiers</strong> (preregistered):</li>
+<li>C1, SciBERT fine-tuned on the CC30k citation-sentiment dataset;</li>
+<li>C2, a local LLM, zero-shot.</li>
+<li><strong>Validation.</strong> Before any outcome was joined, both were validated on 300 contexts labelled blind.</li>
+<li><strong>Positive control.</strong> Contexts published after the replication must predict its outcome.</li>
+</ul>
+<p><strong>Results.</strong></p>
+<ul>
+<li><strong>The preregistered measurement failed</strong>, in two ways:</li>
+<li><strong>Validation:</strong> C1 F1 0.115 (flags 44% of contexts), C2 F1 0.30 [0.00, 0.56]; the bar was 0.5.</li>
+<li><strong>Positive control:</strong> neither C1 (0.497) nor C2 (0.529 [0.491, 0.567]) can predict outcomes even from
+    post-replication citations.</li>
+</ul>
+<p>Under the plan, H1–H3 are therefore <strong>uninformative</strong>. The point estimates are all near chance.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Hypothesis</th>
+<th>C1 (SciBERT)</th>
+<th>C2 (LLM)</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H1: pre-replication negative share predicts failure, AUC ≥ 0.65</td>
+<td>0.480 [0.445, 0.514]</td>
+<td>0.507 [0.472, 0.543]</td>
+<td>uninformative</td>
+</tr>
+<tr>
+<td>Positive control (851 originals)</td>
+<td>0.497 [0.459, 0.536], fails</td>
+<td>0.529 [0.491, 0.567], fails</td>
+<td>—</td>
+</tr>
+<tr>
+<td>H2: adds ≥ 0.05 AUC over metadata (baseline AUC 0.54)</td>
+<td>+0.004 [−0.015, +0.034]</td>
+<td>−0.006 [−0.018, +0.008]</td>
+<td>uninformative</td>
+</tr>
+<tr>
+<td>H3: the same, with the original's n and p (329 originals)</td>
+<td>+0.000 [−0.018, +0.021]</td>
+<td>−0.004 [−0.023, +0.018]</td>
+<td>uninformative</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Exploratory.</strong> A transparent keyword detector for replication-failure language (K1) was written after the
+classifiers failed, and fixed before being run against outcomes.</p>
+<ul>
+<li><strong>It passes the positive control:</strong> 0.625 [0.598, 0.650].</li>
+<li><strong>Before the replication it shows only a faint signal:</strong> AUC 0.534 [0.515, 0.553]; 0.525 with a window ending 2 years
+  before.</li>
+<li><strong>Incremental value</strong> over metadata: +0.014 [−0.006, +0.031].</li>
+<li><strong>Share of originals flagged:</strong> 13.9% of findings that later failed had a pre-replication citing paper with such
+  language, against 7.3% of those that replicated.</li>
+<li><strong>Timing.</strong> Weighting originals equally, the rate is higher but flat in the six years before a recorded failure, and
+  three to four times higher from the replication year.</li>
+</ul>
+<p>The citing literature registers replication failures after they are published. Before, its language carries at most a
+faint signal.</p>
+<h2>1. Background and the gap</h2>
+<ul>
+<li><strong>Replication can be predicted from the paper itself.</strong> Paper text and metadata (Yang, Wu &amp; Uzzi 2020, PNAS),
+  prediction markets and surveys (Dreber et al. 2015; Camerer et al. 2018), and simple statistics such as the original
+  sample size and p-value all predict replication outcomes above chance.</li>
+<li><strong>Replications change later citations, modestly.</strong> Citations fall modestly after a failed replication (von Hippel
+  2023, PNAS; Schafmeister 2021). Non-replicable papers are cited more (Serra-Garcia &amp; Gneezy 2021). Disputing
+  citations are rare: 0.83 per Reproducibility Project: Psychology paper in a decade, in scite's classification.
+  Contradicting results change citing patterns slowly (Hardwicke et al. 2021).</li>
+<li><strong>Tools for citing sentiment.</strong> CC30k (Obadage, Rajtmajer &amp; Wu 2025) holds 30,734 labelled contexts of
+  reproducibility-oriented citation sentiment, from machine-learning papers.</li>
+<li><strong>The gap.</strong> Nobody had tested whether citing language <em>before</em> a replication anticipates its outcome, across a large
+  set of replications with known results.</li>
+</ul>
+<h2>2. Data</h2>
+<ul>
+<li><strong>Replication outcomes.</strong> FLoRA (FORRT Library of Reproduction and Replication Attempts; github.com/forrtproject/
+  FReD-data): 2,246 replication pairs whose original has a DOI, covering 2,116 originals.</li>
+<li>For each original: the first replication year and the outcome of that year's replications (majority; ties are
+    mixed).</li>
+<li>Among the 2,065 originals published before their first replication: 860 successful, 705 failed, 483 mixed
+    (excluded from the primary analysis) and 17 other.</li>
+<li><strong>Original-study statistics.</strong> FReD: sample size and p-value for 520 of the originals.</li>
+<li><strong>Citation contexts.</strong> The Semantic Scholar Graph API (public, no key):</li>
+<li>1,969 originals found; 141 not found;</li>
+<li>6 very highly cited originals truncated at 9,000 citing papers by the API's offset limit;</li>
+<li>815,570 citing papers, 43% of them with contexts;</li>
+<li>787,384 contexts in total.</li>
+<li>Citing papers whose DOI is a replication paper in FLoRA or FReD are excluded (<code>deviations.md</code> D7).</li>
+<li><strong>Covariates.</strong> OpenAlex: venue two-year mean citedness, and the original's field (psychology, economics and
+  business, other).</li>
+</ul>
+<h2>3. Methods</h2>
+<p><strong>Windows.</strong> Citing papers are grouped by publication year:</p>
+<ul>
+<li><strong>pre-replication</strong> (primary): from the original's year up to the year before the first replication;</li>
+<li><strong>first 3 years</strong> after publication;</li>
+<li><strong>a leakage-safe window</strong>, ending 2 years before the replication;</li>
+<li><strong>post-replication</strong>, from a year after the replication on; this is the positive control.</li>
+</ul>
+<p><strong>Predictor.</strong> The share of citing papers with at least one context classified as negative.</p>
+<p><strong>Classifiers</strong> (preregistered):</p>
+<ul>
+<li><strong>C1.</strong> SciBERT fine-tuned on CC30k. On CC30k's own held-out data it reaches NEGATIVE F1 0.91.</li>
+<li><strong>C2.</strong> The local LLM (<code>nemotron_3_nano_omni</code>), zero-shot, asked whether the context expresses doubt about the
+  reliability, replicability or validity of the cited findings.</li>
+<li>The server is shared, so C2 scored up to 100 pre-replication and 50 post-replication citing papers per original,
+    sampled at random and seeded per original (D3).</li>
+<li>C1 restricted to the same sample gives the same answers.</li>
+</ul>
+<p><strong>Validation, before any outcome was joined</strong> (D4, D7).</p>
+<ul>
+<li><strong>Pool.</strong> 20,000 contexts: 75% pre-window and 25% post-window contexts of eligible originals.</li>
+<li><strong>Sample.</strong> 300 contexts from the pool: 150 that either classifier flagged negative, 150 others.</li>
+<li><strong>Labels.</strong> Assigned by the analyst (the AI agent running this study), blind to paper and outcome, and saved before
+  any comparison.</li>
+<li><strong>Rule.</strong> The better classifier is primary if its F1 is at least 0.5.</li>
+</ul>
+<p><strong>Statistics.</strong></p>
+<ul>
+<li><strong>AUC.</strong> Of the share for failure, with 2,000 bootstrap resamples of originals.</li>
+<li><strong>Incremental AUC.</strong> Cross-validated (10-fold × 20), adding the share to a logistic baseline:</li>
+<li>log citing papers;</li>
+<li>original year;</li>
+<li>field;</li>
+<li>venue citedness;</li>
+<li>years to replication;</li>
+<li>in H3, also the original's log n and p-value category.</li>
+<li><strong>Incremental intervals.</strong> 200 bootstrap resamples with grouped 5-fold cross-validation.</li>
+<li><strong>Positive control.</strong> Computed on the primary originals with at least 5 post-replication citing papers (851). If it
+  fails, H1–H3 are uninformative (plan §5).</li>
+</ul>
+<h2>4. Results</h2>
+<h3>4.1 Doubt is rare, and the preregistered classifiers cannot find it</h3>
+<p>Of the 300 validation contexts, 9 express doubt about the cited findings and 16 explicitly confirm them. All 9 doubts
+came from the classifier-flagged half. Weighted back to the pool, doubt appears in <strong>2.6% [1.4%, 6.2%]</strong> of contexts.</p>
+<p>Examples of genuine doubt:</p>
+<ul>
+<li>"This also fails to replicate previous research by Casenhiser and Goldberg (2005)…"</li>
+<li>"…it still remains unclear what factors have influenced the same context advantage found so convincingly by Godden
+  and Baddeley (1975)"</li>
+<li>"Some of the auditory stimuli used in previous studies were also questionable…"</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Detector</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1 [95%]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C1: SciBERT on CC30k</td>
+<td>0.061</td>
+<td>1.00</td>
+<td>0.115 [0.052, 0.184]</td>
+</tr>
+<tr>
+<td>C2: local LLM</td>
+<td>0.273</td>
+<td>0.333</td>
+<td>0.300 [0.000, 0.556]</td>
+</tr>
+<tr>
+<td>K1: replication-failure keywords (exploratory)</td>
+<td>1.00 (1 of 1)</td>
+<td>0.11</td>
+<td>0.20</td>
+</tr>
+<tr>
+<td>K2: broader doubt keywords (exploratory)</td>
+<td>0.83</td>
+<td>0.56</td>
+<td>0.67</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>C1 learned the wrong thing.</strong> CC30k's "negative" class covers any contrastive or limitation statement, such as
+  "however, X cannot be applied to…". C1 flags a negative in every original. Its 0.91 F1 on CC30k does not transfer.</li>
+<li><strong>C2's estimate is imprecise.</strong> Only 11 C2-flagged contexts reached the sample, because C1 dominates the flagged
+  stratum. Its F1 is probably below 0.5 (bootstrap probability of reaching 0.5: 7%), but not certainly.</li>
+<li><strong>The labels are ambiguous in places.</strong> The target citation is not marked in multi-citation contexts.</li>
+<li><strong>Second look.</strong> The independent reviewer re-examined about 90 contexts and agreed with about 95% of the labels.</li>
+</ul>
+<figure><a href="results/figures/F1_validation.png"><img src="results/figures/F1_validation.png" alt="F1"></a><figcaption>F1. How well each detector finds citation contexts that express doubt about the cited findings, judged against 300 contexts labelled blind by the analyst (150 that a classifier flagged, 150 others). The CC30k-trained SciBERT flags almost every contrastive sentence (recall 1.0, precision 0.06); the LLM finds a third of the true cases. Only 9 of the 300 contexts, about 3% of all contexts, express such doubt. The keyword detectors were written afterwards (exploratory).</figcaption></figure>
+<h3>4.2 The preregistered test is uninformative</h3>
+<p>Primary sample:</p>
+<ul>
+<li>1,075 originals, 49% failed;</li>
+<li>half psychology;</li>
+<li>median publication year 2010;</li>
+<li>median 8 years to the first replication;</li>
+<li>median 32 citing papers with contexts before it.</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Analysis</th>
+<th>C1 (SciBERT) AUC</th>
+<th>C2 (LLM) AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H1: pre-replication negative share</td>
+<td>0.480 [0.445, 0.514]</td>
+<td>0.507 [0.472, 0.543]</td>
+</tr>
+<tr>
+<td>First 3 years after publication</td>
+<td>0.467</td>
+<td>0.480</td>
+</tr>
+<tr>
+<td>Window ending 2 years before replication</td>
+<td>0.471</td>
+<td>0.511</td>
+</tr>
+<tr>
+<td>Positive control: post-replication share (851 originals)</td>
+<td>0.497 [0.459, 0.536]</td>
+<td>0.529 [0.491, 0.567]</td>
+</tr>
+<tr>
+<td>Psychology originals only</td>
+<td>0.443</td>
+<td>0.519</td>
+</tr>
+<tr>
+<td>Excluding OpenAlex-sourced FLoRA entries</td>
+<td>0.470</td>
+<td>0.509</td>
+</tr>
+<tr>
+<td>"Mixed" outcomes counted as failed</td>
+<td>0.473</td>
+<td>0.504</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Both classifiers fail the positive control.</strong> Neither can predict the outcome even from citations written <em>after</em>
+  a published failure, when citing papers say "failed to replicate" several times more often (§4.3). Their null
+  before the replication therefore says nothing about the literature: by the plan, H1–H3 are uninformative.</li>
+<li><strong>Incremental AUC.</strong> The metadata baseline itself predicts poorly (cross-validated AUC 0.54; 0.59 with the
+  original's n and p). Neither classifier adds anything:</li>
+<li>H2: +0.004 (C1), −0.006 (C2);</li>
+<li>H3: +0.000, −0.004.</li>
+<li><strong>Other windows and subsets</strong> do not change this.</li>
+</ul>
+<figure><a href="results/figures/F2_auc.png"><img src="results/figures/F2_auc.png" alt="F2"></a><figcaption>F2. How well the share of negative citing papers predicts whether a finding later failed to replicate (area under the ROC curve, 95% bootstrap intervals). Blue: citing papers published before the first replication, for the 1,075 originals with at least 5 such citing papers with context (the hypothesis). Orange: citing papers published at least a year after it, for the 851 of those originals with at least 5 such papers: the positive control, which a detector that can see replication language should pass. Replication papers themselves are excluded throughout. Dashed red: the preregistered AUC of 0.65. C1 and C2 fail the control; the exploratory keyword detectors pass it.</figcaption></figure>
+<h3>4.3 Exploratory: explicit replication language</h3>
+<p>After the preregistered classifiers failed validation, two transparent keyword detectors were fixed in code before
+being run against outcomes (D5):</p>
+<ul>
+<li><strong>K1</strong> matches explicit replication-failure phrases ("failed to replicate", "could not be reproduced", "non-replication",
+  "replication … unsuccessful");</li>
+<li><strong>K2</strong> adds general doubt language ("controversial", "criticized", "contradicts", "mixed results", "confound").</li>
+</ul>
+<p>About 10% of K1 matches are generic statements about the replication crisis, or "not yet replicated".</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Detector</th>
+<th>Before replication</th>
+<th>Window ending 2 years before</th>
+<th>Positive control (851)</th>
+<th>Incremental AUC before</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>K1</td>
+<td>0.534 [0.515, 0.553]</td>
+<td>0.525 [0.506, 0.544]</td>
+<td>0.625 [0.598, 0.650]</td>
+<td>+0.014 [−0.006, +0.031]</td>
+</tr>
+<tr>
+<td>K2</td>
+<td>0.535 [0.503, 0.566]</td>
+<td>0.522 [0.488, 0.555]</td>
+<td>0.596 [0.561, 0.632]</td>
+<td>+0.008 [−0.012, +0.032]</td>
+</tr>
+</tbody>
+</table></div>
+<p>K1 passes the positive control: after a failed replication, citing papers say so. Before it:</p>
+<ul>
+<li>13.9% of originals that went on to fail already had at least one citing paper with explicit replication-failure
+  language, against 7.3% of those that replicated;</li>
+<li>but most had none, so the prediction is weak (0.534), and it adds nothing significant beyond metadata.</li>
+</ul>
+<p>The event study (Figure F3) weights each original equally and excludes replication papers:</p>
+<ul>
+<li>In the six years before the first recorded replication, findings that later failed draw such language at 0.24–0.55%
+  of citing papers per year, against 0.01–0.26%. The rate is higher but not rising, probably echoing earlier
+  attempts.</li>
+<li>From the replication year on, it is 1.1–1.8%.</li>
+</ul>
+<figure><a href="results/figures/F3_eventstudy.png"><img src="results/figures/F3_eventstudy.png" alt="F3"></a><figcaption>F3. Exploratory: the share of an original&#x27;s citing papers whose citation context uses explicit replication-failure language (keyword detector K1), by the citing paper&#x27;s year relative to the original&#x27;s first replication, averaged over originals (each original with at least 3 citing papers with context that year counts equally; replication papers themselves excluded). In the six years before the first recorded replication, findings that went on to fail already draw such language at a somewhat higher, roughly flat rate (0.24-0.55% of citing papers, against 0.01-0.26%), probably echoing earlier attempts; from the replication year on the rate is three to four times higher (1.1-1.8%). Shaded: 95% intervals across originals.</figcaption></figure>
+<h2>5. Discussion</h2>
+<p><strong>What this study establishes:</strong></p>
+<ol>
+<li><strong>Citing sentences rarely express doubt.</strong> About 2.6% [1.4%, 6.2%] do, even though half of these findings would
+   later fail. This extends the RPP observation (fewer than one disputing citation per paper in a decade) to over a
+   thousand replicated findings across fields.</li>
+<li><strong>Off-the-shelf sentiment tools do not measure reproducibility doubt here.</strong> A classifier trained on CC30k's
+   machine-learning labels detects contrastive language, not doubt. A general LLM, used zero-shot, misses most doubts
+   and cannot even see post-replication failure talk. Future work needs labels built for the target literature.</li>
+<li><strong>The literature reacts after a replication.</strong> Explicit replication-failure language becomes three to four times
+   more common and predicts the outcome (AUC 0.63).</li>
+<li><strong>Before a replication there is at most a faint signal.</strong> With the one detector that passes the positive control
+   (exploratory), pre-replication AUC is 0.53, far below the 0.65 target, with no significant gain over metadata.</li>
+</ol>
+<p><strong>What it does not establish:</strong></p>
+<ul>
+<li><strong>That the preregistered hypothesis is false.</strong> The preregistered test is uninformative, because its classifiers
+  failed validation and the positive control. The exploratory result points the same way, but it is exploratory.</li>
+<li><strong>That no early signal exists anywhere.</strong> A domain-specific classifier might find more, and other channels were not
+  measured: talks, social media, or citation counts.</li>
+<li><strong>Generality beyond FLoRA.</strong> FLoRA over-represents psychology and large replication projects. At least one FLoRA
+  "original" is itself a replication-project paper.</li>
+</ul>
+<h2>6. Limitations</h2>
+<ol>
+<li><strong>Measurement.</strong> The preregistered classifiers failed. The keyword detectors are crude: K1 finds only explicit
+   replication language, and about 10% of its matches are generic.</li>
+<li><strong>Validation labels.</strong> A single annotator (an AI model), 9 positive cases, and ambiguity in multi-citation contexts.</li>
+<li><strong>Coverage.</strong> Semantic Scholar supplies contexts for 43% of citing papers, more for recent open-access papers.
+   Harvests of the six most-cited originals are truncated, four of them in the primary sample; excluding them changes
+   nothing.</li>
+<li><strong>Timing.</strong> Citing papers are dated by year, so preprints and earlier unrecorded replications blur the "before"
+   window. The window ending 2 years before gives the same answer.</li>
+<li><strong>Outcome coding.</strong> FLoRA codes the first replication from its authors' statements. 483 "mixed" outcomes are
+   excluded (sensitivity: counted as failed).</li>
+</ol>
+<h2>7. Reproducibility</h2>
+<p>The code is in <code>code/</code>:</p>
+<ul>
+<li><code>fetch_contexts.py</code>, <code>fetch_openalex.py</code>, <code>build_contexts.py</code>: data;</li>
+<li><code>train_c1.py</code>, <code>score_contexts.py</code>, <code>validation.py</code>: classifiers and their validation;</li>
+<li><code>analysis.py</code>: H1–H3, the positive control and robustness;</li>
+<li><code>explore_keywords.py</code>: the exploratory keyword detectors;</li>
+<li><code>make_figures.py</code>, <code>build_report_html.py</code>: presentation.</li>
+</ul>
+<p>Tables are in <code>results/tables/</code> and figures in <code>results/figures/</code>.</p>
+<ul>
+<li><strong>Committed.</strong> Derived per-original features (<code>originals_*.parquet</code>, no text) and the validation labels (context IDs
+  only).</li>
+<li><strong>Not redistributed.</strong> Citation contexts; they can be re-harvested from Semantic Scholar with the code.</li>
+</ul>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: GWOSC / Zenodo public releases. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/metascience-citation-context-replication/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

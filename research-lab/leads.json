@@ -440,7 +440,10 @@
     "Write up with released classifier, per-paper feature dataset, and full replication code."
    ],
    "risks": "Leakage is the killer risk - many negative contexts may postdate publicized replication failures, so the time-sliced analysis must be primary, which shrinks the usable signal. Psychology citation contexts may be scarce in S2ORC for older originals. Domain shift from ML-trained CC30k to psychology text could degrade the classifier; the hand-labeled validation sample is essential and may force relabeling effort.",
-   "plain_summary": "Some published findings fail when other scientists try to repeat them. Before that happens, later papers may already voice doubts when they cite the original ('we could not reproduce...'). This study would test whether the tone of those citations predicts which findings later fail to replicate, better than citation counts alone."
+   "plain_summary": "Many research findings fail when repeated. This study checked whether the sentences other scientists write when citing a finding reveal doubts before it is formally re-tested. Deep dive done: doubt is rare in citing sentences (about 3%), the planned AI classifiers could not measure it, and a simple search for 'failed to replicate' shows the literature reacts after a failed re-test but gives only a faint warning before.",
+   "status": "deep dive \u00b7 report (revised after review)",
+   "report_url": "runs/metascience-citation-context-replication/report.html",
+   "headline": "Faint at most: across 1,075 FLoRA originals and 787,384 Semantic Scholar citation contexts, the preregistered classifiers (SciBERT on CC30k, local LLM) failed validation (F1 0.12 / 0.30) and the post-replication positive control, so H1-H3 are uninformative (AUC 0.48 / 0.51). Exploratory replication-failure keywords pass the control (AUC 0.63 after replication) but predict only faintly before it (AUC 0.534 [0.515, 0.553]; 14% vs 7% of originals flagged); doubt appears in ~2.6% of citing sentences."
   },
   {
    "id": "metascience-semantic-novelty-sleeping-beauties",

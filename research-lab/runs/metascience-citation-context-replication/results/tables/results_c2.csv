@@ -1,0 +1,18 @@
+analysis,predictor,stat,est,lo,hi,n,n_failed,verdict,auc_base,auc_full
+H1 primary: pre-replication negative share,neg_share_pre,AUC,0.5066274365830343,0.47217799284773204,0.5426332970732356,1075,524,uninformative (positive control failed; mechanical rule: contradicted),,
+"positive control V1: post-replication share, primary originals with >= 5 post citing papers",neg_share_post,AUC,0.5288225131237956,0.4909018737548439,0.5669761141974708,851,404,fails,,
+positive control V1 (all originals with >= 5 post-replication citing papers),neg_share_post,AUC,0.5426487211351462,0.5094465243217047,0.579222655459398,1073,482,,,
+excluding originals whose first replication came from OpenAlex-sourced FLoRA entries,neg_share_pre,AUC,0.509056768558952,0.4708917602667602,0.5459213156498313,958,458,,,
+excluding the 6 originals with truncated harvests,neg_share_pre,AUC,0.5067352107958748,0.47353981079768365,0.54190143730576,1071,524,,,
+first 3 years after publication,neg_share_first3,AUC,0.48002195715387813,0.44222453685695695,0.5215128475375777,821,411,,,
+window ending 2 years before replication,neg_share_pre_m2,AUC,0.5112319154465911,0.47593329168786225,0.5477773590246905,961,476,,,
+positive share (higher = success expected; AUC < 0.5 if so),pos_share_pre,AUC,0.48535798894445903,0.45387146914647974,0.5174599146143133,1075,524,,,
+negative citing papers per 100 citing papers,neg_per100_pre,AUC,0.5005680165140411,0.4653408396442681,0.5355676927003666,1075,524,,,
+context-level negative share,neg_ctx_share_pre,AUC,0.5244506864687384,0.4905108033518494,0.5592110371126346,1075,524,,,
+eligibility >= 1 citing paper,neg_share_pre,AUC,0.5282474131559498,0.49807161057545424,0.5589116636172295,1319,615,,,
+eligibility >= 10 citing papers,neg_share_pre,AUC,0.5053051966754443,0.46871284544166497,0.5451155482999055,882,434,,,
+psychology originals only,neg_share_pre,AUC,0.5189927593174675,0.47096929619103445,0.5686885842771371,534,272,,,
+originals from 2000 onward,neg_share_pre,AUC,0.5004673479561317,0.4631828848348795,0.5355779417861641,948,472,,,
+mixed as failed,neg_share_pre,AUC,0.5038800926215659,0.4735403760885272,0.5349078230674846,1421,870,,,
+H2: incremental CV AUC over baseline,neg_share_pre,delta AUC,-0.005665272024494072,-0.01777092794038411,0.008266405921833198,1075,524,uninformative (positive control failed; mechanical rule: contradicted),0.5396009683988862,0.5339356963743921
+H3: incremental CV AUC over baseline + original n and p (FReD subset),neg_share_pre,delta AUC,-0.003990662516674126,-0.02347400596232705,0.018462856518792176,329,173,uninformative (positive control failed; mechanical rule: contradicted),0.5913850600266786,0.5873943975100044

@@ -52,6 +52,7 @@ scout (done) ──► leads.json ──► human picks leads from the plot
 | `bioinformatics-vep-acmg-calibration-drift` — do the ClinGen PP3/BP4 predictor thresholds still hold on variants classified since? | Revised after independent review. Thresholds hold on ClinVar as a whole; weakest in expert-curated disease genes (BayesDel Supporting/Moderate fall short on expert-panel labels); post-2022 ClinVar trends are composition. | [report.html](runs/bioinformatics-vep-acmg-calibration-drift/report.html) · [deviations log](runs/bioinformatics-vep-acmg-calibration-drift/deviations.md) |
 | `climate-earth-record-margin-obs` — are heat records being broken by growing margins in station data? | Revised after independent review. Record-shattering (2003–2025) is **not yet visible** beyond mean warming: not distinguishable from a no-warming climate network-wide, new 30-year records ~20% below a steady-warming null (not established); outside the US new records are ~1.8× the no-warming rate. | [report.html](runs/climate-earth-record-margin-obs/report.html) · [deviations log](runs/climate-earth-record-margin-obs/deviations.md) |
 | `health-econ-wastewater-flusight-value` — does influenza wastewater improve state flu-hospitalisation forecasts? | Revised after independent review. **No detectable gain** at an assumed 10-day reporting delay (relative WIS 0.995 [0.946, 1.045], 16 best-covered states; nothing added to the FluSight ensemble); exploratory: the signal is not ahead of admissions, and value appears only with reporting within days. | [report.html](runs/health-econ-wastewater-flusight-value/report.html) · [deviations log](runs/health-econ-wastewater-flusight-value/deviations.md) |
+| `metascience-citation-context-replication` — does citing language before a replication predict its outcome? | Revised after independent review (fix-first). Preregistered classifiers failed validation and the positive control, so H1–H3 are **uninformative**; exploratory replication-failure keywords pass the control but predict only faintly before replication (AUC 0.53). | [report.html](runs/metascience-citation-context-replication/report.html) · [deviations log](runs/metascience-citation-context-replication/deviations.md) |
 
 Lessons from the first deep dive, to carry into the next ones (details in its deviations log, D19–D29 and D27c):
 
@@ -81,3 +82,7 @@ Lessons from the first deep dive, to carry into the next ones (details in its de
   would have leaked a week of future admissions; matching the hub baseline's median to candidate vintages settled it.
 - **For "does source X add forecast value", run a positive and a negative control first, and scan the reporting lag.**
   Flu wastewater went from no value at a 10-day delay to a 6% gain at an (unreachable) 0-day delay.
+- **Validate text classifiers on the target literature before trusting them.** A SciBERT model with F1 0.91 on its
+  own (ML-paper) benchmark flagged 44% of psychology citation contexts as "negative"; true doubt was ~3%.
+- **Compute a positive control on the same sample as the hypothesis,** and let a failed control make the null
+  uninformative rather than "contradicted".
