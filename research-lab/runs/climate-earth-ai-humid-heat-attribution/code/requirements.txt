@@ -166,7 +166,7 @@ sympy==1.14.0
 termcolor==3.3.0
 threadpoolctl==3.7.0
 toolz==1.1.0
-torch==2.4.0+cu121
+torch==2.13.0
 torch_geometric==2.4.0
 tqdm==4.70.1
 triton==3.0.0
