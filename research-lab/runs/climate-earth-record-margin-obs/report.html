@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Record-Shattering Heat</title>
+<meta name="description" content="Are heat records being broken by growing margins? A preregistered test of record-shattering heat in 2,013 long-running weather stations, 1951-2025.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Climate extremes</div>
+  <h1>Are heat records being broken by growing margins?</h1>
+  <p class="subtitle">A preregistered test of &quot;record-shattering&quot; heat in 2,009 long-running weather stations, 1951–2025</p>
+  <div class="meta">
+    <span>Draft · 2026-10-01 · revised after independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/climate-earth-record-margin-obs/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/climate-earth-record-margin-obs/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/climate-earth-record-margin-obs/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">New 30-year records outside the US</div><div class="tile-value">×1.78</div><div class="tile-note">vs a no-warming climate · 95% [1.17, 2.48] · 615 stations</div></div><div class="tile"><div class="tile-label">Record-shattering, all stations</div><div class="tile-value">×1.19</div><div class="tile-note">vs no warming · [0.64, 1.98] · chance alone gives about ×1.1</div></div><div class="tile"><div class="tile-label">New records vs steady warming</div><div class="tile-value">×0.80</div><div class="tile-note">[0.59, 1.02] · fewer than predicted, not established</div></div><div class="tile"><div class="tile-label">Acceleration, 2003–25 vs 1981–2002</div><div class="tile-value text">none</div><div class="tile-note">shattering ×0.77 [0.37, 1.63] · any record ×1.00</div></div><div class="tile"><div class="tile-label">Coverage of the planned intervals</div><div class="tile-value">33–80%</div><div class="tile-note">two-way intervals 83–100% · synthetic worlds with true ratio 1</div></div><div class="tile"><div class="tile-label">Verdict</div><div class="tile-value text">not yet visible</div><div class="tile-note">no record-shattering beyond mean warming · 2,009 stations, 69% US</div></div></section>
+<main>
+<h2>In plain terms</h2>
+<p>As the climate warms, heat records fall more often; that is well established. Climate models predict more: records
+will increasingly be <em>smashed</em>, by margins far larger than the usual fraction of a degree, as in the 2021 Pacific
+Northwest heatwave. This study checked whether real weather-station records already show that.</p>
+<p>For 2,009 stations with records back to 1951, we asked how often each summer's hottest day beat the previous 30
+years' hottest, and by how much. We compared that with simulated climates:</p>
+<ul>
+<li>one with no warming at all;</li>
+<li>one with each station's own steady warming but unchanged year-to-year variability.</li>
+</ul>
+<p>The tests were written down before any data were downloaded.</p>
+<p>What we found:</p>
+<ul>
+<li><strong>Outside the United States, new heat records are clearly more common than without warming</strong>, about 1.8 times as
+  common. Whether records there are also being <em>smashed</em> more often is borderline.</li>
+<li><strong>Across all stations, smashed records are not clearly more common than chance.</strong> Most stations are in the US,
+  where the hottest summer day has barely warmed since 1980.</li>
+<li><strong>Nothing exceeds what steady warming explains.</strong> New records are, if anything, about 20% rarer than steady warming
+  predicts, but that is within what chance allows.</li>
+<li><strong>No acceleration.</strong> Smashed records were not more frequent in 2003–2025 than in 1981–2002, or where the region
+  warmed faster.</li>
+</ul>
+<p>So the model-predicted rise of record-shattering heat is not yet visible in these station records.</p>
+<p>Two corrections along the way:</p>
+<ul>
+<li><strong>The planned "chance" simulation undercounted records.</strong> Testing it on simulated data with a known answer caught
+  this.</li>
+<li><strong>The first error bars were too narrow.</strong> An independent review noted that one heatwave sets records at hundreds of
+  stations at once, which the first estimate treated as independent. The corrected error bars were tested the same
+  way.</li>
+</ul>
+<h2>Abstract</h2>
+<p>Fischer, Sippel and Knutti (2021) showed in climate-model ensembles that warming makes record-shattering extremes more
+likely: records that beat the previous one by a large margin, at a rate that grows with the speed of warming.
+Observational work has so far measured how often records fall, not by how much.</p>
+<p>We tested the prediction in NOAA GHCN-Daily station data:</p>
+<ul>
+<li>2,009 stations with near-complete warm-season maximum-temperature records for 1951–2025, in 270 grid cells of 5°;</li>
+<li>69% of the stations are in the United States;</li>
+<li>the statistic is the 30-year record margin: a year's hottest day minus the hottest of the previous 30 years, in
+  units of the station's year-to-year standard deviation.</li>
+</ul>
+<p><strong>A methods finding came first.</strong> The preregistered null models failed validation on synthetic station series with a
+known answer.</p>
+<ul>
+<li>They were biased by 10–25%, comparable to the effects under test.</li>
+<li>The cause: resampling residuals <em>with replacement</em> duplicates extreme values, which can then never be strictly beaten,
+  so surrogate climates under-produce records.</li>
+<li>Block permutation replaces the resampling, and a two-parameter hinge trend replaces the smooth trend. Together they
+  give calibrated nulls: they return a ratio of 1 where the answer is 1.</li>
+</ul>
+<p><strong>A second one followed from independent review.</strong> Heatwaves set records at many stations in the same year, so
+uncertainty must be resampled over years as well as places.</p>
+<ul>
+<li>The preregistered interval resampled grid cells only. In synthetic worlds whose stations are correlated like the
+  real ones, it covered the truth in only 33–83% of cases.</li>
+<li>A two-way bootstrap (grid cells × 3-year blocks) covered it in 83–100%.</li>
+</ul>
+<p><strong>With validated nulls and two-way intervals:</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Hypothesis</th>
+<th>Ratio [95%]</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H1: record-shattering (margin &gt; 1 SD) in 2003–2025 vs a no-warming climate</td>
+<td>1.19 [0.64, 1.98]</td>
+<td>not distinguishable from 1</td>
+</tr>
+<tr>
+<td>H1 for week-long heat (TX7x)</td>
+<td>1.38 [0.60, 2.53]</td>
+<td>not distinguishable from 1</td>
+</tr>
+<tr>
+<td>H1 outside the United States</td>
+<td>1.92 [1.00, 3.15]</td>
+<td>borderline</td>
+</tr>
+<tr>
+<td>Any new 30-year record, outside the United States, vs no warming</td>
+<td>1.78 [1.17, 2.48]</td>
+<td>more records than without warming</td>
+</tr>
+<tr>
+<td>H2: vs steady warming with unchanged variability</td>
+<td>0.80 [0.45, 1.34]</td>
+<td>not distinguishable from 1</td>
+</tr>
+<tr>
+<td>H2, any new 30-year record (margin &gt; 0)</td>
+<td>0.80 [0.59, 1.02]</td>
+<td>below 1, but not distinguishable from 1</td>
+</tr>
+<tr>
+<td>H3: dependence on local warming rate (Berkeley Earth)</td>
+<td>slope +0.002 [−0.041, +0.036]</td>
+<td>not supported; underpowered</td>
+</tr>
+<tr>
+<td>H4: 2003–2025 vs 1981–2002</td>
+<td>0.77 [0.37, 1.63]</td>
+<td>not distinguishable from 1</td>
+</tr>
+</tbody>
+</table></div>
+<p>The station records show no sign that heat records are being broken by margins growing beyond what the stations' mean
+warming implies. New 30-year records are about 20% fewer than a trend-plus-stationary-noise null predicts. That
+shortfall is broad across years and strongest at US stations, and it is not statistically distinguishable from 1 once
+year-to-year dependence is included.</p>
+<p>The preregistered analysis, with its flawed nulls and cell-only intervals, had reported H1 as supported (1.67 [1.27,
+2.20]). That number is kept in the record, but it reflects the bias.</p>
+<h2>1. Background and the gap</h2>
+<ul>
+<li><strong>The prediction.</strong> In large model ensembles, the probability of breaking the previous record by several standard
+  deviations rises steeply with the rate of warming (Fischer, Sippel &amp; Knutti 2021, Nature Climate Change).
+  Record-shattering events such as the 2021 Pacific Northwest heatwave are the observational motivation.</li>
+<li><strong>What observations have shown.</strong> Record <em>frequency</em> (a 2025 Nature Reviews Earth &amp; Environment review reports
+  300–350% more daily hot records in 2016–2024 than a stationary climate would give), return times of individual
+  events, and regional record statistics.</li>
+<li><strong>The gap.</strong> We found no global station-based test of record <em>margins</em> against explicit null models that separates:</li>
+<li>the effect of any warming;</li>
+<li>the effect of the local mean warming;</li>
+<li>any excess beyond both, which is the part the rate-dependence mechanism adds.</li>
+</ul>
+<h2>2. Data</h2>
+<ul>
+<li><strong>Temperatures.</strong> GHCN-Daily per-station files from NCEI (current release, downloaded 1 October 2026); daily TMAX,
+  with quality-flagged values dropped. Candidates: the 4,020 stations whose TMAX coverage spans 1951 to 2025.</li>
+<li><strong>Warm season.</strong> May–September in the northern hemisphere, November–March in the southern.</li>
+<li>A season is valid when at least 90% of its days are present.</li>
+<li>TXx is the season's hottest day; TX7x is its hottest 7-day mean.</li>
+<li><strong>Qualifying stations.</strong> At least 60 valid seasons in 1951–2025, and at least 80% valid seasons in each era.</li>
+<li><strong>Plausibility screen</strong> (added after review). A station is dropped if any value lies more than 8 robust standard
+  deviations from its median, or its hottest day is below 10 °C outside the polar regions. This removed 4 qualifying
+  stations, one with values off by a factor of 10. Ratios moved by less than 0.015.</li>
+<li><strong>The final network:</strong></li>
+<li>2,009 stations in 270 grid cells;</li>
+<li>by country: US 1,394, Russia 159, Germany 148, Sweden 38, Australia 33, France 33, Spain 33, Japan 18, others;</li>
+<li>36 in the southern hemisphere.</li>
+<li><strong>External warming rate.</strong> The Berkeley Earth 1° gridded land temperature trend, 1981–2024.</li>
+</ul>
+<h2>3. Methods</h2>
+<p><strong>Preregistered design</strong> (<code>plan.md</code>, committed before any station data were downloaded).</p>
+<ul>
+<li><strong>The statistic.</strong> The 30-year record margin m_t = (TXx_t − max TXx over the previous 30 years) / σ_s, computed for
+  1981–2025 where at least 25 of the 30 look-back years are valid.</li>
+<li>The look-back is fixed, so under a stationary climate the distribution of m_t does not depend on the year. This
+    avoids the "older records are harder to beat" artefact of all-time records.</li>
+<li>σ_s is the standard deviation of the station's residuals about its fitted trend. Record-shattering means m_t &gt; 1:
+    beating the previous 30-year maximum by more than one residual standard deviation.</li>
+<li>Secondary thresholds are 0 and 2. Threshold 0 (any new 30-year record) does not depend on σ_s and is the most
+    robust statistic.</li>
+<li><strong>Comparisons.</strong></li>
+<li><strong>H1:</strong> observed frequency in 2003–2025 against a no-warming (stationary) null.</li>
+<li><strong>H2:</strong> against a trend-preserving null (station trend plus residuals).</li>
+<li><strong>H3:</strong> station excess against the local warming rate.</li>
+<li><strong>H4:</strong> 2003–2025 against 1981–2002.</li>
+<li><strong>Uncertainty.</strong> Frequencies are pooled over station-years. The plan used a spatial block bootstrap over 5°×5° grid
+  cells; this was replaced after review (below).</li>
+</ul>
+<p><strong>Validation and correction of the nulls</strong> (<code>deviations.md</code> D3–D4). We ran every station's pipeline on synthetic series
+with a known answer: the station's own trend (or none) plus stationary noise with its variability and
+autocorrelation, three replicates. The preregistered nulls (30-year LOESS trend, residuals resampled with replacement)
+failed:</p>
+<ul>
+<li>in the no-warming world, H1's ratio came out 1.23–1.27 instead of 1;</li>
+<li>in the steady-warming world, H2's came out 0.91–1.16.</li>
+</ul>
+<p>The main cause is resampling with replacement. The fix is <strong>block permutation</strong>: consecutive blocks of residuals are
+shuffled, and every value is used once. A <strong>hinge trend</strong> replaces the 30-year LOESS, which absorbs part of the
+variability. The hinge is flat to 1980 and linear after, with two parameters; the knot is fixed at 1980, not tuned.</p>
+<p>The corrected nulls pass (Figure F6):</p>
+<ul>
+<li>no-warming world: H1 ratio 0.99 [0.96, 1.02] and 1.02 [0.93, 1.12];</li>
+<li>steady-warming world: H2 ratio 0.99 [0.97, 1.01] and 0.98 [0.92, 1.05];</li>
+<li>with a curved true trend analysed by the hinge: H2 ratio 1.05 [1.02, 1.08] and 1.03 [0.97, 1.11].</li>
+</ul>
+<p>(In each pair, the first value is for threshold 0 and the second for threshold 1.)</p>
+<figure><a href="results/figures/F6_null_validation.png"><img src="results/figures/F6_null_validation.png" alt="F6"></a><figcaption>F6. Validating the null models on synthetic station series with a known answer: each
+qualifying station&#x27;s own trend (or no trend) plus stationary noise matched to its variability, run through the full
+pipeline (3 replicates of 2,013 stations). A calibrated method gives ratio 1. The preregistered nulls (LOESS trend,
+resampling with replacement) are biased by 10-25%; resampling with replacement under-produces records because duplicated
+extreme values cannot be strictly beaten. Hinge detrending with block permutation (blue) is calibrated, including when
+the true trend is curved (bottom row).</figcaption></figure>
+<p><strong>Independent review and the two-way bootstrap</strong> (<code>deviations.md</code> D6). A separate reviewer agent, given the plan, the
+log, the code and the draft, found that the grid-cell bootstrap treats stations in different cells as independent.
+Heatwaves are not: in 2012, one in eight US stations set a new 30-year record in the same summer.</p>
+<p>We therefore resample grid cells and, independently, 3-year blocks of years within each era. Before adopting it, we
+checked both intervals on 30 synthetic worlds per case in which the true ratio is exactly 1. The worlds' year-to-year
+noise is correlated between stations as in the data: a correlation of 0.56 within 500 km, 0.33 at 500–1,000 km, 0.18
+at 1,000–1,500 km and near 0 beyond 2,000 km (Figure F7).</p>
+<ul>
+<li><strong>The cell-only intervals are too narrow.</strong> They contained the truth in 33–80% of worlds.</li>
+<li><strong>The two-way intervals contained it in 97–100% of worlds for H2.</strong> They are conservative there: about 1.5 times
+  wider than the true spread.</li>
+<li><strong>For H1 they contained it in 83% (threshold 0) and 93% (threshold 1).</strong> They are slightly narrow for H1.</li>
+<li><strong>Chance alone produces H1 ratios of about 1.1.</strong> In the no-warming worlds, H1 averaged 1.06 (threshold 0) and 1.13
+  (threshold 1).</li>
+</ul>
+<p>A simpler dependence model (regional plus grid-cell year effects) gave the same picture. The analysis is the same
+before and after this change; only the intervals, and therefore the verdicts, changed.</p>
+<figure><a href="results/figures/F7_interval_coverage.png"><img src="results/figures/F7_interval_coverage.png" alt="F7"></a><figcaption>F7. Do the 95% intervals contain the true answer? Thirty synthetic worlds per panel in
+which the true ratio is exactly 1, with year-to-year noise correlated between stations as in the data (correlation
+falling with distance: about 0.56 within 500 km, 0.18 at 1,000-1,500 km). Dark: the two-way bootstrap (grid cells and
+3-year blocks of years resampled) used in this report. Thin grey: the preregistered cell-only bootstrap. The red line is
+the truth. The cell-only intervals miss it far more often than the nominal 5%.</figcaption></figure>
+<h2>4. Results</h2>
+<h3>4.1 How often records are set and shattered</h3>
+<p>Across the qualifying stations, the hottest day of the warm season beat the previous 30 years':</p>
+<ul>
+<li>in 3.65% of station-years in 2003–2025;</li>
+<li>by more than one standard deviation in 0.57%.</li>
+</ul>
+<p>The yearly series is dominated by large regional heatwaves (Figure F2):</p>
+<ul>
+<li>1988, 2011, 2012 and 2021 in the United States, which set 80–91% of those years' new records;</li>
+<li>2003 in western Europe (Germany and France);</li>
+<li>2010 in Russia.</li>
+</ul>
+<figure><a href="results/figures/F2_yearly.png"><img src="results/figures/F2_yearly.png" alt="F2"></a><figcaption>F2. Percentage of qualifying stations whose hottest day of the warm season beat the hottest
+of the previous 30 years (orange) and beat it by more than one standard deviation of year-to-year variability
+(record-shattering, red), per year. Horizontal lines: expected record-shattering frequency per era under the
+no-warming null (grey dashed) and under the station&#x27;s own smooth warming trend with unchanged variability (blue
+dotted).</figcaption></figure>
+<figure><a href="results/figures/F1_station_map.png"><img src="results/figures/F1_station_map.png" alt="F1"></a><figcaption>F1. The qualifying stations (at least 60 valid warm seasons in 1951-2025 and near-complete
+coverage in both eras). Colour: the station&#x27;s excess of record-shattering years in 2003-2025 (years whose hottest day
+beat the hottest of the previous 30 years by more than one standard deviation of year-to-year variability), observed
+minus the expectation under a no-warming (stationary) null, in percent of years.</figcaption></figure>
+<h3>4.2 H1 and H2: against a no-warming climate and against steady warming</h3>
+<p>Table 1. Observed frequency against the validated nulls, 2003–2025. Ratios with two-way 95% intervals.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Analysis</th>
+<th>Observed</th>
+<th>No-warming null</th>
+<th>Steady-warming null</th>
+<th>H1 ratio</th>
+<th>H2 ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hottest day, margin &gt; 1 SD (primary)</td>
+<td>0.57%</td>
+<td>0.48%</td>
+<td>0.71%</td>
+<td>1.19 [0.64, 1.98]</td>
+<td>0.80 [0.45, 1.34]</td>
+</tr>
+<tr>
+<td>Hottest day, any new record (&gt; 0)</td>
+<td>3.65%</td>
+<td>3.28%</td>
+<td>4.55%</td>
+<td>1.11 [0.80, 1.46]</td>
+<td>0.80 [0.59, 1.02]</td>
+</tr>
+<tr>
+<td>Hottest day, margin &gt; 2 SD</td>
+<td>0.07%</td>
+<td>0.04%</td>
+<td>0.07%</td>
+<td>1.49 [0.30, 4.17]</td>
+<td>0.98 [0.20, 2.65]</td>
+</tr>
+<tr>
+<td>Hottest week (TX7x), &gt; 1 SD</td>
+<td>0.63%</td>
+<td>0.45%</td>
+<td>0.69%</td>
+<td>1.38 [0.60, 2.53]</td>
+<td>0.91 [0.40, 1.59]</td>
+</tr>
+<tr>
+<td>High-quality stations (HCN/CRN/GSN)</td>
+<td>0.57%</td>
+<td>0.49%</td>
+<td>0.63%</td>
+<td>1.16 [0.46, 2.14]</td>
+<td>0.91 [0.37, 1.65]</td>
+</tr>
+<tr>
+<td>Excluding the United States, &gt; 1 SD</td>
+<td>0.78%</td>
+<td>0.40%</td>
+<td>1.03%</td>
+<td>1.92 [1.00, 3.15]</td>
+<td>0.75 [0.40, 1.22]</td>
+</tr>
+<tr>
+<td>Excluding the United States, any new record</td>
+<td>5.80%</td>
+<td>3.26%</td>
+<td>6.36%</td>
+<td><strong>1.78 [1.17, 2.48]</strong></td>
+<td>0.91 [0.60, 1.26]</td>
+</tr>
+<tr>
+<td>United States only, &gt; 1 SD</td>
+<td>0.48%</td>
+<td>0.51%</td>
+<td>0.57%</td>
+<td>0.93 [0.34, 2.01]</td>
+<td>0.84 [0.31, 1.75]</td>
+</tr>
+<tr>
+<td>United States only, any new record</td>
+<td>2.69%</td>
+<td>3.29%</td>
+<td>3.75%</td>
+<td>0.82 [0.47, 1.23]</td>
+<td>0.72 [0.41, 1.07]</td>
+</tr>
+</tbody>
+</table></div>
+<p>The results are the same with block lengths 1 and 5, and with a three-parameter trend that also slopes before 1980
+(§4.5). Figure F3 shows each ratio with both the two-way and the cell-only interval.</p>
+<p><strong>Readings.</strong></p>
+<ul>
+<li><strong>Outside the United States, new 30-year records are clearly more frequent than without warming.</strong> The ratio is
+  1.78 [1.17, 2.48], well above the ~1.06 that correlated chance produces. For record-<em>shattering</em> there (margin &gt; 1 SD)
+  the ratio is similar, 1.92, but the interval reaches 1.00.</li>
+<li>Outside the US, the median station's hottest day warmed 0.47 °C per decade since 1980; in the US, −0.01.</li>
+<li><strong>Pooled over all stations, record-shattering is not distinguishable from a no-warming climate.</strong> This holds for
+  single hottest days (1.19), week-long heat (1.38) and the high-quality subset (1.16). All three intervals include 1,
+  and chance alone gives about 1.1.</li>
+<li><strong>Nowhere does the observed frequency exceed the steady-warming null.</strong> New 30-year records are about 20% fewer than
+  it predicts (0.80 [0.59, 1.02]).</li>
+<li>The two-way interval just includes 1, and the coverage check shows it is conservative for this ratio.</li>
+<li>A three-parameter trend gives 0.77 [0.57, 0.98] (§4.5).</li>
+<li>So the shortfall is suggestive, not established.</li>
+</ul>
+<p>The preregistered analysis had given H1 = 1.67 [1.27, 2.20] and H2 = 1.02 [0.82, 1.26]. The validation (§3) shows those
+nulls under-produce records, which inflated H1.</p>
+<figure><a href="results/figures/F3_ratios.png"><img src="results/figures/F3_ratios.png" alt="F3"></a><figcaption>F3. Ratios with 95% intervals: dark, the two-way bootstrap (5x5-degree grid cells and 3-year
+blocks of years both resampled; deviations.md D6), which allows for heatwave years shared by many stations; thin grey,
+the preregistered cell-only bootstrap, which ignores that dependence and is too narrow. For the validated analysis (hinge trend, block-permutation nulls; top) and the preregistered robustness variants. Bottom
+row: the preregistered null models, which the synthetic validation showed to be biased (F6). Record-shattering = a year&#x27;s hottest day beats the
+previous 30 years&#x27; hottest by more than one standard deviation (thresholds 0 and 2 in two variants; TX7x uses the hottest
+7-day mean).</figcaption></figure>
+<h3>4.3 Where the shortfall against steady warming comes from</h3>
+<p>At the "any new record" threshold (<code>results/tables/h2_breakdown.csv</code>, <code>h2_by_year.csv</code>):</p>
+<ul>
+<li><strong>By region.</strong> The ratio is 0.72 [0.41, 1.07] at US stations and 0.91 [0.60, 1.26] elsewhere.</li>
+<li><strong>By year.</strong> In 17 of the 23 years of 2003–2025, fewer new records were set than the steady-warming null expects.</li>
+<li>Three heatwave years (2012, 2003, 2021) hold 28% of the observed new records, against 13% of the expected ones.</li>
+<li>Without those three years the ratio falls to 0.67. Without the three years with the largest deficits it rises to
+    0.89.</li>
+</ul>
+<p>So the shortfall is spread across most years. A few very large regional heatwaves partly offset it rather than cause
+it. The pattern fits a null that spreads records evenly across years while the real climate concentrates them in
+heatwave years. It also fits the stalled warming of US summer maxima. It does not by itself say which.</p>
+<h3>4.4 H3: no detectable dependence on the local warming rate</h3>
+<p>Stations whose grid cell warmed faster in Berkeley Earth (1981–2024) do not show more excess shattering: slope +0.002
+[−0.041, +0.036] per °C per decade, 1,985 stations (Figure F4).</p>
+<p>This test has little power. The interval spans ±0.04, more than ten times the roughly 0.003 slope the reviewer
+estimated a model-like rate dependence would give at these warming rates. H3 is therefore "not supported", not
+"refuted".</p>
+<p>Using each station's own fitted trend instead gives a positive slope (+0.010 [0.007, 0.014]), but that version is
+circular. A station that happens to end on hot years gets both a steeper trend and more records from the same data.</p>
+<figure><a href="results/figures/F4_rate.png"><img src="results/figures/F4_rate.png" alt="F4"></a><figcaption>F4 (H3). Each station&#x27;s excess of record-shattering years in 2003-2025 (observed minus the
+no-warming null, percent of years) against the local warming rate of its 1-degree grid cell in Berkeley Earth
+(1981-2024). Red: means by decile of warming rate with 95% intervals.</figcaption></figure>
+<h3>4.5 H4 and the early baseline</h3>
+<p>The record-shattering frequency was 0.74% in 1981–2002 and 0.57% in 2003–2025: ratio 0.77 [0.37, 1.63]. At the "any
+new record" threshold it is 1.00 [0.63, 1.51]. Neither shows acceleration.</p>
+<p>The hinge assumes a flat climate before 1980, but US stations were unusually hot in the early 1950s. Their mean
+residual in 1951–55 is +0.78 °C, against +0.24 °C elsewhere (<code>results/tables/baseline_residuals.csv</code>).</p>
+<ul>
+<li><strong>Direction of the effect.</strong> A hot 1950s makes the previous-30-year maximum harder to beat in the early 1980s. It
+  therefore lowers the 1981–2002 frequency and, if anything, raises H4.</li>
+<li><strong>Sensitivity check.</strong> A three-parameter trend with its own 1951–80 slope passes the same synthetic validation. It
+  gives essentially the same results:</li>
+<li>H1 1.27, H2 0.79 and H4 0.79;</li>
+<li>H2 at threshold 0: 0.77 [0.57, 0.98];</li>
+<li>outside the US at threshold 0: H1 1.77 [1.16, 2.46].</li>
+</ul>
+<figure><a href="results/figures/F5_margins.png"><img src="results/figures/F5_margins.png" alt="F5"></a><figcaption>F5. Distribution of the 30-year record margin (a year&#x27;s hottest day minus the hottest of
+the previous 30 years, in units of the station&#x27;s year-to-year standard deviation) in the two eras, pooled over
+stations. Positive values are new 30-year records; values above 1 (dotted) are record-shattering.</figcaption></figure>
+<h2>5. Discussion</h2>
+<p><strong>What this study establishes:</strong></p>
+<ol>
+<li><strong>No observational signal yet of heat records broken by margins beyond mean warming.</strong> Against a validated null of
+   each station's own warming with unchanged variability, record-shattering is no more frequent than expected. New
+   30-year records are, if anything, rarer.</li>
+<li><strong>Outside the United States, warming has made new 30-year heat records clearly more common</strong>, about 1.8 times the
+   no-warming rate. Record-shattering there points the same way, but the interval is borderline. Pooled over a
+   US-dominated network, record-shattering is not distinguishable from a no-warming climate.</li>
+<li><strong>Neither across eras nor across stations does the frequency rise with warming.</strong> That is the observational
+   signature of Fischer et al.'s rate dependence, and it is not seen. The cross-station test (H3) has little power,
+   so its absence is weak evidence.</li>
+<li><strong>Record statistics need validated nulls and validated intervals.</strong>
+   - Resampling with replacement biases record counts by 10–25%.
+   - Resampling places but not years makes intervals 1.6 to 3.6 times too narrow, because heatwaves are shared.
+   - Each of these would have turned an inconclusive result into an apparently clear one.</li>
+</ol>
+<p><strong>What it does not establish:</strong></p>
+<ul>
+<li><strong>That record-shattering is not increasing anywhere.</strong> The station network is 69% US and has few tropical or
+  southern-hemisphere stations.</li>
+<li>The hottest summer day at the median US station has not warmed since 1980 (−0.01 °C per decade), the US "warming
+    hole" for summer maxima. Outside the US it warmed 0.47 °C per decade, and that is where new records are clearly more
+    frequent than without warming.</li>
+<li>Pooled, the median station trend in the hottest day is 0.13 °C per decade, against 0.31 °C per decade in Berkeley
+    Earth mean temperature.</li>
+<li><strong>The long-run prediction.</strong> Fischer et al. predict a strong rise mainly at high warming rates in coming decades. One
+  observed realisation of 2003–2025 has limited power to see it.</li>
+<li><strong>Why new records may be rarer than steady warming predicts.</strong> The shortfall is not established (§4.2). If it is
+  real, candidates include:</li>
+<li>the clustering of records into heatwave years;</li>
+<li>slower warming of summer maxima late in the record;</li>
+<li>long-range memory that the null does not keep.</li>
+</ul>
+<h2>6. Limitations</h2>
+<ol>
+<li><strong>Homogeneity.</strong> GHCN-Daily is not homogenised. Station changes can create spurious steps; the high-quality subset
+   gives the same answers.</li>
+<li><strong>Coverage.</strong> Stations are concentrated in the US and Europe.</li>
+<li><strong>Spatial dependence.</strong> The two-way intervals were checked on synthetic worlds that match the measured
+   distance-dependence of the data but not every feature of it. Examples are opposite-signed swings between distant
+   regions, and multi-year heat episodes like the US 1950s.
+   - Coverage was 83–100%.
+   - The intervals are conservative for H2 and slightly narrow for H1.</li>
+<li><strong>Units of the threshold.</strong> The threshold is in units of each station's residual standard deviation, which depends on
+   the detrending. That is why observed frequencies differ between the preregistered and corrected analyses. Threshold 0
+   has no such dependence.</li>
+<li><strong>Early baseline.</strong> The hinge's flat pre-1980 segment does not fit the hot US 1950s. A three-parameter alternative
+   gives the same answers (§4.5).</li>
+<li><strong>Exploratory analyses.</strong> The corrected nulls, the plausibility screen and the two-way intervals were adopted after
+   the preregistration, because validation or review showed the planned versions to be wrong. Both sets of numbers are
+   reported, with the reasons in <code>deviations.md</code>.</li>
+<li><strong>External covariate.</strong> The external warming rate is for mean temperature, not for summer maxima (correlation with
+   the station trends in the hottest day: 0.50).</li>
+</ol>
+<h2>7. Reproducibility</h2>
+<p>The code is in <code>code/</code>:</p>
+<ul>
+<li><code>fetch_stations.sh</code>: data;</li>
+<li><code>build_series.py</code>: warm-season extremes;</li>
+<li><code>analyze.py</code>:</li>
+<li>margins, nulls, the plausibility screen, and the cell-only and two-way pooling;</li>
+<li><code>analyze.py hinge permute</code> is the corrected analysis, and <code>analyze.py pw permute</code> the three-parameter sensitivity;</li>
+<li><code>validate_nulls.py</code>: synthetic validation of the nulls;</li>
+<li><code>validate_coverage.py</code>: synthetic validation of the intervals (<code>30 nested</code>, <code>30 kernel</code>);</li>
+<li><code>h3_external.py</code>: the H3 covariate;</li>
+<li><code>explore_h2.py</code>, <code>explore_baseline.py</code>: the §4.3 and §4.5 breakdowns;</li>
+<li><code>make_figures.py</code>, <code>build_report_html.py</code>: presentation.</li>
+</ul>
+<p>Tables are in <code>results/tables/</code> and figures in <code>results/figures/</code>. Raw data (about 5 GB) are open and re-downloadable,
+and not committed.</p>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: GWOSC / Zenodo public releases. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/climate-earth-record-margin-obs/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

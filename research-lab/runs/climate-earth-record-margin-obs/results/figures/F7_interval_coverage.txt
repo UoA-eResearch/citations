@@ -1,0 +1,5 @@
+F7. Do the 95% intervals contain the true answer? Thirty synthetic worlds per panel in
+which the true ratio is exactly 1, with year-to-year noise correlated between stations as in the data (correlation
+falling with distance: about 0.56 within 500 km, 0.18 at 1,000-1,500 km). Dark: the two-way bootstrap (grid cells and
+3-year blocks of years resampled) used in this report. Thin grey: the preregistered cell-only bootstrap. The red line is
+the truth. The cell-only intervals miss it far more often than the nominal 5%.

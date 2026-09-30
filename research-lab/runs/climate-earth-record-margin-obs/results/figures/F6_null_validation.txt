@@ -1,0 +1,6 @@
+F6. Validating the null models on synthetic station series with a known answer: each
+qualifying station's own trend (or no trend) plus stationary noise matched to its variability, run through the full
+pipeline (3 replicates of 2,013 stations). A calibrated method gives ratio 1. The preregistered nulls (LOESS trend,
+resampling with replacement) are biased by 10-25%; resampling with replacement under-produces records because duplicated
+extreme values cannot be strictly beaten. Hinge detrending with block permutation (blue) is calibrated, including when
+the true trend is curved (bottom row).

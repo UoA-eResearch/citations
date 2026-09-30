@@ -1,0 +1,2 @@
+predictor,slope,lo,hi,n_stations,n_cells,rate_mean,rate_sd,corr_with_station_rate,method,resample
+Berkeley Earth 1981-2024 trend (degC/decade),0.00018933243346443314,-0.01699631133038773,0.01721423269715846,1989,258,0.3106244660001759,0.09194749616271713,0.4896302673287092,loess,bootstrap

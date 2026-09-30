@@ -1215,7 +1215,10 @@
     "Write up: observed margin trends vs stationary null, agreement/disagreement with Fischer et al. (2021), power analysis discussing single-realization limits."
    ],
    "risks": "Single-realization noise may make the test inconclusive (wide surrogate spread) - mitigated by pooling thousands of stations but a null-power outcome is possible; station inhomogeneities and urbanization inflate margins spuriously; partial scooping risk from the record-statistics community (WWA, ETH) though searches show only model-based margin work to date.",
-   "plain_summary": "Climate models predict that as the world warms, heat records will be broken not only more often but by bigger margins ('record-shattering'). This study checks thousands of weather stations worldwide for whether each year's hottest day is beating the previous 30 years by growing margins, compared with what a climate without warming, or with steady warming alone, would produce. Deep dive in progress."
+   "plain_summary": "Climate models predict that as the world warms, heat records will be broken not only more often but by bigger margins ('record-shattering'). This study checked about 2,000 long-running weather stations for whether each summer's hottest day is beating the previous 30 years by growing margins. Deep dive done: outside the US, new heat records are clearly more common than without warming, but records smashed by wide margins are not yet more common than steady warming alone explains.",
+   "status": "deep dive \u00b7 report (revised after review)",
+   "report_url": "runs/climate-earth-record-margin-obs/report.html",
+   "headline": "Not yet visible: across 2,009 GHCN stations (69% US), record-shattering heat in 2003-2025 is not distinguishable from a no-warming climate (x1.19 [0.64, 1.98]) and new 30-year records are, if anything, ~20% below a steady-warming null (x0.80 [0.59, 1.02]); outside the US new records are ~1.8x the no-warming rate [1.17, 2.48]. No acceleration and no detectable dependence on warming rate. Validated nulls and a two-way (place x year) bootstrap were needed: the planned ones biased records by 10-25% and gave intervals 1.6-3.6x too narrow."
   },
   {
    "id": "climate-earth-leave-record-out-heat",
