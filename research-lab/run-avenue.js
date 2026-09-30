@@ -162,7 +162,7 @@ Executor summary:
 ${execSummary}
 Adversarial review verdicts: ${JSON.stringify(liveReviews)}
 ${refuted ? 'A reviewer found a FATAL flaw. The write-up must lead with this: describe what was attempted, what broke, and what a fixed study would look like. Do not spin a refuted result as a finding.' : 'Reviews passed (address any non-fatal issues in a limitations section).'}
-Write ${RUN_DIR}/report.md: abstract, background + the gap (cite the literature from the lead and plan.md section 9), methods (from plan.md), results with figures (relative image links into results/), limitations (including every reviewer issue and how it was addressed or why it stands), conclusion, and next steps. Honest, publication-draft tone. Return the abstract and the report path.`,
+Write ${RUN_DIR}/report.md: an 'In plain terms' section first (150-300 words for readers outside the field: the setting, the question, how it was tested, what was found, with no unexplained jargon), then abstract, background + the gap (cite the literature from the lead and plan.md section 9), methods (from plan.md), results with figures (relative image links into results/), limitations (including every reviewer issue and how it was addressed or why it stands), conclusion, and next steps. Honest, publication-draft tone. Return the abstract and the report path.`,
   { label: `writeup:${lead.id}`, phase: 'Write-up' })
 
 return { status: refuted ? 'completed-refuted' : 'completed', run_dir: RUN_DIR, scope, build, results, reviews: liveReviews, writeup: String(writeup).slice(0, 2000) }

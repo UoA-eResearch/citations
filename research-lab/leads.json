@@ -80,7 +80,8 @@
     "Compare the measured noise envelope against deltas claimed in FineWeb-Edu and DCLM papers; derive minimum-seed recommendations for 80% power at typical effect sizes.",
     "Write up as a methods paper; release all configs, seeds, checkpoints metadata, and eval tables."
    ],
-   "risks": "If quality-filtering effects dwarf seed noise on nearly all benchmarks the hypothesis is falsified (still publishable as a validation, but less exciting); Ai2's Signal-and-Noise team could publish the causal version first; compute creep if reviewers demand 1B-scale replication."
+   "risks": "If quality-filtering effects dwarf seed noise on nearly all benchmarks the hypothesis is falsified (still publishable as a validation, but less exciting); Ai2's Signal-and-Noise team could publish the causal version first; compute creep if reviewers demand 1B-scale replication.",
+   "plain_summary": "AI language models are trained on huge amounts of web text, and researchers often claim that filtering that text for quality makes the models better. But training the same small model twice from different random starting points already changes its test scores. This study would check whether the reported gains from data filtering are larger than that run-to-run noise, or mostly luck."
   },
   {
    "id": "llm-ml-science-mcf-emergence",
@@ -144,7 +145,8 @@
     "Causal check: LoRA-finetune one pre-crossover Pythia-410M checkpoint on 1k synthetic format-only MCQ examples and test whether MCF-CF gap closes without content knowledge.",
     "Write up with per-checkpoint eval tables released; state a practical rule for when MCF leaderboard scores of small models are meaningful."
    ],
-   "risks": "410M models may never leave chance-level MCF within their training budget (then the seed-spread claim rests on 1B-7B single-seed runs and the hypothesis weakens to the indicator claim); Wiegreffe et al. or Ai2 could extend their analysis across checkpoints first; instruction-formatted web data in OLMo-2's mix may confound comparisons with Pythia."
+   "risks": "410M models may never leave chance-level MCF within their training budget (then the seed-spread claim rests on 1B-7B single-seed runs and the hypothesis weakens to the indicator claim); Wiegreffe et al. or Ai2 could extend their analysis across checkpoints first; instruction-formatted web data in OLMo-2's mix may confound comparisons with Pythia.",
+   "plain_summary": "Language models can be quizzed in two ways: by checking which answer they find most likely, or by asking them to reply with the letter of the right answer (A, B, C...). Small or early-in-training models cannot manage the letter format, then suddenly can. This study would track when that switch happens across many training runs, and test whether a simpler, earlier signal predicts it."
   },
   {
    "id": "llm-ml-science-scaling-fit-seed-uncertainty",
@@ -205,7 +207,8 @@
    "risks": "Seed-induced intervals may be small at the loss level (Gadre et al. suggests robustness), falsifying the headline - though a tight bound is still a useful negative result; the 14M-410M range is only ~1.5 orders of magnitude, so reviewers may question generality; partially overlaps ongoing Ai2 model-ladder work.",
    "critic_note": "Critic: heavily overlaps llm-ml-science-curation-vs-seed-noise (same PolyPythias asset, same seed-noise claim) \u2014 one paper with two sections, not two avenues. Merge candidate.",
    "scout_value_score": 6,
-   "scout_cost_score": 3
+   "scout_cost_score": 3,
+   "plain_summary": "AI labs forecast how well a big model will do by training a ladder of small models and extending the trend. Each small model's result wobbles with random chance. This study would measure how much that wobble distorts the forecasts, and how many repeat runs are needed to make them reliable."
   },
   {
    "id": "llm-ml-science-semantic-contamination-index",
@@ -265,7 +268,8 @@
    "risks": "Compute/storage far beyond local hardware (hence out_of_reach); HF or Ai2 teams have the data in place and could build this first; semantic-detection precision at web scale may be too low without expensive LLM verification, and the inflation-correlation step is confounded by corpus differences beyond contamination.",
    "critic_note": "Critic: value inflated for an out-of-reach design \u2014 full 15T-token FineWeb pass is not a single-A100 job; only a sampled-slice pilot is locally executable, a much smaller claim.",
    "scout_value_score": 8,
-   "scout_cost_score": 9
+   "scout_cost_score": 9,
+   "plain_summary": "AI models are judged on test questions, but if those questions, or reworded versions of them, were already in the training data, a model can look smarter than it is. Current checks only catch exact copies. This study would build a check that also catches paraphrased and translated copies in two major public training datasets, and see whether it explains inflated test scores."
   },
   {
    "id": "metascience-retraction-citer-contagion",
@@ -318,7 +322,8 @@
    "risks": "Main failure modes: the citer-level effect is real but indistinguishable from Azoulay-style field decline (mitigate with within-field controls); some working paper may already cover 'guilt by citation' - a deeper literature pass before committing is required; OpenAlex citation timestamps are noisy for recent years, so restrict retractions to 2000-2021.",
    "critic_note": "Critic: partially pre-empted by van der Vet & Nijveen (2018) and Shuai et al. (2017); value holds only if reason- and depth-stratification carries the paper.",
    "scout_value_score": 6,
-   "scout_cost_score": 4
+   "scout_cost_score": 4,
+   "plain_summary": "When a scientific paper is retracted, does it hurt researchers who innocently cited it beforehand? This study would compare how often those citing papers are cited afterwards with similar papers that never cited the retracted work, and check whether the damage is worse when the retraction was for misconduct rather than an honest mistake."
   },
   {
    "id": "metascience-review-disagreement-disruption",
@@ -371,7 +376,8 @@
    "risks": "Acceptance-conditioning selection is the core threat (variance affects acceptance, acceptance affects visibility); the rejected-but-published sample only partly fixes it. CD index on ML conference papers is noisy for post-2021 works with short citation windows - restrict to <=2021 cohorts. The 2509.25701 team may extend their own pipeline to disruption next, so speed matters.",
    "critic_note": "Critic: outcome metric undermined by its own cited CD-index validity critiques, and prior art implies a likely null \u2014 lowest-expected-value lead in the set.",
    "scout_value_score": 5,
-   "scout_cost_score": 4
+   "scout_cost_score": 4,
+   "plain_summary": "When peer reviewers strongly disagree about a paper, is that a sign the work is genuinely new? Using public review scores from two large AI conferences, this study would test whether controversial papers are more likely to change the direction of later research ('disruptive' work) rather than simply becoming popular."
   },
   {
    "id": "metascience-citation-context-replication",
@@ -433,7 +439,8 @@
     "Robustness: exclude citation contexts published after the replication attempt became public (leakage control, using replication publication dates from FReD); repeat on the ML Reproducibility Challenge sample as an out-of-domain test.",
     "Write up with released classifier, per-paper feature dataset, and full replication code."
    ],
-   "risks": "Leakage is the killer risk - many negative contexts may postdate publicized replication failures, so the time-sliced analysis must be primary, which shrinks the usable signal. Psychology citation contexts may be scarce in S2ORC for older originals. Domain shift from ML-trained CC30k to psychology text could degrade the classifier; the hand-labeled validation sample is essential and may force relabeling effort."
+   "risks": "Leakage is the killer risk - many negative contexts may postdate publicized replication failures, so the time-sliced analysis must be primary, which shrinks the usable signal. Psychology citation contexts may be scarce in S2ORC for older originals. Domain shift from ML-trained CC30k to psychology text could degrade the classifier; the hand-labeled validation sample is essential and may force relabeling effort.",
+   "plain_summary": "Some published findings fail when other scientists try to repeat them. Before that happens, later papers may already voice doubts when they cite the original ('we could not reproduce...'). This study would test whether the tone of those citations predicts which findings later fail to replicate, better than citation counts alone."
   },
   {
    "id": "metascience-semantic-novelty-sleeping-beauties",
@@ -484,7 +491,8 @@
     "Robustness: alternative k for kNN, alternative SB thresholds (Ke continuous B, van Raan criteria), a second macro-field to test generalization, and a check that semantic novelty is not just proxying for OCR/abstract-length artifacts.",
     "Write up with metric-comparison tables, example sleeping beauties from each novelty quadrant for qualitative face validity, and release embeddings-derived novelty scores as a public dataset."
    ],
-   "risks": "Abstract availability in OpenAlex degrades before ~1990 and differs by field, biasing novelty estimates (mitigate by field/year fixed effects and coverage checks). The two novelty measures may correlate too highly to separate, or both may fail to predict SB status (echoing Miura et al.'s null), yielding a less exciting but still publishable metric-validity paper. Someone may have an unpublished preprint doing embedding-novelty vs delayed recognition - a focused literature re-check before committing is warranted."
+   "risks": "Abstract availability in OpenAlex degrades before ~1990 and differs by field, biasing novelty estimates (mitigate by field/year fixed effects and coverage checks). The two novelty measures may correlate too highly to separate, or both may fail to predict SB status (echoing Miura et al.'s null), yielding a less exciting but still publishable metric-validity paper. Someone may have an unpublished preprint doing embedding-novelty vs delayed recognition - a focused literature re-check before committing is warranted.",
+   "plain_summary": "'Sleeping beauties' are scientific papers that are ignored for years before suddenly becoming influential. This study would test whether papers with genuinely unusual ideas (judged by an AI reading the abstract) are more likely to be sleeping beauties than papers that are novel only because they combine unusual sources."
   },
   {
    "id": "astronomy-gwtc4-q-chieff-copula-stress-test",
@@ -544,7 +552,8 @@
    "risks": "The copula authors or another group publishes the same GWTC-4 test first (crowded, fast-moving space); result may be indeterminate (moderate Bayes factors) rather than decisive; must reproduce LVK selection-effect treatment exactly or the comparison is invalid.",
    "status": "deep dive \u00b7 report (revised after review)",
    "report_url": "runs/astronomy-gwtc4-q-chieff-copula-stress-test/report.html",
-   "headline": "Indeterminate: against detection-consistent mock catalogs every calibratable statistic is consistent with no q-chi_eff dependence (hierarchical FPR 0.33, low power); the posterior-median anticorrelation is about half a spin-prior effect (tau -0.22 -> -0.11) and cannot be calibrated, the Linear-model mean shift follows the mass model (P 0.995 -> 0.80), and waveform choice moves the dependence estimate by about one posterior sd."
+   "headline": "Indeterminate: against detection-consistent mock catalogs every calibratable statistic is consistent with no q-chi_eff dependence (hierarchical FPR 0.33, low power); the posterior-median anticorrelation is about half a spin-prior effect (tau -0.22 -> -0.11) and cannot be calibrated, the Linear-model mean shift follows the mass model (P 0.995 -> 0.80), and waveform choice moves the dependence estimate by about one posterior sd.",
+   "plain_summary": "When two black holes merge, detectors on Earth pick up ripples in space. From 153 such mergers, astronomers reported that pairs with more unequal masses tend to spin more in line with their orbit, a clue to how these pairs form. This study tested whether that pattern is real or produced by modelling choices. Deep dive done: the answer is 'not established'; about half of the pattern comes from a default assumption built into the measurements."
   },
   {
    "id": "astronomy-gaia-sb1-tess-synchronization-boundary",
@@ -602,7 +611,8 @@
     "Validate the pipeline by reproducing synchronization statistics for Lurie et al. Kepler EBs and the 2025 TESS EB sample.",
     "Write up with a public machine-readable catalog of P_rot, P_orb, and synchronization class."
    ],
-   "risks": "Rotation-period recovery for slowly rotating, photometrically quiet hot stars is incomplete and could bias the transition sharpness (mitigated but not eliminated by injection-recovery); SB1 light may be contaminated by the unseen companion or a third star; ellipsoidal variability at P_orb/2 can masquerade as synchronized rotation and needs explicit modeling; an EB-focused group could generalize their pipeline to the SB1 sample first."
+   "risks": "Rotation-period recovery for slowly rotating, photometrically quiet hot stars is incomplete and could bias the transition sharpness (mitigated but not eliminated by injection-recovery); SB1 light may be contaminated by the unseen companion or a third star; ellipsoidal variability at P_orb/2 can masquerade as synchronized rotation and needs explicit modeling; an EB-focused group could generalize their pipeline to the SB1 sample first.",
+   "plain_summary": "In close pairs of stars, tides can lock each star's spin to its orbit, the way the Moon always shows Earth the same face. Theory says this locking weakens sharply for stars hotter than about 6,200 kelvin, whose outer layers do not churn. Combining orbits measured by the Gaia space telescope with spin periods from NASA's TESS satellite, this study would find where the locking stops across thousands of star pairs."
   },
   {
    "id": "astronomy-o4a-ml-subthreshold-bbh-search",
@@ -663,7 +673,8 @@
    "risks": "AresGW's own team or the IAS group publishes an O4a catalog first (highest risk); the search may yield zero credible new candidates, downgrading the paper to a sensitivity benchmark; time-slide background estimation on 32 cores may limit achievable FAR floor; disk pressure makes pipeline engineering errors costly in wall time.",
    "critic_note": "Critic: disk estimate optimistic \u2014 O4a two-detector strain approaches/exceeds 600GB before conditioning products; needs an explicit streaming/segment-wise design. High scooping risk from the AresGW authors.",
    "scout_value_score": 7,
-   "scout_cost_score": 7
+   "scout_cost_score": 7,
+   "plain_summary": "Detectors find black-hole mergers by searching noisy data for faint signals. AI search methods have found extra candidates in older public data. This study would retrain such an AI search on the newest public data (2023-24) to see whether it finds mergers that the official search missed."
   },
   {
    "id": "astronomy-ztf-wd-debris-transit-occurrence",
@@ -727,7 +738,8 @@
     "Compute the completeness-corrected occurrence rate with Poisson/binomial statistics; compare to the metal-pollution incidence and the van Sluijs & Van Eylen K2 limit.",
     "Write up with a ranked public candidate catalog and per-star completeness products."
    ],
-   "risks": "An in-house ZTF WD group extension could preempt the search (check ADS first); IRSA rate limits could stretch the download phase; ZTF's sparse cadence gives low completeness to short-duty-cycle transits, so the occurrence bound may be weaker than hoped and depends heavily on the injection model; ZTF reference-image and deblending artifacts near faint WDs can flood the anomaly ranking with false positives."
+   "risks": "An in-house ZTF WD group extension could preempt the search (check ADS first); IRSA rate limits could stretch the download phase; ZTF's sparse cadence gives low completeness to short-duty-cycle transits, so the occurrence bound may be weaker than hoped and depends heavily on the injection model; ZTF reference-image and deblending artifacts near faint WDs can flood the anomaly ranking with false positives.",
+   "plain_summary": "White dwarfs are the dense cores left behind when stars like the Sun die. Many show signs of having swallowed rocky planetary material, but only a handful have been caught with debris actually passing in front of them. Searching seven years of sky-survey data on 250,000 white dwarfs, and testing the search on fake injected signals, this study would measure how rare such debris clouds really are."
   },
   {
    "id": "bioinformatics-vep-acmg-calibration-drift",
@@ -819,7 +831,8 @@
    "requirements_if_out_of_reach": "",
    "status": "deep dive \u00b7 report (revised after review)",
    "report_url": "runs/bioinformatics-vep-acmg-calibration-drift/report.html",
-   "headline": "Thresholds hold genome-wide: on 159,531 ClinVar variants classified 2021-2026 no PP3/BP4 interval of six tools falls short; but on expert-panel labels BayesDel Supporting/Moderate fall short and REVEL is borderline in disease genes, and ClinVar's post-2022 rise in apparent predictor performance is one lab's bulk benign upload."
+   "headline": "Thresholds hold genome-wide: on 159,531 ClinVar variants classified 2021-2026 no PP3/BP4 interval of six tools falls short; but on expert-panel labels BayesDel Supporting/Moderate fall short and REVEL is borderline in disease genes, and ClinVar's post-2022 rise in apparent predictor performance is one lab's bulk benign upload.",
+   "plain_summary": "Genetic-testing labs use computer programs to help judge whether a DNA change causes disease, and in 2022 experts set score cut-offs saying how much weight those programs should get. This study checked whether the cut-offs still hold for the variants classified since. Deep dive done: they hold across the public database, but are weakest in the well-studied disease genes where they matter most."
   },
   {
    "id": "bioinformatics-amr-gene-species-emergence-forecast",
@@ -896,7 +909,8 @@
     "Write up with prospective performance tables, ablations, a released code repo and a calibrated 2026-2027 watchlist of predicted gene x species x country emergences."
    ],
    "risks": "Highest risk is that all apparent skill collapses into sampling effort and database growth once the null is done honestly - a legitimate but less exciting negative result. Second, the prior art (Ellabaan 2021; Science Advances 2021) may be judged to cover the question, so framing must lead with the prospective, null-controlled evaluation. Third, metadata quality (host and country fields are sparse and inconsistent) may force coarse contexts that weaken the signal. Fourth, allele-level definitions change with catalog versions, so a stale-catalog choice may make some 'emergences' pure annotation artifacts.",
-   "requirements_if_out_of_reach": ""
+   "requirements_if_out_of_reach": "",
+   "plain_summary": "Genes that make bacteria resistant to antibiotics spread between species and countries. This study would test whether a model trained on past spread can predict where such genes will appear next, scored honestly by training only on data before a cut-off date and checking against what appeared afterwards."
   },
   {
    "id": "bioinformatics-sc-disease-de-negative-control",
@@ -961,7 +975,8 @@
     "Write up with a released per-contrast credibility table, a power/design rule stated in donors, and code for the matched-null generator."
    ],
    "risks": "Risks: (1) many Census disease datasets lack matched healthy controls within the same study, so the matched-null construction may be impossible for a large fraction of contrasts, shrinking the analysis; (2) the result may simply restate known pseudoreplication findings, making it incremental unless the attribution and credibility table are compelling; (3) heterogeneous cell-type labels across datasets require ontology harmonization that can itself introduce artifacts; (4) reviewers may argue the negative controls are too conservative because healthy-only splits also remove real biological variance.",
-   "requirements_if_out_of_reach": "Already borderline locally: the ~1000-nulls-per-contrast design may need to be reduced to ~200 nulls or restricted to the top ~40 contrasts to fit 94 GB RAM and 32 cores; a second machine or a 500-core CPU cluster would allow the full design and all four DE pipelines."
+   "requirements_if_out_of_reach": "Already borderline locally: the ~1000-nulls-per-contrast design may need to be reduced to ~200 nulls or restricted to the top ~40 contrasts to fit 94 GB RAM and 32 cores; a second machine or a 500-core CPU cluster would allow the full design and all four DE pipelines.",
+   "plain_summary": "Single-cell studies compare cells from sick and healthy people to find signs of disease. But batches of healthy donors can also differ from each other in similar-looking ways. This study would compare healthy people against other healthy people across a huge public atlas, to measure how much of the reported disease signal stands out from that background noise."
   },
   {
    "id": "bioinformatics-perturbation-scaling-transfer",
@@ -1029,7 +1044,8 @@
    "requirements_if_out_of_reach": "Needs 16-32 H100 80GB (or A100 80GB) GPUs across multiple nodes with fast interconnect for roughly 5,000-15,000 GPU-hours, 20-40 TB of NVMe for sharded Tahoe-100M plus checkpoints, and a data-loading pipeline sustaining several GB/s. The stated single A100 80GB with 600 GB disk cannot even store the corpus, let alone train the 1B and 3B rungs. A scaled-down variant (70M-300M parameters, 5-10M cells, one held-out-cell-line split) would fit locally in ~2-3 weeks but could not test the scaling hypothesis as stated.",
    "critic_note": "Critic: residual novelty thin \u2014 Ahlmann-Eltze et al. and Kernfeld et al. already report the negative result; Tahoe-x1's own held-out-cell-line eval may cover the rest.",
    "scout_value_score": 8,
-   "scout_cost_score": 9
+   "scout_cost_score": 9,
+   "plain_summary": "'Virtual cell' AI models try to predict how cells respond to drugs. Some papers claim bigger models keep getting better; others say they do not beat simple baselines. This study would test models of different sizes on cell types and drugs they have never seen, to find out whether size genuinely helps."
   },
   {
    "id": "climate-earth-ai-humid-heat-attribution",
@@ -1085,7 +1101,8 @@
     "Validation/robustness: repeat with deltas from individual CMIP6 models; check factual-forecast blurring of TW peaks vs ERA5 and adjust interpretation; test lead-time sensitivity.",
     "Write up: methods, per-event attributable TW change under both counterfactuals, formal test of the >=50% difference hypothesis, discussion of implications for PGW humid-heat attribution practice."
    ],
-   "risks": "Concurrent work from the ETH/attribution groups extending their pipeline to humid heat; AI-model blurring of dewpoint fields could make TW attribution unreliable at longer leads; near-surface humidity is a weak variable in these models (GraphCast lacks 2m dewpoint, requiring lowest-pressure-level q, which weakens surface TW claims)."
+   "risks": "Concurrent work from the ETH/attribution groups extending their pipeline to humid heat; AI-model blurring of dewpoint fields could make TW attribution unreliable at longer leads; near-surface humidity is a weak variable in these models (GraphCast lacks 2m dewpoint, requiring lowest-pressure-level q, which weakens surface TW claims).",
+   "plain_summary": "Humid heat, where high temperature meets high humidity, is especially dangerous because sweat stops cooling the body. This study would use freely available AI weather models to re-run recent deadly humid heatwaves in a world without human-caused warming, to estimate how much climate change made them worse."
   },
   {
    "id": "climate-earth-mbc-wetbulb-crossings",
@@ -1141,7 +1158,8 @@
     "Diagnostics: attribute shifts to T-q dependence changes (compare corrected rank correlations and tail dependence vs ERA5); map where compensation of biases matters most.",
     "Write up with maps of crossing-date shifts, hypothesis test result, and guidance on when univariate correction is defensible for humid-heat projections."
    ],
-   "risks": "Result could be a null (shifts <10 years) - still publishable but weaker; MBCn convergence and trend-preservation artifacts could confound interpretation; daily huss availability gaps in some CMIP6 models may shrink the ensemble; partial overlap with regional compound-event MBC studies must be clearly differentiated."
+   "risks": "Result could be a null (shifts <10 years) - still publishable but weaker; MBCn convergence and trend-preservation artifacts could confound interpretation; daily huss availability gaps in some CMIP6 models may shrink the ensemble; partial overlap with regional compound-event MBC studies must be clearly differentiated.",
+   "plain_summary": "Climate model output is corrected for known biases before it is used for local projections. Correcting temperature and humidity separately can break the natural link between them, which matters for humid-heat danger. This study would test whether correcting them together shifts the projected year when dangerous humid-heat thresholds are first crossed by a decade or more."
   },
   {
    "id": "climate-earth-record-margin-obs",
@@ -1196,7 +1214,8 @@
     "Repeat the entire analysis on ERA5 0.5-deg daily T2m at station locations to check robustness to station inhomogeneities; sensitivity to record definition (calendar-day vs annual, min length).",
     "Write up: observed margin trends vs stationary null, agreement/disagreement with Fischer et al. (2021), power analysis discussing single-realization limits."
    ],
-   "risks": "Single-realization noise may make the test inconclusive (wide surrogate spread) - mitigated by pooling thousands of stations but a null-power outcome is possible; station inhomogeneities and urbanization inflate margins spuriously; partial scooping risk from the record-statistics community (WWA, ETH) though searches show only model-based margin work to date."
+   "risks": "Single-realization noise may make the test inconclusive (wide surrogate spread) - mitigated by pooling thousands of stations but a null-power outcome is possible; station inhomogeneities and urbanization inflate margins spuriously; partial scooping risk from the record-statistics community (WWA, ETH) though searches show only model-based margin work to date.",
+   "plain_summary": "Climate models predict that as the world warms, heat records will be broken not only more often but by bigger margins ('record-shattering'). This study checks thousands of weather stations worldwide for whether each year's hottest day is beating the previous 30 years by growing margins, compared with what a climate without warming, or with steady warming alone, would produce. Deep dive in progress."
   },
   {
    "id": "climate-earth-leave-record-out-heat",
@@ -1253,7 +1272,8 @@
     "Optional run C (extreme-oversampled) if time permits, to test the symmetric intervention; ablation of exclusion threshold (top-0.5%/2%) via short fine-tunes.",
     "Write up: margin-conditional error curves for A/B(/C), formal test of the <25% hypothesis, implications for data-augmentation vs loss/architecture research directions."
    ],
-   "risks": "Training instability or slower-than-estimated convergence on a single A100 could stretch timelines; conclusions at 1.4-deg may not transfer to 0.25-deg operational models; the gray swan group or the Science Advances authors may publish a heat-extension first; if the A-B gap is large the headline flips (data coverage matters), which is still publishable but less contrarian."
+   "risks": "Training instability or slower-than-estimated convergence on a single A100 could stretch timelines; conclusions at 1.4-deg may not transfer to 0.25-deg operational models; the gray swan group or the Science Advances authors may publish a heat-extension first; if the A-B gap is large the headline flips (data coverage matters), which is still publishable but less contrarian.",
+   "plain_summary": "AI weather-forecasting models tend to underestimate record-breaking heatwaves. Is that because they rarely saw such extremes in training? This study would train a small AI weather model with and without the most extreme past heatwaves, to see how much that missing experience explains the underestimation."
   },
   {
    "id": "comp-social-science-temp-accounts-vandalism",
@@ -1303,7 +1323,8 @@
     "Robustness: exclude wikis with concurrent ORES/patrol-tool changes, vary revert window (24h/7d), alternative outcomes (page protections, abuse-filter hits).",
     "Write up methods, event-study figures, and effect sizes as a full paper draft with reproducible pipeline scripts."
    ],
-   "risks": "Patroller-tooling changes coincide with rollout, so revert rates conflate editor behavior and patroller capacity (mitigated by block/abuse-filter outcomes); WMF may publish its own causal analysis first; pilot wikis were not randomly selected, so selection-into-treatment needs the late-treated-control design to hold."
+   "risks": "Patroller-tooling changes coincide with rollout, so revert rates conflate editor behavior and patroller capacity (mitigated by block/abuse-filter outcomes); WMF may publish its own causal analysis first; pilot wikis were not randomly selected, so selection-into-treatment needs the late-treated-control design to hold.",
+   "plain_summary": "In 2024-2025 Wikipedia stopped showing the internet addresses of people who edit without an account, replacing them with temporary accounts, and rolled the change out to different language editions at different times. That staggered rollout is a natural experiment: this study would test whether the change made anonymous vandalism more or less common."
   },
   {
    "id": "comp-social-science-ai-edit-survival",
@@ -1361,7 +1382,8 @@
     "Robustness: re-run with a second detector (Fast-DetectGPT), vary FPR thresholds, and check dose-response in Binoculars score.",
     "Write up as a full paper draft with released code, sampled-article IDs, and scores (respecting dump licensing)."
    ],
-   "risks": "Detector false positives correlated with deletion-relevant covariates (non-native writing, promotional tone) could fake the hazard gap - the human-label validation and matching are load-bearing; Wikipedia patrollers may themselves use detectors, making 'deletion of AI-flagged text' partly circular (frame as system-level immune response, not ground-truth AI removal); a competing group could publish a similar survival analysis given how visible the March 2026 policy was."
+   "risks": "Detector false positives correlated with deletion-relevant covariates (non-native writing, promotional tone) could fake the hazard gap - the human-label validation and matching are load-bearing; Wikipedia patrollers may themselves use detectors, making 'deletion of AI-flagged text' partly circular (frame as system-level immune response, not ground-truth AI removal); a competing group could publish a similar survival analysis given how visible the March 2026 policy was.",
+   "plain_summary": "About 5% of new English Wikipedia articles appear to be written with AI tools. This study would follow what happens to them: whether AI-looking articles are deleted or heavily rewritten more often than similar articles written by people."
   },
   {
    "id": "comp-social-science-reddit-polarization-post-api",
@@ -1418,7 +1440,8 @@
     "Secondary analyses: echo-chamber sorting (individual-level dimension variance) vs community drift; sensitivity to subreddit-set choices.",
     "Write up with released embedding scores per subreddit-snapshot as a public dataset."
    ],
-   "risks": "Arctic Shift coverage bias is the central threat - if its crawler under-samples political subreddits the series is uninterpretable (the overlap-month audit decides go/no-go early); torrent availability/speed may bottleneck; Reddit's 2023 licensing stance adds ToS ambiguity for redistribution (release derived subreddit-level scores only, not raw text)."
+   "risks": "Arctic Shift coverage bias is the central threat - if its crawler under-samples political subreddits the series is uninterpretable (the overlap-month audit decides go/no-go early); torrent availability/speed may bottleneck; Reddit's 2023 licensing stance adds ToS ambiguity for redistribution (release derived subreddit-level scores only, not raw text).",
+   "plain_summary": "A well-known 2021 study measured political polarisation on Reddit up to 2018, using a data archive that has since shut down. Using a newer public archive, this study would extend the measurement through the 2024 US election and test whether polarisation rose further, and whether newcomers or long-time users drove it."
   },
   {
    "id": "comp-social-science-synthetic-web-census",
@@ -1474,7 +1497,8 @@
     "Join Tranco traffic tiers and ads.txt/ad-network fingerprints; test concentration hypothesis (share of synthetic text in bottom traffic tiers, Gini/top-decile concentration) and fit growth curves by domain class.",
     "Release the domain-month panel and classifier openly; write up as a measurement paper with explicit lower/upper-bound framing."
    ],
-   "risks": "Detector drift across model generations makes a single threshold unstable over 2022-2026 (newer LLM text is harder to detect, biasing growth downward); Graphite or Hanley's group publishes an equivalent open census first; Common Crawl's own crawl-policy changes over time confound composition shifts with synthetic-content growth."
+   "risks": "Detector drift across model generations makes a single threshold unstable over 2022-2026 (newer LLM text is harder to detect, biasing growth downward); Graphite or Hanley's group publishes an equivalent open census first; Common Crawl's own crawl-policy changes over time confound composition shifts with synthetic-content growth.",
+   "plain_summary": "How much of the text being added to the web is now written by AI? Existing estimates are commercial or cover only narrow slices of the web. This study would measure it across a huge public web crawl over time, but it needs more computing power and storage than this machine has, so it is documented as out of reach."
   },
   {
    "id": "experimental-math-oeis-conjecture-audit",
@@ -1526,7 +1550,8 @@
     "Produce the paper draft with full reproducibility scripts and the SQLite audit database as supplementary data"
    ],
    "risks": "The true number of false conjectures may be well under 100 (OEIS editors catch many), turning the headline into a mostly-confirmatory audit - still publishable but lower impact; parsing the free-text Conjecture lines robustly is the main engineering risk; some conjectures reference sequences with no independent program, shrinking the checkable corpus.",
-   "requirements_if_out_of_reach": ""
+   "requirements_if_out_of_reach": "",
+   "plain_summary": "The Online Encyclopedia of Integer Sequences lists tens of thousands of formulas that computers guessed but nobody proved. This study would automatically check them against many more terms of each sequence, to find which guesses are false and to certify each counterexample."
   },
   {
    "id": "experimental-math-txgraffiti-adversarial-audit",
@@ -1583,7 +1608,8 @@
     "Write up: resolved conjectures with minimal counterexamples, verification tables for survivors, and release the audit harness"
    ],
    "risks": "Main risk is a null result (the surviving open conjectures are all true or have only huge counterexamples), degrading the paper to a verification-plus-methodology note; secondary risk is racing Davila's own Optimist pipeline to the same resolutions; some invariants (e.g., zero forcing number) are NP-hard and slow above n~40, limiting the search radius.",
-   "requirements_if_out_of_reach": ""
+   "requirements_if_out_of_reach": "",
+   "plain_summary": "A computer program called TxGraffiti proposes mathematical conjectures about networks (graphs), and researchers publish lists of the ones still unsolved. This study would search systematically for counterexamples that disprove some of them: exhaustively for small networks and with smart search for larger ones."
   },
   {
    "id": "experimental-math-egc-sat-frontier",
@@ -1643,7 +1669,8 @@
    "requirements_if_out_of_reach": "",
    "critic_note": "Critic: extends an existing repo that already moved the frontier 17\u219232 with ~10x cost per added vertex; poor value/cost trade unless a counterexample is genuinely plausible.",
    "scout_value_score": 5,
-   "scout_cost_score": 6
+   "scout_cost_score": 6,
+   "plain_summary": "A famous unsolved puzzle asks whether every network in which each point has at least three connections must contain a loop whose length is a power of two (4, 8, 16...). Computers have checked all networks up to a certain size; this study would use advanced logic solvers to push that check further, or find a counterexample."
   },
   {
    "id": "experimental-math-gpu-multicolor-ramsey",
@@ -1697,7 +1724,8 @@
    "requirements_if_out_of_reach": "",
    "critic_note": "Critic: premise is false \u2014 GPU clique-counting local search for Ramsey witness search is already published (batched boolean matrix products; AFSAT GPU continuous local search). Collapses to a benchmark paper.",
    "scout_value_score": 6,
-   "scout_cost_score": 5
+   "scout_cost_score": 5,
+   "plain_summary": "Ramsey numbers ask how large a network must be before some pattern is guaranteed to appear, however its links are coloured. Finding large colourings that avoid the pattern improves the known bounds. This study would use the GPU to search millions of colourings in parallel, aiming to beat at least one published record."
   },
   {
    "id": "software-security-ai-code-supply-chain-exposure",
@@ -1766,7 +1794,8 @@
     "Validate a 300-commit random sample manually (agent artifacts in diffs, PR metadata) to estimate attribution precision.",
     "Write up as a measurement paper (MSR/EMSE format) with released dataset of per-version AI-content labels; include replication package."
    ],
-   "risks": "Trailer-based attribution undercounts silently-generated code, so exposure is a lower bound - must be framed as such; Nesbitt's blog or a fast-moving arXiv preprint could publish a similar exposure number first (mitigate by adding the release-latency and transitive-weighting analyses, which no one has); tag-to-version mapping is noisy for ~10-20% of packages and needs honest exclusion accounting."
+   "risks": "Trailer-based attribution undercounts silently-generated code, so exposure is a lower bound - must be framed as such; Nesbitt's blog or a fast-moving arXiv preprint could publish a similar exposure number first (mitigate by adding the release-latency and transitive-weighting analyses, which no one has); tag-to-version mapping is noisy for ~10-20% of packages and needs honest exclusion accounting.",
+   "plain_summary": "Most software is assembled from thousands of open-source packages, and more of that code is now written with AI coding agents. This study would measure how much of the software people actually download depends, somewhere in its chain of packages, on AI-authored code."
   },
   {
    "id": "software-security-advisory-range-overapproximation",
@@ -1835,7 +1864,8 @@
     "Cross-validate a subsample against V-SZZ-style introducing-commit analysis to check that code-presence and commit-history methods agree.",
     "Write up with released ground-truth dataset of corrected ranges (a contribution in itself) and a PR-ready feed of proposed GHSA range corrections; MSR/FSE format."
    ],
-   "risks": "Patch-presence matching fails on refactored code (must report undetermined class, and if undetermined exceeds ~40% the headline claim weakens); vulnerable-code presence is not identical to exploitability (frame strictly as range-accuracy, not exploitability); GitHub's advisory curation team may fix 'introduced: 0' laziness mid-study; disk pressure requires streaming eviction of tarballs."
+   "risks": "Patch-presence matching fails on refactored code (must report undetermined class, and if undetermined exceeds ~40% the headline claim weakens); vulnerable-code presence is not identical to exploitability (frame strictly as range-accuracy, not exploitability); GitHub's advisory curation team may fix 'introduced: 0' laziness mid-study; disk pressure requires streaming eviction of tarballs.",
+   "plain_summary": "Security advisories list which versions of a software package are vulnerable. If those version ranges are too broad, organisations are flooded with false alarms. This study would check the published ranges against the actual code history to measure how often they overstate the affected versions."
   },
   {
    "id": "software-security-attestation-phantom-code",
@@ -1903,7 +1933,8 @@
     "Cross-check a subsample of attestations against Rekor log entries to confirm bundle validity and detect any malformed attestations.",
     "Write up as differential measurement study; release the phantom-file dataset and the normalized-diff tool; responsibly report any individual suspicious finding to PyPI security rather than naming it in the paper."
    ],
-   "risks": "Normalization whitelist errors can manufacture fake phantom rates (mitigate with hand-verified calibration set); arXiv:2608.18180 authors may extend to exactly this differential design; attested population is biased toward well-maintained packages, so matching quality is load-bearing - must report covariate balance; wheels with compiled extensions may need exclusion, shrinking the sample."
+   "risks": "Normalization whitelist errors can manufacture fake phantom rates (mitigate with hand-verified calibration set); arXiv:2608.18180 authors may extend to exactly this differential design; attested population is biased toward well-maintained packages, so matching quality is load-bearing - must report covariate balance; wheels with compiled extensions may need exclusion, shrinking the sample.",
+   "plain_summary": "Software packages on PyPI and npm can now carry cryptographic 'attestations' that link them to their public source code. This study would check whether attested packages really match their source, looking for 'phantom' files that appear in the package but not in the source, compared with packages that are not attested."
   },
   {
    "id": "software-security-llm-era-license-drift",
@@ -1968,7 +1999,8 @@
    "risks": "Attribution of drift to LLMs vs organic copying growth is the central identification threat (mitigated but not eliminated by difference-in-differences); fork/vendoring exclusion errors dominate false positives; legal sensitivity requires aggregate-only reporting; and the compute requirement means this is documented here as a requirements dossier, not a locally executable study.",
    "critic_note": "Critic: ecosystem-scale cross-repo clone detection exceeds one machine, and causal attribution to LLM assistants is unidentified (vendoring, StackOverflow copying, metadata churn confound pre/post drift).",
    "scout_value_score": 8,
-   "scout_cost_score": 9
+   "scout_cost_score": 9,
+   "plain_summary": "Some open-source code carries 'copyleft' licences requiring that code built from it stays open. Critics claim AI coding assistants copy such code into other projects without those conditions. This study would measure whether copyleft code fragments started turning up without attribution in permissively licensed projects more often after AI assistants became common."
   },
   {
    "id": "chem-materials-r2scan-upgrade-budget",
@@ -2025,7 +2057,8 @@
     "Fit error-vs-budget curves, locate crossover budgets where each strategy matches full-data direct training; test the 20%/25k hypothesis with bootstrap CIs.",
     "Write up as a benchmark/guidance paper; release all training configs, splits, and the delta-model code."
    ],
-   "risks": "Highest risk is being scooped: the MatPES consortium or the cross-domain-transfer authors could publish budget curves any month. Mitigate by including delta-learning (absent from current multi-fidelity work) and observable-level evaluation. Secondary risk: paired-structure overlap between PBE and r2SCAN subsets may be smaller than assumed, shrinking the delta-learning training pool - verify pairing early."
+   "risks": "Highest risk is being scooped: the MatPES consortium or the cross-domain-transfer authors could publish budget curves any month. Mitigate by including delta-learning (absent from current multi-fidelity work) and observable-level evaluation. Secondary risk: paired-structure overlap between PBE and r2SCAN subsets may be smaller than assumed, shrinking the delta-learning training pool - verify pairing early.",
+   "plain_summary": "Machine-learning models that simulate materials are trained on quantum-chemistry calculations, and a newer, more accurate calculation method (r2SCAN) is expensive to run. This study would test whether a small amount of the accurate data, used to correct an existing model trained on the older method, gets nearly as good results as retraining on a huge accurate dataset."
   },
   {
    "id": "chem-materials-dac-rank-overturn",
@@ -2088,7 +2121,8 @@
     "Sensitivity check on 30 MOFs: MLFF-relaxed flexible-framework snapshots vs rigid CIF geometry to bound the rigidity approximation.",
     "Write up and release the full MLFF Henry-constant table for the 800 MOFs as a community dataset."
    ],
-   "risks": "Main failure modes: (1) ODAC25's own paper or SI already contains this comparison at scale - must verify before starting; (2) MLFF distribution shift on CoRE MOFs not represented in ODAC training data could make 'DFT-level' claims shaky - mitigated by the ODAC23 validation step and restricting claims to validated chemistry; (3) water Widom sampling converges slowly in hydrophobic pores - needs insertion-count convergence checks; (4) missing DDEC charges limit the classical baseline to the charged subset."
+   "risks": "Main failure modes: (1) ODAC25's own paper or SI already contains this comparison at scale - must verify before starting; (2) MLFF distribution shift on CoRE MOFs not represented in ODAC training data could make 'DFT-level' claims shaky - mitigated by the ODAC23 validation step and restricting claims to validated chemistry; (3) water Widom sampling converges slowly in hydrophobic pores - needs insertion-count convergence checks; (4) missing DDEC charges limit the classical baseline to the charged subset.",
+   "plain_summary": "'Direct air capture' materials pull carbon dioxide out of the air, and computer screens rank thousands of candidate materials. Most screens rely on simple physics models known to handle water poorly. This study would re-rank hundreds of materials with a more accurate AI model and check how often the 'top candidates' change."
   },
   {
    "id": "chem-materials-conformal-dft-budget",
@@ -2137,7 +2171,8 @@
     "Read and benchmark against Proof-Carrying Materials (arXiv:2603.12183) if code is public; explicitly position the delta.",
     "Write up with released analysis code as a plug-in calibration layer for screening pipelines."
    ],
-   "risks": "Biggest risk is that Proof-Carrying Materials (2026) already delivers FDR-style guarantees for the same WBM setting, reducing this to a replication-plus-shift-analysis (value drops to ~4). Also, hull-distance residuals across models are correlated (shared training data), which can make committee results less impressive than hoped. Cheap enough that a one-day feasibility read of the two 2026 papers settles go/no-go."
+   "risks": "Biggest risk is that Proof-Carrying Materials (2026) already delivers FDR-style guarantees for the same WBM setting, reducing this to a replication-plus-shift-analysis (value drops to ~4). Also, hull-distance residuals across models are correlated (shared training data), which can make committee results less impressive than hoped. Cheap enough that a one-day feasibility read of the two 2026 papers settles go/no-go.",
+   "plain_summary": "AI models now predict which new materials are stable, and scientists confirm the best candidates with expensive calculations. This study would test a statistical method for deciding how many candidates to check so that the error rate stays within a guaranteed bound, including when the AI faces unfamiliar chemistry."
   },
   {
    "id": "chem-materials-fidelity-conditioned-umlip",
@@ -2201,7 +2236,8 @@
    "risks": "Compute out of reach locally by design. Scientific risks: r2SCAN corpus (~1.3M) may be too small for the conditioned head to benefit from 100M PBE structures (negative transfer); UMA-style conditioning may already be shown sufficient in an existing ablation, reducing novelty; label-convention mismatches between OMat24 (VASP settings, PBE+U) and MatPES (MatPESStaticSet) require careful energy-reference alignment or the joint training silently fails.",
    "critic_note": "Critic: largely redundant with the local r2scan-upgrade-budget lead \u2014 the cheap pilot's outcome mostly determines the answer; OMat24-scale conditioned pretraining is out of reach.",
    "scout_value_score": 7,
-   "scout_cost_score": 9
+   "scout_cost_score": 9,
+   "plain_summary": "Researchers maintain separate AI models of materials for each quantum-calculation method they were trained on. This study would train a single model on both a large dataset from the cheaper method and a small one from the more accurate method, telling it which is which, and test whether it matches the specialised models on both."
   },
   {
    "id": "health-econ-wastewater-flusight-value",
@@ -2265,7 +2301,8 @@
     "Sensitivity analyses: alternative aggregation (flow-normalized vs raw), horizon-specific effects, excluding holiday reporting weeks.",
     "Write up as a full manuscript with reproducible pipeline; include a null-result framing plan since a well-identified null is also publishable."
    ],
-   "risks": "The 2025 medRxiv flu-wastewater surveillance paper or an unposted CDC analysis may already cover part of this; mitigated by scoping to hub-benchmarked probabilistic skill and RSV extension. Wastewater state coverage is uneven pre-2023, shrinking the evaluable panel. Effect may be null - still publishable but at a lower-tier venue."
+   "risks": "The 2025 medRxiv flu-wastewater surveillance paper or an unposted CDC analysis may already cover part of this; mitigated by scoping to hub-benchmarked probabilistic skill and RSV extension. Wastewater state coverage is uneven pre-2023, shrinking the evaluable panel. Effect may be null - still publishable but at a lower-tier venue.",
+   "plain_summary": "Flu virus levels in sewage rise before hospital admissions do, and the US runs a public flu-forecasting challenge (FluSight). This study would test whether adding wastewater data to a standard forecasting model improves its predictions of flu hospitalisations, scored the same way the challenge scores its entries."
   },
   {
    "id": "health-econ-gbd-revision-calibration",
@@ -2320,7 +2357,8 @@
     "Robustness: repeat at level-2 vs level-3 causes, age-standardized vs all-age, and excluding causes with documented methods changes between rounds.",
     "Produce calibration plots and a public reproducibility repository; draft manuscript including IHME's expected 'rounds are not comparable' rebuttal and the decomposition answering it."
    ],
-   "risks": "IHME could reasonably argue coverage-across-rounds is not what UIs promise, blunting impact unless the framing is careful; the 2025 instability paper's team may be extending to causes already; GHDx bulk download limits may force many chunked queries (slow but automatable)."
+   "risks": "IHME could reasonably argue coverage-across-rounds is not what UIs promise, blunting impact unless the framing is careful; the 2025 instability paper's team may be extending to causes already; GHDx bulk download limits may force many chunked queries (slow but automatable).",
+   "plain_summary": "The Global Burden of Disease study publishes death-rate estimates for every country with uncertainty ranges, and revises them every few years. This study would check whether the revised estimates usually fall inside the earlier uncertainty ranges; if not, the ranges are too narrow, especially for countries with poor death records."
   },
   {
    "id": "health-econ-procyclical-mortality-multiverse",
@@ -2383,7 +2421,8 @@
     "Run the drug-poisoning-specific post-2010 analysis as a focused secondary hypothesis.",
     "Write the manuscript with full reproducibility archive; frame as a methods-audit of a canonical literature."
    ],
-   "risks": "Could be judged 'we already knew it was fragile' (Ruhm 2015); mitigated by the estimator-decomposition contribution. CDC WONDER pre-1999 comparability (ICD-9 to ICD-10) requires careful bridging. Continuous-treatment DiD estimators need discretized dose bins - a judgment call reviewers may probe."
+   "risks": "Could be judged 'we already knew it was fragile' (Ruhm 2015); mitigated by the estimator-decomposition contribution. CDC WONDER pre-1999 comparability (ICD-9 to ICD-10) requires careful bridging. Continuous-treatment DiD estimators need discretized dose bins - a judgment call reviewers may probe.",
+   "plain_summary": "A famous finding says that death rates in the US fall during recessions. This study would re-analyse state data from 1976 to 2023 in many reasonable ways, using newer statistical methods, to see how often that finding still holds."
   },
   {
    "id": "health-econ-hub-vintage-rescore",
@@ -2446,7 +2485,8 @@
     "Sensitivity analyses: restrict to large states, exclude pandemic-onset weeks, vary revision-lag definition of 'final'.",
     "Write up with a public re-scoring dataset as a community resource, framing null and positive results as decision-relevant either way."
    ],
-   "risks": "Main risk is a robust null echoing Mathis et al.'s sensitivity check, capping venue tier. Vintage reconstruction for early COVID (mid-2020) is patchy across sources, requiring careful documentation of gaps. The hubverse team is well-positioned to do this themselves and could preempt it."
+   "risks": "Main risk is a robust null echoing Mathis et al.'s sensitivity check, capping venue tier. Vintage reconstruction for early COVID (mid-2020) is patchy across sources, requiring careful documentation of gaps. The hubverse team is well-positioned to do this themselves and could preempt it.",
+   "plain_summary": "Public forecasting challenges for flu and COVID score each team's predictions against the final, cleaned-up data, which forecasters never had at the time. This study would rescore the forecasts against the data as it looked when they were made, and check how often the ranking of forecasting teams changes."
   },
   {
    "id": "extra-open-neuroimaging-reanalysis-openneuro-multiverse-robustness-atlas",
@@ -2497,7 +2537,8 @@
     "Package the resource: robustness maps to NeuroVault, per-dataset index as a JSON/CSV table + small Python query package on GitHub/Zenodo.",
     "Write up as a resource paper (methods, atlas description, hypothesis test, limitations re: fixed preprocessing) with full reproducibility scripts."
    ],
-   "risks": "Fewer datasets than expected have complete published fMRIPrep derivatives plus usable event files, shrinking the sample and the regression power; the Milham-group critique that preprocessing (held fixed here) dominates variability could cap the perceived importance; a concurrent group (e.g., the multi-pipeline dataset authors) could scale their approach across datasets first."
+   "risks": "Fewer datasets than expected have complete published fMRIPrep derivatives plus usable event files, shrinking the sample and the regression power; the Milham-group critique that preprocessing (held fixed here) dominates variability could cap the perceived importance; a concurrent group (e.g., the multi-pipeline dataset authors) could scale their approach across datasets first.",
+   "plain_summary": "Brain-scan (fMRI) results can change with many small analysis choices. This study would re-analyse more than 20 public brain-imaging datasets in many different reasonable ways each, and map which datasets give robust conclusions and which are fragile."
   },
   {
    "id": "extra-open-neuroimaging-reanalysis-attenuation-ceiling-atlas",
@@ -2554,7 +2595,8 @@
     "Release the atlas (NeuroVault + parquet tables) and the calculator as a pip-installable package with a web-form-free CLI.",
     "Write up: methods, ceiling atlas, literature screen result, and guidance section on design choices that raise the ceiling."
    ],
-   "risks": "Ceilings depend on preprocessing choices, inviting the same multiverse critique the tool is meant to police (mitigate by reporting ceilings across 2-3 streams); curating published effects with complete design metadata may be slow and the 'exceeds ceiling' fraction could be small, muting the headline; conceptual overlap with Nikolaidis/Gell may lead reviewers to see it as confirmatory unless the tool is polished."
+   "risks": "Ceilings depend on preprocessing choices, inviting the same multiverse critique the tool is meant to police (mitigate by reporting ceilings across 2-3 streams); curating published effects with complete design metadata may be slow and the 'exceeds ceiling' fraction could be small, muting the headline; conceptual overlap with Nikolaidis/Gell may lead reviewers to see it as confirmatory unless the tool is polished.",
+   "plain_summary": "Studies link brain-scan connectivity to traits such as memory or personality, but both measurements are noisy, which caps how strong any link can appear. Using people who were scanned repeatedly, this study would map the largest correlation each brain connection could plausibly show, and flag published claims that exceed it."
   },
   {
    "id": "extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage",
@@ -2611,7 +2653,8 @@
     "Validate the statistical claims with a simulation study (known truth, varying prior quality).",
     "Release the package plus calibration-curve tables and write up as a methods/resource paper with full scripts."
    ],
-   "risks": "Shrinkage gains may be real but small (equivalent to <2x sample size), weakening the headline; NeuroQuery term-to-contrast mapping is subjective and reviewers may push on it; the idea is close enough to Han & Park that a top venue may see it as a scaled replication unless the calibration/tool framing lands."
+   "risks": "Shrinkage gains may be real but small (equivalent to <2x sample size), weakening the headline; NeuroQuery term-to-contrast mapping is subjective and reviewers may push on it; the idea is close enough to Han & Park that a top venue may see it as a scaled replication unless the calibration/tool framing lands.",
+   "plain_summary": "Small brain-imaging studies produce noisy maps. This study would test whether nudging those maps toward what thousands of earlier studies found (a meta-analytic 'prior') makes them as accurate as a study twice the size, checked against large reference datasets."
   },
   {
    "id": "extra-open-neuroimaging-reanalysis-silicon-narps-agents",
@@ -2663,7 +2706,8 @@
     "Cross-validate the method's usefulness on a second dataset with no many-analyst ground truth (e.g., an AOMIC contrast) to demonstrate the robustness-probe use case.",
     "Write up with full agent transcripts, code, and maps released; frame both positive and negative outcomes as calibrating AI-automated analysis claims."
    ],
-   "risks": "Contamination is the central threat - reviewers may not accept that agents rediscovered rather than recalled the variability structure; agent pipelines may fail at high rates, making the population non-comparable to competent human teams; LLM API cost/time could balloon with 30+ long-horizon runs; and the NeuroAgent group could publish a similar study first."
+   "risks": "Contamination is the central threat - reviewers may not accept that agents rediscovered rather than recalled the variability structure; agent pipelines may fail at high rates, making the population non-comparable to competent human teams; LLM API cost/time could balloon with 30+ long-horizon runs; and the NeuroAgent group could publish a similar study first.",
+   "plain_summary": "In a well-known experiment (NARPS), 70 research teams analysed the same brain-scan data and reached different conclusions. This study would give the same task to more than 30 AI agents working independently, and compare whether their spread of conclusions resembles that of the human teams."
   },
   {
    "id": "extra-open-energy-system-modeling-specification-curve-pypsa-conclusions",
@@ -2725,7 +2769,8 @@
     "Analyze: per-claim specification curves, flip fractions, and ANOVA-style variance decomposition over choice axes; bootstrap significance following Simonsohn et al.",
     "Write up as a methods+results paper with full Snakemake reproduction pipeline published to GitHub/Zenodo."
    ],
-   "risks": "Some claims may be so robust the headline result is a null (still publishable but weaker); a reviewer may argue the specification grid is itself arbitrary (mitigate by pre-registering the grid and taking axes only from choices observed in the published literature); Frey et al. 2025 must be carefully differentiated or reviewers will see it as done."
+   "risks": "Some claims may be so robust the headline result is a null (still publishable but weaker); a reviewer may argue the specification grid is itself arbitrary (mitigate by pre-registering the grid and taking axes only from choices observed in the published literature); Frey et al. 2025 must be carefully differentiated or reviewers will see it as done.",
+   "plain_summary": "Energy-system models underpin headline claims such as 'more transmission lines make net-zero cheaper', but these claims often rest on a single weather year and one set of cost assumptions. This study would re-run the models across many weather years, cost assumptions and near-equivalent solutions to test how robust those headline conclusions are."
   },
   {
    "id": "extra-open-energy-system-modeling-near-optimal-adequacy-screening",
@@ -2781,7 +2826,8 @@
     "Fit and cross-validate the two-feature screening index against EUE rank (Spearman rho, leave-designs-out), and test alternatives (firm margin only, storage only, capex shares).",
     "Write up with figures: EUE spread across the near-optimal space, cost-vs-tail-risk frontier, screening index performance; publish pipeline and derived capacity-factor dataset to Zenodo."
    ],
-   "risks": "The Grochowicz/van Greevenbroek group is actively publishing here and could release exactly this screening analysis; heterogeneity may be small (factor <2), which would reject the hypothesis but still yield a useful negative result; 83-year ERA5 download via CDS can be slow/throttled (mitigate: reduced spatial resolution, fewer years, or the pre-computed renewables.ninja/atlite community cutouts)."
+   "risks": "The Grochowicz/van Greevenbroek group is actively publishing here and could release exactly this screening analysis; heterogeneity may be small (factor <2), which would reject the hypothesis but still yield a useful negative result; 83-year ERA5 download via CDS can be slow/throttled (mitigate: reduced spatial resolution, fewer years, or the pre-computed renewables.ninja/atlite community cutouts).",
+   "plain_summary": "An energy-system model usually has many designs that cost almost the same. This study would test whether those near-equally-cheap designs differ greatly in how often they would leave people without power in bad weather years they were not designed for."
   },
   {
    "id": "extra-open-energy-system-modeling-reproducibility-rerun-audit",
@@ -2837,7 +2883,8 @@
     "Analyze: reproduction rate with Wilson confidence intervals, failure-mode frequencies, predictors of success (containerized? data bundled? CI present?), and per-framework differences.",
     "Write up with an anonymization policy for individual studies (report aggregate rates, notify authors), and publish the audit harness so the community can extend it."
    ],
-   "risks": "Ethical/social sensitivity: naming irreproducible studies invites conflict (mitigated by aggregate reporting and author notification); some pipelines legitimately need >94 GB RAM or Gurobi-only features, inflating 'failure' counts unless pre-classified as 'not attemptable on open stack' - the taxonomy must separate these; a concurrent audit could appear, though none was found in search."
+   "risks": "Ethical/social sensitivity: naming irreproducible studies invites conflict (mitigated by aggregate reporting and author notification); some pipelines legitimately need >94 GB RAM or Gurobi-only features, inflating 'failure' counts unless pre-classified as 'not attemptable on open stack' - the taxonomy must separate these; a concurrent audit could appear, though none was found in search.",
+   "plain_summary": "Many energy-modelling studies publish their code and data, but can anyone actually re-run them? This study would have an automated agent try to reproduce more than 25 published studies end to end, and measure how many give the same headline numbers."
   },
   {
    "id": "extra-open-energy-system-modeling-tsfm-vs-tso-forecasts",
@@ -2893,7 +2940,8 @@
     "Regress TSFM skill advantage on zone characteristics (peak load, share of gaps, variable type) to explain the win/loss pattern and test the wind/solar half of the hypothesis.",
     "Write up as an open benchmark with code, cleaned dataset (license permitting) and a reproducible leaderboard."
    ],
-   "risks": "The niche is being mined quickly - a continental TSFM-vs-TSO comparison could appear within months; ENTSO-E forecast fields are patchy for some zones/variables, shrinking the usable panel; a clean loss by TSFMs on all three variables would reject the hypothesis, though the resulting 'trust the TSO forecasts' result still publishes as a benchmark."
+   "risks": "The niche is being mined quickly - a continental TSFM-vs-TSO comparison could appear within months; ENTSO-E forecast fields are patchy for some zones/variables, shrinking the usable panel; a clean loss by TSFMs on all three variables would reject the hypothesis, though the resulting 'trust the TSO forecasts' result still publishes as a benchmark.",
+   "plain_summary": "European electricity-grid operators publish their own next-day forecasts of electricity demand, and new general-purpose AI forecasting models claim to work 'out of the box'. This study would test whether those AI models beat the operators' own forecasts across about 35 European regions."
   }
  ]
 }

@@ -5,6 +5,27 @@
 Run directory: `research-lab/runs/astronomy-gwtc4-q-chieff-copula-stress-test` · Preregistration: [`plan.md`](plan.md) ·
 Every departure from it: [`deviations.md`](deviations.md) (D1–D30) · Draft of 2026-09-25, revised after independent review
 
+## In plain terms
+
+When two black holes orbit each other and merge, they send out ripples in space (gravitational waves) that detectors
+in the US, Italy and Japan can pick up. From each signal, scientists estimate the black holes' masses and how they
+spin. The latest public catalogue has 153 such pairs.
+
+Several analyses report a pattern: pairs with more unequal masses tend to spin more in line with their orbit. If real,
+it is a clue to how these pairs form, as partners from birth or by meeting in crowded star clusters. This study asked
+whether the pattern is real or a by-product of analysis choices. The tests were written down in advance, and hundreds
+of simulated catalogues showed what chance alone produces.
+
+The answer is "not established":
+
+- **About half of the simple version of the pattern comes from a default assumption.** Each measurement assumes
+  spins point in random directions, and that assumption nudges fast-spinning pairs towards unequal masses.
+- **The more careful measurement sees no link.** It uses each pair's full uncertainty, though it could only have
+  caught a strong effect.
+- **The result depends on modelling choices.** One published version of the pattern appears with one reasonable
+  description of black-hole masses and disappears with the LVK's own. Switching between the standard computer models
+  of the signal moves the answer by about as much as its uncertainty.
+
 ## Abstract
 
 Several binary-black-hole (BBH) population analyses report that the effective inspiral spin χ_eff is anticorrelated

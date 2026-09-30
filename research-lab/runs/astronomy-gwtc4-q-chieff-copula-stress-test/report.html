@@ -89,6 +89,24 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 </header>
 <section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Copula dependence, ln BF</div><div class="tile-value">-0.20</div><div class="tile-note">E1 · threshold ln 3 = 1.10 · LVK-marginal Frank copula: -2.10</div></div><div class="tile"><div class="tile-label">Posterior-median τ(q, χeff)</div><div class="tile-value text">-0.22 → -0.11</div><div class="tile-note">PE prior on → off · FPR 0.010 → 0.19 vs detection-consistent mocks; prior-dominated</div></div><div class="tile"><div class="tile-label">Hierarchical ρ̂ (calibrated)</div><div class="tile-value">+0.17</div><div class="tile-note">FPR 0.33 · Bayes-factor FPR 0.66 · typical of no dependence</div></div><div class="tile"><div class="tile-label">Mean-shift credibility</div><div class="tile-value text">0.995 → 0.80</div><div class="tile-note">PowerLaw+Peak → LVK Broken Power Law + 2 Peaks masses</div></div><div class="tile"><div class="tile-label">Waveform systematic in ρ̂</div><div class="tile-value text">Δ 0.21</div><div class="tile-note">calibrated scan: Mixed +0.17 vs IMRPhenom -0.03 · posterior sd of ρ 0.22</div></div><div class="tile"><div class="tile-label">Preregistered verdict</div><div class="tile-value text">indeterminate</div><div class="tile-note">plan §7 · E1 and E2 disagree; see §4.7</div></div></section>
 <main>
+<h2>In plain terms</h2>
+<p>When two black holes orbit each other and merge, they send out ripples in space (gravitational waves) that detectors
+in the US, Italy and Japan can pick up. From each signal, scientists estimate the black holes' masses and how they
+spin. The latest public catalogue has 153 such pairs.</p>
+<p>Several analyses report a pattern: pairs with more unequal masses tend to spin more in line with their orbit. If real,
+it is a clue to how these pairs form, as partners from birth or by meeting in crowded star clusters. This study asked
+whether the pattern is real or a by-product of analysis choices. The tests were written down in advance, and hundreds
+of simulated catalogues showed what chance alone produces.</p>
+<p>The answer is "not established":</p>
+<ul>
+<li><strong>About half of the simple version of the pattern comes from a default assumption.</strong> Each measurement assumes
+  spins point in random directions, and that assumption nudges fast-spinning pairs towards unequal masses.</li>
+<li><strong>The more careful measurement sees no link.</strong> It uses each pair's full uncertainty, though it could only have
+  caught a strong effect.</li>
+<li><strong>The result depends on modelling choices.</strong> One published version of the pattern appears with one reasonable
+  description of black-hole masses and disappears with the LVK's own. Switching between the standard computer models
+  of the signal moves the answer by about as much as its uncertainty.</li>
+</ul>
 <h2>Abstract</h2>
 <p>Several binary-black-hole (BBH) population analyses report that the effective inspiral spin χ<sub>eff</sub> is anticorrelated
 with the mass ratio q. We preregistered a test of the hypothesis that the GWTC-4.0 version of this correlation is an

@@ -5,6 +5,28 @@
 Run directory: `research-lab/runs/bioinformatics-vep-acmg-calibration-drift` · Preregistration: [`plan.md`](plan.md) ·
 Every departure from it: [`deviations.md`](deviations.md) · Draft of 2026-10-01, revised after independent review
 
+## In plain terms
+
+When someone has a genetic test, the lab often finds variants: spots where their DNA differs from the usual sequence.
+Most are harmless; a few cause disease. Labs sort each one using a shared rulebook in which different kinds of evidence
+earn points. One kind of evidence is a computer prediction of how damaging a DNA change is likely to be. In 2022,
+experts turned those prediction scores into rulebook points, using the public database of lab verdicts (ClinVar) as it
+stood in 2019.
+
+This study asked whether those cut-offs still work on the roughly 160,000 variants that labs first classified between
+2021 and 2026. The tests were written down before looking at any data.
+
+- **Across the whole database, the cut-offs hold.** None of the 42 score bands of six prediction tools fell short of
+  what it is supposed to be worth.
+- **In the best-studied disease genes, the weaker cut-offs look shaky.** These are the genes where expert panels
+  curate the verdicts. There, one tool's "supporting" and "moderate" bands fall short, and the most popular tool's are
+  borderline, because even harmless variants in those genes tend to get worrying scores.
+- **An apparent jump in the tools' performance after 2022 was one lab's upload.** About 59,000 "likely harmless"
+  verdicts arrived from a single lab, mostly in genes nobody had classified before, where almost everything scores as
+  harmless.
+- **Expert panels now lean on the computer evidence more, mostly because the rulebook changed.** 7% of their
+  "pathogenic" verdicts depended on it before 2022, and 22% since. They use the tools no more often than before.
+
 ## Abstract
 
 Clinical laboratories classify DNA variants with the ACMG/AMP framework. Its criteria PP3 and BP4 let computational
