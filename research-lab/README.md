@@ -49,6 +49,7 @@ scout (done) ──► leads.json ──► human picks leads from the plot
 | Lead | Status | Report |
 |---|---|---|
 | `astronomy-gwtc4-q-chieff-copula-stress-test` — is the q–χ_eff anticorrelation in GWTC-4.0 real? | Revised after three independent reviews and recalibrated against detection-consistent mocks. Preregistered verdict: **indeterminate**; every calibratable statistic is consistent with no dependence (low power). | [report.html](runs/astronomy-gwtc4-q-chieff-copula-stress-test/report.html) · [deviations log](runs/astronomy-gwtc4-q-chieff-copula-stress-test/deviations.md) |
+| `bioinformatics-vep-acmg-calibration-drift` — do the ClinGen PP3/BP4 predictor thresholds still hold on variants classified since? | Revised after independent review. Thresholds hold on ClinVar as a whole; weakest in expert-curated disease genes (BayesDel Supporting/Moderate fall short on expert-panel labels); post-2022 ClinVar trends are composition. | [report.html](runs/bioinformatics-vep-acmg-calibration-drift/report.html) · [deviations log](runs/bioinformatics-vep-acmg-calibration-drift/deviations.md) |
 
 Lessons from the first deep dive, to carry into the next ones (details in its deviations log, D19–D29 and D27c):
 
@@ -61,6 +62,9 @@ Lessons from the first deep dive, to carry into the next ones (details in its de
 - **Never run unpenalised MAP optimisation on a Monte Carlo selection-corrected likelihood.** It exploits injection
   sparsity.
 - **Compare point estimates only under the same measure.** The PE prior alone can create the effect under study.
+- **Check benchmark composition before reading a trend.** In the ClinVar study a threefold rise in apparent predictor
+  performance came from one laboratory's bulk submission in previously unlabelled genes; standardise to a fixed gene mix
+  and look at submitters before attributing a change to behaviour (circularity) or to the tools.
 - **Make simulated catalogs detection-consistent.** Drawing events from found injections and adding independent noise biased a dependence
   estimate by −0.14 (half the null spread) until each mock event's likelihood included P_det(θ) (Essick & Fishbach, arXiv:2310.02017).
   Check a simulator by running the statistic at the true parameters with and without noise.

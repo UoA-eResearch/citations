@@ -1,0 +1,50 @@
+{
+  "2021-2022 B": {
+    "n_scv": 24987,
+    "n_submitters": 136,
+    "top1_share": 0.40949293632689,
+    "top3_share": 0.6181614439508545,
+    "frac_with_text": 0.25741385520470644,
+    "frac_cites_bp4": 0.039340457037659586,
+    "frac_cites_pp3": 0.0025213110817625165,
+    "frac_cites_comp": 0.14991795733781565,
+    "median_revel": 0.172,
+    "frac_new_gene": 0.0
+  },
+  "2021-2022 P": {
+    "n_scv": 23175,
+    "n_submitters": 725,
+    "top1_share": 0.23918015102481122,
+    "top3_share": 0.3651779935275081,
+    "frac_with_text": 0.6214886731391586,
+    "frac_cites_bp4": 0.0015102481121898597,
+    "frac_cites_pp3": 0.07935275080906148,
+    "frac_cites_comp": 0.25039913700107874,
+    "median_revel": 0.864,
+    "frac_new_gene": 0.23262135922330096
+  },
+  "2023-2026 B": {
+    "n_scv": 98906,
+    "n_submitters": 138,
+    "top1_share": 0.5983256829717105,
+    "top3_share": 0.9260914403575111,
+    "frac_with_text": 0.6367864436940125,
+    "frac_cites_bp4": 0.04910723313044709,
+    "frac_cites_pp3": 0.001728914322690231,
+    "frac_cites_comp": 0.602450811881989,
+    "median_revel": 0.092,
+    "frac_new_gene": 0.518178876913433
+  },
+  "2023-2026 P": {
+    "n_scv": 33636,
+    "n_submitters": 950,
+    "top1_share": 0.28270305624925673,
+    "top3_share": 0.4032584136044714,
+    "frac_with_text": 0.7171482934950648,
+    "frac_cites_bp4": 0.0013675823522416458,
+    "frac_cites_pp3": 0.10649304316803425,
+    "frac_cites_comp": 0.2838922582946843,
+    "median_revel": 0.872,
+    "frac_new_gene": 0.2505351409204424
+  }
+}

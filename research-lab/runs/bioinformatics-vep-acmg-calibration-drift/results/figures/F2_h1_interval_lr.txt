@@ -1,0 +1,6 @@
+F2 (H1). For each tool and each published evidence interval (x axis, ACMG points;
+negative = benign evidence BP4, positive = pathogenic evidence PP3), the likelihood ratio realised in each cohort:
+fraction of pathogenic variants in the interval divided by the fraction of benign variants in it. Points: estimate;
+bars: 5th-95th percentile over 2,000 gene-cluster bootstrap resamples. Orange bars: the likelihood ratio each
+interval must reach (2.406 per point; benign intervals must fall below the reciprocal). An interval holds when its
+pathogenic-side lower bound is above the orange bar (benign side: upper bound below it).

@@ -816,7 +816,10 @@
     "Write up: reliability plots, drift table per tool and tier, recommended recalibration cadence and recalibrated 2026 thresholds; release code and score tables."
    ],
    "risks": "Main risks: (1) newly resolved variants may be systematically easier (enriched for extreme scores), inflating apparent good calibration - must be modelled explicitly; (2) circularity may make drift uninterpretable without the MaveDB/VCEP subsets, which could be too small for tight CIs; (3) ClinGen may have already published an internal recalibration in 2025-2026 that closes the gap, which a deeper literature pass must check before committing; (4) the prospective B/LB class is much larger than P/LP, so the strong-pathogenic tier may have too few events for a firm conclusion.",
-   "requirements_if_out_of_reach": ""
+   "requirements_if_out_of_reach": "",
+   "status": "deep dive \u00b7 report (revised after review)",
+   "report_url": "runs/bioinformatics-vep-acmg-calibration-drift/report.html",
+   "headline": "Thresholds hold genome-wide: on 159,531 ClinVar variants classified 2021-2026 no PP3/BP4 interval of six tools falls short; but on expert-panel labels BayesDel Supporting/Moderate fall short and REVEL is borderline in disease genes, and ClinVar's post-2022 rise in apparent predictor performance is one lab's bulk benign upload."
   },
   {
    "id": "bioinformatics-amr-gene-species-emergence-forecast",
