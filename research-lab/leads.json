@@ -443,7 +443,9 @@
    "plain_summary": "Many research findings fail when repeated. This study checked whether the sentences other scientists write when citing a finding reveal doubts before it is formally re-tested. Deep dive done: doubt is rare in citing sentences (about 3%), the planned AI classifiers could not measure it, and a simple search for 'failed to replicate' shows the literature reacts after a failed re-test but gives only a faint warning before.",
    "status": "deep dive \u00b7 report (revised after review)",
    "report_url": "runs/metascience-citation-context-replication/report.html",
-   "headline": "Faint at most: across 1,075 FLoRA originals and 787,384 Semantic Scholar citation contexts, the preregistered classifiers (SciBERT on CC30k, local LLM) failed validation (F1 0.12 / 0.30) and the post-replication positive control, so H1-H3 are uninformative (AUC 0.48 / 0.51). Exploratory replication-failure keywords pass the control (AUC 0.63 after replication) but predict only faintly before it (AUC 0.534 [0.515, 0.553]; 14% vs 7% of originals flagged); doubt appears in ~2.6% of citing sentences."
+   "headline": "Faint at most: across 1,075 FLoRA originals and 787,384 Semantic Scholar citation contexts, the preregistered classifiers (SciBERT on CC30k, local LLM) failed validation (F1 0.12 / 0.30) and the post-replication positive control, so H1-H3 are uninformative (AUC 0.48 / 0.51). Exploratory replication-failure keywords pass the control (AUC 0.63 after replication) but predict only faintly before it (AUC 0.534 [0.515, 0.553]; 14% vs 7% of originals flagged); doubt appears in ~2.6% of citing sentences.",
+   "verdict_tag": "Inconclusive",
+   "verdict_note": "The preregistered test was uninformative (classifiers failed validation); an exploratory keyword signal is far below the predicted strength."
   },
   {
    "id": "metascience-semantic-novelty-sleeping-beauties",
@@ -556,7 +558,9 @@
    "status": "deep dive \u00b7 report (revised after review)",
    "report_url": "runs/astronomy-gwtc4-q-chieff-copula-stress-test/report.html",
    "headline": "Indeterminate: against detection-consistent mock catalogs every calibratable statistic is consistent with no q-chi_eff dependence (hierarchical FPR 0.33, low power); the posterior-median anticorrelation is about half a spin-prior effect (tau -0.22 -> -0.11) and cannot be calibrated, the Linear-model mean shift follows the mass model (P 0.995 -> 0.80), and waveform choice moves the dependence estimate by about one posterior sd.",
-   "plain_summary": "When two black holes merge, detectors on Earth pick up ripples in space. From 153 such mergers, astronomers reported that pairs with more unequal masses tend to spin more in line with their orbit, a clue to how these pairs form. This study tested whether that pattern is real or produced by modelling choices. Deep dive done: the answer is 'not established'; about half of the pattern comes from a default assumption built into the measurements."
+   "plain_summary": "When two black holes merge, detectors on Earth pick up ripples in space. From 153 such mergers, astronomers reported that pairs with more unequal masses tend to spin more in line with their orbit, a clue to how these pairs form. This study tested whether that pattern is real or produced by modelling choices. Deep dive done: the answer is 'not established'; about half of the pattern comes from a default assumption built into the measurements.",
+   "verdict_tag": "Inconclusive",
+   "verdict_note": "Preregistered verdict indeterminate: calibrated statistics are consistent with no mass-ratio/spin dependence, but the test has low power."
   },
   {
    "id": "astronomy-gaia-sb1-tess-synchronization-boundary",
@@ -835,7 +839,9 @@
    "status": "deep dive \u00b7 report (revised after review)",
    "report_url": "runs/bioinformatics-vep-acmg-calibration-drift/report.html",
    "headline": "Thresholds hold genome-wide: on 159,531 ClinVar variants classified 2021-2026 no PP3/BP4 interval of six tools falls short; but on expert-panel labels BayesDel Supporting/Moderate fall short and REVEL is borderline in disease genes, and ClinVar's post-2022 rise in apparent predictor performance is one lab's bulk benign upload.",
-   "plain_summary": "Genetic-testing labs use computer programs to help judge whether a DNA change causes disease, and in 2022 experts set score cut-offs saying how much weight those programs should get. This study checked whether the cut-offs still hold for the variants classified since. Deep dive done: they hold across the public database, but are weakest in the well-studied disease genes where they matter most."
+   "plain_summary": "Genetic-testing labs use computer programs to help judge whether a DNA change causes disease, and in 2022 experts set score cut-offs saying how much weight those programs should get. This study checked whether the cut-offs still hold for the variants classified since. Deep dive done: they hold across the public database, but are weakest in the well-studied disease genes where they matter most.",
+   "verdict_tag": "Refuted",
+   "verdict_note": "The predicted drift was not found: no threshold interval falls short ClinVar-wide. Exception: two BayesDel bands fall short on expert-panel labels."
   },
   {
    "id": "bioinformatics-amr-gene-species-emergence-forecast",
@@ -1108,7 +1114,9 @@
    "plain_summary": "Humid heat (hot and moist air) is the most dangerous kind for the body. This study re-ran an AI weather forecast of six recent extreme humid-heat days with the warming of the last 150 years removed. Deep dive done: about 1-1.5 degC of the peak 'wet-bulb' heat is attributable to warming, and the contested choice of how to remove moisture matters much less inside the forecast than on paper, especially a few days ahead.",
    "status": "deep dive \u00b7 report (revised after review)",
    "report_url": "runs/climate-earth-ai-humid-heat-attribution/report.html",
-   "headline": "AIFS (the open AI model with 2 m dewpoint) re-forecasts of six 2023-25 humid-heat extremes respond linearly to removed CMIP6 warming (sign-flip control): ~1-1.5 degC of event-peak wet-bulb temperature attributable. The contested moisture treatment matters far less than statically: constant-RH / temperature-only R = 1.21 [1.06, 1.38] pooled (H1 >=1.5 contradicted; 1.05 at 2 days, 1.25-1.32 at 4-6 days, 1.40 for area means) vs 4.4 without a forecast. The response does not track each model's local surface signal (r = 0.01); peaks are underestimated by 1.75 degC."
+   "headline": "AIFS (the open AI model with 2 m dewpoint) re-forecasts of six 2023-25 humid-heat extremes respond linearly to removed CMIP6 warming (sign-flip control): ~1-1.5 degC of event-peak wet-bulb temperature attributable. The contested moisture treatment matters far less than statically: constant-RH / temperature-only R = 1.21 [1.06, 1.38] pooled (H1 >=1.5 contradicted; 1.05 at 2 days, 1.25-1.32 at 4-6 days, 1.40 for area means) vs 4.4 without a forecast. The response does not track each model's local surface signal (r = 0.01); peaks are underestimated by 1.75 degC.",
+   "verdict_tag": "Refuted",
+   "verdict_note": "The predicted 50% larger attribution under moisture scaling was not found (ratio 1.21 [1.06, 1.38]); inconclusive at 6-day leads and for area means."
   },
   {
    "id": "climate-earth-mbc-wetbulb-crossings",
@@ -1224,7 +1232,9 @@
    "plain_summary": "Climate models predict that as the world warms, heat records will be broken not only more often but by bigger margins ('record-shattering'). This study checked about 2,000 long-running weather stations for whether each summer's hottest day is beating the previous 30 years by growing margins. Deep dive done: outside the US, new heat records are clearly more common than without warming, but records smashed by wide margins are not yet more common than steady warming alone explains.",
    "status": "deep dive \u00b7 report (revised after review)",
    "report_url": "runs/climate-earth-record-margin-obs/report.html",
-   "headline": "Not yet visible: across 2,009 GHCN stations (69% US), record-shattering heat in 2003-2025 is not distinguishable from a no-warming climate (x1.19 [0.64, 1.98]) and new 30-year records are, if anything, ~20% below a steady-warming null (x0.80 [0.59, 1.02]); outside the US new records are ~1.8x the no-warming rate [1.17, 2.48]. No acceleration and no detectable dependence on warming rate. Validated nulls and a two-way (place x year) bootstrap were needed: the planned ones biased records by 10-25% and gave intervals 1.6-3.6x too narrow."
+   "headline": "Not yet visible: across 2,009 GHCN stations (69% US), record-shattering heat in 2003-2025 is not distinguishable from a no-warming climate (x1.19 [0.64, 1.98]) and new 30-year records are, if anything, ~20% below a steady-warming null (x0.80 [0.59, 1.02]); outside the US new records are ~1.8x the no-warming rate [1.17, 2.48]. No acceleration and no detectable dependence on warming rate. Validated nulls and a two-way (place x year) bootstrap were needed: the planned ones biased records by 10-25% and gave intervals 1.6-3.6x too narrow.",
+   "verdict_tag": "Inconclusive",
+   "verdict_note": "Record-shattering heat in 2003-2025 is not distinguishable from a no-warming or steady-warming climate once shared heatwave years are accounted for."
   },
   {
    "id": "climate-earth-leave-record-out-heat",
@@ -2314,7 +2324,9 @@
    "plain_summary": "Flu virus levels in sewage track flu in the community, and the US runs a public flu-forecasting challenge (FluSight). This study tested whether adding sewage data to a strong forecasting model improves its predictions of flu hospitalisations, using only data available at the time. Deep dive done: if sewage results take about ten days to arrive, they add nothing measurable; follow-up analyses suggest they would only help if reported within days.",
    "status": "deep dive \u00b7 report (revised after review)",
    "report_url": "runs/health-econ-wastewater-flusight-value/report.html",
-   "headline": "No detectable gain: with state influenza-A wastewater usable 10 days after collection (assumed), paired real-time quantile-regression forecasts with vs without wastewater give relative WIS 0.995 [0.946, 1.045] in the 16 best-covered states (2023-26; inconclusive by the preregistered 5% rule) and add nothing to the FluSight ensemble (0.992 [0.964, 1.020], contradicted). Exploratory: the signal leads admissions by 0-1 weeks, not 2, and value rises as reporting speeds up (0.94 [0.88, 0.99] at an unreachable 0-day lag)."
+   "headline": "No detectable gain: with state influenza-A wastewater usable 10 days after collection (assumed), paired real-time quantile-regression forecasts with vs without wastewater give relative WIS 0.995 [0.946, 1.045] in the 16 best-covered states (2023-26; inconclusive by the preregistered 5% rule) and add nothing to the FluSight ensemble (0.992 [0.964, 1.020], contradicted). Exploratory: the signal leads admissions by 0-1 weeks, not 2, and value rises as reporting speeds up (0.94 [0.88, 0.99] at an unreachable 0-day lag).",
+   "verdict_tag": "Unsupported",
+   "verdict_note": "No detectable forecast gain from wastewater at an assumed 10-day reporting delay; a gain of 5% or more is not quite ruled out."
   },
   {
    "id": "health-econ-gbd-revision-calibration",
