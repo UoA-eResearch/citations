@@ -54,6 +54,7 @@ scout (done) ──► leads.json ──► human picks leads from the plot
 | `health-econ-wastewater-flusight-value` — does influenza wastewater improve state flu-hospitalisation forecasts? | Revised after independent review. **No detectable gain** at an assumed 10-day reporting delay (relative WIS 0.995 [0.946, 1.045], 16 best-covered states; nothing added to the FluSight ensemble); exploratory: the signal is not ahead of admissions, and value appears only with reporting within days. | [report.html](runs/health-econ-wastewater-flusight-value/report.html) · [deviations log](runs/health-econ-wastewater-flusight-value/deviations.md) |
 | `metascience-citation-context-replication` — does citing language before a replication predict its outcome? | Revised after independent review (fix-first). Preregistered classifiers failed validation and the positive control, so H1–H3 are **uninformative**; exploratory replication-failure keywords pass the control but predict only faintly before replication (AUC 0.53). | [report.html](runs/metascience-citation-context-replication/report.html) · [deviations log](runs/metascience-citation-context-replication/deviations.md) |
 | `climate-earth-ai-humid-heat-attribution` — does the counterfactual moisture treatment change AI-forecast attribution of humid heat? | Revised after independent review (fix-first) and a sign-flip control. AIFS responds linearly; ~1–1.5 °C of peak wet-bulb temperature attributable; moisture treatment R = 1.21 pooled (≥1.5 **contradicted**; larger at 4–6 days and for area means) vs 4.4 statically; the response does not track the local surface signal. | [report.html](runs/climate-earth-ai-humid-heat-attribution/report.html) · [deviations log](runs/climate-earth-ai-humid-heat-attribution/deviations.md) |
+| `comp-social-science-temp-accounts-vandalism` — did Wikipedia's switch from public IP addresses to temporary accounts increase vandalism? | Revised after independent review (fix-first) with an in-time placebo. **No detectable change**: the logged-out 48-hour revert rate moved +2.0 points [−2.9, +5.3] (H1 ≥ +10% inconclusive), no more than the design's seasonal bias (+2.7 points with dates shifted back a year); seasonally adjusted +0.1% [−17.8%, +11.0%]. | [report.html](runs/comp-social-science-temp-accounts-vandalism/report.html) · [deviations log](runs/comp-social-science-temp-accounts-vandalism/deviations.md) |
 
 Lessons from the first deep dive, to carry into the next ones (details in its deviations log, D19–D29 and D27c):
 
@@ -91,3 +92,11 @@ Lessons from the first deep dive, to carry into the next ones (details in its de
   the imposed signal member by member may still be real (AIFS responded linearly to scaled CMIP6 warming), or may be an
   off-manifold penalty; only the control distinguishes them. Report how unphysical the counterfactual starting state is
   (a temperature-only cooling left 17% of 925 hPa points saturated).
+- **Run an in-time placebo for staggered rollouts.** Moving each wave's date back a year, on data from before
+  anyone switched, produced a +2.7-point "effect" from school-holiday seasonality, larger than the real estimate.
+- **Check a pre-trend test's size before reading it.** The joint 11-lead Wald test rejected 96% of the time on
+  no-treatment data with random dates. A 5-lead test rejected 13% of the time, closer to its nominal 5%.
+- **Read the dump's flags before trusting group labels.** Wikimedia's `mediawiki_history` marks cross-wiki imported
+  revisions as anonymous; they were about 20% of German Wikipedia's "logged-out" edits until they were excluded.
+- **Report how much weight rests on a single control unit.** After the last big wave, one not-yet-treated wiki
+  carried 47% of the post-switch weight, and a wiki-level bootstrap does not capture that dependence.

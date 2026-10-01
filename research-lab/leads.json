@@ -1343,7 +1343,12 @@
     "Write up methods, event-study figures, and effect sizes as a full paper draft with reproducible pipeline scripts."
    ],
    "risks": "Patroller-tooling changes coincide with rollout, so revert rates conflate editor behavior and patroller capacity (mitigated by block/abuse-filter outcomes); WMF may publish its own causal analysis first; pilot wikis were not randomly selected, so selection-into-treatment needs the late-treated-control design to hold.",
-   "plain_summary": "In 2024-2025 Wikipedia stopped showing the internet addresses of people who edit without an account, replacing them with temporary accounts, and rolled the change out to different language editions at different times. That staggered rollout is a natural experiment: this study would test whether the change made anonymous vandalism more or less common."
+   "plain_summary": "In 2024-2026 Wikipedia stopped showing the internet addresses of people who edit without an account, replacing them with temporary accounts, and switched different language editions at different times. Deep dive done: comparing wikis that had switched with those that had not yet, there was no detectable rise in vandalism (edits quickly undone). The small apparent rise is no bigger than the dip every school summer produces on its own, but changes of 10-20% are not ruled out.",
+   "status": "deep dive \u00b7 report (revised after review)",
+   "report_url": "runs/comp-social-science-temp-accounts-vandalism/report.html",
+   "headline": "No detectable change: across 40 Wikipedias (35.4 M logged-out content edits, Jan 2024 - Jul 2026), the staggered switch to temporary accounts moved the 48-hour revert rate of logged-out edits by +2.0 points [-2.9, +5.3] (+7.2%; H1 >= +10% inconclusive), no more than the design's own seasonal bias (in-time placebo +2.7 points). Seasonally adjusted (exploratory): +0.1% [-17.8%, +11.0%]. Registered editors, logged-out volume and account creation show no clear change; later waves lean on Russian Wikipedia as the only control.",
+   "verdict_tag": "Inconclusive",
+   "verdict_note": "No detectable change in the 48-hour revert rate of logged-out edits; the estimate is no larger than the design's own seasonal bias, and changes of 10-20% either way are not ruled out."
   },
   {
    "id": "comp-social-science-ai-edit-survival",

@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Temporary Accounts and Vandalism</title>
+<meta name="description" content="Are heat records being broken by growing margins? A preregistered test of record-shattering heat in 2,013 long-running weather stations, 1951-2025.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Computational social science</div>
+  <h1>Did hiding IP addresses change Wikipedia vandalism?</h1>
+  <p class="subtitle">A preregistered staggered difference-in-differences study of the switch to temporary accounts on 40 Wikipedias, 2024–2026</p>
+  <div class="meta">
+    <span>Draft · 2026-10-01 · revised after independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/comp-social-science-temp-accounts-vandalism/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/comp-social-science-temp-accounts-vandalism/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/comp-social-science-temp-accounts-vandalism/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Logged-out 48 h revert rate</div><div class="tile-value">+2.0 pts</div><div class="tile-note">[−2.9, +5.3]; +7.2% relative. H1 (≥ +10%) inconclusive</div></div><div class="tile"><div class="tile-label">Same design, a year with no switch</div><div class="tile-value">+2.7 pts</div><div class="tile-note">in-time placebo: seasonality alone produces this much</div></div><div class="tile"><div class="tile-label">Seasonally adjusted (exploratory)</div><div class="tile-value">+0.1%</div><div class="tile-note">[−17.8%, +11.0%]: essentially zero</div></div><div class="tile"><div class="tile-label">Registered editors (placebo)</div><div class="tile-value">−0.3 pts</div><div class="tile-note">[−0.7, +0.2]: no clear change</div></div><div class="tile"><div class="tile-label">Logged-out edit volume</div><div class="tile-value">−3.0%</div><div class="tile-note">[−9.3%, +7.3%]</div></div><div class="tile"><div class="tile-label">Verdict on H1 (≥ +10%)</div><div class="tile-value text">inconclusive</div><div class="tile-note">no change larger than the design&#x27;s own seasonal bias; 35.4 M logged-out edits, 40 wikis</div></div></section>
+<main>
+<h2>In plain terms</h2>
+<p>Anyone can edit Wikipedia without an account. Until recently, such edits were publicly signed with the editor's IP
+address, which can reveal roughly where they are. Between November 2024 and March 2026, Wikipedia replaced this with
+"temporary accounts": an automatic name, with the IP visible only to trusted volunteers. Critics worried that more
+anonymity would invite more vandalism.</p>
+<p>The switch happened on different wikis at different times, which makes a natural experiment. We compared how often
+logged-out edits were undone within 48 hours (a common sign of vandalism) before and after each wiki switched, against
+wikis that had not switched yet. We used 35 million logged-out edits on 40 large Wikipedias, and wrote down the plan
+before looking at any data.</p>
+<p>What we found:</p>
+<ul>
+<li><strong>No detectable change in vandalism.</strong> The raw comparison suggests a rise of 2 percentage points (from about 28%).
+  But running the same comparison on a year when nobody switched gives a similar "rise" of almost 3 points. Vandalism
+  dips every summer when schools are out, and that pattern fools the comparison.</li>
+<li><strong>Once that summer pattern is removed, the change is essentially zero.</strong> Changes of more than about 10–20% either way
+  remain possible.</li>
+<li><strong>Registered editors showed no clear change, and the amount of logged-out editing did not detectably fall.</strong></li>
+</ul>
+<p>So the switch to temporary accounts did not cause a detectable wave of vandalism on these Wikipedias. A precise answer
+needs more time after the switch.</p>
+<h2>Abstract</h2>
+<p><strong>Question.</strong> Does reducing the public exposure of anonymous editors' identities increase vandalism? Wikimedia's
+replacement of IP-address attribution with temporary accounts, rolled out in waves, is a staggered natural
+experiment. Wikimedia's monitoring reported no concerning trend; no causal estimate was found.</p>
+<p><strong>Design</strong> (preregistered, <code>plan.md</code>, committed before any edit data were downloaded).</p>
+<ul>
+<li><strong>Wikis.</strong> The 40 Wikipedias with the most anonymous content edits in 2024.</li>
+<li><strong>Data.</strong> <code>mediawiki_history</code> dumps: 35.4 M logged-out and 184 M registered content edits, January 2024 to July
+  2026.</li>
+<li><strong>Switch dates.</strong> Inferred from the data; English Wikipedia's matches its documented date.</li>
+<li><strong>Primary outcome.</strong> The share of logged-out content edits identity-reverted within 48 hours.</li>
+<li><strong>Estimator.</strong> Callaway–Sant'Anna difference-in-differences with not-yet-treated controls, months +1 to +6, with a
+  cluster bootstrap over wikis.</li>
+<li><strong>After independent review:</strong></li>
+<li>an in-time placebo;</li>
+<li>a size check of the pre-trend tests;</li>
+<li>a corrected seasonal adjustment;</li>
+<li>a fix that excludes cross-wiki imported revisions.</li>
+</ul>
+<p><strong>Results.</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Analysis</th>
+<th>Estimate [95%]</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H1: logged-out 48 h revert rate (≥ +10% predicted)</td>
+<td>+2.0 points [−2.9, +5.3]; +7.2% [−10.3%, +18.9%]</td>
+<td><strong>inconclusive</strong></td>
+</tr>
+<tr>
+<td>In-time placebo: same design, a year with no switch</td>
+<td>+2.7 points [−0.2, +5.7]; +9.4%</td>
+<td>the design's own bias</td>
+</tr>
+<tr>
+<td>Exploratory: seasonally adjusted (year over year)</td>
+<td>+0.04 points [−4.8, +3.0]; +0.1% [−17.8%, +11.0%]</td>
+<td>essentially zero</td>
+</tr>
+<tr>
+<td>Placebo: registered editors</td>
+<td>−0.28 points [−0.73, +0.16]; −10.9% [−27.9%, +6.4%]</td>
+<td>no change</td>
+</tr>
+<tr>
+<td>Logged-out edit volume</td>
+<td>−3.0% [−9.3%, +7.3%]</td>
+<td>no change</td>
+</tr>
+<tr>
+<td>New self-created accounts</td>
+<td>+10.6% [+1.3%, +20.7%]</td>
+<td>pre-switch months equally high: no evidence of change</td>
+</tr>
+<tr>
+<td>Robustness (windows, weights, waves left out, without enwiki)</td>
+<td>+2.1% to +9.9%</td>
+<td>all inconclusive</td>
+</tr>
+<tr>
+<td>Two-way fixed effects</td>
+<td>+1.3 points [−1.2, +4.1]</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Conclusion.</strong> The switch to temporary accounts produced no detectable change in vandalism as measured by fast
+reverts. The primary estimate is about the size of the design's seasonal bias, and the seasonally adjusted estimate is
+essentially zero. Changes of about 10–20% in either direction cannot be ruled out.</p>
+<h2>1. Background and the gap</h2>
+<ul>
+<li><strong>The policy.</strong> Logged-out edits were attributed publicly to their IP address until Wikimedia introduced temporary
+  accounts. The IP is now visible only to administrators and approved viewers.</li>
+<li><strong>The debate.</strong> Whether exposure deters vandalism is a long-running question in peer-production research. Examples:</li>
+<li>contributions to Wikipedia through Tor (Tran et al. 2020);</li>
+<li>the Portuguese Wikipedia's 2020 restriction of IP editing (Wikimedia Research).</li>
+<li><strong>The gap.</strong> Wikimedia's Trust and Safety team reported "no concerning trends like relatively more reverted edits"
+  in December 2025. That is monitoring, not a causal estimate. No study using the staggered rollout was found.</li>
+</ul>
+<h2>2. Data</h2>
+<ul>
+<li><strong>Edits.</strong> Wikimedia <code>mediawiki_history</code> dumps, snapshot 2026-08, 128 files from the ftp.acc.umu.se mirror, each
+  integrity-checked (<code>deviations.md</code> D3).</li>
+<li><strong>Extraction</strong> (<code>code/extract.awk</code>). Content-namespace revision-create events from 2024 onward, excluding:</li>
+<li>revisions deleted with their page;</li>
+<li>cross-wiki imported revisions, which the dumps mark as anonymous (D5).</li>
+<li><strong>Groups:</strong></li>
+<li><strong>Logged-out:</strong> IP or temporary account.</li>
+<li><strong>Registered:</strong> a permanent account with no bot flag.</li>
+<li><strong>Reverts:</strong> identity reverts within 24 and 48 hours.</li>
+<li><strong>Check.</strong> Before cross-wiki imports were excluded, enwiki's January 2024 logged-out content edits (608,902)
+  matched Wikimedia's Analytics figure exactly. After the exclusion the count is 608,878.</li>
+<li><strong>Wikis.</strong> The 40 with the most anonymous content edits in 2024, from the Wikimedia Analytics API (D2). They run from
+  English (6.8 M) to Croatian (17,000). Portuguese Wikipedia is absent: it has restricted IP editing since 2020.</li>
+<li><strong>Switch dates</strong> (Figure F1). The first day temporary accounts made up at least 1% of logged-out edits. Adoption is
+  sharp: no temporary-account edits the day before, and 100% within a day or two. Five waves:</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Wave</th>
+<th>Wikis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5 November 2024</td>
+<td>5 wikis</td>
+</tr>
+<tr>
+<td>17–30 June 2025</td>
+<td>17 wikis</td>
+</tr>
+<tr>
+<td>2–23 September 2025</td>
+<td>14 wikis</td>
+</tr>
+<tr>
+<td>4–12 November 2025</td>
+<td>English, Spanish, Hungarian</td>
+</tr>
+<tr>
+<td>25 March 2026</td>
+<td>Russian</td>
+</tr>
+</tbody>
+</table></div>
+<figure><a href="results/figures/F1_rollout.png"><img src="results/figures/F1_rollout.png" alt="F1"></a><figcaption>F1. The staggered switch from IP addresses to temporary accounts, as seen in the edit data. Left: the first day on which temporary accounts made up at least 1% of each wiki&#x27;s logged-out content edits (the treatment date). Right: the monthly share of logged-out edits made from temporary accounts, one line per wiki.</figcaption></figure>
+<h2>3. Methods</h2>
+<ul>
+<li><strong>Panel.</strong> Wiki × calendar month, January 2024 to July 2026, the last month with a complete 48-hour revert window
+  (D5). The switch month is dropped.</li>
+<li><strong>Estimator</strong> (Callaway &amp; Sant'Anna 2021).</li>
+<li>For each wave and month: the change since the month before the switch, minus the same change in wikis that had not
+    yet switched.</li>
+<li>These are averaged over waves (weighted by number of wikis) at months −12 to +6.</li>
+<li>The headline averages months +1 to +6.</li>
+<li><strong>Intervals.</strong> 2,000 cluster-bootstrap draws over wikis.</li>
+<li><strong>Decision rule (H1).</strong> Supported if the relative effect is at least +10% with lower bound &gt; 0. Contradicted if the
+  upper bound &lt; +10%. Otherwise inconclusive.</li>
+<li><strong>Validation of the estimator</strong> (<code>code/validate_estimator.py</code>). On synthetic data with a known +2-point effect and
+  staggered waves, it recovers +2.00 [1.82, 2.20] with leads near zero.</li>
+<li><strong>Checks added after review</strong> (D5).</li>
+<li><strong>In-time placebo:</strong> the 2025–26 waves' dates moved back a year, on data from before any of them switched.</li>
+<li><strong>Size check:</strong> how often each pre-trend test rejects when there is no treatment.</li>
+</ul>
+<h2>4. Results</h2>
+<h3>4.1 The revert rate of logged-out edits</h3>
+<p>Before switching, 27.7% of logged-out content edits were reverted within 48 hours (registered: 2.6%). After the
+switch, the estimated change is <strong>+2.0 percentage points [−2.9, +5.3]</strong>: a relative change of +7.2% [−10.3%, +18.9%]
+(Figure F2). By wave:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Wave</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>November 2024</td>
+<td>−2.3 points</td>
+</tr>
+<tr>
+<td>June 2025</td>
+<td>+2.2 points</td>
+</tr>
+<tr>
+<td>September 2025</td>
+<td>+3.5 points</td>
+</tr>
+<tr>
+<td>November 2025</td>
+<td>+2.1 points</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>H1 is inconclusive under the preregistered rule.</strong></p>
+<figure><a href="results/figures/F2_eventstudy.png"><img src="results/figures/F2_eventstudy.png" alt="F2"></a><figcaption>F2. Event study: change in the share of edits reverted within 48 hours, months before and after each wiki switched to temporary accounts, relative to the month before the switch and to wikis that had not yet switched (Callaway-Sant&#x27;Anna estimator; shaded: 95% intervals from a bootstrap over wikis). Months before the switch test whether switching and not-yet-switched wikis were on parallel paths.</figcaption></figure>
+<h3>4.2 The design's own bias: seasonality</h3>
+<p>Logged-out revert rates follow a strong yearly cycle. On wikis that had not yet switched, they run at 28–30% for
+most of the year and fall to 20–24% in July and August, in both 2024 and 2025, plausibly when schools are on
+holiday. The largest wave switched in late June 2025.</p>
+<ul>
+<li><strong>In-time placebo.</strong> The same estimator applied to 2024, with every 2025–26 wave's date moved back exactly a year,
+  "finds" <strong>+2.7 points [−0.2, +5.7]</strong> (+9.4%). Nothing had changed then. The registered placebo is −0.06 points.</li>
+<li>The primary estimate (+2.0) is therefore no larger than what the design produces from seasonality alone.</li>
+<li><strong>Seasonal adjustment</strong> (exploratory). Comparing each month with the same month a year earlier removes each wiki's
+  own cycle. It gives <strong>+0.1% [−17.8%, +11.0%]</strong>: no change.</li>
+<li><strong>Pre-trends.</strong> The preregistered joint test over 11 leads rejects (p &lt; 0.001). But on no-treatment data with
+  randomly reassigned dates it rejects 96% of the time at the 5% level, so it carries no information here.</li>
+<li>A 5-lead test (−6 to −2) rejects 13% of the time under no treatment (nominal 5%), and gives p = 0.21 on the real
+    data.</li>
+<li>The leads themselves (Figure F2) drift by about ±2 points with the seasons.</li>
+</ul>
+<h3>4.3 Robustness, placebo and secondary outcomes</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Variant</th>
+<th>Relative change in the logged-out revert rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>24-hour window</td>
+<td>+6.8%</td>
+</tr>
+<tr>
+<td>Edits instead of wikis as weights</td>
+<td>+7.0% [−8.7%, +20.6%]</td>
+</tr>
+<tr>
+<td>Without English Wikipedia</td>
+<td>+8.0%</td>
+</tr>
+<tr>
+<td>Leaving out each of the first four waves in turn</td>
+<td>+5.2% to +9.9%</td>
+</tr>
+<tr>
+<td>Without Russian Wikipedia</td>
+<td>+2.1%</td>
+</tr>
+<tr>
+<td>Two-way fixed effects</td>
+<td>+1.3 points [−1.2, +4.1]</td>
+</tr>
+</tbody>
+</table></div>
+<p>All are inconclusive. A 10% switch threshold is identical to the primary analysis, because every wiki passes 10% on its
+first day.</p>
+<p><strong>Dependence on Russian Wikipedia.</strong> It switched last, in March 2026, so after November 2025 it is the only
+not-yet-switched control. Cells compared against it alone carry 47% of the post-switch weight. Removing it moves the
+estimate to +2.1%. The bootstrap does not capture this dependence well, so the intervals are probably too narrow.</p>
+<ul>
+<li><strong>Registered-editor placebo.</strong> −0.28 points [−0.73, +0.16], or −10.9% [−27.9%, +6.4%] relative. That is not
+  significant, but not negligible in relative terms.</li>
+<li><strong>Logged-out edit volume.</strong> −3.0% [−9.3%, +7.3%].</li>
+<li><strong>New self-created accounts.</strong> +10.6% [+1.3%, +20.7%] after the switch. But the months before the switch are just as
+  elevated relative to the month before it (Figure F3), so this reflects a dip in the base month, not a change.</li>
+</ul>
+<figure><a href="results/figures/F3_volume.png"><img src="results/figures/F3_volume.png" alt="F3"></a><figcaption>F3. Event study for logged-out edit volume and for new self-created registered accounts per month (percentage change, same estimator and intervals as F2). Account creation is about as high in the months before the switch as after it (relative to the month before the switch), so the post-switch level is not evidence of a change.</figcaption></figure>
+<h2>5. Discussion</h2>
+<p><strong>What this study establishes:</strong></p>
+<ol>
+<li><strong>No detectable change in vandalism followed the switch.</strong> Measured by the share of logged-out edits reverted within
+   48 hours, the switch produced no change larger than this design's own seasonal bias.
+   - Seasonally adjusted, the estimate is essentially zero.
+   - This is consistent with Wikimedia's own monitoring, now with a causal design and uncertainty attached.</li>
+<li><strong>Staggered designs on platform data need in-time placebos.</strong> A school-holiday cycle that coincides with a rollout
+   wave can produce an "effect" of the same size as a plausible real one. Standard joint pre-trend tests can be
+   uninformative with few, highly correlated leads.</li>
+</ol>
+<p><strong>What it does not establish:</strong></p>
+<ul>
+<li><strong>That anonymity has no effect.</strong> Changes of about 10–20% in either direction cannot be ruled out, and later waves
+  are heavily dependent on one control wiki.</li>
+<li><strong>That editor behaviour is unchanged.</strong> The revert rate mixes behaviour with moderation, and moderation changed at the
+  same time:</li>
+<li>temporary accounts persist through a cookie, so repeat vandals become linkable;</li>
+<li>abuse filters and IP blocks apply differently to them;</li>
+<li>patroller tools and machine-learning scoring were updated;</li>
+<li>Russian Wikipedia's flagged-revisions regime differs from most others.</li>
+</ul>
+<p>Any of these could move revert rates without any change in what logged-out editors do.
+- <strong>Long-run effects.</strong> Six months after the switch at most.</p>
+<h2>6. Limitations</h2>
+<ol>
+<li><strong>Seasonality and timing.</strong> The design is biased by the seasonal cycle: the in-time placebo gives +2.7 points. The
+   seasonally adjusted estimate is exploratory.</li>
+<li><strong>Few late controls.</strong> After November 2025 only Russian Wikipedia remains not yet treated. Its cells carry 47% of
+   the weight, and the intervals are probably too narrow.</li>
+<li><strong>Revert rate as a vandalism measure.</strong> Fast identity reverts capture most vandalism, but also good-faith edits that
+   were undone. Unreverted vandalism, and vandalism removed by deleting the page, are missed.</li>
+<li><strong>Data anomalies.</strong>
+   - Persian Wikipedia's logged-out volume fell sharply in January–June 2026.
+   - Croatian Wikipedia has a volume spike in November 2025.</li>
+<li><strong>Not run.</strong> The weekly aggregation, and the revert rate of first logged-out edits, which cannot be linked in the
+   dumps (D4, D5).</li>
+<li><strong>Sample.</strong> 40 Wikipedias chosen by logged-out edit volume. Portuguese Wikipedia's earlier IP ban is outside it.</li>
+</ol>
+<h2>7. Reproducibility</h2>
+<p>The code is in <code>code/</code>:</p>
+<ul>
+<li><code>select_wikis.py</code>: sample;</li>
+<li><code>fetch_dumps.sh</code>: downloads;</li>
+<li><code>extract.awk</code>, <code>extract_all.sh</code>: aggregation;</li>
+<li><code>analysis.py</code>: the estimator, bootstrap and pre-trend tests;</li>
+<li><code>robustness.sh</code>: robustness variants;</li>
+<li><code>extra_models.py</code>: two-way fixed effects and the year-over-year version;</li>
+<li><code>placebo_checks.py</code>: in-time placebo and test size;</li>
+<li><code>validate_estimator.py</code>: estimator validation;</li>
+<li><code>run_all.sh</code>: runs everything;</li>
+<li><code>make_figures.py</code>, <code>build_report_html.py</code>: presentation.</li>
+</ul>
+<p>Tables are in <code>results/tables/</code> and figures in <code>results/figures/</code>. The dumps (about 45 GB) are open and not committed.</p>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: GWOSC / Zenodo public releases. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/comp-social-science-temp-accounts-vandalism/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>
