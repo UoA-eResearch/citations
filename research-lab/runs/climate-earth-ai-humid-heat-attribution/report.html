@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Humid Heat Attribution</title>
+<meta name="description" content="Are heat records being broken by growing margins? A preregistered test of record-shattering heat in 2,013 long-running weather stations, 1951-2025.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Climate extremes</div>
+  <h1>Does the humidity assumption matter when AI attributes humid heat?</h1>
+  <p class="subtitle">Preregistered AI-forecast attribution of six 2023–2025 humid-heat extremes with ECMWF&#x27;s AIFS, under two counterfactual</p>
+  <div class="meta">
+    <span>Draft · 2026-10-01 · revised after independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/climate-earth-ai-humid-heat-attribution/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/climate-earth-ai-humid-heat-attribution/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/climate-earth-ai-humid-heat-attribution/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Attributable peak wet-bulb warming</div><div class="tile-value">≈1–1.5 °C</div><div class="tile-note">since 1850–1900 · six 2023–25 events · AIFS re-forecasts</div></div><div class="tile"><div class="tile-label">Moisture choice, forecast vs on paper</div><div class="tile-value">×1.21 vs ×4.4</div><div class="tile-note">constant-RH / temperature-only · [1.06, 1.38] pooled; ×1.05 at 2 days</div></div><div class="tile"><div class="tile-label">Sign-flip control</div><div class="tile-value text">linear</div><div class="tile-note">×1 +1.52 · ×0.5 +0.83 · ×−1 −1.49 °C (constant RH)</div></div><div class="tile"><div class="tile-label">Tracks local surface warming?</div><div class="tile-value text">no</div><div class="tile-note">member-level r = 0.01; responds to column-wide warming</div></div><div class="tile"><div class="tile-label">Forecast skill at 2 days</div><div class="tile-value">−1.75 °C</div><div class="tile-note">peaks underestimated in all six events</div></div><div class="tile"><div class="tile-label">Verdict on H1 (≥ ×1.5)</div><div class="tile-value text">contradicted</div><div class="tile-note">pooled peak metric; inconclusive at 6 days and for area means</div></div></section>
+<main>
+<p>moisture treatments*</p>
+<h2>In plain terms</h2>
+<p>Humid heat is the most dangerous kind: when air is both hot and moist, sweat stops cooling the body. Scientists measure
+it with the "wet-bulb temperature". A fast way to ask how much climate change worsened a heatwave is to re-run an AI
+weather forecast with the warming of the last 150 years removed from the starting weather, and compare.</p>
+<p>For humid heat, removing the warming forces a choice about moisture: cool the air but keep its water vapour, or also
+remove the extra moisture warmer air can hold. Applied directly to the observed weather, the second choice gives about
+four times the climate signal of the first.</p>
+<p>We re-forecast six of the most extreme humid-heat days of 2023–2025, in the Persian Gulf, South Asia and the US Gulf
+coast, under both choices, using warming estimates from six climate models.</p>
+<p>What we found:</p>
+<ul>
+<li><strong>The forecasts respond to the warming in proportion.</strong> Removing it lowers the peak wet-bulb temperature by about
+  1–1.5 °C. Adding it instead raises it by a similar amount, so this is a real response, not an artefact.</li>
+<li><strong>Inside the forecast, the moisture choice matters much less than on paper.</strong> Two days ahead the two choices give
+  almost the same answer. Four to six days ahead, the moisture-removing choice gives about 25–55% more.</li>
+<li><strong>The forecast responds to the warming of the whole atmosphere, not the local surface.</strong> Even where a climate model
+  says the local surface cooled, the forecast shows the same drop.</li>
+<li><strong>The AI forecasts underestimate the very hottest values</strong>, by about 1.75 °C two days ahead.</li>
+</ul>
+<p>So AI-forecast attribution of humid heat is less sensitive to this moisture choice than a direct calculation suggests,
+especially at short lead times. Its absolute peaks, and its response to local warming, need care.</p>
+<h2>Abstract</h2>
+<p><strong>Question.</strong> Counterfactual "storyline" attribution with AI weather models has been shown for dry heatwaves. For humid
+heat the counterfactual must also remove moisture. Holding specific humidity fixed (temperature only) and holding
+relative humidity fixed (Clausius–Clapeyron) give very different counterfactual wet-bulb temperatures (TW). The lead
+predicted that the moisture-scaled treatment yields at least 50% more attributable TW warming in the forecast.</p>
+<p><strong>Design</strong> (preregistered, <code>plan.md</code>, committed before any event was selected or forecast run).</p>
+<ul>
+<li><strong>Events.</strong> Six humid-heat extremes selected by rule from ERA5 (two per region, 2023–2025).</li>
+<li><strong>Model.</strong> ECMWF's AIFS Single v1.0, the open AI model that forecasts 2 m dewpoint.</li>
+<li><strong>Forecasts.</strong> Started 2, 4 and 6 days ahead, in a factual world and two counterfactuals:</li>
+<li>A: temperature only;</li>
+<li>B: constant relative humidity.</li>
+<li><strong>Warming signals.</strong> Six CMIP6 models (2014–2033 minus 1850–1900).</li>
+<li><strong>Total.</strong> 234 forecasts.</li>
+<li><strong>Control after review.</strong> The signal was also scaled by −1 and 0.5 (48 forecasts).</li>
+</ul>
+<p><strong>Results.</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Analysis</th>
+<th>Result</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H1: R = ΔTW_B / ΔTW_A ≥ 1.5, event-peak TW, all leads pooled</td>
+<td>1.21 [1.06, 1.38]</td>
+<td>contradicted (preregistered rule)</td>
+</tr>
+<tr>
+<td>R by lead (2, 4, 6 days)</td>
+<td>1.05 [0.85, 1.22]; 1.25 [1.07, 1.49]; 1.32 [1.01, 1.66]</td>
+<td>lead 6 inconclusive</td>
+</tr>
+<tr>
+<td>R for area-mean TW, pooled</td>
+<td>1.40 [1.05, 1.76]</td>
+<td>inconclusive</td>
+</tr>
+<tr>
+<td>R without a forecast (thermodynamic expectation)</td>
+<td>4.37</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Control: change when the signal is scaled ×1 / ×0.5 / ×−1 (B)</td>
+<td>+1.52 / +0.83 / −1.49 °C</td>
+<td>real, roughly linear</td>
+</tr>
+<tr>
+<td>Member-level tracking: corr(forecast ΔTW_B, local static ΔTW_B)</td>
+<td>0.01</td>
+<td>not local</td>
+</tr>
+<tr>
+<td>H2: forecast / static ΔTW_B at 2 days</td>
+<td>0.99 [0.63, 1.68]; per member median 0.80</td>
+<td>inconclusive</td>
+</tr>
+<tr>
+<td>V1: factual peak-TW error at 2 days</td>
+<td>−1.75 °C mean (all six low)</td>
+<td>not limited by skill under the rule</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Conclusion.</strong> AIFS responds in proportion to an imposed warming signal: removing it gives about 1–1.5 °C less
+peak TW, and adding it about as much more. The contested moisture treatment changes the answer by about 5% at a
+2-day lead and 25–30% at 4–6 days (up to 55% for area means), far less than its fourfold static effect. Two caveats:</p>
+<ul>
+<li>AIFS responds to the column-wide signal rather than the local surface change.</li>
+<li>The temperature-only counterfactual starts partly saturated, which the model then sheds.</li>
+</ul>
+<h2>1. Background and the gap</h2>
+<ul>
+<li><strong>Forecast-based attribution.</strong> Physics-based forecast attribution of heatwaves (Leach et al. 2021, PNAS; 2024,
+  Nature Communications) has been extended to AI weather models (Jiménez-Esteve et al. 2025, "AI-driven weather
+  forecasts to accelerate climate change attribution of heatwaves", Earth's Future). Those studies treat dry-bulb
+  temperature.</li>
+<li><strong>Why humid heat is different.</strong> Wet-bulb temperature sets the physiological limit of heat stress (Sherwood &amp; Huber
+  2010, PNAS; Raymond et al. 2020, Science Advances; Vecellio et al. 2022). Statistical rapid attribution of humid heat
+  exists ("Multi-method rapid attribution shows climate change is worsening humid heat", Environmental Research Letters
+  2026).</li>
+<li>Most AI weather models have no surface humidity variable; AIFS Single v1.0 has one.</li>
+<li>The counterfactual moisture treatment is contested. Warming has raised atmospheric moisture roughly at constant
+    relative humidity over oceans, and less than that over many land regions.</li>
+<li><strong>The gap.</strong> No AI-forecast attribution of wet-bulb extremes, and no test of how the moisture treatment changes it,
+  was found.</li>
+</ul>
+<h2>2. Data and events</h2>
+<ul>
+<li><strong>ERA5.</strong> The ARCO-ERA5 public archive, 0.25°.</li>
+<li><strong>Events.</strong> Selected by the preregistered rule: the regional maximum of 2 m TW at 06, 12 and 18 UTC
+  (<code>results/tables/events.csv</code>).</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Event</th>
+<th>Region</th>
+<th>Date</th>
+<th>ERA5 peak TW</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E1</td>
+<td>Persian Gulf</td>
+<td>2024-06-22</td>
+<td>33.8 °C (over the Gulf)</td>
+</tr>
+<tr>
+<td>E2</td>
+<td>Persian Gulf</td>
+<td>2025-08-07</td>
+<td>33.2 °C (over the Gulf)</td>
+</tr>
+<tr>
+<td>E3</td>
+<td>South Asia</td>
+<td>2024-05-23</td>
+<td>32.9 °C (see note)</td>
+</tr>
+<tr>
+<td>E4</td>
+<td>South Asia</td>
+<td>2023-05-21</td>
+<td>31.8 °C</td>
+</tr>
+<tr>
+<td>E5</td>
+<td>US Gulf coast</td>
+<td>2023-08-12</td>
+<td>30.2 °C</td>
+</tr>
+<tr>
+<td>E6</td>
+<td>US Gulf coast</td>
+<td>2024-07-02</td>
+<td>29.3 °C</td>
+</tr>
+</tbody>
+</table></div>
+<p>E3's peak (22.3°N, 76.7°E) is a two-point dewpoint anomaly at the Indira Sagar reservoir: 29.4 °C against 21.7 °C at
+its neighbours. It is likely an ERA5 inland-water artefact. The rule selected it, so it is kept and flagged. Leaving it
+out gives R = 1.17.</p>
+<ul>
+<li><strong>CMIP6.</strong> Six models, the first six alphabetically with the needed variables: ACCESS-CM2, AWI-CM-1-1-MR, BCC-CSM2-MR,
+  CAS-ESM2-0, CESM2-WACCM and CIESM. Signals come from the Pangeo public archive.</li>
+<li>The signals warm the free troposphere by 1.5–2.3 K, so the counterfactual is cooler there. They cool the
+    stratosphere at 50 hPa by 1.5–2.2 K, as expected, so the counterfactual is warmer there.</li>
+<li>For May in South Asia, CESM2-WACCM's local surface signal is negative (aerosol cooling), and so is AWI-CM-1-1-MR's
+    for some events. Their counterfactual is warmer and moister at the surface there.</li>
+</ul>
+<h2>3. Methods</h2>
+<p><strong>Forecasts.</strong></p>
+<ul>
+<li>AIFS Single v1.0 (CC BY 4.0), through anemoi-inference 0.4.9 on an A100.</li>
+<li>Initial conditions: ERA5 on event day − 2, 4 or 6 days, regridded to the model's N320 grid. Each forecast runs to
+  18 UTC on the event day.</li>
+</ul>
+<p><strong>Counterfactuals.</strong> Warming signal ΔT per CMIP6 model, for the event month, 2014–2033 minus 1850–1900.</p>
+<ul>
+<li><strong>A, temperature only:</strong> ΔT subtracted from air temperature at all 13 levels, 2 m, skin and soil temperatures, with
+  specific humidity and 2 m dewpoint unchanged.</li>
+<li>Where cooling would push the air past saturation, humidity is capped at saturation.</li>
+<li>That happens often: in the starting states, 11–17% of points at 850–925 hPa end up saturated, against about 1% in
+    ERA5.</li>
+<li>In E3 it also affects 8% of 2 m points in the region.</li>
+<li>World A therefore starts with patches of saturated, cloud-free air.</li>
+<li><strong>B, constant relative humidity:</strong> as A, but humidity at every level and the 2 m dewpoint are reduced to keep
+  relative humidity unchanged.</li>
+<li><strong>Both:</strong> geopotential is adjusted hydrostatically.</li>
+</ul>
+<p><strong>Quantities.</strong></p>
+<ul>
+<li>2 m TW, from the psychrometric equation.</li>
+<li><strong>Event-peak TW:</strong> the regional maximum on the event day.</li>
+<li><strong>Attributable change:</strong> factual minus counterfactual.</li>
+<li><strong>Static change:</strong> the surface part of the same changes applied to ERA5 event-day fields, with no forecast. Its
+  ratio (4.37) is simply the thermodynamic expectation: TW rises 0.21 K per K of warming at fixed vapour pressure,
+  and 0.93 K per K at fixed relative humidity.</li>
+</ul>
+<p><strong>Statistics and validation.</strong></p>
+<ul>
+<li><strong>H1 interval:</strong> a two-level bootstrap, over events then members. Resampling the six climate models as clusters
+  instead gives a narrower interval.</li>
+<li><strong>V1:</strong> forecast skill.</li>
+<li><strong>V2:</strong> whether the signal survives the forecast; this uses a cos-latitude-weighted global mean.</li>
+<li><strong>V3:</strong> a zero-change counterfactual reproduces the factual initial state exactly. Repeated forecasts differ by at
+  most 0.02 °C, because GPU inference is not bit-reproducible.</li>
+</ul>
+<p><strong>Control after review</strong> (<code>deviations.md</code> D4). The warming signal was scaled by −1 (warming added) and 0.5, for E1 and
+E5 at a 2-day lead.</p>
+<p><strong>GPU windows.</strong> The shared language-model server was stopped for three windows (75, 4.5 and 11 minutes) and
+restarted each time.</p>
+<h2>4. Results</h2>
+<h3>4.1 The forecasts capture the events but miss the very top</h3>
+<p>At two days ahead, the factual forecasts underestimate event-peak TW in all six events: by 1.0–2.6 °C, 1.75 °C on
+average (Figure F1). Two events (E1, E4) miss by more than 2 °C. Regional land-mean TW is close (−0.3 °C on average).</p>
+<p>E3's miss partly reflects the ERA5 artefact, which AIFS does not reproduce.</p>
+<figure><a href="results/figures/F1_skill.png"><img src="results/figures/F1_skill.png" alt="F1"></a><figcaption>F1. How well the factual AIFS forecasts reproduce each event: forecast minus ERA5 event-peak 2 m wet-bulb temperature (regional maximum on the event day), by lead time.</figcaption></figure>
+<h3>4.2 The response is real and roughly linear</h3>
+<p>Scaling the warming signal changes the event-peak TW in proportion (Figure F5):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>×1 (removed)</th>
+<th>×0.5</th>
+<th>×−1 (added)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Temperature only (A)</td>
+<td>+1.25 °C</td>
+<td>+0.65 °C</td>
+<td>−1.12 °C</td>
+</tr>
+<tr>
+<td>Constant relative humidity (B)</td>
+<td>+1.52 °C</td>
+<td>+0.83 °C</td>
+<td>−1.49 °C</td>
+</tr>
+</tbody>
+</table></div>
+<p>The change flips sign when the signal does. Only a small part (0.02–0.07 °C) keeps its sign regardless, so the ~1 °C
+attributable change is a response to the imposed warming, not to the act of disturbing the starting state.</p>
+<figure><a href="results/figures/F5_linearity.png"><img src="results/figures/F5_linearity.png" alt="F5"></a><figcaption>F5. Control: does the forecast respond to the imposed signal, or to any disturbance of the starting state? For two events (E1, E5) at a 2-day lead, the warming signal was scaled by 1 (removed, as in the main runs), 0.5, and -1 (added instead). Dots: the six CMIP6 signals; lines: their means. The change flips sign and scales roughly in proportion, so it is a real response to the signal, with only a small component that keeps its sign.</figcaption></figure>
+<h3>4.3 The moisture assumption matters much less inside the forecast (H1)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Temperature only (A)</th>
+<th>Constant RH (B)</th>
+<th>Ratio B / A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Static (no forecast)</td>
+<td>0.26 °C</td>
+<td>1.12 °C</td>
+<td>4.37</td>
+</tr>
+<tr>
+<td>Forecast, 2 days ahead</td>
+<td>1.06 °C</td>
+<td>1.11 °C</td>
+<td>1.05 [0.85, 1.22]</td>
+</tr>
+<tr>
+<td>Forecast, 4 days ahead</td>
+<td>1.05 °C</td>
+<td>1.31 °C</td>
+<td>1.25 [1.07, 1.49]</td>
+</tr>
+<tr>
+<td>Forecast, 6 days ahead</td>
+<td>1.07 °C</td>
+<td>1.41 °C</td>
+<td>1.32 [1.01, 1.66]</td>
+</tr>
+<tr>
+<td>All leads pooled (H1)</td>
+<td></td>
+<td></td>
+<td><strong>1.21 [1.06, 1.38]</strong></td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>H1 is contradicted under the preregistered pooled rule</strong> (upper bound below 1.5).</li>
+<li>The difference grows with lead time: the lead-6 result alone is inconclusive.</li>
+<li>For area-mean TW the ratios are larger: 1.40 [1.05, 1.76] pooled, and 1.55 [1.30, 1.84] at 6 days.</li>
+<li><strong>Robustness.</strong> Leaving out any one event gives 1.16–1.27.</li>
+</ul>
+<figure><a href="results/figures/F2_attribution.png"><img src="results/figures/F2_attribution.png" alt="F2"></a><figcaption>F2. How much warmer the event-peak wet-bulb temperature is in the factual forecast than in a counterfactual forecast without the warming since 1850-1900, at a 2-day lead: dots are means over the six CMIP6 warming signals, bars their range. Orange: warming removed from temperature only (specific humidity unchanged); blue: relative humidity held fixed, so moisture is removed too. Pale colours: the same changes applied to the ERA5 event-day fields with no forecast (static).</figcaption></figure>
+<figure><a href="results/figures/F3_lead.png"><img src="results/figures/F3_lead.png" alt="F3"></a><figcaption>F3. Left: mean attributable change in event-peak wet-bulb temperature by lead time, for the two moisture treatments (solid), against the static values (dotted). Right: the ratio of the two (H1), with the static ratio and the preregistered threshold of 1.5.</figcaption></figure>
+<h3>4.4 What drives the forecast response</h3>
+<ul>
+<li><strong>It is not the local surface signal.</strong> Across members, the forecast change is uncorrelated with the static change
+  computed from each model's local surface warming (r = 0.01).</li>
+<li>In 9 members whose local surface signal is negative (CESM2-WACCM and AWI-CM-1-1-MR over South Asia in May), the
+    forecast still gives +0.5 to +2.6 °C.</li>
+<li>Per member, the forecast/static ratio at 2 days has a median of 0.80, with an interquartile range of 0.55–1.25.</li>
+<li>The aggregate H2 ratio of 0.99 hides this scatter.</li>
+<li>AIFS evidently responds to the column-wide, regional-scale warming, which is similar across models, more than to
+    the local surface change.</li>
+<li><strong>World A is not a stable state.</strong> By the event day, land 2 m dewpoint in world A has fallen relative to the factual
+  forecast. The fall varies by event, 0.8–2.3 °C against a temperature drop of 0.8–1.4 °C. Part of that is the model
+  shedding the moisture the cap left at saturation.</li>
+<li><strong>World B over-dries.</strong> Dewpoint mostly falls more than temperature in B, so the model ends drier than
+  constant-relative-humidity scaling would imply.</li>
+<li><strong>The signal persists.</strong> About 99.5% of the imposed global-mean cooling survives to the end of the forecasts
+  (Figure F4).</li>
+</ul>
+<figure><a href="results/figures/F4_drift.png"><img src="results/figures/F4_drift.png" alt="F4"></a><figcaption>F4. Does the AI model keep the imposed warming signal? Global-mean (cos-latitude weighted) 2 m temperature difference between the factual and constant-relative-humidity counterfactual forecasts at the end of each forecast, against the global-mean signal imposed at the start (dotted: kept in full).</figcaption></figure>
+<h2>5. Discussion</h2>
+<p><strong>What this study establishes:</strong></p>
+<ol>
+<li><strong>AIFS gives a real, roughly linear attribution response for humid heat.</strong> About 1–1.5 °C of event-peak wet-bulb
+   temperature is attributable to warming since 1850–1900 for these six events, and the response flips sign with the
+   signal.</li>
+<li><strong>The moisture treatment matters much less in the forecast than statically.</strong>
+   - At a 2-day lead the two treatments agree to within about 5%.
+   - At 4–6 days they differ by 25–32% for peaks and up to 55% for area means.
+   - Statically they differ fourfold.
+   - So the choice matters most at longer leads and for regional means, and the lead's ≥50% prediction is contradicted
+     only for the pooled peak metric.</li>
+<li><strong>A static (no-forecast) temperature-only calculation would understate attributable humid heat about fourfold.</strong></li>
+</ol>
+<p><strong>What it does not establish:</strong></p>
+<ul>
+<li><strong>That AIFS's response is physically right.</strong> It does not follow each climate model's local surface signal. It
+  over-dries the constant-RH world. Its temperature-only world starts partly saturated. Whether a physics-based model
+  responds the same way was not tested.</li>
+<li><strong>Generality.</strong> Six events, one of them probably a reanalysis artefact; one AI model; six CMIP6 models.</li>
+<li><strong>Probabilities.</strong> This is a storyline (conditional) attribution of intensity, not of likelihood.</li>
+</ul>
+<h2>6. Limitations</h2>
+<ol>
+<li><strong>Forecast skill.</strong> Peaks are underestimated by 1.75 °C on average at 2 days.</li>
+<li><strong>Deterministic model.</strong> Members are CMIP6 signals and lead times, not initial-condition ensembles.</li>
+<li><strong>Counterfactual construction.</strong>
+   - Monthly-mean CMIP6 signals.
+   - No change in circulation, soil moisture, or surface and sea-level pressure.
+   - World A capped at saturation.</li>
+<li><strong>E3.</strong> Likely an ERA5 inland-water artefact.</li>
+<li><strong>Linearity control.</strong> Only two events at one lead.</li>
+<li><strong>Nondeterminism.</strong> Quantified and negligible.</li>
+</ol>
+<h2>7. Reproducibility</h2>
+<p>The code is in <code>code/</code>:</p>
+<ul>
+<li><code>select_events.py</code>: event selection;</li>
+<li><code>cmip6_deltas.py</code>: warming signals;</li>
+<li><code>build_ic.py</code>: initial conditions;</li>
+<li><code>perturb.py</code>: counterfactuals;</li>
+<li><code>run_forecasts.py</code>, <code>gpu_window.sh</code>: the forecasts;</li>
+<li><code>noise_check.py</code>: the nondeterminism check;</li>
+<li><code>control_scale.py</code>: the linearity control;</li>
+<li><code>analyze.py</code>: the analysis;</li>
+<li><code>review_checks.py</code>: checks requested by the independent review;</li>
+<li><code>wetbulb.py</code>: wet-bulb temperature;</li>
+<li><code>make_figures.py</code>, <code>build_report_html.py</code>: presentation.</li>
+</ul>
+<p>Tables are in <code>results/tables/</code> and figures in <code>results/figures/</code>. Data are open; initial conditions and forecasts (about
+8 GB) are not committed.</p>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: GWOSC / Zenodo public releases. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/climate-earth-ai-humid-heat-attribution/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+check,value
+"corr(forecast dB_peak, static dB_peak) over members",0.010440991624120419
+"corr(forecast dA_peak, static dA_peak) over members",0.11060222437036915
+per-member forecast/static dB at lead 2: median [IQR],"0.80 [0.55, 1.25]; negative 4 of 36"
+members whose static dB is negative (counterfactual hotter/moister): forecast dB range,"9 members; forecast dB 0.50 to 2.64; models ['AWI-CM-1-1-MR', 'CESM2-WACCM']"
+"E1 t0 1000 hPa: share of above-ground points saturated (RH>=0.999), F / A",0.003 / 0.079
+"E1 t0 925 hPa: share of above-ground points saturated (RH>=0.999), F / A",0.011 / 0.171
+"E1 t0 850 hPa: share of above-ground points saturated (RH>=0.999), F / A",0.009 / 0.125
+"E1 t0 2 m, region: share of points at RH>=0.999, F / A",0.000 / 0.000
+"E3 t0 1000 hPa: share of above-ground points saturated (RH>=0.999), F / A",0.005 / 0.065
+"E3 t0 925 hPa: share of above-ground points saturated (RH>=0.999), F / A",0.012 / 0.169
+"E3 t0 850 hPa: share of above-ground points saturated (RH>=0.999), F / A",0.007 / 0.110
+"E3 t0 2 m, region: share of points at RH>=0.999, F / A",0.000 / 0.077
+R (peak) at lead 2,"1.05 [0.85, 1.22]"
+R (area) at lead 2,"1.39 [1.01, 1.73]"
+R (peak) at lead 4,"1.25 [1.07, 1.49]"
+R (area) at lead 4,"1.29 [0.86, 1.74]"
+R (peak) at lead 6,"1.32 [1.01, 1.66]"
+R (area) at lead 6,"1.55 [1.30, 1.84]"
+R (peak) leaving out E1,1.16
+R (peak) leaving out E2,1.27
+R (peak) leaving out E3,1.17
+R (peak) leaving out E4,1.20
+R (peak) leaving out E5,1.23
+R (peak) leaving out E6,1.23
+"R (peak), bootstrap resampling models as clusters","[1.19, 1.23]"

@@ -1105,7 +1105,10 @@
     "Write up: methods, per-event attributable TW change under both counterfactuals, formal test of the >=50% difference hypothesis, discussion of implications for PGW humid-heat attribution practice."
    ],
    "risks": "Concurrent work from the ETH/attribution groups extending their pipeline to humid heat; AI-model blurring of dewpoint fields could make TW attribution unreliable at longer leads; near-surface humidity is a weak variable in these models (GraphCast lacks 2m dewpoint, requiring lowest-pressure-level q, which weakens surface TW claims).",
-   "plain_summary": "Humid heat, where high temperature meets high humidity, is especially dangerous because sweat stops cooling the body. This study would use freely available AI weather models to re-run recent deadly humid heatwaves in a world without human-caused warming, to estimate how much climate change made them worse."
+   "plain_summary": "Humid heat (hot and moist air) is the most dangerous kind for the body. This study re-ran an AI weather forecast of six recent extreme humid-heat days with the warming of the last 150 years removed. Deep dive done: about 1-1.5 degC of the peak 'wet-bulb' heat is attributable to warming, and the contested choice of how to remove moisture matters much less inside the forecast than on paper, especially a few days ahead.",
+   "status": "deep dive \u00b7 report (revised after review)",
+   "report_url": "runs/climate-earth-ai-humid-heat-attribution/report.html",
+   "headline": "AIFS (the open AI model with 2 m dewpoint) re-forecasts of six 2023-25 humid-heat extremes respond linearly to removed CMIP6 warming (sign-flip control): ~1-1.5 degC of event-peak wet-bulb temperature attributable. The contested moisture treatment matters far less than statically: constant-RH / temperature-only R = 1.21 [1.06, 1.38] pooled (H1 >=1.5 contradicted; 1.05 at 2 days, 1.25-1.32 at 4-6 days, 1.40 for area means) vs 4.4 without a forecast. The response does not track each model's local surface signal (r = 0.01); peaks are underestimated by 1.75 degC."
   },
   {
    "id": "climate-earth-mbc-wetbulb-crossings",
