@@ -55,6 +55,11 @@ scout (done) ──► leads.json ──► human picks leads from the plot
 | `metascience-citation-context-replication` — does citing language before a replication predict its outcome? | Revised after independent review (fix-first). Preregistered classifiers failed validation and the positive control, so H1–H3 are **uninformative**; exploratory replication-failure keywords pass the control but predict only faintly before replication (AUC 0.53). | [report.html](runs/metascience-citation-context-replication/report.html) · [deviations log](runs/metascience-citation-context-replication/deviations.md) |
 | `climate-earth-ai-humid-heat-attribution` — does the counterfactual moisture treatment change AI-forecast attribution of humid heat? | Revised after independent review (fix-first) and a sign-flip control. AIFS responds linearly; ~1–1.5 °C of peak wet-bulb temperature attributable; moisture treatment R = 1.21 pooled (≥1.5 **contradicted**; larger at 4–6 days and for area means) vs 4.4 statically; the response does not track the local surface signal. | [report.html](runs/climate-earth-ai-humid-heat-attribution/report.html) · [deviations log](runs/climate-earth-ai-humid-heat-attribution/deviations.md) |
 | `comp-social-science-temp-accounts-vandalism` — did Wikipedia's switch from public IP addresses to temporary accounts increase vandalism? | Revised after independent review (fix-first) with an in-time placebo. **No detectable change**: the logged-out 48-hour revert rate moved +2.0 points [−2.9, +5.3] (H1 ≥ +10% inconclusive), no more than the design's seasonal bias (+2.7 points with dates shifted back a year); seasonally adjusted +0.1% [−17.8%, +11.0%]. | [report.html](runs/comp-social-science-temp-accounts-vandalism/report.html) · [deviations log](runs/comp-social-science-temp-accounts-vandalism/deviations.md) |
+| `extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage` — is shrinking a small fMRI study's map toward a NeuroQuery prediction worth extra subjects? | Revised after independent review. **Refuted**: empirical-Bayes shrinkage of 15-subject maps lowered spatial accuracy in all six AOMIC domains (gain < 0.67× in four, 0.76–0.81× in two; ≥ 2× predicted); an oracle-tuned blend gains at most 1.39×. Strong effects vary most between people, so voxelwise shrinkage flattens peaks; it does cut effect-size error ~70% in weak-signal tasks. | [report.html](runs/extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage/report.html) · [deviations log](runs/extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage/deviations.md) |
+
+Skipped after a novelty check: `software-security-attestation-phantom-code`. Solarin et al. (2026,
+arXiv:2608.18180) already compare 4,500 attested with 4,500 non-attested releases on PyPI and npm and recover source
+commits from the attestations, which leaves only one metric (phantom-file rates by attestation status) for a new study.
 
 Lessons from the first deep dive, to carry into the next ones (details in its deviations log, D19–D29 and D27c):
 
@@ -100,3 +105,11 @@ Lessons from the first deep dive, to carry into the next ones (details in its de
   revisions as anonymous; they were about 20% of German Wikipedia's "logged-out" edits until they were excluded.
 - **Report how much weight rests on a single control unit.** After the last big wave, one not-yet-treated wiki
   carried 47% of the post-switch weight, and a wiki-level bootstrap does not capture that dependence.
+- **Give synthetic validation data the real data's variance structure.** A shrinkage estimator passed a check with
+  equal noise everywhere, then failed on fMRI maps, where between-subject variance grows with effect size (r 0.39–0.70).
+- **Separate the machinery from the content.** A flat-prior arm showed that the false-positive inflation and most of
+  the accuracy loss came from shrinkage itself, not from the meta-analytic or mismatched maps.
+- **Report a magnitude metric alongside a pattern metric.** Spatial correlation and Dice ignore rescaling; mean
+  squared error reversed the conclusion in the two weak-signal tasks.
+- **Bound what any method could gain.** An oracle-tuned blend (≤ 1.39×) showed the prior itself was too weak, whatever
+  the estimator.

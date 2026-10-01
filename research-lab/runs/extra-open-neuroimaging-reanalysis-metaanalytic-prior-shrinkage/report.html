@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meta-Analytic Prior Shrinkage</title>
+<meta name="description" content="Are heat records being broken by growing margins? A preregistered test of record-shattering heat in 2,013 long-running weather stations, 1951-2025.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Open neuroimaging reanalysis</div>
+  <h1>Is a meta-analytic prior worth extra subjects in a small fMRI study?</h1>
+  <p class="subtitle">A preregistered test of shrinking 15-subject group maps toward NeuroQuery predictions, against held-out ground truth in six task domains</p>
+  <div class="meta">
+    <span>Draft · 2026-10-02 · revised after independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Gain from the NeuroQuery prior at n = 15</div><div class="tile-value">&lt; 0.67×</div><div class="tile-note">worse than a plain 10-subject map in 4 of 6 domains; 0.76–0.81× in the other two</div></div><div class="tile"><div class="tile-label">Verdict on H1 (≥ 2× in ≥ 5 domains)</div><div class="tile-value text">contradicted</div><div class="tile-note">0 of 6 domains; both replications agree</div></div><div class="tile"><div class="tile-label">Oracle ceiling (best uniform mix)</div><div class="tile-value">≤ 1.39×</div><div class="tile-note">four of six domains below 1.10×</div></div><div class="tile"><div class="tile-label">Prior vs real map (spatial r)</div><div class="tile-value">0.14–0.50</div><div class="tile-note">−0.26 for stop-signal</div></div><div class="tile"><div class="tile-label">Pattern cost of flat shrinkage</div><div class="tile-value text">up to −0.13 r</div><div class="tile-note">strong effects vary most between people; this link explains 59–93% of the loss</div></div><div class="tile"><div class="tile-label">Effect-size error, weak-signal tasks</div><div class="tile-value">−70%</div><div class="tile-note">mean squared error falls where a 15-subject map is mostly noise (checked after review)</div></div></section>
+<main>
+<h2>In plain terms</h2>
+<p>Brain-imaging (fMRI) studies often scan only 15–30 people, so their maps of which brain areas respond to a task are
+noisy. Tools such as NeuroQuery summarise thousands of earlier studies into a predicted map for any task. A tempting
+shortcut is to nudge a small study's noisy map toward that prediction, and the hope was that this would be worth at
+least doubling the number of people scanned.</p>
+<p>We tested this on open data from about 200 people per task, in six kinds of task: memory, emotion, attention conflict,
+faces, anticipation and stopping an action. We repeatedly drew 15 people at random, built their map with and without
+the nudge, and compared both against the map from a separate group of over 100 other people.</p>
+<p>What we found:</p>
+<ul>
+<li><strong>The nudge made the map's pattern less accurate in every task.</strong> A nudged 15-person map matched the true pattern
+  worse than an ordinary map from 12 people, and in four of the six tasks worse than one from 10. It helped get the size
+  of effects right mainly in the two tasks with the weakest signals.</li>
+<li><strong>The main cause is how the method decides what to trust.</strong> It treats variable brain areas as unreliable and pulls
+  them hardest toward the prediction. But the areas that respond most strongly to a task are also the ones that vary
+  most between people, so the method flattened the very signal that mattered.</li>
+<li><strong>Even a perfectly tuned nudge would add little.</strong> The predicted maps match the real ones only loosely, so the best
+  possible blend was worth at most about 40% more people, usually under 10%.</li>
+</ul>
+<p>So for typical tasks, these literature-based predictions are not a substitute for scanning more people.</p>
+<h2>Abstract</h2>
+<p><strong>Question.</strong> NeuroQuery predicts a brain map for any query from about 13,000 articles. Is shrinking a small study's
+group map toward such a prediction worth at least doubling the sample, as the lead hypothesised?</p>
+<p><strong>Design</strong> (preregistered, <code>plan.md</code>, committed before any model was fitted).</p>
+<ul>
+<li><strong>Data.</strong> AOMIC PIOP1 and PIOP2 (CC0), fMRIPrep-preprocessed. 1,695 first-level models; 197–220 included subjects per
+  task.</li>
+<li><strong>Domains.</strong> Six primary contrasts (working memory, emotion processing, cognitive conflict, face perception,
+  anticipation, response inhibition) and two replications.</li>
+<li><strong>Methods compared at n subjects.</strong></li>
+<li>S: the standard mean map.</li>
+<li>EB-Q: empirical-Bayes shrinkage toward the matched NeuroQuery map.</li>
+<li>EB-W: the same toward a mismatched map.</li>
+<li>EB-0: the same toward a flat prior.</li>
+<li><strong>Ground truth.</strong> The mean map of a separate set of N − 80 subjects.</li>
+<li><strong>Outcome.</strong> Mean spatial correlation with the ground truth over 500 draws, at n from 10 to 80. The gain G is the
+  sample size at which S matches a method's accuracy at n = 15, divided by 15.</li>
+</ul>
+<p><strong>Results.</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Analysis</th>
+<th>Result</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H1: EB-Q worth ≥ 2× the sample in ≥ 5 of 6 domains</td>
+<td>G &lt; 0.67 in four domains; 0.81 [0.76, 0.84] conflict; 0.76 [0.74, 0.78] stop-signal</td>
+<td><strong>contradicted</strong> (0 of 6)</td>
+</tr>
+<tr>
+<td>H2: mismatched prior does no harm</td>
+<td>r lower by 0.04–0.13 in all six domains; false positives ×1.5–3.4 in five. The harm comes from the shrinkage itself: flat shrinkage with no map does the same</td>
+<td><strong>contradicted</strong></td>
+</tr>
+<tr>
+<td>H3: matched prior beats flat shrinkage in ≥ 5 domains</td>
+<td>yes in 4 (emotion, conflict, faces, anticipation), r +0.01 to +0.05</td>
+<td>not supported</td>
+</tr>
+<tr>
+<td>Robustness: β unrestricted; other ground truth; Dice overlap</td>
+<td>the same verdicts; EB-Q below S on every pattern metric</td>
+<td>—</td>
+</tr>
+<tr>
+<td>After review: mean squared error (effect size, not pattern)</td>
+<td>EB-Q / S 0.31 conflict, 0.33 anticipation, 0.96 stop-signal; 1.08–1.63 elsewhere</td>
+<td>shrinkage helps magnitude only where the signal is weak</td>
+</tr>
+<tr>
+<td>Exploratory E1: one shrinkage weight for all voxels</td>
+<td>G from below 0.67 to 1.07</td>
+<td>small gains at best</td>
+</tr>
+<tr>
+<td>Exploratory E2: oracle-tuned uniform mix with the prior</td>
+<td>G 1.00–1.39 (four of six below 1.10)</td>
+<td>ceiling far below 2</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Conclusion.</strong> Preregistered empirical-Bayes shrinkage toward NeuroQuery maps makes the spatial pattern of 15-subject
+group maps less accurate, not more; it reduces error in effect sizes mainly in weak-signal tasks. Even an oracle-tuned
+blend gains at most 39% in effective sample size.</p>
+<h2>1. Background and gap</h2>
+<ul>
+<li><strong>The problem.</strong> Small task-fMRI studies replicate poorly (Turner et al. 2018).</li>
+<li><strong>The tools.</strong> Meta-analytic tools encode where tasks usually activate. NeuroQuery (Dockès et al. 2020) predicts a map
+  for free-text queries.</li>
+<li><strong>Closest work.</strong> Han &amp; Park (2019, 2021) used meta-analytic information to set a prior for Bayesian second-level
+  tests: a single global prior scale, not a voxelwise map.</li>
+<li><strong>The gap.</strong> No study was found that validates voxelwise shrinkage toward predicted maps against large-sample ground
+  truth, or that asks how many subjects such a prior is worth.</li>
+</ul>
+<h2>2. Data</h2>
+<ul>
+<li><strong>Datasets.</strong> AOMIC PIOP1 (ds002785) and PIOP2 (ds002790) from OpenNeuro's public S3 bucket: fMRIPrep MNI-space
+  preprocessed BOLD, confounds, brain masks and events.</li>
+<li><strong>First-level models</strong> (<code>code/first_level.py</code>, nilearn 0.14.1):</li>
+<li>smoothing 6 mm at native resolution, then resampling to NeuroQuery's 4 mm grid;</li>
+<li>Glover HRF, cosine drift (1/128 Hz), AR(1) noise, percent-signal scaling;</li>
+<li>confounds: 12 motion parameters, CSF, white matter, and any non-steady-state volumes;</li>
+<li>repetition time from each run's header: 2.0 s, except the multiband faces task (0.75 s, 330 volumes);</li>
+<li>one contrast-estimate map per subject.</li>
+<li><strong>Fits.</strong> 1,695 of 1,698 runs. For the three stop-signal subjects with no successful stops the contrast is undefined
+  (D2).</li>
+<li><strong>Inclusion.</strong> Coverage ≥ 90% and mean framewise displacement ≤ 0.5 mm. Three PIOP2 runs had masks that do not
+  overlap the template at all, a file defect (D4). Group masks have 22,460–24,558 voxels.</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Domain (contrast)</th>
+<th>Included</th>
+<th>NeuroQuery query</th>
+<th>r of prior with full-sample map</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Working memory (active − passive)</td>
+<td>204</td>
+<td>"working memory"</td>
+<td>0.20</td>
+</tr>
+<tr>
+<td>Emotion processing (emotion − control)</td>
+<td>207</td>
+<td>"emotional faces"</td>
+<td>0.38</td>
+</tr>
+<tr>
+<td>Cognitive conflict (incongruent − congruent)</td>
+<td>205</td>
+<td>"stroop"</td>
+<td>0.22</td>
+</tr>
+<tr>
+<td>Face perception (faces − baseline)</td>
+<td>202</td>
+<td>"face perception"</td>
+<td>0.50</td>
+</tr>
+<tr>
+<td>Anticipation (negative − neutral cue)</td>
+<td>197</td>
+<td>"anticipation"</td>
+<td>0.14</td>
+</tr>
+<tr>
+<td>Response inhibition (successful stop − go)</td>
+<td>220</td>
+<td>"stop signal"</td>
+<td>−0.26</td>
+</tr>
+<tr>
+<td>Replication: working memory (PIOP2)</td>
+<td>220</td>
+<td>"working memory"</td>
+<td>0.21</td>
+</tr>
+<tr>
+<td>Replication: emotion processing (PIOP2)</td>
+<td>217</td>
+<td>"emotional faces"</td>
+<td>0.39</td>
+</tr>
+</tbody>
+</table></div>
+<figure><a href="results/figures/F1_maps.png"><img src="results/figures/F1_maps.png" alt="F1"></a><figcaption>F1. Top: each domain&#x27;s group map from all included subjects (contrast estimate, maximum-intensity projection, axial view). Bottom: the NeuroQuery prediction for the matched query. The number under each prior is its spatial correlation with the full-sample map.</figcaption></figure>
+<p><strong>Prior quality.</strong> The NeuroQuery maps agree only loosely with the real maps (Figure F1).</p>
+<ul>
+<li>They predict where a task is reported to activate. They do not predict deactivations, or the visual and auditory
+  responses specific to one design.</li>
+<li>In the stop-signal task the strongest response is in auditory cortex, because the stop signal is a tone. Successful
+  stops also omit the button press, so motor regions are negative in this contrast; the prior points there instead.</li>
+</ul>
+<h2>3. Methods</h2>
+<p><strong>Empirical-Bayes shrinkage</strong> (<code>code/eb.py</code>).</p>
+<ul>
+<li>With b_v the subsample's mean contrast at voxel v, and s²_v its squared standard error:</li>
+<li>b_v ~ N(θ_v, s²_v);</li>
+<li>θ_v ~ N(α + β·m_v, τ²), where m is the z-scored prior map and β ≥ 0.</li>
+<li>α, β and τ² are fitted by marginal maximum likelihood on the subsample alone.</li>
+<li>The estimate is θ̂_v = w_v·b_v + (1 − w_v)·(α + β·m_v), with w_v = τ²/(τ² + s²_v).</li>
+<li>The likelihood is maximised by profiling (D1). The code passed a synthetic check before use: with a good prior it
+  gains, and with an unrelated prior it matches flat shrinkage (D1).</li>
+</ul>
+<p><strong>Subsampling.</strong> For each n in {10, 15, 20, 25, 30, 40, 50, 60, 80} there are 500 draws.</p>
+<ul>
+<li>Each draw takes a ground-truth set of N − 80 subjects, then n others, so ground-truth noise does not change with n.</li>
+<li>The false-positive rate is the share of voxels with no ground-truth effect (|z| &lt; 1.96) that a method calls active
+  at z &gt; 3.09.</li>
+<li>Intervals come from 2,000 bootstrap resamples of the draws.</li>
+</ul>
+<h2>4. Results</h2>
+<h3>4.1 Shrinkage made small-study maps less accurate in pattern (H1, H3)</h3>
+<p>At n = 15 the standard mean map already correlates 0.82–0.92 with the ground truth in four domains (working memory,
+emotion, faces, stop-signal), and 0.34–0.35 in the two weak-signal domains (conflict, anticipation). EB-Q lowered this
+in every domain (Figure F2):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Domain</th>
+<th>S</th>
+<th>EB-Q</th>
+<th>EB-0 (flat)</th>
+<th>EB-W (mismatched)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Working memory</td>
+<td>0.923</td>
+<td>0.885</td>
+<td>0.886</td>
+<td>0.885</td>
+</tr>
+<tr>
+<td>Emotion processing</td>
+<td>0.817</td>
+<td>0.732</td>
+<td>0.701</td>
+<td>0.700</td>
+</tr>
+<tr>
+<td>Cognitive conflict</td>
+<td>0.340</td>
+<td>0.312</td>
+<td>0.277</td>
+<td>0.274</td>
+</tr>
+<tr>
+<td>Face perception</td>
+<td>0.899</td>
+<td>0.820</td>
+<td>0.768</td>
+<td>0.768</td>
+</tr>
+<tr>
+<td>Anticipation</td>
+<td>0.348</td>
+<td>0.268</td>
+<td>0.257</td>
+<td>0.251</td>
+</tr>
+<tr>
+<td>Response inhibition</td>
+<td>0.830</td>
+<td>0.793</td>
+<td>0.793</td>
+<td>0.793</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Effective sample size.</strong> At n = 15, EB-Q was worth fewer subjects than the standard analysis at n = 10 in four
+  domains (G below 0.67, the floor of the grid). In the other two G was 0.81 [0.76, 0.84] (conflict) and
+  0.76 [0.74, 0.78] (stop-signal) (Figure F3). The same holds at n = 20 (G at most 0.81) and n = 30 (0.49–0.84).</li>
+<li><strong>H1 is contradicted in all six domains.</strong> The two replications agree.</li>
+<li><strong>H3.</strong> The matched prior did beat flat shrinkage in four domains, by +0.010 (anticipation) to +0.052 (faces) in r.
+  So the NeuroQuery maps carry some real information. That fell short of the five domains required, so H3 is not
+  supported.</li>
+<li>It did not beat flat shrinkage in working memory (−0.001) or stop-signal (β = 0).</li>
+</ul>
+<figure><a href="results/figures/F2_curves.png"><img src="results/figures/F2_curves.png" alt="F2"></a><figcaption>F2. Mean spatial correlation between a small study&#x27;s group map and the ground-truth map from a separate set of subjects (N - 80), over 500 random draws per sample size. Black: the standard mean map. Blue: shrunk toward the matched NeuroQuery map. Orange: toward a mismatched map. Green: toward a flat prior. The dotted line marks n = 15, the preregistered comparison point.</figcaption></figure>
+<figure><a href="results/figures/F3_gain.png"><img src="results/figures/F3_gain.png" alt="F3"></a><figcaption>F3. How many subjects each method is worth at n = 15, as a multiple of 15: the sample size at which the standard analysis reaches the same mean spatial correlation, divided by 15 (95% intervals from a bootstrap over draws). Triangles at 0.67 mark the floor of the grid: the method at n = 15 is worse than the standard analysis at n = 10. H1 predicted at least 2 (dashed line) in at least five of the six primary domains.</figcaption></figure>
+<h3>4.2 Why: strong effects vary most between people (exploratory)</h3>
+<ul>
+<li><strong>The mechanism.</strong> The model shrinks each voxel by a weight that depends on its sampling variance. Across voxels, the
+  size of the group effect tracks the spread between subjects: r = 0.39–0.70, and the top 10% of voxels by effect have
+  1.4–2.0 times the between-subject SD of the rest (<code>results/tables/variance_effect.csv</code>). The strongest voxels are
+  therefore pulled hardest toward the prior or the global mean, which flattens the map's peaks and lowers its spatial
+  correlation.</li>
+<li><strong>A direct check</strong> (after review, D4). Refitting flat shrinkage with the s²_v values randomly permuted across voxels
+  keeps the same spread of weights but breaks their link to effect size. It removes 59–93% of the loss: in faces it
+  falls from 0.130 to 0.009, in emotion from 0.116 to 0.018. The effect–variance link is the main cause; the rest comes
+  from any voxel-varying weight.</li>
+<li><strong>Flat shrinkage shows it most clearly.</strong> EB-0 uses no prior information and still costs up to 0.13 in r.</li>
+<li><strong>Why the validation missed it.</strong> The synthetic check used noise of equal size everywhere, so it could not reveal
+  this (D3).</li>
+</ul>
+<h3>4.3 Mismatched priors and false positives (H2)</h3>
+<p>The harm here comes from the shrinkage machinery, not from the mismatched map.</p>
+<ul>
+<li><strong>Correlation.</strong> The mismatched prior lowered r by 0.04–0.13 in all six domains. That is no worse than flat shrinkage:
+  relative to EB-0 it cost 0 to 0.006.</li>
+<li>Its fitted β was zero in most draws for emotion and faces, and small elsewhere.</li>
+<li>In working memory the mismatched "face perception" map fits about as well as the matched one: β 0.019 against
+    0.020, and spatial r with the full-sample map 0.18 against 0.20.</li>
+<li><strong>False positives</strong> (Figure F4; <code>review_fpr.csv</code>). The standard analysis declared 0.12–0.18% of null voxels active
+  (nominal 0.1%).</li>
+<li>EB-W raised this 1.5–3.4 times in five domains, to 0.17–0.62%. Anticipation was the exception (0.09%).</li>
+<li>Flat shrinkage alone does almost the same: 3.38, 1.48, 1.00, 2.24, 0.60 and 3.10 times (working memory, emotion,
+    conflict, faces, anticipation, stop-signal).</li>
+<li>The <em>matched</em> prior is highest in every domain: 3.42, 1.80, 1.20, 2.48, 1.28, 3.10.</li>
+<li>Only in conflict does the mismatched map add false positives of its own (1.74 against 1.00).</li>
+<li>The cause is the posterior z-scores. They treat the fitted τ² as known and shrink the posterior SD, so they are
+    overconfident in the voxels pulled toward the prior mean.</li>
+<li><strong>H2 is contradicted</strong> under the preregistered rule.</li>
+<li>Four domains (working memory, conflict, faces, stop-signal) meet its false-positive criterion: lower bound of the
+    ratio &gt; 1.5.</li>
+<li>Emotion (1.49 [1.43, 1.54]) and anticipation are flagged by the correlation criterion alone.</li>
+</ul>
+<figure><a href="results/figures/F4_fpr.png"><img src="results/figures/F4_fpr.png" alt="F4"></a><figcaption>F4. False-positive rate at n = 15: the share of voxels with no detectable effect in the ground-truth set (|z| &lt; 1.96) that each method declares active at z &gt; 3.09, averaged over 500 draws.</figcaption></figure>
+<h3>4.4 Robustness</h3>
+<ul>
+<li><strong>β unrestricted</strong> (<code>hypotheses_unconstrained.csv</code>). The same three verdicts.</li>
+<li><strong>Other pattern metrics.</strong> EB-Q is worse than S on every one, in every domain (G ≤ 0.81, and at the 0.67 floor in
+  most):</li>
+<li>ground truth from all remaining subjects;</li>
+<li>top-10% Dice;</li>
+<li>top-5% Dice.</li>
+<li><strong>Effect size rather than pattern</strong> (after review, D4; <code>review_mse_mechanism.csv</code>). Correlation and Dice ignore
+  rescaling of the map; mean squared error against the ground truth does not.</li>
+<li>EB-Q / S MSE ratio: working memory 1.42, emotion 1.08, conflict 0.31, faces 1.63, anticipation 0.33, stop-signal
+    0.96.</li>
+<li>In the two weak-signal domains, where a 15-subject map is mostly noise, shrinkage cuts the error in effect sizes by
+    about 70% while still blurring the pattern.</li>
+<li>In working memory, emotion and faces it is worse on both counts. In stop-signal it is slightly better on effect
+    size (0.96) and worse on pattern.</li>
+</ul>
+<h3>4.5 How much could any uniform use of these priors add? (exploratory, D3)</h3>
+<p>Two analyses were defined after the primary results (Figure F5).</p>
+<ul>
+<li><strong>E1: one shrinkage weight for all voxels.</strong> Without voxel-specific weights, flat shrinkage no longer changes the
+  map's pattern.</li>
+<li>Shrinkage toward the matched map then gives small gains where the prior is decent: G = 1.07 [1.06, 1.08] for
+    emotion, 1.07 [1.06, 1.07] for faces, 1.01 for working memory.</li>
+<li>It still hurts in the weak-signal domains: 0.86 [0.79, 0.90] for conflict, below 0.67 for anticipation. There the
+    model trusts a weak prior too much.</li>
+<li><strong>E2: an oracle ceiling.</strong> At each draw, the best non-negative uniform mix of the small-study map and the prior map,
+  with the weight chosen using the ground truth.</li>
+<li>G is 1.02 (working memory), 1.09 (emotion), 1.39 [1.30, 1.48] (conflict), 1.08 (faces), 1.14 (anticipation) and
+    1.00 (stop-signal).</li>
+<li>The oracle's choice can never be worse than the data alone, and choosing with a noisy ground truth flatters it
+    slightly, so these are upper bounds.</li>
+<li>The largest gains come where the small study is weakest (conflict, r = 0.34). There even a poor prior adds a little.</li>
+</ul>
+<figure><a href="results/figures/F5_explore.png"><img src="results/figures/F5_explore.png" alt="F5"></a><figcaption>F5. Exploratory, defined after the primary results. Blue: the same empirical-Bayes model with one noise level for all voxels, so every voxel is shrunk by the same weight. Dark blue and orange: the best possible uniform mix of the small-study map with the matched or mismatched NeuroQuery map, with the mixing weight chosen by looking at the ground truth (an upper bound, not a usable method). Even the oracle stays far below the predicted doubling (dashed).</figcaption></figure>
+<h2>5. Discussion</h2>
+<p><strong>What this study establishes:</strong></p>
+<ol>
+<li><strong>Naive voxelwise empirical-Bayes shrinkage harms the spatial pattern of fMRI group maps.</strong>
+   - The standard normal–normal model with one prior variance shrinks most where effects are largest, because in fMRI
+     between-subject variance grows with effect size.
+   - It also inflates false positives through overconfident posterior z-scores, with or without a prior map.
+   - Where the aim is to recover the pattern of activation, shrinkage should model variance as a function of effect
+     size, or use uniform weights.
+   - Where the aim is accurate effect sizes in a weak-signal task, the same shrinkage reduced error by about 70%.</li>
+<li><strong>NeuroQuery predictions are weak priors for specific task contrasts.</strong> Their spatial correlation with real
+   full-sample maps was 0.14–0.50, and negative for one contrast. A 15-subject map is usually far more informative
+   (r 0.82–0.92 with the truth in strong-signal tasks), so even an ideal blend adds under 10%. Only in weak-signal
+   contrasts does the prior add more, and even there under 40%.</li>
+</ol>
+<p><strong>What it does not establish:</strong></p>
+<ul>
+<li><strong>That no prior could help.</strong> These are generic predictions from short queries. A prior built from studies of the
+  same task design, or from a different contrast definition, might be stronger. Region-of-interest analyses and
+  hypothesis tests were not studied, only whole-brain maps.</li>
+<li><strong>Uncertainty across populations.</strong> The intervals reflect variation between draws within these two datasets. The
+  AOMIC PIOP participants are university students in Amsterdam.</li>
+</ul>
+<h2>6. Limitations</h2>
+<ol>
+<li><strong>Correlation as the main metric.</strong> It rewards getting the overall pattern right, not the size of effects. Dice
+   (also a pattern metric) agrees. Mean squared error agrees in working memory, emotion and faces, is slightly better
+   with shrinkage in stop-signal (0.96), and reverses strongly in the two weak-signal domains (§4.4).</li>
+<li><strong>Contrast choices.</strong> The faces contrast is against baseline, and stop-signal "successful stop − go" includes
+   removal of the motor response. Other contrasts might match NeuroQuery better.</li>
+<li><strong>Ground truth.</strong> The mean of 117–140 subjects is itself noisy, which lowers all correlations equally.</li>
+<li><strong>Grid floor.</strong> For four domains G is only known to be below 0.67.</li>
+<li><strong>Exploratory analyses.</strong> E1 and E2 were defined after seeing the primary results (D3).</li>
+</ol>
+<h2>7. Reproducibility</h2>
+<p>The code is in <code>code/</code>:</p>
+<ul>
+<li><code>make_priors.py</code>: priors and analysis grid;</li>
+<li><code>make_manifest.py</code>: job list;</li>
+<li><code>first_level.py</code>, <code>run_first_levels.sh</code>: first-level models;</li>
+<li><code>eb.py</code>, <code>analysis.py</code>: the estimator, draws and hypotheses;</li>
+<li><code>validate_eb.py</code>: synthetic check;</li>
+<li><code>explore.py</code>, <code>diagnostics.py</code>: exploratory analyses;</li>
+<li><code>review_checks.py</code>: checks added after review;</li>
+<li><code>save_maps.py</code>: released group maps;</li>
+<li><code>make_figures.py</code>, <code>build_report_html.py</code>: presentation.</li>
+</ul>
+<p><strong>Where the results are:</strong></p>
+<ul>
+<li><code>results/tables/</code>: per-draw tables, gains and hypothesis tables.</li>
+<li>In <code>gains.csv</code> the column <code>flag</code> marks values at the edge of the grid: "&lt;" means below n = 10, and "&gt;" means above
+    n = 80.</li>
+<li>Rows with n0 = 10 are not evaluable, because the floor equals n0.</li>
+<li><code>results/priors/</code>: the NeuroQuery prior maps.</li>
+<li><code>results/maps/</code>: the full-sample mean and between-subject SD map for each contrast.</li>
+</ul>
+<p>The per-subject maps are not committed (D4). The raw data (about 270 GB) are open on OpenNeuro.</p>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: GWOSC / Zenodo public releases. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

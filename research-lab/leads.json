@@ -2683,7 +2683,12 @@
     "Release the package plus calibration-curve tables and write up as a methods/resource paper with full scripts."
    ],
    "risks": "Shrinkage gains may be real but small (equivalent to <2x sample size), weakening the headline; NeuroQuery term-to-contrast mapping is subjective and reviewers may push on it; the idea is close enough to Han & Park that a top venue may see it as a scaled replication unless the calibration/tool framing lands.",
-   "plain_summary": "Small brain-imaging studies produce noisy maps. This study would test whether nudging those maps toward what thousands of earlier studies found (a meta-analytic 'prior') makes them as accurate as a study twice the size, checked against large reference datasets."
+   "plain_summary": "Small brain-imaging studies give noisy maps. This study tested nudging a 15-person map toward a literature-based prediction (NeuroQuery), hoping it would be worth doubling the sample. Deep dive done: in six tasks the nudge made the map's pattern less accurate, because the brain areas that respond most also vary most between people and get flattened. Even a perfectly tuned nudge would add little: the predictions match real maps only loosely.",
+   "status": "deep dive \u00b7 report (revised after review)",
+   "report_url": "runs/extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage/report.html",
+   "headline": "Worse, not better: across six AOMIC task domains (197-220 subjects each, 500 draws per sample size, held-out ground truth of N-80), empirical-Bayes shrinkage of 15-subject group maps toward NeuroQuery predictions lowered spatial accuracy everywhere (effective-sample gain < 0.67 in four domains, 0.76-0.81 in two; H1 >= 2x contradicted). Strong effects vary most between people, so voxelwise shrinkage flattens peaks; even an oracle-tuned uniform blend gains at most 1.39x (four of six below 1.10x). Shrinkage did cut effect-size error ~70% in the two weak-signal tasks.",
+   "verdict_tag": "Refuted",
+   "verdict_note": "Shrinking 15-subject maps toward NeuroQuery predictions made them less accurate in all six task domains, instead of being worth a doubled sample; even an oracle-tuned blend gains at most 1.39x."
   },
   {
    "id": "extra-open-neuroimaging-reanalysis-silicon-narps-agents",
