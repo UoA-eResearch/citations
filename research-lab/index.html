@@ -31,6 +31,7 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
+    color-scheme: dark;
     --page: #0d0d0d;
     --surface: #1a1a19;
     --ink: #ffffff;
@@ -52,6 +53,7 @@
   }
 }
 :root[data-theme="dark"] {
+  color-scheme: dark;
   --page: #0d0d0d;
   --surface: #1a1a19;
   --ink: #ffffff;
@@ -101,7 +103,7 @@ h1 { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; margin: 0; text
 .filters {
   display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
   padding: 12px 0 16px; border-top: 1px solid var(--grid);
-  position: sticky; top: 0; background: var(--page); z-index: 5;
+  position: sticky; top: env(safe-area-inset-top, 0px); background: var(--page); z-index: 5;
 }
 .fgroup { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .flabel { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-right: 2px; }
@@ -574,7 +576,10 @@ function renderPanel() {
 
   if (l.report_url) {
     const a = el('a', 'report-callout');
-    a.href = l.report_url;
+    // reports live on GitHub Pages; resolve relative links there when the explorer is served elsewhere (the claude.ai artifact)
+    const onPages = location.hostname.endsWith('github.io');
+    a.href = onPages ? l.report_url : new URL(l.report_url, 'https://uoa-eresearch.github.io/citations/research-lab/').href;
+    if (!onPages) { a.target = '_blank'; a.rel = 'noopener'; }
     const top = el('div', 'rc-top');
     top.appendChild(el('span', 'status-pill', l.status || 'report'));
     a.appendChild(top);
