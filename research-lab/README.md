@@ -7,7 +7,7 @@ on this machine (32-core Xeon, 94 GB RAM, A100 80 GB, ~600 GB free disk).
 
 | Piece | What it is |
 |---|---|
-| `leads.json` | The lead database: candidate research avenues with hypothesis, literature for/against, open datasets, value/cost scores, feasibility class, and a step-by-step subagent plan. Produced by the `research-lead-scout` workflow (10 domain scouts + completeness critic). |
+| `leads.json` | The lead database: candidate research avenues with hypothesis, literature for/against, open datasets, value/cost scores, feasibility class, and a step-by-step subagent plan. Produced by the `research-lead-scout` workflow (10 domain scouts + completeness critic). Extended on 2026-10-02 by a second round (`research-lead-scout-round2.js`: 8 domain scouts + a calibration critic) with 32 leads in ecology, seismology, formal mathematics, AI evaluation, cheminformatics, computational reproducibility, law and digital humanities, and quantum simulation (80 leads in total). |
 | Interactive plot (Artifact) | Value (y) vs cost (x) scatter of every lead. Click a marker for full details. Golden quadrant = high value, low cost (top-left). Served from `index.html` on GitHub Pages and mirrored at https://claude.ai/artifact/FL86H7RkNAMkd4CbKserUx; after changing `index.html`, run `python3 build_artifact.py OUT.html` and republish OUT.html to that artifact URL to keep the two in sync. |
 | `run-avenue.js` | The executor workflow. Give it one lead from `leads.json` and it runs the entire research workflow via subagents: scope → build → execute → adversarial review → write-up. |
 | `runs/<lead-id>/` | Working directory created per executed lead: code, data, results, figures, report. |
