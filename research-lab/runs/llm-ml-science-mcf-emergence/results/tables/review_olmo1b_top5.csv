@@ -1,0 +1,61 @@
+task,id,top5
+arc_easy,arc_easy-0,'\n':0.98 | ' D':0.01 | ' A':0.00 | ' B':0.00 | ' C':0.00
+arc_easy,arc_easy-1,'\n':0.95 | '<|endoftext|>':0.02 | ' D':0.02 | ' A':0.01 | ' C':0.00
+arc_easy,arc_easy-2,'\n':0.98 | ' D':0.01 | ' A':0.00 | ' B':0.00 | ' C':0.00
+arc_easy,arc_easy-3,'\n':0.92 | '<|endoftext|>':0.05 | ' D':0.01 | ' A':0.01 | ' B':0.01
+arc_easy,arc_easy-4,'\n':0.97 | ' D':0.01 | ' A':0.01 | '<|endoftext|>':0.00 | ' B':0.00
+arc_easy,arc_easy-5,'\n':0.98 | ' D':0.01 | ' A':0.00 | ' B':0.00 | ' C':0.00
+arc_easy,arc_easy-6,'\n':0.97 | ' D':0.01 | ' A':0.01 | ' C':0.00 | ' B':0.00
+arc_easy,arc_easy-7,'\n':0.98 | '<|endoftext|>':0.01 | ' D':0.01 | ' A':0.00 | ' C':0.00
+arc_easy,arc_easy-8,'\n':0.96 | '<|endoftext|>':0.02 | ' D':0.01 | ' A':0.01 | ' B':0.00
+arc_easy,arc_easy-9,'\n':0.97 | ' D':0.01 | ' A':0.01 | '<|endoftext|>':0.01 | ' C':0.00
+arc_challenge,arc_challenge-0,'\n':1.00 | '<|endoftext|>':0.00 | ' D':0.00 | ' A':0.00 | ' B':0.00
+arc_challenge,arc_challenge-1,'\n':0.99 | '<|endoftext|>':0.00 | ' D':0.00 | ' A':0.00 | ' C':0.00
+arc_challenge,arc_challenge-2,'\n':1.00 | '<|endoftext|>':0.00 | ' D':0.00 | ' B':0.00 | ' A':0.00
+arc_challenge,arc_challenge-3,'\n':1.00 | ' D':0.00 | '<|endoftext|>':0.00 | ' C':0.00 | ' A':0.00
+arc_challenge,arc_challenge-4,'\n':0.99 | '<|endoftext|>':0.00 | ' D':0.00 | ' B':0.00 | ' A':0.00
+arc_challenge,arc_challenge-5,'\n':0.99 | '<|endoftext|>':0.00 | ' D':0.00 | ' B':0.00 | ' A':0.00
+arc_challenge,arc_challenge-6,'\n':1.00 | '<|endoftext|>':0.00 | ' D':0.00 | ' A':0.00 | ' B':0.00
+arc_challenge,arc_challenge-7,'\n':1.00 | '<|endoftext|>':0.00 | ' D':0.00 | ' A':0.00 | ' B':0.00
+arc_challenge,arc_challenge-8,'\n':1.00 | '<|endoftext|>':0.00 | ' D':0.00 | ' A':0.00 | ' B':0.00
+arc_challenge,arc_challenge-9,'\n':1.00 | '<|endoftext|>':0.00 | ' D':0.00 | ' A':0.00 | ' B':0.00
+csqa,csqa-0,'\n':1.00 | '<|endoftext|>':0.00 | ' E':0.00 | ' A':0.00 | ' B':0.00
+csqa,csqa-1,'\n':1.00 | '<|endoftext|>':0.00 | ' E':0.00 | ' A':0.00 | ' B':0.00
+csqa,csqa-2,'\n':1.00 | '<|endoftext|>':0.00 | ' E':0.00 | ' A':0.00 | ' B':0.00
+csqa,csqa-3,'\n':1.00 | '<|endoftext|>':0.00 | ' E':0.00 | ' A':0.00 | ' B':0.00
+csqa,csqa-4,'\n':1.00 | '<|endoftext|>':0.00 | ' E':0.00 | ' A':0.00 | ' B':0.00
+csqa,csqa-5,'\n':1.00 | '<|endoftext|>':0.00 | ' E':0.00 | ' A':0.00 | ' B':0.00
+csqa,csqa-6,'\n':1.00 | '<|endoftext|>':0.00 | ' E':0.00 | ' A':0.00 | ' B':0.00
+csqa,csqa-7,'\n':1.00 | '<|endoftext|>':0.00 | ' E':0.00 | ' A':0.00 | ' B':0.00
+csqa,csqa-8,'\n':1.00 | '<|endoftext|>':0.00 | ' E':0.00 | ' B':0.00 | ' A':0.00
+csqa,csqa-9,'\n':1.00 | '<|endoftext|>':0.00 | ' E':0.00 | ' B':0.00 | ' A':0.00
+piqa,piqa-0,'\n':0.90 | ' B':0.07 | ' A':0.03 | '<|endoftext|>':0.00 | ' C':0.00
+piqa,piqa-1,'\n':0.97 | ' B':0.03 | ' A':0.01 | '<|endoftext|>':0.00 | ' C':0.00
+piqa,piqa-2,'\n':0.97 | ' B':0.02 | ' A':0.01 | '<|endoftext|>':0.00 | ' C':0.00
+piqa,piqa-3,'\n':0.97 | '<|endoftext|>':0.02 | ' B':0.01 | ' A':0.00 | ' C':0.00
+piqa,piqa-4,'\n':0.95 | ' B':0.04 | ' A':0.02 | '<|endoftext|>':0.00 | ' C':0.00
+piqa,piqa-5,'\n':0.97 | ' B':0.02 | ' A':0.01 | '<|endoftext|>':0.00 | ' C':0.00
+piqa,piqa-6,'\n':0.96 | ' B':0.03 | ' A':0.01 | '<|endoftext|>':0.00 | ' C':0.00
+piqa,piqa-7,'\n':0.91 | ' B':0.06 | ' A':0.02 | '<|endoftext|>':0.00 | ' C':0.00
+piqa,piqa-8,'\n':0.92 | ' B':0.04 | ' A':0.03 | '<|endoftext|>':0.01 | ' C':0.00
+piqa,piqa-9,'\n':0.99 | ' B':0.01 | ' A':0.00 | '<|endoftext|>':0.00 | ' C':0.00
+hellaswag,hellaswag-0,'\n':0.96 | ' D':0.01 | '<|endoftext|>':0.01 | ' C':0.01 | ' A':0.01
+hellaswag,hellaswag-1,'\n':0.84 | ' A':0.05 | ' C':0.04 | ' D':0.03 | ' B':0.03
+hellaswag,hellaswag-2,'\n':0.89 | ' C':0.03 | ' A':0.03 | ' D':0.02 | ' B':0.02
+hellaswag,hellaswag-3,'\n':0.78 | ' A':0.06 | ' C':0.06 | ' D':0.04 | ' B':0.04
+hellaswag,hellaswag-4,'\n':0.58 | ' A':0.15 | ' C':0.10 | ' B':0.10 | ' D':0.05
+hellaswag,hellaswag-5,'\n':0.87 | ' C':0.03 | '<|endoftext|>':0.03 | ' D':0.03 | ' A':0.03
+hellaswag,hellaswag-6,'\n':0.97 | ' D':0.01 | ' A':0.01 | '<|endoftext|>':0.01 | ' C':0.01
+hellaswag,hellaswag-7,'\n':0.67 | ' A':0.13 | ' B':0.08 | ' C':0.06 | ' D':0.03
+hellaswag,hellaswag-8,' A':0.38 | ' B':0.18 | ' C':0.18 | '\n':0.16 | ' D':0.07
+hellaswag,hellaswag-9,'\n':0.68 | ' A':0.10 | ' C':0.08 | ' B':0.08 | ' D':0.04
+mmlu,mmlu-0,'\n':0.92 | ' D':0.02 | ' A':0.02 | ' B':0.01 | ' C':0.01
+mmlu,mmlu-1,' A':0.29 | ' B':0.26 | ' C':0.18 | ' D':0.14 | '\n':0.12
+mmlu,mmlu-2,'\n':0.58 | ' B':0.11 | ' C':0.11 | ' A':0.10 | ' D':0.09
+mmlu,mmlu-3,'\n':0.98 | ' D':0.01 | ' C':0.00 | ' B':0.00 | ' A':0.00
+mmlu,mmlu-4,'\n':0.99 | ' D':0.01 | ' A':0.00 | ' B':0.00 | ' C':0.00
+mmlu,mmlu-5,'\n':0.99 | '<|endoftext|>':0.00 | ' D':0.00 | ' B':0.00 | ' C':0.00
+mmlu,mmlu-6,' D':0.28 | ' B':0.25 | ' C':0.25 | ' A':0.22 | '\n':0.00
+mmlu,mmlu-7,'\n':0.61 | ' C':0.11 | ' D':0.09 | ' A':0.09 | ' B':0.08
+mmlu,mmlu-8,'\n':0.98 | ' D':0.01 | ' A':0.00 | ' B':0.00 | ' C':0.00
+mmlu,mmlu-9,'\n':1.00 | '<|endoftext|>':0.00 | ' D':0.00 | ' A':0.00 | ' B':0.00

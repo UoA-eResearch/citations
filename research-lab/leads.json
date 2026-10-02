@@ -150,7 +150,12 @@
     "Write up with per-checkpoint eval tables released; state a practical rule for when MCF leaderboard scores of small models are meaningful."
    ],
    "risks": "410M models may never leave chance-level MCF within their training budget (then the seed-spread claim rests on 1B-7B single-seed runs and the hypothesis weakens to the indicator claim); Wiegreffe et al. or Ai2 could extend their analysis across checkpoints first; instruction-formatted web data in OLMo-2's mix may confound comparisons with Pythia.",
-   "plain_summary": "Language models can be quizzed in two ways: by checking which answer they find most likely, or by asking them to reply with the letter of the right answer (A, B, C...). Small or early-in-training models cannot manage the letter format, then suddenly can. This study would track when that switch happens across many training runs, and test whether a simpler, earlier signal predicts it."
+   "plain_summary": "Language models are often scored by which letter (A, B, C, D) they pick on multiple-choice questions, but small models answer at chance in that format even when they know the answers. This study tested whether how much a model favours the answer letters predicts when it learns the format. Deep dive done: almost every model starts favouring the letters very early, but only two 7-billion-parameter models ever learned the format, so the warning sign says little about when, or whether, it will happen.",
+   "status": "deep dive \u00b7 report (revised after review)",
+   "report_url": "runs/llm-ml-science-mcf-emergence/report.html",
+   "headline": "Letter mass is early, not predictive: across 412 checkpoints of 28 open runs (Pythia 160M-6.9B incl. 20 PolyPythia seeds, OLMo-1/OLMo-2 1B and 7B), five-shot answer-letter probability passes 0.5 within ~2-21B tokens in 163 of 168 run x task units, but only the two OLMo 7B runs leave chance in multiple-choice format (OLMo-2 7B ~214-307B tokens, OLMo-7B-0424 ~490B, several tasks at once). H1 (no departure before mass crossing) supported but uninformative; H2 (timing predicted, rho >= 0.7) not testable with 2 acquiring runs. OLMo-1B-0724 shows the skill only at its last checkpoint and only after a newline; 11 pythia-2.8b HF branches serve stale weights.",
+   "verdict_tag": "Unsupported",
+   "verdict_note": "Letter mass passes 0.5 early in almost every run, including the many that never learn the format; only 2 of 28 runs learn it, so the predicted timing link could not be tested and the indicator is not a usable warning sign."
   },
   {
    "id": "llm-ml-science-scaling-fit-seed-uncertainty",

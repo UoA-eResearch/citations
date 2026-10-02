@@ -1,0 +1,8 @@
+[
+ ["Runs that clearly learn the letter format", "2 of 28", "only the two OLMo 7B models, at about 300B and 490B training tokens"],
+ ["Five-shot letter mass passes 0.5", "167 of 168", "run x task units; 155 of them never leave chance"],
+ ["Lead time, preregistered rule", "31–244×", "in tokens (median 77); 1.4–3.9× for OLMo-7B-0424 if the crossing must hold"],
+ ["H1 / H2 (preregistered)", "supported / not testable", "no violations, but uninformative; only 2 runs acquire the format"],
+ ["Pythia up to 6.9B, 20 PolyPythia seeds", "at chance", "final MCF within ±1.5 points (mean of six tasks) despite rising cloze accuracy"],
+ ["Format fragility", "+18.6 pts", "OLMo-1B-0724 on CSQA when the letter is read after a newline, at its final checkpoint"]
+]

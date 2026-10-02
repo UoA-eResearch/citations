@@ -1,0 +1,12 @@
+run,revision,patterns
+pythia-2.8b,step512,model-0000*-of-00002.safetensors;model.safetensors.index.json
+pythia-2.8b,step1000,model-0000*-of-00002.safetensors;model.safetensors.index.json
+pythia-2.8b,step2000,model-0000*-of-00002.safetensors;model.safetensors.index.json
+pythia-2.8b,step3000,model-0000*-of-00002.safetensors;model.safetensors.index.json
+pythia-2.8b,step5000,model-0000*-of-00002.safetensors;model.safetensors.index.json
+pythia-2.8b,step7000,model-0000*-of-00002.safetensors;model.safetensors.index.json
+pythia-2.8b,step10000,model-0000*-of-00002.safetensors;model.safetensors.index.json
+pythia-2.8b,step15000,model-0000*-of-00002.safetensors;model.safetensors.index.json
+pythia-2.8b,step22000,model-0000*-of-00002.safetensors;model.safetensors.index.json
+pythia-2.8b,step32000,pytorch_model.bin
+pythia-2.8b,step46000,pytorch_model.bin

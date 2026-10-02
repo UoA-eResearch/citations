@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Multiple-Choice Format Emergence</title>
+<meta name="description" content="Are heat records being broken by growing margins? A preregistered test of record-shattering heat in 2,013 long-running weather stations, 1951-2025.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · LLM &amp; ML science</div>
+  <h1>When do language models learn to answer multiple-choice questions by letter?</h1>
+  <p class="subtitle">A preregistered test of answer-letter probability as a leading indicator, across 412 checkpoints of 28 open training runs</p>
+  <div class="meta">
+    <span>Draft · 2026-10-03 · revised after independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/llm-ml-science-mcf-emergence/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/llm-ml-science-mcf-emergence/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/llm-ml-science-mcf-emergence/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Runs that clearly learn the letter format</div><div class="tile-value">2 of 28</div><div class="tile-note">only the two OLMo 7B models, at about 300B and 490B training tokens</div></div><div class="tile"><div class="tile-label">Five-shot letter mass passes 0.5</div><div class="tile-value">167 of 168</div><div class="tile-note">run x task units; 155 of them never leave chance</div></div><div class="tile"><div class="tile-label">Lead time, preregistered rule</div><div class="tile-value">31–244×</div><div class="tile-note">in tokens (median 77); 1.4–3.9× for OLMo-7B-0424 if the crossing must hold</div></div><div class="tile"><div class="tile-label">H1 / H2 (preregistered)</div><div class="tile-value text">supported / not testable</div><div class="tile-note">no violations, but uninformative; only 2 runs acquire the format</div></div><div class="tile"><div class="tile-label">Pythia up to 6.9B, 20 PolyPythia seeds</div><div class="tile-value text">at chance</div><div class="tile-note">final MCF within ±1.5 points (mean of six tasks) despite rising cloze accuracy</div></div><div class="tile"><div class="tile-label">Format fragility</div><div class="tile-value">+18.6 pts</div><div class="tile-note">OLMo-1B-0724 on CSQA when the letter is read after a newline, at its final checkpoint</div></div></section>
+<main>
+<h2>In plain terms</h2>
+<p>Language models are often tested with multiple-choice questions: options labelled A, B, C, D, with the model scored on
+which letter it picks. Small or partly trained models usually score at chance in this format, even when other tests
+show they know the answers. So leaderboards may be measuring whether a model has learned the <em>format</em> rather than what
+it <em>knows</em>. The lead behind this study proposed a cheap warning sign: watch how much of the model's prediction goes to
+the answer letters, and the format should click soon after that share passes one half.</p>
+<p>We tested this on 412 saved snapshots from 28 public training runs, from 160 million to 7 billion parameters, including
+two small models each trained ten times from different random starts. Each snapshot answered six standard question sets.</p>
+<p>What we found:</p>
+<ul>
+<li><strong>Only the two 7-billion-parameter OLMo models clearly learned the format.</strong> They did so after about 300 and 490 billion
+  training tokens (word pieces), on several question sets at once.</li>
+<li><strong>No Pythia model learned it</strong>, up to 6.9 billion parameters and including all twenty random-start copies. Neither did
+  a 1-billion-parameter OLMo model trained on 4 trillion tokens. Another 1-billion-parameter model showed the skill only
+  at its very last snapshot, and only when allowed a line break before the letter.</li>
+<li><strong>The warning sign usually fires far too early to be useful.</strong> Almost every model starts putting most of its
+  prediction on the letters within its first few billion tokens, whether or not it ever learns the format.</li>
+</ul>
+<p>So "puts weight on the letters" is necessary but says little about <em>when</em>, or <em>whether</em>, a model will answer
+multiple-choice questions properly.</p>
+<h2>Abstract</h2>
+<p><strong>Question.</strong> Does a model's probability mass on the valid answer letters predict when its multiple-choice-format
+(MCF) accuracy leaves chance?</p>
+<p><strong>Design</strong> (preregistered, <code>plan.md</code>, committed before any evaluation).</p>
+<ul>
+<li><strong>Runs:</strong></li>
+<li>Pythia 1B–6.9B;</li>
+<li>PolyPythias 410M and 160M, 10 seeds each;</li>
+<li>OLMo-2 1B and 7B;</li>
+<li>OLMo-1B-0724 and OLMo-7B-0424, added because OLMES reports the final Pythias near chance in MCF.</li>
+<li><strong>Checkpoints.</strong> 412, fixed by formula.</li>
+<li><strong>Tasks.</strong> ARC-Easy, ARC-Challenge, CommonsenseQA, PIQA, HellaSwag and MMLU (500 items each). Scored five-shot and
+  zero-shot in MCF, and five-shot in cloze format (CF).</li>
+<li><strong>Units.</strong> One unit is one run on one task, giving 168 units.</li>
+<li><strong>Departure.</strong> The first checkpoint more than 5 points above chance that is still there at the next checkpoint.</li>
+<li><strong>Mass crossing.</strong> The first checkpoint at which mean letter probability exceeds 0.5 and is still above it at the
+  next checkpoint.</li>
+</ul>
+<p><strong>Results.</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Analysis</th>
+<th>Result</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Units that leave chance (five-shot MCF)</td>
+<td>12 of 168, all from the two OLMo 7B runs</td>
+<td>—</td>
+</tr>
+<tr>
+<td>H1: departure never precedes mass crossing</td>
+<td>0 violations; but mass crosses in 167 units, 155 of which never depart</td>
+<td><strong>supported</strong> (uninformative)</td>
+</tr>
+<tr>
+<td>H2: mass-crossing time predicts departure time (ρ ≥ 0.7)</td>
+<td>only 2 runs have both events (≥ 3 required)</td>
+<td><strong>not testable</strong></td>
+</tr>
+<tr>
+<td>H3: never crossing means never departing</td>
+<td>1 never-crossing unit (from a run with erratic letter mass); it does not depart</td>
+<td>consistent (n = 1)</td>
+</tr>
+<tr>
+<td>Lead time, departing units</td>
+<td>31–244 times in tokens (median 77) under the preregistered rule; 1.4–3.9× for OLMo-7B-0424 if the crossing must hold to the end</td>
+<td>not a reliable timing signal</td>
+</tr>
+<tr>
+<td>Zero-shot indicator (secondary)</td>
+<td>H1 inconclusive (1 violation), H2 not testable; median lead 21×</td>
+<td>not better</td>
+</tr>
+<tr>
+<td>Other 26 runs</td>
+<td>never leave chance; final MCF within ±1.5 points of chance (mean of six tasks; −3.8 to +4.2 per task)</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Conclusion.</strong> In these runs, letter mass is a necessary condition for multiple-choice ability but not a usable
+timing signal. Format acquisition occurred clearly only in the two 7B OLMo runs, nearly simultaneously across tasks.</p>
+<h2>1. Background and gap</h2>
+<ul>
+<li><strong>Two ways to score a multiple-choice question.</strong></li>
+<li>In cloze format (CF), each answer's text is scored by its likelihood.</li>
+<li>In MCF, the options are labelled and the label is scored.</li>
+<li><strong>Why it matters.</strong> OLMES (Gu et al. 2024) showed that weaker models score at chance in MCF while CF reveals their
+  knowledge. It recommends taking the better of the two formats. In OLMo-7B-0424, MCF ability appeared after about 400B
+  training tokens.</li>
+<li><strong>Closest work.</strong> Wiegreffe et al. (2024) localised answer-symbol binding in one OLMo run. Wiegreffe et al. (2023)
+  warned that more probability on answer choices does not always mean higher accuracy.</li>
+<li><strong>The gap.</strong> No study was found that describes the onset across scales and seeds, or tests a cheap leading indicator.</li>
+</ul>
+<h2>2. Data, rules and validation</h2>
+<ul>
+<li><strong>Checkpoints</strong> (<code>data/checkpoints.csv</code>).</li>
+<li>Pythia: 14 per run, steps 512–143,000 (1–300B tokens).</li>
+<li>OLMo: 16–20 per run, log-spaced from 1–4B tokens to 2.7–4.0T tokens (D1).</li>
+<li><strong>Prompts.</strong> OLMES style, with five fixed shots. Fifteen MMLU items keep 2–4 shots so that every prompt fits in 1,900
+  tokens (D1).</li>
+<li><strong>Numerics.</strong> fp16 for Pythia, bf16 for OLMo.</li>
+<li><strong>Rules.</strong></li>
+<li>Both events need persistence at the next checkpoint, so a first exceedance at a run's last checkpoint cannot count.
+    Under the preregistered prompt no unit is affected: the largest final excess in a never-departing unit is +4.2.</li>
+<li>The crossover rule compares MCF on 500 items with CF on the first 200 of them.</li>
+<li><strong>Validation</strong> (D1, D2).</li>
+<li>Random-initialisation checkpoints score at chance on every task. One cell is +3.2 points against a 3-point
+    criterion, within sampling noise (standard error about 1.9).</li>
+<li>On OLMo-7B-0424's released <code>main</code> checkpoint, MCF accuracy matches OLMES within 2.6 points for ARC-C, ARC-E and
+    CSQA, and within 4.0 for PIQA. The planned trajectory ends at 2,731B tokens, beyond the released model; that
+    checkpoint scores PIQA 59.2 (−6.4).</li>
+<li>MMLU's 500-item gap (−5.8) shrank to −0.9 on 2,000 items averaged by subject. It was sampling noise plus averaging.</li>
+<li>HellaSwag MCF is lower than OLMES (36 against 50), because OLMES preprocesses HellaSwag contexts.</li>
+<li><strong>A data problem found and fixed</strong> (D5).</li>
+<li>Eleven pythia-2.8b checkpoint branches on Hugging Face contain a stale, identical <code>model.safetensors</code> beside the
+    real step weights, so they first evaluated as the final model.</li>
+<li>An audit of all 412 branches found no other case.</li>
+<li>The 11 checkpoints were re-run with the correct weight files.</li>
+</ul>
+<h2>3. Results</h2>
+<h3>3.1 Only the two OLMo 7B runs clearly leave chance</h3>
+<p>Figure F1 shows every run. Averaged over the six tasks, the final five-shot MCF accuracy above chance is:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Run</th>
+<th>Final MCF accuracy above chance (points)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OLMo-2-1124-7B</td>
+<td>+40.5</td>
+</tr>
+<tr>
+<td>OLMo-7B-0424</td>
+<td>+35.7</td>
+</tr>
+<tr>
+<td>All other 26 runs</td>
+<td>−1.3 to +1.5 (per task −3.8 to +4.2)</td>
+</tr>
+</tbody>
+</table></div>
+<figure><a href="results/figures/F1_all_runs.png"><img src="results/figures/F1_all_runs.png" alt="F1"></a><figcaption>F1. All 28 training runs. Left: five-shot multiple-choice-format accuracy above chance, averaged over the six tasks (dashed: the +5-point departure threshold). Right: mean probability the model puts on the valid answer letters (dashed: the 0.5 threshold). Thick lines: the three 7B-class runs. Only the two OLMo 7B runs leave chance; letter mass passes 0.5 by 21B tokens in 163 of the 168 run-task units, whether or not the format is ever learned.</figcaption></figure>
+<p>The models that never leave chance still learn the content. At the end of training their mean CF accuracy is 0.58
+(Pythia-6.9B) and 0.60 (OLMo-2 1B), far above chance.</p>
+<p><strong>Not training length alone.</strong> At about 300B tokens (E3):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Run</th>
+<th>MCF accuracy above chance (mean of 6 tasks)</th>
+<th>Stage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OLMo-2 7B</td>
+<td>+17.7 points</td>
+<td>mid-training</td>
+</tr>
+<tr>
+<td>Pythia-6.9B</td>
+<td>+0.9 points</td>
+<td>end of training</td>
+</tr>
+<tr>
+<td>OLMo-7B-0424 (at 348B)</td>
+<td>−0.5 points</td>
+<td>its departure comes at 490B</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>Pythia-6.9B stops at 300B, so only the OLMo-2-7B comparison rules out training length. Pythia might have acquired the
+  format with OLMo-7B-0424's 490B.</li>
+<li>OLMo-2 1B stays at chance after 4 <em>trillion</em> tokens (+1.1 points).</li>
+</ul>
+<h3>3.2 Format acquisition is a near-simultaneous, whole-model event (E1)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Run</th>
+<th>Departure range</th>
+<th>Tasks departing together</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OLMo-2 7B</td>
+<td>214–638B tokens</td>
+<td>three at 307B; four of six within one checkpoint</td>
+</tr>
+<tr>
+<td>OLMo-7B-0424</td>
+<td>490–976B tokens</td>
+<td>four at 490B: ARC-C, ARC-E, CSQA, MMLU</td>
+</tr>
+</tbody>
+</table></div>
+<p>PIQA and HellaSwag lag in both runs. The OLMo-7B-0424 timing agrees with OLMES's estimate of about 400B (Figure F2).
+HellaSwag's MCF accuracy stays well below its CF accuracy even at the end (0.48 against 0.86 for OLMo-2 7B).</p>
+<figure><a href="results/figures/F2_olmo7b.png"><img src="results/figures/F2_olmo7b.png" alt="F2"></a><figcaption>F2. The two runs that learn the format, task by task. Dotted lines mark each task&#x27;s departure (the first checkpoint above chance + 5 points that stays there). Departures cluster: three tasks at 307B tokens for OLMo-2 7B and four at 490B for OLMo-7B-0424 (OLMES places this model&#x27;s transition at about 400B).</figcaption></figure>
+<h3>3.3 Letter mass is necessary but not a reliable timing signal (H1–H3)</h3>
+<ul>
+<li><strong>Five-shot letter mass passes 0.5 in 167 of 168 units.</strong> 163 cross by 21B tokens. Four OLMo-1B-0724 units cross late,
+  at 754–1,069B.</li>
+<li><strong>Most crossing units never depart.</strong> 155 of them never leave chance.</li>
+<li><strong>H1</strong> (no departure before mass crossing) <strong>is supported with zero violations.</strong> But the mass crosses so early and so
+  universally that this says little.</li>
+<li><strong>Lead times.</strong> Under the preregistered rule, the 12 departing units crossed at 4–16B tokens, 31–244 times earlier
+  than departure (median 77; Figure F3).</li>
+<li><strong>H2 is not testable.</strong> Only two runs have both events.</li>
+<li><strong>H3.</strong> The single never-crossing unit (OLMo-1B-0724, PIQA) does not depart. It comes from the run with erratic
+  letter mass (below).</li>
+</ul>
+<figure><a href="results/figures/F3_timing.png"><img src="results/figures/F3_timing.png" alt="F3"></a><figcaption>F3. The candidate leading indicator against the event it should predict, one point per run and task. Circles: units that leave chance. Triangles: units that never leave chance, plotted just above their run&#x27;s last checkpoint. Letter mass passes 0.5 early whether or not the format is ever learned; where the format is learned, it does so 31 to 244 times earlier (in tokens) than the departure from chance.</figcaption></figure>
+<p><strong>Sensitivity of the crossing rule</strong> (after review, D6). The preregistered rule needs only two checkpoints in a row.
+OLMo-7B-0424's mean letter mass then falls back below 0.5 at 7 of the next 11 checkpoints: 0.14 at 31B and 0.18 at 88B.
+If the crossing must hold to the end of training, the two acquiring runs disagree:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Run</th>
+<th>Mass holds above 0.5 from</th>
+<th>Departures</th>
+<th>Lead time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OLMo-7B-0424</td>
+<td>125–348B</td>
+<td>490–976B</td>
+<td>1.4–3.9× (just before)</td>
+</tr>
+<tr>
+<td>OLMo-2 7B</td>
+<td>4B</td>
+<td>214–638B</td>
+<td>54–160×</td>
+</tr>
+</tbody>
+</table></div>
+<p>The "far too early" conclusion therefore rests on OLMo-2 7B. In OLMo-7B-0424, <em>stable</em> high letter mass arrived
+shortly before the format did. With two acquiring runs this cannot be resolved; it is a question for future work.</p>
+<p><strong>OLMo-1B-0724 is anomalous</strong> (D6, E5).</p>
+<ul>
+<li>Its five-shot letter mass is lower than its zero-shot mass at 13 of 20 checkpoints. Its mean swings from 0.73 (4B) to 0.06
+  (186B), back to 0.80 (1,515B), and ends at 0.09.</li>
+<li>At its final checkpoint it puts 84–100% of its next-token probability on a newline after "Answer:", not on a letter.</li>
+<li>Read <em>after</em> that newline, the final checkpoint answers above chance on CSQA (+18.6 points), ARC-Easy (+12.5) and
+  ARC-Challenge (+6.8). Earlier checkpoints are at chance in both readings through 2,150B tokens.</li>
+<li>So this model acquires some MCF ability only at its last checkpoint, in a slightly different format. The persistence
+  rule cannot count that.</li>
+</ul>
+<p><strong>Zero-shot letter mass</strong> (secondary) crosses later and closer to departure (median lead 21×).</p>
+<ul>
+<li>Under the same rules, zero-shot H1 is inconclusive (one violation) and H2 is not testable.</li>
+<li>The violation: OLMo-7B-0424 PIQA departs at 1,375B tokens, before its zero-shot mass crosses at 1,937B.</li>
+<li>103 units never cross at zero-shot, and none of them depart.</li>
+</ul>
+<h3>3.4 The cloze-to-MCF crossover is unreliable as defined (E4, D6)</h3>
+<ul>
+<li><strong>Only 4 of 78 defined crossovers are genuine:</strong> ARC-Easy and CSQA in the two 7B runs, at 976–2,714B tokens.</li>
+<li><strong>The other 74 are artefacts.</strong></li>
+<li>68 are in runs that never leave chance.</li>
+<li>6 are at the first checkpoint of the 7B runs.</li>
+<li><strong>The first-checkpoint crossovers.</strong> Nineteen in all: 11 Pythia units at 1.07B tokens and 8 OLMo units at 4B. In 17
+  of them CF accuracy is below chance.</li>
+<li><strong>MCF departs from chance long before it overtakes CF.</strong> PIQA and HellaSwag never genuinely cross.</li>
+</ul>
+<h3>3.5 Random seeds</h3>
+<p>No PolyPythias run leaves chance:</p>
+<ul>
+<li>410M: final excess −1.3 to +0.8 points across 10 seeds (mean of six tasks);</li>
+<li>160M: −1.1 to +1.4 points.</li>
+</ul>
+<p>The planned seed-spread analysis of departure timing is therefore moot. At these sizes and with 300B tokens of the Pile,
+MCF does not emerge in any seed.</p>
+<h2>4. Discussion</h2>
+<p><strong>What this study establishes:</strong></p>
+<ol>
+<li><strong>Early letter mass is not a usable leading indicator of MCF ability.</strong>
+   - Models learn to put probability on the answer letters (format surface) within a few billion tokens, including
+     the 155 units that never acquire the format.
+   - Mapping content to the right letter (symbol binding) arrives hundreds of billions of tokens later, if at all.
+   - Whether <em>sustained</em> high mass is a better signal is open: it was in one acquiring run but not the other.</li>
+<li><strong>Among the Pythia and OLMo families tested, MCF ability was rare below 7B.</strong>
+   - Only the two 7B OLMo runs clearly acquired it.
+   - Pythia-6.9B (300B tokens) and OLMo-2 1B (4T tokens) did not.
+   - OLMo-1B-0724 showed it only at its final checkpoint and only after a newline.
+   - For these families this supports OLMES's use of cloze scoring for small models.</li>
+<li><strong>Acquisition is near-simultaneous across tasks.</strong> In each run four of six tasks leave chance within one or two
+   checkpoints, consistent with a single skill (binding the letter to the chosen content) rather than task-specific
+   learning.</li>
+<li><strong>MCF measurement is fragile to formatting.</strong> A model that expects a line break before its answer scores at chance
+   with the standard prompt. At-chance MCF should be checked against the model's own next-token preferences before it
+   is read as absence of ability.</li>
+<li><strong>Checkpoint repositories need integrity checks.</strong> Hugging Face branches for a widely used model can serve stale
+   weights. Results identical across checkpoints should be treated as a red flag.</li>
+</ol>
+<p><strong>What it does not establish:</strong></p>
+<ul>
+<li><strong>Why only these runs acquire the format.</strong> This study cannot separate data mix, architecture, scale or training
+  stage. The OLMo-1B-0724 jump at its final checkpoint may reflect a late training phase; this was not investigated.</li>
+<li><strong>Whether other indicators would lead.</strong> Item-level predicted labels and correct-label probabilities were not stored
+  (D4), so label bias and continuous accuracy measures could not be tested.</li>
+</ul>
+<h2>5. Limitations</h2>
+<ol>
+<li><strong>Only two runs clearly acquire the format.</strong> Cross-run timing claims (H2) are untestable with this set, and the
+   lead-time conclusion depends on the crossing rule (§3.3).</li>
+<li><strong>Checkpoint spacing.</strong> Departure is resolved only to the nearest checkpoint (for example 214, 307 or 445B tokens).</li>
+<li><strong>One prompt template.</strong>
+   - OLMo-1B-0724 shows that a format mismatch can hide MCF ability.
+   - HellaSwag differs from OLMES's preprocessing.</li>
+<li><strong>500 items per task.</strong> The standard error near chance is about 2 points; the +5-point threshold with persistence
+   guards against noise.</li>
+<li><strong>The added runs</strong> (OLMo-7B-0424, OLMo-1B-0724) were chosen with prior knowledge that one of them acquires the format.
+   This is disclosed in the plan.</li>
+<li><strong>Exploratory analyses.</strong> The sustained-crossing rule, the newline reading and E1–E5 were defined after seeing the
+   primary results (D4, D6).</li>
+</ol>
+<h2>6. Reproducibility</h2>
+<p>The code is in <code>code/</code>:</p>
+<ul>
+<li><code>choose_checkpoints.py</code>: checkpoint list;</li>
+<li><code>build_items.py</code>: items and prompts;</li>
+<li><code>evaluate.py</code>: scoring;</li>
+<li><code>pipeline.py</code>: download, evaluate, delete;</li>
+<li><code>validate_mmlu.py</code>: validation diagnostic;</li>
+<li><code>analysis.py</code>: units and hypotheses;</li>
+<li><code>explore.py</code>: E1–E4;</li>
+<li><code>review_checks.py</code>, <code>newline_check.py</code>, <code>newline_trajectory.py</code>, <code>explore_newline.py</code>: checks added after review;</li>
+<li><code>make_figures.py</code>, <code>build_report_html.py</code>: presentation.</li>
+</ul>
+<p><strong>Results:</strong></p>
+<ul>
+<li>Per-checkpoint item-level results (412 files, 7,200 rows each) are in <code>results/evals/</code>, and the newline-variant
+  results in <code>results/evals_newline/</code>.</li>
+<li>Tables are in <code>results/tables/</code>, including <code>weight_file_audit.csv</code> and <code>weight_overrides.csv</code>.</li>
+<li>The model weights are public on Hugging Face.</li>
+</ul>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: GWOSC / Zenodo public releases. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/llm-ml-science-mcf-emergence/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>
