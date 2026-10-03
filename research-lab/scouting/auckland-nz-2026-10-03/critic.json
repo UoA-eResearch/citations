@@ -1,0 +1,150 @@
+{
+  "assessments": [
+    {
+      "id": "auckland-nz-wastewater-testing-gap-deprivation",
+      "keep": true,
+      "value_score": 6,
+      "cost_score": 3,
+      "feasibility": "local",
+      "critic_note": "Europe PMC and Crossref (2023-26) turned up adjacent work only: Watson/Plank 2024 (national ascertainment only), a 2026 J R Soc NZ paper on Pacific under-representation in FluTracking and sentinel-GP surveillance, and IDI-based predictors of testing and infection (IJPDS 2025). None measures differences in ascertainment between catchments using wastewater, so the gap holds. Data checks: ESR-NZ/covid_in_wastewater data_historic has cases_site.csv (18.7k site-weeks), ww_site.csv (11k) and sites.csv (134 sites with sampler type and population; pushed 2026-09-24), and the NZDep2023 Wayback mirror returns the 2.2 MB file. Stats NZ layers need only a self-service key. Cost raised 2->3 to match the 3-4 day estimate. ww_site has ~40% fewer site-weeks than cases_site, so check the >=50 catchments x >=30 paired weeks rule before preregistering. Analysis is area-level NZDep only, so there is no engagement gate; IMPB review before release is still appropriate.",
+      "duplicate_of": "",
+      "time_sensitive": "",
+      "needs_engagement": ""
+    },
+    {
+      "id": "auckland-nz-immunisation-cascade-forecast",
+      "keep": true,
+      "value_score": 5,
+      "cost_score": 2,
+      "feasibility": "local",
+      "critic_note": "No NZ forecasting that links cohorts across coverage milestones was found (Europe PMC/Crossref 2023-26; the nearest is GBD's country-level forecasts to 2030, Lancet 2025). The Health NZ page lists quarterly files only up to Q3 2025/26. Server headers show Q2 posted 24 Mar 2026 and Q3 posted 24 Jun 2026, so Q4 2025/26 (Apr-Jun 2026) is due now or overdue, and the first prospective target may appear before forecasts are frozen. Value lowered 6->5: the cascade is close to mechanical (the same cohort four quarters later), and Health NZ already holds individual-level AIR data that can project this internally. The added value is independent public accountability. Several 2024/25 files were re-uploaded on 15 Feb 2026, so the rolling-origin backtest must use Wayback vintages rather than revised current files.",
+      "duplicate_of": "",
+      "time_sensitive": "Q4 2025/26 release is due now (Q3 posted 24 Jun 2026): freeze and hash forecasts within days, or retarget to Q1/Q2 2026/27 (~Dec 2026 / ~Mar 2027)",
+      "needs_engagement": ""
+    },
+    {
+      "id": "auckland-nz-equity-adjustor-waitlist-did",
+      "keep": true,
+      "value_score": 6,
+      "cost_score": 2,
+      "feasibility": "local",
+      "critic_note": "Europe PMC ('equity adjustor': 2 unrelated hits) and Crossref found no outcome evaluation; Wood et al. 2025 remains the nearest. I downloaded the Q4 2025/26 extract (extracted 02/09/2026). Its Elective sheet covers district x specialty x 4 ethnic groups x month for 20 districts, Jan 2015 to Jun 2026, with '<5' suppression. I checked the structure only and did not look at outcome values. Value lowered 7->6: there is one treated district, which specialties used the tool and when is uncertain, Auckland weighted ethnicity before Feb 2023, and the outcome is a stock measure, so a well-run study may still be ambiguous. The scout saw raw gap series for six districts, probably including Auckland, so the 4 pp threshold was not set blind. The preregistration must therefore list exactly what was seen and make the 16-district permutation rank and the Asian negative control co-primary. It should also add an unseen hold-out (Jul-Dec 2026 months from the next one or two vintages) as the confirmatory persistence test. Confirm whether 'District' means district of service, since Auckland provides tertiary care for other districts.",
+      "duplicate_of": "",
+      "time_sensitive": "Preregister before the next quarterly vintage (Jul-Sep 2026 months) is published, so it can serve as the unseen hold-out",
+      "needs_engagement": "Not blocking for analysis, but get Māori/Pacific health-equity input (e.g. Tāmaki Makaurau IMPB) on framing before preregistration, and pre-release review, given Te Tiriti and political sensitivity"
+    },
+    {
+      "id": "auckland-nz-hirds-out-of-sample-exceedance-audit",
+      "keep": true,
+      "value_score": 6,
+      "cost_score": 4,
+      "feasibility": "local",
+      "critic_note": "No NZ out-of-sample HIRDS audit was found (Crossref 'HIRDS' and 'design rainfall NZ', Europe PMC IDF+NZ 2023-26); the nearest new resource is the global GSDR-IDF (Sci Data 2026). Feasibility fix: the DataHub FAQ says station data are capped (e.g. 30 datasets per region per year, larger pulls 'by individual negotiation'), so ~300 ESNZ national gauges are not self-service. The HIRDS v4 tables are CC BY after a free account and a purpose statement that the FAQ describes as a compliance declaration, with no approval step. Source gauges from council Hilltop servers verified open today: NRC, HBRC (235 rainfall sites), Greater Wellington (233), Marlborough (180) and Horizons (87). Add the Auckland portal (click-through), and use ESNZ only within the cap. Cost raised 3->4 for harvesting from many portals and QC. Value rounded 6.5->6 because power at rare AEPs is low and the 2017-26 window was chosen knowing it held record storms; keep the national primary test and the no-2023 safeguards.",
+      "duplicate_of": "",
+      "time_sensitive": "",
+      "needs_engagement": ""
+    },
+    {
+      "id": "auckland-nz-avf-dvv-hydrological-baseline",
+      "keep": true,
+      "value_score": 5,
+      "cost_score": 5,
+      "feasibility": "local",
+      "critic_note": "No velocity-change (dv/v) monitoring of the Auckland Volcanic Field was found (Crossref/Europe PMC 2021-26). NZ dv/v work covers Ruapehu and Whakaari; University of Auckland theses remain a grey-literature risk. GeoNet S3 holds AVF EH* day files (~10-12 MB per channel-day; EPAZ 2016 checked), and the FDSN station service is open. Value rounded 5.5->5: this calibrates a tool against a well-known hydrological coupling. Cost stays 5, since ~0.6-1 TB must be streamed and only ~20 GB kept. Design fix: offsets for the 2024-26 sensor changes would have to be fitted on held-out data, which leaks into the held-out R^2. Preregister either ending the held-out window at the first sensor change or fitting offsets on a short burn-in only. No engagement gate; share results with the Tūpuna Maunga Authority as planned.",
+      "duplicate_of": "",
+      "time_sensitive": "",
+      "needs_engagement": ""
+    },
+    {
+      "id": "auckland-nz-fenz-impact-rainfall-thresholds",
+      "keep": true,
+      "value_score": 5,
+      "cost_score": 4,
+      "feasibility": "local",
+      "critic_note": "No study testing rarity against depth using fire-service callouts was found (Crossref/Europe PMC 2023-26); the nearest is an EGU26 abstract relating European flood losses to rainfall return periods. The FENZ catalogue has 8 CC BY CSVs, with FY2024/25 added Mar 2026 (~8 months after year end). FY2025/26 should therefore appear around Feb-Mar 2027. A preregistration frozen before then can use it as a truly unseen confirmatory year and demote FY2024/25 to validation. Value lowered 6->5: AEP and depth are nearly collinear within regions, flood callouts are few and dominated by Jan 2023, and the callout proxy is capped by crew capacity. Cost is 4 standalone, or 3 if it reuses the HIRDS audit's gauge harvest and HIRDS tables (a scheduling pair; the same DataHub station cap applies).",
+      "duplicate_of": "",
+      "time_sensitive": "Freeze before the FY2025/26 FENZ file is released (expected ~Feb-Mar 2027) to gain an unseen test year",
+      "needs_engagement": ""
+    },
+    {
+      "id": "auckland-nz-crl-structural-uplift-prereg",
+      "keep": true,
+      "value_score": 7,
+      "cost_score": 3,
+      "feasibility": "local",
+      "critic_note": "Crossref found only engineering papers and a 2026 commentary, so no evaluation after opening exists. Verified: the current AT GTFS (valid 17 Sep-31 Dec 2026) contains Te Waihorotiu, Karanga-a-Hape and Maungawhau, and the AT daily boardings file runs to 20 Sep 2026. The threshold was informed by the opening-week ratio (0.307). That is acceptable because the confirmatory window (Feb-Mar 2027) is unseen, but the preregistration must record every post-opening day viewed. Each weekly AT release shows more of the decay path, so freeze within about a week. Cost raised 2->3 (about 3-4 days in total including r5py accessibility). The counting artefact from train line-to-line transfers is the main validity threat and needs a preregistered bound.",
+      "duplicate_of": "",
+      "time_sensitive": "Freeze within about a week: AT daily data already run to 20 Sep 2026 and each weekly release reveals more of the post-opening trajectory",
+      "needs_engagement": ""
+    },
+    {
+      "id": "auckland-nz-speed-limit-reversal-crashes",
+      "keep": true,
+      "value_score": 7,
+      "cost_score": 3,
+      "feasibility": "local",
+      "critic_note": "Europe PMC/Crossref found no evaluation of the 2025 reversals (the nearest are a 2024 NZMJ editorial and studies of limit reductions only). Verified the CAS FeatureServer (707,449 crashes) and the speed-limit register (NSLR; 87,046 zone records, refreshed nightly), both open with no key. Value stays 7, but power is the binding risk: the minimum detectable effect is ~18-20% with one post-reversal year, crash timing is by financial year only, and minor-injury crashes are reported late. Preregister the minimum detectable effect and make the Oct 2027 rerun part of the confirmatory plan. Cost raised 2->3 for reconstructing segment-level NSLR history. The scout's pilot used only pre-period crashes; FY2025/26 counts on treated segments must not be tabulated before the preregistration is frozen.",
+      "duplicate_of": "",
+      "time_sensitive": "Start daily NSLR snapshots now (history is rewritten silently); preregister before any FY2025/26 tabulation; confirmatory rerun ~Oct 2027",
+      "needs_engagement": ""
+    },
+    {
+      "id": "auckland-nz-jade-water-value-calibration",
+      "keep": true,
+      "value_score": 6,
+      "cost_score": 4,
+      "feasibility": "local",
+      "critic_note": "No calibration study of the EA's JADE water values was found (Crossref, Europe PMC, arXiv NZ electricity); the nearest are Poletti 2020 and Hassan et al. 2026 (Energies). The EMI blob listing has 2023, 2024 and 2025 run folders and none for 2026, so the series looks closed and the audit is retrospective with no deadline. JADE.jl is MPL-2.0, not a custom licence; its last push was Sep 2023, so the EA's production version may differ. Cost raised 3->4 (4-6 days; ~95 GB of offers streamed). The scout saw the worst miss (2024 week 32: p90 $344 vs actual $797) before setting the '>=20% above p90' threshold. Make the storage-conditional ratio co-primary, report the primary with and without the Aug-Sep 2024 crisis weeks, and frame miscalibration as expected for a risk-neutral benchmark.",
+      "duplicate_of": "",
+      "time_sensitive": "",
+      "needs_engagement": ""
+    },
+    {
+      "id": "auckland-nz-upzoning-canopy-lidar-did",
+      "keep": true,
+      "value_score": 7,
+      "cost_score": 5,
+      "feasibility": "local",
+      "critic_note": "No causal study of upzoning and tree canopy was found (Crossref 'upzoning tree canopy Auckland'); Pedley & Morgenroth 2025 remains the nearest. Verified the LINZ STAC collections (north 2016-18: 192 DSM tiles; 2024 Part 1: 109; Part 2: 172), the OpenTopography Auckland_2013 bulk listing and the Unitary Plan base-zone FeatureServer (139,462 polygons), all open. The main threat is that the pre-period is partly treated. The 2016-18 epoch partly postdates the Unitary Plan (operative in part Nov 2016), and the RMA 2012 amendment removed general urban tree protection from 2015, inside the 2013 -> 2016-18 window. The pre-trend test is therefore weak: prefer tiles captured before Nov 2016 for the pre-period and make the zone-boundary design co-primary. Uses the same LiDAR epochs as the kauri lead, so download once. Check Auckland Council's canopy (ngahere) reports before preregistering.",
+      "duplicate_of": "",
+      "time_sensitive": "",
+      "needs_engagement": ""
+    },
+    {
+      "id": "auckland-nz-2023-storms-estuary-mud-natural-experiment",
+      "keep": true,
+      "value_score": 5,
+      "cost_score": 3,
+      "feasibility": "local",
+      "critic_note": "No exposure-graded test of estuary change after the 2023 storms was found (Crossref 'Cyclone Gabrielle estuary sediment benthic'; Europe PMC estuar* + Gabrielle/2023 floods gave 7 unrelated hits). The LAWA estuary file is live (0.87 MB, posted 21 Jun 2026). Value lowered 6->5: by the scout's own numbers the minimum detectable effect (~4 pp) equals the preregistered effect, so power is about 50%. A 5 km land buffer is also crude exposure for harbour sites, so a null result would be uninformative. Make the continuous-exposure dose-response co-primary. The scout reports pre-storm SDs; the preregistration must freeze the site list without viewing 2023-24 values and state whether any were seen. Shares the 2024 DEM with the LiDAR leads.",
+      "duplicate_of": "",
+      "time_sensitive": "",
+      "needs_engagement": ""
+    },
+    {
+      "id": "auckland-nz-kauri-dieback-multitemporal-lidar",
+      "keep": true,
+      "value_score": 5,
+      "cost_score": 4,
+      "feasibility": "local",
+      "critic_note": "No dieback study using repeat LiDAR or ObsKauri was found (Crossref, Europe PMC 2022-26). The ObsKauri FeatureServer count (52,867) and both LiDAR collections check out. Value lowered 6->5. The canopy-blind labels (2014-15) predate the first LiDAR epoch by 1-4 years, so the test is really prognostic: do trees symptomatic in 2014-15 lose more crown from 2016-18 to 2024? Some severe trees will already be crownless by 2016-18, and there are only ~330 symptomatic trees. Reframe the hypothesis that way and add the 2021/2023 surveys as time-aligned checks. Engagement gate: Waitākere is under a Te Kawerau ā Maki rāhui and kauri are taonga, so the scout's planned contact must happen and guidance be received before preregistration or any feature extraction.",
+      "duplicate_of": "",
+      "time_sensitive": "",
+      "needs_engagement": "Blocking: seek guidance from Te Kawerau ā Maki (Waitākere rāhui), Hunua mana whenua and the council kauri programme before preregistration; publish only aggregated layers and honour any request to restrict"
+    }
+  ],
+  "overall": "Coverage: 12 leads, three each in health, hazards, urban and environment. All are specific to Auckland/NZ and all can run on this machine. Missing areas: education, housing and rents, energy demand, the marine environment (Hauraki Gulf), and kaupapa Māori-led questions (rightly avoided without partners). Mix of designs: four natural-experiment difference-in-differences (waitlist, speed limits, upzoning canopy, estuary mud), four audits or calibration checks (HIRDS, JADE, wastewater ascertainment, FENZ thresholds), two prospective forecasts or evaluations (immunisation, CRL), and two validation or noise-floor studies (kauri LiDAR, AVF dv/v).\n\nNovelty: WebSearch was unavailable, so spot-checks used Europe PMC, Crossref and arXiv. They found nothing that already answers any lead. The remaining risk is unindexed grey literature: council technical reports, UoA theses and EA reports.\n\nDuplicates: none, within the batch or against the existing 80 leads. The closest existing leads are the US wastewater-FluSight and the record-margin leads, which measure different things. Scheduling pairs: HIRDS, then FENZ (same gauge harvest and HIRDS tables); upzoning canopy, then kauri (same 2016-18 and 2024 LiDAR, downloaded once), then estuary (2024 DEM); CRL and speed limits share the OSM extract.\n\nData access: every primary open source was spot-checked and works. One material correction: ESNZ DataHub caps station data (e.g. 30 datasets per region per year; more only by negotiation). The HIRDS and FENZ leads must therefore get gauges from council Hilltop servers (five verified open). HIRDS tables themselves need only a free account and a purpose statement the FAQ describes as compliance only. JADE.jl is MPL-2.0.\n\nCalibration: on value, five scores were lowered by 1 (immunisation, waitlist, FENZ, estuary, kauri) and two half-point scores were rounded down (HIRDS 6.5->6, dv/v 5.5->5). On cost, six were under-scored and raised by 1 (wastewater, HIRDS, FENZ, CRL, speed limits, JADE).\n\nPrior looks at outcome data that the preregistrations must handle:\n- Waitlist: raw gap series were seen. Make the permutation rank and the negative control co-primary, and add an unseen hold-out vintage.\n- JADE: the worst miss was seen before the threshold was set.\n- CRL: the opening week was seen. This is acceptable because the confirmatory window is in the future.\n- Estuary: confirm that 2023-24 values were not viewed.\n\nTe Mana Raraunga: handling is adequate overall. Kauri needs mana whenua engagement before it can run (rāhui; kauri are taonga). The waitlist study should get Māori/Pacific input on framing before preregistration.\n\nTop 3 to run first:\n(1) CRL: the clean prospective window shrinks with every weekly AT release, freezing the preregistration takes about a day, and value is 7.\n(2) Speed-limit reversal: value 7, cheap, all data open with no key, and NSLR snapshotting should start now.\n(3) Wastewater-deprivation ascertainment: clean design, no prior look at outcomes, a unique open dataset, low cost.\nOpportunistic: if Q4 2025/26 immunisation coverage is still unpublished, freeze the forecasts this week (a few hours of work); otherwise retarget to later releases. Next tier: upzoning canopy (value 7, cost 5), then the waitlist DiD once its hold-out vintage and engagement are arranged.",
+  "unscouted_local_angles": [
+    "Prescription co-payment natural experiment: the $5 co-payment was removed on 1 Jul 2023 and reinstated for most adults on 1 Jul 2024. Effect on dispensing by district, age and deprivation, using Health NZ Pharmaceutical Collection aggregates (check how fine the open data are).",
+    "End of the Clean Car Discount (31 Dec 2023) and EV road-user charges (Apr 2024): EV and hybrid registrations by TLA from the open NZTA Motor Vehicle Register, with an event study of the rush to buy before the deadline and the later drop.",
+    "Rents and tenancy policy: MBIE's open rental bond data (monthly, by area) around the 2024-25 restoration of interest deductibility and no-cause terminations (Jan 2025), with Auckland compared against other regions.",
+    "NCEA literacy and numeracy co-requisite (2024): did achievement gaps widen by school Equity Index? Uses NZQA's open school-level secondary statistics.",
+    "Calibration audit of ESNZ/NIWA seasonal climate outlooks (archived tercile forecasts) for rainfall and temperature in Auckland and Northland, relevant to Watercare drought planning.",
+    "Watercare Central Interceptor commissioning: did wet-weather overflow and Safeswim water-quality alerts at Waitematā beaches fall? Check access to Safeswim and Watercare data first.",
+    "Coastal cliff and beach change from the same 2016-18 vs 2024 LiDAR, including slips from the 2023 storms, to validate Auckland Council's coastal-erosion hazard projections (pairs with the LiDAR leads).",
+    "Prospective, preregistered booth-level forecast of the 2026 general election from 2023 Electoral Commission booth results plus open polls. It must be frozen before election day, so it is time-bound.",
+    "Measles 2025-26: an immunity-gap and outbreak-size model for Auckland suburbs, combining PHF Science notifications with the coverage files (an extension of the immunisation lead).",
+    "Urban heat equity: Landsat/ECOSTRESS land-surface temperature against the LiDAR canopy-change rasters, extending the upzoning lead to heat exposure by deprivation.",
+    "Tīkapa Moana / Hauraki Gulf marine protection (2025 Act): a Sentinel-2 baseline of kelp forest and kina barrens. Needs mana whenua partnership before scoping."
+  ]
+}

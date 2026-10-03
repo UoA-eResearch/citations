@@ -1,0 +1,232 @@
+[
+  {
+    "id": "auckland-nz-upzoning-canopy-lidar-did",
+    "title": "Did Auckland's 2016 upzoning cost the city its trees? A three-epoch LiDAR difference-in-differences of canopy loss (2013, 2016-18, 2024)",
+    "domain": "auckland-nz",
+    "hypothesis": "Residential land upzoned to the Mixed Housing Urban or Terrace Housing and Apartment Building zones by the 2016 Auckland Unitary Plan lost at least 1.0 percentage point more tree-canopy cover (LiDAR vegetation >=3 m) between the 2016-18 and 2024 LiDAR epochs than matched Single House zone land (difference-in-differences <= -1.0 pp, 95% CI excluding 0), while the 2013 -> 2016-18 pre-period difference between the same groups is within +/-0.5 pp.",
+    "gap": "The housing effect of the 2016 Auckland Unitary Plan (AUP) upzoning is well established causally (Greenaway-McGrevy & Phillips 2023, J Urban Econ; Urban Studies 2023; Economic Modelling 2026), but its tree-canopy cost has never been estimated with a causal design. The closest work, Pedley & Morgenroth 2025 (Christchurch, Sustainable Cities and Society), links property redevelopment to canopy loss over 2016-2021 from aerial imagery and consents. It is not a zoning-treatment design and does not cover Auckland. Auckland Council's urban ngahere canopy reports compare 2013 with 2016/18 by area and land use; they are grey literature that OpenAlex and Crossref do not index, and must be checked in step 1. The Auckland-wide 2024 LiDAR (Part 1 Apr-Jun 2024, Part 2 Jun-Nov 2024) has only recently become openly available on the LINZ nz-elevation bucket. With the 2013 point cloud on OpenTopography, it makes a three-epoch pre/post design possible for the first time. Novelty searches (OpenAlex: 'Auckland tree canopy loss upzoning' = 0 hits; 'urban intensification tree canopy loss New Zealand'; 'upzoning tree canopy difference-in-differences'; Crossref: 'zoning tree canopy loss residential intensification lidar') turned up no causal upzoning-canopy study.",
+    "value_score": 7,
+    "cost_score": 5,
+    "value_rationale": "Housing supply versus urban trees is a live policy fight in NZ: the Urban Ngahere Strategy's 30% canopy target, national intensification rules (NPS-UD/MDRS) and the removal of blanket urban tree protection. A credible causal estimate of how much canopy upzoning costs, and how that cost splits between redeveloped and untouched parcels, fills a gap that is actively discussed. It also produces a reusable open product: Auckland canopy-change rasters for 2013, 2016-18 and 2024. The value is not higher because the result is specific to one city and the design rests on zoning assignment that is not random.",
+    "cost_rationale": "CPU-only raster work. The data are about 42 GB of LINZ 1 m DSM/DEM (2016-18 plus 2024) and about 46 GB of the 2013 point cloud, rasterised with PDAL; vector layers are under 5 GB. On 32 cores the raster differencing, building masking and parcel aggregation take a few days, and the econometrics take hours. Total is about 90 GB, which puts it in the 50-300 GB band.",
+    "est_wall_time": "7-10 days",
+    "est_data_gb": 90,
+    "feasibility": "local",
+    "requirements_if_out_of_reach": "",
+    "datasets": [
+      {
+        "name": "LINZ Auckland North LiDAR 1m DSM/DEM (2016-2018) and Auckland South LiDAR 1m DSM/DEM (2016-2017)",
+        "url": "https://nz-elevation.s3.ap-southeast-2.amazonaws.com/auckland/auckland-north_2016-2018/dsm_1m/2193/collection.json",
+        "access": "Open public S3 bucket (CC BY 4.0), no account; STAC collections verified, capture window 2016-08-15 to 2018-08-08 (north)",
+        "size": "DSM 7.55 GB (192 tiles) + 3.38 GB (85 tiles); DEM similar; ~22 GB total"
+      },
+      {
+        "name": "LINZ Auckland Part 1 and Part 2 LiDAR 1m DSM/DEM (2024)",
+        "url": "https://nz-elevation.s3.ap-southeast-2.amazonaws.com/auckland/auckland-part-1_2024/dsm_1m/2193/collection.json",
+        "access": "Open public S3 bucket (CC BY 4.0), no account; Part 1 captured 2024-04-29 to 2024-06-26, Part 2 2024-06-25 to 2024-11-03",
+        "size": "DSM 4.33 GB (109 tiles) + 5.63 GB (172 tiles); DEM similar; ~20 GB total"
+      },
+      {
+        "name": "OpenTopography 'Auckland, New Zealand 2013' classified LiDAR point cloud (pre-AUP epoch)",
+        "url": "https://doi.org/10.5069/G9KW5CZ5",
+        "access": "Open, no account; bulk S3-compatible listing verified at https://opentopography.s3.sdsc.edu/pc-bulk?list-type=2&prefix=Auckland_2013/",
+        "size": "46.2 GB (6,512 files)"
+      },
+      {
+        "name": "Auckland Council Unitary Plan Base Zone",
+        "url": "https://services1.arcgis.com/n4yPwebTjJCmXB6W/arcgis/rest/services/Unitary_Plan_Base_Zone/FeatureServer/0",
+        "access": "Open ArcGIS FeatureServer, CC BY 4.0, no account (zone codes: SH=19, MHS=18, MHU=60, THAB=8)",
+        "size": "139,462 polygons, ~0.4 GB"
+      },
+      {
+        "name": "LINZ NZ Building Outlines (All Sources), layer 101292 (includes historic outlines with lifecycle dates)",
+        "url": "https://data.linz.govt.nz/layer/101292-nz-building-outlines-all-sources/",
+        "access": "CC BY 4.0; needs a free LINZ Data Service account/API key for bulk export",
+        "size": "6.6 M features nationally; Auckland subset ~1 GB"
+      },
+      {
+        "name": "LINZ NZ Primary Land Parcels, layer 50823",
+        "url": "https://data.linz.govt.nz/layer/50823-nz-primary-land-parcels/",
+        "access": "CC BY 4.0; needs a free LINZ Data Service account/API key",
+        "size": "2.46 M features nationally; Auckland subset ~0.3 GB"
+      },
+      {
+        "name": "Auckland Council Land Cover 2017 (Lynker Analytics ML classification of 7.5 cm imagery; 'High vegetation' class used for independent validation)",
+        "url": "https://data-aucklandcouncil.opendata.arcgis.com/datasets/017febe483a14ba99108215cc1a3804c",
+        "access": "Open, CC BY 4.0, no account",
+        "size": "1.66 GB file geodatabase"
+      }
+    ],
+    "lit_for": [
+      "Greenaway-McGrevy & Phillips (2023) The impact of upzoning on housing construction in Auckland, Journal of Urban Economics, doi:10.1016/j.jue.2023.103555. Establishes the AUP upzoning as a natural experiment and gives treatment definitions.",
+      "The heterogeneous impacts of widespread upzoning: Lessons from Auckland, New Zealand (2023), Urban Studies, doi:10.1177/00420980231190281",
+      "Can zoning reform increase housing construction? Evidence from Auckland (2026), Economic Modelling, doi:10.1016/j.econmod.2026.107592",
+      "Assessing changes of urban vegetation cover and aboveground carbon stocks using LiDAR and Landsat imagery data in Auckland, New Zealand (2019), International Journal of Remote Sensing, doi:10.1080/01431161.2019.1685716. Shows that LiDAR canopy measurement works in Auckland.",
+      "Effects of different land-use planning instruments on urban shrub and tree canopy cover in Zurich, Switzerland (2024), Urban Forestry & Urban Greening, doi:10.1016/j.ufug.2024.128272"
+    ],
+    "lit_against": [
+      "Pedley & Morgenroth (2025) Green vs growth: The effect of residential intensification on urban tree canopy loss in Christchurch, New Zealand, Sustainable Cities and Society, doi:10.1016/j.scs.2025.106678. Closest prior: redeveloped properties lost much more canopy, but 87% of city-wide loss was on unmodified properties, which could dilute a zone-level effect.",
+      "Auckland Council urban ngahere canopy-cover reports (2013 vs 2016/18 comparison; grey literature, not indexed in OpenAlex or Crossref). They may already tabulate canopy change by zone; check before preregistering.",
+      "Walton (2008) Difficulties with estimating city-wide urban forest cover change from national, remotely-sensed tree canopy maps, Urban Ecosystems, doi:10.1007/s11252-007-0040-9. Warns that cross-epoch sensor differences can produce artifactual change."
+    ],
+    "method": "Three-epoch staggered difference-in-differences with a dose-response by zone. (1) Build canopy maps per epoch: 1 m nDSM = DSM - DEM, with vegetation at >=3 m. Buildings valid at each epoch's capture date are masked out using LINZ Building Outlines (All Sources) lifecycle dates, buffered by 1 m. The 2013 epoch is rasterised from the OpenTopography point cloud with PDAL. Epochs are co-registered on stable roofs and ground. (2) Validate the canopy masks against the Auckland Land Cover 2017 high-vegetation class and against point-cloud high-vegetation classes on a stratified tile sample (target >=90% agreement). (3) Units are residential parcels (LINZ primary parcels) that were already built on in 2013; greenfield and Future Urban land is excluded. Treatment is MHU or THAB (high dose), MHS is low dose, and Single House is the control. (4) Estimate parcel and epoch fixed effects plus treatment x post, with coarsened-exact matching on baseline canopy, parcel area, building age proxy, distance to the city centre and rapid transit, and local board. Standard errors are clustered at SA2 level, and the 2013 -> 2016-18 pre-trend is tested. (5) Mechanism: decompose the excess loss into parcels with new or removed buildings versus unmodified parcels, as in Pedley & Morgenroth. (6) Falsification: a zone-boundary design within 100 m of SH-MHU boundaries; placebo outcomes on park and road-reserve canopy; capture-date controls.",
+    "plan": [
+      "Check Auckland Council canopy reports and the Greenaway-McGrevy treatment definitions. Freeze the analysis sample (residential land built on in 2013), treatment and dose classes, outcome threshold (3 m) and the preregistered effect sizes before downloading the 2024 data.",
+      "Download LINZ 1 m DSM/DEM for 2016-18 and 2024 (~42 GB) and the 2013 OpenTopography point cloud (46 GB). Rasterise 2013 to a 1 m DSM/DEM with PDAL. Co-register all epochs using stable surfaces and report residual vertical error.",
+      "Build per-epoch canopy masks with nDSM >= 3 m, minus building outlines valid at each capture date. Validate against Land Cover 2017 and point-cloud vegetation classes on 50 stratified tiles, and report precision and recall for each epoch.",
+      "Aggregate canopy cover to parcels and 1 ha cells for 2013, 2016-18 and 2024, attaching tile capture dates, AUP zone, overlays (special character, notable trees) and covariates.",
+      "Run the preregistered DiD/event-study with matching and SA2-clustered SEs. Test the pre-trend, the main post effect (MHU/THAB vs SH) and the dose-response (MHS).",
+      "Decompose the excess loss into redeveloped and unmodified parcels using building-outline and DSM change, and estimate canopy lost per net new dwelling.",
+      "Robustness: 2 and 5 m thresholds, a zone-boundary discontinuity sample, excluding parcels redeveloped after Aug 2022 (MDRS/PC78 period), seasonal and leaf-off sensitivity, and placebo land uses.",
+      "Release the canopy-change rasters, parcel table and code under CC BY 4.0, and write the report with a plain-language summary for council and planners."
+    ],
+    "risks": "Zoning was not random: MHU and THAB were placed near centres and transit, where canopy may have changed differently anyway. Mitigations are the 2013 pre-trend, matching and the boundary design. The 2016-18 epoch overlaps the first 1-2 years after the AUP (operative in part Nov 2016), which may weaken the pre-period; tile capture date is a covariate. The LiDAR sensors and point densities differ between 2013, 2016-18 and 2024, which can create artifactual canopy change; mitigations are co-registration, thinning tests and stable-area checks. The epochs fall in different seasons, so deciduous trees may appear leaf-off. Building-outline lifecycle dates may be incomplete. National intensification rules (MDRS via Plan Change 78, notified Aug 2022) may have partly treated control land late in the window. A true effect could also be smaller than the 1 pp threshold if, as in Christchurch, most loss happens on unmodified parcels. That would be a falsification, not a failure. No Māori data are involved.",
+    "plain_summary": "In 2016 Auckland rezoned large areas of the suburbs to allow terraces and apartments, and this led to a building boom. This study compares laser (LiDAR) scans of the whole city from 2013, 2016-18 and 2024 to measure whether rezoned neighbourhoods lost more of their trees than similar neighbourhoods that kept single-house zoning, and by how much. The answer tells Auckland how much tree canopy it trades for new homes and where that loss happens.",
+    "local_relevance": "Auckland Council's urban ngahere (urban forest) team and planners could use the parcel-level canopy-change maps and the causal estimate when setting tree-retention rules and the 30% canopy target in intensification plan changes. Local boards and housing economists get the first estimate of canopy lost per new dwelling."
+  },
+  {
+    "id": "auckland-nz-2023-storms-estuary-mud-natural-experiment",
+    "title": "Did the 2023 Auckland floods and Cyclone Gabrielle muddy Auckland's estuaries? A 15-year event study of LAWA estuary-health monitoring",
+    "domain": "auckland-nz",
+    "hypothesis": "Auckland estuary monitoring sites in the top tercile of 2023-storm sediment exposure show a rise in sediment mud content in the first post-storm survey (2023) that is at least 4 percentage points larger than at bottom-tercile sites, relative to each site's own 2010-2022 baseline (site and year fixed-effects difference-in-differences, 95% CI excluding 0). Exposure is the fraction of newly bare ground, mapped from Sentinel-2 by comparing Nov-Dec 2022 with Feb-Apr 2023, in land draining to the coast within 5 km of the site.",
+    "gap": "The 27 Jan 2023 Auckland Anniversary floods and Cyclone Gabrielle (14 Feb 2023) triggered thousands of slips in Auckland (Brook & Nicoll 2024, Landslides). Sediment is the top-ranked stressor of NZ estuaries. Even so, no peer-reviewed study has tested whether the 2023 storms produced a detectable, exposure-graded step change in estuary mud or benthic health using the long-running Auckland monitoring network. OpenAlex searches ('Cyclone Gabrielle estuary sediment benthic macrofauna': 5 unrelated hits; 'Auckland estuary mud content macrofauna storm 2023': none relevant) and Crossref searches ('2023 Auckland floods estuary sediment mud macrofauna'; 'Cyclone Gabrielle sedimentation estuary benthic ecology') found nothing. Auckland Council's 'Mapping Bare Earth Areas from Cyclone Gabrielle 2023' pilot mapped sediment sources in only 5 catchments and did not link them to estuary outcomes. The LAWA estuary dataset (v2, data to 3 Sep 2025, published 22 Jun 2026) now includes the 2023 and 2024 surveys, alongside 52 Auckland sites with at least 8 pre-storm years of mud data.",
+    "value_score": 6,
+    "cost_score": 3,
+    "value_rationale": "This is a rare natural experiment: a 1-in-200-year rainfall shock hit a monitoring network with a 13-year pre-period. A clear answer, whether positive or null, informs Auckland Council's sediment programmes (e.g. Hoteo Sediment Reduction, the Water Quality Targeted Rate), NPS-FM sediment limits and Kaipara/Manukau restoration. The exposure pipeline transfers to other regions. Its scope is limited to about 60-70 sites and two post-storm years, so the score is a solid 6 rather than higher.",
+    "cost_rationale": "Tabular data are under 1 MB. Exposure mapping streams Sentinel-2 windows (about 10-20 GB) and delineates catchments from the LINZ 1 m DEM resampled to 10 m (about 10 GB). Fixed-effects models and bootstraps take minutes. The whole job is CPU-only and takes 3-4 days.",
+    "est_wall_time": "3-4 days",
+    "est_data_gb": 25,
+    "feasibility": "local",
+    "requirements_if_out_of_reach": "",
+    "datasets": [
+      {
+        "name": "LAWA Estuary Health monitoring dataset (v2, data as at 3 Sep 2025, published 22 Jun 2026): mud content, metals and macrofauna benthic-health score per site and year",
+        "url": "https://www.lawa.org.nz/media/jegduc2j/lawa-estuary-health_monitoring-dataset_sept2025_v2.xlsx",
+        "access": "Open download, no account (listed at https://www.lawa.org.nz/download-data)",
+        "size": "0.87 MB xlsx; 449 sites nationally (122 Auckland), 11,828 rows; Auckland mud content and macrofauna 2010-2024"
+      },
+      {
+        "name": "Sentinel-2 L2A Cloud-Optimised GeoTIFFs via Element84 Earth Search STAC",
+        "url": "https://earth-search.aws.element84.com/v1/collections/sentinel-2-l2a",
+        "access": "Open, no account (verified: 22 scenes with <30% cloud over Auckland, 15 Feb-31 Mar 2023)",
+        "size": "~10-20 GB of windowed reads (B02-B12, SCL)"
+      },
+      {
+        "name": "GPM IMERG Final Run daily precipitation v07 (0.1 deg)",
+        "url": "https://disc.gsfc.nasa.gov/datasets/GPM_3IMERGDF_07/summary",
+        "access": "Free NASA Earthdata account required",
+        "size": "~0.2 GB for the Auckland box 2010-2024"
+      },
+      {
+        "name": "Open-Meteo ERA5 historical archive API (fallback rainfall; underestimates convective extremes: 82 mm on 27 Jan 2023 at central Auckland vs ~250 mm recorded at Auckland Airport)",
+        "url": "https://archive-api.open-meteo.com/v1/archive?latitude=-36.85&longitude=174.76&start_date=2023-01-26&end_date=2023-01-28&daily=precipitation_sum",
+        "access": "Open, no key",
+        "size": "<10 MB"
+      },
+      {
+        "name": "LINZ Auckland Part 1/Part 2 LiDAR 1m DEM (2024) for catchment delineation",
+        "url": "https://nz-elevation.s3.ap-southeast-2.amazonaws.com/auckland/auckland-part-1_2024/dem_1m/2193/collection.json",
+        "access": "Open public S3 (CC BY 4.0), no account",
+        "size": "~10 GB (resampled to 10 m for flow routing)"
+      },
+      {
+        "name": "Auckland Council 'Auckland Sediment Sources Viewer - Cyclone Gabrielle Pilot Study' (bare-earth pre/post maps for 5 pilot catchments; used to validate the Sentinel-2 bare-ground classifier)",
+        "url": "https://www.arcgis.com/home/item.html?id=23ed5b74d0884ebea0129a1426c46ab7",
+        "access": "Public ArcGIS web map; layer export availability to be confirmed",
+        "size": "<1 GB"
+      }
+    ],
+    "lit_for": [
+      "Brook & Nicoll (2024) Brief report of fatal rainfall-triggered landslides from record-breaking 2023 storms in Auckland, New Zealand, Landslides, doi:10.1007/s10346-024-02258-0",
+      "Multiple stressor effects on marine infauna: responses of estuarine taxa and functional traits to sedimentation, nutrient and metal loading (2017), Scientific Reports, doi:10.1038/s41598-017-12323-5",
+      "Influence of land-derived stressors and environmental variability on compositional turnover and diversity of estuarine benthic communities (2021), Marine Ecology Progress Series, doi:10.3354/meps13714",
+      "Macrobenthic-mud relations strengthen the foundation for benthic index development: a case study from shallow, temperate New Zealand estuaries (2015), Ecological Indicators, doi:10.1016/j.ecolind.2015.05.039",
+      "Historical data provides context for recent monitoring and demonstrates 100 years of declining estuarine health (2022), NZ Journal of Marine and Freshwater Research, doi:10.1080/00288330.2022.2086588"
+    ],
+    "lit_against": [
+      "Auckland Council annual estuary and sediment monitoring technical reports (grey literature, not indexed) may already describe 2023 values descriptively. A formal exposure-graded test does not appear to exist, but check before preregistering.",
+      "The Influence of Benthic Macrofauna on the Erodibility of Intertidal Sediments with Varying Mud Content in Three New Zealand Estuaries (2015), Estuaries and Coasts, doi:10.1007/s12237-015-0036-2. Fine sediment can be resuspended and redistributed within weeks, so a single annual sample may miss a transient pulse and bias the result toward a null.",
+      "Auckland Council pilot 'Mapping Bare Earth Areas from Cyclone Gabrielle 2023' (5 catchments): sediment-source mapping only, no estuary outcome. It partly overlaps the exposure step."
+    ],
+    "method": "Pre-registered event study / difference-in-differences on an annual site panel. Outcome: mud content (% <63 um) per site and year. Pre-storm years run 2010-2022, the first post-storm survey is 2023 and 2024 tests persistence. The site list and exposure terciles are frozen before any 2023-2024 contrast is computed. Exposure: for each site, land draining to the coast within 5 km (sensitivity 2 and 10 km) is delineated from the LINZ DEM. Newly bare ground is mapped from Sentinel-2 L2A as a cloud-masked NDVI/bare-soil-index change between Nov-Dec 2022 and Feb-Apr 2023 composites, and validated against Auckland Council's pilot bare-earth maps. The secondary exposure is IMERG storm rainfall for 27 Jan-15 Feb 2023. Model: mud_it = site FE + year FE + beta*(top tercile x 2023) + gamma*(top tercile x 2024), with wild-cluster bootstrap by harbour (16 estuary groups). Secondary outcomes: macrofauna benthic-health score (expected lag to 2024), and Cu/Zn/Pb as an urban-stormwater signal. Placebos: pseudo-events in 2015-2021 and leave-one-harbour-out. External replication: LAWA sites in Northland, Waikato (Coromandel), Hawke's Bay and Gisborne versus South Island controls, using the same exposure pipeline.",
+    "plan": [
+      "Load the LAWA estuary file. Confirm the exact Auckland sampling months, since many records carry year-only dates and post-storm timing must be verified from Auckland Council monitoring documentation. Freeze the site inclusion rule (>=5 pre-2023 years plus a 2023 value) without looking at 2023-2024 values.",
+      "Delineate the contributing land within 2, 5 and 10 km of each site from the LINZ 2024 DEM (resampled to 10 m) using pysheds or WhiteboxTools.",
+      "Build Sentinel-2 bare-ground change maps (Nov-Dec 2022 vs Feb-Apr 2023). Validate them against the Auckland Council pilot bare-earth layers, and compute the exposure fraction per site. Extract IMERG storm totals as the secondary exposure.",
+      "Freeze exposure terciles and write the preregistration, including the 4 pp primary threshold, secondary outcomes and placebo tests.",
+      "Fit the site and year fixed-effects DiD for mud content with wild-cluster bootstrap by harbour. Report the 2023 effect, 2024 persistence, and a continuous-exposure dose-response.",
+      "Run the secondary analyses: benthic-health score in 2023 and 2024, metals, and leave-one-harbour-out and pseudo-event placebos.",
+      "Replicate nationally with the same pipeline on LAWA sites in storm-hit regions (Northland, Coromandel, Hawke's Bay, Tairāwhiti) versus South Island controls, then write the report."
+    ],
+    "risks": "The sample is small: about 60-70 Auckland sites with 2023 data, giving roughly 20 per tercile. The minimum detectable DiD is about 4 pp, given the pre-storm year-to-year SD of 6.6 pp and a within-site SD of 3.4 pp. Sampling dates are partly year-only, so some 2023 records could predate 27 Jan 2023 and must be verified. Harbour sites receive sediment from multiple and distant catchments, so a 5 km radius may misclassify exposure. Mud can be flushed or redistributed before the annual survey. Post-storm Sentinel-2 imagery is cloudy, and urban bare ground from construction may confound the exposure. Only two post-storm years exist in the current release. MĀORI DATA NOTE: no Māori data or customary-fisheries data are used. Estuaries such as Kaipara and Manukau are taonga under active mana whenua kaitiakitanga, so results will be offered to relevant forums (e.g. Kaipara Moana Remediation, the Manukau Harbour Forum and the council's mana whenua liaison) before publication.",
+    "plain_summary": "The 2023 Auckland floods and Cyclone Gabrielle washed huge amounts of soil off the land. This study uses 15 years of council monitoring at about 70 estuary sites to test whether the places that received the most newly bare, slipped land became measurably muddier, and whether shellfish and worm communities suffered. Mud smothers estuary life, so the answer shows how much damage the storms did and which harbours need sediment control most.",
+    "local_relevance": "Auckland Council's Healthy Waters and Environmental Evaluation teams, and the Kaipara Moana Remediation and Manukau Harbour programmes, could use the exposure-graded estimates to target erosion control and to set expectations for estuary recovery. The open Sentinel-2 storm-exposure method can be reused after future extreme rain events."
+  },
+  {
+    "id": "auckland-nz-kauri-dieback-multitemporal-lidar",
+    "title": "Can open repeat LiDAR see kauri dieback? Validating 2016-18 to 2024 canopy change against Auckland Council's ObsKauri field surveys",
+    "domain": "auckland-nz",
+    "hypothesis": "Kauri graded as having possible or severe kauri-dieback symptoms (field status 3-4) in the canopy-blind 2014-15 Waitākere track survey can be distinguished from non-symptomatic kauri (status 1) using only open LiDAR canopy change between 2016-18 and 2024. The change features are loss of P95 canopy height and of upper-canopy (>15 m) cover within 15 m of each recorded tree. The preregistered threshold is a spatially blocked AUC >= 0.70, with the 95% bootstrap CI lower bound above 0.60. The LiDAR-change score must also add >= 0.05 AUC over a static model (distance to track, elevation, slope and 2016-18 canopy height).",
+    "gap": "Remote detection of kauri dieback so far relies on single-date commercial or airborne imagery: Meiforth et al. 2020 (WorldView-2 plus LiDAR, Remote Sensing) and Meiforth et al. 2019 (AISA hyperspectral). Earlier work used helicopter aerial surveillance (NZ Plant Protection 2014). No study has tested whether freely available repeat LiDAR, now available region-wide for Auckland in 2016-18 and 2024, captures dieback progression. Nor has anyone validated such a signal against Auckland Council's public ObsKauri survey layer, which holds 52,867 public-land kauri observations from 2007-2026 across 105 surveys and includes a canopy-independent 2014-15 track survey of 13,861 trees. Novelty searches (OpenAlex: 'kauri dieback remote sensing', 'kauri dieback LiDAR', 'Phytophthora agathidicida detection aerial imagery', 'multi-temporal LiDAR canopy dieback detection Phytophthora'; Crossref: 'kauri dieback canopy LiDAR remote sensing detection') found no multi-temporal LiDAR study and no use of ObsKauri.",
+    "value_score": 6,
+    "cost_score": 4,
+    "value_rationale": "Kauri dieback is Aotearoa's most prominent forest-disease crisis and Auckland spends heavily on surveillance. A validated, free, region-wide canopy-decline screen would let ground teams prioritise where to survey across thousands of hectares, and could be rerun with each new LiDAR flight. A well-powered negative result is also useful, because it would tell agencies not to rely on LiDAR alone. The score is capped at 6 because labels are imperfect (symptoms are not pathogen-specific) and the result is regional.",
+    "cost_rationale": "The primary analysis uses LINZ 1 m DSM/DEM subsets over Waitākere and Hunua (about 5 GB). The secondary canopy-density metrics need OpenTopography point-cloud tiles within 100 m of surveyed kauri, about 40 GB after subsetting from the 211-258 GB full collections. PDAL feature extraction and CPU logistic or gradient-boosting models fit in 4-6 days without a GPU.",
+    "est_wall_time": "5-7 days",
+    "est_data_gb": 50,
+    "feasibility": "local",
+    "requirements_if_out_of_reach": "",
+    "datasets": [
+      {
+        "name": "Auckland Council 'Ruru ObsKauri Tiaki (Valid and Public)': kauri field status (6 classes), soil PCR results for P. agathidicida / P. cinnamomi, survey name and date, case status at 50/250 m",
+        "url": "https://services1.arcgis.com/n4yPwebTjJCmXB6W/arcgis/rest/services/Ruru_ObsKauri_Tiaki_(Valid_and_Public)/FeatureServer/0",
+        "access": "Public ArcGIS FeatureServer, no account, filtered to public land, Auckland Council licence terms, updated weekly; full download verified (52,867 records)",
+        "size": "~12 MB"
+      },
+      {
+        "name": "LINZ Auckland North 2016-2018 / South 2016-2017 and Part 1 / Part 2 2024 LiDAR 1m DSM/DEM (Waitākere and Hunua subsets)",
+        "url": "https://nz-elevation.s3.ap-southeast-2.amazonaws.com/auckland/auckland-north_2016-2018/dsm_1m/2193/collection.json",
+        "access": "Open public S3 (CC BY 4.0), no account",
+        "size": "~5 GB subset (full region ~42 GB)"
+      },
+      {
+        "name": "OpenTopography classified point clouds: Auckland North 2016-2018 (doi:10.5069/G92R3PVR), Auckland South 2016-2017 (doi:10.5069/G9KP8095), Auckland Part 1 2024 (doi:10.5069/G9HH6H8T), Auckland Part 2 2024 (doi:10.5069/G9M906V9)",
+        "url": "https://opentopography.s3.sdsc.edu/pc-bulk?list-type=2&prefix=NZ24_Auckland/",
+        "access": "Open, no account. Bulk S3-compatible listing verified (prefixes NZ16_NAuckland, NZ16_SAuckland, NZ24_Auckland, NZ24_Auckland2); landing DOIs as named",
+        "size": "Full collections 211 GB (NZ16_NAuckland) and 258 GB (NZ24_Auckland); ~40 GB subset of tiles near surveyed kauri"
+      },
+      {
+        "name": "LINZ Auckland 0.075 m aerial imagery: 2024 (RGB and RGB+NIR) and 2017 (RGB only); optional crown-colour/NDVI check",
+        "url": "https://nz-imagery.s3.ap-southeast-2.amazonaws.com/auckland/auckland_2024_0.075m/rgbnir/2193/collection.json",
+        "access": "Open public S3 (CC BY 4.0), no account; the 2024 survey includes an rgbnir product, while 2015-16, 2017, 2020 and 2022 are RGB only",
+        "size": "~5 GB subset"
+      }
+    ],
+    "lit_for": [
+      "Meiforth et al. (2020) Stress Detection in New Zealand Kauri Canopies with WorldView-2 Satellite and LiDAR Data, Remote Sensing, doi:10.3390/rs12121906. Single-date canopy stress is detectable.",
+      "Detection of New Zealand Kauri Trees with AISA Aerial Hyperspectral Data for Use in Multispectral Monitoring (2019), Remote Sensing, doi:10.3390/rs11232865",
+      "Aerial surveillance to detect kauri dieback in New Zealand (2014), NZ Plant Protection, doi:10.30843/nzpp.2014.67.5723",
+      "Phytophthora agathidicida: research progress, cultural perspectives and knowledge gaps in the control and management of kauri dieback (2019), Plant Pathology, doi:10.1111/ppa.13104",
+      "Co-Management of Kauri Dieback in the Waitākere Ranges, Aotearoa New Zealand (2023), Case Studies in the Environment, doi:10.1525/cse.2023.1830829. Governance context for the rāhui and iwi-council co-management."
+    ],
+    "lit_against": [
+      "Probing Early and Long-Term Drought Responses in Kauri Using Canopy Hyperspectral Imaging (2025), Remote Sensing, doi:10.3390/rs17233914. Drought produces canopy decline that resembles dieback, so LiDAR change may not be dieback-specific (addressed by the status-2 'ill thrift' contrast).",
+      "Phytophthora Communities Associated with Agathis australis (kauri) in Te Wao Nui o Tiriwa/Waitākere Ranges (2024), Forests, doi:10.3390/f15050735. Several Phytophthora species occur, so field symptom labels are noisy proxies for P. agathidicida.",
+      "Auckland Council Waitākere Ranges kauri population health monitoring reports (2016, 2021; grey literature) use aerial plus ground surveys and may already use LiDAR crown mapping internally. Check before preregistering.",
+      "Meiforth et al. 2020 already showed single-epoch detection. The novelty here is limited to the multi-epoch, open-data, region-wide design validated on canopy-independent labels."
+    ],
+    "method": "Diagnostic-accuracy study with frozen labels and spatial blocking. Labels come from ObsKauri. Primary set (A): the Waitākere Track Survey 2014-15, n=13,861 (90.3% status 1, 7.3% ill-thrift, 1.8% possible, 0.6% severe). Trees were sampled by proximity to tracks rather than canopy appearance, so this set is canopy-blind. Secondary sets: (B) Hunua Track 2017 plus Hunua Surveillance 2023; (C) Waitākere Survey 2021 and POI 2016, which are targeted and reported separately. Features: 1 m DSM/DEM nDSM change 2016-18 -> 2024 within 7.5, 15 and 25 m neighbourhoods (to absorb GPS error under canopy), giving ΔP95 height, Δ cover >15 m and Δ gap fraction. From density-thinned point clouds come Δ upper-canopy return fraction and Δ rugosity. As a sensitivity check, 2024 NIR imagery adds an NDVI crown-vigour feature, and RGB greenness is compared between 2017 and 2024. Masks remove slips and windthrow from the 2023 storms (ground-surface change and large contiguous losses) and track works. Models: a static baseline (distance to track, elevation, slope, aspect, 2016-18 canopy height) versus baseline plus LiDAR change, fitted as logistic regression and gradient boosting on CPU. Evaluation: 1 km spatial-block cross-validation, AUC with bootstrap CIs and top-decile enrichment. Specificity tests compare severe dieback against ill-thrift and examine the soil-PCR-positive subset. The output is an aggregated (>=250 m hexagon) canopy-decline screening layer.",
+    "plan": [
+      "Download ObsKauri, then freeze label sets A, B and C, the status coding (3-4 vs 1; 2 held out for specificity) and the 1 km spatial blocks. Do this before extracting any LiDAR feature, and preregister the AUC thresholds.",
+      "Fetch LINZ 1 m DSM/DEM tiles for Waitākere and Hunua for both epochs, and OpenTopography point-cloud tiles within 100 m of surveyed kauri (about 40 GB). Thin both epochs to a common point density.",
+      "Co-register the epochs on stable ground. Map and mask 2023 storm slips and windthrow, track upgrades and other non-disease canopy losses.",
+      "Extract per-tree neighbourhood change features at 7.5, 15 and 25 m, plus static covariates (distance to track, terrain, baseline canopy height).",
+      "Fit the static and LiDAR-change models under spatial-block CV. Report AUC, its CI, the increment over static, and top-decile enrichment for set A; replicate on set B and report set C separately.",
+      "Run specificity and robustness checks: severe vs ill-thrift, the soil-PCR-positive subset, neighbourhood radius, density-thinning level and excluding trees within 20 m of tracks.",
+      "Share results and the aggregated screening layer with Auckland Council's kauri dieback programme and mana whenua (Te Kawerau ā Maki for Waitākere, Hunua iwi) for review before public release, then write the report."
+    ],
+    "risks": "GPS positions under kauri canopy are often off by 5-15 m and crowns overlap, which blurs tree-level labels; neighbourhood features and radius sensitivity mitigate this. The two LiDAR epochs differ in point density and season, which can create spurious change; mitigated by thinning and stable-area checks. The 2023 storms caused large slips in the Waitākere Ranges that mimic canopy loss and must be masked. Symptomatic trees are rare in the canopy-blind set (about 330 trees), and some severe trees may already have lost their crowns before 2016-18, reducing measurable change. Symptoms are not specific to P. agathidicida, and drought or ill-thrift may produce the same signal. The public layer excludes private land. MĀORI DATA AND TAONGA FLAG: kauri are a taonga species. The Waitākere Ranges (Te Wao Nui o Tiriwa) have been under a rāhui placed by Te Kawerau ā Maki since 2017, and kauri dieback is co-managed with mana whenua. Following Te Mana Raraunga principles (rangatiratanga, kaitiakitanga, manaakitanga): (1) the study is entirely in-silico and involves no field access, consistent with the rāhui; (2) only aggregated outputs (>=250 m hexagons or catchments) are published, never tree-level symptomatic locations that could draw visitors into closed areas; (3) before preregistration, the lab contacts Auckland Council's kauri dieback team and Te Kawerau ā Maki and Hunua mana whenua to seek guidance, and offers review of the report and derived layers, with co-authorship or acknowledgement as they prefer; (4) derived products are released under CARE-aligned terms, and any iwi request to restrict or withhold them is honoured.",
+    "plain_summary": "Kauri dieback is killing Aotearoa's giant kauri trees, and finding sick trees on foot is slow and spreads the disease. This study checks whether free laser scans of Auckland flown in 2016-18 and again in 2024 can spot thinning kauri crowns, using thousands of council field records of healthy and sick trees as the answer key. If it works, Auckland gets a cheap, repeatable early-warning map that shows surveillance teams where to look first.",
+    "local_relevance": "Auckland Council's kauri dieback and biosecurity teams, together with Te Kawerau ā Maki and Hunua mana whenua as kaitiaki, could use the screening layer to prioritise ground surveys, track management and hygiene investment. Biosecurity NZ could reuse the method nationally wherever repeat LiDAR exists."
+  }
+]

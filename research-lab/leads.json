@@ -1,7 +1,7 @@
 {
  "generated": "2026-09-01",
  "hardware": "32-core Intel Xeon Cascade Lake, 94GB RAM, NVIDIA A100 80GB, ~600GB free disk",
- "method": "10 domain scouts + completeness critic + 2 gap-fill scouts (research-lead-scout workflow, 13 agents, ~107 web searches/tool uses). Critic findings applied as score adjustments with visible critic_note fields; original scout scores preserved as scout_*_score. | Round 2 (2026-10-02): 8 domain scouts over the round-1 critic's unscouted angles + 1 calibration critic (research-lead-scout-round2 workflow, 9 agents, 637 tool uses); critic scores applied, scout scores preserved as scout_*_score where changed.",
+ "method": "10 domain scouts + completeness critic + 2 gap-fill scouts (research-lead-scout workflow, 13 agents, ~107 web searches/tool uses). Critic findings applied as score adjustments with visible critic_note fields; original scout scores preserved as scout_*_score. | Round 2 (2026-10-02): 8 domain scouts over the round-1 critic's unscouted angles + 1 calibration critic (research-lead-scout-round2 workflow, 9 agents, 637 tool uses); critic scores applied, scout scores preserved as scout_*_score where changed. | Auckland/NZ round (2026-10-03): 4 local-context scouts (hazards & climate, urban systems, health & society, environment & biodiversity) + 1 calibration critic; Te Mana Raraunga handling checked per lead; fields local_relevance, time_sensitive and needs_engagement added.",
  "rubric": {
   "cost_score": "1-2 hours-to-a-day CPU-only | 3-4 days, some GPU, <50GB | 5-6 one-two weeks, 50-300GB | 7-8 weeks, near hardware limits | 9-10 exceeds this machine",
   "value_score": "2-3 minor replication | 4-5 solid incremental | 6-7 fills actively-discussed gap | 8-10 major open question / broad impact"
@@ -5310,6 +5310,952 @@
    "critic_note": "Critic (round 2): arXiv showed only the 2023 BP/TN utility rebuttals and Gharibyan 2507.10771; no population-level false-assurance study. Shares its patch generator with the mitigation-bias lead. Down-scaled truncations limit transfer to 50-100-qubit claims. Value 5 and cost 4 kept.",
    "plain_summary": "When classical computers try to check quantum-advantage claims, researchers usually trust a simulation once making it more accurate stops changing the answer. We will test that rule of thumb on hundreds of circuits small enough to know the true answer, measure how often 'stopped changing' still means 'wrong', and build honest error bars that classical challengers can use.",
    "scout_round": 2
+  },
+  {
+   "id": "auckland-nz-wastewater-testing-gap-deprivation",
+   "title": "Who stopped being counted? COVID-19 case-reporting gaps across NZ sewer catchments, measured against wastewater and broken down by deprivation, 2022-2024",
+   "domain": "auckland-nz",
+   "hypothesis": "Across at least 50 NZ wastewater catchments with 30 or more weeks of paired data (Mar 2022 to Jun 2024), the catchment ascertainment index falls as catchment deprivation rises. The index is log weekly reported cases minus log flow- and population-normalised SARS-CoV-2 copies/person/day, with week fixed effects. Prediction: a 1-SD higher population-weighted NZDep2023 score goes with at least 15% fewer reported cases per unit of wastewater signal (multiplicative ratio <= 0.85, 95% CI excluding 1), after adjusting for sampler type (autosampler vs grab), log catchment population, % aged 65+ and region. Second prediction: the slope is steeper (more negative) after mandatory isolation ended on 15 Aug 2023 than in Mar 2022 to Aug 2023 (slope difference with 95% CI excluding 0). Either prediction fails if its CI includes the null or the estimate is on the wrong side of the threshold.",
+   "gap": "Watson, Plank et al. (2024, Commun Med) combined NZ case and wastewater data to estimate one national time-varying case-ascertainment ratio, but they did not model differences between catchments. Overseas studies relate socioeconomic status to cases or wastewater levels in single cities or a few small towns (Georgia USA, Detroit, South Africa). None uses a national deprivation index, catchment-level case counts for 100+ sewersheds, and testing-policy breakpoints together. ESR/PHF Science released an unusual open resource: weekly reported cases aggregated to each sewer catchment, paired with the RNA series, for 134 sites from 2021 to 2024. It has not been used to measure who dropped out of case reporting as testing collapsed.",
+   "value_score": 6.0,
+   "cost_score": 3.0,
+   "value_rationale": "This fills a gap that is actively discussed: whether wastewater can serve as an ascertainment-independent equity monitor. The result would directly inform how PHF Science and Health NZ read case data in high-deprivation areas such as South Auckland, and how they size the reduced 12-site network and future pathogen panels (measles, influenza, H5N1). It is a new NZ-specific analysis, not a global open question, hence 6.",
+   "cost_rationale": "All inputs are small tables (under 0.5 GB). Building approximate sewersheds from SA1 2023 polygons, the urban-rural classification and NZDep2023 takes about a day of GIS work. Panel regressions and sensitivity analyses run in minutes on CPU. No GPU is needed.",
+   "est_wall_time": "3-4 days (1 day data assembly and sewershed mapping, 1 day modelling, 1-2 days sensitivity analyses and write-up)",
+   "est_data_gb": 0.3,
+   "feasibility": "local",
+   "requirements_if_out_of_reach": "",
+   "datasets": [
+    {
+     "name": "PHF Science (ex-ESR) Aotearoa wastewater COVID-19 surveillance: site-level weekly SARS-CoV-2 copies/person/day plus weekly reported cases aggregated per sewer catchment (134 sites Jun 2021-Jun 2024 in data_historic/; 12 sites to Sep 2026 in data/), sites.csv with WWTP lat/lon, catchment population and sampler type",
+     "url": "https://github.com/ESR-NZ/covid_in_wastewater",
+     "access": "Open on GitHub, no account needed (verified; last pushed 2026-09-24). Catchment polygons are council IP and not included.",
+     "size": "~5 MB of CSV/XLSX (repo ~120 MB with history)"
+    },
+    {
+     "name": "NZDep2023 deprivation index by SA1 with higher geographies (University of Otago)",
+     "url": "https://web.archive.org/web/20250426183853id_/https://www.otago.ac.nz/__data/assets/excel_doc/0028/593146/NZDep2023_SA1_withHigherGeo.xlsx",
+     "access": "Open. otago.ac.nz blocks scripted downloads with a Cloudflare challenge, so use this Internet Archive mirror (verified, 2.2 MB) or download manually in a browser",
+     "size": "2.2 MB"
+    },
+    {
+     "name": "Stats NZ Statistical Area 1 2023 (generalised) boundaries",
+     "url": "https://datafinder.stats.govt.nz/layer/111208-statistical-area-1-2023-generalised/",
+     "access": "CC BY 4.0, but export or API needs a free Stats NZ Datafinder account and API key",
+     "size": "~50-150 MB"
+    },
+    {
+     "name": "Stats NZ Urban Rural 2023 (generalised) boundaries, used to assign WWTPs to the towns/urban areas they serve",
+     "url": "https://datafinder.stats.govt.nz/layer/111198-urban-rural-2023-generalised/",
+     "access": "CC BY 4.0; free Stats NZ Datafinder account and API key",
+     "size": "~20-50 MB"
+    },
+    {
+     "name": "Census 2023 usually-resident population by age at SA1/SA2 (for % aged 65+ covariate)",
+     "url": "https://explore.data.stats.govt.nz/",
+     "access": "Open; bulk/API access needs a free Stats NZ API key",
+     "size": "<50 MB"
+    }
+   ],
+   "lit_for": [
+    "Hewitt J et al. (2022) Sensitivity of wastewater-based epidemiology for detection of SARS-CoV-2 RNA in a low prevalence setting. Water Research. doi:10.1016/j.watres.2021.118032 (the NZ lab method behind the data)",
+    "Gilpin B, Chapman JR, Stevens J et al. (2026) Detection of SARS-CoV-2 RNA in wastewater from a city of 90,500 people as the result of a single COVID-19 case. J Water Health. doi:10.2166/wh.2026.146 (NZ sensitivity evidence: wastewater registers even single cases)",
+    "Fisman DN, Wilson N, Lee E et al. (2026) Independent validation of test-adjusted COVID-19 incidence estimates using wastewater surveillance data in Ontario, Canada. medRxiv. doi:10.64898/2026.05.08.26352754 (wastewater as an ascertainment-independent benchmark)",
+    "Holm RH, Pocock G, Severson MA et al. (2023) Using wastewater to overcome health disparities among rural residents. Geoforum. doi:10.1016/j.geoforum.2023.103816"
+   ],
+   "lit_against": [
+    "Watson LM, Plank MJ, Armstrong B et al. (2024) Jointly estimating epidemiological dynamics of Covid-19 from case and wastewater data in Aotearoa New Zealand. Communications Medicine. doi:10.1038/s43856-024-00570-3. This is the closest work: it already shows the NATIONAL case-ascertainment ratio declining over time, but it does not test between-catchment or deprivation gradients",
+    "Lancaster E, Byrd K, Ai Y et al. (2022) Socioeconomic status correlations with confirmed COVID-19 cases and SARS-CoV-2 wastewater concentrations in small-medium sized communities. Environmental Research. doi:10.1016/j.envres.2022.114290 (a few Georgia, USA towns)",
+    "Maree G, Els F, Naidoo Y et al. (2025) Wastewater surveillance overcomes socio-economic limitations of laboratory-based surveillance when monitoring disease transmission: the South African experience. PLoS ONE. doi:10.1371/journal.pone.0311332",
+    "Zhao L, Peidro Guzman H, Weaver Richardson C et al. (2025) Observed differences in wastewater measurements of Treponema pallidum, norovirus and SARS-CoV-2 in Detroit areas with different socioeconomic vulnerability. ACS ES&T Water. doi:10.1021/acsestwater.5c00714",
+    "Novelty searches (OpenAlex: 'wastewater + Aotearoa', 'wastewater COVID-19 + New Zealand', 'wastewater + socioeconomic', 'wastewater SARS-CoV-2 underreporting socioeconomic', 'sewershed SARS-CoV-2 socioeconomic'; arXiv 'wastewater AND ascertainment'): found no catchment-level NZ deprivation analysis of case ascertainment"
+   ],
+   "method": "(1) Build a site-week panel from data_historic/cases_site.csv and ww_site.csv, plus data/ for the 12 sites still running to 2026. Compute AI = log(7*case_7d_avg + 0.5) - log(copies/person/day), dropping weeks below the limit of detection (500 gc/L floor) under a pre-specified rule. (2) Approximate each sewershed. Assign each WWTP to the Urban Rural 2023 urban area(s) it serves by name and nearest-plant matching, take the SA1s inside, and accept the mapping only if the summed 2023 usually-resident population is within +/-25% of ESR's catchment population. Multi-plant metros (Auckland, Wellington, Christchurch) use council-published catchment maps where available or are excluded from the primary analysis. (3) Covariates: population-weighted NZDep2023 score (z-scored), % aged 65+, log population, sampler type, region. (4) Primary model: linear mixed model AI ~ week fixed effects + zNZDep + covariates + (1|site), with cluster-robust SEs by site. Also fit a negative-binomial check on case counts with offset log(RNA load x population). (5) Period interaction: zNZDep x post-15-Aug-2023. (6) Sensitivity: autosampler-only sites; 0-1 week lag; leave-one-region-out; Omicron sub-lineage eras; excluding tourism/commuter catchments (e.g. Queenstown); a placebo that swaps in NZDep of adjacent unserved SA2s. (7) Descriptive extension: ascertainment trends 2024-2026 at the 12 remaining sites. Aggregate area-level data only.",
+   "plan": [
+    "Download the ESR/PHF wastewater CSVs, NZDep2023 SA1 file, and SA1 2023 and Urban Rural 2023 layers (free Datafinder key); freeze checksums.",
+    "Build the site-week panel (cases, RNA, sampler type, population), apply the pre-registered LOD and minimum-weeks rules, and report the site count retained.",
+    "Map each WWTP to an approximate sewershed (urban-area SA1 sets) and validate against ESR catchment population (+/-25% rule); publish the mapping table and the excluded sites with reasons.",
+    "Compute population-weighted NZDep2023, % 65+ and rurality for each catchment.",
+    "Fit the primary mixed model and the negative-binomial check; test H1 (ratio <= 0.85 per SD NZDep) and H2 (steeper slope after 15 Aug 2023).",
+    "Run the sensitivity suite (autosampler-only, lags, leave-one-region-out, variant eras, tourism exclusions, adjacent-area placebo).",
+    "Describe 2024-2026 ascertainment at the 12 retained sites and estimate what share of the deprivation range the reduced network covers.",
+    "Write up the report with plain-language and equity framing; circulate to PHF Science and Northern region public health before release."
+   ],
+   "risks": "Sewershed approximation error is the main threat. Catchment polygons are council IP, so mapping by urban area may misassign fringe SA1s; the population-match rule and the exclusion of metros limit this but reduce the sample. Cases are counted by residence while wastewater reflects where people are (commuters, tourists). Shedding varies by age, variant and vaccination. Flow normalisation errors (stormwater) and grab-sample noise affect small catchments. Policy dates must be fixed from official sources in the preregistration. Ecological inference: the result describes areas, not individuals. Te Mana Raraunga: the primary analysis uses only area-level deprivation. Any secondary use of Census ethnic composition stays aggregate and is framed as a health-system testing-access gap, not a property of communities, with no deficit framing. Findings should be shared with the Iwi-M\u0101ori Partnership Boards and Pacific health partners (e.g. T\u0101maki Makaurau IMPB) before publication.",
+   "critic_note": "Critic (Auckland/NZ round): Europe PMC and Crossref (2023-26) turned up adjacent work only: Watson/Plank 2024 (national ascertainment only), a 2026 J R Soc NZ paper on Pacific under-representation in FluTracking and sentinel-GP surveillance, and IDI-based predictors of testing and infection (IJPDS 2025). None measures differences in ascertainment between catchments using wastewater, so the gap holds. Data checks: ESR-NZ/covid_in_wastewater data_historic has cases_site.csv (18.7k site-weeks), ww_site.csv (11k) and sites.csv (134 sites with sampler type and population; pushed 2026-09-24), and the NZDep2023 Wayback mirror returns the 2.2 MB file. Stats NZ layers need only a self-service key. Cost raised 2->3 to match the 3-4 day estimate. ww_site has ~40% fewer site-weeks than cases_site, so check the >=50 catchments x >=30 paired weeks rule before preregistering. Analysis is area-level NZDep only, so there is no engagement gate; IMPB review before release is still appropriate.",
+   "scout_value_score": 6,
+   "scout_cost_score": 2,
+   "plain_summary": "Sewage shows how much COVID is circulating in a town whether or not people get tested. This study compares sewage virus levels with officially reported cases in 50-100+ NZ towns and suburbs, to test whether poorer areas such as parts of South Auckland had markedly more 'missing' cases once free testing and isolation rules wound down. If so, case counts systematically understate illness where need is greatest, and wastewater could help correct that.",
+   "local_relevance": "PHF Science and Health NZ's public health teams (including the Northern region covering Auckland) could use per-catchment under-reporting factors to adjust case-based alerts and to decide where the cut-down 12-site wastewater network, or future measles/flu panels, should sample. Auckland Council and Iwi-M\u0101ori Partnership Boards get evidence on where surveillance blind spots fall.",
+   "time_sensitive": "",
+   "needs_engagement": "",
+   "scout_round": "auckland-nz"
+  },
+  {
+   "id": "auckland-nz-immunisation-cascade-forecast",
+   "title": "Forecasting NZ's 24-month childhood immunisation coverage from earlier milestones: a cohort-cascade model with a preregistered prospective test against the 95%-by-2030 Health target",
+   "domain": "auckland-nz",
+   "hypothesis": "In rolling-origin backtests over about 60 quarterly coverage releases (2012-2026; 20 districts; Total, M\u0101ori and Pacific groups), a cohort-linked cascade model beats two baselines at the 4-quarter horizon. The model predicts each birth cohort's 24-month full-immunisation coverage from the same cohort's earlier coverage at 12 months (observed 4 quarters before) and 6/8 months. The baselines are (a) persistence of the latest published 24-month coverage and (b) linear-trend extrapolation, and the model must have at least 30% lower mean absolute error than each (Diebold-Mariano p < 0.05). Prospective test: forecasts for the next two Health NZ quarterly releases (Q4 2025/26 and Q1 2026/27) are frozen and hashed before publication. For district totals they must achieve MAE <= 2.5 percentage points, with 70-90% of cells inside the 80% prediction intervals.",
+   "gap": "NZ immunisation research is mostly descriptive or spatial (Marek et al. 2020 on 2006-2017 spatial change; Walls et al. 2023 on measles gaps; Rumball-Smith and Kenealy 2016 on the Northland pathway). Health NZ publishes each milestone's coverage separately every quarter, so the same birth cohort is visible at 6, 8, 12, 18 and 24 months in successive files, but nobody links these into a forward projection. There is no open, validated tool that says now where each district's 24-month coverage, the official Health target, will be in 12 months. Coverage has collapsed (6-month coverage 66.6% nationally and 48.5% for M\u0101ori in Jan-Mar 2026) and measles is spreading in NZ in 2025-26, so this tool is missing at an important time.",
+   "value_score": 5.0,
+   "cost_score": 2.0,
+   "value_rationale": "This is a constructive, actively needed tool. It gives an early read on progress to the 95%-at-24-months 2030 target, district and equity-group targeting 12-16 months ahead, and an input for measles immunity-gap planning during an active outbreak. The method is simple, and its impact depends on uptake by Health NZ, hence 6 not higher.",
+   "cost_rationale": "About 120 small XLSX files (~50 MB total) are parsed into a tidy table. Hierarchical logistic or beta-binomial models with rolling refits take minutes to hours on CPU. Most effort goes into harmonising 15 years of changing file layouts and schedule definitions.",
+   "est_wall_time": "2-3 days for the backtest and frozen forecasts; prospective scoring when the next one or two Health NZ quarterly releases appear (expected within weeks to months)",
+   "est_data_gb": 0.05,
+   "feasibility": "local",
+   "requirements_if_out_of_reach": "",
+   "datasets": [
+    {
+     "name": "Health NZ quarterly and annual childhood immunisation coverage by milestone age (6, 8, 12, 18, 24 months, 54 months, 5 years) x district x ethnicity / NZDep quintile / rurality, with # eligible, # fully immunised, # declined; Q1 2023/24 to Q3 2025/26 (Jan-Mar 2026, extracted 09/04/2026)",
+     "url": "https://www.healthnz.govt.nz/about-us/health-data/data-sets-and-collections/immunisation-data-and-statistics/immunisation-coverage",
+     "access": "Open static XLSX at static.info.content.health.nz, no account (verified)",
+     "size": "~25 files x ~130 KB"
+    },
+    {
+     "name": "Archived Te Whatu Ora/Ministry of Health 3-month-reporting-period coverage files, Apr 2009 to Dec 2022 (54 files; same district x milestone x ethnicity/deprivation layout)",
+     "url": "https://web.archive.org/cdx/search/cdx?url=www.tewhatuora.govt.nz/assets/For-the-health-sector/Health-sector-guidance/Vaccine-information-for-healthcare-professionals/Immunisation-coverage-data-three-month-reporting-period/&matchType=prefix&filter=statuscode:200&collapse=urlkey",
+     "access": "Open via the Internet Archive; the original tewhatuora.govt.nz asset paths now redirect (verified: 54 captures; sample Oct-Dec 2022 file parsed)",
+     "size": "54 files, 60 KB-1.3 MB each (~20 MB)"
+    },
+    {
+     "name": "Archived 12-month rolling coverage files, Jul 2008 to Mar 2023 (55 files), for annual-cohort sensitivity checks",
+     "url": "https://web.archive.org/cdx/search/cdx?url=www.tewhatuora.govt.nz/assets/For-the-health-sector/Health-sector-guidance/Vaccine-information-for-healthcare-professionals/12month-Immunisation-Coverage-Data/&matchType=prefix&filter=statuscode:200&collapse=urlkey",
+     "access": "Open via the Internet Archive",
+     "size": "~25 MB"
+    },
+    {
+     "name": "PHF Science Notifiable Diseases annual data (measles, pertussis by district x age x ethnicity, 2006-2024), for context and a secondary check of forecast immunity gaps against 2019 measles attack rates",
+     "url": "https://github.com/ESR-NZ/Notifiable-Diseases-Annual-Dashboard-",
+     "access": "Open, CC BY 4.0, GitHub (verified)",
+     "size": "~21 MB"
+    }
+   ],
+   "lit_for": [
+    "Petousis-Harris H, Grant CC, Goodyear-Smith F et al. (2012) What contributes to delays? The primary care determinants of immunisation timeliness in New Zealand. J Prim Health Care. doi:10.1071/hc12012 (early delays carry forward, which supports a cascade)",
+    "Rumball-Smith J, Kenealy TW (2016) Childhood immunisations in Northland, New Zealand: declining care and the journey through the immunisation pathway. NZ Med J (PubMed)",
+    "Walls T, Hagedoorn NN, Anglemyer AT et al. (2023) Gaps in measles immunisation coverage for pre-school children in Aotearoa New Zealand: a cross-sectional study. NZ Med J. doi:10.26635/6965.6009",
+    "Pons-Salort M, Molodecky NA, O'Reilly KM et al. (2016) Population immunity against serotype-2 poliomyelitis... spatio-temporal modelling of surveillance data. PLoS Med. doi:10.1371/journal.pmed.1002140 (cohort-based immunity-profile modelling from routine data)"
+   ],
+   "lit_against": [
+    "Marek L, Hobbs M, McCarthy JP et al. (2020) Investigating spatial variation and change (2006-2017) in childhood immunisation coverage in New Zealand. Soc Sci Med. doi:10.1016/j.socscimed.2020.113292 (descriptive spatial trends, no forecasting)",
+    "Marek L, Hobbs M, Wiki J et al. (2020) Spatial-temporal patterns of childhood immunization in New Zealand (2006-2017). Eur J Public Health. doi:10.1093/eurpub/ckaa225",
+    "Health New Zealand Immunisation Taskforce (2025) Initial priorities for the National Immunisation Programme in Aotearoa. doi:10.60967/healthnz.30576716 (policy priorities; no cohort projection)",
+    "Novelty searches (OpenAlex: 'childhood immunisation coverage New Zealand decline', 'immunisation coverage forecasting cohort milestone', 'vaccination coverage nowcast forecast childhood district', 'Aotearoa Immunisation Register coverage', recent NZ immunisation titles 2023+): no cohort-linked coverage forecasting for NZ found"
+   ],
+   "method": "(1) Parse every quarterly file (2009-2026) into a tidy table of quarter x milestone x district x group (Total, M\u0101ori, Pacific, Asian, European/Other; NZDep quintiles) with eligible and fully-immunised counts. Harmonise DHB-to-district names and ethnicity labels ('NZ European' to 'European or Other'). Treat 'n/s' suppressed cells as missing and never back-calculate them. (2) Link cohorts: children reaching 24 months in quarter q reached 12 months in q-4, 6 months in q-6 and 18 months in q-2. (3) Cascade model: a beta-binomial/logit hierarchical model logit(C24[d,g,q]) = a[d,g] + b*logit(C12[d,g,q-4]) + c*catch-up[d,g,(q-4)] + period terms, with partial pooling across districts and groups. Catch-up is the recent cohort-specific gain from 12 to 24 months. Schedule-change breakpoints are explicit dummies (MMR moved to 12/15 months in Oct 2020, PCV changes, NIR-to-AIR migration 2023-24). (4) Rolling-origin evaluation uses only data published by each origin. Compare against persistence, linear drift and ETS baselines on MAE, weighted interval score and PI coverage, stratified by group and by era (stable pre-2020 vs 2020-2026 decline). (5) Freeze, timestamp and hash forecasts for the next two releases; score them on publication. (6) Report projected 24-month coverage per district to 2027 against the 95% target, and the projected measles-susceptible birth cohorts.",
+   "plan": [
+    "Fetch all 2023-2026 Health NZ quarterly/annual files and the 109 archived 2008-2023 files via the Wayback CDX list; log URLs, capture timestamps and checksums.",
+    "Write a robust parser for the changing layouts (header offsets, ethnicity labels, district names); validate national totals against published headline figures.",
+    "Build the cohort-linked panel (milestone lags) and document schedule-definition breakpoints.",
+    "Fit the cascade model and baselines in a rolling-origin backtest (origins 2012-2026); compute MAE, WIS, PI coverage and Diebold-Mariano tests for H1.",
+    "Freeze the final model; publish hashed forecasts (with 80% PIs) for Q4 2025/26 and Q1 2026/27 before their release.",
+    "Score the prospective forecasts on release (H2); if only one release arrives within the study window, report it and append the second later.",
+    "Produce district x group projections to 2027 vs the 95% target and an equity-framed summary for Health NZ and Auckland's three districts."
+   ],
+   "risks": "Schedule and definition changes (2020 MMR timing, PCV changes, the 2023-24 NIR-to-AIR register migration) break cohort comparability, so they need explicit breakpoints and sensitivity runs that exclude affected cohorts. Overlapping or rolling reporting windows and migration change the eligible denominators. Pacific and M\u0101ori cells are suppressed in small districts, so not all groups can be forecast everywhere. The prospective test depends on Health NZ's release timing. The archived files rely on the Internet Archive. Te Mana Raraunga: the study uses M\u0101ori and Pacific coverage data, published only as aggregates by Health NZ. Suppressed cells must never be reverse-engineered. Results are framed as the health system's delivery against Te Tiriti obligations (access and timeliness of services), not as wh\u0101nau or community deficits. Outputs should be offered for review to M\u0101ori and Pacific immunisation researchers and to the Iwi-M\u0101ori Partnership Boards before release.",
+   "critic_note": "Critic (Auckland/NZ round): No NZ forecasting that links cohorts across coverage milestones was found (Europe PMC/Crossref 2023-26; the nearest is GBD's country-level forecasts to 2030, Lancet 2025). The Health NZ page lists quarterly files only up to Q3 2025/26. Server headers show Q2 posted 24 Mar 2026 and Q3 posted 24 Jun 2026, so Q4 2025/26 (Apr-Jun 2026) is due now or overdue, and the first prospective target may appear before forecasts are frozen. Value lowered 6->5: the cascade is close to mechanical (the same cohort four quarters later), and Health NZ already holds individual-level AIR data that can project this internally. The added value is independent public accountability. Several 2024/25 files were re-uploaded on 15 Feb 2026, so the rolling-origin backtest must use Wayback vintages rather than revised current files.",
+   "scout_value_score": 6,
+   "scout_cost_score": 2,
+   "plain_summary": "NZ's goal is for 95% of two-year-olds to be fully immunised by 2030, but coverage has dropped to roughly 80% or lower and measles is spreading. Babies who fall behind at 6 and 12 months tend to stay behind, so this project builds and tests a model that uses today's baby-vaccination numbers to predict each district's two-year-old coverage a year ahead. It will also make dated forecasts before the next official figures come out, so the model can be judged fairly.",
+   "local_relevance": "Health NZ's immunisation programme, Auckland's three districts (Te Toka Tumai Auckland, Counties Manukau, Waitemat\u0101), Iwi-M\u0101ori Partnership Boards and Pacific providers could use the 12-month-ahead district and ethnicity forecasts to target catch-up outreach and measles readiness where the shortfall is predicted, instead of waiting a year for 24-month data.",
+   "time_sensitive": "Q4 2025/26 release is due now (Q3 posted 24 Jun 2026): freeze and hash forecasts within days, or retarget to Q1/Q2 2026/27 (~Dec 2026 / ~Mar 2027)",
+   "needs_engagement": "",
+   "scout_round": "auckland-nz"
+  },
+  {
+   "id": "auckland-nz-equity-adjustor-waitlist-did",
+   "title": "Did ending ethnicity-inclusive surgical waitlist prioritisation in Auckland change who waits longest? A triple-difference evaluation around the Equity Adjustor Score (introduced Feb 2023, rollout halted Jun 2023, discontinued Aug 2024)",
+   "domain": "auckland-nz",
+   "hypothesis": "In Health NZ's monthly elective-surgery waitlist data, the outcome is the share of waitlisted patients waiting more than 120 days, compared between M\u0101ori+Pacific and European/Other patients. Prediction: in Te Toka Tumai Auckland this gap widened by at least 4 percentage points from the pre-controversy period (Jul 2021-Jan 2023) to the post-discontinuation period (Sep 2024-Jun 2026), relative to the same gap change in 15 districts that never used an ethnicity-weighted tool. The estimate is a specialty-fixed-effects, waitlist-size-weighted triple difference. Auckland's estimate must also rank first among all 16 districts in a placebo-in-district permutation (p <= 1/16). Negative control: the Asian minus European/Other gap, which the tool did not target, must show no comparable change (|estimate| < 2 pp). Disclosure for the preregistration: during feasibility checks the scout looked at raw, unadjusted quarterly gap series for six districts. The 4 pp threshold and the permutation and negative-control criteria are therefore set to be informative beyond that descriptive look.",
+   "gap": "The tool caused a national political row in 2023. A Health NZ-commissioned expert panel (chair Prof Rod Jackson) judged it 'legally and ethically justifiable' but not best practice, and Health NZ dropped it on 1 Aug 2024 (RNZ). No public quantitative evaluation could be found of whether the ethnicity weighting changed ethnic inequities in waiting, or whether removing it reversed them. The only peer-reviewed NZ outcome study of a prioritisation tool covers Capital & Coast's non-ethnic General Surgery Prioritisation Tool (Wood et al. 2025). Health NZ now publishes monthly waitlist stocks by district x specialty x ethnicity from 2015 to 2026, which makes a credible quasi-experiment possible with open data.",
+   "value_score": 6.0,
+   "cost_score": 2.0,
+   "value_rationale": "The Auckland tool is among the most debated health-equity policies in NZ, and no outcome evidence has been published on it. A credible open-data evaluation directly informs Health NZ's promised national 'relook' at waitlist prioritisation and the Health target of 95% treated within 4 months. It also bears on Te Tiriti equity obligations. The design is a solid natural experiment rather than a global methods advance, hence 7.",
+   "cost_rationale": "Five quarterly vintages of a ~5.5 MB XLSX (about 100k district x specialty x ethnicity x month rows). Regression, event-study and permutation analyses run in minutes on a laptop-class CPU. Hours to one or two days of work.",
+   "est_wall_time": "1.5-2 days (half a day data build and vintage checks, 1 day estimation, permutations and event studies, half a day write-up)",
+   "est_data_gb": 0.05,
+   "feasibility": "local",
+   "requirements_if_out_of_reach": "",
+   "datasets": [
+    {
+     "name": "Health NZ waitlist detailed data extracts: Elective waitlist (month x region x district x specialty x ethnicity [M\u0101ori, Pacific, Asian, European/Other]; total waiting and waiting <120 days) and FSA waitlist (no ethnicity), Jan 2015-Jun 2026; quarterly vintages Q1-Q4 2025/26",
+     "url": "https://www.healthnz.govt.nz/publications/health-targets-performance-resources-2025-26",
+     "access": "Open static XLSX, no account (verified: waitlist-detail-extract-q4-2025-26.xlsx downloaded and parsed; counts 1-4 shown as '<5')",
+     "size": "~5.5-5.8 MB per vintage (4 vintages)"
+    },
+    {
+     "name": "Health NZ 2024/25 vintage of the same waitlist extract (for revision and stability checks of the pre-period)",
+     "url": "https://static.info.content.health.nz/docs/publications/Waitlist-detail-extract.xlsx",
+     "access": "Open static XLSX (verified, 5.4 MB)",
+     "size": "5.4 MB"
+    },
+    {
+     "name": "Policy timeline sources: RNZ 'Health NZ drops tool that factored in ethnicity for waitlists despite review findings' (1 Aug 2024) and RNZ The Detail 'The waitlist algorithm that morphed into a political weapon' (23 Jun 2023)",
+     "url": "https://www.rnz.co.nz/news/political/523825/health-nz-drops-tool-that-factored-in-ethnicity-for-waitlists-despite-review-findings",
+     "access": "Open web pages (verified)",
+     "size": "<1 MB"
+    }
+   ],
+   "lit_for": [
+    "Ronald M, MacCormick AD, Koea J (2023) Inclusion of ethnicity in surgical waitlist prioritization in Aotearoa New Zealand is appropriate and required. ANZ J Surg. doi:10.1111/ans.18699",
+    "Boyle L, Lawrenson R, Ronald M et al. (2024) Ethnic differences in time to surgery for women with early stage breast cancer in Aotearoa/New Zealand. Lancet Reg Health West Pac. doi:10.1016/j.lanwpc.2024.101091 (documents baseline ethnic inequities in surgical waits)",
+    "Cowan S, Waaka H, Wells C et al. (2025) Investigating postcode lottery: do regional outreach clinics improve waiting times to elective general surgical care for rural and M\u0101ori populations? Aust J Rural Health. doi:10.1111/ajr.70127"
+   ],
+   "lit_against": [
+    "Wood D, Findlay N, Kim AHM, Behar KE, Lin A (2025) Is No difference a good outcome? Equity evaluation of the general surgery prioritization tool. ANZ J Surg. doi:10.1111/ans.70042. This is the closest work: a Capital & Coast tool without ethnicity weighting found no ethnic difference in booking odds, so it does not evaluate the Auckland ethnicity-weighted tool or its removal",
+    "Health NZ-commissioned expert panel review of the Auckland/Northland and Southern equity adjustor tools (chair Prof Rod Jackson; findings reported by RNZ, 1 Aug 2024). It assessed legality, ethics and robustness, but no public outcome evaluation was found",
+    "Novelty searches (Europe PMC: '\"equity adjustor score\" OR \"equity adjuster\"', 'waitlist AND prioritisation AND ethnicity AND New Zealand', 'waiting list AND Health New Zealand/Te Toka Tumai AND M\u0101ori/Pacific 2023-2026', 'algorithm/tool AND ethnicity AND surgical prioritisation AND New Zealand'; Crossref 'equity adjustor score surgical waitlist Auckland'; arXiv 'waitlist AND ethnicity AND prioritization'). No quantitative evaluation found. The OpenAlex daily quota was exhausted for this lead, so Europe PMC and Crossref were used instead"
+   ],
+   "method": "(1) Build a district x specialty x ethnicity x month panel (2015-2026) from the latest vintage. The outcome is long-wait share L = 1 - (waiting <120 d / total waiting). '<5' cells are handled as interval-censored (1-4) with bound-based sensitivity analyses. (2) Groups: M\u0101ori+Pacific (targeted) vs European/Other (reference); Asian vs European/Other as a negative control. (3) Treatment: Te Toka Tumai Auckland is primary. Waitemat\u0101 and Counties Manukau are secondary or excluded because tool coverage is uncertain. Northland (later adopter, earlier stop) and Southern (own tool) are excluded from controls and analysed separately. Periods: pre-controversy Jul 2021-Jan 2023; tool era Feb 2023-Jul 2024, with a sub-split at the Jun 2023 halt; post-discontinuation Sep 2024-Jun 2026. (4) Primary estimator: a weighted (total waiting) triple-difference regression with district x specialty x group, specialty x month and district x month fixed effects. Standard errors are clustered by district, using a wild-cluster bootstrap because there are few treated clusters. Inference also uses a placebo-in-district permutation over 16 districts and a synthetic-control-style gap comparison. (5) Event study with monthly leads and lags to locate breaks at Feb 2023, Jun 2023 and Aug 2024, with pre-trend tests. (6) Specialty heterogeneity: general surgery, orthopaedics, ENT, gynaecology and others. (7) Data-stability check: quantify revisions to pre-period values across the five vintages. Aggregate published data only.",
+   "plan": [
+    "Download all five waitlist-extract vintages; verify schemas and checksums; quantify vintage-to-vintage revisions for 2021-2024 months.",
+    "Build the analysis panel, compute long-wait shares by group, and fix the period and treatment definitions in the preregistration, recording the scout's descriptive peek.",
+    "Pin down the policy dates and which hospitals and specialties used the tool, using RNZ reporting and any Health NZ evaluation report or OIA release; record any uncertainty as alternative treatment definitions.",
+    "Estimate the primary triple difference, with wild-cluster-bootstrap CIs, and run the 16-district placebo permutation (H1).",
+    "Run the Asian-vs-European negative control and the event study (pre-trends; break timing at Feb 2023, Jun 2023 and Aug 2024).",
+    "Run sensitivity analyses: alternative treated sets (adding Waitemat\u0101 and Counties Manukau), '<5' bounds, excluding outsourced high-volume specialties, unweighted estimates, and alternative long-wait thresholds where derivable.",
+    "Write a neutral, plain-language report with equity framing; offer pre-release review to M\u0101ori and Pacific health researchers and the T\u0101maki Makaurau IMPB."
+   ],
+   "risks": "Which hospitals and specialties used the tool, and when, is not fully documented in open sources. Moir (via RNZ) reports that Auckland weighted ethnicity 'for years' before the Feb 2023 five-factor algorithm, so the pre-period is not 'no weighting'; the estimand is therefore the effect of ending ethnicity-inclusive prioritisation. The long-wait share is a stock measure, so it also moves with referral and addition rates and with waitlist validation or removals, not only with scheduling order. Concurrent Auckland-specific shocks (private outsourcing in 2024-26, theatre capacity, industrial action) could confound, and specialty x month and district x month fixed effects only partly absorb them. With one primary treated district, inference relies on the permutation and bootstrap. Health NZ notes the data are live and revisable. The raw-data peek during scouting must be disclosed. The results will be used in a polarised political debate, so neutral wording is essential. Te Mana Raraunga: the study is centrally about M\u0101ori and Pacific equity. It uses only Health NZ's published aggregates, frames effects as properties of health-system prioritisation rather than of communities, avoids deficit framing, and offers findings for review by M\u0101ori and Pacific health leaders and the Iwi-M\u0101ori Partnership Boards before publication.",
+   "critic_note": "Critic (Auckland/NZ round): Europe PMC ('equity adjustor': 2 unrelated hits) and Crossref found no outcome evaluation; Wood et al. 2025 remains the nearest. I downloaded the Q4 2025/26 extract (extracted 02/09/2026). Its Elective sheet covers district x specialty x 4 ethnic groups x month for 20 districts, Jan 2015 to Jun 2026, with '<5' suppression. I checked the structure only and did not look at outcome values. Value lowered 7->6: there is one treated district, which specialties used the tool and when is uncertain, Auckland weighted ethnicity before Feb 2023, and the outcome is a stock measure, so a well-run study may still be ambiguous. The scout saw raw gap series for six districts, probably including Auckland, so the 4 pp threshold was not set blind. The preregistration must therefore list exactly what was seen and make the 16-district permutation rank and the Asian negative control co-primary. It should also add an unseen hold-out (Jul-Dec 2026 months from the next one or two vintages) as the confirmatory persistence test. Confirm whether 'District' means district of service, since Auckland provides tertiary care for other districts.",
+   "scout_value_score": 7,
+   "scout_cost_score": 1,
+   "plain_summary": "In 2023 Auckland hospitals used a scoring tool that gave some extra priority on surgery waitlists to M\u0101ori and Pacific patients, along with clinical need, time waiting, rurality and deprivation. After a political row the tool was stopped in August 2024. This study uses Health NZ's public monthly waitlist figures, compared with other regions, to test whether ending it left M\u0101ori and Pacific patients in Auckland waiting much longer than European patients.",
+   "local_relevance": "Health NZ's planned national review of waitlist prioritisation, Te Toka Tumai Auckland surgical services, the T\u0101maki Makaurau Iwi-M\u0101ori Partnership Board and Pacific health providers could use the estimates to decide whether, and how, equity factors belong in a future prioritisation tool. The evaluation code can then be rerun on each quarterly release.",
+   "time_sensitive": "Preregister before the next quarterly vintage (Jul-Sep 2026 months) is published, so it can serve as the unseen hold-out",
+   "needs_engagement": "Not blocking for analysis, but get M\u0101ori/Pacific health-equity input (e.g. T\u0101maki Makaurau IMPB) on framing before preregistration, and pre-release review, given Te Tiriti and political sensitivity",
+   "scout_round": "auckland-nz"
+  },
+  {
+   "id": "auckland-nz-hirds-out-of-sample-exceedance-audit",
+   "title": "Are New Zealand's design rainfalls already out of date? An out-of-sample exceedance audit of HIRDS v4 (c. 2017-2026), including Auckland's 2023 floods",
+   "domain": "auckland-nz",
+   "hypothesis": "The test pools all NZ rain gauges (target at least 250) that have QC'd sub-daily records and at least 8 out-of-sample water years: ESNZ national network plus Auckland, Northland and Hawke's Bay council gauges. Out-of-sample years are the water years after each gauge's last year used to fit HIRDS v4 (c. 2017-2026). Over those years, annual-maximum 6-h rainfall exceeds the HIRDS v4 'historical' 10% AEP (10-year) depth at that location at least 1.3 times as often as the 10% AEP implies. The observed/expected ratio is estimated with a storm-event block bootstrap, and its 95% CI lower bound must exceed 1.0. H1 is rejected if the point ratio is below 1.3 or the CI includes 1.0. Secondary claims, reported but not confirmatory: the same test at 1 h and 24 h and at the 2% AEP level; the Auckland-region stratum; a sensitivity run excluding Jan-Feb 2023; and whether HIRDS v4's climate-change-adjusted depths (RCP4.5, 2031-2050) give a ratio closer to 1.",
+   "gap": "HIRDS v4 (NIWA, 2018; now on ESNZ DataHub under CC BY) underpins NZ stormwater, culvert and flood design. That includes Auckland Council's Stormwater Code of Practice, which applies a climate-change uplift to HIRDS v4 depths. HIRDS v4 was fitted to records ending around 2016. Since then NZ has had record events: Westport 2021, Nelson 2022 and 2025, Auckland Anniversary 2023 (~250 mm in 24 h at Auckland Airport) and Cyclone Gabrielle. Nobody has checked whether HIRDS's stated exceedance probabilities hold up out of sample. Wright et al. (2019, GRL) did this for US design standards and found 100-year storms markedly more frequent than stated, but there is no NZ equivalent. NZ trend studies (Griffiths 2007, 2013; Harrington & Renwick 2014) use pre-2012 data, report mixed trends and do not test design values. Stone et al. (2024) treat Gabrielle as a future design storm, but nobody has asked whether today's design tables are already miscalibrated.",
+   "value_score": 6.0,
+   "cost_score": 4.0,
+   "value_rationale": "Engineers design against these tables, and the question became urgent after Auckland's 2023 floods. A calibration ratio well above 1 would be direct evidence for revising HIRDS, Auckland's design storms and the national climate-change uplift factors. A ratio near 1 would also be useful: it would show that the 2023 events are consistent with stationary design values plus bad luck. The score stays below 8 because a ~9-year window has limited power at rare AEPs.",
+   "cost_rationale": "Data are small: a few GB of gauge time series plus HIRDS point tables. Computation is annual maxima, bootstrap counts and GEV refits, a few CPU-hours with no GPU. Most of the effort goes into harvesting from several portals (ESNZ DataHub API, Auckland Council WebPortal, Hilltop servers) and quality-controlling recent, partly unaudited data. That makes it days rather than hours.",
+   "est_wall_time": "3-5 days",
+   "est_data_gb": 3,
+   "feasibility": "local",
+   "requirements_if_out_of_reach": "",
+   "datasets": [
+    {
+     "name": "ESNZ (ex-NIWA) DataHub: HIRDS v4 point tables and gridded depth-duration-frequency data, plus national rain-gauge time series (CliFlo successor)",
+     "url": "https://data.niwa.co.nz/pages/hirds-on-datahub",
+     "access": "Free DataHub account plus an online statement of purpose; HIRDS data CC BY 4.0. If the purpose check is not automatic, fall back to an in-house regional GEV fitted to pre-2017 data (see risks)",
+     "size": "HIRDS point tables <50 MB; gridded HIRDS ~1 GB; hourly/10-min rainfall for ~300 gauges ~1-2 GB"
+    },
+    {
+     "name": "Auckland Council Environment Auckland data portal (Aquarius WebPortal): ~100+ Auckland rain gauges, many 1-5 min tipping-bucket records",
+     "url": "https://environmentauckland.org.nz/Data",
+     "access": "No account; click-through terms of use (cite Auckland Council; raw data may not be redistributed, derived results may be published)",
+     "size": "~0.5-1 GB"
+    },
+    {
+     "name": "Northland Regional Council Hilltop server (rainfall, 253 site listings; e.g. site 104977 runs 2010-2026 at sub-hourly resolution)",
+     "url": "https://hilltop.nrc.govt.nz/Data.hts?Service=Hilltop&Request=SiteList&Measurement=Rainfall",
+     "access": "Open Hilltop API, no account",
+     "size": "~0.3-0.5 GB"
+    },
+    {
+     "name": "Hawke's Bay Regional Council Hilltop server (rainfall, 235 site listings; covers Gabrielle)",
+     "url": "https://data.hbrc.govt.nz/Envirodata/EMAR.hts?Service=Hilltop&Request=SiteList&Measurement=Rainfall",
+     "access": "Open Hilltop API, no account",
+     "size": "~0.3-0.5 GB"
+    }
+   ],
+   "lit_for": [
+    "Wright, Bosma & L\u00f3pez-Cant\u00fa 2019 (GRL, doi:10.1029/2019GL083235): regional aggregation shows US '100-year' storms have become more frequent than design standards assume. This is the direct template, with no NZ counterpart",
+    "Stone et al. 2024 (Earth's Future, doi:10.1029/2024EF004772): historical warming raised Gabrielle-like regional totals by ~10% and peak rates by ~20%",
+    "Aldridge & Bell 2024 (Environ. Res.: Climate, doi:10.1088/2752-5295/ada1f0): NZ review expecting the largest increases in short-duration extremes, so the 1-6 h durations deserve priority",
+    "Brook & Nicoll 2024 (Landslides, doi:10.1007/s10346-024-02258-0): the 27 Jan 2023 Auckland storm (265 mm in a day, ~1-in-200-yr estimate) shows how impactful out-of-sample events are"
+   ],
+   "lit_against": [
+    "Griffiths 2007 and 2013 (Weather and Climate) and Harrington & Renwick 2014: NZ daily rainfall extremes show weak or mixed trends to ~2011, so a large shift since 2016 would be surprising",
+    "Serinaldi & Kilsby 2015 (Adv. Water Resour., 'Stationarity is undead'): sampling uncertainty usually swamps apparent non-stationarity in short windows, so an exceedance excess may not be distinguishable from noise",
+    "Vesuviano et al. 2021 (J. Flood Risk Manag., doi:10.1111/jfr3.12703): recalibrating depth-duration-frequency models moves return-period estimates substantially, so model choice rather than climate could drive any mismatch",
+    "Spatial clustering: a few storms (Gabrielle, Jan 2023) may contribute most exceedances, leaving few effective independent events and wide CIs"
+   ],
+   "method": "Harvest sub-daily rainfall for all gauges with at least 8 out-of-sample years. Keep only QC'd data (portal quality codes) and complete water years (July-June, at least 90% coverage). Compute sliding-window annual maxima for 1, 2, 6, 12, 24 and 72 h. Read HIRDS v4 historical depths at each gauge's coordinates by log-linear interpolation across AEPs. For each duration and AEP, count observed exceedances and compare with the expected count (AEP x station-years) as an O/E ratio. Get CIs from a storm-event block bootstrap that resamples dates on which any gauge exceeded, which preserves spatial dependence; cross-check with a Poisson model with storm random effects. As a sanity control, compute the same ratio for in-sample years, where it should be about 1. Secondary analyses: an Auckland stratum, excluding 2023, HIRDS RCP-adjusted depths, and a regional GEV refit with and without post-2016 years to quantify the update to 1% AEP depths.",
+   "plan": [
+    "Confirm the HIRDS v4 fitting period and per-gauge record end from the v4 technical report. Freeze the out-of-sample window and preregister H1 with its duration, AEP and 1.3 threshold",
+    "Register a free ESNZ DataHub account and download HIRDS v4 historical and RCP-adjusted depth tables for all candidate gauge locations. If access stalls, switch to the preregistered in-house regional-GEV baseline",
+    "Harvest sub-daily rainfall from DataHub, the Auckland Council WebPortal (click-through) and the Northland and Hawke's Bay Hilltop APIs. Harmonise time zones and units and apply quality-code filters and completeness rules",
+    "Compute sliding-window annual maxima per water year and duration, and log gauge metadata (record length, distance to the nearest HIRDS gauge)",
+    "Compute O/E exceedance ratios with storm-event block-bootstrap CIs, and the in-sample control ratios",
+    "Run secondary and sensitivity analyses: Auckland stratum, excluding Jan-Feb 2023, RCP-adjusted HIRDS, 1-h/24-h and 2% AEP, and daily-only gauges with a fixed-interval correction",
+    "Refit regional GEVs including post-2016 years and report how much 1% and 2% AEP depths change for Auckland and nationally",
+    "Write up with maps of gauge-level ratios and a plain-language note for stormwater designers"
+   ],
+   "risks": "Access: DataHub needs a free account and a stated purpose. If that turns into manual approval, HIRDS becomes out of reach, and the fallback baseline (an in-house regional GEV on pre-2017 data) tests 'stationary design methods' rather than HIRDS itself. If ESNZ has since released an updated HIRDS that uses post-2016 data, the audit must use archived v4 values. Selection: the lead was motivated by Auckland 2023, which is why the confirmatory test is national and has a no-2023 sensitivity. Recent council data may be provisional, and gauge network changes may bias coverage toward wetter, newer sites. Fewer qualifying gauges than the target would widen the CIs. Power is low at 2% AEP. No M\u0101ori data are involved.",
+   "critic_note": "Critic (Auckland/NZ round): No NZ out-of-sample HIRDS audit was found (Crossref 'HIRDS' and 'design rainfall NZ', Europe PMC IDF+NZ 2023-26); the nearest new resource is the global GSDR-IDF (Sci Data 2026). Feasibility fix: the DataHub FAQ says station data are capped (e.g. 30 datasets per region per year, larger pulls 'by individual negotiation'), so ~300 ESNZ national gauges are not self-service. The HIRDS v4 tables are CC BY after a free account and a purpose statement that the FAQ describes as a compliance declaration, with no approval step. Source gauges from council Hilltop servers verified open today: NRC, HBRC (235 rainfall sites), Greater Wellington (233), Marlborough (180) and Horizons (87). Add the Auckland portal (click-through), and use ESNZ only within the cap. Cost raised 3->4 for harvesting from many portals and QC. Value rounded 6.5->6 because power at rare AEPs is low and the 2017-26 window was chosen knowing it held record storms; keep the national primary test and the no-2023 safeguards.",
+   "scout_value_score": 6.5,
+   "scout_cost_score": 3,
+   "plain_summary": "Engineers size Auckland's pipes, culverts and stormwater ponds from national 'design rainfall' tables that say how often big downpours should happen. This study checks whether, since those tables were built around 2016, downpours meant to come once a decade have actually been happening more often across NZ, Auckland's 2023 floods included. If they have, the tables and the infrastructure built to them need updating.",
+   "local_relevance": "Auckland Council Healthy Waters, Auckland Transport and Watercare designers, ESNZ as HIRDS custodian, and national design guidance (MfE, NZ Transport Agency) would learn whether current design storms and their climate uplifts are already being exceeded too often. They would also get a quantified update to Auckland's 1% AEP depths.",
+   "time_sensitive": "",
+   "needs_engagement": "",
+   "scout_round": "auckland-nz"
+  },
+  {
+   "id": "auckland-nz-avf-dvv-hydrological-baseline",
+   "title": "A hydrological noise floor for volcanic-unrest detection under Auckland: 13 years of ambient-noise seismic velocity monitoring across the Auckland Volcanic Field",
+   "domain": "auckland-nz",
+   "hypothesis": "Daily relative seismic velocity changes (dv/v, 0.5-2 Hz coda) are measured from ambient-noise cross-correlations between GeoNet Auckland Volcanic Field stations, 2013-2026. They are predominantly hydrological. A rainfall-driven pore-pressure-diffusion model plus a seasonal thermoelastic term, fitted on 2013-2020 only, explains at least 50% of the variance of 30-day-smoothed dv/v in the held-out 2021-2026 period: median R^2 >= 0.5 across station pairs with mean coherence >= 0.5. The held-out period includes the record-wet January-February 2023. H1 fails if median held-out R^2 < 0.5. Secondary claims: the post-correction residual 2-sigma noise floor is <= 0.05%, the size of the precursory decreases reported at Piton de la Fournaise; and dv/v shows no step greater than 2 sigma at the March 2020 COVID lockdown, which tests robustness to changes in noise sources.",
+   "gap": "Auckland is built on a monogenetic basaltic field (~53 centres; last eruption ~500 yr BP). Unrest detection relies on seismicity and GNSS. O'Hagan et al. (2026) just produced the first self-consistent ML catalogue of AVF seismicity (~21 events/yr above M0.6), but no continuous velocity-change monitoring exists. Ambient-noise dv/v is a standard precursor tool elsewhere (Brenguier et al. 2008), but it is strongly driven by rainfall and groundwater (Sens-Sch\u00f6nfelder & Wegler 2006; Clements & Denolle 2018). Its noise floor in an urban, groundwater-rich volcanic field is unknown. Earlier AVF ambient-noise work imaged static structure (Ensing et al. 2017) or measured noise levels during the 2020 lockdown (van Wijk et al. 2021), not velocity change. Auckland's record 2023 rainfall gives a natural experiment for the hydrological response, and the lockdown gives a control for changes in noise sources.",
+   "value_score": 5.0,
+   "cost_score": 5.0,
+   "value_rationale": "This is a new, continuous monitoring observable for NZ's highest-consequence volcanic setting, with a quantified false-alarm baseline. It tells GeoNet whether dv/v could detect magma-ascent-scale changes beneath Auckland at all. It scores mid-range because it calibrates a tool rather than detecting unrest, and dv/v-hydrology coupling is well known elsewhere; the novelty is the AVF application and the noise floor.",
+   "cost_rationale": "GeoNet day files are ~7-12 MB per channel-day at 100 Hz. Z components for ~8-11 stations from 2013-2026, plus horizontals at 3-4 stations for single-station cross-components, come to ~0.6-0.9 TB transferred. This is streamed from AWS (download, decimate, correlate, delete), so at most ~20 GB of correlations and metadata are kept. Cross-correlation and stretching with NoisePy, MSNoise or SeisMIC take a few CPU-days on 32 cores, with no GPU. Most of the wall time is network-bound transfer.",
+   "est_wall_time": "1-1.5 weeks",
+   "est_data_gb": 20,
+   "feasibility": "local",
+   "requirements_if_out_of_reach": "",
+   "datasets": [
+    {
+     "name": "GeoNet continuous waveforms, AWS open-data bucket (AVF stations ABAZ, AWAZ, EPAZ, ETAZ, HBAZ, KBAZ, MBAZ, MKAZ, RVAZ, WIAZ, WTAZ; EH*/HH* at 100 Hz; checked available for 2013, 2019 and 2026)",
+     "url": "https://geonet-open-data.s3-ap-southeast-2.amazonaws.com/?list-type=2&prefix=waveforms/miniseed/2026/2026.200/EPAZ.NZ/",
+     "access": "Open, no account (anonymous S3)",
+     "size": "~7-12 MB per channel-day; ~0.6-0.9 TB for the planned subset, streamed rather than stored"
+    },
+    {
+     "name": "GeoNet FDSN station metadata (instrument epochs and responses; several AVF sites changed location codes and sensors in 2024-2026)",
+     "url": "https://service.geonet.org.nz/fdsnws/station/1/query?minlatitude=-37.3&maxlatitude=-36.6&minlongitude=174.4&maxlongitude=175.2&level=station&format=text",
+     "access": "Open, no account",
+     "size": "<10 MB"
+    },
+    {
+     "name": "O'Hagan & Chamberlain AVF earthquake and quarry-blast catalogues 2011-2022 (QuakeML), used to mask transients",
+     "url": "https://zenodo.org/records/15825886",
+     "access": "Open, CC BY 4.0",
+     "size": "~21 MB"
+    },
+    {
+     "name": "Auckland Council Environment Auckland: rainfall and groundwater-level bores (validation of the hydrological driver)",
+     "url": "https://environmentauckland.org.nz/Data",
+     "access": "No account; click-through terms of use (no redistribution of raw data)",
+     "size": "<1 GB"
+    },
+    {
+     "name": "ESNZ DataHub station rainfall (backup forcing, e.g. Auckland Airport, Whenuapai)",
+     "url": "https://data.niwa.co.nz/",
+     "access": "Free DataHub account",
+     "size": "<100 MB"
+    }
+   ],
+   "lit_for": [
+    "Sens-Sch\u00f6nfelder & Wegler 2006 (GRL, doi:10.1029/2006GL027797): a rainfall/groundwater model explains seasonal dv/v at Merapi volcano, the model class used here",
+    "Clements & Denolle 2018 (GRL, doi:10.1029/2018GL077706): ambient-noise dv/v tracks groundwater levels in an urban basin (Los Angeles)",
+    "Feng et al. 2021 (JGR Solid Earth, doi:10.1029/2021JB022650): single-station cross-component dv/v resolves hydrological seasonal velocity changes, useful where inter-station coherence is weak",
+    "van Wijk et al. 2021 (Solid Earth, doi:10.5194/se-12-363-2021): AVF station noise is well characterised and dropped sharply during the 2020 lockdown, giving a natural control on noise sources",
+    "Brenguier et al. 2008 (Nat. Geosci., doi:10.1038/ngeo104): pre-eruptive velocity decreases of order 0.05% at Piton de la Fournaise, which sets the target noise floor"
+   ],
+   "lit_against": [
+    "O'Hagan et al. 2026 (NZJGG, doi:10.1002/jgo2.70063) and Zenodo 15825886: AVF monitoring improvements are already under way via ML seismicity catalogues. dv/v may add little if unrest would show first in seismicity",
+    "Ensing, van Wijk & Sp\u00f6rli 2017 (NZJGG, doi:10.1080/00288306.2017.1337643): AVF ambient-noise correlations are dominated by ocean microseism and cultural noise, so coda stability at 0.5-2 Hz over short inter-station paths may be poor",
+    "Seasonal and urban changes in noise sources can bias dv/v measured by stretching. The lockdown control may reveal source sensitivity that undermines the hydrological interpretation",
+    "Monogenetic-field precursors are poorly constrained (Sherburn et al. 2007 estimate days to weeks), so the 0.05% target is borrowed from a different volcano type"
+   ],
+   "method": "Stream daily miniSEED from the GeoNet AWS bucket for 8-11 AVF stations (Z, plus 3-component at 3-4 sites) for 2013-2026. Preprocess: detrend, remove response, decimate to 20 Hz, spectrally whiten over 0.3-5 Hz and apply running-absolute-mean normalisation. Mask catalogued earthquakes and quarry blasts using the GeoNet and O'Hagan catalogues. Compute daily cross-correlations for all ZZ pairs and single-station cross-components. Measure dv/v by stretching (with MWCS as a cross-check) in coda windows, against references built separately for each instrument epoch, with an offset parameter at each sensor change. Forward model: dv/v(t) = c_epoch + a*[rainfall convolved with a 1-D pore-pressure diffusion kernel (diffusivity, depth)] + seasonal temperature term + linear drift. Fit on 2013-2020 and predict 2021-2026, scoring held-out R^2 per pair; the median R^2 is the primary statistic. Validate the hydrological term against Auckland Council groundwater bores. Test for a step at the 26 Mar 2020 lockdown and estimate the residual noise floor from the 2-sigma of held-out residuals.",
+   "plan": [
+    "Preregister bands, coda windows, pair-quality criteria, model form, the 2013-2020/2021-2026 split and the R^2 >= 0.5 threshold. Build an instrument-epoch table from FDSN metadata",
+    "Write a streaming pipeline (download, preprocess, correlate, delete) and benchmark throughput on one station-year. Size the transfer and drop stations with large gaps",
+    "Run correlations for all pairs and single-station cross-components for 2013-2026, keeping only daily CCFs and quality metrics",
+    "Measure dv/v (stretching plus MWCS), stitch across instrument epochs and screen pairs by coherence",
+    "Harvest rainfall and groundwater series. Fit the pore-pressure-diffusion and seasonal model on 2013-2020 and predict 2021-2026, including Jan-Feb 2023",
+    "Run confirmatory scoring (held-out R^2), then secondaries: residual noise floor, lockdown step test and the 2023 response compared with the prediction interval",
+    "Release an open, re-runnable AVF dv/v pipeline and time series for GeoNet/ESNZ, and write up"
+   ],
+   "risks": "Transfer volume and S3 throughput could stretch wall time. Instrument upgrades in 2024-2026 (new location codes, EH to HH sensors) can introduce artificial offsets near the end of the record. Urban noise non-stationarity and weak coda at short distances may give low coherence, so few pairs may qualify. Rainfall alone may be a poor proxy for groundwater in the AVF's fractured basalt aquifers. Te Mana Raraunga: no M\u0101ori data are used and there is no fieldwork. The AVF maunga are taonga of Ng\u0101 Mana Whenua o T\u0101maki Makaurau (co-governed by the T\u016bpuna Maunga Authority), so hazard findings should be communicated with care and offered to the Authority and to Auckland Emergency Management alongside GeoNet.",
+   "critic_note": "Critic (Auckland/NZ round): No velocity-change (dv/v) monitoring of the Auckland Volcanic Field was found (Crossref/Europe PMC 2021-26). NZ dv/v work covers Ruapehu and Whakaari; University of Auckland theses remain a grey-literature risk. GeoNet S3 holds AVF EH* day files (~10-12 MB per channel-day; EPAZ 2016 checked), and the FDSN station service is open. Value rounded 5.5->5: this calibrates a tool against a well-known hydrological coupling. Cost stays 5, since ~0.6-1 TB must be streamed and only ~20 GB kept. Design fix: offsets for the 2024-26 sensor changes would have to be fitted on held-out data, which leaks into the held-out R^2. Preregister either ending the held-out window at the first sensor change or fitting offsets on a short burn-in only. No engagement gate; share results with the T\u016bpuna Maunga Authority as planned.",
+   "scout_value_score": 5.5,
+   "scout_cost_score": 5,
+   "plain_summary": "Auckland sits on about 53 volcanoes. Rising magma could subtly change how fast seismic waves travel through the ground, and GeoNet's Auckland seismometers can track that continuously from the background 'hum' they record. Rain soaking into the ground also changes wave speeds, so this study measures 13 years of those changes, works out how big the rain-driven 'noise' is (including after the record-wet 2023 summer), and so how small a volcanic signal could be detected.",
+   "local_relevance": "GeoNet/ESNZ volcano monitoring, the DEVORA research programme and Auckland Emergency Management could adopt the pipeline as an extra unrest indicator. They would get a published baseline that distinguishes rain-driven changes like January 2023 from anything magmatic.",
+   "time_sensitive": "",
+   "needs_engagement": "",
+   "scout_round": "auckland-nz"
+  },
+  {
+   "id": "auckland-nz-fenz-impact-rainfall-thresholds",
+   "title": "Rarity, not depth? Impact-based rainfall thresholds for NZ flooding from eight years of Fire and Emergency callouts",
+   "domain": "auckland-nz",
+   "hypothesis": "The unit is the NZ suburb-day, July 2017 - June 2025, restricted to suburbs with an hourly rain gauge within 10 km. The outcome is at least one FENZ flood callout (NaturalDisasterType = 'Flood'). Models are trained on FY2017/18-2023/24 and tested on held-out FY2024/25. A logistic model that uses the local annual exceedance probability (from HIRDS v4) of the day's maximum 6-h rainfall achieves at least 5% lower held-out log-loss than an otherwise identical model using absolute 6-h depth. The paired bootstrap 95% CI of the difference must exclude zero, and the AEP model must also win in a majority of regions under leave-one-region-out cross-validation. H1 fails if either condition is not met. Secondary outputs: region-specific callout curves, including the AEP and depth at which callout probability first exceeds 10 times its background rate, and an Auckland curve with 27 Jan 2023 placed on it.",
+   "gap": "NZ heavy-rain warnings and emergency surge planning still rely largely on fixed national rainfall-depth criteria. Yet the same 100 mm/24 h is routine on the West Coast and damaging in Auckland. Post-2023 reviews of the Auckland flood response and the North Island severe-weather events highlighted gaps in warnings and in emergency-service surge capacity. No NZ study has related rainfall to a national, time-stamped, objective impact record. FENZ's incident dataset (CC BY 4.0, 2017/18-2024/25, ~4,000 flood callouts and ~99% suburb-coded) has not been used for this. International analogues use insurance claims (Spekkers et al. 2013; Papagiannaki et al. 2022) or citizen reports (Tian et al. 2019). The UK validated return-period-based rainfall alerts (Hurford et al. 2012), but nobody has tested 'rarity versus depth' in NZ.",
+   "value_score": 5.0,
+   "cost_score": 4.0,
+   "value_rationale": "It turns an untapped open dataset into impact thresholds for each region, and Auckland's are directly relevant to warning criteria and surge planning, both actively debated since 2023. Either outcome changes practice: if rarity wins, warnings should be expressed as local AEPs (HIRDS); if depth wins, current criteria are defensible. It is not higher because callouts are an imperfect, capacity-limited impact proxy.",
+   "cost_rationale": "Data are small: FENZ CSVs ~0.6 GB, gauge series ~2 GB, plus suburb polygons and HIRDS tables. Models are GLMs/GLMMs on ~10^6-10^7 suburb-days, CPU-only and hours to run. The effort is in geocoding suburb names, assembling gauges from several portals, and robustness checks.",
+   "est_wall_time": "4-6 days",
+   "est_data_gb": 3,
+   "feasibility": "local",
+   "requirements_if_out_of_reach": "",
+   "datasets": [
+    {
+     "name": "Fire and Emergency New Zealand Incident Data, FY2017/18-2024/25 (one row per exposure; StartDateTime, Suburb, TLA, region, IncidentType, NaturalDisasterType). 2017/18 has 402 flood-coded rows and 2022/23 has 925; Auckland had 608 incidents on 27 Jan 2023 against a daily median of 72",
+     "url": "https://catalogue.data.govt.nz/dataset/86c374bf-9741-4258-b906-4863ef9af293",
+     "access": "Open, CC BY 4.0, no account",
+     "size": "8 CSVs, ~70-75 MB each (~0.6 GB)"
+    },
+    {
+     "name": "LINZ NZ Suburbs and Localities (polygons for geocoding FENZ suburb/TLA strings)",
+     "url": "https://data.linz.govt.nz/layer/113764-nz-suburbs-and-localities/",
+     "access": "Free LINZ Data Service account (CC BY 4.0)",
+     "size": "~100 MB"
+    },
+    {
+     "name": "Hourly/sub-hourly rain gauges: ESNZ DataHub national network, Auckland Council WebPortal, Northland and Hawke's Bay Hilltop servers",
+     "url": "https://hilltop.nrc.govt.nz/Data.hts?Service=Hilltop&Request=SiteList&Measurement=Rainfall",
+     "access": "ESNZ: free DataHub account. Auckland Council: click-through terms (https://environmentauckland.org.nz/Data). NRC/HBRC Hilltop: open, no account",
+     "size": "~2 GB"
+    },
+    {
+     "name": "HIRDS v4 depth-duration-frequency tables at gauge locations (to convert depth to local AEP)",
+     "url": "https://data.niwa.co.nz/pages/hirds-on-datahub",
+     "access": "Free ESNZ DataHub account plus online purpose statement (CC BY 4.0)",
+     "size": "<50 MB"
+    },
+    {
+     "name": "Stats NZ Statistical Area 2 boundaries and 2023 Census usually-resident population (exposure offset)",
+     "url": "https://datafinder.stats.govt.nz/layer/120977-statistical-area-2-2025/",
+     "access": "Free Stats NZ Datafinder account (CC BY 4.0)",
+     "size": "~150 MB"
+    }
+   ],
+   "lit_for": [
+    "Spekkers et al. 2013 (HESS, doi:10.5194/hess-17-913-2013): rainfall-related insurance claims rise sharply with intensity, so objective impact records support thresholds",
+    "Papagiannaki et al. 2022 (Water, doi:10.3390/w14060994): damage-triggering rainfall thresholds derived from claims vary across a region, consistent with local adaptation",
+    "Tian et al. 2019 (Sci. Total Environ., doi:10.1016/j.scitotenv.2019.06.355): critical rainfall thresholds for urban pluvial flooding can be inferred from citizen reports",
+    "Hurford et al. 2012 (J. Flood Risk Manag., doi:10.1111/j.1753-318X.2012.01133.x): UK Extreme Rainfall Alerts use return-period thresholds, and their validation shows that rarity-based criteria are operationally viable"
+   ],
+   "lit_against": [
+    "Within a region, local AEP and absolute depth are almost collinear. Identification therefore rests on between-region contrasts dominated by a few big events (Jan 2023, Gabrielle), which may make the test underpowered or event-driven",
+    "Spekkers et al. 2013 also found weak and noisy rainfall-claim relations at moderate intensities, where drainage condition and exposure dominate",
+    "FENZ callouts are capacity-limited and coding-dependent: on 27 Jan 2023 many calls could not be attended, and 'Special Service' or 'Assist Public' rows may hide flood jobs. The impact proxy is therefore censored at the extremes",
+    "Point gauges up to 10 km away can miss convective cells. Wright et al. 2019-style non-stationarity also implies the HIRDS AEPs themselves may be biased (see the companion HIRDS audit)"
+   ],
+   "method": "Parse all eight FENZ files. Define flood callouts primarily as NaturalDisasterType = Flood, with sensitivity variants adding NAT1-3 ICAD codes and water-related 'Special Service' rows. Geocode Suburb plus TLA to LINZ polygons by exact match, then fuzzy match, and report the match rate. Build a suburb-day panel. Assign rainfall from the nearest QC'd hourly gauge within 10 km (inverse-distance mean of up to 3 gauges as a sensitivity), giving the day's maximum 1-, 6- and 24-h depths. Convert depth to AEP by log-interpolating the HIRDS v4 curve at the gauge. Models are logistic GLMMs with suburb and region random effects, a population offset, season and holiday terms: (a) depth splines, (b) AEP splines, (c) both. Train on FY2017/18-2023/24 and test on FY2024/25, which includes the late-June 2025 Nelson-Tasman floods; also run leave-one-region-out CV. The primary statistic is the held-out log-loss difference (a) minus (b) with a paired block bootstrap over storm days. Then derive region-specific callout curves and onset thresholds and place 27 Jan 2023 on the Auckland curve.",
+   "plan": [
+    "Preregister the outcome definition, the 10 km gauge rule, the 6-h primary duration, the train/test split and the 5% log-loss criterion",
+    "Download and parse the FENZ CSVs. Audit flood-coding consistency by year and region, and geocode suburbs to LINZ polygons (target >=95% match)",
+    "Assemble hourly gauges (ESNZ, Auckland Council, NRC, HBRC, plus other open council Hilltop servers), QC them, and compute daily maximum 1/6/24-h depths",
+    "Attach HIRDS v4 depth-AEP curves and compute AEPs. Build the suburb-day panel with population offsets",
+    "Fit the depth, AEP and combined models on training years. Score them on FY2024/25 and in leave-one-region-out CV with bootstrap CIs",
+    "Run sensitivities (outcome definitions, gauge distance, 1-h/24-h durations, excluding Jan-Feb 2023, capacity-censoring checks) and derive regional callout curves",
+    "Write up with an Auckland-focused threshold table for emergency managers and an open notebook"
+   ],
+   "risks": "FENZ capacity saturation and coding drift. Suburb-name geocoding errors. Gauge sparsity outside Auckland, Northland and Hawke's Bay may shrink the national sample. HIRDS access depends on DataHub's purpose statement; the fallback is AEPs from in-house regional GEV fits. Callouts reflect drainage, exposure and reporting behaviour as well as rain. Te Mana Raraunga: FENZ records include suburb-level incidents in communities with high M\u0101ori populations (Tair\u0101whiti, Wairoa, Northland) that are of iwi interest after Gabrielle. The study uses no ethnicity or iwi data and will not stratify by ethnicity without iwi engagement. Results will be aggregated and framed as service design, not deficit, and offered to iwi-led emergency responders (e.g. Te R\u016bnanganui o Ng\u0101ti Porou, Ng\u0101ti Kahungunu), consistent with the principles of rangatiratanga, manaakitanga and kaitiakitanga.",
+   "critic_note": "Critic (Auckland/NZ round): No study testing rarity against depth using fire-service callouts was found (Crossref/Europe PMC 2023-26); the nearest is an EGU26 abstract relating European flood losses to rainfall return periods. The FENZ catalogue has 8 CC BY CSVs, with FY2024/25 added Mar 2026 (~8 months after year end). FY2025/26 should therefore appear around Feb-Mar 2027. A preregistration frozen before then can use it as a truly unseen confirmatory year and demote FY2024/25 to validation. Value lowered 6->5: AEP and depth are nearly collinear within regions, flood callouts are few and dominated by Jan 2023, and the callout proxy is capped by crew capacity. Cost is 4 standalone, or 3 if it reuses the HIRDS audit's gauge harvest and HIRDS tables (a scheduling pair; the same DataHub station cap applies).",
+   "scout_value_score": 6,
+   "scout_cost_score": 3,
+   "plain_summary": "NZ weather warnings mostly trigger at fixed rain totals, but 100 mm of rain is routine on the West Coast and a disaster in Auckland. Using eight years of Fire and Emergency callout records, this study tests whether flood callouts track how unusual the rain is for a place rather than the raw amount. It then works out the rain level at which callouts surge in Auckland and elsewhere.",
+   "local_relevance": "MetService/ESNZ (setting warning criteria), NEMA and Auckland Emergency Management (surge planning) and FENZ (pre-positioning crews) would get region-specific, impact-calibrated rainfall thresholds. Auckland would get its own callout-rainfall curve, with 27 January 2023 placed on it.",
+   "time_sensitive": "Freeze before the FY2025/26 FENZ file is released (expected ~Feb-Mar 2027) to gain an unseen test year",
+   "needs_engagement": "",
+   "scout_round": "auckland-nz"
+  },
+  {
+   "id": "auckland-nz-crl-structural-uplift-prereg",
+   "title": "Is the City Rail Link's ridership jump structural or a novelty effect? A preregistered prospective evaluation of rail uplift, bus substitution and job accessibility",
+   "domain": "auckland-nz",
+   "hypothesis": "Auckland's ratio of weekday (Tue-Thu, non-disrupted) rail to bus boardings held at 0.209-0.232 (monthly medians, Feb-Dec) from July 2023 to 10 September 2026, then jumped to about 0.307 (+37%) in the first full week after City Rail Link public services began on 13 September 2026. Hypothesis: over the confirmatory window 16 February - 25 March 2027 the ratio stays at least 20% above its pre-opening level for the same calendar window (ratio >= 0.27, one-sided 95% lower bound above +10%). That would mean at least ~55% of the opening-week uplift persists rather than fading as a novelty effect.",
+   "gap": "The CRL (NZ$5.5b, New Zealand's largest transport project) opened on 11 September 2026. No independent after-the-fact evaluation exists. The only quantitative documents are AT's 2015 internal business case (forecasts made beforehand) and commentary. Three questions are open: does the opening jump persist (ramp-up vs novelty)? How much comes from people leaving buses rather than new trips? How is the timetable-based accessibility gain spread across Auckland? The window for a truly prospective evaluation, preregistered before the outcome data exist, closes within weeks.",
+   "value_score": 7.0,
+   "cost_score": 3.0,
+   "value_rationale": "Fills an actively discussed gap under unusually clean conditions: a single dated intervention, a highly stable control ratio (rail/bus within about 5% for three years), open counts updated weekly, and a preregistration made before the outcome data exist. That guards against after-the-fact spin in either direction on a NZ$5.5b project. Not 8+: outcomes are at line level, not station level, and a single city limits how far the result generalises.",
+   "cost_rationale": "CPU-only with small data (<2 GB). r5py accessibility matrices for ~600 Auckland SA2s and two GTFS feeds take hours on 32 cores, and the ridership models are trivial. The main cost is calendar time (confirmatory data arrive around late March 2027), not compute. Optional GTFS-RT logging adds ~5-15 GB over 6 months.",
+   "est_wall_time": "2-3 days now (preregistration, counterfactual validation, accessibility analysis, a 6-week interim descriptive check), then ~1 day for the confirmatory test once AT publishes daily boardings through 25 March 2027 (~6 months calendar)",
+   "est_data_gb": 2,
+   "feasibility": "local",
+   "requirements_if_out_of_reach": "",
+   "datasets": [
+    {
+     "name": "Auckland Transport daily boardings by mode (bus/train/ferry; HOP + contactless + train line-to-line transfers), updated weekly",
+     "url": "https://at.govt.nz/about-us/reports-publications/how-many-people-are-taking-buses-trains-and-ferries",
+     "access": "open, no account (XLSX)",
+     "size": "<1 MB; verified 1 Jul 2023 - 20 Sep 2026 (1,178 days)"
+    },
+    {
+     "name": "AT monthly boardings by route (all bus routes, rail lines, ferries), monthly patronage by mode since July 2005, monthly punctuality and reliability by route",
+     "url": "https://at.govt.nz/about-us/reports-publications/how-many-people-are-taking-buses-trains-and-ferries",
+     "access": "open, no account (XLSX)",
+     "size": "<2 MB total"
+    },
+    {
+     "name": "AT GTFS static feed (CRL stations Te Waihorotiu, Karanga-a-Hape and Maungawhau in service; feed valid 17 Sep - 31 Dec 2026)",
+     "url": "https://gtfs.at.govt.nz/gtfs.zip",
+     "access": "open, no account",
+     "size": "28.7 MB zip (~135 MB unzipped)"
+    },
+    {
+     "name": "Historical pre-CRL AT GTFS feeds (Aug 2026), Mobility Database feed mdb-1029",
+     "url": "https://mobilitydatabase.org/feeds/gtfs/mdb-1029",
+     "access": "free Mobility Database account (API refresh token) needed to list and download historical datasets",
+     "size": "~30 MB per feed"
+    },
+    {
+     "name": "AT GTFS-realtime trip updates and vehicle positions (optional logging of delivered service)",
+     "url": "https://dev-portal.at.govt.nz/",
+     "access": "free AT developer-portal account and subscription key (the API returns 401 without one)",
+     "size": "~5-15 GB if polled every 30 s for 6 months"
+    },
+    {
+     "name": "OpenStreetMap New Zealand extract (walk/street network for r5py)",
+     "url": "https://download.geofabrik.de/australia-oceania/new-zealand-latest.osm.pbf",
+     "access": "open (ODbL)",
+     "size": "404 MB"
+    },
+    {
+     "name": "Stats NZ business demography: geographic units and employee counts by industry and SA2, 2000-2025",
+     "url": "https://www.stats.govt.nz/assets/Uploads/New-Zealand-business-demography-statistics/New-Zealand-business-demography-statistics-At-February-2025/Download-data/geographic-units-by-industry-and-statistical-area-2000-2025-descending-order.zip",
+     "access": "open (CC BY 4.0)",
+     "size": "28.7 MB zip"
+    },
+    {
+     "name": "Stats NZ SA2 2023 boundaries (layer 111227) and 2023 Census population change by SA2 (layer 119478)",
+     "url": "https://datafinder.stats.govt.nz/layer/111227-statistical-area-2-2023-generalised/",
+     "access": "free Stats NZ Datafinder account (download/API key)",
+     "size": "<100 MB"
+    }
+   ],
+   "lit_for": [
+    "Shinn & Voulgaris 2019, Transportation Research Record, 'Ridership Ramp-Up? Initial Ridership Variation on New Rail Transit Projects' (10.1177/0361198119844462): the basis for testing persistence vs novelty decay",
+    "Du, Huang & Zhou 2023, Cities, 'Impacts of a new urban rail transit line and its interactions with land use on the ridership of existing stations' (10.1016/j.cities.2023.104506): network effects of a new line",
+    "Greenaway-McGrevy 2024, Journal of Transport Economics and Policy, 'Mode Choice and the Effects of Rapid Transit Improvements on Private Vehicle Use and Urban Development' (10.3828/jtep.2024.58.1.1): an Auckland rapid-transit precedent",
+    "Javanmard, Liu & Long 2025, Travel Behaviour and Society, 'Using Realtime GTFS to generate easy-to-use transit accessibility measures under travel time uncertainty' (10.1016/j.tbs.2025.101054): method for the delivered-service accessibility arm",
+    "Braga, Loureiro & Pereira 2026, Journal of Transport Geography, travel-time variability, jobs competition and accessibility inequalities (10.1016/j.jtrangeo.2025.104526)",
+    "Skamris & Flyvbjerg 1997, Transport Policy, 'Inaccuracy of traffic forecasts and cost estimates on large transport projects' (10.1016/s0967-070x(97)00007-3): motivates an independent, preregistered evaluation after opening"
+   ],
+   "lit_against": [
+    "Novelty searches (Crossref 'City Rail Link' Auckland; Crossref Auckland rail accessibility/GTFS; arXiv Auckland AND transit/rail/bus; arXiv ridership AND accessibility AND rail/metro; arXiv new rail line/line opening ridership; the OpenAlex daily quota was exhausted mid-scan) found no evaluation of the CRL after opening. Crossref hits are construction/engineering papers, e.g., Galli, Ireland & Howard 2019/2020 on CRL land acquisition (10.1201/9780429424441-37)",
+    "Baker & Schloffel-Armstrong 2026, ''We can have beautiful things!' Why Auckland's City Rail Link is about much more than trains' (10.64628/aa.xgjhaj99h): commentary, with no quantitative evaluation",
+    "Auckland Transport's 2015 internal CRL business case (cityraillink.co.nz/crl-business-case): forecasts made before construction, not an evaluation",
+    "Lee, Boarnet & Houston 2017, Sustainability, 'Changes in Service and Associated Ridership Impacts near a New Light Rail Transit Line' (10.3390/su9101827): documents bus-to-rail reallocation, the substitution channel tested here in H2"
+   ],
+   "method": "Prospective, preregistered interrupted time series with a control series from within the same system. Primary outcome: the daily rail/bus boardings ratio on Tue-Thu non-disrupted days. Disruptions are flagged by rules frozen in the preregistration, using rail-replacement counts and ratio outliers. Counterfactual: the same-calendar-window ratio in 2024-2026, plus a regression/state-space model of the ratio on school-term, holiday and month effects, fitted to Jul 2023 - 10 Sep 2026. The null distribution of 'uplift' comes from 50+ placebo opening dates in the pre-period. The primary estimand is persistence: the Feb-Mar 2027 uplift relative to the opening-week uplift. Buses could lose riders to rail, which would inflate the ratio, so rail and bus boardings are also each modelled against their own seasonal baselines. Secondary H2: a route-level monthly difference-in-differences comparing bus routes whose GTFS shapes run within 800 m of the three new stations or along the isthmus/western corridors into the city centre with all other routes (Oct 2026 - Mar 2027 vs Oct 2025 - Mar 2026). The preregistered threshold is a relative loss of at least 5%. Secondary H3 (exploratory, constructive): timetable-based job accessibility from pre-CRL (Aug 2026) and post-CRL (Sep 2026) GTFS via r5py (jobs within 30/45/60 min, 7-9am median, weighted by SA2 population), mapped by area. With GTFS-RT logging, a delivered-service version (adjusted for cancellations and delays) tests how much of the timetabled gain survives day-to-day operations.",
+   "plan": [
+    "Freeze and timestamp the preregistration before AT's next weekly data release: outcome definitions, disruption-flag rules, confirmatory window 16 Feb - 25 Mar 2027, thresholds and placebo design.",
+    "Assemble the AT daily and monthly-by-route series, flag disruption days, and fit and validate the counterfactual ratio model on Jul 2023 - 10 Sep 2026, using 50+ placebo openings to calibrate false-positive rates.",
+    "Download pre-CRL (Aug 2026) and post-CRL (Sep 2026) GTFS; build r5py networks on the OSM NZ extract; compute SA2-to-SA2 public-transport travel-time matrices (7-9am, 1-min departures) and maps of the change in job accessibility.",
+    "Classify bus routes by their exposure to the CRL corridor from GTFS shapes and stops, and prepare the route-level difference-in-differences for H2.",
+    "Optional: register for an AT API key and log GTFS-RT trip updates every 30 s to measure delivered rail service and cancellations through March 2027.",
+    "Publish a non-confirmatory 6-week interim descriptive update (no hypothesis test).",
+    "Once AT publishes data through 25 Mar 2027, run the confirmatory tests (H1 persistence, H2 substitution) and sensitivity analyses (bounds for transfer counting, separate rail and bus baselines, event days excluded), then write the report."
+   ],
+   "risks": "(1) Counting artefact: AT boardings include train line-to-line transfers, and through-running lines change transfer patterns, so part of the uplift could be mechanical. This is handled by sensitivity bounds and reported explicitly, but cannot be fully separated using public data. (2) Concurrent changes (bus network or timetable changes, fare changes in Feb 2027, events, strikes, rail closures) can move the ratio; mitigated by disruption rules frozen in advance and separate baselines per mode. (3) If buses lose riders to rail, the ratio overstates the net rail effect; H2 measures this directly. (4) Pre-CRL GTFS needs a free Mobility Database account and GTFS-RT needs a free AT key. (5) The confirmatory result arrives only after ~6 months. Te Mana Raraunga: no Maori or individual-level data are used (aggregate counts, timetables, census totals). The station names were gifted by mana whenua. Any later equity analysis by ethnicity would use only published aggregates and be discussed with Maori data-governance experts first.",
+   "critic_note": "Critic (Auckland/NZ round): Crossref found only engineering papers and a 2026 commentary, so no evaluation after opening exists. Verified: the current AT GTFS (valid 17 Sep-31 Dec 2026) contains Te Waihorotiu, Karanga-a-Hape and Maungawhau, and the AT daily boardings file runs to 20 Sep 2026. The threshold was informed by the opening-week ratio (0.307). That is acceptable because the confirmatory window (Feb-Mar 2027) is unseen, but the preregistration must record every post-opening day viewed. Each weekly AT release shows more of the decay path, so freeze within about a week. Cost raised 2->3 (about 3-4 days in total including r5py accessibility). The counting artefact from train line-to-line transfers is the main validity threat and needs a preregistered bound.",
+   "scout_value_score": 7,
+   "scout_cost_score": 2,
+   "plain_summary": "Auckland's City Rail Link tunnels opened to the public on 13 September 2026, and train trips jumped by about a third in the first week. This study writes down now, before the data exist, how big the lasting effect should be. In March 2027 it checks whether the jump held up or faded, and whether it came from new trips or from people leaving buses, giving Aucklanders an honest scorecard for a NZ$5.5 billion project.",
+   "local_relevance": "Auckland Transport, Auckland Council, KiwiRail and the Ministry of Transport would get an independent, pre-committed estimate of the CRL's ridership effect and how many riders it drew from buses. They can use it to plan the bus network around the new stations, justify follow-on rail investment and benchmark future business cases.",
+   "time_sensitive": "Freeze within about a week: AT daily data already run to 20 Sep 2026 and each weekly release reveals more of the post-opening trajectory",
+   "needs_engagement": "",
+   "scout_round": "auckland-nz"
+  },
+  {
+   "id": "auckland-nz-speed-limit-reversal-crashes",
+   "title": "What did reversing New Zealand's speed-limit cuts cost in crashes? A national difference-in-differences at road-segment level on the 2025 Setting of Speed Limits Rule reversals",
+   "domain": "auckland-nz",
+   "hypothesis": "The study covers road locations whose permanent posted limit was raised between 1 April and 31 October 2025. These are overwhelmingly reversals of post-2020 reductions under the Land Transport Rule: Setting of Speed Limits 2024, mainly 80->100 km/h on rural roads and state highways and 30/40->50 km/h on urban streets. Hypothesis: police-reported injury crashes on these roads in the post-reversal period (FY2025/26 plus FY2026/27 to date) rose relative to matched locations whose limits did not change. The pooled difference-in-differences rate ratio is at least 1.10, with a one-sided 95% lower bound above 1.00.",
+   "gap": "The 2024 Rule required road controlling authorities to reverse many 2020-2024 speed-limit reductions by 1 July 2025. The government argued the safety cost would be small; safety advocates predicted more deaths and serious injuries. No peer-reviewed or preprint evaluation of the reversals exists. Evidence on Auckland's own reductions is AT grey literature. The international literature is dominated by reductions (20 mph/30 km/h) or motorway increases, not by reversals of recent reductions on the same roads.",
+   "value_score": 7.0,
+   "cost_score": 3.0,
+   "value_rationale": "Directly informs a live national policy argument, and how NZTA and Auckland Transport apply the 2024 Rule and later amendments, with an independent estimate. Designs that reverse a cut on the same road are rare internationally, so the result also tests the symmetry assumption behind models linking speed to crash risk. Capped at 7 by limited power with one post-reversal year and coarse crash timing (financial year only).",
+   "cost_rationale": "All data are open and under ~2 GB: CAS ~0.3 GB CSV, NSLR polygons <1 GB, OSM 0.4 GB, plus selected TMS count sites. Spatial joins and count models run in hours on CPU; no GPU.",
+   "est_wall_time": "2-3 days, plus a pre-committed re-run when FY2026/27 is complete (~Oct 2027), which roughly doubles post-period power",
+   "est_data_gb": 2,
+   "feasibility": "local",
+   "requirements_if_out_of_reach": "",
+   "datasets": [
+    {
+     "name": "NZTA Crash Analysis System (CAS): all police-reported crashes with point locations (NZTM), severity, posted speed limit, crash year and financial year",
+     "url": "https://opendata-nzta.opendata.arcgis.com/datasets/8d684f1841fa4dbea6afaefc8a1ba0fc",
+     "access": "open, CC BY 4.0, no account (FeatureServer or CSV download)",
+     "size": "707,449 crashes, 2000 - Sep 2026; ~0.3 GB CSV (service 0.73 GB)"
+    },
+    {
+     "name": "National Speed Limit Register (NSLR): full-detail speed-limit zones with whenEffective/whenIneffective (from 26 May 2022, refreshed nightly)",
+     "url": "https://opendata-nzta.opendata.arcgis.com/datasets/aa376f1f2f3643bdac4d18855229239c",
+     "access": "open, no account",
+     "size": "56,000 zone polygons, <1 GB GeoJSON (subset of new limits Apr-Oct 2025: 4,095 polygons, 95 MB)"
+    },
+    {
+     "name": "NZTA TMS daily traffic counts (state-highway exposure)",
+     "url": "https://opendata-nzta.opendata.arcgis.com/datasets/898e77d403c443c4961ada073d144735",
+     "access": "open, no account",
+     "size": "whole service ~11 GB; only affected sites are queried (<0.5 GB)"
+    },
+    {
+     "name": "OpenStreetMap New Zealand extract (road network for segmentation and road class)",
+     "url": "https://download.geofabrik.de/australia-oceania/new-zealand-latest.osm.pbf",
+     "access": "open (ODbL)",
+     "size": "404 MB"
+    }
+   ],
+   "lit_for": [
+    "Sayed & Sacchi 2016, Accident Analysis & Prevention, 'Evaluating the safety impact of increased speed limits on rural highways in British Columbia' (10.1016/j.aap.2016.07.012): crashes rose after limit increases; a before-after template with a comparison group",
+    "Brubacher et al. 2018, Sustainability, 'Road Safety Impact of Increased Rural Highway Speed Limits in British Columbia, Canada' (10.3390/su10103555)",
+    "Kokka et al. 2024, J Epidemiol Community Health, 'Effect of 20 mph speed limits on traffic injuries in Edinburgh, UK: a natural experiment and modelling study' (10.1136/jech-2023-221612)",
+    "Quddus, Theofilatos, Feng & Elvik 2025, Accident Analysis & Prevention, 'Evaluating the safety and speed impacts of the 20mph speed limit in the UK: Evidence and insights' (10.1016/j.aap.2025.108210)",
+    "Job & Brodie 2022, Journal of Road Safety, 'Understanding the role of Speeding and Speed in Serious Crash Trauma: A Case Study of New Zealand' (10.33492/jrs-d-21-00069)",
+    "Malyshkina & Mannering 2008, arXiv:0806.1354, 'Analysis of the Effect of Speed Limit Increases on Accident-Injury Severities'",
+    "arXiv:2408.00687 (2024), 'Reducing Urban Speed Limits Decreases Work-Related Traffic Injury Severity: Evidence from Santiago, Chile'"
+   ],
+   "lit_against": [
+    "No peer-reviewed or preprint evaluation of the 2025 New Zealand speed-limit reversals was found (searches: Europe PMC speed limit AND Auckland/New Zealand; Europe PMC speed limit reversal/increase AND crash/injury; Crossref Journal of Road Safety NZ/Auckland speed; arXiv speed limit AND crash/injury, speed limit AND increase/reversal, speed limit AND natural experiment; the OpenAlex daily quota was exhausted mid-scan)",
+    "Auckland Transport's own monitoring of its 2020-2023 Safe Speeds reductions (grey literature, not peer reviewed; figures not independently verified in this scan): covers the reductions, not the reversals",
+    "Mandic, Hewitt & Dodge 2023, Journal of Road Safety, 'Approaches to Managing Speed in New Zealand's Capital' (10.33492/jrs-d-22-00047): descriptive, with no causal crash estimate",
+    "Hu & Cicchino 2024, J Safety Research, 'Effects of lowering speed limits on crash severity in Seattle' (10.1016/j.jsr.2023.11.004): reductions only",
+    "Hunter et al. 2022, J Epidemiol Community Health, Belfast 20 mph 3-year follow-up (10.1136/jech-2022-219729): found little change in casualties, a caution that changing the posted limit may move actual speeds only slightly"
+   ],
+   "method": "Natural experiment analysed as a difference-in-differences at road-segment level. (i) Build a time-indexed speed-limit map: split OSM roads into ~100 m segments and assign the NSLR permanent limit in force on 1 May 2025 and 1 November 2025. Later snapshots are used to exclude locations changed again (e.g., 2026 school-zone or re-lowering changes). Changes are detected by comparing values at fixed dates, not by record end dates, because NSLR contains administrative re-certifications. (ii) Treated segments are those whose limit was raised in the window, grouped by transition type (rural 80->100; urban 30/40->50; other). The 100->110 expressway increases are analysed separately. Controls are unchanged segments matched (coarsened exact matching) on road controlling authority, urban/rural, prior limit history (reduced in 2020-24 and retained vs never reduced), road class and pre-period crash history. (iii) Snap CAS crashes to segments (<=30 m plus street-name agreement); the CAS speedLimit field serves as a manipulation check. (iv) Fit Poisson/negative-binomial difference-in-differences models with segment and stratum x financial-year fixed effects. Post period = FY2025/26 plus partial FY2026/27; the partial year is valid because treated and control segments share the same partial exposure. SEs are clustered by corridor/authority, with event-study pre-trends for FY2017/18-FY2024/25 and placebo reversal years. Secondary analyses: fatal+serious crashes, all crashes, the severity ratio, effects by transition type, state-highway models with TMS AADT exposure, and comparison with the Nilsson/Elvik power-model prediction for the observed limit changes. Pilot from this scan: 682 injury crashes (182 fatal or serious) in FY2023/24-FY2024/25 fell inside zones whose limit rose in Apr-Oct 2025. Most were on 80->100 (197) and 30->50 (158) transitions; 47% were on state highways and 20% in Auckland. That implies a minimum detectable effect of roughly 18-20% with one post-reversal year.",
+   "plan": [
+    "Download CAS (FY2017/18 to present) and NSLR zones, snapshotting NSLR daily during the project to guard against silent edits.",
+    "Segment the OSM road network and assign the limits in force at 1 May 2025, 1 Nov 2025, 30 Jun 2026 and today; classify transitions and flag locations with other changes.",
+    "Snap crashes to segments; run the manipulation check (share of post-period crashes on treated segments recorded at the new limit) and data-quality filters that drop implausible transitions such as 10->50 or 50->100 polygon artefacts.",
+    "Match controls, estimate pre-trend event studies and placebo years, and report the minimum detectable effect before estimating any post-period effect.",
+    "Estimate the primary difference-in-differences rate ratio for injury crashes; then estimate fatal+serious, all-crash, severity and transition-specific effects, plus state-highway models with TMS exposure.",
+    "Robustness checks: alternative snapping tolerances, excluding school-zone segments, Auckland-only and state-highway-only subsets, and a spillover check on adjacent unchanged segments.",
+    "Write the report with tables aimed at NZTA and AT, and pre-commit to re-running once FY2026/27 data are complete."
+   ],
+   "risks": "(1) Power: ~250-340 injury crashes per year on treated segments gives a minimum detectable effect near 18-20% with one post-reversal year, so a null result may be inconclusive; the CI will be reported and the analysis re-run in 2027. (2) Timing: public CAS gives only crash year and financial year, no dates. Reversals clustered around 1 July 2025 line up with the financial-year boundary, but staggered effective dates blur it. (3) Minor-injury and non-injury crashes from recent months are reported with a lag; this affects treated and control segments equally but adds noise. (4) NSLR history starts on 26 May 2022 and contains administrative re-certifications, so changes must be detected by comparing values at fixed dates. (5) Concurrent changes: mandatory variable school-zone limits (by July 2026), further 2026 changes (some Auckland zones were superseded again in Sept 2026), and shifts in enforcement and traffic volumes. (6) Selection: which reductions were reversed depended partly on community consultation outcomes. Te Mana Raraunga: CAS is non-personal and has no ethnicity field, so no Maori data are used. Maori are over-represented in road trauma; any later extension to ethnic disparities would require Maori-led governance of linked health data and is out of scope.",
+   "critic_note": "Critic (Auckland/NZ round): Europe PMC/Crossref found no evaluation of the 2025 reversals (the nearest are a 2024 NZMJ editorial and studies of limit reductions only). Verified the CAS FeatureServer (707,449 crashes) and the speed-limit register (NSLR; 87,046 zone records, refreshed nightly), both open with no key. Value stays 7, but power is the binding risk: the minimum detectable effect is ~18-20% with one post-reversal year, crash timing is by financial year only, and minor-injury crashes are reported late. Preregister the minimum detectable effect and make the Oct 2027 rerun part of the confirmatory plan. Cost raised 2->3 for reconstructing segment-level NSLR history. The scout's pilot used only pre-period crashes; FY2025/26 counts on treated segments must not be tabulated before the preregistration is frozen.",
+   "scout_value_score": 7,
+   "scout_cost_score": 2,
+   "plain_summary": "In 2025 the government made councils and NZTA raise many speed limits that had been lowered since 2020. This study compares crashes on roads where limits went back up with similar roads where nothing changed, to estimate how many extra injury crashes the reversal caused. That evidence matters for decisions about speed limits on Auckland's streets and the state highways around it.",
+   "local_relevance": "NZTA, the Ministry of Transport and Auckland Transport, which manages many of the affected streets, can use the estimate in speed-management plans, the next Government Policy Statement on land transport and any future revision of the speed-limit rule.",
+   "time_sensitive": "Start daily NSLR snapshots now (history is rewritten silently); preregister before any FY2025/26 tabulation; confirmatory rerun ~Oct 2027",
+   "needs_engagement": "",
+   "scout_round": "auckland-nz"
+  },
+  {
+   "id": "auckland-nz-jade-water-value-calibration",
+   "title": "Did the regulator's water-value model see the 2024 power-price crisis coming? A calibration audit of the Electricity Authority's weekly JADE simulations against actual wholesale prices, 2023-2025",
+   "domain": "auckland-nz",
+   "hypothesis": "The Electricity Authority published 103 weekly JADE runs (2023: 43, 2024: 33, 2025: 27). Hypothesis: the actual time-weighted average wholesale price at Haywards (HAY2201) in the first simulated week that lies wholly after the run's inputs were fixed (stage 2) exceeds the 90th percentile of JADE's simulated price distribution (91 historical inflow sequences) in at least 20% of runs, twice the nominal 10%. In addition, among runs starting with national hydro storage below its historical 20th percentile for that week, the exceedance rate is at least three times the rate in the other runs.",
+   "gap": "Since 2023 the EA has published weekly runs of JADE as its benchmark for marginal water values. JADE is the open-source hydro-thermal scheduling model (stochastic dual dynamic programming, SDDP) developed at the University of Auckland's EPOC. The August 2024 crisis (weekly prices near $800/MWh) is central to the current debate over whether NZ wholesale prices reflect fundamentals, gas scarcity or market power. Nobody has checked whether these simulations are calibrated against what actually happened. The closest work (Poletti 2020) measured market power for 2010-2016 with a different benchmark. A recent EA weekly monitoring report checked here compares prices with historical percentiles and does not reference JADE.",
+   "value_score": 6.0,
+   "cost_score": 4.0,
+   "value_rationale": "Fills an actively discussed but technical gap. Whether the official benchmark is calibrated, or demonstrably miscalibrated, matters for EA market monitoring, security-of-supply assessments and the gentailer/market-power debate that sets the power prices Auckland households and businesses pay. Kept at 6 because calibration failure alone cannot separate market power from risk aversion or from mis-modelled gas constraints; the secondary analyses address this only partially.",
+   "cost_rationale": "CPU-only, a few days. The work streams ~9 GB of JADE outputs and ~95 GB of offers (filtered on the fly to hydro units, ~3 GB kept) plus 0.4 GB of prices; the analysis itself is light. Optional JADE.jl re-runs with the open HiGHS solver for 4-6 crisis weeks take hours each on 32 cores.",
+   "est_wall_time": "4-6 days (1 day download/filter, 2 days calibration analysis, 1-2 days offer-markup secondary analysis; +1-2 days for optional JADE re-runs)",
+   "est_data_gb": 12,
+   "feasibility": "local",
+   "requirements_if_out_of_reach": "",
+   "datasets": [
+    {
+     "name": "Electricity Authority EMI 'Expected water values': weekly JADE runs, inputs and outputs, including tidy_results with simulated prices at NI/SI/HAY, marginal water values by reservoir and reservoir levels (91 inflow sequences x 52 stages)",
+     "url": "https://www.emi.ea.govt.nz/Wholesale/Datasets/Expected%20water%20values",
+     "access": "open, no account (Azure blob emidatasets/publicdata)",
+     "size": "103 runs with tidy_results = 9.1 GB; full folders 31 GB"
+    },
+    {
+     "name": "EMI final energy prices, half-hourly by node (monthly files)",
+     "url": "https://www.emi.ea.govt.nz/Wholesale/Datasets/DispatchAndPricing/FinalEnergyPrices",
+     "access": "open, no account",
+     "size": "~10 MB/month; ~0.4 GB for 2023-2025"
+    },
+    {
+     "name": "EMI generator offers by unit, tranche and trading period (daily files)",
+     "url": "https://www.emi.ea.govt.nz/Wholesale/Datasets/BidsAndOffers/Offers",
+     "access": "open, no account",
+     "size": "2023 10.1 GB, 2024 19.1 GB, 2025 65.9 GB (filtered while streaming to hydro energy offers, ~3 GB kept)"
+    },
+    {
+     "name": "EMI Hydrological Modelling Dataset (daily storage, spill and flows for major reservoirs, to 31 Dec 2024)",
+     "url": "https://www.emi.ea.govt.nz/Environment/Datasets/HydrologicalModellingDataset",
+     "access": "open, no account",
+     "size": "0.13 GB"
+    },
+    {
+     "name": "JADE.jl source code (EPOC, University of Auckland)",
+     "url": "https://github.com/EPOC-NZ/JADE.jl",
+     "access": "open source (custom licence; check terms before redistribution); HiGHS solver is open",
+     "size": "<50 MB"
+    }
+   ],
+   "lit_for": [
+    "Hole, Philpott & Dowson 2024, European Journal of Operational Research, 'Capacity planning of renewable energy systems using stochastic dual dynamic programming' (10.1016/j.ejor.2024.12.031): the SDDP/JADE lineage at EPOC, University of Auckland",
+    "Pritchard 2015, European Journal of Operational Research, 'Stochastic inflow modeling for hydropower scheduling problems' (10.1016/j.ejor.2015.05.022)",
+    "arXiv:2607.00504 (2026), 'How optimistic inflow forecasts distort dispatch, prices, and contracts in hydro-dominated power systems: evidence from Brazil': the closest analogue (bias in an official hydro-scheduling model)",
+    "Leclere & Philpott 2025, Operations Research Letters, 'Strategic behavior of risk-averse agents under stochastic market clearing' (10.1016/j.orl.2025.107365)",
+    "Philpott, Read & Batstone 2019, IEEE Power and Energy Magazine, 'The New Zealand Electricity Market: Challenges of a Renewable Energy System' (10.1109/mpe.2018.2871705)"
+   ],
+   "lit_against": [
+    "Poletti 2020, Energy Economics, 'Market Power in the New Zealand electricity wholesale market 2010-2016' (10.1016/j.eneco.2020.105078): the closest study using a market-power benchmark; it pre-dates JADE EWV and the gas-constrained 2023-2025 period",
+    "Hassan, Prasad & Kilby 2026, Energies, 'State-Dependent Merit-Order Effects in a Hydro-Dominated Market ... New Zealand' (10.3390/en19163747): models how price depends on storage and thermal share, but does not evaluate JADE forecasts",
+    "Young, Poletti & Browne 2014, Energy Economics, 'Can agent-based models forecast spot prices in electricity markets? Evidence from the New Zealand electricity market' (10.1016/j.eneco.2014.08.007): evaluated price forecasts from a different (agent-based) model",
+    "Browne, Poletti & Young 2012, New Zealand Economic Papers, 'Simulating market power in the New Zealand electricity market' (10.1080/00779954.2011.649566)",
+    "Electricity Authority weekly trading-conduct reports and half-yearly structure-conduct-performance reviews (grey literature): they monitor prices against historical percentiles; the 14-20 June 2026 report checked here does not reference JADE water values, and no published calibration of EWV was found (searches: OpenAlex NZ market power / water values / SDDP NZ / DOASA; Crossref Jade expected water values; arXiv NZ electricity AND hydro/water value/wholesale, water values AND SDDP AND price, water value AND hydropower AND forecast/calibration)"
+   ],
+   "method": "Calibration audit of an official stochastic model's forecasts. For each weekly run, extract the stage-1 and stage-2 simulated prices (91 historical inflow sequences) at HAY, NI and SI, and combine block prices into time-weighted weekly averages using that run's hours_per_block. Compute actual time-weighted weekly averages at HAY2201, BEN2201 and OTA2201 (Otahuhu, Auckland's reference node) over the matching JADE weeks (week 1 starts on 1 January). Primary test: how often stage 2 exceeds the simulated 90th percentile. Stage 2 is used because run inputs are dated day 2 of the JADE week, so stage 1 is partly elapsed. CIs come from a moving-block bootstrap to handle autocorrelation. Storage state comes from run-start reservoir levels, converted to national energy-storage percentiles using the EMI hydrological dataset. Secondary analyses: (a) PIT histograms and coverage of 50/80/90% intervals at horizons 1-4; (b) CRPS skill against climatology and persistence; (c) regression of log(actual/JADE median) on storage percentile, HVDC/thermal outages and gas-price inputs; (d) hydro offer markups, i.e. the price of the marginal cleared hydro tranche relative to the stage-1 marginal water value of its reservoir, by storage state and firm. Optional constructive arm: re-run JADE.jl with HiGHS for the worst-calibrated weeks under (a) CVaR risk aversion and (b) gas-constrained thermal availability, to see which assumption closes the gap. Pilot fact from this scan: the run for 2024 week 32 (inputs dated 6 Aug 2024) simulated Haywards PEAK-block prices of $237/$294/$344 per MWh at p10/p50/p90. The actual average for 5-11 Aug 2024 was $797/MWh (Benmore $805).",
+   "plan": [
+    "List and download the tidy_results of all 103 runs, filtering to price, mwv, reslevel and total_storage rows on the fly, plus hours_per_block and the run timestamps.",
+    "Download the 2023-2025 monthly final-price files and build actual weekly time-weighted prices at HAY2201, BEN2201 and OTA2201 aligned to JADE weeks.",
+    "Construct a storage percentile for each run start from the EMI hydrological dataset history and the JADE stage-0 reservoir levels.",
+    "Freeze the analysis plan; compute PIT, coverage, exceedance rates and CRPS skill by horizon; run the primary exceedance test and the storage-ratio test with a block bootstrap.",
+    "Filter the 2023-2025 offers to hydro units while streaming; compute marginal-tranche markups over reservoir marginal water values and relate them to storage and firm.",
+    "Optional: re-run JADE.jl with HiGHS for 4-6 crisis weeks under risk-averse and gas-constrained variants.",
+    "Write the report with recommendations for the EA (e.g., publish calibration diagnostics alongside the weekly EWV)."
+   ],
+   "risks": "(1) JADE runs are policy simulations (risk-neutral, historical inflow sequences, fixed demand), not designed as price forecasts, so miscalibration may reflect intended simplifications; results are framed as an audit of the benchmark, not a model 'failure'. (2) Small effective sample: 103 autocorrelated weeks, with the crisis concentrated in roughly 10 of them. The series has gaps (weeks 4-9 of 2024 and 2025, and late-year weeks) and ends at 2025 week 34. (3) Mapping between JADE (nodes NI, SI, HAY; PEAK/SHOULDER/OFFPEAK blocks) and half-hourly nodal prices is approximate; time-weighted weekly averages reduce this. (4) Calibration alone cannot separate market power, risk aversion and mis-modelled gas supply. (5) Offer files are large (2025: 66 GB), so they are filtered while streaming and never stored raw. Te Mana Raraunga: the hydro schemes sit on awa subject to Treaty settlements (e.g., Waikato River, Waitaki). The study uses only market and hydrological data, no Maori data, and makes no claims about iwi interests.",
+   "critic_note": "Critic (Auckland/NZ round): No calibration study of the EA's JADE water values was found (Crossref, Europe PMC, arXiv NZ electricity); the nearest are Poletti 2020 and Hassan et al. 2026 (Energies). The EMI blob listing has 2023, 2024 and 2025 run folders and none for 2026, so the series looks closed and the audit is retrospective with no deadline. JADE.jl is MPL-2.0, not a custom licence; its last push was Sep 2023, so the EA's production version may differ. Cost raised 3->4 (4-6 days; ~95 GB of offers streamed). The scout saw the worst miss (2024 week 32: p90 $344 vs actual $797) before setting the '>=20% above p90' threshold. Make the storage-conditional ratio co-primary, report the primary with and without the Aug-Sep 2024 crisis weeks, and frame miscalibration as expected for a risk-neutral benchmark.",
+   "scout_value_score": 6,
+   "scout_cost_score": 3,
+   "plain_summary": "New Zealand's electricity regulator runs a computer model every week to estimate how valuable the water in hydro lakes is, and uses that as a benchmark for whether power prices are fair. This study checks the model against what actually happened in 2023-2025. For example, in one week of the August 2024 crisis the model's middle price was under $300/MWh even for the busiest hours, but actual prices averaged nearly $800. Knowing when and why the benchmark misses matters for every Auckland household and business whose power price tracks the wholesale market.",
+   "local_relevance": "The Electricity Authority's market-monitoring team, MBIE's energy-security work and EPOC at the University of Auckland (JADE's developers) could use the calibration diagnostics to improve the weekly water-value benchmark and to judge future price spikes. Large Auckland electricity users and consumer advocates would gain an independent read on whether scarcity prices reflected fundamentals.",
+   "time_sensitive": "",
+   "needs_engagement": "",
+   "scout_round": "auckland-nz"
+  },
+  {
+   "id": "auckland-nz-upzoning-canopy-lidar-did",
+   "title": "Did Auckland's 2016 upzoning cost the city its trees? A three-epoch LiDAR difference-in-differences of canopy loss (2013, 2016-18, 2024)",
+   "domain": "auckland-nz",
+   "hypothesis": "Residential land upzoned to the Mixed Housing Urban or Terrace Housing and Apartment Building zones by the 2016 Auckland Unitary Plan lost at least 1.0 percentage point more tree-canopy cover (LiDAR vegetation >=3 m) between the 2016-18 and 2024 LiDAR epochs than matched Single House zone land (difference-in-differences <= -1.0 pp, 95% CI excluding 0), while the 2013 -> 2016-18 pre-period difference between the same groups is within +/-0.5 pp.",
+   "gap": "The housing effect of the 2016 Auckland Unitary Plan (AUP) upzoning is well established causally (Greenaway-McGrevy & Phillips 2023, J Urban Econ; Urban Studies 2023; Economic Modelling 2026), but its tree-canopy cost has never been estimated with a causal design. The closest work, Pedley & Morgenroth 2025 (Christchurch, Sustainable Cities and Society), links property redevelopment to canopy loss over 2016-2021 from aerial imagery and consents. It is not a zoning-treatment design and does not cover Auckland. Auckland Council's urban ngahere canopy reports compare 2013 with 2016/18 by area and land use; they are grey literature that OpenAlex and Crossref do not index, and must be checked in step 1. The Auckland-wide 2024 LiDAR (Part 1 Apr-Jun 2024, Part 2 Jun-Nov 2024) has only recently become openly available on the LINZ nz-elevation bucket. With the 2013 point cloud on OpenTopography, it makes a three-epoch pre/post design possible for the first time. Novelty searches (OpenAlex: 'Auckland tree canopy loss upzoning' = 0 hits; 'urban intensification tree canopy loss New Zealand'; 'upzoning tree canopy difference-in-differences'; Crossref: 'zoning tree canopy loss residential intensification lidar') turned up no causal upzoning-canopy study.",
+   "value_score": 7.0,
+   "cost_score": 5.0,
+   "value_rationale": "Housing supply versus urban trees is a live policy fight in NZ: the Urban Ngahere Strategy's 30% canopy target, national intensification rules (NPS-UD/MDRS) and the removal of blanket urban tree protection. A credible causal estimate of how much canopy upzoning costs, and how that cost splits between redeveloped and untouched parcels, fills a gap that is actively discussed. It also produces a reusable open product: Auckland canopy-change rasters for 2013, 2016-18 and 2024. The value is not higher because the result is specific to one city and the design rests on zoning assignment that is not random.",
+   "cost_rationale": "CPU-only raster work. The data are about 42 GB of LINZ 1 m DSM/DEM (2016-18 plus 2024) and about 46 GB of the 2013 point cloud, rasterised with PDAL; vector layers are under 5 GB. On 32 cores the raster differencing, building masking and parcel aggregation take a few days, and the econometrics take hours. Total is about 90 GB, which puts it in the 50-300 GB band.",
+   "est_wall_time": "7-10 days",
+   "est_data_gb": 90,
+   "feasibility": "local",
+   "requirements_if_out_of_reach": "",
+   "datasets": [
+    {
+     "name": "LINZ Auckland North LiDAR 1m DSM/DEM (2016-2018) and Auckland South LiDAR 1m DSM/DEM (2016-2017)",
+     "url": "https://nz-elevation.s3.ap-southeast-2.amazonaws.com/auckland/auckland-north_2016-2018/dsm_1m/2193/collection.json",
+     "access": "Open public S3 bucket (CC BY 4.0), no account; STAC collections verified, capture window 2016-08-15 to 2018-08-08 (north)",
+     "size": "DSM 7.55 GB (192 tiles) + 3.38 GB (85 tiles); DEM similar; ~22 GB total"
+    },
+    {
+     "name": "LINZ Auckland Part 1 and Part 2 LiDAR 1m DSM/DEM (2024)",
+     "url": "https://nz-elevation.s3.ap-southeast-2.amazonaws.com/auckland/auckland-part-1_2024/dsm_1m/2193/collection.json",
+     "access": "Open public S3 bucket (CC BY 4.0), no account; Part 1 captured 2024-04-29 to 2024-06-26, Part 2 2024-06-25 to 2024-11-03",
+     "size": "DSM 4.33 GB (109 tiles) + 5.63 GB (172 tiles); DEM similar; ~20 GB total"
+    },
+    {
+     "name": "OpenTopography 'Auckland, New Zealand 2013' classified LiDAR point cloud (pre-AUP epoch)",
+     "url": "https://doi.org/10.5069/G9KW5CZ5",
+     "access": "Open, no account; bulk S3-compatible listing verified at https://opentopography.s3.sdsc.edu/pc-bulk?list-type=2&prefix=Auckland_2013/",
+     "size": "46.2 GB (6,512 files)"
+    },
+    {
+     "name": "Auckland Council Unitary Plan Base Zone",
+     "url": "https://services1.arcgis.com/n4yPwebTjJCmXB6W/arcgis/rest/services/Unitary_Plan_Base_Zone/FeatureServer/0",
+     "access": "Open ArcGIS FeatureServer, CC BY 4.0, no account (zone codes: SH=19, MHS=18, MHU=60, THAB=8)",
+     "size": "139,462 polygons, ~0.4 GB"
+    },
+    {
+     "name": "LINZ NZ Building Outlines (All Sources), layer 101292 (includes historic outlines with lifecycle dates)",
+     "url": "https://data.linz.govt.nz/layer/101292-nz-building-outlines-all-sources/",
+     "access": "CC BY 4.0; needs a free LINZ Data Service account/API key for bulk export",
+     "size": "6.6 M features nationally; Auckland subset ~1 GB"
+    },
+    {
+     "name": "LINZ NZ Primary Land Parcels, layer 50823",
+     "url": "https://data.linz.govt.nz/layer/50823-nz-primary-land-parcels/",
+     "access": "CC BY 4.0; needs a free LINZ Data Service account/API key",
+     "size": "2.46 M features nationally; Auckland subset ~0.3 GB"
+    },
+    {
+     "name": "Auckland Council Land Cover 2017 (Lynker Analytics ML classification of 7.5 cm imagery; 'High vegetation' class used for independent validation)",
+     "url": "https://data-aucklandcouncil.opendata.arcgis.com/datasets/017febe483a14ba99108215cc1a3804c",
+     "access": "Open, CC BY 4.0, no account",
+     "size": "1.66 GB file geodatabase"
+    }
+   ],
+   "lit_for": [
+    "Greenaway-McGrevy & Phillips (2023) The impact of upzoning on housing construction in Auckland, Journal of Urban Economics, doi:10.1016/j.jue.2023.103555. Establishes the AUP upzoning as a natural experiment and gives treatment definitions.",
+    "The heterogeneous impacts of widespread upzoning: Lessons from Auckland, New Zealand (2023), Urban Studies, doi:10.1177/00420980231190281",
+    "Can zoning reform increase housing construction? Evidence from Auckland (2026), Economic Modelling, doi:10.1016/j.econmod.2026.107592",
+    "Assessing changes of urban vegetation cover and aboveground carbon stocks using LiDAR and Landsat imagery data in Auckland, New Zealand (2019), International Journal of Remote Sensing, doi:10.1080/01431161.2019.1685716. Shows that LiDAR canopy measurement works in Auckland.",
+    "Effects of different land-use planning instruments on urban shrub and tree canopy cover in Zurich, Switzerland (2024), Urban Forestry & Urban Greening, doi:10.1016/j.ufug.2024.128272"
+   ],
+   "lit_against": [
+    "Pedley & Morgenroth (2025) Green vs growth: The effect of residential intensification on urban tree canopy loss in Christchurch, New Zealand, Sustainable Cities and Society, doi:10.1016/j.scs.2025.106678. Closest prior: redeveloped properties lost much more canopy, but 87% of city-wide loss was on unmodified properties, which could dilute a zone-level effect.",
+    "Auckland Council urban ngahere canopy-cover reports (2013 vs 2016/18 comparison; grey literature, not indexed in OpenAlex or Crossref). They may already tabulate canopy change by zone; check before preregistering.",
+    "Walton (2008) Difficulties with estimating city-wide urban forest cover change from national, remotely-sensed tree canopy maps, Urban Ecosystems, doi:10.1007/s11252-007-0040-9. Warns that cross-epoch sensor differences can produce artifactual change."
+   ],
+   "method": "Three-epoch staggered difference-in-differences with a dose-response by zone. (1) Build canopy maps per epoch: 1 m nDSM = DSM - DEM, with vegetation at >=3 m. Buildings valid at each epoch's capture date are masked out using LINZ Building Outlines (All Sources) lifecycle dates, buffered by 1 m. The 2013 epoch is rasterised from the OpenTopography point cloud with PDAL. Epochs are co-registered on stable roofs and ground. (2) Validate the canopy masks against the Auckland Land Cover 2017 high-vegetation class and against point-cloud high-vegetation classes on a stratified tile sample (target >=90% agreement). (3) Units are residential parcels (LINZ primary parcels) that were already built on in 2013; greenfield and Future Urban land is excluded. Treatment is MHU or THAB (high dose), MHS is low dose, and Single House is the control. (4) Estimate parcel and epoch fixed effects plus treatment x post, with coarsened-exact matching on baseline canopy, parcel area, building age proxy, distance to the city centre and rapid transit, and local board. Standard errors are clustered at SA2 level, and the 2013 -> 2016-18 pre-trend is tested. (5) Mechanism: decompose the excess loss into parcels with new or removed buildings versus unmodified parcels, as in Pedley & Morgenroth. (6) Falsification: a zone-boundary design within 100 m of SH-MHU boundaries; placebo outcomes on park and road-reserve canopy; capture-date controls.",
+   "plan": [
+    "Check Auckland Council canopy reports and the Greenaway-McGrevy treatment definitions. Freeze the analysis sample (residential land built on in 2013), treatment and dose classes, outcome threshold (3 m) and the preregistered effect sizes before downloading the 2024 data.",
+    "Download LINZ 1 m DSM/DEM for 2016-18 and 2024 (~42 GB) and the 2013 OpenTopography point cloud (46 GB). Rasterise 2013 to a 1 m DSM/DEM with PDAL. Co-register all epochs using stable surfaces and report residual vertical error.",
+    "Build per-epoch canopy masks with nDSM >= 3 m, minus building outlines valid at each capture date. Validate against Land Cover 2017 and point-cloud vegetation classes on 50 stratified tiles, and report precision and recall for each epoch.",
+    "Aggregate canopy cover to parcels and 1 ha cells for 2013, 2016-18 and 2024, attaching tile capture dates, AUP zone, overlays (special character, notable trees) and covariates.",
+    "Run the preregistered DiD/event-study with matching and SA2-clustered SEs. Test the pre-trend, the main post effect (MHU/THAB vs SH) and the dose-response (MHS).",
+    "Decompose the excess loss into redeveloped and unmodified parcels using building-outline and DSM change, and estimate canopy lost per net new dwelling.",
+    "Robustness: 2 and 5 m thresholds, a zone-boundary discontinuity sample, excluding parcels redeveloped after Aug 2022 (MDRS/PC78 period), seasonal and leaf-off sensitivity, and placebo land uses.",
+    "Release the canopy-change rasters, parcel table and code under CC BY 4.0, and write the report with a plain-language summary for council and planners."
+   ],
+   "risks": "Zoning was not random: MHU and THAB were placed near centres and transit, where canopy may have changed differently anyway. Mitigations are the 2013 pre-trend, matching and the boundary design. The 2016-18 epoch overlaps the first 1-2 years after the AUP (operative in part Nov 2016), which may weaken the pre-period; tile capture date is a covariate. The LiDAR sensors and point densities differ between 2013, 2016-18 and 2024, which can create artifactual canopy change; mitigations are co-registration, thinning tests and stable-area checks. The epochs fall in different seasons, so deciduous trees may appear leaf-off. Building-outline lifecycle dates may be incomplete. National intensification rules (MDRS via Plan Change 78, notified Aug 2022) may have partly treated control land late in the window. A true effect could also be smaller than the 1 pp threshold if, as in Christchurch, most loss happens on unmodified parcels. That would be a falsification, not a failure. No M\u0101ori data are involved.",
+   "critic_note": "Critic (Auckland/NZ round): No causal study of upzoning and tree canopy was found (Crossref 'upzoning tree canopy Auckland'); Pedley & Morgenroth 2025 remains the nearest. Verified the LINZ STAC collections (north 2016-18: 192 DSM tiles; 2024 Part 1: 109; Part 2: 172), the OpenTopography Auckland_2013 bulk listing and the Unitary Plan base-zone FeatureServer (139,462 polygons), all open. The main threat is that the pre-period is partly treated. The 2016-18 epoch partly postdates the Unitary Plan (operative in part Nov 2016), and the RMA 2012 amendment removed general urban tree protection from 2015, inside the 2013 -> 2016-18 window. The pre-trend test is therefore weak: prefer tiles captured before Nov 2016 for the pre-period and make the zone-boundary design co-primary. Uses the same LiDAR epochs as the kauri lead, so download once. Check Auckland Council's canopy (ngahere) reports before preregistering.",
+   "plain_summary": "In 2016 Auckland rezoned large areas of the suburbs to allow terraces and apartments, and this led to a building boom. This study compares laser (LiDAR) scans of the whole city from 2013, 2016-18 and 2024 to measure whether rezoned neighbourhoods lost more of their trees than similar neighbourhoods that kept single-house zoning, and by how much. The answer tells Auckland how much tree canopy it trades for new homes and where that loss happens.",
+   "local_relevance": "Auckland Council's urban ngahere (urban forest) team and planners could use the parcel-level canopy-change maps and the causal estimate when setting tree-retention rules and the 30% canopy target in intensification plan changes. Local boards and housing economists get the first estimate of canopy lost per new dwelling.",
+   "time_sensitive": "",
+   "needs_engagement": "",
+   "scout_round": "auckland-nz"
+  },
+  {
+   "id": "auckland-nz-2023-storms-estuary-mud-natural-experiment",
+   "title": "Did the 2023 Auckland floods and Cyclone Gabrielle muddy Auckland's estuaries? A 15-year event study of LAWA estuary-health monitoring",
+   "domain": "auckland-nz",
+   "hypothesis": "Auckland estuary monitoring sites in the top tercile of 2023-storm sediment exposure show a rise in sediment mud content in the first post-storm survey (2023) that is at least 4 percentage points larger than at bottom-tercile sites, relative to each site's own 2010-2022 baseline (site and year fixed-effects difference-in-differences, 95% CI excluding 0). Exposure is the fraction of newly bare ground, mapped from Sentinel-2 by comparing Nov-Dec 2022 with Feb-Apr 2023, in land draining to the coast within 5 km of the site.",
+   "gap": "The 27 Jan 2023 Auckland Anniversary floods and Cyclone Gabrielle (14 Feb 2023) triggered thousands of slips in Auckland (Brook & Nicoll 2024, Landslides). Sediment is the top-ranked stressor of NZ estuaries. Even so, no peer-reviewed study has tested whether the 2023 storms produced a detectable, exposure-graded step change in estuary mud or benthic health using the long-running Auckland monitoring network. OpenAlex searches ('Cyclone Gabrielle estuary sediment benthic macrofauna': 5 unrelated hits; 'Auckland estuary mud content macrofauna storm 2023': none relevant) and Crossref searches ('2023 Auckland floods estuary sediment mud macrofauna'; 'Cyclone Gabrielle sedimentation estuary benthic ecology') found nothing. Auckland Council's 'Mapping Bare Earth Areas from Cyclone Gabrielle 2023' pilot mapped sediment sources in only 5 catchments and did not link them to estuary outcomes. The LAWA estuary dataset (v2, data to 3 Sep 2025, published 22 Jun 2026) now includes the 2023 and 2024 surveys, alongside 52 Auckland sites with at least 8 pre-storm years of mud data.",
+   "value_score": 5.0,
+   "cost_score": 3.0,
+   "value_rationale": "This is a rare natural experiment: a 1-in-200-year rainfall shock hit a monitoring network with a 13-year pre-period. A clear answer, whether positive or null, informs Auckland Council's sediment programmes (e.g. Hoteo Sediment Reduction, the Water Quality Targeted Rate), NPS-FM sediment limits and Kaipara/Manukau restoration. The exposure pipeline transfers to other regions. Its scope is limited to about 60-70 sites and two post-storm years, so the score is a solid 6 rather than higher.",
+   "cost_rationale": "Tabular data are under 1 MB. Exposure mapping streams Sentinel-2 windows (about 10-20 GB) and delineates catchments from the LINZ 1 m DEM resampled to 10 m (about 10 GB). Fixed-effects models and bootstraps take minutes. The whole job is CPU-only and takes 3-4 days.",
+   "est_wall_time": "3-4 days",
+   "est_data_gb": 25,
+   "feasibility": "local",
+   "requirements_if_out_of_reach": "",
+   "datasets": [
+    {
+     "name": "LAWA Estuary Health monitoring dataset (v2, data as at 3 Sep 2025, published 22 Jun 2026): mud content, metals and macrofauna benthic-health score per site and year",
+     "url": "https://www.lawa.org.nz/media/jegduc2j/lawa-estuary-health_monitoring-dataset_sept2025_v2.xlsx",
+     "access": "Open download, no account (listed at https://www.lawa.org.nz/download-data)",
+     "size": "0.87 MB xlsx; 449 sites nationally (122 Auckland), 11,828 rows; Auckland mud content and macrofauna 2010-2024"
+    },
+    {
+     "name": "Sentinel-2 L2A Cloud-Optimised GeoTIFFs via Element84 Earth Search STAC",
+     "url": "https://earth-search.aws.element84.com/v1/collections/sentinel-2-l2a",
+     "access": "Open, no account (verified: 22 scenes with <30% cloud over Auckland, 15 Feb-31 Mar 2023)",
+     "size": "~10-20 GB of windowed reads (B02-B12, SCL)"
+    },
+    {
+     "name": "GPM IMERG Final Run daily precipitation v07 (0.1 deg)",
+     "url": "https://disc.gsfc.nasa.gov/datasets/GPM_3IMERGDF_07/summary",
+     "access": "Free NASA Earthdata account required",
+     "size": "~0.2 GB for the Auckland box 2010-2024"
+    },
+    {
+     "name": "Open-Meteo ERA5 historical archive API (fallback rainfall; underestimates convective extremes: 82 mm on 27 Jan 2023 at central Auckland vs ~250 mm recorded at Auckland Airport)",
+     "url": "https://archive-api.open-meteo.com/v1/archive?latitude=-36.85&longitude=174.76&start_date=2023-01-26&end_date=2023-01-28&daily=precipitation_sum",
+     "access": "Open, no key",
+     "size": "<10 MB"
+    },
+    {
+     "name": "LINZ Auckland Part 1/Part 2 LiDAR 1m DEM (2024) for catchment delineation",
+     "url": "https://nz-elevation.s3.ap-southeast-2.amazonaws.com/auckland/auckland-part-1_2024/dem_1m/2193/collection.json",
+     "access": "Open public S3 (CC BY 4.0), no account",
+     "size": "~10 GB (resampled to 10 m for flow routing)"
+    },
+    {
+     "name": "Auckland Council 'Auckland Sediment Sources Viewer - Cyclone Gabrielle Pilot Study' (bare-earth pre/post maps for 5 pilot catchments; used to validate the Sentinel-2 bare-ground classifier)",
+     "url": "https://www.arcgis.com/home/item.html?id=23ed5b74d0884ebea0129a1426c46ab7",
+     "access": "Public ArcGIS web map; layer export availability to be confirmed",
+     "size": "<1 GB"
+    }
+   ],
+   "lit_for": [
+    "Brook & Nicoll (2024) Brief report of fatal rainfall-triggered landslides from record-breaking 2023 storms in Auckland, New Zealand, Landslides, doi:10.1007/s10346-024-02258-0",
+    "Multiple stressor effects on marine infauna: responses of estuarine taxa and functional traits to sedimentation, nutrient and metal loading (2017), Scientific Reports, doi:10.1038/s41598-017-12323-5",
+    "Influence of land-derived stressors and environmental variability on compositional turnover and diversity of estuarine benthic communities (2021), Marine Ecology Progress Series, doi:10.3354/meps13714",
+    "Macrobenthic-mud relations strengthen the foundation for benthic index development: a case study from shallow, temperate New Zealand estuaries (2015), Ecological Indicators, doi:10.1016/j.ecolind.2015.05.039",
+    "Historical data provides context for recent monitoring and demonstrates 100 years of declining estuarine health (2022), NZ Journal of Marine and Freshwater Research, doi:10.1080/00288330.2022.2086588"
+   ],
+   "lit_against": [
+    "Auckland Council annual estuary and sediment monitoring technical reports (grey literature, not indexed) may already describe 2023 values descriptively. A formal exposure-graded test does not appear to exist, but check before preregistering.",
+    "The Influence of Benthic Macrofauna on the Erodibility of Intertidal Sediments with Varying Mud Content in Three New Zealand Estuaries (2015), Estuaries and Coasts, doi:10.1007/s12237-015-0036-2. Fine sediment can be resuspended and redistributed within weeks, so a single annual sample may miss a transient pulse and bias the result toward a null.",
+    "Auckland Council pilot 'Mapping Bare Earth Areas from Cyclone Gabrielle 2023' (5 catchments): sediment-source mapping only, no estuary outcome. It partly overlaps the exposure step."
+   ],
+   "method": "Pre-registered event study / difference-in-differences on an annual site panel. Outcome: mud content (% <63 um) per site and year. Pre-storm years run 2010-2022, the first post-storm survey is 2023 and 2024 tests persistence. The site list and exposure terciles are frozen before any 2023-2024 contrast is computed. Exposure: for each site, land draining to the coast within 5 km (sensitivity 2 and 10 km) is delineated from the LINZ DEM. Newly bare ground is mapped from Sentinel-2 L2A as a cloud-masked NDVI/bare-soil-index change between Nov-Dec 2022 and Feb-Apr 2023 composites, and validated against Auckland Council's pilot bare-earth maps. The secondary exposure is IMERG storm rainfall for 27 Jan-15 Feb 2023. Model: mud_it = site FE + year FE + beta*(top tercile x 2023) + gamma*(top tercile x 2024), with wild-cluster bootstrap by harbour (16 estuary groups). Secondary outcomes: macrofauna benthic-health score (expected lag to 2024), and Cu/Zn/Pb as an urban-stormwater signal. Placebos: pseudo-events in 2015-2021 and leave-one-harbour-out. External replication: LAWA sites in Northland, Waikato (Coromandel), Hawke's Bay and Gisborne versus South Island controls, using the same exposure pipeline.",
+   "plan": [
+    "Load the LAWA estuary file. Confirm the exact Auckland sampling months, since many records carry year-only dates and post-storm timing must be verified from Auckland Council monitoring documentation. Freeze the site inclusion rule (>=5 pre-2023 years plus a 2023 value) without looking at 2023-2024 values.",
+    "Delineate the contributing land within 2, 5 and 10 km of each site from the LINZ 2024 DEM (resampled to 10 m) using pysheds or WhiteboxTools.",
+    "Build Sentinel-2 bare-ground change maps (Nov-Dec 2022 vs Feb-Apr 2023). Validate them against the Auckland Council pilot bare-earth layers, and compute the exposure fraction per site. Extract IMERG storm totals as the secondary exposure.",
+    "Freeze exposure terciles and write the preregistration, including the 4 pp primary threshold, secondary outcomes and placebo tests.",
+    "Fit the site and year fixed-effects DiD for mud content with wild-cluster bootstrap by harbour. Report the 2023 effect, 2024 persistence, and a continuous-exposure dose-response.",
+    "Run the secondary analyses: benthic-health score in 2023 and 2024, metals, and leave-one-harbour-out and pseudo-event placebos.",
+    "Replicate nationally with the same pipeline on LAWA sites in storm-hit regions (Northland, Coromandel, Hawke's Bay, Tair\u0101whiti) versus South Island controls, then write the report."
+   ],
+   "risks": "The sample is small: about 60-70 Auckland sites with 2023 data, giving roughly 20 per tercile. The minimum detectable DiD is about 4 pp, given the pre-storm year-to-year SD of 6.6 pp and a within-site SD of 3.4 pp. Sampling dates are partly year-only, so some 2023 records could predate 27 Jan 2023 and must be verified. Harbour sites receive sediment from multiple and distant catchments, so a 5 km radius may misclassify exposure. Mud can be flushed or redistributed before the annual survey. Post-storm Sentinel-2 imagery is cloudy, and urban bare ground from construction may confound the exposure. Only two post-storm years exist in the current release. M\u0100ORI DATA NOTE: no M\u0101ori data or customary-fisheries data are used. Estuaries such as Kaipara and Manukau are taonga under active mana whenua kaitiakitanga, so results will be offered to relevant forums (e.g. Kaipara Moana Remediation, the Manukau Harbour Forum and the council's mana whenua liaison) before publication.",
+   "critic_note": "Critic (Auckland/NZ round): No exposure-graded test of estuary change after the 2023 storms was found (Crossref 'Cyclone Gabrielle estuary sediment benthic'; Europe PMC estuar* + Gabrielle/2023 floods gave 7 unrelated hits). The LAWA estuary file is live (0.87 MB, posted 21 Jun 2026). Value lowered 6->5: by the scout's own numbers the minimum detectable effect (~4 pp) equals the preregistered effect, so power is about 50%. A 5 km land buffer is also crude exposure for harbour sites, so a null result would be uninformative. Make the continuous-exposure dose-response co-primary. The scout reports pre-storm SDs; the preregistration must freeze the site list without viewing 2023-24 values and state whether any were seen. Shares the 2024 DEM with the LiDAR leads.",
+   "scout_value_score": 6,
+   "scout_cost_score": 3,
+   "plain_summary": "The 2023 Auckland floods and Cyclone Gabrielle washed huge amounts of soil off the land. This study uses 15 years of council monitoring at about 70 estuary sites to test whether the places that received the most newly bare, slipped land became measurably muddier, and whether shellfish and worm communities suffered. Mud smothers estuary life, so the answer shows how much damage the storms did and which harbours need sediment control most.",
+   "local_relevance": "Auckland Council's Healthy Waters and Environmental Evaluation teams, and the Kaipara Moana Remediation and Manukau Harbour programmes, could use the exposure-graded estimates to target erosion control and to set expectations for estuary recovery. The open Sentinel-2 storm-exposure method can be reused after future extreme rain events.",
+   "time_sensitive": "",
+   "needs_engagement": "",
+   "scout_round": "auckland-nz"
+  },
+  {
+   "id": "auckland-nz-kauri-dieback-multitemporal-lidar",
+   "title": "Can open repeat LiDAR see kauri dieback? Validating 2016-18 to 2024 canopy change against Auckland Council's ObsKauri field surveys",
+   "domain": "auckland-nz",
+   "hypothesis": "Kauri graded as having possible or severe kauri-dieback symptoms (field status 3-4) in the canopy-blind 2014-15 Wait\u0101kere track survey can be distinguished from non-symptomatic kauri (status 1) using only open LiDAR canopy change between 2016-18 and 2024. The change features are loss of P95 canopy height and of upper-canopy (>15 m) cover within 15 m of each recorded tree. The preregistered threshold is a spatially blocked AUC >= 0.70, with the 95% bootstrap CI lower bound above 0.60. The LiDAR-change score must also add >= 0.05 AUC over a static model (distance to track, elevation, slope and 2016-18 canopy height).",
+   "gap": "Remote detection of kauri dieback so far relies on single-date commercial or airborne imagery: Meiforth et al. 2020 (WorldView-2 plus LiDAR, Remote Sensing) and Meiforth et al. 2019 (AISA hyperspectral). Earlier work used helicopter aerial surveillance (NZ Plant Protection 2014). No study has tested whether freely available repeat LiDAR, now available region-wide for Auckland in 2016-18 and 2024, captures dieback progression. Nor has anyone validated such a signal against Auckland Council's public ObsKauri survey layer, which holds 52,867 public-land kauri observations from 2007-2026 across 105 surveys and includes a canopy-independent 2014-15 track survey of 13,861 trees. Novelty searches (OpenAlex: 'kauri dieback remote sensing', 'kauri dieback LiDAR', 'Phytophthora agathidicida detection aerial imagery', 'multi-temporal LiDAR canopy dieback detection Phytophthora'; Crossref: 'kauri dieback canopy LiDAR remote sensing detection') found no multi-temporal LiDAR study and no use of ObsKauri.",
+   "value_score": 5.0,
+   "cost_score": 4.0,
+   "value_rationale": "Kauri dieback is Aotearoa's most prominent forest-disease crisis and Auckland spends heavily on surveillance. A validated, free, region-wide canopy-decline screen would let ground teams prioritise where to survey across thousands of hectares, and could be rerun with each new LiDAR flight. A well-powered negative result is also useful, because it would tell agencies not to rely on LiDAR alone. The score is capped at 6 because labels are imperfect (symptoms are not pathogen-specific) and the result is regional.",
+   "cost_rationale": "The primary analysis uses LINZ 1 m DSM/DEM subsets over Wait\u0101kere and Hunua (about 5 GB). The secondary canopy-density metrics need OpenTopography point-cloud tiles within 100 m of surveyed kauri, about 40 GB after subsetting from the 211-258 GB full collections. PDAL feature extraction and CPU logistic or gradient-boosting models fit in 4-6 days without a GPU.",
+   "est_wall_time": "5-7 days",
+   "est_data_gb": 50,
+   "feasibility": "local",
+   "requirements_if_out_of_reach": "",
+   "datasets": [
+    {
+     "name": "Auckland Council 'Ruru ObsKauri Tiaki (Valid and Public)': kauri field status (6 classes), soil PCR results for P. agathidicida / P. cinnamomi, survey name and date, case status at 50/250 m",
+     "url": "https://services1.arcgis.com/n4yPwebTjJCmXB6W/arcgis/rest/services/Ruru_ObsKauri_Tiaki_(Valid_and_Public)/FeatureServer/0",
+     "access": "Public ArcGIS FeatureServer, no account, filtered to public land, Auckland Council licence terms, updated weekly; full download verified (52,867 records)",
+     "size": "~12 MB"
+    },
+    {
+     "name": "LINZ Auckland North 2016-2018 / South 2016-2017 and Part 1 / Part 2 2024 LiDAR 1m DSM/DEM (Wait\u0101kere and Hunua subsets)",
+     "url": "https://nz-elevation.s3.ap-southeast-2.amazonaws.com/auckland/auckland-north_2016-2018/dsm_1m/2193/collection.json",
+     "access": "Open public S3 (CC BY 4.0), no account",
+     "size": "~5 GB subset (full region ~42 GB)"
+    },
+    {
+     "name": "OpenTopography classified point clouds: Auckland North 2016-2018 (doi:10.5069/G92R3PVR), Auckland South 2016-2017 (doi:10.5069/G9KP8095), Auckland Part 1 2024 (doi:10.5069/G9HH6H8T), Auckland Part 2 2024 (doi:10.5069/G9M906V9)",
+     "url": "https://opentopography.s3.sdsc.edu/pc-bulk?list-type=2&prefix=NZ24_Auckland/",
+     "access": "Open, no account. Bulk S3-compatible listing verified (prefixes NZ16_NAuckland, NZ16_SAuckland, NZ24_Auckland, NZ24_Auckland2); landing DOIs as named",
+     "size": "Full collections 211 GB (NZ16_NAuckland) and 258 GB (NZ24_Auckland); ~40 GB subset of tiles near surveyed kauri"
+    },
+    {
+     "name": "LINZ Auckland 0.075 m aerial imagery: 2024 (RGB and RGB+NIR) and 2017 (RGB only); optional crown-colour/NDVI check",
+     "url": "https://nz-imagery.s3.ap-southeast-2.amazonaws.com/auckland/auckland_2024_0.075m/rgbnir/2193/collection.json",
+     "access": "Open public S3 (CC BY 4.0), no account; the 2024 survey includes an rgbnir product, while 2015-16, 2017, 2020 and 2022 are RGB only",
+     "size": "~5 GB subset"
+    }
+   ],
+   "lit_for": [
+    "Meiforth et al. (2020) Stress Detection in New Zealand Kauri Canopies with WorldView-2 Satellite and LiDAR Data, Remote Sensing, doi:10.3390/rs12121906. Single-date canopy stress is detectable.",
+    "Detection of New Zealand Kauri Trees with AISA Aerial Hyperspectral Data for Use in Multispectral Monitoring (2019), Remote Sensing, doi:10.3390/rs11232865",
+    "Aerial surveillance to detect kauri dieback in New Zealand (2014), NZ Plant Protection, doi:10.30843/nzpp.2014.67.5723",
+    "Phytophthora agathidicida: research progress, cultural perspectives and knowledge gaps in the control and management of kauri dieback (2019), Plant Pathology, doi:10.1111/ppa.13104",
+    "Co-Management of Kauri Dieback in the Wait\u0101kere Ranges, Aotearoa New Zealand (2023), Case Studies in the Environment, doi:10.1525/cse.2023.1830829. Governance context for the r\u0101hui and iwi-council co-management."
+   ],
+   "lit_against": [
+    "Probing Early and Long-Term Drought Responses in Kauri Using Canopy Hyperspectral Imaging (2025), Remote Sensing, doi:10.3390/rs17233914. Drought produces canopy decline that resembles dieback, so LiDAR change may not be dieback-specific (addressed by the status-2 'ill thrift' contrast).",
+    "Phytophthora Communities Associated with Agathis australis (kauri) in Te Wao Nui o Tiriwa/Wait\u0101kere Ranges (2024), Forests, doi:10.3390/f15050735. Several Phytophthora species occur, so field symptom labels are noisy proxies for P. agathidicida.",
+    "Auckland Council Wait\u0101kere Ranges kauri population health monitoring reports (2016, 2021; grey literature) use aerial plus ground surveys and may already use LiDAR crown mapping internally. Check before preregistering.",
+    "Meiforth et al. 2020 already showed single-epoch detection. The novelty here is limited to the multi-epoch, open-data, region-wide design validated on canopy-independent labels."
+   ],
+   "method": "Diagnostic-accuracy study with frozen labels and spatial blocking. Labels come from ObsKauri. Primary set (A): the Wait\u0101kere Track Survey 2014-15, n=13,861 (90.3% status 1, 7.3% ill-thrift, 1.8% possible, 0.6% severe). Trees were sampled by proximity to tracks rather than canopy appearance, so this set is canopy-blind. Secondary sets: (B) Hunua Track 2017 plus Hunua Surveillance 2023; (C) Wait\u0101kere Survey 2021 and POI 2016, which are targeted and reported separately. Features: 1 m DSM/DEM nDSM change 2016-18 -> 2024 within 7.5, 15 and 25 m neighbourhoods (to absorb GPS error under canopy), giving \u0394P95 height, \u0394 cover >15 m and \u0394 gap fraction. From density-thinned point clouds come \u0394 upper-canopy return fraction and \u0394 rugosity. As a sensitivity check, 2024 NIR imagery adds an NDVI crown-vigour feature, and RGB greenness is compared between 2017 and 2024. Masks remove slips and windthrow from the 2023 storms (ground-surface change and large contiguous losses) and track works. Models: a static baseline (distance to track, elevation, slope, aspect, 2016-18 canopy height) versus baseline plus LiDAR change, fitted as logistic regression and gradient boosting on CPU. Evaluation: 1 km spatial-block cross-validation, AUC with bootstrap CIs and top-decile enrichment. Specificity tests compare severe dieback against ill-thrift and examine the soil-PCR-positive subset. The output is an aggregated (>=250 m hexagon) canopy-decline screening layer.",
+   "plan": [
+    "Download ObsKauri, then freeze label sets A, B and C, the status coding (3-4 vs 1; 2 held out for specificity) and the 1 km spatial blocks. Do this before extracting any LiDAR feature, and preregister the AUC thresholds.",
+    "Fetch LINZ 1 m DSM/DEM tiles for Wait\u0101kere and Hunua for both epochs, and OpenTopography point-cloud tiles within 100 m of surveyed kauri (about 40 GB). Thin both epochs to a common point density.",
+    "Co-register the epochs on stable ground. Map and mask 2023 storm slips and windthrow, track upgrades and other non-disease canopy losses.",
+    "Extract per-tree neighbourhood change features at 7.5, 15 and 25 m, plus static covariates (distance to track, terrain, baseline canopy height).",
+    "Fit the static and LiDAR-change models under spatial-block CV. Report AUC, its CI, the increment over static, and top-decile enrichment for set A; replicate on set B and report set C separately.",
+    "Run specificity and robustness checks: severe vs ill-thrift, the soil-PCR-positive subset, neighbourhood radius, density-thinning level and excluding trees within 20 m of tracks.",
+    "Share results and the aggregated screening layer with Auckland Council's kauri dieback programme and mana whenua (Te Kawerau \u0101 Maki for Wait\u0101kere, Hunua iwi) for review before public release, then write the report."
+   ],
+   "risks": "GPS positions under kauri canopy are often off by 5-15 m and crowns overlap, which blurs tree-level labels; neighbourhood features and radius sensitivity mitigate this. The two LiDAR epochs differ in point density and season, which can create spurious change; mitigated by thinning and stable-area checks. The 2023 storms caused large slips in the Wait\u0101kere Ranges that mimic canopy loss and must be masked. Symptomatic trees are rare in the canopy-blind set (about 330 trees), and some severe trees may already have lost their crowns before 2016-18, reducing measurable change. Symptoms are not specific to P. agathidicida, and drought or ill-thrift may produce the same signal. The public layer excludes private land. M\u0100ORI DATA AND TAONGA FLAG: kauri are a taonga species. The Wait\u0101kere Ranges (Te Wao Nui o Tiriwa) have been under a r\u0101hui placed by Te Kawerau \u0101 Maki since 2017, and kauri dieback is co-managed with mana whenua. Following Te Mana Raraunga principles (rangatiratanga, kaitiakitanga, manaakitanga): (1) the study is entirely in-silico and involves no field access, consistent with the r\u0101hui; (2) only aggregated outputs (>=250 m hexagons or catchments) are published, never tree-level symptomatic locations that could draw visitors into closed areas; (3) before preregistration, the lab contacts Auckland Council's kauri dieback team and Te Kawerau \u0101 Maki and Hunua mana whenua to seek guidance, and offers review of the report and derived layers, with co-authorship or acknowledgement as they prefer; (4) derived products are released under CARE-aligned terms, and any iwi request to restrict or withhold them is honoured.",
+   "critic_note": "Critic (Auckland/NZ round): No dieback study using repeat LiDAR or ObsKauri was found (Crossref, Europe PMC 2022-26). The ObsKauri FeatureServer count (52,867) and both LiDAR collections check out. Value lowered 6->5. The canopy-blind labels (2014-15) predate the first LiDAR epoch by 1-4 years, so the test is really prognostic: do trees symptomatic in 2014-15 lose more crown from 2016-18 to 2024? Some severe trees will already be crownless by 2016-18, and there are only ~330 symptomatic trees. Reframe the hypothesis that way and add the 2021/2023 surveys as time-aligned checks. Engagement gate: Wait\u0101kere is under a Te Kawerau \u0101 Maki r\u0101hui and kauri are taonga, so the scout's planned contact must happen and guidance be received before preregistration or any feature extraction.",
+   "scout_value_score": 6,
+   "scout_cost_score": 4,
+   "plain_summary": "Kauri dieback is killing Aotearoa's giant kauri trees, and finding sick trees on foot is slow and spreads the disease. This study checks whether free laser scans of Auckland flown in 2016-18 and again in 2024 can spot thinning kauri crowns, using thousands of council field records of healthy and sick trees as the answer key. If it works, Auckland gets a cheap, repeatable early-warning map that shows surveillance teams where to look first.",
+   "local_relevance": "Auckland Council's kauri dieback and biosecurity teams, together with Te Kawerau \u0101 Maki and Hunua mana whenua as kaitiaki, could use the screening layer to prioritise ground surveys, track management and hygiene investment. Biosecurity NZ could reuse the method nationally wherever repeat LiDAR exists.",
+   "time_sensitive": "",
+   "needs_engagement": "Blocking: seek guidance from Te Kawerau \u0101 Maki (Wait\u0101kere r\u0101hui), Hunua mana whenua and the council kauri programme before preregistration; publish only aggregated layers and honour any request to restrict",
+   "scout_round": "auckland-nz"
   }
  ],
  "updated": "2026-10-02",
@@ -5323,5 +6269,19 @@
   "Computational reproducibility at execution scale: re-running published pipelines, notebooks and workflows (Jupyter, Snakemake/Nextflow, R replication packages, CodeOcean capsules) to measure how many actually execute and reproduce their reported numbers - a constructive, high-citation metascience design the sweep missed entirely",
   "Legal, regulatory and digital-humanities text corpora (Caselaw Access Project, EUR-Lex, CourtListener, HathiTrust/Google Books): citation-network and doctrinal-drift analyses, precedent-decay measurement, LLM-era changes in filing language - fully open and purely computational",
   "Classical simulation of quantum-advantage claims (tensor-network/stabilizer methods on an A100) - a well-defined, adversarial, compute-only research program with a track record of high-profile results"
+ ],
+ "critique_assessment_auckland_nz": "Coverage: 12 leads, three each in health, hazards, urban and environment. All are specific to Auckland/NZ and all can run on this machine. Missing areas: education, housing and rents, energy demand, the marine environment (Hauraki Gulf), and kaupapa M\u0101ori-led questions (rightly avoided without partners). Mix of designs: four natural-experiment difference-in-differences (waitlist, speed limits, upzoning canopy, estuary mud), four audits or calibration checks (HIRDS, JADE, wastewater ascertainment, FENZ thresholds), two prospective forecasts or evaluations (immunisation, CRL), and two validation or noise-floor studies (kauri LiDAR, AVF dv/v).\n\nNovelty: WebSearch was unavailable, so spot-checks used Europe PMC, Crossref and arXiv. They found nothing that already answers any lead. The remaining risk is unindexed grey literature: council technical reports, UoA theses and EA reports.\n\nDuplicates: none, within the batch or against the existing 80 leads. The closest existing leads are the US wastewater-FluSight and the record-margin leads, which measure different things. Scheduling pairs: HIRDS, then FENZ (same gauge harvest and HIRDS tables); upzoning canopy, then kauri (same 2016-18 and 2024 LiDAR, downloaded once), then estuary (2024 DEM); CRL and speed limits share the OSM extract.\n\nData access: every primary open source was spot-checked and works. One material correction: ESNZ DataHub caps station data (e.g. 30 datasets per region per year; more only by negotiation). The HIRDS and FENZ leads must therefore get gauges from council Hilltop servers (five verified open). HIRDS tables themselves need only a free account and a purpose statement the FAQ describes as compliance only. JADE.jl is MPL-2.0.\n\nCalibration: on value, five scores were lowered by 1 (immunisation, waitlist, FENZ, estuary, kauri) and two half-point scores were rounded down (HIRDS 6.5->6, dv/v 5.5->5). On cost, six were under-scored and raised by 1 (wastewater, HIRDS, FENZ, CRL, speed limits, JADE).\n\nPrior looks at outcome data that the preregistrations must handle:\n- Waitlist: raw gap series were seen. Make the permutation rank and the negative control co-primary, and add an unseen hold-out vintage.\n- JADE: the worst miss was seen before the threshold was set.\n- CRL: the opening week was seen. This is acceptable because the confirmatory window is in the future.\n- Estuary: confirm that 2023-24 values were not viewed.\n\nTe Mana Raraunga: handling is adequate overall. Kauri needs mana whenua engagement before it can run (r\u0101hui; kauri are taonga). The waitlist study should get M\u0101ori/Pacific input on framing before preregistration.\n\nTop 3 to run first:\n(1) CRL: the clean prospective window shrinks with every weekly AT release, freezing the preregistration takes about a day, and value is 7.\n(2) Speed-limit reversal: value 7, cheap, all data open with no key, and NSLR snapshotting should start now.\n(3) Wastewater-deprivation ascertainment: clean design, no prior look at outcomes, a unique open dataset, low cost.\nOpportunistic: if Q4 2025/26 immunisation coverage is still unpublished, freeze the forecasts this week (a few hours of work); otherwise retarget to later releases. Next tier: upzoning canopy (value 7, cost 5), then the waitlist DiD once its hold-out vintage and engagement are arranged.",
+ "unscouted_angles_auckland_nz": [
+  "Prescription co-payment natural experiment: the $5 co-payment was removed on 1 Jul 2023 and reinstated for most adults on 1 Jul 2024. Effect on dispensing by district, age and deprivation, using Health NZ Pharmaceutical Collection aggregates (check how fine the open data are).",
+  "End of the Clean Car Discount (31 Dec 2023) and EV road-user charges (Apr 2024): EV and hybrid registrations by TLA from the open NZTA Motor Vehicle Register, with an event study of the rush to buy before the deadline and the later drop.",
+  "Rents and tenancy policy: MBIE's open rental bond data (monthly, by area) around the 2024-25 restoration of interest deductibility and no-cause terminations (Jan 2025), with Auckland compared against other regions.",
+  "NCEA literacy and numeracy co-requisite (2024): did achievement gaps widen by school Equity Index? Uses NZQA's open school-level secondary statistics.",
+  "Calibration audit of ESNZ/NIWA seasonal climate outlooks (archived tercile forecasts) for rainfall and temperature in Auckland and Northland, relevant to Watercare drought planning.",
+  "Watercare Central Interceptor commissioning: did wet-weather overflow and Safeswim water-quality alerts at Waitemat\u0101 beaches fall? Check access to Safeswim and Watercare data first.",
+  "Coastal cliff and beach change from the same 2016-18 vs 2024 LiDAR, including slips from the 2023 storms, to validate Auckland Council's coastal-erosion hazard projections (pairs with the LiDAR leads).",
+  "Prospective, preregistered booth-level forecast of the 2026 general election from 2023 Electoral Commission booth results plus open polls. It must be frozen before election day, so it is time-bound.",
+  "Measles 2025-26: an immunity-gap and outbreak-size model for Auckland suburbs, combining PHF Science notifications with the coverage files (an extension of the immunisation lead).",
+  "Urban heat equity: Landsat/ECOSTRESS land-surface temperature against the LiDAR canopy-change rasters, extending the upzoning lead to heat exposure by deprivation.",
+  "T\u012bkapa Moana / Hauraki Gulf marine protection (2025 Act): a Sentinel-2 baseline of kelp forest and kina barrens. Needs mana whenua partnership before scoping."
  ]
 }
