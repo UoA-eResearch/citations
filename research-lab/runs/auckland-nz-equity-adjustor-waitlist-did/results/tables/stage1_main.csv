@@ -1,0 +1,21 @@
+analysis,value,rank,p_perm,q05,q95,verdict,note
+"PRIMARY beta (Auckland MP-EO gap change, pp)",7.21909377367349,1.0,0.0625,-4.6351927143385065,3.785415660361627,Inconclusive,
+tool-era effect tau (pp),4.778765360851245,,,,,,
+negative control: Asian vs EO beta (pp),5.459759544547856,3.0,,,,,
+unweighted beta,3.0588148651141034,,,,,,
+'<5' set to 1,7.3362043234504,,,,,,
+'<5' set to 4,7.107102671932282,,,,,,
+treated = Auckland + Waitemata + Counties Manukau,7.616004119073812,,,,,,
+Maori only,4.2957266154978555,,,,,,
+Pacific only,9.96732490288949,,,,,,
+specialty: General Surgery,-0.6295118095178579,,,,,,
+specialty: Orthopaedic Surgery,0.7377021852416493,,,,,,
+specialty: Otorhinolaryngology (ENT),3.558953636059656,,,,,,
+specialty: Gynaecology,5.059412917197094,,,,,,
+specialty: all others,8.636188076670319,,,,,,
+tool era Feb-Jun 2023 (pp),4.820806506570615,,,,,,
+tool era Jul 2023-Jul 2024 (pp),4.764137079741371,,,,,,
+vintage Waitlist-detail-extract.xlsx (post to 2025-06-30),8.005826767011527,,,,,,pre-period cells matched 11138; mean |dL| 0.06 pp
+vintage Waitlist-detail-extract-Q1-2025-26.xlsx (post to 2025-09-30),8.241584894504927,,,,,,pre-period cells matched 11138; mean |dL| 0.06 pp
+vintage waitlist-detail-extract-q2-25-26.xlsx (post to 2025-12-31),8.12706583387425,,,,,,pre-period cells matched 11138; mean |dL| 0.01 pp
+vintage waitlist-detail-extract-q3-2025-26.xlsx (post to 2026-03-31),7.606122543632352,,,,,,pre-period cells matched 11138; mean |dL| 0.00 pp
