@@ -97,14 +97,14 @@ stayed zoned for single houses. A common worry is that building more homes on th
 <p><strong>The comparison we planned first is misleading.</strong> It matched blocks on their 2016–18 tree cover, and found upzoned
 blocks lost 1.3 percentage points more cover by 2024. But the same comparison showed them gaining 0.8 points more
 before the upzoning took effect. That mirror image is the signature of a statistical artefact called regression to
-the mean, not a real effect. The plan's pre-trend check caught it.</p>
+the mean, rather than of a real effect. The plan's pre-trend check caught it.</p>
 <p><strong>Better comparisons find little or no extra loss.</strong> Comparisons that avoid the artefact put the extra loss on upzoned
 land between about 0.4 points and nothing. Their uncertainty includes zero, and they rule out a difference of one
 point.</p>
 <p><strong>Redevelopment itself does remove trees.</strong> Redeveloped blocks lost about 6–8 points of cover in every zone. Upzoned
 land was redeveloped about twice as often, which explains most of the small raw difference.</p>
 <p><strong>Why the verdict stays open.</strong> The scans are not directly comparable: the 2013 scan has about a quarter of the later
-scans' point density, and part of 2024 was flown as leaves were falling. So by the preregistered rule the verdict is
+scans' raw point density, and less still once overlap points are removed, and part of 2024 was flown as leaves were falling. So by the preregistered rule the verdict is
 inconclusive.</p>
 <h2>What was done</h2>
 <p><strong>Plan.</strong> The plan was committed (d5c6e85) before any 2013 or 2024 data were processed.</p>
@@ -273,13 +273,17 @@ specifications. That is a sensitivity analysis, not the study's verdict.</p>
 <p>Redevelopment removes trees wherever it happens, and upzoning roughly doubled how often blocks were redeveloped.
 Redevelopment is itself an outcome of upzoning, so this split is descriptive, not a separate causal effect.</p>
 <h2>The surveys are not like-for-like</h2>
-<p>Average canopy is 3–4 points higher in the 2016–18 scan than in both 2013 and 2024, in every zone.</p>
+<p>Average canopy in the 2016–18 scan is 3–4 points higher than in 2013 and 2–3 points higher than in 2024, in every zone.</p>
 <ul>
-<li><strong>2013 under-detects canopy.</strong> Its tiles have about 4 points/m², against 16–19 in the later scans. Thinning the
-  later scans lowers detected canopy by about 1 point per halving of density, so 2013 under-detects by roughly
-  3–4 points.</li>
-<li><strong>2024 may read low for seasonal reasons.</strong> The fall from 2016–18 to 2024 happens despite higher density, so it
-  reflects real change, season (part of 2024 was flown in May and June, as leaves fell) or vendor classification.</li>
+<li><strong>2013 under-detects canopy.</strong> Tile-header density, before overlap points are removed, is about 4 points/m² for
+  2013 against 16–19 for the later scans. After removal, six tiles checked by the reviewer give about 2 (2013),
+  5–24 (2016–18; 5 in the southern block, up to 24 in the northern) and about 10 (2024). Thinning lowers detected
+  canopy by about 1 point per halving of density (two tiles: 21.8% at 19 points/m² falls to 20.3% at 8 and 18.1%
+  at 2). So 2013 under-detects by roughly 2–4 points.</li>
+<li><strong>2024 may read low for seasonal reasons.</strong> The fall from 2016–18 to 2024 is not explained by density alone. Header
+  densities are similar, and after overlap removal 2024 is denser than the southern 2016–17 block but sparser than
+  much of the northern block. So it reflects real change, season or vendor classification. On season: part of 2024
+  was flown in May and June as leaves fell (two tiles checked; the full survey ran April–November).</li>
 <li><strong>Density differs by zone.</strong> Upzoned blocks sit in denser 2016–18 tiles within strata. Adjusting for density
   change moves the artefact-free estimates further toward zero (table above).</li>
 </ul>
@@ -290,12 +294,18 @@ Redevelopment is itself an outcome of upzoning, so this split is descriptive, no
 <li><strong>Timing.</strong> The 2016–18 baseline straddles the plan's start in November 2016, and intensification rules from 2022
   may have reached Single House land late in the window.</li>
 <li><strong>Current zoning.</strong> The current zoning layer was used, not a reconstruction of 2016 zoning.</li>
-<li><strong>Tile-seam double counting</strong> affects up to 12 of 900 cells in 6% of units (D6). It changes estimates by less
-  than 0.01 pp.</li>
+<li><strong>Tile-seam double counting</strong> is bounded, not removed (D6). At most 12 of 900 cells (1.3% of the denominator), in
+  5.9% of 2016–18 units, are counted twice with the same canopy flag. The share bias is typically well under 0.1 pp
+  and unrelated to zone.</li>
 </ul>
 <h2>Independent review</h2>
-<p>An independent reviewer re-processed six tiles from scratch and matched the stored counts exactly. The review judged
-the study "fix first":</p>
+<p>An independent reviewer re-processed six tiles (two locations × three scans):</p>
+<ul>
+<li>An exact replica of the code matched the stored counts cell for cell on two tiles.</li>
+<li>An independent implementation matched valid and building counts exactly on all six. Its canopy counts differed
+  only through nearest-ground tie-breaking, by at most 10 of 900 cells.</li>
+</ul>
+<p>The review judged the study "fix first":</p>
 <ul>
 <li>it found the regression-to-the-mean artefact, and the matching table that exposes it;</li>
 <li>it found the undeclared handling of 2024 overlap points (D4), which was then reprocessed;</li>

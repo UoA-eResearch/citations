@@ -14,11 +14,12 @@ leaving 163,303 units; 160,209 of them are in strata with both high-dose and Sin
 epoch-specific measurement difference. The E0 -> E2 long difference (2013 -> 2024) avoids E1 altogether, so it is
 reported as a post hoc estimate.
 
-**Result.** High dose -0.54 pp (95% CI -0.94 to -0.14); low dose -0.24 pp (-0.61 to 0.13).
+**Result.** High dose -0.54 pp (95% CI -0.94 to -0.14); low dose -0.24 pp (-0.61 to 0.13). These are superseded:
+with the corrected data (D4) the high-dose long difference is -0.48 (-0.88 to -0.08).
 
 **Preregistered secondaries.**
 
-- Trend-adjusted estimate (beta_post minus beta_pre x 7.36 / 3.74 years): -3.0 pp. It assumes the pre-period trend
+- Trend-adjusted estimate (beta_post minus beta_pre x 7.36 / 3.74 years): -3.0 pp. It is withdrawn (D5). It assumes the pre-period trend
   would have continued, which an E1 artefact would make invalid.
 - Annualised rates: -0.19 pp per year post and +0.22 pp per year pre.
 
@@ -36,7 +37,7 @@ Three tiles have no class-2 points and produced no cells; they are likely water 
 - **What happened.** The 2013 and 2016-18 tiles mark overlap as class 12, which was dropped. The 2024 tiles are LAS
   1.4 point format 6, which marks overlap with a flag that process_tiles.py did not test. 2024 overlap points (about
   45-55% of points) were therefore kept.
-- **Correction.** process_tiles.py gained a "noov" option that also drops flagged overlap points for formats >= 6,
+- **Correction (reprocessing completed 2026-10-04 03:44 NZDT).** process_tiles.py gained a "noov" option that also drops flagged overlap points for formats >= 6,
   and all 2024 tiles were reprocessed into data/cells/2024_noov.
 - **Which version is primary.** The overlap-free version is the faithful implementation of the plan and is reported
   as primary. The originally processed version is kept as a sensitivity.
@@ -65,14 +66,20 @@ Three tiles have no class-2 points and produced no cells; they are likely water 
 ## D6. Tile-seam double counting (2026-10-04 02:13 NZDT)
 
 1 m cells whose points lie exactly on a tile edge appear in both adjacent tiles, so their counts were summed twice.
-About 5.9% of units have n_valid above 900, at most 912. The review checks rescale each unit's counts so that n_valid
-is at most 900. The preregistered estimates change by less than 0.01 pp.
+About 5.9% of 2016-18 units, and one 2013 unit, have n_valid above 900, at most 912.
+
+The review checks rescale each unit's counts so that n_valid is at most 900. Rescaling cannot change canopy shares,
+so the double counting is bounded rather than removed. At most 12 of 900 cells (1.3% of the denominator) are counted
+twice with the same canopy flag. The share bias is therefore at most 1.3% x |strip share - unit share|, typically
+well under 0.1 pp, and unrelated to zone. Removing it would need a per-1 m OR across tiles, which was not done.
 
 ## D7. Wording and assumptions (2026-10-04 02:13 NZDT)
 
 - **Zone-boundary fixed effect.** It is the 500 m grid block of the nearest boundary point, not "boundary-segment
   pairs".
 - **E1 capture years** (north 2017.5, south 2016.75) are assumptions, used only for annualisation.
-- **Point density differs by epoch.** Tile-header density is about 4 points/m2 at E0 and 16-19 at E1 and E2. The
+- **Point density differs by epoch.** Tile-header density, before overlap points are removed, is about 4 points/m2
+  at E0 and 16-19 at E1 and E2. Effective density after removal, from six tiles, is about 2 (E0), 5-24 (E1) and
+  about 10 (E2). The
   review found that thinning lowers detected canopy by about 1 pp per halving, so no epoch pair is
   density-comparable.

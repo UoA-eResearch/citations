@@ -6123,7 +6123,12 @@
    "local_relevance": "Auckland Council's urban ngahere (urban forest) team and planners could use the parcel-level canopy-change maps and the causal estimate when setting tree-retention rules and the 30% canopy target in intensification plan changes. Local boards and housing economists get the first estimate of canopy lost per new dwelling.",
    "time_sensitive": "",
    "needs_engagement": "",
-   "scout_round": "auckland-nz"
+   "scout_round": "auckland-nz",
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass)",
+   "report_url": "runs/auckland-nz-upzoning-canopy-lidar-did/report.html",
+   "verdict_tag": "Inconclusive",
+   "verdict_note": "The preregistered -1.3 pp extra canopy loss on upzoned land is a regression-to-the-mean artefact (mirror-image pre-trend +0.8); artefact-free comparisons give -0.4 to 0.0 pp and rule out a 1-point loss. Redevelopment removes 6-8 pp of canopy and upzoned land was redeveloped twice as often.",
+   "headline": "Three classified LiDAR epochs (2013, 2016-18, 2024; 6,822 tiles streamed), 160,193 built-up 30 m residential units. Preregistered strata matched on E1 canopy while outcomes are differences from E1 -> RTM: post -1.32, pre +0.83 (gate fails), E2-band placebo +0.75. Oldham / no-band specs: post -0.37 to 0.00, CIs include 0, exclude -1. 2013 density ~1/4 of later scans; 2024 overlap flag fixed after review."
   },
   {
    "id": "auckland-nz-2023-storms-estuary-mud-natural-experiment",

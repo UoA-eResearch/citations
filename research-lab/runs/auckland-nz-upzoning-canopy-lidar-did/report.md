@@ -16,7 +16,7 @@ We measured tree cover taller than 3 metres on built-up residential blocks, usin
 **The comparison we planned first is misleading.** It matched blocks on their 2016–18 tree cover, and found upzoned
 blocks lost 1.3 percentage points more cover by 2024. But the same comparison showed them gaining 0.8 points more
 before the upzoning took effect. That mirror image is the signature of a statistical artefact called regression to
-the mean, not a real effect. The plan's pre-trend check caught it.
+the mean, rather than of a real effect. The plan's pre-trend check caught it.
 
 **Better comparisons find little or no extra loss.** Comparisons that avoid the artefact put the extra loss on upzoned
 land between about 0.4 points and nothing. Their uncertainty includes zero, and they rule out a difference of one
@@ -26,7 +26,7 @@ point.
 land was redeveloped about twice as often, which explains most of the small raw difference.
 
 **Why the verdict stays open.** The scans are not directly comparable: the 2013 scan has about a quarter of the later
-scans' point density, and part of 2024 was flown as leaves were falling. So by the preregistered rule the verdict is
+scans' raw point density, and less still once overlap points are removed, and part of 2024 was flown as leaves were falling. So by the preregistered rule the verdict is
 inconclusive.
 
 ## What was done
@@ -128,13 +128,17 @@ Redevelopment is itself an outcome of upzoning, so this split is descriptive, no
 
 ## The surveys are not like-for-like
 
-Average canopy is 3–4 points higher in the 2016–18 scan than in both 2013 and 2024, in every zone.
+Average canopy in the 2016–18 scan is 3–4 points higher than in 2013 and 2–3 points higher than in 2024, in every zone.
 
-- **2013 under-detects canopy.** Its tiles have about 4 points/m², against 16–19 in the later scans. Thinning the
-  later scans lowers detected canopy by about 1 point per halving of density, so 2013 under-detects by roughly
-  3–4 points.
-- **2024 may read low for seasonal reasons.** The fall from 2016–18 to 2024 happens despite higher density, so it
-  reflects real change, season (part of 2024 was flown in May and June, as leaves fell) or vendor classification.
+- **2013 under-detects canopy.** Tile-header density, before overlap points are removed, is about 4 points/m² for
+  2013 against 16–19 for the later scans. After removal, six tiles checked by the reviewer give about 2 (2013),
+  5–24 (2016–18; 5 in the southern block, up to 24 in the northern) and about 10 (2024). Thinning lowers detected
+  canopy by about 1 point per halving of density (two tiles: 21.8% at 19 points/m² falls to 20.3% at 8 and 18.1%
+  at 2). So 2013 under-detects by roughly 2–4 points.
+- **2024 may read low for seasonal reasons.** The fall from 2016–18 to 2024 is not explained by density alone. Header
+  densities are similar, and after overlap removal 2024 is denser than the southern 2016–17 block but sparser than
+  much of the northern block. So it reflects real change, season or vendor classification. On season: part of 2024
+  was flown in May and June as leaves fell (two tiles checked; the full survey ran April–November).
 - **Density differs by zone.** Upzoned blocks sit in denser 2016–18 tiles within strata. Adjusting for density
   change moves the artefact-free estimates further toward zero (table above).
 
@@ -145,13 +149,19 @@ Average canopy is 3–4 points higher in the 2016–18 scan than in both 2013 an
 - **Timing.** The 2016–18 baseline straddles the plan's start in November 2016, and intensification rules from 2022
   may have reached Single House land late in the window.
 - **Current zoning.** The current zoning layer was used, not a reconstruction of 2016 zoning.
-- **Tile-seam double counting** affects up to 12 of 900 cells in 6% of units (D6). It changes estimates by less
-  than 0.01 pp.
+- **Tile-seam double counting** is bounded, not removed (D6). At most 12 of 900 cells (1.3% of the denominator), in
+  5.9% of 2016–18 units, are counted twice with the same canopy flag. The share bias is typically well under 0.1 pp
+  and unrelated to zone.
 
 ## Independent review
 
-An independent reviewer re-processed six tiles from scratch and matched the stored counts exactly. The review judged
-the study "fix first":
+An independent reviewer re-processed six tiles (two locations × three scans):
+
+- An exact replica of the code matched the stored counts cell for cell on two tiles.
+- An independent implementation matched valid and building counts exactly on all six. Its canopy counts differed
+  only through nearest-ground tie-breaking, by at most 10 of 900 cells.
+
+The review judged the study "fix first":
 
 - it found the regression-to-the-mean artefact, and the matching table that exposes it;
 - it found the undeclared handling of 2024 overlap points (D4), which was then reprocessed;
