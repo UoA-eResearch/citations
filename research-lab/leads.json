@@ -5853,7 +5853,12 @@
    "local_relevance": "Auckland Transport, Auckland Council, KiwiRail and the Ministry of Transport would get an independent, pre-committed estimate of the CRL's ridership effect and how many riders it drew from buses. They can use it to plan the bus network around the new stations, justify follow-on rail investment and benchmark future business cases.",
    "time_sensitive": "Freeze within about a week: AT daily data already run to 20 Sep 2026 and each weekly release reveals more of the post-opening trajectory",
    "needs_engagement": "",
-   "scout_round": "auckland-nz"
+   "scout_round": "auckland-nz",
+   "status": "deep dive \u00b7 preregistered, interim status (test due April 2027)",
+   "report_url": "runs/auckland-nz-crl-structural-uplift-prereg/report.html",
+   "verdict_tag": "Pending",
+   "verdict_note": "Preregistered before the outcome data exist; the 16 Feb-25 Mar 2027 train/bus ratio decides it: Supported at 0.266 or more, Contradicted below 0.253.",
+   "headline": "Opening week: train/bus ratio +36.5% on the same week in 2023-2025 (train +54%, bus +13%). Pre-opening baseline 0.222; placebo error -5.7% to +4.4% from 507 fake opening dates. Calibration revised after an independent fix-first review (disruption filter, minimum days)."
   },
   {
    "id": "auckland-nz-speed-limit-reversal-crashes",
