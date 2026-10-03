@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Activity Cliff Noise Audit</title>
+<meta name="description" content="Are heat records being broken by growing margins? A preregistered test of record-shattering heat in 2,013 long-running weather stations, 1951-2025.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Cheminformatics &amp; drug discovery</div>
+  <h1>Are benchmark activity cliffs real?</h1>
+  <p class="subtitle">A preregistered noise audit of the MoleculeACE activity-cliff benchmark using ChEMBL 37 replicate measurements</p>
+  <div class="meta">
+    <span>Draft · 2026-10-03 · revised after independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/cheminformatics-drug-discovery-cliff-noise-ceiling/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/cheminformatics-drug-discovery-cliff-noise-ceiling/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/cheminformatics-drug-discovery-cliff-noise-ceiling/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Cliffs not confidently real (Gaussian)</div><div class="tile-value">75%</div><div class="tile-note">of 28,569 MoleculeACE cliffs have &gt;= 20% chance of not being a true 10-fold difference (H1 supported)</div></div><div class="tile"><div class="tile-label">Noise-only worlds reproduce the cliff gap</div><div class="tile-value">96–171%</div><div class="tile-note">of the observed 0.142 RMSE gap, every world and model (H3 supported)</div></div><div class="tile"><div class="tile-label">&#x27;High-confidence&#x27; cliff gap</div><div class="tile-value">0.44 vs 0.32–0.56</div><div class="tile-note">real vs noise-only worlds: a selection effect (H2 contradicted)</div></div><div class="tile"><div class="tile-label">Measurement noise (independent replicates)</div><div class="tile-value text">σ = 0.50</div><div class="tile-note">log units for Ki (0.37 EC50); heavier-tailed than Gaussian</div></div><div class="tile"><div class="tile-label">Apparent replicates that are copies</div><div class="tile-value">~2/3</div><div class="tile-note">identical values re-reported in later ChEMBL documents</div></div><div class="tile"><div class="tile-label">Benchmark molecules with one measurement</div><div class="tile-value">96%</div><div class="tile-note">and 69% of cliff pairs come from a single paper</div></div></section>
+<main>
+<h2>In plain terms</h2>
+<p>Drug-discovery models are often tested on "activity cliffs": pairs of almost identical molecules where one is said to
+be at least ten times more potent than the other. A widely used benchmark (MoleculeACE) finds that models make bigger
+errors on these molecules, and a new generation of models is designed to fix that.</p>
+<p>But lab measurements are noisy. When the same molecule is measured in independent studies, results typically differ
+two- to threefold, and sometimes much more. Most molecules in the benchmark were measured only once. So some "cliffs"
+may be accidents of measurement rather than real differences.</p>
+<p>We used the newest public database of lab results to estimate how noisy the measurements are. We then asked how likely
+each benchmark cliff is to be real, and what a world without any real cliffs, only noise, would look like.</p>
+<p>What we found:</p>
+<ul>
+<li><strong>Most benchmark cliffs are not confidently real.</strong> Under the noise model that fits the benchmark pairs, about three-quarters of the
+  28,569 cliffs have at least a 1-in-5 chance of not being a true 10-fold difference.</li>
+<li><strong>Noise alone reproduces the famous "cliff gap".</strong> In simulated worlds with no real cliffs, models still err more on
+  "cliff" molecules, by about as much as on the real benchmark.</li>
+<li><strong>Even the "confidently real" cliffs don't settle the question.</strong> Models err most on them, but they do so in the
+  noise-only worlds too.</li>
+</ul>
+<p>So the benchmark's headline gap is not evidence that models fail on cliffs. Showing that would need cliffs with
+replicated, trustworthy measurements.</p>
+<h2>Abstract</h2>
+<p><strong>Question.</strong> How much of MoleculeACE's activity-cliff error gap reflects measurement noise rather than a modelling
+failure?</p>
+<p><strong>Design</strong> (preregistered, <code>plan.md</code>, committed before any ChEMBL activity data were downloaded).</p>
+<ul>
+<li><strong>Benchmark.</strong> MoleculeACE's 30 datasets and 28,569 cliff pairs, recomputed with its own definition (at least 99.8%
+  agreement with the published labels in every dataset).</li>
+<li><strong>Noise model.</strong> Replicate measurements from ChEMBL 37.</li>
+<li><strong>Cliff confidence.</strong> An empirical-Bayes posterior probability that each cliff is a true ≥ 10-fold difference.</li>
+<li><strong>Model panel.</strong> Random forest, Tanimoto support vector regression, LightGBM and kNN on ECFP4, using the published
+  splits.</li>
+<li><strong>Nulls.</strong> Noise-only synthetic worlds.</li>
+</ul>
+<p><strong>Results.</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Analysis</th>
+<th>Result</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Re-reported values</td>
+<td>about two-thirds of apparent inter-document replicates are identical copies (D2)</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Noise (independent replicates)</td>
+<td>σ = 0.50 log units (Ki), 0.37 (EC50); heavier tails than Gaussian</td>
+<td>t model primary by rule (D3)</td>
+</tr>
+<tr>
+<td>H1: ≥ 25% of cliffs have confidence ≤ 0.8</td>
+<td>Gaussian: 74.8% [69.6, 79.0]; 75–77% in Gaussian arms (71% in the t-noise σ-by-tertile arm); 100% under the primary t model, which can never call a cliff confident (D5)</td>
+<td><strong>supported</strong></td>
+</tr>
+<tr>
+<td>H2: high-confidence cliffs shrink the gap ≥ 40%</td>
+<td>not testable under t; Gaussian arm: gap rises 0.136 → 0.441, but noise-only worlds show the same rise (0.32–0.56)</td>
+<td><strong>contradicted</strong> (Gaussian arm); a selection effect</td>
+</tr>
+<tr>
+<td>H3: a noise-only world reproduces ≥ 50% of the gap</td>
+<td>115% [91, 152] (Gaussian), 171% [137, 229] (t, over-dispersed); 96–104% in document-effect worlds</td>
+<td><strong>supported</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Conclusion.</strong> The benchmark's cliff gap is reproduced by measurement noise plus the way cliffs are selected, across
+every noise model tried. It therefore does not show that models fail on cliffs. The same selection effect makes
+"high-confidence" cliffs look even harder, so single-measurement data cannot show whether real cliffs are hard either.
+Evaluating cliff-aware models needs replicated, noise-audited cliffs and a noise-only null.</p>
+<h2>1. Background and gap</h2>
+<ul>
+<li><strong>The benchmark.</strong> MoleculeACE (van Tilborg, Alenicheva &amp; Grisoni, JCIM 2022) defines a cliff as two molecules with
+  ≥ 0.9 similarity, by ECFP, generic-graph or SMILES similarity, and &gt; 10-fold potency difference. It reports larger
+  errors on cliff molecules, and a 2025–2026 literature designs architectures around this.</li>
+<li><strong>Noise in public data.</strong> Landrum &amp; Riniker (JCIM 2024) showed that values combined from different sources carry
+  roughly 0.5–0.6 log units of noise.</li>
+<li><strong>The gap.</strong> No study was found that propagates replicate noise into the cliff definition, or asks how much of the
+  gap a noise-only world produces.</li>
+</ul>
+<h2>2. Data and validation</h2>
+<ul>
+<li><strong>Benchmark.</strong> MoleculeACE (GitHub <code>molML/MoleculeACE</code>, commit 7e6de0b): 30 datasets, 615–3,657 molecules each, with
+  published splits.</li>
+<li>The cliff definition, reimplemented in <code>code/cliffs.py</code>, reproduces the published <code>cliff_mol</code> labels with at least
+    99.8% agreement in every dataset (D1).</li>
+<li>127,827 similar pairs, of which 28,569 are cliffs.</li>
+<li>MoleculeACE's own curation (Dixon outlier removal, a high-SD drop) makes it somewhat cleaner than raw ChEMBL.</li>
+<li><strong>ChEMBL 37.</strong> Downloaded and verified against EBI's SHA-256.</li>
+<li>For the 30 targets: all Ki or EC50 activities with "=" relations, a pChEMBL value and no validity flag.</li>
+<li>99.7% of benchmark molecules match by full InChIKey.</li>
+<li><strong>Re-reported values</strong> (D2). About two-thirds of inter-document "replicate" pairs (49.6% for EC50; 68.9% across all
+  ChEMBL targets) carry identical values. These are values copied into later documents. They are collapsed before
+  estimating noise and counting replicates.</li>
+<li><strong>Noise model</strong> (Figure F1). From non-duplicate inter-document pairs:</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>σ</th>
+<th>Gaussian 90% coverage of held-out pairs</th>
+<th>t (4 df) coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ki</td>
+<td>0.503 (2,155 pairs)</td>
+<td>80%</td>
+<td>88%</td>
+</tr>
+<tr>
+<td>EC50</td>
+<td>0.367 (365 pairs)</td>
+<td>69%</td>
+<td>79%</td>
+</tr>
+</tbody>
+</table></div>
+<p>The Gaussian coverage misses the preregistered 85–95% range, so the t model is primary.
+- <strong>Few repeats.</strong> 96% of benchmark molecules rest on a single distinct pre-2022 measurement.
+- <strong>Shared source papers</strong> (D5). 69% of cliff pairs (79% of similar pairs) have both molecules in a common source
+  document, and 90% of cliff-pair molecules come from exactly one document. Lab-to-lab offsets cancel within such pairs.</p>
+<figure><a href="results/figures/F1_noise.png"><img src="results/figures/F1_noise.png" alt="F1"></a><figcaption>F1. How much do two independent measurements of the same compound on the same target disagree? Differences between distinct values reported in different ChEMBL documents for the 30 benchmark targets (identical, re-reported values removed; deviations D2), with the fitted Gaussian and Student-t noise models. The tails are heavier than Gaussian, which is why the t model is primary (D3).</figcaption></figure>
+<h2>3. Methods</h2>
+<ul>
+<li><strong>Cliff confidence.</strong> For every similar pair, the observed difference d is the true difference Δ plus noise.</li>
+<li>A nonparametric prior for Δ is fitted to all 127,827 similar pairs by maximum likelihood (EM on a grid).</li>
+<li>Confidence = P(|Δ| &gt; 1 | d).</li>
+<li>The method passed a synthetic calibration check (Gaussian noise) before use.</li>
+<li><strong>Cliff gap.</strong> RMSE on test cliff molecules minus RMSE on test non-cliff molecules, per target, averaged over models and
+  seeds.</li>
+<li>The restricted gap compares high-confidence cliff molecules with all other test molecules.</li>
+<li><strong>Noise-only worlds.</strong> A smooth activity landscape (out-of-fold kNN predictions) plus noise.</li>
+<li>Cliffs are re-detected on the noisy labels and models retrained.</li>
+<li>First run: t and Gaussian noise, 20 draws per target.</li>
+<li>Second run, after review: Gaussian, t and document-effect worlds, in which pairs from the same paper share an
+    offset. Each records calibration statistics and applies the real data's high-confidence rule (5 draws per target).</li>
+</ul>
+<h2>4. Results</h2>
+<h3>4.1 Most benchmark cliffs are not confidently real (H1)</h3>
+<p>Of the 28,569 MoleculeACE cliff pairs (Figure F2):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Arm</th>
+<th>Cliffs with confidence ≤ 0.8</th>
+<th>Cliffs with confidence ≥ 0.9</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gaussian noise</td>
+<td>74.8% [69.6, 79.0]</td>
+<td>17.8%</td>
+</tr>
+<tr>
+<td>Gaussian, within-document noise of 0.3 for shared-document pairs</td>
+<td>77.1%</td>
+<td>15.8%</td>
+</tr>
+<tr>
+<td>t noise, σ by potency tertile</td>
+<td>71.4%</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Primary t model</td>
+<td>100%</td>
+<td>none</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>H1 is supported in every arm.</strong></li>
+<li><strong>The t model's 100% is structural.</strong> Under heavy-tailed noise, confidence can never exceed about 0.74, and it
+  <em>falls</em> for very large differences, which the model treats as likely data errors (Figure F2, right).</li>
+<li><strong>The t model does not fit benchmark pairs</strong> (D5). Noise alone would produce 1,287 pairs more than 3 log units apart,
+  but only 824 are observed. So the Gaussian arm is the more credible guide to how many cliffs are real.</li>
+<li><strong>Why.</strong> The median cliff is only 1.45 log units apart, while the difference between two single measurements has an SD
+  of about 0.7 log units. Under the Gaussian model, noise accounts for about half the variance of observed differences between similar
+  molecules (pair-noise SD 0.67 against an observed SD of 0.91).</li>
+</ul>
+<figure><a href="results/figures/F2_confidence.png"><img src="results/figures/F2_confidence.png" alt="F2"></a><figcaption>F2. Left: the posterior probability that each benchmark cliff is a real 10-fold difference, given measured replicate noise (empirical-Bayes deconvolution over all similar pairs). Dashed: the 0.8 line of H1. Right: confidence against the observed difference. Under heavy-tailed noise no cliff is confidently real; under Gaussian noise only cliffs with very large observed differences are.</figcaption></figure>
+<h3>4.2 Noise alone reproduces the cliff gap (H3)</h3>
+<ul>
+<li><strong>The observed gap.</strong> Averaged over models and targets it is 0.142 log units. By model: random forest 0.138, SVR
+  0.151, LightGBM 0.129, kNN 0.152.</li>
+<li><strong>Worlds with no real cliffs give a gap at least as large</strong> (Figure F3). Sources: the Gaussian and t gaps and their
+  intervals come from the first null run (20 draws per target). The document-effect worlds and the calibration columns
+  come from the second run (5 draws per target), whose Gaussian and t gaps are 0.163 and 0.235 (115% and 165%).</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>World</th>
+<th>Gap</th>
+<th>Share of observed</th>
+<th>Pair-difference SD</th>
+<th>Cliff test molecules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Real</td>
+<td>0.142</td>
+<td>—</td>
+<td>0.87</td>
+<td>126</td>
+</tr>
+<tr>
+<td>Gaussian, best calibrated</td>
+<td>0.164</td>
+<td>115% [91, 152]</td>
+<td>0.81</td>
+<td>135</td>
+</tr>
+<tr>
+<td>t</td>
+<td>0.244</td>
+<td>171% [137, 229]</td>
+<td>1.03</td>
+<td>166 (over-dispersed)</td>
+</tr>
+<tr>
+<td>Document effect, σ_w 0.2</td>
+<td>0.137</td>
+<td>96%</td>
+<td>0.60</td>
+<td>67</td>
+</tr>
+<tr>
+<td>Document effect, σ_w 0.3</td>
+<td>0.148</td>
+<td>104%</td>
+<td>0.67</td>
+<td>87</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>Even the document-effect worlds, which produce fewer cliffs than reality, reproduce the gap.</li>
+<li><strong>The mechanism.</strong> A molecule is labelled a cliff because its measured potency is far from its neighbours'. Noise makes
+  such molecules more likely to be selected, and models that learn the smooth landscape then "miss" exactly them.</li>
+<li><strong>The noise-only worlds are easier to predict than reality.</strong> Their non-cliff RMSE is 0.39–0.64, against 0.69 real,
+  so the comparison is approximate. Its conclusion holds across all four worlds.</li>
+<li><strong>The label-shuffle check.</strong> Random cliff labels over the real predictions give a gap of −0.002, which confirms the
+  gap statistic itself is unbiased.</li>
+</ul>
+<figure><a href="results/figures/F3_null.png"><img src="results/figures/F3_null.png" alt="F3"></a><figcaption>F3. One point per benchmark target: the cliff gap observed with real labels against the gap in a simulated world with a smooth activity landscape (no real cliffs) plus measured noise, averaged over 20 noise draws and four models. Solid line: equal; dashed: half (the H3 threshold). Noise and the way cliffs are selected reproduce the whole gap. The t world is over-dispersed (more cliffs than real); the better-calibrated Gaussian world reproduces 115%.</figcaption></figure>
+<h3>4.3 "High-confidence" cliffs: harder, but by selection (H2)</h3>
+<ul>
+<li><strong>Under t noise no cliff reaches confidence 0.9.</strong> H2 is not testable under the primary model.</li>
+<li><strong>In the Gaussian arm</strong> (29 targets), restricting to molecules in at least one high-confidence cliff raises the gap
+  from 0.136 to 0.441. That is a "shrinkage" of −2.25 [−3.34, −1.59], so H2 is contradicted. The σ-by-tertile arm (13
+  targets, 17 excluded) gives −1.22 [−2.23, −0.24].</li>
+<li><strong>The noise-only worlds show the same rise</strong> (Figure F4). With the real data's high-confidence rule applied to their
+  own cliffs, the restricted gap is 0.32–0.56 against 0.44 in reality.</li>
+<li><strong>So the larger errors on high-confidence cliffs are a selection effect.</strong> These are the pairs with the most extreme
+  observed differences. They say nothing about whether genuinely real cliffs are harder to predict.</li>
+</ul>
+<figure><a href="results/figures/F4_restricted.png"><img src="results/figures/F4_restricted.png" alt="F4"></a><figcaption>F4. Gaussian-noise arm. Restricting the cliff set to molecules in at least one cliff with confidence &gt;= 0.9 roughly triples the gap in the real data (red). A simulated world with no real cliffs, given the same high-confidence rule, shows the same increase (grey crosses): confidently real-looking cliffs are those with the most extreme observed differences, and selecting them is itself what enlarges the gap.</figcaption></figure>
+<h3>4.4 Secondary</h3>
+<ul>
+<li><strong>MoleculeACE's own gap measure</strong> (RMSE on cliff molecules minus RMSE on all test molecules) averages 0.091.</li>
+<li><strong>Do cliffs survive newer data?</strong> This cannot be answered. After removing copied values, only one cliff pair has new
+  post-2021 measurements for both molecules.</li>
+</ul>
+<h2>5. Discussion</h2>
+<p><strong>What this study establishes:</strong></p>
+<ol>
+<li><strong>The benchmark's cliff gap is not diagnostic.</strong>
+   - Worlds with smooth activity landscapes and realistic measurement noise produce a cliff gap as large as the real one,
+     for all four standard models and under every noise model tried.
+   - A positive RMSE_cliff − RMSE_non-cliff therefore cannot by itself show that a model "fails on cliffs", nor that a
+     new architecture fixes them.</li>
+<li><strong>Most benchmark cliffs are not confidently real.</strong> With one measurement per molecule and about 0.5 log units of
+   noise, a 1.5-log-unit difference between similar molecules is weak evidence of a true 10-fold cliff.</li>
+<li><strong>Single-measurement benchmarks cannot answer the question cliff-aware modelling asks.</strong> Even the cliffs that look
+   most real are selected on their extremeness, which enlarges model errors by itself.</li>
+<li><strong>Public potency data contain massive re-reporting.</strong> About two-thirds of apparent independent replicates are copies.
+   Treating them as independent would wildly understate the noise.</li>
+</ol>
+<p><strong>Recommendations for cliff benchmarks:</strong></p>
+<ul>
+<li>Require replicated potencies, ideally from independent laboratories, for cliff molecules.</li>
+<li>Report a noise-only null alongside RMSE_cliff.</li>
+<li>Evaluate on held-out <em>re-measurements</em> rather than on the values used to define the cliffs.</li>
+</ul>
+<p><strong>What it does not establish:</strong></p>
+<ul>
+<li><strong>That models are fine on real cliffs, or that cliff-aware improvements are illusory.</strong> The data cannot separate the
+  two, and that is the point.</li>
+<li><strong>The exact noise level of any pair.</strong> Most cliff pairs come from a single paper, where lab offsets cancel. A within-
+  paper noise of 0.3 log units still leaves 77% of cliffs not confidently real.</li>
+</ul>
+<h2>6. Limitations</h2>
+<ol>
+<li><strong>Noise model.</strong>
+   - Neither the Gaussian nor the t model is calibrated for EC50 replicates (coverage 69% and 79%).
+   - The t model fits replicate differences but over-predicts extreme benchmark differences.
+   - The t scale used the MAD-based σ directly, as preregistered; a MAD-consistent t scale would be 9% smaller.</li>
+<li><strong>Identifiability.</strong> With single measurements, true large differences and noise tails cannot be fully separated.
+   Hence the spread between arms.</li>
+<li><strong>Replicate counts.</strong> n_i is reconstructed from ChEMBL 37 documents up to 2021, not from MoleculeACE's own
+   (unpublished) counts.</li>
+<li><strong>The noise-only worlds</strong> use out-of-fold kNN predictions as the smooth landscape. They are easier to predict than
+   reality, and their noise level differs by world; the conclusion holds across all of them.</li>
+<li><strong>Models.</strong> Four standard fingerprint models with default settings, not the deep cliff-aware architectures.</li>
+<li><strong>Validation scope.</strong> The empirical-Bayes calibration check used Gaussian noise only.</li>
+</ol>
+<h2>7. Reproducibility</h2>
+<p>The code is in <code>code/</code>:</p>
+<ul>
+<li><code>fetch_chembl.sh</code>, <code>extract_chembl.py</code>: data;</li>
+<li><code>cliffs.py</code>: cliff definition and validation;</li>
+<li><code>models.py</code>: model panel;</li>
+<li><code>noise_eb.py</code>, <code>validate_eb.py</code>: noise model and empirical Bayes;</li>
+<li><code>analysis.py</code>: hypotheses and sensitivity arms;</li>
+<li><code>null.py</code>, <code>null_v2.py</code>: noise-only worlds;</li>
+<li><code>control.py</code>: shuffle check and summaries;</li>
+<li><code>review_checks.py</code>: model check, shared documents and Gaussian confidences;</li>
+<li><code>make_figures.py</code>, <code>build_report_html.py</code>: presentation.</li>
+</ul>
+<p>Tables are in <code>results/tables/</code>. The raw ChEMBL database (30 GB) is public and not committed.</p>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: GWOSC / Zenodo public releases. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/cheminformatics-drug-discovery-cliff-noise-ceiling/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

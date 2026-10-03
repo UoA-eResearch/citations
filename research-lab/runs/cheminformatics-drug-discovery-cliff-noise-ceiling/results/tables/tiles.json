@@ -1,0 +1,8 @@
+[
+ ["Cliffs not confidently real (Gaussian)", "75%", "of 28,569 MoleculeACE cliffs have >= 20% chance of not being a true 10-fold difference (H1 supported)"],
+ ["Noise-only worlds reproduce the cliff gap", "96–171%", "of the observed 0.142 RMSE gap, every world and model (H3 supported)"],
+ ["'High-confidence' cliff gap", "0.44 vs 0.32–0.56", "real vs noise-only worlds: a selection effect (H2 contradicted)"],
+ ["Measurement noise (independent replicates)", "σ = 0.50", "log units for Ki (0.37 EC50); heavier-tailed than Gaussian"],
+ ["Apparent replicates that are copies", "~2/3", "identical values re-reported in later ChEMBL documents"],
+ ["Benchmark molecules with one measurement", "96%", "and 69% of cliff pairs come from a single paper"]
+]
