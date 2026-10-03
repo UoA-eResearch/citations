@@ -8,7 +8,9 @@ Per tile (plan.md section 3):
   HAG >= t, for t = 2, 3 (primary) and 5 m; building if it holds a class-6 point;
 - counts are summed into 30 m cells on the global NZTM grid (x, y multiples of 30 m).
 Output per epoch: data/cells/<epoch>/<tile>.parquet with columns cx, cy (cell lower-left), n_valid, n_c2, n_c3, n_c5, n_bld.
-Usage: process_tiles.py <epoch> [n_jobs] [limit]
+Usage: process_tiles.py <epoch> [n_jobs] [limit] [noov]
+With "noov" (deviations.md D4), points carrying the LAS 1.4 overlap *flag* are also dropped (point formats >= 6, as in
+the 2024 collection, mark overlap with a flag rather than class 12); output goes to data/cells/<epoch>_noov/.
 """
 import os
 import subprocess
@@ -29,8 +31,8 @@ CELL = 30
 TMP = Path(os.environ.get("CANOPY_TMP", RUN / "data" / "tmp"))
 
 
-def process(key, epoch):
-    out = RUN / "data" / "cells" / epoch / (Path(key).stem + ".parquet")
+def process(key, epoch, noov=False):
+    out = RUN / "data" / "cells" / (epoch + ("_noov" if noov else "")) / (Path(key).stem + ".parquet")
     if out.exists():
         return "skip"
     TMP.mkdir(parents=True, exist_ok=True)
@@ -48,6 +50,8 @@ def process(key, epoch):
         keep = ~np.isin(cls, DROP)
         if hasattr(las, "withheld") and las.withheld is not None:
             keep &= ~np.asarray(las.withheld, bool)
+        if noov and las.header.point_format.id >= 6:
+            keep &= ~np.asarray(las.overlap, bool)
         x, y, z, cls = np.asarray(las.x)[keep], np.asarray(las.y)[keep], np.asarray(las.z)[keep], cls[keep]
         if len(x) == 0:
             pd.DataFrame(columns=["cx", "cy", "n_valid", "n_c2", "n_c3", "n_c5", "n_bld"]).to_parquet(out)
@@ -92,14 +96,15 @@ def process(key, epoch):
             os.remove(tmp)
 
 
-def main(epoch, n_jobs=48, limit=None):
+def main(epoch, n_jobs=48, limit=None, noov=None):
     t = pd.read_parquet(RUN / "data" / "tiles_needed.parquet")
-    keys = t[t.epoch == epoch].key.tolist()[: int(limit) if limit else None]
-    res = Parallel(n_jobs=int(n_jobs), backend="loky", verbose=5)(delayed(process)(k, epoch) for k in keys)
+    keys = t[t.epoch == epoch].key.tolist()[: int(limit) if limit not in (None, "", "0") else None]
+    nv = noov == "noov"
+    res = Parallel(n_jobs=int(n_jobs), backend="loky", verbose=5)(delayed(process)(k, epoch, nv) for k in keys)
     s = pd.Series(res)
     print(epoch, s.str.split(":").str[0].str.split(" ").str[0].value_counts().to_dict())
     bad = [r for r in res if r not in ("ok", "skip", "empty")]
-    (RUN / "data" / "cells" / f"{epoch}_failures.txt").write_text("\n".join(bad))
+    (RUN / "data" / "cells" / f"{epoch}{'_noov' if nv else ''}_failures.txt").write_text("\n".join(bad))
 
 
 if __name__ == "__main__":

@@ -1,0 +1,6 @@
+analysis,est,note,outcome,term,lo,hi,se,n_units,n_high,n_low,n_sh,n_clusters
+trend-adjusted: beta_post - beta_pre x (post gap / pre gap),-2.954372632899295,"pre gap 3.74 y, post gap 7.36 y",,,,,,,,,,
+annualised post (pp per year),-0.17883530080418064,,,,,,,,,,,
+annualised pre (pp per year),0.22265081188919117,,,,,,,,,,,
+long difference E0->E2 (post hoc),-0.48294862092929347,,d_long_c3,high,-0.882886548342951,-0.08301069351563595,0.20405371089145388,160193.0,51511.0,80424.0,28258.0,525.0
+long difference E0->E2 (post hoc),-0.2160333456933831,,d_long_c3,low,-0.584272151880606,0.1522054604938398,0.18788039279661406,160193.0,51511.0,80424.0,28258.0,525.0

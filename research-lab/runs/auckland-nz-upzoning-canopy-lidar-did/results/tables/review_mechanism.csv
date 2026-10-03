@@ -1,0 +1,21 @@
+version,analysis,value,lo,hi
+E2 as processed (overlap flag kept),decision rule applied post hoc: no canopy band,Contradicted,,
+E2 as processed (overlap flag kept),decision rule applied post hoc: endpoint-mean band (Oldham),Contradicted,,
+E2 as processed (overlap flag kept),decision rule applied post hoc: endpoint-mean band + density change,Contradicted,,
+E2 as processed (overlap flag kept),mechanism (endpoint-mean strata): not redeveloped,-0.03551387689890649,-0.38056958090229476,0.30954182710448175
+E2 as processed (overlap flag kept),mechanism (endpoint-mean strata): redeveloped,-2.211914019912349,-3.385719443571346,-1.0381085962533516
+E2 as processed (overlap flag kept),raw high - SH post gap (pp),-0.3948807454265868,,
+E2 as processed (overlap flag kept),Kitagawa: composition (more redevelopment),-0.2808159392492137,,
+E2 as processed (overlap flag kept),Kitagawa: within redevelopment status,-0.11406480617737308,,
+E2 as processed (overlap flag kept),redevelopment share high / SH,0.118 / 0.061,,
+E2 as processed (overlap flag kept),mean canopy change of redeveloped cells SH / high / low,-5.79 / -7.21 / -6.48,,
+E2 with overlap flag dropped (D4),decision rule applied post hoc: no canopy band,Contradicted,,
+E2 with overlap flag dropped (D4),decision rule applied post hoc: endpoint-mean band (Oldham),Contradicted,,
+E2 with overlap flag dropped (D4),decision rule applied post hoc: endpoint-mean band + density change,Contradicted,,
+E2 with overlap flag dropped (D4),mechanism (endpoint-mean strata): not redeveloped,0.00965166619523623,-0.32561656339622064,0.3449198957866931
+E2 with overlap flag dropped (D4),mechanism (endpoint-mean strata): redeveloped,-2.4574692753730254,-3.7023924661879963,-1.2125460845580545
+E2 with overlap flag dropped (D4),raw high - SH post gap (pp),-0.33343964552571537,,
+E2 with overlap flag dropped (D4),Kitagawa: composition (more redevelopment),-0.28263293405179496,,
+E2 with overlap flag dropped (D4),Kitagawa: within redevelopment status,-0.05080671147392041,,
+E2 with overlap flag dropped (D4),redevelopment share high / SH,0.108 / 0.054,,
+E2 with overlap flag dropped (D4),mean canopy change of redeveloped cells SH / high / low,-6.49 / -8.08 / -7.31,,

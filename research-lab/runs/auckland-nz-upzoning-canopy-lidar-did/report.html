@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Upzoning and Tree Canopy</title>
+<meta name="description" content="A preregistered LiDAR comparison of tree-canopy change on Auckland land upzoned by the 2016 Unitary Plan versus Single House land, 2013-2024.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Auckland &amp; NZ</div>
+  <h1>Did Auckland&#x27;s 2016 upzoning cost tree canopy?</h1>
+  <p class="subtitle">A preregistered comparison of tree canopy from three city-wide LiDAR surveys (2013, 2016–18, 2024) on residential land upzoned to Mixed Housing Urban or Terrace Housing and Apartment Buildings versus matched Single House land</p>
+  <div class="meta">
+    <span>Report · 2026-10-03 · revised after independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-upzoning-canopy-lidar-did/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-upzoning-canopy-lidar-did/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-upzoning-canopy-lidar-did/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Preregistered estimate</div><div class="tile-value">-1.32 pp</div><div class="tile-note">2016-18 to 2024; pre-trend +0.83 fails the check: Inconclusive</div></div><div class="tile"><div class="tile-label">Artefact-free estimates</div><div class="tile-value">-0.4 to 0.0</div><div class="tile-note">pp; CIs include zero and exclude a 1-point extra loss</div></div><div class="tile"><div class="tile-label">Redeveloped blocks</div><div class="tile-value">-6 to -8 pp</div><div class="tile-note">canopy lost in every zone; upzoned land redeveloped twice as often</div></div><div class="tile"><div class="tile-label">Units</div><div class="tile-value">160,193</div><div class="tile-note">30 m built-up residential cells in three LiDAR surveys</div></div></section>
+<main>
+<h2>In plain terms</h2>
+<p>Auckland's 2016 Unitary Plan allowed terraces and apartments on large areas of existing suburbs, while other areas
+stayed zoned for single houses. A common worry is that building more homes on the same land costs trees.</p>
+<p>We measured tree cover taller than 3 metres on built-up residential blocks, using three laser scans of the whole city
+(2013, 2016–18 and 2024). We compared blocks that were upzoned with blocks kept for single houses.</p>
+<p><strong>The comparison we planned first is misleading.</strong> It matched blocks on their 2016–18 tree cover, and found upzoned
+blocks lost 1.3 percentage points more cover by 2024. But the same comparison showed them gaining 0.8 points more
+before the upzoning took effect. That mirror image is the signature of a statistical artefact called regression to
+the mean, not a real effect. The plan's pre-trend check caught it.</p>
+<p><strong>Better comparisons find little or no extra loss.</strong> Comparisons that avoid the artefact put the extra loss on upzoned
+land between about 0.4 points and nothing. Their uncertainty includes zero, and they rule out a difference of one
+point.</p>
+<p><strong>Redevelopment itself does remove trees.</strong> Redeveloped blocks lost about 6–8 points of cover in every zone. Upzoned
+land was redeveloped about twice as often, which explains most of the small raw difference.</p>
+<p><strong>Why the verdict stays open.</strong> The scans are not directly comparable: the 2013 scan has about a quarter of the later
+scans' point density, and part of 2024 was flown as leaves were falling. So by the preregistered rule the verdict is
+inconclusive.</p>
+<h2>What was done</h2>
+<p><strong>Plan.</strong> The plan was committed (d5c6e85) before any 2013 or 2024 data were processed.</p>
+<p><strong>Canopy measurement.</strong></p>
+<ul>
+<li>Classified LiDAR point clouds from OpenTopography's mirror of LINZ and Auckland Council surveys: 6,822 tiles,
+  about 133 GB, processed one tile at a time and then deleted.</li>
+<li>A 1 m cell counts as canopy if it holds a vegetation-classified point at least 3 m above ground.</li>
+<li>Overlap and noise points are dropped. In 2024 overlap is marked by a flag rather than a class; that was fixed after
+  review (D4).</li>
+</ul>
+<p><strong>Units.</strong></p>
+<ul>
+<li>30 m grid cells lying at least 90% in one residential zone, covered in all three scans, and built up (at least 10%
+  building cells) in both 2013 and 2016–18.</li>
+<li>That gives 163,285 units, of which 160,193 fall in matched strata.</li>
+</ul>
+<p><strong>Groups.</strong></p>
+<ul>
+<li>Upzoned: Mixed Housing Urban + Terrace Housing and Apartment Buildings (51,511 units).</li>
+<li>Control: Single House (28,258 units).</li>
+<li>Mixed Housing Suburban is a lower dose.</li>
+</ul>
+<p><strong>Model.</strong></p>
+<ul>
+<li>Change in canopy share between scans, regressed on zone.</li>
+<li>Stratum fixed effects: local board × distance to the city centre × 2016–18 survey block × <strong>2016–18 canopy band</strong>.</li>
+<li>Distance to the nearest train station as a covariate.</li>
+<li>Standard errors clustered by SA2 (525 clusters).</li>
+</ul>
+<p><strong>Decision rule.</strong></p>
+<ul>
+<li><strong>Supported:</strong> the post-period (2016–18 → 2024) estimate ≤ −1.0 pp with its CI below 0, and the pre-period
+  (2013 → 2016–18) estimate within ±0.5 pp.</li>
+<li><strong>Contradicted:</strong> the CI's lower bound &gt; −1.0 pp, with the pre-period check passing.</li>
+<li><strong>Inconclusive:</strong> otherwise.</li>
+</ul>
+<h2>Preregistered result</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Upzoned vs Single House (pp)</th>
+<th>95% CI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Post: 2016–18 → 2024</strong></td>
+<td><strong>−1.32</strong></td>
+<td><strong>−1.65 to −0.98</strong></td>
+</tr>
+<tr>
+<td><strong>Pre-trend: 2013 → 2016–18</strong></td>
+<td><strong>+0.83</strong></td>
+<td><strong>+0.49 to +1.17</strong> (fails the ±0.5 check)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Verdict: Inconclusive.</strong></p>
+<p>The originally processed 2024 data, with overlap points kept, give −1.37 and +0.83 (D4).</p>
+<p><strong>This estimate is not causally interpretable.</strong> The plan matched units on their 2016–18 canopy band, while both
+outcomes are changes <em>from</em> 2016–18 (D5). Blocks matched at an unusually high 2016–18 reading tend to fall back
+afterwards and to have risen before. Upzoned and Single House blocks sit at different points of the canopy
+distribution, so this regression to the mean shows up as a negative "post effect" and a mirror-image positive
+"pre-trend".</p>
+<p>The preregistered trend-adjusted estimate (−3.0 pp) extrapolates that artefact and is withdrawn.</p>
+<h2>What the data show once the artefact is removed</h2>
+<p>These analyses were added after review (D5) and are post hoc. All use the corrected 2024 data. The estimate is
+upzoned vs Single House, in pp, with 95% CIs.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Matching on canopy</th>
+<th>2016–18 → 2024</th>
+<th>2013 → 2016–18</th>
+<th>2013 → 2024</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2016–18 band (preregistered)</td>
+<td>−1.32 (−1.65 to −0.98)</td>
+<td>+0.83 (+0.49 to +1.17)</td>
+<td>−0.48 (−0.88 to −0.08)</td>
+</tr>
+<tr>
+<td>No canopy band</td>
+<td>0.00 (−0.40 to +0.41)</td>
+<td>−0.42 (−0.74 to −0.09)</td>
+<td>−0.41 (−0.82 to 0.00)</td>
+</tr>
+<tr>
+<td>2013 band</td>
+<td>−1.11</td>
+<td>−0.46</td>
+<td>−1.57</td>
+</tr>
+<tr>
+<td>2024 band (placebo)</td>
+<td><strong>+0.75</strong></td>
+<td>+0.59</td>
+<td>+1.35</td>
+</tr>
+<tr>
+<td>Mean of the two scans compared (Oldham)</td>
+<td>−0.37 (−0.74 to 0.00)</td>
+<td>+0.28 (−0.04 to +0.60)</td>
+<td>−0.03 (−0.46 to +0.40)</td>
+</tr>
+<tr>
+<td>Oldham + change in point density</td>
+<td>−0.22 (−0.57 to +0.12)</td>
+<td>+0.04 (−0.25 to +0.32)</td>
+<td>−0.02 (−0.46 to +0.41)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Matching on the start of a change pushes the estimate down; matching on its end pushes it up.</strong> With a 2024 band
+the "effect" becomes +0.75, and a real treatment effect cannot flip sign like that.</p>
+<p><strong>Specifications that avoid the artefact give −0.4 to 0.0 pp for 2016–18 → 2024.</strong> These are no canopy band, or
+matching on the mean of the two scans compared. Their pre-period estimates are small, and they rule out a 1-point
+excess loss. Applied post hoc, the preregistered rule would read "Contradicted" for all three of these
+specifications. That is a sensitivity analysis, not the study's verdict.</p>
+<p><strong>The lower dose behaves the same way.</strong> For Mixed Housing Suburban, −0.84 under the preregistered strata becomes
+−0.25 (Oldham) and −0.11 (no band).</p>
+<h2>Redevelopment</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Post hoc, corrected data</th>
+<th>Estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Not-redeveloped upzoned blocks vs Single House (Oldham strata)</td>
+<td>+0.01 pp (−0.33 to +0.34)</td>
+</tr>
+<tr>
+<td>Redeveloped upzoned blocks vs Single House (Oldham strata)</td>
+<td>−2.46 pp (−3.70 to −1.21)</td>
+</tr>
+<tr>
+<td>Mean canopy change on redeveloped blocks: Single House / upzoned / lower dose</td>
+<td>−6.5 / −8.1 / −7.3 pp</td>
+</tr>
+<tr>
+<td>Share of blocks redeveloped (building share changed ≥ 10 points): upzoned / Single House</td>
+<td>10.8% / 5.4%</td>
+</tr>
+<tr>
+<td>Raw upzoned − Single House gap, 2016–18 → 2024</td>
+<td>−0.33 pp</td>
+</tr>
+<tr>
+<td>… due to more redevelopment (Kitagawa composition)</td>
+<td>−0.28 pp</td>
+</tr>
+<tr>
+<td>… within redevelopment status</td>
+<td>−0.05 pp</td>
+</tr>
+</tbody>
+</table></div>
+<p>Redevelopment removes trees wherever it happens, and upzoning roughly doubled how often blocks were redeveloped.
+Redevelopment is itself an outcome of upzoning, so this split is descriptive, not a separate causal effect.</p>
+<h2>The surveys are not like-for-like</h2>
+<p>Average canopy is 3–4 points higher in the 2016–18 scan than in both 2013 and 2024, in every zone.</p>
+<ul>
+<li><strong>2013 under-detects canopy.</strong> Its tiles have about 4 points/m², against 16–19 in the later scans. Thinning the
+  later scans lowers detected canopy by about 1 point per halving of density, so 2013 under-detects by roughly
+  3–4 points.</li>
+<li><strong>2024 may read low for seasonal reasons.</strong> The fall from 2016–18 to 2024 happens despite higher density, so it
+  reflects real change, season (part of 2024 was flown in May and June, as leaves fell) or vendor classification.</li>
+<li><strong>Density differs by zone.</strong> Upzoned blocks sit in denser 2016–18 tiles within strata. Adjusting for density
+  change moves the artefact-free estimates further toward zero (table above).</li>
+</ul>
+<h2>Limitations</h2>
+<ul>
+<li><strong>Zoning was not random.</strong> Upzoned land is nearer centres and transit. The zone-boundary comparison, units within
+  100 m of a Single House / upzoned boundary, gives +0.13 pp (−0.43 to +0.69) for 2016–18 → 2024.</li>
+<li><strong>Timing.</strong> The 2016–18 baseline straddles the plan's start in November 2016, and intensification rules from 2022
+  may have reached Single House land late in the window.</li>
+<li><strong>Current zoning.</strong> The current zoning layer was used, not a reconstruction of 2016 zoning.</li>
+<li><strong>Tile-seam double counting</strong> affects up to 12 of 900 cells in 6% of units (D6). It changes estimates by less
+  than 0.01 pp.</li>
+</ul>
+<h2>Independent review</h2>
+<p>An independent reviewer re-processed six tiles from scratch and matched the stored counts exactly. The review judged
+the study "fix first":</p>
+<ul>
+<li>it found the regression-to-the-mean artefact, and the matching table that exposes it;</li>
+<li>it found the undeclared handling of 2024 overlap points (D4), which was then reprocessed;</li>
+<li>it found the point-density differences between surveys;</li>
+<li>it required the trend adjustment to be withdrawn and the redevelopment split to be presented descriptively.</li>
+</ul>
+<p>All are included above and logged in deviations D4–D7. The code is in <code>code/review_checks.py</code>.</p>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: GWOSC / Zenodo public releases. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-upzoning-canopy-lidar-did/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>
