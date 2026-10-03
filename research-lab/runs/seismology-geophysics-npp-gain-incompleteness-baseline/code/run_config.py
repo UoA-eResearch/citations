@@ -44,16 +44,23 @@ def load(cfg, cutoff):
     return d, r, params
 
 
-def starts(params, unit, n, span):
-    """Released parameters clipped into the fitting bounds, plus two generic starts."""
+def starts(params, unit, n, span, extra=()):
+    """D2: released parameters clipped into the bounds, a spread of generic starts (c 1e-4..1 h, alpha 1.5..3.3,
+    Tb 0.003..0.03 h, p 1.1..1.5), and the optima of earlier fits (`extra`, e.g. the other sequences' A fits)."""
     hours = unit == "hours"
+    tf = 1.0 if hours else 1 / 24.0                     # time-unit factor
     rate = n / span
     base = dict(mu=min(params["mu"], 5 * rate), K=float(np.clip(params["k0"], 0.01, 1.0)), alpha=float(np.clip(params["a"], 0.3, 2.5)),
                 c=float(np.clip(params["c"], 1e-3, 5.0)), p=float(np.clip(params["omega"], 1.05, 2.5)),
-                Tb=0.005 if hours else 0.0002, G=3.5 if hours else 4.5, H=0.75, beta=2.3)
-    g1 = dict(mu=0.2 * rate, K=0.1, alpha=1.5, c=0.05 if hours else 0.002, p=1.2, Tb=base["Tb"], G=base["G"], H=0.75, beta=2.3)
-    g2 = dict(g1, K=0.3, alpha=1.0, c=0.5 if hours else 0.02, p=1.4, Tb=base["Tb"] * 5, G=base["G"] - 1, H=1.0)
-    return [base, g1, g2]
+                Tb=0.005 * tf, G=3.5 if hours else 4.5, H=0.75, beta=2.3)
+    out = [base]
+    grid = [(1e-4, 3.3, 0.006, 1.1, 0.05), (1e-4, 2.5, 0.02, 1.2, 0.1), (0.01, 3.0, 0.003, 1.15, 0.05), (0.01, 1.5, 0.01, 1.3, 0.3),
+            (0.3, 2.5, 0.006, 1.3, 0.1), (1.0, 2.0, 0.03, 1.5, 0.3), (1e-3, 3.3, 0.01, 1.1, 0.03), (0.1, 3.0, 0.02, 1.2, 0.08)]
+    for c, a, tb, p, k in grid:
+        out.append(dict(mu=0.3 * rate, K=k, alpha=a, c=c * tf, p=p, Tb=tb * tf, G=base["G"], H=0.75, beta=3.0 if a > 2 else 2.4))
+    for e in extra:
+        out.append({k: e[k] for k in ("mu", "K", "alpha", "c", "p", "Tb", "G", "H", "beta") if k in e} | {k: v for k, v in base.items() if k not in e})
+    return out
 
 
 def main(cfg, cutoff=None):
@@ -66,13 +73,19 @@ def main(cfg, cutoff=None):
     assert len(idx) == len(r), (len(idx), len(r))
     out = dict(config=cfg, cutoff=cutoff, n_train=len(d["T_train"]), n_targets=len(idx), unit=d["unit"])
     pw = pd.DataFrame({"t": tgt_t, "S0": r.ETAS_pointwise_like.to_numpy(), "NPP": r.NN_pointwise_lik.to_numpy()})
-    st = starts(params, d["unit"], len(d["T_train"]), d["T_train"][-1] - d["T_train"][0])
+    extra = []
+    if d["unit"] == "hours":   # optima of the first-round primary A fits of all three sequences (results/fits_round1)
+        for f in sorted((RUN / "results" / "fits_round1").glob("*_1.[23].json")):
+            j = json.load(open(f))
+            for mdl in ("A", "B"):
+                extra.append(j[mdl])
+    st = starts(params, d["unit"], len(d["T_train"]), d["T_train"][-1] - d["T_train"][0], extra)
     for model in ("S2", "A", "B"):
         t0 = time.time()
         f = E.fit(model, d["T_train"], d["M_train"], m0, st)
         ll, err = E.target_ll(f, model, d["T_all"], d["M_all"], tgt_t, prev, m0)
         pw[model] = ll
-        out[model] = {k: float(v) for k, v in f.items()} | dict(test_ll=float(ll.mean()), seconds=round(time.time() - t0, 1),
+        out[model] = {k: (float(v) if np.isscalar(v) else [float(x) for x in v]) for k, v in f.items()} | dict(test_ll=float(ll.mean()), seconds=round(time.time() - t0, 1),
                                                               test_soe_err=float(err))
         print(cfg, model, {k: round(float(v), 4) for k, v in f.items() if k in E.NAMES[model] + ["train_ll_per_event"]},
               "test", round(float(ll.mean()), 4), f"{time.time() - t0:.0f}s", flush=True)

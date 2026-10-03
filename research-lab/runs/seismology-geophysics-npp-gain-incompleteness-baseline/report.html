@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neural Earthquake Forecast Baselines</title>
+<meta name="description" content="A preregistered test of whether neural point processes beat ETAS on the 2016-17 Central Apennines sequence only because ETAS ignores catalog incompleteness.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Seismology &amp; geophysics</div>
+  <h1>Do neural earthquake forecasts win only because the ETAS baseline ignores missing earthquakes?</h1>
+  <p class="subtitle">A preregistered re-test of the neural point process advantage on the 2016–17 Central Apennines sequence, against ETAS models that account for short-term catalog incompleteness</p>
+  <div class="meta">
+    <span>Report · 2026-10-03 · revised after independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/seismology-geophysics-npp-gain-incompleteness-baseline/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/seismology-geophysics-npp-gain-incompleteness-baseline/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/seismology-geophysics-npp-gain-incompleteness-baseline/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Gap recovered</div><div class="tile-value">88-109%</div><div class="tile-note">of the neural model&#x27;s advantage, by ETAS with rate-dependent detection</div></div><div class="tile"><div class="tile-label">Verdict</div><div class="tile-value text">Supported</div><div class="tile-note">R &gt;= 0.75 in 3 of 3 preregistered configurations</div></div><div class="tile"><div class="tile-label">Beats the neural model?</div><div class="tile-value text">No</div><div class="tile-note">tied at Visso and Campotosto; NPP better at Norcia (-0.19 nats)</div></div><div class="tile"><div class="tile-label">Synthetic catalog</div><div class="tile-value">~0-12%</div><div class="tile-note">recovered: the result is specific to this catalog&#x27;s incompleteness</div></div></section>
+<main>
+<h2>In plain terms</h2>
+<p>Earthquake forecasting models are usually judged by how well they predict when the next sizeable earthquake
+(magnitude 3 or more) will happen. The standard model, ETAS, assumes each earthquake can trigger more. In 2023, a
+neural network model was reported to beat ETAS clearly on the 2016–17 earthquake sequence in central Italy. The
+advantage was largest when the models were fed many small earthquakes.</p>
+<p>But right after a big earthquake, seismic networks miss many small ones: the recordings overlap and smaller events are
+hidden. Standard ETAS assumes nothing is missed, so it misjudges how productive big earthquakes are. We asked whether
+that handicap, rather than anything the neural network learned, explains its advantage.</p>
+<p>We gave ETAS a simple model of missed detections. When earthquakes come thick and fast, small ones are lost for a few
+tens of seconds after each event. We fitted it to exactly the same data and scored it on exactly the same earthquakes.
+The test was written down before we fitted it.</p>
+<p><strong>What we found.</strong> The improved ETAS closes 88–109% of the neural network's advantage in all three test periods. That
+meets the preregistered test. It does not clearly beat the neural network: in one period the network is still a
+little better, and in the other two they are statistically tied. Most of the improvement comes from the hours just
+after the largest shocks.</p>
+<p>On a computer-generated test catalog, the improved ETAS did not close the gap. So this result is about how this
+catalog misses earthquakes, not a general law.</p>
+<h2>What was done</h2>
+<p><strong>Data and protocol.</strong> The plan was committed (795c015) before any incompleteness-aware ETAS was fitted. Everything
+uses the released data and protocol of Stockman, Lawson &amp; Werner (2023):</p>
+<ul>
+<li>the machine-learning-enhanced AVN catalog;</li>
+<li>three train/test splits (Visso, Norcia and Campotosto);</li>
+<li>input events above a cutoff (magnitude 1.2 or 1.3);</li>
+<li>target events of magnitude 3 or more;</li>
+<li>the same test-period targets and scoring windows.</li>
+</ul>
+<p><strong>Reproduction.</strong> Our re-implementation reproduces their released standard-ETAS scores exactly (difference 0.0). The
+neural model's advantage G is +1.02, +1.61 and +1.39 nats per target event.</p>
+<p><strong>Models.</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S0</td>
+<td>Stockman's published standard ETAS.</td>
+</tr>
+<tr>
+<td>S2</td>
+<td>Standard ETAS refitted here with full history.</td>
+</tr>
+<tr>
+<td>A</td>
+<td>ETAS-I. Events are detected unless a larger one occurred within a blind time T_b, so detection falls when activity is high (Hainzl 2016, 2021). It has 2 extra parameters, T_b and b.</td>
+</tr>
+<tr>
+<td>B</td>
+<td>ETAS with a completeness magnitude that rises after each large shock and decays (Helmstetter et al. 2006).</td>
+</tr>
+</tbody>
+</table></div>
+<p>All are fitted by maximum likelihood on training data only. Of A and B, the primary model is the one with the better
+training fit. That was A in every configuration.</p>
+<p><strong>Statistic.</strong> The recovery fraction R = (A − S0) / (NPP − S0), with a 24-hour block-bootstrap CI. <strong>Supported</strong> if
+R ≥ 0.75 in at least 2 of 3 configurations.</p>
+<p><strong>Validation.</strong> Before any real-data evaluation, the fitting code was checked on simulated catalogs where the truth is
+known. Both A and B recover their generating parameters on average over 16 seeds. The fitted likelihood reaches at
+least the true-parameter likelihood in 16 of 16 seeds for each model. One seed of A has two parameters 2–3 standard
+errors off (D1, D3).</p>
+<h2>Results</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Sequence (cutoff)</th>
+<th>Neural gap G</th>
+<th>ETAS-I score</th>
+<th>Neural score</th>
+<th>Recovery R (95% CI)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Visso (1.2)</td>
+<td>+1.02</td>
+<td>0.134</td>
+<td>0.038</td>
+<td><strong>1.09</strong> (0.69–1.31)</td>
+</tr>
+<tr>
+<td>Norcia (1.2)</td>
+<td>+1.61</td>
+<td>0.352</td>
+<td>0.542</td>
+<td><strong>0.88</strong> (0.80–0.97)</td>
+</tr>
+<tr>
+<td>Campotosto (1.3)</td>
+<td>+1.39</td>
+<td>−0.310</td>
+<td>−0.261</td>
+<td><strong>0.97</strong> (0.81–1.08)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Scores are mean temporal log-likelihoods per target event; the published standard ETAS scores −0.978, −1.070 and
+−1.646.</p>
+<p><strong>Verdict: Supported.</strong> R ≥ 0.75 in all three configurations. The lower bound is above 0.75 in two; Visso's interval
+includes it.</p>
+<p><strong>Where the gap comes from:</strong></p>
+<ul>
+<li>Giving ETAS its full history changes almost nothing (−0.001 to −0.037 nats).</li>
+<li>Refitting standard ETAS changes nothing (0.000 to −0.009).</li>
+<li>The detection model adds +1.11, +1.43 and +1.38.</li>
+<li>What remains between the neural model and ETAS-I is −0.10, +0.19 and +0.05.</li>
+</ul>
+<p><strong>ETAS-I does not beat the neural model at the preregistered cutoffs.</strong> Per target event, ETAS-I minus NPP is:</p>
+<ul>
+<li>+0.10 (95% CI −0.30 to +0.31) at Visso;</li>
+<li>−0.19 (−0.33 to −0.04) at Norcia, where the neural model is significantly better;</li>
+<li>−0.05 (−0.35 to +0.10) at Campotosto.</li>
+</ul>
+<p><strong>The gain is concentrated.</strong> The single 24-hour period containing the Norcia M6.1 mainshock (Visso and Norcia), or
+the January 2017 Campotosto shocks, carries 39–50% of ETAS-I's improvement over standard ETAS. The top three days carry
+49–68%.</p>
+<p><strong>History is not the source of the gain.</strong> Scored with the same truncated history as the published ETAS, ETAS-I
+still gives R = 1.06, 0.86 and 0.96.</p>
+<figure><a href="results/figures/ll_vs_cutoff.png"><img src="results/figures/ll_vs_cutoff.png" alt="Log-likelihood per target event against input cutoff, by model and sequence"></a><figcaption>Test-period temporal log-likelihood per target (M &gt;= 3) event, by input magnitude cutoff, for each AVN partition. Standard ETAS (published, grey dashed) and the neural point process (published, orange) are Stockman et al.&#x27;s released results; the refit standard ETAS (light grey dotted), ETAS-I with rate-dependent detection (A, dark blue) and time-varying completeness (B, light blue) are fitted here on the same training events. The preregistered configurations are the lowest cutoffs (1.2, 1.2, 1.3). Model B&#x27;s fit at Visso 3.0 is degenerate (off scale).</figcaption></figure>
+<h3>Other input cutoffs (secondary)</h3>
+<ul>
+<li><strong>The neural advantage disappears at higher cutoffs.</strong> The published neural gap shrinks as the cutoff rises, and is
+  zero or negative from about magnitude 2.0–2.5. There, R is undefined.</li>
+<li><strong>ETAS-I scores above the neural model in 12 of 15 configurations,</strong> with a CI above zero in 8. It is the best of
+  the five models in 10.</li>
+<li><strong>Much of that margin is the neural model failing at high cutoffs, not ETAS-I excelling.</strong> For example, at Visso
+  3.0 the neural model scores −1.34 against standard ETAS's +0.36.</li>
+</ul>
+<h3>Synthetic incomplete catalog (secondary)</h3>
+<p>On Stockman's synthetic incomplete catalog (cutoff 2.0), the neural model's advantage over published ETAS is +0.22.</p>
+<ul>
+<li>ETAS-I collapses to standard ETAS: its blind time goes to zero. Its R is −0.41 with full history, and 0.02 with
+  truncated history.</li>
+<li>The completeness model B recovers only 12%.</li>
+</ul>
+<p>There, the gap comes from a training-period bias in the ETAS parameters that neither detection model repairs. The AVN
+result therefore reflects the rate-dependent incompleteness of this real catalog. It is not evidence that incompleteness
+explains NPP gains in general.</p>
+<h2>Caveats</h2>
+<ul>
+<li><strong>ETAS-I is a strong baseline, not a physical measurement.</strong></li>
+<li>Its fitted b-value (about 1.5 at the primary cutoffs) is higher than the catalog's at large magnitudes (1.1–1.25).</li>
+<li>Its branching ratio exceeds 1 in several fits.</li>
+<li>Its blind time rises with the cutoff, although a real network's blind time should not.</li>
+<li><strong>One sequence.</strong> One sequence with three overlapping test periods.</li>
+<li><strong>The Fusion model (Xiong et al. 2026) was not tested.</strong> Its released checkpoints do not match any released script.</li>
+<li><strong>Fitting needed care</strong> (D2–D6):</li>
+<li>The first fit at Norcia was a local optimum, which gave R = 0.51; a wider search found the better optimum.</li>
+<li>Two numerical failure modes of the kernel approximation had to be guarded against.</li>
+<li>The preregistered decision rule never changed.</li>
+</ul>
+<h2>Independent review</h2>
+<p>The reviewer independently re-derived the ETAS-I target likelihood and re-integrated it with exact sums and finer
+quadrature, confirming it to within 0.0023 nats. They also confirmed there was no test leakage. The review was
+"fix first":</p>
+<ul>
+<li><strong>Norcia local optimum.</strong> The reviewer found that the first Norcia fit was a local optimum. With the wider search,
+  R rose from 0.51 to 0.88.</li>
+<li><strong>Stale validation tables.</strong> The validation tables came from an earlier version of the code; they were regenerated.</li>
+<li><strong>No b-value leak.</strong> The plan's claimed b-value leak in the published ETAS was wrong, and is withdrawn.</li>
+<li><strong>Requested additions.</strong> The reviewer required the ETAS-I-minus-neural comparison, the concentration analysis,
+  the truncated-history check, the synthetic result and the parameter caveats above.</li>
+</ul>
+<p>The wider search then exposed a further numerical exploit, fixed by an accuracy guard (D6). All results are from the
+final code.</p>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: GWOSC / Zenodo public releases. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/seismology-geophysics-npp-gain-incompleteness-baseline/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

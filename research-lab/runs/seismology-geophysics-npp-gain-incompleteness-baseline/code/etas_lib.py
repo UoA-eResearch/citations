@@ -20,6 +20,7 @@ from scipy.optimize import minimize, nnls
 from scipy.special import ndtr
 
 SIGMA_B = 0.2
+SOE_TOL = 1e-3    # D6: parameter sets whose kernel approximation is worse than this are rejected
 M_LARGE = 4.5
 J = 28
 GL_X, GL_W = np.polynomial.legendre.leggauss(6)
@@ -161,6 +162,8 @@ def train_ll(d, model, T, M, m0, beta=None):
     """Log-likelihood of observed events (index >= 1) in [T0, T_end] with full magnitude density."""
     tmax = T[-1] - T[0] + 1.0
     w, s, err = soe(d["c"], d["p"], tmax)
+    if err > SOE_TOL:
+        raise ValueError(f"kernel approximation error {err:.2e} > {SOE_TOL}")
     amp = (d["p"] - 1) * d["c"] ** (d["p"] - 1)
     prod = d["K"] * np.exp(d["alpha"] * (M - m0))
     lam, states = _lam_events(T, prod, w, s, d["mu"], amp)
@@ -182,24 +185,32 @@ def train_ll(d, model, T, M, m0, beta=None):
     return ll - integ, err
 
 
-def fit(model, T, M, m0, starts, maxiter=400):
+def fit(model, T, M, m0, starts, maxiter=400, screen_iter=60, refine=3):
+    """Multi-start maximum likelihood (D2): every start is screened with a short Nelder-Mead run; the best `refine`
+    screened points are refined with a full Nelder-Mead and L-BFGS-B, and the best optimum is kept."""
     beta_hat = 1.0 / np.mean(M - m0)
     mu_max = 10.0 * len(T) / (T[-1] - T[0])   # background cannot exceed 10x the mean observed rate
-    best = None
+
+    def nll(x):
+        try:
+            d = unpack(x, model)
+            if (d["c"] > 50 or d["c"] < 1e-6 or d["p"] > 4 or d["p"] < 1.0001 or d["alpha"] > 5 or d["K"] > 1e5 or d["mu"] > mu_max
+                    or d.get("Tb", 0) > 1.0 or d.get("beta", 1) > 10):
+                return 1e12
+            v, _ = train_ll(d, model, T, M, m0, beta=beta_hat)
+            return -v if np.isfinite(v) else 1e12
+        except (FloatingPointError, ValueError, OverflowError, ZeroDivisionError):
+            return 1e12
+
+    screened = []
     for st in starts:
         x0 = pack(st, model)
-
-        def nll(x):
-            try:
-                d = unpack(x, model)
-                if (d["c"] > 50 or d["p"] > 4 or d["p"] < 1.0001 or d["alpha"] > 5 or d["K"] > 1e5 or d["mu"] > mu_max
-                        or d.get("Tb", 0) > 1.0 or d.get("beta", 1) > 10):
-                    return 1e12
-                v, _ = train_ll(d, model, T, M, m0, beta=beta_hat)
-                return -v if np.isfinite(v) else 1e12
-            except (FloatingPointError, ValueError, OverflowError, ZeroDivisionError):
-                return 1e12
-        r = minimize(nll, x0, method="Nelder-Mead", options=dict(maxiter=maxiter * len(x0), xatol=1e-4, fatol=1e-3, adaptive=True))
+        r = minimize(nll, x0, method="Nelder-Mead", options=dict(maxiter=screen_iter * len(x0), xatol=1e-3, fatol=1e-2, adaptive=True))
+        screened.append(r)
+    screened.sort(key=lambda r: r.fun)
+    best = None
+    for r0 in screened[:refine]:
+        r = minimize(nll, r0.x, method="Nelder-Mead", options=dict(maxiter=maxiter * len(r0.x), xatol=1e-4, fatol=1e-3, adaptive=True))
         r2 = minimize(nll, r.x, method="L-BFGS-B", options=dict(maxiter=200))
         rr = r2 if r2.fun <= r.fun else r
         if best is None or rr.fun < best.fun:
@@ -208,7 +219,8 @@ def fit(model, T, M, m0, starts, maxiter=400):
     if model == "S2":
         d["beta"] = beta_hat
     ll, err = train_ll(d, model, T, M, m0, beta=beta_hat)
-    d.update(train_ll=ll, train_ll_per_event=ll / (len(T) - 1), soe_max_rel_err=err, n_train=len(T))
+    d.update(train_ll=ll, train_ll_per_event=ll / (len(T) - 1), soe_max_rel_err=err, n_train=len(T), n_starts=len(starts),
+             screened_best_nll=[float(r.fun) for r in screened[:5]])
     return d
 
 
@@ -231,6 +243,8 @@ def target_ll(d, model, T_all, M_all, tgt_times, prev_times, m0, msel=3.0):
     sel = math.exp(-b * (msel - m0))
     tmax = T_all[-1] - T_all[0] + 1.0
     w, s, err = soe(d["c"], d["p"], tmax)
+    if err > SOE_TOL:
+        raise ValueError(f"kernel approximation error {err:.2e} > {SOE_TOL} at evaluation")
     amp = (d["p"] - 1) * d["c"] ** (d["p"] - 1)
     prod = d["K"] * np.exp(d["alpha"] * (M_all - m0))
     _, states = _lam_events(T_all, prod, w, s, d["mu"], amp)
