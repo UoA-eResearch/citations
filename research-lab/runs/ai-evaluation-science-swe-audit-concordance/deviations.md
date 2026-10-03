@@ -15,6 +15,8 @@ Entries are timestamped with `date`.
   - Dawid-Skene prevalence: 2.2% -> 1.8%.
   - H1 and H2 do not use B and are unchanged.
 - **Where the original outputs are.** results/tables/v1_135subs/.
+- **Tie at the top-30 cut.** 30th and 31st place tie at 0.718. The cut follows sort order. Swapping the 31st
+  submission in leaves B identical (32 tasks).
 
 ## D2. Post-hoc analyses requested by the review (2026-10-03 23:59 NZDT; code/review_checks.py)
 
@@ -51,7 +53,9 @@ posterior-positive tasks are listed in review_posterior_positive.csv.
 
 **Leaderboard null: random removal of the same number of tasks** (results/tables/review_leaderboard.csv).
 
-- Removing O's tasks gives tau 0.67, against a random median of 0.78 and 5th percentile of 0.70.
+- Removing O's tasks gives tau 0.67, against a random median of 0.78 and 5th percentile of 0.70 (one-sided p about
+  0.02). With the original 135-submission top 30 it was 0.834 against a random median of 0.826. The result is post hoc,
+  one of four comparisons, and fragile.
 - AS, AT and D are indistinguishable from random removal.
 - B's tau = 1 is tautological, because no top-30 submission solves a B task.
 

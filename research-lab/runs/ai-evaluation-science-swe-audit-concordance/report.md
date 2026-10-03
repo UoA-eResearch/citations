@@ -24,7 +24,7 @@ We lined up every released task-by-task audit and asked whether they agree.
   agreed with each other about those. Requiring two of three reviewers to agree drops it to 11%; requiring all three
   drops it to 1.6%.
 - **Removing flagged tasks barely changes the leaderboard** for the strict checks. Removing OpenAI's broader set
-  reshuffles it somewhat more than removing random tasks would.
+  reshuffles it a little more than removing random tasks would, but that result is fragile.
 
 So the disagreement about "how many tasks are broken" is mostly a disagreement about what counts as broken, not about
 the same thing measured differently.
@@ -59,6 +59,9 @@ Both use 2,000-resample task bootstraps.
 
 Both verdicts follow the preregistered rules. But neither number should be read on its own, for two reasons.
 
+The two tables that follow are post hoc analyses added after review (D2). The preregistered statistics are the two
+rows above.
+
 **The median κ is not a "typical" agreement.** The six pairs form two clusters:
 
 | Pair | κ | 95% CI | Flagged by each | Both |
@@ -89,7 +92,7 @@ When OpenAI's reviewers all agree, the four sources flag 1.6–2.4% of tasks. H1
 
 ## The detector
 
-**Validation.** On OpenAI's full 1,699 annotated instances, the detector flags 17% of tasks.
+**Validation (post hoc, D2).** On OpenAI's full 1,699 annotated instances, the detector flags 17% of tasks.
 
 - 94% of the tasks it flags were judged problematic by OpenAI's annotator consensus (false_negative ≥ 2), against a
   base rate of 61%. That is a likelihood ratio of 9.8.
@@ -102,8 +105,8 @@ When OpenAI's reviewers all agree, the four sources flag 1.6–2.4% of tasks. H1
 - **6 are artefacts.** For example, a zero-width space in a bug report hid an exact match, and messages that already
   existed in the repository with a different number.
 - **Rule by rule:** the identifier rule was right 5 of 5 times, the message-literal rule 1 of 7.
-- **A normalised variant** (zero-width characters removed, backslashes unescaped) removes 2 artefacts and leaves its
-  agreement with ABA unchanged: κ 0.29 and 0.35.
+- **A normalised variant** (zero-width characters removed, backslashes unescaped) removes 2 artefacts and raises its
+  agreement with ABA slightly, from κ 0.26 and 0.32 to 0.29 and 0.35, well within the original CIs.
 
 ## How many are really broken?
 
@@ -111,8 +114,9 @@ A latent-class (Dawid–Skene) model combines all five sources. It puts the shar
 fixes at about **2%**, with a bootstrap 95% CI of 0.7–8% and a range of 1–4% across reasonable choices of sources.
 
 The model is weakly identified, and two of its inputs share a cause: ABA's trajectory mode and the behavioural label
-both come from agent runs. So this is an order of magnitude, not a precise figure. Nine tasks are posterior-positive,
-and three are flagged by every source: pylint-4551, pylint-4604 and pytest-10356.
+both come from agent runs. So this is an order of magnitude, not a precise figure. Nine tasks are posterior-positive.
+Two, pylint-4551 and pylint-4604, are flagged by all five sources. pytest-10356 is flagged by all four audits but is
+solved by at least one top-30 system.
 
 ## Does it matter for the leaderboard?
 
@@ -127,7 +131,9 @@ using Kendall's τ. We also compared it with removing the same number of random 
 | Detector | 12 | 0.98 | 0.97; 0.95 |
 
 - Removing the strict audits' tasks changes the ranking no more than removing random tasks would.
-- Removing OpenAI's broader set reorders it somewhat more than chance (τ 0.67 against a random 5th percentile of 0.70).
+- Removing OpenAI's broader set reorders the ranking slightly more than random removal would (τ 0.67; random 5th
+  percentile 0.70; one-sided p ≈ 0.02). This is a post hoc comparison, one of four, and it was absent with the earlier
+  top-30 set (τ 0.83 against a random 0.83, D1). So it is suggestive rather than established.
 - The behavioural flag cannot change rankings by construction, because no top-30 system solves those tasks.
 
 ## Limitations
@@ -140,8 +146,9 @@ using Kendall's τ. We also compared it with removing the same number of random 
   noted above.
 - **The behavioural label was first built incorrectly,** from 135 of 182 submissions. It is corrected here (D1), and
   H1 and H2 do not depend on it.
-- **OpenAI's 2026 audit,** which reports at least 59% flawed tests in a 28% subset, has no released per-task list, so
-  it could not be compared task by task.
+- **OpenAI's 2026 audit** ("Why SWE-bench Verified no longer measures frontier coding capabilities") reports at least
+  59.4% flawed tests in an audited 27.6% subset. It has no released per-task list, so it could not be compared task by
+  task.
 
 ## Independent review
 

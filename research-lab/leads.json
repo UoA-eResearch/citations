@@ -3973,7 +3973,12 @@
    "scout_value_score": 7,
    "scout_cost_score": 2,
    "plain_summary": "People disagree a lot about how many tasks in a famous AI coding test are broken, with estimates from about 5% to about 30%. This project lines up several independent audits on the same 500 tasks to see whether they even flag the same ones, and adds a simple, transparent checker of its own. If the audits disagree, claims that a benchmark is X% broken are unreliable too.",
-   "scout_round": 2
+   "scout_round": 2,
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass)",
+   "report_url": "runs/ai-evaluation-science-swe-audit-concordance/report.html",
+   "verdict_tag": "Supported",
+   "verdict_note": "Both preregistered hypotheses hold (median kappa 0.15; prevalence ratio 19.7), but the 20-fold range exists only because OpenAI's label counts one annotator's minor concern; the strict audits each flag ~2% and share 3-4 tasks.",
+   "headline": "Strict audits (ABA static, ABA trajectory, a new execution-free detector) each flag ~2% of SWE-bench Verified (10-12 tasks) and share 3-4 (kappa 0.26-0.35). OpenAI 2024 flags 39% = any one annotator's minor concern (annotator kappa 0.12); 11% under majority, 1.6% unanimous. Dawid-Skene prevalence ~2% (0.7-8%). Detector PPV 94% vs base 61% but recall 27%; literal rule unreliable."
   },
   {
    "id": "ai-evaluation-science-sae-pretraining-seed-universality",

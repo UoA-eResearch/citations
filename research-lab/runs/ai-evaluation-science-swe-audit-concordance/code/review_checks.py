@@ -1,4 +1,4 @@
-"""Checks added after independent review (deviations.md D2-D6). Preregistered verdicts come from analysis.py.
+"""Checks added after independent review (deviations.md D1-D4). Preregistered verdicts come from analysis.py.
 
 1. O-definition ladder: O = any annotator >= 1 (preregistered; equals the ensembled max), >= 2 of 3 annotators,
    all 3 annotators; H1 median kappa and H2 ratio with the same bootstrap.
