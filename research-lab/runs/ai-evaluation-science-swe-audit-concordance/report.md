@@ -118,6 +118,12 @@ both come from agent runs. So this is an order of magnitude, not a precise figur
 Two, pylint-4551 and pylint-4604, are flagged by all five sources. pytest-10356 is flagged by all four audits but is
 solved by at least one top-30 system.
 
+**Independent corroboration** (found after publication, 4 Oct 2026). OpenAI's 2026 retirement post, [Why SWE-bench
+Verified no longer measures frontier coding capabilities](https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/),
+gives pylint-dev__pylint-4551 as its example of a too-narrow test: the tests import a `get_annotation` function that
+the issue never mentions. Our detector flagged this task for exactly that identifier (`get_annotation`, with
+`infer_node`).
+
 ## Does it matter for the leaderboard?
 
 We took the top 30 submissions, removed each source's flagged tasks, and compared the new ranking with the original
