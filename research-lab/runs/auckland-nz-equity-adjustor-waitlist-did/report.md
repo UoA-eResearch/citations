@@ -74,9 +74,9 @@ replaces Māori+Pacific with Asian patients.
 
 | | Estimate | Auckland's rank of 16 |
 |---|---|---|
-| **Primary: change in the Māori+Pacific minus European/Other long-wait gap, post vs pre** | **+7.2 pp** | **1st (p = 1/16 = 0.0625, the smallest the design allows)** |
+| **Primary: change in the Māori+Pacific minus European/Other long-wait gap, post vs pre** | **+7.2 pp** | **1st (p = 1/16 = 0.0625, the smallest the design allows); also 1st by t-statistic** |
 | Negative control: Asian minus European/Other | +5.5 pp | 3rd (fails the ±2 pp rule) |
-| Tool era vs pre (τ) | +4.8 pp | 1st |
+| Tool era vs pre (τ) | +4.8 pp | 1st (rank computed post hoc) |
 | Placebo range across the other 15 districts | −4.7 to +4.8 pp | — |
 
 **Verdict: Inconclusive.** The change is large and ranks first, but the negative control fails.
@@ -86,7 +86,7 @@ replaces Māori+Pacific with Asian patients.
 - Suppressed counts set to 1 or 4: +7.3 and +7.1 pp.
 - Including the Waitematā and Counties Manukau districts: +7.6 pp.
 - Unweighted: +3.1 pp (see below).
-- Earlier data vintages, which revise pre-period values by at most 0.06 pp: +7.6 to +8.2 pp.
+- Earlier data vintages, which change about 5% of pre-period cells, almost all suppressed small cells, by 0.06 pp on average: +7.6 to +8.2 pp.
 
 ## What the 7 points are made of
 
@@ -97,12 +97,13 @@ post hoc.
 
 - Decomposing the estimate by specialty attributes **3.5 of the 7.2 points to Dental Surgery**. No other specialty
   contributes more than 0.6.
-- Auckland holds the regional dental-surgery list. It grew about five-fold between 2021 and 2024 for every ethnicity,
-  and long waits on it rose for everyone.
+- Auckland holds the regional dental-surgery list. Between 2021 and 2024 it grew between two-and-a-half-fold and
+  four-fold for every ethnicity, most for Pacific patients. The share waiting more than four months rose in parallel for
+  every ethnicity, from about 12–15% to about 65–70%.
 - Māori and Pacific patients are over-represented on that list, so a region-wide dental backlog shows up as a wider
   ethnic gap.
 - A prioritisation score reorders patients within a list. It cannot move patients between specialties. So this part
-  is not an effect of the score.
+  cannot be an effect of reordering within lists.
 
 **Within specialties the change is about 3 points.**
 
@@ -123,15 +124,18 @@ post hoc.
 **Timing.**
 
 - The gap was already as large in 2019 as during the tool era.
-- It fell to a low point around the 2021 Delta lockdown, which is inside the preregistered pre-period.
-- It rose during the tool era, which is the opposite of what a score favouring Māori and Pacific patients would do.
+- It fell after Auckland's Delta lockdown (Aug–Dec 2021) to a low point in mid-2022. Both are inside the
+  preregistered pre-period.
+- It rose during the tool era, which is the opposite of what a score favouring Māori and Pacific patients would be expected to do if it were the
+  dominant influence on the gap.
 - It peaked in 2025 and fell back by 2026.
-- Within specialties, there is a single step up in early 2023 and no break when the score was dropped.
+- Within specialties, there is a single step up in the second quarter of 2023, the quarter in which the score was
+  rolled out and halted, and no break when the score was dropped.
 
 **Mechanism.** The outcome counts everyone currently waiting, so it reflects who is being added to the list, not only
 the order in which patients are treated. In Auckland the number of Pacific patients waiting rose 1.7-fold between the
 pre and post periods. Māori and Asian numbers rose about 1.5-fold and European/Other 1.3-fold. The comparison
-districts grew far less.
+districts grew less: Māori ×1.15, Pacific ×1.17, Asian ×1.33, European/Other ×1.09.
 
 | Group | Auckland: number waiting | Auckland: number waiting > 4 months | Other districts: number waiting | Other districts: number waiting > 4 months |
 |---|---|---|---|---|
@@ -141,8 +145,8 @@ districts grew far less.
 | European/Other | ×1.32 | ×1.55 | ×1.09 | ×0.98 |
 
 Auckland's long-wait share rose for every group, while it fell for every group elsewhere. A fast-growing group on a
-list with limited capacity ages into long waits and is then cleared under longest-waiting-first. That produces
-exactly this rise and fall without any change in prioritisation.
+list with limited capacity ages into long waits and is then cleared under longest-waiting-first. That can produce
+this rise and fall without any change in prioritisation.
 
 ## Limitations
 
@@ -152,9 +156,10 @@ exactly this rise and fall without any change in prioritisation.
   Auckland also weighted ethnicity in some form before 2023.
 - **The outcome is a stock.** The long-wait share moves with referrals, additions and list validation, not only with
   scheduling order.
-- **Suppressed small counts** make unweighted estimates noisy. The unweighted +3.1 pp mostly reflects cells of 1–5
-  patients.
-- **Specialty mix.** Māori and Pacific patients differ sharply: within specialties, almost all the change is among
+- **Suppressed small counts** make unweighted estimates noisy. The unweighted +3.1 pp is pulled down by small cells, whose shares the suppression rule
+  forces to 0 or 100: it is +3.0 with cells of 5 or fewer removed, +4.7 with cells of 20 or fewer removed, and +5.5 with
+  cells of 50 or fewer removed.
+- **Māori and Pacific differ.** Māori and Pacific patients differ sharply: within specialties, almost all the change is among
   Pacific patients.
 
 ## Hold-out (pending)

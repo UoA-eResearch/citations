@@ -5530,7 +5530,12 @@
    "local_relevance": "Health NZ's planned national review of waitlist prioritisation, Te Toka Tumai Auckland surgical services, the T\u0101maki Makaurau Iwi-M\u0101ori Partnership Board and Pacific health providers could use the estimates to decide whether, and how, equity factors belong in a future prioritisation tool. The evaluation code can then be rerun on each quarterly release.",
    "time_sensitive": "Preregister before the next quarterly vintage (Jul-Sep 2026 months) is published, so it can serve as the unseen hold-out",
    "needs_engagement": "Not blocking for analysis, but get M\u0101ori/Pacific health-equity input (e.g. T\u0101maki Makaurau IMPB) on framing before preregistration, and pre-release review, given Te Tiriti and political sensitivity",
-   "scout_round": "auckland-nz"
+   "scout_round": "auckland-nz",
+   "status": "deep dive \u00b7 report (revised after review); hold-out pending (Dec 2026 - Mar 2027)",
+   "report_url": "runs/auckland-nz-equity-adjustor-waitlist-did/report.html",
+   "verdict_tag": "Inconclusive",
+   "verdict_note": "Auckland's Maori+Pacific long-wait gap widened 7 pp more than elsewhere after the score was dropped (largest of 16), but the Asian gap widened too, half is Auckland's regional dental list, and within specialties the change is about 3 pp and not unusual.",
+   "headline": "Preregistered triple difference: +7.2 pp, rank 1/16 (p = 1/16), Asian negative control +5.5 pp fails. Post hoc (reviewer): dental surgery carries 3.5 pp; within-specialty +3.2 pp (rank 2-3); vs Asian +1.0-1.8 pp; vs 2018-19 baseline +0.7-3.2 pp; gap already widened in the tool era (+4.8 pp). Proceeded without prior Maori/Pacific framing input at the lab owner's direction."
   },
   {
    "id": "auckland-nz-hirds-out-of-sample-exceedance-audit",

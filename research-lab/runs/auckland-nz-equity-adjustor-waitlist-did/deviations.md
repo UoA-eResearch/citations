@@ -25,8 +25,10 @@ is unaffected.
 - **The Q1 2025/26 file is stacked.** It is the 2024/25 extract plus rurality-split rows for Jul-Sep 2025. Its
   pre-period check is therefore by construction the same as the 2024/25 file's.
 - **The zero-total filter is a no-op.** No vintage has a zero total; empty cells are absent rows.
-- **"<5" cells force extreme shares.** 22.9% of raw rows have both counts "<5", which gives L = 0 at the 2.5/2.5
-  imputation. Cells with a total of 5 or less carry 0.23% of the weight but dominate the unweighted estimate (D4).
+- **"<5" cells force extreme shares.** In the 16 study districts, 22.9% of raw rows have both counts "<5" (21.3%
+  across all 20 districts), which gives L = 0 at the 2.5/2.5 imputation.
+- **Small cells pull the unweighted estimate down.** It is +3.0 with cells of 5 or fewer removed, +4.7 with cells of
+  20 or fewer removed, and +5.5 with cells of 50 or fewer removed (D4).
 - **District of service.** Auckland holds regional lists, for example dental surgery and ophthalmology, that the
   neighbouring districts do not report.
 
@@ -36,11 +38,14 @@ The review verdict was "fix first". The preregistered verdict, Inconclusive, is 
 post hoc and are labelled as such in the report.
 
 **Specialty decomposition (Frisch-Waugh-Lovell).** Dental Surgery contributes 3.54 of the 7.22 pp. Auckland's
-regional dental list grew about five-fold for every ethnicity, with long waits rising for all groups. Because
+regional dental list grew between two-and-a-half-fold and four-fold for every ethnicity between 2021 and 2024 (most
+for Pacific patients). The share waiting more than four months rose in parallel for all groups, from about 12-15% to
+about 65-70%. Because
 Māori+Pacific patients are over-represented on that list, an Auckland-wide shock to it loads onto beta. A
 prioritisation score reorders patients within a specialty's list, so this channel is not an effect of the tool.
 
-**Other estimates, each with its 16-district permutation rank:**
+**Other estimates, each with its permutation rank.** The rank is among the districts in which the estimate is
+identified: 16, except where noted. Trimming removes all treated cells in some small districts.
 
 | Analysis | Beta (pp) | Auckland's rank of 16 |
 |---|---|---|
@@ -58,8 +63,8 @@ prioritisation score reorders patients within a specialty's list, so this channe
 | Maori only (saturated FE) | 0.43 | 7 |
 | Pacific only (saturated FE) | 5.39 | 4 |
 | Unweighted, cells with total > 5 | 2.95 | 4 |
-| Unweighted, cells with total > 20 | 4.67 | 2 |
-| Unweighted, cells with total > 50 | 5.49 | 1 |
+| Unweighted, cells with total > 20 | 4.67 | 2 of 15 |
+| Unweighted, cells with total > 50 | 5.49 | 1 of 13 |
 
 **Stock growth, pre to post (Auckland vs controls).**
 
