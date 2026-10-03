@@ -5389,7 +5389,12 @@
    "local_relevance": "PHF Science and Health NZ's public health teams (including the Northern region covering Auckland) could use per-catchment under-reporting factors to adjust case-based alerts and to decide where the cut-down 12-site wastewater network, or future measles/flu panels, should sample. Auckland Council and Iwi-M\u0101ori Partnership Boards get evidence on where surveillance blind spots fall.",
    "time_sensitive": "",
    "needs_engagement": "",
-   "scout_round": "auckland-nz"
+   "scout_round": "auckland-nz",
+   "status": "deep dive \u00b7 report (revised after review)",
+   "report_url": "runs/auckland-nz-wastewater-testing-gap-deprivation/report.html",
+   "verdict_tag": "Inconclusive",
+   "verdict_note": "Reported cases per unit of wastewater virus were an estimated 14% lower per SD of deprivation across 57 towns, but the interval (0.64-1.17 robust) covers both no gap and the preregistered 15% gap; power was only 27%.",
+   "headline": "H1 ratio 0.86 (CR1 0.68-1.09; CR2 0.64-1.17), Inconclusive; no association before adjusting for region and age (0.94); 0.83-1.00 depending on how integer-rounded zero-case weeks are treated. H2 (gap widened after isolation ended) Inconclusive on 26 sites. Metro catchments (council IP) are what would settle it."
   },
   {
    "id": "auckland-nz-immunisation-cascade-forecast",
