@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SWE-bench Audit Concordance</title>
+<meta name="description" content="A preregistered comparison of per-task audits of SWE-bench Verified: how many tasks have tests that reject valid fixes, and do the audits agree?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · AI evaluation science</div>
+  <h1>How many SWE-bench Verified tasks are broken, and do the audits agree?</h1>
+  <p class="subtitle">A preregistered cross-audit comparison of OpenAI&#x27;s 2024 annotations, Auto Benchmark Audit (static and trajectory modes), a new deterministic spec-gap detector and leaderboard behaviour on the 500 SWE-bench Verified tasks</p>
+  <div class="meta">
+    <span>Report · 2026-10-03 · revised after independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ai-evaluation-science-swe-audit-concordance/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ai-evaluation-science-swe-audit-concordance/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ai-evaluation-science-swe-audit-concordance/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Strict audits flag</div><div class="tile-value">~2%</div><div class="tile-note">10-12 of 500 tasks each; they share 3-4</div></div><div class="tile"><div class="tile-label">OpenAI 2024 label</div><div class="tile-value">39%</div><div class="tile-note">any one annotator&#x27;s minor concern; 1.6% when all three agree</div></div><div class="tile"><div class="tile-label">Median pairwise kappa</div><div class="tile-value">0.15</div><div class="tile-note">H1 Supported; strict trio 0.26-0.35, OpenAI vs each 0.03-0.04</div></div><div class="tile"><div class="tile-label">Latent prevalence</div><div class="tile-value">~2%</div><div class="tile-note">Dawid-Skene, 95% CI 0.7-8%</div></div></section>
+<main>
+<h2>In plain terms</h2>
+<p>SWE-bench Verified is the best-known test of whether AI systems can fix real software bugs. Each of its 500 tasks
+comes with tests that decide whether a fix is correct. If a test also rejects correct fixes, for example by demanding
+a function name the bug report never mentioned, the task is "broken". Published estimates of how many are broken range
+from a few percent to over 16%.</p>
+<p>We lined up every released task-by-task audit and asked whether they agree.</p>
+<p><strong>What we found.</strong></p>
+<ul>
+<li><strong>Tight checks flag about 1 in 50.</strong> Three strict checks each flag about 2% of tasks (10–12 of 500): two modes of an
+  automated audit tool, and a simple new detector we wrote. They only partly agree on which ones. All three flag the
+  same 3 tasks, and any two share 3–4.</li>
+<li><strong>OpenAI's much larger figure measures something else.</strong> OpenAI's 2024 labels mark 39% of Verified tasks. That count
+  includes any task where a single one of three reviewers noted a <em>minor</em> concern, and OpenAI's own reviewers rarely
+  agreed with each other about those. Requiring two of three reviewers to agree drops it to 11%; requiring all three
+  drops it to 1.6%.</li>
+<li><strong>Removing flagged tasks barely changes the leaderboard</strong> for the strict checks. Removing OpenAI's broader set
+  reshuffles it somewhat more than removing random tasks would.</li>
+</ul>
+<p>So the disagreement about "how many tasks are broken" is mostly a disagreement about what counts as broken, not about
+the same thing measured differently.</p>
+<h2>What was done</h2>
+<p>The plan and the detector were committed (8f434e0) before any agreement statistic was computed.</p>
+<p><strong>Label sources</strong> for "tests reject valid fixes":</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Source</th>
+<th>Flagged</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>O</td>
+<td>OpenAI 2024 ensembled annotations: false_negative ≥ 1 within Verified, i.e. any annotator noted a minor issue</td>
+<td>197 (39.4%)</td>
+</tr>
+<tr>
+<td>AS</td>
+<td>Auto Benchmark Audit (ABA) static mode, at least one evaluation-category major finding</td>
+<td>10 (2.0%)</td>
+</tr>
+<tr>
+<td>AT</td>
+<td>ABA trajectory mode, the same rule</td>
+<td>12 (2.4%)</td>
+</tr>
+<tr>
+<td>D</td>
+<td>Our deterministic, execution-free spec-gap detector. It flags names or messages that the tests require, that the gold patch introduces, and that appear neither in the issue nor in the repository.</td>
+<td>12 (2.4%)</td>
+</tr>
+<tr>
+<td>B</td>
+<td>Behaviour: unsolved by every one of the 30 best leaderboard submissions (175 submissions; corrected in D1)</td>
+<td>32 (6.4%)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Hypotheses.</strong></p>
+<ul>
+<li><strong>H1:</strong> the median of the six pairwise Cohen's κ among O, AS, AT and D is below 0.20.</li>
+<li><strong>H2:</strong> the highest prevalence among those four sources is more than 3 times the lowest.</li>
+</ul>
+<p>Both use 2,000-resample task bootstraps.</p>
+<h2>Preregistered results</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Estimate</th>
+<th>95% CI</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>H1: median pairwise κ (O, AS, AT, D)</strong></td>
+<td><strong>0.15</strong></td>
+<td><strong>0.02–0.26</strong></td>
+<td><strong>Supported</strong></td>
+</tr>
+<tr>
+<td><strong>H2: max / min prevalence</strong></td>
+<td><strong>19.7</strong></td>
+<td><strong>14.2–48.0</strong></td>
+<td><strong>Supported</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Both verdicts follow the preregistered rules. But neither number should be read on its own, for two reasons.</p>
+<p><strong>The median κ is not a "typical" agreement.</strong> The six pairs form two clusters:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Pair</th>
+<th>κ</th>
+<th>95% CI</th>
+<th>Flagged by each</th>
+<th>Both</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>O – AS</td>
+<td>0.04</td>
+<td>0.01–0.08</td>
+<td>197 / 10</td>
+<td>8</td>
+</tr>
+<tr>
+<td>O – AT</td>
+<td>0.03</td>
+<td>0.00–0.07</td>
+<td>197 / 12</td>
+<td>8</td>
+</tr>
+<tr>
+<td>O – D</td>
+<td>0.04</td>
+<td>0.01–0.08</td>
+<td>197 / 12</td>
+<td>9</td>
+</tr>
+<tr>
+<td>AS – AT</td>
+<td>0.35</td>
+<td>0.09–0.60</td>
+<td>10 / 12</td>
+<td>4</td>
+</tr>
+<tr>
+<td>AS – D</td>
+<td>0.26</td>
+<td>−0.02–0.49</td>
+<td>10 / 12</td>
+<td>3</td>
+</tr>
+<tr>
+<td>AT – D</td>
+<td>0.32</td>
+<td>0.07–0.56</td>
+<td>12 / 12</td>
+<td>4</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>The three strict sources agree only fairly with each other. O agrees with none of them beyond chance.</li>
+<li>The preregistered median, 0.15, falls in the gap between the two clusters.</li>
+<li>Gwet's AC1 (0.97 among AS, AT and D) is what two <em>independent</em> raters would also get at 2% prevalence (about
+  0.95–0.97), so it carries no information here.</li>
+</ul>
+<p><strong>H2 depends on OpenAI's threshold.</strong> Within Verified, OpenAI's label can only be 0 or 1, and "1" means at least one of
+three annotators noted a minor issue. OpenAI's own annotators agree on that only slightly (Fleiss κ 0.12 within
+Verified).</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>How O is defined</th>
+<th>O flags</th>
+<th>Max / min ratio</th>
+<th>H2 under the plan's rule</th>
+<th>Median κ (H1)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Any annotator (preregistered)</td>
+<td>39.4%</td>
+<td>19.7 (14.2–48.0)</td>
+<td>Supported</td>
+<td>0.15</td>
+</tr>
+<tr>
+<td>Two of three annotators</td>
+<td>10.6%</td>
+<td>5.3 (3.6–12.8)</td>
+<td>Supported</td>
+<td>0.17</td>
+</tr>
+<tr>
+<td>All three annotators</td>
+<td>1.6%</td>
+<td>1.5 (1.2–4.8)</td>
+<td>Inconclusive</td>
+<td>0.18</td>
+</tr>
+</tbody>
+</table></div>
+<p>When OpenAI's reviewers all agree, the four sources flag 1.6–2.4% of tasks. H1 holds under every definition.</p>
+<h2>The detector</h2>
+<p><strong>Validation.</strong> On OpenAI's full 1,699 annotated instances, the detector flags 17% of tasks.</p>
+<ul>
+<li>94% of the tasks it flags were judged problematic by OpenAI's annotator consensus (false_negative ≥ 2), against a
+  base rate of 61%. That is a likelihood ratio of 9.8.</li>
+<li>It catches only 27% of the problematic tasks.</li>
+<li>The preregistered AUROC of 0.62 is simply (sensitivity + specificity) / 2, because 83% of scores are zero.</li>
+</ul>
+<p><strong>A manual check of its 12 flags in Verified</strong> (D3, by the independent reviewer):</p>
+<ul>
+<li><strong>6 are real spec gaps,</strong> such as tests requiring a new <code>edit_only</code> argument or an exact new error message.</li>
+<li><strong>6 are artefacts.</strong> For example, a zero-width space in a bug report hid an exact match, and messages that already
+  existed in the repository with a different number.</li>
+<li><strong>Rule by rule:</strong> the identifier rule was right 5 of 5 times, the message-literal rule 1 of 7.</li>
+<li><strong>A normalised variant</strong> (zero-width characters removed, backslashes unescaped) removes 2 artefacts and leaves its
+  agreement with ABA unchanged: κ 0.29 and 0.35.</li>
+</ul>
+<h2>How many are really broken?</h2>
+<p>A latent-class (Dawid–Skene) model combines all five sources. It puts the share of tasks with tests that reject valid
+fixes at about <strong>2%</strong>, with a bootstrap 95% CI of 0.7–8% and a range of 1–4% across reasonable choices of sources.</p>
+<p>The model is weakly identified, and two of its inputs share a cause: ABA's trajectory mode and the behavioural label
+both come from agent runs. So this is an order of magnitude, not a precise figure. Nine tasks are posterior-positive,
+and three are flagged by every source: pylint-4551, pylint-4604 and pytest-10356.</p>
+<h2>Does it matter for the leaderboard?</h2>
+<p>We took the top 30 submissions, removed each source's flagged tasks, and compared the new ranking with the original
+using Kendall's τ. We also compared it with removing the same number of random tasks.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Tasks removed</th>
+<th>Count</th>
+<th>τ</th>
+<th>τ when as many random tasks are removed (median; 5th percentile)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OpenAI (O)</td>
+<td>197</td>
+<td>0.67</td>
+<td>0.78; 0.70</td>
+</tr>
+<tr>
+<td>ABA static</td>
+<td>10</td>
+<td>0.95</td>
+<td>0.98; 0.95</td>
+</tr>
+<tr>
+<td>ABA trajectory</td>
+<td>12</td>
+<td>0.97</td>
+<td>0.97; 0.95</td>
+</tr>
+<tr>
+<td>Detector</td>
+<td>12</td>
+<td>0.98</td>
+<td>0.97; 0.95</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>Removing the strict audits' tasks changes the ranking no more than removing random tasks would.</li>
+<li>Removing OpenAI's broader set reorders it somewhat more than chance (τ 0.67 against a random 5th percentile of 0.70).</li>
+<li>The behavioural flag cannot change rankings by construction, because no top-30 system solves those tasks.</li>
+</ul>
+<h2>Limitations</h2>
+<ul>
+<li><strong>The audits measure different things.</strong> ABA's "evaluation major" also includes tests that are too broad and
+  harness defects (D4). OpenAI's within-Verified label is a minor-issue flag. Low agreement partly reflects these
+  construct differences.</li>
+<li><strong>Rare flags make κ unstable.</strong> With 10–12 flags per source, the pairwise CIs span roughly 0 to 0.6.</li>
+<li><strong>The detector is ours.</strong> It is high-precision, low-recall and narrow in scope. Its message rule needs the fixes
+  noted above.</li>
+<li><strong>The behavioural label was first built incorrectly,</strong> from 135 of 182 submissions. It is corrected here (D1), and
+  H1 and H2 do not depend on it.</li>
+<li><strong>OpenAI's 2026 audit,</strong> which reports at least 59% flawed tests in a 28% subset, has no released per-task list, so
+  it could not be compared task by task.</li>
+</ul>
+<h2>Independent review</h2>
+<p>An independent reviewer reproduced both preregistered verdicts and judged the study "fix first". The review:</p>
+<ul>
+<li>caught the incomplete leaderboard data (D1);</li>
+<li>hand-checked every detector flag (D3);</li>
+<li>showed that H2 rests on OpenAI's any-annotator threshold, that the median κ falls between two clusters, and that
+  AC1 is uninformative at this prevalence;</li>
+<li>required a random-removal baseline for the leaderboard analysis.</li>
+</ul>
+<p>All are included above. The code is in <code>code/review_checks.py</code>.</p>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: GWOSC / Zenodo public releases. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ai-evaluation-science-swe-audit-concordance/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

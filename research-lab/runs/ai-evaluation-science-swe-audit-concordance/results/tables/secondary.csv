@@ -1,0 +1,7 @@
+analysis,value,note
+"median kappa, external sources only (O, AS, AT)",0.040779429489755,
+kappa O-AS / O-AT (independent external pairs),0.03678710078504908,[0.041 0.033]
+"flaw U: median kappa (O_U, AS_U, AT_U)",0.018946593905205728,"{'O_U': np.float64(0.524), 'AS_U': np.float64(0.024), 'AT_U': np.float64(0.044)}"
+detector with hints: kappa vs primary detector,0.9555001779992881,prevalence 0.022
+"Fleiss kappa among OpenAI's 3 annotators (false_negative >= 2, 1,699 instances)",0.4095794831287957,n=1699
+"detector AUROC vs OpenAI consensus false_negative >= 2 (1,699)",0.6197917578090822,95% CI 0.605-0.635; flag rate 0.174; positives 0.612

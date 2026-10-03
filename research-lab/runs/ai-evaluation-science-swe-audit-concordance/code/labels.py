@@ -23,12 +23,23 @@ def run_detector(df, hints=False):
 
 
 def resolved_matrix(ids):
+    """Per-submission resolved lists. Most submissions store results/results.json with a 'resolved' list; the
+    mini-SWE-agent submissions store per_instance_details.json {instance_id: {"resolved": bool, ...}} instead
+    (D1, found in review). Empty files are treated as missing submissions."""
     cols = {}
-    for p in sorted((RAW / "experiments" / "evaluation" / "verified").glob("*/results/results.json")):
-        r = json.load(open(p))
-        if not isinstance(r, dict) or "resolved" not in r:
-            continue
-        cols[p.parent.parent.name] = pd.Series(1, index=r["resolved"]).reindex(ids, fill_value=0)
+    for d in sorted((RAW / "experiments" / "evaluation" / "verified").iterdir()):
+        res = None
+        rj, pj = d / "results" / "results.json", d / "per_instance_details.json"
+        if rj.exists():
+            r = json.load(open(rj))
+            if isinstance(r, dict) and "resolved" in r:
+                res = r["resolved"]
+        if res is None and pj.exists() and pj.stat().st_size > 2:
+            r = json.load(open(pj))
+            if isinstance(r, dict) and r:
+                res = [k for k, v in r.items() if isinstance(v, dict) and v.get("resolved")]
+        if res is not None:
+            cols[d.name] = pd.Series(1, index=res).reindex(ids, fill_value=0)
     return pd.DataFrame(cols)
 
 
