@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speed Limit Reversals</title>
+<meta name="description" content="A preregistered national difference-in-differences of crashes on New Zealand roads whose speed limits were raised back up in 2025.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Auckland &amp; NZ</div>
+  <h1>Did raising speed limits back up in 2025 cost crashes?</h1>
+  <p class="subtitle">A preregistered national difference-in-differences of injury crashes on New Zealand roads whose speed limits were reversed under the 2024 Setting of Speed Limits Rule. Stage 1: the first year after the reversals</p>
+  <div class="meta">
+    <span>Stage 1 report · 2026-10-03 · revised after independent review · Stage 2 re-run due about October 2027</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-speed-limit-reversal-crashes/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-speed-limit-reversal-crashes/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-speed-limit-reversal-crashes/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Injury-crash rate ratio</div><div class="tile-value">1.03</div><div class="tile-note">95% CI 0.84-1.27; Stage 1 verdict: Inconclusive</div></div><div class="tile"><div class="tile-label">Roads raised</div><div class="tile-value">828 km</div><div class="tile-note">10,629 100 m segments, mostly Auckland and state highways</div></div><div class="tile"><div class="tile-label">Injury crashes after</div><div class="tile-value">252</div><div class="tile-note">on raised roads, Jul 2025-Jun 2026</div></div><div class="tile"><div class="tile-label">Detectable effect</div><div class="tile-value text">RR 1.33</div><div class="tile-note">80% power, one-sided 2.5% (from pre-period data)</div></div></section>
+<main>
+<h2>In plain terms</h2>
+<p>Between 2020 and 2024, many New Zealand roads had their speed limits lowered. A 2024 government rule made councils and
+NZTA put many of them back up, mostly by July 2025. The government expected little safety cost; safety advocates
+expected more deaths and injuries.</p>
+<p>We compared crashes on the roads whose limit went back up with similar roads whose limit stayed the same. The raised
+roads are about 830 km, mostly in Auckland and on state highways. The method was written down before we looked at
+any crash from after the change.</p>
+<p><strong>What we found.</strong> In the first year after the reversals (July 2025 to June 2026), injury crashes on the raised roads
+were 3% higher than expected from the comparison roads. That is well within chance: the data fit anything from 16%
+fewer to 27% more injury crashes. Serious and fatal crashes, and each kind of road (urban streets, rural roads, state
+highways), told the same uncertain story.</p>
+<p><strong>Why we cannot say more yet.</strong> One year on 830 km of road gives only about 250 injury crashes. That is enough to
+detect an increase of about a third, but not the roughly 10–20% rise that speed research would predict. So this result
+was the most likely outcome whether or not the reversals made roads less safe.</p>
+<p><strong>What this means.</strong> Nobody, on either side of the argument, should cite this first year as showing the reversals were
+safe, or that they were harmful. We will repeat the identical analysis in late 2027, with two years of data.</p>
+<h2>What was done</h2>
+<p><strong>Planned before seeing the outcome.</strong></p>
+<ul>
+<li>The plan was committed in e74eaea before any 2025/26 crash was tabulated.</li>
+<li>The post-period crash file was downloaded sealed, with its SHA-256 recorded, and opened only after that commit.</li>
+<li>All design numbers, including power and the placebo calibration, came from pre-period crashes only.</li>
+</ul>
+<p><strong>Roads and limits.</strong></p>
+<ul>
+<li>OpenStreetMap's public roads were cut into 1,184,764 segments of 100 m or less.</li>
+<li>Each segment took the limit in force at its midpoint from the National Speed Limit Register (NSLR), on fixed dates
+  from June 2022 to July 2026.</li>
+<li><strong>Treated roads:</strong> one permanent raise of 10–40 km/h between 29 Oct 2024 (the day before the Rule came into force)
+  and 1 Nov 2025, and no other change through July 2026. This gives 10,983 segments, about 860 km:<ul>
+<li>urban 30/40→50: 397 km;</li>
+<li>rural 80/90→90–100: 349 km;</li>
+<li>urban 50→60–80: 74 km;</li>
+<li>peri-urban 60/70→70–100: 40 km.</li>
+</ul>
+</li>
+<li>Almost all treated roads are Auckland Transport roads or state highways, and nearly all were raised between March
+  and June 2025.</li>
+<li><strong>Control roads:</strong> the same limit throughout.</li>
+<li><strong>Matching (strata):</strong> road controlling authority × prior limit × timing of any 2022–2024 reduction × road class.
+  This keeps 10,629 treated segments (828 km) that have controls in their stratum.</li>
+</ul>
+<p><strong>Crashes.</strong></p>
+<ul>
+<li>NZTA's Crash Analysis System, with crash points snapped to the nearest segment within 30 m and a preference for
+  segments with a matching road name.</li>
+<li>99.3% of crashes were snapped, and 89.6% of those matched the road name.</li>
+<li>Crash timing is known only to the half-year, from the calendar and financial year.</li>
+</ul>
+<p><strong>Model.</strong></p>
+<ul>
+<li>Poisson regression of injury crashes per segment and half-year, 2022H1–2026H1.</li>
+<li>Segment fixed effects, and stratum × half-year fixed effects.</li>
+<li>The half-year in which a road's limit changed is dropped for that road.</li>
+<li>Standard errors are clustered on 2,888 road corridors.</li>
+<li>Each stage is tested at one-sided α = 0.025, because there are two looks.</li>
+<li><strong>Supported</strong> needs a rate ratio ≥ 1.10 with the lower bound above 1. <strong>Contradicted</strong> needs the upper bound below
+  1.10.</li>
+</ul>
+<h2>Result</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Analysis</th>
+<th>Rate ratio</th>
+<th>95% CI</th>
+<th>Treated injury crashes after</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Primary: injury crashes</strong></td>
+<td><strong>1.03</strong></td>
+<td><strong>0.84–1.27</strong></td>
+<td>252</td>
+</tr>
+<tr>
+<td>Fatal and serious crashes</td>
+<td>1.02</td>
+<td>0.69–1.50</td>
+<td>55</td>
+</tr>
+<tr>
+<td>All crashes, including non-injury (exploratory, see below)</td>
+<td>1.13</td>
+<td>1.02–1.26</td>
+<td>787</td>
+</tr>
+<tr>
+<td>Urban 30/40→50</td>
+<td>1.07</td>
+<td>0.65–1.76</td>
+<td>54</td>
+</tr>
+<tr>
+<td>Urban 50→60–80</td>
+<td>1.03</td>
+<td>0.69–1.55</td>
+<td>83</td>
+</tr>
+<tr>
+<td>Peri-urban 60/70→70–100</td>
+<td>1.02</td>
+<td>0.61–1.72</td>
+<td>23</td>
+</tr>
+<tr>
+<td>Rural 80/90→90–100</td>
+<td>1.02</td>
+<td>0.75–1.39</td>
+<td>92</td>
+</tr>
+<tr>
+<td>State highways only</td>
+<td>0.98</td>
+<td>0.76–1.25</td>
+<td>118</td>
+</tr>
+<tr>
+<td>Local roads only</td>
+<td>1.12</td>
+<td>0.79–1.58</td>
+<td>134</td>
+</tr>
+<tr>
+<td>Auckland only</td>
+<td>1.11</td>
+<td>0.77–1.59</td>
+<td>126</td>
+</tr>
+<tr>
+<td>July–Dec 2025 only</td>
+<td>0.95</td>
+<td>0.73–1.24</td>
+<td>128</td>
+</tr>
+<tr>
+<td>Jan–Jun 2026 only</td>
+<td>1.12</td>
+<td>0.86–1.47</td>
+<td>124</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Stage-1 verdict: Inconclusive.</strong> The confidence interval rules out neither no change nor the hypothesised rise of 10%
+or more.</p>
+<p><strong>Robustness.</strong> Every injury-crash variant lands between 0.91 and 1.03, with CIs spanning 1:</p>
+<ul>
+<li>snap tolerance 15 m: 1.03;</li>
+<li>snap tolerance 50 m: 1.02;</li>
+<li>name-matched snaps only: 0.99;</li>
+<li>cohort-specific indicators: 1.03;</li>
+<li>corrected dating of reductions and cohorts: 1.02 (D8);</li>
+<li>without roads near school zones: 1.01 (D7);</li>
+<li>full 2017–2026 window: 0.91, which has known pre-trends.</li>
+</ul>
+<figure><a href="results/figures/event_window.png"><img src="results/figures/event_window.png" alt="Injury-crash rate ratio by half-year, treated vs control roads"></a><figcaption>Injury-crash rate ratio on treated (raised) roads relative to matched control roads, by half-year, relative to July-December 2024 (the last full half before most reversals). Blue: before the reversals; red: after. Grey band: January-June 2025, when most limits changed (dropped for treated roads). Bars are 95% confidence intervals clustered by road corridor; the dotted line marks the hypothesised +10%. The 2025 H2 cohort (86 segments) is omitted from this figure only.</figcaption></figure>
+<p><strong>Pre-trends.</strong></p>
+<ul>
+<li>Within the window, the pre-reversal half-years scatter between 0.76 (2023H1) and 1.19 (2024H1) relative to 2024H2
+  (joint test p = 0.044).</li>
+<li>Over the full history the pre-trend test fails clearly. This is consistent with Auckland's 2020–21 reductions,
+  which predate the register's history, and is why the plan starts the window in 2022.</li>
+<li>The 2023H1 dip is a reminder that half-year noise on a few hundred
+  crashes is large.</li>
+</ul>
+<h2>How much could this study see?</h2>
+<ul>
+<li><strong>Power, from pre-period data.</strong> The treated roads had about 135 injury crashes per half-year, so one post-year
+  gives about 250–270. The study could detect a rise of about a third (rate ratio 1.33) with 80% power. The realised
+  standard error, 0.105, matches the plan.</li>
+<li><strong>Power at plausible effect sizes.</strong><ul>
+<li>A rise of +10% would be detected with only about 15% probability.</li>
+<li>The rise predicted by the speed–crash power model is about +19%. That prediction assumes mean speeds rise by a
+  quarter of the posted change and injury crashes scale with speed squared. It would be detected with about 38%
+  probability.</li>
+</ul>
+</li>
+<li><strong>"Supported" would have needed an observed rate ratio above about 1.23.</strong></li>
+<li><strong>Calibration.</strong> The clustered standard errors were checked against 200 placebo "reversals" assigned to unchanged
+  roads in the pre-period. The ratio of placebo spread to standard error was 1.00 in the planned check, and 1.05 in
+  a corrected version where every stratum keeps its controls (D9).</li>
+</ul>
+<h2>The all-crash result is not robust</h2>
+<p>All police-reported crashes, including non-injury crashes, were an estimated 13% higher (1.13, 95% CI 1.02–1.26) in
+the preregistered window. This is one of about fifteen secondary estimates with no verdict attached. It does not
+survive scrutiny:</p>
+<ul>
+<li><strong>Window choice.</strong> Starting the pre-period in 2020H2 gives 1.08 (0.98–1.20); 2023H2 gives 1.09 (0.97–1.22); 2024H1
+  gives 1.05 (0.92–1.20); and the full history gives 1.07 (0.96–1.19).</li>
+<li><strong>Non-injury crashes carry it</strong> (1.18). These are the least completely reported crashes, and the severity mix on
+  treated roads moved toward minor crashes, not the direction a speed effect predicts.</li>
+<li><strong>The earlier window flatters it.</strong> A dip on treated roads in 2023H1, before the reversals, pulls the pre-period
+  average down. Against the last pre-period half alone, post-period crashes were 7% and 11% higher, and neither is
+  significant.</li>
+</ul>
+<p>We treat it as a hypothesis for Stage 2, not as evidence.</p>
+<h2>Can we tell whether the signs actually changed?</h2>
+<p>The register defines treatment; crash records cannot confirm it.</p>
+<ul>
+<li><strong>The crash records' speed-limit field lags.</strong> Police crash reports record a speed limit, but that field follows
+  the register with a lag of about 18 months on treated and control roads alike. The 2023 Auckland reductions appeared
+  in crash records only from late 2024. So the field cannot yet show the 2025 raises.</li>
+<li><strong>Roads near schools.</strong> Of the urban 30→50 segments, 72% were 30 km/h zones that the register listed as being there
+  because of a school. Some of these sit near the variable school-time zones the government introduced at the same
+  time (7.7% of treated segments lie within 50 m of a live school zone). Dropping roads near school zones, or all
+  school-reason roads, leaves the estimate at 1.01.</li>
+</ul>
+<h2>Limitations</h2>
+<ul>
+<li><strong>Thin comparisons in some strata.</strong> The two largest Auckland treated strata have few control crashes. For example,
+  Auckland local roads at 30 km/h reduced in 2023H1 have 184 treated injury crashes against 19 for controls. Much of
+  the comparison comes from strata with plenty of controls: state-highway 80 km/h and 50 km/h roads, and Auckland
+  arterials (<code>results/tables/review_strata.csv</code>).</li>
+<li><strong>Selection.</strong> Which reductions were reversed depended on consultation and the Rule's criteria. Matching on
+  authority, prior limit, reduction timing and road class cannot remove all differences.</li>
+<li><strong>No traffic volumes.</strong> Traffic volumes and enforcement are not observed.</li>
+<li><strong>Register gaps.</strong> From May 2026 the public register has gaps: records end without replacements. These were
+  balanced between groups in Stage 1 (D10) but need re-checking for Stage 2.</li>
+<li><strong>Crash reporting.</strong> Recent minor-injury and non-injury crashes are reported late. Treated and control roads are
+  affected equally, but the most recent half-year is noisier.</li>
+</ul>
+<h2>Independent review</h2>
+<p>An independent reviewer reproduced the primary estimate exactly and judged the study "publish with edits". The
+review:</p>
+<ul>
+<li>found that the all-crash secondary was fragile and corrected how the manipulation check was read (D7);</li>
+<li>showed that the placebo calibration skipped the strata where most treated roads sit, and the corrected re-run
+  confirmed the standard errors (D9);</li>
+<li>found dating artefacts from register re-certifications, which do not move the estimate (D8);</li>
+<li>asked for the low power to be stated plainly.</li>
+</ul>
+<p>All edits are in this report and logged in deviations D6–D10.</p>
+<h2>Stage 2</h2>
+<ul>
+<li><strong>When.</strong> About October 2027, once the crash system holds the full 2026/27 financial year.</li>
+<li><strong>What.</strong> The identical code with the post-period extended to June 2027, which roughly doubles the post-period
+  crashes. Its minimum detectable rate ratio falls to about 1.2.</li>
+<li><strong>Speed-limit data.</strong> Daily register snapshots, kept since 3 Oct 2026, will establish any further changes through
+  June 2027.</li>
+</ul>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: GWOSC / Zenodo public releases. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-speed-limit-reversal-crashes/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

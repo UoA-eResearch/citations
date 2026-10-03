@@ -1,4 +1,4 @@
-"""Snap CAS crashes (FY2017/18 onward) to segments. Usage: snap_crashes.py pre | post
+"""Snap CAS crashes (FY2017/18 onward) to segments. Usage: snap_crashes.py pre|post [tol_m]
 pre  reads data/raw/cas_pre.parquet; post reads the sealed file (only after plan.md is committed; checks its SHA-256).
 Output: data/crashes_<which>.parquet with seg, snap distance, name match, half-year period, severity flags.
 """
@@ -36,21 +36,21 @@ def period(c):
     return np.where(c.crashYear == fy0, fy0.astype(str) + "H2", c.crashYear.astype(str) + "H1")
 
 
-def main(which):
+def main(which, tol=30.0):
     c = load(which)
     c = c[c.X.notna()].reset_index(drop=True)
     segs = gpd.read_parquet(RUN / "data" / "segments.parquet", columns=["seg", "name", "ref", "geometry"])
     segs["_norm"] = [S.norm_name(x) for x in segs.name]
     segs["_sh"] = [S.sh_numbers(x) for x in segs.ref]
     pts = gpd.GeoSeries(gpd.points_from_xy(c.X, c.Y), crs=2193)
-    seg, dist, mm = S.snap(pts, c.crashLocation1.values, segs)
+    seg, dist, mm = S.snap(pts, c.crashLocation1.values, segs, tol=tol)
     out = pd.DataFrame({
         "OBJECTID": c.OBJECTID, "seg": seg, "snap_m": dist, "name_match": mm, "period": period(c),
         "fy": c.crashFinancialYear, "severity": c.crashSeverity, "cas_limit": c.speedLimit,
         "injury": c.crashSeverity.isin(["Fatal Crash", "Serious Crash", "Minor Crash"]),
         "ksi": c.crashSeverity.isin(["Fatal Crash", "Serious Crash"]), "sh": c.crashSHDescription == "Yes",
         "region": c.region, "urban": c.urban})
-    out.to_parquet(RUN / "data" / f"crashes_{which}.parquet")
+    out.to_parquet(RUN / "data" / (f"crashes_{which}.parquet" if tol == 30.0 else f"crashes_{which}_tol{int(tol)}.parquet"))
     if which == "pre":
         print(len(out), "crashes; snapped", (out.seg >= 0).mean().round(4), "; name/SH match among snapped",
               out[out.seg >= 0].name_match.mean().round(3), "; median snap m", np.nanmedian(out.snap_m).round(1))
@@ -60,4 +60,4 @@ def main(which):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    main(sys.argv[1], float(sys.argv[2]) if len(sys.argv) > 2 else 30.0)

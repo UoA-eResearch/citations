@@ -5934,7 +5934,12 @@
    "local_relevance": "NZTA, the Ministry of Transport and Auckland Transport, which manages many of the affected streets, can use the estimate in speed-management plans, the next Government Policy Statement on land transport and any future revision of the speed-limit rule.",
    "time_sensitive": "Start daily NSLR snapshots now (history is rewritten silently); preregister before any FY2025/26 tabulation; confirmatory rerun ~Oct 2027",
    "needs_engagement": "",
-   "scout_round": "auckland-nz"
+   "scout_round": "auckland-nz",
+   "status": "deep dive \u00b7 Stage 1 report (revised after review); Stage 2 ~Oct 2027",
+   "report_url": "runs/auckland-nz-speed-limit-reversal-crashes/report.html",
+   "verdict_tag": "Inconclusive",
+   "verdict_note": "Injury crashes on 828 km of raised roads were 3% higher than on matched roads in the first year (RR 1.03, 95% CI 0.84-1.27); the study could detect only a rise of about a third, so Stage 1 settles nothing either way.",
+   "headline": "Preregistered segment-level DiD (NSLR x OSM x CAS, sealed post-period file). Injury RR 1.03 [0.84, 1.27]; fatal+serious 1.02; every robustness variant 0.91-1.03. All-crash 1.13 [1.02, 1.26] is window-sensitive (1.05-1.09 elsewhere) and treated as a Stage-2 hypothesis. MDE RR 1.33. Stage 2 with FY2026/27 ~Oct 2027."
   },
   {
    "id": "auckland-nz-jade-water-value-calibration",
