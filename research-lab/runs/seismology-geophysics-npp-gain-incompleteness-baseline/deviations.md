@@ -97,7 +97,7 @@ produced that way. The claim is withdrawn.
 
 ## D6. Kernel-approximation guard (2026-10-04 10:12 NZDT)
 
-**The exploit.** The wider multi-start (D2) found a numerical exploit. In 4 of the 32 model-A fits (Norcia 1.2,
+**The exploit.** The wider multi-start (D2) found a numerical exploit. In 4 of the 16 round-2 model-A fits (none of the 32 S2 and B fits) (Norcia 1.2,
 Norcia 1.5, Visso 1.5 and the synthetic catalog), the optimiser drove c towards 1e-294. There the
 sum-of-exponentials (SOE) kernel approximation is 100% wrong (relative error 1.0). The compensating integral was then
 underestimated, giving impossible training log-likelihoods of 15-19 nats per event.

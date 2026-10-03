@@ -22,8 +22,8 @@ The test was written down before we fitted it.
 
 **What we found.** The improved ETAS closes 88–109% of the neural network's advantage in all three test periods. That
 meets the preregistered test. It does not clearly beat the neural network: in one period the network is still a
-little better, and in the other two they are statistically tied. Most of the improvement comes from the hours just
-after the largest shocks.
+little better, and in the other two they are statistically tied. Up to half of the improvement comes from the single
+day of the largest shocks.
 
 On a computer-generated test catalog, the improved ETAS did not close the gap. So this result is about how this
 catalog misses earthquakes, not a general law.
@@ -48,7 +48,7 @@ neural model's advantage G is +1.02, +1.61 and +1.39 nats per target event.
 |---|---|
 | S0 | Stockman's published standard ETAS. |
 | S2 | Standard ETAS refitted here with full history. |
-| A | ETAS-I. Events are detected unless a larger one occurred within a blind time T_b, so detection falls when activity is high (Hainzl 2016, 2021). It has 2 extra parameters, T_b and b. |
+| A | ETAS-I. Events are detected unless a larger one occurred within a blind time T_b, so detection falls when activity is high (Hainzl 2016, 2021). It has one extra parameter, the blind time T_b; the b-value is fitted jointly rather than from the magnitude mean. |
 | B | ETAS with a completeness magnitude that rises after each large shock and decays (Helmstetter et al. 2006). |
 
 All are fitted by maximum likelihood on training data only. Of A and B, the primary model is the one with the better
@@ -57,10 +57,11 @@ training fit. That was A in every configuration.
 **Statistic.** The recovery fraction R = (A − S0) / (NPP − S0), with a 24-hour block-bootstrap CI. **Supported** if
 R ≥ 0.75 in at least 2 of 3 configurations.
 
-**Validation.** Before any real-data evaluation, the fitting code was checked on simulated catalogs where the truth is
-known. Both A and B recover their generating parameters on average over 16 seeds. The fitted likelihood reaches at
-least the true-parameter likelihood in 16 of 16 seeds for each model. One seed of A has two parameters 2–3 standard
-errors off (D1, D3).
+**Validation.** The fitting code was checked on simulated catalogs where the truth is known: first before any
+real-data evaluation (D1), and again after review with the final code and the wide multi-start (D3). Averaged over the 8 seeds with imposed mainshocks, both A and B recover their generating parameters. A also does so
+without mainshocks; B's completeness parameters G and H are not identified when no large event occurs. The fitted
+likelihood reaches at least the true-parameter likelihood in 16 of 16 seeds for each model. One seed of A has two parameters about 2 and 3
+standard errors off (z = −2.1 for K, 3.1 for μ; D1, D3).
 
 ## Results
 
@@ -94,7 +95,7 @@ the January 2017 Campotosto shocks, carries 39–50% of ETAS-I's improvement ove
 49–68%.
 
 **History is not the source of the gain.** Scored with the same truncated history as the published ETAS, ETAS-I
-still gives R = 1.06, 0.86 and 0.96.
+still gives R = 1.06, 0.86 and 0.95.
 
 ![Log-likelihood per target event against input cutoff, by model and sequence](results/figures/ll_vs_cutoff.png)
 
@@ -123,19 +124,20 @@ explains NPP gains in general.
 
 - **ETAS-I is a strong baseline, not a physical measurement.**
   - Its fitted b-value (about 1.5 at the primary cutoffs) is higher than the catalog's at large magnitudes (1.1–1.25).
-  - Its branching ratio exceeds 1 in several fits.
+  - Its branching ratio exceeds 1 in 11 of 15 fits, including the primary Campotosto fit (1.19).
   - Its blind time rises with the cutoff, although a real network's blind time should not.
 - **One sequence.** One sequence with three overlapping test periods.
 - **The Fusion model (Xiong et al. 2026) was not tested.** Its released checkpoints do not match any released script.
 - **Fitting needed care** (D2–D6):
   - The first fit at Norcia was a local optimum, which gave R = 0.51; a wider search found the better optimum.
-  - Two numerical failure modes of the kernel approximation had to be guarded against.
+  - Three numerical failure modes had to be guarded against: an underflow of the observed rate and a log floor,
+    found in validation (D1), and a breakdown of the kernel approximation as c → 0, found by the wider search (D6).
   - The preregistered decision rule never changed.
 
 ## Independent review
 
 The reviewer independently re-derived the ETAS-I target likelihood and re-integrated it with exact sums and finer
-quadrature, confirming it to within 0.0023 nats. They also confirmed there was no test leakage. The review was
+quadrature, confirming it to within 0.0023 nats per target at most (3e-6 on average). They also confirmed there was no test leakage. The review was
 "fix first":
 
 - **Norcia local optimum.** The reviewer found that the first Norcia fit was a local optimum. With the wider search,

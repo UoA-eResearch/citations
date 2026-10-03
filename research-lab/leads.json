@@ -3326,7 +3326,12 @@
    "risks": "Published NPP gains may not reproduce from released code. The Fusion repository has no license and is large. Observed-event likelihoods under different observation models need careful definition, or the comparison stays unfair in the other direction. ETAS-I inversion may be unstable on WHITE_06 or AVN. The NPP advantage may come partly from features other than incompleteness, which would give a mixed result across configurations.",
    "critic_note": "Critic (round 2): OpenAlex finds Tian et al. 2026 Earth's Future (10.1029/2025EF007318), which raised the incompleteness explanation as cited. It also finds 'Enhancing the ETAS model: incorporating rate-dependent incompleteness' (GJI 2025, ggaf156), a stronger ETAS-I baseline the executor should use. No study testing NPPs against incompleteness-aware ETAS turned up. This is a clean benchmark-integrity test in a live debate. Value 7 and cost 4 kept.",
    "plain_summary": "New AI aftershock-forecasting models are reported to beat the standard statistical model (ETAS) when they are fed many small, incompletely recorded earthquakes. This study tests whether that advantage disappears once the standard model gets the same small-earthquake data plus a simple description of which quakes the seismic network misses. If it does, the AI win comes from an unfair comparison.",
-   "scout_round": 2
+   "scout_round": 2,
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass)",
+   "report_url": "runs/seismology-geophysics-npp-gain-incompleteness-baseline/report.html",
+   "verdict_tag": "Supported",
+   "verdict_note": "ETAS with rate-dependent detection (ETAS-I) recovers 88-109% of the neural point process's published advantage in all three AVN test periods, but does not beat it (NPP still better at Norcia); on a synthetic catalog it recovers almost nothing, so the result is catalog-specific.",
+   "headline": "Stockman et al. 2023 AVN protocol reproduced exactly. ETAS-I (blind-time detection) fitted on the same training events: R = 1.09 (0.69-1.31) Visso, 0.88 (0.80-0.97) Norcia, 0.97 (0.81-1.08) Campotosto. A - NPP: +0.10, -0.19 (significant), -0.05 nats/target. Gain concentrated in mainshock days; ETAS-I parameters not physical (b ~1.5, branching > 1 in 11 of 15 fits). Synthetic incomplete catalog: ~0-12% recovered."
   },
   {
    "id": "seismology-geophysics-picker-agreement-on-the-line",
