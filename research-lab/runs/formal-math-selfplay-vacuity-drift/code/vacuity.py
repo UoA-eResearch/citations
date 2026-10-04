@@ -74,7 +74,7 @@ def check_row(repl, prompt, target, trivial=False, t_long=100, t_short=30):
         out["parse_error"] = str(e)[:200]
         return out
     out["parsed"] = True
-    if set(p["imports"]) - {"Mathlib", "Aesop"}:
+    if any(not (i == "Aesop" or i == "Mathlib" or i.startswith("Mathlib.")) for i in p["imports"]):  # env 0 imports all of Mathlib
         out["foreign_imports"] = True
         return out
     pre, B, C = p["preamble"], p["binders"], p["concl"]

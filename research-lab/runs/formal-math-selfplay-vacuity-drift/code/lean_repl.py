@@ -9,8 +9,10 @@ import time
 from pathlib import Path
 
 RUN = Path(__file__).resolve().parents[1]
-WS = RUN / "lean" / "mathlib4"
-REPL_BIN = RUN / "lean" / "repl" / ".lake" / "build" / "bin" / "repl"
+# VAC_TOOLCHAIN=v49 (default; STP/Goedel/DeepSeek environment) or v415 (NuminaMath-LEAN, mathlib v4.15.0)
+TOOLCHAIN = os.environ.get("VAC_TOOLCHAIN", "v49")
+WS = RUN / "lean" / ("mathlib4_v415" if TOOLCHAIN == "v415" else "mathlib4")
+REPL_BIN = RUN / "lean" / ("repl_v415" if TOOLCHAIN == "v415" else "repl") / ".lake" / "build" / "bin" / "repl"
 LAKE = Path.home() / ".elan" / "bin" / "lake"
 HEADER = "import Mathlib\nimport Aesop"
 

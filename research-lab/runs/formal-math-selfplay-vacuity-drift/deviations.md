@@ -45,3 +45,42 @@ plan's rule, every iteration therefore gets 2,000 rows. The pilot's vacuity outc
 3. statement rows.
 
 Workers are pinned to cores 16-27 while the quantum lead's GPU jobs use the rest of the machine.
+
+## D2. Split-check failures: cause and a sensitivity repair pass (2026-10-05 09:03 NZDT)
+
+**What was looked at.** The first 2,788 main-run rows, using split-check health fields only. No vacuity field was
+examined.
+
+**What was found.** 81 of 2,699 re-verified rows fail the split check:
+
+- 54 report "unexpected end of input";
+- 16 report "don't know how to synthesize implicit argument";
+- 11 report other elaboration errors.
+
+**Cause of the main class.** In the 54 rows the conclusion begins with `let x := by …`. STP's own prompt/target split
+cut the prompt at that inner `:= by`, so the prompt holds a truncated conclusion and the target carries the rest of
+the statement and the proof. Our binder/conclusion split is still correct for the hypotheses before the colon. Only the
+conclusion C is truncated, so `∀ B, C` cannot elaborate.
+
+**Primary analysis.** It stays as preregistered: split-check failures are excluded and their rate is reported by
+iteration.
+
+**Sensitivity analysis, defined before any outcome of these rows is seen.** After the main run, every re-verified row
+that failed the split check gets a repair pass:
+
+- **Repair check.** `example : ∀ B, _ := orig`, which checks that B is the hypothesis telescope of the original theorem
+  and lets Lean infer the conclusion.
+- **Automation only.** If the repair check passes, the automation portfolio (b) is run on `theorem v B : False`. It
+  uses only B, so it is valid when C is unknown. The goal swap (a) is not attempted, because the released proof text
+  cannot be separated from the statement.
+
+The primary contrast is then reported again with the repaired rows included, as "sensitivity: split repair".
+
+**Secondary-corpus samples and imports.** `code/sample_other.py` drew and converted the samples. 753 of 10,000
+Goedel SFT v2 rows had no final Lean block or a term-mode proof, and 55 of 10,000 NuminaMath rows could not be split.
+The import check now accepts any `Mathlib.*` module, because environment 0 imports all of Mathlib. Some Numina rows
+import `Mathlib.Tactic` or a single Mathlib module. Every STP row imports exactly `Mathlib` and `Aesop`, so STP rows
+are unaffected.
+
+**CPU pinning.** The quantum lead's three GPU processes were pinned to cores 0-15 at 08:57. Without the pinning they had
+drifted onto the REPL cores, and GPU utilisation fell to 20%.
