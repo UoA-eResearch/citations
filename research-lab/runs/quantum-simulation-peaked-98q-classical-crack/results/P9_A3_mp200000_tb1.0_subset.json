@@ -1,0 +1,27 @@
+{
+ "instance": "P9",
+ "attack": "A3",
+ "max_paulis": 200000,
+ "trunc_budget": 1.0,
+ "n_slices": 207,
+ "z": {
+  "0": NaN,
+  "1": NaN
+ },
+ "unfinished_slices": {
+  "0": 189,
+  "1": 189
+ },
+ "seconds": {
+  "0": 1754.064992310945,
+  "1": 10.453564319992438
+ },
+ "final_terms": {
+  "0": 142844,
+  "1": 3418
+ },
+ "candidate": "00000000000000000000000000000000000000000000000000000000",
+ "mean_abs_z": NaN,
+ "hamming_to_published_P9": 29,
+ "hamming_reversed": 29
+}
