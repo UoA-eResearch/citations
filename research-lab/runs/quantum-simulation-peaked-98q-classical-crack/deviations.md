@@ -49,3 +49,25 @@ results/P11_A1_mb8192_c0.002_s123.json.
 **GPU-hour accounting (conservative).** Each concurrent process is charged its full wall-clock time as A100-hours,
 although they share one GPU (peak memory under 2 GB each). On that basis P11 has used 17.0 h. Its two follow-ups can
 use at most 54 h more, which stays within the 72 h budget. P12 can use at most 27 h.
+
+## D4. Candidate selection and scoring code, written before any follow-up candidate exists (2026-10-05 09:06 NZDT)
+
+**`code/select_candidates.py`** implements plan section 3 and fixes a tie rule that the plan left open. Candidates
+are ordered:
+
+1. by attack, A1 > A2 > A3;
+2. then by the attack's confidence, highest first (A1: top-sample frequency);
+3. then by the smaller SVD cutoff;
+4. then by the larger max_bond.
+
+Ties are likely: a run that resolves no peak has a top frequency of 0.001.
+
+**Commitment.** The selected candidates and their SHA-256 hashes go to `results/final_candidates.json`, which is
+committed before scoring.
+
+**`code/score.py`** reads the sealed answers. It refuses to run unless that file is committed and unmodified, and it
+refuses a second run, so the answers are read once. It applies the plan's rule:
+
+- distance 0: Supported;
+- distance 1-4: Inconclusive;
+- distance 5 or more: Contradicted.
