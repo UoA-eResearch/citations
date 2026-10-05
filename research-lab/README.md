@@ -11,6 +11,7 @@ on this machine (32-core Xeon, 94 GB RAM, A100 80 GB, ~600 GB free disk).
 | Interactive plot (Artifact) | Value (y) vs cost (x) scatter of every lead. Click a marker for full details. Golden quadrant = high value, low cost (top-left). Served from `index.html` on GitHub Pages and mirrored at https://claude.ai/artifact/FL86H7RkNAMkd4CbKserUx; after changing `index.html`, run `python3 build_artifact.py OUT.html` and republish OUT.html to that artifact URL to keep the two in sync. |
 | `run-avenue.js` | The executor workflow. Give it one lead from `leads.json` and it runs the entire research workflow via subagents: scope → build → execute → adversarial review → write-up. |
 | `runs/<lead-id>/` | Working directory created per executed lead: code, data, results, figures, report. |
+| `related-efforts.md` | Survey (2026-10-05) of other autonomous AI research efforts (Kosmos, Denario, Agon, data-to-paper, Agents4Science, ...) and the evidence on how AI research goes wrong, with a prioritised list of changes for this lab. |
 
 ## Lifecycle
 
