@@ -71,3 +71,26 @@ refuses a second run, so the answers are read once. It applies the plan's rule:
 - distance 0: Supported;
 - distance 1-4: Inconclusive;
 - distance 5 or more: Contradicted.
+
+## D5. Follow-up A1 runs hit the 27 h cap; budget closes for P11 (2026-10-06 10:20 NZDT)
+
+**The runs.** All three follow-up A1 runs were stopped by `timeout` at 27 h, at 2026-10-06 10:19, without writing a
+candidate:
+
+| Run | Unitaries consumed at the cap |
+|---|---|
+| P11, cutoff 0.001 | 81 of 1,984 |
+| P11, cutoff 0.0005 | 89 of 1,984 |
+| P12, cutoff 0.002 | 177 of 2,433 |
+
+Details are in `results/tables/A1_progress.csv`. Progress is not linear in time. The completed P11 run at cutoff
+0.002 had consumed 107 unitaries after 7.3 h and finished all 1,984 at 17 h, once unswapping had simplified the
+operator. Tighter cutoffs keep more of the operator, and in these runs the unswapping phase ran slowly.
+
+**P11 budget.** Under D3's accounting, P11 has used 17.0 + 27 + 27 = 71.0 of its 72 A100-hours. A2 on P11 needs more
+than the 1 h left (A2 on P9, a smaller circuit, took 1.4 h) and is therefore not run. P11's only candidate is the one
+from its first A1 run: top-sample frequency 0.001, so no peak was resolved.
+
+**P12 budget.** P12 has used 27 of its 72 h. A2 at chi 256 was started at 10:20 (`timeout 10h`), as D1 specified. A2
+was at chance on P9, so it is not expected to recover the peak. No further A1 run on P12 is planned: at the observed
+rate it would far exceed the remaining 45 h.
