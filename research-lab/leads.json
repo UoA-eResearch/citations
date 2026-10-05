@@ -6291,6 +6291,56 @@
    "time_sensitive": "",
    "needs_engagement": "Blocking: seek guidance from Te Kawerau \u0101 Maki (Wait\u0101kere r\u0101hui), Hunua mana whenua and the council kauri programme before preregistration; publish only aggregated layers and honour any request to restrict",
    "scout_round": "auckland-nz"
+  },
+  {
+   "id": "meta-research-preregistration-first-self-audit",
+   "meta": true,
+   "title": "Preregistration-first autonomous research: a protocol and a self-audit of this lab's first 19 studies",
+   "domain": "meta-research",
+   "hypothesis": "Descriptive self-audit, not a hypothesis test. Were the lab's commitments kept: plans committed before outcomes, deviations logged, review before verdicts? And what did its safeguards catch?",
+   "gap": "Many AI-scientist systems exist (Kosmos, Denario, Agon, data-to-paper, AI Scientist, ScientistTwo). None found commits each study's plan to a public, timestamped record before analysing outcomes and reports the full distribution of verdicts across fields. PaperClaw keeps a local 'pre-registered main-result contract'. Audit protocols (CrossAudit, the Discovery Certification Protocol, XScientist) were demonstrated on one or a few cases. See research-lab/related-efforts.md.",
+   "value_score": 7.0,
+   "cost_score": 2.0,
+   "value_rationale": "The field lacks evidence on whether autonomous research agents can keep confirmatory-science commitments across a portfolio. A candid self-audit, including the failures, is useful to anyone building or evaluating such systems.",
+   "cost_rationale": "Uses only this repository: git history, plans, deviation logs, reports and GitHub push events. Takes about a day of agent time, with coder agents for the judgement-based measures.",
+   "est_wall_time": "about 1 day",
+   "est_data_gb": 0,
+   "feasibility": "local",
+   "requirements_if_out_of_reach": "",
+   "datasets": [
+    {
+     "name": "This repository: plans, deviation logs, reports, code, git history and archived GitHub push events",
+     "url": "https://github.com/UoA-eResearch/citations/tree/main/research-lab",
+     "access": "open",
+     "size": "<1 GB"
+    }
+   ],
+   "lit_for": [
+    "Hidden pitfalls of AI scientist systems (arXiv 2509.08713): audits catch far more with logs and code than with the paper alone",
+    "Verification-gap survey (arXiv 2608.05179): few systems release the traces needed to verify claims",
+    "Claesen et al. 2021 (R. Soc. Open Sci.): human preregistrations rarely disclose deviations"
+   ],
+   "lit_against": [
+    "PaperClaw (arXiv 2606.22610) already fixes a pre-registered main-result contract, locally",
+    "A self-audit by the agent that ran the studies is not independent; all coders and reviewers were same-session subagents of one vendor"
+   ],
+   "method": "An audit protocol is committed before any measure is computed (paper/audit_plan.md). Measures: plan-before-outcome timing from git and GitHub push events; coding of all deviations by two coder agents (Fable 5.1 and Opus 5.5) with Cohen's kappa; what review changed; direct verification of 119 randomly sampled report numbers; reference resolution; scout estimates against outcomes. An independent reviewer agent follows, then a confirmation pass.",
+   "plan": [
+    "Commit the audit protocol",
+    "Compute the automated measures",
+    "Two coders code deviations and reviews; adjudicate with logged rules",
+    "Verify a random sample of report numbers",
+    "Draft the paper with all numbers generated from audit files",
+    "Adversarial review; revise; confirmation pass"
+   ],
+   "risks": "Conflict of interest: the auditing agent ran the studies. Git timestamps are self-attested, although push events corroborate them. No domain expert checked the studies' conclusions.",
+   "critic_note": "Not scouted. Proposed by the lab owner on 2026-10-06 after the field survey (related-efforts.md). Its value and cost scores are the executing agent's, not a critic's.",
+   "plain_summary": "This lab's AI agent writes down its plan for each study and publishes it before looking at the results, then reports whatever it finds, including null results. Here the agent audits itself across its first 19 studies. Did the plans really come first? What went wrong? Did the independent reviews catch mistakes? It reports its own failures as well as its successes. The audit also found and corrected small errors in five published reports.",
+   "status": "meta-study \u00b7 draft paper (revised after independent review)",
+   "report_url": "paper/main.pdf",
+   "verdict_tag": "Pending",
+   "verdict_note": "A descriptive audit, so there is no hypothesis verdict. The draft awaits the reviewer's confirmation pass and the lab owner's decision on authorship and venue.",
+   "headline": "Plans demonstrably came before outcomes in 18 of 19 studies; the first study's plan entered git with its results. 3 of 16 decided verdicts support their hypothesis. 117 of 119 sampled report numbers check out, and the 2 rounding errors are now corrected. Weak points: only one plan had a power calculation, only 3 studies sealed or pre-dated their outcomes, and the protocol's review rules were applied unevenly."
   }
  ],
  "updated": "2026-10-02",

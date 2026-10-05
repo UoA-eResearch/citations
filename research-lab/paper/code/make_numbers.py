@@ -32,7 +32,7 @@ def wilson(k, n, z=1.96):
 
 
 def leads_and_verdicts():
-    L = json.load(open(LAB / "leads.json"))["leads"]
+    L = [l for l in json.load(open(LAB / "leads.json"))["leads"] if not l.get("meta")]  # the meta-study entry is not a scouted lead
     runs = sorted(p.name for p in (LAB / "runs").iterdir() if p.is_dir())
     byid = {l["id"]: l for l in L}
     M["LeadsTotal"] = len(L)
