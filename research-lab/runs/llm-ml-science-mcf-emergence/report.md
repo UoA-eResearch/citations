@@ -112,7 +112,7 @@ Figure F1 shows every run. Averaged over the six tasks, the final five-shot MCF 
 |---|---|
 | OLMo-2-1124-7B | +40.5 |
 | OLMo-7B-0424 | +35.7 |
-| All other 26 runs | −1.3 to +1.5 (per task −3.8 to +4.2) |
+| All other 26 runs | −1.3 to +1.4 (per task −3.8 to +4.2) |
 
 ![F1](results/figures/F1_all_runs.png)
 

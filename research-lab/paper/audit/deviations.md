@@ -92,3 +92,23 @@ its reason is logged in `audit/adjudication.csv`:
 
 **Review issue counts.** Exact agreement on the count of review issues was 24%, and per-category agreement was
 29-100%. These counts are not adjudicated. The paper reports both coders' totals.
+
+## A8. Measure D: matcher bug found by coder B (2026-10-06 01:55 NZDT)
+
+**The bug.** While classifying untraced numbers, coder B found two faults in the number matcher:
+
+- it split numbers with thousands separators in source files ("1,184,764") into separate pieces;
+- it did not scrub "§4.3"-style section references from reports.
+
+**The fix and its effect.** Both are fixed in `audit_numbers.py`, and measure D was rerun:
+
+| Measure | Before | After |
+|---|---|---|
+| Substantive numbers | 2,272 | 2,256 |
+| Share that trace | 95.8% | 95.5% |
+| Cross-run chance rate | 62.0% | 61.6% |
+| Corrected rate, 3 significant figures | 94% | 92% |
+
+**The classified sample.** The 85-number sample the coders classified was drawn under the old matcher. It is kept
+unchanged as `D_sample_untraced.csv` (with a copy in `D_sample_untraced_v1.csv`), and its classification is reported
+as such. Some of those numbers now trace.

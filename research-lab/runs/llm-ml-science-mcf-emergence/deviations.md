@@ -155,3 +155,10 @@ rising to 0.99, CF accuracy rising from 0.30 to 0.55, MCF accuracy at chance thr
   OLMo-1B-0724 is at chance on every task at every checkpoint through 2,150B tokens. It rises only at its final
   checkpoint (3,048B): +6.8 points on ARC-C, +12.5 on ARC-E, +18.6 on CSQA. A rise at the last checkpoint cannot be
   confirmed by a next one, so no departure is counted. Its letter mass after the newline is about 0.99 from 4B.
+
+## Correction after publication (2026-10-06 02:02 NZDT)
+
+The lab's self-audit (`research-lab/paper/`) found a rounding error in the report's results table. For "all other
+26 runs", the range of six-task mean MCF accuracy minus chance was printed as "−1.3 to +1.5". From
+`results/tables/units.csv` the values are −1.25 to +1.449, which round to −1.3 to +1.4. The "+1.5" came from rounding
+twice (1.449 → 1.45 → 1.5). The report is corrected; no conclusion changes.

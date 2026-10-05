@@ -15,7 +15,7 @@ REPO = Path(__file__).resolve().parents[3]
 RUNS = REPO / "research-lab" / "runs"
 OUT = REPO / "research-lab" / "paper" / "audit"
 NUM = re.compile(r"(?<![\w.])([+\-−]?)(\d{1,3}(?:,\d{3})+|\d+)(\.\d+)?(?:[eE]([+\-−]?\d+))?(\s?%)?(?![\w])")
-SRC_NUM = re.compile(r"[+\-]?(?:\d+\.\d*|\.\d+|\d+)(?:[eE][+\-]?\d+)?")
+SRC_NUM = re.compile(r"[+\-]?(?:\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+\.\d*|\.\d+|\d+)(?:[eE][+\-]?\d+)?")  # thousands separators (fix A8)
 MONTHS = r"(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)[a-z]*"
 
 
@@ -23,7 +23,7 @@ def scrub(text):
     """Blank out spans whose digits are not reported quantities (keeps offsets for context)."""
     pats = [r"`[^`\n]*`", r"\]\([^)]*\)", r"https?://\S+", r"\b10\.\d{4,9}/\S+", r"\b(?:arXiv:?\s?)?\d{4}\.\d{4,5}(?:v\d)?\b",
             r"\b[0-9a-f]{7,40}\b(?=[^0-9a-f])", r"\b[DEFRUCT]\d+[a-z]?\b", r"\b\d{4}-\d{2}-\d{2}\b", r"\b\d{1,2}:\d{2}\b",
-            rf"\b\d{{1,2}}\s+{MONTHS}\b", rf"\b{MONTHS}\s+\d{{1,2}}\b", r"(?m)^#+\s*[\d.]+", r"\[\d+\]", r"(?i)\b(?:figure|fig\.|table|section|sec\.|§)\s*\d+(?:\.\d+)*",
+            rf"\b\d{{1,2}}\s+{MONTHS}\b", rf"\b{MONTHS}\s+\d{{1,2}}\b", r"(?m)^#+\s*[\d.]+", r"\[\d+\]", r"(?i)(?:\b(?:figure|fig\.|table|section|sec\.)|§)\s*\d+(?:\.\d+)*",
             r"(?m)^\s*\d+\.\s", r"!\[[^\]]*\]"]
     for p in pats:
         text = re.sub(p, lambda m: " " * len(m.group(0)), text)
@@ -61,7 +61,7 @@ def source_values(run):
             skipped.append(f.name)
             continue
         t = f.read_text(errors="ignore").replace("−", "-")
-        vals.extend(float(x) for x in SRC_NUM.findall(t) if len(x) < 40)
+        vals.extend(float(x.replace(",", "")) for x in SRC_NUM.findall(t) if len(x) < 40)
     a = np.unique(np.array(vals, dtype=float)) if vals else np.array([])
     return np.sort(np.concatenate([a, -a])) if len(a) else a, skipped
 

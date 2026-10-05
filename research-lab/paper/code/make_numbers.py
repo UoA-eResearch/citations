@@ -322,3 +322,43 @@ def study_table():
 
 if __name__ == "__main__":
     study_table()
+
+
+def untraced():
+    a, b = AUD / "coder_A" / "D_untraced_classified.csv", AUD / "coder_B" / "D_untraced_classified.csv"
+    if not (a.exists() and b.exists()):
+        return
+    a, b = pd.read_csv(a), pd.read_csv(b)
+    m = a.merge(b, on="sample_id", suffixes=("_A", "_B"))
+    ca = m.class_A.str.extract(r"(U\d)")[0]
+    cb = m.class_B.str.extract(r"(U\d)")[0]
+    M["UntracedN"] = len(m)
+    M["UntracedKappa"] = f"{cohen_kappa_score(ca, cb):.2f}"
+    M["UntracedUFourBoth"] = int(((ca == "U4") & (cb == "U4")).sum())
+    M["UntracedUFiveAny"] = int(((ca == "U5") | (cb == "U5")).sum())
+    M["UntracedUTwo"] = int(((ca == "U2") & (cb == "U2")).sum())
+    M["UntracedOneThree"] = int((ca.isin(["U1", "U3"]) & cb.isin(["U1", "U3"])).sum())
+    M["UntracedOneThreeDisagree"] = int((ca.isin(["U1", "U3"]) & cb.isin(["U1", "U3"]) & (ca != cb)).sum())
+    M["UntracedSectionRefs"] = int(m.note_A.astype(str).str.contains("section cross-reference", case=False).sum())
+    text = r"""\paragraph{Untraced numbers.} Both coders classified a seeded sample of \UntracedN{} untraced substantive numbers
+(up to 10 per report; drawn before the matcher fix in \texttt{audit/deviations.md}~A8).
+\begin{itemize}
+\item \textbf{Inconsistent with the results:} \UntracedUFiveAny{}. Neither coder found any.
+\item \textbf{Untraceable:} \UntracedUFourBoth{}, the same three for both coders. All three are numbers the
+independent reviewer computed in its own scratch code and that were never saved: two canopy percentages from a
+point-density thinning check, and a likelihood re-integration tolerance.
+\item \textbf{From cited literature or data documentation:} \UntracedUTwo{}.
+\item \textbf{Legitimately sourced:} the remaining \UntracedOneThree{} were arithmetic on traced numbers, design
+parameters or sample counts. The coders differed only on which of these two classes \UntracedOneThreeDisagree{}
+belonged to ($\kappa=\UntracedKappa{}$ overall).
+\end{itemize}
+
+Outside the sample, coder~A found one real error while recomputing a range. A report printed ``$-1.3$ to $+1.5$''
+where the data give $-1.25$ to $+1.449$, so the upper end had been rounded twice. The report has been corrected.
+"""
+    (PAPER / "numbers_untraced.tex").write_text(text)
+
+
+if __name__ == "__main__":
+    untraced()
+    write()

@@ -1,0 +1,86 @@
+sample_id,run,token,class,source,note
+ai-evaluation-science-sw-163,ai-evaluation-science-swe-audit-concordance,59.4%,U2,"OpenAI 2026 post ""Why SWE-bench Verified no longer measures frontier coding capabilities""",External figure from OpenAI audit (at least 59.4% flawed tests)
+ai-evaluation-science-sw-164,ai-evaluation-science-swe-audit-concordance,27.6%,U2,"OpenAI 2026 post ""Why SWE-bench Verified no longer measures frontier coding capabilities""",External figure: audited subset share (27.6%)
+astronomy-gwtc4-q-chieff-181,astronomy-gwtc4-q-chieff-copula-stress-test,880,U3,deviations.md D29 and D27c outcome (440 mocks per version: 200 null + 4x40 + 40 + 40; v3b + v3c),Number of simulated catalogs: 440 v3b + 440 v3c = 880
+auckland-nz-crl-structur-519,auckland-nz-crl-structural-uplift-prereg,"85,100",U1,"results/tables/opening_week.csv (mean train, 2026 rows = 85,106)","Mean of the three 2026 opening-week days, rounded"
+auckland-nz-crl-structur-515,auckland-nz-crl-structural-uplift-prereg,0.2246,U1,"results/tables/opening_week.csv (mean ratio, 2023-2025 rows = 0.22457)",Mean of nine eligible baseline-week daily ratios
+auckland-nz-crl-structur-521,auckland-nz-crl-structural-uplift-prereg,"246,600",U1,"results/tables/opening_week.csv (mean bus, 2023-2025 rows = 246,559)","Mean of nine baseline-week days, rounded"
+auckland-nz-crl-structur-507,auckland-nz-crl-structural-uplift-prereg,"64,000",U1,"results/tables/h1_thresholds.csv train pre_mean = 64,001.5 (mean of baseline_windows.csv train)",Rounded from traced value
+auckland-nz-crl-structur-532,auckland-nz-crl-structural-uplift-prereg,33.3,U1,results/tables/route_exposure.csv sum of pre_boardings over 177 matched routes = 33.31 M,Sum of traced route boardings
+auckland-nz-crl-structur-522,auckland-nz-crl-structural-uplift-prereg,"277,600",U1,"results/tables/opening_week.csv (mean bus, 2026 rows = 277,629)","Mean of three opening-week days, rounded"
+auckland-nz-crl-structur-520,auckland-nz-crl-structural-uplift-prereg,+53.7%,U1,"results/tables/opening_week.csv (train means 85,106 / 55,358 - 1 = 0.537)",Percent change of two means from the table
+auckland-nz-crl-structur-516,auckland-nz-crl-structural-uplift-prereg,0.3065,U1,"results/tables/opening_week.csv (mean ratio, 2026 rows = 0.30655)",Mean of three opening-week daily ratios
+auckland-nz-crl-structur-528,auckland-nz-crl-structural-uplift-prereg,177,U3,results/tables/route_exposure.csv (187 in_gtfs & in_monthly_pre minus 10 short-history routes listed in deviations.md D7),H2 sample size (routes with all six pre months)
+auckland-nz-crl-structur-518,auckland-nz-crl-structural-uplift-prereg,"55,400",U1,"results/tables/opening_week.csv (mean train, 2023-2025 rows = 55,358)","Mean of nine baseline-week days, rounded"
+auckland-nz-equity-adjus-632,auckland-nz-equity-adjustor-waitlist-did,100,U3,report.md wording (share bounds of a percentage),Definitional bound: shares forced to 0% or 100%; not a measured value
+auckland-nz-speed-limit--664,auckland-nz-speed-limit-reversal-crashes,349,U3,data/seg_class.parquet treated length by ttype rural_80_90_up = 348.8 km,Treated-sample road length (recomputed from data; not in results/)
+auckland-nz-speed-limit--674,auckland-nz-speed-limit-reversal-crashes,"10,629",U3,"data/seg_class.parquet treated segments in strata with controls = 10,629 (828.5 km)",Matched treated sample size (recomputed from data)
+auckland-nz-speed-limit--655,auckland-nz-speed-limit-reversal-crashes,860,U3,data/seg_class.parquet treated length = 860.1 km,Treated-sample road length (recomputed from data)
+auckland-nz-speed-limit--678,auckland-nz-speed-limit-reversal-crashes,89.6%,U1,data/crashes_pre.parquet + crashes_post.parquet name_match share among snapped = 0.8958,Statistic reproduced from data files; not saved in results/
+auckland-nz-speed-limit--650,auckland-nz-speed-limit-reversal-crashes,"1,184,764",U3,"plan.md section 3 (Segments: 1,184,764 segments, 106,770 km); data/seg_class.parquet rows","Design: segment count, verbatim in plan.md"
+auckland-nz-speed-limit--659,auckland-nz-speed-limit-reversal-crashes,397,U3,data/seg_class.parquet treated length by ttype urban_30_40_to_50 = 397.4 km,Treated-sample road length (recomputed from data)
+auckland-nz-speed-limit--640,auckland-nz-speed-limit-reversal-crashes,830,U3,data/seg_class.parquet matched treated length = 828.5 km,"Matched treated road length, rounded to about 830 km"
+auckland-nz-speed-limit--644,auckland-nz-speed-limit-reversal-crashes,830,U3,data/seg_class.parquet matched treated length = 828.5 km,"Matched treated road length, rounded to about 830 km"
+auckland-nz-speed-limit--654,auckland-nz-speed-limit-reversal-crashes,"10,983",U3,"data/seg_class.parquet klass == treated count = 10,983",Treated sample size (recomputed from data)
+auckland-nz-upzoning-can-828,auckland-nz-upzoning-canopy-lidar-did,133,U1,"data/tile_index.parquet sum of size over the 6,822 processed tiles = 133.4 GB",Sum of traced tile sizes
+auckland-nz-upzoning-can-952,auckland-nz-upzoning-canopy-lidar-did,20.3%,U4,"none found (reviewer thinning test; deviations.md D7 states only ""about 1 pp per halving"")","Two-tile thinning result not in results/, code/ or deviations"
+auckland-nz-upzoning-can-827,auckland-nz-upzoning-canopy-lidar-did,"6,822",U3,"data/cells/{2013,2016,2024} tile outputs: 2,202 + 2,412 + 2,208 = 6,822","Processed-tile count (plan.md lists 2,202/2,413/2,210 candidate tiles)"
+auckland-nz-upzoning-can-950,auckland-nz-upzoning-canopy-lidar-did,21.8%,U4,"none found (reviewer thinning test; deviations.md D7 states only ""about 1 pp per halving"")","Two-tile thinning result not in results/, code/ or deviations"
+auckland-nz-wastewater-t-997,auckland-nz-wastewater-testing-gap-deprivation,"100,000",U3,"plan.md section 3 outcome formula (x 100,000)","Unit of the ascertainment index (per 100,000 people)"
+bioinformatics-vep-acmg--1145,bioinformatics-vep-acmg-calibration-drift,"114,810",U3,"data/processed/analysis_table.parquet primary_new & rare: B = 114,810",Primary cohort size (recomputed from data; not saved in results/)
+bioinformatics-vep-acmg--1072,bioinformatics-vep-acmg-calibration-drift,"160,000",U3,"data/processed/analysis_table.parquet primary_new & rare = 159,531","Primary cohort size rounded to about 160,000"
+bioinformatics-vep-acmg--1079,bioinformatics-vep-acmg-calibration-drift,"114,810",U3,"data/processed/analysis_table.parquet primary_new & rare: B = 114,810",Primary cohort size (recomputed from data)
+bioinformatics-vep-acmg--1104,bioinformatics-vep-acmg-calibration-drift,"11,834",U2,Pejaver et al. 2022 (AJHG) calibration set,External figure from cited literature
+bioinformatics-vep-acmg--1168,bioinformatics-vep-acmg-calibration-drift,0.878,U2,"Pejaver 2022 / Bergquist 2025 REVEL thresholds (+2 0.773, +3 0.879; deviations.md D7)",Interval upper end = next published threshold minus 0.001 at table precision
+bioinformatics-vep-acmg--1144,bioinformatics-vep-acmg-calibration-drift,"44,721",U3,"data/processed/analysis_table.parquet primary_new & rare: P = 44,721",Primary cohort size (recomputed from data)
+bioinformatics-vep-acmg--1239,bioinformatics-vep-acmg-calibration-drift,0.905,U2,"Published AlphaMissense thresholds (+1 0.792, +2 0.906; deviations.md D7)",Interval upper end = next published threshold minus 0.001
+bioinformatics-vep-acmg--1114,bioinformatics-vep-acmg-calibration-drift,"199,144",U1,"data/processed/status_2026-09.parquet label counts B 139,276 + P 59,868 = 199,144","Descriptive count reproduced from data (36,755 is in score_coverage.csv)"
+bioinformatics-vep-acmg--1071,bioinformatics-vep-acmg-calibration-drift,"159,531",U3,"data/processed/analysis_table.parquet primary_new & rare = 159,531 (44,721 + 114,810)",Primary cohort size (recomputed from data)
+bioinformatics-vep-acmg--1185,bioinformatics-vep-acmg-calibration-drift,0.184,U2,"Published REVEL BP4 thresholds (-1 0.290, -2 0.183; deviations.md D7)",Interval lower end = published -2 threshold plus 0.001
+cheminformatics-drug-dis-1565,cheminformatics-drug-discovery-cliff-noise-ceiling,"127,827",U3,"deviations.md D3 (verbatim 127,827); results/tables/similar_pairs.parquet has 127,827 rows",Count of similar pairs; present verbatim in deviations.md
+climate-earth-ai-humid-h-1645,climate-earth-ai-humid-heat-attribution,150,U3,plan/report design: CMIP6 signal 2014-2033 minus 1850-1900,Plain-language approximation of the counterfactual signal period
+climate-earth-record-mar-1895,climate-earth-record-margin-obs,148,U3,data/processed/station_results_txx_L3_hinge_permute_screened.parquet station prefix GM = 148,Sample composition by country (recomputed from data)
+climate-earth-record-mar-2111,climate-earth-record-margin-obs,4.3,U3,report.md section numbering,"Section cross-reference (section 4.3), not a quantity"
+climate-earth-record-mar-1894,climate-earth-record-margin-obs,159,U3,data/processed/station_results_txx_L3_hinge_permute_screened.parquet station prefix RS = 159,Sample composition by country (recomputed from data)
+climate-earth-record-mar-2099,climate-earth-record-margin-obs,3.6,U1,results/tables/coverage_validation_kernel.csv: SD of log est across worlds / mean cell-only log half-width = 1.58-3.58,"Ratio of true spread to cell-only interval width, by kind and threshold"
+climate-earth-record-mar-1882,climate-earth-record-margin-obs,"4,020",U3,"plan.md section 2 (Candidates: the 4,020 stations)","Design: candidate station count, verbatim in plan.md"
+comp-social-science-temp-2175,comp-social-science-temp-accounts-vandalism,"17,000",U1,"results/tables/wikis.csv hrwiki 16,864",Rounded from traced value
+comp-social-science-temp-2225,comp-social-science-temp-accounts-vandalism,−1.2,U1,results/tables/twfe.csv Y_LO lo = -0.01198,Converted to percentage points
+comp-social-science-temp-2172,comp-social-science-temp-accounts-vandalism,"608,878",U1,"data/processed/agg_v2/2026-08.enwiki.2024-01.tsv sum of LO = 608,878",Count reproduced from processed data after cross-wiki exclusion
+comp-social-science-temp-2171,comp-social-science-temp-accounts-vandalism,"608,902",U1,"deviations.md D4 (verbatim); data/processed/agg/2026-08.enwiki.2024-01.tsv sum of LO = 608,902",Study count that matched the Wikimedia Analytics API figure
+comp-social-science-temp-2125,comp-social-science-temp-accounts-vandalism,184,U1,results/tables/panel_primary.parquet sum of n_REG = 184.18 M (2024-01 to 2026-07),Sum of traced panel counts
+comp-social-science-temp-2163,comp-social-science-temp-accounts-vandalism,−1.2,U1,results/tables/twfe.csv Y_LO lo = -0.01198,Converted to percentage points
+comp-social-science-temp-2226,comp-social-science-temp-accounts-vandalism,+4.1,U1,results/tables/twfe.csv Y_LO hi = 0.04057,Converted to percentage points
+comp-social-science-temp-2164,comp-social-science-temp-accounts-vandalism,+4.1,U1,results/tables/twfe.csv Y_LO hi = 0.04057,Converted to percentage points
+extra-open-neuroimaging--2377,extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage,140,U3,results/tables/inclusion.csv included max 220 minus 80 (ground truth = N - 80),Design: ground-truth set size
+extra-open-neuroimaging--2262,extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage,"1,695",U3,"results/tables/inclusion.csv manifest sum 1,698 minus fit_failed 3; deviations.md D2",Number of fitted first-level models
+extra-open-neuroimaging--2261,extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage,"13,000",U2,"plan.md section 1 (NeuroQuery, Dockes et al. 2020)",External figure from cited tool documentation
+extra-open-neuroimaging--2316,extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage,"1,698",U3,"results/tables/inclusion.csv sum of manifest = 1,698; deviations.md D2",Number of planned first-level runs
+extra-open-neuroimaging--2375,extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage,4.4,U3,report.md section numbering,"Section cross-reference (section 4.4), not a quantity"
+extra-open-neuroimaging--2255,extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage,100,U3,results/tables/inclusion.csv included 197-220 minus 80 = 117-140,Plain-language bound on the ground-truth set size
+extra-open-neuroimaging--2376,extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage,117,U3,results/tables/inclusion.csv included min 197 minus 80 (ground truth = N - 80),Design: ground-truth set size
+extra-open-neuroimaging--2315,extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage,"1,695",U3,"results/tables/inclusion.csv manifest sum 1,698 minus fit_failed 3; deviations.md D2",Number of fitted first-level models
+health-econ-wastewater-f-2452,health-econ-wastewater-flusight-value,"1,493",U3,"plan.md section 3 data description (330,015 samples from 1,493 sites)","Input data size, verbatim in plan.md"
+health-econ-wastewater-f-2643,health-econ-wastewater-flusight-value,4.4,U3,report.md section numbering,"Section cross-reference (section 4.4), not a quantity"
+health-econ-wastewater-f-2451,health-econ-wastewater-flusight-value,"330,015",U3,"plan.md section 3 data description (330,015 samples from 1,493 sites)","Input data size, verbatim in plan.md"
+llm-ml-science-mcf-emerg-2736,llm-ml-science-mcf-emergence,+40.5,U1,results/tables/units.csv OLMo-2-1124-7B mean of (final_acc_mcf5 - final_chance) over 6 tasks = 40.52,"Mean of traced per-task values, in points"
+llm-ml-science-mcf-emerg-2851,llm-ml-science-mcf-emergence,"7,200",U3,"deviations.md D4 (each results file has 7,200 rows)",Design: rows per checkpoint file
+llm-ml-science-mcf-emerg-2831,llm-ml-science-mcf-emergence,−1.3,U1,"results/tables/units.csv 410M runs mean final excess: min -1.25 (seed5), max +0.82","Range of per-run means, rounded"
+llm-ml-science-mcf-emerg-2710,llm-ml-science-mcf-emergence,2.7,U3,results/tables/checkpoints.csv OLMo-7B-0424 max tokens 2.731T,Design: checkpoint schedule endpoint
+llm-ml-science-mcf-emerg-2725,llm-ml-science-mcf-emergence,−6.4,U1,results/tables/checkpoint_metrics.csv OLMo-7B-0424 piqa 2731B acc_mcf5 0.592 minus OLMES 65.6 (deviations.md D2),Difference of traced value and cited OLMES figure
+llm-ml-science-mcf-emerg-2841,llm-ml-science-mcf-emergence,3.3,U3,report.md section numbering,"Section cross-reference (section 3.3), not a quantity"
+llm-ml-science-mcf-emerg-2738,llm-ml-science-mcf-emergence,+35.7,U1,results/tables/units.csv OLMo-7B-0424 mean (final_acc_mcf5 - final_chance) = 35.72,"Mean of traced per-task values, in points"
+llm-ml-science-mcf-emerg-2724,llm-ml-science-mcf-emergence,59.2,U1,results/tables/checkpoint_metrics.csv OLMo-7B-0424 piqa step651581-tokens2731B acc_mcf5 = 0.592,Converted to percent
+llm-ml-science-mcf-emerg-2740,llm-ml-science-mcf-emergence,−1.3,U1,results/tables/units.csv other 26 runs mean final excess: min -1.25,"Range of per-run means, rounded"
+llm-ml-science-mcf-emerg-2750,llm-ml-science-mcf-emergence,+17.7,U1,results/tables/explore_matched_tokens.csv OLMo-2-1124-7B mean_excess = 0.17716,Converted to points
+metascience-citation-con-2936,metascience-citation-context-replication,"787,384",U3,"deviations.md D4 (787,384 harvested contexts); data/processed/contexts.parquet rows","Corpus size, verbatim in deviations.md"
+metascience-citation-con-2923,metascience-citation-context-replication,"30,734",U2,"plan.md section 1 (CC30k, Obadage, Rajtmajer & Wu 2025)",External dataset size from cited literature
+metascience-citation-con-2926,metascience-citation-context-replication,860,U3,results/tables/originals_c1.parquet outcome == successful: 860,Sample composition count
+metascience-citation-con-2925,metascience-citation-context-replication,"2,116",U3,"deviations.md D7 (2,116 originals); data/raw/flora_filtered.csv unique doi_o among replications","Sample size, verbatim in deviations.md"
+metascience-citation-con-2864,metascience-citation-context-replication,"787,384",U3,"deviations.md D4 (787,384); data/processed/contexts.parquet rows","Corpus size, verbatim in deviations.md"
+metascience-citation-con-2863,metascience-citation-context-replication,"2,116",U3,"deviations.md D7; results/tables/harvest_summary.csv rows = 2,116","Sample size, verbatim in deviations.md"
+metascience-citation-con-2924,metascience-citation-context-replication,"2,246",U3,"data/raw/flora_filtered.csv replication rows with doi_o and year_r = 2,246",Input data size (recomputed from raw data)
+metascience-citation-con-2942,metascience-citation-context-replication,"20,000",U3,"deviations.md D3 (validation pool of 20,000 contexts)",Design: validation pool size
+metascience-citation-con-3011,metascience-citation-context-replication,4.3,U3,report.md section numbering,"Section cross-reference (section 4.3), not a quantity"
+metascience-citation-con-2865,metascience-citation-context-replication,"815,570",U3,"deviations.md D7 (815,570 citing papers); data/processed/citing.parquet rows","Corpus size, verbatim in deviations.md"
+seismology-geophysics-np-3157,seismology-geophysics-npp-gain-incompleteness-baseline,0.0023,U4,"none found (reviewer re-integration; not in results/, code/ or deviations.md)",Reviewer-reported tolerance with no saved output
