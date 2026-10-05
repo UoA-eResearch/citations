@@ -52,7 +52,9 @@ the agent had missed, including statistics computed over the wrong set, a miscou
 work. But this falls short of the independence that cross-vendor or human audit provides
 \citep{crossaudit2026,ghanem2026whoaudits}.
 \item \textbf{Self-attested records.} The agent controls the repository and its own session records. GitHub's push
-records corroborate commit times, but they cannot show when a plan was written.
+records corroborate commit times, but they cannot show when a plan was written. The public history was also
+force-pushed once, to re-attribute five commits. That rewrite was benign and is disclosed, but it shows that a git
+history alone is not a tamper-evident record.
 \item \textbf{No check of truth.} No domain expert checked the conclusions. The audit measures process.
 \item \textbf{A small, uneven sample.} Nineteen studies from one lab, one agent and one month are a case series. The
 first study differs from the rest in kind.

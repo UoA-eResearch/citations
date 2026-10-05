@@ -78,5 +78,34 @@ def main():
     print(u[u.resolves != True][["kind", "id", "file"]].to_string(index=False))  # noqa: E712
 
 
-if __name__ == "__main__":
+if __name__ == "__main__" and "--bib" not in __import__("sys").argv:
     main()
+
+
+def bib():
+    """Measure E applied to this paper's own bibliography: resolve every arXiv ID (and compare titles) and DOI in
+    paper/references.bib. Writes paper/audit/E_bib_refs.csv."""
+    text = (LAB / "paper" / "references.bib").read_text()
+    entries = re.split(r"\n@", text)
+    rows = []
+    for e in entries:
+        key = re.match(r"@?\w+\{([^,]+),", e.strip())
+        t = re.search(r"title=\{(.+?)\},\n", e, re.S)
+        title = re.sub(r"[{}\\]", "", t.group(1)) if t else ""
+        for a in re.findall(r"arXiv:(\d{4}\.\d{4,5})", e):
+            rows.append(dict(key=key.group(1) if key else "", kind="arxiv", id=a, bib_title=title))
+        for d in re.findall(r"doi[:\s]*(10\.\d{4,9}/[^\s},;]+)", e):
+            rows.append(dict(key=key.group(1) if key else "", kind="doi", id=d.rstrip("."), bib_title=title))
+    r = pd.DataFrame(rows)
+    ok = check_arxiv(sorted(r[r.kind == "arxiv"].id.unique()))
+    r["resolves"] = [(i in ok) if k == "arxiv" else check_doi(i) for k, i in zip(r.kind, r.id)]
+    r["arxiv_title"] = r.id.map(ok)
+    norm = lambda s: set(re.findall(r"[a-z0-9]+", str(s).lower()))  # noqa: E731
+    r["title_overlap"] = [len(norm(a) & norm(b)) / max(1, len(norm(b))) if k == "arxiv" else None for k, a, b in zip(r.kind, r.arxiv_title, r.bib_title)]
+    r.to_csv(OUT / "E_bib_refs.csv", index=False)
+    print(r.groupby("kind").resolves.agg(["size", "sum"]))
+    print("arXiv entries with title overlap < 0.6:", r[(r.kind == "arxiv") & (r.title_overlap < 0.6)][["key", "id", "bib_title", "arxiv_title"]].to_string(index=False))
+
+
+if __name__ == "__main__" and "--bib" in __import__("sys").argv:
+    bib()

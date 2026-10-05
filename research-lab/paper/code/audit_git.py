@@ -55,3 +55,29 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+def rewrite_map():
+    """Commits whose identity was rewritten on 2026-10-01 (filter-branch, author fix; see paper 5.2). Pairs each commit
+    on the local backup ref that is not on main with the main commit having the same tree, author date and subject.
+    Writes paper/audit/A_rewrite_map.csv (no author identities are written)."""
+    back = "refs/heads/backup/pre-author-fix"
+    old = git("rev-list", back, "--not", "main").split()
+    cur = {}
+    for h in git("rev-list", "main").split():
+        t, ad, s = git("show", "-s", "--format=%T%x09%ad%x09%s", "--date=raw", h).strip().split("\t", 2)
+        cur[(t, ad, s)] = h
+    rows = []
+    for h in old:
+        t, ad, cd, s = git("show", "-s", "--format=%T%x09%ad%x09%cd%x09%s", "--date=raw", h).strip().split("\t", 3)
+        new = cur.get((t, ad, s))
+        nt, ncd = (git("show", "-s", "--format=%T%x09%cd", "--date=raw", new).strip().split("\t") if new else (None, None))
+        rows.append(dict(original_sha=h, current_sha=new, tree=t, tree_identical=bool(new and nt == t), author_date=ad,
+                         committer_date_identical=bool(new and ncd == cd), subject=s))
+    d = pd.DataFrame(rows)
+    d.to_csv(OUT / "A_rewrite_map.csv", index=False)
+    print(d[["original_sha", "current_sha", "tree_identical", "committer_date_identical", "subject"]].to_string(index=False))
+
+
+if __name__ == "__main__" and "--rewrite" in __import__("sys").argv:
+    rewrite_map()

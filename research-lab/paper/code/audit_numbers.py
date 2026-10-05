@@ -105,7 +105,7 @@ def main():
         rng.shuffle(idx)
         for i in idx[:10]:
             samp.append(dict(sample_id=f"{run[:24]}-{i}", run=run, token=a.loc[i, "token"], context=a.loc[i, "context"]))
-    pd.DataFrame(samp).to_csv(OUT / "D_sample_untraced.csv", index=False)
+    pd.DataFrame(samp).to_csv(OUT / "D_sample_untraced_latest.csv", index=False)  # the classified sample is D_sample_untraced_v1.csv (A11)
     print(s.round(3).to_string(index=False))
     tot = a[a.substantive]
     print(f"\nall numbers {len(a)}, traced {a.traced.mean():.3f}; substantive {len(tot)}, traced {tot.traced.mean():.3f}; sample of untraced: {len(samp)}")

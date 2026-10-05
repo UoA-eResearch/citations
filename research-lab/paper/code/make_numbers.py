@@ -382,7 +382,7 @@ if __name__ == "__main__":
 
 def ci(k, n):
     lo, hi = wilson(k, n)
-    return f"{100 * k / n:.0f}\\% ({100 * lo:.0f}--{100 * hi:.0f}\\%)"
+    return f"{100 * k / n:.0f}\\%; 95\\% CI {100 * lo:.0f}--{100 * hi:.0f}\\%"
 
 
 def revisions():
@@ -410,18 +410,20 @@ def revisions():
             shas = [c.get("sha") for c in pl.get("commits", []) or []] + [pl.get("head"), pl.get("before")]
             pushes.append((t, [x for x in shas if x]))
         a = pd.read_csv(AUD / "A_prereg_timing.csv")
+        rw = pd.read_csv(AUD / "A_rewrite_map.csv") if (AUD / "A_rewrite_map.csv").exists() else pd.DataFrame(columns=["original_sha", "current_sha"])
+        orig = dict(zip(rw.current_sha, rw.original_sha))
         lags = []
         for r in a.itertuples():
             full = subprocess.check_output(["git", "rev-parse", r.plan_commit], cwd=LAB.parent, text=True).strip()
             ct = pd.Timestamp(int(r.t_plan), unit="s", tz="UTC")
-            # earliest push whose head or commit list contains the plan commit, or that pushed a descendant of it
-            cand = [t for t, shas in pushes if any(full.startswith(x[:7]) or x.startswith(full[:7]) for x in shas)]
-            if not cand:
-                for t, shas in sorted(pushes):
-                    head = shas[0] if shas else None
-                    if t >= ct and head and subprocess.run(["git", "merge-base", "--is-ancestor", full, head], cwd=LAB.parent).returncode == 0:
-                        cand = [t]
-                        break
+            ids = [full] + ([orig[full]] if full in orig else [])  # rewritten commits are matched through their originals
+            cand = []
+            for t, shas in sorted(pushes):
+                head = shas[0] if shas else None
+                if t >= ct and head and any(subprocess.run(["git", "merge-base", "--is-ancestor", i, head], cwd=LAB.parent,
+                                                           capture_output=True).returncode == 0 for i in ids):
+                    cand = [t]
+                    break
             if cand:
                 lags.append(dict(run=r.run, plan_commit=r.plan_commit, lag_min=(min(cand) - ct).total_seconds() / 60,
                                  pushed_before_first_output=bool(pd.isna(r.t_out) or min(cand).timestamp() < r.t_out)))
@@ -490,7 +492,7 @@ def revisions():
     M["UntracedFivePlus"] = len(u5)
     M["UntracedFivePlusTop"] = u5.run.value_counts().index[0] if len(u5) else ""
     M["UntracedFivePlusTopN"] = int(u5.run.value_counts().iloc[0]) if len(u5) else 0
-    smp = pd.read_csv(AUD / "D_sample_untraced.csv")
+    smp = pd.read_csv(AUD / "D_sample_untraced_v1.csv")  # the 85-number sample the coders classified
     M["SampleReportsTen"] = int((smp.run.value_counts() == 10).sum())
     M["SampleReports"] = smp.run.nunique()
 
@@ -504,8 +506,10 @@ def revisions2():
     import re
     L = pd.read_csv(AUD / "A_push_lag.csv")
     M["PushUnderMinute"] = int((L.lag_min < 1).sum())
-    M["PushBioLagMin"] = f"{L.set_index('run').loc['bioinformatics-vep-acmg-calibration-drift', 'lag_min']:.0f}"
-    M["PushGWTCLagDays"] = f"{L.set_index('run').loc['astronomy-gwtc4-q-chieff-copula-stress-test', 'lag_min'] / 1440:.1f}"
+    M["PushMaxLagSec"] = f"{L.lag_min.max() * 60:.0f}"
+    rw = pd.read_csv(AUD / "A_rewrite_map.csv")
+    M["RewrittenCommits"] = len(rw)
+    M["RewrittenAllIdentical"] = "yes" if (rw.tree_identical & rw.committer_date_identical).all() else "no"
     a = pd.read_csv(AUD / "A_prereg_timing.csv").set_index("run")
     strict = L[L.run.map(a.passes)]
     M["PushStrictBeforeOutput"] = int(strict.pushed_before_first_output.sum())

@@ -67,10 +67,15 @@ verification of a random sample of \VerifyN{} numbers by both coders. That verif
 been corrected in the reports. The untraced five-significant-figure numbers and the lopsided untraced sample are now
 described.
 
-\paragraph{M8. Push events.} Accepted, with one correction. The archived push events show that 17 plans were pushed
-within a minute. The bioinformatics plan was pushed after 22 minutes, and the first study's commits after 5.6 days, so
-the reviewer's ``all 19 within 0.1 minutes'' does not hold for the first study. The distinction between ``committed
-first'' and ``written first'' is now stated in Sections~\ref{sec:protocol} and~\ref{sec:prereg}.
+\paragraph{M8. Push events.} Accepted. In the first revision we ``corrected'' the reviewer, saying the first study's
+commits were pushed 5.6 days late and the bioinformatics plan 22 minutes late. That was wrong. Those lags were
+artefacts of a history rewrite that changed five commit IDs: on 1 October, git \texttt{filter-branch} changed their
+author identity at the lab owner's request, and the branch was force-pushed. The confirmation pass found this.
+
+Matched through the original commit IDs, all 19 plans were pushed within seconds, as the reviewer said. The rewrite is
+now disclosed in Section~\ref{sec:prereg} and in the limitations. \path{audit/A_rewrite_map.csv} lists the original and
+current commit IDs and their identical trees. The distinction between ``committed first'' and ``written first'' is
+stated.
 
 \paragraph{M9. The first study is different.} Accepted. It is described separately in Section~\ref{sec:protocol}.
 Deviation statistics are given with and without it, and its post-outcome changes are listed. We added the evidence
@@ -82,4 +87,16 @@ from the private session record that its plan existed on 2 September.
 the plan, and the session logs identify it as the workflow's scope subagent, running Claude Sonnet~5.
 \item \textbf{Minor 23} (plain-language word counts) is reported as a check that passed.
 \end{itemize}
-A confirmation pass by the same reviewer is recorded in \path{paper/review/}.
+\paragraph{Confirmation pass.} The same reviewer checked the revision (\path{paper/review/confirmation.md}) and
+recommended \emph{minor revision}. Five items were not yet fully addressed, plus a few new problems. We addressed them
+as follows:
+\begin{itemize}
+\item the M8 error above;
+\item a reproducible script for the verification sample (\path{code/sample_verify.py}, which regenerates the
+committed sample exactly from the reports as they stood when it was drawn);
+\item the untraced-sample counts, now taken from the classified file;
+\item a committed output for the bibliography check;
+\item the first study's model history, and a time-zone slip;
+\item the GWTC-4 entry segmentation and which coder found what;
+\item one incomplete reference.
+\end{itemize}

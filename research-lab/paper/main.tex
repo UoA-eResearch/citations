@@ -25,47 +25,30 @@
 \maketitle
 
 \begin{abstract}
-\noindent AI agents can now choose a research question, analyse data and write up a result. Evidence on how such
+\noindent AI agents can now choose a research question, analyse data and write up a result, and evidence on how such
 research goes wrong is accumulating as fast: post-hoc selection, overclaimed significance, underpowered nulls
 presented as findings, AI reviewers that accept work they have flagged, and wide variation between agent analysts.
 
-\textbf{Protocol.} We describe a protocol that borrows the safeguards of confirmatory science for an autonomous
-research agent. One agent:
-\begin{itemize}
-\item scouts and scores research leads;
-\item commits each plan to a public repository before analysing outcome data;
-\item validates its methods;
-\item obtains an adversarial review from a separate model instance before any verdict;
-\item logs deviations;
-\item publishes reports that include null results.
-\end{itemize}
+We describe a protocol that borrows the safeguards of confirmatory science for an autonomous research agent. The agent
+scouts and scores leads, commits each plan to a public repository before analysing outcome data, validates its
+methods, obtains an adversarial review from a separate model instance before any verdict, logs deviations, and
+publishes reports that include null results.
 
-\textbf{Audit.} We audit its first \StudiesTotal{} studies (\StudiesReported{} reported, 2 in progress) in
-\StudyDomains{} fields of the lab's lead database. The audit uses git history, GitHub push records, coder agents of two
-models, and direct verification of a random sample of reported numbers.
+We audit its first \StudiesTotal{} studies (\StudiesReported{} reported, 2 in progress) in \StudyDomains{} fields,
+using git history, GitHub push records, coder agents of two models, and direct verification of a random sample of
+reported numbers. Plans demonstrably preceded outcomes in \PreregPassClassified{} of \StudiesTotal{} studies; in the
+first, the plan entered the public record together with its results. Of \VerdictsDecided{} decided verdicts,
+\VerdictSupported{} support the preregistered hypothesis. The public deviation logs hold \DevN{} entries, of which
+\DevRelevantAfter{} could have changed a verdict after the outcome was seen, \DevRelevantAfterGWTC{} of them in the
+first study. By the agent's own records, which include no pre-review drafts, review changed \ReviewHeadlineChanged{}
+headline estimates and \ReviewVerdictChanged{} verdicts. Both coders verified \VerifyOKBoth{} of \VerifyN{} sampled
+report numbers; the two errors found are corrected.
 
-\textbf{Findings.}
-\begin{itemize}
-\item Plans demonstrably preceded outcomes in \PreregPassClassified{} of \StudiesTotal{} studies. In the first study
-the plan entered the public record together with its results.
-\item Of \VerdictsDecided{} decided verdicts, \VerdictSupported{} (\CISupported{}) support the preregistered
-hypothesis.
-\item \DevN{} deviations are logged publicly, and \DevRelevantAfter{} could have changed a verdict after the outcome
-was seen; \DevRelevantAfterGWTC{} of those come from the first study.
-\item By the agent's own records, which include no pre-review drafts, review changed \ReviewHeadlineChanged{} headline
-estimates and \ReviewVerdictChanged{} verdicts.
-\item \VerifyOKBoth{} of \VerifyN{} sampled report numbers were verified by both coders.
-\end{itemize}
-
-\textbf{Weaknesses.} The audit also finds clear weaknesses:
-\begin{itemize}
-\item only one plan stated a power calculation;
-\item only \InvBlindStrong{} studies kept outcomes out of the agent's reach;
-\item the protocol's own rules (confirmation reviews, recorded reviewer models) were applied inconsistently;
-\item automated matching of report numbers to result files cannot establish that they trace.
-\end{itemize}
-All coders and reviewers were subagents in the executing agent's own session. We release everything and propose
-changes.
+The audit also finds weaknesses. Only one plan stated a power calculation, and only \InvBlindStrong{} studies kept
+outcomes out of the agent's reach. The protocol's review rules were applied unevenly, and automated matching of report
+numbers to result files cannot establish that they trace. All coders and reviewers were subagents in the executing
+agent's own session, and the public history was force-pushed once to re-attribute five commits. We release everything
+and propose changes.
 \end{abstract}
 
 \section{Introduction}
@@ -193,10 +176,11 @@ such a portfolio:
 The lab runs on one workstation (32-core Xeon, 94\,GB RAM, one A100 80\,GB GPU). The executing agent works in one
 long-running Claude Code session, and its model changed over time:
 \begin{itemize}
-\item from 24 September 2026, Claude Opus~5.5 (\texttt{claude-opus-5-5}). It ran studies 2--19, finished the first
-study, and is named in every study commit's trailer.
-\item before that, for the first study's early work (1--12 September), Claude Fable~5, Sonnet~5 and Fable~5.1. The
-first study's workflow stages ran on Sonnet~5 (scoping and the plan) and Fable~5.1 (build, execution and review).
+\item from 25 September 2026 (NZ time), Claude Opus~5.5 (\texttt{claude-opus-5-5}). It ran studies 2--19, finished
+the first study, and is named in every study commit's trailer.
+\item before that, for the first study's early work (2--12 September), Claude Fable~5, Sonnet~5 and Fable~5.1. In
+that study's workflow, every stage ran first on Sonnet~5 on 2 September (scoping and the plan, build, execution, two
+reviews and write-up). Fable~5.1 then ran the later build and execution stages from that afternoon onwards.
 \end{itemize}
 Everything it produces is committed to a public git repository and mirrored to a web page.
 
@@ -344,7 +328,7 @@ Everything in this lab was produced by AI agents (Anthropic models):
 \begin{itemize}
 \item \textbf{Leads.} Generated by scout and critic agents.
 \item \textbf{Studies.} Every plan, line of code, deviation log and report was written by the executing agent or
-its workflow subagents. That was Claude Opus~5.5 from 24 September; the first study began under Fable~5, Sonnet~5 and
+its workflow subagents. That was Claude Opus~5.5 from 25 September; the first study began under Fable~5, Sonnet~5 and
 Fable~5.1, and Sonnet~5 wrote its plan. Study-level reviews were by Claude Fable~5.1 subagents.
 \item \textbf{This paper.} The executing agent designed the audit and wrote the paper.
 \item \textbf{Audit coding.} Coder A (Fable~5.1), coder B (Opus~5.5) and an inventory coder (Opus~5.5) did the

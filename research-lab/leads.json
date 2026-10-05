@@ -6336,11 +6336,11 @@
    "risks": "Conflict of interest: the auditing agent ran the studies. Git timestamps are self-attested, although push events corroborate them. No domain expert checked the studies' conclusions.",
    "critic_note": "Not scouted. Proposed by the lab owner on 2026-10-06 after the field survey (related-efforts.md). Its value and cost scores are the executing agent's, not a critic's.",
    "plain_summary": "This lab's AI agent writes down its plan for each study and publishes it before looking at the results, then reports whatever it finds, including null results. Here the agent audits itself across its first 19 studies. Did the plans really come first? What went wrong? Did the independent reviews catch mistakes? It reports its own failures as well as its successes. The audit also found and corrected small errors in five published reports.",
-   "status": "meta-study \u00b7 draft paper (revised after independent review)",
+   "status": "meta-study \u00b7 draft paper (revised after independent review and confirmation pass)",
    "report_url": "paper/main.pdf",
    "verdict_tag": "Pending",
-   "verdict_note": "A descriptive audit, so there is no hypothesis verdict. The draft awaits the reviewer's confirmation pass and the lab owner's decision on authorship and venue.",
-   "headline": "Plans demonstrably came before outcomes in 18 of 19 studies; the first study's plan entered git with its results. 3 of 16 decided verdicts support their hypothesis. 117 of 119 sampled report numbers check out, and the 2 rounding errors are now corrected. Weak points: only one plan had a power calculation, only 3 studies sealed or pre-dated their outcomes, and the protocol's review rules were applied unevenly."
+   "verdict_note": "A descriptive audit, so there is no hypothesis verdict. The draft has been revised after an independent review (major revision) and a confirmation pass (minor revision). Authorship and venue are for the lab owner to decide.",
+   "headline": "Plans demonstrably came before outcomes in 18 of 19 studies, and all 19 were pushed to GitHub within seconds of commit. The first study's plan entered git together with its results. 3 of 16 decided verdicts support their hypothesis. 117 of 119 sampled report numbers check out, and the 2 rounding errors are corrected. Weak points: only one plan had a power calculation, only 3 studies sealed or pre-dated their outcomes, review rules were applied unevenly, and the history was force-pushed once to re-attribute five commits."
   }
  ],
  "updated": "2026-10-02",

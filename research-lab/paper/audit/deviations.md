@@ -139,3 +139,28 @@ cannot establish that a number traces, and it cannot detect a wrong number that 
 report (`audit/D_verify_sample.csv`). For each one they locate the specific source (file and cell, or a derivation)
 and judge whether the printed value is consistent with it. This sample replaces automated tracing as the primary
 measure of whether report numbers are accurate. The automated rates are reported only to show that the method fails.
+
+## A11. Changes after the confirmation pass (2026-10-06 03:42 NZDT)
+
+**Push lags.** The confirmation pass (`review/confirmation.md`) showed that the push lags in A_push_lag.csv were
+wrong. On 2026-10-01 a `filter-branch` rewrite changed the IDs of five commits, and lags had been matched by the
+current IDs. Two changes follow:
+
+- `audit_git.py --rewrite` now writes `A_rewrite_map.csv`, which pairs the original and current IDs. Trees and
+  timestamps are identical, and author identities are not written.
+- `make_numbers.py` now matches each push through the original ID. All 19 plans were pushed within 4 seconds.
+
+**Untraced sample.** `D_sample_untraced.csv` was overwritten again by the `--perturb` rerun, so A8's statement that
+it was "kept unchanged" stopped being true. It is restored to the classified 85-number sample, which is the same as
+`D_sample_untraced_v1.csv`. `audit_numbers.py` now writes any regenerated sample to
+`D_sample_untraced_latest.csv`, and `make_numbers.py` reads the v1 file.
+
+**Verification sample.** `code/sample_verify.py` regenerates `D_verify_sample.csv`. It uses seed 20261006+7 and the
+reports at commit 90930ab, the state they were in when the sample was drawn, and `--check` confirms an exact
+match.
+
+**Bibliography check.** `audit_refs.py --bib` writes `E_bib_refs.csv`: 33 of 33 arXiv identifiers and 6 of 6 DOIs
+resolve.
+
+**Disagreement count.** A7's count of 27 entries with any coder disagreement covers all 19 studies. For the
+135 entries in reported studies the count is 26.
