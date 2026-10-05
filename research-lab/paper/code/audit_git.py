@@ -1,0 +1,57 @@
+"""Measure A (audit_plan.md): preregistration timing from git history. For each run: first commit adding plan.md,
+first commit adding a results/ file or report.md, and every later commit touching plan.md (with diffstat).
+Writes paper/audit/A_prereg_timing.csv and paper/audit/A_plan_edits.csv."""
+import subprocess
+from pathlib import Path
+
+import pandas as pd
+
+REPO = Path(__file__).resolve().parents[3]
+RUNS = REPO / "research-lab" / "runs"
+OUT = REPO / "research-lab" / "paper" / "audit"
+
+
+def git(*a):
+    return subprocess.check_output(["git", *a], cwd=REPO, text=True)
+
+
+def commits(path, extra=()):
+    """(hash, unix time, subject) of commits touching path, oldest first."""
+    out = git("log", "--reverse", "--format=%H%x09%ct%x09%s", *extra, "--", path).strip().splitlines()
+    return [tuple(x.split("\t", 2)) for x in out if x]
+
+
+def main():
+    rows, edits = [], []
+    for d in sorted(p for p in RUNS.iterdir() if p.is_dir()):
+        rel = d.relative_to(REPO)
+        plan = commits(f"{rel}/plan.md", ("--diff-filter=A",))
+        res = commits(f"{rel}/results", ("--diff-filter=A",))
+        rep = commits(f"{rel}/report.md", ("--diff-filter=A",))
+        t_plan = int(plan[0][1]) if plan else None
+        outs = [int(c[1]) for c in res[:1] + rep[:1]]
+        t_out = min(outs) if outs else None
+        first_out = min(res[:1] + rep[:1], key=lambda c: int(c[1])) if outs else None
+        same_commit = bool(plan and first_out and plan[0][0] == first_out[0])
+        rows.append(dict(run=d.name, plan_commit=plan[0][0][:7] if plan else None, t_plan=t_plan,
+                         first_output_commit=first_out[0][:7] if first_out else None, t_out=t_out,
+                         hours_plan_to_first_output=(t_out - t_plan) / 3600 if t_plan and t_out else None,
+                         passes=bool(t_plan and (t_out is None or (t_plan < t_out and not same_commit))), same_commit=same_commit,
+                         report_exists=(d / "report.md").exists()))
+        allp = commits(f"{rel}/plan.md")
+        for h, t, s in allp[1:]:
+            stat = git("show", "--numstat", "--format=", h, "--", f"{rel}/plan.md").split()
+            edits.append(dict(run=d.name, commit=h[:7], time=int(t), subject=s, lines_added=int(stat[0]) if stat else 0,
+                              lines_removed=int(stat[1]) if len(stat) > 1 else 0, after_first_output=bool(t_out and int(t) > t_out)))
+    a = pd.DataFrame(rows)
+    a.to_csv(OUT / "A_prereg_timing.csv", index=False)
+    e = pd.DataFrame(edits)
+    e.to_csv(OUT / "A_plan_edits.csv", index=False)
+    print(a[["run", "plan_commit", "first_output_commit", "hours_plan_to_first_output", "passes", "same_commit"]].round(1).to_string(index=False))
+    print(f"\npass {int(a.passes.sum())}/{len(a)}; plan edits after first commit: {len(e)} (after first output: {int(e.after_first_output.sum()) if len(e) else 0})")
+    if len(e):
+        print(e[["run", "commit", "subject", "lines_added", "lines_removed", "after_first_output"]].to_string(index=False))
+
+
+if __name__ == "__main__":
+    main()
