@@ -64,3 +64,31 @@ A third coder (Opus model, the same instructions apply) therefore inventories, f
 - the type of primary analysis.
 
 The output is `audit/inventory/plan_inventory.csv`. This inventory was not in the protocol.
+
+## A6. Inventory adjudication: outcome blinding (2026-10-06 01:39 NZDT)
+
+**Why the codebook needed fixing.** It mixed two ideas under "outcome_blinding": keeping outcomes away from the
+analyst, and how outcomes are verified.
+
+**What was recoded.** In `audit/inventory/plan_inventory_adjudicated.csv`:
+
+- **humid-heat:** prospective → none. Its outcomes are computed by the agent's own pipeline, so they are not external
+  data that did not yet exist.
+- **formal-math:** formal → none for blinding. Machine-checked verification is recorded in a separate column,
+  `verification_formal`.
+
+**What remains.** Outcome blinding now covers sealed (speed-limit, quantum) and externally prospective (CRL). The
+coder's raw file is unchanged.
+
+## A7. Adjudication rules and review issue counts (2026-10-06 01:46 NZDT)
+
+**Basis.** Adjudication starts from coder A's file, because it identified entries more conservatively. B's extra
+`D27c-review` is folded into D27c, as A did. Three rules were applied to the 27 disagreements, and each decision and
+its reason is logged in `audit/adjudication.csv`:
+
+1. **Category follows the cause.** A data problem that forced a change of specification is coded C2.
+2. **Verdict relevance takes the cautious side.** When coders split, yes beats unclear, and unclear beats no.
+3. **Timing takes "unclear"** when one coder said unclear.
+
+**Review issue counts.** Exact agreement on the count of review issues was 24%, and per-category agreement was
+29-100%. These counts are not adjudicated. The paper reports both coders' totals.

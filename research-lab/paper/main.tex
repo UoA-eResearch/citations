@@ -5,11 +5,13 @@
 \usepackage{microtype}
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{array}
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{xcolor}
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
 \usepackage{enumitem}
 \setlist{itemsep=2pt,topsep=4pt}
 \input{numbers.tex}
@@ -23,51 +25,41 @@
 \maketitle
 
 \begin{abstract}
-\noindent Systems that let AI agents choose a question, analyse data and write up a result are multiplying. The
-evidence on how such research goes wrong is accumulating too:
+\noindent AI agents can now choose a research question, analyse data and write up a result. Evidence on how such
+research goes wrong is accumulating as fast: post-hoc selection, overclaimed significance, underpowered nulls
+presented as findings, AI reviewers that accept work they have flagged, and large variation between agent analysts.
+
+We describe a protocol that applies the safeguards of confirmatory science to an autonomous research agent, and audit
+how it worked in practice. One AI agent:
 \begin{itemize}
-\item selective reporting and post-hoc choices;
-\item overclaimed significance;
-\item underpowered null results presented as findings;
-\item AI reviewers that accept work they have flagged;
-\item large analyst-to-analyst variation between agents.
+\item scouts and scores \LeadsTotal{} leads in \LeadDomains{} fields;
+\item commits a preregistration to a public repository before analysing outcome data;
+\item keeps outcomes sealed where it can;
+\item validates its methods;
+\item obtains an adversarial review from a separate model instance before any verdict;
+\item logs every deviation with a timestamp;
+\item publishes plain-language reports with one of five verdicts.
 \end{itemize}
 
-\noindent We describe a protocol that applies the safeguards of confirmatory science to an autonomous research agent,
-and audit how well it worked in practice. Under the protocol, one AI agent does the following:
-\begin{itemize}
-\item scouts and scores \LeadsTotal{} research leads across \LeadDomains{} fields using open data;
-\item commits a preregistration to a public git repository before outcome data are analysed;
-\item where possible, keeps outcomes sealed or not yet in existence;
-\item validates its methods before using them;
-\item obtains an independent adversarial review by another model instance before any verdict;
-\item logs every departure from plan with a timestamp;
-\item publishes a report with a plain-language summary and one of five verdicts, including null results.
-\end{itemize}
+We audited the first \StudiesTotal{} studies, in \StudyDomains{} fields, using git history, two independent coder
+agents of different models, automated number tracing and reference resolution.
 
-\noindent We audit the first \StudiesTotal{} studies, \StudiesReported{} of them reported, across \StudyDomains{}
-fields. The audit uses git history, two independent coder agents of different models, automated number tracing, and
-reference resolution.
+\textbf{Verdicts.} Of \VerdictsDecided{} decided verdicts, \VerdictSupported{} support the preregistered hypothesis,
+\VerdictRefuted{} refute it, \VerdictUnsupported{} are unsupported and \VerdictInconclusive{} are inconclusive.
 
-\begin{itemize}
-\item \textbf{Verdicts.} Of the \VerdictsDecided{} decided verdicts, \VerdictSupported{} support the preregistered
-hypothesis, \VerdictRefuted{} refute it, \VerdictUnsupported{} are unsupported and \VerdictInconclusive{} are
-inconclusive.
-\item \textbf{Preregistration timing.} The plan predates every outcome file in \PreregPassStrict{} of \StudiesTotal{}
-studies, and in \PreregPassClassified{} once pre-outcome material committed alongside the plan is allowed. The first
-study's preregistration cannot be verified from the public record.
-\item \textbf{Deviations and review.} \DevTotal{} deviations were logged, and \DevVerdictRelevantPct{} were judged
-capable of changing a verdict. Review changed \ReviewHeadlineChanged{} headline estimates and \ReviewVerdictChanged{}
-verdicts.
-\item \textbf{Number tracing.} Naive tracing of report numbers to result files is barely informative: chance matches
-reach \NumChanceAll{}. After a chance correction, about \NumCorrectedThree{} of three-significant-figure numbers trace.
-\item \textbf{References.} All \RefArxiv{} arXiv identifiers and \RefDoi{} DOIs cited resolve.
-\end{itemize}
+\textbf{Preregistration.} Plans demonstrably preceded outcomes in \PreregPassClassified{} of \StudiesTotal{} studies.
+In the lab's first study, preregistration cannot be verified from the public record.
 
-\noindent Safeguards were applied unevenly. Only \InvPower{} of \StudiesTotal{} plans stated a power analysis, and
-\InvBlindStrong{} kept outcomes sealed, prospective or machine-checked. Scout estimates of effort were too high by more
-than an order of magnitude. We release the protocol, all plans, reports, code and audit data, and propose specific
-changes.
+\textbf{Deviations and review.} \DevVerdictRelevantPct{} of \DevTotal{} logged deviations could have changed a
+verdict. Independent review changed \ReviewHeadlineChanged{} headline estimates and \ReviewVerdictChanged{} verdicts.
+
+\textbf{Weaknesses.} Safeguards were uneven. Only one plan stated a power calculation, and only \InvBlindStrong{}
+studies kept outcomes sealed or not yet in existence. Naive tracing of report numbers to result files proved nearly
+uninformative: \NumChanceAll{} of numbers ``traced'' to unrelated studies.
+
+\textbf{References.} All \RefArxiv{} arXiv identifiers and \RefDoi{} DOIs cited resolve.
+
+We release the protocol, plans, reports, code and audit data, and propose eight changes.
 \end{abstract}
 
 \section{Introduction}
@@ -164,8 +156,8 @@ working in a long-running Claude Code session. Everything it produces is committ
 mirrored to a web page.
 
 The human lab owner sets the programme, authorises resource use (for example, stopping a shared GPU service), and makes
-decisions the agent flags as theirs (for example, whether to proceed without consulting M\=aori and Pacific data
-governance groups). They did not write any plan, code or report.
+decisions the agent flags as theirs (for example, whether to proceed without M\=aori and Pacific input on a study of
+an ethnicity-based waitlist policy). They did not write any plan, code or report.
 
 \subsection{Leads: scouting and triage}
 
@@ -265,7 +257,7 @@ added after the protocol;
 \item[(F)] scout estimates against outcomes.
 \end{itemize}
 Agreement is Cohen's $\kappa$ \citep{cohen1960kappa}. Departures from the audit protocol are logged in
-\texttt{paper/audit/deviations.md}.
+\path{paper/audit/deviations.md}.
 
 \section{Results}
 \label{sec:results}

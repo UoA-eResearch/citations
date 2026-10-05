@@ -1,0 +1,29 @@
+\section{Where to find each part of the protocol}
+\label{app:files}
+
+All paths are relative to \texttt{research-lab/} in the public repository.
+
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.22\textwidth} >{\raggedright\arraybackslash}X@{}}
+\toprule
+Artifact & Location and content \\
+\midrule
+Lead database & \texttt{leads.json}: hypothesis, gap, literature for and against, datasets, method, plan, risks,
+value, cost, feasibility, critic note, plain-language summary, and (after execution) status, verdict tag, verdict
+note and headline \\
+Lead explorer & \texttt{index.html}: value against cost plot (GitHub Pages) \\
+Scouting workflows & \path{research-lead-scout-round2.js} and earlier rounds; \path{run-avenue.js} (executor
+workflow, used in early studies) \\
+Per-study plan & \texttt{runs/<id>/plan.md}, committed before outcome analysis \\
+Deviation log & \texttt{runs/<id>/deviations.md}, entries timestamped with the system clock \\
+Report & \texttt{runs/<id>/report.md} and \texttt{report.html}, with ``In plain terms'', results, caveats and review
+summary \\
+Code and results & \texttt{runs/<id>/code/}, \texttt{runs/<id>/results/} \\
+Field survey & \texttt{related-efforts.md} \\
+Self-audit & \path{paper/audit_plan.md} (protocol), \path{paper/audit/} (all measures, coder outputs, adjudication,
+deviations), \path{paper/code/} (audit and paper-number code) \\
+\bottomrule
+\end{tabularx}
+
+\section{Independent review of this paper}
+\label{app:review}
+\input{review_summary.tex}

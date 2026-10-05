@@ -1,0 +1,40 @@
+measure,run,entry_id,field,coder_A_value,adjudicated,reason
+B,astronomy-gwtc4-q-chieff-copula-stress-test,D3,category,C6,C6,test configuration is an environment/compute matter
+B,astronomy-gwtc4-q-chieff-copula-stress-test,D7,category,C3,C3,"sample rule changed to match the published sample: a change to the primary sample, not a data defect"
+B,astronomy-gwtc4-q-chieff-copula-stress-test,D8,verdict_relevance,no,yes,the reproduction gate decides whether the pipeline counts as validated; cautious rule
+B,astronomy-gwtc4-q-chieff-copula-stress-test,D9,trigger,T1,T2,raised by a failed count gate
+B,astronomy-gwtc4-q-chieff-copula-stress-test,D11,category,C3,C3,likelihood definition changed
+B,astronomy-gwtc4-q-chieff-copula-stress-test,D11,verdict_relevance,unclear,unclear,D28 later shows the bounded penalty can be exploited; cautious rule
+B,astronomy-gwtc4-q-chieff-copula-stress-test,D12,category,C3,C1,numerical setting raised to meet a convergence criterion
+B,astronomy-gwtc4-q-chieff-copula-stress-test,D13,verdict_relevance,yes,yes,prior and grid change for all models; cautious rule
+B,astronomy-gwtc4-q-chieff-copula-stress-test,D27,category,C3,C1,mock kernel defects fixed
+B,astronomy-gwtc4-q-chieff-copula-stress-test,D29,verdict_relevance,yes,yes,the preregistered E2 statistic was recomputed; cautious rule
+B,auckland-nz-crl-structural-uplift-prereg,D1,category,C7,C2,forced by missing preceding values at the start of the series (cause-based rule)
+B,auckland-nz-equity-adjustor-waitlist-did,D3,trigger,T1,T3,"logged with the same timestamp as the review-requested D4, and refers to it"
+B,auckland-nz-speed-limit-reversal-crashes,D6,category,C6,C6,code change that enables planned robustness runs
+B,auckland-nz-speed-limit-reversal-crashes,D6,timing,after,unclear,coders split between after and unclear; rule: unclear
+B,auckland-nz-wastewater-testing-gap-deprivation,D4,trigger,T1,T3,the omission was undeclared until review
+B,auckland-nz-wastewater-testing-gap-deprivation,D4,timing,unclear,after,"logged after review, which follows the results"
+B,auckland-nz-wastewater-testing-gap-deprivation,D4,verdict_relevance,unclear,unclear,cautious rule
+B,auckland-nz-wastewater-testing-gap-deprivation,D5,timing,unclear,unclear,coders split between after and unclear; rule: unclear
+B,bioinformatics-vep-acmg-calibration-drift,D8,verdict_relevance,yes,yes,the review changed how H2 is read and restored omitted results; cautious rule
+B,cheminformatics-drug-discovery-cliff-noise-ceiling,D1,category,C6,C6,downloads and checksums are logistics
+B,cheminformatics-drug-discovery-cliff-noise-ceiling,D1,trigger,T1,T1,routine executor step; the validations listed passed and triggered nothing
+B,cheminformatics-drug-discovery-cliff-noise-ceiling,D2,category,C3,C2,"cause is a data-quality fact (re-reported duplicates), which then forced a redefinition (cause-based rule)"
+B,cheminformatics-drug-discovery-cliff-noise-ceiling,D3,trigger,T1,T2,follows from the failed coverage check under the plan's rule
+B,cheminformatics-drug-discovery-cliff-noise-ceiling,D4,category,C6,C6,a wait-loop bug delayed reading the results
+B,climate-earth-record-margin-obs,D3,trigger,T1,T2,synthetic null validation exposed the bias
+B,climate-earth-record-margin-obs,D5,category,C8,C8,the circular own-trend version was demoted: a claim corrected
+B,extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage,D1,category,C7,C7,the estimator is mathematically unchanged; only the optimiser route differs
+B,formal-math-selfplay-vacuity-drift,D2,trigger,T1,T2,found by the pipeline's built-in split check
+B,health-econ-wastewater-flusight-value,D2,category,C3,C3,"the plan's vintage rule would leak future data, so the specification was corrected"
+B,health-econ-wastewater-flusight-value,D2,trigger,T2,T2,found by matching against hub baseline forecasts (a validation check)
+B,health-econ-wastewater-flusight-value,D2,verdict_relevance,yes,yes,the leakage correction affects the primary comparison; cautious rule
+B,health-econ-wastewater-flusight-value,D4,category,C7,C8,a claim was withdrawn
+B,metascience-citation-context-replication,D3,verdict_relevance,unclear,unclear,the cap on the classifier's scope could matter; cautious rule
+B,seismology-geophysics-npp-gain-incompleteness-baseline,D3,category,C7,C1,stale validation tables corrected
+C,auckland-nz-crl-structural-uplift-prereg,,headline_changed,unclear,no,no outcome exists yet; moving a decision line is not a change to a headline estimate
+C,bioinformatics-vep-acmg-calibration-drift,,headline_changed,yes,no,the numbers were unchanged; only the wording was qualified
+C,bioinformatics-vep-acmg-calibration-drift,,verdict_changed,yes,unclear,"the pre-review draft is not in git, so whether the verdict changed cannot be shown"
+C,metascience-citation-context-replication,,headline_changed,no,no,AUCs barely moved; the verdict change is recorded separately
+C,seismology-geophysics-npp-gain-incompleteness-baseline,,verdict_changed,unclear,no,"primary_round1.csv shows R of 1.09 and 0.97 before review, so 2 of 3 configurations already met the rule and the verdict was Supported both before and after"

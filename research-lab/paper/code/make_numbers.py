@@ -17,6 +17,7 @@ AUD = PAPER / "audit"
 TAB = PAPER / "tables"
 FIG = PAPER / "figures"
 M = {}
+W = {1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six", 7: "Seven", 8: "Eight"}
 
 
 def pct(x, d=0):
@@ -156,14 +157,39 @@ def coders():
     M["DevVerdictRelevant"] = int((vr == "yes").sum())
     M["DevVerdictRelevantPct"] = pct((vr == "yes").mean(), 0)
     cat = final.category.astype(str).str.extract(r"(C\d)")[0].value_counts()
-    for c in [f"C{i}" for i in range(1, 9)]:
-        M[f"Dev{c}"] = int(cat.get(c, 0))
+    for i in range(1, 9):
+        M[f"DevC{W[i]}"] = int(cat.get(f"C{i}", 0))
     trig = final.trigger.astype(str).str.extract(r"(T\d)")[0].value_counts()
-    for t in [f"T{i}" for i in range(1, 5)]:
-        M[f"Dev{t}"] = int(trig.get(t, 0))
+    for i in range(1, 5):
+        M[f"DevT{W[i]}"] = int(trig.get(f"T{i}", 0))
     tim = final.timing.astype(str).str.lower().str.strip().value_counts()
     M["DevAfter"], M["DevBefore"] = int(tim.get("after", 0)), int(tim.get("before", 0))
-    M["DevCFour"] = M["DevC4"]
+    M["DevUnclearTiming"] = int(tim.get("unclear", 0))
+    M["DevAdjudications"] = len(pd.read_csv(AUD / "adjudication.csv").query("measure == 'B'")) if (AUD / "adjudication.csv").exists() else 0
+    M["DevDisagreeEntries"] = int(((m.category_A.astype(str).str[:2].str.lower() != m.category_B.astype(str).str[:2].str.lower()) |
+                                   (m.trigger_A.astype(str).str[:2].str.lower() != m.trigger_B.astype(str).str[:2].str.lower()) |
+                                   (m.timing_A.astype(str).str.lower().str.strip() != m.timing_B.astype(str).str.lower().str.strip()) |
+                                   (m.verdict_relevance_A.astype(str).str.lower().str.strip() != m.verdict_relevance_B.astype(str).str.lower().str.strip())).sum())
+    # verdict-relevant deviations made after the outcome was seen, and the C4 entries
+    M["DevRelevantAfter"] = int(((vr == "yes") & (final.timing.astype(str).str.lower().str.strip() == "after")).sum())
+    final.assign(cat=final.category.astype(str).str[:2]).query("cat == 'C4'")[["run", "entry_id", "entry_title"]].to_csv(AUD / "B_decision_rule_changes.csv", index=False)
+    # figure: categories by trigger
+    lab = {"C1": "bug/numerical fix", "C2": "data problem", "C3": "primary spec change", "C4": "decision-rule change",
+           "C5": "added secondary analysis", "C6": "environment/logistics", "C7": "clarification", "C8": "claim withdrawn/corrected"}
+    tl = {"T1": "executor", "T2": "validation check", "T3": "independent reviewer", "T4": "external event"}
+    ct = pd.crosstab(final.category.astype(str).str[:2], final.trigger.astype(str).str[:2]).reindex(index=list(lab), columns=list(tl), fill_value=0)
+    fig, ax = plt.subplots(figsize=(6.2, 3.3))
+    left = np.zeros(len(ct))
+    cols = ["#2b6c8f", "#7fb069", "#c9a14a", "#a05a7a"]
+    for t, col in zip(ct.columns, cols):
+        ax.barh([lab[c] for c in ct.index], ct[t], left=left, color=col, label=tl[t])
+        left += ct[t].values
+    ax.invert_yaxis()
+    ax.set_xlabel("number of logged deviations")
+    ax.legend(frameon=False, fontsize=8, loc="upper center", bbox_to_anchor=(0.45, -0.18), ncol=4)
+    fig.tight_layout()
+    fig.savefig(FIG / "deviations.pdf", bbox_inches="tight")
+    plt.close(fig)
     return out
 
 
@@ -186,14 +212,20 @@ def review():
     M["ReviewHeadlineChanged"] = int((final.headline_changed.astype(str).str.lower().str.strip() == "yes").sum())
     M["ReviewVerdictChanged"] = int((final.verdict_changed.astype(str).str.lower().str.strip() == "yes").sum())
     n = pd.to_numeric(final.n_issues, errors="coerce")
+    nb = pd.to_numeric(final.n_issues_B, errors="coerce") if "n_issues_B" in final else n
     M["ReviewIssuesMedian"] = f"{n.median():.0f}"
+    M["ReviewIssuesMedianB"] = f"{nb.median():.0f}"
     M["ReviewIssuesTotal"] = f"{n.sum():.0f}"
-    for r in ["R1", "R2", "R3", "R4", "R5", "R6"]:
-        M[f"Review{r}"] = int(pd.to_numeric(final[r], errors="coerce").fillna(0).sum())
+    M["ReviewIssuesTotalB"] = f"{nb.sum():.0f}"
+    for i in range(1, 7):
+        M[f"ReviewR{W[i]}"] = int(pd.to_numeric(final[f"R{i}"], errors="coerce").fillna(0).sum())
+        if f"R{i}_B" in final:
+            M[f"ReviewR{W[i]}B"] = int(pd.to_numeric(final[f"R{i}_B"], errors="coerce").fillna(0).sum())
+    M["ReviewIssuesExactAgree"] = pct((n == nb).mean(), 0)
 
 
 def inventory():
-    f = AUD / "inventory" / "plan_inventory.csv"
+    f = AUD / "inventory" / "plan_inventory_adjudicated.csv"
     if not f.exists():
         return
     d = pd.read_csv(f)
@@ -203,7 +235,8 @@ def inventory():
     ob = norm(d.outcome_blinding)
     for k in ["sealed", "prospective", "formal", "none", "partial"]:
         M[f"InvBlind{k.title()}"] = int(ob.str.startswith(k).sum())
-    M["InvBlindStrong"] = M["InvBlindSealed"] + M["InvBlindProspective"] + M["InvBlindFormal"]
+    M["InvBlindStrong"] = M["InvBlindSealed"] + M["InvBlindProspective"]
+    M["InvVerifFormal"] = int(d.verification_formal.astype(bool).sum())
     for c in ["disclosure", "decision_rule", "validation", "independent_review", "data_open"]:
         M[f"Inv{c.title().replace('_', '')}"] = int((norm(d[c]) == "yes").sum())
         M[f"Inv{c.title().replace('_', '')}Partial"] = int((norm(d[c]) == "partial").sum())
@@ -236,3 +269,56 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+SHORT = {
+    "astronomy-gwtc4-q-chieff-copula-stress-test": ("Astronomy", "Is the GWTC-4 mass-ratio--spin anticorrelation real?"),
+    "bioinformatics-vep-acmg-calibration-drift": ("Bioinformatics", "Do ClinGen variant-predictor thresholds still hold?"),
+    "climate-earth-record-margin-obs": ("Climate", "Are heat records broken by growing margins?"),
+    "health-econ-wastewater-flusight-value": ("Health economics", "Does flu wastewater improve hospitalisation forecasts?"),
+    "metascience-citation-context-replication": ("Metascience", "Does citing language predict replication outcomes?"),
+    "climate-earth-ai-humid-heat-attribution": ("Climate", "Does moisture treatment change AI humid-heat attribution?"),
+    "comp-social-science-temp-accounts-vandalism": ("Computational social science", "Did Wikipedia temporary accounts raise vandalism?"),
+    "extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage": ("Neuroimaging", "Is shrinking small fMRI maps to a meta-analytic prior worth it?"),
+    "llm-ml-science-mcf-emergence": ("ML science", "Does answer-letter mass predict multiple-choice format emergence?"),
+    "cheminformatics-drug-discovery-cliff-noise-ceiling": ("Cheminformatics", "Are benchmark activity cliffs partly measurement noise?"),
+    "auckland-nz-crl-structural-uplift-prereg": ("Transport (NZ)", "Is City Rail Link ridership uplift structural?"),
+    "auckland-nz-speed-limit-reversal-crashes": ("Transport (NZ)", "Did reversing speed-limit cuts increase crashes?"),
+    "auckland-nz-wastewater-testing-gap-deprivation": ("Public health (NZ)", "Is COVID-19 under-ascertainment greater in deprived towns?"),
+    "auckland-nz-equity-adjustor-waitlist-did": ("Health policy (NZ)", "Did ending an ethnicity-inclusive waitlist score change waits?"),
+    "ai-evaluation-science-swe-audit-concordance": ("AI evaluation", "Do independent audits of SWE-bench Verified agree?"),
+    "auckland-nz-upzoning-canopy-lidar-did": ("Urban environment (NZ)", "Did Auckland's 2016 upzoning cost tree canopy?"),
+    "seismology-geophysics-npp-gain-incompleteness-baseline": ("Seismology", "Do neural point processes beat ETAS only via incompleteness?"),
+    "quantum-simulation-peaked-98q-classical-crack": ("Quantum simulation", "Can one GPU recover 98-qubit peaked-circuit answers?"),
+    "formal-math-selfplay-vacuity-drift": ("Formal mathematics", "Do self-play provers drift toward vacuous conjectures?"),
+}
+
+
+def study_table():
+    p = pd.read_csv(AUD / "portfolio.csv")
+    inv = pd.read_csv(AUD / "inventory" / "plan_inventory_adjudicated.csv").set_index("run")
+    a = pd.read_csv(AUD / "A_prereg_timing.csv").set_index("run")
+    import subprocess
+    order = []
+    for r in p.run:
+        out = subprocess.check_output(["git", "log", "--diff-filter=A", "--format=%ct", "--", f"research-lab/runs/{r}/plan.md"], cwd=LAB.parent, text=True).split()
+        order.append(int(out[-1]))
+    p["t"] = order
+    p = p.sort_values("t")
+    lines = [r"\begin{tabularx}{\textwidth}{@{}rl X l l l l@{}}", r"\toprule",
+             r"\# & Field & Question & Verdict & Plan first & Blinding & Power \\", r"\midrule"]
+    yn = {"yes": "yes", "no": "--", "partial": "partial"}
+    for i, row in enumerate(p.itertuples(), 1):
+        f, q = SHORT[row.run]
+        pf = "yes" if a.loc[row.run, "passes"] else ("same commit$^\\dagger$" if row.run != "astronomy-gwtc4-q-chieff-copula-stress-test" else "\\textbf{no}")
+        bl = inv.loc[row.run, "outcome_blinding"]
+        bl = {"none": "--"}.get(bl, bl)
+        pw = yn.get(str(inv.loc[row.run, "power"]).lower(), "?")
+        v = row.verdict if row.verdict != "in progress" else "\\emph{in progress}"
+        lines.append(f"{i} & {f} & {q} & {v} & {pf} & {bl} & {pw} \\\\")
+    lines += [r"\bottomrule", r"\end{tabularx}"]
+    (TAB / "studies.tex").write_text("\n".join(lines) + "\n")
+
+
+if __name__ == "__main__":
+    study_table()
