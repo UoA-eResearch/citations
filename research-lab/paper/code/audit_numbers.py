@@ -50,9 +50,9 @@ def report_numbers(text):
     return out
 
 
-def source_values(run):
+def source_values(run, results_only=False):
     vals = []
-    files = [run / "plan.md", run / "deviations.md"] + [p for p in (run / "results").rglob("*") if p.suffix in (".csv", ".json", ".txt", ".md", ".tsv")]
+    files = ([] if results_only else [run / "plan.md", run / "deviations.md"]) + [p for p in (run / "results").rglob("*") if p.suffix in (".csv", ".json", ".txt", ".md", ".tsv")]
     skipped = []
     for f in files:
         if not f.exists():
@@ -168,3 +168,48 @@ def null_by_sig():
 
 if __name__ == "__main__" and "--sig" in __import__("sys").argv:
     null_by_sig()
+
+
+
+def perturbation_null(seeds=(1, 2, 3, 4, 5)):
+    """Size-matched chance control (review M7.2): shift each printed number by 3-7 units of its last printed digit
+    (random sign), keeping its precision, and test whether the shifted value 'traces' against the study's OWN sources.
+    Reported for all sources and for results/ only. Writes D_numbers_perturbation.csv (per study) and
+    D_numbers_perturbation_by_sig.csv."""
+    rng = np.random.default_rng(20261006)
+    runs = sorted(p for p in RUNS.iterdir() if (p / "report.md").exists())
+    rows, det = [], []
+    for r in runs:
+        nums = [n for n in report_numbers((r / "report.md").read_text()) if n["substantive"]]
+        for ro in (False, True):
+            src = source_values(r, results_only=ro)[0]
+            own = [traced(n["value"], n["decimals"], n["pct"], src) for n in nums]
+            ch = []
+            for _ in seeds:
+                hits = []
+                for n in nums:
+                    u = rng.integers(3, 8) * rng.choice([-1, 1]) * 10 ** (-n["decimals"])
+                    hits.append(traced(round(n["value"] + u, n["decimals"]), n["decimals"], n["pct"], src))
+                ch.append(np.array(hits))
+            chm = np.mean(ch, axis=0)
+            rows.append(dict(run=r.name, sources="results only" if ro else "results+plan+deviations", n=len(nums),
+                             traced_own=float(np.mean(own)), traced_chance=float(np.mean(chm))))
+            for n, o, c in zip(nums, own, chm):
+                det.append(dict(run=r.name, sources="results only" if ro else "results+plan+deviations", token=n["token"],
+                                sig=min(sigdigits(n["token"]), 5), own=o, chance=c))
+    d = pd.DataFrame(rows)
+    d["corrected"] = (d.traced_own - d.traced_chance) / (1 - d.traced_chance)
+    d.to_csv(OUT / "D_numbers_perturbation.csv", index=False)
+    t = pd.DataFrame(det)
+    t.to_csv(OUT / "D_numbers_perturbation_detail.csv", index=False)
+    g = t.groupby(["sources", "sig"]).agg(n=("own", "size"), traced_own=("own", "mean"), traced_chance=("chance", "mean")).reset_index()
+    g["corrected"] = (g.traced_own - g.traced_chance) / (1 - g.traced_chance)
+    g.to_csv(OUT / "D_numbers_perturbation_by_sig.csv", index=False)
+    print(g.round(3).to_string(index=False))
+    for src, h in t.groupby("sources"):
+        o, c = h.own.mean(), h.chance.mean()
+        print(f"{src}: own {o:.3f} chance {c:.3f} corrected {(o - c) / (1 - c):.3f}")
+
+
+if __name__ == "__main__" and "--perturb" in __import__("sys").argv:
+    perturbation_null()

@@ -131,3 +131,10 @@ An independent reviewer (a separate Fable 5.1 agent with the plan, log, code and
      estimated a model-like rate dependence would give at these warming rates.
 8. **Log correction.** D3 said the hinge has 3 parameters; the code has always used 2 (intercept and post-1980 slope).
    D3 now says so and points here.
+
+## Correction after publication (2026-10-06 02:34 NZDT)
+
+The lab's self-audit (`research-lab/paper/`) found a rounding error. For the steady-warming world at threshold 1,
+the lower bound of the H2 ratio is 0.9149 in `results/tables/null_validation_hinge_permute.csv`. The report and D4
+above printed it as 0.92, rounding twice. The report now reads 0.98 [0.91, 1.05]. D4 is left as written, and this
+entry corrects it. No conclusion changes.

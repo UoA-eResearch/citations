@@ -60,7 +60,12 @@ def prereg():
     M["PreregSameCommit"] = int(a.same_commit.sum())
     e = pd.read_csv(AUD / "A_plan_edits.csv") if (AUD / "A_plan_edits.csv").stat().st_size > 2 else pd.DataFrame()
     M["PlanEditsAfterCommit"] = len(e)
-    M["PreregMedianHours"] = f"{a.hours_plan_to_first_output.median():.1f}"
+    ok = a[a.passes & a.hours_plan_to_first_output.notna()]
+    M["PreregMedianHours"] = f"{ok.hours_plan_to_first_output.median():.1f}"
+    M["PreregMinHours"] = f"{ok.hours_plan_to_first_output.min():.2f}"
+    M["PreregMaxHours"] = f"{ok.hours_plan_to_first_output.max():.1f}"
+    M["PreregUnderHour"] = int((ok.hours_plan_to_first_output < 1).sum())
+    M["PreregPassN"] = len(ok)
     return a
 
 
@@ -139,6 +144,10 @@ def coders():
     if not (fa.exists() and fb.exists()):
         return out
     a, b = pd.read_csv(fa), pd.read_csv(fb)
+    # exclude the correction entry created by this audit after coding began (audit deviations A9)
+    a = a[~((a.run == "llm-ml-science-mcf-emergence") & (a.entry_id.astype(str).str.strip() == "U1"))]
+    rep = {p.name for p in (LAB / "runs").iterdir() if (p / "report.md").exists()}
+    a, b = a[a.run.isin(rep)], b[b.run.isin(rep)]
     for d in (a, b):
         d["key"] = d.run.astype(str) + "|" + d.entry_id.astype(str).str.strip()
     m = a.merge(b, on="key", suffixes=("_A", "_B"))
@@ -151,6 +160,7 @@ def coders():
         M[f"Agree{col.title().replace('_', '')}"] = pct(out[col]["agree"], 0)
     adj = AUD / "adjudicated_B.csv"
     final = pd.read_csv(adj) if adj.exists() else a
+    final = final[final.run.isin(rep)]
     M["DevTotal"] = len(final)
     M["DevStudies"] = final.run.nunique()
     vr = final.verdict_relevance.astype(str).str.lower().str.strip()
@@ -176,16 +186,16 @@ def coders():
     # figure: categories by trigger
     lab = {"C1": "bug/numerical fix", "C2": "data problem", "C3": "primary spec change", "C4": "decision-rule change",
            "C5": "added secondary analysis", "C6": "environment/logistics", "C7": "clarification", "C8": "claim withdrawn/corrected"}
-    tl = {"T1": "executor", "T2": "validation check", "T3": "independent reviewer", "T4": "external event"}
+    tl = {"T1": "executor", "T2": "validation check", "T3": "independent reviewer"}
     ct = pd.crosstab(final.category.astype(str).str[:2], final.trigger.astype(str).str[:2]).reindex(index=list(lab), columns=list(tl), fill_value=0)
     fig, ax = plt.subplots(figsize=(6.2, 3.3))
     left = np.zeros(len(ct))
-    cols = ["#2b6c8f", "#7fb069", "#c9a14a", "#a05a7a"]
+    cols = ["#2b6c8f", "#7fb069", "#c9a14a"]
     for t, col in zip(ct.columns, cols):
         ax.barh([lab[c] for c in ct.index], ct[t], left=left, color=col, label=tl[t])
         left += ct[t].values
     ax.invert_yaxis()
-    ax.set_xlabel("number of logged deviations")
+    ax.set_xlabel("number of logged deviations (no entry was triggered by an external event)")
     ax.legend(frameon=False, fontsize=8, loc="upper center", bbox_to_anchor=(0.45, -0.18), ncol=4)
     fig.tight_layout()
     fig.savefig(FIG / "deviations.pdf", bbox_inches="tight")
@@ -207,7 +217,13 @@ def review():
     final = pd.read_csv(adj) if adj.exists() else a
     M["ReviewStudies"] = len(final)
     rec = final.recommendation.astype(str).str.lower()
-    M["ReviewFixFirst"] = int(rec.str.contains("fix").sum())
+    lit = rec.str.contains("fix first|fix-first") & ~rec.str.contains("refuted")
+    M["ReviewFixFirst"] = int(lit.sum())
+    M["ReviewRefutedRec"] = int(rec.str.contains("refuted").sum())
+    M["ReviewPublishEdits"] = int(rec.str.contains("publish with edits").sum() - (rec.str.contains("publish with edits") & lit).sum())
+    conf = final.confirmation_pass.astype(str).str.lower().str.strip() == "yes"
+    M["ReviewConfAmongFix"] = int((conf & (lit | rec.str.contains("refuted"))).sum())
+    M["ReviewFixOrRefuted"] = int((lit | rec.str.contains("refuted")).sum())
     M["ReviewConfirmation"] = int((final.confirmation_pass.astype(str).str.lower().str.strip() == "yes").sum())
     M["ReviewHeadlineChanged"] = int((final.headline_changed.astype(str).str.lower().str.strip() == "yes").sum())
     M["ReviewVerdictChanged"] = int((final.verdict_changed.astype(str).str.lower().str.strip() == "yes").sum())
@@ -361,4 +377,193 @@ where the data give $-1.25$ to $+1.449$, so the upper end had been rounded twice
 
 if __name__ == "__main__":
     untraced()
+    write()
+
+
+def ci(k, n):
+    lo, hi = wilson(k, n)
+    return f"{100 * k / n:.0f}\\% ({100 * lo:.0f}--{100 * hi:.0f}\\%)"
+
+
+def revisions():
+    """Numbers added in response to the independent review (paper/review/review.md)."""
+    import re
+    import subprocess
+    rep = sorted(p.name for p in (LAB / "runs").iterdir() if (p / "report.md").exists())
+    G = "astronomy-gwtc4-q-chieff-copula-stress-test"
+    # Wilson intervals for verdict shares
+    M["CISupported"] = ci(M["VerdictSupported"], M["VerdictsDecided"])
+    M["CIInconclusive"] = ci(M["VerdictInconclusive"], M["VerdictsDecided"])
+    M["CINotSupported"] = ci(M["VerdictsDecided"] - M["VerdictSupported"], M["VerdictsDecided"])
+    M["CIPreregClassified"] = ci(M["PreregPassClassified"], M["StudiesTotal"])
+    # push events: lag between plan commit time and server-side push
+    ev = AUD / "github_push_events_2026-10-06.json"
+    if ev.exists():
+        evs = json.load(open(ev))
+        evs = evs if isinstance(evs, list) else evs.get("events", [])
+        pushes = []
+        for e in evs:
+            if e.get("type") != "PushEvent":
+                continue
+            t = pd.Timestamp(e["created_at"])
+            pl = e.get("payload", {})
+            shas = [c.get("sha") for c in pl.get("commits", []) or []] + [pl.get("head"), pl.get("before")]
+            pushes.append((t, [x for x in shas if x]))
+        a = pd.read_csv(AUD / "A_prereg_timing.csv")
+        lags = []
+        for r in a.itertuples():
+            full = subprocess.check_output(["git", "rev-parse", r.plan_commit], cwd=LAB.parent, text=True).strip()
+            ct = pd.Timestamp(int(r.t_plan), unit="s", tz="UTC")
+            # earliest push whose head or commit list contains the plan commit, or that pushed a descendant of it
+            cand = [t for t, shas in pushes if any(full.startswith(x[:7]) or x.startswith(full[:7]) for x in shas)]
+            if not cand:
+                for t, shas in sorted(pushes):
+                    head = shas[0] if shas else None
+                    if t >= ct and head and subprocess.run(["git", "merge-base", "--is-ancestor", full, head], cwd=LAB.parent).returncode == 0:
+                        cand = [t]
+                        break
+            if cand:
+                lags.append(dict(run=r.run, plan_commit=r.plan_commit, lag_min=(min(cand) - ct).total_seconds() / 60,
+                                 pushed_before_first_output=bool(pd.isna(r.t_out) or min(cand).timestamp() < r.t_out)))
+        L = pd.DataFrame(lags)
+        L.to_csv(AUD / "A_push_lag.csv", index=False)
+        M["PushMatched"] = len(L)
+        M["PushMaxLagMin"] = f"{L.lag_min.max():.1f}" if len(L) else "--"
+        M["PushBeforeOutput"] = int(L.pushed_before_first_output.sum()) if len(L) else 0
+    # deviations with and without GWTC-4
+    f = pd.read_csv(AUD / "adjudicated_B.csv")
+    f = f[f.run.isin(rep)]
+    for tag, d in (("", f), ("NoG", f[f.run != G])):
+        vr = d.verdict_relevance.astype(str).str.lower().str.strip() == "yes"
+        aft = d.timing.astype(str).str.lower().str.strip() == "after"
+        trig = d.trigger.astype(str).str[:2].str.upper()
+        M[f"DevN{tag}"] = len(d)
+        M[f"DevRelevant{tag}"] = int(vr.sum())
+        M[f"DevRelevantAfter{tag}"] = int((vr & aft).sum())
+        M[f"DevRelevantAfterExec{tag}"] = int((vr & aft & (trig == "T1")).sum())
+        M[f"DevRelevantAfterValRev{tag}"] = int((vr & aft & trig.isin(["T2", "T3"])).sum())
+        M[f"DevAfterNotReviewer{tag}"] = int((aft & (trig != "T3")).sum())
+        M[f"CIDevRelevant{tag}"] = ci(int(vr.sum()), len(d))
+    M["DevGWTC"] = int((f.run == G).sum())
+    M["DevRelevantAfterGWTC"] = M["DevRelevantAfter"] - M["DevRelevantAfterNoG"]
+    g = f[(f.run == G) & (f.verdict_relevance.astype(str).str.lower() == "yes") & (f.timing.astype(str).str.lower() == "after") & (f.trigger.astype(str).str[:2].str.upper() == "T1")]
+    M["GWTCExecAfterIDs"] = ", ".join(g.entry_id.astype(str))
+    M["DevAfterReviewer"] = int(((f.timing.astype(str).str.lower() == "after") & (f.trigger.astype(str).str[:2].str.upper() == "T3")).sum())
+    # measure C: coder A, coder B, either
+    ca, cb = pd.read_csv(AUD / "coder_A" / "C_review.csv"), pd.read_csv(AUD / "coder_B" / "C_review.csv")
+    m = ca.merge(cb, on="run", suffixes=("_A", "_B"))
+    for col, key in (("headline_changed", "Headline"), ("verdict_changed", "Verdict")):
+        ya = m[f"{col}_A"].astype(str).str.lower().str.strip() == "yes"
+        yb = m[f"{col}_B"].astype(str).str.lower().str.strip() == "yes"
+        M[f"C{key}A"], M[f"C{key}B"], M[f"C{key}Either"] = int(ya.sum()), int(yb.sum()), int((ya | yb).sum())
+    # protocol compliance counts measured from the run directories
+    rv = sum(1 for r in rep if re.search(r"(?i)fable", (LAB / "runs" / r / "deviations.md").read_text()))
+    M["ReviewerModelRecorded"] = rv
+    M["ReviewSections"] = sum(1 for r in rep if re.search(r"(?im)^#+\s*(independent )?review", (LAB / "runs" / r / "report.md").read_text()))
+    words = []
+    for r in rep:
+        t = (LAB / "runs" / r / "report.md").read_text()
+        mm = re.search(r"(?ims)^##\s*In plain terms\s*$(.*?)(?=^##\s)", t)
+        if mm:
+            words.append(len(re.findall(r"\b\w[\w'’-]*\b", mm.group(1))))
+    M["PlainWordsMin"], M["PlainWordsMax"], M["PlainN"] = min(words), max(words), len(words)
+    gd = (LAB / "runs" / G / "deviations.md").read_text()
+    heads = re.findall(r"(?m)^#{2,4}\s.*$", gd)
+    M["GWTCHeaders"] = len(heads)
+    M["GWTCHeadersNoTime"] = sum(1 for h in heads if not re.search(r"\d{4}-\d{2}-\d{2}|\d{1,2}:\d{2}", h))
+    # effort
+    e = pd.read_csv(AUD / "F_effort.csv")
+    M["EffortActiveHoursTotal"] = f"{e.active_hours.sum():.0f}"
+    M["GWTCSpanDays"] = f"{e.set_index('run').loc[G, 'span_days']:.0f}"
+    # number tracing (perturbation null) and the verification sample
+    pz = pd.read_csv(AUD / "D_numbers_perturbation_detail.csv")
+    for src, key in (("results only", "R"), ("results+plan+deviations", "All")):
+        h = pz[pz.sources == src]
+        o, c = h.own.mean(), h.chance.mean()
+        M[f"Trace{key}Own"], M[f"Trace{key}Chance"] = pct(o, 0), pct(c, 0)
+        h3 = h[h.sig == 3]
+        M[f"Trace{key}OwnThree"], M[f"Trace{key}ChanceThree"] = pct(h3.own.mean(), 0), pct(h3.chance.mean(), 0)
+    s = pd.read_csv(AUD / "D_numbers_summary.csv")
+    # untraced 5+ significant-figure numbers, by study
+    det = pd.read_csv(AUD / "D_numbers_sig_detail.csv")
+    u5 = det[(det.sig >= 5) & (~det.own.astype(bool))]
+    M["UntracedFivePlus"] = len(u5)
+    M["UntracedFivePlusTop"] = u5.run.value_counts().index[0] if len(u5) else ""
+    M["UntracedFivePlusTopN"] = int(u5.run.value_counts().iloc[0]) if len(u5) else 0
+    smp = pd.read_csv(AUD / "D_sample_untraced.csv")
+    M["SampleReportsTen"] = int((smp.run.value_counts() == 10).sum())
+    M["SampleReports"] = smp.run.nunique()
+
+
+if __name__ == "__main__":
+    revisions()
+    write()
+
+
+def revisions2():
+    import re
+    L = pd.read_csv(AUD / "A_push_lag.csv")
+    M["PushUnderMinute"] = int((L.lag_min < 1).sum())
+    M["PushBioLagMin"] = f"{L.set_index('run').loc['bioinformatics-vep-acmg-calibration-drift', 'lag_min']:.0f}"
+    M["PushGWTCLagDays"] = f"{L.set_index('run').loc['astronomy-gwtc4-q-chieff-copula-stress-test', 'lag_min'] / 1440:.1f}"
+    a = pd.read_csv(AUD / "A_prereg_timing.csv").set_index("run")
+    strict = L[L.run.map(a.passes)]
+    M["PushStrictBeforeOutput"] = int(strict.pushed_before_first_output.sum())
+    M["PushStrictN"] = len(strict)
+    # coders' classification of the four same-commit cases
+    fa, fb = AUD / "coder_A" / "A_same_commit.csv", AUD / "coder_B" / "A_same_commit.csv"
+    if fa.exists() and fb.exists():
+        va = pd.read_csv(fa).query("file == 'VERDICT'").set_index("run")["class"].str.lower()
+        vb = pd.read_csv(fb).query("file == 'VERDICT'").set_index("run")["class"].str.lower()
+        both_pre = [r for r in va.index if "pre-outcome only" in va[r] and "pre-outcome only" in vb.get(r, "")]
+        M["SameCommitPreBoth"] = len(both_pre)
+        M["SameCommitAgree"] = int(sum((("pre-outcome only" in va[r]) == ("pre-outcome only" in vb.get(r, ""))) for r in va.index))
+    # direct verification sample
+    da, db = AUD / "coder_A" / "D_verify.csv", AUD / "coder_B" / "D_verify.csv"
+    if da.exists() and db.exists():
+        x, y = pd.read_csv(da), pd.read_csv(db)
+        m = x.merge(y, on="verify_id", suffixes=("_A", "_B"))
+        ca = m.class_A.astype(str).str.extract(r"(V\d)")[0]
+        cb = m.class_B.astype(str).str.extract(r"(V\d)")[0]
+        M["VerifyN"] = len(m)
+        M["VerifyKappa"] = f"{cohen_kappa_score(ca, cb):.2f}"
+        ok = lambda c: c.isin(["V1", "V2", "V3"])  # noqa: E731
+        M["VerifyOKA"], M["VerifyOKB"] = int(ok(ca).sum()), int(ok(cb).sum())
+        M["VerifyOKBoth"] = int((ok(ca) & ok(cb)).sum())
+        M["VerifyCIOKBoth"] = ci(int((ok(ca) & ok(cb)).sum()), len(m))
+        M["VerifyFourA"], M["VerifyFourB"] = int((ca == "V4").sum()), int((cb == "V4").sum())
+        M["VerifyFourEither"] = int(((ca == "V4") | (cb == "V4")).sum())
+        M["VerifyFiveA"], M["VerifyFiveB"] = int((ca == "V5").sum()), int((cb == "V5").sum())
+        M["VerifyFiveEither"] = int(((ca == "V5") | (cb == "V5")).sum())
+        M["VerifyOneA"], M["VerifyOneB"] = int((ca == "V1").sum()), int((cb == "V1").sum())
+        prob = m[(ca.isin(["V4", "V5"])) | (cb.isin(["V4", "V5"]))]
+        prob[["verify_id", "run_A", "token_A", "class_A", "class_B", "located_value_A", "located_value_B", "note_A", "note_B"]].to_csv(AUD / "D_verify_problems.csv", index=False)
+    # bibliography of this paper through measure E
+    bib = (PAPER / "references.bib").read_text()
+    arx = sorted(set(re.findall(r"arXiv:(\d{4}\.\d{4,5})", bib)))
+    dois = sorted(set(re.findall(r"doi[:\s]*(10\.\d{4,9}/[^\s},;]+)", bib)))
+    M["BibArxiv"], M["BibDoi"] = len(arx), len(dois)
+    port = pd.read_csv(AUD / "portfolio.csv")
+    rp = port[port.verdict != "in progress"]
+    M["ValueMin"], M["ValueMax"] = int(rp.value.min()), int(rp.value.max())
+    M["CostMin"], M["CostMax"] = int(rp.cost.min()), int(rp.cost.max())
+    # Figure 2 (revised): own vs size-matched chance (perturbation null), results/ only
+    g = pd.read_csv(AUD / "D_numbers_perturbation_by_sig.csv")
+    g = g[g.sources == "results only"].set_index("sig")
+    fig, ax = plt.subplots(figsize=(5.4, 3.0))
+    x = np.arange(len(g))
+    ax.bar(x - 0.2, g.traced_own, 0.4, label="printed value", color="#2b6c8f")
+    ax.bar(x + 0.2, g.traced_chance, 0.4, label="value shifted 3-7 units in last digit", color="#c9a14a")
+    ax.set_xticks(x, [f"{i}{'+' if i == 5 else ''}\n(n={int(n)})" for i, n in zip(g.index, g.n)])
+    ax.set_xlabel("significant figures printed in the report")
+    ax.set_ylabel("share matching a value\nin the study's results/")
+    ax.set_ylim(0, 1.05)
+    ax.legend(frameon=False, fontsize=7.5, loc="upper right")
+    fig.tight_layout()
+    fig.savefig(FIG / "number_tracing.pdf")
+    plt.close(fig)
+
+
+if __name__ == "__main__":
+    revisions2()
     write()

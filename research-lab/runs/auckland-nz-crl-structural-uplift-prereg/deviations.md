@@ -85,3 +85,10 @@ implemented as the Tue-Thu of ISO week 38, the week containing 15-17 Sep 2026: 1
 - **Month columns.** exposure.py now finds month columns by parsing their dates, and asserts that the expected
   number is present. The earlier version would silently have returned NaN for 2027 months.
 - **Re-released daily files.** A re-released daily file replaces its entry in daily.DAILY rather than being added.
+
+## Correction after publication (2026-10-06 02:34 NZDT)
+
+The lab's self-audit (`research-lab/paper/`) found a misleading phrase in the report. "At 400 m, 37 routes (39%) are
+exposed" read as if 39% were the share of routes. It is the share of pre-period boardings on those routes (0.394); 37
+of 177 routes is 21%. The sentence now reads "37 routes are exposed, carrying 39% of pre-period boardings". No number
+or conclusion changes.

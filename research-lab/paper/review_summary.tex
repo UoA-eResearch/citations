@@ -1,1 +1,85 @@
-The paper was reviewed by an independent agent before release; a summary of its findings and our responses will be added here.
+The paper was reviewed by a Claude Fable~5.1 subagent spawned in the executing agent's session, using the prompt in
+\path{paper/review/prompt.md}. Its review is published unedited as \path{paper/review/review.md}. It recommended
+\emph{major revision}, raising 9 major and 23 minor issues, and recomputed about 60 of the paper's numbers. We list each
+major issue and what we did.
+
+\paragraph{M1. Review effects rest on self-reports.} Accepted. Section~\ref{sec:review} now says that no study
+committed a pre-review draft, so measure C rests on the agent's own records. It cites the evidence for the clearest
+cases. Committing the pre-review draft is now protocol change~4.
+
+\paragraph{M2. Protocol rules not followed as described.} Accepted. Section~\ref{sec:protocol} now describes the
+protocol as practised, with counts measured from the run directories:
+\begin{itemize}
+\item confirmation passes (\ReviewConfAmongFix{} of \ReviewFixOrRefuted{});
+\item recorded reviewer model (\ReviewerModelRecorded{} of \StudiesReported{});
+\item review sections (\ReviewSections{} of \StudiesReported{});
+\item headers without timestamps in the first study;
+\item the first study's two-reviewer scheme;
+\item the change in recommendation vocabulary.
+\end{itemize}
+``Formal'' verification is no longer listed as blinding, and the executing model is named.
+
+\paragraph{M3. Undisclosed departures from the audit plan.} Accepted. We made these changes:
+\begin{itemize}
+\item added Wilson intervals;
+\item removed the in-progress studies from measure B, as the plan specified;
+\item corrected the statement that the audit code was committed with the plan;
+\item reported both coders' measure-C counts beside the adjudicated ones, and said that those adjudications followed
+no rule set in advance;
+\item reverted coder A's raw file to its committed state;
+\item had both coders classify the four same-commit cases (they agreed with each other and with the earlier
+classification);
+\item reported the power comparison.
+\end{itemize}
+
+\paragraph{M4. Wrong or misleading statistics.} Accepted. We corrected:
+\begin{itemize}
+\item the median plan-to-output gap, now computed over the 15 studies with the plan strictly first (3.5\,h, not
+1.7\,h);
+\item the recommendation count (11 ``fix first'', 1 ``refuted'', 5 ``publish with edits'');
+\item the comparison with registered reports, now given with its interval and caveats;
+\item the GWTC-4 false-positive rate, described as replaced rather than re-estimated;
+\item the effort claim, now restricted to the later studies and stating the first study's overrun;
+\item the lead-score claim, now noting the restricted range.
+\end{itemize}
+
+\paragraph{M5. Novelty and related work.} Accepted. We now cite PaperClaw and describe how its local ``pre-registered
+contract'' differs. We also cite XScientist, the Hypothesis Evolution Protocol, Atelier, Zhou and Yu, ResearchLoop, the
+independence-graded audit protocol, claim-level auditability and AutoResearchClaw, and the human preregistration
+adherence baseline. The novelty claim is narrowed. Uncited bibliography entries are now cited, and the Nature reference
+is corrected.
+
+\paragraph{M6. Independence overstated.} Accepted. The AI contribution statement and Section~\ref{sec:audit} now say
+the following:
+\begin{itemize}
+\item the coders and this reviewer were same-session subagents working from prompts written by the executing agent;
+\item which model each coder used;
+\item that one coder shares the executing agent's model.
+\end{itemize}
+The coder prompts are published.
+
+The working tree was frozen during the confirmation pass. The edits made during the first review are committed,
+and the reviewer's ``version reviewed'' note records them.
+
+\paragraph{M7. Number tracing weaker than presented.} Accepted, and the measure redesigned. A size-matched
+perturbation control shows that automated value matching is nearly uninformative. The primary measure is now direct
+verification of a random sample of \VerifyN{} numbers by both coders. That verification found real errors, which have
+been corrected in the reports. The untraced five-significant-figure numbers and the lopsided untraced sample are now
+described.
+
+\paragraph{M8. Push events.} Accepted, with one correction. The archived push events show that 17 plans were pushed
+within a minute. The bioinformatics plan was pushed after 22 minutes, and the first study's commits after 5.6 days, so
+the reviewer's ``all 19 within 0.1 minutes'' does not hold for the first study. The distinction between ``committed
+first'' and ``written first'' is now stated in Sections~\ref{sec:protocol} and~\ref{sec:prereg}.
+
+\paragraph{M9. The first study is different.} Accepted. It is described separately in Section~\ref{sec:protocol}.
+Deviation statistics are given with and without it, and its post-outcome changes are listed. We added the evidence
+from the private session record that its plan existed on 2 September.
+
+\paragraph{Minor issues.} All 23 were addressed by editing the text, except two:
+\begin{itemize}
+\item \textbf{Minor 4} (the first plan's author header) is stated as unresolved, pending confirmation by the lab
+owner.
+\item \textbf{Minor 23} (plain-language word counts) is reported as a check that passed.
+\end{itemize}
+A confirmation pass by the same reviewer is recorded in \path{paper/review/}.

@@ -1,0 +1,3 @@
+verify_id,run_A,token_A,class_A,class_B,located_value_A,located_value_B,note_A,note_B
+V075,climate-earth-record-margin-obs,0.92,V1,V4,0.9149,0.9149,Printed 0.92; 0.9149 sits at the rounding boundary (0.915 -> 0.92 by double rounding),"Rounds to 0.91, printed 0.92 (also 0.92 in deviations D4); likely double rounding"
+V119,seismology-geophysics-npp-gain-incompleteness-baseline,+0.36,V1,V4,0.3550,0.3550 (S0); A = 0.3605,"S0 = 0.35497 prints as 0.35 or 0.36 at the rounding tie; ETAS-I A = 0.3605, NPP -1.344","S0 rounds to 0.35, printed +0.36 (matches ETAS-I A, or double rounding)"

@@ -1,0 +1,117 @@
+commit,run,file,class,reason
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F10_e2_tau_measures.png,OUTCOME,E2 point-estimate tau histograms with the real value and FPRs (primary endpoint E2)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F10_e2_tau_measures.txt,OUTCOME,E2 point-estimate tau histograms with the real value and FPRs (primary endpoint E2)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F11_rho_scan.png,OUTCOME,E2 hierarchical rho scan with real value and FPR 0.24 (primary endpoint E2)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F11_rho_scan.txt,OUTCOME,E2 hierarchical rho scan with real value and FPR 0.24 (primary endpoint E2)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F12_tau_vs_rhohat.png,OUTCOME,real-catalog tau vs rho_hat against mocks (E2 diagnostics)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F12_tau_vs_rhohat.txt,OUTCOME,real-catalog tau vs rho_hat against mocks (E2 diagnostics)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F13_ablation.png,OUTCOME,E4 ablation of slope credibilities on the real catalog
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F13_ablation.txt,OUTCOME,E4 ablation of slope credibilities on the real catalog
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F14_marginal_check.png,OUTCOME,D21 measure check that decided which E2 statistic was primary
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F14_marginal_check.txt,OUTCOME,D21 measure check that decided which E2 statistic was primary
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F15_e5_mass_bins.png,OUTCOME,E5 real-catalog tau per mass bin against null mocks
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F15_e5_mass_bins.txt,OUTCOME,E5 real-catalog tau per mass bin against null mocks
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F1_data_q_chieff.png,OUTCOME,scatter of the 153 events' q and chi_eff point estimates: shows the observed anticorrelation that E2 tests
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F1_data_q_chieff.txt,OUTCOME,scatter of the 153 events' q and chi_eff point estimates: shows the observed anticorrelation that E2 tests
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F2_baseline_slopes.png,OUTCOME,E3 posterior densities of the chi_eff-q slopes fitted to the real catalog
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F2_baseline_slopes.txt,OUTCOME,E3 posterior densities of the chi_eff-q slopes fitted to the real catalog
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F3_copula_rho.png,OUTCOME,E1 posterior of the copula rho with Savage-Dickey ln BF (primary endpoint E1)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F3_copula_rho.txt,OUTCOME,E1 posterior of the copula rho with Savage-Dickey ln BF (primary endpoint E1)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F4_bf_table.png,OUTCOME,Bayes-factor chart including E1 (primary endpoint)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F4_bf_table.txt,OUTCOME,Bayes-factor chart including E1 (primary endpoint)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F7_marginals.png,OUTCOME,fitted population marginals from the real-data copula fits
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F7_marginals.txt,OUTCOME,fitted population marginals from the real-data copula fits
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F8_loo.png,OUTCOME,E5 leave-one-out rho of the real-data copula fit
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F8_loo.txt,OUTCOME,E5 leave-one-out rho of the real-data copula fit
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F1_data_q_chieff.png,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F1_data_q_chieff.txt,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F2_baseline_slopes.png,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F2_baseline_slopes.txt,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F3_copula_rho.png,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F3_copula_rho.txt,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F4_bf_table.png,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F4_bf_table.txt,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F5_mock_null.png,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F5_mock_null.txt,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F6_calibration_curve.png,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F6_calibration_curve.txt,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F7_marginals.png,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F7_marginals.txt,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F8_loo.png,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F8_loo.txt,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F9_ppc.png,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F9_ppc.txt,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/abl_bpl2p_plpspin_both/summary.json,OUTCOME,"full-mode real-catalog fit summary (ln Z, slope posteriors) entering E3/E4 and the reproduction gate"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/abl_bpl2p_sharedtaper_both/summary.json,OUTCOME,"full-mode real-catalog fit summary (ln Z, slope posteriors) entering E3/E4 and the reproduction gate"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/abl_plp_lvkspin_both/summary.json,OUTCOME,"full-mode real-catalog fit summary (ln Z, slope posteriors) entering E3/E4 and the reproduction gate"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/abl_plp_m2taper_both/summary.json,OUTCOME,"full-mode real-catalog fit summary (ln Z, slope posteriors) entering E3/E4 and the reproduction gate"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/baseline_bpq_both/summary.json,OUTCOME,"full-mode real-catalog fit summary (ln Z, slope posteriors) entering E3/E4 and the reproduction gate"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/baseline_bpq_null/summary.json,OUTCOME,"full-mode real-catalog fit summary (ln Z, slope posteriors) entering E3/E4 and the reproduction gate"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/baseline_plp_both/summary.json,OUTCOME,"full-mode real-catalog fit summary (ln Z, slope posteriors) entering E3/E4 and the reproduction gate"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/baseline_plp_both/summary_nuts.json,OUTCOME,"full-mode real-catalog fit summary (ln Z, slope posteriors) entering E3/E4 and the reproduction gate"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/baseline_plp_mean/summary.json,OUTCOME,"full-mode real-catalog fit summary (ln Z, slope posteriors) entering E3/E4 and the reproduction gate"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/baseline_plp_null/summary.json,OUTCOME,"full-mode real-catalog fit summary (ln Z, slope posteriors) entering E3/E4 and the reproduction gate"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/baseline_plp_width/summary.json,OUTCOME,"full-mode real-catalog fit summary (ln Z, slope posteriors) entering E3/E4 and the reproduction gate"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/baseline_splm1_both/summary.json,OUTCOME,"full-mode real-catalog fit summary (ln Z, slope posteriors) entering E3/E4 and the reproduction gate"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/baseline_splm1_null/summary.json,OUTCOME,"full-mode real-catalog fit summary (ln Z, slope posteriors) entering E3/E4 and the reproduction gate"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/copula_gauss_plp/summary.json,OUTCOME,full-mode nested-sampling fit of the real catalog: ln Z and rho posterior quantiles entering E1
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/copula_gauss_splm1/summary.json,OUTCOME,full-mode nested-sampling fit of the real catalog: ln Z and rho posterior quantiles entering E1
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/copula_indep_plp/summary.json,OUTCOME,full-mode nested-sampling fit of the real catalog: ln Z and rho posterior quantiles entering E1
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/lvk_bpl2p_both/summary.json,OUTCOME,"full-mode real-catalog fit summary (ln Z, slope posteriors) entering E3/E4 and the reproduction gate"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/lvk_bpl2p_mean/summary.json,OUTCOME,"full-mode real-catalog fit summary (ln Z, slope posteriors) entering E3/E4 and the reproduction gate"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/lvk_bpl2p_null/summary.json,OUTCOME,"full-mode real-catalog fit summary (ln Z, slope posteriors) entering E3/E4 and the reproduction gate"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/lvk_bpl2p_width/summary.json,OUTCOME,"full-mode real-catalog fit summary (ln Z, slope posteriors) entering E3/E4 and the reproduction gate"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/smoke/baseline_bpq_both/summary.json,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/smoke/baseline_plp_both/summary.json,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/smoke/baseline_plp_both/summary_nuts.json,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/smoke/baseline_plp_null/summary.json,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/smoke/copula_gauss_plp/summary.json,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/smoke/copula_indep_plp/summary.json,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/smoke/copula_indep_splm1/summary.json,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/obsolete_20260925/README.md,PRE-OUTCOME,documentation note listing superseded result files; contains no result values
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/obsolete_20260925/e2_tau_full.v1_measure_mismatch.csv,OUTCOME,superseded first E2 run on the real catalog: observed Kendall tau and mock null distribution (primary endpoint E2)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/obsolete_20260925/e2_tau_full.v1_measure_mismatch.json,OUTCOME,superseded first E2 run on the real catalog: observed Kendall tau and mock null distribution (primary endpoint E2)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/obsolete_20260925/full_F9_ppc.png,OUTCOME,E5 posterior-predictive check of real-event q-chi_eff tau from the real-data copula fit
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/obsolete_20260925/full_F9_ppc.txt,OUTCOME,E5 posterior-predictive check of real-event q-chi_eff tau from the real-data copula fit
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/obsolete_20260925/mock_stats_full_partial.csv,OUTCOME,"real-catalog row holds observed tau -0.218, E1 ln BF -0.20 and copula ln Z values (primary endpoints E1 and E2)"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/obsolete_20260925/ppc_full.csv,OUTCOME,real-data mass-binned tau with posterior-predictive p-values (E5 on the real catalog)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/obsolete_20260925/ppc_taus_full.npy,OUTCOME,posterior-predictive tau draws generated from the real-data copula_gauss_plp fit
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/summary_full.md,OUTCOME,"full-mode results summary stating the verdict CONFIRMED, E1 ln BF -0.20 and E2 FPR 0.24"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/summary_smoke.md,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/bf_table_full.csv,OUTCOME,Bayes-factor table including E1 ln BF = -0.20 (primary endpoint)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/bf_table_full.md,OUTCOME,Bayes-factor table including E1 ln BF = -0.20 (primary endpoint)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/bf_table_smoke.csv,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/bf_table_smoke.md,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/diagnostics_full.json,OUTCOME,"contains E1_ln_bf_dependence, E2 FPRs, decision basis and the verdict string"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/diagnostics_smoke.json,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/e2_rhoscan_full.csv,OUTCOME,hierarchical E2 statistic on the real catalog (rho_hat +0.074) with mock FPR 0.24 (primary endpoint E2)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/e2_rhoscan_full.json,OUTCOME,hierarchical E2 statistic on the real catalog (rho_hat +0.074) with mock FPR 0.24 (primary endpoint E2)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/e2_tau_full.csv,OUTCOME,observed point-estimate tau (-0.217) by measure with mock null FPRs (primary endpoint E2)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/e2_tau_full.json,OUTCOME,observed point-estimate tau (-0.217) by measure with mock null FPRs (primary endpoint E2)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/e5_mass_bins_full.csv,OUTCOME,real-catalog tau per mass bin against null mocks (E5 on real data; q-chi_eff dependence)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/fpr_smoke.json,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/lnz_table_full.csv,OUTCOME,"ln Z of every full-mode fit incl. copula_gauss_plp and copula_indep_plp, from which E1 ln BF follows"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/lnz_table_smoke.csv,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/loo_full.csv,OUTCOME,leave-one-out rho posterior of the real-data Gaussian-copula fit (E5; dependence parameter of E1)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/loo_smoke.csv,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/mock_stats_smoke.csv,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/mock_stats_smoke_partial.csv,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/ppc_mass_full.json,OUTCOME,posterior-predictive checks of the real-data fits; the m1>=40 check decided the E2 decision basis (D21)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/ppc_selfconsistency_full.json,OUTCOME,posterior-predictive checks of the real-data fits; the m1>=40 check decided the E2 decision basis (D21)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/ppc_smoke.csv,PRE-OUTCOME,"smoke-mode development run (4 events, 300 samples, nlive 100); D3: not a scientific run, none of its numbers are meaningful"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/slope_credibilities_full.csv,OUTCOME,real-data Linear-model slope credibilities and ln Z by model (E3/E4 results on q-chi_eff dependence)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,VERDICT,contains outcome material,65 of 101 results files added with plan.md carry primary-outcome information
+e74eaea,auckland-nz-speed-limit-reversal-crashes,results/SHA256SUMS,PRE-OUTCOME,SHA-256 sums of raw inputs and of the sealed post-period crash file; hashes only
+e74eaea,auckland-nz-speed-limit-reversal-crashes,results/figures/pre_event_study.png,PRE-OUTCOME,pre-period event-study figure (2017H2-2024H1); no post-period half-years
+e74eaea,auckland-nz-speed-limit-reversal-crashes,results/tables/pre_event_study.csv,PRE-OUTCOME,event-study coefficients 2017H2-2024H1 only (post period is 2025H2+)
+e74eaea,auckland-nz-speed-limit-reversal-crashes,results/tables/pre_event_study_window.csv,PRE-OUTCOME,pre-trend coefficients for the 2022H1-2024H1 window only
+e74eaea,auckland-nz-speed-limit-reversal-crashes,results/tables/pre_manipulation_baseline.csv,PRE-OUTCOME,pre-period share of crashes whose CAS limit equals the old limit (manipulation-check baseline)
+e74eaea,auckland-nz-speed-limit-reversal-crashes,results/tables/pre_mde.csv,PRE-OUTCOME,power/MDE and placebo SE calibration computed from pre-period data
+e74eaea,auckland-nz-speed-limit-reversal-crashes,results/tables/pre_placebo_space.csv,PRE-OUTCOME,200 placebo-in-space draws with fake treatment on control segments in the pre-period
+e74eaea,auckland-nz-speed-limit-reversal-crashes,results/tables/pre_treated_volumes.csv,PRE-OUTCOME,treated-segment crash counts per half-year 2017H2-2025H1 (pre-period only)
+e74eaea,auckland-nz-speed-limit-reversal-crashes,VERDICT,pre-outcome only,"all 8 results files added with plan.md are inventories, pre-period statistics, power/MDE or hashes"
+311bd7e,auckland-nz-wastewater-testing-gap-deprivation,results/SHA256SUMS,PRE-OUTCOME,"SHA-256 sums of input files (deprivation, census, ESR case and wastewater files); hashes only"
+311bd7e,auckland-nz-wastewater-testing-gap-deprivation,results/tables/catchments.csv,PRE-OUTCOME,"site inventory: population, deprivation, age share, name match and acceptance flag; no case or RNA values"
+311bd7e,auckland-nz-wastewater-testing-gap-deprivation,VERDICT,pre-outcome only,"all 2 results files added with plan.md are inventories, pre-period statistics, power/MDE or hashes"
+1f0956b,health-econ-wastewater-flusight-value,results/tables/ww_coverage.csv,PRE-OUTCOME,state-season wastewater population coverage and site counts defining the panel; no forecast scores
+1f0956b,health-econ-wastewater-flusight-value,VERDICT,pre-outcome only,"all 1 results files added with plan.md are inventories, pre-period statistics, power/MDE or hashes"

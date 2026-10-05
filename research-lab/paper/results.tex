@@ -1,198 +1,265 @@
 \subsection{The portfolio}
 
-Table~\ref{tab:studies} lists the \StudiesTotal{} studies in the order their plans were committed. They span
-\StudyDomains{} of the \LeadDomains{} fields in the lead database. \StudiesReported{} have reports and 2 are still
-running.
+Table~\ref{tab:studies} lists the \StudiesTotal{} studies in the order their plans were committed. They cover
+\StudyDomains{} of the \LeadDomains{} fields in the lead database.
 
-The first report appeared on \CalendarFirstReport{}. The other \ReportsAfterFirst{} followed within
-\CalendarBulkDays{} days, ending on \CalendarLastReport{}; several studies ran in parallel.
+The first study ran from early September to 25 September 2026 under the original executor workflow. The other
+\ReportsAfterFirst{} reports appeared between 1 and 4 October, with several studies running in parallel.
 
-Of the \VerdictsDecided{} decided verdicts, \VerdictSupported{} support the preregistered hypothesis and
-\VerdictRefuted{} refute it. \VerdictUnsupported{} are \emph{Unsupported}: the evidence goes against the hypothesis
-without meeting the refutation rule. The remaining \VerdictInconclusive{} are \emph{Inconclusive}. One more study, a prospective test, is \emph{Pending} until its outcome data exist in 2027.
+Of the \VerdictsDecided{} decided verdicts:
+\begin{itemize}
+\item \VerdictSupported{} support the preregistered hypothesis (\CISupported{});
+\item \VerdictRefuted{} refute it;
+\item \VerdictUnsupported{} are \emph{Unsupported}: the evidence points against the hypothesis without meeting the
+refutation rule;
+\item \VerdictInconclusive{} are \emph{Inconclusive} (\CIInconclusive{}).
+\end{itemize}
+One prospective test is \emph{Pending} until its outcome data exist in 2027.
 
 \begin{table}[t]
 \centering\footnotesize
-\caption{The \StudiesTotal{} studies, in order of plan commit. ``Plan first'': git shows the plan committed before
-any outcome file. $^\dagger$The plan was committed together with pre-outcome material only (Section~\ref{sec:prereg}).
-``Blinding'': how outcomes were kept from the agent before the analysis was fixed (Section~\ref{sec:inventory}).
-``Power'': whether the plan stated a power analysis or minimum detectable effect.}
+\caption{The \StudiesTotal{} studies in order of plan commit. The ``Field'' column gives the subject area; the lead
+database groups the five Auckland studies as one field. ``Plan first'': git shows the plan committed before any
+outcome file; $^\dagger$plan committed together with pre-outcome material only (both coders agree;
+Section~\ref{sec:prereg}). ``Blinding'': how outcomes were kept from the agent. Sealed means stored unread with a
+hash committed; prospective means the outcome did not yet exist; partial means a pending hold-out (waitlist) or
+published final scores already known (MCF). ``Power'': whether the plan stated a power calculation or minimum
+detectable effect.}
 \label{tab:studies}
 \input{tables/studies.tex}
 \end{table}
 
-\subsection{Was the plan committed before the outcomes?}
+\subsection{Were plans committed before outcomes?}
 \label{sec:prereg}
 
-Git history shows the plan committed strictly before any results file or report in \PreregPassStrict{} of
-\StudiesTotal{} studies. The median gap was \PreregMedianHours{} hours. In the other \PreregSameCommit{}, the plan and
-some results files arrived in the same commit, so we inspected those files.
-\begin{itemize}
-\item \textbf{Three contained only pre-outcome material:}
-  \begin{itemize}
-  \item pre-period tables and the minimum detectable effect, plus the hash of the sealed post-period file
-  (speed limits);
-  \item a catchment list (wastewater);
-  \item a data-coverage table (FluSight).
-  \end{itemize}
-\item \textbf{The fourth was the lab's first study (GWTC-4).} Its plan entered git in the same commit as ``full-run
-results''. The plan text says it was drafted three weeks earlier, but the public record cannot confirm that. Its
-report nevertheless described the study as preregistered. We have added a correction to that report.
-\end{itemize}
-Counting pre-outcome material as compliant, \PreregPassClassified{} of \StudiesTotal{} plans demonstrably came first.
-No plan was edited after its first commit.
+\paragraph{Commit order.} Git shows the plan committed strictly before any results file or report in
+\PreregPassStrict{} of \StudiesTotal{} studies. Across those \PreregPassN{}, the median gap to the first output was
+\PreregMedianHours{} hours (range \PreregMinHours{}--\PreregMaxHours{} h); \PreregUnderHour{} plans came less than an
+hour before their first output.
 
-\subsection{Which safeguards did the plans actually use?}
+\paragraph{Push records.} GitHub's server-side push events, archived in \path{audit/}, back up the commit timestamps:
+\begin{itemize}
+\item \PushUnderMinute{} of the \StudiesTotal{} plan commits were pushed within a minute of their commit time;
+\item one (bioinformatics) was pushed after \PushBioLagMin{} minutes;
+\item the first study's commits were pushed \PushGWTCLagDays{} days after they were made;
+\item all \PushStrictN{} plans committed strictly first were also pushed before their first output.
+\end{itemize}
+
+\paragraph{The four same-commit cases.} In the other \PreregSameCommit{} studies the plan and some results files arrived
+in a single commit. Both coders classified every file in those commits.
+\begin{itemize}
+\item \textbf{Three contained only pre-outcome material:} pre-period tables and the hash of a sealed post-period file
+(speed limits), a catchment inventory (wastewater), and a data-coverage table (FluSight).
+\item \textbf{The fourth was the first study (GWTC-4).} Its plan entered git in the same commit as the full results,
+including the verdict.
+\end{itemize}
+The first study's plan file did exist earlier: the agent's private session record shows it, with the committed
+content, on 2 September 2026. That record is not public or externally timestamped, so it is weaker evidence than the
+commit history. The report of that study described itself as preregistered, and it now carries a correction.
+
+\paragraph{Overall.} Counting pre-outcome material as compliant, plans demonstrably came first in
+\PreregPassClassified{} of \StudiesTotal{} studies (\CIPreregClassified{}). No plan was edited after its first commit.
+This shows only that plans were \emph{committed} first. It cannot show that they were written before the data were
+explored, which is what the disclosure sections and, where used, sealing are for.
+
+\subsection{Which safeguards did the plans use?}
 \label{sec:inventory}
 
-The safeguards were applied unevenly.
-
-\paragraph{Applied consistently.}
 \begin{itemize}
-\item Every plan stated a decision rule and was followed by independent review.
-\item \InvDisclosure{} plans disclosed what had already been seen (1 partially).
-\item \InvDataOpen{} used only data open without registration.
+\item \textbf{Applied consistently.} Every plan stated a decision rule. \InvDisclosure{} disclosed what had already
+been seen (and \InvDisclosurePartial{} partially; an earlier text search found explicit sections in only 13, because it
+looked for specific headings). \InvDataOpen{} used only data that are open without registration.
+\item \textbf{Applied unevenly.} \InvValidation{} plans required validation before the primary analysis,
+\InvValidationPartial{} did so partially and 2 did not. Of the 8 plans with several primary tests, \InvMultiplicityYes{}
+addressed multiplicity. These codes come from a single coder and carry no reliability estimate.
+\item \textbf{Power.} Only one plan (speed limits) stated a minimum detectable effect before results, and one more did
+so partially. Two studies record both an assumed effect and a detectable one:
+  \begin{itemize}
+  \item the speed-limit study hypothesised a crash rate ratio of 1.10 but could detect only 1.33;
+  \item the wastewater study assumed a ratio of 0.85 and, after review, computed a detectable ratio of 0.71.
+  \end{itemize}
+Both studies were underpowered for the effect they set out to detect, and both ended \emph{Inconclusive}.
+\item \textbf{Keeping outcomes out of reach.} This was done in only \InvBlindStrong{} studies: two sealed (speed
+limits, quantum) and one prospective (City Rail Link). \InvBlindPartial{} more did so partially. In the other
+\InvBlindNone{}, the outcome data were public and the disclosure section is the only safeguard. Only one
+\emph{decided} study had its outcomes sealed.
 \end{itemize}
-
-\paragraph{Applied unevenly.}
-\begin{itemize}
-\item \InvValidation{} plans required methods to be validated before the primary analysis, \InvValidationPartial{}
-partially, and 2 not at all.
-\item Of the 8 plans with several primary tests, \InvMultiplicityYes{} addressed multiplicity.
-\end{itemize}
-
-\paragraph{Rarely applied.}
-\begin{itemize}
-\item \textbf{Power.} Only one plan stated a power analysis or minimum detectable effect before results, and one more did so partially.
-\item \textbf{Keeping outcomes away from the agent.} This was done in \InvBlindStrong{} studies: sealed post-period
-data with a recorded hash (speed limits), sealed hardware answer strings (quantum), and outcome data that did not yet
-exist (City Rail Link). \InvBlindPartial{} more did so in part. In the remaining \InvBlindNone{}, the outcome data
-were public and the agent could in principle have analysed them before writing the plan. The plan's disclosure is the
-only safeguard there.
-\end{itemize}
-Only one \emph{decided} study (speed limits) had its outcomes sealed.
 
 \subsection{Deviations}
 
-The two coders identified \DevCodedA{} and \DevCodedB{} deviation entries, differing only in whether one review
-paragraph in GWTC-4 counts as a separate entry.
-Agreement was:
+The coders identified 141 and 142 deviation entries across all 19 studies. The difference is whether one review
+paragraph in GWTC-4 counts as a separate entry, and we kept coder A's segmentation. Following the audit plan, the
+analysis covers the \DevN{} entries in the \StudiesReported{} reported studies.
+
+\paragraph{Agreement.} Agreement was high:
 \begin{itemize}
-\item category: $\kappa=\KappaCategory{}$ (\AgreeCategory{} raw agreement);
-\item trigger: $\kappa=\KappaTrigger{}$;
-\item timing: $\kappa=\KappaTiming{}$;
-\item verdict relevance: $\kappa=\KappaVerdictRelevance{}$.
+\item category $\kappa=\KappaCategory{}$;
+\item trigger $\kappa=\KappaTrigger{}$;
+\item timing $\kappa=\KappaTiming{}$;
+\item verdict relevance $\kappa=\KappaVerdictRelevance{}$.
+\end{itemize}
+Disagreements were settled with three fixed rules: category follows the cause; verdict relevance takes the cautious
+side; timing is ``unclear'' if either coder said so. Each decision is logged.
+
+\paragraph{Categories and triggers.} The categories were:
+\begin{itemize}
+\item added secondary analyses: \DevCFive{};
+\item clarifications: \DevCSeven{};
+\item bug or numerical fixes: \DevCOne{};
+\item environment and logistics: \DevCSix{};
+\item changes to the primary specification: \DevCThree{};
+\item data problems: \DevCTwo{};
+\item withdrawn or corrected claims: \DevCEight{};
+\item decision-rule changes: \DevCFour{} (Figure~\ref{fig:dev}).
+\end{itemize}
+\DevAfter{} entries were made after the primary outcome was seen. \DevAfterReviewer{} of these were requested by the
+reviewer, which necessarily comes after the results, and \DevAfterNotReviewer{} were initiated by the agent or by a
+validation check.
+
+\paragraph{Verdict relevance.} \DevRelevant{} entries (\CIDevRelevant{}) could plausibly have changed the verdict, and
+\DevRelevantAfter{} of them were made after the outcome was seen. Of those:
+\begin{itemize}
+\item \DevRelevantAfterValRev{} were triggered by validation or review, mostly corrections of errors;
+\item \DevRelevantAfterExec{} were the agent's own changes after seeing the outcome.
+\end{itemize}
+The first study accounts for \DevGWTC{} of the \DevN{} entries and \DevRelevantAfterGWTC{} of the \DevRelevantAfter{}
+verdict-relevant post-outcome ones. It also accounts for most of the agent's own post-outcome changes (entries
+\GWTCExecAfterIDs{}): a primary statistic redefined, a statistic abandoned, a decision rule chosen after the real-data
+values were seen, and a recalibration. Without the first study:
+\begin{itemize}
+\item \DevNNoG{} entries remain;
+\item \DevRelevantNoG{} are verdict-relevant (\CIDevRelevantNoG{});
+\item \DevRelevantAfterNoG{} are verdict-relevant and post-outcome;
+\item \DevRelevantAfterExecNoG{} of those were the agent's own changes: a corrected claim and a numerical guard.
 \end{itemize}
 
-\DevDisagreeEntries{} entries had at least one disagreement. We settled these with three fixed rules: category
-follows the cause; verdict relevance takes the cautious side; timing is ``unclear'' if either coder said so. Each
-decision is logged with its reason. After adjudication there are \DevTotal{} entries across \DevStudies{} studies
-(Figure~\ref{fig:dev}).
-
-\paragraph{Categories.} The largest categories were added secondary analyses (\DevCFive{}), clarifications
-(\DevCSeven{}), bug or numerical fixes (\DevCOne{}), environment and logistics (\DevCSix{}), changes to the primary
-analysis specification (\DevCThree{}) and data problems (\DevCTwo{}). \DevCEight{} entries withdrew or corrected a
-claim, and \DevCFour{} changed a decision rule or its thresholds.
-
-\paragraph{Triggers and timing.} The executing agent triggered \DevTOne{} entries, validation checks \DevTTwo{}, the
-independent reviewer \DevTThree{}, and external events \DevTFour{}. \DevAfter{} entries were made after the primary
-outcome had been seen, \DevBefore{} before, and \DevUnclearTiming{} could not be dated.
-
-\paragraph{Verdict relevance.} \DevVerdictRelevant{} entries (\DevVerdictRelevantPct{}) were judged capable of
-changing the verdict, and \DevRelevantAfter{} of them were made after the outcome was seen. Those are the entries a
-reader should scrutinise, and each is in the public log with its reason. Most correct errors found by validation or
-review.
-
-\paragraph{Decision-rule changes.} Three entries changed a decision rule:
+\paragraph{Decision rules.} Two decision rules were changed:
 \begin{itemize}
-\item one in GWTC-4, later judged post hoc by the study's own final audit;
-\item one in the City Rail Link study, rewritten after review but before any outcome data existed;
-\item a tie-breaking rule in the quantum study, fixed before any candidate answer was scored.
+\item GWTC-4's, after the outcome was seen; the study's own final audit judged it post hoc;
+\item the City Rail Link study's, after review but before any outcome data existed. A further City Rail Link entry
+moved a threshold and was coded as a specification change.
 \end{itemize}
+
+\paragraph{Comparison with human studies.} In human preregistered studies, undisclosed deviations are common: 9 of 27
+early \emph{Psychological Science} studies disclosed none of theirs \citep{claesen2021dream}. Here every deviation the
+agent made is, by construction, in a public log. The audit cannot detect deviations that were never logged.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/deviations.pdf}
-\caption{Logged deviations by category and trigger (adjudicated codes).}
+\caption{Logged deviations in the \StudiesReported{} reported studies, by category and trigger (adjudicated codes).}
 \label{fig:dev}
 \end{figure}
 
 \subsection{What independent review changed}
+\label{sec:review}
 
-Every review asked for changes before publication. \ReviewFixFirst{} of \ReviewStudies{} said ``fix first'' and the
-rest ``publish with edits''. \ReviewConfirmation{} studies had a confirmation pass.
-
-The coders agreed closely on outcomes but not on how many issues each review raised:
+\paragraph{Recommendations.} Every review asked for changes:
 \begin{itemize}
-\item agreement on whether the headline changed was \AgreeHeadlineChanged{}, and on whether the verdict changed
-\AgreeVerdictChanged{};
-\item agreement on the exact number of issues was only \ReviewIssuesExactAgree{}, so we report both coders' totals.
+\item \ReviewFixFirst{} said ``fix first'';
+\item \ReviewRefutedRec{} (the first study's methodology review) said ``refuted'';
+\item \ReviewPublishEdits{} said ``publish with edits''.
 \end{itemize}
-They counted \ReviewIssuesTotal{} and \ReviewIssuesTotalB{} substantive issues (medians \ReviewIssuesMedian{} and
-\ReviewIssuesMedianB{} per study), which break down as follows:
+A confirmation pass followed in \ReviewConfAmongFix{} of the \ReviewFixOrRefuted{} studies whose review demanded fixes.
+
+\paragraph{Issues raised.} The coders agreed on the exact number of issues per review only \ReviewIssuesExactAgree{}
+of the time, so we give both totals: \ReviewIssuesTotal{} and \ReviewIssuesTotalB{}. By category:
 \begin{itemize}
 \item analysis or model errors: \ReviewRTwo{} and \ReviewRTwoB{};
-\item computational or numerical errors: \ReviewROne{} and \ReviewROneB{};
+\item computational errors: \ReviewROne{} and \ReviewROneB{};
 \item overclaiming: \ReviewRFour{} and \ReviewRFourB{};
 \item missing analyses: \ReviewRFive{} and \ReviewRFiveB{};
 \item documentation: \ReviewRSix{} and \ReviewRSixB{};
 \item leakage or blinding: \ReviewRThree{} each.
 \end{itemize}
 
-After adjudication, review changed the headline estimate in \ReviewHeadlineChanged{} studies:
+\paragraph{What changed.} No study committed a pre-review draft, so what review changed is known only from the agent's
+own deviation logs and the reports' accounts of their reviews. On that evidence:
 \begin{itemize}
-\item a false-positive rate in GWTC-4 moved from 0.24 to 0.010;
-\item the seismology recovery fraction at Norcia moved from 0.51 to 0.88, after the reviewer found a local optimum;
-\item in the cheminformatics study, the headline share of the activity-cliff gap reproduced by noise alone moved from 171\% (from an over-dispersed noise model) to ``about 100--115\%''.
-\item the upzoning estimate shifted.
+\item \textbf{Headlines.} Review changed the headline estimate in \CHeadlineA{} studies according to coder A,
+\CHeadlineB{} according to coder B, and \CHeadlineEither{} according to either coder; we adjudicated \ReviewHeadlineChanged{}.
+\item \textbf{Verdicts.} Review changed the verdict in \CVerdictA{} (A), \CVerdictB{} (B) or \CVerdictEither{}
+(either); we adjudicated \ReviewVerdictChanged{}.
 \end{itemize}
-It changed the verdict in \ReviewVerdictChanged{} studies:
+These measure-C adjudications followed no rule set in advance. In each case the adjudicated count is the lower one,
+and we report all three counts for that reason.
+
+The clearest cases, each documented in the run directory, were these:
 \begin{itemize}
-\item GWTC-4, from a confirmation to ``indeterminate'';
-\item the citation-context study, from a refutation to ``uninformative'', after its positive control failed.
+\item \textbf{Seismology:} the reviewer found a local optimum, and the Norcia recovery fraction moved from 0.51 to
+0.88. The pre-review value is in \path{results/tables/primary_round1.csv}.
+\item \textbf{GWTC-4:} the verdict went from ``confirmed'', recorded in the commit message of the plan commit, to
+``indeterminate''. Its headline false-positive rate was replaced: a different statistic, not a re-estimate.
+\item \textbf{Citation-context study:} the verdict went from a refutation to ``uninformative'' after its positive
+control failed.
 \end{itemize}
-In one further study the pre-review draft was never committed, so whether its verdict changed cannot be determined.
 
-\subsection{Do the numbers in reports trace to results?}
+\subsection{Are the numbers in reports accurate?}
 
-The reports contain \NumAll{} numbers, of which \NumSubstantive{} are substantive (decimals, percentages or integers
-of at least 100). Of these, \NumTracedSubst{} match a value in the study's own results, plan or deviation log
-(Figure~\ref{fig:numbers}). That figure is misleading. Matched against \emph{other} studies' results, a report's
-numbers still ``trace'' \NumChanceAll{} of the time on average, because results files hold thousands of values.
-
-Tracing becomes informative only with more significant figures:
+\paragraph{Direct verification.} Both coders independently checked a seeded random sample of \VerifyN{} substantive
+numbers, 7 from each report, locating the specific source of each.
 \begin{itemize}
-\item at three significant figures (\NumNThree{} numbers), \NumOwnThree{} trace against a chance rate of
-\NumChanceThree{}, which corrects to about \NumCorrectedThree{};
-\item at four, \NumOwnFour{} trace against \NumChanceFour{};
-\item at five or more (\NumNFive{} numbers, mostly large counts), only \NumOwnFive{} trace.
+\item \textbf{Consistent with their source:} \VerifyOKA{} (coder A) and \VerifyOKB{} (coder B); \VerifyOKBoth{} by
+both coders (\VerifyCIOKBoth{}; agreement on the class $\kappa=\VerifyKappa{}$). Sources ranged from a results cell to a recomputation from the data or a design
+parameter.
+\item \textbf{Inconsistent:} \VerifyFourEither{}. Both were flagged by coder~B; coder~A had judged them to sit on a
+rounding boundary. Recomputation confirmed both as rounding errors of one unit in the last printed digit, caused by
+rounding twice: 0.9149 printed as 0.92, and 0.35497 printed as 0.36. The first also appears in a deviation entry.
+\item \textbf{Not verifiable:} \VerifyFiveEither{} could not be verified by at least one coder.
 \end{itemize}
-\input{numbers_untraced.tex}
+A coder also found a phrase in one report that described a share of boardings as if it were a share of routes. Every
+confirmed error has been corrected in the report and logged in the study's deviation file.
+
+\paragraph{Untraced sample.} An earlier sample of \UntracedN{} numbers that automated matching had failed to trace
+gave a similar picture: no number inconsistent with the results, and three untraceable. All three untraceable numbers
+are figures the reviewer computed in scratch code that was never saved. Outside that sample, one coder found a third
+rounding error by the same mechanism, now corrected. The sample is lopsided: \SampleReportsTen{} reports contributed
+10 numbers each, out of \SampleReports{} reports in all.
+
+\paragraph{Automated matching does not work.} We first tried to trace report numbers automatically. The method
+searches a study's \path{results/} files for any value within rounding of each printed number.
+\begin{itemize}
+\item It matched \TraceROwn{} of substantive numbers. Shifting each number by 3--7 units in its last printed digit
+and searching the same files still matched \TraceRChance{} (Figure~\ref{fig:numbers}).
+\item At three significant figures the rates were \TraceROwnThree{} and \TraceRChanceThree{}.
+\end{itemize}
+Result files contain so many nearby values that a match carries little information, and a wrong number can match by
+chance. Earlier controls that matched against other studies' files understated this. Tracing a claim needs a pointer
+to a specific cell, not a search for a matching value.
+
+What the automated pass did reveal is \UntracedFivePlus{} untraced numbers with five or more significant figures.
+\UntracedFivePlusTopN{} of them are sample sizes from one study (bioinformatics) that appear nowhere in its results
+files.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.62\textwidth]{figures/number_tracing.pdf}
-\caption{Share of report numbers that match a value in the study's own results (blue) and, as a chance control, in
-other studies' results (gold), by significant figures printed.}
+\caption{Share of report numbers that match some value in the study's \texttt{results/} files, for the printed value
+(blue) and for the same value shifted by 3--7 units in its last digit (gold). The size-matched chance rate is close to
+the rate for the real numbers, so a match carries little information.}
 \label{fig:numbers}
 \end{figure}
 
 \subsection{References}
 
 All \RefArxiv{} arXiv identifiers cited in leads, plans and reports resolve. \RefDoiOKRaw{} of \RefDoi{} DOIs resolve
-automatically; the other two resolve once parsing errors are fixed (a version suffix, and a truncation at a
-parenthesis). This checks that the references exist, not that they say what they are cited for.
+automatically, and the other two do once parsing errors are repaired. The \BibArxiv{} arXiv identifiers and \BibDoi{}
+DOIs in this paper's own bibliography were checked the same way. Resolution shows that a reference exists, not that it
+says what it is cited for.
 
 \subsection{Scout estimates against outcomes}
 
-The scouts estimated a median of \ScoutDaysMedian{} days per study (\ScoutDaysTotal{} days in total for the reported
-studies). Neither git history nor the session transcripts give a reliable measure of effort per study:
+\paragraph{Effort.} The scouts estimated a median of \ScoutDaysMedian{} days of wall time per study (\ScoutDaysTotal{}
+days in total).
 \begin{itemize}
-\item commits were made in bursts;
-\item studies ran in parallel;
-\item tool calls rarely name the study they belong to.
+\item \textbf{The first study} took far longer than estimated. Its transcript activity spans \GWTCSpanDays{} days
+against an estimate of 3--6, with interruptions.
+\item \textbf{The later studies} took far less. The \ReportsAfterFirst{} later reports appeared within
+\CalendarBulkDays{} days, with several running in parallel.
 \end{itemize}
-The calendar alone, however, shows effort was overestimated by an order of magnitude or more.
+Per-study effort cannot be measured reliably, because commits were made in bursts and transcripts rarely name the study
+they concern. A transcript-based estimate gives \EffortActiveHoursTotal{} active hours across all studies, and we do
+not rely on it.
 
-Value and cost scores did not separate verdicts. The mean value score was 6.0--6.7 for every verdict
-(\texttt{audit/F\_verdict\_by\_scores.csv}).
+\paragraph{Lead scores.} Every executed lead had a value score of \ValueMin{} or \ValueMax{} and a cost score between
+\CostMin{} and \CostMax{}. With so little variation, nothing can yet be said about whether the scores predict verdicts.

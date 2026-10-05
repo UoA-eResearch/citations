@@ -1,0 +1,120 @@
+verify_id,run,token,class,source,located_value,note
+V001,ai-evaluation-science-swe-audit-concordance,39.4%,V1,results/tables/review_O_ladder.csv O_prevalence (preregistered O),0.394,O prevalence 197/500
+V002,ai-evaluation-science-swe-audit-concordance,0.95,V1,results/tables/review_leaderboard.csv AS tau and tau_random_5pct,0.9527 / 0.9516,Both 0.95 entries in the ABA static row match
+V003,ai-evaluation-science-swe-audit-concordance,0.60,V1,results/tables/review_pairs.csv AS-AT k_hi,0.5995,Upper CI of AS-AT kappa
+V004,ai-evaluation-science-swe-audit-concordance,83%,V2,"data/detector_annotated.parquet share of score == 0 (n = 1,699)",0.826,Recomputed; also 1 - flag_rate 0.174 in review_detector_validation.csv
+V005,ai-evaluation-science-swe-audit-concordance,0.01,V1,results/tables/review_pairs.csv O-AS k_lo,0.0078,Lower CI of O-AS kappa
+V006,ai-evaluation-science-swe-audit-concordance,5.3,V1,results/tables/review_O_ladder.csv majority ratio,5.3,"Max/min ratio, two-of-three O definition"
+V007,ai-evaluation-science-swe-audit-concordance,0.15,V1,results/tables/primary.csv H1 estimate,0.1497,Preregistered median pairwise kappa
+V008,astronomy-gwtc4-q-chieff-copula-stress-test,0.02,V1,results/tables/e2_rhoscan_int_full_v3c.json and _wf-phenom/_wf-eob.json rho_hat_mc_sd,0.017 / 0.024 / 0.025,"Monte Carlo sd per waveform variant, about 0.02"
+V009,astronomy-gwtc4-q-chieff-copula-stress-test,−0.11,V2,results/tables/e2_tau_full_v3c.json observed tau_post - tau_flattheta,-0.217 - (-0.106) = -0.111,PE-prior shift of tau in the real catalog
+V010,astronomy-gwtc4-q-chieff-copula-stress-test,+0.17,V1,results/tables/e2_rhoscan_int_full_v3c.json observed.rho_hat,0.1745,Nuisance-integrated hierarchical estimate
+V011,astronomy-gwtc4-q-chieff-copula-stress-test,66%,V1,results/tables/e2_rhoscan_int_full_v3c.json fpr.ln_bf_flat_ge_observed,0.655,Share of v3c null catalogs with larger Bayes factor
+V012,astronomy-gwtc4-q-chieff-copula-stress-test,0.82,V3,arXiv:2508.18083 (LVK GWTC-4.0 population paper); deviations.md D8,0.82,Published P(delta mu < 0) = 82%
+V013,astronomy-gwtc4-q-chieff-copula-stress-test,−0.03,V1,results/tables/e2_rhoscan_int_full_wf-phenom.json rho_hat,-0.0345,IMRPhenom-family calibrated estimate
+V014,astronomy-gwtc4-q-chieff-copula-stress-test,90%,V3,report design: credible-interval level,90%,Interval level for the copula rho posterior (deviations D24 outcome)
+V015,auckland-nz-crl-structural-uplift-prereg,39%,V2,results/tables/route_exposure.csv: share of pre_boardings on routes exposed at 400 m (177 routes),0.394 (routes share 37/177 = 0.209),"Matches boardings share; wording ""37 routes (39%)"" reads as a share of routes, which is 21%"
+V016,auckland-nz-crl-structural-uplift-prereg,"55,400",V2,results/tables/opening_week.csv mean train boardings 2023-2025 rows,"55,358",Mean of nine baseline-week days
+V017,auckland-nz-crl-structural-uplift-prereg,+20%,V3,plan.md section 4; results/tables/h1_thresholds.csv supported_if_U_above,0.20,Decision threshold U >= 0.20
+V018,auckland-nz-crl-structural-uplift-prereg,20%,V3,plan.md section 4; results/tables/h1_thresholds.csv supported_if_U_above,0.20,Decision threshold U >= 0.20
+V019,auckland-nz-crl-structural-uplift-prereg,0.2661,V1,results/tables/h1_thresholds.csv supported_if_post_above,0.26611,Supported line on the ratio
+V020,auckland-nz-crl-structural-uplift-prereg,0.20,V3,plan.md section 4; results/tables/h1_thresholds.csv supported_if_U_above,0.2,Decision threshold
+V021,auckland-nz-crl-structural-uplift-prereg,59%,V2,results/tables/route_exposure.csv: share of pre_boardings on routes exposed at 800 m,0.591 (19.69 / 33.31 M),Recomputed from table
+V022,auckland-nz-equity-adjustor-waitlist-did,1.32,V1,results/tables/review_stock_growth.csv Auckland European/Other stock_ratio,1.3222,Stock growth pre to post
+V023,auckland-nz-equity-adjustor-waitlist-did,1.03,V1,results/tables/review_stock_growth.csv controls Pacific long_ratio,1.0287,Long-waiter growth in controls
+V024,auckland-nz-equity-adjustor-waitlist-did,0.6,V1,results/tables/review_fwl_specialty.csv Urology contribution_pp,0.604,Largest non-dental specialty contribution
+V025,auckland-nz-equity-adjustor-waitlist-did,0.98,V1,results/tables/review_stock_growth.csv controls European/Other long_ratio,0.9829,
+V026,auckland-nz-equity-adjustor-waitlist-did,1.09,V1,results/tables/review_stock_growth.csv controls European/Other stock_ratio,1.0901,
+V027,auckland-nz-equity-adjustor-waitlist-did,+4.8,V1,results/tables/review_checks.csv tool-era tau beta 4.779; preregistered placebo_max 4.783,4.779 / 4.783,Both +4.8 values in the row match
+V028,auckland-nz-equity-adjustor-waitlist-did,+3.0,V1,"results/tables/review_checks.csv ""unweighted, cells with total > 5"" beta",2.952,
+V029,auckland-nz-speed-limit-reversal-crashes,100,V3,plan.md treatment definition (speed-limit category 80/90 -> 90-100 km/h),100,"Speed-limit label, not an estimate"
+V030,auckland-nz-speed-limit-reversal-crashes,0.73,V1,"results/tables/main_results.csv ""post half 2025H2 only"" lo",0.7262,
+V031,auckland-nz-speed-limit-reversal-crashes,1.11,V1,"results/tables/main_results.csv ""Auckland only"" rr",1.1063,
+V032,auckland-nz-speed-limit-reversal-crashes,0.79,V1,"results/tables/main_results.csv ""local roads only"" lo",0.7893,
+V033,auckland-nz-speed-limit-reversal-crashes,1.07,V1,"results/tables/main_results.csv ""type: urban 30/40->50"" rr",1.0682,
+V034,auckland-nz-speed-limit-reversal-crashes,1.19,V2,results/tables/event_window.csv 2024H1 coef 0.1713; exp(coef),1.187,Rate ratio relative to 2024H2
+V035,auckland-nz-speed-limit-reversal-crashes,100,V3,plan.md treatment definition (peri-urban 60/70 -> 70-100 km/h),100,"Speed-limit label, not an estimate"
+V036,auckland-nz-upzoning-canopy-lidar-did,90%,V3,plan.md section 3 units (at least 90% of area in one zone),90%,Unit definition
+V037,auckland-nz-upzoning-canopy-lidar-did,5.4%,V1,"results/tables/review_mechanism.csv ""redevelopment share high / SH"" (overlap dropped)",0.054,SH share redeveloped
+V038,auckland-nz-upzoning-canopy-lidar-did,−0.57,V1,"results/tables/review_specs.csv endpoint-mean band + density change, d_post, high, lo",-0.5714,
+V039,auckland-nz-upzoning-canopy-lidar-did,−0.25,V1,"results/tables/review_specs.csv endpoint-mean band (Oldham), d_post, low, est",-0.2537,Mixed Housing Suburban
+V040,auckland-nz-upzoning-canopy-lidar-did,0.00,V1,"results/tables/review_specs.csv no canopy band, d_post, high, est",0.0049,
+V041,auckland-nz-upzoning-canopy-lidar-did,0.00,V1,"results/tables/review_specs.csv endpoint-mean band (Oldham), d_post, high, hi",0.0009,
+V042,auckland-nz-upzoning-canopy-lidar-did,10%,V3,plan.md section 3 units (building cells at least 10%),10%,Unit definition
+V043,auckland-nz-wastewater-testing-gap-deprivation,0.87,V1,results/tables/main_results.csv negative binomial on weekly cases,0.8704,
+V044,auckland-nz-wastewater-testing-gap-deprivation,0.86,V1,results/tables/review_checks.csv H1 with CR2 SE,0.8622,
+V045,auckland-nz-wastewater-testing-gap-deprivation,1.03,V1,results/tables/review_checks.csv interval-censored NB alpha 1.0 hi,1.0258,Lowest of the upper bounds 1.03-1.12
+V046,auckland-nz-wastewater-testing-gap-deprivation,0.86,V1,results/tables/main_results.csv PRIMARY H1 value,0.8622,
+V047,auckland-nz-wastewater-testing-gap-deprivation,0.86,V1,results/tables/main_results.csv PRIMARY H1 value,0.8622,
+V048,auckland-nz-wastewater-testing-gap-deprivation,0.83,V1,results/tables/review_checks.csv pseudo-count 0.25,0.8311,Lower end of 0.83-0.95
+V049,auckland-nz-wastewater-testing-gap-deprivation,0.37,V1,results/tables/main_results.csv PRIMARY H2 hi,0.3692,
+V050,bioinformatics-vep-acmg-calibration-drift,2.41,V3,Pejaver 2022 / plan.md: LR target 2.406 per point,2.406,Supporting target
+V051,bioinformatics-vep-acmg-calibration-drift,168,V1,results/tables/h1_interval_lr.csv revel N_new +4 lr,168.03,
+V052,bioinformatics-vep-acmg-calibration-drift,33.5,V3,Pejaver 2022 / plan.md: LR target 2.406^4,33.51,Strong (+4) target
+V053,bioinformatics-vep-acmg-calibration-drift,0.008,V1,results/tables/h1_interval_lr.csv am N_new -3 lr,0.00818,
+V054,bioinformatics-vep-acmg-calibration-drift,20.6,V1,results/tables/h4_strata.csv revel N_new +2 non_vcep_gene lr,20.63,
+V055,bioinformatics-vep-acmg-calibration-drift,0.072,V3,Pejaver 2022 / plan.md: LR target 1/13.93 for -3,0.0718,Target
+V056,bioinformatics-vep-acmg-calibration-drift,1.8,V1,results/tables/h4_strata.csv revel N_new +1 vcep_gene lr,1.832,
+V057,cheminformatics-drug-discovery-cliff-noise-ceiling,0.3,V3,deviations.md D5 item 3 sensitivity setting sigma_w = 0.3,0.3,Assumed within-paper noise
+V058,cheminformatics-drug-discovery-cliff-noise-ceiling,99.7%,V1,deviations.md D1 (matching rates),99.7%,Stated in log; not recomputed
+V059,cheminformatics-drug-discovery-cliff-noise-ceiling,25%,V3,plan.md section 6 H1 threshold,25%,Hypothesis threshold
+V060,cheminformatics-drug-discovery-cliff-noise-ceiling,77%,V1,results/tables/review_shared_doc_sensitivity.csv frac_conf_le_0p8,0.7711,Upper end of 75-77%
+V061,cheminformatics-drug-discovery-cliff-noise-ceiling,0.67,V2,results/tables/null_v2.csv docfx_0.3 mean pair_diff_sd,0.665,Mean over targets and draws
+V062,cheminformatics-drug-discovery-cliff-noise-ceiling,0.69,V2,results/tables/null_v2_real_reference.csv mean rmse_noncliff_knn (30 targets),0.6887,
+V063,cheminformatics-drug-discovery-cliff-noise-ceiling,"1,287",V1,results/tables/review_model_check.csv threshold 3 expected_noise_only_t,1286.7,
+V064,climate-earth-ai-humid-heat-attribution,1.49,V1,results/tables/review_checks.csv R (peak) at lead 4 upper,1.49,
+V065,climate-earth-ai-humid-heat-attribution,0.63,V1,results/tables/hypotheses.csv H2 lo,0.6266,
+V066,climate-earth-ai-humid-heat-attribution,1.25,V1,results/tables/review_checks.csv R (peak) at lead 4,1.25,
+V067,climate-earth-ai-humid-heat-attribution,1.75,V1,results/tables/hypotheses.csv V1 factual peak-TW error,1.7497,
+V068,climate-earth-ai-humid-heat-attribution,1.5,V3,plan.md H1 threshold (R >= 1.5),1.5,Hypothesis threshold
+V069,climate-earth-ai-humid-heat-attribution,1.55,V1,results/tables/review_checks.csv R (area) at lead 6,1.55,
+V070,climate-earth-ai-humid-heat-attribution,29.4,V1,deviations.md D4 (E3 2 m dewpoint 29.4 degC vs neighbour mean 21.7),29.4,Stated in log; not in results/
+V071,climate-earth-record-margin-obs,3.6,V2,results/tables/coverage_validation_kernel.csv: sd of log est across worlds / mean cell-only log half-width,1.58-3.58,Max over kind x threshold
+V072,climate-earth-record-margin-obs,2.53,V1,results/tables/pooled_hinge_permute.csv TX7x R1 hi,2.528,
+V073,climate-earth-record-margin-obs,0.63%,V1,results/tables/pooled_hinge_permute.csv TX7x freq_obs_E2,0.00625,
+V074,climate-earth-record-margin-obs,0.77,V1,results/tables/pooled_hinge_permute.csv primary R4,0.7728,
+V075,climate-earth-record-margin-obs,0.92,V4,"results/tables/null_validation_hinge_permute.csv trend, threshold 1, R2_lo",0.9149,"Rounds to 0.91, printed 0.92 (also 0.92 in deviations D4); likely double rounding"
+V076,climate-earth-record-margin-obs,0.45,V1,results/tables/pooled_hinge_permute.csv primary R2 lo,0.4452,
+V077,climate-earth-record-margin-obs,0.99,V1,"results/tables/null_validation_hinge_permute.csv no_trend, threshold 0, R1",0.9918,
+V078,comp-social-science-temp-accounts-vandalism,20%,V2,results/tables/did_yoy.csv YOY_LO rel_lo/rel_hi and did_primary.csv Y_LO rel_lo/rel_hi,-17.8%..+11.0%; -10.3%..+18.9%,Approximate range of excluded changes from the intervals
+V079,comp-social-science-temp-accounts-vandalism,+18.9%,V1,results/tables/did_primary.csv Y_LO rel_hi,0.1888,
+V080,comp-social-science-temp-accounts-vandalism,+7.3%,V1,results/tables/did_primary.csv logN_LO rel_hi,0.0726,Logged-out edit volume upper bound
+V081,comp-social-science-temp-accounts-vandalism,+0.16,V1,results/tables/did_primary.csv Y_REG hi,0.00157,In percentage points
+V082,comp-social-science-temp-accounts-vandalism,96%,V1,results/tables/pretrend_size.csv 11 leads reject_5pct,0.96,
+V083,comp-social-science-temp-accounts-vandalism,1%,V3,plan.md treatment date rule (at least 1% temporary-account edits),1%,Design threshold
+V084,comp-social-science-temp-accounts-vandalism,35.4,V2,results/tables/panel_primary.parquet sum of n_LO (2024-01 to 2026-07),35.38 M,
+V085,extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage,0.22,V1,results/tables/prior_quality.csv ds002785_gstroop r_matched,0.2221,
+V086,extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage,+0.010,V1,results/tables/hypotheses.csv anticipation dr_EBQ_EB0,0.0105,
+V087,extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage,10%,V2,results/tables/explore_gains.csv ORACLE-Q G in strong-signal domains,1.016-1.091 (< 1.10),Oracle blend gains under 10%
+V088,extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage,3.4,V1,results/tables/hypotheses.csv fpr_ratio_EBW_S max (working memory),3.398,
+V089,extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage,0.33,V1,results/tables/review_mse_mechanism.csv anticipation mse_ratio_EB-Q,0.3323,
+V090,extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage,0.14,V3,plan.md section 3 (nilearn 0.14.1); venv nilearn-0.14.1,0.14.1,Software version
+V091,extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage,117,V2,results/tables/inclusion.csv minimum included 197 minus 80 (ground truth N - 80),117,
+V092,health-econ-wastewater-flusight-value,0.995,V1,results/tables/relwis_main_lag10.csv secondary panel geo,0.9952,Equal-weight across states
+V093,health-econ-wastewater-flusight-value,50%,V3,plan.md section 2 primary panel (coverage >= 50%),50%,Panel definition
+V094,health-econ-wastewater-flusight-value,"330,015",V3,plan.md section 3 data description,"330,015",Input data size
+V095,health-econ-wastewater-flusight-value,24%,V1,deviations.md D4 item 6,24%,Stated in log; not recomputed
+V096,health-econ-wastewater-flusight-value,5%,V2,results/tables/relwis_main_lag10.csv primary lo 0.9457,1 - 0.946 = 5.4%,Excluded gain about 5%
+V097,health-econ-wastewater-flusight-value,1.00,V2,results/tables/relwis_main_lag10.csv 0.995 and relwis_main_lag17.csv 1.005,0.995 / 1.005,Rounded to 1.00 for lags >= 10 days
+V098,health-econ-wastewater-flusight-value,0.95,V1,results/tables/relwis_derange_lag10.csv primary lo,0.9508,Negative control interval
+V099,llm-ml-science-mcf-emergence,976,V1,results/tables/units.csv OLMo-7B-0424 csqa crossover,976e9 tokens,
+V100,llm-ml-science-mcf-emergence,"143,000",V3,results/tables/checkpoints.csv Pythia max step,143000,Checkpoint schedule
+V101,llm-ml-science-mcf-emergence,0724,V3,model identifier OLMo-1B-0724 (data documentation),0724,Part of a model name
+V102,llm-ml-science-mcf-emergence,0.06,V2,results/tables/checkpoint_metrics.csv OLMo-1B-0724 mean mass_mcf5 over 6 tasks at 186B,0.059,
+V103,llm-ml-science-mcf-emergence,0.73,V2,results/tables/checkpoint_metrics.csv OLMo-1B-0724 mean mass_mcf5 over 6 tasks at 4B,0.725,
+V104,llm-ml-science-mcf-emergence,1124,V3,model identifier OLMo-2-1124-7B (data documentation),1124,Part of a model name
+V105,llm-ml-science-mcf-emergence,168,V3,design: 28 runs x 6 tasks; results/tables/units.csv rows,168,Number of units
+V106,metascience-citation-context-replication,0.509,V1,results/tables/results_c2.csv excluding OpenAlex-sourced FLoRA entries est,0.5091,
+V107,metascience-citation-context-replication,141,V2,results/tables/harvest_summary.csv count of status 404,141,
+V108,metascience-citation-context-replication,0.54,V1,results/tables/results_c2.csv H2 auc_base,0.5396,
+V109,metascience-citation-context-replication,−0.006,V1,results/tables/results_keywords.csv k1 H2-style incremental lo,-0.0055,
+V110,metascience-citation-context-replication,300,V3,plan.md validation sample size,300,Design
+V111,metascience-citation-context-replication,0.536,V1,results/tables/results_c1.csv positive control V1 (primary originals) hi,0.5360,
+V112,metascience-citation-context-replication,6%,V1,results/tables/validation_prevalence.csv hi,0.0623,
+V113,seismology-geophysics-npp-gain-incompleteness-baseline,−0.10,V1,results/tables/decomposition.csv Visso remainder_NPP_minus_primary,-0.0954,
+V114,seismology-geophysics-npp-gain-incompleteness-baseline,1.2,V3,plan.md / Stockman et al. 2023 protocol: input cutoff magnitude,1.2,Design cutoff
+V115,seismology-geophysics-npp-gain-incompleteness-baseline,+0.19,V1,results/tables/decomposition.csv Norcia remainder_NPP_minus_primary,0.1904,
+V116,seismology-geophysics-npp-gain-incompleteness-baseline,3.1,V1,results/tables/validation_recovery.csv A mu z,3.128,
+V117,seismology-geophysics-npp-gain-incompleteness-baseline,68%,V1,results/tables/secondary_ab.csv Visso share_top3_blocks,0.6796,
+V118,seismology-geophysics-npp-gain-incompleteness-baseline,1.2,V3,plan.md / Stockman et al. 2023 protocol: input cutoff magnitude,1.2,Design cutoff
+V119,seismology-geophysics-npp-gain-incompleteness-baseline,+0.36,V4,results/tables/cutoff_sweep.csv Visso 3.0 S0,0.3550 (S0); A = 0.3605,"S0 rounds to 0.35, printed +0.36 (matches ETAS-I A, or double rounding)"

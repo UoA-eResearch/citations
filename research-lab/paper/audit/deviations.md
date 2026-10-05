@@ -112,3 +112,30 @@ its reason is logged in `audit/adjudication.csv`:
 **The classified sample.** The 85-number sample the coders classified was drawn under the old matcher. It is kept
 unchanged as `D_sample_untraced.csv` (with a copy in `D_sample_untraced_v1.csv`), and its classification is reported
 as such. Some of those numbers now trace.
+
+## A9. A deviation entry created by the audit (2026-10-06 02:12 NZDT)
+
+**The entry.** The rounding correction added to the MCF deviation log at 02:02 is a result of this audit, not one of
+its subjects. Coder A coded it after the fact, as U1 / C8 / T4.
+
+**Treatment.** It is excluded from the deviation counts and the agreement statistics, which cover the entries that
+existed when coding began. It is reported in the paper as an audit finding.
+
+## A10. Measure D redesigned after review (2026-10-06 02:28 NZDT)
+
+**What the reviewer found (M7).** Matching values against other studies' files is not a size-matched control.
+
+**A second control.** We added a perturbation null in `audit_numbers.py --perturb`:
+
+- each printed number is shifted by 3-7 units of its last digit;
+- the shifted value is tested against the study's own sources;
+- the test is reported for all sources and for `results/` only.
+
+**What it showed.** Shifted values still "trace" 75% of the time against `results/` alone, and 67% at three
+significant figures. Results files hold many values close to any reported one. Automated value matching therefore
+cannot establish that a number traces, and it cannot detect a wrong number that coincides with some value.
+
+**Direct verification instead.** Both coders now verify a seeded random sample of 119 substantive numbers, 7 per
+report (`audit/D_verify_sample.csv`). For each one they locate the specific source (file and cell, or a derivation)
+and judge whether the printed value is consistent with it. This sample replaces automated tracing as the primary
+measure of whether report numbers are accurate. The automated rates are reported only to show that the method fails.

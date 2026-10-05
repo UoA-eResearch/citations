@@ -71,7 +71,7 @@ state-level, real-time, hub-benchmarked test of the *marginal* value of flu wast
   - 0.937 [0.882, 0.991] if samples were usable on the day of collection, an unreachable bound;
   - 0.96 at 2 days, whose interval includes 1;
   - 0.98 at 5–7 days;
-  - 1.00 at 10 days or more.
+  - about 1.00 at 10 days or more (0.995 at 10 days, 1.005 at 17).
 
 For influenza hospital forecasting, wastewater appears to be useful mainly as a fast nowcast. A preregistered test with
 measured reporting delays is the natural next step.

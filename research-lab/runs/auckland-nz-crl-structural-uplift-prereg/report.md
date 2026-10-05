@@ -84,7 +84,7 @@ partly why the per-mode series are tracked.
 - **Counts.**
     - 177 routes are in both the feed and AT's monthly route file, with all six pre-period months (Oct 2025–Mar 2026).
     - 54 of them are exposed, carrying 59% of pre-period boardings (19.7 of 33.3 million).
-    - At 400 m, 37 routes (39%) are exposed.
+    - At 400 m, 37 routes are exposed, carrying 39% of pre-period boardings.
 - **Sensitivity radii.** No route's nearest point falls between 800 and 1,200 m, so the 800 m and 1,200 m classes are
   identical.
 - **Where the details are.** The route list is in `results/tables/route_exposure.csv`.

@@ -120,3 +120,9 @@ A separate reviewer agent (Fable 5.1), given the plan, log, code, data and draft
      - corr(0) − corr(2) = 0.086 [0.014, 0.165];
      - corr(0) − corr(1) = 0.030 [−0.030, 0.091];
      - so "not two weeks ahead" is supported, but "coincident" cannot be separated from "one week ahead".
+
+## Correction after publication (2026-10-06 02:39 NZDT)
+
+The lab's self-audit (`research-lab/paper/`) noted an imprecise phrase. The report summarised relative WIS at
+reporting delays of 10 days or more as "1.00". The values in `results/` are 0.995 at 10 days and 1.005 at 17 days, and
+0.9949 rounds to 0.99. The text now gives both values. No conclusion changes.

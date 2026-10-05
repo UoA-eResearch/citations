@@ -1,0 +1,117 @@
+commit,run,file,class,reason
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F10_e2_tau_measures.png,OUTCOME,E2 tau of real catalog vs null mocks (primary E2)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F10_e2_tau_measures.txt,OUTCOME,Caption with result values: E2 tau of real catalog vs null mocks (primary E2)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F11_rho_scan.png,OUTCOME,E2 hierarchical rho scan: real rho_hat and FPR (primary E2)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F11_rho_scan.txt,OUTCOME,Caption with result values: E2 hierarchical rho scan: real rho_hat and FPR (primary E2)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F12_tau_vs_rhohat.png,OUTCOME,Real-catalog tau and rho_hat against mocks (E2 statistics)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F12_tau_vs_rhohat.txt,PRE-OUTCOME,"Caption text only, no result values (accompanies an outcome figure)"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F13_ablation.png,OUTCOME,Full-data slope credibilities by configuration (E4/D17); q-chi_eff dependence
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F13_ablation.txt,OUTCOME,Caption with result values: Full-data slope credibilities by configuration (E4/D17); q-chi_eff dependence
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F14_marginal_check.png,OUTCOME,D21 marginal check that decided the E2 statistic; real vs mock
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F14_marginal_check.txt,OUTCOME,Caption with result values: D21 marginal check that decided the E2 statistic; real vs mock
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F15_e5_mass_bins.png,OUTCOME,Real tau by mass bin vs null mocks (E5 view of E2)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F15_e5_mass_bins.txt,OUTCOME,Caption with result values: Real tau by mass bin vs null mocks (E5 view of E2)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F1_data_q_chieff.png,OUTCOME,Real 153-event q vs chi_eff medians: the data behind the E2 point-estimate statistic
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F1_data_q_chieff.txt,PRE-OUTCOME,"Caption text only, no result values (accompanies an outcome figure)"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F2_baseline_slopes.png,OUTCOME,Full-data posteriors of the chi_eff-q slopes (E3/E4): q-chi_eff dependence in the analysed catalog
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F2_baseline_slopes.txt,PRE-OUTCOME,"Caption text only, no result values (accompanies an outcome figure)"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F3_copula_rho.png,OUTCOME,E1 copula rho posterior and ln BF (primary)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F3_copula_rho.txt,OUTCOME,Caption with result values: E1 copula rho posterior and ln BF (primary)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F4_bf_table.png,OUTCOME,E1/E3/E4 Bayes factors on the full catalog (primary E1)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F4_bf_table.txt,PRE-OUTCOME,"Caption text only, no result values (accompanies an outcome figure)"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F7_marginals.png,OUTCOME,Fitted marginals from full-data copula dependence/independence fits (E1 models)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F7_marginals.txt,PRE-OUTCOME,"Caption text only, no result values (accompanies an outcome figure)"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F8_loo.png,OUTCOME,Leave-one-out copula rho on full data (E5 stability of E1)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/full_F8_loo.txt,PRE-OUTCOME,"Caption text only, no result values (accompanies an outcome figure)"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F1_data_q_chieff.png,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F1_data_q_chieff.txt,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F2_baseline_slopes.png,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F2_baseline_slopes.txt,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F3_copula_rho.png,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F3_copula_rho.txt,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F4_bf_table.png,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F4_bf_table.txt,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F5_mock_null.png,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F5_mock_null.txt,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F6_calibration_curve.png,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F6_calibration_curve.txt,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F7_marginals.png,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F7_marginals.txt,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F8_loo.png,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F8_loo.txt,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F9_ppc.png,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/figures/smoke_F9_ppc.txt,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/abl_bpl2p_plpspin_both/summary.json,OUTCOME,Full-data fit abl_bpl2p_plpspin_both: ln Z and chi_eff-q slopes (E3/E4; q-chi_eff dependence)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/abl_bpl2p_sharedtaper_both/summary.json,OUTCOME,Full-data fit abl_bpl2p_sharedtaper_both: ln Z and chi_eff-q slopes (E3/E4; q-chi_eff dependence)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/abl_plp_lvkspin_both/summary.json,OUTCOME,Full-data fit abl_plp_lvkspin_both: ln Z and chi_eff-q slopes (E3/E4; q-chi_eff dependence)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/abl_plp_m2taper_both/summary.json,OUTCOME,Full-data fit abl_plp_m2taper_both: ln Z and chi_eff-q slopes (E3/E4; q-chi_eff dependence)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/baseline_bpq_both/summary.json,OUTCOME,Full-data fit baseline_bpq_both: ln Z and chi_eff-q slopes (E3/E4; q-chi_eff dependence)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/baseline_bpq_null/summary.json,OUTCOME,Full-data fit baseline_bpq_null: ln Z and chi_eff-q slopes (E3/E4; q-chi_eff dependence)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/baseline_plp_both/summary.json,OUTCOME,Full-data fit baseline_plp_both: ln Z and chi_eff-q slopes (E3/E4; q-chi_eff dependence)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/baseline_plp_both/summary_nuts.json,OUTCOME,Full-data fit baseline_plp_both: ln Z and chi_eff-q slopes (E3/E4; q-chi_eff dependence)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/baseline_plp_mean/summary.json,OUTCOME,Full-data fit baseline_plp_mean: ln Z and chi_eff-q slopes (E3/E4; q-chi_eff dependence)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/baseline_plp_null/summary.json,OUTCOME,Full-data fit baseline_plp_null: ln Z and chi_eff-q slopes (E3/E4; q-chi_eff dependence)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/baseline_plp_width/summary.json,OUTCOME,Full-data fit baseline_plp_width: ln Z and chi_eff-q slopes (E3/E4; q-chi_eff dependence)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/baseline_splm1_both/summary.json,OUTCOME,Full-data fit baseline_splm1_both: ln Z and chi_eff-q slopes (E3/E4; q-chi_eff dependence)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/baseline_splm1_null/summary.json,OUTCOME,Full-data fit baseline_splm1_null: ln Z and chi_eff-q slopes (E3/E4; q-chi_eff dependence)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/copula_gauss_plp/summary.json,OUTCOME,Full-data copula fit copula_gauss_plp: ln Z and rho posterior (E1 primary)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/copula_gauss_splm1/summary.json,OUTCOME,Full-data copula fit copula_gauss_splm1: ln Z and rho posterior (E1 primary)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/copula_indep_plp/summary.json,OUTCOME,Full-data copula fit copula_indep_plp: ln Z and rho posterior (E1 primary)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/lvk_bpl2p_both/summary.json,OUTCOME,Full-data fit lvk_bpl2p_both: ln Z and chi_eff-q slopes (E3/E4; q-chi_eff dependence)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/lvk_bpl2p_mean/summary.json,OUTCOME,Full-data fit lvk_bpl2p_mean: ln Z and chi_eff-q slopes (E3/E4; q-chi_eff dependence)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/lvk_bpl2p_null/summary.json,OUTCOME,Full-data fit lvk_bpl2p_null: ln Z and chi_eff-q slopes (E3/E4; q-chi_eff dependence)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/full/lvk_bpl2p_width/summary.json,OUTCOME,Full-data fit lvk_bpl2p_width: ln Z and chi_eff-q slopes (E3/E4; q-chi_eff dependence)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/smoke/baseline_bpq_both/summary.json,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/smoke/baseline_plp_both/summary.json,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/smoke/baseline_plp_both/summary_nuts.json,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/smoke/baseline_plp_null/summary.json,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/smoke/copula_gauss_plp/summary.json,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/smoke/copula_indep_plp/summary.json,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/fits/smoke/copula_indep_splm1/summary.json,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/obsolete_20260925/README.md,PRE-OUTCOME,Describes superseded files; no result values
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/obsolete_20260925/e2_tau_full.v1_measure_mismatch.csv,OUTCOME,First E2 tau run: real-catalog tau and mock FPR (primary E2)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/obsolete_20260925/e2_tau_full.v1_measure_mismatch.json,OUTCOME,First E2 tau run: real-catalog tau and mock FPR (primary E2)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/obsolete_20260925/full_F9_ppc.png,OUTCOME,E5 copula posterior-predictive check of real tau by mass bin (E2-type statistic)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/obsolete_20260925/full_F9_ppc.txt,PRE-OUTCOME,"Caption text only, no result values (accompanies an outcome figure)"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/obsolete_20260925/mock_stats_full_partial.csv,OUTCOME,"Real-catalog tau, rho_MAP and copula ln BF (-0.20) with first null mocks (E1/E2)"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/obsolete_20260925/ppc_full.csv,OUTCOME,E5 copula posterior-predictive check of real tau by mass bin (E2-type statistic)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/obsolete_20260925/ppc_taus_full.npy,OUTCOME,E5 copula posterior-predictive check of real tau by mass bin (E2-type statistic)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/summary_full.md,OUTCOME,"Full-run summary with E1, E2 and plan-sec-7 verdict"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/summary_smoke.md,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/bf_table_full.csv,OUTCOME,E1/E3/E4 Bayes factors (primary E1)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/bf_table_full.md,OUTCOME,E1/E3/E4 Bayes factors (primary E1)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/bf_table_smoke.csv,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/bf_table_smoke.md,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/diagnostics_full.json,OUTCOME,"Full-run diagnostics including E1, E2 and verdict"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/diagnostics_smoke.json,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/e2_rhoscan_full.csv,OUTCOME,E2 rho scan for real catalog and mocks (primary E2)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/e2_rhoscan_full.json,OUTCOME,E2 rho scan summary: real rho_hat and FPR (primary E2)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/e2_tau_full.csv,OUTCOME,E2 tau by measure for real catalog and mocks (primary E2)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/e2_tau_full.json,OUTCOME,E2 tau FPRs by measure (primary E2)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/e5_mass_bins_full.csv,OUTCOME,Real tau by mass bin vs null (E5 view of E2)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/fpr_smoke.json,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/lnz_table_full.csv,OUTCOME,ln Z of all full fits incl. copula pair (E1 inputs)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/lnz_table_smoke.csv,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/loo_full.csv,OUTCOME,Per-event leave-one-out copula rho/ln BF (E5 stability of E1)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/loo_smoke.csv,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/mock_stats_smoke.csv,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/mock_stats_smoke_partial.csv,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/ppc_mass_full.json,PRE-OUTCOME,Mass-marginal posterior-predictive check; no q-chi_eff dependence statistic
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/ppc_selfconsistency_full.json,PRE-OUTCOME,"Marginal self-consistency fractions (m1, z, q); no dependence statistic"
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/ppc_smoke.csv,PRE-OUTCOME,Smoke test on 4 events (D3): pipeline check; numbers not informative about 153-event E1/E2
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,results/tables/slope_credibilities_full.csv,OUTCOME,Full-data P(slope<0) for chi_eff mean/width vs q (E3/E4 dependence)
+258616c,astronomy-gwtc4-q-chieff-copula-stress-test,VERDICT,contains outcome material,"plan.md first committed with the full-run results: E1 ln BF, E2 tau/rho-scan FPRs, verdict (summary_full.md, bf_table_full, e2_*)"
+e74eaea,auckland-nz-speed-limit-reversal-crashes,results/SHA256SUMS,PRE-OUTCOME,Hashes of input files incl. the sealed post-period crash file; no values
+e74eaea,auckland-nz-speed-limit-reversal-crashes,results/figures/pre_event_study.png,PRE-OUTCOME,Pre-period event study (2017H2-2024H1); no post-period data
+e74eaea,auckland-nz-speed-limit-reversal-crashes,results/tables/pre_event_study.csv,PRE-OUTCOME,Pre-period event-study coefficients only (2017H2-2024H1)
+e74eaea,auckland-nz-speed-limit-reversal-crashes,results/tables/pre_event_study_window.csv,PRE-OUTCOME,Pre-period window coefficients only (2022H1-2024H1)
+e74eaea,auckland-nz-speed-limit-reversal-crashes,results/tables/pre_manipulation_baseline.csv,PRE-OUTCOME,Pre-period share of CAS limits equal to v0; manipulation-check baseline
+e74eaea,auckland-nz-speed-limit-reversal-crashes,results/tables/pre_mde.csv,PRE-OUTCOME,Power/MDE and placebo SE calibration from pre-period crashes
+e74eaea,auckland-nz-speed-limit-reversal-crashes,results/tables/pre_placebo_space.csv,PRE-OUTCOME,Pre-period placebo-in-space draws (fake treatment on controls)
+e74eaea,auckland-nz-speed-limit-reversal-crashes,results/tables/pre_treated_volumes.csv,PRE-OUTCOME,Treated-segment crash counts 2017H2-2025H1 (pre and transition halves); no post period
+e74eaea,auckland-nz-speed-limit-reversal-crashes,VERDICT,pre-outcome only,"Only pre-period statistics, power/MDE and hashes; post-period file sealed"
+311bd7e,auckland-nz-wastewater-testing-gap-deprivation,results/SHA256SUMS,PRE-OUTCOME,Hashes of covariate and ESR data files; no values
+311bd7e,auckland-nz-wastewater-testing-gap-deprivation,results/tables/catchments.csv,PRE-OUTCOME,"Catchment matching: population, NZDep, age share, acceptance; no case or wastewater data"
+311bd7e,auckland-nz-wastewater-testing-gap-deprivation,VERDICT,pre-outcome only,Data inventory and covariates only; no ascertainment index
+1f0956b,health-econ-wastewater-flusight-value,results/tables/ww_coverage.csv,PRE-OUTCOME,State-season wastewater population coverage and site counts; no forecasts or admissions
+1f0956b,health-econ-wastewater-flusight-value,VERDICT,pre-outcome only,Coverage table only (used to define panels); no WIS results

@@ -112,3 +112,9 @@ below 7e-4.
 
 All fits and the validation are re-run with this final code. The invalid round-2 fits are kept, for the record, in
 results/fits_round2_invalid/.
+
+## Correction after publication (2026-10-06 02:34 NZDT)
+
+The lab's self-audit (`research-lab/paper/`) found a rounding error. Standard ETAS (S0) at Visso, cutoff 3.0, scores
+0.35497 in `results/tables/cutoff_sweep.csv`. The report printed it as +0.36, rounding twice (0.35497 → 0.355 →
+0.36). The report now says +0.35. No conclusion changes.

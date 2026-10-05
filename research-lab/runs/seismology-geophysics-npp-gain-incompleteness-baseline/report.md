@@ -106,7 +106,7 @@ still gives R = 1.06, 0.86 and 0.95.
 - **ETAS-I scores above the neural model in 12 of 15 configurations,** with a CI above zero in 8. It is the best of
   the five models in 10.
 - **Much of that margin is the neural model failing at high cutoffs, not ETAS-I excelling.** For example, at Visso
-  3.0 the neural model scores −1.34 against standard ETAS's +0.36.
+  3.0 the neural model scores −1.34 against standard ETAS's +0.35.
 
 ### Synthetic incomplete catalog (secondary)
 

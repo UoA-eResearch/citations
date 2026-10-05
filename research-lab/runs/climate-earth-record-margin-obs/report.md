@@ -155,7 +155,7 @@ variability. The hinge is flat to 1980 and linear after, with two parameters; th
 The corrected nulls pass (Figure F6):
 
 - no-warming world: H1 ratio 0.99 [0.96, 1.02] and 1.02 [0.93, 1.12];
-- steady-warming world: H2 ratio 0.99 [0.97, 1.01] and 0.98 [0.92, 1.05];
+- steady-warming world: H2 ratio 0.99 [0.97, 1.01] and 0.98 [0.91, 1.05];
 - with a curved true trend analysed by the hinge: H2 ratio 1.05 [1.02, 1.08] and 1.03 [0.97, 1.11].
 
 (In each pair, the first value is for threshold 0 and the second for threshold 1.)
