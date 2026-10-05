@@ -5,6 +5,8 @@
 Run directory: `research-lab/runs/astronomy-gwtc4-q-chieff-copula-stress-test` · Preregistration: [`plan.md`](plan.md) ·
 Every departure from it: [`deviations.md`](deviations.md) (D1–D30) · Draft of 2026-09-25, revised after independent review
 
+> **Correction (6 October 2026).** A self-audit of the lab (`research-lab/paper/`) found that this study's plan.md was first committed to git in the same commit as its full results (258616c, 25 September 2026). The plan may have been written before the analysis, but the public record cannot show that, so "preregistered" in this report should be read as "analysis plan written by the agent", not as a verified preregistration. The verdict is unchanged.
+
 ## In plain terms
 
 When two black holes orbit each other and merge, they send out ripples in space (gravitational waves) that detectors

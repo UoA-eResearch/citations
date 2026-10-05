@@ -1,0 +1,304 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\setlist{itemsep=2pt,topsep=4pt}
+\input{numbers.tex}
+
+\title{Preregistration-first autonomous research:\\a protocol and a self-audit of 19 AI-executed studies in 14 fields}
+\author{[Author(s) to be decided by the lab owner]\\University of Auckland\\[4pt]
+\small\textit{Prepared by an AI agent (Claude, Anthropic); see the AI contribution statement.}}
+\date{Draft, \today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent Systems that let AI agents choose a question, analyse data and write up a result are multiplying. The
+evidence on how such research goes wrong is accumulating too:
+\begin{itemize}
+\item selective reporting and post-hoc choices;
+\item overclaimed significance;
+\item underpowered null results presented as findings;
+\item AI reviewers that accept work they have flagged;
+\item large analyst-to-analyst variation between agents.
+\end{itemize}
+
+\noindent We describe a protocol that applies the safeguards of confirmatory science to an autonomous research agent,
+and audit how well it worked in practice. Under the protocol, one AI agent does the following:
+\begin{itemize}
+\item scouts and scores \LeadsTotal{} research leads across \LeadDomains{} fields using open data;
+\item commits a preregistration to a public git repository before outcome data are analysed;
+\item where possible, keeps outcomes sealed or not yet in existence;
+\item validates its methods before using them;
+\item obtains an independent adversarial review by another model instance before any verdict;
+\item logs every departure from plan with a timestamp;
+\item publishes a report with a plain-language summary and one of five verdicts, including null results.
+\end{itemize}
+
+\noindent We audit the first \StudiesTotal{} studies, \StudiesReported{} of them reported, across \StudyDomains{}
+fields. The audit uses git history, two independent coder agents of different models, automated number tracing, and
+reference resolution.
+
+\begin{itemize}
+\item \textbf{Verdicts.} Of the \VerdictsDecided{} decided verdicts, \VerdictSupported{} support the preregistered
+hypothesis, \VerdictRefuted{} refute it, \VerdictUnsupported{} are unsupported and \VerdictInconclusive{} are
+inconclusive.
+\item \textbf{Preregistration timing.} The plan predates every outcome file in \PreregPassStrict{} of \StudiesTotal{}
+studies, and in \PreregPassClassified{} once pre-outcome material committed alongside the plan is allowed. The first
+study's preregistration cannot be verified from the public record.
+\item \textbf{Deviations and review.} \DevTotal{} deviations were logged, and \DevVerdictRelevantPct{} were judged
+capable of changing a verdict. Review changed \ReviewHeadlineChanged{} headline estimates and \ReviewVerdictChanged{}
+verdicts.
+\item \textbf{Number tracing.} Naive tracing of report numbers to result files is barely informative: chance matches
+reach \NumChanceAll{}. After a chance correction, about \NumCorrectedThree{} of three-significant-figure numbers trace.
+\item \textbf{References.} All \RefArxiv{} arXiv identifiers and \RefDoi{} DOIs cited resolve.
+\end{itemize}
+
+\noindent Safeguards were applied unevenly. Only \InvPower{} of \StudiesTotal{} plans stated a power analysis, and
+\InvBlindStrong{} kept outcomes sealed, prospective or machine-checked. Scout estimates of effort were too high by more
+than an order of magnitude. We release the protocol, all plans, reports, code and audit data, and propose specific
+changes.
+\end{abstract}
+
+\section{Introduction}
+
+AI agents can now carry out every step of an empirical study: choosing a question, finding data, writing and running
+analysis code, interpreting results and drafting a paper
+\citep{lu2024aiscientist,yamada2025aiscientistv2,kosmos2025,denario2025,agon2026,ifargan2025datatopaper}.
+
+These systems raise an old problem in a new form. Confirmatory science relies on fixing a question and an analysis
+before seeing the answer, because otherwise flexible choices can manufacture findings
+\citep{simmons2011false,gelman2014garden,nosek2018prereg}. An agent can explore thousands of specifications at almost
+no cost, and nothing obliges it to disclose them.
+
+Recent work documents concrete failures:
+\begin{itemize}
+\item AI scientist systems select benchmarks and runs post hoc, and audits miss this without the full logs
+\citep{pitfalls2025};
+\item frontier agents give underpowered negative results the status of findings \citep{kirgis2026};
+\item the interpretive statements in an AI scientist's reports are much less accurate than its data-analysis
+statements \citep{kosmos2025};
+\item AI analysts given the same data and question reach opposite conclusions
+\citep{bertran2026many,gao2026nse,forkingpaths2026};
+\item AI reviewers can be steered into accepting unsound work \citep{badscientist2025,agents4science2025}.
+\end{itemize}
+
+A recent survey finds that most systems release code but few release the traces needed to verify a claim
+\citep{verificationgap2026}.
+
+\paragraph{This paper.} We describe and audit a research lab run by a single AI agent under a protocol borrowed from
+confirmatory science. Under it, preregistration is written by the agent itself and committed publicly before outcomes
+are analysed. The protocol was used for \StudiesTotal{} studies in \StudyDomains{} fields between September and
+October 2026, all on open data, and all plans, code, deviation logs and reports are public. Our contributions are:
+\begin{enumerate}
+\item a description of the protocol, from lead generation to publication, at a level that allows reuse;
+\item a self-audit of how the protocol worked in practice, designed in advance (the audit plan was committed before any
+measure was computed) and coded by independent agents of two different models;
+\item the failures the audit found, reported in the main text, and changes that follow from them.
+\end{enumerate}
+
+\paragraph{What is not claimed.} We do not claim that the studies' conclusions are correct; no external domain expert
+has checked them. Nor do we claim that the protocol prevents all of the failures above. The audit measures whether the
+protocol's commitments were kept and what its safeguards caught.
+
+\section{Related work}
+
+\paragraph{Autonomous research systems.} Several systems cover several fields or the full research cycle:
+\begin{itemize}
+\item Kosmos runs hundreds of agent rollouts around a shared world model, across metabolomics, materials, neuroscience
+and genetics. Independent scientists judged 79.4\% of its report statements accurate, but only 57.9\% of its
+interpretive ones \citep{kosmos2025}.
+\item Denario produced papers in more than ten disciplines \citep{denario2025}.
+\item Agon runs an ``omnidisciplinary'' loop and contributes a taxonomy of its own failures \citep{agon2026}.
+\item data-to-paper links every number in a generated paper to the code that produced it \citep{ifargan2025datatopaper}.
+\item Ai2's CodeScientist and AutoDiscovery search open-endedly for findings \citep{codescientist2025,autods2025}.
+\item The AI Scientist and ScientistTwo automate machine-learning research
+\citep{lu2024aiscientist,yamada2025aiscientistv2,scientisttwo2026}.
+\end{itemize}
+Biomni executes biomedical workflows \citep{biomni2026}. None of these systems preregisters its studies. Most start
+from a topic chosen by a human, and success is usually reported as a set of discoveries rather than as a distribution
+of verdicts.
+
+\paragraph{Evidence on failure.} We summarised the main empirical findings above
+\citep{pitfalls2025,kirgis2026,si2025gap,bertran2026many,gao2026nse,forkingpaths2026,badscientist2025,agents4science2025}.
+Two more strands are relevant.
+\begin{itemize}
+\item Ideas that LLMs generate look more novel than human ideas but lose that advantage once executed
+\citep{si2025gap}. This bears directly on any system that ranks its own leads.
+\item Open health surveys have been mined for formulaic single-factor association papers with no false-discovery
+control \citep{suchak2025nhanes}, a risk for any open-data research engine.
+\end{itemize}
+
+\paragraph{Preregistration and audit for AI research.} Preregistration has been proposed for experiments \emph{on} AI
+agents \citep{vaccaro2026prereg}, including against LLMs not yet released \citep{thomas2026next}. Several audit
+protocols are closer to ours:
+\begin{itemize}
+\item CrossAudit records audits as git commits, with reviewers from a different vendor
+\citep{crossaudit2026};
+\item the Discovery Certification Protocol tests whether a claimed discovery can be recovered without the search
+history \citep{dcp2026};
+\item an auditable agent loop for empirical economics evaluates on a hold-out built after the search \citep{shin2026auditable};
+\item ABE-Ralph audits whether experiments faithfully test their claims \citep{abe2026fidelity}.
+\end{itemize}
+Each was demonstrated on one or two cases or on seeded defects. Case studies of open-source research frameworks found
+that none completed a full research cycle \citep{agrawal2026case}.
+
+As far as we know, this is the first protocol in which an autonomous agent preregisters its own studies across a
+portfolio of fields, and the first audit of such a portfolio.
+
+\section{The protocol}
+\label{sec:protocol}
+
+The lab runs on one workstation (32-core Xeon, 94\,GB RAM, one A100 80\,GB GPU). The agent is Claude (Anthropic),
+working in a long-running Claude Code session. Everything it produces is committed to a public git repository and
+mirrored to a web page.
+
+The human lab owner sets the programme, authorises resource use (for example, stopping a shared GPU service), and makes
+decisions the agent flags as theirs (for example, whether to proceed without consulting M\=aori and Pacific data
+governance groups). They did not write any plan, code or report.
+
+\subsection{Leads: scouting and triage}
+
+Leads come from three scouting rounds run as multi-agent workflows: 10 domain scouts and a completeness critic; 8
+scouts and a calibration critic; and a local round on Auckland and Aotearoa New Zealand. They are stored in
+\texttt{leads.json}. Each lead records:
+\begin{itemize}
+\item a falsifiable hypothesis;
+\item the gap it fills;
+\item literature for and against;
+\item open datasets with access notes;
+\item a method and step-by-step plan;
+\item risks;
+\item a value score (1--10), a cost score (1--10) and a feasibility class;
+\item a critic's note;
+\item a one-paragraph plain-language summary.
+\end{itemize}
+
+There are \LeadsTotal{} leads in \LeadDomains{} fields. An interactive value-against-cost plot is published, and the
+agent works through leads in the high-value, low-cost quadrant. Before a lead is executed it gets a fresh novelty
+check; one lead was dropped at this stage because a 2026 paper had already answered its question.
+
+\subsection{Preregistration}
+
+Before analysing outcome data, the agent writes \texttt{plan.md} and commits and pushes it. The plan contains:
+\begin{itemize}
+\item the question and hypothesis;
+\item a disclosure of what has already been seen;
+\item data and units;
+\item the primary statistic;
+\item a decision rule mapping results to a verdict;
+\item validation steps;
+\item secondary analyses, labelled as such.
+\end{itemize}
+
+The verdicts are \emph{Supported}, \emph{Refuted}, \emph{Unsupported}, \emph{Inconclusive} and \emph{Pending} (for
+prospective tests). The rule must say when the evidence is too weak to decide, so that a null result is not reported
+as a refutation.
+
+\subsection{Keeping outcomes from the analyst}
+
+Where the design allows, outcomes are kept out of the agent's reach until the analysis is fixed:
+\begin{itemize}
+\item \textbf{Sealed.} Outcome data are stored unread and only their SHA-256 hash is recorded. Examples are the
+post-period crash data in the speed-limit study and the quantum-hardware answer strings in the peaked-circuit study.
+\item \textbf{Prospective.} The outcome does not yet exist when the plan is committed. Examples are City Rail Link
+ridership through March 2027 and future forecast targets.
+\item \textbf{Formal.} The outcome is a machine-checked certificate, as with Lean kernel proofs in the formal-mathematics
+study.
+\end{itemize}
+Otherwise the plan's disclosure states which outcome data the agent had already seen. How often each mechanism was
+used is part of the audit (Section~\ref{sec:results}).
+
+\subsection{Validation before analysis}
+
+Methods are checked before they are used: on synthetic data with known truth, against positive and negative controls,
+or by reproducing a published number. If validation fails, the method is fixed or the claim is downgraded, and the
+change is logged.
+
+\subsection{Independent adversarial review}
+
+Before any verdict, a separate agent instance reviews the run. In most studies this is Claude Fable~5.1, a different
+model from the executing agent. It is told to try to refute the result, and it sees the plan, code, results and draft
+report. It returns a recommendation, for example ``fix first''. Required fixes are made and logged. When the review
+says ``fix first'', the same reviewer instance then checks the fixes in a confirmation pass.
+
+\subsection{Deviation log and reporting}
+
+\texttt{deviations.md} records every departure from the plan, with a timestamp from the system clock. Each report
+contains:
+\begin{itemize}
+\item an ``In plain terms'' section of 150--300 words;
+\item what was done;
+\item results;
+\item caveats;
+\item a summary of the review.
+\end{itemize}
+The verdict, a one-line note and a headline are written back to \texttt{leads.json} and the public page.
+
+\section{Self-audit design}
+\label{sec:audit}
+
+The audit protocol was written and committed before any measure was computed (commit \texttt{f424e29}). The agent
+that ran the studies also wrote this paper, so judgement-based coding was given to two independent coder agents of
+different models (Claude Fable~5.1 and Claude Opus). They saw only the study files and a fixed codebook, and did not
+see each other's work. A third coder (Opus) made an inventory of safeguards in each plan; this was added after the
+protocol and logged as a deviation of the audit.
+
+The measures were:
+\begin{itemize}
+\item[(A)] whether git history shows each plan committed before the first outcome file;
+\item[(B)] coding of every deviation entry by category, trigger, timing and whether it could change the verdict;
+\item[(C)] what independent review raised and what it changed;
+\item[(D)] automated tracing of every number in each report to the study's result files, with a chance-match control
+added after the protocol;
+\item[(E)] resolution of every cited arXiv identifier and DOI;
+\item[(F)] scout estimates against outcomes.
+\end{itemize}
+Agreement is Cohen's $\kappa$ \citep{cohen1960kappa}. Departures from the audit protocol are logged in
+\texttt{paper/audit/deviations.md}.
+
+\section{Results}
+\label{sec:results}
+\input{results.tex}
+
+\section{Discussion}
+\input{discussion.tex}
+
+\section*{AI contribution statement}
+
+An AI agent (Claude, Anthropic; Opus- and Fable-class models) carried out all of the following:
+\begin{itemize}
+\item generated and scored the leads;
+\item wrote every plan, all code, every deviation log and every report;
+\item carried out the audit, with independent coder agents for the judgement-based measures;
+\item drafted this paper.
+\end{itemize}
+An independent agent reviewed the paper before release (Appendix~\ref{app:review}).
+
+The human lab owner set the programme, approved resource use and decisions flagged to them, and takes responsibility
+for any submission. No human checked the scientific conclusions of the individual studies.
+
+\section*{Data and code availability}
+
+All plans, code, deviation logs, reports, audit code and coder outputs are in the public repository
+\url{https://github.com/uoa-eresearch/citations} under \texttt{research-lab/}. Raw data are re-downloadable from the
+sources each plan names. The session transcripts are not released, because they contain the lab owner's messages;
+the numbers derived from them are released.
+
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+
+\appendix
+\input{appendix.tex}
+
+\end{document}

@@ -1,0 +1,20 @@
+run,domain,verdict,value,cost,title
+ai-evaluation-science-swe-audit-concordance,ai-evaluation-science,Supported,6.0,2.0,Auditing the auditors: do independent SWE-bench Verified audits agree on which tasks are broken?
+astronomy-gwtc4-q-chieff-copula-stress-test,astronomy,Inconclusive,7.0,4.0,Is the q-chieff anticorrelation in GWTC-4 real or a mass-model artifact?
+auckland-nz-crl-structural-uplift-prereg,auckland-nz,Pending,7.0,3.0,"Is the City Rail Link's ridership jump structural or a novelty effect? A preregistered prospective evaluation of rail uplift, bus substitution and job accessibility"
+auckland-nz-equity-adjustor-waitlist-did,auckland-nz,Inconclusive,6.0,2.0,"Did ending ethnicity-inclusive surgical waitlist prioritisation in Auckland change who waits longest? A triple-difference evaluation around the Equity Adjustor Score (introduced Feb 2023, rollout halted Jun 2023, discontinued Aug 2024)"
+auckland-nz-speed-limit-reversal-crashes,auckland-nz,Inconclusive,7.0,3.0,What did reversing New Zealand's speed-limit cuts cost in crashes? A national difference-in-differences at road-segment level on the 2025 Setting of Speed Limits Rule reversals
+auckland-nz-upzoning-canopy-lidar-did,auckland-nz,Inconclusive,7.0,5.0,"Did Auckland's 2016 upzoning cost the city its trees? A three-epoch LiDAR difference-in-differences of canopy loss (2013, 2016-18, 2024)"
+auckland-nz-wastewater-testing-gap-deprivation,auckland-nz,Inconclusive,6.0,3.0,"Who stopped being counted? COVID-19 case-reporting gaps across NZ sewer catchments, measured against wastewater and broken down by deprivation, 2022-2024"
+bioinformatics-vep-acmg-calibration-drift,bioinformatics,Refuted,7.0,4.0,Do 2021-calibrated ACMG PP3/BP4 thresholds still hold on 2023-2026 ClinVar reclassifications?
+cheminformatics-drug-discovery-cliff-noise-ceiling,cheminformatics-drug-discovery,Supported,7.0,3.0,Are activity cliffs a modelling failure or an assay-noise artifact? A noise-ceiling decomposition of cliff benchmarks
+climate-earth-ai-humid-heat-attribution,climate-earth,Refuted,7.0,5.0,AI-forecast counterfactual attribution of humid-heat (wet-bulb) extremes
+climate-earth-record-margin-obs,climate-earth,Inconclusive,6.0,3.0,Observational test of increasing record-shattering margins in station data
+comp-social-science-temp-accounts-vandalism,comp-social-science,Inconclusive,7.0,5.0,Temporary Accounts as a Natural Experiment on Anonymity and Vandalism in Wikipedia
+extra-open-neuroimaging-reanalysis-metaanalytic-prior-shrinkage,extra-open-neuroimaging-reanalysis,Refuted,6.0,4.0,NeuroQuery Priors for Small-N Group Maps: A Calibrated Shrinkage Tool
+formal-math-selfplay-vacuity-drift,formal-math,in progress,6.0,3.0,Do self-play provers drift toward vacuous conjectures? Measuring certified vacuity across STP iterations and open prover corpora
+health-econ-wastewater-flusight-value,health-econ,Unsupported,6.0,3.0,Wastewater Signals and FluSight Skill
+llm-ml-science-mcf-emergence,llm-ml-science,Unsupported,6.0,4.0,"When does multiple-choice ability emerge? The cloze-to-MCF crossover across training, seeds, and scales"
+metascience-citation-context-replication,metascience,Inconclusive,7.0,5.0,Citation-context sentiment as a leading indicator of replication failure
+quantum-simulation-peaked-98q-classical-crack,quantum-simulation,in progress,7.0,4.0,Recovering the hidden answer of the unsolved 98-qubit peaked-circuit challenge (P11/P12) on one A100
+seismology-geophysics-npp-gain-incompleteness-baseline,seismology-geophysics,Supported,7.0,4.0,Do neural point processes beat ETAS only because the ETAS baseline ignores catalog incompleteness?

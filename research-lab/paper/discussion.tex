@@ -1,0 +1,65 @@
+\paragraph{What the protocol delivered.} The core commitment held in all studies but one: a public plan, committed
+before outcome data were analysed. In the exception, the first study, the plan was committed together with its
+results. The decision rules forced nulls to be reported as nulls. Only \VerdictSupported{} of \VerdictsDecided{}
+decided verdicts support the preregistered hypothesis; the rest are refutations, unsupported or inconclusive. This is
+far below the share of positive results in conventional literatures and below even the roughly 44\% reported for
+registered reports in psychology \citep{scheel2021positive}. It is the opposite of the curated lists of discoveries
+by which autonomous systems are usually presented.
+
+Independent review was not a formality. It recommended changes before publication in \ReviewFixFirst{} of
+\ReviewStudies{} reported studies, and changed \ReviewHeadlineChanged{} headline estimates and \ReviewVerdictChanged{}
+verdicts. The deviation logs recorded each of these changes with a timestamp. In every case except one, the published
+record shows what changed after the plan and why.
+
+\paragraph{What did not work.}
+\begin{itemize}
+\item \textbf{Uneven safeguards.} The strongest safeguard, keeping outcomes out of the agent's reach, was used in only
+\InvBlindStrong{} of \StudiesTotal{} studies. In the rest, the plan's disclosure is the only protection, and it relies
+on the agent's honesty about what it had seen.
+\item \textbf{Missing power calculations.} Only \InvPower{} plans stated a power calculation or minimum detectable
+effect. This plausibly explains why half the decided verdicts are \emph{Inconclusive}: the scouted effects were
+rarely compared with what the data could detect before the work began. Kirgis et al.\ report the same weakness in
+frontier agents \citep{kirgis2026}.
+\item \textbf{Effort estimates.} Scouts estimated a median of \ScoutDaysMedian{} days per study, \ScoutDaysTotal{} days
+in total. The \ReportsAfterFirst{} reports after the first appeared within \CalendarBulkDays{} days. Speed is not a
+virtue in itself here. It reflects studies scoped to what an agent can do quickly with open data, and the same
+fluency at engineering that Kirgis et al.\ observed alongside weak research judgement.
+\item \textbf{The first study.} Its plan was committed together with its results. Its report nevertheless describes
+itself as preregistered. The plan may well have been written first, but the public record cannot show it, and we have
+added a correction to the report.
+\end{itemize}
+
+\paragraph{What the audit itself teaches.} Naive automated tracing of report numbers to result files, which we and
+others have recommended, is almost uninformative. Numbers from one study ``trace'' to another study's results
+\NumChanceAll{} of the time, because the result files contain thousands of numbers. Tracing is informative only for
+numbers with at least three significant figures, and only after correcting for chance matches. Tools that link claims
+to evidence need to link each claim to a specific cell, as data-to-paper does \citep{ifargan2025datatopaper}, rather
+than search for a matching value.
+
+\paragraph{Limitations.}
+\begin{itemize}
+\item \textbf{The agent audits itself.} The agent that ran the studies wrote this paper. Independent coders reduce,
+but do not remove, the conflict of interest. All the coders and reviewers are models from a single vendor.
+CrossAudit's finding that two vendors read the same rulebook differently \citep{crossaudit2026} suggests a
+cross-vendor reviewer would catch different problems.
+\item \textbf{Git timestamps are self-attested.} The agent controls the repository. Commits pushed to a public remote
+are hard to rewrite unnoticed, but they are not an independent timestamp. A registry (OSF) or a trusted timestamping
+service would be.
+\item \textbf{No external check of conclusions.} No domain expert checked whether the conclusions are right. The audit
+measures process, not truth.
+\item \textbf{Small sample.} Nineteen studies from one lab, one agent family and one month are a case series, not an
+estimate for autonomous research in general.
+\end{itemize}
+
+\paragraph{Changes to the protocol.} The audit and the literature point to eight changes:
+\begin{enumerate}
+\item timestamp each plan with an external registry as well as git;
+\item require a minimum detectable effect, and an equivalence-type rule for \emph{Refuted}, in every plan;
+\item keep outcomes out of the agent's reach whenever a design allows;
+\item publish the reviewer's prompt and full review, and a ledger of every analysis run on outcome data;
+\item link every number in a report to a specific result cell;
+\item add a reviewer from another vendor for \emph{Supported} verdicts, and a blind re-analysis of each headline by
+a second analyst agent given only the plan and the data \citep{gao2026nse,bertran2026many};
+\item record scout estimates against outcomes and recalibrate the lead scoring;
+\item state in every report which decisions were made by a human.
+\end{enumerate}
