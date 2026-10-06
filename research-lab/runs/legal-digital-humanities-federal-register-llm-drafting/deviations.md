@@ -319,3 +319,17 @@ primary DiD (B = 2,000, seed 20261007, fixed before unsealing).
   D8, but nothing beyond the commit history attests that.
 - **Deregulatory filter.** The regex in `analysis.py` (committed at D2, before unsealing) is
   `rescind|rescission|remov|withdraw|deregulat|eliminat`. The report now states it in full.
+
+## D10. Confirmation pass: publish with edits (2026-10-07 08:09 NZDT)
+
+The same reviewer checked the revision (commit 2fd2316) and found every issue resolved or adequately disclosed. The
+recommendation is publish with edits, with no must-fix items. Its six minor items are addressed:
+
+- **N1.** `code/provenance.py` and `provenance.json` record two numbers: 11.3-14.0% of documents score above 25% on
+  their own, and 539,305 paragraphs contain a curly quote (the report had 538,249, from a U+201C-only count).
+- **N2.** The prompt-word sensitivity's level shift (+2 to +3.6 pp) is now reported, and interval widths are given as
+  ±5 to ±6 pp.
+- **N3.** The omitted small DOT units and the FHWA's 4-document 2026 cell are flagged.
+- **N4.** The parse start is attributed to the shell timestamp.
+- **N5.** "11 of 14" now refers to 2024-2025 against 2026.
+- **N6.** The inference about where reporting placed the Gemini initiative is removed.

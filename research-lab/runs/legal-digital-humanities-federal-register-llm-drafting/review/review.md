@@ -443,3 +443,82 @@ is timestamped and matches the commit history, and the verdict follows the rule.
 report says about its own validation and about the government-wide pattern, and in the two confounders it never
 looks at: DOT's shifting sub-agency mix and the drafting lag. Fix those, produce the preregistered monitoring series,
 and the Inconclusive verdict can be published with the caveats it deserves.
+
+## Confirmation pass
+
+Revised report (commit 2fd2316, 07:55 NZDT), D9, `code/post_review.py` and its outputs checked on 7 October 2026
+against the issues above. Method: every new number in report.md was traced to `results/tables/*` and recomputed where
+a recomputation was cheap; the study's twelve-seed table was compared with the reviewer's own independent twelve-seed
+run from the first pass (identical to every digit, max |difference| = 0.0 in both bounds); `groups.py`'s regenerated
+`fr_groups.parquet` was compared document by document with the group/dept/templated columns carried in the paragraph
+parquets (38,258 documents, 0 mismatches, so the fix changed only `subagency` and the new `ferc` flag); `analysis.py`,
+`mle.py`, `validate.py` and `parse.py` are unchanged since D8, so the primary result could not have moved.
+
+### Recommendation: **publish with edits** (minor; no must-fix items remain)
+
+### Status of each issue
+
+| # | Status | Where / note |
+|---|---|---|
+| 1 | resolved | Department table with 95% CIs (14 rows; n sums 3,190 / 1,126 match the primary), "11 of 14 rose and 3 fell", Commerce flat, reweighting 5.06% vs 4.98% (recomputed: 5.06). `monitoring_by_department.csv` (404 department-quarters, B = 300) produced; "every cabinet department" removed from text and tiles. The report could add one pointer to the quarterly file, which it does not name. |
+| 2 | resolved | Report Validation bullets 3-4 and D9 "Corrections" now give the bias/width explanation; the clustering claim is withdrawn in D5/D6 by correction note. |
+| 3 | resolved | Seed table (12 × B = 2,000: hi 4.84-5.11 pp, Refuted under 6) and a B = 10,000 run (−4.23 to +5.01, Inconclusive); "by a hair" removed; In plain terms states the seed dependence and the ~7 pp realised detectability; caveat "formal verdict fragile; substantive result not". |
+| 3b | resolved | Variance by cell (74 / 19 / 4 / 3%, recomputed 74.2 / 19.3 / 3.6 / 2.9), heterogeneity "in every period", floor-level V2 baselines; "appeared from 2025" removed. |
+| 4 | resolved | `subagency` fixed (first non-department agency, `raw_name` fallback); administrations table with CIs; FAA 48→32%, PHMSA 11→26%; composition 1.1-3.7 pp (recomputed 1.14-3.72 on the 8 units with n ≥ 5); PHMSA 12.9% pre discussed as possible baseline contamination; OST 23.3% (n = 11) and NHTSA 9.2% flagged "to watch"; clean-baseline DiD +0.3 (−4.1, +4.6). |
+| 5 | resolved | "do not discriminate"; U+00A0 absence stated; "rules out" gone. |
+| 6 | resolved | Heading replaced by "Removing deregulatory-titled documents does not remove the rise" plus the diffuse-vocabulary bullet. |
+| 7 | resolved | Both lists shown with the criterion ("by absolute rise" / "by ratio, among words with a rise of at least 5 points"); matches `excess_words.csv`. |
+| 8 | resolved | Regex quoted in full in the report and D9. |
+| 9 | resolved | Routine FAA-type share 38% / 25% disclosed (from `post_review_summary.json`, post-dedup documents); sensitivity +1.1 (−4.0, +5.7). |
+| 10 | resolved | Leak named in the Text paragraph with examples; broader-filter sensitivity +0.4 (−4.3, +4.7). The study's broad regex is narrower than the reviewer's (it flags 0.8% more paragraphs); both give the same answer. |
+| 11 | resolved | Caveat on the lower boundary (21.5% of DOT-pre draws, 16 of 31 quarters, both DOT P2 cells); `variance_by_cell.csv` reports the score at α = 0 and the unbounded MLE for the four primary cells (all interior, as the reviewer found). |
+| 12 | resolved | ITT caveat with lag, OIRA and "plan, not adoption date"; 2026Q3 flagged. |
+| 13 | resolved (as a sensitivity) | Primary vocabulary kept, correctly, since D6 closed estimator changes; sensitivity with prompt words removed and preambles/Markdown stripped: DiD +1.5 (−5.0, +7.3). See new item N2 on what that run also shows. |
+| 14a | resolved, with a caveat | Parse start given as 03:50:45 (29 s after the D7 commit), from the shell's `date` output; no artefact records it, so the report should say "by the shell timestamp". Output file time 03:50:53 is verified. |
+| 14b | resolved | "Not sealed" bullet and D9 "Scope of the seal" say exactly what the commit history can and cannot attest. |
+| 15 | resolved | 12.5% (5 of 40; CI 4-27%), 88% within one SE, B = 300 stated. |
+| 16 | resolved | "Background noise" bullet (DOT 2020Q3, comparison 2021Q1 at ~4%). |
+| 17 | resolved | Edge cases listed; FERC sensitivity +0.1 (−4.5, +4.6). Wording nit: "66 documents" is the metadata count in the two windows; 65 (51 + 14) are removed after filtering. |
+| 18 | resolved | Nemotron revision e5e99324 recorded (local metadata; not independently verifiable here). |
+| 19 | resolved | "neighbour set ... not a transitive family, so the rule keeps more documents". |
+| 20 | resolved | 10.7-18.8%, 12.5%, +0.95 corrected; the "2-4 pp" sentence replaced by the variance decomposition. (82.5% power is printed as 82%; trivial.) |
+| 21 | resolved | "We found no DOT-specific rise ... could not rule out a DOT-specific rise of up to about 5 points." |
+
+### New items (all minor; none affects the verdict)
+
+- **N1. Two report numbers have no provenance in the results files.** "about 11-14% of documents score above 25% on
+  their own" comes from the reviewer's scratch computation (12.8 / 14.0 / 11.3 / 11.7%), not from `post_review.py`;
+  "Curly quotes survive in 538,249 paragraphs" is reproduced by none of the obvious definitions (539,305-539,519 over
+  all parsed paragraphs for the three curly-character sets; 299,190-299,374 over cabinet non-templated paragraphs).
+  Fix: add both to `post_review.py` (per-document raw α shares; the curly-quote count with its definition) or round
+  ("about 540,000") and attribute.
+- **N2. The prompt-word sensitivity moves every level by +2 to +3.6 pp while the DiD moves +0.9 pp.** With three
+  words removed and preambles stripped, DOT 2026 reads 6.5% instead of 3.6%, others 7.0% instead of 5.0%, and the
+  calibration intercept rises from 0.54% to 0.77% raw. The report calls this "a small flaw" and says nothing about the
+  level shift. It is direct evidence for the report's own "scale anchored to five generators" caveat: absolute shares
+  depend on vocabulary choices at the ±3 pp scale, and only the DiD is robust. One sentence under the sensitivities
+  table, and "intervals of about ±5 pp" in the first caveat should read "±5 to ±6 pp" (this variant's is −5.0 to
+  +7.3).
+- **N3. Administrations table.** Three units with 12 documents in total are omitted without a note ("Transportation
+  Department" 7 / 1, Great Lakes Seaway 4 / 2, "Office of Secretary of Transportation" 1 / 0); FHWA's 2026 estimate
+  (8.5%) rests on 4 documents and is shown without a flag, while the figure correctly drops units under 10. Add a
+  footnote; harmonise the `raw_name` fallback so that department-only listings are labelled "Office of the Secretary /
+  department" and the two OST spellings merge.
+- **N4. Timing wording.** "Parsed: at 03:50:45" should be attributed to the shell timestamp (see 14a).
+- **N5. "from mid-2025" in the departments sentence** (In plain terms and tile 3): the 11-of-14 figure compares
+  2024-25 with 2026; the mid-2025 timing is from the pooled event study. Say "between 2024-25 and 2026".
+- **N6. "That office is where reporting placed the Gemini initiative."** ProPublica quoted "DOT's top lawyer" and
+  "agency leaders"; locating the initiative in the Office of the Secretary is a reasonable inference (the General
+  Counsel sits there) but should be phrased as one.
+
+### Checks that found nothing wrong
+
+- Every number in the departments, administrations, sensitivities, seed, variance and validation sections matches
+  its results file (rounding to one decimal throughout; 82.5% → 82% is the only rounding-down).
+- The composition decomposition reproduces (2.47% / 3.34%; 1.14-3.72 pp of the 4.0 pp change).
+- The seed table and the B = 10,000 interval are as stated; the preregistered seed's verdict is unchanged and the
+  reasoning that Inconclusive is also right on substance is sound.
+- D9's corrections to D5, D6 and D8 are accurate. The groups.py fix left group, department and templated assignments
+  unchanged for all 38,258 documents with parsed text. No change to the primary pipeline.
+- No new overclaim found beyond N5 and N6; the hedging on OST (n = 11), on PHMSA's pre-period level and on 2026Q3 is
+  appropriate.

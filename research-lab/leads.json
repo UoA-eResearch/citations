@@ -4829,7 +4829,12 @@
    "scout_value_score": 7,
    "scout_cost_score": 3,
    "plain_summary": "In early 2026 the US Transportation Department said it would have Google's Gemini AI write most of its new regulations. This study checks every federal rule published since 2019 to measure how much of the text looks AI-written, agency by agency, and tests whether DOT's published rules really changed after that announcement.",
-   "scout_round": 2
+   "scout_round": 2,
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass)",
+   "report_url": "runs/legal-digital-humanities-federal-register-llm-drafting/report.html",
+   "verdict_tag": "Inconclusive",
+   "verdict_note": "Inconclusive under the preregistered rule: DOT-specific DiD +0.6 pp (95% CI -4.3 to +5.1), so the upper bound misses the Refuted threshold of 5 pp. The bound falls below 5 pp under 6 of 12 bootstrap seeds, so the formal verdict is within Monte Carlo error; on substance, no DOT-specific rise, with about 7 pp realised detectable effect.",
+   "headline": "No DOT-specific rise in AI-like rule text after DOT's January 2026 Gemini plan: DOT went from about 0% to 3.6% and the other cabinet departments from 1.6% to 5.0% (DiD +0.6 pp, -4.3 to +5.1). Most departments (11 of 14) rose from mid-2025, unevenly, in a shift the estimator cannot separate from deregulatory policy vocabulary. DOT's Office of the Secretary read 23% in 2026 (11 documents)."
   },
   {
    "id": "legal-digital-humanities-phantom-citations-judicial-opinions",
@@ -6348,7 +6353,7 @@
    "headline": "Plans demonstrably came before outcomes in 18 of 19 studies, and all 19 were pushed to GitHub within seconds of commit. The first study's plan entered git together with its results. 3 of 16 decided verdicts support their hypothesis. 117 of 119 sampled report numbers check out, and the 2 rounding errors are corrected. Weak points: only one plan had a power calculation, only 3 studies sealed or pre-dated their outcomes, review rules were applied unevenly, and the history was force-pushed once to re-attribute five commits."
   }
  ],
- "updated": "2026-10-02",
+ "updated": "2026-10-07",
  "critique_assessment_round2": "Coverage is broad: 10 domains and 31 leads, mostly audit-style or meta-science, with a few constructive benchmarks (PCBA-2026, the GloBI snapshot benchmark, the SWE cross-audit matrix). My web-search budget was used up, so novelty checks ran through the OpenAlex and arXiv APIs, arXiv abstract pages, and direct data or source checks (GBIF S3, the GBIF blog, tracker READMEs and issues). These checks are narrower than full web search, so there is residual risk of missed grey literature, especially econ working papers and law reviews.\n\nNo lead was killed. The one material pre-emption is arXiv 2602.16733 'Scaling Reproducibility', which automatically matches re-executed outputs at scale and invalidates the R-drift lead's gap statement; that lead should be reframed. The Boltz-2 decoy-shift hypothesis is contradicted in direction by the 2026 Pose-to-Affinity study.\n\nScouts over-scored: 10 values were lowered by 1-2 points, mostly 7s that are really audits of one preprint or folklore. Cost was well calibrated except Boltz-2 (6 to 4).\n\nLeads cluster around shared infrastructure, which affects scheduling more than it creates duplication. Pairs to schedule together: the two QuakeScope leads (same 111 GB archive), the three quantum mitigation and convergence leads (shared patch and noise code), R drift with agent repair (shared ground truth), and phantom citations with precedent erosion (same CourtListener dump). There are no true duplicates of existing leads. The SAE and transcoder seed leads are thematically close to llm-ml-science-curation-vs-seed-noise but measure different objects.\n\nStrongest picks: the 98-qubit peaked-circuit crack, the 74-qubit noisy twin, the activity-cliff noise ceiling, the NPP-vs-incompleteness-aware ETAS test, and the certified Lean contamination DiD.",
  "unscouted_angles_round1": [
   "Ecology and biodiversity informatics (GBIF, eBird, GLOBI, IUCN, TRY): sampling-effort-corrected range-shift estimation, species-distribution-model benchmark leakage and spatial-block validation, whether published climate-driven range shifts survive observer-effort nulls",

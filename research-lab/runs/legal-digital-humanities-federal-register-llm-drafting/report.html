@@ -87,7 +87,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
     <a href="../../index.html">All research leads</a>
   </div>
 </header>
-<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Verdict</div><div class="tile-value text">Inconclusive</div><div class="tile-note">DOT-specific change +0.6 pp (95% CI -4.3 to +5.1); the 5 pp boundary is within bootstrap error</div></div><div class="tile"><div class="tile-label">DOT</div><div class="tile-value">-0.4% -&gt; 3.6%</div><div class="tile-note">estimated LLM-assisted sentences, 2024-25 vs Feb-Sep 2026; 1.1-3.7 pp of the rise is a shift in which administrations published</div></div><div class="tile"><div class="tile-label">Other departments</div><div class="tile-value">1.6% -&gt; 5.0%</div><div class="tile-note">11 of 14 rose from mid-2025, unevenly, before DOT&#x27;s announcement</div></div><div class="tile"><div class="tile-label">Detectable effect</div><div class="tile-value">3 pp planned</div><div class="tile-note">about 7 pp realised</div></div></section>
+<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Verdict</div><div class="tile-value text">Inconclusive</div><div class="tile-note">DOT-specific change +0.6 pp (95% CI -4.3 to +5.1); the 5 pp boundary is within bootstrap error</div></div><div class="tile"><div class="tile-label">DOT</div><div class="tile-value">-0.4% -&gt; 3.6%</div><div class="tile-note">estimated LLM-assisted sentences, 2024-25 vs Feb-Sep 2026; 1.1-3.7 pp of the rise is a shift in which administrations published</div></div><div class="tile"><div class="tile-label">Other departments</div><div class="tile-value">1.6% -&gt; 5.0%</div><div class="tile-note">11 of 14 rose between 2024-25 and 2026, unevenly; the rise began in mid-2025, before DOT&#x27;s announcement</div></div><div class="tile"><div class="tile-label">Detectable effect</div><div class="tile-value">3 pp planned</div><div class="tile-note">about 7 pp realised</div></div></section>
 <main>
 <h2>In plain terms</h2>
 <p>In January 2026 the US Department of Transportation (DOT) said it would use Google's Gemini to draft most new
@@ -102,8 +102,8 @@ DOT-specific rise of up to about 5 points.</p>
 <p>The formal verdict is <strong>Inconclusive</strong>. A "no" verdict needed the top of that range below 5 points. Whether it lands
 just above or just below 5 depends on the random seed of the resampling, and the seed fixed in advance put it just
 above. Either way, the study could only reliably detect a DOT-specific rise of about 7 points.</p>
-<p>Most other departments' rules (11 of 14) also became more AI-like from mid-2025, months before DOT's announcement,
-though unevenly. Within DOT, the Secretary's own office published rules in 2026 that read as the most AI-like of any
+<p>Most other departments' rules (11 of 14) also became more AI-like between 2024-2025 and 2026, unevenly. The rise
+began in mid-2025, months before DOT's announcement. Within DOT, the Secretary's own office published rules in 2026 that read as the most AI-like of any
 DOT unit. That is based on 11 documents, and is worth watching.</p>
 <h2>What was done</h2>
 <p><strong>Documents.</strong> Every proposed and final rule published from January 2019 to September 2026 (38,833 documents), from
@@ -161,8 +161,8 @@ less detectable.</p>
 <ul>
 <li><strong>Sealed:</strong> the 188 daily issues from 2026 were downloaded and hashed (manifest digest b8a470f9…) when the plan was
   committed.</li>
-<li><strong>Parsed:</strong> at 03:50:45 on 7 October, 29 seconds after the validation results and the minimum detectable effect
-  were committed. All 188 files matched the manifest (D7, D8).</li>
+<li><strong>Parsed:</strong> at 03:50:45 on 7 October, by the shell timestamp printed just before the parse command. That is 29
+  seconds after the validation results and the minimum detectable effect were committed. All 188 files matched the manifest (D7, D8).</li>
 <li><strong>Not sealed:</strong> the 2022-2025 text, which includes the pre-period and the placebo windows. It was on disk while the
   estimator changes were made. No estimate was computed on it before unsealing, but only the commit history attests
   that.</li>
@@ -286,7 +286,7 @@ too little precision to exclude one of about 5 pp.</p>
   (bootstrap sd 1.6 pp on the raw scale). The other cells contribute: other departments' 2026, 19%; the two 2024-2025
   cells, 7%.</li>
 <li><strong>V2 spread its injected text evenly.</strong> Real documents differ a lot in how AI-like they read, in every period: about
-  11-14% of documents score above 25% on their own. V2 injected text evenly into every synthetic document, so it
+  11-14% of documents score above 25% on their own (<code>provenance.json</code>). V2 injected text evenly into every synthetic document, so it
   understated that heterogeneity.</li>
 <li><strong>V2's baseline groups contributed almost no variance,</strong> because 2019-2021 text sits at the estimator's floor.</li>
 </ul>
@@ -535,11 +535,14 @@ too little precision to exclude one of about 5 pp.</p>
 <li><strong>PHMSA</strong> read 12.9% before the announcement, far above every other DOT unit, and 2.2% after. If some of its
   2025 deregulatory batch was AI-assisted, DOT's baseline already contains treatment, which would bias the DiD towards
   zero. A clean-baseline sensitivity (below) gives the same answer.</li>
-<li><strong>The Office of the Secretary</strong> read 23.3% in 2026 (95% CI 3.9 to 39.7%), on 11 documents. That office is where
-  reporting placed the Gemini initiative.</li>
+<li><strong>The Office of the Secretary</strong> read 23.3% in 2026 (95% CI 3.9 to 39.7%), on 11 documents. This office houses
+  DOT's central leadership. Whether these rules were drafted with Gemini cannot be told from this data.</li>
 <li><strong>NHTSA</strong> read 9.2% in 2026.</li>
 </ul>
-<p>These cells are small and their intervals wide; they are the ones to watch.</p>
+<p>These cells are small and their intervals wide; they are the ones to watch. The FHWA's 2026 value rests on 4
+documents. Three DOT units with fewer than 10 documents in total (12 documents) are omitted from the table. Their
+names come from the Federal Register's raw agency field: "Transportation Department", "Office of Secretary of
+Transportation" and the Great Lakes St. Lawrence Seaway Development Corporation.</p>
 <figure><a href="results/figures/departments.png"><img src="results/figures/departments.png" alt="Departments and DOT administrations"></a><figcaption>Calibrated estimated share of LLM-assisted preamble sentences by cabinet department (top, largest first) and DOT operating administration with at least 10 documents in each period (bottom), 2024-2025 (grey) against February-September 2026 (colour), with document-bootstrap 95% intervals. Document counts in brackets. Secondary analysis added after the independent review (D9); the department series is the monitoring series of plan section 6.</figcaption></figure>
 <p><strong>Sensitivities (secondary, after review).</strong> DiD with 95% CI, 2,000 draws, the same seed:</p>
 <div class="table-wrap"><table>
@@ -579,8 +582,11 @@ too little precision to exclude one of about 5 pp.</p>
 <ul>
 <li>All point estimates lie between +0.1 and +1.5 pp, and every interval includes 0.</li>
 <li>Three upper bounds fall below 5 pp and two rise above it, which again shows that the verdict boundary is not robust.</li>
-<li>The prompt-word variant addresses a small flaw. "Supplementary", which appears in the drafting prompt, carried the
-  largest weight in the vocabulary.</li>
+<li><strong>The prompt-word variant</strong> addresses a flaw: "supplementary", which appears in the drafting prompt, carried the
+  largest weight in the vocabulary. Removing it, with the other two prompt words, barely moves the DiD (+0.9 pp) but
+  raises every level by 2 to 3.6 pp: DOT 2026 goes from 3.6% to 6.5%, and the other departments from 5.0% to 7.0%.
+  This is direct evidence that the estimated levels depend on reference choices, while the difference between groups
+  is much more stable.</li>
 </ul>
 <p><strong>Other robustness checks (secondary).</strong></p>
 <ul>
@@ -600,7 +606,7 @@ too little precision to exclude one of about 5 pp.</p>
 <ul>
 <li><strong>Non-breaking hyphens and narrow no-break spaces</strong> do not discriminate. gpt-oss and Nemotron use them constantly,
   and no Federal Register document from 2019-2026 contains them. But no document contains an ordinary non-breaking
-  space either, a character routine in word-processed legal text. Curly quotes survive in 538,249 paragraphs. The
+  space either, a character routine in word-processed legal text. Curly quotes survive in 539,305 paragraphs. The
   Federal Register's typesetting evidently normalises such characters, so their absence says nothing about AI use.</li>
 <li><strong>Em dashes per 1,000 words:</strong></li>
 <li>DOT: 0.53 (2019-2021), 0.64 (2024-2025), 0.83 (2026);</li>
@@ -630,7 +636,7 @@ them. The rise is evidence of a style shift, not proof of AI use.</p>
 <li><strong>The formal verdict is fragile; the substantive result is not.</strong> The upper bound sits within Monte Carlo error of
   the 5 pp threshold, and sensitivities fall on both sides of it. The realised precision was about half what
   validation predicted. What holds across every seed and variant is a DOT-specific change near zero (+0.1 to +1.5 pp)
-  with intervals of about ±5 pp.</li>
+  with intervals of about ±5 to ±6 pp.</li>
 <li><strong>This is an intention-to-treat test on publication dates.</strong></li>
 <li>Rules published in early 2026 were drafted in 2025.</li>
 <li>Final rules follow proposals drafted earlier still.</li>

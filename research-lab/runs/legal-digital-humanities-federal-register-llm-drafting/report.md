@@ -26,8 +26,8 @@ The formal verdict is **Inconclusive**. A "no" verdict needed the top of that ra
 just above or just below 5 depends on the random seed of the resampling, and the seed fixed in advance put it just
 above. Either way, the study could only reliably detect a DOT-specific rise of about 7 points.
 
-Most other departments' rules (11 of 14) also became more AI-like from mid-2025, months before DOT's announcement,
-though unevenly. Within DOT, the Secretary's own office published rules in 2026 that read as the most AI-like of any
+Most other departments' rules (11 of 14) also became more AI-like between 2024-2025 and 2026, unevenly. The rise
+began in mid-2025, months before DOT's announcement. Within DOT, the Secretary's own office published rules in 2026 that read as the most AI-like of any
 DOT unit. That is based on 11 documents, and is worth watching.
 
 ## What was done
@@ -93,8 +93,8 @@ less detectable.
 
 - **Sealed:** the 188 daily issues from 2026 were downloaded and hashed (manifest digest b8a470f9…) when the plan was
   committed.
-- **Parsed:** at 03:50:45 on 7 October, 29 seconds after the validation results and the minimum detectable effect
-  were committed. All 188 files matched the manifest (D7, D8).
+- **Parsed:** at 03:50:45 on 7 October, by the shell timestamp printed just before the parse command. That is 29
+  seconds after the validation results and the minimum detectable effect were committed. All 188 files matched the manifest (D7, D8).
 - **Not sealed:** the 2022-2025 text, which includes the pre-period and the placebo windows. It was on disk while the
   estimator changes were made. No estimate was computed on it before unsealing, but only the commit history attests
   that.
@@ -176,7 +176,8 @@ too little precision to exclude one of about 5 pp.
   (bootstrap sd 1.6 pp on the raw scale). The other cells contribute: other departments' 2026, 19%; the two 2024-2025
   cells, 7%.
 - **V2 spread its injected text evenly.** Real documents differ a lot in how AI-like they read, in every period: about
-  11-14% of documents score above 25% on their own. V2 injected text evenly into every synthetic document, so it
+  11-14% of documents score above 25% on their own (`provenance.json`).
+  V2 injected text evenly into every synthetic document, so it
   understated that heterogeneity.
 - **V2's baseline groups contributed almost no variance,** because 2019-2021 text sits at the estimator's floor.
 
@@ -245,11 +246,14 @@ Judged by its realised interval, the study could reliably detect a DOT-specific 
 - **PHMSA** read 12.9% before the announcement, far above every other DOT unit, and 2.2% after. If some of its
   2025 deregulatory batch was AI-assisted, DOT's baseline already contains treatment, which would bias the DiD towards
   zero. A clean-baseline sensitivity (below) gives the same answer.
-- **The Office of the Secretary** read 23.3% in 2026 (95% CI 3.9 to 39.7%), on 11 documents. That office is where
-  reporting placed the Gemini initiative.
+- **The Office of the Secretary** read 23.3% in 2026 (95% CI 3.9 to 39.7%), on 11 documents. This office houses
+  DOT's central leadership. Whether these rules were drafted with Gemini cannot be told from this data.
 - **NHTSA** read 9.2% in 2026.
 
-These cells are small and their intervals wide; they are the ones to watch.
+These cells are small and their intervals wide; they are the ones to watch. The FHWA's 2026 value rests on 4
+documents. Three DOT units with fewer than 10 documents in total (12 documents) are omitted from the table. Their
+names come from the Federal Register's raw agency field: "Transportation Department", "Office of Secretary of
+Transportation" and the Great Lakes St. Lawrence Seaway Development Corporation.
 
 ![Departments and DOT administrations](results/figures/departments.png)
 
@@ -266,8 +270,11 @@ These cells are small and their intervals wide; they are the ones to watch.
 
 - All point estimates lie between +0.1 and +1.5 pp, and every interval includes 0.
 - Three upper bounds fall below 5 pp and two rise above it, which again shows that the verdict boundary is not robust.
-- The prompt-word variant addresses a small flaw. "Supplementary", which appears in the drafting prompt, carried the
-  largest weight in the vocabulary.
+- **The prompt-word variant** addresses a flaw: "supplementary", which appears in the drafting prompt, carried the
+  largest weight in the vocabulary. Removing it, with the other two prompt words, barely moves the DiD (+0.9 pp) but
+  raises every level by 2 to 3.6 pp: DOT 2026 goes from 3.6% to 6.5%, and the other departments from 5.0% to 7.0%.
+  This is direct evidence that the estimated levels depend on reference choices, while the difference between groups
+  is much more stable.
 
 **Other robustness checks (secondary).**
 
@@ -288,7 +295,7 @@ These cells are small and their intervals wide; they are the ones to watch.
 
 - **Non-breaking hyphens and narrow no-break spaces** do not discriminate. gpt-oss and Nemotron use them constantly,
   and no Federal Register document from 2019-2026 contains them. But no document contains an ordinary non-breaking
-  space either, a character routine in word-processed legal text. Curly quotes survive in 538,249 paragraphs. The
+  space either, a character routine in word-processed legal text. Curly quotes survive in 539,305 paragraphs. The
   Federal Register's typesetting evidently normalises such characters, so their absence says nothing about AI use.
 - **Em dashes per 1,000 words:**
   - DOT: 0.53 (2019-2021), 0.64 (2024-2025), 0.83 (2026);
@@ -319,7 +326,7 @@ them. The rise is evidence of a style shift, not proof of AI use.
 - **The formal verdict is fragile; the substantive result is not.** The upper bound sits within Monte Carlo error of
   the 5 pp threshold, and sensitivities fall on both sides of it. The realised precision was about half what
   validation predicted. What holds across every seed and variant is a DOT-specific change near zero (+0.1 to +1.5 pp)
-  with intervals of about ±5 pp.
+  with intervals of about ±5 to ±6 pp.
 - **This is an intention-to-treat test on publication dates.**
   - Rules published in early 2026 were drafted in 2025.
   - Final rules follow proposals drafted earlier still.
