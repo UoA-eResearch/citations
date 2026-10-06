@@ -37,8 +37,11 @@ def sentences(text):
     return [s for s in _TOK.tokenize(text) if len(s.split()) >= 5]
 
 
+NORM = str.maketrans({"\u2010": "-", "\u2011": "-", "\u00a0": " ", "\u202f": " "})  # D4: Unicode hyphens and no-break spaces
+
+
 def tokens(s):
-    return set(WORD.findall(s.lower()))
+    return set(WORD.findall(s.translate(NORM).lower()))
 
 
 def build_vocab(human_sents, llm_sents, candidates, min_h=50, min_a=20):

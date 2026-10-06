@@ -72,3 +72,24 @@ The capped design is kept as a sensitivity (`validate.py capped`, `validation_v2
 
 **Timing.** Validation has not been run, no LLM-fraction estimate exists for any period, and the 2026 issues are
 still sealed.
+
+## D4. Unicode normalisation in the tokenizer, and a typographic-marker check, before validation (2026-10-06 23:57 NZDT)
+
+**What was found.** gpt-oss-120b and Nemotron write compound words with a non-breaking hyphen (U+2011) and put a
+narrow no-break space (U+202F) after § and before units. Qwen, OLMo and Gemma never do. In the 2019-2025 Federal
+Register text, no document in any year contains either character (0.00% of documents per year).
+
+**Tokenizer fix.** The estimator's tokenizer kept ASCII-hyphen compounds as one token ("well-known") but split
+U+2011 compounds into two. Tokens are now formed after mapping U+2010 and U+2011 to "-" and the no-break spaces to a
+space (`code/mle.py`, `NORM`). No estimate had been computed.
+
+**New secondary check (model-free, outside the decision rule).** For each group and period, `analysis.py` now reports:
+
+- the share of documents whose non-procedural text contains U+2011 or U+202F;
+- em dashes per 1,000 words.
+
+Output: `results/tables/typographic_markers.csv`. A nonzero 2026 share would be evidence of pasted machine text,
+since the base rate is zero. A zero share is not evidence against LLM use: the Federal Register's own typesetting
+might normalise these characters, and other tools do not produce them.
+
+**Timing.** Validation has not been run and the 2026 issues are still sealed.

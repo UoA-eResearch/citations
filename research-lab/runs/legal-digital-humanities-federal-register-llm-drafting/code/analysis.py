@@ -192,6 +192,18 @@ def main():
     ex["excess"] = ex["post"] - ex["pre"]
     ex["ratio"] = (ex["post"] + 1e-3) / (ex["pre"] + 1e-3)
     ex.sort_values("excess", ascending=False).groupby("group").head(40).to_csv(TAB / "excess_words.csv", index=False)
+    # typographic markers (secondary, D4): share of documents whose non-procedural text contains a non-breaking hyphen
+    # (U+2011) or narrow no-break space (U+202F), characters absent from every 2019-2025 document and frequent in some
+    # generators' output; plus em dashes per 1,000 words. Model-free; not part of the decision rule.
+    tm = []
+    for gname in ("DOT", "other_cabinet"):
+        for per, (a, b) in (("2019-21", ("2019-01-01", "2021-12-31")), ("pre", ("2024-01-01", "2025-12-31")), ("post", ("2026-02-01", "2026-09-30"))):
+            docs = meta[(meta.group == gname) & (meta.publication_date >= a) & (meta.publication_date <= b)].index
+            txt = p[p.document_number.isin(docs) & ~p.procedural].groupby("document_number").text.apply(" ".join)
+            nw = txt.str.split().str.len().sum()
+            tm.append(dict(group=gname, period=per, n_docs=len(txt), share_nb_marks=float(txt.str.contains("[\u2011\u202f]", regex=True).mean()) if len(txt) else np.nan,
+                           em_dash_per_1000_words=float(txt.str.count("\u2014").sum() / nw * 1000) if nw else np.nan))
+    pd.DataFrame(tm).to_csv(TAB / "typographic_markers.csv", index=False)
     json.dump(out, open(TAB / "summary.json", "w"), indent=1, default=float)
     print(json.dumps(out, indent=1, default=float))
 
