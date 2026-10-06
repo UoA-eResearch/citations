@@ -50,3 +50,25 @@ relative to the comparison group, which biases the DiD towards zero.
 
 **Timing.** This change is made before any LLM-fraction estimate, any validation run, and the unsealing of the outcome
 issues.
+
+## D3. Power check (V2) at the real group sizes, before validation is run (2026-10-06 23:32 NZDT)
+
+**The problem.** Plan section 4 builds four synthetic groups from 2019-2021 validation-pool documents, "with the
+sentence and document counts of DOT-pre, DOT-post, other-pre and other-post". Those are 732, 290, 3,295 and 1,178
+documents (D1), 5,495 in total. After D1 the validation pool has only 1,283 documents. The first code capped every
+group at 320 disjoint documents. That understates power for three of the four groups, and could make Refuted
+unreachable for a reason unrelated to the data.
+
+**The change.** Each group is now drawn independently, with replacement, at its real document count. The draws come
+from the human documents of the generation and validation pools: 2,566 documents of 2019-2021 text that the
+estimator's human reference never sees. The rest is unchanged:
+
+- injection into DOT-post;
+- the document bootstrap within each group;
+- 40 replicates per effect size;
+- power is the share of 95% CIs that exclude 0.
+
+The capped design is kept as a sensitivity (`validate.py capped`, `validation_v2_capped.csv`).
+
+**Timing.** Validation has not been run, no LLM-fraction estimate exists for any period, and the 2026 issues are
+still sealed.
