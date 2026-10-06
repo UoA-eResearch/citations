@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Self-Play Vacuity Drift</title>
+<meta name="description" content="A preregistered, Lean-kernel-certified measurement of contradictory hypotheses across 46 iterations of the STP self-play prover corpus and four other open prover-training corpora.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Formal mathematics</div>
+  <h1>Do self-play provers drift toward vacuous conjectures?</h1>
+  <p class="subtitle">A preregistered, kernel-certified measurement of contradictory hypotheses across 46 iterations of the STP self-play corpus and four other open prover-training corpora</p>
+  <div class="meta">
+    <span>Report · 2026-10-06 · draft for independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/formal-math-selfplay-vacuity-drift/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/formal-math-selfplay-vacuity-drift/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/formal-math-selfplay-vacuity-drift/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Verdict</div><div class="tile-value text">Refuted</div><div class="tile-note">vacuity fell late in self-play: ratio 0.60 (0.53-0.67), not &gt;= 2</div></div><div class="tile"><div class="tile-label">Early vs late</div><div class="tile-value">4.3% -&gt; 2.6%</div><div class="tile-note">certified-vacuous conjectures, iterations 1-9 vs 38-47</div></div><div class="tile"><div class="tile-label">After each restart</div><div class="tile-value">8-10%</div><div class="tile-note">then a steady decline within each self-play phase</div></div><div class="tile"><div class="tile-label">NuminaMath-LEAN</div><div class="tile-value">6.2%</div><div class="tile-note">of solved problems; 7.4% autoformalized vs 1.6% human-written</div></div></section>
+<main>
+<h2>In plain terms</h2>
+<p>Some AI systems learn to prove mathematical theorems by inventing their own practice problems, trying to prove them,
+and training on whatever they prove. A practice problem whose assumptions contradict each other is a trap. It can be
+"proved" without doing any real mathematics, a kind of cheating the training process could reward. We expected such
+vacuous problems to pile up as self-play went on.</p>
+<p>We checked 92,000 problems from STP, a published self-play prover, using the Lean proof checker to certify each
+contradiction. The prediction was wrong. Vacuous problems were <em>less</em> common late in training (2.6%) than early
+(4.3%). The more interesting pattern is the shape:</p>
+<ul>
+<li>each time self-play restarted from a re-trained model, vacuous problems jumped to 8–10%;</li>
+<li>they then declined steadily as the prover improved.</li>
+</ul>
+<p>A likely reason is STP's own filter. It keeps only problems the prover usually fails, and contradictory problems
+become easy and drop out.</p>
+<p>Vacuous problems are far from rare elsewhere. In NuminaMath-LEAN, 6.2% of the problems the prover solved were
+vacuous: 7.4% of machine-translated problems against 1.6% of human-written ones. Vacuous problems were also solved
+more often during reinforcement learning, so the training signal favoured them. Almost all vacuous problems read like
+genuine competition questions.</p>
+<h2>What was done</h2>
+<p><strong>Corpus and sample.</strong> The STP_Lean_0320 corpus has 3,262,558 rows. Its iteration numbers form two self-play phases:</p>
+<ul>
+<li>rounds 0–23, and rounds 24–47;</li>
+<li>rounds 0 and 24 contain no conjectures;</li>
+<li>STP restarts self-play from a re-trained model between the phases.</li>
+</ul>
+<p>We drew 2,000 conjecture rows per iteration (92,000 in total) and 200 statement rows per iteration (9,600 LeanWorkbook
+proofs, used as a control). Each row was checked in STP's own Lean environment: Lean 4.9.0-rc1, the DeepSeek mathlib
+fork (upstream d1d1e4b72), and the STP REPL.</p>
+<p><strong>Certificate.</strong> A row counts as vacuous if a proof of <code>False</code> from its hypotheses compiles, contains no <code>sorry</code>, and
+uses only the standard axioms. Two routes can produce one:</p>
+<ul>
+<li><strong>(a) Goal swap.</strong> The released proof is re-run with the goal replaced by <code>False</code>.</li>
+<li><strong>(b) Automation.</strong> A fixed portfolio is tried: omega, linarith, norm_num, simp_all, nlinarith, aesop and decide.</li>
+</ul>
+<p><strong>Validation.</strong></p>
+<ul>
+<li><strong>Controls.</strong> The pipeline certified 20 of 20 vacuous control statements and 0 of 20 satisfiable ones.</li>
+<li><strong>Re-verification.</strong> The original proofs re-verified for 95.5% of rows, and the binder/conclusion split check
+  passed for 94.2%. Rows failing either were excluded.</li>
+<li><strong>Split repair.</strong> A sensitivity pass repaired split failures caused by STP's own prompt cut-off (D2, D5).</li>
+</ul>
+<h2>Results</h2>
+<p><strong>Primary test (iterations 38–47 against 1–9; iteration 0 has no conjectures).</strong> Rates are weighted by iteration
+size.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Late (38–47)</th>
+<th>Early (1–9)</th>
+<th>Ratio (95% CI)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Certified vacuous</td>
+<td>2.56% (482 of 18,726)</td>
+<td>4.28% (725 of 16,706)</td>
+<td><strong>0.60 (0.53–0.67)</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Verdict: Refuted.</strong> The hypothesis predicted a ratio of at least 2, and the upper end of the 95% CI is 0.67. The same
+verdict holds:</p>
+<ul>
+<li>at statement level (0.61, 0.54–0.68);</li>
+<li>unweighted (0.59, 0.53–0.66);</li>
+<li>with the 991 split-repaired rows added (0.60, 0.53–0.67).</li>
+</ul>
+<figure><a href="results/figures/vacuity_by_iteration.png"><img src="results/figures/vacuity_by_iteration.png" alt="Certified-vacuous rate by STP iteration, with the LeanWorkbook statement control"></a><figcaption>Certified-vacuous share of sampled conjecture rows by STP iteration (Wilson 95% bands), with the LeanWorkbook statement-proof control. Dashed lines mark the two self-play starts; shaded regions are the preregistered early and late windows.</figcaption></figure>
+<p><strong>Dynamics (secondary).</strong> Vacuity is highest right after each self-play start and falls within each phase:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Starting rate</th>
+<th>Peak</th>
+<th>Final five iterations</th>
+<th>Spearman ρ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2.8% at iteration 1</td>
+<td>8.1% at iteration 3</td>
+<td>0.7%</td>
+<td>−0.89</td>
+</tr>
+<tr>
+<td>2</td>
+<td>8.1% at iteration 25</td>
+<td>10.0% at iteration 26</td>
+<td>2.1%</td>
+<td>−0.94</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Contrast</th>
+<th>Rate ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Phase 1, late (14–23) against early (1–9)</td>
+<td>0.20</td>
+</tr>
+<tr>
+<td>Phase 2, late (38–47) against early (25–33)</td>
+<td>0.37</td>
+</tr>
+<tr>
+<td>Phase 2 against phase 1, overall</td>
+<td>2.19</td>
+</tr>
+</tbody>
+</table></div>
+<p>Across all 46 iterations the trend is flat (ρ = −0.004), because the decline within each phase cancels the restart
+jump.</p>
+<p><strong>Control.</strong> The LeanWorkbook statement proofs, whose problems come from a fixed pool, have a vacuity rate of 1.9%
+overall with no clear trend (ρ = −0.22, p = 0.12).</p>
+<p><strong>How vacuity is certified.</strong></p>
+<ul>
+<li>Of the 1,207 certified rows in the primary windows, 994 were certified only by the goal swap, 123 only by
+  automation, and 90 by both. In most cases, then, the released proof itself derives the contradiction.</li>
+<li>Conclusions provable with all hypotheses discarded fell from 3.8% to 0.1% between the early and late windows.</li>
+</ul>
+<p><strong>Training weight.</strong> Vacuous rows carry higher STP training weights: the odds ratio is 1.79 per 0.1 of weight
+(1.73–1.85). STP weights a proof by <code>exp(-0.001 × proof length)</code>, and vacuous conjectures tend to have short proofs, so
+the weighting gives them more emphasis in training.</p>
+<p><strong>Causes (100 random certified rows, coded by a separate agent).</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Cause</th>
+<th>Rows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Contradictory numeric constraints</td>
+<td>59</td>
+</tr>
+<tr>
+<td>Unsatisfiable functional equations, domain or range confusions, and parsing slips (e.g. <code>x i+1</code> read as <code>(x i)+1</code>)</td>
+<td>21</td>
+</tr>
+<tr>
+<td>A hypothesis that is false on its own</td>
+<td>18</td>
+</tr>
+<tr>
+<td>Natural-number subtraction or division</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Cast or division-by-zero conventions</td>
+<td>1</td>
+</tr>
+</tbody>
+</table></div>
+<p>85 of the contradictions are local, visible from one or two hypotheses, and 97 of the 100 statements read like genuine
+competition claims.</p>
+<p><strong>Other corpora (secondary).</strong> Each is a uniform sample, checked in its own Lean version.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Corpus</th>
+<th>Re-verified</th>
+<th>Certified vacuous (95% CI)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NuminaMath-LEAN, model proofs (Lean 4.15)</td>
+<td>88.7%</td>
+<td><strong>6.2%</strong> (5.8–6.8)</td>
+</tr>
+<tr>
+<td>Goedel Lean-workbook-proofs</td>
+<td>96.2%</td>
+<td>2.8% (2.4–3.3)</td>
+</tr>
+<tr>
+<td>DeepSeek-Prover-V1</td>
+<td>99.9%</td>
+<td>2.0% (1.7–2.4)</td>
+</tr>
+<tr>
+<td>Goedel-Prover-V2 SFT</td>
+<td>83.2%</td>
+<td>1.0% (0.8–1.2); 1.2% excluding negation statements</td>
+</tr>
+</tbody>
+</table></div>
+<p>In NuminaMath-LEAN:</p>
+<ul>
+<li>autoformalized statements are vacuous 7.4% of the time (of 7,051), and human-formalized ones 1.6% (of 1,767);</li>
+<li>the RL win rate is higher for vacuous statements (0.73 against 0.67, Mann–Whitney p = 2×10⁻⁸). The RL loop
+  solved them more easily, and so rewarded them more often.</li>
+</ul>
+<h2>Caveats</h2>
+<ul>
+<li><strong>A lower bound.</strong> Certified vacuity requires either the released proof to prove <code>False</code> or one of seven automation
+  tactics to find the contradiction. Hard contradictions are missed.</li>
+<li><strong>Final training data only.</strong> STP_Lean_0320 is the final, filtered training set, not every conjecture generated. A
+  vacuous conjecture that STP's filters removed is invisible here. The pass-rate explanation for the decline is a
+  hypothesis that we did not test.</li>
+<li><strong>Two phases, not one run.</strong> The preregistered contrast spans a restart. The within-phase contrasts, added as
+  secondary analyses before any outcome was seen, show the dynamics more clearly than the primary contrast does.</li>
+<li><strong>Exclusions.</strong></li>
+<li>About 4.5% of rows did not re-verify, and 1.3% failed the split check.</li>
+<li>SFT v2 and NuminaMath re-verified less often (83% and 89%), possibly because of version differences.</li>
+<li>Excluded rows could differ systematically.</li>
+<li><strong>Causes from one coder.</strong> The cause categories come from a single coder agent (Claude Fable 5.1) reading the
+  statements, without running Lean.</li>
+</ul>
+<h2>Deviations (summary)</h2>
+<ul>
+<li><strong>D1:</strong> the REPL's output-flushing fix (STP's own <code>Main.lean</code>), validation and timing pilot; 2,000 rows per
+  iteration under the pilot rule.</li>
+<li><strong>D2:</strong> the split-repair sensitivity, defined before any outcome was seen.</li>
+<li><strong>D3:</strong> the repair pass run early, on idle cores.</li>
+<li><strong>D4:</strong> an analysis-code guard for the incomplete repair file.</li>
+<li><strong>D5:</strong> a bug in the repair check (<code>example</code> rejects holes in its type), fixed and rerun; the result is unchanged.</li>
+<li><strong>D6:</strong> NuminaMath run in parallel.</li>
+</ul>
+<p>The decision rule never changed.</p>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/formal-math-selfplay-vacuity-drift/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>
