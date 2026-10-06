@@ -96,7 +96,7 @@ def main():
     P = BT.load()
     districts = sorted({k[0] for k in P if k[0] != "National total"})
     dd, _ = BT.run_backtest(P, districts, BT.PRIMARY_GROUPS, [1, 4])
-    dd = dd[dd.M1.notna()]
+    dd = dd[dd.M1.notna() & dd.B1.notna() & dd.B2.notna()]  # like-for-like with the committed cells (confirmation N2)
     out["interval_pool_without_national"] = {f"h{h}_primary_coverage": cover(dd[dd.h == h])[0] for h in (1, 4)}
     out["interval_pool_with_national"] = {f"h{h}_primary_coverage": cover(prim[prim.h == h])[0] for h in (1, 4)}
     json.dump(out, open(TAB / "post_review.json", "w"), indent=1, default=float)

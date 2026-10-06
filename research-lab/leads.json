@@ -5486,7 +5486,12 @@
    "local_relevance": "Health NZ's immunisation programme, Auckland's three districts (Te Toka Tumai Auckland, Counties Manukau, Waitemat\u0101), Iwi-M\u0101ori Partnership Boards and Pacific providers could use the 12-month-ahead district and ethnicity forecasts to target catch-up outreach and measles readiness where the shortfall is predicted, instead of waiting a year for 24-month data.",
    "time_sensitive": "Q4 2025/26 release is due now (Q3 posted 24 Jun 2026): freeze and hash forecasts within days, or retarget to Q1/Q2 2026/27 (~Dec 2026 / ~Mar 2027)",
    "needs_engagement": "",
-   "scout_round": "auckland-nz"
+   "scout_round": "auckland-nz",
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass); prospective test pending (Dec 2026 / Mar 2027)",
+   "report_url": "runs/auckland-nz-immunisation-cascade-forecast/report.html",
+   "verdict_tag": "Refuted",
+   "verdict_note": "H1 Refuted: a year ahead, the cohort cascade was no better than persistence over 2012-2026 (-4.7%, 95% CI -20% to +13%; needed a 30% cut). It cut errors by 17-22% before 2020, close to the noise floor, then failed as the 24-month measure was redefined (2020 schedule) and re-based (2023-24 register). H2, frozen forecasts for the Jul-Sep and Oct-Dec 2026 releases, is pending.",
+   "headline": "Linking the same children across milestones does not forecast NZ's 24-month immunisation coverage a year ahead any better than the latest figure, because the measure itself changed in 2020 and 2023-24. Forecasts frozen before publication put national coverage at about 85% for Jul-Dec 2026, Maori at about 73%, and no district at 95%."
   },
   {
    "id": "auckland-nz-equity-adjustor-waitlist-did",

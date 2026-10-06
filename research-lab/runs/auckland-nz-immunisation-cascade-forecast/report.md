@@ -37,7 +37,9 @@ one. They will be scored when Health NZ publishes the figures, expected around D
 **Data.** We collected every quarterly coverage file that could be recovered since April 2009:
 
 - 54 archived Ministry of Health and Te Whatu Ora files, from the Internet Archive;
-- 12 current Health NZ quarterly files, to June 2026. Twelve annual files were also downloaded but not used.
+- 12 current Health NZ quarterly files, to June 2026.
+
+Twelve current annual files and 55 archived 12-month rolling files were also downloaded but not used.
 
 Three quarters have no recoverable file: 2009Q3, 2022Q2 and 2023Q2.
 
@@ -123,7 +125,7 @@ floor. The pre-2020 cut of 17-22% was close to the best any method could achieve
 - **The new register counted more children.** Health NZ notes that the Aotearoa Immunisation Register captures more
   eligible children than the old register, so a drop in measured coverage was expected.
   - For targets in 2024Q1-2024Q4, whose 12-month input came from the old register, the 24-month denominator was 2.7-4.3%
-    larger than the same cohort's 12-month denominator, against 98-102% otherwise.
+    larger than the same cohort's 12-month denominator, against 98-102% otherwise (one quarter, 2012Q2, was 97.9%).
   - The national gap between a cohort's 24-month and its 12-month coverage widened to −12.5 pp in 2024Q3.
 - **Catch-up outran earlier cohorts.** The 12-to-24-month gap then closed to about 0 by 2025Q2. Low 12-month coverage
   in 2024 implied 24-month coverage near 70% in 2025, but the published figure recovered to about 83%.
@@ -140,7 +142,7 @@ and 32%). But the gain has shrunk, especially for the district Totals that H2 sc
 | District Totals | 1 quarter: cascade / persistence / reduction | 2 quarters: cascade / persistence / reduction |
 |---|---|---|
 | 2013-2019 | 1.15 / 1.68 pp / 31% | 1.19 / 1.72 pp / 31% |
-| 2020-2022 | 2.16 / 2.17 pp / 0% | 2.43 / 2.80 pp / 13% |
+| 2020-2022 | 2.16 / 2.16 pp / 0% | 2.43 / 2.80 pp / 13% |
 | 2023-2026 | 3.18 / 3.20 pp / 1% | 3.16 / 3.87 pp / 18% |
 
 At 3 quarters, the cascade is again no better than persistence.
@@ -162,7 +164,7 @@ At 3 quarters, the cascade is again no better than persistence.
 - **The intervals are mis-specified by cell size.** They scale with sampling noise, but most error is systematic.
   - District Totals at 1-2 quarters: 85% coverage in the smallest third of districts, 71% in the middle third and 67%
     in the largest.
-  - National total: 33-39%.
+  - National total: 32-38%.
 
 ## Frozen forecasts (H2, pending)
 

@@ -53,7 +53,8 @@ D1, plus the following. **None of this touches `results/forecasts_frozen.csv` or
 
 - **The national total is in the interval pool.** `backtest.py` puts its errors into each group's pooled z
   percentiles, while the plan says "pooled across districts". Without it, primary-cell coverage in the backtest is
-  76.7% (h = 1) and 59.5% (h = 4), against 77.4% and 61.3% with it. The frozen intervals include it.
+  76.3% (h = 1) and 59.2% (h = 4), against 77.4% and 61.3% with it, on the same cells. (Corrected after the
+  confirmation pass: the first comparison used mismatched cell sets.) The frozen intervals include it.
 - **B2 works on the coverage scale.** It fits and clips a line on coverage, as the plan's B2 paragraph specifies,
   although the plan's preamble says all models work on the logit scale.
 
@@ -77,3 +78,15 @@ D1, plus the following. **None of this touches `results/forecasts_frozen.csv` or
 noise floor, milestone changes around October 2020, and the cohort gap and denominators.
 
 **District figure.** The districts are now listed alphabetically rather than ranked by forecast.
+
+## D3. Confirmation pass: publish with edits (2026-10-07 09:26 NZDT)
+
+The same reviewer checked the revision (52e6e5c) and found all 19 issues resolved or adequately disclosed, with no
+must-fix items. The following were fixed:
+
+- two roundings in report.md (2.16 pp; 32-38%);
+- the like-for-like interval-pool comparison in D2 and \`post_review.py\`;
+- the one exception to the 98-102% denominator range;
+- a mention of the unused 12-month files.
+
+The frozen file is unchanged.

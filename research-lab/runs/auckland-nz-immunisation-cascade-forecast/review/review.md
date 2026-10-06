@@ -312,3 +312,73 @@ district names; group-sum, district-sum and cohort-denominator checks; annual-fi
 suppression verification against raw rows and the files' key text; Health NZ coverage page (definitions, AIR note,
 publication calendar); Wayback CDX queries for the missing quarters; web sources on the October 2020 schedule change
 and the AIR go-live (4 December 2023).
+
+## Confirmation pass
+
+Revised report at commit 52e6e5c (pushed; HEAD = origin/main), 7 October 2026. Checked: `report.md`, `report.html`,
+`deviations.md` (D2), `code/{backtest,score,figures,build_report_html,post_review}.py`, the seven new
+`results/tables/post_review*` files, `tiles.json`, the district figure and caption. Frozen file unchanged
+(sha256 e19d0d63… on disk and in 52e6e5c); `data/coverage.parquet` sha256 21926040… as recorded in D2.
+
+**Re-runs (scratch copy, cores 0-3).** `score.py` runs in pending mode: the D1 hash check and the new historical-rows
+hash check both pass against the current parquet, 0 cells scored, verdict "pending". `post_review.py` regenerates all
+seven tables byte-identically. `backtest.py` regenerates `h1.json`, `backtest_summary.csv`, `backtest_cells.csv` and
+`secondary_by_district.csv` byte-identically, leaves `forecasts_frozen.csv` untouched and writes
+`forecasts_rerun.csv`, which differs from the frozen file only in `lo80_recent`/`hi80_recent` for the 75 h=1 rows
+(now NaN under the D1 minimum), exactly as D2 says.
+
+**New numbers in `report.md` against the tables.** All verified: weighted reduction −16.0%; 1,904 cells with an
+interval; noise floor 1.69 -> "1.7 pp", bar 1.85, Pacific median 55 with bar 2.26 < floor 2.39; 12-month changes all
+below 1.2 pp (max −1.13); 18-month −6.65/−4.36; 24-month −2.64/−2.05; denominator ratios 1.039/1.043/1.027 for
+2024Q1/Q3/Q4 -> "2.7-4.3%"; gap −12.47 -> "−12.5 pp" and +0.24 -> "about 0" by 2025Q2; short-horizon table
+(1.15/1.68/31%, 1.19/1.72/31%, 2.16/2.16/0.3%, 2.43/2.80/13%, 3.18/3.20/0.7%, 3.16/3.87/18%); "about 15%" at h=2
+(13-18%); "3.2-3.6 pp" and "about 60%" since 2023; D1 like-for-like 65/64 vs 76/72 on 80/160 and 100/200 cells with
+none from 2024; 5 target quarters at h=1; coverage by size 84.8/71.3/67.2%; M2 2,351 / 3.78 / 4.11 / 3.92 / 3.5%;
+district sums 99.65-100%; frozen national, Māori and district figures unchanged. `report.html` carries the same numbers
+(the only HTML-only tokens are the favicon SVG and the dropped commit hash). The district figure is alphabetical
+(Auckland at top) and the caption says so.
+
+### Status of the 19 issues
+
+| # | Issue | Status |
+|---|---|---|
+| 1 | 12-month milestone misattributed | **Resolved.** Report now says the Oct 2020 change added vaccines to the 18- and 24-month milestones and that the 12-month milestone barely changed, with the per-milestone changes from `post_review_schedule_change_milestones.csv`. |
+| 2 | "A quarter or two ahead, it works" | **Resolved.** Plain terms, the new district-Totals-by-period table and the tile now state ~0% (h=1) and ~15% (h=2) since 2020. |
+| 3 | D1 not like-for-like; frozen h=1 recent interval below D1 minimum; calibration stops at 2025Q2 | **Resolved / disclosed.** D2 gives the like-for-like figures, flags the h=1 interval, discloses the origin cutoff; the guard is in `backtest.py` and verified by re-run. Frozen file unchanged, as it should be. |
+| 4 | Mechanisms stated as facts | **Resolved.** "Three changes are consistent with the failure... cannot apportion." |
+| 5 | Intervals mis-specified by size; H2 failure mode | **Resolved.** Stated in Results, Frozen forecasts and Caveats; `score.py` reports the seven largest districts separately (secondary). |
+| 6 | National total in the interval pool | **Disclosed (D2).** Minor: D2's "76.7% / 59.5% without" is computed on all cells with M1, while "77.4% / 61.3% with" is on the B1&B2-filtered set; like-for-like (filtered) the without-national figures are 76.3% and 59.2%. Direction and size unchanged; fix the cell set in `post_review.py` lines 98-101 or say so. |
+| 7 | 30% bar vs noise floor; weighted MAE | **Resolved.** |
+| 8 | AIR denominator mechanism | **Resolved.** Minor: "against 98-102% otherwise" has one exception (2012Q2, 97.9%). |
+| 9 | Secondary suppression | **Resolved.** |
+| 10 | h=1 is a nowcast | **Resolved.** |
+| 11 | H2 weak test | **Resolved.** |
+| 12 | Numbers not in results files | **Resolved.** Every quoted number traces to `post_review*` or the original tables; the tables regenerate identically. |
+| 13 | Data-description overstatements | **Resolved.** Trivial residue: the 55 archived 12-month files that `plan.md` lists are not mentioned in the Data paragraph. |
+| 14 | Ranking figure; plain-terms framing | **Resolved.** Cosmetic: the legend now sits over the West Coast and Whanganui intervals at lower right; move it (e.g. upper left or outside the axes). |
+| 15 | Provenance statement | **Resolved.** |
+| 16 | `score.py` hardening | **Resolved.** Anchored D1 regex, historical-rows hash (verified to match), 40-cell assertion, parse-only edit policy and parquet hash in D2. |
+| 17 | B2 on the coverage scale | **Resolved / disclosed.** |
+| 18 | Sub-period DM statistics | **Closed, no action needed.** Not quoted anywhere. |
+| 19 | Cohort alignment | **Resolved** via the denominator bullet. |
+
+### New items (none must-fix)
+
+- **N1. Two rounding slips.** `report.md:143` persistence 2020-2022 at 1 quarter is "2.17 pp"; the table value is
+  2.1646 -> 2.16 pp (the "0%" is right). `report.md:165` "National total: 33-39%" should be "32-38%" (0.325 at h=2,
+  0.385 at h=1); 18% at h=4 could be added.
+- **N2.** D2 interval-pool comparison on mismatched cell sets (Issue 6 above).
+- **N3.** "98-102% otherwise" -> "98-102% in every other quarter but one (97.9% in 2012Q2)".
+- **N4. Wording.** `report.md:21-22` "close to the best any method could do" rests on a lower bound from target-cell
+  noise alone (1.69 pp vs the cascade's 2.06-2.22 pp). It is defensible, because input-cell noise raises the floor,
+  but "within about a fifth of a lower bound on the achievable error" would be exact. Optional.
+- **N5.** Figure legend overlap (Issue 14 above). Cosmetic.
+- **N6.** The pool-comparison and like-for-like counts in D2 ("80 of 160") use the B1&B2-filtered cells while the
+  earlier review text used all cells with M1 (80 of 180); both are correct for their stated set. No action.
+
+No new error or overclaim was introduced. The H1 verdict, the frozen forecasts and the H2 scoring rule are unchanged.
+
+### Final recommendation: **publish with edits**
+
+The edits are N1-N3 (two roundings, one cell-set note, one "but one"), none of which changes a sentence's meaning.
+No must-fix items remain.
