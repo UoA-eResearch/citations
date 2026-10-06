@@ -1,7 +1,10 @@
-"""Primary and secondary analyses (plan.md sections 4-5; deviations D2). Reads results/rows/*.jsonl + samples.
-Usage: analysis.py [rows_dir] (default results/rows). Writes results/tables/*.csv and prints the verdict.
-Eligible rows: re-verified and split check passed. V = swap or automation certificate."""
+"""Primary and secondary analyses (plan.md sections 4-5; deviations D2, D7). Reads results/rows_v2/*.jsonl + samples.
+Usage: analysis.py [rows_dir] (default results/rows_v2). Writes results/tables/*.csv and prints the verdict.
+Eligible rows: re-verified and split check passed. V = swap or automation certificate (v2: elaborated in the original
+statement's context). STP rows: miniF2F environment, with the all-of-Mathlib result for rows that did not re-verify
+under miniF2F (D7). The v1 tables are kept in results/tables_v1/."""
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -10,18 +13,58 @@ import pandas as pd
 from scipy import stats
 
 RUN = Path(__file__).resolve().parents[1]
-TAB = RUN / "results" / "tables"
+TAB = Path(os.environ.get("VAC_TAB", RUN / "results" / "tables"))
 EARLY, LATE = list(range(1, 10)), list(range(38, 48))
 CONTRASTS = {"primary: 38-47 vs 1-9": (LATE, EARLY), "phase 1: 14-23 vs 1-9": (list(range(14, 24)), EARLY),
              "phase 2: 38-47 vs 25-33": (LATE, list(range(25, 34))), "phase 2 (25-47) vs phase 1 (1-23)": (list(range(25, 48)), list(range(1, 24)))}
 
 
-def load(rows_dir, name, sample):
+def read_rows(rows_dir, name):
+    """Rows for `name`; STP files are merged with their all-of-Mathlib fallback (D7): a row that did not re-verify under
+    miniF2F takes its fallback result. Column `env` records which environment the row's result comes from."""
     d = pd.DataFrame([json.loads(line) for line in open(rows_dir / f"{name}.jsonl")])
+    d["env"] = "minif2f" if name.startswith("stp_") else "own"
+    fb = rows_dir / f"{name}_mathlib.jsonl"
+    if fb.exists():
+        f = pd.DataFrame([json.loads(line) for line in open(fb)])
+        f["env"] = "mathlib"
+        d = pd.concat([d[~d.row_id.isin(f.row_id)], f], ignore_index=True)
+    return d
+
+
+def exclusion_class(r):
+    if not r.get("parsed"):
+        return "parse error (truncated prompt)"
+    if r.get("foreign_imports"):
+        return "foreign imports"
+    if r.get("reverify") is not True:
+        if r.get("reverify_timeout"):
+            return "re-verify timeout"
+        err = " ".join(r.get("reverify_errors") or [])
+        if "ambiguous" in err:
+            return "ambiguous notation"
+        if "unknown identifier" in err or "unknown constant" in err or "function expected" in err:
+            return "unknown identifier (dropped per-row header)"
+        return "other re-verify error"
+    if r.get("split_ok") is not True:
+        return "split-check failure"
+    return "eligible"
+
+
+def load(rows_dir, name, sample):
+    d = read_rows(rows_dir, name)
+    d["excl"] = [exclusion_class(r) for r in d.to_dict("records")]
     s = pd.read_parquet(RUN / "data" / "samples" / sample).drop(columns=["target"], errors="ignore")
     d = s.merge(d, on="row_id", how="inner")
     d["eligible"] = (d.reverify == True) & (d.split_ok == True)  # noqa: E712
     d["V"] = d.vacuous.fillna(False).astype(bool)
+    for col in ("swap", "vacuous_ext", "auto_bound", "binders_empty", "ext_checkable", "trivial"):
+        if col not in d:
+            d[col] = np.nan
+    d["Vswap"] = d.swap.fillna(False).astype(bool)
+    d["Vauto"] = d.auto.notna()
+    d["Vext"] = d.vacuous_ext.fillna(False).astype(bool)
+    d["has_binders"] = ~d.binders_empty.fillna(False).astype(bool)
     return d
 
 
@@ -88,7 +131,7 @@ def statement_level(d):
     return u
 
 
-def main(rows_dir=RUN / "results" / "rows"):
+def main(rows_dir=RUN / "results" / "rows_v2"):
     rows_dir = Path(rows_dir)
     out = {}
     c = load(rows_dir, "stp_conjecture", "stp_conjecture.parquet")
@@ -98,10 +141,22 @@ def main(rows_dir=RUN / "results" / "rows"):
     per = c[c.eligible].groupby("iteration").agg(k=("V", "sum"), n=("V", "size"), N=("N_iter", "first"))
     per["rate"] = per.k / per.n
     per[["lo", "hi"]] = [wilson(k, n) for k, n in zip(per.k, per.n)]
-    per["swap"] = c[c.eligible].groupby("iteration").swap.apply(lambda x: x.fillna(False).mean())
-    per["auto"] = c[c.eligible].groupby("iteration").auto.apply(lambda x: x.notna().mean())
+    ce = c[c.eligible]
+    g = ce.groupby("iteration")
+    per["swap"] = g.Vswap.mean()
+    per["auto"] = g.Vauto.mean()
+    per["coverage"] = g.has_binders.mean()  # share of eligible rows the preregistered certificate can examine (A3)
+    per["rate_checkable"] = ce[ce.has_binders].groupby("iteration").V.mean()
+    per["rate_ext"] = g.Vext.mean()  # secondary certificate: hypotheses plus premises inside the conclusion
+    per["auto_bound_share"] = g.auto_bound.apply(lambda x: x.fillna(False).astype(bool).mean())
+    per["auto_bound_share_of_vacuous"] = ce[ce.V].groupby("iteration").auto_bound.apply(lambda x: x.fillna(False).astype(bool).mean())
+    per["fallback_env_share"] = g.env.apply(lambda x: (x == "mathlib").mean())
     per = per.join(health[["reverify", "split_ok"]])
     per.to_csv(TAB / "per_iteration.csv")
+    # exclusion taxonomy by window (B1)
+    win = np.where(c.iteration.isin(EARLY), "early 1-9", np.where(c.iteration.isin(LATE), "late 38-47", "other"))
+    tax = pd.crosstab(c.excl, win, margins=True, margins_name="all")
+    tax.to_csv(TAB / "exclusions.csv")
     res = []
     for name, (L, E) in CONTRASTS.items():
         r = contrast(c, L, E)
@@ -113,10 +168,20 @@ def main(rows_dir=RUN / "results" / "rows"):
     # unweighted pooled sensitivity
     cc = c.copy(); cc["one"] = 1
     r = contrast(cc, LATE, EARLY, weight_col="one"); r["contrast"] = "primary, unweighted"; res.append(r)
-    # split repair sensitivity (D2)
+    # D7 secondary contrasts and sensitivities
+    for label, col, sub in [("swap certificate only", "Vswap", None), ("automation certificate only", "Vauto", None),
+                            ("rows with binders only (checkable)", "V", "has_binders"),
+                            ("secondary: hypotheses plus conclusion premises", "Vext", None)]:
+        cc = c if sub is None else c[c[sub]]
+        r = contrast(cc, LATE, EARLY, col=col); r["contrast"] = label; res.append(r)
+    cc = c.copy(); cc["eligible"] = cc.eligible & (cc.env == "minif2f")
+    r = contrast(cc, LATE, EARLY); r["contrast"] = "miniF2F environment only (no fallback)"; res.append(r)
+    cc = c.copy(); cc["eligible"] = cc.eligible & ~cc.auto_bound.fillna(False).astype(bool)
+    r = contrast(cc, LATE, EARLY); r["contrast"] = "excluding statements with auto-bound variables"; res.append(r)
+    # split repair sensitivity (D2, with the D7 soundness check)
     rp = rows_dir / "stp_conjecture_repair.jsonl"
-    log = RUN / "logs" / "repair.log"
-    repair_done = log.exists() and "done" in log.read_text()  # the repair pass prints "done" when the conjecture file is complete
+    log = RUN / "logs" / "run_v2.log"
+    repair_done = log.exists() and "repair done" in log.read_text()
     if rp.exists() and repair_done:
         rr = pd.DataFrame([json.loads(line) for line in open(rp)])
         if "vacuous_repair" not in rr:
@@ -146,12 +211,20 @@ def main(rows_dir=RUN / "results" / "rows"):
                 both=int((vac.swap.fillna(False).astype(bool) & vac.auto.notna()).sum()), trivial_rate_early=e[e.iteration.isin(EARLY)].trivial.fillna(False).mean(),
                 trivial_rate_late=e[e.iteration.isin(LATE)].trivial.fillna(False).mean())
     meth.update({f"auto_{t}": int((vac.auto == t).sum()) for t in vac.auto.dropna().unique()})
+    meth.update(auto_bound_vacuous_early=int(vac[vac.iteration.isin(EARLY)].auto_bound.fillna(False).astype(bool).sum()),
+                auto_bound_vacuous_late=int(vac[vac.iteration.isin(LATE)].auto_bound.fillna(False).astype(bool).sum()),
+                vacuous_early=int(vac.iteration.isin(EARLY).sum()), vacuous_late=int(vac.iteration.isin(LATE).sum()),
+                binderless_share_early=float(1 - e[e.iteration.isin(EARLY)].has_binders.mean()),
+                binderless_share_late=float(1 - e[e.iteration.isin(LATE)].has_binders.mean()),
+                swap_rate_early=float(e[e.iteration.isin(EARLY)].Vswap.mean()), swap_rate_late=float(e[e.iteration.isin(LATE)].Vswap.mean()),
+                auto_rate_early=float(e[e.iteration.isin(EARLY)].Vauto.mean()), auto_rate_late=float(e[e.iteration.isin(LATE)].Vauto.mean()))
     pd.DataFrame([meth]).to_csv(TAB / "methods.csv", index=False)
     # STP weight
     try:
         import statsmodels.formula.api as smf
         ce = c[c.eligible].copy(); ce["Vi"] = ce.V.astype(int); ce["w10"] = ce.weight * 10
-        fit = smf.logit("Vi ~ w10 + C(iteration)", data=ce).fit(disp=0)
+        out["mean_weight_vacuous"] = float(ce[ce.V].weight.mean()); out["mean_weight_nonvacuous"] = float(ce[~ce.V].weight.mean())
+        fit = smf.logit("Vi ~ w10 + C(iteration)", data=ce).fit(disp=0)  # iteration fixed effects (disclosed in D7)
         out["weight_OR_per_0.1"] = float(np.exp(fit.params["w10"])); out["weight_OR_ci"] = [float(x) for x in np.exp(fit.conf_int().loc["w10"])]
     except Exception as ex:  # noqa: BLE001
         out["weight_logit_error"] = str(ex)[:200]
@@ -159,11 +232,13 @@ def main(rows_dir=RUN / "results" / "rows"):
     sname = rows_dir / "stp_statement.jsonl"
     if sname.exists():
         s = load(rows_dir, "stp_statement", "stp_statement.parquet")
-        sp = s[s.eligible].groupby("iteration").agg(k=("V", "sum"), n=("V", "size"))
+        sp = s[s.eligible].groupby("iteration").agg(k=("V", "sum"), n=("V", "size"), swap=("Vswap", "mean"), auto=("Vauto", "mean"), ext=("Vext", "mean"))
         sp["rate"] = sp.k / sp.n
         sp.to_csv(TAB / "statement_per_iteration.csv")
-        r = contrast(s, LATE, list(range(0, 10)))
-        out["statement_control_38_47_vs_0_9"] = {k: r[k] for k in ("p_late", "p_early", "RR", "RR_lo", "RR_hi", "k_late", "k_early")}
+        for label, col in (("statement_control_38_47_vs_0_9", "V"), ("statement_control_swap_only", "Vswap"), ("statement_control_auto_only", "Vauto")):
+            r = contrast(s, LATE, list(range(0, 10)), col=col)
+            out[label] = {k: r[k] for k in ("p_late", "p_early", "RR", "RR_lo", "RR_hi", "k_late", "k_early")}
+        out["statement_exclusions"] = s.excl.value_counts().to_dict()
         out["statement_spearman"] = list(stats.spearmanr(sp.index, sp.rate))
     # other corpora
     oc = []
@@ -175,7 +250,8 @@ def main(rows_dir=RUN / "results" / "rows"):
         e = o[o.eligible]
         k, n = int(e.V.sum()), len(e)
         row = dict(corpus=name, sampled=len(o), reverify=o.reverify.fillna(False).mean(), eligible=n, vacuous=k, rate=k / n if n else np.nan,
-                   lo=wilson(k, n)[0], hi=wilson(k, n)[1])
+                   lo=wilson(k, n)[0], hi=wilson(k, n)[1], auto_bound_share_of_vacuous=e[e.V].auto_bound.fillna(False).astype(bool).mean() if k else np.nan,
+                   coverage=e.has_binders.mean(), rate_ext=e.Vext.mean(), exclusions=json.dumps(o.excl.value_counts().to_dict()))
         if name == "sftv2":
             en = e[~e.negation]
             row.update(rate_excl_negation=en.V.mean(), n_excl_negation=len(en))
@@ -195,7 +271,7 @@ def main(rows_dir=RUN / "results" / "rows"):
     if len(allv):
         smp = allv.sample(min(100, len(allv)), random_state=7)
         smp.assign(statement=smp.prompt.str.split("```lean4\n").str[1].str.split("open BigOperators Real Nat Topology Rat").str[-1].str.strip())[
-            ["row_id", "iteration", "swap", "auto", "statement"]].to_csv(TAB / "vacuous_sample_100.csv", index=False)
+            ["row_id", "iteration", "swap", "auto", "auto_bound", "statement"]].to_csv(TAB / "vacuous_sample_100.csv", index=False)
     json.dump(out, open(TAB / "summary.json", "w"), indent=1, default=float)
     pd.set_option("display.width", 250)
     print(con.round(4).to_string())
