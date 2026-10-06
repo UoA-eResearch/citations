@@ -75,6 +75,8 @@ Skipped after a novelty check: `software-security-attestation-phantom-code`. Sol
 arXiv:2608.18180) already compare 4,500 attested with 4,500 non-attested releases on PyPI and npm and recover source
 commits from the attestations, which leaves only one metric (phantom-file rates by attestation status) for a new study.
 
+Skipped after a feasibility check (7 October 2026): `comp-social-science-ai-edit-survival`. The text of deleted Wikipedia articles is visible only to administrators (the API returns `permissiondenied` for deleted revisions), so the first revisions of deleted articles cannot be scored retrospectively. Since August 2025, suspected LLM articles can also be speedy-deleted because they look AI-generated, which makes the outcome partly circular. A prospective version would need months of collection and could no longer test the March 2026 policy change.
+
 Lessons from the first deep dive, to carry into the next ones (details in its deviations log, D19–D29 and D27c):
 
 - **Get independent review before stating a verdict.** Both reviewers found real problems the main analysis had missed:
