@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Immunisation Cascade Forecast</title>
+<meta name="description" content="A preregistered backtest of a cohort-cascade forecast of New Zealand's 24-month childhood immunisation coverage by district and ethnic group, with forecasts for the next Health NZ releases frozen before publication.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Auckland and New Zealand</div>
+  <h1>Can earlier milestones forecast New Zealand&#x27;s 24-month immunisation coverage?</h1>
+  <p class="subtitle">A preregistered rolling-origin backtest of a cohort-cascade forecast of Health NZ&#x27;s 24-month coverage measure, 2012-2026, for 20 districts and Māori and Pacific children, with forecasts for the next releases frozen and hashed before publication.</p>
+  <div class="meta">
+    <span>Report · 2026-10-07 · draft for independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-immunisation-cascade-forecast/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-immunisation-cascade-forecast/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-immunisation-cascade-forecast/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">H1 (backtest)</div><div class="tile-value text">Refuted</div><div class="tile-note">a year ahead the cascade is no better than persistence: -4.7% (95% CI -20% to +13%)</div></div><div class="tile"><div class="tile-label">Before 2020</div><div class="tile-value">-17 to -22%</div><div class="tile-note">error cut against persistence at 4 quarters, until the schedule change</div></div><div class="tile"><div class="tile-label">1-2 quarters ahead</div><div class="tile-value">-20 to -32%</div><div class="tile-note">error cut against both baselines, from 18-month coverage</div></div><div class="tile"><div class="tile-label">H2 (prospective)</div><div class="tile-value text">pending</div><div class="tile-note">frozen forecasts for Jul-Sep and Oct-Dec 2026: national about 85%</div></div></section>
+<main>
+<h2>In plain terms</h2>
+<p>Health NZ reports every quarter how many children are fully immunised at 6, 8, 12, 18 and 24 months. The 24-month
+figure is the official health target, and it trails the others: the children who will be counted at 24 months next
+year were already counted at 12 months this year. We asked whether linking the same children across milestones gives
+a better year-ahead forecast than simple rules.</p>
+<p><strong>A year ahead, it does not.</strong> Across 50 quarters of history (2012-2026), forecasts for each district, and for Māori
+and Pacific children, built from the same children's 12-month coverage were no better than assuming nothing changes.
+Before 2020 they were clearly better, cutting the error by about a fifth. After the 2020 schedule change and the
+2023-24 move to a new immunisation register, the link between 12-month and 24-month coverage shifted. Recent catch-up
+between those ages has outpaced anything earlier cohorts showed.</p>
+<p><strong>A quarter or two ahead, it works.</strong> Using the same children's 18-month coverage, forecasts were 20-32% more
+accurate than either simple rule.</p>
+<p>We have frozen and published forecasts for the next two releases, July-September and October-December 2026. Nationally
+they put 24-month coverage at about 85%. No district reaches 95%, and Māori coverage is forecast at about 73%. These
+forecasts will be scored when Health NZ publishes the figures, expected around December 2026 and March 2027.</p>
+<h2>What was done</h2>
+<p><strong>Data.</strong> Every quarterly coverage file Health NZ and the Ministry of Health have published since April 2009 was
+collected:</p>
+<ul>
+<li>54 archived files, recovered from the Internet Archive;</li>
+<li>12 current files, to June 2026.</li>
+</ul>
+<p>They were parsed into one table of quarter × milestone × district × ethnic group, with eligible and fully immunised
+counts (66 quarters; 2009Q3, 2022Q2 and 2023Q2 have no file). The parse reproduces the published headline for
+January-March 2026: 6-month coverage of 66.6% nationally and 48.5% for Māori. District counts sum to the national
+total within 1.5%, the remainder being children with no district. Suppressed cells were left missing and never
+back-calculated.</p>
+<p><strong>The cascade (M1).</strong> The children who reach 24 months in a quarter reached 12 months four quarters earlier, and 18
+months two quarters earlier.</p>
+<ul>
+<li><strong>Year-ahead forecasts (3-4 quarters):</strong> start from the cohort's 12-month coverage on the logit scale and add the
+  average 12-to-24-month change of the latest four cohorts in the same district and group.</li>
+<li><strong>Short-horizon forecasts (1-2 quarters):</strong> the same, from 18-month coverage.</li>
+</ul>
+<p>Intervals come from standardised past errors.</p>
+<p><strong>Baselines.</strong></p>
+<ul>
+<li><strong>Persistence (B1):</strong> the latest published 24-month value.</li>
+<li><strong>Linear trend (B2):</strong> a line through the last eight published values.</li>
+</ul>
+<p><strong>Test (H1, preregistered).</strong> At a 4-quarter horizon, over the 20 districts × Total, Māori and Pacific, M1's mean
+absolute error must be at least 30% below each baseline's, with a one-sided Diebold-Mariano p &lt; 0.05 against each.
+The backtest uses 50 origins from 2012Q2 to 2025Q2. It is Refuted if, against either baseline, the upper end of the
+block-bootstrap 95% CI for the error reduction is below 30%.</p>
+<h2>Results</h2>
+<p><strong>H1: Refuted.</strong> 4-quarter horizon, 2,471 district-group-quarter cells:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Mean absolute error</th>
+<th>Error reduction by the cascade (95% CI)</th>
+<th>Diebold-Mariano p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cohort cascade (M1)</td>
+<td>4.19 pp</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Persistence (B1)</td>
+<td>4.00 pp</td>
+<td>−4.7% (−20.4% to +13.4%)</td>
+<td>0.76</td>
+</tr>
+<tr>
+<td>Linear trend (B2)</td>
+<td>4.80 pp</td>
+<td>+12.8% (+4.6% to +22.6%)</td>
+<td>0.0009</td>
+</tr>
+</tbody>
+</table></div>
+<p>The cascade is significantly better than a linear trend, but by far less than 30%, and no better than persistence.
+Its preregistered 80% intervals covered only 61% of outcomes.</p>
+<figure><a href="results/figures/backtest_errors.png"><img src="results/figures/backtest_errors.png" alt="Backtest error by horizon and period"></a><figcaption>Rolling-origin backtest, 20 districts x Total, Maori and Pacific. Left: mean absolute error by horizon. Right: at the 4-quarter horizon, by target year. Dashed lines: the October 2020 schedule change and the 2023-24 move to the Aotearoa Immunisation Register (AIR).</figcaption></figure>
+<p><strong>What changed.</strong> The cascade worked until the 2020 schedule change and failed after it. Mean absolute error at a
+4-quarter horizon:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Target years</th>
+<th>Cascade</th>
+<th>Persistence</th>
+<th>Linear trend</th>
+<th>Reduction against persistence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2013-2016</td>
+<td>2.06 pp</td>
+<td>2.48 pp</td>
+<td>3.03 pp</td>
+<td>17%</td>
+</tr>
+<tr>
+<td>2017-2019</td>
+<td>2.22 pp</td>
+<td>2.85 pp</td>
+<td>3.19 pp</td>
+<td>22%</td>
+</tr>
+<tr>
+<td>2020-2022</td>
+<td>5.83 pp</td>
+<td>5.83 pp</td>
+<td>6.34 pp</td>
+<td>0%</td>
+</tr>
+<tr>
+<td>2023-2026</td>
+<td>8.07 pp</td>
+<td>5.70 pp</td>
+<td>7.79 pp</td>
+<td>−42%</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>The schedule change.</strong> From 1 October 2020 the first MMR dose moved to 12 months and the pneumococcal booster from
+  15 to 12 months. So the "12-month" milestone began counting different vaccines, and its relationship to 24-month
+  coverage changed.</li>
+<li><strong>The new register.</strong> Then came the move from the National Immunisation Register to the Aotearoa Immunisation
+  Register.</li>
+<li><strong>Catch-up outran the model.</strong> In 2024-25, low 12-month coverage implied 24-month coverage near 70%. The published
+  figure recovered to about 83% instead, as catch-up between 12 and 24 months surged.</li>
+</ul>
+<p>Excluding the target quarters most affected (2020Q3-2022Q2 and 2023Q3-2024Q2) still leaves the cascade 5% worse than
+persistence.</p>
+<figure><a href="results/figures/series.png"><img src="results/figures/series.png" alt="Published coverage, backtest and frozen forecasts"></a><figcaption>Published 24-month full-immunisation coverage (Total), 2009-2026, with the cascade&#x27;s 4-quarter-ahead backtest forecasts (dots) and the forecasts frozen on 7 October 2026 for 2026Q3-2027Q2 (preregistered 80% intervals shaded). Dotted line: the 95% target.</figcaption></figure>
+<p><strong>Secondary results.</strong></p>
+<ul>
+<li><strong>Horizon.</strong> Short-horizon forecasts from 18-month coverage are much better than both baselines:</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Horizon</th>
+<th>Cascade</th>
+<th>Persistence</th>
+<th>Linear trend</th>
+<th>Reductions (DM p &lt; 0.001)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 quarter</td>
+<td>2.30 pp</td>
+<td>2.88 pp</td>
+<td>2.94 pp</td>
+<td>20%, 22%</td>
+</tr>
+<tr>
+<td>2 quarters</td>
+<td>2.43 pp</td>
+<td>3.28 pp</td>
+<td>3.55 pp</td>
+<td>26%, 32%</td>
+</tr>
+</tbody>
+</table></div>
+<p>Their 80% intervals covered 77% and 76% of outcomes. At 3 quarters, the cascade is again no better than
+  persistence.
+- <strong>Groups (4 quarters):</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Cascade</th>
+<th>Persistence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total</td>
+<td>3.18 pp</td>
+<td>2.97 pp</td>
+</tr>
+<tr>
+<td>Māori</td>
+<td>4.83 pp</td>
+<td>4.76 pp</td>
+</tr>
+<tr>
+<td>Pacific</td>
+<td>4.94 pp</td>
+<td>4.58 pp</td>
+</tr>
+</tbody>
+</table></div>
+<p>The cascade does not help any group a year ahead.
+- <strong>Regression cascade (M2).</strong> It adds 6-month coverage and fits intercepts by district and group. On the 2,351
+  cells where M1, M2 and persistence all forecast, it reaches 3.78 pp, against 4.11 pp for M1 and 3.92 pp for
+  persistence. That is a 3.5% improvement on persistence, far from the 30% bar.
+- <strong>National total.</strong> The cascade (3.20 pp) is worse than persistence (2.38 pp). Its intervals are far too narrow for
+  large cells (26% coverage), because they scale with sampling noise while national errors are systematic.</p>
+<h2>Frozen forecasts (H2, pending)</h2>
+<p>The cascade was refitted on data to June 2026, and forecasts for July 2026 to June 2027 were frozen on 7 October 2026:
+279 district-group-quarter cells, sha256 e19d0d63…, committed in eb53bc6 and pushed.</p>
+<p><strong>National, 24-month coverage:</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Quarter</th>
+<th>Total (80% interval)</th>
+<th>Māori</th>
+<th>Pacific</th>
+<th>Asian</th>
+<th>European or Other</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jul-Sep 2026</td>
+<td>85.4% (84.9-86.0)</td>
+<td>73.4%</td>
+<td>86.2%</td>
+<td>96.4%</td>
+<td>86.9%</td>
+</tr>
+<tr>
+<td>Oct-Dec 2026</td>
+<td>85.3% (84.8-86.0)</td>
+<td>73.4%</td>
+<td>86.8%</td>
+<td>96.0%</td>
+<td>86.4%</td>
+</tr>
+</tbody>
+</table></div>
+<p>The latest published value (April-June 2026) is 83.7%. No district is forecast to reach 95% in October-December 2026.
+Two reach 90%: Capital and Coast, and Auckland. Northland's forecast is lowest, at 69.3%.</p>
+<figure><a href="results/figures/districts_2026q4.png"><img src="results/figures/districts_2026q4.png" alt="Frozen forecasts by district"></a><figcaption>Frozen cascade forecasts of 24-month coverage for October-December 2026 (Q2 2026/27) by district, for Total, Maori and Pacific children where the inputs are published, with preregistered 80% intervals. Dotted line: the 95% target.</figcaption></figure>
+<p><strong>Scoring (preregistered).</strong> When Health NZ publishes the two files, <code>code/score.py</code> checks the frozen file's hash
+and scores the 40 district-Total cells. H2 is Supported if both of these hold:</p>
+<ul>
+<li>the mean absolute error is at most 2.5 pp;</li>
+<li>70-90% of cells fall inside the preregistered 80% intervals.</li>
+</ul>
+<p>The backtest gives reason for caution on both counts.</p>
+<ul>
+<li><strong>Error.</strong> For district Totals at 1-2 quarters, the error was 1.7-1.9 pp overall, but about 3 pp for 2023-2026
+  targets.</li>
+<li><strong>Interval coverage.</strong> Coverage was 73-76% overall, but about 60% for 2023-2026.</li>
+<li><strong>A second interval, added after the backtest (D1).</strong> It is calibrated on the latest eight quarters and frozen
+  alongside the preregistered one. It would have covered 72-76% in 2023-2026, but that figure is post hoc. H2 is
+  scored on the preregistered interval.</li>
+</ul>
+<p>The forecasts for 2027Q1 and 2027Q2 use 12-month inputs, which the backtest shows are currently unreliable. They are
+reported for completeness only.</p>
+<h2>Caveats</h2>
+<ul>
+<li><strong>A forecasting method, not an explanation.</strong> The failure after 2020 is consistent with the schedule change, the
+  register migration and the surge in catch-up. The backtest cannot separate them.</li>
+<li><strong>Definitions move.</strong> What "fully immunised for age" means at each milestone follows the schedule. The 12-month
+  milestone in particular changed meaning in October 2020. Any cohort-linked model must be re-anchored after such a
+  change, and the cascade's four-cohort window takes a year to do so.</li>
+<li><strong>Published files only.</strong> Health NZ holds individual-level register data and could project coverage far more
+  precisely. The value of this work is an independent, open check, not a replacement.</li>
+<li><strong>Small cells.</strong> Pacific and Asian cells are often suppressed in smaller districts, so those groups are forecast
+  only where Health NZ publishes them. District intervals for small populations are wide.</li>
+<li><strong>Three quarters have no file</strong> (2009Q3, 2022Q2, 2023Q2). Forecasts needing those inputs were not made.</li>
+</ul>
+<h2>Data and Māori data sovereignty</h2>
+<p>The study uses only aggregate counts that Health NZ publishes, under the Te Mana Raraunga principles:</p>
+<ul>
+<li>suppressed cells are never reverse-engineered;</li>
+<li>results for Māori and Pacific children describe how far immunisation services are reaching them, not
+  characteristics of their families;</li>
+<li>the district forecasts are offered as a tool for Health NZ, Iwi-Māori Partnership Boards and Pacific providers to
+  plan catch-up and measles readiness, not as a ranking of communities.</li>
+</ul>
+<h2>Deviations (summary)</h2>
+<p>D1, logged before freezing: a second, recent-window 80% interval was added to the frozen forecasts as a labelled
+secondary, after the backtest showed the preregistered intervals undercovering since 2023. The preregistered
+interval remains the one H2 is scored on. Nothing else departs from the plan.</p>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-immunisation-cascade-forecast/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>
