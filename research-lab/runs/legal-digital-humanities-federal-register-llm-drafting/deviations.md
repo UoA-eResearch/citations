@@ -186,3 +186,49 @@ The V2 run with D5 intervals was stopped unfinished. V1, V2 and the capped V2 ar
 - V2 at delta = 0 reports the DiD's false-positive rate directly.
 
 **Timing.** The 2026 issues are still sealed.
+
+## D7. Validation results with the final estimator, and the minimum detectable effect, before unsealing (2026-10-07 03:50 NZDT)
+
+Estimator: paired reference (D5), calibration a = 0.54% and b = 0.769, with calibration uncertainty propagated (D6).
+The 95% range of the b draws is 0.728-0.814. Files: `logs/validate.log`, `results/tables/validation_v1.csv`,
+`validation_v2.csv`, `calibration.json`, `results/figures/validation.png`.
+
+**V1** (50 replicates per level):
+
+| True α | Documents: estimate | Documents: coverage | Pseudo-documents: estimate | Pseudo-documents: coverage |
+|---|---|---|---|---|
+| 0 | 0.26% | 100% | 0.32% | 98% |
+| 2% | 2.82% | 100% | 2.61% | 86% |
+| 5% | 5.79% | 88% | 5.90% | 58% |
+| 10% | 10.98% | 90% | 10.95% | 66% |
+| 25% | 26.02% | 96% | 26.00% | 94% |
+
+- **Bias criterion:** met in both constructions. The worst case at α ≤ 10% is +0.98 pp.
+- **Coverage criterion:** not met. The documents construction falls to 88% at α = 5%; the pseudo-document construction
+  (no document clustering) falls to 58-66%.
+- **Consequence:** by the rule fixed in D6, the study proceeds, and this shortfall is a primary caveat. The estimator
+  slightly overstates large fractions (about +4% of the true value), because the two held-out halves differ in
+  detectability.
+
+**V2** (D3 design: real group sizes, 40 replicates per level):
+
+| Injected DiD | Power (95% CI excludes 0) | Mean estimated DiD | Mean CI width |
+|---|---|---|---|
+| 0 | 12% | +0.22 pp | 3.96 pp |
+| 1 pp | 20% | +1.39 pp | 4.55 pp |
+| 2 pp | 70% | +2.47 pp | 4.16 pp |
+| 3 pp | 82% | +3.28 pp | 4.34 pp |
+| 5 pp | 100% | +5.58 pp | 4.60 pp |
+| 7.5 pp | 100% | +8.15 pp | 4.66 pp |
+
+- **Minimum detectable DiD at 80% power: 3 pp.** That is at most 5 pp, so all three verdicts remain reachable under
+  plan section 5.
+- **False-positive rate at DiD = 0: 12%** (about 5 of 40), above the nominal 5%. The DiD interval is somewhat too
+  narrow, consistent with V1. This is reported as a caveat on any "CI excludes 0" statement. Supported also needs
+  DiD ≥ 5 pp, a size that V2 never produced under the null.
+- **Bias:** the estimated DiD exceeds the injected one by about 0.2-0.6 pp.
+
+**Not yet run.** The capped-design V2 sensitivity is still running. It is deterministic, committed code that uses only
+2019-2021 data, so the unsealing below cannot affect it.
+
+**Next.** Verify the sealed files against `data/SEALED_MANIFEST.sha256`, then parse them (`parse.py sealed`).
