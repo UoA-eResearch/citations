@@ -1,0 +1,13 @@
+{
+ "candidates_commit": "0bf21f0249a08550d6597a89c838deedbad42da9",
+ "P11": {
+  "hamming": 47,
+  "verdict_rule": "Contradicted",
+  "source": "P11_A1_mb8192_c0.002_s123"
+ },
+ "P12": {
+  "hamming": 57,
+  "verdict_rule": "Contradicted",
+  "source": "P12_A2_mb256_cNone_s1234"
+ }
+}
