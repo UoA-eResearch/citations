@@ -14,7 +14,9 @@ TOOLCHAIN = os.environ.get("VAC_TOOLCHAIN", "v49")
 WS = RUN / "lean" / ("mathlib4_v415" if TOOLCHAIN == "v415" else "mathlib4")
 REPL_BIN = RUN / "lean" / ("repl_v415" if TOOLCHAIN == "v415" else "repl") / ".lake" / "build" / "bin" / "repl"
 LAKE = Path.home() / ".elan" / "bin" / "lake"
-HEADER = "import Mathlib\nimport Aesop"
+# VAC_HEADER=minif2f (D7): STP's verifier environment, `import miniF2F` (kfdong/STP assets/setup/miniF2F.lean, compiled
+# into the workspace); default: all of Mathlib, as in the first run.
+HEADER = "import miniF2F\nimport Aesop" if os.environ.get("VAC_HEADER") == "minif2f" else "import Mathlib\nimport Aesop"
 
 
 class Repl:

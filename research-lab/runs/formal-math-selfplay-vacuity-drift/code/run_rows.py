@@ -53,10 +53,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("sample"); ap.add_argument("out"); ap.add_argument("workers", type=int)
     ap.add_argument("--trivial-iters", default=""); ap.add_argument("--filter", default=""); ap.add_argument("--quiet", action="store_true")
+    ap.add_argument("--ids", default="", help="file with one row_id per line; only these rows are run (D7 fallback pass)")
     a = ap.parse_args()
     df = pd.read_parquet(a.sample)
     if a.filter:
         df = df.query(a.filter)
+    if a.ids:
+        df = df[df.row_id.isin({int(x) for x in open(a.ids).read().split()})]
     out = Path(a.out)
     done = set()
     if out.exists():

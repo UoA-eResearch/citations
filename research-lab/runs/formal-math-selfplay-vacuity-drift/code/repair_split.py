@@ -1,6 +1,7 @@
 """Split-repair sensitivity pass (deviations.md D2). For re-verified rows that failed the split check: re-verify,
 check `example : ∀ B, _ := orig` (B is the hypothesis telescope; conclusion inferred), and if it passes run only the
-automation portfolio (b) on `theorem v B : False`. Usage: repair_split.py <sample.parquet> <rows.jsonl> <out.jsonl> <workers>"""
+automation portfolio (b) on `theorem v B : False`, and (D7) count it only if `example : type_of% @orig := by intros;
+exfalso; apply v <;> assumption` compiles. Usage: repair_split.py <sample.parquet> <rows.jsonl> <out.jsonl> <workers>"""
 import json
 import multiprocessing as mp
 import sys
@@ -31,7 +32,7 @@ def repair(item):
             return out
         orig = "orig_thm"
         cmd = body[:p["decl_start"]] + body[p["decl_start"]:p["name_end"]].rsplit(p["name"], 1)[0] + orig + body[p["name_end"]:] + target
-        _repl.ensure(2)
+        _repl.ensure(11)
         r = _repl.run(cmd, timeout=100)
         if "timeout" in r or "dead" in r or errors(r):
             out.update(repair_ok=False, repair_reason="reverify failed")
@@ -44,12 +45,16 @@ def repair(item):
         v, out["auto"] = "vac_thm", None
         for tac in AUTO:
             stmt = f"theorem {v} : ∀ {B}, False := by\n  decide" if tac == "decide" else f"theorem {v} {B} : False := by\n  {tac}"
-            r = _repl.run(f"{pre}set_option maxHeartbeats 100000 in\n{stmt}\n\n#print axioms {v}", timeout=30)
-            ok, ax = cert_ok(r, v)
+            rc = _repl.run(f"{pre}set_option maxHeartbeats 100000 in\n{stmt}\n\n#print axioms {v}", env=r["env"], timeout=30)
+            ok, ax = cert_ok(rc, v)
             if ok:
                 out["auto"], out["auto_axioms"] = tac, ax
+                # D7 soundness check: the certificate must refute the ORIGINAL theorem's hypotheses as elaborated there
+                # (the conclusion text is unreliable for these rows, so the original's type is used via `type_of%`)
+                rs = _repl.run(f"example : type_of% @{orig} := by\n  intros\n  exfalso\n  apply {v} <;> assumption", env=rc["env"], timeout=30)
+                out["sound"] = not ("timeout" in rs or "dead" in rs or errors(rs))
                 break
-        out["vacuous_repair"] = bool(out["auto"])
+        out["vacuous_repair"] = bool(out["auto"]) and bool(out.get("sound"))
     except Exception as e:  # noqa: BLE001
         out["worker_error"] = repr(e)[:300]
         try:

@@ -57,19 +57,39 @@ SAT = [
     ("(n : ℕ) (h : [1, 2, 3].count n = 1) (hn : n < 5) : n ≤ 3", "revert h\n  revert hn\n  revert n\n  decide"),
 ]
 
+# v2 controls (D7, after review): undeclared variables whose type only the conclusion fixes; binder-less statements
+# (secondary certificate); a conclusion ending in `→ False`, which the secondary certificate must not count.
+VAC_V2 = [
+    ("(h : a < 0) : a = 5", "omega"),  # `a` undeclared, conclusion does not fix the type: ℕ, genuinely vacuous
+]
+SAT_V2 = [
+    ("(h1 : 0 < x) (h2 : x < 1) : (x : ℝ) ^ 2 < 1", "nlinarith"),
+    ("(h₀ : 0 < x) (h₁ : x + y = 1) (h₂ : 0 < y) : x * y ≤ (1 : ℝ) / 4", "nlinarith [sq_nonneg (x - y)]"),
+    ("(h : b < 0) : (b : ℤ) ^ 2 > 0", "nlinarith"),
+    ("(x : ℝ) (h : x > 0) : x = -1 → False", "intro h2\n  linarith"),
+]
+EXT_VAC = [("∀ x : ℝ, x > 5 → x < 3 → x = 0", "intro x h1 h2\n  linarith")]
+EXT_SAT = [("∀ x : ℝ, x > 1 → x ^ 2 > 1", "intro x h\n  nlinarith")]
+
 
 def main():
     repl = Repl()
     rows = []
-    for kind, items in (("vacuous", VAC), ("satisfiable", SAT)):
+    groups = [("vacuous", VAC), ("satisfiable", SAT)]
+    if "--v2" in sys.argv:
+        groups += [("vacuous_undeclared", VAC_V2), ("satisfiable_undeclared", SAT_V2), ("ext_vacuous_binderless", EXT_VAC), ("ext_satisfiable_binderless", EXT_SAT)]
+    for kind, items in groups:
         for i, (stmt, proof) in enumerate(items):
-            prompt = HDR + f"theorem control_{kind}_{i} {stmt} := by"
+            prompt = HDR + f"theorem control_{kind}_{i} {stmt if not stmt.startswith('∀') else ': ' + stmt} := by"
             o = check_row(repl, prompt, "\n  " + proof, trivial=True)
-            rows.append(dict(kind=kind, i=i, stmt=stmt, **{k: o.get(k) for k in ("parsed", "reverify", "split_ok", "swap", "auto", "vacuous", "trivial", "reverify_errors", "split_errors")}))
-            print(kind, i, {k: o.get(k) for k in ("reverify", "split_ok", "swap", "auto", "vacuous", "trivial")}, o.get("reverify_errors") or o.get("split_errors") or "")
+            rows.append(dict(kind=kind, i=i, stmt=stmt, **{k: o.get(k) for k in ("parsed", "reverify", "split_ok", "auto_bound", "n_intros", "concl_false", "swap", "auto", "vacuous", "ext_auto", "vacuous_ext", "trivial", "reverify_errors", "split_errors")}))
+            print(kind, i, {k: o.get(k) for k in ("reverify", "split_ok", "auto_bound", "n_intros", "concl_false", "swap", "auto", "vacuous", "vacuous_ext")}, o.get("reverify_errors") or o.get("split_errors") or "")
     repl.kill()
     d = pd.DataFrame(rows)
-    d.to_csv(RUN / "results" / "tables" / "validation_controls.csv", index=False)
+    d.to_csv(RUN / "results" / "tables" / ("validation_controls_v2.csv" if "--v2" in sys.argv else "validation_controls.csv"), index=False)
+    for k in d.kind.unique():
+        x = d[d.kind == k]
+        print(f"{k}: certified {int(x.vacuous.fillna(False).sum())}/{len(x)} | extended {int(x.vacuous_ext.fillna(False).sum()) if 'vacuous_ext' in x else '-'}/{len(x)} | reverify {int(x.reverify.fillna(False).sum())}")
     v, s = d[d.kind == "vacuous"], d[d.kind == "satisfiable"]
     print("vacuous certified", int(v.vacuous.fillna(False).sum()), "/ 20 | satisfiable certified", int(s.vacuous.fillna(False).sum()),
           "/ 20 | split ok", int(d.split_ok.fillna(False).sum()), "/ 40 | reverify ok", int(d.reverify.fillna(False).sum()), "/ 40")
