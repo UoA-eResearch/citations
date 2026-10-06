@@ -94,3 +94,14 @@ from its first A1 run: top-sample frequency 0.001, so no peak was resolved.
 **P12 budget.** P12 has used 27 of its 72 h. A2 at chi 256 was started at 10:20 (`timeout 10h`), as D1 specified. A2
 was at chance on P9, so it is not expected to recover the peak. No further A1 run on P12 is planned: at the observed
 rate it would far exceed the remaining 45 h.
+
+## D6. Attacks complete; final candidates are committed before scoring (2026-10-06 14:02 NZDT)
+
+**P12 A2.** A2 on P12 at chi 256 finished in 13,263 s (3.7 h), with a mean per-bit margin of 0.15. P12 has used
+27 + 3.7 = 30.7 A100-hours.
+
+**Selection.** No further attack is run. The final candidates are selected by `code/select_candidates.py` under the
+D4 rule and committed with their SHA-256 before `code/score.py` reads the sealed answers:
+
+- **P11:** the only candidate is from the first A1 run, which resolved no peak (top-sample frequency 0.001).
+- **P12:** the only candidate is from A2.
