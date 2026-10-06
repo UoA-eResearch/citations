@@ -121,3 +121,9 @@ The cause was in our check, not the rows. Lean rejects any `example` whose state
 original theorem and leaves the conclusion to Lean. Checked by hand on three rows: it passes where the old form failed.
 The repair pass was rerun with the fix. The buggy outputs are kept as `*_repair_v1_buggy.jsonl`. No vacuity outcome
 of the repaired rows had been produced before the fix, because no row had passed the check.
+
+## D6. NuminaMath runs in parallel (2026-10-06 14:21 NZDT)
+
+The NuminaMath-LEAN secondary corpus is run now on cores 0-11 (`code/run_numina_now.sh`, 10 workers, Lean 4.15). The
+other secondary corpora continue in sequence on cores 16-27. `run_rows.py` is resumable, so when `run_other.sh`
+reaches Numina it finds every row done. Only the scheduling changes.

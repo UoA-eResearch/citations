@@ -77,8 +77,8 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 <div class="page">
 <header class="masthead">
   <div class="eyebrow">Research Lab · Deep dive · Quantum simulation</div>
-  <h1>Do generic tensor-network attacks recover the hidden answers of the 98-qubit peaked circuits?</h1>
-  <p class="subtitle">A preregistered test of three published classical attacks on BlueQubit&#x27;s P11 and P12, scored against the</p>
+  <h1>Do general-purpose classical attacks recover the hidden answers of the 98-qubit peaked circuits?</h1>
+  <p class="subtitle">A preregistered test of three published classical attacks on BlueQubit&#x27;s P11 and P12, scored against the quantum-hardware answers, which were sealed unread. Overtaken during the study by a structure-aware attack that solved both in minutes.</p>
   <div class="meta">
     <span>Report · 2026-10-06 · revised after independent review</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/quantum-simulation-peaked-98q-classical-crack/plan.md">Preregistration</a>
@@ -89,10 +89,6 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 </header>
 <section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Our verdict</div><div class="tile-value text">Refuted</div><div class="tile-note">for the three preregistered generic attacks within the budget</div></div><div class="tile"><div class="tile-label">P11 best guess</div><div class="tile-value">47 / 98</div><div class="tile-note">bits wrong: chance level (expected 49)</div></div><div class="tile"><div class="tile-label">External solution</div><div class="tile-value">89 s</div><div class="tile-note">P11 solved exactly on a CPU by structural de-obfuscation (5 Oct)</div></div><div class="tile"><div class="tile-label">P9 validation</div><div class="tile-value text">exact</div><div class="tile-note">published 56-qubit answer reproduced in 6,267 s</div></div></section>
 <main>
-<p>quantum-hardware answers, which were sealed unread. Overtaken during the study by a structure-aware attack that solved
-both in minutes.*</p>
-<p><a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/quantum-simulation-peaked-98q-classical-crack/plan.md"><code>plan.md</code></a> (commit ff1996a) · Departures from it: <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/quantum-simulation-peaked-98q-classical-crack/deviations.md"><code>deviations.md</code></a> (D1–D7) · Independent
-review: <a href="review/review.md"><code>review/review.md</code></a> · 6 October 2026, revised after review</p>
 <h2>In plain terms</h2>
 <p>A "peaked circuit" is a quantum program built so that one particular 98-bit answer comes out far more often than any
 other. A quantum computer can find it by running the program and counting. If an ordinary computer can find it too,
@@ -102,7 +98,8 @@ Helios-1 quantum computer.</p>
 <p>We gave three published general-purpose attacks a budget of 72 hours on one A100 graphics card for each circuit. Before
 running anything, we stored Helios-1's answers away without looking at them.</p>
 <ul>
-<li><strong>The attacks reproduced P9 exactly.</strong> The method works on the smaller circuit.</li>
+<li><strong>The main attack reproduced P9 exactly.</strong> It works on the smaller circuit. The other two attacks failed even on
+  P9.</li>
 <li><strong>They failed on P11 and P12.</strong> The main attack either finished but lost the answer, or ran out of time early.
   When we opened the sealed answers, our best guess for P11 was 47 bits wrong out of 98, no better than chance.</li>
 </ul>
@@ -112,9 +109,9 @@ reshuffling of the qubits, removed the disguise, and calculated the answer exact
 <p>So these circuits are not hard for ordinary computers. They are hard only for general-purpose methods that do not
 look for how the circuits were built, and our study measured how far those methods fall short.</p>
 <h2>Overtaken by events (5 October 2026)</h2>
-<p><strong>The external solution.</strong> On 5 October 2026 at 15:43 UTC, a day after this study's plan was committed and while its
-runs were in progress, Dylan Neve posted classical solutions of P11 and P12 to the Quantum Advantage Tracker (issues</p>
-<h1>251 and #252).</h1>
+<p><strong>The external solution.</strong> On 5 October 2026 at 15:43 UTC, about 40 hours after this study's plan was committed and
+while its runs were in progress, Dylan Neve posted classical solutions of P11 and P12 to the Quantum Advantage Tracker
+(issues #251 and #252).</p>
 <p><strong>How it works.</strong> Every two-qubit block has the same pattern, <code>u a; u b; cz a,b; u a; u b</code>. Single-qubit rotations in
 the second half of the circuit are exact inverses of partners in the first half. Those inverse pairs fingerprint the
 inserted identity blocks, and the hidden permutation is a 49-swap involution. With the blocks replaced by that
@@ -272,11 +269,12 @@ authors'-hardware terms was smaller.</p>
   truncation. We did not log the discarded weight, so we cannot separate truncation at a good permutation from a poor
   permutation chosen by the greedy search.</li>
 <li><strong>Bond dimension.</strong> P9's operator repeatedly collapses to bond dimension 16 or less once about 40% of the circuit is
-  absorbed. P11's stays above about 25 throughout (<code>results/figures/a1_bond_vs_absorbed.png</code>).</li>
-<li><strong>Tighter cutoffs.</strong> At tighter cutoffs, unswapping did not get past the first 4–5% of the circuit in 27 hours, with
-  three runs sharing the GPU. The shared runs reached 50 absorbed blocks faster than the solo run did, so contention
-  was probably mild.</li>
+  absorbed. P11's stays above about 25 once about 20% is absorbed (figure below).</li>
 </ul>
+<p><img alt="Core-operator bond dimension against the fraction of two-qubit unitaries absorbed, for the two completed runs" src="results/figures/a1_bond_vs_absorbed.png" />
+- <strong>Tighter cutoffs.</strong> At tighter cutoffs, unswapping did not get past the first 4–5% of the circuit in 27 hours, with
+  three runs sharing the GPU. The shared runs reached 50 absorbed blocks faster than the solo run did, so contention
+  was probably mild.</p>
 <p>P11 has fewer CZ gates per qubit than P9 (41 against 68). Its two halves share 111 qubit pairs. That is what chance
 predicts for 98 qubits (113), just as P9's 340 is close to chance for 56 (322), so the statistic says nothing about how
 scrambled the circuits are.</p>
@@ -309,7 +307,7 @@ scrambled the circuits are.</p>
 <p>The decision rule itself never changed.</p>
 </main>
 <footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
-A100 machine. Data: GWOSC / Zenodo public releases. Every departure from the preregistration is recorded in the
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
 <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/quantum-simulation-peaked-98q-classical-crack/deviations.md">deviations log</a>.</footer>
 </div>
 </body>

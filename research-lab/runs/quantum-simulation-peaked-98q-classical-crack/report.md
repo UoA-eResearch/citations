@@ -1,4 +1,4 @@
-# Do generic tensor-network attacks recover the hidden answers of the 98-qubit peaked circuits?
+# Do general-purpose classical attacks recover the hidden answers of the 98-qubit peaked circuits?
 
 *A preregistered test of three published classical attacks on BlueQubit's P11 and P12, scored against the
 quantum-hardware answers, which were sealed unread. Overtaken during the study by a structure-aware attack that solved
@@ -19,7 +19,8 @@ Helios-1 quantum computer.
 We gave three published general-purpose attacks a budget of 72 hours on one A100 graphics card for each circuit. Before
 running anything, we stored Helios-1's answers away without looking at them.
 
-- **The attacks reproduced P9 exactly.** The method works on the smaller circuit.
+- **The main attack reproduced P9 exactly.** It works on the smaller circuit. The other two attacks failed even on
+  P9.
 - **They failed on P11 and P12.** The main attack either finished but lost the answer, or ran out of time early.
   When we opened the sealed answers, our best guess for P11 was 47 bits wrong out of 98, no better than chance.
 
@@ -32,9 +33,9 @@ look for how the circuits were built, and our study measured how far those metho
 
 ## Overtaken by events (5 October 2026)
 
-**The external solution.** On 5 October 2026 at 15:43 UTC, a day after this study's plan was committed and while its
-runs were in progress, Dylan Neve posted classical solutions of P11 and P12 to the Quantum Advantage Tracker (issues
-#251 and #252).
+**The external solution.** On 5 October 2026 at 15:43 UTC, about 40 hours after this study's plan was committed and
+while its runs were in progress, Dylan Neve posted classical solutions of P11 and P12 to the Quantum Advantage Tracker
+(issues #251 and #252).
 
 **How it works.** Every two-qubit block has the same pattern, `u a; u b; cz a,b; u a; u b`. Single-qubit rotations in
 the second half of the circuit are exact inverses of partners in the first half. Those inverse pairs fingerprint the
@@ -118,7 +119,9 @@ GPU utilisation was not measured. P11 ran in about 44 GPU wall-hours, 27 of them
   truncation. We did not log the discarded weight, so we cannot separate truncation at a good permutation from a poor
   permutation chosen by the greedy search.
 - **Bond dimension.** P9's operator repeatedly collapses to bond dimension 16 or less once about 40% of the circuit is
-  absorbed. P11's stays above about 25 throughout (`results/figures/a1_bond_vs_absorbed.png`).
+  absorbed. P11's stays above about 25 once about 20% is absorbed (figure below).
+
+![Core-operator bond dimension against the fraction of two-qubit unitaries absorbed, for the two completed runs](results/figures/a1_bond_vs_absorbed.png)
 - **Tighter cutoffs.** At tighter cutoffs, unswapping did not get past the first 4–5% of the circuit in 27 hours, with
   three runs sharing the GPU. The shared runs reached 50 absorbed blocks faster than the solo run did, so contention
   was probably mild.

@@ -40,10 +40,23 @@ def main():
     # title + subtitle handled by the template
     lines = md.splitlines()
     title = lines[0].lstrip("# ").strip()
-    subtitle = lines[2].strip("* ").strip() if len(lines) > 2 else ""
-    body_md = "\n".join(l for l in lines[3:] if not l.startswith("Run directory:") and not l.startswith("Every departure from it:"))
+    # subtitle: the italic block after the title, which may wrap over several lines
+    i, sub = 2, []
+    while i < len(lines) and lines[i].strip():
+        sub.append(lines[i].strip())
+        i += 1
+    subtitle = " ".join(sub).strip("* ").strip()
+    rest = lines[i:]
+    # drop the run-directory / links block (it wraps over several lines up to the first blank line)
+    j = 0
+    while j < len(rest) and not rest[j].strip():
+        j += 1
+    if j < len(rest) and rest[j].startswith("Run directory:"):
+        while j < len(rest) and rest[j].strip():
+            j += 1
+    body_md = "\n".join(rest[j:])
     # links to repo files that Pages would serve as raw text
-    body_md = body_md.replace("](plan.md)", f"]({REPO_BLOB}/plan.md)").replace("](deviations.md)", f"]({REPO_BLOB}/deviations.md)")
+    body_md = body_md.replace("](plan.md)", f"]({REPO_BLOB}/plan.md)").replace("](deviations.md)", f"]({REPO_BLOB}/deviations.md)").replace("](review/review.md)", f"]({REPO_BLOB}/review/review.md)")
     body = markdown.markdown(body_md, extensions=["tables", "fenced_code", "sane_lists"])
 
     # figures with captions
@@ -158,7 +171,7 @@ __TILES__
 __BODY__
 </main>
 <footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
-A100 machine. Data: GWOSC / Zenodo public releases. Every departure from the preregistration is recorded in the
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
 <a href="__BLOB__/deviations.md">deviations log</a>.</footer>
 </div>
 </body>
