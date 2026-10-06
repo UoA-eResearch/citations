@@ -24,3 +24,29 @@ one; only the code was wrong.
 **Fix.** The assignment is fixed, and the paragraphs, pools and power-analysis group sizes are regenerated. No LLM text
 had been generated and no estimate computed. The 2019-2021 reference pools are now restricted to cabinet departments,
 as `code/pools.py` intended: 3,849 human, 1,283 generation and 1,283 validation documents.
+
+## D2. Two closer-proxy generators added before any estimate (2026-10-06 22:27 NZDT)
+
+**The change.** The plan's three generators have each produced 4,000 polish and draft pairs:
+
+- Qwen2.5-32B-Instruct (revision 5ede1c97);
+- OLMo-2-0325-32B-Instruct (revision b9602434);
+- Nemotron-3-Nano-Omni, thinking disabled.
+
+The lab owner asked whether a better generator was available. DOT reports using Google Gemini. The closest open
+relative is **Gemma 4 31B-it** (google/gemma-4-31B-it, March 2026, Apache-2.0, ungated). The gated Gemma 3 was not
+accessible. Other departments mostly use ChatGPT- or Copilot-style tools, and **gpt-oss-120b** (OpenAI, Apache-2.0)
+represents that family.
+
+**Why it matters.** If the LLM reference lacks the style that DOT's tool actually produces, DOT's α is underestimated
+relative to the comparison group, which biases the DiD towards zero.
+
+**Revised design.**
+
+- **Primary LLM reference:** pooled over all five generators, with the same prompts and sampling.
+- **New secondary:** a Gemma-4-only reference, as the Gemini proxy.
+- **Leave-one-generator-out (plan section 6):** now covers five generators.
+- **Fallback:** if gpt-oss-120b cannot be served on the A100, gpt-oss-20b is used, and that is logged.
+
+**Timing.** This change is made before any LLM-fraction estimate, any validation run, and the unsealing of the outcome
+issues.

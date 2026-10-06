@@ -25,6 +25,9 @@ def chat(base, model, prompt, max_tokens=700):
             "max_tokens": max_tokens}
     if "nemotron" in model:  # reasoning model: thinking disabled so outputs are final text (plan section 3)
         body["chat_template_kwargs"] = {"enable_thinking": False}
+    if "gptoss" in model:  # reasoning model (D2): low reasoning effort; reasoning tokens count against max_tokens
+        body["reasoning_effort"] = "low"
+        body["max_tokens"] = max_tokens * 3
     for attempt in range(4):
         try:
             r = requests.post(f"{base}/v1/chat/completions", json=body, timeout=600)
