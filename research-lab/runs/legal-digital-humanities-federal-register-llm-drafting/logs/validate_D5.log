@@ -1,0 +1,13 @@
+{"a_raw_alpha_generation_pool": 0.005365950786646123, "b_slope": 0.769491641911963, "raw_alpha_C_half": 0.7748575926986091, "n_ref_sentences": 98299, "n_source_sentences": 12177, "n_C_sentences": 12457, "vocab": 859, "generators": ["gemma", "gptoss", "nemotron", "olmo", "qwen"]}
+{"raw_alpha_validation_pool": 0.007528338386643467, "raw_alpha_V_half": 0.7978645102427, "calibrated_alpha_validation_pool": 0.002810150860930003, "calibrated_alpha_V_half": 1.0298988530751618}
+DOT 2024-25 mean sentences per document 184.4; post-period sentence count ~ 53472
+V1 pseudo-documents alpha=0.00: mean est 0.0032 bias +0.0032 coverage 0.80 mean CI width 0.0099
+V1 documents alpha=0.00: mean est 0.0026 bias +0.0026 coverage 0.96 mean CI width 0.0259
+V1 pseudo-documents alpha=0.02: mean est 0.0261 bias +0.0061 coverage 0.46 mean CI width 0.0121
+V1 documents alpha=0.02: mean est 0.0282 bias +0.0082 coverage 0.98 mean CI width 0.0348
+V1 pseudo-documents alpha=0.05: mean est 0.0590 bias +0.0090 coverage 0.24 mean CI width 0.0142
+V1 documents alpha=0.05: mean est 0.0579 bias +0.0079 coverage 0.82 mean CI width 0.0329
+V1 pseudo-documents alpha=0.10: mean est 0.1095 bias +0.0095 coverage 0.32 mean CI width 0.0166
+V1 documents alpha=0.10: mean est 0.1098 bias +0.0098 coverage 0.86 mean CI width 0.0357
+V1 pseudo-documents alpha=0.25: mean est 0.2600 bias +0.0100 coverage 0.58 mean CI width 0.0221
+V1 documents alpha=0.25: mean est 0.2602 bias +0.0102 coverage 0.82 mean CI width 0.0371

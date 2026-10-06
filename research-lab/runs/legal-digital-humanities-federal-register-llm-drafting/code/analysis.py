@@ -23,7 +23,7 @@ from validate import build_estimator  # noqa: E402
 RUN = Path(__file__).resolve().parents[1]
 TAB = RUN / "results" / "tables"
 RNG = np.random.default_rng(20261007)
-CAL = None  # set in main(): the D5 calibration of the pooled estimator
+CAL = None  # set in main(): the pooled estimator, carrying its D5 calibration and D6 calibration draws
 DEREG = re.compile(r"rescind|rescission|remov|withdraw|deregulat|eliminat", re.I)
 
 
@@ -75,7 +75,8 @@ def doc_d(sents_by_doc, est):
     return {doc: est.d(s) for doc, s in sents_by_doc.items()}
 
 
-def alpha_boot(docs, dmap, B=2000, cal=lambda x: x):
+def alpha_boot(docs, dmap, B=2000, calib=None):
+    """Calibrated alpha and bootstrap draws; draw i is calibrated with calibration draw i (D6)."""
     arr = [dmap[d] for d in docs if d in dmap]
     full = alpha_mle(np.concatenate(arr)) if arr else np.nan
     draws = np.empty(B)
@@ -83,17 +84,17 @@ def alpha_boot(docs, dmap, B=2000, cal=lambda x: x):
     for b in range(B):
         idx = RNG.integers(0, n, n)
         draws[b] = alpha_mle(np.concatenate([arr[i] for i in idx]))
-    return float(cal(full)), cal(draws), n
+    return float(calib.cal(full)), calib.cal_draws(draws), n
 
 
-def did(meta, dmap, pre, post, B=2000, sel=None, cal=None):
+def did(meta, dmap, pre, post, B=2000, sel=None, calib=None):
     """pre/post: (start, end) date strings, inclusive. sel: optional boolean mask over meta rows."""
     m = meta if sel is None else meta[sel]
     res = {}
     for gname in ("DOT", "other_cabinet"):
         for per, (a, b) in (("pre", pre), ("post", post)):
             docs = m[(m.group == gname) & (m.publication_date >= a) & (m.publication_date <= b)].index
-            res[(gname, per)] = alpha_boot(docs, dmap, B, cal or CAL)
+            res[(gname, per)] = alpha_boot(docs, dmap, B, calib or CAL)
     d = (res[("DOT", "post")][0] - res[("DOT", "pre")][0]) - (res[("other_cabinet", "post")][0] - res[("other_cabinet", "pre")][0])
     dd = (res[("DOT", "post")][1] - res[("DOT", "pre")][1]) - (res[("other_cabinet", "post")][1] - res[("other_cabinet", "pre")][1])
     lo, hi = np.nanpercentile(dd, [2.5, 97.5])
@@ -118,7 +119,7 @@ def main():
     human_sents = [s for t in human[~human.procedural].text for s in sentences(t)]
     global CAL
     est, info, _ = build_estimator(human_sents=human_sents)
-    CAL = est.cal
+    CAL = est
     p = load_paragraphs()
     p, n_dropped = dedup(p)
     meta = p.drop_duplicates("document_number").set_index("document_number")[["publication_date", "group", "type", "title"]]
@@ -149,7 +150,7 @@ def main():
             docs = meta[(meta.group == gname) & (q == qq)].index
             if len(docs) < 5:
                 continue
-            a, draws, n = alpha_boot(docs, dmap, B=300, cal=CAL)
+            a, draws, n = alpha_boot(docs, dmap, B=300, calib=CAL)
             ev.append(dict(group=gname, quarter=qq, alpha=a, lo=np.nanpercentile(draws, 2.5), hi=np.nanpercentile(draws, 97.5), n_docs=n))
     pd.DataFrame(ev).to_csv(TAB / "event_study.csv", index=False)
     # splits (secondary)
@@ -171,7 +172,7 @@ def main():
             keep, label = [x for x in gens if x != drop], f"without {drop}"
         e2, i2, _ = build_estimator(gens=keep, human_sents=human_sents)
         dm2 = doc_d(sents, e2)
-        r = did(meta, dm2, ("2024-01-01", "2025-12-31"), ("2026-02-01", "2026-09-30"), B=300, cal=e2.cal)
+        r = did(meta, dm2, ("2024-01-01", "2025-12-31"), ("2026-02-01", "2026-09-30"), B=300, calib=e2)
         lg.append(dict(reference=label, slope=i2["b_slope"], **r))
     pd.DataFrame(lg).to_csv(TAB / "logo.csv", index=False)
     # excess vocabulary (Kobak-style): document frequency of words in 2026 vs 2024-25, by group

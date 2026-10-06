@@ -151,3 +151,38 @@ the validation pool and all held-out generated sentences (`scratchpad` runs, not
 No other estimator variant was tried.
 
 **Timing.** No estimate exists for 2022 or later, and the 2026 issues are still sealed.
+
+## D6. V1 with the D5 estimator: bias passes, coverage fails; calibration uncertainty propagated (2026-10-07 00:57 NZDT)
+
+**V1 with the D5 estimator** (`logs/validate_D5.log`, `results/tables/validation_v1_D5.csv`). Calibration:
+a = 0.54% and b = 0.769. Calibrated α on the validation pool is 0.28%, and on half V is 103%.
+
+| True α | Pseudo-documents: bias | Pseudo-documents: coverage | Documents: bias | Documents: coverage |
+|---|---|---|---|---|
+| 0 | +0.32 pp | 80% | +0.26 pp | 96% |
+| 2% | +0.61 pp | 46% | +0.82 pp | 98% |
+| 5% | +0.90 pp | 24% | +0.79 pp | 82% |
+| 10% | +0.95 pp | 32% | +0.98 pp | 86% |
+| 25% | +1.00 pp | 58% | +1.02 pp | 82% |
+
+- **Bias criterion:** passes in both constructions (|bias| < 1 pp at α ≤ 10%).
+- **Coverage criterion:** fails. With real documents, coverage falls to 82-86% at α ≥ 5%. The pseudo-document
+  construction undercovers badly because its bootstrap ignores document clustering.
+
+**Cause.** The residual bias rises with α. It matches the slope error between the two held-out halves: V reads 79.8%
+raw and C reads 77.5%, about 3% apart. The bootstrap CI ignored this uncertainty in the calibration (a, b).
+
+**Fix (2019-2021 data only).** 2,000 calibration draws (a_i, b_i) are made by resampling the generation pool's documents
+and half C's paragraph keys (`build_estimator`). Bootstrap draw i of every estimate is calibrated with (a_i, b_i),
+using the same i in every group. So a still cancels in a DiD, and the uncertainty in b now enters every interval.
+Point estimates still use (a, b).
+
+The V2 run with D5 intervals was stopped unfinished. V1, V2 and the capped V2 are rerun with D6.
+
+**Rule set now, whatever the outcome.** This is the last change to the estimator.
+
+- If V1 still fails, the study proceeds and the V1 shortfall is reported as a primary caveat.
+- The decision rule depends on V2 (the minimum detectable effect), not on V1.
+- V2 at delta = 0 reports the DiD's false-positive rate directly.
+
+**Timing.** The 2026 issues are still sealed.

@@ -3,8 +3,10 @@
 Estimator (D5, after the first V1 failed): paired LLM reference (mle.Estimator(paired=...)) plus a two-point linear
 calibration fitted on 2019-21 data that V1 never sees: a = raw alpha on the generation pool's human documents,
 b = raw alpha on the calibration half (C) of the held-out generated sentences, minus a; calibrated alpha =
-(raw - a) / b, applied to point estimates and bootstrap draws alike. Held-out paragraph keys are split into halves C
-and V by the parity of the md5 of the key.
+(raw - a) / b. Held-out paragraph keys are split into halves C and V by the parity of the md5 of the key.
+D6: calibration uncertainty is propagated. 2,000 calibration draws (a_i, b_i) are made by resampling the generation
+pool's documents and the C half's paragraph keys; bootstrap draw i of any estimate is calibrated with (a_i, b_i), the
+same i for every group, so a cancels in a DiD and b's uncertainty enters its interval. Point estimates use (a, b).
 
 V1: synthetic mixtures of validation-pool human text and the V half of the held-out generated sentences at alpha in
     {0,2,5,10,25}%, 50 replicates each, at the sentence count of the DOT post period. Two constructions (D5):
@@ -63,7 +65,7 @@ def doc_sentences(df):
     return out
 
 
-def build_estimator(gens=None, human_sents=None):
+def build_estimator(gens=None, human_sents=None, n_cal=2000, seed=20261008):
     """The D5 estimator: paired reference from the kept generators (all if gens is None), calibrated on the
     generation pool's human documents and the C half. Returns (est, info, V-half sentences); est.cal maps raw alpha
     to the calibrated scale."""
@@ -79,13 +81,23 @@ def build_estimator(gens=None, human_sents=None):
     src_sents = [s for t in src[src.key.isin(set(g[g.half == "ref"].key))].text for s in sentences(t)]
     est = Estimator(human_sents, ref, adj_adv_words(), paired=(src_sents, ref))
     gen_docs = doc_sentences(pd.read_parquet(RUN / "data" / "pools" / "generation.parquet"))
-    a = alpha_mle(np.concatenate([est.d(v) for v in gen_docs.values()]))
-    c_sents = [s for t in g[g.half == "C"].text for s in sentences(t)]
-    b = alpha_mle(est.d(c_sents)) - a
-    est.a, est.b = a, b
+    gen_d = [est.d(v) for v in gen_docs.values()]
+    a = alpha_mle(np.concatenate(gen_d))
+    c_d = [est.d(x) for x in (g[g.half == "C"].groupby("key").text.apply(lambda t: [s for u in t for s in sentences(u)]))]
+    c_d = [x for x in c_d if len(x)]
+    c_sents = sum(len(x) for x in c_d)
+    b = alpha_mle(np.concatenate(c_d)) - a
+    rng = np.random.default_rng(seed)  # D6: calibration draws
+    A, Bs = np.empty(n_cal), np.empty(n_cal)
+    for i in range(n_cal):
+        A[i] = alpha_mle(np.concatenate([gen_d[j] for j in rng.integers(0, len(gen_d), len(gen_d))]))
+        Bs[i] = alpha_mle(np.concatenate([c_d[j] for j in rng.integers(0, len(c_d), len(c_d))])) - A[i]
+    est.a, est.b, est.A, est.B = a, b, A, Bs
     est.cal = lambda x: (np.asarray(x) - a) / b
+    est.cal_draws = lambda d: (np.asarray(d) - A[:len(d)]) / Bs[:len(d)]
     info = dict(a_raw_alpha_generation_pool=a, b_slope=b, raw_alpha_C_half=a + b, n_ref_sentences=len(ref),
-                n_source_sentences=len(src_sents), n_C_sentences=len(c_sents), vocab=len(est.vocab),
+                n_source_sentences=len(src_sents), n_C_sentences=c_sents, vocab=len(est.vocab),
+                a_draws_sd=float(A.std()), b_draws_sd=float(Bs.std()), b_draws_95=[float(x) for x in np.percentile(Bs, [2.5, 97.5])],
                 generators=sorted(g.gen.unique()))
     v_sents = [s for t in g[g.half == "V"].text for s in sentences(t)]
     return est, info, v_sents
@@ -133,7 +145,7 @@ def main():
                             arr[m] = RNG.choice(d_llm, int(m.sum()))
                         docs.append(arr)
                 raw_a, draws = bootstrap_alpha(docs, B=300, rng=RNG)
-                e, dr = float(est.cal(raw_a)), est.cal(draws)
+                e, dr = float(est.cal(raw_a)), est.cal_draws(draws)
                 lo, hi = np.percentile(dr, [2.5, 97.5])
                 rows.append(dict(construction=construction, alpha=a, rep=r, raw=raw_a, est=e, lo=lo, hi=hi, covered=lo <= a <= hi))
             v = pd.DataFrame([x for x in rows if x["alpha"] == a and x["construction"] == construction])
@@ -167,7 +179,7 @@ def main():
             ests, draws = {}, {}
             for gname, docs in groups.items():
                 ra, rd = bootstrap_alpha(docs, B=300, rng=RNG)
-                ests[gname], draws[gname] = float(est.cal(ra)), est.cal(rd)
+                ests[gname], draws[gname] = float(est.cal(ra)), est.cal_draws(rd)
             did = (ests["dot_post"] - ests["dot_pre"]) - (ests["oth_post"] - ests["oth_pre"])
             dd = (draws["dot_post"] - draws["dot_pre"]) - (draws["oth_post"] - draws["oth_pre"])
             lo, hi = np.percentile(dd, [2.5, 97.5])
