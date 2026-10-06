@@ -41,7 +41,10 @@ def main():
             if a.get("id"):
                 by_id[a["id"]] = a
     m["dept"] = [dept_of(a, by_id) for a in ags]
-    m["subagency"] = [(a[0].get("name") if a else None) for a in ags]
+    # D9 (after review): the API lists the parent department first, so take the first listed agency that is not a
+    # cabinet department itself (agencies[0] made every DOT document "Transportation Department")
+    m["subagency"] = [next(((x.get("name") or x.get("raw_name")) for x in a if x.get("slug") not in DEPTS), a[0].get("name")) if a else None for a in ags]
+    m["ferc"] = [any("Federal Energy Regulatory Commission" in (x.get("name") or "") for x in a) for a in ags]
     m["group"] = m.dept.map(lambda d: "excluded" if pd.isna(d) else ("DOT" if d == "DOT" else "other_cabinet"))  # D1: NaN is truthy
     m["templated"] = m.title.fillna("").str.contains(TEMPLATED)
     d = pd.to_datetime(m.publication_date)
