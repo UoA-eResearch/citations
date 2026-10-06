@@ -50,7 +50,11 @@ def validation():
     a1.set_ylabel("mean calibrated estimate (%)")
     a1.legend(frameon=False, fontsize=6.5)
     p = v2.groupby("delta").detect.mean()
-    a2.plot(100 * p.index, 100 * p.values, "o-", color="#2e5e8c", ms=4)
+    a2.plot(100 * p.index, 100 * p.values, "o-", color="#2e5e8c", ms=4, label="real group sizes (D3)")
+    if (T / "validation_v2_capped.csv").exists():
+        pc = pd.read_csv(T / "validation_v2_capped.csv").groupby("delta").detect.mean()
+        a2.plot(100 * pc.index, 100 * pc.values, "s--", color="#8a8a8a", ms=3.5, lw=1, label="groups capped at 320 documents")
+    a2.legend(frameon=False, fontsize=7, loc="lower right")
     a2.axhline(80, color="grey", lw=0.8, ls=":")
     a2.axhline(5, color="grey", lw=0.8, ls=":")
     a2.set_xlabel("injected DiD (percentage points)")
