@@ -115,8 +115,12 @@ def main(rows_dir=RUN / "results" / "rows"):
     r = contrast(cc, LATE, EARLY, weight_col="one"); r["contrast"] = "primary, unweighted"; res.append(r)
     # split repair sensitivity (D2)
     rp = rows_dir / "stp_conjecture_repair.jsonl"
-    if rp.exists():
+    log = RUN / "logs" / "repair.log"
+    repair_done = log.exists() and "done" in log.read_text()  # the repair pass prints "done" when the conjecture file is complete
+    if rp.exists() and repair_done:
         rr = pd.DataFrame([json.loads(line) for line in open(rp)])
+        if "vacuous_repair" not in rr:
+            rr["vacuous_repair"] = False
         rr = rr[rr.get("repair_ok", False) == True]  # noqa: E712
         c2 = c.copy()
         m = c2.row_id.isin(rr.row_id)

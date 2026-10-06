@@ -84,3 +84,40 @@ are unaffected.
 
 **CPU pinning.** The quantum lead's three GPU processes were pinned to cores 0-15 at 08:57. Without the pinning they had
 drifted onto the REPL cores, and GPU utilisation fell to 20%.
+
+## D3. Main run complete; the repair pass runs early (2026-10-06 13:55 NZDT)
+
+**Main run.** It finished at 13:54 with all 92,000 conjecture rows and 9,600 statement rows. The secondary-corpus run
+(`run_other.sh`) started on cores 16-27.
+
+**Repair pass.** The quantum lead's GPU jobs have released cores 0-15, so the split-repair pass (D2) now runs
+immediately on cores 0-11 with 10 workers (`code/run_repair_now.sh`). It no longer waits behind the secondary
+corpora. The queued `run_repair.sh` was cancelled by its PID before it started. The rows, code and rules are
+unchanged; only the timing and the worker count differ.
+
+**Primary analysis.** It is run now with the analysis code committed in c9f1baa, before any outcome existed. The
+primary test uses only the STP conjecture rows, which are complete.
+
+**Row files.** `results/rows/` is untracked in git while the runs are in progress. It will be committed in compressed
+form when they finish.
+
+## D4. Analysis code guard (2026-10-06 13:55 NZDT)
+
+`analysis.py` read the repair file while the repair pass was still writing it, and crashed because a column was
+missing. It now reports the D2 split-repair sensitivity only after `logs/repair.log` records completion, and treats a
+missing `vacuous_repair` column as no certificate. The primary analysis is unchanged.
+
+## D5. Bug in the split-repair check; the repair pass is rerun (2026-10-06 13:57 NZDT)
+
+**The bug.** The repair pass (D2) failed every row:
+
+- 1,034 failed the telescope check;
+- 216 had no binders, so cannot be repaired by design.
+
+The cause was in our check, not the rows. Lean rejects any `example` whose stated type contains holes, so
+`example : ∀ B, _ := orig` cannot elaborate.
+
+**The fix and rerun.** The check is now `#check (orig : ∀ B, _)`, which elaborates the binder telescope against the
+original theorem and leaves the conclusion to Lean. Checked by hand on three rows: it passes where the old form failed.
+The repair pass was rerun with the fix. The buggy outputs are kept as `*_repair_v1_buggy.jsonl`. No vacuity outcome
+of the repaired rows had been produced before the fix, because no row had passed the check.

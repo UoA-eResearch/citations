@@ -36,7 +36,7 @@ def repair(item):
         if "timeout" in r or "dead" in r or errors(r):
             out.update(repair_ok=False, repair_reason="reverify failed")
             return out
-        r2 = _repl.run(f"example : ∀ {B}, _ := {orig}", env=r["env"], timeout=30)
+        r2 = _repl.run(f"#check ({orig} : ∀ {B}, _)", env=r["env"], timeout=30)  # D5: `example` rejects holes in its stated type
         out["repair_ok"] = not ("timeout" in r2 or "dead" in r2 or errors(r2))
         if not out["repair_ok"]:
             out["repair_reason"] = "telescope check failed"
