@@ -1,0 +1,7 @@
+vocab 859 | human sentences 1001115 | LLM ref sentences 98299 | LLM held-out 24309
+DOT 2024-25 mean sentences per document 184.4; post-period sentence count ~ 53472
+V1 alpha=0.00: mean est 0.0168 bias +0.0168 coverage 0.00
+V1 alpha=0.02: mean est 0.0379 bias +0.0179 coverage 0.00
+V1 alpha=0.05: mean est 0.0653 bias +0.0153 coverage 0.00
+V1 alpha=0.10: mean est 0.1077 bias +0.0077 coverage 0.44
+V1 alpha=0.25: mean est 0.2296 bias -0.0204 coverage 0.00

@@ -3,7 +3,8 @@ Inputs: data/paragraphs_raw.parquet (2019-2025), data/paragraphs_sealed.parquet 
 data/pools/*, data/llm_ref/*.jsonl. Outputs: results/tables/{primary,placebos,event_study,splits,logo,excess_words}.csv
 and results/tables/summary.json.
 
-Estimator: pooled LLM reference over all generators (D2), human reference = human pool (2019-21). Units for every
+Estimator: pooled LLM reference over all generators (D2), human reference = human pool (2019-21); paired reference and
+two-point calibration (D5, validate.build_estimator); every alpha and bootstrap draw is on the calibrated scale. Units for every
 estimate: non-templated, non-procedural paragraphs of DOT or other-cabinet documents, after MinHash near-duplicate
 filtering (plan section 2). 2019-21 baselines for placebo P1 use only documents NOT in the human-reference pool."""
 import json
@@ -16,12 +17,13 @@ import pandas as pd
 from datasketch import MinHash, MinHashLSH
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from mle import Estimator, adj_adv_words, alpha_mle, sentences  # noqa: E402
-from validate import llm_sentences  # noqa: E402
+from mle import alpha_mle, sentences  # noqa: E402
+from validate import build_estimator  # noqa: E402
 
 RUN = Path(__file__).resolve().parents[1]
 TAB = RUN / "results" / "tables"
 RNG = np.random.default_rng(20261007)
+CAL = None  # set in main(): the D5 calibration of the pooled estimator
 DEREG = re.compile(r"rescind|rescission|remov|withdraw|deregulat|eliminat", re.I)
 
 
@@ -73,7 +75,7 @@ def doc_d(sents_by_doc, est):
     return {doc: est.d(s) for doc, s in sents_by_doc.items()}
 
 
-def alpha_boot(docs, dmap, B=2000):
+def alpha_boot(docs, dmap, B=2000, cal=lambda x: x):
     arr = [dmap[d] for d in docs if d in dmap]
     full = alpha_mle(np.concatenate(arr)) if arr else np.nan
     draws = np.empty(B)
@@ -81,17 +83,17 @@ def alpha_boot(docs, dmap, B=2000):
     for b in range(B):
         idx = RNG.integers(0, n, n)
         draws[b] = alpha_mle(np.concatenate([arr[i] for i in idx]))
-    return full, draws, n
+    return float(cal(full)), cal(draws), n
 
 
-def did(meta, dmap, pre, post, B=2000, sel=None):
+def did(meta, dmap, pre, post, B=2000, sel=None, cal=None):
     """pre/post: (start, end) date strings, inclusive. sel: optional boolean mask over meta rows."""
     m = meta if sel is None else meta[sel]
     res = {}
     for gname in ("DOT", "other_cabinet"):
         for per, (a, b) in (("pre", pre), ("post", post)):
             docs = m[(m.group == gname) & (m.publication_date >= a) & (m.publication_date <= b)].index
-            res[(gname, per)] = alpha_boot(docs, dmap, B)
+            res[(gname, per)] = alpha_boot(docs, dmap, B, cal or CAL)
     d = (res[("DOT", "post")][0] - res[("DOT", "pre")][0]) - (res[("other_cabinet", "post")][0] - res[("other_cabinet", "pre")][0])
     dd = (res[("DOT", "post")][1] - res[("DOT", "pre")][1]) - (res[("other_cabinet", "post")][1] - res[("other_cabinet", "pre")][1])
     lo, hi = np.nanpercentile(dd, [2.5, 97.5])
@@ -114,9 +116,9 @@ def main():
     human = pd.read_parquet(RUN / "data" / "pools" / "human.parquet")
     human_docs = set(human.document_number)
     human_sents = [s for t in human[~human.procedural].text for s in sentences(t)]
-    llm_ref, _, gen = llm_sentences()
-    cand = adj_adv_words()
-    est = Estimator(human_sents, llm_ref, cand)
+    global CAL
+    est, info, _ = build_estimator(human_sents=human_sents)
+    CAL = est.cal
     p = load_paragraphs()
     p, n_dropped = dedup(p)
     meta = p.drop_duplicates("document_number").set_index("document_number")[["publication_date", "group", "type", "title"]]
@@ -126,7 +128,7 @@ def main():
     v2 = pd.read_csv(TAB / "validation_v2.csv")
     pw = v2.groupby("delta").detect.mean()
     mde = float(pw[pw >= 0.8].index.min()) if (pw >= 0.8).any() else float("inf")
-    out = {"near_duplicates_dropped": int(n_dropped), "MDE_80": mde}
+    out = {"near_duplicates_dropped": int(n_dropped), "MDE_80": mde, "calibration": info}
     prim = did(meta, dmap, ("2024-01-01", "2025-12-31"), ("2026-02-01", "2026-09-30"))
     prim["verdict"] = verdict(prim, mde)
     pd.DataFrame([prim]).to_csv(TAB / "primary.csv", index=False)
@@ -147,7 +149,7 @@ def main():
             docs = meta[(meta.group == gname) & (q == qq)].index
             if len(docs) < 5:
                 continue
-            a, draws, n = alpha_boot(docs, dmap, B=300)
+            a, draws, n = alpha_boot(docs, dmap, B=300, cal=CAL)
             ev.append(dict(group=gname, quarter=qq, alpha=a, lo=np.nanpercentile(draws, 2.5), hi=np.nanpercentile(draws, 97.5), n_docs=n))
     pd.DataFrame(ev).to_csv(TAB / "event_study.csv", index=False)
     # splits (secondary)
@@ -161,21 +163,16 @@ def main():
     pd.DataFrame(sp).to_csv(TAB / "splits.csv", index=False)
     # leave-one-generator-out and Gemini proxy (point estimates)
     lg = []
-    gens = sorted(gen.gen.unique())
+    gens = info["generators"]
     for drop in gens + ["ONLY:gemma"]:
         if drop.startswith("ONLY:"):
-            keep = gen[gen.gen == drop.split(":")[1]]
-            label = "Gemma 4 only (Gemini proxy)"
+            keep, label = ["gemma"], "Gemma 4 only (Gemini proxy)"
         else:
-            keep = gen[gen.gen != drop]
-            label = f"without {drop}"
-        if keep.empty:
-            continue
-        ref = [s for t in keep.text for s in sentences(t)]
-        e2 = Estimator(human_sents, ref, cand)
+            keep, label = [x for x in gens if x != drop], f"without {drop}"
+        e2, i2, _ = build_estimator(gens=keep, human_sents=human_sents)
         dm2 = doc_d(sents, e2)
-        r = did(meta, dm2, ("2024-01-01", "2025-12-31"), ("2026-02-01", "2026-09-30"), B=300)
-        lg.append(dict(reference=label, **r))
+        r = did(meta, dm2, ("2024-01-01", "2025-12-31"), ("2026-02-01", "2026-09-30"), B=300, cal=e2.cal)
+        lg.append(dict(reference=label, slope=i2["b_slope"], **r))
     pd.DataFrame(lg).to_csv(TAB / "logo.csv", index=False)
     # excess vocabulary (Kobak-style): document frequency of words in 2026 vs 2024-25, by group
     rows = []

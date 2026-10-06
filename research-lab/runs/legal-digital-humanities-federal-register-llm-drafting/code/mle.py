@@ -67,12 +67,22 @@ def occurrence(sents, index):
 
 
 class Estimator:
-    def __init__(self, human_sents, llm_sents, candidates, min_h=50, min_a=20):
+    """paired=(source_sents, rewrite_sents) (D5): p_A(w) = p_H(w) * r(w), where r(w) is the ratio of w's sentence
+    occurrence rate in the LLM outputs to that in the source paragraphs they were generated from. The LLM reference
+    then carries only the shift the generators introduce, transferred onto the human reference's topic mix, instead of
+    the topics of the few documents that were rewritten (which made those documents' own human text score 11%)."""
+
+    def __init__(self, human_sents, llm_sents, candidates, min_h=50, min_a=20, paired=None):
         self.vocab, _, _ = build_vocab(human_sents, llm_sents, candidates, min_h, min_a)
         self.index = {w: i for i, w in enumerate(self.vocab)}
         Xh, Xa = occurrence(human_sents, self.index), occurrence(llm_sents, self.index)
         ph = (np.asarray(Xh.sum(0)).ravel() + 0.5) / (Xh.shape[0] + 1.0)
         pa = (np.asarray(Xa.sum(0)).ravel() + 0.5) / (Xa.shape[0] + 1.0)
+        if paired is not None:
+            Xs, Xr = occurrence(paired[0], self.index), occurrence(paired[1], self.index)
+            ps = (np.asarray(Xs.sum(0)).ravel() + 0.5) / (Xs.shape[0] + 1.0)
+            pr = (np.asarray(Xr.sum(0)).ravel() + 0.5) / (Xr.shape[0] + 1.0)
+            pa = np.clip(ph * pr / ps, 1e-6, 0.999)
         # log P(s|A) - log P(s|H) = sum_w x_w [logit pa - logit ph] + sum_w [log(1-pa) - log(1-ph)]
         self.w = (np.log(pa) - np.log1p(-pa)) - (np.log(ph) - np.log1p(-ph))
         self.c = float(np.sum(np.log1p(-pa) - np.log1p(-ph)))

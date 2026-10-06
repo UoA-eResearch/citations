@@ -93,3 +93,61 @@ since the base rate is zero. A zero share is not evidence against LLM use: the F
 might normalise these characters, and other tools do not produce them.
 
 **Timing.** Validation has not been run and the 2026 issues are still sealed.
+
+## D5. V1 failed; estimator fixed with 2019-2021 data only (plan section 4), before unsealing (2026-10-07 00:43 NZDT)
+
+**V1 with the plan's estimator** (`logs/validate_estimator_v1.log`, `results/tables/validation_v1_estimator_v1.csv`):
+
+| True α | Mean estimate | Bias | Coverage |
+|---|---|---|---|
+| 0 | 1.68% | +1.68 pp | 0% |
+| 2% | 3.79% | +1.79 pp | 0% |
+| 5% | 6.53% | +1.53 pp | 0% |
+| 10% | 10.77% | +0.77 pp | 44% |
+| 25% | 22.96% | −2.04 pp | 0% |
+
+That fails both criteria: |bias| < 1 pp at α ≤ 10%, and coverage ≥ 90%. The V2 run with this estimator was stopped
+unfinished.
+
+**Diagnosis** (2019-2021 data only; raw α):
+
+- **The human reference itself:** 0.9%. Within-sentence overdispersion: the variance of the count of vocabulary words
+  per sentence is 3.79, against 2.32 under the model's independence assumption. The mixture absorbs it.
+- **Validation pool:** 1.6%.
+- **Generation pool's human documents: 11.1%.** These are the documents whose paragraphs were rewritten. The rewrites
+  keep their sources' topical adjectives, so the LLM reference carried the topics of a few hundred documents rather
+  than only the generators' style (topic leakage).
+- **Held-out generated text:** 81%, so estimates are attenuated.
+
+**Fix, defined before the full V1 rerun.**
+
+1. **Paired LLM reference** (`mle.Estimator(paired=...)`). p_A(w) = p_H(w) × r(w), where r(w) is the ratio of w's
+   sentence-occurrence rate in the generated outputs to its rate in the source paragraphs they came from. The
+   reference keeps the shift the generators introduce and takes its topic mix from the human reference.
+2. **Two-point linear calibration** from 2019-2021 data that V1 never uses:
+   - a = raw α on the generation pool's human documents;
+   - b = raw α on half C of the held-out generated sentences, minus a.
+   - Calibrated α = (raw − a)/b, applied to point estimates and bootstrap draws alike.
+   - Half C is chosen by the md5 parity of the paragraph key.
+   - In a difference-in-differences a cancels, and b rescales the DiD to the true-fraction scale that V1 validates.
+3. **V1 is rerun on the validation pool and the other held-out half (V)**, with two constructions, both reported:
+   - **"Pseudo-documents"**, as first coded: sentences are shuffled into 290 equal chunks. This destroys document
+     clustering, so its bootstrap CI ignores between-document variation.
+   - **"Documents":** 290 real validation documents per replicate, each sentence replaced by a generated one with
+     probability α. This is the structure the analysis's document bootstrap faces.
+4. **V2 is rerun with the fixed estimator** (D3 design), on the calibrated scale. Power does not depend on a linear
+   calibration.
+5. **`analysis.py`** uses the same estimator through `validate.build_estimator`. Leave-one-generator-out and the
+   Gemma-only reference each get their own paired reference and calibration.
+
+**Disclosure of the quick checks that led here.** Raw α, 10 replicates per level, pseudo-document construction, on
+the validation pool and all held-out generated sentences (`scratchpad` runs, not committed):
+
+| Estimator | Human reference | Generation pool | Validation pool | Held-out generated | Mixtures at α = 0 / 0.05 / 0.10 / 0.25 |
+|---|---|---|---|---|---|
+| Unpaired | 0.94% | 11.1% | 1.62% | 81.2% | 1.72 / 6.63 / 10.66 / 23.02% |
+| Paired | 0.50% | 0.54% | 0.75% | 78.6% | 0.74 / 5.05 / 8.91 / 20.44% |
+
+No other estimator variant was tried.
+
+**Timing.** No estimate exists for 2022 or later, and the 2026 issues are still sealed.
