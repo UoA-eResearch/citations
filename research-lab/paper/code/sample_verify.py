@@ -7,6 +7,9 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from snapshot import REPORTED, RUNS_ALL  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from audit_numbers import report_numbers  # noqa: E402
@@ -17,7 +20,7 @@ COMMIT = "90930ab"
 
 
 def draw():
-    runs = sorted(p.name for p in (REPO / "research-lab" / "runs").iterdir() if (p / "report.md").exists())
+    runs = sorted(REPORTED)
     rows = []
     for run in runs:
         text = subprocess.check_output(["git", "show", f"{COMMIT}:research-lab/runs/{run}/report.md"], cwd=REPO, text=True)

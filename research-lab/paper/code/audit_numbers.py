@@ -10,6 +10,9 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from snapshot import REPORTED, RUNS_ALL  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[3]
 RUNS = REPO / "research-lab" / "runs"
@@ -82,7 +85,7 @@ def traced(v, k, pct, src):
 
 def main():
     rows, summ = [], []
-    for run in sorted(p for p in RUNS.iterdir() if (p / "report.md").exists()):
+    for run in sorted(RUNS / r for r in REPORTED):
         text = (run / "report.md").read_text()
         src, skipped = source_values(run)
         nums = report_numbers(text)
@@ -118,7 +121,7 @@ if __name__ == "__main__":
 def null_rate():
     """Chance-match check (added after the protocol; see paper): trace each report's substantive numbers against every
     OTHER run's sources. The mean cross-run traced rate estimates how often a number 'traces' by coincidence."""
-    runs = sorted(p for p in RUNS.iterdir() if (p / "report.md").exists())
+    runs = sorted(RUNS / r for r in REPORTED)
     srcs = {r.name: source_values(r)[0] for r in runs}
     nums = {r.name: [n for n in report_numbers((r / "report.md").read_text()) if n["substantive"]] for r in runs}
     rows = []
@@ -145,7 +148,7 @@ def sigdigits(tok):
 
 def null_by_sig():
     """Own vs cross-run (chance) traced rates by number of significant digits printed."""
-    runs = sorted(p for p in RUNS.iterdir() if (p / "report.md").exists())
+    runs = sorted(RUNS / r for r in REPORTED)
     srcs = {r.name: source_values(r)[0] for r in runs}
     rows = []
     for r in runs:
@@ -177,7 +180,7 @@ def perturbation_null(seeds=(1, 2, 3, 4, 5)):
     Reported for all sources and for results/ only. Writes D_numbers_perturbation.csv (per study) and
     D_numbers_perturbation_by_sig.csv."""
     rng = np.random.default_rng(20261006)
-    runs = sorted(p for p in RUNS.iterdir() if (p / "report.md").exists())
+    runs = sorted(RUNS / r for r in REPORTED)
     rows, det = [], []
     for r in runs:
         nums = [n for n in report_numbers((r / "report.md").read_text()) if n["substantive"]]

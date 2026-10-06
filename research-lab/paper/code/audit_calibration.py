@@ -8,6 +8,9 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from snapshot import REPORTED, RUNS_ALL  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[3]
 LAB = REPO / "research-lab"
@@ -32,7 +35,7 @@ def git_times(path):
 def main():
     leads = {l["id"]: l for l in json.load(open(LAB / "leads.json"))["leads"]}
     rows = []
-    for run in sorted(p for p in (LAB / "runs").iterdir() if (p / "report.md").exists()):
+    for run in sorted(LAB / "runs" / r for r in REPORTED):
         l = leads.get(run.name, {})
         lo, hi = parse_days(l.get("est_wall_time"))
         t_run = git_times(run.relative_to(REPO).as_posix())

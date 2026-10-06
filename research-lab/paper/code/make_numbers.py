@@ -9,6 +9,9 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from snapshot import REPORTED, RUNS_ALL  # noqa: E402
 from sklearn.metrics import cohen_kappa_score  # noqa: E402
 
 PAPER = Path(__file__).resolve().parents[1]
@@ -33,13 +36,13 @@ def wilson(k, n, z=1.96):
 
 def leads_and_verdicts():
     L = [l for l in json.load(open(LAB / "leads.json"))["leads"] if not l.get("meta")]  # the meta-study entry is not a scouted lead
-    runs = sorted(p.name for p in (LAB / "runs").iterdir() if p.is_dir())
+    runs = sorted(RUNS_ALL)
     byid = {l["id"]: l for l in L}
     M["LeadsTotal"] = len(L)
     M["LeadDomains"] = len({l["domain"] for l in L})
     M["StudiesTotal"] = len(runs)
     M["StudyDomains"] = len({byid[r]["domain"] for r in runs})
-    rep = [r for r in runs if (LAB / "runs" / r / "report.md").exists()]
+    rep = [r for r in runs if r in REPORTED]
     M["StudiesReported"] = len(rep)
     vt = pd.Series([byid[r].get("verdict_tag") for r in rep]).value_counts()
     for k in ["Supported", "Refuted", "Unsupported", "Inconclusive", "Pending"]:
@@ -119,7 +122,7 @@ def calibration():
     M["ScoutDaysMedian"] = f"{mid.median():.1f}"
     a = pd.read_csv(AUD / "A_prereg_timing.csv")
     t0 = pd.to_datetime(a.t_plan.min(), unit="s", utc=True).tz_convert("Pacific/Auckland")
-    rep = [r for r in a.run if (LAB / "runs" / r / "report.md").exists()]
+    rep = [r for r in a.run if r in REPORTED]
     first_rep = []
     import subprocess
     for r in rep:
@@ -146,7 +149,7 @@ def coders():
     a, b = pd.read_csv(fa), pd.read_csv(fb)
     # exclude the correction entry created by this audit after coding began (audit deviations A9)
     a = a[~((a.run == "llm-ml-science-mcf-emergence") & (a.entry_id.astype(str).str.strip() == "U1"))]
-    rep = {p.name for p in (LAB / "runs").iterdir() if (p / "report.md").exists()}
+    rep = set(REPORTED)
     a, b = a[a.run.isin(rep)], b[b.run.isin(rep)]
     for d in (a, b):
         d["key"] = d.run.astype(str) + "|" + d.entry_id.astype(str).str.strip()
@@ -389,7 +392,7 @@ def revisions():
     """Numbers added in response to the independent review (paper/review/review.md)."""
     import re
     import subprocess
-    rep = sorted(p.name for p in (LAB / "runs").iterdir() if (p / "report.md").exists())
+    rep = sorted(REPORTED)
     G = "astronomy-gwtc4-q-chieff-copula-stress-test"
     # Wilson intervals for verdict shares
     M["CISupported"] = ci(M["VerdictSupported"], M["VerdictsDecided"])
