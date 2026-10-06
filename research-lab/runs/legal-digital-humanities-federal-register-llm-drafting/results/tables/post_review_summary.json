@@ -1,0 +1,30 @@
+{
+ "comparison_group_2026_reweighted_to_2024_25_shares": 0.05055957050129313,
+ "comparison_group_2024_25_reweighted_to_2026_shares": 0.015877067159298805,
+ "departments_rose": 11,
+ "departments_fell": 3,
+ "dot_2026_at_2024_25_mix": 0.02469509888217201,
+ "dot_2024_25_at_2026_mix": 0.033378053765840965,
+ "dot_subagencies_in_decomposition": [
+  "Federal Aviation Administration",
+  "Pipeline and Hazardous Materials Safety Administration",
+  "Federal Railroad Administration",
+  "National Highway Traffic Safety Administration",
+  "Federal Motor Carrier Safety Administration",
+  "Office of the Secretary",
+  "Federal Transit Administration",
+  "Maritime Administration"
+ ],
+ "routine_titles_share": {
+  "DOT_pre": 0.3802008608321377,
+  "DOT_post": 0.24528301886792453,
+  "other_cabinet_pre": 0.0786833855799373,
+  "other_cabinet_post": 0.0586145648312611
+ },
+ "broad_filter_extra_procedural_share": 0.007659447084140897,
+ "prompt_clean_calibration": {
+  "a_raw_alpha_generation_pool": 0.007661015689674213,
+  "b_slope": 0.7603709532880928,
+  "vocab": 856
+ }
+}

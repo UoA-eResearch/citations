@@ -249,3 +249,73 @@ document number.
 - An empty group-period returns NaN instead of failing.
 
 No estimate had been produced. The analysis is rerun unchanged otherwise.
+
+## D9. Independent review (fix first); post-review analyses and corrections (2026-10-07 07:53 NZDT)
+
+The review (`review/review.md`) reproduced the primary estimate, its interval and the verdict to every digit. It
+found the sealing and timing sound, and asked for text corrections plus several secondary analyses. Everything below
+was done after unsealing and after the review. **None of it can change the verdict**, which rests on `analysis.py`'s
+primary DiD (B = 2,000, seed 20261007, fixed before unsealing).
+
+**Code.**
+
+- **`groups.py`** took `agencies[0]`, which is the parent department, as the sub-agency. It now takes the first
+  listed agency that is not a cabinet department, falling back to `raw_name` where the API gives no name (DOT's
+  Office of the Secretary). It also flags FERC. The group, department and templated columns are unchanged (checked:
+  38,833 of 38,833 identical).
+- **`code/post_review.py`** produces the analyses below. Nemotron's revision (e5e99324, from the local download
+  metadata) is now in `generator_revisions.json`.
+
+**Results** (files in `results/tables/`).
+
+1. **Bootstrap-seed sensitivity** (`seed_sensitivity.csv`). The point DiD is +0.56 pp under every seed. Over 12
+   seeds at B = 2,000, the upper bound ranges from 4.84 to 5.11 pp and falls below 5 pp in 6 of them, so the formal
+   rule would return Refuted under those seeds. A B = 10,000 run gives −4.23 to +5.01 pp. The verdict therefore sits
+   within Monte Carlo error of the threshold. The preregistered seed's Inconclusive stands.
+2. **Variance by cell** (`variance_by_cell.csv`, raw scale). Shares of the DiD's bootstrap variance:
+
+   | Cell | Bootstrap sd | Share of variance |
+   |---|---|---|
+   | DOT 2026 | 1.58 pp | 74% |
+   | Other departments 2026 | 0.81 pp | 19% |
+   | Other departments 2024-25 | 0.35 pp | 4% |
+   | DOT 2024-25 | 0.31 pp | 3% |
+
+   21.5% of the DOT 2024-25 bootstrap draws sit at the lower boundary, raw α = 0. In all four primary cells the score
+   of the log-likelihood at α = 0 is positive, so the full-sample estimates are interior.
+3. **Monitoring series (plan section 6, not produced before).**
+   - `monitoring_by_department.csv` gives α by department and quarter.
+   - `department_pre_post.csv` gives each department's 2024-25 and 2026 values. 11 of the 14 comparison departments
+     rose and 3 fell (Justice, Education, HUD). Commerce, the largest, moved from 0.9% to 1.3%.
+   - Reweighting the comparison group's 2026 department estimates to its 2024-25 document mix gives 5.06%, against
+     4.98% actual.
+4. **DOT administrations** (`dot_subagency_pre_post.csv`).
+   - The FAA's share of DOT documents fell from 48% to 32%, and PHMSA's rose from 11% to 26%.
+   - PHMSA read 12.9% in 2024-25 and 2.2% in 2026. The Office of the Secretary read 23.3% in 2026 (11 documents).
+     NHTSA read 9.2%.
+   - At the 2024-25 mix, DOT's 2026 value would be 2.47%. At the 2026 mix, its 2024-25 value would be 3.34%. So the
+     composition shift accounts for 1.1-3.7 of DOT's 4.0 pp change.
+5. **Sensitivities** (`sensitivities.csv`; DiD and 95% CI, B = 2,000, seed 20261007):
+
+   | Sensitivity | DiD (95% CI) |
+   |---|---|
+   | Clean baseline (2024-01 to 2025-06) | +0.3 (−4.1 to +4.6) |
+   | Routine FAA-type titles excluded (38% of DOT's 2024-25 documents, 25% of 2026) | +1.1 (−4.0 to +5.7) |
+   | FERC excluded | +0.1 (−4.5 to +4.6) |
+   | Broader procedural filter (regulatory impact analysis, severability, good cause and similar) | +0.4 (−4.3 to +4.7) |
+   | Prompt words ("every", "only", "supplementary") removed from the vocabulary; chat preambles and Markdown stripped | +1.5 (−5.0 to +7.3) |
+
+**Corrections to earlier entries.**
+
+- **D5 point 3 and D6 "Cause".** The pseudo-document construction does not hide document clustering: its sentences
+  are drawn i.i.d., so its bootstrap is valid for that design. It undercovers because the estimator's bias, +0.6 to
+  +1.0 pp at α ≥ 2% (about +4% relative, from the slope difference between halves C and V), is as large as its narrow
+  intervals' half-width. The documents construction covers better only because real document heterogeneity makes its
+  intervals wider.
+- **D8 timing.** `parse.py sealed` started at 03:50:45 NZDT, which is the `date` printed immediately before it in the
+  same shell command. That is 29 s after the D7 commit (03:50:16). Its output was written at 03:50:53.
+- **Scope of the seal.** Only the 2026 issues were sealed. The 2022-2025 text, which includes the pre-period and both
+  placebo windows, was on disk unsealed while D2-D6 were decided. No LLM-fraction estimate was computed on it before
+  D8, but nothing beyond the commit history attests that.
+- **Deregulatory filter.** The regex in `analysis.py` (committed at D2, before unsealing) is
+  `rescind|rescission|remov|withdraw|deregulat|eliminat`. The report now states it in full.

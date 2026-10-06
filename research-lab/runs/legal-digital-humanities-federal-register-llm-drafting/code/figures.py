@@ -63,9 +63,39 @@ def validation():
     fig.savefig(F / "validation.png", dpi=150)
 
 
+def departments():
+    """D9 (post-review): calibrated alpha by cabinet department and DOT administration, 2024-25 vs Feb-Sep 2026."""
+    d = pd.read_csv(T / "department_pre_post.csv").sort_values("n_pre", ascending=False)
+    s = pd.read_csv(T / "dot_subagency_pre_post.csv")
+    s = s[(s.n_pre >= 10) & (s.n_post >= 10)].sort_values("n_pre", ascending=False)
+    short = {"Federal Aviation Administration": "FAA", "Pipeline and Hazardous Materials Safety Administration": "PHMSA",
+             "Federal Railroad Administration": "FRA", "National Highway Traffic Safety Administration": "NHTSA",
+             "Federal Motor Carrier Safety Administration": "FMCSA", "Office of the Secretary": "Office of the Secretary"}
+    s["label"] = "DOT: " + s.subagency.map(short).fillna(s.subagency)
+    d["label"] = d.department
+    rows = pd.concat([d, s], ignore_index=True)
+    ypos = list(range(len(d))) + [len(d) + 1 + k for k in range(len(s))]  # a gap before the DOT administrations
+    fig, ax = plt.subplots(figsize=(9, 0.32 * len(rows) + 1.4))
+    for i, r in zip(ypos, rows.itertuples()):
+        dot = r.label.startswith("DOT")
+        for per, col, off in (("pre", "#9aa5b1", -0.15), ("post", "#b5452c" if dot else "#2e5e8c", 0.15)):
+            a, lo, hi = getattr(r, f"alpha_{per}"), getattr(r, f"lo_{per}"), getattr(r, f"hi_{per}")
+            ax.plot([100 * lo, 100 * hi], [i + off] * 2, color=col, lw=1.2)
+            ax.plot(100 * a, i + off, "o", color=col, ms=4)
+    ax.set_yticks(ypos)
+    ax.set_yticklabels([f"{r.label} ({int(r.n_pre)}/{int(r.n_post)})" for r in rows.itertuples()], fontsize=7.5)
+    ax.invert_yaxis()
+    ax.axvline(0, color="black", lw=0.5)
+    ax.set_xlabel("estimated LLM-assisted sentences (%): grey 2024-2025, colour Feb-Sep 2026, with 95% CI")
+    fig.subplots_adjust(left=0.3, right=0.98, top=0.98, bottom=0.07)
+    fig.savefig(F / "departments.png", dpi=150)
+
+
 def main():
     F.mkdir(parents=True, exist_ok=True)
     validation()
+    if (T / "department_pre_post.csv").exists():
+        departments()
     if (T / "event_study.csv").exists():
         event_study()
 

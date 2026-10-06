@@ -1,0 +1,84 @@
+        seed      B      DiD       lo       hi       verdict
+0   20261007   2000  0.00564 -0.04257  0.05101  Inconclusive
+1          1   2000  0.00564 -0.04112  0.04867       Refuted
+2          2   2000  0.00564 -0.04179  0.04940       Refuted
+3          3   2000  0.00564 -0.04062  0.04846       Refuted
+4          4   2000  0.00564 -0.04063  0.05046  Inconclusive
+5          5   2000  0.00564 -0.04083  0.05087  Inconclusive
+6          6   2000  0.00564 -0.04441  0.04902       Refuted
+7          7   2000  0.00564 -0.04381  0.05108  Inconclusive
+8          8   2000  0.00564 -0.04087  0.05058  Inconclusive
+9          9   2000  0.00564 -0.04165  0.04861       Refuted
+10        10   2000  0.00564 -0.04136  0.05001  Inconclusive
+11        11   2000  0.00564 -0.04213  0.04840       Refuted
+12  20261008  10000  0.00564 -0.04231  0.05007  Inconclusive
+           group period  n_docs  raw_alpha  raw_sd  calibrated_sd  share_draws_at_zero   score_at_0  score_per_sentence  alpha_floor_allowed  raw_alpha_unbounded  cal_alpha_unbounded  cal_alpha
+0            DOT    pre     697     0.0024  0.0031         0.0040                0.215    2604.0066              0.0198              -0.0023               0.0024              -0.0038    -0.0038
+1            DOT   post     265     0.0331  0.0158         0.0205                0.005   10454.5859              0.3073              -0.0003               0.0331               0.0361     0.0361
+2  other_cabinet    pre    3190     0.0174  0.0035         0.0045                0.000  212627.0625              0.1837              -0.0000               0.0174               0.0156     0.0156
+3  other_cabinet   post    1126     0.0437  0.0081         0.0105                0.000   85941.5000              0.2485              -0.0004               0.0437               0.0498     0.0498
+   department  alpha_pre  lo_pre  hi_pre  n_pre  alpha_post  lo_post  hi_post  n_post  change
+0    Commerce     0.0092 -0.0006  0.0182    723      0.0131  -0.0030   0.0359     239  0.0038
+1         DHS     0.0027 -0.0078  0.0152    161      0.0233   0.0016   0.0490      53  0.0206
+2         DOT    -0.0038 -0.0122  0.0083    697      0.0361  -0.0023   0.0725     265  0.0399
+3     Defense     0.0245 -0.0080  0.1309    186      0.1397   0.0444   0.2699      24  0.1152
+4   Education     0.0457  0.0084  0.1834     78      0.0323   0.0043   0.0816      28 -0.0134
+5      Energy     0.0315 -0.0083  0.1243    229      0.0465  -0.0019   0.0995      52  0.0151
+6         HHS     0.0044 -0.0044  0.0123    375      0.0642   0.0273   0.1046     173  0.0599
+7         HUD     0.0081 -0.0098  0.0412     58     -0.0070  -0.0142   0.0155      18 -0.0151
+8    Interior     0.0534  0.0295  0.0803    343      0.0752   0.0368   0.1187      94  0.0218
+9     Justice    -0.0034 -0.0128  0.0176    103     -0.0070  -0.0140   0.0027      94 -0.0035
+10      Labor     0.0117 -0.0070  0.0539    148      0.0710   0.0278   0.1477      50  0.0593
+11      State     0.0194 -0.0082  0.0760     42      0.1615   0.0092   0.3365      22  0.1421
+12   Treasury     0.0344 -0.0050  0.0849    388      0.0830   0.0039   0.1550     158  0.0486
+13       USDA     0.0007 -0.0090  0.0158    279      0.0144  -0.0024   0.0403     108  0.0137
+14         VA    -0.0068 -0.0138  0.0166     77      0.0867   0.0307   0.1568      13  0.0936
+                                                  subagency  alpha_pre  lo_pre  hi_pre  n_pre  alpha_post  lo_post  hi_post  n_post  share_pre  share_post
+0                           Federal Aviation Administration     0.0042 -0.0108  0.0277    332     -0.0052  -0.0134   0.0242      85     0.4763      0.3208
+10   Pipeline and Hazardous Materials Safety Administration     0.1289  0.0187  0.3476     76      0.0221  -0.0023   0.1012      69     0.1090      0.2604
+3                           Federal Railroad Administration    -0.0070 -0.0140  0.0081     64      0.0164  -0.0093   0.0644      29     0.0918      0.1094
+7            National Highway Traffic Safety Administration    -0.0070 -0.0144 -0.0019     62      0.0916  -0.0096   0.1308      26     0.0890      0.0981
+2               Federal Motor Carrier Safety Administration    -0.0070 -0.0141  0.0016     47      0.0340  -0.0115   0.0815      24     0.0674      0.0906
+1                            Federal Highway Administration    -0.0060 -0.0138  0.0110     46      0.0846  -0.0113   0.2033       4     0.0660      0.0151
+9                                   Office of the Secretary    -0.0070 -0.0144 -0.0019     33      0.2329   0.0393   0.3972      11     0.0473      0.0415
+4                            Federal Transit Administration    -0.0070 -0.0130  0.1144     19     -0.0070  -0.0140   0.1303       7     0.0273      0.0264
+11                                Transportation Department     0.0469 -0.0109  0.3900      7      0.1050   0.0967   0.1127       1     0.0100      0.0038
+6                                   Maritime Administration     0.0060 -0.0119  0.1812      6     -0.0070  -0.0144   0.0233       7     0.0086      0.0264
+5   Great Lakes St. Lawrence Seaway Development Corporation    -0.0070 -0.0144 -0.0019      4     -0.0070  -0.0144  -0.0019       2     0.0057      0.0075
+8                     Office of Secretary of Transportation    -0.0070 -0.0144 -0.0019      1         NaN      NaN      NaN       0     0.0014      0.0000
+primary (reproduction) 0.0056 -0.0426 0.051
+clean baseline: pre = 2024-01 to 2025-06 0.003 -0.0409 0.0463
+routine titles excluded (special conditions, routes, airways, petitions, corrections) 0.0111 -0.0396 0.0568
+FERC excluded 0.0014 -0.0452 0.0458
+broader procedural filter 0.0037 -0.0426 0.0469
+prompt words removed, chat preambles stripped 0.0146 -0.0499 0.073
+{
+ "comparison_group_2026_reweighted_to_2024_25_shares": 0.05055957050129313,
+ "comparison_group_2024_25_reweighted_to_2026_shares": 0.015877067159298805,
+ "departments_rose": 11,
+ "departments_fell": 3,
+ "dot_2026_at_2024_25_mix": 0.02469509888217201,
+ "dot_2024_25_at_2026_mix": 0.033378053765840965,
+ "dot_subagencies_in_decomposition": [
+  "Federal Aviation Administration",
+  "Pipeline and Hazardous Materials Safety Administration",
+  "Federal Railroad Administration",
+  "National Highway Traffic Safety Administration",
+  "Federal Motor Carrier Safety Administration",
+  "Office of the Secretary",
+  "Federal Transit Administration",
+  "Maritime Administration"
+ ],
+ "routine_titles_share": {
+  "DOT_pre": 0.3802008608321377,
+  "DOT_post": 0.24528301886792453,
+  "other_cabinet_pre": 0.0786833855799373,
+  "other_cabinet_post": 0.0586145648312611
+ },
+ "broad_filter_extra_procedural_share": 0.007659447084140897,
+ "prompt_clean_calibration": {
+  "a_raw_alpha_generation_pool": 0.007661015689674213,
+  "b_slope": 0.7603709532880928,
+  "vocab": 856
+ }
+}
