@@ -22,11 +22,16 @@ TAB = RUN / "results" / "tables"
 
 def main():
     f = RUN / "results" / "forecasts_frozen.csv"
-    want = re.search(r"\n\s+([0-9a-f]{64})\n", (RUN / "deviations.md").read_text()).group(1)
+    want = re.search(r"Its sha256 is\s+([0-9a-f]{64})", (RUN / "deviations.md").read_text()).group(1)  # D1's hash
     got = hashlib.sha256(f.read_bytes()).hexdigest()
     assert got == want, f"frozen file hash mismatch: {got} != {want}"
     fr = pd.read_csv(f)
     d = pd.read_parquet(RUN / "data" / "coverage.parquet")
+    # D2: parse-only edits for new layouts are allowed but must leave the historical rows (to 2026Q2) unchanged
+    hist = d[pd.to_datetime(d.quarter_end) <= "2026-06-30"].sort_values(["quarter_end", "milestone", "district", "group"])
+    hh = hashlib.sha256(hist[["quarter_end", "milestone", "district", "group", "eligible", "immunised"]].astype(str).to_csv(index=False).encode()).hexdigest()
+    want_h = re.search(r"historical rows hash\s+([0-9a-f]{64})", (RUN / "deviations.md").read_text()).group(1)
+    assert hh == want_h, f"historical coverage rows changed: {hh} != {want_h}"
     d = d[(d.milestone == 24) & (d.eligible > 0) & d.immunised.notna()].copy()
     d["target"] = [f"{t.year}Q{(t.month - 1) // 3 + 1}" for t in pd.to_datetime(d.quarter_end)]
     d["actual"] = d.immunised / d.eligible
@@ -42,6 +47,12 @@ def main():
         out.update(MAE=float(prim.ae.mean()), coverage80=float(prim.in80.mean()), coverage80_recent=float(prim.in80_recent.mean()),
                    MAE_persistence=float(prim.ae_persistence.mean()))
     both = set(prim.target) >= {"2026Q3", "2026Q4"}
+    if both:
+        assert len(prim) == 40, f"expected 40 district-Total cells, got {len(prim)}"  # D2
+    big = ["Auckland", "Counties Manukau", "Waitematā", "Canterbury", "Waikato", "Capital and Coast", "Southern"]
+    if len(prim):
+        out["coverage80_seven_largest_districts"] = float(prim[prim.district.isin(big)].in80.mean())
+        out["coverage80_other_districts"] = float(prim[~prim.district.isin(big)].in80.mean())
     if not both:
         out["verdict_H2"] = "pending"
     elif out["MAE"] <= 2.5 and 0.70 <= out["coverage80"] <= 0.90:

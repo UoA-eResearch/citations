@@ -72,7 +72,7 @@ def series():
 def districts():
     fr = pd.read_csv(RUN / "results" / "forecasts_frozen.csv")
     f = fr[(fr.target == "2026Q4") & (fr.district != "National total")]
-    order = f[f.group == "Total"].sort_values("forecast").district.tolist()
+    order = sorted(f[f.group == "Total"].district.unique(), reverse=True)  # D2: alphabetical, not a league table
     fig, ax = plt.subplots(figsize=(7.5, 6))
     for k, (g, col, off) in enumerate([("Total", "#1f6f8b", 0), ("Maori", "#b5452c", 0.22), ("Pacific", "#6b8e23", -0.22)]):
         x = f[f.group == g].set_index("district").reindex(order)
@@ -83,7 +83,7 @@ def districts():
     ax.set_xlabel("forecast 24-month coverage, Oct-Dec 2026 (%), with preregistered 80% interval")
     ax.legend(frameon=False, fontsize=8, loc="lower right")
     fig.tight_layout(); fig.savefig(F / "districts_2026q4.png", dpi=150)
-    (F / "districts_2026q4.txt").write_text("Frozen cascade forecasts of 24-month coverage for October-December 2026 (Q2 2026/27) by district, for Total, Maori and Pacific children where the inputs are published, with preregistered 80% intervals. Dotted line: the 95% target.")
+    (F / "districts_2026q4.txt").write_text("Frozen cascade forecasts of 24-month coverage for October-December 2026 (Q2 2026/27) by district, for Total, Maori and Pacific children where the inputs are published, with preregistered 80% intervals. Dotted line: the 95% target. Districts are listed alphabetically.")
 
 
 def main():

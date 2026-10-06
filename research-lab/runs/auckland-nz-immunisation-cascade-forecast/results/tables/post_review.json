@@ -1,0 +1,20 @@
+{
+ "M2_common": {
+  "n": 2351,
+  "MAE_M1": 4.106653573695108,
+  "MAE_M2": 3.78063249663514,
+  "MAE_B1": 3.9190017687655283,
+  "reduction_M2_vs_B1": 0.03530727473337536
+ },
+ "h4_eligible_weighted_reduction_vs_B1": -0.16004267083622192,
+ "h4_PI80_cells_with_interval": 1904,
+ "h4_cells": 2471,
+ "interval_pool_without_national": {
+  "h1_primary_coverage": 0.7666989351403679,
+  "h4_primary_coverage": 0.5950413223140496
+ },
+ "interval_pool_with_national": {
+  "h1_primary_coverage": 0.7743933918430562,
+  "h4_primary_coverage": 0.6134453781512605
+ }
+}

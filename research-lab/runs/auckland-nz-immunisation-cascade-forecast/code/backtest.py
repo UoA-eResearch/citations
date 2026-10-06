@@ -251,7 +251,8 @@ def main():
         for h in (1, 2, 3, 4):
             past = [z for (tq, z) in errs.get((g, h), []) if tq <= q]
             zq = np.percentile(past, [10, 90])
-            zr = np.percentile([z for (tq, z) in errs.get((g, h), []) if q - 8 < tq <= q], [10, 90])
+            rq = [(tq, z) for (tq, z) in errs.get((g, h), []) if q - 8 < tq <= q]
+            zr = np.percentile([z for _, z in rq], [10, 90]) if len({tq for tq, _ in rq}) >= 6 else (np.nan, np.nan)  # D2: D1's own minimum
             for d in districts + ["National total"]:
                 f = m1(P, d, g, q, h)
                 if f is None:
@@ -261,7 +262,10 @@ def main():
                                lo80=float(expit(logit(f["p"]) + zq[0] / s_)), hi80=float(expit(logit(f["p"]) + zq[1] / s_)),
                                lo80_recent=float(expit(logit(f["p"]) + zr[0] / s_)), hi80_recent=float(expit(logit(f["p"]) + zr[1] / s_)),
                                last_published_C24=(cov(P, d, g, 24, q) or (np.nan,))[0]))
-    pd.DataFrame(fr).to_csv(RUN / "results" / "forecasts_frozen.csv", index=False, float_format="%.5f")
+    out = RUN / "results" / "forecasts_frozen.csv"
+    if out.exists():  # D2: never overwrite the frozen, hashed file; a re-run writes alongside it
+        out = RUN / "results" / "forecasts_rerun.csv"
+    pd.DataFrame(fr).to_csv(out, index=False, float_format="%.5f")
     print(pd.DataFrame(fr)[lambda x: (x.group == "Total") & (x.district == "National total")].round(4).to_string())
 
 
