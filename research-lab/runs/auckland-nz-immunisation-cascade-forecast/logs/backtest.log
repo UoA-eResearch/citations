@@ -1,0 +1,48 @@
+{
+ "label": "H1 primary: 20 districts x Total/Maori/Pacific, h=4",
+ "h": 4,
+ "n_cells": 2471,
+ "n_origins": 50,
+ "MAE_M1": 4.186386126691517,
+ "MAE_B1": 3.9994068992626417,
+ "MAE_B2": 4.798546955172444,
+ "reduction_vs_B1": -0.04675173897993434,
+ "DM_stat_B1": -0.6981306477198487,
+ "DM_p_B1": 0.7574522534406918,
+ "reduction_vs_B2": 0.1275721242700495,
+ "DM_stat_B2": 3.1087704367603393,
+ "DM_p_B2": 0.0009393381297638781,
+ "PI80_coverage": 0.6134453781512605,
+ "PI80_recent_coverage_posthoc": 0.6684945164506481,
+ "reduction_vs_B1_CI": [
+  -0.2044691829617164,
+  0.13407799523055916
+ ],
+ "reduction_vs_B2_CI": [
+  0.04621958987380959,
+  0.22623548820163877
+ ],
+ "verdict": "Refuted"
+}
+                                                      label  n_cells  MAE_M1  MAE_B1  MAE_B2  reduction_vs_B1  reduction_vs_B2  DM_p_B1  DM_p_B2  PI80_coverage
+0                                        primary cells, h=1     2348   2.296   2.878   2.941            0.202            0.219    0.000    0.000          0.774
+1                                        primary cells, h=2     2439   2.430   3.276   3.553            0.258            0.316    0.000    0.000          0.758
+2                                        primary cells, h=3     2396   3.827   3.514   4.134           -0.089            0.074    0.877    0.105          0.635
+3                                        primary cells, h=4     2471   4.186   3.999   4.799           -0.047            0.128    0.757    0.001          0.613
+4                                          group Total, h=4     1000   3.179   2.972   3.701           -0.070            0.141    0.723    0.002          0.574
+5                                          group Maori, h=4      945   4.834   4.763   5.695           -0.015            0.151    0.633    0.000          0.639
+6                                        group Pacific, h=4      526   4.938   4.582   5.275           -0.078            0.064    0.872    0.420          0.644
+7                                          group Asian, h=4      676   3.222   3.323   3.831            0.030            0.159    0.786    0.106          0.714
+8                              group European or Other, h=4      673   2.293   2.254   2.765           -0.017            0.171    0.691    0.111          0.601
+9                                 national, all groups, h=4      250   3.196   2.383   3.364           -0.341            0.050    0.950    0.213          0.256
+10  h=4 excluding schedule-change and AIR-migration targets     1961   3.534   3.365   4.229           -0.050            0.164    0.747    0.002          0.651
+11                                   h=4, targets 2013-2016      775   2.059   2.479   3.032            0.169            0.321    0.000    0.000          0.822
+12                                   h=4, targets 2017-2019      625   2.224   2.855   3.193            0.221            0.303    0.000    0.000          0.770
+13                                   h=4, targets 2020-2022      573   5.827   5.825   6.336           -0.000            0.080    0.507    0.022          0.518
+14                                   h=4, targets 2023-2026      498   8.072   5.701   7.793           -0.416           -0.036    0.978    0.766          0.440
+15                             M2 vs M1, h=4 (common cells)     2377   4.113     NaN     NaN              NaN              NaN      NaN      NaN            NaN
+    origin  target  h        district  group  forecast    lo80    hi80  lo80_recent  hi80_recent  last_published_C24
+20  2026Q2  2026Q3  1  National total  Total    0.8541  0.8491  0.8602       0.8518       0.8681              0.8374
+41  2026Q2  2026Q4  2  National total  Total    0.8534  0.8479  0.8600       0.8502       0.8673              0.8374
+62  2026Q2  2027Q1  3  National total  Total    0.8436  0.8340  0.8541       0.8382       0.8793              0.8374
+83  2026Q2  2027Q2  4  National total  Total    0.8469  0.8366  0.8587       0.8416       0.8845              0.8374

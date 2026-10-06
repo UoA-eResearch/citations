@@ -160,6 +160,8 @@ def run_backtest(P, districts, groups, horizons):
             for g in groups:
                 past = [z for (tq, z) in errs.get((g, h), []) if tq <= q]
                 zq = np.percentile(past, [10, 90]) if len(set(tq for tq, _ in errs.get((g, h), []) if tq <= q)) >= 8 else None
+                recent = [z for (tq, z) in errs.get((g, h), []) if q - 8 < tq <= q]  # D1 secondary: last 8 target quarters
+                zr = np.percentile(recent, [10, 90]) if len(set(tq for tq, _ in errs.get((g, h), []) if q - 8 < tq <= q)) >= 6 else None
                 for d in districts:
                     act = cov(P, d, g, 24, q + h)
                     f1 = m1(P, d, g, q, h)
@@ -175,6 +177,8 @@ def run_backtest(P, districts, groups, horizons):
                         errs.setdefault((g, h), []).append((q + h, z))
                         if zq is not None:
                             row["lo80"] = float(expit(logit(f1["p"]) + zq[0] / s)); row["hi80"] = float(expit(logit(f1["p"]) + zq[1] / s))
+                        if zr is not None:
+                            row["lo80r"] = float(expit(logit(f1["p"]) + zr[0] / s)); row["hi80r"] = float(expit(logit(f1["p"]) + zr[1] / s))
                     rows.append(row)
     df = pd.DataFrame(rows)
     for m in ("M1", "B1", "B2", "M2"):
@@ -194,6 +198,9 @@ def summarise(df, h, label, extra=None):
     if "lo80" in c:
         w = c.dropna(subset=["lo80"])
         out["PI80_coverage"] = float(((w.actual >= w.lo80) & (w.actual <= w.hi80)).mean()) if len(w) else np.nan
+    if "lo80r" in c:
+        w = c.dropna(subset=["lo80r"])
+        out["PI80_recent_coverage_posthoc"] = float(((w.actual >= w.lo80r) & (w.actual <= w.hi80r)).mean()) if len(w) else np.nan
     return out, c
 
 
@@ -244,6 +251,7 @@ def main():
         for h in (1, 2, 3, 4):
             past = [z for (tq, z) in errs.get((g, h), []) if tq <= q]
             zq = np.percentile(past, [10, 90])
+            zr = np.percentile([z for (tq, z) in errs.get((g, h), []) if q - 8 < tq <= q], [10, 90])
             for d in districts + ["National total"]:
                 f = m1(P, d, g, q, h)
                 if f is None:
@@ -251,6 +259,7 @@ def main():
                 s_ = np.sqrt(f["n_in"] * f["p"] * (1 - f["p"]))
                 fr.append(dict(origin=qlabel(q), target=qlabel(q + h), h=h, district=d, group=g, forecast=f["p"],
                                lo80=float(expit(logit(f["p"]) + zq[0] / s_)), hi80=float(expit(logit(f["p"]) + zq[1] / s_)),
+                               lo80_recent=float(expit(logit(f["p"]) + zr[0] / s_)), hi80_recent=float(expit(logit(f["p"]) + zr[1] / s_)),
                                last_published_C24=(cov(P, d, g, 24, q) or (np.nan,))[0]))
     pd.DataFrame(fr).to_csv(RUN / "results" / "forecasts_frozen.csv", index=False, float_format="%.5f")
     print(pd.DataFrame(fr)[lambda x: (x.group == "Total") & (x.district == "National total")].round(4).to_string())
