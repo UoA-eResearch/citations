@@ -232,3 +232,20 @@ The 95% range of the b draws is 0.728-0.814. Files: `logs/validate.log`, `result
 2019-2021 data, so the unsealing below cannot affect it.
 
 **Next.** Verify the sealed files against `data/SEALED_MANIFEST.sha256`, then parse them (`parse.py sealed`).
+
+## D8. Unsealed; crash in the near-duplicate filter fixed before any estimate (2026-10-07 04:28 NZDT)
+
+**Unsealing.** The 188 sealed issues matched `SEALED_MANIFEST.sha256` file by file. The manifest digest recomputed
+to b8a470f9…, as stated in the plan, and the manifest is unchanged since 22616bf. `parse.py sealed` (03:50 NZDT,
+7 October) produced 245,721 paragraphs in 3,540 documents, before the templated-action filter.
+
+**The crash.** The first analysis run crashed in `dedup` before computing any estimate: a pandas Index was indexed by
+document number.
+
+**The fix.**
+
+- `q` is now a Series indexed by document.
+- MinHash signatures are built with `update_batch`, which gives the same hash values (checked) and is faster.
+- An empty group-period returns NaN instead of failing.
+
+No estimate had been produced. The analysis is rerun unchanged otherwise.

@@ -45,12 +45,11 @@ def dedup(p):
     for doc, t in txt.items():
         w = t.lower().split()
         m = MinHash(num_perm=64)
-        for i in range(max(1, len(w) - 4)):
-            m.update(" ".join(w[i:i + 5]).encode())
+        m.update_batch([" ".join(w[i:i + 5]).encode() for i in range(max(1, len(w) - 4))])  # D8: batched, same hashes
         mh[doc] = m
         lsh.insert(doc, m)
     meta = p.drop_duplicates("document_number").set_index("document_number")
-    q = pd.PeriodIndex(pd.to_datetime(meta.publication_date), freq="Q").astype(str)
+    q = pd.Series(pd.PeriodIndex(pd.to_datetime(meta.publication_date), freq="Q").astype(str), index=meta.index)  # D8
     keep, seen = set(), set()
     for doc in txt.index:
         fam = tuple(sorted(lsh.query(mh[doc])))
@@ -78,7 +77,9 @@ def doc_d(sents_by_doc, est):
 def alpha_boot(docs, dmap, B=2000, calib=None):
     """Calibrated alpha and bootstrap draws; draw i is calibrated with calibration draw i (D6)."""
     arr = [dmap[d] for d in docs if d in dmap]
-    full = alpha_mle(np.concatenate(arr)) if arr else np.nan
+    if not arr:  # D8: empty group-period
+        return np.nan, np.full(B, np.nan), 0
+    full = alpha_mle(np.concatenate(arr))
     draws = np.empty(B)
     n = len(arr)
     for b in range(B):
