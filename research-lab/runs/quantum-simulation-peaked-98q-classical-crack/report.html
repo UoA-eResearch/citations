@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>98-Qubit Peaked Circuits</title>
+<meta name="description" content="A preregistered test of three published classical attacks on the 98-qubit peaked circuits P11 and P12, scored against sealed quantum-hardware answers, and overtaken by a structure-aware classical solution.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Quantum simulation</div>
+  <h1>Do generic tensor-network attacks recover the hidden answers of the 98-qubit peaked circuits?</h1>
+  <p class="subtitle">A preregistered test of three published classical attacks on BlueQubit&#x27;s P11 and P12, scored against the</p>
+  <div class="meta">
+    <span>Report · 2026-10-06 · revised after independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/quantum-simulation-peaked-98q-classical-crack/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/quantum-simulation-peaked-98q-classical-crack/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/quantum-simulation-peaked-98q-classical-crack/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Our verdict</div><div class="tile-value text">Refuted</div><div class="tile-note">for the three preregistered generic attacks within the budget</div></div><div class="tile"><div class="tile-label">P11 best guess</div><div class="tile-value">47 / 98</div><div class="tile-note">bits wrong: chance level (expected 49)</div></div><div class="tile"><div class="tile-label">External solution</div><div class="tile-value">89 s</div><div class="tile-note">P11 solved exactly on a CPU by structural de-obfuscation (5 Oct)</div></div><div class="tile"><div class="tile-label">P9 validation</div><div class="tile-value text">exact</div><div class="tile-note">published 56-qubit answer reproduced in 6,267 s</div></div></section>
+<main>
+<p>quantum-hardware answers, which were sealed unread. Overtaken during the study by a structure-aware attack that solved
+both in minutes.*</p>
+<p><a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/quantum-simulation-peaked-98q-classical-crack/plan.md"><code>plan.md</code></a> (commit ff1996a) · Departures from it: <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/quantum-simulation-peaked-98q-classical-crack/deviations.md"><code>deviations.md</code></a> (D1–D7) · Independent
+review: <a href="review/review.md"><code>review/review.md</code></a> · 6 October 2026, revised after review</p>
+<h2>In plain terms</h2>
+<p>A "peaked circuit" is a quantum program built so that one particular 98-bit answer comes out far more often than any
+other. A quantum computer can find it by running the program and counting. If an ordinary computer can find it too,
+the circuit shows no quantum advantage. A 56-qubit circuit of this kind (P9) had already been cracked classically in
+about an hour with a general-purpose method. Two 98-qubit circuits, P11 and P12, had been solved only by Quantinuum's
+Helios-1 quantum computer.</p>
+<p>We gave three published general-purpose attacks a budget of 72 hours on one A100 graphics card for each circuit. Before
+running anything, we stored Helios-1's answers away without looking at them.</p>
+<ul>
+<li><strong>The attacks reproduced P9 exactly.</strong> The method works on the smaller circuit.</li>
+<li><strong>They failed on P11 and P12.</strong> The main attack either finished but lost the answer, or ran out of time early.
+  When we opened the sealed answers, our best guess for P11 was 47 bits wrong out of 98, no better than chance.</li>
+</ul>
+<p><strong>The circuits were cracked anyway, and quickly.</strong> While our runs were going, someone else solved both circuits
+classically in under four minutes on an ordinary computer. They noticed that most of each circuit is a disguised
+reshuffling of the qubits, removed the disguise, and calculated the answer exactly from the small part left over.</p>
+<p>So these circuits are not hard for ordinary computers. They are hard only for general-purpose methods that do not
+look for how the circuits were built, and our study measured how far those methods fall short.</p>
+<h2>Overtaken by events (5 October 2026)</h2>
+<p><strong>The external solution.</strong> On 5 October 2026 at 15:43 UTC, a day after this study's plan was committed and while its
+runs were in progress, Dylan Neve posted classical solutions of P11 and P12 to the Quantum Advantage Tracker (issues</p>
+<h1>251 and #252).</h1>
+<p><strong>How it works.</strong> Every two-qubit block has the same pattern, <code>u a; u b; cz a,b; u a; u b</code>. Single-qubit rotations in
+the second half of the circuit are exact inverses of partners in the first half. Those inverse pairs fingerprint the
+inserted identity blocks, and the hidden permutation is a 49-swap involution. With the blocks replaced by that
+permutation, a small core remains, and its exact single-qubit marginals contract in seconds.</p>
+<p><strong>Results.</strong> P11 took 89 s and P12 182 s on a 16-vCPU virtual machine. The solver ran without access to the answer.
+Both strings match Helios-1 bit for bit and were accepted by BlueQubit's portal.</p>
+<p><strong>What it means here.</strong> At the time of writing the issues were open and not yet reviewed by the tracker's maintainers.
+The lead's premise, that P11 and P12 were unsolved classically, no longer holds.</p>
+<p><strong>What we missed.</strong> Our structural statistics (<code>code/structure.py</code>) looked at CZ counts, pair overlaps and degree
+sequences. They did not look for inverse pairs between consecutive CZs, which is the structure the external attack
+exploited.</p>
+<h2>What was done</h2>
+<p><strong>Circuits and answers.</strong> The QASM files for P9 (56 qubits, 1,917 RZZ gates), P11 (98 qubits, 1,999 CZ) and P12 (98
+qubits, 2,457 CZ) came from the Quantum Advantage Tracker, with their hashes recorded. The Helios-1 peak strings for
+P11 and P12 (issues #246 and #247) were extracted by a script that printed only their hashes. The issue pages had been
+consulted for metadata when the lead was researched, before sealing. <code>code/score.py</code> read the sealed file once, after
+the final candidates and their hashes were committed (0bf21f0, 14:02:24 on 6 October). The blinding protected the
+attacks and the candidate selection, and the outcome would not change if it had failed: both candidates are at chance.</p>
+<p><strong>Attacks.</strong> These are the three named in the preregistered hypothesis:</p>
+<ul>
+<li><strong>A1. MPO middle-out cancellation with greedy unswapping</strong> (Kremer &amp; Dupuis, arXiv:2604.21908), using the authors'
+  code at a pinned commit, unchanged.</li>
+<li><strong>A2. Low-bond MPS simulation with per-bit majority vote</strong>, the same authors' distillation method. We ran it in
+  complex128 instead of the notebook's complex64, because complex64 failed (D1).</li>
+<li><strong>A3. Heisenberg-picture propagation of each Z_i</strong> with Pauli truncation, using qiskit-addon-obp.</li>
+</ul>
+<p><strong>Budget.</strong> The budget was 72 A100-hours per instance, counted in process-hours: every concurrent process was charged
+its full wall-clock time (D3). This environment ran the P9 reference attack 1.5–2.3 times slower than the authors
+reported (6,267 s against the paper's 4,059 s and the notebook's 2,722 s), so the effective budget in
+authors'-hardware terms was smaller.</p>
+<h2>Results</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Instance</th>
+<th>Attack</th>
+<th>Outcome</th>
+<th>Process-hours</th>
+<th>GPU wall-hours (sharing)</th>
+<th>Peak GPU memory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P9 (validation)</td>
+<td>A1, cutoff 0.002</td>
+<td>Published peak recovered exactly; top sample frequency 0.107</td>
+<td>1.7</td>
+<td>1.7 (alone)</td>
+<td>1.8 GB</td>
+</tr>
+<tr>
+<td>P9 (validation)</td>
+<td>A2, χ 256</td>
+<td>30 of 56 bits wrong: chance level</td>
+<td>1.4</td>
+<td>1.4 (with P11 A1)</td>
+<td>0.2 GB</td>
+</tr>
+<tr>
+<td>P9 (validation)</td>
+<td>A3</td>
+<td>Pauli growth exhausted 20,000–200,000 terms within 18 of 207 depth slices</td>
+<td>CPU only</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>P11</td>
+<td>A1, cutoff 0.002</td>
+<td>Completed. The operator's bond peaked at 511, and the most frequent of 1,000 samples occurred once: no peak</td>
+<td>17.0</td>
+<td>17.0 (mostly alone)</td>
+<td>1.6 GB</td>
+</tr>
+<tr>
+<td>P11</td>
+<td>A1, cutoff 0.001</td>
+<td>Capped at 27 h after absorbing 81 of 1,984 two-qubit blocks</td>
+<td>27.0</td>
+<td>27.0 (shared by 3)</td>
+<td>&lt;2 GB</td>
+</tr>
+<tr>
+<td>P11</td>
+<td>A1, cutoff 0.0005</td>
+<td>Capped at 27 h after absorbing 89 of 1,984</td>
+<td>27.0</td>
+<td>the same 27.0</td>
+<td>&lt;2 GB</td>
+</tr>
+<tr>
+<td>P12</td>
+<td>A1, cutoff 0.002</td>
+<td>Capped at 27 h after absorbing 177 of 2,433</td>
+<td>27.0</td>
+<td>the same 27.0</td>
+<td>&lt;2 GB</td>
+</tr>
+<tr>
+<td>P12</td>
+<td>A2, χ 256</td>
+<td>Candidate from per-bit majority vote. Mean margin 0.15, which is no reliability signal: P9's at-chance run had 0.11</td>
+<td>3.7</td>
+<td>3.7 (alone)</td>
+<td>0.4 GB</td>
+</tr>
+</tbody>
+</table></div>
+<p>GPU utilisation was not measured. P11 ran in about 44 GPU wall-hours, 27 of them shared three ways, and P12 in about
+31. Progress was too irregular to extrapolate: the completed P11 run had absorbed 107 blocks after 7 hours and all
+1,984 by 17 hours. In the capped runs, the P11 cutoff-0.001 run absorbed no further blocks in its last 8 hours.</p>
+<p><strong>Scoring.</strong> Two random 98-bit strings differ in 49 bits on average, with a standard deviation of 4.95.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Final candidate</th>
+<th>Bits wrong (of 98)</th>
+<th>Preregistered rule (plan §4)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>P11 (primary)</strong></td>
+<td>A1, cutoff 0.002</td>
+<td><strong>47</strong> (−0.4 SD from chance)</td>
+<td>Contradicted: 5 or more bits wrong, with the budget exhausted under D3's accounting</td>
+</tr>
+<tr>
+<td>P12 (secondary)</td>
+<td>A2, χ 256</td>
+<td>57 (+1.6 SD)</td>
+<td>Not scored: the rule needs an exhausted budget, and P12 used 30.7 of 72 h</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Verdict: Refuted (Contradicted under plan §4), for the three preregistered attacks within this budget.</strong></p>
+<ul>
+<li><strong>The hypothesis tested.</strong> As worded in the lead, it was that one of attacks (a)–(c) would recover P11's peak within
+  72 A100-hours.</li>
+<li><strong>The result.</strong> The best candidate is 47 bits wrong.</li>
+<li><strong>The budget.</strong> It counts as exhausted only under D3's process-hour accounting. In GPU wall-hours about 28 hours
+  remained, and the attack could not have used them productively, given the stalled runs.</li>
+<li><strong>The broader question.</strong> Can an open classical method recover these peaks? An independent party answered yes during
+  the study (see above).</li>
+</ul>
+<figure><a href="results/figures/a1_progress.png"><img src="results/figures/a1_progress.png" alt="A1 progress: core-operator size and two-qubit blocks absorbed against wall-clock hours"></a><figcaption>Left: size of the central operator (10-minute rolling median). Right: two-qubit blocks absorbed. P9 and the first P11 run accelerate once unswapping has cancelled enough structure; the tighter P11 cutoffs and P12 stall.</figcaption></figure>
+<p><strong>Why A1 fails on P11.</strong></p>
+<ul>
+<li><strong>Where the time goes.</strong> Most of A1's work is unswapping, a search for the hidden permutations that let the two
+  halves of the circuit cancel. Absorption of two-qubit blocks speeds up once enough structure has cancelled. For P9
+  that happened within 1.5 hours; for P11 at cutoff 0.002 it took about 15 hours.</li>
+<li><strong>Losing the peak.</strong> The method's only approximation is the SVD cutoff, so the loss of the P11 peak must come from
+  truncation. We did not log the discarded weight, so we cannot separate truncation at a good permutation from a poor
+  permutation chosen by the greedy search.</li>
+<li><strong>Bond dimension.</strong> P9's operator repeatedly collapses to bond dimension 16 or less once about 40% of the circuit is
+  absorbed. P11's stays above about 25 throughout (<code>results/figures/a1_bond_vs_absorbed.png</code>).</li>
+<li><strong>Tighter cutoffs.</strong> At tighter cutoffs, unswapping did not get past the first 4–5% of the circuit in 27 hours, with
+  three runs sharing the GPU. The shared runs reached 50 absorbed blocks faster than the solo run did, so contention
+  was probably mild.</li>
+</ul>
+<p>P11 has fewer CZ gates per qubit than P9 (41 against 68). Its two halves share 111 qubit pairs. That is what chance
+predicts for 98 qubits (113), just as P9's 340 is close to chance for 56 (322), so the statistic says nothing about how
+scrambled the circuits are.</p>
+<h2>Caveats</h2>
+<ul>
+<li><strong>Scope.</strong> The result covers three general-purpose attacks, one GPU, and this budget. The circuits are classically
+  easy for a structure-aware attack (above).</li>
+<li><strong>Budget accounting.</strong> D3's process-hour convention, fixed before any follow-up result, charged concurrent runs in
+  full. That makes "budget exhausted" easier to reach than the plan's natural reading of A100-hours would, and so
+  weakens the refutation rather than strengthening it.</li>
+<li><strong>Reduced A2 grid.</strong> A2 was run once, at χ 256 on P12, instead of over the planned grid of χ values and qubit orders,
+  after it was at chance on P9 (D1, D5, D7).</li>
+<li><strong>Bit order.</strong> The bit-order convention was checked on P9 only, where the published string matches the notebook's
+  order. Our P11 and P12 candidates are at chance under either order.</li>
+<li><strong>Reference answer.</strong> We assume the Helios-1 strings are the true peaks; the external classical solution agrees
+  with them.</li>
+</ul>
+<h2>Deviations (summary)</h2>
+<ul>
+<li><strong>D1.</strong> A2 run in complex128 after complex64 failed; A2 at chance on P9, so it was reduced to a single run.</li>
+<li><strong>D2.</strong> A3 not run on P11 or P12 (infeasible on P9).</li>
+<li><strong>D3.</strong> The first P11 run resolved no peak. Tighter cutoffs replaced the planned max_bond 16,384, and the
+  process-hour accounting rule was set.</li>
+<li><strong>D4.</strong> A tie rule for candidate selection, fixed before any follow-up candidate existed.</li>
+<li><strong>D5.</strong> The follow-up runs hit their 27 h caps, closing P11's budget.</li>
+<li><strong>D6.</strong> Final candidates committed before scoring.</li>
+<li><strong>D7.</strong> Revisions after review: the external crack, P12 unscored, the reduced A2 grid, budget semantics, and the
+  table correction.</li>
+</ul>
+<p>The decision rule itself never changed.</p>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: GWOSC / Zenodo public releases. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/quantum-simulation-peaked-98q-classical-crack/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

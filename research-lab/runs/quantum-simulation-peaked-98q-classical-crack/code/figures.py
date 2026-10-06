@@ -57,7 +57,28 @@ def main():
     fig.tight_layout()
     (RUN / "results" / "figures").mkdir(parents=True, exist_ok=True)
     fig.savefig(RUN / "results" / "figures" / "a1_progress.png", dpi=150)
-    pd.concat(series).to_csv(RUN / "results" / "tables" / "a1_progress_series.csv", index=False)
+    allser = pd.concat(series)
+    allser.to_csv(RUN / "results" / "tables" / "a1_progress_series.csv", index=False)
+    # per-run summary (replaces the hand-built A1_progress.csv; review issue 8): bond and progress from the series
+    summ = allser.groupby("run").agg(hours=("hours", "max"), peak_max_bond=("max_bond", "max"), unitaries_absorbed=("unitaries", "max"))
+    tot = {"P9": 1885, "P11": 1984, "P12": 2433}
+    summ["total_unitaries"] = [tot[r.split(",")[0]] for r in summ.index]
+    summ["finished"] = summ.unitaries_absorbed >= summ.total_unitaries - 1
+    summ.to_csv(RUN / "results" / "tables" / "A1_progress.csv")
+    print(summ)
+    # bond dimension against unitaries absorbed for the completed runs (plan section 5; review issue 6)
+    fig2, ax2 = plt.subplots(figsize=(5.5, 3.4))
+    for lab, f in [("P9, cutoff 0.002", "P9_A1_mb8192_c0.002_s123_stats.csv"), ("P11, cutoff 0.002", "P11_A1_mb8192_c0.002_s123_stats.csv")]:
+        st = pd.read_csv(RUN / "results" / "tables" / f)
+        st["u"] = st.u_consumed_total.ffill().fillna(0)
+        ab = st[st.stage == "absorbing"]
+        ax2.plot(ab.u / ab.u.max(), ab.max_bond, ".", ms=2, label=lab)
+    ax2.set_yscale("log")
+    ax2.set_xlabel("fraction of two-qubit unitaries absorbed")
+    ax2.set_ylabel("core MPO max bond")
+    ax2.legend(frameon=False, fontsize=8)
+    fig2.tight_layout()
+    fig2.savefig(RUN / "results" / "figures" / "a1_bond_vs_absorbed.png", dpi=150)
     print(pd.concat(series).groupby("run").agg(hours=("hours", "max"), peak_elems=("total_elems", "max"), peak_bond=("max_bond", "max"), unitaries=("unitaries", "max")))
 
 

@@ -1,4 +1,7 @@
-"""Score the committed final candidates against the sealed Helios-1 strings (plan.md section 4). Refuses to run unless
+"""Score the committed final candidates against the sealed Helios-1 strings (plan.md section 4).
+NOTE (D7, after the single scoring run): this version applied the Hamming thresholds without the plan's "when the budget
+is exhausted" condition and tested one bit order only. Future uses must pass budget_exhausted per instance and report
+both bit orders; the scoring run of 2026-10-06 is NOT rerun (the answers are read once). Refuses to run unless
 results/final_candidates.json is committed and unmodified in git, and refuses a second run (answers are read once).
 Writes results/score.json."""
 import json
