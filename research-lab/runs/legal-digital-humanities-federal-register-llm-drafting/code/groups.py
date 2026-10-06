@@ -42,7 +42,7 @@ def main():
                 by_id[a["id"]] = a
     m["dept"] = [dept_of(a, by_id) for a in ags]
     m["subagency"] = [(a[0].get("name") if a else None) for a in ags]
-    m["group"] = m.dept.map(lambda d: "DOT" if d == "DOT" else ("other_cabinet" if d else "excluded"))
+    m["group"] = m.dept.map(lambda d: "excluded" if pd.isna(d) else ("DOT" if d == "DOT" else "other_cabinet"))  # D1: NaN is truthy
     m["templated"] = m.title.fillna("").str.contains(TEMPLATED)
     d = pd.to_datetime(m.publication_date)
     m["period"] = pd.cut(d, [pd.Timestamp("2018-12-31"), pd.Timestamp("2021-12-31"), pd.Timestamp("2023-12-31"),

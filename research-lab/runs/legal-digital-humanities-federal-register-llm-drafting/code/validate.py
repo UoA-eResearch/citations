@@ -83,7 +83,7 @@ def main():
     v1 = pd.DataFrame(rows)
     v1.to_csv(TAB / "validation_v1.csv", index=False)
     # V2: power for the DiD
-    counts = {"dot_pre": 732, "dot_post": 290, "oth_pre": 5778, "oth_post": 1973}
+    counts = {"dot_pre": 732, "dot_post": 290, "oth_pre": 3295, "oth_post": 1178}  # D1 corrected counts
     keys = list(vd)
     rows2 = []
     for delta in (0.0, 0.01, 0.02, 0.03, 0.05, 0.075):
