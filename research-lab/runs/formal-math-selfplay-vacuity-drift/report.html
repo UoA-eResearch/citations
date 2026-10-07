@@ -80,91 +80,204 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
   <h1>Do self-play provers drift toward vacuous conjectures?</h1>
   <p class="subtitle">A preregistered, kernel-certified measurement of contradictory hypotheses across 46 iterations of the STP self-play corpus and four other open prover-training corpora</p>
   <div class="meta">
-    <span>Report · 2026-10-06 · draft for independent review</span>
+    <span>Report · 2026-10-06 · revised after independent review</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/formal-math-selfplay-vacuity-drift/plan.md">Preregistration</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/formal-math-selfplay-vacuity-drift/deviations.md">Deviations log</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/formal-math-selfplay-vacuity-drift/code">Code</a>
     <a href="../../index.html">All research leads</a>
   </div>
 </header>
-<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Verdict</div><div class="tile-value text">Refuted</div><div class="tile-note">vacuity fell late in self-play: ratio 0.60 (0.53-0.67), not &gt;= 2</div></div><div class="tile"><div class="tile-label">Early vs late</div><div class="tile-value">4.3% -&gt; 2.6%</div><div class="tile-note">certified-vacuous conjectures, iterations 1-9 vs 38-47</div></div><div class="tile"><div class="tile-label">After each restart</div><div class="tile-value">8-10%</div><div class="tile-note">then a steady decline within each self-play phase</div></div><div class="tile"><div class="tile-label">NuminaMath-LEAN</div><div class="tile-value">6.2%</div><div class="tile-note">of solved problems; 7.4% autoformalized vs 1.6% human-written</div></div></section>
+<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Verdict</div><div class="tile-value text">Refuted</div><div class="tile-note">vacuity fell late in self-play: ratio 0.61 (0.54-0.68), not &gt;= 2</div></div><div class="tile"><div class="tile-label">Early vs late</div><div class="tile-value">4.1% -&gt; 2.5%</div><div class="tile-note">certified-vacuous conjectures, iterations 1-9 vs 38-47 (v2 certificate)</div></div><div class="tile"><div class="tile-label">Peaks</div><div class="tile-value">8% and 10%</div><div class="tile-note">early in each self-play phase, then a steady decline; the fixed-pool control fell too</div></div><div class="tile"><div class="tile-label">NuminaMath-LEAN</div><div class="tile-value">6.2%</div><div class="tile-note">of statements with a proof; 7.4% autoformalized vs 1.6% human-written</div></div></section>
 <main>
 <h2>In plain terms</h2>
 <p>Some AI systems learn to prove mathematical theorems by inventing their own practice problems, trying to prove them,
 and training on whatever they prove. A practice problem whose assumptions contradict each other is a trap. It can be
-"proved" without doing any real mathematics, a kind of cheating the training process could reward. We expected such
-vacuous problems to pile up as self-play went on.</p>
-<p>We checked 92,000 problems from STP, a published self-play prover, using the Lean proof checker to certify each
-contradiction. The prediction was wrong. Vacuous problems were <em>less</em> common late in training (2.6%) than early
-(4.3%). The more interesting pattern is the shape:</p>
+"proved" without doing any real mathematics, which the training process might reward. We expected such vacuous
+problems to pile up as self-play went on.</p>
+<p>We checked 92,000 training proofs from STP, a published self-play prover, using the Lean proof checker to certify each
+contradiction. The prediction was wrong. Vacuous problems were <em>less</em> common late in training (2.5%) than early
+(4.1%).</p>
+<p>The shape of the curve is the more interesting part. Vacuous problems peaked early in each of STP's two self-play
+phases, at 8% in round 3 and 10% in round 26, and then declined steadily. Several things could explain the decline:</p>
 <ul>
-<li>each time self-play restarted from a re-trained model, vacuous problems jumped to 8–10%;</li>
-<li>they then declined steadily as the prover improved.</li>
+<li>STP's filter, which keeps only problems the prover usually fails;</li>
+<li>the problem generator learning to write well-formed statements;</li>
+<li>a change in what our checker can see.</li>
 </ul>
-<p>A likely reason is STP's own filter. It keeps only problems the prover usually fails, and contradictory problems
-become easy and drop out.</p>
-<p>Vacuous problems are far from rare elsewhere. In NuminaMath-LEAN, 6.2% of the problems the prover solved were
-vacuous: 7.4% of machine-translated problems against 1.6% of human-written ones. Vacuous problems were also solved
-more often during reinforcement learning, so the training signal favoured them. Almost all vacuous problems read like
-genuine competition questions.</p>
+<p>The data cannot fully separate them.</p>
+<p>Vacuous problems are far from rare in other corpora. In NuminaMath-LEAN, 6.2% of the problems with a machine proof
+were vacuous: 7.4% of machine-translated problems against 1.6% of human-written ones. About three in four vacuous problems read like genuine competition questions.</p>
 <h2>What was done</h2>
 <p><strong>Corpus and sample.</strong> The STP_Lean_0320 corpus has 3,262,558 rows. Its iteration numbers form two self-play phases:</p>
 <ul>
-<li>rounds 0–23, and rounds 24–47;</li>
+<li>rounds 0-23, and rounds 24-47;</li>
 <li>rounds 0 and 24 contain no conjectures;</li>
 <li>STP restarts self-play from a re-trained model between the phases.</li>
 </ul>
-<p>We drew 2,000 conjecture rows per iteration (92,000 in total) and 200 statement rows per iteration (9,600 LeanWorkbook
-proofs, used as a control). Each row was checked in STP's own Lean environment: Lean 4.9.0-rc1, the DeepSeek mathlib
-fork (upstream d1d1e4b72), and the STP REPL.</p>
-<p><strong>Certificate.</strong> A row counts as vacuous if a proof of <code>False</code> from its hypotheses compiles, contains no <code>sorry</code>, and
-uses only the standard axioms. Two routes can produce one:</p>
+<p>We drew 2,000 conjecture rows per iteration: 92,000 proofs of about 80,000 distinct conjectures, some proved more than
+once. We also drew 200 statement rows per iteration (9,600 LeanWorkbook proofs) as a control.</p>
+<p><strong>Environment.</strong> Each row was checked in STP's own verifier environment: Lean 4.9.0-rc1, Mathlib at DeepSeek's pinned
+version, and <code>import miniF2F</code>, STP's curated subset of Mathlib (<code>lean/stp_env/miniF2F.lean</code>, from kfdong/STP). The
+1,152 rows that did not re-verify there were retried under all of Mathlib, and 33 then re-verified.</p>
+<p><strong>Certificate (v2, after the independent review).</strong> A row counts as vacuous if a proof of False from its hypotheses,
+<em>as the original statement elaborates them</em>, compiles, contains no <code>sorry</code>, and uses only the standard axioms. There
+are two routes:</p>
 <ul>
-<li><strong>(a) Goal swap.</strong> The released proof is re-run with the goal replaced by <code>False</code>.</li>
-<li><strong>(b) Automation.</strong> A fixed portfolio is tried: omega, linarith, norm_num, simp_all, nlinarith, aesop and decide.</li>
+<li><strong>(a) Goal swap:</strong> <code>theorem v B : C := False.elim (by &lt;released proof&gt;)</code>, that is, the released proof run against
+  the goal False.</li>
+<li><strong>(b) Automation:</strong> <code>theorem v B : C := by exfalso; &lt;tactic&gt;</code>, for a fixed portfolio of omega, linarith, norm_num,
+  simp_all, nlinarith, aesop and decide.</li>
+</ul>
+<p><strong>Why v2.</strong> The first version elaborated <code>theorem v B : False</code> on its own. A variable whose type only the conclusion
+fixed then defaulted to ℕ, which turned hypotheses that are satisfiable over ℝ into contradictions over ℕ. The
+reviewer found this (D7). On the rows eligible under both versions in the primary windows:</p>
+<ul>
+<li>v2 removes 18 of v1's 1,207 certificates. Two of the reviewer's 18 flagged rows turned out to be genuinely
+  vacuous in their own elaboration (over ℤ), which v2 confirms.</li>
+<li>v2 adds 12 certificates that v1 missed.</li>
 </ul>
 <p><strong>Validation.</strong></p>
-<ul>
-<li><strong>Controls.</strong> The pipeline certified 20 of 20 vacuous control statements and 0 of 20 satisfiable ones.</li>
-<li><strong>Re-verification.</strong> The original proofs re-verified for 95.5% of rows, and the binder/conclusion split check
-  passed for 94.2%. Rows failing either were excluded.</li>
-<li><strong>Split repair.</strong> A sensitivity pass repaired split failures caused by STP's own prompt cut-off (D2, D5).</li>
-</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Original controls (20 vacuous, 20 satisfiable)</td>
+<td>20 of 20 and 0 of 20 certified</td>
+</tr>
+<tr>
+<td>Satisfiable statements with undeclared variables</td>
+<td>0 of 4 certified</td>
+</tr>
+<tr>
+<td>Undeclared-variable statement that is genuinely vacuous over ℕ</td>
+<td>1 of 1 certified</td>
+</tr>
+<tr>
+<td>Regression on 318 real rows</td>
+<td>v2 behaves as designed</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Exclusions</strong> (primary windows; <code>results/tables/exclusions.csv</code>):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Reason</th>
+<th>Early (1-9)</th>
+<th>Late (38-47)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Eligible</td>
+<td>17,272 of 18,000</td>
+<td>19,064 of 20,000</td>
+</tr>
+<tr>
+<td>Truncated prompt, cut by STP at an inner <code>:=</code></td>
+<td>388</td>
+<td>11</td>
+</tr>
+<tr>
+<td>Identifier from a dropped per-row header (e.g. <code>card</code>, <code>Bijective</code>)</td>
+<td>4</td>
+<td>495</td>
+</tr>
+<tr>
+<td>Binder/conclusion split check failed</td>
+<td>334</td>
+<td>363</td>
+</tr>
+<tr>
+<td>Other re-verification failures</td>
+<td>2</td>
+<td>67</td>
+</tr>
+</tbody>
+</table></div>
+<p>The released corpus contains rows that cannot compile under its own header, and their share depends on the
+iteration.</p>
 <h2>Results</h2>
-<p><strong>Primary test (iterations 38–47 against 1–9; iteration 0 has no conjectures).</strong> Rates are weighted by iteration
-size.</p>
+<p><strong>Primary test (iterations 38-47 against 1-9; iteration 0 has no conjectures).</strong> Rates are weighted by iteration
+size (population-weighted), with unweighted values in brackets.</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
 <th></th>
-<th>Late (38–47)</th>
-<th>Early (1–9)</th>
+<th>Late (38-47)</th>
+<th>Early (1-9)</th>
 <th>Ratio (95% CI)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Certified vacuous</td>
-<td>2.56% (482 of 18,726)</td>
-<td>4.28% (725 of 16,706)</td>
-<td><strong>0.60 (0.53–0.67)</strong></td>
+<td>2.51% (2.53%; 482 of 19,064)</td>
+<td>4.13% (4.22%; 724 of 17,272)</td>
+<td><strong>0.61 (0.54-0.68)</strong></td>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Verdict: Refuted.</strong> The hypothesis predicted a ratio of at least 2, and the upper end of the 95% CI is 0.67. The same
-verdict holds:</p>
-<ul>
-<li>at statement level (0.61, 0.54–0.68);</li>
-<li>unweighted (0.59, 0.53–0.66);</li>
-<li>with the 991 split-repaired rows added (0.60, 0.53–0.67).</li>
-</ul>
-<figure><a href="results/figures/vacuity_by_iteration.png"><img src="results/figures/vacuity_by_iteration.png" alt="Certified-vacuous rate by STP iteration, with the LeanWorkbook statement control"></a><figcaption>Certified-vacuous share of sampled conjecture rows by STP iteration (Wilson 95% bands), with the LeanWorkbook statement-proof control. Dashed lines mark the two self-play starts; shaded regions are the preregistered early and late windows.</figcaption></figure>
-<p><strong>Dynamics (secondary).</strong> Vacuity is highest right after each self-play start and falls within each phase:</p>
+<p><strong>Verdict: Refuted.</strong> The hypothesis predicted a ratio of at least 2, and the upper end of the 95% CI is 0.68.</p>
+<p><strong>Sensitivities.</strong> Every one also gives a ratio below 1:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Variant</th>
+<th>Ratio (95% CI)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Statement level (sampling is proportional to each statement's number of proofs)</td>
+<td>0.62 (0.55-0.70)</td>
+</tr>
+<tr>
+<td>Unweighted</td>
+<td>0.60 (0.53-0.67)</td>
+</tr>
+<tr>
+<td>With the 986 split-repaired rows</td>
+<td>0.61 (0.54-0.68)</td>
+</tr>
+<tr>
+<td>miniF2F environment only</td>
+<td>0.61 (0.54-0.68)</td>
+</tr>
+<tr>
+<td>Excluding statements with undeclared variables</td>
+<td>0.72 (0.63-0.81)</td>
+</tr>
+<tr>
+<td>Rows the certificate can examine (hypotheses in binders)</td>
+<td>0.45 (0.40-0.50)</td>
+</tr>
+<tr>
+<td>Secondary certificate, also refuting premises inside the conclusion</td>
+<td>0.57 (0.51-0.64)</td>
+</tr>
+<tr>
+<td>Goal-swap certificates only</td>
+<td>0.65 (0.58-0.73)</td>
+</tr>
+<tr>
+<td>Automation certificates only</td>
+<td>0.19 (0.13-0.28)</td>
+</tr>
+</tbody>
+</table></div>
+<figure><a href="results/figures/vacuity_by_iteration.png"><img src="results/figures/vacuity_by_iteration.png" alt="Certified-vacuous rate by STP iteration, with the LeanWorkbook statement control and coverage"></a><figcaption>Certified-vacuous share of sampled conjecture rows by STP iteration (Wilson 95% bands; v2 certificate, elaborated in each statement&#x27;s own context), the LeanWorkbook statement-proof control, and the secondary certificate that also refutes premises inside the conclusion. Lower panel: coverage, the share of eligible rows with hypotheses in binders that the primary certificate can examine. Dashed lines: the two self-play starts; shaded: the preregistered early (1-9) and late (38-47) windows.</figcaption></figure>
+<p><strong>Dynamics (secondary).</strong> Vacuity peaks early in each self-play phase and then falls:</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
 <th>Phase</th>
-<th>Starting rate</th>
+<th>Start</th>
 <th>Peak</th>
 <th>Final five iterations</th>
 <th>Spearman ρ</th>
@@ -173,17 +286,17 @@ verdict holds:</p>
 <tbody>
 <tr>
 <td>1</td>
-<td>2.8% at iteration 1</td>
-<td>8.1% at iteration 3</td>
-<td>0.7%</td>
-<td>−0.89</td>
+<td>2.9% at iteration 1</td>
+<td>7.8% at iteration 3</td>
+<td>0.6%</td>
+<td>−0.90</td>
 </tr>
 <tr>
 <td>2</td>
-<td>8.1% at iteration 25</td>
-<td>10.0% at iteration 26</td>
+<td>8.0% at iteration 25</td>
+<td>9.8% at iteration 26</td>
 <td>2.1%</td>
-<td>−0.94</td>
+<td>−0.93</td>
 </tr>
 </tbody>
 </table></div>
@@ -191,38 +304,80 @@ verdict holds:</p>
 <thead>
 <tr>
 <th>Contrast</th>
-<th>Rate ratio</th>
+<th>Rate ratio (95% CI)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Phase 1, late (14–23) against early (1–9)</td>
-<td>0.20</td>
+<td>Phase 1, late (14-23) against early (1-9)</td>
+<td>0.20 (0.17-0.24)</td>
 </tr>
 <tr>
-<td>Phase 2, late (38–47) against early (25–33)</td>
-<td>0.37</td>
+<td>Phase 2, late (38-47) against early (25-33)</td>
+<td>0.37 (0.33-0.41)</td>
 </tr>
 <tr>
 <td>Phase 2 against phase 1, overall</td>
-<td>2.19</td>
+<td>2.23 (2.06-2.42)</td>
 </tr>
 </tbody>
 </table></div>
-<p>Across all 46 iterations the trend is flat (ρ = −0.004), because the decline within each phase cancels the restart
-jump.</p>
-<p><strong>Control.</strong> The LeanWorkbook statement proofs, whose problems come from a fixed pool, have a vacuity rate of 1.9%
-overall with no clear trend (ρ = −0.22, p = 0.12).</p>
-<p><strong>How vacuity is certified.</strong></p>
+<p>Across all 46 iterations the trend is flat (ρ = −0.006), because the decline within each phase cancels the restart.</p>
+<p><strong>What else changes over training.</strong> The decline must be read alongside three things that move with it.</p>
 <ul>
-<li>Of the 1,207 certified rows in the primary windows, 994 were certified only by the goal swap, 123 only by
-  automation, and 90 by both. In most cases, then, the released proof itself derives the contradiction.</li>
-<li>Conclusions provable with all hypotheses discarded fell from 3.8% to 0.1% between the early and late windows.</li>
+<li><strong>Coverage.</strong> Statements with no binders, whose hypotheses all sit in the conclusion, cannot be examined by the
+  preregistered certificate. They are 25.5% of eligible early rows and 1.0% of late rows, and 41% at iterations 3-4.</li>
+<li>Among the rows the certificate can examine, the ratio is steeper, 0.45. The iteration-3 peak is 13.2% there.</li>
+<li>The secondary certificate, which can also examine binder-less rows by refuting the premises inside the
+    conclusion, adds few certificates (ratio 0.57). So the coverage gap hid little vacuity.</li>
+<li><strong>Undeclared variables.</strong> Statements whose variables default to ℕ make up 25.7% of certified rows early (186 of
+  724) and 2.3% late (11 of 482). As the generator learned to declare variables, this source of vacuity disappeared.
+  Excluding these statements gives a ratio of 0.72.</li>
+<li><strong>The control also fell.</strong> The LeanWorkbook statement proofs come from a fixed pool of problems, so their true
+  vacuity cannot change. Their certified rate still fell from 2.7% (iterations 0-9) to 1.5% (38-47): ratio 0.57
+  (0.33-0.97).</li>
+<li>Goal-swap certificates alone: 0.65 (0.37-1.16). Automation alone: 0.47 (0.18-1.19).</li>
+<li>Over all iterations: 1.8% (172 of 9,594), ρ = −0.24 (p = 0.10).</li>
 </ul>
-<p><strong>Training weight.</strong> Vacuous rows carry higher STP training weights: the odds ratio is 1.79 per 0.1 of weight
-(1.73–1.85). STP weights a proof by <code>exp(-0.001 × proof length)</code>, and vacuous conjectures tend to have short proofs, so
-the weighting gives them more emphasis in training.</p>
-<p><strong>Causes (100 random certified rows, coded by a separate agent).</strong></p>
+<p>A falling rate on a fixed pool means either that STP proves a different mix of pool problems over time, or that the
+  certificate's sensitivity drifts as the prover's proofs change. Either would contribute to the decline in the
+  conjectures. The within-phase declines are therefore best read as upper bounds on any real change in what the
+  generator proposes.</p>
+<p><strong>Candidate mechanisms for the decline.</strong> None is tested here.</p>
+<ul>
+<li>STP's own filter keeps conjectures the prover usually fails, and easy, vacuous ones drop out.</li>
+<li>The generator learns well-formed Lean: it declares variables and puts hypotheses in binders.</li>
+<li>The checker's sensitivity drifts (see the control).</li>
+</ul>
+<p><strong>How vacuity is certified.</strong> Of the 1,206 certified rows in the primary windows:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Route</th>
+<th>Rows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Goal swap only</td>
+<td>1,004</td>
+</tr>
+<tr>
+<td>Automation only</td>
+<td>112</td>
+</tr>
+<tr>
+<td>Both</td>
+<td>90</td>
+</tr>
+</tbody>
+</table></div>
+<p>So in most cases the released proof itself derives the contradiction. Conclusions provable with all hypotheses
+discarded fell from 3.8% to 0.1%, a figure also affected by coverage.</p>
+<p><strong>Training weight.</strong> STP's released weight is exactly exp(−0.001 × proof length), the length term of its weighting.
+Vacuous rows average 0.776 against 0.637 for other rows, 22% more, because their proofs are shorter. A logistic
+regression with iteration fixed effects gives an odds ratio of 1.81 (1.75-1.88) per 0.1 of weight.</p>
+<p><strong>Causes (100 random certified rows from all iterations, coded by a separate agent).</strong></p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -233,91 +388,111 @@ the weighting gives them more emphasis in training.</p>
 <tbody>
 <tr>
 <td>Contradictory numeric constraints</td>
-<td>59</td>
+<td>52</td>
 </tr>
 <tr>
-<td>Unsatisfiable functional equations, domain or range confusions, and parsing slips (e.g. <code>x i+1</code> read as <code>(x i)+1</code>)</td>
-<td>21</td>
+<td>Unsatisfiable functional equations, domain or range confusions, and parsing slips (e.g. <code>a n+1</code> read as <code>(a n)+1</code>)</td>
+<td>33</td>
 </tr>
 <tr>
 <td>A hypothesis that is false on its own</td>
-<td>18</td>
+<td>9</td>
 </tr>
 <tr>
 <td>Natural-number subtraction or division</td>
-<td>1</td>
+<td>2</td>
 </tr>
 <tr>
 <td>Cast or division-by-zero conventions</td>
-<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>An undeclared variable defaulted to ℕ</td>
+<td>2</td>
 </tr>
 </tbody>
 </table></div>
-<p>85 of the contradictions are local, visible from one or two hypotheses, and 97 of the 100 statements read like genuine
-competition claims.</p>
-<p><strong>Other corpora (secondary).</strong> Each is a uniform sample, checked in its own Lean version.</p>
+<p>88 of the contradictions are local, visible from one or two hypotheses. 76 of the 100 statements read like genuine competition claims; the rest are visibly garbled. Nine sampled rows use undeclared variables. In seven of them the contradiction does not depend on the variable's type, so they were coded by their underlying cause. The coder's prompt is in <code>review/coder_prompt.md</code>.</p>
+<p><strong>Other corpora (secondary).</strong> Each is a uniform sample, checked in its own Lean version with the v2 certificate.</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
 <th>Corpus</th>
 <th>Re-verified</th>
-<th>Certified vacuous (95% CI)</th>
+<th>Certified vacuous, among statements with a proof (95% CI)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>NuminaMath-LEAN, model proofs (Lean 4.15)</td>
 <td>88.7%</td>
-<td><strong>6.2%</strong> (5.8–6.8)</td>
+<td><strong>6.2%</strong> (5.7-6.7)</td>
 </tr>
 <tr>
 <td>Goedel Lean-workbook-proofs</td>
-<td>96.2%</td>
-<td>2.8% (2.4–3.3)</td>
+<td>96.1%</td>
+<td>2.8% (2.4-3.3)</td>
 </tr>
 <tr>
 <td>DeepSeek-Prover-V1</td>
 <td>99.9%</td>
-<td>2.0% (1.7–2.4)</td>
+<td>2.0% (1.7-2.5)</td>
 </tr>
 <tr>
 <td>Goedel-Prover-V2 SFT</td>
-<td>83.2%</td>
-<td>1.0% (0.8–1.2); 1.2% excluding negation statements</td>
+<td>83.1%</td>
+<td>1.0% (0.8-1.2); 1.2% excluding its deliberate negation statements</td>
 </tr>
 </tbody>
 </table></div>
 <p>In NuminaMath-LEAN:</p>
 <ul>
-<li>autoformalized statements are vacuous 7.4% of the time (of 7,051), and human-formalized ones 1.6% (of 1,767);</li>
-<li>the RL win rate is higher for vacuous statements (0.73 against 0.67, Mann–Whitney p = 2×10⁻⁸). The RL loop
-  solved them more easily, and so rewarded them more often.</li>
+<li><strong>By author.</strong> Autoformalised statements are vacuous 7.4% of the time (of 7,051), and human-formalised ones 1.6%
+  (of 1,767).</li>
+<li><strong>Pass rates.</strong> Kimina-Prover's RL pass rate was higher for vacuous statements (0.73 against 0.67, Mann-Whitney
+  p = 2×10⁻⁸), consistent with their being easier. Whether this biased training depends on the RL objective. With
+  group-normalised advantages, a prompt solved every time contributes no gradient.</li>
+</ul>
+<p><strong>Related work.</strong></p>
+<ul>
+<li><strong>Ammanamanchi, Bhat &amp; Biderman (arXiv 2606.29493)</strong> audit five Lean <em>benchmarks</em> with certified checkers, including
+  vacuous theorems. This study measures <em>training</em> corpora.</li>
+<li><strong>DeepSeek-Prover-V1's negation filter</strong> cannot remove vacuous statements, because refuting ¬(∀ B, C) needs a
+  witness for B. That is consistent with its 2.0%.</li>
+<li><strong>Goedel-Prover-V2</strong> adds negated statements on purpose, which is why they are separated out above.</li>
 </ul>
 <h2>Caveats</h2>
 <ul>
-<li><strong>A lower bound.</strong> Certified vacuity requires either the released proof to prove <code>False</code> or one of seven automation
-  tactics to find the contradiction. Hard contradictions are missed.</li>
+<li><strong>A lower bound.</strong> Vacuity is certified only if the released proof proves False or one of seven tactics finds the
+  contradiction. Hard contradictions are missed.</li>
 <li><strong>Final training data only.</strong> STP_Lean_0320 is the final, filtered training set, not every conjecture generated. A
-  vacuous conjecture that STP's filters removed is invisible here. The pass-rate explanation for the decline is a
-  hypothesis that we did not test.</li>
+  vacuous conjecture that STP's filters removed is invisible here.</li>
+<li><strong>Measurement drift.</strong> The fixed-pool control declined too, so part of the conjectures' decline may be a change in
+  the checker's sensitivity or in which pool problems were proved.</li>
 <li><strong>Two phases, not one run.</strong> The preregistered contrast spans a restart. The within-phase contrasts, added as
-  secondary analyses before any outcome was seen, show the dynamics more clearly than the primary contrast does.</li>
-<li><strong>Exclusions.</strong></li>
-<li>About 4.5% of rows did not re-verify, and 1.3% failed the split check.</li>
-<li>SFT v2 and NuminaMath re-verified less often (83% and 89%), possibly because of version differences.</li>
-<li>Excluded rows could differ systematically.</li>
-<li><strong>Causes from one coder.</strong> The cause categories come from a single coder agent (Claude Fable 5.1) reading the
-  statements, without running Lean.</li>
+  secondary analyses before any outcome was seen, show the dynamics more clearly.</li>
+<li><strong>Environment.</strong> STP's per-row headers are missing from the released corpus. That makes 1-3% of late rows
+  uncompilable, which is iteration-dependent. The DeepSeek mathlib fork's commit (2f65ba7) is no longer served by
+  GitHub, so our equivalence with upstream d1d1e4b72 could not be re-verified.</li>
+<li><strong>Context sensitivity.</strong> A few certificates succeed or fail depending on what is already in the Lean environment.
+  Certificates are therefore built in a fresh environment.</li>
+<li><strong>Causes from one coder.</strong> The cause categories come from a single coder agent reading the statements, without
+  running Lean.</li>
 </ul>
 <h2>Deviations (summary)</h2>
 <ul>
-<li><strong>D1:</strong> the REPL's output-flushing fix (STP's own <code>Main.lean</code>), validation and timing pilot; 2,000 rows per
-  iteration under the pilot rule.</li>
-<li><strong>D2:</strong> the split-repair sensitivity, defined before any outcome was seen.</li>
-<li><strong>D3:</strong> the repair pass run early, on idle cores.</li>
-<li><strong>D4:</strong> an analysis-code guard for the incomplete repair file.</li>
-<li><strong>D5:</strong> a bug in the repair check (<code>example</code> rejects holes in its type), fixed and rerun; the result is unchanged.</li>
+<li><strong>D1:</strong> the REPL's output-flushing fix, validation and timing pilot.</li>
+<li><strong>D2:</strong> the split-repair sensitivity.</li>
+<li><strong>D3:</strong> the repair pass run early.</li>
+<li><strong>D4:</strong> an analysis-code guard.</li>
+<li><strong>D5:</strong> a bug in the repair check, fixed.</li>
 <li><strong>D6:</strong> NuminaMath run in parallel.</li>
+<li><strong>D7, after the independent review:</strong></li>
+<li>the certificate elaborated in each statement's own context;</li>
+<li>STP's miniF2F environment, with an all-of-Mathlib fallback;</li>
+<li>coverage probes and the secondary certificate;</li>
+<li>a soundness check on the repair;</li>
+<li>full rerun.</li>
 </ul>
 <p>The decision rule never changed.</p>
 </main>

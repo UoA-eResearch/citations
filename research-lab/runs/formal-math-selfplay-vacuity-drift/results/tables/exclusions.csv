@@ -1,0 +1,9 @@
+excl,early 1-9,late 38-47,other,all
+ambiguous notation,0,5,14,19
+eligible,17272,19064,52876,89212
+other re-verify error,2,61,89,152
+parse error (truncated prompt),388,11,28,427
+re-verify timeout,0,1,2,3
+split-check failure,334,363,556,1253
+unknown identifier (dropped per-row header),4,495,435,934
+all,18000,20000,54000,92000

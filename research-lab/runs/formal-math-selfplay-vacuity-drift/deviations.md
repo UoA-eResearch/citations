@@ -201,3 +201,31 @@ genuine cases (accepted).
 
 **Timing.** All of this follows sight of the v1 outcomes and of the review. No change to the decision rule is
 possible, so the verdict can only change through the measurement.
+
+## D8. Results of the v2 rerun, and re-coded causes (2026-10-08 12:25 NZDT)
+
+**The rerun.** `code/run_v2.sh` finished at 23:13 NZDT on 7 October. `analysis.py` (v2, committed in 3e4ebf6 before
+the rerun finished) gives the primary ratio 0.609 (0.543-0.684): **Refuted**, as with v1 (0.599).
+
+On the rows of the primary windows eligible under both v1 and v2:
+
+- v2 removes 18 of v1's certificates and adds 12;
+- 905 rows became eligible under STP's miniF2F environment, mostly the `π` rows, and 5 of them are vacuous;
+- 33 of the 1,152 fallback rows re-verified under all of Mathlib.
+
+**Re-coded causes (review C2).** The 100-row cause sample was redrawn from the v2 certified rows (seed 7). A separate
+coder agent (Claude Fable 5.1) coded it with the prompt saved in `review/coder_prompt.md`. The categories are those of
+v1, plus K6, "undeclared variable defaulted to ℕ". The first coding prompt had not been saved.
+
+| Cause | Rows |
+|---|---|
+| K2 | 52 |
+| K5 | 33 |
+| K3 | 9 |
+| K1 | 2 |
+| K4 | 2 |
+| K6 | 2 |
+
+Locality: 88 local. Real claim: 76 yes. The v1 coding is kept in `results/tables_v1/`.
+
+**Figure.** The x = 0 label now reads "self-play start".

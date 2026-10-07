@@ -1,101 +1,101 @@
 row_id,iteration,cause,locality,real_claim,explanation
-1908220,8.0,K5,local,yes,"Functional eq f x + y = f(x+y+2) has no solution: (0,0),(2,0),(0,2) give f0=f2=f4=f0+2, so 2=0"
-1629872,32.0,K2,local,yes,"FE at x=y=1 forces f 1 = f1/f1 + 1 = 2, but h2 says f 1 = 1"
-1437630,29.0,K2,local,yes,"h2 at k=2: (n+2)^2 | 2(n+2) means n+2 | 2, impossible for 0 < n"
-803848,26.0,K2,local,yes,n^2+1 = 6n-3 i.e. n^2-6n+4 = 0 has no natural root (n = 3 +/- sqrt 5)
-1909562,37.0,K2,global,yes,"Recurrence at n=0 gives a 1 = sqrt(a 0 + a 1) = sqrt 2, but h1 says a 1 = 1"
-3168488,3.0,K2,local,yes,"autoImplicit x y z default to Nat; 0<x,y,z with x+y+z=1 impossible (omega)"
-688658,21.0,K5,local,yes,"FE at x=0: f 0 + y = f 0, so y = 0 for every real y"
-885608,39.0,K2,local,yes,"a^n = 2 with n > 2 has no Nat solution (a=1 gives 1, a>=2 gives >=8)"
-2664688,44.0,K5,local,yes,Set eq {x | 0 <= f x} = range f impossible: f = sqrt(..) >= 0 so LHS = univ but -1 not in range
-1828955,25.0,K2,global,yes,"a^2 b = 9 and a^3 b = 27 force a = 3, b = 1, contradicting 1 < b"
-2991811,27.0,K5,local,yes,"FE f(a^2+b^2) = a+b-3 ill-defined: (1,0) gives f 1 = -2, (-1,0) gives f 1 = -4"
-2241117,4.0,K2,global,yes,"x+y+z = 1 with x,y,z > 0 forces xyz <= 1/27 by AM-GM, but xyz = 1/6"
-2204295,44.0,K5,local,yes,"Set eq {x | 0 <= f x} = range f impossible: sqrt >= 0 so LHS = univ, range excludes -1"
-2777507,37.0,K2,local,yes,"sum_{k=1..n} (k-1)^2 takes values 0,0,1,5,14,30,... never 16"
-1788109,2.0,K2,local,yes,x = 3y-4 and y = x/3+4 inconsistent (over R: y = y+8/3; in Nat via omega); autoImplicit Nat
-1974838,25.0,K2,global,yes,"autoImplicit a b c default to Nat; a,b,c > 0 with a+b+c = 1 impossible"
-1290538,29.0,K3,local,yes,"With f x = logb x 4, h1 (f x <= 1 iff 1 <= x <= 4) is a closed false fact: x = 2 gives f 2 = 2"
-1343877,35.0,K3,local,yes,"a 2011 = a 2 unfolds to sqrt(2011^2+1) = sqrt 5, closed false"
-1903224,26.0,K3,local,yes,"f x = (x+1)^2/(x+1)^2 is 1 for x != -1 (0 at -1), so f x = 5 is impossible"
-2698824,46.0,K5,local,yes,FE f x f y = x^2 y^2 + f(x+y) x y has no solution: instances force f1^2 + f(-1)^2 = -14
-1598802,6.0,K2,local,yes,"x^2+y^2+z^2 = 1 bounds |x|,|y|,|z| <= 1 so |xyz| <= 1 with equality impossible; xyz = 1 fails"
-1135383,29.0,K2,local,yes,orderOf x = 2 and orderOf x | 3 give 2 | 3
-86141,9.0,K2,global,yes,"Primes are >= 2 so p + q >= 4, but p + q = 3"
-2008530,6.0,K2,local,yes,2 * a 1 = 1^3 = 1 has no Nat solution (parity)
-2578539,5.0,K1,local,yes,"Exponent 2/3 is Nat division = 0, so hypothesis reads x^0 + y^0 = c^0 i.e. 2 = 1"
-2436805,30.0,K3,local,yes,"x 0 = sqrt(0^2 - 0) = 0 by definition, so 0 < x 0 is false"
-375452,5.0,K2,local,yes,a^2+b^2+c^2 = 1 forces |abc| <= 1 with equality impossible; abc = 1 fails
-2565415,28.0,K2,local,yes,"p | 2 implies p <= 2, contradicting p > 2"
-204915,8.0,K5,local,yes,"Precedence: x i+1 parses as (x i)+1, so hypothesis reads 1/2^i = 0 for all i"
-1846398,34.0,K5,local,yes,"FE f x f y = sqrt(x^2+y^2) unsatisfiable: (0,0) gives f 0 = 0, (0,1) gives f0 f1 = 1"
-1871098,32.0,K3,local,yes,"With f = sqrt, h1 is closed false: sqrt 1 * sqrt 1 = sqrt 2"
-3215502,36.0,K5,global,yes,"f(x-y) = f x f y at x=y gives f 0 = (f x)^2; with f 0 = 0 forces f = 0, contra exists x f x != 0"
-746922,33.0,K2,local,yes,t = a/b > 0 but t^2 = (t+3)^2 forces t = -3/2
-2806588,31.0,K3,local,yes,"f 3 = sqrt(9-18) = sqrt(-9) (= 0 in Lean), so f 3 * f 3 = 27 is closed false"
-692721,25.0,K2,local,yes,"h1 at x = n: gcd n n = n = 1, contradicting 2 <= n (range should be x < n)"
-2584787,32.0,K3,local,yes,n in Finset.Ico 1 n requires n < n
-2246798,5.0,K5,local,yes,"Precedence: a n+1 + b n+1 parses as (a n)+1+(b n)+1 = a n + b n, i.e. 2 = 0"
-2553137,29.0,K3,local,yes,"Closed false: at m = 0, sqrt 2 <= 1"
-2809187,47.0,K3,local,yes,"a 2 + a 3 = sqrt 6 + sqrt 8 ~ 5.28, so = 20 is closed false"
-2840927,41.0,K2,global,yes,"f x = x^2 + 2 sqrt n > 0 for n >= 1, so exists x, f x <= 0 fails"
-1001281,15.0,K2,local,yes,"f0 f1 = 1, f1 f2 = 2, f2 f3 = 3 force 2 * f 3 = 3, no Nat solution (fine over R)"
-2889451,37.0,K2,local,yes,a^n = 2 with n prime (n >= 2) has no Nat solution
-2199763,36.0,K2,local,no,sqrt(3/2) ~ 1.22 = x contradicts x < 1; conclusion has sqrt of negative constants
-2215186,6.0,K5,local,yes,"Precedence: f n+1 parses as (f n)+1, so n=0 gives f 0 + 1 = 0"
-2090798,8.0,K2,local,yes,"Sum of n terms each > 1 is 0 (n=0) or >= 2, never 1"
-272669,32.0,K3,local,yes,"sqrt(x^3-2) = a^x for all x is closed false (x=2,3 give incompatible a); Lean also has sqrt(-2) = 0 != a^0"
-16872,7.0,K2,global,yes,"RHS >= 2*2(a+b+c) = 4(a+b+c) > a+b+c for positive a,b,c"
-1378423,29.0,K3,local,yes,"82 | n+4 makes n even and >= 78, so n prime is impossible (even prime > 2)"
-2928664,30.0,K2,local,yes,sqrt(2n) >= 2 for n >= 2 but (n+1)/n <= 3/2
-1525599,6.0,K2,local,yes,"forall n a^n = 2b gives (n=0,1) b = 1/2; forall n b^n = 2c gives b = 1"
-1004969,42.0,K2,local,yes,"sqrt(n^2 - n) = n squares to n = 0, contradicting n != 0"
-903624,43.0,K2,local,yes,"a/b + b/a = 2 forces (a-b)^2 = 0 (or 0 = 2 if a or b is 0), contradicting a != b"
-2268472,16.0,K2,local,yes,x^2 = 2 has no integer solution
-2901657,25.0,K2,local,yes,sin t = 0 and cos t = 0 violate sin^2 + cos^2 = 1
-1054754,41.0,K2,local,yes,"forall x : Nat, x^2 = n at x = 0 gives n = 0, contradicting n != 0 (bound x shadows the sequence)"
-2624329,27.0,K2,local,yes,n=1: a 2 = (1 + a 2)^2 has no solution (y^2 + y + 1 = 0)
-3226264,40.0,K2,local,yes,"2z = sqrt 5 makes z real with z^2 = 5/4, contradicting z^2 = -1"
-2835110,47.0,K2,local,yes,"p = 3 mod 4 gives p >= 3, p^2 >= 9; a^(p^2) = 4 has no Nat solution"
-938703,26.0,K3,local,yes,"f 4 = sqrt 4 = 2 by definition, so f 4 = 7 is closed false"
-2203664,14.0,K4,local,yes,Cancelling gives y = f x * y / x; at x = 0 Lean division by zero yields y = 0 for all y
-1318547,46.0,K2,local,yes,p^q = 3 with q prime (q >= 2) has no Nat solution
-56241,6.0,K2,global,yes,"Recurrence gives a 1 = a 0 + 1 = 3, but a 1 = 2"
-1602349,33.0,K3,local,yes,Two explicit formulas for f disagree: f 0 = 10 from h0 (x=-3) vs 4 from h1
-2691833,12.0,K5,local,yes,"FE f x + y = f(x^2+y): x=0 gives f y = f 0 + y, then x = x^2 for all x"
-2433898,28.0,K2,local,yes,"Given sin, cos values have sin^2 + cos^2 = 3/2, not 1"
-1951999,42.0,K2,local,yes,a^p = 4 with p > 4 has no Nat solution
-2349058,35.0,K5,global,yes,"FE + f 0 = 0, f 1 = 1 force f(-1) = -1/2, f(-2) = 0 = f 0, breaking Equiv injectivity"
-484480,22.0,K5,local,yes,"f(x+y) = xy(x+y) ill-defined: (1,0) gives f 1 = 0, (1/2,1/2) gives f 1 = 1/4"
-759077,37.0,K5,local,yes,f : R equiv R but f x = sqrt x is not bijective (-1 not in range; sqrt(-1) = sqrt(-2) = 0)
-663814,17.0,K5,local,yes,FE at x=0 gives f y = y; then x=y=1 gives 2 = 2 + 1/2
-1002609,42.0,K2,local,no,x^2 + 4027 x = 1 has no integer solution; conclusion is literally False
-1404802,5.0,K2,global,yes,autoImplicit n m r default to Nat; all > 0 with n+m+r = 1 impossible
-1681424,26.0,K3,local,yes,"With f x = x^3 + 1, f 2 = 3 is closed false (f 2 = 9); h0 also fails at x=y=0"
-2497456,38.0,K2,local,no,a^p = 2 with p > 2 has no Nat solution; conclusion has sqrt of negative and % on reals
-665547,34.0,K3,local,yes,"0 is in Finset.range (n+1), so forall x in range, x != 0 is impossible"
-1661687,47.0,K2,local,yes,h2 at n = 0: 0 <= x 0 and x 0 < 0
-197359,42.0,K2,local,yes,"b^p = p with p prime has no Nat solution (b=1 gives 1, b>=2 gives 2^p > p)"
-2805364,22.0,K2,local,yes,"a, b in {-1, 1} so a + b in {-2, 0, 2}, never 1"
-2572715,4.0,K3,local,yes,Quantifies over all injective f; f = (x -> x - a) gives 0 < 0
-2385189,9.0,K2,local,yes,"m^a + m^b >= 4 + 4 for m,a,b > 1, cannot equal 1"
-1209295,7.0,K2,local,yes,"abc = 1 gives a^2b^2 + b^2c^2 + c^2a^2 >= 3 by AM-GM, not 1"
-3035177,25.0,K2,local,yes,"Polynomial identity forces 2ab = ab i.e. ab = 0, contradicting a, b > 0"
-279296,42.0,K2,global,yes,"p prime, p != 2 gives p >= 3; k^p = 4 has no Nat solution"
-2042039,27.0,K2,global,yes,"A..E = 0 force p = 0, which is not prime"
-1582536,44.0,K2,local,yes,"a^n = n with n prime has no Nat solution (a=1 gives 1 != n, a>=2 gives 2^n > n)"
-276388,32.0,K2,global,yes,"f(n^2) = sqrt(n^2/n) = sqrt n = 1 forces n = 1, contradicting n != 1"
-751022,29.0,K2,global,yes,"Recurrence gives a 2 = sqrt(a 1) + a 1 = 2, but a 2 = 1"
-1631547,41.0,K2,local,yes,a^p = p with p prime has no Nat solution
-2555650,25.0,K5,local,yes,sigma.symm 0 = 3 = sigma.symm 20 contradicts injectivity of an Equiv
-1408339,41.0,K5,local,yes,"f(x/y) = sqrt(x^2+y^2) ill-defined: (1,1) gives f 1 = sqrt 2, (2,2) gives sqrt 8"
-849,42.0,K5,local,yes,FE f x f y = f(x/y) + xy unsatisfiable: instances force f 0 = 0 and f 0^2 = f 1 = golden ratio
-1764469,33.0,K3,local,yes,"orderOf 1 = 1, so forall x, orderOf x = 2 is impossible"
-2468022,5.0,K2,local,yes,"autoImplicit x y z default to Nat; x,y,z > 0 with x+y+z = 1 impossible (omega)"
-988927,33.0,K2,local,yes,"5^n | n with n > 0 needs 5^n <= n, impossible"
-3154085,7.0,K5,local,yes,"forall a n, f n = sqrt(1+a^2)^2: a=0 and a=1 give f 0 = 1 and f 0 = 2 (quantifier scope error)"
-1422685,18.0,K2,local,yes,x^2 = -1 has no real solution
-1641536,26.0,K3,local,yes,"forall a b, ab/(a-b) = const is false on its own: (2,1) gives 2, (1,2) gives -2"
-1072407,39.0,K5,local,yes,"Set eq {x | 0 <= f x} = f image: sqrt >= 0 so LHS = univ, but image excludes -1"
-3045690,7.0,K2,local,yes,"Recurrence at n=0: f 1 = f 0 + f 1 forces f 0 = 0, but f 0 = 1"
-2730931,25.0,K2,local,yes,hdiv at n = 2: (2-1)^2 = 1 = 4m has no Nat solution
+2446261,8.0,K5,local,yes,"gcd written as the pair (a, p) = 1 forces a = 1 and p = 1, so Nat.Prime p fails"
+3190942,44.0,K2,local,yes,"a^(p+1) = p has no solution for prime p (a = 1 gives 1, a >= 2 gives > p)"
+106942,29.0,K2,global,yes,p * q = 8 cannot hold with both p and q prime (8 = 2^3)
+3215785,38.0,K2,local,yes,a^p = 2 has no natural solution once p >= 2 (prime)
+131364,31.0,K2,local,yes,"sum of a i = i + 1 over range n is n(n+1)/2, never 49"
+2186395,3.0,K6,local,yes,"undeclared a b c default to N, so a*b*c = 1 forces a = b = c = 1 and then b(a+b) = 2 but c(a+b+c) = 3"
+4699,21.0,K2,global,yes,"power sums 3, 5, 7 give e3 = -2/3 whose cubic has only one real root, so no real a b c exist"
+1004969,42.0,K2,local,yes,"sqrt(n^2 - n) = n forces n = 0, contradicting n != 0"
+1348574,37.0,K2,local,yes,a^p = 2 has no natural solution once p >= 2 (prime)
+800838,30.0,K2,local,no,"a 3 = 10 does not divide 8, contradicting the universal divisibility hypothesis"
+2991309,33.0,K5,local,yes,"f(n+1+m) = f n + f m with f 2 = 2 forces 3 * f 0 = 2, impossible in N"
+2420076,4.0,K2,local,yes,"a^2 + b^2 + c^2 = 1 bounds |abc| <= 3^(-3/2) < 1, so abc = 1 is impossible"
+1360699,44.0,K5,local,yes,"a*x^2 + x = sqrt x + n for all x fails (x = 0 gives n = 0, x = 1 gives a = 0, x = 4 gives 4 = 2)"
+625093,36.0,K2,local,yes,"m*n = 3 mod 4 forces m + n = 0 mod 4, contradicting (m+n) % 4 = 2"
+3178012,2.0,K2,global,yes,"with a b c > 0 and abc = 1, a + b + 2c >= 2/sqrt c + 2c > 2, so a + b + 2c = 2 fails"
+1656320,45.0,K3,local,yes,"sqrt(n+3) = n*sqrt n has no natural solution (n = 0 gives sqrt 3 = 0, n >= 1 needs n^3 = n+3)"
+1361615,26.0,K5,local,yes,"taking x = y gives f x / f x = 0 while f x != 0, so 1 = 0"
+2120607,35.0,K2,global,yes,"f k = f 0 + k so the sum over range n is >= n(n-1)/2 >= 6 for n > 3, never 1"
+572504,32.0,K2,local,yes,"b = sqrt(a+1) and a = sqrt(b+1) force (a-b)(a+b+1) = 0 hence a = b, contradicting a != b"
+2698824,46.0,K5,local,yes,"the functional equation forces f 0 = 0, f 1 and f(-1) both roots of 5t^2 - 8t - 1 with product 1, impossible"
+861254,6.0,K2,local,yes,a 0 = 0 but 2 * a 0 = (0+1)^m = 1
+298274,27.0,K3,local,yes,"k = 1 gives n % 1 = 0, so the hypothesis n % k != 0 for all k > 0 is false"
+1496838,9.0,K2,local,yes,"a + b + c = 3 makes sqrt(a+b+c) = sqrt 3, not 3"
+2786291,6.0,K4,local,yes,"at n = 0 Lean evaluates (1 + 1/0)^0 = 1, contradicting f 0 = 0"
+1991436,5.0,K2,local,yes,"x^2 + y^2 + z^2 = 1 bounds |xyz| <= 3^(-3/2) < 1, so xyz = 1 is impossible"
+1828266,33.0,K2,global,yes,"f 1 = 2 gives f 2 = f 1^2 - 2 f 1 = 0, contradicting f i > 0"
+470545,5.0,K2,local,yes,three reals cannot be pairwise at distance exactly 1 on a line
+1934949,28.0,K5,local,no,"the equation forces f 0 = 1, f(-1) = 2, f(-2) = 5, hence f 2 = 1, but x = y = 1 gives f 2 = 2"
+3153724,9.0,K2,local,yes,"with x^2 + y^2 + z^2 = 1, |x^2 yz - 2xyz| <= |xyz| * |x - 2| < 1"
+2066288,34.0,K2,local,yes,"f x = logb 2 x gives f(125/2) = log2 62.5 ~ 5.97, not 1"
+1386539,47.0,K5,local,no,f x + y = f x * y (parsing slip for f(x+y)) gives f x = 0 at y = 0 and then 1 = 0 at y = 1
+459443,36.0,K5,local,yes,"f 0 = 1 and f 2 = 4 force f(-2) = -7/4, f(-1) = +-1/2, f 1 = -+2, but f 1^2 = f 2 + 2 = 6"
+1166145,30.0,K3,local,yes,(n+1)^2 + 1 > n^2 + 1 > 0 so it cannot divide n^2 + 1
+2494583,38.0,K5,local,yes,"n = m = 1 gives f 1 = f 1^2 * sqrt 2, i.e. 2 = 4 sqrt 2"
+1215145,35.0,K2,local,yes,x 0 = sqrt(0^2 + 1) = 1 contradicts 1 < x 0
+845103,29.0,K1,local,yes,at n = 0 truncated subtraction gives S 0 = S 0 + 1
+2911446,5.0,K2,local,yes,"a^2 + b^2 + c^2 = 1 bounds |abc| <= 3^(-3/2) < 1, so abc = 1 is impossible"
+272669,32.0,K5,local,no,"sqrt(x^3 - 2) cannot equal a^x for all x (x = cbrt 2 forces a = 0, then larger x give sqrt > 0 = 0)"
+483274,29.0,K5,local,no,x = sqrt x + 1 for all x fails at x = 0 (0 = 1)
+3067548,31.0,K5,local,yes,"a n+1 parses as (a n) + 1, so (a n) + 1 = (a n)/2 forces a n = -2, but a n = (1/2)^n > 0"
+3234150,15.0,K3,local,yes,"3t^2 + 2t + 1 = 0 has negative discriminant, no real t = x/y"
+1733586,44.0,K3,local,yes,a^2 + b^2 = 2765 = 5*7*79 has no natural solution (7 and 79 are 3 mod 4 to odd power)
+1771187,36.0,K2,local,yes,a^p = 2 has no natural solution once p >= 2 (prime)
+40337,7.0,K5,local,no,(f x)^2 = 1 - x fails at x = 2 where the right side is negative
+1812356,8.0,K2,local,yes,"a, b, c >= 1 in N makes a + b + c >= 3, never 1"
+399135,35.0,K2,local,yes,a^p = 2 has no natural solution once p > 3
+1746511,7.0,K5,local,no,a n = x^2 for every x forces 0 = a n = 1
+2577605,29.0,K3,local,yes,"logb a (1/a) is always -1 (or 0), never -2"
+1018568,30.0,K2,local,yes,n^n > n for n > 1 so n^n cannot divide n
+1502051,6.0,K2,local,yes,(f 0)^2 = 0^2 + 1 = 1 contradicts f 0 = 0
+3198902,38.0,K2,local,no,"p^p * q^q = p * q is impossible for prime p (p^p > p and q^q >= q, or q = 0 gives p^p = 0)"
+275930,43.0,K2,local,yes,"a^p - 1 = 4 means a^p = 5, impossible for p >= 2"
+1120612,16.0,K2,global,yes,"p^3 | 8 forces p in {1, 2}; p odd forces p = 1, which is not prime"
+700438,31.0,K2,global,yes,"0 < x < 1 makes log x < 0 so logb x 2 = log 2 / log x is negative, not 2"
+678648,26.0,K2,local,no,"IsUnit (n^2 + 1) in N forces n^2 + 1 = 1, i.e. n = 0, contradicting 1 < n"
+527337,35.0,K5,local,yes,"f >= 0 everywhere so {x | 0 <= f x} = univ, but f '' univ = range f omits -1"
+2238638,27.0,K2,local,yes,f(-1) = 0 but the hypothesis demands f(-1) >= -1 + 2 = 1
+742268,29.0,K2,local,no,"n > 3 makes n^n >= 256, never 1"
+247482,26.0,K2,global,yes,"sqrt x = sqrt y with x, y >= 0 gives x = y, so sqrt(x+39) = sqrt(y+39)"
+821224,14.0,K6,global,yes,"undeclared x and untyped y default to N, where x, y > 0 forces x + y >= 2, not 1"
+2948397,30.0,K3,local,no,m = n^3 is a multiple of n with m < n^3 false
+2008530,6.0,K5,local,no,2 * a 1 = 1^3 = 1 has no natural solution
+2015472,29.0,K5,local,yes,"f 0 = 0 and x = y = 2 force a = -3/4, then x = y = 1 gives 9/2 = 51/8"
+2691833,12.0,K5,local,no,"f x + y = f(x^2 + y) (parsing slip) with y = -x^2 gives f x = f 0 + x^2, then f x = f(x^2) forces x^2 = x^4 for all x"
+354031,34.0,K3,local,yes,"n = 0 gives sqrt(1 - a^0) = sqrt 0 = 0, not 1/2"
+1390940,42.0,K5,local,yes,"x^4 is not injective on R (1 and -1), so it cannot be an Equiv"
+1291852,35.0,K5,local,yes,f 1 = f(1/2)^2 = 4 contradicts f 1 = 2
+405297,22.0,K2,local,yes,"a, b in {-1, 1} gives a + b in {-2, 0, 2}, never 1"
+131799,37.0,K2,local,yes,"a^p = 2 with p >= 2 forces a = 1, contradicting a > 1 (or a >= 2 gives >= 4)"
+72778,16.0,K5,local,no,"a x + y = a(x + y + xy) (parsing slip) gives a y = 1 + y, then xy = 0 for all x, y"
+1740772,42.0,K2,local,yes,"a prime has divisors 1 and n, so the divisor sum is n + 1, not n"
+2321080,6.0,K5,local,no,x * f x = 1 - x at x = 0 gives 0 = 1
+986474,27.0,K5,local,yes,"x = 0 and x = 2 both give argument 0, but f 0 = 0 and f 0 = 8"
+2674129,38.0,K2,local,yes,"a^p = p is impossible for p > 4 (a = 1 gives 1, a >= 2 gives 2^p > p)"
+1055202,26.0,K2,local,yes,"7 | n + 2 gives n = 5 mod 7, so n^2 + 2 = 27 = 6 mod 7, not 0"
+2802970,33.0,K5,local,yes,"f >= 0 everywhere so {x | 0 <= f x} = univ, but f '' univ = range f omits -1"
+146738,42.0,K5,local,yes,"x -> n*x with n prime is not surjective on N (1 is missed), so f cannot be an Equiv"
+1160135,22.0,K2,global,no,"A = B means (0, 1) = (1, 0)"
+2572715,4.0,K5,local,no,"the injective f x = x - a - 1 has f a = -1 < 0, so the for-all-f hypothesis is false"
+2452746,9.0,K2,global,yes,"the recurrence gives a 2 = 4, a 3 = 3, then 4 * a 4 = 5 has no natural solution"
+2834931,7.0,K3,local,no,"x = y = 1 satisfies xy = 1 but x^2 + y^2 = 2, not 1"
+251259,25.0,K2,local,yes,"the linear system gives 13b = 54, no integer solution"
+1529901,28.0,K5,local,yes,"f 1 = 1 and f(1 - 1) force f(-1) = -1, but x = -1, y = 0 gives f(-1) = 1"
+2240416,27.0,K4,local,no,"a real c is cast to C with imaginary part 0, so c = Complex.I is impossible"
+1785952,44.0,K5,local,no,f x * y = sqrt 3 at y = 0 gives 0 = sqrt 3
+2626806,31.0,K2,local,yes,"x k = 2^(9-k) x 9 makes the sum 1022 * x 9, never 52"
+2699463,36.0,K2,local,no,"Nat.sqrt(4n)^2 > n for n >= 2, so it cannot equal a prime n"
+2190168,41.0,K2,local,yes,"a^p = p is impossible for prime p (a = 1 gives 1, a >= 2 gives 2^p > p)"
+829872,23.0,K5,local,no,"a ring equivalence is additive, so f(x+y) = f x + f y + xy forces xy = 0 for all x, y"
+2578880,26.0,K2,local,yes,"x = sqrt(x^2 + (1-x)^2) forces (1-x)^2 = 0, i.e. x = 1, contradicting x < 1"
+1621344,42.0,K5,local,yes,"sqrt(4x^3 + 1) >= 0 is not surjective on R, so it cannot be an Equiv"
+1857827,33.0,K2,local,yes,"p^n = 2 forces p = 2, contradicting p != 2"
+2811588,5.0,K2,local,yes,"with a^2 + b^2 + c^2 = 1, a^2 b + b^2 c + c^2 a <= a^2 + b^2 + c^2 = 1 with equality impossible"
+1017339,44.0,K2,local,yes,"sqrt(n^2 - 1) = 3n squares to n^2 - 1 = 9n^2, impossible for n >= 1 (n = 0 excluded)"
+1338619,7.0,K5,local,yes,"a n+1 parses as (a n) + 1, so at n = 0 it gives a 0 + 1 = 0, i.e. 2 = 0"
+838362,18.0,K5,local,no,(f 2)^2 = 2 has no natural solution
+1439145,34.0,K2,global,yes,"the sum over range n with n > 1 includes a 1 = 1 > 0, so it cannot be 0"
+1308211,26.0,K1,local,no,"natural division makes 1/3 + 1/9 + 1/27 + 1/81 = 0, so f 3 = 0, not 13"
+1213025,7.0,K5,local,yes,"a n+1 parses as (a n) + 1, so (a n) + 1 = a n + n forces n = 1 for all n, false at n = 0"
+1951806,42.0,K2,local,yes,"a^p = 4 with p > 4 is impossible (a = 1 gives 1, a >= 2 gives >= 32)"

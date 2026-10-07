@@ -29,7 +29,7 @@ def main():
             ax2.plot(q.iteration, 100 * q.coverage, "o-", color="#555", ms=2.5, lw=1)
     for x in (0, 24):
         ax.axvline(x, color="grey", lw=0.8, ls="--")
-    ax.text(0.5, ax.get_ylim()[1] * 0.92, "self-play\nstart", fontsize=7, color="grey")
+    ax.text(0.4, ax.get_ylim()[1] * 0.55, "self-play\nstart", fontsize=7, color="grey")
     ax.text(24.5, ax.get_ylim()[1] * 0.92, "restart from\nre-trained model", fontsize=7, color="grey")
     for a in (ax, ax2):
         a.axvspan(1, 9, color="#999", alpha=0.08)

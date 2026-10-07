@@ -1,146 +1,130 @@
-row_id,iteration,swap,auto,statement
-1908220,8.0,True,,"theorem lean_workbook_21 (f : ℝ → ℝ) (hf : ∀ x y, f x + y = f (x + y + 2)) (x y : ℝ) : f x - f y = x - y:= by"
-1629872,32.0,True,,"theorem amc12b_2013_p10 (f : ℝ → ℝ) (h₀ : 0 < f) (h₁ : ∀ x y, f (x * y) = f x / f y + 1) (h₂ : f 1 = 1): f (4 / 2) ≥ 2 - Real.sqrt (12):= by"
-1437630,29.0,True,,"theorem mathd_algebra_425 (n : ℤ) (h₀ : 0 < n) (h₁ : n < 10) (h₂ : ∀ k : ℕ, 1 < k → (n + k)^2 ∣ 2 * (n + k)) : 49 / (n^2 - n) ≥ 1:= by"
-803848,26.0,True,,theorem mathd_numbertheory_112_34 (n : ℕ) (h₀ : 1 < n) (h₁ : n ≠ 3) (h₂ : n ^ 2 + 1 = 3 * (2 * n - 1)) : n = 7:= by
-1909562,37.0,True,,"theorem amc12a_2013_p16 (n : ℕ) (a : ℕ → ℝ) (h₀ : a 0 = 1)
-        (h₁ : a 1 = 1) (h₂ : ∀ n, a (n + 1) = Real.sqrt (a n + a 1))    :  a 6 ≠ 2:= by"
-3168488,3.0,True,omega,"theorem mathd_algebra_423 (h₀ : 0 < x ∧ 0 < y ∧ 0 < z) (h₁ : x * y = 1) 
-     (h₂ : x * z = 1) (h₃ : y * z = 1) (h₄ : x + y + z = 1) : 1 / x + 1 / y + 1 / z = 1:= by"
-688658,21.0,True,,"theorem lean_workbook_plus_58486 (f : ℝ → ℝ) (h₁ : ∀ x y, f x + y = f (x - y + x + y) + x * y * (1 /√2)) :  f x = 0 ↔ |x| ≤ 2:= by"
-885608,39.0,True,,"theorem mathd_numbertheory_1746 (n : ℕ) (h₀ : 1 < n) (h₁ : 2 < n) (a : ℕ) 
-        (h₂ : a ^ n = 2) : a ^ (n ^ (n + 1)) % n = 0 ∧ a ^ (n ^ (n + 1)) % (n * (n + 1)) ≤ (n + 1):= by"
-2664688,44.0,True,,"theorem aime_1995_p10 (n : ℕ) (h₀ : n ≠ 0) (hn : 3 < n) (f : ℝ → ℝ) (h₁ : ∀ x, f x = Real.sqrt (n^2 - x))  (h₂ :   { x | 0 ≤ f x } = f '' Set.univ) :   Real.sqrt 3 / Real.sqrt n < n - Real.sqrt (n^2 - 3):= by"
-1828955,25.0,True,,"theorem amc12a_2012_p5 (a b : ℝ) (f : ℕ → ℝ) (h₀ : ∀ n, f n = a ^ n * b)
-  (h₁ : 1 < b) (h₂ : 0 < a) (h₃ : f 2 = 9) (h₄ : f 3 = 27) : b = 3 ∧ a = 2:= by"
-2991811,27.0,True,,"theorem mathd_algebra_590 (f : ℤ → ℤ) (h₀ : ∀ a b, f (a^2 + b^2) = a + b - 3) : f 30 = 5:= by"
-2241117,4.0,True,,"theorem lean_workbook_1093 (x y z : ℝ) (h₀ : 0 < x ∧ 0 < y ∧ 0 < z) (h₁ : x ≠ 1 ∧ y ≠ 1 ∧ z ≠ 1)
-  (h₂ : x * y * z = 1 / 6) (h₃ : x + y + z = 1) :
-  Real.log ((1 / (1 - x) - x) * (1 / (1 - y) - y) * (1 / (1 - z) - z)) ≤ Real.log (7^3):= by"
-2204295,44.0,True,,"theorem amc12a_2007_p15 (a b : ℝ) (f : ℝ → ℝ) (h₀ : 0 < b) (h₁ : ∀ x, f x = Real.sqrt (a * x ^ 2 + b * x)) (h₂ : { x | 0 ≤ f x } = f '' Set.univ) : a ^ 2 ≤ 4 * Real.sqrt (b / a - 1) ^ 2:= by"
-2777507,37.0,True,,"theorem mathd_numbertheory_887 (n : ℕ) (h₀ : 1 < n) (h₁ : 2 < n) (h₂ : ∑ k in Finset.Icc 1 n, (k-1)^2 = 16) : Nat.sqrt (n^2 - 1) ≤ 4 * √ (4^3 - 1):= by"
-1788109,2.0,True,omega,theorem mathd_algebra_224_eqn (h₀ : x = 3 * y - 4) (h₁ : y = (x / 3) + 4) : x = 12 * (x / 3) - 8:= by
-1974838,25.0,True,omega,theorem main_inequality (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) (hab : a + b + c = 1) :  a*b / (a + b) + b*c / (b + c) + c*a / (c + a) ≤ 1 / 2:= by
-1290538,29.0,True,,"theorem aime_1994_p2 (f : ℝ → ℝ) (h₀ : ∀ x, f x = Real.logb x 4)
-    (h₁ : ∀ x, f x ≤ 1 ↔ 1 ≤ x ∧ x ≤ 4)
-    (h₂ : ∃ x, f x = 0) : ∃ x, f x = -1 ∧ 0 < x ∧ x < 1:= by"
-1343877,35.0,True,,"theorem amc12b_2011_p18 (a : ℕ → ℝ) (h₀ : ∀ n, a n = Real.sqrt (n ^ 2 + 1)) (h₁ : a 2011 = a 2 ) :  a 2010 < Real.sqrt 4053:= by"
-1903224,26.0,True,,"theorem mathd_algebra_241 (f : ℝ → ℝ) (h₀ : ∀ x, f x = (x + 1) ^ 2 / (x + 1) ^ 2)
-    (h₁ : x ≠ -1) (h₂ : f x = 5) : x = -1/2:= by"
-2698824,46.0,True,,"theorem theorem_11_75 (f : ℝ → ℝ) (h₀ : ContinuousOn f  (Set.univ))  (h₁ : ∀ x y, f x * f y = x ^ 2 * y ^ 2 + f (x + y) * x * y) :   Real.sqrt (4 * Real.sqrt 2) / Real.sqrt 3 < f 4:= by"
-1598802,6.0,True,,"theorem lean_workbook_1968 (x y z : ℝ) (h : x^2 + y^2 + z^2 = 1) (hxyz : x * y * z = 1) : 3 * Real.sqrt (x^2 + y^2 + z^2) ≤ x + y + z + Real.sqrt (1 + 1 + 1) *
-                (Real.sqrt (x ^ 2 + y ^ 2) + Real.sqrt (y ^ 2 + z ^ 2) + Real.sqrt (z ^ 2 + x ^ 2)):= by"
-1135383,29.0,True,,"theorem exercise_2_2_5 (G : Type*) [Group G] (x : G)
-  (hx : x ≠ 1)
-  (H : orderOf x = 2)
-  (h : orderOf x ∣ 3) :
-  x = x⁻¹:= by"
-86141,9.0,True,,theorem lean_workbook_453 (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) (hpq : p + q = 3) : (p + 2 * q) ^ 2 - (2 * p + q) ^ 2 ≤ 3 * p ^ 2:= by
-2008530,6.0,True,,"theorem lean_workbook_4883 (a : ℕ → ℕ) (ha hb : a 0 = 0) (hab : ∀ m, 2 * a m = m^3) : a m = m^2:= by"
-2578539,5.0,False,norm_num at *,"theorem lean_workbook_plus_24595 (x y c : ℝ) (h₁ : x ^ (2 / 3) + y ^ (2 / 3) = c ^ (2 / 3)) : ∃ s : ℝ, x ^ 2 + y ^ 2 = c ^ 2 - 2 * c * (x * (Real.cos s) ^ 2 + y * (Real.cos s) ^ 2) - 2 * c * (x * (Real.sin s) ^ 2 + y * (Real.sin s) ^ 2):= by"
-2436805,30.0,True,simp_all,"theorem aime_2000_p14 (n : ℕ) (hn : 1 < n) (x : ℕ → ℝ)
-   (hx₁ : 0 < x 0) (hx₂ : ∀ n, x n = Real.sqrt (n ^ 2 - n)) : x (n - 1) ≥ Real.sqrt 1:= by"
-375452,5.0,True,,"theorem lean_workbook_4506 (a b c : ℝ) (h₀ : a ^ 2 + b ^ 2 + c ^ 2 = 1) (h₁ : a * b * c = 1) :
-   2 * (2 * (a * b + b * c + c * a) + b * b * (a - b) * (a - c) + c * c * (a - b) * (a - c) + b * b * c * c) ≥ a * b * c * (a + b + b + c + c + a):= by"
-2565415,28.0,True,,theorem theorem_proof_of_ge_0 (p : ℕ) (hp : p.Prime) (h₀ : p > 2) (h₁ : p ∣ 2) : 50 ∣ p^3 - p:= by
-204915,8.0,True,,"theorem lean_workbook_396621 (n : ℕ) (x : ℕ → ℝ) (h₀ : x 0 = 1) (h₁ : ∀ i, x i+1 = x i + 1 - 1/2 ^ (i)) : x n ≤ 1 + 0.5 ^ (n + 1):= by"
-1846398,34.0,True,,"theorem theorem_1_27374 (f : ℝ → ℝ) (hf: ∀ x y, f x * f y = Real.sqrt (x^2 + y^2))      (h : f (1/2) = 1/2): abs (f 1/2^2 - 2) < 4 * f 1/2:= by"
-1871098,32.0,True,,"theorem mathn_algebra_1012 (f : ℝ → ℝ) (h₀ : ∀ x, f x = Real.sqrt x) (h₁ : ∀ x y, f x * f y = f (x ^ 2 + y ^ 2)) (h₂ : f 4 = 2) : (Real.sqrt (4 * 3) - f 3) ≤ 2:= by"
-3215502,36.0,True,,"theorem algebraic_21_2157 (f : ℝ → ℝ) (h₀ : f 0 = 0) (h₁ : ∀ x y, f (x - y) = f x * f y) (h₂ : ∃ x, f x ≠ 0) : (∀ x y, f (x * y) = f x * f y) ↔ ∀ x, f x = x^2:= by"
-746922,33.0,True,,theorem aime_1988_p11 (a b : ℝ) (h₀ : 0 < a ∧ 0 < b) (h₁ : a ≠ b) (h₂ : a ^ 2 / b ^ 2 = (a / b + 3)^2) : a / b = 2 - √5:= by
-2806588,31.0,True,,"theorem problem2019al20 (f : ℝ → ℝ) (h₀ : ∀ x, f x = Real.sqrt (x ^ 2 - 6 * x)) (h₁ : ∀ x y, f x * f y = f (x + y)) (h₂ : f 3 * f 3 = 27) : ∀ x, f x ≥ 0 ∧ ∀ x, f x ≤ Real.sqrt (x ^ 2 + 4 * x):= by"
-692721,25.0,True,,"theorem mathd_numbertheory_263 (n : ℕ) (h₀ : 2 ≤ n) (h₁ : ∀ x : ℕ, 2 ≤ x → x ≤ n → Nat.gcd x n = 1) : n.Prime:= by"
-2584787,32.0,True,norm_num at *,"theorem theorem_2022_6_10 (n : ℕ) (hn : n ∈ Finset.Ico 1 n) : 
-    (n : ℂ) ^ n ≠ -1:= by"
-2246798,5.0,True,,"theorem theorem_376 (a b : ℕ → ℕ)
- (h₀ : a 0 ≠ 0 ∨ b 0 ≠ 0) (h₁ : ∀ n, a n+1 + b n+1 = a n + b n) :
- a n ∣ b n:= by"
-2553137,29.0,True,,"theorem lean_workbook_plus_5815 (x : ℝ) (hx : 0 < x) (h : ∀ m : ℕ, Real.sqrt (2 - m) ≤ m + 1) :
-  Real.sqrt (2 - x) ≤ x + 1 := by"
-2809187,47.0,True,,"theorem amc12b_2017_p12 (n : ℕ) (h₀ : n ≠ 0 ∧ 1 < n) (a : ℕ → ℝ) (h₁ : ∀ i, a i = Real.sqrt (2 * (i + 1))) (h₂ : a 2 + a 3 = 20) : (a 1 + a (n + 1)) ^ 2 ≤ 288 * Real.sqrt 15:= by"
-2840927,41.0,True,,"theorem main_exercise (n : ℕ) (hn : n ≠ 0) (h' : 2 ≤ n) (f : ℝ → ℝ)   (h₀ : ∀ x, f x = x ^ 2 + 2 * Real.sqrt (n))  (h₁ : ∃ x, f x ≤ 0) : ∑ k in Finset.range n, k ≤ n * (n - 1) * Real.sqrt n:= by"
-1001281,15.0,True,,"theorem lean_workbook_38257 (f : ℕ → ℕ) (n : ℕ) (hn : f 0 = 1 ∧ ∀ i, f i * f (i+1) = i + 1) :  ∑ k in Finset.range n, f k / f k ≤ n + 1:= by"
-2889451,37.0,True,,theorem thm_3_2_2010 (n : ℕ) (hn : 1 < n) (hn_prime : Nat.Prime n) { a : ℕ} (ha : a^n = 2) : a ≡ 2 [MOD n] ↔ n = 2:= by
-2199763,36.0,True,,theorem theorem_61 (x : ℝ) (h₀ : 0 < x ∧ x < 1) (h₁ : Real.sqrt (3/2) = x) :  Real.sqrt (1 - Real.sqrt 3) / Real.sqrt (1 - Real.sqrt 2) ≤ x ^ 2:= by
-2215186,6.0,True,,"theorem lean_workbook_55339 (f : ℕ → ℕ) (hf : f 0 = 0 ∧ ∀ n, f n+1 = n * f (n+1 - 1)) : ∀ n, 2 * f n = n ^ 2:= by"
-2090798,8.0,True,,"theorem lean_workbook_plus_1480 (a : ℕ → ℕ) (h1 : ∀ n, 1 < a n) (h2 : ∑ i in Finset.range n, a i = 1) : n = 1:= by"
-272669,32.0,True,,"theorem problem169 (f : ℝ → ℝ) (h₀ : ∀ x, f x = Real.sqrt (x^3 - 2)) (h₁ : ∃ a, ∀ x, f x = a ^ x) (h₂ : Real.sqrt (x ^ 3 - 2) = 11) : Real.sqrt (x ^ 3 - 2) * x ≤ 66:= by"
-16872,7.0,True,,theorem lean_workbook_plus_845 (a b c : ℝ) (hab : a > 0) (hb : b > 0) (hc : c > 0) (h : a + b + c = 2 * (a * b ^ 2 / (a + b) + b * c ^ 2 / (b + c) + c * a ^ 2 / (a + c)) + 2 * (a + b + b + c + c + a)) :    a * b + b * c + c * a ≥ a * b * c:= by
-1378423,29.0,True,,theorem mathd_numbertheory_140 (n : ℕ) (hn : n.Prime) (ln : (82 : ℕ) ∣ n + 4) : n = 328 := by
-2928664,30.0,True,,theorem amc12a_2010_p12 (n : ℕ) (h₀ : 2 ≤ n) (h₁ : Real.sqrt (2 * n) = (n + 1)  / n) : 2 * n ^ 2 * (n + 1)^2 = 2 * (8 * n * (n + 1)) ^ (n - 2):= by
-1525599,6.0,True,,"theorem theorem_169 (a b c : ℝ) (h₁ : ∀ n : ℕ, a^n = 2 * b) (h₂ : ∀ n : ℕ, b^n = 2 * c) : a^8 + b^8 + c^8 ≤ 64 * c^8:= by"
-1004969,42.0,True,,theorem amc12b_2006_p17 (n : ℕ) (h₀ : n ≠ 0) (h₁ : n ≤ 100)  (h₂ : Real.sqrt (n^2 - n) = n) : (2 : ℝ) ^ (n + 3) * n ≥ (7 : ℝ) ^ n:= by
-903624,43.0,True,,"theorem theorem_exercise_13_44 (a b : ℝ) (h₀ :  a ≠ 0) ( h₁ : b ≠ 0) ( h₂ : a ≠ b)  ( h₃ :  a / b + b / a = 2) :
-        Real.sqrt (a + b) / (a - b) * (a + b) ≠ 2:= by"
-2268472,16.0,True,,theorem lean_workbook_45895 (x : ℤ) (h₁ : x ≠ 0 ∧ x^2 = 2)  : x ^ 4 = 4 + 3*x^2:= by
-2901657,25.0,True,,theorem trigo_01 (θ : ℝ) (h : sin θ = 0 ∧ cos θ = 0) : 0 < sin θ ^ 2 + cos θ ^ 2:= by
-1054754,41.0,True,,"theorem algebra_p17459646_12 (n : ℕ) (hn : n ≠ 0)        (x : ℕ → ℤ) (hx : ∀ x, x ^ 2 = n) :       ∑ k in Finset.range n, (x k * x k) / n ≥ n:= by"
-2624329,27.0,True,,"theorem amc12a_2008_p4 (a : ℕ → ℕ) (h₀ : a 0 = 1) (h₁ : a 1 = 1) (h : ∀ n, 0 < n → a (n + 1) = (a n + a (n + 1)) ^ 2) : a 3 = 2 ^ 45 - 1:= by"
-3226264,40.0,True,,"theorem aime_1984_p10 (z : ℂ) (h₀ : z ≠ 0 ∧ z^2 = -1) (h₁ : 2 * z = √5) :
-     Complex.abs (1 - z^4) ≥ Real.sqrt (2 - √5) ^ 2:= by"
-2835110,47.0,True,,"theorem lean_17708 (p : ℕ) (hp : Nat.Prime p) (h : p ≡ 3 [ZMOD 4]  )
-        (a : ℕ) (h1 : a ≠ 0 ∧ a ^ (p^2) = 4) : a  % p = 1 ∧ a^p % p = 1 := by"
-938703,26.0,True,,"theorem mathd_algebra_243 (f : ℝ → ℝ) (h₀ : ∀ x, x ≥ 0 → f x = Real.sqrt x) (h₁ : ∀ x, x < 0 → f x = x ^ 3) (h₂ : f 4 = 7) : f (f 4) = 9:= by"
-2203664,14.0,True,,"theorem lean_workbook_plus_8342  (f : ℝ → ℝ)
-   (h₀ : f 1 = 1)
-   (h₁ : ∀ x y, f x + y = f x + f x * y / x)
-   : ∀ x, f x = x:= by"
-1318547,46.0,True,,"theorem main_p1631 (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
-    (hpq : p^q - 1 = 2) {f : ℕ → ℝ} 
-    (hf : ∀ x, f x = Real.sqrt (x^2 + 2)) :
-        ((p * q : ℕ) : ℝ) * f (p * q) ≠ q:= by"
-56241,6.0,True,,"theorem lean_workbook_plus_3445 (a : ℕ → ℕ) (a2 : a 0 = 2) (a3 : a 1 = 2) (a4 : ∀ n:ℕ, a n + 1 = a (n + 1)) : a m ≤ m ^ 2:= by"
-1602349,33.0,True,,"theorem amc12a_2019_p21 (x : ℝ) (f : ℝ → ℝ) (h₀ : ∀ x, f (x + 3) = 3 * x ^ 2 + 7 * x + 4)
-   (h₁ : ∀ x, f x = x ^ 2 + 2 * x * Real.sqrt (3 - x^2) + 4)  : f x > 4 ↔ 0 < x ∧ x< 3:= by"
-2691833,12.0,True,,"theorem lean_workbook_plus_69558 (f : ℝ → ℝ)
+row_id,iteration,swap,auto,auto_bound,statement
+2446261,8.0,False,aesop,False,"theorem lean_workbook_1988 (p : ℕ) (hp : Nat.Prime p) (a : ℕ) (h : (a, p) = 1)  : ∃ x : ℕ, x < p ∧ a * x ≡ 1 [ZMOD p]  := by"
+3190942,44.0,True,,False,theorem main_5978 (p : ℕ) (h₀ : Nat.Prime p) (a : ℕ) (h₁ : a ^ (p + 1) = p) : a ∣ a ^ (p + 2) + 2 ↔ a = 2:= by
+106942,29.0,True,,False,"theorem maintheorem_2018pq18 (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) 
+      (hpq : p * q = 8) : 2^(p^2*q) ∣ (p^2 + q)^4:= by"
+3215785,38.0,True,,False,theorem theorem_problem2_1 (p : ℕ) (hp : Nat.Prime p) ( hp1 : p ≠ 2) ( a : ℕ)  ( h : a ^ p = 2) : a ≠ 2 ∧ a ^ (p * (p - 1)) ≠ 4 := by
+131364,31.0,True,,False,"theorem aime_1987_p7 (n : ℕ) (a : ℕ → ℕ) (h₀ : ∀ i < n, a i = i + 1)
+     (h₁ : n < 100) (h₂ : ∑ i in Finset.range n, a i = 49) : n = 20 ∧ ∀ i < n, a i ≤ 40↔ n = 20 ∧ ∀ i < 20, a i ≤ 40:= by"
+2186395,3.0,True,simp_all,True,"theorem mathd_algebra_245 (h₀ : 0 < a ∧ 0 < b ∧ 0 < c) (h₁ : a * b * c = 1)
+             (h₂ : b * (a + b) = c * (a + b + c)) : b = c:= by"
+4699,21.0,True,,False,theorem lean_workbook_plus_47266 (a b c : ℝ) (h₁ : a + b + c = 3) (h₂ : a^2 + b^2 + c^2 = 5) (h₃ : a^3 + b^3 + c^3 = 7) : a^4 * b^6 ≤ 985:= by
+1004969,42.0,True,,False,theorem amc12b_2006_p17 (n : ℕ) (h₀ : n ≠ 0) (h₁ : n ≤ 100)  (h₂ : Real.sqrt (n^2 - n) = n) : (2 : ℝ) ^ (n + 3) * n ≥ (7 : ℝ) ^ n:= by
+1348574,37.0,True,,False,theorem theorem_2020 {p : ℕ} [Fact (Nat.Prime p)] {a : ℕ} (h1 : a ^ p = 2) : (a ^ (p^2) % p) = 2 ∧ (a ^ (p^4) % p) ≠ 0:= by
+800838,30.0,True,,False,"theorem mathd_algebra_187 (a : ℕ → ℕ)  (h₀ : ∀ n, a n = n ^ 2 + 1) (h₁ : ∀ n, a n ≠ 0) (h₂ : ∀ n, a n ∣ 8) : a 1 < a 0:= by"
+2991309,33.0,True,,False,"theorem A_2254 (n : ℕ) (hn : 1 < n) (f : ℕ → ℕ) (hf:  f 2 = 2) (h1: ∀ n m, f (n+1  + m) = f n + f m) : f n ≤ n^2:= by"
+2420076,4.0,True,,False,theorem lean_workbook_plus_2052 (a b c : ℝ) (h1 : a * b * c = 1) (h2 : a ^ 2 + b ^ 2 + c ^ 2 = 1) : a + b + c ≥ 1 ∨ a + b + c ≤ -1:= by
+1360699,44.0,True,,False,"theorem mainP1068 (a : ℝ) (f : ℝ → ℝ) (h₀ : ∀ x, f x = a * x ^ 2 + x)  (h₁ :  ∃ n : ℕ, ∀ x, f x = Real.sqrt x + n) : Real.sqrt (a ^ 2) / a ≤ (2 + Real.sqrt 15) / 2  := by"
+625093,36.0,True,,False,theorem mathd_numbertheory_167 (m n : ℕ) (h₀ : 0 < m ∧ 0 < n) (h₁ : m ≠ n) (h₂ :  m * n % 4 = 3) (h₃ : (m + n) % 4 = 2) : m % 4 = 3 ∧ n % 4 = 1 ↔ (m + n) % 4 = 2 ∨ (m + n) % 4 = 6:= by
+3178012,2.0,True,,False,"theorem mathd_algebra_307_a (a b c : ℝ) (h₀ : 0 < a ∧ 0 < b ∧ 0 < c) (h₁ : a * b * c = 1)
+  (h₂ : a + b + c * 2 = 2) : c = 1 / 2:= by"
+1656320,45.0,True,,False,"theorem main_6477 (n : ℕ)  (hn : n ≠ 0) (a : ℕ → ℝ) (ha : Real.sqrt (n + 3) = n * Real.sqrt n) : ∑ k in Finset.range n, a k^2 ≤ (n + 3) * n^2:= by"
+1361615,26.0,True,,False,"theorem mathd_algebra_245 (f : ℝ → ℝ) (h₀ : ∀ x y, f x / f y = (x ^ 2 - y ^ 2) / (x ^ 2 + y ^ 2) ∧ f x ≠ 0)
+    (h₁ : f 1 = 1) (h₂ : f 2 = 9 / 5) : f (1 / 2) = 1 / 5:= by"
+2120607,35.0,True,,False,"theorem theorem_2014_p_45 (n : ℕ) (hn : 3 < n)  (f : ℕ → ℕ) (h₀ : ∀ i, f (i + 1) = f i + 1) (h₁ : ∑ k in Finset.range n, f k = 1) : n ≤ 4^f n:= by"
+572504,32.0,True,,False,theorem math_2418_2018_p10 (a b : ℝ) (h₀ : 0 < a ∧ 0 < b) (h₁ : a ≠ b) (h₂ : Real.sqrt (a + 1) = b ∧ Real.sqrt (b + 1) = a) : (a + 1) * b  + Real.sqrt (a + 2) ≠ 2 ^ 2:= by
+2698824,46.0,True,,False,"theorem theorem_11_75 (f : ℝ → ℝ) (h₀ : ContinuousOn f  (Set.univ))  (h₁ : ∀ x y, f x * f y = x ^ 2 * y ^ 2 + f (x + y) * x * y) :   Real.sqrt (4 * Real.sqrt 2) / Real.sqrt 3 < f 4:= by"
+861254,6.0,True,,False,"theorem lean_workbook_26431 (a : ℕ → ℕ) (m n : ℕ) (h₁ : a 0 = 0 ∧ ∀ n, 2 * a n = (n + 1) ^ m) : a n = n ^ m:= by"
+298274,27.0,True,,False,"theorem mathd_algebra_185 (n : ℕ) (hn : 1 < n) (h : ∀ k : ℕ, 0 < k → n % k ≠ 0) : n.Prime:= by"
+1496838,9.0,True,,False,theorem lean_workbook_plus_8343 (a b c : ℝ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) (hab : a + b + c = 3) (h : Real.sqrt (a + b + c) = 3) : (2 - a) * (2 - b) * (2 - c) ≥ Real.sqrt (3 * (a^2 + b^2 + c ^ 2 + 3 * a * b * b * c + a * c)) := by
+2786291,6.0,False,simp_all,False,"theorem mathd_algebra_536 (f : ℕ → ℝ) (h₀ : f 0 = 0) (h₁ : ∀ n, f n = (1 + 1 / n) ^ n) :
+     ∀ n, 1 < n → f n > 1:= by"
+1991436,5.0,True,,False,theorem lean_workbook_259 (x y z : ℝ) (h₁ : x * y * z = 1) (h₂ : x ^ 2 + y ^ 2 + z ^ 2 = 1) : x * Real.sqrt (1 + y ^ 2) + y * Real.sqrt (1 + x ^ 2) ≥ Real.sqrt (1 + x ^ 2) * Real.sqrt (1 + y ^ 2):= by
+1828266,33.0,True,,False,"theorem aime_1992_p18 (n : ℕ) (hn : 2 ≤ n) (f : ℕ → ℝ) (hf: ∀ i, 0 < f i)
+        (h₁ : ∀ i, f i ^ 2 = f (i + 1) + 2 * f i  ) (h₂ : f 1 = 2  ) :  Real.sqrt 2 * (∏ k in Finset.Icc 1 n, f k) ≤ (2 + Real.sqrt 2) ^ n  := by"
+470545,5.0,True,,False,"theorem lean_workbook_549 (a b c : ℝ) (h1 : a > 0 ∧ b > 0 ∧ c > 0) (h2 : |a - b| = 1 ∧ |b - c| = 1 ∧ |c - a| = 1) :
+                  a + b + c ≥ 3 * (3 * (a + b) + 2 * b * c) / (a + b + c + 2):= by"
+1934949,28.0,True,,False,"theorem mathd_algebra_14 (f : ℝ → ℝ) (h₀ : ∀ x, 0 < f x) (h₁ : ∀ x y, f (x + y) = f x * f y + x * y) (h₂ : f 1 = 1) : ∀ x, f x = x^255 - x^255 + x:= by"
+3153724,9.0,True,,False,theorem lean_workbook_22817 (x y z : ℝ) (h₁ : x^2 + y^2 + z^2 = 1) (h₂ : x^2 * y * z - 2*x*y*z = 1) : x = 1 - y * z ∨ x = -1:= by
+2066288,34.0,True,,False,"theorem A_2120_2004 (f : ℝ → ℝ) (h₀ : ∀ x y, f (x ^ y) = f x * f y) (h₁ : f (5 ^ 3 / 2) = 1) (h₂ : ∀ x, f x = Real.logb 2 x) : Real.logb 2 (2 * √2) ≥ 2 / 2^ (1/3):= by"
+1386539,47.0,True,,False,"theorem main_271 (f : ℝ → ℝ) (h₀ : Continuous f) (h₁ : ∀ x y, f x + y = f x * y) : f (-1) = 0 ↔ ∀ x, f x = f x⁻¹:= by"
+459443,36.0,True,,False,"theorem _7300 (f : ℝ → ℝ) (h₀ : ∀ x y, f x * f y = f (x + y) + 2 * x * y) (h₁ : f 2 = 4) :
+       ∀ x, f x = x^2 - x:= by"
+1166145,30.0,True,,False,theorem main_result (n : ℕ) (hn : n ≠ 0) (hn1 : (n + 1) ^ 2 + 1 ∣ n ^ 2 + 1) : n % 12 = 0 ∧ n ≠ 3 ∧ n ≠ 8 ∧ n ≠ 9 ∧ n ≠ 10:= by
+2494583,38.0,True,,False,"theorem q1_8_22_2018_4_23 (f : ℕ → ℝ) (h₀ : ∀ n m : ℕ, f (n * m) = f n * (f m) * Real.sqrt 2) (h₁ : f 1 = 2) : Real.logb (5^2) (5^4) ≤ f 4:= by"
+1215145,35.0,False,simp_all,False,"theorem amc12a_2008_p14 (x : ℕ → ℝ) (h₀ : 1 < x 0) (h₁ : ∀ n : ℕ, x n = Real.sqrt (n^2 + 1)) : ∏ k in Finset.Icc    (1 : ℕ) 4, x k ≠ Real.sqrt 2:= by"
+845103,29.0,True,,False,"theorem sum_lemma (S : ℕ → ℂ) (h₁ : ∀ n, S n = S (n - 1) + 1) (h₂ : S 0 = 1) : ∑ n in Finset.range 10, S n = 100/9 + (49/9) * Complex.I:= by"
+2911446,5.0,True,,False,theorem lean_workbook_33798 (a b c : ℝ) (habc : a * b * c = 1) (h : a^2 + b^2 + c^2 = 1) : (a * b) * Real.sqrt (1 - (a - b)^2) ≤ 1:= by
+272669,32.0,True,,True,"theorem problem169 (f : ℝ → ℝ) (h₀ : ∀ x, f x = Real.sqrt (x^3 - 2)) (h₁ : ∃ a, ∀ x, f x = a ^ x) (h₂ : Real.sqrt (x ^ 3 - 2) = 11) : Real.sqrt (x ^ 3 - 2) * x ≤ 66:= by"
+483274,29.0,True,,True,"theorem mathd_algebra_617 (f : ℝ → ℝ) (h₀ : ∀ x, f x = Real.sqrt x) (h₁ : ∀ x, x = f x + 1) : f (f x) + 1 = x:= by"
+3067548,31.0,True,,False,"theorem math1291_1751 (a : ℕ → ℝ) (h₀ : ∀ n, a n = (1 / 2:ℝ)^ n) (h₁ : ∀ n, a n+1 = (1 / 2) * a n ) : ∀ n, 1 / a n ≥ 2:= by"
+3234150,15.0,False,nlinarith,False,theorem lean_workbook_53843 (x y : ℝ) (hx : x ≠ 0) (hy : y ≠ 0) (hxy : x * y ≠ 0) (h : 3 * (x / y) ^ 2 + 2 * (x / y) + 1 = 0)  : x⁻¹ + y⁻¹ ≠ 0 ∧ x * y * (x + y)⁻¹ ≠ 1 := by
+1733586,44.0,True,,False,theorem math_numbertheory_2360 {a b : ℕ} (h₁ : 0 < a ∧ 0 < b) ( h₂ : Real.sqrt (a ^ 2 + b ^ 2) = Real.sqrt (2765))  : Real.sqrt (a + b) * Real.sqrt (a - b) ≤ 55:= by
+1771187,36.0,True,,False,"theorem theorem_1_24_2011_1 (p : ℕ) (hp : Nat.Prime p) (hp1 : p ≠ 2) (a : ℕ) (ha : a ^ p = 2) : a = 1 ∧ ∃ n : ℕ, a ^ 3 = n * a:= by"
+40337,7.0,True,,True,"theorem lean_32778 (f : ℝ → ℝ) (h₁ : ∀ x, f x ^ 2 = 1 - x) (h₂ : ∑ i in Finset.range n, (f i * x ^ 2) = 1) : 0 ≤ x^2 - 2 * x * f 0 + f 0 ^ 2:= by"
+1812356,8.0,True,omega,False,theorem lean_induction_lemma1098 (a b c : ℕ) (h₀ : a ≠ 0 ∧ b ≠ 0 ∧ c ≠ 0) (h₁ : a + b + c = 1) (n : ℕ) : a * b ^ n + b * c ^ n + c * a ^ n ≤ a ^ (n + 3) + b ^ (n + 3) + c ^ (n + 3):= by
+399135,35.0,True,,False,"theorem Theorem_2020_p12 (p : ℕ) (hp : Nat.Prime p) (hp2 :  p ≠ 3)
+        (p3 : 3 < p)  (a : ℕ) (ha : a ^ p = 2) : a ≠ 2 ↔ p % 4 = 1:= by"
+1746511,7.0,True,,False,"theorem lean_workbook_4766 (a : ℕ → ℝ) {n : ℕ} (hn : n ≠ 0) (h1 : ∀ n x, a n = x ^ 2) : (∑ k in Finset.range n, a k) ^ 2 = ∑ k in Finset.range n, ∑ m in Finset.range k, 2 * a k * a m:= by"
+2577605,29.0,True,aesop,False,theorem mathd_algebra_124 (a : ℝ) (h₀ : 0 < a) (h₁ : a ≠ 1) (h₂ : (Real.logb a a = 1) ∧ (Real.logb a (1/a) = -2)) : a ≠ 9 ∧ a ≠ 2 ∧ a < 3/2 := by
+1018568,30.0,True,,False,theorem mathd_algebra_479 (n : ℕ) (h₀ : 1 < n) (h₁ : (n^n) ∣ n) : n = 1 ∨ n = 2:= by
+1502051,6.0,True,,False,"theorem theorem_39 (x : ℝ) (h₀ : 0 ≤ x) (f : ℝ → ℝ) (hf : Continuous f) (h₁ : f 0 = 0)  (h₂ : ∀ x, (f x)^2 = x^2 + 1) : f x = x:= by"
+3198902,38.0,True,,False,theorem math_18920_165 (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) (h :  p ≠ q) (h₀ : p ^ p * q ^ q = p * q) : p * q = 2^3 * 3^3 ↔ p = 12 ∧ q = 8 ∨ p = 8 ∧ q = 12:= by
+275930,43.0,True,,False,"theorem p11_11_124 (p : ℕ) (hp : Nat.Prime p) (hp1 : p ≠ 2) {a : ℕ} (h : a ^ p - 1 = 4)
+        : a ^ (p * 2) % p = 4 % p:= by"
+1120612,16.0,True,,False,theorem lean_workbook_4285 (p : ℕ) (hp : Nat.Prime p) (h1 : p ≡ 1 [ZMOD 2]) (h2 : p ^ 3 ∣ 2 ^ 3)   : p = 2:= by
+700438,31.0,True,,False,theorem algebra_13541 (x : ℝ) (h₀ : 0 < x) (h₁ : x < 1) (h₂ : Real.logb x 2 = 2) : x = Real.sqrt 2 / 2:= by
+678648,26.0,True,simp_all,False,theorem mathd_numbertheory_123 (n : ℕ) (h₀ : 1 < n) (h₁ : n ≠ 2) (h₂ : IsUnit (n ^ 2 + 1)) : False:= by
+527337,35.0,True,,False,"theorem amc12a_2018_p20 (a : ℝ) (f : ℝ → ℝ) (h₀ : 0 < a)
+    (h₁ : ∀ x, f x = Real.sqrt (x ^ 2 + a * x)) (h₂ : { x | 0 ≤ f x } = f '' { x | 0 ≤ f x }) :
+     Real.sqrt (a + 8) ≠ a / 2:= by"
+2238638,27.0,True,,False,"theorem mathd_algebra_420 (f : ℝ → ℝ) (h₀ : ∀ x, f x = 2 * (x ^ 2) + 4 * x + 2) (h₁ : ∀ x, f x ≥ x + 2) :  ∃! x, x^2 + 2 * x + 2 = 0:= by"
+742268,29.0,True,,False,theorem mathd_algebra_116 (n : ℕ) (h₀ : 3 < n) (h₁ : 2 ≤ n) (h₂ : (n : ℝ) ^ n = 1) : n = 1:= by
+247482,26.0,False,simp_all,False,theorem mathd_algebra_423 (x y : ℝ) (h₀ : 0 ≤ x ∧ 0 ≤ y) (h₁ : Real.sqrt x = Real.sqrt y) (h₂ : Real.sqrt (x + 39) ≠ Real.sqrt (y + 39)) : x = y + 39:= by
+821224,14.0,True,omega,True,theorem lean_workbook_20150 y (hx: x > 0) (hy: y > 0) (hxy: x + y = 1): 1 / (x * y) + (1 + 1/x) * (1 + 1/y) ≥ 9:= by
+2948397,30.0,True,,False,"theorem mathd_algebra_166 (n : ℕ) (h₀ : 1 < n) (h₁ : n ≤ 50) (h₂ : ∀ m : ℕ, n ∣ m → m < n^3) : n ≤ 20 := by"
+2008530,6.0,True,,True,"theorem lean_workbook_4883 (a : ℕ → ℕ) (ha hb : a 0 = 0) (hab : ∀ m, 2 * a m = m^3) : a m = m^2:= by"
+2015472,29.0,True,,False,"theorem mathd_algebra_723 (a : ℝ) (f : ℝ → ℝ) (h₀ : ∀ x, f x = a * (x - 2) ^ 2 + 3)
+     (h₁ : ∀ x y, f x + f y = f (x + y) + 2 * f x * f y / 3) (h₂ : f 0 = 0) :
+     a = 3 / 4 ∧ ∀ x, f x ≥ 0:= by"
+2691833,12.0,True,,True,"theorem lean_workbook_plus_69558 (f : ℝ → ℝ)
      (h₁ : ∀ x y, f x + y = f (x ^ 2 + y)) :
      f (x ^ 2) = f (2 * x) / 2:= by"
-2433898,28.0,True,,"theorem lean_workbook_plus_39223 (x : ℝ) (h₁ : sin x = (Real.sqrt 2 - 1) / 2) (h₂ : cos x = (Real.sqrt 2 + 1) / 2) :
-          (Real.sqrt 2) / 2 + 1 / 2 + 1 / 8 * Real.sqrt (2 - Real.sqrt 2) * (1 + Real.sqrt 2) * (1 + 4 * (Real.sqrt 2 - 1)^2) *
-              (1 / 3 + 1 / 2 * Real.sqrt 2 * (1 / 2 + Real.sqrt 2 / 3)) =
-              Real.sqrt 2 * (1 + Real.sqrt 2):= by"
-1951999,42.0,True,,"theorem exercise_5_204 (p : ℕ) [hp : Fact (Nat.Prime p)]
-        (hp4 : 4 < p)  (a : ℕ) (h₁ : a ^ p = 4) : a^ (p + 1) % p = 4 % p ↔ a ≤ p:= by"
-2349058,35.0,True,,"theorem theorem_52651 (f : Equiv ℝ ℝ) (h₀ : f 0 = 0) (h₁ : f 1 = 1) (h₂ : ∀ x y, f (x + y) = f x + f y + f (x * y)) :  f.symm 9 = 3 ↔ f 3 = 9:= by"
-484480,22.0,True,,"theorem lean_workbook_34634  (f : ℂ → ℂ) (h₁ : ∀ x y : ℂ, f (x + y) = x * y * (x + y)) :  (∀ x y : ℂ, x * y = x * x + y * y) ↔ ∃! k :ℂ, ∀ x: ℂ, f x = k*x:= by"
-759077,37.0,True,,"theorem algebra_207m (f : ℝ ≃ ℝ) (h₀ : ∀ x, f x = Real.sqrt x) : (f.symm) 3 = 3 ↔ ∀ x, f x = x^3:= by"
-663814,17.0,True,,"theorem lean_workbook_plus_63376 (f : ℝ → ℝ) (x y z : ℝ) (h₁ : f 0 = 0) (h₂ : ∀ x y, f x + y = f (x + y) + x * f y / (x + y)) : f x = f y * (x / y):= by"
-1002609,42.0,True,,theorem lean_workbook_6240_2 (x : ℤ) (h₁ : x^2 + 2013 * x + 2014 * x = 1) : False  := by
-1404802,5.0,False,omega,theorem lean_workbook_plus_1005 (h₁ : 0 < n) (h₂ : 0 < m) (h₃ : 0 < r) (h₄ : n + m + r = 1) : (x ^ 2 + 1) ^ 15 ∣ x ^ (2 * (n ^ 2 + m ^ 2 + r ^ 2)):= by
-1681424,26.0,True,,"theorem mathd_algebra_111 (f : ℤ → ℝ) (h : ∀ x, f x = x^3 + 1) (h₀ : ∀ x y, f x + f y = f (x + y) + 2 * (x * y) * (x + y) + 2 * (x * y)) (h₁ : f 2 = 3) :  f (-1) = -2:= by"
-2497456,38.0,True,,theorem problem27_2017 (p : ℕ) [Fact (Nat.Prime p)] (h₀ : 2 < p)  (a : ℕ)  (h₁ : a ^ p = 2) :  Real.sqrt (2 - Real.sqrt (17)) ^ 2 % p  < 17:= by
-665547,34.0,False,aesop,"theorem mathd_numbertheory_107 (n : ℕ) (h₀ : 1 < n) (h₁ : ∀ x : ℕ, x ∈ Finset.range (n + 1) → x ≠ 0) :
-        (∑ k in Finset.range (n + 1), k) * n ≠ n ^ 2 := by"
-1661687,47.0,True,,"theorem amc12b_2015_p12 (n : ℕ) (h₀ : n ≠ 0 ∧ n ≠ 1) (h₁ : 2 < n) (x : ℕ → ℝ) ( h₂ : ∀ n, x n ≥ 0 ∧ x n < n) :
-       ∑ k  in Finset.Icc 1 (n - 1), Real.sqrt (1 / Real.sqrt 2) * x k < n^ n - 1:= by"
-197359,42.0,True,,theorem lean_workbook_1245 (p : ℕ) (hp : Nat.Prime p) { q : ℕ} (hq : q ∣ p) { b : ℕ} (hb : b^p = p) : b^ (p * 2) ≠ 2^ (p * 2):= by
-2805364,22.0,True,,theorem lean_workbook_12461 (a : ℝ) (b : ℝ) (n : ℕ) (h₁ : a ^ 2 = 1 ∧ b ^ 2 = 1) (h₂ : a + b = 1)  : 1 / a ^ n + 1 / b ^ n ≥ 1 / 2^n - 1:= by
-2572715,4.0,True,,"theorem mathd_algebra_532_lemma13 (a b c : ℝ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) (habc : a + b + c = 1)  (hf: ∀ (f : ℝ → ℝ), Function.Injective f → 0 < f a ∧ 0 < f b∧ 0 < f c  ) :
+354031,34.0,True,,False,"theorem amc12a_2019_p3 (a : ℝ) (h₀ : 0 < a)  (h₁ : a ≤ 1) (h₂ : ∀ n : ℕ, Real.sqrt ((1 - a ^ n) ) = 1 / 2) : a = 1 - Real.sqrt 3 / 2:= by"
+1390940,42.0,True,,False,"theorem p1313519 (σ : Equiv ℝ ℝ) (h : ∀ x, σ.1 x = x ^ (4 : ℕ)) :  Real.sqrt 3 * σ.2 (σ.1 (σ.2 (Real.sqrt 3))) ≠ 4   := by"
+1291852,35.0,True,,False,"theorem amc12a_2013_p14 (n : ℕ) (hn : 2 ≤ n) (f : ℝ → ℝ) (h₀ : ∀ x y, f (x + y) = f x * f y) (h₁ : f (1/2) = 2 ∧ f 1 = 2) : f^[n] 1 ≥ n * 1/2^n:= by"
+405297,22.0,True,,False,theorem lean_workbook_12461 (a : ℝ) (b : ℝ) (n : ℕ) (h₁ : a ^ 2 = 1 ∧ b ^ 2 = 1) (h₂ : a + b = 1)  : 1 / a ^ n + 1 / b ^ n ≥ 1 / 2^n - 1:= by
+131799,37.0,True,,False,theorem main_result {p : ℕ} [Fact (Nat.Prime p)] {a : ℕ} (h₀ : 1 < a) (h₁ : a ^ p = 2) : a ^ (p * (10 ^ (p - 1) - 1)) % p = 1:= by
+72778,16.0,True,,False,"theorem lean_workbook_22367 (n : ℕ) (a : ℕ → ℕ) (h₁ : a 0 = 1 ∧ ∀ x y, a x + y = a (x + y + x * y))  : a (n + 2) / a n ≤ a (n + 2) + 2:= by"
+1740772,42.0,False,simp_all,False,"theorem mathd_numbertheory_238 (n : ℕ) (h₀ : n ≠ 0 ∧ n ≠ 1) (h₁ : Nat.Prime n)  (h₂ : (∑ k in Finset.filter (fun x => x ∣ n) (Finset.range (n + 1)),  k) = n) : 2 ^ (n + 6) ≠ 324 * n:= by"
+2321080,6.0,True,,True,"theorem lean_workbook_449942 (f : ℝ → ℝ) (h₀ : ∃ x, x ≠ 0 ∧ f x = 0) (h₁ : ∀ x, x * f x = 1 - x) : 2 * √(2 * |x| + 2 * f x) ≥ |x| + f x:= by"
+986474,27.0,True,,True,"theorem mathd_algebra_173 (f : ℝ → ℝ) (h₀ : ∀ x, f (x ^ 2 - 2 * x) = 3 * x ^ 4 - 10 * x ^ 2) (h₁ : ∃ x, f x = a) : ∃ x, x ^ 2 - 2 * x = a ↔ 3 * a ^ 4 - 10 * a ^ 2 = a:= by"
+2674129,38.0,True,,False,"theorem math_42221 (p : ℕ) (hp : Nat.Prime p) (hp1 : 4 < p) {a : ℕ} (h : a ^ p = p) :
+        p % (a ^ 2) = 0∧ a ^ (p - 1) ≠ 1:= by"
+1055202,26.0,True,,False,theorem mathd_numbertheory_464 (n : ℕ) (h₀ : 7 ∣ n ^ 2 + 2) (h₁ : 7 ∣ n + 2) : 7 ∣ n^2 + 2 * n + 2:= by
+2802970,33.0,True,,False,"theorem amc12b_2007_p21 (a b c : ℝ) (f : ℝ → ℝ) (h₀ : 0 < a ∧ 0 < b ∧ 0 < c)
+ (h₁ : ∀ x, f x = Real.sqrt (a * x ^ 2 + b * x + c)) (h₂ : { x | 0 ≤ f x } = f '' { x | 0 ≤ f x }) : a / b ≤ 2^ (4/3 - 1/3 / 2):= by"
+146738,42.0,True,,False,"theorem math20178 (n : ℕ) (hn : n ≠ 0) (hn1 : Nat.Prime n) (f : Equiv ℕ ℕ) (hf :  ∀ x, f x = n *x) :  Real.sqrt (n ^ 2 - 4) ≠ 3 ↔ f.symm ( f.symm 3) ≠ 3:= by"
+1160135,22.0,True,simp_all,False,"theorem lean_workbook_plus_10417 (A B C : ℝ × ℝ) (hA : A = (0, 1)) (hB : B = (1, 0)) (hC : C = (-1/2, 0)) (h : A = B ∧ B = C) :  A.1 * B.1 * C.1 = -1/4:= by"
+2572715,4.0,True,,False,"theorem mathd_algebra_532_lemma13 (a b c : ℝ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) (habc : a + b + c = 1)  (hf: ∀ (f : ℝ → ℝ), Function.Injective f → 0 < f a ∧ 0 < f b∧ 0 < f c  ) :
          (1 - 1 / (a + 1)) * (1 - 1 / (b + 1)) * (1 - 1 / (c + 1)) ≤ 1 / 64:= by"
-2385189,9.0,True,,theorem lean_workbook_3854 (m a b : ℕ) (h₁ : 1 < m ∧ 1 < a ∧ 1 < b) (h₂ : m^a + m^b = 1) : a + b = 2:= by
-1209295,7.0,True,,theorem lean_workbook_plus_3259 (a b c : ℝ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) (habc : a * b * c = 1) (h : a^2 * b ^ 2 + b^2 * c^2 + c^2 * a^2 = 1) : a * b * (a + b) * (b + c) * c * a ≤ (a + b) ^ 2 * (b + c) ^ 2:= by
-3035177,25.0,True,,"theorem amc12b_2012_p7 (a b : ℝ) (h₀ : 0 < a ∧ 0 < b)
-  (h₁ : ∀ x, x^2 - (a + b) * x + 2 * (a * b) = (x - a) * (x - b)) :
-  a = b:= by"
-279296,42.0,True,,theorem lemma_507075 (p : ℕ) [hp : Fact (Nat.Prime p)]  (hp1 :  p ≠ 2) {k : ℕ} (hk : k ≠ 0) (h : k ^ p = 4) : Real.sqrt (k) * ( k - 1) ≠ p:= by
-2042039,27.0,True,aesop,theorem aime_1985 (p : ℕ) (hp : p.Prime) (hA : A = 0) (hB : B = 0) (hC : C = 0) (hD : D = 0) (hE : E = 0) (h : A + B + C + D + E = p) : A ^ 3 + B ^ 3 + C ^ 3 + D ^ 3 + E ^ 3 = p ^ 3 ↔ p = 3∧ A = B ∧ B = C ∧ C = D ∧ D = E:= by
-1582536,44.0,True,,theorem mathd_numbertheory_1466_2018 (n : ℕ) (hn : 1 < n) (hn1 : Nat.Prime n)  (a : ℕ) (ha : a^n = n) : a^ (a - n) % n = 0 ↔ a ≥ n:= by
-276388,32.0,True,simp_all,"theorem aime_2020_p15 (n : ℕ) (hn : n ≠ 0) (hn2 : n ≠ 1)  (f : ℕ → ℝ) (hf: ∀ i, f i = Real.sqrt (i/n)) (hf2: f (n^2) = 1): f n ≥ (n - 1 / n):= by"
-751022,29.0,False,simp_all,"theorem bj_2020_p12 (a : ℕ → ℝ) (h₁ : ∀ n, 0 ≤ a n) (h₂ : ∀ n, a (n + 1) = Real.sqrt (a n) + a n) (h₃ : a 1 = 1) (h₄ : a 2 = 1) : ∀ n, 0 < n → a n ≤ Real.sqrt 4 + 4:= by"
-1631547,41.0,True,,"theorem main_result (p : ℕ) {hp : Nat.Prime p} {hp1 : p ≠ 2} (a : ℕ) (h₀ : a ≠ 0 ∧ a^p = p) :
-        ((∑ k in Finset.Icc 1 (p - 1), (k : ℤ)) : ℚ) ≠ p / p:= by"
-2555650,25.0,True,,"theorem mathd_algebra_452 (σ : Equiv ℝ ℝ) (h₀ : σ.2 0 = 3) (h₁ : σ.2 3 = 9)
-      (h₂ : σ.2 9 = 20) (h₃ : σ.2 20 = 3) : σ.1 3 = 0:= by"
-1408339,41.0,True,,"theorem amc12b_2021_p6 (f : ℝ → ℝ) (h₀ : ∀ x > 0, ∀ y > 0, f (x / y) = √(x ^ 2 + y ^ 2)) ( h₁ : f 2 = 2) :
-        f (4 / √2) * (5 / 2) ≠ 3/ 2  := by"
-849,42.0,True,,"theorem lean_workbook_23461 (f : ℝ → ℝ) (h : ∀ x y, f x * f y = f (x / y) + x * y) : (∀ x y : ℝ,  f x^2 + x * y + y^2 = 0) ↔ ∀ x : ℝ, f x= 0 ∨ f x= -2 *x:= by"
-1764469,33.0,True,,"theorem exercise_2_6_17_1 {G : Type*} [CommGroup G] (h : ∀ x : G, orderOf x = 2) (hm : m ≠ 0) : ∃ a : G, a≠ 1 ∧ a * a = 1 ∧ orderOf (a * a) ∣ m^2:= by"
-2468022,5.0,False,omega,theorem lean_workbook_plus_1943 (h₁ : 0 < x ∧ 0 < y ∧ 0 < z) (h₂ : x + y + z = 1) : √(x ^ 2 + y ^ 2 + z ^ 2) ≥ √(x ^ 2) - √(y ^ 2) + √(y ^ 2) - √(z ^ 2) + √(z ^ 2) - √(x ^ 2):= by
-988927,33.0,True,,theorem mathd_numbertheory_278 (n : ℕ) (h₀ : 2 < n) (h₁ : 3 < n)  (h₂ : 5 ∣ n) (h₃ : 5^n ∣ n) : n = 5:= by
-3154085,7.0,True,,"theorem lean_workbook_10891 (f : ℝ → ℝ) (h₀ : ∀ (a : ℝ) (n : ℕ), f n = Real.sqrt (1 + a ^ 2) ^ 2) (h₁ : ∀ a, f a = a ^ 2) :∀ a, Real.sqrt (1 + a^2) ^ 2 = a^2:= by"
-1422685,18.0,False,nlinarith,theorem lean_workbook_41681 (x : ℝ) (hx : x ^ 2 = -1) : x ^ (2 * (2 : ℝ)) ≠ 0 ∨ x = 1 / x:= by
-1641536,26.0,True,,"theorem mathd_algebra_241_correction (x y : ℝ) (h₀ : x ≠ 0 ∧ y ≠ 0) (h₁ : ∀ a b : ℝ, (a * b) / (a - b) = x * y / (2 * x - 3 * y)) : x = 0 ∨ y = 0:= by"
-1072407,39.0,True,,"theorem amc12a_2015_p14 (a : ℝ) (f : ℝ → ℝ) (h₀ : 0 < a) (h₁ : ∀ x, f x = Real.sqrt (a * x ^ 2 + a * x)) (h₂ : { x | 0 ≤ f x } = f '' { x | 0 ≤ f x }) :  Real.sqrt (a / Real.sqrt (a + 1)) ∈ Set.Icc (-1 : ℝ) 1 ↔ a ≤ 2 ∨ a ≥ 1:= by"
-3045690,7.0,True,,"theorem lean_workbook_3789 (f : ℕ → ℕ) (n : ℕ) (h₁ : f 0 = 1) (h₂ : ∀ n, f (n+1) = f n + f 1) : f n = n:= by"
-2730931,25.0,True,,"theorem induction_powtonminusone (n : ℕ) (P : ℕ → Prop) (h₀ : ∀ n, P n → P (n + 1))
-    (hp : P 2) (hdiv : ∀ n, 1 < n → ∃ m, (n - 1) ^ 2 = m * 4) : P (n ^ 2 - 1):= by"
+2452746,9.0,True,,False,"theorem mathd_algebra_821 (a : ℕ → ℕ) (a1 : a 0 = 1) (a2 : a 1 = 2)
+    (a_rec : ∀ n, a (n + 2) * a n = a (n + 1) + 2) : ∀ n : ℕ, a (2 * n) ≥ a (2 * n - 1):= by"
+2834931,7.0,False,norm_num at *,False,"theorem theorem_2941 (f : ℝ → ℝ) (h₀ : f = λ x => (x + 1 / 3) ^ 2 - 1) (h₁ : ∀ x y, x * y = 1 → x ^ 2 + y ^ 2 = 1) : ∀ x, 1 / (x ^ 2 + 3 / 3 - x * (1 / 3)) ≥ 1:= by"
+251259,25.0,True,omega,False,"theorem mathd_algebra_143_a (a b : ℤ) (h₁ : 3 * a + 2 * b = 12) (h₂ : 3 * b - 2 * a = 10) :
+    a ^ 2 + b ^ 2 = 144:= by"
+1529901,28.0,True,,False,"theorem mathd_algebra_466 (f : ℝ → ℝ) (h₀ : ∀ x y, f (x^3 + y^3) = x ^ 2 + y ^ 2 + 2 * f x * f y) (h₁ : f 0 = 0) : ∀ x, f x = 0 ∨ ∃ a, f x = a / 2 * x:= by"
+2240416,27.0,True,,False,"theorem algebra_manipexpr_apbeq2cceqiacpbceqm2_real' (a b c : ℝ) (h₀ : a + b = 2 * c)
+   (h₁ : c = Complex.I) (h₂ : a * b < 0) : a * b ≤ -1:= by"
+1785952,44.0,True,,False,"theorem p610 (n : ℕ) (hn : n ≠ 0)  (x : ℕ → ℝ) (hx : ∀ i, x i = Real.sqrt (n * (n + 1) / 2)) (f : Equiv ℕ ℕ) (hf : ∀ x y, f x * y = Real.sqrt 3) : ∑ b in Finset.Iio (n + 1), x (f b) ≤ n * (n + 1) * n:= by"
+2626806,31.0,True,,False,"theorem amc12a_2012_p13 (x : ℕ → ℕ) (h₀ : (∑ k in Finset.range 9, x k) = 52) (h₁ : ∀ k ≤ 8, x k = 2 * x (k + 1)) : x 0 = 28:= by"
+2699463,36.0,True,,False,theorem theorem_3_1_4_1 (n : ℕ) (h₀ : 1 < n) (h₁ : Nat.sqrt (n * 4) * Nat.sqrt (n * 4) = n ∧ Nat.Prime n) : n = 16 := by
+2190168,41.0,True,,False,theorem main_15_28_2017 {p : ℕ} (hp : Nat.Prime p) {a : ℕ} (h₀ : a^p = p) : a ^ (p^2 + 2) % p = 0 ∧ (a + 2 : ℕ) ^ p % p = 0:= by
+829872,23.0,True,,False,"theorem lean_workbook_50662(f : ℤ ≃+* ℤ) (h₁ : ∀ x y : ℤ, f (x + y) = f x + f y + x * y)  : f 1 = 1 ↔ ∀ n : ℤ, f n = n := by"
+2578880,26.0,True,,False,"theorem amc12a_2007_p12 (x : ℝ)
+    (h₀ : 0 < x ∧ x < 1)
+    (h₁ : x = Real.sqrt (x^2 + (1 - x)^2)) :
+    x = 1 - Real.sqrt (3 - 2 * Real.sqrt 2):= by"
+1621344,42.0,True,,False,"theorem math_9787 (σ : Equiv ℝ ℝ)   (h₀ :  ∀ x,     σ.1 x = Real.sqrt (4 * x ^ 3 + 1)) :      σ.2 33 ≠ 2 * Real.sqrt 2:= by"
+1857827,33.0,True,,False,"theorem aime_1988 (p n : ℕ) (hp : Nat.Prime p) (hp1 : p ≠ 2) (h2 : p ^ n = 2) :
+      (2 / (Real.sqrt (2^n)))^2 < n:= by"
+2811588,5.0,True,,False,theorem lean_workbook_240 (a b c : ℝ) (h₀ : a^2 + b^2 + c^2 = 1) (h₁ : a^2 * b + b^2 * c + c^2 * a = 1) : a = b:= by
+1017339,44.0,True,,False,theorem amc12b_2014 (n : ℕ) (h₀ : n ≠ 0)  (h₁ : n ≠ 1) (h₂ : Real.sqrt (n ^ 2 - 1) / 3 = n) : Real.sqrt (3 * n + 1) * Real.sqrt (n ^ 2 - n) ≤ n ^ n:= by
+1338619,7.0,True,,False,"theorem am_2004_p3 (a : ℕ → ℝ)  (h₀ : a 0 = 1 ∧ ∀ n, a n+1 = n * a n) (hn :
+     ∀ n, 0 < a n) : a 3 = 6:= by"
+838362,18.0,True,,False,"theorem lean_workbook_33463 (f : ℕ → ℕ) (n : ℕ) (hn : ∀ k, f k ^ 2 = k) : ∑ k in Finset.range n, (f k + 1)^2 ≤ (n+1)^2 * ∑ k in Finset.range n, k^2 + 4 * ∑ k in Finset.range n, k * (n - k)  := by"
+1439145,34.0,True,,False,"theorem mathd_algebra_216 (n : ℕ) (hn : 1 < n) (a : ℕ → ℝ) (ha : ∀ x, a x = x^2) (h₀ : ∑ k in Finset.range n, a k = 0) : ∏ k in Finset.Iio n, a k ≤ 0:= by"
+1308211,26.0,True,,False,"theorem mathd_algebra_316 (f : ℕ → ℕ) (h₁ : ∀ m, 0 < m → (1/m + 1/m^2 + 1/m^3 + 1/m^4) = f m) (h₂ : f 3 = 13) : f 3 = 3 + 6 + 1/3 + 1/90:= by"
+1213025,7.0,True,,False,"theorem lean_workbook_2598 (a : ℕ → ℝ) (n : ℕ) (hn : a 0 = 1 ∧ ∀ n, a n+1 = a n + n) : 2 * ∑ k in Finset.range n, k ≤ a n * (a n + 1):= by"
+1951806,42.0,True,,False,"theorem exercise_5_204 (p : ℕ) [hp : Fact (Nat.Prime p)]
+        (hp4 : 4 < p)  (a : ℕ) (h₁ : a ^ p = 4) : a^ (p + 1) % p = 4 % p ↔ a ≤ p:= by"
