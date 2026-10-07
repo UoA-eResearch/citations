@@ -127,6 +127,22 @@ def run(items, out_path, workers, toolchain):
                 print(i + 1, flush=True)
 
 
+def cap_numerals(cand, bench, corp, cap=20):
+    """D2: keep at most `cap` numeral-only candidates per benchmark item (by identifier Jaccard, then corpus id)."""
+    bi = pd.read_parquet(RUN / "data" / "statements" / f"{bench}.parquet").set_index("id").idents
+    ci = pd.read_parquet(RUN / "data" / "statements" / f"{corp}.parquet", columns=["id", "idents"]).set_index("id").idents
+    num = cand[cand.via == "numerals"].copy()
+    rest = cand[cand.via != "numerals"]
+    num = num[~num.set_index(["bench_id", "corpus_id"]).index.isin(rest.set_index(["bench_id", "corpus_id"]).index)]
+
+    def jac(r):
+        a, b = set(bi[r.bench_id].split()), set(ci[r.corpus_id].split())
+        return len(a & b) / max(1, len(a | b))
+    num["idj"] = [jac(r) for r in num.itertuples()] if len(num) else []
+    num = num.sort_values(["bench_id", "idj", "corpus_id"], ascending=[True, False, True]).groupby("bench_id").head(cap)
+    return pd.concat([rest, num.drop(columns="idj")], ignore_index=True)
+
+
 def leaks(bench, workers, toolchain):
     b = pd.read_parquet(RUN / "data" / "statements" / f"{bench}.parquet").set_index("id").stmt
     out_dir = RUN / "data" / "certify"
@@ -136,7 +152,7 @@ def leaks(bench, workers, toolchain):
         if ("v415" if corp in LEAN415 else "v49") != toolchain:
             continue
         c = pd.read_parquet(RUN / "data" / "statements" / f"{corp}.parquet").set_index("id").stmt
-        cand = pd.read_parquet(f).drop_duplicates(["bench_id", "corpus_id"])
+        cand = cap_numerals(pd.read_parquet(f).drop_duplicates(["bench_id", "corpus_id"]), bench, corp)
         # train => test (a = corpus, b = bench) and test => train
         items = [(f"{x.bench_id}|{corp}|{x.corpus_id}", c[x.corpus_id], b[x.bench_id], "both") for x in cand.itertuples()]
         run(items, out_dir / f"{bench}__{corp}.jsonl", workers, "v415" if corp in LEAN415 else "v49")
