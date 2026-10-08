@@ -55,3 +55,31 @@ falls outside the top 20. Such misses would understate the leak rate.
 **Retrieval results seen so far:** counts only (`results/tables/retrieval_counts.csv`). STP has 174 miniF2F items
 at L0, Goedel-Pset 10, NuminaMath-LEAN 5 and Goedel's Lean-workbook-proofs 1. No certification has been run except the
 16-pair test in D1.
+
+## D3. The D1 informativeness guard replaced, before any prover sampling (2026-10-08 14:36 NZDT)
+
+**What was found.** A spot-check of certified L2 pairs (miniF2F × Goedel-Pset and × NuminaMath-LEAN) found
+implications that cannot reflect the same problem. Examples:
+
+- a training statement that 8^2012 % 10 = 2 "implies" the test statement (k² + 2^k) % 10 = 6 with k = 2008² + 2^2008;
+- one closed fraction computation "implies" another.
+
+The D1 guard missed these for two reasons:
+
+1. It tried a *smaller* portfolio on the conclusion alone than the implication check uses, so a conclusion provable by
+   `simp_all` with an extra hypothesis present looked non-trivial.
+2. It failed open: a timeout counted as "not provable alone". Timeouts were frequent for about 20 minutes while two
+   certification runs (44 workers) competed for 24 cores, after an interrupted restart.
+
+The spot-checked L1 pairs were genuine: the same problem with renamed hypotheses or a reworded conclusion.
+
+**New guard** (`code/recheck.py`). For every certified implication a ⇒ b, the *identical* command is rerun with a
+replaced by `True`, with the same portfolio and a 60 s limit, on uncontended cores.
+
+- If it succeeds, or times out, the certificate does not depend on a. The implication is not informative and does
+  not count (fail-closed).
+- **L1** requires both directions informative. **L2** requires train ⇒ test informative.
+- The D1 flags are kept in the data but no longer used.
+
+**Status.** No prover output has been generated beyond the D-pilot (truncation only; next entry), and no proof has
+been verified. The secondary-benchmark certification is paused and will resume after the recheck.

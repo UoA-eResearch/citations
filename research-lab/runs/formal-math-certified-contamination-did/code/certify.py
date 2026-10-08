@@ -130,7 +130,7 @@ def run(items, out_path, workers, toolchain):
 def cap_numerals(cand, bench, corp, cap=20):
     """D2: keep at most `cap` numeral-only candidates per benchmark item (by identifier Jaccard, then corpus id)."""
     bi = pd.read_parquet(RUN / "data" / "statements" / f"{bench}.parquet").set_index("id").idents
-    ci = pd.read_parquet(RUN / "data" / "statements" / f"{corp}.parquet", columns=["id", "idents"]).set_index("id").idents
+    ci = pd.read_parquet(RUN / "data" / "statements" / f"{corp}.parquet", columns=["id", "idents"]).drop_duplicates("id").set_index("id").idents
     num = cand[cand.via == "numerals"].copy()
     rest = cand[cand.via != "numerals"]
     num = num[~num.set_index(["bench_id", "corpus_id"]).index.isin(rest.set_index(["bench_id", "corpus_id"]).index)]
@@ -151,7 +151,7 @@ def leaks(bench, workers, toolchain):
         corp = f.stem.split("__")[1]
         if ("v415" if corp in LEAN415 else "v49") != toolchain:
             continue
-        c = pd.read_parquet(RUN / "data" / "statements" / f"{corp}.parquet").set_index("id").stmt
+        c = pd.read_parquet(RUN / "data" / "statements" / f"{corp}.parquet").drop_duplicates("id").set_index("id").stmt  # ids repeat in NuminaMath-LEAN
         cand = cap_numerals(pd.read_parquet(f).drop_duplicates(["bench_id", "corpus_id"]), bench, corp)
         # train => test (a = corpus, b = bench) and test => train
         items = [(f"{x.bench_id}|{corp}|{x.corpus_id}", c[x.corpus_id], b[x.bench_id], "both") for x in cand.itertuples()]
