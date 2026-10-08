@@ -171,3 +171,24 @@ tokens and 45 or more at 8,192. That is a long outage of the lab owner's shared 
   MDE = 2.49 × 0.30 × sqrt(1/170 + 1/450) = **6.7 pp**
 
 That is at most 10 pp, so all three verdicts remain reachable.
+
+## D5. STP tokenizer configuration fixed; the first STP outputs discarded unverified (2026-10-08 14:59 NZDT)
+
+**The problem.** STP's released `tokenizer_config.json` declares `LlamaTokenizer`, a SentencePiece class, but its
+`tokenizer.json` is DeepSeek's byte-level BPE. Loaded that way:
+
+- prompts were encoded to the wrong token ids;
+- outputs were decoded as raw byte-level symbols ("Ġ", "Ċ").
+
+The first 21 STP requests returned English prose instead of Lean tactics. They are kept as
+`data/samples/stp_broken_tokenizer.jsonl` and are **not verified or scored**. The run was stopped after 90 seconds.
+
+**The fix.** The local copy's `tokenizer_class` is set to `PreTrainedTokenizerFast`, which uses `tokenizer.json` as
+released. The original is kept as `tokenizer_config.orig.json`.
+
+- Checked on CPU: a prompt round-trips exactly, and the BOS token (100000) is added by the post-processor.
+- STP is resampled in full after the three main provers (`code/run_gpu_stp.sh`), with the same restart guarantee for
+  the owner's vLLM.
+
+**Also.** The CPU chain (`run_cpu_main.sh`) was stopped and restarted from the edited script. bash had kept the old
+copy open after the in-place edit. Every step resumes from its output file.
