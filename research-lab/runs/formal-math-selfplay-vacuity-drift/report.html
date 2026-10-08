@@ -80,7 +80,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
   <h1>Do self-play provers drift toward vacuous conjectures?</h1>
   <p class="subtitle">A preregistered, kernel-certified measurement of contradictory hypotheses across 46 iterations of the STP self-play corpus and four other open prover-training corpora</p>
   <div class="meta">
-    <span>Report · 2026-10-06 · revised after independent review</span>
+    <span>Report · 2026-10-08 · revised after independent review</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/formal-math-selfplay-vacuity-drift/plan.md">Preregistration</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/formal-math-selfplay-vacuity-drift/deviations.md">Deviations log</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/formal-math-selfplay-vacuity-drift/code">Code</a>
@@ -106,7 +106,7 @@ phases, at 8% in round 3 and 10% in round 26, and then declined steadily. Severa
 </ul>
 <p>The data cannot fully separate them.</p>
 <p>Vacuous problems are far from rare in other corpora. In NuminaMath-LEAN, 6.2% of the problems with a machine proof
-were vacuous: 7.4% of machine-translated problems against 1.6% of human-written ones. About three in four vacuous problems read like genuine competition questions.</p>
+were vacuous: 7.4% of machine-translated problems against 1.6% of human-written ones. Most vacuous problems read like genuine competition questions.</p>
 <h2>What was done</h2>
 <p><strong>Corpus and sample.</strong> The STP_Lean_0320 corpus has 3,262,558 rows. Its iteration numbers form two self-play phases:</p>
 <ul>
@@ -116,9 +116,10 @@ were vacuous: 7.4% of machine-translated problems against 1.6% of human-written 
 </ul>
 <p>We drew 2,000 conjecture rows per iteration: 92,000 proofs of about 80,000 distinct conjectures, some proved more than
 once. We also drew 200 statement rows per iteration (9,600 LeanWorkbook proofs) as a control.</p>
-<p><strong>Environment.</strong> Each row was checked in STP's own verifier environment: Lean 4.9.0-rc1, Mathlib at DeepSeek's pinned
-version, and <code>import miniF2F</code>, STP's curated subset of Mathlib (<code>lean/stp_env/miniF2F.lean</code>, from kfdong/STP). The
-1,152 rows that did not re-verify there were retried under all of Mathlib, and 33 then re-verified.</p>
+<p><strong>Environment.</strong> Each row was checked in STP's own verifier environment: Lean 4.9.0-rc1, Mathlib at upstream d1d1e4b72 (the version
+DeepSeek's fork pins), and <code>import miniF2F</code>, STP's curated subset of Mathlib (<code>lean/stp_env/miniF2F.lean</code>, from kfdong/STP). The
+1,152 rows that did not re-verify there were retried under all of Mathlib. 44 then re-verified, 33 became eligible,
+and none of them was vacuous.</p>
 <p><strong>Certificate (v2, after the independent review).</strong> A row counts as vacuous if a proof of False from its hypotheses,
 <em>as the original statement elaborates them</em>, compiles, contains no <code>sorry</code>, and uses only the standard axioms. There
 are two routes:</p>
@@ -132,9 +133,12 @@ are two routes:</p>
 fixed then defaulted to ℕ, which turned hypotheses that are satisfiable over ℝ into contradictions over ℕ. The
 reviewer found this (D7). On the rows eligible under both versions in the primary windows:</p>
 <ul>
-<li>v2 removes 18 of v1's 1,207 certificates. Two of the reviewer's 18 flagged rows turned out to be genuinely
-  vacuous in their own elaboration (over ℤ), which v2 confirms.</li>
-<li>v2 adds 12 certificates that v1 missed.</li>
+<li><strong>v2 removes 18 of v1's 1,207 certificates.</strong></li>
+<li>16 were type flips: hypotheses satisfiable in their own type, refuted over ℕ.</li>
+<li>2 were lost to the 100 s time limit in the v2 run.</li>
+<li>Two further rows that the reviewer flagged turned out to be genuinely vacuous in their own elaboration (over ℤ),
+    and v2 confirms them.</li>
+<li><strong>v2 adds 12 certificates that v1 missed.</strong> In these rows the ℕ default had made the released proof fail.</li>
 </ul>
 <p><strong>Validation.</strong></p>
 <div class="table-wrap"><table>
@@ -203,8 +207,9 @@ reviewer found this (D7). On the rows eligible under both versions in the primar
 <p>The released corpus contains rows that cannot compile under its own header, and their share depends on the
 iteration.</p>
 <h2>Results</h2>
-<p><strong>Primary test (iterations 38-47 against 1-9; iteration 0 has no conjectures).</strong> Rates are weighted by iteration
-size (population-weighted), with unweighted values in brackets.</p>
+<p><strong>Primary test (iterations 38-47 against 1-9; iteration 0 has no conjectures).</strong> Rates are weighted by each
+iteration's size in the corpus (population-weighted), with the pooled sample rate in brackets. The one-sided z-test
+uses unpooled stratum variances.</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -217,8 +222,8 @@ size (population-weighted), with unweighted values in brackets.</p>
 <tbody>
 <tr>
 <td>Certified vacuous</td>
-<td>2.51% (2.53%; 482 of 19,064)</td>
-<td>4.13% (4.22%; 724 of 17,272)</td>
+<td>2.51% (pooled 2.53%; 482 of 19,064)</td>
+<td>4.13% (pooled 4.19%; 724 of 17,272)</td>
 <td><strong>0.61 (0.54-0.68)</strong></td>
 </tr>
 </tbody>
@@ -328,8 +333,11 @@ size (population-weighted), with unweighted values in brackets.</p>
 <li><strong>Coverage.</strong> Statements with no binders, whose hypotheses all sit in the conclusion, cannot be examined by the
   preregistered certificate. They are 25.5% of eligible early rows and 1.0% of late rows, and 41% at iterations 3-4.</li>
 <li>Among the rows the certificate can examine, the ratio is steeper, 0.45. The iteration-3 peak is 13.2% there.</li>
-<li>The secondary certificate, which can also examine binder-less rows by refuting the premises inside the
-    conclusion, adds few certificates (ratio 0.57). So the coverage gap hid little vacuity.</li>
+<li>The secondary certificate can also examine binder-less rows, by refuting the premises inside the conclusion, but
+    only by automation, because the released proof expects the original goal. Automation alone certifies 0.91% of
+    early binder-less rows (40 of 4,403), against 1.35% of early checkable rows, where the full certificate finds
+    5.63%. The gap may therefore hide on the order of 150 early certificates. The checkable-row ratio, 0.45, is the
+    better-matched comparison.</li>
 <li><strong>Undeclared variables.</strong> Statements whose variables default to ℕ make up 25.7% of certified rows early (186 of
   724) and 2.3% late (11 of 482). As the generator learned to declare variables, this source of vacuity disappeared.
   Excluding these statements gives a ratio of 0.72.</li>
@@ -412,7 +420,7 @@ regression with iteration fixed effects gives an odds ratio of 1.81 (1.75-1.88) 
 </tr>
 </tbody>
 </table></div>
-<p>88 of the contradictions are local, visible from one or two hypotheses. 76 of the 100 statements read like genuine competition claims; the rest are visibly garbled. Nine sampled rows use undeclared variables. In seven of them the contradiction does not depend on the variable's type, so they were coded by their underlying cause. The coder's prompt is in <code>review/coder_prompt.md</code>.</p>
+<p>88 of the contradictions are local, visible from one or two hypotheses. 76 of the 100 statements read like genuine competition claims; the rest are visibly garbled. The "real claim" judgement is unstable between codings: the v1 coding of a comparable sample marked 97 of 100 as genuine, this one 76. Nine sampled rows use undeclared variables. In seven of them the contradiction does not depend on the variable's type, so they were coded by their underlying cause. The coder's prompt is in <code>review/coder_prompt.md</code>.</p>
 <p><strong>Other corpora (secondary).</strong> Each is a uniform sample, checked in its own Lean version with the v2 certificate.</p>
 <div class="table-wrap"><table>
 <thead>
@@ -493,6 +501,8 @@ regression with iteration fixed effects gives an odds ratio of 1.81 (1.75-1.88) 
 <li>coverage probes and the secondary certificate;</li>
 <li>a soundness check on the repair;</li>
 <li>full rerun.</li>
+<li><strong>D8:</strong> the v2 results, the re-coded causes and a saved coder prompt.</li>
+<li><strong>D9:</strong> confirmation-pass edits.</li>
 </ul>
 <p>The decision rule never changed.</p>
 </main>

@@ -4,7 +4,7 @@
 corpus and four other open prover-training corpora*
 
 Run directory: `research-lab/runs/formal-math-selfplay-vacuity-drift` · Preregistration: [`plan.md`](plan.md)
-(commit 86f1489) · Departures from it: [`deviations.md`](deviations.md) (D1-D7) · Independent review:
+(commit 86f1489) · Departures from it: [`deviations.md`](deviations.md) (D1-D9) · Independent review:
 [`review/review.md`](review/review.md) · 8 October 2026, revised after independent review
 
 ## In plain terms
@@ -28,7 +28,7 @@ phases, at 8% in round 3 and 10% in round 26, and then declined steadily. Severa
 The data cannot fully separate them.
 
 Vacuous problems are far from rare in other corpora. In NuminaMath-LEAN, 6.2% of the problems with a machine proof
-were vacuous: 7.4% of machine-translated problems against 1.6% of human-written ones. About three in four vacuous problems read like genuine competition questions.
+were vacuous: 7.4% of machine-translated problems against 1.6% of human-written ones. Most vacuous problems read like genuine competition questions.
 
 ## What was done
 
@@ -41,9 +41,10 @@ were vacuous: 7.4% of machine-translated problems against 1.6% of human-written 
 We drew 2,000 conjecture rows per iteration: 92,000 proofs of about 80,000 distinct conjectures, some proved more than
 once. We also drew 200 statement rows per iteration (9,600 LeanWorkbook proofs) as a control.
 
-**Environment.** Each row was checked in STP's own verifier environment: Lean 4.9.0-rc1, Mathlib at DeepSeek's pinned
-version, and `import miniF2F`, STP's curated subset of Mathlib (`lean/stp_env/miniF2F.lean`, from kfdong/STP). The
-1,152 rows that did not re-verify there were retried under all of Mathlib, and 33 then re-verified.
+**Environment.** Each row was checked in STP's own verifier environment: Lean 4.9.0-rc1, Mathlib at upstream d1d1e4b72 (the version
+DeepSeek's fork pins), and `import miniF2F`, STP's curated subset of Mathlib (`lean/stp_env/miniF2F.lean`, from kfdong/STP). The
+1,152 rows that did not re-verify there were retried under all of Mathlib. 44 then re-verified, 33 became eligible,
+and none of them was vacuous.
 
 **Certificate (v2, after the independent review).** A row counts as vacuous if a proof of False from its hypotheses,
 *as the original statement elaborates them*, compiles, contains no `sorry`, and uses only the standard axioms. There
@@ -58,9 +59,12 @@ are two routes:
 fixed then defaulted to ℕ, which turned hypotheses that are satisfiable over ℝ into contradictions over ℕ. The
 reviewer found this (D7). On the rows eligible under both versions in the primary windows:
 
-- v2 removes 18 of v1's 1,207 certificates. Two of the reviewer's 18 flagged rows turned out to be genuinely
-  vacuous in their own elaboration (over ℤ), which v2 confirms.
-- v2 adds 12 certificates that v1 missed.
+- **v2 removes 18 of v1's 1,207 certificates.**
+  - 16 were type flips: hypotheses satisfiable in their own type, refuted over ℕ.
+  - 2 were lost to the 100 s time limit in the v2 run.
+  - Two further rows that the reviewer flagged turned out to be genuinely vacuous in their own elaboration (over ℤ),
+    and v2 confirms them.
+- **v2 adds 12 certificates that v1 missed.** In these rows the ℕ default had made the released proof fail.
 
 **Validation.**
 
@@ -86,12 +90,13 @@ iteration.
 
 ## Results
 
-**Primary test (iterations 38-47 against 1-9; iteration 0 has no conjectures).** Rates are weighted by iteration
-size (population-weighted), with unweighted values in brackets.
+**Primary test (iterations 38-47 against 1-9; iteration 0 has no conjectures).** Rates are weighted by each
+iteration's size in the corpus (population-weighted), with the pooled sample rate in brackets. The one-sided z-test
+uses unpooled stratum variances.
 
 | | Late (38-47) | Early (1-9) | Ratio (95% CI) |
 |---|---|---|---|
-| Certified vacuous | 2.51% (2.53%; 482 of 19,064) | 4.13% (4.22%; 724 of 17,272) | **0.61 (0.54-0.68)** |
+| Certified vacuous | 2.51% (pooled 2.53%; 482 of 19,064) | 4.13% (pooled 4.19%; 724 of 17,272) | **0.61 (0.54-0.68)** |
 
 **Verdict: Refuted.** The hypothesis predicted a ratio of at least 2, and the upper end of the 95% CI is 0.68.
 
@@ -131,8 +136,11 @@ Across all 46 iterations the trend is flat (ρ = −0.006), because the decline 
 - **Coverage.** Statements with no binders, whose hypotheses all sit in the conclusion, cannot be examined by the
   preregistered certificate. They are 25.5% of eligible early rows and 1.0% of late rows, and 41% at iterations 3-4.
   - Among the rows the certificate can examine, the ratio is steeper, 0.45. The iteration-3 peak is 13.2% there.
-  - The secondary certificate, which can also examine binder-less rows by refuting the premises inside the
-    conclusion, adds few certificates (ratio 0.57). So the coverage gap hid little vacuity.
+  - The secondary certificate can also examine binder-less rows, by refuting the premises inside the conclusion, but
+    only by automation, because the released proof expects the original goal. Automation alone certifies 0.91% of
+    early binder-less rows (40 of 4,403), against 1.35% of early checkable rows, where the full certificate finds
+    5.63%. The gap may therefore hide on the order of 150 early certificates. The checkable-row ratio, 0.45, is the
+    better-matched comparison.
 - **Undeclared variables.** Statements whose variables default to ℕ make up 25.7% of certified rows early (186 of
   724) and 2.3% late (11 of 482). As the generator learned to declare variables, this source of vacuity disappeared.
   Excluding these statements gives a ratio of 0.72.
@@ -179,7 +187,7 @@ regression with iteration fixed effects gives an odds ratio of 1.81 (1.75-1.88) 
 | Cast or division-by-zero conventions | 2 |
 | An undeclared variable defaulted to ℕ | 2 |
 
-88 of the contradictions are local, visible from one or two hypotheses. 76 of the 100 statements read like genuine competition claims; the rest are visibly garbled. Nine sampled rows use undeclared variables. In seven of them the contradiction does not depend on the variable's type, so they were coded by their underlying cause. The coder's prompt is in `review/coder_prompt.md`.
+88 of the contradictions are local, visible from one or two hypotheses. 76 of the 100 statements read like genuine competition claims; the rest are visibly garbled. The "real claim" judgement is unstable between codings: the v1 coding of a comparable sample marked 97 of 100 as genuine, this one 76. Nine sampled rows use undeclared variables. In seven of them the contradiction does not depend on the variable's type, so they were coded by their underlying cause. The coder's prompt is in `review/coder_prompt.md`.
 
 **Other corpora (secondary).** Each is a uniform sample, checked in its own Lean version with the v2 certificate.
 
@@ -238,5 +246,7 @@ In NuminaMath-LEAN:
   - coverage probes and the secondary certificate;
   - a soundness check on the repair;
   - full rerun.
+- **D8:** the v2 results, the re-coded causes and a saved coder prompt.
+- **D9:** confirmation-pass edits.
 
 The decision rule never changed.

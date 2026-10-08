@@ -229,3 +229,25 @@ v1, plus K6, "undeclared variable defaulted to ℕ". The first coding prompt had
 Locality: 88 local. Real claim: 76 yes. The v1 coding is kept in `results/tables_v1/`.
 
 **Figure.** The x = 0 label now reads "self-play start".
+
+## D9. Confirmation pass: publish with edits (2026-10-08 13:02 NZDT)
+
+The same reviewer verified the following:
+
+- the v2 code is byte-identical to the pre-rerun commits;
+- the compressed row files decompress to the tables' inputs;
+- every number in the report;
+- in Lean, 30 of 30 certified rows reproduce by the same route, with `vac_thm` having the same type as `orig_thm`, and
+  15 of 15 non-certified rows stay non-certified.
+
+The verdict stands. Edits made:
+
+- **N1.** The coverage claim is corrected: the goal swap cannot apply to binder-less rows.
+- **N2.** The pooled rates in the primary table are correct (4.19%, 2.53%).
+- **N3.** 44 fallback rows re-verified, 33 became eligible and none was vacuous.
+- **N4.** The Mathlib version is upstream d1d1e4b72.
+- **N5.** The header and the deviation summary include D8, and the HTML date is corrected.
+- **N6.** A caveat on the instability of the coder's "real claim" judgement (97 against 76 of 100).
+- **N7.** The 18 removed and 12 added certificates are explained.
+
+**Reproduction.** `analysis.py` reads `results/rows_v2/*.jsonl`. Run `gunzip -k results/rows*/*.jsonl.gz` first.

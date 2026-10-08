@@ -366,3 +366,103 @@ the 100 may be false positives (47 of the 100 coded rows fall in the primary win
    Aesop`; 8 random failing `π` rows and 4 `card` rows re-verified.
 
 False-positive row ids (A1): early: 174691, 333422, 364393, 682372, 760556, 1064402, 1219391, 1280388, 1618564, 1655837, 1802958, 2088927, 2444670, 2468022, 2719539, 2720027, 2882263; late: 84593.
+
+## Confirmation pass
+
+Reviewer: the same independent reviewer, 2026-10-08, on commit 4563a5a (D7, D8, `analysis.py` v2 at 3e4ebf6, rewritten
+`report.md`). Checked: the v2 code against D7; `vacuity.py`, `lean_repl.py` and `analysis.py` are byte-identical to
+their pre-rerun commits (78e9674, 3e4ebf6), so nothing in the analysis changed after the v2 outcomes existed;
+`lean/stp_env/miniF2F.lean` has the stated sha256 (b59fe463…) and its olean is in the workspace; every committed
+`rows*/*.jsonl.gz` decompresses to the byte-identical `.jsonl` the tables were built from; every number in `report.md`
+was recomputed from `results/rows_v2/` (table below); and a Lean spot-check on cores 0–3 with the study's own v2
+`check_row` under `import miniF2F`.
+
+**Lean spot-check.** 30 v2-certified primary-window rows (the 12 certificates v2 added, the 2 of my 18 that v2 kept, 16
+random): 30/30 reproduce by the same route with only `propext`/`Classical.choice`/`Quot.sound`, and in all 30 the
+pretty-printed type of `vac_thm` is identical to that of `orig_thm`, which is what makes the v2 certificate sound by
+construction. 15 random non-certified rows: 0/15 certify. 8 secondary-only rows: 7/8 reproduce (`intros; exfalso; tac`
+compiles, final target not `False`, primary certificate fails); the eighth timed out at re-verification on the loaded
+cores (106 s against a 100 s limit), which is load, not a disagreement. The two rows I flagged that v2 kept, 1064402 and
+1802958, elaborate over `ℤ` (`∀ {x y : ℤ}, 2x² + 3y² = 1 → …`; `∀ {a c b d : ℤ}, …, a² + b² = 1 → c² + d² = 1 → …`)
+and are genuinely vacuous there; v1's certificate for them was unsound (over `ℕ`) but its conclusion happened to be
+right. The two v1 certificates that v2 dropped although they were not type flips (375452, 2017089) are wall-clock timeouts: both have `swap_timeout: True` at 102.6 s in the v2 run, where v1's swap took 9.4 s and 80.1 s, and in my rerun the v1 form still succeeds while the v2 form exceeds 100 s. Swap-time distributions are otherwise identical between runs (early/late p95 7.6 s / 19.3 s in both) and v2 has fewer swap timeouts overall (25 vs 42), so this is run-to-run timing variance under the heavier v2 load (22 workers), not a property of the `False.elim (by …)` form; it costs 2 of 1,207 certificates. v2 also gained 23 swap certificates v1 lacked (12 in the early window), rows where the ℕ-default had made the released proof fail.
+
+### Status of the original issues
+
+| Issue | Status | Evidence / remaining edit |
+|---|---|---|
+| A1 certificate unsound under auto-bound variables | **Resolved** | `theorem v B : C := False.elim (by …)` and `by exfalso; tac` in the original context; `decide` after reverting all hypotheses; autoImplicit probe recorded; new controls 0/4 satisfiable-undeclared and 1/1 vacuous-undeclared certified in both environments. On rows eligible under both versions v2 removes 18 v1 certificates (16 of my 18 flips; the other two are genuinely vacuous over ℤ and stay) and adds 12. Spot-check above. Edit: say that the 18 removed are 16 type flips plus 2 certificates (375452, 2017089) lost to the 100 s limit in the v2 run, not 18 flips. |
+| A2 environment not STP's | **Resolved, with two wording edits** | STP's `miniF2F` compiled in, `VAC_HEADER` switch, all-of-Mathlib fallback (1,152 rows; 44 re-verify, 33 pass the split check, 0 vacuous); 905 primary-window rows recovered (841 `π`, 64 other), 5 vacuous; exclusion taxonomy by window in `exclusions.csv` and the report (recomputed, matches). Edits: "33 then re-verified" → "44 re-verified and 33 became eligible"; "Mathlib at DeepSeek's pinned version" → "upstream mathlib d1d1e4b72 (DeepSeek's fork 2f65ba7 can no longer be fetched, see Caveats)". |
+| A3 coverage | **Resolved as measurement; one new overclaim** | Coverage per iteration (figure lower panel), checkable-row ratio 0.45 (0.40–0.50), binder-less shares 25.5% / 1.0%, secondary certificate 0.57 (0.51–0.64). See N1 below for the sentence "So the coverage gap hid little vacuity". |
+| A4 unreported control contrast | **Resolved** | 0.57 (0.33–0.97) reported with swap-only 0.65 (0.37–1.16) and automation-only 0.47 (0.18–1.19); within-phase declines read as upper bounds; "Measurement drift" caveat. |
+| B1 exclusions under-reported | **Resolved** | Taxonomy table incl. 427 truncated prompts; split-repair and `π` sensitivities listed. |
+| B2 "jumped to 8–10% after each restart"; figure label | **Resolved** | "peaked early in each phase, 8% in round 3 and 10% in round 26"; x = 0 now "self-play start"; tiles updated. |
+| B3 single mechanism | **Resolved** | Three candidates, "None is tested here", plain-terms hedged. |
+| B4 training weight | **Resolved** | Mean weights 0.776 vs 0.637 (22%), length-term-only stated, `C(iteration)` disclosed. |
+| B5 NuminaMath win rate | **Resolved** | Hedged; group-normalised-advantage point made; column labelled "among statements with a proof". |
+| B6 related work | **Resolved (brief)** | Optional: add that the benchmark audit found one certified vacuous theorem in ~10,000 items, against 1–6% here. |
+| B7 reproducibility | **Resolved** | `rows/` and `rows_v2/` committed compressed; gz = jsonl verified. Optional: `analysis.py` reads `.jsonl`, so document `gunzip -k results/rows_v2/*.gz` or read the gz directly. |
+| B8 units | **Resolved; one number wrong** | "92,000 proofs of about 80,000 distinct conjectures"; weighted/unweighted labelled; size-biased statement sample noted. See N2. |
+| C1 context sensitivity | **Disclosed** | Caveat present; certificates are built in a fresh env 0. The two lost certificates are wall-clock timeouts under load, a related but distinct effect worth one clause in the caveat. |
+| C2 cause coding | **Resolved; one caveat to add** | Re-coded 100 v2 rows with K6, prompt saved, 9 auto-bound rows identified, the false positive left the sample. See N6. |
+| C3 minor | **Mostly resolved** | Fork cited; trivial-rate caveat added; coverage panel added. Not done, optional: state that the z-test uses unpooled stratum variances; the SFT v2 error taxonomy is in `other_corpora.csv` (978 other errors, 346 dropped-header identifiers, 238 timeouts) but not in the report. |
+
+### New issues (all wording or single numbers; no rerun needed)
+
+- **N1 (must edit).** `report.md` "What else changes over training → Coverage": "The secondary certificate … adds few
+  certificates (ratio 0.57). So the coverage gap hid little vacuity." This does not follow. The secondary certificate
+  has only automation sensitivity. Among early-window eligible rows, automation certifies 0.91% of binder-less rows
+  (40 of 4,403) against 1.35% of checkable rows, where the full certificate (swap + automation) finds 5.63%. By the one
+  yardstick that applies to both groups, binder-less rows are about two-thirds as vacuous as checkable rows, and the
+  goal swap, which supplies three-quarters of all certificates, cannot be applied to them. So the gap plausibly hides
+  of the order of 150 early certificates (4,403 × ~3.8%), which is why the checkable-row ratio (0.45) differs from the
+  primary (0.61). Replace the sentence with that comparison and point to the checkable-row ratio as the better-matched
+  one.
+- **N2 (must edit).** Primary table: "(4.22%; 724 of 17,272)" and "(2.53%; 482 of 19,064)". 724/17,272 = 4.19% and
+  482/19,064 = 2.53%. The 4.22% is the equal-iteration-weight rate from the "unweighted" sensitivity (each iteration
+  weighted 1/9), not the pooled rate. Print 4.19% / 2.53%, or label the bracketed figure "equal iteration weights".
+- **N3 (edit).** "The 1,152 rows that did not re-verify there were retried under all of Mathlib, and 33 then re-verified":
+  44 re-verified, 33 also passed the split check (became eligible); none is vacuous.
+- **N4 (edit).** "Mathlib at DeepSeek's pinned version" in "Environment" overstates what the Caveats admit; the local
+  build is upstream d1d1e4b72.
+- **N5 (edit).** The header says "D1-D7" and the Deviations summary stops at D7; D8 exists. `build_report_html.py` hard-
+  codes "Report · 2026-10-06" while `report.md` is dated 8 October; the HTML masthead should carry the revision date.
+- **N6 (edit).** Coder stability: the v1 coding judged 97 of 100 statements "real claims", the v2 coding 76 of 100, on
+  two random samples of nearly the same population by the same model class. "About three in four vacuous problems read
+  like genuine competition questions" (plain terms) should say the judgement varied between 76% and 97% across two
+  coder runs, or drop the figure to the Causes section with that caveat. The cause distribution itself is similar
+  across runs (K2 59 → 52, K5 21 → 33, K3 18 → 9), which is worth one sentence too.
+- **N7 (edit).** "v2 removes 18 of v1's 1,207 certificates" should say what they are (see A1 row): 16 type flips and 2
+  genuine certificates (375452, 2017089) lost to the 100 s wall-clock limit in the v2 run; otherwise a reader infers
+  18 flips, which contradicts "Two of the reviewer's 18 … v2 confirms". The 12 added are rows where v1's ℕ-default
+  had made the released proof fail; both counts are a timing/elaboration effect, not a change of definition.
+
+### Recomputed numbers (v2)
+
+| Quantity | Report | Recomputed from `rows_v2/` |
+|---|---|---|
+| Primary RR | 0.61 (0.54–0.68); 2.51% vs 4.13% | 0.6093 (0.5430–0.6837); p_L 0.02514, p_E 0.04126; k 482/724; n 19,064/17,272 |
+| Pooled unweighted rates | 2.53%, 4.22% | **2.53%, 4.19%** (N2) |
+| Sensitivities (statement, unweighted, repair +986, miniF2F-only, excl. auto-bound, checkable, secondary, swap-only, auto-only) | 0.62, 0.60, 0.61, 0.61, 0.72, 0.45, 0.57, 0.65, 0.19 | 0.617, 0.598, 0.607, 0.610, 0.715, 0.449, 0.574, 0.649, 0.189 (CIs match) |
+| Phase contrasts | 0.20, 0.37, 2.23 | 0.204 (0.172–0.241), 0.367 (0.331–0.407), 2.235 (2.063–2.421) |
+| Peaks / starts / final five | 2.9%, 7.8%, 8.0%, 9.8%; 0.6%, 2.1% | 0.0287, 0.0782, 0.0804, 0.0984; 0.0064, 0.0208 |
+| Spearman all / p1 / p2 | −0.006, −0.90, −0.93 | −0.0061, −0.902, −0.933 |
+| Coverage: binder-less early/late; it 3–4; checkable it-3 peak | 25.5%, 1.0%; 41%; 13.2% | 0.2549, 0.0104; 0.409, 0.411; 0.1324 |
+| Auto-bound share of certified early/late | 186 of 724, 11 of 482 | 186/724, 11/482 |
+| Control 0–9 vs 38–47; swap; auto; overall; ρ | 0.57 (0.33–0.97); 0.65; 0.47; 1.8% (172/9,594); −0.24 (0.10) | 0.5657 (0.3288–0.9732); 0.650; 0.465; 172/9,594 = 1.79%; −0.244 (0.095) |
+| Routes | 1,206; 1,004 / 112 / 90 | 1,206; 1,004 / 112 / 90 |
+| Trivial early/late | 3.8% / 0.1% | 0.0383 / 0.0013 |
+| Weight | 0.776 vs 0.637; OR 1.81 (1.75–1.88) | 0.7760 vs 0.6373; 1.814 (1.755–1.875) |
+| Exclusions (early / late): truncated, dropped header, split, other | 388/11, 4/495, 334/363, 2/67 | 388/11, 4/495, 334/363, (2+0+0)/(61+5+1) = 2/67 |
+| Fallback | 1,152 retried, 33 re-verified | 1,152; **44 re-verified, 33 eligible**, 0 vacuous (N3) |
+| v1→v2 on both-eligible rows; newly eligible | 18 removed, 12 added; 905 (5 vacuous) | 18 removed, 12 added; 905 (841 `π`), 5 vacuous |
+| Causes | 52/33/9/2/2/2; 88 local; 76 real; 9 auto-bound | same; `vacuous_sample_100.csv` auto_bound = 9; ids match |
+| Other corpora | 6.2 (5.7–6.7); 2.8 (2.4–3.3); 2.0 (1.7–2.5); 1.0 (0.8–1.2), 1.2 | 549/8,818; 134/4,806; 101/4,990; 75/7,638; 1.15% (match) |
+| Numina author / pass rate | 7.4% of 7,051; 1.6% of 1,767; 0.73 vs 0.67, 2×10⁻⁸ | 0.0739; 0.0158; 0.7304 vs 0.6656; 1.7×10⁻⁸ |
+
+### Final recommendation: **publish with edits**
+
+The four measurement defects are fixed as D7 describes and the fixes are verified in Lean; the decision rule is
+unchanged; the verdict (Refuted, RR 0.61, upper CI 0.68) stands and now rests on a sound certificate in STP's
+environment with its coverage and control confounds disclosed. The remaining items are N1–N7: one sentence that
+overclaims (N1), one mislabelled number (N2), and five small wording/date/consistency edits. None requires a rerun.

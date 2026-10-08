@@ -159,7 +159,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
   <h1>__TITLE__</h1>
   <p class="subtitle">__SUBTITLE__</p>
   <div class="meta">
-    <span>Report · 2026-10-06 · revised after independent review</span>
+    <span>Report · 2026-10-08 · revised after independent review</span>
     <a href="__BLOB__/plan.md">Preregistration</a>
     <a href="__BLOB__/deviations.md">Deviations log</a>
     <a href="__BLOB__/code">Code</a>
