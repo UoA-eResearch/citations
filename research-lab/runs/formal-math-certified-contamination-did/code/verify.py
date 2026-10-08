@@ -21,6 +21,7 @@ from lean_repl import Repl, axioms, errors, uses_sorry  # noqa: E402
 ALLOWED = {"propext", "Classical.choice", "Quot.sound"}
 BANNED = re.compile(r"\b(native_decide|admit|sorry)\b|^\s*axiom\s", re.M)
 HDR = "open BigOperators Real Nat Topology Rat\n\n"
+PI = re.compile(r"(?<![\w.])π(?![\w])")  # D4: bare pi read as Real.pi in statement and proof
 
 
 def block(text):
@@ -31,6 +32,7 @@ def block(text):
 def check_one(repl, code, want_norm):
     if code is None:
         return "no code"
+    code = PI.sub("Real.pi", code)
     s = statement(code)
     if s is None or normalise(s) != want_norm:
         return "changed statement"
@@ -56,9 +58,10 @@ def init():
 
 
 def work(item):
-    key, idx, text, finish, want = item
+    key, idx, text, finish, want, stmt = item
     try:
-        st = "truncated" if finish == "length" else check_one(_repl, block(text), want)
+        code = (stmt + " := by" + (text or "")) if PROVER == "stp" else block(text)  # STP writes only the tactic block
+        st = "truncated" if finish == "length" else check_one(_repl, code, want)
     except Exception as e:  # noqa: BLE001
         st = "worker error"
         try:
@@ -68,7 +71,12 @@ def work(item):
     return dict(key=key, idx=idx, status=st)
 
 
+PROVER = None
+
+
 def main(prover, workers):
+    global PROVER
+    PROVER = prover
     ref = pd.read_parquet(RUN / "data" / "reforms.parquet").set_index("id")
     out = RUN / "data" / "verified" / f"{prover}.jsonl"
     out.parent.mkdir(exist_ok=True)
@@ -80,10 +88,10 @@ def main(prover, workers):
             continue
         iid, ver = r["key"].split("|")
         stmt = ref.loc[iid, "orig" if ver == "orig" else ver]
-        want = normalise(statement(stmt + " := by"))
+        want = normalise(statement(PI.sub("Real.pi", stmt) + " := by"))
         for i, o in enumerate(r["outputs"]):
             if (r["key"], i) not in done:
-                items.append((r["key"], i, o["text"], o["finish"], want))
+                items.append((r["key"], i, o["text"], o["finish"], want, stmt))
     print(f"{prover}: {len(items)} outputs to verify ({os.environ.get('VAC_TOOLCHAIN', 'v49')})", flush=True)
     with mp.Pool(workers, initializer=init) as pool, open(out, "a") as f:
         for k, res in enumerate(pool.imap_unordered(work, items, chunksize=4)):

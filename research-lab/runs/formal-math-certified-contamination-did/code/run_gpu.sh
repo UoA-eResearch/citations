@@ -7,10 +7,13 @@ RUN=$(pwd)
 MODE=${1:-pilot}
 trap 'docker stop fr-gen >/dev/null 2>&1; docker start vllm >/dev/null 2>&1; echo "owner vllm restarted $(date)"' EXIT
 docker stop vllm
-for spec in "dsp_v2:DeepSeek-Prover-V2-7B" "goedel_v2:Goedel-Prover-V2-8B" "kimina:Kimina-Prover-Distill-8B"; do
+SPECS="dsp_v2:DeepSeek-Prover-V2-7B goedel_v2:Goedel-Prover-V2-8B kimina:Kimina-Prover-Distill-8B"
+[ "$MODE" = main ] && SPECS="stp:STP_model_Lean_0320 $SPECS"  # D4: the STP prover as a pre-specified secondary
+for spec in $SPECS; do
   name=${spec%%:*}; dir=${spec#*:}
+  MAXLEN=12288; [ "$name" = stp ] && MAXLEN=4096  # STP's model has a 4,096-token context
   docker run --rm -d --gpus all --name fr-gen -v $RUN/data/models:/models -p 8001:8000 vllm/vllm-openai:latest \
-    --model /models/$dir --served-model-name $name --max-model-len 12288 --gpu-memory-utilization 0.92 --max-num-seqs 256 \
+    --model /models/$dir --served-model-name $name --max-model-len $MAXLEN --gpu-memory-utilization 0.92 --max-num-seqs 256 \
     --enable-prefix-caching
   up=0
   for i in $(seq 1 120); do curl -sf localhost:8001/v1/models >/dev/null && up=1 && break; sleep 10; done

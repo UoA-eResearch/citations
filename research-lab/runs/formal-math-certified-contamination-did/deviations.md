@@ -83,3 +83,91 @@ replaced by `True`, with the same portfolio and a 60 s limit, on uncontended cor
 
 **Status.** No prover output has been generated beyond the D-pilot (truncation only; next entry), and no proof has
 been verified. The secondary-benchmark certification is paused and will resume after the recheck.
+
+## D3a. The D3 recheck also failed open; replaced by a hypothesis-free portfolio (2026-10-08 14:41 NZDT)
+
+The D3 recheck (14:37-14:40) still counted closed arithmetic facts as L2 leaks. For example, the training statement
+1 + 1/(1 + 1/(1 + 1/(1 + 1/2))) = 8/5 "implied" the test statement 1 + 1/(1 + 1/(1 + 1)) = 5/3.
+
+**The cause.** With the hypothesis replaced by `True`, `simp_all` clears `h : True` from the context, so the
+portfolio's `nlinarith [h]` branch fails on an unknown identifier. A conclusion that `simp_all` plus `nlinarith`
+proves on its own therefore looked informative.
+
+**The fix.** The counterfactual is now the conclusion on its own, with no hypothesis, under every hypothesis-free
+branch of the certification portfolio plus `norm_num`, `linarith`, `nlinarith` and `decide` (60 s;
+fail-closed). This is at least as strong as anything the certification portfolio could do without the training
+statement. The D3 outputs are kept in `data/certify/recheck_D3_true_variant/`.
+
+No prover sampling or verification has taken place.
+
+## D3b. Explosion guard: implications from refutable training statements do not count (2026-10-08 14:45 NZDT)
+
+After D3a, a spot-check of Goedel-Pset L2 pairs still found unrelated statements. Each training statement was false,
+for example "∀ a : ℝ, a = 0" and "n = 20 → n − 2 = 18 → 18 + 1 = 19 → n − 18 = 1". `simp_all` or `aesop` derives
+a contradiction from the false hypothesis and then proves the benchmark statement by explosion. This was checked
+branch by branch in Lean on three pairs. Goedel-Pset contains false formalisations, as other autoformalised corpora
+do.
+
+**The extra condition.** An implication a ⇒ b counts only if a is not refutable: `(∀ a) → False` must not be provable
+by the certification portfolio within 60 s. A refutation or a timeout makes the implication uninformative
+(fail-closed). For L1 the same applies in the other direction.
+
+The D3a outputs are kept in `data/certify/recheck_D3a/`. No prover sampling or verification has taken place.
+
+## D4. Leak tiers final; sampling plan and minimum detectable effect, before main sampling (2026-10-08 14:52 NZDT)
+
+**Leak tiers for the 488 miniF2F items** (D1-D3b; `results/tables/leak_rates.csv`, `leak_pairs_bench_minif2f.csv`):
+
+| Corpus | Items leaked (L0/L1/L2) | Share |
+|---|---|---|
+| STP_Lean_0320 | 179 (174 / 3 / 2; 173 of the 174 L0 items are validation items) | 36.7% |
+| Goedel-Pset-v1 | 67 (10 / 36 / 21) | 13.7% |
+| SFT_dataset_v2 | 61 (0 / 31 / 30) | 12.5% |
+| NuminaMath-LEAN | 55 (5 / 37 / 13; the 5 L0 items are all test items) | 11.3% |
+| DeepSeek-Prover-V1 | 16 (0 / 15 / 1) | 3.3% |
+| Goedel's Lean-workbook-proofs | 10 | 2.0% |
+| Lean Workbook | 0 | 0% |
+| Any corpus | 252 | 51.6% |
+
+69 items are automation-provable.
+
+**Leaked (item, prover) pairs against each prover's own corpora:** Goedel-Prover-V2 99, Kimina 55, DeepSeek-Prover-V2
+16; 170 in all. Every one has at least one certified reformulation in its prover's environment.
+
+**The pilot** (13:06-13:39 NZDT, 8 October). 20 items, 8 samples per version, at the plan's 4,096-token cap. **No
+pilot output was verified or scored.** Only finish reasons and lengths were read. Truncated outputs:
+
+| Prover | Truncated |
+|---|---|
+| DeepSeek-Prover-V2 | 24% |
+| Goedel-Prover-V2 | 44% |
+| Kimina | 36% |
+
+The model cards recommend 8,192 (DeepSeek), 8,096 (Kimina) and 32,768 (Goedel) tokens. Throughput implies that the
+plan's full design (488 items × about 2.7 versions × 32 samples × 3 provers) would take about 35 GPU-hours at 4,096
+tokens and 45 or more at 8,192. That is a long outage of the lab owner's shared vLLM service.
+
+**Sampling plan.**
+
+1. **Token cap: 8,192** for all three provers, close to the DeepSeek and Kimina model cards. Goedel's documented
+   32,768 is not affordable, so some of its outputs will still be truncated. Truncation is treated identically
+   across versions, so the DiD is not biased by it.
+2. **Items per prover:**
+   - every own-leaked item;
+   - **150 clean items** drawn at random (seed 20261008) from that prover's clean items with a certified
+     reformulation.
+
+   The leaked arm dominates the DiD's variance, so dropping clean items costs little precision. **pass@32 is kept.**
+3. **Secondary, pre-specified now: the STP prover** (kfdong/STP_model_Lean_0320, revision ae7751cc).
+   - Its own corpus, STP_Lean_0320, holds 179 leaked items, nearly all miniF2F-valid statements verbatim.
+   - All 488 items, 32 samples per version, completion-style prompt as in STP's corpus.
+   - Temperature 1.0, top-p 0.95, at most 2,048 tokens.
+   - Analysed separately and not pooled into H1.
+4. **Verification** uses all of Mathlib, with bare `π` read as `Real.pi` in both statement and proof (as in D1).
+   Lean 4.9 serves DeepSeek, Goedel and STP; Lean 4.15 serves Kimina.
+
+**Minimum detectable effect (plan section 5), recorded before sampling.** With n_leaked = 170 and n_clean = 450:
+
+  MDE = 2.49 × 0.30 × sqrt(1/170 + 1/450) = **6.7 pp**
+
+That is at most 10 pp, so all three verdicts remain reachable.

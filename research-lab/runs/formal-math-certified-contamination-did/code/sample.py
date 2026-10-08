@@ -19,10 +19,12 @@ HEADER = "import Mathlib\nimport Aesop\n\nset_option maxHeartbeats 400000\n\nope
 PLAN = ("Before producing the Lean 4 code to formally prove the given theorem, provide a detailed proof plan outlining the "
         "main proof steps and strategies.\nThe plan should highlight key ideas, intermediate lemmas, and proof structures "
         "that will guide the construction of the final formal proof.")
-ENV = {"dsp_v2": "v49", "goedel_v2": "v49", "kimina": "v415"}
+ENV = {"dsp_v2": "v49", "goedel_v2": "v49", "kimina": "v415", "stp": "v49"}
 SAMPLING = {"dsp_v2": dict(temperature=1.0, top_p=0.95), "goedel_v2": dict(temperature=1.0, top_p=0.95),
-            "kimina": dict(temperature=0.6, top_p=0.95)}
-N, MAX_TOKENS = 32, 4096
+            "kimina": dict(temperature=0.6, top_p=0.95), "stp": dict(temperature=1.0, top_p=0.95)}
+N, MAX_TOKENS = 32, 8192  # D4: 8,192 (pilot truncation at 4,096 was 24-44%)
+STP_HEADER = "import Mathlib\nimport Aesop\nset_option maxHeartbeats 400000\nopen BigOperators Real Nat Topology Rat\n\n"
+CLEAN_PER_PROVER, SEED = 150, 20261008
 
 
 def informal():
@@ -64,6 +66,17 @@ def main(prover, base, served, pilot=None):
         for k in ("R1", "R2"):
             if getattr(r, k) and f"{r.id}|{k}" in ok:
                 jobs.append((f"{r.id}|{k}", getattr(r, k), nl.get(r.id)))
+    if not pilot and prover != "stp":  # D4: every own-leaked item plus 150 clean items (seeded)
+        st = pd.read_csv(RUN / "results" / "tables" / "leak_status_by_prover.csv")
+        st = st[(st.scope == "own corpora") & (st.prover == prover)]
+        with_reform = {j[0].split("|")[0] for j in jobs if not j[0].endswith("|orig")}
+        leaked = set(st[st.leaked].item) & with_reform
+        clean = sorted(set(st[~st.leaked].item) & with_reform)
+        import numpy as np
+        pick = set(np.random.default_rng(SEED).choice(clean, CLEAN_PER_PROVER, replace=False))
+        keep = leaked | pick
+        jobs = [j for j in jobs if j[0].split("|")[0] in keep]
+        json.dump(sorted(keep), open(RUN / "results" / "tables" / f"sampled_items_{prover}.json", "w"))
     if pilot:
         ids = sorted({j[0].split("|")[0] for j in jobs})[:: max(1, len(ref) // int(pilot))][: int(pilot)]
         jobs = [j for j in jobs if j[0].split("|")[0] in ids]
@@ -75,13 +88,19 @@ def main(prover, base, served, pilot=None):
 
     def one(job):
         key, stmt, doc = job
-        body = dict(model=served, messages=messages(prover, stmt, doc), n=N if not pilot else 8, max_tokens=MAX_TOKENS, **SAMPLING[prover])
+        if prover == "stp":  # completion-style, as in STP's corpus; the model writes the tactic block
+            body = dict(model=served, prompt=f"Complete the following Lean 4 code:\n\n```lean4\n{STP_HEADER}{stmt} := by", n=N,
+                        max_tokens=2048, stop=["```"], **SAMPLING[prover])
+            url = f"{base}/v1/completions"
+        else:
+            body = dict(model=served, messages=messages(prover, stmt, doc), n=N if not pilot else 8, max_tokens=MAX_TOKENS, **SAMPLING[prover])
+            url = f"{base}/v1/chat/completions"
         for attempt in range(5):
             try:
-                r = requests.post(f"{base}/v1/chat/completions", json=body, timeout=3600)
+                r = requests.post(url, json=body, timeout=7200)
                 r.raise_for_status()
                 ch = r.json()["choices"]
-                return dict(key=key, outputs=[dict(text=c["message"]["content"], finish=c["finish_reason"]) for c in ch])
+                return dict(key=key, outputs=[dict(text=c["message"]["content"] if "message" in c else c["text"], finish=c["finish_reason"]) for c in ch])
             except Exception as e:  # noqa: BLE001
                 time.sleep(10 * (attempt + 1))
                 err = repr(e)[:200]

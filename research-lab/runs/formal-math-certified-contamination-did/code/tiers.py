@@ -2,7 +2,7 @@
 (plan section 5), computed before any main prover sampling.
 Tier per (benchmark item, corpus statement): L0 identical normalised text; L1 certified both ways, neither conclusion
 automation-provable; L2 train => test certified, the test statement not automation-provable. Items whose statement the
-portfolio proves on its own are "automation-provable" and can be leaked only through L0.
+portfolio proves on its own are "automation-provable" and can be leaked only through L0. Informativeness follows D3 (recheck.py).
 Writes results/tables/leak_pairs.csv, leak_rates.csv, leak_status_by_prover.csv and mde.json."""
 import json
 import sys
@@ -27,8 +27,14 @@ def tiers(bench):
             for x in c[c.via == "L0"].itertuples():
                 rows.append(dict(item=x.bench_id, corpus=corp, corpus_id=x.corpus_id, tier="L0"))
         f = RUN / "data" / "certify" / f"{bench}__{corp}.jsonl"
+        rc = RUN / "data" / "certify" / f"recheck_{bench}__{corp}.jsonl"
         if not f.exists():
             continue
+        inf = {}
+        if rc.exists():  # D3: informativeness from the True-substitution recheck (fail-closed)
+            for line in open(rc):
+                q = json.loads(line)
+                inf[q["key"]] = (q.get("ab_inf"), q.get("ba_inf"))
         for line in open(f):
             r = json.loads(line)
             if r.get("status") != "checked":
@@ -36,8 +42,11 @@ def tiers(bench):
             item, _, cid = r["key"].split("|", 2)
             if r.get("b_trivial"):
                 trivial.add(item)
-            ab = bool(r.get("ab")) and r.get("b_trivial") is False  # train => test, informative
-            ba = bool(r.get("ba")) and r.get("a_trivial") is False  # test => train, informative
+            if not rc.exists():
+                raise SystemExit(f"recheck missing for {bench} x {corp}")
+            ab_inf, ba_inf = inf.get(r["key"], (None, None))
+            ab = bool(r.get("ab")) and ab_inf is True  # train => test, informative (D3)
+            ba = bool(r.get("ba")) and ba_inf is True  # test => train, informative (D3)
             if ab and ba:
                 rows.append(dict(item=item, corpus=corp, corpus_id=cid, tier="L1"))
             elif ab:

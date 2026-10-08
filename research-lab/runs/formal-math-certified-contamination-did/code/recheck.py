@@ -17,23 +17,44 @@ import certify as C  # noqa: E402
 RUN = Path(__file__).resolve().parents[1]
 
 
+# D3a: every hypothesis-free branch of certify.PORTFOLIO plus norm_num/linarith/nlinarith/decide. With h replaced by True,
+# simp_all cleared h before `nlinarith [h]`, so that branch failed and the recheck failed open.
+FREE = ("first\n    | (simp_all; done)\n    | aesop\n    | (norm_num; done)\n    | linarith\n    | nlinarith\n"
+        "    | (simp_all <;> nlinarith)\n    | (simp_all <;> linarith)\n    | decide")
+
+
 def informative(repl, b, timeout=60):
     """True if (True -> forall b) is NOT provable by the portfolio within the timeout; False if it is or times out."""
     try:
         pb = C.prop(b)
     except Exception:  # noqa: BLE001
         return False
-    r = repl.run(f"{C.HDR}theorem chk : True → {pb} := by\n  intro h\n  intros\n  {C.PORTFOLIO}\n\n#print axioms chk", timeout=timeout)
+    r = repl.run(f"{C.HDR}theorem chk : {pb} := by\n  intros\n  {FREE}\n\n#print axioms chk", timeout=timeout)
     if "timeout" in r or "dead" in r:
         return False
     proved = not C.errors(r) and not C.uses_sorry(r) and (C.axioms(r, "chk") is not None)
     return not proved
 
 
+def refutable(repl, a, timeout=60):
+    """D3b: True if (forall a) -> False is provable by the certification portfolio, or times out (fail-closed). A refutable
+    hypothesis proves anything by explosion, so an implication from it is not a leak."""
+    try:
+        pa = C.prop(a)
+    except Exception:  # noqa: BLE001
+        return True
+    r = repl.run(f"{C.HDR}theorem chk : {pa} → False := by\n  intro h\n  intros\n  {C.PORTFOLIO}\n\n#print axioms chk", timeout=timeout)
+    if "timeout" in r or "dead" in r:
+        return True
+    return not C.errors(r) and not C.uses_sorry(r) and (C.axioms(r, "chk") is not None)
+
+
 def work(item):
     key, a, b, ab, ba = item
     try:
-        return dict(key=key, ab_inf=informative(C._repl, b) if ab else None, ba_inf=informative(C._repl, a) if ba else None)
+        ab_inf = (informative(C._repl, b) and not refutable(C._repl, a)) if ab else None
+        ba_inf = (informative(C._repl, a) and not refutable(C._repl, b)) if ba else None
+        return dict(key=key, ab_inf=ab_inf, ba_inf=ba_inf)
     except Exception as e:  # noqa: BLE001
         try:
             C._repl.restart()
