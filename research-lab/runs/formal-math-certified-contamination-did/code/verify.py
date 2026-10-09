@@ -54,7 +54,7 @@ _repl = None
 
 def init():
     global _repl
-    _repl = Repl()
+    _repl = Repl(max_cmds=int(os.environ.get("VERIFY_MAX_CMDS", "250")))  # restart REPLs often: memory grows per command
 
 
 def work(item):

@@ -39,7 +39,7 @@ def tiers(bench):
             r = json.loads(line)
             if r.get("status") != "checked":
                 continue
-            item, _, cid = r["key"].split("|", 2)
+            item, _, cid = r["key"].rsplit("|", 2)  # ProofNet# ids contain "|"
             if r.get("b_trivial"):
                 trivial.add(item)
             if not rc.exists():

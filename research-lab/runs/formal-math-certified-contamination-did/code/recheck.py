@@ -75,7 +75,7 @@ def main(bench, workers):
         for line in open(f):
             r = json.loads(line)
             if r.get("status") == "checked" and (r.get("ab") or r.get("ba")):
-                item, _, cid = r["key"].split("|", 2)
+                item, _, cid = r["key"].rsplit("|", 2)  # ProofNet# ids contain "|"
                 items.append((r["key"], c[cid], b[item], bool(r.get("ab")), bool(r.get("ba"))))
         out = RUN / "data" / "certify" / f"recheck_{bench}__{corp}.jsonl"
         done = {json.loads(l)["key"] for l in open(out)} if out.exists() else set()
