@@ -192,3 +192,49 @@ released. The original is kept as `tokenizer_config.orig.json`.
 
 **Also.** The CPU chain (`run_cpu_main.sh`) was stopped and restarted from the edited script. bash had kept the old
 copy open after the in-place edit. Every step resumes from its output file.
+
+## D6. Memory safety net during verification (2026-10-10 01:28 NZDT)
+
+Some proof checks make one Lean REPL grow to 11-16 GB. Together with the other workers this twice pushed the machine
+to critically low memory. Claude Code then stopped background monitors, though no verification work was lost.
+
+**Mitigations.**
+
+- **Fewer, fresher REPLs.** Verification was restarted on 9 October with 10 workers instead of 22, and with REPL
+  restarts every 40 commands (`VERIFY_MAX_CMDS`).
+- **A watchdog** (`code/repl_watchdog.sh`, from 01:28 NZDT on 10 October). It kills any single REPL above 20 GB. The
+  output being checked is then recorded as a failure, as a timeout would be.
+
+**Which outputs it could affect.** DeepSeek-Prover-V2, Goedel-Prover-V2 and Kimina were fully verified before the
+watchdog started. Only the STP verification (secondary) can be affected. Kills are logged in
+`logs/repl_watchdog.log` and will be reported.
+
+## D7. DeepSeek-Prover-V2 outputs invalid (tokenizer); resampled. The pooled result was seen first (2026-10-10 01:31 NZDT)
+
+**What happened.** The first pooled analysis (01:30 NZDT, 10 October; `code/analysis.py --no-stp`) showed
+DeepSeek-Prover-V2 at 0% pass@32 on every item and version. 14,407 of its 14,688 outputs had no extractable code.
+
+**The cause** is the same class of bug as D5. Under the transformers version in the vLLM image, DeepSeek-Prover-V2's
+`tokenizer_config.json` (`LlamaTokenizerFast`, `legacy`) loads a tokenizer that drops spaces and non-ASCII
+characters. Prompts were therefore encoded wrongly: the model saw `theoremt(bhv:)(h:0<b0<h)…`. Outputs were decoded
+lossily. The fix is the one used in D5 (`tokenizer_class: PreTrainedTokenizerFast`). With it the tokenizer
+round-trips exactly, and the chat template yields BOS followed by the intact statement.
+
+Goedel-Prover-V2 and Kimina (Qwen2 tokenizer) were checked the same way and are unaffected. The pilot did not catch
+the problem because it read only lengths and finish reasons. `sample.py` now aborts when early outputs contain
+byte-level artefacts.
+
+**The invalid run** is archived in `data/invalid_D7/`, not scored, and DeepSeek-Prover-V2 is resampled in full
+(`code/run_gpu_dsp.sh`).
+
+**Disclosure.** The pooled analysis with the invalid DeepSeek-Prover-V2 rows was printed:
+
+| | Value |
+|---|---|
+| DiD | +1.0 pp |
+| One-sided 95% bounds | −0.9 to +3.0 pp |
+| Goedel-Prover-V2 alone | +1.0 pp |
+| Kimina alone | +1.2 pp |
+
+The secondary analyses were printed too, and the STP rows were excluded as incomplete. Nothing in the design changes
+because of it: the resampled DeepSeek-Prover-V2 outputs go through the committed `analysis.py` unchanged.

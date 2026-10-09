@@ -109,6 +109,11 @@ def main(prover, base, served, pilot=None):
     t0 = time.time()
     with ThreadPoolExecutor(16) as ex, open(out, "a") as f:
         for i, res in enumerate(ex.map(one, todo)):
+            # D7: abort on byte-level BPE artefacts, the sign of a broken tokenizer (as for STP and DeepSeek-Prover-V2)
+            if i < 5 and "outputs" in res:
+                txt = "".join(o["text"] or "" for o in res["outputs"])
+                if txt.count("Ġ") + txt.count("Ċ") > 20:
+                    raise SystemExit(f"{prover}: byte-level artefacts in decoded output; tokenizer misconfigured")
             f.write(json.dumps(res) + "\n"); f.flush()
             if (i + 1) % 50 == 0:
                 print(f"{i + 1}/{len(todo)} | {(time.time() - t0) / 60:.1f} min", flush=True)

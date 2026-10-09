@@ -72,12 +72,12 @@ def verdict(r, mde):
     return "Inconclusive"
 
 
-def main():
+def main(*args):
     st = pd.read_csv(TAB / "leak_status_by_prover.csv")
     pairs = pd.read_csv(TAB / "leak_pairs_bench_minif2f.csv")
     mde = json.load(open(TAB / "mde.json"))
     allg, units = [], []
-    for p in PRIMARY + ["stp"]:
+    for p in PRIMARY + ([] if "--no-stp" in args else ["stp"]):  # --no-stp while STP verification is incomplete
         f = RUN / "data" / "verified" / f"{p}.jsonl"
         if not f.exists():
             continue
