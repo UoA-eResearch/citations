@@ -1,0 +1,49 @@
+PRIMARY {
+ "DiD": 0.013267973856209151,
+ "lower95_one_sided": -0.007454193217334522,
+ "upper95_one_sided": 0.034977292189534846,
+ "n_leaked": 170,
+ "n_clean": 450,
+ "mean_d_leaked": 0.008823529411764706,
+ "mean_d_clean": -0.0044444444444444444,
+ "sd_d": 0.13481032432547282,
+ "MDE_preregistered_pp": 6.0939591872799905,
+ "MDE_design_D4_pp": 6.724898424774118,
+ "MDE_observed_sd_pp": 3.0219524589988676,
+ "verdict": "Refuted"
+}
+                                          analysis     DiD  lower95_one_sided  upper95_one_sided  n_leaked  n_clean  mean_d_leaked  mean_d_clean
+0                                    prover dsp_v2  0.0100            -0.0128             0.0333        16      150         0.0000       -0.0100
+1                                 prover goedel_v2  0.0101            -0.0097             0.0337        99      150         0.0101        0.0000
+2                                    prover kimina  0.0124            -0.0361             0.0610        55      150         0.0091       -0.0033
+3                                       prover stp  0.0353             0.0102             0.0619       179      305         0.0419        0.0066
+4                    per-sample pass rate (pooled)  0.0150            -0.0003             0.0309       170      450         0.0418        0.0268
+5                        L0/L1 leaks only (pooled)  0.0219            -0.0000             0.0473       118      502         0.0169       -0.0050
+6  leak against any corpus (pooled, sampled items) -0.0013            -0.0207             0.0178       381      239        -0.0013        0.0000
+7   excluding the 19 Kimina-revised items (pooled)  0.0102            -0.0105             0.0314       166      438         0.0090       -0.0011
+8              STP prover, leak against STP corpus  0.0353             0.0098             0.0617       179      305         0.0419        0.0066
+       prover version  leaked  changed  truncated  pass32   rate    n
+0      dsp_v2      R1   False    0.004      0.139   0.732  0.566  149
+1      dsp_v2      R1    True    0.000      0.006   1.000  0.900   16
+2      dsp_v2      R2   False    0.004      0.133   0.768  0.539  112
+3      dsp_v2      R2    True    0.000      0.029   1.000  0.797   16
+4      dsp_v2    orig   False    0.002      0.096   0.727  0.582  150
+5      dsp_v2    orig    True    0.000      0.008   1.000  0.955   16
+6   goedel_v2      R1   False    0.001      0.132   0.880  0.682  150
+7   goedel_v2      R1    True    0.009      0.176   0.816  0.600   98
+8   goedel_v2      R2   False    0.008      0.142   0.867  0.650  128
+9   goedel_v2      R2    True    0.021      0.168   0.828  0.555   64
+10  goedel_v2    orig   False    0.002      0.129   0.873  0.694  150
+11  goedel_v2    orig    True    0.001      0.168   0.828  0.619   99
+12     kimina      R1   False    0.000      0.221   0.733  0.563  150
+13     kimina      R1    True    0.002      0.221   0.782  0.619   55
+14     kimina      R2   False    0.000      0.203   0.731  0.552  119
+15     kimina      R2    True    0.005      0.148   0.850  0.670   40
+16     kimina    orig   False    0.000      0.199   0.720  0.568  150
+17     kimina    orig    True    0.000      0.219   0.782  0.627   55
+18        stp      R1   False    0.002      0.000   0.430  0.320  305
+19        stp      R1    True    0.003      0.000   0.972  0.832  178
+20        stp      R2   False    0.003      0.000   0.450  0.334  242
+21        stp      R2    True    0.007      0.000   0.931  0.676  144
+22        stp    orig   False    0.003      0.000   0.430  0.325  305
+23        stp    orig    True    0.008      0.000   1.000  0.924  179

@@ -238,3 +238,29 @@ byte-level artefacts.
 
 The secondary analyses were printed too, and the STP rows were excluded as incomplete. Nothing in the design changes
 because of it: the resampled DeepSeek-Prover-V2 outputs go through the committed `analysis.py` unchanged.
+
+## D8. Results; a correction to D6 (2026-10-11 12:29 NZDT)
+
+**Runs.**
+
+- The resampled DeepSeek-Prover-V2 run finished at 20:01 NZDT on 10 October, and the owner's vLLM was restarted
+  automatically at 20:01:52.
+- DeepSeek-Prover-V2 verification finished at 22:57.
+- The committed `analysis.py` ran unchanged apart from the `--no-stp` switch, which this final run did not use.
+
+**Primary result.** DiD = +1.33 pp, one-sided 95% bounds −0.75 to +3.50 pp; 170 leaked and 450 clean pairs.
+**Refuted** under plan section 5. The STP secondary gives +3.5 pp (+1.0 to +6.2).
+
+**Correction to D6.** D6 said only STP's verification could be affected by the 20 GB watchdog. The DeepSeek-Prover-V2
+re-verification (D7) also ran under it.
+
+| Verification | Watchdog kills (`logs/repl_watchdog.log`) |
+|---|---|
+| STP (1-5 a.m., 10 October) | 18 |
+| DeepSeek-Prover-V2 (20:59-21:01, 10 October) | 4 |
+
+Each killed check counts as a failed output. That is 4 of 14,688 DeepSeek-Prover-V2 outputs and at most 18 of 43,424
+STP outputs.
+
+**Rejection reasons, for the record.** All 869 of Kimina's "banned" outputs use `native_decide` in proof code, which
+the plan bans. None was a commented `sorry`.
