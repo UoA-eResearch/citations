@@ -367,3 +367,55 @@ analysis was first run".
 **The reviewer's sample.** One of the reviewer's re-check stages started while the fixed Lean Workbook certification
 was being written. Its random sample of rejected pairs may therefore include some newly certified Lean Workbook pairs.
 That affects only the reviewer's reproducibility check, not any study number.
+
+### D9 addendum: guard audit and the vacuity portfolio (2026-10-11 16:00 NZDT)
+
+**The fix chain finished at 15:55 NZDT on 11 October.** The new guards removed 27 pair-directions on miniF2F that the
+D3b recheck had accepted:
+
+| Corpus | Directions removed |
+|---|---|
+| Goedel-Pset | 16 |
+| Goedel SFT v2 | 6 |
+| STP_Lean_0320 | 3 |
+| NuminaMath-LEAN | 2 |
+
+None was gained. The reviewer had confirmed 11 spurious pairs, so each of the 27 was re-run with a per-condition
+record (`code/d9_diagnose_flips.py`, `results/d9_checks/`). The negation test was also retried with a 300 s
+timeout.
+
+| Outcome | Directions |
+|---|---|
+| A kernel-checked proof rejects the direction | 27 |
+| A timeout rejects the direction | 0 |
+| The 300 s negation retry changes the result | 0 |
+
+**What the rejecting proofs are.**
+
+- **Witness refutation:** 20 directions. The training statement, or for the reverse direction the benchmark-side
+  premise, is refuted outright by a numeral instance.
+- **Negation proof:** 11 directions. The premise implies the negation of the conclusion for every value of its
+  binders.
+- These overlap, because some directions have both proofs.
+
+**Where they come from.** The reviewer's 11 spurious pairs are among the 27. The rest are the same kind of pair: the
+reviewer's prose named several of them. A few are new false Goedel-Pset statements, for example the pairs behind
+`test/imo_1960_p2` and `test/induction_1pxpownlt1pnx`.
+
+**The vacuity portfolio, as first written, found no vacuous item.** It missed `valid/mathd_numbertheory_35`. Two
+reasons:
+
+- the portfolio cannot instantiate a ∀-hypothesis;
+- its branches did not have to close the goal, so `first` committed to a branch that made progress without closing
+  the goal.
+
+**The fix.**
+
+- Every branch must now close the goal.
+- Each hypothesis is also instantiated at 0 to 3, as in the explosion guard.
+
+The portfolio now finds exactly one vacuous item, `valid/mathd_numbertheory_35`, and 82 automation-provable items
+(80 + 2 timeouts in the reviewer's run). The first output is kept in
+`results/d9_checks/bench_items_first_portfolio.csv`.
+
+The pooled analysis has not yet been run on the D9 tiers.
