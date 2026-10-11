@@ -65,9 +65,11 @@ def jobs():
 
 
 def main(model, base, pilot=None):
-    js = jobs()
-    if pilot:
-        js = js[:: max(1, len(js) // int(pilot))][: int(pilot)]
+    js = jobs() if not pilot else []
+    if pilot:  # format check only, on items outside the catalogue (unchanged v1/v2 pairs), so no outcome is seen
+        allp = [json.loads(l) for l in open(CAT / "all_pairs.jsonl")]
+        un = [r for r in allp if not r["changed"] and r["role"] == "primary"]
+        js = [(f"pilot/{r['item']}|O", r["nl"]) for r in un[:: max(1, len(un) // int(pilot))][: int(pilot)]]
     out = RUN / "data" / "samples" / (f"{model}_pilot.jsonl" if pilot else f"{model}.jsonl")
     out.parent.mkdir(parents=True, exist_ok=True)
     done = {json.loads(l)["key"] for l in open(out)} if out.exists() else set()
