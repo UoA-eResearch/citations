@@ -16,7 +16,7 @@ RUN = Path(__file__).resolve().parents[1]
 TAB = RUN / "results" / "tables"
 FIG = RUN / "results" / "figures"
 GROUP_ORDER = ["high", "medium", "low"]
-GROUP_LABEL = {"high": "High-quality VR\n(59 countries)", "medium": "Medium\n(28)", "low": "Low, very low or none\n(117)"}
+GROUP_LABEL = {"high": "High-quality VR\n(59 countries)", "medium": "Medium\n(28)", "low": "Low, very low or\nnot assessed by WHO (117)"}
 C1C, C2C = "#2a78d6", "#d95926"
 
 
@@ -43,20 +43,27 @@ def coverage_by_group(pr, sec):
         lo = est - np.array([v["lower95"] for v in vals])
         hi = np.array([v["upper95"] for v in vals]) - est
         ax.errorbar(xs + off, est, yerr=[lo, hi], fmt="o", color=col, capsize=4, ms=7, label=name)
+    rc = pd.read_csv(TAB / "review_checks.csv")
+    dw = rc[rc.analysis == "R2 death-weighted C2"].set_index("group")
+    vals = [dw.loc[g] for g in ["all"] + GROUP_ORDER]
+    est = np.array([v.estimate for v in vals])
+    ax.errorbar(xs + 0.36, est, yerr=[est - np.array([v.lower95 for v in vals]), np.array([v.upper95 for v in vals]) - est],
+                fmt="s", color="#85847e", capsize=3, ms=5, mfc="white", label="C2 weighted by deaths (review-requested, exploratory)")
     e1 = sec[(sec.analysis.str.startswith("E1")) & (sec.group == "all")].estimate.iloc[0]
     ax.axhline(0.95, color="#85847e", ls="--", lw=1)
     ax.text(len(xs) - 0.5, 0.955, "95%: the C2 floor if intervals are calibrated", ha="right", va="bottom", fontsize=8, color="#4f4e4a")
-    ax.axhline(e1, color=C1C, ls=":", lw=1)
-    ax.text(len(xs) - 0.5, e1 - 0.006, f"{pct(e1)}: C1 expected if calibrated and independent", ha="right", va="top", fontsize=8, color=C1C)
+    ax.axhline(e1, color=C1C, ls=":", lw=1, label=f"{pct(e1)}: C1 floor if calibrated (independent errors)")
     ax.set_xticks(xs, labels, fontsize=8.5)
-    ax.set_ylim(0.55, 1.0)
+    ax.set_ylim(0.5, 1.0)
     ax.yaxis.set_major_formatter(matplotlib.ticker.PercentFormatter(1.0, decimals=0))
     ax.set_ylabel("Share of country-cause-year cells")
     ax.legend(loc="lower left", fontsize=8, frameon=False)
     ax.spines[["top", "right"]].set_visible(False)
     save(fig, "coverage_by_group", "Coverage of GBD 2023 estimates by GBD 2021 95% uncertainty intervals, 137 level-3 causes × 2019 "
          "and 2021, by WHO vital-registration quality group. Bars are 95% two-way (country × cause) bootstrap intervals. Both "
-         "measures sit far below what calibrated intervals would give, and hardly differ by data quality.")
+         "measures sit far below what calibrated intervals would give and, counting every cell equally, hardly differ by data quality. "
+         "Grey squares weight cells by GBD 2021 deaths (review-requested, exploratory): the low group then falls to 70%, almost "
+         "entirely because of large revisions to major causes in China and India.")
 
 
 def calibration_levels(p):
@@ -130,10 +137,10 @@ def tiles(pr, sec):
     d = pr["H4"]["high_minus_low"]
     sign = lambda x: f"{'+' if x >= 0 else '−'}{abs(100 * x):.1f}"  # noqa: E731
     t = [
-        ["Inside the GBD 2021 interval", pct(pr["H1"]["estimate"]), f"of GBD 2023 estimates; about {pct(e1, 0)} expected if calibrated"],
+        ["Inside the GBD 2021 interval", pct(pr["H1"]["estimate"]), f"of GBD 2023 estimates; at least {pct(e1, 0)} if calibrated"],
         ["Within combined uncertainty", pct(pr["H3"]["estimate"]), "of revisions (C2); at least 95% if calibrated"],
         ["High − low data quality", f"{sign(d['estimate'])} pts", f"C2 gap, 95% CI {sign(d['lower95'])} to {sign(d['upper95'])}"],
-        ["Verdict", "Inconclusive", "too narrow everywhere (H3); no clear quality gradient (H4)"],
+        ["Verdict", "Inconclusive", "too narrow everywhere (H3); no cell-weighted quality gradient (H4)"],
     ]
     json.dump(t, open(TAB / "tiles.json", "w"), ensure_ascii=False, indent=1)
     return t

@@ -1,0 +1,77 @@
+analysis,group,estimate,lower95,upper95,n
+R1 `none` countries in GBD's VR garbage-code table (any year 1980-2021),none,27.0,,,85.0
+R1 `none` countries with GBD VR data in 2010-2021,none,17.0,,,85.0
+R1 `none` countries with WHO MDB national data in >= 1 year since 2010,none,9.0,,,85.0
+"R1 H4 gap (C2 high - low), ALT1 low = WHO low/very low + `none` without GBD VR data 2010-21",high 59 / low 100,0.00929290655657744,-0.031322846393976374,0.04909009841094098,
+"R1 H4 gap (C2 high - low), ALT2 as ALT1, and `none` with GBD VR and garbage < 20% moved to high",high 69 / low 100,-0.0024588372979524875,-0.04421081815965953,0.037156527656013454,
+"R1 H4 gap (C2 high - low), ALT3 low = `none` without GBD VR data 2010-21 only",high 59 / low 68,0.002062380803148023,-0.041657797304103225,0.04574265474256526,
+R2 death-weighted C2,all,0.7654158975463093,0.6288135495557844,0.9027308471720342,
+R2 death-weighted C2,high,0.8992315913292449,0.7954862208750075,0.9533045928066364,
+R2 death-weighted C2,low,0.6973467303339398,0.5284520835787647,0.8791132629541303,
+R2 death-weighted C2,medium,0.8741228008685817,0.736425040075658,0.9469442653624582,
+"R2 death-weighted C2 gap, high - low",high - low,0.20188486099530512,0.020824749008042927,0.37204104303472785,
+"R2 death-weighted C2, low group excluding China and India",low,0.8325403660177568,0.7435035741938546,0.903606724664357,
+R2 share of the low group's death-weighted C2 misses from China and India,low,0.7509327528667157,,,
+R2 share of the low group's death-weighted misses from its 10 largest country-cause pairs,low,0.6520580724330707,,,10.0
+R2 median per-country death-weighted C2,high,0.9144436257759255,,,
+R2 median per-country death-weighted C2,low,0.831482955468127,,,
+"R3 H4 gap, country-only bootstrap",high - low,0.012298227110383086,-0.01801892441654964,0.0412413384120356,
+R3 H4 upper bound across seeds 1-10: min,high - low,0.04893051814562157,,,
+R3 H4 upper bound across seeds 1-10: max,high - low,0.05360496066444497,,,
+R3 H4 seeds (of 10) with upper bound < 0.05 (would be Refuted),high - low,1.0,,,
+"R3 H4 gap, B = 20,000",high - low,0.012298227110383086,-0.027443726175534297,0.05279547876965807,
+R4 UIs overlap (>= 90% if both calibrated),all,0.885941898542676,0.8624077056330041,0.9056130118832582,
+R4 UIs overlap (>= 90% if both calibrated),high,0.8821831364124597,0.8513096189510527,0.9097078967211928,
+R4 UIs overlap (>= 90% if both calibrated),low,0.8866604786846118,0.8619979276484924,0.9103296780062213,
+R4 UIs overlap (>= 90% if both calibrated),medium,0.8907363420427553,0.8538737462767136,0.9219046261484988,
+"R4 UIs overlap gap, high - low",high - low,-0.004477342272152129,-0.03420725085674491,0.025212226889868856,
+"S7/R4 expected if calibrated, error correlation 0.0: C1 (E1)",all,0.7793109334100269,,,
+"S7/R4 expected if calibrated, error correlation 0.0: C2",all,0.9500000018071153,,,
+"S7/R4 expected if calibrated, error correlation 0.0: overlap",all,0.9930877468454936,,,
+"S7/R4 expected if calibrated, error correlation 0.5: C1 (E1)",all,0.8890808793092496,,,
+"S7/R4 expected if calibrated, error correlation 0.5: C2",all,0.9920890825408697,,,
+"S7/R4 expected if calibrated, error correlation 0.5: overlap",all,0.9993701695909326,,,
+"S7/R4 expected if calibrated, error correlation 0.8: C1 (E1)",all,0.9564462054117866,,,
+"S7/R4 expected if calibrated, error correlation 0.8: C2",all,0.9991734911521165,,,
+"S7/R4 expected if calibrated, error correlation 0.8: overlap",all,0.9997055586386706,,,
+R5 C2 by GBD 2021 deaths in the cell,< 1,0.7172405547584888,,,8364.0
+R5 C2 by GBD 2021 deaths in the cell,1-10,0.7732149036797785,,,8669.0
+R5 C2 by GBD 2021 deaths in the cell,10-100,0.8304602124057258,,,12994.0
+R5 C2 by GBD 2021 deaths in the cell,"100-1,000",0.8545677410051193,,,13869.0
+R5 C2 by GBD 2021 deaths in the cell,"1,000-10,000",0.8605747301201155,,,6577.0
+R5 C2 by GBD 2021 deaths in the cell,">= 10,000",0.8608247422680413,,,1746.0
+R5 C2 excluding cells with < 1 GBD 2021 death,all,0.8324934443050963,0.8072964843005842,0.8554346087882289,43855.0
+R5 country-cause pairs eligible in both years,all,25950.0,,,
+R5 share of those pairs with the same C2 outcome in both years,all,0.9151445086705202,,,
+S9 share of C2 misses from the 10 lowest-C2 causes,all,0.1831943157244362,,,9711.0
+S9 share of C2 misses from Other neoplasms,all,0.03851302646483369,,,
+S9 Other neoplasms: median log-revision (ln p23 - ln p21),all,1.3932851587325024,,,408.0
+S9 Other neoplasms: share of cells revised upward,all,0.9779411764705882,,,
+S9 share of C2 misses from COVID-19,all,0.01050355267222737,,,
+S9 COVID-19: median log-revision (ln p23 - ln p21),all,0.0952116761125108,,,191.0
+S9 COVID-19: share of cells revised upward,all,0.6230366492146597,,,
+S9 share of C2 misses from Other intestinal infectious diseases,all,0.029966017917825147,,,
+S9 Other intestinal infectious diseases: median log-revision (ln p23 - ln p21),all,1.0059846516919677,,,408.0
+S9 Other intestinal infectious diseases: share of cells revised upward,all,0.7622549019607843,,,
+S10 median stated log-SD s21,all,0.15171424665317018,,,
+S10 median |ln p23 - ln p21|,all,0.1746758262471051,,,
+S10 SD of z,all,3.102807498051898,,,
+S10 share |z| > 5,all,0.03651927459353875,,,
+S10 median stated log-SD s21,high,0.07458204471004357,,,
+S10 median |ln p23 - ln p21|,high,0.08445481425314272,,,
+S10 SD of z,high,4.163215525609931,,,
+S10 share |z| > 5,high,0.03752685284640172,,,
+S10 median stated log-SD s21,low,0.20016063947297524,,,
+S10 median |ln p23 - ln p21|,low,0.2618327464258372,,,
+S10 SD of z,low,2.5422521283421844,,,
+S10 share |z| > 5,low,0.035768746270635816,,,
+S10 median stated log-SD s21,medium,0.10901204856147016,,,
+S10 median |ln p23 - ln p21|,medium,0.11647610631597605,,,
+S10 SD of z,medium,2.626447718813266,,,
+S10 share |z| > 5,medium,0.03758558055050999,,,
+"M13 rows outside their own interval, IHME-GBD_2021_DATA-30d8ecb1-1.zip",exact,21.0,,,56712.0
+"M13 rows outside their own interval, IHME-GBD_2021_DATA-30d8ecb1-1.zip",relative excess > 1e-6,5.0,,,56712.0
+"M13 rows outside their own interval, IHME-GBD_2023_DATA-297c3461-1.zip",exact,7.0,,,28560.0
+"M13 rows outside their own interval, IHME-GBD_2023_DATA-297c3461-1.zip",relative excess > 1e-6,0.0,,,28560.0
+"M13 rows outside their own interval, IHME-GBD_2023_DATA-2b7b6033-1.zip",exact,6.0,,,60792.0
+"M13 rows outside their own interval, IHME-GBD_2023_DATA-2b7b6033-1.zip",relative excess > 1e-6,0.0,,,60792.0

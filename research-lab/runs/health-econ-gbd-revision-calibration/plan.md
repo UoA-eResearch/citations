@@ -236,3 +236,10 @@ results.
   The by-cause table shows where revisions concentrate.
 - **Scope:** two years, level-3 causes, both sexes and all ages only, and no age-standardised rates.
 - **The quality measure is WHO's,** not GBD's own star rating.
+
+---
+
+*Erratum added after the independent review (12 October 2026; deviations.md D3). In section 4, "Countries missing from
+the table have no vital-registration data in the WHO Mortality Database" is wrong. Table 4.1 covers only countries in
+WHO's GHE scope. 17 of the 85 `none` countries have GBD vital-registration data for 2010-2021, and 9 have WHO Mortality
+Database data since 2010. The preregistered grouping is kept, and alternatives are reported.*

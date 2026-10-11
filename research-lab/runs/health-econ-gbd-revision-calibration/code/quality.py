@@ -2,7 +2,9 @@
 
 1. WHO GHE 2021 methods, Table 4.1 (pages 9-14): quality class of each country's vital registration (VR) data (high,
    medium, low, very low), completeness and usability ranges, years in the WHO Mortality Database. Countries not in the
-   table have no VR data in the WHO database and are classed `none`.
+   table are classed `none` ("not assessed in WHO Table 4.1"). Table 4.1 covers only WHO's GHE scope (Member States
+   over 90,000 people, plus Puerto Rico, Taiwan and Palestine), so `none` includes some countries that do have death
+   registration (erratum, deviations.md D3; see code/review_checks.py).
 2. GBD 2021 causes-of-death appendix 1, pages 76-78: percentage of VR deaths redistributed from garbage codes, by
    country-year (1980-2021). Covariate: mean over 2010-2021 of the years present; countries not listed have no VR.
 
