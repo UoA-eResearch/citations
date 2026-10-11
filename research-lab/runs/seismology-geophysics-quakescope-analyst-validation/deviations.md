@@ -42,3 +42,27 @@ before any matching. Of 54,286 SCEDC files:
 **The geographic-type field** is `l` (local), `r` (regional) or `t` (teleseism). The plan specifies local
 earthquakes, so SCEDC events are kept only with type `eq` and geographic type `l`. Teleseisms would mostly fail
 the 100 km filter anyway; regional events located outside the network are dropped.
+
+## D3 - 2026-10-12 01:02 NZDT - analysis crash in H2 (-inf noise covariate); H1 results lost; rerun
+
+The first full analysis run (started 11 October 19:38, about 5 h 20 min) crashed in `h2()`, in the secondary
+linear-regression check: `ValueError: Input X contains infinity`. No result had been printed or saved, because
+`primary.json` was written only after H2, so no outcome was seen.
+
+**Cause.** Three stations (BK.BABI, BK.QRDG, NC.MDPB) have a median 60-s RMS of exactly zero over their noise hours,
+a flat or dead trace, so log10 gave -inf. The primary gradient-boosting model had accepted -inf silently and would
+have treated these stations as extremely quiet.
+
+**Changes (code only; no rule changed).**
+
+1. Non-finite `log_noise` is set to missing in `analysis.main()`. Plan section 4 says stations without a usable
+   noise hour get a missing value, and a zero-RMS trace is not usable. 22 other stations were already missing
+   (21 with no data, 1 with no response).
+2. `h1()` writes its bootstrap draws (`results/tables/h1_bootstrap_draws.csv`) and `primary.json` as soon as H1
+   is done, and logs progress every 10 refits. The refits use `imap_unordered`. Each refit still uses seed
+   20261011 + 1 + b, so results do not depend on order.
+3. 13 bootstrap workers instead of 8; the machine is otherwise idle.
+4. `tests/smoke_main.py` (new) runs `main()` end to end on synthetic data, with a -inf and a NaN noise value
+   planted, in a scratch directory. It passes.
+
+The analysis is rerun from the same matched and covariate files; parse, covariates and match are not rerun.

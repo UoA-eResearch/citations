@@ -65,11 +65,22 @@ def _boot(args):
     return sd_p(f["beta"], f["s_u"]), f["converged"]
 
 
-def h1(d, B=200, workers=8):
+def _boot_indexed(args):
+    return args[1], _boot(args)
+
+
+def h1(d, B=200, workers=13):
     f = fit(d)
     est = sd_p(f["beta"], f["s_u"])
+    print("H1 main fit done; bootstrap starting", flush=True)
+    res = [None] * B
     with mp.Pool(workers) as pool:
-        res = pool.map(_boot, [(d, b) for b in range(B)])
+        for k, (b, r) in enumerate(pool.imap_unordered(_boot_indexed, [(d, b) for b in range(B)])):
+            res[b] = r
+            if (k + 1) % 10 == 0:
+                print(f"bootstrap {k + 1}/{B}", flush=True)
+    # D3: draws saved as soon as they exist
+    pd.DataFrame({"b": range(B), "SD_p": [x[0] for x in res], "converged": [x[1] for x in res]}).to_csv(TAB / "h1_bootstrap_draws.csv", index=False)
     draws = np.array([x[0] for x in res])
     lo, hi = np.percentile(draws, [2.5, 97.5])
     verdict = "Supported" if (est >= 0.10 and lo >= 0.05) else "Refuted" if hi < 0.10 else "Inconclusive"
@@ -148,6 +159,10 @@ def main(*args):
     TAB.mkdir(parents=True, exist_ok=True)
     m = pd.read_parquet(RUN / "data" / "matched.parquet")
     cov = pd.read_parquet(RUN / "data" / "covariates.parquet").set_index("netsta")
+    # D3: a zero median RMS (flat or dead trace) gives log10(0) = -inf; treat as unusable, i.e. missing (plan section 4)
+    bad = ~np.isfinite(cov.log_noise) & cov.log_noise.notna()
+    print("non-finite log_noise set to missing:", list(cov.index[bad]), flush=True)
+    cov.loc[bad, "log_noise"] = np.nan
     d = prepare(m)
     n30 = int((d.groupby("netsta").size() >= MIN_H2).sum())
     out = dict(n_stations_ge30=n30)
@@ -158,6 +173,7 @@ def main(*args):
         return
     f, r1 = h1(d)
     out["H1"] = r1
+    json.dump(out, open(TAB / "primary.json", "w"), indent=1, default=float)  # D3: saved before H2
     r2, sec2, x = h2(f, d, cov)
     out["H2"] = r2
     out["H2_secondary"] = sec2
