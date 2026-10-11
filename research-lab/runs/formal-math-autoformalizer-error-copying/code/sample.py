@@ -43,7 +43,8 @@ def request(model, nl):
     if model == "herald":
         q = ("Please translate the natural language statement to Lean4 code with the header\n**Name**\n"
              f"{NAME}\n**Informal statement**\n{nl}\n")
-        return "completions", dict(prompt=f"User:{q}\n\nAssistant:")
+        # D3: stop at either end token (generation_config: 100001; tokenizer eos <|im_end|>: 100002)
+        return "completions", dict(prompt=f"User:{q}\n\nAssistant:", stop_token_ids=[100001, 100002])
     if model == "dsp_v2":
         return "chat", dict(messages=[{"role": "user", "content": f"{INSTR}\n\n{nl}"}])
     if model == "qwen":

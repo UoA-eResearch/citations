@@ -70,3 +70,24 @@ Written while the 16 rater subagents were running. No tag file had been opened.
    - Any `<think>` section is dropped first.
    - If the last code block is unterminated (a truncated output), the text after the last fence is used.
    - The reverse direction (D → O, C → O) is tested only when the forward one holds.
+
+## D3 - 2026-10-12 10:58 NZDT - Herald's tokenizer repaired before sampling (D2 item 6)
+
+**The failure.** Under the transformers version in the vLLM image, Herald_translator's `tokenizer_config.json`
+(`LlamaTokenizer`, `legacy`) does not round-trip a Lean statement. It drops the spaces and the non-ASCII symbols:
+
+`theoremmy_favorite_theorem(x:)(h:0<x):kFinset.Icc112,x^k2*:=bysorry`
+
+This is the contamination run's D5/D7 bug.
+
+**The fix.** As there, `tokenizer_class` is set to `PreTrainedTokenizerFast` (the original is kept as
+`tokenizer_config.orig.json`).
+
+**Checks after the fix** (`code/tokcheck.py`, `code/tokcheck_bos.py`, run in the vLLM image):
+
+- All five tokenizers round-trip the test statement exactly.
+- Herald's encoder still prepends BOS (`<｜begin▁of▁sentence｜>`, id 100000).
+- Its generation config ends on id 100001, while the tokenizer's eos is `<|im_end|>` (id 100002). Herald's requests
+  therefore stop on either (`stop_token_ids`).
+
+No model had been sampled.
