@@ -53,3 +53,15 @@ labelled "review-requested, exploratory" in the report. No preregistered verdict
 - **The `none`-class audit.** It first counted countries present in the GBD table at any year (27). It now uses
   countries with data in 2010-2021 (17), matching WHO's post-2010 window and the reviewer's count. Both counts are
   reported.
+
+## D3b - 2026-10-12 00:51 NZDT - confirmation pass (review/confirmation.md: publish with edits, 3 wording issues)
+
+- Added two rows to review_checks.py. The death-weighted high - low gap without China and India is +6.7 points (-1.8 to
+  +13.6), so China and India account for about two-thirds of the +20.2 gap, not "almost all"; they hold 55% of the
+  low group's deaths. The other row is SD of z by group and year. All earlier review_checks numbers are unchanged
+  (each bootstrap has its own fixed seed).
+- Reworded "almost entirely China and India" in the verdict, plain-terms section, figure caption and "What this
+  means".
+- Reworded the tail sentence: the extreme standardised revisions in well-registered countries occur in both years,
+  and the 2021 coverage dip is only coincident with the new data and COVID-19 correction.
+- Reworded the Zavalis et al. sentence.

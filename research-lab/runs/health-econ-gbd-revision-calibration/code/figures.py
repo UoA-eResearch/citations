@@ -62,8 +62,8 @@ def coverage_by_group(pr, sec):
     save(fig, "coverage_by_group", "Coverage of GBD 2023 estimates by GBD 2021 95% uncertainty intervals, 137 level-3 causes × 2019 "
          "and 2021, by WHO vital-registration quality group. Bars are 95% two-way (country × cause) bootstrap intervals. Both "
          "measures sit far below what calibrated intervals would give and, counting every cell equally, hardly differ by data quality. "
-         "Grey squares weight cells by GBD 2021 deaths (review-requested, exploratory): the low group then falls to 70%, almost "
-         "entirely because of large revisions to major causes in China and India.")
+         "Grey squares weight cells by GBD 2021 deaths (review-requested, exploratory): the low group then falls to 70%, about "
+         "two-thirds of the gap coming from large revisions to major causes in China and India.")
 
 
 def calibration_levels(p):

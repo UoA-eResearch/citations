@@ -5,8 +5,9 @@
 death registration.*
 
 Run directory: `research-lab/runs/health-econ-gbd-revision-calibration` · Preregistration: [`plan.md`](plan.md)
-(commit 6b7a3e2; erratum appended after review) · Departures from it: [`deviations.md`](deviations.md) (D1-D3) ·
-Independent review: [`review/review.md`](review/review.md) · 12 October 2026, revised after review
+(commit 6b7a3e2; erratum appended after review) · Departures from it: [`deviations.md`](deviations.md) (D1-D3b) ·
+Independent review: [`review/review.md`](review/review.md), confirmation pass
+[`review/confirmation.md`](review/confirmation.md) · 12 October 2026, revised after review
 
 **Verdict: Inconclusive (preregistered headline rule).**
 
@@ -17,8 +18,8 @@ Independent review: [`review/review.md`](review/review.md) · 12 October 2026, r
   +1.2 points (95% CI −2.8 to +5.2). Whether that is "Inconclusive" or "Refuted" depends on bootstrap noise and on
   the grouping.
 - **Weighting by deaths gives a different picture.** As a review-requested alternative, weighting by deaths, the
-  low-quality group's coverage drops to 70% against 90% in the high group. That gap is almost entirely large
-  revisions to major causes in China and India.
+  low-quality group's coverage drops to 70% against 90% in the high group. About two-thirds of that gap comes from
+  large revisions to major causes in China and India; without them a gap of about 7 points (−2 to +14) remains.
 
 ## In plain terms
 
@@ -36,7 +37,7 @@ intestinal infections", came with no stated change of method.
 
 We expected the ranges to fail most where death registration is poor. **Counting every country and cause equally,
 they did not:** well-registered countries fell short just as often. Weighting by number of deaths, the poor-data group
-looks much worse. That is almost all China and India, where GBD revised major causes such as stroke, heart disease and
+looks much worse. Most of that is China and India, where GBD revised major causes such as stroke, heart disease and
 lung disease by more than its ranges allowed.
 
 **For users:** a GBD range understates how far the next round may move the number, in rich and poor countries alike.
@@ -155,6 +156,7 @@ assumed.
 | C2 weighted by GBD 2021 deaths | all 76.5% (62.9-90.3); high 89.9% (79.5-95.3); medium 87.4%; low 69.7% (52.8-87.9) |
 | Death-weighted C2 gap, high − low | **+20.2 points (+2.1 to +37.2)** |
 | Death-weighted C2, low group without China and India | 83.3% (74.4-90.4) |
+| Death-weighted C2 gap, high − low, without China and India (confirmation pass) | +6.7 points (−1.8 to +13.6): about two-thirds of the +20.2 gap is China and India, which hold 55% of the low group's deaths |
 | Share of the low group's death-weighted misses from China and India | 75%; its ten largest country-cause misses are all in China or India and make up 65% |
 | Median per-country death-weighted C2: high / low | 91.4% / 83.1% |
 | H4 gap, country-only bootstrap | +1.2 (−1.8 to +4.1) |
@@ -172,16 +174,20 @@ assumed.
 log-SD is 2.7 times that in high-quality countries. Revisions there are also larger, 3.1 times, so intervals and
 revisions scale together. This partly answers Byass et al. (2013), who noted that GBD 2010's intervals for diabetes
 mortality were "not appreciably wider" in data-sparse regions. In this panel they are wider, by about the right
-factor for typical cells. The heaviest tail of revisions is in well-registered countries (SD of z 4.2). In the 2021
-data year that matches the arrival of new registration data and GBD 2023's COVID-19 misclassification correction
-(GBD 2023 appendix §3.8). The exploratory year split (X5) shows a +4.0 gap in 2019 and −1.5 in 2021.
+factor for typical cells. The most extreme standardised revisions are in well-registered countries (SD of z 4.2, against 2.5 in
+the low group), in both years (4.2 in 2019, 4.1 in 2021), because their intervals are narrow. The share of cells beyond
+|z| > 5 is the same in every group (3.6-3.8%). The high group's lower coverage in 2021 (78.7% against 85.5% in 2019;
+X5 gap +4.0 in 2019, −1.5 in 2021) coincides with the 2020-22 registration data and the COVID-19 misclassification
+correction that GBD 2023 added (appendix §3.8), but this study does not show that link.
 
-**Why the death-weighted gap is large.** A few very large cells dominate the low group's weighted share: stroke,
-chronic obstructive pulmonary disease, ischaemic heart disease, COVID-19, diabetes, oesophageal cancer, road injuries
-and lower respiratory infections in China and India. Both countries are "not assessed" in WHO Table 4.1. China does
+**Why the death-weighted gap is large.** A few very large cells dominate the low group's weighted share. China and
+India hold 55% of the low group's deaths and 75% of its death-weighted misses. The ten largest misses are all theirs:
+stroke, chronic obstructive pulmonary disease, ischaemic heart disease, COVID-19, diabetes, oesophageal cancer, road
+injuries and lower respiratory infections. Both countries are "not assessed" in WHO Table 4.1. China does
 have well-coded registration in GBD's table (garbage share 9.6% for 2010-21); India's is weaker (44%). Their GBD inputs
-also include China's Disease Surveillance Points and India's Sample Registration System. So the weighted gap says more
-about two countries than about registration quality.
+also include China's Disease Surveillance Points and India's Sample Registration System. So about two-thirds of the
+weighted gap is about two countries rather than registration quality. The remaining gap of about 7 points (−2 to +14)
+is uncertain but leans the expected way.
 
 Both weightings are legitimate answers to different questions. Equal cells ask whether the typical country-cause
 interval is calibrated. Death weights ask whether the intervals around the deaths that matter are calibrated.
@@ -244,12 +250,14 @@ risk, and users should not read them as the latter.
 **Data quality does not explain the typical shortfall.** Counting each country-cause equally, well-registered countries
 miss about as often as the rest. GBD's wider intervals in data-poor countries keep pace with their larger revisions. In
 well-registered countries the misses are likely to come from recoding, garbage-code redistribution, new years of data
-and cause-model changes, but this study does not show which. Weighted by deaths the picture differs, because GBD 2023
-moved several of China's and India's largest causes outside their GBD 2021 intervals.
+and cause-model changes, but this study does not show which. Weighted by deaths the picture differs. GBD 2023 moved several
+of China's and India's largest causes outside their GBD 2021 intervals, which accounts for about two-thirds of the
+death-weighted gap; a smaller, uncertain gap remains without them.
 
 **Precedents.** Dorrington and Bradshaw (*Bull WHO* 2016) found that "the most recent estimates from IHME and WHO lie
 outside the respective 95% uncertainty intervals about their previous estimates" for maternal mortality. Zavalis,
-Pezzullo and Ioannidis (*JAMA Health Forum* 2026) found this for global risk-factor burden across eight GBD rounds.
+Pezzullo and Ioannidis (*JAMA Health Forum* 2026) found the same between recent rounds for global risk-factor burden.
+They studied instability across eight rounds, and compared GBD 2021 estimates with GBD 2019 intervals.
 This study adds country × cause-of-death detail, a calibration benchmark that allows for both rounds' uncertainty, and
 the test against data quality.
 

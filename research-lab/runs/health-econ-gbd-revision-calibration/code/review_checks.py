@@ -128,6 +128,9 @@ def main():
     ci_ids = set(q[q.location_name.isin(["China", "India"])].location_id)
     r2 = boot(p, "cov2", "elig2", {"low": np.array(sorted(set(g["low"]) - ci_ids)), "high": g["high"]}, wcol="p21")
     rec(rows, "R2 death-weighted C2, low group excluding China and India", "low", r2["low"][0], *A.ci(r2["low"][1]))
+    rec(rows, "R2 death-weighted C2 gap, high - low, excluding China and India (confirmation pass)", "high - low", *gap(r2))
+    w_ci = p[p.elig2 & p.location_id.isin(ci_ids)].p21.sum() / p[p.elig2 & p.location_id.isin(g["low"])].p21.sum()
+    rec(rows, "R2 share of the low group's GBD 2021 deaths (eligible cells) in China and India", "low", float(w_ci))
     x = p[p.elig2 & p.location_id.isin(g["low"])].copy()
     x["wmiss"] = x.p21 * (~x.cov2)
     share = x[x.location_id.isin(ci_ids)].wmiss.sum() / x.wmiss.sum()
@@ -200,6 +203,8 @@ def main():
         rec(rows, "S10 median |ln p23 - ln p21|", kk, float(np.median(np.abs(np.log(z.p23) - np.log(z.p21)))))
         rec(rows, "S10 SD of z", kk, float(np.std(z.z)))
         rec(rows, "S10 share |z| > 5", kk, float((np.abs(z.z) > 5).mean()))
+        for y in (2019, 2021):
+            rec(rows, f"S10 SD of z, year {y} (confirmation pass)", kk, float(np.std(z[z.year == y].z)))
 
     # M13: own-interval violations in the raw files
     for key in ("d21", "d23_2019", "d23_2021"):

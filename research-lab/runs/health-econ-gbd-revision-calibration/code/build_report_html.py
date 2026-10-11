@@ -56,7 +56,7 @@ def main():
             j += 1
     body_md = "\n".join(rest[j:])
     # links to repo files that Pages would serve as raw text
-    body_md = body_md.replace("](plan.md)", f"]({REPO_BLOB}/plan.md)").replace("](deviations.md)", f"]({REPO_BLOB}/deviations.md)").replace("](review/review.md)", f"]({REPO_BLOB}/review/review.md)")
+    body_md = body_md.replace("](plan.md)", f"]({REPO_BLOB}/plan.md)").replace("](deviations.md)", f"]({REPO_BLOB}/deviations.md)").replace("](review/review.md)", f"]({REPO_BLOB}/review/review.md)").replace("](review/confirmation.md)", f"]({REPO_BLOB}/review/confirmation.md)")
     body = markdown.markdown(body_md, extensions=["tables", "fenced_code", "sane_lists"])
 
     # figures with captions
