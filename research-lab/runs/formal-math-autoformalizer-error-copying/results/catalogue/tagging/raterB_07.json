@@ -1,0 +1,119 @@
+[
+  {
+    "id": "t201",
+    "A": {
+      "faithful": false,
+      "category": 2,
+      "reason": "No finiteness of G; claim fails for infinite groups (e.g. (Q,+) has no maximal subgroups). Unparenthesised or/and is logically equivalent."
+    },
+    "B": {
+      "faithful": true,
+      "category": null,
+      "reason": "Fintype G, H proper (H != top), maximal subgroup M with H <= M; matches the definition and claim."
+    }
+  },
+  {
+    "id": "t113",
+    "A": {
+      "faithful": true,
+      "category": null,
+      "reason": "Reals with sum 25, |x-y| = 11, conclusion max x y = 18; exact encoding of 'the larger number'."
+    },
+    "B": {
+      "faithful": true,
+      "category": null,
+      "reason": "Labels x as the larger via x - y = 11 (benign WLOG) and concludes x = 18."
+    }
+  },
+  {
+    "id": "t035",
+    "A": {
+      "faithful": true,
+      "category": null,
+      "reason": "Additivity on positive rationals, f(p) = p for primes, f(25/.11) < 0 proves choice (E); total domain Q is benign."
+    },
+    "B": {
+      "faithful": true,
+      "category": null,
+      "reason": "Same hypotheses with explicit binders; f(25/11) < 0 proves the correct choice (E)."
+    }
+  },
+  {
+    "id": "t271",
+    "A": {
+      "faithful": false,
+      "category": 3,
+      "reason": "Only subsequences of the form p(l*n), l : N+, not an arbitrary subsequence p(n_l); proves a strictly special case."
+    },
+    "B": {
+      "faithful": false,
+      "category": 2,
+      "reason": "l : N allows l = 0, so p(l*n) is constant, not a subsequence; statement then false (p n = 1/(n+1)). Same arithmetic restriction."
+    }
+  },
+  {
+    "id": "t022",
+    "A": {
+      "faithful": false,
+      "category": 6,
+      "reason": "Domain encoded as {x | 0 <= f x} with f curried (nonsense, equals univ), so S is empty; also Finset assigned a Set."
+    },
+    "B": {
+      "faithful": false,
+      "category": 8,
+      "reason": "Real.sqrt >= 0 makes {x | 0 <= f x} = univ, so h2 (univ = range f) is impossible; vacuous. Conclusion also only necessity."
+    }
+  },
+  {
+    "id": "t000",
+    "A": {
+      "faithful": true,
+      "category": null,
+      "reason": "Positive reals, three equations, z + 1/y = m rational, reduced num + den = 5; m > 0 is implied. Matches."
+    },
+    "B": {
+      "faithful": true,
+      "category": null,
+      "reason": "Same over Q (reasonable; unique solution is rational), unused n harmless, num + den of z + 1/y = 5."
+    }
+  },
+  {
+    "id": "t025",
+    "A": {
+      "faithful": true,
+      "category": null,
+      "reason": "Informal text truncated to choices; IsGreatest of x^2-6x+y^2 under |x+y|+|x-y| = 2 is 8 matches the standard problem."
+    },
+    "B": {
+      "faithful": false,
+      "category": 7,
+      "reason": "Only proves x^2-6x+y^2 <= 8, not that 8 is attained; maximum value not established."
+    }
+  },
+  {
+    "id": "t004",
+    "A": {
+      "faithful": false,
+      "category": 2,
+      "reason": "No a, b > 0 (implied by logs); Real.logb uses |x|, so a = -64, b = 8 satisfy hypotheses but ab = -512."
+    },
+    "B": {
+      "faithful": true,
+      "category": null,
+      "reason": "0 <= a, 0 <= b (implied by logs); zero cases excluded by the equations; ab = 512 correct."
+    }
+  },
+  {
+    "id": "t208",
+    "A": {
+      "faithful": true,
+      "category": null,
+      "reason": "Finite CommGroup of order p*q, p != q primes, IsCyclic G; matches."
+    },
+    "B": {
+      "faithful": false,
+      "category": 2,
+      "reason": "Drops the abelian hypothesis (Group not CommGroup); false, e.g. S3 of order 6."
+    }
+  }
+]

@@ -1,0 +1,82 @@
+[
+ {
+  "id": "t002",
+  "statement": "Let $f(x)=|x-p|+|x-15|+|x-p-15|$, where $0 < p < 15$. Determine the [[minimum]] value taken by $f(x)$ for $x$ in the [[interval]] $p \\leq x\\leq15$. Show that it is 015."
+ },
+ {
+  "id": "t003",
+  "statement": "Find the minimum value of $\\frac{9x^2\\sin^2 x + 4}{x\\sin x}$ for $0 < x < \\pi$. Show that it is 012."
+ },
+ {
+  "id": "t004",
+  "statement": "Determine the value of $ab$ if $\\log_8a+\\log_4b^2=5$ and $\\log_8b+\\log_4a^2=7$. Show that it is 512."
+ },
+ {
+  "id": "t005",
+  "statement": "Find $(\\log_2 x)^2$ if $\\log_2 (\\log_8 x) = \\log_8 (\\log_2 x)$. Show that it is 027."
+ },
+ {
+  "id": "t009",
+  "statement": "The function $f_{}^{}$ has the property that, for each real number $x,\\,$\n<center>$f(x)+f(x-1) = x^2.\\,$</center>\nIf $f(19)=94,\\,$ what is the remainder when $f(94)\\,$ is divided by $1000$? Show that it is 561."
+ },
+ {
+  "id": "t012",
+  "statement": "Let $r$ be a real number such that $r^{\\frac{1}{3}} + \\frac{1}{r^{\\frac{1}{3}}} = 3$. Show that $r^3 + \\frac{1}{r^3} = 5778$."
+ },
+ {
+  "id": "t015",
+  "statement": "Let $A, M,$ and $C$ be [[nonnegative integer]]s such that $A + M + C=12$. What is the maximum value of $A \\cdot M \\cdot C + A \\cdot M + M \\cdot C + A \\cdot C$?\n\n$ \\mathrm{(A) \\ 62 } \\qquad \\mathrm{(B) \\ 72 } \\qquad \\mathrm{(C) \\ 92 } \\qquad \\mathrm{(D) \\ 102 } \\qquad \\mathrm{(E) \\ 112 }  $ Show that it is \\text{E}."
+ },
+ {
+  "id": "t019",
+  "statement": "Both roots of the quadratic equation $x^2 - 63x + k = 0$ are prime numbers. The number of possible values of $k$ is \n\n$\\text{(A)}\\ 0 \\qquad \\text{(B)}\\ 1 \\qquad \\text{(C)}\\ 2 \\qquad \\text{(D)}\\ 4 \\qquad \\text{(E) more than 4}$ Show that it is \\text{(B)}\\ 1."
+ },
+ {
+  "id": "t020",
+  "statement": "Consider the sequence of numbers: $4,7,1,8,9,7,6,\\dots$ For $n>2$, the $n$-th term of the sequence is the units digit of the sum of the two previous terms. Let $S_n$ denote the sum of the first $n$ terms of this sequence. The smallest value of $n$ for which $S_n>10,000$ is: \n\n$\n\\text{(A) }1992\n\\qquad\n\\text{(B) }1999\n\\qquad\n\\text{(C) }2001\n\\qquad\n\\text{(D) }2002\n\\qquad\n\\text{(E) }2004\n$ Show that it is (B)1999."
+ },
+ {
+  "id": "t021",
+  "statement": "For how many positive integers $m$ does there exist at least one positive integer n such that $m \\cdot n \\le m + n$?\n\n$ \\textbf{(A) } 4\\qquad \\textbf{(B) } 6\\qquad \\textbf{(C) } 9\\qquad \\textbf{(D) } 12\\qquad \\textbf{(E) } \\text{infinitely many} $ Show that it is \\textbf{(E) } \\text{infinitely many}."
+ },
+ {
+  "id": "t024",
+  "statement": "What is the minimum value of $f(x)=\\left|x-1\\right| + \\left|2x-1\\right| + \\left|3x-1\\right| + \\cdots + \\left|119x - 1 \\right|$?\n\n$\\textbf{(A)}\\ 49 \\qquad \\textbf{(B)}\\ 50 \\qquad \\textbf{(C)}\\ 51 \\qquad \\textbf{(D)}\\ 52 \\qquad \\textbf{(E)}\\ 53$ Show that it is 49\\ \\textbf{(A)}."
+ },
+ {
+  "id": "t025",
+  "statement": "$\n\\textbf{(A)}\\ 5 \\qquad\n\\textbf{(B)}\\ 6 \\qquad\n\\textbf{(C)}\\ 7 \\qquad\n\\textbf{(D)}\\ 8 \\qquad\n\\textbf{(E)}\\ 9 $ Show that it is \\textbf{(D)}\\ 8."
+ },
+ {
+  "id": "t029",
+  "statement": "There is a unique positive integer $n$ such that$\\log_2{(\\log_{16}{n})} = \\log_4{(\\log_4{n})}.$What is the sum of the digits of $n?$\n\n$\\textbf{(A) } 4 \\qquad \\textbf{(B) } 7 \\qquad \\textbf{(C) } 8 \\qquad \\textbf{(D) } 11 \\qquad \\textbf{(E) } 13$ Show that it is \\textbf{(E) } 13."
+ },
+ {
+  "id": "t033",
+  "statement": "The number $a=\\frac{p}{q}$, where $p$ and $q$ are relatively prime positive integers, has the property that the sum of all real numbers $x$ satisfying\n$ \\lfloor x \\rfloor \\cdot \\{x\\} = a \\cdot x^2$\nis $420$, where $\\lfloor x \\rfloor$ denotes the greatest integer less than or equal to $x$ and $\\{x\\}=x- \\lfloor x \\rfloor$ denotes the fractional part of $x$. What is $p+q$?\n\n$\\textbf{(A) } 245 \\qquad \\textbf{(B) } 593 \\qquad \\textbf{(C) } 929 \\qquad \\textbf{(D) } 1331 \\qquad \\textbf{(E) } 1332$ Show that it is \\textbf{(C) } 929."
+ },
+ {
+  "id": "t034",
+  "statement": "Seven cubes, whose volumes are $1$, $8$, $27$, $64$, $125$, $216$, and $343$ cubic units, are stacked vertically to form a tower in which the volumes of the cubes decrease from bottom to top. Except for the bottom cube, the bottom face of each cube lies completely on top of the cube below it. What is the total surface area of the tower (including the bottom) in square units?\n\n$ \\textbf{(A)}\\ 644\\qquad\\textbf{(B)}\\ 658\\qquad\\textbf{(C)}\\ 664\\qquad\\textbf{(D)}\\ 720\\qquad\\textbf{(E)}\\ 749 $ Show that it is \\textbf{(B) }658."
+ },
+ {
+  "id": "t037",
+  "statement": "Let $d(n)$ denote the number of positive integers that divide $n$, including $1$ and $n$. For example, $d(1)=1,d(2)=2,$ and $d(12)=6$. (This function is known as the divisor function.) Let$f(n)=\\frac{d(n)}{\\sqrt [3]n}.$There is a unique positive integer $N$ such that $f(N)>f(n)$ for all positive integers $n\\ne N$. What is the sum of the digits of $N?$\n\n$\\textbf{(A) }5 \\qquad \\textbf{(B) }6 \\qquad \\textbf{(C) }7 \\qquad \\textbf{(D) }8\\qquad \\textbf{(E) }9$ Show that it is \\textbf{(E) }9."
+ },
+ {
+  "id": "t039",
+  "statement": "What is the least possible value of $(xy-1)^2+(x+y)^2$ for real numbers $x$ and $y$?\n\n$\\textbf{(A)} ~0\\qquad\\textbf{(B)} ~\\frac{1}{4}\\qquad\\textbf{(C)} ~\\frac{1}{2} \\qquad\\textbf{(D)} ~1 \\qquad\\textbf{(E)} Show that it is \\textbf{(D)} ~1."
+ },
+ {
+  "id": "t045",
+  "statement": "What is the maximum value of $\\frac{(2^t-3t)t}{4^t}$ for real values of $t?$\n\n$\\textbf{(A)}\\ \\frac{1}{16} \\qquad\\textbf{(B)}\\ \\frac{1}{15} \\qquad\\textbf{(C)}\\ \\frac{1}{12} \\qquad\\textbf{(D)}\\ \\frac{1}{10} \\qquad\\textbf{(E)}\\ \\frac{1}{9}$ Show that it is \\textbf{(C)} \\frac{1}{12}."
+ },
+ {
+  "id": "t050",
+  "statement": "Solve the equation $\\cos^2{x}+\\cos^2{2x}+\\cos^2{3x}=1$."
+ },
+ {
+  "id": "t051",
+  "statement": "Prove that for every natural number $n$, and for every real number $x \\neq \\frac{k\\pi}{2^t}$ ($t=0,1, \\dots, n$; $k$ any integer)\n$ \\frac{1}{\\sin{2x}}+\\frac{1}{\\sin{4x}}+\\dots+\\frac{1}{\\sin{2^nx}}=\\cot{x}-\\cot{2^nx}  $"
+ }
+]

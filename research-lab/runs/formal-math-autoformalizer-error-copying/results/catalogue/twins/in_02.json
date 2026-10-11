@@ -1,0 +1,142 @@
+[
+ {
+  "id": "t155",
+  "N": "What is the sum of the four positive factors of the positive integer value of $\\sqrt{196}$? Show that it is 24.",
+  "D": "theorem mathd_numbertheory_35 (S : Finset ℕ) (h₀ : ∀ n : ℕ, n ∣ Nat.sqrt 196) :\n    (∑ k in S, k) = 24 := by",
+  "C": "theorem mathd_numbertheory_35\n  (S : Finset ℕ)\n  (h₀ : ∀ n : ℕ, n ∈ S ↔ n ∣ Nat.sqrt 196)\n  (h₁: S.card = 4) :\n  (∑ k ∈ S, k) = 24 := by",
+  "defect": "Hypothesis says every natural divides 14 (false), so vacuous; S is otherwise unconstrained.; h₀ asserts every natural divides 14, which is false; S unconstrained; vacuous."
+ },
+ {
+  "id": "t158",
+  "N": "Find the smallest positive integer $k$ such that, for every positive integer $n$, $6n+k$ is relatively prime to each of $6n+3$, $6n+2$, and $6n+1$. Show that it is 5.",
+  "D": "theorem mathd_numbertheory_435 (k : ℕ) (h₀ : 0 < k) (h₁ : ∀ n, Nat.gcd (6 * n + k) (6 * n + 3) = 1)\n    (h₂ : ∀ n, Nat.gcd (6 * n + k) (6 * n + 2) = 1) (h₃ : ∀ n, Nat.gcd (6 * n + k) (6 * n + 1) = 1) :\n    5 ≤ k := by",
+  "C": "theorem mathd_numbertheory_435\n  (S : Set ℕ)\n  (hS: S = {k | ∀ n:ℕ, 0 < n → Nat.gcd (6 * n + k) (6 * n + 3) = 1 ∧Nat.gcd (6 * n + k) (6 * n + 2) = 1 ∧ Nat.gcd (6 * n + k) (6 * n + 1) = 1}) :\n  IsLeast S 5 := by",
+  "defect": "Only proves the lower bound 5 <= k; does not show k=5 works (also quantifies over n=0).; Only 5 ≤ k is asserted; that 5 itself has the property is not; also ∀ n includes n = 0."
+ },
+ {
+  "id": "t159",
+  "N": "What is the least positive integer $n$ such that $80325$ divides $n!$? Show that it is 17.",
+  "D": "theorem mathd_numbertheory_457 (n : ℕ) (h₀ : 0 < n) (h₁ : 80325 ∣ n !) : 17 ≤ n := by",
+  "C": "theorem mathd_numbertheory_457\n  (S : Set ℕ)\n  (hS: S = {n | 0 < n ∧  80325 ∣ Nat.factorial n}) :\n  IsLeast S 17 := by",
+  "defect": "Only shows any such n is at least 17; does not show 80325 divides 17!.; Only the lower bound 17 ≤ n; does not assert 80325 ∣ 17!."
+ },
+ {
+  "id": "t161",
+  "N": "Suppose $a$ and $b$ are positive integers such that the units digit of $a$ is $2$, the units digit of $b$ is $4$, and the greatest common divisor of $a$ and $b$ is $6$.\n\nWhat is the smallest possible value of the least common multiple of $a$ and $b$? Show that it is 108.",
+  "D": "theorem mathd_numbertheory_495 (a b : ℕ) (h₀ : 0 < a ∧ 0 < b) (h₁ : a % 10 = 2) (h₂ : b % 10 = 4)\n    (h₃ : Nat.gcd a b = 6) : 108 ≤ Nat.lcm a b := by",
+  "C": "theorem mathd_numbertheory_495\n  (S : Set ℕ)\n  (hS : S = {n | ∃ a b:ℕ, 0 < a ∧ 0 < b ∧ a % 10 = 2 ∧ b % 10 = 4 ∧ Nat.gcd a b = 6 ∧ n = Nat.lcm a b}) :\n  IsLeast S 108 := by",
+  "defect": "Only lower bound lcm ≥ 108; attainment of the smallest value not shown.; Only the lower bound 108≤lcm; attainment of the minimum is not stated."
+ },
+ {
+  "id": "t162",
+  "N": "What is the smallest integer greater than 10 that is both a perfect square and a perfect cube? Show that it is 64.",
+  "D": "theorem mathd_numbertheory_5 (n : ℕ) (h₀ : 10 ≤ n) (h₁ : ∃ x, x ^ 2 = n) (h₂ : ∃ t, t ^ 3 = n) :\n    64 ≤ n := by",
+  "C": "theorem mathd_numbertheory_5\n  (S : Set ℕ)\n  (hS : S = {x | 10 < x ∧ (∃ y:ℕ, y ^ 2 = x) ∧ (∃ z:ℕ, z ^ 3 = x)}):\n  IsLeast S 64 := by",
+  "defect": "Only lower bound 64 <= n; does not show 64 qualifies (also uses 10 <= n).; Only the lower bound 64 <= n; does not state that 64 is attained (least value)."
+ },
+ {
+  "id": "t163",
+  "N": "If $n$ and $k$ are positive integers such that $5<\\frac nk<6$, then what is the smallest possible value of $\\frac{\\mathop{\\text{lcm}}[n,k]}{\\gcd(n,k)}$? Show that it is 22.",
+  "D": "theorem mathd_numbertheory_530 (n k : ℕ) (h₀ : 0 < n ∧ 0 < k) (h₀ : (n : ℝ) / k < 6)\n  (h₁ : (5 : ℝ) < n / k) : 22 ≤ Nat.lcm n k / Nat.gcd n k := by",
+  "C": "theorem mathd_numbertheory_530\n  (S : Set ℕ)\n  (hS : ∀ x:ℕ, x ∈ S ↔ ∃ n k :ℕ, 0 < n ∧ 0 < k ∧ (5 : ℝ) < n / k ∧ (n : ℝ) / k < 6 ∧ x = Nat.lcm n k / Nat.gcd n k) :\n  IsLeast S 22 := by",
+  "defect": "Only a lower bound 22; does not show 22 is attained (minimum).; Only proves 22 ≤ lcm/gcd; does not show 22 is attained (minimum)."
+ },
+ {
+  "id": "t164",
+  "N": "A positive integer $X$ is 2 more than a multiple of 3. Its units digit is the same as the units digit of a number that is 4 more than a multiple of 5. What is the smallest possible value of $X$? Show that it is 14.",
+  "D": "theorem mathd_numbertheory_559 (x y : ℕ) (h₀ : x % 3 = 2) (h₁ : y % 5 = 4) (h₂ : x % 10 = y % 10) :\n    14 ≤ x := by",
+  "C": "theorem mathd_numbertheory_559\n  (S: Set ℕ)\n  (hS: S = {x | x % 3 = 2 ∧ ∃ y:ℕ, (y % 5 = 4 ∧ x % 10 = y % 10)}) :\n  IsLeast S 14 := by",
+  "defect": "Only the lower bound 14 <= x; does not show 14 satisfies the conditions.; Only 14 ≤ x; does not assert that 14 satisfies the conditions."
+ },
+ {
+  "id": "t165",
+  "N": "If $n$ is a multiple of three, what is the remainder when $(n + 4) + (n + 6) + (n + 8)$ is divided by $9$? Show that it is 0.",
+  "D": "theorem mathd_numbertheory_582 (n : ℕ) (h₀ : 0 < n) (h₁ : 3 ∣ n) :\n    (n + 4 + (n + 6) + (n + 8)) % 9 = 0 := by",
+  "C": "theorem mathd_numbertheory_582 (n : ℕ) (h₁ : 3 ∣ n) :\n  (n + 4 + (n + 6) + (n + 8)) % 9 = 0 := by",
+  "defect": "Adds 0 < n, not stated; n = 0 is a multiple of three.; Adds 0 < n, which the problem neither states nor implies (0 is a multiple of three)."
+ },
+ {
+  "id": "t167",
+  "N": "The greatest common divisor of positive integers $m$ and $n$ is 8. The least common multiple of $m$ and $n$ is 112. What is the least possible value of $m+n$? Show that it is 72.",
+  "D": "theorem mathd_numbertheory_711 (m n : ℕ) (h₀ : 0 < m ∧ 0 < n) (h₁ : Nat.gcd m n = 8)\n    (h₂ : Nat.lcm m n = 112) : 72 ≤ m + n := by",
+  "C": "theorem mathd_numbertheory_711\n  (S: Set ℕ)\n  (hS : S = {x | ∃ m n, x = m + n ∧ Nat.gcd m n = 8 ∧ Nat.lcm m n = 112}):\n  IsLeast S 72 := by",
+  "defect": "Only the lower bound 72 <= m+n; attainment of the minimum is not shown.; Only 72 ≤ m + n; attainment by (m, n) = (16, 56) not asserted."
+ },
+ {
+  "id": "t169",
+  "N": "What is the largest negative integer $x$ satisfying $$24x \\equiv 15 \\pmod{1199}~?$$ Show that it is -449.",
+  "D": "theorem mathd_numbertheory_765 (x : ℤ) (h₀ : x < 0) (h₁ : 24 * x % 1199 = 15) : x ≤ -449 := by",
+  "C": "theorem mathd_numbertheory_765\n  (S : Set ℤ)\n  (hS : S = {x | x < 0 ∧ (24 * x) ≡ 15 [ZMOD 1199]}) :\n  IsGreatest S (-449:ℤ) := by",
+  "defect": "Only the upper bound x <= -449; does not show -449 is a solution.; Only x ≤ -449; does not assert that -449 is a solution."
+ },
+ {
+  "id": "t170",
+  "N": "What is the digit in the hundredths place of the decimal equivalent of $\\frac{9}{160}$? Show that it is 5.",
+  "D": "theorem mathd_numbertheory_84 : Int.floor ((9 : ℝ) / 160 * 100) = 5 := by",
+  "C": "theorem mathd_numbertheory_84 : (Nat.floor (100 * (9 / 160 : ℝ)) % 10 = 5) := by",
+  "defect": "floor(100x) without mod 10 is not the hundredths-digit formula; coincides only because the tenths digit is 0.; ⌊100·9/160⌋ = 5 pins the hundredths digit (tenths digit is 0); true and implies the answer."
+ },
+ {
+  "id": "t178",
+  "N": "Let $I, J$ be ideals in a ring $R$. Prove that the residue of any element of $I \\cap J$ in $R / I J$ is nilpotent.",
+  "D": "theorem exercise_10_4_6 {R : Type*} [CommRing R]\n  [NoZeroDivisors R] (I J : Ideal R) (x : ↑(I ⊓ J)) :\n  IsNilpotent ((Ideal.Quotient.mk (I*J)) x) :=",
+  "C": "theorem exercise_10_4_6 {R : Type*} [CommRing R]\n  (I J : Ideal R) (x : ↑(I ⊓ J)) :\n  IsNilpotent ((Ideal.Quotient.mk (I*J)) x) :=",
+  "defect": "Adds NoZeroDivisors on R, not in the informal statement.; Extra NoZeroDivisors hypothesis not in the informal statement."
+ },
+ {
+  "id": "t179",
+  "N": "Let $I, J$ be ideals of a ring $R$ such that $I+J=R$. Prove that $I J=I \\cap J$.",
+  "D": "theorem exercise_10_4_7a {R : Type*} [CommRing R] [NoZeroDivisors R]\n  (I J : Ideal R) (hIJ : I + J = ⊤) : I * J = I ⊓ J :=",
+  "C": "theorem exercise_10_4_7a {R : Type*} [CommRing R]\n  (I J : Ideal R) (hIJ : I + J = ⊤) : I * J = I ⊓ J :=",
+  "defect": "Adds NoZeroDivisors hypothesis not in the informal statement.; NoZeroDivisors is an extra hypothesis the problem does not state."
+ },
+ {
+  "id": "t180",
+  "N": "Prove that $x^3 + 6x + 12$ is irreducible in $\\mathbb{Q}$.",
+  "D": "theorem exercise_11_4_1b {F : Type*} [Field F] [Fintype F] (hF : card F = 2) :\n  Irreducible (12 + 6 * X + X ^ 3 : Polynomial F) :=",
+  "C": "theorem exercise_11_4_1b :\n  Irreducible (12 + 6 * X + X ^ 3 : Polynomial ℚ) :=",
+  "defect": "Polynomial taken over a two-element field instead of ℚ (there it is X^3, reducible).; Over a field of 2 elements, not ℚ; polynomial reduces to X^3."
+ },
+ {
+  "id": "t181",
+  "N": "Prove that $x^2+x+1$ is irreducible in the field $\\mathbb{F}_2$.",
+  "D": "theorem exercise_11_4_6a {F : Type*} [Field F] [Fintype F] (hF : card F = 7) :\n  Irreducible (X ^ 2 + 1 : Polynomial F) :=",
+  "C": "theorem exercise_11_4_6a {F : Type*} [Field F] [Fintype F] (hF : card F = 2) :\n  Irreducible (X ^ 2 + X + 1 : Polynomial F) :=",
+  "defect": "Different polynomial X^2+1 over a field of 7 elements; not the stated problem.; Field size 7 and polynomial X²+1 instead of 𝔽₂ and X²+X+1."
+ },
+ {
+  "id": "t182",
+  "N": "Prove that $x^2+1$ is irreducible in $\\mathbb{F}_7$",
+  "D": "theorem exercise_11_4_6b {F : Type*} [Field F] [Fintype F] (hF : card F = 31) :\n  Irreducible (X ^ 3 - 9 : Polynomial F) :=",
+  "C": "theorem exercise_11_4_6b {F : Type*} [Field F] [Fintype F] (hF : card F = 7) :\n  Irreducible (X ^ 2 + 1 : Polynomial F) :=",
+  "defect": "Wrong field size (31) and wrong polynomial (X^3 - 9).; Different problem: field of 31 elements and polynomial X^3 − 9 instead of X^2 + 1 over F_7."
+ },
+ {
+  "id": "t183",
+  "N": "Let $p$ be a prime integer. Prove that the polynomial $x^n-p$ is irreducible in $\\mathbb{Q}[x]$.",
+  "D": "theorem exercise_11_4_8 (p : ℕ) (hp : Prime p) (n : ℕ) :\n  -- p ∈ ℕ can be written as p ∈ ℚ[X]\n  Irreducible (X ^ n - (p : Polynomial ℚ) : Polynomial ℚ) :=",
+  "C": "theorem exercise_11_4_8 (p : ℕ) (hp : Prime p) (n : ℕ) (hn : n > 0) :\n  Irreducible (X ^ n - (p : Polynomial ℚ) : Polynomial ℚ) :=",
+  "defect": "Missing n >= 1; at n = 0, 1 - p is a unit, not irreducible.; Allows n = 0, where X^0 − p is a nonzero constant (unit), not irreducible; problem intends degree n ≥ 1."
+ },
+ {
+  "id": "t184",
+  "N": "Let $V$ be a vector space over an infinite field $F$. Prove that $V$ is not the union of finitely many proper subspaces.",
+  "D": "theorem exercise_3_7_2 {K V : Type*} [Field K] [AddCommGroup V]\n  [Module K V] {ι : Type*} [Fintype ι] (γ : ι → Submodule K V)\n  (h : ∀ i : ι, γ i ≠ ⊤) :\n  (⋂ (i : ι), (γ i : Set V)) ≠ ⊤ :=",
+  "C": "theorem exercise_3_7_2 {K V : Type*} [Field K] [Infinite K] [AddCommGroup V]\n  [Module K V] {ι : Type*} [Fintype ι] (γ : ι → Submodule K V)\n  (h : ∀ i : ι, γ i ≠ ⊤) :\n  (⋃ (i : ι), (γ i : Set V)) ≠ ⊤ :=",
+  "defect": "Uses intersection instead of union of subspaces; also omits that the field is infinite.; Intersection ⋂ instead of union ⋃ of the subspaces; also the Infinite K hypothesis is missing."
+ },
+ {
+  "id": "t185",
+  "N": "Show that $\\frac{-1 + \\sqrt{3}i}{2}$ is a cube root of 1 (meaning that its cube equals 1).",
+  "D": "theorem exercise_1_2 :\n  (⟨-1/2, Real.sqrt 3 / 2⟩ : ℂ) ^ 3 = -1 :=",
+  "C": "theorem exercise_1_2 :\n  (⟨-1/2, Real.sqrt 3 / 2⟩ : ℂ) ^ 3 = 1 :=",
+  "defect": "Claims the cube equals -1 instead of 1.; Claims cube equals −1; the informal says 1."
+ },
+ {
+  "id": "t186",
+  "N": "Prove that the union of two subspaces of $V$ is a subspace of $V$ if and only if one of the subspaces is contained in the other.",
+  "D": "theorem exercise_1_9 {F V : Type*} [AddCommGroup V] [Field F]\n  [Module F V] (U W : Submodule F V):\n  ∃ U' : Submodule F V, (U'.carrier = ↑U ∩ ↑W ↔ (U ≤ W ∨ W ≤ U)) :=",
+  "C": "theorem exercise_1_9 {F V : Type*} [AddCommGroup V] [Field F]\n  [Module F V] (U W : Submodule F V):\n  (∃ U' : Submodule F V, U'.carrier = ↑U ∪ ↑W) ↔ (U ≤ W ∨ W ≤ U) :=",
+  "defect": "Uses intersection instead of union, and the existential scopes over the iff, making it trivial.; Uses intersection instead of union, and the existential scopes over the iff."
+ }
+]

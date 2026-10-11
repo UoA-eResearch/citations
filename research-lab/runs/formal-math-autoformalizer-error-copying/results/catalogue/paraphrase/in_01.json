@@ -1,0 +1,82 @@
+[
+ {
+  "id": "t052",
+  "statement": "Let $a$ and $b$ be real numbers for which the equation\n$x^4 + ax^3 + bx^2 + ax + 1 = 0$\nhas at least one real solution. For all such pairs $(a, b)$, find the minimum value of $a^2 + b^2$."
+ },
+ {
+  "id": "t056",
+  "statement": "The function $f(x,y)$ satisfies\n\n(1) $f(0,y)=y+1, $\n\n(2) $f(x+1,0)=f(x,1), $\n\n(3) $f(x+1,y+1)=f(x,f(x+1,y)), $\n\nfor all non-negative integers $x,y $. Determine $f(4,1981) $."
+ },
+ {
+  "id": "t062",
+  "statement": "Show that for any real number $x$ and any natural number $n$, if $x > -1$, then $(1+nx)\\leq (1+x)^n$."
+ },
+ {
+  "id": "t065",
+  "statement": "Show that for positive integer $n$, $\\sum_{k=0}^{n-1} \\frac{1}{(k+1)(k+2)} = \\frac{n}{n+1}$."
+ },
+ {
+  "id": "t066",
+  "statement": "Show that for positive integer $n$, $\\sum_{k=0}^{n-1} (2k + 1) = n^2$."
+ },
+ {
+  "id": "t084",
+  "statement": "Suppose $f(x)$ is an invertible function, and suppose that $f(2)=f^{-1}(2)=4$.\n\nWhat is the value of $f(f(2))$? Show that it is 2."
+ },
+ {
+  "id": "t092",
+  "statement": "Let $t=2s-s^2$ and $s=n^2 - 2^n+1$. What is the value of $t$ when $n=3$? Show that it is 0."
+ },
+ {
+  "id": "t097",
+  "statement": "What is the largest number $c$ such that $2x^2+5x+c=0$ has at least one real solution? Express your answer as a common fraction. Show that it is \\frac{25}{8}."
+ },
+ {
+  "id": "t100",
+  "statement": "If $ \\sqrt{x+\\!\\sqrt{x+\\!\\sqrt{x+\\!\\sqrt{x+\\cdots}}}}=9$, find $x$. Show that it is 72."
+ },
+ {
+  "id": "t101",
+  "statement": "If $n = 11$, then what is $\\left(\\frac{1}{4}\\right)^{n+1} \\cdot 2^{2n}$? Show that it is \\frac{1}{4}."
+ },
+ {
+  "id": "t104",
+  "statement": "Solve for $a$: $\\frac15|9+2a|<1$.  Express your answer in interval notation. Show that it is (-7, -2)."
+ },
+ {
+  "id": "t112",
+  "statement": "What is the minimum possible value for $y$ in the equation $y = x^2 - 6x + 13$? Show that it is 4."
+ },
+ {
+  "id": "t126",
+  "statement": "For integers $n$, let \\[f(n) = \\left\\{\n\\begin{array}{cl}\nn^2 & \\text{ if }n\\text{ is odd}, \\\\\nn^2 - 4n - 1 & \\text{ if }n\\text{ is even}.\n\\end{array}\n\\right.\\]Find $f(f(f(f(f(4)))))$. Show that it is 1."
+ },
+ {
+  "id": "t133",
+  "statement": "What is the smallest positive integer $N$ such that the value $7 + (30 \\times N)$ is not a prime number? Show that it is 6."
+ },
+ {
+  "id": "t134",
+  "statement": "Let $n$ be a positive integer.  What is the greatest possible value of $\\gcd(n + 7, 2n + 1)$? Show that it is 13."
+ },
+ {
+  "id": "t137",
+  "statement": "The two-digit number $``B6,''$ where $B$ is the tens digit, is the square of a positive integer. How many distinct possible values are there for $B$? Show that it is 2."
+ },
+ {
+  "id": "t144",
+  "statement": "The greatest common divisor of positive integers $m$ and $n$ is 6. The least common multiple of $m$ and $n$ is 126. What is the least possible value of $m+n$? Show that it is 60."
+ },
+ {
+  "id": "t147",
+  "statement": "What is the smallest positive integer, other than $1$, that is both a perfect cube and a perfect fourth power? Show that it is 4096."
+ },
+ {
+  "id": "t148",
+  "statement": "Let $r$ be the remainder when $1342$ is divided by $13$.\n\nDetermine the smallest positive integer that has these two properties:\n\n$\\bullet~$ It is a multiple of $1342$.\n\n$\\bullet~$ Its remainder upon being divided by $13$ is smaller than $r$. Show that it is 6710."
+ },
+ {
+  "id": "t154",
+  "statement": "What is the units digit of the product of all of the odd integers between 0 and 12? Show that it is 5."
+ }
+]

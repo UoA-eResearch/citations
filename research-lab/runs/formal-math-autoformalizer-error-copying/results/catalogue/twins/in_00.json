@@ -1,0 +1,142 @@
+[
+ {
+  "id": "t002",
+  "N": "Let $f(x)=|x-p|+|x-15|+|x-p-15|$, where $0 < p < 15$. Determine the [[minimum]] value taken by $f(x)$ for $x$ in the [[interval]] $p \\leq x\\leq15$. Show that it is 015.",
+  "D": "theorem aime_1983_p2 (x p : ℝ) (f : ℝ → ℝ) (h₀ : 0 < p ∧ p < 15) (h₁ : p ≤ x ∧ x ≤ 15)\n    (h₂ : f x = abs (x - p) + abs (x - 15) + abs (x - p - 15)) : 15 ≤ f x := by",
+  "C": "theorem aime_1983_p2\n  (p : ℝ)\n  (f : ℝ → ℝ)\n  (h₀ : f = fun x => abs (x - p) + abs (x - 15) + abs (x - p - 15))\n  (h₁ : 0 < p ∧ p < 15)\n  (S R : Set ℝ)\n  (hS : S = Set.Icc p 15)\n  (hR : R = {y | ∃ x ∈ S, y = f x}) :\n  IsLeast R 15 := by",
+  "defect": "Only lower bound f x ≥ 15; attainment of the minimum not shown.; Only 15 ≤ f x on the interval; attainment of the minimum is not stated."
+ },
+ {
+  "id": "t003",
+  "N": "Find the minimum value of $\\frac{9x^2\\sin^2 x + 4}{x\\sin x}$ for $0 < x < \\pi$. Show that it is 012.",
+  "D": "theorem aime_1983_p9 (x : ℝ) (h₀ : 0 < x ∧ x < Real.pi) :\n  12 ≤ (9 * (x ^ 2 * Real.sin x ^ 2) + 4) / (x * Real.sin x) := by",
+  "C": "theorem aime_1983_p9\n  (x : ℝ)\n  (S : Set ℝ)\n  (f : ℝ → ℝ)\n  (h₀ : f = fun x ↦ (9 * (x ^ 2 * Real.sin x ^ 2) + 4) / (x * Real.sin x))\n  (h₁ : S = Set.Ioo 0 Real.pi) :\n  IsLeast (Set.image f S) 12 := by",
+  "defect": "Only proves the lower bound 12; does not show the minimum is attained.; Only the lower bound 12 ≤ f(x); attainment of 12 not stated."
+ },
+ {
+  "id": "t004",
+  "N": "Determine the value of $ab$ if $\\log_8a+\\log_4b^2=5$ and $\\log_8b+\\log_4a^2=7$. Show that it is 512.",
+  "D": "theorem aime_1984_p5 (a b : ℝ) (h₀ : Real.logb 8 a + Real.logb 4 (b ^ 2) = 5)\n  (h₁ : Real.logb 8 b + Real.logb 4 (a ^ 2) = 7) : a * b = 512 := by",
+  "C": "theorem aime_1984_p5 (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) (h₀ : Real.logb 8 a + Real.logb 4 (b ^ 2) = 5)\n  (h₁ : Real.logb 8 b + Real.logb 4 (a ^ 2) = 7) : a * b = 512 := by",
+  "defect": "No positivity of a, b; Real.logb uses |x|, so a < 0 < b gives ab = -512, statement false.; No a, b > 0 (implied by logs); Real.logb uses |x|, so a = -64, b = 8 satisfy hypotheses but ab = -512."
+ },
+ {
+  "id": "t005",
+  "N": "Find $(\\log_2 x)^2$ if $\\log_2 (\\log_8 x) = \\log_8 (\\log_2 x)$. Show that it is 027.",
+  "D": "theorem aime_1988_p3 (x : ℝ) (h₀ : 0 < x)\n  (h₁ : Real.logb 2 (Real.logb 8 x) = Real.logb 8 (Real.logb 2 x)) : Real.logb 2 x ^ 2 = 27 := by",
+  "C": "theorem aime_1988_p3 (x : ℝ)  (h₀ : 1 < x)\n  (h₁ : Real.logb 2 (Real.logb 8 x) = Real.logb 8 (Real.logb 2 x)) : Real.logb 2 x ^ 2 = 27 := by",
+  "defect": "Only 0 < x; x = 1 satisfies h1 via log 0 = 0 junk, giving 0 = 27; needs x > 1.; Only 0 < x; x = 1 satisfies h₁ via Lean's log 0 = 0 but gives 0 ≠ 27; needs x > 1."
+ },
+ {
+  "id": "t009",
+  "N": "The function $f_{}^{}$ has the property that, for each real number $x,\\,$\n<center>$f(x)+f(x-1) = x^2.\\,$</center>\nIf $f(19)=94,\\,$ what is the remainder when $f(94)\\,$ is divided by $1000$? Show that it is 561.",
+  "D": "theorem aime_1994_p3 (x : ℤ) (f : ℤ → ℤ) (h0 : f x + f (x - 1) = x ^ 2) (h1 : f 19 = 94) :\n    f 94 % 1000 = 561 := by",
+  "C": "theorem aime_1994_p3 (f : ℤ → ℤ) (h₁ : ∀ x, f x + f (x-1) = x^2) (h₂ : f 19 = 94) : f 94 % 1000 = 561 := by",
+  "defect": "Functional equation assumed only at one fixed x, not for all x.; Functional equation assumed for a single fixed x only, not for all x."
+ },
+ {
+  "id": "t012",
+  "N": "Let $r$ be a real number such that $r^{\\frac{1}{3}} + \\frac{1}{r^{\\frac{1}{3}}} = 3$. Show that $r^3 + \\frac{1}{r^3} = 5778$.",
+  "D": "theorem algebra_cubrtrp1oncubrtreq3_rcubp1onrcubeq5778 (r : ℝ)\n    (h₀ : r ^ ((1 : ℝ) / 3) + 1 / r ^ ((1 : ℝ) / 3) = 3) : r ^ 3 + 1 / r ^ 3 = 5778 := by",
+  "C": "theorem algebra_cubrtrp1oncubrtreq3_rcubp1onrcubeq5778\n  (r : ℝ)\n  (h₀ : r^((1 : ℝ)/3) + 1/r^((1 : ℝ)/3) = 3)\n  (h₁: r ^ (1 / 3 : ℝ) ≠ (1 / 2 : ℝ) * (-r) ^ (1 / 3 : ℝ)) :\n  r^3 + 1/(r^3) = 5778 := by",
+  "defect": "Real.rpow on negative r is not the real cube root; admits spurious negative r satisfying h0, making the statement false.; Lean rpow for r < 0 gives |r|^(1/3)/2, admitting negative r with r³+1/r³ < 0; needs 0 < r."
+ },
+ {
+  "id": "t015",
+  "N": "Let $A, M,$ and $C$ be [[nonnegative integer]]s such that $A + M + C=12$. What is the maximum value of $A \\cdot M \\cdot C + A \\cdot M + M \\cdot C + A \\cdot C$?\n\n$ \\mathrm{(A) \\ 62 } \\qquad \\mathrm{(B) \\ 72 } \\qquad \\mathrm{(C) \\ 92 } \\qquad \\mathrm{(D) \\ 102 } \\qquad \\mathrm{(E) \\ 112 }  $ Show that it is \\text{E}.",
+  "D": "theorem amc12_2000_p12 (a m c : ℕ) (h₀ : a + m + c = 12) :\n    a * m * c + a * m + m * c + a * c ≤ 112 := by",
+  "C": "theorem amc12_2000_p12\n  (S: Set ℕ)\n  (hS: S = {x | ∃ a m c : ℕ, (x = a * m * c + a * m + m * c + a * c) ∧a + m + c = 12}) :\n  IsGreatest S 112 := by",
+  "defect": "Only upper bound 112; does not show 112 is attained, so maximum not established.; Only upper bound ≤ 112; attainment (maximum) not stated."
+ },
+ {
+  "id": "t019",
+  "N": "Both roots of the quadratic equation $x^2 - 63x + k = 0$ are prime numbers. The number of possible values of $k$ is \n\n$\\text{(A)}\\ 0 \\qquad \\text{(B)}\\ 1 \\qquad \\text{(C)}\\ 2 \\qquad \\text{(D)}\\ 4 \\qquad \\text{(E) more than 4}$ Show that it is \\text{(B)}\\ 1.",
+  "D": "theorem amc12a_2002_p12 (f : ℝ → ℝ) (k : ℝ) (a b : ℕ) (h₀ : ∀ x, f x = x ^ 2 - 63 * x + k)\n  (h₁ : f a = 0 ∧ f b = 0) (h₂ : a ≠ b) (h₃ : Nat.Prime a ∧ Nat.Prime b) : k = 122 := by",
+  "C": "theorem amc12a_2002_p12 :\n  ∃! k, ∃ a b:ℕ, (Nat.Prime a ∧ Nat.Prime b ∧ a ≠ b ∧ (∀ f : ℝ → ℝ, (f = fun x:ℝ ↦ x ^ 2 - 63 * x + k ) → f (a:ℝ) = 0 ∧ f (b:ℝ) = 0)) := by",
+  "defect": "Only shows any such k equals 122 (uniqueness); does not establish existence, so count = 1 is not proved.; Proves k=122 is forced but not that such k exists; the count 1 is not established."
+ },
+ {
+  "id": "t020",
+  "N": "Consider the sequence of numbers: $4,7,1,8,9,7,6,\\dots$ For $n>2$, the $n$-th term of the sequence is the units digit of the sum of the two previous terms. Let $S_n$ denote the sum of the first $n$ terms of this sequence. The smallest value of $n$ for which $S_n>10,000$ is: \n\n$\n\\text{(A) }1992\n\\qquad\n\\text{(B) }1999\n\\qquad\n\\text{(C) }2001\n\\qquad\n\\text{(D) }2002\n\\qquad\n\\text{(E) }2004\n$ Show that it is (B)1999.",
+  "D": "theorem amc12a_2002_p21 (u : ℕ → ℕ) (h₀ : u 0 = 4) (h₁ : u 1 = 7)\n    (h₂ : ∀ n ≥ 2, u (n + 2) = (u n + u (n + 1)) % 10) :\n    ∀ n, (∑ k in Finset.range n, u k) > 10000 → 1999 ≤ n := by",
+  "C": "theorem amc12a_2002_p21\n  (u S : ℕ → ℕ)\n  (h₀ : u 0 = 4)\n  (h₁ : u 1 = 7)\n  (h₂ : ∀ n ≥ 2, u n = (u (n - 2) + u (n - 1)) % 10)\n  (h₃ : ∀ n, S n = ∑ k ∈ Finset.range n, u k)\n  (Sn : Set ℕ)\n  (h₄ : Sn = {n | S n > 10000}) :\n  IsLeast Sn 1999 := by",
+  "defect": "u(n+2) recurrence only for n ≥ 2 leaves u 2, u 3 free (statement false); also only a lower bound.; Recursion only for n ≥ 2 defines u(n+2), leaving u 2, u 3 free; also lower bound only."
+ },
+ {
+  "id": "t021",
+  "N": "For how many positive integers $m$ does there exist at least one positive integer n such that $m \\cdot n \\le m + n$?\n\n$ \\textbf{(A) } 4\\qquad \\textbf{(B) } 6\\qquad \\textbf{(C) } 9\\qquad \\textbf{(D) } 12\\qquad \\textbf{(E) } \\text{infinitely many} $ Show that it is \\textbf{(E) } \\text{infinitely many}.",
+  "D": "theorem amc12a_2002_p6 (n : ℕ) (h₀ : 0 < n) : ∃ m, m > n ∧ ∃ p, m * p ≤ m + p := by",
+  "C": "theorem amc12a_2002_p6\n  (S: Set ℕ)\n  (hS : S = {m | 0 < m ∧ (∃ n, 0 < n ∧ m * n ≤ m + n)}) :\n  Set.Infinite S := by",
+  "defect": "Witness p lacks positivity, so p=0 makes m*p <= m+p trivial; the positive-n condition is dropped.; Witness p is not required positive; p = 0 makes m*p ≤ m+p trivial for every m."
+ },
+ {
+  "id": "t024",
+  "N": "What is the minimum value of $f(x)=\\left|x-1\\right| + \\left|2x-1\\right| + \\left|3x-1\\right| + \\cdots + \\left|119x - 1 \\right|$?\n\n$\\textbf{(A)}\\ 49 \\qquad \\textbf{(B)}\\ 50 \\qquad \\textbf{(C)}\\ 51 \\qquad \\textbf{(D)}\\ 52 \\qquad \\textbf{(E)}\\ 53$ Show that it is 49\\ \\textbf{(A)}.",
+  "D": "theorem amc12a_2010_p22 (x : ℝ) : 49 ≤ ∑ k:ℤ in Finset.Icc 1 119, abs (↑k * x - 1) := by",
+  "C": "theorem amc12a_2010_p22 : IsLeast {x | ∃ t : ℝ, x = ∑ i in Finset.range 119, |(i+1)*t - 1|} 49 := by",
+  "defect": "Only a lower bound 49; does not show the minimum 49 is attained.; Only the lower bound 49 ≤ f(x); attainment of the minimum is not asserted."
+ },
+ {
+  "id": "t025",
+  "N": "$\n\\textbf{(A)}\\ 5 \\qquad\n\\textbf{(B)}\\ 6 \\qquad\n\\textbf{(C)}\\ 7 \\qquad\n\\textbf{(D)}\\ 8 \\qquad\n\\textbf{(E)}\\ 9 $ Show that it is \\textbf{(D)}\\ 8.",
+  "D": "theorem amc12a_2011_p18 (x y : ℝ) (h₀ : abs (x + y) + abs (x - y) = 2) :\n  x ^ 2 - 6 * x + y ^ 2 ≤ 8 := by",
+  "C": "theorem amc12a_2011_p18\n  (S : Set ℝ)\n  (hS : S = {z | ∃ x y:ℝ, abs (x + y) + abs (x - y) = 2 ∧ z = x ^ 2 - 6 * x + y ^ 2}) :\n  IsGreatest S 8 := by",
+  "defect": "Besides the missing informal problem, it only proves an upper bound ≤ 8, not that 8 is attained or the answer.; Only proves x^2-6x+y^2 <= 8, not that 8 is attained; maximum value not established."
+ },
+ {
+  "id": "t029",
+  "N": "There is a unique positive integer $n$ such that$\\log_2{(\\log_{16}{n})} = \\log_4{(\\log_4{n})}.$What is the sum of the digits of $n?$\n\n$\\textbf{(A) } 4 \\qquad \\textbf{(B) } 7 \\qquad \\textbf{(C) } 8 \\qquad \\textbf{(D) } 11 \\qquad \\textbf{(E) } 13$ Show that it is \\textbf{(E) } 13.",
+  "D": "theorem amc12a_2020_p10 (n : ℕ) (h₀ : 0 < n)\n    (h₁ : Real.logb 2 (Real.logb 16 n) = Real.logb 4 (Real.logb 4 n)) :\n    (List.sum (Nat.digits 10 n)) = 13 := by",
+  "C": "theorem amc12a_2020_p10\n  (n : ℕ)\n  (h₀ : 1 < n)\n  (h₁ : Real.logb (2 : ℝ) (Real.logb (16 : ℝ) n) = Real.logb (4 : ℝ) (Real.logb (4 : ℝ) n)) :\n  List.sum (Nat.digits 10 n) = 13 := by",
+  "defect": "Lacks implicit n > 1: n = 1 satisfies the Lean equation via junk log 0 = 0, so claim fails.; With only 0 < n, n = 1 satisfies the equation via Lean's log 0 = 0; digit sum 1."
+ },
+ {
+  "id": "t033",
+  "N": "The number $a=\\frac{p}{q}$, where $p$ and $q$ are relatively prime positive integers, has the property that the sum of all real numbers $x$ satisfying\n$ \\lfloor x \\rfloor \\cdot \\{x\\} = a \\cdot x^2$\nis $420$, where $\\lfloor x \\rfloor$ denotes the greatest integer less than or equal to $x$ and $\\{x\\}=x- \\lfloor x \\rfloor$ denotes the fractional part of $x$. What is $p+q$?\n\n$\\textbf{(A) } 245 \\qquad \\textbf{(B) } 593 \\qquad \\textbf{(C) } 929 \\qquad \\textbf{(D) } 1331 \\qquad \\textbf{(E) } 1332$ Show that it is \\textbf{(C) } 929.",
+  "D": "theorem amc12a_2020_p25 (a : ℚ) (S : Finset ℝ)\n    (h₀ : ∀ x : ℝ, x ∈ S ↔ ↑⌊x⌋ * (x - ↑⌊x⌋) = ↑a * x ^ 2) (h₁ : (∑ k in S, k) = 420) :\n    ↑a.den + a.num = 929 := by",
+  "C": "theorem amc12a_2020_p25\n  (a : ℚ)\n  (ha₀ : 0 < a)\n  (S : Finset ℝ)\n  (h₀ : ∀ (x : ℝ), x ∈ S ↔ ↑⌊x⌋ * (x - ↑⌊x⌋) = ↑a * x ^ 2)\n  (h₁ : (∑ k ∈ S, k) = 420) :\n  ↑a.den + a.num = 929 := by",
+  "defect": "Omits a > 0, but a <= 0 makes the hypotheses unsatisfiable (sum <= 0 or infinite set); den + num = 929 matches.; Positivity of a (p, q positive integers) is dropped."
+ },
+ {
+  "id": "t034",
+  "N": "Seven cubes, whose volumes are $1$, $8$, $27$, $64$, $125$, $216$, and $343$ cubic units, are stacked vertically to form a tower in which the volumes of the cubes decrease from bottom to top. Except for the bottom cube, the bottom face of each cube lies completely on top of the cube below it. What is the total surface area of the tower (including the bottom) in square units?\n\n$ \\textbf{(A)}\\ 644\\qquad\\textbf{(B)}\\ 658\\qquad\\textbf{(C)}\\ 664\\qquad\\textbf{(D)}\\ 720\\qquad\\textbf{(E)}\\ 749 $ Show that it is \\textbf{(B) }658.",
+  "D": "theorem amc12a_2020_p7 (a : ℕ → ℕ) (h₀ : a 0 ^ 3 = 1) (h₁ : a 1 ^ 3 = 8) (h₂ : a 2 ^ 3 = 27)\n    (h₃ : a 3 ^ 3 = 64) (h₄ : a 4 ^ 3 = 125) (h₅ : a 5 ^ 3 = 216) (h₆ : a 6 ^ 3 = 343) :\n    ↑(∑ k in Finset.range 7, 6 * (a (k ^ 2))) - ↑(2 * ∑ k in Finset.range 6, (a (k ^ 2))) = (658 : ℤ) := by",
+  "C": "theorem amc12a_2020_p7\n  (a : ℕ → ℕ)\n  (h₀ : a 0 ^ 3 = 1)\n  (h₁ : a 1 ^ 3 = 8)\n  (h₂ : a 2 ^ 3 = 27)\n  (h₃ : a 3 ^ 3 = 64)\n  (h₄ : a 4 ^ 3 = 125)\n  (h₅ : a 5 ^ 3 = 216)\n  (h₆ : a 6 ^ 3 = 343) :\n  (↑(∑ k ∈ Finset.range (7:ℕ), ((6:ℕ) * (a k) ^ 2)):ℤ) - ↑(2 * ∑ k ∈Finset.range 6, (a k) ^ 2) = (658 : ℤ) := by",
+  "defect": "Applies a to k^2 instead of squaring a k; terms a 9, a 16 etc. are unconstrained.; Uses a (k^2) instead of (a k)^2; a 9, a 16, a 25, a 36 unconstrained."
+ },
+ {
+  "id": "t037",
+  "N": "Let $d(n)$ denote the number of positive integers that divide $n$, including $1$ and $n$. For example, $d(1)=1,d(2)=2,$ and $d(12)=6$. (This function is known as the divisor function.) Let$f(n)=\\frac{d(n)}{\\sqrt [3]n}.$There is a unique positive integer $N$ such that $f(N)>f(n)$ for all positive integers $n\\ne N$. What is the sum of the digits of $N?$\n\n$\\textbf{(A) }5 \\qquad \\textbf{(B) }6 \\qquad \\textbf{(C) }7 \\qquad \\textbf{(D) }8\\qquad \\textbf{(E) }9$ Show that it is \\textbf{(E) }9.",
+  "D": "theorem amc12a_2021_p25 (N : ℕ) (f : ℕ → ℝ)\n    (h₀ : ∀ n, 0 < n → f n = (Nat.divisors n).card / n ^ ((1 : ℝ) / 3))\n    (h₁ : ∀ (n) (_ : n ≠ N), 0 < n → f n < f N) : (List.sum (Nat.digits 10 N)) = 9 := by",
+  "C": "theorem amc12a_2021_p25\n  (m : ℕ)\n  (hm₀ : 0 < m)\n  (f : ℕ → ℝ)\n  (h₀ : ∀ n, 0 < n → f n = ((Nat.divisors n).card)/(n^((1:ℝ)/3)))\n  (h₁ : ∀ n ≠ m, 0 < n → f n < f m) :\n  (Nat.digits 10 m).sum = 9 := by",
+  "defect": "N not required positive; N = 0 with large junk f 0 satisfies hypotheses, making the claim false.; No hypothesis 0 < N; N = 0 with f 0 unconstrained and chosen large satisfies h₁, digit sum 0 ≠ 9."
+ },
+ {
+  "id": "t039",
+  "N": "What is the least possible value of $(xy-1)^2+(x+y)^2$ for real numbers $x$ and $y$?\n\n$\\textbf{(A)} ~0\\qquad\\textbf{(B)} ~\\frac{1}{4}\\qquad\\textbf{(C)} ~\\frac{1}{2} \\qquad\\textbf{(D)} ~1 \\qquad\\textbf{(E)} Show that it is \\textbf{(D)} ~1.",
+  "D": "theorem amc12a_2021_p7 (x y : ℝ) : 1 ≤ (x * y - 1) ^ 2 + (x + y) ^ 2 := by",
+  "C": "theorem amc12a_2021_p7\n  (S : Set ℝ)\n  (hS : S = {z | ∃ x y:ℝ, z = (x * y - 1) ^ 2 + (x + y) ^ 2}) :\n  IsLeast S 1 := by",
+  "defect": "Only proves lower bound 1; does not show the value 1 is attained (least value).; Only the lower bound 1≤…; attainment of the minimum is not stated."
+ },
+ {
+  "id": "t045",
+  "N": "What is the maximum value of $\\frac{(2^t-3t)t}{4^t}$ for real values of $t?$\n\n$\\textbf{(A)}\\ \\frac{1}{16} \\qquad\\textbf{(B)}\\ \\frac{1}{15} \\qquad\\textbf{(C)}\\ \\frac{1}{12} \\qquad\\textbf{(D)}\\ \\frac{1}{10} \\qquad\\textbf{(E)}\\ \\frac{1}{9}$ Show that it is \\textbf{(C)} \\frac{1}{12}.",
+  "D": "theorem amc12b_2020_p22 (t : ℝ) : (2 ^ t - 3 * t) * t / 4 ^ t ≤ 1 / 12 := by",
+  "C": "theorem amc12b_2020_p22\n  (S : Set ℝ)\n  (hS: S = {x:ℝ | ∃ t, x = (2 ^ t - 3 * t) * t / 4 ^ t}) :\n  IsGreatest S (1 / 12:ℝ) := by",
+  "defect": "Only upper bound 1/12; attainment of the maximum not shown.; Only the upper bound ≤1/12; attainment of the maximum is not stated."
+ },
+ {
+  "id": "t050",
+  "N": "Solve the equation $\\cos^2{x}+\\cos^2{2x}+\\cos^2{3x}=1$.",
+  "D": "theorem imo_1962_p4 (S : Set ℝ)\n    (h₀ : S = { x : ℝ | Real.cos x ^ 2 + Real.cos (2 * x) ^ 2 + Real.cos (3 * x) ^ 2 = 1 }) :\n    S =\n      { x : ℝ |\n        ∃ m : ℤ,\n          x = Real.pi / 2 + m * Real.pi ∨\n            x = Real.pi / 4 + m * Real.pi / 2 ∨ x = Real.pi / 6 + m * Real.pi / 6 ∨ x = 5 * Real.pi / 6 + m * Real.pi / 6 } := by",
+  "C": "theorem imo_1962_p4\n  (S : Set ℝ)\n  (h₀ : S = {x : ℝ | (Real.cos x)^2 + (Real.cos (2 * x))^2 + (Real.cos (3 * x))^2 = 1}) :\n  S = {x : ℝ | ∃ k : ℤ, (x = π / 2 + k * π) ∨ (x = π / 4 + k * π / 2)\n  ∨ (x = π / 6 + k * π) ∨ (x = 5 * π / 6 + k * π)} := by",
+  "defect": "Uses period pi/6 for last families, wrongly including e.g. x = 0, which is not a solution.; π/6 + mπ/6 gives all multiples of π/6, e.g. x = 0, which is not a solution."
+ },
+ {
+  "id": "t051",
+  "N": "Prove that for every natural number $n$, and for every real number $x \\neq \\frac{k\\pi}{2^t}$ ($t=0,1, \\dots, n$; $k$ any integer)\n$ \\frac{1}{\\sin{2x}}+\\frac{1}{\\sin{4x}}+\\dots+\\frac{1}{\\sin{2^nx}}=\\cot{x}-\\cot{2^nx}  $",
+  "D": "theorem imo_1966_p4 (n : ℕ) (x : ℝ) (h₀ : ∀ k : ℕ, 0 < k → ∀ m : ℤ, x ≠ m * Real.pi / 2 ^ k)\n  (h₁ : 0 < n) :\n  (∑ k in Finset.Icc 1 n, 1 / Real.sin (2 ^ k * x)) = 1 / Real.tan x - 1 / Real.tan (2 ^ n * x) := by",
+  "C": "theorem imo_1966_p4\n  (n : ℕ)\n  (x : ℝ)\n  (h₀ : ∀ k : ℕ, k ≤ n → ∀ m : ℤ, x ≠ m * π / (2^k))\n  (h₁ : 0 < n) :\n  ∑ k ∈ Finset.Icc 1 n, (1 / Real.sin ((2^k) * x)) = 1 / Real.tan x - 1 / Real.tan ((2^n) * x) := by",
+  "defect": "Excludes m*pi/2^k for all k > 0 (unbounded), a stronger hypothesis than t = 0..n.; Requires x ≠ mπ/2^k for all k ≥ 1, not only k ≤ n; stronger hypothesis than stated."
+ }
+]

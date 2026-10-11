@@ -1,0 +1,142 @@
+[
+ {
+  "id": "t187",
+  "N": "Suppose that $V$ is finite dimensional and that $T \\in \\mathcal{L}(V, W)$. Prove that there exists a subspace $U$ of $V$ such that $U \\cap \\operatorname{null} T=\\{0\\}$ and range $T=\\{T u: u \\in U\\}$.",
+  "D": "theorem exercise_3_8 {F V W : Type*}  [AddCommGroup V]\n  [AddCommGroup W] [Field F] [Module F V] [Module F W]\n  (L : V →ₗ[F] W) :\n  ∃ U : Submodule F V, U ⊓ (ker L) = ⊥ ∧\n  (range L = range (domRestrict L U)) :=",
+  "C": "theorem exercise_3_8 {F V W : Type*} [AddCommGroup V]\n  [AddCommGroup W] [Field F] [Module F V] [FiniteDimensional F V] [Module F W]\n  (L : V →ₗ[F] W) :\n  ∃ U : Submodule F V, U ⊓ (ker L) = ⊥ ∧\n  (range L = range (domRestrict L U)):=",
+  "defect": "Drops the finite-dimensionality hypothesis on V.; FiniteDimensional F V hypothesis dropped; statement generalized beyond the informal."
+ },
+ {
+  "id": "t188",
+  "N": "Suppose that $T \\in \\mathcal{L}(V)$ has $\\operatorname{dim} V$ distinct eigenvalues and that $S \\in \\mathcal{L}(V)$ has the same eigenvectors as $T$ (not necessarily with the same eigenvalues). Prove that $S T=T S$.",
+  "D": "theorem exercise_5_20 {F V : Type*} [AddCommGroup V] [Field F]\n  [Module F V] [FiniteDimensional F V] {S T : End F V}\n  (h1 : card (T.Eigenvalues) = finrank F V)\n  (h2 : ∀ v : V, ∃ c : F, v ∈ eigenspace S c ↔ ∃ c : F, v ∈ eigenspace T c) :\n  S * T = T * S :=",
+  "C": "theorem exercise_5_20 {F V : Type*} [AddCommGroup V] [Field F]\n  [Module F V] [FiniteDimensional F V] {S T : End F V}\n  (h1 : card (T.Eigenvalues) = finrank F V)\n  (h2 : ∀ v : V, (∃ c : F, v ∈ eigenspace S c) ↔ (∃ c : F, v ∈ eigenspace T c)) :\n  S * T = T * S :=",
+  "defect": "Existential c scopes over the iff, so the hypothesis only says T-eigenvectors are S-eigenvectors; the 'same eigenvectors' condition is lost.; Unbracketed ∃ c scopes over the whole iff; only 'every T-eigenvector is an S-eigenvector' is captured, not equality."
+ },
+ {
+  "id": "t189",
+  "N": "Prove that $\\left(\\sum_{j=1}^{n} a_{j} b_{j}\\right)^{2} \\leq\\left(\\sum_{j=1}^{n} j a_{j}{ }^{2}\\right)\\left(\\sum_{j=1}^{n} \\frac{b_{j}{ }^{2}}{j}\\right)$ for all real numbers $a_{1}, \\ldots, a_{n}$ and $b_{1}, \\ldots, b_{n}$.",
+  "D": "theorem exercise_6_3 {n : ℕ} (a b : Fin n → ℝ) :\n  (∑ i, a i * b i) ^ 2 ≤ (∑ i : Fin n, i * a i ^ 2) * (∑ i, b i ^ 2 / i) :=",
+  "C": "theorem exercise_6_3 {n : ℕ} (a b : Fin n → ℝ) :\n  (∑ i, a i * b i) ^ 2 ≤ (∑ i : Fin n, (i + 1) * a i ^ 2) * (∑ i, b i ^ 2 / (i + 1)) :=",
+  "defect": "Fin n index starts at 0, so weights i instead of j = i+1; first term weight 0 makes inequality false.; Fin n indices start at 0, so weights i and 1/i (1/0=0) replace j and 1/j; false for n=1."
+ },
+ {
+  "id": "t190",
+  "N": "Suppose $T \\in \\mathcal{L}(V)$ is self-adjoint, $\\lambda \\in \\mathbf{F}$, and $\\epsilon>0$. Prove that if there exists $v \\in V$ such that $\\|v\\|=1$ and $\\|T v-\\lambda v\\|<\\epsilon,$ then $T$ has an eigenvalue $\\lambda^{\\prime}$ such that $\\left|\\lambda-\\lambda^{\\prime}\\right|<\\epsilon$.",
+  "D": "theorem exercise_7_14 {𝕜 V : Type*} [RCLike 𝕜] [NormedAddCommGroup V]\n  [InnerProductSpace 𝕜 V] [FiniteDimensional 𝕜 V]\n  {T : Module.End 𝕜 V} (hT : IsSelfAdjoint T)\n  {l : 𝕜} {ε : ℝ} (he : ε > 0) : ∃ v : V, ‖v‖= 1 ∧ (‖T v - l • v‖ < ε →\n  (∃ l' : T.Eigenvalues, ‖l - l'‖ < ε)) :=",
+  "C": "theorem exercise_7_14 {𝕜 V : Type*} [RCLike 𝕜] [NormedAddCommGroup V]\n  [InnerProductSpace 𝕜 V] [FiniteDimensional 𝕜 V]\n  {T : Module.End 𝕜 V} (hT : IsSelfAdjoint T)\n  {l : 𝕜} {ε : ℝ} (he : ε > 0) : (∃ v : V, ‖v‖= 1 ∧ ‖T v - l • v‖ < ε) →\n  (∃ l' : T.Eigenvalues, ‖l - l'‖ < ε) :=",
+  "defect": "Existential over v moved outside the implication; asserts existence of a unit v rather than an implication.; Existential over v pulled outside the implication; asserts some unit v exists, not 'if there exists v'."
+ },
+ {
+  "id": "t191",
+  "N": "Let $x$ be an element of $G$. Prove that $x^2=1$ if and only if $|x|$ is either $1$ or $2$.",
+  "D": "theorem exercise_1_1_16 {G : Type*} [Group G]\n  (x : G) (hx : x ^ 2 = 1) :\n  orderOf x = 1 ∨ orderOf x = 2 :=",
+  "C": "theorem exercise_1_1_16 {G : Type*} [Group G]\n  (x : G) : x ^ 2 = 1 ↔ (orderOf x = 1 ∨ orderOf x = 2) :=",
+  "defect": "Only the forward direction of the iff.; Only the forward direction of the iff."
+ },
+ {
+  "id": "t193",
+  "N": "Let $x$ and $y$ be elements of $G$. Prove that $xy=yx$ if and only if $y^{-1}xy=x$ if and only if $x^{-1}y^{-1}xy=1$.",
+  "D": "theorem exercise_1_1_18 {G : Type*} [Group G]\n  (x y : G) : (x * y = y * x ↔ y⁻¹ * x * y = x) ↔ (x⁻¹ * y⁻¹ * x * y = 1) :=",
+  "C": "theorem exercise_1_1_18 {G : Type*} [Group G]\n  (x y : G) : (x * y = y * x ↔ y⁻¹ * x * y = x) ∧ (y⁻¹ * x * y = x ↔ x⁻¹ * y⁻¹ * x * y = 1) :=",
+  "defect": "Parenthesised as (P ↔ Q) ↔ R, which asserts R always holds; wrong binding of the iff chain.; (P ↔ Q) ↔ R misassociates the chain; effectively asserts x⁻¹y⁻¹xy = 1 for all x, y."
+ },
+ {
+  "id": "t194",
+  "N": "Prove that $A \\times B$ is an abelian group if and only if both $A$ and $B$ are abelian.",
+  "D": "theorem exercise_1_1_29 {A B : Type*} [Group A] [Group B] :\n  ∀ x y : A × B, x*y = y*x ↔ (∀ x y : A, x*y = y*x) ∧\n  (∀ x y : B, x*y = y*x) :=",
+  "C": "theorem exercise_1_1_29 {A B : Type*} [Group A] [Group B] :\n  (∀ x y : A × B, x*y = y*x) ↔ (∀ x y : A, x*y = y*x) ∧\n  (∀ x y : B, x*y = y*x) :=",
+  "defect": "Universal over x y scopes over the iff: for each pair, xy=yx iff both abelian, which is false.; The forall x y scopes over the iff: asserts x*y = y*x iff (A, B abelian) for each pair, not the biconditional."
+ },
+ {
+  "id": "t196",
+  "N": "If $x$ is an element of infinite order in $G$, prove that the elements $x^{n}, n \\in \\mathbb{Z}$ are all distinct.",
+  "D": "theorem exercise_1_1_34 {G : Type*} [Group G] {x : G}\n  (hx_inf : orderOf x = 0) (n m : ℤ) :\n  x ^ n ≠ x ^ m :=",
+  "C": "theorem exercise_1_1_34 {G : Type*} [Group G] {x : G}\n  (hx_inf : orderOf x = 0) (n m : ℤ) (hnm : n ≠ m) :\n  x ^ n ≠ x ^ m :=",
+  "defect": "Missing n != m; claims x^n != x^m even when n = m, which is false.; Missing n != m; the claim x^n != x^m for all n, m is false when n = m."
+ },
+ {
+  "id": "t197",
+  "N": "Prove that the multiplication of residue class $\\mathbb{Z}/n\\mathbb{Z}$ is associative.",
+  "D": "theorem exercise_1_1_4 (n : ℕ) :\n  ∀ (a b c : ℕ), (a * b) * c ≡ a * (b * c) [ZMOD n] :=",
+  "C": "theorem exercise_1_1_4 (n : ℕ) (a b c : ZMod n) :\n  (a * b) * c = a * (b * c) :=",
+  "defect": "Works with natural representatives, not residue classes; trivially true by associativity in N.; Associativity on integer representatives modulo n; equivalent statement for residue classes."
+ },
+ {
+  "id": "t198",
+  "N": "Let $G$ be any group. Prove that the map from $G$ to itself defined by $g \\mapsto g^{-1}$ is a homomorphism if and only if $G$ is abelian.",
+  "D": "theorem exercise_1_6_17 {G : Type*} [Group G] (f : G → G)\n  (hf : f = λ g => g⁻¹) :\n  ∀ x y : G, f x * f y = f (x*y) ↔ ∀ x y : G, x*y = y*x :=",
+  "C": "theorem exercise_1_6_17 {G : Type*} [Group G] (f : G → G)\n  (hf : f = λ g => g⁻¹) :\n  (∀ x y : G, f x * f y = f (x*y)) ↔ ∀ x y : G, x*y = y*x :=",
+  "defect": "∀ x y scopes over the iff: homomorphism condition at one pair iff G abelian, which is false.; ∀ x y binds the whole iff: ∀ x y, (f x * f y = f(xy) ↔ abelian); false for nonabelian G."
+ },
+ {
+  "id": "t201",
+  "N": "A subgroup $M$ of a group $G$ is called a maximal subgroup if $M \\neq G$ and the only subgroups of $G$ which contain $M$ are $M$ and $G$. Prove that if $H$ is a proper subgroup of the finite group $G$ then there is a maximal subgroup of $G$ containing $H$.",
+  "D": "theorem exercise_2_4_16a {G : Type*} [Group G] {H : Subgroup G}\n  (hH : H ≠ ⊤) :\n  ∃ M : Subgroup G, M ≠ ⊤ ∧\n  ∀ K : Subgroup G, M ≤ K → K = M ∨ K = ⊤ ∧\n  H ≤ M :=",
+  "C": "theorem exercise_2_4_16a {G : Type*} [Group G] [Fintype G] {H : Subgroup G}\n  (hH : H ≠ ⊤) :\n  ∃ M : Subgroup G, M ≠ ⊤ ∧\n  (∀ K : Subgroup G, M ≤ K → K = M ∨ K = ⊤) ∧\n  H ≤ M :=",
+  "defect": "Drops the finiteness of G (no Fintype); false for infinite groups like ℚ with no maximal subgroups. Precedence quirk is logically harmless.; No finiteness of G; claim fails for infinite groups (e.g. (Q,+) has no maximal subgroups). Unparenthesised or/and is logically equivalent."
+ },
+ {
+  "id": "t203",
+  "N": "Prove that if $H$ is a subgroup of $G$ then $H$ is generated by the set $H-\\{1\\}$.",
+  "D": "theorem exercise_2_4_4 {G : Type*} [Group G] (H : Subgroup G) :\n  closure ((H : Set G) \\ {1}) = ⊤ :=",
+  "C": "theorem exercise_2_4_4 {G : Type*} [Group G] (H : Subgroup G) :\n  closure ((H : Set G) \\ {1}) = H :=",
+  "defect": "Claims closure of H minus {1} is the whole group (top) instead of H.; Claims closure of H \\ {1} is ⊤ (all of G) rather than H."
+ },
+ {
+  "id": "t204",
+  "N": "Prove that the intersection of an arbitrary nonempty collection of normal subgroups of a group is a normal subgroup (do not assume the collection is countable).",
+  "D": "theorem exercise_3_1_22b {G : Type*} [Group G] (I : Type*)\n  (H : I → Subgroup G) (hH : ∀ i : I, Normal (H i)) :\n  Normal (⨅ (i : I), H i) :=",
+  "C": "theorem exercise_3_1_22b {G : Type*} [Group G] (I : Type*) [Nonempty I]\n  (H : I → Subgroup G) (hH : ∀ i : I, Normal (H i)) :\n  Normal (⨅ (i : I), H i):=",
+  "defect": "Drops the nonempty-collection hypothesis the problem imposes (harmless generalization, but hypotheses differ).; Drops the stated nonemptiness of the family; still true (empty infimum is top) but strictly stronger than asked."
+ },
+ {
+  "id": "t205",
+  "N": "Use Lagrange's Theorem in the multiplicative group $(\\mathbb{Z} / p \\mathbb{Z})^{\\times}$to prove Fermat's Little Theorem: if $p$ is a prime then $a^{p} \\equiv a(\\bmod p)$ for all $a \\in \\mathbb{Z}$.",
+  "D": "theorem exercise_3_2_16 (p : ℕ) (hp : Nat.Prime p) (a : ℕ) :\n  Nat.Coprime a p → a ^ p ≡ a [ZMOD p] :=",
+  "C": "theorem exercise_3_2_16 (p : ℕ) (hp : Nat.Prime p) (a : ℤ) :\n  a ^ p ≡ a [ZMOD p] :=",
+  "defect": "Adds coprimality of a and p (and restricts a to N); the claim is for all integers a.; Extra coprimality hypothesis not in the informal statement; also a restricted to ℕ."
+ },
+ {
+  "id": "t206",
+  "N": "Prove that if $H$ is a normal subgroup of $G$ of prime index $p$ then for all $K \\leq G$ either $K \\leq H$, or $G=H K$ and $|K: K \\cap H|=p$.",
+  "D": "theorem exercise_3_3_3 {p : Nat.Primes} {G : Type*} [Group G]\n  {H : Subgroup G} [hH : H.Normal] (hH1 : H.index = p) :\n  ∀ K : Subgroup G, K ≤ H ∨ H ⊔ K = ⊤ ∨ (K ⊓ H).relindex K = p :=",
+  "C": "theorem exercise_3_3_3 {p : Nat.Primes} {G : Type*} [Group G]\n  {H : Subgroup G} [hH : H.Normal] (hH1 : H.index = p) :\n  ∀ K : Subgroup G, K ≤ H ∨ (H ⊔ K = ⊤ ∧ (K ⊓ H).relindex K = p) :=",
+  "defect": "Uses disjunction instead of conjunction for G = HK and the index condition.; Conjunction replaced by disjunction; weaker than the stated dichotomy."
+ },
+ {
+  "id": "t207",
+  "N": "Prove that if $H$ is a nontrivial normal subgroup of the solvable group $G$ then there is a nontrivial subgroup $A$ of $H$ with $A \\unlhd G$ and $A$ abelian.",
+  "D": "theorem exercise_3_4_11 {G : Type*} [Group G] [IsSolvable G]\n  {H : Subgroup G} (hH : H ≠ ⊥) [H.Normal] :\n  ∃ A ≤ H, A.Normal ∧ ∀ a b : A, a*b = b*a :=",
+  "C": "theorem exercise_3_4_11 {G : Type*} [Group G] [IsSolvable G]\n  {H : Subgroup G} (hH : H ≠ ⊥) [H.Normal] :\n  ∃ A ≤ H, A ≠ ⊥ ∧ A.Normal ∧ ∀ a b : A, a*b = b*a :=",
+  "defect": "Omits A ≠ ⊥, so A = ⊥ trivially satisfies the conclusion.; Drops A ≠ ⊥, so A = ⊥ satisfies the conclusion trivially."
+ },
+ {
+  "id": "t208",
+  "N": "Prove that if $G$ is an abelian group of order $p q$, where $p$ and $q$ are distinct primes, then $G$ is cyclic.",
+  "D": "theorem exercise_4_4_2 {G : Type*} [Fintype G] [Group G]\n  {p q : Nat.Primes} (hpq : p ≠ q) (hG : card G = p*q) :\n  IsCyclic G :=",
+  "C": "theorem exercise_4_4_2 {G : Type*} [Fintype G] [CommGroup G]\n  {p q : Nat.Primes} (hpq : p ≠ q) (hG : card G = p*q) :\n  IsCyclic G :=",
+  "defect": "Uses Group instead of CommGroup, dropping the abelian hypothesis; false (S3 has order 6).; Drops the abelian hypothesis (Group not CommGroup); false, e.g. S3 of order 6."
+ },
+ {
+  "id": "t209",
+  "N": "Prove that there exists a normal subgroup that is not characteristic.",
+  "D": "theorem exercise_4_4_6b :\n  ∃ (G : Type*) (hG : Group G) (H : @Subgroup G hG), @Characteristic G hG H  ∧ ¬ @Normal G hG H :=",
+  "C": "theorem exercise_4_4_6b :\n  ∃ (G : Type*) (hG : Group G) (H : @Subgroup G hG), @Normal G hG H ∧ ¬ @Characteristic G hG H :=",
+  "defect": "Swaps the predicates: asks for characteristic but not normal, which is impossible.; Predicates swapped: asserts a characteristic non-normal subgroup (impossible), not a normal non-characteristic one."
+ },
+ {
+  "id": "t210",
+  "N": "Let $G$ be a group with subgroups $H$ and $K$ with $H \\leq K$. Prove that if $H$ is characteristic in $K$ and $K$ is normal in $G$ then $H$ is normal in $G$.",
+  "D": "theorem exercise_4_4_8a {G : Type*} [Group G] (H K : Subgroup G)\n  (hHK : H ≤ K) [hHK1 : (H.subgroupOf K).Normal] [hK : K.Normal] :\n  H.Normal :=",
+  "C": "theorem exercise_4_4_8a {G : Type*} [Group G] (H K : Subgroup G)\n  (hHK : H ≤ K) [hHK1 : (H.subgroupOf K).Characteristic] [hK : K.Normal] :\n  H.Normal :=",
+  "defect": "Replaces 'characteristic in K' by 'normal in K'; normality is not transitive, claim becomes false.; Replaces 'characteristic in K' by 'normal in K'; normality is not transitive, so the statement is false."
+ },
+ {
+  "id": "t211",
+  "N": "Prove that a group of order 56 has a normal Sylow $p$-subgroup for some prime $p$ dividing its order.",
+  "D": "theorem exercise_4_5_13 {G : Type*} [Group G] [Fintype G]\n  (hG : card G = 56) :\n  ∃ (p : ℕ) (P : Sylow p G), P.Normal :=",
+  "C": "theorem exercise_4_5_13 {G : Type*} [Group G] [Fintype G]\n  (hG : card G = 56) :\n  ∃ (p : ℕ) (P : Sylow p G), p.Prime ∧ (p ∣ card G) ∧ P.Normal :=",
+  "defect": "No primality or divisibility of p; trivially true with p = 1 (trivial Sylow subgroup normal).; p unconstrained; for p not dividing 56 the Sylow subgroup is trivial and normal, trivial claim."
+ }
+]

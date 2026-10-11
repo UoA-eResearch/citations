@@ -1,0 +1,142 @@
+[
+ {
+  "id": "t212",
+  "N": "Prove that a group of order 312 has a normal Sylow $p$-subgroup for some prime $p$ dividing its order.",
+  "D": "theorem exercise_4_5_14 {G : Type*} [Group G] [Fintype G]\n  (hG : card G = 312) :\n  ∃ (p : ℕ) (P : Sylow p G), P.Normal :=",
+  "C": "theorem exercise_4_5_14 {G : Type*} [Group G] [Fintype G]\n  (hG : card G = 312) :\n  ∃ (p : ℕ) (P : Sylow p G), p.Prime ∧ (p ∣ card G) ∧ P.Normal :=",
+  "defect": "Drops p prime and p | |G|; trivially true via p = 1 or p not dividing 312 (trivial Sylow subgroup is normal).; Drops p prime and p ∣ |G|; trivially satisfied by p=1 or p∤312 with P=⊥ normal."
+ },
+ {
+  "id": "t213",
+  "N": "Prove that a group of order 351 has a normal Sylow $p$-subgroup for some prime $p$ dividing its order.",
+  "D": "theorem exercise_4_5_15 {G : Type*} [Group G] [Fintype G]\n  (hG : card G = 351) :\n  ∃ (p : ℕ) (P : Sylow p G), P.Normal :=",
+  "C": "theorem exercise_4_5_15 {G : Type*} [Group G] [Fintype G]\n  (hG : card G = 351) :\n  ∃ (p : ℕ) (P : Sylow p G), p.Prime ∧ (p ∣ card G) ∧  P.Normal :=",
+  "defect": "No requirement that p is prime dividing 351; trivial via p = 1 or a non-dividing prime.; p need not be prime or divide 351; trivially true with p = 2 (trivial Sylow 2-subgroup is normal)."
+ },
+ {
+  "id": "t214",
+  "N": "Let $|G|=p q r$, where $p, q$ and $r$ are primes with $p<q<r$. Prove that $G$ has a normal Sylow subgroup for either $p, q$ or $r$.",
+  "D": "theorem exercise_4_5_16 {p q r : ℕ} {G : Type*} [Group G]\n  [Fintype G]  (hpqr : p < q ∧ q < r)\n  (hpqr1 : p.Prime ∧ q.Prime ∧ r.Prime)(hG : card G = p*q*r) :\n  Nonempty (Sylow p G) ∨ Nonempty (Sylow q G) ∨ Nonempty (Sylow r G) :=",
+  "C": "theorem exercise_4_5_16 {p q r : ℕ} {G : Type*} [Group G]\n  [Fintype G]  (hpqr : p < q ∧ q < r)\n  (hpqr1 : p.Prime ∧ q.Prime ∧ r.Prime)(hG : card G = p*q*r) :\n  (∃ (P : Sylow p G), P.Normal) ∨ (∃ (P : Sylow q G), P.Normal) ∨ (∃ (P : Sylow r G), P.Normal) :=",
+  "defect": "Only asserts Sylow subgroups exist (always true); normality is missing.; Nonempty (Sylow p G) always holds by Sylow's theorem; normality dropped, conclusion trivial."
+ },
+ {
+  "id": "t215",
+  "N": "Prove that if $|G|=105$ then $G$ has a normal Sylow 5 -subgroup and a normal Sylow 7-subgroup.",
+  "D": "theorem exercise_4_5_17 {G : Type*} [Fintype G] [Group G]\n  (hG : card G = 105) :\n  Nonempty (Sylow 5 G) ∧ Nonempty (Sylow 7 G) :=",
+  "C": "theorem exercise_4_5_17 {G : Type*} [Fintype G] [Group G]\n  (hG : card G = 105) :\n  (∃ (P : Sylow 5 G), P.Normal) ∧ (∃ (P : Sylow 7 G), P.Normal) :=",
+  "defect": "Only asserts Sylow 5- and 7-subgroups exist; normality is not claimed.; Only existence of Sylow 5- and 7-subgroups (automatic by Sylow); normality is dropped."
+ },
+ {
+  "id": "t216",
+  "N": "Prove that if $P \\in \\operatorname{Syl}_{p}(G)$ and $H$ is a subgroup of $G$ containing $P$ then $P \\in \\operatorname{Syl}_{p}(H)$.",
+  "D": "theorem exercise_4_5_1a {p : ℕ} {G : Type*} [Group G]\n  {P : Subgroup G} (hP : IsPGroup p P) (H : Subgroup G)\n  (hH : P ≤ H) : IsPGroup p H :=",
+  "C": "theorem exercise_4_5_1a {p : ℕ} {G : Type*} [Group G]\n  {P : Sylow p G} (H : Subgroup G) (hH : P ≤ H) :\n  IsPGroup p (P.subgroupOf H) ∧\n  ∀ (Q : Subgroup H), IsPGroup p Q → (P.subgroupOf H) ≤ Q → Q = (P.subgroupOf H) :=",
+  "defect": "Concludes H is a p-group (false in general) from P being a p-group; not that P is Sylow in H.; Conclusion claims H itself is a p-group, a different (false) statement; Sylow maximality of P also dropped."
+ },
+ {
+  "id": "t217",
+  "N": "Let $P$ be a normal Sylow $p$-subgroup of $G$ and let $H$ be any subgroup of $G$. Prove that $P \\cap H$ is the unique Sylow $p$-subgroup of $H$.",
+  "D": "theorem exercise_4_5_33 {G : Type*} [Group G] [Fintype G] {p : ℕ}\n  (P : Sylow p G) [hP : P.Normal] (H : Subgroup G) [Fintype H] :\n  ∀ R : Sylow p H, R.toSubgroup = (H ⊓ P.toSubgroup).subgroupOf H ∧\n  Nonempty (Sylow p H) :=",
+  "C": "theorem exercise_4_5_33 {G : Type*} [Group G] [Fintype G] {p : ℕ}\n  (P : Sylow p G) [hP : P.Normal] (H : Subgroup G) [Fintype H] :\n  (∀ R : Sylow p H, R.toSubgroup = (H ⊓ P.toSubgroup).subgroupOf H) ∧\n  Nonempty (Sylow p H) :=",
+  "defect": "Nonempty placed inside ∀ R, so existence of a Sylow subgroup equal to P∩H is not asserted; only uniqueness.; Nonempty conjunct inside ∀ R is redundant; existence of a Sylow p-subgroup of H not asserted independently, only uniqueness."
+ },
+ {
+  "id": "t218",
+  "N": "Let $\\varphi: R \\rightarrow S$ be a surjective homomorphism of rings. Prove that the image of the center of $R$ is contained in the center of $S$.",
+  "D": "theorem exercise_7_3_16 {R S : Type*} [Ring R] [Ring S]\n  {φ : R →+* S} (hf : Function.Surjective φ) :\n  φ '' (center R) ⊂ center S :=",
+  "C": "theorem exercise_7_3_16 {R S : Type*} [Ring R] [Ring S]\n  {φ : R →+* S} (hf : Function.Surjective φ) :\n  φ '' (center R) ⊆ center S :=",
+  "defect": "Strict subset instead of containment; false e.g. for identity map.; Strict subset ⊂ instead of ⊆; fails e.g. for an isomorphism."
+ },
+ {
+  "id": "t219",
+  "N": "Let $R$ be an integral domain. Prove that if the following two conditions hold then $R$ is a Principal Ideal Domain: (i) any two nonzero elements $a$ and $b$ in $R$ have a greatest common divisor which can be written in the form $r a+s b$ for some $r, s \\in R$, and (ii) if $a_{1}, a_{2}, a_{3}, \\ldots$ are nonzero elements of $R$ such that $a_{i+1} \\mid a_{i}$ for all $i$, then there is a positive integer $N$ such that $a_{n}$ is a unit times $a_{N}$ for all $n \\geq N$.",
+  "D": "theorem exercise_8_2_4 {R : Type*} [Ring R][NoZeroDivisors R]\n  [CancelCommMonoidWithZero R] [GCDMonoid R]\n  (h1 : ∀ a b : R, a ≠ 0 → b ≠ 0 → ∃ r s : R, gcd a b = r*a + s*b)\n  (h2 : ∀ a : ℕ → R, (∀ i j : ℕ, i < j → a i ∣ a j) →\n  ∃ N : ℕ, ∀ n ≥ N, ∃ u : R, IsUnit u ∧ a n = u * a N) :\n  IsPrincipalIdealRing R :=",
+  "C": "theorem exercise_8_2_4 {R : Type*} [CommRing R] [IsDomain R] [GCDMonoid R]\n  (h1 : ∀ a b : R, a ≠ 0 → b ≠ 0 → ∃ r s : R, gcd a b = r*a + s*b)\n  (h2 : ∀ a : ℕ → R, (∀ i : ℕ, a i ≠ 0 ∧ a (i + 1) ∣ a i) →\n  ∃ N : ℕ, ∀ n ≥ N, ∃ u : R, IsUnit u ∧ a n = u * a N) :\n  IsPrincipalIdealRing R :=",
+  "defect": "Chain condition reversed (a_i divides a_j for i<j) and nonzero terms dropped; also clashing Ring/CancelCommMonoidWithZero structures.; Divisibility chain reversed (a i ∣ a j for i < j, not a (i+1) ∣ a i); nonzero condition dropped; mixed instances."
+ },
+ {
+  "id": "t221",
+  "N": "Prove that the quotient ring $\\mathbb{Z}[i] /(1+i)$ is a field of order 2.",
+  "D": "theorem exercise_8_3_6a {R : Type} [Ring R]\n  (hR : R = (GaussianInt ⧸ span ({⟨0, 1⟩} : Set GaussianInt))) :\n  IsField R ∧ ∃ finR : Fintype R, @card R finR = 2 :=",
+  "C": "theorem exercise_8_3_6a {R : Type} [Ring R]\n  (hR : R = (GaussianInt ⧸ span ({⟨1, 1⟩} : Set GaussianInt))) :\n  IsField R ∧ ∃ finR : Fintype R, @card R finR = 2 :=",
+  "defect": "Ideal generated by i (a unit) instead of 1+i; quotient is the zero ring.; Generator ⟨0,1⟩ = i (a unit) instead of 1 + i; quotient is trivial, not a field of order 2."
+ },
+ {
+  "id": "t222",
+  "N": "Prove that the ring $\\mathbb{Z}\\left[x_{1}, x_{2}, x_{3}, \\ldots\\right] /\\left(x_{1} x_{2}, x_{3} x_{4}, x_{5} x_{6}, \\ldots\\right)$ contains infinitely many minimal prime ideals.",
+  "D": "theorem exercise_9_1_10 {f : ℕ → MvPolynomial ℕ ℤ}\n  (hf : f = λ i => MvPolynomial.X i * MvPolynomial.X (i+1)):\n  Infinite (minimalPrimes (MvPolynomial ℕ ℤ ⧸ span (range f))) :=",
+  "C": "theorem exercise_9_1_10 {f : ℕ → MvPolynomial ℕ ℤ}\n  (hf : f = λ i => MvPolynomial.X (2*i) * MvPolynomial.X (2*i+1)):\n  Infinite (minimalPrimes (MvPolynomial ℕ ℤ ⧸ span (range f))) :=",
+  "defect": "Uses overlapping products X i * X(i+1), a different ideal.; Generators X i · X (i+1) are consecutive overlapping products, a different ideal."
+ },
+ {
+  "id": "t223",
+  "N": "Let $A$ be a normal subgroup of a group $G$, and suppose that $b \\in G$ is an element of prime order $p$, and that $b \\not\\in A$. Show that $A \\cap (b) = (e)$.",
+  "D": "theorem exercise_2_10_1 {G : Type*} [Group G] (A : Subgroup G)\n  [A.Normal] {b : G} (hp : Nat.Prime (orderOf b)) :\n  A ⊓ (Subgroup.closure {b}) = ⊥ :=",
+  "C": "theorem exercise_2_10_1 {G : Type*} [Group G] (A : Subgroup G)\n  [A.Normal] {b : G} (hb : b ∉ A) (hp : Nat.Prime (orderOf b)) :\n  A ⊓ (Subgroup.closure {b}) = ⊥ :=",
+  "defect": "Missing hypothesis b ∉ A; false when b ∈ A.; Missing b∉A; without it the claim is false (b∈A gives A∩⟨b⟩=⟨b⟩)."
+ },
+ {
+  "id": "t224",
+  "N": "If $G$ is a finite group, prove that, given $a \\in G$, there is a positive integer $n$, depending on $a$, such that $a^n = e$.",
+  "D": "theorem exercise_2_1_26 {G : Type*} [Group G]\n  [Fintype G] (a : G) : ∃ (n : ℕ), a ^ n = 1 :=",
+  "C": "theorem exercise_2_1_26 {G : Type*} [Group G]\n  [Fintype G] (a : G) : ∃ (n : ℕ), n > 0 ∧ a ^ n = 1 :=",
+  "defect": "No positivity on n; n = 0 trivially gives a^0 = 1.; Positivity of n dropped; n = 0 gives a^0 = 1 trivially."
+ },
+ {
+  "id": "t225",
+  "N": "If $G$ is a finite group, prove that there is an integer $m > 0$ such that $a^m = e$ for all $a \\in G$.",
+  "D": "theorem exercise_2_1_27 {G : Type*} [Group G]\n  [Fintype G] : ∃ (m : ℕ), ∀ (a : G), a ^ m = 1 :=",
+  "C": "theorem exercise_2_1_27 {G : Type*} [Group G]\n  [Fintype G] : ∃ (m : ℕ), m > 0 ∧ ∀ (a : G), a ^ m = 1 :=",
+  "defect": "Drops m > 0; trivially satisfied by m = 0.; Omits m > 0, so m = 0 trivially satisfies the conclusion."
+ },
+ {
+  "id": "t227",
+  "N": "If $a^2 = 0$ in $R$, show that $ax + xa$ commutes with $a$.",
+  "D": "theorem exercise_4_2_6 {R : Type*} [Ring R] (a x : R)\n  (h : a ^ 2 = 0) : a * (a * x + x * a) = (x + x * a) * a :=",
+  "C": "theorem exercise_4_2_6 {R : Type*} [Ring R] (a x : R)\n  (h : a ^ 2 = 0) : a * (a * x + x * a) = (a * x + x * a) * a :=",
+  "defect": "Right side is (x + x*a)*a instead of (a*x + x*a)*a; wrong expression.; Right side is (x + x*a)*a instead of (a*x + x*a)*a; wrong formula."
+ },
+ {
+  "id": "t228",
+  "N": "Let $p$ be an odd prime and let $1 + \\frac{1}{2} + ... + \\frac{1}{p - 1} = \\frac{a}{b}$, where $a, b$ are integers. Show that $p \\mid a$.",
+  "D": "theorem exercise_4_2_9 {p : ℕ} (hp : Nat.Prime p) (hp1 : Odd p) :\n  ∃ (a b : ℤ), (a / b : ℚ) = ∑ i in Finset.range p, 1 / (i + 1) → ↑p ∣ a :=",
+  "C": "theorem exercise_4_2_9 {p : ℕ} (hp : Nat.Prime p) (hp1 : Odd p) :\n  ∀ (a b : ℤ), (a / b : ℚ) = ∑ i in Finset.range (p-1), (1 / (i + 1) : ℚ) → ↑p ∣ a :=",
+  "defect": "Existential over a, b makes the implication trivially satisfiable; also sum runs to 1/p.; ∃ a b instead of ∀ makes the claim trivial (a = 0); sum over range p also includes 1/p."
+ },
+ {
+  "id": "t229",
+  "N": "Show that $(p - 1)/2$ of the numbers $1, 2, \\ldots, p - 1$ are quadratic residues and $(p - 1)/2$ are quadratic nonresidues $\\mod p$.",
+  "D": "theorem exercise_4_4_9 (p : ℕ) (hp : Nat.Prime p) :\n  (∃ S : Finset (ZMod p), S.card = (p-1)/2 ∧ ∃ x : ZMod p, x^2 = p) ∧\n  (∃ S : Finset (ZMod p), S.card = (p-1)/2 ∧ ¬ ∃ x : ZMod p, x^2 = p) :=",
+  "C": "theorem exercise_4_4_9 (p : ℕ) (hp : Nat.Prime p) (hodd : p % 2 = 1) :\n  (∃ S : Finset (ZMod p), 0 ∉ S ∧ S.card = (p-1)/2 ∧ ∀ q ∈ S, ∃ x : ZMod p, x^2 = q) ∧\n  (∃ S : Finset (ZMod p), 0 ∉ S ∧ S.card = (p-1)/2 ∧ ∀ q ∈ S, ¬ ∃ x : ZMod p, x^2 = q) :=",
+  "defect": "Membership condition lost: tests whether p (zero in ZMod p) is a square, unrelated to S; false.; Tests whether p (= 0 in ZMod p) is a square instead of the elements of S; condition unrelated to residues."
+ },
+ {
+  "id": "t230",
+  "N": "Let $F = \\mathbb{Z}_p$ be the field of integers $\\mod p$, where $p$ is a prime, and let $q(x) \\in F[x]$ be irreducible of degree $n$. Show that $F[x]/(q(x))$ is a field having at exactly $p^n$ elements.",
+  "D": "theorem exercise_4_5_16 {p n: ℕ} (hp : Nat.Prime p)\n  {q : Polynomial (ZMod p)} (hq : Irreducible q) (hn : q.degree = n) :\n  ∃ is_fin : Fintype $ Polynomial (ZMod p) ⧸ span ({q} : Set (Polynomial $ ZMod p)),\n  @card (Polynomial (ZMod p) ⧸ span {q}) is_fin = p ^ n ∧\n  IsField (Polynomial $ ZMod p) :=",
+  "C": "theorem exercise_4_5_16 {p n: ℕ} (hp : Nat.Prime p)\n  {q : Polynomial (ZMod p)} (hq : Irreducible q) (hn : q.degree = n) :\n  (∃ is_fin : Fintype $ Polynomial (ZMod p) ⧸ span ({q}),\n  @card (Polynomial (ZMod p) ⧸ span {q}) is_fin = p ^ n) ∧\n  IsField (Polynomial (ZMod p) ⧸ span {q}) :=",
+  "defect": "Claims the polynomial ring ZMod p[X] is a field instead of the quotient; false claim about wrong object.; IsField applied to Polynomial (ZMod p) instead of the quotient ring; wrong object."
+ },
+ {
+  "id": "t231",
+  "N": "If $p$ is a prime, show that $q(x) = 1 + x + x^2 + \\cdots x^{p - 1}$ is irreducible in $Q[x]$.",
+  "D": "theorem exercise_4_5_25 {p : ℕ} (hp : Nat.Prime p) :\n  Irreducible (∑ i : Finset.range p, X ^ p : Polynomial ℚ) :=",
+  "C": "theorem exercise_4_5_25 {p : ℕ} (hp : Nat.Prime p) :\n  Irreducible (∑ i in Finset.range p, X ^ i : Polynomial ℚ) :=",
+  "defect": "Sums X^p p times (p*X^p) instead of X^i; wrong polynomial.; Summand is X^p instead of X^i; the polynomial is p·X^p, not 1 + X + ... + X^(p-1)."
+ },
+ {
+  "id": "t232",
+  "N": "If $F$ is a field of characteristic $p \\neq 0$, show that $(a + b)^m = a^m + b^m$, where $m = p^n$, for all $a, b \\in F$ and any positive integer $n$.",
+  "D": "theorem exercise_5_1_8 {p m n: ℕ} {F : Type*} [Field F]\n  (hp : Nat.Prime p) (hF : CharP F p) (a b : F) (hm : m = p ^ n) :\n  (a + b) ^ m = a^m + b^m :=",
+  "C": "theorem exercise_5_1_8 {p m n: ℕ} {F : Type*} [Field F]\n  (hp : p ≠ 0) (hn : n > 0)\n  (hF : CharP F p) (a b : F) (hm : m = p ^ n) :\n  (a + b) ^ m = a^m + b^m :=",
+  "defect": "Drops the requirement that n be positive (n = 0 allowed); prime p is implied.; Omits n > 0 (n = 0 gives the trivial m = 1); Nat.Prime p is implied by a field of characteristic p != 0."
+ },
+ {
+  "id": "t233",
+  "N": "Let $V$ be a vector space over an infinite field $F$. Show that $V$ cannot be the set-theoretic union of a finite number of proper subspaces of $V$.",
+  "D": "theorem exercise_5_2_20 {F V ι: Type*} [Infinite F] [Field F]\n  [AddCommGroup V] [Module F V] {u : ι → Submodule F V}\n  (hu : ∀ i : ι, u i ≠ ⊤) :\n  (⋃ i : ι, (u i : Set V)) ≠ ⊤ :=",
+  "C": "theorem exercise_5_2_20 {F V ι: Type*} [Infinite F] [Field F]\n  [AddCommGroup V] [Module F V] [Finite ι] {u : ι → Submodule F V}\n  (hu : ∀ i : ι, u i ≠ ⊤) :\n  (⋃ i : ι, (u i : Set V)) ≠ ⊤ :=",
+  "defect": "Missing finiteness of index type ι; false for infinitely many proper subspaces.; No finiteness of ι; infinitely many proper subspaces can cover V, so false."
+ }
+]

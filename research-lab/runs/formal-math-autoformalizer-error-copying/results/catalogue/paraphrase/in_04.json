@@ -1,0 +1,82 @@
+[
+ {
+  "id": "t212",
+  "statement": "Prove that a group of order 312 has a normal Sylow $p$-subgroup for some prime $p$ dividing its order."
+ },
+ {
+  "id": "t213",
+  "statement": "Prove that a group of order 351 has a normal Sylow $p$-subgroup for some prime $p$ dividing its order."
+ },
+ {
+  "id": "t214",
+  "statement": "Let $|G|=p q r$, where $p, q$ and $r$ are primes with $p<q<r$. Prove that $G$ has a normal Sylow subgroup for either $p, q$ or $r$."
+ },
+ {
+  "id": "t215",
+  "statement": "Prove that if $|G|=105$ then $G$ has a normal Sylow 5 -subgroup and a normal Sylow 7-subgroup."
+ },
+ {
+  "id": "t216",
+  "statement": "Prove that if $P \\in \\operatorname{Syl}_{p}(G)$ and $H$ is a subgroup of $G$ containing $P$ then $P \\in \\operatorname{Syl}_{p}(H)$."
+ },
+ {
+  "id": "t217",
+  "statement": "Let $P$ be a normal Sylow $p$-subgroup of $G$ and let $H$ be any subgroup of $G$. Prove that $P \\cap H$ is the unique Sylow $p$-subgroup of $H$."
+ },
+ {
+  "id": "t218",
+  "statement": "Let $\\varphi: R \\rightarrow S$ be a surjective homomorphism of rings. Prove that the image of the center of $R$ is contained in the center of $S$."
+ },
+ {
+  "id": "t219",
+  "statement": "Let $R$ be an integral domain. Prove that if the following two conditions hold then $R$ is a Principal Ideal Domain: (i) any two nonzero elements $a$ and $b$ in $R$ have a greatest common divisor which can be written in the form $r a+s b$ for some $r, s \\in R$, and (ii) if $a_{1}, a_{2}, a_{3}, \\ldots$ are nonzero elements of $R$ such that $a_{i+1} \\mid a_{i}$ for all $i$, then there is a positive integer $N$ such that $a_{n}$ is a unit times $a_{N}$ for all $n \\geq N$."
+ },
+ {
+  "id": "t221",
+  "statement": "Prove that the quotient ring $\\mathbb{Z}[i] /(1+i)$ is a field of order 2."
+ },
+ {
+  "id": "t222",
+  "statement": "Prove that the ring $\\mathbb{Z}\\left[x_{1}, x_{2}, x_{3}, \\ldots\\right] /\\left(x_{1} x_{2}, x_{3} x_{4}, x_{5} x_{6}, \\ldots\\right)$ contains infinitely many minimal prime ideals."
+ },
+ {
+  "id": "t223",
+  "statement": "Let $A$ be a normal subgroup of a group $G$, and suppose that $b \\in G$ is an element of prime order $p$, and that $b \\not\\in A$. Show that $A \\cap (b) = (e)$."
+ },
+ {
+  "id": "t224",
+  "statement": "If $G$ is a finite group, prove that, given $a \\in G$, there is a positive integer $n$, depending on $a$, such that $a^n = e$."
+ },
+ {
+  "id": "t225",
+  "statement": "If $G$ is a finite group, prove that there is an integer $m > 0$ such that $a^m = e$ for all $a \\in G$."
+ },
+ {
+  "id": "t227",
+  "statement": "If $a^2 = 0$ in $R$, show that $ax + xa$ commutes with $a$."
+ },
+ {
+  "id": "t228",
+  "statement": "Let $p$ be an odd prime and let $1 + \\frac{1}{2} + ... + \\frac{1}{p - 1} = \\frac{a}{b}$, where $a, b$ are integers. Show that $p \\mid a$."
+ },
+ {
+  "id": "t229",
+  "statement": "Show that $(p - 1)/2$ of the numbers $1, 2, \\ldots, p - 1$ are quadratic residues and $(p - 1)/2$ are quadratic nonresidues $\\mod p$."
+ },
+ {
+  "id": "t230",
+  "statement": "Let $F = \\mathbb{Z}_p$ be the field of integers $\\mod p$, where $p$ is a prime, and let $q(x) \\in F[x]$ be irreducible of degree $n$. Show that $F[x]/(q(x))$ is a field having at exactly $p^n$ elements."
+ },
+ {
+  "id": "t231",
+  "statement": "If $p$ is a prime, show that $q(x) = 1 + x + x^2 + \\cdots x^{p - 1}$ is irreducible in $Q[x]$."
+ },
+ {
+  "id": "t232",
+  "statement": "If $F$ is a field of characteristic $p \\neq 0$, show that $(a + b)^m = a^m + b^m$, where $m = p^n$, for all $a, b \\in F$ and any positive integer $n$."
+ },
+ {
+  "id": "t233",
+  "statement": "Let $V$ be a vector space over an infinite field $F$. Show that $V$ cannot be the set-theoretic union of a finite number of proper subspaces of $V$."
+ }
+]

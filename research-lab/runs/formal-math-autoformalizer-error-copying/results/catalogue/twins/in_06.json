@@ -1,0 +1,107 @@
+[
+ {
+  "id": "t264",
+  "N": "Suppose $a, b \\in R^k$. Find $c \\in R^k$ and $r > 0$ such that $|x-a|=2|x-b|$ if and only if $| x - c | = r$. Prove that $3c = 4b - a$ and $3r = 2 |b - a|$.",
+  "D": "theorem exercise_1_19\n  (n : ℕ)\n  (a b c x : EuclideanSpace ℝ (Fin n))\n  (r : ℝ)\n  (h₁ : r > 0)\n  (h₂ : 3 • c = 4 • b - a)\n  (h₃ : 3 * r = 2 * ‖x - b‖)\n  : ‖x - a‖ = 2 * ‖x - b‖ ↔ ‖x - c‖ = r :=",
+  "C": "theorem exercise_1_19\n  (n : ℕ)\n  (a b : EuclideanSpace ℝ (Fin n))\n  : (∃ c r, r > 0 ∧ (∀ x, ‖x - a‖ = 2 * ‖x - b‖ ↔ ‖x - c‖ = r)) ∧\n    (∀ c r, (r > 0 ∧ (∀ x, ‖x - a‖ = 2 * ‖x - b‖ ↔ ‖x - c‖ = r)) →\n      (3 • c = 4 • b - a ∧ 3 * r = 2 * ‖b - a‖)) :=",
+  "defect": "Radius condition 3r = 2‖x - b‖ depends on x instead of 2‖b - a‖.; r defined by 3r = 2‖x − b‖ (depends on x) instead of 2‖b − a‖; iff then false."
+ },
+ {
+  "id": "t265",
+  "N": "If $r$ is rational $(r \\neq 0)$ and $x$ is irrational, prove that $r+x$ is irrational.",
+  "D": "theorem exercise_1_1a\n  (x : ℝ) (y : ℚ) :\n  ( Irrational x ) -> Irrational ( x + y ) :=",
+  "C": "theorem exercise_1_1a\n  (x : ℝ) (y : ℚ) (hy : y ≠ 0) :\n  ( Irrational x ) -> Irrational ( x + y ) :=",
+  "defect": "Omits r ≠ 0 stated in the problem (result still true, but hypothesis dropped).; Drops r≠0 that the problem imposes (still true, but a stronger statement)."
+ },
+ {
+  "id": "t266",
+  "N": "Let $A$ be a nonempty set of real numbers which is bounded below. Let $-A$ be the set of all numbers $-x$, where $x \\in A$. Prove that $\\inf A=-\\sup (-A)$.",
+  "D": "theorem exercise_1_5 (A minus_A : Set ℝ) (hA : A.Nonempty)\n  (hA_bdd_below : BddBelow A) (hminus_A : minus_A = {x | -x ∈ A}) :\n  Inf A = Sup minus_A :=",
+  "C": "theorem exercise_1_5 (A minus_A : Set ℝ) (hA : A.Nonempty)\n  (hA_bdd_below : BddBelow A) (hminus_A : minus_A = {x | -x ∈ A}) :\n  sInf A = - sSup minus_A :=",
+  "defect": "Claims inf A = sup(-A), missing the negation (and uses Inf/Sup classes rather than sInf/sSup).; Missing negation: claims inf A = sup(−A) instead of −sup(−A)."
+ },
+ {
+  "id": "t267",
+  "N": "Suppose $E\\subset\\mathbb{R}^k$ is uncountable, and let $P$ be the set of condensation points of $E$. Prove that $P$ is perfect.",
+  "D": "theorem exercise_2_27a (k : ℕ) (E P : Set (EuclideanSpace ℝ (Fin k)))\n  (hE : E.Nonempty ∧ ¬ Set.Countable E)\n  (hP : P = {x | ∀ U ∈ 𝓝 x, ¬ Set.Countable (P ∩ E)}) :\n  IsClosed P ∧ P = {x | ClusterPt x (𝓟 P)} :=",
+  "C": "theorem exercise_2_27a (k : ℕ) (E P : Set (EuclideanSpace ℝ (Fin k)))\n  (hE : ¬ Set.Countable E)\n  (hP : P = {x | ∀ U ∈ 𝓝 x, ¬ Set.Countable (U ∩ E)}) :\n  Perfect P :=",
+  "defect": "Condensation set defined self-referentially with P ∩ E instead of U ∩ E; conclusion is only closedness, not perfectness.; Definition of P uses P ∩ E instead of U ∩ E; self-referential and ignores the neighbourhood U."
+ },
+ {
+  "id": "t268",
+  "N": "Suppose $E\\subset\\mathbb{R}^k$ is uncountable, and let $P$ be the set of condensation points of $E$. Prove that at most countably many points of $E$ are not in $P$.",
+  "D": "theorem exercise_2_27b (k : ℕ) (E P : Set (EuclideanSpace ℝ (Fin k)))\n  (hE : E.Nonempty ∧ ¬ Set.Countable E)\n  (hP : P = {x | ∀ U ∈ 𝓝 x, (P ∩ E).Nonempty ∧ ¬ Set.Countable (P ∩ E)}) :\n  Set.Countable (E \\ P) :=",
+  "C": "theorem exercise_2_27b (k : ℕ) (E P : Set (EuclideanSpace ℝ (Fin k)))\n  (hE : ¬ Set.Countable E)\n  (hP : P = {x | ∀ U ∈ 𝓝 x, ¬ Set.Countable (U ∩ E)}) :\n  Set.Countable (E \\ P) :=",
+  "defect": "P defined self-referentially via P ∩ E instead of U ∩ E; not the condensation-point set.; Definition of P refers to P ∩ E instead of U ∩ E; circular and ignores the neighbourhood U."
+ },
+ {
+  "id": "t269",
+  "N": "Prove that every closed set in a separable metric space is the union of a (possibly empty) perfect set and a set which is at most countable.",
+  "D": "theorem exercise_2_28 (X : Type*) [MetricSpace X] [SeparableSpace X]\n  (A : Set X) (hA : IsClosed A) :\n  ∃ P₁ P₂ : Set X, A = P₁ ∪ P₂ ∧\n  IsClosed P₁ ∧ P₁ = {x | ClusterPt x (𝓟 P₁)} ∧\n  Set.Countable P₂ :=",
+  "C": "theorem exercise_2_28 (X : Type*) [MetricSpace X] [SeparableSpace X]\n  (A : Set X) (hA : IsClosed A) :\n  ∃ P₁ P₂ : Set X, A = P₁ ∪ P₂ ∧ Perfect P₁ ∧ Set.Countable P₂ :=",
+  "defect": "ClusterPt with principal filter means closure point, not accumulation point; 'perfect' reduces to closed, trivial.; ClusterPt x (𝓟 P₁) is closure, not accumulation, so 'perfect' degenerates to closed; P₁ = A, P₂ = ∅ trivially works."
+ },
+ {
+  "id": "t272",
+  "N": "If $\\left\\{E_{n}\\right\\}$ is a sequence of closed nonempty and bounded sets in a complete metric space $X$, if $E_{n} \\supset E_{n+1}$, and if $\\lim _{n \\rightarrow \\infty} \\operatorname{diam} E_{n}=0,$ then $\\bigcap_{1}^{\\infty} E_{n}$ consists of exactly one point.",
+  "D": "theorem exercise_3_21\n  {X : Type*} [MetricSpace X] [CompleteSpace X]\n  (E : ℕ → Set X)\n  (hE : ∀ n, E n ⊃ E (n + 1))\n  (hE' : Tendsto (λ n => Metric.diam (E n)) atTop (𝓝 0)) :\n  ∃ a, Set.iInter E = {a} :=",
+  "C": "theorem exercise_3_21\n  {X : Type*} [MetricSpace X] [CompleteSpace X]\n  (E : ℕ → Set X)\n  (hEcl : ∀ n, IsClosed (E n))\n  (hEne : ∀ n, (E n).Nonempty)\n  (hEbdd : ∀ n, Bornology.IsBounded (E n))\n  (hE : ∀ n, E n ⊇ E (n + 1))\n  (hE' : Tendsto (λ n => Metric.diam (E n)) atTop (𝓝 0)) :\n  ∃ a, Set.iInter E = {a} :=",
+  "defect": "Drops closed, nonempty and bounded hypotheses; e.g. open intervals (0,1/n) give empty intersection.; Omits closed, nonempty and bounded; intersection may be empty (e.g. all E n empty)."
+ },
+ {
+  "id": "t273",
+  "N": "Suppose $X$ is a nonempty complete metric space, and $\\left\\{G_{n}\\right\\}$ is a sequence of dense open sets of $X$. Prove Baire's theorem, namely, that $\\bigcap_{1}^{\\infty} G_{n}$ is not empty.",
+  "D": "theorem exercise_3_22 (X : Type*) [MetricSpace X] [CompleteSpace X]\n  (G : ℕ → Set X) (hG : ∀ n, IsOpen (G n) ∧ Dense (G n)) :\n  ∃ x, ∀ n, x ∈ G n :=",
+  "C": "theorem exercise_3_22 (X : Type*) [MetricSpace X] [CompleteSpace X] [Nonempty X]\n  (G : ℕ → Set X) (hG : ∀ n, IsOpen (G n) ∧ Dense (G n)) :\n  ∃ x, ∀ n, x ∈ G n :=",
+  "defect": "Missing nonemptiness of X; false for the empty space.; Omits nonemptiness of X; the empty space makes the conclusion false."
+ },
+ {
+  "id": "t275",
+  "N": "Prove that the convergence of $\\Sigma a_{n}$ implies the convergence of $\\sum \\frac{\\sqrt{a_{n}}}{n}$ if $a_n\\geq 0$.",
+  "D": "theorem exercise_3_7\n  (a : ℕ → ℝ)\n  (h : ∃ y, (Tendsto (λ n => (∑ i in (range n), a i)) atTop (𝓝 y))) :\n  ∃ y, Tendsto (λ n => (∑ i in (range n), sqrt (a i) / n)) atTop (𝓝 y) :=",
+  "C": "theorem exercise_3_7\n  (a : ℕ → ℝ)\n  (hnneg : ∀ n, a n ≥ 0)\n  (h : ∃ y, (Tendsto (λ n => (∑ i in (range n), a i)) atTop (𝓝 y))) :\n  ∃ y, Tendsto (λ n => (∑ i in (range n), sqrt (a i) / (i + 1))) atTop (𝓝 y) :=",
+  "defect": "Divides by the partial-sum bound n instead of the index; also drops a_n >= 0.; Summand divides by the outer bound n, not the index i (a Cesàro mean, not the series); also drops a_n ≥ 0."
+ },
+ {
+  "id": "t277",
+  "N": "Let $E$ be a bounded set in $R^{1}$. Prove that there exists a real function $f$ such that $f$ is uniformly continuous and is not bounded on $E$.",
+  "D": "theorem exercise_4_8b\n  (E : Set ℝ) :\n  ∃ f : ℝ → ℝ, UniformContinuousOn f E ∧ ¬ Bornology.IsBounded (Set.image f E) :=",
+  "C": "theorem exercise_4_8b\n  (E : Set ℝ) (h : Bornology.IsBounded E) :\n  ∃ f : ℝ → ℝ, UniformContinuousOn f E ∧ ¬ Bornology.IsBounded (Set.image f E) :=",
+  "defect": "Drops the hypothesis that E is bounded.; Boundedness of E is dropped."
+ },
+ {
+  "id": "t279",
+  "N": "Suppose $f$ is a real, three times differentiable function on $[-1,1]$, such that $f(-1)=0, \\quad f(0)=0, \\quad f(1)=1, \\quad f^{\\prime}(0)=0 .$ Prove that $f^{(3)}(x) \\geq 3$ for some $x \\in(-1,1)$.",
+  "D": "theorem exercise_5_17\n  {f : ℝ → ℝ}\n  (hf' : DifferentiableOn ℝ f (Set.Icc (-1) 1))\n  (hf'' : DifferentiableOn ℝ (deriv f) (Set.Icc 1 1))\n  (hf''' : DifferentiableOn ℝ (deriv (deriv f)) (Set.Icc 1 1))\n  (hf0 : f (-1) = 0)\n  (hf1 : f 0 = 0)\n  (hf2 : f 1 = 1)\n  (hf3 : deriv f 0 = 0) :\n  ∃ x, x ∈ Set.Ioo (-1 : ℝ) 1 ∧ deriv (deriv (deriv f)) x ≥ 3 :=",
+  "C": "theorem exercise_5_17\n  {f : ℝ → ℝ}\n  (hf' : DifferentiableOn ℝ f (Set.Icc (-1) 1))\n  (hf'' : DifferentiableOn ℝ (deriv f) (Set.Icc (-1) 1))\n  (hf''' : DifferentiableOn ℝ (deriv (deriv f)) (Set.Icc (-1) 1))\n  (hf0 : f (-1) = 0)\n  (hf1 : f 0 = 0)\n  (hf2 : f 1 = 1)\n  (hf3 : deriv f 0 = 0) :\n  ∃ x, x ∈ Set.Ioo (-1 : ℝ) 1 ∧ deriv (deriv (deriv f)) x ≥ 3 :=",
+  "defect": "Differentiability of f' and f'' only on Icc 1 1 (a singleton), so three-times differentiability is effectively dropped.; hf'', hf''' are on Icc 1 1 = {1}, vacuous; second and third differentiability are lost (typo 1 for -1)."
+ },
+ {
+  "id": "t281",
+  "N": "Suppose $f$ is defined and differentiable for every $x>0$, and $f^{\\prime}(x) \\rightarrow 0$ as $x \\rightarrow+\\infty$. Put $g(x)=f(x+1)-f(x)$. Prove that $g(x) \\rightarrow 0$ as $x \\rightarrow+\\infty$.",
+  "D": "theorem exercise_5_5\n  {f : ℝ → ℝ}\n  (hfd : Differentiable ℝ f)\n  (hf : Tendsto (deriv f) atTop (𝓝 0)) :\n  Tendsto (λ x => f (x + 1) - f x) atTop atTop :=",
+  "C": "theorem exercise_5_5\n  {f : ℝ → ℝ}\n  (hfd : DifferentiableOn ℝ f (Ioi 0))\n  (hf : Tendsto (deriv f) atTop (𝓝 0)) :\n  Tendsto (λ x => f (x + 1) - f x) atTop (𝓝 0) :=",
+  "defect": "Concludes g → +∞ (atTop) instead of g → 0; also strengthens differentiability to all ℝ.; Conclusion says g → +∞ (atTop) instead of g → 0; also requires differentiability everywhere."
+ },
+ {
+  "id": "t282",
+  "N": "Suppose (a) $f$ is continuous for $x \\geq 0$, (b) $f^{\\prime}(x)$ exists for $x>0$, (c) $f(0)=0$, (d) $f^{\\prime}$ is monotonically increasing. Put $g(x)=\\frac{f(x)}{x} \\quad(x>0)$ and prove that $g$ is monotonically increasing.",
+  "D": "theorem exercise_5_6\n  {f : ℝ → ℝ}\n  (hf1 : Continuous f)\n  (hf2 : ∀ x, DifferentiableAt ℝ f x)\n  (hf3 : f 0 = 0)\n  (hf4 : Monotone (deriv f)) :\n  MonotoneOn (λ x => f x / x) (Set.Ioi 0) :=",
+  "C": "theorem exercise_5_6\n  {f : ℝ → ℝ}\n  (hf1 : ContinuousOn f (Set.Ici 0))\n  (hf2 : DifferentiableOn ℝ f (Set.Ioi 0))\n  (hf3 : f 0 = 0)\n  (hf4 : MonotoneOn (deriv f) (Set.Ioi 0)) :\n  MonotoneOn (λ x => f x / x) (Set.Ioi 0) :=",
+  "defect": "Assumes continuity, differentiability and monotone derivative on all of ℝ, stronger than stated.; Requires continuity, differentiability and monotone derivative on all of ℝ; problem assumes them only on x ≥ 0 / x > 0."
+ },
+ {
+  "id": "t284",
+  "N": "Prove that the power series $\\sum zn/n^2$ converges at every point of the unit circle.",
+  "D": "theorem exercise_1_19b (z : ℂ) (hz : abs z = 1) (s : ℕ → ℂ)\n    (h : s = (λ n => ∑ i in (range n), i * z / i ^ 2)) :\n    ∃ y, Tendsto s atTop (𝓝 y) :=",
+  "C": "theorem exercise_1_19b (z : ℂ) (hz : abs z = 1) (s : ℕ → ℂ)\n    (h : s = (λ n => ∑ i in (range n), z ^ (i + 1) / (i + 1) ^ 2)) :\n    ∃ y, Tendsto s atTop (𝓝 y) :=",
+  "defect": "Uses i*z/i^2 = z/i (harmonic series), not z^n/n^2; wrong summand.; Summand i*z/i^2 = z/i, the harmonic-type series, not z^n/n^2."
+ },
+ {
+  "id": "t285",
+  "N": "Prove that the power series $\\sum zn/n$ converges at every point of the unit circle except $z = 1$.",
+  "D": "theorem exercise_1_19c (z : ℂ) (hz : abs z = 1) (hz2 : z ≠ 1) (s : ℕ → ℂ)\n    (h : s = (λ n => ∑ i in (range n), i * z / i)) :\n    ∃ z, Tendsto s atTop (𝓝 z) :=",
+  "C": "theorem exercise_1_19c (z : ℂ) (hz : abs z = 1) (s : ℕ → ℂ)\n    (h : s = (λ n => ∑ i in (range n), z ^ (i + 1) / (i + 1))) :\n    (∃ z₀, Tendsto s atTop (𝓝 z₀)) ↔ z ≠ 1 :=",
+  "defect": "Summand i*z/i is z (not z^i/i); wrong series.; Series term i*z/i (= z) instead of z^i/i; not the given power series."
+ }
+]

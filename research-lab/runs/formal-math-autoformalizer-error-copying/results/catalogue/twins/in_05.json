@@ -1,0 +1,142 @@
+[
+ {
+  "id": "t234",
+  "N": "If $a \\in C$ is such that $p(a) = 0$, where $p(x) = x^5 + \\sqrt{2}x^3 + \\sqrt{5}x^2 + \\sqrt{7}x + \\sqrt{11}$, show that $a$ is algebraic over $\\mathbb{Q}$ of degree at most 80.",
+  "D": "theorem exercise_5_4_3 {a : ℂ} {p : ℂ → ℂ}\n  (hp : p = λ (x : ℂ) => x^5 + sqrt 2 * x^3 + sqrt 5 * x^2 + sqrt 7 * x + 11)\n  (ha : p a = 0) :\n  ∃ p : Polynomial ℂ , p.degree < 80 ∧ a ∈ p.roots ∧\n  ∀ n : p.support, ∃ a b : ℤ, p.coeff n = a / b :=",
+  "C": "theorem exercise_5_4_3 {a : ℂ} {p : ℂ → ℂ}\n  (hp : p = λ (x : ℂ) => x^5 + sqrt 2 * x^3 + sqrt 5 * x^2 + sqrt 7 * x + sqrt 11)\n  (ha : p a = 0) :\n  ∃ q : Polynomial ℂ, q ≠ 0 ∧ q.degree ≤ 80 ∧ a ∈ q.roots ∧\n  ∀ n : q.support, ∃ a b : ℤ, q.coeff n = a / b :=",
+  "defect": "Constant term 11 instead of √11 changes the polynomial (also degree < 80 instead of ≤ 80).; Constant term 11 instead of √11; also degree <80 rather than ≤80."
+ },
+ {
+  "id": "t235",
+  "N": "If $F$ is of characteristic $p \\neq 0$, show that all the roots of $x^m - x$, where $m = p^n$, are distinct.",
+  "D": "theorem exercise_5_6_14 {p m n: ℕ} (hp : Nat.Prime p) {F : Type*}\n  [Field F] [CharP F p] (hm : m = p ^ n) :\n  card (rootSet (X ^ m - X : Polynomial F) F) = m :=",
+  "C": "theorem exercise_5_6_14 {p m n: ℕ} (hp : p ≠ 0) (hn : n > 0)\n  {F : Type*} [Field F] [CharP F p] (hm : m = p ^ n) :\n  (X ^ m - X : Polynomial F).Separable :=",
+  "defect": "Counts roots lying in F, false unless F contains them all; does not express distinctness.; Counts roots in F equal to m; false unless F contains all roots (e.g. 𝔽_p, n = 2); not distinctness."
+ },
+ {
+  "id": "t237",
+  "N": "If $n$ is not a prime, show that $(n-1) ! \\equiv 0(n)$, except when $n=4$.",
+  "D": "theorem exercise_3_10 {n : ℕ} (hn0 : ¬ n.Prime) (hn1 : n ≠ 4) :\n  Nat.factorial (n-1) ≡ 0 [MOD n] :=",
+  "C": "theorem exercise_3_10 {n : ℕ+} (hn0 : ¬ n.Prime) :\n  Nat.factorial (n-1) ≡ 0 [MOD n] ↔ n ≠ 4 :=",
+  "defect": "n ranges over N including 0; (0-1)! = 1 is not 0 mod 0, so statement false; problem means positive n.; n : ℕ admits n = 0, where 0! = 1 is not ≡ 0 [MOD 0]; needs n ≥ 1."
+ },
+ {
+  "id": "t238",
+  "N": "Prove that $1^{k}+2^{k}+\\cdots+(p-1)^{k} \\equiv 0(p)$ if $p-1 \\nmid k$ and $-1(p)$ if $p-1 \\mid k$.",
+  "D": "theorem exercise_4_11 {p : ℕ} (hp : p.Prime) (k s: ℕ)\n  (s := ∑ n : Fin p, (n : ℕ) ^ k) :\n  ((¬ p - 1 ∣ k) → s ≡ 0 [MOD p]) ∧ (p - 1 ∣ k → s ≡ 0 [MOD p]) :=",
+  "C": "theorem exercise_4_11 {p : ℕ} (hp : p.Prime) (k s: ℕ)\n  (hs : s = ∑ n : Fin (p-1), (n + 1 : ℕ) ^ k) :\n  ((¬ p - 1 ∣ k) → s ≡ 0 [MOD p]) ∧ (p - 1 ∣ k → s ≡ -1 [ZMOD p]) :=",
+  "defect": "Second case claims ≡ 0 instead of ≡ -1; also s is only an unconstrained default parameter.; Second case says ≡ 0 instead of ≡ -1; s also rebound as unconstrained optParam; sum over Fin p includes 0^k."
+ },
+ {
+  "id": "t242",
+  "N": "Show that $x^{4} \\equiv 2(p)$ has a solution for $p \\equiv 1(4)$ iff $p$ is of the form $A^{2}+64 B^{2}$.",
+  "D": "theorem exercise_5_28 {p : ℕ} (hp : p.Prime) (hp1 : p ≡ 1 [MOD 4]):\n  ∃ x, x^4 ≡ 2 [MOD p] ↔ ∃ A B, p = A^2 + 64*B^2 :=",
+  "C": "theorem exercise_5_28 {p : ℕ} (hp : p.Prime) (hp1 : p ≡ 1 [MOD 4]):\n  (∃ x, x^4 ≡ 2 [MOD p]) ↔ ∃ A B, p = A^2 + 64*B^2 :=",
+  "defect": "∃ x scopes over the whole iff instead of only the congruence.; ∃ x binds the whole iff: ∃ x, (x⁴ ≡ 2 ↔ ...); the reverse direction is trivialised."
+ },
+ {
+  "id": "t243",
+  "N": "Let $A \\subset X$; let $f: A \\rightarrow Y$ be continuous; let $Y$ be Hausdorff. Show that if $f$ may be extended to a continuous function $g: \\bar{A} \\rightarrow Y$, then $g$ is uniquely determined by $f$.",
+  "D": "theorem exercise_18_13\n  {X : Type*} [TopologicalSpace X] {Y : Type*} [TopologicalSpace Y]\n  [T2Space Y] {A : Set X} {f : A → Y} (hf : Continuous f)\n  (g : closure A → Y)\n  (g_con : Continuous g) :\n  ∀ (g' : closure A → Y), Continuous g' →  (∀ (x : closure A), g x = g' x) :=",
+  "C": "theorem exercise_18_13\n  {X : Type*} [TopologicalSpace X] {Y : Type*} [TopologicalSpace Y] [T2Space Y]\n  {A : Set X} {f : X → Y} (hf : ContinuousOn f A)\n  (g : X → Y) (g_con : ContinuousOn g (closure A))\n  (gExt : ∀ x : A, g x = f x) :\n  ∀ (g' : X → Y), (ContinuousOn g' (closure A) ∧ (∀ x : A, g' x = f x)) → (∀ x : closure A, g x = g' x) :=",
+  "defect": "Missing that g and g' extend f; claims any two continuous maps on closure agree.; g and g' are not required to extend f; claims any two continuous maps on the closure agree."
+ },
+ {
+  "id": "t244",
+  "N": "Let $\\mathbf{x}_1, \\mathbf{x}_2, \\ldots$ be a sequence of the points of the product space $\\prod X_\\alpha$.  Show that this sequence converges to the point $\\mathbf{x}$ if and only if the sequence $\\pi_\\alpha(\\mathbf{x}_i)$ converges to $\\pi_\\alpha(\\mathbf{x})$ for each $\\alpha$.",
+  "D": "theorem exercise_19_6a\n  {n : ℕ}\n  {f : Fin n → Type*} {x : ℕ → Πa, f a}\n  (y : Πi, f i)\n  [Πa, TopologicalSpace (f a)] :\n  Tendsto x atTop (𝓝 y) ↔ ∀ i, Tendsto (λ j => (x j) i) atTop (𝓝 (y i)) :=",
+  "C": "theorem exercise_19_6a\n  {ι : Type*}\n  {f : ι → Type*} {x : ℕ → Πa, f a}\n  (y : Πi, f i)\n  [Πa, TopologicalSpace (f a)] :\n  Tendsto x atTop (𝓝 y) ↔ ∀ i, Tendsto (λ j => (x j) i) atTop (𝓝 (y i)) :=",
+  "defect": "Index set restricted to Fin n, so only finite products; the problem concerns arbitrary products.; Index type Fin n restricts to finite products; the informal product is over an arbitrary index set."
+ },
+ {
+  "id": "t245",
+  "N": "Let $p: X \\rightarrow Y$ be a continuous map. Show that if there is a continuous map $f: Y \\rightarrow X$ such that $p \\circ f$ equals the identity map of $Y$, then $p$ is a quotient map.",
+  "D": "theorem exercise_22_2a {X Y : Type*} [TopologicalSpace X]\n  [TopologicalSpace Y] (p : X → Y) (h : Continuous p) :\n  QuotientMap p ↔ ∃ (f : Y → X), Continuous f ∧ p ∘ f = id :=",
+  "C": "theorem exercise_22_2a {X Y : Type*} [TopologicalSpace X]\n  [TopologicalSpace Y] (p : X → Y) (h : Continuous p) :\n  (∃ (f : Y → X), Continuous f ∧ p ∘ f = id) → QuotientMap p :=",
+  "defect": "States an iff; the converse (every quotient map has a continuous section) is false and not claimed.; Iff instead of implication; the converse (quotient maps admit continuous sections) is false."
+ },
+ {
+  "id": "t246",
+  "N": "Let $\\left\\{A_{\\alpha}\\right\\}$ be a collection of connected subspaces of $X$; let $A$ be a connected subset of $X$. Show that if $A \\cap A_{\\alpha} \\neq \\varnothing$ for all $\\alpha$, then $A \\cup\\left(\\bigcup A_{\\alpha}\\right)$ is connected.",
+  "D": "theorem exercise_23_3 {X : Type*} [TopologicalSpace X]\n  [TopologicalSpace X] {A : ℕ → Set X}\n  (hAn : ∀ n, IsConnected (A n))\n  (A₀ : Set X)\n  (hA : IsConnected A₀)\n  (h : ∀ n, A₀ ∩ A n ≠ ∅) :\n  IsConnected (A₀ ∪ (⋃ n, A n)) :=",
+  "C": "theorem exercise_23_3 {X α : Type*} [TopologicalSpace X]\n  {A : α → Set X}\n  (hAa : ∀ a, IsConnected (A a))\n  (A₀ : Set X)\n  (hA : IsConnected A₀)\n  (h : ∀ a, A₀ ∩ A a ≠ ∅) :\n  IsConnected (A₀ ∪ (⋃ a, A a)) :=",
+  "defect": "Family indexed by N only (countable), while the problem allows an arbitrary collection.; Family indexed by ℕ only (countable); the informal allows an arbitrary collection."
+ },
+ {
+  "id": "t247",
+  "N": "Let $p: X \\rightarrow Y$ be a closed continuous surjective map such that $p^{-1}(\\{y\\})$ is compact, for each $y \\in Y$. (Such a map is called a perfect map.) Show that if $Y$ is compact, then $X$ is compact.",
+  "D": "theorem exercise_26_12 {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]\n  (p : X → Y) (h : Function.Surjective p) (hc : Continuous p) (hp : ∀ y, IsCompact (p ⁻¹' {y}))\n  (hY : CompactSpace Y) : CompactSpace X :=",
+  "C": "theorem exercise_26_12 {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]\n  (p : X → Y) (h : Function.Surjective p) (hc : Continuous p)\n  (hp : IsClosedMap p) (hp : ∀ y, IsCompact (p ⁻¹' {y}))\n  (hY : CompactSpace Y) : CompactSpace X :=",
+  "defect": "Missing that p is a closed map; statement false without it.; Closed-map hypothesis missing; without it X need not be compact."
+ },
+ {
+  "id": "t248",
+  "N": "Let $(X, d)$ be a metric space. If $f: X \\rightarrow X$ satisfies the condition $d(f(x), f(y))=d(x, y)$ for all $x, y \\in X$, then $f$ is called an isometry of $X$. Show that if $f$ is an isometry and $X$ is compact, then $f$ is bijective and hence a homeomorphism.",
+  "D": "theorem exercise_28_6 {X : Type*} [MetricSpace X]\n  [CompactSpace X] {f : X → X} (hf : Isometry f) :\n  Function.Bijective f :=",
+  "C": "theorem exercise_28_6 {X : Type*} [MetricSpace X]\n  [CompactSpace X] {f : X → X} (hf : Isometry f) :\n  Continuous f ∧ Bijective f ∧ IsOpenMap f :=",
+  "defect": "Only proves bijectivity; omits the homeomorphism conclusion.; Proves bijectivity only; omits the homeomorphism conclusion."
+ },
+ {
+  "id": "t249",
+  "N": "Show that if $X$ is a Hausdorff space that is locally compact at the point $x$, then for each neighborhood $U$ of $x$, there is a neighborhood $V$ of $x$ such that $\\bar{V}$ is compact and $\\bar{V} \\subset U$.",
+  "D": "theorem exercise_29_10 {X : Type*}\n  [TopologicalSpace X] [T2Space X] (x : X)\n  (hx : ∃ U : Set X, x ∈ U ∧ IsOpen U ∧ (∃ K : Set X, U ⊂ K ∧ IsCompact K))\n  (U : Set X) (hU : IsOpen U) (hxU : x ∈ U) :\n  ∃ (V : Set X), IsOpen V ∧ x ∈ V ∧ IsCompact (closure V) ∧ closure V ⊆ U :=",
+  "C": "theorem exercise_29_10 {X : Type*}\n  [TopologicalSpace X] [T2Space X] (x : X)\n  (hx : ∃ U : Set X, x ∈ U ∧ IsOpen U ∧ (∃ K : Set X, U ⊆ K ∧ IsCompact K))\n  (U : Set X) (hU : IsOpen U) (hxU : x ∈ U) :\n  ∃ (V : Set X), IsOpen V ∧ x ∈ V ∧ IsCompact (closure V) ∧ closure V ⊆ U :=",
+  "defect": "Strict subset U ⊂ K strengthens Munkres' local compactness hypothesis (U ⊆ K); not stated.; Strict ⊂ instead of ⊆ in local compactness; stronger hypothesis excluding e.g. one-point space."
+ },
+ {
+  "id": "t250",
+  "N": "Show that if $X$ has a countable dense subset, every collection of disjoint open sets in $X$ is countable.",
+  "D": "theorem exercise_30_13 {X : Type*} [TopologicalSpace X]\n  (h : ∃ (s : Set X), Countable s ∧ Dense s) (U : Set (Set X))\n  (hU : ∀ (x y : Set X), x ∈ U → y ∈ U → x ≠ y → x ∩ y = ∅) :\n  Countable U :=",
+  "C": "theorem exercise_30_13 {X : Type*} [TopologicalSpace X]\n  (h : ∃ (s : Set X), Countable s ∧ Dense s) (U : Set (Set X))\n  (hU : ∀ (x y : Set X), x ∈ U → y ∈ U → x ≠ y → x ∩ y = ∅)\n  (hUopen : ∀ (u : Set X), u ∈ U → IsOpen u) :\n  Countable U :=",
+  "defect": "Drops the hypothesis that the sets in U are open.; Openness of the sets in U is missing; false for a family of disjoint singletons."
+ },
+ {
+  "id": "t252",
+  "N": "Let $X$ be a compact Hausdorff space that is the union of the closed subspaces $X_1$ and $X_2$. If $X_1$ and $X_2$ are metrizable, show that $X$ is metrizable.",
+  "D": "theorem exercise_34_9\n  (X : Type*) [TopologicalSpace X] [CompactSpace X]\n  (X1 X2 : Set X) (hX1 : IsClosed X1) (hX2 : IsClosed X2)\n  (hX : X1 ∪ X2 = univ) (hX1m : MetrizableSpace X1)\n  (hX2m : MetrizableSpace X2) : MetrizableSpace X :=",
+  "C": "theorem exercise_34_9\n  (X : Type*) [TopologicalSpace X] [CompactSpace X] [T2Space X]\n  (X1 X2 : Set X) (hX1 : IsClosed X1) (hX2 : IsClosed X2)\n  (hX : X1 ∪ X2 = univ) (hX1m : MetrizableSpace X1)\n  (hX2m : MetrizableSpace X2) : MetrizableSpace X :=",
+  "defect": "Missing the Hausdorff (T2Space) hypothesis.; Omits the stated Hausdorff hypothesis (derivable here from the closed metrizable cover, so the claim is unchanged)."
+ },
+ {
+  "id": "t257",
+  "N": "Prove that there are unique positive integers $a, n$ such that $a^{n+1}-(a+1)^n=2001$.",
+  "D": "theorem exercise_2001_a5 :\n  ∃! a : ℕ, ∃! n : ℕ, a > 0 ∧ n > 0 ∧ a^(n+1) - (a+1)^n = 2001 :=",
+  "C": "theorem exercise_2001_a5 :\n  ∃! p : ℕ × ℕ, p.1 > 0 ∧ p.2 > 0 ∧ p.1^(p.2 + 1) - (p.1 + 1)^(p.2) = 2001 :=",
+  "defect": "Nested ∃! a, ∃! n differs from uniqueness of the pair (a, n).; Nested ∃! a, ∃! n is not uniqueness of the pair (a, n); quantifier structure wrong. ℕ truncation harmless (2001 ≠ 0)."
+ },
+ {
+  "id": "t258",
+  "N": "Prove that for each positive integer $n$, the number $10^{10^{10^n}}+10^{10^n}+10^n-1$ is not prime.",
+  "D": "theorem exercise_2010_a4 (n : ℕ) :\n  ¬ Nat.Prime (10^10^10^n + 10^10^n + 10^n - 1) :=",
+  "C": "theorem exercise_2010_a4 (n : ℕ) (hn : n > 0) :\n  ¬ Nat.Prime (10^10^10^n + 10^10^n + 10^n - 1) :=",
+  "defect": "Drops n positive; covers n = 0 too (still true, but a stronger statement than posed).; Drops n>0 imposed by the problem (still true for n=0, but a stronger statement)."
+ },
+ {
+  "id": "t259",
+  "N": "Let $f: \\mathbb{R} \\rightarrow \\mathbb{R}$ be an infinitely differentiable function satisfying $f(0)=0, f(1)=1$, and $f(x) \\geq 0$ for all $x \\in$ $\\mathbb{R}$. Show that there exist a positive integer $n$ and a real number $x$ such that $f^{(n)}(x)<0$.",
+  "D": "theorem exercise_2018_a5 (f : ℝ → ℝ) (hf : ContDiff ℝ ⊤ f)\n  (hf0 : f 0 = 0) (hf1 : f 1 = 1) (hf2 : ∀ x, f x ≥ 0) :\n  ∃ (n : ℕ) (x : ℝ), iteratedDeriv n f x = 0 :=",
+  "C": "theorem exercise_2018_a5 (f : ℝ → ℝ) (hf : ContDiff ℝ ⊤ f)\n  (hf0 : f 0 = 0) (hf1 : f 1 = 1) (hf2 : ∀ x, f x ≥ 0) :\n  ∃ (n : ℕ+) (x : ℝ), iteratedDeriv n f x < 0 :=",
+  "defect": "Claims some derivative equals 0 (trivial at n = 0, x = 0) instead of being negative with n positive.; Uses = 0 instead of < 0 and allows n = 0; trivially true at x = 0."
+ },
+ {
+  "id": "t260",
+  "N": "Given a real number $a$, we define a sequence by $x_{0}=1$, $x_{1}=x_{2}=a$, and $x_{n+1}=2 x_{n} x_{n-1}-x_{n-2}$ for $n \\geq 2$. Prove that if $x_{n}=0$ for some $n$, then the sequence is periodic.",
+  "D": "theorem exercise_2018_b4 (a : ℝ) (x : ℕ → ℝ) (hx0 : x 0 = a)\n  (hx1 : x 1 = a)\n  (hxn : ∀ n : ℕ, n ≥ 2 → x (n+1) = 2*(x n)*(x (n-1)) - x (n-2))\n  (h : ∃ n, x n = 0) :\n  ∃ c, Function.Periodic x c :=",
+  "C": "theorem exercise_2018_b4 (a : ℝ) (x : ℕ → ℝ) (hx0 : x 0 = 1)\n  (hx1 : x 1 = a) (hx2 : x 2 = a)\n  (hxn : ∀ n : ℕ, n ≥ 2 → x (n+1) = 2*(x n)*(x (n-1)) - x (n-2))\n  (h : ∃ n, x n = 0) :\n  ∃ c ≠ 0, Function.Periodic x c :=",
+  "defect": "∃ c, Periodic x c is trivial with c = 0; also x 0 = a instead of 1 and no x 2 = a.; ∃ c, Periodic x c is trivially true with c = 0; also x 0 = a (not 1) and x 2 = a missing."
+ },
+ {
+  "id": "t261",
+  "N": "For $j \\in\\{1,2,3,4\\}$, let $z_{j}$ be a complex number with $\\left|z_{j}\\right|=1$ and $z_{j} \\neq 1$. Prove that $3-z_{1}-z_{2}-z_{3}-z_{4}+z_{1} z_{2} z_{3} z_{4} \\neq 0 .$",
+  "D": "theorem exercise_2020_b5 (z : Fin 4 → ℂ) (hz0 : ∀ n, ‖z n‖ < 1)\n  (hz1 : ∀ n : Fin 4, z n ≠ 1) :\n  3 - z 0 - z 1 - z 2 - z 3 + (z 0) * (z 1) * (z 2) * (z 3) ≠ 0 :=",
+  "C": "theorem exercise_2020_b5 (z : Fin 4 → ℂ) (hz0 : ∀ n, ‖z n‖ = 1)\n  (hz1 : ∀ n, z n ≠ 1) :\n  3 - z 0 - z 1 - z 2 - z 3 + (z 0) * (z 1) * (z 2) * (z 3) ≠ 0 :=",
+  "defect": "Hypothesis |z_j| < 1 replaces |z_j| = 1.; Hypothesis ‖z n‖ < 1 instead of = 1; wrong relation."
+ },
+ {
+  "id": "t262",
+  "N": "If $z$ is a complex number, prove that there exists an $r\\geq 0$ and a complex number $w$ with $| w | = 1$ such that $z = rw$.",
+  "D": "theorem exercise_1_11a (z : ℂ) :\n  ∃ (r : ℝ) (w : ℂ), abs w = 1 ∧ z = r * w :=",
+  "C": "theorem exercise_1_11a (z : ℂ) :\n  ∃ (r : ℝ) (w : ℂ), r ≥ 0 ∧ abs w = 1 ∧ z = r * w :=",
+  "defect": "Drops the required r >= 0 from the conclusion, weakening it.; Omits r ≥ 0 from the conclusion."
+ }
+]

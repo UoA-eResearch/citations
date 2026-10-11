@@ -1,0 +1,82 @@
+[
+ {
+  "id": "t155",
+  "statement": "What is the sum of the four positive factors of the positive integer value of $\\sqrt{196}$? Show that it is 24."
+ },
+ {
+  "id": "t158",
+  "statement": "Find the smallest positive integer $k$ such that, for every positive integer $n$, $6n+k$ is relatively prime to each of $6n+3$, $6n+2$, and $6n+1$. Show that it is 5."
+ },
+ {
+  "id": "t159",
+  "statement": "What is the least positive integer $n$ such that $80325$ divides $n!$? Show that it is 17."
+ },
+ {
+  "id": "t161",
+  "statement": "Suppose $a$ and $b$ are positive integers such that the units digit of $a$ is $2$, the units digit of $b$ is $4$, and the greatest common divisor of $a$ and $b$ is $6$.\n\nWhat is the smallest possible value of the least common multiple of $a$ and $b$? Show that it is 108."
+ },
+ {
+  "id": "t162",
+  "statement": "What is the smallest integer greater than 10 that is both a perfect square and a perfect cube? Show that it is 64."
+ },
+ {
+  "id": "t163",
+  "statement": "If $n$ and $k$ are positive integers such that $5<\\frac nk<6$, then what is the smallest possible value of $\\frac{\\mathop{\\text{lcm}}[n,k]}{\\gcd(n,k)}$? Show that it is 22."
+ },
+ {
+  "id": "t164",
+  "statement": "A positive integer $X$ is 2 more than a multiple of 3. Its units digit is the same as the units digit of a number that is 4 more than a multiple of 5. What is the smallest possible value of $X$? Show that it is 14."
+ },
+ {
+  "id": "t165",
+  "statement": "If $n$ is a multiple of three, what is the remainder when $(n + 4) + (n + 6) + (n + 8)$ is divided by $9$? Show that it is 0."
+ },
+ {
+  "id": "t167",
+  "statement": "The greatest common divisor of positive integers $m$ and $n$ is 8. The least common multiple of $m$ and $n$ is 112. What is the least possible value of $m+n$? Show that it is 72."
+ },
+ {
+  "id": "t169",
+  "statement": "What is the largest negative integer $x$ satisfying $$24x \\equiv 15 \\pmod{1199}~?$$ Show that it is -449."
+ },
+ {
+  "id": "t170",
+  "statement": "What is the digit in the hundredths place of the decimal equivalent of $\\frac{9}{160}$? Show that it is 5."
+ },
+ {
+  "id": "t178",
+  "statement": "Let $I, J$ be ideals in a ring $R$. Prove that the residue of any element of $I \\cap J$ in $R / I J$ is nilpotent."
+ },
+ {
+  "id": "t179",
+  "statement": "Let $I, J$ be ideals of a ring $R$ such that $I+J=R$. Prove that $I J=I \\cap J$."
+ },
+ {
+  "id": "t180",
+  "statement": "Prove that $x^3 + 6x + 12$ is irreducible in $\\mathbb{Q}$."
+ },
+ {
+  "id": "t181",
+  "statement": "Prove that $x^2+x+1$ is irreducible in the field $\\mathbb{F}_2$."
+ },
+ {
+  "id": "t182",
+  "statement": "Prove that $x^2+1$ is irreducible in $\\mathbb{F}_7$"
+ },
+ {
+  "id": "t183",
+  "statement": "Let $p$ be a prime integer. Prove that the polynomial $x^n-p$ is irreducible in $\\mathbb{Q}[x]$."
+ },
+ {
+  "id": "t184",
+  "statement": "Let $V$ be a vector space over an infinite field $F$. Prove that $V$ is not the union of finitely many proper subspaces."
+ },
+ {
+  "id": "t185",
+  "statement": "Show that $\\frac{-1 + \\sqrt{3}i}{2}$ is a cube root of 1 (meaning that its cube equals 1)."
+ },
+ {
+  "id": "t186",
+  "statement": "Prove that the union of two subspaces of $V$ is a subspace of $V$ if and only if one of the subspaces is contained in the other."
+ }
+]

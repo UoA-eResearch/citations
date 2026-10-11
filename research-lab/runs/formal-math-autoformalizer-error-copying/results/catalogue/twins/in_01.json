@@ -1,0 +1,142 @@
+[
+ {
+  "id": "t052",
+  "N": "Let $a$ and $b$ be real numbers for which the equation\n$x^4 + ax^3 + bx^2 + ax + 1 = 0$\nhas at least one real solution. For all such pairs $(a, b)$, find the minimum value of $a^2 + b^2$.",
+  "D": "theorem imo_1973_p3 (a b : ℝ) (h₀ : ∃ x, x ^ 4 + a * x ^ 3 + b * x ^ 2 + a * x + 1 = 0) :\n  4 / 5 ≤ a ^ 2 + b ^ 2 := by",
+  "C": "theorem imo_1973_p3\n  (S : Set (ℝ × ℝ))\n  (hS : S = {(a, b) | ∃ x : ℝ, x ^ 4 + a * x ^ 3 + b * x ^ 2 + a * x + 1 = 0}) :\n  IsLeast {z | ∃ a b : ℝ, (a, b) ∈ S ∧ z = a ^ 2 + b ^ 2} (4 / 5) := by",
+  "defect": "Only the lower bound 4/5 <= a^2+b^2; attainment of the minimum is not shown.; Only the lower bound 4/5 ≤ a² + b²; attainment of 4/5 not asserted."
+ },
+ {
+  "id": "t056",
+  "N": "The function $f(x,y)$ satisfies\n\n(1) $f(0,y)=y+1, $\n\n(2) $f(x+1,0)=f(x,1), $\n\n(3) $f(x+1,y+1)=f(x,f(x+1,y)), $\n\nfor all non-negative integers $x,y $. Determine $f(4,1981) $.",
+  "D": "theorem imo_1981_p6 (f : ℕ → ℕ → ℕ) (h₀ : ∀ y, f 0 y = y + 1) (h₁ : ∀ x, f (x + 1) 0 = f x 1)\n    (h₂ : ∀ x y, f (x + 1) (y + 1) = f x (f (x + 1) y)) : ∀ y, f 4 (y + 1) = 2 ^ (f 4 y + 3) - 3 := by",
+  "C": "theorem imo_1981_p6 (f : ℕ → ℕ → ℕ) (h₀ : ∀ y, f 0 y = y + 1) (h₁ : ∀ x, f (x + 1) 0 = f x 1)\n  (h₂ : ∀ x y, f (x + 1) (y + 1) = f x (f (x + 1) y)) : f 4 1981 = ((2^.)^[1984] 1 - 3) := by",
+  "defect": "Only gives a recurrence for f(4, y+1); does not determine f(4,1981).; States a recurrence for f 4 (y+1), not the value f 4 1981."
+ },
+ {
+  "id": "t062",
+  "N": "Show that for any real number $x$ and any natural number $n$, if $x > -1$, then $(1+nx)\\leq (1+x)^n$.",
+  "D": "theorem induction_1pxpownlt1pnx (x : ℝ) (n : ℕ) (h₀ : -1 < x) (h₁ : 0 < n) :\n    1 + ↑n * x ≤ (1 + x) ^ (n : ℕ) := by",
+  "C": "theorem induction_1pxpownlt1pnx (x : ℝ) (n : ℕ) (h₀ : -1 < x) :\n  1 + (n:ℝ)* x ≤ (1+x)^n := by",
+  "defect": "Adds 0 < n; informal covers any natural number n (n = 0 holds trivially).; Bernoulli inequality with x > -1; 0 < n matches the common convention that natural numbers start at 1."
+ },
+ {
+  "id": "t065",
+  "N": "Show that for positive integer $n$, $\\sum_{k=0}^{n-1} \\frac{1}{(k+1)(k+2)} = \\frac{n}{n+1}$.",
+  "D": "theorem induction_sum_1oktkp1 (n : ℕ) :\n  (∑ k in Finset.range n, (1 : ℝ) / ((k + 1) * (k + 2))) = n / (n + 1) := by",
+  "C": "theorem induction_sum_1oktkp1 (n : ℕ) (hn₀: 0 < n):\n  (∑ k ∈ Finset.range n, (1 : ℝ) / ((k + 1) * (k + 2))) = n / (n + 1) := by",
+  "defect": "Drops positivity of n; adds the n = 0 case (true, but the stated hypothesis is missing).; Drops n>0 imposed by the problem (true for n=0, but a stronger statement)."
+ },
+ {
+  "id": "t066",
+  "N": "Show that for positive integer $n$, $\\sum_{k=0}^{n-1} (2k + 1) = n^2$.",
+  "D": "theorem induction_sum_odd (n : ℕ) : (∑ k in Finset.range n, 2 * k) + 1 = n ^ 2 := by",
+  "C": "theorem induction_sum_odd (n : ℕ) : (∑ k ∈ Finset.range n, (2 * k + 1)) = n ^ 2 := by",
+  "defect": "Misparenthesised: (sum of 2k) + 1 instead of sum of (2k + 1).; Parenthesisation error: (Σ 2k) + 1 instead of Σ (2k + 1)."
+ },
+ {
+  "id": "t084",
+  "N": "Suppose $f(x)$ is an invertible function, and suppose that $f(2)=f^{-1}(2)=4$.\n\nWhat is the value of $f(f(2))$? Show that it is 2.",
+  "D": "theorem mathd_algebra_188 (σ : Equiv ℝ ℝ) (h : σ.1 2 = σ.2 2) : σ.1 (σ.1 2) = 2 := by",
+  "C": "theorem mathd_algebra_188\n  (f : ℝ → ℝ)\n  (h₀ : Function.Bijective f)\n  (h₁ : f 2 = 4)\n  (h₂ : f 2 = Function.invFun f 2) :\n  f (f 2) = 2 := by",
+  "defect": "Omits f(2) = 4; only assumes f(2) = f^{-1}(2) (still true but hypotheses differ).; Drops the given value f(2) = f^-1(2) = 4; proves only the generalisation from sigma(2) = sigma^-1(2)."
+ },
+ {
+  "id": "t092",
+  "N": "Let $t=2s-s^2$ and $s=n^2 - 2^n+1$. What is the value of $t$ when $n=3$? Show that it is 0.",
+  "D": "theorem mathd_algebra_247 (t s : ℝ) (n : ℤ) (h₀ : t = 2 * s - s ^ 2) (h₁ : s = n ^ 2 - 2 ^ n + 1)\n  (n) (_ : n = 3) : t = 0 := by",
+  "C": "theorem mathd_algebra_247 (t s : ℝ) (n : ℤ) (h₀ : t = 2 * s - s ^ 2) (h₁ : s = n ^ 2 - 2 ^ n + 1)\n  (h₂ : n = 3) :\n  t = 0 := by",
+  "defect": "Binder (n) introduces a new n; hypothesis n = 3 does not constrain the n in s.; Second binder (n) shadows the integer n; n = 3 constrains the new variable, original n free."
+ },
+ {
+  "id": "t097",
+  "N": "What is the largest number $c$ such that $2x^2+5x+c=0$ has at least one real solution? Express your answer as a common fraction. Show that it is \\frac{25}{8}.",
+  "D": "theorem mathd_algebra_28 (c : ℝ) (f : ℝ → ℝ) (h₀ : ∀ x, f x = 2 * x ^ 2 + 5 * x + c)\n  (h₁ : ∃ x, f x ≤ 0) : c ≤ 25 / 8 := by",
+  "C": "theorem mathd_algebra_28\n  (S : Set ℝ)\n  (hS : S = {c | ∃ x:ℝ, 2 * x ^ 2 + 5 * x + c = 0}) :\n  IsGreatest S (25/8:ℝ) := by",
+  "defect": "Only proves the upper bound c <= 25/8; never shows 25/8 is attained, so 'largest' is not established.; Only the upper bound c ≤ 25/8; attainment of 25/8 not asserted (the ≤ 0 hypothesis is equivalent for this parabola)."
+ },
+ {
+  "id": "t100",
+  "N": "If $ \\sqrt{x+\\!\\sqrt{x+\\!\\sqrt{x+\\!\\sqrt{x+\\cdots}}}}=9$, find $x$. Show that it is 72.",
+  "D": "theorem mathd_algebra_31 (x : NNReal) (u : ℕ → NNReal) (h₀ : ∀ n, u (n + 1) = NNReal.sqrt (x + u n))\n  (h₁ : Filter.Tendsto u Filter.atTop (𝓝 9)) : 9 = NNReal.sqrt (x + 9) := by",
+  "C": "theorem mathd_algebra_31 (x : ℝ) (u : ℕ → ℝ) (h₀ : ∀ n, u (n + 1) = Real.sqrt (x + u n))\n  (h₁ : Filter.Tendsto u Filter.atTop (nhds 9)) : x = 72 := by",
+  "defect": "Concludes only the fixed-point equation 9 = sqrt(x + 9); never states the answer x = 72.; Concludes only the fixed-point equation 9 = sqrt(x + 9), not the asked value x = 72."
+ },
+ {
+  "id": "t101",
+  "N": "If $n = 11$, then what is $\\left(\\frac{1}{4}\\right)^{n+1} \\cdot 2^{2n}$? Show that it is \\frac{1}{4}.",
+  "D": "theorem mathd_algebra_314 (n : ℕ) (h₀ : n = 11) : (1 / 4) ^ (n + 1) * 2 ^ (2 * n) = 1 / 4 := by",
+  "C": "theorem mathd_algebra_314 (n : ℕ) (h₀ : n = 11) : (1 / 4 : ℝ) ^ (n + 1) * 2 ^ (2 * n) = 1 / 4 := by",
+  "defect": "Computed in natural numbers, so 1/4 = 0 and the equation is trivially 0 = 0.; Computed in the naturals where 1/4 = 0; both sides collapse to 0."
+ },
+ {
+  "id": "t104",
+  "N": "Solve for $a$: $\\frac15|9+2a|<1$.  Express your answer in interval notation. Show that it is (-7, -2).",
+  "D": "theorem mathd_algebra_327 (a : ℝ) (h₀ : 1 / 5 * abs (9 + 2 * a) < 1) : -7 < a ∧ a < -2 := by",
+  "C": "theorem mathd_algebra_327 \n  (a : ℝ) : \n  (1 / 5 * abs (9 + 2 * a) < 1) ↔ a ∈ Set.Ioo (-7:ℝ) (-2) := by",
+  "defect": "Only one direction: inequality implies a in (-7,-2); does not show every such a is a solution.; Only one direction: solutions lie in (−7, −2); does not show the whole interval solves it."
+ },
+ {
+  "id": "t112",
+  "N": "What is the minimum possible value for $y$ in the equation $y = x^2 - 6x + 13$? Show that it is 4.",
+  "D": "theorem mathd_algebra_410 (x y : ℝ) (h₀ : y = x ^ 2 - 6 * x + 13) : 4 ≤ y := by",
+  "C": "theorem mathd_algebra_410\n  (f : ℝ → ℝ)\n  (h₀ : f = fun x ↦ x ^ 2 - 6 * x + 13) :\n  IsLeast (Set.range f) 4 := by",
+  "defect": "Only proves 4 is a lower bound; does not show the minimum 4 is attained.; Only proves 4 is a lower bound for y, not that 4 is the minimum (attained)."
+ },
+ {
+  "id": "t126",
+  "N": "For integers $n$, let \\[f(n) = \\left\\{\n\\begin{array}{cl}\nn^2 & \\text{ if }n\\text{ is odd}, \\\\\nn^2 - 4n - 1 & \\text{ if }n\\text{ is even}.\n\\end{array}\n\\right.\\]Find $f(f(f(f(f(4)))))$. Show that it is 1.",
+  "D": "theorem mathd_algebra_76 (f : ℤ → ℤ) (h₀ : ∀ n, Odd n → f n = n ^ 2)\n    (h₁ : ∀ n, Even n → f n = n ^ 2 - 4 * n - 1) : f 4 = -1 := by",
+  "C": "theorem mathd_algebra_76\n  (f : ℤ → ℤ) (h₀ : ∀ n, Odd n → f n = n ^ 2)\n  (h₁ : ∀ n, Even n → f n = n ^ 2 - 4 * n - 1) :\n  f (f (f (f (f (4))))) = 1 := by",
+  "defect": "Only proves the first step f(4) = -1, not the fivefold composition.; Proves only f(4) = -1, the first iterate; the asked value is f^5(4) = 1."
+ },
+ {
+  "id": "t133",
+  "N": "What is the smallest positive integer $N$ such that the value $7 + (30 \\times N)$ is not a prime number? Show that it is 6.",
+  "D": "theorem mathd_numbertheory_150 (n : ℕ) (h₀ : ¬Nat.Prime (7 + 30 * n)) : 6 ≤ n := by",
+  "C": "theorem mathd_numbertheory_150\n  (S : Set ℕ)\n  (hS: S = {n:ℕ | 0 < n ∧ ¬ Nat.Prime (7 + 30 * n)}) :\n  IsLeast S 6 := by",
+  "defect": "Only lower bound 6 ≤ n; does not show 7+30·6 is composite.; Only lower bound 6 ≤ n; does not state 7 + 180 is composite."
+ },
+ {
+  "id": "t134",
+  "N": "Let $n$ be a positive integer.  What is the greatest possible value of $\\gcd(n + 7, 2n + 1)$? Show that it is 13.",
+  "D": "theorem mathd_numbertheory_156 (n : ℕ) (h₀ : 0 < n) : Nat.gcd (n + 7) (2 * n + 1) ≤ 13 := by",
+  "C": "theorem mathd_numbertheory_156\n  (S : Set ℕ)\n  (hS : S = {x | ∃ n, 0 < n ∧ x = Nat.gcd (n + 7) (2 * n + 1)}) :\n  IsGreatest S 13 := by",
+  "defect": "Only proves gcd <= 13; does not show 13 is attained.; Only the upper bound gcd ≤ 13; does not show 13 is attained."
+ },
+ {
+  "id": "t137",
+  "N": "The two-digit number $``B6,''$ where $B$ is the tens digit, is the square of a positive integer. How many distinct possible values are there for $B$? Show that it is 2.",
+  "D": "theorem mathd_numbertheory_22 (b : ℕ) (h₀ : b < 10)\n  (h₁ : Nat.sqrt (10 * b + 6) * Nat.sqrt (10 * b + 6) = 10 * b + 6) : b = 3 ∨ b = 1 := by",
+  "C": "theorem mathd_numbertheory_22\n  (S : Finset ℕ)\n  (hS : S = {b | ∃ x y : ℕ , Nat.digits 10 x = [6, b] ∧ 0 < y ∧ y ^ 2 = x}) :\n  S.card = 2 := by",
+  "defect": "Only shows B ∈ {1, 3}; does not show both occur, so the count 2 is not established.; Only shows valid B lies in {1, 3}; does not show both occur nor state the count 2."
+ },
+ {
+  "id": "t144",
+  "N": "The greatest common divisor of positive integers $m$ and $n$ is 6. The least common multiple of $m$ and $n$ is 126. What is the least possible value of $m+n$? Show that it is 60.",
+  "D": "theorem mathd_numbertheory_277 (m n : ℕ) (h₀ : Nat.gcd m n = 6) (h₁ : Nat.lcm m n = 126) :\n    60 ≤ m + n := by",
+  "C": "theorem mathd_numbertheory_277\n  (S: Set ℕ)\n  (hS: S = {x | ∃ m n:ℕ, x = m + n ∧ Nat.gcd m n = 6 ∧ Nat.lcm m n = 126}):\n  IsLeast S 60 := by",
+  "defect": "Only proves the lower bound 60 <= m+n; does not show 60 is attained.; Proves only the lower bound 60 <= m+n; attainment (least value) is not stated."
+ },
+ {
+  "id": "t147",
+  "N": "What is the smallest positive integer, other than $1$, that is both a perfect cube and a perfect fourth power? Show that it is 4096.",
+  "D": "theorem mathd_numbertheory_296 (n : ℕ) (h₀ : 2 ≤ n) (h₁ : ∃ x, x ^ 3 = n) (h₂ : ∃ t, t ^ 4 = n) :\n    4096 ≤ n := by",
+  "C": "theorem mathd_numbertheory_296\n  (S : Set ℕ)\n  (hS :  S = {n | 0 < n ∧ n ≠ 1 ∧ ∃ x, x ^ 3 = n ∧ ∃ t, t ^ 4 = n}) :\n  IsLeast S 4096 := by",
+  "defect": "Only lower bound 4096 ≤ n; does not show 4096 is a cube and fourth power.; Only proves 4096 ≤ n for such n; does not show 4096 is itself attained (minimum)."
+ },
+ {
+  "id": "t148",
+  "N": "Let $r$ be the remainder when $1342$ is divided by $13$.\n\nDetermine the smallest positive integer that has these two properties:\n\n$\\bullet~$ It is a multiple of $1342$.\n\n$\\bullet~$ Its remainder upon being divided by $13$ is smaller than $r$. Show that it is 6710.",
+  "D": "theorem mathd_numbertheory_314 (r n : ℕ) (h₀ : r = 1342 % 13) (h₁ : 0 < n) (h₂ : 1342 ∣ n)\n    (h₃ : n % 13 < r) : 6710 ≤ n := by",
+  "C": "theorem mathd_numbertheory_314 \n  (r n : ℕ) (h₀ : r = 1342 % 13)\n  (S : Set ℕ)\n  (hS: S = {x | 0 < x ∧ (∃ k:ℕ, k * 1342 = x) ∧ x % 13 < r}):\n  IsLeast S 6710 := by",
+  "defect": "Only proves 6710 is a lower bound; does not show 6710 itself has the properties.; Only proves 6710 is a lower bound; does not show 6710 has the properties."
+ },
+ {
+  "id": "t154",
+  "N": "What is the units digit of the product of all of the odd integers between 0 and 12? Show that it is 5.",
+  "D": "theorem mathd_numbertheory_343 : (∏ k in Finset.range 6, 2 * k + 1) % 10 = 5 := by",
+  "C": "theorem mathd_numbertheory_343\n  (S : Finset ℕ)\n  (hS : S = Finset.filter (fun x => Odd x) (Finset.range 13))\n  (p : ℕ)\n  (h₀: p = ∏ k ∈ S, k) :\n  p % 10 = 5 := by",
+  "defect": "Big-operator precedence parses as (∏ 2k) + 1 = 1, not ∏(2k+1); claim false.; Product of 2k+1 for k<6 is 1·3·5·7·9·11; mod 10 = 5."
+ }
+]
