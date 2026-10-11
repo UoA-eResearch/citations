@@ -1,0 +1,54 @@
+{
+ "p_picks_all_conf": 38141132,
+ "seconds": 78710400.0,
+ "p_picks_per_second": 0.4845755071756718,
+ "thresholds": {
+  "conf>=0.5": {
+   "n": 9391601,
+   "share_isolated_unreferenced": 0.5934887991940884
+  },
+  "conf>=0.7": {
+   "n": 4894802,
+   "share_isolated_unreferenced": 0.4413128457494297
+  },
+  "conf>=0.9": {
+   "n": 2019703,
+   "share_isolated_unreferenced": 0.24359027045065537
+  }
+ },
+ "daytime_07_18_share": {
+  "isolated_unreferenced": 0.5656152613741767,
+  "unreferenced_not_isolated": 0.48233935803591615,
+  "referenced": 0.4803785575181933
+ },
+ "isolated_neighbours_loaded": {
+  "0": 3.893207698145434e-05,
+  "1": 0.00031863303557171845,
+  "2": 0.0010301750508180222,
+  "3": 0.01092627843432051,
+  "4": 0.09382397318889593,
+  "5": 0.8938620082134123
+ },
+ "isolated_share_by_network": {
+  "BK": 0.7411909609120522,
+  "CI": 0.5936373058755847,
+  "NC": 0.532836350432769
+ },
+ "conf_quantiles": {
+  "isolated_unreferenced": [
+   0.561,
+   0.647,
+   0.779
+  ],
+  "unreferenced_not_isolated": [
+   0.658,
+   0.834,
+   0.944
+  ],
+  "referenced": [
+   0.835,
+   0.93,
+   0.967
+  ]
+ }
+}

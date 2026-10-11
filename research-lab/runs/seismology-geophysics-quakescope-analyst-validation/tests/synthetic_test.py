@@ -8,6 +8,10 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "code"))
 import analysis as A  # noqa: E402
 import match as Mt  # noqa: E402
+import tempfile  # noqa: E402
+
+# D5 (review issue 21): h1() writes its bootstrap draws to A.TAB; point it at a scratch directory, not results/
+A.TAB = Path(tempfile.mkdtemp())
 
 rng = np.random.default_rng(1)
 # 1. greedy matching

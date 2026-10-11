@@ -83,6 +83,7 @@ class AGHQ:
                     break
             if np.max(np.abs(step)) < 1e-10:
                 break
+        self.unconverged = int(np.sum(np.abs(step) >= 1e-10))  # D5 (review issue 19): stations whose mode did not converge
         p = expit(eta0 + u[self.st])
         H = self._sum(p * (1 - p)) + 1 / s2
         self.u = u
@@ -124,7 +125,9 @@ def aghq(K, sname):
     r = minimize(f, np.array(x0, float), method="Nelder-Mead", options={"xatol": 1e-4, "fatol": 1e-3, "maxiter": 3000, "maxfev": 3000})
     beta = dict(zip(["Intercept", "M", "logd"], r.x[:3]))
     s_u = float(np.exp(r.x[3]))
+    g.negll(r.x)
     res = dict(K=K, start=sname, success=bool(r.success), message=str(r.message), nfev=int(r.nfev), negll=float(r.fun),
+               modes_unconverged_at_optimum=g.unconverged,
                beta=beta, sigma_u=s_u, SD_p=A.sd_p(beta, s_u), minutes=(time.time() - t) / 60)
     if K == 15 and sname == "vb":
         u, H = g.modes(g.X @ r.x[:3], s_u ** 2)

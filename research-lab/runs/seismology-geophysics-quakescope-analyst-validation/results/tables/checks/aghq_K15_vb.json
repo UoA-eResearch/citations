@@ -5,6 +5,7 @@
  "message": "Optimization terminated successfully.",
  "nfev": 119,
  "negll": 137642.73200149968,
+ "modes_unconverged_at_optimum": 0,
  "beta": {
   "Intercept": 2.619363301696207,
   "M": 0.5756247324479818,
@@ -12,5 +13,5 @@
  },
  "sigma_u": 1.0669825740873597,
  "SD_p": 0.10439955420396867,
- "minutes": 0.49086743195851645
+ "minutes": 0.5530239105224609
 }

@@ -87,45 +87,75 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
     <a href="../../index.html">All research leads</a>
   </div>
 </header>
-<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Reference P picks</div><div class="tile-value">509,596</div><div class="tile-note">1,026 CI/NC/BK stations, 30 months 2010-2024</div></div><div class="tile"><div class="tile-label">Pooled P recall</div><div class="tile-value">91.0%</div><div class="tile-note">within 0.5 s of an analyst-reviewed pick</div></div><div class="tile"><div class="tile-label">Between-station SD</div><div class="tile-value">0.105</div><div class="tile-note">95% CI 0.096-0.114; H1 Supported</div></div><div class="tile"><div class="tile-label">Explained by attributes</div><div class="tile-value text">R² 0.29</div><div class="tile-note">95% CI 0.22-0.36; H2 Refuted</div></div></section>
+<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Reference P picks</div><div class="tile-value">509,596</div><div class="tile-note">1,026 CI/NC/BK stations, 30 months 2010-2024</div></div><div class="tile"><div class="tile-label">Pooled P recall</div><div class="tile-value">91.0%</div><div class="tile-note">within 0.5 s of an analyst-reviewed pick</div></div><div class="tile"><div class="tile-label">Between-station SD</div><div class="tile-value">0.105</div><div class="tile-note">95% CI 0.096-0.114; H1 Supported (0.095, Inconclusive, without zero-output days)</div></div><div class="tile"><div class="tile-label">Explained by attributes</div><div class="tile-value text">R² 0.29</div><div class="tile-note">95% CI 0.22-0.36; H2 Refuted</div></div></section>
 <main>
-<p><strong>Verdict: Refuted (H1 Supported narrowly, H2 Refuted).</strong> The plan set no headline rule. The lead's hypothesis was
-that recall varies between stations <em>and</em> that station attributes explain at least half of that variation. The second
-part fails clearly.</p>
+<p><strong>Verdict: Refuted on H2; H1 at its threshold.</strong> The lead's hypothesis had two parts. The first (H1) was that "after
+adjusting for magnitude and distance, recall varies between stations with SD ≥ 0.10". The second (H2) was that
+"station attributes alone explain at least 50% of that between-station variance". The second part fails clearly, so
+the joint hypothesis is refuted. The first sits on its threshold: Supported under the preregistered denominator,
+Inconclusive when station-days with no catalogue output are left out. The plan set no headline rule. The tag refers to
+the hypothesis, not to the catalogue, whose recall is high (first bullet).</p>
 <ul>
 <li><strong>The catalogue finds 91% of analyst-reviewed P arrivals within 0.5 s.</strong> Matched picks sit a median 0.02 s after
   the analyst's.</li>
-<li><strong>Stations differ (H1 Supported, narrowly).</strong> After adjusting for magnitude and distance, the between-station SD of
-  recall is 0.105 (95% CI 0.096 to 0.114) at an M 2.0 event 30 km away. The rule needed at least 0.10, so the
-  estimate passes by 0.005 and the interval includes values below the threshold. A typical station finds 92% of such
-  arrivals; one station in ten finds fewer than 76%.</li>
-<li><strong>Station attributes don't predict which stations are weak (H2 Refuted).</strong> Band code, instrument code, sampling rate
-  and ambient noise explain 29% of the station-to-station variation in spatially grouped cross-validation (95% CI 22%
-  to 36%). The hypothesis needed 50%.</li>
-<li><strong>Exploratory: most confident P picks look like single-station detections.</strong> 59% of the catalogue's P picks with
-  confidence ≥ 0.5 have no analyst pick and no P pick at any of the station's 5 nearest neighbours within 10 s. This is
-  a post-hoc proxy and is labelled as such.</li>
+<li><strong>Stations differ by about the amount the threshold names (H1).</strong> After adjusting for magnitude and distance, the
+  between-station SD of recall at an M 2.0 event 30 km away is:</li>
+<li><strong>0.105</strong> (95% CI 0.096 to 0.114) as preregistered, so H1 is Supported by the rule;</li>
+<li>0.095 (0.088 to 0.105), Inconclusive, without the 1.25% of reference picks on station-days on which QuakeScope
+    produced no picks at all;</li>
+<li>0.086 on impulsive arrivals alone.</li>
 </ul>
+<p>Whether the variation clears 0.10 is not settled by these data. A typical station finds 92% of such arrivals; one
+  station in ten finds fewer than 76% (79% without the zero-output days).
+- <strong>Station attributes don't predict which stations are weak (H2 Refuted).</strong> Band code, instrument code, sampling rate
+  and ambient noise explain 29% of the station-to-station variation in spatially grouped cross-validation (95% CI 22%
+  to 36%), and 36% (28% to 42%) without the zero-output days. The hypothesis needed 50%.
+- <strong>Some of the weakest "stations" are processing gaps.</strong> On 7.4% of the station-days that QuakeScope lists as read,
+  it produced no picks. The worst stations in the table are largely these days. They probably come from the reader
+  defect for which the catalogue is being re-read from 8 October 2026.
+- <strong>Exploratory: most confident P picks look like single-station detections.</strong> 59% of the catalogue's P picks with
+  confidence ≥ 0.5 have no analyst pick and no P pick at any of the station's 5 nearest neighbours within 10 s. They
+  peak in daytime hours, like cultural noise. This is a post-hoc proxy and is labelled as such.</p>
 <h2>In plain terms</h2>
 <p>QuakeScope is a public catalogue of 4.3 billion earthquake "picks": the moments when a machine-learning model
-(PhaseNet) decided a seismic wave had reached a seismometer. Researchers are starting to build earthquake catalogues
-and training sets from it. Its authors did not compare it, archive-wide, with the arrivals that human analysts picked.</p>
-<p>We did that for California. We took 30 randomly chosen months from 2010-2024 and every P-wave arrival (the first wave)
-that analysts at the Southern and Northern California data centres picked for local earthquakes of magnitude 1.5 or
-more within 100 km. That is half a million arrivals at about a thousand stations. <strong>The catalogue had a pick within
-half a second for 91% of them, usually within a few hundredths of a second.</strong></p>
+(PhaseNet) decided a seismic wave had reached a seismometer. Researchers are starting to build on it, but its authors
+did not compare it, archive-wide, with the arrivals that human analysts picked.</p>
+<p>We did that for California, using every P-wave arrival (the first wave) that analysts picked for local earthquakes
+of magnitude 1.5 or more in 30 random months of 2010-2024. That is half a million arrivals at about a thousand stations. <strong>The catalogue had a pick within half a second for 91% of
+them, usually within a few hundredths of a second.</strong></p>
 <p>We expected some stations to do much worse than others, and they do. A typical station catches 92% of the arrivals
-from a magnitude-2 earthquake 30 km away; one station in ten catches fewer than 76%. The spread is just above the
-size we set in advance as meaningful.</p>
+from a magnitude-2 earthquake 30 km away; one station in ten catches fewer than 76%. Whether the spread reaches the
+size we set in advance as meaningful is too close to call. It is just above it as planned, and just below it without
+the days on which the catalogue produced no picks at a station, which look like a software fault now being fixed.</p>
 <p>We also expected to predict the weak stations from what the station is: its sensor type, sampling rate and how noisy
-its site is. <strong>That failed.</strong> Those attributes explain under a third of the differences. So anyone using QuakeScope
-picks at a particular station should check that station's track record, which we release as a table, rather than
-assume it from the station's specifications.</p>
+its site is. <strong>That failed.</strong> Those attributes explain about a third of the differences, short of the half we set as
+the bar. So anyone using QuakeScope picks at a particular station should check that station's track record, which we
+release as a table.</p>
 <p>A side finding needs confirming: most of the catalogue's confident P picks have no matching pick at any nearby
 station and no analyst pick. They may be noise, or tiny earthquakes that only one station recorded.</p>
+<h2>Related work</h2>
+<ul>
+<li><strong>Earlier comparisons of PhaseNet with analyst picks.</strong></li>
+<li>Münchmeyer et al. (2022) benchmark deep-learning pickers, PhaseNet among them, against analyst picks on curated
+    datasets.</li>
+<li>A 2025 ESS Open Archive preprint (Shimota, Tepp, Biondi and co-authors) evaluates PhaseNet against Southern
+    California Seismic Network (SCSN) analyst picks for M 3+ earthquakes.</li>
+<li><strong>The QuakeScope team's own benchmarks</strong> use curated sequences
+  (<a href="https://seisscoped.org/QuakeScope/">seisscoped.org/QuakeScope</a>).</li>
+</ul>
+<p>None of these is an archive-wide, station-level validation of the released QuakeScope catalogue. OpenAlex lists four
+works citing the QuakeScope paper, and none of them does this either.</p>
+<p><strong>Reference picks that may have started as PhaseNet picks.</strong> SCSN reported in 2024 that it had "recently integrated"
+PhaseNet into its event post-processing (Tepp et al., SSA 2024 abstract). In that case, some reviewed SCEDC picks from
+2023-2024 began as PhaseNet picks, which would favour a PhaseNet catalogue. SCEDC recall shows no such rise: 92.6% for
+2010-2022 and 92.6% for 2023-2024.</p>
 <h2>The data</h2>
-<p><strong>The catalogue.</strong> The 2026 QuakeScope <code>western</code> catalogue on the anonymous S3 bucket <code>quakescope-picks-2026</code>. It uses
-PhaseNet with the <code>original</code> weights (trained on Northern California data) and thresholds of 0.2. Partitions:
+<p><strong>The catalogue.</strong> The 2026 QuakeScope <code>western</code> catalogue on the anonymous S3 bucket <code>quakescope-picks-2026</code>. Its
+run record names PhaseNet with the <code>original</code> weights and thresholds of 0.2.</p>
+<p>Those weights were trained on NCEDC analyst-labelled arrivals (Zhu and Beroza 2019), so the NC and BK reference picks
+from the earlier years overlap PhaseNet's training distribution, and possibly its training events. There is no sign
+that this inflates recall. Recall on NCEDC picks is 89.9% in 2010-2017 and 89.4% in 2018-2024; on SCEDC picks it is
+93.2% and 92.2%. Partitions:
 <code>network={CI,NC,BK}/year=Y/month=M</code>, for 30 months drawn 2 per year from 2010-2024 (seed 20261011; listed in Section 3
 of the plan and in <code>data/months.json</code>). The listing of every downloaded file (key, ETag, size) is frozen in
 <code>data/manifest_picks.csv</code>, because the bucket is being re-read from 8 October 2026.</p>
@@ -133,7 +163,8 @@ of the plan and in <code>data/months.json</code>). The listing of every download
 <ul>
 <li><strong>SCEDC</strong> (network CI): event phase files. Local earthquakes only (type <code>eq</code>, geographic type <code>l</code>; D2).</li>
 <li><strong>NCEDC</strong> (networks NC and BK): monthly Hypoinverse phase archives. Only events with review status F (final), joined
-  from the NCEDC catalogue (D1).</li>
+  from the NCEDC catalogue (D1). This excludes the automatic (A, 21%) and intermediate (I, 2%) events, among the
+  NCEDC catalogue's M ≥ 1.5 events in the sampled months.</li>
 </ul>
 <p>Both are "analyst-reviewed", not necessarily hand-picked from scratch. Some arrivals began as automatic picks that an
 analyst accepted or adjusted.</p>
@@ -144,6 +175,9 @@ analyst accepted or adjusted.</p>
 <li>analyst weight &gt; 0;</li>
 <li>one pick per event, station and phase.</li>
 </ul>
+<p>Nine P picks whose arrival falls in the following, unsampled month are dropped at matching. The catalogue partitions
+contain 0.6-5.7% exact duplicate rows (re-reads). They do not affect one-to-one matching, and the false-pick proxy
+removes them.</p>
 <p><strong>The denominator.</strong> A reference pick counts only if QuakeScope's availability table says it read that station-day,
 and the station is in QuakeScope's station list. A miss on a day QuakeScope never processed is not a picker failure.</p>
 <div class="table-wrap"><table>
@@ -231,7 +265,7 @@ sensitivity analyses.</p>
 <td style="text-align: right;">86.4% / 91.0% / 92.3%</td>
 </tr>
 <tr>
-<td>Pooled S recall, ±0.5 s (196,118 S picks)</td>
+<td>Pooled S recall, ±0.5 s (all 196,118 S picks in the denominator)</td>
 <td style="text-align: right;">88.8%</td>
 </tr>
 <tr>
@@ -251,7 +285,40 @@ sensitivity analyses.</p>
 <p>The timing offset is similar across bands: median +0.03 s on HH, +0.02 s on EH and +0.023 s on HN channels
 (<code>results/tables/timing_by_band.csv</code>). Pooled recall moves little with year (88-93%) or with distance (91.9% within
 10 km, 90.8% at 60-100 km).</p>
-<h3>H1: recall varies between stations (Supported, narrowly)</h3>
+<p><strong>Where the misses are</strong> (post hoc, <code>results/tables/review/misses.json</code>). Of the 45,856 unmatched H1 picks:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Nearest catalogue P pick at the station</th>
+<th style="text-align: right;">Share of misses</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>None at all: the station-day has zero catalogue picks (see the zero-output days below)</td>
+<td style="text-align: right;">14%</td>
+</tr>
+<tr>
+<td>0.5-1 s away (most of them late; the 1.0 s tolerance recovers these)</td>
+<td style="text-align: right;">15%</td>
+</tr>
+<tr>
+<td>1-3 s away</td>
+<td style="text-align: right;">6%</td>
+</tr>
+<tr>
+<td>3-300 s away</td>
+<td style="text-align: right;">22%</td>
+</tr>
+<tr>
+<td>None within 300 s, on a day with catalogue picks</td>
+<td style="text-align: right;">43%</td>
+</tr>
+</tbody>
+</table></div>
+<p>The distribution of nearest-pick offsets has no peaks at whole seconds or constant offsets, so there is no time-zone,
+clock or format artefact (reviewer's check, <code>review/review.md</code>).</p>
+<h3>H1: recall varies between stations (Supported by the preregistered rule; not robust)</h3>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -283,13 +350,20 @@ sensitivity analyses.</p>
 </tr>
 </tbody>
 </table></div>
-<p>By the preregistered rule this is <strong>Supported</strong>: SD_p ≥ 0.10 and the lower bound (0.096) ≥ 0.05. The margin is thin.
-The point estimate exceeds 0.10 by 0.005 and the interval includes values below 0.10. The plan's power section
-expected H1 to be decidable "unless the true SD sits within about 0.01 of 0.10", and it does sit there.</p>
+<p>By the preregistered rule this is <strong>Supported</strong>: SD_p ≥ 0.10 and the lower bound (0.096) ≥ 0.05. The margin is thin.</p>
+<ul>
+<li><strong>The point estimate is only just above 0.10.</strong> The preregistered Monte Carlo estimate (10⁵ draws) is 0.1049. The
+  same integrand by quadrature gives 0.1045, and other Monte Carlo seeds give 0.1040-0.1046.</li>
+<li><strong>Many bootstrap draws fall below 0.10:</strong> 19% of the 200 (draws range from 0.093 to 0.119).</li>
+<li><strong>The plan anticipated this.</strong> Its power section said H1 is decidable "unless the true SD sits within about 0.01 of
+  0.10", and it does sit there.</li>
+<li><strong>The result depends on a denominator choice.</strong> Without the station-days on which QuakeScope produced no picks at
+  all, SD_p is 0.095 (0.088 to 0.105) and the rule returns Inconclusive; see the zero-output days below.</li>
+</ul>
 <p>The rule's interval condition (lower bound ≥ 0.05) is looser than its point condition (≥ 0.10). It asks only that the
 variation be clearly non-trivial, and by that standard it is. Whether the variation clears 0.10 specifically is not
 settled by these data.</p>
-<figure><a href="results/figures/station_recall.png"><img src="results/figures/station_recall.png" alt="Adjusted station recall"></a><figcaption>Adjusted P-pick recall for the 949 stations with at least 30 analyst-reviewed P picks (posterior-mean station effect from the mixed model, evaluated at an M 2.0 event 30 km away). The solid line is a station with a zero effect; the dashed line is the 10th percentile.</figcaption></figure>
+<figure><a href="results/figures/station_recall.png"><img src="results/figures/station_recall.png" alt="Adjusted station recall"></a><figcaption>Adjusted P-pick recall for the 949 stations with at least 30 analyst-reviewed P picks (posterior-mean station effect from the mixed model, evaluated at an M 2.0 event 30 km away). The solid line is a station with a zero effect; the dashed line is the 10th percentile. The purple outline is the review-requested sensitivity analysis that drops station-days on which QuakeScope produced no picks (deviations.md D5).</figcaption></figure>
 <p><strong>The spread is in a tail of weak stations.</strong> Among the 949 stations with ≥ 30 picks, adjusted recall at the
 reference event has:</p>
 <ul>
@@ -297,6 +371,8 @@ reference event has:</p>
 <li>a 10th percentile of 76% and a 5th percentile of 66%;</li>
 <li>14% of stations below 80% and 35% below 90%.</li>
 </ul>
+<p>Part of the lowest tail is days without catalogue output. Without them, the 10th percentile is 79%, the 5th 70%, and
+11% of stations fall below 80% (see below).</p>
 <p><strong>SD_p depends on the reference event.</strong> Recall is near its ceiling, so the same logit-scale spread (σ_u = 1.08) is
 smaller on the probability scale where recall is higher. Evaluated at other events (<code>results/tables/checks/misc.json</code>,
 post hoc), SD_p is:</p>
@@ -354,7 +430,7 @@ median distance 50 km.</p>
 <td style="text-align: right;">509,596</td>
 </tr>
 <tr>
-<td>S picks (±0.5 s)</td>
+<td>S picks (±0.5 s; stations with ≥ 10 S picks)</td>
 <td style="text-align: right;">0.176</td>
 <td style="text-align: right;">195,079</td>
 </tr>
@@ -367,20 +443,146 @@ median distance 50 km.</p>
 </table></div>
 <p>The busiest sampled month (June 2020) holds 6.2% of the picks, below the 25% that would have triggered the
 leave-one-month-out check.</p>
-<p>The S-pick spread is larger. On impulsive arrivals alone, which an analyst marks as clear, the spread drops below 0.10
-(0.086). Part of the station-to-station variation is therefore in emergent arrivals, which are harder for analyst and
-picker alike.</p>
+<p>The S-pick spread is larger. <strong>On impulsive arrivals alone, H1 does not hold:</strong> SD_p is 0.086, below 0.10. These are
+the arrivals an analyst marks as clear.</p>
+<p><strong>Part of the station-to-station variation is in what analysts picked at a station</strong> (post hoc,
+<code>results/tables/review/h1_weight_onset_covariates.json</code>).</p>
+<ul>
+<li><strong>Recall depends strongly on the analyst's weight.</strong></li>
+<li>SCEDC: 97.7% at weight 1.0, 94.2% at 0.8, 89.0% at 0.5 and 78.2% at 0.2.</li>
+<li>NCEDC: 94.3% at 1.0, 92.6% at 0.75, 86.4% at 0.5 and 69.9% at 0.25.</li>
+<li>Impulsive against emergent onsets: 94.7% against 86.2%.</li>
+<li><strong>Some of the spread is pick quality.</strong> With weight class (four classes matched across the two centres' scales, plus
+  an "other" class for SCEDC's rare weight 0.3) and onset added as covariates, σ_u falls from 1.08 to 1.01.</li>
+<li><strong>H1 then falls below its threshold.</strong> SD_p at the reference event is 0.097 for the observed mix of pick qualities.
+  For top-weight impulsive picks, where typical recall is 96%, it is 0.060.</li>
+<li><strong>Distance acts through pick quality.</strong> Its coefficient changes sign (+0.17 against −0.88). Analysts give
+  distant arrivals lower weights: the mean weight is 0.92 within 10 km and 0.62 at 60-100 km, and the impulsive share
+  is 88% and 38%.</li>
+</ul>
+<p>The H1 estimand was preregistered without these adjustments. They show that the 0.10 threshold is crossed or not
+depending on which arrivals count as the reference.</p>
 <figure><a href="results/figures/station_map.png"><img src="results/figures/station_map.png" alt="Station map"></a><figcaption>Where the low-recall stations are: adjusted P recall by station location (CI, NC and BK stations with at least 30 reference P picks; colour scale clipped at 60%). Low-recall stations are drawn on top.</figcaption></figure>
 <p><strong>Where the weak stations are (post hoc, descriptive).</strong> Of the 949 stations, 95 have adjusted recall below 76% (the
 10th percentile).</p>
 <ul>
 <li><strong>Most are short-period (EH) stations: 78 of the 95, against 476 of all 949.</strong> CI's EH stations have a median
-  adjusted recall of 79% (n = 83), against 95% for its broadband HH stations (n = 287). NC's EH stations, by
+  adjusted recall of 79% (n = 83), against 95% for its H-band stations (n = 287: 278 HH broadband, 9 HN
+  accelerometer). NC's EH stations, by
   contrast, have a median of 91% (n = 393).</li>
 <li><strong>Some areas have more than their share.</strong> 18% of stations in the Los Angeles basin fall below 76%, as do 13% around
   Long Valley and Mammoth and 14% in the San Francisco Bay Area. That compares with 9% elsewhere.</li>
 </ul>
-<p>The regional boxes were drawn after looking at the map, so these shares are descriptive only.</p>
+<p>The boxes (<code>review_checks.BOXES</code>) were drawn after looking at the map, so these shares are descriptive only:</p>
+<ul>
+<li>Los Angeles basin: 33.6-34.4° N, 117.6-118.7° W (67 stations);</li>
+<li>Long Valley and Mammoth: 37.4-38.0° N, 118.6-119.3° W (31);</li>
+<li>San Francisco Bay Area: 37.2-38.3° N, 121.6-122.8° W (106).</li>
+</ul>
+<p>With a slightly different Bay Area box the reviewer obtained 17% rather than 14%.</p>
+<p>These descriptions barely change when the station-days without catalogue output are left out (next section).</p>
+<h3>Zero-output station-days: a review-requested sensitivity analysis (post hoc; deviations.md D5)</h3>
+<p>The preregistered denominator keeps every reference pick on a station-day that QuakeScope's availability table marks
+<code>loaded</code>. That table also counts the picks QuakeScope produced that day (<code>npks</code>).</p>
+<p><strong>Some loaded station-days have no output at all.</strong></p>
+<ul>
+<li><strong>How many:</strong> 7.4% of loaded CI/NC/BK station-days in the sampled months have zero picks, and 17% have fewer than 5.</li>
+<li><strong>What they do to recall:</strong> 6,383 of the 509,596 H1 picks (1.25%) fall on zero-pick days, where recall is 0 by
+  construction. Recall rises steadily with the day's pick count: 65% on days with 1-2 picks, 82% with 3-5, 89% with
+  11-20, and 95-96% above 50.</li>
+<li><strong>The largest case:</strong> CI on 1 January 2017, an Imperial Valley swarm day (1,169 of these picks). Several stations
+  near the swarm are <code>loaded</code> with zero picks while their neighbours have hundreds (reviewer's check).</li>
+<li><strong>The likely cause, in part:</strong> on 26% of these picks the analyst's channel band was not among the bands QuakeScope
+  read that day, against 3.5% on other days. That matches the reader defect the QuakeScope team describes ("the reader
+  chose one channel band per station for the whole campaign, so days when that band was absent were never read"), for
+  which the western catalogue is being re-read from 8 October 2026. For the rest, the tables do not show the cause.</li>
+</ul>
+<p>The plan excluded never-read days because "a miss there is not a picker failure". The same reasoning applies to days
+with no output.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Denominator</th>
+<th style="text-align: right;">Picks / stations</th>
+<th style="text-align: right;">Pooled recall</th>
+<th style="text-align: right;">SD_p (95% CI)</th>
+<th>H1 under the preregistered rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Preregistered: all <code>loaded</code> days</strong></td>
+<td style="text-align: right;">509,596 / 1,026</td>
+<td style="text-align: right;">91.0%</td>
+<td style="text-align: right;"><strong>0.105</strong> (0.096 to 0.114)</td>
+<td><strong>Supported</strong></td>
+</tr>
+<tr>
+<td>Excluding zero-pick days (200-refit bootstrap)</td>
+<td style="text-align: right;">503,204 / 1,025</td>
+<td style="text-align: right;">92.2%</td>
+<td style="text-align: right;">0.095 (0.088 to 0.105)</td>
+<td><strong>Inconclusive</strong></td>
+</tr>
+<tr>
+<td>Excluding days with &lt; 10% of the station's median count (point estimate)</td>
+<td style="text-align: right;">501,463 / 1,026</td>
+<td style="text-align: right;">92.2%</td>
+<td style="text-align: right;">0.099</td>
+<td>(no interval)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Without zero-pick days, SD_p is 0.095 (95% CI 0.088 to 0.105). The point estimate is below 0.10, so the rule cannot
+return Supported. The upper bound is above 0.10, so it cannot return Refuted either. The rule therefore returns <strong>Inconclusive</strong>.</p>
+<ul>
+<li><strong>Bootstrap:</strong> 14% of the 200 draws are at or above 0.10 (draws 0.083 to 0.113).</li>
+<li><strong>Why it falls:</strong> the logit-scale spread barely moves (σ_u 1.087 against 1.078). Typical recall at
+  the reference event rises from 92.4% to 93.6%, nearer the ceiling, and SD_p shrinks with it.</li>
+<li><strong>Convergence:</strong> as in the primary fit, every VB fit carries statsmodels' non-convergence flag (D4).</li>
+</ul>
+<p><strong>The weak-station tail shrinks</strong> without zero-pick days, though it does not disappear:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align: right;">All loaded days</th>
+<th style="text-align: right;">Excluding zero-pick days</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10th / 5th percentile of adjusted recall</td>
+<td style="text-align: right;">76% / 66%</td>
+<td style="text-align: right;">79% / 70%</td>
+</tr>
+<tr>
+<td>Stations below 80% / 90%</td>
+<td style="text-align: right;">14.0% / 35.1%</td>
+<td style="text-align: right;">11.2% / 29.8%</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Individual stations change most.</strong> The worst stations in the preregistered table are largely this artefact:</p>
+<ul>
+<li>BK.BABI has 84% of its picks on zero-pick days, and raw recall 0.12 with them against 0.78 without them.</li>
+<li>NC.KTJ: 68% of picks, 0.28 against 0.86.</li>
+<li>CI.WLH2: 47% of picks, 0.53 against 0.997.</li>
+</ul>
+<p>In the station table, 8 stations with more than 25% of their picks on zero-pick days are flagged, and every
+station also gets its adjusted recall without those days.</p>
+<p><strong>Which stations are weak barely changes.</strong></p>
+<ul>
+<li><strong>Bottom decile:</strong> 83 of the 95 stations in the preregistered bottom decile stay in it without zero-pick days.</li>
+<li><strong>Band:</strong> 85 of the new bottom 95 are short-period (EH) stations.</li>
+<li><strong>Regions:</strong> the shares in the three regional boxes are the same to within one percentage point (18%, 13% and 13%,
+  against 9% elsewhere).</li>
+</ul>
+<p>The station effects with and without these days correlate at 0.94 (reviewer's check).</p>
+<p><strong>H2 does not change.</strong> On the station effects estimated without zero-pick days (946 stations with ≥ 30 picks), CV R²
+is 0.36 (0.28 to 0.42), still Refuted. The linear model gives 0.36 and the model with secondary attributes 0.40 (0.33 to
+0.46). R² rises because days without output, which no station attribute can predict, leave the target. The upper bound
+is still below 0.50.</p>
 <h3>H2: station attributes do not predict the weak stations (Refuted)</h3>
 <div class="table-wrap"><table>
 <thead>
@@ -480,9 +682,17 @@ and 923 sample at 100 Hz.</p>
   is more than band alone and noise alone added together (0.11 + 0.08), so the two interact. Even so, most of the
   variation lies within band-and-noise groups.</li>
 </ul>
-<p><strong>Location predicts nothing out of cell.</strong> Neighbouring stations in other 1° cells say less about a station than the
-overall mean does (R² −0.13). The station effects are local to the station, not a regional pattern that spatial
-cross-validation could transfer.</p>
+<p><strong>Location transfers poorly between cells, but neighbours are modestly alike.</strong></p>
+<ul>
+<li><strong>Between cells.</strong> Under the preregistered spatially grouped CV, latitude and longitude alone predict worse than the
+  overall mean (R² −0.13). What a station's location says does not carry over to other 1° cells.</li>
+<li><strong>Within cells.</strong> A station's effect correlates r = 0.32 with the mean effect of its 5 nearest stations (median
+  distance 14 km); r = 0.25 for the single nearest and 0.34 for the 10 nearest.</li>
+<li><strong>Under plain 5-fold CV</strong>, which lets neighbours sit on both sides of a split, location alone gives R² 0.10 (0.03 to
+  0.16). Adding location to the four attributes raises R² from 0.33 to 0.39.</li>
+</ul>
+<p>So there is local clustering at the scale of tens of kilometres, but no regional pattern at the 100-km scale that
+transfers between cells (<code>results/tables/review/misc.json</code>).</p>
 <p>The H2 result does not depend on the VB estimator. With maximum-likelihood station effects as the target, R² is also
 0.29.</p>
 <h3>Diagnostics added after the outcome (deviations.md D4; <code>code/checks.py</code>)</h3>
@@ -494,7 +704,16 @@ gradient norms were 6e-5 to 4e-4, over about 2,060 parameters, and the ELBO was 
 primary estimate is therefore reproducible despite <code>fit_vb</code>'s unseeded starting values. An L-BFGS-B refit stopped
 earlier (gradient norm 36, a worse ELBO) and gives SD_p 0.1051.</p>
 <p><strong>An independent maximum-likelihood fit</strong> of the same model, by adaptive Gauss-Hermite quadrature (as in lme4's
-<code>glmer</code>; <code>tests/aghq_test.py</code> recovers a known station SD on synthetic data):</p>
+<code>glmer</code>). <code>tests/aghq_test.py</code> checks it on synthetic data with a true station SD of 1.1
+(<code>results/tables/review/aghq_test_output.txt</code>):</p>
+<ul>
+<li><strong>400 stations:</strong> the realised SD is 1.060, and ML gives 1.006 (1 node) and 1.011 (15 nodes).</li>
+<li><strong>1,500 stations:</strong> the realised SD is 1.074, and ML gives 1.067 and 1.073.</li>
+</ul>
+<p>The draft's D4 entry quoted only the 1,500-station run, without saying so. In small designs both ML and VB sit a few
+per cent below the realised SD (the reviewer found VB at 1.019 on the 400-station data). If anything, then, σ_u is
+underestimated and the estimate is conservative for H1, though with 1,026 stations the 1,500-station run suggests the
+bias is small. What the cross-check shows is that ML and VB agree with each other:</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -525,7 +744,8 @@ earlier (gradient norm 36, a worse ELBO) and gives SD_p 0.1051.</p>
 </tr>
 </tbody>
 </table></div>
-<p>Both ML fits converge to the same values from the VB estimate and from zero. The ML spread is about 1% smaller, as
+<p>Both ML fits converge to the same values from the VB estimate and from zero, with every station's conditional mode
+converged at the optimum. The ML spread is about 1% smaller, as
 expected for a maximum-likelihood variance component. ML also puts SD_p above 0.10, so the H1 verdict does not depend
 on the estimator. The bootstrap interval was computed with VB only.</p>
 <p><strong>Bookkeeping.</strong> The station order of the VB effects matches the model's level names (1,026 of 1,026), and the
@@ -533,55 +753,76 @@ effects track raw station recall (Spearman 0.98).</p>
 <h3>Exploratory: a false-pick proxy</h3>
 <p>The plan listed a false-pick proxy as exploratory. The proxy counts catalogue P picks with confidence ≥ 0.5 that have
 no reference pick at the station and no catalogue P pick at another station within 10 s. <code>analysis.py</code> had not
-implemented it, so it was added after the outcome (D4).</p>
+implemented it, so it was added after the outcome (D4). Its caveats were added at the reviewer's request (D5).</p>
 <p><strong>The proxy as preregistered is uninformative.</strong></p>
 <ul>
 <li><strong>Definitions fixed in D4:</strong> "no reference pick" means none of either phase at the station within 1 s; "another
   station" means any CI, NC or BK station.</li>
 <li><strong>Result:</strong> 7,485 of 9,391,601 confident P picks, or 0.013 per station-day.</li>
-<li><strong>Why it says little:</strong> across CI, NC and BK the catalogue holds about 0.4 P picks per second. A ±10 s window
-  therefore almost always contains another station's pick by chance.</li>
+<li><strong>Why it says little:</strong> across CI, NC and BK the catalogue holds about 0.5 P picks per second (38.1 million in the
+  30 months). A ±10 s window therefore almost always contains another station's pick by chance.</li>
 </ul>
 <p><strong>A post-hoc variant: isolation from the 5 nearest stations</strong> (<code>checks.py falsepick_nn</code>). A pick is isolated if none of
-the station's 5 nearest catalogue stations has a P pick within 10 s. Across stations, the median of the mean distance to
-those 5 neighbours is 18 km.</p>
+the station's 5 nearest catalogue stations (CI, NC or BK) has a P pick within 10 s. Across stations, the median of the
+mean distance to those 5 neighbours is 18 km.</p>
 <ul>
-<li><strong>The variant separates real and unconfirmed picks.</strong> Of the confident picks that match an analyst pick, 0.9% are
-  isolated; of those that do not, 62% are.</li>
-<li><strong>Result:</strong> 59% of all confident P picks (5.57 million of 9.39 million) are isolated and unreferenced. That is 9.4 per
-  loaded station-day pooled. Across the 949 H2 stations the median is 3.6 per day and the 90th percentile 23 per day.</li>
-<li><strong>Recall and false picks go together:</strong> stations with higher recall also have more isolated picks (Spearman +0.28).
-  That is consistent with a trade-off between sensitivity and false picks at the station level.</li>
+<li><strong>Result:</strong> 59% of confident P picks (5.57 million of 9.39 million) are isolated and unreferenced. That is 9.4 per
+  loaded station-day, against 0.86 analyst-picked M ≥ 1.5 P arrivals per station-day. Across the 949 H2 stations the
+  median is 3.6 per day and the 90th percentile 23 per day.</li>
+<li><strong>The share depends on the confidence threshold.</strong> It is 44% at confidence ≥ 0.7 and 24% at ≥ 0.9. Isolated
+  unreferenced picks have median confidence 0.65 (quartiles 0.56-0.78), against 0.93 for referenced picks.</li>
+<li><strong>Picks an analyst confirmed are rarely isolated</strong> (0.9%, against 62% of unreferenced picks). This is only a check
+  that the isolation test behaves sensibly. Referenced picks come from M ≥ 1.5 events recorded at many stations, so
+  they are rarely isolated by construction, and the check says nothing about what the isolated unreferenced picks
+  are.</li>
+<li><strong>Neighbours were usually recording.</strong> For 89% of isolated unreferenced picks all 5 neighbours were loaded that day,
+  and for 99% at least 4 were.</li>
+<li><strong>There is a daily cycle.</strong> Isolated unreferenced picks are 1.2-1.3 times the uniform hourly rate between 07:00 and
+  13:00 local standard time (UTC−8), and about 0.8 times it between 00:00 and 04:00. Referenced picks, and unreferenced picks that are not
+  isolated, show no such cycle: 57% of isolated unreferenced picks fall in the 12 hours from 07:00 to 18:59, against 48% of the others.
+  That is the signature of cultural (human-made) noise, not of small earthquakes, which networks detect better at
+  night. It does not measure the share.</li>
+<li><strong>Sparse networks have more isolated picks.</strong> The isolated share is 74% at BK stations, 59% at CI and 53% at NC,
+  consistent with sparser neighbours. Stations of other networks (for example BG at The Geysers, the strong-motion
+  networks and the Plate Boundary Observatory) are not candidate neighbours.</li>
+<li><strong>Recall and isolated picks go together.</strong> Stations with higher recall also have more isolated picks (Spearman
+  +0.28). That is consistent with a trade-off between sensitivity and false picks at the station level.</li>
 </ul>
+<p><strong>What "unreferenced" means.</strong> "No analyst pick for an M ≥ 1.5 event within 100 km", not "no earthquake". Events below
+M 1.5 are the great majority of catalogued events, and the reference never contains them.</p>
 <p><strong>What the isolated picks could be.</strong></p>
 <ul>
-<li><strong>Noise detections.</strong> The likely majority.</li>
+<li><strong>Noise detections.</strong> The daily cycle points this way.</li>
 <li><strong>Tiny earthquakes recorded at one station only.</strong> Their number is unknown.</li>
-<li><strong>Picks whose neighbours had a data gap that day.</strong> For picks an analyst confirmed, this effect is bounded by the
-  0.9% figure.</li>
+<li><strong>Picks whose neighbours lacked data.</strong> These are rare, as above.</li>
 </ul>
-<p>The proxy says the catalogue's P picks at confidence ≥ 0.5 are not, by themselves, a list of earthquake arrivals. A
-proper precision study would need event association or template matching.</p>
+<p>The proxy is a flag, not a precision estimate. It says the catalogue's P picks at confidence ≥ 0.5 are not, by
+themselves, a list of earthquake arrivals. A precision study would need event association or template matching.</p>
 <h2>What this means</h2>
 <p><strong>For users of the catalogue.</strong> At these networks QuakeScope's <code>original</code>-weight PhaseNet picks find nine in ten
 analyst-reviewed P arrivals of local M ≥ 1.5 events, with near-analyst timing. That is a usable catalogue. But recall
-is not uniform. Roughly one station in seven sits below 80% at a typical event, and the station's specifications do
-not identify it. Studies that depend on complete phase coverage at particular stations should check those stations
+is not uniform. About one station in eight sits below 80% at a typical event (11-14%, depending on whether days
+without output count), and the station's specifications do not identify it. Studies that depend on complete phase coverage at particular stations should check those stations
 directly. The released table <code>results/tables/station_reliability.csv</code> gives every station's adjusted recall, with an
 interval and the attributes used here.</p>
 <p><strong>For the QuakeScope team.</strong></p>
 <ul>
-<li><strong>Weak stations are station-specific.</strong> Short-period sensors and noisy sites do worse, but most of the variation is
-  neither instrumental nor regional, and location predicts nothing out of cell. That argues for per-station
-  evaluation, and perhaps site-aware calibration, of the staged <code>quakescope2026</code> weights.</li>
+<li><strong>Weak stations are mostly station-specific.</strong> Short-period sensors and noisy sites do worse, and neighbouring
+  stations are modestly alike. But most of the variation is not explained by attributes or location. That argues for
+  per-station evaluation of the staged <code>quakescope2026</code> weights, and perhaps site-aware calibration.</li>
+<li><strong>Check the station-days that are <code>loaded</code> with no picks.</strong> 7.4% of the loaded station-days in the sampled months
+  have <code>npks = 0</code>. On 26% of the reference picks on those days, the analyst's channel band was not among those
+  QuakeScope read, against 3.5% on other days. That fits the reader defect behind the re-read. The station table flags
+  the 8 stations with more than 25% of their reference picks on such days, and it can serve as a check after the
+  re-read.</li>
 <li><strong>False picks may be the larger gap.</strong> On the post-hoc proxy, most confident P picks lack any corroborating pick
   nearby. A precision study is a natural next lead.</li>
 </ul>
 <p><strong>What this does not show.</strong></p>
 <ul>
 <li><strong>Not precision.</strong> Recall against analyst picks says nothing about false picks. The proxy is crude and post hoc.</li>
-<li><strong>Not other regions.</strong> Not other networks (UW, NN, UU and others in the western catalogue), not the 2025 <code>jma_wc</code>
-  archive, and not small events (M &lt; 1.5).</li>
+<li><strong>Not other regions.</strong> Not other networks (UW, NN, UU and others in the western catalogue), not the 2025 archive
+  (run with <code>instance</code> weights, according to the QuakeScope site), and not small events (M &lt; 1.5).</li>
 <li><strong>Not a true miss rate.</strong> Reference picks are the data centres' reviewed picks. Some started as automatic picks, and
   analysts pick some arrivals that a picker cannot be expected to see.</li>
 </ul>
@@ -589,10 +830,23 @@ interval and the attributes used here.</p>
 <ul>
 <li><strong>Analyst picks are a reference, not ground truth.</strong> Emergent arrivals have real timing uncertainty; the impulsive
   subset is the cleaner comparison (SD_p 0.086).</li>
-<li><strong>H1 sits on its threshold.</strong> The verdict follows the rule, but a reasonable reader could call the H1 result "about
-  0.10".</li>
+<li><strong>H1 sits on its threshold.</strong> The rule returns Supported under the preregistered denominator and Inconclusive
+  without zero-output days. 19% of the primary bootstrap draws are below 0.10, and the impulsive and pick-quality
+  analyses put SD_p at 0.086-0.097. The H1 result is best read as "about 0.10".</li>
 <li><strong>The model assumes station effects are normal on the logit scale.</strong> The observed distribution has a long low tail
-  (Figure 1). SD_p summarises it through σ_u, and the quantiles of the station table describe the tail directly.</li>
+  (skew −0.49; Figure 1).</li>
+<li>The empirical SD of posterior-mean station recall across the 949 stations is 0.115, above the model's 0.105. The
+    logit-normal summary is therefore conservative for the H1 threshold.</li>
+<li>But the excess comes from the tail, which is partly zero-output days. Without those days the empirical SD is
+    0.103 (946 stations), and for stations with ≥ 100 picks it is 0.098.</li>
+<li><strong>The noise covariate is noisy.</strong></li>
+<li>It contains physically implausible values. 33 stations exceed log10 RMS −6 (1 µm/s in 1-10 Hz at night) and 32
+    fall below −8.7, under the low-noise model. These are response, metadata or dead-channel problems, so part of
+    the noise-recall association is "broken station" detection.</li>
+<li>Of the 927 stations with any noise windows, 495 have fewer than the full 180 one-minute windows, and 14 have fewer
+    than 60. The window count is now in the station table.</li>
+<li>The plan's FDSN dataselect fallback for stations without S3 waveforms was not implemented: 21 stations have no
+    noise value for that reason.</li>
 <li><strong>The noise covariate is a 3-hour sample</strong> (three one-hour windows at night local time). It may misrepresent
   stations whose noise is daytime or seasonal (urban, coastal).</li>
 <li><strong>Coverage.</strong> Only CI, NC and BK, and only 30 sampled months. 11% of analyst-picked arrivals fall on station-days
@@ -609,12 +863,17 @@ interval and the attributes used here.</p>
   saved before H2; 13 bootstrap workers; a smoke test of the whole pipeline.</li>
 <li><strong>D4</strong> (after the outcome): the diagnostics and the exploratory false-pick work above, plus figures. No verdict
   changed.</li>
+<li><strong>D5</strong> (after the outcome, at the reviewer's request): the zero-output-day sensitivity analysis (H1 Inconclusive
+  without those days), the weight and onset covariates, the AGHQ test correction, the false-pick caveats, the
+  location analyses and the new station-table columns. The preregistered verdicts are unchanged and stay primary.</li>
 </ul>
 <h2>Reproduce</h2>
-<pre><code>code/run_fetch.sh            # catalogue partitions, availability, stations, phase files, StationXML (about 2.4 GB)
+<pre><code>venv/bin/python code/fetch.py months &amp;&amp; venv/bin/python code/fetch.py catalogues
+code/run_fetch.sh            # catalogue partitions, availability, stations, phase files, StationXML (about 2.4 GB)
 venv/bin/python code/parse.py &amp;&amp; venv/bin/python code/covariates.py 12 &amp;&amp; venv/bin/python code/match.py
 venv/bin/python code/analysis.py            # H1 (about 4 h with 13 workers), H2, secondary
 code/run_checks.sh &amp;&amp; code/run_aghq.sh      # D4 diagnostics
+code/run_review_checks.sh                   # D5 review-requested analyses (zero-output days: about 3.5 h)
 venv/bin/python code/checks.py falsepick_nn
 OMP_NUM_THREADS=2 venv/bin/python code/figures.py
 </code></pre>
@@ -630,7 +889,7 @@ OMP_NUM_THREADS=2 venv/bin/python code/figures.py
   doi:10.7932/NCEDC. Phase archives, catalogue and continuous waveforms from the public AWS bucket.</li>
 <li><strong>PhaseNet:</strong> Zhu, W. and Beroza, G. C. (2019). <em>Geophys. J. Int.</em> 216, 261-273.</li>
 <li><strong>Released tables</strong> (derived): <code>results/tables/station_reliability.csv</code>, <code>primary.json</code>, <code>secondary.csv</code>,
-  <code>timing_by_band.csv</code>, <code>h1_bootstrap_draws.csv</code>, and <code>results/tables/checks/</code>.</li>
+  <code>timing_by_band.csv</code>, <code>h1_bootstrap_draws.csv</code>, <code>results/tables/checks/</code> and <code>results/tables/review/</code>.</li>
 </ul>
 </main>
 <footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one

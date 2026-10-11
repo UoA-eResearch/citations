@@ -107,3 +107,71 @@ These diagnostics were added after the outcome was seen (`code/checks.py`, `code
     62% of unreferenced ones.
   - Both the preregistered and the variant results are reported, labelled exploratory.
 - **Figures** (`code/figures.py`) recompute the H2 out-of-fold predictions. They reproduce R² exactly (asserted).
+
+## D5 - 2026-10-12 06:40 NZDT - review-requested analyses and corrections (review/review.md, "fix first", 21 issues)
+
+The preregistered verdicts are unchanged and stay primary. Everything below is post hoc, done at the reviewer's
+request (`code/review_checks.py`, `code/run_review_checks.sh`; outputs in `results/tables/review/`). It was decided
+before the zero-pick-day bootstrap had returned.
+
+1. **Zero-output station-days (issue 1).**
+   - **The problem.** 7.4% of loaded CI/NC/BK station-days in the sampled months have `npks = 0` in QuakeScope's
+     availability table: QuakeScope produced no pick at all on them. 6,383 of the 509,596 H1 picks fall on such days,
+     and their recall is 0 by construction.
+   - **Sensitivity A.** H1 is refitted without these days (503,204 picks, 1,025 stations) with the same 200-refit
+     bootstrap and seeds, writing to `results/tables/review/excl_zero/`. H2 and the tail quantiles are recomputed on
+     the same effects.
+   - **Sensitivity B.** Days with fewer than 10% of the station's median daily pick count are excluded (point estimate
+     only).
+   - **Reporting.** The report states the H1 verdict under both denominators. `station_reliability.csv` gains
+     `zero_pick_day_share`, `low_day_share`, `recall_ref_excl_zero_days`, `noise_windows` and two flags.
+2. **The AGHQ synthetic-test claim (issue 2).**
+   - **What was wrong.** The "1.074 recovered as 1.073" in D4 came from `tests/aghq_test.py 1500` (S = 1,500 stations,
+     passed as an argument). D4 did not say so, and the default (S = 400) gives sample SD 1.060, recovered as
+     1.006/1.011.
+   - **The fix.** Both runs are reported, and the cross-check is described as agreement between ML and VB rather than
+     recovery of the truth.
+3. **Precision of H1 (issue 3).** The quadrature value of SD_p (0.1045) and the share of bootstrap draws below 0.10
+   (19%) are reported.
+4. **The logit-normal assumption (issue 4).** The empirical SD of posterior-mean station recall is reported.
+5. **Location (issues 5 and 6).**
+   - The local spatial correlation of station effects with their neighbours' is reported.
+   - So is plain 5-fold CV with location added.
+   - The regional boxes are fixed in code (`review_checks.BOXES`): the same boxes as the draft's computation.
+6. **False-pick proxy caveats (issue 7).** Shares at confidence ≥ 0.7 and 0.9; the hour-of-day profile; how many
+   neighbours were loaded; the isolated share by network; confidence quantiles.
+7. **Reference heterogeneity (issue 8).** One VB fit with analyst weight class (four classes mapped across the two
+   centres' scales) and onset as covariates.
+8. **Facts and descriptives.**
+   - Recall by period and data centre (issue 9).
+   - The NCEDC status shares (issue 18).
+   - Noise outliers and window counts (issue 13).
+   - The decomposition of misses (issue 17).
+9. **Code fixes.**
+   - `tests/synthetic_test.py` now writes its bootstrap draws to a scratch directory (issue 21).
+   - `checks.AGHQ.modes` records how many station modes are unconverged (issue 19); the AGHQ fits are rerun to
+     report it.
+10. **Text (issues 10-12, 14-16, 20).**
+    - The related work is cited.
+    - The 2025 archive is described as the QuakeScope site does (`instance` weights).
+    - The verdict tag is reconsidered.
+    - Labels are corrected.
+
+### D5 completion - 2026-10-12 10:38 NZDT - results of the review-requested analyses
+
+- **Sensitivity A (zero-pick days excluded; 503,204 picks, 1,025 stations; 200-refit bootstrap).**
+  - SD_p is 0.095 (95% CI 0.088 to 0.105), so the preregistered rule returns **Inconclusive** under this
+    denominator. 14% of the bootstrap draws are at or above 0.10.
+  - σ_u is 1.087, against 1.078 in the primary fit; typical recall at the reference event is 93.6%, against 92.4%.
+  - Tails (946 stations with ≥ 30 picks): 10th percentile 79%, 5th 70%; 11.2% of stations below 80%, 29.8% below 90%.
+  - H2 on these effects: R² 0.36 (0.28 to 0.42), still Refuted.
+  - 8 stations have more than 25% of their reference picks on zero-pick days (flagged in the station table).
+- **AGHQ rerun.** All four fits have zero unconverged station modes at the optimum.
+- **The verdict tag (issue 11) stays "Refuted".**
+  - The lab's tags describe the lead's hypothesis, which was joint, and its second part fails robustly.
+  - The report's verdict line reads "Refuted on H2; H1 at its threshold". It quotes both parts of the hypothesis and
+    says that the tag is not a verdict on the catalogue.
+  - A "Mixed" tag was considered and not adopted. It would be new to the lab's index, and the reviewer offered
+    "Refuted (H2)" as the alternative.
+- **Figure 1** now spans 0.1-1.0, because the draft's 0.3-1.0 range dropped the 5 stations below 0.3. It also
+  overlays the sensitivity-A effects.

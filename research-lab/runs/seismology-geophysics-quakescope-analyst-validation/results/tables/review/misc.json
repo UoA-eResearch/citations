@@ -1,0 +1,181 @@
+{
+ "SD_p_quadrature": 0.10449492159033581,
+ "SD_p_mc_primary": 0.104887890301753,
+ "SD_p_mc_other_seeds": [
+  0.1039590011597018,
+  0.10462333394232574,
+  0.10420090208211262,
+  0.10432309364275473,
+  0.1041367456957873
+ ],
+ "boot_share_below_0_10": 0.19,
+ "boot_sd": 0.005151132936392569,
+ "boot_min": 0.0929322192068342,
+ "boot_max": 0.1187376550470575,
+ "empirical_sd_recall_ge30": 0.11458150950659741,
+ "empirical_sd_recall_all": 0.1141705327347902,
+ "empirical_sd_recall_ge100": 0.0980472348425962,
+ "u_skew_ge30": -0.4931006550384022,
+ "local_spatial": {
+  "r_u_mean_1nn": 0.24691327573129332,
+  "r_u_mean_5nn": 0.3181892473772821,
+  "r_u_mean_10nn": 0.33585119690535514,
+  "median_5nn_mean_km": 14.029327556402233
+ },
+ "plain_kfold": {
+  "location only": {
+   "R2": 0.09890660445748833,
+   "lower95": 0.03435267252168019,
+   "upper95": 0.15549399061563615,
+   "n_stations": 949
+  },
+  "primary": {
+   "R2": 0.3339737477829081,
+   "lower95": 0.2627827931086445,
+   "upper95": 0.39683697549070285,
+   "n_stations": 949
+  },
+  "primary + location": {
+   "R2": 0.3943754263407322,
+   "lower95": 0.3249865110322747,
+   "upper95": 0.46002662255799365,
+   "n_stations": 949
+  }
+ },
+ "boxes": {
+  "Los Angeles basin": [
+   33.6,
+   34.4,
+   -118.7,
+   -117.6
+  ],
+  "Long Valley and Mammoth": [
+   37.4,
+   38.0,
+   -119.3,
+   -118.6
+  ],
+  "San Francisco Bay Area": [
+   37.2,
+   38.3,
+   -122.8,
+   -121.6
+  ]
+ },
+ "regions": {
+  "Long Valley and Mammoth": {
+   "n": 31,
+   "median": 0.8855074935606302,
+   "share_below_q10": 0.12903225806451613
+  },
+  "Los Angeles basin": {
+   "n": 67,
+   "median": 0.8834532173528431,
+   "share_below_q10": 0.1791044776119403
+  },
+  "San Francisco Bay Area": {
+   "n": 106,
+   "median": 0.9198572761772112,
+   "share_below_q10": 0.14150943396226415
+  },
+  "elsewhere": {
+   "n": 745,
+   "median": 0.933486334732357,
+   "share_below_q10": 0.08590604026845637
+  }
+ },
+ "recall_by_source_period": {
+  "ncedc 2010-2017": 0.8989538196052557,
+  "ncedc 2018-2024": 0.8944998973095092,
+  "scedc 2010-2017": 0.9322634288578068,
+  "scedc 2018-2024": 0.9217993176744774
+ },
+ "ncedc_catalogue": {
+  "columns": [
+   "time",
+   "mag",
+   "status"
+  ],
+  "n_events": 16263,
+  "status_share": {
+   "F": 0.7710754473344401,
+   "A": 0.21293734243374532,
+   "I": 0.01598721023181455
+  }
+ },
+ "noise": {
+  "above_minus6": 33,
+  "below_minus8_7": 32,
+  "full_180_windows": 432,
+  "under_60_windows": 14,
+  "missing": 25
+ },
+ "recall_by_network_readband": [
+  {
+   "network": "BK",
+   "cha": "DP",
+   "median": 0.9686418474720514,
+   "size": 6
+  },
+  {
+   "network": "BK",
+   "cha": "HH",
+   "median": 0.9506898821344396,
+   "size": 119
+  },
+  {
+   "network": "BK",
+   "cha": "HN",
+   "median": 0.914938882729778,
+   "size": 7
+  },
+  {
+   "network": "CI",
+   "cha": "EH",
+   "median": 0.7877362667095389,
+   "size": 83
+  },
+  {
+   "network": "CI",
+   "cha": "HH",
+   "median": 0.9519223178005474,
+   "size": 278
+  },
+  {
+   "network": "CI",
+   "cha": "HN",
+   "median": 0.907243345398411,
+   "size": 9
+  },
+  {
+   "network": "NC",
+   "cha": "DP",
+   "median": 0.9698980583268042,
+   "size": 1
+  },
+  {
+   "network": "NC",
+   "cha": "EH",
+   "median": 0.9133223441087494,
+   "size": 393
+  },
+  {
+   "network": "NC",
+   "cha": "HH",
+   "median": 0.9423856540214404,
+   "size": 33
+  },
+  {
+   "network": "NC",
+   "cha": "HN",
+   "median": 0.9597929466653731,
+   "size": 18
+  },
+  {
+   "network": "NC",
+   "cha": "SH",
+   "median": 0.897367385522353,
+   "size": 2
+  }
+ ]
+}
