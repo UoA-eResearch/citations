@@ -7,6 +7,7 @@ Filters (plan section 3; D1 adds the NCEDC review status): CI picks from SCEDC; 
 import gzip
 import io
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -25,9 +26,15 @@ def scedc_file(path):
     if not lines:
         return rows
     h = lines[0].split()
+    # D2: placeholder files (event id 0, 1970 date) are skipped; the origin time is found by pattern, since one header
+    # omits the geographic type field; geotype l (local), r (regional), t (teleseism)
+    k = next((i for i, x in enumerate(h) if re.match(r"\d{4}/\d\d/\d\d,\d", x)), None)
+    if k is None or h[0] == "0" or k + 4 >= len(h):
+        return rows
     evid, etype = h[0], h[1]
-    ot = pd.Timestamp(h[3].replace("/", "-").replace(",", " "))
-    mag = float(h[7])
+    geotype = h[2] if k == 3 else ""
+    ot = pd.Timestamp(h[k].replace("/", "-").replace(",", " "))
+    mag = float(h[k + 4])
     for l in lines[1:]:
         f = l.split()
         if len(f) < 12:
@@ -35,7 +42,7 @@ def scedc_file(path):
         net, sta, cha, loc = f[0], f[1], f[2], f[3]
         phase, onset = f[7], f[9]
         weight, dist, tt = float(f[10]), float(f[11]), float(f[12])
-        rows.append(dict(source="scedc", evid=evid, etype=etype, mag=mag, origin=ot, net=net, sta=sta, cha=cha,
+        rows.append(dict(source="scedc", evid=evid, etype=etype, geotype=geotype, mag=mag, origin=ot, net=net, sta=sta, cha=cha,
                          loc="" if loc == "--" else loc, phase=phase, onset=onset, weight=weight, dist_km=dist,
                          t_ref=ot + pd.Timedelta(seconds=tt)))
     return rows
@@ -102,7 +109,7 @@ def main():
     d.loc[nc, "etype"] = d.loc[nc, "evid"].map(cat["type"])
     d["status"] = np.where(nc, d.evid.map(cat["status"]), "scedc")
     n0 = len(d)
-    keep = (((d.source == "scedc") & (d.net == "CI")) | (nc & d.net.isin(["NC", "BK"]))) & (d.etype == "eq") & \
+    keep = (((d.source == "scedc") & (d.net == "CI") & (d.geotype == "l")) | (nc & d.net.isin(["NC", "BK"]))) & (d.etype == "eq") & \
         (d.mag >= 1.5) & ((d.source == "scedc") | (d.status == "F")) & (d.dist_km <= 100) & (d.weight > 0)
     d = d[keep].sort_values(["evid", "net", "sta", "phase", "weight", "t_ref"], ascending=[True, True, True, True, False, True])
     d = d.drop_duplicates(["source", "evid", "net", "sta", "phase"])

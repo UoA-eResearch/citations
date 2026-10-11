@@ -27,3 +27,18 @@ recall had been computed.
 
 The synthetic test (`tests/synthetic_test.py`) recovers a known between-station SD (0.158 against 0.159) and a known
 covariate structure (spatial-CV R² 0.62).
+
+## D2. SCEDC header variants; local events only (2026-10-11 17:40 NZDT)
+
+The first run of `parse.py` stopped on SCEDC phase-file headers that the format probe had not shown. It stopped
+before any matching. Of 54,286 SCEDC files:
+
+| Header | Files | Handling |
+|---|---|---|
+| Normal | 53,922 | Parsed |
+| Placeholder (event ID 0, date 1970-01-01) | 363 | Skipped; no event |
+| Missing geographic-type field | 1 | Origin time found by pattern; type left empty, so the event is excluded below |
+
+**The geographic-type field** is `l` (local), `r` (regional) or `t` (teleseism). The plan specifies local
+earthquakes, so SCEDC events are kept only with type `eq` and geographic type `l`. Teleseisms would mostly fail
+the 100 km filter anyway; regional events located outside the network are dropped.
