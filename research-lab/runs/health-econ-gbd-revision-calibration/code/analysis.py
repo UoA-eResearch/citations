@@ -166,7 +166,7 @@ def secondary(p, q):
     rows += row("C1, cells with >= 10 deaths (GBD 2021)", big, "cov1", "elig1", groups=g)
     rows += row("C2, cells with >= 10 deaths (GBD 2021)", big, "cov2", "elig2", groups=g)
     # benchmark E1 and direction of misses, width ratio
-    for k, cs in {"all": None} | g.items():
+    for k, cs in ({"all": None} | g).items():
         x = p if cs is None else p[p.location_id.isin(cs)]
         e = x[x.elig1 & x.elig2]
         rows.append(dict(analysis="E1, expected C1 if calibrated and independent (mean over cells eligible for both)", group=k,

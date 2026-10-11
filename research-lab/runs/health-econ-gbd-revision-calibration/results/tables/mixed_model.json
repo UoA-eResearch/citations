@@ -1,0 +1,15 @@
+{
+ "C(quality_group, Treatment('high'))[T.low]": {
+  "OR": 1.0613872070276125,
+  "lower95": 1.0284135263433287,
+  "upper95": 1.0954181118634834
+ },
+ "C(quality_group, Treatment('high'))[T.medium]": {
+  "OR": 0.9350389539241812,
+  "lower95": 0.8745109530737191,
+  "upper95": 0.9997563121224007
+ },
+ "sd_country_logit": 0.7195079782252052,
+ "sd_cause_logit": 0.9549789905701558,
+ "optimiser_converged_flag": true
+}

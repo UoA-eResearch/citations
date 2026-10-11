@@ -1,0 +1,28 @@
+analysis,group,n_cells,estimate,lower95,upper95
+X1 C1 excluding Other neoplasms,all,51902.0,0.6639243189087126,0.6337693003688286,0.6910254234722292
+X1 C2 excluding Other neoplasms,all,51811.0,0.8197873038543938,0.7941373182226544,0.8426126698395613
+X2 number of residual 'Other ...' causes excluded,all,,13.0,,
+X2 C1 excluding residual 'Other ...' causes,all,47006.0,0.6748712930264221,0.6465519890407604,0.7002244502003623
+X2 C2 excluding residual 'Other ...' causes,all,46915.0,0.8276457422999041,0.8056721839406461,0.8471840728484081
+"X2 C2 high - low, excluding residual causes",high - low,,0.016956198280760226,-0.022328877645162663,0.05568051299379393
+"X3 per-cause C2, 10th percentile across 137 causes",all,,0.6602941176470588,,
+"X3 per-cause C2, 25th percentile across 137 causes",all,,0.7769607843137255,,
+"X3 per-cause C2, 50th percentile across 137 causes",all,,0.8382352941176471,,
+"X3 per-cause C2, 75th percentile across 137 causes",all,,0.8924050632911392,,
+"X3 per-cause C2, 90th percentile across 137 causes",all,,0.9299019607843138,,
+X3 causes with per-cause C2 >= 0.95,all,,7.0,,
+X4 share |z| <= 0.674 (nominal 0.50),all,52219.0,0.4529002853367548,,
+X4 share |z| <= 1.282 (nominal 0.80),all,52219.0,0.6794461785939984,,
+X4 share |z| <= 1.645 (nominal 0.90),all,52219.0,0.7629023918497099,,
+X4 share |z| <= 1.960 (nominal 0.95),all,52219.0,0.8140332063042188,,
+X4 share |z| <= 2.576 (nominal 0.99),all,52219.0,0.8771519944847661,,
+X4 SD of z (1 if calibrated and independent),all,,3.102807498051898,,
+X4 median |z| (0.674 if calibrated and independent),all,,0.7721990966920641,,
+X4 widening factor so that 80% of |z| fall within the nominal 80% band,all,,1.4536509556725965,,
+X4 widening factor so that 90% of |z| fall within the nominal 90% band,all,,1.7856077601605553,,
+X4 widening factor so that 95% of |z| fall within the nominal 95% band,all,,2.1784457365075536,,
+"X5 C2 high - low, year 2019",high - low,,0.039940714420519385,-0.0020814230098396224,0.08004662382991688
+"X5 C2 high - low, year 2021",high - low,,-0.015279171315588536,-0.05987683436651107,0.026971867810633474
+X6 C2 with asymmetric half-widths,high,,0.8211600429645542,0.7832855394752964,0.8541218095819327
+X6 C2 with asymmetric half-widths,low,,0.8070012596963468,0.778246343408192,0.8353480748606559
+X6 C2 with asymmetric half-widths,medium,,0.8217130082436775,0.7715701994855639,0.8640321833838184
