@@ -2,21 +2,21 @@
 [
 "Verdict",
 "Refuted",
-"leaked problems lose +1.3 pp more on certified rewording (bounds -0.7 to +3.5), not >= 10"
+"surface rewording, pass@32: leaked problems lose +1.0 pp more (one-sided upper bound +3.3), not >= 10"
 ],
 [
 "miniF2F leaked",
-"52%",
-"252 of 488 have a Lean-certified equivalent or stronger statement in an open corpus"
+"51%",
+"250 of 488 have a Lean-certified identical, equivalent or stronger statement in an open corpus"
 ],
 [
 "Own-corpus leaks",
-"20% / 11% / 3%",
-"Goedel-Prover-V2 / Kimina / DeepSeek-Prover-V2"
+"18% / 11% / 3%",
+"Goedel-Prover-V2 / Kimina / DeepSeek-Prover-V2 (public lineage)"
 ],
 [
-"STP (secondary)",
-"+3.5 pp",
-"the one prover whose trained-on items lose measurably more on rewording"
+"Per sample",
+"+6.8 / +14.4 pp",
+"extra drop on reworded leaked items for DeepSeek-Prover-V2 / STP, whose leaks are near-verbatim; pass@32 sits at a 100% ceiling"
 ]
 ]

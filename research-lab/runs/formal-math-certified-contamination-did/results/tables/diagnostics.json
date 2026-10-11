@@ -1,0 +1,193 @@
+{
+ "retrieval_recall_on_reformulations": {
+  "R1": {
+   "n": 400,
+   "recall": 0.5825,
+   "median_jaccard": 0.33984375
+  },
+  "R2": {
+   "n": 386,
+   "recall": 0.4378238341968912,
+   "median_jaccard": 0.265625
+  }
+ },
+ "unchecked_minif2f": {
+  "by_corpus": {
+   "dsp_v1": {
+    "pairs": 2628,
+    "unchecked": 107
+   },
+   "goedel_lwproofs": {
+    "pairs": 2100,
+    "unchecked": 52
+   },
+   "goedel_pset": {
+    "pairs": 6229,
+    "unchecked": 384
+   },
+   "lean_workbook": {
+    "pairs": 3075,
+    "unchecked": 163
+   },
+   "numina_lean": {
+    "pairs": 3285,
+    "unchecked": 295
+   },
+   "sft_v2": {
+    "pairs": 5687,
+    "unchecked": 355
+   },
+   "stp": {
+    "pairs": 5526,
+    "unchecked": 340
+   }
+  },
+  "pairs": 28530,
+  "unchecked": 1696,
+  "share": 0.05944619698562916
+ },
+ "l2_composition": {
+  "n": 211,
+  "by_type": {
+   "benchmark conclusion with extra conjuncts": 114,
+   "other (more general, or textually different)": 63,
+   "same conclusion, fewer or weaker hypotheses": 24,
+   "iff form": 10
+  }
+ },
+ "leaked_items_by_best_tier": {
+  "L0": 185,
+  "L1": 47,
+  "L2": 18
+ },
+ "solve_rates_by_split": [
+  {
+   "prover": "dsp_v2",
+   "leaked": false,
+   "split": "test",
+   "n": 74,
+   "pass32": 0.7027027027027027,
+   "rate": 0.5434966216216216
+  },
+  {
+   "prover": "dsp_v2",
+   "leaked": false,
+   "split": "valid",
+   "n": 69,
+   "pass32": 0.7681159420289855,
+   "rate": 0.6340579710144928
+  },
+  {
+   "prover": "dsp_v2",
+   "leaked": true,
+   "split": "test",
+   "n": 8,
+   "pass32": 1.0,
+   "rate": 0.94921875
+  },
+  {
+   "prover": "dsp_v2",
+   "leaked": true,
+   "split": "valid",
+   "n": 8,
+   "pass32": 1.0,
+   "rate": 0.9609375
+  },
+  {
+   "prover": "goedel_v2",
+   "leaked": false,
+   "split": "test",
+   "n": 80,
+   "pass32": 0.8625,
+   "rate": 0.64765625
+  },
+  {
+   "prover": "goedel_v2",
+   "leaked": false,
+   "split": "valid",
+   "n": 74,
+   "pass32": 0.8918918918918919,
+   "rate": 0.7753378378378378
+  },
+  {
+   "prover": "goedel_v2",
+   "leaked": true,
+   "split": "test",
+   "n": 36,
+   "pass32": 0.7222222222222222,
+   "rate": 0.4644097222222222
+  },
+  {
+   "prover": "goedel_v2",
+   "leaked": true,
+   "split": "valid",
+   "n": 52,
+   "pass32": 0.9038461538461539,
+   "rate": 0.7001201923076923
+  },
+  {
+   "prover": "kimina",
+   "leaked": false,
+   "split": "test",
+   "n": 70,
+   "pass32": 0.7285714285714285,
+   "rate": 0.5424107142857143
+  },
+  {
+   "prover": "kimina",
+   "leaked": false,
+   "split": "valid",
+   "n": 74,
+   "pass32": 0.7297297297297297,
+   "rate": 0.6038851351351351
+  },
+  {
+   "prover": "kimina",
+   "leaked": true,
+   "split": "test",
+   "n": 29,
+   "pass32": 0.8275862068965517,
+   "rate": 0.6411637931034483
+  },
+  {
+   "prover": "kimina",
+   "leaked": true,
+   "split": "valid",
+   "n": 23,
+   "pass32": 0.7391304347826086,
+   "rate": 0.6086956521739131
+  },
+  {
+   "prover": "stp",
+   "leaked": false,
+   "split": "test",
+   "n": 233,
+   "pass32": 0.5536480686695279,
+   "rate": 0.42006437768240346
+  },
+  {
+   "prover": "stp",
+   "leaked": false,
+   "split": "valid",
+   "n": 63,
+   "pass32": 0.015873015873015872,
+   "rate": 0.013392857142857142
+  },
+  {
+   "prover": "stp",
+   "leaked": true,
+   "split": "test",
+   "n": 6,
+   "pass32": 1.0,
+   "rate": 0.7447916666666666
+  },
+  {
+   "prover": "stp",
+   "leaked": true,
+   "split": "valid",
+   "n": 167,
+   "pass32": 1.0,
+   "rate": 0.9307634730538922
+  }
+ ]
+}

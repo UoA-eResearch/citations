@@ -77,7 +77,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 <div class="page">
 <header class="masthead">
   <div class="eyebrow">Research Lab · Deep dive · Formal mathematics</div>
-  <h1>Does training-set leakage explain how AI provers score on miniF2F?</h1>
+  <h1>Do AI provers lose more on reworded leaked miniF2F problems?</h1>
   <p class="subtitle">A preregistered study: Lean-certified leakage between seven open prover-training corpora and four benchmarks, and a difference-in-differences test of whether leaked problems lose more of their solve rate when reworded into certified-equivalent forms.</p>
   <div class="meta">
     <span>Report · 2026-10-11 · draft for independent review</span>
@@ -87,26 +87,32 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
     <a href="../../index.html">All research leads</a>
   </div>
 </header>
-<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Verdict</div><div class="tile-value text">Refuted</div><div class="tile-note">leaked problems lose +1.3 pp more on certified rewording (bounds -0.7 to +3.5), not &gt;= 10</div></div><div class="tile"><div class="tile-label">miniF2F leaked</div><div class="tile-value">52%</div><div class="tile-note">252 of 488 have a Lean-certified equivalent or stronger statement in an open corpus</div></div><div class="tile"><div class="tile-label">Own-corpus leaks</div><div class="tile-value">20% / 11% / 3%</div><div class="tile-note">Goedel-Prover-V2 / Kimina / DeepSeek-Prover-V2</div></div><div class="tile"><div class="tile-label">STP (secondary)</div><div class="tile-value">+3.5 pp</div><div class="tile-note">the one prover whose trained-on items lose measurably more on rewording</div></div></section>
+<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Verdict</div><div class="tile-value text">Refuted</div><div class="tile-note">surface rewording, pass@32: leaked problems lose +1.0 pp more (one-sided upper bound +3.3), not &gt;= 10</div></div><div class="tile"><div class="tile-label">miniF2F leaked</div><div class="tile-value">51%</div><div class="tile-note">250 of 488 have a Lean-certified identical, equivalent or stronger statement in an open corpus</div></div><div class="tile"><div class="tile-label">Own-corpus leaks</div><div class="tile-value">18% / 11% / 3%</div><div class="tile-note">Goedel-Prover-V2 / Kimina / DeepSeek-Prover-V2 (public lineage)</div></div><div class="tile"><div class="tile-label">Per sample</div><div class="tile-value">+6.8 / +14.4 pp</div><div class="tile-note">extra drop on reworded leaked items for DeepSeek-Prover-V2 / STP, whose leaks are near-verbatim; pass@32 sits at a 100% ceiling</div></div></section>
 <main>
+<p><strong>Verdict: Refuted (surface rewording, pass@32).</strong> At the preregistered metric and threshold, leaked problems do not lose
+10 points more than clean ones when reworded. Per sample, though, the two provers whose training data hold near-verbatim
+copies lose 7 and 14 points more.</p>
 <h2>In plain terms</h2>
-<p>AI systems that write machine-checked proofs are usually compared on miniF2F, a set of 488 competition problems. If
-the problems, or versions of them, sit in a system's training data, its score may reflect memory rather than skill.</p>
-<p>We searched the seven public training sets behind today's open provers for every miniF2F problem, and used the Lean
-proof checker to certify matches: identical, logically equivalent, or a stronger version of the same claim. <strong>About
-half of miniF2F (252 of 488 problems) has such a match in at least one open corpus.</strong> For each prover's own training
-data the rate is lower but substantial:</p>
+<p>AI systems that write machine-checked proofs are usually compared on miniF2F, a set of 488 competition problems. If the
+problems, or versions of them, are in a system's training data, its score may reflect memory rather than skill.</p>
+<p>We searched the seven public training sets behind today's open provers for every miniF2F problem. The Lean proof checker
+certified each match as identical, logically equivalent, or a stronger claim. <strong>About half of miniF2F (250 of 488
+problems) has such a match in at least one open corpus.</strong> For each prover's own public training data, the rate is:</p>
 <ul>
-<li>about a fifth of problems for Goedel-Prover-V2;</li>
+<li>18% for Goedel-Prover-V2;</li>
 <li>11% for Kimina;</li>
 <li>3% for DeepSeek-Prover-V2.</li>
 </ul>
-<p>We then tested whether memory drives the scores. If a model has memorised a problem, rewording it (renaming
-variables, reordering assumptions, flipping equations) should hurt more on leaked problems than on clean ones. It did
-not. Rewording changed the solve rate by about 1 point more on leaked problems, far below the 10 points we set in
-advance. <strong>The prediction is refuted.</strong></p>
-<p>Leaked problems were often solved far more frequently in absolute terms (100% against 43-73% for two provers). Whatever
-the models learned from them survives simple rewording, and our design cannot tell memory from easier problems.</p>
+<p>DeepSeek-Prover-V2 and STP also document training on miniF2F's 244 "validation" problems.</p>
+<p>We then reworded each problem without changing its meaning: renamed variables, reordered assumptions, flipped
+equations. The preregistered test asked whether leaked problems lose at least 10 points more of their 32-attempt solve
+rate than clean ones. They lost about 1 point more. <strong>The prediction is refuted.</strong></p>
+<p>That metric has a blind spot. A problem counts as solved if any of the 32 attempts succeeds, and two provers solve every
+leaked problem every time, so the metric cannot fall. Counting individual attempts instead, DeepSeek-Prover-V2 and STP
+lose 7 and 14 points more on reworded leaked problems, more with heavier rewording. That is the signature of memorised
+wording. Goedel and Kimina, whose leaks are mostly differently worded versions, show no such effect.</p>
+<p>So surface memorisation is real for some provers, but at 32 attempts it does not change which problems get solved.
+Along the way we found two miniF2F problems that are false as formalised, and one that is vacuous.</p>
 <h2>What was done</h2>
 <p><strong>Benchmarks.</strong></p>
 <ul>
@@ -178,38 +184,38 @@ version (4.9 or 4.15):</p>
 </tr>
 <tr>
 <td>L2</td>
-<td>The training statement certifiably implies the test statement</td>
+<td>The training statement certifiably implies the benchmark statement</td>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Guards.</strong> An implication counts only if it is <em>informative</em>:</p>
+<p><strong>Guards.</strong> An implication counts only if it is informative:</p>
 <ul>
-<li><strong>The conclusion is not provable alone.</strong> The conclusion must not be provable by a superset of the portfolio
-  without the hypothesis (D3a).</li>
-<li><strong>The hypothesis is not refutable.</strong> The training statement must not be refutable by the portfolio, because a false
-  training statement implies anything (D3b).</li>
+<li><strong>The conclusion is not provable alone.</strong> The conclusion must not be provable by a hypothesis-free portfolio (D3a).</li>
+<li><strong>The premise is not false.</strong> It must not be refuted by the portfolio (D3b) or by small numeral witnesses (D9).</li>
+<li><strong>No explosion.</strong> The premise must not also imply the negation of the conclusion (D9).</li>
 </ul>
-<p>Timeouts count as "not a leak". These guards came from spot-checks during the study, before any prover was run. The
-first versions let through closed arithmetic facts and false training statements (D3-D3b).</p>
+<p>Timeouts count against the leak. The witness and negation conditions were added after the independent review found
+false training statements, such as "∀ a : ℝ, a = 0", still counted as leaks. Every rejection they added is a
+kernel-checked proof, not a timeout (D9 addendum).</p>
 <p><strong>Reformulations.</strong> Two per item:</p>
 <ul>
 <li><strong>R1:</strong> fresh names for every variable and hypothesis, with hypotheses reordered.</li>
 <li><strong>R2:</strong> R1 plus flipped equalities.</li>
 </ul>
-<p>Each is kept only if Lean certifies it equivalent to the original in each prover's environment: 484 of 488 items in
-Lean 4.9 and 483 in Lean 4.15.</p>
+<p>Each is kept only if Lean certifies it equivalent to the original in each prover's environment. For 83 items without
+binders, R1 is identical to the original; those R1 versions are dropped (D9). 70 of those 83 items keep a genuine R2.</p>
 <p><strong>Provers and sampling.</strong></p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
 <th>Prover</th>
-<th>Own corpora</th>
+<th>Own corpora (plan)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>DeepSeek-Prover-V2-7B</td>
-<td>DeepSeek-Prover-V1 data</td>
+<td>DeepSeek-Prover-V1 data (its public lineage)</td>
 </tr>
 <tr>
 <td>Goedel-Prover-V2-8B</td>
@@ -217,7 +223,7 @@ Lean 4.9 and 483 in Lean 4.15.</p>
 </tr>
 <tr>
 <td>Kimina-Prover-Distill-8B</td>
-<td>NuminaMath-LEAN</td>
+<td>NuminaMath-LEAN (the data of its 72B teacher)</td>
 </tr>
 <tr>
 <td>STP (pre-specified secondary)</td>
@@ -226,29 +232,31 @@ Lean 4.9 and 483 in Lean 4.15.</p>
 </tbody>
 </table></div>
 <ul>
-<li>32 samples per version, each model card's prompt, at most 8,192 new tokens. STP: 2,048, as a completion model.</li>
-<li><strong>Items:</strong> every leaked item plus 150 random clean items per prover. STP: all 488.</li>
+<li><strong>Sampling.</strong> 32 samples per version, at most 8,192 new tokens. STP is a completion model and gets 2,048.</li>
+<li><strong>Prompt.</strong> DeepSeek-Prover-V1.5's miniF2F header with each model's documented instruction and chat template. The
+  header sets <code>maxHeartbeats 400000</code>, where the model cards use 0.</li>
+<li><strong>Items.</strong> Every leaked item plus 150 random clean items per prover. STP gets all 488.</li>
 </ul>
 <p><strong>Verification.</strong> Every proof was checked in Lean in its prover's environment. Rejected:</p>
 <ul>
-<li>changed theorem statements;</li>
+<li>changed theorem statements, compared ignoring spaces next to brackets (D9);</li>
 <li><code>sorry</code>, <code>admit</code> and <code>native_decide</code>;</li>
 <li>non-standard axioms.</li>
 </ul>
 <p><strong>Test (H1).</strong> For each (item, prover):</p>
 <ul>
-<li>d = pass@32 on the original − mean pass@32 on its certified reformulations;</li>
+<li>d = pass@32 on the original − mean pass@32 on its genuine certified reformulations;</li>
 <li>DiD = mean d over leaked pairs − mean d over clean pairs, pooled over the three provers;</li>
-<li>the interval is a one-sided 95% item-cluster bootstrap (10,000 draws).</li>
+<li>the interval is an item-cluster bootstrap (10,000 draws).</li>
 </ul>
+<p>The one vacuous item (below) is excluded.</p>
 <p><strong>Decision rule.</strong></p>
 <ul>
-<li><strong>Supported:</strong> DiD ≥ 10 pp and the lower bound &gt; 0.</li>
-<li><strong>Refuted:</strong> the upper bound is below 10 pp and the minimum detectable effect is at most 10 pp. It was set at 6.7 pp
-  before sampling (D4).</li>
+<li><strong>Supported:</strong> DiD ≥ 10 pp and the one-sided 95% lower bound &gt; 0.</li>
+<li><strong>Refuted:</strong> the one-sided 95% upper bound is below 10 pp and the minimum detectable effect is at most 10 pp.</li>
 </ul>
 <h2>Results</h2>
-<p><strong>Leak map (H0).</strong></p>
+<p><strong>Leak map (H0).</strong> Items with a certified L0, L1 or L2 match:</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -268,25 +276,32 @@ Lean 4.9 and 483 in Lean 4.15.</p>
 <td>0</td>
 </tr>
 <tr>
-<td>Goedel-Pset-v1</td>
-<td>67 (13.7%)</td>
-<td>48</td>
-<td>6</td>
-<td>9</td>
+<td>Goedel SFT v2</td>
+<td>57 (11.7%)</td>
+<td>41</td>
+<td>5</td>
+<td>1</td>
 </tr>
 <tr>
-<td>Goedel-Prover-V2 SFT</td>
-<td>61 (12.5%)</td>
-<td>42</td>
+<td>Goedel-Pset-v1</td>
+<td>56 (11.5%)</td>
+<td>40</td>
 <td>5</td>
-<td>2</td>
+<td>7</td>
 </tr>
 <tr>
 <td>NuminaMath-LEAN</td>
-<td>55 (11.3%)</td>
+<td>54 (11.1%)</td>
 <td>53</td>
 <td>5</td>
-<td>22</td>
+<td>19</td>
+</tr>
+<tr>
+<td>Lean Workbook</td>
+<td>30 (6.1%)</td>
+<td>28</td>
+<td>1</td>
+<td>1</td>
 </tr>
 <tr>
 <td>DeepSeek-Prover-V1</td>
@@ -303,180 +318,333 @@ Lean 4.9 and 483 in Lean 4.15.</p>
 <td>0</td>
 </tr>
 <tr>
-<td>Lean Workbook</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-<tr>
 <td><strong>Any corpus</strong></td>
-<td><strong>252 (51.6%)</strong></td>
-<td><strong>171 (35.0%)</strong></td>
+<td><strong>250 (51.2%)</strong></td>
+<td><strong>168 (34.4%)</strong></td>
 <td><strong>34 (9.2%)</strong></td>
-<td><strong>26 (3.9%)</strong></td>
+<td><strong>23 (3.4%)</strong></td>
 </tr>
 </tbody>
 </table></div>
-<figure><a href="results/figures/leak_rates.png"><img src="results/figures/leak_rates.png" alt="Certified leak rates"></a><figcaption>Share of benchmark items with a Lean-certified identical (L0), equivalent (L1) or stronger (L2) statement in each open training corpus, after the informativeness and explosion guards (D3-D3b).</figcaption></figure>
+<figure><a href="results/figures/leak_rates.png"><img src="results/figures/leak_rates.png" alt="Certified leak rates"></a><figcaption>Share of benchmark items with a Lean-certified identical (L0), equivalent (L1) or stronger (L2) statement in each open training corpus, after the informativeness and explosion guards (D3-D3b, D9).</figcaption></figure>
+<p><strong>Verbatim copies.</strong></p>
 <ul>
-<li><strong>STP_Lean_0320.</strong> It contains 173 miniF2F <em>validation</em> statements verbatim, so STP trained on them. Only one test
-  item matches verbatim.</li>
-<li><strong>NuminaMath-LEAN</strong> (Kimina's corpus) contains 5 miniF2F <em>test</em> statements verbatim, plus 37 certified equivalents
-  and 13 stronger statements. It also covers 22 PutnamBench problems.</li>
-<li><strong>Most leaks are not textual copies.</strong> Across corpora, L1 and L2 leaks, which text-level decontamination can miss,
-  outnumber verbatim ones apart from STP.</li>
-<li><strong>Automation alone.</strong> 69 miniF2F items are provable by the certification portfolio alone, and so can only be leaked
-  verbatim.</li>
+<li><strong>STP_Lean_0320</strong> contains 173 miniF2F validation statements verbatim, plus one test statement.</li>
+<li><strong>NuminaMath-LEAN</strong> (Kimina's lineage) contains 5 miniF2F test statements verbatim: <code>aime_1990_p15</code>, <code>imo_1963_p5</code>
+  and three MATH algebra items. That is despite the Kimina paper's 13-gram decontamination, which was run on the
+  informal problems.</li>
+<li><strong>Lean Workbook</strong> contains 2 verbatim, one of them a test item.</li>
 </ul>
-<p><strong>H1: Refuted.</strong> Pooled over the three provers (170 leaked and 450 clean pairs):</p>
+<p><strong>Best tier per leaked item.</strong> Across all corpora, 185 of the 250 leaked items match at L0, 47 at L1 at best, and 18
+only at L2.</p>
+<p><strong>What L2 means here.</strong> Of the 211 L2 pairs:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Kind of L2 pair</th>
+<th>Pairs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The benchmark conclusion with extra conjuncts (STP conjectures, Goedel scaffolds)</td>
+<td>114</td>
+</tr>
+<tr>
+<td>The same conclusion with fewer or weaker hypotheses</td>
+<td>24</td>
+</tr>
+<tr>
+<td>An iff form</td>
+<td>10</td>
+</tr>
+<tr>
+<td>More general, or textually different</td>
+<td>63</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Benchmark items.</strong></p>
+<ul>
+<li><strong>Automation-provable:</strong> 82 miniF2F items are provable by the hypothesis-free portfolio alone, so they can be
+  leaked only verbatim.</li>
+<li><strong>Vacuous:</strong> <code>valid/mathd_numbertheory_35</code> has contradictory hypotheses (<code>∀ n, n ∣ Nat.sqrt 196</code>).</li>
+<li><strong>False as formalised:</strong> two items are refuted in Lean.</li>
+<li><code>valid/aime_1988_p3</code>: at x = 1, Lean's log 0 = 0 makes the hypothesis hold and the conclusion fail.</li>
+<li><code>valid/induction_sum_odd</code>: Σ 2k + 1 = n² fails at n = 0.</li>
+</ul>
+<p><strong>H1: Refuted.</strong> Pooled over the three provers (156 leaked and 441 clean pairs):</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
 <th></th>
-<th>Drop from original to reformulation</th>
+<th>Drop from original to reformulation, pass@32</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Leaked items</td>
-<td>+0.9 pp</td>
+<td>+0.6 pp</td>
 </tr>
 <tr>
 <td>Clean items</td>
-<td>−0.4 pp</td>
+<td>−0.3 pp</td>
 </tr>
 <tr>
 <td><strong>Difference-in-differences</strong></td>
-<td><strong>+1.3 pp (one-sided 95% bounds −0.7 to +3.5)</strong></td>
+<td><strong>+1.0 pp (one-sided 95% upper bound +3.3; lower bound −1.2)</strong></td>
 </tr>
 </tbody>
 </table></div>
-<p>The upper bound is far below the preregistered 10 pp, and the minimum detectable effect was 6.7 pp. Using the
-observed spread of d, it would have been 3.0 pp.</p>
-<figure><a href="results/figures/did.png"><img src="results/figures/did.png" alt="Difference-in-differences by prover"></a><figcaption>Difference-in-differences: (pass@32 drop from original to certified reformulation on leaked items) minus (the same drop on clean items), pooled over the three preregistered provers and for each prover, with item-cluster bootstrap one-sided 95% bounds. STP is a pre-specified secondary analysis.</figcaption></figure>
-<p><strong>By prover.</strong></p>
+<p>The upper bound is far below the preregistered 10 pp.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Minimum detectable effect</th>
+<th>pp</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Design assumption (SD 0.30)</td>
+<td>7.0</td>
+</tr>
+<tr>
+<td>Observed spread of d</td>
+<td>3.2</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>By prover.</strong> Brackets give 90% intervals (the 5th and 95th bootstrap percentiles):</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
 <th>Prover</th>
-<th>Leaked pairs</th>
-<th>DiD (one-sided 95% bounds)</th>
+<th>Leaked / clean pairs</th>
+<th>DiD, pass@32</th>
+<th>DiD, per-sample solve rate</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>DeepSeek-Prover-V2</td>
-<td>16</td>
-<td>+1.0 pp (−1.3 to +3.3)</td>
+<td>16 / 143</td>
+<td>+1.0 pp (−1.3, +3.5)</td>
+<td><strong>+6.8 pp (+0.3, +15.4)</strong></td>
 </tr>
 <tr>
 <td>Goedel-Prover-V2</td>
-<td>99</td>
-<td>+1.0 pp (−1.0 to +3.4)</td>
+<td>88 / 154</td>
+<td>+1.1 pp (−1.1, +3.7)</td>
+<td>+0.5 pp (−1.5, +2.6)</td>
 </tr>
 <tr>
 <td>Kimina</td>
-<td>55</td>
-<td>+1.2 pp (−3.6 to +6.1)</td>
+<td>52 / 144</td>
+<td>0.0 pp (−5.0, +5.0)</td>
+<td>+0.8 pp (−1.8, +3.3)</td>
 </tr>
 <tr>
 <td>STP, secondary</td>
-<td>179</td>
-<td><strong>+3.5 pp (+1.0 to +6.2)</strong></td>
+<td>173 / 296</td>
+<td><strong>+3.9 pp (+1.0, +7.0)</strong></td>
+<td><strong>+14.4 pp (+11.5, +17.4)</strong></td>
+</tr>
+<tr>
+<td>Pooled, three provers</td>
+<td>156 / 441</td>
+<td>+1.0 pp (−1.2, +3.3)</td>
+<td>+1.1 pp (−0.6, +2.8)</td>
 </tr>
 </tbody>
 </table></div>
-<p>STP is the one prover whose leaked items lose measurably more on rewording. Those are items it demonstrably trained
-on, and even there the effect is small.</p>
-<p><strong>Robustness (pooled, secondary).</strong></p>
+<figure><a href="results/figures/did.png"><img src="results/figures/did.png" alt="Difference-in-differences by prover"></a><figcaption>Difference-in-differences: (drop from original to certified reformulation on leaked items) minus (the same drop on clean items), for pass@32 (the preregistered metric, black) and the per-sample solve rate (red), pooled over the three preregistered provers and for each prover. Bars are 90% item-cluster bootstrap intervals; the verdict uses the upper one-sided 95% bound. STP is a pre-specified secondary.</figcaption></figure>
+<p><strong>The ceiling.</strong></p>
+<ul>
+<li><strong>pass@32 cannot fall on these leaked items.</strong> For DeepSeek-Prover-V2 and STP, leaked items are solved at 100%
+  pass@32 on the original. For DeepSeek-Prover-V2 they stay at 100% on every reformulation, so d is 0 there by
+  construction.</li>
+<li><strong>The share of correct samples does fall, more with heavier rewording.</strong></li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Prover, leaked items</th>
+<th>Original</th>
+<th>R1</th>
+<th>R2</th>
+<th>Clean items over the same versions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DeepSeek-Prover-V2</td>
+<td>95.5%</td>
+<td>90.0%</td>
+<td>79.7%</td>
+<td>about 53-62% → 52-54%</td>
+</tr>
+<tr>
+<td>STP</td>
+<td>92%</td>
+<td>80%</td>
+<td>68%</td>
+<td>28-36% → 27-33%</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>The extra drop on R2 (per sample):</strong></li>
+<li>DeepSeek-Prover-V2: +8.3 pp (−0.1, +17.9);</li>
+<li>STP: +22.1 pp (+17.7, +26.7).</li>
+<li><strong>This is the signature of surface memorisation that H1 posits</strong>, but it lowers how often a leaked problem is solved,
+  not whether it is solved in 32 attempts.</li>
+<li><strong>Goedel-Prover-V2 and Kimina show no such pattern.</strong> Their leaks are mostly autoformalised equivalents or
+  scaffolded variants, not verbatim copies.</li>
+</ul>
+<figure><a href="results/figures/pass_by_version.png"><img src="results/figures/pass_by_version.png" alt="Solve rates by statement version"></a><figcaption>Top: pass@32 on the original statement and its kernel-certified reformulations (R1: renamed and reordered; R2: also equalities flipped), for items leaked in the prover&#x27;s own training corpora and for clean items. Bottom: the share of the 32 samples that are correct. For DeepSeek-Prover-V2 and STP, pass@32 on leaked items sits at 100%, so it cannot register a drop; the per-sample rate on those items falls with each reformulation. R1 versions identical to the original are excluded (D9); each version is averaged over the items where it exists (paired differences are in did_by_version.csv).</figcaption></figure>
+<p><strong>Documented training on miniF2F-valid (D9).</strong></p>
+<ul>
+<li><strong>What the papers say.</strong> DeepSeek-Prover-V1.5's SFT data and DeepSeek-Prover-V2's curriculum include miniF2F-valid,
+  and STP trains on it. The plan's mapping gave DeepSeek-Prover-V2 only its public lineage, so 69 of its 143 "clean"
+  pairs are documented training items.</li>
+<li><strong>The validation split is solved more often everywhere.</strong> Clean-arm pass@32 on valid against test items:</li>
+<li>DeepSeek-Prover-V2: 77% against 70%;</li>
+<li>Goedel-Prover-V2: 89% against 86%, despite no documentation.</li>
+<li><strong>STP shows the selection.</strong> It solves 2% of the 63 validation items not in its corpus. These are the ones it failed
+  on during training.</li>
+</ul>
+<p><strong>Robustness (pooled over the three provers unless stated; secondary).</strong> Brackets give 90% intervals:</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
 <th>Variant</th>
-<th>DiD (one-sided 95% bounds)</th>
+<th>Leaked / clean pairs</th>
+<th>DiD</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Per-sample solve rates instead of pass@32</td>
-<td>+1.5 pp (−0.0 to +3.1)</td>
+<td>Documented training: miniF2F-valid counted as leaked for DeepSeek-Prover-V2</td>
+<td>225 / 372</td>
+<td>+0.1 pp (−1.8, +2.2)</td>
+</tr>
+<tr>
+<td>Test items only</td>
+<td>73 / 224</td>
+<td>0.0 pp (−2.1, +2.1)</td>
+</tr>
+<tr>
+<td>Validation items only</td>
+<td>83 / 217</td>
+<td>+1.8 pp (−1.8, +5.6)</td>
 </tr>
 <tr>
 <td>L0/L1 leaks only</td>
-<td>+2.2 pp (−0.0 to +4.7)</td>
+<td>114 / 483</td>
+<td>+2.3 pp (0.0, +5.0)</td>
 </tr>
 <tr>
 <td>Leak defined against all corpora</td>
-<td>−0.1 pp (−2.1 to +1.8)</td>
+<td>364 / 233</td>
+<td>−0.1 pp (−2.1, +1.9)</td>
 </tr>
 <tr>
 <td>Excluding the 19 items Kimina revised</td>
-<td>+1.0 pp (−1.1 to +3.1)</td>
+<td>153 / 428</td>
+<td>+0.7 pp (−1.5, +2.9)</td>
+</tr>
+<tr>
+<td>STP, miniF2F-valid counted as leaked</td>
+<td>236 / 233</td>
+<td>+2.3 pp (−0.5, +5.2)</td>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Solve rates by version (descriptive).</strong> pass@32 on the original, R1 and R2:</p>
-<div class="table-wrap"><table>
-<thead>
-<tr>
-<th>Prover</th>
-<th>Leaked items</th>
-<th>Clean items</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>DeepSeek-Prover-V2</td>
-<td>100%, 100%, 100%</td>
-<td>73%, 73%, 77%</td>
-</tr>
-<tr>
-<td>Goedel-Prover-V2</td>
-<td>83%, 82%, 83%</td>
-<td>87%, 88%, 87%</td>
-</tr>
-<tr>
-<td>Kimina</td>
-<td>78%, 78%, 85%</td>
-<td>72%, 73%, 73%</td>
-</tr>
-<tr>
-<td>STP</td>
-<td>100%, 97%, 93%</td>
-<td>43%, 43%, 45%</td>
-</tr>
-</tbody>
-</table></div>
-<figure><a href="results/figures/pass_by_version.png"><img src="results/figures/pass_by_version.png" alt="Solve rates by statement version"></a><figcaption>pass@32 on the original statement and its two kernel-certified reformulations (R1: renamed and reordered; R2: also equalities flipped), for items leaked in the prover&#x27;s own training corpora and for clean items. Leaked items are solved more often, but rewording barely changes either group.</figcaption></figure>
+<p><strong>The preregistered mixed logistic model.</strong></p>
 <ul>
-<li><strong>Levels.</strong> For DeepSeek and STP, leaked items are solved far more often than clean ones. For Goedel they are not.</li>
-<li><strong>Rewording barely moves either group.</strong> Rejections for a changed statement were at most 2.1% in any cell, so
-  "correcting" a reworded statement back to its training form is rare.</li>
-<li><strong>Why levels prove nothing here.</strong> Leaked problems may simply be easier: frequently reproduced problems tend to be
-  standard exercises. That is why the preregistered test compares changes, not levels.</li>
+<li><strong>Specification:</strong> <code>success ~ reformulated × leaked + (1|item) + (1|prover)</code>, at sample level, on 51,232 samples.</li>
+<li><strong>Fit:</strong> variational Bayes, because no Laplace or quadrature GLMM was available.</li>
+<li><strong>Interaction:</strong> odds ratio 0.97 (95% credible interval 0.90 to 1.03). Reformulation lowers the odds of success
+  about equally for leaked and clean items, with an odds ratio of 0.67 for the main effect.</li>
+<li><strong>The pooled model is dominated by Goedel-Prover-V2's 88 leaked units</strong>, as the pooled per-sample DiD is.</li>
+</ul>
+<p><strong>Levels and selection.</strong></p>
+<ul>
+<li><strong>Levels differ by prover.</strong> For DeepSeek-Prover-V2 and STP, leaked items are solved far more often than clean ones
+  (100% against 73% and 44% pass@32). For Goedel-Prover-V2 they are solved less often.</li>
+<li><strong>The level comparison is confounded by construction.</strong> Four of the corpora consist of verified proofs, so an item
+  is "leaked" only if the pipeline that built the corpus proved it. That is selection on the outcome.</li>
+<li><strong>That is why the preregistered test compares changes, not levels.</strong></li>
 </ul>
 <h2>Caveats</h2>
 <ul>
 <li><strong>Surface rewording only.</strong> R1 and R2 change names, order and equation direction. A model that has memorised a
-  problem's solution, not its exact text, would pass both. The test rules out text-level memorisation as the driver
-  of the scores, not memorisation of solutions. Deeper, certified-equivalent rewrites (e.g. changing the
-  representation) are a natural next step.</li>
-<li><strong>Leaks are a lower bound.</strong> Retrieval is MinHash plus capped numeral matching, and certification is a bounded
-  portfolio. Equivalents that are textually different and hard to prove are missed.</li>
-<li><strong>DeepSeek-Prover-V2's own corpus is only its public lineage</strong> (DeepSeek-Prover-V1). Its real training set is not
-  public. That is why it has only 16 leaked pairs.</li>
-<li><strong>Each prover's design changed during the study</strong> (D4), before sampling:</li>
+  solution, not its wording, passes both.</li>
+<li><strong>What the design cannot answer.</strong> The title's broader question, whether training-set leakage explains the scores,
+    is not answered here. Memorised proofs survive renaming, the clean arm is partly trained on, and leaked items are
+    selected for solvability.</li>
+<li><strong>Related work uses deeper rewrites.</strong> MiniF2F-ALF (arXiv 2606.12594) reports that every prover it tests loses
+    accuracy on mutated statements. "What are the right symmetries for formal theorem proving?" (arXiv 2605.22257)
+    reports large variation across equivalent formulations. Both rewrite more deeply than R1 and R2, which is the
+    natural reading of the null here.</li>
+<li><strong>The clean arm is not clean.</strong> Two of the four provers document training on miniF2F-valid, and the third shows the
+  same pattern. Undetected equivalents also attenuate the DiD toward zero (next point).</li>
+<li><strong>Leaks are a lower bound.</strong></li>
+<li><strong>Retrieval misses equivalents.</strong> On the study's own certified reformulations as known equivalents, the retrieval
+    rule finds only 58% of R1 variants and 44% of R2 variants. The median MinHash Jaccard against the original is
+    0.34 for R1. A renamed copy of a miniF2F item in a corpus has roughly a coin-flip chance of being found.</li>
+<li><strong>Some pairs stay unchecked.</strong> 5.9% of miniF2F candidate pairs do not elaborate (mostly undeclared variables) and
+    count as no leak.</li>
+<li><strong>Certification is bounded.</strong> It uses a 20 s portfolio, and the guards are portfolio-relative: "not provable
+    alone" means not by this portfolio in 60 s.</li>
+<li><strong>Some "clean" pairs were sampled as leaked.</strong> D9 removed false leaks after sampling. The 10 items that lost their
+  leak status (9 Goedel-Prover-V2, 1 Kimina) now sit in the clean arm alongside the random clean sample. Their
+  versions were all sampled.</li>
+<li><strong>Design changes during the study</strong>, before sampling (D4):</li>
 <li>only 150 clean items per prover;</li>
-<li>an 8,192-token cap instead of 4,096, because the pilot showed 24-44% of outputs truncated at 4,096.</li>
+<li>an 8,192-token cap, because the pilot showed 24-44% of outputs truncated at 4,096.</li>
 </ul>
-<p>Truncation remains (Goedel 13-18%, Kimina 15-22% of outputs) and is treated alike across versions.
-- <strong>Two tokenizer failures were caught and fixed</strong> (D5, D7). STP's and DeepSeek-Prover-V2's released tokenizer
-  configurations garble Lean text under current libraries. Both were re-run in full, and the invalid outputs were
-  discarded unscored. A preliminary pooled result with the invalid DeepSeek-Prover-V2 rows was seen and is disclosed
-  (D7).
-- <strong>The memory watchdog</strong> killed 22 runaway proof checks: 18 during STP verification and 4 during DeepSeek-Prover-V2's
-  re-verification. Those outputs count as failures (D6, D8).</p>
+<p>Truncation remains, at up to 19% (Goedel-Prover-V2) and 25% (Kimina) of outputs in a cell, and is treated alike
+  across versions.
+- <strong>Two tokenizer failures were caught and fixed</strong> (D5, D7). The released tokenizer configurations of STP and
+  DeepSeek-Prover-V2 garble Lean text under current libraries. Both were resampled in full. A preliminary pooled
+  result with the invalid DeepSeek-Prover-V2 rows was seen and is disclosed (D7).
+- <strong>The memory watchdog</strong> killed 22 runaway proof checks (18 STP, 4 DeepSeek-Prover-V2). Those outputs count as
+  failures.
+- <strong>The MDE in <code>mde.json</code> is not the one the verdict uses.</strong> <code>mde.json</code> gives 6.3 pp, computed from all clean pairs
+  before the 150-item subsample. The verdict uses the design MDE over the analysed units: 7.0 pp.</p>
+<h2>Independent review and what changed</h2>
+<p>An independent adversarial review of the first draft (<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/formal-math-certified-contamination-did/review/review.md"><code>review/review.md</code></a>, with its Lean re-checks in
+<code>review/reviewer_checks/</code>) recommended "fix first". It confirmed:</p>
+<ul>
+<li>the primary number to the digit;</li>
+<li>the decision rule;</li>
+<li>the timeline;</li>
+<li>the tokenizer fixes.</li>
+</ul>
+<p>Its findings, and what changed (D9):</p>
+<ol>
+<li><strong>Lean Workbook was never certified.</strong> An extraction bug left <code>:= by sorry</code> in every statement. After the fix it
+   contributes 30 leaked miniF2F items.</li>
+<li><strong>The explosion guard missed false training statements.</strong> The witness and negation conditions now reject 27 more
+   pair-directions, all by kernel proof. Goedel-Prover-V2's own leaked items fall from 99 to 89.</li>
+<li><strong>DeepSeek-Prover-V2 and STP document training on miniF2F-valid.</strong> The documented-training and test-only contrasts
+   are now reported, with the same conclusion.</li>
+<li><strong>The per-sample results contradicted the draft's prose.</strong> The draft said that whatever the models learned
+   "survives simple rewording". That sentence is withdrawn. The verdict is now scoped to surface rewording and pass@32.</li>
+</ol>
+<p>Smaller fixes:</p>
+<ul>
+<li>identical R1 versions are dropped;</li>
+<li>37 valid proofs that had been rejected for whitespace are restored;</li>
+<li>the vacuous item is excluded;</li>
+<li>the missing mixed model is added;</li>
+<li>the automation-provable count is now the operative one (82, not 69);</li>
+<li>the L2 composition, retrieval recall and unchecked share are stated;</li>
+<li>the prompt description is corrected.</li>
+</ul>
+<p>The pooled pass@32 verdict did not change under any of these fixes.</p>
 <h2>Deviations (summary)</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -516,7 +684,11 @@ on, and even there the effect is small.</p>
 </tr>
 <tr>
 <td>D8</td>
-<td>Results and corrections</td>
+<td>Results of the first draft; correction to D6</td>
+</tr>
+<tr>
+<td>D9</td>
+<td>Fixes after the independent review; guard audit; vacuity and refutation checks</td>
 </tr>
 </tbody>
 </table></div>

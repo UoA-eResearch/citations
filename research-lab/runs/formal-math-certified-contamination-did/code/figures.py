@@ -29,41 +29,48 @@ def leaks():
     ax.set_ylabel("benchmark items with a certified\nequivalent or stronger statement (%)")
     ax.legend(frameon=False, fontsize=8)
     fig.tight_layout(); fig.savefig(F / "leak_rates.png", dpi=150)
-    (F / "leak_rates.txt").write_text("Share of benchmark items with a Lean-certified identical (L0), equivalent (L1) or stronger (L2) statement in each open training corpus, after the informativeness and explosion guards (D3-D3b).")
+    (F / "leak_rates.txt").write_text("Share of benchmark items with a Lean-certified identical (L0), equivalent (L1) or stronger (L2) statement in each open training corpus, after the informativeness and explosion guards (D3-D3b, D9).")
 
 
 def pass_rates():
     g = pd.read_csv(T / "statement_changes.csv")
-    fig, axes = plt.subplots(1, 4, figsize=(11, 3.2), sharey=True)
-    for ax, p in zip(axes, PROV):
-        d = g[g.prover == p]
-        for leaked, col, lab in ((True, "#b5452c", "leaked"), (False, "#2e5e8c", "clean")):
-            x = d[d.leaked == leaked].set_index("version").reindex(["orig", "R1", "R2"])
-            ax.plot(range(3), 100 * x.pass32, "o-", color=col, label=lab)
-        ax.set_xticks(range(3)); ax.set_xticklabels(["original", "R1", "R2"], fontsize=8)
-        ax.set_title(PROV[p], fontsize=9); ax.set_ylim(0, 105)
-    axes[0].set_ylabel("items solved (pass@32, %)"); axes[0].legend(frameon=False, fontsize=8)
+    fig, axes = plt.subplots(2, 4, figsize=(11, 5.6), sharey="row")
+    for row, (col_, lab_) in enumerate((("pass32", "items solved (pass@32, %)"), ("rate", "samples correct (%)"))):
+        for ax, p in zip(axes[row], PROV):
+            d = g[g.prover == p]
+            for leaked, col, lab in ((True, "#b5452c", "leaked"), (False, "#2e5e8c", "clean")):
+                x = d[d.leaked == leaked].set_index("version").reindex(["orig", "R1", "R2"])
+                ax.plot(range(3), 100 * x[col_], "o-", color=col, label=lab)
+            ax.set_xticks(range(3)); ax.set_xticklabels(["original", "R1", "R2"], fontsize=8)
+            if row == 0:
+                ax.set_title(PROV[p], fontsize=9)
+            ax.set_ylim(0, 105)
+        axes[row][0].set_ylabel(lab_)
+    axes[0][0].legend(frameon=False, fontsize=8)
     fig.tight_layout(); fig.savefig(F / "pass_by_version.png", dpi=150)
-    (F / "pass_by_version.txt").write_text("pass@32 on the original statement and its two kernel-certified reformulations (R1: renamed and reordered; R2: also equalities flipped), for items leaked in the prover's own training corpora and for clean items. Leaked items are solved more often, but rewording barely changes either group.")
+    (F / "pass_by_version.txt").write_text("Top: pass@32 on the original statement and its kernel-certified reformulations (R1: renamed and reordered; R2: also equalities flipped), for items leaked in the prover's own training corpora and for clean items. Bottom: the share of the 32 samples that are correct. For DeepSeek-Prover-V2 and STP, pass@32 on leaked items sits at 100%, so it cannot register a drop; the per-sample rate on those items falls with each reformulation. R1 versions identical to the original are excluded (D9); each version is averaged over the items where it exists (paired differences are in did_by_version.csv).")
 
 
 def forest():
-    s = pd.read_csv(T / "secondary.csv")
+    s = pd.read_csv(T / "secondary.csv").set_index("analysis")
     prim = json.load(open(T / "primary.json"))
-    rows = [("Pooled (H1)", prim["DiD"], prim["lower95_one_sided"], prim["upper95_one_sided"])]
+    rows = [("Pooled (H1)", (prim["DiD"], prim["lower95_one_sided"], prim["upper95_one_sided"]),
+             tuple(s.loc["per-sample pass rate (pooled)", ["DiD", "lower95_one_sided", "upper95_one_sided"]]))]
     for p in PROV:
-        x = s[s.analysis == f"prover {p}"].iloc[0]
-        rows.append((PROV[p], x.DiD, x.lower95_one_sided, x.upper95_one_sided))
-    fig, ax = plt.subplots(figsize=(7, 2.8))
-    for i, (lab, e, lo, hi) in enumerate(rows):
-        ax.plot([100 * lo, 100 * hi], [i, i], color="black" if i == 0 else "#555", lw=2 if i == 0 else 1.2)
-        ax.plot(100 * e, i, "o", color="black" if i == 0 else "#555")
+        rows.append((PROV[p], tuple(s.loc[f"prover {p}", ["DiD", "lower95_one_sided", "upper95_one_sided"]]),
+                     tuple(s.loc[f"per-sample, prover {p}", ["DiD", "lower95_one_sided", "upper95_one_sided"]])))
+    fig, ax = plt.subplots(figsize=(7.5, 3.4))
+    for i, (lab, a, b) in enumerate(rows):
+        for off, (e, lo, hi), col, mk, name in ((-0.15, a, "black", "o", "pass@32 (preregistered)"), (0.15, b, "#b5452c", "s", "per-sample solve rate")):
+            ax.plot([100 * lo, 100 * hi], [i + off, i + off], color=col, lw=1.6 if i == 0 else 1.1)
+            ax.plot(100 * e, i + off, mk, color=col, label=name if i == 0 else None)
     ax.axvline(0, color="grey", lw=0.8); ax.axvline(10, color="#b5452c", lw=0.8, ls="--")
-    ax.text(10.2, len(rows) - 0.6, "preregistered\n10 pp threshold", fontsize=7, color="#b5452c")
+    ax.text(10.3, -0.45, "preregistered\n10 pp threshold", fontsize=7, color="#b5452c", va="top")
     ax.set_yticks(range(len(rows))); ax.set_yticklabels([r[0] for r in rows], fontsize=8); ax.invert_yaxis()
-    ax.set_xlabel("extra drop in pass@32 on reformulation for leaked items (pp; one-sided 95% bounds)")
+    ax.set_xlabel("extra drop on reformulation for leaked items (pp; 90% interval)")
+    ax.legend(frameon=False, fontsize=7, loc="center right")
     fig.tight_layout(); fig.savefig(F / "did.png", dpi=150)
-    (F / "did.txt").write_text("Difference-in-differences: (pass@32 drop from original to certified reformulation on leaked items) minus (the same drop on clean items), pooled over the three preregistered provers and for each prover, with item-cluster bootstrap one-sided 95% bounds. STP is a pre-specified secondary analysis.")
+    (F / "did.txt").write_text("Difference-in-differences: (drop from original to certified reformulation on leaked items) minus (the same drop on clean items), for pass@32 (the preregistered metric, black) and the per-sample solve rate (red), pooled over the three preregistered provers and for each prover. Bars are 90% item-cluster bootstrap intervals; the verdict uses the upper one-sided 95% bound. STP is a pre-specified secondary.")
 
 
 def main():

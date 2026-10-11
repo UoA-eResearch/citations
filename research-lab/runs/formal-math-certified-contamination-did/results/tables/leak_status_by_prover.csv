@@ -18,7 +18,7 @@ goedel_v2,own corpora,test/algebra_sqineq_unitcircatbpabsamblt1,False,False
 goedel_v2,own corpora,test/imo_1977_p6,True,False
 goedel_v2,own corpora,test/mathd_algebra_419,False,False
 goedel_v2,own corpora,test/amc12a_2020_p10,False,False
-goedel_v2,own corpora,test/imo_1960_p2,True,False
+goedel_v2,own corpora,test/imo_1960_p2,False,False
 goedel_v2,own corpora,test/mathd_numbertheory_427,False,False
 goedel_v2,own corpora,test/numbertheory_x5neqy2p4,False,False
 goedel_v2,own corpora,test/imosl_2007_algebra_p6,False,False
@@ -46,7 +46,7 @@ goedel_v2,own corpora,test/mathd_numbertheory_447,False,True
 goedel_v2,own corpora,test/mathd_numbertheory_328,False,True
 goedel_v2,own corpora,test/mathd_numbertheory_451,False,False
 goedel_v2,own corpora,test/aime_1997_p9,False,False
-goedel_v2,own corpora,test/algebra_sqineq_at2malt1,True,False
+goedel_v2,own corpora,test/algebra_sqineq_at2malt1,False,False
 goedel_v2,own corpora,test/algebra_apbmpcneq0_aeq0anbeq0anceq0,False,False
 goedel_v2,own corpora,test/mathd_algebra_171,False,False
 goedel_v2,own corpora,test/mathd_numbertheory_227,False,False
@@ -116,7 +116,7 @@ goedel_v2,own corpora,test/algebra_sum1onsqrt2to1onsqrt10000lt198,False,False
 goedel_v2,own corpora,test/mathd_numbertheory_618,False,False
 goedel_v2,own corpora,test/amc12a_2020_p4,False,False
 goedel_v2,own corpora,test/amc12b_2020_p6,False,False
-goedel_v2,own corpora,test/mathd_numbertheory_435,True,False
+goedel_v2,own corpora,test/mathd_numbertheory_435,False,False
 goedel_v2,own corpora,test/algebra_others_exirrpowirrrat,False,False
 goedel_v2,own corpora,test/mathd_algebra_427,False,True
 goedel_v2,own corpora,test/mathd_algebra_76,False,False
@@ -137,10 +137,10 @@ goedel_v2,own corpora,test/amc12a_2021_p9,False,True
 goedel_v2,own corpora,test/aime_1984_p1,False,False
 goedel_v2,own corpora,test/amc12a_2021_p22,False,False
 goedel_v2,own corpora,test/mathd_numbertheory_229,False,True
-goedel_v2,own corpora,test/mathd_numbertheory_100,True,False
+goedel_v2,own corpora,test/mathd_numbertheory_100,False,False
 goedel_v2,own corpora,test/mathd_algebra_313,False,False
-goedel_v2,own corpora,test/amc12b_2002_p4,True,False
-goedel_v2,own corpora,test/amc12a_2002_p6,True,False
+goedel_v2,own corpora,test/amc12b_2002_p4,False,False
+goedel_v2,own corpora,test/amc12a_2002_p6,False,False
 goedel_v2,own corpora,test/amc12a_2003_p23,False,False
 goedel_v2,own corpora,test/mathd_algebra_129,False,False
 goedel_v2,own corpora,test/amc12b_2021_p18,False,False
@@ -278,7 +278,7 @@ goedel_v2,own corpora,valid/mathd_numbertheory_132,False,True
 goedel_v2,own corpora,valid/amc12a_2009_p5,False,False
 goedel_v2,own corpora,valid/mathd_numbertheory_188,False,True
 goedel_v2,own corpora,valid/mathd_algebra_224,False,False
-goedel_v2,own corpora,valid/induction_divisibility_3divnto3m2n,True,False
+goedel_v2,own corpora,valid/induction_divisibility_3divnto3m2n,False,False
 goedel_v2,own corpora,valid/induction_sum_1oktkp1,True,False
 goedel_v2,own corpora,valid/mathd_numbertheory_32,True,False
 goedel_v2,own corpora,valid/mathd_algebra_422,False,False
@@ -314,7 +314,7 @@ goedel_v2,own corpora,valid/amc12a_2008_p2,False,False
 goedel_v2,own corpora,valid/mathd_algebra_35,False,False
 goedel_v2,own corpora,valid/algebra_amgm_faxinrrp2msqrt2geq2mxm1div2x,False,False
 goedel_v2,own corpora,valid/mathd_numbertheory_335,False,False
-goedel_v2,own corpora,valid/mathd_numbertheory_35,True,False
+goedel_v2,own corpora,valid/mathd_numbertheory_35,False,False
 goedel_v2,own corpora,valid/amc12a_2021_p7,True,False
 goedel_v2,own corpora,valid/mathd_algebra_327,False,False
 goedel_v2,own corpora,valid/aime_1984_p15,True,False
@@ -373,7 +373,7 @@ goedel_v2,own corpora,valid/numbertheory_xsqpysqintdenomeq,False,False
 goedel_v2,own corpora,valid/aimeII_2001_p3,False,False
 goedel_v2,own corpora,valid/mathd_numbertheory_22,False,False
 goedel_v2,own corpora,valid/aime_1987_p8,False,False
-goedel_v2,own corpora,valid/mathd_numbertheory_136,True,False
+goedel_v2,own corpora,valid/mathd_numbertheory_136,False,False
 goedel_v2,own corpora,valid/amc12_2000_p11,True,False
 goedel_v2,own corpora,valid/amc12b_2003_p9,False,False
 goedel_v2,own corpora,valid/algebra_2complexrootspoly_xsqp49eqxp7itxpn7i,True,False
@@ -405,7 +405,7 @@ goedel_v2,own corpora,valid/mathd_numbertheory_156,False,False
 goedel_v2,own corpora,valid/mathd_algebra_451,True,False
 goedel_v2,own corpora,valid/mathd_algebra_144,False,False
 goedel_v2,own corpora,valid/mathd_algebra_282,False,False
-goedel_v2,own corpora,valid/mathd_algebra_410,True,False
+goedel_v2,own corpora,valid/mathd_algebra_410,False,False
 goedel_v2,own corpora,valid/mathd_numbertheory_232,False,False
 goedel_v2,own corpora,valid/mathd_algebra_77,True,False
 goedel_v2,own corpora,valid/imo_1974_p5,True,False
@@ -506,7 +506,7 @@ goedel_v2,all corpora,test/algebra_sqineq_unitcircatbpabsamblt1,False,False
 goedel_v2,all corpora,test/imo_1977_p6,True,False
 goedel_v2,all corpora,test/mathd_algebra_419,False,False
 goedel_v2,all corpora,test/amc12a_2020_p10,False,False
-goedel_v2,all corpora,test/imo_1960_p2,True,False
+goedel_v2,all corpora,test/imo_1960_p2,False,False
 goedel_v2,all corpora,test/mathd_numbertheory_427,False,False
 goedel_v2,all corpora,test/numbertheory_x5neqy2p4,False,False
 goedel_v2,all corpora,test/imosl_2007_algebra_p6,False,False
@@ -534,7 +534,7 @@ goedel_v2,all corpora,test/mathd_numbertheory_447,False,True
 goedel_v2,all corpora,test/mathd_numbertheory_328,False,True
 goedel_v2,all corpora,test/mathd_numbertheory_451,False,False
 goedel_v2,all corpora,test/aime_1997_p9,False,False
-goedel_v2,all corpora,test/algebra_sqineq_at2malt1,True,False
+goedel_v2,all corpora,test/algebra_sqineq_at2malt1,False,False
 goedel_v2,all corpora,test/algebra_apbmpcneq0_aeq0anbeq0anceq0,False,False
 goedel_v2,all corpora,test/mathd_algebra_171,False,False
 goedel_v2,all corpora,test/mathd_numbertheory_227,False,False
@@ -567,10 +567,10 @@ goedel_v2,all corpora,test/amc12b_2020_p21,False,False
 goedel_v2,all corpora,test/amc12a_2003_p5,False,False
 goedel_v2,all corpora,test/mathd_numbertheory_495,False,False
 goedel_v2,all corpora,test/mathd_algebra_296,False,False
-goedel_v2,all corpora,test/algebra_abpbcpcageq3_sumaonsqrtapbgeq3onsqrt2,False,False
+goedel_v2,all corpora,test/algebra_abpbcpcageq3_sumaonsqrtapbgeq3onsqrt2,True,False
 goedel_v2,all corpora,test/algebra_2varlineareq_fp3zeq11_3tfm1m5zeqn68_feqn10_zeq7,False,False
 goedel_v2,all corpora,test/mathd_numbertheory_247,True,False
-goedel_v2,all corpora,test/induction_pord1p1on2powklt5on2,False,False
+goedel_v2,all corpora,test/induction_pord1p1on2powklt5on2,True,False
 goedel_v2,all corpora,test/mathd_algebra_107,False,False
 goedel_v2,all corpora,test/numbertheory_2pownm1prime_nprime,True,False
 goedel_v2,all corpora,test/mathd_algebra_412,False,False
@@ -604,7 +604,7 @@ goedel_v2,all corpora,test/algebra_sum1onsqrt2to1onsqrt10000lt198,False,False
 goedel_v2,all corpora,test/mathd_numbertheory_618,False,False
 goedel_v2,all corpora,test/amc12a_2020_p4,False,False
 goedel_v2,all corpora,test/amc12b_2020_p6,False,False
-goedel_v2,all corpora,test/mathd_numbertheory_435,True,False
+goedel_v2,all corpora,test/mathd_numbertheory_435,False,False
 goedel_v2,all corpora,test/algebra_others_exirrpowirrrat,False,False
 goedel_v2,all corpora,test/mathd_algebra_427,True,True
 goedel_v2,all corpora,test/mathd_algebra_76,False,False
@@ -625,10 +625,10 @@ goedel_v2,all corpora,test/amc12a_2021_p9,False,True
 goedel_v2,all corpora,test/aime_1984_p1,False,False
 goedel_v2,all corpora,test/amc12a_2021_p22,False,False
 goedel_v2,all corpora,test/mathd_numbertheory_229,False,True
-goedel_v2,all corpora,test/mathd_numbertheory_100,True,False
+goedel_v2,all corpora,test/mathd_numbertheory_100,False,False
 goedel_v2,all corpora,test/mathd_algebra_313,False,False
-goedel_v2,all corpora,test/amc12b_2002_p4,True,False
-goedel_v2,all corpora,test/amc12a_2002_p6,True,False
+goedel_v2,all corpora,test/amc12b_2002_p4,False,False
+goedel_v2,all corpora,test/amc12a_2002_p6,False,False
 goedel_v2,all corpora,test/amc12a_2003_p23,False,False
 goedel_v2,all corpora,test/mathd_algebra_129,False,False
 goedel_v2,all corpora,test/amc12b_2021_p18,False,False
@@ -692,7 +692,7 @@ goedel_v2,all corpora,test/amc12a_2008_p25,True,False
 goedel_v2,all corpora,test/algebra_apbpceq2_abpbcpcaeq1_aleq1on3anbleq1ancleq4on3,False,False
 goedel_v2,all corpora,test/mathd_numbertheory_66,False,True
 goedel_v2,all corpora,test/amc12b_2021_p1,False,False
-goedel_v2,all corpora,test/algebra_apbon2pownleqapownpbpowon2,False,False
+goedel_v2,all corpora,test/algebra_apbon2pownleqapownpbpowon2,True,False
 goedel_v2,all corpora,test/imo_1968_p5_1,True,False
 goedel_v2,all corpora,test/aime_1990_p15,True,False
 goedel_v2,all corpora,test/mathd_numbertheory_235,False,True
@@ -718,7 +718,7 @@ goedel_v2,all corpora,test/amc12_2000_p20,True,False
 goedel_v2,all corpora,test/mathd_algebra_302,False,False
 goedel_v2,all corpora,test/aime_1983_p2,True,False
 goedel_v2,all corpora,test/mathd_algebra_139,False,False
-goedel_v2,all corpora,test/amc12a_2021_p25,False,False
+goedel_v2,all corpora,test/amc12a_2021_p25,True,False
 goedel_v2,all corpora,test/amc12a_2020_p25,False,False
 goedel_v2,all corpora,test/mathd_numbertheory_150,False,False
 goedel_v2,all corpora,test/aime_1989_p8,False,False
@@ -1231,7 +1231,7 @@ kimina,own corpora,valid/mathd_numbertheory_169,False,True
 kimina,own corpora,valid/amc12a_2009_p9,True,False
 kimina,own corpora,valid/amc12a_2019_p9,False,False
 kimina,own corpora,valid/mathd_algebra_13,False,False
-kimina,own corpora,valid/induction_sum2kp1npqsqm1,True,False
+kimina,own corpora,valid/induction_sum2kp1npqsqm1,False,False
 kimina,own corpora,valid/aime_1991_p6,False,False
 kimina,own corpora,valid/mathd_numbertheory_149,False,True
 kimina,own corpora,valid/imo_1984_p2,False,False
@@ -1482,7 +1482,7 @@ kimina,all corpora,test/algebra_sqineq_unitcircatbpabsamblt1,False,False
 kimina,all corpora,test/imo_1977_p6,True,False
 kimina,all corpora,test/mathd_algebra_419,False,False
 kimina,all corpora,test/amc12a_2020_p10,False,False
-kimina,all corpora,test/imo_1960_p2,True,False
+kimina,all corpora,test/imo_1960_p2,False,False
 kimina,all corpora,test/mathd_numbertheory_427,False,False
 kimina,all corpora,test/numbertheory_x5neqy2p4,False,False
 kimina,all corpora,test/imosl_2007_algebra_p6,False,False
@@ -1510,7 +1510,7 @@ kimina,all corpora,test/mathd_numbertheory_447,False,True
 kimina,all corpora,test/mathd_numbertheory_328,False,True
 kimina,all corpora,test/mathd_numbertheory_451,False,False
 kimina,all corpora,test/aime_1997_p9,False,False
-kimina,all corpora,test/algebra_sqineq_at2malt1,True,False
+kimina,all corpora,test/algebra_sqineq_at2malt1,False,False
 kimina,all corpora,test/algebra_apbmpcneq0_aeq0anbeq0anceq0,False,False
 kimina,all corpora,test/mathd_algebra_171,False,False
 kimina,all corpora,test/mathd_numbertheory_227,False,False
@@ -1543,10 +1543,10 @@ kimina,all corpora,test/amc12b_2020_p21,False,False
 kimina,all corpora,test/amc12a_2003_p5,False,False
 kimina,all corpora,test/mathd_numbertheory_495,False,False
 kimina,all corpora,test/mathd_algebra_296,False,False
-kimina,all corpora,test/algebra_abpbcpcageq3_sumaonsqrtapbgeq3onsqrt2,False,False
+kimina,all corpora,test/algebra_abpbcpcageq3_sumaonsqrtapbgeq3onsqrt2,True,False
 kimina,all corpora,test/algebra_2varlineareq_fp3zeq11_3tfm1m5zeqn68_feqn10_zeq7,False,False
 kimina,all corpora,test/mathd_numbertheory_247,True,False
-kimina,all corpora,test/induction_pord1p1on2powklt5on2,False,False
+kimina,all corpora,test/induction_pord1p1on2powklt5on2,True,False
 kimina,all corpora,test/mathd_algebra_107,False,False
 kimina,all corpora,test/numbertheory_2pownm1prime_nprime,True,False
 kimina,all corpora,test/mathd_algebra_412,False,False
@@ -1580,7 +1580,7 @@ kimina,all corpora,test/algebra_sum1onsqrt2to1onsqrt10000lt198,False,False
 kimina,all corpora,test/mathd_numbertheory_618,False,False
 kimina,all corpora,test/amc12a_2020_p4,False,False
 kimina,all corpora,test/amc12b_2020_p6,False,False
-kimina,all corpora,test/mathd_numbertheory_435,True,False
+kimina,all corpora,test/mathd_numbertheory_435,False,False
 kimina,all corpora,test/algebra_others_exirrpowirrrat,False,False
 kimina,all corpora,test/mathd_algebra_427,True,True
 kimina,all corpora,test/mathd_algebra_76,False,False
@@ -1601,10 +1601,10 @@ kimina,all corpora,test/amc12a_2021_p9,False,True
 kimina,all corpora,test/aime_1984_p1,False,False
 kimina,all corpora,test/amc12a_2021_p22,False,False
 kimina,all corpora,test/mathd_numbertheory_229,False,True
-kimina,all corpora,test/mathd_numbertheory_100,True,False
+kimina,all corpora,test/mathd_numbertheory_100,False,False
 kimina,all corpora,test/mathd_algebra_313,False,False
-kimina,all corpora,test/amc12b_2002_p4,True,False
-kimina,all corpora,test/amc12a_2002_p6,True,False
+kimina,all corpora,test/amc12b_2002_p4,False,False
+kimina,all corpora,test/amc12a_2002_p6,False,False
 kimina,all corpora,test/amc12a_2003_p23,False,False
 kimina,all corpora,test/mathd_algebra_129,False,False
 kimina,all corpora,test/amc12b_2021_p18,False,False
@@ -1668,7 +1668,7 @@ kimina,all corpora,test/amc12a_2008_p25,True,False
 kimina,all corpora,test/algebra_apbpceq2_abpbcpcaeq1_aleq1on3anbleq1ancleq4on3,False,False
 kimina,all corpora,test/mathd_numbertheory_66,False,True
 kimina,all corpora,test/amc12b_2021_p1,False,False
-kimina,all corpora,test/algebra_apbon2pownleqapownpbpowon2,False,False
+kimina,all corpora,test/algebra_apbon2pownleqapownpbpowon2,True,False
 kimina,all corpora,test/imo_1968_p5_1,True,False
 kimina,all corpora,test/aime_1990_p15,True,False
 kimina,all corpora,test/mathd_numbertheory_235,False,True
@@ -1694,7 +1694,7 @@ kimina,all corpora,test/amc12_2000_p20,True,False
 kimina,all corpora,test/mathd_algebra_302,False,False
 kimina,all corpora,test/aime_1983_p2,True,False
 kimina,all corpora,test/mathd_algebra_139,False,False
-kimina,all corpora,test/amc12a_2021_p25,False,False
+kimina,all corpora,test/amc12a_2021_p25,True,False
 kimina,all corpora,test/amc12a_2020_p25,False,False
 kimina,all corpora,test/mathd_numbertheory_150,False,False
 kimina,all corpora,test/aime_1989_p8,False,False
@@ -2458,7 +2458,7 @@ dsp_v2,all corpora,test/algebra_sqineq_unitcircatbpabsamblt1,False,False
 dsp_v2,all corpora,test/imo_1977_p6,True,False
 dsp_v2,all corpora,test/mathd_algebra_419,False,False
 dsp_v2,all corpora,test/amc12a_2020_p10,False,False
-dsp_v2,all corpora,test/imo_1960_p2,True,False
+dsp_v2,all corpora,test/imo_1960_p2,False,False
 dsp_v2,all corpora,test/mathd_numbertheory_427,False,False
 dsp_v2,all corpora,test/numbertheory_x5neqy2p4,False,False
 dsp_v2,all corpora,test/imosl_2007_algebra_p6,False,False
@@ -2486,7 +2486,7 @@ dsp_v2,all corpora,test/mathd_numbertheory_447,False,True
 dsp_v2,all corpora,test/mathd_numbertheory_328,False,True
 dsp_v2,all corpora,test/mathd_numbertheory_451,False,False
 dsp_v2,all corpora,test/aime_1997_p9,False,False
-dsp_v2,all corpora,test/algebra_sqineq_at2malt1,True,False
+dsp_v2,all corpora,test/algebra_sqineq_at2malt1,False,False
 dsp_v2,all corpora,test/algebra_apbmpcneq0_aeq0anbeq0anceq0,False,False
 dsp_v2,all corpora,test/mathd_algebra_171,False,False
 dsp_v2,all corpora,test/mathd_numbertheory_227,False,False
@@ -2519,10 +2519,10 @@ dsp_v2,all corpora,test/amc12b_2020_p21,False,False
 dsp_v2,all corpora,test/amc12a_2003_p5,False,False
 dsp_v2,all corpora,test/mathd_numbertheory_495,False,False
 dsp_v2,all corpora,test/mathd_algebra_296,False,False
-dsp_v2,all corpora,test/algebra_abpbcpcageq3_sumaonsqrtapbgeq3onsqrt2,False,False
+dsp_v2,all corpora,test/algebra_abpbcpcageq3_sumaonsqrtapbgeq3onsqrt2,True,False
 dsp_v2,all corpora,test/algebra_2varlineareq_fp3zeq11_3tfm1m5zeqn68_feqn10_zeq7,False,False
 dsp_v2,all corpora,test/mathd_numbertheory_247,True,False
-dsp_v2,all corpora,test/induction_pord1p1on2powklt5on2,False,False
+dsp_v2,all corpora,test/induction_pord1p1on2powklt5on2,True,False
 dsp_v2,all corpora,test/mathd_algebra_107,False,False
 dsp_v2,all corpora,test/numbertheory_2pownm1prime_nprime,True,False
 dsp_v2,all corpora,test/mathd_algebra_412,False,False
@@ -2556,7 +2556,7 @@ dsp_v2,all corpora,test/algebra_sum1onsqrt2to1onsqrt10000lt198,False,False
 dsp_v2,all corpora,test/mathd_numbertheory_618,False,False
 dsp_v2,all corpora,test/amc12a_2020_p4,False,False
 dsp_v2,all corpora,test/amc12b_2020_p6,False,False
-dsp_v2,all corpora,test/mathd_numbertheory_435,True,False
+dsp_v2,all corpora,test/mathd_numbertheory_435,False,False
 dsp_v2,all corpora,test/algebra_others_exirrpowirrrat,False,False
 dsp_v2,all corpora,test/mathd_algebra_427,True,True
 dsp_v2,all corpora,test/mathd_algebra_76,False,False
@@ -2577,10 +2577,10 @@ dsp_v2,all corpora,test/amc12a_2021_p9,False,True
 dsp_v2,all corpora,test/aime_1984_p1,False,False
 dsp_v2,all corpora,test/amc12a_2021_p22,False,False
 dsp_v2,all corpora,test/mathd_numbertheory_229,False,True
-dsp_v2,all corpora,test/mathd_numbertheory_100,True,False
+dsp_v2,all corpora,test/mathd_numbertheory_100,False,False
 dsp_v2,all corpora,test/mathd_algebra_313,False,False
-dsp_v2,all corpora,test/amc12b_2002_p4,True,False
-dsp_v2,all corpora,test/amc12a_2002_p6,True,False
+dsp_v2,all corpora,test/amc12b_2002_p4,False,False
+dsp_v2,all corpora,test/amc12a_2002_p6,False,False
 dsp_v2,all corpora,test/amc12a_2003_p23,False,False
 dsp_v2,all corpora,test/mathd_algebra_129,False,False
 dsp_v2,all corpora,test/amc12b_2021_p18,False,False
@@ -2644,7 +2644,7 @@ dsp_v2,all corpora,test/amc12a_2008_p25,True,False
 dsp_v2,all corpora,test/algebra_apbpceq2_abpbcpcaeq1_aleq1on3anbleq1ancleq4on3,False,False
 dsp_v2,all corpora,test/mathd_numbertheory_66,False,True
 dsp_v2,all corpora,test/amc12b_2021_p1,False,False
-dsp_v2,all corpora,test/algebra_apbon2pownleqapownpbpowon2,False,False
+dsp_v2,all corpora,test/algebra_apbon2pownleqapownpbpowon2,True,False
 dsp_v2,all corpora,test/imo_1968_p5_1,True,False
 dsp_v2,all corpora,test/aime_1990_p15,True,False
 dsp_v2,all corpora,test/mathd_numbertheory_235,False,True
@@ -2670,7 +2670,7 @@ dsp_v2,all corpora,test/amc12_2000_p20,True,False
 dsp_v2,all corpora,test/mathd_algebra_302,False,False
 dsp_v2,all corpora,test/aime_1983_p2,True,False
 dsp_v2,all corpora,test/mathd_algebra_139,False,False
-dsp_v2,all corpora,test/amc12a_2021_p25,False,False
+dsp_v2,all corpora,test/amc12a_2021_p25,True,False
 dsp_v2,all corpora,test/amc12a_2020_p25,False,False
 dsp_v2,all corpora,test/mathd_numbertheory_150,False,False
 dsp_v2,all corpora,test/aime_1989_p8,False,False
