@@ -1,0 +1,42 @@
+{
+ "n_stations_ge30": 949,
+ "H1": {
+  "SD_p": 0.104887890301753,
+  "lower95": 0.09555023809096093,
+  "upper95": 0.11431989449193493,
+  "sigma_u_logit": 1.0779989282034101,
+  "beta": {
+   "Intercept": 2.6352797944175155,
+   "M": 0.5821854883515551,
+   "logd": -0.8778382612961309
+  },
+  "converged": false,
+  "boot_converged_share": 0.0,
+  "n_picks": 509596,
+  "n_stations": 1026,
+  "verdict": "Supported"
+ },
+ "H2": {
+  "R2": 0.29117399429217794,
+  "lower95": 0.2154039601379439,
+  "upper95": 0.35544804411564074,
+  "n_stations": 949,
+  "verdict": "Refuted",
+  "noise_share": 0.061723266959297696,
+  "R2_reliability_corrected": 0.3103284820338254
+ },
+ "H2_secondary": {
+  "linear": {
+   "R2": 0.28759620780608064,
+   "lower95": 0.22183600736976486,
+   "upper95": 0.34873945073990437,
+   "n_stations": 949
+  },
+  "hgb_secondary_covariates": {
+   "R2": 0.321627012668142,
+   "lower95": 0.25024837608461753,
+   "upper95": 0.3883413602813886,
+   "n_stations": 949
+  }
+ }
+}

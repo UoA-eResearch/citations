@@ -1,0 +1,19 @@
+{
+ "K": 5,
+ "p_picks_conf05": 9391601.0,
+ "unreferenced_share": 0.9532523794398846,
+ "isolated_nn_share": 0.5939232299157513,
+ "false_proxy_nn": 5573810.0,
+ "false_proxy_nn_share_of_p05": 0.5934887991940884,
+ "rate_per_day_nn_pooled": 9.364773206494071,
+ "rate_per_day_nn_quantiles_h2_stations": {
+  "0.1": 0.4684736562934384,
+  "0.25": 1.0661157024793388,
+  "0.5": 3.5631174533479695,
+  "0.75": 10.763358778625955,
+  "0.9": 23.183529136882385
+ },
+ "spearman_u_rate_nn_h2_stations": 0.2805716766332632,
+ "spearman_rate_nn_nn_km_h2_stations": 0.12911421369405593,
+ "n_h2_stations": 949
+}

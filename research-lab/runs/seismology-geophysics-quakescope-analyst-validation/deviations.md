@@ -66,3 +66,44 @@ have treated these stations as extremely quiet.
    planted, in a scratch directory. It passes.
 
 The analysis is rerun from the same matched and covariate files; parse, covariates and match are not rerun.
+
+## D4 - 2026-10-12 05:33 NZDT - post-outcome diagnostics (after the primary results were seen)
+
+The rerun finished (log `logs/analysis.log`). The H1 and H2 verdicts follow the preregistered rules unchanged. Every VB
+fit, the main fit and all 200 bootstrap refits, carried statsmodels' "VB fitting did not converge" flag (D1 item 7
+anticipated a varying flag; a share of 0 was not anticipated). `fit_vb` also draws its starting values from fresh
+entropy unless given a seed, so the main estimate is not bit-for-bit reproducible.
+
+These diagnostics were added after the outcome was seen (`code/checks.py`, `code/run_checks.sh`,
+`tests/aghq_test.py`). They are labelled post-outcome in the report and change no verdict:
+
+1. **VB refits with fixed starting seeds** (1, 2, 3; BFGS as in the primary fit) and one with L-BFGS-B. They record
+   the optimiser's message, iterations and gradient norm.
+2. **An independent maximum-likelihood fit** of the same model by adaptive Gauss-Hermite quadrature (1 and 15 nodes,
+   as in lme4's `glmer` nAGQ), from two starting points. Tested on synthetic data first: a known station SD of
+   1.074 (sample) was recovered as 1.073.
+3. **Checks of bookkeeping.** The station order of the VB effects against the model's level names; the busiest month's
+   share (the plan's conditional subset); SD_p at other reference events.
+4. **The plan's exploratory false-pick proxy** (section 6), which `analysis.py` had not implemented.
+   - Definitions fixed here: catalogue P picks with confidence >= 0.5, with no reference pick of either phase at the
+     station within 1 s, and no catalogue P pick at another CI, NC or BK station within 10 s.
+   - Rate per loaded station-day in the sampled months.
+5. **H2 exploratory.** Single-covariate and location-only cross-validated R², and H2 with the ML station effects
+   as the target.
+
+**D4 addendum (2026-10-12 05:56 NZDT).**
+
+- **The AGHQ fit was restarted.** The first attempt (one process; tolerances xatol 1e-6, fatol 1e-4) had printed
+  nothing after 19 minutes and was stopped. In a second attempt, the fits started from the VB estimate wandered to
+  absurd values: the warm-started Newton iteration for the station modes diverged after large simplex moves. The
+  Newton steps are now clipped to ±1, with a restart from zero if they have not converged. The four fits (1 and 15
+  nodes; VB and zero starts) run in parallel with tolerances xatol 1e-4 and fatol 1e-3 (`code/run_aghq.sh`). The
+  synthetic test gives the same answer as before.
+- **A post-hoc variant of the false-pick proxy** (`checks.py falsepick_nn`). The preregistered isolation test was met
+  by chance: there are about 0.4 P picks per second across CI, NC and BK, so almost every pick has another station's
+  pick within 10 s. The variant calls a pick isolated if none of the station's 5 nearest catalogue stations has a P
+  pick within 10 s.
+  - **Validated on picks an analyst confirmed:** 0.9% of referenced picks with confidence ≥ 0.5 are flagged, against
+    62% of unreferenced ones.
+  - Both the preregistered and the variant results are reported, labelled exploratory.
+- **Figures** (`code/figures.py`) recompute the H2 out-of-fold predictions. They reproduce R² exactly (asserted).

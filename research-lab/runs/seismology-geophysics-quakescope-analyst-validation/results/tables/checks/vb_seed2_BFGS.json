@@ -1,0 +1,18 @@
+{
+ "seed": 2,
+ "method": "BFGS",
+ "success": false,
+ "message": "Desired error not necessarily achieved due to precision loss.",
+ "nit": 788,
+ "grad_norm": 6.43481949045207e-05,
+ "grad_max": 2.8167094186404285e-05,
+ "neg_elbo": 136954.94293052808,
+ "beta": {
+  "Intercept": 2.63527978933263,
+  "M": 0.5821855002212761,
+  "logd": -0.8778382737898415
+ },
+ "sigma_u": 1.0779989217519195,
+ "SD_p": 0.10488788945220694,
+ "minutes": 14.903322664896647
+}

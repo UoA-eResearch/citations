@@ -1,0 +1,18 @@
+{
+ "seed": 1,
+ "method": "L-BFGS-B",
+ "success": true,
+ "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+ "nit": 501,
+ "grad_norm": 36.12100652481814,
+ "grad_max": 28.469524080691013,
+ "neg_elbo": 136996.93112469712,
+ "beta": {
+  "Intercept": 2.631736305671857,
+  "M": 0.582495595797086,
+  "logd": -0.8723652360473181
+ },
+ "sigma_u": 1.0816365253519744,
+ "SD_p": 0.10505233101487799,
+ "minutes": 7.85256826877594
+}

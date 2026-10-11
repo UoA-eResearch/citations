@@ -1,0 +1,17 @@
+{
+ "stations": 1088,
+ "station_days": 595220.0,
+ "p_picks_conf05": 9391601.0,
+ "isolated": 7486.0,
+ "false_proxy": 7485.0,
+ "rate_per_day_pooled": 0.01257518228554148,
+ "rate_per_day_quantiles_h2_stations": {
+  "0.1": 0.0,
+  "0.25": 0.0,
+  "0.5": 0.0021953896816684962,
+  "0.75": 0.008083140877598153,
+  "0.9": 0.024482267464893348
+ },
+ "spearman_u_rate_h2_stations": 0.136184382596584,
+ "n_h2_stations": 949
+}
