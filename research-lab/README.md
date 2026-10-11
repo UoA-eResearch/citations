@@ -77,6 +77,13 @@ Skipped after a novelty check: `software-security-attestation-phantom-code`. Sol
 arXiv:2608.18180) already compare 4,500 attested with 4,500 non-attested releases on PyPI and npm and recover source
 commits from the attestations, which leaves only one metric (phantom-file rates by attestation status) for a new study.
 
+Skipped after a novelty check (11 October 2026): `quantum-simulation-floquet-74q-noisy-twin`. The lead assumed the Qedma/IBM paper (arXiv:2607.24937) has no classical simulation of the noisy circuit. It has two:
+
+- Appendix J.2 runs noisy sparse-Pauli-path simulation with zero-noise extrapolation on the 51-qubit patch (30 steps). Its injected noise is several times stronger than the hardware's reported effective two-qubit infidelity. It needed about 10⁹ Pauli strings at peak, saved less than an order of magnitude of memory, and remained truncation-dependent.
+- Appendix D simulates the characterised noisy QPU exactly at 28 qubits, at 1x and 2x noise with the same extrapolation.
+
+A 74-qubit twin at the weaker hardware noise would be harder still. The prior evidence predicts a truncation-limited, inconclusive result within this machine's 94 GB, so the lead no longer justifies its 1.5-2 weeks of compute.
+
 Skipped after a feasibility check (7 October 2026): `comp-social-science-ai-edit-survival`. The text of deleted Wikipedia articles is visible only to administrators (the API returns `permissiondenied` for deleted revisions), so the first revisions of deleted articles cannot be scored retrospectively. Since August 2025, suspected LLM articles can also be speedy-deleted because they look AI-generated, which makes the outcome partly circular. A prospective version would need months of collection and could no longer test the March 2026 policy change.
 
 Lessons from the first deep dive, to carry into the next ones (details in its deviations log, D19–D29 and D27c):
