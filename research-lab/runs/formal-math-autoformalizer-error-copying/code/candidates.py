@@ -139,3 +139,38 @@ if __name__ == "__main__":
         build()
     elif cmd == "lean":
         lean(sys.argv[2], int(sys.argv[3]))
+
+
+def merge():
+    """Plan 2.2: the item's environment is the first (v49, then v415) in which both D and C elaborate; pairs certified
+    equivalent in both directions are dropped. Writes filtered.jsonl (every candidate, with its fate) and attrition."""
+    cand = pd.read_json(CAT / "candidates.jsonl", lines=True)
+    res = {}
+    for tc in ("v49", "v415"):
+        p = CAT / f"lean_{tc}.jsonl"
+        if p.exists():
+            for r in map(json.loads, open(p)):
+                if r["item"] not in res and r.get("D_elab") and r.get("C_elab"):
+                    res[r["item"]] = dict(r, env=tc)
+    for tc in ("v49", "v415"):  # items that elaborated in neither: keep the last record for the attrition table
+        p = CAT / f"lean_{tc}.jsonl"
+        if p.exists():
+            for r in map(json.loads, open(p)):
+                res.setdefault(r["item"], dict(r, env=None))
+    rows = []
+    for c in cand.to_dict("records"):
+        r = res.get(c["item"], {})
+        fate = ("error" if "error" in r else "no Lean record" if not r else "does not elaborate" if r["env"] is None
+                else "certified equivalent" if r.get("DC") and r.get("CD") else "kept")
+        rows.append(dict(c, env=r.get("env"), D_elab=r.get("D_elab"), C_elab=r.get("C_elab"), DC=r.get("DC"),
+                         CD=r.get("CD"), fate=fate))
+    df = pd.DataFrame(rows)
+    df.to_json(CAT / "filtered.jsonl", orient="records", lines=True, force_ascii=False)
+    att = df.groupby(["source", "role", "fate"]).size().unstack(fill_value=0)
+    att.to_csv(CAT / "attrition_lean.csv")
+    print(att)
+    print(df[df.fate == "kept"].groupby(["source", "env"]).size())
+
+
+if __name__ == "__main__" and sys.argv[1] == "merge":
+    merge()
