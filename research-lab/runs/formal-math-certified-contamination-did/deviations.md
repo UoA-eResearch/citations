@@ -392,11 +392,18 @@ timeout.
 
 **What the rejecting proofs are.**
 
-- **Witness refutation:** 20 directions. The training statement, or for the reverse direction the benchmark-side
-  premise, is refuted outright by a numeral instance.
-- **Negation proof:** 11 directions. The premise implies the negation of the conclusion for every value of its
+| Rejecting proof | Directions |
+|---|---|
+| Witness refutation only | 15 |
+| Witness refutation and negation proof | 5 |
+| Negation proof only | 7 |
+
+- **Witness refutation** (20 directions in all): the premise is refuted outright by a numeral instance. The premise is
+  usually the training statement. In one reverse direction it is the benchmark statement `valid/aime_1988_p3`, which
+  is false as formalised: at x = 1, Lean's junk value log 0 = 0 makes the hypothesis 0 = 0 hold and the conclusion
+  0 = 27 fail (checked separately in Lean 4.9).
+- **Negation proof** (12 directions in all): the premise implies the negation of the conclusion for every value of its
   binders.
-- These overlap, because some directions have both proofs.
 
 **Where they come from.** The reviewer's 11 spurious pairs are among the 27. The rest are the same kind of pair: the
 reviewer's prose named several of them. A few are new false Goedel-Pset statements, for example the pairs behind
@@ -417,5 +424,9 @@ reasons:
 The portfolio now finds exactly one vacuous item, `valid/mathd_numbertheory_35`, and 82 automation-provable items
 (80 + 2 timeouts in the reviewer's run). The first output is kept in
 `results/d9_checks/bench_items_first_portfolio.csv`.
+
+**A refutation column is added to `benchcheck.py`.** It records benchmark statements refuted by a kernel-checked witness.
+No prover can solve such an item. These items stay in the units, because they contribute d = 0 in both arms and dropping
+them would be a further unplanned rule. They are counted and listed in the report.
 
 The pooled analysis has not yet been run on the D9 tiers.

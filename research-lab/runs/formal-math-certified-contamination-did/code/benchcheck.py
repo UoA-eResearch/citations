@@ -26,6 +26,13 @@ def exf(binders):
     return "first\n" + "\n".join(f"    | {b}" for b in br)
 
 
+def _proved_refutation(stmt):
+    """witness_refutable() counts a timeout as refutable (fail-closed for the guard); here only a kernel-checked
+    refutation counts (D9 addendum: a benchmark statement that is false as formalised, e.g. valid/aime_1988_p3)."""
+    r = C._repl.run(f"{C.HDR}theorem chk : ¬ {C.prop(stmt)} := by\n  intro h\n  {R.WITNESS}\n\n#print axioms chk", timeout=60)
+    return "timeout" not in r and "dead" not in r and not C.errors(r) and not C.uses_sorry(r) and C.axioms(r, "chk") is not None
+
+
 def work(item):
     iid, stmt = item
     try:
@@ -33,7 +40,8 @@ def work(item):
         b, c = C.split(stmt)
         r = C._repl.run(f"{C.HDR}set_option maxHeartbeats 100000 in\ntheorem v {b} : {c} := by\n  exfalso\n  {exf(b)}\n\n#print axioms v", timeout=60)
         vac = "timeout" not in r and "dead" not in r and not C.errors(r) and not C.uses_sorry(r) and C.axioms(r, "v") is not None
-        return dict(item=iid, automation_provable=provable, vacuous=vac)
+        refuted = R.witness_refutable(C._repl, stmt) is True and _proved_refutation(stmt)
+        return dict(item=iid, automation_provable=provable, vacuous=vac, refuted=refuted)
     except Exception as e:  # noqa: BLE001
         return dict(item=iid, error=repr(e)[:150])
 
@@ -44,7 +52,7 @@ def main(workers):
         res = pool.map(work, list(zip(b.id, b.stmt)), chunksize=1)
     d = pd.DataFrame(res)
     d.to_csv(RUN / "results" / "tables" / "bench_items.csv", index=False)
-    print(d[["automation_provable", "vacuous"]].sum().to_dict(), "errors", int(d.get("error", pd.Series()).notna().sum()))
+    print(d[["automation_provable", "vacuous", "refuted"]].sum().to_dict(), "errors", int(d.get("error", pd.Series()).notna().sum()))
 
 
 if __name__ == "__main__":
