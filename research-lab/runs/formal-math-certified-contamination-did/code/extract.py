@@ -87,7 +87,8 @@ def main(which=None):
     jobs["goedel_pset"] = lambda: pd.concat([table(x.problem_id, x.formal_statement) for x in
                                              (pd.read_parquet(f) for f in sorted((RAW / "Goedel-Pset-v1" / "data").glob("*.parquet")))])
     lw = json.load(open(RAW / "Lean-Workbook" / "lean_workbook.json"))
-    jobs["lean_workbook"] = lambda: table([f"lw{i}" for i in range(len(lw))], [x["formal_statement"] + " := by" for x in lw])
+    # D9: Lean Workbook statements end in ":=  by sorry" (two spaces); strip it before appending ":= by"
+    jobs["lean_workbook"] = lambda: table([f"lw{i}" for i in range(len(lw))], [re.sub(r":=\s*by\s*sorry\s*$", "", x["formal_statement"].strip()) + " := by" for x in lw])
     dsp = pd.read_json(RAW / "DeepSeek-Prover-V1" / "dataset.jsonl", lines=True)
     jobs["dsp_v1"] = lambda: table(dsp.name, dsp.formal_statement)
     nm = pd.read_parquet(RAW / "NuminaMath-LEAN" / "data" / "train-00000-of-00001.parquet")

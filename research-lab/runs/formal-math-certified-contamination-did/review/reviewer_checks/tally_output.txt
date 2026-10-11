@@ -1,0 +1,66 @@
+=== NEGATION / WITNESS TEST on all L1/L2 pairs
+rows 649 errors 0 by tier {'L1': 433, 'L2': 216}
+ab reproduced: {True: 649} | ba on L1: {True: 433}
+a=>not b: {False: 642, True: 7} | b=>not a (L1): {False: 433}
+train refutable (study guard): {False: 649} | witness: {False: 643, True: 6}
+test FREE-provable: {'not_proved': 649}
+spurious pairs: 11 of 649
+                      size  sum
+corpus          tier           
+dsp_v1          L1      29    0
+                L2       3    0
+goedel_lwproofs L1      20    0
+                L2       2    0
+goedel_pset     L1      83    0
+                L2      43    8
+numina_lean     L1      55    0
+                L2      20    0
+sft_v2          L1      69    1
+                L2      65    2
+stp             L1     177    0
+                L2      83    0
+                                                                       key tier  a_implies_not_b  train_refutable_witness b_implies_not_a test_free_provable
+66             test/algebra_sqineq_at2malt1|goedel_pset|Goedel-Pset-982374   L2            False                     True            None         not_proved
+67             test/algebra_sqineq_at2malt1|goedel_pset|Goedel-Pset-722447   L2             True                     True            None         not_proved
+68            test/algebra_sqineq_at2malt1|goedel_pset|Goedel-Pset-1618977   L2            False                     True            None         not_proved
+73   test/numbertheory_2pownm1prime_nprime|goedel_pset|Goedel-Pset-1640931   L2             True                    False            None         not_proved
+79             test/mathd_numbertheory_435|goedel_pset|Goedel-Pset-1180270   L2             True                    False            None         not_proved
+136                    test/amc12a_2002_p6|goedel_pset|Goedel-Pset-1424476   L2             True                    False            None         not_proved
+150        test/induction_sumkexp3eqsumksq|goedel_pset|Goedel-Pset-1639476   L2             True                     True            None         not_proved
+178  valid/numbertheory_prmdvsneqnsqmodpeq0|goedel_pset|Goedel-Pset-996498   L2             True                    False            None         not_proved
+181                          test/algebra_sqineq_at2malt1|sft_v2|sft400869   L2            False                     True            None         not_proved
+235                            valid/mathd_numbertheory_35|sft_v2|sft75023   L1             True                    False           False         not_proved
+244                           valid/mathd_numbertheory_136|sft_v2|sft55303   L2            False                     True            None         not_proved
+goedel_v2: leaked items before 99 after removing spurious pairs 95 (lost: ['test/amc12a_2002_p6', 'test/mathd_numbertheory_435', 'valid/mathd_numbertheory_136', 'valid/mathd_numbertheory_35'])
+kimina: leaked items before 55 after removing spurious pairs 55 (lost: [])
+dsp_v2: leaked items before 16 after removing spurious pairs 16 (lost: [])
+stp: leaked items before 179 after removing spurious pairs 179 (lost: [])
+any corpus: before 252 after 250
+  dsp_v1: items before 16 after 16
+  goedel_lwproofs: items before 10 after 10
+  goedel_pset: items before 67 after 63
+  numina_lean: items before 55 after 55
+  sft_v2: items before 61 after 58
+  stp: items before 179 after 179
+
+=== FREE on all 488 miniF2F items (Lean 4.9): {'not_proved': 406, 'proved': 80, 'timeout': 2}
+   D1-flag items 69 | FREE-provable 80 | overlap 68 | FREE-provable but not D1-flagged 12 | D1 but not FREE 1
+   leaked units whose item is FREE-provable (should be L0 only): {'kimina': 3, 'stp': 35}
+
+=== rejected_v49.jsonl: 90 rows
+                   n  ab_now  ba_now  test_informative  train_refutable                        test_free
+kind                                                                                                    
+cert_rejected     60       0       0                 0                0                               {}
+recheck_rejected  30      30      17                 1                2  {'proved': 29, 'not_proved': 1}
+
+=== rejected_v415.jsonl: 30 rows
+                   n  ab_now  ba_now  test_informative  train_refutable       test_free
+kind                                                                                   
+cert_rejected     20       0       0                 0                0              {}
+recheck_rejected  10      10       7                 0                0  {'proved': 10}
+
+=== whitespace re-verification goedel: {'ok': 31, 'error': 11}
+[["unknown identifier 'h₁'"], ['failed to synthesize\n  CancelMonoidWithZero (ZMod 1399)\nuse `set_option diagnostics true` to get diagnostic information', 'unsolved goals\nu₁ : ZMod 1399\nhyp1 : 160⁻¹ = u₁\nh₂ : 160 * 1058 = 1\nh₄ : u₁ = 160⁻¹\n⊢ ¬160 = 0'], ["tactic 'rewrite' failed, did not find instance of the pattern in the current goal\nu₁ : ZMod 1399\nhyp1 : 160⁻¹ = u₁\n⊢ u₁ = 1058"], ['linarith failed to find a contradiction\ncase a\nu₁ : ℝ\nhyp1 : 6 = √(4 + √(16 + 16 * u₁)) + √(1 + √(1 + u₁))\nh : ¬1 + u₁ ≥ 0\nh₂ : 1 + u₁ < 0\nh₃ : √(1 + u₁) = 0\nh₄ : √(1 + √(1 + u₁)) = 1\nh₅ h₇ : √(16 + 1', 'linarith failed to find a contradiction\nu₁ : ℝ\nhyp1 : 6 = √(4 + √(16 + 16 * u₁)) + √(1 + √(1 + u₁))\nh : ¬1 + u₁ ≥ 0\nh₂ : 1 + u₁ < 0\nh₃ : √(1 + u₁) = 0\nh₄ : √(1 + √(1 + u₁)) = 1\nh₅ : √(16 + 16 * u₁) ≥ '], ["tactic 'rewrite' failed, did not find instance of the pattern in the target expression\n  8\nu₁ : ℕ\nhyp2 : 8 = Nat.gcd 120 u₁\nhyp1 : 3720 = Nat.lcm 120 u₁\nh₁ : Nat.gcd 120 u₁ * Nat.lcm 120 u₁ = 120 * u₁"]]
+
+=== whitespace re-verification dsp: {'error': 8, 'ok': 6}
+[["tactic 'aesop' failed, made no progress\nInitial goal:\n  u₁ : ℝ ≃ ℝ\n  hyp1 : u₁.symm 2 = u₁ 2\n  ⊢ u₁ (u₁ 2) = 2", 'unsolved goals\nu₁ : ℝ ≃ ℝ\nhyp1 : u₁.symm 2 = u₁ 2\n⊢ u₁ (u₁ 2) = 2'], ['function expected at\n  u₁\nterm has type\n  ℕ', "tactic 'rewrite' failed, did not find instance of the pattern in the target expression\n  ((u₁ + 2)! - (u₁ + 1)!) / u₁ !\nu₁ : ℕ\nhyp1 : 9 ≤ u₁\nh₁ : ((u₁ + 2)! - (u₁ + 1)!) / u₁ ! = (u₁ + 1) ^ 2\n⊢ ↑((u₁ "], ['function expected at\n  u₁\nterm has type\n  ℕ', 'simp made no progress'], ['omega could not prove the goal:\na possible counterexample may satisfy the constraints\n  f ≥ 0\n  d ≥ 0\n  3*b + c + 2*d - e - 2*f ≥ 1\n  a ≥ 9\nwhere\n a := ↑u₁\n b := ↑u₁ * ↑u₁ !\n c := ↑(u₁ ^ 2) * ↑u₁ !\n d', 'unsolved goals\nu₁ : ℕ\nhyp1 : 9 ≤ u₁\n⊢ u₁ * (1 + u₁)! + (1 + u₁)! * 2 = u₁ * u₁ ! * 3 + u₁ ^ 2 * u₁ ! + u₁ ! * 2'], ['function expected at\n  u₁\nterm has type\n  ℝ', 'linarith failed to find a contradiction\ncase h1.h\nu₁ v₁ : ℝ\nhyp2 : u₁ - v₁ = u₁ * v₁\nhyp1 : u₁ ≠ 0 ∧ v₁ ≠ 0\nh₁ : 1 - v₁ ≠ 0\nh₃ : u₁ - v₁ = u₁ * v₁\nh₄ : u₁ - v₁ - u₁ * v₁ = 0\na✝ : sorryAx ℝ true - v₁ <']]

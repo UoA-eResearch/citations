@@ -49,11 +49,50 @@ def refutable(repl, a, timeout=60):
     return not C.errors(r) and not C.uses_sorry(r) and (C.axioms(r, "chk") is not None)
 
 
+WITNESS = ("first\n" + "".join(f"    | (have := h {w}; norm_num at this; done)\n" for w in
+                               ["0", "1", "2", "3", "0 0", "1 1", "1 2", "2 1", "2 3"]).rstrip("\n"))  # each branch must close the goal
+
+
+def witness_refutable(repl, a, timeout=60):
+    """D9: True if (forall a) is refuted by instantiating it at small numerals (h 0, h 1, ..., h 1 2, ...) and
+    normalising, e.g. 'forall a : R, a = 0' or '0 < n -> Nat.Prime n -> False'. Timeout counts as refutable."""
+    try:
+        pa = C.prop(a)
+    except Exception:  # noqa: BLE001
+        return True
+    r = repl.run(f"{C.HDR}theorem chk : ¬ {pa} := by\n  intro h\n  {WITNESS}\n\n#print axioms chk", timeout=timeout)
+    if "timeout" in r or "dead" in r:
+        return True
+    return not C.errors(r) and not C.uses_sorry(r) and (C.axioms(r, "chk") is not None)
+
+
+def negation_certified(repl, a, b, timeout=60):
+    """D9: True if a => (forall B_b, not C_b) is also certified by the portfolio, i.e. a is inconsistent with b's
+    binders and the implication a => b is an explosion. Timeout counts as certified (fail-closed)."""
+    try:
+        bb, cb = C.split(b)
+        pa = C.prop(a)
+    except Exception:  # noqa: BLE001
+        return True
+    nb = f"(∀ {bb}, ¬ ({cb}))" if bb else f"(¬ ({cb}))"
+    r = repl.run(f"{C.HDR}theorem chk : {pa} → {nb} := by\n  intro h\n  intros\n  {C.PORTFOLIO}\n\n#print axioms chk", timeout=timeout)
+    if "timeout" in r or "dead" in r:
+        return True
+    return not C.errors(r) and not C.uses_sorry(r) and (C.axioms(r, "chk") is not None)
+
+
+def one_way(repl, a, b):
+    """a => b counts only if: b not provable alone (D3a), a not refutable by the portfolio (D3b), a not refuted by small
+    witnesses (D9), and a => not b not certified (D9)."""
+    return (informative(repl, b) and not refutable(repl, a) and not witness_refutable(repl, a)
+            and not negation_certified(repl, a, b))
+
+
 def work(item):
     key, a, b, ab, ba = item
     try:
-        ab_inf = (informative(C._repl, b) and not refutable(C._repl, a)) if ab else None
-        ba_inf = (informative(C._repl, a) and not refutable(C._repl, b)) if ba else None
+        ab_inf = one_way(C._repl, a, b) if ab else None
+        ba_inf = one_way(C._repl, b, a) if ba else None
         return dict(key=key, ab_inf=ab_inf, ba_inf=ba_inf)
     except Exception as e:  # noqa: BLE001
         try:

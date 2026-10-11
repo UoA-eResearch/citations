@@ -1,0 +1,42 @@
+{"key": "test/mathd_numbertheory_483|R2", "idx": 27, "status": "error", "err": ["unknown identifier 'h\u2081'"]}
+{"key": "test/mathd_numbertheory_559|R2", "idx": 18, "status": "ok"}
+{"key": "test/mathd_numbertheory_321|R2", "idx": 5, "status": "error", "err": ["failed to synthesize\n  CancelMonoidWithZero (ZMod 1399)\nuse `set_option diagnostics true` to get diagnostic information", "unsolved goals\nu\u2081 : ZMod 1399\nhyp1 : 160\u207b\u00b9 = u\u2081\nh\u2082 : 160 * 1058 = 1\nh\u2084 : u\u2081 = 160\u207b\u00b9\n\u22a2 \u00ac160 = 0"]}
+{"key": "test/mathd_numbertheory_559|R2", "idx": 8, "status": "ok"}
+{"key": "test/mathd_numbertheory_321|R2", "idx": 10, "status": "ok"}
+{"key": "test/mathd_numbertheory_321|R2", "idx": 2, "status": "error", "err": ["tactic 'rewrite' failed, did not find instance of the pattern in the current goal\nu\u2081 : ZMod 1399\nhyp1 : 160\u207b\u00b9 = u\u2081\n\u22a2 u\u2081 = 1058"]}
+{"key": "test/mathd_numbertheory_321|R2", "idx": 16, "status": "ok"}
+{"key": "test/algebra_sqineq_unitcircatbpamblt1|R2", "idx": 4, "status": "ok"}
+{"key": "test/mathd_algebra_332|R2", "idx": 25, "status": "ok"}
+{"key": "test/mathd_algebra_17|R2", "idx": 6, "status": "error", "err": ["linarith failed to find a contradiction\ncase a\nu\u2081 : \u211d\nhyp1 : 6 = \u221a(4 + \u221a(16 + 16 * u\u2081)) + \u221a(1 + \u221a(1 + u\u2081))\nh : \u00ac1 + u\u2081 \u2265 0\nh\u2082 : 1 + u\u2081 < 0\nh\u2083 : \u221a(1 + u\u2081) = 0\nh\u2084 : \u221a(1 + \u221a(1 + u\u2081)) = 1\nh\u2085 h\u2087 : \u221a(16 + 1", "linarith failed to find a contradiction\nu\u2081 : \u211d\nhyp1 : 6 = \u221a(4 + \u221a(16 + 16 * u\u2081)) + \u221a(1 + \u221a(1 + u\u2081))\nh : \u00ac1 + u\u2081 \u2265 0\nh\u2082 : 1 + u\u2081 < 0\nh\u2083 : \u221a(1 + u\u2081) = 0\nh\u2084 : \u221a(1 + \u221a(1 + u\u2081)) = 1\nh\u2085 : \u221a(16 + 16 * u\u2081) \u2265 "]}
+{"key": "test/mathd_numbertheory_222|R2", "idx": 30, "status": "error", "err": ["tactic 'rewrite' failed, did not find instance of the pattern in the target expression\n  8\nu\u2081 : \u2115\nhyp2 : 8 = Nat.gcd 120 u\u2081\nhyp1 : 3720 = Nat.lcm 120 u\u2081\nh\u2081 : Nat.gcd 120 u\u2081 * Nat.lcm 120 u\u2081 = 120 * u\u2081"]}
+{"key": "test/amc12a_2009_p6|R2", "idx": 17, "status": "error", "err": ["tactic 'rewrite' failed, did not find instance of the pattern in the target expression\n  2 ^ u\u2081\nu\u2081 v\u2081 w\u2081 s\u2081 : \u211d\nhyp2 : 3 ^ v\u2081 = s\u2081\nhyp1 : 2 ^ u\u2081 = w\u2081\n\u22a2 w\u2081 > 0", "tactic 'rewrite' failed, did not find instance of the pattern in the target expression\n  2 ^ u\u2081\nu\u2081 v\u2081 w\u2081 s\u2081 : \u211d\nhyp2 : 3 ^ v\u2081 = s\u2081\nhyp1 : 2 ^ u\u2081 = w\u2081\nh_w1_pos : w\u2081 > 0\nh_s1_pos : s\u2081 > 0\n\u22a2 w\u2081 ^ (2 * v\u2081"]}
+{"key": "test/mathd_algebra_332|R2", "idx": 22, "status": "ok"}
+{"key": "test/aime_1983_p2|R2", "idx": 5, "status": "error", "err": ["linarith failed to find a contradiction\ncase h1.h\nu\u2081 v\u2081 : \u211d\nw\u2081 : \u211d \u2192 \u211d\nhyp2 : v\u2081 \u2264 u\u2081 \u2227 u\u2081 \u2264 15\nhyp1 : 0 < v\u2081 \u2227 v\u2081 < 15\nh\u2081 : u\u2081 - v\u2081 \u2265 0\nh\u2082 : |u\u2081 - v\u2081| = u\u2081 - v\u2081\nh\u2086 : |-15 + (u\u2081 - v\u2081)| = 15 - u\u2081 + v\u2081\n", "unsolved goals\nu\u2081 v\u2081 : \u211d\nw\u2081 : \u211d \u2192 \u211d\nhyp2 : v\u2081 \u2264 u\u2081 \u2227 u\u2081 \u2264 15\nhyp1 : 0 < v\u2081 \u2227 v\u2081 < 15\nh\u2081 : u\u2081 - v\u2081 \u2265 0\nh\u2082 : |u\u2081 - v\u2081| = u\u2081 - v\u2081\nh\u2086 : |-15 + (u\u2081 - v\u2081)| = 15 - u\u2081 + v\u2081\nh\u2085 : -15 + (u\u2081 - v\u2081) < 0\nh\u2084 : |-15 "]}
+{"key": "test/amc12a_2009_p6|R2", "idx": 18, "status": "error", "err": ["linarith failed to find a contradiction\ncase h1.h\nu\u2081 v\u2081 w\u2081 s\u2081 : \u211d\nhyp2 : 3 ^ v\u2081 = s\u2081\nh_s\u2081_pos : 0 < s\u2081\nh_w\u2081_pos : 0 < w\u2081\nh1 : (12 ^ u\u2081) ^ v\u2081 = ((2 ^ 2) ^ u\u2081) ^ v\u2081 * (3 ^ u\u2081) ^ v\u2081\nh\u2085 : 2 ^ u\u2081 = w\u2081\na\u271d :", "unsolved goals\nu\u2081 v\u2081 w\u2081 s\u2081 : \u211d\nhyp2 : 3 ^ v\u2081 = s\u2081\nh_s\u2081_pos : 0 < s\u2081\nh_w\u2081_pos : 0 < w\u2081\nh1 : (12 ^ u\u2081) ^ v\u2081 = ((2 ^ 2) ^ u\u2081) ^ v\u2081 * (3 ^ u\u2081) ^ v\u2081\nh\u2085 : 2 ^ u\u2081 = w\u2081\n\u22a2 w\u2081 ^ (v\u2081 * 2) = 2 ^ u\u2081 ^ (v\u2081 * 2)"]}
+{"key": "test/aime_1983_p2|R2", "idx": 7, "status": "ok"}
+{"key": "test/aime_1983_p2|R2", "idx": 14, "status": "ok"}
+{"key": "test/aime_1983_p2|R2", "idx": 16, "status": "ok"}
+{"key": "test/aime_1983_p2|R2", "idx": 18, "status": "ok"}
+{"key": "test/aime_1983_p2|R2", "idx": 20, "status": "ok"}
+{"key": "test/aime_1983_p2|R2", "idx": 27, "status": "ok"}
+{"key": "valid/amc12a_2009_p5|R2", "idx": 28, "status": "ok"}
+{"key": "valid/mathd_algebra_547|R2", "idx": 29, "status": "ok"}
+{"key": "valid/amc12_2001_p2|R2", "idx": 5, "status": "ok"}
+{"key": "valid/amc12_2001_p2|R2", "idx": 20, "status": "ok"}
+{"key": "test/aime_1983_p2|R2", "idx": 21, "status": "ok"}
+{"key": "valid/amc12a_2013_p8|R2", "idx": 8, "status": "ok"}
+{"key": "valid/amc12_2001_p2|R2", "idx": 16, "status": "ok"}
+{"key": "valid/amc12_2000_p11|R2", "idx": 11, "status": "ok"}
+{"key": "test/mathd_numbertheory_495|R2", "idx": 15, "status": "error", "err": ["omega could not prove the goal:\na possible counterexample may satisfy the constraints\n  b \u2265 0\n  a \u2265 0\nwhere\n a := \u2191k / 5\n b := \u2191m / 5", "(deterministic) timeout at `isDefEq`, maximum number of heartbeats (200000) has been reached\nuse `set_option maxHeartbeats <num>` to set the limit\nuse `set_option diagnostics true` to get diagnostic i"]}
+{"key": "valid/amc12b_2020_p5|R2", "idx": 10, "status": "error", "err": ["unsolved goals\nu\u2081 v\u2081 : \u2115\nhyp2 : (7 * 3 + u\u2081) * 8 = v\u2081 * 3 * 3\nhyp1 : (7 * 3 + u\u2081 * 2) * 8 = v\u2081 * 5 * 3\n\u22a2 False"]}
+{"key": "valid/amc12_2000_p11|R2", "idx": 23, "status": "ok"}
+{"key": "valid/amc12_2000_p11|R2", "idx": 12, "status": "ok"}
+{"key": "valid/amc12_2000_p11|R2", "idx": 24, "status": "ok"}
+{"key": "test/mathd_numbertheory_495|R2", "idx": 10, "status": "ok"}
+{"key": "valid/mathd_algebra_159|R2", "idx": 30, "status": "ok"}
+{"key": "valid/amc12_2000_p11|R2", "idx": 16, "status": "ok"}
+{"key": "valid/algebra_manipexpr_apbeq2cceqiacpbceqm2|R2", "idx": 21, "status": "ok"}
+{"key": "valid/mathd_algebra_123|R2", "idx": 1, "status": "ok"}
+{"key": "valid/amc12_2000_p11|R2", "idx": 29, "status": "error", "err": ["linarith failed to find a contradiction\ncase h1.h\nu\u2081 v\u2081 : \u211d\nhyp2 : u\u2081 - v\u2081 = u\u2081 * v\u2081\nhyp1 : u\u2081 \u2260 0 \u2227 v\u2081 \u2260 0\nh_u\u2081_ne_neg_one : u\u2081 \u2260 -1\nh_v\u2081 h\u2081 : v\u2081 = u\u2081 / (u\u2081 + 1)\nh\u2082 : u\u2081 + 1 \u2260 0\nh\u2083 : u\u2081 / v\u2081 = u\u2081 / (", "unsolved goals\nu\u2081 v\u2081 : \u211d\nhyp2 : u\u2081 - v\u2081 = u\u2081 * v\u2081\nhyp1 : u\u2081 \u2260 0 \u2227 v\u2081 \u2260 0\nh_u\u2081_ne_neg_one : u\u2081 \u2260 -1\nh_v\u2081 h\u2081 : v\u2081 = u\u2081 / (u\u2081 + 1)\nh\u2082 : u\u2081 + 1 \u2260 0\nh\u2083 : u\u2081 / v\u2081 = u\u2081 / (u\u2081 / (u\u2081 + 1))\n\u22a2 (u\u2081 + u\u2081 ^ 2) / u\u2081"]}
+{"key": "valid/algebra_manipexpr_apbeq2cceqiacpbceqm2|R2", "idx": 16, "status": "ok"}
+{"key": "valid/mathd_numbertheory_110|R2", "idx": 8, "status": "ok"}

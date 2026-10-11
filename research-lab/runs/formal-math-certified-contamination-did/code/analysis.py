@@ -4,6 +4,10 @@ item-versions sampled), results/tables/leak_status_by_prover.csv, leak_pairs_ben
 Outputs: results/tables/{pass_by_version.csv, primary.json, secondary.csv, statement_changes.csv}.
 
 Unit: (item, prover) with an original and at least one certified reformulation sampled.
+D9 (after the independent review): whitespace-only "changed statement" rejections re-checked (data/verified/<p>_ws.jsonl
+overrides); R1 versions textually identical to the original dropped; vacuous benchmark items (results/tables/
+bench_items.csv) dropped; added the documented-training and test/valid-only contrasts, per-sample DiDs by prover, the
+solve-rate DiD by version and the preregistered mixed logistic model.
 d = pass@32(original) - mean pass@32 over the certified reformulations.
 DiD = mean d (leaked) - mean d (clean), pooled over DeepSeek-Prover-V2, Goedel-Prover-V2 and Kimina (H1), with a
 one-sided 95% item-cluster bootstrap (10,000 draws; items resampled with all their provers)."""
@@ -22,10 +26,37 @@ RNG = np.random.default_rng(20261009)
 B = 10000
 
 
-def load_versions(prover):
+def identical_r1():
+    """D9: items whose R1 is textually identical to the original (no binders to rename or reorder)."""
+    r = pd.read_parquet(RUN / "data" / "reforms.parquet")
+    n = lambda x: " ".join(str(x).split())  # noqa: E731
+    return set(r.id[r.R1.map(n) == r.orig.map(n)])
+
+
+def vacuous_items():
+    f = TAB / "bench_items.csv"
+    if not f.exists():
+        return set()
+    b = pd.read_csv(f)
+    return set(b.item[b.vacuous.fillna(False).astype(bool)])
+
+
+SAMPLES = []
+
+
+def load_versions(prover, drop_r1=frozenset()):
     v = pd.DataFrame([json.loads(l) for l in open(RUN / "data" / "verified" / f"{prover}.jsonl")])
+    ws = RUN / "data" / "verified" / f"{prover}_ws.jsonl"
+    if ws.exists():  # D9: spacing-insensitive re-check of "changed statement" rejections
+        o = pd.DataFrame([json.loads(l) for l in open(ws)])
+        if len(o):
+            o = o.set_index(["key", "idx"]).status
+            k = pd.MultiIndex.from_frame(v[["key", "idx"]])
+            v["status"] = np.where(k.isin(o.index), o.reindex(k).values, v.status)
     v[["item", "version"]] = v.key.str.split("|", expand=True)
+    v = v[~((v.version == "R1") & v["item"].isin(drop_r1))]
     v["ok"] = v.status == "ok"
+    SAMPLES.append(v.assign(prover=prover)[["item", "version", "prover", "ok"]])
     g = v.groupby(["item", "version"]).agg(n=("ok", "size"), k=("ok", "sum"),
                                           changed=("status", lambda s: (s == "changed statement").mean()),
                                           truncated=("status", lambda s: (s == "truncated").mean())).reset_index()
@@ -72,16 +103,40 @@ def verdict(r, mde):
     return "Inconclusive"
 
 
+def mixed_model(P, verified):
+    """Plan section 5 secondary: success ~ reformulated x leaked + (1|item) + (1|prover), sample level, primary provers.
+    Variational Bayes (statsmodels BinomialBayesMixedGLM); no Laplace/quadrature GLMM is available (D9)."""
+    from statsmodels.genmod.bayes_mixed_glm import BinomialBayesMixedGLM
+    keep = P.set_index(["item", "prover"]).leaked
+    d = verified[verified.set_index(["item", "prover"]).index.isin(keep.index)].copy()
+    d["leaked"] = keep.reindex(pd.MultiIndex.from_frame(d[["item", "prover"]])).astype(float).values
+    d["reformulated"] = (d.version != "orig").astype(float)
+    d["success"] = d.ok.astype(float)
+    m = BinomialBayesMixedGLM.from_formula("success ~ reformulated * leaked", {"item": "0 + C(item)", "prover": "0 + C(prover)"}, d)
+    r = m.fit_vb()
+    names = list(m.exog_names)
+    i = names.index("reformulated:leaked")
+    est, sd = float(r.fe_mean[i]), float(r.fe_sd[i])
+    out = dict(term="reformulated:leaked", log_odds=est, sd=sd, lower95=est - 1.96 * sd, upper95=est + 1.96 * sd,
+               odds_ratio=float(np.exp(est)), n_samples=len(d), n_units=int(len(keep)),
+               fixed_effects={n: [float(a), float(b)] for n, a, b in zip(names, r.fe_mean, r.fe_sd)},
+               vc_sd_posterior_mean={n: float(np.exp(a)) for n, a in zip(m.vcp_names, r.vcp_mean)})
+    return out
+
+
 def main(*args):
     st = pd.read_csv(TAB / "leak_status_by_prover.csv")
     pairs = pd.read_csv(TAB / "leak_pairs_bench_minif2f.csv")
     mde = json.load(open(TAB / "mde.json"))
-    allg, units = [], []
+    allg, units, rows_v = [], [], []
+    drop_r1, vac = identical_r1(), vacuous_items()
+    print(f"D9: {len(drop_r1)} identical-R1 items, {len(vac)} vacuous items dropped: {sorted(vac)}")
     for p in PRIMARY + ([] if "--no-stp" in args else ["stp"]):  # --no-stp while STP verification is incomplete
         f = RUN / "data" / "verified" / f"{p}.jsonl"
         if not f.exists():
             continue
-        g = load_versions(p)
+        g = load_versions(p, drop_r1)
+        g = g[~g["item"].isin(vac)]
         allg.append(g)
         if p == "stp":
             own = set(pairs[pairs.corpus.isin(OWN["stp"])].item)
@@ -94,6 +149,7 @@ def main(*args):
         # secondary leak definitions
         u["leaked_L0L1"] = u["item"].isin(set(pairs[pairs.corpus.isin(OWN[p]) & pairs.tier.isin(["L0", "L1"])].item))
         u["leaked_any_corpus"] = u["item"].isin(set(pairs.item))
+        u["valid"] = u["item"].str.startswith("valid/")
         units.append(u)
     allg = pd.concat(allg)
     allg.to_csv(TAB / "pass_by_version.csv", index=False)
@@ -126,7 +182,45 @@ def main(*args):
     revised = {"test/" + r.name for r in k.itertuples() if t15.get(r.name, "").strip() not in r.formal_statement}
     add("excluding the 19 Kimina-revised items (pooled)", P[~P["item"].isin(revised)])
     add("STP prover, leak against STP corpus", U[U.prover == "stp"])
+    # D9 additions
+    for p in PRIMARY + ["stp"]:
+        add(f"per-sample, prover {p}", U[U.prover == p], "d_rate")
+    doc = P.assign(leaked=P.leaked | ((P.prover == "dsp_v2") & P.valid))
+    add("documented training: miniF2F-valid leaked for DeepSeek-Prover-V2 (pooled)", doc)
+    add("documented training, per-sample (pooled)", doc, "d_rate")
+    add("documented training: DeepSeek-Prover-V2 alone", doc[doc.prover == "dsp_v2"])
+    add("test items only (pooled)", P[~P.valid])
+    add("test items only, per-sample (pooled)", P[~P.valid], "d_rate")
+    add("valid items only (pooled)", P[P.valid])
+    S = U[U.prover == "stp"]
+    add("STP, documented training: miniF2F-valid leaked", S.assign(leaked=S.leaked | S.valid))
+    add("STP, test items only", S[~S.valid])
     pd.DataFrame(rows).to_csv(TAB / "secondary.csv", index=False)
+    # solve-rate DiD by version (descriptive; genuine reformulations only)
+    G = allg.copy()
+    for p in PRIMARY + ["stp"]:
+        gp = G[G.prover == p]
+        lk = U[U.prover == p].set_index("item").leaked
+        o = gp[gp.version == "orig"].set_index("item")
+        for ver in ("R1", "R2"):
+            r = gp[gp.version == ver].set_index("item")
+            uv = o[["pass32", "rate"]].join(r[["pass32", "rate"]], rsuffix="_v", how="inner").join(lk, how="inner")
+            uv["d"], uv["d_rate"] = uv.pass32 - uv.pass32_v, uv.rate - uv.rate_v
+            uv = uv.reset_index()
+            for col in ("d", "d_rate"):
+                if uv.leaked.sum() and (~uv.leaked).sum():
+                    x = did(uv, col)
+                    rows_v.append(dict(prover=p, version=ver, metric="pass32" if col == "d" else "per-sample", **x,
+                                       leaked_orig=float(uv[uv.leaked]["rate" if col == "d_rate" else "pass32"].mean()),
+                                       leaked_ver=float(uv[uv.leaked]["rate_v" if col == "d_rate" else "pass32_v"].mean()),
+                                       clean_orig=float(uv[~uv.leaked]["rate" if col == "d_rate" else "pass32"].mean()),
+                                       clean_ver=float(uv[~uv.leaked]["rate_v" if col == "d_rate" else "pass32_v"].mean())))
+    pd.DataFrame(rows_v).to_csv(TAB / "did_by_version.csv", index=False)
+    print(pd.DataFrame(rows_v)[["prover", "version", "metric", "DiD", "lower95_one_sided", "upper95_one_sided", "leaked_orig", "leaked_ver", "clean_orig", "clean_ver"]].round(3).to_string())
+    if "--no-mixed" not in args:
+        mm = mixed_model(P, pd.concat(SAMPLES))
+        json.dump(mm, open(TAB / "mixed_model.json", "w"), indent=1)
+        print("MIXED", {k: v for k, v in mm.items() if k != "fixed_effects"})
     print(pd.DataFrame(rows)[["analysis", "DiD", "lower95_one_sided", "upper95_one_sided", "n_leaked", "n_clean", "mean_d_leaked", "mean_d_clean"]].round(4).to_string())
     # statement-change diagnostic: share of outputs rejected for restating a different theorem, by version and leak
     allg = allg.merge(U[["item", "prover", "leaked"]], on=["item", "prover"], how="left")

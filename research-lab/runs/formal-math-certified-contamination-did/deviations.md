@@ -264,3 +264,106 @@ STP outputs.
 
 **Rejection reasons, for the record.** All 869 of Kimina's "banned" outputs use `native_decide` in proof code, which
 the plan bans. None was a commented `sorry`.
+
+## D9. Fixes after the independent review (2026-10-11 13:29 NZDT)
+
+The independent review of the draft (`review/review.md`, commit a1797f1) recommended "fix first". It found two bugs in
+the leak certification and several problems with the analysis and the prose. Its recomputations already show many of
+the numbers below (per-sample DiDs by prover, test-only and valid-only DiDs, the DiD with identical R1 dropped), so
+none of the changes in this entry is blind to outcomes. The decision rule is unchanged. Every change is listed here,
+and the analyses as first run (D8) stay in `results/tables_D8/`.
+
+**1. Lean Workbook was never certified (bug).**
+
+- `extract.py` appended `:= by` to Lean Workbook statements that already end in `:=  by sorry`. Every statement
+  therefore kept `sorry`, all 1,915 miniF2F candidate pairs were "unchecked", and the reported "0 leaks" was an
+  artefact.
+- **Fix:** strip the suffix, then rerun retrieval, certification and the recheck for Lean Workbook on all four
+  benchmarks.
+- The buggy certification files are kept in `data/certify/lean_workbook_buggy/`.
+
+**2. The explosion guard (D3b) let false training statements through (bug).**
+
+- D3b claimed the guard caught the motivating example "∀ a : ℝ, a = 0". It did not. `(∀ a : ℝ, a = 0) → False` is
+  not provable by the portfolio, because nothing instantiates the quantifier. In the implication, the benchmark's own
+  binders supply the term. The reviewer found such pairs in the final leak list, for example `n = 320`, `a = 4` and
+  `0 < n → Nat.Prime n → False`.
+- **Two extra conditions.** An implication a ⇒ b now also requires:
+  1. **Witness refutation fails.** a must not be refuted by instantiating it at small numerals (0, 1, 2, 3 and
+     pairs), each closed by `norm_num`.
+  2. **The negation is not certified.** a ⇒ (∀ binders of b, ¬ conclusion of b) must not be certified by the same
+     portfolio. If both a ⇒ b and a ⇒ ¬b certify, a is inconsistent with b's binders.
+- Timeouts count against the leak (fail-closed), as before.
+- **Checked in Lean (Lean 4.9) on the reviewer's cases:**
+  - "a = 0" and "n = 320" are refuted by witnesses;
+  - "0 < n → Nat.Prime n → False" is refuted by a witness, and its negation implication also certifies;
+  - a genuine leak (the same linear system with renamed hypotheses) is unaffected.
+- The recheck is rerun for every benchmark and corpus. The D3b outputs are kept in `data/certify/recheck_D3b/`.
+
+**3. Benchmark items.**
+
+- **Automation-provable count.** It is now computed with the operative FREE portfolio on all 488 miniF2F items
+  (`code/benchcheck.py`, 60 s each). The draft's "69" was D1's narrower flag.
+- **Vacuous items are dropped from the DiD units.** These are items whose hypotheses are contradictory, certified by
+  `exfalso` plus automation as in the vacuity study's v2 certificate. Example: `valid/mathd_numbertheory_35`, with
+  `h₀ : ∀ n, n ∣ Nat.sqrt 196`. Any statement sharing such a hypothesis is "equivalent" to them, and every prover
+  solves them.
+
+**4. Reformulations.**
+
+- **Identical R1 versions are dropped.** For 83 items without binders, R1 is textually identical to the original, so
+  "R1" was the same prompt sampled twice.
+- **Units without a genuine reformulation are dropped.** These are units whose only certified reformulation is an
+  identical R1.
+
+**5. Whitespace-only rejections.**
+
+- **Re-checked.** Outputs rejected as "changed statement" are re-checked with a comparison that ignores spaces next to
+  brackets, colons and commas (`code/reverify_ws.py`). Example: `v₁ )` in R2 against `v₁)` in the output.
+- **Recompiled.** Those that then match are compiled exactly as in `verify.py`, and the new status replaces the old.
+
+**6. Documented training on miniF2F-valid.**
+
+- **The plan's mapping omits it.** The plan gave DeepSeek-Prover-V2 only its public lineage, DeepSeek-Prover-V1, as
+  "own corpora". Both its papers document training on miniF2F-valid:
+  - V1.5 (arXiv 2408.08152): SFT data;
+  - V2 (arXiv 2504.21801): curriculum learning.
+- **STP's paper (arXiv 2502.00212)** documents the same, consistent with its 173 verbatim valid statements.
+- **The primary analysis keeps the preregistered mapping** with fixes 1 to 5.
+- **Two analyses are reported alongside it, with equal prominence:**
+  - **(a) Documented training:** every miniF2F-valid item counts as leaked for DeepSeek-Prover-V2 and STP.
+  - **(b) Test items only:** every prover, since the valid split is probably trained on more widely. Goedel's
+    clean-valid items are solved more often than its clean-test items.
+- Analysis (a) changes which pairs are "clean", so it is not the preregistered contrast.
+
+**7. Analyses added.**
+
+- **Per-sample DiD by prover.** This secondary was preregistered pooled.
+- **Solve-rate DiD by version.** R1 and R2 separately; descriptive.
+- **The preregistered mixed logistic model.** It was missing from the draft:
+  - specification: `success ~ reformulated × leaked + (1|item) + (1|prover)`;
+  - fitted as a Bayesian binomial mixed GLM by variational Bayes (statsmodels `BinomialBayesMixedGLM`), because no
+    Laplace or adaptive-quadrature GLMM is available in the environment.
+- **Interval labels.** The 5th and 95th bootstrap percentiles are a 90% two-sided interval. The verdict uses only the
+  one-sided bound.
+- **The two MDE figures.** `mde.json` records 6.09 pp, computed from the 1,294 clean pairs before the 150-item
+  subsample. D4 and the verdict use 6.72 pp.
+
+**8. Prose.**
+
+- **Scope of the verdict.** The pass@32 metric sits at a 100% ceiling for the leaked arms of DeepSeek-Prover-V2 and
+  STP, so it cannot register degradation there. The verdict is scoped to "surface rewording, pass@32".
+- **Sentences removed.** Those that claimed more than pass@32 can show are removed.
+- **The L2 composition is stated.**
+- **The selection of leaked items is stated.** Proof corpora contain only items their pipeline solved.
+- **The prompt description is corrected.** It is the DeepSeek-Prover-V1.5 miniF2F header with each model's documented
+  instruction, and it uses `maxHeartbeats 400000` where the cards use 0.
+- **Retrieval recall and the unchecked share are quantified.**
+
+**Timeline note.** `analysis.py` was committed (7657ea0) before the pooled analysis was first run. Some per-prover
+verification files existed by then, so "before any verification result is read" is changed to "before the pooled
+analysis was first run".
+
+**The reviewer's sample.** One of the reviewer's re-check stages started while the fixed Lean Workbook certification
+was being written. Its random sample of rejected pairs may therefore include some newly certified Lean Workbook pairs.
+That affects only the reviewer's reproducibility check, not any study number.

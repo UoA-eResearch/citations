@@ -1,0 +1,13 @@
+{
+ "n_leaked_pairs_own": 170,
+ "n_clean_pairs_own": 1294,
+ "MDE_pp": 6.0939591872799905,
+ "per_prover_leaked": {
+  "dsp_v2": 16,
+  "goedel_v2": 99,
+  "kimina": 55
+ },
+ "n_leaked_pairs_all_corpora": 756,
+ "automation_provable_items": 69,
+ "note": "pairs = (item, prover); sampling-level availability (certified reformulations) not yet applied"
+}
