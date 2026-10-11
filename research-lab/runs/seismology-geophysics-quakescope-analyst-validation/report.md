@@ -5,7 +5,8 @@
 
 Run directory: `research-lab/runs/seismology-geophysics-quakescope-analyst-validation` · Preregistration:
 [`plan.md`](plan.md) (commit 5bb0f02) · Departures from it: [`deviations.md`](deviations.md) (D1-D5) · Independent
-review: [`review/review.md`](review/review.md) · 12 October 2026
+review: [`review/review.md`](review/review.md), confirmation pass:
+[`review/confirmation.md`](review/confirmation.md) · 12 October 2026
 
 **Verdict: Refuted on H2; H1 at its threshold.** The lead's hypothesis had two parts. The first (H1) was that "after
 adjusting for magnitude and distance, recall varies between stations with SD ≥ 0.10". The second (H2) was that
@@ -71,8 +72,8 @@ station and no analyst pick. They may be noise, or tiny earthquakes that only on
 None of these is an archive-wide, station-level validation of the released QuakeScope catalogue. OpenAlex lists four
 works citing the QuakeScope paper, and none of them does this either.
 
-**Reference picks that may have started as PhaseNet picks.** SCSN reported in 2024 that it had "recently integrated"
-PhaseNet into its event post-processing (Tepp et al., SSA 2024 abstract). In that case, some reviewed SCEDC picks from
+**Reference picks that may have started as PhaseNet picks.** SCSN reported in 2024 that it "has integrated the
+deep-learning picker PhaseNet into its event post-processing" (Tepp et al., SSA 2024 abstract). In that case, some reviewed SCEDC picks from
 2023-2024 began as PhaseNet picks, which would favour a PhaseNet catalogue. SCEDC recall shows no such rise: 92.6% for
 2010-2022 and 92.6% for 2023-2024.
 
@@ -325,7 +326,8 @@ return Supported. The upper bound is above 0.10, so it cannot return Refuted eit
 - **Bootstrap:** 14% of the 200 draws are at or above 0.10 (draws 0.083 to 0.113).
 - **Why it falls:** the logit-scale spread barely moves (σ_u 1.087 against 1.078). Typical recall at
   the reference event rises from 92.4% to 93.6%, nearer the ceiling, and SD_p shrinks with it.
-- **Convergence:** as in the primary fit, every VB fit carries statsmodels' non-convergence flag (D4).
+- **Convergence:** as in the primary fit, statsmodels' non-convergence flag is raised on the main fit and on 196 of
+  the 200 refits (D4).
 
 **The weak-station tail shrinks** without zero-pick days, though it does not disappear:
 
@@ -414,7 +416,7 @@ The H2 result does not depend on the VB estimator. With maximum-likelihood stati
 
 ### Diagnostics added after the outcome (deviations.md D4; `code/checks.py`)
 
-**VB non-convergence flag.** statsmodels raised "VB fitting did not converge" on every fit. The flag is set when
+**VB non-convergence flag.** statsmodels raised "VB fitting did not converge" on every preregistered fit. The flag is set when
 `scipy.optimize.minimize` (BFGS) reports `success = False`. Three refits with fixed starting seeds show why: each
 stopped with "Desired error not necessarily achieved due to precision loss" after 700-790 iterations. The
 gradient norms were 6e-5 to 4e-4, over about 2,060 parameters, and the ELBO was identical to nine significant figures.
@@ -556,7 +558,8 @@ interval and the attributes used here.
   stations whose noise is daytime or seasonal (urban, coastal).
 - **Coverage.** Only CI, NC and BK, and only 30 sampled months. 11% of analyst-picked arrivals fall on station-days
   QuakeScope did not read, and are excluded.
-- **Variational Bayes.** Every fit carries statsmodels' non-convergence flag. The diagnostics above show that the flag
+- **Variational Bayes.** Every preregistered fit carries statsmodels' non-convergence flag (as do all but 4 of the
+  201 fits without zero-output days). The diagnostics above show that the flag
   reflects BFGS's precision-loss stop at a near-zero gradient, and that maximum likelihood agrees.
 
 ## Deviations

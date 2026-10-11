@@ -175,3 +175,13 @@ before the zero-pick-day bootstrap had returned.
     "Refuted (H2)" as the alternative.
 - **Figure 1** now spans 0.1-1.0, because the draft's 0.3-1.0 range dropped the 5 stations below 0.3. It also
   overlays the sensitivity-A effects.
+
+### D5b - 2026-10-12 10:44 NZDT - confirmation-pass edits (review/confirmation.md: publish with edits)
+
+The reviewer rated 20 issues resolved and accepted the tag decision (issue 11), on condition that the one-word tag is
+always shown with its qualifier. Three text edits followed, and no number or verdict changed:
+
+1. Sensitivity A's convergence flag is raised on the main fit and 196 of the 200 refits (4 converged), not on every
+   fit. The Limitations line is corrected to match.
+2. The Tepp et al. (SSA 2024) phrase is now quoted verbatim.
+3. The lab index entry and the README row carry "Refuted on H2; H1 at its threshold" alongside the tag.
