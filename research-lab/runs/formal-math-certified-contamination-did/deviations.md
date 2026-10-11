@@ -430,3 +430,45 @@ No prover can solve such an item. These items stay in the units, because they co
 them would be a further unplanned rule. They are counted and listed in the report.
 
 The pooled analysis has not yet been run on the D9 tiers.
+
+## D10. Edits after the confirmation pass (2026-10-11 16:21 NZDT)
+
+The confirmation pass (`review/confirmation.md`, on commit f4672e5) recommended "publish with edits". It reproduced the
+primary result under the D9 rules and found no error in the reruns. It asked for seven small edits, A to G; none
+changes a verdict number. They are made here.
+
+- **A. Mixed model.** The variational fit in `logs/analysis_D9.log` raised a non-convergence warning.
+  - `analysis.py` now passes `minim_opts={"maxiter": 5000}` and records whether the optimiser converged.
+  - The reviewer's refit at that budget gave the same odds ratio, 0.965 (0.901 to 1.033).
+  - **The convergence flag is not stable across runs.** Here the flag varied between runs at both the default budget
+    and 5,000 iterations; the final run converged. The interaction odds ratio was 0.9652 every time, to four decimals.
+    So the flag reflects how the BFGS optimiser stops, not a different estimate. The report says this.
+- **B. R2 count.** For the 83 items whose R1 equals the original, 70 have an R2 text. 69 of those are certified in
+  Lean 4.9 and 65 in Lean 4.15 (the draft said "70 keep a genuine R2").
+- **C. Timeline.** D9 said its changes were committed before the reruns. That holds for everything except the Lean
+  Workbook extraction and retrieval:
+
+  | Step | Time (11 October, NZDT) |
+  |---|---|
+  | Lean Workbook extraction and retrieval rewritten | 13:03 |
+  | D9 entry committed | 13:32 |
+  | Lean Workbook certification starts | 13:46 |
+  | Rechecks | 14:43-15:12 |
+
+  The extraction fix is mechanical and was specified by the review.
+
+  The vacuity portfolio was also changed after its first result (no vacuous item) was seen. That change is
+  outcome-neutral for the DiD: vacuous items, like the two refuted ones, contribute d = 0 in both arms.
+- **D. Stale D1 fields.** `mde.json`'s `automation_provable_items` (69) and the `automation_provable` column of
+  `leak_status_by_prover.csv` come from D1's flag. `tiers.py` now labels them `*_D1_flag`, and the tiers are
+  regenerated, with identical leak tables otherwise. The operative count is in `bench_items.csv` (82).
+- **E. A blind spot in the witness guard.** It instantiates explicit binders only. A false training statement written
+  with implicit binders (`{x : ℝ}`), or with hypotheses before its first explicit binder, is not witness-refuted. One
+  surviving L2 pair is of this kind: `aime_1988_p3` × NuminaMath-LEAN `algebra_280685`. It is the same false
+  formalisation, so it is a leak of the defective item either way. The report states the blind spot.
+- **F. Lean Workbook.** The report adds that 18 of its 30 leaked items are miniF2F test items, 11 of them at L0/L1. Four
+  test items are leaked only through Lean Workbook. Checked independently from `leak_pairs_bench_minif2f.csv`.
+- **G. Plain-terms wording.** "That is the signature of memorised wording" becomes "consistent with".
+- **A sensitivity row is added.** It excludes the 10 items that lost their leak status in D9 and now sit in the clean
+  arm. The reviewer's computation gave +1.11 pp (−1.08, +3.35), n 156/431. The row is appended after all other
+  bootstrap computations, so no other number's random draws change.

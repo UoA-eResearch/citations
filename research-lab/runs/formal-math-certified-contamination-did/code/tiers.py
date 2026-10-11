@@ -83,7 +83,7 @@ def main(bench="bench_minif2f"):
         for scope, cs in (("own corpora", corps), ("all corpora", ALL)):
             leaked = set(best[best.corpus.isin(cs)].item)
             for it in items:
-                st.append(dict(prover=prov, scope=scope, item=it, leaked=it in leaked, automation_provable=it in trivial))
+                st.append(dict(prover=prov, scope=scope, item=it, leaked=it in leaked, automation_provable_D1_flag=it in trivial))
     st = pd.DataFrame(st)
     st.to_csv(TAB / "leak_status_by_prover.csv", index=False)
     own = st[st.scope == "own corpora"]
@@ -91,7 +91,7 @@ def main(bench="bench_minif2f"):
     n_clean = int((~own.leaked).sum())
     mde = 2.49 * 0.30 * np.sqrt(1 / max(n_leak, 1) + 1 / n_clean)
     res = dict(n_leaked_pairs_own=n_leak, n_clean_pairs_own=n_clean, MDE_pp=100 * mde, per_prover_leaked=own.groupby("prover").leaked.sum().to_dict(),
-               n_leaked_pairs_all_corpora=int(st[st.scope == "all corpora"].leaked.sum()), automation_provable_items=len(trivial),
+               n_leaked_pairs_all_corpora=int(st[st.scope == "all corpora"].leaked.sum()), automation_provable_items_D1_flag=len(trivial),
                note="pairs = (item, prover); sampling-level availability (certified reformulations) not yet applied")
     json.dump(res, open(TAB / "mde.json", "w"), indent=1, default=int)
     print(json.dumps(res, indent=1, default=int))

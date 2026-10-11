@@ -113,14 +113,19 @@ def mixed_model(P, verified):
     d["reformulated"] = (d.version != "orig").astype(float)
     d["success"] = d.ok.astype(float)
     m = BinomialBayesMixedGLM.from_formula("success ~ reformulated * leaked", {"item": "0 + C(item)", "prover": "0 + C(prover)"}, d)
-    r = m.fit_vb()
+    import warnings
+    with warnings.catch_warnings(record=True) as w:  # D10: larger optimiser budget; record convergence
+        warnings.simplefilter("always")
+        r = m.fit_vb(minim_opts={"maxiter": 5000})
+    converged = not any("converge" in str(x.message).lower() for x in w)
     names = list(m.exog_names)
     i = names.index("reformulated:leaked")
     est, sd = float(r.fe_mean[i]), float(r.fe_sd[i])
     out = dict(term="reformulated:leaked", log_odds=est, sd=sd, lower95=est - 1.96 * sd, upper95=est + 1.96 * sd,
                odds_ratio=float(np.exp(est)), n_samples=len(d), n_units=int(len(keep)),
                fixed_effects={n: [float(a), float(b)] for n, a, b in zip(names, r.fe_mean, r.fe_sd)},
-               vc_sd_posterior_mean={n: float(np.exp(a)) for n, a in zip(m.vcp_names, r.vcp_mean)})
+               vc_sd_posterior_mean={n: float(np.exp(a)) for n, a in zip(m.vcp_names, r.vcp_mean)},
+               optimiser_converged=converged, maxiter=5000)
     return out
 
 
@@ -221,6 +226,18 @@ def main(*args):
         mm = mixed_model(P, pd.concat(SAMPLES))
         json.dump(mm, open(TAB / "mixed_model.json", "w"), indent=1)
         print("MIXED", {k: v for k, v in mm.items() if k != "fixed_effects"})
+    # D10: sensitivity without the items that lost their leak status in D9 (appended last so no other draws change)
+    d8 = TAB.parent / "tables_D8" / "leak_status_by_prover.csv"
+    if d8.exists():
+        o = pd.read_csv(d8)
+        o = o[(o.scope == "own corpora") & o.leaked]
+        was = set(zip(o.prover, o["item"]))
+        flip = P[[(not l) and ((p, i) in was) for p, i, l in zip(P.prover, P["item"], P.leaked)]]
+        n0 = len(rows)
+        add(f"excluding the {len(flip)} items that lost leak status in D9 (pooled)", P.drop(flip.index))
+        add(f"excluding the {len(flip)} items that lost leak status in D9, per-sample (pooled)", P.drop(flip.index), "d_rate")
+        pd.DataFrame(rows).to_csv(TAB / "secondary.csv", index=False)
+        print(pd.DataFrame(rows[n0:])[["analysis", "DiD", "lower95_one_sided", "upper95_one_sided", "n_leaked", "n_clean"]].round(4).to_string())
     print(pd.DataFrame(rows)[["analysis", "DiD", "lower95_one_sided", "upper95_one_sided", "n_leaked", "n_clean", "mean_d_leaked", "mean_d_clean"]].round(4).to_string())
     # statement-change diagnostic: share of outputs rejected for restating a different theorem, by version and leak
     allg = allg.merge(U[["item", "prover", "leaked"]], on=["item", "prover"], how="left")

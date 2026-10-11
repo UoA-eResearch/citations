@@ -109,7 +109,7 @@ equations. The preregistered test asked whether leaked problems lose at least 10
 rate than clean ones. They lost about 1 point more. <strong>The prediction is refuted.</strong></p>
 <p>That metric has a blind spot. A problem counts as solved if any of the 32 attempts succeeds, and two provers solve every
 leaked problem every time, so the metric cannot fall. Counting individual attempts instead, DeepSeek-Prover-V2 and STP
-lose 7 and 14 points more on reworded leaked problems, more with heavier rewording. That is the signature of memorised
+lose 7 and 14 points more on reworded leaked problems, more with heavier rewording. That pattern is consistent with memorised
 wording. Goedel and Kimina, whose leaks are mostly differently worded versions, show no such effect.</p>
 <p>So surface memorisation is real for some provers, but at 32 attempts it does not change which problems get solved.
 Along the way we found two miniF2F problems that are false as formalised, and one that is vacuous.</p>
@@ -203,7 +203,8 @@ kernel-checked proof, not a timeout (D9 addendum).</p>
 <li><strong>R2:</strong> R1 plus flipped equalities.</li>
 </ul>
 <p>Each is kept only if Lean certifies it equivalent to the original in each prover's environment. For 83 items without
-binders, R1 is identical to the original; those R1 versions are dropped (D9). 70 of those 83 items keep a genuine R2.</p>
+binders, R1 is identical to the original; those R1 versions are dropped (D9). 70 of those 83 items have a distinct R2
+text, certified for 69 items in Lean 4.9 and 65 in Lean 4.15.</p>
 <p><strong>Provers and sampling.</strong></p>
 <div class="table-wrap"><table>
 <thead>
@@ -333,7 +334,12 @@ binders, R1 is identical to the original; those R1 versions are dropped (D9). 70
 <li><strong>NuminaMath-LEAN</strong> (Kimina's lineage) contains 5 miniF2F test statements verbatim: <code>aime_1990_p15</code>, <code>imo_1963_p5</code>
   and three MATH algebra items. That is despite the Kimina paper's 13-gram decontamination, which was run on the
   informal problems.</li>
-<li><strong>Lean Workbook</strong> contains 2 verbatim, one of them a test item.</li>
+<li><strong>Lean Workbook</strong> contains 2 statements verbatim, one of them a test item.</li>
+<li><strong>It matters more than that suggests.</strong> 18 of its 30 leaked items are miniF2F test items, 11 of them verbatim or
+    near-verbatim with renamed hypotheses, for example <code>aime_1990_p15</code>, <code>imo_1963_p5</code>, <code>imo_1974_p3</code> and
+    <code>imo_1983_p6</code>.</li>
+<li><strong>Four test items are leaked only here.</strong></li>
+<li><strong>It is a documented training source.</strong> DeepSeek-Prover-V1.5, STP and Goedel-Prover-V1 document training on it.</li>
 </ul>
 <p><strong>Best tier per leaked item.</strong> Across all corpora, 185 of the 250 leaked items match at L0, 47 at L1 at best, and 18
 only at L2.</p>
@@ -368,8 +374,10 @@ only at L2.</p>
 <ul>
 <li><strong>Automation-provable:</strong> 82 miniF2F items are provable by the hypothesis-free portfolio alone, so they can be
   leaked only verbatim.</li>
-<li><strong>Vacuous:</strong> <code>valid/mathd_numbertheory_35</code> has contradictory hypotheses (<code>∀ n, n ∣ Nat.sqrt 196</code>).</li>
-<li><strong>False as formalised:</strong> two items are refuted in Lean.</li>
+<li><strong>Vacuous:</strong> <code>valid/mathd_numbertheory_35</code> has contradictory hypotheses (<code>∀ n, n ∣ Nat.sqrt 196</code>).
+  It is excluded from the DiD. Every prover solves it on every version, so d = 0 there.</li>
+<li><strong>False as formalised:</strong> two items are refuted in Lean. No prover can solve them, so they contribute d = 0 in both
+  arms.</li>
 <li><code>valid/aime_1988_p3</code>: at x = 1, Lean's log 0 = 0 makes the hypothesis hold and the conclusion fail.</li>
 <li><code>valid/induction_sum_odd</code>: Σ 2k + 1 = n² fails at n = 0.</li>
 </ul>
@@ -497,7 +505,7 @@ only at L2.</p>
 <li><strong>The extra drop on R2 (per sample):</strong></li>
 <li>DeepSeek-Prover-V2: +8.3 pp (−0.1, +17.9);</li>
 <li>STP: +22.1 pp (+17.7, +26.7).</li>
-<li><strong>This is the signature of surface memorisation that H1 posits</strong>, but it lowers how often a leaked problem is solved,
+<li><strong>This is consistent with the surface memorisation that H1 posits</strong>, but it lowers how often a leaked problem is solved,
   not whether it is solved in 32 attempts.</li>
 <li><strong>Goedel-Prover-V2 and Kimina show no such pattern.</strong> Their leaks are mostly autoformalised equivalents or
   scaffolded variants, not verbatim copies.</li>
@@ -565,7 +573,8 @@ only at L2.</p>
 <ul>
 <li><strong>Specification:</strong> <code>success ~ reformulated × leaked + (1|item) + (1|prover)</code>, at sample level, on 51,232 samples.</li>
 <li><strong>Fit:</strong> variational Bayes, because no Laplace or quadrature GLMM was available.</li>
-<li><strong>Interaction:</strong> odds ratio 0.97 (95% credible interval 0.90 to 1.03). Reformulation lowers the odds of success
+<li><strong>Interaction:</strong> odds ratio 0.97 (95% credible interval 0.90 to 1.03).</li>
+<li><strong>Convergence:</strong> the optimiser's convergence flag varies between runs (D10), but the odds ratio is 0.965 every time. Reformulation lowers the odds of success
   about equally for leaked and clean items, with an odds ratio of 0.67 for the main effect.</li>
 <li><strong>The pooled model is dominated by Goedel-Prover-V2's 88 leaked units</strong>, as the pooled per-sample DiD is.</li>
 </ul>
@@ -598,9 +607,12 @@ only at L2.</p>
     count as no leak.</li>
 <li><strong>Certification is bounded.</strong> It uses a 20 s portfolio, and the guards are portfolio-relative: "not provable
     alone" means not by this portfolio in 60 s.</li>
+<li><strong>The witness guard has a blind spot.</strong> It instantiates explicit binders only. A false training statement written
+    with implicit binders, or with hypotheses before its first explicit binder, can still count. One surviving L2 pair
+    is of this kind, and it copies the false <code>aime_1988_p3</code> itself.</li>
 <li><strong>Some "clean" pairs were sampled as leaked.</strong> D9 removed false leaks after sampling. The 10 items that lost their
   leak status (9 Goedel-Prover-V2, 1 Kimina) now sit in the clean arm alongside the random clean sample. Their
-  versions were all sampled.</li>
+  versions were all sampled. Without them the DiD is +1.1 pp (−1.1, +3.4; 156 leaked and 431 clean pairs).</li>
 <li><strong>Design changes during the study</strong>, before sampling (D4):</li>
 <li>only 150 clean items per prover;</li>
 <li>an 8,192-token cap, because the pilot showed 24-44% of outputs truncated at 4,096.</li>
@@ -645,6 +657,8 @@ only at L2.</p>
 <li>the prompt description is corrected.</li>
 </ul>
 <p>The pooled pass@32 verdict did not change under any of these fixes.</p>
+<p>A confirmation pass by the same reviewer (<a href="review/confirmation.md"><code>review/confirmation.md</code></a>) found every issue
+resolved and no new errors in the reruns. It reproduced the primary result. Its seven small edits are made (D10).</p>
 <h2>Deviations (summary)</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -689,6 +703,10 @@ only at L2.</p>
 <tr>
 <td>D9</td>
 <td>Fixes after the independent review; guard audit; vacuity and refutation checks</td>
+</tr>
+<tr>
+<td>D10</td>
+<td>Edits after the confirmation pass</td>
 </tr>
 </tbody>
 </table></div>
