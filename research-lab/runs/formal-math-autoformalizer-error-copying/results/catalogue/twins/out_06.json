@@ -1,0 +1,93 @@
+[
+ {
+  "id": "t264",
+  "skip": "C (the given corrected statement) is false when a = b, which it allows (e.g. n = 0, or any n with a = b: |x-a| = 2|x-b| then holds only at x = a, and no sphere of radius r > 0 is a single point, so the first conjunct fails). Any numeral-only twin keeps this (sigma {2->3, 3->8, 4->9}, i.e. |x-a| = 3|x-b|, 8c = 9b - a, 8r = 3|b-a|, would carry the same gap), and a != b cannot be added by changing numerals, so a true C' is impossible. Not forced."
+ },
+ {
+  "id": "t265",
+  "skip": "No numerical parameter: the only numeral is the structural 0 of the nonzero condition r != 0. Changing it (e.g. r != 1) gives an unnatural hypothesis, and D contains no numeral, so D' would be textually identical to D and could not separate a memorised copy from the analogous defect."
+ },
+ {
+  "id": "t266",
+  "skip": "No numerical parameter: purely structural statement (inf A = -sup(-A)); N contains no numeral."
+ },
+ {
+  "id": "t267",
+  "skip": "No numerical parameter: purely structural statement about condensation points in R^k (k is a variable); N contains no numeral."
+ },
+ {
+  "id": "t268",
+  "skip": "No numerical parameter: purely structural statement about condensation points in R^k (k is a variable); N contains no numeral."
+ },
+ {
+  "id": "t269",
+  "skip": "No numerical parameter: purely structural statement (closed set = perfect set + countable set); N contains no numeral."
+ },
+ {
+  "id": "t272",
+  "skip": "No numerical parameter: the numerals are structural (intersection index 1, successor n+1, limit 0). Changing n+1 to n+2 makes the statement false (even and odd chains can shrink to different points), and the limit 0 or the start index have no free choice."
+ },
+ {
+  "id": "t273",
+  "skip": "No numerical parameter: the only numeral is the structural start index 1 of the intersection (Lean quantifies over all n); purely structural Baire statement."
+ },
+ {
+  "id": "t275",
+  "skip": "No numerical parameter: the only numeral is the structural 0 in a_n >= 0; the summand sqrt(a_n)/n has no numeral that can change without adding symbols."
+ },
+ {
+  "id": "t277",
+  "skip": "No numerical parameter: the only numeral is the dimension 1 of R^1, and changing it would change the Lean types (R -> EuclideanSpace), not just numerals."
+ },
+ {
+  "id": "t279",
+  "skip": null,
+  "sigma": {
+   "1 (the value f(1)=1)": "2",
+   "3 (the bound f'''(x) >= 3)": "6"
+  },
+  "N_twin": "Suppose $f$ is a real, three times differentiable function on $[-1,1]$, such that $f(-1)=0, \\quad f(0)=0, \\quad f(1)=2, \\quad f^{\\prime}(0)=0 .$ Prove that $f^{(3)}(x) \\geq 6$ for some $x \\in(-1,1)$.",
+  "D_twin": "theorem exercise_5_17\n  {f : ℝ → ℝ}\n  (hf' : DifferentiableOn ℝ f (Set.Icc (-1) 1))\n  (hf'' : DifferentiableOn ℝ (deriv f) (Set.Icc 1 1))\n  (hf''' : DifferentiableOn ℝ (deriv (deriv f)) (Set.Icc 1 1))\n  (hf0 : f (-1) = 0)\n  (hf1 : f 0 = 0)\n  (hf2 : f 1 = 2)\n  (hf3 : deriv f 0 = 0) :\n  ∃ x, x ∈ Set.Ioo (-1 : ℝ) 1 ∧ deriv (deriv (deriv f)) x ≥ 6 :=",
+  "C_twin": "theorem exercise_5_17\n  {f : ℝ → ℝ}\n  (hf' : DifferentiableOn ℝ f (Set.Icc (-1) 1))\n  (hf'' : DifferentiableOn ℝ (deriv f) (Set.Icc (-1) 1))\n  (hf''' : DifferentiableOn ℝ (deriv (deriv f)) (Set.Icc (-1) 1))\n  (hf0 : f (-1) = 0)\n  (hf1 : f 0 = 0)\n  (hf2 : f 1 = 2)\n  (hf3 : deriv f 0 = 0) :\n  ∃ x, x ∈ Set.Ioo (-1 : ℝ) 1 ∧ deriv (deriv (deriv f)) x ≥ 6 :=",
+  "answer_script": "from fractions import Fraction as F\n\n# Twin of Rudin 5.17: f(-1)=0, f(0)=0, f(1)=2, f'(0)=0 on [-1,1].\n# Taylor at 0 with Lagrange remainder (Rolle three times, interior regularity only):\n#   f(1)  = f(0) + f'(0) + f''(0)/2 + f'''(s)/6,   s in (0,1)\n#   f(-1) = f(0) - f'(0) + f''(0)/2 - f'''(t)/6,   t in (-1,0)\n# so f'''(s) + f'''(t) = 6*(f(1) - f(-1) - 2 f'(0)) and max(f'''(s), f'''(t)) >= 3*(f(1) - f(-1) - 2 f'(0)).\nfm1, f0, f1, fp0 = F(0), F(0), F(2), F(0)\nbound = 3 * (f1 - fm1 - 2 * fp0)\n\n# the same formula gives the original bound 3 for f(1)=1\nassert 3 * (F(1) - 0 - 2 * 0) == 3\n\n# sharpness: f(x) = x^3 + x^2 meets the twin's hypotheses and has f''' = 6 identically\np = [F(0), F(0), F(1), F(1)]\nev = lambda c, x: sum(ci * x ** i for i, ci in enumerate(c))\nder = lambda c: [i * c[i] for i in range(1, len(c))]\nassert ev(p, F(-1)) == fm1 and ev(p, F(0)) == f0 and ev(p, F(1)) == f1 and ev(der(p), F(0)) == fp0\nassert der(der(der(p))) == [bound]\nprint(bound)\n",
+  "answer_value": "6",
+  "answer_span": null,
+  "defect_rule": "sigma changes only the value of f at 1 (1 -> 2) and the stated bound (3 -> 6); the interval endpoints -1, 1, the values f(-1) = 0, f(0) = 0, f'(0) = 0, the derivative order (3) and the theorem name are unchanged. Taylor at 0 gives f'''(s) + f'''(t) = 6 (f(1) - f(-1) - 2 f'(0)) = 12, so some f''' >= 6 (sharp: f = x^3 + x^2); equivalently C' follows from C applied to f/2, and the Rolle argument only needs regularity on (-1,1) and continuity of f on [-1,1]. Same defect, unchanged: hf'' and hf''' are on Set.Icc 1 1 (typo 1 for -1), a singleton, so second and third differentiability are lost; D' is false (f = x^2 + x|x| meets its hypotheses with deriv^3 f = 0 on (-1,1))."
+ },
+ {
+  "id": "t281",
+  "skip": null,
+  "sigma": {
+   "1": "2"
+  },
+  "N_twin": "Suppose $f$ is defined and differentiable for every $x>0$, and $f^{\\prime}(x) \\rightarrow 0$ as $x \\rightarrow+\\infty$. Put $g(x)=f(x+2)-f(x)$. Prove that $g(x) \\rightarrow 0$ as $x \\rightarrow+\\infty$.",
+  "D_twin": "theorem exercise_5_5\n  {f : ℝ → ℝ}\n  (hfd : Differentiable ℝ f)\n  (hf : Tendsto (deriv f) atTop (𝓝 0)) :\n  Tendsto (λ x => f (x + 2) - f x) atTop atTop :=",
+  "C_twin": "theorem exercise_5_5\n  {f : ℝ → ℝ}\n  (hfd : DifferentiableOn ℝ f (Ioi 0))\n  (hf : Tendsto (deriv f) atTop (𝓝 0)) :\n  Tendsto (λ x => f (x + 2) - f x) atTop (𝓝 0) :=",
+  "answer_script": "import math\n\n# Twin of Rudin 5.5 with step 2: g(x) = f(x+2) - f(x).\n# Mean value theorem on [x, x+2] (inside x > 0): g(x) = 2 f'(xi), x < xi < x+2,\n# so |g(x)| <= 2 sup_{[x, x+2]} |f'| -> 0 when f' -> 0. Numerical check on three test functions.\nh = 2\ntests = [\n    (math.sqrt, lambda t: 0.5 / math.sqrt(t)),\n    (math.log, lambda t: 1 / t),\n    (lambda t: math.sin(math.sqrt(t)), lambda t: math.cos(math.sqrt(t)) / (2 * math.sqrt(t))),\n]\nok = True\nfor f, fp in tests:\n    for x in [1e2, 1e4, 1e6, 1e8]:\n        g = f(x + h) - f(x)\n        sup = max(abs(fp(x + h * k / 2000)) for k in range(2001))\n        ok = ok and abs(g) <= h * sup + 1e-9\n    ok = ok and abs(f(1e12 + h) - f(1e12)) < 1e-5\nprint(ok)\n",
+  "answer_value": "True",
+  "answer_span": null,
+  "defect_rule": "No computed answer: the script checks numerically that |f(x+2) - f(x)| <= 2 sup|f'| on [x, x+2] (mean value theorem) and that g -> 0 for three test functions with f' -> 0, and prints True. sigma changes the step 1 -> 2 in g(x) = f(x+1) - f(x) only; the 0s (x > 0, the limits 0, Ioi 0) and the theorem name are unchanged. C' is true (g(x) = 2 f'(xi) with xi in (x, x+2) inside x > 0). Same defect: D' concludes g -> +infinity (atTop) instead of g -> 0 and assumes differentiability on all of R; D' is false (f = 0)."
+ },
+ {
+  "id": "t282",
+  "skip": "No numerical parameter: all numerals are structural 0s (x >= 0, x > 0, f(0) = 0). f(0) = 0 cannot be replaced by a positive value (f = 1 gives g = 1/x, decreasing), and a negative value needs a minus sign."
+ },
+ {
+  "id": "t284",
+  "skip": null,
+  "sigma": {
+   "2": "3"
+  },
+  "N_twin": "Prove that the power series $\\sum zn/n^3$ converges at every point of the unit circle.",
+  "D_twin": "theorem exercise_1_19b (z : ℂ) (hz : abs z = 1) (s : ℕ → ℂ)\n    (h : s = (λ n => ∑ i in (range n), i * z / i ^ 3)) :\n    ∃ y, Tendsto s atTop (𝓝 y) :=",
+  "C_twin": "theorem exercise_1_19b (z : ℂ) (hz : abs z = 1) (s : ℕ → ℂ)\n    (h : s = (λ n => ∑ i in (range n), z ^ (i + 1) / (i + 1) ^ 3)) :\n    ∃ y, Tendsto s atTop (𝓝 y) :=",
+  "answer_script": "import cmath\nimport math\n\n# Twin of Rudin 1.19(b) with exponent 3: s_n = sum_{i<n} z^(i+1)/(i+1)^3, |z| = 1.\n# |z^(i+1)/(i+1)^3| = 1/(i+1)^3 and sum 1/k^3 converges (tail after N terms <= 1/(2 N^2)),\n# so the partial sums are Cauchy and converge at every point of the unit circle.\ndef s(z, n):\n    return sum(z ** (i + 1) / (i + 1) ** 3 for i in range(n))\n\nok = True\nfor t in [0.0, 0.5, 1.0, math.pi / 3, math.pi, 2.5, 5.0]:\n    z = cmath.exp(1j * t)\n    a, b = s(z, 2000), s(z, 4000)\n    ok = ok and abs(a - b) <= 1 / (2 * 2000 ** 2) + 1e-12\nprint(ok)\n",
+  "answer_value": "True",
+  "answer_span": null,
+  "defect_rule": "No computed answer: the script checks the Cauchy tail bound of the partial sums of z^(i+1)/(i+1)^3 at seven points of the unit circle and prints True. sigma changes the exponent of the p-series 2 -> 3 in N, D and C; the radius 1 (abs z = 1), the shift i + 1 and the theorem name are unchanged. C' is true (absolute convergence, sum 1/k^3 < infinity). Same defect, same rule: 'zn' is read as z*n, so the summand is i * z / i ^ 3 instead of z^(i+1)/(i+1)^3. Caveat: with exponent 3 the defective summand equals z/i^2 (i >= 1; 0 at i = 0), a convergent series, so D' is TRUE whereas D (z/i, harmonic) was false; no integer exponent other than 2 keeps D' false while C' stays true. D' still formalises a different series from N' (not equivalent to C' as a statement about s), but drop this twin if the defect must keep its truth value."
+ },
+ {
+  "id": "t285",
+  "skip": "No numerical parameter: the only numeral is the exceptional point z = 1, which is forced (the series sum z^n/n diverges exactly at z = 1 on the unit circle); N has no other numeral."
+ }
+]

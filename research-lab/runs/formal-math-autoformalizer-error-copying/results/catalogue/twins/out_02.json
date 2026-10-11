@@ -1,0 +1,237 @@
+[
+ {
+  "id": "t155",
+  "skip": null,
+  "sigma": {
+   "196": "441",
+   "24": "32"
+  },
+  "N_twin": "What is the sum of the four positive factors of the positive integer value of $\\sqrt{441}$? Show that it is 32.",
+  "D_twin": "theorem mathd_numbertheory_35 (S : Finset ℕ) (h₀ : ∀ n : ℕ, n ∣ Nat.sqrt 441) :\n    (∑ k in S, k) = 32 := by",
+  "C_twin": "theorem mathd_numbertheory_35\n  (S : Finset ℕ)\n  (h₀ : ∀ n : ℕ, n ∈ S ↔ n ∣ Nat.sqrt 441)\n  (h₁: S.card = 4) :\n  (∑ k ∈ S, k) = 32 := by",
+  "answer_script": "import math\n# sqrt(441) = 21 = 3 * 7 has exactly four positive divisors 1, 3, 7, 21.\nm = math.isqrt(441)\nassert m * m == 441\ndivs = [d for d in range(1, m + 1) if m % d == 0]\nassert len(divs) == 4, divs\nprint(sum(divs))\n",
+  "answer_value": "32",
+  "answer_span": null,
+  "defect_rule": "Defect carried by sigma alone: h0 still says every natural divides Nat.sqrt 441 (= 21), which is false, so D' is vacuous and S is unconstrained, exactly as in D (where Nat.sqrt 196 = 14). The 4 in C's S.card = 4 is the word 'four' in N and is unchanged (21 = 3*7 still has four divisors)."
+ },
+ {
+  "id": "t158",
+  "skip": null,
+  "sigma": {
+   "6": "42",
+   "3": "7",
+   "2": "6",
+   "1": "5",
+   "5": "13"
+  },
+  "N_twin": "Find the smallest positive integer $k$ such that, for every positive integer $n$, $42n+k$ is relatively prime to each of $42n+7$, $42n+6$, and $42n+5$. Show that it is 13.",
+  "D_twin": "theorem mathd_numbertheory_435 (k : ℕ) (h₀ : 0 < k) (h₁ : ∀ n, Nat.gcd (42 * n + k) (42 * n + 7) = 1)\n    (h₂ : ∀ n, Nat.gcd (42 * n + k) (42 * n + 6) = 1) (h₃ : ∀ n, Nat.gcd (42 * n + k) (42 * n + 5) = 1) :\n    13 ≤ k := by",
+  "C_twin": "theorem mathd_numbertheory_435\n  (S : Set ℕ)\n  (hS: S = {k | ∀ n:ℕ, 0 < n → Nat.gcd (42 * n + k) (42 * n + 7) = 1 ∧Nat.gcd (42 * n + k) (42 * n + 6) = 1 ∧ Nat.gcd (42 * n + k) (42 * n + 5) = 1}) :\n  IsLeast S 13 := by",
+  "answer_script": "from math import gcd\n# gcd(mn+k, mn+j) = gcd(k-j, mn+j). With m = 42 and offsets 7, 6, 5:\n# k = 13 gives gcd(6, 42n+7) = 1 (odd, = 1 mod 3), gcd(7, 42n+6) = 1 (= 6 mod 7), gcd(8, 42n+5) = 1 (odd),\n# for every n >= 0. Each smaller k (including 0) fails for some n >= 1.\nm, offs = 42, (7, 6, 5)\ndef ok(k, N=5000):\n    return all(gcd(m * n + k, m * n + j) == 1 for n in range(1, N) for j in offs)\n# residue proof for k = 13 over a full period of n (lcm of 6, 7, 8 = 168)\nassert all(gcd(m * n + 13, m * n + j) == 1 for n in range(0, 168) for j in offs)\nleast = next(k for k in range(0, 1000) if ok(k))\nassert all(not ok(k) for k in range(0, least))\nprint(least)\n",
+  "answer_value": "13",
+  "answer_span": null,
+  "defect_rule": "Defect carried by sigma alone: D' still asserts only the lower bound 13 ≤ k (it does not state that 13 itself has the property) and its h1-h3 still quantify over all n including n = 0, exactly as D does for 5. Mapping: modulus 6 -> 42, offsets 3, 2, 1 -> 7, 6, 5, answer 5 -> 13 (the analogue of k-3, k-2, k-1 = 2, 3, 4 is k-7, k-6, k-5 = 6, 7, 8). Structural numerals are unchanged: the 0 in 0 < k / 0 < n and the 1 in Nat.gcd ... = 1 (coprimality); sigma key '1' refers only to the offset in 6n+1. Note: 13 also satisfies the n = 0 cases, so D' is not vacuous, as in D."
+ },
+ {
+  "id": "t159",
+  "skip": null,
+  "sigma": {
+   "80325": "61425",
+   "17": "13"
+  },
+  "N_twin": "What is the least positive integer $n$ such that $61425$ divides $n!$? Show that it is 13.",
+  "D_twin": "theorem mathd_numbertheory_457 (n : ℕ) (h₀ : 0 < n) (h₁ : 61425 ∣ n !) : 13 ≤ n := by",
+  "C_twin": "theorem mathd_numbertheory_457\n  (S : Set ℕ)\n  (hS: S = {n | 0 < n ∧  61425 ∣ Nat.factorial n}) :\n  IsLeast S 13 := by",
+  "answer_script": "import math\n# 80325 = 3^3 * 5^2 * 7 * 17 -> twin 61425 = 3^3 * 5^2 * 7 * 13 (largest prime factor drives the answer).\nN = 61425\nassert N == 3**3 * 5**2 * 7 * 13\nprint(next(n for n in range(1, 100) if math.factorial(n) % N == 0))\n",
+  "answer_value": "13",
+  "answer_span": null,
+  "defect_rule": "Defect carried by sigma alone: D' still states only the lower bound 13 ≤ n and does not assert that 61425 divides 13!, as D does for 17 and 80325. Same factorisation pattern 3^3*5^2*7*p with p = 17 -> 13. The 0 in 0 < n is structural."
+ },
+ {
+  "id": "t161",
+  "skip": null,
+  "sigma": {
+   "4": "6",
+   "6": "8",
+   "108": "144"
+  },
+  "N_twin": "Suppose $a$ and $b$ are positive integers such that the units digit of $a$ is $2$, the units digit of $b$ is $6$, and the greatest common divisor of $a$ and $b$ is $8$.\n\nWhat is the smallest possible value of the least common multiple of $a$ and $b$? Show that it is 144.",
+  "D_twin": "theorem mathd_numbertheory_495 (a b : ℕ) (h₀ : 0 < a ∧ 0 < b) (h₁ : a % 10 = 2) (h₂ : b % 10 = 6)\n    (h₃ : Nat.gcd a b = 8) : 144 ≤ Nat.lcm a b := by",
+  "C_twin": "theorem mathd_numbertheory_495\n  (S : Set ℕ)\n  (hS : S = {n | ∃ a b:ℕ, 0 < a ∧ 0 < b ∧ a % 10 = 2 ∧ b % 10 = 6 ∧ Nat.gcd a b = 8 ∧ n = Nat.lcm a b}) :\n  IsLeast S 144 := by",
+  "answer_script": "from math import gcd, lcm\n# lcm(a, b) >= max(a, b), so any lcm below 200 needs a, b < 200: a finite search is exhaustive.\nbest = min(lcm(a, b) for a in range(1, 200) for b in range(1, 200)\n           if a % 10 == 2 and b % 10 == 6 and gcd(a, b) == 8)\nassert best < 200\nprint(best)  # attained by a = 72, b = 16\n",
+  "answer_value": "144",
+  "answer_span": null,
+  "defect_rule": "Defect carried by sigma alone: D' still states only the lower bound 144 ≤ lcm a b and not that 144 is attained (a = 72, b = 16), as D does for 108 (a = 12, b = 54). Units digit of a (2) and the base 10 are unchanged; units digit of b 4 -> 6, gcd 6 -> 8. As in the original, the first candidate (a = 32, b = 16) fails the gcd condition, so difficulty is similar."
+ },
+ {
+  "id": "t162",
+  "skip": null,
+  "sigma": {
+   "10": "100",
+   "64": "729"
+  },
+  "N_twin": "What is the smallest integer greater than 100 that is both a perfect square and a perfect cube? Show that it is 729.",
+  "D_twin": "theorem mathd_numbertheory_5 (n : ℕ) (h₀ : 100 ≤ n) (h₁ : ∃ x, x ^ 2 = n) (h₂ : ∃ t, t ^ 3 = n) :\n    729 ≤ n := by",
+  "C_twin": "theorem mathd_numbertheory_5\n  (S : Set ℕ)\n  (hS : S = {x | 100 < x ∧ (∃ y:ℕ, y ^ 2 = x) ∧ (∃ z:ℕ, z ^ 3 = x)}):\n  IsLeast S 729 := by",
+  "answer_script": "import math\ndef is_sq(x): r = math.isqrt(x); return r * r == x\ndef is_cube(x):\n    r = round(x ** (1 / 3))\n    return any((r + d) ** 3 == x for d in (-1, 0, 1))\nprint(next(x for x in range(101, 10**6) if is_sq(x) and is_cube(x)))\n",
+  "answer_value": "729",
+  "answer_span": null,
+  "defect_rule": "Defect carried by sigma alone: D' still states only the lower bound 729 ≤ n without saying 729 qualifies, and still uses the non-strict 100 ≤ n where N says 'greater than', as D does with 10 ≤ n and 64. Exponents 2 and 3 (square, cube) are structural and unchanged. The theorem name mathd_numbertheory_5 is untouched."
+ },
+ {
+  "id": "t163",
+  "skip": null,
+  "sigma": {
+   "5": "7",
+   "6": "8",
+   "22": "30"
+  },
+  "N_twin": "If $n$ and $k$ are positive integers such that $7<\\frac nk<8$, then what is the smallest possible value of $\\frac{\\mathop{\\text{lcm}}[n,k]}{\\gcd(n,k)}$? Show that it is 30.",
+  "D_twin": "theorem mathd_numbertheory_530 (n k : ℕ) (h₀ : 0 < n ∧ 0 < k) (h₀ : (n : ℝ) / k < 8)\n  (h₁ : (7 : ℝ) < n / k) : 30 ≤ Nat.lcm n k / Nat.gcd n k := by",
+  "C_twin": "theorem mathd_numbertheory_530\n  (S : Set ℕ)\n  (hS : ∀ x:ℕ, x ∈ S ↔ ∃ n k :ℕ, 0 < n ∧ 0 < k ∧ (7 : ℝ) < n / k ∧ (n : ℝ) / k < 8 ∧ x = Nat.lcm n k / Nat.gcd n k) :\n  IsLeast S 30 := by",
+  "answer_script": "from math import gcd, lcm\n# lcm/gcd = a*b with a = n/g, b = k/g coprime and 7b < a < 8b, so a*b > 7*b^2;\n# a value below 30 needs b <= 2, hence k is bounded: searching k < 60 is exhaustive for values < 30.\nbest = min(lcm(n, k) // gcd(n, k) for k in range(1, 60) for n in range(7 * k + 1, 8 * k))\nprint(best)  # attained by n = 15, k = 2\n",
+  "answer_value": "30",
+  "answer_span": null,
+  "defect_rule": "Defect carried by sigma alone: D' still states only the lower bound 30 ≤ lcm n k / gcd n k and not that 30 is attained (n = 15, k = 2), as D does for 22 (n = 11, k = 2). Bounds 5, 6 -> 7, 8. The 0 in 0 < n ∧ 0 < k is structural; the duplicated hypothesis name h₀ in D is kept."
+ },
+ {
+  "id": "t164",
+  "skip": null,
+  "sigma": {
+   "2": "3",
+   "3": "7",
+   "14": "24"
+  },
+  "N_twin": "A positive integer $X$ is 3 more than a multiple of 7. Its units digit is the same as the units digit of a number that is 4 more than a multiple of 5. What is the smallest possible value of $X$? Show that it is 24.",
+  "D_twin": "theorem mathd_numbertheory_559 (x y : ℕ) (h₀ : x % 7 = 3) (h₁ : y % 5 = 4) (h₂ : x % 10 = y % 10) :\n    24 ≤ x := by",
+  "C_twin": "theorem mathd_numbertheory_559\n  (S: Set ℕ)\n  (hS: S = {x | x % 7 = 3 ∧ ∃ y:ℕ, (y % 5 = 4 ∧ x % 10 = y % 10)}) :\n  IsLeast S 24 := by",
+  "answer_script": "# y = 4 (mod 5) has units digit 4 or 9; X = 3 (mod 7) runs 3, 10, 17, 24, ...\ndigits = {y % 10 for y in range(0, 1000) if y % 5 == 4}\nassert digits == {4, 9}\nprint(next(x for x in range(0, 1000) if x % 7 == 3 and x % 10 in digits))\n",
+  "answer_value": "24",
+  "answer_span": null,
+  "defect_rule": "Defect carried by sigma alone: D' still states only the lower bound 24 ≤ x without asserting 24 satisfies the conditions, as D does for 14. 'n more than a multiple of m' changes from (2, 3) to (3, 7); the 4 and 5 of y and the base 10 are unchanged."
+ },
+ {
+  "id": "t165",
+  "skip": null,
+  "sigma": {
+   "4": "11",
+   "6": "13",
+   "8": "15",
+   "0": "3"
+  },
+  "N_twin": "If $n$ is a multiple of three, what is the remainder when $(n + 11) + (n + 13) + (n + 15)$ is divided by $9$? Show that it is 3.",
+  "D_twin": "theorem mathd_numbertheory_582 (n : ℕ) (h₀ : 0 < n) (h₁ : 3 ∣ n) :\n    (n + 11 + (n + 13) + (n + 15)) % 9 = 3 := by",
+  "C_twin": "theorem mathd_numbertheory_582 (n : ℕ) (h₁ : 3 ∣ n) :\n  (n + 11 + (n + 13) + (n + 15)) % 9 = 3 := by",
+  "answer_script": "# n = 3m: (n+11)+(n+13)+(n+15) = 9m + 39, and 39 = 4*9 + 3.\nvals = {((n + 11) + (n + 13) + (n + 15)) % 9 for n in range(0, 3000, 3)}\nassert len(vals) == 1\nprint(vals.pop())\n",
+  "answer_value": "3",
+  "answer_span": null,
+  "defect_rule": "Defect carried unchanged: D' still adds the hypothesis 0 < n, which N' neither states nor implies (n = 0 is a multiple of three, and C' holds at n = 0: 39 % 9 = 3). The 0 in that added hypothesis is the defect's structural bound and stays 0; only the answer 0 -> 3 changes (sigma key '0' refers to the answer only). Offsets 4, 6, 8 -> 11, 13, 15 (still step 2); modulus 9 and 'three' unchanged."
+ },
+ {
+  "id": "t167",
+  "skip": null,
+  "sigma": {
+   "8": "10",
+   "112": "210",
+   "72": "100"
+  },
+  "N_twin": "The greatest common divisor of positive integers $m$ and $n$ is 10. The least common multiple of $m$ and $n$ is 210. What is the least possible value of $m+n$? Show that it is 100.",
+  "D_twin": "theorem mathd_numbertheory_711 (m n : ℕ) (h₀ : 0 < m ∧ 0 < n) (h₁ : Nat.gcd m n = 10)\n    (h₂ : Nat.lcm m n = 210) : 100 ≤ m + n := by",
+  "C_twin": "theorem mathd_numbertheory_711\n  (S: Set ℕ)\n  (hS : S = {x | ∃ m n, x = m + n ∧ Nat.gcd m n = 10 ∧ Nat.lcm m n = 210}):\n  IsLeast S 100 := by",
+  "answer_script": "from math import gcd, lcm\n# m, n divide lcm = 210, so the search is exhaustive (m = 0 or n = 0 gives lcm 0).\npairs = [(m, n) for m in range(1, 211) for n in range(1, 211) if gcd(m, n) == 10 and lcm(m, n) == 210]\nprint(min(m + n for m, n in pairs))  # attained by (30, 70)\n",
+  "answer_value": "100",
+  "answer_span": null,
+  "defect_rule": "Defect carried by sigma alone: D' still states only the lower bound 100 ≤ m + n, without the attainment by (m, n) = (30, 70), as D does for 72 with (16, 56). gcd 8 -> 10 and lcm 112 -> 210 keep lcm/gcd a product of two distinct primes (14 = 2*7 -> 21 = 3*7). The 0 in 0 < m ∧ 0 < n is structural."
+ },
+ {
+  "id": "t169",
+  "skip": null,
+  "sigma": {
+   "24": "28",
+   "15": "13",
+   "1199": "1201",
+   "-449": "-214"
+  },
+  "N_twin": "What is the largest negative integer $x$ satisfying $$28x \\equiv 13 \\pmod{1201}~?$$ Show that it is -214.",
+  "D_twin": "theorem mathd_numbertheory_765 (x : ℤ) (h₀ : x < 0) (h₁ : 28 * x % 1201 = 13) : x ≤ -214 := by",
+  "C_twin": "theorem mathd_numbertheory_765\n  (S : Set ℤ)\n  (hS : S = {x | x < 0 ∧ (28 * x) ≡ 13 [ZMOD 1201]}) :\n  IsGreatest S (-214:ℤ) := by",
+  "answer_script": "from math import gcd\na, b, m = 28, 13, 1201\nassert gcd(a, m) == 1  # unique residue class of solutions\nx0 = (b * pow(a, -1, m)) % m\nlargest_neg = x0 - m if x0 > 0 else -m\nassert (a * largest_neg - b) % m == 0 and largest_neg < 0 and largest_neg + m >= 0\nprint(largest_neg)\n",
+  "answer_value": "-214",
+  "answer_span": null,
+  "defect_rule": "Defect carried by sigma alone: D' still states only the upper bound x ≤ -214 and does not assert that -214 is a solution, as D does for -449. Since 0 ≤ 13 < 1201, D's Int.emod form 28 * x % 1201 = 13 is still equivalent to the congruence, as in D. The 0 in x < 0 is structural."
+ },
+ {
+  "id": "t170",
+  "skip": null,
+  "sigma": {
+   "9": "11",
+   "5": "6"
+  },
+  "N_twin": "What is the digit in the hundredths place of the decimal equivalent of $\\frac{11}{160}$? Show that it is 6.",
+  "D_twin": "theorem mathd_numbertheory_84 : Int.floor ((11 : ℝ) / 160 * 100) = 6 := by",
+  "C_twin": "theorem mathd_numbertheory_84 : (Nat.floor (100 * (11 / 160 : ℝ)) % 10 = 6) := by",
+  "answer_script": "from fractions import Fraction\nimport math\nx = Fraction(11, 160)  # 0.06875\nassert math.floor(10 * x) % 10 == 0  # tenths digit is 0, so floor(100x) is the hundredths digit itself (as for 9/160)\nassert math.floor(100 * x) == math.floor(100 * x) % 10\nprint(math.floor(100 * x) % 10)\n",
+  "answer_value": "6",
+  "answer_span": null,
+  "defect_rule": "Defect carried by sigma alone: D' still uses floor(100x) without % 10, which is not the hundredths-digit formula and coincides with it only because the tenths digit of 11/160 = 0.06875 is 0, exactly as for 9/160 = 0.05625. The fraction was chosen to keep that coincidence (same denominator 160). The 100 and 10 (hundredths, base) are structural and unchanged."
+ },
+ {
+  "id": "t178",
+  "skip": "No numerical parameter: a purely structural ring-theory statement (I ∩ J residues nilpotent in R/IJ); nothing to perturb."
+ },
+ {
+  "id": "t179",
+  "skip": "No numerical parameter: a purely structural statement (I + J = R implies IJ = I ∩ J)."
+ },
+ {
+  "id": "t180",
+  "skip": null,
+  "sigma": {
+   "6": "10",
+   "12": "20"
+  },
+  "N_twin": "Prove that $x^3 + 10x + 20$ is irreducible in $\\mathbb{Q}$.",
+  "D_twin": "theorem exercise_11_4_1b {F : Type*} [Field F] [Fintype F] (hF : card F = 2) :\n  Irreducible (20 + 10 * X + X ^ 3 : Polynomial F) :=",
+  "C_twin": "theorem exercise_11_4_1b :\n  Irreducible (20 + 10 * X + X ^ 3 : Polynomial ℚ) :=",
+  "answer_script": "from fractions import Fraction\n# x^3 + 10x + 20: Eisenstein at p = 5 (5 | 10, 5 | 20, 25 does not divide 20) -> irreducible over Q.\nc = [20, 10, 0, 1]  # constant term first\np = 5\neis = all(a % p == 0 for a in c[:-1]) and c[-1] % p != 0 and c[0] % (p * p) != 0\n# cross-check: a cubic is reducible over Q iff it has a rational root; candidates are +-divisors of 20.\nf = lambda x: x**3 + 10 * x + 20\nno_root = all(f(s * d) != 0 for d in range(1, 21) if 20 % d == 0 for s in (1, -1))\n# the defect: over a field with 2 elements every non-leading coefficient is even, so the polynomial is X^3 (reducible).\nmod2_is_X3 = all(a % 2 == 0 for a in c[:-1])\nprint(eis and no_root and mod2_is_X3)\n",
+  "answer_value": "True",
+  "answer_span": null,
+  "defect_rule": "Proof statement, no computed answer: the script checks that C' is true (Eisenstein at 5 and no rational root) and that the defect survives (over a two-element field the twin polynomial reduces to X^3, as x^3+6x+12 does), and prints True. The wrong field size 2 in D's hF : card F = 2 has no counterpart in N and is carried by the identity rule (kept at 2). Coefficients 6, 12 -> 10, 20 (both even, Eisenstein prime 3 -> 5); the exponent 3 is structural."
+ },
+ {
+  "id": "t181",
+  "skip": "The defect is a wholesale substitution of an unrelated exercise's statement (X^2+1 over a 7-element field for x^2+x+1 over F_2); its numbers 7 and X^2+1 have no relation to N, so the only transfer rule is the identity, giving D' textually identical to D. The twin then could not separate a memorised copy from the analogous defect. Not forced."
+ },
+ {
+  "id": "t182",
+  "skip": "The defect is a wholesale substitution of an unrelated exercise's statement (X^3-9 over a 31-element field for x^2+1 over F_7); its numbers 31, 3 and 9 have no relation to N, so the only transfer rule is the identity, giving D' textually identical to D. The twin then could not separate a memorised copy from the analogous defect. Not forced."
+ },
+ {
+  "id": "t183",
+  "skip": "No numerical parameter: p and n are variables (x^n - p irreducible for a prime p); the informal statement contains no numeral."
+ },
+ {
+  "id": "t184",
+  "skip": "No numerical parameter: a purely structural statement (a vector space over an infinite field is not a finite union of proper subspaces)."
+ },
+ {
+  "id": "t185",
+  "skip": null,
+  "sigma": {
+   "-1 (real-part numerator)": "-3",
+   "3 (under the square root)": "27",
+   "1 (the value of the cube)": "27"
+  },
+  "N_twin": "Show that $\\frac{-3 + \\sqrt{27}i}{2}$ is a cube root of 27 (meaning that its cube equals 27).",
+  "D_twin": "theorem exercise_1_2 :\n  (⟨-3/2, Real.sqrt 27 / 2⟩ : ℂ) ^ 3 = -27 :=",
+  "C_twin": "theorem exercise_1_2 :\n  (⟨-3/2, Real.sqrt 27 / 2⟩ : ℂ) ^ 3 = 27 :=",
+  "answer_script": "from fractions import Fraction\n# z = x + i*y with x = -3/2, y = sqrt(27)/2, so y^2 = 27/4 exactly; z = 3 * (-1 + sqrt(3) i)/2.\n# (x + iy)^3 = (x^3 - 3 x y^2) + i * y * (3 x^2 - y^2)\nx = Fraction(-3, 2); y2 = Fraction(27, 4)\nre = x**3 - 3 * x * y2\nim_over_y = 3 * x**2 - y2\nassert im_over_y == 0\nassert re.denominator == 1\nprint(re.numerator)\n",
+  "answer_value": "27",
+  "answer_span": null,
+  "defect_rule": "Rule: D states the cube equals the negative of N's value. The twin scales the root by 3 (numerator -1 -> -3, radicand 3 -> 27 = 3*3^2, denominator 2 and the cube exponent 3 unchanged), so the value of the cube 1 -> 27 and D's -1 -> -27. sigma is by role because the numeral 1 plays two roles (real part and value of the cube) and the exponent 3 is structural."
+ },
+ {
+  "id": "t186",
+  "skip": "No numerical parameter: the 'two' subspaces are structural (union of two subspaces is a subspace iff one contains the other); no numeral to perturb."
+ }
+]

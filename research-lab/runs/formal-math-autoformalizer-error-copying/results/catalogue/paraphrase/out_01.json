@@ -1,0 +1,82 @@
+[
+ {
+  "id": "t052",
+  "paraphrase": "Suppose the real numbers $a$ and $b$ are chosen so that the quartic equation $x^4 + ax^3 + bx^2 + ax + 1 = 0$ possesses one or more real roots. Taken over every such pair $(a, b)$, determine the smallest value that $a^2 + b^2$ can take."
+ },
+ {
+  "id": "t056",
+  "paraphrase": "For every pair of non-negative integers $x, y$, the function $f(x,y)$ obeys the rules\n\n(1) $f(0,y)=y+1$,\n\n(2) $f(x+1,0)=f(x,1)$,\n\n(3) $f(x+1,y+1)=f(x,f(x+1,y))$.\n\nCompute the value of $f(4,1981)$."
+ },
+ {
+  "id": "t062",
+  "paraphrase": "Prove that whenever $x$ is a real number satisfying $x > -1$ and $n$ is a natural number, the inequality $(1+nx)\\leq (1+x)^n$ holds."
+ },
+ {
+  "id": "t065",
+  "paraphrase": "Prove that the identity $\\sum_{k=0}^{n-1} \\frac{1}{(k+1)(k+2)} = \\frac{n}{n+1}$ is valid for every positive integer $n$."
+ },
+ {
+  "id": "t066",
+  "paraphrase": "Demonstrate that $\\sum_{k=0}^{n-1} (2k + 1)$ equals $n^2$ whenever $n$ is a positive integer."
+ },
+ {
+  "id": "t084",
+  "paraphrase": "Let $f(x)$ be a function that has an inverse, and assume that $f(2)=f^{-1}(2)=4$.\n\nFind $f(f(2))$. Prove that the answer is 2."
+ },
+ {
+  "id": "t092",
+  "paraphrase": "Given $s=n^2 - 2^n+1$ and $t=2s-s^2$, compute $t$ for $n=3$. Prove that the result is 0."
+ },
+ {
+  "id": "t097",
+  "paraphrase": "Find the greatest value of $c$ for which the equation $2x^2+5x+c=0$ has one or more real solutions, giving the answer as a common fraction. Prove that this value is \\frac{25}{8}."
+ },
+ {
+  "id": "t100",
+  "paraphrase": "Determine $x$ given that $ \\sqrt{x+\\!\\sqrt{x+\\!\\sqrt{x+\\!\\sqrt{x+\\cdots}}}}=9$. Prove that $x$ equals 72."
+ },
+ {
+  "id": "t101",
+  "paraphrase": "Taking $n = 11$, evaluate the expression $\\left(\\frac{1}{4}\\right)^{n+1} \\cdot 2^{2n}$. Prove that the result is \\frac{1}{4}."
+ },
+ {
+  "id": "t104",
+  "paraphrase": "Find every $a$ satisfying the inequality $\\frac15|9+2a|<1$, and write the solution set using interval notation. Prove that the solution set is (-7, -2)."
+ },
+ {
+  "id": "t112",
+  "paraphrase": "Consider the equation $y = x^2 - 6x + 13$. Find the least value that $y$ can attain. Prove that this least value is 4."
+ },
+ {
+  "id": "t126",
+  "paraphrase": "Define a function $f$ on the integers by \\[f(n) = \\left\\{\n\\begin{array}{cl}\nn^2 & \\text{ when }n\\text{ is odd}, \\\\\nn^2 - 4n - 1 & \\text{ when }n\\text{ is even}.\n\\end{array}\n\\right.\\]Compute $f(f(f(f(f(4)))))$, and prove that the result equals 1."
+ },
+ {
+  "id": "t133",
+  "paraphrase": "Find the least positive integer $N$ for which the number $7 + (30 \\times N)$ fails to be prime. Prove that this least $N$ is 6."
+ },
+ {
+  "id": "t134",
+  "paraphrase": "As $n$ ranges over the positive integers, find the largest value that $\\gcd(n + 7, 2n + 1)$ can attain. Prove that this maximum is 13."
+ },
+ {
+  "id": "t137",
+  "paraphrase": "Suppose the two-digit number $``B6,''$, whose tens digit is $B$, equals the square of some positive integer. Count the different values that $B$ could take. Prove that there are 2 of them."
+ },
+ {
+  "id": "t144",
+  "paraphrase": "Two positive integers $m$ and $n$ have greatest common divisor equal to 6 and least common multiple equal to 126. Find the smallest value that $m+n$ can take. Prove that this smallest value is 60."
+ },
+ {
+  "id": "t147",
+  "paraphrase": "Excluding $1$, find the least positive integer that is a perfect cube and is also a perfect fourth power. Prove that this integer is 4096."
+ },
+ {
+  "id": "t148",
+  "paraphrase": "Denote by $r$ the remainder obtained on dividing $1342$ by $13$.\n\nFind the least positive integer satisfying both of the following conditions:\n\n$\\bullet~$ It is divisible by $1342$.\n\n$\\bullet~$ When it is divided by $13$, the remainder left over is less than $r$. Prove that this integer is 6710."
+ },
+ {
+  "id": "t154",
+  "paraphrase": "Multiply together every odd integer lying between 0 and 12. What is the ones digit of the resulting product? Prove that this digit is 5."
+ }
+]

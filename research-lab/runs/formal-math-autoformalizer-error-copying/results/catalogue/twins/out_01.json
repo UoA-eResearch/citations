@@ -1,0 +1,266 @@
+[
+ {
+  "id": "t052",
+  "skip": "No numerical parameter that can change: every numeral in N is structural (the exponents 4, 3, 2 of the palindromic quartic and of a^2 + b^2, and the constant term 1 that equals the leading coefficient and makes the polynomial reciprocal). With constant term k != 1 the substitution t = x + 1/x no longer applies and the minimum, min over u > 0 of (u^2 + k)^2 / (u^3 + 3u^2 + u), is not a clean number (k = 2: 1.5528..., k = 4: 2.8428...), so the problem becomes a different, harder one. Not forced."
+ },
+ {
+  "id": "t056",
+  "skip": "The only parameter is the argument 1981 (answer tower height 1984). D (the recurrence f 4 (y + 1) = 2 ^ (f 4 y + 3) - 3) contains no number from N, so the faithful transfer gives D' textually identical to D: a memorised copy of D on the twin would be scored as the analogous defect, and the twin could not separate copying from the analogous defect. Changing the row 4 changes the difficulty and the recurrence's form (f 3 (y + 1) = 2 * f 3 y + 3 is not a numerals-only edit of D). Not forced."
+ },
+ {
+  "id": "t062",
+  "skip": null,
+  "sigma": {
+   "-1 (threshold in x > -1)": "-2"
+  },
+  "N_twin": "Show that for any real number $x$ and any natural number $n$, if $x > -2$, then $(1+nx)\\leq (1+x)^n$.",
+  "D_twin": "theorem induction_1pxpownlt1pnx (x : ℝ) (n : ℕ) (h₀ : -2 < x) (h₁ : 0 < n) :\n    1 + ↑n * x ≤ (1 + x) ^ (n : ℕ) := by",
+  "C_twin": "theorem induction_1pxpownlt1pnx (x : ℝ) (n : ℕ) (h₀ : -2 < x) :\n  1 + (n:ℝ)* x ≤ (1+x)^n := by",
+  "answer_script": "# Twin of t062: for real x > -2 and natural n, 1 + n x <= (1 + x)^n (Bernoulli holds for x >= -2).\n# Proof: x > -1 is the usual Bernoulli inequality. For -2 < x <= -1: n = 0, 1 give equality; for n >= 2,\n# 1 + n x <= 1 - n <= -1 <= (1 + x)^n because |1 + x| <= 1.\nfrom fractions import Fraction as F\nok = True\nxs = [F(-2) + F(1, 100) * i for i in range(1, 501)] + [F(-2) + F(1, 10**k) for k in range(3, 9)]\nfor x in xs:\n    for n in range(0, 41):\n        if not (1 + n * x <= (1 + x) ** n):\n            ok = False\n# the threshold matters: below -2 the inequality can fail (x = -2.7, n = 5: 1 - 13.5 = -12.5 > (-1.7)^5 = -14.2)\nx = F(-27, 10)\nprint(\"x = -2.7, n = 5 fails:\", not (1 + 5 * x <= (1 + x) ** 5))\nprint(ok)\n",
+  "answer_value": "True",
+  "answer_span": null,
+  "defect_rule": "The hypothesis threshold -1 in x > -1 becomes -2 in N, D and C (h₀ : -2 < x); the 1 in 1 + nx and (1 + x)^n is structural (the Bernoulli form) and is kept, as is the 0 in D's h₁ : 0 < n, which is the defect itself. Same defect: D' adds the hypothesis 0 < n, which N' does not have. C' is true: for x > -1 it is Bernoulli's inequality; for -2 < x <= -1, n = 0 and n = 1 give equality and for n >= 2, 1 + nx <= 1 - n <= -1 <= (1 + x)^n since |1 + x| <= 1. Proof statement with no computed answer: the script checks the inequality exactly on a rational grid of x in (-2, 3] for n <= 40 and prints True."
+ },
+ {
+  "id": "t065",
+  "skip": null,
+  "sigma": {
+   "numerator 1": "2",
+   "k+1": "k+2",
+   "k+2": "k+3",
+   "n+1 (answer denominator)": "n+2"
+  },
+  "N_twin": "Show that for positive integer $n$, $\\sum_{k=0}^{n-1} \\frac{2}{(k+2)(k+3)} = \\frac{n}{n+2}$.",
+  "D_twin": "theorem induction_sum_1oktkp1 (n : ℕ) :\n  (∑ k in Finset.range n, (2 : ℝ) / ((k + 2) * (k + 3))) = n / (n + 2) := by",
+  "C_twin": "theorem induction_sum_1oktkp1 (n : ℕ) (hn₀: 0 < n):\n  (∑ k ∈ Finset.range n, (2 : ℝ) / ((k + 2) * (k + 3))) = n / (n + 2) := by",
+  "answer_script": "# Twin of t065: sum_{k=0}^{n-1} 2/((k+2)(k+3)) = n/(n+2).\n# Telescoping: 2/((k+2)(k+3)) = 2/(k+2) - 2/(k+3), so the sum is 2/2 - 2/(n+2) = n/(n+2).\nfrom fractions import Fraction as F\nok = all(sum(F(2, (k + 2) * (k + 3)) for k in range(n)) == F(n, n + 2) for n in range(0, 301))\nprint(ok)\n",
+  "answer_value": "True",
+  "answer_span": null,
+  "defect_rule": "The summand 1/((k+1)(k+2)) becomes 2/((k+2)(k+3)) and the answer n/(n+1) becomes n/(n+2) in N, D and C (the general identity sum_{k<n} p/((k+p)(k+p+1)) = n/(n+p), here p = 2), so the answer keeps its form and only numerals change; k=0 and n-1 in the sum limits, the hypothesis 0 < n of C and the theorem name are kept. Same defect: D' drops the hypothesis 0 < n (the n = 0 case is true, 0 = 0, as in D). Proof statement with no single computed answer: the script checks the identity exactly for n = 0..300 and prints True."
+ },
+ {
+  "id": "t066",
+  "skip": null,
+  "sigma": {
+   "2 (coefficient of k)": "6",
+   "1 (constant)": "3",
+   "n^2 (answer)": "3n^2"
+  },
+  "N_twin": "Show that for positive integer $n$, $\\sum_{k=0}^{n-1} (6k + 3) = 3n^2$.",
+  "D_twin": "theorem induction_sum_odd (n : ℕ) : (∑ k in Finset.range n, 6 * k) + 3 = 3 * n ^ 2 := by",
+  "C_twin": "theorem induction_sum_odd (n : ℕ) : (∑ k ∈ Finset.range n, (6 * k + 3)) = 3 * n ^ 2 := by",
+  "answer_script": "# Twin of t066: sum_{k=0}^{n-1} (6k + 3) = 3 n^2 (three times the sum of the first n odd numbers).\nok = all(sum(6 * k + 3 for k in range(n)) == 3 * n ** 2 for n in range(0, 501))\n# the misparenthesised D' form (sum of 6k) + 3 = 3 n^2 is false, e.g. at n = 2 (6 + 3 = 9 != 12), as D is at n = 2\nprint(\"D' at n = 2:\", sum(6 * k for k in range(2)) + 3 == 3 * 2 ** 2)\nprint(ok)\n",
+  "answer_value": "True",
+  "answer_span": "3 * n ^ 2",
+  "defect_rule": "The summand 2k + 1 becomes 6k + 3 (factor 3) in N, D and C, so the answer n^2 becomes 3n^2; no linear summand other than 2k + 1 sums to exactly n^2, so the answer must change form. answer_span '3 * n ^ 2' is the answer in D' and C'; in N' the answer is the LaTeX '3n^2', a pure numeral insertion before n^2, so N' passes the numerals-only check without the span. Same defect: D' is misparenthesised as (sum of 6k) + 3 instead of sum of (6k + 3), and is false (n = 2: 9 != 12) as D is. Proof statement: the script checks the identity for n = 0..500 and prints True."
+ },
+ {
+  "id": "t084",
+  "skip": null,
+  "sigma": {
+   "2": "3",
+   "4": "7"
+  },
+  "N_twin": "Suppose $f(x)$ is an invertible function, and suppose that $f(3)=f^{-1}(3)=7$.\n\nWhat is the value of $f(f(3))$? Show that it is 3.",
+  "D_twin": "theorem mathd_algebra_188 (σ : Equiv ℝ ℝ) (h : σ.1 3 = σ.2 3) : σ.1 (σ.1 3) = 3 := by",
+  "C_twin": "theorem mathd_algebra_188\n  (f : ℝ → ℝ)\n  (h₀ : Function.Bijective f)\n  (h₁ : f 3 = 7)\n  (h₂ : f 3 = Function.invFun f 3) :\n  f (f 3) = 3 := by",
+  "answer_script": "# Twin of t084: f invertible with f(3) = f^{-1}(3) = 7; then f(7) = 3 and f(f(3)) = f(7) = 3.\n# Check on every permutation f of {0..7} with f(3) = 7 and f^{-1}(3) = 7 (i.e. f(7) = 3).\nfrom itertools import permutations\nvals = set()\nfor p in permutations(range(8)):\n    if p[3] == 7 and p.index(3) == 7:\n        vals.add(p[p[3]])\nprint(sorted(vals))\nprint(vals.pop())\n",
+  "answer_value": "3",
+  "answer_span": null,
+  "defect_rule": "The argument 2 (in f(2), f^{-1}(2) and hence the answer f(f(2)) = 2) becomes 3, and the common value 4 becomes 7, in N, D and C; the projection indices in σ.1 and σ.2 and the -1 of f^{-1} are notation and kept. Same defect: D' keeps only σ(3) = σ⁻¹(3) and drops the given value 7 (f(3) = 7), exactly as D drops 4. C' is true: invFun f 3 is a preimage of 3, so f 7 = 3 and f (f 3) = f 7 = 3. The script prints the answer 3."
+ },
+ {
+  "id": "t092",
+  "skip": null,
+  "sigma": {
+   "3 (value of n)": "4",
+   "0 (answer)": "1"
+  },
+  "N_twin": "Let $t=2s-s^2$ and $s=n^2 - 2^n+1$. What is the value of $t$ when $n=4$? Show that it is 1.",
+  "D_twin": "theorem mathd_algebra_247 (t s : ℝ) (n : ℤ) (h₀ : t = 2 * s - s ^ 2) (h₁ : s = n ^ 2 - 2 ^ n + 1)\n  (n) (_ : n = 4) : t = 1 := by",
+  "C_twin": "theorem mathd_algebra_247 (t s : ℝ) (n : ℤ) (h₀ : t = 2 * s - s ^ 2) (h₁ : s = n ^ 2 - 2 ^ n + 1)\n  (h₂ : n = 4) :\n  t = 1 := by",
+  "answer_script": "# Twin of t092: t = 2s - s^2, s = n^2 - 2^n + 1, n = 4: s = 16 - 16 + 1 = 1, t = 2 - 1 = 1.\nfrom fractions import Fraction as F\nn = 4\ns = F(n) ** 2 - F(2) ** n + 1\nt = 2 * s - s ** 2\nprint(s)\nprint(t)\n",
+  "answer_value": "1",
+  "answer_span": null,
+  "defect_rule": "n = 3 becomes n = 4 in N, D and C, and the answer 0 becomes 1 (s = 1, t = 1); the coefficients 2 in 2s, the exponents and the 2 in 2^n are kept. Same defect: D' still introduces a second binder (n) after h₁, so n = 4 constrains the new variable and the integer n in s stays free. The script prints the answer 1."
+ },
+ {
+  "id": "t097",
+  "skip": null,
+  "sigma": {
+   "2 (coefficient of x^2)": "3",
+   "5 (coefficient of x)": "7",
+   "25/8 (answer)": "49/12"
+  },
+  "N_twin": "What is the largest number $c$ such that $3x^2+7x+c=0$ has at least one real solution? Express your answer as a common fraction. Show that it is \\frac{49}{12}.",
+  "D_twin": "theorem mathd_algebra_28 (c : ℝ) (f : ℝ → ℝ) (h₀ : ∀ x, f x = 3 * x ^ 2 + 7 * x + c)\n  (h₁ : ∃ x, f x ≤ 0) : c ≤ 49 / 12 := by",
+  "C_twin": "theorem mathd_algebra_28\n  (S : Set ℝ)\n  (hS : S = {c | ∃ x:ℝ, 3 * x ^ 2 + 7 * x + c = 0}) :\n  IsGreatest S (49/12:ℝ) := by",
+  "answer_script": "# Twin of t097: largest c with 3x^2 + 7x + c = 0 solvable over the reals: discriminant 49 - 12c >= 0, c <= 49/12.\nfrom fractions import Fraction as F\na, b = 3, 7\ncmax = F(b * b, 4 * a)\nx0 = F(-b, 2 * a)\nassert a * x0 ** 2 + b * x0 + cmax == 0          # attained (double root x = -7/6)\nassert b * b - 4 * a * (cmax + F(1, 10**6)) < 0   # any larger c has no real root\nprint(cmax)\n",
+  "answer_value": "49/12",
+  "answer_span": null,
+  "defect_rule": "The coefficients 2 and 5 become 3 and 7 in N, D and C (the exponent 2 of x^2 is kept), and the answer 25/8 = 5^2/(4*2) becomes 49/12 = 7^2/(4*3), still a common fraction in lowest terms. Same defect: D' only proves the upper bound c <= 49/12 (with the hypothesis f x <= 0, still equivalent to a real root since the parabola opens upward), never attainment. The script prints the answer 49/12."
+ },
+ {
+  "id": "t100",
+  "skip": null,
+  "sigma": {
+   "9": "7",
+   "72 (answer)": "42"
+  },
+  "N_twin": "If $ \\sqrt{x+\\!\\sqrt{x+\\!\\sqrt{x+\\!\\sqrt{x+\\cdots}}}}=7$, find $x$. Show that it is 42.",
+  "D_twin": "theorem mathd_algebra_31 (x : NNReal) (u : ℕ → NNReal) (h₀ : ∀ n, u (n + 1) = NNReal.sqrt (x + u n))\n  (h₁ : Filter.Tendsto u Filter.atTop (𝓝 7)) : 7 = NNReal.sqrt (x + 7) := by",
+  "C_twin": "theorem mathd_algebra_31 (x : ℝ) (u : ℕ → ℝ) (h₀ : ∀ n, u (n + 1) = Real.sqrt (x + u n))\n  (h₁ : Filter.Tendsto u Filter.atTop (nhds 7)) : x = 42 := by",
+  "answer_script": "# Twin of t100: sqrt(x + sqrt(x + ...)) = 7 gives 7 = sqrt(x + 7), so x = 49 - 7 = 42.\nimport math\nL = 7\nx = L * L - L\nu = 0.0\nfor _ in range(200):\n    u = math.sqrt(x + u)\nassert abs(u - L) < 1e-12\nprint(x)\n",
+  "answer_value": "42",
+  "answer_span": null,
+  "defect_rule": "The limit 9 becomes 7 in N, D and C, and the answer 72 = 9^2 - 9 becomes 42 = 7^2 - 7. Same defect: D' concludes only the fixed-point equation 7 = sqrt(x + 7), never the value x = 42. C' is true: by continuity of Real.sqrt the limit satisfies 7 = sqrt(x + 7), which forces x + 7 = 49. The script prints the answer 42."
+ },
+ {
+  "id": "t101",
+  "skip": null,
+  "sigma": {
+   "11 (value of n)": "7",
+   "4 (in 1/4 and the answer 1/4)": "9",
+   "2 (base of 2^{2n})": "3"
+  },
+  "N_twin": "If $n = 7$, then what is $\\left(\\frac{1}{9}\\right)^{n+1} \\cdot 3^{2n}$? Show that it is \\frac{1}{9}.",
+  "D_twin": "theorem mathd_algebra_314 (n : ℕ) (h₀ : n = 7) : (1 / 9) ^ (n + 1) * 3 ^ (2 * n) = 1 / 9 := by",
+  "C_twin": "theorem mathd_algebra_314 (n : ℕ) (h₀ : n = 7) : (1 / 9 : ℝ) ^ (n + 1) * 3 ^ (2 * n) = 1 / 9 := by",
+  "answer_script": "# Twin of t101: n = 7, (1/9)^(n+1) * 3^(2n) = 9^(-(n+1)) * 9^n = 1/9.\nfrom fractions import Fraction as F\nn = 7\nv = F(1, 9) ** (n + 1) * 3 ** (2 * n)\nprint(v)\n",
+  "answer_value": "1/9",
+  "answer_span": null,
+  "defect_rule": "n = 11 becomes n = 7, the base pair (1/4, 2) becomes (1/9, 3) with 3^2 = 9 as 2^2 = 4, and the answer 1/4 becomes 1/9, in N, D and C; the 2 in 2n and the 1 in n+1 are kept. Same defect: D' is computed in the natural numbers, where 1 / 9 = 0, so both sides collapse to 0. The script prints the answer 1/9."
+ },
+ {
+  "id": "t104",
+  "skip": null,
+  "sigma": {
+   "9": "11",
+   "-7 (left endpoint)": "-8",
+   "-2 (right endpoint)": "-3"
+  },
+  "N_twin": "Solve for $a$: $\\frac15|11+2a|<1$.  Express your answer in interval notation. Show that it is (-8, -3).",
+  "D_twin": "theorem mathd_algebra_327 (a : ℝ) (h₀ : 1 / 5 * abs (11 + 2 * a) < 1) : -8 < a ∧ a < -3 := by",
+  "C_twin": "theorem mathd_algebra_327 \n  (a : ℝ) : \n  (1 / 5 * abs (11 + 2 * a) < 1) ↔ a ∈ Set.Ioo (-8:ℝ) (-3) := by",
+  "answer_script": "# Twin of t104: (1/5)|11 + 2a| < 1  <=>  -5 < 11 + 2a < 5  <=>  -8 < a < -3.\nfrom fractions import Fraction as F\nlo, hi = F(-5 - 11, 2), F(5 - 11, 2)\ngrid = [F(i, 100) for i in range(-1500, 500)]\nassert all((F(1, 5) * abs(11 + 2 * a) < 1) == (lo < a < hi) for a in grid)\nprint(f\"({lo}, {hi})\")\n",
+  "answer_value": "(-8, -3)",
+  "answer_span": null,
+  "defect_rule": "The constant 9 becomes 11 in N, D and C; 1/5 (written \\frac15, one word token in N), the coefficient 2 and the bound 1 are kept; the answer interval (-7, -2) becomes (-8, -3). Same defect: D' states only one direction (the inequality implies -8 < a < -3), not that every a in the interval is a solution. The script prints the interval (-8, -3)."
+ },
+ {
+  "id": "t112",
+  "skip": null,
+  "sigma": {
+   "6": "8",
+   "13": "23",
+   "4 (answer)": "7"
+  },
+  "N_twin": "What is the minimum possible value for $y$ in the equation $y = x^2 - 8x + 23$? Show that it is 7.",
+  "D_twin": "theorem mathd_algebra_410 (x y : ℝ) (h₀ : y = x ^ 2 - 8 * x + 23) : 7 ≤ y := by",
+  "C_twin": "theorem mathd_algebra_410\n  (f : ℝ → ℝ)\n  (h₀ : f = fun x ↦ x ^ 2 - 8 * x + 23) :\n  IsLeast (Set.range f) 7 := by",
+  "answer_script": "# Twin of t112: y = x^2 - 8x + 23 = (x - 4)^2 + 7, minimum 7 at x = 4.\nfrom fractions import Fraction as F\nf = lambda x: x * x - 8 * x + 23\nm = f(F(4))\nassert all(f(F(i, 10)) >= m for i in range(-200, 300))\nprint(m)\n",
+  "answer_value": "7",
+  "answer_span": null,
+  "defect_rule": "The coefficients 6 and 13 become 8 and 23 in N, D and C, and the minimum 4 = 13 - 3^2 becomes 7 = 23 - 4^2 (still attained at an integer x). Same defect: D' only proves 7 <= y, a lower bound, not that 7 is attained. The script prints the answer 7."
+ },
+ {
+  "id": "t126",
+  "skip": null,
+  "sigma": {
+   "4": "6"
+  },
+  "N_twin": "For integers $n$, let \\[f(n) = \\left\\{\n\\begin{array}{cl}\nn^2 & \\text{ if }n\\text{ is odd}, \\\\\nn^2 - 6n - 1 & \\text{ if }n\\text{ is even}.\n\\end{array}\n\\right.\\]Find $f(f(f(f(f(6)))))$. Show that it is 1.",
+  "D_twin": "theorem mathd_algebra_76 (f : ℤ → ℤ) (h₀ : ∀ n, Odd n → f n = n ^ 2)\n    (h₁ : ∀ n, Even n → f n = n ^ 2 - 6 * n - 1) : f 6 = -1 := by",
+  "C_twin": "theorem mathd_algebra_76\n  (f : ℤ → ℤ) (h₀ : ∀ n, Odd n → f n = n ^ 2)\n  (h₁ : ∀ n, Even n → f n = n ^ 2 - 6 * n - 1) :\n  f (f (f (f (f (6))))) = 1 := by",
+  "answer_script": "# Twin of t126: f(n) = n^2 (n odd), n^2 - 6n - 1 (n even); f(6) = -1, f(-1) = 1, then 1 is fixed.\ndef f(n):\n    return n * n if n % 2 else n * n - 6 * n - 1\nv, seq = 6, []\nfor _ in range(5):\n    v = f(v)\n    seq.append(v)\nprint(seq)\nprint(v)\n",
+  "answer_value": "1",
+  "answer_span": null,
+  "defect_rule": "The numeral 4 becomes 6 everywhere it occurs in N, D and C (the coefficient in n^2 - 4n - 1 and the start value), so f(6) = 36 - 36 - 1 = -1 as f(4) = -1 before; the exponents 2 and the constant 1 are kept and the answer stays 1 (6 -> -1 -> 1 -> 1 -> 1 -> 1). Same defect: D' proves only the first step f 6 = -1, not the fivefold composition. The script prints the answer 1."
+ },
+ {
+  "id": "t133",
+  "skip": null,
+  "sigma": {
+   "7": "11",
+   "6 (answer)": "5"
+  },
+  "N_twin": "What is the smallest positive integer $N$ such that the value $11 + (30 \\times N)$ is not a prime number? Show that it is 5.",
+  "D_twin": "theorem mathd_numbertheory_150 (n : ℕ) (h₀ : ¬Nat.Prime (11 + 30 * n)) : 5 ≤ n := by",
+  "C_twin": "theorem mathd_numbertheory_150\n  (S : Set ℕ)\n  (hS: S = {n:ℕ | 0 < n ∧ ¬ Nat.Prime (11 + 30 * n)}) :\n  IsLeast S 5 := by",
+  "answer_script": "# Twin of t133: smallest positive N with 11 + 30N not prime: 41, 71, 101, 131 are prime, 161 = 7 * 23.\ndef isprime(m):\n    return m > 1 and all(m % d for d in range(2, int(m ** 0.5) + 1))\nassert isprime(11)          # N = 0 gives a prime, so D' (which lacks 0 < n) is still only a lower bound\nN = 1\nwhile isprime(11 + 30 * N):\n    N += 1\nprint([11 + 30 * k for k in range(1, N + 1)])\nprint(N)\n",
+  "answer_value": "5",
+  "answer_span": null,
+  "defect_rule": "The constant 7 becomes 11 in N, D and C (30 is kept), and the answer 6 becomes 5 (161 = 7 * 23). 11 is prime like 7, so n = 0 is excluded by the primality hypothesis in D' exactly as in D. Same defect: D' only proves the lower bound 5 <= n, not that 11 + 30 * 5 is composite. The script prints the answer 5."
+ },
+ {
+  "id": "t134",
+  "skip": null,
+  "sigma": {
+   "7": "9",
+   "13 (answer)": "17"
+  },
+  "N_twin": "Let $n$ be a positive integer.  What is the greatest possible value of $\\gcd(n + 9, 2n + 1)$? Show that it is 17.",
+  "D_twin": "theorem mathd_numbertheory_156 (n : ℕ) (h₀ : 0 < n) : Nat.gcd (n + 9) (2 * n + 1) ≤ 17 := by",
+  "C_twin": "theorem mathd_numbertheory_156\n  (S : Set ℕ)\n  (hS : S = {x | ∃ n, 0 < n ∧ x = Nat.gcd (n + 9) (2 * n + 1)}) :\n  IsGreatest S 17 := by",
+  "answer_script": "# Twin of t134: gcd(n + 9, 2n + 1) divides 2(n + 9) - (2n + 1) = 17, and n = 8 gives gcd(17, 17) = 17.\nfrom math import gcd\nvals = {gcd(n + 9, 2 * n + 1) for n in range(1, 100001)}\nassert all(17 % v == 0 for v in vals) and gcd(8 + 9, 2 * 8 + 1) == 17\nprint(max(vals))\n",
+  "answer_value": "17",
+  "answer_span": null,
+  "defect_rule": "The constant 7 becomes 9 in N, D and C (2n + 1 kept), and the answer 13 = 2*7 - 1 becomes 17 = 2*9 - 1, attained at n = 8. Same defect: D' only proves the upper bound gcd <= 17, not that 17 is attained. The script prints the answer 17."
+ },
+ {
+  "id": "t137",
+  "skip": "The only parameter, the units digit 6, sits inside the word token 'B6' (it cannot change under the numerals-only diff), and no other units digit gives two two-digit squares (16 and 36 are the only pair; 25, 49, 64, 81 are alone), so the answer 2 and D's two-disjunct conclusion b = 3 ∨ b = 1 cannot be carried over (with units digit 4, D' would also have to admit b = 0, since 04 = 4 is a square under D's b < 10). Not forced."
+ },
+ {
+  "id": "t144",
+  "skip": null,
+  "sigma": {
+   "6 (gcd)": "8",
+   "126 (lcm)": "120",
+   "60 (answer)": "64"
+  },
+  "N_twin": "The greatest common divisor of positive integers $m$ and $n$ is 8. The least common multiple of $m$ and $n$ is 120. What is the least possible value of $m+n$? Show that it is 64.",
+  "D_twin": "theorem mathd_numbertheory_277 (m n : ℕ) (h₀ : Nat.gcd m n = 8) (h₁ : Nat.lcm m n = 120) :\n    64 ≤ m + n := by",
+  "C_twin": "theorem mathd_numbertheory_277\n  (S: Set ℕ)\n  (hS: S = {x | ∃ m n:ℕ, x = m + n ∧ Nat.gcd m n = 8 ∧ Nat.lcm m n = 120}):\n  IsLeast S 64 := by",
+  "answer_script": "# Twin of t144: gcd(m, n) = 8, lcm(m, n) = 120; m = 8a, n = 8b with ab = 15, gcd(a, b) = 1;\n# (a, b) = (3, 5) gives 24 + 40 = 64, (1, 15) gives 128.  Brute force over m, n | 120 (and m, n = 0).\nfrom math import gcd\ndef lcm(a, b):\n    return a * b // gcd(a, b) if a and b else 0\nsums = [m + n for m in range(0, 121) for n in range(0, 121) if gcd(m, n) == 8 and lcm(m, n) == 120]\nprint(sorted(set(sums)))\nprint(min(sums))\n",
+  "answer_value": "64",
+  "answer_span": null,
+  "defect_rule": "The gcd 6 and lcm 126 (ratio 21 = 3*7) become 8 and 120 (ratio 15 = 3*5) in N, D and C, and the answer 60 = 6*(3+7) becomes 64 = 8*(3+5). Same defect: D' only proves the lower bound 64 <= m + n, not that 64 is attained. The script prints the answer 64."
+ },
+ {
+  "id": "t147",
+  "skip": "The parameters (cube, fourth power) are words in N, not numerals; the only numerals in N are the excluded value 1 and the answer 4096. Changing 'other than 1' to any other value makes the answer 1 (trivial), and changing the exponents 3 and 4 only in D and C would break the numerals-only diff with N. Not forced."
+ },
+ {
+  "id": "t148",
+  "skip": null,
+  "sigma": {
+   "1342": "1347",
+   "13": "17",
+   "6710 (answer)": "6735"
+  },
+  "N_twin": "Let $r$ be the remainder when $1347$ is divided by $17$.\n\nDetermine the smallest positive integer that has these two properties:\n\n$\\bullet~$ It is a multiple of $1347$.\n\n$\\bullet~$ Its remainder upon being divided by $17$ is smaller than $r$. Show that it is 6735.",
+  "D_twin": "theorem mathd_numbertheory_314 (r n : ℕ) (h₀ : r = 1347 % 17) (h₁ : 0 < n) (h₂ : 1347 ∣ n)\n    (h₃ : n % 17 < r) : 6735 ≤ n := by",
+  "C_twin": "theorem mathd_numbertheory_314 \n  (r n : ℕ) (h₀ : r = 1347 % 17)\n  (S : Set ℕ)\n  (hS: S = {x | 0 < x ∧ (∃ k:ℕ, k * 1347 = x) ∧ x % 17 < r}):\n  IsLeast S 6735 := by",
+  "answer_script": "# Twin of t148: r = 1347 mod 17 = 4; multiples k*1347 have remainder 4k mod 17: 4, 8, 12, 16, 3 -> k = 5.\nM, p = 1347, 17\nr = M % p\nk = 1\nwhile (k * M) % p >= r:\n    k += 1\nprint(r, k)\nprint(k * M)\n",
+  "answer_value": "6735",
+  "answer_span": null,
+  "defect_rule": "The number 1342 becomes 1347 and the modulus 13 becomes 17 in N, D and C, and the answer 6710 = 5*1342 becomes 6735 = 5*1347 (r = 4 now, r = 3 before; the multiplier 5 is the same). Same defect: D' only proves 6735 is a lower bound, not that 6735 itself has the two properties. The script prints the answer 6735."
+ },
+ {
+  "id": "t154",
+  "skip": null,
+  "sigma": {
+   "12": "16",
+   "6 (range bound in D: number of odd integers below 12)": "8",
+   "13 (range bound in C: 12 + 1)": "17"
+  },
+  "N_twin": "What is the units digit of the product of all of the odd integers between 0 and 16? Show that it is 5.",
+  "D_twin": "theorem mathd_numbertheory_343 : (∏ k in Finset.range 8, 2 * k + 1) % 10 = 5 := by",
+  "C_twin": "theorem mathd_numbertheory_343\n  (S : Finset ℕ)\n  (hS : S = Finset.filter (fun x => Odd x) (Finset.range 17))\n  (p : ℕ)\n  (h₀: p = ∏ k ∈ S, k) :\n  p % 10 = 5 := by",
+  "answer_script": "# Twin of t154: units digit of 1*3*5*...*15 (odd integers between 0 and 16) = 2027025 -> 5.\nfrom math import prod\nodds = [k for k in range(17) if k % 2 == 1]\nassert odds == [2 * k + 1 for k in range(8)]\nprint(prod(odds))\nprint(prod(odds) % 10)\n",
+  "answer_value": "5",
+  "answer_span": null,
+  "defect_rule": "The bound 12 becomes 16 in N, and the dependent range bounds follow by the same rules: D's Finset.range 6 (the 6 odd integers 2k+1 below 12) becomes Finset.range 8, and C's Finset.range 13 (12 + 1) becomes Finset.range 17. The answer stays 5 (the product contains 5 and is odd). Same defect: in D' the big operator still parses as (prod of 2k) + 1 = 1, so D' claims 1 % 10 = 5 and is false, as D is. The script prints the answer 5."
+ }
+]

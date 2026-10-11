@@ -1,0 +1,82 @@
+[
+ {
+  "id": "t187",
+  "paraphrase": "Let $V$ be a finite-dimensional space and let $T \\in \\mathcal{L}(V, W)$. Show that one can find a subspace $U$ of $V$ for which $U \\cap \\operatorname{null} T=\\{0\\}$ and range $T=\\{T u: u \\in U\\}$."
+ },
+ {
+  "id": "t188",
+  "paraphrase": "Let $T \\in \\mathcal{L}(V)$ be an operator with $\\operatorname{dim} V$ distinct eigenvalues, and let $S \\in \\mathcal{L}(V)$ be an operator whose eigenvectors are exactly those of $T$ (its eigenvalues may differ from those of $T$). Show that $S T=T S$."
+ },
+ {
+  "id": "t189",
+  "paraphrase": "Show that, whatever the real numbers $a_{1}, \\ldots, a_{n}$ and $b_{1}, \\ldots, b_{n}$ are, the inequality $\\left(\\sum_{j=1}^{n} a_{j} b_{j}\\right)^{2} \\leq\\left(\\sum_{j=1}^{n} j a_{j}{ }^{2}\\right)\\left(\\sum_{j=1}^{n} \\frac{b_{j}{ }^{2}}{j}\\right)$ holds."
+ },
+ {
+  "id": "t190",
+  "paraphrase": "Let $T \\in \\mathcal{L}(V)$ be self-adjoint, let $\\lambda \\in \\mathbf{F}$, and let $\\epsilon>0$. Show that whenever some vector $v \\in V$ satisfies $\\|v\\|=1$ and $\\|T v-\\lambda v\\|<\\epsilon,$ the operator $T$ possesses an eigenvalue $\\lambda^{\\prime}$ with $\\left|\\lambda-\\lambda^{\\prime}\\right|<\\epsilon$."
+ },
+ {
+  "id": "t191",
+  "paraphrase": "For an element $x$ of $G$, show that $x^2=1$ holds exactly when the order $|x|$ equals $1$ or $2$."
+ },
+ {
+  "id": "t193",
+  "paraphrase": "Given elements $x$ and $y$ of $G$, show that the three conditions $xy=yx$, $y^{-1}xy=x$ and $x^{-1}y^{-1}xy=1$ are all equivalent to one another."
+ },
+ {
+  "id": "t194",
+  "paraphrase": "Show that the group $A \\times B$ is abelian precisely when each of $A$ and $B$ is abelian."
+ },
+ {
+  "id": "t196",
+  "paraphrase": "Suppose $x \\in G$ has infinite order. Show that the powers $x^{n}$, as $n$ ranges over $\\mathbb{Z}$, are pairwise distinct."
+ },
+ {
+  "id": "t197",
+  "paraphrase": "Show that multiplying residue classes in $\\mathbb{Z}/n\\mathbb{Z}$ is an associative operation."
+ },
+ {
+  "id": "t198",
+  "paraphrase": "For an arbitrary group $G$, show that the function from $G$ into $G$ sending $g \\mapsto g^{-1}$ is a homomorphism exactly when $G$ is abelian."
+ },
+ {
+  "id": "t201",
+  "paraphrase": "Call a subgroup $M$ of a group $G$ maximal when $M \\neq G$ and no subgroups of $G$ other than $M$ and $G$ themselves contain $M$. Show that for any proper subgroup $H$ of a finite group $G$, some maximal subgroup of $G$ contains $H$."
+ },
+ {
+  "id": "t203",
+  "paraphrase": "Let $H$ be a subgroup of $G$. Show that the set $H-\\{1\\}$ generates $H$."
+ },
+ {
+  "id": "t204",
+  "paraphrase": "Show that, in any group, intersecting a nonempty family of normal subgroups, of arbitrary size, yields a normal subgroup (the family is not to be assumed countable)."
+ },
+ {
+  "id": "t205",
+  "paraphrase": "By applying Lagrange's Theorem to the multiplicative group $(\\mathbb{Z} / p \\mathbb{Z})^{\\times}$, establish Fermat's Little Theorem, which states that for a prime $p$ one has $a^{p} \\equiv a(\\bmod p)$ for every $a \\in \\mathbb{Z}$."
+ },
+ {
+  "id": "t206",
+  "paraphrase": "Let $H$ be a normal subgroup of $G$ whose index is a prime $p$. Show that every $K \\leq G$ satisfies either $K \\leq H$, or both $G=H K$ and $|K: K \\cap H|=p$."
+ },
+ {
+  "id": "t207",
+  "paraphrase": "Let $G$ be a solvable group and $H$ a nontrivial normal subgroup of $G$. Show that $H$ contains a nontrivial abelian subgroup $A$ satisfying $A \\unlhd G$."
+ },
+ {
+  "id": "t208",
+  "paraphrase": "Let $p$ and $q$ be two distinct primes. Show that every abelian group $G$ whose order is $p q$ must be cyclic."
+ },
+ {
+  "id": "t209",
+  "paraphrase": "Show that some normal subgroup fails to be characteristic."
+ },
+ {
+  "id": "t210",
+  "paraphrase": "Suppose $G$ is a group and $H$, $K$ are subgroups of $G$ with $H \\leq K$. Show that $H$ is normal in $G$ whenever $H$ is characteristic in $K$ and $K$ is normal in $G$."
+ },
+ {
+  "id": "t211",
+  "paraphrase": "Show that any group of order 56 possesses, for some prime $p$ that divides the group's order, a Sylow $p$-subgroup that is normal."
+ }
+]

@@ -1,0 +1,62 @@
+[
+ {
+  "id": "t264",
+  "paraphrase": "Let $a$ and $b$ be points of $R^k$. Determine a point $c \\in R^k$ and a radius $r > 0$ for which the condition $|x-a|=2|x-b|$ holds exactly when $| x - c | = r$. Show that these satisfy $3c = 4b - a$ and $3r = 2 |b - a|$."
+ },
+ {
+  "id": "t265",
+  "paraphrase": "Let $r$ be a nonzero rational number $(r \\neq 0)$, and let $x$ be an irrational number. Show that the sum $r+x$ is an irrational number."
+ },
+ {
+  "id": "t266",
+  "paraphrase": "Consider a set $A$ of real numbers that is nonempty and has a lower bound. Define $-A$ to be the collection of the numbers $-x$ as $x$ ranges over $x \\in A$. Show that $\\inf A=-\\sup (-A)$."
+ },
+ {
+  "id": "t267",
+  "paraphrase": "Let $E\\subset\\mathbb{R}^k$ be an uncountable set, and denote by $P$ the collection of all condensation points of $E$. Show that $P$ is a perfect set."
+ },
+ {
+  "id": "t268",
+  "paraphrase": "Let $E\\subset\\mathbb{R}^k$ be an uncountable set, and denote by $P$ the collection of all condensation points of $E$. Show that the points of $E$ lying outside $P$ form a set that is at most countable."
+ },
+ {
+  "id": "t269",
+  "paraphrase": "Show that in any separable metric space, each closed set can be written as the union of two pieces: a perfect set (which may be empty) and a set that is at most countable."
+ },
+ {
+  "id": "t272",
+  "paraphrase": "Let $X$ be a complete metric space and let $\\left\\{E_{n}\\right\\}$ be a sequence of subsets of $X$, each of them nonempty, closed and bounded, such that $E_{n} \\supset E_{n+1}$ and $\\lim _{n \\rightarrow \\infty} \\operatorname{diam} E_{n}=0.$ Then the intersection $\\bigcap_{1}^{\\infty} E_{n}$ contains precisely one point."
+ },
+ {
+  "id": "t273",
+  "paraphrase": "Let $X$ be a complete metric space that is not empty, and let $\\left\\{G_{n}\\right\\}$ be a sequence of open subsets of $X$, each of which is dense in $X$. Establish Baire's theorem: the intersection $\\bigcap_{1}^{\\infty} G_{n}$ is nonempty."
+ },
+ {
+  "id": "t275",
+  "paraphrase": "Given that $a_n\\geq 0$, show that whenever the series $\\Sigma a_{n}$ converges, the series $\\sum \\frac{\\sqrt{a_{n}}}{n}$ converges as well."
+ },
+ {
+  "id": "t277",
+  "paraphrase": "Take a bounded set $E$ in $R^{1}$. Show that one can find a real function $f$ which is uniformly continuous but fails to be bounded on $E$."
+ },
+ {
+  "id": "t279",
+  "paraphrase": "Let $f$ be a real-valued function on $[-1,1]$ that is three times differentiable and satisfies $f(-1)=0, \\quad f(0)=0, \\quad f(1)=1, \\quad f^{\\prime}(0)=0 .$ Show that there is some point $x \\in(-1,1)$ at which $f^{(3)}(x) \\geq 3$."
+ },
+ {
+  "id": "t281",
+  "paraphrase": "Let $f$ be a function that is defined and differentiable at each $x>0$, and assume $f^{\\prime}(x) \\rightarrow 0$ as $x \\rightarrow+\\infty$. Define $g(x)=f(x+1)-f(x)$. Show that $g(x)$ tends to $0$ as $x \\rightarrow+\\infty$."
+ },
+ {
+  "id": "t282",
+  "paraphrase": "Assume the following hold: (a) $f$ is continuous on $x \\geq 0$; (b) the derivative $f^{\\prime}(x)$ exists whenever $x>0$; (c) $f(0)=0$; (d) $f^{\\prime}$ increases monotonically. Defining $g(x)=\\frac{f(x)}{x} \\quad(x>0)$, show that $g$ is a monotonically increasing function."
+ },
+ {
+  "id": "t284",
+  "paraphrase": "Show that $\\sum zn/n^2$, regarded as a power series, is convergent at each point lying on the unit circle."
+ },
+ {
+  "id": "t285",
+  "paraphrase": "Show that $\\sum zn/n$, regarded as a power series, is convergent at each point lying on the unit circle, with the sole exception of $z = 1$."
+ }
+]

@@ -15,7 +15,7 @@ import requests
 RUN = Path(__file__).resolve().parents[1]
 CAT = RUN / "results" / "catalogue"
 NAME, N, SEED = "my_favorite_theorem", 16, 20261012
-MAX_TOKENS = {"goedel": 16384}
+MAX_TOKENS = {"goedel": 16384, "dsp_v2": 4096}  # D4: dsp_v2 raised from 2,048 after the format pilot
 FEWSHOT = [
     ("Find the real number x such that 2x + 3 = 11. Show that x = 4.",
      "theorem my_favorite_theorem (x : ℝ) (h : 2 * x + 3 = 11) : x = 4 := by sorry"),

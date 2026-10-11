@@ -1,0 +1,123 @@
+[
+ {
+  "id": "t212",
+  "skip": null,
+  "sigma": {
+   "312": "408"
+  },
+  "N_twin": "Prove that a group of order 408 has a normal Sylow $p$-subgroup for some prime $p$ dividing its order.",
+  "D_twin": "theorem exercise_4_5_14 {G : Type*} [Group G] [Fintype G]\n  (hG : card G = 408) :\n  ∃ (p : ℕ) (P : Sylow p G), P.Normal :=",
+  "C_twin": "theorem exercise_4_5_14 {G : Type*} [Group G] [Fintype G]\n  (hG : card G = 408) :\n  ∃ (p : ℕ) (P : Sylow p G), p.Prime ∧ (p ∣ card G) ∧ P.Normal :=",
+  "answer_script": "# Twin of t212: every group of order 408 has a normal Sylow p-subgroup (p prime, p | 408).\n# Sylow: n_p divides |G|/p^a and n_p = 1 (mod p). If 1 is the only such value, the Sylow p-subgroup is normal.\ndef factor(n):\n    f, d = {}, 2\n    while d * d <= n:\n        while n % d == 0:\n            f[d] = f.get(d, 0) + 1\n            n //= d\n        d += 1\n    if n > 1:\n        f[n] = f.get(n, 0) + 1\n    return f\nN = 408\nf = factor(N)\nallowed = {p: [d for d in range(1, N // p**a + 1) if (N // p**a) % d == 0 and d % p == 1] for p, a in f.items()}\nprint(f, allowed)\nforced = [p for p in allowed if allowed[p] == [1]]\nprint(\"forced normal Sylow primes:\", forced)\nprint(len(forced) > 0)\n",
+  "answer_value": "True",
+  "answer_span": null,
+  "defect_rule": "Same defect: D' drops `p.Prime` and `p ∣ card G` exactly as D does (no number involved), so p = 1 or a prime not dividing 408 with the trivial Sylow subgroup makes it vacuous. 408 = 2^3*3*17 mirrors 312 = 2^3*3*13: n_17 | 24 and n_17 = 1 mod 17 force n_17 = 1, so C' holds with p = 17. Proof statement with no stated answer: the script prints True after checking that some prime dividing 408 has Sylow count forced to 1."
+ },
+ {
+  "id": "t213",
+  "skip": null,
+  "sigma": {
+   "351": "3875"
+  },
+  "N_twin": "Prove that a group of order 3875 has a normal Sylow $p$-subgroup for some prime $p$ dividing its order.",
+  "D_twin": "theorem exercise_4_5_15 {G : Type*} [Group G] [Fintype G]\n  (hG : card G = 3875) :\n  ∃ (p : ℕ) (P : Sylow p G), P.Normal :=",
+  "C_twin": "theorem exercise_4_5_15 {G : Type*} [Group G] [Fintype G]\n  (hG : card G = 3875) :\n  ∃ (p : ℕ) (P : Sylow p G), p.Prime ∧ (p ∣ card G) ∧  P.Normal :=",
+  "answer_script": "# Twin of t213: every group of order 3875 = 5^3 * 31 has a normal Sylow p-subgroup (p prime, p | 3875).\n# Enumerate all Sylow-admissible (n_p) with every n_p > 1 and show each is impossible by element counting:\n#  - exponent-1 prime p: n_p*(p-1) elements of order p;\n#  - exponent-a prime p (a >= 2), n_p >= 2: at least 2*p^a - p^(a-1) - 1 nonidentity p-elements.\nfrom itertools import product\ndef factor(n):\n    f, d = {}, 2\n    while d * d <= n:\n        while n % d == 0:\n            f[d] = f.get(d, 0) + 1\n            n //= d\n        d += 1\n    if n > 1:\n        f[n] = f.get(n, 0) + 1\n    return f\nN = 3875\nf = factor(N)\nallowed = {p: [d for d in range(1, N // p**a + 1) if (N // p**a) % d == 0 and d % p == 1] for p, a in f.items()}\nprint(f, allowed)\nok = True\nps = list(f)\nfor combo in product(*[[x for x in allowed[p] if x > 1] for p in ps]):\n    count = 1\n    for p, n in zip(ps, combo):\n        a = f[p]\n        count += n * (p - 1) if a == 1 else 2 * p**a - p**(a - 1) - 1\n    print(dict(zip(ps, combo)), \"lower bound on |G|:\", count)\n    if count <= N:\n        ok = False\nprint(ok)\n",
+  "answer_value": "True",
+  "answer_span": null,
+  "defect_rule": "Same defect: D' drops `p.Prime` and `p ∣ card G` exactly as D does (no number involved). 3875 = 5^3*31 mirrors 351 = 3^3*13 (q | p^3 - 1 but not p - 1 or p^2 - 1, and q = 1 mod p): n_31 in {1,125}, n_5 in {1,31}, and n_31 = 125 leaves only 125 elements outside the elements of order 31, so the Sylow 5-subgroup is unique; same counting proof as for 351. (56 = 2^3*7 was avoided because it is itself a textbook exercise, D&F 4.5.13.) Proof statement with no stated answer: the script prints True after showing every Sylow-admissible choice with all n_p > 1 is impossible by element counting."
+ },
+ {
+  "id": "t214",
+  "skip": "No numerals in N (|G| = pqr with symbolic primes p < q < r); nothing to perturb."
+ },
+ {
+  "id": "t215",
+  "skip": null,
+  "sigma": {
+   "105": "595"
+  },
+  "N_twin": "Prove that if $|G|=595$ then $G$ has a normal Sylow 5 -subgroup and a normal Sylow 7-subgroup.",
+  "D_twin": "theorem exercise_4_5_17 {G : Type*} [Fintype G] [Group G]\n  (hG : card G = 595) :\n  Nonempty (Sylow 5 G) ∧ Nonempty (Sylow 7 G) :=",
+  "C_twin": "theorem exercise_4_5_17 {G : Type*} [Fintype G] [Group G]\n  (hG : card G = 595) :\n  (∃ (P : Sylow 5 G), P.Normal) ∧ (∃ (P : Sylow 7 G), P.Normal) :=",
+  "answer_script": "# Twin of t215: every group of order 595 has a normal Sylow 5-subgroup and a normal Sylow 7-subgroup.\n# 595 = 5*7*17 is squarefree with gcd(595, phi(595)) = 1, so every group of order 595 is cyclic\n# (no prime factor q divides p-1 for another prime factor p); in a cyclic group every subgroup is normal.\nfrom math import gcd\nN = 595\nps = [p for p in range(2, N + 1) if N % p == 0 and all(p % d for d in range(2, p))]\nphi = 1\nfor p in ps:\n    phi *= p - 1\nassert all(N % (p * p) for p in ps)          # squarefree\nassert N % 5 == 0 and N % 7 == 0               # 5 and 7 divide |G|, so the Sylow subgroups are nontrivial\nallowed = {p: [d for d in range(1, N // p + 1) if (N // p) % d == 0 and d % p == 1] for p in ps}\nprint(ps, \"phi =\", phi, \"Sylow counts allowed:\", allowed)\nprint(gcd(N, phi) == 1)\n",
+  "answer_value": "True",
+  "answer_span": null,
+  "defect_rule": "Same defect: D' asserts only Nonempty (Sylow 5 G) and Nonempty (Sylow 7 G) (automatic by Sylow), normality dropped, exactly as D; the primes 5 and 7 are kept, only the order changes. 595 = 5*7*17 is squarefree with gcd(595, phi(595)) = 1, so every group of order 595 is cyclic and both Sylow subgroups are normal (n_7 in {1,85} and n_17 in {1,35} as Sylow numerics, so the argument is not immediate from counts alone, as for 105). Proof statement with no stated answer: the script prints True after checking gcd(595, phi(595)) = 1 (cyclic-number criterion)."
+ },
+ {
+  "id": "t216",
+  "skip": "No numerical parameters (Sylow p-subgroup inclusion statement is purely structural)."
+ },
+ {
+  "id": "t217",
+  "skip": "No numerical parameters (normal Sylow p-subgroup intersected with H is purely structural)."
+ },
+ {
+  "id": "t218",
+  "skip": "No numerical parameters (centre under a surjective ring homomorphism is purely structural)."
+ },
+ {
+  "id": "t219",
+  "skip": "Only structural numerals (indices a_1, a_2, a_3, a_{i+1}, the labels (i), (ii)); no parameter can change while keeping the same statement."
+ },
+ {
+  "id": "t221",
+  "skip": null,
+  "sigma": {
+   "1": "2",
+   "2": "5"
+  },
+  "N_twin": "Prove that the quotient ring $\\mathbb{Z}[i] /(2+i)$ is a field of order 5.",
+  "D_twin": "theorem exercise_8_3_6a {R : Type} [Ring R]\n  (hR : R = (GaussianInt ⧸ span ({⟨0, 1⟩} : Set GaussianInt))) :\n  IsField R ∧ ∃ finR : Fintype R, @card R finR = 5 :=",
+  "C_twin": "theorem exercise_8_3_6a {R : Type} [Ring R]\n  (hR : R = (GaussianInt ⧸ span ({⟨2, 1⟩} : Set GaussianInt))) :\n  IsField R ∧ ∃ finR : Fintype R, @card R finR = 5 :=",
+  "answer_script": "# Twin of t221: Z[i]/(2+i) is a field of order 5.\n# |Z[i]/(a+bi)| = |det [[a, b], [-b, a]]| = a^2 + b^2 (the ideal is the lattice spanned by z and i*z).\n# A prime norm makes a+bi a Gaussian prime, so the quotient is the field Z/pZ.\na, b = 2, 1\norder = abs(a * a - (-b) * b)\nassert all(order % d for d in range(2, order)) and order > 1   # prime -> field\n# explicit isomorphism Z[i]/(2+i) -> Z/5: i -> -a * b^{-1} = -2; check (-2)^2 = -1 mod 5\nr = (-a * pow(b, -1, order)) % order\nassert (r * r + 1) % order == 0 and (a + b * r) % order == 0\n# the defective generator <0, 1> = i is a unit: index |0*0 + 1*1| = 1, i.e. the zero ring\nprint(\"defective quotient order:\", 0 * 0 + 1 * 1)\nprint(order)\n",
+  "answer_value": "5",
+  "answer_span": null,
+  "defect_rule": "sigma is applied by role: the real part 1 of the generator 1+i becomes 2 (generator 2+i, norm 5, a Gaussian prime) and the order 2 becomes 5; the imaginary coefficient 1 of the generator (implicit in N's '+i', second component of ⟨1, 1⟩) is not a parameter and is kept. Defect rule: D replaces the generator's real part by 0 (⟨0, 1⟩ = i, a unit, so the quotient is the zero ring); applied to 2+i this again gives ⟨0, 1⟩, so D' differs from D only in the order 2 -> 5. The script prints the order of Z[i]/(2+i) (= 5, prime, hence a field), which is the value stated in N' and C'."
+ },
+ {
+  "id": "t222",
+  "skip": "Only structural numerals (variable indices x_1 x_2, x_3 x_4, ... define the pairing pattern; changing them is not a numeral substitution of a parameter and would change the ideal's shape)."
+ },
+ {
+  "id": "t223",
+  "skip": "No numerals in N (prime order p is symbolic); nothing to perturb."
+ },
+ {
+  "id": "t224",
+  "skip": "No numerals in N; nothing to perturb."
+ },
+ {
+  "id": "t225",
+  "skip": "Only the structural constant 0 in m > 0 (changing it is not a parameter change and the positivity defect hinges on it)."
+ },
+ {
+  "id": "t227",
+  "skip": "Only the exponent 2 in a^2 = 0 is numeric and it is structural: with a^3 = 0 (or higher) the claim that ax + xa commutes with a is false (needs a^2 x = x a^2), so no true twin exists."
+ },
+ {
+  "id": "t228",
+  "skip": "Only structural numerals (the harmonic sum 1 + 1/2 + ... + 1/(p-1) over a symbolic odd prime p); no parameter to perturb."
+ },
+ {
+  "id": "t229",
+  "skip": "Only structural numerals ((p-1)/2 and 1, ..., p-1 for a symbolic prime p); no parameter to perturb."
+ },
+ {
+  "id": "t230",
+  "skip": "No numerical parameters (p, n symbolic; p^n structural)."
+ },
+ {
+  "id": "t231",
+  "skip": "Only structural numerals (1 + x + ... + x^{p-1} for a symbolic prime p); no parameter to perturb."
+ },
+ {
+  "id": "t232",
+  "skip": "Only structural numerals (p != 0, m = p^n, positive n, all symbolic); no parameter to perturb."
+ },
+ {
+  "id": "t233",
+  "skip": "No numerals in N; purely structural statement about vector spaces over infinite fields."
+ }
+]

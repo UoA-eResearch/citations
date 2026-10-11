@@ -1,0 +1,82 @@
+[
+ {
+  "id": "t002",
+  "paraphrase": "For $0 < p < 15$, define $f(x)=|x-p|+|x-15|+|x-p-15|$. Restricting attention to those $x$ with $p \\leq x\\leq15$, find the smallest value that $f(x)$ attains, and prove that this least value is 015."
+ },
+ {
+  "id": "t003",
+  "paraphrase": "Over the range $0 < x < \\pi$, what is the least value attained by the expression $\\frac{9x^2\\sin^2 x + 4}{x\\sin x}$? Prove that this least value equals 012."
+ },
+ {
+  "id": "t004",
+  "paraphrase": "Suppose that $\\log_8a+\\log_4b^2=5$ and also $\\log_8b+\\log_4a^2=7$. Compute the product $ab$ and prove that it equals 512."
+ },
+ {
+  "id": "t005",
+  "paraphrase": "Given that $\\log_2 (\\log_8 x) = \\log_8 (\\log_2 x)$, compute the quantity $(\\log_2 x)^2$, and prove that it comes out to 027."
+ },
+ {
+  "id": "t009",
+  "paraphrase": "A function $f$ satisfies $f(x)+f(x-1) = x^2$ for every real number $x$. Given in addition that $f(19)=94$, determine the remainder left when $f(94)$ is divided by $1000$. Prove that this remainder is 561."
+ },
+ {
+  "id": "t012",
+  "paraphrase": "Suppose the real number $r$ satisfies $r^{\\frac{1}{3}} + \\frac{1}{r^{\\frac{1}{3}}} = 3$. Prove the equality $r^3 + \\frac{1}{r^3} = 5778$."
+ },
+ {
+  "id": "t015",
+  "paraphrase": "The nonnegative integers $A$, $M$, and $C$ satisfy $A + M + C=12$. Among all such choices, find the largest possible value of the expression $A \\cdot M \\cdot C + A \\cdot M + M \\cdot C + A \\cdot C$.\n\n$ \\mathrm{(A) \\ 62 } \\qquad \\mathrm{(B) \\ 72 } \\qquad \\mathrm{(C) \\ 92 } \\qquad \\mathrm{(D) \\ 102 } \\qquad \\mathrm{(E) \\ 112 }  $ Prove that the correct choice is \\text{E}."
+ },
+ {
+  "id": "t019",
+  "paraphrase": "Each root of the quadratic equation $x^2 - 63x + k = 0$ is a prime number. How many values can $k$ possibly take?\n\n$\\text{(A)}\\ 0 \\qquad \\text{(B)}\\ 1 \\qquad \\text{(C)}\\ 2 \\qquad \\text{(D)}\\ 4 \\qquad \\text{(E) more than 4}$ Prove that the correct choice is \\text{(B)}\\ 1."
+ },
+ {
+  "id": "t020",
+  "paraphrase": "A sequence starts $4,7,1,8,9,7,6,\\dots$ and, for every $n>2$, its $n$-th term equals the units digit of the sum of the two terms immediately preceding it. Write $S_n$ for the total of the first $n$ terms. Find the least $n$ for which $S_n>10,000$.\n\n$\n\\text{(A) }1992\n\\qquad\n\\text{(B) }1999\n\\qquad\n\\text{(C) }2001\n\\qquad\n\\text{(D) }2002\n\\qquad\n\\text{(E) }2004\n$ Prove that the correct choice is (B)1999."
+ },
+ {
+  "id": "t021",
+  "paraphrase": "Count the positive integers $m$ for which some positive integer $n$ (at least one) satisfies the inequality $m \\cdot n \\le m + n$.\n\n$ \\textbf{(A) } 4\\qquad \\textbf{(B) } 6\\qquad \\textbf{(C) } 9\\qquad \\textbf{(D) } 12\\qquad \\textbf{(E) } \\text{infinitely many} $ Prove that the correct choice is \\textbf{(E) } \\text{infinitely many}."
+ },
+ {
+  "id": "t024",
+  "paraphrase": "Determine the smallest value that the function $f(x)=\\left|x-1\\right| + \\left|2x-1\\right| + \\left|3x-1\\right| + \\cdots + \\left|119x - 1 \\right|$ can take.\n\n$\\textbf{(A)}\\ 49 \\qquad \\textbf{(B)}\\ 50 \\qquad \\textbf{(C)}\\ 51 \\qquad \\textbf{(D)}\\ 52 \\qquad \\textbf{(E)}\\ 53$ Prove that the answer is 49\\ \\textbf{(A)}."
+ },
+ {
+  "id": "t025",
+  "paraphrase": "From the options listed below, prove that the correct choice is \\textbf{(D)}\\ 8.\n\n$\n\\textbf{(A)}\\ 5 \\qquad\n\\textbf{(B)}\\ 6 \\qquad\n\\textbf{(C)}\\ 7 \\qquad\n\\textbf{(D)}\\ 8 \\qquad\n\\textbf{(E)}\\ 9 $"
+ },
+ {
+  "id": "t029",
+  "paraphrase": "Exactly one positive integer $n$ satisfies $\\log_2{(\\log_{16}{n})} = \\log_4{(\\log_4{n})}.$ Find the sum of the decimal digits of this $n$.\n\n$\\textbf{(A) } 4 \\qquad \\textbf{(B) } 7 \\qquad \\textbf{(C) } 8 \\qquad \\textbf{(D) } 11 \\qquad \\textbf{(E) } 13$ Prove that the correct choice is \\textbf{(E) } 13."
+ },
+ {
+  "id": "t033",
+  "paraphrase": "Let $p$ and $q$ be positive integers that are coprime, and put $a=\\frac{p}{q}$. Suppose that adding together every real number $x$ which satisfies\n$ \\lfloor x \\rfloor \\cdot \\{x\\} = a \\cdot x^2$\nyields a total of $420$. Here $\\lfloor x \\rfloor$ stands for the largest integer not exceeding $x$, and $\\{x\\}=x- \\lfloor x \\rfloor$ stands for the fractional part of $x$. Determine $p+q$.\n\n$\\textbf{(A) } 245 \\qquad \\textbf{(B) } 593 \\qquad \\textbf{(C) } 929 \\qquad \\textbf{(D) } 1331 \\qquad \\textbf{(E) } 1332$ Prove that the correct choice is \\textbf{(C) } 929."
+ },
+ {
+  "id": "t034",
+  "paraphrase": "A tower is built by stacking seven cubes vertically, with volumes $1$, $8$, $27$, $64$, $125$, $216$, and $343$ cubic units, placed so that volume goes down as one moves from the bottom of the tower to its top. Every cube other than the lowest one sits with its whole bottom face resting on the cube directly beneath it. Counting the bottom of the tower, find the tower's total surface area in square units.\n\n$ \\textbf{(A)}\\ 644\\qquad\\textbf{(B)}\\ 658\\qquad\\textbf{(C)}\\ 664\\qquad\\textbf{(D)}\\ 720\\qquad\\textbf{(E)}\\ 749 $ Prove that the correct choice is \\textbf{(B) }658."
+ },
+ {
+  "id": "t037",
+  "paraphrase": "For a positive integer $n$, write $d(n)$ for how many positive divisors $n$ has, counting both $1$ and $n$ itself; for instance, $d(1)=1,d(2)=2,$ and $d(12)=6$. (This is what is called the divisor function.) Define $f(n)=\\frac{d(n)}{\\sqrt [3]n}.$ Exactly one positive integer $N$ has the property that $f(N)>f(n)$ holds for every positive integer $n\\ne N$. Find the sum of the digits of $N$.\n\n$\\textbf{(A) }5 \\qquad \\textbf{(B) }6 \\qquad \\textbf{(C) }7 \\qquad \\textbf{(D) }8\\qquad \\textbf{(E) }9$ Prove that the correct choice is \\textbf{(E) }9."
+ },
+ {
+  "id": "t039",
+  "paraphrase": "As $x$ and $y$ range over the real numbers, find the smallest value the expression $(xy-1)^2+(x+y)^2$ can take.\n\n$\\textbf{(A)} ~0\\qquad\\textbf{(B)} ~\\frac{1}{4}\\qquad\\textbf{(C)} ~\\frac{1}{2} \\qquad\\textbf{(D)} ~1 \\qquad\\textbf{(E)}$ Prove that the correct choice is \\textbf{(D)} ~1."
+ },
+ {
+  "id": "t045",
+  "paraphrase": "As $t$ ranges over the real numbers, determine the largest value of $\\frac{(2^t-3t)t}{4^t}$.\n\n$\\textbf{(A)}\\ \\frac{1}{16} \\qquad\\textbf{(B)}\\ \\frac{1}{15} \\qquad\\textbf{(C)}\\ \\frac{1}{12} \\qquad\\textbf{(D)}\\ \\frac{1}{10} \\qquad\\textbf{(E)}\\ \\frac{1}{9}$ Prove that the correct choice is \\textbf{(C)} \\frac{1}{12}."
+ },
+ {
+  "id": "t050",
+  "paraphrase": "Find all solutions $x$ of the equation $\\cos^2{x}+\\cos^2{2x}+\\cos^2{3x}=1$."
+ },
+ {
+  "id": "t051",
+  "paraphrase": "Show that the identity\n$ \\frac{1}{\\sin{2x}}+\\frac{1}{\\sin{4x}}+\\dots+\\frac{1}{\\sin{2^nx}}=\\cot{x}-\\cot{2^nx}  $\nholds for each natural number $n$ and each real number $x$ not of the form $\\frac{k\\pi}{2^t}$, where $t=0,1, \\dots, n$ and $k$ is any integer."
+ }
+]

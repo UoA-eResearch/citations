@@ -1,0 +1,82 @@
+[
+ {
+  "id": "t155",
+  "paraphrase": "Determine the total of the four positive divisors of the positive integer equal to $\\sqrt{196}$, and prove that this total is 24."
+ },
+ {
+  "id": "t158",
+  "paraphrase": "Determine the least positive integer $k$ with the property that, whatever positive integer $n$ is chosen, $6n+k$ is coprime to every one of $6n+3$, $6n+2$, and $6n+1$. Prove that this least value is 5."
+ },
+ {
+  "id": "t159",
+  "paraphrase": "Find the smallest positive integer $n$ for which $n!$ is divisible by $80325$, and prove that this $n$ equals 17."
+ },
+ {
+  "id": "t161",
+  "paraphrase": "Let $a$ and $b$ be positive integers whose last digits are $2$ and $4$ respectively, and whose greatest common divisor equals $6$.\n\nDetermine the minimum value that the least common multiple of $a$ and $b$ can take, and prove that this minimum is 108."
+ },
+ {
+  "id": "t162",
+  "paraphrase": "Find the least integer exceeding 10 that is simultaneously a perfect square and a perfect cube, and prove that it equals 64."
+ },
+ {
+  "id": "t163",
+  "paraphrase": "Positive integers $n$ and $k$ satisfy $5<\\frac nk<6$. Over all such pairs, determine the minimum of $\\frac{\\mathop{\\text{lcm}}[n,k]}{\\gcd(n,k)}$, and prove that this minimum is 22."
+ },
+ {
+  "id": "t164",
+  "paraphrase": "A positive integer $X$ exceeds some multiple of 3 by 2. In addition, the last digit of $X$ coincides with the last digit of some number that exceeds a multiple of 5 by 4. Determine the minimum possible value of $X$, and prove that it is 14."
+ },
+ {
+  "id": "t165",
+  "paraphrase": "Let $n$ be a multiple of three. Find the remainder upon dividing $(n + 4) + (n + 6) + (n + 8)$ by $9$, and prove that this remainder is 0."
+ },
+ {
+  "id": "t167",
+  "paraphrase": "Two positive integers $m$ and $n$ have greatest common divisor 8 and least common multiple 112. Determine the minimum possible value of $m+n$, and prove that it equals 72."
+ },
+ {
+  "id": "t169",
+  "paraphrase": "Among all negative integers $x$ that satisfy $$24x \\equiv 15 \\pmod{1199},$$ find the largest one, and prove that it is -449."
+ },
+ {
+  "id": "t170",
+  "paraphrase": "Consider the decimal expansion of $\\frac{9}{160}$. Determine which digit sits in its hundredths position, and prove that this digit is 5."
+ },
+ {
+  "id": "t178",
+  "paraphrase": "Suppose $R$ is a ring with ideals $I$ and $J$. Show that whenever an element belongs to $I \\cap J$, its image in the quotient ring $R / I J$ is nilpotent."
+ },
+ {
+  "id": "t179",
+  "paraphrase": "Given a ring $R$ and two of its ideals $I, J$ satisfying $I+J=R$, show that the equality $I J=I \\cap J$ holds."
+ },
+ {
+  "id": "t180",
+  "paraphrase": "Show that, in $\\mathbb{Q}$, the polynomial $x^3 + 6x + 12$ is irreducible."
+ },
+ {
+  "id": "t181",
+  "paraphrase": "Show that, over the field $\\mathbb{F}_2$, the polynomial $x^2+x+1$ is irreducible."
+ },
+ {
+  "id": "t182",
+  "paraphrase": "Show that, in $\\mathbb{F}_7$, the polynomial $x^2+1$ is irreducible."
+ },
+ {
+  "id": "t183",
+  "paraphrase": "For a prime integer $p$, show that $x^n-p$ is an irreducible polynomial in $\\mathbb{Q}[x]$."
+ },
+ {
+  "id": "t184",
+  "paraphrase": "Suppose $F$ is an infinite field and $V$ is a vector space over $F$. Show that $V$ cannot be written as the union of a finite number of proper subspaces."
+ },
+ {
+  "id": "t185",
+  "paraphrase": "Prove that the number $\\frac{-1 + \\sqrt{3}i}{2}$ is a cube root of 1, that is, raising it to the third power gives 1."
+ },
+ {
+  "id": "t186",
+  "paraphrase": "Given two subspaces of $V$, show that their union is itself a subspace of $V$ exactly when one of the two lies inside the other."
+ }
+]

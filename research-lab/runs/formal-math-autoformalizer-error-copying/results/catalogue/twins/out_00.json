@@ -1,0 +1,296 @@
+[
+ {
+  "id": "t002",
+  "skip": null,
+  "sigma": {
+   "15": "20",
+   "015 (stated answer)": "020"
+  },
+  "N_twin": "Let $f(x)=|x-p|+|x-20|+|x-p-20|$, where $0 < p < 20$. Determine the [[minimum]] value taken by $f(x)$ for $x$ in the [[interval]] $p \\leq x\\leq20$. Show that it is 020.",
+  "D_twin": "theorem aime_1983_p2 (x p : ℝ) (f : ℝ → ℝ) (h₀ : 0 < p ∧ p < 20) (h₁ : p ≤ x ∧ x ≤ 20)\n    (h₂ : f x = abs (x - p) + abs (x - 20) + abs (x - p - 20)) : 20 ≤ f x := by",
+  "C_twin": "theorem aime_1983_p2\n  (p : ℝ)\n  (f : ℝ → ℝ)\n  (h₀ : f = fun x => abs (x - p) + abs (x - 20) + abs (x - p - 20))\n  (h₁ : 0 < p ∧ p < 20)\n  (S R : Set ℝ)\n  (hS : S = Set.Icc p 20)\n  (hR : R = {y | ∃ x ∈ S, y = f x}) :\n  IsLeast R 20 := by",
+  "answer_script": "from fractions import Fraction as F\nc = 20  # the parameter (was 15)\ndef f(x, p):\n    return abs(x - p) + abs(x - c) + abs(x - p - c)\n# on p <= x <= c: f(x) = (x - p) + (c - x) + (p + c - x) = 2c - x, decreasing, so the minimum is f(c) = c\nfor p in [F(k, 7) for k in range(1, 7 * c)]:\n    xs = [p + (c - p) * F(i, 400) for i in range(401)]\n    assert all(f(x, p) == 2 * c - x for x in xs)\n    assert min(f(x, p) for x in xs) == c == f(F(c), p)\nprint(c)\n",
+  "answer_value": "20",
+  "answer_span": null,
+  "defect_rule": "sigma 15 -> 20 everywhere (the minimum equals the parameter, so the stated answer 015 -> 020 and the bound/IsLeast value 15 -> 20). Same defect: D' keeps only the lower bound 20 <= f x on [p, 20] and omits attainment (IsLeast in C'). Note: in N the numeral sits in '\\leq15' -> '\\leq20' (digits only, but glued to a LaTeX command)."
+ },
+ {
+  "id": "t003",
+  "skip": null,
+  "sigma": {
+   "9": "25",
+   "012 (stated answer)": "020",
+   "12": "20"
+  },
+  "N_twin": "Find the minimum value of $\\frac{25x^2\\sin^2 x + 4}{x\\sin x}$ for $0 < x < \\pi$. Show that it is 020.",
+  "D_twin": "theorem aime_1983_p9 (x : ℝ) (h₀ : 0 < x ∧ x < Real.pi) :\n  20 ≤ (25 * (x ^ 2 * Real.sin x ^ 2) + 4) / (x * Real.sin x) := by",
+  "C_twin": "theorem aime_1983_p9\n  (x : ℝ)\n  (S : Set ℝ)\n  (f : ℝ → ℝ)\n  (h₀ : f = fun x ↦ (25 * (x ^ 2 * Real.sin x ^ 2) + 4) / (x * Real.sin x))\n  (h₁ : S = Set.Ioo 0 Real.pi) :\n  IsLeast (Set.image f S) 20 := by",
+  "answer_script": "import math\na, b = 25, 4  # coefficient 9 -> 25; constant 4 kept\n# with y = x sin x > 0 on (0, pi): a*y + b/y >= 2*sqrt(a*b), equality at y = sqrt(b/a)\nm = 2 * math.isqrt(a * b)\nassert m * m == 4 * a * b\nystar = math.sqrt(b / a)\nymax = max(x * math.sin(x) for x in (i * math.pi / 100000 for i in range(1, 100000)))\nassert 0 < ystar < ymax  # y* = 2/5 is attained on (0, pi) (x sin x is continuous from 0 up to ~1.82)\ng = lambda x: (a * (x ** 2 * math.sin(x) ** 2) + b) / (x * math.sin(x))\nmn = min(g(i * math.pi / 200000) for i in range(1, 200000))\nassert m - 1e-9 <= mn < m + 1e-6\nprint(m)\n",
+  "answer_value": "20",
+  "answer_span": null,
+  "defect_rule": "sigma 9 -> 25 (4 kept); minimum 2*sqrt(25*4) = 20 at x sin x = 2/5, so 012 -> 020 and 12 -> 20. Same defect: D' states only the lower bound 20 <= ..., not attainment (IsLeast in C')."
+ },
+ {
+  "id": "t004",
+  "skip": null,
+  "sigma": {
+   "7": "11",
+   "512": "4096"
+  },
+  "N_twin": "Determine the value of $ab$ if $\\log_8a+\\log_4b^2=5$ and $\\log_8b+\\log_4a^2=11$. Show that it is 4096.",
+  "D_twin": "theorem aime_1984_p5 (a b : ℝ) (h₀ : Real.logb 8 a + Real.logb 4 (b ^ 2) = 5)\n  (h₁ : Real.logb 8 b + Real.logb 4 (a ^ 2) = 11) : a * b = 4096 := by",
+  "C_twin": "theorem aime_1984_p5 (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) (h₀ : Real.logb 8 a + Real.logb 4 (b ^ 2) = 5)\n  (h₁ : Real.logb 8 b + Real.logb 4 (a ^ 2) = 11) : a * b = 4096 := by",
+  "answer_script": "from fractions import Fraction as F\nimport math\np, q = 5, 11  # right-hand sides (7 -> 11)\n# A = log2|a|, B = log2|b|: A/3 + B = p, A + B/3 = q\ndet = F(1, 9) - 1\nA = (p * F(1, 3) - q) / det\nB = (F(1, 3) * q - p) / det\nassert A / 3 + B == p and A + B / 3 == q\nassert (A + B).denominator == 1\nab = 2 ** int(A + B)\n# numeric check with a, b > 0\na, b = 2.0 ** float(A), 2.0 ** float(B)\nassert abs(math.log(a, 8) + math.log(b * b, 4) - p) < 1e-9 and abs(math.log(b, 8) + math.log(a * a, 4) - q) < 1e-9\n# corrected twin also allows a = 0 or b = 0 (Real.logb x 0 = 0): a = 0 forces B = p and B/3 = q; b = 0 forces A/3 = p and A = q\nassert F(p, 3) != q and 3 * p != q\n# the defect survives: a = -2^A, b = 2^B satisfy D' (logb uses |x|) with a*b = -ab\nprint(ab)\n",
+  "answer_value": "4096",
+  "answer_span": null,
+  "defect_rule": "sigma 7 -> 11 (5 kept): A/3 + B = 5, A + B/3 = 11 gives A + B = 12, ab = 4096. Same defect: D' omits a, b >= 0; since Real.logb uses |x|, a = -2^10.5, b = 2^1.5 satisfy D' with ab = -4096. The zero cases admitted by C' (a = 0 or b = 0) remain inconsistent (checked in the script)."
+ },
+ {
+  "id": "t005",
+  "skip": null,
+  "sigma": {
+   "8": "4",
+   "027 (stated answer)": "016",
+   "27": "16"
+  },
+  "N_twin": "Find $(\\log_2 x)^2$ if $\\log_2 (\\log_4 x) = \\log_4 (\\log_2 x)$. Show that it is 016.",
+  "D_twin": "theorem aime_1988_p3 (x : ℝ) (h₀ : 0 < x)\n  (h₁ : Real.logb 2 (Real.logb 4 x) = Real.logb 4 (Real.logb 2 x)) : Real.logb 2 x ^ 2 = 16 := by",
+  "C_twin": "theorem aime_1988_p3 (x : ℝ)  (h₀ : 1 < x)\n  (h₁ : Real.logb 2 (Real.logb 4 x) = Real.logb 4 (Real.logb 2 x)) : Real.logb 2 x ^ 2 = 16 := by",
+  "answer_script": "import math\nk = 2  # base 8 = 2^3 -> base 4 = 2^2\n# y = log2 x > 0 (x > 1): log2(y/k) = log2(y)/k  <=>  (1 - 1/k) log2 y = log2 k  <=>  y = k^(k/(k-1))\ny = k ** (k / (k - 1))\nassert abs(y - 4) < 1e-12\nx = 2.0 ** y\nassert abs(math.log(math.log(x, 4), 2) - math.log(math.log(x, 2), 4)) < 1e-12\n# uniqueness: log2(y/2) - log2(y)/2 = log2(y)/2 - 1 is strictly increasing in y > 0\n# the defect survives: x = 1 gives logb 2 (logb 4 1) = logb 2 0 = 0 = logb 4 0, but (logb 2 1)^2 = 0 != 16\nprint(round(y ** 2))\n",
+  "answer_value": "16",
+  "answer_span": null,
+  "defect_rule": "sigma base 8 -> 4 (the other base 2 kept): y = log2 x satisfies log2(y/2) = log2(y)/2, so y = 4 and (log2 x)^2 = 16 (027 -> 016, 27 -> 16). Same defect: D' keeps only 0 < x, so x = 1 satisfies h1 through logb _ 0 = 0 and gives 0 = 16; C' keeps 1 < x. Note: in N the numerals sit in '\\log_8' -> '\\log_4' (digits only, but glued to the LaTeX subscript)."
+ },
+ {
+  "id": "t009",
+  "skip": null,
+  "sigma": {
+   "19": "23",
+   "561": "647"
+  },
+  "N_twin": "The function $f_{}^{}$ has the property that, for each real number $x,\\,$\n<center>$f(x)+f(x-1) = x^2.\\,$</center>\nIf $f(23)=94,\\,$ what is the remainder when $f(94)\\,$ is divided by $1000$? Show that it is 647.",
+  "D_twin": "theorem aime_1994_p3 (x : ℤ) (f : ℤ → ℤ) (h0 : f x + f (x - 1) = x ^ 2) (h1 : f 23 = 94) :\n    f 94 % 1000 = 647 := by",
+  "C_twin": "theorem aime_1994_p3 (f : ℤ → ℤ) (h₁ : ∀ x, f x + f (x-1) = x^2) (h₂ : f 23 = 94) : f 94 % 1000 = 647 := by",
+  "answer_script": "# f(x) = x^2 - f(x-1) for all integers x, starting from f(23) = 94\nv = 94\nfor x in range(24, 95):\n    v = x * x - v\nassert v > 0\nprint(v % 1000)\n",
+  "answer_value": "647",
+  "answer_span": null,
+  "defect_rule": "sigma 19 -> 23 (94 and 1000 kept): f(94) = 4647, remainder 647. Same defect: D' assumes the functional equation only at one fixed integer x (h0), not for all x as in C'."
+ },
+ {
+  "id": "t012",
+  "skip": null,
+  "sigma": {
+   "3 (right-hand side of the hypothesis only; the 1/3 exponents and r^3 are structural)": "4",
+   "5778": "140452"
+  },
+  "N_twin": "Let $r$ be a real number such that $r^{\\frac{1}{3}} + \\frac{1}{r^{\\frac{1}{3}}} = 4$. Show that $r^3 + \\frac{1}{r^3} = 140452$.",
+  "D_twin": "theorem algebra_cubrtrp1oncubrtreq3_rcubp1onrcubeq5778 (r : ℝ)\n    (h₀ : r ^ ((1 : ℝ) / 3) + 1 / r ^ ((1 : ℝ) / 3) = 4) : r ^ 3 + 1 / r ^ 3 = 140452 := by",
+  "C_twin": "theorem algebra_cubrtrp1oncubrtreq3_rcubp1onrcubeq5778\n  (r : ℝ)\n  (h₀ : r^((1 : ℝ)/3) + 1/r^((1 : ℝ)/3) = 4)\n  (h₁: r ^ (1 / 3 : ℝ) ≠ (1 / 2 : ℝ) * (-r) ^ (1 / 3 : ℝ)) :\n  r^3 + 1/(r^3) = 140452 := by",
+  "answer_script": "import math\ns = 4  # t + 1/t = s with t = r^(1/3) > 0 (was 3)\n# a_n = t^n + t^-n satisfies a_{n+1} = s a_n - a_{n-1}; r^3 + 1/r^3 = a_9\na = [2, s]\nfor n in range(2, 10):\n    a.append(s * a[-1] - a[-2])\nt = (s + math.sqrt(s * s - 4)) / 2\nassert abs((t ** 9 + t ** -9) - a[9]) / a[9] < 1e-12\n# the defect survives: for r < 0 Lean's rpow gives r^(1/3) = u/2 with u = |r|^(1/3); u/2 + 2/u = s has positive roots\nassert s * s - 4 > 0  # u^2 - 2 s u + 4 = 0 has discriminant 4 s^2 - 16 > 0, roots positive\nu = s + math.sqrt(s * s - 4)\nr = -u ** 3\nassert abs(u / 2 + 2 / u - s) < 1e-12 and r ** 3 + 1 / r ** 3 < 0\nprint(a[9])\n",
+  "answer_value": "140452",
+  "answer_span": null,
+  "defect_rule": "sigma: the given value 3 of r^(1/3) + 1/r^(1/3) -> 4 (the cube-root exponents 1/3, the power r^3 and the 1/2 in C's h1 are structural and kept); answer 5778 -> 140452 = a_9 with a_1 = 4. Same defect: D' uses Real.rpow without excluding r < 0; for r < 0, rpow gives |r|^(1/3)/2, and u/2 + 2/u = 4 has positive roots u = 4 +- 2*sqrt(3), so r = -u^3 satisfies h0 with r^3 + 1/r^3 < 0. C' keeps h1 (which excludes r < 0). Theorem name unchanged."
+ },
+ {
+  "id": "t015",
+  "skip": null,
+  "sigma": {
+   "12": "15",
+   "62": "150",
+   "72": "160",
+   "92": "180",
+   "102": "190",
+   "112": "200"
+  },
+  "N_twin": "Let $A, M,$ and $C$ be [[nonnegative integer]]s such that $A + M + C=15$. What is the maximum value of $A \\cdot M \\cdot C + A \\cdot M + M \\cdot C + A \\cdot C$?\n\n$ \\mathrm{(A) \\ 150 } \\qquad \\mathrm{(B) \\ 160 } \\qquad \\mathrm{(C) \\ 180 } \\qquad \\mathrm{(D) \\ 190 } \\qquad \\mathrm{(E) \\ 200 }  $ Show that it is \\text{E}.",
+  "D_twin": "theorem amc12_2000_p12 (a m c : ℕ) (h₀ : a + m + c = 15) :\n    a * m * c + a * m + m * c + a * c ≤ 200 := by",
+  "C_twin": "theorem amc12_2000_p12\n  (S: Set ℕ)\n  (hS: S = {x | ∃ a m c : ℕ, (x = a * m * c + a * m + m * c + a * c) ∧a + m + c = 15}) :\n  IsGreatest S 200 := by",
+  "answer_script": "S = 15  # A + M + C (was 12)\nbest = max(a * m * c + a * m + m * c + a * c\n           for a in range(S + 1) for m in range(S + 1 - a) for c in [S - a - m])\nassert best == ((S + 3) // 3) ** 3 - (S + 1)  # (A+1)(M+1)(C+1) - (A+M+C) - 1 with A = M = C = 5\nprint(best)\n",
+  "answer_value": "200",
+  "answer_span": null,
+  "defect_rule": "sigma 12 -> 15; maximum (6*6*6) - 16 = 200 (choice E). Distractors keep their offsets from the answer (-50, -40, -20, -10): 150, 160, 180, 190, 200. Same defect: D' states only the upper bound <= 200, not attainment (IsGreatest in C')."
+ },
+ {
+  "id": "t019",
+  "skip": null,
+  "sigma": {
+   "63": "75",
+   "122 (D's value of k, = 2*(63-2))": "146"
+  },
+  "N_twin": "Both roots of the quadratic equation $x^2 - 75x + k = 0$ are prime numbers. The number of possible values of $k$ is \n\n$\\text{(A)}\\ 0 \\qquad \\text{(B)}\\ 1 \\qquad \\text{(C)}\\ 2 \\qquad \\text{(D)}\\ 4 \\qquad \\text{(E) more than 4}$ Show that it is \\text{(B)}\\ 1.",
+  "D_twin": "theorem amc12a_2002_p12 (f : ℝ → ℝ) (k : ℝ) (a b : ℕ) (h₀ : ∀ x, f x = x ^ 2 - 75 * x + k)\n  (h₁ : f a = 0 ∧ f b = 0) (h₂ : a ≠ b) (h₃ : Nat.Prime a ∧ Nat.Prime b) : k = 146 := by",
+  "C_twin": "theorem amc12a_2002_p12 :\n  ∃! k, ∃ a b:ℕ, (Nat.Prime a ∧ Nat.Prime b ∧ a ≠ b ∧ (∀ f : ℝ → ℝ, (f = fun x:ℝ ↦ x ^ 2 - 75 * x + k ) → f (a:ℝ) = 0 ∧ f (b:ℝ) = 0)) := by",
+  "answer_script": "def isprime(n):\n    return n > 1 and all(n % d for d in range(2, int(n ** 0.5) + 1))\nn = 75  # coefficient (was 63); n - 2 = 73 is prime\n# distinct roots a != b of x^2 - n x + k: a + b = n, a b = k\nks = sorted({a * (n - a) for a in range(2, n - 1) if a != n - a and isprime(a) and isprime(n - a)})\nfor k in ks:\n    a = 2\n    b = n - 2\n    assert a * a - n * a + k == 0 and b * b - n * b + k == 0\nprint(ks)\nprint(len(ks))\n",
+  "answer_value": "1",
+  "answer_span": null,
+  "defect_rule": "sigma 63 -> 75 (75 - 2 = 73 is prime, so exactly one k). The count stays 1 (choice B unchanged); D's constant k = 122 = 2*(63-2) has no counterpart in N and is carried by the same relation: k = 2*(75-2) = 146 (printed on the script's second-to-last line; the last line is the count 1). Same defect: D' only proves that any such k equals 146 (uniqueness), not existence (C' states exists-unique)."
+ },
+ {
+  "id": "t020",
+  "skip": null,
+  "sigma": {
+   "10,000 / 10000": "7,000 / 7000",
+   "1992": "1392",
+   "1999": "1399",
+   "2001": "1401",
+   "2002": "1402",
+   "2004": "1404"
+  },
+  "N_twin": "Consider the sequence of numbers: $4,7,1,8,9,7,6,\\dots$ For $n>2$, the $n$-th term of the sequence is the units digit of the sum of the two previous terms. Let $S_n$ denote the sum of the first $n$ terms of this sequence. The smallest value of $n$ for which $S_n>7,000$ is: \n\n$\n\\text{(A) }1392\n\\qquad\n\\text{(B) }1399\n\\qquad\n\\text{(C) }1401\n\\qquad\n\\text{(D) }1402\n\\qquad\n\\text{(E) }1404\n$ Show that it is (B)1399.",
+  "D_twin": "theorem amc12a_2002_p21 (u : ℕ → ℕ) (h₀ : u 0 = 4) (h₁ : u 1 = 7)\n    (h₂ : ∀ n ≥ 2, u (n + 2) = (u n + u (n + 1)) % 10) :\n    ∀ n, (∑ k in Finset.range n, u k) > 7000 → 1399 ≤ n := by",
+  "C_twin": "theorem amc12a_2002_p21\n  (u S : ℕ → ℕ)\n  (h₀ : u 0 = 4)\n  (h₁ : u 1 = 7)\n  (h₂ : ∀ n ≥ 2, u n = (u (n - 2) + u (n - 1)) % 10)\n  (h₃ : ∀ n, S n = ∑ k ∈ Finset.range n, u k)\n  (Sn : Set ℕ)\n  (h₄ : Sn = {n | S n > 7000}) :\n  IsLeast Sn 1399 := by",
+  "answer_script": "u = [4, 7]\nwhile len(u) < 6000:\n    u.append((u[-2] + u[-1]) % 10)\nT = 7000  # threshold (was 10000)\ns, ans = 0, None\nfor n in range(1, 6000):\n    s += u[n - 1]  # s = S_n, the sum of the first n terms\n    if s > T:\n        ans = n\n        break\nassert sum(u[:ans - 1]) <= T < sum(u[:ans])\nprint(ans)\n",
+  "answer_value": "1399",
+  "answer_span": null,
+  "defect_rule": "sigma threshold 10,000 -> 7,000 (initial terms 4, 7 and the listed terms kept); smallest n with S_n > 7000 is 1399 (choice B). Distractors keep their offsets from the answer (-7, +2, +3, +5): 1392, 1401, 1402, 1404. Same defect: D' keeps the recurrence u (n + 2) = ... only for n >= 2 (u 2, u 3 free) and states only the lower bound 1399 <= n."
+ },
+ {
+  "id": "t021",
+  "skip": "No numerical parameter: the condition m*n <= m + n has no given numbers, the answer is 'infinitely many', and the only numerals in N are the distractor choices (4, 6, 9, 12); D and C contain only the structural 0 of positivity. Changing distractors would not change the problem."
+ },
+ {
+  "id": "t024",
+  "skip": null,
+  "sigma": {
+   "119 (number of terms)": "49",
+   "49 (answer, choice A)": "20",
+   "50": "21",
+   "51": "22",
+   "52": "23",
+   "53": "24"
+  },
+  "N_twin": "What is the minimum value of $f(x)=\\left|x-1\\right| + \\left|2x-1\\right| + \\left|3x-1\\right| + \\cdots + \\left|49x - 1 \\right|$?\n\n$\\textbf{(A)}\\ 20 \\qquad \\textbf{(B)}\\ 21 \\qquad \\textbf{(C)}\\ 22 \\qquad \\textbf{(D)}\\ 23 \\qquad \\textbf{(E)}\\ 24$ Show that it is 20\\ \\textbf{(A)}.",
+  "D_twin": "theorem amc12a_2010_p22 (x : ℝ) : 20 ≤ ∑ k:ℤ in Finset.Icc 1 49, abs (↑k * x - 1) := by",
+  "C_twin": "theorem amc12a_2010_p22 : IsLeast {x | ∃ t : ℝ, x = ∑ i in Finset.range 49, |(i+1)*t - 1|} 20 := by",
+  "answer_script": "from fractions import Fraction as F\nn = 49  # number of terms (was 119)\nf = lambda x: sum(abs(k * x - 1) for k in range(1, n + 1))\n# f is convex piecewise linear with breakpoints 1/k; f(x) >= n for x <= 0, so the minimum is at a breakpoint\nvals = sorted((f(F(1, m)), m) for m in range(1, n + 1))\nmn, m = vals[0]\nassert mn.denominator == 1 and mn < n\nprint(mn)\n",
+  "answer_value": "20",
+  "answer_span": null,
+  "defect_rule": "sigma number of terms 119 -> 49; minimum 20 (attained at x = 1/35), choice A. Distractors keep their offsets (+1..+4): 21, 22, 23, 24. Same defect: D' states only the lower bound 20 <= sum, not attainment (IsLeast in C')."
+ },
+ {
+  "id": "t025",
+  "skip": "N contains no problem statement, only the answer choices and the answer; the problem's parameters (2 in |x+y|+|x-y| = 2 and 6 in x^2 - 6x + y^2) occur only in D and C, so a substitution cannot be applied consistently to N and N' would not determine C'."
+ },
+ {
+  "id": "t029",
+  "skip": null,
+  "sigma": {
+   "16": "64",
+   "13": "19"
+  },
+  "N_twin": "There is a unique positive integer $n$ such that$\\log_2{(\\log_{64}{n})} = \\log_4{(\\log_4{n})}.$What is the sum of the digits of $n?$\n\n$\\textbf{(A) } 4 \\qquad \\textbf{(B) } 7 \\qquad \\textbf{(C) } 8 \\qquad \\textbf{(D) } 11 \\qquad \\textbf{(E) } 19$ Show that it is \\textbf{(E) } 19.",
+  "D_twin": "theorem amc12a_2020_p10 (n : ℕ) (h₀ : 0 < n)\n    (h₁ : Real.logb 2 (Real.logb 64 n) = Real.logb 4 (Real.logb 4 n)) :\n    (List.sum (Nat.digits 10 n)) = 19 := by",
+  "C_twin": "theorem amc12a_2020_p10\n  (n : ℕ)\n  (h₀ : 1 < n)\n  (h₁ : Real.logb (2 : ℝ) (Real.logb (64 : ℝ) n) = Real.logb (4 : ℝ) (Real.logb (4 : ℝ) n)) :\n  List.sum (Nat.digits 10 n) = 19 := by",
+  "answer_script": "import math\nfrom fractions import Fraction as F\n# y = log2 n > 0 (n > 1): log2(y/6) = log4(y/2) = log2(y/2)/2  <=>  log2(y)/2 = log2(6) - 1/2  <=>  y = 36/2 = 18\ny = F(36, 2)\nassert y.denominator == 1\ny = int(y)\nassert abs(math.log2(y / 6) - math.log2(y / 2) / 2) < 1e-12\n# uniqueness: LHS - RHS = log2(y)/2 - log2(6) + 1/2 is strictly increasing in y > 0\nn = 2 ** y\nprint(n)\nprint(sum(int(d) for d in str(n)))\n",
+  "answer_value": "19",
+  "answer_span": null,
+  "defect_rule": "sigma base 16 -> 64 (bases 2 and 4 kept, so no glued '\\log_2'/'\\log_4' token changes): unique n = 2^18 = 262144, digit sum 19 (choice E; distractors 4, 7, 8, 11 kept, not derivable by sigma). Same defect: D' keeps only 0 < n, so n = 1 satisfies h1 through logb _ 0 = 0 (0 = 0) with digit sum 1 != 19; C' keeps 1 < n."
+ },
+ {
+  "id": "t033",
+  "skip": null,
+  "sigma": {
+   "420": "364",
+   "929": "811"
+  },
+  "N_twin": "The number $a=\\frac{p}{q}$, where $p$ and $q$ are relatively prime positive integers, has the property that the sum of all real numbers $x$ satisfying\n$ \\lfloor x \\rfloor \\cdot \\{x\\} = a \\cdot x^2$\nis $364$, where $\\lfloor x \\rfloor$ denotes the greatest integer less than or equal to $x$ and $\\{x\\}=x- \\lfloor x \\rfloor$ denotes the fractional part of $x$. What is $p+q$?\n\n$\\textbf{(A) } 245 \\qquad \\textbf{(B) } 593 \\qquad \\textbf{(C) } 811 \\qquad \\textbf{(D) } 1331 \\qquad \\textbf{(E) } 1332$ Show that it is \\textbf{(C) } 811.",
+  "D_twin": "theorem amc12a_2020_p25 (a : ℚ) (S : Finset ℝ)\n    (h₀ : ∀ x : ℝ, x ∈ S ↔ ↑⌊x⌋ * (x - ↑⌊x⌋) = ↑a * x ^ 2) (h₁ : (∑ k in S, k) = 364) :\n    ↑a.den + a.num = 811 := by",
+  "C_twin": "theorem amc12a_2020_p25\n  (a : ℚ)\n  (ha₀ : 0 < a)\n  (S : Finset ℝ)\n  (h₀ : ∀ (x : ℝ), x ∈ S ↔ ↑⌊x⌋ * (x - ↑⌊x⌋) = ↑a * x ^ 2)\n  (h₁ : (∑ k ∈ S, k) = 364) :\n  ↑a.den + a.num = 811 := by",
+  "answer_script": "from fractions import Fraction as F\ntarget = 364  # sum of solutions (was 420 = 28*30/2)\n# for 0 < a <= 1/4 the solutions are x = 0 and x = n r (n = 1..M) with r = (1 - sqrt(1-4a))/(2a), M = #{n >= 1 : n (r-1) < 1};\n# the sum r M(M+1)/2 runs over the disjoint increasing intervals [M(M+2)/2, (M+1)^2/2), so it determines M and r uniquely\nM = next(m for m in range(1, 1000) if F(m * (m + 2), 2) <= target < F((m + 1) ** 2, 2))\nr = F(target) / (F(M * (M + 1), 2))\na = (r - 1) / r ** 2\nassert a == F(M + 1, (M + 2) ** 2)\n# check directly: x = 0 and the roots of a x^2 - n x + n^2 = 0 in [n, n+1); no solutions with floor(x) < 0; none for a > 1/4\nsq = F(M, M + 2)\nassert sq * sq == 1 - 4 * a\nsols = [F(0)]\nfor n in range(1, 2000):\n    for sg in (1, -1):\n        x = n * (1 + sg * sq) / (2 * a)\n        if n <= x < n + 1:\n            sols.append(x)\nassert sum(sols) == target and len(sols) == M + 1\nprint(a)\nprint(a.numerator + a.denominator)\n",
+  "answer_value": "811",
+  "answer_span": null,
+  "defect_rule": "sigma sum 420 -> 364 (= 26*28/2); then a = 27/784, p + q = 811 (choice C; distractors 245, 593, 1331, 1332 kept, not derivable by sigma). Same defect: D' omits 0 < a (C' keeps ha0)."
+ },
+ {
+  "id": "t034",
+  "skip": null,
+  "sigma": {
+   "volumes 1, 8, 27, 64, 125, 216, 343 (sides 1..7)": "216, 343, 512, 729, 1000, 1331, 1728 (sides 6..12)",
+   "644": "2654",
+   "658 (answer, choice B)": "2668",
+   "664": "2674",
+   "720": "2730",
+   "749": "2759"
+  },
+  "N_twin": "Seven cubes, whose volumes are $216$, $343$, $512$, $729$, $1000$, $1331$, and $1728$ cubic units, are stacked vertically to form a tower in which the volumes of the cubes decrease from bottom to top. Except for the bottom cube, the bottom face of each cube lies completely on top of the cube below it. What is the total surface area of the tower (including the bottom) in square units?\n\n$ \\textbf{(A)}\\ 2654\\qquad\\textbf{(B)}\\ 2668\\qquad\\textbf{(C)}\\ 2674\\qquad\\textbf{(D)}\\ 2730\\qquad\\textbf{(E)}\\ 2759 $ Show that it is \\textbf{(B) }2668.",
+  "D_twin": "theorem amc12a_2020_p7 (a : ℕ → ℕ) (h₀ : a 0 ^ 3 = 216) (h₁ : a 1 ^ 3 = 343) (h₂ : a 2 ^ 3 = 512)\n    (h₃ : a 3 ^ 3 = 729) (h₄ : a 4 ^ 3 = 1000) (h₅ : a 5 ^ 3 = 1331) (h₆ : a 6 ^ 3 = 1728) :\n    ↑(∑ k in Finset.range 7, 6 * (a (k ^ 2))) - ↑(2 * ∑ k in Finset.range 6, (a (k ^ 2))) = (2668 : ℤ) := by",
+  "C_twin": "theorem amc12a_2020_p7\n  (a : ℕ → ℕ)\n  (h₀ : a 0 ^ 3 = 216)\n  (h₁ : a 1 ^ 3 = 343)\n  (h₂ : a 2 ^ 3 = 512)\n  (h₃ : a 3 ^ 3 = 729)\n  (h₄ : a 4 ^ 3 = 1000)\n  (h₅ : a 5 ^ 3 = 1331)\n  (h₆ : a 6 ^ 3 = 1728) :\n  (↑(∑ k ∈ Finset.range (7:ℕ), ((6:ℕ) * (a k) ^ 2)):ℤ) - ↑(2 * ∑ k ∈Finset.range 6, (a k) ^ 2) = (2668 : ℤ) := by",
+  "answer_script": "vols = [216, 343, 512, 729, 1000, 1331, 1728]  # side lengths 6..12 (was 1, 8, ..., 343, sides 1..7)\nsides = [round(v ** (1 / 3)) for v in vols]\nassert [s ** 3 for s in sides] == vols\n# all faces minus, for each cube above the bottom (largest) one, its bottom face and the equal area it covers below\ntotal = sum(6 * s * s for s in sides) - 2 * sum(s * s for s in sides[:-1])\n# the corrected formal expression with a k = sides[k]\nassert sum(6 * sides[k] ** 2 for k in range(7)) - 2 * sum(sides[k] ** 2 for k in range(6)) == total\nprint(total)\n",
+  "answer_value": "2668",
+  "answer_span": null,
+  "defect_rule": "sigma volumes (k+1)^3 -> (k+6)^3 for k = 0..6, i.e. 1, 8, ..., 343 -> 216, 343, 512, 729, 1000, 1331, 1728 (seven cubes, side lengths 6..12; a shift by 1 (sides 2..8) was not used because the token diff then aligns the lists as a deletion plus an insertion); surface area 2668 (choice B). Distractors keep their offsets from the answer (-14, +6, +62, +91): 2654, 2674, 2730, 2759. Same defect: D' applies a to k ^ 2 instead of squaring a k (a 9, a 16, a 25, a 36 unconstrained)."
+ },
+ {
+  "id": "t037",
+  "skip": null,
+  "sigma": {
+   "3 (root order: cube root -> fourth root)": "4",
+   "5": "14",
+   "6": "15",
+   "7": "16",
+   "8": "17",
+   "9": "18"
+  },
+  "N_twin": "Let $d(n)$ denote the number of positive integers that divide $n$, including $1$ and $n$. For example, $d(1)=1,d(2)=2,$ and $d(12)=6$. (This function is known as the divisor function.) Let$f(n)=\\frac{d(n)}{\\sqrt [4]n}.$There is a unique positive integer $N$ such that $f(N)>f(n)$ for all positive integers $n\\ne N$. What is the sum of the digits of $N?$\n\n$\\textbf{(A) }14 \\qquad \\textbf{(B) }15 \\qquad \\textbf{(C) }16 \\qquad \\textbf{(D) }17\\qquad \\textbf{(E) }18$ Show that it is \\textbf{(E) }18.",
+  "D_twin": "theorem amc12a_2021_p25 (N : ℕ) (f : ℕ → ℝ)\n    (h₀ : ∀ n, 0 < n → f n = (Nat.divisors n).card / n ^ ((1 : ℝ) / 4))\n    (h₁ : ∀ (n) (_ : n ≠ N), 0 < n → f n < f N) : (List.sum (Nat.digits 10 N)) = 18 := by",
+  "C_twin": "theorem amc12a_2021_p25\n  (m : ℕ)\n  (hm₀ : 0 < m)\n  (f : ℕ → ℝ)\n  (h₀ : ∀ n, 0 < n → f n = ((Nat.divisors n).card)/(n^((1:ℝ)/4)))\n  (h₁ : ∀ n ≠ m, 0 < n → f n < f m) :\n  (Nat.digits 10 m).sum = 18 := by",
+  "answer_script": "R = 4  # f(n) = d(n) / n^(1/R) (was R = 3)\ndef primes(m):\n    return [p for p in range(2, m) if all(p % q for q in range(2, int(p ** 0.5) + 1))]\n# f is multiplicative: f(n) = prod_p g_p(e_p), g_p(e) = (e+1)/p^(e/R); compare exactly via g(e) > g(e') <=> (e+1)^R p^e' > (e'+1)^R p^e\ndef better(p, e, e2):\n    return (e + 1) ** R * p ** e2 > (e2 + 1) ** R * p ** e\nN = 1\nfor p in primes(2000):\n    best = 0\n    for e in range(1, 80):\n        if better(p, e, best):\n            best = e\n    # the optimum must be strict (unique maximiser)\n    assert all(better(p, best, e) for e in range(0, 80) if e != best)\n    if p >= 2 ** R + 1:\n        assert best == 0  # (e+1)^R < p^e for e >= 1 when p > 2^R\n    N *= p ** best\nprint(N)\nprint(sum(int(c) for c in str(N)))\n",
+  "answer_value": "18",
+  "answer_span": null,
+  "defect_rule": "sigma root order 3 -> 4 (f(n) = d(n)/n^(1/4); the examples d(1)=1, d(2)=2, d(12)=6 kept): unique maximiser N = 2^5*3^3*5^2*7*11*13 = 21621600, digit sum 18 (choice E). Choices shifted by +9 like the answer: 14, 15, 16, 17, 18. Same defect: D' has no 0 < N, so N = 0 with f 0 unconstrained (chosen large) satisfies h1, digit sum 0 != 18; C' keeps 0 < m."
+ },
+ {
+  "id": "t039",
+  "skip": null,
+  "sigma": {
+   "1 (constant in xy-1)": "2",
+   "1 (answer)": "4"
+  },
+  "N_twin": "What is the least possible value of $(xy-2)^2+(x+y)^2$ for real numbers $x$ and $y$?\n\n$\\textbf{(A)} ~0\\qquad\\textbf{(B)} ~\\frac{1}{4}\\qquad\\textbf{(C)} ~\\frac{1}{2} \\qquad\\textbf{(D)} ~4 \\qquad\\textbf{(E)} Show that it is \\textbf{(D)} ~4.",
+  "D_twin": "theorem amc12a_2021_p7 (x y : ℝ) : 4 ≤ (x * y - 2) ^ 2 + (x + y) ^ 2 := by",
+  "C_twin": "theorem amc12a_2021_p7\n  (S : Set ℝ)\n  (hS : S = {z | ∃ x y:ℝ, z = (x * y - 2) ^ 2 + (x + y) ^ 2}) :\n  IsLeast S 4 := by",
+  "answer_script": "c = 2  # constant in (xy - c)^2 (was 1)\ng = lambda x, y: (x * y - c) ** 2 + (x + y) ** 2\n# with p = xy, s = x + y, s^2 >= 4p: g = (p - c)^2 + s^2 >= (p - c)^2 + max(0, 4p); for c <= 2 this is >= c^2 (p <= 0: (p-c)^2 >= c^2; p > 0: p^2 - (2c-4)p + c^2 >= c^2)\nassert c <= 2\nassert g(0, 0) == c * c\nmn = min(g(i / 40, j / 40) for i in range(-200, 201) for j in range(-200, 201))\nassert abs(mn - c * c) < 1e-12\nprint(c * c)\n",
+  "answer_value": "4",
+  "answer_span": null,
+  "defect_rule": "sigma constant 1 in (xy-1)^2 -> 2; least value 4 at x = y = 0 (choice D). Distractors 0, 1/4, 1/2 kept (not derivable by sigma without changing their form; all still below 4); the truncated choice E is unchanged. Same defect: D' states only the lower bound 4 <= ..., not attainment (IsLeast in C')."
+ },
+ {
+  "id": "t045",
+  "skip": null,
+  "sigma": {
+   "3": "5",
+   "16": "24",
+   "15": "23",
+   "12": "20",
+   "10": "18",
+   "9": "17"
+  },
+  "N_twin": "What is the maximum value of $\\frac{(2^t-5t)t}{4^t}$ for real values of $t?$\n\n$\\textbf{(A)}\\ \\frac{1}{24} \\qquad\\textbf{(B)}\\ \\frac{1}{23} \\qquad\\textbf{(C)}\\ \\frac{1}{20} \\qquad\\textbf{(D)}\\ \\frac{1}{18} \\qquad\\textbf{(E)}\\ \\frac{1}{17}$ Show that it is \\textbf{(C)} \\frac{1}{20}.",
+  "D_twin": "theorem amc12b_2020_p22 (t : ℝ) : (2 ^ t - 5 * t) * t / 4 ^ t ≤ 1 / 20 := by",
+  "C_twin": "theorem amc12b_2020_p22\n  (S : Set ℝ)\n  (hS: S = {x:ℝ | ∃ t, x = (2 ^ t - 5 * t) * t / 4 ^ t}) :\n  IsGreatest S (1 / 20:ℝ) := by",
+  "answer_script": "import math\nfrom fractions import Fraction as F\nk = 5  # coefficient of t (was 3)\n# with u = t/2^t the expression is u - k u^2 <= 1/(4k), equality iff u = 1/(2k)\nans = F(1, 4 * k)\numax = 1 / (math.e * math.log(2))  # max of t/2^t, at t = 1/ln 2\nassert umax > 1 / (2 * k)\nlo, hi = 0.0, 1 / math.log(2)  # t/2^t increases from 0 to umax on this interval\nfor _ in range(200):\n    mid = (lo + hi) / 2\n    if mid / 2 ** mid < 1 / (2 * k):\n        lo = mid\n    else:\n        hi = mid\nh = lambda t: (2 ** t - k * t) * t / 4 ** t\nassert abs(h(lo) - float(ans)) < 1e-12\nassert max(h(i / 1000) for i in range(-5000, 20000)) <= float(ans) + 1e-15\nprint(ans)\n",
+  "answer_value": "1/20",
+  "answer_span": null,
+  "defect_rule": "sigma coefficient 3 -> 5; maximum 1/(4*5) = 1/20 (choice C), a numeral-only change of 1/12. Choice denominators keep their offsets from 4k (+4, +3, 0, -2, -3): 1/24, 1/23, 1/20, 1/18, 1/17. Same defect: D' states only the upper bound <= 1/20, not attainment (IsGreatest in C')."
+ },
+ {
+  "id": "t050",
+  "skip": null,
+  "sigma": {
+   "2 (in cos 2x)": "3",
+   "3 (in cos 3x)": "4",
+   "pi/4 + k pi/2 (cos 2x = 0 family)": "pi/8 + k pi/4 (cos 4x = 0 family)"
+  },
+  "N_twin": "Solve the equation $\\cos^2{x}+\\cos^2{3x}+\\cos^2{4x}=1$.",
+  "D_twin": "theorem imo_1962_p4 (S : Set ℝ)\n    (h₀ : S = { x : ℝ | Real.cos x ^ 2 + Real.cos (3 * x) ^ 2 + Real.cos (4 * x) ^ 2 = 1 }) :\n    S =\n      { x : ℝ |\n        ∃ m : ℤ,\n          x = Real.pi / 2 + m * Real.pi ∨\n            x = Real.pi / 8 + m * Real.pi / 4 ∨ x = Real.pi / 6 + m * Real.pi / 6 ∨ x = 5 * Real.pi / 6 + m * Real.pi / 6 } := by",
+  "C_twin": "theorem imo_1962_p4\n  (S : Set ℝ)\n  (h₀ : S = {x : ℝ | (Real.cos x)^2 + (Real.cos (3 * x))^2 + (Real.cos (4 * x))^2 = 1}) :\n  S = {x : ℝ | ∃ k : ℤ, (x = π / 2 + k * π) ∨ (x = π / 8 + k * π / 4)\n  ∨ (x = π / 6 + k * π) ∨ (x = 5 * π / 6 + k * π)} := by",
+  "answer_script": "import math, random\n# identity cos^2 A + cos^2 B + cos^2(A+B) - 1 = 2 cos A cos B cos(A+B); here A = x, B = 3x, A + B = 4x\nrandom.seed(1)\nfor _ in range(10000):\n    x = random.uniform(-20, 20)\n    lhs = math.cos(x) ** 2 + math.cos(3 * x) ** 2 + math.cos(4 * x) ** 2 - 1\n    assert abs(lhs - 2 * math.cos(x) * math.cos(3 * x) * math.cos(4 * x)) < 1e-9\npi = math.pi\nkey = lambda x: round((x % (2 * pi)) % (2 * pi), 9) % round(2 * pi, 9)\n# exact solution set in [0, 2pi): zeros of cos x, cos 3x, cos 4x\ntrue = {key(pi / 2 + j * pi) for j in range(2)} | {key(pi / 6 + j * pi / 3) for j in range(6)} | {key(pi / 8 + j * pi / 4) for j in range(8)}\n# the corrected twin's four families\nclaimed = set()\nfor k in range(-10, 10):\n    for x in (pi / 2 + k * pi, pi / 8 + k * pi / 4, pi / 6 + k * pi, 5 * pi / 6 + k * pi):\n        claimed.add(key(x))\n        assert abs(math.cos(x) ** 2 + math.cos(3 * x) ** 2 + math.cos(4 * x) ** 2 - 1) < 1e-9\nassert claimed == true\n# the defect survives: D' family pi/6 + m pi/6 contains x = 0, which is not a solution\nassert abs(math.cos(0) ** 2 + math.cos(0) ** 2 + math.cos(0) ** 2 - 1) > 1\nprint(len(true))\n",
+  "answer_value": "14",
+  "answer_span": null,
+  "defect_rule": "sigma: the multipliers (x, 2x, 3x) -> (x, 3x, 4x) (still A, B, A+B, so the equation is again equivalent to cos x cos 3x cos 4x = 0); the cos 2x = 0 family pi/4 + k pi/2 becomes the cos 4x = 0 family pi/8 + k pi/4, the cos x and cos 3x families (pi/2 + k pi, pi/6 + k pi, 5 pi/6 + k pi) are unchanged. Same defect, same rule: D' keeps period pi/6 (instead of pi) in the last two families, which wrongly includes x = 0. The script checks the solution set and prints the number of solutions in [0, 2 pi) (14), a computed check value rather than a stated answer."
+ },
+ {
+  "id": "t051",
+  "skip": "Purely structural identity: the base 2 is the doubling that makes 1/sin 2y = cot y - cot 2y work, and t = 0, 1, ..., n and n are not numerical parameters; no number can be changed while keeping a true statement of the same kind."
+ }
+]

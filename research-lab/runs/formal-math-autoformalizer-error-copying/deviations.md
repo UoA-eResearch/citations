@@ -91,3 +91,40 @@ This is the contamination run's D5/D7 bug.
   therefore stop on either (`stop_token_ids`).
 
 No model had been sampled.
+
+## D4 - 2026-10-12 11:16 NZDT - format pilot (no catalogue item sampled)
+
+The pilot (`code/run_gpu.sh pilot`) sampled each model on six miniF2F and ProofNet items that are *not* in the
+catalogue: pairs whose v1 and corrected statements are identical. It checked extraction and finish reasons only; no
+output was classified. The owner's `vllm` container was restarted when the pilot ended (11:16:32).
+
+| Model | Statements extracted (of 102) | Truncated at the token limit |
+|---|---:|---:|
+| Kimina | 102 | 0 |
+| Goedel | 102 | 0 |
+| Herald | 102 | 0 |
+| Qwen | 99 | 0 |
+| DeepSeek-Prover-V2 | 88 | 16 |
+
+DeepSeek-Prover-V2 writes a long explanation before the statement. Its limit is therefore raised from 2,048 to 4,096
+new tokens; its server's context is 6,144. The other models keep the plan's limits.
+
+## D5 - 2026-10-12 11:22 NZDT - check 3 tokenizer fixed (before any twin check was run)
+
+The builder of twin batch 00 reported a defect in check 3's tokenizer (`twins.TOK`). Its pattern `\w+` reads a
+digit that follows letters or an underscore as part of the word. A digit-only change inside LaTeX (`x\leq15` →
+`x\leq20`, `\log_8` → `\log_4`) then counts as a non-numeral change. Plan 3.1 and the builders' instructions
+allow such changes ("digits, including digits inside LaTeX").
+
+The word pattern is now `[^\W\d]+`, so digits are always separate tokens. Subscripted hypothesis names such as
+`h₀` are unaffected: subscript digits are not decimal digits. The fix was made before `twins.py diffcheck` or any
+Lean check had run.
+
+The builders reported 63 twins built and 72 items skipped, most for having no numerical parameter (the ProofNet
+items, chiefly).
+
+**D5, addendum (same session, after the Lean twin checks).** One twin (t164) failed check 3 for a second mechanical
+reason. difflib aligned the repeated numeral 3 across positions (\`x % 3 = 2\` → \`x % 7 = 3\`) and reported a spurious
+insertion and deletion of \`=\`. When the two token sequences have the same length, check 3 now compares them position
+by position, and it falls back to difflib otherwise. The twin's edit is numerals-only (σ: 2→3, 3→7, 14→24). No model
+had been sampled.

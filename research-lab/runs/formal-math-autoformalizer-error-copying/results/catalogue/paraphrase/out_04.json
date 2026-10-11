@@ -1,0 +1,82 @@
+[
+ {
+  "id": "t212",
+  "paraphrase": "Show that any group $G$ with 312 elements possesses, for at least one prime $p$ dividing $|G|$, a Sylow $p$-subgroup that is normal in $G$."
+ },
+ {
+  "id": "t213",
+  "paraphrase": "Show that any group $G$ with 351 elements possesses, for at least one prime $p$ dividing $|G|$, a Sylow $p$-subgroup that is normal in $G$."
+ },
+ {
+  "id": "t214",
+  "paraphrase": "Suppose $G$ is a group of order $p q r$, with $p, q, r$ primes satisfying $p<q<r$. Show that for at least one of the primes $p$, $q$, $r$, the group $G$ possesses a normal Sylow subgroup."
+ },
+ {
+  "id": "t215",
+  "paraphrase": "Let $G$ be a group with $|G|=105$. Show that $G$ possesses a Sylow 5-subgroup which is normal, and likewise a Sylow 7-subgroup which is normal."
+ },
+ {
+  "id": "t216",
+  "paraphrase": "Suppose $P \\in \\operatorname{Syl}_{p}(G)$ and that $H$ is a subgroup of $G$ with $P \\subseteq H$. Show that $P$ is then also a Sylow $p$-subgroup of $H$, that is, $P \\in \\operatorname{Syl}_{p}(H)$."
+ },
+ {
+  "id": "t217",
+  "paraphrase": "Suppose $H$ is an arbitrary subgroup of $G$ and $P$ is a Sylow $p$-subgroup of $G$ that is normal in $G$. Show that $H$ has exactly one Sylow $p$-subgroup, namely $P \\cap H$."
+ },
+ {
+  "id": "t218",
+  "paraphrase": "Suppose $\\varphi: R \\rightarrow S$ is a ring homomorphism that is onto. Show that $\\varphi$ sends every element of the center of $R$ into the center of $S$."
+ },
+ {
+  "id": "t219",
+  "paraphrase": "Suppose $R$ is an integral domain satisfying both of the following properties: (i) for every pair of nonzero elements $a, b \\in R$ there exists a greatest common divisor of $a$ and $b$ expressible as $r a+s b$ with $r, s \\in R$; and (ii) whenever $a_{1}, a_{2}, a_{3}, \\ldots$ is a sequence of nonzero elements of $R$ with $a_{i+1} \\mid a_{i}$ for every $i$, some positive integer $N$ exists for which each $a_{n}$ with $n \\geq N$ equals a unit multiplied by $a_{N}$. Show that $R$ must then be a Principal Ideal Domain."
+ },
+ {
+  "id": "t221",
+  "paraphrase": "Show that the ring obtained by taking $\\mathbb{Z}[i]$ modulo the ideal $(1+i)$, namely $\\mathbb{Z}[i] /(1+i)$, is a field with exactly 2 elements."
+ },
+ {
+  "id": "t222",
+  "paraphrase": "Consider the quotient ring $\\mathbb{Z}\\left[x_{1}, x_{2}, x_{3}, \\ldots\\right] /\\left(x_{1} x_{2}, x_{3} x_{4}, x_{5} x_{6}, \\ldots\\right)$. Show that the set of its minimal prime ideals is infinite."
+ },
+ {
+  "id": "t223",
+  "paraphrase": "Suppose $G$ is a group with a normal subgroup $A$, and let $b \\in G$ be an element whose order is a prime $p$, where $b \\not\\in A$. Prove that $A \\cap (b) = (e)$."
+ },
+ {
+  "id": "t224",
+  "paraphrase": "Let $G$ be a finite group and take any $a \\in G$. Show that some positive integer $n$, which may depend on $a$, satisfies $a^n = e$."
+ },
+ {
+  "id": "t225",
+  "paraphrase": "Let $G$ be a finite group. Show that a single integer $m > 0$ exists for which $a^m = e$ holds for every $a \\in G$."
+ },
+ {
+  "id": "t227",
+  "paraphrase": "Suppose that in $R$ the element $a$ satisfies $a^2 = 0$. Prove that $a$ and $ax + xa$ commute with each other."
+ },
+ {
+  "id": "t228",
+  "paraphrase": "Suppose $p$ is an odd prime, and write the sum $1 + \\frac{1}{2} + ... + \\frac{1}{p - 1}$ as $\\frac{a}{b}$ with $a, b$ integers. Prove that $a$ is divisible by $p$, i.e. $p \\mid a$."
+ },
+ {
+  "id": "t229",
+  "paraphrase": "Prove that, modulo $p$, the numbers $1, 2, \\ldots, p - 1$ split so that $(p - 1)/2$ of them are quadratic residues and $(p - 1)/2$ of them are quadratic nonresidues."
+ },
+ {
+  "id": "t230",
+  "paraphrase": "Let $p$ be a prime and let $F = \\mathbb{Z}_p$ denote the field of integers $\\mod p$. If $q(x) \\in F[x]$ is an irreducible polynomial of degree $n$, prove that $F[x]/(q(x))$ is a field with exactly $p^n$ elements."
+ },
+ {
+  "id": "t231",
+  "paraphrase": "Let $p$ be a prime. Prove that the polynomial $q(x) = 1 + x + x^2 + \\cdots + x^{p - 1}$ is an irreducible element of $Q[x]$."
+ },
+ {
+  "id": "t232",
+  "paraphrase": "Let $F$ be a field whose characteristic is $p \\neq 0$. Prove that for every $a, b \\in F$ and every positive integer $n$, setting $m = p^n$, one has $(a + b)^m = a^m + b^m$."
+ },
+ {
+  "id": "t233",
+  "paraphrase": "Suppose $F$ is an infinite field and $V$ is a vector space over $F$. Prove that it is impossible to write $V$, as a set, as the union of finitely many proper subspaces of $V$."
+ }
+]

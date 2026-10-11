@@ -24,7 +24,7 @@ CAT = RUN / "results" / "catalogue"
 TW, PA = CAT / "twins", CAT / "paraphrase"
 PY = str(RUN.parent / "formal-math-certified-contamination-did" / "venv" / "bin" / "python")
 SEED, SIZE = 20261012, 20
-TOK = re.compile(r"\d+(?:\.\d+)?|<ANS>|\w+|\S")
+TOK = re.compile(r"\d+(?:\.\d+)?|<ANS>|[^\W\d]+|\S")  # D5: digits split from letters (LaTeX \leq15, \log_8)
 NUM = re.compile(r"^\d+(?:\.\d+)?$")
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
@@ -61,6 +61,8 @@ def toks(s, ans=None):
 def numerals_only(a, b, ans=None):
     """True if b differs from a only in numerals, apart from regions aligned with the declared answer span in b."""
     ta, tb = toks(a), toks(b, ans)
+    if len(ta) == len(tb):  # D5: same length, compare position by position (difflib can misalign repeated numerals)
+        return all(x == y or (NUM.match(x) and NUM.match(y)) or y == "<ANS>" for x, y in zip(ta, tb))
     for op, i1, i2, j1, j2 in SequenceMatcher(None, ta, tb, autojunk=False).get_opcodes():
         if op == "equal":
             continue

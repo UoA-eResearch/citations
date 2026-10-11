@@ -1,0 +1,17 @@
+[
+  {"id": "t264", "same": true, "reason": "Same a,b in R^k, same locus condition, same c, r and identities 3c=4b-a, 3r=2|b-a|."},
+  {"id": "t265", "same": true, "reason": "Same hypotheses: r rational nonzero, x irrational; same claim r+x irrational."},
+  {"id": "t266", "same": true, "reason": "Same nonempty bounded-below A, same -A definition, same claim inf A = -sup(-A)."},
+  {"id": "t267", "same": true, "reason": "Same uncountable E in R^k, P condensation points, same claim P perfect."},
+  {"id": "t268", "same": true, "reason": "Same setup; 'at most countably many points of E not in P' matches both."},
+  {"id": "t269", "same": true, "reason": "Same claim: closed set in separable metric space is perfect (possibly empty) union at most countable."},
+  {"id": "t272", "same": true, "reason": "Same nested nonempty closed bounded sets, diam to 0, complete space; intersection is one point."},
+  {"id": "t273", "same": true, "reason": "Same nonempty complete metric space, dense open G_n; same Baire conclusion."},
+  {"id": "t275", "same": true, "reason": "Same a_n >= 0, convergence of sum a_n implies convergence of sum sqrt(a_n)/n."},
+  {"id": "t277", "same": true, "reason": "Same bounded E in R^1; existence of uniformly continuous unbounded-on-E real f."},
+  {"id": "t279", "same": true, "reason": "Same boundary and derivative conditions on [-1,1]; same claim f'''(x) >= 3 somewhere."},
+  {"id": "t281", "same": true, "reason": "Same f differentiable on x>0, f' to 0, g(x)=f(x+1)-f(x) tends to 0."},
+  {"id": "t282", "same": true, "reason": "Same conditions (a)-(d), same g(x)=f(x)/x, same monotone increasing claim."},
+  {"id": "t284", "same": true, "reason": "Same power series sum z^n/n^2, same claim: converges everywhere on unit circle."},
+  {"id": "t285", "same": true, "reason": "Same series sum z^n/n, converges on unit circle except z=1 in both."}
+]

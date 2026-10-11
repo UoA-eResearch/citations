@@ -1,0 +1,112 @@
+[
+ {
+  "id": "t187",
+  "skip": "No numerical parameter: a purely structural linear-algebra statement (the only numeral is the zero subspace {0})."
+ },
+ {
+  "id": "t188",
+  "skip": "No numerical parameter: structural statement about eigenvalues and eigenvectors (dim V is not a numeral)."
+ },
+ {
+  "id": "t189",
+  "skip": "The only numerals are the starting index 1 (and the structural squares). Moving the start to 2 makes C' (Fin n with weights i + 2) match N' only after reindexing n, and the faithful transfer of the defect (raw 0-based Fin index used as the weight) gives D' textually identical to D, so the twin could not separate a memorised copy from the analogous defect. Not forced."
+ },
+ {
+  "id": "t190",
+  "skip": null,
+  "sigma": {
+   "1": "2"
+  },
+  "N_twin": "Suppose $T \\in \\mathcal{L}(V)$ is self-adjoint, $\\lambda \\in \\mathbf{F}$, and $\\epsilon>0$. Prove that if there exists $v \\in V$ such that $\\|v\\|=2$ and $\\|T v-\\lambda v\\|<\\epsilon,$ then $T$ has an eigenvalue $\\lambda^{\\prime}$ such that $\\left|\\lambda-\\lambda^{\\prime}\\right|<\\epsilon$.",
+  "D_twin": "theorem exercise_7_14 {𝕜 V : Type*} [RCLike 𝕜] [NormedAddCommGroup V]\n  [InnerProductSpace 𝕜 V] [FiniteDimensional 𝕜 V]\n  {T : Module.End 𝕜 V} (hT : IsSelfAdjoint T)\n  {l : 𝕜} {ε : ℝ} (he : ε > 0) : ∃ v : V, ‖v‖= 2 ∧ (‖T v - l • v‖ < ε →\n  (∃ l' : T.Eigenvalues, ‖l - l'‖ < ε)) :=",
+  "C_twin": "theorem exercise_7_14 {𝕜 V : Type*} [RCLike 𝕜] [NormedAddCommGroup V]\n  [InnerProductSpace 𝕜 V] [FiniteDimensional 𝕜 V]\n  {T : Module.End 𝕜 V} (hT : IsSelfAdjoint T)\n  {l : 𝕜} {ε : ℝ} (he : ε > 0) : (∃ v : V, ‖v‖= 2 ∧ ‖T v - l • v‖ < ε) →\n  (∃ l' : T.Eigenvalues, ‖l - l'‖ < ε) :=",
+  "answer_script": "# Twin of t190 with ||v|| = 2: if ||v|| = 2 and ||Tv - l v|| < eps then some eigenvalue l' has |l - l'| < eps.\n# Spectral bound: min_i |mu_i - l| <= ||Tv - l v|| / ||v|| = ||Tv - l v|| / 2 < eps.\n# Checked on random real symmetric 2x2 matrices (closed-form eigenvalues) and random v of norm 2.\nimport math, random\nrandom.seed(20261012)\nok = True\nfor _ in range(20000):\n    a, b, c = (random.uniform(-5, 5) for _ in range(3))\n    tr, det = a + c, a * c - b * b\n    disc = math.sqrt(max(tr * tr / 4 - det, 0.0))\n    mus = (tr / 2 - disc, tr / 2 + disc)\n    th = random.uniform(0, 2 * math.pi)\n    v = (2 * math.cos(th), 2 * math.sin(th))\n    l = random.uniform(-6, 6)\n    r = math.hypot(a * v[0] + b * v[1] - l * v[0], b * v[0] + c * v[1] - l * v[1])\n    eps = r + 1e-9\n    if not min(abs(m - l) for m in mus) < eps:\n        ok = False\nprint(ok)\n",
+  "answer_value": "True",
+  "answer_span": null,
+  "defect_rule": "Only the norm of v changes (1 -> 2 in N, D and C; the 0 in eps>0 and digits in the theorem name are unchanged). Same defect: the existential over v is pulled outside the implication, so D' asserts that some v with norm 2 exists for which the implication holds, instead of 'if such a v exists then ...'. C' is true: writing v in an orthonormal eigenbasis, min |l - mu_i| <= ||Tv - l v|| / ||v|| = ||Tv - l v|| / 2 < eps/2 < eps. No computed answer; the script checks this spectral bound on random symmetric matrices with norm-2 vectors and prints True."
+ },
+ {
+  "id": "t191",
+  "skip": null,
+  "sigma": {
+   "2": "3"
+  },
+  "N_twin": "Let $x$ be an element of $G$. Prove that $x^3=1$ if and only if $|x|$ is either $1$ or $3$.",
+  "D_twin": "theorem exercise_1_1_16 {G : Type*} [Group G]\n  (x : G) (hx : x ^ 3 = 1) :\n  orderOf x = 1 ∨ orderOf x = 3 :=",
+  "C_twin": "theorem exercise_1_1_16 {G : Type*} [Group G]\n  (x : G) : x ^ 3 = 1 ↔ (orderOf x = 1 ∨ orderOf x = 3) :=",
+  "answer_script": "# Twin of t191: x^3 = 1 iff the order of x is 1 or 3 (order divides 3, and 3 is prime).\n# Brute force over the cyclic groups Z/m (m <= 60) and the symmetric group S4.\nfrom itertools import permutations\ndef divisors(n):\n    return [d for d in range(1, n + 1) if n % d == 0]\nok = divisors(3) == [1, 3]\nfor m in range(1, 61):\n    for x in range(m):\n        order = next(k for k in range(1, m + 1) if (k * x) % m == 0)\n        ok &= (((3 * x) % m == 0) == (order in (1, 3)))\ndef comp(p, q):\n    return tuple(p[q[i]] for i in range(len(q)))\ne = tuple(range(4))\nfor p in permutations(range(4)):\n    k, q = 1, p\n    while q != e:\n        q, k = comp(q, p), k + 1\n    cube = comp(p, comp(p, p))\n    ok &= ((cube == e) == (k in (1, 3)))\nprint(ok)\n",
+  "answer_value": "True",
+  "answer_span": null,
+  "defect_rule": "The exponent and the matching order both change 2 -> 3 (3 is prime, so the orders dividing 3 are exactly 1 and 3); the 1 (identity, and order 1) and the theorem name are unchanged. Same defect: D' keeps only the forward direction (hypothesis x ^ 3 = 1, conclusion order 1 or 3) instead of the iff. C' is true since x ^ 3 = 1 iff orderOf x divides 3. No computed answer; the script brute-forces the iff over Z/m (m <= 60) and S4 and prints True."
+ },
+ {
+  "id": "t193",
+  "skip": "No numerical parameter: the 1 and -1 are the group identity and inverse notation (structural)."
+ },
+ {
+  "id": "t194",
+  "skip": "No numerical parameter: purely structural statement (A x B abelian iff A and B abelian)."
+ },
+ {
+  "id": "t196",
+  "skip": "No numerical parameter: purely structural statement (powers of an element of infinite order are distinct)."
+ },
+ {
+  "id": "t197",
+  "skip": "No numerical parameter: n in Z/nZ is a variable; the statement is structural (associativity)."
+ },
+ {
+  "id": "t198",
+  "skip": "No numerical parameter: the -1 is inverse notation (structural); inversion is a homomorphism iff G is abelian."
+ },
+ {
+  "id": "t201",
+  "skip": "No numerical parameter: purely structural statement about maximal subgroups of finite groups."
+ },
+ {
+  "id": "t203",
+  "skip": "No numerical parameter: the 1 in H - {1} is the identity element (structural)."
+ },
+ {
+  "id": "t204",
+  "skip": "No numerical parameter: purely structural statement (intersection of normal subgroups is normal)."
+ },
+ {
+  "id": "t205",
+  "skip": "No numerical parameter: Fermat's little theorem is stated for a variable prime p; no numeral to perturb."
+ },
+ {
+  "id": "t206",
+  "skip": "No numerical parameter: the index is a variable prime p; no numeral to perturb."
+ },
+ {
+  "id": "t207",
+  "skip": "No numerical parameter: purely structural statement about solvable groups."
+ },
+ {
+  "id": "t208",
+  "skip": "No numerical parameter: the order pq uses variable primes p and q; no numeral to perturb."
+ },
+ {
+  "id": "t209",
+  "skip": "No numerical parameter: purely structural existence statement (normal but not characteristic subgroup)."
+ },
+ {
+  "id": "t210",
+  "skip": "No numerical parameter: purely structural statement (characteristic in a normal subgroup implies normal)."
+ },
+ {
+  "id": "t211",
+  "skip": null,
+  "sigma": {
+   "56": "80"
+  },
+  "N_twin": "Prove that a group of order 80 has a normal Sylow $p$-subgroup for some prime $p$ dividing its order.",
+  "D_twin": "theorem exercise_4_5_13 {G : Type*} [Group G] [Fintype G]\n  (hG : card G = 80) :\n  ∃ (p : ℕ) (P : Sylow p G), P.Normal :=",
+  "C_twin": "theorem exercise_4_5_13 {G : Type*} [Group G] [Fintype G]\n  (hG : card G = 80) :\n  ∃ (p : ℕ) (P : Sylow p G), p.Prime ∧ (p ∣ card G) ∧ P.Normal :=",
+  "answer_script": "# Twin of t211: every group of order 80 has a normal Sylow p-subgroup for some prime p dividing 80.\n# Sylow counts: n_p divides 80 / p^a and n_p = 1 mod p. If n_5 = 16 and n_2 = 5, the 16 subgroups of\n# order 5 give 16 * 4 = 64 elements of order 5, and two distinct Sylow 2-subgroups (order 16) give at\n# least 16 + 1 more elements, so 64 + 17 = 81 > 80: impossible. Hence n_5 = 1 or n_2 = 1.\nn = 80\ndef factor(n):\n    f, p = {}, 2\n    while p * p <= n:\n        while n % p == 0:\n            f[p] = f.get(p, 0) + 1\n            n //= p\n        p += 1\n    if n > 1:\n        f[n] = f.get(n, 0) + 1\n    return f\nf = factor(n)\nassert f == {2: 4, 5: 1}\ncounts = {p: [d for d in range(1, n // p**a + 1) if (n // p**a) % d == 0 and d % p == 1] for p, a in f.items()}\nassert counts == {2: [1, 5], 5: [1, 16]}\nn5, n2 = 16, 5\nelements_order5 = n5 * (5 - 1)\nelements_2power_at_least = 16 + 1\nprint(elements_order5 + elements_2power_at_least > n)\n",
+  "answer_value": "True",
+  "answer_span": null,
+  "defect_rule": "Group order 56 = 2^3*7 -> 80 = 2^4*5, which needs the same counting argument (n_5 in {1,16}; if 16 then 64 elements of order 5 leave exactly 16 elements, forcing a unique Sylow 2-subgroup), so C' is true and of similar difficulty. Same defect: p is unconstrained in D' (no primality, no divisibility), so p = 1 or a prime not dividing 80 gives a trivial normal Sylow subgroup. No computed answer; the script checks the Sylow-count contradiction for order 80 and prints True."
+ }
+]

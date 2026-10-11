@@ -1,0 +1,152 @@
+[
+ {
+  "id": "t234",
+  "skip": null,
+  "sigma": {
+   "11": "13"
+  },
+  "N_twin": "If $a \\in C$ is such that $p(a) = 0$, where $p(x) = x^5 + \\sqrt{2}x^3 + \\sqrt{5}x^2 + \\sqrt{7}x + \\sqrt{13}$, show that $a$ is algebraic over $\\mathbb{Q}$ of degree at most 80.",
+  "D_twin": "theorem exercise_5_4_3 {a : ℂ} {p : ℂ → ℂ}\n  (hp : p = λ (x : ℂ) => x^5 + sqrt 2 * x^3 + sqrt 5 * x^2 + sqrt 7 * x + 13)\n  (ha : p a = 0) :\n  ∃ p : Polynomial ℂ , p.degree < 80 ∧ a ∈ p.roots ∧\n  ∀ n : p.support, ∃ a b : ℤ, p.coeff n = a / b :=",
+  "C_twin": "theorem exercise_5_4_3 {a : ℂ} {p : ℂ → ℂ}\n  (hp : p = λ (x : ℂ) => x^5 + sqrt 2 * x^3 + sqrt 5 * x^2 + sqrt 7 * x + sqrt 13)\n  (ha : p a = 0) :\n  ∃ q : Polynomial ℂ, q ≠ 0 ∧ q.degree ≤ 80 ∧ a ∈ q.roots ∧\n  ∀ n : q.support, ∃ a b : ℤ, q.coeff n = a / b :=",
+  "answer_script": "# Twin of t234 (sqrt 11 -> sqrt 13): a is a root of x^5 + sqrt2 x^3 + sqrt5 x^2 + sqrt7 x + sqrt13,\n# whose coefficients lie in K = Q(sqrt2, sqrt5, sqrt7, sqrt13). [K:Q] = 2^r where r is the GF(2)-rank of the\n# squarefree radicands' prime-exponent parity vectors (multiplicative independence modulo squares), and\n# [K(a):K] <= 5, so deg_Q(a) <= 5 * 2^r. The script computes this bound.\nradicands = [2, 5, 7, 13]\ndef factor(n):\n    f, d = {}, 2\n    while d * d <= n:\n        while n % d == 0:\n            f[d] = f.get(d, 0) + 1\n            n //= d\n        d += 1\n    if n > 1:\n        f[n] = f.get(n, 0) + 1\n    return f\nprimes = sorted({p for r in radicands for p in factor(r)})\nrows = []\nfor r in radicands:\n    fr = factor(r)\n    rows.append(sum(((fr.get(p, 0) % 2) << i) for i, p in enumerate(primes)))\n# GF(2) rank by elimination\nrank, basis = 0, []\nfor v in rows:\n    for b in basis:\n        v = min(v, v ^ b)\n    if v:\n        basis.append(v)\n        rank += 1\ndeg_K = 2 ** rank\nprint(\"rank\", rank, \"[K:Q]\", deg_K)\nprint(5 * deg_K)\n",
+  "answer_value": "80",
+  "answer_span": null,
+  "defect_rule": "The radicand of the constant term changes 11 -> 13 in N, D and C (2, 5, 7, the exponents 5, 3, 2 and the bound 80 are unchanged; 2, 5, 7, 13 are distinct primes, so Q(sqrt2, sqrt5, sqrt7, sqrt13) still has degree 16 and the bound stays 5 * 16 = 80). Same defect, carried by the same rule: D' writes the constant term as the bare radicand 13 instead of sqrt 13 (as D wrote 11 instead of sqrt 11), and keeps degree < 80 instead of <= 80. C' is true: a has degree <= 5 over the degree-16 field, so its minimal polynomial over Q (nonzero, rational coefficients) has degree <= 80. The script computes the bound 5 * 2^rank and prints 80, the value stated in N' and C'."
+ },
+ {
+  "id": "t235",
+  "skip": "No numerical parameter: p, m = p^n and n are symbolic; the only numeral is the structural 0 in p != 0."
+ },
+ {
+  "id": "t237",
+  "skip": null,
+  "sigma": {
+   "1": "2"
+  },
+  "N_twin": "If $n$ is not a prime, show that $(n-2) ! \\equiv 0(n)$, except when $n=4$.",
+  "D_twin": "theorem exercise_3_10 {n : ℕ} (hn0 : ¬ n.Prime) (hn1 : n ≠ 4) :\n  Nat.factorial (n-2) ≡ 0 [MOD n] :=",
+  "C_twin": "theorem exercise_3_10 {n : ℕ+} (hn0 : ¬ n.Prime) :\n  Nat.factorial (n-2) ≡ 0 [MOD n] ↔ n ≠ 4 :=",
+  "answer_script": "# Twin of t237 ((n-1)! -> (n-2)!): for non-prime n >= 1, (n-2)! = 0 mod n iff n != 4\n# (natural-number subtraction, so n = 1, 2 give 0! = 1). Proof: if n = ab with 1 < a < b then a, b <= n/2 <= n-2;\n# if n = q^2 with q >= 3 prime then q < 2q <= n-2, so q*2q | (n-2)!; n = 4 gives 2! = 2. Exhaustive check below.\nimport math\ndef is_prime(n):\n    return n >= 2 and all(n % d for d in range(2, int(math.isqrt(n)) + 1))\nexceptions = []\nfor n in range(1, 3001):\n    if is_prime(n):\n        continue\n    if math.factorial(max(n - 2, 0)) % n != 0:\n        exceptions.append(n)\n# the defect case of D' (n = 0 allowed): x = y [MOD 0] means x = y, and (0-2)! = 0! = 1 != 0, so D' fails at n = 0\nprint(\"D' holds at n = 0:\", math.factorial(0) == 0)\nprint(\",\".join(map(str, exceptions)))\n",
+  "answer_value": "4",
+  "answer_span": null,
+  "defect_rule": "Only the offset in the factorial changes, (n-1)! -> (n-2)!, in N, D and C (the 0 of the congruence, the exception 4, and the hypothesis names hn0/hn1 and theorem name are unchanged). The exception stays n = 4: for composite n = ab with 1 < a < b both factors are <= n/2 <= n-2; for n = q^2 with prime q >= 3, q < 2q <= n-2; n = 4 gives 2! = 2; n = 1 gives 0! = 1 = 0 mod 1. Same defect: D' keeps n : N, which admits n = 0, where (0-2)! = 0! = 1 is not = 0 [MOD 0], so D' is false exactly as D is; C' (n : N+, iff with n != 4) is true. The script checks all non-prime n <= 3000 and prints the exception set, 4, the value stated in N' and C'."
+ },
+ {
+  "id": "t238",
+  "skip": "Only structural numerals: the sum 1^k + ... + (p-1)^k runs over all nonzero residues of a symbolic prime p and the values 0 and -1 are the theorem's content; no parameter can change while keeping the same statement."
+ },
+ {
+  "id": "t242",
+  "skip": null,
+  "sigma": {
+   "2": "8"
+  },
+  "N_twin": "Show that $x^{4} \\equiv 8(p)$ has a solution for $p \\equiv 1(4)$ iff $p$ is of the form $A^{2}+64 B^{2}$.",
+  "D_twin": "theorem exercise_5_28 {p : ℕ} (hp : p.Prime) (hp1 : p ≡ 1 [MOD 4]):\n  ∃ x, x^4 ≡ 8 [MOD p] ↔ ∃ A B, p = A^2 + 64*B^2 :=",
+  "C_twin": "theorem exercise_5_28 {p : ℕ} (hp : p.Prime) (hp1 : p ≡ 1 [MOD 4]):\n  (∃ x, x^4 ≡ 8 [MOD p]) ↔ ∃ A B, p = A^2 + 64*B^2 :=",
+  "answer_script": "# Twin of t242 (x^4 = 2 -> x^4 = 8 (mod p)): for a prime p = 1 (mod 4) the quartic-residue class of 8 = 2^3 is the\n# cube of the class of 2 in the cyclic group F_p^* / (F_p^*)^4 of order 4, and 3 is prime to 4, so 8 is a quartic\n# residue iff 2 is, iff p = A^2 + 64 B^2 (Gauss). Checked for all primes p = 1 (mod 4) below 200000.\nimport math\nLIM = 200000\nsieve = bytearray([1]) * (LIM + 1)\nsieve[0] = sieve[1] = 0\nfor i in range(2, int(LIM ** 0.5) + 1):\n    if sieve[i]:\n        sieve[i * i::i] = bytearray(len(sieve[i * i::i]))\nsquares = set(i * i for i in range(int(LIM ** 0.5) + 2))\nok, count = True, 0\nfor p in range(5, LIM + 1, 4):\n    if not sieve[p]:\n        continue\n    quartic8 = pow(8, (p - 1) // 4, p) == 1          # x^4 = 8 solvable (cyclic group, 4 | p-1)\n    quartic2 = pow(2, (p - 1) // 4, p) == 1\n    form = any((p - 64 * B * B) in squares for B in range(0, int(math.isqrt(p // 64)) + 1))\n    if not (quartic8 == form == quartic2):\n        ok = False\n    count += 1\n# brute-force cross-check of the Euler criterion on small primes\nfor p in range(5, 2000, 4):\n    if sieve[p]:\n        brute = any(pow(x, 4, p) == 8 % p for x in range(p))\n        if brute != (pow(8, (p - 1) // 4, p) == 1):\n            ok = False\nprint(\"primes checked\", count)\nprint(ok)\n",
+  "answer_value": "True",
+  "answer_span": null,
+  "defect_rule": "Only the residue in the quartic congruence changes, 2 -> 8 (the exponents 4 and 2, the modulus 4 in p = 1 (4) and the 64 are unchanged; sigma applies to the residue only, not to the structural exponents in A^2, B^2). C' is true: for p = 1 (mod 4), F_p^*/(F_p^*)^4 is cyclic of order 4 and the class of 8 = 2^3 is the cube of the class of 2, so 8 is a quartic residue iff 2 is, iff p = A^2 + 64B^2. Same defect: in D' the existential over x scopes over the whole iff instead of only the congruence. No computed answer; the script checks the equivalence for all primes p = 1 (mod 4) below 200000 (Euler criterion, cross-checked by brute force on small p) and prints True."
+ },
+ {
+  "id": "t243",
+  "skip": "No numerals in N; purely structural statement (uniqueness of continuous extensions into a Hausdorff space)."
+ },
+ {
+  "id": "t244",
+  "skip": "No numerical parameter: the subscripts x_1, x_2 are sequence indices; purely structural statement about convergence in product spaces."
+ },
+ {
+  "id": "t245",
+  "skip": "No numerals in N; purely structural statement (a map with a continuous right inverse is a quotient map)."
+ },
+ {
+  "id": "t246",
+  "skip": "No numerals in N; purely structural statement about unions of connected sets."
+ },
+ {
+  "id": "t247",
+  "skip": "No numerals in N; purely structural statement about perfect maps and compactness."
+ },
+ {
+  "id": "t248",
+  "skip": "No numerals in N; purely structural statement about isometries of compact metric spaces."
+ },
+ {
+  "id": "t249",
+  "skip": "No numerals in N; purely structural statement about local compactness in Hausdorff spaces."
+ },
+ {
+  "id": "t250",
+  "skip": "No numerals in N; purely structural statement about separable spaces."
+ },
+ {
+  "id": "t252",
+  "skip": "No numerical parameter: the subscripts X_1, X_2 are labels; purely structural statement about metrizability."
+ },
+ {
+  "id": "t257",
+  "skip": null,
+  "sigma": {
+   "2001": "1187"
+  },
+  "N_twin": "Prove that there are unique positive integers $a, n$ such that $a^{n+1}-(a+1)^n=1187$.",
+  "D_twin": "theorem exercise_2001_a5 :\n  ∃! a : ℕ, ∃! n : ℕ, a > 0 ∧ n > 0 ∧ a^(n+1) - (a+1)^n = 1187 :=",
+  "C_twin": "theorem exercise_2001_a5 :\n  ∃! p : ℕ × ℕ, p.1 > 0 ∧ p.2 > 0 ∧ p.1^(p.2 + 1) - (p.1 + 1)^(p.2) = 1187 :=",
+  "answer_script": "# Twin of t257 (2001 -> 1187): exactly one pair of positive integers (a, n) has a^(n+1) - (a+1)^n = 1187.\n# Exhaustive and complete: mod a, 0 - 1 = 1187, so a | 1188; a = 1 gives 1 - 2^n < 0. For each a >= 2 the scan over n\n# stops once (a+1)^n >= a^(n+1); the ratio (a+1)^n / a^(n+1) only grows with n, so no later n gives a positive\n# difference (and in N the truncated difference is then 0 != 1187).\nM = 1187\nsols = []\nfor a in range(2, M + 2):\n    if (M + 1) % a:\n        continue\n    n, A, B = 1, a * a, a + 1\n    while B < A:\n        if A - B == M:\n            sols.append((a, n))\n        n, A, B = n + 1, A * a, B * (a + 1)\nprint(\"solutions\", sols)\nprint(sols == [(11, 2)])\n",
+  "answer_value": "True",
+  "answer_span": null,
+  "defect_rule": "The constant 2001 changes to 1187 = 11^3 - 12^2 in N, D and C (the digits in the theorem name exercise_2001_a5 are unchanged). The structure mirrors the original (a | 1188, the parity argument mod a+1 forces n even and a in {2, 3, 11}), and the unique pair is (a, n) = (11, 2) (originally (13, 2)). Same defect: D' nests ∃! a, ∃! n instead of asserting uniqueness of the pair; N-truncation stays harmless since 1187 != 0. No stated answer; the script does an exhaustive, complete search (a | 1188 is necessary; for each a the scan stops once (a+1)^n >= a^(n+1)), prints the solution list [(11, 2)], and prints True on its last line."
+ },
+ {
+  "id": "t258",
+  "skip": null,
+  "sigma": {
+   "10": "12"
+  },
+  "N_twin": "Prove that for each positive integer $n$, the number $12^{12^{12^n}}+12^{12^n}+12^n-1$ is not prime.",
+  "D_twin": "theorem exercise_2010_a4 (n : ℕ) :\n  ¬ Nat.Prime (12^12^12^n + 12^12^n + 12^n - 1) :=",
+  "C_twin": "theorem exercise_2010_a4 (n : ℕ) (hn : n > 0) :\n  ¬ Nat.Prime (12^12^12^n + 12^12^n + 12^n - 1) :=",
+  "answer_script": "# Twin of t258 (base 10 -> 12): N(n) = 12^12^12^n + 12^12^n + 12^n - 1 is composite for n > 0.\n# Proof: write n = 2^m k with k odd, t = 2^m, d = 12^t + 1. Then 12^t = -1 (mod d), so 12^n = (-1)^k = -1, and the\n# exponents 12^n and 12^12^n are even multiples of t (2^(2n) divides 12^n and 2n > m), so both towers are = 1 (mod d);\n# hence N = 1 + 1 - 1 - 1 = 0 (mod d), with 1 < d < N. Checked numerically (exact modular arithmetic) for n = 1..5.\nok = True\nfor n in range(1, 6):\n    m = (n & -n).bit_length() - 1\n    t = 2 ** m\n    d = 12 ** t + 1\n    e1 = 12 ** n\n    e2 = 12 ** e1\n    r = (pow(12, e2, d) + pow(12, e1, d) + pow(12, n, d) - 1) % d\n    ok = ok and r == 0 and d > 1\nprint(ok)\n",
+  "answer_value": "True",
+  "answer_span": null,
+  "defect_rule": "The base 10 changes to 12 everywhere in the expression (N, D and C); the -1, the 0 in n > 0 and the digits in the theorem name exercise_2010_a4 are unchanged. C' is true by the same proof as the original (any even base works): with n = 2^m k, k odd, d = 12^(2^m) + 1 divides the number and 1 < d < it. Same defect: D' drops n > 0 (still true at n = 0, where the number is 12^12 + 12 = 12(12^11 + 1), but a stronger statement than posed). No computed answer; the script verifies d | N(n) by exact modular arithmetic for n = 1..5 and prints True."
+ },
+ {
+  "id": "t259",
+  "skip": null,
+  "sigma": {
+   "1": "2"
+  },
+  "N_twin": "Let $f: \\mathbb{R} \\rightarrow \\mathbb{R}$ be an infinitely differentiable function satisfying $f(0)=0, f(2)=2$, and $f(x) \\geq 0$ for all $x \\in$ $\\mathbb{R}$. Show that there exist a positive integer $n$ and a real number $x$ such that $f^{(n)}(x)<0$.",
+  "D_twin": "theorem exercise_2018_a5 (f : ℝ → ℝ) (hf : ContDiff ℝ ⊤ f)\n  (hf0 : f 0 = 0) (hf1 : f 2 = 2) (hf2 : ∀ x, f x ≥ 0) :\n  ∃ (n : ℕ) (x : ℝ), iteratedDeriv n f x = 0 :=",
+  "C_twin": "theorem exercise_2018_a5 (f : ℝ → ℝ) (hf : ContDiff ℝ ⊤ f)\n  (hf0 : f 0 = 0) (hf1 : f 2 = 2) (hf2 : ∀ x, f x ≥ 0) :\n  ∃ (n : ℕ+) (x : ℝ), iteratedDeriv n f x < 0 :=",
+  "answer_script": "# Twin of t259 (f(1) = 1 -> f(2) = 2): the twin reduces to the original by g(x) = f(2x)/2, which is smooth, nonnegative,\n# g(0) = 0 and g(1) = 1, with g^(n)(x) = 2^(n-1) f^(n)(2x); so g^(n)(x) < 0 gives f^(n)(2x) < 0 with the same n >= 1.\n# The script checks the scaling identity exactly on random rational polynomials (n = 0..6) and prints True.\nimport random\nfrom fractions import Fraction as F\nrandom.seed(20261012)\ndef deriv(c):\n    return [i * c[i] for i in range(1, len(c))]\ndef ev(c, x):\n    return sum(ci * x ** i for i, ci in enumerate(c))\nok = True\nfor _ in range(200):\n    f = [F(random.randint(-9, 9), random.randint(1, 9)) for _ in range(8)]\n    g = [f[i] * F(2) ** i / 2 for i in range(len(f))]        # g(x) = f(2x)/2\n    fd, gd = f[:], g[:]\n    for n in range(7):\n        x = F(random.randint(-20, 20), random.randint(1, 7))\n        if ev(gd, x) != F(2) ** n / 2 * ev(fd, 2 * x):\n            ok = False\n        fd, gd = deriv(fd), deriv(gd)\n    if ev(g, F(0)) != ev(f, F(0)) / 2 or ev(g, F(1)) != ev(f, F(2)) / 2:\n        ok = False\nprint(ok)\n",
+  "answer_value": "True",
+  "answer_span": null,
+  "defect_rule": "The second boundary condition f(1) = 1 becomes f(2) = 2 (point and value both 1 -> 2) in N, D and C; f(0) = 0, the 0 in f^(n)(x) < 0 / = 0, and the hypothesis names hf0/hf1/hf2 are unchanged. C' is true: g(x) = f(2x)/2 satisfies the original hypotheses and g^(n)(x) = 2^(n-1) f^(n)(2x), so the original conclusion for g gives f^(n)(2x) < 0 with n >= 1. Same defect: D' claims some iterated derivative equals 0 with n allowed to be 0, trivially true at n = 0, x = 0 since f 0 = 0. No computed answer; the script checks the scaling identity exactly on random rational polynomials and prints True."
+ },
+ {
+  "id": "t260",
+  "skip": "Only structural numerals: x_0 = 1, the coefficient 2 and the indices are forced by the cosine/Fibonacci structure (x_n = cos(F_n theta)); changing any of them breaks the periodicity claim, so no twin keeps C' true."
+ },
+ {
+  "id": "t261",
+  "skip": "Only structural numerals: the 1s define the unit circle and z_j != 1, and 3 = (number of variables) - 1; changing the modulus breaks the identity, changing 3 alters truth or makes the claim trivial (>= 5 follows from the triangle inequality), and changing the number of variables changes the formula's structure, not just numerals."
+ },
+ {
+  "id": "t262",
+  "skip": null,
+  "sigma": {
+   "1": "2"
+  },
+  "N_twin": "If $z$ is a complex number, prove that there exists an $r\\geq 0$ and a complex number $w$ with $| w | = 2$ such that $z = rw$.",
+  "D_twin": "theorem exercise_1_11a (z : ℂ) :\n  ∃ (r : ℝ) (w : ℂ), abs w = 2 ∧ z = r * w :=",
+  "C_twin": "theorem exercise_1_11a (z : ℂ) :\n  ∃ (r : ℝ) (w : ℂ), r ≥ 0 ∧ abs w = 2 ∧ z = r * w :=",
+  "answer_script": "# Twin of t262 (|w| = 1 -> |w| = 2): take r = |z|/2 >= 0 and w = 2z/|z| (w = 2 if z = 0); then |w| = 2 and z = r w.\n# Checked on random complex numbers and z = 0.\nimport random, cmath\nrandom.seed(20261012)\nok = True\nfor z in [0j] + [complex(random.uniform(-50, 50), random.uniform(-50, 50)) for _ in range(10000)]:\n    r = abs(z) / 2\n    w = 2 * z / abs(z) if z != 0 else 2 + 0j\n    ok = ok and r >= 0 and abs(abs(w) - 2) < 1e-12 and abs(z - r * w) < 1e-9\nprint(ok)\n",
+  "answer_value": "True",
+  "answer_span": null,
+  "defect_rule": "The prescribed modulus of w changes 1 -> 2 in N, D and C; the 0 in r >= 0 and the digits in the theorem name exercise_1_11a are unchanged. C' is true: r = |z|/2 >= 0 and w = 2z/|z| (w = 2 if z = 0). Same defect: D' omits r >= 0 from the conclusion, weakening it (a negative r is allowed). No computed answer; the script checks the witness on random z and z = 0 and prints True."
+ }
+]
