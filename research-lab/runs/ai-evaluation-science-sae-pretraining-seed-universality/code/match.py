@@ -170,18 +170,34 @@ def main(layer, pairs_file=None):
     needed = sorted({p["a"] for p in pairs} | {p["b"] for p in pairs})
     enc, proc, qual = {}, {}, []
     t0 = time.time()
+    out_dir = RUN / "data" / "match" / f"L{layer}"
+    out_dir.mkdir(parents=True, exist_ok=True)
     for mname in needed:
         res, keep, n_tok = encode_model(mname, layer, tokens, {s: SAE(sae_dir(mname, layer, s)) for s in SEEDS})
         enc[mname], proc[mname] = res, keep
         for s in SEEDS:
             qual.append(dict(model=mname, seed=s, fvu=res[s]["fvu"], dead=float((res[s]["fired"] == 0).float().mean()),
                              assessable=int((res[s]["fired"] >= MIN_FIRE).sum()), n_tok=n_tok))
+            np.save(out_dir / f"fired_{mname}_s{s}.npy", res[s]["fired"].numpy())
         print(f"L{layer} encoded {mname} ({time.time() - t0:.0f} s)", flush=True)
+    # plan 7.7: EleutherAI's reference SAE on the original model, as context for the training budget
+    ref_dir = RUN / "data" / "raw" / "eai_sae_ref" / f"layers.{layer}"
+    ref_rows = []
+    if "p160m" in enc and ref_dir.exists():
+        ref, _, n_ref = encode_model("p160m", layer, tokens, {"ref": SAE(ref_dir)})
+        ref = ref["ref"]
+        qual.append(dict(model="eai_reference", seed=-1, fvu=ref["fvu"], dead=float((ref["fired"] == 0).float().mean()),
+                         assessable=int((ref["fired"] >= MIN_FIRE).sum()), n_tok=n_ref))
+        for s in SEEDS:
+            ba, bb = corr_best(enc["p160m"][s], ref, n_tok)
+            ref_rows.append(dict(kind="reference", a="p160m", sa=s, b="eai_reference", sb=-1, id=-1 - s,
+                                 **{f"f{th}": (frac(ba, th) + frac(bb, th)) / 2 for th in THRESHOLDS}))
+        del ref
+        torch.cuda.empty_cache()
     tab = RUN / "results" / "tables"
     tab.mkdir(parents=True, exist_ok=True)
     pd.DataFrame(qual).to_csv(tab / f"sae_quality_L{layer}.csv", index=False)
-    out_dir = RUN / "data" / "match" / f"L{layer}"
-    out_dir.mkdir(parents=True, exist_ok=True)
+    pd.DataFrame(ref_rows).to_csv(tab / f"reference_L{layer}.csv", index=False)
     rows = []
     rot_cache = {}
     for n, p in enumerate(pairs):
