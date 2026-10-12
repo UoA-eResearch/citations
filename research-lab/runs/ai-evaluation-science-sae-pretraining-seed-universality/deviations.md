@@ -201,3 +201,17 @@ statistic uses only the 10 full seeds and is unaffected.
     combinations have a standard deviation with a median of 0.0013-0.0017, at most 0.004. The results are conditional
     on one SAE training stream and one held-out set.
   - No number in the primary or secondary analyses changed.
+
+## D9 - 2026-10-13 07:26 NZDT - token-identity check (post hoc; written before it is run, during the confirmation pass)
+
+- **Why.** The lead's risk note said that activation matching across models may be inflated by token-identity
+  features, which every model has, and suggested stratifying them out. The plan did not include this, and neither the
+  report nor the review addressed it.
+- **The check** (`code/token_identity.py`).
+  - **Purity.** Per latent of the 30 SAEs of the 10 full-seed models, at both layers: the share of its firings on H
+    that fall on its most frequent input token.
+  - **Token-identity latent:** purity ≥ 0.5.
+  - **Outputs.** Within and cross match rates for token-identity and other latents. The primary statistic is
+    recomputed with the directional scores restricted to non-token latents as sources. Candidates are unchanged,
+    because the stored best-match arrays do not allow restricting them.
+- **Status.** Exploratory; it does not change the verdict.
