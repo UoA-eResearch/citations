@@ -1,0 +1,10 @@
+measurement,value,note
+probe_complexes,3,"ABL1(E255K) kinase-domain crop (292 aa) x 3 panel ligands; a mutant Davis entry, excluded from the panel by rule 1, so no panel cell was observed before the plan was committed"
+prediction_seconds_total,57,"wall time of the boltz predict loop for the 3 complexes"
+seconds_per_complex,19.0,"57 / 3, one process, A100 80GB, boltz 2.2.1 with cuequivariance cu13 kernels"
+process_seconds_total,203,"including model load and input preprocessing"
+startup_seconds,146,"203 - 57; paid once per process, so sharding amortises it"
+gpu_mib_at_load,3231,"nvidia-smi during model load"
+planned_complexes,1597,"1024 panel + 128 decoy + 96 sampling + 256 promiscuity + 93 post-cutoff"
+implied_single_process_hours,8.4,"1597 x 19s"
+shards,3,"concurrent boltz processes, seeds 20261013 + shard index"

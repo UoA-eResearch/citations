@@ -25,3 +25,27 @@ Also set in the plan rather than the lead: AutoDock Vina cross-docking is declar
 §5.8), and two arms the lead did not ask for are added — an affinity-sampling arm (§5.4, prompted by
 BoltzOmics' finding that within-drug correlation moves with sampling) and a training-support gradient
 (§5.6, prompted by MIRAGE).
+
+## D2 — 2026-10-13 09:57 NZDT — boltz needs the cuequivariance kernels installed
+
+`pip install boltz` (2.2.1) does not install `cuequivariance_torch`, and the default code path imports it:
+the first run died with `ModuleNotFoundError: No module named 'cuequivariance_torch'` before any
+prediction. Installed `cuequivariance-torch`, `cuequivariance-ops-torch-cu13` and `cuequivariance-ops-cu13`
+(all 0.12.0, the cu13 build matching torch 2.14.1+cu130) rather than passing `--no_kernels`, so the model
+runs on its intended fused kernels. Recorded in `results/tables/env.json`. No effect on the design.
+
+## D3 — 2026-10-13 10:01 NZDT — one analysis added beyond the plan, coded before any panel result
+
+`code/geometry.py`: if the affinity head turns out not to track the measured selectivity profile, the plan
+has no way to say whether it responds to the protein *at all*. The added analysis builds a kinase-by-kinase
+distance matrix from the predictions (after removing each ligand's mean) and correlates it with the same
+matrix built from the measurements and with pairwise sequence identity between the kinase-domain crops
+(Biopython global alignment, BLOSUM62). A protein-blind head correlates with neither; a protein-aware but
+mis-calibrated head correlates with sequence while missing the measurements. Exploratory, no verdict
+depends on it, and the code was written and committed before any panel prediction was read.
+
+Also recorded here: per-complex runtime measured at 19 s on the idle A100 (results/tables/timing.csv), so
+the whole design — 1,597 complexes — fits in about 8.4 GPU-hours and no arm has to be dropped. The arms run
+in three concurrent shards with seeds 20261013 + shard index, and the shard map is released
+(results/tables/shards_*.csv) because the diffusion sampling makes each prediction stochastic: a value is
+reproducible given the shard layout and seed, not given the pair alone.

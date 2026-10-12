@@ -73,9 +73,17 @@ def write_yaml(indir, pair_id, protein, seq, smiles):
     return p
 
 
+# plan.md §4: the Boltz-2 defaults, passed explicitly so every run records them. An arm that overrides
+# one of these (the sampling arm) passes it in `extra` and the default is dropped.
+FLAGS = {"--recycling_steps": "3", "--sampling_steps": "200", "--diffusion_samples": "1",
+         "--diffusion_samples_affinity": "5", "--sampling_steps_affinity": "200",
+         "--output_format": "mmcif", "--num_workers": "2", "--preprocessing-threads": "4"}
+
+
 def run(indir, outdir, extra=(), seed=SEED):
+    flags = [x for k, v in FLAGS.items() if k not in extra for x in (k, v)]
     cmd = [str(VENV / "boltz"), "predict", str(indir), "--out_dir", str(outdir), "--seed", str(seed),
-           "--output_format", "mmcif", "--num_workers", "2", "--preprocessing-threads", "4", *extra]
+           *flags, *extra]
     print(" ".join(cmd), flush=True)
     t0 = time.time()
     r = subprocess.run(cmd)
