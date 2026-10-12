@@ -148,6 +148,20 @@ Results go to `results/catalogue/refcheck.jsonl`.
 recomputed on the included items with a twin whose D and D′ are neither proved nor refuted (a reference whose check
 errors counts as uninformative). The preregistered verdict is unchanged. The report gives both.
 
+**D6, timeline (added after the independent review, issue 10).** "Before any outcome was computed" needs the facts
+behind it:
+
+- **When the data existed.** The classification files of the three primary models were complete well before D6:
+  `data/classified/kimina.jsonl` at 11:44, `goedel.jsonl` at 11:58 and `herald.jsonl` at 12:05. D6 was written at
+  13:21.
+- **What had been read from them.** Before D6, only the `error`, `elab` and timing fields (13:18). Four randomly drawn
+  non-elaborating Herald outputs were also printed, to check that their failures were genuine. No `copy` or `correct`
+  field had been tabulated or displayed.
+- **What prompted it.** While drafting the methods, I asked how the certifier could misclassify. That question, and the
+  contamination run's informativeness and explosion guards (its D3, D9), led to the check.
+- **Verifiability.** None of this can be verified from the logs. The session transcript is the only record.
+- **Effect.** The check changes the primary rate ratio from 0.91 to 0.93.
+
 ## D7 - 2026-10-12 13:30 NZDT - exploratory analyses added after the outcomes were seen
 
 Added after `analysis.py` had produced the preregistered results. None changes the verdict, and the report labels them
@@ -164,6 +178,51 @@ exploratory.
 5. **The three twins the builders flagged dropped** (`flagged_twins_dropped`). Two were flagged as borderline (t237,
    t262); in one, D′ became true while D was false (t284). All three passed the mechanical checks and are in the
    primary set.
+   - **Where the flags came from** (added after the review, issue 12). The builders raised these flags in their
+     replies before sampling. The replies are in the session record; the committed `defect_rule` fields describe the
+     twins but do not flag them.
+   - **When the analysis was decided.** Running this sensitivity was decided after the per-item results had been seen.
+     So was the "clearer paraphrases" reading of the O vs P result.
 
 **Released outputs** (plan 10). The raw model outputs and the per-output classifications are released gzipped in
 `results/outputs/` and `results/classified/`, because `data/` is not tracked.
+
+## D8 - 2026-10-12 15:46 NZDT - analyses requested by the independent review (after the outcomes)
+
+The review (`review/review.md`, fix first, 17 issues) asked for the analyses below. All come after the outcomes, are
+exploratory, and leave the preregistered verdict unchanged. Code: `code/review_analyses.py` and `code/recheck_near.py`.
+Tables: `results/tables/review/`.
+
+1. **Port-header fingerprint** (issues 1 and 6). This is the share of extracted outputs on ProofNet items whose `open`
+   lines include every `open` line of the item's ProofNet Lean 4 port header. It is broken down by model, condition,
+   item set (with or without a twin) and split. A companion table, `header_by_textbook.csv`, shows which textbook's
+   header Kimina emits.
+2. **Per-item O/T/P table on the 59 primary items** (issues 2 and 3), pooled and by model. It comes with O vs P by
+   model on those items.
+3. **D6 applied to the 129-item O vs P set** (issue 9). The analysis drops items whose D is portfolio-provable or
+   refuted, and logs the outputs certified equivalent to both references. Plan 5 says such outputs are logged and
+   counted as "other". All 97 are on Rudin 1.1a, whose D and C are both portfolio-provable, and none is in the primary
+   set.
+4. **Greedy and verbatim counts for P on the 59 items** (issue 11). The report quoted them, but `secondary.json` holds
+   them only for the 129-item set.
+5. **Missed equivalences** (issue 7).
+   - **Near-identical "other" outputs:** "other" outputs whose normalised statement has a difflib ratio of at least 0.9
+     to the defective reference, counted by model and condition.
+   - **Lean re-check:** a re-check of every unique "other" statement on the 59 items with a ratio of at least 0.8
+     (674 statements). It uses a portfolio that first normalises both sides (`ring_nf`, `field_simp`, `simp only` with
+     `div_div` and commutativity) and allows 40 s per direction.
+   - **Sensitivity:** the primary ratio with the newly certified outputs counted as copies.
+   - **Validation:** before the run, this portfolio was checked on the review's example from
+     induction_sum_1oktkp1, `1 / (k + 1) / (k + 2)` against `1 / ((k + 1) * (k + 2))`. It certifies both directions
+     where the preregistered portfolio certifies neither.
+   - **Restart:** the first run was stopped after about a minute and restarted, because its output file had been moved
+     by mistake while it was being written. No row of it had been read.
+6. **Plan section 1's premise** (issue 17). The plan says Lean Workbook was "synthesized from miniF2F and ProofNet".
+   More precisely, the dataset's statements are translated from contest problems. Its first-round translation model,
+   however, was trained on all miniF2F and ProofNet statement pairs, both splits, the ProofNet pairs taken from
+   `rahul3613/ProofNet-lean4` (arXiv 2406.03847, section 4.1). The premise that these benchmarks' formal statements are
+   in the training lineage of open formalizers stands.
+7. **Timeline** (issue 13). The study ran from 10:46 to 13:34 on 12 October 2026. Rater, twin-builder, paraphrase and
+   judge subagents ran in parallel batches. GPU sampling overlapped with the Lean classification, which ran per model
+   as each finished sampling. The report's methods sections were drafted during classification; its results sections
+   were written after `analysis.py` ran.

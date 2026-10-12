@@ -5,37 +5,38 @@ have documented mistakes, and number-perturbed twins of the same problems, and t
 reproduce the mistake.*
 
 Run directory: `research-lab/runs/formal-math-autoformalizer-error-copying` · Preregistration: [`plan.md`](plan.md)
-(commit 9afb62b) · Departures from it: [`deviations.md`](deviations.md) (D1-D7) · Independent review:
-[`review/review.md`](review/review.md) · 12 October 2026
+(commit 9afb62b) · Departures from it: [`deviations.md`](deviations.md) (D1-D8) · Independent review:
+[`review/review.md`](review/review.md) · 12 October 2026, revised after review
 
 **Verdict: Refuted.** Three open autoformalizers reproduce the benchmarks' documented defects in 7.2% of samples on the
-original problems and the analogous defect in 7.9% on number-perturbed twins: a rate ratio of 0.91 (95% CI 0.76-1.06)
-where the hypothesis needed at least 3. The defects they reproduce are habits they show whatever the numbers, not
-recall of the benchmark's statement.
+original problems and the analogous defect in 7.9% on number-perturbed twins. That is a rate ratio of 0.91 (95% CI
+0.76-1.06), where the hypothesis needed at least 3. So the copying is not recall tied to a problem's numbers. It is not
+evidence against memorized benchmark statements, though. One model, Kimina, reproduces the ProofNet Lean port's header
+lines and, on one problem, a wrong constant that only the port contains, on twins as often as on originals. That is
+memory of a statement's template, which this design cannot detect.
 
 ## In plain terms
 
-AI "autoformalizers" translate a maths problem written in words into Lean, a language a computer can check. They are
-tested on miniF2F and ProofNet, two benchmarks whose official Lean versions were later found to contain many mistakes:
-a missing condition, or a claim weaker than the problem's. If an autoformalizer had memorised the official versions
-during training, it should reproduce those mistakes when given the original problem.
+AI "autoformalizers" translate a maths problem written in words into Lean, a language a computer can check. Two
+benchmarks they are tested on, miniF2F and ProofNet, have official Lean versions that were later found to contain many
+mistakes, such as a missing condition or a claim weaker than the problem's. A model that had memorised those versions
+might reproduce their mistakes.
 
-We tested this on 59 problems with a documented mistake. For each we made a twin: the same problem with different
-numbers, with the mistake carried over to its official-style version. A model that remembers the official statement
-should copy the mistake on the original but not on the twin, which it has never seen. A model that falls into a common
-trap should make the same kind of mistake on both.
+We tested 59 such problems that contain numbers. For each we made a twin with different numbers and carried the mistake
+over to the twin's official-style version. A model recalling an official statement together with its numbers should
+copy the mistake on the original but not on the twin. A model falling into a common trap should make it on both.
 
-Three open autoformalizers wrote 16 versions of every problem and every twin, and the Lean checker decided which ones
-say exactly what the flawed official statement says. They reproduced the mistake in 7.2% of attempts on the originals
-and 7.9% on the twins. The prediction was at least three times as often on the originals. **It is refuted.**
+Three autoformalizers wrote 16 versions of every problem and every twin. The Lean checker certified which ones say the
+same thing as the flawed official statement: 7.2% of attempts on originals and 7.9% on twins. The prediction was at
+least three times as often on originals. **It is refuted.**
 
-The mistakes the models make are common habits. They write "the smallest value is 64" as "every value is at least
-64", and they drop conditions such as "positive". They do so whatever the numbers are.
+That rules out recall tied to the numbers, but not memory of a statement's shape. One model, Kimina, shows clear signs
+of that. In about half of its answers to ProofNet problems it writes the exact header lines of the official ProofNet
+Lean files, which nothing in the problem asks for. On one problem it repeats a wrong constant from the official version
+on the twin as well. The other four models never write those headers.
 
-One pattern needs care. On a reworded version of each problem, the models made these mistakes less often: the
-originals (and the twins, which keep their wording) drew about 1.6 times as many, almost all from two of the three
-models. That could be memory of how such problems are usually worded, or just that the rewordings were clearer. This
-study cannot tell which.
+Rewording the problems cut Kimina's copied mistakes by half, where changing the numbers did not. Herald's fell too,
+though on one problem only because the reworded text led it to write something Lean rejects.
 
 ## What was done
 
@@ -223,27 +224,92 @@ Two typical cases:
 | Weakened or trivial conclusion (category 7) | 30 | 110 | 115 | 0.96 (0.80-1.14) |
 | Missing hypothesis (2) | 8 | 45 | 61 | 0.74 (0.36-1.15) |
 | Wrong domain or type (4) | 3 | 21 | 24 | 0.88 (0.62-1.18) |
-| Wrong constant (1) | 4 | 11 | 11 | 1.00 (1.00-1.00) |
+| Wrong constant (1): every defect output is on Dummit-Foote 8.3.6a | 4 | 11 | 11 | 1.00 (1.00-1.00) |
 | Wrong quantifier or binding (5) | 6 | 8 | 7 | 1.13 (1.00-1.24) |
 | Wrong relation or formula (6) | 6 | 9 | 7 | 1.27 (1.00-2.60) |
 | Extra hypothesis (3), vacuous hypotheses (8) | 1 each | 0 | 0 | — |
 
-**Categories.** Half of the primary items, and just over half of all defect outputs (225 of 429), are "weakened
-conclusion" defects. Typically a "find the least (or greatest) value" problem is stated as a one-sided bound. That is
-the single most common pattern in miniF2F v1's defects, and the models write it just as readily for the twin.
+**Weakened conclusions dominate.** Half of the primary items, and just over half of all defect outputs (225 of 429),
+are "weakened conclusion" defects. Typically a "find the least (or greatest) value" problem is stated as a one-sided
+bound. That is the single most common pattern in miniF2F v1's defects, and the models write it just as readily for the
+twin.
 
-**ProofNet.** Its lower bound sits just above 1 (1.01), but its rate ratio is 1.07, far from the hypothesised 3. The
-19 items come from eight sources (seven textbooks and the Putnam), and eight of them from abstract algebra (Dummit-Foote,
-Artin, Herstein).
+**The "wrong constant" row is one item.** Its interval is degenerate (1.00-1.00) because that one item has identical
+counts in the two conditions, so every bootstrap draw does. A ratio of 1 does not mean "no copying" here: 8.3.6a is
+the clearest case of a memorized statement in the study (next section).
+
+**ProofNet.** Its lower bound of 1.01 is barely above 1 and rests on 19 items whose counts are nearly identical in the
+two conditions. Its ratio, 1.07, is far from the hypothesised 3. The 19 items come from eight sources (seven textbooks
+and the Putnam), and eight of them come from abstract algebra (Dummit-Foote, Artin, Herstein).
+
+### Kimina reproduces the ProofNet port's templates (exploratory; found by the review, D8)
+
+**Why the twins cannot see it.** The twin design assumes that a memorized statement is recalled together with its
+numbers. Suppose instead a model has memorized a statement as a template and fills in whatever numbers it is given. It
+then produces the analogous defect on the twin just as often, so RR ≈ 1 by construction. The independent review found
+that Kimina does this. Three observations show it.
+
+**1. The port's header lines.** The ProofNet Lean 4 port starts each textbook's statements with fixed `open` lines:
+for example `open Fintype Subgroup Set Polynomial Ideal` for Dummit-Foote, and
+`open Topology Filter Real Complex TopologicalSpace Finset` for Rudin. Nothing in an informal statement asks for them.
+The table gives the share of extracted temperature samples whose `open` lines include every line of the item's port
+header:
+
+| Model | ProofNet items without a twin (64): O | P | Items with a twin (19): O | T | P |
+|---|---:|---:|---:|---:|---:|
+| Kimina-Autoformalizer-7B | 54% (547 of 1,022) | 51% | 40% (121 of 304) | 37% | 38% |
+| Goedel, Herald, DeepSeek-Prover-V2, Qwen | 0% | 0% | 0% | 0% | 0% |
+
+- **Rate by split.** On originals the rate is about the same for ProofNet's test items (48%) as for its validation
+  items (53%).
+- **Which header.** Kimina usually writes the header of the item's own textbook:
+  - Rudin items: 167 of 224 outputs;
+  - Munkres items: 113 of 144;
+  - Shakarchi items: 32 of 32.
+
+  For algebra items it sometimes writes another algebra textbook's header instead. On Dummit-Foote items it wrote the
+  Dummit-Foote header 175 times and the Herstein header 87 times (`header_by_textbook.csv`).
+- **The same with new numbers.** The rate is about the same on originals, twins and paraphrases of the same items.
+
+**2. A constant only the port contains.** Dummit-Foote 8.3.6a reads "Prove that the quotient ring Z[i]/(1+i) is a field
+of order 2".
+
+- **The port's error.** The port writes the ideal as `span ({⟨0, 1⟩} : Set GaussianInt)`, the ideal generated by *i*.
+  Since *i* is a unit, the quotient is the zero ring and the statement is false.
+- **On the original.** Kimina writes exactly this, with the port's header, in 11 of 16 samples.
+- **On the twin**, "Z[i]/(2+i) is a field of order 5", it writes `⟨0, 1⟩` again in 11 of 16 samples and changes only the
+  order, to 5. Nothing in the twin's text yields `⟨0, 1⟩`. The reviewer confirmed in Lean that this output is
+  equivalent to D′, and that an output with the right generator `⟨2, 1⟩` is equivalent to C′.
+- **On the paraphrase** it writes `⟨0, 1⟩` in 5 of 16 samples.
+
+**3. The port's statement bodies.** Dummit-Foote 4.5.13, 4.5.14, 4.5.15 and 4.5.17 ask for "a normal Sylow p-subgroup
+for some prime p dividing its order". For these, Kimina writes the port's body `∃ (p : ℕ) (P : Sylow p G), P.Normal`,
+which drops "p prime" and "p divides |G|". It does so 42 times on originals and 39 times on twins.
+
+**Where the copies sit.** Kimina's copies are almost all on ProofNet items: 80 of its 86 on originals and 74 of its 81
+on twins. Most of Herald's (93 of 111) are on miniF2F items, where the defects are the one-sided bounds and dropped
+conditions shown above. There is no comparable fingerprint for miniF2F: its header, `open BigOperators Real Nat
+Topology Rat`, is shared by many training sets.
+
+**What this shows and what it does not.** Kimina's training data evidently included the ProofNet port's statements, or
+data copied from them. The header depends only on the textbook, so it cannot show which items were seen. The 8.3.6a
+constant is item-specific, but that item is in ProofNet's validation split, which a model may legitimately train on.
+
+**Where the port entered training data.** The study does not know Kimina's training data item by item. One documented
+route by which the port entered the open training lineage is the Lean Workbook pipeline. Its first translation model
+was trained on all miniF2F and ProofNet statement pairs, both splits, the ProofNet pairs taken from this same port
+(arXiv 2406.03847, section 4.1).
 
 ### Originals against paraphrases (secondary; partly exploratory)
 
 ![How outputs are classified, by model and condition](results/figures/classes.png)
 
 **The preregistered comparison.** On the 129 included items with a paraphrase, the three primary models reproduced the
-defect 327 times on originals and 208 times on paraphrases (6,192 samples each): RR 1.57 (1.28-1.99).
+defect 327 times on originals and 208 times on paraphrases (6,192 samples each): RR 1.57 (1.28-1.99). Three items have
+a portfolio-provable D (mathd_algebra_188, mathd_algebra_314 and Rudin 1.1a). Without them (D6 applied, D8), the count
+is 319 vs 208 on 126 items: 1.53 (1.26-1.96).
 
-**Exploratory (D7).**
+**Exploratory (D7, D8).**
 
 - **The same 59 items in all three conditions.** The counts are 204 (originals), 225 (twins) and 129 (paraphrases):
   - O vs P: RR 1.58 (1.20-2.21);
@@ -251,40 +317,40 @@ defect 327 times on originals and 208 times on paraphrases (6,192 samples each):
 
   The originals and the twins share their wording and differ in their numbers; the paraphrases share the numbers and
   differ in wording. **Changing the wording lowers the defect rate. Changing the numbers does not.**
-- **By model,** the excess comes from two models:
+- **By model on the same 59 items,** the excess comes from Kimina and, less clearly, Herald:
 
 | Model | Copies on O | Copies on P | RR (95% CI) |
 |---|---:|---:|---|
-| Kimina-Autoformalizer-7B | 207 | 122 | 1.69 (1.31-2.27) |
-| Herald_translator | 113 | 80 | 1.41 (1.02-2.26) |
+| Kimina-Autoformalizer-7B | 86 | 43 | 1.99 (1.27-3.30) |
+| Herald_translator | 111 | 80 | 1.39 (1.00-2.26) |
 | Goedel-Formalizer-V2-8B | 7 | 6 | 1.15 (0.68-1.62) |
-| DeepSeek-Prover-V2-7B | 18 | 32 | 0.57 (0.23-1.14) |
-| Qwen2.5-7B-Instruct | 38 | 36 | 1.05 (0.04-2.93) |
+| DeepSeek-Prover-V2-7B | 16 | 17 | 0.94 (0.39-1.62) |
+| Qwen2.5-7B-Instruct | 38 | 35 | 1.08 (0.04-3.40) |
 
-**Two readings fit, and this study cannot separate them.**
+On all 129 items the ratios for Kimina and Herald are 1.69 (1.31-2.27) and 1.41 (1.02-2.26).
 
-1. **Wording-keyed recall.** A model whose training data drew on the benchmarks may have learned which formal *shape*
-   goes with a given wording. It would then fill
-   in whatever numbers it is given, so the twins would not detect it.
-2. **The paraphrases are clearer.** The paraphrases were written by a strong model and often make the condition that
-   gets dropped more explicit. Dummit-Foote 4.5.14 shows this:
-   - The original reads "a group of order 312 has a normal Sylow p-subgroup for some prime p dividing its order".
-     Kimina gives the original ProofNet port's form, `∃ (p : ℕ) (P : Sylow p G), P.Normal`, in 15 of 16 samples, and
-     that form drops "p prime" and "p divides |G|".
-   - The paraphrase reads "possesses, for at least one prime p dividing |G|, a Sylow p-subgroup that is normal".
-     Kimina's statement is correct in 14 of 16 samples.
+**What drives it, item by item** (`results/tables/review/per_item_OTP.csv`):
 
-   The paraphrase judge checked that meaning was preserved, not that difficulty was.
-
-The general model, Qwen, shows no O vs P difference, and nor do Goedel or DeepSeek-Prover-V2. That fits reading 1
-slightly better, but Qwen's interval is very wide: only 26% of its outputs elaborate.
+- **Kimina's Sylow items.** On Dummit-Foote 4.5.14 and 4.5.15, its copies fall from 15 and 12 on originals (15 and 9
+  on twins) to 1 and 1 on paraphrases. The paraphrases keep the same content: 4.5.14's reads "possesses, for at least
+  one prime p dividing |G|, a Sylow p-subgroup that is normal". So clearer content does not explain the drop. With the
+  original wording, numbers changed or not, Kimina writes the port's statement body; with new wording, it mostly writes
+  a correct one. Together with the port fingerprint, which is about as common on paraphrases as on originals, this
+  favours **wording-keyed recall** of the port's statements for Kimina's ProofNet items.
+- **Herald.** Part of its drop is an artefact of what elaborates. On amc12a_2021_p7, "the least possible value of
+  (xy−1)² + (x+y)²", it writes `(xy - 1)` in 10 of 16 paraphrase samples, against 1 of 16 on the original. Lean reads
+  `xy` as an unknown identifier, so those outputs do not elaborate.
+- **Not uniform.** On some items paraphrases draw more copies than originals, for example mathd_algebra_410 (5 on the
+  original, 12 on the paraphrase).
+- **The paraphrase check is weak.** The paraphrase judge accepted all 135 paraphrases. A judge that accepts everything
+  gives no evidence that it can tell a changed problem from an unchanged one.
 
 ### Accuracy against the defective reference
 
 On the 59 primary items, the three primary models' outputs are certified correct (≡ C) in 13.5% of samples on
 originals and 13.4% on twins. They are equivalent to the defective reference (≡ D) in 7.2% and 7.9%. So scoring against
-the v1 or original-port statement would credit about 7% of samples for reproducing its defect, as much on twins as
-on originals. That inflation is real, but it comes from shared habits, not from item-level memory.
+the v1 or original-port statement would credit about 7% of samples for reproducing its defect. That credit is as large
+on twins as on originals, so it does not depend on recall tied to the numbers.
 
 ### Negative control: defects no model can have seen
 
@@ -295,10 +361,11 @@ The eight control items carry a defect that miniF2F-v2's edit introduced; their 
   1/f(33), not the inverse function.
 - **DeepSeek-Prover-V2** reproduced a v2 defect once.
 - **Kimina, Goedel and Qwen** never did.
-- **The faithful v1 statement**, which the models could have seen in training, was produced once in 640 samples.
+- **Outputs equivalent to the faithful v1 statement** were rare on these eight items: 1 of 640 samples. Several of
+  these v1 statements use idiosyncratic forms (`σ : Equiv ℝ ℝ`), and elaboration on these items is low (Herald 85 of
+  128, Qwen 75 of 128).
 
-So natural pitfalls are frequent enough to reproduce even defects that could not have been memorized. And these
-models do not reproduce v1 statements verbatim on demand.
+So a natural pitfall can reproduce even a defect that no model can have memorized, at least for Herald.
 
 ### Sensitivities
 
@@ -308,29 +375,35 @@ models do not reproduce v1 statements verbatim on demand.
 | One-rater items added (plan 8) | 63 | 204 | 225 | 0.91 (0.75-1.06) |
 | Trivially provable references dropped (D6) | 57 | 196 | 212 | 0.93 (0.77-1.08) |
 | Builder-flagged twins dropped (D7, exploratory) | 56 | 183 | 207 | 0.88 (0.73-1.04) |
+| Missed equivalences re-checked with a normalising portfolio (D8) | 59 | 211 | 229 | 0.92 (0.80-1.05) |
 
 - **One-rater items added.** The four extra items produced no defect output.
-- **Trivially provable references dropped (D6).** If a defective reference is itself proved outright by the tactic
-  portfolio, any output the portfolio can prove counts as "equivalent" to it. This was checked before any outcome was
-  computed. It is true of two primary items, mathd_algebra_188 and mathd_algebra_314: their D and D′ are both provable.
-  No primary item's reference was refuted.
-- **Builder-flagged twins dropped.** These are the two twins the builders flagged as borderline (Ireland-Rosen 3.10,
-  Rudin 1.11a), and one where the twin's defective statement became true while the original's was false (Shakarchi
-  1.19b).
+- **Trivially provable references dropped (D6).** If the tactic portfolio can prove a defective reference outright,
+  any output the portfolio can prove counts as "equivalent" to it. Two primary items are like this, mathd_algebra_188
+  and mathd_algebra_314: their D and D′ are both provable. No primary item's reference was refuted.
+
+  D6 was written at 13:21. The three primary models' classification files had been complete since 11:44-12:05, but
+  only their elaboration, error and timing fields had been read (deviations.md, D6 timeline).
+- **Builder-flagged twins dropped.** This sensitivity was decided after the per-item results had been seen. The builders
+  raised the flags before sampling:
+  - two twins they called borderline (Ireland-Rosen 3.10, Rudin 1.11a);
+  - one where the twin's defective statement became true while the original's was false (Shakarchi 1.19b).
+- **Missed equivalences** (D8; next section). 16 more statements are certified as copies, all Herald's: 7 more copies
+  on originals, 4 on twins and 16 on paraphrases.
 - **Truth-certified twins.** The plan's truth-certified-twin sensitivity cannot be computed: the portfolio proved none
   of the 59 primary twins' C′. The one twin whose C′ it proved is in the one-rater set.
 - **Among elaborating outputs only.** The defect rate is 9.4% on originals (204 of 2,180), 10.3% on twins (225 of
   2,179) and 5.9% on paraphrases (129 of 2,190).
 - **Greedy outputs.** 14 of 177 on originals, 16 of 177 on twins, and 8 of 177 on paraphrases of the same items.
-- **Verbatim copies.** These are outputs whose binders and conclusion match D (or D′) character for character, apart
-  from whitespace and the theorem name. There are 35 on originals, 31 on twins, and 11 on paraphrases of the same
-  items. Even verbatim reproduction is as common for the twins, whose D′ no model has seen.
+- **Verbatim copies.** These are outputs whose binders and conclusion, with runs of whitespace collapsed, equal those
+  of D (or D′). `(x:ℝ)` and `(x : ℝ)` count as different. There are 35 on originals, 31 on twins, and 11 on
+  paraphrases of the same items.
 
-### Is the classifier biased between conditions? (plan 8, item 9)
+### Is the classifier biased between conditions? (plan 8, item 9; D8)
 
 A certifier that recognised the benchmark's own wording more readily than a reworded equivalent would favour
-condition O. It does not appear to. Among elaborating outputs, the share equivalent to neither reference is almost the
-same on originals and twins for every model:
+condition O. In aggregate it does not appear to. Among elaborating outputs, the share equivalent to neither reference
+is almost the same on originals and twins for every model:
 
 | Model | O | T |
 |---|---:|---:|
@@ -353,49 +426,144 @@ Elaboration rates are also nearly the same across conditions:
 Herald's lower rate comes partly from statements that rely on auto-bound implicit variables, which the plan turns off
 for every model and every reference.
 
+**The certifier does miss identical statements, though.** The review found that Herald's
+`∑ k in Finset.range n, (1 : ℝ) / (k + 1) / (k + 2) = n / (n + 1)` is not certified equivalent to D's
+`1 / ((k + 1) * (k + 2))`, although the two are the same statement: `div_div` under a binder is out of the portfolio's
+reach. On induction_sum_1oktkp1, Herald writes the division chain on most originals and the product form on all 16
+twins, so the item's 3 vs 16 was partly an artefact of the certifier.
+
+The re-check (D8, `code/recheck_near.py`):
+
+- **What was re-checked.** Every unique "other" statement on the 59 items that is textually close to the defective
+  reference (difflib ratio ≥ 0.8): 674 statements from all five models. The portfolio first normalises both sides with
+  `ring_nf`, `field_simp`, and `simp only` with `div_div` and commutativity, and it allows 40 s per direction.
+- **Result.** It certifies 16 more as equivalent to the reference, all Herald's, on two items:
+  - induction_sum_1oktkp1: 5 more on originals, now 8 vs 16;
+  - aime_1983_p9: 2 more on originals and 4 on twins.
+- **Effect on the primary result.** It becomes 211 vs 229, RR 0.92 (0.80-1.05). O vs P on the 59 items becomes 211 vs
+  145, 1.45 (1.09-2.05).
+- **Near-identical "other" outputs** (ratio ≥ 0.9; `near_D_other.csv`) are about as common on originals as on twins:
+  Herald 33 vs 31, Kimina 30 vs 25, Qwen 7 vs 7, DeepSeek-Prover-V2 1 vs 4, Goedel 0 vs 0.
+
+**Outputs certified equivalent to both D and C.** Plan section 5 counts these as "other" and says they are logged.
+There are 97, from 33 unique statements across all five models, all on Rudin 1.1a. That item's D and C are both
+portfolio-provable. It is not in the primary set; D6 now drops it from the O vs P comparison above.
+
 ## What this means
 
-**The fingerprint does not fire.** The hypothesis treated reproduced benchmark defects as a fingerprint of memorized
-benchmark statements. Open autoformalizers do reproduce those defects, in 7-8% of samples, and in nearly every sample
-on some items. But they reproduce them just as often when the problem's numbers are changed, so the reproduced defects
-are not evidence of item-level memorization. They are formalization habits:
+**The fingerprint does not fire, in the form tested.** The hypothesis treated reproduced benchmark defects as a
+fingerprint of memorized benchmark statements. Open autoformalizers do reproduce those defects, in 7-8% of samples, and
+in nearly every sample on some items. But they reproduce them just as often when the problem's numbers are changed. So
+the defects are not recalled together with the problem's numbers.
 
-- one-sided bounds for "least" or "greatest" problems;
-- dropped positivity or primality conditions;
-- the original port's shapes for some algebra statements.
+**Two different things give RR ≈ 1, and the design cannot tell them apart.**
 
-The benchmark's original statements share these habits.
+- **Shared formalization habits.** These are one-sided bounds for "least" or "greatest" problems, and dropped
+  positivity conditions. Most of Herald's copies are of this kind, on miniF2F. The negative control shows that such a
+  pitfall reproduces even a defect no model can have seen.
+- **Template recall.** Here a memorized statement has its numbers filled in afresh. Kimina does this on ProofNet: the
+  port's headers, its Sylow statement bodies, and its wrong constant on 8.3.6a, on twins as on originals.
 
-**The miniF2F-v2 paper.** It reads Herald's and Kimina's drop from v1 to v2 as possible contamination (arXiv
-2511.03108). This result does not support item-level memorization as the explanation of that gap. It does show that
-where v1 is wrong, it is often wrong in the way the formalizers are wrong. Any evaluation that uses the v1 statements as
-its reference therefore credits the shared mistake, whether or not the model has seen the benchmark.
+The header fingerprint and the 8.3.6a constant separate the two for Kimina. Nothing in this study separates them for
+Herald's miniF2F copies.
 
-**What the test cannot rule out.** The twins keep the original wording, so they detect only recall tied to the
-problem's numbers. The paraphrase comparison suggests that the wording matters for two of the three autoformalizers,
-but it cannot say whether through memory or through clarity. A design that separates the two would need paraphrases
-matched for explicitness, or, better, training-data provenance for the models.
+**The miniF2F-v2 paper** (arXiv 2511.03108) says the decline it reports "suggests that current autoformalizers may
+suffer from data contamination". Its human-judged formalization accuracy, from v1 to v2s:
+
+| Model | Test | Validation |
+|---|---|---|
+| Kimina | 88.1% → 79.5% | 82.0% → 78.7% |
+| Herald | 55.3% → 51.6% | 59.4% → 48.0% |
+| o4-mini | 46.3% → 51.6% (rises) | 47.1% → 52.5% (rises) |
+
+This study bears on that in two ways:
+
+- **On miniF2F,** where most of Herald's copies are, the defects are copied as often on twins, so there they look like
+  shared habits. A v1 reference credits those habits whether or not the model has seen the benchmark.
+- **On ProofNet,** Kimina's reproduction of the port is the kind of contamination the paper suspects.
+
+The study has no miniF2F counterpart of the header fingerprint, so it cannot say whether Kimina's miniF2F accuracy is
+affected the same way.
+
+**What a better test would need.** The twins keep the original wording, so they detect only recall tied to the
+numbers. The paraphrase comparison points to wording-keyed recall for Kimina, but paraphrases could also change
+difficulty, and the judge did not check that. A sharper design would use:
+
+- format fingerprints such as the port's headers;
+- twins that also change the wording;
+- paraphrases matched for explicitness.
+
+Best of all would be the models' training-data provenance.
 
 ## Limitations
 
-- **Twins exist only for problems with numbers.** 59 of the 129 included items have a valid twin, and only 19 of the
-  83 included ProofNet items. The result therefore speaks mostly to miniF2F-style computation problems and to the
-  ProofNet exercises that have numerical parameters.
+- **Twins exist only for problems with numbers, and this biases the primary set towards RR ≈ 1.** 59 of the 129
+  included items have a valid twin, but only 19 of the 83 included ProofNet items do.
+  - **What was excluded.** The 64 ProofNet items without a twin are abstract statements, where Kimina's port
+    fingerprint is strongest: 54% of its outputs on those items, against 40% on the items with a twin.
+  - **What was kept.** The primary set keeps miniF2F's "find the value" problems, whose defect, a one-sided bound, is
+    the most natural pitfall of all.
+  - **The result.** The primary set leans towards items where RR ≈ 1 is expected under both readings. The result
+    speaks mostly to problems with numerical parameters.
 - **Few items carry the signal.** Defect outputs come from 27 items. The item-cluster bootstrap accounts for this, but
   per-model and per-category intervals rest on a handful of items. Several intervals have a degenerate bound (1.00)
-  because every defect output for that subset sits on one or two items.
-- **Machine raters and builders.** The defect tags come from two LLM raters (κ 0.957 on D), not from the benchmark
-  authors. Some "defects" are faithfulness gaps that leave the statement true. Putnam 2010 A4 without `n > 0` is still
-  true at n = 0, for example. Those are among the defects most naturally reproduced. Twins were built by an LLM and
-  checked by script, not by hand.
-- **Equivalence is certified by a tactic portfolio with a 20 s limit.** Equivalent outputs that the portfolio cannot
-  connect are counted as "other", in either condition.
-  - The "other" shares are similar across conditions, so this should not bias the ratio.
-  - Two trivially provable references were found and handled (D6).
-  - A reference whose equivalence class is easy to hit by accident remains possible.
+  because every defect output in that subset sits on one or two items with equal counts in both conditions.
+- **Machine raters, builders and judges.** The defect tags come from two LLM raters (κ 0.957 on D), not from the
+  benchmark authors.
+  - Some "defects" are faithfulness gaps that leave the statement true. Putnam 2010 A4 without `n > 0` is still true
+    at n = 0, for example. Those are among the defects most naturally reproduced.
+  - Twins were built by an LLM and checked by script, not by hand.
+  - The paraphrase judge accepted every paraphrase.
+- **Twin texts keep the source's formats.** On the AIME twin of aime_1988_p3, Herald read the three-digit answer "016"
+  as 0.16 in 8 of 16 samples. That item's counts (7 on the original, 4 on the twin) partly reflect this.
+- **Equivalence is certified by a tactic portfolio with a 20 s limit.** Equivalent outputs the portfolio cannot connect
+  are counted as "other", in either condition. A normalising re-check of near-identical outputs changes little (D8),
+  but misses beyond its reach remain possible.
 - **One environment.** Lean 4.9 with DeepSeek-Prover-V1.5's Mathlib. Models trained on newer Mathlib produce some
   statements that do not elaborate there, in every condition alike.
 - **Five open 7-8B models.** Closed or larger autoformalizers were not tested.
+
+## Independent review and what changed
+
+An independent Claude Fable 5.1 reviewer ([`review/review.md`](review/review.md)) recommended **fix first**, with 17
+issues.
+
+**What it confirmed.**
+
+- It recomputed every number from the classification files and found them right.
+- It confirmed that each stage's code and the frozen catalogue were committed before the outcomes they could affect.
+- It read about 40 "copy" and 40 "other" outputs by hand and found no wrong "copy".
+
+**What it found.** The draft overstated what the result means. Its headline said the reproduced defects were "habits,
+not recall of the benchmark's statement". But the study's own data show Kimina reproducing the ProofNet port as a
+template, which the twin design classifies as a habit.
+
+**What changed.**
+
+- **Scope.** The verdict, the plain-terms summary and "What this means" now limit the result to recall tied to the
+  numbers.
+- **New results.**
+  - a section on Kimina's template recall, with the header fingerprint and 8.3.6a;
+  - the per-item O/T/P comparison, and Kimina's O vs P ratio on the 59 items (1.99);
+  - a corrected reading of the paraphrase result: the 4.5.14 example had been cited for the wrong reading;
+  - the certifier's missed equivalences, with a normalising re-check;
+  - the 97 outputs equivalent to both references;
+  - D6 applied to the O vs P set;
+  - the D6 timeline, and the post-hoc status of the flagged-twin sensitivity;
+  - the selection bias's direction;
+  - the twin answer-format quirk.
+- **Narrower claims.** The negative-control claim is narrowed to the eight items.
+
+**Two review points were checked against the sources and corrected.**
+
+- **The size of the miniF2F-v2 drop.** The reviewer called it small (Herald −0.8 pp). That figure comes from the
+  paper's other table, which scores Herald's automated judge. The paper's sentence about contamination refers to the
+  formalization-accuracy table quoted above, where the drops are 3-11 points.
+- **The Lean Workbook premise.** The reviewer said plan section 1's premise was inaccurate. The Lean Workbook paper
+  does train its first translator on all miniF2F and ProofNet pairs, so the premise holds. Its wording is made precise
+  in D8.
+
+The revised report went back to the same reviewer for a confirmation pass ([`review/confirmation.md`](review/confirmation.md)).
 
 ## Deviations
 
@@ -408,7 +576,9 @@ All are timestamped in [`deviations.md`](deviations.md).
 - **D3:** Herald's tokenizer was repaired before sampling. It dropped spaces and Unicode in the vLLM image.
 - **D4:** a format pilot on non-catalogue items. DeepSeek-Prover-V2's token limit was raised to 4,096.
 - **D5:** two fixes to twin check 3 (numerals-only diffs), before any twin was checked.
-- **D6:** the informativeness check on the references, added before any outcome was computed (a sensitivity only).
+- **D6:** the informativeness check on the references, a sensitivity only.
+  - It was written before any outcome was tabulated.
+  - It came after the primary models' classification files existed; see its timeline.
 - **D7:** exploratory analyses added after the outcomes:
   - all three conditions on the same items;
   - O vs P by model;
@@ -416,6 +586,15 @@ All are timestamped in [`deviations.md`](deviations.md).
   - dropping the flagged twins.
 
   It also covers the release of the outputs.
+- **D8:** the analyses the review requested. All come after the outcomes and are exploratory:
+  - the port-header fingerprint;
+  - per-item O/T/P;
+  - D6 applied to O vs P;
+  - outputs equivalent to both references;
+  - greedy and verbatim counts for P on the 59 items;
+  - the normalising re-check.
+
+  D8 also makes the plan's Lean Workbook premise precise and gives the study's timeline.
 
 ## Reproduce
 
@@ -430,7 +609,10 @@ python code/twins.py freeze                  # results/catalogue/frozen.jsonl
 code/run_gpu.sh main                         # sampling (stops and restarts the owner's vLLM container)
 code/run_classify.sh                         # Lean classification, per model
 VAC_TOOLCHAIN=v49 python code/refcheck.py 22 # D6
-python code/analysis.py && python code/figures.py && python code/build_report_html.py
+python code/analysis.py
+VAC_TOOLCHAIN=v49 python code/recheck_near.py 24  # D8: normalising re-check of near-identical 'other' outputs
+python code/review_analyses.py              # D8: review-requested analyses -> results/tables/review/
+python code/figures.py && python code/build_report_html.py
 ```
 
 `python` is the contamination run's venv (`../formal-math-certified-contamination-did/venv/bin/python`). The Lean REPL
@@ -445,7 +627,7 @@ Everything released is derived from open data and open-weight models.
   check (`refcheck.jsonl`).
 - **Every model output** (`results/outputs/<model>.jsonl.gz`).
 - **Every classification** (`results/classified/`).
-- **The tables behind every number** (`results/tables/`).
+- **The tables behind every number** (`results/tables/`, with the review-requested analyses in `results/tables/review/`).
 
 ## Data and citations
 

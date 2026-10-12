@@ -56,7 +56,7 @@ def main():
             j += 1
     body_md = "\n".join(rest[j:])
     # links to repo files that Pages would serve as raw text
-    body_md = body_md.replace("](plan.md)", f"]({REPO_BLOB}/plan.md)").replace("](deviations.md)", f"]({REPO_BLOB}/deviations.md)").replace("](review/review.md)", f"]({REPO_BLOB}/review/review.md)")
+    body_md = body_md.replace("](plan.md)", f"]({REPO_BLOB}/plan.md)").replace("](deviations.md)", f"]({REPO_BLOB}/deviations.md)").replace("](review/review.md)", f"]({REPO_BLOB}/review/review.md)").replace("](review/confirmation.md)", f"]({REPO_BLOB}/review/confirmation.md)")
     body = markdown.markdown(body_md, extensions=["tables", "fenced_code", "sane_lists"])
 
     # figures with captions
@@ -159,7 +159,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
   <h1>__TITLE__</h1>
   <p class="subtitle">__SUBTITLE__</p>
   <div class="meta">
-    <span>Report · 2026-10-12 · draft for independent review</span>
+    <span>Report · 2026-10-12 · revised after independent review</span>
     <a href="__BLOB__/plan.md">Preregistration</a>
     <a href="__BLOB__/deviations.md">Deviations log</a>
     <a href="__BLOB__/code">Code</a>

@@ -28,6 +28,9 @@ def forest(p, s):
     rows += [("One-rater set added, O vs T", s["one_rater_set"], False)]
     if s.get("informative_refs"):
         rows += [("Trivially provable references dropped (D6)", s["informative_refs"], False)]
+    rv = T / "review" / "review.json"
+    if rv.exists() and json.load(open(rv)).get("recheck_near"):
+        rows += [("Missed equivalences re-checked (D8)", json.load(open(rv))["recheck_near"]["primary"], False)]
     if s.get("truth_certified_twins"):
         rows += [("Truth-certified twins only, O vs T", s["truth_certified_twins"], False)]
     fig, ax = plt.subplots(figsize=(8.2, 0.42 * len(rows) + 1.2))
