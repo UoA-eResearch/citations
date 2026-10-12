@@ -140,3 +140,14 @@ statistic uses only the 10 full seeds and is unaffected.
   initialisation.
 - **Analysis code** is unchanged. The report gives the decomposition under both the preregistered and the corrected
   labels.
+
+## D7 - 2026-10-13 06:43 NZDT - one more post-hoc exploratory analysis (conditional replication)
+
+- **Script.** `code/exploratory_conditional.py`, written after the results were seen and before it was run.
+- **Question.** Are the latents that replicate across SAE seeds of one model the same ones that replicate across
+  pretraining seeds?
+- **Method.** For every SAE of the 10 full-seed models, and each of its assessable latents:
+  - count the within pairs (0, 1 or 2) in which the latent has a match at r ≥ 0.7;
+  - compute the share of its 9 full pairs in which it has one.
+- **Data.** It uses only the stored per-latent arrays.
+- **Status.** Exploratory; it changes no verdict.

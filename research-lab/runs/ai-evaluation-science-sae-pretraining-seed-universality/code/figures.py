@@ -15,8 +15,10 @@ RUN = Path(__file__).resolve().parents[1]
 T, F = RUN / "results" / "tables", RUN / "results" / "figures"
 LAYERS = [4, 8]
 FULL = ["p160m"] + [f"p160m-seed{i}" for i in range(1, 10)]
+# labels for the decoupled kinds follow D6 (what the checkpoints show), not the preregistered names
 KINDS = [("within", "within model\n(SAE seeds)", "#2e6f9e"), ("full", "full seeds\n(init + data)", "#c2412d"),
-         ("init", "init only", "#d9822b"), ("data", "data order\nonly", "#7a9e3b"), ("both_dc", "init vs\ndata variant", "#8d6cab")]
+         ("init", "near-replicate\n(weight-seed)", "#d9822b"), ("data", "data order\n(data-seed)", "#7a9e3b"),
+         ("both_dc", "data order\n(weight- vs\ndata-seed)", "#8d6cab")]
 
 
 def caption(name, text):
@@ -57,7 +59,7 @@ def scores(pairs, prim):
     fig.tight_layout()
     fig.savefig(F / "scores.png", dpi=160)
     plt.close(fig)
-    caption("scores", """Pair scores at r >= 0.7, by kind of pair and layer. Within: one point per model (mean of its
+    caption("scores", """Pair scores at r >= 0.7, by kind of pair and layer (decoupled kinds labelled as in D6). Within: one point per model (mean of its
 three SAE-seed pairs; filled = the 10 full-seed models that enter the primary statistic, hollow = the 6 decoupled
 variants). Cross kinds: one point per model pair (mean of its three SAE-seed combinations). Black bars are means. The
 dashed line is 0.8 times the mean within score of the 10 full-seed models: the hypothesis's threshold.""")
@@ -70,8 +72,8 @@ def ratios(prim, sec):
     if sec.get("drop_flagged"):
         rows += [("Flagged SAEs' models dropped", sec["drop_flagged"], False)]
     dec = sec["decomposition"]
-    lab = {"init": "Init only (weight-seed variants)", "data": "Data order only (data-seed variants)",
-           "both_dc": "Init vs data variant", "full": "Full seeds (vs lineage within)"}
+    lab = {"init": "near-replicate (weight-seed variants)", "data": "data order (data-seed variants)",
+           "both_dc": "data order (weight- vs data-seed)", "full": "full seeds (vs lineage within)"}
     rows += [(f"Decomposition: {lab[k]}", dict(R=dec[k]["ratio"], lower95=dec[k]["lower95"], upper95=dec[k]["upper95"]),
               False) for k in ["init", "data", "both_dc", "full"]]
     fig, ax = plt.subplots(figsize=(8.2, 0.42 * len(rows) + 1.2))
@@ -97,7 +99,8 @@ def ratios(prim, sec):
 over the 10 full-seed models, with the dyadic model bootstrap interval. Supported needs the whole interval below 0.8
 (dashed); Refuted needs it at or above 0.8. The decomposition rows divide each kind's mean score by the mean within
 score of the seed-0 lineage (original, weight-seed and data-seed variants); their intervals resample model pairs and
-are descriptive (6-9 model pairs per kind, 45 for full).""")
+are descriptive (6-9 model pairs per kind, 45 for full). Labels follow D6: all seven lineage models were trained from
+the original's initialisation, so the weight-seed pairs are near-replicates, not initialisation-only pairs.""")
 
 
 def best_corr(pairs):
@@ -150,7 +153,8 @@ def decoder(sec):
     caption("decoder", """Decoder geometry (plan 7.5): share of latents whose decoder direction has a cosine of at least
 0.5 (left) or 0.7 (right) with some decoder direction of the other SAE, in the raw residual bases (solid) and after
 an orthogonal Procrustes rotation of one model's residual basis onto the other's, fitted on 262,144 tokens of H (pale).
-Within pairs share a basis, so their rotation is the identity.""")
+Within pairs share a basis, so their rotation is the identity. The lineage pairs (right three groups) share the
+original's initialisation (D6), which explains their small raw alignment.""")
 
 
 def frequency(sec):
@@ -171,6 +175,17 @@ def frequency(sec):
 7.4), within against full pairs. Terciles are computed per SAE over its assessable latents.""")
 
 
+def tiles(prim, sec):
+    """Key-result tiles for report.html: [label, value, note], rounded once from the stored values."""
+    W, X = prim["W"], prim["X"]
+    t = [["Verdict", prim["verdict"], "the whole interval is at or above 0.8"],
+         ["Cross ÷ within, R", f"{prim['R']:.3f}", f"95% interval {prim['lower95']:.3f}–{prim['upper95']:.3f}"],
+         ["Within one model", f"{100 * W['4']:.0f}% · {100 * W['8']:.0f}%",
+          "latents with a match at r ≥ 0.7 in another SAE seed, layer 4 · 8"],
+         ["Across pretraining seeds", f"{100 * X['4']:.0f}% · {100 * X['8']:.0f}%", "same, in another model's SAE, layer 4 · 8"]]
+    json.dump(t, open(T / "tiles.json", "w"), indent=1, ensure_ascii=False)
+
+
 def main():
     F.mkdir(parents=True, exist_ok=True)
     pairs = {L: pd.read_csv(T / f"pairs_L{L}.csv") for L in LAYERS}
@@ -180,6 +195,7 @@ def main():
     best_corr(pairs)
     decoder(sec)
     frequency(sec)
+    tiles(prim, sec)
     print("figures written")
 
 
