@@ -7,7 +7,10 @@
 - monology/pile-uncopyrighted val.jsonl.zst (SAE training stream) and test.jsonl.zst (held-out matching set);
 - EleutherAI/sae-pythia-160m-32k at the two study layers (recipe sanity check).
 
-The HF read token is read from ~/.config/hf/token and never printed. Usage: fetch.py models|step0|pile|ref"""
+The HF read token is read from ~/.config/hf/token and never printed. Usage: fetch.py models|step0|pile|ref|early
+
+`early` (D6, post hoc): step1 and step1000 of the original, the weight-seed variants, data-seed1 and seed1, to check
+which initialisation each released training run actually started from."""
 import sys
 from pathlib import Path
 
@@ -39,6 +42,12 @@ def main(what):
             p = snapshot_download(m, revision="step0", allow_patterns=["config.json", "pytorch_model.bin"],
                                   local_dir=RAW / "step0" / short(m), token=TOKEN)
             print(m, "step0 ->", p, flush=True)
+    elif what == "early":
+        for m in [MODELS[0], MODELS[1]] + MODELS[10:14]:
+            for rev in ["step1", "step1000"]:
+                p = snapshot_download(m, revision=rev, allow_patterns=["config.json", "pytorch_model.bin"],
+                                      local_dir=RAW / rev / short(m), token=TOKEN)
+                print(m, rev, "->", p, flush=True)
     elif what == "pile":
         for f in ["val.jsonl.zst", "test.jsonl.zst"]:
             p = hf_hub_download(PILE, f, repo_type="dataset", revision=PILE_SHA, local_dir=RAW / "pile", token=TOKEN)

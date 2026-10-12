@@ -90,3 +90,53 @@ and `N_SEQ` (fewer sequences of H). The main run sets none of them.
     an orthogonal rotation restores it. The check tests this directly: B's seed-0 SAE on A's residual stream, raw,
     Procrustes-rotated and least-squares mapped. The maps are fitted on sequences 0-127 of H and evaluated on
     sequences 128-255. It also records how well each map predicts B's residual stream from A's.
+
+## D6 - 2026-10-13 06:41 NZDT - the weight-seed variants were not trained from their own initialisation (post hoc; corrects D2)
+
+**What D5's exploratory checks showed.**
+
+- **Shared outlier dimensions.** All seven models of the seed-0 lineage share their top residual dimensions by mean
+  square: dimensions 393, 684, 411, 625 and 634 head the list at layer 4 in all seven. Each of seeds 1-9 has its own
+  distinct set (`results/tables/exploratory_outliers.csv`). Shared privileged coordinates point to a shared
+  initialisation, which D2 had ruled out for the weight-seed variants.
+
+**The check** (`code/lineage_check.py`, post hoc; `fetch.py early` downloaded step 1 and step 1000 of the original,
+seed1, weight-seed1..3 and data-seed1).
+
+- **Method.** Median correlation, over the 50 weight matrices, between each model's weights and each available step-0
+  checkpoint.
+- **Weight-seed variants against the original's step 0.** Step 1 correlates 1.000, step 1000 0.892-0.893, and the
+  final checkpoint 0.068-0.069. These are the same values as for the original's own run (1.000, 0.892, 0.068).
+- **Weight-seed variants against their own released step 0.** 0.000 at every step.
+- **Control.** `pythia-160m-seed1` correlates 0.000 with every one of these step-0 checkpoints.
+- **Pairwise at step 1000.** The weight-seed variants are closer to the original (0.977-0.980) than data-seed1 is
+  (0.964).
+- **Pairwise at the end.** All are about equally far apart (0.17-0.21; `results/tables/lineage_pairwise.csv`).
+
+**This is a known defect, which the pre-plan checks missed.** EleutherAI/pythia issue #203, open since 21 July 2026,
+reports it: <https://github.com/EleutherAI/pythia/issues/203>. Its 3 October 2026 comment adds three points:
+
+- the weight-seed runs' step 1 is bitwise identical to the original's step 1;
+- their published step-0 branches are copies of `pythia-160m-seed4..6`;
+- their first training batch appears to be the original run's.
+
+D2 compared only the step-0 checkpoints, so its conclusion that "the decoupled labels hold as the plan assumed" is
+wrong for the weight-seed variants. Plan section 2's rule applies: "the decoupled comparisons are relabelled by what
+the checkpoints show".
+
+**Relabelling.** It is used for the decomposition (plan 7.2) and the decoder and exploratory analyses; the primary
+statistic uses only the 10 full seeds and is unaffected.
+
+| Kind in `pairs.py` | Preregistered label | What the checkpoints show |
+|---|---|---|
+| `init` | only the initialisation differs | Same initialisation and, per #203, the same first batch. The variants differ from the original in some way the artifacts do not identify: issue #203 suggests numerical nondeterminism or a later data-order change. Called "near-replicate" in the report. |
+| `data` | only the data order differs | As labelled. Same initialisation; different batch composition. |
+| `both_dc` | both differ (a weight-seed against a data-seed variant) | Same initialisation; different batch composition. This is effectively a second set of data-order pairs. |
+| `full` | both differ | As labelled. Seeds 1-9 each start from their own initialisation (control above). |
+
+- **Consequence.** No comparison in this study varies the initialisation alone. The only pairs that differ in
+  initialisation are the full-seed pairs, which also differ in data order.
+- **The 3-8% raw decoder alignment** in D5 is explained: all seven lineage models share the original's
+  initialisation.
+- **Analysis code** is unchanged. The report gives the decomposition under both the preregistered and the corrected
+  labels.
