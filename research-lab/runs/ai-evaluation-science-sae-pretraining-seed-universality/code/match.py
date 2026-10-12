@@ -63,15 +63,15 @@ def sae_dir(model, layer, seed):
 
 
 @torch.no_grad()
-def encode_model(model, layer, tokens, batch=16):
+def encode_model(model, layer, tokens, saes, batch=16):
+    """Encode H with each SAE in `saes` (name -> SAE) on `model`'s block-`layer` output."""
     m = AutoModel.from_pretrained(RUN / "data" / "raw" / "models" / model, dtype=torch.bfloat16).to(DEV).eval()
-    saes = {s: SAE(sae_dir(model, layer, s)) for s in SEEDS}
     grab = {}
     # the same hookpoint as sparsify (`layers.L`): the output of block L
     h = m.layers[layer].register_forward_hook(lambda mod, inp, out: grab.__setitem__("x", out[0] if isinstance(out, tuple) else out))
-    out = {s: dict(idx=[], val=[]) for s in SEEDS}
-    err = {s: 0.0 for s in SEEDS}
-    fired = {s: torch.zeros(NLAT, device=DEV, dtype=torch.long) for s in SEEDS}
+    out = {s: dict(idx=[], val=[]) for s in saes}
+    err = {s: 0.0 for s in saes}
+    fired = {s: torch.zeros(NLAT, device=DEV, dtype=torch.long) for s in saes}
     sx = torch.zeros(m.config.hidden_size, device=DEV, dtype=torch.float64)
     sxx, n_tok, keep, n_keep = 0.0, 0, [], 0
     for b in range(0, len(tokens), batch):
@@ -93,14 +93,14 @@ def encode_model(model, layer, tokens, batch=16):
     h.remove()
     tot = sxx - float((sx ** 2).sum()) / n_tok  # total sum of squares about the mean
     res = {}
-    for s in SEEDS:
+    for s in saes:
         idx = torch.cat(out[s]["idx"])
         val = torch.cat(out[s]["val"])
         il = idx.long() & 0xFFFF
         S = torch.zeros(NLAT, dtype=torch.float64).index_add_(0, il.flatten(), val.flatten().double())
         SS = torch.zeros(NLAT, dtype=torch.float64).index_add_(0, il.flatten(), val.flatten().double() ** 2)
         res[s] = dict(idx=idx, val=val, S=S, SS=SS, fired=fired[s].cpu(), fvu=err[s] / tot, W_dec=saes[s].W_dec.cpu())
-    del m, saes
+    del m
     torch.cuda.empty_cache()
     return res, torch.cat(keep), n_tok
 
@@ -149,6 +149,12 @@ def dec_cos_best(Wa, Wb, Rot=None):
     return best_a.cpu().numpy(), best_b.cpu().numpy()
 
 
+def frac(best, th):
+    """Share of assessable latents (finite best value) whose best match is at least th."""
+    ok = np.isfinite(best)
+    return float((best[ok] >= th).mean()) if ok.any() else float("nan")
+
+
 def procrustes(Xa, Xb):
     """Orthogonal R minimising ||(Xa - mean) R - (Xb - mean)||_F."""
     a = Xa.to(DEV).float()
@@ -165,7 +171,7 @@ def main(layer, pairs_file=None):
     enc, proc, qual = {}, {}, []
     t0 = time.time()
     for mname in needed:
-        res, keep, n_tok = encode_model(mname, layer, tokens)
+        res, keep, n_tok = encode_model(mname, layer, tokens, {s: SAE(sae_dir(mname, layer, s)) for s in SEEDS})
         enc[mname], proc[mname] = res, keep
         for s in SEEDS:
             qual.append(dict(model=mname, seed=s, fvu=res[s]["fvu"], dead=float((res[s]["fired"] == 0).float().mean()),
@@ -196,7 +202,7 @@ def main(layer, pairs_file=None):
         row = dict(p)
         row.update(assess_a=int(np.isfinite(ba).sum()), assess_b=int(np.isfinite(bb).sum()))
         for th in THRESHOLDS:
-            fa, fb = np.nanmean(ba >= th), np.nanmean(bb >= th)
+            fa, fb = frac(ba, th), frac(bb, th)
             row[f"f{th}_ab"], row[f"f{th}_ba"], row[f"f{th}"] = fa, fb, (fa + fb) / 2
         for nm, (xa, xb) in (("cos", (ca, cb)), ("rcos", (ra, rb))):
             for th in (0.5, 0.7):
