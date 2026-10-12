@@ -151,3 +151,14 @@ statistic uses only the 10 full seeds and is unaffected.
   - compute the share of its 9 full pairs in which it has one.
 - **Data.** It uses only the stored per-latent arrays.
 - **Status.** Exploratory; it changes no verdict.
+
+## D8 - 2026-10-13 07:20 NZDT - independent review (publish with edits, 13 issues) and the changes made
+
+- **Review.** `review/review.md` (Fable 5.1), on the pre-review draft 4928313: publish with edits, 13 issues. The
+  reviewer re-derived the primary statistic and re-implemented the matching densely. Both reproduce, and no number
+  or verdict changes.
+- **Analyses requested by the review** (`code/review_fixes.py`, post hoc, exploratory; written before it was run):
+  - (a) the firing-frequency table with the within row restricted to the 10 full-seed models (issue 13);
+  - (b) D7 stratified by firing-frequency tercile (issue 11);
+  - (c) outlier-dimension counts across the lineage (issue 9);
+  - (d) ||R − I||_F and det(R) of the Procrustes maps for every cross-model pair (issue 8).
