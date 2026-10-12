@@ -50,7 +50,7 @@ def promiscuity(d):
     """Recompute P1 on the 40-kinase union (panel + the 8 least promiscuous eligible kinases)."""
     extra = json.load(open(RUN / "data" / "promisc_kinases.json"))
     accs = [k["acc"] for k in d["panel"]["kinases"]] + [k["acc"] for k in extra]
-    pred_u, _, meas_u, accs_u, cids_u = S.matrices(None, d, accs=accs)
+    pred_u, _, meas_u, accs_u, cids_u = S.matrices(["panel", "promisc"], d, accs=accs)
     pred_e, _, meas_e, accs_e, _ = S.matrices("promisc", d, accs=[k["acc"] for k in extra])
     return dict(union=dict(shape=[len(cids_u), len(accs_u)], P1=A.primary(pred_u, meas_u),
                            P3=A.med(A.within_kinase(pred_u, meas_u))),

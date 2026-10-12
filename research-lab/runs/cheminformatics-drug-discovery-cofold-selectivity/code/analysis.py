@@ -135,6 +135,15 @@ def base_promiscuity(meas_full, rows, cols):
     return out
 
 
+def base_promiscuity_full(meas_full, rows, cols):
+    """B1 without the leave-one-out adjustment, so it is identical for every ligand. Used for the
+    within-kinase axis P3: the leave-one-out version of B1 correlates exactly -1 with the measurement
+    there, because leaving a strong binder out lowers that kinase's mean — an artefact of the
+    adjustment, not a property of the baseline."""
+    sub = meas_full[:, cols]
+    return np.repeat(sub.mean(0)[None, :], len(rows), axis=0)
+
+
 def base_neighbour(meas_full, rows, cols, smiles, nn=1):
     """B2: the measured pKd of the most ECFP4-similar other Davis ligand on the same kinase."""
     from rdkit import Chem, DataStructs

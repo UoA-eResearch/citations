@@ -1,0 +1,68 @@
+{
+ "note": "Baselines computed from the measured panel alone, before any model prediction was read. B1's within-kinase figure uses the version without the leave-one-out adjustment.",
+ "B0_ligand_only": {
+  "P1": {
+   "point": 0.0,
+   "lo": 0.0,
+   "hi": 0.0
+  },
+  "P2": {
+   "point": 0.0,
+   "lo": 0.0,
+   "hi": 0.0
+  },
+  "P3": 0.489,
+  "top1": 0.062
+ },
+ "B1_promiscuity": {
+  "P1": {
+   "point": 0.386,
+   "lo": 0.31,
+   "hi": 0.522
+  },
+  "P2": {
+   "point": 0.293,
+   "lo": 0.175,
+   "hi": 0.391
+  },
+  "P3": 0.0,
+  "top1": 0.188
+ },
+ "B2_neighbour": {
+  "P1": {
+   "point": 0.394,
+   "lo": 0.268,
+   "hi": 0.503
+  },
+  "P2": {
+   "point": 0.294,
+   "lo": 0.124,
+   "hi": 0.433
+  },
+  "P3": 0.264,
+  "top1": 0.312
+ },
+ "B3_mw": {
+  "P1": {
+   "point": 0.0,
+   "lo": 0.0,
+   "hi": 0.0
+  },
+  "P2": {
+   "point": 0.0,
+   "lo": 0.0,
+   "hi": 0.0
+  },
+  "P3": 0.061,
+  "top1": 0.062
+ },
+ "measured_decomposition": {
+  "ligand": 0.2549,
+  "kinase": 0.1463,
+  "residual": 0.5988,
+  "sd_total": 1.1857,
+  "sd_ligand": 0.5986,
+  "sd_kinase": 0.4536
+ },
+ "chance_top1": 0.094
+}

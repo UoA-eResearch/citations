@@ -25,13 +25,18 @@ PRED = RUN / "results" / "predictions.jsonl"
 
 
 def preds(arm=None):
+    """Rows for one arm, or for a list of arms. Never call this with arm=None when the values are going
+    to be pivoted: the sampling arm re-predicts 96 panel pairs at a different setting, and pooling the
+    two would silently mix settings for the same (kinase, ligand) cell."""
     rows = [json.loads(l) for l in open(PRED)]
     df = pd.DataFrame(rows)
     df = df.drop_duplicates(subset=["arm", "pair_id"], keep="last")
     df["protein"] = df.pair_id.str.split("__").str[0]
     df["cid"] = df.pair_id.str.split("__").str[1]
     df["pred"] = 6.0 - df.affinity_pred_value
-    return df[df.arm == arm] if arm else df
+    if arm is None:
+        return df
+    return df[df.arm.isin([arm] if isinstance(arm, str) else list(arm))]
 
 
 def davis():
@@ -40,7 +45,9 @@ def davis():
     names = [p[0] for p in prot]
     return dict(Y=Y, panel=P, prot_names=names, lig=dict(lig),
                 rows=[c["row"] for c in P["ligands"]], cols=[k["col"] for k in P["kinases"]],
-                cids=[c["cid"] for c in P["ligands"]], accs=[k["acc"] for k in P["kinases"]])
+                cids=[c["cid"] for c in P["ligands"]], accs=[k["acc"] for k in P["kinases"]],
+                # all 68 ligands in Y row order - the nearest-neighbour baseline searches over all of them
+                all_smiles=[s for _, s in lig], all_cids=[c for c, _ in lig])
 
 
 def pkd(nm):
@@ -113,7 +120,7 @@ def primary():
     rows, cols = [c["row"] for c in d["panel"]["ligands"]], [k["col"] for k in d["panel"]["kinases"]]
     rows = [r for r, c in zip(rows, d["cids"]) if c in cids]
     Ypkd = pkd(d["Y"])
-    smiles = [d["lig"][c] for c in d["cids"]]
+    smiles = d["all_smiles"]
     mw = [c["mw"] for c in d["panel"]["ligands"] if c["cid"] in cids]
     bases = dict(B0_ligand_only=A.base_ligand_only(Ypkd, rows, cols),
                  B1_promiscuity=A.base_promiscuity(Ypkd, rows, cols),
@@ -121,7 +128,11 @@ def primary():
                  B3_mw=A.base_mw(mw, len(cols)))
     out["baselines"] = {}
     for name, b in bases.items():
-        out["baselines"][name] = dict(P1=A.primary(b, meas), P3=A.med(A.within_kinase(b, meas)),
+        # B1's within-kinase axis is read off the version without the leave-one-out adjustment
+        b3 = A.base_promiscuity_full(Ypkd, rows, cols) if name == "B1_promiscuity" else b
+        out["baselines"][name] = dict(P1=A.primary(b, meas), P2=A.primary(b, meas, True),
+                                      P3=A.med(A.within_kinase(b3, meas)),
+                                      top1=A.hit_rates(b, meas)["top1"],
                                       diff=A.paired_difference(pred, meas, b))
     # confidence-filtered recomputation (plan.md §9.3)
     t = pd.read_csv(TAB / "pairs_panel.csv")
