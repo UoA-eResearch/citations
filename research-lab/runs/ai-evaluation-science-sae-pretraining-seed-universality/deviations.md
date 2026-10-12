@@ -58,3 +58,16 @@ and `N_SEQ` (fewer sequences of H). The main run sets none of them.
 - **Data.** 64 sequences of H.
 - **Result.** It ran end to end, including the reference comparison. Its `*_dryrun` outputs were deleted.
 - **What it did not touch.** No full-budget SAE was involved. The first main training run was still in progress.
+
+## D4 - 2026-10-13 05:42 NZDT - main training finished; matching started; figure code; a docstring correction (no pair score seen)
+
+- **Training.** All 16 runs finished between 16:18 on 12 October and 05:38 on 13 October NZDT (about 49-52 minutes
+  each), with no failure and no error, NaN or traceback in any log. All 96 SAEs (16 models × 2 layers × 3 seeds) were
+  saved, about 201 MB each.
+- **Matching** (`code/run_match.sh`) started at 05:39 NZDT.
+- **Figure code** (`code/figures.py`) was written and tested on the mock tables while the matching ran, and is committed
+  before any pair score is seen.
+- **Docstring correction.** `match.dec_cos_best` says it takes the maximum |cosine|. The code takes the maximum signed
+  cosine. The signed version is the right quantity here: SAE activations are non-negative, so a decoder row and its
+  negation are different features. The code is unchanged; only the description was wrong. The report describes the
+  signed cosine.
