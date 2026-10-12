@@ -88,6 +88,26 @@ def main():
     prim = A.primary_block(recomputed, col="f0.7_nontoken")
     # per layer (added after the pooled result was first printed; see D9)
     prim["per_layer"] = {str(L): A.primary_block(recomputed, col="f0.7_nontoken", layers=[L]) for L in [4, 8]}
+    # sensitivity to the purity cut (D9, added after the confirmation pass): token-identity = purity >= 0.8
+    for cut in [0.8]:
+        rec, share = {}, {}
+        for L in [4, 8]:
+            d = recomputed[L].copy()
+            n_tid = n_all = 0
+            for i, p in d.iterrows():
+                z = np.load(RUN / "data" / "match" / f"L{L}" / f"pair_{p.id}.npz")
+                sc = []
+                for side, m, s in (("a", p.a, p.sa), ("b", p.b, p.sb)):
+                    best = z[f"corr_{side}"].astype(np.float32)
+                    ok, tid = np.isfinite(best), pur[L][(m, s)] >= cut
+                    sc.append(float((best[ok & ~tid] >= 0.7).mean()))
+                    n_tid, n_all = n_tid + int((ok & tid).sum()), n_all + int(ok.sum())
+                d.loc[i, "f0.7_nontoken"] = sum(sc) / 2
+            rec[L], share[str(L)] = d, n_tid / n_all
+        blk = A.primary_block(rec, col="f0.7_nontoken")
+        blk["per_layer"] = {str(L): A.primary_block(rec, col="f0.7_nontoken", layers=[L]) for L in [4, 8]}
+        blk["token_identity_share"] = share
+        prim[f"cut{cut}"] = blk
     json.dump(prim, open(TAB / "token_identity_primary.json", "w"), indent=1)
     print(json.dumps(prim, indent=1))
 

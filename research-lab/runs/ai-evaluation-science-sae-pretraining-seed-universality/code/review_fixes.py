@@ -105,9 +105,9 @@ def rotations():
     for L in [4, 8]:
         X = {m: residual(m, L, tokens).to(torch.bfloat16) for m in MODELS}
         for a, b, kind in model_pairs:
-            fa, fb = X[a].float().to(M.DEV), X[b].float().to(M.DEV)
+            fa, fb = X[a].double().to(M.DEV), X[b].double().to(M.DEV)  # float64: a float32 SVD leaves |det| ~ 1.10
             U, _, Vt = torch.linalg.svd((fa - fa.mean(0)).T @ (fb - fb.mean(0)))
-            R = (U @ Vt).double()
+            R = U @ Vt
             rows.append(dict(layer=L, kind=kind, a=a, b=b, frob_from_I=float((R - torch.eye(768, device=M.DEV, dtype=R.dtype)).norm()),
                              det=float(torch.linalg.det(R))))
         del X

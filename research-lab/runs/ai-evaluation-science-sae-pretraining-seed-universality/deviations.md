@@ -224,3 +224,24 @@ statistic uses only the 10 full seeds and is unaffected.
   - **Timing.** The per-layer intervals were added to the script after the pooled result had been printed. It was
     rerun from the cached purities. The pooled numbers are unchanged.
   - **The preregistered verdict is unchanged.** The report now gives this result prominently as a qualification.
+
+## D10 - 2026-10-13 07:46 NZDT - confirmation pass (publish with edits) and the final edits
+
+- **Confirmation** (`review/confirmation.md`). Of the 13 issues, 12 are resolved and issue 4 is partly resolved. It
+  raises 7 new small points, including three on D9. No number or verdict changes. Edits made:
+  - **Issue 4.** The lineage model-pair scores "overlap the full-seed range at both layers, inside it at layer 4" (they
+    were "inside it at both layers", which is false at layer 8). The figure labels no longer say "near-replicate"; the
+    weight-seed kind is "weight-seed (same init)".
+  - **D9.**
+    - The purity ≥ 0.8 cut was added to `code/token_identity.py`. Token-identity share: 10.9% (layer 4) and 7.7%
+      (layer 8). Without those latents, R = 0.855 (0.852-0.859); layer 4 0.897, layer 8 0.810 (0.805-0.814), Refuted.
+    - The report now says layer 8 is "at or just below the line, depending on the cut".
+    - "Context-dependent" became "not token-identity".
+    - The closing reading is limited to the 0.5 cut.
+  - **Precision.** The Procrustes SVD in `code/review_fixes.py` is now float64. The float32 version stored |det| ≈ 1.10.
+    The reflection counts are unchanged. The full-pair ‖R − I‖_F range became 39.12-39.27; D8's "39.12-39.28" is
+    superseded.
+  - **Smaller edits.**
+    - McCann's decoder match is now "98-99%".
+    - The standardised fit's SAE metric is cited (0.53 to 0.50 at layer 4, 0.36 to 0.38 at layer 8).
+    - The plain terms are trimmed to 294 words.

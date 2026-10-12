@@ -6,7 +6,7 @@ by their activations on held-out text. The test compares how often a feature rec
 seeds with how often it recurs across SAE seeds on one model.*
 
 Run directory: `research-lab/runs/ai-evaluation-science-sae-pretraining-seed-universality` · Preregistration:
-[`plan.md`](plan.md) (commit 3e34053) · Departures from it: [`deviations.md`](deviations.md) (D1-D9) · Independent review:
+[`plan.md`](plan.md) (commit 3e34053) · Departures from it: [`deviations.md`](deviations.md) (D1-D10) · Independent review:
 [`review/review.md`](review/review.md), confirmation pass [`review/confirmation.md`](review/confirmation.md) · 13 October
 2026, revised after review
 
@@ -19,9 +19,11 @@ Run directory: `research-lab/runs/ai-evaluation-science-sae-pretraining-seed-uni
   Layer 8 alone is 0.817, two points above the line.
 - **Token-identity latents flatter the ratio** (exploratory, D9).
   - About a quarter of latents fire mostly on one input token. Every run has them, and they match well everywhere.
-  - Without them as sources, R is 0.833 (0.829-0.837).
-  - At layer 8 alone it is 0.784 (0.779-0.790), below the 0.8 line. For the context-dependent features of the deeper
-    layer, the hypothesis would have held.
+  - **At a purity cut of 0.5** (at least half a latent's firings on one token), R without them as sources is 0.833
+    (0.829-0.837). Layer 8 alone is 0.784 (0.779-0.790), below the 0.8 line.
+  - **At a cut of 0.8**, R is 0.855, and layer 8 is 0.810 (0.805-0.814), just above it.
+  - So for the deeper layer's other latents, the ratio is at or just below the hypothesis's threshold, depending on
+    the cut.
 - **Where the irreproducibility lies.** Mostly in the SAE, not in the pretraining run. Two SAEs on the same model share
   46% (layer 4) and 42% (layer 8) of their latents at a correlation of at least 0.7. SAEs on different pretraining
   runs share 42% and 34%.
@@ -40,15 +42,15 @@ Run directory: `research-lab/runs/ai-evaluation-science-sae-pretraining-seed-uni
 
 Sparse autoencoders (SAEs) are a popular tool for looking inside language models. They split a model's internal
 activity into thousands of "features", each standing for one recognisable pattern. A worry is that these
-features describe one particular training run rather than what models of that kind learn.
+features describe one training run, not what models of that kind learn.
 
 We tested this on Pythia-160M, a small open model released in many training runs: the original, nine runs from
 other random starting points, and six variants. We trained three SAEs on each of 16 runs. Then we
 asked how often a feature in one SAE has a near-twin in another: the two are active on the same words (correlation at
-least 0.7) across 2 million tokens of held-out text.
+least 0.7) across 2 million tokens of new text.
 
-- **Same model, different SAE.** They share only 46% of their features in the middle of the model and 42% deeper in.
-  That is how irreproducible SAE training itself is.
+- **Same model, different SAE.** They share only 46% of features in the middle of the model and 42% deeper in: the
+  irreproducibility of SAE training itself.
 - **Independent training runs.** They share 42% and 34%.
 
 The prediction was that features would recur across runs at less than 0.8 times the rate within a run. They recurred at
@@ -56,14 +58,13 @@ The prediction was that features would recur across runs at less than 0.8 times 
 not from the training run.
 
 The verdict depends on that criterion. For near-exact twins (correlation 0.9) the ratio is 0.73, and the
-prediction would have held. About a quarter of the features just track one particular word, and every run has those.
-Leaving them out, the ratio is 0.83, and in the deeper layer 0.78, below the line.
+prediction would have held. A tenth to a quarter of features fire mostly on one word, and every run has those. Without them the ratio falls to 0.83-0.86, and in the deeper layer to about the line (0.78-0.81).
 
-A practical filter: a feature that two other SAEs on the same model both find again has a twin in about 80% of
+A practical filter: a feature that two other SAEs on the same model both re-find has a twin in about 80% of
 comparisons with other runs.
 
-Three variants released as differing only in their starting point actually started from the original's, a problem
-already reported to EleutherAI.
+Three variants released as differing only in their starting point actually started from the original's (already
+reported to EleutherAI).
 
 ## What was done
 
@@ -219,25 +220,28 @@ address it.
 
 **The primary statistic with token-identity latents removed as sources:**
 
-| | R (95% interval) | By the rule |
-|---|---:|---|
-| Both layers | 0.833 (0.829-0.837) | Refuted |
-| Layer 4 | 0.878 (0.872-0.884) | Refuted |
-| Layer 8 | 0.784 (0.779-0.790) | Supported |
+| | Purity cut 0.5: R (95% interval) | By the rule | Purity cut 0.8: R (95% interval) | By the rule |
+|---|---:|---|---:|---|
+| Token-identity share of latents (layer 4 / 8) | 28.5% / 23.5% | | 10.9% / 7.7% | |
+| Both layers | 0.833 (0.829-0.837) | Refuted | 0.855 (0.852-0.859) | Refuted |
+| Layer 4 | 0.878 (0.872-0.884) | Refuted | 0.897 (0.892-0.902) | Refuted |
+| Layer 8 | 0.784 (0.779-0.790) | Supported | 0.810 (0.805-0.814) | Refuted |
 
 The candidate latents of the other SAE are unchanged, because the stored best-match arrays do not allow restricting
 them.
 
 - **Token-identity latents match better everywhere.** They are a quarter of the dictionary, they match more often
   both within a model and across runs, and they lose least across runs. They pull the ratio up.
-- **The pooled verdict survives without them, by a smaller margin** (0.833).
-- **Layer 8 does not.** Its context-dependent latents recur across runs at 0.78 of the within-model rate, below the
-  hypothesis's threshold. The per-layer version of this check was added after the pooled result had been printed
-  (D9).
-- **How much it matters.** This check is exploratory and the purity threshold of 0.5 is a choice. It leaves the
-  preregistered verdict unchanged. But it changes how strongly the verdict generalises: for the features
-  interpretability work usually cares about, deeper in the model, the pretraining run matters about as much as the
-  hypothesis said.
+- **The pooled verdict survives without them, by a smaller margin**: 0.833 or 0.855, depending on the cut.
+- **Layer 8 sits at the line.** Its latents that are not token-identity recur across runs at 0.78 (cut 0.5) or 0.81
+  (cut 0.8) of the within-model rate. That is just below or just above the hypothesis's threshold, depending on the
+  cut. The direction of the effect is the same at both cuts: removing token-identity latents takes 1-3 points off
+  the ratio.
+- **Timing.** The per-layer version was added after the pooled result had been printed, and the 0.8 cut after the
+  confirmation pass (D9).
+- **How much it matters.** This check is exploratory. It leaves the preregistered verdict unchanged, but it weakens
+  how far the verdict generalises. For layer 8's latents that are not token-identity, the pretraining run matters
+  about as much as the hypothesis said at the 0.5 cut, and slightly less at the 0.8 cut.
 
 ### Latents that replicate within a model replicate across models (exploratory, D7)
 
@@ -317,8 +321,8 @@ models, 0.440; intervals resample model pairs and are descriptive):
   perturbation: the pairs share the original's initialisation and differ in batch composition or in something
   unidentified, yet score 0.869-0.871 against 0.862 for independent seeds.
 - **Sharing the initialisation is worth at most about one point.** 6-9 model pairs per kind cannot resolve the
-  difference. The `init` interval (0.862-0.879) contains the full-seed estimate, and the model-pair scores of the
-  lineage kinds lie inside the full-seed range at both layers.
+  difference. The `init` interval (0.862-0.879) contains the full-seed estimate. The model-pair scores of the
+  lineage kinds overlap the full-seed range at both layers, and lie inside it at layer 4.
 - **What the study cannot tell.** Two explanations fit equally well:
   - training amplifies any perturbation until runs are as far apart, feature-wise, as independent seeds;
   - or the weight-seed runs are simply data-order variants after their first batch.
@@ -331,7 +335,7 @@ models, 0.440; intervals resample model pairs and are descriptive):
 
 McCann (arXiv 2605.24577) reports four things for nine Pythia-70m seeds (d = 512):
 
-- across seeds, at least 99% of features at intermediate residual sites match at decoder cosine > 0.5 (Hungarian
+- across seeds, 98-99% of features at intermediate residual sites match at decoder cosine > 0.5 (Hungarian
   matching), falling to 62% at the final layer;
 - an SAE from one seed reconstructs another seed's activations at negative explained variance at internal layers;
 - after an orthogonal Procrustes fit, explained variance recovers to 0.85-0.99 (the "within 0.025 of the ceiling"
@@ -353,10 +357,10 @@ other SAE):
 - **Raw cosine.** Across independently initialised models it is never ≥ 0.5 for any latent of any of the 135 pairs at
   either layer.
   - That agrees with the residual bases differing by an arbitrary orthogonal map.
-  - It does not reproduce McCann's 99% decoder match. This study's best-match criterion is more lenient than
+  - It does not reproduce McCann's 98-99% decoder match. This study's best-match criterion is more lenient than
     Hungarian matching, so finding nothing is a stronger non-replication, not a weaker one.
 - **The Procrustes map behaves like a random orthogonal matrix** (D8, `results/tables/review_rotations.csv`).
-  - For the 45 full-seed pairs, ‖R − I‖_F is 39.12-39.28 at both layers, against √(2 · 768) = 39.19 for a random
+  - For the 45 full-seed pairs, ‖R − I‖_F is 39.12-39.27 at both layers, against √(2 · 768) = 39.19 for a random
     orthogonal matrix. McCann's diagnostic replicates at 160M.
   - The map is a reflection (determinant −1) for 28 and 25 of the 45 pairs at layers 4 and 8, as expected of a random
     orthogonal matrix. So it is an orthogonal map, not strictly a rotation.
@@ -390,8 +394,9 @@ fitted on 128 sequences of H and evaluated on 128 others. Means over the 45 full
   linear correspondence between their residual streams.
 - **Outlier dimensions are not what limits the fit.** The review tested this on one full-seed pair (`p160m` against
   `seed5`; `review/reviewer_checks/procrustes_check.json`).
-  - Standardising each dimension before the fit does not help: map FVU 0.71 becomes 0.88 at layer 4, and 0.92 becomes
-    0.96 at layer 8.
+  - Standardising each dimension before the fit does not help. Map FVU goes from 0.71 to 0.88 at layer 4 and from
+    0.92 to 0.96 at layer 8. B's SAE on the mapped stream goes from 0.53 to 0.50 and from 0.36 to 0.38: no material
+    change.
   - Dropping the top-10 outlier dimensions from the fit makes it worse (1.13 and 1.21).
   - The map fits outlier and non-outlier dimensions equally badly (0.71 against 0.70 at layer 4).
 - **Caveats.** Model size (160M against 70M), SAE type (TopK against ReLU with L1), training tokens (200 million
@@ -424,8 +429,8 @@ fitted on 128 sequences of H and evaluated on 128 others. Means over the 45 full
   most SAE features: 86% as many as two SAEs on the same model at the preregistered criterion.
 - The hypothesis that features are largely properties of the training run is refuted at this criterion (r ≥ 0.7,
   layers pooled). At r ≥ 0.9 it would have held, and layer 8 alone is two points above the line.
-- Part of the margin comes from token-identity latents, which every run shares. Without them the pooled ratio is 0.833,
-  and at layer 8 it is 0.784, below the line (D9, exploratory).
+- Part of the margin comes from token-identity latents, which every run shares. Without them the pooled ratio is
+  0.833-0.855, and layer 8 is 0.784-0.810, at the line, depending on the purity cut (D9, exploratory).
 
 **For interpretability practice.** For this SAE recipe and budget, and at r ≥ 0.7, the binding constraint on
 reproducible features is the SAE, not the language model.
@@ -439,7 +444,7 @@ reproducible features is the SAE, not the language model.
 - near-exact correspondence (r ≥ 0.9, ratio 0.725);
 - the most frequently firing latents (ratio 0.64 for the top third at layer 8);
 - the deeper of the two layers (0.817 against 0.902);
-- context-dependent rather than token-identity latents (0.784 at layer 8).
+- latents that are not token-identity (0.784-0.810 at layer 8, depending on the purity cut).
 
 A claim that a specific, frequently active, deep-layer feature is "the model's" deserves a check on a second
 pretraining run.
@@ -471,7 +476,8 @@ pretraining run.
 - **Exploratory analyses.** None of these were preregistered: the outlier dimensions, the cross-model reconstruction,
   the conditional replication, the analyses requested by the review, and the token-identity check (D5, D7-D9).
 - **Token-identity stratification.** The lead named this risk, but the plan omitted it, so it was added after the
-  results (D9). Its threshold (purity 0.5) is a choice. The candidate set was not restricted.
+  results (D9). The layer-8 reading depends on the purity cut: 0.5 gives 0.784, 0.8 gives 0.810. The candidate set
+  was not restricted.
 
 ## Deviations
 
@@ -491,7 +497,9 @@ pretraining run.
   - review-requested analyses added: the frequency table on 10 models, D7 by tercile, outlier counts, and ‖R − I‖_F
     and det(R).
 - **D9.** A post-hoc token-identity check, prompted by the lead's risk note. Without token-identity latents the pooled
-  R is 0.833, and layer 8 is 0.784.
+  R is 0.833 at a purity cut of 0.5 and 0.855 at 0.8. Layer 8 is 0.784 and 0.810.
+- **D10.** The confirmation pass (publish with edits) and the final edits: the D9 cut sensitivity, the figure labels,
+  and a float64 recomputation of the Procrustes maps.
 
 Nothing changed the primary statistic, its inputs or the decision rule.
 

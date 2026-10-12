@@ -3,4 +3,5 @@ over the 10 full-seed models, with the dyadic model bootstrap interval. Supporte
 (dashed); Refuted needs it at or above 0.8. The decomposition rows divide each kind's mean score by the mean within
 score of the seed-0 lineage (original, weight-seed and data-seed variants); their intervals resample model pairs and
 are descriptive (6-9 model pairs per kind, 45 for full). Labels follow D6: all seven lineage models were trained from
-the original's initialisation, so the weight-seed pairs are near-replicates, not initialisation-only pairs.
+the original's initialisation, so the weight-seed pairs differ from each other and from the original in an
+unidentified way, not in initialisation.

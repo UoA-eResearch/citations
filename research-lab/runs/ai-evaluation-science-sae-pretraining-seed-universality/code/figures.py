@@ -17,7 +17,7 @@ LAYERS = [4, 8]
 FULL = ["p160m"] + [f"p160m-seed{i}" for i in range(1, 10)]
 # labels for the decoupled kinds follow D6 (what the checkpoints show), not the preregistered names
 KINDS = [("within", "within model\n(SAE seeds)", "#2e6f9e"), ("full", "full seeds\n(init + data)", "#c2412d"),
-         ("init", "near-replicate\n(weight-seed)", "#d9822b"), ("data", "data order\n(data-seed)", "#7a9e3b"),
+         ("init", "weight-seed\n(same init)", "#d9822b"), ("data", "data order\n(data-seed)", "#7a9e3b"),
          ("both_dc", "data order\n(weight- vs\ndata-seed)", "#8d6cab")]
 
 
@@ -72,7 +72,7 @@ def ratios(prim, sec):
     if sec.get("drop_flagged"):
         rows += [("Flagged SAEs' models dropped", sec["drop_flagged"], False)]
     dec = sec["decomposition"]
-    lab = {"init": "near-replicate (weight-seed variants)", "data": "data order (data-seed variants)",
+    lab = {"init": "weight-seed (same init, perturbation unidentified)", "data": "data order (data-seed variants)",
            "both_dc": "data order (weight- vs data-seed)", "full": "full seeds (vs lineage within)"}
     rows += [(f"Decomposition: {lab[k]}", dict(R=dec[k]["ratio"], lower95=dec[k]["lower95"], upper95=dec[k]["upper95"]),
               False) for k in ["init", "data", "both_dc", "full"]]
@@ -100,7 +100,8 @@ over the 10 full-seed models, with the dyadic model bootstrap interval. Supporte
 (dashed); Refuted needs it at or above 0.8. The decomposition rows divide each kind's mean score by the mean within
 score of the seed-0 lineage (original, weight-seed and data-seed variants); their intervals resample model pairs and
 are descriptive (6-9 model pairs per kind, 45 for full). Labels follow D6: all seven lineage models were trained from
-the original's initialisation, so the weight-seed pairs are near-replicates, not initialisation-only pairs.""")
+the original's initialisation, so the weight-seed pairs differ from each other and from the original in an
+unidentified way, not in initialisation.""")
 
 
 def best_corr(pairs):
