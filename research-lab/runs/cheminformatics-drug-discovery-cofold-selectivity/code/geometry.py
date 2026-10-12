@@ -58,10 +58,13 @@ def tri(m):
     return m[i, j]
 
 
-def main():
-    d = S.davis()
-    pred, prob, meas, accs, cids = S.matrices("panel", d)
-    kin = {k["acc"]: k for k in d["panel"]["kinases"]}
+def identity_matrix(accs, kin):
+    """Pairwise identity between the kinase-domain crops, cached: it depends only on the panel."""
+    f = TAB / "kinase_identity.csv"
+    if f.exists():
+        t = pd.read_csv(f, index_col=0)
+        if list(t.columns) == list(accs):
+            return t.to_numpy(float)
     seqs = [kin[a]["crop_seq"] for a in accs]
     n = len(accs)
     ident = np.eye(n)
@@ -69,6 +72,21 @@ def main():
         for j in range(i + 1, n):
             ident[i, j] = ident[j, i] = seq_identity(seqs[i], seqs[j])
         print(f"  identity row {i + 1}/{n}", flush=True)
+    pd.DataFrame(ident, index=accs, columns=accs).to_csv(f)
+    return ident
+
+
+def main():
+    d = S.davis()
+    kin = {k["acc"]: k for k in d["panel"]["kinases"]}
+    if len(sys.argv) > 1 and sys.argv[1] == "identity":
+        ident = identity_matrix([k["acc"] for k in d["panel"]["kinases"]], kin)
+        print("identity matrix cached;", f"median {np.median(tri(ident)):.3f}",
+              f"range {tri(ident).min():.3f}-{tri(ident).max():.3f}")
+        return
+    pred, prob, meas, accs, cids = S.matrices("panel", d)
+    n = len(accs)
+    ident = identity_matrix(accs, kin)
     sd = 1 - ident
     dp, dm = centred_distance(pred), centred_distance(meas)
     groups = np.array([kin[a]["group"] for a in accs])
@@ -85,12 +103,25 @@ def main():
                         pred_across=float(np.median(dp[~same])),
                         meas_within=float(np.median(dm[same & ~np.eye(n, dtype=bool)])),
                         meas_across=float(np.median(dm[~same]))),
+        # the panel's four near-identical kinase pairs are natural test cases: CSNK1D/CSNK1E share 97% of
+        # their kinase-domain sequence, so a protein-aware model should predict them almost alike, and the
+        # measurements say how alike they really are
+        near_pairs=[dict(a=kin[accs[i]]["davis_name"], b=kin[accs[j]]["davis_name"],
+                         identity=round(float(ident[i, j]), 3),
+                         meas_mean_abs_diff=float(np.nanmean(np.abs(meas[:, i] - meas[:, j]))),
+                         pred_mean_abs_diff=float(np.nanmean(np.abs(pred[:, i] - pred[:, j]))),
+                         meas_profile_rho=float(A.rho(meas[:, i], meas[:, j])),
+                         pred_profile_rho=float(A.rho(pred[:, i], pred[:, j])))
+                    for i in range(n) for j in range(i + 1, n) if ident[i, j] >= 0.5],
+        all_pairs_median=dict(
+            meas_mean_abs_diff=float(np.median([np.nanmean(np.abs(meas[:, i] - meas[:, j]))
+                                                for i in range(n) for j in range(i + 1, n)])),
+            pred_mean_abs_diff=float(np.median([np.nanmean(np.abs(pred[:, i] - pred[:, j]))
+                                                for i in range(n) for j in range(i + 1, n)]))),
         spread=dict(pred_ligand_sd=float(np.median(np.nanstd(pred, axis=1))),
                     meas_ligand_sd=float(np.median(np.nanstd(meas, axis=1))),
                     pred_kinase_effect_sd=float(np.nanstd(np.nanmean(pred, axis=0))),
                     meas_kinase_effect_sd=float(np.nanstd(np.nanmean(meas, axis=0)))))
-    np.save(TAB / "kinase_identity.npy", ident)
-    pd.DataFrame(ident, index=accs, columns=accs).to_csv(TAB / "kinase_identity.csv")
     A.save(out, "geometry.json")
     print(json.dumps(out, indent=1))
 
