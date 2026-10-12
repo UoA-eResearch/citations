@@ -128,3 +128,22 @@ reason. difflib aligned the repeated numeral 3 across positions (\`x % 3 = 2\` �
 insertion and deletion of \`=\`. When the two token sequences have the same length, check 3 now compares them position
 by position, and it falls back to difflib otherwise. The twin's edit is numerals-only (σ: 2→3, 3→7, 14→24). No model
 had been sampled.
+
+## D6 - 2026-10-12 13:21 NZDT - informativeness check on the defective references (before any outcome was computed)
+
+Added after sampling and during the Lean classification, before `analysis.py` had been run or any classification
+row had been tabulated by class. Only extraction rates, finish reasons and elaboration rates had been looked at.
+
+**The problem.** The copy test certifies O → D and D → O with a tactic portfolio. If D is itself proved outright by the
+portfolio (a weakened conclusion that has become easy, say), any output the portfolio can prove is certified
+equivalent to D, and "equivalent to D" no longer means "copies D". If D is refuted, D → O can hold by explosion. The
+contamination run met the same problem and added informativeness and explosion guards (its D3, D9). The plan has no
+such guard.
+
+**The check** (`code/refcheck.py`). Each primary item's D and C (and, for items with a twin, D′ and C′) is tested with
+`lean_check.provable` and `lean_check.refuted`, the portfolios already used for the twins' truth screen (D1 item 3).
+Results go to `results/catalogue/refcheck.jsonl`.
+
+**Its use.** It is a sensitivity analysis only (`secondary.json`, `informative_refs`): the primary rate ratio
+recomputed on the included items with a twin whose D and D′ are neither proved nor refuted (a reference whose check
+errors counts as uninformative). The preregistered verdict is unchanged. The report gives both.

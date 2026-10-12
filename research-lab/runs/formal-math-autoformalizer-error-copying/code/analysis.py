@@ -126,6 +126,15 @@ def main():
     sec["one_rater_set"] = ratio(counts(df, one, PRIMARY, "O"), counts(df, one, PRIMARY, "T"), len(PRIMARY))
     tc = sorted(prim[(prim.set == "included") & prim.N_twin.notna() & prim.twin_truth_certified].item)
     sec["truth_certified_twins"] = ratio(counts(df, tc, PRIMARY, "O"), counts(df, tc, PRIMARY, "T"), len(PRIMARY)) if tc else None
+    # D6: items whose defective references (D and D') are neither portfolio-provable nor portfolio-refuted
+    rc = CAT / "refcheck.jsonl"
+    if rc.exists():
+        r = pd.read_json(rc, lines=True)
+        err = r.error.notna() if "error" in r else False  # an unchecked reference counts as uninformative
+        bad = set(r[r.ref.isin(["D", "D_twin"]) & (r.proved.fillna(False).astype(bool) | r.refuted.fillna(False).astype(bool) | err)].item)
+        inf = [i for i in inc_tw if i not in bad]
+        sec["informative_refs"] = dict(ratio(counts(df, inf, PRIMARY, "O"), counts(df, inf, PRIMARY, "T"), len(PRIMARY)),
+                                       excluded=sorted(set(inc_tw) & bad))
     d = df[df.model.isin(PRIMARY) & df.item.isin(inc_tw) & (df.idx != "g")]
     el = d[d.cls != "noelab"].groupby("cond").agg(n=("cls", "size"), copies=("cls", lambda s: int((s == "copy").sum())))
     sec["among_elaborating"] = {c: dict(n=int(r.n), copies=int(r.copies), rate=float(r.copies / r.n) if r.n else None)
