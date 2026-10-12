@@ -1,0 +1,7 @@
+variant,tensors,identical_tensors,all_identical,max_abs_diff,keys_only_in_one,tokenizers_equivalent_all_16
+p160m-weight-seed1,184,134,False,0.18798828125,0,True
+p160m-weight-seed2,184,134,False,0.188629150390625,0,True
+p160m-weight-seed3,184,134,False,0.19342041015625,0,True
+p160m-data-seed1,184,184,True,0.0,0,True
+p160m-data-seed2,184,184,True,0.0,0,True
+p160m-data-seed3,184,184,True,0.0,0,True

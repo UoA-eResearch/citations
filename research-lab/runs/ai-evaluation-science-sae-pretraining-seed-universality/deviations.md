@@ -27,3 +27,20 @@
    depend on them; they only label the decoupled comparisons (plan section 7, item 2).
 5. **Disk.** sparsify's optimizer state (1.2 GB per model) is deleted after each run completes. It is needed only to
    resume a run.
+
+## D2 - 2026-10-12 16:21 NZDT - validation checks (plan 9.3), run while the main training ran; no SAE matched
+
+- **Step-0 checkpoints** (`code/check_step0.py`, `results/tables/step0_check.csv`).
+  - **Data-seed variants.** The step-0 checkpoints of `pythia-160m-data-seed1..3` are identical to the original's,
+    in all 184 tensors.
+  - **Weight-seed variants.** Those of `pythia-160m-weight-seed1..3` differ: 134 of 184 tensors are identical, the
+    maximum absolute difference in the rest is about 0.19. The identical tensors are presumably the biases and
+    normalisation parameters, which start at constants.
+  - **Effect.** The decoupled labels hold as the plan assumed: the data-seed variants share the original's
+    initialisation, and the weight-seed variants do not. The plan's comparisons need no relabelling. That the
+    weight-seed variants share the original's data order rests on the PolyPythias paper; it cannot be checked from
+    the weights.
+- **Tokenizers.** The `tokenizer.json` files are not byte-identical across the 16 repositories: 12 serialise the BPE
+  `model` section differently. All 16 have the same vocabulary and give identical ids on the first 20,000 tokens of
+  the training text. The training stream and H, tokenized once with the original's tokenizer, are therefore valid
+  inputs for every model.
