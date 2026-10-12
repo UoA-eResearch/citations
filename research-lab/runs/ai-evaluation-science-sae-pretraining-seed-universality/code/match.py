@@ -19,6 +19,7 @@ pair: match fractions at r >= 0.5 / 0.7 / 0.9 in each direction, assessable coun
 results/tables/sae_quality_L{L}.csv (FVU, dead fraction, assessable latents per SAE).
 Usage: match.py <layer> [pairs_file]   (pairs default: the full design from pairs.py)"""
 import json
+import os
 import sys
 import time
 from pathlib import Path
@@ -58,8 +59,13 @@ class SAE:
         return (v.unsqueeze(-1) * self.W_dec[i]).sum(-2) + self.b_dec
 
 
+SAE_ROOT = Path(os.environ.get("SAE_ROOT", RUN / "data" / "sae"))  # dry runs: SAE_ROOT=data/sae_pilot
+TAG = os.environ.get("MATCH_TAG", "")  # dry runs write *_<tag> files, never the study's tables
+N_SEQ = int(os.environ.get("N_SEQ", 0)) or None  # dry runs: fewer sequences of H
+
+
 def sae_dir(model, layer, seed):
-    return RUN / "data" / "sae" / model / f"layers.{layer}" / f"seed{seed}"
+    return SAE_ROOT / model / f"layers.{layer}" / f"seed{seed}"
 
 
 @torch.no_grad()
@@ -165,12 +171,12 @@ def procrustes(Xa, Xb):
 
 
 def main(layer, pairs_file=None):
-    tokens = np.fromfile(RUN / "data" / "heldout_tokens.bin", dtype=np.uint16).reshape(-1, CTX)
+    tokens = np.fromfile(RUN / "data" / "heldout_tokens.bin", dtype=np.uint16).reshape(-1, CTX)[:N_SEQ]
     pairs = design() if pairs_file is None else json.loads(Path(pairs_file).read_text())
     needed = sorted({p["a"] for p in pairs} | {p["b"] for p in pairs})
     enc, proc, qual = {}, {}, []
     t0 = time.time()
-    out_dir = RUN / "data" / "match" / f"L{layer}"
+    out_dir = RUN / "data" / "match" / f"L{layer}{TAG}"
     out_dir.mkdir(parents=True, exist_ok=True)
     for mname in needed:
         res, keep, n_tok = encode_model(mname, layer, tokens, {s: SAE(sae_dir(mname, layer, s)) for s in SEEDS})
@@ -196,8 +202,8 @@ def main(layer, pairs_file=None):
         torch.cuda.empty_cache()
     tab = RUN / "results" / "tables"
     tab.mkdir(parents=True, exist_ok=True)
-    pd.DataFrame(qual).to_csv(tab / f"sae_quality_L{layer}.csv", index=False)
-    pd.DataFrame(ref_rows).to_csv(tab / f"reference_L{layer}.csv", index=False)
+    pd.DataFrame(qual).to_csv(tab / f"sae_quality_L{layer}{TAG}.csv", index=False)
+    pd.DataFrame(ref_rows).to_csv(tab / f"reference_L{layer}{TAG}.csv", index=False)
     rows = []
     rot_cache = {}
     for n, p in enumerate(pairs):
@@ -226,8 +232,8 @@ def main(layer, pairs_file=None):
         rows.append(row)
         if n % 10 == 0:
             print(f"L{layer} pair {n + 1}/{len(pairs)} ({time.time() - t0:.0f} s)", flush=True)
-            pd.DataFrame(rows).to_csv(tab / f"pairs_L{layer}.csv", index=False)
-    pd.DataFrame(rows).to_csv(tab / f"pairs_L{layer}.csv", index=False)
+            pd.DataFrame(rows).to_csv(tab / f"pairs_L{layer}{TAG}.csv", index=False)
+    pd.DataFrame(rows).to_csv(tab / f"pairs_L{layer}{TAG}.csv", index=False)
     print(f"MATCH L{layer} DONE", flush=True)
 
 

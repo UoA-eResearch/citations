@@ -44,3 +44,17 @@
   `model` section differently. All 16 have the same vocabulary and give identical ids on the first 20,000 tokens of
   the training text. The training stream and H, tokenized once with the original's tokenizer, are therefore valid
   inputs for every model.
+
+## D3 - 2026-10-12 16:22 NZDT - dry run of the matching pipeline (pilot SAEs only; outputs deleted)
+
+`match.py` takes three environment overrides for dry runs: `SAE_ROOT`, `MATCH_TAG` (suffix for every output file)
+and `N_SEQ` (fewer sequences of H). The main run sets none of them.
+
+**The dry run.**
+
+- **Pairs.** The three within pairs of the pilot SAEs on the original model, and one cross pair in which the pilot
+  SAEs were applied to `pythia-160m-seed1`'s residual stream. The cross pair has no meaning; it only exercises the
+  cross-model path and the Procrustes rotation.
+- **Data.** 64 sequences of H.
+- **Result.** It ran end to end, including the reference comparison. Its `*_dryrun` outputs were deleted.
+- **What it did not touch.** No full-budget SAE was involved. The first main training run was still in progress.
