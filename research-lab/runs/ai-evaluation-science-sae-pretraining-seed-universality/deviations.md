@@ -71,3 +71,22 @@ and `N_SEQ` (fewer sequences of H). The main run sets none of them.
   cosine. The signed version is the right quantity here: SAE activations are non-negative, so a decoder row and its
   negation are different features. The code is unchanged; only the description was wrong. The report describes the
   signed cosine.
+
+## D5 - 2026-10-13 06:10 NZDT - matching finished; primary and secondary analyses run; two post-hoc exploratory checks
+
+- **Matching** finished at 06:07 NZDT: 246 pairs at each layer, about 15 minutes per layer.
+- **Analysis.** `code/analysis.py` ran unchanged at 06:09 NZDT, then `code/figures.py`.
+- **Post hoc, exploratory** (`code/exploratory.py`, written after the primary and secondary results were seen; not
+  in the plan; it changes no verdict). The decoder-geometry secondary analysis (plan 7.5) showed a pattern the plan
+  did not anticipate:
+  - **The pattern.** The raw decoder cosine is never ≥ 0.5 across full seeds, but it is for 3-8% of latents across
+    the seed-0 lineage. That includes pairs of a weight-seed and a data-seed variant, which share neither the
+    initialisation nor the data order.
+  - **Init check.** Step-0 weights of `weight-seed1` correlate with the original's at about 0.000 in all 50 weight
+    tensors (embedding, attention, MLP, unembedding). Their initialisation is independent, as labelled.
+  - **(a) Outlier dimensions.** Do the models share privileged residual coordinates? The check takes, per model and
+    layer, the top-10 residual dimensions by mean square.
+  - **(b) McCann's central claim.** An SAE trained on one seed reconstructs another seed's residual stream badly, and
+    an orthogonal rotation restores it. The check tests this directly: B's seed-0 SAE on A's residual stream, raw,
+    Procrustes-rotated and least-squares mapped. The maps are fitted on sequences 0-127 of H and evaluated on
+    sequences 128-255. It also records how well each map predicts B's residual stream from A's.
