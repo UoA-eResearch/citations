@@ -97,15 +97,16 @@ Measured properly, on the panel arm with and without a second arm running beside
 | configuration | per complex, each process | aggregate per complex |
 | --- | --- | --- |
 | one process (panel alone, structure pass) | 15.1 s | 15.1 s |
-| two processes (panel + decoy, structure pass) | 17.3 s and 21 s | 9.5 s |
+| two processes (panel + decoy, structure pass), first sample | 17.3 s and 21 s | 9.5 s |
+| the same, a few minutes later | 23.6 s and 19.3 s | 10.6 s |
 | three processes (decoy, structure pass) | ~28 s | ~9.4 s |
 
-So two concurrent processes give about a 1.6x aggregate speedup for a 15 % slowdown of the first arm, and a
-third adds nothing. The arms now run in two lanes: the panel in one, and decoy, promiscuity, sampling and
+So two concurrent processes give a 1.4-1.6x aggregate speedup (two samples, taken minutes apart, differ by
+that much) while the first arm slows by 15-55 %, and a third process adds nothing. The arms now run in two lanes: the panel in one, and decoy, promiscuity, sampling and
 post-cutoff one after another in the other (`code/lane2.sh`). Each arm is still a single process with seed
 20261013, so a prediction is still reproducible from its arm and pair alone.
 
 Corrected budget: each complex costs about 34 s of single-process GPU time across the two passes, not 19 s,
-so the 1,597 complexes are about 15 GPU-hours, or about 9 hours of wall clock in two lanes. Still inside
+so the 1,597 complexes are about 15 GPU-hours, or about 9-10 hours of wall clock in two lanes. Still inside
 the 48-hour cap in plan.md §5.7, so no arm is dropped, but the figure in D4 and in
 results/tables/timing.csv was wrong by a factor of two and is corrected there.
