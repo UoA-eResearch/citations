@@ -49,3 +49,19 @@ the whole design — 1,597 complexes — fits in about 8.4 GPU-hours and no arm 
 in three concurrent shards with seeds 20261013 + shard index, and the shard map is released
 (results/tables/shards_*.csv) because the diffusion sampling makes each prediction stochastic: a value is
 reproducible given the shard layout and seed, not given the pair alone.
+
+## D4 — 2026-10-13 10:32 NZDT — one boltz process per arm, not three; the GPU is already saturated by one
+
+The plan (§5.7, D3) said the arms would run in three concurrent shards. Measured on the decoy arm, three
+processes take about 29 s per complex in aggregate while one process takes 19 s — a single boltz process
+already holds the A100 at 94-100 % utilisation, so the extra processes only add contention and memory
+pressure (49 GB across three). Every arm now runs as a single process with seed 20261013, which also makes
+each prediction reproducible from the pair alone rather than from a shard layout.
+
+The 22 decoy complexes computed under the three-shard layout were deleted rather than kept: a process that
+sees every third input has a different RNG stream from one that sees all of them, so keeping them would
+have meant two provenances in one arm for about seven minutes of saved compute. `results/predictions.jsonl`
+was cleared with them; nothing had been analysed.
+
+Revised budget: 1,597 complexes at 19 s is about 8.4 GPU-hours, still well inside the 48-hour cap, so no
+arm is dropped.
