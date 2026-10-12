@@ -11,7 +11,8 @@ preregistered verdict. Writes results/tables/review/:
   both_equivalent.csv     outputs certified equivalent to both D and C (plan 5: logged, counted as "other"; issue 9)
   review.json             O vs P by model on the 59 items; O vs P without uninformative references (D6 applied to the
                           129-item set); greedy and verbatim counts on the 59 items for P; the normalised-recheck
-                          sensitivity (recheck_near.py) when its output exists (issues 3, 7, 9, 11)"""
+                          sensitivity (recheck_near.py) when its output exists, with plan 5's both-references rule
+                          applied from recheck_near_C.jsonl (issues 3, 7, 9, 11; confirmation pass)"""
 import json
 import re
 import sys
@@ -141,8 +142,11 @@ def main():
     if rn.exists():
         r = pd.read_json(rn, lines=True)
         new = set(r[r.copy_norm.fillna(False).astype(bool)].uid)
+        rc_c = OUT / "recheck_near_C.jsonl"  # plan 5: an output equivalent to both references counts as "other"
+        both_c = set(pd.read_json(rc_c, lines=True).query("correct_norm == True").uid) if rc_c.exists() else set()
         rev["recheck_near"] = dict(checked=len(r), errors=int(r.error.notna().sum()) if "error" in r else 0,
-                                   newly_certified=len(new))
+                                   newly_certified=len(new), also_equivalent_to_C=len(both_c) if rc_c.exists() else None)
+        new -= both_c
         uid = []
         for m in A.MODELS:
             uid += [f"{m}:{json.loads(x).get('uid')}" for x in open(RUN / "data" / "classified" / f"{m}_outputs.jsonl")]

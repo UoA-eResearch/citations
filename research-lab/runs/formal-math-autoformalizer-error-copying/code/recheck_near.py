@@ -5,7 +5,10 @@ preregistered certifier misses some identical statements, e.g. `1 / (k + 1) / (k
 on the 59 primary items, all models and conditions, whose normalised binders and conclusion have a difflib ratio of at
 least 0.8 to those of the condition's defective reference (D, or D' for twins). Each is tested O -> D and D -> O
 (40 s per direction). Writes results/tables/review/recheck_near.jsonl.
-Usage: VAC_TOOLCHAIN=v49 recheck_near.py <workers> [test]"""
+`ctest` (confirmation pass): every statement newly certified equivalent to D is also tested against the corrected
+reference C (or C') with the same portfolio, so that plan 5's rule (equivalent to both -> "other") applies; writes
+results/tables/review/recheck_near_C.jsonl.
+Usage: VAC_TOOLCHAIN=v49 recheck_near.py <workers> [test|ctest]"""
 import json
 import multiprocessing as mp
 import sys
@@ -61,6 +64,17 @@ def work(task):
     return out
 
 
+def work_c(task):
+    uid, code, ref = task
+    out = dict(uid=uid)
+    try:
+        a = implies_norm(_repl, code, ref["C"], ref["oD"], ref["oC"])
+        out["correct_norm"] = bool(a and implies_norm(_repl, ref["C"], code, ref["oC"], ref["oD"]))
+    except Exception as e:  # noqa: BLE001
+        out["error"] = repr(e)[:300]
+    return out
+
+
 def candidates():
     fz = [json.loads(x) for x in open(CAT / "frozen.jsonl")]
     prim = {r["item"] for r in fz if r["set"] == "included" and r.get("N_twin")}
@@ -88,7 +102,8 @@ def candidates():
     return tasks
 
 
-def main(workers, test=False):
+def main(workers, mode=None):
+    test = mode == "test"
     OUT.mkdir(parents=True, exist_ok=True)
     if test:  # review issue 7's example (induction_sum_1oktkp1): the division chain against D
         R = refs()["minif2f/induction_sum_1oktkp1|O"]
@@ -99,6 +114,15 @@ def main(workers, test=False):
         print("normalising:", implies_norm(repl, code, R["D"], R["oD"], R["oD"]), implies_norm(repl, R["D"], code, R["oD"], R["oD"]))
         return
     tasks = candidates()
+    if mode == "ctest":
+        new = {json.loads(x)["uid"] for x in open(OUT / "recheck_near.jsonl") if json.loads(x).get("copy_norm")}
+        tasks = [t for t in tasks if t[0] in new]
+        print(len(tasks), "newly certified statements to test against C", flush=True)
+        with mp.Pool(workers, initializer=init) as pool, open(OUT / "recheck_near_C.jsonl", "w") as f:
+            for o in pool.imap_unordered(work_c, tasks, chunksize=1):
+                f.write(json.dumps(o) + "\n")
+        print("CTEST DONE", flush=True)
+        return
     print(len(tasks), "near-D 'other' statements to re-check", flush=True)
     with mp.Pool(workers, initializer=init) as pool, open(OUT / "recheck_near.jsonl", "w") as f:
         for o in pool.imap_unordered(work, tasks, chunksize=1):
@@ -108,4 +132,4 @@ def main(workers, test=False):
 
 
 if __name__ == "__main__":
-    main(int(sys.argv[1]), len(sys.argv) > 2 and sys.argv[2] == "test")
+    main(int(sys.argv[1]), sys.argv[2] if len(sys.argv) > 2 else None)

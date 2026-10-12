@@ -6,7 +6,8 @@ reproduce the mistake.*
 
 Run directory: `research-lab/runs/formal-math-autoformalizer-error-copying` · Preregistration: [`plan.md`](plan.md)
 (commit 9afb62b) · Departures from it: [`deviations.md`](deviations.md) (D1-D8) · Independent review:
-[`review/review.md`](review/review.md) · 12 October 2026, revised after review
+[`review/review.md`](review/review.md), confirmation pass [`review/confirmation.md`](review/confirmation.md) · 12 October
+2026, revised after review
 
 **Verdict: Refuted.** Three open autoformalizers reproduce the benchmarks' documented defects in 7.2% of samples on the
 original problems and the analogous defect in 7.9% on number-perturbed twins. That is a rate ratio of 0.91 (95% CI
@@ -292,8 +293,13 @@ conditions shown above. There is no comparable fingerprint for miniF2F: its head
 Topology Rat`, is shared by many training sets.
 
 **What this shows and what it does not.** Kimina's training data evidently included the ProofNet port's statements, or
-data copied from them. The header depends only on the textbook, so it cannot show which items were seen. The 8.3.6a
-constant is item-specific, but that item is in ProofNet's validation split, which a model may legitimately train on.
+data copied from them. None of the three observations shows which items were seen:
+
+- **The header** depends only on the textbook.
+- **The 8.3.6a constant** is item-specific, but that item is in ProofNet's validation split, which a model may
+  legitimately train on.
+- **The Sylow bodies** do include test-split items (4.5.13, 4.5.15, 4.5.17). But the four statements share one
+  template, so recall of the validation item 4.5.14 would produce them too.
 
 **Where the port entered training data.** The study does not know Kimina's training data item by item. One documented
 route by which the port entered the open training lineage is the Lean Workbook pipeline. Its first translation model
@@ -388,8 +394,8 @@ So a natural pitfall can reproduce even a defect that no model can have memorize
   raised the flags before sampling:
   - two twins they called borderline (Ireland-Rosen 3.10, Rudin 1.11a);
   - one where the twin's defective statement became true while the original's was false (Shakarchi 1.19b).
-- **Missed equivalences** (D8; next section). 16 more statements are certified as copies, all Herald's: 7 more copies
-  on originals, 4 on twins and 16 on paraphrases.
+- **Missed equivalences** (D8; next section). 16 more unique statements, all Herald's, are certified as copies. They
+  account for 27 more temperature outputs: 7 on originals, 4 on twins and 16 on paraphrases.
 - **Truth-certified twins.** The plan's truth-certified-twin sensitivity cannot be computed: the portfolio proved none
   of the 59 primary twins' C′. The one twin whose C′ it proved is in the one-rater set.
 - **Among elaborating outputs only.** The defect rate is 9.4% on originals (204 of 2,180), 10.3% on twins (225 of
@@ -437,9 +443,13 @@ The re-check (D8, `code/recheck_near.py`):
 - **What was re-checked.** Every unique "other" statement on the 59 items that is textually close to the defective
   reference (difflib ratio ≥ 0.8): 674 statements from all five models. The portfolio first normalises both sides with
   `ring_nf`, `field_simp`, and `simp only` with `div_div` and commutativity, and it allows 40 s per direction.
-- **Result.** It certifies 16 more as equivalent to the reference, all Herald's, on two items:
+- **Result.** It certifies 16 more unique statements (27 temperature outputs) as equivalent to the reference, all
+  Herald's, on two items:
   - induction_sum_1oktkp1: 5 more on originals, now 8 vs 16;
   - aime_1983_p9: 2 more on originals and 4 on twins.
+- **Equivalent to both?** None of the 16 is equivalent to the corrected reference C (or C′) under the same portfolio,
+  so plan section 5's rule (equivalent to both counts as "other") does not apply. This was tested after the
+  confirmation pass asked for it.
 - **Effect on the primary result.** It becomes 211 vs 229, RR 0.92 (0.80-1.05). O vs P on the 59 items becomes 211 vs
   145, 1.45 (1.09-2.05).
 - **Near-identical "other" outputs** (ratio ≥ 0.9; `near_D_other.csv`) are about as common on originals as on twins:
@@ -476,7 +486,9 @@ suffer from data contamination". Its human-judged formalization accuracy, from v
 | Herald | 55.3% → 51.6% | 59.4% → 48.0% |
 | o4-mini | 46.3% → 51.6% (rises) | 47.1% → 52.5% (rises) |
 
-This study bears on that in two ways:
+These are the paper's @1 figures (its Table 3). Its @128 comparison (Table 2) shows no consistent decline in
+human-judged accuracy (Kimina 90.6% → 91.0% on test; Herald 62.7% → 66.0%), so the contamination remark rests on the
+@1 results. This study bears on that remark in two ways:
 
 - **On miniF2F,** where most of Herald's copies are, the defects are copied as often on twins, so there they look like
   shared habits. A v1 reference credits those habits whether or not the model has seen the benchmark.
@@ -563,7 +575,17 @@ template, which the twin design classifies as a habit.
   does train its first translator on all miniF2F and ProofNet pairs, so the premise holds. Its wording is made precise
   in D8.
 
-The revised report went back to the same reviewer for a confirmation pass ([`review/confirmation.md`](review/confirmation.md)).
+**The confirmation pass.** The revised report went back to the same reviewer
+([`review/confirmation.md`](review/confirmation.md)). It recommended **publish with edits**:
+
+- **All 17 issues resolved.** On points (a) and (b) above, it agreed the report was right against the saved sources.
+- **New numbers.** It reproduced every new number independently.
+- **Five small points**, all addressed:
+  - the re-check now also tests the 16 statements against C;
+  - the re-check's statement and output counts are separated;
+  - the caveat on test-split Sylow items is added;
+  - the paper's @128 table is noted;
+  - a scratch file is removed.
 
 ## Deviations
 

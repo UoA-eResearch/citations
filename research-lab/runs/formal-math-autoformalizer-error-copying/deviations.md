@@ -226,3 +226,9 @@ Tables: `results/tables/review/`.
    judge subagents ran in parallel batches. GPU sampling overlapped with the Lean classification, which ran per model
    as each finished sampling. The report's methods sections were drafted during classification; its results sections
    were written after `analysis.py` ran.
+
+**D8, addendum (after the confirmation pass, publish with edits).** The normalising re-check tested equivalence to D
+only. The 16 newly certified statements were then also tested against the corrected reference, C or C′
+(`recheck_near.py ctest`, `results/tables/review/recheck_near_C.jsonl`). None is equivalent to it, so plan 5's rule
+(an output equivalent to both references counts as "other") changes nothing. `review_analyses.py` applies the rule
+from that file.
