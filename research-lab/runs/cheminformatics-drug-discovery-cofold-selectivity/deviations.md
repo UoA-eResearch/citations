@@ -65,3 +65,47 @@ was cleared with them; nothing had been analysed.
 
 Revised budget: 1,597 complexes at 19 s is about 8.4 GPU-hours, still well inside the 48-hour cap, so no
 arm is dropped.
+
+## D5 — 2026-10-13 11:05 NZDT — two corrections to the lead's literature claims, found while the panel ran
+
+1. The lead's `lit_against` says "the Boltz-2 authors already report ligand-only baselines ... so some
+   ligand-bias quantification exists in-house". Reading the preprint (bioRxiv 2025.06.14.659707) I could
+   find no ligand-only baseline and no within-ligand across-target evaluation; what is there is the
+   *training* construction, where synthetic decoys are made by "shuffling binders identified in hit-to-lead
+   screens across different targets, while mitigating low false negative rates by ensuring that each decoy
+   has a Tanimoto similarity below 0.3 to all known binders associated with similar proteins". Training on
+   cross-target decoys is not the same as measuring ligand bias in evaluation. Stated this way in the
+   report.
+2. MIRAGE (arXiv 2609.14491) does not report a within-ligand across-target statistic: it varies how much
+   historical public support a protein family has and reports stratified correlations — for Boltz-2,
+   r = -0.03 at support 1 rising to 0.585 at support 301+, on 373 matched PDBbind-derived complexes, with
+   ligand-only and family-disjoint controls staying flat. Complementary to this study rather than
+   overlapping: its axis is generalisation to unsupported families, ours is selectivity inside a
+   well-supported family.
+
+Neither changes the design. Both are recorded because the report's novelty claim rests on them.
+
+## D6 — 2026-10-13 11:09 NZDT — D4 corrected: two concurrent processes are faster, and the budget is 2x what I said
+
+D4 concluded that one boltz process per arm was fastest. That comparison was not like for like. Boltz runs
+**two** passes over an arm — a structure pass and then an affinity pass — and I had compared the probe's
+structure-pass rate (19 s per complex) against the three-shard *affinity*-pass rate (60 s per shard), which
+made sharding look three times worse than it was.
+
+Measured properly, on the panel arm with and without a second arm running beside it:
+
+| configuration | per complex, each process | aggregate per complex |
+| --- | --- | --- |
+| one process (panel alone, structure pass) | 15.1 s | 15.1 s |
+| two processes (panel + decoy, structure pass) | 17.3 s and 21 s | 9.5 s |
+| three processes (decoy, structure pass) | ~28 s | ~9.4 s |
+
+So two concurrent processes give about a 1.6x aggregate speedup for a 15 % slowdown of the first arm, and a
+third adds nothing. The arms now run in two lanes: the panel in one, and decoy, promiscuity, sampling and
+post-cutoff one after another in the other (`code/lane2.sh`). Each arm is still a single process with seed
+20261013, so a prediction is still reproducible from its arm and pair alone.
+
+Corrected budget: each complex costs about 34 s of single-process GPU time across the two passes, not 19 s,
+so the 1,597 complexes are about 15 GPU-hours, or about 9 hours of wall clock in two lanes. Still inside
+the 48-hour cap in plan.md §5.7, so no arm is dropped, but the figure in D4 and in
+results/tables/timing.csv was wrong by a factor of two and is corrected there.
