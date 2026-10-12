@@ -1,0 +1,4 @@
+Pair scores at r >= 0.7, by kind of pair and layer (decoupled kinds labelled as in D6). Within: one point per model (mean of its
+three SAE-seed pairs; filled = the 10 full-seed models that enter the primary statistic, hollow = the 6 decoupled
+variants). Cross kinds: one point per model pair (mean of its three SAE-seed combinations). Black bars are means. The
+dashed line is 0.8 times the mean within score of the 10 full-seed models: the hypothesis's threshold.

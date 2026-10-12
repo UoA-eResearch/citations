@@ -1,0 +1,22 @@
+[
+ [
+  "Verdict",
+  "Refuted",
+  "the whole interval is at or above 0.8"
+ ],
+ [
+  "Cross ÷ within, R",
+  "0.862",
+  "95% interval 0.859–0.866"
+ ],
+ [
+  "Within one model",
+  "46% · 42%",
+  "latents with a match at r ≥ 0.7 in another SAE seed, layer 4 · 8"
+ ],
+ [
+  "Across pretraining seeds",
+  "42% · 34%",
+  "same, in another model's SAE, layer 4 · 8"
+ ]
+]

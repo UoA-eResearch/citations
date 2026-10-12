@@ -1,0 +1,4 @@
+Distribution of each assessable latent's best activation correlation with the other SAE of
+its pair, pooled over both directions and all pairs among the 10 full-seed models: within (same model, different SAE
+seed) against full (different pretraining seed, different SAE seed). The dashed line is the matching threshold
+r = 0.7.

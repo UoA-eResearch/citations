@@ -1,0 +1,5 @@
+Decoder geometry (plan 7.5): share of latents whose decoder direction has a cosine of at least
+0.5 (left) or 0.7 (right) with some decoder direction of the other SAE, in the raw residual bases (solid) and after
+an orthogonal Procrustes rotation of one model's residual basis onto the other's, fitted on 262,144 tokens of H (pale).
+Within pairs share a basis, so their rotation is the identity. The lineage pairs (right three groups) share the
+original's initialisation (D6), which explains their small raw alignment.

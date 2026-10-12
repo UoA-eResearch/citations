@@ -59,6 +59,8 @@ def main():
     body_md = "\n".join(rest[j:])
     # links to repo files that Pages would serve as raw text
     body_md = body_md.replace("](plan.md)", f"]({REPO_BLOB}/plan.md)").replace("](deviations.md)", f"]({REPO_BLOB}/deviations.md)").replace("](review/review.md)", f"]({REPO_BLOB}/review/review.md)").replace("](review/confirmation.md)", f"]({REPO_BLOB}/review/confirmation.md)")
+    # nested list items are indented by 2 spaces in report.md; python-markdown needs 4 per level
+    body_md = re.sub(r"(?m)^( +)(- )", lambda m: " " * (2 * len(m.group(1))) + m.group(2), body_md)
     body = markdown.markdown(body_md, extensions=["tables", "fenced_code", "sane_lists"])
 
     # figures with captions
