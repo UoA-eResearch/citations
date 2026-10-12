@@ -46,8 +46,11 @@ def main(workers):
         tasks += [(r["item"], "D", r["D"], oD), (r["item"], "C", r["C"], oC)]
         if r.get("D_twin"):
             tasks += [(r["item"], "D_twin", r["D_twin"], oD), (r["item"], "C_twin", r["C_twin"], oC)]
-    print(len(tasks), "references", flush=True)
-    with mp.Pool(workers, initializer=init) as pool, open(CAT / "refcheck.jsonl", "w") as f:
+    path = CAT / "refcheck.jsonl"
+    done = {(o["item"], o["ref"]) for o in map(json.loads, open(path)) if "error" not in o} if path.exists() else set()
+    tasks = [t for t in tasks if (t[0], t[1]) not in done]
+    print(len(tasks), "references to check", flush=True)
+    with mp.Pool(workers, initializer=init) as pool, open(path, "a") as f:
         for o in pool.imap_unordered(work, tasks, chunksize=1):
             f.write(json.dumps(o) + "\n")
             f.flush()

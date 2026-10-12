@@ -129,7 +129,7 @@ def main():
     # D6: items whose defective references (D and D') are neither portfolio-provable nor portfolio-refuted
     rc = CAT / "refcheck.jsonl"
     if rc.exists():
-        r = pd.read_json(rc, lines=True)
+        r = pd.read_json(rc, lines=True).drop_duplicates(["item", "ref"], keep="last")  # a rerun after an error
         err = r.error.notna() if "error" in r else False  # an unchecked reference counts as uninformative
         bad = set(r[r.ref.isin(["D", "D_twin"]) & (r.proved.fillna(False).astype(bool) | r.refuted.fillna(False).astype(bool) | err)].item)
         inf = [i for i in inc_tw if i not in bad]
@@ -143,6 +143,18 @@ def main():
     dd = df[df.item.isin(inc_tw + inc_p) & (df.idx != "g")]
     tab = dd.groupby(["model", "cond", "cls"]).size().unstack(fill_value=0)
     tab.to_csv(TAB / "classes_by_model_condition.csv")
+    # exploratory (D7, after the outcomes): the three conditions on the same 59 items, and O vs P by model
+    d = df[df.item.isin(inc_tw) & (df.idx != "g")]
+    d.groupby(["model", "cond", "cls"]).size().unstack(fill_value=0).to_csv(TAB / "classes_twin_items.csv")
+    sec["exploratory"] = dict(
+        O_vs_P_twin_items=ratio(counts(df, inc_tw, PRIMARY, "O"), counts(df, inc_tw, PRIMARY, "P"), len(PRIMARY)),
+        P_vs_T_twin_items=ratio(counts(df, inc_tw, PRIMARY, "P"), counts(df, inc_tw, PRIMARY, "T"), len(PRIMARY)),
+        O_vs_P_by_model={m: ratio(counts(df, inc_p, [m], "O"), counts(df, inc_p, [m], "P"), 1) for m in present},
+        items_with_any_defect_output=int(((xo + xt) > 0).sum()))
+    # twins the builders flagged as borderline (t237, t262) or whose D' became true while D was false (t284)
+    flagged = {"proofnet/Ireland-Rosen|exercise_3_10", "proofnet/Rudin|exercise_1_11a", "proofnet/Shakarchi|exercise_1_19b"}
+    nf = [i for i in inc_tw if i not in flagged]
+    sec["exploratory"]["flagged_twins_dropped"] = ratio(counts(df, nf, PRIMARY, "O"), counts(df, nf, PRIMARY, "T"), len(PRIMARY))
     json.dump(sec, open(TAB / "secondary.json", "w"), indent=1, default=float)
     print(json.dumps(p, indent=1))
     print(json.dumps(sec["by_model"], indent=1)[:2000])

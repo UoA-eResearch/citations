@@ -1,0 +1,20 @@
+{
+ "RR": 0.9068736141906872,
+ "lower95": 0.7574313414333484,
+ "upper95": 1.0595016906315107,
+ "x_O": 204,
+ "x_T": 225,
+ "n_O": 2832,
+ "n_T": 2832,
+ "rate_O": 0.07203389830508475,
+ "rate_T": 0.07944915254237288,
+ "items": 59,
+ "verdict": "Refuted",
+ "any_excess": false,
+ "models": [
+  "kimina",
+  "goedel",
+  "herald"
+ ],
+ "mde_caveat": false
+}

@@ -1,0 +1,810 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Autoformalizer Error Copying</title>
+<meta name="description" content="A preregistered test of whether open autoformalizers reproduce the documented defects of miniF2F and ProofNet formal statements more often than the analogous defects on number-perturbed twins.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Formal mathematics</div>
+  <h1>Do AI autoformalizers copy the known mistakes in miniF2F and ProofNet?</h1>
+  <p class="subtitle">A preregistered error-copying test. Open autoformalizers were given benchmark problems whose official Lean statements have documented mistakes, and number-perturbed twins of the same problems, and the Lean kernel decided which outputs reproduce the mistake.</p>
+  <div class="meta">
+    <span>Report · 2026-10-12 · draft for independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/formal-math-autoformalizer-error-copying/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/formal-math-autoformalizer-error-copying/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/formal-math-autoformalizer-error-copying/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Verdict (preregistered rule)</div><div class="tile-value text">Refuted</div><div class="tile-note">RR ≥ 3 with lower bound &gt; 1.5 needed</div></div><div class="tile"><div class="tile-label">Rate ratio, original vs twin</div><div class="tile-value">0.91</div><div class="tile-note">95% CI 0.76–1.06</div></div><div class="tile"><div class="tile-label">Defect copies, originals</div><div class="tile-value">204 / 2,832</div><div class="tile-note">7.2% of samples</div></div><div class="tile"><div class="tile-label">Analogous defects, twins</div><div class="tile-value">225 / 2,832</div><div class="tile-note">7.9% of samples; 59 items</div></div></section>
+<main>
+<p><strong>Verdict: Refuted.</strong> Three open autoformalizers reproduce the benchmarks' documented defects in 7.2% of samples on the
+original problems and the analogous defect in 7.9% on number-perturbed twins: a rate ratio of 0.91 (95% CI 0.76-1.06)
+where the hypothesis needed at least 3. The defects they reproduce are habits they show whatever the numbers, not
+recall of the benchmark's statement.</p>
+<h2>In plain terms</h2>
+<p>AI "autoformalizers" translate a maths problem written in words into Lean, a language a computer can check. They are
+tested on miniF2F and ProofNet, two benchmarks whose official Lean versions were later found to contain many mistakes:
+a missing condition, or a claim weaker than the problem's. If an autoformalizer had memorised the official versions
+during training, it should reproduce those mistakes when given the original problem.</p>
+<p>We tested this on 59 problems with a documented mistake. For each we made a twin: the same problem with different
+numbers, with the mistake carried over to its official-style version. A model that remembers the official statement
+should copy the mistake on the original but not on the twin, which it has never seen. A model that falls into a common
+trap should make the same kind of mistake on both.</p>
+<p>Three open autoformalizers wrote 16 versions of every problem and every twin, and the Lean checker decided which ones
+say exactly what the flawed official statement says. They reproduced the mistake in 7.2% of attempts on the originals
+and 7.9% on the twins. The prediction was at least three times as often on the originals. <strong>It is refuted.</strong></p>
+<p>The mistakes the models make are common habits. They write "the smallest value is 64" as "every value is at least
+64", and they drop conditions such as "positive". They do so whatever the numbers are.</p>
+<p>One pattern needs care. On a reworded version of each problem, the models made these mistakes less often: the
+originals (and the twins, which keep their wording) drew about 1.6 times as many, almost all from two of the three
+models. That could be memory of how such problems are usually worded, or just that the rewordings were clearer. This
+study cannot tell which.</p>
+<h2>What was done</h2>
+<h3>The defect catalogue</h3>
+<p><strong>Pairs of statements.</strong> Each candidate item pairs a defective original formal statement D with a corrected reference C
+for the same informal problem N (plan 2.1):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Defective original D</th>
+<th>Corrected reference C</th>
+<th>Informal input N</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>miniF2F</td>
+<td>the v1 Lean 4 statement (DeepSeek-Prover-V1.5's <code>minif2f.jsonl</code>)</td>
+<td>the miniF2F-v2s statement of the same name</td>
+<td>the v1 informal statement</td>
+</tr>
+<tr>
+<td>ProofNet</td>
+<td>the original Lean 4 port (DeepSeek-Prover-V1.5's <code>proofnet.jsonl</code>)</td>
+<td>the ProofNet# statement</td>
+<td>the original informal statement</td>
+</tr>
+</tbody>
+</table></div>
+<p>An item is a candidate if D and C differ after normalisation: 228 of 488 miniF2F items and 147 of the 369 matched
+ProofNet items (D1 item 5).</p>
+<p><strong>Lean filters</strong> (plan 2.2; Lean 4.9 with DeepSeek-Prover-V1.5's Mathlib, autoImplicit off). Both statements must
+elaborate, and they must not be certified equivalent in both directions by the tactic portfolio (20 s per direction).
+Every pair that survived elaborated in Lean 4.9, the first environment, so the Lean 4.15 fallback was never used.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Source</th>
+<th style="text-align: right;">Candidates</th>
+<th style="text-align: right;">Do not elaborate</th>
+<th style="text-align: right;">Certified equivalent (rewrites)</th>
+<th style="text-align: right;">Kept</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>miniF2F</td>
+<td style="text-align: right;">228</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">178</td>
+</tr>
+<tr>
+<td>ProofNet</td>
+<td style="text-align: right;">147</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">111</td>
+</tr>
+<tr>
+<td>Negative controls</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">8</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Blind defect tagging</strong> (plan 2.3). Two raters tagged all 289 kept pairs: a Claude Opus 5.5 subagent (rater A) and a
+Claude Fable 5.1 subagent (rater B). Each saw only the informal statement and the two formal statements, labelled A
+and B in a seeded random order, with the theorem name replaced by <code>X</code>. Neither knew which statement was the original.</p>
+<ul>
+<li>Agreement on whether D is faithful: Cohen's κ = 0.957.</li>
+<li><strong>Included</strong> (both raters: D unfaithful and C faithful): <strong>129 items</strong>, 46 miniF2F and 83 ProofNet.</li>
+<li><strong>One-rater set</strong> (exactly one rater says so): 6 items.</li>
+<li>The raters gave the same defect category to 120 of the 129 included items (93%).</li>
+</ul>
+<h3>Twins and paraphrases</h3>
+<p><strong>Number-perturbed twins</strong> (plan 3.1). A builder subagent (Claude Opus 5.5) was given N, D, C and the raters' defect
+reasons. It changed the problem's numbers consistently in all three, recomputed the answer with a script, and carried
+the defect over to the twin's defective statement D′. For example:</p>
+<blockquote>
+<p><strong>N:</strong> What is the smallest integer greater than 10 that is both a perfect square and a perfect cube? Show that it
+is 64.</p>
+<p><strong>D:</strong> <code>(n : ℕ) (h₀ : 10 ≤ n) (h₁ : ∃ x, x ^ 2 = n) (h₂ : ∃ t, t ^ 3 = n) : 64 ≤ n</code>. This is only a lower bound: it
+does not say that 64 qualifies.</p>
+<p><strong>N′:</strong> What is the smallest integer greater than 100 that is both a perfect square and a perfect cube? Show that it
+is 729.</p>
+<p><strong>D′:</strong> <code>(n : ℕ) (h₀ : 100 ≤ n) (h₁ : ∃ x, x ^ 2 = n) (h₂ : ∃ t, t ^ 3 = n) : 729 ≤ n</code>.</p>
+</blockquote>
+<p>A twin was kept only if it passed five scripted checks (plan 3.1):</p>
+<ol>
+<li>D′ and the corrected twin C′ elaborate.</li>
+<li>D′ and C′ are not certified equivalent, so the defect survives.</li>
+<li>The three diffs (N→N′, D→D′, C→C′) change only numerals, apart from a declared answer span.</li>
+<li>The answer script reruns to the stated answer.</li>
+<li>The portfolio cannot refute C′.</li>
+</ol>
+<p><strong>Twin attrition.</strong></p>
+<ul>
+<li>Builders built 63 twins and declined 72 items, almost all because the problem has no numerical parameter to change.
+  That is true of most ProofNet items, which are abstract statements about groups, rings and spaces: 64 of the 83
+  included ProofNet items have no twin.</li>
+<li>All 63 built twins passed all five checks.</li>
+<li><strong>The primary set is the 59 included items with a valid twin: 40 miniF2F and 19 ProofNet.</strong> It is above the plan's
+  floor of 40 items, below which the power calculation would not hold.</li>
+<li>Four more twins belong to the one-rater set (sensitivity analysis).</li>
+</ul>
+<p><strong>Meaning-preserving paraphrases</strong> (plan 3.2; secondary). Another subagent reworded every one of the 135 informal
+statements, keeping every number, object and claim. A blind Fable 5.1 judge, shown the two texts in random order,
+judged all 135 to state the same problem.</p>
+<p><strong>Negative controls.</strong> These are the eight miniF2F items whose v2 edit <em>introduced</em> a defect (minif2f-v2-audit,
+<code>v2_miscorrection</code>). Here D is the defective v2s statement and C the faithful v1 statement. No model in the study can
+have seen v2, so outputting those defects estimates the natural rate of those particular mistakes.</p>
+<p>The catalogue was committed and frozen (commit d0f4aea) before any model was sampled.</p>
+<h3>Models and sampling</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Role</th>
+<th>Prompt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kimina-Autoformalizer-7B</td>
+<td>primary</td>
+<td>model card</td>
+</tr>
+<tr>
+<td>Goedel-Formalizer-V2-8B</td>
+<td>primary</td>
+<td>model card (thinks first; 16,384-token limit)</td>
+</tr>
+<tr>
+<td>Herald_translator</td>
+<td>primary</td>
+<td>repository template</td>
+</tr>
+<tr>
+<td>DeepSeek-Prover-V2-7B</td>
+<td>secondary</td>
+<td>a plain instruction (4,096-token limit, D4)</td>
+</tr>
+<tr>
+<td>Qwen2.5-7B-Instruct</td>
+<td>secondary, general-model control</td>
+<td>the same instruction with three handwritten examples</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Neutral theorem name.</strong> It was always <code>my_favorite_theorem</code>. A benchmark name such as <code>mathd_algebra_478</code> would
+  itself be a memorization cue that twins cannot carry.</li>
+<li><strong>Release dates.</strong> Every model was released before miniF2F-v2 (November 2025).</li>
+<li><strong>Samples.</strong> For every model, item and condition there were 16 samples at temperature 0.8 and one greedy sample.</li>
+<li><strong>Conditions.</strong></li>
+<li>O: the original text, 143 texts including the 8 controls;</li>
+<li>T: the twin, 63 texts;</li>
+<li>P: the paraphrase, 135 texts.</li>
+<li><strong>Total.</strong> 5,797 outputs per model, 28,985 in all.</li>
+<li><strong>Sampling quality.</strong> No request failed. A statement was extracted from 98.3% (DeepSeek-Prover-V2) to 99.9%
+  (Goedel) of outputs. 204 of DeepSeek-Prover-V2's 5,797 outputs hit the 4,096-token limit, as did 19 of Herald's and 4
+  of Goedel's.</li>
+</ul>
+<h3>Classifying outputs</h3>
+<p>Each output's statement was extracted (the last Lean code block, after any thinking) and checked in Lean against the
+condition's references (D and C for originals and paraphrases; D′ and C′ for twins):</p>
+<ul>
+<li><strong>defect copy:</strong> certified equivalent to D (or D′) in both directions;</li>
+<li><strong>correct:</strong> certified equivalent to C (or C′);</li>
+<li><strong>other:</strong> elaborates, but is equivalent to neither;</li>
+<li><strong>does not elaborate:</strong> includes outputs with no statement.</li>
+</ul>
+<p>Identical statements within an item and condition were checked once (19,807 unique statements).</p>
+<h3>The test</h3>
+<p>The test follows plan section 6. It is computed over the three primary models' temperature samples on the 59 primary
+items:</p>
+<ul>
+<li>x_O is the number of defect copies on originals;</li>
+<li>x_T is the number of analogous defects on twins;</li>
+<li>each is out of n = 59 × 3 × 16 = 2,832.</li>
+</ul>
+<p>RR = ((x_O + 0.5) / n) / ((x_T + 0.5) / n), with a 95% item-cluster bootstrap interval (2,000 draws).</p>
+<ul>
+<li><strong>Supported:</strong> RR ≥ 3 and a lower bound above 1.5.</li>
+<li><strong>Refuted:</strong> an upper bound below 3.</li>
+<li><strong>Inconclusive:</strong> otherwise, or if x_O + x_T &lt; 20.</li>
+</ul>
+<h2>Results</h2>
+<h3>The preregistered test: Refuted</h3>
+<figure><a href="results/figures/rate_ratios.png"><img src="results/figures/rate_ratios.png" alt="Rate ratios against the decision thresholds"></a><figcaption>Rate ratio of defect copies (outputs certified equivalent to the defective reference) on the original informal statement against analogous defects on its number-perturbed twin (or, for the paraphrase row, against defect copies on a meaning-preserving paraphrase), with 95% item-cluster bootstrap intervals (2,000 draws). The primary estimate (diamond) pools the three dedicated autoformalizers&#x27; temperature samples on the included items with a valid twin. H is Supported if RR ≥ 3 with a lower bound above 1.5, and Refuted if the upper bound is below 3. The numbers at the right are the defect counts in the two conditions (0.5 is added to each count in the ratio). Dotted line: 1.5; dashed red line: 3.</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align: right;">Originals (O)</th>
+<th style="text-align: right;">Twins (T)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Defect copies (≡ D, or ≡ D′ on twins)</td>
+<td style="text-align: right;">204 of 2,832 (7.2%)</td>
+<td style="text-align: right;">225 of 2,832 (7.9%)</td>
+</tr>
+<tr>
+<td><strong>Rate ratio O / T</strong></td>
+<td style="text-align: right;"><strong>0.91 (95% CI 0.76-1.06)</strong></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table></div>
+<p>The upper bound, 1.06, is far below 3, so the hypothesis is <strong>Refuted</strong>. The lower bound is not even above 1: there is
+no detectable excess of copying on the originals at all. With 429 defect outputs, the test is well above the rule's
+20-output floor. The twin defect rate, about 8%, is higher than the 3-5% assumed in the power simulation, which only
+tightens the interval.</p>
+<p><strong>By model, no autoformalizer comes close to the threshold.</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Model</th>
+<th style="text-align: right;">Copies on O</th>
+<th style="text-align: right;">Analogous defects on T</th>
+<th>RR (95% CI)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kimina-Autoformalizer-7B</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">81</td>
+<td>1.06 (0.96-1.18)</td>
+</tr>
+<tr>
+<td>Goedel-Formalizer-V2-8B</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">7</td>
+<td>1.00 (0.84-1.86)</td>
+</tr>
+<tr>
+<td>Herald_translator</td>
+<td style="text-align: right;">111</td>
+<td style="text-align: right;">137</td>
+<td>0.81 (0.61-1.05)</td>
+</tr>
+<tr>
+<td>DeepSeek-Prover-V2-7B (secondary)</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">15</td>
+<td>1.06 (0.63-3.00)</td>
+</tr>
+<tr>
+<td>Qwen2.5-7B-Instruct (secondary)</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">30</td>
+<td>1.26 (1.00-1.65)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Each model has 944 samples per condition. Goedel-Formalizer-V2 rarely reproduces any defect (under 1% of samples).
+Herald reproduces defects most often (12% on originals, 15% on twins).</p>
+<p><strong>Per item, copies on originals and analogous defects on twins track each other closely.</strong></p>
+<figure><a href="results/figures/per_item.png"><img src="results/figures/per_item.png" alt="Per-item defect copies on originals against twins"></a><figcaption>Each point is one of the 59 included items with a valid twin: defect copies among the three primary models&#x27; 48 temperature samples on the original informal statement against analogous defects among the 48 on its twin (jittered). The grey line is equality; the dashed red line a ratio of 3. 32 items have no defect output in either condition (the cluster at the origin).</figcaption></figure>
+<ul>
+<li><strong>Concentration.</strong> Defect outputs fall on 27 of the 59 items; the other 32 have none in either condition.</li>
+<li><strong>Counts on the busiest items</strong> are often identical in the two conditions:</li>
+<li>Putnam 2010 A4: 20 vs 20;</li>
+<li>AMC 12 2000 P12: 16 vs 16;</li>
+<li>Dummit-Foote 4.5.14: 15 vs 15.</li>
+</ul>
+<p>Two typical cases:</p>
+<ul>
+<li><strong>Putnam 2010 A4,</strong> "for each positive integer n, 10^10^10^n + 10^10^n + 10^n − 1 is not prime". The original ProofNet
+  port drops <code>n &gt; 0</code>. Herald drops it in all 16 samples of the original, and in all 16 samples of the twin, which has
+  base 12.</li>
+<li><strong>AMC 12 2000 P12,</strong> "what is the maximum value of …? Show that it is 112". miniF2F v1 states only the upper bound
+  (<code>… ≤ 112</code>). Herald does the same in all 16 samples of the original, and states <code>… ≤ 200</code> in all 16 samples of the
+  twin (sum 15).</li>
+</ul>
+<h3>By source and defect category</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Subset</th>
+<th style="text-align: right;">Items</th>
+<th style="text-align: right;">O</th>
+<th style="text-align: right;">T</th>
+<th>RR (95% CI)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>miniF2F</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">101</td>
+<td style="text-align: right;">129</td>
+<td>0.78 (0.58-1.03)</td>
+</tr>
+<tr>
+<td>ProofNet</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">103</td>
+<td style="text-align: right;">96</td>
+<td>1.07 (1.01-1.16)</td>
+</tr>
+<tr>
+<td>Weakened or trivial conclusion (category 7)</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">115</td>
+<td>0.96 (0.80-1.14)</td>
+</tr>
+<tr>
+<td>Missing hypothesis (2)</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">61</td>
+<td>0.74 (0.36-1.15)</td>
+</tr>
+<tr>
+<td>Wrong domain or type (4)</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">24</td>
+<td>0.88 (0.62-1.18)</td>
+</tr>
+<tr>
+<td>Wrong constant (1)</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">11</td>
+<td>1.00 (1.00-1.00)</td>
+</tr>
+<tr>
+<td>Wrong quantifier or binding (5)</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">7</td>
+<td>1.13 (1.00-1.24)</td>
+</tr>
+<tr>
+<td>Wrong relation or formula (6)</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">7</td>
+<td>1.27 (1.00-2.60)</td>
+</tr>
+<tr>
+<td>Extra hypothesis (3), vacuous hypotheses (8)</td>
+<td style="text-align: right;">1 each</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Categories.</strong> Half of the primary items, and just over half of all defect outputs (225 of 429), are "weakened
+conclusion" defects. Typically a "find the least (or greatest) value" problem is stated as a one-sided bound. That is
+the single most common pattern in miniF2F v1's defects, and the models write it just as readily for the twin.</p>
+<p><strong>ProofNet.</strong> Its lower bound sits just above 1 (1.01), but its rate ratio is 1.07, far from the hypothesised 3. The
+19 items come from eight sources (seven textbooks and the Putnam), and eight of them from abstract algebra (Dummit-Foote,
+Artin, Herstein).</p>
+<h3>Originals against paraphrases (secondary; partly exploratory)</h3>
+<figure><a href="results/figures/classes.png"><img src="results/figures/classes.png" alt="How outputs are classified, by model and condition"></a><figcaption>How each model&#x27;s temperature samples are classified in Lean, by condition: certified equivalent to the condition&#x27;s defective reference (D for originals and paraphrases, D′ for twins), to its corrected reference (C or C′), elaborating but equivalent to neither, or no statement / does not elaborate. All three conditions are on the same 59 included items with a valid twin.</figcaption></figure>
+<p><strong>The preregistered comparison.</strong> On the 129 included items with a paraphrase, the three primary models reproduced the
+defect 327 times on originals and 208 times on paraphrases (6,192 samples each): RR 1.57 (1.28-1.99).</p>
+<p><strong>Exploratory (D7).</strong></p>
+<ul>
+<li><strong>The same 59 items in all three conditions.</strong> The counts are 204 (originals), 225 (twins) and 129 (paraphrases):</li>
+<li>O vs P: RR 1.58 (1.20-2.21);</li>
+<li>P vs T: RR 0.57 (0.40-0.77).</li>
+</ul>
+<p>The originals and the twins share their wording and differ in their numbers; the paraphrases share the numbers and
+  differ in wording. <strong>Changing the wording lowers the defect rate. Changing the numbers does not.</strong>
+- <strong>By model,</strong> the excess comes from two models:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Model</th>
+<th style="text-align: right;">Copies on O</th>
+<th style="text-align: right;">Copies on P</th>
+<th>RR (95% CI)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kimina-Autoformalizer-7B</td>
+<td style="text-align: right;">207</td>
+<td style="text-align: right;">122</td>
+<td>1.69 (1.31-2.27)</td>
+</tr>
+<tr>
+<td>Herald_translator</td>
+<td style="text-align: right;">113</td>
+<td style="text-align: right;">80</td>
+<td>1.41 (1.02-2.26)</td>
+</tr>
+<tr>
+<td>Goedel-Formalizer-V2-8B</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">6</td>
+<td>1.15 (0.68-1.62)</td>
+</tr>
+<tr>
+<td>DeepSeek-Prover-V2-7B</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">32</td>
+<td>0.57 (0.23-1.14)</td>
+</tr>
+<tr>
+<td>Qwen2.5-7B-Instruct</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">36</td>
+<td>1.05 (0.04-2.93)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Two readings fit, and this study cannot separate them.</strong></p>
+<ol>
+<li><strong>Wording-keyed recall.</strong> A model whose training data drew on the benchmarks may have learned which formal <em>shape</em>
+   goes with a given wording. It would then fill
+   in whatever numbers it is given, so the twins would not detect it.</li>
+<li><strong>The paraphrases are clearer.</strong> The paraphrases were written by a strong model and often make the condition that
+   gets dropped more explicit. Dummit-Foote 4.5.14 shows this:
+   - The original reads "a group of order 312 has a normal Sylow p-subgroup for some prime p dividing its order".
+     Kimina gives the original ProofNet port's form, <code>∃ (p : ℕ) (P : Sylow p G), P.Normal</code>, in 15 of 16 samples, and
+     that form drops "p prime" and "p divides |G|".
+   - The paraphrase reads "possesses, for at least one prime p dividing |G|, a Sylow p-subgroup that is normal".
+     Kimina's statement is correct in 14 of 16 samples.</li>
+</ol>
+<p>The paraphrase judge checked that meaning was preserved, not that difficulty was.</p>
+<p>The general model, Qwen, shows no O vs P difference, and nor do Goedel or DeepSeek-Prover-V2. That fits reading 1
+slightly better, but Qwen's interval is very wide: only 26% of its outputs elaborate.</p>
+<h3>Accuracy against the defective reference</h3>
+<p>On the 59 primary items, the three primary models' outputs are certified correct (≡ C) in 13.5% of samples on
+originals and 13.4% on twins. They are equivalent to the defective reference (≡ D) in 7.2% and 7.9%. So scoring against
+the v1 or original-port statement would credit about 7% of samples for reproducing its defect, as much on twins as
+on originals. That inflation is real, but it comes from shared habits, not from item-level memory.</p>
+<h3>Negative control: defects no model can have seen</h3>
+<p>The eight control items carry a defect that miniF2F-v2's edit introduced; their faithful statement is the v1 one.</p>
+<ul>
+<li><strong>Herald reproduced the v2 defect in 11 of its 128 samples</strong> on these items. Eight of those are on mathd_algebra_393,
+  "if f(x) = 4x³ + 1, find f⁻¹(33)", whose v2s statement writes <code>f⁻¹ 33</code>. In Lean that is the pointwise reciprocal
+  1/f(33), not the inverse function.</li>
+<li><strong>DeepSeek-Prover-V2</strong> reproduced a v2 defect once.</li>
+<li><strong>Kimina, Goedel and Qwen</strong> never did.</li>
+<li><strong>The faithful v1 statement</strong>, which the models could have seen in training, was produced once in 640 samples.</li>
+</ul>
+<p>So natural pitfalls are frequent enough to reproduce even defects that could not have been memorized. And these
+models do not reproduce v1 statements verbatim on demand.</p>
+<h3>Sensitivities</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Analysis</th>
+<th style="text-align: right;">Items</th>
+<th style="text-align: right;">O</th>
+<th style="text-align: right;">T</th>
+<th>RR (95% CI)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Primary</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">204</td>
+<td style="text-align: right;">225</td>
+<td>0.91 (0.76-1.06)</td>
+</tr>
+<tr>
+<td>One-rater items added (plan 8)</td>
+<td style="text-align: right;">63</td>
+<td style="text-align: right;">204</td>
+<td style="text-align: right;">225</td>
+<td>0.91 (0.75-1.06)</td>
+</tr>
+<tr>
+<td>Trivially provable references dropped (D6)</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">196</td>
+<td style="text-align: right;">212</td>
+<td>0.93 (0.77-1.08)</td>
+</tr>
+<tr>
+<td>Builder-flagged twins dropped (D7, exploratory)</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">183</td>
+<td style="text-align: right;">207</td>
+<td>0.88 (0.73-1.04)</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>One-rater items added.</strong> The four extra items produced no defect output.</li>
+<li><strong>Trivially provable references dropped (D6).</strong> If a defective reference is itself proved outright by the tactic
+  portfolio, any output the portfolio can prove counts as "equivalent" to it. This was checked before any outcome was
+  computed. It is true of two primary items, mathd_algebra_188 and mathd_algebra_314: their D and D′ are both provable.
+  No primary item's reference was refuted.</li>
+<li><strong>Builder-flagged twins dropped.</strong> These are the two twins the builders flagged as borderline (Ireland-Rosen 3.10,
+  Rudin 1.11a), and one where the twin's defective statement became true while the original's was false (Shakarchi
+  1.19b).</li>
+<li><strong>Truth-certified twins.</strong> The plan's truth-certified-twin sensitivity cannot be computed: the portfolio proved none
+  of the 59 primary twins' C′. The one twin whose C′ it proved is in the one-rater set.</li>
+<li><strong>Among elaborating outputs only.</strong> The defect rate is 9.4% on originals (204 of 2,180), 10.3% on twins (225 of
+  2,179) and 5.9% on paraphrases (129 of 2,190).</li>
+<li><strong>Greedy outputs.</strong> 14 of 177 on originals, 16 of 177 on twins, and 8 of 177 on paraphrases of the same items.</li>
+<li><strong>Verbatim copies.</strong> These are outputs whose binders and conclusion match D (or D′) character for character, apart
+  from whitespace and the theorem name. There are 35 on originals, 31 on twins, and 11 on paraphrases of the same
+  items. Even verbatim reproduction is as common for the twins, whose D′ no model has seen.</li>
+</ul>
+<h3>Is the classifier biased between conditions? (plan 8, item 9)</h3>
+<p>A certifier that recognised the benchmark's own wording more readily than a reworded equivalent would favour
+condition O. It does not appear to. Among elaborating outputs, the share equivalent to neither reference is almost the
+same on originals and twins for every model:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Model</th>
+<th style="text-align: right;">O</th>
+<th style="text-align: right;">T</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kimina</td>
+<td style="text-align: right;">0.62</td>
+<td style="text-align: right;">0.62</td>
+</tr>
+<tr>
+<td>Goedel</td>
+<td style="text-align: right;">0.82</td>
+<td style="text-align: right;">0.82</td>
+</tr>
+<tr>
+<td>Herald</td>
+<td style="text-align: right;">0.77</td>
+<td style="text-align: right;">0.74</td>
+</tr>
+<tr>
+<td>DeepSeek-Prover-V2</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.83</td>
+</tr>
+<tr>
+<td>Qwen</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.87</td>
+</tr>
+</tbody>
+</table></div>
+<p>Elaboration rates are also nearly the same across conditions:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Model</th>
+<th style="text-align: right;">O</th>
+<th style="text-align: right;">T</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kimina</td>
+<td style="text-align: right;">84%</td>
+<td style="text-align: right;">83%</td>
+</tr>
+<tr>
+<td>Goedel</td>
+<td style="text-align: right;">79%</td>
+<td style="text-align: right;">80%</td>
+</tr>
+<tr>
+<td>Herald</td>
+<td style="text-align: right;">68%</td>
+<td style="text-align: right;">68%</td>
+</tr>
+<tr>
+<td>DeepSeek-Prover-V2</td>
+<td style="text-align: right;">64%</td>
+<td style="text-align: right;">62%</td>
+</tr>
+<tr>
+<td>Qwen</td>
+<td style="text-align: right;">26%</td>
+<td style="text-align: right;">25%</td>
+</tr>
+</tbody>
+</table></div>
+<p>Herald's lower rate comes partly from statements that rely on auto-bound implicit variables, which the plan turns off
+for every model and every reference.</p>
+<h2>What this means</h2>
+<p><strong>The fingerprint does not fire.</strong> The hypothesis treated reproduced benchmark defects as a fingerprint of memorized
+benchmark statements. Open autoformalizers do reproduce those defects, in 7-8% of samples, and in nearly every sample
+on some items. But they reproduce them just as often when the problem's numbers are changed, so the reproduced defects
+are not evidence of item-level memorization. They are formalization habits:</p>
+<ul>
+<li>one-sided bounds for "least" or "greatest" problems;</li>
+<li>dropped positivity or primality conditions;</li>
+<li>the original port's shapes for some algebra statements.</li>
+</ul>
+<p>The benchmark's original statements share these habits.</p>
+<p><strong>The miniF2F-v2 paper.</strong> It reads Herald's and Kimina's drop from v1 to v2 as possible contamination (arXiv
+2511.03108). This result does not support item-level memorization as the explanation of that gap. It does show that
+where v1 is wrong, it is often wrong in the way the formalizers are wrong. Any evaluation that uses the v1 statements as
+its reference therefore credits the shared mistake, whether or not the model has seen the benchmark.</p>
+<p><strong>What the test cannot rule out.</strong> The twins keep the original wording, so they detect only recall tied to the
+problem's numbers. The paraphrase comparison suggests that the wording matters for two of the three autoformalizers,
+but it cannot say whether through memory or through clarity. A design that separates the two would need paraphrases
+matched for explicitness, or, better, training-data provenance for the models.</p>
+<h2>Limitations</h2>
+<ul>
+<li><strong>Twins exist only for problems with numbers.</strong> 59 of the 129 included items have a valid twin, and only 19 of the
+  83 included ProofNet items. The result therefore speaks mostly to miniF2F-style computation problems and to the
+  ProofNet exercises that have numerical parameters.</li>
+<li><strong>Few items carry the signal.</strong> Defect outputs come from 27 items. The item-cluster bootstrap accounts for this, but
+  per-model and per-category intervals rest on a handful of items. Several intervals have a degenerate bound (1.00)
+  because every defect output for that subset sits on one or two items.</li>
+<li><strong>Machine raters and builders.</strong> The defect tags come from two LLM raters (κ 0.957 on D), not from the benchmark
+  authors. Some "defects" are faithfulness gaps that leave the statement true. Putnam 2010 A4 without <code>n &gt; 0</code> is still
+  true at n = 0, for example. Those are among the defects most naturally reproduced. Twins were built by an LLM and
+  checked by script, not by hand.</li>
+<li><strong>Equivalence is certified by a tactic portfolio with a 20 s limit.</strong> Equivalent outputs that the portfolio cannot
+  connect are counted as "other", in either condition.</li>
+<li>The "other" shares are similar across conditions, so this should not bias the ratio.</li>
+<li>Two trivially provable references were found and handled (D6).</li>
+<li>A reference whose equivalence class is easy to hit by accident remains possible.</li>
+<li><strong>One environment.</strong> Lean 4.9 with DeepSeek-Prover-V1.5's Mathlib. Models trained on newer Mathlib produce some
+  statements that do not elaborate there, in every condition alike.</li>
+<li><strong>Five open 7-8B models.</strong> Closed or larger autoformalizers were not tested.</li>
+</ul>
+<h2>Deviations</h2>
+<p>All are timestamped in <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/formal-math-autoformalizer-error-copying/deviations.md"><code>deviations.md</code></a>.</p>
+<ul>
+<li><strong>D1:</strong> implementation of the Lean checks. Statements are wrapped as <code>def</code> per statement with their own <code>open</code> lines,
+  and <code>Type*</code> is read as <code>Type</code>.</li>
+<li><strong>D2:</strong> twins and paraphrases are also built for the one-rater set; controls are sampled in O only; sampling and
+  extraction details.</li>
+<li><strong>D3:</strong> Herald's tokenizer was repaired before sampling. It dropped spaces and Unicode in the vLLM image.</li>
+<li><strong>D4:</strong> a format pilot on non-catalogue items. DeepSeek-Prover-V2's token limit was raised to 4,096.</li>
+<li><strong>D5:</strong> two fixes to twin check 3 (numerals-only diffs), before any twin was checked.</li>
+<li><strong>D6:</strong> the informativeness check on the references, added before any outcome was computed (a sensitivity only).</li>
+<li><strong>D7:</strong> exploratory analyses added after the outcomes:</li>
+<li>all three conditions on the same items;</li>
+<li>O vs P by model;</li>
+<li>the classification figure on the same items;</li>
+<li>dropping the flagged twins.</li>
+</ul>
+<p>It also covers the release of the outputs.</p>
+<h2>Reproduce</h2>
+<pre><code>code/run_lean_filter.sh                      # candidates (code/candidates.py build) and the Lean filters, plan 2.2
+python code/tagging.py prepare               # blinded tagging batches; raters write results/catalogue/tagging/rater*.json
+python code/tagging.py collect
+python code/twins.py prepare                 # builders write twins/out_*.json, paraphrase/out_*.json
+python code/twins.py diffcheck &amp;&amp; VAC_TOOLCHAIN=v49 python code/twins.py lean 22
+python code/twins.py judge_prepare           # judges write paraphrase/judge_out_*.json
+python code/twins.py freeze                  # results/catalogue/frozen.jsonl
+code/run_gpu.sh main                         # sampling (stops and restarts the owner's vLLM container)
+code/run_classify.sh                         # Lean classification, per model
+VAC_TOOLCHAIN=v49 python code/refcheck.py 22 # D6
+python code/analysis.py &amp;&amp; python code/figures.py &amp;&amp; python code/build_report_html.py
+</code></pre>
+<p><code>python</code> is the contamination run's venv (<code>../formal-math-certified-contamination-did/venv/bin/python</code>). The Lean REPL
+and toolchains are those of <code>../formal-math-selfplay-vacuity-drift</code>.</p>
+<h2>Released</h2>
+<p>Everything released is derived from open data and open-weight models.</p>
+<ul>
+<li><strong>The frozen catalogue</strong> (<code>results/catalogue/</code>): candidate pairs, Lean filter results, the blinded tagging batches
+  with both raters' tags and the key, twins with their checks, paraphrases with the judges' verdicts, and the reference
+  check (<code>refcheck.jsonl</code>).</li>
+<li><strong>Every model output</strong> (<code>results/outputs/&lt;model&gt;.jsonl.gz</code>).</li>
+<li><strong>Every classification</strong> (<code>results/classified/</code>).</li>
+<li><strong>The tables behind every number</strong> (<code>results/tables/</code>).</li>
+</ul>
+<h2>Data and citations</h2>
+<ul>
+<li><strong>miniF2F:</strong> Zheng, K., Han, J. M., Polu, S. (2022). <em>miniF2F: a cross-system benchmark for formal Olympiad-level
+  mathematics.</em> ICLR. Lean 4 v1 statements as distributed with DeepSeek-Prover-V1.5 (<code>datasets/minif2f.jsonl</code>, commit
+  2c4ba91).</li>
+<li><strong>miniF2F-v2:</strong> arXiv 2511.03108 (<code>roozbeh-mohit/miniF2F_v2</code>, commit 905eca8). The audit of v2 is
+  <code>ibrahimmian36/minif2f-v2-audit</code> (commit 9e38e22).</li>
+<li><strong>ProofNet:</strong> Azerbayev, Z. et al. (2023). <em>ProofNet: autoformalizing and formally proving undergraduate-level
+  mathematics.</em> arXiv 2302.12433. The Lean 4 port is as distributed with DeepSeek-Prover-V1.5
+  (<code>datasets/proofnet.jsonl</code>). ProofNet# is <code>PAug/ProofNetSharp</code> (a8da405fbd).</li>
+<li><strong>Models:</strong></li>
+<li>Kimina-Autoformalizer-7B (ddd47cb);</li>
+<li>Goedel-Formalizer-V2-8B (fe2d362);</li>
+<li>Herald_translator (c819f87);</li>
+<li>DeepSeek-Prover-V2-7B (a8d9e14);</li>
+<li>Qwen2.5-7B-Instruct (a09a354).</li>
+</ul>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/formal-math-autoformalizer-error-copying/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

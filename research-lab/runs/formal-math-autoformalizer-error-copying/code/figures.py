@@ -14,6 +14,7 @@ RUN = Path(__file__).resolve().parents[1]
 T, F = RUN / "results" / "tables", RUN / "results" / "figures"
 NAMES = {"kimina": "Kimina-Autoformalizer-7B", "goedel": "Goedel-Formalizer-V2-8B", "herald": "Herald_translator",
          "dsp_v2": "DeepSeek-Prover-V2-7B (secondary)", "qwen": "Qwen2.5-7B-Instruct (secondary)"}
+SRC = {"minif2f": "miniF2F", "proofnet": "ProofNet"}
 COND = {"O": "original", "T": "twin", "P": "paraphrase"}
 CLS = [("copy", "defect copy (≡ reference D)", "#c2412d"), ("correct", "correct (≡ corrected C)", "#2e6f9e"),
        ("other", "elaborates, equivalent to neither", "#b9b6ab"), ("noelab", "no statement or does not elaborate", "#e9e6dc")]
@@ -23,8 +24,10 @@ def forest(p, s):
     rows = [("Primary: 3 autoformalizers, O vs T", p, True)]
     rows += [(f"{NAMES[m]}, O vs T", s["by_model"][m], False) for m in NAMES if m in s["by_model"]]
     rows += [("Original vs paraphrase (3 primary)", s["O_vs_P"], False)]
-    rows += [(f"{k}, O vs T", v, False) for k, v in s["by_source"].items()]
+    rows += [(f"{SRC[k]} items only, O vs T", v, False) for k, v in s["by_source"].items()]
     rows += [("One-rater set added, O vs T", s["one_rater_set"], False)]
+    if s.get("informative_refs"):
+        rows += [("Trivially provable references dropped (D6)", s["informative_refs"], False)]
     if s.get("truth_certified_twins"):
         rows += [("Truth-certified twins only, O vs T", s["truth_certified_twins"], False)]
     fig, ax = plt.subplots(figsize=(8.2, 0.42 * len(rows) + 1.2))
@@ -43,8 +46,8 @@ def forest(p, s):
     ticks = [t for t in (0.1, 0.2, 0.5, 1, 1.5, 2, 3, 5, 10, 20, 50, 100) if lo <= t <= hi]
     ax.set_xticks(ticks); ax.set_xticklabels([f"{t:g}" for t in ticks])
     ax.set_yticks(range(len(rows))); ax.set_yticklabels([r[0] for r in rows], fontsize=8); ax.invert_yaxis()
-    ax.set_xlabel("rate ratio: defect copies on the first text / analogous defects on the second (95% item-cluster bootstrap)")
-    ax.text(1.02, -0.9, "copies\nO vs T (P)", transform=ax.get_yaxis_transform(), fontsize=7, color="#555555", va="bottom")
+    ax.set_xlabel("rate ratio (log scale), with 95% item-cluster bootstrap interval")
+    ax.text(1.02, -0.75, "defects", transform=ax.get_yaxis_transform(), fontsize=7.5, color="#555555", va="bottom")
     fig.tight_layout(); fig.savefig(F / "rate_ratios.png", dpi=150); plt.close(fig)
     (F / "rate_ratios.txt").write_text(
         "Rate ratio of defect copies (outputs certified equivalent to the defective reference) on the original informal "
@@ -52,17 +55,18 @@ def forest(p, s):
         "copies on a meaning-preserving paraphrase), with 95% item-cluster bootstrap intervals (2,000 draws). The "
         "primary estimate (diamond) pools the three dedicated autoformalizers' temperature samples on the included items "
         "with a valid twin. H is Supported if RR ≥ 3 with a lower bound above 1.5, and Refuted if the upper bound is "
-        "below 3. The numbers at the right are the defect counts in the two conditions; 0.5 is added to each count.")
+        "below 3. The numbers at the right are the defect counts in the two conditions (0.5 is added to each count in the "
+        "ratio). Dotted line: 1.5; dashed red line: 3.")
 
 
 def classes():
-    c = pd.read_csv(T / "classes_by_model_condition.csv").set_index(["model", "cond"])
+    c = pd.read_csv(T / "classes_twin_items.csv").set_index(["model", "cond"])
     c = c.reindex(columns=[k for k, _, _ in CLS], fill_value=0)
     models = [m for m in NAMES if m in c.index.get_level_values(0)]
     fig, axes = plt.subplots(1, len(models), figsize=(2.1 * len(models) + 1.2, 3.6), sharey=True)
     for ax, m in zip(np.atleast_1d(axes), models):
         d = c.loc[m].reindex([k for k in COND if k in c.loc[m].index])
-        share = d.div(d.sum(1), axis=0) * 100
+        share = d.div(d.sum(axis=1), axis=0) * 100
         bottom = np.zeros(len(share))
         for k, lab, col in CLS:
             ax.bar(range(len(share)), share[k], bottom=bottom, color=col, label=lab, width=0.7, edgecolor="white", lw=0.5)
@@ -77,8 +81,8 @@ def classes():
     (F / "classes.txt").write_text(
         "How each model's temperature samples are classified in Lean, by condition: certified equivalent to the "
         "condition's defective reference (D for originals and paraphrases, D′ for twins), to its corrected reference (C or "
-        "C′), elaborating but equivalent to neither, or no statement / does not elaborate. Items: the included items "
-        "with a valid twin (originals and twins) and those with an accepted paraphrase.")
+        "C′), elaborating but equivalent to neither, or no statement / does not elaborate. All three conditions are on the "
+        "same 59 included items with a valid twin.")
 
 
 def items(p):
@@ -101,7 +105,8 @@ def items(p):
     (F / "per_item.txt").write_text(
         f"Each point is one of the {len(d)} included items with a valid twin: defect copies among the three primary "
         "models' 48 temperature samples on the original informal statement against analogous defects among the 48 on "
-        "its twin (jittered). The grey line is equality; the dashed red line a ratio of 3.")
+        "its twin (jittered). The grey line is equality; the dashed red line a ratio of 3. "
+        f"{int(((d.copies_O + d.analog_T) == 0).sum())} items have no defect output in either condition (the cluster at the origin).")
 
 
 def tiles(p, s):

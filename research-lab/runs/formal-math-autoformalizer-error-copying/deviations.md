@@ -147,3 +147,23 @@ Results go to `results/catalogue/refcheck.jsonl`.
 **Its use.** It is a sensitivity analysis only (`secondary.json`, `informative_refs`): the primary rate ratio
 recomputed on the included items with a twin whose D and D′ are neither proved nor refuted (a reference whose check
 errors counts as uninformative). The preregistered verdict is unchanged. The report gives both.
+
+## D7 - 2026-10-12 13:30 NZDT - exploratory analyses added after the outcomes were seen
+
+Added after `analysis.py` had produced the preregistered results. None changes the verdict, and the report labels them
+exploratory.
+
+1. **All three conditions on the same items.** The plan's O vs P comparison (section 8, item 2) uses the 129 included
+   items with a paraphrase. Only 59 of them have a twin, so O, T and P are also compared on those 59 items
+   (`secondary.json`, `exploratory`): O vs P and P vs T.
+2. **O vs P by model**, for the same reason: the O vs P excess turned out to come from two models.
+3. **The classification figure** (`classes.png`) is drawn from a new table, `classes_twin_items.csv`, on those 59
+   items. The preregistered table, `classes_by_model_condition.csv`, pools different item sets across conditions
+   (originals of all 129 included items, twins of 59), so its condition shares are not comparable.
+4. **The count of items with any defect output.**
+5. **The three twins the builders flagged dropped** (`flagged_twins_dropped`). Two were flagged as borderline (t237,
+   t262); in one, D′ became true while D was false (t284). All three passed the mechanical checks and are in the
+   primary set.
+
+**Released outputs** (plan 10). The raw model outputs and the per-output classifications are released gzipped in
+`results/outputs/` and `results/classified/`, because `data/` is not tracked.
