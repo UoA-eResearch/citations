@@ -86,6 +86,8 @@ def main():
     g.to_csv(TAB / "token_identity.csv")
     print(g.round(3).to_string())
     prim = A.primary_block(recomputed, col="f0.7_nontoken")
+    # per layer (added after the pooled result was first printed; see D9)
+    prim["per_layer"] = {str(L): A.primary_block(recomputed, col="f0.7_nontoken", layers=[L]) for L in [4, 8]}
     json.dump(prim, open(TAB / "token_identity_primary.json", "w"), indent=1)
     print(json.dumps(prim, indent=1))
 

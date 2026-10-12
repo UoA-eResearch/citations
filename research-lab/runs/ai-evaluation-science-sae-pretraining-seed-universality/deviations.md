@@ -215,3 +215,12 @@ statistic uses only the 10 full seeds and is unaffected.
     recomputed with the directional scores restricted to non-token latents as sources. Candidates are unchanged,
     because the stored best-match arrays do not allow restricting them.
 - **Status.** Exploratory; it does not change the verdict.
+- **Result** (logged 07:39 NZDT, after it was seen).
+  - **Token-identity latents** are 28.5% of assessable latents at layer 4 and 23.5% at layer 8. They match more often
+    both within (0.645, 0.594) and across runs (0.606, 0.524) than other latents (within 0.391, 0.362; across 0.343,
+    0.283).
+  - **Without them as sources:** R = 0.833 (0.829-0.837), Refuted. Layer 4 is 0.878 (0.872-0.884). Layer 8 is 0.784
+    (0.779-0.790), below 0.8.
+  - **Timing.** The per-layer intervals were added to the script after the pooled result had been printed. It was
+    rerun from the cached purities. The pooled numbers are unchanged.
+  - **The preregistered verdict is unchanged.** The report now gives this result prominently as a qualification.

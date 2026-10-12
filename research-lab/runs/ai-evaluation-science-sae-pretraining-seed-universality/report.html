@@ -80,7 +80,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
   <h1>Are SAE features properties of the model or of the training run?</h1>
   <p class="subtitle">A preregistered test on PolyPythia-160M. 96 sparse autoencoders, three per model on 16 pretraining runs of the same language model (the original, nine independent seeds and six variants of the original), were matched latent by latent by their activations on held-out text. The test compares how often a feature recurs across independent pretraining seeds with how often it recurs across SAE seeds on one model.</p>
   <div class="meta">
-    <span>Report · 2026-10-13 · pre-review draft</span>
+    <span>Report · 2026-10-13 · revised after independent review</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ai-evaluation-science-sae-pretraining-seed-universality/plan.md">Preregistration</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ai-evaluation-science-sae-pretraining-seed-universality/deviations.md">Deviations log</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ai-evaluation-science-sae-pretraining-seed-universality/code">Code</a>
@@ -96,6 +96,13 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 <li><strong>The scope.</strong> The verdict holds at the preregistered criterion: a match is a correlation of at least 0.7, and
   layers 4 and 8 are pooled. At the stricter criterion r ≥ 0.9 the ratio is 0.725 and the hypothesis would have held.
   Layer 8 alone is 0.817, two points above the line.</li>
+<li><strong>Token-identity latents flatter the ratio</strong> (exploratory, D9).<ul>
+<li>About a quarter of latents fire mostly on one input token. Every run has them, and they match well everywhere.</li>
+<li>Without them as sources, R is 0.833 (0.829-0.837).</li>
+<li>At layer 8 alone it is 0.784 (0.779-0.790), below the 0.8 line. For the context-dependent features of the deeper
+layer, the hypothesis would have held.</li>
+</ul>
+</li>
 <li><strong>Where the irreproducibility lies.</strong> Mostly in the SAE, not in the pretraining run. Two SAEs on the same model share
   46% (layer 4) and 42% (layer 8) of their latents at a correlation of at least 0.7. SAEs on different pretraining
   runs share 42% and 34%.</li>
@@ -116,10 +123,10 @@ relabelled after the results were seen.</li>
 </ul>
 <h2>In plain terms</h2>
 <p>Sparse autoencoders (SAEs) are a popular tool for looking inside language models. They split a model's internal
-activity into tens of thousands of "features", each meant to stand for one recognisable pattern. A worry is that these
+activity into thousands of "features", each standing for one recognisable pattern. A worry is that these
 features describe one particular training run rather than what models of that kind learn.</p>
 <p>We tested this on Pythia-160M, a small open model released in many training runs: the original, nine runs from
-different random starting points, and six variants of the original. We trained three SAEs on each of 16 runs. Then we
+other random starting points, and six variants. We trained three SAEs on each of 16 runs. Then we
 asked how often a feature in one SAE has a near-twin in another: the two are active on the same words (correlation at
 least 0.7) across 2 million tokens of held-out text.</p>
 <ul>
@@ -131,12 +138,12 @@ least 0.7) across 2 million tokens of held-out text.</p>
 0.86 times, so <strong>the prediction is refuted</strong> at the agreed criterion. Most of the irreproducibility comes from the SAE,
 not from the training run.</p>
 <p>The verdict depends on that criterion. For near-exact twins (correlation 0.9) the ratio is 0.73, and the
-prediction would have held. The deeper layer alone, at 0.82, is close to the line. The most frequently active features
-lose the most.</p>
-<p>A practical filter follows: a feature that two other SAEs on the same model both find again has a twin in about 80% of
+prediction would have held. About a quarter of the features just track one particular word, and every run has those.
+Leaving them out, the ratio is 0.83, and in the deeper layer 0.78, below the line.</p>
+<p>A practical filter: a feature that two other SAEs on the same model both find again has a twin in about 80% of
 comparisons with other runs.</p>
-<p>We also found that three variants released as differing only in their starting point actually started from the
-original's, a problem already reported to EleutherAI.</p>
+<p>Three variants released as differing only in their starting point actually started from the original's, a problem
+already reported to EleutherAI.</p>
 <h2>What was done</h2>
 <h3>Models and SAEs</h3>
 <ul>
@@ -375,6 +382,98 @@ full-seed models in both rows (<code>results/tables/review_frequency_full_seeds.
   run's SAE.</li>
 <li><strong>The figure</strong> is plan 7.4's version, whose within row pools all 16 models. It differs from the table by at most
   0.006 in any cell.</li>
+</ul>
+<h3>Token-identity latents flatter the ratio (exploratory, D9)</h3>
+<p>The lead's risk note warned that features tied to a single input token might match across models for a trivial
+reason: every model sees the same tokens. The plan did not stratify them out, and the pre-review draft did not
+address it.</p>
+<p><strong>The check</strong> (<code>code/token_identity.py</code>; <code>results/tables/token_identity.csv</code>, <code>token_identity_primary.json</code>):</p>
+<ul>
+<li>For each latent of the 30 SAEs of the 10 full-seed models, its token purity is the share of its firings on H that
+  fall on its most frequent input token.</li>
+<li>Latents with purity ≥ 0.5 count as token-identity latents.</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align: right;">Layer 4: token-identity</th>
+<th style="text-align: right;">Layer 4: other</th>
+<th style="text-align: right;">Layer 8: token-identity</th>
+<th style="text-align: right;">Layer 8: other</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Share of assessable latents</td>
+<td style="text-align: right;">28.5%</td>
+<td style="text-align: right;">71.5%</td>
+<td style="text-align: right;">23.5%</td>
+<td style="text-align: right;">76.5%</td>
+</tr>
+<tr>
+<td>Within-model match rate</td>
+<td style="text-align: right;">0.645</td>
+<td style="text-align: right;">0.391</td>
+<td style="text-align: right;">0.594</td>
+<td style="text-align: right;">0.362</td>
+</tr>
+<tr>
+<td>Cross-seed match rate</td>
+<td style="text-align: right;">0.606</td>
+<td style="text-align: right;">0.343</td>
+<td style="text-align: right;">0.524</td>
+<td style="text-align: right;">0.283</td>
+</tr>
+<tr>
+<td>Ratio</td>
+<td style="text-align: right;">0.94</td>
+<td style="text-align: right;">0.88</td>
+<td style="text-align: right;">0.88</td>
+<td style="text-align: right;">0.78</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>The primary statistic with token-identity latents removed as sources:</strong></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align: right;">R (95% interval)</th>
+<th>By the rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Both layers</td>
+<td style="text-align: right;">0.833 (0.829-0.837)</td>
+<td>Refuted</td>
+</tr>
+<tr>
+<td>Layer 4</td>
+<td style="text-align: right;">0.878 (0.872-0.884)</td>
+<td>Refuted</td>
+</tr>
+<tr>
+<td>Layer 8</td>
+<td style="text-align: right;">0.784 (0.779-0.790)</td>
+<td>Supported</td>
+</tr>
+</tbody>
+</table></div>
+<p>The candidate latents of the other SAE are unchanged, because the stored best-match arrays do not allow restricting
+them.</p>
+<ul>
+<li><strong>Token-identity latents match better everywhere.</strong> They are a quarter of the dictionary, they match more often
+  both within a model and across runs, and they lose least across runs. They pull the ratio up.</li>
+<li><strong>The pooled verdict survives without them, by a smaller margin</strong> (0.833).</li>
+<li><strong>Layer 8 does not.</strong> Its context-dependent latents recur across runs at 0.78 of the within-model rate, below the
+  hypothesis's threshold. The per-layer version of this check was added after the pooled result had been printed
+  (D9).</li>
+<li><strong>How much it matters.</strong> This check is exploratory and the purity threshold of 0.5 is a choice. It leaves the
+  preregistered verdict unchanged. But it changes how strongly the verdict generalises: for the features
+  interpretability work usually cares about, deeper in the model, the pretraining run matters about as much as the
+  hypothesis said.</li>
 </ul>
 <h3>Latents that replicate within a model replicate across models (exploratory, D7)</h3>
 <p>For each SAE of the 10 full-seed models, every assessable latent was classified by how many of the model's other two
@@ -724,6 +823,8 @@ within-model level, and with it the ratio's denominator.</li>
   most SAE features: 86% as many as two SAEs on the same model at the preregistered criterion.</li>
 <li>The hypothesis that features are largely properties of the training run is refuted at this criterion (r ≥ 0.7,
   layers pooled). At r ≥ 0.9 it would have held, and layer 8 alone is two points above the line.</li>
+<li>Part of the margin comes from token-identity latents, which every run shares. Without them the pooled ratio is 0.833,
+  and at layer 8 it is 0.784, below the line (D9, exploratory).</li>
 </ul>
 <p><strong>For interpretability practice.</strong> For this SAE recipe and budget, and at r ≥ 0.7, the binding constraint on
 reproducible features is the SAE, not the language model.</p>
@@ -736,7 +837,8 @@ reproducible features is the SAE, not the language model.</p>
 <ul>
 <li>near-exact correspondence (r ≥ 0.9, ratio 0.725);</li>
 <li>the most frequently firing latents (ratio 0.64 for the top third at layer 8);</li>
-<li>the deeper of the two layers (0.817 against 0.902).</li>
+<li>the deeper of the two layers (0.817 against 0.902);</li>
+<li>context-dependent rather than token-identity latents (0.784 at layer 8).</li>
 </ul>
 <p>A claim that a specific, frequently active, deep-layer feature is "the model's" deserves a check on a second
 pretraining run.</p>
@@ -767,7 +869,9 @@ standard deviation has a median of 0.0013 (layer 4) and 0.0017 (layer 8), at mos
 <li><strong>The decomposition.</strong> It was relabelled after the results were seen (D6) because of a defect in the released
   checkpoints that the pre-plan checks should have found. The study has no initialisation-only comparison.</li>
 <li><strong>Exploratory analyses.</strong> None of these were preregistered: the outlier dimensions, the cross-model reconstruction,
-  the conditional replication, and the analyses requested by the review (D5, D7, D8).</li>
+  the conditional replication, the analyses requested by the review, and the token-identity check (D5, D7-D9).</li>
+<li><strong>Token-identity stratification.</strong> The lead named this risk, but the plan omitted it, so it was added after the
+  results (D9). Its threshold (purity 0.5) is a choice. The candidate set was not restricted.</li>
 </ul>
 <h2>Deviations</h2>
 <ul>
@@ -788,6 +892,8 @@ standard deviation has a median of 0.0013 (layer 4) and 0.0017 (layer 8), at mos
 and det(R).</li>
 </ul>
 </li>
+<li><strong>D9.</strong> A post-hoc token-identity check, prompted by the lead's risk note. Without token-identity latents the pooled
+  R is 0.833, and layer 8 is 0.784.</li>
 </ul>
 <p>Nothing changed the primary statistic, its inputs or the decision rule.</p>
 <h2>Reproduce</h2>
@@ -799,6 +905,7 @@ venv/bin/python code/analysis.py; venv/bin/python code/figures.py
 venv/bin/python code/fetch.py early; venv/bin/python code/lineage_check.py           # D6
 venv/bin/python code/exploratory.py; venv/bin/python code/exploratory_conditional.py # D5, D7
 venv/bin/python code/review_fixes.py                                                 # D8
+venv/bin/python code/token_identity.py                                               # D9
 </code></pre>
 <h2>Released</h2>
 <ul>
