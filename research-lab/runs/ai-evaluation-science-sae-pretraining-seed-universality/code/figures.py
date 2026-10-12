@@ -140,7 +140,7 @@ def decoder(sec):
             raw = [sec["decoder"][f"L{L}|{k}"][f"cos{th}"] for k in ks]
             rot = [sec["decoder"][f"L{L}|{k}"][f"rcos{th}"] for k in ks]
             ax.bar(x + o, rot, width=0.38, color="#2e6f9e" if L == 4 else "#c2412d", alpha=0.35,
-                   label=f"layer {L}, Procrustes-rotated")
+                   label=f"layer {L}, Procrustes-mapped")
             ax.bar(x + o, raw, width=0.38, color="#2e6f9e" if L == 4 else "#c2412d", label=f"layer {L}, raw")
         ax.set_xticks(x)
         ax.set_xticklabels([dict((k, l) for k, l, _ in KINDS)[k] for k in ks], fontsize=7.5)
@@ -152,8 +152,8 @@ def decoder(sec):
     plt.close(fig)
     caption("decoder", """Decoder geometry (plan 7.5): share of latents whose decoder direction has a cosine of at least
 0.5 (left) or 0.7 (right) with some decoder direction of the other SAE, in the raw residual bases (solid) and after
-an orthogonal Procrustes rotation of one model's residual basis onto the other's, fitted on 262,144 tokens of H (pale).
-Within pairs share a basis, so their rotation is the identity. The lineage pairs (right three groups) share the
+an orthogonal Procrustes map of one model's residual basis onto the other's, fitted on 262,144 tokens of H (pale).
+Within pairs share a basis, so their map is the identity. The lineage pairs (right three groups) share the
 original's initialisation (D6), which explains their small raw alignment.""")
 
 
@@ -172,7 +172,8 @@ def frequency(sec):
     fig.savefig(F / "frequency.png", dpi=160)
     plt.close(fig)
     caption("frequency", """Directional match rate (r >= 0.7) by tercile of the source latent's firing count on H (plan
-7.4), within against full pairs. Terciles are computed per SAE over its assessable latents.""")
+7.4), within against full pairs. Terciles are computed per SAE over its assessable latents. As preregistered, the
+within line pools all 16 models; restricted to the 10 full-seed models it moves by at most 0.006 (report table).""")
 
 
 def tiles(prim, sec):

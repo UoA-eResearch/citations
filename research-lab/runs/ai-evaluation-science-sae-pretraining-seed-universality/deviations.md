@@ -91,7 +91,7 @@ and `N_SEQ` (fewer sequences of H). The main run sets none of them.
     Procrustes-rotated and least-squares mapped. The maps are fitted on sequences 0-127 of H and evaluated on
     sequences 128-255. It also records how well each map predicts B's residual stream from A's.
 
-## D6 - 2026-10-13 06:41 NZDT - the weight-seed variants were not trained from their own initialisation (post hoc; corrects D2)
+## D6 - 2026-10-13 06:41 NZDT - the weight-seed variants were not trained from their own initialisation (post hoc; corrects D2; its step-1 evidence, its "plan section 2" framing and its outlier-dimension sentence are corrected in D8)
 
 **What D5's exploratory checks showed.**
 
@@ -162,3 +162,42 @@ statistic uses only the 10 full seeds and is unaffected.
   - (b) D7 stratified by firing-frequency tercile (issue 11);
   - (c) outlier-dimension counts across the lineage (issue 9);
   - (d) ||R − I||_F and det(R) of the Procrustes maps for every cross-model pair (issue 8).
+- **Changes made in response, by issue:**
+  1. **McCann's claims restated.** For Pythia-70m he reports post-rotation explained variance of 0.85-0.99; the
+     "within 0.025" gap is his toy model's. His intermediate-layer decoder match is ≥ 99%, falling to 62% at the final
+     layer. His setting is now listed: ReLU + L1 SAEs on 256 × 256 tokens at seven residual sites. Verified against
+     the paper's text.
+  2. **D6's step-1 evidence withdrawn.** The step-1 checkpoints equal step 0, because the learning-rate warm-up starts
+     at zero. D6's conclusion rests on step 1000 (0.892-0.893 against the original's step 0, 0.000 against their own)
+     and on the final checkpoints. #203's first-batch claim is attributed to #203 and marked as not verified here.
+  3. **The relabelling is called post hoc.** The plan's step-0 check had passed. A pattern in the results triggered
+     the relabelling, and checkpoints outside the plan justified it.
+  4. **The decomposition reading is narrowed.** The report no longer offers an "amplification" reading. "Near-replicate"
+     is replaced by "same initialisation, perturbation unidentified". The value of a shared initialisation is now "at
+     most about one point, not resolvable".
+  5. **Wording on independence.** The subtitle and the plain summary no longer call all 16 runs independent.
+  6. **Scope of the verdict.** It is stated in the summary and the plain terms: r ≥ 0.7, layers pooled; r ≥ 0.9 would
+     be Supported; layer 8 alone is 0.817. "Noise" became "irreproducibility".
+  7. **The reference-SAE inference is weakened** to what it shows.
+  8. **The outlier-dimension caveat is replaced** by the review's test: standardising or dropping outlier dimensions
+     does not help the orthogonal map. ‖R − I‖_F (39.12-39.28 against √1536 = 39.19 for full pairs; 22.9-26.6 for
+     lineage pairs) and det(R) were computed for every pair. "Rotation" became "orthogonal map" where accuracy needs
+     it: about half the maps are reflections.
+  9. **Outlier-dimension counts.** Stated exactly from `review_outliers.csv`.
+  10. **Disclosure gaps** (see below).
+  11. **D7 framing.** It is now a precision filter, with pooled rates. The tercile-stratified table was added: the
+      pattern holds inside every tercile.
+  12. **Paulo & Belrose.** The comparison is marked as loose: different site and criterion.
+  13. **Frequency table.** It now uses the 10 full-seed models in both rows. The figure stays the preregistered
+      16-model version, with a caption note.
+- **Disclosure gaps (issue 10):**
+  - (a) `code/figures.py` was edited after the results, at 06:41 (commit b7c45a6), and again now. The changes are the
+    decoupled kinds' labels per D6, captions and the key-result tiles; the plotted quantities are unchanged.
+  - (b) `code/lineage_check.py` was committed together with its outputs (138e1a5); it is post hoc.
+  - (c) D5 says the analysis ran at 06:09 NZDT. Its output files are stamped 06:07:54; the 06:09 was the approximate
+    time I noted.
+- **Other edits.**
+  - The Limitations section now says that SAE-seed variation is averaged out. Each model pair's three SAE-seed
+    combinations have a standard deviation with a median of 0.0013-0.0017, at most 0.004. The results are conditional
+    on one SAE training stream and one held-out set.
+  - No number in the primary or secondary analyses changed.
