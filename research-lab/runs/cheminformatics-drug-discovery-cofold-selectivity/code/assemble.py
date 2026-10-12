@@ -104,6 +104,7 @@ def primary():
     out = A.summarise(pred, meas, "boltz2_affinity_value")
     out["verdict"] = A.verdict(out["P1"], out["P3"])
     out["shape"] = dict(ligands=len(cids), kinases=len(accs))
+    out["cids"], out["accs"] = cids, accs  # the row/column order every per_ligand / per_kinase list follows
     out["censored_share"] = float((meas <= A.CENSOR_PKD).mean())
     # secondary read-out: the binary binder probability on the same axis
     out["P1_probability"] = A.primary(prob, meas)

@@ -1,0 +1,14 @@
+Davis matrix: 68 ligands x 442 kinase assays, 0 missing cells, Kd 0.016-10000 nM
+censored at the 10 uM ceiling: 20931 cells (69.6%); pKd range 5.00-10.80
+
+CID 5291 - imatinib (expect ABL1 and DDR1): 53 uncensored of 442; strongest DDR1 9.15, ABL1 8.96, ABL1(Q252H) 8.74, ABL1(F317L) 8.60, ABL1(H396P) 8.23
+CID 44259 - staurosporine (expect almost everything): 402 uncensored of 442; strongest SLK 10.62, LOK 10.43, CAMKK1 10.41, SNARK 10.07, PHKG2 9.85
+CID 123631 - an EGFR inhibitor (expect EGFR and its deletion mutants): 99 uncensored of 442; strongest EGFR(L747T751del) 9.28, EGFR(E746A750del) 9.27, EGFR(L747S752del) 9.24, EGFR(L747E749del) 9.24, EGFR(L858R) 9.03
+CID 5328940 - an ABL inhibitor (expect ABL1 and its mutants): 240 uncensored of 442; strongest ABL1(F317L)p 10.54, ABL1(Y253F) 10.44, ABL1(M351T) 10.43, ABL1(Q252H)p 10.41, ABL1(E255K) 10.33
+CID 3062316 - an ABL inhibitor (expect ABL1 and its mutants): 159 uncensored of 442; strongest ABL1(M351T) 10.80, ABL1(F317L)p 10.72, ABL1(H396P) 10.60, ABL1 10.54, ABL1(F317L) 10.49
+
+panel rectangle: 32 ligands x 32 kinases, 746 uncensored cells (72.9%), pKd 5.00-10.62
+per-ligand uncensored cells: min 17, median 22, max 32
+per-kinase uncensored cells: min 13, median 23, max 30
+per-ligand spread of measured pKd (SD): median 1.00
+per-kinase spread of measured pKd (SD): median 1.07

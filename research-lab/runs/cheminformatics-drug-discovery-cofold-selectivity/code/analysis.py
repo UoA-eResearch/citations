@@ -24,10 +24,18 @@ MIN_UNC_P2 = 5
 
 
 def rho(x, y):
-    """Spearman with ties; nan when either side has no variation or fewer than 3 points."""
+    """Spearman with ties.
+
+    nan when there is nothing to rank: fewer than 3 usable points, or no variation in the *measured*
+    side. A predictor with no variation (every target scored the same) carries no rank information about
+    a varying measurement, so it scores exactly 0 rather than nan — that is what makes the ligand-only
+    baseline B0 equal to zero by construction, as plan.md §7 asserts.
+    """
     m = np.isfinite(x) & np.isfinite(y)
-    if m.sum() < 3 or np.unique(x[m]).size < 2 or np.unique(y[m]).size < 2:
+    if m.sum() < 3 or np.unique(y[m]).size < 2:
         return np.nan
+    if np.unique(x[m]).size < 2:
+        return 0.0
     return stats.spearmanr(x[m], y[m]).statistic
 
 

@@ -9,7 +9,7 @@ have an affinity JSON in the output directory are skipped by boltz itself unless
 Usage:
   python code/boltzrun.py msa   <name=seq-file.json>      fetch missing MSAs into data/msa/
   python code/boltzrun.py yaml  <spec.json> <indir>       write one YAML per complex
-  python code/boltzrun.py run   <indir> <outdir> [flags]  run boltz predict over the directory
+  python code/boltzrun.py run   <indir> <outdir> [--seed N] [flags]  run boltz predict over the directory
   python code/boltzrun.py collect <outdir> <arm> <jsonl>  append the affinity outputs to a jsonl
 """
 import hashlib
@@ -73,8 +73,8 @@ def write_yaml(indir, pair_id, protein, seq, smiles):
     return p
 
 
-def run(indir, outdir, extra=()):
-    cmd = [str(VENV / "boltz"), "predict", str(indir), "--out_dir", str(outdir), "--seed", str(SEED),
+def run(indir, outdir, extra=(), seed=SEED):
+    cmd = [str(VENV / "boltz"), "predict", str(indir), "--out_dir", str(outdir), "--seed", str(seed),
            "--output_format", "mmcif", "--num_workers", "2", "--preprocessing-threads", "4", *extra]
     print(" ".join(cmd), flush=True)
     t0 = time.time()
@@ -125,7 +125,10 @@ if __name__ == "__main__":
             write_yaml(d, c["pair_id"], c["protein"], c["seq"], c["smiles"])
         print(f"wrote {len(spec)} yaml files to {d}")
     elif cmd == "run":
-        sys.exit(run(sys.argv[2], sys.argv[3], sys.argv[4:]))
+        rest, seed = sys.argv[4:], SEED
+        if rest[:1] == ["--seed"]:
+            seed, rest = int(rest[1]), rest[2:]
+        sys.exit(run(sys.argv[2], sys.argv[3], rest, seed))
     elif cmd == "collect":
         collect(sys.argv[2], sys.argv[3], sys.argv[4])
     else:
