@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/mnt/citations/research-lab/runs/auckland-nz-speed-limit-reversal-crashes/code/nslr_snapshot.py", line 93, in <module>
+    daemon() if a.daemon else snapshot(a.full)
+    ^^^^^^^^
+  File "/mnt/citations/research-lab/runs/auckland-nz-speed-limit-reversal-crashes/code/nslr_snapshot.py", line 79, in daemon
+    time.sleep((nxt - now).total_seconds())
+KeyboardInterrupt
