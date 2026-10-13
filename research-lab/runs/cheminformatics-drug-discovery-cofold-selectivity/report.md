@@ -81,8 +81,94 @@ TBD
 
 ## What this does and does not show
 
-TBD
+TBD — the outcome-specific paragraph goes here once the arms are in. The limitations below were written
+from the design, before the predictions were analysed.
+
+**It tests one axis, not the model.** The question is whether a fixed ligand's predicted ranking of
+proteins tracks the measured one. That is the axis selectivity work needs, and it is not the axis Boltz-2
+was tuned or benchmarked on. A model can be genuinely useful for ranking a congeneric series against one
+target — the published audits say it is — and carry no usable protein-side signal. Nothing here speaks to
+pose accuracy, to the structure module, or to the conventional axis beyond the one within-kinase number
+reported for scale.
+
+**One model version, one read-out.** Boltz-2 2.2.1 released weights, the `affinity_pred_value` head, the
+default settings passed explicitly. The binary binder probability is reported alongside because it is a
+differently-trained head on the same features; the sampling arm varies the diffusion budget. A later
+release could behave differently, which is why the decoy protocol and panel definition are released with
+the report rather than only the numbers.
+
+**The crop is a real assumption.** The model sees the annotated kinase domain plus 20 residues, not the
+full-length protein. That matches what the competition binding assay reports and makes a panel affordable,
+but accessory domains, linkers and partners that shape selectivity in the cell are absent. If removing
+them is what removes the signal, that is a finding about the input the model can be given at scale, not
+about the kinome. Crop length and Boltz's own confidence scores are reported per complex, and the primary
+statistic is recomputed on the high-confidence half, so a reader can check whether the failures are the
+poorly-folded inputs.
+
+**Training exposure cuts one way.** Davis is from 2011 and is almost certainly inside the training
+distribution. That makes a null result harder to explain away — the model is not being asked to
+extrapolate — and it makes a positive result uninterpretable as generalisation. The post-cutoff arm (11
+compounds first published in 2025, 93 pairs) and the training-support gradient bound this, but 93 pairs is
+the ceiling of what public post-cutoff profiling offers, so that arm is a check, not a replication.
+
+**Censoring is handled two ways and both are reported.** 27.1 % of the rectangle sits at the 10 µM assay
+ceiling. P1 keeps those cells as ties at pKd 5, because telling binders from non-binders is part of
+selectivity; P2 drops them and asks only about ordering among real numbers. The verdict follows P1, as
+preregistered.
+
+**The panel is deliberately the easy case.** Kinases and ligands were chosen for having many uncensored
+measurements, which buys dynamic range to rank but samples the more promiscuous end of both. The
+promiscuity probe adds the eight least-promiscuous eligible kinases to test whether the picture changes
+where binding is rare. A panel chosen for difficulty would be a harder test, not an easier one.
+
+**Rank, not calibration.** Davis reports Kd from a competition binding assay; the model's head mixes
+Kd/Ki/IC50. Every primary statistic is a rank correlation within a fixed ligand, which is invariant to any
+monotone recalibration — including the molecular-weight correction, which for a fixed ligand is a
+constant and cannot change a within-ligand statistic at all. Absolute agreement in log units is reported
+descriptively and should not be read as a calibration claim.
+
+**No docking comparison.** A Vina or Glide baseline would answer "is this better than the cheap physical
+alternative?", which is a different and larger study; it was declared out of scope in the plan (§5.8)
+rather than dropped quietly. The baselines here are deliberately trivial — target promiscuity, nearest
+chemical neighbour, ligand-only, molecular weight — because the point of the comparison is what a model
+must beat to be worth running at all.
 
 ## Reproducing it
 
-TBD
+Everything needed is in the run directory, and nothing in it requires a credential: the Davis panel comes
+from the DeepDTA release, the kinase sequences from UniProt, the alignments from the public ColabFold
+server, and the model weights from the Boltz release.
+
+```
+code/panel.py                  select the 32 x 32 rectangle   -> data/panel.json
+code/validate_data.py          check the matrix against the paper and PubChem
+code/build_inputs.py <arm>     write one YAML per complex     -> data/inputs_<arm>/
+code/boltzrun.py msa <seqs>    fetch one MSA per protein      -> data/msa/
+code/boltzrun.py run <in> <out>  boltz predict, resumable
+code/boltzrun.py collect <out> <arm> results/predictions.jsonl
+code/assemble.py tidy          per-pair tables                -> results/tables/pairs_<arm>.csv
+code/assemble.py primary       P1-P5, baselines, verdict      -> results/tables/primary.json
+code/secondary.py              decoy, promiscuity, sampling, support
+code/geometry.py               sequence-vs-prediction geometry
+code/figures.py                F1-F5
+code/test_analysis.py          17 checks on the estimators
+```
+
+The estimator checks are worth running first: they assert that a perfect predictor scores 1, that a
+ligand-only predictor scores exactly 0 on the selectivity axis, that the sign convention is right, that a
+pure-noise predictor's interval covers 0, and that each of the four verdict branches fires on data built to
+trigger it. They take a second and they caught two real bugs in this analysis.
+
+Seeds and settings are fixed in `code/boltzrun.py` (`SEED = 20261013`, the explicit flag dictionary) and
+`code/analysis.py` (`SEED`, `NBOOT = 2000`). `results/tables/env.json` carries the package versions and the
+sha256 of both released checkpoints, so a rerun can confirm it used the same weights. The per-complex
+read-outs, with Boltz's own confidence scores, are released as `results/predictions.jsonl`; the alignments
+themselves are not redistributed, only the manifest of which sequence was aligned.
+
+One operational note for anyone repeating this at panel scale. A thousand complexes is about fifteen
+GPU-hours, which is long enough that the machine will probably interrupt you: this run was stopped twice by
+host crashes. Boltz writes each complex's outputs as it finishes and skips on restart any complex that
+already has them, so both interruptions cost one complex each. Fetch the alignments once per protein and
+cache them, rather than letting the predictor fetch per complex — the same 32 proteins appear in every
+column of the rectangle, and the public server is the slowest step in the whole pipeline by an order of
+magnitude.
