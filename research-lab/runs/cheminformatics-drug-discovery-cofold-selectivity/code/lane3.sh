@@ -25,8 +25,17 @@ if [ "$have" -lt "$N_PC" ]; then
   exit 1
 fi
 
-while pgrep -f "boltzrun.py run data/inputs_panel" > /dev/null; do sleep 120; done
-echo "[$(date +%H:%M:%S)] panel lane free, starting post-cutoff"
+# Start as soon as there is room, by either route: the panel lane finishing, or enough free memory to run
+# beside it (the panel pass itself holds about 9 GB, so 14 GB free is a safe margin for a second process).
+# D6 measured two concurrent lanes at 1.4-1.6x the aggregate throughput of one, so taking the second route
+# when it opens saves about an hour.
+while true; do
+  pgrep -f "boltzrun.py run data/inputs_panel" > /dev/null || { why="panel lane finished"; break; }
+  free=$(nvidia-smi --query-gpu=memory.free --format=csv,noheader,nounits | head -1)
+  [ "${free:-0}" -ge 14000 ] && { why="${free} MiB free, running beside the panel"; break; }
+  sleep 120
+done
+echo "[$(date +%H:%M:%S)] starting post-cutoff: $why"
 $PY code/postcutoff.py yaml >> logs/build_postcut.log 2>&1 \
   && $PY code/boltzrun.py run data/inputs_postcut out/postcut > logs/postcut_run.log 2>&1 \
   && $PY code/boltzrun.py collect out/postcut postcut results/predictions.jsonl >> logs/collect.log 2>&1
