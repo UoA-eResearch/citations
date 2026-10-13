@@ -70,6 +70,8 @@ def boot_ligand(fn, n_lig, rng, nboot=NBOOT):
 def ci(draws, level=95):
     d = np.asarray(draws, float)
     d = d[np.isfinite(d)]
+    if d.size == 0:          # nothing was estimable in any draw: say so rather than raise
+        return float("nan"), float("nan")
     lo, hi = np.percentile(d, [(100 - level) / 2, 100 - (100 - level) / 2])
     return float(lo), float(hi)
 
@@ -99,9 +101,9 @@ def boot_kinase(pred, meas, uncensored_only=False, nboot=NBOOT):
     rng = np.random.default_rng(SEED + 1)
     k = pred.shape[1]
     draws = [med(within_ligand(pred[:, c], meas[:, c], uncensored_only))
-             for c in (rng.integers(0, k, k) for _ in range(nboot // 4))]
+             for c in (rng.integers(0, k, k) for _ in range(nboot))]
     lo, hi = ci(draws)
-    return dict(lo=lo, hi=hi, nboot=nboot // 4)
+    return dict(lo=lo, hi=hi, nboot=nboot)
 
 
 def boot_dyadic(pred, meas, uncensored_only=False, nboot=NBOOT):
@@ -109,11 +111,11 @@ def boot_dyadic(pred, meas, uncensored_only=False, nboot=NBOOT):
     rng = np.random.default_rng(SEED + 2)
     n, k = pred.shape
     draws = []
-    for _ in range(nboot // 4):
+    for _ in range(nboot):
         ri, cj = rng.integers(0, n, n), rng.integers(0, k, k)
         draws.append(med(within_ligand(pred[np.ix_(ri, cj)], meas[np.ix_(ri, cj)], uncensored_only)))
     lo, hi = ci(draws)
-    return dict(lo=lo, hi=hi, nboot=nboot // 4)
+    return dict(lo=lo, hi=hi, nboot=nboot)
 
 
 # ---------------------------------------------------------------- baselines (plan.md §7)
@@ -193,6 +195,12 @@ def hit_vectors(pred, meas, top=3):
         y, p = meas[i], pred[i]
         if np.unique(y).size < 2:
             continue
+        # A predictor with no variation has no ranking at all, and argsort would silently return the
+        # first columns in panel order — which made the ligand-only and molecular-weight baselines look
+        # like estimates (0.062) when they were really an artefact of the kinase column order. Under
+        # random column orders the same statistic averages 0.104. Undefined is the honest value.
+        if np.unique(p).size < 2:
+            continue
         cut = np.sort(y)[-top]
         true = set(np.where(y >= cut)[0])
         order = np.argsort(-p)
@@ -217,6 +225,8 @@ def paired_hit_difference(pred, meas, base, top=3, nboot=NBOOT):
     """
     a1, a3 = hit_vectors(pred, meas, top)
     b1, b3 = hit_vectors(base, meas, top)
+    if not np.isfinite(b1).any():   # a constant baseline has no ranking, so there is no difference to take
+        return dict(undefined=True, reason="baseline has no ranking (constant within each ligand)")
     out = {}
     for name, a, b in (("top1", a1, b1), ("precision_at_3", a3, b3)):
         rng = np.random.default_rng(SEED)
@@ -224,6 +234,92 @@ def paired_hit_difference(pred, meas, base, top=3, nboot=NBOOT):
         lo, hi = ci(draws)
         out[name] = dict(point=float(np.nanmean(a) - np.nanmean(b)), lo=lo, hi=hi,
                          base_point=float(np.nanmean(b)))
+    return out
+
+
+# ---------------------------------------------------------------- rank statistics beyond P1 (D11)
+# Added after the adversarial review, which showed that P1 is the single statistic on which the model does
+# not separate from the chemistry-free baseline. These say what the profile looks like at the top, among
+# real affinities, and on the binder/non-binder split that P1 mixes in with everything else.
+def _dcg(gain, k=None):
+    g = np.asarray(gain, float)
+    if k:
+        g = g[:k]
+    return float(np.sum(g / np.log2(np.arange(2, len(g) + 2))))
+
+
+def ndcg(pred, meas, k=None):
+    """Per-ligand NDCG with gain = pKd - 5, so the censored block contributes exactly nothing and the
+    statistic is dominated by how well the strong binders are placed near the top."""
+    out = np.full(pred.shape[0], np.nan)
+    for i in range(pred.shape[0]):
+        g = np.maximum(meas[i] - CENSOR_PKD, 0.0)
+        ideal = _dcg(np.sort(g)[::-1], k)
+        if ideal <= 0 or np.unique(pred[i]).size < 2:
+            continue
+        out[i] = _dcg(g[np.argsort(-pred[i])], k) / ideal
+    return out
+
+
+def concordance_uncensored(pred, meas):
+    """Per-ligand share of uncensored kinase pairs the prediction orders the way the measurement does."""
+    out = np.full(pred.shape[0], np.nan)
+    for i in range(pred.shape[0]):
+        keep = meas[i] > CENSOR_PKD
+        p, y = pred[i][keep], meas[i][keep]
+        if p.size < 3:
+            continue
+        dp, dy = np.sign(p[:, None] - p[None, :]), np.sign(y[:, None] - y[None, :])
+        ok = (dp != 0) & (dy != 0) & np.triu(np.ones((p.size, p.size), bool), 1)
+        if ok.sum():
+            out[i] = float(((dp == dy) & ok).sum() / ok.sum())
+    return out
+
+
+def auc_ceiling(pred, meas):
+    """Per-ligand AUC for the one thing P1 spends 27 % of its weight on: telling the cells at the assay
+    ceiling from the cells with a real measured affinity."""
+    out = np.full(pred.shape[0], np.nan)
+    for i in range(pred.shape[0]):
+        pos = meas[i] > CENSOR_PKD
+        n1, n0 = int(pos.sum()), int((~pos).sum())
+        if n1 == 0 or n0 == 0 or np.unique(pred[i]).size < 2:
+            continue
+        r = stats.rankdata(pred[i])
+        out[i] = float((r[pos].sum() - n1 * (n1 + 1) / 2) / (n1 * n0))
+    return out
+
+
+def paired_vector_difference(a, b, nboot=NBOOT):
+    """Paired ligand bootstrap of mean(a) - mean(b) for two per-ligand statistic vectors."""
+    a, b = np.asarray(a, float), np.asarray(b, float)
+    rng = np.random.default_rng(SEED)
+    draws = boot_ligand(lambda idx: float(np.nanmean(a[idx]) - np.nanmean(b[idx])), len(a), rng, nboot)
+    lo, hi = ci(draws)
+    return dict(point=float(np.nanmean(a) - np.nanmean(b)), lo=lo, hi=hi,
+                model=float(np.nanmean(a)), base=float(np.nanmean(b)))
+
+
+def rank_statistics(pred, meas, bases, nboot=NBOOT):
+    """Every statistic in one table, each with a paired ligand bootstrap against each baseline."""
+    stats_ = {"P2_uncensored": lambda p: within_ligand(p, meas, True),
+              "concordance_uncensored": lambda p: concordance_uncensored(p, meas),
+              "ndcg": lambda p: ndcg(p, meas), "ndcg_at_3": lambda p: ndcg(p, meas, 3),
+              "ndcg_at_5": lambda p: ndcg(p, meas, 5),
+              "auc_ceiling_vs_binders": lambda p: auc_ceiling(p, meas),
+              "top1": lambda p: hit_vectors(p, meas)[0]}
+    out = {}
+    for name, fn in stats_.items():
+        a = fn(pred)
+        row = dict(model=float(np.nanmean(a)) if name != "P2_uncensored" else med(a), vs={})
+        for bn, b in bases.items():
+            v = fn(b)
+            if not np.isfinite(v).any():
+                row["vs"][bn] = dict(undefined=True)
+                continue
+            row["vs"][bn] = (paired_difference(pred, meas, b, True, nboot) if name == "P2_uncensored"
+                             else paired_vector_difference(a, v, nboot))
+        out[name] = row
     return out
 
 

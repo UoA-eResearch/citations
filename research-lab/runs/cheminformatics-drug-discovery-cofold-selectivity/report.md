@@ -4,11 +4,13 @@
 measured binding constants.*
 
 **Verdict: Refuted.** The preregistered hypothesis — that Boltz-2's affinity head cannot rank proteins for
-a fixed ligand — does not hold. It ranks them with a median correlation of 0.44, puts a true top-3 kinase
-first for 56 % of compounds, and never falls below zero on any of them. It also does not demonstrably beat
-a baseline that ignores the compound entirely on the primary statistic, captures barely a third of the
-compound-by-kinase interaction that selectivity consists of, and reports differences between kinases at
-about half their true size.
+a fixed ligand — does not hold. It ranks them with a median correlation of 0.44 and puts a true top-3
+kinase first for 56 % of compounds against 9 % for chance. Against a baseline that never looks at the
+compound, it wins on every statistic tried except two: the preregistered primary P1, and the ability to
+tell the assay-ceiling block from real binders. Those two exceptions are the same fact, and they are why
+the primary statistic understates the model. What it does badly is the thing selectivity consists of: it
+captures about a third of the compound-by-kinase interaction, and reports the difference between a typical
+pair of kinases at about half its true size.
 
 ## In plain terms
 
@@ -26,13 +28,16 @@ We expected it to fail, and preregistered that prediction. It didn't. The model'
 
 But a correlation on its own means little without something to compare it against, so we also wrote down,
 before running the model, what some deliberately stupid methods achieve. One of them ignores the compound
-entirely and simply ranks kinases by how many drugs bind them in general. That scores 0.39 — statistically
-indistinguishable from the model.
+entirely and simply ranks kinases by how many drugs bind them in general. On the headline measure that
+scores 0.39 — statistically indistinguishable from the model.
 
-The resolution is that the two methods fail differently. The stupid baseline is excellent for promiscuous
-compounds and actively wrong for selective ones, dropping as low as −0.42. The model is never actively
-wrong on any of the 32 compounds, and when asked to name a compound's single best target it gets one right
-56 % of the time, against 19 % for the baseline.
+That near-tie turns out to be an artefact of the measure rather than a fact about the model. Seven in ten
+of the laboratory numbers are not real affinities at all: they are "no measurable binding at the highest
+concentration tested". The headline measure spends a quarter of its weight on sorting those non-binders,
+and the stupid baseline is exactly as good at spotting them as the model is. Once you ask any question
+that depends on real affinities — order the compounds that do bind, or name the best target — the model
+wins by a margin that comfortably excludes chance. Asked to name a compound's single best target it
+succeeds 56 % of the time, against 19 % for the baseline.
 
 Where it falls short is the thing selectivity actually consists of. Most of what varies in real
 measurements is the specific pairing of compound and kinase; the model captures only about a third of that,
@@ -59,6 +64,28 @@ compares that ranking with the measured dissociation constants.
 The preregistered hypothesis, in plan.md, was that the model fails this test: median within-ligand
 across-kinase Spearman ≤ 0.25, while still clearing 0.4 on the conventional axis.
 
+## What was already known
+
+The preregistration catalogued the nearest prior work before any prediction was made; the full table is in
+plan.md §2. Six results bound this study on either side:
+
+| Work | What it establishes | Why it leaves this question open |
+| --- | --- | --- |
+| Boltz-2 preprint (bioRxiv 2025.06.14.659707) | FEP benchmarks, hit discovery, synthetic cross-target decoys in training | No panel-complete within-ligand test against measured values |
+| **Koch, ChemRxiv 10.26434/chemrxiv-2025-sf3cs** | **Closest prior work.** Boltz-2 cannot pick the true target for an active among LIT-PCBA decoy targets, by either read-out | Binary target identification among unrelated pockets, not quantitative ranking inside one family against measured Kd |
+| MIRAGE (arXiv 2609.14491) | Accuracy versus historical public support for a protein family, with ligand-only controls | Generalisation to *unsupported* families; this panel is deliberately all high-support |
+| Nesso-1 (10.64898/2026.08.01.742196) | Matches or surpasses Boltz-2, arguing its benchmarks "reflect in-distribution scenarios" | Model comparison, not a selectivity audit — but it sharpens why an in-distribution panel is the right place to look |
+| BoltzOmics (PMC13401010) | Within-drug ranking across *variants of one protein*, sensitive to affinity sampling settings | Mutants of a single target; motivated this study's sampling arm |
+| Reliability audits (arXiv 2603.05532; JCIM pmid 41592323) | Boltz-2 affinity is largely independent of pose quality | A few targets, within-target axis |
+
+Koch's result is the one that most constrains how this study's decoy arm should be read, and it is
+discussed where that arm is reported. Their finding also changed this study's design before it ran: H4 was
+restated as a descriptive spread comparison rather than a target-identification claim, because they had
+already answered the target-identification question (D1, plan §1.2).
+
+No prior work tests the axis this study tests — within-ligand, across-target, against a complete measured
+panel, with chemistry-free and label-using baselines and a variance decomposition.
+
 ## How it was done
 
 **The panel.** A 32 × 32 rectangle of the Davis panel, every cell predicted. Kinases had to be wild-type,
@@ -80,21 +107,30 @@ of relatively promiscuous kinases and ligands, which a separate arm probes.
 chain, one MSA per protein from the public ColabFold server, reused across every complex that protein
 appears in. Settings are the defaults, passed explicitly: 3 recycling steps, 200 sampling steps, 1
 diffusion sample, 5 affinity diffusion samples, 200 affinity sampling steps, no molecular-weight
-correction, seed 20261013 plus the shard index. The read-out is `affinity_pred_value`, which is
+correction, seed 20261013 throughout (every retained run was a single process at that one seed). The
+read-out is `affinity_pred_value`, which is
 log10(IC50 in µM), converted to a pIC50-like scale (6 − value) so that higher means stronger, matching pKd;
 `affinity_probability_binary` is reported alongside. Note that the molecular-weight correction cannot
 change any within-ligand statistic, because for a fixed ligand it is a constant.
+
+One point about the read-out matters for reading the results. Boltz's own documentation scopes
+`affinity_pred_value` to "comparing different active molecules, **not inactives**", and directs
+`affinity_probability_binary` at telling binders from decoys. P1 ranks all 32 kinases together, 27 % of
+them at the assay ceiling, so the preregistered primary estimand uses the value head outside its documented
+domain. That is the documented reason to expect what we find — the probability head ranking better, and P2
+being the more appropriate statistic for the value head — and it was not noticed until after the analysis
+was done.
 
 **What the measurements say before the model is consulted.** Three numbers fix the scale, and all three
 come from Davis alone:
 
 | Reference, from measured data only | Selectivity axis (within-ligand, 32 kinases) | Conventional axis (within-kinase, 32 ligands) | Top-1 hit |
 | --- | --- | --- | --- |
-| Ligand-only (one value per ligand) | 0.000 by construction | **0.489** | 0.062 |
-| Target promiscuity, no chemistry at all | **0.386** (0.310–0.522) | 0.000 by construction | 0.188 |
-| Nearest chemical neighbour (uses labels) | 0.394 (0.268–0.503) | 0.264 | 0.312 |
-| Molecular weight only | 0.000 | 0.061 | 0.062 |
-| Chance | — | — | 0.094 |
+| Ligand-only (one value per ligand) | 0.000 by construction | **0.489** | undefined |
+| Target promiscuity, no chemistry (uses the measured panel) | **0.386** (0.310–0.522) | 0.000 by construction | 0.188 |
+| Nearest chemical neighbour (uses the measured panel) | 0.394 (0.268–0.503) | 0.264 | 0.312 |
+| Molecular weight only | 0.000 | 0.061 | undefined |
+| Chance | — | — | 0.096 |
 
 Two consequences for reading the hypothesis. The threshold it set on the selectivity axis, 0.25, is *below*
 what a baseline with no chemistry in it achieves (0.386): knowing only which kinases bind most compounds
@@ -111,7 +147,8 @@ not either main effect.
 ## Results
 
 All 1,024 panel complexes predicted, no failures, no missing cells. The secondary arms add 573 more, for
-1,597 in total — the preregistered budget exactly.
+1,597 in total, against the ≈1,624 the plan projected: the post-cutoff arm yielded 11 compounds and 93
+pairs where plan §5.3 had estimated 14 and ~120 (D11).
 
 ### The preregistered verdict: Refuted
 
@@ -127,13 +164,20 @@ It does not fail it.
 | P1 on the high-confidence half | 0.537 | 0.391 – 0.637 | |
 | P1 using the binary binder probability | 0.596 | 0.519 – 0.665 | |
 | P3 median within-kinase Spearman, 32 ligands | 0.453 | — | H2's floor was 0.4 |
-| P4 top-1 in the true top-3 | 0.562 | — | chance 0.094 |
-| P4 precision@3 | 0.375 | — | chance 0.094 |
+| P4 top-1 in the true top-3 | 0.562 | — | chance 0.096 |
+| P4 precision@3 | 0.375 | — | chance 0.096 |
 
 The lower end of every interval sits above 0.25, so by the rule in plan.md §6 the hypothesis is **refuted**:
-the affinity head is not protein-blind, and its rankings are not noise. Censoring is not doing the work —
-dropping the ceiling cells moves P1 from 0.444 to 0.464 — and neither is structural quality, since the
-high-confidence half scores slightly higher than the whole.
+the affinity head is not protein-blind, and its rankings are not noise. Dropping the ceiling cells moves the
+model's own score up slightly, from 0.444 to 0.464, so censoring is not propping the model up. It is
+emphatically doing work in the *comparison* against the baselines, which the next section is about.
+
+The high-confidence row needs a caveat the plan did not anticipate. Filtering to the better half of Boltz's
+own confidence scores is not the fold-quality control §9.3 intended: at the median cut, 6 of the 32 kinases
+retain no cells at all, the kept half is *more* censored than the whole (31.6 % against 22.7 %), and mean
+confidence correlates −0.278 with within-kinase accuracy. It is close to a non-random kinase subset with a
+different effective panel per ligand, so 0.537 should be read as "the result is not an artefact of the
+worst-folded complexes" and no further.
 
 ### But the threshold was in the wrong place, which the baselines show
 
@@ -141,42 +185,66 @@ This was foreseeable and was written down before any prediction: 0.25 is *below*
 chemistry in it achieves. Ranking kinases purely by how many compounds they bind — a single column vector
 reused for every ligand — scores 0.386.
 
-| | P1, selectivity axis | top-1 | precision@3 |
-| --- | --- | --- | --- |
-| **Boltz-2 affinity** | **0.444** (0.418 – 0.532) | **0.562** | **0.375** |
-| B1 target promiscuity, no chemistry | 0.386 (0.310 – 0.522) | 0.188 | 0.229 |
-| B2 nearest chemical neighbour (uses labels) | 0.394 (0.268 – 0.503) | 0.312 | 0.240 |
-| B0 ligand-only | 0.000 | 0.062 | 0.042 |
-| B3 molecular weight | 0.000 | 0.062 | 0.042 |
+| | P1 all cells | P2 uncensored | top-1 | precision@3 |
+| --- | --- | --- | --- | --- |
+| **Boltz-2 affinity** | **0.444** (0.418 – 0.532) | **0.464** (0.429 – 0.487) | **0.562** | **0.375** |
+| B1 target promiscuity (uses the measured panel) | 0.386 (0.310 – 0.522) | 0.293 | 0.188 | 0.229 |
+| B2 nearest chemical neighbour (uses the measured panel) | 0.394 (0.268 – 0.503) | 0.294 | 0.312 | 0.240 |
+| B0 ligand-only | 0.000 | 0.000 | undefined | undefined |
+| B3 molecular weight | 0.000 | 0.000 | undefined | undefined |
 
-Paired ligand bootstraps of the difference, model minus baseline:
+B0 and B3 are constant within a ligand, so they have no ranking and no hit rate; an earlier draft printed
+0.062 for them, which was an artefact of the kinase column order rather than an estimate.
 
-| vs | P1 | top-1 | precision@3 |
-| --- | --- | --- | --- |
-| B1 promiscuity | +0.058 (−0.071, +0.166) | **+0.375 (+0.188, +0.562)** | **+0.146 (+0.021, +0.250)** |
-| B2 neighbour | +0.050 (−0.065, +0.195) | **+0.250 (+0.031, +0.469)** | **+0.135 (+0.010, +0.260)** |
+Both B1 and B2 are built from the measured Davis panel — B1 from 67 other compounds' Kd against the same
+kinases, B2 from the nearest compound's. As plan.md §7 put it, they are references for *how much signal is
+extractable*, not fair competitors to a zero-shot model: neither can be computed for a kinase set nobody
+has profiled yet, which is the situation the model is meant to serve. They are the right bar for "is this
+worth running", and the wrong bar for "is this impressive".
 
-The two statistics disagree, and the disagreement is the result. On the preregistered primary statistic —
-the median rank correlation over the whole 32-kinase profile — Boltz-2 is within noise of a baseline that
-never looks at the compound. On finding the right targets it is not: it puts a genuine top-3 kinase first
-for 56 % of ligands, against 19 % for the promiscuity baseline and 9 % for chance. The hit-rate comparison
-was not preregistered with an interval; that was added on seeing the gap, and is reported as the addition
-it is (D8).
+### P1 is the one statistic that does not separate them, and the reason is the assay ceiling
 
-Two things explain the gap. The profile contains a 27 % block of cells tied at the assay ceiling plus a
-long tail of weak binders, where ordering carries little information and the model adds little; the median
-Spearman weights all of that equally with the top. And the per-ligand floor differs sharply, which is
-visible in F1 and is an exploratory observation (D9):
+Paired ligand bootstraps of the difference, model minus baseline, over every rank statistic a selectivity
+user might reasonably ask for:
 
-| | worst ligand | ligands below 0 | ligands below 0.25 |
-| --- | --- | --- | --- |
-| Boltz-2 | +0.029 | 0 of 32 | 3 of 32 |
-| B1 promiscuity | −0.387 | 2 of 32 | 7 of 32 |
-| B2 neighbour | −0.419 | 3 of 32 | 11 of 32 |
+| statistic | model | B1 | model − B1 | model − B2 |
+| --- | --- | --- | --- | --- |
+| P1 median within-ligand ρ, all cells | 0.444 | 0.386 | +0.058 (−0.071, +0.166) | +0.050 (−0.065, +0.195) |
+| AUC, ceiling block vs real binders | 0.724 | 0.711 | +0.013 (−0.061, +0.090) | +0.038 (−0.030, +0.115) |
+| P2 median within-ligand ρ, uncensored | 0.464 | 0.293 | **+0.171 (+0.065, +0.292)** | **+0.170 (+0.017, +0.346)** |
+| concordance among uncensored cells | 0.653 | 0.604 | **+0.050 (+0.014, +0.084)** | +0.037 (−0.010, +0.082) |
+| NDCG (gain = pKd − 5) | 0.864 | 0.802 | **+0.062 (+0.021, +0.106)** | **+0.057 (+0.012, +0.108)** |
+| NDCG@3 | 0.693 | 0.497 | **+0.196 (+0.096, +0.296)** | **+0.123 (+0.018, +0.235)** |
+| NDCG@5 | 0.709 | 0.566 | **+0.142 (+0.053, +0.236)** | **+0.125 (+0.036, +0.224)** |
+| top-1 in the true top-3 | 0.562 | 0.188 | **+0.375 (+0.188, +0.562)** | **+0.250 (+0.031, +0.469)** |
+| precision@3 | 0.375 | 0.229 | **+0.146 (+0.021, +0.250)** | **+0.135 (+0.010, +0.260)** |
 
-The baselines reach their median by being excellent for promiscuous compounds and actively misleading for
-selective ones. Boltz-2 is never actively misleading on this panel. For a tool meant to nominate a
-handful of targets, that floor matters more than the median.
+Exactly two rows fail to exclude zero, and they are the same fact twice. 27.1 % of the rectangle is tied at
+the 10 µM ceiling, and the model and the chemistry-free baseline are *equally good at spotting that block*
+— AUC 0.724 against 0.711, a dead heat. P1 ranks all 32 kinases together, so it spends roughly a quarter of
+its weight on a task where the two are tied. Every statistic that asks about ordering real affinities (P2,
+concordance), or about the top of the profile (NDCG@3, top-1), separates them with an interval excluding
+zero.
+
+So the honest summary is not "the two statistics disagree". It is that **P1 understates the model, for a
+reason specific to how censored this kind of panel is**, and that the preregistered primary was the wrong
+instrument for the question — which is a lesson about the preregistration, not a licence to pick the
+flattering number. Only P1 and P2 were preregistered as estimands; the rank-weighted statistics were added
+after seeing P1 (D11), and the hit-rate intervals after seeing the point estimates (D8). The verdict stands
+on P1 alone, as committed.
+
+The per-ligand floors sharpen the same point, and are exploratory (D9):
+
+| | P1 worst | P1 below 0 | P2 worst | P2 below 0 |
+| --- | --- | --- | --- | --- |
+| Boltz-2 | +0.029 | 0 of 32 | −0.094 | 2 of 32 |
+| B1 promiscuity | −0.387 | 2 of 32 | −0.101 | 2 of 32 |
+| B2 neighbour | −0.419 | 3 of 32 | −0.123 | 6 of 32 |
+
+On all cells the model never goes negative and the baselines do, which looks like a decisive reliability
+advantage. It is not: on uncensored cells the model's floor (−0.094, two ligands) is indistinguishable from
+B1's (−0.101, two ligands). The floor gap is another consequence of the ceiling block, not a separate
+property, and an earlier draft of this report built a recommendation on it that it would not support.
 
 ### What the model gets wrong: it hears the ligand, and it flattens the kinome
 
@@ -195,7 +263,9 @@ against 1.00), and across the whole panel 0.76 against 1.19. So differences are 
 often than not, but systematically too small.
 
 The geometry arm (exploratory, D3) says what the model is listening to. Taking each kinase's 32-ligand
-prediction vector, removing ligand means and comparing the resulting kinase-by-kinase distance matrices:
+prediction vector and comparing the resulting kinase-by-kinase distance matrices (ligand means are
+subtracted first, though that is cosmetic: a per-ligand constant cancels in the difference between two
+kinases' vectors, so it controls for nothing):
 
 | Mantel-style comparison | ρ | permutation p |
 | --- | --- | --- |
@@ -212,10 +282,9 @@ An earlier draft of this report claimed the model tracks sequence *more tightly 
 themselves do* (0.338 against 0.248). A kinase bootstrap of that difference does not support it: +0.081
 (−0.099, +0.284), positive in 80 % of draws. The claim has been withdrawn.
 
-What the geometry does show is flattening. Across all 496 kinase pairs the median measured difference is
-1.12 log units and the median predicted difference 0.56 — a ratio of 0.50. The natural suspicion is that
-close paralogues are flattened worst, since that is the case drug projects care about, but the panel's five
-most similar pairs give ratios of 0.33 to 0.79, median 0.57, which is no worse than the panel at large:
+What the geometry does show is flattening. Taking each kinase pair's mean absolute difference across the 32
+ligands, the median per-pair ratio of predicted to measured is 0.52: the typical pair of kinases is
+reported about half as far apart as it really is.
 
 | pair | crop identity | measured | predicted | ratio |
 | --- | --- | --- | --- | --- |
@@ -224,12 +293,22 @@ most similar pairs give ratios of 0.33 to 0.79, median 0.57, which is no worse t
 | LOK / SLK | 0.746 | 0.328 | 0.258 | 0.79 |
 | CLK1 / CLK2 | 0.639 | 0.325 | 0.239 | 0.73 |
 | CSF1R / FLT3 | 0.532 | 0.923 | 0.528 | 0.57 |
-| *all 496 pairs* | *0.233 median* | *1.120* | *0.562* | *0.50* |
+| *the five above, median* | | | | *0.57* |
+| *all 496 pairs, median of per-pair ratios* | *0.233 median identity* | | | *0.52* |
 
-So the compression is uniform rather than paralogue-specific: the model halves the distance between any two
-kinases, whether they are near-twins or unrelated. That is still the thing to know before using it to
-separate two close relatives — the differences it reports will be about half their true size — but it is a
-calibration failure across the kinome, not a specific blindness to paralogues.
+The natural suspicion is that close paralogues are flattened worst, since that is the case drug projects
+care about. There is no sign of it, but nor is it ruled out: the correlation between crop identity and the
+compression ratio is −0.068 (dyadic permutation p = 0.41), and the near-identical pairs sit +0.051
+(−0.223, +0.309) from the rest. With five near-identical pairs the interval admits a substantial effect in
+either direction, so the right statement is that no dependence on similarity is detectable, not that
+compression is uniform. (An earlier draft asserted uniformity, which would have repeated the error D10 was
+written about; the table also mixed a ratio of medians with medians of ratios, and is now one estimator
+throughout.)
+
+Compression is also not a constant factor: per-pair ratios run from 0.25 to 1.32, with six of the 496 pairs
+predicted *further* apart than they measure. "Halves the distance" describes the typical pair, not every
+pair. Either way it is the thing to know before using the model to separate two relatives — the gap it
+reports is likely to be around half the real one.
 
 ### The secondary arms
 
@@ -240,17 +319,45 @@ ligand's kinase *mean*. The binary probability separates them further still (med
 0.44 for kinases). Kinase inhibitors are recognised as kinase binders; this is the easy discrimination, and
 the model passes it cleanly.
 
+The plan put a specific question to this arm: HSP90α was included as a *nucleotide-binding* non-kinase, so
+if the head were responding to generic ATP-pocket character rather than to kinase identity, HSP90 should
+score like a kinase. It does not — but it is the most kinase-like of the four, on both read-outs: binder
+probability 0.290 against 0.070, 0.183 and 0.190 for the others, and the smallest gap at −2.04 kinome SDs
+against −2.22, −2.33 and −2.37. So a little of the discrimination is ATP-pocket character, and most of it
+is not.
+
+This is also the arm where the closest prior work disagrees with us, and the disagreement is worth stating
+rather than smoothing over. Koch et al. (10.26434/chemrxiv-2025-sf3cs) report that Boltz-2 "is still not
+able to identify the correct protein target by correctly predicting a higher binding affinity in comparison
+to the decoy targets". Our decoy arm passes. The two are compatible because the tests are different ones:
+Koch rank plausible decoy targets drawn from LIT-PCBA, where the decoys are proteins a compound might
+genuinely be confused about, while this arm uses four unrelated non-kinases against potent kinase drugs — a
+much easier discrimination. Their result is the more demanding test of the two, and ours should not be read
+as contradicting it. H4 was restated before any prediction because of their work (D1, plan §1.2): the
+original clause would have claimed novelty for a question they had already answered.
+
 **Promiscuity probe (256 complexes).** Adding the eight least-promiscuous eligible kinases to the panel
 leaves the result where it was: P1 = 0.475 (0.359 – 0.573) over the 40-kinase union. The eight on their own
-give 0.284 (0.192 – 0.577), but with an average of 1.4 uncensored cells per ligand that sub-rectangle is
-too censored to carry any weight, and it is reported rather than relied on.
+give 0.284 (0.192 – 0.577), but with an average of 1.4 uncensored cells per ligand only 16 of the 32
+ligands have a defined correlation there at all, so that sub-rectangle carries no weight and is reported
+rather than relied on. One number in this arm does cross a preregistered line: the 40-kinase union's
+within-kinase P3 is 0.379, just below H2's 0.4 floor, where the 32-kinase panel gave 0.453.
 
 **Affinity sampling (96 complexes re-predicted).** Doubling the affinity sampling steps and running nine
 diffusion samples instead of five changes nothing: predictions correlate 0.979 between settings, move 0.13
-log units on average, and P1 shifts by −0.029 (−0.206, +0.091). The result is not a sampling artefact.
+log units on average, and P1 shifts by −0.029 (−0.206, +0.091).
+
+On its own that correlation has no scale — 0.979 could mean "the setting does not matter" or "0.979 is
+simply the noise floor". The reproducibility check (plan §4, `results/tables/repro.csv`) supplies the
+reference, and it is the more informative half of this arm. Re-running one complex at the same seed
+reproduces the affinity value *bit for bit*, so the pipeline is fully deterministic; re-running it at a
+changed seed moves it 0.156 log units. The sampling settings therefore move predictions **less** than
+simply changing the seed does (0.128 against 0.156). The result is not a sampling artefact, and that now
+rests on a measured noise floor rather than on an unanchored correlation.
 
 **Post-cutoff compounds (93 complexes).** The eleven compounds whose earliest ChEMBL document is 2025 or
-later, profiled against 6 to 12 kinases each (61 kinases in all, 3 % of records censored), give P1 = 0.543
+later, profiled against 6 to 12 kinases each (61 kinases in all, 8.6 % of records censored — 3 pairs
+inactive at the top concentration and 5 more potent than the assay could resolve), give P1 = 0.543
 (0.371 – 0.657) — if anything above the Davis panel's 0.444, with intervals that overlap heavily. Whatever
 the model is doing, it is not reciting Davis.
 
@@ -305,13 +412,23 @@ differently-trained head on the same features; the sampling arm varies the diffu
 release could behave differently, which is why the decoy protocol and panel definition are released with
 the report rather than only the numbers.
 
-**The crop is a real assumption.** The model sees the annotated kinase domain plus 20 residues, not the
-full-length protein. That matches what the competition binding assay reports and makes a panel affordable,
-but accessory domains, linkers and partners that shape selectivity in the cell are absent. If removing
-them is what removes the signal, that is a finding about the input the model can be given at scale, not
-about the kinome. Crop length and Boltz's own confidence scores are reported per complex, and the primary
-statistic is recomputed on the high-confidence half, so a reader can check whether the failures are the
-poorly-folded inputs.
+**The crop is a real assumption, and it is measurably costing accuracy.** The model sees the annotated
+kinase domain plus 20 residues, not the full-length protein — a median of 55 % of the full sequence, as
+little as 15 % for the largest multi-domain kinases. That matches what the competition binding assay
+reports and makes a panel affordable, but it is not free:
+
+| | |
+| --- | --- |
+| Spearman (fraction of the protein retained, within-kinase ρ) | +0.389 (p = 0.028) |
+| P1 on the 16 least-cropped kinases | 0.524 |
+| P1 on the 16 most-cropped kinases | 0.389 |
+
+The kinases that lose the most sequence are the ones the model ranks worst. This cuts in opposite
+directions for the two headline claims, and both directions should be stated. It makes "Refuted"
+**conservative**: an uncropped model would presumably score higher still, so the hypothesis of failure
+would be refuted more decisively, not less. But it **weakens** the comparison against the baselines, which
+read measured labels and are entirely crop-immune — some part of the model's narrow margin on P1 is a
+handicap this study imposed rather than a limitation of the model. How much, this design cannot say.
 
 **Training exposure cuts one way.** Davis is from 2011 and is almost certainly inside the training
 distribution. That makes a null result harder to explain away — the model is not being asked to
@@ -359,7 +476,8 @@ code/assemble.py primary       P1-P5, baselines, verdict      -> results/tables/
 code/secondary.py              decoy, promiscuity, sampling, support
 code/geometry.py               sequence-vs-prediction geometry
 code/figures.py                F1-F5
-code/test_analysis.py          17 checks on the estimators
+code/repro_check.py            plan §4's same-seed and changed-seed check -> repro.csv
+code/test_analysis.py          18 checks on the estimators
 ```
 
 The estimator checks are worth running first: they assert that a perfect predictor scores 1, that a
@@ -374,9 +492,13 @@ read-outs, with Boltz's own confidence scores, are released as `results/predicti
 themselves are not redistributed, only the manifest of which sequence was aligned.
 
 One operational note for anyone repeating this at panel scale. A thousand complexes is about fifteen
-GPU-hours, which is long enough that the machine will probably interrupt you: this run was stopped twice by
-host crashes. Boltz writes each complex's outputs as it finishes and skips on restart any complex that
-already has them, so both interruptions cost one complex each. Fetch the alignments once per protein and
-cache them, rather than letting the predictor fetch per complex — the same 32 proteins appear in every
-column of the rectangle, and the public server is the slowest step in the whole pipeline by an order of
-magnitude.
+GPU-hours, which is long enough that the machine will probably interrupt you: this run was stopped by a
+host crash with the panel 582/1024 through its affinity pass. Boltz writes each complex's outputs as it
+finishes and skips on restart any complex that already has them, so the interruption cost one complex. It
+is worth confirming that it fails loudly rather than quietly: an out-of-memory batch produces a *missing*
+complex and an error, never a wrong number, so a complete output count is sufficient evidence that nothing
+was silently corrupted.
+
+Fetch the alignments once per protein and cache them, rather than letting the predictor fetch per complex —
+the same 32 proteins appear in every column of the rectangle, and the public server is the slowest step in
+the whole pipeline by an order of magnitude.

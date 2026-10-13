@@ -71,8 +71,16 @@ check("decomposition: kinase-only matrix", d["kinase"] > 0.999 and d["ligand"] <
 # 8. Hit rates: a perfect predictor gets top1 == 1 and precision@3 == 1
 h = A.hit_rates(truth, truth)
 check("perfect hit rates", h["top1"] == 1 and h["precision_at_3"] == 1)
+# A predictor with no variation within a ligand has no ranking, so its hit rate must be undefined rather
+# than whatever the column order happens to give. The previous version of this check asserted only that
+# the number was small, which it was — by accident of the synthetic data's column order.
 h = A.hit_rates(lo, meas)
-check("ligand-only top1 is chance-like", h["top1"] < 0.4, f"top1={h['top1']:.2f}")
+check("ligand-only top1 is undefined, not a number", h["n"] == 0 and np.isnan(h["top1"]),
+      f"n={h['n']} top1={h['top1']}")
+import numpy.random as _r  # noqa: E402
+perm = _r.default_rng(0).permutation(meas.shape[1])
+h2 = A.hit_rates(lo[:, perm], meas[:, perm])
+check("...and stays undefined under any column order", h2["n"] == 0)
 
 # 9. The paired difference against a baseline is the difference of the two medians
 diff = A.paired_difference(truth, meas, lo)

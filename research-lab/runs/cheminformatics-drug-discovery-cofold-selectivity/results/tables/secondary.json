@@ -141,6 +141,7 @@
      NaN
     ]
    },
+   "n_ligands_defined": 16,
    "mean_n_unc": 1.4375
   },
   "extra_kinases": [
@@ -693,7 +694,8 @@
    6,
    12
   ],
-  "censored_share": 0.03225806451612903,
+  "censored_share": 0.08602150537634409,
+  "censored_share_upper_only": 0.03225806451612903,
   "P1": {
    "point": 0.5428571428571429,
    "lo": 0.37126414119311024,
@@ -703,8 +705,8 @@
    "point": 0.5333333333333333
   },
   "P1_uncensored": {
-   "point": 0.5428571428571429,
-   "n": 11
+   "point": 0.5714285714285714,
+   "n": 10
   },
   "baseline_within_arm": {
    "computable": false,
@@ -795,11 +797,11 @@
    {
     "chembl_id": "CHEMBL6175168",
     "n_kinases": 9,
-    "n_censored": 0,
+    "n_censored": 5,
     "rho": 0.054772255750516606,
     "rho_probability": -0.12780193008453875,
     "rho_baseline": 1.0,
-    "rho_uncensored": 0.054772255750516606,
+    "rho_uncensored": NaN,
     "pact_range": 1.5999725612641988
    },
    {

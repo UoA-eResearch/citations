@@ -55,6 +55,7 @@ def promiscuity(d):
     return dict(union=dict(shape=[len(cids_u), len(accs_u)], P1=A.primary(pred_u, meas_u),
                            P3=A.med(A.within_kinase(pred_u, meas_u))),
                 extra_only=dict(shape=list(pred_e.shape), P1=A.primary(pred_e, meas_e),
+                                n_ligands_defined=int(A.primary(pred_e, meas_e)["n_ligands"]),
                                 mean_n_unc=float((meas_e > A.CENSOR_PKD).sum(1).mean())),
                 extra_kinases=[(k["davis_name"], k["group"], k["n_unc"]) for k in extra])
 
@@ -94,7 +95,10 @@ def postcut():
     pr["acc"] = pr.protein.str.replace("_pc", "", regex=False)
     m = t.merge(pr[["acc", "cid", "pred", "affinity_probability_binary"]].rename(
         columns={"cid": "chembl_id"}), on=["acc", "chembl_id"], how="inner")
-    m["censored"] = m.rels.astype(str).str.contains(">")
+    # both directions are bounds, not values: 3 pairs are ">" (inactive at the top concentration) and 5
+    # are "<" (more potent than the assay could resolve). The first draft counted only ">".
+    m["censored"] = m.rels.astype(str).str.contains(">|<", regex=True)
+    m["censored_upper"] = m.rels.astype(str).str.contains(">")
     # each kinase's mean over the other compounds (the B1 analogue, where it is defined at all)
     counts = m.groupby("acc").chembl_id.nunique()
     rows, per = [], []
@@ -134,6 +138,7 @@ def postcut():
     return dict(n_compounds=len(p), n_pairs=int(len(m)),
                 kinases_per_compound=[int(p.n_kinases.min()), int(p.n_kinases.max())],
                 censored_share=float(m.censored.mean()),
+                censored_share_upper_only=float(m.censored_upper.mean()),
                 P1=dict(point=A.med(a), lo=lo, hi=hi),
                 P1_probability=dict(point=A.med(p.rho_probability.to_numpy(float))),
                 P1_uncensored=dict(point=A.med(p.rho_uncensored.to_numpy(float)),

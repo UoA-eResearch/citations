@@ -3,7 +3,9 @@ measured selectivity profile, does it respond to the protein *at all*?
 
 Three ways to ask:
   1. Mantel-style: build a kinase-by-kinase distance matrix from the predictions (Euclidean distance
-     between the 32-ligand prediction vectors of two kinases, after removing each ligand's mean) and
+     between the 32-ligand prediction vectors of two kinases; each ligand's mean is removed first, which
+     is cosmetic rather than a control -- a per-ligand constant cancels in the difference of two kinases'
+     vectors, so the distances are identical either way) and
      correlate it with (a) the same distance built from the measurements and (b) pairwise sequence
      distance between the kinase-domain crops. A protein-blind head gives near-zero correlation with
      both; a protein-aware but mis-calibrated head correlates with sequence while missing the
@@ -116,6 +118,52 @@ def sequence_reliance(pred, meas, sd, nboot=2000, seed=20261013):
                 share_of_draws_positive=float(np.mean(np.asarray(diffs) > 0)), nboot=len(diffs))
 
 
+def compression(pred, meas, ident, nperm=9999, nboot=2000, seed=20261013):
+    """Per-pair ratio of predicted to measured mean absolute difference, and whether it depends on how
+    similar the two kinases are.
+
+    The first draft compared a ratio of medians (0.50) against a median of per-pair ratios (0.57) and
+    called the result uniform. One estimator throughout, and a test of the dependence rather than an
+    assertion: a dyadic permutation for the correlation with identity, and a kinase bootstrap for the
+    near-versus-rest gap.
+    """
+    rng = np.random.default_rng(seed)
+    n = pred.shape[1]
+    iu = np.triu_indices(n, 1)
+    dm = np.array([np.nanmean(np.abs(meas[:, i] - meas[:, j])) for i, j in zip(*iu)])
+    dp = np.array([np.nanmean(np.abs(pred[:, i] - pred[:, j])) for i, j in zip(*iu)])
+    ratio = dp / dm
+    idv = ident[iu]
+    near = idv >= 0.5
+    obs = A.rho(idv, ratio)
+    null = np.empty(nperm)
+    for k in range(nperm):                      # permute kinase labels, preserving dyadic structure
+        p = rng.permutation(n)
+        null[k] = A.rho(ident[np.ix_(p, p)][iu], ratio)
+    R = np.full((n, n), np.nan)             # dense ratio matrix, so a bootstrap draw is one index op
+    R[iu] = ratio
+    R.T[iu] = ratio
+    gaps = []
+    for _ in range(nboot):
+        idx = rng.integers(0, n, n)
+        keep = np.triu(np.ones((n, n), bool), 1) & (idx[:, None] != idx[None, :])
+        im, rm = ident[np.ix_(idx, idx)][keep], R[np.ix_(idx, idx)][keep]
+        m = np.isfinite(rm)
+        if (im[m] >= 0.5).sum() >= 2 and (im[m] < 0.5).sum() >= 2:
+            gaps.append(float(np.median(rm[m][im[m] >= 0.5]) - np.median(rm[m][im[m] < 0.5])))
+    return dict(median_ratio_all_pairs=float(np.median(ratio)),
+                median_ratio_near=float(np.median(ratio[near])),
+                median_ratio_rest=float(np.median(ratio[~near])),
+                ratio_range=[float(ratio.min()), float(ratio.max())],
+                ratio_iqr=[float(np.percentile(ratio, 25)), float(np.percentile(ratio, 75))],
+                n_pairs_expanded=int((ratio > 1).sum()),
+                spearman_identity_vs_ratio=float(obs),
+                permutation_p=float((1 + (np.abs(null) >= abs(obs)).sum()) / (nperm + 1)),
+                near_minus_rest=dict(point=float(np.median(ratio[near]) - np.median(ratio[~near])),
+                                     lo=float(np.percentile(gaps, 2.5)),
+                                     hi=float(np.percentile(gaps, 97.5)), nboot=len(gaps)))
+
+
 def main():
     d = S.davis()
     kin = {k["acc"]: k for k in d["panel"]["kinases"]}
@@ -142,6 +190,7 @@ def main():
         mantel_tests=dict(pred_vs_meas=mantel_test(dp, dm), pred_vs_sequence=mantel_test(dp, sd),
                           meas_vs_sequence=mantel_test(dm, sd)),
         sequence_reliance=sequence_reliance(pred, meas, sd),
+        compression=compression(pred, meas, ident),
         identity_range=[float(tri(ident).min()), float(tri(ident).max())],
         median_identity=float(np.median(tri(ident))),
         same_group=dict(pred_within=float(np.median(dp[same & ~np.eye(n, dtype=bool)])),

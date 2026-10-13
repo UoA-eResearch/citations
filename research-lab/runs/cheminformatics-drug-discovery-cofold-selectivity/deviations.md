@@ -212,3 +212,61 @@ compression: the model halves the distance between any two kinases regardless of
 
 This was found by testing my own claim before sending the draft out, which is where it should have been
 found; the first draft should not have made a comparison it had no interval for.
+
+## D11 — 2026-10-14 05:16 NZDT — changes made in response to the independent adversarial review
+
+The Fable 5.1 review of draft 04c7f25 returned **fix first** with 19 issues. It re-derived the panel from
+the Davis release and UniProt independently (identical to the byte), reproduced every statistic to three
+decimals, and confirmed the verdict. Four of its findings changed what the report claims, three of them in
+the model's favour, and all four were verified here before being acted on.
+
+**1. The central comparison was reported on one statistic and reverses on the other preregistered one.**
+B1's and B2's P2 values were sitting in `results/tables/primary.json` and appeared nowhere in the report.
+On P2 — uncensored cells only, preregistered in §6 — the model beats B1 by +0.171 (+0.065, +0.292) and B2
+by +0.170 (+0.017, +0.346), both excluding zero, where on P1 neither does. Added to the report, and the
+sentence claiming "censoring is not doing the work" is corrected: it is not doing the work for the model's
+own score, and it is doing nearly all of it in the comparison.
+
+**2. The mechanism given for the P1 result was wrong.** `analysis.py` gained the rank statistics the review
+asked for — concordance among uncensored cells, NDCG, NDCG@3, NDCG@5, and the AUC for separating the
+ceiling block from real binders — each with the same paired ligand bootstrap. The model separates from B1
+on every one except the ceiling AUC (0.724 against 0.711). So P1's null result is not "the model adds
+little in the censored tail"; it is "both are equally good there, and P1 gives that a quarter of its
+weight". These statistics were chosen after seeing P1 and are reported as such; the verdict still rests on
+P1 alone.
+
+**3. The per-ligand floor claim does not survive the uncensored subset.** Model worst −0.094 with 2 of 32
+ligands below zero, against B1's −0.101 with 2 of 32: indistinguishable. The "never below zero" framing was
+an all-cells phenomenon, and the recommendation built on it ("that floor matters more than the median") is
+withdrawn.
+
+**4. The uniform-compression claim repeated the defect D10 was written about.** The table compared a ratio
+of medians with medians of ratios; it is now one estimator throughout (0.52 all pairs, 0.57 for the five
+near-identical ones). The dependence is now tested rather than asserted: Spearman(identity, ratio) = −0.068
+with a dyadic permutation p = 0.41, and near-minus-rest = +0.051 (−0.223, +0.309). The honest statement is
+that no dependence is detectable, not that compression is uniform. "Halves the distance between any two
+kinases" is also wrong — per-pair ratios run 0.25 to 1.32, and 6 of 496 pairs are predicted further apart
+than they measure.
+
+**Also fixed.** `repro.csv` (plan §4) had never been produced and the omission was not logged; it has now
+been run (`code/repro_check.py`): the same seed reproduces the affinity value bit for bit, and a changed
+seed moves it 0.156 log units — which gives the sampling arm the reference it lacked, and strengthens it,
+since the two sampling settings differ by less (0.128) than a seed change does. The sensitivity bootstraps
+were running 500 draws against plan §6's 2,000 and now run 2,000 (intervals essentially unchanged:
+kinase 0.367–0.578, dyadic 0.329–0.624). B0 and B3 hit rates were artefacts of the kinase column order and
+are now reported as undefined, with `hit_vectors` returning nan for a predictor with no ranking and a test
+asserting it under permuted column order. The crop gradient is quantified and its asymmetric direction
+stated. The post-cutoff censored share now counts both bounds (8.6 %, not 3.2 %). The promiscuity
+sub-rectangle reports n = 16 of 32 ligands, and the 40-kinase union's P3 = 0.379 — below H2's floor — is no
+longer omitted. B1 is labelled as using the measured panel, with plan §7's caveat carried into the report.
+The post-cutoff shortfall (14 compounds projected, 11 delivered; two filters in `postcutoff.py` that plan
+§5.3 does not state) is disclosed, and "the preregistered budget exactly" corrected to 1,597 against ≈1,624
+projected. "Seed 20261013 plus the shard index" is corrected — only the deleted shard runs used other
+seeds. "Stopped twice by host crashes" is corrected to once, which is all that is evidenced. The plan's
+literature table is carried into the report, Koch et al. is cited and reconciled with the decoy arm, the
+H4 restatement is disclosed, and Nesso-1 is added. The preregistered HSP90 question is answered. Boltz's
+documentation scoping `affinity_pred_value` away from inactives is now stated where the read-out is
+defined, since it is the documented explanation for a finding the report had called unanticipated.
+
+Not changed: the geometry section's "removing ligand means" is indeed a no-op for the distance it feeds
+(the review measured max |centred − uncentred| = 0), and the wording is corrected rather than the code.

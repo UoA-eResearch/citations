@@ -14,6 +14,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+from scipy import stats
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import analysis as A  # noqa: E402
@@ -137,6 +138,19 @@ def primary():
                                       # D8: the hit-rate difference needs an interval too, because it
                                       # and P1 disagree about how much the model adds over B1 and B2
                                       hit_diff=A.paired_hit_difference(pred, meas, b))
+    # every rank statistic against every baseline, in one table (D11, post-review)
+    out["rank_statistics"] = A.rank_statistics(pred, meas, {k: v for k, v in bases.items()})
+    # the crop gradient: the plan's §9.3 threat, measured rather than asserted
+    kin = {k["acc"]: k for k in d["panel"]["kinases"]}
+    frac = np.array([kin[a]["crop_len"] / kin[a]["full_len"] for a in accs], float)
+    wk = A.within_kinase(pred, meas)
+    half = np.argsort(frac)
+    out["crop_gradient"] = dict(
+        spearman_fraction_vs_within_kinase=float(A.rho(frac, wk)),
+        p_value=float(stats.spearmanr(frac, wk).pvalue),
+        median_fraction=float(np.median(frac)), range=[float(frac.min()), float(frac.max())],
+        P1_least_cropped_half=A.primary(pred[:, half[16:]], meas[:, half[16:]])["point"],
+        P1_most_cropped_half=A.primary(pred[:, half[:16]], meas[:, half[:16]])["point"])
     # confidence-filtered recomputation (plan.md §9.3)
     t = pd.read_csv(TAB / "pairs_panel.csv")
     cut = t.confidence_score.median()

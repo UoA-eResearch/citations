@@ -66,8 +66,8 @@ def f1(prim, pairs):
     ax.set_ylabel("within-ligand Spearman across the 32 kinases", fontsize=9)
     # the floor matters as much as the median for a tool meant to nominate targets, and it is the one
     # place where the model and the baselines plainly differ (exploratory; see deviations D9)
-    ax.set_title("One point per ligand; bar = median\nBoltz-2's worst ligand scores 0.03, the baselines' "
-                 "worst score below zero", fontsize=9)
+    ax.set_title("One point per ligand; bar = median\nthe floor gap here is an all-cells effect: on "
+                 "uncensored cells it closes (see P2)", fontsize=9)
     ax.grid(axis="y", color="#ececec", lw=0.6)
     ax.set_axisbelow(True)
 

@@ -50,6 +50,28 @@
   "share_of_draws_positive": 0.8025,
   "nboot": 2000
  },
+ "compression": {
+  "median_ratio_all_pairs": 0.5222298350034247,
+  "median_ratio_near": 0.5725217397977809,
+  "median_ratio_rest": 0.5216113439498237,
+  "ratio_range": [
+   0.2504297013810265,
+   1.3187103586221105
+  ],
+  "ratio_iqr": [
+   0.4290481454051214,
+   0.6384647315039567
+  ],
+  "n_pairs_expanded": 6,
+  "spearman_identity_vs_ratio": -0.06815095477929643,
+  "permutation_p": 0.4123,
+  "near_minus_rest": {
+   "point": 0.0509103958479572,
+   "lo": -0.22284470727814215,
+   "hi": 0.3086393959427653,
+   "nboot": 1744
+  }
+ },
  "identity_range": [
   0.1764705882352941,
   0.9730639730639732
