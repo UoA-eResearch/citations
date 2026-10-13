@@ -270,3 +270,48 @@ defined, since it is the documented explanation for a finding the report had cal
 
 Not changed: the geometry section's "removing ligand means" is indeed a no-op for the distance it feeds
 (the review measured max |centred − uncentred| = 0), and the wording is corrected rather than the code.
+
+## D12 — 2026-10-14 05:27 NZDT — the confirmation pass: Boltz is not reproducible across run configurations
+
+The reviewer's confirmation pass on the revised draft returned **publish with edits** with five remaining
+items. Four were small (listed below). The fifth falsifies a claim made three times in this run's own
+records, and nobody had checked it until the reviewer did the obvious thing and compared `repro.csv`
+against the stored panel value for the same pair.
+
+| the same complex, the same seed (20261013) | `affinity_pred_value` |
+| --- | --- |
+| run alone, twice (`repro.csv` a and b) | 0.9130484461784364 both times |
+| run inside the 1,024-complex panel job | 0.8504559397697449 |
+
+**0.063 log units apart.** Boltz is exactly deterministic given an identical run configuration, and not
+deterministic across configurations: batching moves the answer, through RNG stream position or
+non-deterministic kernels. The reviewer ruled out the obvious confounders — this pair's structure and
+affinity outputs were both written during the first panel run, well before the crash, the resume, or the
+memory-constrained period.
+
+Three consequences, all recorded rather than quietly patched:
+
+1. **"The pipeline is fully deterministic" was false** and is corrected in the report.
+2. **D6's "a prediction is still reproducible from its arm and pair alone" is falsified.** It was the stated
+   justification for deleting the 22 sharded decoy complexes in D4. The deletion was still the right call —
+   one provenance per arm is good hygiene regardless — but it was justified on a premise that does not hold.
+3. **The sampling arm's evidence is rebuilt on a better reference.** Comparing 0.128 (between settings) with
+   0.156 (a seed change in a single-complex run) was not like for like. The right comparison is 0.128 against
+   0.063, the movement with no seed change at all, purely from batching context. The conclusion is unchanged
+   — the sampling settings do not matter much — and now rests on a floor measured the same way.
+
+Readers are warned in the reproduction section that re-predicting one complex will not reproduce a released
+value exactly, with 0.06 log units as the floor on any single-complex comparison.
+
+**The other four items.** The sensitivity-bootstrap row in the report still showed the old 500-draw
+intervals and now shows the 2,000-draw ones. Issue 12 of the review — the per-axis B1 variant switch — had
+been fixed in code comments only and is now stated in the report with both numbers (B1 without the
+leave-one-out adjustment scores 0.4256 against 0.3856, so the adjustment mildly flatters the model). Two
+sentences surviving from the pre-revision draft were removed: the plain-language summary still carried the
+"any two kinases ... near-twins or unrelated" wording that D11 retired, and the discussion still credited
+the model's floor as an advantage after D11 had withdrawn it. The sixteen post-hoc comparisons now carry a
+multiplicity statement, and the five whose lower bound is under +0.025 are no longer typeset as though they
+were as solid as the three large ones.
+
+The reviewer also conceded one point to me: it had written that a single kinase pair was predicted further
+apart than measured, having read the maximum rather than counted. Six of the 496 pairs are.

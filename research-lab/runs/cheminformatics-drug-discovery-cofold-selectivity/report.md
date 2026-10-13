@@ -41,9 +41,9 @@ succeeds 56 % of the time, against 19 % for the baseline.
 
 Where it falls short is the thing selectivity actually consists of. Most of what varies in real
 measurements is the specific pairing of compound and kinase; the model captures only about a third of that,
-leaning instead on how potent a compound is overall. It also flattens the kinome: the difference it reports
-between any two kinases is about half the real one, whether they are near-twins or unrelated proteins. So
-it will point you at roughly the right targets while understating how much they differ.
+leaning instead on how potent a compound is overall. It also flattens the kinome: for a typical pair of
+kinases, the difference it reports is about half the real one. So it will point you at roughly the right
+targets while understating how much they differ.
 
 Useful for triage, then, and better than nothing by a clear margin at the top of the list. Not yet a
 substitute for the experiment when two close relatives have to be told apart.
@@ -159,8 +159,8 @@ It does not fail it.
 | --- | --- | --- | --- |
 | **P1** median within-ligand Spearman, 32 kinases | **0.444** | 0.418 – 0.532 | ligand cluster bootstrap |
 | P2 the same, uncensored cells only | 0.464 | 0.429 – 0.487 | |
-| P1, resampling kinases instead of ligands | — | 0.368 – 0.569 | sensitivity |
-| P1, dyadic bootstrap | — | 0.331 – 0.619 | sensitivity |
+| P1, resampling kinases instead of ligands | — | 0.368 – 0.578 | sensitivity |
+| P1, dyadic bootstrap | — | 0.329 – 0.624 | sensitivity |
 | P1 on the high-confidence half | 0.537 | 0.391 – 0.637 | |
 | P1 using the binary binder probability | 0.596 | 0.519 – 0.665 | |
 | P3 median within-kinase Spearman, 32 ligands | 0.453 | — | H2's floor was 0.4 |
@@ -196,6 +196,16 @@ reused for every ligand — scores 0.386.
 B0 and B3 are constant within a ligand, so they have no ranking and no hit rate; an earlier draft printed
 0.062 for them, which was an artefact of the kinase column order rather than an estimate.
 
+One detail of B1 needs stating, because it is a choice that affects the headline margin. B1 is each
+kinase's mean measured pKd over the *other* 67 compounds — leaving the ranked compound out, so that it
+cannot contribute to the baseline it is scored against. Without that adjustment B1 scores 0.4256 on P1
+rather than 0.3856, which would shrink the model's margin from +0.058 to +0.018; the leave-one-out version
+is the honest comparator but it is also the one that flatters the model, and both numbers belong in the
+record. On the within-kinase axis the adjustment has to be dropped, because leaving a compound out of its
+own kinase's mean makes that baseline correlate exactly −1 with the measurement there; the within-kinase
+cell therefore uses the unadjusted variant, which is 0 by construction. Both variants were committed at
+`bdd795d`, half an hour before the panel run began.
+
 Both B1 and B2 are built from the measured Davis panel — B1 from 67 other compounds' Kd against the same
 kinases, B2 from the nearest compound's. As plan.md §7 put it, they are references for *how much signal is
 extractable*, not fair competitors to a zero-shot model: neither can be computed for a kinase set nobody
@@ -207,14 +217,17 @@ worth running", and the wrong bar for "is this impressive".
 Paired ligand bootstraps of the difference, model minus baseline, over every rank statistic a selectivity
 user might reasonably ask for:
 
+Bold marks the margins wide enough to survive a multiplicity correction over the sixteen comparisons in
+this table; the unbolded ones exclude zero individually but would not.
+
 | statistic | model | B1 | model − B1 | model − B2 |
 | --- | --- | --- | --- | --- |
 | P1 median within-ligand ρ, all cells | 0.444 | 0.386 | +0.058 (−0.071, +0.166) | +0.050 (−0.065, +0.195) |
 | AUC, ceiling block vs real binders | 0.724 | 0.711 | +0.013 (−0.061, +0.090) | +0.038 (−0.030, +0.115) |
-| P2 median within-ligand ρ, uncensored | 0.464 | 0.293 | **+0.171 (+0.065, +0.292)** | **+0.170 (+0.017, +0.346)** |
-| concordance among uncensored cells | 0.653 | 0.604 | **+0.050 (+0.014, +0.084)** | +0.037 (−0.010, +0.082) |
-| NDCG (gain = pKd − 5) | 0.864 | 0.802 | **+0.062 (+0.021, +0.106)** | **+0.057 (+0.012, +0.108)** |
-| NDCG@3 | 0.693 | 0.497 | **+0.196 (+0.096, +0.296)** | **+0.123 (+0.018, +0.235)** |
+| P2 median within-ligand ρ, uncensored | 0.464 | 0.293 | **+0.171 (+0.065, +0.292)** | +0.170 (+0.017, +0.346) |
+| concordance among uncensored cells | 0.653 | 0.604 | +0.050 (+0.014, +0.084) | +0.037 (−0.010, +0.082) |
+| NDCG (gain = pKd − 5) | 0.864 | 0.802 | +0.062 (+0.021, +0.106) | +0.057 (+0.012, +0.108) |
+| NDCG@3 | 0.693 | 0.497 | **+0.196 (+0.096, +0.296)** | +0.123 (+0.018, +0.235) |
 | NDCG@5 | 0.709 | 0.566 | **+0.142 (+0.053, +0.236)** | **+0.125 (+0.036, +0.224)** |
 | top-1 in the true top-3 | 0.562 | 0.188 | **+0.375 (+0.188, +0.562)** | **+0.250 (+0.031, +0.469)** |
 | precision@3 | 0.375 | 0.229 | **+0.146 (+0.021, +0.250)** | **+0.135 (+0.010, +0.260)** |
@@ -226,12 +239,18 @@ its weight on a task where the two are tied. Every statistic that asks about ord
 concordance), or about the top of the profile (NDCG@3, top-1), separates them with an interval excluding
 zero.
 
-So the honest summary is not "the two statistics disagree". It is that **P1 understates the model, for a
-reason specific to how censored this kind of panel is**, and that the preregistered primary was the wrong
-instrument for the question — which is a lesson about the preregistration, not a licence to pick the
-flattering number. Only P1 and P2 were preregistered as estimands; the rank-weighted statistics were added
-after seeing P1 (D11), and the hit-rate intervals after seeing the point estimates (D8). The verdict stands
-on P1 alone, as committed.
+So the honest summary is not "the two statistics disagree". P1 is a legitimate composite of two questions —
+can you spot the non-binders, and can you order the binders — and the model's advantage over the baselines
+is concentrated entirely in the second of them. For a panel that is 27 % ceiling cells, that is enough to
+hide the advantage in the composite.
+
+Two cautions on the table above. Only P1 and P2 were preregistered as estimands; the rank-weighted
+statistics were added after seeing P1 (D11), and the hit-rate intervals after seeing the point estimates
+(D8). And the table contains sixteen post-hoc comparisons with no multiplicity correction: five of the
+intervals have a lower bound under +0.025 (NDCG vs B2, concordance vs B1, P2 vs B2, NDCG@3 vs B2, NDCG vs
+B1) and would not survive a Bonferroni step over sixteen tests. The conclusion does not rest on those: the
+three large margins against B1 — P2 +0.171, NDCG@3 +0.196, top-1 +0.375 — survive any correction one might
+apply. The verdict itself stands on P1 alone, as committed.
 
 The per-ligand floors sharpen the same point, and are exploratory (D9):
 
@@ -349,11 +368,20 @@ log units on average, and P1 shifts by −0.029 (−0.206, +0.091).
 
 On its own that correlation has no scale — 0.979 could mean "the setting does not matter" or "0.979 is
 simply the noise floor". The reproducibility check (plan §4, `results/tables/repro.csv`) supplies the
-reference, and it is the more informative half of this arm. Re-running one complex at the same seed
-reproduces the affinity value *bit for bit*, so the pipeline is fully deterministic; re-running it at a
-changed seed moves it 0.156 log units. The sampling settings therefore move predictions **less** than
-simply changing the seed does (0.128 against 0.156). The result is not a sampling artefact, and that now
-rests on a measured noise floor rather than on an unanchored correlation.
+reference, and it turned up something the plan did not anticipate.
+
+Re-running one complex twice in the same configuration reproduces the affinity value to the last decimal
+digit. But re-running that same complex, at the same seed, *alone* rather than inside the 1,024-complex
+panel job moves it by **0.063 log units**. Boltz is deterministic given an identical run configuration and
+not deterministic across configurations: batching changes the result, presumably through RNG stream
+position or non-deterministic kernels. (Changing the seed as well moves it 0.156.)
+
+That is the reference this arm needed, and it is a stricter one than a seed change: 0.063 is the movement
+with *no* seed change at all, purely from running the complex in different company. The sampling arm's
+0.128 log units is only about twice that floor, so a good deal of what looked like a sampling-setting
+effect is simply run context. The conclusion is unchanged and better grounded — the affinity sampling
+settings do not matter much — but the honest version is 0.128 against a floor of 0.063, not against a
+seed-change figure measured in a different kind of run.
 
 **Post-cutoff compounds (93 complexes).** The eleven compounds whose earliest ChEMBL document is 2025 or
 later, profiled against 6 to 12 kinases each (61 kinases in all, 8.6 % of records censored — 3 pairs
@@ -388,12 +416,16 @@ expedition, but the size of the gap was not anticipated.
 
 The headline is easy to misread in either direction, so stated plainly: on this panel Boltz-2's affinity
 head carries real protein-side signal — it is not ranking kinases at random, and it clears the
-preregistered threshold comfortably — but on the preregistered primary statistic it does not demonstrably
-beat a baseline that never looks at the compound, and its advantage is concentrated at the top of the
-ranking and in its floor rather than spread across the profile. The hypothesis this study set out to test
-was refuted, and the threshold it set was, as the preregistration itself anticipated, too low to be the
-interesting comparison. The interesting comparison is the baseline table, and it was fixed before any
-prediction was made.
+preregistered threshold comfortably. Against a baseline that never looks at the compound it wins on every
+statistic tried except the preregistered primary P1 and the ceiling-versus-binder AUC, which are the same
+fact: P1 is a composite of two things, telling binders from non-binders and ordering the binders, and the
+model's advantage lives entirely in the second. That is a real limitation of the primary statistic for this
+kind of panel, not a licence to quote whichever number flatters the model — the verdict stands on P1, and
+the statistics that separate the two were chosen after seeing it.
+
+The hypothesis this study set out to test was refuted, and the threshold it set was, as the preregistration
+itself anticipated, too low to be the interesting comparison. The interesting comparison is the baseline
+table, and it was fixed before any prediction was made.
 
 A reader should not take "Refuted" to mean the model is good at selectivity. It means the specific claim
 that it is *useless* at selectivity is wrong. The limitations below were written from the design, before
@@ -484,6 +516,12 @@ The estimator checks are worth running first: they assert that a perfect predict
 ligand-only predictor scores exactly 0 on the selectivity axis, that the sign convention is right, that a
 pure-noise predictor's interval covers 0, and that each of the four verdict branches fires on data built to
 trigger it. They take a second and they caught two real bugs in this analysis.
+
+One caution for anyone checking a released number: re-predicting a single complex will *not* reproduce the
+released value exactly. Boltz is deterministic for an identical run configuration but not across
+configurations — the same complex at the same seed moves 0.063 log units when run alone instead of inside
+the 1,024-complex job (`results/tables/repro.csv`). Re-run the whole arm to reproduce an arm's numbers, and
+treat 0.06 log units as the floor on any single-complex comparison.
 
 Seeds and settings are fixed in `code/boltzrun.py` (`SEED = 20261013`, the explicit flag dictionary) and
 `code/analysis.py` (`SEED`, `NBOOT = 2000`). `results/tables/env.json` carries the package versions and the
