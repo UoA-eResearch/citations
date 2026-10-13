@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Citation Network Explorer</title>
-    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.css">
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -208,11 +208,14 @@
 
     <div id="toasts"></div>
 
-    <!-- UMD dependencies (order matters; module scripts below run after these) -->
+    <!-- UMD dependencies (order matters; module scripts below run after these).
+         Pin exact versions: deck.gl and the vendored cosmos.gl each bundle luma.gl, which throws
+         "multiple versions detected" unless both carry the same release. deck.gl 9.3.11 and
+         cosmos.gl 3.1.0 both bundle luma.gl 9.3.6; deck.gl 9.4 bundles 9.4.0 and breaks the map. -->
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
     <script src="vendor/cosmos-gl/cosmos.min.js"></script>
-    <script src="https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.js"></script>
-    <script src="https://unpkg.com/deck.gl@9/dist.min.js"></script>
+    <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+    <script src="https://unpkg.com/deck.gl@9.3.11/dist.min.js"></script>
     <script type="module" src="js/main.js"></script>
 </body>
 
