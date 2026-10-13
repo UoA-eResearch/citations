@@ -15,6 +15,10 @@ export function createViewMap(container) {
 
     function ensure() {
         if (deckgl) return deckgl;
+        // A failed deck.gl bundle (e.g. a luma.gl version clash) leaves only a stub `deck` global.
+        if (typeof globalThis.deck?.DeckGL !== "function") {
+            throw new Error("deck.gl did not load (see the browser console for the script error)");
+        }
         deckgl = new deck.DeckGL({
             container,
             mapStyle: MAP_STYLE,
