@@ -12,7 +12,7 @@ model to rank 32 human kinase domains, and compares with the Davis et al. 2011 K
 
 - plan.md (preregistration, commit c9fa258 — committed before any panel prediction);
 - deviations.md (D1-D7);
-- report.md (pre-review draft, commit <<DRAFT_COMMIT>>);
+- report.md (pre-review draft, commit 04c7f25);
 - code/: panel.py, validate_data.py, check_smiles.py, build_inputs.py, boltzrun.py, postcutoff.py, shard.py,
   analysis.py, test_analysis.py, assemble.py, secondary.py, geometry.py, figures.py, env_record.py,
   run_all.sh, lane2.sh, lane3.sh, msa_queue.sh;
@@ -121,8 +121,38 @@ Check at least:
 10. **Plain-language summary.** Is "## In plain terms" accurate, and does it avoid both overstatement and false
     modesty? It is the part most people will read.
 
-<<RESULTS_SPECIFIC — filled in when the draft is complete: the headline numbers, the verdict branch that fired, and
-the two or three claims that most need attacking.>>
+**What the draft concludes, and where to aim.**
+
+The verdict is **Refuted**: P1 = 0.444 (0.418, 0.532) against a hypothesis of P1 <= 0.25, so the claim that the affinity
+head cannot rank proteins for a fixed ligand does not hold. Supporting numbers: P2 = 0.464, P3 = 0.453, top-1 = 0.562
+against 0.094 chance, 1024/1024 complexes with no failures, kinase bootstrap (0.368, 0.569), dyadic (0.331, 0.619).
+
+Four claims carry the report, and each has a specific weakness to attack:
+
+1. **"The threshold was below a trivial baseline, so the interesting comparison is the baseline table."** B1 (target
+   promiscuity, no chemistry) scores 0.386 and the model beats it by only +0.058 (-0.071, +0.166). Is B1 implemented
+   correctly, and is it really chemistry-free? Note it is built from the *measured* Davis matrix, so it uses labels the
+   model never sees - does that make it a fair comparator, an unfair one, or an upper bound of a different kind? Is the
+   leave-the-ranked-ligand-out adjustment right?
+2. **"P1 and the hit rates disagree, and the disagreement is the result."** On top-1 the model beats B1 by
+   +0.375 (+0.188, +0.562) and B2 by +0.250 (+0.031, +0.469). This is the load-bearing claim of the whole report.
+   Attack it: is the discrepancy real, or an artefact of comparing a median-of-correlations with a mean-of-indicators
+   at different effective sample sizes? Top-1 over 32 ligands is 32 Bernoulli draws - is the paired bootstrap honest
+   about that? Would a rank-weighted statistic (NDCG, AUC restricted to the top of the profile) agree? Note the
+   hit-rate interval was added after seeing P1 (D8), so judge whether the report's framing of it is honest.
+3. **"The model never falls below zero on any ligand; the baselines do."** Exploratory, no test, no interval (D9).
+   Is it a real property or a reading of noise on 32 ligands? Does it survive the uncensored-only subset?
+4. **"The binary probability head is the better ranker"** (P1 0.596 vs 0.444) and the practical recommendation drawn
+   from it. Is the gap tested? Should it be, given it was a preregistered secondary read-out?
+
+Also check what was *withdrawn*: D10 records a claim about sequence reliance that the first draft made, that a
+permutation test and kinase bootstrap did not support, and that was removed before review. Verify the withdrawal is
+complete and that no trace of the claim survives elsewhere in the report, and check whether the replacement claim -
+uniform compression, ratio 0.50 across all pairs, 0.57 for the five most similar pairs - is itself adequately
+supported.
+
+Finally, the post-cutoff arm reports P1 = 0.543 (0.371, 0.657), *above* the Davis panel. Eleven compounds is very few.
+Is that number being leaned on harder than it can bear?
 
 Write your review to review/review.md with:
 
