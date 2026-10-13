@@ -133,7 +133,10 @@ def primary():
         out["baselines"][name] = dict(P1=A.primary(b, meas), P2=A.primary(b, meas, True),
                                       P3=A.med(A.within_kinase(b3, meas)),
                                       top1=A.hit_rates(b, meas)["top1"],
-                                      diff=A.paired_difference(pred, meas, b))
+                                      diff=A.paired_difference(pred, meas, b),
+                                      # D8: the hit-rate difference needs an interval too, because it
+                                      # and P1 disagree about how much the model adds over B1 and B2
+                                      hit_diff=A.paired_hit_difference(pred, meas, b))
     # confidence-filtered recomputation (plan.md §9.3)
     t = pd.read_csv(TAB / "pairs_panel.csv")
     cut = t.confidence_score.median()

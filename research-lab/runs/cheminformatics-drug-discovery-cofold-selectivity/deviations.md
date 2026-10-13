@@ -149,3 +149,19 @@ Three things changed as a result, none of them in the design or the analysis:
    their first 32 characters. The conformer digest was right as far as it went; the affinity one described
    a file that was never used. Both are now full sha256 of the released checkpoints, and both kernels the
    run executed under are recorded.
+
+## D8 — 2026-10-14 03:33 NZDT — an interval for the hit-rate difference, which the plan only point-estimated
+
+plan.md §7 compares the model with each baseline on P1, by paired ligand bootstrap, and §6 lists the hit
+rates (P4) as an estimand without a baseline comparison. That was an oversight, and the results make it
+matter: P1 and the hit rates disagree about how much the model adds over the two non-trivial baselines.
+On P1 the margin over target promiscuity is +0.058 with an interval spanning zero; on top-1 it is +0.375
+with an interval that does not. A difference carrying that much of the conclusion cannot be reported as
+two point estimates, so `analysis.py` gained `hit_vectors` and `paired_hit_difference` (the same paired
+ligand bootstrap, same seed, same 2000 draws) and `assemble.py` stores a `hit_diff` per baseline.
+
+`hit_rates` now derives its numbers from `hit_vectors` so that the point estimates and the bootstrapped
+ones cannot drift apart. The 17 estimator checks still pass and P1-P5 are unchanged to three decimals.
+
+This is an addition to the preregistered comparison, made after seeing P1, and it is reported as such:
+the preregistered verdict stands on P1 alone.

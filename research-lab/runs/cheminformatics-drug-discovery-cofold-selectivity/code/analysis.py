@@ -180,21 +180,51 @@ def two_way(mat):
                 sd_ligand=float(np.nanstd(a)), sd_kinase=float(np.nanstd(b)))
 
 
-def hit_rates(pred, meas, top=3):
-    """Per ligand: is the model's top-ranked kinase among the ligand's true top-3 measured kinases, and
-    what share of the model's top-3 is in the true top-3? Ties in the measured values are broken by
-    counting any kinase whose pKd ties the 3rd-best value as part of the true top set."""
-    t1, p3 = [], []
-    for i in range(pred.shape[0]):
+def hit_vectors(pred, meas, top=3):
+    """The per-ligand indicators behind hit_rates: (top-1 hit, precision@3), nan where undefined.
+
+    Per ligand: is the model's top-ranked kinase among the ligand's true top-3 measured kinases, and what
+    share of the model's top-3 is in the true top-3? Ties in the measured values are broken by counting
+    any kinase whose pKd ties the 3rd-best value as part of the true top set.
+    """
+    n = pred.shape[0]
+    t1, p3 = np.full(n, np.nan), np.full(n, np.nan)
+    for i in range(n):
         y, p = meas[i], pred[i]
         if np.unique(y).size < 2:
             continue
         cut = np.sort(y)[-top]
         true = set(np.where(y >= cut)[0])
         order = np.argsort(-p)
-        t1.append(int(order[0] in true))
-        p3.append(len(set(order[:top]) & true) / top)
-    return dict(top1=float(np.mean(t1)), precision_at_3=float(np.mean(p3)), n=len(t1))
+        t1[i] = float(order[0] in true)
+        p3[i] = len(set(order[:top]) & true) / top
+    return t1, p3
+
+
+def hit_rates(pred, meas, top=3):
+    t1, p3 = hit_vectors(pred, meas, top)
+    return dict(top1=float(np.nanmean(t1)), precision_at_3=float(np.nanmean(p3)),
+                n=int(np.isfinite(t1).sum()))
+
+
+def paired_hit_difference(pred, meas, base, top=3, nboot=NBOOT):
+    """Paired ligand bootstrap of the top-1 and precision@3 differences, model minus baseline.
+
+    Added after the plan (D8). The preregistered comparison against the baselines is on P1 alone, and P1
+    and the hit rates disagree about how much the model adds: P1 puts it within noise of a baseline with
+    no chemistry in it, while the top-1 rate is three times the baseline's. A difference that carries
+    that much of the conclusion needs an interval, not a pair of point estimates.
+    """
+    a1, a3 = hit_vectors(pred, meas, top)
+    b1, b3 = hit_vectors(base, meas, top)
+    out = {}
+    for name, a, b in (("top1", a1, b1), ("precision_at_3", a3, b3)):
+        rng = np.random.default_rng(SEED)
+        draws = boot_ligand(lambda idx: float(np.nanmean(a[idx]) - np.nanmean(b[idx])), len(a), rng, nboot)
+        lo, hi = ci(draws)
+        out[name] = dict(point=float(np.nanmean(a) - np.nanmean(b)), lo=lo, hi=hi,
+                         base_point=float(np.nanmean(b)))
+    return out
 
 
 def summarise(pred, meas, label, nboot=NBOOT):

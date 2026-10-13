@@ -1,0 +1,689 @@
+{
+ "decoy": {
+  "per_decoy": [
+   {
+    "decoy": "P00918",
+    "median_pred": 5.266173541545868,
+    "median_gap_vs_kinase_mean": -1.26079373259563,
+    "median_gap_vs_kinase_max": -2.428509682416916,
+    "median_gap_in_kinome_sd": -2.3710613513935823,
+    "share_above_kinase_mean": 0.03125,
+    "share_above_kinase_max": 0.0,
+    "median_prob": 0.06952254474163055
+   },
+   {
+    "decoy": "P07477",
+    "median_pred": 5.194703221321106,
+    "median_gap_vs_kinase_mean": -1.1335715356399305,
+    "median_gap_vs_kinase_max": -2.3399526476860046,
+    "median_gap_in_kinome_sd": -2.218648243511988,
+    "share_above_kinase_mean": 0.03125,
+    "share_above_kinase_max": 0.0,
+    "median_prob": 0.18282436579465866
+   },
+   {
+    "decoy": "P07900",
+    "median_pred": 5.34931817650795,
+    "median_gap_vs_kinase_mean": -1.1446915408596396,
+    "median_gap_vs_kinase_max": -2.06983545422554,
+    "median_gap_in_kinome_sd": -2.042488280049236,
+    "share_above_kinase_mean": 0.0,
+    "share_above_kinase_max": 0.0,
+    "median_prob": 0.28965117037296295
+   },
+   {
+    "decoy": "P09211",
+    "median_pred": 5.250469744205475,
+    "median_gap_vs_kinase_mean": -1.1913501519011334,
+    "median_gap_vs_kinase_max": -2.1918693482875824,
+    "median_gap_in_kinome_sd": -2.332663341708008,
+    "share_above_kinase_mean": 0.0,
+    "share_above_kinase_max": 0.0,
+    "median_prob": 0.1896815150976181
+   }
+  ],
+  "kinome_sd_median": 0.5214690199056622,
+  "kinome_mean_median": 6.358219845860731,
+  "kinase_prob_median": 0.436326265335083
+ },
+ "promiscuity": {
+  "union": {
+   "shape": [
+    32,
+    40
+   ],
+   "P1": {
+    "point": 0.47504433261185725,
+    "lo": 0.35861897880623295,
+    "hi": 0.5734020041186225,
+    "n_ligands": 32,
+    "mean": 0.4545835694117638,
+    "per_ligand": [
+     0.37804435997463953,
+     0.34380712999893104,
+     0.32897405081911735,
+     0.5186955265326019,
+     0.6547902550852006,
+     0.5135213531360472,
+     0.4030372019738287,
+     0.4009885575247091,
+     0.37594065307947566,
+     0.6299390651354466,
+     0.3089337261128866,
+     0.3375630648517417,
+     0.5966816634470131,
+     0.3230057886964979,
+     0.3225454121637564,
+     0.49395034732503906,
+     0.2908000186076752,
+     0.5053814193349795,
+     0.07150136658238894,
+     0.5852573041986308,
+     0.5734020041186225,
+     0.6375791871406467,
+     0.12798491542642618,
+     0.6323736310016593,
+     0.2746112553343261,
+     0.7046985153909318,
+     0.4942250735124484,
+     0.6273701755531904,
+     0.7198572930447148,
+     0.4561383178986754,
+     0.3412973045329902,
+     0.573778283641203
+    ]
+   },
+   "P3": 0.3788604533220601
+  },
+  "extra_only": {
+   "shape": [
+    32,
+    8
+   ],
+   "P1": {
+    "point": 0.2835890783316791,
+    "lo": 0.191911005525096,
+    "hi": 0.5773502691896257,
+    "n_ligands": 16,
+    "mean": 0.3023772620762593,
+    "per_ligand": [
+     NaN,
+     0.40915854419248576,
+     NaN,
+     0.29615285103456107,
+     -0.09759000729485333,
+     0.21562217300853243,
+     NaN,
+     NaN,
+     NaN,
+     0.27545404024004955,
+     NaN,
+     NaN,
+     0.29172411642330864,
+     0.13638618139749523,
+     NaN,
+     0.24743582965269675,
+     NaN,
+     0.7325886315065459,
+     NaN,
+     NaN,
+     -0.5773502691896257,
+     0.8024095954818835,
+     0.24743582965269675,
+     0.5773502691896257,
+     NaN,
+     0.5773502691896257,
+     0.7863867486193535,
+     NaN,
+     NaN,
+     NaN,
+     -0.08247860988423225,
+     NaN
+    ]
+   },
+   "mean_n_unc": 1.4375
+  },
+  "extra_kinases": [
+   [
+    "AKT2",
+    "AGC",
+    7
+   ],
+   [
+    "SNRK",
+    "CAMK",
+    5
+   ],
+   [
+    "CSNK1G3",
+    "CK1",
+    9
+   ],
+   [
+    "p38-delta",
+    "CMGC",
+    7
+   ],
+   [
+    "NEK1",
+    "OTHER",
+    8
+   ],
+   [
+    "ASK2",
+    "STE",
+    5
+   ],
+   [
+    "CTK",
+    "TK",
+    9
+   ],
+   [
+    "BMPR1A",
+    "TKL",
+    7
+   ]
+  ]
+ },
+ "sampling": {
+  "panel": {
+   "shape": [
+    8,
+    12
+   ],
+   "P1": {
+    "point": 0.42307692307692313,
+    "lo": 0.3087738305619017,
+    "hi": 0.6293706293706295,
+    "n_ligands": 8,
+    "mean": 0.3808989818449101,
+    "per_ligand": [
+     0.6503496503496504,
+     -0.2377622377622378,
+     0.3087738305619017,
+     0.44055944055944063,
+     0.4755244755244756,
+     0.4055944055944056,
+     0.3747816605610153,
+     0.6293706293706295
+    ]
+   },
+   "P1_probability": {
+    "point": 0.5524475524475525,
+    "lo": 0.3152369107522558,
+    "hi": 0.6228146853146851,
+    "n_ligands": 8,
+    "mean": 0.49893750242408585,
+    "per_ligand": [
+     0.5804195804195805,
+     0.21678321678321683,
+     0.41052884290616476,
+     0.5244755244755246,
+     0.6993006993006995,
+     0.6643356643356644,
+     0.3152369107522558,
+     0.5804195804195805
+    ]
+   },
+   "P3": 0.23809523809523814
+  },
+  "sampling": {
+   "shape": [
+    8,
+    12
+   ],
+   "P1": {
+    "point": 0.393660021193461,
+    "lo": 0.2000012311594136,
+    "hi": 0.5524475524475525,
+    "n_ligands": 8,
+    "mean": 0.3620515228296556,
+    "per_ligand": [
+     0.5874125874125874,
+     -0.08391608391608392,
+     0.2000012311594136,
+     0.5524475524475525,
+     0.5104895104895105,
+     0.44055944055944063,
+     0.34676060182748136,
+     0.3426573426573427
+    ]
+   },
+   "P1_probability": {
+    "point": 0.590909090909091,
+    "lo": 0.3512471693305409,
+    "hi": 0.7027972027972029,
+    "n_ligands": 8,
+    "mean": 0.5500654146416413,
+    "per_ligand": [
+     0.6293706293706295,
+     0.31468531468531474,
+     0.3894760817314897,
+     0.6783216783216784,
+     0.7272727272727274,
+     0.7902097902097903,
+     0.3187395430939476,
+     0.5524475524475525
+    ]
+   },
+   "P3": 0.2619047619047619
+  },
+  "pairwise": {
+   "pearson_between_settings": 0.9794979411684098,
+   "mean_abs_change": 0.12836352004281557,
+   "diff": {
+    "point": -0.029416901883462132,
+    "lo": -0.20573824135969787,
+    "hi": 0.09090909090909083,
+    "base_point": 0.42307692307692313
+   }
+  }
+ },
+ "support": {
+  "per_kinase": [
+   {
+    "acc": "O14578",
+    "kinase": "CIT",
+    "group": "AGC",
+    "support": 293,
+    "log_support": 2.4683473304121573,
+    "within_kinase_rho": 0.10913538254560542,
+    "concordance": 0.6349765258215962,
+    "n_comparisons": 852,
+    "mae": 1.0757399090813156,
+    "n_unc": 17
+   },
+   {
+    "acc": "Q8WTQ7",
+    "kinase": "GRK7",
+    "group": "AGC",
+    "support": 91,
+    "log_support": 1.9637878273455553,
+    "within_kinase_rho": 0.34462987461961514,
+    "concordance": 0.6583229036295369,
+    "n_comparisons": 799,
+    "mae": 0.8999003423492737,
+    "n_unc": 15
+   },
+   {
+    "acc": "P23443",
+    "kinase": "S6K1",
+    "group": "AGC",
+    "support": 1958,
+    "log_support": 3.2920344359947364,
+    "within_kinase_rho": 0.4521179118981829,
+    "concordance": 0.7075471698113207,
+    "n_comparisons": 848,
+    "mae": 0.7514558109059487,
+    "n_unc": 20
+   },
+   {
+    "acc": "Q9UEE5",
+    "kinase": "DRAK1",
+    "group": "CAMK",
+    "support": 223,
+    "log_support": 2.3502480183341627,
+    "within_kinase_rho": 0.29448065270836155,
+    "concordance": 0.734207389749702,
+    "n_comparisons": 839,
+    "mae": 1.0357654079288936,
+    "n_unc": 17
+   },
+   {
+    "acc": "Q9HBH9",
+    "kinase": "MKNK2",
+    "group": "CAMK",
+    "support": 1798,
+    "log_support": 3.2550311633455515,
+    "within_kinase_rho": 0.5300565439033134,
+    "concordance": 0.61345496009122,
+    "n_comparisons": 877,
+    "mae": 0.9071959711932877,
+    "n_unc": 21
+   },
+   {
+    "acc": "Q9H0K1",
+    "kinase": "SIK2",
+    "group": "CAMK",
+    "support": 359,
+    "log_support": 2.5563025007672873,
+    "within_kinase_rho": 0.4286113439448562,
+    "concordance": 0.6418242491657397,
+    "n_comparisons": 899,
+    "mae": 0.850899418855651,
+    "n_unc": 24
+   },
+   {
+    "acc": "Q9H093",
+    "kinase": "SNARK",
+    "group": "CAMK",
+    "support": 278,
+    "log_support": 2.4456042032735974,
+    "within_kinase_rho": 0.45960561629466073,
+    "concordance": 0.7302325581395349,
+    "n_comparisons": 860,
+    "mae": 0.8666986474307793,
+    "n_unc": 20
+   },
+   {
+    "acc": "Q9BYT3",
+    "kinase": "STK33",
+    "group": "CAMK",
+    "support": 127,
+    "log_support": 2.1072099696478683,
+    "within_kinase_rho": 0.7112331996204032,
+    "concordance": 0.7393800229621125,
+    "n_comparisons": 871,
+    "mae": 0.6387769379674934,
+    "n_unc": 22
+   },
+   {
+    "acc": "P48730",
+    "kinase": "CSNK1D",
+    "group": "CK1",
+    "support": 1792,
+    "log_support": 3.253580289562183,
+    "within_kinase_rho": 0.1050974738327753,
+    "concordance": 0.7233250620347395,
+    "n_comparisons": 806,
+    "mae": 0.9013551489216303,
+    "n_unc": 13
+   },
+   {
+    "acc": "P49674",
+    "kinase": "CSNK1E",
+    "group": "CK1",
+    "support": 1993,
+    "log_support": 3.299725153975637,
+    "within_kinase_rho": 0.23914460364489806,
+    "concordance": 0.7376470588235294,
+    "n_comparisons": 850,
+    "mae": 0.7508675276994616,
+    "n_unc": 17
+   },
+   {
+    "acc": "P50613",
+    "kinase": "CDK7",
+    "group": "CMGC",
+    "support": 730,
+    "log_support": 2.8639173769578603,
+    "within_kinase_rho": 0.7516699214883619,
+    "concordance": 0.7413213885778276,
+    "n_comparisons": 893,
+    "mae": 0.6478851157720567,
+    "n_unc": 23
+   },
+   {
+    "acc": "P49759",
+    "kinase": "CLK1",
+    "group": "CMGC",
+    "support": 1192,
+    "log_support": 3.076640443670342,
+    "within_kinase_rho": 0.5500603371058556,
+    "concordance": 0.674364896073903,
+    "n_comparisons": 866,
+    "mae": 0.7756668641709892,
+    "n_unc": 21
+   },
+   {
+    "acc": "P49760",
+    "kinase": "CLK2",
+    "group": "CMGC",
+    "support": 804,
+    "log_support": 2.9057958803678687,
+    "within_kinase_rho": 0.6227567667399296,
+    "concordance": 0.7190876350540216,
+    "n_comparisons": 833,
+    "mae": 0.6203393284750721,
+    "n_unc": 18
+   },
+   {
+    "acc": "Q8NE63",
+    "kinase": "HIPK4",
+    "group": "CMGC",
+    "support": 109,
+    "log_support": 2.041392685158225,
+    "within_kinase_rho": 0.506392251151276,
+    "concordance": 0.6406080347448425,
+    "n_comparisons": 921,
+    "mae": 0.6832788123334674,
+    "n_unc": 26
+   },
+   {
+    "acc": "Q2M2I8",
+    "kinase": "AAK1",
+    "group": "OTHER",
+    "support": 1178,
+    "log_support": 3.071513805095089,
+    "within_kinase_rho": 0.3636304575418421,
+    "concordance": 0.6431870669745958,
+    "n_comparisons": 866,
+    "mae": 0.9929383382643777,
+    "n_unc": 21
+   },
+   {
+    "acc": "Q96GD4",
+    "kinase": "AURKB",
+    "group": "OTHER",
+    "support": 2841,
+    "log_support": 3.4536240735914507,
+    "within_kinase_rho": 0.6459374273877231,
+    "concordance": 0.7042716319824753,
+    "n_comparisons": 913,
+    "mae": 0.7168689650845592,
+    "n_unc": 24
+   },
+   {
+    "acc": "Q9UQB9",
+    "kinase": "AURKC",
+    "group": "OTHER",
+    "support": 173,
+    "log_support": 2.2405492482826,
+    "within_kinase_rho": 0.6364314805571737,
+    "concordance": 0.6882290562036055,
+    "n_comparisons": 943,
+    "mae": 0.737613863237999,
+    "n_unc": 27
+   },
+   {
+    "acc": "O14976",
+    "kinase": "GAK",
+    "group": "OTHER",
+    "support": 498,
+    "log_support": 2.6981005456233897,
+    "within_kinase_rho": -0.07079847538031202,
+    "concordance": 0.6609071274298056,
+    "n_comparisons": 926,
+    "mae": 1.1304083876574023,
+    "n_unc": 26
+   },
+   {
+    "acc": "O00444",
+    "kinase": "PLK4",
+    "group": "OTHER",
+    "support": 843,
+    "log_support": 2.926342446625655,
+    "within_kinase_rho": 0.5782874473023831,
+    "concordance": 0.6956989247311828,
+    "n_comparisons": 930,
+    "mae": 0.9189103254805824,
+    "n_unc": 26
+   },
+   {
+    "acc": "O94804",
+    "kinase": "LOK",
+    "group": "STE",
+    "support": 363,
+    "log_support": 2.561101383649056,
+    "within_kinase_rho": 0.3343114388199386,
+    "concordance": 0.5774499473129611,
+    "n_comparisons": 949,
+    "mae": 1.0552575694497675,
+    "n_unc": 29
+   },
+   {
+    "acc": "Q13163",
+    "kinase": "MEK5",
+    "group": "STE",
+    "support": 300,
+    "log_support": 2.4785664955938436,
+    "within_kinase_rho": 0.4536120583683646,
+    "concordance": 0.7299270072992701,
+    "n_comparisons": 959,
+    "mae": 0.7947849242311339,
+    "n_unc": 29
+   },
+   {
+    "acc": "Q9H2G2",
+    "kinase": "SLK",
+    "group": "STE",
+    "support": 374,
+    "log_support": 2.574031267727719,
+    "within_kinase_rho": 0.31593447880202397,
+    "concordance": 0.6542553191489362,
+    "n_comparisons": 940,
+    "mae": 0.8864796060572977,
+    "n_unc": 28
+   },
+   {
+    "acc": "Q9UKE5",
+    "kinase": "TNIK",
+    "group": "STE",
+    "support": 736,
+    "log_support": 2.8674674878590514,
+    "within_kinase_rho": 0.20568819804355482,
+    "concordance": 0.6293558606124604,
+    "n_comparisons": 947,
+    "mae": 0.8455827073813784,
+    "n_unc": 28
+   },
+   {
+    "acc": "Q56UN5",
+    "kinase": "YSK4",
+    "group": "STE",
+    "support": 105,
+    "log_support": 2.0253058652647704,
+    "within_kinase_rho": 0.389474690231838,
+    "concordance": 0.5332640332640333,
+    "n_comparisons": 962,
+    "mae": 1.1811052065385201,
+    "n_unc": 30
+   },
+   {
+    "acc": "P07333",
+    "kinase": "CSF1R",
+    "group": "TK",
+    "support": 2700,
+    "log_support": 3.431524584187451,
+    "within_kinase_rho": 0.35317878727868535,
+    "concordance": 0.6969376979936642,
+    "n_comparisons": 947,
+    "mae": 1.0026325067568012,
+    "n_unc": 28
+   },
+   {
+    "acc": "Q08345",
+    "kinase": "DDR1",
+    "group": "TK",
+    "support": 1837,
+    "log_support": 3.2643455070500926,
+    "within_kinase_rho": 0.6096788489225063,
+    "concordance": 0.7053191489361702,
+    "n_comparisons": 940,
+    "mae": 0.8383695432093894,
+    "n_unc": 27
+   },
+   {
+    "acc": "O15197",
+    "kinase": "EPHB6",
+    "group": "TK",
+    "support": 273,
+    "log_support": 2.437750562820388,
+    "within_kinase_rho": 0.4939494281505151,
+    "concordance": 0.7275574112734864,
+    "n_comparisons": 958,
+    "mae": 0.676532253947964,
+    "n_unc": 29
+   },
+   {
+    "acc": "P36888",
+    "kinase": "FLT3",
+    "group": "TK",
+    "support": 5205,
+    "log_support": 3.716504163773217,
+    "within_kinase_rho": 0.68463517621159,
+    "concordance": 0.7424714434060229,
+    "n_comparisons": 963,
+    "mae": 0.9923400019698474,
+    "n_unc": 30
+   },
+   {
+    "acc": "P06239",
+    "kinase": "LCK",
+    "group": "TK",
+    "support": 2867,
+    "log_support": 3.4575791469957626,
+    "within_kinase_rho": 0.6208732412031109,
+    "concordance": 0.70020964360587,
+    "n_comparisons": 954,
+    "mae": 0.6788169109606458,
+    "n_unc": 29
+   },
+   {
+    "acc": "O00238",
+    "kinase": "BMPR1B",
+    "group": "TKL",
+    "support": 529,
+    "log_support": 2.724275869600789,
+    "within_kinase_rho": 0.23910949943380633,
+    "concordance": 0.6759581881533101,
+    "n_comparisons": 861,
+    "mae": 0.8201877969091702,
+    "n_unc": 18
+   },
+   {
+    "acc": "P51617",
+    "kinase": "IRAK1",
+    "group": "TKL",
+    "support": 837,
+    "log_support": 2.9232440186302764,
+    "within_kinase_rho": 0.13087027486332514,
+    "concordance": 0.6640449438202247,
+    "n_comparisons": 890,
+    "mae": 0.9116151674686357,
+    "n_unc": 23
+   },
+   {
+    "acc": "O43353",
+    "kinase": "RIPK2",
+    "group": "TKL",
+    "support": 974,
+    "log_support": 2.989004615698537,
+    "within_kinase_rho": 0.48582432848701035,
+    "concordance": 0.7416107382550335,
+    "n_comparisons": 894,
+    "mae": 0.8749858540126941,
+    "n_unc": 20
+   }
+  ],
+  "fits": {
+   "within_kinase_rho": {
+    "spearman": 0.1473607038123167,
+    "slope": 0.05127165697167625
+   },
+   "concordance": {
+    "spearman": 0.25109970674486803,
+    "slope": 0.034707913409042994
+   },
+   "mae": {
+    "spearman": -0.0406891495601173,
+    "slope": -0.022378882787354636
+   }
+  },
+  "support_range": [
+   91,
+   5205
+  ]
+ }
+}

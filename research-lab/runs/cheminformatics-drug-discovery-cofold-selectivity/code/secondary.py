@@ -79,6 +79,62 @@ def sampling(d):
     return out
 
 
+def postcut():
+    """Arm 5.3: the same within-ligand question on 11 compounds first published in 2025 or later.
+
+    Three things make this a check rather than a replication, and all three are reported: the measurements
+    are ChEMBL pActivity pooled over mixed assay types (IC50 and Ki, some records right-censored at '>'),
+    not Davis Kd from one assay; each compound covers only 6-12 kinases, so a per-compound Spearman is
+    noisy; and the kinase sets differ between compounds, so there is no rectangle and no clean analogue of
+    the panel's promiscuity baseline. The within-arm baseline below uses each kinase's mean measured
+    pActivity over the *other* compounds, and is only defined for kinases appearing in at least three.
+    """
+    t = pd.read_csv(TAB / "postcut_pairs.csv")
+    pr = S.preds("postcut")
+    pr["acc"] = pr.protein.str.replace("_pc", "", regex=False)
+    m = t.merge(pr[["acc", "cid", "pred", "affinity_probability_binary"]].rename(
+        columns={"cid": "chembl_id"}), on=["acc", "chembl_id"], how="inner")
+    m["censored"] = m.rels.astype(str).str.contains(">")
+    # each kinase's mean over the other compounds (the B1 analogue, where it is defined at all)
+    counts = m.groupby("acc").chembl_id.nunique()
+    rows, per = [], []
+    for cid, g in m.groupby("chembl_id"):
+        base = []
+        for _, r in g.iterrows():
+            others = m[(m.acc == r.acc) & (m.chembl_id != cid)]
+            base.append(others.pact.mean() if counts.get(r.acc, 0) >= 3 else np.nan)
+        rho_m = A.rho(g.pred.to_numpy(float), g.pact.to_numpy(float))
+        rho_p = A.rho(g.affinity_probability_binary.to_numpy(float), g.pact.to_numpy(float))
+        rho_b = A.rho(np.asarray(base, float), g.pact.to_numpy(float))
+        unc = g[~g.censored]
+        rho_u = (A.rho(unc.pred.to_numpy(float), unc.pact.to_numpy(float))
+                 if len(unc) >= A.MIN_UNC_P2 else np.nan)
+        per.append(dict(chembl_id=cid, n_kinases=len(g), n_censored=int(g.censored.sum()),
+                        rho=rho_m, rho_probability=rho_p, rho_baseline=rho_b, rho_uncensored=rho_u,
+                        pact_range=float(g.pact.max() - g.pact.min())))
+        rows.append((rho_m, rho_b))
+    p = pd.DataFrame(per)
+    p.to_csv(TAB / "postcut_per_compound.csv", index=False)
+    a = p.rho.to_numpy(float)
+    b = p.rho_baseline.to_numpy(float)
+    rng = np.random.default_rng(A.SEED)
+    draws = A.boot_ligand(lambda idx: A.med(a[idx]), len(a), rng)
+    lo, hi = A.ci(draws)
+    rng = np.random.default_rng(A.SEED)
+    dd = A.boot_ligand(lambda idx: A.med(a[idx]) - A.med(b[idx]), len(a), rng)
+    dlo, dhi = A.ci(dd)
+    return dict(n_compounds=len(p), n_pairs=int(len(m)),
+                kinases_per_compound=[int(p.n_kinases.min()), int(p.n_kinases.max())],
+                censored_share=float(m.censored.mean()),
+                P1=dict(point=A.med(a), lo=lo, hi=hi),
+                P1_probability=dict(point=A.med(p.rho_probability.to_numpy(float))),
+                P1_uncensored=dict(point=A.med(p.rho_uncensored.to_numpy(float)),
+                                   n=int(np.isfinite(p.rho_uncensored).sum())),
+                baseline_within_arm=dict(point=A.med(b), n=int(np.isfinite(b).sum()),
+                                         diff=dict(point=A.med(a) - A.med(b), lo=dlo, hi=dhi)),
+                per_compound=per)
+
+
 def kinase_concordance(pred, meas):
     """Per kinase: share of within-ligand pairwise comparisons involving that kinase that the model
     orders the same way as the measurement (ties in either dropped)."""
@@ -147,6 +203,9 @@ def main(which="all"):
         out["sampling"] = sampling(d)
     if which in ("all", "support"):
         out["support"] = support(d)
+    if which in ("all", "postcut") and (TAB / "postcut_pairs.csv").exists() \
+            and not S.preds("postcut").empty:
+        out["postcut"] = postcut()
     old = json.load(open(TAB / "secondary.json")) if (TAB / "secondary.json").exists() else {}
     old.update(out)
     A.save(old, "secondary.json")

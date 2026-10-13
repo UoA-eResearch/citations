@@ -1,0 +1,75 @@
+{
+ "n_kinases": 32,
+ "mantel_pred_vs_meas": 0.43396144216225996,
+ "mantel_pred_vs_sequence": 0.33806795280984275,
+ "mantel_meas_vs_sequence": 0.2483655380816707,
+ "mantel_prob_vs_meas": 0.5200912218177097,
+ "identity_range": [
+  0.1764705882352941,
+  0.9730639730639732
+ ],
+ "median_identity": 0.23316975841242443,
+ "same_group": {
+  "pred_within": 0.6474226627808697,
+  "pred_across": 0.7173618675729697,
+  "meas_within": 1.178003156904257,
+  "meas_across": 1.4756497788947613
+ },
+ "near_pairs": [
+  {
+   "a": "CSNK1D",
+   "b": "CSNK1E",
+   "identity": 0.973,
+   "meas_mean_abs_diff": 0.3501722925061278,
+   "pred_mean_abs_diff": 0.1150937033817172,
+   "meas_profile_rho": 0.8610222359839258,
+   "pred_profile_rho": 0.9420821114369501
+  },
+  {
+   "a": "CLK1",
+   "b": "CLK2",
+   "identity": 0.639,
+   "meas_mean_abs_diff": 0.3254516274147048,
+   "pred_mean_abs_diff": 0.23896163026802242,
+   "meas_profile_rho": 0.9006964725852303,
+   "pred_profile_rho": 0.845307917888563
+  },
+  {
+   "a": "AURKB",
+   "b": "AURKC",
+   "identity": 0.795,
+   "meas_mean_abs_diff": 0.3706298334956172,
+   "pred_mean_abs_diff": 0.14809076650999486,
+   "meas_profile_rho": 0.8580831420217586,
+   "pred_profile_rho": 0.9761730205278591
+  },
+  {
+   "a": "LOK",
+   "b": "SLK",
+   "identity": 0.746,
+   "meas_mean_abs_diff": 0.3275021531585778,
+   "pred_mean_abs_diff": 0.25767519493820146,
+   "meas_profile_rho": 0.9145480540867383,
+   "pred_profile_rho": 0.8881964809384164
+  },
+  {
+   "a": "CSF1R",
+   "b": "FLT3",
+   "identity": 0.532,
+   "meas_mean_abs_diff": 0.9228323438071977,
+   "pred_mean_abs_diff": 0.5283415790181607,
+   "meas_profile_rho": 0.6468754202428627,
+   "pred_profile_rho": 0.5370234604105572
+  }
+ ],
+ "all_pairs_median": {
+  "meas_mean_abs_diff": 1.1204556059953608,
+  "pred_mean_abs_diff": 0.5620108913281001
+ },
+ "spread": {
+  "pred_ligand_sd": 0.5214690199056622,
+  "meas_ligand_sd": 0.9987019559994635,
+  "pred_kinase_effect_sd": 0.2556348348443105,
+  "meas_kinase_effect_sd": 0.45356574585867365
+ }
+}
