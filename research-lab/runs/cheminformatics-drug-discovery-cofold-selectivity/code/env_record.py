@@ -16,7 +16,7 @@ from pathlib import Path
 RUN = Path(__file__).resolve().parents[1]
 CKPT = Path.home() / ".boltz"
 PKGS = ["boltz", "torch", "rdkit", "numpy", "scipy", "pandas", "scikit-learn",
-        "cuequivariance-torch"]
+        "cuequivariance-torch", "matplotlib"]
 
 
 def sha256_file(p, chunk=1 << 20):

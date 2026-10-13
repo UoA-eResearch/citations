@@ -8,7 +8,36 @@ measured binding constants.*
 
 ## In plain terms
 
-TBD
+Drug companies need to know not just whether a compound hits its target, but what else it hits. A drug that
+blocks the intended enzyme and thirty others causes side effects. So the practical question for any new
+affinity predictor is: given a compound, can it tell you which proteins that compound will bind?
+
+Boltz-2 is an open model that predicts binding affinity roughly a thousand times faster than the physics
+calculations it aims to replace. We tested it the way a drug project would: take 32 known kinase
+inhibitors, ask the model to rank 32 human kinases for each one, and compare with laboratory measurements
+of all 1,024 combinations.
+
+We expected it to fail, and preregistered that prediction. It didn't. The model's rankings correlate about
+0.44 with the measurements, well above the threshold we had set for failure.
+
+But a correlation on its own means little without something to compare it against, so we also wrote down,
+before running the model, what some deliberately stupid methods achieve. One of them ignores the compound
+entirely and simply ranks kinases by how many drugs bind them in general. That scores 0.39 — statistically
+indistinguishable from the model.
+
+The resolution is that the two methods fail differently. The stupid baseline is excellent for promiscuous
+compounds and actively wrong for selective ones, dropping as low as −0.42. The model is never actively
+wrong on any of the 32 compounds, and when asked to name a compound's single best target it gets one right
+56 % of the time, against 19 % for the baseline.
+
+Where it falls short is the thing selectivity actually consists of. Most of what varies in real
+measurements is the specific pairing of compound and kinase; the model captures only about a third of that,
+leaning instead on how potent a compound is overall and on how similar two kinases look in sequence — more
+heavily than the real biology warrants. It predicts two near-identical kinases to be three times more alike
+than they measure.
+
+Useful for triage, then, and better than nothing by a clear margin at the top of the list. Not yet a
+substitute for the experiment when two close relatives have to be told apart.
 
 ## What was asked
 
@@ -77,12 +106,154 @@ not either main effect.
 
 ## Results
 
-TBD
+All 1,024 panel complexes predicted, no failures, no missing cells. The secondary arms add 573 more.
+
+### The preregistered verdict: Refuted
+
+The hypothesis was that the model fails this test, with a median within-ligand Spearman of 0.25 or below.
+It does not fail it.
+
+| | point | 95 % interval | |
+| --- | --- | --- | --- |
+| **P1** median within-ligand Spearman, 32 kinases | **0.444** | 0.418 – 0.532 | ligand cluster bootstrap |
+| P2 the same, uncensored cells only | 0.464 | 0.429 – 0.487 | |
+| P1, resampling kinases instead of ligands | — | 0.368 – 0.569 | sensitivity |
+| P1, dyadic bootstrap | — | 0.331 – 0.619 | sensitivity |
+| P1 on the high-confidence half | 0.537 | 0.391 – 0.637 | |
+| P1 using the binary binder probability | 0.596 | 0.519 – 0.665 | |
+| P3 median within-kinase Spearman, 32 ligands | 0.453 | — | H2's floor was 0.4 |
+| P4 top-1 in the true top-3 | 0.562 | — | chance 0.094 |
+| P4 precision@3 | 0.375 | — | chance 0.094 |
+
+The lower end of every interval sits above 0.25, so by the rule in plan.md §6 the hypothesis is **refuted**:
+the affinity head is not protein-blind, and its rankings are not noise. Censoring is not doing the work —
+dropping the ceiling cells moves P1 from 0.444 to 0.464 — and neither is structural quality, since the
+high-confidence half scores slightly higher than the whole.
+
+### But the threshold was in the wrong place, which the baselines show
+
+This was foreseeable and was written down before any prediction: 0.25 is *below* what a baseline with no
+chemistry in it achieves. Ranking kinases purely by how many compounds they bind — a single column vector
+reused for every ligand — scores 0.386.
+
+| | P1, selectivity axis | top-1 | precision@3 |
+| --- | --- | --- | --- |
+| **Boltz-2 affinity** | **0.444** (0.418 – 0.532) | **0.562** | **0.375** |
+| B1 target promiscuity, no chemistry | 0.386 (0.310 – 0.522) | 0.188 | 0.229 |
+| B2 nearest chemical neighbour (uses labels) | 0.394 (0.268 – 0.503) | 0.312 | 0.240 |
+| B0 ligand-only | 0.000 | 0.062 | 0.042 |
+| B3 molecular weight | 0.000 | 0.062 | 0.042 |
+
+Paired ligand bootstraps of the difference, model minus baseline:
+
+| vs | P1 | top-1 | precision@3 |
+| --- | --- | --- | --- |
+| B1 promiscuity | +0.058 (−0.071, +0.166) | **+0.375 (+0.188, +0.562)** | **+0.146 (+0.021, +0.250)** |
+| B2 neighbour | +0.050 (−0.065, +0.195) | **+0.250 (+0.031, +0.469)** | **+0.135 (+0.010, +0.260)** |
+
+The two statistics disagree, and the disagreement is the result. On the preregistered primary statistic —
+the median rank correlation over the whole 32-kinase profile — Boltz-2 is within noise of a baseline that
+never looks at the compound. On finding the right targets it is not: it puts a genuine top-3 kinase first
+for 56 % of ligands, against 19 % for the promiscuity baseline and 9 % for chance. The hit-rate comparison
+was not preregistered with an interval; that was added on seeing the gap, and is reported as the addition
+it is (D8).
+
+Two things explain the gap. The profile contains a 27 % block of cells tied at the assay ceiling plus a
+long tail of weak binders, where ordering carries little information and the model adds little; the median
+Spearman weights all of that equally with the top. And the per-ligand floor differs sharply, which is
+visible in F1 and is an exploratory observation (D9):
+
+| | worst ligand | ligands below 0 | ligands below 0.25 |
+| --- | --- | --- | --- |
+| Boltz-2 | +0.029 | 0 of 32 | 3 of 32 |
+| B1 promiscuity | −0.387 | 2 of 32 | 7 of 32 |
+| B2 neighbour | −0.419 | 3 of 32 | 11 of 32 |
+
+The baselines reach their median by being excellent for promiscuous compounds and actively misleading for
+selective ones. Boltz-2 is never actively misleading on this panel. For a tool meant to nominate a
+handful of targets, that floor matters more than the median.
+
+### What the model gets wrong: it hears the ligand, and over-trusts sequence similarity
+
+The two-way decomposition says where the error lives (F3). In the measurements, 60 % of the variance is
+the ligand-by-kinase interaction — which is exactly what selectivity *is*. In the predictions it is 35 %,
+while the ligand main effect swells from 25 % to 53 %.
+
+| share of variance | measured | predicted |
+| --- | --- | --- |
+| ligand (which compound is potent in general) | 25.5 % | 53.4 % |
+| kinase (which kinase binds most things) | 14.6 % | 11.4 % |
+| ligand × kinase interaction (selectivity itself) | 59.9 % | 35.2 % |
+
+The predictions are also compressed: the spread of a ligand's profile is half the measured spread (SD 0.52
+against 1.00), and across the whole panel 0.76 against 1.19. So differences are in the right direction more
+often than not, but systematically too small.
+
+The geometry arm (exploratory, D3) says what the model is listening to. Taking each kinase's 32-ligand
+prediction vector, removing ligand means and comparing the resulting kinase-by-kinase distance matrices:
+
+| Mantel-style comparison | ρ |
+| --- | --- |
+| predicted distances vs measured distances | 0.434 |
+| predicted distances vs kinase-domain sequence distance | 0.338 |
+| **measured** distances vs sequence distance | **0.248** |
+| binary-probability distances vs measured distances | 0.520 |
+
+The model's picture of which kinases resemble each other tracks sequence identity *more tightly than the
+real pharmacology does*. The four near-identical pairs in the panel show the same thing from the other
+side: CSNK1D and CSNK1E share 97 % of their kinase-domain sequence and really differ by 0.35 log units on
+average across these ligands, but are predicted to differ by 0.12; AURKB and AURKC differ by 0.37 measured
+and 0.15 predicted. Across all 496 kinase pairs the median measured difference is 1.12 log units and the
+median predicted difference 0.56. Sequence similarity is a good prior for binding similarity, and the model
+leans on it harder than the measurements justify — which is precisely the failure mode that matters when a
+project needs to separate two close paralogues.
+
+### The secondary arms
+
+**Decoys (128 complexes).** For every one of the four non-kinase proteins, the median prediction sits 1.1
+to 1.3 log units below the same ligand's mean across the 32 kinases — 2.0 to 2.4 within-kinome standard
+deviations. No decoy ever outscored a ligand's best kinase (0 of 128), and only 2 of 128 outscored a
+ligand's kinase *mean*. The binary probability separates them further still (median 0.07 – 0.29 against
+0.44 for kinases). Kinase inhibitors are recognised as kinase binders; this is the easy discrimination, and
+the model passes it cleanly.
+
+**Promiscuity probe (256 complexes).** Adding the eight least-promiscuous eligible kinases to the panel
+leaves the result where it was: P1 = 0.475 (0.359 – 0.573) over the 40-kinase union. The eight on their own
+give 0.284 (0.192 – 0.577), but with an average of 1.4 uncensored cells per ligand that sub-rectangle is
+too censored to carry any weight, and it is reported rather than relied on.
+
+**Affinity sampling (96 complexes re-predicted).** Doubling the affinity sampling steps and running nine
+diffusion samples instead of five changes nothing: predictions correlate 0.979 between settings, move 0.13
+log units on average, and P1 shifts by −0.029 (−0.206, +0.091). The result is not a sampling artefact.
+
+**Training support (no GPU).** Across the panel's kinases, pre-2024 ChEMBL compound counts span 91 to
+5,205, and accuracy barely tracks them: Spearman 0.147 against the within-kinase correlation, 0.251 against
+pairwise concordance, −0.041 against absolute error. On this panel the model is not simply reciting the
+best-measured targets.
+
+### The other head is better
+
+One practical finding worth stating separately. Boltz-2 emits a binary binder probability alongside the
+affinity value, and on this axis the probability is consistently the better ranker: P1 = 0.596 against
+0.444, within-kinase 0.614 against 0.453, and a Mantel correlation of 0.520 against 0.434. Anyone using
+Boltz-2 for selectivity triage should be ranking by `affinity_probability_binary`, not by
+`affinity_pred_value`. That comparison was preregistered as a secondary read-out, so it is not a fishing
+expedition, but the size of the gap was not anticipated.
 
 ## What this does and does not show
 
-TBD — the outcome-specific paragraph goes here once the arms are in. The limitations below were written
-from the design, before the predictions were analysed.
+The headline is easy to misread in either direction, so stated plainly: on this panel Boltz-2's affinity
+head carries real protein-side signal — it is not ranking kinases at random, and it clears the
+preregistered threshold comfortably — but on the preregistered primary statistic it does not demonstrably
+beat a baseline that never looks at the compound, and its advantage is concentrated at the top of the
+ranking and in its floor rather than spread across the profile. The hypothesis this study set out to test
+was refuted, and the threshold it set was, as the preregistration itself anticipated, too low to be the
+interesting comparison. The interesting comparison is the baseline table, and it was fixed before any
+prediction was made.
+
+A reader should not take "Refuted" to mean the model is good at selectivity. It means the specific claim
+that it is *useless* at selectivity is wrong. The limitations below were written from the design, before
+the predictions were analysed.
 
 **It tests one axis, not the model.** The question is whether a fixed ligand's predicted ranking of
 proteins tracks the measured one. That is the axis selectivity work needs, and it is not the axis Boltz-2

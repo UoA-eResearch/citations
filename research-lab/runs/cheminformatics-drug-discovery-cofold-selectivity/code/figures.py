@@ -15,9 +15,15 @@ import pandas as pd  # noqa: E402
 RUN = Path(__file__).resolve().parents[1]
 T, F = RUN / "results" / "tables", RUN / "results" / "figures"
 BLUE, RED, ORANGE, GREEN, PURPLE, GREY = "#2e6f9e", "#c2412d", "#d9822b", "#7a9e3b", "#8d6cab", "#555555"
-BASE_LABELS = [("B1_promiscuity", "target promiscuity\n(no chemistry)", ORANGE),
-               ("B2_neighbour", "nearest chemical\nneighbour (labels)", GREEN),
-               ("B0_ligand_only", "ligand-only\n(zero by construction)", GREY)]
+BASE_LABELS = [("B1_promiscuity", "promiscuity\n(no chemistry)", ORANGE),
+               ("B2_neighbour", "neighbour\n(uses labels)", GREEN),
+               ("B0_ligand_only", "ligand-only\n(zero)", GREY)]
+
+
+def short_name(name, cid, limit=22):
+    """Drug names make the example panels readable; the systematic names in the Davis release do not, so
+    those fall back to the CID."""
+    return name if len(str(name)) <= limit else f"CID {cid}"
 
 
 def caption(name, text):
@@ -41,8 +47,8 @@ def grid(pairs, value="pred_pic50"):
 
 
 def f1(prim, pairs):
-    fig = plt.figure(figsize=(11, 4.4))
-    ax = fig.add_subplot(1, 2, 1)
+    fig = plt.figure(figsize=(12, 4.6))
+    ax = fig.add_axes([0.065, 0.19, 0.37, 0.72])
     rng = np.random.default_rng(0)
     series = [("boltz2", "Boltz-2", BLUE, prim["P1"]["per_ligand"])] + \
              [(k, lab, col, prim["baselines"][k]["P1"]["per_ligand"]) for k, lab, col in BASE_LABELS]
@@ -52,31 +58,36 @@ def f1(prim, pairs):
         ax.scatter(j + rng.uniform(-0.17, 0.17, len(v)), v, s=16, color=col, alpha=0.8, lw=0)
         ax.plot([j - 0.3, j + 0.3], [np.median(v)] * 2, color="black", lw=1.8)
     ax.axhline(0.25, color=RED, ls="--", lw=1)
-    ax.text(len(series) - 0.5, 0.255, "hypothesis threshold 0.25", ha="right", va="bottom", fontsize=8, color=RED)
+    ax.text(-0.42, 0.265, "hypothesis threshold 0.25", ha="left", va="bottom", fontsize=7.5, color=RED)
     ax.axhline(0, color="#bbbbbb", lw=0.8)
     ax.set_xticks(range(len(series)))
     ax.set_xticklabels([s[1] for s in series], fontsize=8)
-    ax.set_ylabel("within-ligand Spearman across the 32 kinases")
-    ax.set_title("One point per ligand; bar = median", fontsize=10)
+    ax.set_xlim(-0.55, len(series) - 0.45)
+    ax.set_ylabel("within-ligand Spearman across the 32 kinases", fontsize=9)
+    # the floor matters as much as the median for a tool meant to nominate targets, and it is the one
+    # place where the model and the baselines plainly differ (exploratory; see deviations D9)
+    ax.set_title("One point per ligand; bar = median\nBoltz-2's worst ligand scores 0.03, the baselines' "
+                 "worst score below zero", fontsize=9)
     ax.grid(axis="y", color="#ececec", lw=0.6)
     ax.set_axisbelow(True)
 
     # four example ligands: the ones with the most uncensored cells (deterministic)
     order = [str(c) for c in prim["cids"]]  # the order per_ligand follows
     unc = pairs.groupby("cid").censored.apply(lambda s: (~s).sum()).sort_values(ascending=False)
-    gs = fig.add_gridspec(2, 4, left=0.56, right=0.99, top=0.92, bottom=0.12, wspace=0.35, hspace=0.45)
+    names = pd.read_csv(T / "ligand_names.csv").set_index("cid").name.to_dict()
+    gs = fig.add_gridspec(2, 2, left=0.53, right=0.99, top=0.88, bottom=0.14, wspace=0.42, hspace=0.62)
     for k, cid in enumerate(unc.index[:4]):
-        a = fig.add_subplot(gs[k // 2, 2 + k % 2])
+        a = fig.add_subplot(gs[k // 2, k % 2])
         d = pairs[pairs.cid == cid]
         a.scatter(d.pkd, d.pred_pic50, s=14, color=np.where(d.censored, "#cccccc", BLUE).tolist(), lw=0)
         r = prim["P1"]["per_ligand"][order.index(str(cid))]
-        a.set_title(f"CID {cid}  ρ = {r:.2f}", fontsize=8)
+        a.set_title(f"{short_name(names.get(cid, cid), cid)}   ρ = {r:.2f}", fontsize=8)
         a.tick_params(labelsize=7)
         if k // 2 == 1:
             a.set_xlabel("measured pKd", fontsize=8)
         if k % 2 == 0:
             a.set_ylabel("predicted", fontsize=8)
-    fig.savefig(F / "F1_selectivity.png", dpi=160, bbox_inches="tight")
+    fig.savefig(F / "F1_selectivity.png", dpi=160)
     plt.close(fig)
     caption("F1_selectivity",
             "Left: the selectivity axis. Each point is one ligand's Spearman correlation between Boltz-2's "
@@ -166,9 +177,11 @@ def f4(sec, pairs):
         ax.scatter(j + rng.uniform(-0.17, 0.17, len(v)), v, s=16, color=PURPLE, alpha=0.8, lw=0)
         ax.plot([j - 0.3, j + 0.3], [np.nanmedian(v)] * 2, color="black", lw=1.8)
     ax.axhline(0, color="#999999", lw=0.9)
-    ax.axhline(np.nanmedian(kin["std"]), color=BLUE, ls=":", lw=1)
-    ax.text(len(d) - 0.5, np.nanmedian(kin["std"]), " median within-kinome SD", fontsize=8, color=BLUE,
-            ha="right", va="bottom")
+    # drawn one SD *below* the mean, where the decoys actually are: at the top of the axis it collided
+    # with the title and gave the reader nothing to compare against
+    ax.axhline(-np.nanmedian(kin["std"]), color=BLUE, ls=":", lw=1)
+    ax.text(-0.42, -np.nanmedian(kin["std"]), " one within-kinome SD below the ligand's kinase mean",
+            fontsize=7.5, color=BLUE, ha="left", va="bottom")
     ax.set_xticks(range(len(d)))
     ax.set_xticklabels([names.get(a, a) for a in d.decoy], fontsize=8)
     ax.set_ylabel("predicted − the ligand's kinase mean (log units)")

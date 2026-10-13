@@ -165,3 +165,26 @@ ones cannot drift apart. The 17 estimator checks still pass and P1-P5 are unchan
 
 This is an addition to the preregistered comparison, made after seeing P1, and it is reported as such:
 the preregistered verdict stands on P1 alone.
+
+## D9 — 2026-10-14 03:38 NZDT — two exploratory additions, and an environment change made mid-run
+
+**The per-ligand floor.** plan.md §6 defines P1 as the median of the within-ligand correlations and says
+nothing about their spread. On seeing that Boltz-2 and the promiscuity baseline have nearly the same median
+but very different worst cases (+0.029 against -0.387, and 0 against 2 ligands below zero), the spread is
+reported descriptively in the results and in F1. It is an observation made after seeing the data, it has no
+interval and no test, and the verdict does not rest on it.
+
+**The binary probability head.** Reporting `affinity_probability_binary` alongside the value head was
+preregistered (§4), but only as a secondary read-out. That it ranks kinases consistently better than the
+value head is an unanticipated finding, and the recommendation drawn from it is practical advice, not a
+tested hypothesis.
+
+**matplotlib installed mid-run.** Generating the figures needed matplotlib, which was not in the venv.
+Installing it pulled numpy 2.5.4 over the pinned 1.26.4, which boltz forbids (`numpy<2.0`) — while the
+post-cutoff arm was running in that same venv. The running process already held numpy in memory and was
+unaffected (its outputs continued without a break, 23 structures at the time and 93 complete afterwards),
+and numpy 1.26.4 was restored within two minutes along with a compatible matplotlib 3.9.4. No prediction
+was made under the wrong numpy: the panel, decoy, promiscuity and sampling arms had all finished before the
+install, and the post-cutoff arm's process never reloaded it. `results/tables/env.json` was rebuilt
+afterwards and records what the analysis actually ran under. The lesson is the obvious one — do not install
+into the environment of a running job; it was luck, not judgement, that this cost nothing.
