@@ -92,15 +92,18 @@ def run(indir, outdir, extra=(), seed=SEED):
 
 
 def collect(outdir, arm, jsonl):
-    """Read affinity_*.json and confidence_*.json from a boltz output tree into one jsonl."""
+    """Read affinity_*.json and confidence_*.json from a boltz output tree into one jsonl.
+
+    The outputs sit at <outdir>/boltz_results_<indir name>/predictions/<pair_id>/, so the tree is
+    walked rather than assumed to be one level deep: the first version of this function looked only in
+    <outdir>/predictions and <outdir> itself, found no pair directories, and reported "collected 0"
+    for three finished arms without failing.
+    """
     base = Path(outdir)
-    pred = next(p for p in [base / "predictions", base] if p.exists())
     rows = []
-    for d in sorted(pred.iterdir()):
-        if not d.is_dir():
-            continue
-        aff = d / f"affinity_{d.name}.json"
-        if not aff.exists():
+    for aff in sorted(base.rglob("affinity_*.json")):
+        d = aff.parent
+        if aff.name != f"affinity_{d.name}.json":
             continue
         r = dict(arm=arm, pair_id=d.name, **json.load(open(aff)))
         conf = sorted(d.glob("confidence_*.json"))
@@ -113,7 +116,7 @@ def collect(outdir, arm, jsonl):
     with open(jsonl, "a") as f:
         for r in rows:
             f.write(json.dumps(r) + "\n")
-    print(f"collected {len(rows)} predictions from {pred} -> {jsonl}")
+    print(f"collected {len(rows)} predictions from {base} -> {jsonl}")
     return rows
 
 

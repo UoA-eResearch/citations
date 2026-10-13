@@ -110,3 +110,42 @@ Corrected budget: each complex costs about 34 s of single-process GPU time acros
 so the 1,597 complexes are about 15 GPU-hours, or about 9-10 hours of wall clock in two lanes. Still inside
 the 48-hour cap in plan.md §5.7, so no arm is dropped, but the figure in D4 and in
 results/tables/timing.csv was wrong by a factor of two and is corrected there.
+
+## D7 — 2026-10-14 01:07 NZDT — host crash mid-run; a silent collector bug; corrected checkpoint hashes
+
+The VM stopped hard at about 22:56 NZDT on 13 October, the second such stop in two days (the first is
+recorded in the lab's notes for 13 October). Nothing in the guest records a cause. The reboot killed both
+boltz lanes and the MSA queue, and brought the owner's vLLM container back up on the GPU, which leaves
+about 10 GB of the 80 GB free.
+
+What survived, because every arm writes its outputs per complex as it goes:
+
+| arm | structures | affinity read-outs | state after the crash |
+| --- | --- | --- | --- |
+| panel | 1024 / 1024 | 582 / 1024 | affinity pass resumed |
+| decoy | 128 / 128 | 128 / 128 | complete |
+| promiscuity | 256 / 256 | 256 / 256 | complete |
+| sampling | 96 / 96 | 96 / 96 | complete |
+| post-cutoff | 0 / 93 | 0 / 93 | 33 of 61 MSAs cached, fetching the rest |
+
+Three things changed as a result, none of them in the design or the analysis:
+
+1. **A silent bug in `collect()`, fixed.** It looked for pair directories in `out/<arm>/predictions` and
+   in `out/<arm>` itself, but boltz writes them to `out/<arm>/boltz_results_inputs_<arm>/predictions/`.
+   It therefore found nothing and printed "collected 0 predictions" for three finished arms without
+   failing, which is how `logs/lane2.log` came to report `decoy collected, 0 rows`. It now walks the tree
+   for `affinity_<pair_id>.json`. No prediction was lost: all 1062 finished read-outs collected on the
+   first attempt after the fix. The lesson is the familiar one — a step that reports zero should be
+   treated as a failure, not as a count.
+2. **The resumed panel run shares the GPU with vLLM.** Stopping that container is the owner's call, not
+   mine, so the affinity pass was restarted into the memory that was left, with
+   `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True` to reduce the chance of a fragmentation failure in
+   the narrower space. Neither the allocator setting nor the sharing changes the computation: the model,
+   its weights, the flags and the seed are the preregistered ones, and the 582 read-outs taken before the
+   crash are kept rather than recomputed.
+3. **`results/tables/env.json` is rebuilt by `code/env_record.py`.** The hand-made first version was
+   wrong twice: the affinity checkpoint was still downloading when it was hashed, so its recorded size was
+   a partial 508 MB against the true 2,062,139,170 B, and both digests were labelled sha256 but held only
+   their first 32 characters. The conformer digest was right as far as it went; the affinity one described
+   a file that was never used. Both are now full sha256 of the released checkpoints, and both kernels the
+   run executed under are recorded.
