@@ -188,3 +188,27 @@ was made under the wrong numpy: the panel, decoy, promiscuity and sampling arms 
 install, and the post-cutoff arm's process never reloaded it. `results/tables/env.json` was rebuilt
 afterwards and records what the analysis actually ran under. The lesson is the obvious one — do not install
 into the environment of a running job; it was luck, not judgement, that this cost nothing.
+
+## D10 — 2026-10-14 04:26 NZDT — a claim tested and withdrawn before review
+
+The geometry arm reported three Mantel-style correlations as point estimates, and the first draft of the
+report drew a comparison between two of them: that the model's kinase geometry tracks sequence distance
+(0.338) more tightly than the measured geometry does (0.248), and therefore that it "leans on sequence
+harder than the measurements justify".
+
+Comparing two correlations needs more than two numbers, so `geometry.py` gained a permutation test for each
+Mantel correlation (9,999 permutations of kinase labels, which preserves the dyadic dependence) and a
+kinase bootstrap of the difference. Results:
+
+* all three correlations are individually well outside their permutation nulls: pred vs measured 0.434
+  (p = 0.0001), pred vs sequence 0.338 (p = 0.0003), measured vs sequence 0.248 (p = 0.0029);
+* the difference the report claimed is +0.081 (−0.099, +0.284), positive in 80 % of draws.
+
+The claim is withdrawn, and the withdrawal is stated in the report rather than quietly deleted. A second
+check followed it: if the model over-merged close paralogues, the five most similar kinase pairs should be
+compressed more than average. Their predicted/measured difference ratios are 0.33 to 0.79, median 0.57,
+against 0.50 across all 496 pairs — no worse, if anything slightly better. The surviving finding is uniform
+compression: the model halves the distance between any two kinases regardless of their similarity.
+
+This was found by testing my own claim before sending the draft out, which is where it should have been
+found; the first draft should not have made a comparison it had no interval for.

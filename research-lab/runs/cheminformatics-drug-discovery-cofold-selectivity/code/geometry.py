@@ -76,6 +76,46 @@ def identity_matrix(accs, kin):
     return ident
 
 
+def mantel_test(da, db, nperm=9999, seed=20261013):
+    """Permutation test for a Mantel-style correlation: permute one matrix's kinase labels, which keeps
+    the dyadic dependence structure that makes a naive p-value on 496 non-independent pairs meaningless."""
+    rng = np.random.default_rng(seed)
+    obs = A.rho(tri(da), tri(db))
+    n = da.shape[0]
+    null = np.empty(nperm)
+    for i in range(nperm):
+        p = rng.permutation(n)
+        null[i] = A.rho(tri(da[np.ix_(p, p)]), tri(db))
+    return dict(rho=float(obs), p=float((1 + (np.abs(null) >= abs(obs)).sum()) / (nperm + 1)),
+                null_95=[float(np.percentile(null, 2.5)), float(np.percentile(null, 97.5))], nperm=nperm)
+
+
+def sequence_reliance(pred, meas, sd, nboot=2000, seed=20261013):
+    """Is the model's kinase geometry more tightly tied to sequence than the measurements' own geometry is?
+
+    The report makes this claim, so it needs an interval rather than two point estimates. Kinases are
+    resampled (the unit the two distance matrices share), and both Mantel correlations and their
+    difference are recomputed in each draw. Resampling kinases duplicates rows, which puts exact zeros on
+    the diagonal blocks of the distance matrices; those are dropped rather than counted as real pairs.
+    """
+    rng = np.random.default_rng(seed)
+    n = pred.shape[1]
+    diffs, a_s, b_s = [], [], []
+    for _ in range(nboot):
+        idx = rng.integers(0, n, n)
+        keep = np.triu(np.ones((n, n), bool), 1) & (idx[:, None] != idx[None, :])
+        dp = centred_distance(pred[:, idx])[keep]
+        dm = centred_distance(meas[:, idx])[keep]
+        ds = sd[np.ix_(idx, idx)][keep]
+        a, b = A.rho(dp, ds), A.rho(dm, ds)
+        if np.isfinite(a) and np.isfinite(b):
+            a_s.append(a), b_s.append(b), diffs.append(a - b)
+    q = lambda v: [float(np.percentile(v, 2.5)), float(np.percentile(v, 97.5))]  # noqa: E731
+    return dict(pred_vs_sequence_ci=q(a_s), meas_vs_sequence_ci=q(b_s), difference_ci=q(diffs),
+                difference_point=float(np.median(diffs)),
+                share_of_draws_positive=float(np.mean(np.asarray(diffs) > 0)), nboot=len(diffs))
+
+
 def main():
     d = S.davis()
     kin = {k["acc"]: k for k in d["panel"]["kinases"]}
@@ -97,6 +137,11 @@ def main():
         mantel_pred_vs_sequence=float(A.rho(tri(dp), tri(sd))),
         mantel_meas_vs_sequence=float(A.rho(tri(dm), tri(sd))),
         mantel_prob_vs_meas=float(A.rho(tri(centred_distance(prob)), tri(dm))),
+        # permutation tests and a kinase bootstrap, added because the report compares two of these
+        # correlations with each other (see deviations D9)
+        mantel_tests=dict(pred_vs_meas=mantel_test(dp, dm), pred_vs_sequence=mantel_test(dp, sd),
+                          meas_vs_sequence=mantel_test(dm, sd)),
+        sequence_reliance=sequence_reliance(pred, meas, sd),
         identity_range=[float(tri(ident).min()), float(tri(ident).max())],
         median_identity=float(np.median(tri(ident))),
         same_group=dict(pred_within=float(np.median(dp[same & ~np.eye(n, dtype=bool)])),

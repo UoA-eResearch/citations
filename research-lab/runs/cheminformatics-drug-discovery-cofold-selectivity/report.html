@@ -93,8 +93,8 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 a fixed ligand — does not hold. It ranks them with a median correlation of 0.44, puts a true top-3 kinase
 first for 56 % of compounds, and never falls below zero on any of them. It also does not demonstrably beat
 a baseline that ignores the compound entirely on the primary statistic, captures barely a third of the
-compound-by-kinase interaction that selectivity consists of, and over-trusts sequence similarity between
-close paralogues.</p>
+compound-by-kinase interaction that selectivity consists of, and reports differences between kinases at
+about half their true size.</p>
 <h2>In plain terms</h2>
 <p>Drug companies need to know not just whether a compound hits its target, but what else it hits. A drug that
 blocks the intended enzyme and thirty others causes side effects. So the practical question for any new
@@ -115,9 +115,9 @@ wrong on any of the 32 compounds, and when asked to name a compound's single bes
 56 % of the time, against 19 % for the baseline.</p>
 <p>Where it falls short is the thing selectivity actually consists of. Most of what varies in real
 measurements is the specific pairing of compound and kinase; the model captures only about a third of that,
-leaning instead on how potent a compound is overall and on how similar two kinases look in sequence — more
-heavily than the real biology warrants. It predicts two near-identical kinases to be three times more alike
-than they measure.</p>
+leaning instead on how potent a compound is overall. It also flattens the kinome: the difference it reports
+between any two kinases is about half the real one, whether they are near-twins or unrelated proteins. So
+it will point you at roughly the right targets while understating how much they differ.</p>
 <p>Useful for triage, then, and better than nothing by a clear margin at the top of the list. Not yet a
 substitute for the experiment when two close relatives have to be told apart.</p>
 <h2>What was asked</h2>
@@ -398,7 +398,7 @@ visible in F1 and is an exploratory observation (D9):</p>
 <p>The baselines reach their median by being excellent for promiscuous compounds and actively misleading for
 selective ones. Boltz-2 is never actively misleading on this panel. For a tool meant to nominate a
 handful of targets, that floor matters more than the median.</p>
-<h3>What the model gets wrong: it hears the ligand, and over-trusts sequence similarity</h3>
+<h3>What the model gets wrong: it hears the ligand, and it flattens the kinome</h3>
 <p>The two-way decomposition says where the error lives (F3). In the measurements, 60 % of the variance is
 the ligand-by-kinase interaction — which is exactly what selectivity <em>is</em>. In the predictions it is 35 %,
 while the ligand main effect swells from 25 % to 53 %.</p>
@@ -438,35 +438,101 @@ prediction vector, removing ligand means and comparing the resulting kinase-by-k
 <tr>
 <th>Mantel-style comparison</th>
 <th>ρ</th>
+<th>permutation p</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>predicted distances vs measured distances</td>
 <td>0.434</td>
+<td>0.0001</td>
 </tr>
 <tr>
 <td>predicted distances vs kinase-domain sequence distance</td>
 <td>0.338</td>
+<td>0.0003</td>
 </tr>
 <tr>
-<td><strong>measured</strong> distances vs sequence distance</td>
-<td><strong>0.248</strong></td>
+<td>measured distances vs sequence distance</td>
+<td>0.248</td>
+<td>0.0029</td>
 </tr>
 <tr>
 <td>binary-probability distances vs measured distances</td>
 <td>0.520</td>
+<td>—</td>
 </tr>
 </tbody>
 </table></div>
-<p>The model's picture of which kinases resemble each other tracks sequence identity <em>more tightly than the
-real pharmacology does</em>. The four near-identical pairs in the panel show the same thing from the other
-side: CSNK1D and CSNK1E share 97 % of their kinase-domain sequence and really differ by 0.35 log units on
-average across these ligands, but are predicted to differ by 0.12; AURKB and AURKC differ by 0.37 measured
-and 0.15 predicted. Across all 496 kinase pairs the median measured difference is 1.12 log units and the
-median predicted difference 0.56. Sequence similarity is a good prior for binding similarity, and the model
-leans on it harder than the measurements justify — which is precisely the failure mode that matters when a
-project needs to separate two close paralogues.</p>
+<p>The model has a real picture of which kinases resemble each other, and it is not a sequence lookup: it
+agrees with the measured geometry (0.434) more than with sequence distance (0.338), on a panel whose median
+pairwise crop identity is only 23 %.</p>
+<p>An earlier draft of this report claimed the model tracks sequence <em>more tightly than the measurements
+themselves do</em> (0.338 against 0.248). A kinase bootstrap of that difference does not support it: +0.081
+(−0.099, +0.284), positive in 80 % of draws. The claim has been withdrawn.</p>
+<p>What the geometry does show is flattening. Across all 496 kinase pairs the median measured difference is
+1.12 log units and the median predicted difference 0.56 — a ratio of 0.50. The natural suspicion is that
+close paralogues are flattened worst, since that is the case drug projects care about, but the panel's five
+most similar pairs give ratios of 0.33 to 0.79, median 0.57, which is no worse than the panel at large:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>pair</th>
+<th>crop identity</th>
+<th>measured</th>
+<th>predicted</th>
+<th>ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CSNK1D / CSNK1E</td>
+<td>0.973</td>
+<td>0.350</td>
+<td>0.115</td>
+<td>0.33</td>
+</tr>
+<tr>
+<td>AURKB / AURKC</td>
+<td>0.795</td>
+<td>0.371</td>
+<td>0.148</td>
+<td>0.40</td>
+</tr>
+<tr>
+<td>LOK / SLK</td>
+<td>0.746</td>
+<td>0.328</td>
+<td>0.258</td>
+<td>0.79</td>
+</tr>
+<tr>
+<td>CLK1 / CLK2</td>
+<td>0.639</td>
+<td>0.325</td>
+<td>0.239</td>
+<td>0.73</td>
+</tr>
+<tr>
+<td>CSF1R / FLT3</td>
+<td>0.532</td>
+<td>0.923</td>
+<td>0.528</td>
+<td>0.57</td>
+</tr>
+<tr>
+<td><em>all 496 pairs</em></td>
+<td><em>0.233 median</em></td>
+<td><em>1.120</em></td>
+<td><em>0.562</em></td>
+<td><em>0.50</em></td>
+</tr>
+</tbody>
+</table></div>
+<p>So the compression is uniform rather than paralogue-specific: the model halves the distance between any two
+kinases, whether they are near-twins or unrelated. That is still the thing to know before using it to
+separate two close relatives — the differences it reports will be about half their true size — but it is a
+calibration failure across the kinome, not a specific blindness to paralogues.</p>
 <h3>The secondary arms</h3>
 <p><strong>Decoys (128 complexes).</strong> For every one of the four non-kinase proteins, the median prediction sits 1.1
 to 1.3 log units below the same ligand's mean across the 32 kinases — 2.0 to 2.4 within-kinome standard
