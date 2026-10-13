@@ -3,8 +3,12 @@
 *A kinase-panel selectivity test of Boltz-2: hold each ligand fixed, vary the protein, and compare with
 measured binding constants.*
 
-> Draft in progress — the panel is still running. Sections marked TBD are filled from the stored tables
-> once every arm has finished.
+**Verdict: Refuted.** The preregistered hypothesis — that Boltz-2's affinity head cannot rank proteins for
+a fixed ligand — does not hold. It ranks them with a median correlation of 0.44, puts a true top-3 kinase
+first for 56 % of compounds, and never falls below zero on any of them. It also does not demonstrably beat
+a baseline that ignores the compound entirely on the primary statistic, captures barely a third of the
+compound-by-kinase interaction that selectivity consists of, and over-trusts sequence similarity between
+close paralogues.
 
 ## In plain terms
 
@@ -106,7 +110,8 @@ not either main effect.
 
 ## Results
 
-All 1,024 panel complexes predicted, no failures, no missing cells. The secondary arms add 573 more.
+All 1,024 panel complexes predicted, no failures, no missing cells. The secondary arms add 573 more, for
+1,597 in total — the preregistered budget exactly.
 
 ### The preregistered verdict: Refuted
 
@@ -225,6 +230,20 @@ too censored to carry any weight, and it is reported rather than relied on.
 **Affinity sampling (96 complexes re-predicted).** Doubling the affinity sampling steps and running nine
 diffusion samples instead of five changes nothing: predictions correlate 0.979 between settings, move 0.13
 log units on average, and P1 shifts by −0.029 (−0.206, +0.091). The result is not a sampling artefact.
+
+**Post-cutoff compounds (93 complexes).** The eleven compounds whose earliest ChEMBL document is 2025 or
+later, profiled against 6 to 12 kinases each (61 kinases in all, 3 % of records censored), give P1 = 0.543
+(0.371 – 0.657) — if anything above the Davis panel's 0.444, with intervals that overlap heavily. Whatever
+the model is doing, it is not reciting Davis.
+
+Three caveats keep this a check rather than a replication. The measurements are ChEMBL pActivity pooled
+over mixed assay types rather than one laboratory's Kd, so some of the within-compound variation is
+between-assay noise. Six to twelve kinases make a per-compound correlation noisy. And this arm admits no
+baseline: the promiscuity analogue needs kinases measured across several compounds, but only 8 of the 61
+appear in three or more, leaving the baseline defined for 4 compounds over 3 to 6 kinases each — two of
+which share all six, so their "mean over other compounds" is essentially each other and both score exactly
+1.0. That is an artefact of the overlap, and it is reported as not computable rather than as a comparison.
+Ninety-three pairs is the ceiling of what public post-cutoff kinase profiling currently offers.
 
 **Training support (no GPU).** Across the panel's kinases, pre-2024 ChEMBL compound counts span 91 to
 5,205, and accuracy barely tracks them: Spearman 0.147 against the within-kinase correlation, 0.251 against

@@ -120,9 +120,17 @@ def postcut():
     rng = np.random.default_rng(A.SEED)
     draws = A.boot_ligand(lambda idx: A.med(a[idx]), len(a), rng)
     lo, hi = A.ci(draws)
-    rng = np.random.default_rng(A.SEED)
-    dd = A.boot_ligand(lambda idx: A.med(a[idx]) - A.med(b[idx]), len(a), rng)
-    dlo, dhi = A.ci(dd)
+    # The promiscuity analogue needs kinases measured across several compounds, and this arm has 61
+    # kinases of which only 8 appear in three or more. The baseline is therefore defined for 4 compounds
+    # and spans 3-6 kinases each, and two of those four share all six kinases - so their "mean over the
+    # other compounds" is essentially the other compound's own measurements, and both score exactly 1.0.
+    # That is an artefact of the overlap, not a baseline, so it is reported as not computable.
+    n_base = int(np.isfinite(b).sum())
+    enough = (p.rho_baseline.notna() & (p.n_kinases >= 5)).sum() >= 5
+    baseline = (dict(computable=False, n_compounds_defined=n_base,
+                     reason="only 8 of 61 kinases appear in 3 or more compounds; the baseline is defined "
+                            "for 4 compounds over 3-6 kinases each and is dominated by overlapping pairs")
+                if not enough else dict(computable=True, point=A.med(b), n=n_base))
     return dict(n_compounds=len(p), n_pairs=int(len(m)),
                 kinases_per_compound=[int(p.n_kinases.min()), int(p.n_kinases.max())],
                 censored_share=float(m.censored.mean()),
@@ -130,8 +138,7 @@ def postcut():
                 P1_probability=dict(point=A.med(p.rho_probability.to_numpy(float))),
                 P1_uncensored=dict(point=A.med(p.rho_uncensored.to_numpy(float)),
                                    n=int(np.isfinite(p.rho_uncensored).sum())),
-                baseline_within_arm=dict(point=A.med(b), n=int(np.isfinite(b).sum()),
-                                         diff=dict(point=A.med(a) - A.med(b), lo=dlo, hi=dhi)),
+                baseline_within_arm=baseline,
                 per_compound=per)
 
 

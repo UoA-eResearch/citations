@@ -685,5 +685,143 @@
    91,
    5205
   ]
+ },
+ "postcut": {
+  "n_compounds": 11,
+  "n_pairs": 93,
+  "kinases_per_compound": [
+   6,
+   12
+  ],
+  "censored_share": 0.03225806451612903,
+  "P1": {
+   "point": 0.5428571428571429,
+   "lo": 0.37126414119311024,
+   "hi": 0.6573426573426573
+  },
+  "P1_probability": {
+   "point": 0.5333333333333333
+  },
+  "P1_uncensored": {
+   "point": 0.5428571428571429,
+   "n": 11
+  },
+  "baseline_within_arm": {
+   "computable": false,
+   "n_compounds_defined": 4,
+   "reason": "only 8 of 61 kinases appear in 3 or more compounds; the baseline is defined for 4 compounds over 3-6 kinases each and is dominated by overlapping pairs"
+  },
+  "per_compound": [
+   {
+    "chembl_id": "CHEMBL6133974",
+    "n_kinases": 8,
+    "n_censored": 1,
+    "rho": 0.7545045450053531,
+    "rho_probability": 0.17964393928698885,
+    "rho_baseline": NaN,
+    "rho_uncensored": 0.642857142857143,
+    "pact_range": 3.0655015487564317
+   },
+   {
+    "chembl_id": "CHEMBL6162015",
+    "n_kinases": 12,
+    "n_censored": 0,
+    "rho": 0.45534220441992507,
+    "rho_probability": 0.1225921319592106,
+    "rho_baseline": NaN,
+    "rho_uncensored": 0.45534220441992507,
+    "pact_range": 3.3826718402592624
+   },
+   {
+    "chembl_id": "CHEMBL6167301",
+    "n_kinases": 6,
+    "n_censored": 0,
+    "rho": 0.5428571428571429,
+    "rho_probability": 1.0,
+    "rho_baseline": 1.0,
+    "rho_uncensored": 0.5428571428571429,
+    "pact_range": 1.8000084393922817
+   },
+   {
+    "chembl_id": "CHEMBL6170125",
+    "n_kinases": 6,
+    "n_censored": 0,
+    "rho": 0.5428571428571429,
+    "rho_probability": 0.8857142857142858,
+    "rho_baseline": 1.0,
+    "rho_uncensored": 0.5428571428571429,
+    "pact_range": 1.7000085293459613
+   },
+   {
+    "chembl_id": "CHEMBL6172244",
+    "n_kinases": 12,
+    "n_censored": 0,
+    "rho": 0.6573426573426573,
+    "rho_probability": 0.5384615384615385,
+    "rho_baseline": NaN,
+    "rho_uncensored": 0.6573426573426573,
+    "pact_range": 2.840586538281446
+   },
+   {
+    "chembl_id": "CHEMBL6172486",
+    "n_kinases": 8,
+    "n_censored": 0,
+    "rho": 0.3333333333333334,
+    "rho_probability": 0.6904761904761906,
+    "rho_baseline": NaN,
+    "rho_uncensored": 0.3333333333333334,
+    "pact_range": 3.867092333720424
+   },
+   {
+    "chembl_id": "CHEMBL6173446",
+    "n_kinases": 9,
+    "n_censored": 0,
+    "rho": 0.6,
+    "rho_probability": 0.5333333333333333,
+    "rho_baseline": NaN,
+    "rho_uncensored": 0.6,
+    "pact_range": 2.1860468693702293
+   },
+   {
+    "chembl_id": "CHEMBL6175165",
+    "n_kinases": 8,
+    "n_censored": 0,
+    "rho": 0.4761904761904762,
+    "rho_probability": -0.023809523809523815,
+    "rho_baseline": NaN,
+    "rho_uncensored": 0.4761904761904762,
+    "pact_range": 2.0808231931146013
+   },
+   {
+    "chembl_id": "CHEMBL6175168",
+    "n_kinases": 9,
+    "n_censored": 0,
+    "rho": 0.054772255750516606,
+    "rho_probability": -0.12780193008453875,
+    "rho_baseline": 1.0,
+    "rho_uncensored": 0.054772255750516606,
+    "pact_range": 1.5999725612641988
+   },
+   {
+    "chembl_id": "CHEMBL6177408",
+    "n_kinases": 7,
+    "n_censored": 0,
+    "rho": 0.8214285714285715,
+    "rho_probability": 0.6071428571428572,
+    "rho_baseline": 0.942857142857143,
+    "rho_uncensored": 0.8214285714285715,
+    "pact_range": 2.7999803121963955
+   },
+   {
+    "chembl_id": "CHEMBL6177465",
+    "n_kinases": 8,
+    "n_censored": 2,
+    "rho": 0.37126414119311024,
+    "rho_probability": 0.29940656547831473,
+    "rho_baseline": NaN,
+    "rho_uncensored": 0.942857142857143,
+    "pact_range": 1.920818753952375
+   }
+  ]
  }
 }
