@@ -131,10 +131,16 @@ dmypy.json
 .vscode
 
 # research-lab run scratch (venvs, raw data, mocks) — keep plan/code/results/report
+# Both forms of each path: the trailing slash matches only a real directory, and these are symlinks to
+# /mnt/data (the HDD) on any run whose heavy trees have been offloaded from the NVMe.
 research-lab/runs/*/venv/
+research-lab/runs/*/venv
 research-lab/runs/*/data/
+research-lab/runs/*/data
 research-lab/runs/*/out/
+research-lab/runs/*/out
 research-lab/runs/*/logs/
+research-lab/runs/*/logs
 research-lab/runs/*/code/__pycache__/
 # research-lab fit binaries (nautilus checkpoints, posterior arrays: ~1.9 GB) -- keep summary.json only
 research-lab/runs/*/results/fits/**/*.h5
