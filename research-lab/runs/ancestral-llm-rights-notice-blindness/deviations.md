@@ -24,3 +24,9 @@ Loading Qwen3-32B's 62 GB from the HDD took about 20 minutes; the server had jus
 script's timeout stopped it, and the script moved on to OLMo-2 and Mistral. No Qwen output was generated. Qwen
 runs afterwards in its own GPU window (code/run_gpu_qwen.sh: identical except for the model list and a 60-minute
 timeout). Generation settings, prompts and corpus are unchanged.
+
+Then OLMo-2's server crashed at start-up, started seconds after the Qwen container was stopped mid-warmup; the
+container was removed (--rm) before its log could be read, so the cause is inferred, not seen: most likely Qwen's
+GPU memory was not yet released. The second window (run_gpu_qwen.sh) now runs OLMo-2 and then Qwen3, waits for the
+GPU to be free before each server starts, and captures each container's log to logs/lc-gen-<model>.log. Mistral
+ran in the first window with its log captured.
