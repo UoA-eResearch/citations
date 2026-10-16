@@ -41,3 +41,22 @@ requires at least 9 months with ≥29 °C water. All 42 years are present; El Ni
 La Niña years at 162–177°E. Also: PSL's single-file ERSST downloaded at ~45 KB/s and its OPeNDAP endpoint
 returned 429, so ERSST v5 is read from NCEI's monthly files, whose calendars disagree between years; the
 date is taken from each filename. None of this involved the outcome.
+
+## D4 — 2026-10-16 18:35 NZDT — the preregistered masking check is blind; recorded before primary.py ran
+
+plan.md §9.1 measured public-domain suppression as "catch recorded where effort is missing" and set a rule:
+if that exceeded 10% of in-EEZ catch in any decade, O2 and O2u would be flagged unreliable. `observed.py`
+returned exactly 0.0 in every decade. That is not reassurance. In this file the missing-value pattern is
+identical across all 26 variables in 100.0000% of the 6,249,600 cell-months from 1980 to 2021: a suppressed
+cell loses its catch, its effort and its set counts together, which makes it indistinguishable from a cell
+nobody fished. Catch-without-effort cannot occur, so the check could never have fired.
+
+Consequences, decided now, before any primary result has been seen:
+- The rule in §9.1 is **unevaluable**, not satisfied. The report will say the masking footprint is unknown
+  from this file, not that it is small.
+- Following the conservative branch the plan itself specified for the triggered case, the report leads with
+  O1, and O2/O2u are presented with their unknown exposure to suppression stated.
+- One added check, labelled post hoc: compare the 1° file's annual skipjack purse-seine total inside the
+  domain with the FIRMS Global Tuna Atlas 5° total for the same area and gear. Suppression bites far less
+  at 5°, so the shortfall bounds what the 1° file is missing. It cannot say where inside the domain the
+  missing catch was, so it bounds the size of the problem, not its direction for the EEZ share.
