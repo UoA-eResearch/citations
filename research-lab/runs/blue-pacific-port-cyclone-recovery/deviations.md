@@ -86,3 +86,13 @@ Before scoring, score_forecast.py prints the model file's sha256; it must match.
 
 12 Pacific island ports x Category 3/4/5 x 25/75/125 km = 108 rows. Benchmarks recorded in the model file:
 historical share disrupted 0.329; historical median recovery among disrupted events 5.5 days.
+
+## D7 — 2026-10-17 00:37 NZDT — post-hoc detectability checks, written after the results were seen
+
+The preregistered results run against the lead: higher import share, and being a small-island port, go with
+FEWER detected disruptions. The obvious worry is detectability. Part A's control for it is log mean daily calls,
+a straight line, while the simulation shows detection power is a steep threshold in traffic. code/supplementary.py
+(written now, before it is run) gives each event its simulated power to detect a 7- and 14-day closure (S1),
+refits part A with that power as the control (S2) and on high-power events only (S3), and writes the Pacific case
+series with the shortest closure each port could have shown. These are labelled post hoc in the report and
+change no verdict.
