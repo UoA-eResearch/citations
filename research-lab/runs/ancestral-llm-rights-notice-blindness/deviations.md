@@ -84,3 +84,8 @@ omitted 1.2 points LESS often than conventional clauses), H3 Refuted (an element
 before it runs, describes which way verdicts move (V1, with the matched pairs), how often an element is called not
 legally binding (V2), and how often models attach NonCommercial/NoDerivatives/ShareAlike terms to plain CC BY (V3).
 Descriptive only; patterns for V2 and V3 are lexical and unvalidated, and the report says so.
+
+Addendum to D4: plan section 3 says no record is sent to a third-party API. Generation and scoring were entirely
+local; but the pilot adjudication was done by the agent running the study, so the 200 adjudicated responses (which
+quote public DataCite metadata) passed through the agent's own model service. Disclosed in the report.
+

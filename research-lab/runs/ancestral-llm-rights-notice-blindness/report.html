@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notices in AI Answers</title>
+<meta name="description" content="A preregistered test of whether sparse-autoencoder features of Pythia-160M are shared across independently pretrained models as often as across SAE retrainings on one model.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Ancestral Futures</div>
+  <h1>Do AI models pass on Indigenous data-governance notices?</h1>
+  <p class="subtitle">A within-record experiment on 221 real repository records: Local Contexts Notices and Labels, or matched conventional rights clauses, swapped into the same metadata slot and given to three open-weight models under three framings. 19,890 responses.</p>
+  <div class="meta">
+    <span>Report · 2026-10-17 · pre-review draft</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ancestral-llm-rights-notice-blindness/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ancestral-llm-rights-notice-blindness/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ancestral-llm-rights-notice-blindness/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: Refuted, on all three preregistered hypotheses. The notices are passed on; they are not acted on.</strong>
+The lead predicted that models would omit Local Contexts elements in at least 70% of reuse advice, 25 points more
+often than conventional clauses, and that an element would rarely change the advice.</p>
+<ul>
+<li><strong>Omission:</strong> the models omitted a Local Contexts element in <strong>0.5%</strong> of responses (95% interval 0.4–0.6%),
+  slightly <em>less</em> often than conventional clauses (1.7%).</li>
+<li><strong>Who omits:</strong> almost every omission came from one model in one framing.</li>
+<li><strong>Verdict change:</strong> in the structured "agent" framing, an element changed the stated reuse verdict <strong>85%</strong> of the
+  time.</li>
+</ul>
+<p>But post-hoc analysis shows what that change usually is: a move to <em>"unclear"</em>.</p>
+<ul>
+<li>A conventional "please contact the data providers before reuse; collaboration is welcome" becomes "permission or
+  contact required: yes" in <strong>100%</strong> of agent summaries.</li>
+<li>The TK Open to Collaboration Label, the matched Indigenous-governance invitation, becomes "yes" in <strong>2%</strong>.</li>
+<li>A data use agreement becomes "yes" in 100%. TK Community Use Only, which Local Contexts describes as material
+  "not, and never was, free, public, or available for everyone", becomes "yes" in 28%, and "commercial use
+  allowed" in 31%.</li>
+</ul>
+<h2>In plain terms</h2>
+<p>Indigenous communities and institutions can attach "Notices" and "Labels" to datasets in online repositories:
+short, machine-readable statements such as <em>TK Community Use Only</em> or <em>Traditional Knowledge Notice</em>. They tell
+anyone reusing the data that there are cultural rights or community rules attached. Researchers increasingly ask
+AI assistants whether they can reuse a dataset. We wanted to know whether the AI passes these notices on.</p>
+<p>We took 221 real dataset records and made copies of each with a different notice inserted: five kinds of Local
+Contexts notice, three ordinary conditions (such as "non-commercial use only"), or nothing. We gave them to three
+openly available AI models, asking in three different ways, and checked nearly 20,000 answers.</p>
+<p>The models almost always mentioned the notice. Only one model, in one style of question, occasionally left it out.
+So the worry that AI simply ignores these notices is not borne out.</p>
+<p>What the models did with them is another matter. When asked to fill in a short reuse summary, a plain request to
+"contact the providers before reuse" was always turned into "contact required". An Indigenous label asking for the
+same kind of collaboration almost never was; the models mostly answered "unclear". A label saying the material is
+for community use only still produced "commercial use allowed" about a third of the time.</p>
+<p>The AI passes on the words. It does not reliably treat Indigenous notices as conditions in the way it treats
+ordinary ones.</p>
+<h2>What was asked</h2>
+<p>The lead (scouted 2026-10-16, University of Auckland Ancestral Futures signature research area) asked whether
+open-weight models are "notice-blind". Do they omit Local Contexts elements they are given, more often than
+conventional non-standard rights clauses, without the element changing their advice?</p>
+<p>The harvest made the lead's design impossible (D1). Of the 48,353 DataCite records carrying a Local Contexts URI,
+48,332 are from one repository, Neotoma, and all of those carry one element. Only 21 records anywhere else carry
+one. So the study became a <strong>within-record experiment</strong>. Each sampled record is shown with every condition in the
+same rightsList slot, after its CC BY licence, and nothing else changes.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>hypothesis</th>
+<th>prediction</th>
+<th>decision rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H1</td>
+<td>pooled Local Contexts omission ≥ 70%</td>
+<td>Supported if the 95% interval's lower end ≥ 0.70; Refuted if its upper end &lt; 0.70</td>
+</tr>
+<tr>
+<td>H2</td>
+<td>Local Contexts omission exceeds conventional omission by ≥ 25 points</td>
+<td>Supported if lower end ≥ 0.25; Refuted if upper end &lt; 0.25</td>
+</tr>
+<tr>
+<td>H3</td>
+<td>an element changes the agent verdict, relative to the same record without it, in ≤ 20%</td>
+<td>Supported if upper end ≤ 0.20; Refuted if lower end &gt; 0.20</td>
+</tr>
+</tbody>
+</table></div>
+<h2>What was already known</h2>
+<p>Three searches by the scouting critic found nothing that tests whether a model surfaces a rights element it was
+given, and nothing with an Indigenous-governance arm. The nearest work extracts licences into rights vocabularies
+(LLM4RE, arXiv 2510.18787), or documents reference fabrication that disadvantages marginalised scholarship. The
+Notices were designed to travel with data (Liggins, Hudson &amp; Anderson 2021, <em>Mol. Ecol.</em>). DataCite documents them
+as part of its schema.</p>
+<h2>How it was done</h2>
+<p><strong>Records.</strong> 200 Neotoma records drawn at random, plus all 21 non-Neotoma records (Pacific research stations at
+Gump and Tetiaroa, iPlaces, Zenodo). Existing Local Contexts elements were removed, and long lists were capped
+identically across conditions. A disjoint 20 Neotoma records formed a pilot set.</p>
+<p><strong>Conditions</strong> (wording and URIs from localcontexts.org):</p>
+<ul>
+<li><em>Local Contexts:</em> TK Open to Collaboration (Neotoma's real form), TK Non-Commercial, BC Notice, TK Notice, TK
+  Community Use Only, and TK Open to Collaboration without its URI.</li>
+<li><em>Conventional:</em> a CC BY-NC licence, "A data use agreement is required before reuse", and "Users are asked to
+  contact the data providers before reuse; collaboration is welcome".</li>
+<li><em>None.</em></li>
+</ul>
+<p>Matched pairs: TK NC against CC BY-NC (the same restriction), and TK CB against the contact clause (the same
+invitation).</p>
+<p><strong>Models and framings.</strong> Three models at greedy decoding, up to 1,100 new tokens, all run locally on vLLM. No record went to a
+third-party model for generation or scoring. The pilot adjudication was done by the agent running the study,
+so those 200 responses, which quote public metadata, did pass through the agent's own model service:</p>
+<ul>
+<li>Qwen3-32B (non-thinking mode);</li>
+<li>Mistral-Small-24B-Instruct-2501;</li>
+<li>OLMo-2-1124-13B-Instruct.</li>
+</ul>
+<p>Three framings:</p>
+<ul>
+<li>a researcher asking "can I reuse this, and under what conditions?";</li>
+<li>an agent producing a JSON summary with fields for commercial use and for whether permission or contact is
+  required;</li>
+<li>"list every condition, notice or restriction".</li>
+</ul>
+<p>221 records × 10 conditions × 3 framings × 3 models = 19,890 responses. 0 errors; 14 truncated.</p>
+<p><strong>Scoring.</strong> A preregistered lexical rule per condition: does the response name the element or state what it asks?
+Before the main set was scored, I adjudicated 200 pilot responses, blind to the rule (D4). All 200 mentioned the
+element, and the rule agreed on every one (sensitivity 1.00). Specificity comes from each pattern's hit rate on
+responses with no element: 1–2% for most patterns, 7–8% for the two non-commercial ones. A name-only secondary
+measure guards against that.</p>
+<p><strong>Operational deviations</strong> (D2, D3), all before any element-condition response was read:</p>
+<ul>
+<li>Two model servers failed to start in the first GPU window (one a context-length mismatch).</li>
+<li>One script lacked a package.</li>
+<li>The generation cap was raised from 700 to 1,100 tokens after a quarter of the first pilot responses hit it.</li>
+</ul>
+<h2>Results</h2>
+<h3>H1 and H2: Refuted. The elements are passed on, almost always</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>Local Contexts omission</th>
+<th>conventional omission</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>all (H1, H2)</td>
+<td><strong>0.5% (0.4–0.6%)</strong></td>
+<td>1.7%</td>
+</tr>
+<tr>
+<td>difference, Local Contexts minus conventional (H2)</td>
+<td><strong>−1.2 points (−1.5 to −1.0)</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>Qwen3-32B</td>
+<td>0.0%</td>
+<td>0.0%</td>
+</tr>
+<tr>
+<td>Mistral-Small-24B</td>
+<td>0.0%</td>
+<td>0.2%</td>
+</tr>
+<tr>
+<td>OLMo-2-13B</td>
+<td>1.4%</td>
+<td>5.0%</td>
+</tr>
+<tr>
+<td>researcher framing</td>
+<td>1.4%</td>
+<td>4.8%</td>
+</tr>
+<tr>
+<td>agent / direct framing</td>
+<td>0.0% / 0.0%</td>
+<td>0.4% / 0.0%</td>
+</tr>
+<tr>
+<td>name-only measure (secondary)</td>
+<td>0.5%</td>
+<td>4.0%</td>
+</tr>
+<tr>
+<td>excluding the 14 truncated responses</td>
+<td>0.5%</td>
+<td>1.7%</td>
+</tr>
+</tbody>
+</table></div>
+<p>Every omission of a Local Contexts element comes from OLMo-2-13B's researcher answers. In that cell it drops the
+BC Notice 11% of the time and a CC BY-NC licence 42%. When a Local Contexts element is mentioned, it is named as
+such (Local Contexts, TK, BC, Indigenous or cultural rights) 99.9% of the time. Removing the localcontexts.org URI
+barely matters (TK CB omission 0.6% with it, 1.0% without).</p>
+<figure><a href="results/figures/F1_omission.png"><img src="results/figures/F1_omission.png" alt="Omission rate by element and model"></a><figcaption>F1. The preregistered outcome: the share of responses that omit the inserted rights element, by element and model, each point pooling 663 responses (221 records x 3 framings). Local Contexts omission is 0.5% overall (95% interval 0.4-0.6%), conventional-clause omission 1.7%. Almost every omission is OLMo-2-13B in the researcher framing, where it drops the CC BY-NC licence 42% of the time and the BC Notice 11%.</figcaption></figure>
+<h3>H3: Refuted. Elements change the verdict, mostly to "unclear"</h3>
+<p>In the agent framing an element changes at least one of the two verdict fields, against the same record and model
+without it, in <strong>85.3% (84.1–86.4%)</strong> of cases (50 of 3,315 pairs unparseable). The direction of the change is the
+substantive result, described post hoc below.</p>
+<h3>Post hoc: conditions become "required", Local Contexts elements become "unclear" (D6)</h3>
+<p>Agent framing, "permission_or_contact_required" (F2):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>element</th>
+<th>yes</th>
+<th>unclear</th>
+<th>no</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>contact providers; collaboration welcome</td>
+<td><strong>100%</strong></td>
+<td>0%</td>
+<td>0%</td>
+</tr>
+<tr>
+<td>data use agreement required</td>
+<td><strong>100%</strong></td>
+<td>0%</td>
+<td>0%</td>
+</tr>
+<tr>
+<td>TK Community Use Only</td>
+<td>28%</td>
+<td>64%</td>
+<td>8%</td>
+</tr>
+<tr>
+<td>TK Open to Collaboration</td>
+<td><strong>2%</strong></td>
+<td>64%</td>
+<td>33%</td>
+</tr>
+<tr>
+<td>TK Notice</td>
+<td>3%</td>
+<td>68%</td>
+<td>29%</td>
+</tr>
+<tr>
+<td>BC Notice</td>
+<td>2%</td>
+<td>80%</td>
+<td>18%</td>
+</tr>
+<tr>
+<td>no extra element</td>
+<td>4%</td>
+<td>6%</td>
+<td>91%</td>
+</tr>
+</tbody>
+</table></div>
+<figure><a href="results/figures/F2_contact_verdict.png"><img src="results/figures/F2_contact_verdict.png" alt="The agent verdict on permission or contact, by element"></a><figcaption>F2. Post hoc (deviations D6). In the agent framing, models fill a field &quot;permission_or_contact_required&quot; (yes / no / unclear). A conventional request to contact the providers, or a data use agreement, becomes &quot;yes&quot; every time in every model. The Local Contexts elements mostly become &quot;unclear&quot; - including TK Open to Collaboration, the matched equivalent of the contact request (2% &quot;yes&quot;), and TK Community Use Only (28% &quot;yes&quot;). 663 responses per condition (221 records x 3 models), 50 unparseable responses excluded.</figcaption></figure>
+<p>Agent framing, "commercial_use_allowed":</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>element</th>
+<th>no</th>
+<th>unclear</th>
+<th>yes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TK Non-Commercial</td>
+<td><strong>98%</strong></td>
+<td>2%</td>
+<td>0%</td>
+</tr>
+<tr>
+<td>CC BY-NC licence</td>
+<td><strong>91%</strong></td>
+<td>1%</td>
+<td>8%</td>
+</tr>
+<tr>
+<td>TK Community Use Only</td>
+<td>13%</td>
+<td>56%</td>
+<td><strong>31%</strong></td>
+</tr>
+<tr>
+<td>no extra element</td>
+<td>6%</td>
+<td>9%</td>
+<td>86%</td>
+</tr>
+</tbody>
+</table></div>
+<p>Read against what each element says:</p>
+<ul>
+<li><strong>The matched restriction is honoured equally.</strong> TK Non-Commercial and a CC BY-NC licence both produce "no
+  commercial use" over 90% of the time.</li>
+<li><strong>The matched invitation is not.</strong> The conventional request to contact the providers is read as a requirement
+  every time, by every model. The TK Open to Collaboration Label, whose template text says the community "is open
+  to future engagement, collaboration, and partnership", is read as one 2% of the time. Arguably the conventional
+  request is over-read and the Label under-read; either way, the same kind of ask gets different treatment.</li>
+<li><strong>The strongest restriction is often softened.</strong> Local Contexts' template for TK Community Use Only says the
+  material "has specific conditions for circulation within the community" and "is not, and never was, free,
+  public, or available for everyone". Models answer "commercial use allowed: yes" in 31% of agent summaries:
+  OLMo-2 28%, Mistral 7% and Qwen3 5% chose "no", with the rest "unclear" or "yes".</li>
+<li><strong>The Notices are acknowledged, not translated into conditions.</strong> The BC and TK Notices say that "appropriate
+  permissions may need" to be sought; models mostly answer "unclear", and 18–29% answer "no".</li>
+<li><strong>Prose framings</strong> (lexical, unvalidated). Local Contexts elements are described as "not legally binding" or
+  similar in 3–12% of responses that mention them (BC Notice 12%, TK CB 12%). The conventional contact request is
+  described that way 30% of the time, which is accurate for a request.</li>
+</ul>
+<p>A separate finding: in the responses with no extra element, where the record carries only CC BY, <strong>OLMo-2-13B
+attaches NonCommercial, NoDerivatives or ShareAlike terms to the licence in 51% of its prose answers</strong>. Qwen3 does
+so in 4%, Mistral never. The pilot adjudication noted further characterisation errors: "BC" read as British
+Columbia, TK Community Use Only taken to mean "the paleoecology research community", and a CC BY-NC licence listed
+with "commercial use allowed: yes".</p>
+<h2>What this does and does not show</h2>
+<p><strong>It shows</strong> that three current open-weight models, given a repository record's metadata, almost always pass on a
+Local Contexts Notice or Label, and by name. The "notice-blind" hypothesis is refuted for this setting. It also
+shows, post hoc, that in a structured reuse summary these models treat Local Contexts elements as uncertain far
+more often than conventional clauses that ask the same kind of thing.</p>
+<p><strong>It does not show</strong>:</p>
+<ol>
+<li><strong>Hosted assistants.</strong> These are three open-weight models at greedy decoding, not the hosted assistants most
+   researchers use.</li>
+<li><strong>Other presentations.</strong> The element sits in a metadata JSON. A landing page, a PDF, or a record with many
+   fields may be harder.</li>
+<li><strong>Whether "unclear" is the right answer.</strong> For some elements it is defensible. What each element asks is taken
+   from Local Contexts' published text, but whether a given answer respects it is a normative judgement this lab
+   has not made with the communities concerned. That engagement is a care point, not a precondition (plan §8).</li>
+<li><strong>Real-world element variety.</strong> Element types other than Neotoma's are inserted experimentally, using Local
+   Contexts' own names, because almost no real records carry them.</li>
+<li><strong>Validated post-hoc measures.</strong> The verdict tables use the models' own structured fields, but the
+   "not binding" and invented-term counts are lexical and were not validated.</li>
+</ol>
+<h2>Scope and care</h2>
+<p>The study used only public repository metadata and never asked a model to produce or elaborate Indigenous
+knowledge; only reuse statements were scored. The results describe models, not the communities, institutions or
+repositories involved.</p>
+<p>One data-quality point is worth passing to Neotoma and Local Contexts. Neotoma's element pairs the name of a TK
+<em>Label</em> ("TK Open to Collaboration (TK CB)") with the URI of the Open to Collaborate <em>Notice</em>, a different
+instrument.</p>
+<h2>Process and deviations</h2>
+<p>Six logged deviations (<code>deviations.md</code>):</p>
+<ul>
+<li>D1: within-record design; no LLM judge, with agent adjudication of the pilot instead.</li>
+<li>D2: GPU-stage failures: a start timeout, a context-length mismatch, a missing package.</li>
+<li>D3: generation cap raised to 1,100 tokens.</li>
+<li>D4: pilot adjudicated; scorer frozen unchanged; name-only secondary added.</li>
+<li>D5: a bootstrap relabelling bug, fixed before any result was printed.</li>
+<li>D6: post-hoc verdict and wording checks.</li>
+</ul>
+<p>Commits: plan 1c953ad, scorer frozen 3f119ce, results 7d6b7a7.</p>
+<h2>Reproducing it</h2>
+<pre><code>venv/bin/python code/harvest_lc.py          # all DataCite records with a Local Contexts URI
+venv/bin/python code/build_corpus.py        # 221 + 20 records x 10 conditions
+venv/bin/python code/test_scoring.py        # 20 checks of the scorer and decision rules
+bash code/run_gpu_mistral.sh                # local vLLM, three models (stops and restarts the host's vllm)
+venv/bin/python code/pilot_sample.py sample # then adjudicate; `compare` checks the scorer
+venv/bin/python code/analysis.py main       # H1-H3 -&gt; results/tables/primary_main.json
+venv/bin/python code/supplementary.py       # post-hoc verdicts and wording
+venv/bin/python code/figures.py
+</code></pre>
+<p>Released: the corpus (public metadata, <code>results/corpus/</code>), prompts, every response, every score, the pilot
+adjudication, and all code. Model weights are pinned by revision in <code>code/download_models.py</code>.</p>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ancestral-llm-rights-notice-blindness/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>
