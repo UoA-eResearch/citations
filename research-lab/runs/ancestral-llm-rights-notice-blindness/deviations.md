@@ -30,3 +30,9 @@ container was removed (--rm) before its log could be read, so the cause is infer
 GPU memory was not yet released. The second window (run_gpu_qwen.sh) now runs OLMo-2 and then Qwen3, waits for the
 GPU to be free before each server starts, and captures each container's log to logs/lc-gen-<model>.log. Mistral
 ran in the first window with its log captured.
+
+And Mistral's server came up in the first window, but generate.py failed at import: the requests package was not
+installed in the venv (generate.py had not been smoke-tested before the GPU stage). requests was installed before
+the second window reached generation; Mistral runs in a third window (code/run_gpu_mistral.sh, same settings). No
+response from any model had been generated or read when these were fixed.
+
