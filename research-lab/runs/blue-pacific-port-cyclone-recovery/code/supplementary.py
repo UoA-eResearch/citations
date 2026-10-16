@@ -102,8 +102,10 @@ def main():
     pac = allr[allr.pict & (allr.cat_at_closest >= 3) & (allr.closest_km <= 150)].copy()
     pac["shortest_closure_seen_80pct"] = [shortest80(g, m, a) if m >= 0.25 else None
                                           for m, a in zip(pac.mean_calls, pac.alpha.fillna(0.25))]
-    pac["pow14"] = [power(g, m, a, 14) if m > 0 else 0.0 for m, a in zip(pac.mean_calls.clip(lower=1e-3),
-                                                                         pac.alpha.fillna(0.25))]
+    # below the simulated range (0.25 calls/day) np.interp would clamp to the grid's lowest row and overstate
+    # power, so those ports get no number - their power for a 14-day closure is below 0.38 and falls with traffic
+    pac["pow14"] = [power(g, m, a, 14) if m >= g.mu.min() else np.nan
+                    for m, a in zip(pac.mean_calls, pac.alpha.fillna(0.25))]
     keep = ["portname", "ISO3", "storm", "date", "cat_at_closest", "closest_km", "mean_calls", "status",
             "shortest_closure_seen_80pct", "pow14", "depth_min_ratio", "depth_crit", "disrupted", "T"]
     pac[keep].sort_values(["date", "closest_km"]).to_csv(TAB / "pacific_case_series.csv", index=False)

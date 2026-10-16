@@ -96,3 +96,7 @@ a straight line, while the simulation shows detection power is a steep threshold
 refits part A with that power as the control (S2) and on high-power events only (S3), and writes the Pacific case
 series with the shortest closure each port could have shown. These are labelled post hoc in the report and
 change no verdict.
+
+Addendum, same session: the first run of supplementary.py clamped power for ports below the simulated range
+(0.25 calls/day) to the grid's lowest row, giving 0.38 to ports with 0.01 calls a day. Only the Pacific case
+series column was affected (S1-S3 use computed events, all >= 0.5 calls/day); those ports now get no number.
