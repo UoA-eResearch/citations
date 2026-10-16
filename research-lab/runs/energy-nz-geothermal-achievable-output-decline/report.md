@@ -94,7 +94,7 @@ plant series). But the files do not cover every geothermal plant (D4):
 The lead's unit-level dataset holds geothermal units only at Wairakei and Ohaaki, and only for 2000–2003 (D1).
 
 **The field is the unit.** Plants on one field share a consented fluid take. At Wairakei, fluid "is prioritised
-to Te Mihi and Poihipi … Wairakei utilises the balance and ramps up during outages on other plants" (Contact, in
+to Te Mihi and Poihipi … Wairakei utilises the balance and ramps up during outrages [sic] on other plants" (Contact, in
 FGGS). A single plant there reflects allocation, not the reservoir.
 
 **Achievable output** is the month's 95th percentile (P95) of half-hourly field output: the level reached in about
