@@ -1,0 +1,492 @@
+{
+ "primary": {
+  "describe": {
+   "sids": {
+    "n": 17,
+    "storms": 8,
+    "share_disrupted": 0.058823529411764705,
+    "median_T_all": 0.0,
+    "median_T_disrupted": 2.0,
+    "censored_at_120": 0
+   },
+   "non_sids": {
+    "n": 68,
+    "storms": 27,
+    "share_disrupted": 0.39705882352941174,
+    "median_T_all": 0.0,
+    "median_T_disrupted": 6.0,
+    "censored_at_120": 1
+   },
+   "pacific": {
+    "n": 5,
+    "storms": 3,
+    "share_disrupted": 0.0,
+    "median_T_all": 0.0,
+    "median_T_disrupted": null,
+    "censored_at_120": 0
+   }
+  },
+  "H1": {
+   "delta_aic": 2.3348902174897717,
+   "verdict": "Inconclusive",
+   "aic_base": 290.0431634882655,
+   "aic_full": 287.70827327077575,
+   "delta_aic_part_a": 4.170863930054566,
+   "delta_aic_part_b": -1.8359737125648223,
+   "part_a_share_coef": -2.538400796016645,
+   "part_a_share_p_cluster": 0.03222153756005155,
+   "part_a_share_or_per_10pp": 0.7758158609079517,
+   "part_b_share_time_ratio": 1.660381471242604,
+   "part_b_share_tr_ci_storm_bootstrap": [
+    0.16920239037263674,
+    670.2101531910704
+   ],
+   "part_b_bootstrap": {
+    "lo": -1.7766597044119532,
+    "hi": 6.5075913246827435,
+    "ok_draws": 980,
+    "failed_draws": 20
+   },
+   "n_events": 85,
+   "n_disrupted": 28,
+   "n_storms": 34
+  },
+  "H2": {
+   "disruption_odds_ratio": 0.08829357783462616,
+   "disruption_or_ci_cluster": [
+    0.005442073179099458,
+    1.4324974380681172
+   ],
+   "disruption_p_cluster": 0.08779291082587819,
+   "n_sids_events": 17,
+   "n_sids_storms": 8,
+   "n_sids_disrupted": 1,
+   "time_ratio": null,
+   "lo": null,
+   "hi": null,
+   "verdict": "Inconclusive",
+   "reason": "not estimable: 1 disrupted small-island event(s) (< 3)"
+  }
+ },
+ "cat1_150km": {
+  "describe": {
+   "sids": {
+    "n": 53,
+    "storms": 22,
+    "share_disrupted": 0.09433962264150944,
+    "median_T_all": 0.0,
+    "median_T_disrupted": 21.0,
+    "censored_at_120": 1
+   },
+   "non_sids": {
+    "n": 382,
+    "storms": 86,
+    "share_disrupted": 0.29842931937172773,
+    "median_T_all": 0.0,
+    "median_T_disrupted": 7.0,
+    "censored_at_120": 21
+   },
+   "pacific": {
+    "n": 10,
+    "storms": 8,
+    "share_disrupted": 0.0,
+    "median_T_all": 0.0,
+    "median_T_disrupted": null,
+    "censored_at_120": 0
+   }
+  },
+  "H1": {
+   "delta_aic": 9.521108816537662,
+   "verdict": "Inconclusive",
+   "aic_base": 1293.0668326290668,
+   "aic_full": 1283.545723812529,
+   "delta_aic_part_a": 9.157247717435212,
+   "delta_aic_part_b": 0.363861099102337,
+   "part_a_share_coef": -1.7312778447779786,
+   "part_a_share_p_cluster": 0.016221123383353877,
+   "part_a_share_or_per_10pp": 0.8410301373808762,
+   "part_b_share_time_ratio": 0.27188569669950435,
+   "part_b_share_tr_ci_storm_bootstrap": [
+    0.047647864457844,
+    1.7060121105635966
+   ],
+   "part_b_bootstrap": {
+    "lo": -3.04391746714031,
+    "hi": 0.5341585478506197,
+    "ok_draws": 1000,
+    "failed_draws": 0
+   },
+   "n_events": 435,
+   "n_disrupted": 119,
+   "n_storms": 100
+  },
+  "H2": {
+   "disruption_odds_ratio": 0.4070266627454332,
+   "disruption_or_ci_cluster": [
+    0.12774985941966926,
+    1.2968366848956137
+   ],
+   "disruption_p_cluster": 0.12842797340239534,
+   "n_sids_events": 53,
+   "n_sids_storms": 22,
+   "n_sids_disrupted": 5,
+   "time_ratio": 0.8012442826420378,
+   "lo": 0.15432665015552224,
+   "hi": 3.8930845623871866,
+   "verdict": "Inconclusive",
+   "part_b_bootstrap": {
+    "lo": -1.868683818029571,
+    "hi": 1.3592017900433668,
+    "ok_draws": 980,
+    "failed_draws": 20
+   }
+  }
+ },
+ "cat3_100km": {
+  "describe": {
+   "sids": {
+    "n": 13,
+    "storms": 7,
+    "share_disrupted": 0.07692307692307693,
+    "median_T_all": 0.0,
+    "median_T_disrupted": 2.0,
+    "censored_at_120": 0
+   },
+   "non_sids": {
+    "n": 40,
+    "storms": 18,
+    "share_disrupted": 0.45,
+    "median_T_all": 0.0,
+    "median_T_disrupted": 7.5,
+    "censored_at_120": 1
+   },
+   "pacific": {
+    "n": 2,
+    "storms": 2,
+    "share_disrupted": 0.0,
+    "median_T_all": 0.0,
+    "median_T_disrupted": null,
+    "censored_at_120": 0
+   }
+  },
+  "H1": {
+   "delta_aic": 3.402301190017255,
+   "verdict": "Inconclusive",
+   "aic_base": 197.09723670358693,
+   "aic_full": 193.69493551356967,
+   "delta_aic_part_a": 5.358773692990056,
+   "delta_aic_part_b": -1.9564725029728152,
+   "part_a_share_coef": -3.999129239209973,
+   "part_a_share_p_cluster": 0.12885097641695015,
+   "part_a_share_or_per_10pp": 0.6703784174182637,
+   "part_b_share_time_ratio": 1.2670422102579475,
+   "part_b_share_tr_ci_storm_bootstrap": [
+    3.076528332581905e-07,
+    22800485.4874698
+   ],
+   "part_b_bootstrap": {
+    "lo": -14.994293854446912,
+    "hi": 16.94229238700805,
+    "ok_draws": 839,
+    "failed_draws": 161
+   },
+   "n_events": 53,
+   "n_disrupted": 19,
+   "n_storms": 24
+  },
+  "H2": {
+   "disruption_odds_ratio": 0.11562637139314605,
+   "disruption_or_ci_cluster": [
+    0.005106943101352659,
+    2.6178983192518097
+   ],
+   "disruption_p_cluster": 0.17530216774927065,
+   "n_sids_events": 13,
+   "n_sids_storms": 7,
+   "n_sids_disrupted": 1,
+   "time_ratio": null,
+   "lo": null,
+   "hi": null,
+   "verdict": "Inconclusive",
+   "reason": "not estimable: 1 disrupted small-island event(s) (< 3)"
+  }
+ },
+ "cat3_250km": {
+  "describe": {
+   "sids": {
+    "n": 34,
+    "storms": 14,
+    "share_disrupted": 0.029411764705882353,
+    "median_T_all": 0.0,
+    "median_T_disrupted": 2.0,
+    "censored_at_120": 0
+   },
+   "non_sids": {
+    "n": 155,
+    "storms": 40,
+    "share_disrupted": 0.3161290322580645,
+    "median_T_all": 0.0,
+    "median_T_disrupted": 10.0,
+    "censored_at_120": 2
+   },
+   "pacific": {
+    "n": 7,
+    "storms": 4,
+    "share_disrupted": 0.0,
+    "median_T_all": 0.0,
+    "median_T_disrupted": null,
+    "censored_at_120": 0
+   }
+  },
+  "H1": {
+   "delta_aic": 9.080949359598208,
+   "verdict": "Inconclusive",
+   "aic_base": 575.2235306522991,
+   "aic_full": 566.1425812927009,
+   "delta_aic_part_a": 8.08077022378734,
+   "delta_aic_part_b": 1.0001791358109244,
+   "part_a_share_coef": -2.52577863097636,
+   "part_a_share_p_cluster": 0.003808808400619163,
+   "part_a_share_or_per_10pp": 0.776795726763011,
+   "part_b_share_time_ratio": 0.1635041308559615,
+   "part_b_share_tr_ci_storm_bootstrap": [
+    0.05271515039857615,
+    5.281915156952193
+   ],
+   "part_b_bootstrap": {
+    "lo": -2.942852380906433,
+    "hi": 1.6642887510712265,
+    "ok_draws": 1000,
+    "failed_draws": 0
+   },
+   "n_events": 189,
+   "n_disrupted": 50,
+   "n_storms": 50
+  },
+  "H2": {
+   "disruption_odds_ratio": 0.0902055661981378,
+   "disruption_or_ci_cluster": [
+    0.010570196246242058,
+    0.7698101325242204
+   ],
+   "disruption_p_cluster": 0.027869863006234088,
+   "n_sids_events": 34,
+   "n_sids_storms": 14,
+   "n_sids_disrupted": 1,
+   "time_ratio": null,
+   "lo": null,
+   "hi": null,
+   "verdict": "Inconclusive",
+   "reason": "not estimable: 1 disrupted small-island event(s) (< 3)"
+  }
+ },
+ "sensitivity": {
+  "T10": {
+   "H1": {
+    "delta_aic": 2.1754025682871543,
+    "verdict": "Inconclusive",
+    "aic_base": 313.1727942373364,
+    "aic_full": 310.99739166904925,
+    "delta_aic_part_a": 4.170863930054566,
+    "delta_aic_part_b": -1.9954613617674113,
+    "part_a_share_coef": -2.538400796016645,
+    "part_a_share_p_cluster": 0.03222153756005155,
+    "part_a_share_or_per_10pp": 0.7758158609079517,
+    "part_b_share_time_ratio": 0.8964572400087518,
+    "part_b_share_tr_ci_storm_bootstrap": [
+     0.02097944703301834,
+     416.7337315850054
+    ],
+    "part_b_bootstrap": {
+     "lo": -3.8642120332241396,
+     "hi": 6.0324474844802545,
+     "ok_draws": 976,
+     "failed_draws": 24
+    },
+    "n_events": 85,
+    "n_disrupted": 28,
+    "n_storms": 34
+   },
+   "H2": {
+    "disruption_odds_ratio": 0.08829357783462616,
+    "disruption_or_ci_cluster": [
+     0.005442073179099458,
+     1.4324974380681172
+    ],
+    "disruption_p_cluster": 0.08779291082587819,
+    "n_sids_events": 17,
+    "n_sids_storms": 8,
+    "n_sids_disrupted": 1,
+    "time_ratio": null,
+    "lo": null,
+    "hi": null,
+    "verdict": "Inconclusive",
+    "reason": "not estimable: 1 disrupted small-island event(s) (< 3)"
+   },
+   "describe": {
+    "sids": {
+     "n": 17,
+     "storms": 8,
+     "share_disrupted": 0.058823529411764705,
+     "median_T_all": 0.0,
+     "median_T_disrupted": 3.0,
+     "censored_at_120": 0
+    },
+    "non_sids": {
+     "n": 68,
+     "storms": 27,
+     "share_disrupted": 0.39705882352941174,
+     "median_T_all": 0.0,
+     "median_T_disrupted": 11.0,
+     "censored_at_120": 4
+    },
+    "pacific": {
+     "n": 5,
+     "storms": 3,
+     "share_disrupted": 0.0,
+     "median_T_all": 0.0,
+     "median_T_disrupted": null,
+     "censored_at_120": 0
+    }
+   }
+  },
+  "own_history": {
+   "H1": {
+    "delta_aic": 1.537340422201794,
+    "verdict": "Refuted",
+    "aic_base": 286.1562878600231,
+    "aic_full": 284.6189474378213,
+    "delta_aic_part_a": 3.4866280568146237,
+    "delta_aic_part_b": -1.9492876346128298,
+    "part_a_share_coef": -2.3656425978626063,
+    "part_a_share_p_cluster": 0.03760007958016312,
+    "part_a_share_or_per_10pp": 0.7893351581636736,
+    "part_b_share_time_ratio": 1.328474874358177,
+    "part_b_share_tr_ci_storm_bootstrap": [
+     0.12505650437136173,
+     546.7263060731077
+    ],
+    "part_b_bootstrap": {
+     "lo": -2.078989608845971,
+     "hi": 6.303948322674744,
+     "ok_draws": 980,
+     "failed_draws": 20
+    },
+    "n_events": 85,
+    "n_disrupted": 27,
+    "n_storms": 34
+   },
+   "H2": {
+    "disruption_odds_ratio": 0.08945258084261884,
+    "disruption_or_ci_cluster": [
+     0.005282595532444787,
+     1.5147410340730827
+    ],
+    "disruption_p_cluster": 0.09446372315425886,
+    "n_sids_events": 17,
+    "n_sids_storms": 8,
+    "n_sids_disrupted": 1,
+    "time_ratio": null,
+    "lo": null,
+    "hi": null,
+    "verdict": "Inconclusive",
+    "reason": "not estimable: 1 disrupted small-island event(s) (< 3)"
+   },
+   "describe": {
+    "sids": {
+     "n": 17,
+     "storms": 8,
+     "share_disrupted": 0.058823529411764705,
+     "median_T_all": 0.0,
+     "median_T_disrupted": 2.0,
+     "censored_at_120": 0
+    },
+    "non_sids": {
+     "n": 68,
+     "storms": 27,
+     "share_disrupted": 0.38235294117647056,
+     "median_T_all": 0.0,
+     "median_T_disrupted": 6.5,
+     "censored_at_120": 1
+    },
+    "pacific": {
+     "n": 5,
+     "storms": 3,
+     "share_disrupted": 0.0,
+     "median_T_all": 0.0,
+     "median_T_disrupted": null,
+     "censored_at_120": 0
+    }
+   }
+  },
+  "excluding_covid_onset": {
+   "H1": {
+    "delta_aic": 1.4614822356448371,
+    "verdict": "Refuted",
+    "aic_base": 288.11830865758384,
+    "aic_full": 286.656826421939,
+    "delta_aic_part_a": 3.2974559482096737,
+    "delta_aic_part_b": -1.8359737125648223,
+    "part_a_share_coef": -2.3812766311409828,
+    "part_a_share_p_cluster": 0.04161870881023015,
+    "part_a_share_or_per_10pp": 0.7881020731064242,
+    "part_b_share_time_ratio": 1.660381471242604,
+    "part_b_share_tr_ci_storm_bootstrap": [
+     0.1524739674729807,
+     628.5678794828187
+    ],
+    "part_b_bootstrap": {
+     "lo": -1.8807614026016524,
+     "hi": 6.443444024557765,
+     "ok_draws": 967,
+     "failed_draws": 33
+    },
+    "n_events": 81,
+    "n_disrupted": 28,
+    "n_storms": 32
+   },
+   "H2": {
+    "disruption_odds_ratio": 0.1036000716792073,
+    "disruption_or_ci_cluster": [
+     0.006342453877079474,
+     1.6922432641921128
+    ],
+    "disruption_p_cluster": 0.11164438813782677,
+    "n_sids_events": 14,
+    "n_sids_storms": 7,
+    "n_sids_disrupted": 1,
+    "time_ratio": null,
+    "lo": null,
+    "hi": null,
+    "verdict": "Inconclusive",
+    "reason": "not estimable: 1 disrupted small-island event(s) (< 3)"
+   },
+   "describe": {
+    "sids": {
+     "n": 14,
+     "storms": 7,
+     "share_disrupted": 0.07142857142857142,
+     "median_T_all": 0.0,
+     "median_T_disrupted": 2.0,
+     "censored_at_120": 0
+    },
+    "non_sids": {
+     "n": 67,
+     "storms": 26,
+     "share_disrupted": 0.40298507462686567,
+     "median_T_all": 0.0,
+     "median_T_disrupted": 6.0,
+     "censored_at_120": 1
+    },
+    "pacific": {
+     "n": 2,
+     "storms": 2,
+     "share_disrupted": 0.0,
+     "median_T_all": 0.0,
+     "median_T_disrupted": null,
+     "censored_at_120": 0
+    }
+   }
+  }
+ }
+}

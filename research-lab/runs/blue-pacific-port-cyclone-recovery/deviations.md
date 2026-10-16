@@ -64,3 +64,25 @@ resamples storms (1000 draws). AIC uses no standard errors, so H1's preregistere
 by this choice. A guard is added: with fewer than 3 disrupted small-island events, part B cannot estimate a
 small-island time ratio, so H2 is reported as not estimable, which under plan section 6 is Inconclusive rather
 than a number fitted to one event. A synthetic check of analysis.py is added to the tests before the rerun.
+
+## D5 — 2026-10-17 00:35 NZDT — the forecast's part B drops the small-island indicator; made before forecast.py ran
+
+plan.md section 7 puts the small-island indicator in both parts of the forecast model. The primary arm has one
+disrupted small-island event (D4), so part B's coefficient for it would be fitted to a single recovery time, and
+every Pacific forecast - all small-island ports - would inherit that one number. forecast.py now keeps the
+indicator in part A (disrupted or not: 17 small-island events, 8 storms) and drops it from part B when fewer than 3
+small-island events were disrupted, the same threshold as H2's guard. The model file records which covariates each
+part uses, and score_forecast.py reads that list. forecast.py also now checks that the formula the scorer will use
+reproduces lifelines' predicted median for every forecast row, so the 2027 score is computed from exactly the
+frozen model. Made after H1/H2 were seen (they are in results/tables/primary.json) and before any forecast existed.
+
+## D6 — 2026-10-17 00:36 NZDT — the 2026-27 forecast is frozen
+
+forecast.py ran once, after D5. The two files below are committed now, before the season opens on 1 November 2026.
+Before scoring, score_forecast.py prints the model file's sha256; it must match.
+
+    forecast_model.json  0cbaa6e125ad071f05641a2c3ad58f096c4ad993bbef50220ed77ff6e43b8d25
+    forecast_table.csv   26e6c7aa3693f2734372e5ca153d38c0daa8ee85b5d3fd19d0c7e73e635f45c3
+
+12 Pacific island ports x Category 3/4/5 x 25/75/125 km = 108 rows. Benchmarks recorded in the model file:
+historical share disrupted 0.329; historical median recovery among disrupted events 5.5 days.

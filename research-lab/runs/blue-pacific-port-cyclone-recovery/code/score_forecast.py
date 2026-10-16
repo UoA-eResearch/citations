@@ -44,7 +44,7 @@ def predict(model, x):
     z = pa["const"] + sum(pa[c] * x[c] for c in covs)
     p_dis = 1 / (1 + np.exp(-z))
     lam = model["part_b_weibull_aft"]
-    log_scale = lam["lambda_|Intercept"] + sum(lam[f"lambda_|{c}"] * x[c] for c in covs)
+    log_scale = lam["lambda_|Intercept"] + sum(lam[f"lambda_|{c}"] * x[c] for c in model.get("part_b_covariates", covs))
     rho = np.exp(lam["rho_|Intercept"])
     median = np.exp(log_scale) * np.log(2) ** (1 / rho)
     return p_dis, median
