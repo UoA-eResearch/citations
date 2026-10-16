@@ -26,7 +26,8 @@ Every departure from the lead and from plan.md, timestamped with `date` when it 
    hold total biomass: identical to `bet_Badult` + `bet_Byoung` (correlation 1.0000, ratio 1.0000) and not a
    copy of the `bet_Byoung` file (different hash, ratio 6.7). `code/model_targets.py` reads the variable by
    position, not by name.
-2. The bigeye *historical* `bet_Btot` is a different quantity: 0.848 × (adult + young) overall, between
+2. **[Superseded - see D8.3: this file is the adult-only biomass, and the 0.848 below is just the adult fraction.]**
+   The bigeye *historical* `bet_Btot` is a different quantity: 0.848 × (adult + young) overall, between
    0.73 and 1.00 by cell. Splicing it to the projections would put a definitional step at 2010/2011 inside
    Bell et al.'s 2009–2018 baseline. Adult + young is used instead. Skipjack and yellowfin hold
    Btot = adult + young to 1.0000 in every cell, in both runs, so the primary skipjack analysis is untouched.
@@ -170,8 +171,36 @@ D4 FIRMS check, promised and not run, is now run: the 1-degree file holds 58% (1
 5-degree skipjack purse-seine total for the domain - a quarter of the catch missing, time-varying. Outside the
 twelve EEZs, skipjack catch in 140-180E fell from 107 to 26 kt/yr after 2010 while catch at 180-200E rose from
 17 to 61 kt/yr: the closure's displaced catch went partly into the EEZs and partly to the eastern high seas.
+**[Superseded - see D9: the eastern rise came in 2014-19, not at the closure.]**
 (The review read this as no change east of 180E, on a narrower window; with 2000-09 against 2010-19, which
 includes the 2015 El Nino, it is a large rise.) The PNA proposed closing a further eastern high-seas block
 (10N-20S, 170E-150W) around 2010-11; whether and when it took effect I could not confirm, so it is mentioned
 only as a possibility. And D7's refinement was not logged with a decision rule before it ran; the draft said
 every post-hoc analysis was, which was false for D7.
+
+## D9 — 2026-10-16 19:46 NZDT — the confirmation pass (publish with edits, 6 edits)
+
+The reviewer's confirmation pass on 9ba8dd3 found all six must-fix items addressed and recomputed the new
+numbers to match. Six edits, none changing a verdict, each verified here first:
+
+1. **I had over-claimed the closure's displacement.** D8 and the revised report said the 2010 closure's
+   displaced catch went partly to the eastern high seas, from decade averages. The years say otherwise:
+   outside-EEZ skipjack at 180-200E was 13.6 kt/yr in 2010-2013, no higher than 2000-2009 (16.7). The rise came
+   in 2014-2019 (92.5 kt/yr; 173.5 in 2015), correlates 0.76 with Nino 3.4 (2000-2019), and began after CMM 2008-01 lapsed
+   in February 2013. At the closure, displaced catch went into the EEZs.
+2. **The PNA eastern closure is confirmed**, which I had failed to do: announced 23 April 2010, effective
+   1 January 2011, for PNA-licensed purse seiners, 10N-20S x 170E-150W, 4,555,000 km2 (pnatuna.com/node/102).
+   It explains why nothing rose east of the dateline at the closure. A June 2014 3IA amendment titled as
+   removing the closure exists but could not be opened; noted, not relied on.
+3. **The Tuna Atlas rows are raised** (every WCPFC SKJ purse-seine row has processing level "raised"), so the
+   1-degree file's ~27% shortfall is raising plus suppression, not suppression. The 1-degree file has no catch
+   at 120-130E in any decade (144-578 kt/decade at 5 degrees, domestic fleets); excluding that band it holds
+   63/76/78/82% by decade. In the 1980s it holds 68% of the 5-degree catch at 130-160E but 11% at 160-200E, so
+   the early-1980s EEZ share rests on a file that barely sees the east that decade.
+4. Wording: "agree from 1990" -> "point the same way" (intervals +/-0.4-0.5); "8%, the false-alarm rate" ->
+   "about the 5% false-alarm rate"; F1's caption no longer calls the density share free of where the fleet
+   fishes; D2.2 and the D8 displacement sentence carry superseded markers in place.
+5. **One reviewer claim corrected rather than adopted.** It said that where the footprint check has power,
+   none of the rule combinations points west. There are eight such combinations on the wider footprints; four
+   exceed the projected rate, and one is -0.010 (west, though indistinguishable from zero). The report gives
+   that count.

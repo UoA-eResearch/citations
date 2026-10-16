@@ -132,6 +132,14 @@ def main():
         yrs = np.arange(2000, 2020)
         bands[f"{a}-{b}E"] = dict(kt_per_yr_2000_2009=float(s[yrs < 2010].mean()), kt_per_yr_2010_2019=float(s[yrs >= 2010].mean()))
     out["closure_outside_eez_catch_by_band"] = bands
+    # timing east of the dateline (confirmation pass, D9): decade means hid that nothing rose at the closure
+    cols = (lon_c >= 180) & (lon_c < 200)
+    east = pd.Series(outside[:, :, cols].sum(axis=(1, 2)) / 1000, index=np.arange(2000, 2020))
+    out["east_180_200E_timing"] = dict(kt_2000_2009=float(east.loc[2000:2009].mean()),
+                                       kt_2010_2013=float(east.loc[2010:2013].mean()),
+                                       kt_2014_2019=float(east.loc[2014:2019].mean()),
+                                       kt_2015=float(east.loc[2015]),
+                                       corr_nino34_2000_2019=float(np.corrcoef(east, idx.loc[2000:2019, "nino34"])[0, 1]))
 
     json.dump(out, open(TAB / "review_response.json", "w"), indent=1, default=float)
     print(f"GLS-AR(1) rho {out['gls']['rho']:.2f}: {out['gls']['point']:+.3f} [{out['gls']['lo']:+.3f}, {out['gls']['hi']:+.3f}] -> {out['gls']['verdict_vs_tau']}")

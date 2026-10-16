@@ -67,7 +67,24 @@ def main():
                ratio_min_year=float(t.ratio.min()), ratio_max_year=float(t.ratio.max()),
                ratio_median=float(t.ratio.median()),
                by_year=t.reset_index().rename(columns={"index": "year"}).to_dict(orient="records"))
+    # where the gap is (confirmation pass, D9): by longitude band and decade
+    latok = (lat_c >= DOMAIN["lat"][0]) & (lat_c <= DOMAIN["lat"][1])
+    gg = g[g.geographic_identifier.isin(inside)].merge(cells, left_on="geographic_identifier", right_on="code")
+    gg["dec"] = (gg.year // 10) * 10
+    def one_band(a, b):
+        cols = (lon_c >= a) & (lon_c < b)
+        s = skj.values[:, latok][:, :, cols].sum(axis=(1, 2)) / 1000
+        return pd.Series(s, index=np.arange(1980, 2022)).groupby(lambda y: (y // 10) * 10).sum()
+    def five_band(a, b):
+        return gg[(gg.lon >= a) & (gg.lon < b)].groupby("dec").measurement_value.sum() / 1000
+    out["band_120_130E"] = dict(one_deg_kt=one_band(120, 130).to_dict(), five_deg_kt=five_band(120, 130).to_dict())
+    out["ratio_excluding_120_130E"] = (one_band(130, 228) / five_band(130, 228)).to_dict()
+    out["coverage_1980s"] = {"130-160E": float(one_band(130, 160)[1980] / five_band(130, 160)[1980]),
+                             "160-200E": float(one_band(160, 200)[1980] / five_band(160, 200)[1980])}
+    out["processing_level"] = "raised (every WCPFC SKJ purse-seine row)"
     json.dump(out, open(TAB / "firms_check.json", "w"), indent=1, default=float)
+    print("excluding 120-130E, by decade:", {k: round(v, 3) for k, v in out["ratio_excluding_120_130E"].items()})
+    print("1980s coverage:", {k: round(v, 3) for k, v in out["coverage_1980s"].items()})
     print(dec.round(3).to_string())
     print(f"\nyearly 1-degree / 5-degree ratio: median {t.ratio.median():.3f}, range {t.ratio.min():.3f}-{t.ratio.max():.3f}")
 

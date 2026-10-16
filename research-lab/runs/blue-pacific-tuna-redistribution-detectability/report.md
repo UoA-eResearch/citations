@@ -125,7 +125,7 @@ Three numbers describe what the catch record can detect:
 
 | | value |
 | --- | --- |
-| **power to see the decline the projection makes** — beginning in 2011, record to 2021, size-calibrated test | **8%**, the false-alarm rate |
+| **power to see the decline the projection makes** — beginning in 2011, record to 2021, size-calibrated test | **8%** — about the 5% false-alarm rate |
 | minimum linear decline across 1980–2021 detectable at 80% power: preregistered / size-calibrated test | 0.325 / 0.425 pp/yr |
 | power to detect a 42-year linear decline at τ: preregistered / size-calibrated test | 0.37 / 0.17 |
 
@@ -172,12 +172,18 @@ Catch outside the twelve EEZ areas, by longitude, says where the displaced fishi
 | 180–200°E | 16.7 | 60.9 |
 | 200–228°E | 0.9 | 4.6 |
 
-Catch in the western high seas, where the closed pockets lie, fell by about 80 kt a year; catch east of the
-dateline rose by about 48. The closure's displaced catch went partly inside the EEZs and partly to the eastern
-high seas — the displacement the PNA's scientists warned of when they proposed closing a further eastern block
-(10°N–20°S, 170°E–150°W) around 2010–11. I could not confirm whether or when that eastern closure took effect.
-These bands include other states' EEZs inside the domain, not only high seas, and the 2010s window includes
-the 2015 El Niño, which pushes fishing east; a narrower window shows a smaller eastern rise.
+Catch in the western high seas, where the closed pockets lie, fell by about 80 kt a year. The decade averages
+make it look as if some of it reappeared east of the dateline, but the timing says otherwise: at 180–200°E,
+outside-EEZ catch was 13.6 kt a year in 2010–2013, no higher than before. The rise came in 2014–2019 (92.5 kt a
+year, 173.5 in the 2015 El Niño), tracks ENSO (correlation 0.76 with Niño 3.4 over 2000–2019), and began after the pocket
+closure measure lapsed in February 2013. At the time of the closure, the displaced catch went into the EEZs.
+
+That fits the management record. On 1 January 2011 the PNA also closed the high seas between 10°N and 20°S,
+170°E and 150°W — 4.56 million km² — to the purse seiners it licenses (announced 23 April 2010,
+pnatuna.com/node/102). With both the western pockets and the eastern high seas closed to those vessels, effort
+had nowhere to go but inside the EEZs. A PNA amendment dated June 2014 is titled as removing that closure; I
+could not open it, so its timing fit with the 2014 rise is noted, not relied on. These bands include other
+states' EEZs inside the domain, not only high seas.
 
 What the per-EEZ pattern does *not* show: I predicted, before computing it, that the 2010 jump would sit in the
 seven EEZs bordering the closed pockets. It does not, cleanly. Grouped, the bordering EEZs carry more of the
@@ -187,7 +193,7 @@ trend trade off per EEZ and the decomposition is poorly identified (F3).
 
 ![The 2010 step by EEZ](results/figures/F3_per_eez_step.png)
 
-### SEAPODYM's historical run and the observations agree from 1990
+### SEAPODYM's historical run and the observations point the same way from 1990
 
 | ENSO-adjusted trend, pp/yr | observed | SEAPODYM hist | difference (95%) |
 | --- | --- | --- | --- |
@@ -201,7 +207,7 @@ trend trade off per EEZ and the decomposition is poorly identified (F3).
 H2, as preregistered, is consistent. The one disagreement — the 1980–2010 density share — comes from the
 fleet's development decade: a share over fished cells is close to 1 by construction when the fleet works 25
 cells inside Papua New Guinea and FSM waters (1980) and falls as it spreads to 410 cells (1992). From 1990 all
-three observed series move the same way as the model. The first draft read the 1980–2010 density result as
+three observed series move the same way as the model, though with intervals of ±0.4–0.5 points. The first draft read the 1980–2010 density result as
 evidence against SEAPODYM's redistribution; it is not, and that reading is withdrawn. None of the observed
 series is free of the fleet's footprint.
 
@@ -234,8 +240,9 @@ blind to the shift the model predicts:
 The narrow western footprints give a clean null, but SEAPODYM's own projected shift registers there as only
 +0.002 to +0.010° a year against +0.070 domain-wide, so they could not tell no shift from the projected one.
 The wider footprints, where the projected shift is visible (+0.03 to +0.04), give trends from no detectable
-change to +0.14 — at or above the projected rate — depending on the threshold and the coverage rule (the full
-grid, with 60% and 90% coverage rules, is in results/tables/footprint_grid.json). The first draft reported only
+change to +0.14 — at or above the projected rate — depending on the threshold and the coverage rule. Across the eight threshold-by-coverage combinations on
+those wider footprints, four exceed the projected rate and the one negative estimate (−0.010) is
+indistinguishable from zero (full grid, with 60% and 90% coverage rules, in results/tables/footprint_grid.json). The first draft reported only
 the ≥80% row, read its null as proof the fish had not moved, and left out the ≥50% result that its own plan
 had named as the sensitivity. That headline is withdrawn.
 
@@ -247,13 +254,15 @@ cannot test it on a timescale that matters for decisions about 2050.
 **Catch is not biomass.** SEAPODYM's runs are no-fishing biomass; the observations are catch from a managed,
 expanding fishery. Everything is framed on shares and trends, never levels.
 
-**The 1° file is missing a quarter of the catch.** Against the FIRMS Global Tuna Atlas 5° public data for the
-same domain, the 1° file holds 58% of skipjack purse-seine catch in the 1980s, 71% in the 1990s, 73% in the
-2000s and 79% in the 2010s (median year 73%, range 28–82%). The 5° data may be raised to total catch while
-the 1° file is not, so the gap is suppression plus possibly raising. Suppressed cells lose every variable at
-once, so they are indistinguishable from unfished ones (D4). The missing fraction shrinks over time; if the
-missing catch is not spread evenly between EEZs and high seas, that alone could move the share. Its
-direction is unknown.
+**The 1° file holds about three-quarters of the raised catch, unevenly.** Against the FIRMS Global Tuna Atlas
+5° public data for the same domain — which are raised to total catch — the 1° file holds 58% of skipjack
+purse-seine catch in the 1980s, 71% in the 1990s, 73% in the 2000s and 79% in the 2010s (median year 73%). The
+gap is raising plus suppression; suppressed cells lose every variable at once, so they are indistinguishable
+from unfished ones (D4). Part of it is a whole region: the 1° file has no catch at all at 120–130°E, where the 5°
+data record 144–578 kt a decade from domestic fleets; excluding that band it holds 63%, 76%, 78% and 82% by
+decade. More consequential for this study, in the 1980s it holds 68% of the 5° catch at 130–160°E but only 11%
+at 160–200°E. The high EEZ share of the early 1980s therefore rests on a file that barely sees the east that
+decade, and the share's early level — and so part of its long-run shape — is not trustworthy.
 
 **The domain stops at 228°E.** Biomass that leaves eastward leaves the denominator too, so this share is not
 the 13% figure and must not be read as one.
