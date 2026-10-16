@@ -109,3 +109,18 @@ the domain fished on at least 5 days in at least 80% of the 42 years (sensitivit
 enters or leaves. If the eastward trend survives on a fixed footprint, density has shifted east within grounds
 fished throughout. If it vanishes, the centroid result is fleet expansion. Either way the report says which.
 The same fixed footprint is used for a density share, to see whether the flat O2 result depends on footprint.
+
+## D7 — 2026-10-16 18:45 NZDT — the fixed footprint was not fixed in its early years; refit on covered years
+
+The D6 footprint (cells fished in >= 80% of years) gave a centroid trend of +0.075 deg/yr (+0.019, +0.134),
+against +0.65 for the unconstrained density centroid. But its yearly coverage fell as low as 0.17: a "fixed"
+cell set is only fixed if its cells are actually fished. Coverage is below 0.8 in 1980-1987 (0.17, 0.29,
+0.71, 0.49, 0.58, 0.74, 0.74, 0.72) - the fishery's development years - and in 1998, 2001 and 2002.
+Refitted on the 31 years with coverage >= 0.8 (1988-2021): **+0.002 deg/yr (-0.009, +0.013)**.
+
+This refinement was not specified in D6; it was prompted by the coverage figure, and it is labelled post hoc.
+It moves the conclusion in the conservative direction: the +0.075 itself came from the under-covered early
+years, and within grounds genuinely fished throughout there is no eastward drift at all. The D6 decision rule
+said that if the trend vanished on a fixed footprint, the centroid result is fleet expansion; it vanishes.
+The footprint is 96.8% inside the EEZs and spans 141.5-159.5 E, so its density share cannot move much and is
+reported but not interpreted.

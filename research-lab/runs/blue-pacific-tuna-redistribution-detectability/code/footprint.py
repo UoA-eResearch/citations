@@ -52,7 +52,15 @@ def main():
         d_t = A.trend_ci(dens, YEARS, idx)
         d_t["verdict_vs_tau"] = A.verdict_h1(d_t["lo"], d_t["hi"], tau)
         lon_f = lon_c[np.where(foot.any(0))[0]]
+        # D7, post hoc: a fixed cell set is only fixed in years when its cells are actually fished, so refit
+        # on the years with >= 80% of footprint cells covered
+        good = YEARS[cover >= 0.8]
+        c_cov = A.trend_ci(cen[cover >= 0.8] / 100, good, idx)
+        c_cov["years"] = [int(good.min()), int(good.max())]
+        c_cov["n"] = int(len(good))
+        low = {int(y): float(c) for y, c in zip(YEARS, cover) if c < 0.8}
         out[f"min_frac_{f_min}"] = dict(
+            centroid_trend_covered_years=c_cov, low_coverage_years=low,
             n_cells=int(foot.sum()), lon_range=[float(lon_f.min()), float(lon_f.max())],
             eez_area_share=float((area * frac * foot).sum() / (area * foot).sum()),
             mean_yearly_coverage=float(cover.mean()), min_yearly_coverage=float(cover.min()),

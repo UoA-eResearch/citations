@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pacific Tuna Shift</title>
+<meta name="description" content="A preregistered test of whether sparse-autoencoder features of Pythia-160M are shared across independently pretrained models as often as across SAE retrainings on one model.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Blue Pacific Horizons</div>
+  <h1>Is the projected eastward shift of Pacific skipjack detectable yet?</h1>
+  <p class="subtitle">A detection-and-power test of the SEAPODYM projections behind the &quot;13% loss from Pacific SIDS waters&quot; claim, against 42 years of open purse-seine data.</p>
+  <div class="meta">
+    <span>Report · 2026-10-13 · pre-review draft</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/blue-pacific-tuna-redistribution-detectability/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/blue-pacific-tuna-redistribution-detectability/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/blue-pacific-tuna-redistribution-detectability/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">Verdict</div><div class="tile-value text">Supported</div><div class="tile-note">EEZ catch share rose +0.26 pp/yr; SEAPODYM projected -0.12</div></div><div class="tile"><div class="tile-label">Power at the projected rate</div><div class="tile-value">17%</div><div class="tile-note">size-calibrated; 37% with the preregistered test</div></div><div class="tile"><div class="tile-label">Detectable at 80% power by</div><div class="tile-value">2098</div><div class="tile-note">for a decline at the projected rate from 2011</div></div><div class="tile"><div class="tile-label">Eastward drift, fixed grounds</div><div class="tile-value">+0.002 deg/yr</div><div class="tile-note">against +0.55 over all fished cells: the fleet moved, not the fish</div></div></section>
+<main>
+<p><strong>Verdict: Supported.</strong> By the preregistered rule, the share of tropical skipjack catch taken inside the ten
+Pacific SIDS' EEZs has not declined at SEAPODYM's projected rate: it rose, by +0.255 percentage points a year
+(95% interval −0.026 to +0.537), against a projected −0.117. That verdict does <strong>not</strong> contradict SEAPODYM —
+the model's own historical run rises too, and its decline begins later. What the study shows is that catch
+records cannot settle the question: they would detect a decline of the projected size about one time in six,
+and not reliably before the 2090s, because the share is moved far more by fishing rules and the fleet's
+expansion than by the fish.</p>
+<h2>In plain terms</h2>
+<p>A widely cited projection says that by 2050, climate change will push about 13% of the region's tuna out of
+the waters of ten Pacific Island countries and into the high seas, costing them access fees. We asked
+whether that shift can already be seen in the fishing record.</p>
+<p>We used 42 years of public catch data for skipjack, the main purse-seine target. The share caught inside the
+islands' waters has not fallen; it has risen. That sounds like evidence against the projection, but it is
+not: the computer model behind the projection says the same thing for the past, and only starts the decline
+in the future.</p>
+<p>The more useful finding is about what the catch record can and cannot tell anyone. Year to year the share
+swings by up to 15 points. Against that noise, a decline of the projected size would be detected only about
+one time in six, and not reliably until near the end of the century — long after 2050.</p>
+<p>The share does move, but mostly for reasons that have nothing to do with where the fish are. It jumped
+in 2010, the year the high seas between several island countries were closed to these vessels. And the
+fleet's centre of activity has moved steadily east — but when we looked only at fishing grounds worked
+throughout the whole period, the fish had not moved east at all. The fleet had simply spread into new water.</p>
+<p>So watching where tuna are caught will not confirm or refute the projection on any timescale that matters for
+decisions. That needs evidence that does not depend on where boats choose, or are allowed, to fish.</p>
+<h2>What was asked</h2>
+<p>Bell et al. (2021, <em>Nature Sustainability</em> 4:900–910) project that under RCP 8.5 the combined biomass of
+skipjack, yellowfin and bigeye in the EEZs of ten Pacific SIDS falls by an average of 13% (range −5% to −20%)
+by 2050, as tuna move east. The figure is now load-bearing in WCPFC, Forum Fisheries Agency and
+climate-finance arguments. SEAPODYM's developers validate its <em>fit</em> to catch, length and tagging data; nobody
+had tested whether the projected <em>redistribution</em> is visible in the record, or how much power the record has
+to see it.</p>
+<h2>What was already known</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Work</th>
+<th>What it establishes</th>
+<th>What it leaves open</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bell et al. (2021)</td>
+<td>The projection under test</td>
+<td>Whether the redistribution is detectable in observations</td>
+</tr>
+<tr>
+<td>SEAPODYM validation (WCPFC-SC21-2025/SA-IP-20 §6.2; SC22-2026)</td>
+<td>Out-of-sample fit to catch, length and tagging</td>
+<td>Fit to the redistribution <em>trend</em></td>
+</tr>
+<tr>
+<td>Lehodey et al. (1997, <em>Nature</em>)</td>
+<td>Skipjack track the warm-pool edge with ENSO</td>
+<td>Long-term change once ENSO is removed</td>
+</tr>
+<tr>
+<td>Hanich et al. (2018) / McDermott et al. (2019), <em>PNAS</em></td>
+<td>ENSO dominates effort redistribution; ENSO control is the crux</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Dutta (2025), <em>Asia &amp; the Pacific Policy Studies</em></td>
+<td>Management moves catch across EEZ boundaries</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p>The calibration critic for this scouting round confirmed no detection-or-power test of the SEAPODYM
+redistribution trend exists.</p>
+<h2>How it was done</h2>
+<p><strong>Data, all open.</strong> WCPFC public-domain purse-seine catch and effort, 1°×1° monthly (SPC THREDDS mirror,
+1967–2021; 1980–2021 complete). SEAPODYM 2° reference runs from SPC: a historical run forced by ocean
+reanalysis (1980–2010) and four RCP 8.5 projections forced by Earth system models (GFDL, IPSL, MIROC, MPI;
+2011–2099), with no fishing. Marine Regions EEZ boundaries for the twelve EEZ areas of the ten SIDS (the eight
+Parties to the Nauru Agreement, Tokelau and the Cook Islands; Kiribati counts three). Niño 3.4 and ERSST v5.</p>
+<p><strong>The comparison.</strong> The same quantity in model and observations: the share of skipjack in a fixed domain
+(20°S–20°N, 120°E–228°E, the WCPFC data's extent) that lies inside the twelve EEZ areas. Observed as catch
+share (preregistered primary), density share (each fished cell weighted by catch per fishing day, which
+removes where the fleet is allowed to fish), and a free-school-only density share.</p>
+<p><strong>The test.</strong> An ENSO-adjusted linear trend: share on year, Niño 3.4 (current and lagged) and the warm-pool
+edge. Moving-block bootstrap intervals (block 4, 2000 draws), Newey–West beside each.</p>
+<p><strong>The threshold</strong> was not chosen by hand. It is SEAPODYM's own projected rate of change in the identical
+share, four-ESM mean, 2011–2050: <strong>τ = −0.1174 pp/yr</strong> (GFDL −0.074, IPSL −0.216, MIROC −0.152, MPI −0.027).</p>
+<p>Plan, code and model-only results were committed (3cc5aff) before any observed series was computed.</p>
+<h2>What the model predicts, computed before any observation</h2>
+<p><strong>The headline reproduces approximately.</strong> The EEZ mask matches Marine Regions' area to 0.4%. From the same
+files and ESMs Bell et al. used, the three-species biomass change in the twelve EEZ areas, 2044–2053 against
+2009–2018, is −14.2% (four-ESM mean; −9.6% to −20.4%) against the published −13% (−5% to −20%). The mean
+agrees within 1–2 points; the least-negative ESM does not. This study tests the files SPC serves, not the
+paper's exact numbers.</p>
+<p><strong>The model's past and future point opposite ways.</strong> SEAPODYM's historical run has the skipjack EEZ share
+<em>rising</em> over 1980–2010: <strong>+0.105 pp/yr ENSO-adjusted (+0.033 to +0.180)</strong>. The decline begins only in the
+ESM-forced projections. So the model does not predict the shift should already be visible, and an observed
+rise would agree with it. This was written into the plan (§1.3) before any observation was examined.</p>
+<h2>Results</h2>
+<p>All 1980–2021; ENSO-adjusted; 95% intervals.</p>
+<h3>The preregistered verdict: Supported</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>trend (pp/yr)</th>
+<th>bootstrap</th>
+<th>Newey–West</th>
+<th>vs τ = −0.117</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>H1, catch share (primary)</strong></td>
+<td><strong>+0.255</strong></td>
+<td>−0.026 to +0.537</td>
+<td>+0.017 to +0.494</td>
+<td><strong>Supported</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Mean share 83.8%. Both intervals sit above τ, so the verdict does not depend on which is used. It holds
+across coordinate conventions (+0.321, +0.179), the 10°S–10°N core (+0.252), yellowfin (+0.332), bigeye
+(+0.194), and covariate sets (none +0.190, Niño 3.4 only +0.216).</p>
+<h3>The record cannot see a decline of the projected size</h3>
+<figure><a href="results/figures/F2_power.png"><img src="results/figures/F2_power.png" alt="Power to detect a decline"></a><figcaption>Injection-recovery power for a linear decline in the primary series (EEZ catch share, 1980-2021): the fitted trend is removed, a known decline added, block-resampled residuals re-added, and the same ENSO-adjusted estimator re-fitted. The preregistered one-sided HAC test fires in 14% of simulations with no decline injected, against a nominal 5%, so its curve overstates power; the size-calibrated curve takes its critical value from those null simulations. The vertical line is SEAPODYM&#x27;s projected 2011-2050 rate of change in the identical share (0.117 pp/yr), the dotted line 80% power.</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>preregistered test</th>
+<th>size-calibrated test</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>false-alarm rate with no decline</td>
+<td>0.14 (nominal 0.05)</td>
+<td>0.05</td>
+</tr>
+<tr>
+<td>minimum detectable decline, 80% power</td>
+<td>0.325 pp/yr</td>
+<td><strong>0.425 pp/yr</strong></td>
+</tr>
+<tr>
+<td>power to detect τ</td>
+<td>0.37</td>
+<td><strong>0.17</strong></td>
+</tr>
+<tr>
+<td>first year a decline at τ from 2011 is detectable at 80%</td>
+<td>2084</td>
+<td><strong>2098</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>The catch share's ENSO-adjusted residuals have a standard deviation of 7.9 points and lag-1 autocorrelation
+0.56 — six times noisier than SEAPODYM's biomass share (1.3 points). The preregistered one-sided test fires
+14% of the time when nothing is there, because three Newey–West lags undercorrect that autocorrelation, so
+its power figures are optimistic. The calibrated test takes its critical value from the no-decline
+simulations; its numbers are the honest pair (D5). Either way, <strong>catch-share monitoring could not confirm a
+2050 projection until decades after 2050.</strong></p>
+<h3>What moves the share is not the fish</h3>
+<figure><a href="results/figures/F1_shares.png"><img src="results/figures/F1_shares.png" alt="Observed and modelled EEZ shares"></a><figcaption>Share of skipjack inside the twelve EEZ areas of the ten Pacific SIDS in Bell et al. (2021), within the domain 20S-20N, 120E-228E, each shown as percentage points from its own 1980-2009 mean so that observed catch shares (about 81% before 2010) and modelled biomass shares (about 49%) share one axis. Solid lines are WCPFC public-domain purse-seine data: catch share (the preregistered primary series), density share (each fished cell weighted by catch per fishing day, which removes where the fleet is allowed to fish), and the share of fishing days. The dashed line is SEAPODYM skipjack biomass: the reanalysis-forced historical run to 2010, then the mean of the four ESM-forced RCP 8.5 projections. The dotted line marks the 2010 closure of the high-seas pockets to purse seiners.</figcaption></figure>
+<p>The share does not trend smoothly. It was high in the early 1980s, dipped through the 1990s, and jumped in
+2010 (F1). Adding a single step at 2010 — the year WCPFC closed the high-seas pockets between several EEZs to
+purse seiners — gives a step of <strong>+17.0 points</strong> (Newey–West +8.5 to +25.6) and turns the trend to <strong>−0.242
+pp/yr</strong> (−0.538 to +0.054, Inconclusive against τ). Before 2010, the trend is −0.103 (−0.472 to +0.263).</p>
+<p>At the same moment the EEZ share of fishing <em>days</em> jumped from 81.8% to 92.4% and catch share from 80.9% to
+91.3%, while the density share — which ignores how much fishing each cell received — moved far less, 78.8% to
+83.5%. Over the whole period the density share is flat: <strong>+0.011 pp/yr (−0.247 to +0.254)</strong>.</p>
+<p>What the per-EEZ pattern does <em>not</em> show (D5, D6): I predicted, before computing it, that the 2010 jump would
+sit in the seven EEZs bordering the closed pockets. It does not, cleanly. Grouped, the bordering EEZs carry
+more of the ENSO-adjusted step (+12.1 against +5.0 points), but all of it is Papua New Guinea, whose interval
+spans about −4 to +37 points; four of the seven bordering EEZs have negative steps. With only twelve post-2010
+years, step and trend trade off per EEZ and the decomposition is poorly identified (F3).</p>
+<p><img alt="The 2010 step by EEZ" src="results/figures/F3_per_eez_step.png" />
+ So the 2010 step
+coincides with the closure and with a jump in fishing effort inside the EEZs — and that is all this study can
+say about its cause.</p>
+<h3>SEAPODYM's historical run does not reproduce what was observed</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>1980–2010</th>
+<th>observed</th>
+<th>SEAPODYM historical</th>
+<th>difference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H2, catch share</td>
+<td>−0.103</td>
+<td>+0.105</td>
+<td>−0.208 (−0.793 to +0.240), consistent</td>
+</tr>
+<tr>
+<td>density share</td>
+<td>−0.293</td>
+<td>+0.105</td>
+<td><strong>−0.398 (−0.889 to −0.045)</strong></td>
+</tr>
+<tr>
+<td>free-school density share</td>
+<td>−0.002</td>
+<td>+0.105</td>
+<td>−0.107 (−0.807 to +0.463)</td>
+</tr>
+<tr>
+<td>centroid, degrees east/yr</td>
+<td>—</td>
+<td>−0.163 (−0.234 to −0.092)</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p>On the catch share the two are consistent, but the interval is too wide to mean much. On the density share
+— the closest observed analogue to biomass — they are not: the model's rise is contradicted by an observed
+decline. Out of sample (<strong>H3</strong>, train 1980–1999, test 2000–2010), neither SEAPODYM nor the ENSO regression has
+skill: R² is −0.46 and −1.72 respectively, both worse than predicting the test-period mean. SEAPODYM "wins"
+(ΔR² = +1.26, interval −0.85 to +2.92) only because the ENSO regression fails worse, so by the preregistered
+rule H3 is not supported.</p>
+<h3>The eastward move is the fishery, not the fish</h3>
+<p>The catch centroid has moved east at <strong>+0.554° a year</strong> (+0.390 to +0.715) and the density centroid at
++0.650 — the direction SEAPODYM projects, eight times its projected rate of +0.070. Catch shifted from western
+EEZs (Papua New Guinea −8.9 points, FSM −10.9) to central and eastern ones (Kiribati Gilbert +11.4, Nauru
++4.9, Tuvalu +4.2, Kiribati Phoenix +3.1). Because that move stayed largely inside the ten SIDS' waters, the
+pooled share could not register it.</p>
+<p>But the purse-seine fishery itself expanded east over these decades, and a centroid computed over the cells
+fished each year moves east whenever new grounds open. Restricted to the 86 cells fished in at least 80% of
+years (141.5–159.5°E), the trend falls to +0.075; restricted further to the 31 years in which those cells
+were actually fished (1988–2021), it is <strong>+0.002° a year (−0.009 to +0.013)</strong> (F4; D6, D7). Within grounds
+worked throughout, skipjack density has not shifted east at all.</p>
+<figure><a href="results/figures/F4_centroid.png"><img src="results/figures/F4_centroid.png" alt="Centroid trends"></a><figcaption>Trend in the mean longitude of skipjack within the domain. The top two rows use every cell fished that year, weighted by observed catch and by observed density (catch per fishing day times cell area); the next two restrict density to a fixed set of 86 core cells (141.5-159.5E) fished in at least 80% of years, first over all years and then over the 31 years in which those cells were actually covered (deviations D6, D7). Each is ENSO-adjusted with a 95% block-bootstrap interval. The SEAPODYM rows use modelled biomass; the projected value is the four-ESM mean linear trend for 2011-2050 and has no interval. A centroid over fished cells moves east whenever the fishery opens new eastern grounds, so only the fixed-footprint rows speak to where the fish are.</figcaption></figure>
+<h2>What this does and does not show</h2>
+<p><strong>It does not show the projection is wrong.</strong> The verdict is Supported, but SEAPODYM predicts what was
+observed for the past. The study shows the projection is <em>untested</em> by the catch record and will stay so.</p>
+<p><strong>It does show the model's historical dynamics disagree with observation on density</strong> — the one observed
+series built to track fish rather than fleets. A model whose historical redistribution points the wrong way
+on that series deserves less confidence in its projected redistribution than its fit statistics suggest.</p>
+<p><strong>Catch is not biomass.</strong> SEAPODYM's runs are no-fishing biomass; the observations are catch from a managed,
+expanding fishery. Everything is framed on shares and trends, never levels.</p>
+<p><strong>Public-domain suppression is unmeasurable here</strong> (D4). The preregistered check looked for catch recorded
+without effort; in this file a suppressed cell loses every variable at once (identical missing-value pattern
+across all 26 variables in every cell-month), so it is indistinguishable from an unfished cell. The size of
+the problem is unknown, not small.</p>
+<p><strong>The domain stops at 228°E.</strong> Biomass that leaves eastward leaves the denominator too, so this share is not
+the 13% figure and must not be read as one.</p>
+<p><strong>The open data end in 2021</strong>, and SEAPODYM's historical run in 2010. A newer WCPFC release would add years
+but not change the power arithmetic much: at 80% power the detection year is decades away.</p>
+<p><strong>Several analyses are post hoc</strong> (D5–D7): the per-EEZ test, the size-calibrated power, the centroid and its
+fixed-footprint check. Each was logged with its decision rule before it ran, and two of them went against my
+expectation.</p>
+<h2>Data-integrity findings worth reporting to SPC</h2>
+<p>The four bigeye projection files labelled <code>bet_Btot_*</code> name their variable <code>bet_B_young</code> but hold total
+biomass (identical to adult + young). The bigeye historical <code>bet_Btot</code> is a different quantity, 0.848 × (adult
++ young), varying 0.73–1.00 by cell, so splicing it to the projections puts a definitional step at 2010/2011
+inside the 2009–2018 baseline Bell et al. used. Skipjack and yellowfin are consistent (D2).</p>
+<h2>Reproducing it</h2>
+<pre><code>code/model_targets.py   EEZ mask, Bell reproduction, SEAPODYM share trajectories   (model only)
+code/indices.py         Nino 3.4 anomaly and warm-pool edge
+code/observed.py        observed annual shares, three coordinate conventions
+code/analysis.py        estimators and decision rules
+code/test_analysis.py   14 checks on synthetic data
+code/primary.py         H1-H4 and preregistered sensitivities -&gt; primary.json
+code/exploratory.py     per-EEZ, size-calibrated power, centroid  (post hoc, D5)
+code/footprint.py       fixed-footprint check                     (post hoc, D6-D7)
+code/figures.py         F1-F4
+</code></pre>
+<p>Raw data are public at the URLs in plan.md §3 and are not redistributed. Seeds are fixed (20261016).</p>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/blue-pacific-tuna-redistribution-detectability/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

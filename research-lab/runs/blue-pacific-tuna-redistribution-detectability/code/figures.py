@@ -47,8 +47,7 @@ def f1():
     style(ax)
     ax.axhline(0, color=INK2, lw=0.8)
     ax.axvline(2010, color=INK2, lw=0.8, ls=":")
-    ax.text(2010.4, ax.get_ylim()[1] if False else 15.5, "2010: high-seas pockets\nclosed to purse seiners",
-            fontsize=8, color=INK2, va="top")
+    ax.text(2010.5, -10.5, "2010: high-seas pockets\nclosed to purse seiners", fontsize=8, color=INK2, va="top")
     series = [("catch share inside EEZs (O1, primary)", obs.skj_catch_share, BLUE, "-"),
               ("density share (O2)", obs.skj_density_share, ORANGE, "-"),
               ("fishing-days share", obs.days_eez_share, AQUA, "-")]
@@ -60,7 +59,7 @@ def f1():
     ax.set_xlim(1979, 2051)
     ax.set_ylim(-16, 17)
     ax.set_ylabel("share inside the 12 EEZ areas,\npp from its own 1980-2009 mean")
-    ax.set_title("Observed skipjack shares rose with the 2010 closure; SEAPODYM projects a fall that begins later",
+    ax.set_title("Observed shares swing by up to 15 points and jump in 2010; SEAPODYM's projected fall begins later",
                  fontsize=10, color=INK, loc="left")
     ax.legend(frameon=False, fontsize=8, loc="lower left", labelcolor=INK)
     fig.tight_layout()
@@ -135,7 +134,8 @@ def f3():
     ax.scatter([], [], color=BLUE, s=36, label="borders a high-seas pocket closed in 2010")
     ax.scatter([], [], color=ORANGE, s=36, label="does not border one")
     ax.legend(frameon=False, fontsize=8, loc="lower right", labelcolor=INK)
-    ax.set_title("Where the 2010 jump went", fontsize=10, color=INK, loc="left")
+    ax.set_title("The 2010 step by EEZ: no clean pattern by pocket, and PNG's step is barely identified",
+                 fontsize=10, color=INK, loc="left")
     fig.tight_layout()
     fig.savefig(F / "F3_per_eez_step.png", dpi=170)
     plt.close(fig)
@@ -148,30 +148,38 @@ def f3():
 
 def f4():
     e = json.load(open(T / "exploratory.json"))
+    fp = json.load(open(T / "footprint.json"))["min_frac_0.8"]
     c = e["centroid_deg_per_yr"]
-    rows = [("observed catch, 1980-2021", c["obs_catch_1980_2021"], BLUE),
-            ("observed density, 1980-2021", c["obs_density_1980_2021"], ORANGE),
+    cv = fp["centroid_trend_covered_years"]
+    rows = [("observed catch, all fished cells", c["obs_catch_1980_2021"], BLUE),
+            ("observed density, all fished cells", c["obs_density_1980_2021"], ORANGE),
+            ("density, fixed core grounds, 1980-2021", fp["centroid_trend_deg_per_yr"], ORANGE),
+            (f"density, fixed core, covered years {cv['years'][0]}-{cv['years'][1]}", cv, ORANGE),
             ("SEAPODYM historical, 1980-2010", c["model_hist_1980_2010"], YELLOW)]
-    fig, ax = plt.subplots(figsize=(6.6, 2.8))
+    fig, ax = plt.subplots(figsize=(8.0, 3.8))
     ax.grid(axis="x", color=GRID, lw=0.6)
     ax.set_axisbelow(True)
     for i, (lab, v, col) in enumerate(rows):
         ax.hlines(i, v["lo"], v["hi"], color=col, lw=1.6)
         ax.scatter(v["point"], i, color=col, s=40, zorder=3, edgecolor=SURF, linewidth=1.2)
     pr = c["model_proj_2011_2050_deg_per_yr"]
-    ax.scatter(pr, 3, color=YELLOW, s=40, marker="D", zorder=3, edgecolor=SURF, linewidth=1.2)
+    ax.scatter(pr, len(rows), color=YELLOW, s=40, marker="D", zorder=3, edgecolor=SURF, linewidth=1.2)
     ax.axvline(0, color=INK2, lw=0.8)
-    ax.set_yticks(range(4))
+    ax.set_yticks(range(len(rows) + 1))
     ax.set_yticklabels([r[0] for r in rows] + ["SEAPODYM projected, 2011-2050"], color=INK)
-    ax.set_xlabel("ENSO-adjusted trend in the centroid's longitude (degrees per year; east is positive)")
-    ax.set_title("The skipjack centroid", fontsize=10, color=INK, loc="left")
+    ax.invert_yaxis()
+    ax.set_xlabel("ENSO-adjusted centroid trend (degrees east per year)")
+    ax.set_title("On fixed grounds, the eastward move vanishes", fontsize=10, color=INK, loc="left")
     fig.tight_layout()
     fig.savefig(F / "F4_centroid.png", dpi=170)
     plt.close(fig)
-    caption("F4_centroid", """Trend in the mean longitude of skipjack within the domain, weighted by observed
-    catch, by observed density (catch per fishing day times cell area), and by SEAPODYM biomass, each
-    ENSO-adjusted with 95% block-bootstrap intervals; the projected value is the four-ESM mean linear trend for
-    2011-2050 and has no interval. An eastward redistribution moves the centroid east.""")
+    caption("F4_centroid", """Trend in the mean longitude of skipjack within the domain. The top two rows use every cell fished that year, weighted by observed
+    catch and by observed density (catch per fishing day times cell area); the next two restrict density to a
+    fixed set of 86 core cells (141.5-159.5E) fished in at least 80% of years, first over all years and then
+    over the 31 years in which those cells were actually covered (deviations D6, D7). Each is ENSO-adjusted with a
+    95% block-bootstrap interval. The SEAPODYM rows use modelled biomass; the projected value is the four-ESM
+    mean linear trend for 2011-2050 and has no interval. A centroid over fished cells moves east whenever the
+    fishery opens new eastern grounds, so only the fixed-footprint rows speak to where the fish are.""")
 
 
 if __name__ == "__main__":
