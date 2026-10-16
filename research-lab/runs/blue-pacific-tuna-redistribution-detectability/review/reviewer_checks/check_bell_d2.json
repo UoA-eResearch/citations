@@ -1,0 +1,169 @@
+{
+ "bet_GFDL_Btot_vs_adult_plus_young": {
+  "corr": 1.0,
+  "sum_ratio": 1.0,
+  "cell_p1": 1.0,
+  "cell_p50": 1.0,
+  "cell_p99": 1.0,
+  "max_abs_diff_over_max": 0.0
+ },
+ "bet_GFDL_Btot_vs_young": {
+  "corr": 0.7721400359165622,
+  "sum_ratio": 6.6970046284836195,
+  "cell_p1": 3.113700783931214,
+  "cell_p50": 4.699808339374911,
+  "cell_p99": 11.703616561859874,
+  "max_abs_diff_over_max": 3.373769556307901
+ },
+ "bet_IPSL_total_ratio_to_GFDL_Btot": 1.0006353855133057,
+ "bet_IPSL_total_ratio_to_GFDL_young": 6.810025215148926,
+ "bet_MIROC_total_ratio_to_GFDL_Btot": 1.0435385704040527,
+ "bet_MIROC_total_ratio_to_GFDL_young": 7.102011203765869,
+ "bet_MPI_total_ratio_to_GFDL_Btot": 1.0421873331069946,
+ "bet_MPI_total_ratio_to_GFDL_young": 7.0928144454956055,
+ "bet_hist_Btot_vs_adult_plus_young": {
+  "corr": 0.9700458998959557,
+  "sum_ratio": 0.8483601427895211,
+  "cell_p1": 0.6726322225894121,
+  "cell_p50": 0.7940625826948746,
+  "cell_p99": 0.9951248352270496,
+  "max_abs_diff_over_max": 0.24243520460128212
+ },
+ "bet_hist_Btot_vs_adult": {
+  "corr": 1.0,
+  "sum_ratio": 1.0,
+  "cell_p1": 1.0,
+  "cell_p50": 1.0,
+  "cell_p99": 1.0,
+  "max_abs_diff_over_max": 0.0
+ },
+ "bet_hist_fit": {
+  "adult": 1.0,
+  "young": -7.950419160593211e-18,
+  "r2": 1.0
+ },
+ "bet_hist_ratio_by_year": {
+  "1980": 0.8274632096290588,
+  "1981": 0.8306841850280762,
+  "1982": 0.8344840407371521,
+  "1983": 0.8377290368080139,
+  "1984": 0.8390246033668518,
+  "1985": 0.8439002633094788,
+  "1986": 0.8491284847259521,
+  "1987": 0.8485042452812195,
+  "1988": 0.8463096618652344,
+  "1989": 0.8468515276908875,
+  "1990": 0.849205732345581,
+  "1991": 0.8507997989654541,
+  "1992": 0.8484273552894592,
+  "1993": 0.8488698601722717,
+  "1994": 0.8522138595581055,
+  "1995": 0.8568716645240784,
+  "1996": 0.8543400764465332,
+  "1997": 0.8524875640869141,
+  "1998": 0.8506342768669128,
+  "1999": 0.8488560318946838,
+  "2000": 0.8496364951133728,
+  "2001": 0.8531250357627869,
+  "2002": 0.8501271605491638,
+  "2003": 0.8488554954528809,
+  "2004": 0.8519285321235657,
+  "2005": 0.853328287601471,
+  "2006": 0.8533611297607422,
+  "2007": 0.8528054356575012,
+  "2008": 0.8523911833763123,
+  "2009": 0.8536176681518555,
+  "2010": 0.8534289002418518
+ },
+ "skj_hist_Btot_vs_adult_plus_young": {
+  "corr": 0.9999999999999998,
+  "sum_ratio": 0.9999999999713933,
+  "cell_p1": 0.999999891004206,
+  "cell_p50": 1.0,
+  "cell_p99": 1.0000001089843222,
+  "max_abs_diff_over_max": 7.349083448034153e-08
+ },
+ "skj_GFDL_Btot_vs_adult_plus_young": {
+  "corr": 0.9999999999999999,
+  "sum_ratio": 1.0,
+  "cell_p1": 1.0,
+  "cell_p50": 1.0,
+  "cell_p99": 1.0,
+  "max_abs_diff_over_max": 0.0
+ },
+ "yft_hist_Btot_vs_adult_plus_young": {
+  "corr": 0.9999999999999979,
+  "sum_ratio": 0.9999999999427467,
+  "cell_p1": 0.9999998899293325,
+  "cell_p50": 1.0,
+  "cell_p99": 1.0000001100337699,
+  "max_abs_diff_over_max": 6.046571418655051e-08
+ },
+ "yft_GFDL_Btot_vs_adult_plus_young": {
+  "corr": 1.0,
+  "sum_ratio": 1.0,
+  "cell_p1": 1.0,
+  "cell_p50": 1.0,
+  "cell_p99": 1.0,
+  "max_abs_diff_over_max": 0.0
+ },
+ "mask": {
+  "max_abs_diff_vs_study": 1.9984014443252818e-15,
+  "area_km2": 16487699.949830502,
+  "mr_area_km2": 16421482.0
+ },
+ "bell": {
+  "GFDL": {
+   "chg_spliced": -0.1314245908293984,
+   "chg_proj_only": -0.1130950472333897,
+   "chg_spliced_bet_as_served": -0.12595750600729416,
+   "hist2010_over_proj2011": 1.0074587743390042,
+   "skj_chg_proj_only": -0.14728804434046006,
+   "skj_share_of_eez_biomass_2011_18": 0.5792870194357764,
+   "yft_chg_proj_only": -0.06544616119994251,
+   "yft_share_of_eez_biomass_2011_18": 0.3049828756642948,
+   "bet_chg_proj_only": -0.06751083991230045,
+   "bet_share_of_eez_biomass_2011_18": 0.11573010489992895
+  },
+  "IPSL": {
+   "chg_spliced": -0.21970442107701027,
+   "chg_proj_only": -0.20361633408911906,
+   "chg_spliced_bet_as_served": -0.21480149577048313,
+   "hist2010_over_proj2011": 1.0073726788332897,
+   "skj_chg_proj_only": -0.2884981284269137,
+   "skj_share_of_eez_biomass_2011_18": 0.5794264061622624,
+   "yft_chg_proj_only": -0.09609074772650328,
+   "yft_share_of_eez_biomass_2011_18": 0.30518850759667204,
+   "bet_chg_proj_only": -0.06176802123962166,
+   "bet_share_of_eez_biomass_2011_18": 0.1153850862410656
+  },
+  "MIROC": {
+   "chg_spliced": -0.15987013287766172,
+   "chg_proj_only": -0.15555117775418825,
+   "chg_spliced_bet_as_served": -0.15488774238781633,
+   "hist2010_over_proj2011": 1.0051600751513086,
+   "skj_chg_proj_only": -0.21243960361483605,
+   "skj_share_of_eez_biomass_2011_18": 0.5741680639404898,
+   "yft_chg_proj_only": -0.09345689966865167,
+   "yft_share_of_eez_biomass_2011_18": 0.31612865984110333,
+   "bet_chg_proj_only": -0.03674217886795561,
+   "bet_share_of_eez_biomass_2011_18": 0.10970327621840674
+  },
+  "MPI": {
+   "chg_spliced": -0.10266583409104812,
+   "chg_proj_only": -0.09558097636833829,
+   "chg_spliced_bet_as_served": -0.09728713410904521,
+   "hist2010_over_proj2011": 1.005675750014691,
+   "skj_chg_proj_only": -0.11171595314386051,
+   "skj_share_of_eez_biomass_2011_18": 0.5722667447749096,
+   "yft_chg_proj_only": -0.08402995626789689,
+   "yft_share_of_eez_biomass_2011_18": 0.316761154479228,
+   "bet_chg_proj_only": -0.04534676311608454,
+   "bet_share_of_eez_biomass_2011_18": 0.11097210074586239
+  }
+ },
+ "bell_mean_spliced": -0.15341624471877963,
+ "bell_mean_proj_only": -0.14196088386125882,
+ "tau_mean_pp": -0.11739425035984973,
+ "hist_trend_pp": 0.11432946428956825
+}

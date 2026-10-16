@@ -43,12 +43,26 @@ t_adj = A.trend_ci(series(0.0, 0.2, enso=0.08), YEARS, IDX, nboot=300)
 check("ENSO adjustment narrows the interval", (t_adj["hi"] - t_adj["lo"]) < (t_noadj["hi"] - t_noadj["lo"]),
       f"adj width {t_adj['hi']-t_adj['lo']:.3f} vs unadj {t_noadj['hi']-t_noadj['lo']:.3f}")
 
-# 3. interval coverage near nominal for white noise (coarse: 150 reps)
+# 3. interval coverage, white noise and the observed AR(1) autocorrelation (coarse: 150 reps each)
 cover = 0
 for s in range(150):
     tt = A.trend_ci(series(-0.10, 1.0, seed=100 + s), YEARS, IDX, nboot=200, seed=s)
     cover += tt["lo"] <= -0.10 <= tt["hi"]
-check("block-bootstrap coverage roughly nominal", 0.85 <= cover / 150 <= 0.99, f"coverage {cover/150:.2f}")
+check("block-bootstrap coverage roughly nominal (white noise)", 0.85 <= cover / 150 <= 0.99, f"coverage {cover/150:.2f}")
+# The first version of this check used white noise only and reported 0.89, which the plan disclosed. The real
+# residuals have lag-1 autocorrelation 0.56, and the review showed coverage drops to about 0.79 there. This
+# check records that rather than asserting it away: it passes if coverage is measured, and prints the number.
+cover_ar = 0
+r = np.random.default_rng(99)
+for s in range(150):
+    e = np.empty(n); e[0] = r.normal(0, 1)
+    for t in range(1, n):
+        e[t] = 0.56 * e[t - 1] + r.normal(0, np.sqrt(1 - 0.56 ** 2))
+    yy = 0.6 - 0.10 / 100 * (YEARS - 2000) + 0.03 * IDX.nino34.values + e / 100
+    tt = A.trend_ci(yy, YEARS, IDX, nboot=200, seed=s)
+    cover_ar += tt["lo"] <= -0.10 <= tt["hi"]
+check("block-bootstrap coverage under AR(1) 0.56 is measured (expected below nominal)",
+      0.6 <= cover_ar / 150 <= 0.95, f"coverage {cover_ar/150:.2f}")
 
 # 4. the three verdict branches
 check("verdict Supported", A.verdict_h1(-0.05, 0.20, -0.117) == "Supported")
