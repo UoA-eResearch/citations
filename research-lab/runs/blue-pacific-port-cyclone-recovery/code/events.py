@@ -74,6 +74,11 @@ def hourly(track):
 
 
 def main():
+    # optional arguments: a raw-data directory and an output directory, so the 2027 scoring can rebuild the event
+    # table from a new vintage without touching the sealed data/raw or data/processed (review issue 10)
+    global RAW, PROC
+    if len(sys.argv) > 2:
+        RAW, PROC = Path(sys.argv[1]).resolve(), Path(sys.argv[2]).resolve()
     ports = pd.read_csv(RAW / "portwatch" / "ports.csv")
     ports["pict"] = ports.ISO3.isin(PICT)
     tracks = load_tracks()
@@ -104,7 +109,8 @@ def main():
     arms = {"cat3_150km (primary)": count(3, 150), "cat1_150km": count(1, 150),
             "cat3_100km": count(3, 100), "cat3_250km": count(3, 250)}
     out = dict(start=START, track_end=str(tracks.ISO_TIME.max()), arms=arms)
-    json.dump(out, open(TAB / "event_counts.json", "w"), indent=1)
+    # with directories given (the 2027 scoring), the counts go beside the new event table, not over the sealed ones
+    json.dump(out, open((PROC if len(sys.argv) > 2 else TAB) / "event_counts.json", "w"), indent=1)
     print(json.dumps(out, indent=1))
     prim = ev[(ev.cat_at_closest >= 3) & (ev.closest_km <= 150) & ev.pict].sort_values("date")
     print("\nPICT events in the primary arm:")

@@ -4,21 +4,23 @@ Committed with plan.md and run only after it.
 
 For an event at port p with closest approach on day d0:
 
-  counterfactual  A negative-binomial GLM fitted to the port's calls over [d0-730, d0-15]:
-                  log mu_t = b0 + day-of-week + two annual harmonics + linear trend + c * log(index_t)
-                  index_t is the summed daily calls at REFERENCE ports - every port with >= 0.5 calls/day lying
-                  1000-4000 km from p and not itself within 250 km of any Cat 1+ storm in [d0-30, d0+120].
-                  The index carries global and regional shocks the port's own history cannot: COVID's collapse in
-                  shipping in early 2020 would otherwise be read as storm damage (Cyclone Harold, April 2020).
-                  Sensitivity: the same model without the index (own history only).
-  band            2000 simulated NB paths over [d0-7, d0+120]; centred 7-day means; the 5th percentile L_t.
-                  (Centred, not trailing: a trailing mean keeps a one-day closure depressed for a week.)
-  disrupted       the observed centred 7-day mean r_t falls below L_t on some day t in [0, 14].
-  recovery time   if disrupted, the first day t after the first drop such that r_s >= L_s for s = t..t+6;
-                  censored at 120 days if never. If not disrupted, 0 - reported as "no detectable disruption",
-                  never as a recovery, because at low traffic a short closure cannot be seen (detectability.py).
-  sensitivity     T10: the first day the centred mean is back within 10% of the counterfactual mean, sustained
-                  7 days - the threshold the lead's hypothesis named.
+  counterfactual  A negative-binomial GLM fitted to the port's calls over [d0-730, d0-15]: day of week, two annual
+                  harmonics, a linear trend, and an OFFSET of log summed calls at the REFERENCE ports (every port
+                  with >= 0.5 calls/day lying 1000-4000 km from p and not itself within 250 km of a Cat 1+ storm in
+                  [d0-30, d0+120]) - i.e. a model of the port's share of regional traffic, so a shock to all
+                  shipping (COVID, early 2020) cancels. Sensitivity: the same model without the offset.
+  window          k days, scaled to traffic: about TARGET_CALLS expected calls per window, at least 7, odd, at most
+                  35. All smoothing is a centred k-day mean.
+  disrupted       familywise: the deepest dip of observed / counterfactual (centred k-day means) over days
+                  0..max(14, k) is below the 5th percentile of the same statistic over 2000 simulated paths.
+  recovery time   if disrupted, the first day from the DEEPEST DIP onward such that the observed centred mean stays
+                  at or above the pointwise 5% band for k consecutive days; censored at 120 days if never. If not
+                  disrupted, 0 - reported as "no detectable disruption", never as a recovery.
+  sensitivity     T10: the same, with "back within 10% of the counterfactual mean" in place of the band.
+
+(This docstring was corrected after the adversarial review, deviations D8; it previously described the
+pointwise 7-day rule and "first drop" start that tests replaced before any real event was computed. The code
+below is unchanged since plan commit d12c3f0.)
 
 Writes data/processed/recovery.csv.
 """

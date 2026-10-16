@@ -1,0 +1,257 @@
+{
+ "P1_placebo": {
+  "runs": 258,
+  "skipped_storm": 55,
+  "skipped_other": 27,
+  "false_alarm_rate": 0.10077519379844961,
+  "flagged": 26,
+  "own_history_rate": 0.09689922480620156,
+  "by_traffic": {
+   "0.5-1": {
+    "n": 78,
+    "rate": 0.07692307692307693
+   },
+   "1-2": {
+    "n": 73,
+    "rate": 0.0547945205479452
+   },
+   "2-5": {
+    "n": 32,
+    "rate": 0.15625
+   },
+   ">5": {
+    "n": 75,
+    "rate": 0.14666666666666667
+   }
+  },
+  "by_group": {
+   "non_sids": {
+    "n": 209,
+    "flagged": 23,
+    "rate": 0.11004784688995216
+   },
+   "sids": {
+    "n": 49,
+    "flagged": 3,
+    "rate": 0.061224489795918366
+   }
+  },
+  "spurious_T_median": 34.0,
+  "spurious_T_censored": 10,
+  "expected_false_alarms": {
+   "all_85": 8.565891472868216,
+   "non_sids_68": 6.852713178294573,
+   "sids_17": 1.7131782945736433
+  }
+ },
+ "P2_exposure": {
+  "non_sids_outside": {
+   "n": 34,
+   "disrupted": 8
+  },
+  "non_sids_inside": {
+   "n": 23,
+   "disrupted": 14
+  },
+  "sids_outside": {
+   "n": 11,
+   "disrupted": 1
+  },
+  "sids_inside": {
+   "n": 6,
+   "disrupted": 0
+  },
+  "r64_missing": 11,
+  "fisher_p_inside": 0.016858237547892726,
+  "fisher_p_outside": 0.41569670464795416
+ },
+ "P3_event_power_sids": {
+  "closed_7d": {
+   "mean": 0.6052941176470589,
+   "min": 0.06,
+   "n_below_0_8": 10
+  },
+  "closed_10d": {
+   "mean": 0.8058823529411764,
+   "min": 0.12,
+   "n_below_0_8": 6
+  },
+  "closed_14d": {
+   "mean": 0.9323529411764705,
+   "min": 0.33,
+   "n_below_0_8": 2
+  },
+  "closed_21d": {
+   "mean": 0.9758823529411764,
+   "min": 0.59,
+   "n_below_0_8": 1
+  },
+  "halved_14d": {
+   "mean": 0.4470588235294118,
+   "min": 0.06,
+   "n_below_0_8": 15
+  },
+  "halved_28d": {
+   "mean": 0.5729411764705883,
+   "min": 0.26,
+   "n_below_0_8": 15
+  },
+  "quarter_14d": {
+   "mean": 0.74,
+   "min": 0.1,
+   "n_below_0_8": 7
+  }
+ },
+ "P4_country_ports": {
+  "corr_share_log_nports": -0.7864236256617215,
+  "share": {
+   "coef": 2.645358080733214,
+   "p": 0.23993248740447382
+  },
+  "log_nports": {
+   "coef": 1.2631615404311423,
+   "p": 0.007574433256482663
+  },
+  "cat1_150km": {
+   "share": {
+    "coef": -0.36894525585531207,
+    "p": 0.7229620537815906
+   },
+   "log_nports": {
+    "coef": 0.3000264406272755,
+    "p": 0.17851741531118603
+   }
+  }
+ },
+ "P4_part_a_share_or_per_10pp_by_arm": {
+  "primary": [
+   0.7758158609079517,
+   0.6149922718537983,
+   0.9786956317711799
+  ],
+  "cat1_150km": [
+   0.8410301373808762,
+   0.730312039664239,
+   0.9685335220655699
+  ],
+  "cat3_100km": [
+   0.6703784174182637,
+   0.40010049568699274,
+   1.1232358554531678
+  ],
+  "cat3_250km": [
+   0.776795726763011,
+   0.6546454800956931,
+   0.9217379779801895
+  ]
+ },
+ "P5_permutation": {
+  "observed": 2.3348902174897717,
+  "n": 400,
+  "p": 0.14,
+  "q90": 3.4095995304125335,
+  "q95": 5.028448639161382,
+  "share_supported": 0.0025
+ },
+ "P6_h2_without_guard": {
+  "lifelines_wald": [
+   0.39659776809639186,
+   0.06024465364466663,
+   2.610850592432015
+  ],
+  "storm_bootstrap": {
+   "tr": 0.39659776809639186,
+   "lo": 0.14316118008749282,
+   "hi": 1.335486909162598,
+   "ok_draws": 636
+  },
+  "pooled_mean_days": {
+   "sids": 0.11764705882352941,
+   "non_sids": 5.838235294117647,
+   "ratio_ci": [
+    0.0,
+    0.0943965910126697
+   ]
+  }
+ },
+ "P7_part_b_sensitivity": {
+  "laura_delta_censored_day43": {
+   "n_flagged": 2,
+   "part_b_cat_tr": 3.0574571732029785,
+   "part_b_delta_aic_share": -1.8531557316214275,
+   "median_T_disrupted": 5.5
+  },
+  "without_cebu_rai": {
+   "n_flagged": 1,
+   "part_b_cat_tr": 0.9152594743295802,
+   "part_b_delta_aic_share": -1.7216044847404817,
+   "median_T_disrupted": 5.0
+  },
+  "original_part_b_cat_tr": 3.1366314391214107
+ },
+ "P8_forecast_if_sids_kept_in_part_b": {
+  "sids_coef": -1.894688356043975,
+  "cat4_75km": [
+   {
+    "port": "Noumea",
+    "frozen_median": 19.29435018063204,
+    "median_if_sids_kept": 6.15775639699991
+   },
+   {
+    "port": "Kimbe",
+    "frozen_median": 14.289767926255134,
+    "median_if_sids_kept": 2.6251579810348846
+   },
+   {
+    "port": "Lae",
+    "frozen_median": 16.458664556745735,
+    "median_if_sids_kept": 3.6927745177078117
+   },
+   {
+    "port": "Port Moresby",
+    "frozen_median": 17.016049905107693,
+    "median_if_sids_kept": 4.044860673431248
+   },
+   {
+    "port": "Rabaul",
+    "frozen_median": 14.38897913712042,
+    "median_if_sids_kept": 2.6544377593050283
+   },
+   {
+    "port": "Apia",
+    "frozen_median": 23.408284423672853,
+    "median_if_sids_kept": 12.22267527985394
+   },
+   {
+    "port": "Apra Harbor",
+    "frozen_median": 23.280455468672216,
+    "median_if_sids_kept": 11.557476298824445
+   },
+   {
+    "port": "Papeete",
+    "frozen_median": 23.233929219157908,
+    "median_if_sids_kept": 11.19268607120089
+   },
+   {
+    "port": "Honiara",
+    "frozen_median": 22.26322957268579,
+    "median_if_sids_kept": 10.394775818906322
+   },
+   {
+    "port": "Nuku'alofa",
+    "frozen_median": 22.90417592003229,
+    "median_if_sids_kept": 11.387483481310744
+   },
+   {
+    "port": "Lautoka",
+    "frozen_median": 17.79739253575159,
+    "median_if_sids_kept": 4.94897217224611
+   },
+   {
+    "port": "Suva",
+    "frozen_median": 18.120222565991757,
+    "median_if_sids_kept": 5.218946931389144
+   }
+  ]
+ }
+}

@@ -89,42 +89,47 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 </header>
 <section class="tiles" aria-label="Key results"></section>
 <main>
-<p><strong>Verdict: Inconclusive, and the direction runs against the lead.</strong> The primary hypothesis was that a port's share
-of national imports predicts recovery beyond size and storm. It came out at ΔAIC 2.3 against a bar of 10, just
-above the line for Refuted. Its direction is the reverse of the lead's story: ports that carry more of their
-country's imports were <em>less</em> often detectably disrupted. That association weakens and loses significance once
-detectability is properly controlled. The small-island comparison could not be estimated. Only 1 of 17
-measurable events at small-island ports showed any detectable disruption, about the method's false-alarm rate, so
-there was nothing to time. At the five Pacific events with enough traffic to measure, a complete two-week closure
-would almost certainly have been seen; none was. The other 27 Pacific events fall at ports too quiet for any
-method based on ship calls to see a disruption shorter than about a month. Where disruptions were detected (other
-ports), the median recovery time is 6 days, the same as the main earlier AIS study.</p>
+<p><strong>Verdict: Inconclusive. Neither preregistered hypothesis could be decided, and the lead's direction is not borne
+out.</strong> The primary hypothesis was that a port's share of national imports predicts recovery beyond size and storm.
+It came out at ΔAIC 2.3 against a bar of 10. A permutation test puts that gain within chance (p = 0.14). The
+association in it turns out to track how many ports a country has, not import concentration as such.</p>
+<p>The small-island hypothesis (a time ratio ≥ 2) could not be estimated as planned. Only 1 of 17 measurable
+small-island events showed any detectable disruption. That is the rate the same method gives at small-island ports
+on dates with no storm (3 of 49), so there was nothing to time. Measured instead as average days disrupted,
+small-island ports showed far less disruption than other ports, not more.</p>
+<p>The deeper finding is about what this kind of data can see. Most Pacific island ports are too quiet for ship-call
+records to reveal a closure shorter than a month. Of the six measurable small-island harbours that took
+hurricane-force winds, four would almost certainly have shown a complete two-week closure, and none did. At the
+other two (Montego Bay and Santiago de Cuba under Hurricane Melissa, 2025) the method could not have reliably seen
+one.</p>
 <h2>In plain terms</h2>
-<p>When a severe cyclone passes near a port, how long until ships come back? And are small island ports, which often
+<p>When a severe cyclone passes near a port, how long until ships come back? Are small island ports, which often
 handle most of a country's imports, slower to recover? We used a public daily record of ship visits to 2,065 ports
 from 2019 to 2026, and matched it with every cyclone track.</p>
 <p>Most Pacific island ports turned out to be too quiet to answer the question. Fifty of 62 get fewer than one ship
 every two days. At that rate, a port can be shut for two weeks and the record looks much like an ordinary lull.
-We worked out exactly how long a closure each port could reveal before looking at any result.</p>
+Before looking at any result, we simulated how long a closure would have to be to show up at each level of traffic.</p>
 <p>At the small-island ports busy enough to measure (17 cases, mostly in the Caribbean, five in the Pacific), we
-almost never saw a disruption. If a port had been fully shut for two weeks, we would very likely have noticed.
-That does not mean the storms did no harm. Ship visits are not cargo, the hardest-hit ports were usually the
-quiet ones, and a reduced service can look normal in this record. It does mean that long, complete port closures
-were not what happened at the main island harbours we could see.</p>
-<p>At the busier ports elsewhere, a detected disruption typically lasted about six days, matching earlier work.</p>
+almost never saw a disruption. The one we saw (Kingston, Jamaica, two days) is the rate our method gives on dates
+with no storm at all. Only six of those ports actually took hurricane-force winds. At four of them, a full
+two-week shutdown would almost certainly have shown up, and none did. At the two ports hit hardest by Hurricane
+Melissa, it might not have. That is not evidence that the islands escaped harm. Ship visits are not cargo, the
+hardest-hit ports were usually the quiet ones, and a service running at half capacity would often look normal in
+this record.</p>
+<p>At busier ports elsewhere, a detected disruption typically lasted about six days, matching earlier work. Even
+there, some detections are probably false alarms.</p>
 <p>Before the season opens on 1 November 2026, we have locked in a forecast for 12 Pacific ports. We will score it
 once the season's data are complete, in about September 2027.</p>
 <h2>What was asked</h2>
 <p>The lead (scouted 2026-10-16 from the University of Auckland's Blue Pacific Horizons signature research area)
 claimed three things. Pacific island ports take a median of at least 14 days to recover after a Category 3+
 cyclone. That is at least twice as long as matched non-island ports. And a port's share of national imports
-predicts recovery better than its size (ΔAIC ≥ 10). It proposed IMF PortWatch daily port calls and IBTrACS cyclone
-tracks, with a frozen forecast for the 2026–27 season.</p>
-<p>Counting events before computing any outcome showed the first claim had no usable sample (§ How it was done), so
-plan.md restated the hypotheses before any recovery time existed:</p>
+predicts recovery better than its size (ΔAIC ≥ 10).</p>
+<p>Counting events before computing any outcome showed the first claim had no usable sample, so plan.md restated the
+hypotheses before any recovery time existed:</p>
 <ul>
 <li><strong>H1 (primary):</strong> adding import share to both parts of a two-part model improves AIC by ≥ 10. Supported if
-  ΔAIC ≥ 10, Refuted if &lt; 2, Inconclusive between. The sign is reported, not presumed.</li>
+  ΔAIC ≥ 10; Refuted if &lt; 2; Inconclusive between.</li>
 <li><strong>H2 (secondary):</strong> small island developing states (UN list) recover at least 2× more slowly, adjusted
   (Weibull time ratio). Supported if the interval is above 1 and the point estimate is ≥ 2; Refuted if the upper
   end is &lt; 2.</li>
@@ -143,18 +148,23 @@ plan.md restated the hypotheses before any recovery time existed:</p>
 <tbody>
 <tr>
 <td>Verschuur, Koks &amp; Hall (2020), <em>Transp. Res. D</em> 85:102393</td>
-<td>AIS-observed recovery after natural disasters: 141 disruptions, 74 ports; median 6 days, p95 22 days</td>
+<td>AIS-observed port disruption after natural disasters: 141 disruptions, 74 ports, 27 disasters; median 6 days, p95 22.2 days</td>
 <td>small islands; import concentration</td>
 </tr>
 <tr>
+<td>Verschuur, Koks &amp; Hall (2023), <em>Nature Climate Change</em> 13:804–806</td>
+<td>modelled downtime at 1,320 ports and its trade knock-ons; some small island states among the most exposed</td>
+<td>observed recovery</td>
+</tr>
+<tr>
 <td>CyPort (arXiv:2509.22656)</td>
-<td>1,927 port–cyclone interactions at 145 US ports</td>
+<td>1,927 port–cyclone interactions at 145 US ports, 2015–2023</td>
 <td>outside the US</td>
 </tr>
 <tr>
-<td>US DOT, <em>Prediction of port recovery time after a severe storm</em></td>
-<td>AIS vessel counts, Gulf of Mexico</td>
-<td>outside the Gulf</td>
+<td>US DOT / MarTREC (2023), <em>Prediction of port recovery time after a severe storm</em></td>
+<td>AIS vessel counts; Gulf and Florida storms of 2022</td>
+<td>outside the US</td>
 </tr>
 <tr>
 <td>IMF WP 26/99 (2026)</td>
@@ -163,43 +173,44 @@ plan.md restated the hypotheses before any recovery time existed:</p>
 </tr>
 </tbody>
 </table></div>
-<p>No earlier PortWatch-based estimate for Pacific island ports, test of import concentration, or frozen seasonal
-forecast was found (search 2026-10-16).</p>
+<p>No earlier PortWatch- or AIS-based estimate of recovery at Pacific island ports, test of import concentration, or
+frozen seasonal forecast was found (searches 2026-10-16 and, by the reviewer, 2026-10-17).</p>
 <h2>How it was done</h2>
-<p><strong>Data.</strong> IMF PortWatch daily port calls, 2019-01-01 to 2026-07-24 (2,065 ports, 5.7 M rows). The PortWatch ports
-database (size; share of national maritime imports, a model-based PortWatch estimate). IBTrACS v04r01 tracks to
-2026-10-15. All retrieved 2026-10-16; hashes are in <code>data/raw/VINTAGE.txt</code>.</p>
+<p><strong>Data.</strong> IMF PortWatch daily port calls, 2019-01-01 to 2026-07-24 (2,065 ports). The PortWatch ports database
+(size; share of national maritime imports, a model-based estimate). IBTrACS v04r01 tracks to 2026-10-15. All
+retrieved 2026-10-16; hashes are in <code>data/raw/VINTAGE.txt</code>.</p>
 <p><strong>Events.</strong> A port–storm pair where the hourly-interpolated track passes within 150 km at Category 3+ (the primary
-arm), with closest approach from 2019. The arm holds 213 events. 85 of them (34 storms) are at ports averaging
-≥ 0.5 calls a day, with ≥ 270 days of history before and the follow-up the method needs after. The rest are
-114 at quieter ports, 8 with too little follow-up and 6 with too little history.</p>
-<p><strong>What counts as a disruption.</strong> For each event, a negative-binomial model of the port's daily calls over the
-two years before, with weekday, seasonal and trend terms. It enters the port's <em>share</em> of traffic at reference
-ports 1,000–4,000 km away, so a shock to all shipping (COVID's collapse in early 2020) cancels rather than
-reading as storm damage. 2,000 simulated paths give the range of normal. An event is <em>disrupted</em> if the
-deepest dip in the first two weeks falls below the 5th percentile of the same statistic in the simulated paths.
-<em>Recovery time</em> is the first day after the dip from which calls stay within the normal range for a full window.
-The smoothing window scales with traffic, about ten expected calls: 7 days at busy ports, 21 at half a call a day.</p>
+arm). "Category" is the Saffir–Simpson scale from 1-minute winds (JTWC/NHC), not the Australian or Fiji regional
+scale. The arm holds 213 events. 85 of them (34 storms) are at ports averaging ≥ 0.5 calls a day, with ≥ 270 days
+of history before and the follow-up the method needs after. The rest are 114 at quieter ports, 8 with too little
+follow-up and 6 with too little history.</p>
+<p><strong>What counts as a disruption.</strong> For each event, a negative-binomial model of the port's daily calls over the two
+years before, with weekday, seasonal and trend terms. It models the port's <em>share</em> of traffic at reference ports
+1,000–4,000 km away, so that a shock to all shipping (COVID's collapse in early 2020) cancels. 2,000 simulated paths
+give the range of normal. An event is <em>disrupted</em> if the deepest dip in the first 14 days falls below the 5th
+percentile of the same statistic in the simulated paths. At the quietest ports that window stretches to the
+smoothing-window length, up to 27 days. <em>Recovery time</em> is the first day from the deepest dip from which calls stay
+within the normal range for a full window. The smoothing window scales with traffic, about ten expected calls: 7
+days at busy ports, 21 at half a call a day.</p>
 <p><strong>What the method can see, worked out first.</strong> Synthetic ports with known closures, run through the identical
-algorithm (F1). At ≥ 2 calls a day, a complete closure of a week is caught every time. At one call a day, 78% of
-the time. At half a call, 30%, and a two-week closure 85%. False alarms run at 3–10%. When a closure is caught,
-the recovery time matches its true length to about a day.</p>
-<figure><a href="results/figures/F1_detectability.png"><img src="results/figures/F1_detectability.png" alt="Detection probability against closure length by port traffic"></a><figcaption>F1. What the method can detect. Simulated ports with a known complete closure, run through exactly the preregistered algorithm (120 replicates per point, dispersion 0.25; the full grid, including dispersion 1, is in results/tables/detectability.json). The value at 0 days is the false-alarm rate. Of the 62 Pacific island ports, 50 average under 0.5 calls a day and 7 more between 0.5 and 1.</figcaption></figure>
+algorithm (F1; the rows quoted use dispersion 0.25). At ≥ 2 calls a day, a complete week-long closure is caught
+every time. At one call a day, 78% of the time. At half a call, 30%, and a two-week closure 85%. The simulation
+uses independent noise. Real series have serially correlated swings, so the real false-alarm rate, measured after
+the review at storm-free dates, is higher: about 10% (below).</p>
+<figure><a href="results/figures/F1_detectability.png"><img src="results/figures/F1_detectability.png" alt="Detection probability against closure length by port traffic"></a><figcaption>F1. What the method can detect. Simulated ports with a known complete closure, run through exactly the preregistered algorithm (120 replicates per point, dispersion 0.25; the full grid, including dispersion 1, is in results/tables/detectability.json). The value at 0 days is the simulated false-alarm rate. The simulation draws independent noise; real port series vary more serially, and at storm-free dates the real pipeline flags 10% of runs, rising to 15% above two calls a day (deviations D8). Of the 62 Pacific island ports, 50 average under 0.5 calls a day and 7 more between 0.5 and 1.</figcaption></figure>
 <p><strong>Model.</strong> Part A: a logistic model for disrupted or not. Part B: a Weibull accelerated-failure-time model for
-recovery days among disrupted events, censored at 120. Both use log port size, log mean daily calls (the
-detectability control), category and distance. Part A intervals are clustered by storm. Part B intervals use a
-storm-cluster bootstrap (1,000 draws).</p>
+recovery days among disrupted events, censored at 120. Both use log port size, log mean daily calls (a
+detectability control), category and distance. Part A intervals are clustered by storm; part B intervals use a
+storm-cluster bootstrap.</p>
 <p><strong>Changed from the lead before any outcome (deviations D1).</strong> 50 of 62 Pacific island ports average under 0.5
-calls a day. Of 32 Pacific events in the primary arm, 5 were measurable, from 3 storms, three of them Cyclone
-Harold at the onset of COVID. So the Pacific became a case series. The island comparison widened to all small
-island developing states. Import concentration, with 85 events and 34 storms, became the primary. "Non-island"
-became "not a small island developing state", since Japan, the Philippines and Taiwan are islands.</p>
-<p><strong>Caught by the method's own tests before any real event (D2, D3).</strong> A pointwise 15-day rule gave 23% false
-alarms; it became one familywise test. An estimated COVID adjustment absorbed nothing; it became an offset. A
-fixed 7-day window could not see even a 28-day closure at half a call a day; it now scales with traffic. And the
-simulation itself silently scored invalid runs as undetected; fixed, and now an error.</p>
+calls a day. Of 32 Pacific events in the primary arm, 5 were measurable, from 3 storms. So the Pacific became a
+case series. The island comparison widened to all small island developing states, and import concentration became
+the primary. "Non-island" became "not a small island developing state".</p>
+<p><strong>Caught by the method's own tests before any real event (D2, D3).</strong> A pointwise rule gave 23% false alarms; it
+became one familywise test. An estimated COVID adjustment absorbed nothing; it became an offset. A fixed 7-day
+window could not see even a 28-day closure at half a call a day; it now scales with traffic.</p>
 <h2>Results</h2>
-<h3>H1: Inconclusive, close to Refuted, and the sign is the reverse of the lead's story</h3>
+<h3>H1: Inconclusive, and indistinguishable from chance</h3>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -263,12 +274,22 @@ simulation itself silently scored invalid runs as undetected; fixed, and now an 
 </tbody>
 </table></div>
 <p>All the gain is in part A, whether a disruption is detected at all (ΔAIC +4.2). Adding import share to part B makes
-the fit worse (−1.8). Its time ratio, 1.66, has a bootstrap interval of 0.17 to 670: these data say nothing about
-whether import share changes recovery <em>length</em>.</p>
-<p>In part A the direction is consistent across every specification. Ports carrying more of their country's imports
-were less often detectably disrupted. That fits one of the two mechanisms plan.md set out in advance: ships bound
-for a country's only port cannot divert, so they wait and return. But it is also what leftover detectability
-would produce, which the post-hoc checks below address.</p>
+the fit worse (−1.8), and its time ratio has a bootstrap interval of 0.17 to 670. These data say nothing about
+import share and recovery <em>length</em>.</p>
+<p>Two post-hoc checks (D8) say the part-A association should not be read as an import-concentration effect:</p>
+<ul>
+<li><strong>It is within chance.</strong> Shuffling import share across ports 400 times gives a null distribution of ΔAIC whose
+  95th percentile is 5.0. The observed 2.33 is exceeded 14% of the time. (For the Cat 1+ arm the reviewer's
+  permutation gives p = 0.003, so an association exists there, but see the next point.)</li>
+<li><strong>It tracks how many ports a country has.</strong> PortWatch's share is within-country, so a port in a one-port country
+  has share 1 by construction. Across the 85 events, share correlates −0.79 with log(number of PortWatch ports in
+  the country). Adding that variable turns the share coefficient positive (+2.6, p = 0.24); the port-count
+  variable carries the association (+1.26, p = 0.008). In the Cat 1+ arm, share goes to −0.37 (p = 0.72). Ports in
+  China, the US, Japan, Taiwan and the Philippines were more often detectably disrupted than ports elsewhere.</li>
+</ul>
+<p>Candidate reasons include pre-emptive typhoon closures at Chinese and Japanese ports (short, clean, detectable
+dips), AIS density, storm geometry (landfalls versus offshore passes), relief shipping raising calls at island
+ports after a disaster, and the busy-port false alarms below. None of them is import concentration.</p>
 <h3>H2: Inconclusive, because there was almost nothing to time</h3>
 <div class="table-wrap"><table>
 <thead>
@@ -277,7 +298,7 @@ would produce, which the post-hoc checks below address.</p>
 <th>events</th>
 <th>storms</th>
 <th>detectably disrupted</th>
-<th>median recovery if disrupted</th>
+<th>at storm-free placebo dates</th>
 </tr>
 </thead>
 <tbody>
@@ -286,14 +307,14 @@ would produce, which the post-hoc checks below address.</p>
 <td>17</td>
 <td>8</td>
 <td><strong>1</strong> (Kingston, Melissa 2025: 2 days)</td>
-<td>—</td>
+<td>3 of 49 runs (6%)</td>
 </tr>
 <tr>
 <td>other ports</td>
 <td>68</td>
 <td>27</td>
-<td>27 (40%)</td>
-<td><strong>6 days</strong> (p90: 34)</td>
+<td>27 (40%); median recovery 6 days, p90 34</td>
+<td>23 of 209 runs (11%)</td>
 </tr>
 <tr>
 <td>Pacific island ports (subset of the first row)</td>
@@ -304,31 +325,49 @@ would produce, which the post-hoc checks below address.</p>
 </tr>
 </tbody>
 </table></div>
-<p>With one disrupted small-island event, part B cannot estimate a small-island time ratio. The preregistered guard
-(D4) makes H2 Inconclusive rather than report a number fitted to one event. Part A has an odds ratio for
-small-island ports of 0.09 (0.01–1.43, p = 0.09). In the Cat 1+ arm, where 5 of 53 small-island events were
-disrupted, the adjusted time ratio is 0.80 (0.15–3.89). That is also Inconclusive, but its point estimate is
-nowhere near 2.</p>
-<figure><a href="results/figures/F2_events.png"><img src="results/figures/F2_events.png" alt="Recovery days against port traffic for every measurable event"></a><figcaption>F2. Every primary-arm event (Category 3+ within 150 km) whose port averages at least 0.5 calls a day and has the history and follow-up the method needs: 85 events, 34 storms. Filled markers are detected disruptions, plotted at their recovery time; hollow markers are events with no detectable disruption, jittered around zero. Another 49 small-island events, at ports below 0.5 calls a day, could not be analysed. The shaded band is where simulation shows a complete week-long closure is detected less than 80% of the time.</figcaption></figure>
-<p><strong>External check.</strong> The median recovery among detected disruptions at other ports, 6 days, is the median Verschuur
-et al. (2020) found from AIS at 74 ports. The two studies differ in method, period and port set.</p>
-<h3>Post hoc: is "less often disrupted" just "harder to see"? (D7)</h3>
-<p>Part A controls for detectability with a straight line in log traffic. But the simulation shows detectability is
-a steep threshold. Small-island events have less power to show a week-long closure: on average 0.66, against 0.86
-elsewhere. For a two-week closure the gap almost closes: 0.95 against 0.98. Three checks, written and committed
-after the results were seen and before they ran:</p>
+<p>With one disrupted small-island event, part B cannot estimate a small-island time ratio. H2 is reported as
+Inconclusive by a guard (fewer than 3 disrupted small-island events → not estimable). The guard was <strong>added in D4
+after the descriptive table was seen; it was not preregistered.</strong> The alternatives give different answers:</p>
 <ul>
-<li><strong>Simulated power as the control.</strong> Each event gets its simulated power to detect a 7-day closure in place of log
-  traffic. The import-share odds ratio moves to 0.85 (0.66–1.10, p = 0.21). The small-island ratio stays 0.09
-  (0.00–1.79).</li>
-<li><strong>High-power events only</strong> (≥ 80% power for a 7-day closure; 56 events, 28 storms). Import share: 0.79
-  (0.58–1.09). Small-island ports: 1 of 6 disrupted, against 42% elsewhere.</li>
+<li>the D4 code without the guard (storm bootstrap): time ratio 0.40, interval 0.14–1.34, which would be <strong>Refuted</strong>;</li>
+<li>lifelines' own interval: 0.40 (0.06–2.61), which would be Inconclusive;</li>
+<li>a pooled measure, mean recovery days counting undisrupted events as 0: 0.12 days at small-island ports against
+  5.84 elsewhere, ratio 0.02 (0.00–0.09).</li>
 </ul>
+<p>The lead's directional claim, that small island ports are slower, is therefore contradicted in the pooled sense.
+In the conditional sense, recovery time among disrupted events, it is untestable here. In the Cat 1+ arm, where 5 of
+53 small-island events were disrupted, the adjusted time ratio is 0.80 (0.15–3.89).</p>
+<figure><a href="results/figures/F2_events.png"><img src="results/figures/F2_events.png" alt="Recovery days against port traffic for every measurable event"></a><figcaption>F2. Every primary-arm event (Category 3+ within 150 km) whose port averages at least 0.5 calls a day and has the history and follow-up the method needs: 85 events, 34 storms. Filled markers are detected disruptions, plotted at their recovery time; hollow markers are events with no detectable disruption, jittered around zero. Another 49 small-island events, at ports below 0.5 calls a day, could not be analysed. The shaded band is where simulation shows a complete week-long closure is detected less than 80% of the time. At storm-free placebo dates the same pipeline flags 10% of runs (6% at small-island ports, 15% above two calls a day; deviations D8), so about 9 of the 28 detections are expected false alarms.</figcaption></figure>
+<p><strong>External check, with a caveat.</strong> The median recovery among detected disruptions at other ports, 6 days, equals
+Verschuur et al.'s (2020) AIS median. But at the placebo false-alarm rate, about 7 of the 27 non-small-island
+detections are expected to be false alarms. Those carry spurious "recovery times" of median 34 days (10 of 26
+censored at 120), so the 6-day median and 34-day p90 describe a mixture.</p>
+<p><strong>Two influential events.</strong> Lake Charles (56 days) and Calcasieu Pass (60 days) after Hurricane Laura were hit
+by Hurricane Delta on days 43–44. Censoring them at day 43 barely changes part B. Cebu after Typhoon Rai (December
+2021) is the only disrupted event censored at 120 days. Its calls stayed at about half their earlier level for all
+of 2022, a level shift whose cause (storm damage, Omicron, or a counting change) the series cannot tell. Without
+Cebu, part B's category effect falls from ×3.1 to ×0.9 per category step. That matters for the forecast below.</p>
+<h3>Post hoc: what the small-island result can and cannot carry (D7, D8)</h3>
+<p><strong>Exposure.</strong> "Category 3+ within 150 km" describes the storm, not what the port felt. Using IBTrACS's 64-kt wind
+radii in the quadrant facing the port, only 6 of the 17 small-island events were inside hurricane-force winds:
+Nouméa/Niran, Apra Harbor/Mawar, Kingston/Beryl, Mariel/Rafael, Santiago de Cuba/Melissa and Montego Bay/Melissa.
+Inside those radii: small-island ports 0 of 6 disrupted, other ports 14 of 23 (Fisher p = 0.017). Outside: 1 of 11
+against 8 of 34 (p = 0.42). Radii were missing for 11 other-port events.</p>
+<p><strong>Event-specific power.</strong> Closures were simulated under each event's own fitted counterfactual, reference index and
+threshold (100 replicates each). For a complete 14-day closure the mean power across the 17 events is 0.93, but it
+is 0.33 at Santiago de Cuba/Melissa (whose calls rose after the storm, consistent with relief shipping) and 0.79 at
+Montego Bay/Melissa. For a week-long closure the mean is 0.61, and 10 of 17 events are below 0.8. Partial
+disruption is mostly invisible: calls halved for 14 days are caught 45% of the time on average, halved for 28 days
+57%. Fifteen of 17 events are below 0.8 for both.</p>
+<p><strong>So the surviving claim is narrow.</strong> Four measurable small-island harbours took hurricane-force winds with near-1
+power for a two-week complete closure: Nouméa, Apra Harbor, Kingston under Beryl, and Mariel under Rafael. None
+showed one. At the two Melissa direct hits it could not have been seen reliably. A half-capacity month could have
+been missed almost anywhere.</p>
+<p><strong>Detectability as a control.</strong> Small-island events have less power to show a week-long closure (0.66 against 0.86
+by the simulation grid). Replacing part A's straight-line traffic control with each event's simulated power shrinks
+the import-share log-odds by about a third (to an odds ratio of 0.85, 0.66–1.10, p = 0.21). The small-island odds
+ratio stays at 0.09 (0.00–1.79).</p>
 <figure><a href="results/figures/F3_odds_ratios.png"><img src="results/figures/F3_odds_ratios.png" alt="Odds ratios of a detectable disruption for import share and small-island ports"></a><figcaption>F3. Part A of the two-part model: the odds of a detectable disruption, with 95% intervals clustered by storm. The preregistered model controls for detectability with log mean daily calls; the post-hoc rows (deviations D7) replace that with each event&#x27;s simulated power to detect a 7-day closure, or keep only events where that power is at least 80%. The direction holds throughout, but once detectability is controlled properly neither interval excludes 1.</figcaption></figure>
-<p>The direction survives, but neither association is distinguishable from zero once detectability is handled
-properly. Part of the preregistered import-share signal was very likely detectability. What survives every check
-is the simplest fact: at the small-island ports where a two-week complete closure would have been seen about 95%
-of the time, one disruption was seen in 17 events, and it lasted two days.</p>
 <h3>The Pacific case series</h3>
 <div class="table-wrap"><table>
 <thead>
@@ -336,8 +375,9 @@ of the time, one disruption was seen in 17 events, and it lasted two days.</p>
 <th>port</th>
 <th>storm</th>
 <th>traffic (calls/day)</th>
-<th>shortest closure caught 80% of the time</th>
-<th>power for 14 days</th>
+<th>hurricane-force winds at port</th>
+<th>power, complete 14-day closure</th>
+<th>power, halved 28 days</th>
 <th>dip (observed ÷ expected)</th>
 <th>threshold</th>
 <th>disrupted</th>
@@ -348,8 +388,9 @@ of the time, one disruption was seen in 17 events, and it lasted two days.</p>
 <td>Lautoka, Fiji</td>
 <td>Harold, Apr 2020 (Cat 4, 111 km)</td>
 <td>0.99</td>
-<td>10 days</td>
+<td>no</td>
 <td>1.00</td>
+<td>0.41</td>
 <td>0.93</td>
 <td>0.24</td>
 <td>no</td>
@@ -358,8 +399,9 @@ of the time, one disruption was seen in 17 events, and it lasted two days.</p>
 <td>Suva, Fiji</td>
 <td>Harold, Apr 2020 (Cat 4, 103 km)</td>
 <td>1.02</td>
-<td>10 days</td>
+<td>no</td>
 <td>1.00</td>
+<td>0.52</td>
 <td>0.88</td>
 <td>0.24</td>
 <td>no</td>
@@ -368,8 +410,9 @@ of the time, one disruption was seen in 17 events, and it lasted two days.</p>
 <td>Nuku'alofa, Tonga</td>
 <td>Harold, Apr 2020 (Cat 4, 115 km)</td>
 <td>0.54</td>
-<td>14 days</td>
-<td>0.87</td>
+<td>no</td>
+<td>0.96</td>
+<td>0.51</td>
 <td>0.64</td>
 <td>0.36</td>
 <td>no</td>
@@ -378,8 +421,9 @@ of the time, one disruption was seen in 17 events, and it lasted two days.</p>
 <td>Nouméa, New Caledonia</td>
 <td>Niran, Mar 2021 (Cat 3, 50 km)</td>
 <td>1.44</td>
-<td>7 days</td>
+<td>yes</td>
 <td>1.00</td>
+<td>0.63</td>
 <td>0.38</td>
 <td>0.30</td>
 <td>no (close)</td>
@@ -388,8 +432,9 @@ of the time, one disruption was seen in 17 events, and it lasted two days.</p>
 <td>Apra Harbor, Guam</td>
 <td>Mawar, May 2023 (Cat 4, 37 km)</td>
 <td>0.87</td>
-<td>10 days</td>
-<td>0.97</td>
+<td>yes</td>
+<td>1.00</td>
+<td>0.51</td>
 <td>0.78</td>
 <td>0.36</td>
 <td>no</td>
@@ -398,16 +443,16 @@ of the time, one disruption was seen in 17 events, and it lasted two days.</p>
 </table></div>
 <p>The other 27 Pacific events in the primary arm could not be analysed. 26 are at ports below 0.5 calls a day,
 including Luganville under Harold's eye, Savusavu under Yasa, and every Saipan, Tinian and Rota event. The
-remaining one is Apra Harbor under Bavi in July 2026, with too little follow-up yet. At those ports, even a
-month-long closure is uncertain to show in ship calls. Nouméa under Niran came closest: calls fell to 38% of
-expected against a threshold of 30%.</p>
+remaining one is Apra Harbor under Bavi (July 2026), with too little follow-up yet. The strongest hits on Pacific
+main harbours in recent memory (Pam at Port Vila 2015, Winston at Suva and Lautoka 2016, Gita at Nuku'alofa 2018)
+predate PortWatch.</p>
 <h3>The frozen forecast for 2026–27</h3>
 <p>The forecast model has base covariates, import share and the small-island indicator in part A. Part B drops the
 indicator, because one disrupted event cannot estimate it (D5). It was fitted once and frozen on 2026-10-17:</p>
 <pre><code>forecast_model.json  0cbaa6e125ad071f05641a2c3ad58f096c4ad993bbef50220ed77ff6e43b8d25
 forecast_table.csv   26e6c7aa3693f2734372e5ca153d38c0daa8ee85b5d3fd19d0c7e73e635f45c3
 </code></pre>
-<p>For a Category 4 cyclone passing 75 km away:</p>
+<p>For a Category 4 cyclone passing 75 km away (alphabetical; this is not a ranking):</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -418,43 +463,8 @@ forecast_table.csv   26e6c7aa3693f2734372e5ca153d38c0daa8ee85b5d3fd19d0c7e73e635
 </thead>
 <tbody>
 <tr>
-<td>Port Moresby, Papua New Guinea</td>
-<td>0.15</td>
-<td>17</td>
-</tr>
-<tr>
-<td>Lae, Papua New Guinea</td>
-<td>0.15</td>
-<td>16</td>
-</tr>
-<tr>
-<td>Rabaul, Papua New Guinea</td>
-<td>0.10</td>
-<td>14</td>
-</tr>
-<tr>
-<td>Kimbe, Papua New Guinea</td>
-<td>0.09</td>
-<td>14</td>
-</tr>
-<tr>
-<td>Nouméa, New Caledonia</td>
-<td>0.08</td>
-<td>19</td>
-</tr>
-<tr>
-<td>Lautoka, Fiji</td>
-<td>0.08</td>
-<td>18</td>
-</tr>
-<tr>
-<td>Suva, Fiji</td>
-<td>0.08</td>
-<td>18</td>
-</tr>
-<tr>
-<td>Papeete, French Polynesia</td>
-<td>0.04</td>
+<td>Apia, Samoa</td>
+<td>0.02</td>
 <td>23</td>
 </tr>
 <tr>
@@ -468,57 +478,121 @@ forecast_table.csv   26e6c7aa3693f2734372e5ca153d38c0daa8ee85b5d3fd19d0c7e73e635
 <td>22</td>
 </tr>
 <tr>
-<td>Nuku'alofa, Tonga</td>
-<td>0.03</td>
-<td>23</td>
+<td>Kimbe, Papua New Guinea</td>
+<td>0.09</td>
+<td>14</td>
 </tr>
 <tr>
-<td>Apia, Samoa</td>
+<td>Lae, Papua New Guinea</td>
+<td>0.15</td>
+<td>16</td>
+</tr>
+<tr>
+<td>Lautoka, Fiji</td>
+<td>0.08</td>
+<td>18</td>
+</tr>
+<tr>
+<td>Nouméa, New Caledonia</td>
+<td>0.08</td>
+<td>19</td>
+</tr>
+<tr>
+<td>Nuku'alofa, Tonga</td>
 <td>0.02</td>
 <td>23</td>
 </tr>
+<tr>
+<td>Papeete, French Polynesia</td>
+<td>0.04</td>
+<td>23</td>
+</tr>
+<tr>
+<td>Port Moresby, Papua New Guinea</td>
+<td>0.15</td>
+<td>17</td>
+</tr>
+<tr>
+<td>Rabaul, Papua New Guinea</td>
+<td>0.10</td>
+<td>14</td>
+</tr>
+<tr>
+<td>Suva, Fiji</td>
+<td>0.08</td>
+<td>18</td>
+</tr>
 </tbody>
 </table></div>
-<p>The full table covers Category 3, 4 and 5 at 25, 75 and 125 km. Chances of disruption run from 0.003 to 0.56.
-Medians are a Weibull extrapolation; at the quietest ports and strongest storms they exceed the 120-day horizon.
-<code>code/score_forecast.py</code> was committed with the plan. It scores the forecast against the historical benchmarks
-(share disrupted 0.33; median recovery 5.5 days) once PortWatch covers 30 April 2027 plus 135 days, about
-September 2027. With fewer than three qualifying events, the score will be reported and not interpreted.</p>
+<p>How to read it:</p>
+<ul>
+<li><strong>The chances mostly track traffic.</strong> Part A's coefficient on log mean daily calls is 1.11, so the busier PNG
+  ports score higher because a disruption there is easier to see, not because they are more vulnerable.</li>
+<li><strong>The medians rest on two choices.</strong> Had part B kept the small-island indicator, as the plan specified, they
+  would be about four times shorter: Port Moresby 4 days instead of 17, Suva 5 instead of 18, Apia 12 instead of
+  23. D5 was made after H1 and H2 were seen.</li>
+<li><strong>The category effect behind the medians rests on Cebu.</strong> It depends on one censored event (Cebu/Rai); without
+  it the effect vanishes. Medians above the 120-day horizon (nine rows, all Category 5 at 25 km) extrapolate beyond
+  the fitting data, which contain no Category 5 event.</li>
+</ul>
+<p>The forecast file stays frozen. The scorer, <code>code/score_forecast.py</code>, was revised after the review so that it runs
+without judgement calls (D8):</p>
+<ul>
+<li>It checks the model's hash.</li>
+<li>It uses the frozen 2026 port covariates (<code>forecast_port_covariates.csv</code>, verified to reproduce all 108 forecast
+  rows).</li>
+<li>It rebuilds the season's events from a new vintage without touching the sealed data.</li>
+<li>It scores recovery with censoring, and reports Brier scores against both the all-port benchmark (0.33) and the
+  small-island rate (0.06).</li>
+</ul>
+<p>A dry run on the 2019–20 season reproduces the three Harold events. Scoring is due once PortWatch covers 30 April
+2027 plus 135 days, about September 2027. With fewer than three events the score will be reported and not
+interpreted.</p>
 <h2>What this does and does not show</h2>
-<p><strong>It shows</strong> that at the small-island ports busy enough to measure, complete closures of two weeks or more after
-Category 3+ cyclones were not what happened, 2019–2026. The method's power for such a closure was about 0.95, and
-16 of 17 events showed no disruption at all. It also shows that the question the lead asked cannot be answered
-from ship calls for most Pacific ports, and how quiet a port must be before the answer runs out (F1).</p>
-<p><strong>It does not show</strong> that small island ports are resilient. Five reasons:</p>
+<p><strong>It shows</strong> three things. First, at the four measurable small-island harbours that took hurricane-force winds and
+where the method had near-full power, there was no complete two-week closure (2019–2026). Second, import share as
+PortWatch defines it is not a usable predictor of port recovery: its signal is within chance and is carried by
+country port counts. Third, most Pacific ports are too quiet for ship-call records to answer the lead's question,
+and F1 shows where that limit lies.</p>
+<p><strong>It does not show</strong> that small island ports are resilient. Eleven reasons:</p>
 <ol>
 <li><strong>Port calls are not cargo.</strong> A port can receive ships while cranes, warehouses or roads are down.</li>
 <li><strong>The hardest-hit ports are mostly the quiet ones.</strong> 49 of 68 small-island events in the primary arm were at
-   ports too quiet to analyse. The ports that were measurable are the main national harbours, typically the
-   best protected and first to be reopened.</li>
-<li><strong>The record misses the worst case in the window.</strong> PortWatch starts in January 2019. So Hurricane Dorian's
-   devastation of Freeport, Bahamas (September 2019) has too little prior history for the counterfactual and is
-   excluded.</li>
-<li><strong>Partial disruption is harder to see than closure.</strong> The simulation used complete closures. Halved traffic
-   for a month is less detectable.</li>
-<li><strong>Disruptions starting more than two weeks after the storm</strong> (supply-chain knock-ons) are outside the test
-   window.</li>
+   ports too quiet to analyse. The measurable ones are main national harbours.</li>
+<li><strong>Partial disruption is mostly invisible</strong> (calls halved for a month: 57% power on average).</li>
+<li><strong>Exposure is thin.</strong> Only 6 measurable small-island events were inside hurricane-force winds, and two of
+   those were beyond the method's power.</li>
+<li><strong>Small vessels are outside the data.</strong> PortWatch counts AIS-equipped cargo and tanker vessels, not the small
+   inter-island boats that carry much of the Pacific's domestic supply.</li>
+<li><strong>Relief and naval shipping</strong> can raise call counts after a disaster (Santiago de Cuba after Melissa).</li>
+<li><strong>Second storms</strong> inside the 120-day window (Laura then Delta).</li>
+<li><strong>The worst cases predate the record.</strong> PortWatch starts in 2019, after Pam, Winston and Gita, and Dorian's
+   devastation of Freeport (September 2019) has too little prior history to analyse.</li>
+<li><strong>Metering gaps:</strong> AIS coverage loss at a port, PortWatch revisions, and anchorage calls outside the port
+   polygon.</li>
+<li><strong>Disruptions starting more than about two weeks after the storm</strong> fall outside the test window.</li>
+<li><strong>The detection threshold carries Monte Carlo noise.</strong> The reviewer's eight-seed rerun gives 28 ± 1
+    detections; no small-island verdict is near its threshold.</li>
 </ol>
-<p>The import-concentration result is weaker than its preregistered p-value suggests. AIC with 34 storm clusters is
-overconfident, and the post-hoc power control halves the signal. The direction (less often disrupted, not slower)
-is worth testing with cargo or berth data, not AIS calls.</p>
+<p>"Small island developing state" is the UN label. It includes territories of the US, France and the UK (Guam, the
+Northern Marianas, New Caledonia, the Turks and Caicos), so it does not describe a port's resources. The code's list
+also includes Bahrain, which is no longer on the UN list; Bahrain has no events, so this is immaterial.</p>
 <h2>Process and deviations</h2>
-<p>Seven logged deviations (<code>deviations.md</code>):</p>
+<p>Eight logged deviations (<code>deviations.md</code>):</p>
 <ul>
 <li>D1: hypotheses restated before any outcome.</li>
 <li>D2, D3: method flaws caught by tests.</li>
-<li>D4: <code>analysis.py</code> crashed on first run, because lifelines' AFT fitter has no cluster option. Only descriptive
-  tables were produced. The fix (storm bootstrap) and new tests were committed before the rerun.</li>
+<li>D4: <code>analysis.py</code> crashed on first run. The fix and new tests were committed before the rerun. The H2 guard
+  added there is post hoc.</li>
 <li>D5: the forecast's part B drops the small-island indicator.</li>
 <li>D6: forecast hashes.</li>
 <li>D7: post-hoc detectability checks.</li>
+<li>D8: acting on the adversarial review (fix first, 21 issues). It added the placebo, exposure, event-power,
+  country-port, permutation and H2 checks (<code>code/review_response.py</code>). It also revised the scorer and corrected
+  <code>recovery.py</code>'s docstring, whose code is unchanged since the plan.</li>
 </ul>
-<p>Code was committed before the outcomes it produced. The plan is at d12c3f0, the analysis fix at 3c194e6, and the
-results and frozen forecast at 0c928af.</p>
+<p>Code was committed before the outcomes it produced. The plan is at d12c3f0, the analysis fix at 3c194e6, the
+results and frozen forecast at 0c928af, and the review response at e230de9.</p>
 <h2>Reproducing it</h2>
 <pre><code>bash code/download.sh                    # PortWatch + IBTrACS; compare data/raw/VINTAGE.txt
 venv/bin/python code/events.py           # cyclone-port events from tracks and coordinates only
@@ -528,11 +602,13 @@ venv/bin/python code/recovery.py         # every event's counterfactual, disrupt
 venv/bin/python code/test_analysis.py    # 6 synthetic checks of the models
 venv/bin/python code/analysis.py         # H1, H2, arms, sensitivities -&gt; results/tables/primary.json
 venv/bin/python code/supplementary.py    # post-hoc checks, Pacific case series
+venv/bin/python code/review_response.py  # placebo, exposure, event power, confounds (~20 min)
 venv/bin/python code/figures.py
 </code></pre>
 <p>Released: <code>results/tables/recovery_events.csv</code> (every event, its status, disruption and recovery time),
-<code>events_all.csv</code>, <code>detectability.json</code>, <code>primary.json</code>, <code>supplementary.json</code>, <code>pacific_case_series.csv</code>, and the
-frozen forecast. PortWatch and IBTrACS are public and not redistributed.</p>
+<code>events_all.csv</code>, <code>detectability.json</code>, <code>primary.json</code>, <code>supplementary.json</code>, <code>review_response.json</code>,
+<code>placebo_false_alarms.csv</code>, <code>exposure_primary.csv</code>, <code>event_power_sids.csv</code>, <code>pacific_case_series.csv</code>, and the frozen
+forecast with its covariates. PortWatch and IBTrACS are public and not redistributed.</p>
 </main>
 <footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
 A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the

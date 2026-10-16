@@ -1,0 +1,341 @@
+portid,d0,shift,status,disrupted,T,event,own_disrupted,mean_calls,portname,storm,sids
+port2055,2019-12-24,-365,short_history,,,,,1.1813902968863144,Iloilo,PHANFONE,False
+port2055,2019-12-24,365,ok,False,0.0,1.0,False,1.1813902968863144,Iloilo,PHANFONE,False
+port2055,2019-12-24,-200,short_history,,,,,1.1813902968863144,Iloilo,PHANFONE,False
+port2055,2019-12-24,200,ok,False,0.0,1.0,False,1.1813902968863144,Iloilo,PHANFONE,False
+port836,2020-04-08,-365,short_history,,,,,0.5438088341781318,Nuku'alofa,HAROLD,True
+port836,2020-04-08,365,ok,False,0.0,1.0,False,0.5438088341781318,Nuku'alofa,HAROLD,True
+port836,2020-04-08,-200,storm_in_window,,,,,,Nuku'alofa,HAROLD,True
+port836,2020-04-08,200,ok,False,0.0,1.0,False,0.5438088341781318,Nuku'alofa,HAROLD,True
+port636,2020-04-07,-365,short_history,,,,,0.9887762490948588,Lautoka,HAROLD,True
+port636,2020-04-07,365,ok,False,0.0,1.0,False,0.9887762490948588,Lautoka,HAROLD,True
+port636,2020-04-07,-200,short_history,,,,,0.9887762490948588,Lautoka,HAROLD,True
+port636,2020-04-07,200,storm_in_window,,,,,,Lautoka,HAROLD,True
+port1240,2020-04-08,-365,short_history,,,,,1.0220854453294714,Suva,HAROLD,True
+port1240,2020-04-08,365,ok,False,0.0,1.0,False,1.0220854453294714,Suva,HAROLD,True
+port1240,2020-04-08,-200,storm_in_window,,,,,,Suva,HAROLD,True
+port1240,2020-04-08,200,storm_in_window,,,,,,Suva,HAROLD,True
+port883,2020-05-20,-365,storm_in_window,,,,,,Paradip,AMPHAN,False
+port883,2020-05-20,365,ok,True,8.0,1.0,True,3.5184648805213614,Paradip,AMPHAN,False
+port883,2020-05-20,-200,storm_in_window,,,,,,Paradip,AMPHAN,False
+port883,2020-05-20,200,ok,False,0.0,1.0,False,3.5184648805213614,Paradip,AMPHAN,False
+port134,2020-08-27,-365,short_history,,,,,3.391745112237509,Beaumont,LAURA,False
+port134,2020-08-27,365,ok,False,0.0,1.0,False,3.391745112237509,Beaumont,LAURA,False
+port134,2020-08-27,-200,ok,False,0.0,1.0,False,3.391745112237509,Beaumont,LAURA,False
+port134,2020-08-27,200,ok,False,0.0,1.0,False,3.391745112237509,Beaumont,LAURA,False
+port933,2020-08-27,-365,short_history,,,,,3.2487328023171615,Port Arthur,LAURA,False
+port933,2020-08-27,365,ok,False,0.0,1.0,False,3.2487328023171615,Port Arthur,LAURA,False
+port933,2020-08-27,-200,ok,False,0.0,1.0,False,3.2487328023171615,Port Arthur,LAURA,False
+port933,2020-08-27,200,ok,False,0.0,1.0,False,3.2487328023171615,Port Arthur,LAURA,False
+port629,2020-08-27,-365,short_history,,,,,2.16908037653874,Lake Charles,LAURA,False
+port629,2020-08-27,365,storm_in_window,,,,,,Lake Charles,LAURA,False
+port629,2020-08-27,-200,ok,False,0.0,1.0,False,2.16908037653874,Lake Charles,LAURA,False
+port629,2020-08-27,200,ok,False,0.0,1.0,False,2.16908037653874,Lake Charles,LAURA,False
+port2388,2020-08-27,-365,short_history,,,,,1.6759594496741492,Sabine Pass,LAURA,False
+port2388,2020-08-27,365,ok,False,0.0,1.0,False,1.6759594496741492,Sabine Pass,LAURA,False
+port2388,2020-08-27,-200,ok,False,0.0,1.0,False,1.6759594496741492,Sabine Pass,LAURA,False
+port2388,2020-08-27,200,ok,False,0.0,1.0,False,1.6759594496741492,Sabine Pass,LAURA,False
+port2480,2020-08-27,-365,short_history,,,,,0.7103548153511948,Calcasieu Pass LNG Terminal,LAURA,False
+port2480,2020-08-27,365,ok,False,0.0,1.0,False,0.7103548153511948,Calcasieu Pass LNG Terminal,LAURA,False
+port2480,2020-08-27,-200,ok,False,0.0,1.0,False,0.7103548153511948,Calcasieu Pass LNG Terminal,LAURA,False
+port2480,2020-08-27,200,ok,False,0.0,1.0,False,0.7103548153511948,Calcasieu Pass LNG Terminal,LAURA,False
+port2040,2020-08-31,-365,storm_in_window,,,,,,Naha,MAYSAK,False
+port2040,2020-08-31,365,ok,False,0.0,1.0,False,4.828747284576394,Naha,MAYSAK,False
+port2040,2020-08-31,-200,ok,False,0.0,1.0,False,4.828747284576394,Naha,MAYSAK,False
+port2040,2020-08-31,200,ok,False,0.0,1.0,False,4.828747284576394,Naha,MAYSAK,False
+port2173,2020-08-31,-365,storm_in_window,,,,,,Henza Island,MAYSAK,False
+port2173,2020-08-31,365,ok,False,0.0,1.0,False,0.8381607530774801,Henza Island,MAYSAK,False
+port2173,2020-08-31,-200,ok,False,0.0,1.0,False,0.8381607530774801,Henza Island,MAYSAK,False
+port2173,2020-08-31,200,ok,False,0.0,1.0,False,0.8381607530774801,Henza Island,MAYSAK,False
+port2180,2020-08-31,-365,storm_in_window,,,,,,Kinwan,MAYSAK,False
+port2180,2020-08-31,365,ok,False,0.0,1.0,False,0.6310644460535844,Kinwan,MAYSAK,False
+port2180,2020-08-31,-200,ok,True,120.0,0.0,False,0.6310644460535844,Kinwan,MAYSAK,False
+port2180,2020-08-31,200,ok,False,0.0,1.0,False,0.6310644460535844,Kinwan,MAYSAK,False
+port352,2020-10-28,-365,ok,True,120.0,0.0,True,1.7005792903692976,Fourchon,ZETA,False
+port352,2020-10-28,365,ok,False,0.0,1.0,False,1.7005792903692976,Fourchon,ZETA,False
+port352,2020-10-28,-200,ok,False,0.0,1.0,True,1.7005792903692976,Fourchon,ZETA,False
+port352,2020-10-28,200,storm_in_window,,,,,,Fourchon,ZETA,False
+port2278,2020-11-16,-365,ok,False,0.0,1.0,False,0.554670528602462,San Andres,IOTA,False
+port2278,2020-11-16,365,ok,False,0.0,1.0,False,0.554670528602462,San Andres,IOTA,False
+port2278,2020-11-16,-200,ok,False,0.0,1.0,False,0.554670528602462,San Andres,IOTA,False
+port2278,2020-11-16,200,ok,False,0.0,1.0,False,0.554670528602462,San Andres,IOTA,False
+port832,2021-03-06,-365,ok,False,0.0,1.0,False,1.4377262853005068,Noumea,NIRAN,True
+port832,2021-03-06,365,storm_in_window,,,,,,Noumea,NIRAN,True
+port832,2021-03-06,-200,ok,False,0.0,1.0,False,1.4377262853005068,Noumea,NIRAN,True
+port832,2021-03-06,200,ok,False,0.0,1.0,False,1.4377262853005068,Noumea,NIRAN,True
+port511,2021-05-16,-365,storm_in_window,,,,,,Jaigad Port,TAUKTAE,False
+port511,2021-05-16,365,ok,True,120.0,0.0,True,1.7099927588703838,Jaigad Port,TAUKTAE,False
+port511,2021-05-16,-200,ok,False,0.0,1.0,False,1.7099927588703838,Jaigad Port,TAUKTAE,False
+port511,2021-05-16,200,ok,False,0.0,1.0,False,1.7099927588703838,Jaigad Port,TAUKTAE,False
+port776,2021-05-17,-365,storm_in_window,,,,,,Mumbai-Jawaharlal Nehru (Nhava Sheva),TAUKTAE,False
+port776,2021-05-17,365,ok,False,0.0,1.0,False,18.32729905865315,Mumbai-Jawaharlal Nehru (Nhava Sheva),TAUKTAE,False
+port776,2021-05-17,-200,ok,False,0.0,1.0,False,18.32729905865315,Mumbai-Jawaharlal Nehru (Nhava Sheva),TAUKTAE,False
+port776,2021-05-17,200,ok,False,0.0,1.0,False,18.32729905865315,Mumbai-Jawaharlal Nehru (Nhava Sheva),TAUKTAE,False
+port907,2021-05-17,-365,ok,False,0.0,1.0,False,2.3667632150615496,Pipavav Port,TAUKTAE,False
+port907,2021-05-17,365,ok,False,0.0,1.0,False,2.3667632150615496,Pipavav Port,TAUKTAE,False
+port907,2021-05-17,-200,ok,False,0.0,1.0,False,2.3667632150615496,Pipavav Port,TAUKTAE,False
+port907,2021-05-17,200,ok,False,0.0,1.0,False,2.3667632150615496,Pipavav Port,TAUKTAE,False
+port1332,2021-08-21,-365,ok,False,0.0,1.0,False,1.16908037653874,Tuxpan,GRACE,False
+port1332,2021-08-21,365,ok,False,0.0,1.0,False,1.16908037653874,Tuxpan,GRACE,False
+port1332,2021-08-21,-200,ok,False,0.0,1.0,False,1.16908037653874,Tuxpan,GRACE,False
+port1332,2021-08-21,200,ok,False,0.0,1.0,False,1.16908037653874,Tuxpan,GRACE,False
+port812,2021-08-30,-365,storm_in_window,,,,,,New Orleans,IDA,False
+port812,2021-08-30,365,ok,False,0.0,1.0,False,14.818609703113685,New Orleans,IDA,False
+port812,2021-08-30,-200,ok,False,0.0,1.0,False,14.818609703113685,New Orleans,IDA,False
+port812,2021-08-30,200,ok,False,0.0,1.0,False,14.818609703113685,New Orleans,IDA,False
+port352,2021-08-29,-365,storm_in_window,,,,,,Fourchon,IDA,False
+port352,2021-08-29,365,ok,False,0.0,1.0,False,1.7005792903692976,Fourchon,IDA,False
+port352,2021-08-29,-200,ok,False,0.0,1.0,False,1.7005792903692976,Fourchon,IDA,False
+port352,2021-08-29,200,ok,False,0.0,1.0,False,1.7005792903692976,Fourchon,IDA,False
+port2329,2021-08-29,-365,storm_in_window,,,,,,Plaquemines,IDA,False
+port2329,2021-08-29,365,ok,False,0.0,1.0,False,1.7748008689355539,Plaquemines,IDA,False
+port2329,2021-08-29,-200,ok,False,0.0,1.0,False,1.7748008689355539,Plaquemines,IDA,False
+port2329,2021-08-29,200,ok,False,0.0,1.0,False,1.7748008689355539,Plaquemines,IDA,False
+port238,2021-09-12,-365,ok,False,0.0,1.0,False,9.540912382331644,Keelung,CHANTHU,False
+port238,2021-09-12,365,storm_in_window,,,,,,Keelung,CHANTHU,False
+port238,2021-09-12,-200,ok,False,0.0,1.0,False,9.540912382331644,Keelung,CHANTHU,False
+port238,2021-09-12,200,ok,False,0.0,1.0,False,9.540912382331644,Keelung,CHANTHU,False
+port482,2021-09-12,-365,ok,False,0.0,1.0,False,0.6560463432295438,Hualien,CHANTHU,False
+port482,2021-09-12,365,ok,False,0.0,1.0,False,0.6560463432295438,Hualien,CHANTHU,False
+port482,2021-09-12,-200,ok,False,0.0,1.0,False,0.6560463432295438,Hualien,CHANTHU,False
+port482,2021-09-12,200,ok,False,0.0,1.0,False,0.6560463432295438,Hualien,CHANTHU,False
+port1261,2021-09-12,-365,ok,False,0.0,1.0,False,7.530412744388125,Taipei,CHANTHU,False
+port1261,2021-09-12,365,ok,False,0.0,1.0,False,7.530412744388125,Taipei,CHANTHU,False
+port1261,2021-09-12,-200,ok,True,25.0,1.0,True,7.530412744388125,Taipei,CHANTHU,False
+port1261,2021-09-12,200,ok,False,0.0,1.0,False,7.530412744388125,Taipei,CHANTHU,False
+port224,2021-12-16,-365,ok,False,0.0,1.0,False,5.735698769007965,Cebu,RAI,False
+port224,2021-12-16,365,ok,False,0.0,1.0,False,5.735698769007965,Cebu,RAI,False
+port224,2021-12-16,-200,ok,False,0.0,1.0,False,5.735698769007965,Cebu,RAI,False
+port224,2021-12-16,200,ok,True,120.0,0.0,True,5.735698769007965,Cebu,RAI,False
+port2055,2021-12-16,-365,ok,False,0.0,1.0,False,1.1813902968863144,Iloilo,RAI,False
+port2055,2021-12-16,365,ok,False,0.0,1.0,False,1.1813902968863144,Iloilo,RAI,False
+port2055,2021-12-16,-200,ok,False,0.0,1.0,False,1.1813902968863144,Iloilo,RAI,False
+port2055,2021-12-16,200,ok,False,0.0,1.0,False,1.1813902968863144,Iloilo,RAI,False
+port2395,2021-12-16,-365,ok,True,11.0,1.0,True,1.1455467052860246,Bacolod,RAI,False
+port2395,2021-12-16,365,ok,False,0.0,1.0,False,1.1455467052860246,Bacolod,RAI,False
+port2395,2021-12-16,-200,ok,False,0.0,1.0,False,1.1455467052860246,Bacolod,RAI,False
+port2395,2021-12-16,200,ok,False,0.0,1.0,False,1.1455467052860246,Bacolod,RAI,False
+port2040,2022-08-31,-365,ok,False,0.0,1.0,False,4.828747284576394,Naha,HINNAMNOR,False
+port2040,2022-08-31,365,storm_in_window,,,,,,Naha,HINNAMNOR,False
+port2040,2022-08-31,-200,ok,False,0.0,1.0,False,4.828747284576394,Naha,HINNAMNOR,False
+port2040,2022-08-31,200,ok,True,120.0,0.0,True,4.828747284576394,Naha,HINNAMNOR,False
+port2173,2022-08-31,-365,ok,False,0.0,1.0,False,0.8381607530774801,Henza Island,HINNAMNOR,False
+port2173,2022-08-31,365,storm_in_window,,,,,,Henza Island,HINNAMNOR,False
+port2173,2022-08-31,-200,ok,False,0.0,1.0,False,0.8381607530774801,Henza Island,HINNAMNOR,False
+port2173,2022-08-31,200,ok,False,0.0,1.0,False,0.8381607530774801,Henza Island,HINNAMNOR,False
+port1025,2022-09-20,-365,ok,False,0.0,1.0,False,0.6042722664735699,Providenciales,FIONA,True
+port1025,2022-09-20,365,ok,False,0.0,1.0,False,0.6042722664735699,Providenciales,FIONA,True
+port1025,2022-09-20,-200,ok,False,0.0,1.0,False,0.6042722664735699,Providenciales,FIONA,True
+port1025,2022-09-20,200,ok,False,0.0,1.0,False,0.6042722664735699,Providenciales,FIONA,True
+port694,2022-09-25,-365,ok,True,29.0,1.0,True,22.55792903692976,Manila,NORU,False
+port694,2022-09-25,365,ok,False,0.0,1.0,False,22.55792903692976,Manila,NORU,False
+port694,2022-09-25,-200,ok,False,0.0,1.0,False,22.55792903692976,Manila,NORU,False
+port694,2022-09-25,200,ok,False,0.0,1.0,False,22.55792903692976,Manila,NORU,False
+port1232,2022-09-25,-365,ok,True,34.0,1.0,True,2.4637943519188994,Subic Bay,NORU,False
+port1232,2022-09-25,365,ok,False,0.0,1.0,False,2.4637943519188994,Subic Bay,NORU,False
+port1232,2022-09-25,-200,ok,False,0.0,1.0,False,2.4637943519188994,Subic Bay,NORU,False
+port1232,2022-09-25,200,ok,False,0.0,1.0,False,2.4637943519188994,Subic Bay,NORU,False
+port967,2022-09-29,-365,ok,False,0.0,1.0,False,0.8519188993482983,Port Manatee,IAN,False
+port967,2022-09-29,365,storm_in_window,,,,,,Port Manatee,IAN,False
+port967,2022-09-29,-200,ok,False,0.0,1.0,False,0.8519188993482983,Port Manatee,IAN,False
+port967,2022-09-29,200,ok,False,0.0,1.0,False,0.8519188993482983,Port Manatee,IAN,False
+port704,2022-09-27,-365,ok,False,0.0,1.0,False,1.1252715423606083,Mariel,IAN,True
+port704,2022-09-27,365,storm_in_window,,,,,,Mariel,IAN,True
+port704,2022-09-27,-200,ok,False,0.0,1.0,False,1.1252715423606083,Mariel,IAN,True
+port704,2022-09-27,200,ok,False,0.0,1.0,False,1.1252715423606083,Mariel,IAN,True
+port86,2022-09-27,-365,ok,False,0.0,1.0,False,0.6082548877624909,La Habana,IAN,True
+port86,2022-09-27,365,ok,False,0.0,1.0,False,0.6082548877624909,La Habana,IAN,True
+port86,2022-09-27,-200,ok,False,0.0,1.0,False,0.6082548877624909,La Habana,IAN,True
+port86,2022-09-27,200,ok,True,9.0,1.0,False,0.6082548877624909,La Habana,IAN,True
+port1259,2022-09-29,-365,ok,False,0.0,1.0,False,2.5286024619840695,Tampa Port,IAN,False
+port1259,2022-09-29,365,storm_in_window,,,,,,Tampa Port,IAN,False
+port1259,2022-09-29,-200,ok,False,0.0,1.0,False,2.5286024619840695,Tampa Port,IAN,False
+port1259,2022-09-29,200,ok,False,0.0,1.0,False,2.5286024619840695,Tampa Port,IAN,False
+port723,2022-10-23,-365,storm_in_window,,,,,,Mazatlan,ROSLYN,False
+port723,2022-10-23,365,ok,False,0.0,1.0,False,1.5162925416364952,Mazatlan,ROSLYN,False
+port723,2022-10-23,-200,ok,False,0.0,1.0,False,1.5162925416364952,Mazatlan,ROSLYN,False
+port723,2022-10-23,200,ok,False,0.0,1.0,False,1.5162925416364952,Mazatlan,ROSLYN,False
+port955,2023-04-13,-365,ok,False,0.0,1.0,False,8.914192614047792,Port Hedland,ILSA,False
+port955,2023-04-13,365,ok,False,0.0,1.0,False,8.914192614047792,Port Hedland,ILSA,False
+port955,2023-04-13,-200,ok,False,0.0,1.0,False,8.914192614047792,Port Hedland,ILSA,False
+port955,2023-04-13,200,ok,False,0.0,1.0,False,8.914192614047792,Port Hedland,ILSA,False
+port61,2023-05-24,-365,ok,False,0.0,1.0,False,0.8725561187545257,Apra Harbor,MAWAR,True
+port61,2023-05-24,365,ok,False,0.0,1.0,False,0.8725561187545257,Apra Harbor,MAWAR,True
+port61,2023-05-24,-200,ok,False,0.0,1.0,False,0.8725561187545257,Apra Harbor,MAWAR,True
+port61,2023-05-24,200,ok,False,0.0,1.0,False,0.8725561187545257,Apra Harbor,MAWAR,True
+port2040,2023-08-01,-365,storm_in_window,,,,,,Naha,KHANUN,False
+port2040,2023-08-01,365,ok,False,0.0,1.0,False,4.828747284576394,Naha,KHANUN,False
+port2040,2023-08-01,-200,ok,True,120.0,0.0,True,4.828747284576394,Naha,KHANUN,False
+port2040,2023-08-01,200,ok,False,0.0,1.0,False,4.828747284576394,Naha,KHANUN,False
+port2173,2023-08-01,-365,storm_in_window,,,,,,Henza Island,KHANUN,False
+port2173,2023-08-01,365,ok,False,0.0,1.0,False,0.8381607530774801,Henza Island,KHANUN,False
+port2173,2023-08-01,-200,ok,True,120.0,0.0,True,0.8381607530774801,Henza Island,KHANUN,False
+port2173,2023-08-01,200,ok,False,0.0,1.0,False,0.8381607530774801,Henza Island,KHANUN,False
+port2180,2023-08-01,-365,storm_in_window,,,,,,Kinwan,KHANUN,False
+port2180,2023-08-01,365,ok,False,0.0,1.0,False,0.6310644460535844,Kinwan,KHANUN,False
+port2180,2023-08-01,-200,ok,True,120.0,0.0,True,0.6310644460535844,Kinwan,KHANUN,False
+port2180,2023-08-01,200,ok,False,0.0,1.0,False,0.6310644460535844,Kinwan,KHANUN,False
+port1189,2023-09-01,-365,ok,False,0.0,1.0,False,9.584359160028965,Shekou (Shenzhen),SAOLA,False
+port1189,2023-09-01,365,ok,True,12.0,1.0,True,9.584359160028965,Shekou (Shenzhen),SAOLA,False
+port1189,2023-09-01,-200,ok,False,0.0,1.0,False,9.584359160028965,Shekou (Shenzhen),SAOLA,False
+port1189,2023-09-01,200,ok,False,0.0,1.0,False,9.584359160028965,Shekou (Shenzhen),SAOLA,False
+port1414,2023-09-01,-365,ok,False,0.0,1.0,False,9.4605358435916,Yantian,SAOLA,False
+port1414,2023-09-01,365,ok,True,22.0,1.0,True,9.4605358435916,Yantian,SAOLA,False
+port1414,2023-09-01,-200,ok,True,110.0,1.0,True,9.4605358435916,Yantian,SAOLA,False
+port1414,2023-09-01,200,ok,False,0.0,1.0,False,9.4605358435916,Yantian,SAOLA,False
+port484,2023-09-01,-365,ok,False,0.0,1.0,False,5.198769007965242,Huizhou,SAOLA,False
+port484,2023-09-01,365,ok,False,0.0,1.0,False,5.198769007965242,Huizhou,SAOLA,False
+port484,2023-09-01,-200,ok,True,120.0,0.0,True,5.198769007965242,Huizhou,SAOLA,False
+port484,2023-09-01,200,ok,False,0.0,1.0,False,5.198769007965242,Huizhou,SAOLA,False
+port474,2023-09-01,-365,ok,False,0.0,1.0,False,44.35228095582911,Hong Kong,SAOLA,False
+port474,2023-09-01,365,ok,True,8.0,1.0,True,44.35228095582911,Hong Kong,SAOLA,False
+port474,2023-09-01,-200,ok,False,0.0,1.0,False,44.35228095582911,Hong Kong,SAOLA,False
+port474,2023-09-01,200,ok,False,0.0,1.0,False,44.35228095582911,Hong Kong,SAOLA,False
+port2028,2023-09-01,-365,ok,False,0.0,1.0,False,11.623099203475743,Mawan,SAOLA,False
+port2028,2023-09-01,365,ok,True,22.0,1.0,True,11.623099203475743,Mawan,SAOLA,False
+port2028,2023-09-01,-200,ok,False,0.0,1.0,False,11.623099203475743,Mawan,SAOLA,False
+port2028,2023-09-01,200,ok,False,0.0,1.0,False,11.623099203475743,Mawan,SAOLA,False
+port2029,2023-09-01,-365,ok,False,0.0,1.0,False,1.4753801593048514,Dachan Bay,SAOLA,False
+port2029,2023-09-01,365,ok,False,0.0,1.0,False,1.4753801593048514,Dachan Bay,SAOLA,False
+port2029,2023-09-01,-200,ok,False,0.0,1.0,False,1.4753801593048514,Dachan Bay,SAOLA,False
+port2029,2023-09-01,200,ok,False,0.0,1.0,False,1.4753801593048514,Dachan Bay,SAOLA,False
+port482,2023-09-03,-365,ok,False,0.0,1.0,False,0.6560463432295438,Hualien,HAIKUI,False
+port482,2023-09-03,365,storm_in_window,,,,,,Hualien,HAIKUI,False
+port482,2023-09-03,-200,ok,False,0.0,1.0,False,0.6560463432295438,Hualien,HAIKUI,False
+port482,2023-09-03,200,ok,False,0.0,1.0,False,0.6560463432295438,Hualien,HAIKUI,False
+port574,2024-07-01,-365,storm_in_window,,,,,,Kingstown,BERYL,True
+port574,2024-07-01,365,ok,False,0.0,1.0,False,1.223388848660391,Kingstown,BERYL,True
+port574,2024-07-01,-200,ok,False,0.0,1.0,False,1.223388848660391,Kingstown,BERYL,True
+port574,2024-07-01,200,ok,False,0.0,1.0,False,1.223388848660391,Kingstown,BERYL,True
+port572,2024-07-03,-365,ok,False,0.0,1.0,False,6.691527878349023,Kingston,BERYL,True
+port572,2024-07-03,365,storm_in_window,,,,,,Kingston,BERYL,True
+port572,2024-07-03,-200,ok,False,0.0,1.0,False,6.691527878349023,Kingston,BERYL,True
+port572,2024-07-03,200,ok,False,0.0,1.0,False,6.691527878349023,Kingston,BERYL,True
+port763,2024-07-04,-365,ok,False,0.0,1.0,False,0.5329471397538016,Montego Bay,BERYL,True
+port763,2024-07-04,365,storm_in_window,,,,,,Montego Bay,BERYL,True
+port763,2024-07-04,-200,ok,False,0.0,1.0,False,0.5329471397538016,Montego Bay,BERYL,True
+port763,2024-07-04,200,ok,False,0.0,1.0,False,0.5329471397538016,Montego Bay,BERYL,True
+port1223,2024-07-01,-365,ok,False,0.0,1.0,False,1.0217233888486603,Saint George's,BERYL,True
+port1223,2024-07-01,365,ok,True,6.0,1.0,True,1.0217233888486603,Saint George's,BERYL,True
+port1223,2024-07-01,-200,ok,False,0.0,1.0,False,1.0217233888486603,Saint George's,BERYL,True
+port1223,2024-07-01,200,ok,False,0.0,1.0,False,1.0217233888486603,Saint George's,BERYL,True
+port482,2024-07-24,-365,storm_in_window,,,,,,Hualien,GAEMI,False
+port482,2024-07-24,365,storm_in_window,,,,,,Hualien,GAEMI,False
+port482,2024-07-24,-200,ok,False,0.0,1.0,False,0.6560463432295438,Hualien,GAEMI,False
+port482,2024-07-24,200,ok,True,120.0,0.0,True,0.6560463432295438,Hualien,GAEMI,False
+port339,2024-09-07,-365,ok,False,0.0,1.0,False,5.391020999275887,Fangcheng,YAGI,False
+port339,2024-09-07,365,storm_in_window,,,,,,Fangcheng,YAGI,False
+port339,2024-09-07,-200,ok,True,35.0,1.0,True,5.391020999275887,Fangcheng,YAGI,False
+port339,2024-09-07,200,ok,False,0.0,1.0,False,5.391020999275887,Fangcheng,YAGI,False
+port1071,2024-09-06,-365,ok,False,0.0,1.0,False,10.055032585083273,Qinzhou,YAGI,False
+port1071,2024-09-06,365,storm_in_window,,,,,,Qinzhou,YAGI,False
+port1071,2024-09-06,-200,ok,False,0.0,1.0,False,10.055032585083273,Qinzhou,YAGI,False
+port1071,2024-09-06,200,ok,False,0.0,1.0,False,10.055032585083273,Qinzhou,YAGI,False
+port424,2024-09-06,-365,ok,False,0.0,1.0,False,1.6766835626357712,Guangxi Beibu Gulf Port,YAGI,False
+port424,2024-09-06,365,storm_in_window,,,,,,Guangxi Beibu Gulf Port,YAGI,False
+port424,2024-09-06,-200,ok,False,0.0,1.0,False,1.6766835626357712,Guangxi Beibu Gulf Port,YAGI,False
+port424,2024-09-06,200,ok,False,0.0,1.0,False,1.6766835626357712,Guangxi Beibu Gulf Port,YAGI,False
+port1409,2024-09-06,-365,ok,False,0.0,1.0,False,5.11875452570601,Yangpu,YAGI,False
+port1409,2024-09-06,365,storm_in_window,,,,,,Yangpu,YAGI,False
+port1409,2024-09-06,-200,ok,False,0.0,1.0,False,5.11875452570601,Yangpu,YAGI,False
+port1409,2024-09-06,200,ok,False,0.0,1.0,False,5.11875452570601,Yangpu,YAGI,False
+port1426,2024-09-06,-365,ok,False,0.0,1.0,False,6.97501810282404,Zhanjiang,YAGI,False
+port1426,2024-09-06,365,storm_in_window,,,,,,Zhanjiang,YAGI,False
+port1426,2024-09-06,-200,ok,False,0.0,1.0,False,6.97501810282404,Zhanjiang,YAGI,False
+port1426,2024-09-06,200,ok,False,0.0,1.0,False,6.97501810282404,Zhanjiang,YAGI,False
+port437,2024-09-06,-365,ok,False,0.0,1.0,False,0.9489500362056481,Haikou,YAGI,False
+port437,2024-09-06,365,storm_in_window,,,,,,Haikou,YAGI,False
+port437,2024-09-06,-200,ok,False,0.0,1.0,False,0.9489500362056481,Haikou,YAGI,False
+port437,2024-09-06,200,ok,False,0.0,1.0,False,0.9489500362056481,Haikou,YAGI,False
+port123,2024-09-06,-365,ok,False,0.0,1.0,False,1.5477914554670529,Basuo,YAGI,False
+port123,2024-09-06,365,storm_in_window,,,,,,Basuo,YAGI,False
+port123,2024-09-06,-200,ok,False,0.0,1.0,False,1.5477914554670529,Basuo,YAGI,False
+port123,2024-09-06,200,ok,False,0.0,1.0,False,1.5477914554670529,Basuo,YAGI,False
+port136,2024-09-06,-365,ok,False,0.0,1.0,False,0.5488776249094859,Beihai,YAGI,False
+port136,2024-09-06,365,storm_in_window,,,,,,Beihai,YAGI,False
+port136,2024-09-06,-200,ok,False,0.0,1.0,False,0.5488776249094859,Beihai,YAGI,False
+port136,2024-09-06,200,ok,False,0.0,1.0,False,0.5488776249094859,Beihai,YAGI,False
+port242,2024-09-06,-365,ok,False,0.0,1.0,False,0.832729905865315,Chiwan,YAGI,False
+port242,2024-09-06,365,storm_in_window,,,,,,Chiwan,YAGI,False
+port242,2024-09-06,-200,ok,False,0.0,1.0,False,0.832729905865315,Chiwan,YAGI,False
+port242,2024-09-06,200,ok,False,0.0,1.0,False,0.832729905865315,Chiwan,YAGI,False
+port473,2024-09-07,-365,ok,False,0.0,1.0,False,1.8794351918899348,Hon Gai,YAGI,False
+port473,2024-09-07,365,ok,False,0.0,1.0,False,1.8794351918899348,Hon Gai,YAGI,False
+port473,2024-09-07,-200,ok,False,0.0,1.0,False,1.8794351918899348,Hon Gai,YAGI,False
+port473,2024-09-07,200,storm_in_window,,,,,,Hon Gai,YAGI,False
+port1023,2024-10-08,-365,ok,False,0.0,1.0,False,1.6227371469949312,Progreso,MILTON,False
+port1023,2024-10-08,365,ok,False,0.0,1.0,False,1.6227371469949312,Progreso,MILTON,False
+port1023,2024-10-08,-200,ok,False,0.0,1.0,False,1.6227371469949312,Progreso,MILTON,False
+port1023,2024-10-08,200,ok,False,0.0,1.0,False,1.6227371469949312,Progreso,MILTON,False
+port967,2024-10-10,-365,ok,False,0.0,1.0,False,0.8519188993482983,Port Manatee,MILTON,False
+port967,2024-10-10,365,ok,False,0.0,1.0,False,0.8519188993482983,Port Manatee,MILTON,False
+port967,2024-10-10,-200,ok,False,0.0,1.0,False,0.8519188993482983,Port Manatee,MILTON,False
+port967,2024-10-10,200,ok,False,0.0,1.0,False,0.8519188993482983,Port Manatee,MILTON,False
+port482,2024-10-31,-365,storm_in_window,,,,,,Hualien,KONG-REY,False
+port482,2024-10-31,365,ok,False,0.0,1.0,False,0.6560463432295438,Hualien,KONG-REY,False
+port482,2024-10-31,-200,storm_in_window,,,,,,Hualien,KONG-REY,False
+port482,2024-10-31,200,storm_in_window,,,,,,Hualien,KONG-REY,False
+port541,2024-10-31,-365,storm_in_window,,,,,,Kaohsiung,KONG-REY,False
+port541,2024-10-31,365,ok,True,14.0,1.0,True,35.249818971759595,Kaohsiung,KONG-REY,False
+port541,2024-10-31,-200,storm_in_window,,,,,,Kaohsiung,KONG-REY,False
+port541,2024-10-31,200,storm_in_window,,,,,,Kaohsiung,KONG-REY,False
+port704,2024-11-06,-365,ok,False,0.0,1.0,False,1.1252715423606083,Mariel,RAFAEL,True
+port704,2024-11-06,365,ok,False,0.0,1.0,False,1.1252715423606083,Mariel,RAFAEL,True
+port704,2024-11-06,-200,ok,False,0.0,1.0,False,1.1252715423606083,Mariel,RAFAEL,True
+port704,2024-11-06,200,ok,False,0.0,1.0,False,1.1252715423606083,Mariel,RAFAEL,True
+port86,2024-11-06,-365,ok,False,0.0,1.0,False,0.6082548877624909,La Habana,RAFAEL,True
+port86,2024-11-06,365,ok,False,0.0,1.0,False,0.6082548877624909,La Habana,RAFAEL,True
+port86,2024-11-06,-200,ok,False,0.0,1.0,False,0.6082548877624909,La Habana,RAFAEL,True
+port86,2024-11-06,200,ok,False,0.0,1.0,False,0.6082548877624909,La Habana,RAFAEL,True
+port784,2024-12-15,-365,ok,False,0.0,1.0,False,1.109341057204924,Nacala,CHIDO,False
+port784,2024-12-15,365,ok,False,0.0,1.0,False,1.109341057204924,Nacala,CHIDO,False
+port784,2024-12-15,-200,ok,False,0.0,1.0,False,1.109341057204924,Nacala,CHIDO,False
+port784,2024-12-15,200,ok,False,0.0,1.0,False,1.109341057204924,Nacala,CHIDO,False
+port955,2025-02-14,-365,ok,False,0.0,1.0,False,8.914192614047792,Port Hedland,ZELIA,False
+port955,2025-02-14,365,ok,False,0.0,1.0,False,8.914192614047792,Port Hedland,ZELIA,False
+port955,2025-02-14,-200,ok,False,0.0,1.0,False,8.914192614047792,Port Hedland,ZELIA,False
+port955,2025-02-14,200,ok,False,0.0,1.0,False,8.914192614047792,Port Hedland,ZELIA,False
+port1189,2025-09-24,-365,ok,False,0.0,1.0,False,9.584359160028965,Shekou (Shenzhen),RAGASA,False
+port1189,2025-09-24,365,short_followup,,,,,9.584359160028965,Shekou (Shenzhen),RAGASA,False
+port1189,2025-09-24,-200,ok,False,0.0,1.0,False,9.584359160028965,Shekou (Shenzhen),RAGASA,False
+port1189,2025-09-24,200,storm_in_window,,,,,,Shekou (Shenzhen),RAGASA,False
+port474,2025-09-24,-365,ok,False,0.0,1.0,False,44.35228095582911,Hong Kong,RAGASA,False
+port474,2025-09-24,365,short_followup,,,,,44.35228095582911,Hong Kong,RAGASA,False
+port474,2025-09-24,-200,ok,False,0.0,1.0,False,44.35228095582911,Hong Kong,RAGASA,False
+port474,2025-09-24,200,storm_in_window,,,,,,Hong Kong,RAGASA,False
+port674,2025-09-24,-365,ok,False,0.0,1.0,False,0.8631426502534395,Macau,RAGASA,False
+port674,2025-09-24,365,short_followup,,,,,0.8631426502534395,Macau,RAGASA,False
+port674,2025-09-24,-200,ok,False,0.0,1.0,False,0.8631426502534395,Macau,RAGASA,False
+port674,2025-09-24,200,storm_in_window,,,,,,Macau,RAGASA,False
+port2028,2025-09-24,-365,ok,False,0.0,1.0,False,11.623099203475743,Mawan,RAGASA,False
+port2028,2025-09-24,365,short_followup,,,,,11.623099203475743,Mawan,RAGASA,False
+port2028,2025-09-24,-200,ok,False,0.0,1.0,False,11.623099203475743,Mawan,RAGASA,False
+port2028,2025-09-24,200,storm_in_window,,,,,,Mawan,RAGASA,False
+port2029,2025-09-24,-365,ok,False,0.0,1.0,False,1.4753801593048514,Dachan Bay,RAGASA,False
+port2029,2025-09-24,365,short_followup,,,,,1.4753801593048514,Dachan Bay,RAGASA,False
+port2029,2025-09-24,-200,ok,False,0.0,1.0,False,1.4753801593048514,Dachan Bay,RAGASA,False
+port2029,2025-09-24,200,storm_in_window,,,,,,Dachan Bay,RAGASA,False
+port2112,2025-09-24,-365,ok,False,0.0,1.0,False,6.654960173787111,Zhuhai,RAGASA,False
+port2112,2025-09-24,365,short_followup,,,,,6.654960173787111,Zhuhai,RAGASA,False
+port2112,2025-09-24,-200,ok,False,0.0,1.0,False,6.654960173787111,Zhuhai,RAGASA,False
+port2112,2025-09-24,200,storm_in_window,,,,,,Zhuhai,RAGASA,False
+port1156,2025-10-29,-365,ok,False,0.0,1.0,False,0.5459811730629979,Santiago De Cuba,MELISSA,True
+port1156,2025-10-29,365,short_followup,,,,,0.5459811730629979,Santiago De Cuba,MELISSA,True
+port1156,2025-10-29,-200,ok,True,34.0,1.0,True,0.5459811730629979,Santiago De Cuba,MELISSA,True
+port1156,2025-10-29,200,short_followup,,,,,0.5459811730629979,Santiago De Cuba,MELISSA,True
+port572,2025-10-28,-365,ok,False,0.0,1.0,False,6.691527878349023,Kingston,MELISSA,True
+port572,2025-10-28,365,short_followup,,,,,6.691527878349023,Kingston,MELISSA,True
+port572,2025-10-28,-200,ok,False,0.0,1.0,False,6.691527878349023,Kingston,MELISSA,True
+port572,2025-10-28,200,short_followup,,,,,6.691527878349023,Kingston,MELISSA,True
+port763,2025-10-28,-365,ok,False,0.0,1.0,False,0.5329471397538016,Montego Bay,MELISSA,True
+port763,2025-10-28,365,short_followup,,,,,0.5329471397538016,Montego Bay,MELISSA,True
+port763,2025-10-28,-200,ok,False,0.0,1.0,False,0.5329471397538016,Montego Bay,MELISSA,True
+port763,2025-10-28,200,short_followup,,,,,0.5329471397538016,Montego Bay,MELISSA,True
+port1078,2025-11-06,-365,ok,True,18.0,1.0,True,2.3240405503258508,Quy Nhon,KALMAEGI,False
+port1078,2025-11-06,365,short_followup,,,,,2.3240405503258508,Quy Nhon,KALMAEGI,False
+port1078,2025-11-06,-200,ok,False,0.0,1.0,False,2.3240405503258508,Quy Nhon,KALMAEGI,False
+port1078,2025-11-06,200,short_followup,,,,,2.3240405503258508,Quy Nhon,KALMAEGI,False
+port2262,2025-11-06,-365,ok,False,0.0,1.0,False,0.8450398262128892,Van Phong,KALMAEGI,False
+port2262,2025-11-06,365,short_followup,,,,,0.8450398262128892,Van Phong,KALMAEGI,False
+port2262,2025-11-06,-200,ok,False,0.0,1.0,False,0.8450398262128892,Van Phong,KALMAEGI,False
+port2262,2025-11-06,200,short_followup,,,,,0.8450398262128892,Van Phong,KALMAEGI,False

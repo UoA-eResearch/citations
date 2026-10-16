@@ -115,3 +115,17 @@ Corrections to earlier entries: the H2 guard in D4 was added after the descripti
 preregistered (the draft report called it "the preregistered guard"); D2 should also have said that the recovery
 rule starts from the deepest dip, not the first drop (plan.md section 5 already states the deepest-dip rule); and
 D5's forecast.py edit was committed together with its outputs, not before them.
+
+D8 outcomes (review_response.py, run after the commit above): placebo false-alarm rate 10.1% (26/258; 6% at
+small-island ports, 15% above two calls a day; spurious recovery median 34 days); 6 of 17 small-island events
+inside the 64-kt radius (0 disrupted) vs 14 of 23 other-port events; event-specific power for a complete 14-day
+closure mean 0.93, 0.33 at Santiago de Cuba/Melissa and 0.79 at Montego Bay/Melissa, calls halved for 28 days
+0.57; import share vs log(ports in country) r = -0.79, and with that covariate share turns positive (p = 0.24);
+permutation p for dAIC 2.33 = 0.14; H2 without the guard: storm bootstrap 0.14-1.34 (would be Refuted), pooled
+mean-days ratio 0.02; without Cebu/Rai part B's category effect falls from x3.1 to x0.9; had part B kept the
+small-island indicator, Cat 4/75 km medians would be about four times shorter. None changes a preregistered
+verdict; the report's surviving claim, plain-language summary and import-share reading were rewritten accordingly.
+The forecast covariates were frozen from the sealed 2026 vintage (forecast_port_covariates.csv, sha256
+30e8a4c19ed47ee0eefc872b8d5e7182b7ba9e949e97c78d650961e8da4737f7) and the revised scorer reproduces all 108
+frozen rows from them.
+

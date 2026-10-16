@@ -57,8 +57,10 @@ def f1():
     fig.savefig(F / "F1_detectability.png", dpi=200)
     caption("F1_detectability", """F1. What the method can detect. Simulated ports with a known complete closure, run through exactly
     the preregistered algorithm (120 replicates per point, dispersion 0.25; the full grid, including dispersion 1,
-    is in results/tables/detectability.json). The value at 0 days is the false-alarm rate. Of the 62 Pacific island
-    ports, 50 average under 0.5 calls a day and 7 more between 0.5 and 1.""")
+    is in results/tables/detectability.json). The value at 0 days is the simulated false-alarm rate. The simulation
+    draws independent noise; real port series vary more serially, and at storm-free dates the real pipeline flags
+    10% of runs, rising to 15% above two calls a day (deviations D8). Of the 62 Pacific island ports, 50 average
+    under 0.5 calls a day and 7 more between 0.5 and 1.""")
 
 
 def f2():
@@ -88,7 +90,7 @@ def f2():
     ax.set_xlabel("port's mean daily calls, 2019-2026 (log scale)")
     ax.set_ylabel("recovery time, days")
     n_quiet = int(((p.status == "low_activity") & p.sids).sum())
-    ax.set_title("Small-island ports almost never showed a detectable disruption", loc="left", fontsize=10, color=INK)
+    ax.set_title("Small-island ports showed disruptions at the rate of storm-free dates", loc="left", fontsize=10, color=INK)
     from matplotlib.lines import Line2D
     hs = [Line2D([], [], ls="", marker=mk, color=col, ms=6, label=f"{lab}: {int(ok[ok.sids == s_].disrupted.sum())} of "
                  f"{int((ok.sids == s_).sum())} disrupted")
@@ -101,7 +103,9 @@ def f2():
     and has the history and follow-up the method needs: {len(ok)} events, {ok.sid.nunique()} storms. Filled markers are
     detected disruptions, plotted at their recovery time; hollow markers are events with no detectable disruption,
     jittered around zero. Another {n_quiet} small-island events, at ports below 0.5 calls a day, could not be analysed.
-    The shaded band is where simulation shows a complete week-long closure is detected less than 80% of the time.""")
+    The shaded band is where simulation shows a complete week-long closure is detected less than 80% of the time.
+    At storm-free placebo dates the same pipeline flags 10% of runs (6% at small-island ports, 15% above two calls
+    a day; deviations D8), so about 9 of the 28 detections are expected false alarms.""")
 
 
 def f3():
