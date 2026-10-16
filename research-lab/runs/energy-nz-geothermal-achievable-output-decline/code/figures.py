@@ -77,7 +77,7 @@ def f2():
     s = json.load(open(T / "supplementary.json"))
     fields = sorted(p["fields"], key=lambda f: p["fields"][f]["pct_per_yr"])
     fig, ax = plt.subplots(figsize=(8.4, 4.4))
-    fig.subplots_adjust(left=0.20, right=0.97, bottom=0.14, top=0.95)
+    fig.subplots_adjust(left=0.31, right=0.97, bottom=0.14, top=0.95)
     ax.grid(axis="x", color=GRID, lw=0.6); ax.set_axisbelow(True)
     for x, lab in ((0, "flat"), (-1.5, "H1 line"), (-3, "H2 line\n(-3%/yr)")):
         ax.axvline(x, color=INK2, lw=0.8, ls="-" if x == 0 else ":")

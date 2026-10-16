@@ -70,3 +70,8 @@ calls the intervals approximate, relabels F2's -3 line, adds Mokai's direct-use 
 and narrows the novelty claim. analysis.py's EVENTS label still says 117 MW (a description string only; the
 window it defines is unchanged and harmless).
 
+Confirmation pass (review/confirmation.md, publish with edits): F2's y-axis labels were clipped - the left margin is
+widened and the figure regenerated. Optional wording taken: the last-decade sentence now says its uncertainty spans
+flat; "probably" a mill's net export; the commit list completed; the abstract states the full +0.1 to -0.2 range of
+specifications beside "0 to -0.2".
+

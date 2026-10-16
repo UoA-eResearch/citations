@@ -10,7 +10,8 @@ preregistered bar of 1.5% a year.
 - **Preregistered estimate:** the capacity-weighted trend across the eight fields, between capacity changes, is
   **+0.02% a year (95% interval −0.18 to +0.22)**.
 - **After review:** handling commissioning ramps and a capacity change the plan missed moves it to **between about
-  0 and −0.2% a year**.
+  0 and −0.2% a year**. Across every specification tried, including weighting choices, it runs from +0.1 to
+  −0.2.
 - **Last decade:** **−0.4% a year (−1.0 to +0.1)**.
 - **No field declines faster than 3% a year.** The steepest is **Mokai, −1.5% a year since 2008**.
 
@@ -33,8 +34,8 @@ field and month we took the output level reached in the best 5% of half-hours. T
 tests before looking at any results.
 
 Across the eight fields, achievable output has barely changed: somewhere between flat and a fall of about 0.2% a
-year, depending on how the start-up months of new plant are handled. Over the last ten years it is about 0.4% a
-year. No field is falling anywhere near 3% a year. Mokai shows the clearest decline, about 1.5% a year since 2008;
+year, depending on how the start-up months of new plant are handled. Over the last ten years it is a fall of about 0.4% a
+year, with an uncertainty that spans flat. No field is falling anywhere near 3% a year. Mokai shows the clearest decline, about 1.5% a year since 2008;
 that field also supplies steam to greenhouses and a milk-processing plant.
 
 Behind the near-flat total, some fields slip while others have been upgraded, and at Ohaaki output rose sharply in
@@ -88,8 +89,8 @@ plant series). But the files do not cover every geothermal plant (D4):
   and the old Kawerau binary never appear.
 - **Missing for years:** Ngāwhā OEC4 (31.5 MW, commissioned around January 2021) is absent until 2024-01.
 - **Kawerau is not a field in these data.** Its record is the Kawerau KGL station (100 MW, 2008), a 5.5 MW plant
-  before 2008, and from 2020 two small series (13–15 MW and 28–37 MW, the latter a mill's net export) whose exact
-  identity is uncertain.
+  before 2008, and from 2020 two small series (13–15 MW and 28–37 MW, the latter probably a mill's net export) whose
+  exact identity is uncertain.
 
 The lead's unit-level dataset holds geothermal units only at Wairakei and Ohaaki, and only for 2000–2003 (D1).
 
@@ -242,7 +243,7 @@ Four logged deviations:
   alternative segmentations, AR(2), the outage filter and the Ohaaki windows (`code/review_response.py`), and
   rewrote the framing.
 
-Commits: plan c72cc2c, D2 fix d0be78c, results 0ab005b, review response 2f8c705.
+Commits: plan c72cc2c, D2 fix d0be78c, results 0ab005b, review response 2f8c705 and c371b0f, quotation fix 7a904a6.
 
 ## Reproducing it
 
