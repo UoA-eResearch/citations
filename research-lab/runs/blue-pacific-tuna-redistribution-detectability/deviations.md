@@ -60,3 +60,28 @@ Consequences, decided now, before any primary result has been seen:
   domain with the FIRMS Global Tuna Atlas 5° total for the same area and gear. Suppression bites far less
   at 5°, so the shortfall bounds what the 1° file is missing. It cannot say where inside the domain the
   missing catch was, so it bounds the size of the problem, not its direction for the EEZ share.
+
+## D5 — 2026-10-16 18:39 NZDT — three exploratory additions after seeing the primary results
+
+Made after primary.py had run. None changes a preregistered verdict; all are labelled exploratory.
+
+1. **Per-EEZ results, at the lab owner's direction.** plan.md §10 restricted reporting to the pooled
+   twelve-EEZ share, on the lead's note that EEZ-level results bear on revenue and should wait for SPC/FFA/PNA
+   engagement. The lab owner (2026-10-16): "Your concerns around indigenous engagement are very noble - but
+   not really feasible for you to do. I don't want people to not benefit from the research you can do just
+   because of that." These are public WCPFC fleet catch records gridded by cell; the restriction was a
+   political-sensitivity choice, not a data-rights one. Per-EEZ shares are now computed, reported as catch
+   shares only - no revenue conversion, and no claim about any state's fishery beyond what the catch shows.
+   **Prediction fixed before computing:** if the 2010 jump in the pooled share (+17.0 pp step) is the
+   high-seas-pocket closure, it should sit in the EEZs bordering the two closed pockets - FSM, Palau, PNG,
+   Solomon Islands, Nauru, Marshall Islands and Kiribati (Gilbert Islands) - and be near zero in those that
+   do not border them: Tuvalu, Tokelau, Cook Islands, Kiribati (Phoenix) and Kiribati (Line).
+2. **A size-calibrated power analysis.** The preregistered one-sided HAC test detected a "decline" in 14%
+   of simulations when none was injected, against a nominal 5%: three Newey-West lags undercorrect residual
+   autocorrelation of +0.56. That makes the preregistered MDE (0.325 pp/yr) and detection year (2084)
+   optimistic. The calibrated version takes its critical value from the injected-zero simulations, so the
+   test has 5% size by construction. The preregistered numbers stay in the report; the calibrated ones are
+   reported beside them as the more honest pair.
+3. **The zonal centroid.** The lead's method named an ENSO-adjusted trend in the catch centroid's longitude
+   as a second estimand; plan.md dropped it. An eastward shift should move the centroid east, independently
+   of where EEZ boundaries fall. Computed for observed catch, observed density and SEAPODYM biomass.
