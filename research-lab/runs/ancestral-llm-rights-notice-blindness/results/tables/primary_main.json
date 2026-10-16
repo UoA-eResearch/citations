@@ -1,0 +1,264 @@
+{
+ "set": "main",
+ "n_responses": 19890,
+ "n_records": 221,
+ "fp_rates": {
+  "LC_CB": 0.05580693815987934,
+  "LC_CB_NOURI": 0.05580693815987934,
+  "LC_NC": 0.07792860734037205,
+  "LC_BC": 0.010055304172951232,
+  "LC_TK": 0.010055304172951232,
+  "LC_CO": 0.011060834590246356,
+  "CV_NC": 0.06887883358471594,
+  "CV_DUA": 0.015082956259426848,
+  "CV_CONTACT": 0.04725992961287079
+ },
+ "H1": {
+  "lc_omission": 0.0048265460030165915,
+  "ci": [
+   0.003519356460532931,
+   0.006435394670688788
+  ],
+  "verdict": "Refuted"
+ },
+ "H2": {
+  "lc_minus_cv": -0.012267471091000504,
+  "ci": [
+   -0.014882688117982235,
+   -0.009619574325456678
+  ],
+  "cv_omission": 0.017094017094017096,
+  "verdict": "Refuted"
+ },
+ "H3": {
+  "verdict_change_rate": 0.8526799387442573,
+  "ci": [
+   0.8406091393595234,
+   0.8643968071568311
+  ],
+  "unparsed_agent_pairs": 50,
+  "verdict": "Refuted"
+ },
+ "omission_by_condition_model_framing": {
+  "CV_CONTACT|mistral-small-24b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.0
+  },
+  "CV_CONTACT|olmo2-13b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.00904977375565611
+  },
+  "CV_CONTACT|qwen3-32b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.0
+  },
+  "CV_DUA|mistral-small-24b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.0
+  },
+  "CV_DUA|olmo2-13b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.0
+  },
+  "CV_DUA|qwen3-32b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.0
+  },
+  "CV_NC|mistral-small-24b": {
+   "agent": 0.013574660633484163,
+   "direct": 0.0,
+   "researcher": 0.0
+  },
+  "CV_NC|olmo2-13b": {
+   "agent": 0.01809954751131222,
+   "direct": 0.0,
+   "researcher": 0.42081447963800905
+  },
+  "CV_NC|qwen3-32b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.0
+  },
+  "LC_BC|mistral-small-24b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.0
+  },
+  "LC_BC|olmo2-13b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.11312217194570136
+  },
+  "LC_BC|qwen3-32b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.0
+  },
+  "LC_CB|mistral-small-24b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.0
+  },
+  "LC_CB|olmo2-13b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.049773755656108594
+  },
+  "LC_CB|qwen3-32b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.0
+  },
+  "LC_CB_NOURI|mistral-small-24b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.0
+  },
+  "LC_CB_NOURI|olmo2-13b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.06787330316742081
+  },
+  "LC_CB_NOURI|qwen3-32b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.01809954751131222
+  },
+  "LC_CO|mistral-small-24b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.0
+  },
+  "LC_CO|olmo2-13b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.0
+  },
+  "LC_CO|qwen3-32b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.0
+  },
+  "LC_NC|mistral-small-24b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.0
+  },
+  "LC_NC|olmo2-13b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.00904977375565611
+  },
+  "LC_NC|qwen3-32b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.0
+  },
+  "LC_TK|mistral-small-24b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.0
+  },
+  "LC_TK|olmo2-13b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.04524886877828054
+  },
+  "LC_TK|qwen3-32b": {
+   "agent": 0.0,
+   "direct": 0.0,
+   "researcher": 0.0
+  }
+ },
+ "omission_by_condition": {
+  "CV_CONTACT": 0.001,
+  "CV_DUA": 0.0,
+  "CV_NC": 0.0503,
+  "LC_BC": 0.0126,
+  "LC_CB": 0.0055,
+  "LC_CB_NOURI": 0.0096,
+  "LC_CO": 0.0,
+  "LC_NC": 0.001,
+  "LC_TK": 0.005
+ },
+ "omission_by_model": {
+  "mistral-small-24b": {
+   "lc": 0.0,
+   "cv": 0.0015082956259426848
+  },
+  "olmo2-13b": {
+   "lc": 0.014479638009049774,
+   "cv": 0.049773755656108594
+  },
+  "qwen3-32b": {
+   "lc": 0.0,
+   "cv": 0.0
+  }
+ },
+ "omission_by_framing": {
+  "agent": {
+   "lc": 0.0,
+   "cv": 0.003519356460532931
+  },
+  "direct": {
+   "lc": 0.0,
+   "cv": 0.0
+  },
+  "researcher": {
+   "lc": 0.014479638009049774,
+   "cv": 0.04776269482151835
+  }
+ },
+ "named_as_indigenous_governance_given_lc_mention": 0.9994947964029504,
+ "matched_pairs": {
+  "nc_restriction: LC_NC vs CV_NC": [
+   0.001005530417295123,
+   0.05027652086475616
+  ],
+  "invitation: LC_CB vs CV_CONTACT": [
+   0.005530417295123178,
+   0.001005530417295123
+  ],
+  "uri_cue: LC_CB vs LC_CB_NOURI": [
+   0.005530417295123178,
+   0.009552538964303671
+  ]
+ },
+ "omission_name_only": {
+  "lc": 0.00512820512820511,
+  "cv": 0.04038880509468745,
+  "by_condition": {
+   "CV_CONTACT": 0.0045,
+   "CV_DUA": 0.0,
+   "CV_NC": 0.1166,
+   "LC_BC": 0.0126,
+   "LC_CB": 0.006,
+   "LC_CB_NOURI": 0.0101,
+   "LC_CO": 0.0,
+   "LC_NC": 0.002,
+   "LC_TK": 0.005
+  }
+ },
+ "truncated_share": 0.0007038712921065862,
+ "sensitivity_excluding_truncated": {
+  "lc_omission": 0.00482897384305835,
+  "cv_omission": 0.017116965933881522,
+  "n": 19876
+ },
+ "by_record_source": {
+  "other": {
+   "lc": 0.005291005291005291,
+   "cv": 0.010582010582010581
+  },
+  "neotoma": {
+   "lc": 0.0047777777777777775,
+   "cv": 0.017777777777777778
+  }
+ }
+}

@@ -75,3 +75,12 @@ The first main run crashed in H3's bootstrap: a record drawn twice kept its DOI,
 lookup returned several rows. Each resampled copy now gets its own label (standard for a cluster bootstrap; H1 and
 H2's intervals are computed the same way and are affected only through that relabelling). The run crashed before
 printing or writing any result; the scorer is unchanged.
+
+## D6 — 2026-10-17 12:56 NZDT — post-hoc descriptive checks of what models say about the elements
+
+The preregistered results: H1 Refuted (Local Contexts omission 0.5%, 0.4-0.6%), H2 Refuted (Local Contexts
+omitted 1.2 points LESS often than conventional clauses), H3 Refuted (an element changes the agent verdict in 85%,
+84-86%). Nearly all omissions are OLMo-2 in the researcher framing. code/supplementary.py, written now and committed
+before it runs, describes which way verdicts move (V1, with the matched pairs), how often an element is called not
+legally binding (V2), and how often models attach NonCommercial/NoDerivatives/ShareAlike terms to plain CC BY (V3).
+Descriptive only; patterns for V2 and V3 are lexical and unvalidated, and the report says so.
