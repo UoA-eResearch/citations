@@ -68,3 +68,10 @@ unchanged. Added before the main set is scored, as a secondary only: mention by 
 hallucinated restriction cannot trigger. The adjudication notes also record characterisation errors (invented
 CC BY terms, TK CO called non-binding, "BC" read as British Columbia, an NC licence listed with commercial use
 "yes"); these are descriptive and not part of any preregistered outcome.
+
+## D5 — 2026-10-17 12:45 NZDT — a bootstrap bug in analysis.py, fixed before any result was printed
+
+The first main run crashed in H3's bootstrap: a record drawn twice kept its DOI, so the per-record NONE baseline
+lookup returned several rows. Each resampled copy now gets its own label (standard for a cluster bootstrap; H1 and
+H2's intervals are computed the same way and are affected only through that relabelling). The run crashed before
+printing or writing any result; the scorer is unchanged.

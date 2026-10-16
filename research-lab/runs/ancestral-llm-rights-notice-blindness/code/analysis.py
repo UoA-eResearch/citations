@@ -61,7 +61,10 @@ def boot(d, stat, nboot=NBOOT, seed=SEED):
     rng = np.random.default_rng(seed)
     vals = []
     for _ in range(nboot):
-        b = pd.concat([groups[k] for k in rng.choice(recs, len(recs))], ignore_index=True)
+        # each resampled copy gets its own label, so a record drawn twice counts as two records (a first version
+        # reused the DOI, and H3's per-record baseline lookup then returned several rows - deviations D5)
+        b = pd.concat([groups[k].assign(doi=f"{k}#{i}") for i, k in enumerate(rng.choice(recs, len(recs)))],
+                      ignore_index=True)
         vals.append(stat(b))
     return float(stat(d)), float(np.percentile(vals, 2.5)), float(np.percentile(vals, 97.5))
 
