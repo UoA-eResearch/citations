@@ -56,3 +56,15 @@ data/generations/discarded_700tok/ and not used. At that point I had read three 
 (no element present), to check format; no element-condition response had been read or scored. All three models now
 run in one final window (run_gpu_mistral.sh: Qwen3 and Mistral at 6,144 context, OLMo-2 at 4,096). Truncated responses
 are still reported, with a sensitivity excluding them.
+
+## D4 — 2026-10-17 12:43 NZDT — pilot adjudication done; scorer frozen unchanged, one name-only secondary added
+
+I adjudicated the 200-response pilot sample blind to the scorer (results/tables/pilot_adjudication.csv). All 200
+mention the inserted element. The scorer agrees on every one (sensitivity 1.00, no disagreements); specificity is
+not estimable from a sample with no negatives, so the pilot's NONE responses give each pattern's false-positive
+rate: 1-2% for the Local Contexts, data-use-agreement and contact patterns, 7-8% for the two non-commercial
+patterns, because some models invent a NonCommercial term for plain CC BY. The preregistered patterns are frozen
+unchanged. Added before the main set is scored, as a secondary only: mention by explicit name (score.NAMES), which a
+hallucinated restriction cannot trigger. The adjudication notes also record characterisation errors (invented
+CC BY terms, TK CO called non-binding, "BC" read as British Columbia, an NC licence listed with commercial use
+"yes"); these are descriptive and not part of any preregistered outcome.

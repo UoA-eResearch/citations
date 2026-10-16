@@ -1,0 +1,102 @@
+{
+ "CV_CONTACT": {
+  "n": 23,
+  "tp": 23,
+  "fn": 0,
+  "fp": 0,
+  "tn": 0,
+  "sensitivity": 1.0,
+  "specificity": null,
+  "agreement": 1.0
+ },
+ "CV_DUA": {
+  "n": 23,
+  "tp": 23,
+  "fn": 0,
+  "fp": 0,
+  "tn": 0,
+  "sensitivity": 1.0,
+  "specificity": null,
+  "agreement": 1.0
+ },
+ "CV_NC": {
+  "n": 22,
+  "tp": 22,
+  "fn": 0,
+  "fp": 0,
+  "tn": 0,
+  "sensitivity": 1.0,
+  "specificity": null,
+  "agreement": 1.0
+ },
+ "LC_BC": {
+  "n": 22,
+  "tp": 22,
+  "fn": 0,
+  "fp": 0,
+  "tn": 0,
+  "sensitivity": 1.0,
+  "specificity": null,
+  "agreement": 1.0
+ },
+ "LC_CB": {
+  "n": 22,
+  "tp": 22,
+  "fn": 0,
+  "fp": 0,
+  "tn": 0,
+  "sensitivity": 1.0,
+  "specificity": null,
+  "agreement": 1.0
+ },
+ "LC_CB_NOURI": {
+  "n": 22,
+  "tp": 22,
+  "fn": 0,
+  "fp": 0,
+  "tn": 0,
+  "sensitivity": 1.0,
+  "specificity": null,
+  "agreement": 1.0
+ },
+ "LC_CO": {
+  "n": 22,
+  "tp": 22,
+  "fn": 0,
+  "fp": 0,
+  "tn": 0,
+  "sensitivity": 1.0,
+  "specificity": null,
+  "agreement": 1.0
+ },
+ "LC_NC": {
+  "n": 22,
+  "tp": 22,
+  "fn": 0,
+  "fp": 0,
+  "tn": 0,
+  "sensitivity": 1.0,
+  "specificity": null,
+  "agreement": 1.0
+ },
+ "LC_TK": {
+  "n": 22,
+  "tp": 22,
+  "fn": 0,
+  "fp": 0,
+  "tn": 0,
+  "sensitivity": 1.0,
+  "specificity": null,
+  "agreement": 1.0
+ },
+ "ALL": {
+  "n": 200,
+  "tp": 200,
+  "fn": 0,
+  "fp": 0,
+  "tn": 0,
+  "sensitivity": 1.0,
+  "specificity": null,
+  "agreement": 1.0
+ }
+}

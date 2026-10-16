@@ -81,3 +81,18 @@ def agent_fields(text):
     except Exception:
         return None
     return norm(d.get("commercial_use_allowed")), norm(d.get("permission_or_contact_required"))
+
+# Secondary, added after the pilot (deviations D4): mention by explicit NAME only, which a model's hallucinated
+# restriction cannot trigger (the pilot's NONE responses matched the NC content pattern 7-8% of the time because
+# some models invent a NonCommercial term for plain CC BY).
+NAMES = {
+    "LC_CB": GEN_LC + r"|open\s+to\s+collaborat|tk\s*\(?cb\b", "LC_CB_NOURI": GEN_LC + r"|open\s+to\s+collaborat|tk\s*\(?cb\b",
+    "LC_NC": GEN_LC + r"|tk\s*\(?nc\b", "LC_BC": GEN_LC, "LC_TK": GEN_LC, "LC_CO": GEN_LC + r"|community\s+use\s+only|tk\s*\(?co\b",
+    "CV_NC": r"non[- ]?commercial\s+4\.0|\bby[- ]nc\b|cc[- ]by[- ]nc|attribution[- ]non[- ]?commercial",
+    "CV_DUA": DUA, "CV_CONTACT": r"contact\s+the\s+data\s+providers|collaboration\s+is\s+welcome",
+}
+
+
+def mentions_by_name(text, condition):
+    return bool(re.search(NAMES[condition], strip_echo(text), FLAGS))
+

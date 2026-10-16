@@ -44,6 +44,7 @@ def score_frame(d):
     d = d[d.ok].copy()
     d["mention"] = [S.mentions(t, c) if c in S.PATTERNS else np.nan for t, c in zip(d.text, d.condition)]
     d["named_lc"] = [S.named_lc(t) for t in d.text]
+    d["mention_name"] = [S.mentions_by_name(t, c) if c in S.NAMES else np.nan for t, c in zip(d.text, d.condition)]
     d["omit"] = 1 - d.mention
     return d
 
@@ -115,6 +116,10 @@ def main(which="main"):
         "nc_restriction: LC_NC vs CV_NC": [float(d[d.condition == "LC_NC"].omit.mean()), float(d[d.condition == "CV_NC"].omit.mean())],
         "invitation: LC_CB vs CV_CONTACT": [float(d[d.condition == "LC_CB"].omit.mean()), float(d[d.condition == "CV_CONTACT"].omit.mean())],
         "uri_cue: LC_CB vs LC_CB_NOURI": [float(d[d.condition == "LC_CB"].omit.mean()), float(d[d.condition == "LC_CB_NOURI"].omit.mean())]}
+    nm = d[d.condition != "NONE"]
+    out["omission_name_only"] = dict(lc=float(1 - nm[nm.condition.isin(S.LC_CONDITIONS)].mention_name.mean()),
+                                     cv=float(1 - nm[nm.condition.isin(S.CV_CONDITIONS)].mention_name.mean()),
+                                     by_condition=(1 - nm.groupby("condition").mention_name.mean()).round(4).to_dict())
     out["truncated_share"] = float((d.finish == "length").mean()) if "finish" in d else None
     nt = d[d.finish != "length"] if "finish" in d else d
     out["sensitivity_excluding_truncated"] = dict(lc_omission=float(lc_omit(nt)), cv_omission=float(cv_omit(nt)),
