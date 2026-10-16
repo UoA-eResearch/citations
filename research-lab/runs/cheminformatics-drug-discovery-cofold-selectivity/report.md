@@ -214,6 +214,8 @@ worth running", and the wrong bar for "is this impressive".
 
 ### P1 is the one statistic that does not separate them, and the reason is the assay ceiling
 
+![Per-ligand selectivity correlations, model and baselines](results/figures/F1_selectivity.png)
+
 Paired ligand bootstraps of the difference, model minus baseline, over every rank statistic a selectivity
 user might reasonably ask for:
 
@@ -277,6 +279,10 @@ while the ligand main effect swells from 25 % to 53 %.
 | kinase (which kinase binds most things) | 14.6 % | 11.4 % |
 | ligand × kinase interaction (selectivity itself) | 59.9 % | 35.2 % |
 
+![Variance decomposition and the conventional axis](results/figures/F3_decomposition.png)
+
+![Measured and predicted panels](results/figures/F2_panels.png)
+
 The predictions are also compressed: the spread of a ligand's profile is half the measured spread (SD 0.52
 against 1.00), and across the whole panel 0.76 against 1.19. So differences are in the right direction more
 often than not, but systematically too small.
@@ -337,6 +343,8 @@ deviations. No decoy ever outscored a ligand's best kinase (0 of 128), and only 
 ligand's kinase *mean*. The binary probability separates them further still (median 0.07 – 0.29 against
 0.44 for kinases). Kinase inhibitors are recognised as kinase binders; this is the easy discrimination, and
 the model passes it cleanly.
+
+![Decoy proteins against the kinome](results/figures/F4_decoys.png)
 
 The plan put a specific question to this arm: HSP90α was included as a *nucleotide-binding* non-kinase, so
 if the head were responding to generic ATP-pocket character rather than to kinase identity, HSP90 should
@@ -402,6 +410,8 @@ Ninety-three pairs is the ceiling of what public post-cutoff kinase profiling cu
 5,205, and accuracy barely tracks them: Spearman 0.147 against the within-kinase correlation, 0.251 against
 pairwise concordance, −0.041 against absolute error. On this panel the model is not simply reciting the
 best-measured targets.
+
+![Affinity sampling and training support](results/figures/F5_sampling_support.png)
 
 ### The other head is better
 

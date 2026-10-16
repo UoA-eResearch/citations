@@ -315,3 +315,15 @@ were as solid as the three large ones.
 
 The reviewer also conceded one point to me: it had written that a single kinase pair was predicted further
 apart than measured, having read the maximum rather than counted. Six of the 496 pairs are.
+
+## D13 — 2026-10-16 18:51 NZDT — post-publication correction: the report had no figures, and one misled
+
+Found while building the next study's report. The published report.html carried none of its five figures:
+the builder embeds an image only where report.md has a markdown image tag, and this report.md had none, so
+F1-F5 existed on disk but never reached the page. They are now embedded where the text cites them.
+
+Viewing F2 for the first time in context showed a worse problem. Its two lower heatmaps (measured and
+predicted, each ligand's mean removed) used separate colour scales - measured +/-2.5, predicted +/-1.2 - so
+they looked equally variable. That hid the report's own finding that the predictions are compressed to about
+half the measured spread. Each row now shares one colour scale, set by the measured values, and the paler
+predicted panel shows the compression directly. No number in the report changes.

@@ -423,6 +423,7 @@ extractable</em>, not fair competitors to a zero-shot model: neither can be comp
 has profiled yet, which is the situation the model is meant to serve. They are the right bar for "is this
 worth running", and the wrong bar for "is this impressive".</p>
 <h3>P1 is the one statistic that does not separate them, and the reason is the assay ceiling</h3>
+<figure><a href="results/figures/F1_selectivity.png"><img src="results/figures/F1_selectivity.png" alt="Per-ligand selectivity correlations, model and baselines"></a><figcaption>Left: the selectivity axis. Each point is one ligand&#x27;s Spearman correlation between Boltz-2&#x27;s predicted affinity and the measured Davis pKd across the 32 panel kinases, with the same statistic for the chemistry-free target-promiscuity baseline, the nearest-chemical-neighbour baseline and the ligand-only baseline (exactly zero by construction). The dashed line is the preregistered threshold of 0.25. Right: four example ligands (the four with the most uncensored panel cells); grey points are cells at the 10 µM assay ceiling.</figcaption></figure>
 <p>Paired ligand bootstraps of the difference, model minus baseline, over every rank statistic a selectivity
 user might reasonably ask for:</p>
 <p>Bold marks the margins wide enough to survive a multiplicity correction over the sixteen comparisons in
@@ -589,6 +590,8 @@ while the ligand main effect swells from 25 % to 53 %.</p>
 </tr>
 </tbody>
 </table></div>
+<figure><a href="results/figures/F3_decomposition.png"><img src="results/figures/F3_decomposition.png" alt="Variance decomposition and the conventional axis"></a><figcaption>Left: how much of the variation in the panel belongs to the ligand, to the kinase and to the ligand-by-kinase interaction, for the measurements and for Boltz-2&#x27;s predictions. A protein-blind predictor has a kinase share near zero. Right: the conventional axis — ranking ligands within one kinase — one correlation per kinase, against the hypothesis&#x27;s floor of 0.4.</figcaption></figure>
+<figure><a href="results/figures/F2_panels.png"><img src="results/figures/F2_panels.png" alt="Measured and predicted panels"></a><figcaption>The panel as measured and as predicted, ligands in rows (ordered by mean measured pKd) and kinases in columns (likewise). The lower row removes each ligand&#x27;s own mean, which is what the selectivity question is about: horizontal banding in the lower-right panel would mean the model varies by ligand but not by target, while agreement between the two lower panels would mean it tracks the real selectivity profile. Each row shares one colour scale, so the paler lower-right panel shows directly how much smaller the predicted differences between kinases are.</figcaption></figure>
 <p>The predictions are also compressed: the spread of a ligand's profile is half the measured spread (SD 0.52
 against 1.00), and across the whole panel 0.76 against 1.19. So differences are in the right direction more
 often than not, but systematically too small.</p>
@@ -717,6 +720,7 @@ deviations. No decoy ever outscored a ligand's best kinase (0 of 128), and only 
 ligand's kinase <em>mean</em>. The binary probability separates them further still (median 0.07 – 0.29 against
 0.44 for kinases). Kinase inhibitors are recognised as kinase binders; this is the easy discrimination, and
 the model passes it cleanly.</p>
+<figure><a href="results/figures/F4_decoys.png"><img src="results/figures/F4_decoys.png" alt="Decoy proteins against the kinome"></a><figcaption>Left: each ligand re-scored against four non-kinase proteins, as the gap from that ligand&#x27;s mean prediction over the 32 kinases; the dotted line is the median spread of a ligand&#x27;s own predictions inside the kinome, so points inside that band are shifts no larger than the model&#x27;s ordinary variation between kinases. HSP90&#x27;s N-terminal domain is a nucleotide-binding non-kinase, included to see whether generic ATP-pocket character is what the head responds to. Right: the two affinity outputs against each other for panel and decoy complexes.</figcaption></figure>
 <p>The plan put a specific question to this arm: HSP90α was included as a <em>nucleotide-binding</em> non-kinase, so
 if the head were responding to generic ATP-pocket character rather than to kinase identity, HSP90 should
 score like a kinase. It does not — but it is the most kinase-like of the four, on both read-outs: binder
@@ -772,6 +776,7 @@ Ninety-three pairs is the ceiling of what public post-cutoff kinase profiling cu
 5,205, and accuracy barely tracks them: Spearman 0.147 against the within-kinase correlation, 0.251 against
 pairwise concordance, −0.041 against absolute error. On this panel the model is not simply reciting the
 best-measured targets.</p>
+<figure><a href="results/figures/F5_sampling_support.png"><img src="results/figures/F5_sampling_support.png" alt="Affinity sampling and training support"></a><figcaption>Left: the same 8 × 12 sub-panel at the default affinity sampling and at the heavier setting that BoltzOmics reported to improve within-drug ranking across protein variants; lines join the same ligand. Right: per-kinase accuracy on the conventional axis against how much pre-2024 ChEMBL data exists for that kinase, a proxy for training support.</figcaption></figure>
 <h3>The other head is better</h3>
 <p>One practical finding worth stating separately. Boltz-2 emits a binary binder probability alongside the
 affinity value, and on this axis the probability is consistently the better ranker: P1 = 0.596 against

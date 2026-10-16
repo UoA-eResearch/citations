@@ -100,14 +100,20 @@ def f1(prim, pairs):
 
 def f2(pairs):
     pred, meas = grid(pairs, "pred_pic50")
-    fig, axes = plt.subplots(2, 2, figsize=(11, 7.4))
-    for ax, (m, lab, cm) in zip(axes.ravel(), [
-            (meas, "measured pKd", "viridis"), (pred, "predicted (6 − log10 IC50[µM])", "viridis"),
+    rows = [(meas, "measured pKd", "viridis"), (pred, "predicted (6 − log10 IC50[µM])", "viridis"),
             (meas.sub(meas.mean(1), axis=0), "measured, ligand mean removed", "coolwarm"),
-            (pred.sub(pred.mean(1), axis=0), "predicted, ligand mean removed", "coolwarm")]):
+            (pred.sub(pred.mean(1), axis=0), "predicted, ligand mean removed", "coolwarm")]
+    # One colour scale per row, shared by the measured and predicted panels. Separate scales made the
+    # two lower panels look equally variable, which hid the report's own finding that the predictions
+    # are compressed to about half the measured spread.
+    top = np.concatenate([rows[0][0].to_numpy(float).ravel(), rows[1][0].to_numpy(float).ravel()])
+    lo_top, hi_top = np.nanmin(top), np.nanmax(top)
+    lim = np.nanpercentile(np.abs(rows[2][0].to_numpy(float)), 98)      # set by the measured spread
+    fig, axes = plt.subplots(2, 2, figsize=(11, 7.4))
+    for k, (ax, (m, lab, cm)) in enumerate(zip(axes.ravel(), rows)):
         v = m.to_numpy(float)
-        lim = np.nanpercentile(np.abs(v), 98) if cm == "coolwarm" else None
-        im = ax.imshow(v, aspect="auto", cmap=cm, vmin=-lim if lim else None, vmax=lim if lim else None)
+        vmin, vmax = (lo_top, hi_top) if k < 2 else (-lim, lim)
+        im = ax.imshow(v, aspect="auto", cmap=cm, vmin=vmin, vmax=vmax)
         ax.set_title(lab, fontsize=10)
         ax.set_xticks(range(0, m.shape[1], 4))
         ax.set_xticklabels(m.columns[::4], rotation=90, fontsize=6)
@@ -122,7 +128,8 @@ def f2(pairs):
             "kinases in columns (likewise). The lower row removes each ligand's own mean, which is what the "
             "selectivity question is about: horizontal banding in the lower-right panel would mean the "
             "model varies by ligand but not by target, while agreement between the two lower panels would "
-            "mean it tracks the real selectivity profile.")
+            "mean it tracks the real selectivity profile. Each row shares one colour scale, so the paler "
+            "lower-right panel shows directly how much smaller the predicted differences between kinases are.")
 
 
 def f3(prim, pairs):
