@@ -100,3 +100,18 @@ change no verdict.
 Addendum, same session: the first run of supplementary.py clamped power for ports below the simulated range
 (0.25 calls/day) to the grid's lowest row, giving 0.38 to ports with 0.01 calls a day. Only the Pacific case
 series column was affected (S1-S3 use computed events, all >= 0.5 calls/day); those ports now get no number.
+
+## D8 — 2026-10-17 01:10 NZDT — acting on the adversarial review (fix first, 21 issues)
+
+The review (review/review.md, Fable 5.1) confirmed every number and the commit order, and left both
+preregistered verdicts standing, but found the report's strongest surviving claim, its plain-language summary and
+its reading of the import-share sign unsupported as worded. code/review_response.py, written now and committed
+before it runs, reproduces the review's key checks in the study's own code (placebo false alarms; 64-kt exposure;
+event-specific power for complete and partial closures; the country-port-count confound; a permutation null for
+dAIC; H2 without the D4 guard; the Laura/Delta and Cebu sensitivities; the forecast had D5 not been made; per-arm
+intervals). The report is then revised; recovery.py's stale docstring is corrected (documentation only); and
+score_forecast.py is made runnable without judgement calls (the forecast files themselves stay frozen).
+Corrections to earlier entries: the H2 guard in D4 was added after the descriptive table was seen and is not
+preregistered (the draft report called it "the preregistered guard"); D2 should also have said that the recovery
+rule starts from the deepest dip, not the first drop (plan.md section 5 already states the deepest-dip rule); and
+D5's forecast.py edit was committed together with its outputs, not before them.
