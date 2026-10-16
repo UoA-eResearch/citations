@@ -17,3 +17,10 @@ Every departure from the lead and from plan.md, timestamped with `date` when it 
    reporting to Neotoma and Local Contexts.
 6. The Mistral snapshot's duplicate consolidated.safetensors (47 GB, a re-packaging of the sharded weights) was
    deleted so vLLM loads only the sharded set.
+
+## D2 — 2026-10-17 08:29 NZDT — the Qwen3-32B server missed run_gpu.sh's 20-minute start timeout
+
+Loading Qwen3-32B's 62 GB from the HDD took about 20 minutes; the server had just finished warming up when the
+script's timeout stopped it, and the script moved on to OLMo-2 and Mistral. No Qwen output was generated. Qwen
+runs afterwards in its own GPU window (code/run_gpu_qwen.sh: identical except for the model list and a 60-minute
+timeout). Generation settings, prompts and corpus are unchanged.
