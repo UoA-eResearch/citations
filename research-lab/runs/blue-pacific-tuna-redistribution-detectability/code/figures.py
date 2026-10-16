@@ -59,7 +59,7 @@ def f1():
     ax.set_xlim(1979, 2051)
     ax.set_ylim(-16, 17)
     ax.set_ylabel("share inside the 12 EEZ areas,\npp from its own 1980-2009 mean")
-    ax.set_title("Observed shares swing by up to 15 points and jump in 2010; SEAPODYM's projected fall begins later",
+    ax.set_title("Observed shares swing by up to 18 points and jump in 2010; SEAPODYM's projected fall begins later",
                  fontsize=10, color=INK, loc="left")
     ax.legend(frameon=False, fontsize=8, loc="lower left", labelcolor=INK)
     fig.tight_layout()
@@ -147,39 +147,50 @@ def f3():
 
 
 def f4():
+    """The centroid, honestly: each fixed footprint's observed trend beside what SEAPODYM's projected shift
+    would look like on those same cells. The first draft compared only with zero and read a null on a
+    footprint that could barely register the projected shift as proof that the fish had not moved (D8)."""
     e = json.load(open(T / "exploratory.json"))
-    fp = json.load(open(T / "footprint.json"))["min_frac_0.8"]
+    g = json.load(open(T / "footprint_grid.json"))["grid"]
     c = e["centroid_deg_per_yr"]
-    cv = fp["centroid_trend_covered_years"]
-    rows = [("observed catch, all fished cells", c["obs_catch_1980_2021"], BLUE),
-            ("observed density, all fished cells", c["obs_density_1980_2021"], ORANGE),
-            ("density, fixed core grounds, 1980-2021", fp["centroid_trend_deg_per_yr"], ORANGE),
-            (f"density, fixed core, covered years {cv['years'][0]}-{cv['years'][1]}", cv, ORANGE),
-            ("SEAPODYM historical, 1980-2010", c["model_hist_1980_2010"], YELLOW)]
-    fig, ax = plt.subplots(figsize=(8.0, 3.8))
+    rows = [r for r in g if r["coverage_rule"] == 0.8 and r["point"] is not None]
+    fig, ax = plt.subplots(figsize=(8.2, 4.2))
     ax.grid(axis="x", color=GRID, lw=0.6)
     ax.set_axisbelow(True)
-    for i, (lab, v, col) in enumerate(rows):
-        ax.hlines(i, v["lo"], v["hi"], color=col, lw=1.6)
-        ax.scatter(v["point"], i, color=col, s=40, zorder=3, edgecolor=SURF, linewidth=1.2)
-    pr = c["model_proj_2011_2050_deg_per_yr"]
-    ax.scatter(pr, len(rows), color=YELLOW, s=40, marker="D", zorder=3, edgecolor=SURF, linewidth=1.2)
+    labels, y = [], 0
+    for lab, v, col in (("catch, all fished cells", c["obs_catch_1980_2021"], BLUE),
+                        ("density, all fished cells", c["obs_density_1980_2021"], ORANGE)):
+        ax.hlines(y, v["lo"], v["hi"], color=col, lw=1.6)
+        ax.scatter(v["point"], y, color=col, s=40, zorder=3, edgecolor=SURF, linewidth=1.2)
+        labels.append(lab); y += 1
+    for r in rows:
+        ax.hlines(y, r["lo"], r["hi"], color=ORANGE, lw=1.6)
+        ax.scatter(r["point"], y, color=ORANGE, s=40, zorder=3, edgecolor=SURF, linewidth=1.2)
+        ax.scatter(r["model_proj_trend_in_footprint"], y, color=YELLOW, marker="D", s=42, zorder=4,
+                   edgecolor=SURF, linewidth=1.2)
+        labels.append(f"density, fixed footprint >={int(100*r['threshold'])}% yrs "
+                      f"({r['n_cells']} cells, to {r['lon_range'][1]:.0f}E)")
+        y += 1
     ax.axvline(0, color=INK2, lw=0.8)
-    ax.set_yticks(range(len(rows) + 1))
-    ax.set_yticklabels([r[0] for r in rows] + ["SEAPODYM projected, 2011-2050"], color=INK)
+    ax.set_yticks(range(len(labels)))
+    ax.set_yticklabels(labels, color=INK, fontsize=8)
     ax.invert_yaxis()
+    ax.scatter([], [], color=ORANGE, s=40, label="observed density, 95% interval")
+    ax.scatter([], [], color=YELLOW, marker="D", s=42, label="SEAPODYM projected shift on the same cells")
+    ax.legend(frameon=False, fontsize=8, loc="lower right", labelcolor=INK)
     ax.set_xlabel("ENSO-adjusted centroid trend (degrees east per year)")
-    ax.set_title("On fixed grounds, the eastward move vanishes", fontsize=10, color=INK, loc="left")
+    ax.set_title("A clean null only where the projected shift is invisible too", fontsize=10, color=INK, loc="left")
     fig.tight_layout()
     fig.savefig(F / "F4_centroid.png", dpi=170)
     plt.close(fig)
-    caption("F4_centroid", """Trend in the mean longitude of skipjack within the domain. The top two rows use every cell fished that year, weighted by observed
-    catch and by observed density (catch per fishing day times cell area); the next two restrict density to a
-    fixed set of 86 core cells (141.5-159.5E) fished in at least 80% of years, first over all years and then
-    over the 31 years in which those cells were actually covered (deviations D6, D7). Each is ENSO-adjusted with a
-    95% block-bootstrap interval. The SEAPODYM rows use modelled biomass; the projected value is the four-ESM
-    mean linear trend for 2011-2050 and has no interval. A centroid over fished cells moves east whenever the
-    fishery opens new eastern grounds, so only the fixed-footprint rows speak to where the fish are.""")
+    caption("F4_centroid", """Trend in the mean longitude of skipjack within the domain. The top two rows use every
+    cell fished that year, so they move east whenever the fleet opens new eastern grounds. The remaining rows hold
+    the cells fixed - those fished in at least the stated share of the 42 years - and use only years in which at
+    least 80% of them were actually fished. Beside each observed trend (orange, 95% block-bootstrap interval) is
+    SEAPODYM's projected 2011-2050 trend computed on the same cells (yellow diamond). The narrow western footprints
+    give a clean null but register only a fraction of the projected shift, so they cannot tell no shift from the
+    projected one; the wider footprints, where the projected shift is visible, give trends that depend on the
+    threshold. Full threshold-by-coverage grid in results/tables/footprint_grid.json (deviations D8).""")
 
 
 if __name__ == "__main__":

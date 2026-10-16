@@ -124,3 +124,54 @@ years, and within grounds genuinely fished throughout there is no eastward drift
 said that if the trend vanished on a fixed footprint, the centroid result is fleet expansion; it vanishes.
 The footprint is 96.8% inside the EEZs and spans 141.5-159.5 E, so its density share cannot move much and is
 reported but not interpreted.
+
+## D8 — 2026-10-16 19:31 NZDT — changes made in response to the adversarial review (fix first, 18 issues)
+
+The Fable 5.1 review of draft 9f05cfc recomputed everything from the raw files and confirmed the commit order,
+the EEZ mask, tau, O1 for all 42 years, H1, H2, H3, the per-EEZ numbers and the power figures. It found six
+must-fix problems. Each was verified here before it was acted on.
+
+1. **The fixed-footprint headline was unsupported, and I had left out a preregistered result.** On the 86-cell
+   footprint, SEAPODYM's own projected 2011-2050 centroid trend is +0.0095 deg/yr (GFDL 0.0066, IPSL 0.0094,
+   MIROC 0.0159, MPI 0.0062) against +0.070 domain-wide, and the observed interval (-0.009, +0.013) contains
+   it. The check could not tell "no shift" from "the projected shift". The D6 decision rule was mis-specified:
+   it never asked what the model would show on that footprint. And the 50% footprint - the sensitivity D6
+   itself named - gave +0.137 (+0.077, +0.195), sitting in footprint.json and absent from the report. That is
+   selective reporting, and it is corrected. `footprint_grid.py` now reports every threshold x coverage rule,
+   each beside the model's projected shift on the same cells. Where the check has power (footprints reaching
+   ~185E, model +0.03 to +0.04), observed trends run from -0.010 to +0.137 depending on the rule. "The fish
+   have not moved east" and "the fleet moved, not the fish" are withdrawn. What survives: most of the catch
+   centroid's +0.55 deg/yr is fleet footprint, and whether skipjack density has shifted east is unresolved.
+2. **The preregistered intervals undercover.** The disclosed 0.89 was measured under white noise. Under the
+   observed AR(1) autocorrelation (0.56) coverage is about 0.79 (block bootstrap) and 0.76 (HAC). A GLS-AR(1)
+   interval gives +0.198 (-0.225, +0.620), which includes tau. The verdict stays Supported by the preregistered
+   rule and is reported as borderline - Inconclusive under GLS-AR(1). test_analysis.py now measures coverage
+   under AR(1) noise too.
+3. **D2.2 misdiagnosed the bigeye historical file.** `bet_Btot_hist_F0` is identical to `bet_Badult_hist_F0`
+   (max difference 0): the served historical "total" is adult biomass only. The 0.848 was adult/(adult+young).
+   The projection files' wrong variable name is a leftover of `cdo add bet_Byoung bet_Badult` with no `chname`
+   step (their history attribute). The adult+young fix was right; the description was wrong, and it was
+   headed to SPC.
+4. **The H2 density-share "contradiction" was the fleet's footprint.** O2 is a share over fished cells, and the
+   fleet fished 25 cells in 1980 and 410 by 1992. From 1990 the observed density-share trend is +0.180 against
+   the model's +0.221 (difference -0.041, -0.496 to +0.322); catch and free-school shares agree in sign too.
+   The preregistered 1980-2010 numbers stay; the interpretation, and the sentence saying the model "deserves
+   less confidence", are withdrawn. None of the observed series is footprint-free.
+5. **The detection year is a range, not 2098.** Under catch-share noise models it runs 2050 (post-1990
+   residuals, 2010 step removed) to 2117 (autocorrelation 0.75); 2097 with the preregistered noise. A
+   fishery-independent index with model-like noise would reach it by about 2035.
+6. **The Bell reproduction was mislabelled.** -14.2% is the 2011-2018 baseline; the spliced 2009-2018 gives
+   -15.3%. Bell et al.'s own equation (1), a month-by-month ratio over 2011-2020, gives -13.8% (-9.3 to -19.9)
+   - so part of the gap was my method, not the files. The residual gap is MPI (-9.3% against -5%).
+
+Also: "one time in six" described a 42-year linear decline; for the decline the projection actually makes,
+beginning in 2011, the record to 2021 has 8% power - the false-alarm rate. H3 is called uninformative. The
+D4 FIRMS check, promised and not run, is now run: the 1-degree file holds 58% (1980s) to 79% (2010s) of the
+5-degree skipjack purse-seine total for the domain - a quarter of the catch missing, time-varying. Outside the
+twelve EEZs, skipjack catch in 140-180E fell from 107 to 26 kt/yr after 2010 while catch at 180-200E rose from
+17 to 61 kt/yr: the closure's displaced catch went partly into the EEZs and partly to the eastern high seas.
+(The review read this as no change east of 180E, on a narrower window; with 2000-09 against 2010-19, which
+includes the 2015 El Nino, it is a large rise.) The PNA proposed closing a further eastern high-seas block
+(10N-20S, 170E-150W) around 2010-11; whether and when it took effect I could not confirm, so it is mentioned
+only as a possibility. And D7's refinement was not logged with a decision rule before it ran; the draft said
+every post-hoc analysis was, which was false for D7.

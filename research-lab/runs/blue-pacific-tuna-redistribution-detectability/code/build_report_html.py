@@ -16,7 +16,18 @@ RUN = Path(__file__).resolve().parents[1]
 REPO_BLOB = "https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/" + RUN.name
 FIG = RUN / "results" / "figures"
 TAB = RUN / "results" / "tables"
-DATE = "2026-10-13"
+def _report_date():
+    """The report's last commit date, falling back to today - a hard-coded date was copied from another run."""
+    import datetime, subprocess
+    try:
+        d = subprocess.run(["git", "log", "-1", "--format=%cs", "--", "report.md"], cwd=RUN,
+                           capture_output=True, text=True, timeout=30).stdout.strip()
+        return d or datetime.date.today().isoformat()
+    except Exception:
+        return datetime.date.today().isoformat()
+
+
+DATE = _report_date()
 STATUS = "revised after independent review" if (RUN / "review" / "confirmation.md").exists() else "pre-review draft"
 
 

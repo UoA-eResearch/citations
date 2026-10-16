@@ -100,11 +100,12 @@ def _load(sp, part, run):
 def open_run(sp, run):
     """Total biomass, defined as adult + young throughout.
 
-    That is what 'Btot' holds in every file except one: the bigeye historical run, where 'Btot' is
-    0.848 x (adult + young) and varies by cell (0.73-1.00), so it is not the same quantity as the
-    projections' 'Btot' and would put a definitional step into anything spliced across 2010/2011.
-    For that run alone, adult + young is used instead. Skipjack and yellowfin agree to 1.0000 in every
-    cell, so for them this changes nothing.
+    That is what 'Btot' holds in every file except one: the bigeye historical run, whose 'Btot' is
+    identical to its 'Badult' file (maximum difference 0) - adult biomass only. (The first version of
+    this note described it as 0.848 x (adult + young) varying by cell; that ratio was just the adult
+    fraction, and the review identified what the file actually is - deviations D8.) It would put a
+    definitional step into anything spliced across 2010/2011, so for that run alone adult + young is used.
+    Skipjack and yellowfin agree to 1.0000 in every cell, so for them this changes nothing.
     """
     if sp == "bet" and run == "hist":
         return _load(sp, "Badult", run) + _load(sp, "Byoung", run)
