@@ -35,6 +35,8 @@ RUN = Path(__file__).resolve().parents[1]
 RAW, PROC, TAB = RUN / "data" / "raw", RUN / "data" / "processed", RUN / "results" / "tables"
 BASE = ["log_size", "log_activity", "cat", "closest_100km"]
 ARMS = {"primary": (3, 150), "cat1_150km": (1, 150), "cat3_100km": (3, 100), "cat3_250km": (3, 250)}
+SEED, NBOOT = 20261017, 1000
+MIN_SIDS_DISRUPTED = 3          # below this, part B cannot estimate a small-island time ratio (deviations D4)
 
 
 def load(arm="primary", col_T="T", col_ev="event", col_dis="disrupted"):
@@ -63,8 +65,45 @@ def part_b(r, covs):
     d = r[r.D_].copy()
     d["T_"] = d.T_.clip(lower=1.0)                    # a disruption that clears on day 0 counts as one day
     f = WeibullAFTFitter()
-    f.fit(d[covs + ["T_", "E_", "sid"]], duration_col="T_", event_col="E_", cluster_col="sid")
+    # lifelines' AFT fitters have no cluster option (only CoxPHFitter does); storm-clustered intervals for part B
+    # come from boot_b() instead (deviations D4). AIC needs no standard errors.
+    f.fit(d[covs + ["T_", "E_"]], duration_col="T_", event_col="E_")
     return f
+
+
+def _boot_fit(args):
+    rb, covs, term = args
+    try:
+        if rb.D_.sum() < len(covs) + 3 or (term == "sids" and rb[rb.D_][term].nunique() < 2):
+            return None
+        c = float(part_b(rb, covs).params_.loc[("lambda_", term)])
+        return c if np.isfinite(c) and abs(c) < 20 else None
+    except Exception:
+        return None
+
+
+def boot_b(r, covs, term, draws=None, seed=SEED):
+    """Storm-cluster bootstrap of a part-B coefficient: resample storms with replacement, refit, take the 2.5th and
+    97.5th percentiles. Draws that fail to fit (e.g. too few disrupted events resampled) are dropped and counted.
+    Resamples are drawn in order from one seeded generator, so the result does not depend on the worker count."""
+    from multiprocessing import Pool
+    draws = draws or NBOOT
+    rng = np.random.default_rng(seed)
+    storms = r.sid.unique()
+    groups = {s: g for s, g in r.groupby("sid")}
+    jobs = []
+    for _ in range(draws):
+        pick = rng.choice(storms, size=len(storms), replace=True)
+        rb = pd.concat([groups[s].assign(sid=f"{s}#{i}") for i, s in enumerate(pick)], ignore_index=True)
+        jobs.append((rb, covs, term))
+    with Pool(28) as pool:
+        res = pool.map(_boot_fit, jobs, chunksize=8)
+    coefs = [c for c in res if c is not None]
+    failed = draws - len(coefs)
+    if len(coefs) < draws // 2:
+        return dict(lo=None, hi=None, ok_draws=len(coefs), failed_draws=failed)
+    lo, hi = np.percentile(coefs, [2.5, 97.5])
+    return dict(lo=float(lo), hi=float(hi), ok_draws=len(coefs), failed_draws=failed)
 
 
 def aic_two_part(r, covs):
@@ -77,23 +116,41 @@ def h1(r):
     aic1, a1, b1 = aic_two_part(r, BASE + ["share"])
     d = aic0 - aic1
     verdict = "Supported" if d >= 10 else ("Refuted" if d < 2 else "Inconclusive")
-    sb = b1.summary.loc[("lambda_", "share")]
+    cb = float(b1.params_.loc[("lambda_", "share")])
+    bs = boot_b(r, BASE + ["share"], "share")
+    ci = [float(np.exp(bs["lo"])), float(np.exp(bs["hi"]))] if bs["lo"] is not None else None
     return dict(delta_aic=float(d), verdict=verdict, aic_base=float(aic0), aic_full=float(aic1),
-                part_a_share_coef=float(a1.params["share"]), part_a_share_p=float(a1.pvalues["share"]),
-                part_b_share_time_ratio=float(np.exp(sb["coef"])),
-                part_b_share_tr_ci=[float(np.exp(sb["coef lower 95%"])), float(np.exp(sb["coef upper 95%"]))],
+                delta_aic_part_a=float(a0.aic - a1.aic), delta_aic_part_b=float(b0.AIC_ - b1.AIC_),
+                part_a_share_coef=float(a1.params["share"]), part_a_share_p_cluster=float(a1.pvalues["share"]),
+                part_a_share_or_per_10pp=float(np.exp(0.1 * a1.params["share"])),
+                part_b_share_time_ratio=float(np.exp(cb)), part_b_share_tr_ci_storm_bootstrap=ci,
+                part_b_bootstrap=bs,
                 n_events=int(len(r)), n_disrupted=int(r.D_.sum()), n_storms=int(r.sid.nunique()))
 
 
 def h2(r):
-    b = part_b(r, BASE + ["sids"])
-    s = b.summary.loc[("lambda_", "sids")]
-    tr, lo, hi = float(np.exp(s["coef"])), float(np.exp(s["coef lower 95%"])), float(np.exp(s["coef upper 95%"]))
-    verdict = "Supported" if (lo > 1 and tr >= 2) else ("Refuted" if hi < 2 else "Inconclusive")
     a = part_a(r, BASE + ["sids"])
-    return dict(time_ratio=tr, lo=lo, hi=hi, verdict=verdict, disruption_odds_ratio=float(np.exp(a.params["sids"])),
-                disruption_or_ci=[float(np.exp(a.conf_int().loc["sids", 0])), float(np.exp(a.conf_int().loc["sids", 1]))],
-                n_sids_events=int(r.sids.sum()), n_sids_storms=int(r[r.sids == 1].sid.nunique()))
+    out = dict(disruption_odds_ratio=float(np.exp(a.params["sids"])),
+               disruption_or_ci_cluster=[float(np.exp(a.conf_int().loc["sids", 0])),
+                                         float(np.exp(a.conf_int().loc["sids", 1]))],
+               disruption_p_cluster=float(a.pvalues["sids"]),
+               n_sids_events=int(r.sids.sum()), n_sids_storms=int(r[r.sids == 1].sid.nunique()),
+               n_sids_disrupted=int((r.D_ & (r.sids == 1)).sum()))
+    if out["n_sids_disrupted"] < MIN_SIDS_DISRUPTED:
+        # plan section 6 makes anything that is neither Supported nor Refuted Inconclusive; a time ratio fitted to
+        # one or two disrupted events would be a number with no meaning
+        return dict(out, time_ratio=None, lo=None, hi=None, verdict="Inconclusive",
+                    reason=f"not estimable: {out['n_sids_disrupted']} disrupted small-island event(s) "
+                           f"(< {MIN_SIDS_DISRUPTED})")
+    b = part_b(r, BASE + ["sids"])
+    tr = float(np.exp(b.params_.loc[("lambda_", "sids")]))
+    bs = boot_b(r, BASE + ["sids"], "sids")
+    if bs["lo"] is None:
+        return dict(out, time_ratio=tr, lo=None, hi=None, verdict="Inconclusive", part_b_bootstrap=bs,
+                    reason="bootstrap failed in most draws")
+    lo, hi = float(np.exp(bs["lo"])), float(np.exp(bs["hi"]))
+    verdict = "Supported" if (lo > 1 and tr >= 2) else ("Refuted" if hi < 2 else "Inconclusive")
+    return dict(out, time_ratio=tr, lo=lo, hi=hi, verdict=verdict, part_b_bootstrap=bs)
 
 
 def describe(r):

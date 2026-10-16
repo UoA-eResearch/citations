@@ -50,3 +50,17 @@ short for a 21-day window, so quiet-port runs returned "short_followup" - and de
 still dividing by the full number of runs, silently scoring them as undetected. It would have reported zero
 detection at low traffic for a reason that had nothing to do with detectability. The series now runs long enough
 for the widest window, detection rates divide by valid runs, and a cell with any invalid run raises an error.
+
+## D4 — 2026-10-17 00:16 NZDT — analysis.py crashed on first run: an untested code path
+
+On its first run every model call failed: lifelines 0.30.3's WeibullAFTFitter.fit() has no `cluster_col` argument
+(only CoxPHFitter does). test_recovery.py exercised the recovery algorithm but never analysis.py, so the bug
+reached the real run. The error was caught per model, so only the descriptive tables were produced - those had
+been seen when this was logged: small island states 1 of 17 events disrupted, other ports 27 of 68, Pacific 0 of 5.
+
+The fix keeps what plan.md specified - errors clustered by storm - with the closest available implementation:
+part A keeps statsmodels' cluster-robust covariance; part B's intervals come from a cluster bootstrap that
+resamples storms (1000 draws). AIC uses no standard errors, so H1's preregistered decision quantity is unaffected
+by this choice. A guard is added: with fewer than 3 disrupted small-island events, part B cannot estimate a
+small-island time ratio, so H2 is reported as not estimable, which under plan section 6 is Inconclusive rather
+than a number fitted to one event. A synthetic check of analysis.py is added to the tests before the rerun.
