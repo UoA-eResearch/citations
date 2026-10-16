@@ -21,3 +21,13 @@ Every departure from the lead and from plan.md, timestamped with `date` when it 
    estimator. Not done, and said so.
 6. Also first: the EMI download script saved 321 HTML redirect stubs instead of data (no -L); found before use,
    fixed, re-downloaded.
+
+## D2 — 2026-10-17 00:55 NZDT — a date-parsing bug in build_series.py, found before any trend existed
+
+The first build parsed ISO dates (YYYY-MM-DD) with dayfirst=True, which swaps day and month for days 1-12, so
+every month kept only about 20 of its 31 days. analysis.py then found no month with >= 80% valid half-hours and
+crashed before computing any trend; the valid-fraction check (0.645 in every field and month, data-quality counts
+only) showed why. Fixed (ISO parsed explicitly; any row dated outside its file's month now raises an error) and
+rebuilt: every segment is now 100% valid. The segments the code builds match those plan.md section 5 predicted
+from the inventory, exactly. 5 of 2,068 field-months are dropped as whole-month outages (Ohaaki 3, Rotokawa 1,
+Tauhara 1).

@@ -70,7 +70,17 @@ def read_month(f):
     unknown = sorted(set(d.key) - set(FIELD))
     if unknown:
         raise RuntimeError(f"{f}: geothermal plant(s) not mapped to a field: {unknown}")
-    d["date"] = pd.to_datetime(d[dcol], dayfirst=True, format="mixed")
+    # dates are ISO (YYYY-MM-DD) in some files and d/m/Y in others; parsing ISO with dayfirst=True swaps day and
+    # month for days 1-12 (a first run lost 11-12 days of every month this way, caught by the valid-half-hour count)
+    s = d[dcol].str.strip()
+    iso = s.str.match(r"^\d{4}-\d{2}-\d{2}")
+    d["date"] = pd.NaT
+    d.loc[iso, "date"] = pd.to_datetime(s[iso], format="%Y-%m-%d")
+    d.loc[~iso, "date"] = pd.to_datetime(s[~iso], dayfirst=True, format="mixed")
+    d["date"] = pd.to_datetime(d["date"])
+    bad = (d.date.dt.to_period("M") != pd.Period(f"{Path(f).name[:4]}-{Path(f).name[4:6]}", "M"))
+    if bad.any():
+        raise RuntimeError(f"{f}: {int(bad.sum())} rows dated outside the file's month")
     for c in TP:
         if c not in d:
             d[c] = np.nan
