@@ -65,8 +65,11 @@ def f1():
     as a percentage of its own segment mean so that every field shares one axis (blue). Shaded spans are the
     preregistered segments, cut at plant entries and documented capacity changes; orange lines are their fitted
     trends (GLS with AR(1) errors, month-of-year effects removed - the line shows the trend only). The panel titles
-    give each field's preregistered trend and mean P95. Ohaaki's 2008 jump and run-down are inside one segment;
-    no capacity change was documented for it.""")
+    give each field's preregistered trend and mean P95. Ohaaki's 2007-08 rise and fall are inside one segment; no
+    capacity change was documented for it. Kawerau's first segment is a 5.5 MW plant, its second the 100 MW KGL
+    station, its third KGL plus small series of uncertain identity (D4). Wairakei 2006-13 includes Poihipi's
+    connection to the field (2006-11), and the start of Wairakei 2014- and Ngatamariki include commissioning ramps
+    longer than the six months excluded (D4).""")
 
 
 def f2():
@@ -76,7 +79,7 @@ def f2():
     fig, ax = plt.subplots(figsize=(8.4, 4.4))
     fig.subplots_adjust(left=0.20, right=0.97, bottom=0.14, top=0.95)
     ax.grid(axis="x", color=GRID, lw=0.6); ax.set_axisbelow(True)
-    for x, lab in ((0, "flat"), (-1.5, "H1 line"), (-3, "H2 line\n(MBIE's 3%)")):
+    for x, lab in ((0, "flat"), (-1.5, "H1 line"), (-3, "H2 line\n(-3%/yr)")):
         ax.axvline(x, color=INK2, lw=0.8, ls="-" if x == 0 else ":")
         ax.text(x, len(fields) + 1.55, lab, ha="center", va="bottom", fontsize=8, color=INK2,
                 bbox=dict(fc=SURF, ec="none", pad=1.5))
@@ -94,15 +97,18 @@ def f2():
     ax.plot(oh["ci"], [oy, oy], color=ORANGE, lw=2, solid_capstyle="round")
     ax.scatter([oh["pct_per_yr"]], [oy], facecolor=SURF, edgecolor=ORANGE, s=40, lw=1.5, zorder=3)
     ax.set_yticks(ys + [fy, oy])
-    ax.set_yticklabels(fields + ["fleet (capacity-weighted)", "Ohaaki 2008-13, after\na step up (post hoc)"])
+    ax.set_yticklabels(fields + ["fleet (capacity-weighted)", "Ohaaki 2008-13 (post hoc,\nwindow chosen from the series)"])
     ax.set_xlim(-13, 3.2)
     ax.set_ylim(-2.0, len(fields) + 2.3)
     ax.set_xlabel("trend in achievable output, % per year (95% interval)")
     fig.savefig(F / "F2_trends.png", dpi=200)
     caption("F2_trends", """F2. Preregistered trends in achievable output for the eight fields (blue) and the fleet
     (black diamond), with 95% intervals, against the decision lines: H1 asks whether the fleet declines more slowly
-    than 1.5%/yr, H2 whether two or more fields decline faster than 3%/yr. The orange hollow marker is post hoc
-    (deviations D3): Ohaaki's run-down over the five years after its 2008 step up, fitted with the same model.""")
+    than 1.5%/yr, H2 whether two or more fields decline faster than 3%/yr. Intervals are approximate: at the most
+    autocorrelated segments their true coverage is nearer 87-90% (deviations D4). The orange hollow marker is post
+    hoc (D3): Ohaaki's fall over the five years after its 2007-08 rise, fitted with the same model; the window was
+    chosen from the series (peak to return to baseline), which fixes the slope, so it shows the size of that episode,
+    not a rate to compare with anything.""")
 
 
 if __name__ == "__main__":

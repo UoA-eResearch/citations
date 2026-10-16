@@ -58,3 +58,15 @@ endpoint rule and its drilling attribution is undocumented. Also: KGL's 2017 rer
 28% of the field. code/review_response.py, written now and committed before it runs, computes the alternative
 segmentations, a rule-based variant (12-month ramps, the Poihipi window, Kawerau = KGL), capacity-weighted segment
 combination, AR(2) errors, a rolling outage filter and the Ohaaki window sensitivity. The report is then revised.
+
+D4 outcomes (review_response.py): fleet -0.09 (-0.27, +0.09) with Wairakei 2014- from 2015-01; -0.13 (-0.29, +0.02)
+adding Nga Tamariki from 2014-10; -0.19 (-0.34, -0.03) also dropping Wairakei 2006-13; rule-based variant (12-month
+ramps, Poihipi window 2006-11, Kawerau = KGL) -0.04 (-0.22, +0.14); capacity-weighted segments +0.10 (-0.15, +0.36);
+AR(2) +0.02 (-0.19, +0.23); rolling outage filter -0.08 (-0.24, +0.08), 42 months dropped. H1 Supported and H2
+Refuted in every case. Ohaaki fall: -10.4 (2008-13), -12.1 (2008-12), -5.1 (2008-16), -1.7 (2008-26). The report
+now says "between about 0 and -0.2%/yr, -0.4 over the last decade", drops the drilling mechanism, states the
+coverage gaps, labels the Ohaaki slope as endpoint-determined and its cause undocumented, corrects KGL to 107 MW,
+calls the intervals approximate, relabels F2's -3 line, adds Mokai's direct-use steam and the FGGS contradiction,
+and narrows the novelty claim. analysis.py's EVENTS label still says 117 MW (a description string only; the
+window it defines is unchanged and harmless).
+
