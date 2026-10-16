@@ -85,3 +85,27 @@ Made after primary.py had run. None changes a preregistered verdict; all are lab
 3. **The zonal centroid.** The lead's method named an ENSO-adjusted trend in the catch centroid's longitude
    as a second estimand; plan.md dropped it. An eastward shift should move the centroid east, independently
    of where EEZ boundaries fall. Computed for observed catch, observed density and SEAPODYM biomass.
+
+## D6 — 2026-10-16 18:43 NZDT — the per-EEZ prediction failed; a fixed-footprint check on the centroid
+
+**The D5 prediction did not hold.** It said the 2010 jump would sit in the seven EEZs bordering the closed
+pockets and be near zero in the five that do not. ENSO-adjusted steps summed by group do favour the bordering
+EEZs (+12.1 against +5.0 pp), but all of it is Papua New Guinea (+16.6); four of the seven bordering EEZs have
+negative steps and all five non-bordering EEZs positive ones. Raw before/after means point the other way:
+bordering EEZs 76.5% -> 77.0% of domain catch, non-bordering 4.4% -> 14.2%. And the per-EEZ steps are poorly
+identified - with twelve post-2010 years the step and trend terms trade off, so PNG's raw share fell 8.9 points
+while its step is +16.6. The report will not attribute the pooled 2010 step to the closure on the strength of
+the per-EEZ pattern; it coincides with the closure and with a jump in the EEZ share of fishing days, and that is
+all that can be said.
+
+**What the per-EEZ shares show instead** is catch moving from the western EEZs (PNG, FSM) to central and
+eastern ones (Kiribati Gilbert, Nauru, Tuvalu, Phoenix), and the ENSO-adjusted centroid moving east at +0.55
+(catch) and +0.65 (density) degrees per year. That is the direction SEAPODYM projects - but the purse-seine
+fishery itself expanded east over these decades, and a centroid computed over the cells fished in each year
+moves east whenever new eastern grounds open, fish or no fish.
+
+**Check, defined before it is run:** recompute the density centroid over a FIXED footprint - only the cells in
+the domain fished on at least 5 days in at least 80% of the 42 years (sensitivity: 50%) - so that no cell
+enters or leaves. If the eastward trend survives on a fixed footprint, density has shifted east within grounds
+fished throughout. If it vanishes, the centroid result is fleet expansion. Either way the report says which.
+The same fixed footprint is used for a density share, to see whether the flat O2 result depends on footprint.
