@@ -1,0 +1,38 @@
+{
+ "start": "2019-01-01",
+ "track_end": "2026-10-15 00:00:00",
+ "arms": {
+  "cat3_150km (primary)": {
+   "events": 213,
+   "pict_events": 32,
+   "pict_ports": 23,
+   "pict_storms": 9,
+   "other_events": 181,
+   "other_ports": 131
+  },
+  "cat1_150km": {
+   "events": 881,
+   "pict_events": 51,
+   "pict_ports": 24,
+   "pict_storms": 20,
+   "other_events": 830,
+   "other_ports": 353
+  },
+  "cat3_100km": {
+   "events": 134,
+   "pict_events": 17,
+   "pict_ports": 13,
+   "pict_storms": 7,
+   "other_events": 117,
+   "other_ports": 99
+  },
+  "cat3_250km": {
+   "events": 400,
+   "pict_events": 42,
+   "pict_ports": 24,
+   "pict_storms": 9,
+   "other_events": 358,
+   "other_ports": 234
+  }
+ }
+}
