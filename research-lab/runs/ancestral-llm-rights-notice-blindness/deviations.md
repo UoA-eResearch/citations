@@ -36,3 +36,12 @@ installed in the venv (generate.py had not been smoke-tested before the GPU stag
 the second window reached generation; Mistral runs in a third window (code/run_gpu_mistral.sh, same settings). No
 response from any model had been generated or read when these were fixed.
 
+Second window: OLMo-2's server failed again, this time with its log captured: vLLM rejects --max-model-len 6144
+because OLMo-2's context is 4,096 tokens (so the first-window crash was probably this too, not GPU memory). The
+longest prompt is 2,959 OLMo tokens, so prompt + 700 output always fits in 4,096; the third window
+(run_gpu_mistral.sh) runs Mistral and OLMo at --max-model-len 4096, which truncates nothing and does not change any
+output. The script also now stops waiting as soon as a server's container exits (the second window polled a dead
+OLMo server for its full 60 minutes). Weights were moved to the NVMe (/mnt/research-lab-models/..., at the user's
+request; faster loading) and data/models now links there; the HDD copy is kept as data/models_hdd until the run
+ends. Qwen3 runs in the second window from the NVMe copy.
+
