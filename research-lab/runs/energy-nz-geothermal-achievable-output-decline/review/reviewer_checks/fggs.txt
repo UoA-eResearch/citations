@@ -1,0 +1,2641 @@
+Future Geothermal Generation Stack
+
+
+
+
+        A report for the Ministry of Business, Innovation and Employment
+                                   Authored by: Lawless Geo-Consulting
+                             (Jim Lawless, Bart van Campen, Jim Randle)
+                                                             Revision D
+                                                            March 2020
+Cover page: The 14 MW (net) binary bottoming plant at Wairakei. Original A and B Stations in the
+background. A good example of recent incremental brownfield development.
+Table of Contents
+  Disclaimer............................................................................................................................................ 5
+  List of abbreviations ............................................................................................................................ 6
+Executive Summary................................................................................................................................. 1
+1.      Introduction .................................................................................................................................... 3
+  1.1. Scope of work.......................................................................................................................... 3
+  1.2. Background ............................................................................................................................. 3
+2. Present generation, regulations and emissions.............................................................................. 6
+     2.1. Present geothermal generation and location ......................................................................... 6
+     2.2. Outline of geothermal technology .......................................................................................... 7
+     2.3. Regulatory environment and impacts on development timing and feasibility ...................... 9
+       Classification and preservation of geothermal systems ................................................................. 9
+        Central government policy affecting geothermal development .................................................. 11
+        Multiple operators ........................................................................................................................ 12
+        Status of landowners .................................................................................................................... 12
+        Maori interests .............................................................................................................................. 12
+        Safety Regulations......................................................................................................................... 13
+   2.4. Greenhouse gas emissions.................................................................................................... 13
+3. Methodology adopted for estimating CAPEX and OPEX................................................................... 17
+  3.1. CAPEX .................................................................................................................................... 17
+  3.2. Foreign/USD and local cost shares........................................................................................ 19
+  3.3. OPEX ...................................................................................................................................... 20
+  3.4. Greenhouse gas emission costs ............................................................................................ 20
+4. Other potential future developments .......................................................................................... 22
+  4.1. Potential for new technology to increase existing geothermal generation capacity ................ 22
+  4.2. Potential for geothermal generation to be extended to areas outside the existing Rotorua-
+  Taupō and Ngāwhā areas.................................................................................................................. 23
+  4.3. Potential for geothermal to generate in a load-following manner, to compensate for
+  intermittency of other electricity sources ........................................................................................ 25
+  4.4. Extent to which non-electric uses of geothermal energy will compete with, or complement
+  generation ......................................................................................................................................... 26
+5. Review of individual prospects ..................................................................................................... 28
+        Decommissioning .......................................................................................................................... 28
+     5.1. Northland ................................................................................................................................... 29
+       Ngāwhā ......................................................................................................................................... 29
+     5.2. Waikato Region .......................................................................................................................... 30
+       Atiamuri ........................................................................................................................................ 30
+        Horohoro ....................................................................................................................................... 31
+        Ketetahi/Tongariro........................................................................................................................ 31
+        Lake Taupō/Horomatangi ............................................................................................................. 31
+        Mangakino .................................................................................................................................... 31
+        Mokai ............................................................................................................................................ 32
+        Ngatamariki ................................................................................................................................... 32
+        Ohaaki ........................................................................................................................................... 33
+        Orakei Korako................................................................................................................................ 34
+        Reporoa ......................................................................................................................................... 34
+        Rotokawa ...................................................................................................................................... 35
+        Tauhara & Wairakei ...................................................................................................................... 36
+        Te Kopia......................................................................................................................................... 38
+        Tokaanu (+ Hipaua-Waihi) ............................................................................................................ 38
+        Waimangu, Waiotapu and Waikite ............................................................................................... 38
+     5.3. Bay of Plenty Region .................................................................................................................. 39
+       Kawerau ........................................................................................................................................ 39
+        Rotoma .......................................................................................................................................... 41
+        Rotorua ......................................................................................................................................... 41
+        Taheke and Tikitere....................................................................................................................... 41
+     5.4. Summary future geothermal generation stack.......................................................................... 42
+6.     Conclusions ................................................................................................................................... 45
+References ............................................................................................................................................ 47
+     Annex 1: List of persons consulted ................................................................................................... 50
+     Annex 2: GHG emissions from NZ producing fields .......................................................................... 51
+     Annex 3: Scope of work .................................................................................................................... 53
+
+
+List of Figures
+Figure 1: LRMC of new non-peak RE-generation according to EDGS-2016 (source: MBIE, 2016) ......... 4
+Figure 2: Map of New Zealand’s high temperature geothermal resources (source: NZGA/GNS, 2019)
+ ................................................................................................................................................................ 6
+Figure 3: Graphical chart comparing the operational emissions intensity of geothermal power
+stations in New Zealand to other types of electricity generation (source: McLean and Richardson,
+2019) ..................................................................................................................................................... 15
+Figure 4: Variation of power plant cost with size (source: GT Management, 2019) ............................ 18
+Figure 5: Regions where <210°C geothermal reservoirs have been developed for power generation.
+Showing average reservoir temperature and net installed capacity (source: Febrianto, 2017) .......... 24
+Figure 6: Breakdown of possible total geothermal generation by category                                                                                        42
+
+
+List of Tables
+Table 1: EDGS-2016 geothermal generation stack (source: MBIE, 2016) .............................................. 3
+Table 2: Geothermal plant and generation technologies in New Zealand (source: NZGA, 2019 and
+authors’ input) ........................................................................................................................................ 8
+Table 3: Characteristics of different plant types (source: Lawless et al, 2016) ...................................... 9
+Table 4: Scale factors for enthalpy (source: GT, 2019) ......................................................................... 18
+Table 5: Summary of Kawerau production consents (source: Kawerau-SMP, 2018) .......................... 40
+Table 6: Summary table 'Future geothermal generation stack'.......................................................... 44
+Disclaimer
+While every effort has been taken to ensure the information in this report is correct, the study has
+involved a degree of subjective judgement as to future events, which has included in some cases the
+weighing of the balance of probabilities of future events. Therefore, neither Lawless Geo-Consulting
+nor the individual authors take responsibility for future investment decisions which may be taken on
+the basis of results presented herein.
+List of abbreviations
+
+ BOPRC              Bay of Plenty Regional Council
+ CCS                Carbon Capture and Storage
+ CMA                Crown Minerals Act (2010)
+ COD                Commercial Operation Date (date when a power plant is fully commissioned)
+ EDGS               Electricity Demand and Generation Scenarios (published on a regular basis by
+                    MBIE to inform electricity market and facilitate planning)
+ GDL                Geothermal Developments Ltd
+ GHG                Greenhouse gases
+ IRR                Internal rate of return
+ KGL                Kawerau Geothermal Limited (Kawerau Power Station owned by Mercury)
+ MBIE               Ministry of Business, Innovation and Employment
+ Mercury/MRP        Mercury NZ Limited (formerly Mighty River Power)
+ MWe                Net Megawatts of electrical energy generated from a power station
+ NCG                Non-condensable gases (like CO2, CH4 and H2S)
+ NPS                National Policy Statement
+ NST                Norske Skog Tasman
+ NTGA(L)            Ngāti Tuwharetoa Geothermal Assets Limited
+ NTST               Ngati Tūwharetoa (BOP) Settlement Trust
+ NTEL               Ngati Tūwharetoa Electricity Limited
+ NZGA               New Zealand Geothermal Association
+ NZU                New Zealand carbon emissions trading unit
+ PRP                Peer Review Panel
+ RMA                Resource Management Act 1991
+ RPS                Regional Policy Statements
+ SAGS               Steamfield above ground system
+ TAOM               Te Ahi O Māui Partnership
+ TN2T               Tauhara North No. 2 Trust
+ TPC                Tuaropaki Power Company
+ TVZ                Taupō Volcanic Zone
+ WACC               Weighted average cost of capital
+Executive Summary
+This review was commissioned by the Ministry for Business, Innovation and Employment (MBIE) in
+consultation with Transpower. The principal objective of this work is to present estimations about the
+possible timing and cost of future geothermal projects in New Zealand over a 40-year horizon.
+
+The pace of geothermal development in New Zealand has been modest over the past five years, after
+a period of rapid growth in response to declining gas reserves. There is now a more positive mood in
+the industry following the government setting objectives for greatly reduced GHG emissions by 2050.
+Direct use of geothermal heat can also make a significant contribution to reducing fossil fuel use,
+though that is not the subject of the present study. The industry foresees on-going growth in the
+geothermal generation sector, albeit at a modest pace.
+
+Access to resources is more likely to constrain the pace of development than project cost and
+electricity price. Around half of New Zealand’s high-temperature geothermal resources are currently
+fully or partially protected. Regulatory and consenting difficulties may lead to delays for future
+projects. For the present study, it is assumed that the current regulatory regime will remain more or
+less as is, but it is conceivable that more permissive or more restrictive approaches are possible in the
+future. The current draft NPS on Biodiversity, which is open for consultation at present, is an example
+of regulation that in its initial draft form could limit future geothermal development if that is not taken
+into account. It should not be assumed that all existing projects will automatically be re-consented,
+and the consents for all existing projects expire within the 40-year horizon. On the other hand, a more
+enabling regime and policy at the national level would accelerate the pace of geothermal
+development, but would also presumably make it easier to consent new wind and solar and possibly
+even small hydro projects so would not necessarily favour geothermal over other renewable sources.
+
+It is not expected that new technology will greatly reduce the cost of future geothermal generation
+nor, within what is likely to be economic in New Zealand, significantly extend the geographical spread
+of its coverage to much lower-temperature resources. Thus, future large-scale development is likely
+to be within the Taupō Volcanic Zone and at Ngāwhā in Northland. Some modest cost reductions and
+gains in efficiency can be expected within the existing project areas, but to a lesser extent than the
+less mature renewable industries such as solar, wind and storage.
+
+From a technical perspective, geothermal generation can be made to run in a load-following manner,
+but the most economic use of geothermal generation will remain as base load. It is conceivable that
+government initiatives to minimise carbon emissions might lead to geothermal becoming more
+important for load following, although the generators concerned would probably insist on a take-or-
+pay or capacity charge type of compensation to take account of the very high proportion of fixed costs
+of geothermal project operation. New geothermal has the potential to largely substitute for existing
+thermal plant as baseload firming for other renewables.
+
+Geothermal power projects do emit GHG, albeit in most cases at significantly lower rates per MWh
+than fossil fuel plants. Previous studies in New Zealand have over-stated the emissions of existing and
+future geothermal plants, in part because emissions have actually dropped over time in some cases.
+More specific figures have been presented here for each prospect to a semi-quantitative level, based
+on actual recent data. The present MW-weighted average emissions intensity for existing geothermal
+projects is 76 g CO2eq/kWh (2018), which has been steadily declining (91 g CO2eq/kWh in 2015) and
+is expected to continue to do so in the future. If much higher carbon prices eventuate in the future,
+the pressure on geothermal plants will increase and the expected emissions intensity would likely drop
+faster. In general, that would disadvantage new, higher emitting geothermal projects relative to other
+renewables (but much less than fossil-fuelled plants). The CCS technology does exist for removal of
+
+
+                                                                                                         1
+GHG from geothermal plants and reinjection into nearby reservoirs, and likely at a lower cost than for
+fossil fuel projects.
+
+Greater future direct use of geothermal energy is generally expected to be complementary rather than
+competitive to electricity generation or to be based on lower-temperature resources. A notable
+exception to that could be at Kawerau where there is scope for expansion but the balance between
+future industrial use and electricity generation is unclear. Another possible future “direct use” is
+mineral recovery provided certain technical challenges can be overcome. Preservation of geothermal
+activity for tourism is a form of “direct use” which precludes generation at Rotorua and some of the
+protected systems in particular.
+
+To derive capital costs of projects, scaling factors based on enthalpy and project size have been applied
+to the power plant portion of the project cost, which is taken to be 40% of the total. On this basis
+capital costs range from $4,734 to $9,767/kW with a weighted average of $5,782/kW. It is expected
+that at least 50% of the project capital costs will be in New Zealand currency.
+
+No significant net reduction in existing production is anticipated due to decommissioning over the
+next 40 years (assuming any retirement of plant at Wairakei is met by an increase at Te Mihi), provided
+all existing plants can be re-consented for the existing quantities of fluid take.
+.
+Taking likely earliest dates of COD into account yields an estimated sequence of future geothermal
+projects as summarised in Table 6 (section 5.4). The total estimated available future geothermal
+generation stack by 2060 is 1035 MW.
+
+This total new geothermal generation stack is slightly higher than previously presented by MBIE
+(2016), but it is likely that many projects will be commissioned later than previously assumed, for
+reasons other than cost.
+
+
+
+
+                                                                                                       2
+1.       Introduction
+1.1.     Scope of work
+This review was commissioned by the Ministry for Business, Innovation and Employment (MBIE) in
+consultation with Transpower. The scope of work is presented in Annex 3. The principal objective of
+this work is to present estimations about the possible timing and cost of future geothermal projects
+in New Zealand over a 40-year horizon. The resulting ‘future geothermal generation stack’ should
+assist MBIE in updating its 2016 Electricity Demand and Generation Scenarios for New Zealand, and
+planning/modelling for future transmission requirements.
+
+Differences between this review and that underlying the 2016 version include:
+     Greater attention to the issue of timing and consenting of geothermal projects, which will
+        inevitably lead to delays for some projects beyond the point that a simple LRMC comparison
+        would indicate;
+     More quantification of greenhouse gas emissions (GHG) from geothermal projects, based on
+        recent data from existing projects;
+     More consideration of the effects of scale and likely technology of projects on their capital
+        cost;
+     The split of CAPEX between local and overseas components.
+
+The process has involved extensive consultation with the geothermal industry and relevant regulators
+and well as review of published information. The willing participation of many people from the
+industry and regulators is gratefully acknowledged (see Annex 1). However, the opinions and
+assumptions expressed herein are entirely those of the authors.
+
+This report has been authored by:
+Jim Lawless (Lawless Geo-Consulting Limited)
+Jim Randle (GT Management)
+Bart van Campen (Geothermal Institute, University of Auckland)
+
+1.2.     Background
+As part of the 2016 Electricity Demand and Generation Scenarios (EDGS), MBIE produced a likely
+geothermal generation stack as follows:
+
+                                                                                            Variable
+                                                                      Typical    Capital                Fixed O&M,   LRMC
+             Project              Type         Status          MW                            O&M,
+                                                                      GWh pa     cost $m                   $/kW      $/MWh
+                                                                                            $/MWh
+TikitereTaheke_generic2         Geo      Generic                 80        631        409        0.00       105.00      95.37
+Tauhara_stage_2                 Geo      Fully Consented        250       1971       1184        0.00       105.00      97.65
+Rotokawa_generic1               Geo      Generic                130       1025        620        0.00       105.00      98.09
+Ngatamariki_generic1            Geo      Generic                100        788        479        0.00       105.00      98.32
+Tauhara_generic1                Geo      Generic                 80        631        409        0.00       105.00     102.70
+Tikitere_LakeRotoiti            Geo      Proposed                45        355        299        0.00       105.00     114.47
+Kawerau_generic2                Geo      Generic                 30        237        219        0.00       105.00     122.56
+Ngawha2_stage_1                 Geo      Fully Consented         25        197        183        0.00       105.00     122.76
+Ngawha2_stage_2                 Geo      Fully Consented         25        197        183        0.00       105.00     122.76
+Rotoma_LakeRotoma               Geo      Applied for Consent     35        276        256        0.00       105.00     123.05
+Kawerau_TeAhiOMaui _KA22        Geo      Fully Consented         20        158        147        0.00       105.00     123.08
+Wairakei_generic1               Geo      Generic                 45        355        327        0.00       105.00     131.61
+Mangakino_generic1              Geo      Generic                 40        315        291        0.00       105.00     131.70
+Ohaaki_generic1                 Geo      Generic                 40        315        291        0.00       105.00     131.70
+Total                                                           945
+Table 1: EDGS-2016 geothermal generation stack (source: MBIE, 2016)
+
+The MBIE’s EDGS models supposedly build the lowest LRMC plants first (many of which are geothermal
+– see Figure 1 below), but from the above geothermal generation stack, it can be seen that some of
+the fully consented plants (several now built or under construction) actually have higher LRMC than
+
+                                                                                                                             3
+some of the other projects, still under consideration. It is therefore apparent that for geothermal
+plants in New Zealand cost is not the only criterion as to when projects actually get built.
+
+The above geothermal project list adds up to around 945 MWe of new geothermal projects (including
+Ngāwhā, Kawerau-TAOM and Tauhara-II presently built or under construction). Many of the long-
+term New Zealand electricity modelling scenarios (e.g. Productivity Commission (2018), ICCC (2019),
+BEC2060 (2019), include much higher MWe of geothermal in their long-term (2050, 2060) scenarios,
+which to the present authors appear unrealistic.
+
+Most of these modelling exercises (including MBIE-EDGS, 2016) have used uniform, average emission
+intensities (115 – 130 g CO2 eq./kWh) for historic, as well as future, new geothermal investment plant.
+These figures are above the recent average. Recent new emissions data (McLean and Richardson
+2019) and conceptual modelling (Van Campen et. al. 2020) show that varying assumptions on
+geothermal emissions can have significant impact on the rate, timing and location of future
+geothermal investment.
+
+   $MWh                          LRMC of new non-peak generation projects ($2014/MWh)
+   200
+
+
+   180                                                                                                             Wind
+
+
+
+   160
+                                                                                                                   Geothermal
+   140
+
+
+   120                                                                                                             Hydro
+
+
+   100
+                                                                                                                   Other
+    80
+
+
+    60                                                                                                             Gas baseload
+
+
+    40
+
+                                                                                                                   Coal
+    20
+
+
+        0
+                                                                                                                   Lignite
+                                                                                                           10000
+            0
+
+
+
+
+                         2000
+
+
+
+
+                                             4000
+
+
+
+
+                                                                  6000
+
+
+
+
+                                                                                        8000
+
+
+
+
+                                Cumulative   GWh    for renewables and price indicator line for thermals
+
+
+
+Figure 1: LRMC of new non-peak RE-generation according to EDGS-2016 (source: MBIE, 2016)
+
+
+
+It is now timely to update the 2016 MBIE geothermal generations stack. Since then several
+developments have taken place:
+
+    -       No large new plants have been built or retired, but one new smaller project has been built:
+            the Te Ahi O Maui (TAOM) geothermal plant is a partnership between the Kawerau A8D Ahu
+            Whenua Trust and Eastland Generation. It uses both an older well previously drilled by the
+            New Zealand government, and several new dedicated wells. The plant, commissioned in
+            September 2018, is the latest generation of Ormat binary cycle technology and is delivering
+            25 MWe;
+
+                                                                                                                             4
+-   An expansion of the binary-only project at Ngāwhā in Northland by 50 MW has been
+    consented. The first phase (25 MWe) is still at the drilling and civil works stage, but can be
+    regarded as firmly committed, with a commercial operation date (COD) of mid-2021. The
+    remaining, second phase is expected to be installed by 2026 at the earliest;
+-   The current government has introduced the Climate Change Response (Zero Carbon)
+    Amendment Bill (2019) and presented ambitious plans to decarbonize the economy and the
+    electricity sector, including aiming for significant electricity demand rise from electric vehicles.
+    This is likely to significantly increase demand for renewable energy projects, including
+    geothermal. It is important therefore to have a more updated, detailed view of the
+    geothermal projects available.
+
+
+
+
+                                                                                                      5
+2. Present generation, regulations and emissions
+2.1.   Present geothermal generation and location
+Most of New Zealand’s known high enthalpy geothermal resources are located in the Taupō Volcanic
+Zone (TVZ) in the central North Island, apart from the single occurrence in Northland at Ngāwhā near
+Kaikohe (Figure 2). Because of the decentralized nature of the geothermal regulatory regime under
+the Resource Management Act (RMA 1991), these high enthalpy systems fall under three different
+regional regulatory regimes: Waikato Regional Council (with around 70% of the geothermal
+resources), Bay of Plenty Regional Council (around 25%) and Northland Regional Council (Ngāwhā
+only).
+
+
+
+
+         Figure 2: Map of New Zealand’s high temperature geothermal resources (source: NZGA/GNS, 2019)
+
+
+                                                                                                         6
+Geothermal generation in New Zealand started in the late 1950s and has grown over the decades,
+with a strong new surge since the mid-2000s (see Table 2 below) to a total of 1,010 MWe after the
+commissioning of the most recent Te Ahi o Maui plant in 2018. More plants are under construction.
+
+Most of these geothermal systems were well explored by government drilling programmes from the
+1950s-1970s, before electricity markets were deregulated and privatized. Most of the geothermal
+power developments until recently have been in the Waikato Region, with resources/power plants
+generally located close to the central transmission lines. With the notable exception of Kawerau,
+geothermal systems in the Bay of Plenty region have been less developed, partially due to private/Iwi
+landownership and restrictions in access, and partly due to the protection of geothermal surface
+features. Hence less is known and more systems are classified as ‘conditional/limited development’
+in Bay of Plenty (see 2.3). These systems also tend to be more remote and some transmission
+upgrades might be needed to integrate any developments into the main grid.
+
+Many of the present geothermal plants were (re)consented in the 2010s for up to 35 years, and will
+have their consents expire around 2040-50. The first consents to expire are for Mokai (2024) and
+Wairakei A and B/Te Mihi in 2026. This has generally been included as a decommissioning in electricity
+modelling exercises like MBIE-EDGS (2016), but a different approach has been taken here. Mokai and
+Wairakei A&B have been assumed to continue at around the same capacity or replaced by a similar
+capacity. For example, in the case of Wairakei either by fully reconsenting Wairakei A and B stations,
+re-configuring them with a smaller output and/or adding a third unit at Te Mihi. In effect, this would
+cancel out the ‘decommissioning’ of Wairakei A and B, and is therefore not seen as a separate project.
+For project consents expiring in the 2040s and beyond it is very uncertain what might happen, but it
+has generally been assumed that projects will continue. If the requirement is to model the
+decommissioning of geothermal plant explicitly, then these projects need to be studied and modelled
+separately, but this is outside the scope of this work.
+
+2.2.    Outline of geothermal technology
+Technology choices have environmental impacts that may affect the timing and feasibility of a project.
+There are a number of different possible plant configurations for converting geothermal heat to
+electricity. A range of these have been adopted in New Zealand, more so than in some other countries.
+The originally-installed capacity of some of the power plants was greater than at present.
+
+The reasons for the range are partly technical, in that the applicable temperature ranges of binary
+plants and condensing turbines are different, but they have also been driven by regulatory issues and
+consideration of environmental effects, which have changed greatly over time (Lawless et al. 2016).
+
+
+The biggest differences in the effects of different types of plant configurations are in the waste
+disposal and cooling systems adopted. The oldest plants, Wairakei and Kawerau, did not initially adopt
+reinjection of separated brine but rather disposed of brine to rivers, though in both cases that has
+since been reduced by partial reinjection (80% in the case of Wairakei). Condensing steam turbines
+often use water passing through evaporative cooling towers (either natural draft or mechanical draft)
+to maintain condenser vacuum. Therefore, a proportion of the steam condensate is lost to
+evaporation rather than injected. In the special case of Wairakei, the Waikato river is used for direct-
+contact cooling which results in contamination of the river. Binary plants usually use air cooling
+systems, and so conserve water for reinjection. although in some circumstances the cooler reinjected
+fluid and the fact that the reinjection load is increased, can produce a problem with reservoir cooling.
+
+
+
+
+                                                                                                      7
+                                                      Current
+             Plant                     COD                           Steam Supply             Prime Mover                Cooling
+                                                       MW
+Wairakei A&B                           1958             127     Triple flash              BPT & CST                Water (river)
+Kawerau                                1966              8      Single flash              BPT                      None *
+                                                                                                                   Natural draft
+Ohaaki                                 1988              57     Double flash              BPT & CST
+                                                                                                                   evaporative water
+Kawerau binary                     1989 &1993             4     Bottoming, retrofitted    Binary                   Air
+Wairakei BP                           1996               19     (Topping) Triple flash    BPT                      Water (river)
+                                                                                                                   Mechanical
+Poihipi                                1996              50     Dry steam                 CST                      evaporative water
+Rotokawa + extension               1997 & 2003           35     Single flash              Combined cycle           Air
+Ngāwhā                             1998 & 2008           25     IP steam and brine        Binary                   Air
+Wairakei binary                     2004-2005            14     None - bottoming          Binary                   Air
+Mokai                            1999, 2005, 2007       112     Single flash              Combined cycle           Air
+                                                                                                                   Mechanical
+Kawerau (KGL)                      2008 & 2017          107     Double flash              CST                      evaporative water
+Kawerau-GDL                           2008               8      None - bottoming          Binary                   Air
+                                                                                                                   Mechanical
+                                                                Triple flash
+Rotokawa - Nga Awa Purua               2010             140                               CST                      evaporative water
+Tauhara - Te Huka                      2010              28     IP steam and brine        Binary                   Air
+                                                                                                                   Mechanical
+Kawerau (TOPP1)                        2013              21     Double flash              CST                      evaporative water
+Ngatamariki                            2013              82     IP steam and brine        Binary                   Air
+                                                                                                                   Mechanical
+Te Mihi
+                                      2014             166      Double flash               CST                     evaporative water
+Kawerau-Te Ahi O Maui                 2018              25      IP steam and brine         Binary                  Air
+Total                                                 1028
+  Table 2: Geothermal plant and generation technologies in New Zealand. Capacities are installed capacity, not necessarily
+  original capacity nor current generation e.g. Ohaaki was originally 108 MW, installed capacity is now 57 MW, currently
+  produces around 40 MWe. (source: NZGA, 2019 and authors’ input)
+
+         * Exhaust steam is used for industrial process heat
+
+  Mass loss through evaporation rather than returning it to the reservoir will generally reduce the
+  amount of pressure support provided by reinjection (though it could avoid enthalpy decline). Thus,
+  reservoir pressures can be expected to decline faster than would otherwise be the case. That in turn
+  could lead to accelerated production decline (arguably lesser sustainability) and unwanted surface
+  effects such as changes in thermal activity and subsidence.
+
+
+
+  The possibility of such effects was a significant factor in the adoption of a binary-only (i.e. no steam
+  turbines) plant and full reinjection at the recent Ngatamariki plant. It remains to be seen whether
+  this will be a major consideration for future power schemes, though it should be noted that the
+  plant selection in that case was voluntary on the part of the developer and there is no suggestion
+  that such should be in effect made mandatory through resource consent conditions. Wider
+  consideration of this issue would favour binary-only plants over condensing steam turbines which
+  would lead to an increased project cost per MW. On the other hand, for high enthalpy fields,
+  combined cycle plants such as Mokai and Rotokawa with steam turbines exhausting into binary
+  condensers can be very efficient and cost effective.
+
+
+
+
+                                                                                                                             8
+ Type               Size                 CAPEX/MW            Thermodynami         Water          Other issues
+                                                             c efficiency         conservation
+ Back               Small to mid-        Cheapest            Low when stand-      Lowest         If stand alone, most
+ pressure           range                                    alone                               applicable at remote
+ turbine (BPT)                                                                                   locations (e.g. single
+                                                                                                 well) and/or early
+                                                                                                 stage resource testing
+ Condensing         Largest              Next                High, but require    Low if using   Very efficient if using
+ steam              turbines             cheapest            high grade           evaporative    multiple flash,
+ turbine (CST)                                               resource             cooling        economies of scale
+ Binary             Small and            Most                Not very             High           Can be used for small
+                    modular              expensive           efficient per se,                   individual projects or
+                                                             but can make                        larger modular
+                                                             use of lower                        combinations
+                                                             grade resources
+ Combinations       Depends on           Intermediate        Can be very          High           Various configurations
+                    combinations,                            efficient overall                   possible including
+                    generally                                                                    retrofitting
+                    larger overall
+
+
+Table 3: Characteristics of different plant types (source: Lawless et al, 2016)
+
+
+
+
+2.3.      Regulatory environment and impacts on development timing and feasibility
+Classification and preservation of geothermal systems
+The situation regarding regulation and classification of geothermal systems in New Zealand is complex
+and differs from the regime in many other countries. The discussion here does not purport to be
+exhaustive or definitive, but touches on a number of issues that need to be taken into account when
+considering the course and especially the pace of further geothermal electricity development in this
+country.
+
+Geothermal resources in New Zealand are managed under the Resource Management Act 1991
+(RMA). Previous analyses of the likely Generation Stack have been based principally on the long run
+marginal cost (LRMC). That is logical, and LRMC is a key parameter, but it does not explicitly take into
+account the geothermal regulatory environment in New Zealand. One of the fundamental principles
+of the RMA is that of sustainable management, which in the geothermal context has been variously
+interpreted to mean:
+
+         A proportion of New Zealand’s geothermal systems should remain undeveloped, or with
+          limited development, in order to protect or manage their intrinsic scientific, landscape,
+          ecological and cultural value. Other, “development” systems can be developed, although still
+          within the context of sustainable management. This has led to the classification of all
+          geothermal systems in the TVZ from Protection to Development, as described further below;
+         Even in systems where development is provided for, the rights of future generations should
+          be taken into account. Therefore, while extraction can exceed renewability in the short term,
+          a proportion of the resource must remain at the end of the consent period;
+         Even in systems where development is provided for, untoward surface effects should be
+          avoided, mitigated, or remedied as for any project. That can include effects on significant
+          surface geothermal features, but also other external effects such as subsidence and
+          hydrothermal eruptions.
+
+
+                                                                                                                     9
+Both regional and district councils have roles and responsibilities relating to geothermal
+developments. Regional Councils have the function of managing the take and use of geothermal fluid
+and energy, and discharges to the environment, while district councils have a role managing the
+effects of the use of land (e.g. earthworks, infrastructure, structures etc.). Most of New Zealand’s
+geothermal resources are managed by the Waikato and the Bay of Plenty Regional Councils. The
+Northland Regional Council manages the Ngāwhā geothermal system.
+
+Since the introduction of the RMA, there has so far been little direction from central government on
+geothermal development. There has been a National Policy Statement on renewable electricity
+generation (2011), but in the view of the present authors it lacks specificity.
+
+The RMA framework is specified by the regional councils in their Regional Policy Statements (RPS),
+and specific policies and rules for activities within regional plans. The Waikato and Bay of Plenty
+Regional Policy Statements take a broadly similar approach to sustainable management of geothermal
+resources through classification of systems. Both have adopted a similar classification system for
+geothermal areas. That for Waikato Regional Council is as follows:
+
+       “Classification is based on ranking each system’s characteristics and aims to balance
+       development with the protection of highly valued surface features. There is a different
+       management approach for each category.
+
+       In areas classified for Development, large-scale uses are allowed as long as they are
+       undertaken in a sustainable and environmentally responsible manner.
+
+       In Limited Development systems, takes that will not damage surface features are allowed.
+
+       Research systems are those where not enough about the system is known to classify it as
+       either Development, Limited Development, or Protected. In these systems, only small takes
+       and those undertaken for scientific research into the system are allowed.
+
+       Protected systems contain vulnerable geothermal features valued for their cultural and
+       scientific characteristics. Their protected status ensures that their underground geothermal
+       water source cannot be extracted and that the surface features are not damaged by
+       unsuitable land uses.
+
+       Small systems are isolated springs or sets of springs. These can only sustain small takes and
+       are not suitable for electricity generation” (WRC 2019).
+
+Bay of Plenty Regional Council has a very similar classification policy with some differences in
+terminology.
+
+A significant proportion of New Zealand’s high temperature geothermal resources are currently fully
+or partially protected from development. Lawless (2005) estimated that proportion to be 40-70%
+depending on what assumptions are made. While some of the resource capacity estimates in that
+paper need to be updated, the general conclusion remains valid.
+
+Hence, a significant portion of the remaining resources are in categories which mean in effect that
+only very limited development is possible pending further investigation, for example to demonstrate
+whether abstraction would adversely affect significant surface features. It would, however, be
+possible to develop a conditional or limited development system provided adverse effects on surface
+features are avoided, remedied or mitigated. In “Development” systems, consenting (or reconsenting)
+
+
+                                                                                                 10
+would likely be via a notified consent process, hearings and potentially appeals, and can be a
+protracted process.
+
+It is possible to change the classification status of a system, most likely through a regional plan change
+process, for example from “Research” to “Development” or “Conditional Development” to
+“Development” if new information becomes available, but that has not been done so far and may turn
+out to be a protracted process in practice.
+
+Thus, absent a major revision of the RMA and/or a retreat from the principles of sustainability (which
+seem unlikely within the time frame considered), there could be consequent delays in obtaining
+consents for projects, especially where a change in their status needs to be taken into account as well
+as their cost. There are likely to be geothermal projects which ultimately have a reasonably low LRMC
+but which we know will be delayed by many years by the regulatory requirements.
+
+The cost of delay could be taken explicitly into account by considering both the probable escalation in
+major cost components1 and the financial effect of delay on the Net Present Value (NPV). That is the
+methodology adopted in the recent work by GT Management for example (GT 2019). However, the
+existing MBIE EDGS/GEM-model does not work that way and so for consistency with other renewable
+sources which are being considered in parallel to but outside this study, the possible timing of projects
+due to regulatory issues has been estimated, but has not been used to determine the LRMC.
+
+Central government policy affecting geothermal development
+Although allocation and management of geothermal resources takes place at the regional level, under
+the RMA National Policy Statements (NPS) can provide national guidance and must be given effect by
+RPS and regional plans.
+
+As well as the existing NPS on renewable electricity generation (2011), the forthcoming draft NPS on
+Biodiversity may be relevant to geothermal development. This is presently under development and
+open for consultation. As presently worded, it would require strict preservation of geothermal
+ecosystems and biodiversity in every geothermal system, even within geothermal systems classified
+for development. The regional authorities have expressed the view that if passed in its present form
+it could preclude all further geothermal development and/or the reconsenting of existing projects
+even in “Development” systems.
+
+Another potential concern is fresh water regulation. Geothermal energy is regulated as “water” under
+the RMA. There is currently debate at a national level and development of policy relating to ownership
+and administration of natural fresh water. That could lead to some uncertainty for future geothermal
+development, especially around the aspect of royalties.
+
+An area where the lack of involvement by central government is detrimental to geothermal
+development in the view of the present authors, concerns the collection of exploration data. The way
+in which access to geothermal resources, and the data resulting from geothermal exploration are
+handled is in contrast to how minerals and petroleum are handled in New Zealand. Access to and
+allocation of mineral resources is covered under the Crown Minerals Act (CMA 2010). A company can
+apply for a Prospecting Permit or Exploration Licence over a specific area, and for a limited time. They
+then have priority in terms of applying for a mining license (although not an automatic right to obtain
+one). To keep their exploration right they have to fulfil a minimum programme of work and file regular
+
+1 Escalation of the several major cost components of a geothermal project is not straightforward, as they are controlled by different
+
+factors. For example, the cost of pipelines etc. depends on world-wide steel prices, but the cost of drilling is far more dictated by the cost
+of oil and hence demand for drilling rigs. For the present purposes an overall figure of 2.2% has been used, being an approximation to US
+PPI.
+
+                                                                                                                                           11
+reports with New Zealand Petroleum and Minerals. That information enters the public domain after
+an embargoed period. A very similar situation applies to petroleum, except that specific areas are
+more often offered for tender by the Government rather than being granted in response to
+exploration company initiatives.
+
+In both those cases, the information that is collected about our natural resource endowment becomes
+part of our national inventory, to the benefit of the country as whole. Most countries have a generally
+similar regime for both mineral and geothermal resources.
+
+In contrast, it is not possible in New Zealand to obtain priority of access during exploration to
+geothermal resources, since those are allocated under the Resource Management Act. The only way
+a company can obtain rights/consents to use geothermal energy is to obtain a resource consent to
+extract it from a particular area. However, to obtain a resource consent requires a thorough
+application which not only has to cover environmental effects, but also issues of sustainability. This
+means that the applicant has to have a good idea of the size of the resource and how it could be
+developed. This in turn, means that for a company to obtain a resource consent for geothermal
+development, they need to undertake a thorough investigation at a minimum cost for geophysical
+surveys of hundreds of thousands of dollars, and probably drilling at a cost of tens of millions of dollars,
+but with no right of priority or access. Since geothermal exploration carries no rights of priority, there
+is a strong incentive for the data collected to remain confidential. Hence, unlike petroleum and
+minerals exploration, New Zealand Petroleum and Minerals (nor any other central agency) does not
+collect information generated during the exploration phase, nor do they make any effort to collate or
+publish existing data to attract investment. Regional Councils collect only data generated during the
+exercising of a resource consent, which may come many years after exploration, by different parties,
+or not at all.
+
+Other issues that arise from the legal/regulatory environment and could also affect the timing or
+feasibility of projects include the following.
+
+Multiple operators
+A feature of both the Waikato and Bay of Plenty regional policies is that multiple operators with
+separate take and discharge consents are allowed on a single geothermal resource/system, e.g. there
+are presently four developers on the Kawerau system. That is unusual on a world scale. It can and
+has led to complications and delays, although it can also lead to opportunities for collaboration and
+flexibility. The over-production and consequential severe decline of the Geysers geothermal resource
+in the USA was a consequence of multiple tapper access, which was only resolved when one single
+operator effectively remained in operation and took steps to recover the reservoir pressure through
+supplementary injection.
+
+Status of landowners
+Landowners do not own underlying geothermal resources. However, they do control access to them,
+so in practice, they have a considerable de-facto degree of control. That can lead to delays and
+complications especially where there are multiple landowners over a particular resource/system.
+
+Maori interests
+Maori are involved in geothermal projects in several different ways, some of which at times can have
+conflicting objectives. Some of these are:
+
+       As landowners. In practice, the land overlying many of our geothermal resources belongs to
+        Maori trusts. There is a range of models of engagement ranging from the Mokai project where
+
+
+
+                                                                                                         12
+        the Tuaropaki Trust took the lead role and initially was the sole owner of the power scheme,
+        to those where the landowners are more passive and just receive a royalty.
+       As kaitiaki of the resource. A guardianship role for Maori is explicit in the RMA (and in some
+        Statutory Acknowledgements), but precisely what that means and who is responsible can
+        sometimes be unclear. In places, the local Maori landowners also are accepted as having the
+        mandate for kaitiakitanga, but in other areas, arrangements may be different or more
+        commonly overlapping.
+       As claimants to be owners or users of the resource. Under the Geothermal Energy Act (1953),
+        it was stated clearly that: “The sole right to tap, take, use, and apply geothermal energy on or
+        under the land shall vest in the Crown.” Ownership of some resources has however been
+        challenged with a number of Waitangi Treaty claims, some of which are unresolved, and some
+        of which have been brought by wider parties than the specific landowners. While in no case
+        has actual ownership of the resource been transferred to Maori as part of a Waitangi Tribunal
+        settlement, the Crown has in cases recognized access to the resource and ownership of assets
+        such as wells. For example, in the case of Ngāti Tūwharetoa Geothermal Assets (NTGA) at
+        Kawerau (a wholly owned subsidiary of Ngāti Tūwharetoa Settlement Trust), as holders of
+        Statutory Acknowledgements by the Crown, Ngāti Tūwharetoa (Bay of Plenty) is recognised
+        by the Crown as having particular cultural, spiritual, historical, and traditional association with,
+        and use of, the geothermal energy and geothermal water located in the Kawerau Geothermal
+        System.
+
+Past history has shown that Maori landowners are not averse to geothermal development in principle
+and have acted as a springboard in many cases, although experience suggests that Maori landowners
+are more likely to take a long term and holistic view of the resource than a more strictly economically-
+driven developer. The combination of the above factors, the tensions between them, and
+complexities of land ownership can lead to delays that need to be considered in the potential timing
+of new geothermal generation projects.
+
+
+Safety Regulations
+There is a general view in the industry that recent revisions in national safe working, in some cases,
+do not take account of the specifics of geothermal operations, and can be a hindrance to development.
+The leading developers are, however, working pro-actively with MBIE on rationalising these aspects
+and longer-term this will hopefully not lead to delays.
+
+No attempt has been made to take all the above-mentioned issues into account for specific projects
+in this report, but they need to be considered as representing possible factors in lower geothermal
+growth/availability scenarios.
+
+2.4.    Greenhouse gas emissions
+Geothermal generation is not free of Green House Gas (GHG) emissions as the produced underground
+fluids contain many dissolved, non-condensable gases, especially carbon dioxide (CO2) and hydrogen
+sulphide (H2S), and in some cases traces of methane (CH4) (ESMAP, 2016). The CO2 and CH4 are GHGs.
+A large part of these GHGs will be emitted to the atmosphere, even if the majority of the produced
+fluids is subsequently reinjected into the ground. Geothermal power plants have to account for their
+GHG emissions by closely monitoring/sampling the emissions from their produced vs their reinjected
+fluids (e.g. under the NZ Emissions Trading Scheme - ETS).
+
+Geothermal fluids and reservoir rocks vary considerably from field to field, as well as variations in
+power plant technology (low-temperature, closed loop binary systems), efficiency, reinjection,
+management, etc. Hence emission intensity (generally expressed as g CO2/kWh or g CO2eq/kWh)
+
+                                                                                                         13
+varies significantly, from 18-21 g CO2eq/kWh for some Icelandic plants and Wairakei in New Zealand,
+to 1,640 gCO2 /kWh in Alasehir-Kavaklidere, Turkey (Layman (2017). Bertani and Thain (2002)
+calculated a weighted world average of around 122 g CO2eq/kWh.
+
+In comparison, GHG emissions for fossil-fuel fired power plants are closely monitored and reasonably
+standardized/similar around the world, with around 390 g CO2eq/kWh for CCGT and 955 g CO2eq/kWh
+for coal-fired generation (McLean and Richardson 2019).
+
+In contrast to many renewable energy plants, geothermal plants provide baseload generation, with
+capacity factors of 90-95% or more, particularly in New Zealand. Hence most geothermal power plants
+will replace much higher emitting baseload fossil-fuel generated electricity and serve to reduce
+emissions significantly. In terms of life-cycle emissions geothermal power plants tend to have lower
+life-cycle emissions (excluding direct, operational, field emissions) than solar PV, but higher than wind
+(IPCC 2014).
+
+Until recently, limited geothermal field emissions data was publicly available in New Zealand. What
+was publicly available, were aggregated data from MBIE on fugitive emissions from the geothermal
+power generation sector. This resulted in an estimated average of 115-130 g CO2eq/kWh over recent
+years. As those were the only available, public data sources, these were the data used in several
+recent modelling efforts for New Zealand’s future low-emission electricity/energy sector, including
+BEC (2015), MBIE-EDGS (2016), Vivid (2017), Sapere (2018), Productivity Commission (2018), ICCC
+(2019). In general, these studies acknowledged a variation of emissions between different existing
+plants (from 32 – 597 gCO2/kWh), but they generally modelled (future) geothermal investments with
+a single constant emission intensity of 115 (BEC-2015, MBIE-2016) – 130 (ICCC, 2019) g CO2eq/kWh.
+
+Recently, however, the NZ Geothermal Association managed to gather confidential company
+emissions data and publish almost 10 years’ worth of geothermal emissions data (McLean and
+Richardson 2019 – see Annex 2 for details). Relevant conclusions from this review include:
+    1. The mw-weighted average emissions intensity in 2018 was estimated at 76 g CO2eq/kWh. This
+        was down from 91 g CO2eq/kWh in 2015. As a cross-check that can be compared to a figure
+        for Indonesia (where all resources tapped are volcanic, similar to New Zealand) of 63 g
+        CO2eq/kWh (Yuniarto et al. 2015);
+    2. A large variation in emission intensities between fields: in 2018 from 21 gCO2eq/kWh for
+        Wairakei A&B to 341 g CO2eq/kWh for Ohaaki;
+    3. All NZ geothermal field/plant emissions are considerably lower than gas- or coal-fired
+        emissions (at 390, and 955 g CO2/kWh respectively, see Figure 3 below);
+    4. A general, long-term trend towards lower emission intensities for each individual field, as well
+        as in aggregate, weighted average (see point 1). For individual fields at times long term
+        degassing trends might be interrupted by new wells taken into production, added capacity or
+        operational changes;
+    5. Generally lower emissions intensity for newer, more efficient geothermal plants.
+
+The NZGA data is detailed and seems accurate, but the emissions intensity averages and totals do not
+seem to match data from MBIE (fugitive emissions from geothermal generation going back to 1990).
+This would need further comparison and investigation.
+
+
+
+
+                                                                                                      14
+Figure 3: Graphical chart comparing the operational emissions intensity of geothermal power stations in New Zealand to
+other types of electricity generation (source: McLean and Richardson 2019)
+
+For the present modelling purposes, a semi-quantitative approach is proposed, classifying (new)
+geothermal plants in 4 categories. The cost implications are discussed in 3.4:
+    - Very low emissions (< 40 g CO2eq /kWh)
+    - Low emissions (40 –80 g CO2eq/kWh)
+    - Medium emissions (80 –150 g CO2eq/kWh)
+    - High emissions (> 150 g CO2eq/kWh)
+
+For the long-term future (especially under high carbon price scenarios), improved technologies, higher
+efficiencies, better reinjection management and even Carbon Capture and Storage (CCS) are all
+options to further reduce geothermal emissions. CCS for geothermal is likely to be easier/cheaper
+than for some power sources as the sequestration area (the geothermal reservoir that the fluid and
+emissions came from originally) is co-located with the power station; much more so than for most coal
+or gas-fired power plants. Additionally, the gas stream to be processed is predominately CO2, rather
+than a nitrogen/CO2 mix in a fossil fuelled plant.
+
+
+
+
+                                                                                                                         15
+Although a separate issue from GHG, it is noteworthy that New Zealand has some of the most
+permissive air emission limits for toxic geothermal gasses in the world2, most notably H2S. Elsewhere
+where tougher limits apply, geothermal plants have continued to operate economically despite H2S
+removal being required (e.g. in the USA).
+
+
+
+
+2 Noting again that resource consent conditions in New Zealand are region, and project, specific, not in accordance with an overall national
+
+standard.
+
+                                                                                                                                        16
+3. Methodology adopted for estimating CAPEX and OPEX
+3.1.    CAPEX
+Estimating costs for future geothermal investments faces many uncertainties and the variation in
+capital costs (CAPEX) can easily be as much as 20-30% depending on project specifics. When using
+publicly declared costs of projects, project-specific issues need to be considered. CAPEX can also vary
+depending on the financial assumptions with regard to how sunk costs are treated. For example, some
+of the existing projects took over several highly productive historical wells drilled by the government
+decades before, but at significantly less than replacement cost. Given the very long history of some
+New Zealand projects before COD, the differences can be significant.
+
+The NZ dollar exchange rate can also have a significant effect as a large portion of the project cost
+consists of overseas components, as discussed below. For the present study, an exchange rate of 0.65
+to the US dollar is assumed (slightly higher than the rate at time of writing), but noting that this has
+varied by at least 15% over the past decade. Therefore, CAPEX can be reasonably accurately estimated
+for plants in the near future when the project is well-defined, but becomes less clear for projects in
+the more distant future. However, experience indicates that changes in exchange rates are to a large
+extent cancelled out by changes in national inflation rates, and it is therefore appropriate to undertake
+all long-term cost estimating in a single currency.
+
+GT Management (2019) produced a detailed Production Cost Model, which incorporates a large
+number of factors to estimate geothermal CAPEX. That model has the advantage of having been based
+on extensive consultation with the international industry, and peer review by the World Bank. It was
+originally developed using funding from the New Zealand Ministry of Foreign Affairs and Trade (MFAT).
+While that modelling was specific to Indonesia, and some of the specific costs and financial
+assumptions (WACC, IRR) will differ from those in New Zealand, it included a number of useful
+empirical cost correlations which are used here.
+
+As in many energy projects, there is a tension in geothermal projects between the desire by developers
+and regulators on the one hand to proceed cautiously in a staged or modular fashion, and the fact that
+the cost of geothermal power projects has significant economies of scale. That applies particularly to
+the power plant cost: the number and cost of wells and SAGS (steamfield above ground system) tend
+to be more simply, linearly dependant on the MW. The effect of size on power plant cost was
+quantified by GT Management (2019), based in part on earlier work by SKM (2009). That correlation
+was developed further with Indonesian cost data and extensive feedback from developers.
+
+While the correlation is specific to Indonesia, it should also be applicable in New Zealand to a sufficient
+degree of accuracy for the purposes of this report. It has been used in developing the capital cost
+estimates, assuming that the power plant is roughly 40% of the total project cost.
+
+Figure 4 shows three correlation ratios/formulas, in case multiple plants/units are ordered or built
+around the same time. For the present report, the single unit correlation is used unless stated
+otherwise. The authors have assumed that the remaining 60% CAPEX has a fixed cost per MWe, and
+that it scales linearly with MW capacity.
+
+
+
+
+                                                                                                        17
+Figure 4: Variation of power plant cost with size (source: GT Management, 2019)
+
+
+
+Reservoir enthalpy and well productivity affect the plant design and number of wells, including the
+production-to-reinjection-well ratio, and complexity of the SAGS. For this report a single reservoir
+enthalpy scaling factor will be used as follows:
+
+
+                    Enthalpy (kJ/kg)                                Multiplier on basic power plant costs
+                       760 – 940                                                     1.3
+                      940 – 1450                                                     1.0
+                        > 1450                                                       0.9
+Table 4: Scale factors for enthalpy (source: GT Management, 2019)
+
+
+
+
+In the case of retrofitted bottoming binary plants, the project CAPEX would be reduced by the lack of
+new wells required, but the plant cost per MW will be higher because of the low enthalpy. It has been
+assumed that these two factors will offset each other. As these plants will inevitably be small this
+assumption will make relatively little difference to the big picture. It has been observed at Kawerau
+that such plants are attractive to smaller developers, presumably because of low capital requirements,
+the low resource risk and the relative ease of getting consents to operate. Generally, the bottoming
+plant operations would come within the geothermal resource consents for the primary field operators,
+and they would only be responsible for their additional direct effects (discharge, land-use, etc).
+
+A useful international CAPEX benchmark is 4,000 to 5,000 USD/kW for greenfield projects, with the
+higher number being more appropriate to small projects with low-quality resources. The 4,000
+USD/kW figure is approximately 6,000 NZD/kW. There are however several reasons why CAPEX for
+recent projects in New Zealand may have been lower than the international benchmark:
+    The mature and competitive nature of the New Zealand geothermal industry.
+    Many of the projects in New Zealand were brownfield, rather than greenfield projects (e.g.
+        Ngāwhā, Te Mihi);
+
+
+                                                                                                            18
+       Even in projects which have not previously had power plants, the level of risk is lower than in
+        most overseas project because of the large legacy of resource data;
+       In some cases, previously drilled wells would have been purchased at less than replacement
+        cost, or taken into the project at a discounted sunk cost;
+       Access and infrastructure costs are generally low in the TVZ;
+       Drilling costs per metre in NZ are lower than in some countries and in some cases, wells are
+        shallower;
+       Some projects may have taken advantage of a higher NZ/US dollar exchange rate at the time.
+
+The publicly available data from projects in the past decade bears this out:
+     The Eastland annual report 2019 reported the cost of TAOM at NZ $149 million for 26 MW
+       net, i.e. NZ$5,730 per kW. This would appear to be a reasonable benchmark for projects of
+       this size. Larger brownfield projects should have slightly lower unit costs;
+     At final notice to proceed, Top Energy’s CEO reported the cost of Ngāwhā-3 will be NZ $182
+       million for 28 MW net, or NZ $6,500 per kW. It is understood that the civil costs for this project
+       will be high and the enthalpy is low, so the CAPEX will be higher than average. Ngāwhā-3 is
+       presently under construction, with an expected COD of mid-2021;
+     In its annual report, MRP/Mercury reported the cost of greenfield Ngatamariki A (82 MW net,
+       2013) was NZ 466 million, i.e. NZ$5,682 per kW. This project is now almost 7 years old, so
+       some cost escalation would be necessary for reference. On the other hand, the pure binary
+       plant configuration will have been more expensive than a combined cycle plant.
+     Contact Energy reported the Te Mihi project cost at NZ $633M for 166 MW, or $3,753 per kW.
+       However, that was for the power plant only. It was completed in 2014 and could be expected
+       to have lower than average CAPEX due to the large size, high enthalpy, and the fact that it will
+       have made use of some of the existing Wairakei infrastructure, probably including previously
+       drilled wells. For that reason, it is difficult to decide what the full cost including steamfield
+       infrastructure “should” be, but it could be expected that would add at least 20% to the power
+       plant cost.
+
+The above CAPEX for historic NZ geothermal projects will be subject to cost escalation, and some
+scaling due to size and enthalpy. The authors therefore propose to use a reference CAPEX figure of
+5,500 NZD/kW for a single unit, 55 MW development, medium enthalpy. This will be scaled for the
+various prospects being proposed (see chapter 5), using the above-mentioned scaling factors.
+
+3.2.    Foreign/USD and local cost shares
+One difference between New Zealand and international projects in terms of the breakdown into local
+and overseas cost components, is that drilling rigs in New Zealand are usually contracted on a NZ$ day
+rate basis, whereas overseas it is more likely to be in US$. Drilling costs in New Zealand are sometimes
+slightly lower than in some other countries because there is a mature and competitive local drilling
+industry and some of the resources are shallower. However, it is likely that such items as casings and
+well heads will be sourced internationally.
+
+The power plant cost will have a higher overseas cost component as there are no manufacturers in
+New Zealand for the major plant components (turbines, generators etc.), although physical installation
+can be carried out by competent local sub-contractor firms and some smaller components (e.g.
+switchboards) and construction materials can be sourced in New Zealand. Similarly, steam field costs
+will require mostly overseas currency for steel pipe material, but minor fabricated components,
+construction materials and labour can be sourced in New Zealand.
+
+Given that drilling costs make up typically 30% to 40% of a project in New Zealand, these factors mean
+that the overseas cost proportion of a New Zealand geothermal project can be expected to be rather
+
+                                                                                                      19
+lower than the international average in less developed countries (such as Indonesia, Kenya and the
+Philippines). Overall, it might be expected that at least 50% of the project capital costs will be in New
+Zealand currency, and this may rise on a case-by-case basis to 60% or even more.
+
+It is likely that a much higher contribution of local currency would be found for operating costs,
+including major plant overhauls and make-up and replacement well drilling costs. In practice, the only
+overseas currency component of operating costs will be for spare parts sourced from original
+equipment manufacturers, and this, taken over the life of the project, may be less than 20% or even
+10% of the whole life cost.
+
+3.3.    OPEX
+Operation and Maintenance costs/expenditures (OPEX) for geothermal power plant, as for solar and
+wind, are virtually all constant per MW installed capacity, rather than being variable on a per MWh
+delivered energy basis (which is used by the fossil industry because of the impact of fuel cost and
+machine maintenance based on effective full-power hours), especially if carbon/GHG costs are
+excluded. There will be some variation between plants depending on technology, fluid characteristics
+and age of the plant, but within a limited range. Accounting practices can also make a difference
+depending on how OPEX is treated.
+
+For simplicity’s sake, in this report all fixed O&M costs apart from make-up drilling are clustered
+together and summarized in one factor, starting with Contact Energy’s recent Tauhara estimate
+(Contact, 2018) at NZ$ 20/ MWh (ex carbon cost), which results in NZ$ 157,680 per MW per annum
+(90% CF).
+
+For individual projects, variations in resource run-down rate will also play a role in terms of make-up
+drilling, which can also be treated as fixed O&M. The rate of decline of individual geothermal wells,
+and of geothermal resources as a whole, varies significantly. For the present study, the authors have
+used an estimate of 3% annual run down. This is at the lower end of the possible range, but consistent
+with the conservative approach taken to sustainability in New Zealand (though it would be too low for
+Ohaaki for example, and too high for Kawerau). For a 55MW project, with wells producing on average
+9MW each, that would result in around one well every 5.5 years. At NZ$10M per well, that would cost
+NZ$1.8/annum or $33,000/MW as fixed O&M. In this analysis those costs will be evenly spread per
+year, though in practice especially on larger projects they would be drilled in batches every few years
+to save on rig mobilisation costs.
+
+Combining the above factors, the authors therefore estimate fixed OPEX for all projects at NZ$
+190,000/MW p.a. (NZ$ 190/kW).
+
+Note that this figure includes all O&M costs, including replacement wells. For modelling purposes this
+is appropriate, although from a strict accounting perspective replacement wells are normally regarded
+as capital asset additions rather than being expensed.
+
+3.4.    Greenhouse gas emission costs
+For this study, the authors have developed a semi-quantitative approach, using four emissions
+categories to classify each project/field: from very low – low – medium – high (see chapter 2.3),
+without an attempt at calculating the specific potential cost/impact on LRMC for each project, as MBIE
+modelling with the produced ‘future geothermal generation stack’ is expected to calculate the GHG
+emission costs under various carbon market price scenarios, and incorporate these in LRMC-
+calculations accordingly. To put that in perspective though, at a “NZU” carbon price of $25 per tonne,
+even the highest emitting geothermal stations (Ngāwhā and Ohaaki) would incur a penalty of less than
+
+
+                                                                                                      20
+NZ$10/MWh ($7.6 and $8.5 respectively) and most plants would be much less. At a 95 % capacity
+factor, Ohaaki would have an additional variable OPEX of $70,000 per MW p.a. The majority of
+stations, using a MW-weighted average of 75 gCO2eq/MWh would cost $15,600 per MW p.a.
+
+
+
+
+                                                                                          21
+       4. Other potential future developments
+
+4.1. Potential for new technology to increase existing geothermal generation capacity
+Geothermal generation is a mature technology with a history of over 100 years. The original Wairakei
+plant in New Zealand, which was the first large-scale plant in the world, has been operating for over
+60 years. There have been some major changes over the last 25 years, especially with regard to steam
+turbine technology, where the “standard” large size geothermal unit has increased from 55 MW to
+110 MW and larger, and now allows a higher inlet steam pressure. Drilling for geothermal wells is
+very much an offshoot of the oil drilling industry, so radical changes in geothermal drilling technology
+are not expected, although there are some areas for further research and such work is continuing in
+the USA. Therefore, while there is some scope for technical improvements in geothermal generation
+projects, it can be expected that the gains will be small and incremental. More significantly, the rate
+of cost reduction for geothermal generation due to technical improvements is likely to be significantly
+less than for solar, and to a lesser extent wind. That will disadvantage geothermal generation relative
+to the other newer sources as time progresses.
+
+Geothermal generation projects in New Zealand are already efficient on a world scale (Lawless et al.
+2016). There is some potential to take up existing technology which has not been widely used to date
+in New Zealand, but whether that happens will be driven by costs and the regulatory environment.
+For example, a high carbon tax would make CCS feasible, but it would also further disadvantage
+geothermal plants (especially those with higher emission intensities) relative to other renewables such
+as wind, which are free of operational GHG emissions.
+
+Some possible changes in geothermal technology over the coming decades include:
+
+            Greater use of digital technology to improve resource investigation, drilling, operations and
+             maintenance. Geothermal operators are reporting small but steady improvements in this
+             regard;
+            Greater use of low-temperature binary plants. For reasons given in the next section, this is
+             likely to be mainly restricted to retrofitting as bottoming plant utilising brine from existing
+             condensing power schemes (with limited opportunities) rather than as stand-alone projects;
+            Use of pumped wells in conjunction with binary plants on lower temperature resources
+             (Febrianto 2017). Similarly, for economic reasons, this is likely to be restricted to un-tapped
+             areas of already developed resources rather than moving into wholly new areas;
+            Carbon capture of carbon dioxide for industrial or agricultural use. This is already being done,
+             for example for many years at Kizildere in Turkey. For most uses it requires removal of the
+             hydrogen sulphide content of the total non-condensable gases (NCG), which is possible but at
+             significant cost. This may be forced on geothermal projects in the more distant future if
+             carbon prices rise significantly. It has also been suggested that geothermal reservoirs could
+             be used for CCS not only of their own emissions, but also of carbon dioxide emissions from
+             other sources, possibly with (injected) carbon dioxide eventually replacing steam as the
+             working fluid in geothermal power plants. Some theoretical modelling has been carried out
+             on this concept showing that the thermodynamics are favourable, and some small-scale trials
+             in Iceland, but the practical challenges are formidable, especially in terms of scaling and
+             corrosion and guaranteeing the GHG remain underground;
+            Improvements in controlling deposition of silica and other deleterious minerals in the waste
+             stream. This is an area where there are new developments, with New Zealand taking a leading
+             role. This includes the Geo40 process, which produces a commercial silica product and is
+             being trialled in several areas including NZ and Japan3. Apart from extracting minerals, it
+3
+    https://geo40.com/projects/
+
+                                                                                                          22
+       creates an opportunity to extract more energy from the brine fraction of geothermal fluid by
+       allowing for a lower reinjection temperature. It is most applicable to high temperature
+       resources, where it could make a modest contribution to the output of new plants. It is
+       unlikely existing plant will be re-configured and retrofitted to any significant extent. It also
+       provides the opportunity to extract other minerals from the geothermal waste streams. For
+       example, lithium is a valuable minor component of geothermal brine, but recovering it means
+       either inhibiting the co-deposition of silica or removing the silica first. That could provide a
+       valuable additional revenue streams for future geothermal projects as well as helping to meet
+       sustainability criteria;
+      Deeper drilling in known high temperature areas to tap super-critical fluid. This has been
+       proposed in several countries including New Zealand as a means of sourcing geothermal fluids
+       with much higher enthalpy, hence much greater well productivity, than in conventional
+       projects. Some trials of this have been conducted in Iceland and Japan with mixed results.
+       There are significant practical difficulties, not only with the drilling and well design but also
+       with corrosion and mineral deposition by these fluids. Even if the practical difficulties can be
+       solved this is considered by the present authors likely to be too expensive to be included in
+       the Generation Stack over the time period considered;
+      Creation of artificial geothermal resources by hydraulic stimulation in hot impermeable rocks
+       at depth (Hot Dry Rock, HDR or EGS projects). This is superficially an attractive proposition,
+       as hot rocks, especially granites, exist in many parts of the world, including New Zealand,
+       outside of the naturally convective magmatic-related geothermal systems. Experimental
+       schemes have been developed in several parts of the World including Europe and Australia.
+       However, the flow rates achieved and the cost of drilling to such depths has meant that the
+       economics of such schemes are unfavourable. It is very unlikely that such projects would
+       become economically feasible in New Zealand within the time frame considered;
+      Possible use of production from deep sedimentary systems. This is again a relatively new
+       approach being considered in Australia and parts of Europe (especially where lower
+       temperature fluids can be used directly for district heating) and its application to New Zealand
+       will be limited;
+      More economical methods of resource exploration, especially by the use of deep slimhole
+       wells. This will have limited application in New Zealand, where most initial exploration drilling
+       has already been undertaken;
+      Expanded use of improved general drilling techniques, e.g. the use of aerated drilling to
+       minimise down-hole problems, possibly the use of hammer rather than rotary drilling for
+       certain types of formations, improved bit technology to allow holes to be drilled for longer
+       without the need to trip-out-of-hole for bit changes. These can be expected to have some
+       incremental cost advantages in New Zealand but a resulting radical drop in costs is not
+       expected.
+
+4.2. Potential for geothermal generation to be extended to areas outside the existing
+Rotorua-Taupō and Ngāwhā areas
+High temperature geothermal resources in New Zealand are confined to the Taupō Volcanic Zone
+(TVZ) and a single occurrence at Ngāwhā in Northland. It is geologically improbable that any other
+undetected high temperature naturally convective resources exist at economically drillable depth in
+New Zealand. Hot dry rock projects are excluded for the reasons given under 4.1. Therefore, any
+expansion of geothermal generation on a significant scale outside these regions will require the use
+of lower temperature resources, which inevitably means binary power plants and probably the use of
+pumped wells, as lower temperature wells cannot self-discharge by two-phase flashing.
+
+
+
+
+                                                                                                     23
+Geothermal power projects of this type have been successfully developed in many countries as
+summarised in Figure 5. They can be economic provided some of the following special circumstances
+exist:
+     Relatively high power prices e.g. Germany, where prices for electricity from renewable
+       sources can be more than 5 times the average price in New Zealand. Febrianto et al. (2017)
+       estimated a base case LEC (Levelized electricity cost) of 9.52c US/kWh (NZc 14.6/kWh) for
+       low enthalpy plants with pumped wells in favourable circumstances in Indonesia,
+       considerably above the current average cost in New Zealand;
+     Extensive shallow geothermal reservoirs with high pressures/water levels. This is the case in
+       parts of the USA and Turkey;
+     High permeability near-surface geological formations such as terrestrial sediments, to
+       provide an extensive reservoir for geothermal resources to accumulate;
+     Extensive high permeability deep sedimentary reservoirs that have been explored by oil wells,
+       preferably with numerous existing but abandoned wells that can be converted.
+
+
+
+
+Figure 5: Regions where <210°C geothermal reservoirs have been developed for power generation. Showing average
+reservoir temperature and net installed capacity (source: Febrianto 2017)
+
+In New Zealand, there are no extensive areas of high permeability near-surface sediments to provide
+a reservoir, except possibly the Canterbury Plains, where no significant geothermal heat has been
+discovered. Therefore, any geothermal resources associated with isolated tectonic hot springs are
+likely to be small. In the absence of such circumstances, such projects, while technically possible, will
+be sufficiently expensive that they are likely to be more expensive than other renewable sources
+especially wind and to a lesser extent solar.
+
+There are two situations where that may not apply:
+
+        Energy recovery from hot water produced by oil wells. There are oil wells in Taranaki which
+         produce water hot enough to generate electricity in a binary plant, albeit at significant cost
+         because of the modest temperature. Those opportunities are sufficiently limited and small
+         scale at present that they can be ignored for the present purposes. Reyes (2019) has observed
+         that there are only four abandoned oil wells with temperatures over 150 °C in Taranaki, and
+         these are scattered rather than grouped to provide a larger project. The potential is perhaps
+
+
+                                                                                                                 24
+        5 MW in total, and it is unlikely that there will be a large expansion of the oil industry in the
+        foreseeable future;
+       Water at around 200 °C in the outflow zones of some TVZ high temperature geothermal
+        systems, such as at Mokai. That has the advantages that the permeability is high in some of
+        the near-surface pyroclastic formations, the outflows are shallow and represent a significant
+        volume of resource, and in most cases the extent of the resource has been well defined by
+        geophysics and previous drilling. These also have the advantage that, unlike the separated
+        brine steam from high-temperature projects, the silica content of the water has re-
+        equilibrated underground and so does not pose such a risk of deposition in the surface
+        pipework as would the use of a bottoming plant on a high temperature resource. However,
+        given that such occurrences are all in the TVZ, they can be regarded as “second tier” additions
+        to known high temperature projects.
+
+It is concluded therefore that the potential for projects outside the known high temperature areas in
+New Zealand is very limited.
+
+4.3. Potential for geothermal to generate in a load-following manner, to
+compensate for intermittency of other electricity sources
+Geothermal power plants, having high CAPEX and low OPEX, are usually operated in as close to base-
+load operation as possible. They achieve higher capacity factors than any other type of power plant,
+often over 95%.
+
+From a technical perspective, it is possible to operate geothermal power plants in a load following
+manner. Generally, this is achieved as the load is reduced by diverting steam to a silenced atmospheric
+vent (usually a rock muffler) because the original steam source (the wells) cannot respond as quickly
+as conventional boilers. Steam venting can easily occur as quickly as the load change on the turbine.
+Obviously, the vented steam represents a loss of energy and hence a potentially significant decrease
+in overall thermal efficiency. The loss of steam can be minimised by partial throttling of one or more
+production wells, but fully ‘shutting in’ of individual wells is highly undesirable because of the potential
+for thermal cycling problems. Therefore, depending on the degree of load reduction, there may still
+be some residual steam venting. Following a load reduction, load increase may be slightly slower if
+production wells have been throttled as they will take longer to re-open without causing flow
+instability problems in the steam supply system (wells and separators), although if the load increase
+is programmed (e.g. to correspond to an expected diurnal increase in the early morning) then the
+throttled wells can be opened in advance of requirement.
+
+Note that steam venting in this manner may be considered environmentally or socially problematic in
+some areas, especially if the project is located close to a population centre. It may also in New Zealand
+be regarded as “unsustainable” (not efficient use) under the RMA, although the amount of steam
+venting may actually be very small, especially if undertaken in support of predictable diurnal load
+variations. For binary plants using brine, load following is more easily achieved by simply bypassing
+the brine flow directly to injection. As this hotter brine is then being reintroduced into the sub-surface
+system there should be no issues regarding unsustainability.
+
+One example is the Tongonan I power plant in the Philippines. It had a 3 x 37.5 MW condensing steam
+turbine configuration. The number of units was partially because spinning reserve was required for a
+nearby copper smelter. When it was built it was the only power source on the island of Leyte, so it
+had to operate in a completely load-following manner. It was a technical success (Minson et al, 1985).
+However, it would be unlikely to be acceptable in New Zealand because it achieved load shedding by
+discharging surplus steam to the atmosphere.
+
+
+                                                                                                         25
+Closer to home, when first built what is now the Poihipi plant operated in a load/cost-following
+manner. The owner, Geotherm Energy, had a daily resource consent allocation which would not
+support the full output for 24 hours. Rather than run the station at part load (which would have been
+physically and economically inefficient), the station was run at the full 55MW output during the day,
+when spot power prices were highest, and then reduced to about 3 MW overnight. It was not shut
+down completely to avoid thermal cycling. This was also technically successful. However, the station
+is no longer run in that way as it is now inter-connected to the Te Mihi/Wairakei steam supply system
+which has much larger consents.
+
+As these examples show, it is quite possible to run a geothermal power plant at variable load. It is
+however very economically unattractive (except in the special case where it is consent limited and
+cost following), since the economics of geothermal power project are designed around continuous
+operation. In effect the last few percent of operation represent the profit margin.
+
+In general, the efficiency of geothermal plants drops off at part load, as with any thermal plant, so
+there is an incentive to maximise their output given that the limiting factor is usually consented fluid
+take, not MW. On a small scale, in recent years there has been a move to adapt resource consent
+wording to average fluid take over longer than a daily period to allow for some make-up of outages.
+
+Summarizing the above, the authors see little potential for geothermal power plants in New Zealand,
+which will be mainly located near the central part of the grid system, to firm up the intermittency of
+other power plants and load to any large degree by being load-following. However, if the use of solar
+and wind power increases there may be an increased demand for the geothermal plants to be able to
+respond to those plants’ very variable inputs to the grid. That is feasible. On the basis of scenarios
+presented in the report, if all of the new geothermal generation postulated here was in fact developed
+over the next 40 years, it would be more than sufficient to provide baseload to replace all remaining
+thermal plant, because of the high capacity factors of the geothermal plant. In 2018 existing
+geothermal plant produced 7,510 GWh of generation, and all thermal stations 6,895 GWh. This report
+suggests slightly more than a doubling of New Zealand’s installed geothermal capacity by 206 (Section
+5), so the figures match quite closely.
+
+4.4. Extent to which non-electric uses of geothermal energy will compete with, or
+complement generation
+In most cases geothermal direct use will be complementary to electricity generation and can provide
+a valuable additional revenue stream. Many direct uses require only lower temperature heat than is
+suitable for regular condensing steam geothermal turbines, so cascaded uses are common, as in the
+case of the Prawn Farm at Wairakei, which heats river water to around 25-30°C using geothermal brine
+from the Wairakei power plant discharges.
+
+Generally speaking, large geothermal power schemes produce a vast surplus of low-grade heat which
+can be readily utilised provided silica deposition issues can be overcome. In some cases, it may be
+possible to make use of individual high temperature wells which are either marginal for production
+for power generation or in an inconvenient location to connect. Although from a technical perspective
+direct use of geothermal heat may be more efficient than conversion to electricity, the economic value
+of electricity is generally greater than that of the equivalent amount of heat. One of the biggest
+hurdles to overcome is obtaining a load of sufficient size to justify well drilling. As a stand-alone
+proposition there are very few industrial operations with enough scale to make it worthwhile, which
+is why these operations stand alongside electricity generation. Furthermore, in many cases the
+availability or cost of transport of raw materials to the geothermal site makes stand-alone direct use
+less attractive than generation.
+
+
+                                                                                                     26
+There are some exceptions to these generalisations, as follows:
+
+
+       The very large dedicated industrial site at Kawerau uses a portion of the high-temperature
+        resource for industrial direct heat use and will undoubtedly continue to do so;
+       It is possible that re-powering the existing dairy factory at Reporoa which uses natural gas may
+        take precedence over generation, though a complementary scheme is more likely;
+       In some cases, such as Rotorua, preservation of the thermal activity for tourism logically takes
+        precedence over power generation. This can also be considered a non-extractive “use”.
+
+
+
+
+                                                                                                     27
+5.       Review of individual prospects
+Because of the importance of regulatory issues, the prospects and projects are presented in this
+chapter organised by region. Minor hot spring occurrences that are unlikely to lead to economic
+projects are not included. Prospects that are currently protected from development are included, but
+covered only briefly to identify key issues and give an approximate estimate of potential resource
+capacity.
+
+As well as estimates of the capacity of individual resources, as cited with each prospect below, there
+have been several studies intended to assess all of New Zealand’s geothermal resources on a
+consistent basis. These include:
+
+        A paper by Lawless and Lovelock (2002), which underwent several revisions, the most recent
+         being Lawless (2005). This used a simplistic but consistent volumetric stored heat method to
+         estimate the potential generation capacity for all of New Zealand’s high temperature
+         geothermal resources. Although the individual resource estimates which make it up should,
+         and in some cases have been updated, it remains a useful assessment of what proportion of
+         our total geothermal resource capacity is available and what proportion is protected from
+         development. In some cases, it still has the best estimates available, and in a common
+         framework. It is probably the source of the oft-quoted figure that our total capacity is
+         3,600MW, but it is often overlooked that Lawless’s (2005) estimates were based on total
+         resource depletion over 50 years, because of perceived conservatism over sustainability. On
+         the one hand, that period may be too short given the tenor of recent resource consent
+         litigation, but on the other it would be more usual in the international industry to use a figure
+         of 30 years, which would increase the 3600 MW to 6000MW. The SKM/WRC (2002) report
+         produced separate estimates for 30, 100, 200 and 300 years so the results can only be
+         compared by scaling accordingly. It also is often overlooked that Lawless’s (2005) paper
+         included a large proportion of protected fields. Given that 1,000MW has already been
+         developed, the true remaining available quantity is undoubtedly much less than 2,600 MW.
+        A comprehensive assessment by SKM/WRC (2002) of all of the geothermal resources in the
+         Waikato region using a similar methodology to that of Lawless (2005). This study produced a
+         range of probabilistic results (P10, P50 and P90) as well as a range of depletion timeframes
+         (including recharge) for 30, 100, 200 and 300 years. For the area it covers, and where no more
+         specific information is available, this is still regarded as the best available estimate for the
+         present study.
+
+In general, it is important to distinguish between total resource capacity and project capacity. The
+above estimates referred to total resource capacity, that is to say what could be expected to be
+economically extracted while running the resource to depletion, albeit over a longer time scale than
+resource consents will be available for. In the scenarios presented below, what is estimated is what a
+prudent developer might be prepared to undertake within the next 40 years, having regard to resource
+uncertainty and the requirement for sustainable management under the RMA, which will generally
+require some of the resource to remain un-depleted. Thus, the projects included in the ‘future
+geothermal generation stack’ here are generally less than the ultimate resource capacity.
+
+Decommissioning
+Decommission of existing projects could occur for one of three reasons:
+
+     1. Resource depletion. The only project where this applies to a significant degree is Ohaaki,
+        which has already been de-rated from 108 MW to 57 MW and is currently producing about
+        40 MW. Even in that case it is not expected that there will be further retirement of plant.
+        This is discussed in more detail below.
+
+                                                                                                       28
+    2. Mechanical degradation of plant. The only plant where this is expected to be a major issue
+       over the next few decades is Wairakei, which has already been operating for over 65 years.
+       It cannot operate much longer in its present form, both for that reason and because it does
+       not meet modern environmental expectations. It is not yet clear what will happen at
+       Wairakei: it may be overhauled, re-configured or retired, but as discussed below in either
+       event any decrease in output will be made up from Te Mihi.
+    3. Failure to obtain new resource consents. As the longest period resource consents can be
+       issued for is 35 years, all plants will require reconsenting within the 40-year horizon. For
+       reasons discussed above, it should not be assumed that new consents will automatically be
+       granted for the same quantities nor under the same conditions. The possible implications of
+       this are discussed in Section 5.4 below.
+
+In summary therefore, no significant net reduction in existing capacity due to decommissioning
+should occur within the next 40 years for resource or operational reasons. Some reduction is
+possible if the consenting regime is applied more rigorously.
+
+
+
+5.1. Northland
+Ngāwhā
+Ngāwhā is the only high temperature prospect in the Northland region, and the only one known
+outside the TVZ. It is located near Kaikohe. The geology differs from that in the TVZ, with the
+geothermal resource being wholly hosted in Mesozoic greywackes, capped by impermeable Tertiary
+sediments. That means that while the resource volume is large, storage capacity for fluids is small and
+disturbances in reservoir pressures propagate rapidly through the reservoir. Careful management of
+the resource is required.
+
+A number of wells were drilled using central government funding in the late 1970s to early 1980s. The
+project was later taken up by Top Energy and local and regional Maori interests to form a company
+now called Ngāwhā Generation Limited. The field was developed in several stages, with initially a 10
+MW power plant (1998), another 15 MW in 2008. At present a further expansion is underway. In
+2017 resource consent was granted to expand the project with another ~50 MW, the first stage of
+which (~28 MW) is presently under construction, with an expected COD of mid-2021. The second
+stage is expected to follow after lengthy observation of the impacts of the previous phase, indicated
+for 2026 at the earliest: a minimum gap of 3 years is required by the new consents (Consent Decision
+Report, 2015). All developments are pure binary plants because of the lower reservoir temperatures
+than typical in the TVZ.
+
+Part of the reason for the slow staged development has been the conservative resource consent
+conditions. Certain small hot springs at Ngāwhā are regarded as being highly culturally significant. As
+these are of low flow rates, they are potentially very sensitive to changes in reservoir pressure. Hence
+development can only proceed on the condition, accepted by the developers, that reservoir pressures
+must remain fixed within a narrow band. That has led to the unusual situation where over 100%
+reinjection is practiced by using meteoric water to make up any loss of mass due to gas emissions, and
+to compensate for thermal effects on pressures. So far this strategy appears to have been successful.
+
+Another unusual feature of the Ngāwhā project is the large NCG quantity emitted per MW: 304 g
+CO2eq/kWh in 2018 (McLean and Richardson 2019). This is partially due to a moderately high gas
+content in the deep fluid, but has more to do with the fact that the productive reservoir has a
+temperature of only about 220°C, less than any other geothermal power scheme in New Zealand (not
+including bottoming binary plants, which run on separated (de-gassed) brine and so have very low
+
+                                                                                                     29
+emissions). This means that considerably more fluid is required for each MW generated, and hence
+more GHGs per MWh emitted.
+
+There are however some reasons to suppose that future expansion of the drilled area could produce
+less NCG per MWh, namely:
+
+
+
+       The gas content in the reservoir has been depleting with time. Emissions per kWh have
+        declined by 18% in the past 8 years, gas content of the three main production wells has fallen
+        to almost half its original value according to Bromley et al. (2014);
+       While the currently productive part of the reservoir is at a temperature of 200 -230°C, this is
+        because good permeability is so far localised in a shallow zone at the top of the greywacke,
+        where gas has accumulated. An earlier deep well reached a temperature of 300°C but failed
+        to encounter significant permeability. If during future drilling, a hot and permeable zone is
+        located (and there are some geological reasons to suppose that such might exist), then a
+        future scheme could have significantly less NCG/MWh.
+
+The strategic location of Ngāwhā, north of the transmission bottleneck at Auckland and being the
+furthest north power plant in the country, means that from a grid perspective there will be a strong
+incentive to further increase production there, even if the project suffers economically from high GHG
+emissions.
+
+There appears little doubt that the resource capacity is potentially large. Lawless (2005) gave an
+optimistic estimate of 120 MW over 50 years and there is reason to believe even that figure may be
+conservative. Burnell and Weir (2014) presented numerical reservoir modelling demonstrating that
+the current management regime could sustain production to 2050 at 75 MW capacity, with
+insignificant change in reservoir pressure and only a small decline in enthalpy. However, it is probable
+that further development will proceed cautiously by stages with the effects of each expansion
+considered before further consents are granted.
+
+Accordingly, three future projects each of 25 MW capacity are projected (on top of the Ngāwhā-3
+expansion presently under construction) at long intervals in 2031, 2041 and 2051 to take the total
+capacity to 125 MW. Higher than average CAPEX costs should be anticipated, because of the small
+size of the project stages, the low resource quality (temperature and gas content) and the need for
+supplementary injection. Some upside is however possible.
+
+5.2. Waikato Region
+Atiamuri
+The Atiamuri system is classified for limited development. It is located between Atiamuri and
+Mangakino. Some geoscientific surveys have been carried out and one shallow well drilled to 600m
+(Risk, 2000a). The gas content is unknown, but as silica sinters have been deposited rather than
+carbonate travertine (which would imply a high bicarbonate content) it may not be extremely high.
+The resource does not appear large and may be of relatively low temperature compared to others in
+the TVZ. SKM/WRC (2002) gave a median estimate of 6 MW over a 30-year project life. As far as is
+known no developer has expressed an interest in applying for resource consents to develop Atiamuri.
+
+Because of the probable small size, limited development classification and possible low temperature,
+it is assumed that no more than 5 MW would be developed, not before 2040. The small size of the
+project and possible lower enthalpy will increase the CAPEX.
+
+
+
+                                                                                                     30
+The gas content at Atiamuri is unknown, but because of the possible lower temperatures may be
+higher per MWh than the average for the TVZ. It is assumed to be “medium” according to the
+classification adopted in this study.
+
+Horohoro
+The Horohoro system is classified for development. It is situated near the north-eastern boundary of
+the Waikato region, close to the road from Atiamuri to Rotorua. Some geoscientific surveys have been
+carried out and several shallow wells drilled to a maximum of 593m (Risk 2000b).
+
+Despite a promising geophysical anomaly and signs of past activity, drilling encountered only modest
+temperature (80 °C) and it appears the system is waning. SKM/WRC (2002) gave the median capacity
+as 5 MW over a 30-year project life.
+
+Because of the probable small size and possible low temperature, it is assumed that no more than 5
+MW would be developed, not before 2040, and at relatively high cost.
+
+The gas content at Horohoro is unknown, but because of the possible lower temperatures may be
+higher per MWh than the average for the TVZ. Emission intensity is therefore assumed to be
+“medium”.
+
+Ketetahi/Tongariro
+A geothermal system which is at least in part steam-dominated exists under Mt. Tongariro with its
+surface expression at Ketetahi Springs. The resource is undoubtedly large. SKM/WRC (2002) gave a
+median estimate of 100 MW based on a 30-year project life. This prospect is totally enclosed by a
+National Park and it has protected status by Waikato Regional Council. Also, recent eruptions from Te
+Maire Craters on Tongariro have demonstrated significant volcanic risk. Ketetahi/Tongariro is
+therefore not considered further in this study for potential geothermal generation.
+
+Lake Taupō/Horomatangi
+A geothermal system exists under Lake Taupō. SKM/WRC (2002) estimated this at 380 MW over a 30-
+year project life. The system is classified as protected. The environmental effects of disturbing the
+system are unpredictable and possibly severe. Development is not practical and hence this prospect
+is not considered further.
+
+Mangakino
+The Magakino system is classified for development. It is located between Atiamuri and Mangakino on
+the north bank of the Waikato river, and lies north-west of Mokai.
+
+Mercury Energy previously held resource consents for drilling, and drilled 4 deep wells covering the
+central part of the supposed resource, supplementing an earlier shallow well (607 m with a maximum
+temperature of 185 °C) drilled to the west during government-funded exploration. Comprehensive
+geoscientific studies have been carried out, though not all of that information, nor all of the results of
+deep drilling have been made public.
+
+SKM/WRC (2002) estimated the median capacity as 47 MW over 30-year project life. That estimate
+was done before the detailed exploration by Mercury Energy, being based only on the results of the
+original shallow well in the west. Although no details are available it would be reasonable to assume
+from the level of commitment and the area drilled that Mercury Energy were hoping for a larger
+resource than that. However, in the event, deep drilling was largely unsuccessful in terms of locating
+a large, hot and permeable resource. Post-drilling, Rustandi et al. (2016) estimated the generation
+capacity to be between 10 and 26 MW, provided adequate permeability could be located.
+
+                                                                                                       31
+It is clear that at least some hot resource exists based on the original shallow well and chemical
+geothermometry, but it may not be very large. Further scientific work would be required to better
+understand the geothermal system, though that is complicated by the fact that the original thermal
+features and part of the resource area have now been flooded by hydro development. It is assumed
+therefore that a 25 MW project is possible, but not before 2030 and because of the scale, at higher
+than average cost.
+
+The gas content at Mangakino is unknown but is probably low.
+
+Mokai
+The Mokai system is classified for development. It is located north-west of Taupō, to the south of the
+Waikato river downstream of Atiamuri. Extensive scientific surveys have been carried out and a
+number of deep wells drilled during the government exploration phase. These were then taken over
+by the Tuaropaki Power Company, of which the local land-owning Tuaropaki Trust remains the major
+shareholder, and further drilling was undertaken.
+
+A combined cycle steam turbine/binary plant was installed in three stages with a total capacity now
+of 112 MW. Two significant direct use projects have also been installed: a large area of geothermally-
+heated greenhouses, and a milk-processing plant.
+
+SKM/WRC estimated the median resource capacity as 140 MW. The plant has been maintaining close
+to full output. The main resource fluid take consent expires in 2024. A small expansion was applied
+for in 2016, to maintain production from the existing plant. It is therefore considered unlikely that
+further expansion of that plant would be undertaken.
+
+Furthermore, Tuaropaki previously stated (Brian Jones, pers. comm. 2007) that a factor in deciding to
+install the direct use projects was the greater opportunities these gave for providing employment. It
+therefore seems probable that further direct use projects and/or expansion of the existing ones may
+occur in preference to greater power generation at the Mokai plant.
+
+However, there may be a significant un-tapped resource contained in the outflow zone of the Mokai
+field, which still lies within the same land ownership. The ‘Mokai outflow’ resource would be at lower
+temperatures than the upflow zone, but could be tapped with shallower wells and without having
+much impact on the current production zone (though reinjection may have to be shifted). It is
+therefore considered possible that an additional 25 MW of binary plant could be installed there,
+possibly in association with future direct use projects. This is unlikely to occur before 2030.
+
+The GHG emissions intensity from such a plant may be lower than for most geothermal projects in
+New Zealand, as the outflow would have been de-gassed already. Because of the lower enthalpy in
+that zone and the small scale, the CAPEX would be higher than average.
+
+Ngatamariki
+The Ngatamariki system is classified for development. It is located north of Taupō, north of Rotokawa
+and south of Orakei Korako. Extensive scientific surveys have been carried out and 4 deep wells were
+drilled during the government exploration phase. These were then taken over by Mercury Energy and
+further drilling undertaken.
+
+As discussed in section 2.2, the plant selection was in part dictated by concerns over maintaining
+reservoir pressures to avoid any effects on the adjacent Orakei Korako field. However, there is no
+direct evidence that any connection exists, nor to the Rotokawa field to the south. Cold water
+
+
+                                                                                                   32
+incursion from above was also a concern. Hence, despite the high field enthalpy, an 82 MW binary
+plant was built and commissioned in 2013 (Legmann, 2015). The main consents expire in 2045.
+
+SKM/WRC (2002) gave the median resource capacity as 120 MW over a 30-year project life. More
+recent estimates based on numerical simulation modelling indicated a median value of 83 MW
+(Quinao and Zarrouk, 2015). Modelling demonstrated that the existing project can continue to
+perform for 50 years with relatively little change in well performance and total production. Under
+operation, production has been lost due to unanticipated calcite deposition (Quinao et al, 2017) which
+is now being managed. Pressure change has been relatively small.
+
+It seems probable that further development of the Ngatamariki field could occur, but in view of the
+perceived sensitivity of the area it would be difficult to obtain further consents until a significant
+period of operation and observation has occurred. It is also likely that any future power plant would
+have to have the same configuration as the present one. Therefore, it is assumed that a further 50
+MW binary plant could be installed, but not before 2030 and with above average CAPEX.
+
+The gas content at Ngatamariki is low. Future developments can be assumed to have similar
+emissions.
+
+Ohaaki
+The Ohaaki system is classified for development and the Ohaaki development is one of the oldest in
+New Zealand. Government-led exploration started in the 1960s, but it was deemed small and
+problematic to develop, until the oil crisis and Brundtland report of the 1970s spurred the government
+to re-ignite developing indigenous, non-hydro and non-fossil power plants.
+
+The power plant was consented (water rights granted) for 20-year production in 1978 at 80-90 MWe
+for phase-1 (a second phase up to 150 MWe had been listed as an option after several years of
+operation). During detailed design, two additional high-pressure turbines (ex-Wairakei) were added
+to the design to make use of the excess steam expected in the first 10 years of operation, bringing net
+capacity to 108 MWe. The plant was finally commissioned in 1989, by which time 49 wells had been
+drilled. During exploration and extensive well testing, significant pressure drops had been foreseen,
+and as many as three new wells per annum were planned to maintain steam pressure. The plant ran
+at full capacity until 1993, but very few new wells were drilled as market circumstances had changed
+significantly. The power station was re-consented for lower production levels in 1998 (15 years) and
+again in 2013 (for 35 years; consents expire in 2048).
+
+Ohaaki has high temperature areas, but suffers from zones of limited permeability (in deeper areas)
+and cold-water inflows into some of the intermediate production zones. Given the long and not totally
+successful operational history, stored heat estimates such as have been carried out at other fields are
+less relevant than the actual reservoir responses. GHG emissions are high. The fluids are high in silica,
+creating scaling issues and relatively high operational costs.
+
+The 2013 resource consent allows Ohaaki production at 40,000 tonnes per day (tpd), which could
+produce around 55 MWe using one HP and one IP turbine. During the consenting process, specific
+mention was made of the option to convert one of the IP-turbines to low pressure, to potentially
+generate an additional 20 MWe from the same fluid take, depending on market circumstances and
+solution of technical issues, especially silica deposition. In the present market circumstances Ohaaki
+runs at 40-45 MWe-net and Contact has indicated in their System Management Plans they expect to
+maintain this in the coming 5 years. This would notionally leave around 25-30 MWe of additional
+generation available within the same consent, on medium investment.
+
+
+
+                                                                                                      33
+In the meantime, after extensive pilot testing, GEO-40 has constructed a commercial silica-removal
+plant on the Ohaaki field. This both resolves the silica issue, and produces sellable silica. The next
+step is to remove lithium for sale as well. Future plans might include upscaling volumes.
+
+The costs and gas emissions for any future development would depend very much on the
+configuration. If it was done by converting one of the turbines to lower pressure operation, that would
+be at lower than typical cost as far as the power plant is concerned (since much of it already exists),
+but significant additional drilling would be required, perhaps at lower than a typical success ratio
+based on results to date, and the silica removal system (which is also energy intensive) would add
+cost. If it was done by retrofitting bottoming binary plant, the CAPEX would be higher per MW but
+the drilling cost would be less, as would the gas emission per MW as it would be utilising already de-
+gassed brine.
+
+For the present study, after discussion with Contact Energy, it is assumed that no additional output
+will be produced at Ohaaki above present output within the time period considered. If some
+additional generation did take place, that would come within the original total installed capacity so
+presumably would have no impact on the transmission connection, which must be over-sized for the
+current operation.
+
+Orakei Korako
+The Orakei Korako system is classified as protected and is a significant tourist destination. It is located
+to the north-west of Ohaaki, straddling the Waikato river. Detailed surface surveys were carried out
+there before part of the field was flooded by hydro development. Four wells were drilled to over
+1000m during previous government-funded exploration, encountering temperatures over 200 °C (Risk
+2000b).
+
+Orakei Korako is close to the Ngatamariki field. There is no evidence that these fields are connected,
+and the scientific data suggests they are not (Risk 2000b), but concern that the development of
+Ngatamariki could possibly affect Orakei Korako has led to stringent monitoring conditions at
+Ngatamariki, including shallow monitoring wells between the two fields, and choice of a binary plant
+at Ngatamariki to conserve fluid for reinjection.
+
+The median capacity of the Orakei Korako field was estimated by SKM/WRC (2002) as 110 MW over a
+30-year project life. There is no doubt it is one of the larger un-tapped fields in the region, but because
+of the protected status, no generation is anticipated there within the 40-year horizon.
+
+Reporoa
+The Reporoa system is classified as a ‘Research system’. It is located to the south west of the larger
+Waiotapu field and south of the Waikite field. Scientific investigations have been carried out and one
+well was drilled to about 1300 m during government exploration, which encountered moderate
+temperatures around 225 °C (Risk, 2000b).
+
+Reporoa was estimated by SKM/WRC (2002) to have a median capacity of 42 MW over a 30-year
+project life. They commented that the area for the estimate was downgraded on the basis that the
+system may be waning and the low-resistivity zone represents an older, larger system (Bibby et al.,
+1994). If that is not the case, the resource would be larger. Lawless (2005) estimated a median
+capacity of 42 MW over a 50-year project life.
+
+There is a large dairy factory at Reporoa currently fuelled by natural gas. So it is possible some direct
+use of geothermal energy could take place there rather than electricity generation. It is more likely,
+though, that cascaded dual use would be favoured.
+
+
+                                                                                                        34
+The principal reason Reporoa has been classed as a “research” system is that there are concerns over
+a possible hydrological connection to the protected Waiotapu geothermal system to the north east,
+or even the further outlying Waimangu and Waikite systems. A connection between Waimangu and
+Waiotapu appears unlikely. The Waimangu system underwent major changes following the 1886
+Tarawera eruption, without that affecting Waiotapu, so a connection even further to the south to
+Reporoa seems very unlikely. The concept of a connection between Reporoa and Waiotapu and
+Waikite was based mainly on earlier Schlumberger DC resistivity surveys, which have been superseded
+by later MT methods, and no longer seems very likely.
+
+Recent numerical simulation modelling by Pauline and Kaya (2019) demonstrated that a 25 MW
+development at Reporoa should be possible without affecting Waiotapu, provided the reinjection was
+appropriately sited. Nevertheless, any development at Reporoa will require a cautious approach and
+adjustment of the current classification, based on new data and the on-going operational history.
+Accordingly, it is expected that an initial 25 MW development could occur, but not before 2030, with
+subsequent 25 MW stages in 2040 and 2050. The scale of the project and possibly only moderate
+temperatures mean that it will be of above average cost.
+
+The NCG content appears to be medium, based on well chemistry reported by Bignall (1990).
+
+Rotokawa
+The Rotokawa system is classified for development. Despite close proximity to the Tauhara field there
+does not appear to be a hydrological connection. Extensive scientific surveys have been carried out
+and a number of deep wells drilled during the government exploration phase. These were then taken
+over by a joint venture between what is now Mercury Energy and the local landowning trust, the
+Tauhara North No. 2 Trust, and further drilling undertaken.
+
+Development took place in two stages. The first stage was a combined cycle back pressure steam
+turbine and binary plant, very similar to that at Mokai, and commissioned in the same year (1997),
+but of smaller capacity. It was expanded in 2003 and now has a capacity of 35 MW. The second stage,
+called Nga Awa Purua, was the 2010 commissioning of a triple-flash condensing steam plant of 140
+MW. Consents for the Rotokawa Nga Awa Purua plants expire in 2053.
+
+The capacity of the Rotokawa field is large. It was estimated as 300 MW by SKM/WRC (2002) over a
+30-year project life. The response to production is however now more informative. The field has
+shown a response to the current level of production in terms of enthalpy and pressure declines,
+(Clearwater 2015), but recent numerical modelling indicates 50+ years of production can be sustained
+by appropriate management (Hernandez 2015).
+
+Further development of the Rotokawa field seems possible, but the size and nature of the plant is not
+clear. Previous development was on the south side of the Waikato river, but the field extends to the
+north of the river and has been confirmed by two early exploratory wells, albeit possibly at somewhat
+lower temperature. Under the newest consent (20/6/2018), an increased amount of fluid can be
+taken from the south as well as the north western side of the river. The consents expire in 2053.
+
+It is therefore expected that there could be a further 100 MW expansion at Rotokawa, but in two 50
+MW stages, with the first not before 2030 and the second 10 years after that. CAPEX would be average
+as the field has high temperatures.
+
+
+
+
+                                                                                                  35
+The GHG emissions at Rotokawa were originally in the medium category, but McLean and Richardson
+(2019) pointed out that they have declined substantially with production. Future developments can
+be assumed to have low emissions.
+
+Tauhara & Wairakei
+The Tauhara field is classified for development, jointly with Wairakei. Tauhara and Wairakei need to
+be considered together. They are adjacent fields each side of the Waikato river, with Tauhara in part
+underlying Taupō township. They occupy separate areas, have separate hot upflows, power plants
+and resource consents, but are hydrologically linked. More than 40 years of operation at Wairakei
+without reinjection caused a large pressure decline at Tauhara, leading to significant environmental
+effects in both areas including loss of thermal features, changes in thermal activity, hydrothermal
+eruptions and subsidence. As production at Wairakei without full reinjection continues, albeit a much
+smaller proportion than in the past, the cumulative effects on Tauhara still need to be considered and
+will be an issue in any new consents. Cumulative effects of discharge to the Waikato river will also
+need to be taken into account in the future.
+
+There are several power plants and direct use projects on the Wairakei field:
+
+       Wairakei (A and B stations) was the first grid-connected geothermal power plant in New Zealand, in
+        1958. Its output peaked at 192 MW. The configuration is complex, with many small condensing and
+        back pressure steam turbines. Contact Energy commented that: “Wairakei output is primarily
+        constrained by resource consent limits. Permitted mass take is 245,000t/d and the resource is quite
+        capable of supplying this. Fluid utilisation within the permitted take is prioritised to Te Mihi and Poihipi,
+        as they are the most efficient and have lower environmental impact. Wairakei utilises the balance and
+        ramps up during outrages on other plants. It is unusual for Wairakei to be loaded over 120MW these
+        days and often operates at 80-90MW.”
+       A series of bottoming binary plants (19 MW total) operating on some of the separated brine
+        were added near to the Wairakei power plant site in 1996 and 2005. Their production falls
+        under the Wairakei A&B consents;
+       The Poihipi 55 MW condensing steam turbine plant lies to the west, also tapping the Wairakei
+        resource. It was originally built by Geotherm Energy Ltd. but was later taken over by Contact
+        Energy and is run jointly with the other Wairakei power plants, with an interconnected steam
+        supply system;
+       The Te Mihi station is a modern double flash condensing steam plant of 166 MW capacity with
+        two units, commissioned in 2014. It is in the northern part of the Wairakei field.
+
+The main fluid take consents for all the above stations on the Wairakei field expire in 2026.
+
+At Tauhara, Contact Energy received consent for up to 250 MWe of geothermal generation (plus
+direct, cascade use) in 2010, but due to subdued electricity demand growth the main plant has not
+been built yet. The consents expire in 2045. At present Tauhara supports:
+
+       The Te Huka plant is a binary power plant of 24 MW capacity. It was commissioned in 2010; The
+        direct use system supplying Tenon and Natures Flame is a separate stand-alone system, not
+        interconnected to Te Huka. The systems are physically close together and may be connected at some
+        time in the future. Consents for both come under the main Tauhara consents and expire in 2048.
+
+       A number of deep wells have been drilled, and the lapse period for Contact’s Tauhara-2 plant
+        has been extended to 2025. Contact has indicated work on the plant is restarting, with the
+        plant likely to be built in 2 stages in the norther part of the Tauhara area. It seems that the
+        only thing holding up construction of that plant is Contact Energy waiting until they are sure
+        it is economically justified, given the current low growth in national power demand and the
+        uncertainties over the future of the Tiwai Point/ Manapouri scheme.
+
+                                                                                                                  36
+Additionally, there are a large number (several hundred) shallow wells which are used for domestic
+purposes or small-scale industrial use. These tap a shallow part of the resource, so do not directly
+compete with the larger power schemes, but the potential for the power schemes to affect the shallow
+wells may affect the social licence for future expansion, along with other environmental effects. These
+include a recent acceleration in subsidence rates, leading to some damage4, in the Crown Rd area,
+which will inevitably raise public awareness of possible effects.
+
+There is no doubt the Wairakei and Tauhara fields have a large physical capacity. SKM/WRC (2002)
+estimated the median capacities of Wairakei and Tauhara respectively as 510 and 320 MW over a 30-
+year project life. Those figures are interesting for comparison with the other fields in the region, but
+they are not very relevant to predicting future production because:
+
+            A large amount of energy has already been extracted (not considered by SKM/WRC, 2002),
+             including a large sub-surface transfer from Tauhara to Wairakei. There has also been a
+             significant amount of recharge from depth.
+            The physical capacity of the fields is not the main driver of what future development is likely
+             to be possible. It has far more to do with environmental effects and consenting.
+            More sophisticated methods are now available using actual production and monitoring data
+             and numerical reservoir modelling. For example, the most recent modelling reported (Contact
+             Energy 2019) drew the following conclusions:
+                 o The target total mass flow of 245,000 tonnes per day at Wairakei is maintained until
+                      almost 2050.
+                 o The total steam flow for Tauhara II is maintained at the target of 47,300 tonnes per
+                      day up to 2036 and then fell slowly to 40,000 tonnes per day by 2060. This showed a
+                      revision is required to the allocation of production to areas of the model to meet the
+                      target as opposed to an indication that the field overall cannot sustain the target.
+                 o The model is able to accept all the injected/reinjected condensate and separated
+                      geothermal water at Wairakei.
+
+Contact Energy have presented a number of scenarios for how Wairakei-Tauhara may be developed
+in the future (Contact, 2018). For the present study, it is assumed that:
+
+            The 250 MW Tauhara plant goes ahead by 2025. It will probably in practice be installed in
+             multiple stages. Here it is assumed that it will be a single plant with identical two units
+             installed sequentially;
+            Reconsenting of the Wairakei plant as it currently stands in 2026 should not be taken as given.
+             There are features of the Wairakei plant which would be environmentally unacceptable in a
+             new plant/consent. Re-configuring it to meet modern expectations would be expensive;
+            If the Wairakei A and B stations were to close, there would be a surplus of steam available
+             which could not be fully accommodated by the existing Poihipi and Te Mihi plants;
+            Therefore, it is assumed that there will be no net loss or gain of capacity at the Wairakei field,
+             whether that is achieved by fully reconsenting Wairakei A and B stations, re-configuring them
+             with a smaller output and/or adding a third unit at Te Mihi;
+
+Further generation is possible at Tauhara, but it is unlikely to be consented until some years of
+experience are gained in operating the new 250 MW plant and observing any effects. It has been
+somewhat arbitrarily assumed that an additional 30 MW may be possible in 2035.
+
+
+
+4
+    Though so far only to property owned by Contact Energy, or for which repairs have been paid for by Contact Energy
+
+                                                                                                                        37
+The gas content at Wairakei varies from plant to plant as they have different configurations and tap
+different resource sectors. The emissions at the original A and B stations (and the binary) are very low
+in part because the field has become de-gassed by many years of operation, and because they tap a
+de-gassed outflow zone. They are slightly higher at Te Mihi/Poihipi as they draw on the reservoir
+closer to the upflow. It can be expected that the new Tauhara plant will have emissions similar to the
+Te Mihi plant. All are low using the present classification.
+
+Te Kopia
+The system is classified as protected. It is adjacent to the Orakei Korako field, to the northeast, but
+appears to be separate. There have been extensive scientific surveys and two deep drillholes to
+around 1000 m with a maximum temperature of 240 °C (Risk 2000b).
+
+The median capacity of the Te Kopia field was estimated by SKM/WRC (2002) as 96 MW over a 30-
+year project life.
+
+Because of the protected status, no generation there is anticipated within the 40-year horizon.
+
+Tokaanu (+ Hipaua-Waihi)
+The system is classified for limited development. It is located at the south end of Lake Taupō. The
+geology of this field is somewhat different from most in the TVZ, being associated with an elevated
+andesitic stratovolcano. That means that it is more likely to have an extensive outflow zone than
+most.
+
+There have been extensive scientific surveys, though not all of the data have been made public. No
+wells have been drilled apart from some very shallow ones for early exploration and to supply the
+thermal pools at Tokaanu, which are clearly on an outflow zone.
+
+SKM/WRC (2002) estimated the median capacity as 200 MW over 30 years. This is probably the largest
+untapped and not fully protected field in the region. It is understood that developers have previously
+been in discussions with the major landowner for some years though no announcements have been
+made as to an agreement being reached.
+
+It is conjectured that a large development here is possible, but it would be a protracted process
+whereby wells would have to be drilled at risk, within the context of the current limited development
+status, then an application made to change the status to allow greater development on the basis of
+the results. That is to say, to confirm the nature of the larger resource, the developer would have to
+drill more wells than would be economically justified by the limited development currently permitted.
+Consenting may not be straightforward because of existing direct use, land stability issues (there were
+two historical destructive landslides from the thermal ground, one of which caused multiple fatalities)
+and proximity to Lake Taupō which could lead to flooding if subsidence occurred.
+
+Accordingly, it is suggested that a 20 MW project may be possible by 2030, followed by a 100 MW
+development 10 years later. Development beyond that may be possible but at the present it is too
+uncertain to include. There is evidence for high temperatures so CAPEX will be average.
+
+The gas content at Tokaanu is probably medium based on data from Severne (1999).
+
+Waimangu, Waiotapu and Waikite
+These three systems are lumped together by Waikato Regional Council, and are classified as protected,
+but it is likely that they are all separate systems, and a large part of Waimangu lies within the Bay of
+Plenty region (with an agreement for joint management and an alignment in protected status). Seven
+
+                                                                                                     38
+wells were drilled at Waiotapu as part of earlier government exploration, encountering high
+temperatures (295 °C) but limited permeability.
+
+SKM/WRC (2002) gave the median capacity of Waimangu as 280 MW over a 30-year project life and
+Waikite - Waiotapu as 340 MW. There is no doubt they are of large capacity. Waiotapu has the largest
+surface heat flow of any geothermal field in the TVZ.
+
+Because of the protected status, no development is anticipated at these fields. However, because of
+the reputed possible connection between Waiotapu and Reporoa, more scientific work at Waiotapu
+would possibly be needed before the status of Reporoa as a “research” system could be changed.
+
+
+5.3. Bay of Plenty Region
+Kawerau
+Kawerau is the furthest north-east of the high temperature geothermal systems on-shore within the
+TVZ5. It is classified as for development.
+
+Kawerau was extensively drilled in the late 1950s and was the first large geothermal project
+commissioned in New Zealand as it started supplying steam to the local pulp and paper mills in 1957.
+For many years the focus was on industrial use of the steam. Although about 10 MW of electricity
+was internally generated (and still is, at around 8MWe) within the industrial complex, that was not
+connected to the national grid. Total steam taken was equivalent to about 40 MW electrical capacity.
+Ngāti Tūwharetoa Geothermal Assets Limited (NTGA) is a 100 % wholly owned subsidiary of Ngāti
+Tūwharetoa Settlement Trust (NTST). At the time of its formation (2005), NTGA purchased the Crown
+assets including take, injection and monitoring wells, supporting infrastructure and the historical
+supply contracts and consents relating to the Kawerau Geothermal System (Kawerau SMP, 2018).
+Industrial use remains a major emphasis at Kawerau with currently 6 principal industrial users.
+
+In the 2000s, attention was focussed on the potential for more electricity generation. Mighty River
+Power (now Mercury) carried out drilling, including in the eastern part of the resource, which lies
+under land owned by the Putauaki Trust and which had not been previously drilled. That led to
+Mercury commissioning a 100 MW condensing steam power plant in 2008 (in 2017 rerated to 117
+MW).
+
+Further small power plants in various ownership were added. Some of those were bottoming binary
+plants (so are dependent on the fluid provided by the upstream schemes). The latest project has been
+the 25 MW Te Ahi o Maui binary high-enthalpy plant which is a partnership between the Kawerau A8D
+Ahu Whenua Trust and Eastland Generation.
+
+The main consents and expiry dates are as follows:
+
+
+
+
+5 Geothermal systems occur on White and Whale Islands, which are geologically part of the TVZ, but these are fully protected and not
+
+considered further.
+
+                                                                                                                                       39
+Table 5: Summary of Kawerau production consents (source: Kawerau-SMP 2018)
+
+The current situation is therefore complex, with resource consents held by four groups and several
+projects, some of which are interconnected. There is a joint reservoir management committee and
+plan (Kawerau SMP, 2018). The BOPRC peer review panel publishes a public community report on the
+status of the system based on the separate consent holder reports, but consent holders currently have
+their own responsibilities and report details separately – and not publicly. Bay of Plenty Regional
+Council are currently rationalising the situation but full details of the reservoir response are not
+currently available for the purposes of this review.
+
+The capacity of the Kawerau resource is large. Lawless (2005) estimated it at 450 MW, but more
+recent work has superseded that. The latest publicly available summary report from BOPRC (2017)
+states that “In 2017 the pressure drops field wide were comparable to recent years and well within
+modelled limits.” but notes some enthalpy decline. The 2018 SMP stated that declines in the deep
+reservoir pressure have been in the range of 2-5 bar. It is certainly the case that the effects on the
+reservoir have been much less than at Wairakei (up to 25 bar), despite Kawerau having been similarly
+operated for many years without reinjection, albeit at a smaller scale. There have been on-going
+issues with calcite scaling and more recently in controlling silica deposition, but those are amenable
+to management. There is currently some unused capacity within the resource consents held by the
+various parties, of the order of 40,000 tpd though some of that may be used for further industrial
+direct use rather than electricity generation.
+
+Because of the complex situation, it is difficult to make detailed estimates of what may occur over the
+next 40 years, and what proportion of further development may be for direct use rather than
+electricity generation. Accordingly, it is assumed that a further 50 MW of electricity generation is
+possible, but not before 2030. Further development is possible but cannot be quantified at this time.
+The resource is high temperature so costs for condensing steam plant should be average, but smaller
+binary plants will be more expensive.
+
+The gas content in the deep reservoir at Kawerau is higher than most in the TVZ, but because of the
+diverse plant configurations, the emissions per MWh vary. The bottoming binary plants for example,
+produce virtually no emission. It is estimated that overall for future developments, the gas emissions
+will be the same as the current average, which is at a medium level.
+
+
+                                                                                                    40
+Rotoma
+The Rotoma field lies near Lake Rotoma, north east of Rotorua. It is classified in part for development
+and in part for limited development. It has little surface expression and is somewhat enigmatic, with
+the chemistry being less informative than at most NZ fields.
+
+Preliminary investigation works were undertaken in the early 1990s with the drilling of one well. Few
+details are available, but it is believed that the well discharged at a sub-commercial rate but did prove
+moderate temperatures. In 2010 Rotoma No. 1 made application for a 35 MWe station with
+supplementary use for process heat applications. This was declined but exploration consents were
+granted to construct up to ten wells for investigation and monitoring and taking and discharge of fluid
+to better understand the Rotoma-Tikorangi Field and potential effects on Waitangi Soda Springs.
+However, no further exploration has taken place to date. Further geoscientific work would be needed
+before development could proceed.
+
+Lawless (2005) estimated the resource capacity over a 50-year project life as 35 MW. This is one case
+where resource uncertainty is more significant than regulatory impediments, and there are relatively
+few surface features or geothermal ecosystems to be affected. It has been assumed that a 25 MW
+development using binary plant (because high temperatures have not been confirmed) would be
+possible by 2030, with possibly further extensions beyond that, but they are too uncertain to include
+at this stage. CAPEX would be higher than average because of the scale and possibly low enthalpy.
+
+The gas content at Rotoma appears to be higher than most in the TVZ. For the present purposes it is
+assumed to be medium.
+
+Rotorua
+The Rotorua geothermal system underlies the town of Rotorua and extends into the lake. There is
+extensive surface activity, which is the focus of much tourist activity. It has a special classification
+status and management plan which would probably preclude any large-scale generation.
+
+No deep wells have been drilled. Many hundred independently-owned shallow wells have been drilled
+and used for bathing, domestic and commercial purposes, although many wells were closed by
+Government action in the 1980s after the significant tourist features were observed to be affected.
+
+Lawless (2005) estimated the electrical generation capacity to be 35 MW over 50 years. No electrical
+generation is likely to occur though because of the requirement to preserve the thermal activity. It
+has been estimated that tourism related to geothermal activity brings about 5 times the income to
+Rotorua than would be possible using the field for electricity generation, quite apart from its cultural
+significance. Accordingly, it is not considered further for power generation purposes in this report.
+
+Taheke and Tikitere
+Taheke and Tikitere are geothermal fields which lie north and south of Lake Rotoiti respectively.
+Geophysics shows that the Tikitere system extends under the lake and hot springs occur on the Lake
+bed. It is not known if this provides a connection between Tikitere and the Taheke field, though it
+appears unlikely. Tikitere and Taheke are classed for conditional development, though Lake Rotoiti
+itself appears to be separately classed as being for development. Separate development under the
+lake would have considerable practical difficulties so is not taken into account here.
+
+There are significant geothermal features at the Hells Gate area of Tikitere. Several shallow wells were
+previously drilled at Tikitere (also known as Ruahine Springs) during government-funded exploration.
+They discovered a shallow dry steam resource, which is probably not characteristic of the deeper
+reservoir. More recently 4 deep wells were drilled at Taheke: no details are publicly available.
+
+                                                                                                      41
+Three Maori land trusts including Paehinahina Mourea (60 %), Manupirua (30 %) and Tikitere (5%)
+Trusts own the land over the Tikitere resource and as such, joined forces to jointly develop the
+geothermal resource. Consent applications have been lodged but not progressed for exploration
+investigations.
+
+At Taheke, the resource area is split between two different Maori trusts, who have separately entered
+into agreements with Mercury Energy and Contact Energy. Mighty River Power Limited (Mercury) was
+granted consent for exploration wells at Taheke (with permission from Okere 1B3C3 and Adjoining
+Blocks Incorporated and Ruahine & Kuharua Incorporation) in 2013.                  It has not been
+exercised. Exploration consents were granted to Taheke 8C and Contact, for up to 10 wells. Contact
+has drilled 4 wells.
+
+Lawless (2005) estimated the resource capacity over 50 years to be 240 MW for the two fields (and
+possibly Lake Rotoiti) combined. Because of the complicated land ownership, as far as projects go
+they need to be treated separately. Tikitere is a good example of an area on which a reasonably large
+and low-cost development is possible, but which is likely to be delayed by consenting, especially with
+regard to significant geothermal features, and commercial factors. We have assumed a 50 MW
+development would be possible, but not until 2030, with possibly a further 50 MW in 2040. There is
+some possibility that the first stage development would make use of the shallow steam zone, so costs
+would be lower than average based on the high enthalpy. That would probably not apply to any
+second stage development which would have to tap the deeper reservoir.
+
+At Taheke, it would be most logical for there to be a single development but that does not appear to
+be likely based on the history to date. Therefore 25 MW developments are predicted in 2030, 2040
+and 2050, without specifying which landowners and generators will carry them out. The small size of
+the projects will make them more expensive than the average.
+
+The gas content at Tikitere based on previous well testing result was high. However, those shallow
+wells tapped a steam zone where gas can be expected to have accumulated. Tapping the deeper,
+hotter liquid may lead to lower gas emission per MWh. At Taheke no data are publicly available. It is
+assumed that both areas will have medium emissions.
+
+5.4. Summary future geothermal generation stack
+The following table summarises the individual assessments discussed above, to produce the basis for
+an overall future geothermal generation stack. Note that unlike the previous ‘MBIE stack’, this is
+arranged by anticipated earliest date of commercial operation, which is largely driven by non-
+economic issues rather than LRMC.
+
+The estimated total additional geothermal generation available by 2060 is 1035 MW. There are
+considerable uncertainties in that estimate, mainly to do with regulatory and consenting issues rather
+than cost, although an increase in carbon emission cost is also potentially a significant factor which
+has not been taken into account (apart from classifying each prospect in a semi-quantitative manner).
+
+Producing a range of scenarios is outside the scope of this report, but it is perhaps worthwhile to
+estimate what the impact would be if the assumptions made as to the mutability of geothermal
+systems classification prove to be incorrect. That would eliminate any significant development at
+Atiamuri, Tokaanu and Reporoa, thus reducing the total to 835 MW.
+
+If it proves more difficult than anticipated to obtain consents for further expansion in existing
+development systems, then longer delays may occur, or in the worst case no further increase in
+
+                                                                                                      42
+generation would be possible. It is even conceivable that reconsenting of the existing projects, all of
+which have consents that expire within the next 40 years (Wairakei for example as early as 2026) may
+prove to be difficult or impossible, leading to an actual reduction in capacity.
+
+These uncertainties, and a comparison with the possible total economically developable quantity
+under a much more permissive regulatory regime, are further quantified in Figure 6 below. The
+possible tranches of MW used to build up this figure are as follow:
+
+    1. Already installed capacity as in Table2: 1028 MW.
+    2. Already consented additions as in Table 6 (Tauhara, Ngāwhā 3 & 4): 300 MW.
+    3. Possible additions as in Table 6 that would require consents, but are within development fields
+       (Ngāwhā 5 & 6, Mangakino, Mokai4, Ngatamariki 2, Rotokawa 3 & 4, Kawerau 2, Rotoma,
+       Tauhara 3, Horohoro, Rotokawa 4): 360 MW.
+    4. Possible additions as in Table 6 within research or limited development fields, that would
+       therefor require a change of status (Tokaanu, Tikitere, Taheke, Reporoa, Atiamuri): 375 MW.
+    5. Other fields that are currently classified as protected, and so cannot be developed under the
+       current regulatory regime. Note that the present authors do not advocate a change of the
+       status of these fields, but have included them for the sake of completeness. Field capacities
+       are taken from the estimates quoted in Sections 5.1 - 5.3 above, where necessary converting
+       to a 50-year project life (Ketetahi, Orakei Korako, Te Kopia, Waikite, Waimangu, Waiotapu):
+       556 MW. Not included in that are fields on offshore islands (e.g. White Island), the field under
+       Lake Taupō, and Rotorua, at all of which development of power generation is considered
+       impractical.
+
+Not explicitly taken into account are the fact that currently Wairakei and Ohaaki generation is typically
+below their maximum installed capacity and there is unused capacity within the existing Kawerau
+consents, since it is not clear whether the latter would be used for electricity generation or direct
+industrial use.
+
+
+
+
+                                                                                                      43
+                                                                                                               GHG      Variable       Fixed
+                                                                       Capital cost Capital cost Earliest
+    Project         Location          Status         Enthalpy   MW                                          emissions    O&M,          O&M,
+                                                                        NZD/kW        NZ$M        date
+                                                                                                             category   $/MWh          $/kW
+
+Ngawha-3          Northland     Consented            Low          25     NZD 7,802      195          2021 High                     0      190
+Tauhara-2a        Waikato       Consented            Medium      125     NZD 4,734      592          2021 Low                      0      190
+Tauhara-2b        Waikato       Consented            Medium      125     NZD 4,734      592          2026 Low                      0      190
+Ngawha-4          Northland     Consented            Low          25     NZD 7,802      195          2031 High                     0      190
+Mangakino         Waikato       Generic-Greenfield   Medium       25     NZD 6,127      153          2030 Low                      0      190
+Mokai-4           Waikato       Generic-brownfield   Low          25     NZD 7,802      195          2030 Low                      0      190
+Ngatamariki-2     Waikato       Generic-brownfield   Medium       50     NZD 5,568      278          2030 Low                      0      190
+Rotokawa-3        Waikato       Generic-brownfield   Medium       50     NZD 5,568      278          2030 Low                      0      190
+                                Generic-with-
+                                                     Medium
+Kawerau-2         Bay of Plenty restrictions                      50     NZD 5,568      278          2030 Medium                   0      190
+Rotoma-1          Bay of Plenty Generic-Greenfield   Low          25     NZD 7,802      195          2030 Medium                   0      190
+                                Generic-with-
+                                                     Medium
+Tokaanu-1         Waikato       restrictions                      20     NZD 6,335      127          2030 Medium                   0      190
+                                Generic-with-
+Tikitere-1        Bay of Plenty restrictions         High         50     NZD 5,023      251          2030 Medium                   0      190
+                                Generic-with-
+                                                     Medium
+Taheke-1          Bay of Plenty restrictions                      25     NZD 6,127      153          2030 Medium                   0      190
+                                Generic-with-
+                                                     Medium
+Reporoa-1         Waikato       restrictions                      25     NZD 6,127      153          2030 Medium                   0      190
+Tauhara-3         Waikato       Generic-brownfield   Medium       30     NZD 5,968      179          2035 Low                      0      190
+Horohoro          Waikato       Generic-Greenfield   Low           5     NZD 9,767      49           2040 Medium                   0      190
+                                Generic-with-
+Atiamuri          Waikato       restrictions         Low           5     NZD 9,767      49           2040 Medium                   0      190
+Rotokawa-4        Waikato       Generic-brownfield
+                                Generic-with-        Medium       50     NZD 5,568      278          2040 Low                      0      190
+Tokaanu-2         Waikato       restrictions
+                                Generic-with-        Medium      100     NZD 5,119      512          2040 Medium                   0      190
+Tikitere-2        Bay of Plenty restrictions         Medium       50     NZD 5,568      278          2040 Medium                   0      190
+                                Generic-with-
+                                                     Medium
+Taheke-2          Bay of Plenty restrictions                      25     NZD 6,127      153          2040 Medium                   0      190
+                                Generic-with-
+                                                     Medium
+Reporoa-2         Waikato       restrictions                      25     NZD 6,127      153          2040 Medium                   0      190
+Ngawha-5          Northland     Generic-brownfield   Low          25     NZD 7,802      195          2041 High                     0      190
+                                Generic-with-
+Taheke-3          Bay of Plenty restrictions         Medium       25     NZD 6,127      153          2050 Medium                   0      190
+                                Generic-with-
+Reporoa-3         Waikato       restrictions         Medium       25     NZD 6,127      153          2050 Medium                   0      190
+Ngawha-6          Northland     Generic-brownfield   Low          25     NZD 7,802      195          2051 High                     0      190
+
+
+Table 6: Summary table 'Future geothermal generation stack' (figures in 2019-NZD)
+
+
+
+
+             Existing     Consented            Development      Limited development           Protected
+
+
+
+
+Figure 6: Breakdown of possible total geothermal generation by category
+
+                                                                                                                                          44
+6.      Conclusions
+The pace of geothermal development in New Zealand has been modest over the past five years, after
+a period of rapid growth in response to declining gas reserves. The recent slow-down is mainly due to
+a flat power demand and the possible contribution to the grid of the Manapouri power scheme if the
+Tiwai Point aluminium smelter were to close.
+
+There is now a more positive mood in the industry following the government setting objectives for
+greatly reduce GHG emissions by 2050. The generators have pointed out that there is limited scope
+for further de-carbonisation of the existing electricity grid because of our already-large degree of
+renewables generation and the practical advantages of maintaining some gas generation for load
+trimming. There are however significant opportunities for renewable electricity to substitute for other
+existing fossil-fuel usage in the transport and industrial sectors, which make up 18% and 11% of our
+total emissions respectively. Direct use of geothermal heat can also make a significant contribution
+to reducing fossil fuel use, though that is not the subject of the present study. The industry foresees
+on-going growth in the geothermal generation sector, albeit at a modest pace.
+
+Access to resources is more likely to constrain the pace of development than project cost and
+electricity price. Around half of New Zealand’s high-temperature geothermal resources are currently
+fully or partially protected. Regulatory and consenting difficulties may lead to delays for future
+projects. For the present study, it is assumed that the current regulatory regime will remain more or
+less as is, but it is conceivable that more permissive or more restrictive approaches are possible in the
+future. The current draft NPS on Biodiversity, which is open for consultation at present, is an example
+of regulation that in its initial draft form could limit future geothermal development if that is not taken
+into account. It should not be assumed that all existing projects will automatically be re-consented,
+and the consents for all existing projects expire within the 40-year horizon. A more enabling regime
+and policy at the national level would accelerate the pace of geothermal development, but would also
+presumably make it easier to consent new wind, solar and hydro projects so would not necessarily
+favour geothermal relative to other renewable sources.
+
+It is not expected that new technology will greatly reduce the cost of future geothermal generation
+nor, within what is likely to be economic in New Zealand, significantly extend the geographical spread
+of its coverage to much lower-temperature resources. Thus, future large-scale development is likely
+to only be within the Taupō Volcanic Zone and at Ngāwhā in Northland. Some modest cost reductions
+and gains in efficiency can be expected within the existing project areas, but to a lesser extent than
+the less mature renewable industries such as solar, wind and storage.
+
+There is considerable scope for new geothermal plant to replace existing thermal plant, whether that
+be in a baseload or load following mode. From a technical perspective, geothermal generation can be
+made to run in a load-following manner, but the most economic use of geothermal generation will
+remain as base load, and since it is not anticipated that geothermal generation will extend to new
+geographical areas or remote parts of the grid, the scope for this to occur is limited, except possibly
+at Ngāwhā. It is conceivable that government initiatives to minimise carbon emissions might lead to
+geothermal becoming more important for load following, although the generators concerned would
+probably insist on a take-or-pay or capacity charge type of compensation to take account of the very
+high proportion of fixed costs of geothermal project operation.
+
+Geothermal power projects do emit GHG, albeit in most cases at significantly lower rates per MWh
+than fossil fuel plants. Previous studies in New Zealand have over-stated the emissions of existing and
+future geothermal plants. More specific figures have been presented here for each prospect to a semi-
+quantitative level, based on actual recent data. The present weighted average emissions intensity for
+existing geothermal projects is 76 g CO2eq/kWh (2018), which has been steadily declining (91 g
+
+                                                                                                        45
+CO2eq/kWh in 2015) and is expected to continue to do so in the future. If much higher carbon prices
+eventuate in the future, the pressure on geothermal plants will increase and the expected emissions
+intensity would likely drop faster. In general, that would disadvantage new, higher emitting
+geothermal projects relative to other renewables (but much less than fossil-fuelled plants). The CCS
+technology does exist for removal of GHG from geothermal plants and reinjection in nearby reservoirs,
+and likely at a lower cost than for fossil fuel projects.
+
+Greater future direct use of geothermal energy is generally expected to be complementary rather than
+competitive to electricity generation or be based on lower-temperature resources. A notable
+exception to that could be at Kawerau where there is scope for expansion but the balance between
+future industrial use and electricity generation is unclear. Another possible future “direct use” is
+mineral recovery provided certain technical challenges can be overcome. Preservation of geothermal
+activity for tourism is a form of “direct use” which precludes generation at Rotorua and some of the
+protected systems in particular.
+
+Taking likely earliest dates of COD into account yields an estimated sequence of future geothermal
+projects as summarised in Table 6 (section 5.4). The total estimated available future geothermal
+generation stack by 2060 is 1035 MW. Capital costs range from $4,734 to $9,767/kW with a weighted
+average of $5,782/kW. It is expected that at least 50% of the project capital costs will be in New
+Zealand currency.
+
+This total new geothermal generation stack is slightly higher than previously presented by MBIE
+(2016), but it is likely that many projects will be commissioned later than previously assumed.
+
+
+
+
+                                                                                                  46
+References
+-   BEC (2015); Business NZ Energy Council; World Energy Council; New Zealand Energy Scenarios
+    Navigating energy futures to 2050; Auckland, 2016;
+-   BEC2060 (2019); Business NZ Energy Council; World Energy Council; New Zealand energy
+    scenarios. Navigating our flight path to 2060; Auckland, 2019; Retrieved from (Dec 2019):
+    https://www.bec2060.org.nz/
+-   Bertani, R., Thain, I.; 2002: Geothermal power generating plant CO2 emission survey; IGA News,
+    (49), 1–16;
+-   Bignall G. 1990: ; Hydrology and hydrothermal alteration, Reporoa well; Proc 12th New Zealand
+    Geothermal Workshop, Reporoa, 1990;
+-   Bibby, H.M., Caldwell, T.G., Risk, G.F. 1994: Resistivity evidence for an independent geothermal
+    field at Reporoa. Proc. 16th N.Z. Geothermal Workshop, 1994, 16, 133-138.
+-   Bromley, C.J., Burnell, J., Mroczek, E., Simpson, M.; 2014: 2014 Ngāwhā conceptual model. GNS
+    Consultancy report 2014/181.
+-   Burnell, J and Weir, G: 2014: 2014 Ngāwhā numerical reservoir model: GNS Consultancy report
+    2014/143.
+-   Clearwater J. Hernandez D., Sewell S., Addison S.; Model-based decision making to manage
+    production in the western compartment at Rotokawa; Proceedings of the 38th New Zealand
+    Geothermal Workshop, 2015;
+-   Climate Works Australia (2014); Pathways to Deep Decarbonisation in 2050; (September), pp.1–
+    49;            https://www.climateworksaustralia.org/project/national-projects/pathways-deep-
+    decarbonisation-2050 ;
+-   Consent Decision Report, 2015: Ngāwhā Generation Limited’s Resource Consent Applications to
+    the Northland Regional Council and the Far North District Council and Top Energy Limited’s
+    Notice of Requirement to the Far North District Council
+-   Contact Energy; 2019: Wairakei – Tauhara geothermal system Annual Monitoring Report for
+    2018.
+-   Contact Energy; 2018; Contact Energy Investor Presentation; Published via NZX, November 2018;
+    http://nzx-prod-s7fsd7f98s.s3-website-ap-southeast-
+    2.amazonaws.com/attachments/CEN/326341/289918.pdf ;
+-   ESMAP (016; Greenhouse gases from geothermal power production; Washington, 2019;
+    Retrieved from (Dec 2019): https://www.esmap.org/node/57064 ;
+-   Febrianto, R., Bydder, J., Hochwimmer, A., Ussher, G.:2017; Pumped Well Geothermal Power
+    Generation in the Indonesian Context; Proceedings of the 5th Indonesia International Geothermal
+    Convention & Exhibition (IIGCE) 2017
+-   GT Management 2019; GT Management, Cost of Production from Geothermal Power Projects in
+    Indonesia; Revision 4; Unpublished report, for PT SMI December, 2019;
+-   ICCC 2019; Interim Climate Change Committee; Accelerated Electrification: Evidence, Analysis and
+    Recommendations; Wellington, 2019;
+-   Hernandez D., Clearwater J., Burnell J., Franz P., Azwar L., Marsh A.; Update on the Modeling of
+    the Rotokawa Geothermal System: 2010 – 2014; in: Proceedings World Geothermal Congress,
+    2015;
+-   IPCC 2014; Bruckner, T., Fulton, L., Hertwich, E., McKinnon, A., Perczyk, D., Roy, J., Wiser, R.;
+    Annex III: Technology-specific cost and performance parameters; In: O. Edenhofer, R. Pichs-
+    Madruga, Y., Sokona, E. Farahani, S. Kadner, K. Seyboth, J. C. Minx (Eds.), Climate Change 2014:
+    Mitigation of Climate Change. Retrieved from (Dec 2019):
+    https://www.ipcc.ch/pdf/assessmentreport/ar5/wg3/ipcc_wg3_ar5_annex-iii.pdf
+-   Kawerau SMP: 2018; Bay of Plenty Regional Council; Kawerau geothermal system management
+    plan; Whakatane, February 2018;
+-   Lawless, J.V; 2002: New Zealand’s geothermal resource base revisited; 7th Annual Seminar, New
+    Zealand Geothermal Association, Taupō, 2002;
+
+                                                                                                  47
+-   Lawless, J.V: 2005; Maintaining Leadership in Geothermal Energy Generation in New Zealand;
+    National Power Conference, Auckland 2015;
+-   Lawless, J. V., Darma, S., van Campen, B., Randle, J.B.; 2016: Can geothermal regulation enhance
+    (technical) innovation – Evidence and - case studies from NZ and Indonesia; New Zealand
+    Geothermal Workshop, 2016;
+-   Lawless, J.V., Lovelock, B.G.; 2001: New Zealand’s geothermal resource base. 6th Annual Seminar,
+    New Zealand Geothermal Association, Taupō;
+-   Legmann, Hilel.;2015: The 100-MW Ngatamariki geothermal power station a purpose-built plant
+    for high temperature, high enthalpy resource; in: Proceedings of the World Geothermal Congress
+    2015, Melbourne, Australia, 19-25 April 2015
+-   MBIE 2016; Ministry of Business, Innovation and Employment; GEM 2016 LRMC model;
+    Wellington, 2016;
+-   McLean and Richardson, I. 2019; New Zealand Geothermal Power Generation in Context; in:
+    Proceedings of the 41st New Zealand Geothermal Workshop, 25-27 November 2019, Auckland,
+    New Zealand;
+-   Minson, A.A.C., Kivell, J.A., .Fry, T.J.; 1985: Tongonan I geothermal power development,
+    Philippines; in: Geothermics Volume 14, Issues 2–3, 1985, Pages 353-370;
+-   Pauline, R, Kaya, E; 2019: Modelling geothermal power generation from the Waiotapu-Waikite-
+    Reporoa geothermal fields in: Proceedings of the 41st New Zealand Geothermal Workshop, 25-
+    27 November 2019, Auckland, New Zealand p.62;
+-   PB Power; 2012; Generation Data Update; Parson Brinkerhoff report for Ministry of Economic
+    Development; NZ Wellington, January 2012;
+-   Quinao J., Zarrouk, S.; 2015: Probabilistic resource assessment using the Ngatamariki numerical
+    model through experimental design and response surface methods (ED and RSM); in:
+    Proceedings of the 37th New Zealand Geothermal Workshop, 2015;
+-   Quinao, J., Buscarlet, E., & Siega, F.; 2017: Early identification and management of calcite
+    deposition in the Ngatamariki geothermal field, New Zealand (2017); in: Proceedings of the 42nd
+    Workshop on Geothermal Reservoir Engineering, Stanford University;
+-   Reyes, A; 2019: Geothermal energy from petroleum wells in New Zealand – benefits and barriers;
+    Proceedings of the NZ Geothermal Workshop, 2019;
+-   Risk, G.F. 2000a; Boundaries of Horomatangi, Tokaanu-Waihi-Hipaua, Waiotapu-Waikite,
+    Waimangu and Atiamuri Geothermal Fields; GNS report 2000/22 for Environment Waikato;
+-   Risk, G.F. 2000b; Boundaries of Horohoro, Te Kopia, Orakei Korako, Ngatamariki and Reporoa
+    geothermal fields; GNS report 2000/131 for Environment Waikato;
+-   Rustandi, D., Sadiq. J. Zarrouk, S.J., Luketina, K.M.; 2016: The Mangakino geothermal system:
+    resource evaluation; Proceedings of the 38th New Zealand Geothermal Workshop 23-25
+    November 2016, Auckland;
+-   Stevenson, T., Batstone, S., Reeve, D., Poynton, M., Comendant, C.; 2018: Transitioning to zero
+    net emissions by 2050: moving to a very low-emissions electricity system in New Zealand;
+    Prepared for the New Zealand Productivity Commission; April 2018;
+-   Severne, C.; 1999: Recent geophysical and geochemical studies from the Tokaanu-Waihi
+    hydrothermal system (Taupō Volcanic Zone New Zealand); in: Proceedings of the 24th Workshop
+    on Geothermal Reservoir Engineering, Stanford University;
+-   SKM 2009; Assessment of Current Cost of Geothermal Power Generation in New Zealand (2007
+    basis); Sinclair Knight Merz, Auckland, 2009;
+-   SKM/WRC 2002; Sinclair Knight Merz Report for Waikato Regional Council; Resource capacity
+    Estimates for High-Temperature Geothermal Systems in the Waikato Region; Hamilton, 2002;
+-   Van Campen, B., Archer, R., Grinlinton, D.; 2019: Ohaaki resource assessment in UNFC
+    framework and proposal: Proceedings of the 41st New Zealand Geothermal Workshop, 25-27
+    November 2019, Auckland, New Zealand;
+
+
+
+                                                                                                 48
+-   Van Campen, B., Suomalainen, K.; 2020: Changing geothermal GHG emissions and impact on
+    future low carbon power systems - the case of New Zealand’s decarbonisation plan; in: 7th IAEE
+    Asia-Oceania Conference 2020; Energy Centre/International Association for Energy Economics;
+    Auckland, February, 2020 (in press);
+-   WRC 2019; Waikato Regional Council; Classifying geothermal systems; Retrieved from (Dec
+    2019): https://www.waikatoregion.govt.nz/environment/natural-
+    resources/geothermal/classifying-geothermal-systems/
+-   Yuniarto, Soesilo, T.E.B., Heviati, E.; 2015: Geothermal Power Plan Emissions in Indonesia; in:
+    Proceedings of the World Geothermal Congress 2015, Melbourne, Australia.
+
+
+
+
+                                                                                                  49
+Annex 1: List of persons consulted
+Simon Addison        Ormat
+
+Rosalind Archer      Director, Geothermal Institute
+
+Phil Bishop          Electricity Authority
+
+Sam Brown            Tuaropaki Power Company (review only)
+
+John Burnell         GNS Science
+
+Jane Bydder          Mercury Energy
+
+Aroha Campbell       Tauhara North No. 2 Trust
+
+Nick Clarke          Mercury Energy
+
+Gilad Cohen          Ormat
+
+Bruce Cole           Ormat
+
+Penny Doorman        Bay of Plenty Regional Council
+
+Mike Dunstall        Contact Energy
+
+Ben Lee              Northland Regional Council
+
+Hilel Legmann        Ormat
+
+Katherine Luketina   WRC
+
+Katie McLean         Contact Energy
+
+Jim McLeod           Waikato Regional Council
+
+Ted Montague         Contact Energy
+
+Michael O’Sullivan   University of Auckland
+
+Jaime Quinao         Ngāti Tūwharetoa Geothermal Assets
+
+Paul Quinlivan       Jacobs
+
+Agnes Reyes          GNS Science
+
+Greg Ussher          Jacobs
+
+Patrick Walsh        Ormat
+
+Sadiq Zarrouk        Geothermal Institute
+
+
+
+
+                                                             50
+Annex 2: GHG emissions from NZ producing fields
+Source: McLean and Richardson 2019)
+Emissions intensity and source data for Mercury power stations
+                               Emissions factor             # sample        Mass steam        Generation         Emissions intensity
+Station            Year
+                               [tCO2(eq)/t steam]           sets            [kt]              [GWh (net)]        [gCO2(eq)/ kWh(net)]
+                   2011        0.0058                       *               *                 *                  35
+                   2013        0.004356                     6               5,555             815                30
+                   2014        0.004033                     6               5,722             876                26
+Mokai              2015        0.0036                       8               6,159             851                26
+                   2016        0.004599                     8               6,215             852                34
+                   2017        0.004155                     8               5,910             848                29
+                   2018        0.0046                       12              5,616             492                52
+                   2014        0.016062                     8               3,220             629                82
+                   2015        0.01805                      8               3,792             733                93
+Ngatamariki        2016        0.015                        8               3,716             699                80
+                   2017        0.01342                      10              3,873             801                65
+                   2018        0.013352                     12              3,765             785                64
+                   2011        0.019449                     *               *                 *                  130
+                   2012        0.016329                     12              8,076             1145               115
+                   2013        0.015633                     12              7,449             1106               105
+Nga Awa            2014        0.013356                     12              7,369             1063               93
+Purua              2015        0.014663                     12              7,359             1083               100
+(NAP)
+                   2016        0.01309                      12              7,915             1170               88
+                   2017        0.011181                     12              7,576             1170               73
+                   2018        0.009947                     12              7,798             1239               63
+                   2011        0.024004                     *               *                 *                  150
+                   2012        0.02174                      6               1,614             284                123
+                   2013        0.01829                      6               1,636             284                105
+                   2014        0.018994                     6               1,603             256                119
+Rotokawa
+                   2015        0.018205                     6               1,581             273                105
+                   2016        0.015991                     8               1,620             280                93
+                   2017        0.014966                     8               1,551             289                80
+                   2018        0.01454                      12              1,684             292                84
+                   2011        0.017358                     *               *                 *                  136
+                   2012       0.020443                    12              6,647             842                  161
+                   2013       0.018352                    12              6,231             813                  141
+Kawerau            2014       0.019471                    10              6,857             901                  123
+(KGL)              2015       0.02226                     12              7,001             902                  173
+                   2016       0.019153                    12              6,676             853                  150
+                   2017       0.017288                    12              6,947             961                  125
+                   2018       0.017082                    12              6,558             912                  123
+*Source data for some of the Mercury power stations was not readily available for 2011, only the final results
+
+
+
+Emissions intensity and source data for Top Energy (Ngāwhā) and NTGA (TOPP1) power stations.
+                             Emissions factor             # sample       Mass steam        Generation            Emissions intensity
+Station          Year
+                             [tCO2(eq)/t steam]           sets           [kt]              [GWh (net)]           [gCO2(eq)/ kWh(net)]
+                 2017        0.0122                       15             920               187                   60
+TOPP1
+                 2018        0.0121                       12             929               187                   60
+                 2010        0.09700                      26             361               101                   348
+                 2011        0.09252                      4              683               193                   328
+                 2012        0.08902                      4              735               203                   322
+                 2013        0.08839                      6              769               197                   345
+Ngāwhā           2014        0.08640                      10             783               194                   348
+                 2015        0.08119                      4              784               192                   332
+                 2016        0.08490                      12             770               203                   322
+                 2017        0.08314                      6              726               198                   306
+                 2018        0.08395                      4              735               203                   304
+
+
+
+
+                                                                                                                                        51
+Emissions intensity and source data for Contact Energy power stations
+                       Emissions factor     # sample   Mass steam   Generation    Emissions intensity
+ Station     Year
+                       [tCO2(eq)/t steam]   sets       [kt]         [GWh (net)]   [gCO2(eq)/ kWh(net)]
+             2010      0.0048               1          13,105       1,359         46
+             2012      0.0065               2          13,202       1,324         65
+             2013      0.0062               1          13,018       1,262         64
+             2014      0.002                1          11,630       1,156         20
+ Wairakei
+             2015      0.0022               1          11,540       1,113         23
+             2016      0.0026               13         10,387       1,119         24
+             2017      0.0026               12         9,581        1,045         24
+             2018      0.0023               8          9,287        1,017         21
+             2014      0.0059               12         6,107        756           48
+             2015      0.005                8          10,627       1,262         42
+ Te Mihi     2016      0.0048               8          10,169       1,188         41
+             2017      0.0052               10         12,121       1,410         45
+             2018      0.0051               9          11,704       1,376         43
+             2010      0.006                1          3,208        385           50
+             2012      0.0014               2          3,651        448           11
+             2013      0.0013               1          3,471        450           10
+             2014      0.0019               1          3,136        394           15
+ Poihipi     2015      0.0020               1          2,464        322           15
+             2016      0.0020               1          3,069        398           15
+             2017      0.0041               3          3,215        413           32
+             2018      0.0048               11         3,209        403           38
+             2010      0.0087               1          1,254        210           52
+             2011      0.0079               1          779          133           46
+             2012      0.0046               12         1,216        210           27
+             2013      0.0047               6          1,020        176           27
+ Te Huka     2014      0.0057               1          1,373        213           37
+             2015      0.0059               10         1,221        195           37
+             2016      0.0059               9          1,210        191           37
+             2017      0.0055               10         1,188        207           32
+             2018      0.007                8          1,240        193           45
+             2010      0.0555               1          3,892        411           525
+             2011      0.0493               1          3,480        392           438
+             2012      0.04875              2          3,077        346           434
+             2014      0.0463               1          2,597        272           443
+ Ohaaki
+             2015      0.0411               1          2,982        326           376
+             2016      0.0494               12         3,103        331           463
+             2017      0.0392               10         3,230        338           375
+             2018      0.0363               9          2,552        272           341
+
+
+
+
+                                                                                                         52
+Annex 3: Scope of work
+The primary task is to produce a list of geothermal generation projects which could be
+commissioned in New Zealand over the next 40 years, giving:
+
+
+
+       Location
+
+       Probable capacity
+
+       Probable capital cost
+
+               Split of capital cost into local and foreign components
+       Likely timing
+
+       GHG emissions to a semi-quantitative level
+
+       Estimated operating cost
+
+These will be used as input to the existing MBIE Long run marginal cost model to produce a
+predicted generation stack. The model will be run by MBIE.
+
+A written report will be produced explaining the reasoning behind the parameters selected, noting
+that non-economic issues, particularly regulatory, are likely to drive the timing of many
+projects. Comments will be made on other geothermal resources which have considerable
+generation potential, but which are likely to be unavailable in the foreseeable future because of
+regulatory classifications for preservation. It is believed this could comprise about 50% of the total.
+
+To this end it will be necessary to consult with the major geothermal developers, and the regulatory
+authorities concerned.
+
+With regard to predicted capital costs, reference will be made to recent economic modelling studies
+in Indonesia which produced correlation curves for geothermal costs vs. project size and resource
+quality.
+
+Other matters to be addressed are:
+
+       Potential for new technology to increase existing geothermal generation capacity
+
+       Potential for geothermal generation to be extended to areas outside the existing Rotorua-
+        Taupō and Ngāwhā areas.
+       Potential for geothermal to generate in a load-following manner, to compensate for
+        intermittency of other electricity sources.
+
+       Extent to which non-electric uses of geothermal energy will compete with, or complement,
+        generation.
+
+
+
+
+                                                                                                      53
+

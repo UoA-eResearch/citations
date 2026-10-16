@@ -41,3 +41,20 @@ well-investment programme the NZGA field page describes. code/supplementary.py, 
 it runs, gives rolling 60-month trends per field (R1), flags year-to-year steps of >= 15% (R2), and fits the
 preregistered trend model to the run-down after each upward step (R3). Descriptive and exploratory; no verdict
 changes.
+
+## D4 — 2026-10-17 08:02 NZDT — acting on the adversarial review (publish with edits; 4 must-fix, 7 should-fix)
+
+The review (review/review.md, Fable 5.1) reproduced every number, recomputed eight field-month P95s from the raw
+files exactly, found the git order clean and both verdicts robust (worst fleet lower bound -0.33%/yr). It found the
+framing wrong in four places: "flat" depends on two commissioning ramps and an uncut, documented capacity change
+(Poihipi's connection to the Wairakei steamfield, 2006-2011, missed because the plan used only FGGS Table 2); the
+"upkeep keeps the fleet level" mechanism is not shown (the study has no drilling data, and the offsets it found are
+uprates and commissioning artefacts); Generation_MD does NOT cover every geothermal plant (Te Ahi O Maui is not
+identifiable before 2025-09, GDL/TOPP1/the Kawerau binary never appear, Ngawha OEC4 is absent until 2024-01), so
+plan section 3's claim was wrong and Kawerau is not a field in these data; and the Ohaaki -10.4%/yr is fixed by its
+endpoint rule and its drilling attribution is undocumented. Also: KGL's 2017 rerate was to 107 MW per FGGS Table 2
+(the text's 117 is contradicted, and no step is visible), TAOM is not in the data in 2018-19, intervals cover
+~87-95% rather than 95% at high autocorrelation, and inverse-variance weighting gives Kawerau's 5.5 MW pre-2008 plant
+28% of the field. code/review_response.py, written now and committed before it runs, computes the alternative
+segmentations, a rule-based variant (12-month ramps, the Poihipi window, Kawerau = KGL), capacity-weighted segment
+combination, AR(2) errors, a rolling outage filter and the Ohaaki window sensitivity. The report is then revised.

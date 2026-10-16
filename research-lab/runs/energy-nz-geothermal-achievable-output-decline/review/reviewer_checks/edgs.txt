@@ -1,0 +1,1657 @@
+Electricity Demand and
+Generation Scenarios:
+Results summary
+JULY 2024
+July 2024
+
+
+
+
+EDGS 2024 Report
+2
+Key results
+Total electricity demand increases across all our scenarios to
+2050
+Total electricity demand grows between 35.3 per cent and 82.0 per cent by 2050, reaching
+62.1 TWh (terawatt hours) in the Reference scenario. By 2050, across our scenarios around
+half of all energy demand will be met by electricity.
+In the short term, the commercial and industrial sectors are the main sectors driving this
+growth. From the late 2030s, electrification of transport plays a larger role with increased
+uptake of electric vehicles (EVs).
+Contributing to higher demand is the level of switching of existing fossil fuel use to
+electricity, which is a key uncertainty. Alternative electrical heating technologies may
+become more attractive over time. With the same heating demand, users may increasingly
+convert to electrical heating, depending on investment and running costs.
+The increase in total demand drives an increase in peak demand to between 9.1 GW and
+12.5 GW by 2050. A key contributor is higher residential demand for heating, which will
+drive higher winter demand peaks.
+Figure 1: Total electricity demand
+
+
+
+
+EDGS 2024 Report
+                                                                                               1
+To meet this increased demand, new generation build is
+mostly onshore wind and solar
+The least cost solution to meet most new demand is onshore wind and solar generation. We
+also expect to see some new hydro and geothermal plants built.
+To ensure enough firm capacity to reliably meet peak demand, new gas peakers are required
+to provide firming in all scenarios.
+The level of support that is needed in the system to meet peak demand differs by scenario.
+More efficient load distribution and higher levels of battery installation in the Environmental
+and Innovation scenarios mean that less overall capacity is required to meet peak demand.
+
+
+Figure 2: Share of electricity generation by commodity in Reference scenario
+
+
+
+
+EDGS 2024 Report
+                                                                                              2
+The renewable share of electricity generation could reach as
+high as 98.3%
+The renewable share of generation reaches between 96.2 per cent and 98.3 per cent by
+2050.
+A key uncertainty on the future level of renewable generation is the future of coal use at the
+Huntly Power Station. While Genesis Energy have signalled that they expect to reduce coal
+use in the Rankine units, there may be continued demand. This is likely in the case of limited
+alternatives for firming and constraints on natural gas availability.
+Figure 3: Renewable share of electricity generation
+
+
+
+
+EDGS 2024 Report
+                                                                                             3
+Contents
+Key results _________________________________________________________________ 1
+  Total electricity demand increases across all our scenarios to 2050 __________________ 1
+  To meet this increased demand, new generation build is mostly onshore wind and solar _ 2
+  The renewable share of electricity generation could reach as high as 98.3% ___________ 3
+Purpose ___________________________________________________________________ 5
+  EDGS is being refreshed to better represent the potential futures of a changing nation __ 5
+Development of EDGS 2024 ___________________________________________________ 6
+  Stakeholders wanted a scenario focussed on climate change action _________________ 6
+  There was a need for more variation across scenarios ____________________________ 6
+  Aligning fuel switching assumptions with the future worlds that we’re modelling _______ 7
+  Submitters asked for more information on assumptions and results _________________ 7
+Our scenarios_______________________________________________________________ 8
+  Interpretation of scenarios __________________________________________________ 8
+  We have modelled five scenarios to capture a range of potential futures _____________ 8
+Modelling assumptions ______________________________________________________ 10
+  Macroeconomic assumptions _______________________________________________ 10
+  Electricity demand assumptions _____________________________________________ 15
+  Electricity generation assumptions ___________________________________________ 20
+Modelling energy futures ____________________________________________________ 28
+Results ___________________________________________________________________ 30
+  Demand for electricity is expected to grow ____________________________________ 30
+  To meet higher demand, more capacity is required ______________________________ 39
+  Total energy consumption falls across our scenarios _____________________________ 44
+  Renewable share of energy consumption grows with higher electricity use ___________ 45
+  Emissions from electricity generation are expected to flatten _____________________ 46
+Next steps ________________________________________________________________ 48
+Appendix One – Overview of EDGS modelling ____________________________________ 49
+  Supply and Demand Energy Model (SADEM) ___________________________________ 49
+  Generation Expansion Model (GEM) _________________________________________ 50
+
+
+
+
+EDGS 2024 Report
+                                                                                           4
+Purpose
+MBIE prepares an independent set of scenarios called the Electricity Demand and
+Generation Scenarios (EDGS) that explore potential future electricity demand and the
+generation capacity required to meet that demand.
+These scenarios are used by the Commerce Commission to assess Transpower’s planning
+proposals for future capital investment in the electricity transmission grid. The Commerce
+Commission is responsible for approving any major investments in transmission assets by
+Transpower.
+EDGS has an explicit role in the investment test for approving Transpower’s proposals under
+the Transpower Capital Expenditure Input Methodology (Capex IM). The Capex IM is part of
+the Commerce Commission's individual price-quality path regulation of Transpower's
+electricity transmission services, under Subpart 7 of Part 4 of the Commerce Act 19861.
+The scenarios are designed to investigate key uncertainties in the electricity sector including:
+    •   The type and location of electricity generation supply, considering:
+           o Technology costs (for existing and emerging generation technologies)
+           o Resource availability and cost (particularly for natural gas)
+    •   The characteristics and location of electricity demand, considering:
+           o The size and structure of the economy
+           o The future of heavy industry in New Zealand, particularly the Tiwai Point
+               aluminium smelter
+           o The price of electricity compared with alternative energy sources
+           o Energy efficiency and demand side participation in the electricity market
+           o Uptake rate of new technology such as electric vehicles and Solar PV
+
+
+EDGS is being refreshed to better represent the potential
+futures of a changing nation
+The last release of EDGS was published in July 2019. After consulting with stakeholders, we
+temporarily put the next update of EDGS on hold due to the difficulty in accurately
+forecasting the impact of the coronavirus (COVID-19) pandemic on domestic and global
+economic activity.
+Considering the changes in the economy that have occurred since 2019, announcements
+made by participants in New Zealand’s energy sector on their future operations, and
+ongoing technological development, there is a need for a refresh of the potential future
+scenarios of the electricity sector in New Zealand.
+This report presents the results of this work and reflects our thinking, with the input from a
+range of stakeholders, on a range of potential futures of New Zealand’s electricity system.
+
+
+1
+ For more information about the Capex IM, see the Transpower input methodologies on the Commerce
+Commission website (https://comcom.govt.nz/regulated-industries/input-methodologies/input-
+methodologies-for-electricity-gas-and-airports/transpower-input-methodologies).
+
+
+EDGS 2024 Report
+                                                                                                   5
+Development of EDGS 2024
+As part of the development of EDGS 2024, we undertook a public consultation over May and
+June 2023 on a set of draft assumptions about the future state of the electricity system.
+In this consultation, we sought feedback from stakeholders to ensure that the scenarios, and
+resulting modelling, accurately reflect the range of potential pathways that the electricity
+sector could take. For more information on the consultation and to read individual
+submissions, see the EDGS 2023 consultation webpage2.
+We received 19 submissions from stakeholders which were used to shape the scenarios used
+in EDGS 2024.
+The consultation document proposed refreshing four of the scenarios presented in EDGS
+2019. This included a scenario looking at current trends continuing, two scenarios looking at
+differing economic conditions, and a fourth scenario considering accelerated technological
+development.
+
+
+
+Stakeholders wanted a scenario focussed on climate change
+action
+We had proposed removing the Environmental scenario which considered a range of levers
+for driving emissions reductions in the energy sector. It was instead proposed to incorporate
+these levers into every scenario rather than having a separate scenario examining this.
+Several stakeholders expressed a need for either reinstating the Environmental scenario or
+adopting scenarios with similar aims and assumptions.
+We therefore decided to retain an Environmental scenario, resulting in this EDGS update
+examining five potential futures. This Environmental scenario was, however, not a direct
+replication of the previous scenario, but an updated version to represent more current
+thinking and assumptions.
+
+
+
+There was a need for more variation across scenarios
+Stakeholders conveyed a need for more variation across both supply and demand in the
+scenarios to explore the range of potential futures.
+We have considered this in our modelling through building more variation into our demand
+and supply assumptions across scenarios and creating new methods and processes to
+support this.
+For example, we have incorporated the ability to vary the generation stack fed into our
+electricity model. This meant we could vary the potential plants our model “chooses” to
+
+2
+ https://www.mbie.govt.nz/have-your-say/electricity-demand-and-generation-scenarios-edgs-2023-
+consultation
+
+
+EDGS 2024 Report
+                                                                                                 6
+build from to reflect different states of the world across scenarios (such as costs of
+technology and the investment environment).
+
+Aligning fuel switching assumptions with the future worlds
+that we’re modelling
+We received feedback on the need to consider the ease and speed that fuel switching can
+happen for different applications, and how this would differ by scenario. For example, in a
+state of the world with more rapid technological development, alternatives may be more
+cost effective and easier to access so fuel switching is relatively easier and would happen at
+a larger scale sooner.
+In response to this we have extended how we apply fuel switching in our model by
+introducing an adjustment to account for the speed at which fuel switching occurs.
+
+
+
+Submitters asked for more information on assumptions and
+results
+Several submitters stated that they wanted more information on the assumptions
+underpinning the EDGS scenarios and associated modelling, as well as more detailed results.
+This was important for ensuring that the information is transparent and easily accessible to
+stakeholders.
+In response to this we have published two data files alongside this report – one containing
+the assumptions that have been used into our scenarios, and the other containing the
+results of our modelling.
+
+
+
+
+EDGS 2024 Report
+                                                                                                 7
+Our scenarios
+For EDGS 2024, five scenarios were developed to explore a range of potential futures of
+electricity demand and generation in New Zealand.
+These scenarios build off those used in EDGS 2019 and have been updated to reflect
+developments in the energy sector, the wider economy, and available technologies.
+Each of the five scenarios illustrate a possible future based on several high-level
+assumptions (which will differ from scenario to scenario). The scenarios are:
+   •   Reference: Current trends continue with anticipated changes
+   •   Growth: Higher economic growth drives immigration while policy and investment
+       focus on priorities other than the energy sector
+   •   Innovation: Current economic trends continue, alongside accelerated technological
+       uptake and learning rates
+   •   Constraint: International trends leave little room for domestic growth or innovation
+   •   Environmental: New Zealand targets more ambitious reductions in emissions.
+
+
+
+Interpretation of scenarios
+These scenarios do not represent forecasts of the future and should not be interpreted as
+such. They are also not expected to cover all possible futures. Instead, they aim to provide a
+useful and representative sample of potential outcomes which span the space of potential
+futures by examining plausible combinations of key assumptions.
+The following should be considered when interpreting the scenarios and analysing results of
+our modelling:
+   • No significance should be attributed to the scenario names, which are used to help
+     readers identify the scenarios and distinguish between them. The names are not
+     intended to convey an indication that any scenario is better or worse than any other.
+   • Due to updates in our thinking around our scenarios, the scenarios in EDGS 2024 that
+     have the same names as those in EDGS 2019 may not be directly comparable.
+   • We have not quantified the likelihood of any scenario relative to the others. For
+     analytical purposes, it is most appropriate to assign all scenarios an equal weight.
+   • We have not assessed every combination of every scenario input.
+
+
+
+We have modelled five scenarios to capture a range of
+potential futures
+Reference
+The Reference scenario is our baseline scenario and considers both current trends and
+anticipated changes. It is the scenario against which the other scenarios are compared.
+
+
+
+EDGS 2024 Report
+                                                                                              8
+We assume that economic, technological, and policy trends continue at the pace
+experienced in recent years. We account for currently implemented and upcoming policies
+and assume further electrification uptake.
+Growth
+The Growth scenario models accelerated economic growth and corresponding increased
+demands on the energy system relative to the Reference scenario. The Growth scenario
+indicates what electricity demand could look like if the economy is growing quickly, but we
+are not investing in electrification at greater rates.
+We assume that New Zealand experiences both higher economic growth and increased
+immigration, while policy and investment are focused on priorities other than the energy
+sector. The economy transforms to emphasise high technology (resulting in an increased
+share of the commercial sector), while higher income growth and personal wealth drive
+higher uptake of new technologies such as electric vehicles (EVs). Carbon costs are lower.
+Constraint
+The Constraint scenario models slower economic growth which leads to lower energy
+demand growth. This scenario is essentially the inverse of the Growth scenario.
+We assume that adverse international trends negatively impact New Zealand’s economy,
+leaving little room for local growth or innovation. Lower income growth means lower uptake
+of technology such as EVs. At the same time, decreased international activity and slower
+technological development results in higher costs for wind turbines and solar panels than in
+the Reference scenario.
+Innovation
+The Innovation scenario models increased rates of development and uptake of new
+technologies. We assume that new and improved technologies enable rapid electrification of
+both transport and process heat. This results in a faster reduction in technology costs across
+the economy (e.g., wind and solar generation and EVs).
+While the rate of technological change and electrification is increased, total population and
+demand growth remains the same as in the Reference scenario.
+Environmental
+More ambitious national emissions reduction targets are set than in the Reference scenario.
+Technology is more readily available due to regulation, incentives, or other measures.
+Initiatives are introduced to support both transport and process heat switching to lower
+emissions alternatives. Carbon prices are significantly higher, in line with government
+projections.
+
+
+
+
+EDGS 2024 Report
+                                                                                                9
+Modelling assumptions
+This section provides an overview of the assumptions that have been used for our modelling.
+The accompanying assumptions file has time series and values for some of these series
+where applicable.
+
+
+
+Macroeconomic assumptions
+Table 1 contains a summary of the key macroeconomic assumptions used across our
+scenarios. The discount rate, exchange rate, and coal import price are kept the same across
+scenarios. The rest of the assumptions vary as follows:
+    • GDP and population are varied across the Reference, Growth and Constraint scenarios
+      to reflect different economic conditions. For the Innovation and Environmental
+      scenarios, the Reference scenario settings for these variables are used as we choose to
+      vary other assumptions to test outcomes.
+    • Higher rates of technology uptake are assumed in the Innovation scenario. A more
+      decentralised economy sees an increasing share of national electricity demand in the
+      South Island.
+    • Carbon prices falling in most scenarios to align with the latest market data. In contrast,
+      the Environmental scenario has a rising price to align with 2023 government
+      projections3.
+
+
+
+
+3
+ New Zealand’s projected greenhouse gas emissions to 2050 | Ministry for the Environment
+(https://environment.govt.nz/facts-and-science/climate-change/new-zealands-projected-greenhouse-gas-
+emissions-to-2050/)
+
+
+EDGS 2024 Report
+                                                                                                       10
+Table 1: Summary of key macroeconomic assumptions
+
+ Assumption        Reference      Growth       Constraint       Innovation Environmental
+
+ GDP growth        Treasury       Treasury     Treasury         Reference   Reference
+                   forecast       forecast     forecast
+                   (median)       (top 90%)    (bottom 10%)
+
+ Discount rate     5%             Reference    Reference        Reference   Reference
+
+ Exchange rate     0.65           Reference    Reference        Reference   Reference
+                   USD/NZD
+
+ Population        Stats NZ       Stats NZ     Stats NZ         Reference   Reference
+ growth            forecast       forecast     forecast
+                   (median)       (top 95%)    (bottom 5%)
+
+ Carbon price      Falling to     Falling to   Reference        Reference   Rising to $230
+ $/tonne           $50            $35
+
+ Crude oil         IEA crude      Reference    10% higher       Reference   IEA crude
+ price             forecast                                                 forecast
+                   (Stated                                                  (Net Zero)
+                   Policies)
+
+ Coal import       IEA coal       Reference    Reference        Reference   Reference
+ price             price
+                   forecast
+
+ Natural gas       Rising 2%      Reference    Rising 4% p.a.   Reference   Reference
+ domestic          p.a. in real                in real terms
+ wholesale         terms
+ price
+
+ Vehicle           Ministry of    Increased    Decreased        Reference   Decreased
+ kilometres        Transport
+ travelled         base
+                   forecast
+
+ North Island      61.2%          Reference    Reference        Falling     Reference
+ share of                                                       0.2% pa
+ national
+ electricity
+ demand
+
+
+
+
+EDGS 2024 Report
+                                                                                             11
+Gross Domestic Product (GDP)
+Gross Domestic Product (GDP) is a key driver of industrial and commercial electricity
+demand. It is also used to adjust our transport demand projections, as higher economic
+activity tends to correlate with increased heavy vehicle commercial use. GDP projections are
+sourced from Treasury Budget Economic and Fiscal Updates.
+Figure 4: GDP projection assumptions
+
+
+
+
+Population
+Population is a key driver of residential electricity demand. Population projections are also
+used to adjust our transport demand projections, as higher population is likely to lead to
+higher driving activity for personal transport.
+Stats NZ produces regular long-term population projections including probability ranges and
+different scenarios. We can therefore adjust our projections using the provided probability
+ranges. We use the median range for our reference scenario, the 95 th percentile for “High”
+population, and the 5th percentile forecast for “Low”.
+Following unexpectedly high net migration during 2023, Stats NZ have advised that their
+most recent forecast is inappropriate for short-term use but is still appropriate for
+“projected trends beyond the late 2020s”4. We have therefore built a composite model
+using the most appropriate projections for short and long-term population projections, in
+line with this advice. We interpolate projections for the years where Stats NZ does not
+provide these.
+
+
+4
+  Key advice for using updated 2018-base projections published in 2022 and 2023 | Stats NZ
+(https://www.stats.govt.nz/reports/key-advice-for-using-updated-2018-base-projections-published-in-2022-and-
+2023/)
+
+
+EDGS 2024 Report
+                                                                                                          12
+Figure 5: Population projection assumptions
+
+
+
+
+Carbon price
+The carbon price is an exogenous assumption we input into the model. All else being equal,
+a higher carbon price would lead to higher costs for fossil fuels, and consumers may be more
+incentivised to switch to lower emissions fuels. Electricity generators are also incentivised to
+use less coal, gas, or diesel when possible. Sensitivity testing shows that industrial users and
+electricity generators are most sensitive to a higher carbon price. The carbon price path
+remains a key uncertainty in our modelling and so we have modified this across scenarios.
+
+
+
+
+EDGS 2024 Report
+                                                                                             13
+Figure 6: Carbon price projection assumptions
+
+
+
+
+In the Reference scenario, carbon prices fall to $50/tonne by 2050. This projection is based
+on modelling from the Ministry for the Environment and Ministry of Primary Industries.
+Under current ETS settings, it is expected that carbon prices will approach the cost of
+planting enough additional forest to absorb another tonne of carbon. This was projected at a
+range of $25-$75/per tonne, with a midpoint of $50.
+The Growth scenario drops the price further, to $35/tonne. In the Environmental scenario,
+we increase carbon prices to $230/tonne by 2050, in line with 2023 government emissions
+projections.
+Large energy users
+New Zealand has several large energy users that produce specific products such as
+aluminium, methanol, steel, and ammonia-urea. For each of these users, assumptions on
+future operations are made on a case-by-case basis.
+   • Ammonia-urea production is assumed to stay at 2023 levels across all scenarios.
+   • The May 2024 energy supply agreement for the Tiwai Point aluminium smelter goes
+     out to 2044, and we assume this level of demand stays in the system out to 2050.
+     Aluminium production is assumed to stay at 2023 levels across all scenarios.
+   • For methanol production, we assume that Methanex’s Waitara Valley plant remains
+     mothballed and the two Motonui trains are closed in 2026 and 2030.
+   • For steel production, we assume that NZ Steel’s Electric Arc Furnace sees a 50 per cent
+     reduction in coal use at the Glenbrook steel mill for 2027 onwards.
+
+
+
+
+EDGS 2024 Report
+                                                                                          14
+Electricity demand assumptions
+Table 2 contains a summary of the key electricity demand assumptions used across our
+scenarios.
+The rate of electric vehicle (EV) uptake is based on the Ministry of Transport’s (MOT) uptake
+modelling, with EDGS scenarios using MOT’s scenarios for baseline, slow, and fast rates of
+uptake.
+Fuel switching (particularly electrification) rates and speeds have been adjusted across
+scenarios to represent variance in possible technological uptake. In some scenarios, some
+current energy demand is switched to hydrogen, which we then assume requires electricity
+demand for electrolysis.
+We modify potential datacentre load across scenarios to represent a range of potential
+future demand from this sector.
+Peak demand is a function of total demand and how consumers shift their demand between
+peak and off-peak times. There is a need to ensure that electricity supply can meet peak
+demand. In the Innovation and Environmental scenarios, we assume that users can more
+efficiently shift their demand, leading to relatively lower peak demand.
+
+
+
+
+Table 2: Summary of key electricity demand assumptions
+
+ Assumption      Reference      Growth        Constraint     Innovation    Environmental
+
+ EV uptake       Ministry of    Reference     MOT slow       MOT fast      MOT fast
+ rate            Transport                    uptake         uptake        uptake scenario
+                 (MOT) base                   scenario       scenario
+                 scenario
+
+ Fuel            MBIE           Reference     Reference      More          More activities
+ switching       projection                                  activities    switch, some to
+ (exogenous                                                  switch,       hydrogen
+ assumption)                                                 some to
+                                                             hydrogen
+
+ Fuel            MBIE           Reference     Reference      Switching     Switching curve
+ switching       projection                                  curve         brought
+ speed                                                       brought       forward
+                                                             forward
+
+
+
+
+EDGS 2024 Report
+                                                                                           15
+    Assumption     Reference        Growth          Constraint      Innovation       Environmental
+
+    Hydrogen       Limited          Reference       Reference       Meet             Meet increased
+    production5                                                     increased        demand
+                                                                    demand
+
+    Datacentre     233 MW by        383 MW by       113 MW by       583 MW by        Reference
+    load           2029             2029            2026            2035
+
+    Peak ratio     Keep at          Reference       Reference       Moderate         Gradual decline
+                   latest                                           decline
+                   historical
+                   levels
+
+
+Fuel switching assumptions
+Our energy model projects fuel use across different sectors based on exogenous inputs (such
+as GDP or population growth) and historical relationships between prices and energy
+intensities. However historical relationships between price and fuel intensities may not
+necessarily hold in the future, and this will not adequately capture expected changes in
+consumption brought about by technology change or government initiatives. We therefore
+modify the projections further to capture expected future trends.
+Exogenous and explicit fuel switching rates are applied to fuel use within each sector. End
+use data comes from the Energy Efficiency and Conservation Authority’s Energy End-Use
+Database (EEUD)6. We then apply assumed switching rates to each fuel, depending on the
+scenario.
+Table 3 lists default assumptions for each use. For each use, we assume these are the
+proportions that are switched from fossil fuel use by 2050. The use is either electrified,
+switched to some combination of biomass and electricity, or switched to hydrogen in the
+case of high temperature heat.
+Fuel switching rates are assumptions only. They are intended to capture expected future
+trends. This includes the impact of programmes such as already committed projects from
+the now closed Government Investment in Decarbonising Industry (GIDI) fund. However,
+they are not forecasts.
+
+
+
+
+5
+  Hydrogen production is modelled to meet hydrogen demand in scenarios where some end use of fuels is
+switched to hydrogen. This has electricity demand implications.
+6
+  Energy End Use Database | EECA (https://www.eeca.govt.nz/insights/data-tools/energy-end-use-database/)
+
+
+EDGS 2024 Report
+                                                                                                       16
+Table 3: Default fuel switching assumptions
+
+End use                                             Reference,                   Innovation &
+                                                    Constraint, Growth           Environmental
+
+High Temperature Heat (>300°C), Process
+Requirements                                                   0%                            50%
+
+Intermediate Heat (100-300°C), Cooking                         5%                            50%
+
+Intermediate Heat (100-300°C), Process
+Requirements                                                   50%                           70%
+
+Low Temperature Heat (<100°C), Process
+Requirements                                                   80%                           95%
+
+Low Temperature Heat (<100°C), Water
+Heating                                                        90%                           95%
+
+Low Temperature Heat (<100°C), Space
+Heating                                                        90%                           95%
+
+Motive Power                                                   5%                            30%
+
+
+We do not apply these assumptions in the same way to every use. For example, residential
+users are generally less price sensitive than commercial or industrial users, so we
+significantly decrease the switching rate assumptions for residential use. Further, the
+National Policy Statement for Greenhouse Gas Emissions on coal7 means that coal use for
+low and intermediate process heat will be phased out by 2037. This means we have
+increased the switching rates for these activities to ensure that coal use trends towards 0 by
+that year.
+Any fuel used for high temperature process heat we assume is replaced with some mixture
+of electricity and hydrogen. For hydrogen production, we further assume electrolysis
+production at an efficiency rate of 50 per cent. This effectively means high temperature fuel
+uses is indirectly replaced with electricity, but at low efficiency rates.
+For the Innovation/Environmental scenarios, we have also shifted forward the curves such
+that more of the switching happens earlier in the projected timeframe. This of course
+impacts the necessary generation build to meet new demand, but also the relevant energy
+emissions for earlier budget periods.
+
+
+
+
+7
+ National Policy Statement for Greenhouse Gas Emissions from Industrial Process Heat 2023 | Ministry for the
+Environment (https://environment.govt.nz/publications/national-policy-statement-for-greenhouse-gas-
+emissions-from-industrial-process-heat-2023
+
+
+EDGS 2024 Report
+                                                                                                          17
+Each sector has quite different uses for each fuel, and so these lead to different sector
+switching rates. The final rates calculated are displayed in Figure 7.
+Figure 7: Fuel switching rate assumptions8
+
+
+
+
+Datacentre build
+Large-scale datacentre build could lead to an uptick in electricity demand that we have not
+previously forecast. Companies such as CDC, Microsoft, and Amazon have all expressed
+interest in building large-scale datacentres in New Zealand, and some have already begun
+operations, including DCI Datacentres. Preliminary consumption data for 2023 shows an
+increase in electricity intensity, which may be driven by higher demand from datacentres.
+We have assessed announcements for current developer intentions and modified the
+expected build schedule per scenario to represent a range of possible future demand.
+Datacentres traditionally operate at baseload, and so we have assumed they will run with a
+load factor of 90 per cent. This means they draw 90 per cent of their maximum possible
+demand in any given year.
+
+
+
+
+8
+    “General Industry” excludes large energy users. These are modelled separately.
+
+
+EDGS 2024 Report
+                                                                                            18
+Figure 8: Datacentre capacity assumptions
+
+
+
+
+In the Reference and Environmental scenarios, total datacentre demand capacity reaches
+233 MW by 2029. This includes new build from Microsoft, Amazon Web Services, T4 Group,
+and CDC Datacentres. In the Constraint scenario, we remove some of this capacity, as some
+developer plans may not proceed in less favourable economic conditions. In the Growth
+Scenario, we instead add further signalled build in the form of a 150 MW datacentre in
+Makarewa, which has been proposed by Datagrid. In the Innovation scenario we add further
+generic datacentre load over a longer period, representing continued growth in the sector.
+Peak demand modelling
+Peak electricity demand – or the highest level that demand reaches in any given year – is a
+key projection variable. Historically, we typically reach peak demand during winter evenings,
+as residential users increase demand for space and water heating. We currently project this
+using a peak “ratio”, which is effectively the ratio between peak load and total demand.
+Residential consumers have the highest variance between peak and average demand, and so
+their peak ratio is highest. Residential demand will continue to drive higher peak ratios.
+Greater electrification of residential heating, as more homes move away from gas or LPG,
+will lead to higher peak ratios over time. However, greater baseload demand from users
+such as datacentres would lower the peak ratio.
+When projecting peak demand, we use historical peak ratios to estimate possible peaks. It is
+interesting to note that these ratios have been increasing over the last few years. Six of the
+ten highest peaks on record occurred in 2023.
+We decrease peak ratios over time in the Innovation scenario, representing increased “load-
+shifting” – or the ability for homes to shift their demand to off-peak hours. This might be
+achieved by more precise time-of-use pricing plans in combination with technology such as
+
+
+
+EDGS 2024 Report
+                                                                                            19
+distributed home batteries, allowing users to shift consumption to times when it is easier on
+the grid.
+These final levels of peak demand are a key input for modelling new generation build. The
+expansion model needs to build enough firm capacity to meet peak demand in any given
+year. When projecting whether we can meet peak, we also add a small buffer of around
+700 MW, which represents the potential increased demand that could be driven by sudden
+cold snaps.
+
+
+
+Electricity generation assumptions
+Table 4 contains a summary of the key electricity generation assumptions used across our
+scenarios.
+MBIE is responsible for maintaining data on New Zealand’s generation stack. This is a list
+containing information existing and potential new electricity generation plants in New
+Zealand and is a key input for GEM. There are several things to note about the generation
+stack used for this EDGS update:
+   •   To ensure that the information used in our modelling is transparent, we source
+       information for the generation stack from publicly available sources. This means that
+       we have not included information that is commercially sensitive and unable to be
+       disclosed publicly.
+   •   Announcements made after June 3rd 2024 have not been included.
+   •   GEM requires detailed information on plants including costs (both to construct and
+       operate) and information on how plants may operate in the market once they’re
+       constructed. While some plants have been announced by developers, a lack of
+       information means that they have not been incorporated into the generation stack.
+The generation stack has been significantly overhauled for EDGS 2024, based on industry
+sector reports and media monitoring. This ensures the list of potential plants is as
+comprehensive as possible.
+For some scenarios, we have constrained the pipeline by limiting the plants available to the
+model to reflect that not every plant that has been announced may end up being built. We
+have made further adjustments to capital costs, making some plants more or less economic
+to build depending on the scenario being run. This also impacts the wholesale electricity
+price indicator.
+Uptake and electricity generation from distributed solar and battery connections is fed in as
+exogenous assumptions
+
+
+
+
+EDGS 2024 Report
+                                                                                             20
+Table 4: Summary of key electricity generation assumptions
+
+Assumption       Reference      Growth       Constraint Innovation           Environmental
+
+Onshore          MBIE          Reference Reference           MBIE            MBIE generation
+wind / utility   generation                                  generation      stack
+solar            stack                                       stack           (unconstrained)
+pipeline         (constrained)                               (unconstrained)
+
+Onshore          MBIE           Reference Capex              Capex reduced   Full consenting
+wind / utility   generation               10% more           15%             cost adjustment
+solar costs      stack,                   costly
+                 moderate
+                 consenting
+                 cost
+                 adjustment
+
+Demand side MBIE                Reference 10% more           Reference       Reference
+response    generation                    costly
+            stack
+
+Stratford        2053           Reference Reference          2035            2035
+peaker
+retirement
+
+Huntly Unit 5 2037              Reference Reference          2032            2032
+retirement
+
+Huntly           N/A            Reference Reference          In 2032         In 2032
+Rankine unit
+retirement
+
+Huntly           No             Reference Reference          From 2032       From 2032
+biomass use
+
+Distributed   MBIE BAU          Faster       Slower          Faster uptake   Faster uptake
+solar/battery projection        uptake       uptake
+uptake
+
+Grid scale       733 MW by      Reference Reference          1700 MW by      1700 MW by
+battery          2029                                        2049            2049
+capacity
+
+
+
+
+EDGS 2024 Report
+                                                                                             21
+Future operation of existing thermal plants
+Contact’s 377 MW Taranaki Combined Cycle plant (TCC) is expected to close at the end of
+20249. In the Environmental and Innovation scenarios, we also assume that the adjacent
+Stratford peaker units close in 2035. In most scenarios, we also assume Genesis Energy’s
+Unit 5 combined cycle plant (previously known as e3p) will close in 2037 after 30 years of
+life. In the Innovation and Environmental scenarios, Unit 5 instead closes in 2032.
+We also change the way in which the Huntly dual-fuel Rankine units are operated in the
+Innovation and Environmental scenarios, as they are refitted for biomass use rather than
+being decommissioned. We otherwise assume that these remain operational out to 205010.
+Consenting cost adjustments
+The Electrify NZ work programme includes initiatives designed to create a more enabling
+consenting environment for renewable energy projects. We have included the impact of this
+in our modelling by reducing the capital costs for all plants in our pipeline that are not
+already consented, as outlined in Table 5.
+Consenting costs are a function of plant size. There is some research on current consenting
+costs, but we are still building up our understanding of the exact impacts of this policy. For
+EDGS, we have reduced plant capital expenditure costs by halving the assumed consenting
+cost11 for each technology in the Reference scenario. We have applied a larger adjustment in
+the Environmental scenario.
+
+
+Table 5: Consenting cost adjustments
+
+     Plant Type              Moderate consenting cost adjustment                       Full consenting
+                                                                                       cost adjustment
+
+     Solar                                           -1.4%                                   -2.8%
+
+     Wind                                            -1.4%                                   -2.8%
+
+     Biogas                                          -1.3%                                   -2.6%
+
+     Geothermal                                     -0.765%                                 -1.53%
+
+     Hydro                                          -0.455%                                 -0.91%
+
+
+
+
+9
+    CEN performance demonstrates underlying business health: (https://www.nzx.com/announcements/426369)
+10 We currently only model two Huntly Rankine units. Theoretically three could be operational, but the third
+
+unit is currently kept it in reserve and made available to the market on as needed basis.
+11
+  Infrastructure Consenting for Climate Targets: (https://media.umbraco.io/te-waihanga-30-year-
+strategy/z50ht3nz/infrastructure-consenting-for-climate-targets.pdf) – Table 19
+
+
+EDGS 2024 Report
+                                                                                                               22
+This has the impact of marginally decreasing the wholesale electricity cost indicator that we
+model. This then leads to a slight increase in demand in our model. However, other inputs
+such as carbon price or GDP have much larger impacts on electricity demand and therefore
+required generation build.
+Distributed solar uptake
+We project a range of uptake rates for distributed solar photovoltaic (PV) connections. These
+are solar installations connected to individual dwellings or businesses, rather than the
+electricity grid. With around a third of dwellings being rentals and some dwellings being
+unsuitable for installations of solar PV systems (due to factors such as shading or the type of
+building), we expect to see that maximum uptake would be materially less than 100 per cent
+of all dwellings. However, uncertainty around future costs and the relative economics, as
+well as potential future regulatory changes, mean that there are a range of potential
+trajectories for uptake of distributed solar PV.
+Approach to modelling distributed solar
+Almost all distributed generation is modelled in SADEM rather than GEM. This means that
+distributed generation is not optimised alongside other generation types in GEM and instead
+has assumptions fed in about how it will change over time.
+For distributed solar PV connections in particular, a satellite model is used to project the
+number of new connections, and associated capacity and electricity generation12. These
+projections are then fed in as exogenous assumptions to SADEM. This satellite model builds
+off data published on the Electricity Authority’s Electricity Market Information website (EMI)
+on installed distributed generation in New Zealand.
+Projecting total connections
+In recent years, data published on EMI shows average annual growth rates of around 20 per
+cent in connections with solar PV. We expect to see these growth rates for the next several
+years, but these are unlikely to be sustained in the longer term.
+For each sector and scenario, we specify long term growth rates that we transition to over
+time. We apply these by starting with growth rates of 20 per cent in 2024. We then
+transition linearly to the longer-term growth rates as outlined in the following table that are
+applied for 2030 to 2050. Note that the same growth rates are applied for both solar only
+and solar with battery connections.
+Table 6: Distributed solar long-term growth rates
+
+        Sector             Reference        Growth         Constraint      Innovation    Environmental
+
+        Commercial         3.0%             4.0%           1.5%            5.0%          5.0%
+
+        Industrial         2.0%             3.0%           1.0%            4.0%          4.0%
+
+        Residential        4.0%             5.0%           2.0%            7.0%          7.0%
+
+
+
+12
+     For existing connections, the last historical values are carried forward to 2050.
+
+
+EDGS 2024 Report
+                                                                                                         23
+We assume the lowest growth rates in the Constraint scenario, as higher cost of
+technologies and lower income growth leads to lower uptake of technology. The Growth
+scenario sees higher growth rates than the Reference scenario, as an increased focus on
+technology and higher income growth sees more households and businesses choosing to
+adopt solar PV systems. The Innovation and Environmental scenarios see the highest growth
+rates due to higher availability of technology and the introduction of other measures to
+encourage uptake of these technologies.
+
+
+Figure 9: Projected new distributed solar connections
+
+
+
+
+Projecting installed new capacity
+Once new connections have been projected, the number of cumulative new connections in
+each year are determined. That is, we determine the number of new connections in each
+year relative to 2023.
+The following assumptions are made on the installed capacity by new connection for each
+combination of sector and system type. These have been derived by analysing recent data
+published on EMI13. There is more uncertainty in average capacity per connection for the
+industrial and commercial sectors, but these account for a lower proportion of total
+distributed solar capacity.
+
+
+
+13
+     Electricity Authority - EMI (https://www.emi.ea.govt.nz/Retail/Reports/GUEHMT)
+
+
+EDGS 2024 Report
+                                                                                           24
+Table 7: Distributed solar average capacity per connection
+
+                  Sector              System type            Capacity (kW)
+
+                  Commercial          Solar only                   22
+
+                  Industrial          Solar only                   25
+
+                  Residential         Solar only                   4.7
+
+                  Commercial          Solar and batteries          15
+
+                  Industrial          Solar and batteries          10
+
+                  Residential         Solar and batteries          5.5
+
+
+These are applied to the number of new connections to get the total capacity from new
+connections in each year out to 2050 – essentially the cumulative “new build”.
+
+
+Figure 10: Projected total distributed solar capacity
+
+
+
+
+EDGS 2024 Report
+                                                                                        25
+Overall contribution from distributed solar
+As a final step, we determine the amount of electricity generation from these new
+connections. For this we assume a capacity factor of 14.5 per cent.
+
+
+Figure 11: Projected total distributed solar electricity generation
+
+
+
+
+Battery Energy Storage Systems
+Battery Energy Storage Systems (BESS) technology are expected to become a more
+important piece of the energy system in the future. These large-scale grid-connected
+batteries can store energy when supply is high and provide it back to the grid when demand
+is at a peak.
+As more intermittent generation sources (such as wind and solar) are built, prices are likely
+to become even more volatile. This means there will be greater economic incentive for
+developers that can use BESS to buy electricity when prices are very low and sell back to the
+grid in times of tight supply.
+To integrate BESS into our modelling, we compiled a list of developer battery construction
+intentions. These include the 4x100 MW units Genesis has proposed at Huntly, Meridian’s
+100 MW Ruakaka and Manawatu sites, and a Contact facility that may be built co-located
+with NZSteel’s Glenbrook mill. We have also included several other battery sites that
+developers have signalled are likely to be co-located with solar farms, such as the New
+Zealand Clean Energy Masterton Solar & Energy Storage project.
+In most scenarios, we assume that 733 MW of total BESS capacity will be built by 2029. This
+estimate is slightly conservative: as of October 2023, Transpower reported that around 910
+
+
+EDGS 2024 Report
+                                                                                             26
+MW of BESS was in their connection queue or under investigation14. In the Innovation and
+Environmental scenarios, we assume much greater BESS development over a longer time
+horizon, adding further generic BESS capacity to reach approximately 1,700 MW by 2049.
+We do not yet have complete information on exactly when these BESS facilities are likely to
+be built, nor the expected costs or losses associated with charging and discharging. Where
+information was missing, we have made assumptions and judgements based on market
+expectations. This iteration of EDGS takes a high-level approach to BESS modelling through
+reducing peak demand by total projected battery capacity, meaning that the expansion
+model needs to build fewer thermal peakers to meet demand.
+
+
+
+
+14
+  Investment in flexible resources set to ease renewables transition | Transpower
+(https://www.transpower.co.nz/news/investment-flexible-resources-set-ease-renewables-transition)
+
+
+EDGS 2024 Report
+                                                                                                   27
+Modelling energy futures
+MBIE maintains a suite of energy modelling tools that it uses to prepare projections and
+inform advice and analysis on the energy sector. There are two main models in the suite
+used for EDGS, namely the Supply and Demand Energy Model (SADEM) and the Generation
+Expansion Model (GEM).
+SADEM is a model owned and operated by MBIE. The model projects energy demand for all
+sectors of the economy based on external drivers (such as population and economic
+growth), accounting for switching between different energy types within sectors. It also
+estimates energy sector greenhouse gas emissions based on projected energy supply and
+demand.
+A version of the Electricity Authority’s GEM is used to project the timing and type of new
+generation capacity that is built. GEM is a long-term planning model used to study capacity
+expansion in the electricity sector by projecting the timing and type of new generation
+capacity that is built.
+EDGS uses these two models to project energy demand across New Zealand under multiple
+scenarios, and to build generation capacity to meet future electricity demand while
+maintaining security of supply.
+The cost of meeting demand through the available pipeline is a key driver of the wholesale
+electricity cost15. This cost also impacts demand through changing the relative economics
+between different energy types, so SADEM and GEM must be run together multiple times to
+converge on equilibrium demand.
+
+
+
+
+15
+  The “wholesale electricity cost” indicator that we produce from GEM reflects the long run marginal cost
+(LRMC) of new generation. It should not be viewed as a price forecast.
+
+
+EDGS 2024 Report
+                                                                                                            28
+The following diagram provides a high-level overview of the data flows and interactions
+between SADEM and GEM as part of our modelling process. Appendix One provides more
+detailed information on how SADEM and GEM operate.
+
+
+Figure 12. SADEM and GEM overview
+
+
+
+
+      GD     popula on growth
+
+           uel switching rates                                      Genera on pipeline
+                                      Electricity demand
+
+       New technology uptake
+
+               uel prices
+
+
+
+
+                                 SADEM                      GEM
+
+                 esults
+
+
+
+                                         New capacity
+
+                                         Electricity cost
+
+
+
+
+EDGS 2024 Report
+                                                                                          29
+Results
+Demand for electricity is expected to grow
+All EDGS scenarios expect electricity demand to grow out to 2050, despite reasonably flat
+growth over the past 15 years. In the Reference scenario, total electricity consumption
+reaches 62.1 TWh16 by 2050, a 56.6 per cent increase from 2023 consumption. Across the
+scenarios, the demand projection ranges from 53.5 TWh to 71.7 TWh.
+Figure 13. Total electricity demand
+
+
+
+
+This is chiefly driven by increased electrification in existing energy use, as well as increased
+uptake of some new technologies, such as electric vehicles and large-scale datacentres.
+There is significantly faster growth among the Innovation, Growth, and Environmental
+scenarios. However, this growth is most rapid for the Innovation and Environmental
+scenarios, which both expect even more electrification of industrial use over the next 10-15
+years. In contrast, the Growth scenario sees a more gradual increase out to 2050 as we
+assume steady economic growth.
+While they take different trajectories, both the Growth and Innovation scenarios reach
+around the same total demand by 2050 of approximately 72 TWh. The Constraint scenario
+indicates only a 35 per cent increase in demand by 2050 due to lower economic activity and
+switching rates.
+
+
+
+16
+  TWh (terawatt hour) is a unit of electrical energy equivalent to 1 trillion watt-hours. New Zealand currently
+consumes around 40 TWh of electricity every year.
+
+
+EDGS 2024 Report
+                                                                                                              30
+Electrification is the main driver of increased demand
+In the short term, the commercial and industrial sectors are the main sectors driving growth
+in national electricity demand. We also expect to see electrification of transport playing a
+larger role from the late 2030s onwards.
+Between scenarios, the greatest variance in electricity demand projections comes from the
+commercial and industrial sectors. This is mostly due to assumed fuel switching of existing
+fossil fuel use and the level of electrification of low/medium heat industrial processes.
+The rate and quantity of electrification is a key uncertainty that we have modified across
+scenarios. For example, the Innovation and Environmental scenarios assume faster
+electrification rates, brought about by faster technological advancement or other incentives
+and support, respectively. Additional demand shifts occur in the Environmental scenario,
+with further switching driven by a much higher assumed carbon price.
+More detail on fuel switching assumptions by scenario can be found on page 17.
+By 2050 around half of all energy demand will be met by electricity
+The assumed electrification across all scenarios sees existing energy use across the
+economy, mostly from fossil fuels, switched to electricity. We also see new demand coming
+online due to new technologies, such as datacentres. In 2023, only around 26 per cent of our
+total energy demand was for electricity, but this is estimated to increase to between 44.8
+and 55.4 per cent by 2050.
+Figure 14: Electricity share of total demand
+
+
+
+
+EDGS 2024 Report
+                                                                                          31
+Industrial demand
+Industrial electricity demand reaches 22.1 TWh in the Reference scenario, an increase of 38
+per cent over 2023 levels. Most of this growth demand is in the medium-term, as we assume
+that industrial economic activity – and the associated energy demand – begins to decline in
+the 2040s due to a combination of flattening industrial economic activity and greater
+efficiency in the sector.
+Demand in the Innovation scenario reaches 27.1 TWh in 2050, 22.6 per cent higher than the
+Reference scenario. The Innovation and Environmental scenarios show much higher
+electrification, particularly in the short-term. This is mostly due to higher rates of fuel
+switching being assumed in these scenarios. A large proportion of industrial demand for
+fossil fuels is for low and intermediate process heat, and much of this could be electrified
+under the right conditions.
+The decline in industrial electricity demand in recent years has been in part driven by the
+closure of large industrial sites - such as Norske Skog’s newsprint mill and the Marsden oint
+oil refinery. The projections of industrial sector demand reverse this trend, where all
+scenarios show growing electricity demand despite recent declines. There are two key
+reasons for this:
+    1) We do not assume that recent declines will continue. Unless otherwise specified, our
+       default assumption is that large industrial sites will not close.
+    2) We assume that existing activity will begin to be electrified at greater rates.
+We see electricity demand increase in the industrial sector. This is mostly due to
+assumptions of fuel switching of some low and intermediate heat processes.
+
+Figure 15: Industrial electricity demand
+
+
+
+
+EDGS 2024 Report
+                                                                                           32
+The National Policy Statement on Greenhouse Gas Emissions means that many coal boilers
+for low or intermediate process heat must be phased out by 2037. While some of these may
+be replaced with biomass boilers, we expect that many will be replaced with electric heat
+pumps, particularly for low-temperature applications.
+Due to the time taken for some projects to be implemented, the now closed Government
+Investment in Decarbonising Industry (GIDI) fund will lead to some electricity demand
+increases from the installation of electrical heat pumps.
+The impact of these electrification assumptions is significant. We have tested this by
+removing the impacts of our fuel switching assumptions from general industry demand17, as
+illustrated in Figure 16. We then see that demand gradually declines over time in the
+Reference scenario. This is mostly due to expected efficiency improvements in the sector but
+is also a function of economic activity projections.
+Industrial users are also most sensitive to shifts in carbon price, as fuel prices are integral to
+their outputs. Coal, natural gas, or LPG for process heat become less attractive options at a
+high carbon price, which further incentivises fuel switching. Lower electricity prices, such as
+those in the Innovation scenario, have a similar effect. Historically, industrial users are much
+more sensitive to fuel or electricity prices than residential or commercial users, as these
+make up a much larger portion of their overall costs.
+Figure 16: Fuel switching sensitivity testing on general industry demand
+
+
+
+
+17
+     Note that “General Industry” excludes key industrial users such as NZ Steel or the NZ Aluminium Smelter.
+
+
+EDGS 2024 Report
+                                                                                                                33
+Commercial demand
+Commercial electricity demand grows from 9.6 to 15.7 TWh in the Reference scenario, an
+increase of 64.3 per cent over 2023 levels. In the Innovation and Growth scenarios,
+commercial electricity demand nearly doubles to around 19 TWh.
+All scenarios show an increase in demand in the near term due to an expectation of greater
+electrification of existing space heating for commercial purposes, but also an expectation of
+planned large-scale datacentre builds, which could contribute more to electricity demand in
+the coming years.
+The variance between scenarios is mostly explained by different assumptions of future
+economic activity of the commercial sector. However, we also assume different rates of
+large-scale datacentre build across scenarios, which drives a wide range in the resulting
+projections of commercial sector demand.
+Figure 17: Commercial electricity demand
+
+
+
+
+Large-scale datacentres contributing to commercial demand growth
+As it is still an emerging industry, the build of datacentres is a key uncertainty across our
+projections. To address this, we consider a wide range of potential datacentre build across
+the scenarios to analyse the impacts on demand and resulting generation build.
+At the upper end demand reaches 4.6 TWh, which close to current demand from the Tiwai
+Point aluminium smelter. For the Reference scenario, we assume 1.8 TWh of demand by
+2030, which would account for 2.9 per cent of total demand in that year.
+
+
+
+
+EDGS 2024 Report
+                                                                                                34
+Figure 18: Datacentre annual demand assumptions
+
+
+
+
+While there is uncertainty over the future build rate of datacentres and their electricity
+demand, we have already seen an increase in commercial electricity intensity in historical
+2023 data due to several datacentres coming online, mostly around Auckland. If this
+continues it could represent a structural shift in sectoral consumption trends.
+As with many EDGS assumptions, these datacentre assumptions are not intended to be
+forecasts, but rather are intended to explore a wide range of possible futures. More detail
+on datacentre assumptions by scenario, including announced datacentres that have been
+included, can be found on page 18.
+
+
+Residential demand
+Residential demand increases from the current 13.2 TWh to 15.3 TWh in the Reference
+scenario. The demand projection ranges between 14 and 16.8 TWh.
+For the residential sector, population is the biggest driver of differences in demand between
+scenarios. For example, population is assumed to grow by 16 per cent in the Reference
+scenario and 27 per cent in the Growth scenario, which leads to the projected growth in
+demand.
+Higher carbon prices or cheaper technology may lead to some further electrification of
+existing use, but greater population growth is more likely to lead to more new homes which
+are more likely to be built with electric heating in mind, rather than fitted with natural gas or
+LPG devices. It is important to note that due to a range of factors, we do not assume that
+residential consumers will be able to electrify consumption at the same rates as industrial or
+commercial users.
+
+
+
+
+EDGS 2024 Report
+                                                                                              35
+Figure 19: Residential electricity demand
+
+
+
+
+Transport demand
+In the Reference scenario, electricity demand for road transport grows to 9.6 TWh, several
+magnitudes higher than the 0.27 TWh estimated in 2023. We see this growth across all
+scenarios, driven by Ministry of Transport projections of electric vehicle uptake rates out to
+2050.
+Electricity demand for road transport is effectively driven by two things – the uptake rate of
+electric vehicles (EVs) and “vehicle kilometres travelled” (VKT), a measure of how far New
+Zealanders drive in any given year.
+Much of the variance between scenarios is due to different activity assumptions. In the
+Constraint scenario, we assume that lower population and GDP means lower demand for
+transport generally, both for personal and commercial use. Further, lower income growth in
+the Constraint scenario means that consumers are less likely to be able to invest in EVs.
+In the Innovation and Environmental scenarios, we assume higher EV uptake rates, driven by
+either technological progress or public initiatives to make EVs more accessible. However, we
+also assume some mode switching in the Environmental scenario, as personal transport
+shifts to greater uptake of cycling or public transport. This means we project lower personal
+vehicle use and higher public transport use in the Environmental scenario.
+
+
+
+
+EDGS 2024 Report
+                                                                                             36
+Figure 20: Transport electricity demand
+
+
+
+
+EV uptake a key driver of transport demand
+One key driver of electricity demand is EV uptake rates. The Ministry of Transport have
+provided MBIE with several scenarios of EV uptake rates18. We apply the Fast case to the
+Innovation and Environmental scenarios, the Slow case to the Constraint scenario, and the
+Base case to the Reference and Growth scenarios.
+All scenarios expect significant uptake in EV use, particularly from the late 2030’s onwards.
+However, no scenario reaches full electrification, instead ranging between 60.8 per cent and
+76.4 per cent.
+MBIE’s modelling does not consider electrification of fleet counts, as energy requirements
+per unit of use is the more important metric for EDGS. The shares in Figure 20 refer to
+vehicle use in terms of distance travelled, not the share of vehicles that have been
+electrified. That is, a large commercial vehicle would usually travel much more than a
+personal light vehicle, so its electrification would be weighted more here.
+
+
+
+
+18 For more information on the Ministry of Transport modelling, and the Vehicle Fleet Emissions Model in
+
+particular, please see their site here: https://www.transport.govt.nz/statistics-and-insights/transport-
+outlook/sheet/updated-future-state-model-results
+
+
+
+EDGS 2024 Report
+                                                                                                           37
+Figure 21: EV uptake rates
+
+
+
+
+The EDGS scenarios do not currently consider electricity demand for non-road transport
+vehicles, nor the potential demand due to hydrogen electrolysis for fuel cell vehicles. This is
+not a comment on the validity of these technologies in the future, but rather that we
+currently have limited information on how they might work or what plausible uptake rates
+might be. Future EDGS releases may include further work in this area as different
+technologies continue to mature.
+
+
+Peak electricity demand
+In 2023, peak grid demand (on a half-hourly average basis) was around 6.7 GW and is
+projected to grow by 59 per cent to around 10.7 GW in the Reference scenario.
+Peak demand projections range between 12.5 MW and 9.1 MW across the Growth and
+Innovation scenarios. Despite higher overall electricity demand, peak demand begins falling
+in the Environmental and Innovation scenarios. This is because we assume that these
+scenarios engage in more efficient load-shifting. Time of use pricing, smart charging, and
+effective grid management would mean that electricity demand is able to be distributed
+more evenly across trading periods. This will lead to lower peak demand, and less need for
+expensive peaking solutions.
+
+
+
+
+EDGS 2024 Report
+                                                                                             38
+Figure 22: New Zealand annual peak load
+
+
+
+
+It is important to note that this peak demand metric does not consider demand-side
+response arrangements, such as the May 2024 agreement between NZ Aluminium Smelters
+and Meridian Energy19. In this agreement, Tiwai can reduce its load by up to 185 MW if
+called upon by Meridian Energy (and will be offered payment for doing so). When modelling
+peak demand and firm generation response, we subtract relevant demand-side response
+from the peak demand metric here.
+More information on peak demand modelling can be found on pages 19-20.
+
+
+
+To meet higher demand, more capacity is required
+To meet future electricity demand, and to replace existing plants scheduled for retirement,
+9.4GW of new capacity will be required by 2050 in the Reference scenario. As at the end of
+2022, MBIE statistics show 9.85 GW of installed capacity, so this represents a gross increase
+of 95 per cent.
+The scenarios vary by nearly 10 GW, with a lower end of 5.4 GW of new construction
+required in the Constraint scenario which sees lower levels for key drivers of activity.
+However, 5.4 GW still represents a gross capacity increase of 54.8 per cent from 2022 levels,
+and 15.1 GW in the Growth scenario represents a gross increase of 153 per cent. The Growth
+scenario has a significant amount of new solar generation capacity to account for solar
+generation having relatively lower capacity factors than wind plants. More efficient load
+
+
+19
+  Meridian and NZAS Sign Long Term Contracts | Meridian Energy (https://www.meridianenergy.co.nz/news-and-
+events/meridian-and-nzas-sign-long-term-contracts)
+
+
+EDGS 2024 Report
+                                                                                                       39
+distribution and higher levels of battery installation in the Environmental and Innovation
+scenarios also mean that less overall capacity is required to meet peak demand.
+Figure 23: New build required
+
+
+
+
+The net capacity gain will be lower as it accounts for the loss in retired or decommissioned
+plants. Plant decommissioning is broadly similar across the scenarios, as it is driven by when
+we expect current plants to reach the end of their useful life. This impacts some older wind
+farms that may need to be retired after 25 years of operation, such as the farms at West
+Wind or Mill Creek20.
+We also expect retirements of thermal plants in the existing generation fleet. The assumed
+closure dates of these plants are one of the key drivers for the renewable share of electricity
+generation and electricity generation emissions, as mostly renewables are built to replace
+the decommissioned capacity. More information on these assumptions can be found on
+page 21.
+
+
+Most new build is wind and solar
+GEM often chooses to build new capacity using wind and solar technology as they have a
+relatively lower overall cost than other plant types. GEM is run to minimise the cost to the
+system by choosing the lowest cost build schedule to meet total and peak demand in each
+scenario in each year. For technologies such as wind and solar where costs are relatively
+lower, it is likely that GEM will choose to “build” these at a greater rate. More information
+on GEM is available in Appendix One.
+
+
+20
+  Some of these plants may be repowered, and our current version of GEM treats this as new generation build
+due to potential differences in operation and configuration.
+
+
+EDGS 2024 Report
+                                                                                                         40
+As a result of this, most new builds seen across the scenarios are onshore wind and solar
+farms. These tend to have lower capacity factors than existing thermal or hydro plants,
+which means more total capacity will need to be built to reach similar output levels.
+In the Reference scenario solar capacity is projected to grow from 0.4 GW to 4.7 GW by
+2050. It ranges between 2.7 GW and 9.1 GW depending on the scenario. Wind capacity is
+similarly projected to expand from 1.0 GW to 4.6 GW in the Reference scenario. Wind
+capacity at 2050 ranges from 3.6 GW to 6.0 GW.
+There is also some new geothermal build across all scenarios, providing further baseload
+generation capacity. However, this is not sufficient for firming. As a result, we see natural
+gas peakers and some smaller-scale hydro plants (mostly run-of-river) required later from
+the 2030s to provide further firming capacity. Additional thermal peakers are especially
+required under the Growth and Reference scenarios with between 0.8 and 0.9 GW more
+thermal peaking capacity required by 2050 compared to the other scenarios.
+
+
+Figure 24: Total capacity by technology21
+
+
+
+
+21
+  “Thermal” here refers to plants that burn fossil fuels for electricity generation, such as coal and natural gas.
+Biomass or other renewable plants are not included in Figure 24.
+
+
+
+
+EDGS 2024 Report
+                                                                                                                 41
+Figure 25: Generation build schedules
+
+
+
+
+EDGS 2024 Report
+                                        42
+Renewable share of electricity generation to increase
+The increase in renewable generation leads to an increase in the share of electricity
+generation from renewable sources. The share reaches 96.3 per cent in the Reference, up
+from 87.1 per cent in 2022. However, natural gas peakers are still expected to play a role in
+all scenarios. Even under the Environmental scenario the renewable share stabilises at
+around 97 per cent in the 2040s before gradually climbing to 98.3 per cent by 2050, as
+increased carbon prices make fossil generation increasingly less attractive.
+It is possible that these gas peakers may be replaced by green technologies such as biomass,
+biogas, waste-to-energy, or hydrogen peakers. It is also possible that peakers will become
+less necessary if large-scale grid batteries are deployed at scale, allowing peak demand to be
+met with stored renewable electricity. However, there is currently limited information on
+how some of these technologies would operate in practise. The EDGS scenarios cannot
+capture all possible futures and reflect the most plausible expectations as at the time of
+writing.
+A key driver of increases to the renewable share of electricity generation is our assumptions
+on the timing of thermal plant closures. As we see gas or coal plants such as the Huntly
+Rankine units or the Taranaki Combined Cycle plant close, new generation comes online. To
+meet this gap, renewable generation such as solar or wind is built as it is relatively more
+economic. However, the model must also consider other implications such as variability of
+supply and how demand is met in peak periods.
+Figure 26: Renewable share of electricity generation
+
+
+
+
+EDGS 2024 Report                                                                   43
+Total energy consumption falls across our scenarios
+Despite greater electrification and economic activity, we see that total energy demand
+declines 13.5 per cent to 472 PJ by 2050 in the Reference scenario. There is however a large
+variance across the scenarios, from 521 PJ in the Growth scenario to only 431 PJ in the
+Constraint scenario.
+We see energy demand falling overall due mostly due to expected gains in energy efficiency.
+Technologies such as electric heat pumps or EVs require less energy input to service the
+same level of demand. The greatest driver of overall decline however is the energy
+requirement for the transport sector, as higher electrification means less total energy input
+for the same activity. Transport energy demand falls 36.6 per cent (76.8 PJ) in the Reference
+scenario.
+Figure 27: Total final consumption
+
+
+
+
+The biggest difference between scenarios comes from the industrial and commercial sectors,
+where different fuel switching rates and activity assumptions lead to large differences in
+total energy requirements. The residential and transport sectors show narrower bands
+across scenarios, meaning that these sectors are less sensitive to our range of input
+assumptions.
+As the same assumptions on the future operation of Methanex are applied across all
+scenarios, there are similar shifts downwards for all scenarios as gas consumption decreases.
+
+
+
+
+EDGS 2024 Report                                                                  44
+The dynamics of the New Zealand natural gas market are out of scope for EDGS modelling.
+Gas consumption for direct energy use, electricity generation, or non-energy use such as
+chemical manufacturing has not been restricted by projected supply in this iteration of
+EDGS. Comparing projected gas use to natural gas field operator projections of expected
+projection shows there may be a gap in supply22.
+
+
+
+Renewable share of energy consumption grows with higher
+electricity use
+The renewable share of final energy consumption is the proportion of all energy consumed
+produced by renewable sources, including the renewable share of consumed electricity.
+New Zealand’s renewable share of final energy consumption reached a record high of 30 per
+cent in 2022. We see that this climbs to 57.2 per cent by 2050 in the Reference scenario. In
+the Innovation and Reference scenarios, this reaches around as high as 66 per cent, as faster
+rates of assumed fuel switching means less non-renewable energy is used for road transport
+or industrial processes.
+Figure 28: Renewable share of final energy consumption
+
+
+
+
+22
+  Field operator projections are updated annually and can be found at https://www.mbie.govt.nz/building-
+and-energy/energy-and-natural-resources/energy-statistics-and-modelling/energy-statistics/petroleum-
+reserves-data
+
+
+EDGS 2024 Report                                                                               45
+Emissions from electricity generation are expected to flatten
+Under the Reference scenario, greenhouse gas emissions for electricity generation are
+projected to fall to 2.5 Mt CO2-e by 2050, and across all scenarios range between 2.8 and 1.6
+Mt CO2-e annually. The key uncertainty between scenarios is the closure of key thermal
+plants (such as Huntly’s Unit 5) and whether it will be possible to convert Huntly’s ankine
+units to operate on renewable wood pellets. We also see more natural gas required for
+firming in scenarios with lower grid battery uptake. The higher carbon price in the
+Environmental scenario also incentivises less fossil fuel use for generation in the medium to
+long term.
+Emissions from electricity generation include fugitive emissions from geothermal plants. This
+means that even if electricity generation were 100 per cent renewable, we would still expect
+some emissions from this sector.
+Emissions are expected to fall after 2024, as Contact Energy has signalled it intends to close
+the Taranaki Combined Cycle gas plant at the end of this year. All scenarios show emissions
+remaining relatively steady in the short term and it is only in the 2030s that significant
+divergences occur due to the timing of thermal plant closures. By the mid-2040s all scenarios
+show electricity emissions stabilising at different levels.
+Figure 29: Electricity generation emissions
+
+
+
+
+EDGS 2024 Report                                                                   46
+Total energy sector emissions fall across all scenarios
+Total energy emissions fall to 17 Mt CO2-e by 2050 in the Reference scenario. Much of this is
+driven by the fall in transport emissions, and fuel switching in the industrial and commercial
+sectors. The narrow range between the Growth and Constraint scenarios implies that much
+of the difference in emissions between scenarios is not related to activity, but instead fuel
+switching rates and other technological advancement.
+
+
+Figure 30: Total energy emissions
+
+
+
+
+EDGS 2024 Report                                                                   47
+Next steps
+The previous EDGS results were published in July 2019. The scenario definitions, and many
+of the modelling assumptions, have changed materially in this refresh. The changes are due
+to the pace of change in the regulatory environment, policy direction, energy industry
+expectations, and technology development.
+To ensure that the EDGS results reflect emerging trends in a timely manner, our intention is
+to refresh the EDGS more frequently in the future.
+In the meantime, if you have any specific requests or queries relating to the EDGS, then
+please contact us via email at energyinfo@mbie.govt.nz.
+
+
+
+
+EDGS 2024 Report                                                                  48
+Appendix One – Overview of EDGS
+modelling
+MBIE’s energy modelling work programme, including EDGS, makes use of two distinct but
+related models:
+•       MBIE’s “Supply and Demand Energy Model” (SADEM)
+•       The Electricity Authority’s “Generation Expansion Model” (GEM)
+
+Supply and Demand Energy Model (SADEM)
+The Supply and Demand Energy Model (SADEM) is a partial equilibrium model of the energy
+sector. Key drivers such as GDP, population, and the carbon price are exogenous. This means
+that the potential link between variables such as energy demand and the carbon price are
+not modelled explicitly.
+SADEM projects energy demand across the entire economy. The total and peak electricity
+demand are then supplied to GEM, which uses this information to develop a generation
+build schedule and estimate a wholesale electricity cost indicator. This wholesale cost
+indicator then influences electricity demand. As a result, SADEM and GEM need to be run
+iteratively until the models reach an equilibrium of supply and demand.
+Figure 31: SADEM and GEM overview
+
+        GD     popula on growth
+
+             uel switching rates                                     Genera on pipeline
+                                        Electricity demand
+
+        New technology uptake
+
+                 uel prices
+
+
+
+
+                                   SADEM                      GEM
+
+                   esults
+
+
+
+                                           New capacity
+
+                                           Electricity cost
+
+
+
+SADEM performs several key functions:
+
+    •   Provides a central hub, coordinating electricity supply information from GEM and
+        MBIE’s historical energy and activity data.
+
+
+
+EDGS 2024 Report                                                                    49
+       •   Loads and coordinates assumptions and external projections, such as population or
+           carbon price inputs.
+       •   Projects energy demand for each sector and fuel using econometric relationships
+           between demand and price and fuel switching assumptions of expected fuel
+           switching.
+       •   Calculates projected energy sector greenhouse gas emissions by applying emission
+           factors.
+
+Generation Expansion Model (GEM)
+The Generation Expansion Model (GEM) is a long-term planning model used to study
+capacity expansion in the New Zealand electricity sector.
+GEM is used to project the timing and type of new generation capacity that is built. It does
+this by selecting optimal plants from the generation stack, which is MBIE’s internal dataset
+on upcoming potential plant builds. We also provide the model with potential “generic”
+plants. These generic plants are those that haven’t been announced by any specific
+developer but could theoretically be built.
+GEM takes this information and designs a plant build schedule that meets total and peak
+demand while minimising total costs. A wholesale price estimate is then projected based on
+the long run marginal cost of each new plant built.
+To do this, GEM:
+       •   Selects from the pipeline of potential plants and builds those needed to meet
+           demand or peak demand with the lowest cost in each year.
+       •   Retires plants that reach the end of their natural lifespan, or refurbishes these if
+           refurbishment is applicable and doing so would be cost-effective
+       •   Runs several scenarios of different hydrology sequences, to ensure that enough
+           capacity is built to meet wet or dry year requirements.
+       •   Assesses the firm capacity of the current build and ensures that it is sufficient to
+           meet SADEM’s projection of peak demand.
+       •   Dispatches different technologies based on the overall demand for any given year
+           (for example, lowering Huntly coal use if there is enough wind or hydro generation to
+           meet baseload requirements).
+There is also the ability to manually adjust specific settings for plants, such as adjusting
+Huntly’s ankine units to use biomass, or exogenously setting plant retirement dates.
+ or more information see the Electricity Authority’s webpage “Generation Expansion Model
+(GEM) overview23”.
+
+
+
+
+23
+     Electricity Authority – Generation Expansion Model (https://www.emi.ea.govt.nz/Wholesale/Tools/GEM)
+
+
+EDGS 2024 Report                                                                               50
+
