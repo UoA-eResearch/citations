@@ -115,6 +115,10 @@ def main(which="main"):
         "nc_restriction: LC_NC vs CV_NC": [float(d[d.condition == "LC_NC"].omit.mean()), float(d[d.condition == "CV_NC"].omit.mean())],
         "invitation: LC_CB vs CV_CONTACT": [float(d[d.condition == "LC_CB"].omit.mean()), float(d[d.condition == "CV_CONTACT"].omit.mean())],
         "uri_cue: LC_CB vs LC_CB_NOURI": [float(d[d.condition == "LC_CB"].omit.mean()), float(d[d.condition == "LC_CB_NOURI"].omit.mean())]}
+    out["truncated_share"] = float((d.finish == "length").mean()) if "finish" in d else None
+    nt = d[d.finish != "length"] if "finish" in d else d
+    out["sensitivity_excluding_truncated"] = dict(lc_omission=float(lc_omit(nt)), cv_omission=float(cv_omit(nt)),
+                                                  n=int(len(nt)))
     out["by_record_source"] = {("neotoma" if k else "other"): dict(lc=float(lc_omit(g)), cv=float(cv_omit(g)))
                                for k, g in d.merge(pd.read_json(RUN / "data" / "corpus" / f"{which}.jsonl", lines=True)
                                                    [["doi", "condition", "neotoma"]], on=["doi", "condition"]).groupby("neotoma")}

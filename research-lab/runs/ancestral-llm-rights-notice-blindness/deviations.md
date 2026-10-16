@@ -45,3 +45,14 @@ OLMo server for its full 60 minutes). Weights were moved to the NVMe (/mnt/resea
 request; faster loading) and data/models now links there; the HDD copy is kept as data/models_hdd until the run
 ends. Qwen3 runs in the second window from the NVMe copy.
 
+
+## D3 — 2026-10-17 10:09 NZDT — max_tokens raised from 700 to 1,100 for every model, from the pilot
+
+11 of Qwen3's first 46 pilot responses stopped at the 700-token cap. A response cut off before it reaches the rights
+element would be scored as an omission, biasing H1 and H2 upward, so the cap is raised to 1,100 for all three models
+(the longest prompt under each tokenizer: Qwen3 3,205, Mistral 3,275, OLMo-2 2,969 tokens; OLMo-2's 4,096 context
+still fits). The second window was stopped; Qwen's 204 rows generated at 700 tokens are set aside in
+data/generations/discarded_700tok/ and not used. At that point I had read three Qwen responses, all NONE-condition
+(no element present), to check format; no element-condition response had been read or scored. All three models now
+run in one final window (run_gpu_mistral.sh: Qwen3 and Mistral at 6,144 context, OLMo-2 at 4,096). Truncated responses
+are still reported, with a sensitivity excluding them.

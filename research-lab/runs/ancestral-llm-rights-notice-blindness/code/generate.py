@@ -1,5 +1,5 @@
 """Generate responses from one model served by a local vLLM OpenAI-compatible server. All inference is local:
-no record is sent to any third-party API. Greedy decoding (temperature 0), max 700 new tokens; Qwen3 in its
+no record is sent to any third-party API. Greedy decoding (temperature 0), max 1,100 new tokens; Qwen3 in its
 non-thinking mode. Resumable: rows already in the output file are skipped.
 
 Usage: venv/bin/python code/generate.py <label> <base_url> <served_name> <set: pilot|main>
@@ -16,7 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from prompts import FRAMINGS  # noqa: E402
 
 RUN = Path(__file__).resolve().parents[1]
-MAX_TOKENS = 700
+MAX_TOKENS = 1100   # raised from 700 after 11 of Qwen's first 46 pilot responses hit the cap (deviations D3)
 
 
 def main(label, base, served, which):

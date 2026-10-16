@@ -1,17 +1,17 @@
 #!/bin/bash
-# Third GPU window (deviations D2): Mistral-Small-24B (in the first window generate.py failed at import: requests was
-# not installed) and OLMo-2-13B (its server rejected --max-model-len 6144: OLMo-2's context is 4,096). Context set to
-# 4,096 for both: the longest prompt is 2,959 OLMo tokens + 700 output, so no prompt or output is truncated.
+# Final GPU window for all three models (deviations D2, D3), with max_tokens 1,100 for every model. Context per model:
+# OLMo-2 4,096 (its limit; longest prompt 2,969 + 1,100 fits), Qwen3 and Mistral 6,144. Waits for a free GPU before
+# each server, stops waiting if a container exits, and captures each container's log.
 cd "$(dirname "$0")/.."
 RUN=$(pwd)
 trap 'docker stop lc-gen >/dev/null 2>&1; docker start vllm >/dev/null 2>&1; echo "user vllm restarted $(date)"' EXIT
 docker image inspect vllm/vllm-openai:latest --format '{{.Id}} {{.Created}}' > logs/vllm_image_mistral.txt
 docker stop vllm
-for spec in "mistral-small-24b:Mistral-Small-24B-Instruct-2501" "olmo2-13b:OLMo-2-1124-13B-Instruct"; do
-  IFS=: read label dir <<< "$spec"
+for spec in "qwen3-32b:Qwen3-32B:6144" "mistral-small-24b:Mistral-Small-24B-Instruct-2501:6144" "olmo2-13b:OLMo-2-1124-13B-Instruct:4096"; do
+  IFS=: read label dir mlen <<< "$spec"
   for i in $(seq 1 60); do used=$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits | head -1); [ "$used" -lt 2000 ] && break; sleep 10; done
   docker run --rm -d --gpus all --name lc-gen -v $RUN/data/models:/models -p 8002:8000 vllm/vllm-openai:latest \
-    --model /models/$dir --served-model-name $label --max-model-len 4096 --gpu-memory-utilization 0.92 \
+    --model /models/$dir --served-model-name $label --max-model-len $mlen --gpu-memory-utilization 0.92 \
     --max-num-seqs 64 --seed 0
   (docker logs -f lc-gen > logs/lc-gen-$label.log 2>&1 &)
   up=0
