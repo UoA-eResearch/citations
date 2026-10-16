@@ -31,3 +31,13 @@ only) showed why. Fixed (ISO parsed explicitly; any row dated outside its file's
 rebuilt: every segment is now 100% valid. The segments the code builds match those plan.md section 5 predicted
 from the inventory, exactly. 5 of 2,068 field-months are dropped as whole-month outages (Ohaaki 3, Rotokawa 1,
 Tauhara 1).
+
+## D3 — 2026-10-17 00:56 NZDT — post-hoc descriptive checks of drilling cycles, written after the results were seen
+
+The preregistered results: H1 Supported (fleet +0.02%/yr, -0.18 to +0.22), H2 Refuted (no field below -3%/yr;
+Mokai steepest at -1.53%/yr). Ohaaki's linear trend (-0.12%/yr, wide interval -1.65 to +1.44) hides a cycle: annual
+median P95 of 35-40 MW in 2000-07, 66 MW in 2008, back to ~40 MW by 2013, flat since - consistent with the
+well-investment programme the NZGA field page describes. code/supplementary.py, written now and committed before
+it runs, gives rolling 60-month trends per field (R1), flags year-to-year steps of >= 15% (R2), and fits the
+preregistered trend model to the run-down after each upward step (R3). Descriptive and exploratory; no verdict
+changes.
