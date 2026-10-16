@@ -23,7 +23,9 @@ What it does:
   - recovery-time error, censoring-aware: for an observed recovery, |log T - log median|; for a recovery censored
     at 120 days, max(0, log 120 - log median) (a forecast at or beyond the censoring point is not penalised); the
     same for the benchmark median (5.5 days);
-  - with fewer than 3 events the score is reported and not interpreted.
+  - decision rule: fewer than 3 events -> reported, not interpreted; 3+ events with none disrupted ->
+    uninformative about skill (low probabilities win automatically); otherwise the forecast "shows skill" only
+    if its Brier score beats BOTH benchmarks AND its recovery error beats the benchmark median's.
 """
 import hashlib
 import json
@@ -135,6 +137,14 @@ def main(raw, proc):
                  mae_log_T=float(np.mean(err)) if err else None,
                  mae_log_T_benchmark=float(np.mean(err0)) if err0 else None,
                  interpret=bool(len(ok) >= 3))
+    # decision rule, fixed after the review (deviations D8) so September 2027 holds no judgement call
+    if len(ok) < 3:
+        score["verdict"] = "reported, not interpreted (fewer than 3 events)"
+    elif len(dis) == 0:
+        score["verdict"] = "uninformative about skill (no event disrupted)"
+    else:
+        skill = (brier < b_all) and (brier < b_sids) and (score["mae_log_T"] < score["mae_log_T_benchmark"])
+        score["verdict"] = "shows skill" if skill else "does not show skill"
     json.dump(score, open(TAB / "forecast_score.json", "w"), indent=1)
     print(json.dumps(score, indent=1))
 

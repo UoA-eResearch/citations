@@ -1,0 +1,10 @@
+{
+ "n_events": 3,
+ "n_disrupted": 0,
+ "brier": 0.001804636216828164,
+ "brier_benchmark_all_ports": 0.10851211072664362,
+ "brier_benchmark_small_island": 0.003460207612456747,
+ "mae_log_T": null,
+ "mae_log_T_benchmark": null,
+ "interpret": true
+}

@@ -80,7 +80,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
   <h1>How long do island supply lines stay broken after a cyclone?</h1>
   <p class="subtitle">Ship calls after Category 3+ cyclones at 2,065 ports over eight years of open AIS-derived data: an import-concentration test, a small-island comparison, and a forecast for the 2026–27 South Pacific season frozen before it begins.</p>
   <div class="meta">
-    <span>Report · 2026-10-17 · pre-review draft</span>
+    <span>Report · 2026-10-17 · revised after independent review</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/blue-pacific-port-cyclone-recovery/plan.md">Preregistration</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/blue-pacific-port-cyclone-recovery/deviations.md">Deviations log</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/blue-pacific-port-cyclone-recovery/code">Code</a>
@@ -96,7 +96,9 @@ association in it turns out to track how many ports a country has, not import co
 <p>The small-island hypothesis (a time ratio ≥ 2) could not be estimated as planned. Only 1 of 17 measurable
 small-island events showed any detectable disruption. That is the rate the same method gives at small-island ports
 on dates with no storm (3 of 49), so there was nothing to time. Measured instead as average days disrupted,
-small-island ports showed far less disruption than other ports, not more.</p>
+small-island ports showed far less <em>detectable</em> disruption than other ports, not more. Part of that gap is
+detectability. The part that is not is among ports inside hurricane-force winds: small-island ports 0 of 6
+disrupted, other ports 14 of 23.</p>
 <p>The deeper finding is about what this kind of data can see. Most Pacific island ports are too quiet for ship-call
 records to reveal a closure shorter than a month. Of the six measurable small-island harbours that took
 hurricane-force winds, four would almost certainly have shown a complete two-week closure, and none did. At the
@@ -111,7 +113,7 @@ every two days. At that rate, a port can be shut for two weeks and the record lo
 Before looking at any result, we simulated how long a closure would have to be to show up at each level of traffic.</p>
 <p>At the small-island ports busy enough to measure (17 cases, mostly in the Caribbean, five in the Pacific), we
 almost never saw a disruption. The one we saw (Kingston, Jamaica, two days) is the rate our method gives on dates
-with no storm at all. Only six of those ports actually took hurricane-force winds. At four of them, a full
+with no storm at all. Only six of those cases actually took hurricane-force winds. At four of them, a full
 two-week shutdown would almost certainly have shown up, and none did. At the two ports hit hardest by Hurricane
 Melissa, it might not have. That is not evidence that the islands escaped harm. Ship visits are not cargo, the
 hardest-hit ports were usually the quiet ones, and a service running at half capacity would often look normal in
@@ -546,13 +548,22 @@ without judgement calls (D8):</p>
   small-island rate (0.06).</li>
 </ul>
 <p>A dry run on the 2019–20 season reproduces the three Harold events. Scoring is due once PortWatch covers 30 April
-2027 plus 135 days, about September 2027. With fewer than three events the score will be reported and not
-interpreted.</p>
+2027 plus 135 days, about September 2027.</p>
+<p><strong>The decision rule, fixed now (D8):</strong></p>
+<ul>
+<li><strong>Fewer than 3 scorable events:</strong> the score is reported and not interpreted.</li>
+<li><strong>3 or more events but none disrupted:</strong> the result is reported as uninformative about skill, because low
+  probabilities win automatically when nothing happens.</li>
+<li><strong>3 or more events, at least one disrupted:</strong> the forecast <em>shows skill</em> only if its Brier score beats both the
+  all-port (0.33) and small-island (0.06) benchmarks, <em>and</em> its censoring-aware recovery error beats the 5.5-day
+  benchmark's. Otherwise it <em>does not show skill</em>.</li>
+</ul>
 <h2>What this does and does not show</h2>
 <p><strong>It shows</strong> three things. First, at the four measurable small-island harbours that took hurricane-force winds and
 where the method had near-full power, there was no complete two-week closure (2019–2026). Second, import share as
-PortWatch defines it is not a usable predictor of port recovery: its signal is within chance and is carried by
-country port counts. Third, most Pacific ports are too quiet for ship-call records to answer the lead's question,
+PortWatch defines it is not a usable predictor of port recovery in these data. In the primary arm its signal is
+within chance (permutation p = 0.14). In the Cat 1+ arm it is not within chance, but it is carried by country port
+counts. Third, most Pacific ports are too quiet for ship-call records to answer the lead's question,
 and F1 shows where that limit lies.</p>
 <p><strong>It does not show</strong> that small island ports are resilient. Eleven reasons:</p>
 <ol>

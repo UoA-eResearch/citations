@@ -129,3 +129,11 @@ The forecast covariates were frozen from the sealed 2026 vintage (forecast_port_
 30e8a4c19ed47ee0eefc872b8d5e7182b7ba9e949e97c78d650961e8da4737f7) and the revised scorer reproduces all 108
 frozen rows from them.
 
+Confirmation pass (review/confirmation.md, publish with edits): three wording edits made (pooled gap is detectable
+disruption, with the inside-R64 stratum as the part that is not detectability; import share "not usable in these
+data", within chance in the primary arm but not in Cat 1+, where port counts carry it; "cases" for "ports"). The
+forecast's decision rule is now fixed in report and scorer: fewer than 3 events -> reported, not interpreted; 3+
+with none disrupted -> uninformative about skill; otherwise "shows skill" only if the Brier score beats both the
+all-port (0.329) and small-island (0.059) benchmarks and the censoring-aware recovery error beats the 5.5-day
+benchmark's.
+

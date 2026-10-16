@@ -1,0 +1,47 @@
+{
+ "season": [
+  "2026-11-01",
+  "2027-04-30"
+ ],
+ "covariates": [
+  "log_size",
+  "log_activity",
+  "cat",
+  "closest_100km",
+  "share",
+  "sids"
+ ],
+ "part_b_covariates": [
+  "log_size",
+  "log_activity",
+  "cat",
+  "closest_100km",
+  "share"
+ ],
+ "fitted_on": {
+  "n_events": 85,
+  "n_disrupted": 28,
+  "n_storms": 34,
+  "n_sids_disrupted": 1
+ },
+ "part_a_logit": {
+  "const": -2.571509934316078,
+  "log_size": -0.31761410385122973,
+  "log_activity": 1.1098165013459866,
+  "cat": 1.3182741439522667,
+  "closest_100km": -1.3521656937735915,
+  "share": -1.452475558285346,
+  "sids": -1.604476966074677
+ },
+ "part_b_weibull_aft": {
+  "lambda_|cat": 1.172920719752028,
+  "lambda_|closest_100km": -1.5861638313474713,
+  "lambda_|log_activity": -0.06637234020803427,
+  "lambda_|log_size": 0.05798887194507227,
+  "lambda_|share": 0.5070473779214033,
+  "lambda_|Intercept": -0.8604282374555229,
+  "rho_|Intercept": 0.06588457051560484
+ },
+ "benchmark_median_T_disrupted": 5.5,
+ "benchmark_share_disrupted": 0.32941176470588235
+}

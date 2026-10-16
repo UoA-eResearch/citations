@@ -12,7 +12,9 @@ association in it turns out to track how many ports a country has, not import co
 The small-island hypothesis (a time ratio ≥ 2) could not be estimated as planned. Only 1 of 17 measurable
 small-island events showed any detectable disruption. That is the rate the same method gives at small-island ports
 on dates with no storm (3 of 49), so there was nothing to time. Measured instead as average days disrupted,
-small-island ports showed far less disruption than other ports, not more.
+small-island ports showed far less *detectable* disruption than other ports, not more. Part of that gap is
+detectability. The part that is not is among ports inside hurricane-force winds: small-island ports 0 of 6
+disrupted, other ports 14 of 23.
 
 The deeper finding is about what this kind of data can see. Most Pacific island ports are too quiet for ship-call
 records to reveal a closure shorter than a month. Of the six measurable small-island harbours that took
@@ -32,7 +34,7 @@ Before looking at any result, we simulated how long a closure would have to be t
 
 At the small-island ports busy enough to measure (17 cases, mostly in the Caribbean, five in the Pacific), we
 almost never saw a disruption. The one we saw (Kingston, Jamaica, two days) is the rate our method gives on dates
-with no storm at all. Only six of those ports actually took hurricane-force winds. At four of them, a full
+with no storm at all. Only six of those cases actually took hurricane-force winds. At four of them, a full
 two-week shutdown would almost certainly have shown up, and none did. At the two ports hit hardest by Hurricane
 Melissa, it might not have. That is not evidence that the islands escaped harm. Ship visits are not cargo, the
 hardest-hit ports were usually the quiet ones, and a service running at half capacity would often look normal in
@@ -275,15 +277,24 @@ without judgement calls (D8):
   small-island rate (0.06).
 
 A dry run on the 2019–20 season reproduces the three Harold events. Scoring is due once PortWatch covers 30 April
-2027 plus 135 days, about September 2027. With fewer than three events the score will be reported and not
-interpreted.
+2027 plus 135 days, about September 2027.
+
+**The decision rule, fixed now (D8):**
+
+- **Fewer than 3 scorable events:** the score is reported and not interpreted.
+- **3 or more events but none disrupted:** the result is reported as uninformative about skill, because low
+  probabilities win automatically when nothing happens.
+- **3 or more events, at least one disrupted:** the forecast *shows skill* only if its Brier score beats both the
+  all-port (0.33) and small-island (0.06) benchmarks, *and* its censoring-aware recovery error beats the 5.5-day
+  benchmark's. Otherwise it *does not show skill*.
 
 ## What this does and does not show
 
 **It shows** three things. First, at the four measurable small-island harbours that took hurricane-force winds and
 where the method had near-full power, there was no complete two-week closure (2019–2026). Second, import share as
-PortWatch defines it is not a usable predictor of port recovery: its signal is within chance and is carried by
-country port counts. Third, most Pacific ports are too quiet for ship-call records to answer the lead's question,
+PortWatch defines it is not a usable predictor of port recovery in these data. In the primary arm its signal is
+within chance (permutation p = 0.14). In the Cat 1+ arm it is not within chance, but it is carried by country port
+counts. Third, most Pacific ports are too quiet for ship-call records to answer the lead's question,
 and F1 shows where that limit lies.
 
 **It does not show** that small island ports are resilient. Eleven reasons:
