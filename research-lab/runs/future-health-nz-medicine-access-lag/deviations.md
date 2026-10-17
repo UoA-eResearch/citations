@@ -206,3 +206,21 @@ new analytic choices. The report gives both sets of numbers; the verdict-bearing
    the preregistered old-substance rule excludes it. The additions can therefore move only the cohort-wide denominators,
    not H1 or H3. The Medsafe searches are run for them, and for the five names D8 created, through the same
    `medsafe.py` (search terms "dimethyl fumarate" and "faecal microbiota").
+
+## D8d — 2026-10-18 00:24 NZDT — corrections to earlier entries (review issues 4, 21, 22, 24) and the report rewrite
+
+- **D2.1.** The Hospital Medicines List archive runs from October 2013 to October 2026, not 2011–2025.
+- **Plan §4 cutoff.** The cutoff is 1 October 2026, the last Schedule edition available when the analysis ran, not 1
+  November 2026.
+- **D6.2.** The FDA approvals the cohort missed were a coverage gap: Drugs@FDA omits CBER-licensed products. They were
+  not a naming problem, except Velphoro (a CDER product under a different ingredient string). D8b.1 and D8c.2 address
+  the gap.
+- **D6.4.** The provisional-consent limitation applied to T1 as well as T2. D8b.5 fixes T1 and bounds T2.
+- **Issue 22** (split FDA ingredient strings on commas) needed no change. After the ALIAS table, no cohort name joins
+  two substances that are approved separately (checked against every FDA/EMA first approval).
+- **The report was rewritten after the D8 rerun.**
+  - H3 is reframed around the source's own definition.
+  - The TGA paired median is dropped.
+  - The stage split and its decomposition use one population.
+  - Both adjudications are reported, as scored and re-scored.
+  - The pre-review numbers are kept beside the corrected ones.

@@ -52,7 +52,9 @@ def f1():
     ax.legend(frameon=False, ncol=3, loc="lower left", bbox_to_anchor=(0, 1.0), fontsize=8)
     fig.savefig(F / "F1_stages.png", dpi=200); plt.close(fig)
     caption("F1_stages", """Median days in each stage for new active substances that were eventually funded and have
-    all four dates, by period of first international approval. Stacked medians do not sum to the median total.""")
+    all four dates, by period of first international approval. A sponsor that applied in NZ before the first FDA/EMA
+    approval has a sponsor delay of 0 (22 of the 71 approved 2010-23). Stacked medians do not sum to the median
+    total.""")
 
 
 def f2():

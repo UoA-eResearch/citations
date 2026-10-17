@@ -1,78 +1,78 @@
 {
  "cutoff": "2026-10-01",
- "n_cohort": 680,
- "n_excluded_old": 25,
+ "n_cohort": 666,
+ "n_excluded_old": 28,
  "H1_population": {
-  "t0_2010_2023": 627,
-  "funded": 87,
-  "used": 74,
-  "funded_before_consent": 5,
-  "funded_without_consent": 5,
-  "consent_before_t0": 3
+  "t0_2010_2023": 612,
+  "funded": 84,
+  "used": 77,
+  "funded_before_consent": 4,
+  "funded_without_consent": 2,
+  "consent_before_t0": 1
  },
  "H1a_regulatory_share": {
-  "aggregate": 0.4039861989962906,
+  "aggregate": 0.401442150543258,
   "ci": [
-   0.32689448369968876,
-   0.4841426689658066
+   0.3326250740008839,
+   0.47994086291720484
   ],
-  "median_per_substance": 0.3983112848539777,
+  "median_per_substance": 0.39936229573535276,
   "verdict": "Refuted"
  },
  "H1b_median_total_days": {
-  "median": 1556.0,
+  "median": 1668.0,
   "ci": [
    1329.0,
-   2200.0
+   2134.0
   ],
-  "funded_all_median": 1447.0,
+  "funded_all_median": 1483.0,
   "verdict": "Inconclusive"
  },
  "H3_denominators_T2_T3_years": {
   "funded_only": {
-   "n": 79,
-   "mean": 3.1866503781873,
-   "median": 2.135523613963039
+   "n": 80,
+   "mean": 3.1658795345653665,
+   "median": 2.130047912388775
   },
   "consented_km": {
-   "n": 204,
-   "events": 79,
+   "n": 205,
+   "events": 80,
    "median": 11.953456536618754,
-   "rmst_10y": 6.985087004506102,
-   "funded_by_5y": 0.3308779318564232,
-   "funded_by_10y": 0.4336766922601343
+   "rmst_10y": 6.956538740442502,
+   "funded_by_5y": 0.3343878346927184,
+   "funded_by_10y": 0.43643894311028586
   },
   "all_cohort_T0_T3_km": {
-   "n": 680,
-   "events": 89,
+   "n": 666,
+   "events": 86,
    "median": null,
-   "rmst_10y": 9.170185965241483
+   "rmst_10y": 9.193325220112053
   },
   "verdict": "Refuted",
   "other_claims": {
-   "days_1050_funded_median_T2_T3": 780.0,
+   "days_1050_funded_median_T2_T3": 778.0,
    "years_7_to_10": {
     "funded_mean_in_range": false
    }
   }
  },
  "D3_funding_stage_split": {
-  "n": 33,
-  "consent_to_application_median_days": 134.0,
-  "application_to_listing_median_days": 1065.0,
-  "application_share_of_funding_stage": 0.8813024294110465,
-  "funded_with_application_before_consent": 41
+  "n": 34,
+  "consent_to_application_median_days": 129.0,
+  "application_to_listing_median_days": 983.5,
+  "application_share_of_funding_stage": 0.8823062042282713,
+  "funded_with_application_before_consent": 40
  },
  "D3_H3_application_based_years": {
   "application_to_approval_decided_only": {
    "n": 75,
-   "mean": 3.4165822496007303,
+   "mean": 3.406616472735569,
    "median": 2.195756331279945
   },
   "application_to_approval_km": {
-   "n": 177,
+   "n": 175,
    "median": 8.728268309377139,
-   "rmst_10y": 6.620170931661872
+   "rmst_10y": 6.568077769942265
   },
   "consent_to_approval_decided_only": {
    "n": 72,
@@ -82,82 +82,158 @@
   "consent_to_approval_km": {
    "n": 207,
    "median": 12.971937029431896,
-   "rmst_10y": 7.269913819404164
+   "rmst_10y": 7.270053979797334
   }
  },
  "D3_TGA_benchmark": {
   "cutoff": "2026-03-05",
-  "n": 680,
+  "n": 666,
   "both": 184,
   "median_medsafe_minus_tga_days": 427.0,
   "nz_km_median_days": null,
-  "au_km_median_days": 1469.0,
-  "nz_by_2y": 0.15119580863954485,
-  "au_by_2y": 0.394642835208708,
-  "nz_by_5y": 0.29387694033535305,
-  "au_by_5y": 0.5279037684317615
+  "au_km_median_days": 1440.0,
+  "nz_by_2y": 0.15479771912668905,
+  "au_by_2y": 0.3973202341676494,
+  "nz_by_5y": 0.30342419988082336,
+  "au_by_5y": 0.5356096844376317
  },
  "competing_risks": {
-  "n": 204,
-  "funded": 79,
+  "n": 205,
+  "funded": 80,
   "consent_ended_first": 24,
-  "cif_funded_5y": 0.3308844306859348,
-  "cif_funded_10y": 0.436240046699796
+  "cif_funded_5y": 0.3343947936925732,
+  "cif_funded_10y": 0.4388994016498425
  },
+ "stage_early_filers": 25,
  "stage_split": [
   {
    "period": "2010-14",
-   "n": 27,
-   "sponsor_median": 494.0,
-   "medsafe_median": 268.0,
-   "funding_median": 774.0,
-   "total_median": 2511.0,
-   "sponsor_share": 0.3077494735972916,
-   "medsafe_share": 0.11790044451784264,
-   "funding_share": 0.5743500818848658
+   "n": 38,
+   "sponsor_median": 247.0,
+   "medsafe_median": 262.5,
+   "funding_median": 777.0,
+   "total_median": 1585.0,
+   "sponsor_share": 0.263892658634159,
+   "medsafe_share": 0.13816542560096295,
+   "funding_share": 0.597941915764878
   },
   {
    "period": "2015-19",
-   "n": 20,
-   "sponsor_median": 479.5,
-   "medsafe_median": 267.5,
-   "funding_median": 1016.5,
-   "total_median": 2059.0,
-   "sponsor_share": 0.2805460443323121,
-   "medsafe_share": 0.16070463146512884,
-   "funding_share": 0.5587493242025591
+   "n": 29,
+   "sponsor_median": 332.0,
+   "medsafe_median": 301.0,
+   "funding_median": 931.0,
+   "total_median": 1839.0,
+   "sponsor_share": 0.24174908323147015,
+   "medsafe_share": 0.19529947771974665,
+   "funding_share": 0.5629514390487832
   },
   {
    "period": "2020-23",
+   "n": 4,
+   "sponsor_median": 0.0,
+   "medsafe_median": 257.5,
+   "funding_median": 250.5,
+   "total_median": 539.0,
+   "sponsor_share": 0.02419984387197502,
+   "medsafe_share": 0.4562841530054645,
+   "funding_share": 0.5195160031225605
+  },
+  {
+   "period": "2024",
    "n": 2,
-   "sponsor_median": 393.5,
-   "medsafe_median": 402.0,
-   "funding_median": 425.0,
-   "total_median": 1220.5,
-   "sponsor_share": 0.3224088488324457,
-   "medsafe_share": 0.3293732077017616,
-   "funding_share": 0.3482179434657927
+   "sponsor_median": 0.0,
+   "medsafe_median": 300.0,
+   "funding_median": 167.0,
+   "total_median": 467.0,
+   "sponsor_share": 0.0,
+   "medsafe_share": 0.6423982869379015,
+   "funding_share": 0.3576017130620985
   },
   {
    "period": "all 2010-23",
-   "n": 49,
-   "sponsor_median": 494.0,
+   "n": 71,
+   "sponsor_median": 262.0,
    "medsafe_median": 269.0,
-   "funding_median": 931.0,
-   "total_median": 2200.0,
-   "sponsor_share": 0.29794302738166967,
-   "medsafe_share": 0.13812177813483298,
-   "funding_share": 0.5639351944834974
+   "funding_median": 780.0,
+   "total_median": 1610.0,
+   "sponsor_share": 0.2510846102126756,
+   "medsafe_share": 0.1657666584097102,
+   "funding_share": 0.5831487313776142
   }
  ],
+ "decomposition_one_population": {
+  "n": 71,
+  "regulatory_T0_T2": 0.4168512686223858,
+  "regulatory_ci": [
+   0.34098716026797093,
+   0.4985159900255838
+  ],
+  "sponsor": 0.2510846102126756,
+  "sponsor_ci": [
+   0.18512499532650828,
+   0.3203157271618268
+  ],
+  "medsafe": 0.1657666584097102,
+  "medsafe_ci": [
+   0.1388798313824997,
+   0.1988626993470884
+  ],
+  "funding": 0.5831487313776142,
+  "funding_ci": [
+   0.5014840099744161,
+   0.6590128397320291
+  ]
+ },
+ "H1a_provisional_lower_bound": {
+  "n_with_section23": 2,
+  "aggregate": 0.39570885033275366
+ },
+ "H3_context": {
+  "rmst_by_horizon_years": {
+   "5.0": 3.9748142011705117,
+   "7.7": 5.642349250094802,
+   "10.0": 6.956538740442502,
+   "12.0": 8.01880744650291
+  },
+  "funded_T2_T3_ge7y": 9,
+  "funded_T2_T3_7_to_10y": 4,
+  "funded_T2_T3_gt10y": 5,
+  "funded_n": 80,
+  "unfunded_at_7y_km": 0.6002518335693308,
+  "funded_T2_T3_mean_days": 1156.3375,
+  "decided_app_to_approval_by_decision_year": {
+   "to 2021": {
+    "n": 47,
+    "mean": 2.095912155766234,
+    "median": 1.8453114305270362
+   },
+   "2022-23": {
+    "n": 10,
+    "mean": 4.131964407939767,
+    "median": 3.567419575633128
+   },
+   "2024-26": {
+    "n": 18,
+    "mean": 6.426040003042057,
+    "median": 5.564681724845996
+   }
+  }
+ },
+ "t0_2024": {
+  "n": 54,
+  "consented": 3,
+  "funded": 2
+ },
+ "excluded_hml_first_edition": 8,
  "H2_australia": {
-  "n": 310,
+  "n": 316,
   "nz_events": 15,
   "au_events": 77,
   "nz_median": null,
   "au_median": null,
-  "nz_listed_by_3y": 0.03650171937879121,
-  "au_listed_by_3y": 0.17544835528806169,
+  "nz_listed_by_3y": 0.03584716808764832,
+  "au_listed_by_3y": 0.16932854025047261,
   "verdict": "not testable as stated (median not reached)"
  }
 }

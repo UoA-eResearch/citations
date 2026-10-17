@@ -1,0 +1,206 @@
+{
+ "R5_cohort": {
+  "before": 705,
+  "after": 694,
+  "removed_or_merged": 30,
+  "added_or_renamed": [
+   "acellular tissue engineered vessel",
+   "afamitresgene autoleucel",
+   "allogeneic cultured keratinocytes and dermal fibroblasts in murine collagen",
+   "allogeneic cultured keratinocytes and fibroblasts in bovine collagen",
+   "allogeneic processed thymus tissue",
+   "azficel-t",
+   "beremagene geperpavec",
+   "delandistrogene moxeparvovec",
+   "dimethylfumarate",
+   "donislecel",
+   "fecal microbiota",
+   "lifileucel",
+   "lovotibeglogene autotemcel",
+   "nadofaragene firadenovec",
+   "obecabtagene autoleucel",
+   "omidubicel",
+   "plasminogen",
+   "remestemcel-l",
+   "sipuleucel-t"
+  ],
+  "cber_matched": 52,
+  "cber_only_added": 14,
+  "t0_changed": 32,
+  "t0_changed_median_days": 266.0,
+  "wrong_before_share": 0.088
+ },
+ "R5_t1_changed": {
+  "amivantamab": [
+   "NaT",
+   "2021-12-03"
+  ],
+  "atezolizumab": [
+   "2018-02-23",
+   "2016-09-20"
+  ],
+  "cilgavimab": [
+   "NaT",
+   "2022-04-26"
+  ],
+  "epcoritamab": [
+   "NaT",
+   "2024-06-27"
+  ],
+  "glofitamab": [
+   "2024-10-01",
+   "2022-09-01"
+  ],
+  "polatuzumab vedotin": [
+   "2022-02-14",
+   "2019-04-04"
+  ],
+  "tixagevimab": [
+   "NaT",
+   "2022-04-26"
+  ],
+  "vemurafenib": [
+   "2015-05-01",
+   "2011-05-20"
+  ],
+  "zanubrutinib": [
+   "NaT",
+   "2022-01-10"
+  ]
+ },
+ "R5_t2_changed": {
+  "tenofovir alafenamide": [
+   "NaT",
+   "2016-11-10"
+  ]
+ },
+ "R5_t3_changed": {},
+ "R10_brand_matches": {
+  "n": 8,
+  "set_t2": [
+   "tenofovir alafenamide"
+  ],
+  "substances": [
+   "botulinum toxin type a",
+   "collagenase clostridium histolyticum",
+   "follitropin delta",
+   "nonacog gamma",
+   "peginterferon beta-1a",
+   "tenofovir alafenamide",
+   "trastuzumab deruxtecan",
+   "trastuzumab emtansine"
+  ]
+ },
+ "R11_validation": {
+  "v1_as_reported": {
+   "t1_ok": [
+    0.985,
+    133
+   ],
+   "t2_ok": [
+    0.966,
+    148
+   ],
+   "t3_ok": [
+    0.979,
+    142
+   ]
+  },
+  "v1_rescored": {
+   "t1_ok": [
+    0.97,
+    134
+   ],
+   "t2_ok": [
+    0.959,
+    148
+   ],
+   "t3_ok": [
+    0.979,
+    142
+   ]
+  },
+  "v1_ids_rescored": [
+   "m073",
+   "m116"
+  ],
+  "v2_as_reported": {
+   "t1_ok": [
+    1.0,
+    97
+   ],
+   "t2_ok": [
+    0.99,
+    100
+   ],
+   "t3_ok": [
+    1.0,
+    98
+   ]
+  },
+  "v2_rescored": {
+   "t1_ok": [
+    0.98,
+    98
+   ],
+   "t2_ok": [
+    0.98,
+    100
+   ],
+   "t3_ok": [
+    1.0,
+    98
+   ]
+  },
+  "v2_ids_rescored": [
+   "r018",
+   "r059"
+  ],
+  "reviewer_readjudication": {
+   "t1_ok": [
+    0.89,
+    64
+   ],
+   "t2_ok": [
+    0.94,
+    70
+   ],
+   "t3_ok": [
+    1.0,
+    69
+   ]
+  }
+ },
+ "R15_recall": {
+  "sample": 50,
+  "with_cohort_hit": 10,
+  "without": 40,
+  "without_first_approved_before_2010": 28,
+  "without_first_approved_2010_2024": [],
+  "without_no_fda_ema_match": [
+   "Benzbromarone",
+   "Erythropoietin alfa",
+   "Dimethicone",
+   "Calcium lactate gluconate with calcium carbonate",
+   "Human milk fortifier",
+   "Sulfadiazine Silver",
+   "Carmellose sodium with gelatin and pectin",
+   "Pneumococcal (PCV13) vaccine",
+   "Meningocccal B multicomponent vaccine",
+   "High protein enteral feed 1.26 kcal/ml",
+   "Chlortalidone [Chlorthalidone]",
+   "Cefalexin"
+  ]
+ },
+ "R17_D4": {
+  "gap_window_t3b": 16,
+  "t3_set_by_su": []
+ },
+ "R8_forecast": {
+  "n": 125,
+  "lapsed_consent": 24,
+  "no_longer_in_cohort": [
+   "alpha1-proteinase inhibitor"
+  ]
+ }
+}

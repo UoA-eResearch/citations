@@ -1,0 +1,151 @@
+id,t1_ok,t2_ok,t3_ok,note,substance
+m000,,1.0,,excluded as old correctly (Botox 1991); T1/T3 not applicable,botulinum toxin type a
+m001,1.0,1.0,1.0,,albutrepenonacog alfa
+m002,1.0,1.0,1.0,absent everywhere,eteplirsen
+m003,1.0,1.0,1.0,SU Oct 2019 vs XML Dec 2019 within 31 days of a Nov effective date,venetoclax
+m004,,1.0,1.0,other factor IX products correctly rejected; application search failed (T1 cannot tell),nonacog beta pegol
+m005,1.0,1.0,1.0,absent everywhere,pegvaliase
+m006,1.0,1.0,1.0,absent everywhere,triclabendazole
+m007,1.0,1.0,1.0,absent everywhere,regdanvimab
+m008,1.0,1.0,1.0,absent everywhere,crisantaspase
+m009,1.0,1.0,1.0,absent everywhere (cell therapy),cells encoding arsa gene
+m010,,0.0,1.0,register shows full consent 2024-11; provisional consent (2022) not captured; funded 2022-04,nirmatrelvir
+m011,1.0,1.0,1.0,absent everywhere,lurasidone
+m012,1.0,1.0,1.0,apixaban not funded in NZ,apixaban
+m013,1.0,1.0,1.0,absent everywhere,dacomitinib
+m014,1.0,1.0,1.0,absent everywhere,pegzilarginase
+m015,0.0,0.0,1.0,provisional-to-full application 2024-10 implies an earlier provisional consent and original application not captured,glofitamab
+m016,,0.0,0.0,old substance under another name (pancreatin; funded as pancreatic enzymes) - should be excluded,pancreas powder
+m017,1.0,1.0,1.0,absent everywhere,sutimlimab
+m018,1.0,1.0,1.0,absent everywhere,ezogabine
+m019,1.0,1.0,1.0,absent everywhere,tisotumab vedotin
+m020,1.0,1.0,1.0,absent everywhere,eflapegrastim
+m021,1.0,1.0,1.0,absent everywhere,opicapone
+m022,1.0,1.0,1.0,absent everywhere,ganaxolone
+m023,,,1.0,radium-223 product not identifiable in the evidence (fallback term 'dichloride'); cannot tell,radium ra223 dichloride
+m024,1.0,1.0,1.0,absent everywhere,landiolol
+m025,1.0,1.0,1.0,absent everywhere,cefiderocol
+m026,1.0,1.0,1.0,absent everywhere,ublituximab
+m027,0.0,0.0,1.0,Medsafe lists 'Ceftaroline' (Zinforo 2013-08-29; application 2012-12-12) - prodrug-name miss; HML 2014-11 correct,ceftaroline fosamil
+m028,1.0,1.0,1.0,absent everywhere,zanidatamab
+m029,1.0,1.0,1.0,absent everywhere,lifitegrast
+m030,1.0,1.0,1.0,,pirfenidone
+m031,1.0,1.0,1.0,,isavuconazonium
+m032,1.0,1.0,1.0,absent everywhere (loose register/PHARMAC check finds nothing),lisocabtagene maraleucel
+m033,1.0,1.0,1.0,,sacituzumab govitecan
+m034,1.0,1.0,1.0,absent everywhere (loose register/PHARMAC check finds nothing),fezolinetant
+m035,1.0,1.0,1.0,absent everywhere (loose register/PHARMAC check finds nothing),pemigatinib
+m036,1.0,1.0,1.0,absent everywhere (loose register/PHARMAC check finds nothing),pozelimab
+m037,1.0,1.0,1.0,absent everywhere (loose register/PHARMAC check finds nothing),bempedoic acid
+m038,1.0,1.0,1.0,absent everywhere (loose register/PHARMAC check finds nothing),gimeracil
+m039,1.0,1.0,1.0,application pending; no consent yet,sotagliflozin
+m040,1.0,1.0,1.0,absent everywhere (loose register/PHARMAC check finds nothing),vorapaxar
+m041,1.0,1.0,1.0,absent everywhere (loose register/PHARMAC check finds nothing),ixekizumab
+m042,1.0,1.0,1.0,absent everywhere (loose register/PHARMAC check finds nothing),naldemedine
+m043,1.0,1.0,1.0,absent everywhere (loose register/PHARMAC check finds nothing),levacetylleucine
+m044,1.0,1.0,1.0,absent everywhere (loose register/PHARMAC check finds nothing),talazoparib
+m045,1.0,1.0,1.0,absent everywhere (loose register/PHARMAC check finds nothing),spinosad
+m046,1.0,1.0,1.0,absent everywhere (loose register/PHARMAC check finds nothing),ibrexafungerp
+m047,,1.0,,excluded as old correctly,leuprorelin
+m048,1.0,1.0,1.0,absent everywhere (loose register/PHARMAC check finds nothing),valoctocogene roxaparvovec
+m049,1.0,1.0,1.0,absent everywhere (loose register/PHARMAC check finds nothing),sulopenem etzadroxil
+m050,1.0,1.0,1.0,absent everywhere (loose register/PHARMAC check finds nothing),rucaparib
+m051,1.0,1.0,1.0,absent everywhere (loose register/PHARMAC check finds nothing),tarlatamab
+m052,1.0,1.0,1.0,absent everywhere (loose register/PHARMAC check finds nothing),difelikefalin
+m053,1.0,1.0,1.0,absent everywhere (loose register/PHARMAC check finds nothing),ivosidenib
+m054,1.0,1.0,1.0,absent everywhere (loose register/PHARMAC check finds nothing),allogeneic t cells genetically modified
+m055,1.0,1.0,1.0,absent everywhere (loose register/PHARMAC check finds nothing),encorafenib
+m056,1.0,1.0,1.0,absent everywhere (loose register/PHARMAC check finds nothing),cangrelor
+m057,1.0,1.0,1.0,absent everywhere (loose register/PHARMAC check finds nothing),raxibacumab
+m058,1.0,1.0,1.0,absent everywhere (loose register/PHARMAC check finds nothing),rezafungin
+m059,,1.0,,excluded as old correctly,tegafur
+m060,1.0,1.0,1.0,,repotrectinib
+m061,1.0,1.0,1.0,,tafluprost
+m062,1.0,1.0,1.0,,quizartinib
+m063,1.0,1.0,1.0,,bimekizumab
+m064,,1.0,1.0,application search failed (T1 cannot tell); icodec not in register,insulin icodec
+m065,1.0,1.0,1.0,,inebilizumab
+m066,1.0,1.0,1.0,,naxitamab
+m067,1.0,1.0,1.0,,atogepant
+m068,1.0,1.0,1.0,,olaparib
+m069,1.0,1.0,1.0,,maftivimab
+m070,1.0,1.0,1.0,,ledipasvir
+m071,1.0,1.0,1.0,,glasdegib
+m072,1.0,1.0,1.0,,tisagenlecleucel
+m073,0.0,1.0,1.0,funded 2022-07 before the (lapsed) consent 2022-07-29; application not found [D8 re-score: Section 23 application earlier],cilgavimab
+m074,1.0,1.0,1.0,,trastuzumab deruxtecan
+m075,1.0,1.0,1.0,,netupitant
+m076,,0.0,,"generic EMA name for an old substance concept (human factor VIII; register has 'Factor VIII, human' 1993) - should be excluded",human coagulation factor viii
+m077,1.0,1.0,1.0,,regorafenib
+m078,1.0,1.0,1.0,,calaspargase pegol
+m079,1.0,1.0,1.0,,teriflunomide
+m080,1.0,1.0,1.0,,ombitasvir
+m081,1.0,1.0,1.0,,tovorafenib
+m082,1.0,1.0,1.0,,tagraxofusp
+m083,1.0,1.0,1.0,,imetelstat
+m084,1.0,1.0,1.0,,tremelimumab
+m085,1.0,1.0,1.0,,concizumab
+m086,1.0,1.0,1.0,,tofacitinib
+m087,1.0,1.0,1.0,,autologous cd34
+m088,1.0,1.0,1.0,,motixafortide
+m089,1.0,1.0,1.0,,cenobamate
+m090,1.0,1.0,1.0,,secnidazole
+m091,1.0,1.0,1.0,,sparsentan
+m092,1.0,1.0,1.0,,capivasertib
+m093,1.0,1.0,1.0,,pembrolizumab
+m094,,1.0,,excluded as old correctly,ciclosporin
+m095,1.0,1.0,1.0,,vestronidase alfa
+m096,1.0,1.0,1.0,,darolutamide
+m097,1.0,1.0,1.0,,axicabtagene ciloleucel
+m098,1.0,1.0,1.0,,selumetinib
+m099,1.0,1.0,1.0,,retroviral vector that encodes for the human ada cdna sequence
+m100,1.0,1.0,1.0,,estetrol
+m101,1.0,1.0,1.0,,givinostat
+m102,1.0,1.0,1.0,,ubrogepant
+m103,1.0,1.0,1.0,,tecovirimat
+m104,1.0,1.0,1.0,,elotuzumab
+m105,1.0,1.0,1.0,,lazertinib
+m106,1.0,1.0,1.0,,luliconazole
+m107,1.0,1.0,1.0,,rimegepant
+m108,1.0,1.0,1.0,,catridecacog
+m109,,1.0,,excluded as old correctly,treosulfan
+m110,,1.0,,excluded as old correctly,norethisterone
+m111,1.0,1.0,1.0,,azilsartan kamedoxomil
+m112,1.0,1.0,1.0,,glecaprevir
+m113,,1.0,,excluded as old correctly,amisulpride
+m114,1.0,1.0,1.0,withdrawn application counts as first application; no consent,ciltacabtagene autoleucel
+m115,1.0,1.0,1.0,,ponesimod
+m116,0.0,0.0,1.0,[D8 re-score: Section 23 application earlier],vemurafenib
+m117,1.0,1.0,1.0,,resmetirom
+m118,1.0,1.0,1.0,,oritavancin
+m119,,,0.0,old substance (PAS); listed since at least 2013-04 as 'Para-amino salicylic acid' - should be excluded,para-aminosalicylic acid
+m120,1.0,1.0,1.0,,selpercatinib
+m121,1.0,1.0,1.0,,ferric coordination complex
+m122,1.0,1.0,1.0,,enfortumab vedotin
+m123,1.0,1.0,1.0,,sacubitril
+m124,1.0,1.0,1.0,,ticagrelor
+m125,1.0,1.0,1.0,,viloxazine
+m126,1.0,1.0,1.0,,somatrogon
+m127,1.0,1.0,1.0,,betrixaban
+m128,1.0,1.0,1.0,,asfotase alfa
+m129,,1.0,1.0,application search failed (T1 cannot tell),aflibercept
+m130,1.0,1.0,1.0,,voxelotor
+m131,1.0,1.0,1.0,,evolocumab
+m132,1.0,1.0,1.0,,lutetium vipivotide tetraxetan
+m133,1.0,1.0,1.0,,binimetinib
+m134,1.0,1.0,1.0,,fostamatinib
+m135,1.0,1.0,1.0,,plazomicin
+m136,1.0,1.0,1.0,,peginterferon beta-1a
+m137,,1.0,1.0,provisional consent 2023-06 captured; application search failed,cemiplimab
+m138,1.0,1.0,1.0,,elvitegravir
+m139,1.0,1.0,1.0,,vaborbactam
+m140,1.0,1.0,1.0,T1-T3 right but T0 wrong: FDA approved Breo (vilanterol trifenatate) 2013-05; 'trifenatate' missing from the salt list,vilanterol
+m141,1.0,1.0,1.0,,alcaftadine
+m142,1.0,1.0,1.0,,trilaciclib
+m143,1.0,1.0,1.0,,benznidazole
+m144,1.0,1.0,1.0,,ospemifene
+m145,1.0,1.0,1.0,,mirabegron
+m146,1.0,1.0,1.0,"T1-T3 right but T0 wrong: FDA approved Adynovate 2015-11 under the proper name 'antihemophilic factor (recombinant), pegylated'",rurioctocog alfa pegol
+m147,1.0,1.0,0.0,"malformed combined substance name; PHARMAC lists 'Elexacaftor with tezacaftor, ivacaftor and ivacaftor' - whole-sequence match fails",ivacaftor tezacaftor
+m148,1.0,1.0,1.0,,omidenepag isopropyl
+m149,1.0,1.0,1.0,,nirsevimab
