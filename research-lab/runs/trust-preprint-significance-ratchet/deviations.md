@@ -40,3 +40,38 @@ Every departure from the lead and from plan.md, timestamped with `date` when it 
    up and 1,437 down. This shows the direction of the exact subset before `analysis.py` ran. The analysis and its
    verdict rule are fixed in the committed code and are not changed by it. With at most 13 exact crossings, the
    primary is expected to be too imprecise for a Supported or Refuted verdict.
+
+## D3 — 2026-10-17 15:59 NZDT — after analysis.py ran; before any v2 code was written
+
+`analysis.py` (results/tables/primary.json) ran as committed. Under the abort rule the primary is the exact tuple
+subset of the v1 population: **4 crossings, 1 up (0.25)**; the paper bootstrap gives [0.00, 0.50], so the
+preregistered rule mechanically returns Refuted. All crossings (unreliable, precision 0.12): 1,411 crossings in 514
+papers, 0.489 [0.453, 0.526].
+
+1. **The primary is reported as Inconclusive, not Refuted.** A percentile bootstrap over four statistics is not a 95%
+   interval: it can take only a handful of values. The exact (Clopper–Pearson) interval for 1 of 4 is [0.006, 0.806],
+   which includes 0.67. Four crossings cannot refute a 2:1 ratchet. This departs from the mechanical rule in the
+   conservative direction. From here on, whenever a share rests on fewer than 30 crossings, the exact interval is
+   reported alongside the bootstrap and the wider one decides.
+2. **A labelled exploratory v2, specified here before it is built or run.** The validation found two fixable causes,
+   so v2 repairs them and adds a strict crossing definition. It is reported as exploratory, never as the
+   preregistered test.
+   - **Extraction (code/extract_v2.py):** text is repaired with `ftfy.fix_text` (mojibake: "Ã\x9710â\x88\x925" →
+     "×10−5"). A middle dot between digits becomes a decimal point. A comma directly after a p comparator and its
+     integer part ("p = 0,33") becomes a decimal point. A "p" preceded by any word character or ² (η²p, ηp2, ω²p) is
+     not a p-value. A mantissa followed by "×10" with no exponent ("p=1x10") is undetermined. The tuple regex,
+     significance rule and sentence splitter are unchanged.
+   - **Alignment (code/pipeline_v2.py):** align.py unchanged (SIM_MIN 0.6). Each statistic also keeps its rank within
+     its sentence, the number of statistics in that sentence, and its matched text.
+   - **Strict crossing (code/analysis_v2.py):** an aligned crossing counts only if (a) both sides are in the abstract
+     or the results text, so no tables and no figure legends; (b) it is an exact tuple match or the masked sentence
+     cosine is ≥ 0.80; (c) both sentences hold the same number of statistics and the pair has the same rank in each;
+     (d) neither sentence defines significance stars (`*p < 0.05`, `p < 0.05 (*)` style).
+   - **Fresh blind validation (code/validate_v2.py):** up to 100 strict crossings and 50 strict non-crossings, seeded,
+     in random order. Version order and stratum are hidden, and the aligned statistic is marked in each sentence (the
+     v1 display showed only its value, which caused the v072 error).
+   - **Decision for v2:** if precision among strict crossings is ≥ 0.90, the strict share up in the v1 population (paper
+     bootstrap, plus the exact interval if n < 30) is reported as the exploratory estimate and read against the plan's
+     thresholds (≥ 0.67 with lower end > 0.50 would be ratchet-like; upper end < 0.67 would be against it). If < 0.90,
+     only the validated-correct crossings are reported, by direction, and v2 is inconclusive.
+   - S1 (dropped vs added) is recomputed on the v2 extraction as a robustness check.

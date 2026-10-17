@@ -1,0 +1,84 @@
+{
+ "n_pairs": 23220,
+ "n_pairs_with_stats": 13049,
+ "n_statistics": 271195,
+ "status_counts": {
+  "added": 122559,
+  "aligned": 110143,
+  "dropped": 38493
+ },
+ "class_counts": {
+  "unchanged": 89366,
+  "changed_not_crossing": 12723,
+  "undetermined": 5114,
+  "crossing_up": 1498,
+  "crossing_down": 1442
+ },
+ "alignment_validation": {
+  "precision_crossings": 0.12,
+  "n_crossings_checked": 100,
+  "precision_other": 0.79
+ },
+ "n_pairs_v1": 11508,
+ "sensitivity_all_versions": {
+  "n_crossings": 2940,
+  "share_up": 0.5095238095238095,
+  "ci": [
+   0.48252945128957486,
+   0.5359923696420644
+  ],
+  "verdict": "Refuted"
+ },
+ "primary_all_crossings": {
+  "n_crossings": 1411,
+  "n_papers": 514,
+  "share_up": 0.4890148830616584,
+  "ci": [
+   0.4531512235671614,
+   0.5261688071924793
+  ],
+  "verdict": "Refuted"
+ },
+ "exact_tuples_only": {
+  "n_crossings": 4,
+  "share_up": 0.25,
+  "ci": [
+   0.0,
+   0.5
+  ],
+  "verdict": "Refuted"
+ },
+ "primary_used": "exact_tuples_only (abort rule)",
+ "S1_dropped_vs_added": {
+  "n_dropped": 19024,
+  "share_sig_dropped": 0.8153910849453322,
+  "n_added": 51978,
+  "share_sig_added": 0.8200969641001963
+ },
+ "S2_statcheck": {
+  "n_aligned_tuples": 3460,
+  "preprint_inconsistent": 187,
+  "published_inconsistent": 187,
+  "repair_rate": 0.10160427807486631
+ },
+ "S3_by_server": {
+  "bioRxiv": {
+   "share_up": 0.5384615384615384,
+   "lo": 0.40476190476190477,
+   "hi": 0.696969696969697,
+   "n": 39
+  },
+  "medRxiv": {
+   "share_up": 0.47435897435897434,
+   "lo": 0.41307034510841906,
+   "hi": 0.5425255102040816,
+   "n": 624
+  },
+  "other": {
+   "share_up": 0.49866310160427807,
+   "lo": 0.4557237197045153,
+   "hi": 0.5404339986887157,
+   "n": 748
+  }
+ }
+}
