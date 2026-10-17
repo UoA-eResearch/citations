@@ -144,3 +144,11 @@ substance, and not to a stoplist of generic words.
 new EU name: pancreas powder (pancreatin), para-aminosalicylic acid, "human coagulation factor viii" and
 alpha1-proteinase inhibitor. They inflate the unfunded and unconsented counts. They are reported, and a sensitivity
 drops EMA-first substances whose name is a generic class description.
+
+## D8a — 2026-10-17 23:23 NZDT — forecast scoring uses the frozen match names (review issue 8), before any 2027 data
+
+`score_forecast.py` matched the bare substance name, while linking used aliases and the first-word rule. 22 of the
+125 forecast substances differ: isavuconazole, for example, is written "isavuconazonium" by Medsafe and PHARMAC. The
+match names in force at the freeze (D6/D7 linking) are written to `results/forecast_2026_match_names.csv`, with its
+own sha256, committed and pushed now. `score_forecast.py` checks both hashes and scores with those names. The
+forecast itself is unchanged.
