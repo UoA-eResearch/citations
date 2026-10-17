@@ -19,6 +19,7 @@ RUN = Path(__file__).resolve().parents[1]
 OUT = RUN / "data" / "raw" / "medsafe" / "html"
 LOG = RUN / "data" / "raw" / "medsafe" / "log.jsonl"
 UA = "research-lab medicines-access study (mailto:noreply@anthropic.com)"
+TERM = {"concentrate of proteolytic enzymes enriched in bromelain": "bromelain"}   # D5
 
 
 def slug(s):
@@ -31,8 +32,8 @@ async def search(pg, st, term):
     await pg.fill("#txtIngredient", term)
     await pg.press("#txtIngredient", "Enter")
     await pg.wait_for_url(re.compile(r"qry=" + st), timeout=30000)
-    # results stream in over the circuit: poll until the "N records" line (or a product link) appears, up to 20 s
-    for _ in range(40):
+    # results stream in over the circuit: poll until the "N records" line (or a product link) appears, up to 60 s
+    for _ in range(120):
         await pg.wait_for_timeout(500)
         html = await pg.content()
         n = len(re.findall(r"ProductDetail\?Product_id=", html))
@@ -53,7 +54,7 @@ async def main():
                 for st in ("Product", "Application"):
                     if (s, st) in done:
                         continue
-                    terms = [s] + ([max(s.split(), key=len)] if " " in s else [])
+                    terms = [TERM.get(s, s)] + ([max(s.split(), key=len)] if (" " in s and s not in TERM) else [])
                     rec = dict(substance=s, type=st)
                     for term in terms:
                         for attempt in range(3):

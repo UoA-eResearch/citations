@@ -81,3 +81,18 @@ late. `code/su_listings.py` therefore parses the detailed "New Listings – effe
 Schedule Update PDF (upper-case chemical headers). Listings effective inside the two gap windows are added as T3B
 candidates, and T3B is the earlier of the XML first edition and a gap-window Schedule Update listing. Outside the
 gaps, the PDFs are used only for validation.
+
+## D5 — 2026-10-17 20:19 NZDT — cohort cleaning and Medsafe retries, before any date was linked
+
+1. **Nine cohort entries excluded as not new active substances.** All surfaced through failed Medsafe searches.
+   - Six FDA "X and hyaluronidase" products: subcutaneous co-formulations of antibodies already approved
+     (atezolizumab, daratumumab, efgartigimod alfa, ocrelizumab, pertuzumab–trastuzumab, trastuzumab). FDA writes
+     them as one ingredient string with "AND", so cohort.py's semicolon split kept them whole.
+   - "hydrogen", a salt-stripping artefact of potassium hydrogen carbonate (Sibnayal).
+   - "air polymer a" (ExEm Foam, ultrasound contrast) and "brilliant blue g" (TissueBlue, surgical stain), diagnostic
+     and surgical agents the name filter missed.
+
+   The cohort is now **722**. `code/cohort.py` lists each exclusion with its reason.
+2. **Medsafe Application searches that timed out** (popular ingredients with many applications) are retried with a
+   60 s poll instead of 20 s. NexoBrid's normalised name ("concentrate of proteolytic enzymes enriched in bromelain")
+   is searched as "bromelain", where the generic fallback word "concentrate" had returned huge result sets.

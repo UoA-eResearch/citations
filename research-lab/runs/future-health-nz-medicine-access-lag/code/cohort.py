@@ -13,6 +13,13 @@ from names import DIAG_RE, components  # noqa: E402
 RUN = Path(__file__).resolve().parents[1]
 R = RUN / "data" / "raw"
 LO, HI = pd.Timestamp("2010-01-01"), pd.Timestamp("2024-12-31")
+# D5: not new active substances, found when Medsafe searches failed on them
+EXCLUDE = {s: "subcutaneous co-formulation of an existing antibody with hyaluronidase" for s in (
+               "atezolizumab and hyaluronidase", "daratumumab and hyaluronidase", "efgartigimod alfa and hyaluronidase",
+               "ocrelizumab and hyaluronidase", "pertuzumab trastuzumab and hyaluronidase", "trastuzumab and hyaluronidase")}
+EXCLUDE.update({"hydrogen": "salt-stripping artefact of potassium hydrogen carbonate (Sibnayal)",
+                "air polymer a": "diagnostic ultrasound contrast agent (ExEm Foam)",
+                "brilliant blue g": "surgical stain (TissueBlue)"})
 
 
 def fda():
@@ -66,6 +73,7 @@ def main():
     diag = c.index.to_series().map(lambda x: bool(DIAG_RE.search(x))) | c.atc.fillna("").str.match(r"^(J07|V04|V08|V09|V01)")
     c = c[~diag]
     c = c[c.index.str.len() > 3]
+    c = c[~c.index.isin(list(EXCLUDE))]
     # FDA-first substances must enter through a new-molecular-entity NDA (Type 1, Type 1/4) or a BLA, so old
     # substances first marketed in the US inside a nutrition kit or a new formulation are not "new"
     nme = (c.t0_source == "EMA") | (c.fda_nme == True)  # noqa: E712
