@@ -1,0 +1,79 @@
+"""New-active-substance cohort (plan section 3): substances whose FIRST approval anywhere in the FDA (Drugs@FDA, any
+application type) or the EU (EMA centralised, non-generic non-biosimilar human medicines) falls in 2010-2024.
+T0 = the earlier of the two first approvals. Diagnostics, vaccines and allergens are excluded. Writes
+data/cohort.csv (substance, t0, t0_source, fda_first, ema_first, ema_orphan, atc, fda_priority, n_fda_appl)."""
+import sys
+from pathlib import Path
+
+import pandas as pd
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from names import DIAG_RE, components  # noqa: E402
+
+RUN = Path(__file__).resolve().parents[1]
+R = RUN / "data" / "raw"
+LO, HI = pd.Timestamp("2010-01-01"), pd.Timestamp("2024-12-31")
+
+
+def fda():
+    rd = lambda f: pd.read_csv(R / "fda" / f, sep="\t", dtype=str, encoding="latin-1")
+    sub, prod, app = rd("Submissions.txt"), rd("Products.txt"), rd("Applications.txt")
+    o = sub[(sub.SubmissionType == "ORIG") & (sub.SubmissionStatus == "AP")].copy()
+    o["date"] = pd.to_datetime(o.SubmissionStatusDate, errors="coerce")
+    o = o.merge(app[["ApplNo", "ApplType"]], on="ApplNo")
+    ing = prod[["ApplNo", "ActiveIngredient", "DrugName"]].drop_duplicates()
+    rows = []
+    for r in o.merge(ing, on="ApplNo").itertuples():
+        for c in components(r.ActiveIngredient, sep=r";"):
+            rows.append(dict(substance=c, date=r.date, appl=r.ApplNo, appltype=r.ApplType, cls=r.SubmissionClassCodeID,
+                             priority=r.ReviewPriority, name=r.DrugName))
+    d = pd.DataFrame(rows).dropna(subset=["date"]).sort_values("date")
+    first = d.groupby("substance").first()
+    # NME/BLA entry: ANY original approval on the first-approval date that is an NDA Type 1 or 1/4, or a BLA (an
+    # application often carries several same-day ORIG rows, e.g. ORIG-1 Type 1 and ORIG-2 efficacy)
+    d["nme_row"] = d.cls.isin(["7", "8"]) | (d.appltype == "BLA")
+    on_first = d[d.date == d.substance.map(first.date)]
+    first["nme"] = on_first.groupby("substance").nme_row.any()
+    return first.rename(columns={"date": "fda_first"}), d.groupby("substance").appl.nunique()
+
+
+def ema():
+    x = pd.read_excel(R / "ema" / "medicines_output.xlsx", header=8)
+    h = x[(x.Category == "Human") & (x.Generic != "Yes") & (x.Biosimilar != "Yes")].copy()
+    h["date"] = pd.to_datetime(h["Marketing authorisation date"], dayfirst=True, errors="coerce")
+    inn_col = "International non-proprietary name (INN) / common name"
+    rows = []
+    for _, r in h.dropna(subset=["date"]).iterrows():
+        inn = r[inn_col] if isinstance(r[inn_col], str) else r["Active substance"]
+        for c in components(inn):
+            rows.append(dict(substance=c, date=r["date"], orphan=r["Orphan medicine"], atc=r["ATC code (human)"],
+                             name=r["Name of medicine"]))
+    d = pd.DataFrame(rows).sort_values("date")
+    return d.groupby("substance").first().rename(columns={"date": "ema_first"})
+
+
+def main():
+    f, napp = fda()
+    e = ema()
+    sub = sorted(set(f.index) | set(e.index))
+    c = pd.DataFrame(index=pd.Index(sub, name="substance"))
+    c["fda_first"] = f.fda_first; c["fda_priority"] = f.priority; c["fda_name"] = f.name; c["n_fda_appl"] = napp
+    c["fda_nme"] = f.nme
+    c["ema_first"] = e.ema_first; c["ema_orphan"] = e.orphan; c["atc"] = e.atc; c["ema_name"] = e.name
+    c["t0"] = c[["fda_first", "ema_first"]].min(axis=1)
+    c["t0_source"] = (c.fda_first <= c.ema_first.fillna(pd.Timestamp.max)).map({True: "FDA", False: "EMA"})
+    c = c[(c.t0 >= LO) & (c.t0 <= HI)]
+    diag = c.index.to_series().map(lambda x: bool(DIAG_RE.search(x))) | c.atc.fillna("").str.match(r"^(J07|V04|V08|V09|V01)")
+    c = c[~diag]
+    c = c[c.index.str.len() > 3]
+    # FDA-first substances must enter through a new-molecular-entity NDA (Type 1, Type 1/4) or a BLA, so old
+    # substances first marketed in the US inside a nutrition kit or a new formulation are not "new"
+    nme = (c.t0_source == "EMA") | (c.fda_nme == True)  # noqa: E712
+    print("dropped as not NME/BLA:", sorted(c[~nme].index)[:60], int((~nme).sum()))
+    c = c[nme]
+    c.to_csv(RUN / "data" / "cohort.csv")
+    print(len(c), "substances;", c.t0_source.value_counts().to_dict(), "; by year", c.t0.dt.year.value_counts().sort_index().to_dict())
+
+
+if __name__ == "__main__":
+    sys.exit(main())
