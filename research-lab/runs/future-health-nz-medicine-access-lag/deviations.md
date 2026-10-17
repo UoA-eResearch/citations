@@ -129,3 +129,18 @@ gaps, the PDFs are used only for validation.
 4. **Provisional consent.** Medsafe's product approval date appears to be the latest consent. Where a provisional
    consent was converted to full, the first consent is not recorded (seen in 2 of 150: Paxlovid, glofitamab), and T2
    is late. The report quantifies how many substances have a "provisional" application or status.
+
+## D7 — 2026-10-17 22:41 NZDT — fresh-sample re-validation after D6, before any lag was computed
+
+100 new substances (seed 20261023, excluding the first 150) were adjudicated against the D6 linking.
+- **Precision:** T1 1.000 (97/97), T2 0.990 (99/100), T3 1.000 (98/98).
+- **Among present dates:** T2 27/28, T3 12/12.
+
+The first-word rule's error found during D6 checks was fixed before this sample was drawn: tezacaftor had matched
+"ivacaftor" through an alias. The rule now applies to canonical names only, never to a word that is another cohort
+substance, and not to a stoplist of generic words.
+
+**Residual cohort impurity.** Across both samples, about 2% of entries (4 of 250) are old substance concepts under a
+new EU name: pancreas powder (pancreatin), para-aminosalicylic acid, "human coagulation factor viii" and
+alpha1-proteinase inhibitor. They inflate the unfunded and unconsented counts. They are reported, and a sensitivity
+drops EMA-first substances whose name is a generic class description.
