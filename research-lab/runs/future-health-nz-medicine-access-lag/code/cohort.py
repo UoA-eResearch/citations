@@ -8,7 +8,7 @@ from pathlib import Path
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from names import DIAG_RE, components  # noqa: E402
+from names import DIAG_RE, components, norm  # noqa: E402
 
 RUN = Path(__file__).resolve().parents[1]
 R = RUN / "data" / "raw"
@@ -23,14 +23,40 @@ ALIAS = {"afatinib dimaleate": "afatinib", "cabozantinib s": "cabozantinib", "el
          "ombitasvir paritaprevir ritonavir": "ombitasvir", "pasireotide diaspartate": "pasireotide", "patiromer sorbitex": "patiromer",
          "rucaparib camsylate": "rucaparib", "trametinib dimethyl sulfoxide": "trametinib", "vilanterol trifenatate": "vilanterol",
          "isavuconazonium": "isavuconazole", "ledispavir": "ledipasvir", "azilsartan kamedoxomil": "azilsartan medoxomil",
-         "telotristat etiprate": "telotristat ethyl", "radium ra-223 dichloride": "radium ra223 dichloride"}
+         "telotristat etiprate": "telotristat ethyl", "radium ra-223 dichloride": "radium ra223 dichloride",
+         # D8 (review issue 5): more FDA/EMA variants, and multi-component products counted once
+         "ado-trastuzumab emtansine": "trastuzumab emtansine", "fam-trastuzumab deruxtecan": "trastuzumab deruxtecan",
+         "lutetium lu-177 vipivotide tetraxetan": "lutetium vipivotide tetraxetan", "dalfampridine": "fampridine",
+         "ezogabine": "retigabine", "voxilaprevi": "voxilaprevir", "birch triterpenes": "birch bark extract",
+         "autologous peripheral-blood mononuclear cells activated": "sipuleucel-t",
+         "prostatic acid phosphatase granulocyte-macrophage colony-stimulating factor": "sipuleucel-t",
+         "a retroviral vector encoding for a truncated form of the human low affinity nerve growth factor receptor": "allogeneic t cells genetically modified",
+         "the herpes simplex i virus thymidine kinase": "allogeneic t cells genetically modified",
+         "cells transduced": "autologous cd34", "enriched cell fraction that contains cd34": "autologous cd34",
+         "retroviral vector that encodes for the human ada cdna sequence": "autologous cd34",
+         "oteracil": "gimeracil", "piperaquine tetraphosphate": "artenimol"}
+# D8: CBER biologics are absent from Drugs@FDA; their first US licensure comes from the FDA Purple Book (CBER rows),
+# matched by proper name, by brand, or by this map where the US and EU brands differ (dates always from the file)
+CBER_BRAND = {"nonacog beta pegol": "rebinyn", "efmoroctocog alfa": "eloctate", "efanesoctocog alfa": "altuviiio",
+              "eptacog beta": "sevenfact", "vonicog alfa": "vonvendi", "andexanet alfa": "andexxa",
+              "fidanacogene elaparvovec": "beqvez", "rurioctocog alfa pegol": "adynovate"}
 # D6: FDA approvals under a proper or brand name the INN match cannot see
 T0_OVERRIDE = {"rurioctocog alfa pegol": ("2015-11-13", "FDA Adynovate, proper name antihemophilic factor (recombinant), pegylated"),
                "sucroferric oxyhydroxide": ("2013-11-27", "FDA Velphoro, listed as ferric oxyhydroxide")}
 EXCLUDE.update({"hydrogen": "salt-stripping artefact of potassium hydrogen carbonate (Sibnayal)",
                 "air polymer a": "diagnostic ultrasound contrast agent (ExEm Foam)",
                 "brilliant blue g": "surgical stain (TissueBlue)",
-                "gemtuzumab ozogamicin": "first FDA approval 2000 (Mylotarg; withdrawn 2010, re-approved 2017) - not new in 2010-2024"})
+                "gemtuzumab ozogamicin": "first FDA approval 2000 (Mylotarg; withdrawn 2010, re-approved 2017) - not new in 2010-2024",
+                # D8 (review issue 5): old substance concepts under new names, and diagnostics or precursors
+                "asparaginase erwinia chrysanthemi": "Erwinia asparaginase in use since the 1980s (Erwinase)",
+                "crisantaspase": "Erwinia asparaginase in use since the 1980s (Erwinase)",
+                "c1 inhibitor": "FDA Cinryze 2008 (CBER); not new in 2010-2024", "chlormethine": "mechlorethamine, 1949",
+                "human coagulation factor viii": "plasma factor VIII (Voncento); Humate-P 1986",
+                "human von willebrand factor": "plasma von Willebrand factor (Voncento); Humate-P 1986",
+                "alpha1-proteinase inhibitor": "alpha-1 antitrypsin; Prolastin 1987", "pancreas powder": "pancreatin",
+                "para-aminosalicylic acid": "PAS, 1940s", "polidocanol": "sclerosant in use since the 1960s",
+                "xenon xe-129 hyperpolarized": "MRI contrast agent (Xenoview)", "c-11": "PET diagnostic (choline C-11)",
+                "lutetium": "radiolabelling precursor (Lumark), not a medicine"})
 
 
 def fda():
@@ -94,6 +120,24 @@ def main():
     c["fda_first"] = f.fda_first; c["fda_priority"] = f.priority; c["fda_name"] = f.name; c["n_fda_appl"] = napp
     c["fda_nme"] = f.nme
     c["ema_first"] = e.ema_first; c["ema_orphan"] = e.orphan; c["atc"] = e.atc; c["ema_name"] = e.name
+    # D8: CBER first licensure (Purple Book)
+    pb = pd.read_csv(R / "purplebook" / "purplebook.csv", skiprows=3, dtype=str, encoding="utf-8-sig")
+    pb = pb[pb.Center == "CBER"].copy()
+    pb["date"] = pd.to_datetime(pb["Approval Date"], format="mixed", errors="coerce")
+    pb["proper"] = pb["Proper Name"].fillna("").map(lambda x: norm(x))
+    pb["brand"] = pb["Proprietary Name"].fillna("").str.lower().str.split().str[0]
+    cber = {}
+    for k in c.index:
+        names = aliases.get(k, {k}) | {k}
+        ema_brand = str(c.loc[k, "ema_name"]).lower().split()[0] if isinstance(c.loc[k, "ema_name"], str) else "@@"
+        m = pb[pb.proper.isin(names) | (pb.brand == ema_brand) | (pb.brand == CBER_BRAND.get(k, "@@"))]
+        if len(m) and m.date.notna().any():
+            x = m.sort_values("date").iloc[0]
+            cber[k] = (x.date, f"CBER {x['Proprietary Name']} ({x['Proper Name']})")
+    for k, (dt, why) in cber.items():
+        if pd.isna(c.loc[k, "fda_first"]) or dt < c.loc[k, "fda_first"]:
+            c.loc[k, "fda_first"] = dt; c.loc[k, "fda_name"] = why; c.loc[k, "fda_nme"] = True
+    c["cber_t0"] = c.index.isin(list(cber))
     for k, (dt, why) in T0_OVERRIDE.items():
         if k in c.index:
             c.loc[k, "fda_first"] = pd.Timestamp(dt); c.loc[k, "fda_name"] = why; c.loc[k, "fda_nme"] = True

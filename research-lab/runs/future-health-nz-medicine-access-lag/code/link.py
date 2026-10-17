@@ -19,7 +19,8 @@ from names import norm  # noqa: E402
 RUN = Path(__file__).resolve().parents[1]
 CONSENTED = {"Consent given", "Approval lapsed", "Revoked", "Not available", "Provisional consent",
              "Not available - Provisional consent", "Consent suspended"}
-NEW_APPL = re.compile(r"^New .*Medicine Application", re.I)
+NEW_APPL = re.compile(r"^New .*Medicine Application|^Provisional Consent \(Section 23\)", re.I)   # D8: Section 23 too
+LEGACY = {"dimethylfumarate": "dimethyl"}   # D8: the Medsafe crawl searched the pre-D8 normalised name
 
 
 def has(sub, text):
@@ -72,6 +73,9 @@ def main():
     SU["text"] = SU.chemical.map(norm)
     W = pd.read_csv(RUN / "data" / "msw.csv", dtype=str) if (RUN / "data" / "msw.csv").exists() else pd.DataFrame(columns=["drug", "listed_date"])
     U = RUN / "data" / "raw" / "uoa_pharmac"
+    REG = pd.read_csv(U / "medsafe_register.csv", dtype=str).fillna("")
+    REG = REG[REG.Status.isin(CONSENTED)].copy()
+    REG["pname"] = REG.Product.str.lower()
     APP = pd.read_csv(U / "pharmac_approvals.csv", dtype=str)
     APP["chem"] = APP.Chemical_Name__c.fillna("").map(norm)
     APP["received"] = pd.to_datetime(APP["Application Received date"], errors="coerce")
@@ -85,14 +89,27 @@ def main():
     for r in c.itertuples():
         s = r.substance
         pats = patterns(s, r.aliases, old_tokens, cohort_names - {s}, first_counts)
-        names = set(str(r.aliases).split("|")) | {s}
+        names = set(str(r.aliases).split("|")) | {s} | ({LEGACY[s]} if s in LEGACY else set())
         p = P[P.substance.isin(names) & P.ingredients.map(lambda x: has_any(pats, x)) & P.status.isin(CONSENTED)]
         t2 = dmy(p.approval_date).min() if len(p) else pd.NaT
+        # D8 (review issue 10): a prodrug or ester of an older moiety is often listed by Medsafe under the old moiety
+        # ("Tenofovir" for tenofovir alafenamide), which no name rule can separate; match the register by FDA/EMA brand
+        brand_t2 = pd.NaT
+        w0 = s.split()
+        if len(w0) > 1 and w0[0] in old_tokens:
+            brands = {str(b).lower().split()[0] for b in (r.fda_name, r.ema_name) if isinstance(b, str) and len(str(b).split()[0]) >= 5
+                      and not str(b).startswith(("FDA ", "CBER "))}
+            bm = REG[REG.pname.map(lambda x: any(x.startswith(b + ",") or x.startswith(b + " ") for b in brands))]
+            brand_t2 = dmy(bm["Approval date"]).min() if len(bm) else pd.NaT
+            if pd.notna(brand_t2) and (pd.isna(t2) or brand_t2 < t2):
+                t2 = brand_t2
         # consent ended: every consented product has lapsed or been revoked; dated by the latest notification
         ended = (dmy(p.notification_date).max() if len(p) and p.status.isin({"Approval lapsed", "Revoked"}).all()
                  else pd.NaT)
         a = A[A.substance.isin(names) & A.ingredients.map(lambda x: has_any(pats, x)) & A.type.fillna("").str.match(NEW_APPL)]
         ad = dmy(a.application_date)
+        prov = a[a.type.fillna("").str.contains("Provisional Consent", case=False)]
+        t_prov = dmy(prov.application_date).min() if len(prov) else pd.NaT
         t1 = ad[ad <= t2].min() if pd.notna(t2) else ad.min()
         pat = "|".join(r"(?<![a-z0-9])" + re.escape(x) + r"(?![a-z0-9])" for x in pats)
         hit = L[L.text.str.contains(pat, regex=True)]
@@ -107,11 +124,16 @@ def main():
         pat_app = APP[APP.chem.str.contains(pat, regex=True)]
         t_app, t_dec = pat_app.received.min(), pat_app.approved.min()
         t_tga = TGA[TGA.text.str.contains(pat, regex=True)].date.min()
-        old = ((pd.notna(t2) and t2 < r.t0 - pd.Timedelta(days=365)) or (pd.notna(b) and b <= first_ed)
+        first_hml = L[L.source == "HML"].ed.min()
+        if pd.notna(h) and h <= first_hml:      # D8: the first HML edition (Oct 2013) is not a funding event
+            h_censored = True
+        else:
+            h_censored = False
+        old = ((pd.notna(t2) and t2 < r.t0 - pd.Timedelta(days=365)) or (pd.notna(b) and b <= first_ed) or h_censored
                or (pd.notna(t3) and t3 < r.t0 - pd.Timedelta(days=365)))
         out.append(dict(substance=s, match_names="|".join(pats), t0=r.t0, t0_source=r.t0_source, t1=t1, t2=t2, consent_ended=ended,
                         t3b=b, t3h=h, t3=t3, t3_au=au,
-                        au_any_record=bool(len(w)), t_app=t_app, t_dec=t_dec, t_tga=t_tga, n_applications=len(pat_app), n_medsafe_products=len(p), n_listing_rows=len(hit),
+                        au_any_record=bool(len(w)), brand_t2=brand_t2, hml_first_edition=h_censored, t_prov=t_prov, t_app=t_app, t_dec=t_dec, t_tga=t_tga, n_applications=len(pat_app), n_medsafe_products=len(p), n_listing_rows=len(hit),
                         ema_orphan=r.ema_orphan, atc=r.atc, fda_priority=r.fda_priority, excluded_old=bool(old)))
     d = pd.DataFrame(out)
     d.to_csv(RUN / "data" / "linked.csv", index=False)

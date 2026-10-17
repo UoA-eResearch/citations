@@ -152,3 +152,37 @@ drops EMA-first substances whose name is a generic class description.
 match names in force at the freeze (D6/D7 linking) are written to `results/forecast_2026_match_names.csv`, with its
 own sha256, committed and pushed now. `score_forecast.py` checks both hashes and scores with those names. The
 forecast itself is unchanged.
+
+## D8b — 2026-10-17 23:26 NZDT — corrections from the review (review/review.md), after the first analysis
+
+The preregistered analysis had already run (results as run are kept in `results/tables/primary_asrun_prereview.json`
+and `stage_table_asrun_prereview.csv`). These corrections fix data and coding errors the review found. They are not
+new analytic choices. The report gives both sets of numbers; the verdict-bearing H1a and H1b do not change.
+
+1. **CBER biologics (issue 5).** Drugs@FDA omits CBER-licensed products: cell and gene therapies, coagulation factors,
+   and Provenge. Their first US licensure now comes from the FDA Purple Book (CBER rows, September 2026 export,
+   `data/raw/purplebook/`, sha256 recorded), matched by proper name, by brand, or by a short map where the US and EU
+   brands differ (`cohort.py` CBER_BRAND). The dates are always taken from the file. 40 substances get an earlier T0.
+2. **More duplicates and multi-component products (issue 5).**
+   - Merged pairs: ado-/fam-trastuzumab, lutetium vipivotide tetraxetan, dalfampridine/fampridine,
+     ezogabine/retigabine, the EMA typo "voxilaprevi", birch triterpenes/birch bark extract.
+   - One product, several components, now counted once: Provenge, Zalmoxis, Strimvelis, Teysuno's new components,
+     Eurartesim.
+3. **Old substance concepts and diagnostics excluded (issue 5):** Erwinia asparaginase (both names), C1 inhibitor,
+   chlormethine, plasma factor VIII and von Willebrand factor (Voncento), alpha1-proteinase inhibitor, pancreas
+   powder, para-aminosalicylic acid, polidocanol, xenon Xe-129, choline C-11, lutetium (a precursor). The cohort is now
+   **680**.
+4. **Dimethyl fumarate (issue 6).** `norm` now keeps fumarate esters whole ("dimethylfumarate"), so the name can no
+   longer match dimethyl sulfoxide.
+5. **T1 counts Section 23 provisional-consent applications (issue 4).** T2 cannot be recovered for converted
+   products, so a lower bound (T2 no later than the first Section 23 application) is reported as a sensitivity.
+6. **The first HML edition (October 2013) is not a funding event (issue 12).** A substance present in it is excluded
+   as left-censored, as the 2006 Schedule rule already does for community listings.
+7. **Prodrugs and esters of older moieties (issue 10).** Medsafe lists their products under the old moiety (Vemlidy as
+   "Tenofovir"). For multi-word names whose first word is an older drug, the Medsafe register snapshot is also matched
+   by FDA/EMA brand name, and the count is reported.
+8. **Stage table (issues 3 and 14).** A sponsor that applied in NZ before the first FDA/EMA approval gets a sponsor
+   delay of 0 instead of being dropped. The decomposition is given on one population, with bootstrap intervals for
+   each share.
+9. **H3 and the TGA comparison (issues 1, 2 and 7)** are reframed in the report around the sources' own definitions.
+   The paired TGA median is dropped, because the ARTG lists current entries only.

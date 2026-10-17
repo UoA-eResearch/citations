@@ -17,6 +17,9 @@ DIAG_RE = re.compile(r"vaccine|\b(f|ga|tc|in|cu|zr|i|n|rb|o)[ -]?\d{2,3}\b|fluci
 
 def norm(s):
     s = (s or "").lower()
+    # D8: fumarate esters are the active moiety's name, not a salt; keep them whole so "dimethyl fumarate" cannot
+    # collapse to "dimethyl" and match dimethyl sulfoxide
+    s = re.sub(r"\b(dimethyl|diroximel|monomethyl) fumarate\b", r"\1fumarate", s)
     s = re.sub(r"\(.*?\)", " ", s)
     s = SALT_RE.sub(" ", s)
     s = re.sub(r"[^a-z0-9 \-]", " ", s)

@@ -19,7 +19,7 @@ D = lambda a, b: (b - a).dt.days
 
 
 def load():
-    d = pd.read_csv(RUN / "data" / "linked.csv", parse_dates=["t0", "t1", "t2", "t3b", "t3h", "t3", "t3_au", "consent_ended", "t_app", "t_dec", "t_tga"])
+    d = pd.read_csv(RUN / "data" / "linked.csv", parse_dates=["t0", "t1", "t2", "t3b", "t3h", "t3", "t3_au", "consent_ended", "t_app", "t_dec", "t_tga", "t_prov"])
     L = pd.read_csv(RUN / "data" / "pharmac_listings.csv", usecols=["edition", "source"])
     cutoff = pd.to_datetime(L[L.source == "schedule"].edition).max()
     d = d[~d.excluded_old].copy()
@@ -122,18 +122,50 @@ def main():
     ci_at = lambda t: float(aj.cumulative_density_.loc[:t].iloc[-1, 0]) if (aj.cumulative_density_.index <= t).any() else 0.0
     out["competing_risks"] = dict(n=int(len(cr)), funded=int((cr.event == 1).sum()), consent_ended_first=int((cr.event == 2).sum()),
                                   cif_funded_5y=ci_at(1826), cif_funded_10y=ci_at(3652))
-    # stage split among funded substances with T1, by T0 period
-    st = d[d.t3.notna() & d.t1.notna() & d.t2.notna()]
-    st = st[(st.t0 <= st.t1) & (st.t1 <= st.t2) & (st.t2 <= st.t3)].copy()
+    # stage split among funded substances with T1, by T0 period. D8 (review issue 3): a sponsor that applied in NZ before
+    # the first FDA/EMA approval has a sponsor delay of 0 (T1 clipped at T0), not exclusion
+    st = d[d.t3.notna() & d.t1.notna() & d.t2.notna()].copy()
+    out["stage_early_filers"] = int((st.t1 < st.t0).sum())
+    st["t1c"] = st[["t1", "t0"]].max(axis=1)
+    st = st[(st.t0 <= st.t2) & (st.t1c <= st.t2) & (st.t2 <= st.t3)].copy()
     st["period"] = pd.cut(st.t0.dt.year, [2009, 2014, 2019, 2023, 2024], labels=["2010-14", "2015-19", "2020-23", "2024"])
     rows = []
     for p, g in list(st.groupby("period", observed=True)) + [("all 2010-23", st[st.t0.dt.year <= 2023])]:
-        a, b_, c_ = D(g.t0, g.t1), D(g.t1, g.t2), D(g.t2, g.t3); tot = D(g.t0, g.t3)
+        a, b_, c_ = D(g.t0, g.t1c), D(g.t1c, g.t2), D(g.t2, g.t3); tot = D(g.t0, g.t3)
         rows.append(dict(period=str(p), n=len(g), sponsor_median=a.median(), medsafe_median=b_.median(), funding_median=c_.median(),
                          total_median=tot.median(), sponsor_share=a.sum() / tot.sum(), medsafe_share=b_.sum() / tot.sum(),
                          funding_share=c_.sum() / tot.sum()))
     pd.DataFrame(rows).to_csv(TAB / "stage_table.csv", index=False)
     out["stage_split"] = rows
+    s23 = st[st.t0.dt.year <= 2023]
+    shr = lambda x, a, b: float(D(x[a], x[b]).sum() / D(x.t0, x.t3).sum()) if len(x) else None
+    out["decomposition_one_population"] = dict(
+        n=int(len(s23)), regulatory_T0_T2=shr(s23, "t0", "t2"), regulatory_ci=boot(s23, lambda x: shr(x, "t0", "t2")),
+        sponsor=shr(s23, "t0", "t1c"), sponsor_ci=boot(s23, lambda x: shr(x, "t0", "t1c")),
+        medsafe=shr(s23, "t1c", "t2"), medsafe_ci=boot(s23, lambda x: shr(x, "t1c", "t2")),
+        funding=shr(s23, "t2", "t3"), funding_ci=boot(s23, lambda x: shr(x, "t2", "t3")))
+    # provisional consent lower bound (review issue 4): T2 no later than the first Section 23 application
+    pv = clean.copy()
+    pv["t2"] = pv[["t2", "t_prov"]].min(axis=1)
+    out["H1a_provisional_lower_bound"] = dict(n_with_section23=int(clean.t_prov.notna().sum()), aggregate=share(pv))
+    # H3 context (review issues 1-2)
+    rm_h = {}
+    for tau in (1826, 2812, 3652, 4383):
+        rm_h[str(round(tau / 365.25, 1))] = yrs(float(np.trapz(k.survival_function_at_times(np.arange(0, tau + 1)).values, dx=1)))
+    ap2 = ap[ap.t_dec.notna() & (ap.t_dec >= ap.t_app)].copy()
+    ap2["dy"] = ap2.t_dec.dt.year
+    out["H3_context"] = dict(rmst_by_horizon_years=rm_h,
+                             funded_T2_T3_ge7y=int((D(f2.t2, f2.t3) >= 7 * 365.25).sum()),
+                             funded_T2_T3_7_to_10y=int(((D(f2.t2, f2.t3) >= 7 * 365.25) & (D(f2.t2, f2.t3) < 10 * 365.25)).sum()),
+                             funded_T2_T3_gt10y=int((D(f2.t2, f2.t3) >= 10 * 365.25).sum()), funded_n=int(len(f2)),
+                             unfunded_at_7y_km=float(k.survival_function_at_times(2557).iloc[0]),
+                             funded_T2_T3_mean_days=float(D(f2.t2, f2.t3).mean()),
+                             decided_app_to_approval_by_decision_year={str(lab): dict(n=int(len(g)), mean=yrs(float(D(g.t_app, g.t_dec).mean())),
+                                                                                      median=yrs(float(D(g.t_app, g.t_dec).median())))
+                                                                       for lab, g in ap2.groupby(pd.cut(ap2.dy, [2000, 2021, 2023, 2026], labels=["to 2021", "2022-23", "2024-26"]), observed=True)})
+    t24 = d[d.t0.dt.year == 2024]
+    out["t0_2024"] = dict(n=int(len(t24)), consented=int(t24.t2.notna().sum()), funded=int(t24.t3.notna().sum()))
+    out["excluded_hml_first_edition"] = int(pd.read_csv(RUN / "data" / "linked.csv").get("hml_first_edition", pd.Series(dtype=bool)).fillna(False).astype(bool).sum())
     # H2: Australia, T0 2019-2024
     au = d[(d.t0.dt.year >= 2019) & (d.t0.dt.year <= 2024)].copy()
     au_cut = min(cutoff, pd.Timestamp("2026-10-01"))
