@@ -99,7 +99,7 @@ TEMPLATE = """<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NMA Ranking Fragility</title>
-<meta name="description" content="A preregistered test of whether sparse-autoencoder features of Pythia-160M are shared across independently pretrained models as often as across SAE retrainings on one model.">
+<meta name="description" content="A temporal holdout across 176 published network meta-analyses from the open nmadb database. How often does the top-ranked treatment change when the newest studies are added back, and is the stated probability of being best calibrated against that?">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
