@@ -19,7 +19,7 @@ D = lambda a, b: (b - a).dt.days
 
 
 def load():
-    d = pd.read_csv(RUN / "data" / "linked.csv", parse_dates=["t0", "t1", "t2", "t3b", "t3h", "t3", "t3_au", "consent_ended"])
+    d = pd.read_csv(RUN / "data" / "linked.csv", parse_dates=["t0", "t1", "t2", "t3b", "t3h", "t3", "t3_au", "consent_ended", "t_app", "t_dec", "t_tga"])
     L = pd.read_csv(RUN / "data" / "pharmac_listings.csv", usecols=["edition", "source"])
     cutoff = pd.to_datetime(L[L.source == "schedule"].edition).max()
     d = d[~d.excluded_old].copy()
@@ -82,6 +82,37 @@ def main():
     h["verdict"] = "Supported" if (funded_hit and not cens_hit) else "Refuted"
     h["other_claims"] = dict(days_1050_funded_median_T2_T3=float(D(f2.t2, f2.t3).median()),
                              years_7_to_10=dict(funded_mean_in_range=bool(7 <= h["funded_only"]["mean"] <= 10)))
+    # D3.1: funding stage split at the PHARMAC application, and application-based versions of the 7.7-year claim
+    fa = pre[pre.t3.notna() & pre.t2.notna() & pre.t_app.notna()]
+    fa = fa[(fa.t2 <= fa.t_app) & (fa.t_app <= fa.t3)]
+    tot = D(fa.t2, fa.t3)
+    out["D3_funding_stage_split"] = dict(n=int(len(fa)), consent_to_application_median_days=float(D(fa.t2, fa.t_app).median()) if len(fa) else None,
+                                         application_to_listing_median_days=float(D(fa.t_app, fa.t3).median()) if len(fa) else None,
+                                         application_share_of_funding_stage=float(D(fa.t_app, fa.t3).sum() / tot.sum()) if len(fa) else None,
+                                         funded_with_application_before_consent=int((pre.t3.notna() & pre.t2.notna() & pre.t_app.notna() & (pre.t_app < pre.t2)).sum()))
+    ap = d[d.t_app.notna()].copy()
+    dec = ap[ap.t_dec.notna() & (ap.t_dec >= ap.t_app)]
+    k_a, med_a, rm_a = km(D(ap.t_app, ap.t_dec.where(ap.t_dec >= ap.t_app).fillna(cutoff)).clip(lower=0), ap.t_dec.notna() & (ap.t_dec >= ap.t_app))
+    c2d = d[d.t2.notna()].copy(); c2d = c2d[~(c2d.t_dec.notna() & (c2d.t_dec < c2d.t2))]
+    k_b, med_b, rm_b = km(D(c2d.t2, c2d.t_dec.fillna(cutoff)).clip(lower=0), c2d.t_dec.notna())
+    dd = c2d[c2d.t_dec.notna()]
+    out["D3_H3_application_based_years"] = dict(
+        application_to_approval_decided_only=dict(n=int(len(dec)), mean=yrs(float(D(dec.t_app, dec.t_dec).mean())) if len(dec) else None,
+                                                  median=yrs(float(D(dec.t_app, dec.t_dec).median())) if len(dec) else None),
+        application_to_approval_km=dict(n=int(len(ap)), median=yrs(med_a) if med_a else None, rmst_10y=yrs(rm_a)),
+        consent_to_approval_decided_only=dict(n=int(len(dd)), mean=yrs(float(D(dd.t2, dd.t_dec).mean())) if len(dd) else None,
+                                              median=yrs(float(D(dd.t2, dd.t_dec).median())) if len(dd) else None),
+        consent_to_approval_km=dict(n=int(len(c2d)), median=yrs(med_b) if med_b else None, rmst_10y=yrs(rm_b)))
+    # D3.3: regulator benchmark, Medsafe (T2) vs TGA (T_TGA), whole cohort
+    tga_cut = min(cutoff, d.t_tga.max()) if d.t_tga.notna().any() else cutoff
+    both = d[d.t2.notna() & d.t_tga.notna()]
+    kn, mn, _ = km(D(d.t0, d.t2.where(d.t2 <= tga_cut).fillna(tga_cut)).clip(lower=0), d.t2.notna() & (d.t2 <= tga_cut))
+    ka, ma, _ = km(D(d.t0, d.t_tga.where(d.t_tga <= tga_cut).fillna(tga_cut)).clip(lower=0), d.t_tga.notna() & (d.t_tga <= tga_cut))
+    sh = lambda k, t: float(1 - k.survival_function_at_times(t).iloc[0])
+    out["D3_TGA_benchmark"] = dict(cutoff=str(tga_cut.date()), n=int(len(d)), both=int(len(both)),
+                                   median_medsafe_minus_tga_days=float(D(both.t_tga, both.t2).median()) if len(both) else None,
+                                   nz_km_median_days=mn, au_km_median_days=ma,
+                                   nz_by_2y=sh(kn, 730), au_by_2y=sh(ka, 730), nz_by_5y=sh(kn, 1826), au_by_5y=sh(ka, 1826))
     # competing risks: funding vs consent ended before funding
     cr = c2.copy()
     end = cr.t3.where(cr.t3.notna(), cr.consent_ended.where(cr.consent_ended.notna() & (cr.consent_ended <= cutoff)))

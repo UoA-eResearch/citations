@@ -3,6 +3,8 @@
   T2  first Medsafe product approval         T3B / T3H  first community Schedule / HML edition listing it
   T3  min(T3B, T3H)                          T3_AU  first "Medicine listed on the PBS" date
   excluded_old  D2.2 (Medsafe consent or a PHARMAC listing more than a year before T0, or listed in the 2006 Schedule)
+  T_app / T_dec  (D3) first PHARMAC funding application received / first decision recorded as an approval to fund,
+                 from the UoA-eResearch/pharmac application tracker data; T_TGA (D3) earliest ARTG registration
 Matching: the substance's normalised name as a whole-word sequence inside the normalised ingredient / chemical /
 formulation / drug-name text."""
 import re
@@ -37,6 +39,16 @@ def main():
     L["text"] = (L.chemical.fillna("") + " " + L.formulations.fillna("")).map(norm)
     first_ed = L[L.source == "schedule"].ed.min()
     W = pd.read_csv(RUN / "data" / "msw.csv", dtype=str) if (RUN / "data" / "msw.csv").exists() else pd.DataFrame(columns=["drug", "listed_date"])
+    U = RUN / "data" / "raw" / "uoa_pharmac"
+    APP = pd.read_csv(U / "pharmac_approvals.csv", dtype=str)
+    APP["chem"] = APP.Chemical_Name__c.fillna("").map(norm)
+    APP["received"] = pd.to_datetime(APP["Application Received date"], errors="coerce")
+    APP["approved"] = [min((pd.Timestamp(d) for d, t in re.findall(r"(\d{4}-\d{2}-\d{2}):([^\n]*)", x)
+                            if re.search(r"has been approved", t, re.I)), default=pd.NaT) if isinstance(x, str) else pd.NaT
+                       for x in APP["Decision dates"]]
+    TGA = pd.read_csv(U / "tga_artg.csv", dtype=str)
+    TGA["text"] = TGA.Name.fillna("").map(norm)
+    TGA["date"] = pd.to_datetime(TGA.RegistrationDate, errors="coerce")
     out = []
     for r in c.itertuples():
         s = r.substance
@@ -55,11 +67,14 @@ def main():
         t3 = min([x for x in (b, h) if pd.notna(x)], default=pd.NaT)
         w = W[W.drug.map(lambda x: has(s, x))]
         au = dmy(w.listed_date).min() if len(w) else pd.NaT
+        pat_app = APP[APP.chem.str.contains(pat, regex=True)]
+        t_app, t_dec = pat_app.received.min(), pat_app.approved.min()
+        t_tga = TGA[TGA.text.str.contains(pat, regex=True)].date.min()
         old = ((pd.notna(t2) and t2 < r.t0 - pd.Timedelta(days=365)) or (pd.notna(b) and b <= first_ed)
                or (pd.notna(t3) and t3 < r.t0 - pd.Timedelta(days=365)))
         out.append(dict(substance=s, t0=r.t0, t0_source=r.t0_source, t1=t1, t2=t2, consent_ended=ended,
                         t3b=b, t3h=h, t3=t3, t3_au=au,
-                        au_any_record=bool(len(w)), n_medsafe_products=len(p), n_listing_rows=len(hit),
+                        au_any_record=bool(len(w)), t_app=t_app, t_dec=t_dec, t_tga=t_tga, n_applications=len(pat_app), n_medsafe_products=len(p), n_listing_rows=len(hit),
                         ema_orphan=r.ema_orphan, atc=r.atc, fda_priority=r.fda_priority, excluded_old=bool(old)))
     d = pd.DataFrame(out)
     d.to_csv(RUN / "data" / "linked.csv", index=False)
