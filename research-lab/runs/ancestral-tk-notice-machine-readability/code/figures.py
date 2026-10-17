@@ -35,6 +35,8 @@ def caption(name, text):
 
 def f2():
     v = pd.DataFrame([json.loads(l) for l in open(RUN / "data" / "views.jsonl")])
+    pr = pd.read_csv(T / "precision.csv")      # D4: DOIs judged not genuine are not element-bearing
+    v = v[~v.doi.str.lower().isin(set(pr[pr.genuine == 0].record.astype(str).str.lower()))]
     v["stratum"] = v.doi.str.startswith("10.21233/").map({True: "Neotoma (10.21233)", False: "all other publishers"})
     fig, axes = plt.subplots(1, 2, figsize=(9.6, 3.8), sharey=True)
     fig.subplots_adjust(left=0.2, right=0.98, bottom=0.2, top=0.86, wspace=0.08)

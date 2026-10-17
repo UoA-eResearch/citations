@@ -65,6 +65,19 @@ def main():
                          warnings=int(v.warning.sum()))
         m = v.pivot_table(index="view", columns="result", values="doi", aggfunc="count", fill_value=0)
         m.to_csv(TAB / "view_matrix.csv")
+        # plan section 4: the preserve/degrade/drop matrix by stratum (Neotoma vs other publishers), and H2 per stratum
+        v["stratum"] = np.where(v.doi.str.lower().str.startswith("10.21233/"), "neotoma", "other")
+        v.pivot_table(index=["stratum", "view"], columns="result", values="doi", aggfunc="count", fill_value=0).to_csv(TAB / "view_matrix_by_stratum.csv")
+        a["stratum"] = np.where(a.doi.str.lower().str.startswith("10.21233/"), "neotoma", "other")
+        out["H2_by_stratum"] = {}
+        for stv, gg in a.groupby("stratum"):
+            g2 = gg.groupby("doi")["drop"].agg(["sum", "count"])
+            s2, n2 = g2["sum"].to_numpy(), g2["count"].to_numpy()
+            ix = np.random.default_rng(20261021).integers(0, len(g2), size=(2000, len(g2)))
+            b2 = s2[ix].sum(1) / n2[ix].sum(1)
+            out["H2_by_stratum"][stv] = dict(n_dois=int(len(g2)), n_pairs=int(n2.sum()), drop_share=float(s2.sum() / n2.sum()),
+                                             ci=[float(x) for x in np.percentile(b2, [2.5, 97.5])],
+                                             results=gg.result.value_counts().to_dict())
         out["per_view"] = {vw: dict(drop=int((a[a.view == vw].result == "drop").sum()), n=int((a.view == vw).sum()),
                                     ci=exact(int((a[a.view == vw].result == "drop").sum()), int((a.view == vw).sum()))) for vw in sorted(a.view.unique())}
     json.dump(out, open(TAB / "primary.json", "w"), indent=1, default=str)
