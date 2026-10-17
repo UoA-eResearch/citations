@@ -22,7 +22,7 @@ UA = {"User-Agent": "research-lab accessibility study (mailto:noreply@anthropic.
 
 def query(domain):
     for host in (domain, "www." + domain):
-        url = ("http://web.archive.org/cdx/search/cdx?url=" + host + "/&from=202401&to=202604&output=json"
+        url = ("https://web.archive.org/cdx/search/cdx?url=" + host + "/&from=202401&to=202604&output=json"
                "&filter=statuscode:200&filter=mimetype:text/html&fl=timestamp,original,digest&collapse=timestamp:8")
         for k in range(6):
             try:

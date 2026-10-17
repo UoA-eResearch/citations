@@ -30,3 +30,9 @@ Every departure from the lead and from plan.md, timestamped with `date` when it 
    page title (ministry, parliament, government, municipality, university, police terms in 14 languages) mark it as
    one. The rule is applied before the sector rules, to the same earliest pre-period snapshot. The frame itself is
    unchanged; public counts are reported.
+
+## D3 — 2026-10-17 16:13 NZDT — operational, before any archived page was fetched
+
+The archive began refusing plain-HTTP connections to web.archive.org (port 80) after the first rows, while HTTPS
+still answered (8–25 s per CDX query). `cdx.py` now queries over HTTPS; nothing else changes. The 7 rows already
+written are valid and kept, since the job resumes by domain.
