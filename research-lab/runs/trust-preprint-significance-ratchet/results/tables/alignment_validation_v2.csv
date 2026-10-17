@@ -1,0 +1,115 @@
+id,correct,note,stratum,pre_is,pair,how
+w000,1,,other,1,10.21203/rs.3.rs-1159494/v1,similar
+w001,1,same statement; published version has p<=0.05 typo,crossing,2,10.1101/2021.09.23.21263649,similar
+w002,1,,other,1,10.21203/rs.3.rs-3491978/v1,exact
+w003,0,different statistic (legend threshold vs estimate),crossing,1,10.21203/rs.3.rs-3906183/v1,similar
+w004,1,,other,2,10.1101/2020.06.16.20133298,similar
+w005,1,"same comparison, validation dataset replaced",crossing,1,10.1101/2020.11.20.20235598,similar
+w006,1,,other,2,10.21203/rs.3.rs-228821/v1,similar
+w007,0,different analysis (change vs baseline),crossing,2,10.21203/rs.3.rs-1753398/v1,similar
+w008,1,"same statistic, .46 -> .046",crossing,1,10.1101/2021.10.27.21265563,similar
+w009,1,same statistic (tuple vs bare p),other,1,10.21203/rs.3.rs-33259/v1,similar
+w010,1,"same comparison, data changed",crossing,2,10.1101/2020.09.30.20204503,similar
+w011,1,,other,1,10.21203/rs.3.rs-4077386/v1,exact
+w012,1,"same comparison, data changed",crossing,1,10.1101/2020.07.15.20154906,similar
+w013,1,,other,1,10.1101/2021.02.04.21251165,exact
+w014,0,different comparison (L1/L2 vs T11/T12),crossing,1,10.21203/rs.3.rs-1966542/v1,similar
+w015,1,,other,1,10.1101/2020.10.03.20205328,similar
+w016,1,"same coefficient, re-estimated",crossing,1,10.1101/2020.06.24.20138990,similar
+w017,1,"same test, changed",crossing,1,10.21203/rs.3.rs-1305015/v1,similar
+w018,1,"same comparison, changed",crossing,2,10.21203/rs.3.rs-9083519/v1,similar
+w019,1,"same comparison, changed",crossing,2,10.21203/rs.3.rs-3348558/v1,similar
+w020,1,"same comparison, changed",crossing,1,10.1101/2022.01.07.22268729,similar
+w021,1,"same comparison, changed",crossing,1,10.21203/rs.3.rs-32474/v1,similar
+w022,1,,other,1,10.1101/2021.06.05.447221,similar
+w023,0,different statistic,crossing,2,10.21203/rs.3.rs-3906183/v1,similar
+w024,1,same label (S2) by 'respectively'; the three values look permuted across M/S1/S2,crossing,1,10.1101/2020.09.28.20202929,similar
+w025,1,,other,1,10.21203/rs.3.rs-88850/v1,similar
+w026,0,reordered list: interaction vs treatment,crossing,2,10.21203/rs.3.rs-2579394/v1,similar
+w027,0,reordered list: fat-free mass vs fat percentage,crossing,2,10.1101/2022.01.20.22269593,similar
+w028,1,,other,2,10.21203/rs.3.rs-3071406/v1,similar
+w029,0,"fragment only, identity cannot be verified",crossing,1,10.21203/rs.3.rs-1890415/v1,similar
+w030,0,different comparison,crossing,1,10.21203/rs.3.rs-1971685/v1,similar
+w031,1,"same comparison, data changed",crossing,2,10.21203/rs.3.rs-82103/v1,similar
+w032,1,,other,2,10.21203/rs.3.rs-5999833/v1,similar
+w033,1,"same analysis, category added",crossing,1,10.1101/2021.06.10.21258685,similar
+w034,1,,other,1,10.1101/2020.07.05.20140467,similar
+w035,1,"same comparison, re-analysed",crossing,1,10.1101/2020.12.23.20248773,similar
+w036,1,,other,1,10.21203/rs.3.rs-7952367/v1,similar
+w037,1,,other,1,10.21203/rs.3.rs-3489783/v1,similar
+w038,0,reordered list: treatment vs interaction,crossing,2,10.21203/rs.3.rs-2579394/v1,similar
+w039,1,,other,2,10.1101/2020.10.15.20212308,similar
+w040,0,"fragment only, identity cannot be verified",crossing,1,10.21203/rs.3.rs-1890415/v1,similar
+w041,0,different comparison (fracture vs cholelithiasis),crossing,1,10.1101/2020.08.14.20175190,similar
+w042,1,,other,2,10.21203/rs.3.rs-2199193/v1,similar
+w043,1,,other,1,10.21203/rs.3.rs-2988839/v1,exact
+w044,1,,other,2,10.1101/2021.10.27.21265561,similar
+w045,1,,other,2,10.1101/2021.04.19.21255701,similar
+w046,1,,other,2,10.21203/rs.3.rs-5125055/v1,similar
+w047,1,"same test, changed",crossing,1,10.21203/rs.3.rs-3005279/v1,similar
+w048,1,,other,1,10.1101/2020.05.04.20072447,exact
+w049,1,"same comparison, data changed",crossing,2,10.21203/rs.3.rs-97391/v1,similar
+w050,1,same statement; preprint P<0.0001 contradicts 'not significantly different',crossing,1,10.1101/2020.12.18.20248449,similar
+w051,1,"same comparison, test changed",crossing,2,10.21203/rs.3.rs-3261636/v1,similar
+w052,1,,other,2,10.21203/rs.3.rs-5462180/v1,exact
+w053,1,same position in a 'respectively' pair; re-analysed (n 15 -> 13),crossing,1,10.1101/2020.05.12.20098889,similar
+w054,0,same statistic but published typo 'P=001' read as p = 1,crossing,2,10.21203/rs.3.rs-84890/v1,similar
+w055,1,,other,1,10.1101/2021.12.13.21267717,similar
+w056,1,,other,2,10.21203/rs.3.rs-2569372/v1,similar
+w057,1,same position in a 'respectively' pair; re-analysed,crossing,1,10.1101/2020.05.12.20098889,similar
+w058,1,,other,2,10.21203/rs.3.rs-1719859/v1,similar
+w059,0,reordered list: influenza vs skin infection,crossing,2,10.1101/2020.08.14.20175190,similar
+w060,0,same statistic but broken decimal 'p =0. 07' read as p = 0,crossing,1,10.21203/rs.3.rs-3342492/v1,similar
+w061,1,"same quantity, re-analysed",crossing,2,10.1101/2020.04.30.20086348,similar
+w062,1,,other,1,10.1101/2020.10.08.20204750,similar
+w063,1,,other,2,10.21203/rs.3.rs-6630497/v1,similar
+w064,1,"same statistic, value changed",crossing,1,10.21203/rs.3.rs-2108333/v1,similar
+w065,1,"same interaction, re-analysed",crossing,2,10.21203/rs.3.rs-1093241/v1,similar
+w066,0,reordered list: urolithiasis vs skin infection,crossing,1,10.1101/2020.08.14.20175190,similar
+w067,0,"fragment only, identity cannot be verified",crossing,1,10.21203/rs.3.rs-1890415/v1,similar
+w068,1,,other,2,10.1101/2021.09.26.21264127,similar
+w069,1,,other,2,10.21203/rs.3.rs-23343/v1,similar
+w070,1,"same comparison, more patients",crossing,1,10.1101/2020.05.01.20081026,similar
+w071,1,,other,2,10.1101/2022.02.05.22270436,similar
+w072,1,,other,1,10.21203/rs.3.rs-484578/v1,similar
+w073,1,,other,2,10.21203/rs.3.rs-2486242/v1,exact
+w074,0,different statistic (Acinetobacter vs MRSA),crossing,1,10.21203/rs.3.rs-1396691/v1,similar
+w075,1,"same comparison, more patients",crossing,1,10.1101/2020.05.01.20081026,similar
+w076,1,,other,1,10.1101/2022.01.26.22269729,similar
+w077,1,,other,1,10.21203/rs.3.rs-2891476/v1,similar
+w078,1,,other,1,10.21203/rs.3.rs-2894990/v1,similar
+w079,1,"same labelled comparison, value changed",crossing,1,10.21203/rs.3.rs-142530/v1,similar
+w080,1,,other,2,10.21203/rs.3.rs-2287964/v1,similar
+w081,1,,crossing,2,10.21203/rs.3.rs-403472/v1,similar
+w082,1,,other,1,10.1101/2021.10.27.21265563,similar
+w083,1,same comparison (language abilities),crossing,1,10.1101/2020.10.02.20205237,similar
+w084,0,"fragment only, identity cannot be verified",crossing,2,10.21203/rs.3.rs-6470825/v1,similar
+w085,1,"same comparison; broken 'p<0. 05' parsed as p<0, significance status still correct",crossing,1,10.21203/rs.3.rs-89225/v1,similar
+w086,1,"same comparison; group relabelled SI/IC, data changed",crossing,1,10.21203/rs.3.rs-2036036/v1,similar
+w087,1,,other,2,10.21203/rs.3.rs-8086725/v1,similar
+w088,1,,other,2,10.21203/rs.3.rs-1885399/v1,similar
+w089,1,"same comparison, re-analysed",crossing,2,10.21203/rs.3.rs-7149123/v1,similar
+w090,1,same label (S1) by 'respectively'; the three values look permuted across M/S1/S2,crossing,1,10.1101/2020.09.28.20202929,similar
+w091,0,"fragment only, identity cannot be verified",crossing,1,10.21203/rs.3.rs-1890415/v1,similar
+w092,1,,other,1,10.1101/2022.01.24.22269734,exact
+w093,1,"same comparison, re-analysed",crossing,1,10.21203/rs.3.rs-1966542/v1,similar
+w094,1,same comparison; preprint P=0.033 contradicts 'not significant',crossing,2,10.21203/rs.3.rs-97391/v1,similar
+w095,1,"same statement, conclusion reversed",crossing,2,10.21203/rs.3.rs-2387106/v1,similar
+w096,1,,other,2,10.1101/2021.10.19.21265230,similar
+w097,0,reordered list: respiratory infection vs cholelithiasis,crossing,2,10.1101/2020.08.14.20175190,similar
+w098,0,reordered: all samples vs cancer samples,crossing,2,10.21203/rs.3.rs-2922325/v1,similar
+w099,1,,other,2,10.21203/rs.3.rs-3356197/v1,exact
+w100,1,,other,1,10.1101/2021.09.26.21264127,exact
+w101,1,"same comparison; status relabelled IC/SI, data changed",crossing,2,10.21203/rs.3.rs-2036036/v1,similar
+w102,1,"same correlation, re-analysed",other,2,10.1101/2021.02.16.21251850,similar
+w103,1,,other,2,10.1101/2021.08.23.457328,similar
+w104,1,"same comparison, data changed",crossing,1,10.1101/2021.10.14.21264747,similar
+w105,1,"same interaction, re-analysed",crossing,1,10.21203/rs.3.rs-1093241/v1,similar
+w106,1,"same test, data changed",crossing,2,10.1101/2020.12.23.20248773,similar
+w107,0,reordered list: fat-free mass vs BMI,crossing,1,10.1101/2022.01.20.22269593,similar
+w108,1,"same heterogeneity statistic, value differs",crossing,2,10.1101/2020.08.15.20102699,similar
+w109,1,,other,1,10.21203/rs.3.rs-4462659/v1,similar
+w110,1,"same comparison, data changed",crossing,1,10.1101/2021.05.21.21257626,similar
+w111,1,,other,2,10.21203/rs.3.rs-2517758/v1,similar
+w112,1,,other,2,10.1101/2020.11.09.372201,similar
+w113,1,,other,2,10.1101/2020.05.04.20072447,exact

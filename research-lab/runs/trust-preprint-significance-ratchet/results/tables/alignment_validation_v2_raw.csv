@@ -1,0 +1,115 @@
+id,correct,note
+w000,1,
+w001,1,same statement; published version has p<=0.05 typo
+w002,1,
+w003,0,different statistic (legend threshold vs estimate)
+w004,1,
+w005,1,"same comparison, validation dataset replaced"
+w006,1,
+w007,0,different analysis (change vs baseline)
+w008,1,"same statistic, .46 -> .046"
+w009,1,same statistic (tuple vs bare p)
+w010,1,"same comparison, data changed"
+w011,1,
+w012,1,"same comparison, data changed"
+w013,1,
+w014,0,different comparison (L1/L2 vs T11/T12)
+w015,1,
+w016,1,"same coefficient, re-estimated"
+w017,1,"same test, changed"
+w018,1,"same comparison, changed"
+w019,1,"same comparison, changed"
+w020,1,"same comparison, changed"
+w021,1,"same comparison, changed"
+w022,1,
+w023,0,different statistic
+w024,1,same label (S2) by 'respectively'; the three values look permuted across M/S1/S2
+w025,1,
+w026,0,reordered list: interaction vs treatment
+w027,0,reordered list: fat-free mass vs fat percentage
+w028,1,
+w029,0,"fragment only, identity cannot be verified"
+w030,0,different comparison
+w031,1,"same comparison, data changed"
+w032,1,
+w033,1,"same analysis, category added"
+w034,1,
+w035,1,"same comparison, re-analysed"
+w036,1,
+w037,1,
+w038,0,reordered list: treatment vs interaction
+w039,1,
+w040,0,"fragment only, identity cannot be verified"
+w041,0,different comparison (fracture vs cholelithiasis)
+w042,1,
+w043,1,
+w044,1,
+w045,1,
+w046,1,
+w047,1,"same test, changed"
+w048,1,
+w049,1,"same comparison, data changed"
+w050,1,same statement; preprint P<0.0001 contradicts 'not significantly different'
+w051,1,"same comparison, test changed"
+w052,1,
+w053,1,same position in a 'respectively' pair; re-analysed (n 15 -> 13)
+w054,0,same statistic but published typo 'P=001' read as p = 1
+w055,1,
+w056,1,
+w057,1,same position in a 'respectively' pair; re-analysed
+w058,1,
+w059,0,reordered list: influenza vs skin infection
+w060,0,same statistic but broken decimal 'p =0. 07' read as p = 0
+w061,1,"same quantity, re-analysed"
+w062,1,
+w063,1,
+w064,1,"same statistic, value changed"
+w065,1,"same interaction, re-analysed"
+w066,0,reordered list: urolithiasis vs skin infection
+w067,0,"fragment only, identity cannot be verified"
+w068,1,
+w069,1,
+w070,1,"same comparison, more patients"
+w071,1,
+w072,1,
+w073,1,
+w074,0,different statistic (Acinetobacter vs MRSA)
+w075,1,"same comparison, more patients"
+w076,1,
+w077,1,
+w078,1,
+w079,1,"same labelled comparison, value changed"
+w080,1,
+w081,1,
+w082,1,
+w083,1,same comparison (language abilities)
+w084,0,"fragment only, identity cannot be verified"
+w085,1,"same comparison; broken 'p<0. 05' parsed as p<0, significance status still correct"
+w086,1,"same comparison; group relabelled SI/IC, data changed"
+w087,1,
+w088,1,
+w089,1,"same comparison, re-analysed"
+w090,1,same label (S1) by 'respectively'; the three values look permuted across M/S1/S2
+w091,0,"fragment only, identity cannot be verified"
+w092,1,
+w093,1,"same comparison, re-analysed"
+w094,1,same comparison; preprint P=0.033 contradicts 'not significant'
+w095,1,"same statement, conclusion reversed"
+w096,1,
+w097,0,reordered list: respiratory infection vs cholelithiasis
+w098,0,reordered: all samples vs cancer samples
+w099,1,
+w100,1,
+w101,1,"same comparison; status relabelled IC/SI, data changed"
+w102,1,"same correlation, re-analysed"
+w103,1,
+w104,1,"same comparison, data changed"
+w105,1,"same interaction, re-analysed"
+w106,1,"same test, data changed"
+w107,0,reordered list: fat-free mass vs BMI
+w108,1,"same heterogeneity statistic, value differs"
+w109,1,
+w110,1,"same comparison, data changed"
+w111,1,
+w112,1,
+w113,1,

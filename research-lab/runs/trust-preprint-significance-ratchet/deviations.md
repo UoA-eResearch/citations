@@ -75,3 +75,19 @@ papers, 0.489 [0.453, 0.526].
      thresholds (≥ 0.67 with lower end > 0.50 would be ratchet-like; upper end < 0.67 would be against it). If < 0.90,
      only the validated-correct crossings are reported, by direction, and v2 is inconclusive.
    - S1 (dropped vs added) is recomputed on the v2 extraction as a robustness check.
+
+## D4 — 2026-10-17 16:09 NZDT — after the v2 validation was adjudicated, before analysis_v2.py was run
+
+1. **v2 blind validation.** The strict rule leaves only 64 crossings in the v1 population, so the sample is all 64
+   (a census) plus 50 strict non-crossings. Precision among strict crossings is **42 of 64 (0.66)**, against 50 of 50
+   for non-crossings. Under D3's decision rule, v2 is inconclusive and only the validated-correct crossings are
+   reported, by direction.
+2. **What still fails under the strict rule:** reordered lists, where the same sentence lists the same items in a
+   different order, so the same rank is a different item (8); fragments too short to identify the comparison (5,
+   "CLP + E-5, p = …; vs."); typos and broken decimals read literally ("P=001", "p =0. 07"); and different statistics
+   in near-identical sentences. Several correct crossings are themselves corrections ("p = .46" → "p = 0.046"), and two
+   are three values that appear permuted across labels (w024, w090), so even a correct alignment does not always mean
+   a changed result.
+3. Because the 64 strict crossings were adjudicated in full, the 42 correct ones are every verified strict crossing in
+   the v1 population. Their direction is reported with an exact interval as a descriptive, exploratory result; they
+   are not a random sample of all true crossings (the strict rule selects text-only, same-structure sentences).
