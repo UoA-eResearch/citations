@@ -93,3 +93,19 @@ with infinite weights.
    byte-identical. 44 networks are refitted with the fixed code (`data/jobs_refit.json`) and merged into
    `data/fits.jsonl`. These are every network with any failed fit, the three with changed data, and the two
    re-directed ones. The first-run fits are kept as `data/fits_v1.jsonl`.
+
+## D5 — 2026-10-18 08:29 NZDT — loose ends from the confirmation pass (review/confirmation.md: publish)
+
+- **The meta description** now says 177 networks. The F2 caption says retention is counted among the treatments
+  already compared. The report's re-parse sentence now reads "31 of 32 exact, one not comparable".
+- **D2's hand-checked set** is 30 binary/rate plus 30 continuous networks, 60 in all, not "60 binary or rate and all 30
+  continuous".
+  - The list file `data/validation/d2_handchecked_lists.txt` was copied into the run during D4 from the D2 session's
+    working list. The review's independent selection of the same networks matches it exactly.
+- **Two process notes.**
+  - The D4 additions to `analysis.py` (new-entrant retention, participant share) and `direction_record.py` were
+    committed with their outputs (090577c), not before them. The verdict-bearing refit itself followed committed code
+    (637023d).
+  - The standardised files were regenerated about a minute before that code commit.
+- **482475.** Two arms of 482475 with n > 0 but no mean are still counted at standardisation and dropped by the fit
+  (28 studies parsed, 26 fitted). No reported number is affected.

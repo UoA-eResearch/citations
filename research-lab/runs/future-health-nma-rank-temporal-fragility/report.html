@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NMA Ranking Fragility</title>
-<meta name="description" content="A temporal holdout across 176 published network meta-analyses from the open nmadb database. How often does the top-ranked treatment change when the newest studies are added back, and is the stated probability of being best calibrated against that?">
+<meta name="description" content="A temporal holdout across 177 published network meta-analyses from the open nmadb database. How often does the top-ranked treatment change when the newest studies are added back, and is the stated probability of being best calibrated against that?">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -80,7 +80,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
   <h1>Are network meta-analysis rankings a forecast or a snapshot?</h1>
   <p class="subtitle">A temporal holdout across 177 published network meta-analyses from the open nmadb database. How often does the top-ranked treatment change when the newest studies are added back, and is the stated probability of being best calibrated against that?</p>
   <div class="meta">
-    <span>Report · 2026-10-18 · pre-review draft</span>
+    <span>Report · 2026-10-18 · revised after independent review</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/future-health-nma-rank-temporal-fragility/plan.md">Preregistration</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/future-health-nma-rank-temporal-fragility/deviations.md">Deviations log</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/future-health-nma-rank-temporal-fragility/code">Code</a>
@@ -248,7 +248,7 @@ probability of being best.</p>
 <p><strong>Validation.</strong>
 - <strong>V1, parsing.</strong> 23 networks, oversampling the label-year ones, were compared with their raw sheets. 22 were right;
   the one error, a missed year in one study, is fixed.
-    - The independent review re-parsed 32 networks and found them exact.
+    - The independent review re-parsed 32 networks: 31 match exactly, and one could not be compared by its parser.
     - Empty arms (n = 0) were later dropped (D4).
 - <strong>Direction of benefit (D2, D4).</strong> The catalogue's "harmful/beneficial" label and the sheets' own labels often
   disagree.
@@ -340,7 +340,7 @@ that ranks first. Dashed line: random holdouts of the primary size.</em></p>
     probability is 0.59 against 67% retention (a gap of 8 points, −15 to −1), close to the diagonal (Figure 2).
     - <strong>Counting new entrants,</strong> longer-horizon retention is 46%, and the stated probability <em>overstates</em> it by about 13
     points.</p>
-<figure><a href="results/figures/F2_calibration.png"><img src="results/figures/F2_calibration.png" alt="Figure 2"></a><figcaption>Calibration of the pre-update probability of being best of the top-ranked treatment against the share of networks in which that treatment is still top-ranked once the withheld studies are added back. Bins of width 0.2 with at least 3 networks; bars are 95% Wilson intervals. Points above the diagonal mean the stated probability understates how often the top rank holds.</figcaption></figure>
+<figure><a href="results/figures/F2_calibration.png"><img src="results/figures/F2_calibration.png" alt="Figure 2"></a><figcaption>Calibration of the pre-update probability of being best of the top-ranked treatment against the share of networks in which that treatment is still top-ranked, among the treatments already compared, once the withheld studies are added back (a newly added treatment that ranks first is not counted). Bins of width 0.2 with at least 3 networks; bars are 95% Wilson intervals. Points above the diagonal mean the stated probability understates how often the top rank holds.</figcaption></figure>
 <p><em>Figure 2. Calibration of the pre-update probability of being best against the share of networks whose top treatment
 keeps its place among the treatments already compared. Bins of width 0.2 with at least 3 networks; bars are 95%
 Wilson intervals.</em></p>

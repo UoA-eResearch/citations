@@ -107,7 +107,8 @@ def f2():
     ax.text(0.03, 0.95, "above the diagonal: the probability\nunderstates how often the top holds", fontsize=7, color=INK2, va="top")
     fig.savefig(F / "F2_calibration.png", dpi=200); plt.close(fig)
     caption("F2_calibration", """Calibration of the pre-update probability of being best of the top-ranked treatment against
-    the share of networks in which that treatment is still top-ranked once the withheld studies are added back. Bins
+    the share of networks in which that treatment is still top-ranked, among the treatments already compared, once the
+    withheld studies are added back (a newly added treatment that ranks first is not counted). Bins
     of width 0.2 with at least 3 networks; bars are 95% Wilson intervals. Points above the diagonal mean the stated
     probability understates how often the top rank holds.""")
 

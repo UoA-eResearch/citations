@@ -121,7 +121,7 @@ probability of being best.
 **Validation.**
 - **V1, parsing.** 23 networks, oversampling the label-year ones, were compared with their raw sheets. 22 were right;
   the one error, a missed year in one study, is fixed.
-  - The independent review re-parsed 32 networks and found them exact.
+  - The independent review re-parsed 32 networks: 31 match exactly, and one could not be compared by its parser.
   - Empty arms (n = 0) were later dropped (D4).
 - **Direction of benefit (D2, D4).** The catalogue's "harmful/beneficial" label and the sheets' own labels often
   disagree.
