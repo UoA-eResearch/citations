@@ -28,16 +28,15 @@ Every crossing it found in the version-1 population was then checked by hand.
   - Among statistics found in near-identical sentences in both versions, about 2 to 4 per 1,000 changed significance:
     1.8 by the strict route and 3.6 by the preregistered route.
   - How often rewritten sentences hide a crossing is unknown, because they cannot be matched.
-- **Selective removal could not be tested well.**
+- **Selective removal could not be tested.**
   - The preregistered comparison found no difference: dropped statistics were significant 81.5% of the time, added
     ones 82.0%.
   - But most "dropped" and "added" statistics are matching failures, which dilute any difference.
-  - A sharper post hoc comparison, restricted to statistics removed from or added to a sentence that survived, finds
-    removed ones less often significant: 70.8% against 80.4%, +9.6 points, interval 0.6 to 18.6. That is suggestive,
-    exploratory and subject to the same artefacts.
-- **Arithmetic inconsistencies are carried over.**
-  - Of 29 preprint statistics whose reported significance contradicts their own test statistic, 3 were consistent in
-    the published version.
+  - A sharper post hoc version is dominated by significance-star legends, and its sign flips with how they are
+    excluded.
+- **Inconsistent p-values are carried over.**
+  - Of at most 29 preprint statistics whose reported significance contradicts their own test statistic, 3 were
+    consistent in the published version.
   - Most flagged inconsistencies were copied verbatim, and many are one-tailed tests or rounding conventions rather
     than errors.
 
@@ -59,10 +58,9 @@ mostly mistakes.
 We then checked every candidate under a stricter rule by hand. Of 33 genuinely changed results, 20 moved into
 significance and 13 out of it. That tilt could be chance: the data fit both "no push" and "a strong push".
 
-We could not tell whether non-significant results are quietly removed during revision. A rough check found no
-difference; a sharper one hints that removed results are somewhat less often significant than added ones, but it is
-not conclusive. And internal arithmetic errors in preprints were almost always carried into the journal version
-unchanged.
+We could not tell whether non-significant results are quietly removed during revision: our comparison was swamped
+by matching errors and by the star footnotes ("*p < 0.05") in figure legends. Reported p-values that disagree with
+their own test statistic were almost always carried into the journal version unchanged.
 
 The main lesson is about method. Automated comparisons of this kind need several safeguards; without them, the
 "changes" they count will mostly be their own errors:
@@ -117,8 +115,8 @@ that crossings are rare.
   Square, Preprints.org and others).
 - **Confirmation.** Server-asserted publication links (Crossref relations, the bioRxiv API) were confirmed by title
   similarity (token Jaccard ≥ 0.5). That gave 28,597 of 31,261 candidates. Of the 2,664 rejected (medRxiv 1,234,
-  Research Square 789, bioRxiv 469, others 172), the reviewer's sample suggests most are true pairs whose title was
-  rewritten. Retitling goes with heavier revision, so the filter selects against the pairs most likely to change.
+  Research Square 789, bioRxiv 469, others 172), the reviewer's sample of 14 suggests most are true pairs whose title
+  was rewritten. Retitling goes with heavier revision, so the filter selects against the pairs most likely to change.
 - **Full texts.** The open-access published versions were fetched from PMC: 22,941 articles for 23,220 preprints.
 - **Primary population.** The **11,508** pairs whose preprint full text is known to be version 1. That population is
   Research Square 6,066, medRxiv 4,290, bioRxiv 1,040 and others 112.
@@ -164,7 +162,7 @@ that crossings are rare.
   statistic marked in each sentence.
 - **Limitation.** The "abstract or results text" condition is weaker than intended. In PMC XML, table and caption
   text is nested inside results sections and was flattened into them: 20.8% of strict-eligible pairs carry such
-  glued text.
+  glued text (20.1% by D5's rule; the reviewer's rule gives 20.8%).
 
 **Adversarial review (D5).** An independent reviewer (Fable 5.1) re-adjudicated 124 items from the blind displays. It
 agreed on 121 (kappa 0.95) and rejected three that the agent had accepted: a fragment and two positional matches.
@@ -243,8 +241,8 @@ Under the strict rule, 22 of 64 crossings still failed:
 
 | code | n | up |
 | --- | --- | --- |
-| changed result: new data (more patients, a replaced dataset) | 13 | 9 |
-| changed result: re-analysis (a different test or model) | 12 | 7 |
+| changed result: new data (more patients, a replaced dataset) | 12 | 9 |
+| changed result: re-analysis (a different test or model) | 13 | 7 |
 | changed result: reason not visible in the sentence | 16 | 10 |
 | correction or typo: a value contradicting its own sentence ("p = 0.033" beside "not significant"; ".46" vs ".046"; a star-legend typo) | 8 | 3 |
 | relabelled: three values permuted across labels | 2 | 1 |
@@ -256,7 +254,8 @@ Under the strict rule, 22 of 64 crossings still failed:
 | set | up / n | share | exact 95% interval |
 | --- | --- | --- | --- |
 | without the reviewer's two rejections in the census | 20 / 31 | 0.65 | 0.45–0.81 |
-| new data only | 9 / 13 | 0.69 | 0.39–0.91 |
+| new data only | 9 / 12 | 0.75 | 0.43–0.95 |
+| all 42 blind-verified strict crossings, before coding (the coding was done after unblinding) | 24 / 42 | 0.57 | 0.41–0.72 |
 | without sentences containing glued table or caption text | 16 / 27 | 0.59 | 0.39–0.78 |
 | papers posted more than 30 days before publication (all 28 qualify) | 20 / 33 | 0.61 | 0.42–0.77 |
 | changed results in the version-1 population, both validation samples | 23 / 37 | 0.62 | 0.45–0.78 |
@@ -281,12 +280,16 @@ lead estimate is the census of changed results. The dashed lines mark no ratchet
   - This comparison cannot detect selective removal. Most unmatched statistics are matching failures, and published
     table text is extracted twice, so both pools sit near the base rate whatever happens to genuinely removed
     results.
-  - **Post hoc (reviewer-suggested).** Restricting to statistics dropped from, or added to, a sentence that survived
-    revision (it holds an aligned statistic) gives 70.8% of 1,250 dropped against 80.4% of 7,752 added: **+9.6
-    points, paper bootstrap 0.6 to 18.6**, 1,899 papers.
-  - Published versions add far more statistics to surviving sentences than they remove. The direction is what
-    selective removal of non-significant results would produce. This comparison was not preregistered and inherits
-    the extraction artefacts, so it is a lead, not a finding.
+  - **Post hoc (reviewer-suggested), and uninformative.** Restricting to statistics dropped from, or added to, a
+    sentence that survived revision gives 70.8% of 1,250 against 80.4% of 7,752 (+9.6 points, 0.6 to 18.6). But 35%
+    of the added and 25% of the dropped are significance-star definitions ("*p < 0.05, **p < 0.01"), significant by
+    construction, which journal captions carry more of. The estimate moves with how they are removed:
+    - without star legends, +3.9 points (−4.5 to +11.7);
+    - without star legends or glued text, +5.1 (−0.7 to +11.3);
+    - text sections only, without star legends, −9.4 (−17.6 to −0.8);
+    - the reviewer's own exclusions, +2.4 (−6.1 to +10.7).
+
+    It says nothing about selective removal.
 - **S2, consistency.**
   - Of 3,460 aligned tuple pairs, only 1,361 can be evaluated; the rest lack df.
   - 187 preprint tuples report a p-value outside the range implied by their own test statistic:
@@ -294,9 +297,10 @@ lead estimate is the census of changed results. The dashed lines mark no ratchet
     - 52 are explained by a one-tailed p;
     - several follow the "p = 0.001" floor convention.
   - So "inconsistent" here is mostly not an error, and a verbatim copy can never be "repaired".
-  - The subset that matters, **decision inconsistencies**, is **29, and 3 were consistent** in the published
-    version.
-  - Reported significance that contradicts its own test statistic was almost always carried over unchanged.
+  - The subset that matters, **decision inconsistencies**, is **at most 29, and 3 were consistent** in the published
+    version. Of the 29, 24 are verbatim copies, 3 are explicable as one-tailed tests, and several are "z" matches
+    that are z-scores rather than test statistics.
+  - Reported p-values that disagree with their own test statistic were almost always carried over unchanged.
 - **S3, by server.** Automated estimates only, which the validation shows are unreliable: medRxiv 0.474 (624
   crossings), other servers 0.499 (748; 90% Research Square), bioRxiv 0.538 (39).
 
@@ -340,6 +344,8 @@ before the outputs it produces. Deviations are in `deviations.md`:
 - **D4:** the v2 validation outcome (a census of 64).
 - **D5:** the response to the adversarial review (`review/review.md`): the fallback audit, the re-based verified
   estimate, reworded secondaries, corrected literature, and added disclosures.
+- **D6:** the confirmation pass (`review/confirmation.md`, publish with edits): the post hoc S1 comparison is
+  withdrawn as an artefact of star legends; "at most 29"; the blind pre-coding census added; one code aligned.
 
 Pipeline fixes the review recommended are listed above as lessons. They are not re-run here, because the verdict
 does not depend on them.

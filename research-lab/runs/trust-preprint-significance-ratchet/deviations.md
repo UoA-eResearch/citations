@@ -148,3 +148,23 @@ The review (`review/review.md`, Fable 5.1) found that the verdict stands but the
 6. **Not done:** re-running the pipeline with the extraction fixes (stripping table and figure subtrees, splitting
    glued sentences, p = 0 and 1 undetermined, star legends globally, df required for exact matches, the middle-dot
    regression). They are listed as the methods lesson; the verdict does not depend on them.
+
+## D6 — 2026-10-17 18:49 NZDT — confirmation pass (publish with edits)
+
+`review/confirmation.md` confirmed every D5 number and asked for one fix and four edits:
+
+1. **C1. The post hoc S1 comparison is withdrawn as a finding.** Significance-star legends are 35% of the statistics
+   "added to surviving sentences" and 25% of those dropped (D5's STAR rule; the reviewer's rule finds 41% and 28%).
+   The estimate's sign flips with how they are excluded:
+   - without star legends, +3.9 (−4.5 to +11.7);
+   - without star legends or glued text, +5.1 (−0.7 to +11.3);
+   - text sections only, without star legends, −9.4 (−17.6 to −0.8).
+
+   The report now calls it uninformative. The verdict-block and plain-terms claims are removed, and D5.3's "suggestive"
+   no longer holds. `review_response.py` R13 now reports all the variants.
+2. **C2.** Decision inconsistencies are "at most 29": 24 are verbatim copies, 3 are one-tailed-explicable, and some
+   "z" matches are z-scores rather than test statistics.
+3. **C3.** The blind, pre-coding census (24/42, 0.57, 0.41–0.72) is added to the sensitivities and Figure 2.
+4. **C4.** w053 is recoded as changed_analysis, like w057, so "new data only" is now 9/12.
+5. **C5.** Wording: the "sample of 14"; the glued-text share from D5's own rule (20.1%); "p-values that disagree
+   with their own test statistic" in place of "arithmetic errors".

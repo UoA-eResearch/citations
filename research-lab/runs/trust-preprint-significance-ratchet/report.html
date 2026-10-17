@@ -80,7 +80,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
   <h1>Does peer review push p-values across 0.05 in one direction?</h1>
   <p class="subtitle">Version-matched statistics in 23,220 preprints and their published journal versions: when a reported p-value crosses 0.05 between the two, does it more often move into significance than out of it?</p>
   <div class="meta">
-    <span>Report · 2026-10-17 · pre-review draft</span>
+    <span>Report · 2026-10-17 · revised after independent review</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/trust-preprint-significance-ratchet/plan.md">Preregistration</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/trust-preprint-significance-ratchet/deviations.md">Deviations log</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/trust-preprint-significance-ratchet/code">Code</a>
@@ -113,18 +113,17 @@ Every crossing it found in the version-1 population was then checked by hand.
 <li>How often rewritten sentences hide a crossing is unknown, because they cannot be matched.</li>
 </ul>
 </li>
-<li><strong>Selective removal could not be tested well.</strong><ul>
+<li><strong>Selective removal could not be tested.</strong><ul>
 <li>The preregistered comparison found no difference: dropped statistics were significant 81.5% of the time, added
 ones 82.0%.</li>
 <li>But most "dropped" and "added" statistics are matching failures, which dilute any difference.</li>
-<li>A sharper post hoc comparison, restricted to statistics removed from or added to a sentence that survived, finds
-removed ones less often significant: 70.8% against 80.4%, +9.6 points, interval 0.6 to 18.6. That is suggestive,
-exploratory and subject to the same artefacts.</li>
+<li>A sharper post hoc version is dominated by significance-star legends, and its sign flips with how they are
+excluded.</li>
 </ul>
 </li>
-<li><strong>Arithmetic inconsistencies are carried over.</strong><ul>
-<li>Of 29 preprint statistics whose reported significance contradicts their own test statistic, 3 were consistent in
-the published version.</li>
+<li><strong>Inconsistent p-values are carried over.</strong><ul>
+<li>Of at most 29 preprint statistics whose reported significance contradicts their own test statistic, 3 were
+consistent in the published version.</li>
 <li>Most flagged inconsistencies were copied verbatim, and many are one-tailed tests or rounding conventions rather
 than errors.</li>
 </ul>
@@ -143,10 +142,9 @@ medicine and biology, by finding each p-value in both versions and checking whet
 mostly mistakes.</p>
 <p>We then checked every candidate under a stricter rule by hand. Of 33 genuinely changed results, 20 moved into
 significance and 13 out of it. That tilt could be chance: the data fit both "no push" and "a strong push".</p>
-<p>We could not tell whether non-significant results are quietly removed during revision. A rough check found no
-difference; a sharper one hints that removed results are somewhat less often significant than added ones, but it is
-not conclusive. And internal arithmetic errors in preprints were almost always carried into the journal version
-unchanged.</p>
+<p>We could not tell whether non-significant results are quietly removed during revision: our comparison was swamped
+by matching errors and by the star footnotes ("*p &lt; 0.05") in figure legends. Reported p-values that disagree with
+their own test statistic were almost always carried into the journal version unchanged.</p>
 <p>The main lesson is about method. Automated comparisons of this kind need several safeguards; without them, the
 "changes" they count will mostly be their own errors:
 - repair the text encoding;
@@ -199,8 +197,8 @@ that crossings are rare.</p>
   Square, Preprints.org and others).
 - <strong>Confirmation.</strong> Server-asserted publication links (Crossref relations, the bioRxiv API) were confirmed by title
   similarity (token Jaccard ≥ 0.5). That gave 28,597 of 31,261 candidates. Of the 2,664 rejected (medRxiv 1,234,
-  Research Square 789, bioRxiv 469, others 172), the reviewer's sample suggests most are true pairs whose title was
-  rewritten. Retitling goes with heavier revision, so the filter selects against the pairs most likely to change.
+  Research Square 789, bioRxiv 469, others 172), the reviewer's sample of 14 suggests most are true pairs whose title
+  was rewritten. Retitling goes with heavier revision, so the filter selects against the pairs most likely to change.
 - <strong>Full texts.</strong> The open-access published versions were fetched from PMC: 22,941 articles for 23,220 preprints.
 - <strong>Primary population.</strong> The <strong>11,508</strong> pairs whose preprint full text is known to be version 1. That population is
   Research Square 6,066, medRxiv 4,290, bioRxiv 1,040 and others 112.
@@ -242,7 +240,7 @@ that crossings are rare.</p>
   statistic marked in each sentence.
 - <strong>Limitation.</strong> The "abstract or results text" condition is weaker than intended. In PMC XML, table and caption
   text is nested inside results sections and was flattened into them: 20.8% of strict-eligible pairs carry such
-  glued text.</p>
+  glued text (20.1% by D5's rule; the reviewer's rule gives 20.8%).</p>
 <p><strong>Adversarial review (D5).</strong> An independent reviewer (Fable 5.1) re-adjudicated 124 items from the blind displays. It
 agreed on 121 (kappa 0.95) and rejected three that the agent had accepted: a fragment and two positional matches.</p>
 <h2>Results</h2>
@@ -384,12 +382,12 @@ these errors.</p>
 <tbody>
 <tr>
 <td>changed result: new data (more patients, a replaced dataset)</td>
-<td>13</td>
+<td>12</td>
 <td>9</td>
 </tr>
 <tr>
 <td>changed result: re-analysis (a different test or model)</td>
-<td>12</td>
+<td>13</td>
 <td>7</td>
 </tr>
 <tr>
@@ -434,9 +432,15 @@ these errors.</p>
 </tr>
 <tr>
 <td>new data only</td>
-<td>9 / 13</td>
-<td>0.69</td>
-<td>0.39–0.91</td>
+<td>9 / 12</td>
+<td>0.75</td>
+<td>0.43–0.95</td>
+</tr>
+<tr>
+<td>all 42 blind-verified strict crossings, before coding (the coding was done after unblinding)</td>
+<td>24 / 42</td>
+<td>0.57</td>
+<td>0.41–0.72</td>
 </tr>
 <tr>
 <td>without sentences containing glued table or caption text</td>
@@ -467,42 +471,46 @@ these errors.</p>
 <p>No interval excludes 0.50 or 0.67. By the plan's thresholds, applied descriptively, all read Inconclusive.</p>
 <p>These crossings are not a random sample of all genuine crossings. The strict rule keeps sentences that changed
 least, in text sections.</p>
-<figure><a href="results/figures/F2_share_up.png"><img src="results/figures/F2_share_up.png" alt="Figure 2"></a><figcaption>Share of statistics that move from non-significant in the preprint to significant in the published version, among those whose significance changes. Hollow, light: automated estimates, made mostly of artefacts (the preregistered fallback&#x27;s four exact-tuple crossings include three: a df-less r matched to the wrong partner twice, and a broken decimal). Filled: crossings a blind adjudication confirmed. The lead estimate is the census of changed results in the version-1 population (33, of which 20 go up), which excludes corrections and typos, relabelled values and a duplicate; its interval includes both one half and a 2:1 ratchet, as do the sensitivities.</figcaption></figure>
+<figure><a href="results/figures/F2_share_up.png"><img src="results/figures/F2_share_up.png" alt="Figure 2"></a><figcaption>Share of statistics that move from non-significant in the preprint to significant in the published version, among those whose significance changes. Hollow, light: automated estimates, made mostly of artefacts (the preregistered fallback&#x27;s four exact-tuple crossings include three: a df-less r matched to the wrong partner twice, and a broken decimal). Filled: crossings a blind adjudication confirmed. The lead estimate is the census of changed results in the version-1 population (33, of which 20 go up), which excludes corrections and typos, relabelled values and a duplicate (coded after unblinding; the blind, pre-coding census is 24 of 42); its interval includes both one half and a 2:1 ratchet, as do the sensitivities.</figcaption></figure>
 <p><em>Figure 2. Share of crossings that go up. Hollow, light: automated estimates, mostly artefacts. Filled: verified. The
 lead estimate is the census of changed results. The dashed lines mark no ratchet (0.50) and the lead's 2:1 ratchet
 (0.67).</em></p>
 <h3>Secondaries</h3>
 <ul>
-<li><strong>S1, dropped vs added (v1 extraction, version-1 population).</strong><ul>
+<li>
+<p><strong>S1, dropped vs added (v1 extraction, version-1 population).</strong></p>
+<ul>
 <li>81.5% of 19,024 dropped and 82.0% of 51,978 added statistics are significant: a difference of +0.5 points (paper
 bootstrap −1.7 to +2.6).</li>
 <li>This comparison cannot detect selective removal. Most unmatched statistics are matching failures, and published
 table text is extracted twice, so both pools sit near the base rate whatever happens to genuinely removed
 results.</li>
-<li><strong>Post hoc (reviewer-suggested).</strong> Restricting to statistics dropped from, or added to, a sentence that survived
-revision (it holds an aligned statistic) gives 70.8% of 1,250 dropped against 80.4% of 7,752 added: <strong>+9.6
-points, paper bootstrap 0.6 to 18.6</strong>, 1,899 papers.</li>
-<li>Published versions add far more statistics to surviving sentences than they remove. The direction is what
-selective removal of non-significant results would produce. This comparison was not preregistered and inherits
-the extraction artefacts, so it is a lead, not a finding.</li>
+<li><strong>Post hoc (reviewer-suggested), and uninformative.</strong> Restricting to statistics dropped from, or added to, a
+sentence that survived revision gives 70.8% of 1,250 against 80.4% of 7,752 (+9.6 points, 0.6 to 18.6). But 35%
+of the added and 25% of the dropped are significance-star definitions ("*p &lt; 0.05, **p &lt; 0.01"), significant by
+construction, which journal captions carry more of. The estimate moves with how they are removed:<ul>
+<li>without star legends, +3.9 points (−4.5 to +11.7);</li>
+<li>without star legends or glued text, +5.1 (−0.7 to +11.3);</li>
+<li>text sections only, without star legends, −9.4 (−17.6 to −0.8);</li>
+<li>the reviewer's own exclusions, +2.4 (−6.1 to +10.7).</li>
 </ul>
 </li>
-<li><strong>S2, consistency.</strong><ul>
-<li>Of 3,460 aligned tuple pairs, only 1,361 can be evaluated; the rest lack df.</li>
-<li>187 preprint tuples report a p-value outside the range implied by their own test statistic:<ul>
-<li>153 are copied verbatim into the published version;</li>
-<li>52 are explained by a one-tailed p;</li>
-<li>several follow the "p = 0.001" floor convention.</li>
 </ul>
+<p>It says nothing about selective removal.
+- <strong>S2, consistency.</strong>
+- Of 3,460 aligned tuple pairs, only 1,361 can be evaluated; the rest lack df.
+- 187 preprint tuples report a p-value outside the range implied by their own test statistic:
+    - 153 are copied verbatim into the published version;
+    - 52 are explained by a one-tailed p;
+    - several follow the "p = 0.001" floor convention.
+- So "inconsistent" here is mostly not an error, and a verbatim copy can never be "repaired".
+- The subset that matters, <strong>decision inconsistencies</strong>, is <strong>at most 29, and 3 were consistent</strong> in the published
+version. Of the 29, 24 are verbatim copies, 3 are explicable as one-tailed tests, and several are "z" matches
+that are z-scores rather than test statistics.
+- Reported p-values that disagree with their own test statistic were almost always carried over unchanged.
+- <strong>S3, by server.</strong> Automated estimates only, which the validation shows are unreliable: medRxiv 0.474 (624
+  crossings), other servers 0.499 (748; 90% Research Square), bioRxiv 0.538 (39).</p>
 </li>
-<li>So "inconsistent" here is mostly not an error, and a verbatim copy can never be "repaired".</li>
-<li>The subset that matters, <strong>decision inconsistencies</strong>, is <strong>29, and 3 were consistent</strong> in the published
-version.</li>
-<li>Reported significance that contradicts its own test statistic was almost always carried over unchanged.</li>
-</ul>
-</li>
-<li><strong>S3, by server.</strong> Automated estimates only, which the validation shows are unreliable: medRxiv 0.474 (624
-  crossings), other servers 0.499 (748; 90% Research Square), bioRxiv 0.538 (39).</li>
 </ul>
 <h2>What this does and does not show</h2>
 <ul>
@@ -544,6 +552,8 @@ before the outputs it produces. Deviations are in <code>deviations.md</code>:</p
 <li><strong>D4:</strong> the v2 validation outcome (a census of 64).</li>
 <li><strong>D5:</strong> the response to the adversarial review (<code>review/review.md</code>): the fallback audit, the re-based verified
   estimate, reworded secondaries, corrected literature, and added disclosures.</li>
+<li><strong>D6:</strong> the confirmation pass (<code>review/confirmation.md</code>, publish with edits): the post hoc S1 comparison is
+  withdrawn as an artefact of star legends; "at most 29"; the blind pre-coding census added; one code aligned.</li>
 </ul>
 <p>Pipeline fixes the review recommended are listed above as lessons. They are not re-run here, because the verdict
 does not depend on them.</p>

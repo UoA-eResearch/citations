@@ -24,7 +24,7 @@ import requests
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from analysis import consistent, recompute_p  # noqa: E402
-from analysis_v2 import CROSS, clopper, strict  # noqa: E402
+from analysis_v2 import CROSS, STAR, clopper, strict  # noqa: E402
 from supplementary import paper_boot, verified  # noqa: E402
 
 RUN = Path(__file__).resolve().parents[1]
@@ -79,6 +79,7 @@ def main():
     census = v[(v["sample"] == "v2") & changed]
     out["R3_verified"] = dict(
         codes=v.groupby("code").up.agg(["count", "sum"]).rename(columns={"count": "n", "sum": "up"}).to_dict("index"),
+        census_all_blind_verified_v1=est(v[v["sample"] == "v2"]),
         census_changed_v1=est(census),
         census_changed_v1_minus_reviewer_rejections=est(census[~rej]),
         census_changed_v1_new_data_only=est(census[census.code == "changed_data"]),
@@ -95,14 +96,16 @@ def main():
         x = s2.get(row.id)
         return bool(x) and bool(GLUE.search(x["sentence_1"]) or GLUE.search(x["sentence_2"]) or max(len(x["sentence_1"]), len(x["sentence_2"])) > 600)
     census = census.assign(glued=[is_glued(r) for r in census.itertuples()])
-    out["R8_glued"] = dict(strict_v1_crossings=len(sc), glued=len(gl_keys),
+    se = [r for r in al2 if r["status"] == "aligned" and r["pair"] in v1 and strict(r)]
+    out["R8_glued"] = dict(strict_eligible_v1=len(se), strict_eligible_glued_share=sum(glued(r) for r in se) / len(se),
+                           strict_v1_crossings=len(sc), glued=len(gl_keys),
                            census_changed_glued=int(census.glued.sum()), census_changed_without_glued=est(census[~census.glued]))
     # R4 rates
     det_all = sum(1 for r in rows if r["status"] == "aligned" and r["pair"] in v1 and r["cls"] != "undetermined")
     det_strict = sum(1 for r in al2 if r["status"] == "aligned" and r["pair"] in v1 and strict(r) and r["cls"] != "undetermined")
     out["R4_rates_per_1000"] = dict(prereg_route=1000 * 1411 * 0.12 / det_all, prereg_determined=det_all,
                                     strict_route=1000 * len(sc) * 42 / 64 / det_strict, strict_determined=det_strict)
-    # R13 S1 within surviving sentences
+    # R13 S1 within surviving sentences; C1 (confirmation): star legends make it an artefact, so variants without them
     rv1 = [r for r in rows if r["pair"] in v1]
     keep = {}
     for r in rv1:
@@ -110,19 +113,24 @@ def main():
             keep.setdefault(r["pair"], [set(), set()]); keep[r["pair"]][0].add(r["pre"]["sentence"]); keep[r["pair"]][1].add(r["pub"]["sentence"])
     S = []
     for r in rv1:
-        if r["status"] == "dropped" and r["pre"]["sig"] is not None and r["pre"]["sentence"] in keep.get(r["pair"], [set(), set()])[0]:
-            S.append((r["pair"], "dropped", r["pre"]["sig"]))
-        if r["status"] == "added" and r["pub"]["sig"] is not None and r["pub"]["sentence"] in keep.get(r["pair"], [set(), set()])[1]:
-            S.append((r["pair"], "added", r["pub"]["sig"]))
-    s1 = pd.DataFrame(S, columns=["pair", "status", "sig"])
-    g = s1.groupby(["pair", "status"]).sig.agg(["sum", "count"]).unstack(fill_value=0)
-    sa, na, sd, nd = (g[("sum", "added")].to_numpy(), g[("count", "added")].to_numpy(), g[("sum", "dropped")].to_numpy(), g[("count", "dropped")].to_numpy())
-    idx = np.random.default_rng(20261017).integers(0, len(g), size=(2000, len(g)))
-    diff = sa[idx].sum(1) / np.maximum(na[idx].sum(1), 1) - sd[idx].sum(1) / np.maximum(nd[idx].sum(1), 1)
-    out["R13_S1_surviving_sentences"] = dict(n_dropped=int(nd.sum()), share_sig_dropped=float(sd.sum() / nd.sum()),
-                                             n_added=int(na.sum()), share_sig_added=float(sa.sum() / na.sum()),
-                                             diff=float(sa.sum() / na.sum() - sd.sum() / nd.sum()),
-                                             ci=[float(np.percentile(diff, 2.5)), float(np.percentile(diff, 97.5))], n_papers=int(len(g)))
+        for st, side, k in (("dropped", "pre", 0), ("added", "pub", 1)):
+            if r["status"] == st and r[side]["sig"] is not None and r[side]["sentence"] in keep.get(r["pair"], [set(), set()])[k]:
+                x = r[side]
+                S.append((r["pair"], st, x["sig"], bool(STAR.search(x["sentence"])),
+                          bool(GLUE.search(x["sentence"]) or len(x["sentence"]) > 600), x["section"] in ("abstract", "result")))
+    s1 = pd.DataFrame(S, columns=["pair", "status", "sig", "star", "glued", "text"])
+
+    def s1diff(df):
+        g = df.groupby(["pair", "status"]).sig.agg(["sum", "count"]).unstack(fill_value=0)
+        sa, na, sd, nd = (g[("sum", "added")].to_numpy(), g[("count", "added")].to_numpy(), g[("sum", "dropped")].to_numpy(), g[("count", "dropped")].to_numpy())
+        idx = np.random.default_rng(20261017).integers(0, len(g), size=(2000, len(g)))
+        diff = sa[idx].sum(1) / np.maximum(na[idx].sum(1), 1) - sd[idx].sum(1) / np.maximum(nd[idx].sum(1), 1)
+        return dict(n_dropped=int(nd.sum()), share_sig_dropped=float(sd.sum() / nd.sum()), n_added=int(na.sum()),
+                    share_sig_added=float(sa.sum() / na.sum()), diff=float(sa.sum() / na.sum() - sd.sum() / nd.sum()),
+                    ci=[float(np.percentile(diff, 2.5)), float(np.percentile(diff, 97.5))], n_papers=int(len(g)))
+    out["R13_S1_surviving_sentences"] = dict(
+        all=s1diff(s1), star_share_added=float(s1[s1.status == "added"].star.mean()), star_share_dropped=float(s1[s1.status == "dropped"].star.mean()),
+        without_star=s1diff(s1[~s1.star]), without_star_or_glued=s1diff(s1[~s1.star & ~s1.glued]), text_only_without_star=s1diff(s1[~s1.star & s1.text]))
     # R14 S2
     tup = [r for r in rv1 if r["status"] == "aligned" and r["pre"]["kind"] == "tuple" and r["pub"]["kind"] == "tuple"]
     inc = [(consistent(r["pre"]), consistent(r["pub"]), r) for r in tup]

@@ -73,8 +73,9 @@ def f2():
             ("Strict automated crossings (precision 0.66)", e["strict_v1"]["share_up"], e["strict_v1"]["ci_read"], e["strict_v1"]["n"], False),
             ("Verified changed results, version-1 census", *v(r["census_changed_v1"]), True),
             ("  without the reviewer's rejections", *v(r["census_changed_v1_minus_reviewer_rejections"]), True),
+            ("  all 42 blind-verified, before coding", *v(r["census_all_blind_verified_v1"]), True),
             ("  all 52 verified crossings, as drafted", *v(r["pooled_all_52_as_drafted"]), True)]
-    fig, ax = plt.subplots(figsize=(8.6, 3.6))
+    fig, ax = plt.subplots(figsize=(8.6, 3.9))
     fig.subplots_adjust(left=0.46, right=0.97, bottom=0.16, top=0.92)
     ax.grid(axis="x", color=GRID, lw=0.6); ax.set_axisbelow(True)
     for x, lab in ((0.5, "no ratchet"), (0.67, "2:1 ratchet")):
@@ -93,8 +94,8 @@ def f2():
     artefacts (the preregistered fallback's four exact-tuple crossings include three: a df-less r matched to the wrong
     partner twice, and a broken decimal). Filled: crossings a blind adjudication confirmed. The lead estimate is the
     census of changed results in the version-1 population (33, of which 20 go up), which excludes corrections and
-    typos, relabelled values and a duplicate; its interval includes both one half and a 2:1 ratchet, as do the
-    sensitivities.""")
+    typos, relabelled values and a duplicate (coded after unblinding; the blind, pre-coding census is 24 of 42); its
+    interval includes both one half and a 2:1 ratchet, as do the sensitivities.""")
 
 
 if __name__ == "__main__":
