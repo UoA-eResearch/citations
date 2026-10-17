@@ -30,16 +30,21 @@ def dmy(s):
     return pd.to_datetime(s, dayfirst=True, errors="coerce")
 
 
-def patterns(s, aliases, old_tokens):
+GENERIC_FIRST = {"allogeneic", "angiotensin", "concentrate", "enriched", "matrix-applied", "spheroids", "prostatic", "retroviral",
+                 "oestrogens", "uridine", "alpha1-proteinase", "pancreas", "acetylsalicylic"}   # D6: not INN stems
+
+
+def patterns(s, aliases, old_tokens, cohort_names=frozenset(), first_counts=None):
     """D6: match the canonical name or any alias; also the first word alone when the name has several words, the first
-    word has >= 7 letters, and no substance first approved before 2010 starts with that word (so 'polatuzumab vedotin'
-    matches Medsafe's 'Polatuzumab', but 'aripiprazole lauroxil' never matches Abilify's 'Aripiprazole')."""
+    word has >= 7 letters, no substance first approved before 2010 starts with that word, the word is not itself another
+    cohort substance, and no other cohort substance starts with it (so 'polatuzumab vedotin' matches Medsafe's
+    'Polatuzumab', but 'aripiprazole lauroxil' never matches Abilify's 'Aripiprazole'). Canonical names only."""
     names = sorted(set(aliases.split("|")) | {s}) if isinstance(aliases, str) else [s]
     out = list(names)
-    for n in names:
-        w = n.split()
-        if len(w) > 1 and len(w[0]) >= 7 and w[0] not in old_tokens:
-            out.append(w[0])
+    w = s.split()                       # the canonical name only, never an alias's first word
+    if (len(w) > 1 and len(w[0]) >= 7 and w[0] not in old_tokens and w[0] not in cohort_names and w[0] not in GENERIC_FIRST
+            and (first_counts or {}).get(w[0], 1) == 1):
+        out.append(w[0])
     return sorted(set(out))
 
 
@@ -51,6 +56,8 @@ def main():
     c = pd.read_csv(RUN / "data" / "cohort.csv", parse_dates=["t0", "fda_first", "ema_first"])
     allf = pd.read_csv(RUN / "data" / "all_first_approvals.csv", index_col=0, parse_dates=["first"])
     old_tokens = {k.split()[0] for k, v in allf["first"].items() if pd.notna(v) and v < pd.Timestamp("2010-01-01") and isinstance(k, str) and k}
+    cohort_names = set(c.substance)
+    first_counts = c.substance.str.split().str[0].value_counts().to_dict()
     P = pd.read_csv(RUN / "data" / "medsafe_products.csv", dtype=str)
     A = pd.read_csv(RUN / "data" / "medsafe_applications.csv", dtype=str)
     L = pd.read_csv(RUN / "data" / "pharmac_listings.csv", dtype=str)
@@ -77,7 +84,7 @@ def main():
     out = []
     for r in c.itertuples():
         s = r.substance
-        pats = patterns(s, r.aliases, old_tokens)
+        pats = patterns(s, r.aliases, old_tokens, cohort_names - {s}, first_counts)
         names = set(str(r.aliases).split("|")) | {s}
         p = P[P.substance.isin(names) & P.ingredients.map(lambda x: has_any(pats, x)) & P.status.isin(CONSENTED)]
         t2 = dmy(p.approval_date).min() if len(p) else pd.NaT

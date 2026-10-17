@@ -40,7 +40,7 @@ def su_mentions(sub):
     return None, []
 
 
-def sample():
+def sample(n=150, seed=20261020, tag=""):
     d = pd.read_csv(RUN / "data" / "linked.csv")
     P = pd.read_csv(RUN / "data" / "medsafe_products.csv", dtype=str)
     A = pd.read_csv(RUN / "data" / "medsafe_applications.csv", dtype=str)
@@ -49,19 +49,23 @@ def sample():
     U = (L.assign(text=(L.chemical.fillna("") + " " + L.formulations.fillna("")))
           .groupby(["source", "chemical"]).agg(first=("edition", "min"), text=("text", "first")).reset_index())
     U["ntext"] = U.text.map(norm); U["nchem"] = U.chemical.fillna("").map(norm)
-    s = d.sample(150, random_state=20261020).reset_index(drop=True)
-    (V / "evidence").mkdir(parents=True, exist_ok=True)
+    if tag:      # D6 re-validation: a fresh sample that excludes the first one
+        d = d[~d.substance.isin(pd.read_csv(V / "link_key.csv").substance)]
+    s = d.sample(n, random_state=seed).reset_index(drop=True)
+    (V / f"evidence{tag}").mkdir(parents=True, exist_ok=True)
     keys = []
     for i, r in s.iterrows():
-        sub, lid = r.substance, f"m{i:03d}"
-        out = [f"SUBSTANCE: {sub}   T0 {r.t0} ({r.t0_source})", f"LINKED: T1 {r.t1}  T2 {r.t2}  T3B {r.t3b}  T3H {r.t3h}  "
+        sub, lid = r.substance, f"{'r' if tag else 'm'}{i:03d}"
+        pats = str(r.match_names).split("|") if "match_names" in d and isinstance(r.match_names, str) else [sub]
+        names = set(pats)
+        out = [f"SUBSTANCE: {sub}   T0 {r.t0} ({r.t0_source})   match names: {'|'.join(pats)}", f"LINKED: T1 {r.t1}  T2 {r.t2}  T3B {r.t3b}  T3H {r.t3h}  "
                f"T3 {r.t3}  excluded_old {r.excluded_old}", "", "MEDSAFE PRODUCTS (+ = passed filter):"]
-        for x in P[P.substance == sub].head(40).itertuples():
-            out.append(f"  {'+' if has(sub, x.ingredients) else ' '} {x.approval_date:>11} | {x.status} | {x.product} | {x.ingredients}")
+        for x in P[P.substance.isin(names | {sub})].head(40).itertuples():
+            out.append(f"  {'+' if any(has(q, x.ingredients) for q in pats) else ' '} {x.approval_date:>11} | {x.status} | {x.product} | {x.ingredients}")
         out.append("MEDSAFE APPLICATIONS (New ... Medicine Application rows):")
-        for x in A[(A.substance == sub) & A.type.fillna("").str.startswith("New")].head(20).itertuples():
-            out.append(f"  {'+' if has(sub, x.ingredients) else ' '} {x.application_date:>11} | {x.status} | {x.change} | {x.product}")
-        pat = re.compile(r"(?<![a-z0-9])" + re.escape(sub) + r"(?![a-z0-9])")
+        for x in A[A.substance.isin(names | {sub}) & A.type.fillna("").str.startswith("New")].head(20).itertuples():
+            out.append(f"  {'+' if any(has(q, x.ingredients) for q in pats) else ' '} {x.application_date:>11} | {x.status} | {x.change} | {x.product}")
+        pat = re.compile("|".join(r"(?<![a-z0-9])" + re.escape(q) + r"(?![a-z0-9])" for q in pats))
         hit = U[U.ntext.str.contains(pat)]
         out.append("PHARMAC XML first editions (matched):")
         out += [f"  {x.source:8} {x.first} | {x.chemical}" for x in hit.itertuples()]
@@ -72,19 +76,24 @@ def sample():
         f, lines = su_mentions(sub)
         out.append(f"SCHEDULE UPDATE PDFs, first mention: {f}")
         out += [f"  > {l[:200]}" for l in lines]
-        (V / "evidence" / f"{lid}.txt").write_text("\n".join(out) + "\n")
+        (V / f"evidence{tag}" / f"{lid}.txt").write_text("\n".join(out) + "\n")
         keys.append(dict(id=lid, substance=sub))
-    pd.DataFrame(keys).to_csv(V / "link_key.csv", index=False)
+    pd.DataFrame(keys).to_csv(V / f"link_key{tag}.csv", index=False)
     print(len(keys), "evidence files")
 
 
-def merge():
-    m = pd.read_csv(TAB / "link_validation_raw.csv").merge(pd.read_csv(V / "link_key.csv"), on="id")
-    m.to_csv(TAB / "link_validation.csv", index=False)
+def merge(tag=""):
+    m = pd.read_csv(TAB / f"link_validation{tag}_raw.csv").merge(pd.read_csv(V / f"link_key{tag}.csv"), on="id")
+    m.to_csv(TAB / f"link_validation{tag}.csv", index=False)
     for c in ("t1_ok", "t2_ok", "t3_ok"):
         x = m[c].dropna()
         print(c, f"{x.mean():.3f}", f"({int(x.sum())}/{len(x)}; {m[c].isna().sum()} cannot tell)")
 
 
 if __name__ == "__main__":
-    {"sample": sample, "merge": merge}[sys.argv[1]]()
+    if sys.argv[1:] == ["sample_v2"]:
+        sample(100, 20261023, "_v2")
+    elif sys.argv[1:] == ["merge_v2"]:
+        merge("_v2")
+    else:
+        {"sample": sample, "merge": merge}[sys.argv[1]]()
