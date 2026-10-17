@@ -53,14 +53,22 @@ fit_one <- function(D, kind, sm, small, studies, detail, seed) {
   P <- pairs_of(Ds, kind, sm)
   P <- P[is.finite(P$TE) & is.finite(P$seTE) & P$seTE > 0, ]
   P <- largest_component(P)
-  net <- netmeta(TE, seTE, treat1, treat2, studlab, data = P, sm = sm, common = TRUE, random = TRUE,
+  fitnet <- function(P) netmeta(TE, seTE, treat1, treat2, studlab, data = P, sm = sm, common = TRUE, random = TRUE,
                  method.tau = "DL", small.values = small, tol.multiarm = if (kind == "long_continuous") 0.2 else 0.001,
                  details.chkmultiarm = FALSE, warn = FALSE)
+  split <- FALSE
+  net <- tryCatch(fitnet(P), error = function(e) e)
+  if (inherits(net, "error") && kind == "iv") {
+    # D3: a contrast-level multi-arm study whose contrast variances imply a non-positive arm variance cannot be fitted
+    # as a multi-arm study; its contrasts are entered as separate studies
+    P$studlab <- paste(P$studlab, seq_len(nrow(P)), sep = "_")
+    net <- fitnet(P); split <- TRUE
+  } else if (inherits(net, "error")) stop(conditionMessage(net))
   ps <- pscore(net$TE.random, net$seTE.random, small)
   psc <- pscore(net$TE.common, net$seTE.common, small)
   out <- list(trts = names(ps), pscore = unname(ps), top = names(ps)[which.max(ps)],
               pscore_common = unname(psc), top_common = names(psc)[which.max(psc)],
-              n_studies = net$k, n_trts = net$n)
+              n_studies = net$k, n_trts = net$n, multiarm_split = split)
   if (detail) {
     set.seed(seed)
     rk <- rankogram(net, nsim = 10000, random = TRUE, common = FALSE)

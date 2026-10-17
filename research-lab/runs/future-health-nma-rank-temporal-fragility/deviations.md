@@ -58,3 +58,15 @@ redraw was needed. V1 also exposed a problem the plan did not anticipate: which 
    - **The sensitivity set.** The 29 adjudicated contrast-level networks form an iv sensitivity set, analysed both
      with and without them, and separately with high-confidence calls only.
    - **The rest is unchanged:** hypotheses, thresholds, holdouts and model.
+
+## D3 — 2026-10-18 00:53 NZDT — contrast-level multi-arm studies that netmeta cannot fit (before the main run)
+
+A test fit of five networks failed on 501308. The cause is its three-arm study Muggia (2000): the three contrasts are
+consistent, but their variances imply an arm variance of about zero (0.0117 + 0.0120 − 0.0237), and netmeta stops
+with infinite weights.
+- **The rule.** When a contrast-level fit fails, its multi-arm studies' contrasts are entered as separate studies,
+  ignoring their correlation. Each fit records `multiarm_split`, and the report gives the count.
+- **Scope.** This applies only to the iv sensitivity set. Arm-level networks are unaffected: pairwise() builds
+  consistent multi-arm contrasts from arm data.
+- **Checks in the same test.** The engine's P-score equals netmeta's `netrank(method = "P-score")` exactly, checked
+  on 481107. A direct-evidence share of 0 is genuine when the top two treatments were never compared head to head.
