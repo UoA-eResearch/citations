@@ -96,3 +96,36 @@ gaps, the PDFs are used only for validation.
 2. **Medsafe Application searches that timed out** (popular ingredients with many applications) are retried with a
    60 s poll instead of 20 s. NexoBrid's normalised name ("concentrate of proteolytic enzymes enriched in bromelain")
    is searched as "bromelain", where the generic fallback word "concentrate" had returned huge result sets.
+
+## D6 — 2026-10-17 22:13 NZDT — after the linking validation, before any lag was computed
+
+1. **Validation outcome (plan section 4).** 150 substances were adjudicated by the agent against the saved evidence.
+   - **Precision:** T1 0.985 (131/133), T2 0.966 (143/148), T3 0.979 (139/142), all above the 0.90 threshold.
+   - **Among present dates only:** T2 0.95 (38/40), T3 0.94 (17/18).
+   - **Absences.** Those scored "correctly absent" were also checked against the independent Medsafe register and
+     PHARMAC text, with a loose substring match on the first seven letters.
+   - **Recall.** In 50 random new PHARMAC chemicals (community from 2011, HML from 2014), all 10 that are new active
+     substances of 2010–2024 are in the cohort, with T3 equal to that listing.
+   - **Result:** the T1–T3 linking stands without the plan's revision.
+2. **What validation did not cover: T0 and duplicates.** The plan validated T1–T3 only. The evidence showed two kinds
+   of T0 error, and an audit of every EMA-first substance for an earlier FDA approval (by first word or brand,
+   `data/validation/t0_audit_candidates.csv`) confirmed both:
+   - **The same drug twice, under FDA and EMA name variants:** salts and esters, moiety versus prodrug, combination
+     strings, and one EMA typo ("ledispavir"). Sixteen variants are merged into their canonical substances, with the
+     earliest approval as T0 (`cohort.py` ALIAS).
+   - **FDA approvals under a proper or brand name** the INN match cannot see: Adynovate (rurioctocog alfa pegol, FDA
+     2015-11-13) and Velphoro (sucroferric oxyhydroxide, FDA 2013-11-27). These become T0 overrides.
+   - **Not new:** gemtuzumab ozogamicin was first approved by the FDA in 2000 and re-approved in 2017. It is excluded.
+
+   The cohort is now **705**. This is a pre-analysis correction of the cohort definition, not a revision of the
+   validated T1–T3 linking. FDA biologics approved under a different brand and proper name than in the EU remain
+   undetectable by rule: 1 of 150 sampled. Their T0 is late, and their lags are understated.
+3. **Alias-aware matching, and a first-word rule** (`link.py` patterns). Each substance matches its canonical name
+   or any alias, and Medsafe rows from every alias's search are pooled. A multi-word name also matches its first word
+   alone when that word has at least 7 letters and no substance first approved before 2010 starts with it. Medsafe
+   lists conjugates and prodrugs by the first word only ("Polatuzumab", "Ceftaroline", "Mirvetuximab"); the condition
+   keeps "aripiprazole lauroxil" and "gabapentin enacarbil" from matching the older drugs. This changes the linking
+   after validation, so a **fresh 100-substance validation** (seed 20261023) is run on the result before any lag.
+4. **Provisional consent.** Medsafe's product approval date appears to be the latest consent. Where a provisional
+   consent was converted to full, the first consent is not recorded (seen in 2 of 150: Paxlovid, glofitamab), and T2
+   is late. The report quantifies how many substances have a "provisional" application or status.

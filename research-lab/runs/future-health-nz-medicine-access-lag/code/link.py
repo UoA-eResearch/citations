@@ -30,8 +30,27 @@ def dmy(s):
     return pd.to_datetime(s, dayfirst=True, errors="coerce")
 
 
+def patterns(s, aliases, old_tokens):
+    """D6: match the canonical name or any alias; also the first word alone when the name has several words, the first
+    word has >= 7 letters, and no substance first approved before 2010 starts with that word (so 'polatuzumab vedotin'
+    matches Medsafe's 'Polatuzumab', but 'aripiprazole lauroxil' never matches Abilify's 'Aripiprazole')."""
+    names = sorted(set(aliases.split("|")) | {s}) if isinstance(aliases, str) else [s]
+    out = list(names)
+    for n in names:
+        w = n.split()
+        if len(w) > 1 and len(w[0]) >= 7 and w[0] not in old_tokens:
+            out.append(w[0])
+    return sorted(set(out))
+
+
+def has_any(pats, text):
+    return any(has(p, text) for p in pats)
+
+
 def main():
     c = pd.read_csv(RUN / "data" / "cohort.csv", parse_dates=["t0", "fda_first", "ema_first"])
+    allf = pd.read_csv(RUN / "data" / "all_first_approvals.csv", index_col=0, parse_dates=["first"])
+    old_tokens = {k.split()[0] for k, v in allf["first"].items() if pd.notna(v) and v < pd.Timestamp("2010-01-01") and isinstance(k, str) and k}
     P = pd.read_csv(RUN / "data" / "medsafe_products.csv", dtype=str)
     A = pd.read_csv(RUN / "data" / "medsafe_applications.csv", dtype=str)
     L = pd.read_csv(RUN / "data" / "pharmac_listings.csv", dtype=str)
@@ -58,15 +77,17 @@ def main():
     out = []
     for r in c.itertuples():
         s = r.substance
-        p = P[(P.substance == s) & P.ingredients.map(lambda x: has(s, x)) & P.status.isin(CONSENTED)]
+        pats = patterns(s, r.aliases, old_tokens)
+        names = set(str(r.aliases).split("|")) | {s}
+        p = P[P.substance.isin(names) & P.ingredients.map(lambda x: has_any(pats, x)) & P.status.isin(CONSENTED)]
         t2 = dmy(p.approval_date).min() if len(p) else pd.NaT
         # consent ended: every consented product has lapsed or been revoked; dated by the latest notification
         ended = (dmy(p.notification_date).max() if len(p) and p.status.isin({"Approval lapsed", "Revoked"}).all()
                  else pd.NaT)
-        a = A[(A.substance == s) & A.ingredients.map(lambda x: has(s, x)) & A.type.fillna("").str.match(NEW_APPL)]
+        a = A[A.substance.isin(names) & A.ingredients.map(lambda x: has_any(pats, x)) & A.type.fillna("").str.match(NEW_APPL)]
         ad = dmy(a.application_date)
         t1 = ad[ad <= t2].min() if pd.notna(t2) else ad.min()
-        pat = r"(?<![a-z0-9])" + re.escape(s) + r"(?![a-z0-9])"
+        pat = "|".join(r"(?<![a-z0-9])" + re.escape(x) + r"(?![a-z0-9])" for x in pats)
         hit = L[L.text.str.contains(pat, regex=True)]
         b = hit[(hit.source == "schedule") & (hit.section == "B")].ed.min()
         b_su = SU[SU.text.str.contains(pat, regex=True)].eff.min()
@@ -74,14 +95,14 @@ def main():
             b = b_su
         h = hit[hit.source == "HML"].ed.min()
         t3 = min([x for x in (b, h) if pd.notna(x)], default=pd.NaT)
-        w = W[W.drug.map(lambda x: has(s, x))]
+        w = W[W.drug.map(lambda x: has_any(pats, x))]
         au = dmy(w.listed_date).min() if len(w) else pd.NaT
         pat_app = APP[APP.chem.str.contains(pat, regex=True)]
         t_app, t_dec = pat_app.received.min(), pat_app.approved.min()
         t_tga = TGA[TGA.text.str.contains(pat, regex=True)].date.min()
         old = ((pd.notna(t2) and t2 < r.t0 - pd.Timedelta(days=365)) or (pd.notna(b) and b <= first_ed)
                or (pd.notna(t3) and t3 < r.t0 - pd.Timedelta(days=365)))
-        out.append(dict(substance=s, t0=r.t0, t0_source=r.t0_source, t1=t1, t2=t2, consent_ended=ended,
+        out.append(dict(substance=s, match_names="|".join(pats), t0=r.t0, t0_source=r.t0_source, t1=t1, t2=t2, consent_ended=ended,
                         t3b=b, t3h=h, t3=t3, t3_au=au,
                         au_any_record=bool(len(w)), t_app=t_app, t_dec=t_dec, t_tga=t_tga, n_applications=len(pat_app), n_medsafe_products=len(p), n_listing_rows=len(hit),
                         ema_orphan=r.ema_orphan, atc=r.atc, fda_priority=r.fda_priority, excluded_old=bool(old)))

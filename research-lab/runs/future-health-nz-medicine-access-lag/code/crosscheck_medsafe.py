@@ -11,7 +11,7 @@ from pathlib import Path
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from link import CONSENTED, has  # noqa: E402
+from link import CONSENTED, has_any  # noqa: E402
 
 RUN = Path(__file__).resolve().parents[1]
 SNAP = pd.Timestamp("2026-03-30")
@@ -25,7 +25,8 @@ def main():
     reg["date"] = pd.to_datetime(reg["Approval date"], dayfirst=True, errors="coerce")
     rows = []
     for r in d.itertuples():
-        m = reg[reg["Active ingredients"].map(lambda x: has(r.substance, x))]
+        pats = str(r.match_names).split("|")
+        m = reg[reg["Active ingredients"].map(lambda x: has_any(pats, x))]
         t2r = m.date.min() if len(m) else pd.NaT
         rows.append(dict(substance=r.substance, t2=r.t2, t2_register=t2r))
     x = pd.DataFrame(rows)
