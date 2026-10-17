@@ -40,6 +40,23 @@ ALIAS = {"afatinib dimaleate": "afatinib", "cabozantinib s": "cabozantinib", "el
 CBER_BRAND = {"nonacog beta pegol": "rebinyn", "efmoroctocog alfa": "eloctate", "efanesoctocog alfa": "altuviiio",
               "eptacog beta": "sevenfact", "vonicog alfa": "vonvendi", "andexanet alfa": "andexxa",
               "fidanacogene elaparvovec": "beqvez", "rurioctocog alfa pegol": "adynovate"}
+# D8: CBER-only new active substances (never EMA-approved, or EMA-approved after 2024), absent from both of the
+# plan's sources. Rule: CBER 351(a) licence first granted 2010-2024 to a concept no earlier product had; vaccines,
+# allergen extracts, diagnostics, antivenoms, cord blood, immune globulins and plasma products of established concepts
+# are out, as for the rest of the cohort. Canonical name -> Purple Book proper-name stems (suffix removed); dates from
+# the file. Two faecal microbiota products count once.
+CBER_ONLY = {"acellular tissue engineered vessel": ["acellular tissue engineered vessel"],
+             "afamitresgene autoleucel": ["afamitresgene autoleucel"],
+             "allogeneic cultured keratinocytes and dermal fibroblasts in murine collagen":
+                 ["allogeneic cultured keratinocytes and dermal fibroblasts in murine collagen"],
+             "allogeneic cultured keratinocytes and fibroblasts in bovine collagen":
+                 ["allogeneic cultured keratinocytes and fibroblasts in bovine collagen"],
+             "allogeneic processed thymus tissue": ["allogeneic processed thymus tissue"], "azficel-t": ["azficel-t"],
+             "donislecel": ["donislecel"], "omidubicel": ["omidubicel"], "remestemcel-l": ["remestemcel-l"],
+             "lifileucel": ["lifileucel"], "delandistrogene moxeparvovec": ["delandistrogene moxeparvovec"],
+             "lovotibeglogene autotemcel": ["lovotibeglogene autotemcel"],
+             "fecal microbiota": ["fecal microbiota, live", "fecal microbiota spores, live"], "plasminogen": ["plasminogen, human"]}
+CBER_ONLY_ALIAS = {"fecal microbiota": {"faecal microbiota"}}
 # D6: FDA approvals under a proper or brand name the INN match cannot see
 T0_OVERRIDE = {"rurioctocog alfa pegol": ("2015-11-13", "FDA Adynovate, proper name antihemophilic factor (recombinant), pegylated"),
                "sucroferric oxyhydroxide": ("2013-11-27", "FDA Velphoro, listed as ferric oxyhydroxide")}
@@ -126,6 +143,14 @@ def main():
     pb["date"] = pd.to_datetime(pb["Approval Date"], format="mixed", errors="coerce")
     pb["proper"] = pb["Proper Name"].fillna("").map(lambda x: norm(x))
     pb["brand"] = pb["Proprietary Name"].fillna("").str.lower().str.split().str[0]
+    pb["stem"] = pb["Proper Name"].fillna("").str.lower().str.replace(r"-[a-z]{4}$", "", regex=True).str.strip()
+    for k, stems in CBER_ONLY.items():
+        m = pb[pb.stem.isin(stems)].sort_values("date")
+        assert len(m), k
+        x = m.iloc[0]
+        c.loc[k, ["fda_first", "fda_name", "fda_nme"]] = [x.date, f"CBER {x['Proprietary Name']} ({x['Proper Name']})", True]
+        aliases[k] = {k} | CBER_ONLY_ALIAS.get(k, set())
+    c["fda_first"] = pd.to_datetime(c.fda_first)
     cber = {}
     for k in c.index:
         names = aliases.get(k, {k}) | {k}

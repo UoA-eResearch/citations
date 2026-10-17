@@ -19,7 +19,8 @@ RUN = Path(__file__).resolve().parents[1]
 OUT = RUN / "data" / "raw" / "medsafe" / "html"
 LOG = RUN / "data" / "raw" / "medsafe" / "log.jsonl"
 UA = "research-lab medicines-access study (mailto:noreply@anthropic.com)"
-TERM = {"concentrate of proteolytic enzymes enriched in bromelain": "bromelain"}   # D5
+TERM = {"concentrate of proteolytic enzymes enriched in bromelain": "bromelain",   # D5
+        "dimethylfumarate": "dimethyl fumarate", "fecal microbiota": "faecal microbiota"}   # D8
 
 
 def slug(s):

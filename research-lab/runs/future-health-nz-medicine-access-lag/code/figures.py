@@ -61,7 +61,7 @@ def f2():
     fig.subplots_adjust(left=0.1, right=0.97, bottom=0.14, top=0.92)
     tga_cut = min(cutoff, d.t_tga.max()) if d.t_tga.notna().any() else cutoff
     au = d[(d.t0.dt.year >= 2019)]
-    series = [("Medsafe consent (NZ)", d, "t2", cutoff), ("TGA registration (AU)", d, "t_tga", tga_cut),
+    series = [("Medsafe consent (NZ)", d, "t2", cutoff), ("TGA registration (AU; current ARTG entries, a lower bound)", d, "t_tga", tga_cut),
               ("PHARMAC funded listing (NZ)", d, "t3", cutoff), ("PBS listing (AU, T0 2019-24)", au, "t3_au", min(cutoff, pd.Timestamp("2026-10-01")))]
     for k, (lab, x, col, cut) in enumerate(series):
         ev = x[col].notna() & (x[col] <= cut)
@@ -77,31 +77,36 @@ def f2():
     caption("F2_milestones", """Cumulative share of new active substances (first approved by FDA or EMA 2010-2024)
     reaching each milestone, by years since that first approval; substances not yet reaching it are censored at the
     data cutoff. The PBS curve covers only substances first approved 2019-2024, the era the Medicine Status Website
-    records.""")
+    records. The TGA curve uses current ARTG entries only, so cancelled registrations are missing and it is a lower
+    bound.""")
 
 
 def f3():
     p = json.load(open(T / "primary.json"))
-    h = p["H3_denominators_T2_T3_years"]
-    rows = [("Funded only: mean", h["funded_only"]["mean"]), ("Funded only: median", h["funded_only"]["median"]),
-            ("All consented: KM median", h["consented_km"]["median"]), ("All consented: mean to 10 y (RMST)", h["consented_km"]["rmst_10y"])]
-    fig, ax = plt.subplots(figsize=(7.0, 2.6))
-    fig.subplots_adjust(left=0.36, right=0.96, bottom=0.2, top=0.9)
-    for i, (lab, v) in enumerate(rows):
+    a, h, c = p["D3_H3_application_based_years"], p["H3_denominators_T2_T3_years"], p["H3_context"]["decided_app_to_approval_by_decision_year"]
+    rows = [("Application → approval, decided only: mean", a["application_to_approval_decided_only"]["mean"], "decided"),
+            ("   decisions in 2024–26 only: mean", c["2024-26"]["mean"], "decided"),
+            ("Application → approval, all, censored: KM median", a["application_to_approval_km"]["median"], "all"),
+            ("Consent → funding, funded only: mean", h["funded_only"]["mean"], "decided"),
+            ("Consent → funding, all, censored: KM median", h["consented_km"]["median"], "all")]
+    fig, ax = plt.subplots(figsize=(7.6, 2.9))
+    fig.subplots_adjust(left=0.43, right=0.96, bottom=0.19, top=0.88)
+    for i, (lab, v, kind) in enumerate(rows):
         y = len(rows) - 1 - i
         if v is None:
-            ax.text(0.1, y, "not reached", va="center", color=INK2, fontsize=8)
-        else:
-            ax.barh(y, v, color=COL[0], height=0.55)
-            ax.text(v + 0.1, y, f"{v:.1f}", va="center", color=INK, fontsize=8)
-    ax.axvline(7.7, color=COL[2], ls="--", lw=1); ax.text(7.75, len(rows) - 0.5, "7.7 years (industry figure)", color=INK2, fontsize=7.5, va="bottom")
+            ax.text(0.1, y, "not reached", va="center", color=INK2, fontsize=8); continue
+        ax.barh(y, v, color=COL[0] if kind == "decided" else COL[1], height=0.55)
+        ax.text(v + 0.1, y, f"{v:.1f}", va="center", color=INK, fontsize=8)
+    ax.axvline(7.7, color=COL[2], ls="--", lw=1)
+    ax.text(7.75, len(rows) - 0.45, "7.7 y: mean application → decision,\n29 decided applications (HealthiNZ 2023)", color=INK2, fontsize=7, va="bottom")
     ax.set_yticks(range(len(rows))); ax.set_yticklabels([r[0] for r in rows][::-1])
-    ax.set_xlabel("years from Medsafe consent to PHARMAC funded listing")
+    ax.set_xlabel("years"); ax.set_xlim(0, 15)
     ax.grid(axis="x", color=GRID, lw=0.6); ax.set_axisbelow(True)
     fig.savefig(F / "F3_denominators.png", dpi=200); plt.close(fig)
-    caption("F3_denominators", """Medsafe consent to PHARMAC funding under different denominators. Counting only
-    medicines that were funded gives short waits; counting every consented medicine, with those not yet funded
-    censored, gives much longer ones. Restricted mean to 10 years caps each wait at 10 years.""")
+    caption("F3_denominators", """The industry's 7.7 years is the mean time from a funding application to a decision,
+    over 29 applications that had been decided (HealthiNZ 2023, quoted by Shawview 2023). Blue: this cohort's
+    decided-only equivalents (all decisions, and decisions in 2024-26 alone). Green: censoring-aware medians that also
+    count applications and consented medicines still waiting.""")
 
 
 if __name__ == "__main__":

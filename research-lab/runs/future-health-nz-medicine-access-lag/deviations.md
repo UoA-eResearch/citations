@@ -186,3 +186,23 @@ new analytic choices. The report gives both sets of numbers; the verdict-bearing
    each share.
 9. **H3 and the TGA comparison (issues 1, 2 and 7)** are reframed in the report around the sources' own definitions.
    The paired TGA median is dropped, because the ARTG lists current entries only.
+
+## D8c — 2026-10-17 23:58 NZDT — two follow-ups to D8b, found after its first rerun
+
+1. **HML left-censoring refined (commit 5f4864b).** As first written, D8b.6 censored every substance present in the
+   first HML edition. That included substances that already had an earlier community Schedule listing, whose T3
+   does not depend on the HML (16 substances). Censoring now applies only when the first HML edition would be the
+   earliest listing (8 substances). In the first D8b run, H1b read "Supported" (median 1,752, interval 1,403–2,202)
+   because of that over-exclusion. With the refinement it is Inconclusive (1,668, 1,329–2,134), as it was before review.
+2. **CBER-only new active substances added to the cohort.** Checking the Purple Book file's coverage (it is a full
+   listing: N/R/U is blank for existing products) showed that FDA's CBER also licensed new active substances in
+   2010–2024 that the EMA never approved, or approved only after 2024. Neither of the plan's two sources contains them,
+   so D8b.1 could not reach them. 14 are added (`cohort.py` CBER_ONLY, with the inclusion rule written out; dates
+   from the file). Examples are Lantidra, Omisirge, Ryoncil, Amtagvi, Tecelra, Elevidys, Lyfgenia, Rebyota/Vowst
+   (counted once), Ryplazim, Rethymic, StrataGraft, Gintuit, Laviv and Symvess. Vaccines, allergen extracts,
+   diagnostics, antivenoms, cord blood, immune globulins and plasma products of established concepts are left out, as
+   in the rest of the cohort. Before the crawl, the independent Medsafe register snapshot holds only one of them:
+   Prochymal (remestemcel-L), consented in 2012 and lapsed in 2016. That is more than a year before FDA licensure, so
+   the preregistered old-substance rule excludes it. The additions can therefore move only the cohort-wide denominators,
+   not H1 or H3. The Medsafe searches are run for them, and for the five names D8 created, through the same
+   `medsafe.py` (search terms "dimethyl fumarate" and "faecal microbiota").
