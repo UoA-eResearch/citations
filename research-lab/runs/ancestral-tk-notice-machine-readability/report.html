@@ -89,54 +89,61 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 </header>
 <section class="tiles" aria-label="Key results"></section>
 <main>
-<p><strong>Verdict: Supported, on both counts, with one large caveat.</strong> The open-data layer's Local Contexts metadata is
-almost entirely one repository's.</p>
+<p><strong>Verdict: Supported as preregistered, on both counts. Both results are one repository's, and H2 is set by the list
+of views.</strong></p>
 <ul>
-<li><strong>Community Labels are vanishingly rare (H1, Supported).</strong><ul>
-<li>Of 48,361 records carrying any Local Contexts element, <strong>one</strong> carries a TK or BC Label backed by a live Local
-Contexts Hub project: 0.002% (exact 95% CI 0.00005–0.012%), against a threshold of 0.1%.</li>
-<li>99.94% of element-bearing records come from one repository, the Neotoma Paleoecology Database. Without Neotoma it
-is 1 of 29 records.</li>
+<li><strong>Community Labels are vanishingly rare (H1, Supported pooled).</strong><ul>
+<li>Of 48,362 records carrying any Local Contexts element, <strong>one</strong> carries a TK or BC Label (by name or URI) with a
+live Local Contexts Hub project: 0.002% (exact 95% CI 0.00005–0.012%), against a threshold of 0.1%.</li>
+<li>99.94% of the records come from one repository, the Neotoma Paleoecology Database.</li>
+<li>Without Neotoma it is 1 of 30 records, which is Inconclusive by the same rule (3.3%, 0.08–17%).</li>
+<li>Two more DOIs (Moorea Biocode 1.0) carry a BC Label's template text, with a live Hub project where a community
+applied that Label, but not the Label's name. Counting them gives 3 of 48,362 (still Supported), and 3 of 30
+without Neotoma (Refuted).</li>
 </ul>
 </li>
 <li><strong>Machine views drop the element (H2, Supported).</strong> Across 1,998 sampled DOIs and up to nine views each, the
-  element is dropped in <strong>43.6%</strong> of record × view pairs (95% CI 43.5–43.7%), against a threshold of 40%.<ul>
-<li><strong>For publishers other than Neotoma</strong>, whose records more often carry the element in free text that citation
-formats keep, the share is 30.5% (25.4–35.2%).</li>
+  element is dropped in <strong>43.6%</strong> of record × view pairs, against a threshold of 40%.<ul>
+<li><strong>The crossing comes from the view list.</strong> Four of the nine preregistered views drop the element for almost every
+record, and only 7 distinct record patterns occur. Without any one of those four views, the share is 36.5–37.4%
+and H2 would be Refuted. Without any of the other five, it is 49%.</li>
+<li><strong>Other publishers.</strong> For publishers other than Neotoma the share is 28.8% (24.0–33.6%).</li>
 </ul>
 </li>
-<li><strong>The loss is set by the format, not by the record.</strong><ul>
-<li><strong>Formats that keep it.</strong> DataCite XML, both OAI-PMH formats and Crosscite JSON carry it in every record that has
-it as a rights entry.</li>
-<li><strong>Formats that drop it.</strong> BibTeX, CSL-JSON, the formatted citation and the OpenAIRE Graph drop it almost always.</li>
-<li><strong>Schema.org JSON-LD</strong>, the format search engines read, merges it into <code>license</code>, where it cannot be told apart
-from the licence.</li>
+<li><strong>What a machine sees depends on the format and on the repository's order.</strong><ul>
+<li><strong>Formats that carry the rights list.</strong> DataCite XML, both OAI-PMH formats and Crosscite JSON carry it in full.</li>
+<li><strong>Citation formats</strong> (CSL-JSON, BibTeX) carry only the <em>first</em> rights entry. Neotoma lists its Creative Commons
+licence first, so the Notice is cut. Repositories that list the Local Contexts entry first keep it.</li>
+<li><strong>Schema.org JSON-LD</strong>, the format search engines read, puts the Local Contexts URI in <code>license</code>.</li>
+<li><strong>The formatted citation and the OpenAIRE Graph</strong> drop it.</li>
 </ul>
 </li>
-<li><strong>No view says anything was dropped (H2b).</strong> None of the 17,762 views that returned a record warns that a rights
-  element was dropped.</li>
+<li><strong>No view says anything was dropped (H2b).</strong> None of these formats has a field for such a warning, and none was found
+  in the 17,762 views that returned a record.</li>
 </ul>
-<p>These counts describe repository systems, not communities. Labels may be meant to live in the Hub and on landing
-pages rather than in DOI metadata. The study measures what a machine consumer can see.</p>
+<p>These counts describe repository systems, not communities. At the Hub itself, 15 of the 17 live projects linked from
+these records carry Notices only. Labels are rare at the source too, so their rarity in DOI metadata may reflect
+design and newness rather than loss.</p>
 <h2>In plain terms</h2>
 <p>Indigenous communities now have a formal way to attach their own conditions to data about them: "Labels", applied
-through a system called Local Contexts. Institutions can also attach "Notices" saying that such conditions may
-apply. Repository systems have built support for both. We asked two plumbing questions:
+through a system called Local Contexts. Institutions can also attach "Notices" saying that such conditions may apply.
+We asked two plumbing questions:
 - Do these marks show up in the open research-data layer?
-- Do they survive when the record is copied into the standard formats that other systems read?</p>
+- Do they survive when a record is copied into the formats other systems read?</p>
 <p>We searched nine platforms and found about 48,000 records carrying a Local Contexts mark. Almost all came from one
-paleoecology database, which marks every record with the same institutional Notice. Only one record anywhere carried
-a community Label linked to a live Local Contexts project.</p>
-<p>We then followed 2,000 of these records through nine common export formats:
-- <strong>The full metadata formats kept the mark.</strong> These are DataCite XML, the OAI-PMH feeds and Crosscite JSON.
-- <strong>The citation formats lost it.</strong> BibTeX, CSL-JSON and the plain formatted citation, which reference managers
-  use, almost always threw it away.
-- <strong>The research graph lost it.</strong> So did OpenAIRE, a large European research-information graph.
-- <strong>The search-engine format blurred it.</strong> The schema.org format that search engines read folded it into the
-  licence, so a machine cannot tell the two apart.
+paleoecology database, which puts the same institutional Notice on every record. Under our strict rule, only one
+record carried a community Label linked to a live Local Contexts project. Two more carried a Label's wording without
+its name. At the Local Contexts Hub itself, most projects linked from these records also carry Notices only.</p>
+<p>We then followed 1,998 records through nine common formats:
+- <strong>The full metadata formats kept the mark.</strong>
+- <strong>Citation formats kept only the first rights statement.</strong> So the mark survived only when the repository listed it
+  before the licence.
+- <strong>The search-engine format filed it as a licence.</strong>
+- <strong>One large research graph dropped it.</strong>
 - <strong>No format ever said that something had been left out.</strong></p>
-<p>This is about the pipes, not the communities. Labels may be meant to live on the Local Contexts Hub, and absence
-from DOI records is not, by itself, a failing.</p>
+<p>The headline "more than 40% lost" depends on which formats are counted. Most of the loss is in citation and
+aggregator formats that carry little rights information of any kind.</p>
+<p>This is about the pipes, not the communities.</p>
 <h2>What was asked</h2>
 <p>The lead (<code>ancestral-tk-notice-machine-readability</code>, Ancestral Futures) asked whether Indigenous-governance metadata
 is present but not machine-readable downstream. Preregistered hypotheses (<code>plan.md</code>):
@@ -173,33 +180,110 @@ is present but not machine-readable downstream. Preregistered hypotheses (<code>
 </table></div>
 <h2>How it was done</h2>
 <p><strong>Census (limb 1).</strong> Nine platforms were queried through their public APIs for Local Contexts URIs and exact
-vocabulary names:
-- DataCite: structured rights fields and free text;
-- Zenodo, Dryad, Harvard Dataverse, figshare and OSF;
-- GBIF, including machine tags;
-- RAiD and re3data.</p>
-<p>Every raw response is saved.
-- <strong>OSF's search failed</strong> with 503s and is reported as unavailable, not as zero.
-- <strong>Two paging bugs</strong> (Zenodo's page-size limit; RAiD's cursor) were fixed before the census was scanned (D2, D3).
+vocabulary names, and every raw response is saved.
+- <strong>DataCite.</strong> Structured rights fields and free text. After review, a supplementary pass added field-wildcard
+  queries (descriptions, related and alternate identifiers, subjects, rights text, and the "Local Contexts" rights
+  scheme), because DataCite's free-text index cannot see URIs (D5). It found one more record.
+- <strong>The other platforms:</strong> Zenodo, Dryad, Harvard Dataverse, figshare, OSF, GBIF, RAiD and re3data.
 - <strong>Name-only hits.</strong> All 69 records matched only by a vocabulary name in free text were adjudicated by hand. 2 were
-  genuine; the rest were mostly empty template fields and texts about Local Contexts, and are dropped.
-- <strong>URIs.</strong> Every distinct Local Contexts URI was resolved: 21 of 24 live, and 3 Hub projects dead.</p>
+  genuine. The rest were mostly empty figshare template fields (two universities have built Local Contexts fields
+  into their templates) and texts about Local Contexts.
+- <strong>URIs.</strong> Every distinct Local Contexts URI was resolved, and every linked Hub project was read through the Hub's
+  public API.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>platform</th>
+<th>records returned</th>
+<th>element-bearing</th>
+<th>Label with live Hub</th>
+<th>note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DataCite</td>
+<td>52,012</td>
+<td>48,360</td>
+<td>0</td>
+<td>free text cannot see URIs; field queries added (D5)</td>
+</tr>
+<tr>
+<td>Zenodo</td>
+<td>697</td>
+<td>1</td>
+<td>0</td>
+<td>its public JSON omits custom rights entries that DataCite shows for the same DOIs</td>
+</tr>
+<tr>
+<td>Dryad</td>
+<td>42</td>
+<td>0</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td>Harvard Dataverse</td>
+<td>196</td>
+<td>0</td>
+<td>0</td>
+<td>no Local Contexts metadata block installed: a structural zero</td>
+</tr>
+<tr>
+<td>figshare</td>
+<td>2,267</td>
+<td>2</td>
+<td>1</td>
+<td>template fields; 2 of 65 filled</td>
+</tr>
+<tr>
+<td>GBIF</td>
+<td>156</td>
+<td>1</td>
+<td>0</td>
+<td>machine-tag namespace not queried (unknown)</td>
+</tr>
+<tr>
+<td>RAiD</td>
+<td>622</td>
+<td>0</td>
+<td>0</td>
+<td>no public RAiD exposes a TK label field</td>
+</tr>
+<tr>
+<td>OSF</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>search unavailable (HTTP 503)</td>
+</tr>
+<tr>
+<td>re3data</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>searches names and descriptions, not policies</td>
+</tr>
+</tbody>
+</table></div>
+<p>Platform counts are lower bounds. The Zenodo and GBIF hits duplicate DataCite DOIs and are counted once.</p>
 <p><strong>Crosswalks (limb 2).</strong>
-- <strong>The sample.</strong> All non-Neotoma element-bearing DataCite DOIs, with Neotoma filling the sample to 2,000 (seed
-  20261021).
+- <strong>The sample.</strong> All non-Neotoma element-bearing DataCite DOIs at the time, with Neotoma filling the sample to 2,000
+  (seed 20261021). Two DOIs later judged not genuine are excluded (D4); the DMPTool record found in D5 is not in the
+  sample.
 - <strong>The nine views.</strong> Six DOI content-negotiation formats (DataCite XML, schema.org JSON-LD, Crosscite JSON,
   CSL-JSON, BibTeX, formatted citation); DataCite OAI-PMH <code>oai_dc</code> and <code>oai_datacite</code>; and the OpenAIRE Graph record.
-- <strong>Scoring</strong>, by a deterministic parser:
-    - <strong>preserve:</strong> the element's URI or name is in a rights-type field, distinct from the licence;
-    - <strong>degrade:</strong> it appears only in the licence field or in free text;
+- <strong>Scoring:</strong>
+    - <strong>preserve:</strong> the URI or name is in a rights-type field, distinct from the licence;
+    - <strong>degrade:</strong> it appears only in the licence field, in free text, or in the citation formats' single <code>copyright</code>
+    field, which holds whatever rights entry came first;
     - <strong>drop:</strong> it is absent;
     - views that return nothing are excluded.
-- <strong>Exclusion.</strong> Two sampled DOIs whose element was later judged not genuine (a conference abstract) are excluded
-  (D4).</p>
+- <strong>Re-scoring after review.</strong> All bodies were re-scored with JSON-parsed rights fields, which corrected three calls
+  (D5).</p>
 <p><strong>Hand check.</strong> 100 record-views, stratified by view with each view's rare calls oversampled, were checked against
-the raw responses. All 100 scorer calls are right under the URI-or-name definition. In one DOI's citation formats,
-the Attribution Incomplete Notice's wording survives without its name or URI. That is a drop by definition, and
-unidentifiable to a machine.</p>
+the raw responses. All 100 scorer calls are right under the URI-or-name definition. The independent review re-scored
+104 more and agreed on drop versus not-drop in every case.</p>
 <h2>Results</h2>
 <h3>H1: how many records carry a community Label?</h3>
 <div class="table-wrap"><table>
@@ -209,47 +293,128 @@ unidentifiable to a machine.</p>
 <th>records with any element</th>
 <th>Label with a live Hub project</th>
 <th>share (exact 95% CI)</th>
+<th>verdict by the rule</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>all platforms</td>
-<td>48,361</td>
+<td>48,362</td>
 <td>1</td>
 <td>0.002% (0.00005–0.012%)</td>
+<td>Supported</td>
 </tr>
 <tr>
 <td>without Neotoma</td>
-<td>29</td>
+<td>30</td>
 <td>1</td>
-<td>3.4% (0.09–17.8%)</td>
+<td>3.3% (0.08–17%)</td>
+<td>Inconclusive</td>
+</tr>
+<tr>
+<td>counting the two Biocode DOIs: all</td>
+<td>48,362</td>
+<td>3</td>
+<td>0.006% (0.0013–0.018%)</td>
+<td>Supported</td>
+</tr>
+<tr>
+<td>counting the two Biocode DOIs: without Neotoma</td>
+<td>30</td>
+<td>3</td>
+<td>10% (2.1–27%)</td>
+<td>Refuted</td>
 </tr>
 </tbody>
 </table></div>
-<p><strong>H1, Supported.</strong> The upper end of the interval, 0.012%, is below 0.1%.
-- <strong>The one record</strong> is a Victoria University of Wellington figshare dataset (10.26686/wgtn.25790481), carrying a BC
-  Provenance Label and a live Hub project.
-- <strong>Neotoma's records.</strong> Neotoma's 48,332 records each carry the Open to Collaborate <em>Notice</em> URI, under the name of
-  the <em>TK Open to Collaboration Label</em> and with no Hub project. That naming mismatch is why "Label" names appear in
-  48,333 records, while none of those carries a community-applied Label.
-- <strong>The other 28 element-bearing records:</strong>
-    - 27 DataCite DOIs: the Gump South Pacific Research Station and Tetiaroa Society on Mo'orea, iPlaces, ADA
-    Dataverse (Dja Dja Wurrung material), Landcare Research's NZ Arthropod Collection, and Zenodo;
-    - a second Victoria University of Wellington figshare record.
-    - The Zenodo and GBIF platform hits duplicate DataCite DOIs and are counted once.
-- <strong>Notices dominate.</strong> Of 28 records with a Hub project link, most carry a BC or TK Notice. Notices are placed by
-  researchers or institutions, not by communities.</p>
-<figure><a href="results/figures/F1_census.png"><img src="results/figures/F1_census.png" alt="Figure 1"></a><figcaption>Records carrying a Local Contexts Notice or Label, by platform, after the free-text channel was adjudicated in full. One repository (Neotoma) accounts for nearly all of them. Zenodo and figshare hits also appear as DataCite DOIs, so platforms overlap.</figcaption></figure>
+<ul>
+<li><strong>The pooled verdict is Neotoma's.</strong> Neotoma's 48,332 records each carry the Open to Collaborate <em>Notice</em> URI,
+  under the name of the <em>TK Open to Collaboration Label</em> (TK CB), and with no Hub project. That naming mismatch is why
+  Label names appear in 48,333 records, while none of those carries a community-applied Label.</li>
+<li><strong>The one counted record</strong> is a Victoria University of Wellington thesis record on figshare. It carries a BC
+  Provenance Label and a live Hub project created by the community. The Label is the community's own statement and is
+  not evaluated here. Its DOI, like the other VUW record's, is registered but absent from DataCite's public index.</li>
+<li><strong>The other 29 non-Neotoma records:</strong><ul>
+<li>DataCite DOIs from the Gump South Pacific Research Station on Mo'orea (its publisher name appears in two forms),
+Tetiaroa Society on Tetiaroa, iPlaces, ADA Dataverse (three datasets from a community-led project), Landcare
+Research's NZ Arthropod Collection, Zenodo and a DMPTool plan;</li>
+<li>a second VUW figshare record.</li>
+</ul>
+</li>
+<li><strong>The Biocode records.</strong> The two Moorea Biocode 1.0 DOIs list, in their rights entries, a BC Label's template
+  wording ("This Label is being used to verify that…") with identifiers "bc-consent" and "bc-label". The linked Hub
+  project shows a BC Consent Verified Label applied by a community. They fail the preregistered rule only because
+  neither the Label's name nor its URI appears.</li>
+<li><strong>At the Hub.</strong> Of the 20 Hub projects linked from these records, 17 resolve and 3 return 404. 15 of the 17 carry
+  Notices only, created by institutions or researchers. 2 carry a Label: the VUW project, created by a community, and
+  the Biocode project, created by an institution, with a community-applied Label. The DOI layer's Notice-heavy
+  picture mirrors the Hub for these projects.</li>
+</ul>
+<figure><a href="results/figures/F1_census.png"><img src="results/figures/F1_census.png" alt="Figure 1"></a><figcaption>Records carrying a Local Contexts Notice or Label, by platform, after the free-text channel was adjudicated in full. One repository (Neotoma) accounts for nearly all of them. The Zenodo and GBIF hits also appear as DataCite DOIs and are counted once there; the two figshare DOIs are registered but absent from DataCite&#x27;s public index.</figcaption></figure>
 <p><em>Figure 1. Records carrying a Local Contexts element, by platform (log scale). Neotoma is shown separately from every
 other DataCite publisher.</em></p>
 <h3>H2: what survives the crosswalks?</h3>
-<p><strong>H2, Supported.</strong> 7,750 of 17,762 record × view pairs drop the element: <strong>43.6%</strong> (record-cluster bootstrap 95% CI
-43.5–43.7%).
-- <strong>Why the interval is so narrow.</strong> Nearly every record behaves the same way in each view.
-- <strong>By stratum.</strong> The share is 43.8% for Neotoma's 1,971 DOIs and 30.5% (25.4–35.2%) for the 27 DOIs of other
-  publishers.
-- <strong>What drives the difference.</strong> The other publishers' records put the notice text in fields that CSL-JSON and
-  BibTeX carry as <code>copyright</code> or a note, so those views degrade instead of dropping it.</p>
+<p><strong>H2, Supported.</strong> 7,746 of 17,762 record × view pairs drop the element: <strong>43.6%</strong> (record-cluster bootstrap 95% CI
+43.5–43.7%).</p>
+<p><strong>The interval is not the uncertainty that matters.</strong> Only 7 distinct per-record patterns occur across 1,998 DOIs.
+Every Neotoma record shows the same pattern: exactly 4 of the 9 views drop the element. The threshold is crossed
+because the preregistered list holds four such views.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>H2 variant</th>
+<th>share dropped</th>
+<th>verdict by the rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>as preregistered (9 views)</td>
+<td>43.6%</td>
+<td>Supported</td>
+</tr>
+<tr>
+<td>without BibTeX / CSL-JSON / formatted citation</td>
+<td>36.5% each</td>
+<td>Refuted</td>
+</tr>
+<tr>
+<td>without the OpenAIRE Graph</td>
+<td>37.4%</td>
+<td>Refuted</td>
+</tr>
+<tr>
+<td>without any one of the other five views</td>
+<td>49.1%</td>
+<td>Supported</td>
+</tr>
+<tr>
+<td>the six doi.org formats only</td>
+<td>49.8%</td>
+<td>Supported</td>
+</tr>
+<tr>
+<td>only views with a rights or licence field</td>
+<td>16.6%</td>
+<td>Refuted</td>
+</tr>
+<tr>
+<td>unavailable OpenAIRE records counted as drops</td>
+<td>44.3%</td>
+<td>Supported</td>
+</tr>
+<tr>
+<td>Neotoma (1,971 DOIs)</td>
+<td>43.8%</td>
+<td>Supported</td>
+</tr>
+<tr>
+<td>other publishers (27 DOIs)</td>
+<td>28.8% (24.0–33.6%)</td>
+<td>Refuted</td>
+</tr>
+</tbody>
+</table></div>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -284,8 +449,8 @@ other DataCite publisher.</em></p>
 </tr>
 <tr>
 <td>Crosscite JSON</td>
-<td>1,991</td>
-<td>7</td>
+<td>1,992</td>
+<td>6</td>
 <td>0</td>
 <td>0</td>
 </tr>
@@ -299,15 +464,15 @@ other DataCite publisher.</em></p>
 <tr>
 <td>CSL-JSON</td>
 <td>0</td>
-<td>10</td>
-<td>1,988</td>
+<td>12</td>
+<td>1,986</td>
 <td>0</td>
 </tr>
 <tr>
 <td>BibTeX</td>
 <td>0</td>
-<td>9</td>
-<td>1,989</td>
+<td>11</td>
+<td>1,987</td>
 <td>0</td>
 </tr>
 <tr>
@@ -319,60 +484,88 @@ other DataCite publisher.</em></p>
 </tr>
 <tr>
 <td>OpenAIRE Graph</td>
-<td>2</td>
-<td>4</td>
+<td>0</td>
+<td>6</td>
 <td>1,772</td>
 <td>220</td>
 </tr>
 </tbody>
 </table></div>
 <ul>
-<li><strong>The rights-bearing views keep it.</strong> These are DataCite's own XML, both OAI-PMH formats (including <code>oai_dc</code>,
-  despite the Dataverse crosswalk issues) and Crosscite JSON. Their few "degrade" calls are records whose repository
-  put the notice in the description in the first place; the crosswalk did not cause them.</li>
-<li><strong>Schema.org JSON-LD</strong>, the format read by dataset search engines, lists the Local Contexts URI in <code>license</code>,
-  alongside the Creative Commons licence. A consumer cannot tell a governance notice from a licence.</li>
-<li><strong>The citation formats drop it,</strong> as they were not designed to carry rights.</li>
-<li><strong>The OpenAIRE Graph,</strong> an aggregator copy, drops it in 99.7% of the records it holds.</li>
+<li><strong>DataCite's own formats keep it.</strong> DataCite XML, both OAI-PMH formats and Crosscite JSON carry the element wherever
+  the repository put it in the rights list. Their 6 "degrade" calls are records whose repository put the notice in the
+  description; the crosswalk did not cause them.</li>
+<li><strong><code>oai_dc</code> flattens it.</strong> It keeps the element as untyped <code>dc:rights</code> strings and loses the scheme ("Local
+  Contexts") that tells a machine what it is.</li>
+<li><strong>The citation formats keep one rights entry.</strong> CSL-JSON and BibTeX carry a single <code>copyright</code> field equal to the
+  first rights entry, in every sampled DOI.<ul>
+<li>When the repository lists its licence first, as Neotoma does, the Notice is cut.</li>
+<li>All 17 sampled records that list the Local Contexts entry first carry it.</li>
+<li>We score those as "degrade" rather than "preserve", because <code>copyright</code> holds whatever came first rather than a
+typed rights entry.</li>
 </ul>
-<p><strong>H2b.</strong> None of the 17,762 views that returned a record contains a warning that a rights element was omitted.</p>
+</li>
+<li><strong>Schema.org JSON-LD</strong> lists the Local Contexts URI in <code>license</code>, beside the Creative Commons licence. Only the
+  URI's domain distinguishes a governance notice from a licence; the field asserts that both are licences. Scoring
+  these as "degrade" rather than "drop" is the conservative choice: as drops, H2 would be 54.8%.</li>
+<li><strong>The OpenAIRE Graph</strong> drops it in 1,772 of the 1,778 records it holds; the other 6 carry it only in free text.
+  220 DOIs are not indexed there.</li>
+</ul>
+<p><strong>H2b.</strong> None of the formats has a field for a warning that rights were omitted, and none of the 17,762 views
+contains one.</p>
 <figure><a href="results/figures/F2_crosswalks.png"><img src="results/figures/F2_crosswalks.png" alt="Figure 2"></a><figcaption>For sampled DOIs carrying a Local Contexts element in DataCite, whether each machine view preserves it (in a rights field, distinct from the licence), degrades it (merged into the licence or free text), drops it, or returns nothing. Neotoma&#x27;s records are near-identical, so its panel is one pattern repeated.</figcaption></figure>
 <p><em>Figure 2. Whether each machine view preserves, degrades or drops the element, by view, for sampled DOIs. Other
 publishers (left) and Neotoma (right).</em></p>
 <h2>What this does and does not show</h2>
 <ul>
 <li><strong>Uptake in the DOI layer is one institution's Notice.</strong> Community-applied Labels, the element designed to carry a
-  community's own conditions, are almost absent: one record across nine platforms. This may reflect where Labels are
-  meant to live, on the Hub and on landing pages, and the newness of the system. Absence from DOI metadata is not by
-  itself a failing.</li>
-<li><strong>Where the element is a proper rights entry, DataCite's own formats carry it faithfully.</strong> The loss happens in the
-  formats that most downstream tools use: citation formats, the schema.org markup search engines read, and an
-  aggregator graph. None of them says so.</li>
-<li><strong>The verdicts are dominated by one repository.</strong> H2's pooled share is effectively Neotoma's. Other publishers'
-  practice (free-text notices, Hub project links) is too sparse, 27 DOIs, to generalise.</li>
-<li><strong>Not shown:</strong> whether any community wants more visibility; landing pages and the Hub itself; non-DataCite DOI
-  registries; full-text recall outside the searched fields (counts are lower bounds).</li>
+  community's own conditions, are almost absent: one record under a strict rule, three under a looser one. The Hub
+  shows the same picture for the linked projects, which suggests newness and design rather than loss.</li>
+<li><strong>Where the element is a proper rights entry, DataCite's own formats carry it faithfully.</strong> Downstream formats then
+  either flatten it (<code>oai_dc</code>), file it as a licence (JSON-LD), keep it only if it is listed first (citation formats),
+  or drop it (formatted citation, OpenAIRE). None says so.</li>
+<li><strong>H2's verdict is a statement about the preregistered view list.</strong> "More than 40% of pairs" holds because four of
+  nine standard views drop the element. That is a fair description of the pipeline as listed, but not a property of
+  the records.</li>
+<li><strong>Not shown:</strong><ul>
+<li>whether any community wants more visibility;</li>
+<li>landing pages, or the Hub's own visibility;</li>
+<li>specific Label names in free text (name-only recall covers four generic names);</li>
+<li>GBIF machine tags under their own namespace;</li>
+<li>the Zenodo records whose rights entries its public JSON hides.</li>
+</ul>
+</li>
 <li><strong>Care note.</strong> No community's data was analysed, and no collection is judged. Engagement with Local Contexts, the
   repositories and Te Mana Raraunga / Pacific data-governance advisers is recommended before these counts are used to
   rank platforms.</li>
 </ul>
 <h2>Process and deviations</h2>
-<p>Preregistered in <code>plan.md</code>, with all code committed before the outputs it produces. Deviations are in
-<code>deviations.md</code>:
+<p>Preregistered in <code>plan.md</code>, with all code committed before the outputs it produces, with one exception noted in D5.
+An independent adversarial review (<code>review/review.md</code>) recommended "fix first". Its corrections are D5. Deviations:
 - <strong>D1:</strong> testing on neutral terms only; OSF unavailability recorded; the aggregator is OpenAIRE only; the H2 unit;
   the care note.
 - <strong>D2:</strong> the Zenodo page-size bug, fixed before the census was scanned.
 - <strong>D3:</strong> RAiD cursor paging.
-- <strong>D4:</strong> H2 excludes DOIs whose element was judged not genuine; the hand check.</p>
+- <strong>D4:</strong> H2 excludes DOIs whose element was judged not genuine; the hand check.
+- <strong>D5:</strong> review corrections:
+    - DataCite field queries;
+    - detector fixes;
+    - JSON-parsed scoring;
+    - the platform table;
+    - the view-set sensitivity;
+    - the alternative H1 count;
+    - the Hub cross-check;
+    - the D4 ordering restated.</p>
 <h2>Reproducing it</h2>
-<pre><code>venv/bin/python code/census.py; venv/bin/python code/census.py scan      # limb 1 (all raw responses saved)
-venv/bin/python code/precision.py                                       # adjudication of name-only hits
-venv/bin/python code/resolve_uris.py; venv/bin/python code/views.py      # limb 2 (18,000 record-views)
-venv/bin/python code/handcheck.py                                       # hand-check sheet
+<pre><code>venv/bin/python code/census.py datacite datacite_fields zenodo dryad dataverse figshare gbif raid osf re3data
+venv/bin/python code/census.py scan; venv/bin/python code/precision.py
+venv/bin/python code/resolve_uris.py; venv/bin/python code/hub_check.py
+venv/bin/python code/views.py; venv/bin/python code/rescore.py; venv/bin/python code/handcheck.py
 venv/bin/python code/analysis.py; venv/bin/python code/figures.py
 </code></pre>
 <p><strong>Released</strong> in <code>results/tables/</code>:
 - <code>primary.json</code>;
+- <code>platforms.csv</code> and <code>hub_projects.csv</code>;
 - the census and view matrices, including by stratum;
 - <code>precision.csv</code>, <code>handcheck.csv</code> and <code>vocabulary.json</code>.</p>
 </main>

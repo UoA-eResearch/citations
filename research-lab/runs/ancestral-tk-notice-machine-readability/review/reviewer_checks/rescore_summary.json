@@ -1,0 +1,75 @@
+{
+ "n": 18000,
+ "n_disagree": 3,
+ "disagree_by": {
+  "openaire:preserve->degrade": 2,
+  "crosscite_json:degrade->preserve": 1
+ },
+ "where_by_view_result": {
+  "datacite_xml:degrade": {
+   "/resource/descriptions/description": 6,
+   "/resource/alternateIdentifiers/alternateIdentifier": 2
+  },
+  "schemaorg_jsonld:degrade": {
+   ".license[]": 1983,
+   ".license": 9,
+   ".description": 3,
+   ".identifier.value": 1,
+   ".identifier[].value": 1
+  },
+  "crosscite_json:degrade": {
+   ".descriptions[].description": 6,
+   ".identifiers[].identifier": 2
+  },
+  "csl_json:degrade": {
+   ".copyright": 9,
+   ".abstract": 3
+  },
+  "bibtex:drop": {
+   "-": 1991
+  },
+  "citation_text:drop": {
+   "-": 2000
+  },
+  "oai_dc:degrade": {
+   "/OAI-PMH/GetRecord/record/metadata/dc/description": 6,
+   "/OAI-PMH/GetRecord/record/metadata/dc/identifier": 2
+  },
+  "oai_datacite:degrade": {
+   "/OAI-PMH/GetRecord/record/metadata/oai_datacite/payload/resource/descriptions/description": 6,
+   "/OAI-PMH/GetRecord/record/metadata/oai_datacite/payload/resource/alternateIdentifiers/alternateIdentifier": 2
+  },
+  "openaire:degrade": {
+   "[].descriptions[]": 6,
+   "[].instances[].urls[]": 2
+  },
+  "datacite_xml:preserve": {
+   "/resource/rightsList/rights": 1992
+  },
+  "crosscite_json:preserve": {
+   ".rights_list[].rights|.rights_list[].rightsUri": 1989,
+   ".rights_list[].rightsUri": 3
+  },
+  "bibtex:degrade": {
+   "copyright": 9
+  },
+  "oai_dc:preserve": {
+   "/OAI-PMH/GetRecord/record/metadata/dc/rights": 1992
+  },
+  "oai_datacite:preserve": {
+   "/OAI-PMH/GetRecord/record/metadata/oai_datacite/payload/resource/rightsList/rights": 1992
+  },
+  "openaire:unavailable": {
+   "-": 220
+  },
+  "schemaorg_jsonld:drop": {
+   "-": 3
+  },
+  "csl_json:drop": {
+   "-": 1988
+  },
+  "openaire:drop": {
+   "-": 1772
+  }
+ }
+}

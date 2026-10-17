@@ -1,0 +1,977 @@
+{
+ "H1": {
+  "all": {
+   "n": 48361,
+   "label_with_live_hub": 1,
+   "share": 2.0677818903662043e-05,
+   "exact_ci": [
+    5.235169115018089e-07,
+    0.00011520398771432778
+   ],
+   "wilson_ci": [
+    3.6501520641834436e-06,
+    0.00011712888297643129
+   ],
+   "verdict_by_prereg_rule": "Supported",
+   "labels_by_name_or_uri": 48333,
+   "label_uri_only": 0,
+   "notices": 48355,
+   "hub_project_any": 28,
+   "hub_project_live": 24
+  },
+  "without_neotoma": {
+   "n": 29,
+   "label_with_live_hub": 1,
+   "share": 0.034482758620689655,
+   "exact_ci": [
+    0.000872646883579922,
+    0.1776442954887229
+   ],
+   "wilson_ci": [
+    0.006113214225076519,
+    0.17175522037795662
+   ],
+   "verdict_by_prereg_rule": "Inconclusive",
+   "labels_by_name_or_uri": 1,
+   "label_uri_only": 0,
+   "notices": 23,
+   "hub_project_any": 28,
+   "hub_project_live": 24
+  },
+  "all_before_precision_exclusion": {
+   "n": 48426,
+   "label_with_live_hub": 1,
+   "share": 2.0650064015198447e-05,
+   "exact_ci": [
+    5.228142189326869e-07,
+    0.00011504936198145027
+   ],
+   "wilson_ci": [
+    3.645252619886608e-06,
+    0.00011697167911745167
+   ],
+   "verdict_by_prereg_rule": "Supported",
+   "labels_by_name_or_uri": 48334,
+   "label_uri_only": 0,
+   "notices": 48419,
+   "hub_project_any": 28,
+   "hub_project_live": 24
+  },
+  "without_neotoma_before_precision_exclusion": {
+   "n": 94,
+   "label_with_live_hub": 1,
+   "share": 0.010638297872340425,
+   "exact_ci": [
+    0.00026930211448559046,
+    0.05785133973267045
+   ],
+   "wilson_ci": [
+    0.0018803957273075822,
+    0.057822913565974944
+   ],
+   "verdict_by_prereg_rule": "Inconclusive",
+   "labels_by_name_or_uri": 2,
+   "label_uri_only": 0,
+   "notices": 87,
+   "hub_project_any": 28,
+   "hub_project_live": 24
+  },
+  "records_with_live_hub_project": [
+   {
+    "platform": "datacite",
+    "id": "10.17913/f3/100501.31069",
+    "doi": "10.17913/f3/100501.31069",
+    "publisher": "Tetiaroa Society",
+    "name_labels": [],
+    "uri_notices": [
+     "bc-notice"
+    ],
+    "name_notices": [],
+    "hub_projects": [
+     "3f341ef3-31dc-41ac-ab3b-d41481626660"
+    ]
+   },
+   {
+    "platform": "datacite",
+    "id": "10.5281/zenodo.10381316",
+    "doi": "10.5281/zenodo.10381316",
+    "publisher": "Zenodo",
+    "name_labels": [],
+    "uri_notices": [],
+    "name_notices": [],
+    "hub_projects": [
+     "54be05d7-aa5c-4886-abd9-dc45b2fa8df4"
+    ]
+   },
+   {
+    "platform": "datacite",
+    "id": "10.5281/zenodo.10381317",
+    "doi": "10.5281/zenodo.10381317",
+    "publisher": "Zenodo",
+    "name_labels": [],
+    "uri_notices": [],
+    "name_notices": [],
+    "hub_projects": [
+     "54be05d7-aa5c-4886-abd9-dc45b2fa8df4"
+    ]
+   },
+   {
+    "platform": "datacite",
+    "id": "10.17913/f3z59r",
+    "doi": "10.17913/f3z59r",
+    "publisher": "Tetiaroa Society",
+    "name_labels": [],
+    "uri_notices": [
+     "bc-notice"
+    ],
+    "name_notices": [],
+    "hub_projects": [
+     "9a7785a1-6de5-47e8-8f05-e4f5c98e2339"
+    ]
+   },
+   {
+    "platform": "datacite",
+    "id": "10.17913/f3tg6g",
+    "doi": "10.17913/f3tg6g",
+    "publisher": "Tetiaroa Society",
+    "name_labels": [],
+    "uri_notices": [
+     "bc-notice"
+    ],
+    "name_notices": [],
+    "hub_projects": [
+     "0aa4b8c6-e15d-4aac-8aba-8f4be26b229f"
+    ]
+   },
+   {
+    "platform": "datacite",
+    "id": "10.17913/100501.9190",
+    "doi": "10.17913/100501.9190",
+    "publisher": "Gump South Pacific Research Station",
+    "name_labels": [],
+    "uri_notices": [
+     "attribution-incomplete",
+     "bc-notice",
+     "tk-notice"
+    ],
+    "name_notices": [
+     "attribution-incomplete",
+     "bc-notice",
+     "tk-notice"
+    ],
+    "hub_projects": [
+     "71b32571-0176-4627-8e01-4d78818432a7"
+    ]
+   },
+   {
+    "platform": "datacite",
+    "id": "10.60950/1e3081c1-bcc5-44b4-841c-ba74674b4121",
+    "doi": "10.60950/1e3081c1-bcc5-44b4-841c-ba74674b4121",
+    "publisher": "UC Berkeley Gump South Pacific Research Station",
+    "name_labels": [],
+    "uri_notices": [],
+    "name_notices": [
+     "bc-notice",
+     "tk-notice"
+    ],
+    "hub_projects": [
+     "03818172-23c1-4dd1-a662-f11aa07cccda"
+    ]
+   },
+   {
+    "platform": "datacite",
+    "id": "10.60950/fcd7dcde-b6f7-4b04-9e46-0ec9cf1dfcfe",
+    "doi": "10.60950/fcd7dcde-b6f7-4b04-9e46-0ec9cf1dfcfe",
+    "publisher": "UC Berkeley Gump South Pacific Research Station",
+    "name_labels": [],
+    "uri_notices": [],
+    "name_notices": [
+     "bc-notice",
+     "tk-notice"
+    ],
+    "hub_projects": [
+     "7b9e7321-555b-486c-9f2d-277e3f07eb52"
+    ]
+   },
+   {
+    "platform": "datacite",
+    "id": "10.60950/7efde9b6-eddf-4011-83ac-885605d05bc9",
+    "doi": "10.60950/7efde9b6-eddf-4011-83ac-885605d05bc9",
+    "publisher": "UC Berkeley Gump South Pacific Research Station",
+    "name_labels": [],
+    "uri_notices": [],
+    "name_notices": [
+     "bc-notice"
+    ],
+    "hub_projects": [
+     "54be05d7-aa5c-4886-abd9-dc45b2fa8df4"
+    ]
+   },
+   {
+    "platform": "datacite",
+    "id": "10.60950/59bf110f-a960-4ced-a855-888b18afd3d6",
+    "doi": "10.60950/59bf110f-a960-4ced-a855-888b18afd3d6",
+    "publisher": "UC Berkeley Gump South Pacific Research Station",
+    "name_labels": [],
+    "uri_notices": [],
+    "name_notices": [
+     "bc-notice",
+     "tk-notice"
+    ],
+    "hub_projects": [
+     "222da5aa-f84e-4e6f-a8ed-ed83087b4a6b"
+    ]
+   },
+   {
+    "platform": "datacite",
+    "id": "10.60950/52c68d5a-d89d-4c8a-8dd7-767377819afc",
+    "doi": "10.60950/52c68d5a-d89d-4c8a-8dd7-767377819afc",
+    "publisher": "UC Berkeley Gump South Pacific Research Station",
+    "name_labels": [],
+    "uri_notices": [],
+    "name_notices": [
+     "bc-notice",
+     "tk-notice"
+    ],
+    "hub_projects": [
+     "d7d74bae-e4db-4cfe-99de-949bf62bde97"
+    ]
+   },
+   {
+    "platform": "datacite",
+    "id": "10.60950/ed1f5a5b-b8ff-4b3c-9934-488c796c4364",
+    "doi": "10.60950/ed1f5a5b-b8ff-4b3c-9934-488c796c4364",
+    "publisher": "UC Berkeley Gump South Pacific Research Station",
+    "name_labels": [],
+    "uri_notices": [],
+    "name_notices": [
+     "bc-notice",
+     "tk-notice"
+    ],
+    "hub_projects": [
+     "bf647797-a3e4-4083-b147-ef1e204e3194"
+    ]
+   },
+   {
+    "platform": "datacite",
+    "id": "10.60950/0182a933-27a7-47f5-9230-3e9ae380af5c",
+    "doi": "10.60950/0182a933-27a7-47f5-9230-3e9ae380af5c",
+    "publisher": "UC Berkeley Gump South Pacific Research Station",
+    "name_labels": [],
+    "uri_notices": [],
+    "name_notices": [
+     "bc-notice"
+    ],
+    "hub_projects": [
+     "54be05d7-aa5c-4886-abd9-dc45b2fa8df4"
+    ]
+   },
+   {
+    "platform": "datacite",
+    "id": "10.5281/zenodo.13127019",
+    "doi": "10.5281/zenodo.13127019",
+    "publisher": "Zenodo",
+    "name_labels": [],
+    "uri_notices": [],
+    "name_notices": [],
+    "hub_projects": [
+     "a0a7f8ab-da03-4fa7-b474-f5d4526de9bd"
+    ]
+   },
+   {
+    "platform": "datacite",
+    "id": "10.5281/zenodo.13127018",
+    "doi": "10.5281/zenodo.13127018",
+    "publisher": "Zenodo",
+    "name_labels": [],
+    "uri_notices": [],
+    "name_notices": [],
+    "hub_projects": [
+     "a0a7f8ab-da03-4fa7-b474-f5d4526de9bd"
+    ]
+   },
+   {
+    "platform": "datacite",
+    "id": "10.26193/odrnrp",
+    "doi": "10.26193/odrnrp",
+    "publisher": "ADA Dataverse",
+    "name_labels": [],
+    "uri_notices": [],
+    "name_notices": [
+     "bc-notice"
+    ],
+    "hub_projects": [
+     "d06d7125-a887-4819-ba1e-1e9b6a5799a3"
+    ]
+   },
+   {
+    "platform": "datacite",
+    "id": "10.26193/62sb59",
+    "doi": "10.26193/62sb59",
+    "publisher": "ADA Dataverse",
+    "name_labels": [],
+    "uri_notices": [],
+    "name_notices": [
+     "bc-notice"
+    ],
+    "hub_projects": [
+     "d06d7125-a887-4819-ba1e-1e9b6a5799a3"
+    ]
+   },
+   {
+    "platform": "datacite",
+    "id": "10.26193/9sgxmy",
+    "doi": "10.26193/9sgxmy",
+    "publisher": "ADA Dataverse",
+    "name_labels": [],
+    "uri_notices": [],
+    "name_notices": [
+     "bc-notice"
+    ],
+    "hub_projects": [
+     "abc009aa-133a-4bdd-a5de-204dd06ff838"
+    ]
+   },
+   {
+    "platform": "datacite",
+    "id": "10.5281/zenodo.15859523",
+    "doi": "10.5281/zenodo.15859523",
+    "publisher": "iPlaces",
+    "name_labels": [],
+    "uri_notices": [
+     "bc-notice"
+    ],
+    "name_notices": [],
+    "hub_projects": [
+     "54be05d7-aa5c-4886-abd9-dc45b2fa8df4"
+    ]
+   },
+   {
+    "platform": "datacite",
+    "id": "10.5281/zenodo.15859524",
+    "doi": "10.5281/zenodo.15859524",
+    "publisher": "iPlaces",
+    "name_labels": [],
+    "uri_notices": [
+     "bc-notice"
+    ],
+    "name_notices": [],
+    "hub_projects": [
+     "54be05d7-aa5c-4886-abd9-dc45b2fa8df4"
+    ]
+   },
+   {
+    "platform": "datacite",
+    "id": "10.60950/a34751ce-f7a2-44d5-bde0-f579aad2d4e5",
+    "doi": "10.60950/a34751ce-f7a2-44d5-bde0-f579aad2d4e5",
+    "publisher": "UC Berkeley Gump South Pacific Research Station",
+    "name_labels": [],
+    "uri_notices": [],
+    "name_notices": [
+     "bc-notice",
+     "tk-notice"
+    ],
+    "hub_projects": [
+     "e884d181-a5b8-40ec-9311-81870a3b372a"
+    ]
+   },
+   {
+    "platform": "datacite",
+    "id": "10.60950/100501.9190",
+    "doi": "10.60950/100501.9190",
+    "publisher": "UC Berkeley Gump South Pacific Research Station",
+    "name_labels": [],
+    "uri_notices": [],
+    "name_notices": [],
+    "hub_projects": [
+     "71b32571-0176-4627-8e01-4d78818432a7"
+    ]
+   },
+   {
+    "platform": "figshare",
+    "id": "25790481",
+    "doi": "10.26686/wgtn.25790481",
+    "publisher": "",
+    "name_labels": [
+     "bc-provenance"
+    ],
+    "uri_notices": [],
+    "name_notices": [],
+    "hub_projects": [
+     "c57b53f1-2089-42ff-93aa-9a179636e4d0"
+    ]
+   },
+   {
+    "platform": "figshare",
+    "id": "28974539",
+    "doi": "10.26686/wgtn.28974539",
+    "publisher": "",
+    "name_labels": [],
+    "uri_notices": [],
+    "name_notices": [
+     "attribution-incomplete",
+     "bc-notice"
+    ],
+    "hub_projects": [
+     "212bef2e-571f-4f9f-b044-6d639e029e0d",
+     "e2e9341e-bdd3-4078-b230-4f8acd25c6b0"
+    ]
+   }
+  ],
+  "per_platform_wilson": {
+   "datacite": {
+    "n": 48359,
+    "k": 0,
+    "wilson_ci": [
+     6.776263578034403e-21,
+     7.94299665904051e-05
+    ]
+   },
+   "figshare": {
+    "n": 2,
+    "k": 1,
+    "wilson_ci": [
+     0.09453120463920084,
+     0.9054687953607992
+    ]
+   }
+  }
+ },
+ "concentration": {
+  "top_publisher": "Neotoma Paleoecology Database",
+  "top_share": 0.9994003432517938,
+  "hhi": 0.9988011089449158,
+  "n_publishers": 9,
+  "by_year_neotoma": {
+   "2025": 40992,
+   "2026": 7340
+  },
+  "by_year_other": {
+   "2024": 13,
+   "2025": 9,
+   "2023": 2,
+   "2007": 2,
+   "2026": 2,
+   "2015": 1
+  }
+ },
+ "H2": {
+  "as_reported_D4": {
+   "n_dois": 1998,
+   "n_pairs": 17762,
+   "n_drop": 7750,
+   "share": 0.4363247382051571,
+   "ci": [
+    0.4350126606488921,
+    0.43747197245800556
+   ],
+   "verdict": "Supported",
+   "label": "D4 applied, unavailable excluded"
+  },
+  "without_D4": {
+   "n_dois": 2000,
+   "n_pairs": 17780,
+   "n_drop": 7754,
+   "share": 0.4361079865016873,
+   "ci": [
+    0.43482406156179987,
+    0.4373349811808325
+   ],
+   "verdict": "Supported",
+   "label": "no D4 exclusion (2,000 DOIs)"
+  },
+  "unavailable_as_drop": {
+   "n_dois": 1998,
+   "n_pairs": 17982,
+   "n_drop": 7970,
+   "share": 0.44322099877655435,
+   "ci": [
+    0.44244244244244246,
+    0.4438883327772217
+   ],
+   "verdict": "Supported",
+   "label": "unavailable counted as drop"
+  },
+  "unavailable_as_kept": {
+   "n_dois": 1998,
+   "n_pairs": 17982,
+   "n_drop": 7750,
+   "share": 0.4309865420976532,
+   "ci": [
+    0.42909576242909575,
+    0.4327104882660438
+   ],
+   "verdict": "Supported",
+   "label": "unavailable counted as not-drop"
+  },
+  "by_stratum": {
+   "neotoma": {
+    "n_dois": 1971,
+    "n_pairs": 17536,
+    "n_drop": 7681,
+    "share": 0.4380132299270073,
+    "ci": [
+     0.4371787549971445,
+     0.4388771849911746
+    ],
+    "verdict": "Supported",
+    "label": "neotoma"
+   },
+   "other": {
+    "n_dois": 27,
+    "n_pairs": 226,
+    "n_drop": 69,
+    "share": 0.3053097345132743,
+    "ci": [
+     0.25443752020038785,
+     0.3524229074889868
+    ],
+    "verdict": "Refuted",
+    "label": "other"
+   }
+  },
+  "other_without_D4": {
+   "n_dois": 29,
+   "n_pairs": 244,
+   "n_drop": 73,
+   "share": 0.29918032786885246,
+   "ci": [
+    0.2510455946415965,
+    0.344
+   ],
+   "verdict": "Refuted",
+   "label": "other publishers, no D4 exclusion"
+  },
+  "leave_one_view_out": {
+   "bibtex": {
+    "n_dois": 1998,
+    "n_pairs": 15764,
+    "n_drop": 5761,
+    "share": 0.3654529307282416,
+    "ci": [
+     0.3641385814684675,
+     0.36667104768127
+    ],
+    "verdict": "Refuted",
+    "label": "without bibtex"
+   },
+   "citation_text": {
+    "n_dois": 1998,
+    "n_pairs": 15764,
+    "n_drop": 5752,
+    "share": 0.3648820096422228,
+    "ci": [
+     0.36330063363259685,
+     0.36626329280363584
+    ],
+    "verdict": "Refuted",
+    "label": "without citation_text"
+   },
+   "crosscite_json": {
+    "n_dois": 1998,
+    "n_pairs": 15764,
+    "n_drop": 7750,
+    "share": 0.49162649073839126,
+    "ci": [
+     0.49024219693598625,
+     0.4928408741708105
+    ],
+    "verdict": "Supported",
+    "label": "without crosscite_json"
+   },
+   "csl_json": {
+    "n_dois": 1998,
+    "n_pairs": 15764,
+    "n_drop": 5762,
+    "share": 0.3655163664044659,
+    "ci": [
+     0.36419674631418403,
+     0.36671744936602274
+    ],
+    "verdict": "Refuted",
+    "label": "without csl_json"
+   },
+   "datacite_xml": {
+    "n_dois": 1998,
+    "n_pairs": 15764,
+    "n_drop": 7750,
+    "share": 0.49162649073839126,
+    "ci": [
+     0.49024219693598625,
+     0.4928408741708105
+    ],
+    "verdict": "Supported",
+    "label": "without datacite_xml"
+   },
+   "oai_datacite": {
+    "n_dois": 1998,
+    "n_pairs": 15764,
+    "n_drop": 7750,
+    "share": 0.49162649073839126,
+    "ci": [
+     0.49024219693598625,
+     0.4928408741708105
+    ],
+    "verdict": "Supported",
+    "label": "without oai_datacite"
+   },
+   "oai_dc": {
+    "n_dois": 1998,
+    "n_pairs": 15764,
+    "n_drop": 7750,
+    "share": 0.49162649073839126,
+    "ci": [
+     0.49024219693598625,
+     0.4928408741708105
+    ],
+    "verdict": "Supported",
+    "label": "without oai_dc"
+   },
+   "openaire": {
+    "n_dois": 1998,
+    "n_pairs": 15984,
+    "n_drop": 5978,
+    "share": 0.373998998998999,
+    "ci": [
+     0.37318568568568566,
+     0.3747497497497497
+    ],
+    "verdict": "Refuted",
+    "label": "without openaire"
+   },
+   "schemaorg_jsonld": {
+    "n_dois": 1998,
+    "n_pairs": 15764,
+    "n_drop": 7747,
+    "share": 0.49143618370971837,
+    "ci": [
+     0.49006030504628095,
+     0.49268480370603884
+    ],
+    "verdict": "Supported",
+    "label": "without schemaorg_jsonld"
+   }
+  },
+  "without_openaire_and_citation_text": {
+   "n_dois": 1998,
+   "n_pairs": 13986,
+   "n_drop": 3980,
+   "share": 0.28457028457028455,
+   "ci": [
+    0.28364078364078366,
+    0.2854282854282854
+   ],
+   "verdict": "Refuted",
+   "label": "without OpenAIRE and formatted citation"
+  },
+  "only_rights_capable_views": {
+   "n_dois": 1998,
+   "n_pairs": 11768,
+   "n_drop": 1775,
+   "share": 0.15083276682528893,
+   "ci": [
+    0.1487602426137771,
+    0.15274361801373929
+   ],
+   "verdict": "Refuted",
+   "label": "views with any rights/licence field"
+  },
+  "only_cn_views": {
+   "n_dois": 1998,
+   "n_pairs": 11988,
+   "n_drop": 5978,
+   "share": 0.4986653319986653,
+   "ci": [
+    0.49758091424758094,
+    0.49966633299966634
+   ],
+   "verdict": "Supported",
+   "label": "the six doi.org content-negotiation formats"
+  },
+  "neotoma_arithmetic": {
+   "views_dropping": [
+    "bibtex",
+    "citation_text",
+    "csl_json",
+    "openaire"
+   ],
+   "drop_pairs": 7681,
+   "pairs": 17536,
+   "note": "4 of 9 views drop for every Neotoma record; 203 OpenAIRE views unavailable -> (3*1971+1768)/(8*1971+1768)"
+  },
+  "per_view": {
+   "bibtex": {
+    "drop": 1989,
+    "n": 1998,
+    "share": 0.9954954954954955,
+    "exact_ci": [
+     0.991466342373723,
+     0.9979382477115778
+    ],
+    "results": {
+     "drop": 1989,
+     "degrade": 9
+    }
+   },
+   "citation_text": {
+    "drop": 1998,
+    "n": 1998,
+    "share": 1.0,
+    "exact_ci": [
+     0.998155417324507,
+     1.0
+    ],
+    "results": {
+     "drop": 1998
+    }
+   },
+   "crosscite_json": {
+    "drop": 0,
+    "n": 1998,
+    "share": 0.0,
+    "exact_ci": [
+     0.0,
+     0.001844582675493056
+    ],
+    "results": {
+     "preserve": 1991,
+     "degrade": 7
+    }
+   },
+   "csl_json": {
+    "drop": 1988,
+    "n": 1998,
+    "share": 0.994994994994995,
+    "exact_ci": [
+     0.9908149391666617,
+     0.9975973750863972
+    ],
+    "results": {
+     "drop": 1988,
+     "degrade": 10
+    }
+   },
+   "datacite_xml": {
+    "drop": 0,
+    "n": 1998,
+    "share": 0.0,
+    "exact_ci": [
+     0.0,
+     0.001844582675493056
+    ],
+    "results": {
+     "preserve": 1992,
+     "degrade": 6
+    }
+   },
+   "oai_datacite": {
+    "drop": 0,
+    "n": 1998,
+    "share": 0.0,
+    "exact_ci": [
+     0.0,
+     0.001844582675493056
+    ],
+    "results": {
+     "preserve": 1992,
+     "degrade": 6
+    }
+   },
+   "oai_dc": {
+    "drop": 0,
+    "n": 1998,
+    "share": 0.0,
+    "exact_ci": [
+     0.0,
+     0.001844582675493056
+    ],
+    "results": {
+     "preserve": 1992,
+     "degrade": 6
+    }
+   },
+   "openaire": {
+    "drop": 1772,
+    "n": 1778,
+    "share": 0.9966254218222722,
+    "exact_ci": [
+     0.9926695374211484,
+     0.9987606134550225
+    ],
+    "results": {
+     "drop": 1772,
+     "degrade": 4,
+     "preserve": 2
+    }
+   },
+   "schemaorg_jsonld": {
+    "drop": 3,
+    "n": 1998,
+    "share": 0.0015015015015015015,
+    "exact_ci": [
+     0.00030975280918078054,
+     0.00438169548124043
+    ],
+    "results": {
+     "degrade": 1995,
+     "drop": 3
+    }
+   }
+  },
+  "matrix_by_stratum": {
+   "neotoma:bibtex": {
+    "drop": 1971
+   },
+   "neotoma:citation_text": {
+    "drop": 1971
+   },
+   "neotoma:crosscite_json": {
+    "preserve": 1971
+   },
+   "neotoma:csl_json": {
+    "drop": 1971
+   },
+   "neotoma:datacite_xml": {
+    "preserve": 1971
+   },
+   "neotoma:oai_datacite": {
+    "preserve": 1971
+   },
+   "neotoma:oai_dc": {
+    "preserve": 1971
+   },
+   "neotoma:openaire": {
+    "drop": 1768,
+    "unavailable": 203
+   },
+   "neotoma:schemaorg_jsonld": {
+    "degrade": 1971
+   },
+   "other:bibtex": {
+    "drop": 18,
+    "degrade": 9
+   },
+   "other:citation_text": {
+    "drop": 27
+   },
+   "other:crosscite_json": {
+    "preserve": 20,
+    "degrade": 7
+   },
+   "other:csl_json": {
+    "drop": 17,
+    "degrade": 10
+   },
+   "other:datacite_xml": {
+    "preserve": 21,
+    "degrade": 6
+   },
+   "other:oai_datacite": {
+    "preserve": 21,
+    "degrade": 6
+   },
+   "other:oai_dc": {
+    "preserve": 21,
+    "degrade": 6
+   },
+   "other:openaire": {
+    "unavailable": 17,
+    "degrade": 4,
+    "drop": 4,
+    "preserve": 2
+   },
+   "other:schemaorg_jsonld": {
+    "degrade": 24,
+    "drop": 3
+   }
+  },
+  "distinct_record_patterns": {
+   "n_patterns": 7,
+   "top": {
+    "drop|drop|preserve|drop|preserve|preserve|preserve|drop|degrade": 1772,
+    "drop|drop|preserve|drop|preserve|preserve|preserve|unavailable|degrade": 210,
+    "degrade|drop|preserve|degrade|preserve|preserve|preserve|unavailable|degrade": 9,
+    "drop|drop|degrade|drop|degrade|degrade|degrade|degrade|drop": 3,
+    "drop|drop|degrade|drop|degrade|degrade|degrade|preserve|degrade": 2
+   }
+  }
+ },
+ "H2b_warnings": 0,
+ "H2_counts": {
+  "rows": 17982,
+  "unavailable": 220,
+  "returned": 17762
+ },
+ "H1_sensitivity": {
+  "as_reported_all": {
+   "k": 1,
+   "n": 48361,
+   "share": 2.0677818903662043e-05,
+   "exact_ci": [
+    5.235169115018089e-07,
+    0.00011520398771432778
+   ],
+   "verdict": "Supported"
+  },
+  "as_reported_without_neotoma": {
+   "k": 1,
+   "n": 29,
+   "share": 0.034482758620689655,
+   "exact_ci": [
+    0.000872646883579922,
+    0.1776442954887229
+   ],
+   "verdict": "Inconclusive"
+  },
+  "plus_biocode_label_template_all": {
+   "k": 3,
+   "n": 48361,
+   "share": 6.203345671098612e-05,
+   "exact_ci": [
+    1.2792972821777379e-05,
+    0.00018127727537495188
+   ],
+   "verdict": "Supported"
+  },
+  "plus_biocode_label_template_without_neotoma": {
+   "k": 3,
+   "n": 29,
+   "share": 0.10344827586206896,
+   "exact_ci": [
+    0.021863736829853642,
+    0.2735151978924229
+   ],
+   "verdict": "Refuted"
+  },
+  "plus_biocode_and_dmptool_fn_all": {
+   "k": 3,
+   "n": 48362,
+   "share": 6.203217402092552e-05,
+   "exact_ci": [
+    1.2792708292694072e-05,
+    0.00018127352725728842
+   ],
+   "verdict": "Supported"
+  },
+  "plus_biocode_and_dmptool_fn_without_neotoma": {
+   "k": 3,
+   "n": 30,
+   "share": 0.1,
+   "exact_ci": [
+    0.02111713702972257,
+    0.2652884504742081
+   ],
+   "verdict": "Refuted"
+  },
+  "biocode_counted_as_one_object_without_neotoma": {
+   "k": 2,
+   "n": 28,
+   "share": 0.07142857142857142,
+   "exact_ci": [
+    0.008770496703527133,
+    0.23503477317459073
+   ],
+   "verdict": "Refuted"
+  }
+ }
+}

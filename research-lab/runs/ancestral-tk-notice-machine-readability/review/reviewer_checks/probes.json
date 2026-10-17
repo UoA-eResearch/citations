@@ -1,0 +1,845 @@
+{
+ "d1_rightsUri_wild": {
+  "query": "rightsList.rightsUri:*localcontexts*",
+  "status": 200,
+  "total": 48353,
+  "n_returned": 1,
+  "not_in_raw_census": [],
+  "n_not_in_raw": 0,
+  "in_census": 1
+ },
+ "d2_rightsUri_wild_notneo": {
+  "query": "rightsList.rightsUri:*localcontexts* AND NOT prefix:10.21233",
+  "status": 200,
+  "total": 21,
+  "n_returned": 21,
+  "not_in_raw_census": [],
+  "n_not_in_raw": 0,
+  "in_census": 21
+ },
+ "d3_token_localcontexts": {
+  "query": "localcontexts",
+  "status": 200,
+  "total": 2,
+  "n_returned": 1,
+  "not_in_raw_census": [],
+  "n_not_in_raw": 0,
+  "in_census": 0
+ },
+ "d4_phrase_hub_domain": {
+  "query": "\"localcontextshub.org\"",
+  "status": 200,
+  "total": 4,
+  "n_returned": 4,
+  "not_in_raw_census": [],
+  "n_not_in_raw": 0,
+  "in_census": 3
+ },
+ "d5_phrase_lc_domain": {
+  "query": "\"localcontexts.org\" AND NOT prefix:10.21233",
+  "status": 200,
+  "total": 4,
+  "n_returned": 4,
+  "not_in_raw_census": [
+   "10.5281/zenodo.17434304",
+   "10.5281/zenodo.17434305",
+   "10.5281/zenodo.8088226",
+   "10.5281/zenodo.8088227"
+  ],
+  "n_not_in_raw": 4,
+  "in_census": 0
+ },
+ "d6_any_wild_notneo": {
+  "query": "*localcontexts* AND NOT prefix:10.21233",
+  "status": 200,
+  "total": 14,
+  "n_returned": 14,
+  "not_in_raw_census": [
+   "10.48321/d190108951",
+   "10.5281/zenodo.17434304",
+   "10.5281/zenodo.17434305",
+   "10.5281/zenodo.8088226",
+   "10.5281/zenodo.8088227"
+  ],
+  "n_not_in_raw": 5,
+  "in_census": 5
+ },
+ "d7_desc_wild_notneo": {
+  "query": "descriptions.description:*localcontexts* AND NOT prefix:10.21233",
+  "status": 200,
+  "total": 11,
+  "n_returned": 11,
+  "not_in_raw_census": [
+   "10.5281/zenodo.17434304",
+   "10.5281/zenodo.17434305",
+   "10.5281/zenodo.8088226",
+   "10.5281/zenodo.8088227"
+  ],
+  "n_not_in_raw": 4,
+  "in_census": 3
+ },
+ "d8_related_wild": {
+  "query": "relatedIdentifiers.relatedIdentifier:*localcontexts*",
+  "status": 200,
+  "total": 3,
+  "n_returned": 3,
+  "not_in_raw_census": [
+   "10.48321/d190108951"
+  ],
+  "n_not_in_raw": 1,
+  "in_census": 2
+ },
+ "d9a_identifiers_wild": {
+  "query": "identifiers.identifier:*localcontexts*",
+  "status": 200,
+  "total": 2,
+  "n_returned": 2,
+  "not_in_raw_census": [],
+  "n_not_in_raw": 0,
+  "in_census": 2
+ },
+ "d9b_altid_wild": {
+  "query": "alternateIdentifiers.alternateIdentifier:*localcontexts*",
+  "status": 200,
+  "total": 0,
+  "n_returned": 0,
+  "not_in_raw_census": [],
+  "n_not_in_raw": 0,
+  "in_census": 0
+ },
+ "d10_subjects_wild": {
+  "query": "subjects.subject:*localcontexts*",
+  "status": 200,
+  "total": 0,
+  "n_returned": 0,
+  "not_in_raw_census": [],
+  "n_not_in_raw": 0,
+  "in_census": 0
+ },
+ "d11_rights_text_wild_notneo": {
+  "query": "rightsList.rights:*localcontexts* AND NOT prefix:10.21233",
+  "status": 200,
+  "total": 10,
+  "n_returned": 10,
+  "not_in_raw_census": [],
+  "n_not_in_raw": 0,
+  "in_census": 10
+ },
+ "d12_scheme_LC_notneo": {
+  "query": "rightsList.rightsIdentifierScheme:\"Local Contexts\" AND NOT prefix:10.21233",
+  "status": 200,
+  "total": 11,
+  "n_returned": 11,
+  "not_in_raw_census": [],
+  "n_not_in_raw": 0,
+  "in_census": 11
+ },
+ "d12b_scheme_LC_all": {
+  "query": "rightsList.rightsIdentifierScheme:\"Local Contexts\"",
+  "status": 200,
+  "total": 48343,
+  "n_returned": 1,
+  "not_in_raw_census": [],
+  "n_not_in_raw": 0,
+  "in_census": 1
+ },
+ "d13_BC_Provenance": {
+  "query": "\"BC Provenance\"",
+  "status": 200,
+  "total": 7,
+  "n_returned": 7,
+  "not_in_raw_census": [
+   "10.5281/zenodo.10336416",
+   "10.5281/zenodo.10336417",
+   "10.5281/zenodo.20197890",
+   "10.5281/zenodo.20197891",
+   "10.5281/zenodo.20203301",
+   "10.5281/zenodo.20203302",
+   "10.5281/zenodo.21248559"
+  ],
+  "n_not_in_raw": 7,
+  "in_census": 0
+ },
+ "d14_TK_Attribution": {
+  "query": "\"TK Attribution\"",
+  "status": 200,
+  "total": 0,
+  "n_returned": 0,
+  "not_in_raw_census": [],
+  "n_not_in_raw": 0,
+  "in_census": 0
+ },
+ "d15_Attribution_Incomplete": {
+  "query": "\"Attribution Incomplete\"",
+  "status": 200,
+  "total": 8,
+  "n_returned": 8,
+  "not_in_raw_census": [
+   "10.48550/arxiv.2607.21686",
+   "10.5281/zenodo.19931903",
+   "10.5281/zenodo.21819123",
+   "10.5281/zenodo.21819124",
+   "10.5281/zenodo.22756170",
+   "10.5281/zenodo.23127600",
+   "10.5281/zenodo.3605606",
+   "10.5281/zenodo.3605607"
+  ],
+  "n_not_in_raw": 8,
+  "in_census": 0
+ },
+ "d16_Open_to_Collaborate_notneo": {
+  "query": "\"Open to Collaborate\" AND NOT prefix:10.21233",
+  "status": 200,
+  "total": 16,
+  "n_returned": 16,
+  "not_in_raw_census": [
+   "10.25447/sit.31304623",
+   "10.25447/sit.31304623.v1",
+   "10.25447/sit.31304623.v2",
+   "10.25447/sit.31311937",
+   "10.25447/sit.31311937.v1",
+   "10.25447/sit.31311937.v2",
+   "10.34847/nkl.f1cbh8qv",
+   "10.5281/zenodo.22815005",
+   "10.5281/zenodo.22815006",
+   "10.5281/zenodo.22883803",
+   "10.5281/zenodo.22883804",
+   "10.5281/zenodo.3758662",
+   "10.5281/zenodo.3758663",
+   "10.7269/c1mw26"
+  ],
+  "n_not_in_raw": 14,
+  "in_census": 2
+ },
+ "d17_subjects_phrase_LC": {
+  "query": "subjects.subject:\"Local Contexts\"",
+  "status": 200,
+  "total": 17,
+  "n_returned": 17,
+  "not_in_raw_census": [],
+  "n_not_in_raw": 0,
+  "in_census": 2
+ },
+ "d18_token_hub": {
+  "query": "localcontextshub",
+  "status": 200,
+  "total": 0,
+  "n_returned": 0,
+  "not_in_raw_census": [],
+  "n_not_in_raw": 0,
+  "in_census": 0
+ },
+ "d19_phrase_LC_total": {
+  "query": "\"Local Contexts\"",
+  "status": 200,
+  "total": 3600,
+  "n_returned": 1,
+  "not_in_raw_census": [],
+  "n_not_in_raw": 0,
+  "in_census": 0
+ },
+ "d20_BC_Notice_phrase_notneo": {
+  "query": "\"BC Notice\" AND NOT prefix:10.21233",
+  "status": 200,
+  "total": 4,
+  "n_returned": 1,
+  "not_in_raw_census": [],
+  "n_not_in_raw": 0,
+  "in_census": 1
+ },
+ "dc_record_10.26686/wgtn.25790481": {
+  "status": 404,
+  "body": "{\"errors\":[{\"status\":\"404\",\"title\":\"The resource you are looking for doesn't exist.\"}]}"
+ },
+ "dc_record_10.26686/wgtn.28974539": {
+  "status": 404,
+  "body": "{\"errors\":[{\"status\":\"404\",\"title\":\"The resource you are looking for doesn't exist.\"}]}"
+ },
+ "hub_projects": {
+  "03818172-23c1-4dd1-a662-f11aa07cccda": {
+   "status": 200,
+   "title": "Island Sustainability Program (ISP)",
+   "privacy": "Public",
+   "created_by": [
+    "institution: Gump South Pacific Research Station"
+   ],
+   "notices": [
+    "attribution_incomplete",
+    "biocultural",
+    "traditional_knowledge"
+   ],
+   "bc_labels": [],
+   "tk_labels": [],
+   "publication_doi": null
+  },
+  "d06d7125-a887-4819-ba1e-1e9b6a5799a3": {
+   "status": 200,
+   "title": "Data governance with CARE: A case study of interests under the kangaroo grass (Buwatj) project (Djandak Dja Kunditja, Country Healing its Home) (Report)",
+   "privacy": "Public",
+   "created_by": [
+    "researcher: Megan Wong"
+   ],
+   "notices": [
+    "biocultural"
+   ],
+   "bc_labels": [],
+   "tk_labels": [],
+   "publication_doi": null
+  },
+  "3f341ef3-31dc-41ac-ab3b-d41481626660": {
+   "status": 200,
+   "title": "ARMS for Biodiversity Baselines in Polynesie Francaise",
+   "privacy": "Public",
+   "created_by": [
+    "institution: Tetiaroa Society"
+   ],
+   "notices": [
+    "biocultural"
+   ],
+   "bc_labels": [],
+   "tk_labels": [],
+   "publication_doi": "https://doi.org/10.17913/f3/100501.31069"
+  },
+  "abc009aa-133a-4bdd-a5de-204dd06ff838": {
+   "status": 200,
+   "title": "Djandak Dja Kunditja (Country Healing its home) - The assessment of Biocultural (BC) and Traditional knowledge (TK) applicability (Report)",
+   "privacy": "Public",
+   "created_by": [
+    "researcher: Megan Wong"
+   ],
+   "notices": [
+    "biocultural"
+   ],
+   "bc_labels": [],
+   "tk_labels": [],
+   "publication_doi": null
+  },
+  "8056c536-6b93-4fcb-aad9-e6aa615eef5a": {
+   "status": 404,
+   "title": null,
+   "privacy": null,
+   "created_by": [],
+   "notices": [],
+   "bc_labels": [],
+   "tk_labels": [],
+   "publication_doi": null
+  },
+  "e884d181-a5b8-40ec-9311-81870a3b372a": {
+   "status": 200,
+   "title": "MOZEROA 2030: Innovative Mosquito Control on Huahine Island",
+   "privacy": "Public",
+   "created_by": [
+    "institution: Gump South Pacific Research Station"
+   ],
+   "notices": [
+    "attribution_incomplete",
+    "biocultural",
+    "traditional_knowledge"
+   ],
+   "bc_labels": [],
+   "tk_labels": [],
+   "publication_doi": null
+  },
+  "a0a7f8ab-da03-4fa7-b474-f5d4526de9bd": {
+   "status": 200,
+   "title": "Recognizing Indigenous Interests: Labelling DSI with Provenance Metadata. Policy Brief",
+   "privacy": "Public",
+   "created_by": [
+    "researcher: Jane Anderson"
+   ],
+   "notices": [
+    "biocultural",
+    "traditional_knowledge"
+   ],
+   "bc_labels": [],
+   "tk_labels": [],
+   "publication_doi": "10.5281/zenodo.13127019"
+  },
+  "54be05d7-aa5c-4886-abd9-dc45b2fa8df4": {
+   "status": 200,
+   "title": "Biocode 2.0",
+   "privacy": "Public",
+   "created_by": [
+    "institution: Gump South Pacific Research Station"
+   ],
+   "notices": [
+    "biocultural"
+   ],
+   "bc_labels": [],
+   "tk_labels": [],
+   "publication_doi": null
+  },
+  "bf647797-a3e4-4083-b147-ef1e204e3194": {
+   "status": 200,
+   "title": "Mo\u2019orea eDNA Project / Projet eDNA",
+   "privacy": "Public",
+   "created_by": [
+    "institution: Gump South Pacific Research Station"
+   ],
+   "notices": [
+    "attribution_incomplete",
+    "biocultural",
+    "traditional_knowledge"
+   ],
+   "bc_labels": [],
+   "tk_labels": [],
+   "publication_doi": null
+  },
+  "e2e9341e-bdd3-4078-b230-4f8acd25c6b0": {
+   "status": 200,
+   "title": "Conservation and restoration genomics of Syzygium maire, a nationally critically threatened swampland tree species of Aotearoa New Zealand",
+   "privacy": "Contributor",
+   "created_by": [
+    "researcher: Colan Balkwill"
+   ],
+   "notices": [
+    "attribution_incomplete",
+    "biocultural"
+   ],
+   "bc_labels": [],
+   "tk_labels": [],
+   "publication_doi": null
+  },
+  "7b9e7321-555b-486c-9f2d-277e3f07eb52": {
+   "status": 200,
+   "title": "Temae Scavenger Hunt - ISP 2025",
+   "privacy": "Public",
+   "created_by": [
+    "institution: Gump South Pacific Research Station"
+   ],
+   "notices": [
+    "attribution_incomplete",
+    "biocultural",
+    "traditional_knowledge"
+   ],
+   "bc_labels": [],
+   "tk_labels": [],
+   "publication_doi": null
+  },
+  "222da5aa-f84e-4e6f-a8ed-ed83087b4a6b": {
+   "status": 200,
+   "title": "Does it poop? An exploration of b\u00eache-de-mer/sea cucumber gut biome",
+   "privacy": "Public",
+   "created_by": [
+    "institution: Gump South Pacific Research Station"
+   ],
+   "notices": [
+    "attribution_incomplete",
+    "biocultural",
+    "traditional_knowledge"
+   ],
+   "bc_labels": [],
+   "tk_labels": [],
+   "publication_doi": null
+  },
+  "0aa4b8c6-e15d-4aac-8aba-8f4be26b229f": {
+   "status": 200,
+   "title": "Strawberry Hermit Crabs",
+   "privacy": "Public",
+   "created_by": [
+    "institution: Tetiaroa Society"
+   ],
+   "notices": [
+    "biocultural"
+   ],
+   "bc_labels": [],
+   "tk_labels": [],
+   "publication_doi": "https://doi.org/10.17913/f3tg6g"
+  },
+  "c57b53f1-2089-42ff-93aa-9a179636e4d0": {
+   "status": 200,
+   "title": "Habitat use and spawning behaviour of Galaxis postvectis, short-jaw k\u014dk\u014dp\u016b, in the Waipoua River catchment",
+   "privacy": "Public",
+   "created_by": [
+    "community: Te Roroa"
+   ],
+   "notices": [],
+   "bc_labels": [
+    "provenance (BC Provenance (BC P); community=Te Roroa)"
+   ],
+   "tk_labels": [],
+   "publication_doi": null
+  },
+  "9a7785a1-6de5-47e8-8f05-e4f5c98e2339": {
+   "status": 200,
+   "title": "Fish Biodiversity Survey",
+   "privacy": "Public",
+   "created_by": [
+    "institution: Tetiaroa Society"
+   ],
+   "notices": [
+    "biocultural"
+   ],
+   "bc_labels": [],
+   "tk_labels": [],
+   "publication_doi": "https://doi.org/10.17913/f3z59r"
+  },
+  "212bef2e-571f-4f9f-b044-6d639e029e0d": {
+   "status": 200,
+   "title": "Maire tawake genome",
+   "privacy": "Public",
+   "created_by": [
+    "institution: Plant & Food Research"
+   ],
+   "notices": [
+    "biocultural"
+   ],
+   "bc_labels": [],
+   "tk_labels": [],
+   "publication_doi": null
+  },
+  "d7d74bae-e4db-4cfe-99de-949bf62bde97": {
+   "status": 200,
+   "title": "Coastal Monitoring & Benthic Surveys (Surveillance c\u00f4ti\u00e8re et \u00e9tudes benthiques)",
+   "privacy": "Public",
+   "created_by": [
+    "institution: Gump South Pacific Research Station"
+   ],
+   "notices": [
+    "attribution_incomplete",
+    "biocultural",
+    "traditional_knowledge"
+   ],
+   "bc_labels": [],
+   "tk_labels": [],
+   "publication_doi": null
+  },
+  "e260673d-816c-4e0b-90f6-c4ff203d06c4": {
+   "status": 404,
+   "title": null,
+   "privacy": null,
+   "created_by": [],
+   "notices": [],
+   "bc_labels": [],
+   "tk_labels": [],
+   "publication_doi": null
+  },
+  "f2e1acfd-8257-487b-b67b-57c8b1e5e948": {
+   "status": 404,
+   "title": null,
+   "privacy": null,
+   "created_by": [],
+   "notices": [],
+   "bc_labels": [],
+   "tk_labels": [],
+   "publication_doi": null
+  },
+  "71b32571-0176-4627-8e01-4d78818432a7": {
+   "status": 200,
+   "title": "Moorea Biocode 1.0",
+   "privacy": "Public",
+   "created_by": [
+    "institution: Gump South Pacific Research Station"
+   ],
+   "notices": [],
+   "bc_labels": [
+    "consent_verified (Faarii; community=Atiti'a Center)"
+   ],
+   "tk_labels": [],
+   "publication_doi": "https://doi.org/10.17913/100501.9190"
+  }
+ },
+ "dv_metadatablocks": {
+  "status": 200,
+  "blocks": [
+   "geospatial:Geospatial Metadata",
+   "socialscience:Social Science and Humanities Metadata",
+   "astrophysics:Astronomy and Astrophysics Metadata",
+   "biomedical:Life Sciences Metadata",
+   "journal:Journal Metadata",
+   "customPSI:PSI Metadata",
+   "customMRA:MRA Metadata",
+   "customPSRI:Political Science Replication Initiative Metadata",
+   "customGSD:Graduate School of Design Metadata",
+   "customDigaai:Digaai Metadata",
+   "customCHIA:CHIA Metadata",
+   "customARCS:Alliance for Research on Corporate Sustainability Metadata",
+   "custom_hbgdki:HBGDki Custom Metadata",
+   "citation:Citation Metadata",
+   "customCIESIN:CIESIN Metadata Block",
+   "AdditionalMetadataAboutDataset:Additional Metadata About Dataset",
+   "customNDR:Negotiation Data Repository Metadata",
+   "customSAEF:SAEF Metadata",
+   "computationalworkflow:Computational Workflow Metadata",
+   "customMORU:MORU Metadata",
+   "3dobjects:3D Objects Metadata",
+   "customCAFEQualityChecklist:Quality Checklist",
+   "customCAFEDataSources:Metadata About Data Sources",
+   "customCAFEDataLocation:Metadata About Geospatial Files"
+  ]
+ },
+ "dv_q_hubdomain": {
+  "q": "localcontextshub.org",
+  "status": 200,
+  "total": 0,
+  "items": []
+ },
+ "dv_q_wild": {
+  "q": "localcontexts*",
+  "status": 200,
+  "total": 0,
+  "items": []
+ },
+ "dv_q_phrase": {
+  "q": "\"Local Contexts\"",
+  "status": 200,
+  "total": 196,
+  "items": [
+   [
+    "doi:10.7910/DVN/H7AT3N",
+    "Replication Data for: \"Affective Polarization, Local Contexts, and Public Opinion in America\""
+   ],
+   [
+    "doi:10.7910/DVN/ATFEAM",
+    "Replication Data for: Global trust, local context: Public trust in international organisations in the UK and Japan"
+   ],
+   [
+    "doi:10.7910/DVN/QBG1AJ",
+    "Replication Data for: People not Places: Local Context Does not Predict Individual Preferences for Globalization"
+   ],
+   [
+    "doi:10.7910/DVN/RLLWQN",
+    "Replication Data for: Local Context and Mobilization in Poor Communities: Lessons from Kenya, Malawi and Zambia"
+   ],
+   [
+    "doi:10.7910/DVN/JTITB9",
+    "Replication Data for: Local Communities, Distant Origins: How Cultural Distance and Local Context Shape Immigrant Ethnoreligious Infrastructures."
+   ],
+   [
+    "doi:10.7910/DVN/YETU0O",
+    "Replication Data for: \"How local context affects populist radical right support: A cross-national investigation into mediated and moderated relationships\""
+   ],
+   [
+    "doi:10.7910/DVN/5EZOHY",
+    "Replication Data for: Busemeyer, Marius R./Goerres, Achim: Policy Feedback in the Local Context: Analyzing Fairness Perceptions of Public Childcare Fees in a German Town, Journal of Public Policy"
+   ],
+   [
+    "doi:10.7910/DVN/CNLBJK",
+    "Mapping the Extraordinary Measure Disease Outbreak (EMDO): An Analysis of Health Regulations in Indonesia 2000-2023"
+   ],
+   [
+    "doi:10.7910/DVN/OKZOUX",
+    "Replication Data for: Social Brokerage: Accountability and the Social Life of Information"
+   ],
+   [
+    "doi:10.7910/DVN/XA5DRD",
+    "Replication data for: Acculturating Contexts and Anglo Opposition to Immigration in the United States"
+   ]
+  ]
+ },
+ "dv_q_token": {
+  "q": "localcontexts",
+  "status": 200,
+  "total": 0,
+  "items": []
+ },
+ "dv_q_hubtoken": {
+  "q": "localcontextshub",
+  "status": 200,
+  "total": 0,
+  "items": []
+ },
+ "z1_token": {
+  "params": {
+   "q": "localcontexts",
+   "size": 1
+  },
+  "status": 200,
+  "total": 0,
+  "first": []
+ },
+ "z2_hubdomain": {
+  "params": {
+   "q": "\"localcontextshub.org\"",
+   "size": 1
+  },
+  "status": 200,
+  "total": 1,
+  "first": [
+   "10.5281/zenodo.13127019"
+  ]
+ },
+ "z3_rights_link": {
+  "params": {
+   "q": "metadata.rights.link:\"https://localcontextshub.org/projects/54be05d7-aa5c-4886-abd9-dc45b2fa8df4\"",
+   "size": 1
+  },
+  "status": 200,
+  "total": 2,
+  "first": [
+   "10.5281/zenodo.15859524"
+  ]
+ },
+ "z4_rights_title": {
+  "params": {
+   "q": "metadata.rights.title.en:\"BC-Notice\"",
+   "size": 1
+  },
+  "status": 200,
+  "total": 2,
+  "first": [
+   "10.5281/zenodo.15859524"
+  ]
+ },
+ "z5_token_allversions": {
+  "params": {
+   "q": "localcontexts",
+   "size": 1,
+   "allversions": "true"
+  },
+  "status": 200,
+  "total": 0,
+  "first": []
+ },
+ "z6_record_10381317_rdm": {
+  "status": 200,
+  "rights": [
+   {
+    "id": "cc-by-4.0",
+    "title": {
+     "en": "Creative Commons Attribution 4.0 International"
+    },
+    "description": {
+     "en": "The Creative Commons Attribution license allows re-distribution and re-use of a licensed work on the condition that the creator is appropriately credited."
+    },
+    "icon": "cc-by-icon",
+    "props": {
+     "url": "https://creativecommons.org/licenses/by/4.0/legalcode",
+     "scheme": "spdx"
+    }
+   },
+   {
+    "title": {
+     "en": "BC-Notice"
+    },
+    "description": {
+     "en": "The BC (Biocultural) Notice is a visible notification that there are accompanying cultural rights and responsibilities that need further attention for any future sharing and use of this material or data. The BC Notice recognizes the rights of Indigenous peoples to permission the use of information, collections, data and digital sequence information (DSI) generated from the biodiversity or genetic resources associated with traditional lands, waters, and territories. The BC Notice may indicate that BC Labels are in development and their implementation is being negotiated."
+    },
+    "link": "https://localcontextshub.org/projects/54be05d7-aa5c-4886-abd9-dc45b2fa8df4"
+   }
+  ],
+  "has_lc": true
+ },
+ "z7_record_10381317_legacy": {
+  "status": 200,
+  "has_lc_hub": false,
+  "has_bc_notice": false
+ },
+ "g1_mt_ns_lc": {
+  "status": 200,
+  "count": 0,
+  "titles": []
+ },
+ "g2_mt_ns_hub": {
+  "status": 200,
+  "count": 0,
+  "titles": []
+ },
+ "g3_q_hub": {
+  "status": 200,
+  "count": 0,
+  "titles": []
+ },
+ "g4_q_tk_label": {
+  "status": 200,
+  "count": 2,
+  "titles": [
+   "Some Botswana Traditional Medicinal Plants held at PSUB Herbarium",
+   "Redux Sellow: revealing Sellow\u2019s collections from the Herbier Imp\u00e9rial du Br\u00e9sil at the Paris Herbarium"
+  ]
+ },
+ "a1_raid_single_keys": {
+  "status": 200,
+  "keys": [
+   "access",
+   "contributor",
+   "date",
+   "identifier",
+   "metadata",
+   "organisation",
+   "subject",
+   "title"
+  ],
+  "has_tk": false
+ },
+ "a2_raid_list": {
+  "status": 200,
+  "pageInfo": {
+   "hasNextPage": true,
+   "endCursor": "YWZ0ZXI6MTc0Mjk1NTc1NTpodHRwczovL3JhaWQub3JnLzEwLjI2MjU5LzQ4ODc1MQ==",
+   "limit": 1
+  },
+  "keys": [
+   "pageInfo",
+   "raids",
+   "sources",
+   "totalCount"
+  ]
+ },
+ "e1_neotoma": {
+  "q": "Neotoma",
+  "status": 200,
+  "n": 1,
+  "names": [
+   "Neotoma Paleoecology Database"
+  ]
+ },
+ "e2_pollen": {
+  "q": "pollen",
+  "status": 200,
+  "n": 3,
+  "names": [
+   "Palynological Database",
+   "NOAA National Centers for Environmental Information -  Paleoclimatology Data",
+   "Neotoma Paleoecology Database"
+  ]
+ },
+ "e3_indigenous": {
+  "q": "Indigenous",
+  "status": 200,
+  "n": 10,
+  "names": [
+   "dharmae",
+   "Oceans 3.0 Data Portal",
+   "DataStream",
+   "Columbia Basin Water Hub",
+   "Loyalist Migrations",
+   "National Vegetation Survey Databank",
+   "Australian Data Archive",
+   "Italian National Database of Monovarietal Extra Virgin Olive Oils"
+  ]
+ },
+ "e4_localcontexts": {
+  "q": "localcontexts",
+  "status": 200,
+  "n": 0,
+  "names": []
+ },
+ "o1_share": {
+  "status": 503,
+  "body": "<!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>OSF</title>\n    <link rel=\"icon\" href=\"https://osf.io/favicon.ico\" />\n    <style>\n      body {\n        margin: 0;\n        min-height: 100vh;\n        display: flex;\n        justify-content: center;\n        align-items: "
+ },
+ "o2_osf_v2_search": {
+  "status": 503,
+  "body": "<!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>OSF</title>\n    <link rel=\"icon\" href=\"https://osf.io/favicon.ico\" />\n    <style>\n      body {\n        margin: 0;\n        min-height: 100vh;\n        display: flex;\n        justify-content: center;\n        align-items: "
+ },
+ "o3_osf_nodes_desc": {
+  "status": 503,
+  "body": "<!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <title>OSF</title>\n    <link rel=\"icon\" href=\"https://osf.io/favicon.ico\" />\n    <style>\n      body {\n        margin: 0;\n        min-height: 100vh;\n        display: flex;\n        justify-content: center;\n        align-items: "
+ },
+ "openaire_unavailable_recheck": {
+  "10.21233/gctk-by68": {
+   "status": 200,
+   "numFound": 0
+  },
+  "10.21233/717z-b048": {
+   "status": 200,
+   "numFound": 0
+  },
+  "10.21233/k9b1-7y11": {
+   "status": 200,
+   "numFound": 0
+  }
+ },
+ "_n_live_requests_this_run": 73
+}
