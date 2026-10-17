@@ -49,14 +49,17 @@ def main():
     full_only = len(sys.argv) > 1 and sys.argv[1] == "full_only"
     s = pd.read_csv(RUN / "data" / "std_summary.csv", dtype={"record": str})
     s = s[s.parsed & (s.measure != "other") & (s.n_trts >= 3) & (s.n_studies >= 10) & (s.year_share >= 0.90)]
+    # D2: direction from the adjudicated table; contrast-level networks form a sensitivity set, undetermined ones are out
+    dr = pd.read_csv(RUN / "results" / "tables" / "direction.csv", dtype={"record": str}).set_index("record")
+    s = s[s.record.map(dr.small_values).notna()]
     jobs, rows = [], []
     for r in s.itertuples():
         d = pd.read_csv(STD / f"{r.record}.csv", dtype={"study": str})
         st = d.groupby("study").year.first()
         allst = st.index.tolist()
-        small = "good" if r.direction == "Harmful" else "bad"
+        small = dr.loc[r.record, "small_values"]
         fits = [dict(name="full", studies=allst, detail=True)]
-        row = dict(record=r.record, k=len(allst), k_dated=int(st.notna().sum()))
+        row = dict(record=r.record, k=len(allst), k_dated=int(st.notna().sum()), set="iv_sensitivity" if r.format == "iv" else "primary")
         if not full_only:
             hold = {"T10": newest(st, 0.10), "S1": newest(st, 0.25), "S3": oldest(st, 0.50)}
             hold["S2"] = st[st == st.max()].index.tolist()

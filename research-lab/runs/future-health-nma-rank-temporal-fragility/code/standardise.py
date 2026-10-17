@@ -4,9 +4,10 @@ Reads data/raw/catalog.csv and data/raw/datasets/<record>.xlsx. Writes:
   data/std/<record>.csv     long: study, label, year, t, r, n | y, sd, n | r, n, time   iv: study, label, year, t1, t2, TE, seTE
   data/std/<record>.trt.json treatment number -> name, from the sheet's "Treatments" side table (for validation V3)
   data/std_summary.csv      one row per record: format, type, measure, direction, counts, year coverage, parse issues
-Inverse-variance ratio measures are analysed on the log scale. Where every effect is positive the sheet is on the
-natural scale; the effect is logged and seTE is taken from the 95% CI on the log scale when the CI is given, else by
-the delta method (se / effect)."""
+Inverse-variance ratio measures are analysed on the log scale. Which sheets give them on the natural scale is
+adjudicated (D2, NATURAL below): an all-positive column is not evidence, because a network where every comparison
+favours one side has all-positive log ratios. For natural-scale sheets the effect is logged and seTE is taken from the
+95% CI on the log scale (CI columns, or a text CI column "a-b"), else by the delta method (se / effect)."""
 import json
 import re
 import sys
@@ -26,7 +27,10 @@ RATIO = {"OR", "RR", "HR", "IRR"}
 YEAR_COLS = ["study year", "year", "studyyear", "pub. year", "publication year", "pub year"]
 LABEL_COLS = ["study name", "study (name)", "study", "studyid", "study id", "author"]
 # D1: with no year column, a year written in the study label ("Smolen, 2008", "Black et al. (2007)") is used
-LABEL_YEAR = re.compile(r"(?:^|[\s,(\[])((?:19[5-9]|20[0-2])\d)[a-z]?(?=[\s,)\].;]|$)")
+LABEL_YEAR = re.compile(r"(?:^|[\s,.(\[])((?:19[5-9]|20[0-2])\d)[a-z]?(?=[\s,)\].;]|$)")
+# D2: contrast-level ratio sheets on the natural scale (checked against their CIs: asymmetric on the linear scale);
+# every other iv ratio sheet is already on the log scale (501244 and 501378 have all-positive log ratios)
+NATURAL = {"479688", "479757", "480486", "501200"}
 
 
 def num(s):
@@ -105,12 +109,17 @@ def parse(rid, meta):
         cil = num(raw[lc["cil"]]) if "cil" in lc else None
         cih = num(raw[lc["cih"]]) if "cih" in lc else None
         keep = d.study.notna() & d.t1.notna() & d.t2.notna() & d.TE.notna()
-        if sm in RATIO and (d.loc[keep, "TE"] > 0).all():
+        if sm in RATIO and rid in NATURAL:
             issues.append("iv ratio on natural scale: logged")
             te = d.TE.copy()
             d["TE"] = np.log(te)
+            txt = next((raw[c] for c in raw.columns if re.search(r"95\s*%\s*ci", str(c), re.I)), None)
             if cil is not None and cih is not None and (cil[keep] > 0).all() and (cih[keep] > 0).all():
                 d["seTE"] = (np.log(cih) - np.log(cil)) / (2 * 1.959964)
+            elif txt is not None:
+                b = txt.astype(str).str.extract(r"([\d.]+)\s*-\s*([\d.]+)").astype(float)
+                d["seTE"] = (np.log(b[1]) - np.log(b[0])) / (2 * 1.959964)
+                issues.append("seTE from text CI")
             else:
                 d["seTE"] = d.seTE / te
                 issues.append("seTE by delta method")

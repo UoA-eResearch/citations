@@ -1,0 +1,24 @@
+record,studies_ok,arms_ok,treatments_ok,years_ok,values_ok,note
+501423,1,1,1,1,1,label years (D1) correct for all 10; dataset analyses 4 of the review's 8 treatments
+481107,1,1,1,1,1,
+482117,1,1,1,1,1,"iv; one study year NR in the sheet; some trials appear as two contrasts under different ids (dataset coding, not parsing)"
+501414,1,1,1,1,1,
+479807,1,1,1,1,1,
+501217,1,1,1,1,1,"two studies without a year in the year column (Lightfoot 1997, Cannon 2000): gaps are not filled from labels (D1), never withheld"
+501250,1,1,1,1,1,label years (D1)
+501281,1,1,1,1,1,label years (D1); 'Solaraze study #2' has no year
+501425,1,1,1,1,1,label years (D1)
+480001,1,1,1,1,1,
+481216,1,1,1,1,1,
+479770,1,1,1,1,1,
+501325,1,1,1,1,1,
+481733,1,1,1,1,1,
+481588,1,1,1,1,1,
+501308,1,1,1,1,1,"iv HR, log scale as given"
+480804,1,1,1,1,1,
+501387,1,1,1,1,1,
+501277,1,1,1,1,1,label years (D1)
+501253,1,1,1,1,1,
+501194,1,1,1,1,1,label years (D1); four labels without a year
+501220,1,1,1,0,1,label years (D1): 'Aichelmann-Reidy et al.2001' missed (no space before the year) - regex fixed in D2; combined labels take the later year
+501211,1,1,1,1,1,"label years (D1); iv MD - parsing right, but the sign convention needed adjudication (D2)"
