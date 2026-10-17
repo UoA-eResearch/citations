@@ -20,6 +20,11 @@ def exact(k, n):
 
 def main():
     c = pd.DataFrame([json.loads(l) for l in open(RUN / "data" / "census.jsonl")])
+    # free-text (name-only) hits were adjudicated in full (precision.py); drop those judged not genuine
+    pr = pd.read_csv(TAB / "precision.csv")
+    bad = set(zip(pr[pr.genuine == 0].platform, pr[pr.genuine == 0].record.astype(str)))
+    out_ft = dict(name_only=int(len(pr)), genuine=int(pr.genuine.sum()))
+    c = c[[(p, str(i)) not in bad for p, i in zip(c.platform, c.id)]].copy()
     us = json.load(open(RUN / "data" / "uri_status.json")) if (RUN / "data" / "uri_status.json").exists() else {}
     live_project = lambda ps: any(us.get(f"https://localcontextshub.org/projects/{p}/") == 200 for p in ps)
     c["has_label"] = c.uri_labels.map(bool) | c.name_labels.map(bool)
@@ -29,7 +34,7 @@ def main():
     # deduplicate across platforms by DOI where present (a DataCite DOI also held by Zenodo/Dryad counts once)
     c["key"] = np.where(c.doi.fillna("") != "", c.doi.fillna("").str.lower(), c.platform + ":" + c.id.astype(str))
     u = c.sort_values("platform").drop_duplicates("key")
-    out = dict(n_records=int(len(u)), by_platform=c.groupby("platform").size().to_dict())
+    out = dict(n_records=int(len(u)), by_platform=c.groupby("platform").size().to_dict(), free_text=out_ft)
     for name, g in (("all", u), ("without_neotoma", u[~u.neotoma])):
         k, n = int(g.label_hub.sum()), len(g)
         out[f"H1_{name}"] = dict(n=n, label_hub=k, share=k / n if n else None, ci=exact(k, n), labels_any=int(g.has_label.sum()),
