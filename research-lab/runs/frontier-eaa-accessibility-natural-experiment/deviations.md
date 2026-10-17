@@ -70,3 +70,19 @@ written are valid and kept, since the job resumes by domain.
 3. **New selection to disclose.** Common Crawl obeys robots.txt, and many sites, notably publishers, block CCBot.
    Those sites are absent from every crawl and drop out as ineligible. Exclusion counts are reported by group and
    sector. Capture dates within a crawl vary by site; the capture timestamp is kept.
+
+## D5 — 2026-10-17 18:55 NZDT — back to the Wayback Machine at one request at a time on a seeded half-sample, before any page was fetched
+
+1. **Common Crawl was not usable.** Its index server answered only intermittently: about a third of requests failed
+   with transient 400/502/504 errors, and it then refused connections from this host for about an hour. 11 domains
+   were indexed (`data/cdx/cc_snapshots.jsonl`). They are discarded.
+2. **The Wayback Machine is reachable again** (17 Oct, evening NZDT). To avoid another block:
+   - `code/cdx_v2.py` and `code/fetch.py` now make one request at a time, 2 s apart, with hard backoff on
+     429/5xx;
+   - a failed request is recorded as an error and retried, never written as absence;
+   - each job stops itself after 20 consecutive connection failures.
+3. **Half-sample.** At that rate the full frame would take several days of archive load. The sample is a seeded
+   (20261018) random 150 of the 300 sites per jurisdiction: 2,700 sites, of which 2,100 EU, 450 placebo and 150 UK
+   (`data/frame/sample_d5.csv`, also in `results/tables/`, sha256 a8479b8bf0b33a6a…).
+4. **Unchanged:** targets, eligibility (≥ 2 of 4 pre, ≥ 2 of 3 post), sector rules, outcome, analysis, decision rules.
+   Lower power is the cost, and the report will give the achieved minimum detectable effect.
