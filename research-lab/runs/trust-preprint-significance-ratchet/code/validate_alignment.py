@@ -34,9 +34,14 @@ def sample():
     with open(V / "sample.jsonl", "w") as fh:
         for i, (stratum, r) in enumerate(pick):
             a, b = r["pre"]["sentence"], r["pub"]["sentence"]
+            sa = f'{r["pre"]["test"] or "p"} {r["pre"]["cmp"]} {r["pre"]["p"]:g}'
+            sb = f'{r["pub"]["test"] or "p"} {r["pub"]["cmp"]} {r["pub"]["p"]:g}'
             flip = rnd.random() < 0.5
-            s1, s2 = (b, a) if flip else (a, b)
-            fh.write(json.dumps(dict(id=f"v{i:03d}", sentence_1=s1, sentence_2=s2), ensure_ascii=False) + "\n")
+            s1, s2, t1, t2 = (b, a, sb, sa) if flip else (a, b, sa, sb)
+            # the aligned statistic is shown for each side, in the same random order, so the adjudicator can judge
+            # statistic identity (not just sentence correspondence) without knowing which side is the preprint
+            fh.write(json.dumps(dict(id=f"v{i:03d}", sentence_1=s1, sentence_2=s2, stat_1=t1, stat_2=t2),
+                                ensure_ascii=False) + "\n")
             keys.append(dict(id=f"v{i:03d}", stratum=stratum, pre_is=2 if flip else 1, pair=r["pair"], how=r["how"]))
     pd.DataFrame(keys).to_csv(V / "key.csv", index=False)
     print(len(pick), "sampled:", pd.DataFrame(keys).stratum.value_counts().to_dict())

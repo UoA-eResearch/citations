@@ -1,0 +1,201 @@
+id,correct,note
+v000,0,misaligned: dropped comparison shifts rank order
+v001,0,misaligned table cells
+v002,0,different result
+v003,1,
+v004,0,different comparison
+v005,1,
+v006,1,
+v007,0,"table, values differ, likely misaligned"
+v008,0,same statistic but mojibake exponent read as p=1
+v009,1,"same comparison, re-analysed"
+v010,1,legend
+v011,0,table misaligned
+v012,0,legend items differ
+v013,0,table misaligned
+v014,0,eta2p read as p (extraction)
+v015,0,different
+v016,1,
+v017,1,
+v018,0,table misaligned
+v019,1,
+v020,1,"same test, re-analysed"
+v021,0,different comparison
+v022,1,"same statement, reversed conclusion"
+v023,0,different result
+v024,1,same statistic (bare p vs tuple)
+v025,1,legend
+v026,0,different result
+v027,0,same statistic but middle-dot decimal read as p=0
+v028,1,
+v029,1,
+v030,0,different result
+v031,1,
+v032,1,
+v033,0,misaligned
+v034,0,different condition
+v035,0,"table vs text, different"
+v036,0,"comma decimals, different"
+v037,0,"reordered sentence, VN vs IgG"
+v038,0,different table
+v039,0,table misaligned
+v040,1,
+v041,1,
+v042,0,legend items differ
+v043,1,
+v044,1,
+v045,0,different result
+v046,0,different variable
+v047,1,
+v048,1,"same comparison, changed result"
+v049,0,"text vs table, different"
+v050,1,
+v051,0,"same statistic, mojibake exponent read as p=1"
+v052,0,different statistic / table or legend misaligned
+v053,0,"same statistic, mojibake exponent"
+v054,0,different statistic / table or legend misaligned
+v055,1,
+v056,0,different statistic / table or legend misaligned
+v057,0,different statistic / table or legend misaligned
+v058,0,different statistic / table or legend misaligned
+v059,0,"same statistic, mojibake exponent read as p<2"
+v060,1,
+v061,1,
+v062,0,different statistic / table or legend misaligned
+v063,0,different statistic / table or legend misaligned
+v064,0,different statistic / table or legend misaligned
+v065,0,VL vs VM misaligned
+v066,1,
+v067,0,different statistic / table or legend misaligned
+v068,0,different statistic / table or legend misaligned
+v069,1,
+v070,0,different statistic / table or legend misaligned
+v071,1,
+v072,0,different p in the same sentence (adjudication corrected on re-check)
+v073,1,"same statistic, value corrected .46 -> .046"
+v074,0,different statistic / table or legend misaligned
+v075,0,different statistic / table or legend misaligned
+v076,0,different statistic / table or legend misaligned
+v077,0,"same statistic, middle-dot decimal read as 0"
+v078,1,
+v079,1,"same statistic, changed result"
+v080,1,"same comparison, changed result"
+v081,0,different statistic / table or legend misaligned
+v082,0,different statistic / table or legend misaligned
+v083,0,"post hoc dropped, shifted"
+v084,1,
+v085,0,misaligned
+v086,1,"same test, re-analysed"
+v087,0,"same statistic, comma decimal read as 0"
+v088,0,different statistic / table or legend misaligned
+v089,0,different statistic / table or legend misaligned
+v090,1,
+v091,1,
+v092,1,
+v093,1,
+v094,1,
+v095,1,
+v096,1,
+v097,1,
+v098,0,threshold statement vs result
+v099,0,different statistic / table or legend misaligned
+v100,1,
+v101,0,different statistic / table or legend misaligned
+v102,0,middle-dot decimal read as 0
+v103,1,
+v104,0,different statistic / table or legend misaligned
+v105,0,misaligned tests
+v106,0,different statistic / table or legend misaligned
+v107,0,different statistic / table or legend misaligned
+v108,1,
+v109,1,
+v110,1,
+v111,0,different statistic / table or legend misaligned
+v112,0,different statistic / table or legend misaligned
+v113,1,
+v114,0,different statistic / table or legend misaligned
+v115,0,mojibake exponent
+v116,0,different statistic / table or legend misaligned
+v117,0,different statistic / table or legend misaligned
+v118,0,different statistic / table or legend misaligned
+v119,1,"same comparison, trend -> significant"
+v120,0,different statistic / table or legend misaligned
+v121,0,comma decimal
+v122,0,different statistic / table or legend misaligned
+v123,0,mojibake exponent
+v124,1,
+v125,0,different statistic / table or legend misaligned
+v126,1,
+v127,1,
+v128,0,middle-dot decimal
+v129,1,
+v130,0,"one gene dropped, shifted"
+v131,0,misaligned GAC vs CC
+v132,1,
+v133,1,"same statement, published typo p<0.05"
+v134,0,lost exponent
+v135,0,different statistic / table or legend misaligned
+v136,1,"same comparison fragment, changed"
+v137,0,comma decimals
+v138,0,different statistic / table or legend misaligned
+v139,0,different statistic / table or legend misaligned
+v140,1,
+v141,0,different statistic / table or legend misaligned
+v142,1,
+v143,0,different statistic / table or legend misaligned
+v144,1,
+v145,1,
+v146,1,
+v147,1,
+v148,1,
+v149,0,mojibake exponent
+v150,1,"same correlation, species set changed"
+v151,1,
+v152,0,mojibake exponent
+v153,0,different statistic / table or legend misaligned
+v154,0,different protein/dose
+v155,1,
+v156,0,different statistic / table or legend misaligned
+v157,0,different statistic / table or legend misaligned
+v158,1,
+v159,1,
+v160,1,
+v161,1,
+v162,0,different statistic / table or legend misaligned
+v163,0,different statistic / table or legend misaligned
+v164,0,different statistic / table or legend misaligned
+v165,0,different dose
+v166,0,different statistic / table or legend misaligned
+v167,0,different statistic / table or legend misaligned
+v168,0,different statistic / table or legend misaligned
+v169,1,
+v170,0,"rows dropped, shifted"
+v171,1,same statistic (1.00)
+v172,0,different statistic / table or legend misaligned
+v173,1,
+v174,1,
+v175,1,"same comparison, changed result"
+v176,0,adjacent statistic
+v177,1,
+v178,1,
+v179,1,
+v180,1,
+v181,0,mojibake exponent
+v182,1,"same legend item, typo corrected"
+v183,0,different statistic / table or legend misaligned
+v184,1,
+v185,0,mojibake <= misaligned
+v186,1,"same comparison, changed"
+v187,1,
+v188,0,different statistic / table or legend misaligned
+v189,0,different statistic / table or legend misaligned
+v190,1,
+v191,1,
+v192,1,
+v193,0,middle-dot decimal read as 0
+v194,1,
+v195,0,different statistic / table or legend misaligned
+v196,1,
+v197,1,
+v198,1,
+v199,0,different statistic / table or legend misaligned
