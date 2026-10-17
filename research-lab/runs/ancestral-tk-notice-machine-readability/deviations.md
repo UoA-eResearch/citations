@@ -16,3 +16,12 @@ Every departure from the lead and from plan.md, timestamped with `date` when it 
 5. **Engagement** with Local Contexts, the repositories and Māori and Pacific data-governance advisers is a care note,
    not a gate (lab policy, 2026-10-16). The report frames counts as describing systems, not communities, and says
    that DOI-layer absence may be by design.
+
+## D2 — 2026-10-17 20:20 NZDT — Zenodo page-size bug, before the census was scanned
+
+The first census run asked Zenodo for 100 records per page. Anonymous requests are limited to 25, and the API
+returned HTTP 400, which `census.py` treated as "no more results", so Zenodo was logged with 0 records. That is a
+failure recorded as absence. Fixed: the page size is now 25 (up to 400 pages, Zenodo's 10,000-result cap), and every
+paged platform writes an explicit error marker if its first page fails. `scan` reports those errors in
+`data/census_errors.json` instead of counting them as zero. Zenodo is re-run. Any other platform that returns 0 records in
+the first run is re-run under the new code, so a failure would show as an error marker.

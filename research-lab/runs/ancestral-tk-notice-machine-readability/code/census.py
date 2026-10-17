@@ -64,13 +64,16 @@ def zenodo():
     for q in TERMS:
         page = 1
         while True:
-            r = get("https://zenodo.org/api/records", params={"q": q, "size": 100, "page": page})
+            # anonymous requests are limited to 25 per page (a size of 100 returns HTTP 400)
+            r = get("https://zenodo.org/api/records", params={"q": q, "size": 25, "page": page})
             if r is None or r.status_code != 200:
+                if page == 1:
+                    recs[f"_error:{q}"] = dict(platform="zenodo", id=f"_error:{q}", query=q, meta=dict(status=None if r is None else r.status_code))
                 break
             hits = r.json()["hits"]["hits"]
             for x in hits:
                 recs.setdefault(str(x["id"]), dict(platform="zenodo", id=str(x["id"]), query=q, meta=x))
-            if len(hits) < 100 or page >= 100:
+            if len(hits) < 25 or page >= 400:
                 break
             page += 1; time.sleep(1)
     return save("zenodo", recs)
@@ -83,6 +86,8 @@ def dryad():
         while True:
             r = get("https://datadryad.org/api/v2/search", params={"q": q, "per_page": 100, "page": page})
             if r is None or r.status_code != 200:
+                if page == 1:
+                    recs[f"_error:{q}"] = dict(platform="dryad", id=f"_error:{q}", query=q, meta=dict(status=None if r is None else r.status_code))
                 break
             items = r.json().get("_embedded", {}).get("stash:datasets", [])
             for x in items:
@@ -100,6 +105,8 @@ def dataverse():
         while True:
             r = get("https://dataverse.harvard.edu/api/search", params={"q": q, "type": "dataset", "per_page": 100, "start": start})
             if r is None or r.status_code != 200:
+                if start == 0:
+                    recs[f"_error:{q}"] = dict(platform="dataverse", id=f"_error:{q}", query=q, meta=dict(status=None if r is None else r.status_code))
                 break
             items = r.json()["data"]["items"]
             for x in items:
@@ -145,6 +152,8 @@ def gbif():
         while True:
             r = get("https://api.gbif.org/v1/dataset/search", params={"q": q, "limit": 100, "offset": off})
             if r is None or r.status_code != 200:
+                if off == 0:
+                    recs[f"_error:{q}"] = dict(platform="gbif", id=f"_error:{q}", query=q, meta=dict(status=None if r is None else r.status_code))
                 break
             res = r.json()["results"]
             for x in res:
@@ -200,14 +209,15 @@ PLATFORMS = dict(datacite=datacite, zenodo=zenodo, dryad=dryad, dataverse=datave
 
 
 def scan():
-    out = []
+    out, errors = [], {}
     for p in PLATFORMS:
         f = RAW / p / "records.jsonl"
         if not f.exists():
             continue
         for l in open(f):
             r = json.loads(l)
-            if r["id"] == "_unavailable":
+            if r["id"] == "_unavailable" or str(r["id"]).startswith("_error:"):
+                errors.setdefault(p, []).append(r["query"])
                 continue
             m = r["meta"]
             text = json.dumps(r.get("full") or m, ensure_ascii=False)
@@ -227,7 +237,8 @@ def scan():
         for x in out:
             fh.write(json.dumps(x) + "\n")
     from collections import Counter
-    print(len(out), "element-bearing records", dict(Counter(x["platform"] for x in out)))
+    json.dump(errors, open(RUN / "data" / "census_errors.json", "w"), indent=1)
+    print(len(out), "element-bearing records", dict(Counter(x["platform"] for x in out)), "; query errors:", errors)
 
 
 if __name__ == "__main__":
