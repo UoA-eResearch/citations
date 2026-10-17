@@ -4,7 +4,8 @@ import re
 from pathlib import Path
 
 V = json.load(open(Path(__file__).resolve().parents[1] / "results" / "tables" / "vocabulary.json"))
-URI_RE = re.compile(r"localcontexts(?:hub)?\.org/(label|notice|projects?)/([A-Za-z0-9\-]+)", re.I)
+# D5: plural path forms too (RAiD's schema URI uses /labels/ and /notices/)
+URI_RE = re.compile(r"localcontexts(?:hub)?\.org/(labels?|notices?|projects?)/([A-Za-z0-9\-]+)", re.I)
 NOTICE_NAMES = {"tk-notice": [r"TK Notice", r"Traditional Knowledge Notice"], "bc-notice": [r"BC Notice", r"Biocultural Notice"],
                 "attribution-incomplete": [r"Attribution Incomplete Notice"], "open-to-collaborate": [r"Open to Collaborate Notice"]}
 
@@ -17,7 +18,8 @@ def _label_pat(slug):
 
 
 LABEL_RES = {s: _label_pat(s) for s in V["labels"]}
-NOTICE_RES = {s: re.compile(r"\b(?:" + "|".join(p) + r")\b", re.I) for s, p in NOTICE_NAMES.items()}
+# D5: hyphen/underscore-tolerant, as the Label patterns already are ("BC-Notice")
+NOTICE_RES = {s: re.compile(r"\b(?:" + "|".join(x.replace(" ", r"[ \-_]+") for x in p) + r")\b", re.I) for s, p in NOTICE_NAMES.items()}
 
 
 def detect(text):
@@ -25,7 +27,7 @@ def detect(text):
     t = text or ""
     out = dict(uri_labels=set(), uri_notices=set(), hub_projects=set(), name_labels=set(), name_notices=set())
     for kind, slug in URI_RE.findall(t):
-        k = kind.lower()
+        k = kind.lower().rstrip("s") if kind.lower() != "projects" else "projects"
         if k == "label":
             out["uri_labels"].add(slug.lower())
         elif k == "notice":

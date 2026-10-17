@@ -59,6 +59,36 @@ def datacite():
     return save("datacite", recs)
 
 
+# D5 (review issue 1-2): DataCite's free-text query cannot see URIs (indexed as domain tokens), so a record whose only
+# element is a Hub/Notice/Label URI outside rightsList, with no vocabulary name, was invisible. Field-wildcard queries
+# and the two Notice names the first run omitted; saved separately and folded into the DataCite rows by scan().
+FIELD_QUERIES = ["*localcontexts* AND NOT prefix:10.21233", "descriptions.description:*localcontexts*",
+                 "relatedIdentifiers.relatedIdentifier:*localcontexts*", "identifiers.identifier:*localcontexts*",
+                 "alternateIdentifiers.alternateIdentifier:*localcontexts*", "subjects.subject:*localcontexts*",
+                 "rightsList.rights:*localcontexts* AND NOT prefix:10.21233",
+                 "rightsList.rightsIdentifierScheme:\"Local Contexts\" AND NOT prefix:10.21233",
+                 "\"localcontexts.org\" AND NOT prefix:10.21233", "\"localcontextshub.org\"", "subjects.subject:\"Local Contexts\"",
+                 "\"Open to Collaborate Notice\" AND NOT prefix:10.21233", "\"Attribution Incomplete Notice\""]
+
+
+def datacite_fields():
+    recs = {}
+    for q in FIELD_QUERIES:
+        url = "https://api.datacite.org/dois"
+        params = {"query": q, "page[size]": 1000, "page[cursor]": 1}
+        while url:
+            r = get(url, params=params)
+            if r is None or r.status_code != 200:
+                recs[f"_error:{q}"] = dict(platform="datacite_fields", id=f"_error:{q}", query=q, meta=dict(status=None if r is None else r.status_code))
+                break
+            j = r.json()
+            for x in j["data"]:
+                recs.setdefault(x["id"], dict(platform="datacite_fields", id=x["id"], query=q, meta=x))
+            url = j.get("links", {}).get("next"); params = None
+            time.sleep(1.0)
+    return save("datacite_fields", recs)
+
+
 def zenodo():
     recs = {}
     for q in TERMS:
@@ -216,12 +246,13 @@ def re3data():
     return save("re3data", recs)
 
 
-PLATFORMS = dict(datacite=datacite, zenodo=zenodo, dryad=dryad, dataverse=dataverse, figshare=figshare, gbif=gbif,
+PLATFORMS = dict(datacite=datacite, datacite_fields=datacite_fields, zenodo=zenodo, dryad=dryad, dataverse=dataverse, figshare=figshare, gbif=gbif,
                  raid=raid, osf=osf, re3data=re3data)
 
 
 def scan():
     out, errors = [], {}
+    seen_dc = set()
     for p in PLATFORMS:
         f = RAW / p / "records.jsonl"
         if not f.exists():
@@ -232,16 +263,24 @@ def scan():
                 errors.setdefault(p, []).append(r["query"])
                 continue
             m = r["meta"]
+            if p == "datacite_fields":       # D5: same records as DataCite; keep one row per DOI
+                if r["id"] in seen_dc:
+                    continue
+                p_out = "datacite"
+            else:
+                p_out = p
+            if p == "datacite":
+                seen_dc.add(r["id"])
             text = json.dumps(r.get("full") or m, ensure_ascii=False)
             det = detect(text)
             if not any_element(det):
                 continue
-            rights = json.dumps(((m.get("attributes") or {}).get("rightsList")) if p == "datacite" else
+            rights = json.dumps(((m.get("attributes") or {}).get("rightsList")) if p in ("datacite", "datacite_fields") else
                                 (m.get("license") or m.get("rights") or m.get("metadata", {}).get("rights") or ""), ensure_ascii=False)
             a = m.get("attributes") or {}
-            out.append(dict(platform=p, id=r["id"], doi=(a.get("doi") or m.get("doi") or ""),
+            out.append(dict(platform=p_out, id=r["id"], doi=(a.get("doi") or m.get("doi") or ""),
                             publisher=(a.get("publisher") if isinstance(a.get("publisher"), str) else (a.get("publisher") or {}).get("name") if a else m.get("publisher") or ""),
-                            client=((m.get("relationships") or {}).get("client") or {}).get("data", {}).get("id") if p == "datacite" else "",
+                            client=((m.get("relationships") or {}).get("client") or {}).get("data", {}).get("id") if p in ("datacite", "datacite_fields") else "",
                             year=a.get("publicationYear") or str(m.get("publication_date") or m.get("published_date") or m.get("publicationDate") or "")[:4],
                             rtype=((a.get("types") or {}).get("resourceTypeGeneral") or ""), structured=bool(detect(rights)["uri_labels"] or detect(rights)["uri_notices"] or detect(rights)["hub_projects"]),
                             **det))

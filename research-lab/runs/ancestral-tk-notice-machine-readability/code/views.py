@@ -45,13 +45,37 @@ def fetch(doi, view):
         return None, str(e)[:200]
 
 
+def json_rights(view, body):
+    """D5: rights entries by parsing (regex windows mis-scored 3 views: a ']' inside rights text; an 800-character
+    window after 'license' reaching instances[].urls)."""
+    try:
+        j = json.loads(body)
+    except Exception:
+        return None
+    if view == "crosscite_json":
+        return json.dumps(j.get("rights_list") or j.get("rightsList") or [], ensure_ascii=False)
+    if view == "openaire":
+        res = j.get("results") or []
+        parts = []
+        for x in res:
+            parts.append(x.get("bestAccessRight"))
+            for ins in x.get("instances") or []:
+                parts += [ins.get("license"), ins.get("accessRight")]
+        return json.dumps(parts, ensure_ascii=False)
+    return None
+
+
 def score(view, status, body):
     if status != 200 or not body or ("idDoesNotExist" in body) or (view == "openaire" and '"numFound":0' in body.replace(" ", "")):
         return "unavailable"
     if not any_element(detect(body)):
         return "drop"
     fld = RIGHTS_FIELD.get(view)
-    in_rights = bool(fld) and any(any_element(detect(m)) for m in re.findall(fld, body, re.S | re.I))
+    jr = json_rights(view, body) if view in ("crosscite_json", "openaire") else None
+    if jr is not None:
+        in_rights = any_element(detect(jr))
+    else:
+        in_rights = bool(fld) and any(any_element(detect(m)) for m in re.findall(fld, body, re.S | re.I))
     if in_rights and view not in LICENCE_ONLY:
         return "preserve"
     return "degrade"
