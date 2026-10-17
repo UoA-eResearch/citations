@@ -27,6 +27,15 @@ BOILER = re.compile(r"considered\s+(statistically\s+)?significant|significan(ce|
                     r"\balpha\s*(level\s*)?(=|of)|level\s+of\s+significance|set\s+at\s+p|defined\s+as\s+p", re.I)
 
 
+def version_of(rec):
+    """Europe PMC's article-version, else the version a DOI encodes (Research Square: .../v2), else None (unknown;
+    common for bioRxiv and medRxiv, whose DOIs do not encode it)."""
+    if rec.get("version"):
+        return str(rec["version"])
+    m = re.search(r"/v(\d+)$", rec.get("doi") or "")
+    return m.group(1) if m else None
+
+
 def stats_of(rec):
     out = []
     if rec.get("abstract"):
@@ -75,7 +84,7 @@ def main():
     with gzip.open(RUN / "data" / "aligned" / "statistics.jsonl.gz", "wt") as fs, \
             open(RUN / "data" / "aligned" / "pairs.jsonl", "w") as fp, ProcessPoolExecutor(24) as ex:
         for k, (pair, rows, info) in enumerate(ex.map(one, jobs, chunksize=16)):
-            fp.write(json.dumps(dict(pair, version_used=pre[pair["preprint_doi"]].get("version"),
+            fp.write(json.dumps(dict(pair, version_used=version_of(pre[pair["preprint_doi"]]),
                                      info=info if rows is not None else None, error=None if rows is not None else info)) + "\n")
             for r in rows or []:
                 fs.write(json.dumps(r, ensure_ascii=False) + "\n")
