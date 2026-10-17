@@ -168,12 +168,24 @@ def gbif():
 
 
 def raid():
-    r = get("https://api.raid.org/raid/")
-    recs = {}
-    if r is not None and r.status_code == 200:
-        for x in r.json().get("raids", []):
+    # the public list endpoint pages by cursor (limit=100, ?cursor=<pageInfo.endCursor>); the first run fetched only
+    # the default first page of 25 (D3)
+    recs, cursor = {}, None
+    while True:
+        params = {"limit": 100} | ({"cursor": cursor} if cursor else {})
+        r = get("https://api.raid.org/raid/", params=params)
+        if r is None or r.status_code != 200:
+            if cursor is None:
+                recs["_error:all"] = dict(platform="raid", id="_error:all", query="all", meta=dict(status=None if r is None else r.status_code))
+            break
+        j = r.json()
+        for x in j.get("raids", []):
             k = (x.get("identifier") or {}).get("id")
             recs[k] = dict(platform="raid", id=k, query="all", meta=x)
+        pi = j.get("pageInfo") or {}
+        if not pi.get("hasNextPage"):
+            break
+        cursor = pi.get("endCursor"); time.sleep(0.5)
     return save("raid", recs)
 
 

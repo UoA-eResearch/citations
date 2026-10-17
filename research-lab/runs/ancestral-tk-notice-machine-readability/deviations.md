@@ -25,3 +25,10 @@ failure recorded as absence. Fixed: the page size is now 25 (up to 400 pages, Ze
 paged platform writes an explicit error marker if its first page fails. `scan` reports those errors in
 `data/census_errors.json` instead of counting them as zero. Zenodo is re-run. Any other platform that returns 0 records in
 the first run is re-run under the new code, so a failure would show as an error marker.
+
+## D3 — 2026-10-17 23:03 NZDT — RAiD paging, before the census was scanned
+
+The first run fetched only RAiD's default first page (25 of 622 records). The public endpoint pages with
+`limit=100` and `cursor=<pageInfo.endCursor>`, and `raid()` now follows it, with an error marker if the first
+page fails. re3data's 0 was checked: the API returns an empty list with status 200, a genuine zero. Zenodo is re-run
+under the D2 fix.
