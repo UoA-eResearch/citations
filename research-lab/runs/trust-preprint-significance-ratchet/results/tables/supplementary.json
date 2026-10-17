@@ -1,0 +1,101 @@
+{
+ "verified": {
+  "v1_sample": {
+   "n": 12,
+   "n_papers": 11,
+   "up": 9,
+   "share_up": 0.75,
+   "exact_ci": [
+    0.4281415381218108,
+    0.9451393554720072
+   ],
+   "paper_boot_ci": [
+    0.45454545454545453,
+    1.0
+   ]
+  },
+  "v2_census": {
+   "n": 42,
+   "n_papers": 35,
+   "up": 24,
+   "share_up": 0.5714285714285714,
+   "exact_ci": [
+    0.40961127076287007,
+    0.7227932522003722
+   ],
+   "paper_boot_ci": [
+    0.4145247029393371,
+    0.725
+   ]
+  },
+  "combined": {
+   "n": 52,
+   "n_papers": 44,
+   "up": 31,
+   "share_up": 0.5961538461538461,
+   "exact_ci": [
+    0.45101577030155116,
+    0.7299402604083106
+   ],
+   "paper_boot_ci": [
+    0.45278394376618575,
+    0.7307692307692307
+   ]
+  }
+ },
+ "overlap_v1_v2": 2,
+ "kinds": {
+  "changed, reason not stated": {
+   "n": 14,
+   "up": 8
+  },
+  "conclusion reversed": {
+   "n": 1,
+   "up": 1
+  },
+  "correction or typo": {
+   "n": 9,
+   "up": 4
+  },
+  "data changed": {
+   "n": 13,
+   "up": 9
+  },
+  "re-analysis": {
+   "n": 13,
+   "up": 8
+  },
+  "values look permuted": {
+   "n": 2,
+   "up": 1
+  }
+ },
+ "failures": {
+  "v1": {
+   "different statistic or table/legend row (not separated)": 44,
+   "different statistic": 15,
+   "extraction (encoding, decimals, typos, effect sizes)": 14,
+   "table or legend misaligned": 9,
+   "reordered list or shifted rank": 6
+  },
+  "v2": {
+   "reordered list or shifted rank": 8,
+   "different statistic": 6,
+   "fragment too short to identify": 5,
+   "extraction (encoding, decimals, typos, effect sizes)": 2,
+   "table or legend misaligned": 1
+  }
+ },
+ "S1_v1": {
+  "share_sig_added": 0.8200969641001963,
+  "share_sig_dropped": 0.8153910849453322,
+  "diff": 0.00470587915486409,
+  "diff_ci": [
+   -0.01680007482303255,
+   0.025833959839056286
+  ],
+  "n_added": 51978,
+  "n_dropped": 19024,
+  "n_papers": 5261
+ }
+}

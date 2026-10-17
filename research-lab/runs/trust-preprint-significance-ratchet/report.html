@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Preprint Significance Ratchet</title>
+<meta name="description" content="A preregistered test of whether sparse-autoencoder features of Pythia-160M are shared across independently pretrained models as often as across SAE retrainings on one model.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Advancing Trust in Knowledge</div>
+  <h1>Does peer review push p-values across 0.05 in one direction?</h1>
+  <p class="subtitle">Version-matched statistics in 23,220 preprints and their published journal versions: when a reported p-value crosses 0.05 between the two, does it more often move into significance than out of it?</p>
+  <div class="meta">
+    <span>Report · 2026-10-17 · pre-review draft</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/trust-preprint-significance-ratchet/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/trust-preprint-significance-ratchet/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/trust-preprint-significance-ratchet/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: Inconclusive.</strong> The preregistered test could not be run as planned.</p>
+<p><strong>Why.</strong> Automated matching of statistics between versions mostly finds artefacts. In a blind check, 88 of 100
+automatically detected crossings were not the same statistic in both versions, or were misread. That tripped the
+preregistered abort rule, which leaves exact test-statistic matches, and there are only <strong>4</strong> of those (1 up). Four
+crossings cannot test anything.</p>
+<p><strong>What hand verification shows.</strong> A stricter, exploratory matching rule was specified after the abort and every
+crossing it found was checked by hand. Of the <strong>52</strong> crossings verified across both checks, <strong>31 go up</strong>
+(non-significant in the preprint, significant when published): 0.60, 95% interval 0.45–0.73. That leans up, but it
+is consistent with no ratchet (0.50) and with the 2:1 ratchet the lead predicted (0.67).</p>
+<p><strong>Three things are clearer than the headline:</strong></p>
+<ul>
+<li><strong>Crossings are rare.</strong> In the strict set, about 2.8 automated crossings per 1,000 statistic pairs, of which two
+  thirds were real: under 2 per 1,000.</li>
+<li><strong>No selective dropping.</strong> Statistics removed from preprints were significant as often as statistics added in the
+  published version (81.5% vs 82.0%; difference +0.5 points, 95% interval −1.7 to +2.6).</li>
+<li><strong>Inconsistencies persist.</strong> Of 187 preprint statistics whose p-value does not match its own test statistic, 19
+  (10%) were consistent in the published version. The lead predicted fewer than half.</li>
+</ul>
+<h2>In plain terms</h2>
+<p>When scientists post a preprint and later publish the paper in a journal, some numbers change. If peer review or
+revision tends to nudge results over the line into "statistically significant" (p below 0.05), we would expect more
+results to cross into significance than out of it. We tried to measure that across more than 23,000 papers, mostly
+COVID-era medicine and biology, by finding each p-value in both versions and checking whether its significance
+changed.</p>
+<p>The computer matching did not work well enough. When we checked 100 of the changes it found, 88 were mistakes. Some
+were garbled characters ("1.0Ã10â5" instead of 1.0×10⁻⁵), some were decimal commas or middle dots, and many matched
+the wrong number in a table or a list. Changes in significance are rare, so mistakes dominate them. Our planned test
+therefore had only 4 trustworthy cases.</p>
+<p>We then checked every candidate under a stricter rule by hand. Of 52 genuine changes, 31 moved into significance and
+21 out of it. That tilt could be chance: the data fit both "no push" and "a strong push". Two side results are firmer.
+Results that disappeared between versions were not less significant than results that appeared, so there is no sign
+of non-significant results being quietly dropped. And internal arithmetic errors in preprints were rarely fixed in
+the journal version.</p>
+<p>The main lesson is about method. Anyone automating this kind of comparison needs to repair text encoding, handle
+tables separately and check by hand. Otherwise the "changes" they count will mostly be their own errors.</p>
+<h2>What was asked</h2>
+<p>The lead (<code>trust-preprint-significance-ratchet</code>) proposed that among reported statistics present in both a preprint
+and its published version, those whose significance at 0.05 changes would cross upward at least two times in three
+(H1: share up ≥ 0.67 with the lower end of a paper-level bootstrap interval above 0.50; Refuted if the upper end is
+below 0.67). Three secondaries were preregistered:</p>
+<ul>
+<li>S1: dropped vs added statistics;</li>
+<li>S2: statcheck-style consistency and its repair;</li>
+<li>S3: exact tuple matches, and a split by server.</li>
+</ul>
+<h2>What was already known</h2>
+<p>Version comparisons so far work at the level of primary outcomes or claims:</p>
+<ul>
+<li>In medRxiv prevention preprints, 16.8% changed primary-outcome magnitude (Sci Rep 2023).</li>
+<li>About 10% of bioRxiv epidemiology preprints changed main findings (Bero et al. 2021).</li>
+<li>Primary end points were concordant in 98% of medRxiv–journal pairs (JAMA Netw Open 2022).</li>
+<li>An LLM classification of 72,644 bioRxiv pairs found more cautious wording and rare changes of claim (bioRxiv
+  2026.06.30.735556).</li>
+<li>statcheck work shows that journal adoption reduces decision inconsistencies near 0.05 (Nuijten &amp; Wicherts 2024).</li>
+</ul>
+<p>A search on 2026-10-17 found no version-matched study of the direction of significance crossings across all reported
+statistics.</p>
+<h2>How it was done</h2>
+<p><strong>Pairs.</strong> The preprints are the 75,217 full texts in Europe PMC's preprint shards (bioRxiv, medRxiv, Research
+Square, Preprints.org and others). Server-asserted publication links (Crossref relations, the bioRxiv API) were
+confirmed by title similarity (token Jaccard ≥ 0.5), giving 28,597 pairs. The 23,220 with an open-access published
+version in PMC were fetched. The primary population is the <strong>11,508</strong> pairs whose preprint full text is known to be
+version 1, so it predates peer review. Of all pairs, 13,049 had statistics in the sections used.</p>
+<p><strong>Extraction.</strong> p-values and statcheck-style tuples (t, F, r, χ², z with df) were taken from abstracts, results,
+tables and figure captions. Boilerplate threshold sentences were removed. Significance is determined only when the
+comparator makes it unambiguous (for example p = 0.03, p &lt; 0.01, p &gt; 0.1); everything else, including p = 0.05, is
+undetermined. That gave 271,195 statistics.</p>
+<p><strong>Alignment.</strong> Exact tuple matches came first, then one-to-one matching of sentences by TF-IDF with numbers masked
+(cosine ≥ 0.6, same section group), with several statistics in a sentence paired by order. 110,143 statistics were
+aligned.</p>
+<p><strong>Blind validation and abort rule (plan §6).</strong> Before any crossing was tallied, 100 crossings and 100 other aligned
+pairs were drawn and shown in random order with the version order and stratum hidden. The adjudicator, who was the
+agent running the study, judged whether each pair reported the same statistic. The plan required precision among
+crossings of at least 0.90 for the all-crossings test; below that, the primary falls back to exact tuple matches only.</p>
+<p><strong>Exploratory v2 (deviations D3, D4), specified in writing before it was built.</strong></p>
+<ul>
+<li>Extraction repairs: text repair with ftfy for mojibake, middle-dot and comma decimals, partial eta squared no longer
+  read as p, lost exponents treated as undetermined.</li>
+<li>A <strong>strict crossing</strong> must satisfy all of the following:<ul>
+<li>it sits in abstract or results text (no tables, no legends);</li>
+<li>it is an exact tuple match or has a masked sentence cosine of at least 0.80;</li>
+<li>its sentence holds the same number of statistics as its counterpart, and the pair has the same rank in each;</li>
+<li>neither sentence is a significance-star definition.</li>
+</ul>
+</li>
+<li>A fresh blind validation, with the aligned statistic marked in each sentence.</li>
+</ul>
+<h2>Results</h2>
+<h3>The preregistered primary: 4 crossings, Inconclusive</h3>
+<p>The blind validation found <strong>12 of 100</strong> crossings correct (precision 0.12), against 79 of 100 for aligned pairs that
+did not cross (Figure 1). The abort rule applied. Among exact tuple matches in the version-1 population there are
+<strong>4 crossings, 1 up</strong> (0.25).</p>
+<p>The plan's rule, applied mechanically to the paper bootstrap interval [0.00, 0.50], returns Refuted. A percentile
+bootstrap over four observations is not a 95% interval, though. The exact interval for 1 of 4 is <strong>0.006–0.81</strong>,
+which includes 0.67, so the primary is reported as Inconclusive (D3.1).</p>
+<p>The all-crossings estimate, 0.489 (0.453–0.526, 1,411 crossings in 514 papers), would have read as Refuted had the
+validation passed. With 88% of its crossings artefacts, it measures the matching errors, which run equally in both
+directions, not the literature.</p>
+<figure><a href="results/figures/F1_alignment_precision.png"><img src="results/figures/F1_alignment_precision.png" alt="Figure 1"></a><figcaption>Blind adjudication of aligned statistic pairs, with version order and stratum hidden. With the preregistered aligner, 12 of 100 sampled significance crossings were the same statistic in both versions, far below the 0.90 the plan required, so the primary test fell back to exact tuple matches. The strict exploratory rule (abstract and results text only, near-identical sentences, same position) reached 42 of all 64 crossings in the version-1 population. Aligned pairs that do not cross are mostly right in both cases.</figcaption></figure>
+<p><em>Figure 1. Blind adjudication of aligned pairs. Crossings are mostly artefacts under the preregistered aligner (12 of
+100) and still a third artefacts under the strict exploratory rule (42 of 64). Pairs that do not cross are mostly
+right.</em></p>
+<h3>Why automated crossings fail</h3>
+<p>The 88 rejected crossings in the preregistered sample break down as follows. Most batch notes did not separate the
+first two causes.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>cause</th>
+<th>count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>a different statistic in the matched sentence, or a different row of a table or legend</td>
+<td>44</td>
+</tr>
+<tr>
+<td>table or legend rows, noted explicitly</td>
+<td>9</td>
+</tr>
+<tr>
+<td>a different statistic, noted explicitly</td>
+<td>15</td>
+</tr>
+<tr>
+<td>extraction errors</td>
+<td>14</td>
+</tr>
+<tr>
+<td>a reordered list or shifted rank</td>
+<td>6</td>
+</tr>
+</tbody>
+</table></div>
+<p>The extraction errors include mojibake read as p = 1 or as the mantissa, middle-dot and comma decimals read as p = 0,
+and partial eta squared read as p.</p>
+<p>A crossing needs a change in significance, and genuine changes are rare, so a crossing filter concentrates exactly
+these errors. Aligned pairs that do not cross are mostly right.</p>
+<p>Under the strict rule, 22 of 64 crossings still failed:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>cause</th>
+<th>count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>reordered lists (the same items in a different order, so the same rank is a different item)</td>
+<td>8</td>
+</tr>
+<tr>
+<td>different statistics in near-identical sentences</td>
+<td>6</td>
+</tr>
+<tr>
+<td>fragments too short to identify ("CLP + E-5, p = …; vs.")</td>
+<td>5</td>
+</tr>
+<tr>
+<td>typos or broken decimals read literally ("P=001", "p =0. 07")</td>
+<td>2</td>
+</tr>
+<tr>
+<td>a table row</td>
+<td>1</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Verified crossings (exploratory): they lean up, the interval is wide</h3>
+<p>The 64 strict crossings in the version-1 population were adjudicated in full. The <strong>42</strong> correct ones are therefore
+every verified strict crossing there: <strong>24 up, 18 down</strong> (0.57; exact 0.41–0.72; paper bootstrap 0.41–0.73; 35
+papers). Adding the 12 correct crossings from the first validation (2 overlap) gives <strong>52 verified crossings, 31 up</strong>
+(0.60; exact 0.45–0.73; paper bootstrap 0.45–0.73; 44 papers) (Figure 2).</p>
+<p>Neither interval excludes 0.50 or 0.67. By the plan's thresholds, applied descriptively, both read Inconclusive.
+These crossings are not a random sample of all genuine crossings: the strict rule keeps only text, same-structure
+sentences.</p>
+<figure><a href="results/figures/F2_share_up.png"><img src="results/figures/F2_share_up.png" alt="Figure 2"></a><figcaption>Share of statistics that move from non-significant in the preprint to significant in the published version, among those whose significance changes. Hollow marks are automated estimates; filled marks are crossings a blind adjudication confirmed. The preregistered primary rests on 4 crossings (exact interval). The automated estimates sit near one half but are made mostly of artefacts. The 42 verified strict crossings and the 52 verified crossings overall lean up (0.57 and 0.60) with intervals that include both one half and a 2:1 ratchet.</figcaption></figure>
+<p><em>Figure 2. Share of crossings that go up. Hollow: automated (unreliable). Filled: blind-verified. The lines mark no
+ratchet (0.50) and the lead's 2:1 ratchet (0.67).</em></p>
+<p>What the verified crossings are, from the adjudication notes (52, with the number going up):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>kind</th>
+<th>n</th>
+<th>up</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>same comparison, data changed (more patients, a replaced dataset)</td>
+<td>13</td>
+<td>9</td>
+</tr>
+<tr>
+<td>same comparison, re-analysed (a different test or model)</td>
+<td>13</td>
+<td>8</td>
+</tr>
+<tr>
+<td>a correction or typo (".46" → ".046"; "p = 0.033" beside "not significant")</td>
+<td>9</td>
+<td>4</td>
+</tr>
+<tr>
+<td>changed, reason not visible in the sentence</td>
+<td>14</td>
+<td>8</td>
+</tr>
+<tr>
+<td>conclusion reversed in the text ("parity was / was not a relevant factor")</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>three values that appear permuted across labels (two adjudications of one sentence)</td>
+<td>2</td>
+<td>1</td>
+</tr>
+</tbody>
+</table></div>
+<p>Most changes come with new data or a new analysis, which is what peer review asks for. The direction of those
+changes, 17 of 26 up, is the closest this study gets to the ratchet question. With 26 cases, that is weak evidence.</p>
+<h3>Secondaries</h3>
+<ul>
+<li><strong>S1, dropped vs added (v1 extraction, version-1 population).</strong><ul>
+<li>81.5% of 19,024 dropped and 82.0% of 51,978 added statistics are significant.</li>
+<li>The difference is <strong>+0.5 points (paper bootstrap −1.7 to +2.6)</strong>, so there is no sign that non-significant
+results are selectively removed.</li>
+<li>The v2 extraction gives 81.4% vs 82.3%.</li>
+<li>Dropped and added counts are themselves inflated by alignment failures, but these run in both directions.</li>
+</ul>
+</li>
+<li><strong>S2, consistency.</strong><ul>
+<li>Of 3,460 aligned tuple pairs, 187 preprint tuples report a p-value outside the range implied by their own test
+statistic and degrees of freedom.</li>
+<li>Only <strong>19 (10%)</strong> are consistent in the published version, in line with the lead's prediction of under half.</li>
+<li>187 published tuples are inconsistent: inconsistencies are mostly carried over unchanged.</li>
+<li>One-tailed tests, corrections and extraction quirks inflate any automated inconsistency count, so the level is an
+upper bound; the low repair rate is the robust part.</li>
+</ul>
+</li>
+<li><strong>S3, by server.</strong> Automated estimates only, which the validation shows are unreliable: medRxiv 0.474 (624
+  crossings), other servers 0.499 (748), bioRxiv 0.538 (39).</li>
+</ul>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>It does not show that there is no ratchet.</strong> It shows that automated detection cannot measure one. Among
+  hand-verified crossings, a 2:1 ratchet is still inside the interval.</li>
+<li><strong>It does show that significance crossings are rare and that most automated "crossings" are artefacts.</strong> Any
+  large-scale claim about version-to-version significance changes built on text mining without validation should be
+  treated with caution. The failure modes here are specific and fixable: encoding repair, decimal conventions, tables
+  handled as tables, list-order checks.</li>
+<li><strong>Legitimate change.</strong> Crossings that come with more data or a different analysis are legitimate. A ratchet would
+  show the direction of change, not misconduct.</li>
+<li><strong>Selection.</strong> Only pairs with an open-access published version enter. COVID-era medRxiv and Research Square
+  dominate the version-1 population (Research Square 6,066; medRxiv 4,290; bioRxiv 1,040).</li>
+<li><strong>Adjudication.</strong> All adjudication was by the agent running the study, blind to version order and stratum, not by
+  independent human coders. One judgement was corrected on re-check before any statistic was computed (D2.4).</li>
+</ul>
+<h2>Process and deviations</h2>
+<p>Preregistered in <code>plan.md</code> (commit 8f19a76) before any statistic was extracted from real text; code committed before
+the outputs it produces. Deviations are in <code>deviations.md</code>:</p>
+<ul>
+<li><strong>D1:</strong> linkage routes are not independent, so links were confirmed by title similarity; version-1 primary; no
+  embedding model; validation by the agent.</li>
+<li><strong>D2:</strong> a display change before adjudication (the sample is identical); the validation outcome and abort; a
+  disclosure that an all-versions tally of crossing classes was printed after adjudication and before the analysis
+  ran.</li>
+<li><strong>D3:</strong> the primary reported as Inconclusive, not the mechanical Refuted; the exploratory v2 specified before it was
+  built.</li>
+<li><strong>D4:</strong> the v2 validation outcome (a census of 64).</li>
+</ul>
+<h2>Reproducing it</h2>
+<pre><code>venv/bin/python code/parse_jats.py ...            # Europe PMC preprint shards -&gt; data/parsed/
+venv/bin/python code/link.py crossref; ... confirm # candidate pairs -&gt; data/pairs_candidates.jsonl (released)
+venv/bin/python code/fetch_published.py           # PMC OA full texts
+venv/bin/python code/pipeline.py                  # preregistered extraction + alignment -&gt; data/aligned/
+venv/bin/python code/validate_alignment.py sample # blind sample; adjudication in results/tables/alignment_validation_raw.csv
+venv/bin/python code/validate_alignment.py merge
+venv/bin/python code/analysis.py                  # results/tables/primary.json
+venv/bin/python code/pipeline_v2.py               # exploratory -&gt; data/aligned_v2/
+venv/bin/python code/validate_v2.py sample; venv/bin/python code/validate_v2.py merge
+venv/bin/python code/analysis_v2.py               # results/tables/exploratory_v2.json
+venv/bin/python code/supplementary.py             # results/tables/supplementary.json, verified_crossings.csv
+venv/bin/python code/figures.py
+</code></pre>
+<p><strong>Released.</strong> <code>results/tables/</code>: the confirmed pair list with sha256; both adjudication files with their keys merged;
+the verified crossings; and all result JSONs. The validation samples quote single sentences from the papers. They are
+regenerated exactly by the seeded scripts from the open full texts, and are not redistributed.</p>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/trust-preprint-significance-ratchet/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

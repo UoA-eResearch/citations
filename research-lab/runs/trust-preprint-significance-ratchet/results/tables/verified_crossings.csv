@@ -1,0 +1,53 @@
+sample,id,pair,pre,pub,up,kind,note
+v1,v009,10.1101/2023.07.17.548989,z = 0.12,z = 0.02,True,re-analysis,"same comparison, re-analysed"
+v1,v020,10.1101/2021.07.23.453593,p = 0.012,p = 0.19,False,re-analysis,"same test, re-analysed"
+v1,v022,10.21203/rs.3.rs-2387106/v1,p > 0.05,p < 0.05,True,conclusion reversed,"same statement, reversed conclusion"
+v1,v048,10.1101/2021.09.28.21264250,p = 0.53,p = 0.02,True,"changed, reason not stated","same comparison, changed result"
+v1,v073,10.1101/2021.10.27.21265563,p = 0.46,p = 0.046,True,correction or typo,"same statistic, value corrected .46 -> .046"
+v1,v079,10.1101/2021.10.04.21264500,p = 0.04,p = 0.06,False,"changed, reason not stated","same statistic, changed result"
+v1,v080,10.1101/2021.09.28.21264250,p = 0.15,p = 0.048,True,"changed, reason not stated","same comparison, changed result"
+v1,v119,10.1101/2024.04.18.590099,p = 0.06,p < 0.05,True,re-analysis,"same comparison, trend -> significant"
+v1,v133,10.1101/2024.04.04.24305329,p < 0.05,p > 0.05,False,correction or typo,"same statement, published typo p<0.05"
+v1,v136,10.1101/2023.03.08.531684,p = 0.2582,p = 0.0087,True,"changed, reason not stated","same comparison fragment, changed"
+v1,v175,10.1101/2021.06.30.21259796,p = 0.06,p = 0.03,True,"changed, reason not stated","same comparison, changed result"
+v1,v182,10.1101/2021.02.13.431090,p > 0.05,p < 0.05,True,correction or typo,"same legend item, typo corrected"
+v2,w001,10.1101/2021.09.23.21263649,p <= 0.05,p > 0.05,False,correction or typo,same statement; published version has p<=0.05 typo
+v2,w005,10.1101/2020.11.20.20235598,p = 0.12,p = 0.001,True,data changed,"same comparison, validation dataset replaced"
+v2,w010,10.1101/2020.09.30.20204503,p = 0.04,p = 0.13,False,data changed,"same comparison, data changed"
+v2,w012,10.1101/2020.07.15.20154906,p = 0.001,p = 0.06,False,data changed,"same comparison, data changed"
+v2,w016,10.1101/2020.06.24.20138990,p = 0.139,p = 0.005,True,re-analysis,"same coefficient, re-estimated"
+v2,w017,10.21203/rs.3.rs-1305015/v1,p = 0.057,p < 0.001,True,"changed, reason not stated","same test, changed"
+v2,w018,10.21203/rs.3.rs-9083519/v1,p = 0.058,p = 0.0019,True,"changed, reason not stated","same comparison, changed"
+v2,w019,10.21203/rs.3.rs-3348558/v1,p < 0.0001,p = 0.13,False,"changed, reason not stated","same comparison, changed"
+v2,w020,10.1101/2022.01.07.22268729,p = 0.04,p = 0.06,False,"changed, reason not stated","same comparison, changed"
+v2,w021,10.21203/rs.3.rs-32474/v1,p = 0.06,p = 0.025,True,"changed, reason not stated","same comparison, changed"
+v2,w024,10.1101/2020.09.28.20202929,p = 0.051,p = 0.016,True,values look permuted,same label (S2) by 'respectively'; the three values look permuted across M/S1/S2
+v2,w031,10.21203/rs.3.rs-82103/v1,p = 0.13,p < 0.01,True,data changed,"same comparison, data changed"
+v2,w033,10.1101/2021.06.10.21258685,χ2 = 0.15,χ2 < 0.001,True,re-analysis,"same analysis, category added"
+v2,w035,10.1101/2020.12.23.20248773,t = 0.08,t < 0.001,True,re-analysis,"same comparison, re-analysed"
+v2,w047,10.21203/rs.3.rs-3005279/v1,p = 0.15,χ2 = 0.03,True,"changed, reason not stated","same test, changed"
+v2,w049,10.21203/rs.3.rs-97391/v1,p = 0.063,p = 0.033,True,data changed,"same comparison, data changed"
+v2,w050,10.1101/2020.12.18.20248449,p < 0.0001,p >= 0.1249,False,correction or typo,same statement; preprint P<0.0001 contradicts 'not significantly different'
+v2,w051,10.21203/rs.3.rs-3261636/v1,p = 0.0667,p = 0.02,True,re-analysis,"same comparison, test changed"
+v2,w053,10.1101/2020.05.12.20098889,p = 2.3e-05,p = 0.78,False,data changed,same position in a 'respectively' pair; re-analysed (n 15 -> 13)
+v2,w057,10.1101/2020.05.12.20098889,p = 0.048,p = 0.35,False,re-analysis,same position in a 'respectively' pair; re-analysed
+v2,w061,10.1101/2020.04.30.20086348,p = 0.196,p = 0.009,True,re-analysis,"same quantity, re-analysed"
+v2,w064,10.21203/rs.3.rs-2108333/v1,p = 0.47,p = 0.04,True,correction or typo,"same statistic, value changed"
+v2,w065,10.21203/rs.3.rs-1093241/v1,f = 0.077,f = 0.047,True,re-analysis,"same interaction, re-analysed"
+v2,w070,10.1101/2020.05.01.20081026,p = 0.14,p = 0.02,True,data changed,"same comparison, more patients"
+v2,w075,10.1101/2020.05.01.20081026,p = 0.1,p = 0.003,True,data changed,"same comparison, more patients"
+v2,w079,10.21203/rs.3.rs-142530/v1,p = 0.006,p = 0.285,False,correction or typo,"same labelled comparison, value changed"
+v2,w081,10.21203/rs.3.rs-403472/v1,p = 0.045,p = 0.057,False,"changed, reason not stated",
+v2,w083,10.1101/2020.10.02.20205237,p < 0.008,p > 0.05,False,"changed, reason not stated",same comparison (language abilities)
+v2,w085,10.21203/rs.3.rs-89225/v1,p < 0,p = 0.16,False,"changed, reason not stated","same comparison; broken 'p<0. 05' parsed as p<0, significance status still correct"
+v2,w086,10.21203/rs.3.rs-2036036/v1,p = 0.84,p = 0.046,True,data changed,"same comparison; group relabelled SI/IC, data changed"
+v2,w089,10.21203/rs.3.rs-7149123/v1,p = 0.031,p = 0.062,False,re-analysis,"same comparison, re-analysed"
+v2,w090,10.1101/2020.09.28.20202929,p = 0.016,p = 0.055,False,values look permuted,same label (S1) by 'respectively'; the three values look permuted across M/S1/S2
+v2,w093,10.21203/rs.3.rs-1966542/v1,p = 0.046,p = 0.275,False,re-analysis,"same comparison, re-analysed"
+v2,w094,10.21203/rs.3.rs-97391/v1,p = 0.067,p = 0.033,True,correction or typo,same comparison; preprint P=0.033 contradicts 'not significant'
+v2,w101,10.21203/rs.3.rs-2036036/v1,p = 0.32,p = 0.03,True,data changed,"same comparison; status relabelled IC/SI, data changed"
+v2,w104,10.1101/2021.10.14.21264747,p = 0.03,p = 0.179,False,data changed,"same comparison, data changed"
+v2,w105,10.21203/rs.3.rs-1093241/v1,f = 0.016,f = 0.056,False,re-analysis,"same interaction, re-analysed"
+v2,w106,10.1101/2020.12.23.20248773,t = 0.99,t < 0.001,True,data changed,"same test, data changed"
+v2,w108,10.1101/2020.08.15.20102699,p = 0.04,p = 0.4,False,correction or typo,"same heterogeneity statistic, value differs"
+v2,w110,10.1101/2021.05.21.21257626,p = 0.28,p = 0.01,True,data changed,"same comparison, data changed"

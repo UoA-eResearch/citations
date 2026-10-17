@@ -1,0 +1,112 @@
+{
+ "n_statistics": 266801,
+ "n_aligned": 112406,
+ "n_strict_eligible": 54877,
+ "class_counts_all": {
+  "unchanged": 94824,
+  "changed_not_crossing": 12098,
+  "undetermined": 2959,
+  "crossing_down": 1268,
+  "crossing_up": 1257
+ },
+ "class_counts_strict": {
+  "unchanged": 50707,
+  "changed_not_crossing": 2706,
+  "undetermined": 1310,
+  "crossing_up": 78,
+  "crossing_down": 76
+ },
+ "strict_v1": {
+  "n": 64,
+  "n_papers": 47,
+  "n_up": 33,
+  "share_up": 0.515625,
+  "boot_ci": [
+   0.39705298786181137,
+   0.6307692307692307
+  ],
+  "ci_read": [
+   0.39705298786181137,
+   0.6307692307692307
+  ],
+  "reading": "against a 2:1 ratchet",
+  "per_1000_determined": 2.750204116711787
+ },
+ "strict_all_versions": {
+  "n": 154,
+  "n_papers": 95,
+  "n_up": 78,
+  "share_up": 0.5064935064935064,
+  "boot_ci": [
+   0.41890693885374736,
+   0.5827952538631346
+  ],
+  "ci_read": [
+   0.41890693885374736,
+   0.5827952538631346
+  ],
+  "reading": "against a 2:1 ratchet"
+ },
+ "strict_v1_exact_tuples": {
+  "n": 0,
+  "n_papers": 0,
+  "n_up": 0,
+  "share_up": null,
+  "boot_ci": [
+   null,
+   null
+  ],
+  "ci_read": [
+   null,
+   null
+  ],
+  "reading": "not estimable"
+ },
+ "all_crossings_v1_unreliable": {
+  "n": 1260,
+  "n_papers": 442,
+  "n_up": 616,
+  "share_up": 0.4888888888888889,
+  "boot_ci": [
+   0.4527965601394028,
+   0.5279012467796397
+  ],
+  "ci_read": [
+   0.4527965601394028,
+   0.5279012467796397
+  ],
+  "reading": "against a 2:1 ratchet"
+ },
+ "validation_v2": {
+  "precision_crossings": 0.65625,
+  "n_crossings": 64,
+  "precision_other": 1.0
+ },
+ "decision": "only validated-correct crossings reported",
+ "validated_correct_crossings": {
+  "v1": {
+   "n": 12,
+   "up": 9,
+   "down": 3,
+   "exact_ci_up": [
+    0.4281415381218108,
+    0.9451393554720072
+   ]
+  },
+  "v2": {
+   "n": 42,
+   "up": 24,
+   "down": 18,
+   "exact_ci_up": [
+    0.40961127076287007,
+    0.7227932522003722
+   ]
+  }
+ },
+ "S1_v2": {
+  "n_dropped": 19384,
+  "share_sig_dropped": 0.814331407346265,
+  "n_added": 48767,
+  "share_sig_added": 0.8234666885393811
+ }
+}
