@@ -1,0 +1,18 @@
+# Deviations log
+
+Every departure from the lead and from plan.md, timestamped with `date` when it was made.
+
+## D1 — 2026-10-17 19:03 NZDT — before any census query or machine-view fetch
+
+1. **Testing without seeing outcomes.** API syntax was checked on a neutral term ("pollen"), not on the study's
+   search terms. The crosswalk scorer was tested on the one DOI the lead itself documents (10.21233/7mmk-mr58). That
+   test found the Crosscite JSON key is `rights_list`, and the pattern was fixed before any sample was drawn.
+2. **OSF/SHARE search returned 503 on 2026-10-17.** `census.py` records the platform as unavailable if it still
+   does, rather than dropping it silently.
+3. **The lead's "aggregator copies"** become the OpenAIRE Graph record only. BASE needs registration, and Google
+   Dataset Search has no API.
+4. **H2 unit.** The lead's "≥ 40% of the standard machine views" is made precise as record × view pairs, with a
+   record-cluster bootstrap.
+5. **Engagement** with Local Contexts, the repositories and Māori and Pacific data-governance advisers is a care note,
+   not a gate (lab policy, 2026-10-16). The report frames counts as describing systems, not communities, and says
+   that DOI-layer absence may be by design.
