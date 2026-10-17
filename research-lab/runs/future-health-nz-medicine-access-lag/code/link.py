@@ -125,7 +125,8 @@ def main():
         t_app, t_dec = pat_app.received.min(), pat_app.approved.min()
         t_tga = TGA[TGA.text.str.contains(pat, regex=True)].date.min()
         first_hml = L[L.source == "HML"].ed.min()
-        if pd.notna(h) and h <= first_hml:      # D8: the first HML edition (Oct 2013) is not a funding event
+        # D8: the first HML edition (Oct 2013) is not a funding event; censor only when it would be the earliest listing
+        if pd.notna(h) and h <= first_hml and (pd.isna(b) or b > first_hml):
             h_censored = True
         else:
             h_censored = False
