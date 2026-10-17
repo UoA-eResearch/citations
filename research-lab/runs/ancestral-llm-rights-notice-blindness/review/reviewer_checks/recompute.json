@@ -1,0 +1,349 @@
+{
+ "H1": {
+  "est": 0.0048265460030165915,
+  "ci": [
+   0.003519356460532931,
+   0.006334841628959276
+  ],
+  "n": 9945
+ },
+ "H2": {
+  "est": -0.012267471091000504,
+  "ci": [
+   -0.014881850175967826,
+   -0.009619574325456678
+  ],
+  "cv": 0.017094017094017096,
+  "n_cv": 5967
+ },
+ "H3": {
+  "est": 0.8526799387442573,
+  "ci": [
+   0.8416526190605408,
+   0.8642223712067748
+  ],
+  "n_pairs": 3265,
+  "unparsed": 50
+ },
+ "H3_decomposition": {
+  "contact:no->unclear": 1917,
+  "commercial:yes->no": 590,
+  "commercial:yes->unclear": 411,
+  "contact:no->yes": 371,
+  "commercial:no->yes": 93,
+  "commercial:unclear->no": 86,
+  "contact:unclear->yes": 78,
+  "contact:yes->no": 75,
+  "commercial:unclear->yes": 46,
+  "contact:yes->unclear": 39,
+  "commercial:no->unclear": 34,
+  "contact:unclear->no": 14
+ },
+ "H3_changed_pairs": 2784,
+ "H3_changed_only_to_unclear": 1748,
+ "H3_changed_incl_definite": 1036,
+ "H3_rate_definite_change": 0.31730474732006125,
+ "H3_by_condition": {
+  "LC_BC": {
+   "change": 0.8346094946401225,
+   "definite": 0.07044410413476264
+  },
+  "LC_CB": {
+   "change": 0.7335375191424196,
+   "definite": 0.11026033690658499
+  },
+  "LC_CO": {
+   "change": 0.9693721286370597,
+   "definite": 0.3537519142419602
+  },
+  "LC_NC": {
+   "change": 0.9647779479326187,
+   "definite": 0.9494640122511485
+  },
+  "LC_TK": {
+   "change": 0.7611026033690659,
+   "definite": 0.10260336906584992
+  }
+ },
+ "H3_by_model": {
+  "mistral-small-24b": 0.9547511312217195,
+  "olmo2-13b": 0.6123222748815166,
+  "qwen3-32b": 0.9800904977375565
+ },
+ "contact_by_condition": {
+  "CV_CONTACT": {
+   "no": 0.0,
+   "unclear": 0.0,
+   "yes": 1.0
+  },
+  "CV_DUA": {
+   "no": 0.0,
+   "unclear": 0.0,
+   "yes": 1.0
+  },
+  "CV_NC": {
+   "no": 0.78,
+   "unclear": 0.038,
+   "yes": 0.182
+  },
+  "LC_BC": {
+   "no": 0.183,
+   "unclear": 0.799,
+   "yes": 0.018
+  },
+  "LC_CB": {
+   "no": 0.332,
+   "unclear": 0.644,
+   "yes": 0.024
+  },
+  "LC_CB_NOURI": {
+   "no": 0.24,
+   "unclear": 0.742,
+   "yes": 0.018
+  },
+  "LC_CO": {
+   "no": 0.078,
+   "unclear": 0.64,
+   "yes": 0.282
+  },
+  "LC_NC": {
+   "no": 0.317,
+   "unclear": 0.35,
+   "yes": 0.333
+  },
+  "LC_TK": {
+   "no": 0.29,
+   "unclear": 0.682,
+   "yes": 0.029
+  },
+  "NONE": {
+   "no": 0.907,
+   "unclear": 0.057,
+   "yes": 0.037
+  }
+ },
+ "commercial_by_condition": {
+  "CV_CONTACT": {
+   "no": 0.0,
+   "unclear": 0.379,
+   "yes": 0.621
+  },
+  "CV_DUA": {
+   "no": 0.005,
+   "unclear": 0.374,
+   "yes": 0.621
+  },
+  "CV_NC": {
+   "no": 0.909,
+   "unclear": 0.009,
+   "yes": 0.082
+  },
+  "LC_BC": {
+   "no": 0.002,
+   "unclear": 0.196,
+   "yes": 0.802
+  },
+  "LC_CB": {
+   "no": 0.0,
+   "unclear": 0.068,
+   "yes": 0.932
+  },
+  "LC_CB_NOURI": {
+   "no": 0.002,
+   "unclear": 0.139,
+   "yes": 0.86
+  },
+  "LC_CO": {
+   "no": 0.131,
+   "unclear": 0.558,
+   "yes": 0.311
+  },
+  "LC_NC": {
+   "no": 0.982,
+   "unclear": 0.018,
+   "yes": 0.0
+  },
+  "LC_TK": {
+   "no": 0.0,
+   "unclear": 0.094,
+   "yes": 0.906
+  },
+  "NONE": {
+   "no": 0.055,
+   "unclear": 0.089,
+   "yes": 0.856
+  }
+ },
+ "commercial_LC_CO_by_model": {
+  "mistral-small-24b": {
+   "no": 0.072,
+   "unclear": 0.91,
+   "yes": 0.018
+  },
+  "olmo2-13b": {
+   "no": 0.276,
+   "unclear": 0.719,
+   "yes": 0.005
+  },
+  "qwen3-32b": {
+   "no": 0.045,
+   "unclear": 0.045,
+   "yes": 0.91
+  }
+ },
+ "contact_LC_CB_by_model": {
+  "mistral-small-24b": {
+   "no": 0.0,
+   "unclear": 1.0,
+   "yes": 0.0
+  },
+  "olmo2-13b": {
+   "no": 0.928,
+   "unclear": 0.072,
+   "yes": 0.0
+  },
+  "qwen3-32b": {
+   "no": 0.068,
+   "unclear": 0.86,
+   "yes": 0.072
+  }
+ },
+ "contact_CV_CONTACT_by_model": {
+  "mistral-small-24b": {
+   "yes": 1.0
+  },
+  "olmo2-13b": {
+   "yes": 1.0
+  },
+  "qwen3-32b": {
+   "yes": 1.0
+  }
+ },
+ "unparseable_agent": 13,
+ "omission_by_model": {
+  "mistral-small-24b": {
+   "lc": 0.0,
+   "cv": 0.0015082956259426848
+  },
+  "olmo2-13b": {
+   "lc": 0.014479638009049774,
+   "cv": 0.049773755656108594
+  },
+  "qwen3-32b": {
+   "lc": 0.0,
+   "cv": 0.0
+  }
+ },
+ "omission_by_framing": {
+  "agent": {
+   "lc": 0.0,
+   "cv": 0.003519356460532931
+  },
+  "direct": {
+   "lc": 0.0,
+   "cv": 0.0
+  },
+  "researcher": {
+   "lc": 0.014479638009049774,
+   "cv": 0.04776269482151835
+  }
+ },
+ "omission_by_condition": {
+  "CV_CONTACT": 0.001,
+  "CV_DUA": 0.0,
+  "CV_NC": 0.0503,
+  "LC_BC": 0.0126,
+  "LC_CB": 0.0055,
+  "LC_CB_NOURI": 0.0096,
+  "LC_CO": 0.0,
+  "LC_NC": 0.001,
+  "LC_TK": 0.005
+ },
+ "olmo_researcher_omission_by_condition": {
+  "CV_CONTACT": 0.009,
+  "CV_DUA": 0.0,
+  "CV_NC": 0.4208,
+  "LC_BC": 0.1131,
+  "LC_CB": 0.0498,
+  "LC_CB_NOURI": 0.0679,
+  "LC_CO": 0.0,
+  "LC_NC": 0.009,
+  "LC_TK": 0.0452
+ },
+ "omissions_count_by_model_framing": {
+  "mistral-small-24b|agent": 3,
+  "mistral-small-24b|direct": 0,
+  "mistral-small-24b|researcher": 0,
+  "olmo2-13b|agent": 4,
+  "olmo2-13b|direct": 0,
+  "olmo2-13b|researcher": 158,
+  "qwen3-32b|agent": 0,
+  "qwen3-32b|direct": 0,
+  "qwen3-32b|researcher": 4
+ },
+ "lc_omissions_total": 48,
+ "cv_omissions_total": 102,
+ "lc_omissions_outside_olmo_researcher": 0,
+ "named_given_lc_mention": 0.9994947964029504,
+ "truncated": 14,
+ "excl_trunc": {
+  "lc": 0.00482897384305835,
+  "cv": 0.017116965933881522
+ },
+ "name_only_omission": {
+  "lc": 0.00512820512820511,
+  "cv": 0.04038880509468745
+ },
+ "uri_cue": {
+  "LC_CB": 0.005530417295123178,
+  "LC_CB_NOURI": 0.009552538964303671
+ },
+ "V2_by_condition": {
+  "CV_CONTACT": 0.301,
+  "CV_DUA": 0.001,
+  "CV_NC": 0.01,
+  "LC_BC": 0.12,
+  "LC_CB": 0.117,
+  "LC_CB_NOURI": 0.047,
+  "LC_CO": 0.035,
+  "LC_NC": 0.045,
+  "LC_TK": 0.039
+ },
+ "V2_courtesy_only_by_condition": {
+  "CV_CONTACT": 0.012,
+  "CV_DUA": 0.001,
+  "CV_NC": 0.0,
+  "LC_BC": 0.002,
+  "LC_CB": 0.002,
+  "LC_CB_NOURI": 0.004,
+  "LC_CO": 0.001,
+  "LC_NC": 0.001,
+  "LC_TK": 0.0
+ },
+ "V3_by_model": {
+  "noncommercial": {
+   "mistral-small-24b": 0.0,
+   "olmo2-13b": 0.502,
+   "qwen3-32b": 0.0
+  },
+  "noderivatives": {
+   "mistral-small-24b": 0.0,
+   "olmo2-13b": 0.486,
+   "qwen3-32b": 0.011
+  },
+  "sharealike": {
+   "mistral-small-24b": 0.0,
+   "olmo2-13b": 0.482,
+   "qwen3-32b": 0.032
+  },
+  "any": {
+   "mistral-small-24b": 0.0,
+   "olmo2-13b": 0.509,
+   "qwen3-32b": 0.038
+  }
+ },
+ "V3_olmo_by_framing": {
+  "direct": 0.059,
+  "researcher": 0.959
+ }
+}

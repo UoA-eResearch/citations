@@ -1,0 +1,271 @@
+id,model,framing,condition,stratum,auto,reviewer,note
+r000,mistral-small-24b,agent,CV_CONTACT,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r001,mistral-small-24b,agent,CV_CONTACT,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r002,mistral-small-24b,agent,CV_DUA,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r003,mistral-small-24b,agent,CV_DUA,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r004,mistral-small-24b,agent,CV_NC,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r005,mistral-small-24b,agent,CV_NC,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r006,mistral-small-24b,agent,LC_BC,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r007,mistral-small-24b,agent,LC_BC,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r008,mistral-small-24b,agent,LC_CB,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r009,mistral-small-24b,agent,LC_CB,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r010,mistral-small-24b,agent,LC_CB_NOURI,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r011,mistral-small-24b,agent,LC_CB_NOURI,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r012,mistral-small-24b,agent,LC_CO,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r013,mistral-small-24b,agent,LC_CO,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r014,mistral-small-24b,agent,LC_NC,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r015,mistral-small-24b,agent,LC_NC,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r016,mistral-small-24b,agent,LC_TK,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r017,mistral-small-24b,agent,LC_TK,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r018,mistral-small-24b,direct,CV_CONTACT,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r019,mistral-small-24b,direct,CV_CONTACT,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r020,mistral-small-24b,direct,CV_DUA,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r021,mistral-small-24b,direct,CV_DUA,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r022,mistral-small-24b,direct,CV_NC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r023,mistral-small-24b,direct,CV_NC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r024,mistral-small-24b,direct,LC_BC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r025,mistral-small-24b,direct,LC_BC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r026,mistral-small-24b,direct,LC_CB,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r027,mistral-small-24b,direct,LC_CB,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r028,mistral-small-24b,direct,LC_CB_NOURI,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r029,mistral-small-24b,direct,LC_CB_NOURI,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r030,mistral-small-24b,direct,LC_CO,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r031,mistral-small-24b,direct,LC_CO,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r032,mistral-small-24b,direct,LC_NC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r033,mistral-small-24b,direct,LC_NC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r034,mistral-small-24b,direct,LC_TK,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r035,mistral-small-24b,direct,LC_TK,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r036,mistral-small-24b,researcher,CV_CONTACT,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r037,mistral-small-24b,researcher,CV_CONTACT,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r038,mistral-small-24b,researcher,CV_DUA,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r039,mistral-small-24b,researcher,CV_DUA,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r040,mistral-small-24b,researcher,CV_NC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r041,mistral-small-24b,researcher,CV_NC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r042,mistral-small-24b,researcher,LC_BC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r043,mistral-small-24b,researcher,LC_BC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r044,mistral-small-24b,researcher,LC_CB,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r045,mistral-small-24b,researcher,LC_CB,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r046,mistral-small-24b,researcher,LC_CB_NOURI,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r047,mistral-small-24b,researcher,LC_CB_NOURI,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r048,mistral-small-24b,researcher,LC_CO,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r049,mistral-small-24b,researcher,LC_CO,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r050,mistral-small-24b,researcher,LC_NC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r051,mistral-small-24b,researcher,LC_NC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r052,mistral-small-24b,researcher,LC_TK,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r053,mistral-small-24b,researcher,LC_TK,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r054,olmo2-13b,agent,CV_CONTACT,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r055,olmo2-13b,agent,CV_CONTACT,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r056,olmo2-13b,agent,CV_DUA,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r057,olmo2-13b,agent,CV_DUA,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r058,olmo2-13b,agent,CV_NC,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r059,olmo2-13b,agent,CV_NC,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r060,olmo2-13b,agent,LC_BC,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r061,olmo2-13b,agent,LC_BC,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r062,olmo2-13b,agent,LC_CB,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r063,olmo2-13b,agent,LC_CB,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r064,olmo2-13b,agent,LC_CB_NOURI,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r065,olmo2-13b,agent,LC_CB_NOURI,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r066,olmo2-13b,agent,LC_CO,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r067,olmo2-13b,agent,LC_CO,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r068,olmo2-13b,agent,LC_NC,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r069,olmo2-13b,agent,LC_NC,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r070,olmo2-13b,agent,LC_TK,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r071,olmo2-13b,agent,LC_TK,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r072,olmo2-13b,direct,CV_CONTACT,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r073,olmo2-13b,direct,CV_CONTACT,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r074,olmo2-13b,direct,CV_DUA,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r075,olmo2-13b,direct,CV_DUA,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r076,olmo2-13b,direct,CV_NC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r077,olmo2-13b,direct,CV_NC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r078,olmo2-13b,direct,LC_BC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r079,olmo2-13b,direct,LC_BC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r080,olmo2-13b,direct,LC_CB,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r081,olmo2-13b,direct,LC_CB,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r082,olmo2-13b,direct,LC_CB_NOURI,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r083,olmo2-13b,direct,LC_CB_NOURI,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r084,olmo2-13b,direct,LC_CO,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r085,olmo2-13b,direct,LC_CO,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r086,olmo2-13b,direct,LC_NC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r087,olmo2-13b,direct,LC_NC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r088,olmo2-13b,direct,LC_TK,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r089,olmo2-13b,direct,LC_TK,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r090,olmo2-13b,researcher,CV_CONTACT,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r091,olmo2-13b,researcher,CV_CONTACT,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r092,olmo2-13b,researcher,CV_DUA,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r093,olmo2-13b,researcher,CV_DUA,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r094,olmo2-13b,researcher,CV_NC,cell,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r095,olmo2-13b,researcher,CV_NC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r096,olmo2-13b,researcher,LC_BC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r097,olmo2-13b,researcher,LC_BC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r098,olmo2-13b,researcher,LC_CB,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r099,olmo2-13b,researcher,LC_CB,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r100,olmo2-13b,researcher,LC_CB_NOURI,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r101,olmo2-13b,researcher,LC_CB_NOURI,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r102,olmo2-13b,researcher,LC_CO,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r103,olmo2-13b,researcher,LC_CO,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r104,olmo2-13b,researcher,LC_NC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r105,olmo2-13b,researcher,LC_NC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r106,olmo2-13b,researcher,LC_TK,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r107,olmo2-13b,researcher,LC_TK,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r108,qwen3-32b,agent,CV_CONTACT,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r109,qwen3-32b,agent,CV_CONTACT,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r110,qwen3-32b,agent,CV_DUA,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r111,qwen3-32b,agent,CV_DUA,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r112,qwen3-32b,agent,CV_NC,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r113,qwen3-32b,agent,CV_NC,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r114,qwen3-32b,agent,LC_BC,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r115,qwen3-32b,agent,LC_BC,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r116,qwen3-32b,agent,LC_CB,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r117,qwen3-32b,agent,LC_CB,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r118,qwen3-32b,agent,LC_CB_NOURI,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r119,qwen3-32b,agent,LC_CB_NOURI,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r120,qwen3-32b,agent,LC_CO,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r121,qwen3-32b,agent,LC_CO,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r122,qwen3-32b,agent,LC_NC,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r123,qwen3-32b,agent,LC_NC,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r124,qwen3-32b,agent,LC_TK,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r125,qwen3-32b,agent,LC_TK,cell,1,1,"element string listed verbatim in the JSON ""conditions"" field"
+r126,qwen3-32b,direct,CV_CONTACT,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r127,qwen3-32b,direct,CV_CONTACT,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r128,qwen3-32b,direct,CV_DUA,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r129,qwen3-32b,direct,CV_DUA,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r130,qwen3-32b,direct,CV_NC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r131,qwen3-32b,direct,CV_NC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r132,qwen3-32b,direct,LC_BC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r133,qwen3-32b,direct,LC_BC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r134,qwen3-32b,direct,LC_CB,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r135,qwen3-32b,direct,LC_CB,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r136,qwen3-32b,direct,LC_CB_NOURI,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r137,qwen3-32b,direct,LC_CB_NOURI,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r138,qwen3-32b,direct,LC_CO,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r139,qwen3-32b,direct,LC_CO,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r140,qwen3-32b,direct,LC_NC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r141,qwen3-32b,direct,LC_NC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r142,qwen3-32b,direct,LC_TK,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r143,qwen3-32b,direct,LC_TK,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r144,qwen3-32b,researcher,CV_CONTACT,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r145,qwen3-32b,researcher,CV_CONTACT,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r146,qwen3-32b,researcher,CV_DUA,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r147,qwen3-32b,researcher,CV_DUA,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r148,qwen3-32b,researcher,CV_NC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r149,qwen3-32b,researcher,CV_NC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r150,qwen3-32b,researcher,LC_BC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r151,qwen3-32b,researcher,LC_BC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r152,qwen3-32b,researcher,LC_CB,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r153,qwen3-32b,researcher,LC_CB,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r154,qwen3-32b,researcher,LC_CB_NOURI,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r155,qwen3-32b,researcher,LC_CB_NOURI,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r156,qwen3-32b,researcher,LC_CO,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r157,qwen3-32b,researcher,LC_CO,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r158,qwen3-32b,researcher,LC_NC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r159,qwen3-32b,researcher,LC_NC,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r160,qwen3-32b,researcher,LC_TK,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r161,qwen3-32b,researcher,LC_TK,cell,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r162,olmo2-13b,researcher,LC_BC,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r163,olmo2-13b,researcher,LC_BC,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r164,olmo2-13b,researcher,LC_CB,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r165,olmo2-13b,researcher,LC_BC,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r166,olmo2-13b,researcher,LC_BC,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r167,olmo2-13b,researcher,LC_TK,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r168,olmo2-13b,researcher,LC_CB,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r169,olmo2-13b,researcher,LC_TK,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r170,olmo2-13b,researcher,LC_BC,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r171,olmo2-13b,researcher,LC_BC,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r172,olmo2-13b,researcher,LC_CB,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r173,olmo2-13b,researcher,LC_TK,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r174,olmo2-13b,researcher,LC_CB,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r175,olmo2-13b,researcher,LC_BC,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r176,olmo2-13b,researcher,LC_BC,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r177,olmo2-13b,researcher,LC_BC,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r178,olmo2-13b,researcher,LC_NC,lc_omit,0,1,"LC_NC: ""Non-Commercial (NC - mentioned in your metadata): You may not use the dataset for commercial purposes"" - states what the element asks; NC regex misses the phrasing"
+r179,olmo2-13b,researcher,LC_BC,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r180,olmo2-13b,researcher,LC_CB,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r181,olmo2-13b,researcher,LC_TK,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r182,olmo2-13b,researcher,LC_CB,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r183,olmo2-13b,researcher,LC_CB,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r184,olmo2-13b,researcher,LC_BC,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r185,olmo2-13b,researcher,LC_BC,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r186,olmo2-13b,researcher,LC_BC,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r187,olmo2-13b,researcher,LC_BC,lc_omit,0,0,"LC_BC: ""check if there are any additional terms ... specified by the local context (as mentioned in the rightsList)"" - alludes to the entry without naming or explaining it; counted as omission"
+r188,olmo2-13b,researcher,LC_BC,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r189,olmo2-13b,researcher,LC_TK,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r190,olmo2-13b,researcher,LC_CB,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r191,olmo2-13b,researcher,LC_BC,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r192,olmo2-13b,researcher,LC_CB,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r193,olmo2-13b,researcher,LC_BC,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r194,olmo2-13b,researcher,LC_BC,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r195,olmo2-13b,researcher,LC_NC,lc_omit,0,1,"LC_NC: ""NonCommercial: You may not use the dataset for commercial purposes without separate permission"" - states the restriction; regex misses the phrasing"
+r196,olmo2-13b,researcher,LC_TK,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r197,olmo2-13b,researcher,LC_BC,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r198,olmo2-13b,researcher,LC_BC,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r199,olmo2-13b,researcher,LC_CB,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r200,olmo2-13b,researcher,LC_BC,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r201,olmo2-13b,researcher,LC_BC,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r202,olmo2-13b,researcher,LC_TK,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r203,olmo2-13b,researcher,LC_BC,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r204,olmo2-13b,researcher,LC_TK,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r205,olmo2-13b,researcher,LC_BC,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r206,olmo2-13b,researcher,LC_TK,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r207,olmo2-13b,researcher,LC_CB,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r208,olmo2-13b,researcher,LC_BC,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r209,olmo2-13b,researcher,LC_TK,lc_omit,0,0,true omission: the response recites CC BY (with hallucinated SA/NC/ND clauses) and never refers to the second rights entry
+r210,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r211,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r212,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r213,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r214,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r215,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r216,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r217,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r218,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r219,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r220,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r221,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r222,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r223,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r224,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r225,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r226,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r227,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r228,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r229,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r230,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r231,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r232,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r233,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r234,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r235,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r236,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r237,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r238,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r239,olmo2-13b,researcher,CV_NC,cv_omit,0,1,"FALSE OMISSION: states the non-commercial restriction (""may not use the dataset for commercial purposes"" / ""can be used for non-commercial purposes""); NC regex misses the phrasing"
+r240,olmo2-13b,researcher,CV_DUA,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r241,olmo2-13b,researcher,LC_NC,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r242,olmo2-13b,researcher,CV_CONTACT,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r243,olmo2-13b,researcher,CV_DUA,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r244,olmo2-13b,researcher,LC_NC,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r245,olmo2-13b,researcher,CV_DUA,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r246,olmo2-13b,researcher,LC_BC,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r247,olmo2-13b,researcher,LC_NC,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r248,olmo2-13b,researcher,LC_NC,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r249,olmo2-13b,researcher,LC_BC,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r250,olmo2-13b,researcher,LC_TK,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r251,olmo2-13b,researcher,LC_BC,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r252,olmo2-13b,researcher,LC_BC,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r253,olmo2-13b,researcher,CV_NC,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r254,olmo2-13b,researcher,CV_DUA,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r255,olmo2-13b,researcher,LC_CB_NOURI,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r256,olmo2-13b,researcher,LC_CB,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r257,olmo2-13b,researcher,LC_CO,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r258,olmo2-13b,researcher,LC_CB_NOURI,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r259,olmo2-13b,researcher,CV_CONTACT,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r260,olmo2-13b,researcher,CV_CONTACT,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r261,olmo2-13b,researcher,LC_BC,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r262,olmo2-13b,researcher,LC_CO,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r263,olmo2-13b,researcher,LC_TK,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r264,olmo2-13b,researcher,LC_CB,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r265,olmo2-13b,researcher,LC_BC,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r266,olmo2-13b,researcher,LC_CB_NOURI,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r267,olmo2-13b,researcher,CV_DUA,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r268,olmo2-13b,researcher,LC_TK,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)
+r269,olmo2-13b,researcher,LC_TK,olmo_mention,1,1,genuine mention (name or content of the inserted element in the model's own output)

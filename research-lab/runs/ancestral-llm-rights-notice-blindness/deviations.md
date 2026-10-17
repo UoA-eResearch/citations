@@ -89,3 +89,20 @@ Addendum to D4: plan section 3 says no record is sent to a third-party API. Gene
 local; but the pilot adjudication was done by the agent running the study, so the 200 adjudicated responses (which
 quote public DataCite metadata) passed through the agent's own model service. Disclosed in the report.
 
+
+## D7 — 2026-10-17 13:20 NZDT — acting on the adversarial review (fix first, 17 issues)
+
+The review (Fable 5.1) reproduced every primary number and left all three verdicts standing, but found: the
+non-commercial content pattern cannot score the OLMo-2 researcher cell (OLMo recites CC BY with invented NC terms, so
+"mention by content" is indistinguishable from its baseline), making the conventional-omission figures, the "42%"
+and H2's sign artefacts; the pilot adjudication contained none of the pilot's 17 scorer-negatives, so "sensitivity
+1.00" was vacuous; the adjudicator was the LLM running the study, and plan section 3's "no record is sent to a
+third-party API" was not kept (every response read by the agent passed through its hosted model service); the
+inserted name+URI form is thinner than real Hub Notices, and 15 of 21 non-Neotoma records carry no licence; the
+"matched invitation" is not matched (TK CB's text makes no request); the TK CO "commercial yes" is one model under a
+co-present CC BY licence, for a Label that does not address commercial use; the "not binding" measure counts accurate
+statements; the V3 regex counts disclaimers; H3's changes are mostly moves to "unclear"; batched generation is not
+bit-reproducible; and the LLM4RE citation is wrong (arXiv 2510.18787 is a requirements-engineering study). Correction
+to the plan: section 3's bold sentence should have read "no record is sent to a third-party model for generation or
+scoring". code/review_response.py, written now and committed before it runs, reproduces the checks in the study's own
+code, using the reviewer's independent hand judgements for the corrected omission rates. The report is then revised.

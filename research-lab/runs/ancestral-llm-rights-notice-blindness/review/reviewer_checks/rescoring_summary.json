@@ -1,0 +1,62 @@
+{
+ "n": 270,
+ "agreement_by_stratum": {
+  "cell": {
+   "n": 162,
+   "agree": 161,
+   "auto1_rev1": 161,
+   "auto0_rev0": 0,
+   "auto0_rev1": 1,
+   "auto1_rev0": 0
+  },
+  "cv_omit": {
+   "n": 30,
+   "agree": 0,
+   "auto1_rev1": 0,
+   "auto0_rev0": 0,
+   "auto0_rev1": 30,
+   "auto1_rev0": 0
+  },
+  "lc_omit": {
+   "n": 48,
+   "agree": 46,
+   "auto1_rev1": 0,
+   "auto0_rev0": 46,
+   "auto0_rev1": 2,
+   "auto1_rev0": 0
+  },
+  "olmo_mention": {
+   "n": 30,
+   "agree": 30,
+   "auto1_rev1": 30,
+   "auto0_rev0": 0,
+   "auto0_rev1": 0,
+   "auto1_rev0": 0
+  }
+ },
+ "overall": {
+  "auto1_rev1": 191,
+  "auto0_rev0": 46,
+  "auto0_rev1": 33,
+  "auto1_rev0": 0
+ },
+ "false_omission_share_among_scored_omissions_in_sample": 0.4177215189873418,
+ "false_omission_by_condition_group": {
+  "CV_NC_olmo_researcher": "31/31",
+  "LC_conditions": "2/48"
+ },
+ "corrected": {
+  "lc_omissions": 46,
+  "lc_rate": 0.004625439919557567,
+  "cv_omissions": 9,
+  "cv_rate": 0.0015082956259426848,
+  "h2_diff": 0.003117144293614882
+ },
+ "H3_definite_change": {
+  "est": 0.31730474732006125,
+  "ci": [
+   0.30351118314801256,
+   0.3310776934749621
+  ]
+ }
+}
