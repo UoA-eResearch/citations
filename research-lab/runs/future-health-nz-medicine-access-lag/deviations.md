@@ -40,3 +40,34 @@ Every departure from the lead and from plan.md, timestamped with `date` when it 
 3. **Crawler.** Medsafe results stream in after the page loads. The first crawler version waited a fixed 1.2 s and
    missed application rows; it was replaced before any results were used (commit de1125a), and the crawl restarted
    from scratch.
+
+## D3 — 2026-10-17 18:51 NZDT — additional sources from UoA-eResearch/pharmac (suggested by the user), before any date was linked
+
+The user pointed to https://github.com/UoA-eResearch/pharmac (commit 3e3e850, 2026-10-13; files copied to
+`data/raw/uoa_pharmac/` with SHA256SUMS). Three of its datasets are added. Nothing in it had been linked to the
+cohort before this entry.
+
+1. **PHARMAC application tracker** (`pharmac_approvals.csv`, 2,015 funding applications): application-received
+   dates, stage dates, decision dates and outcomes.
+   - **New dates per substance** (matched with the same whole-word rule on Chemical_Name__c):
+     - T_app, the earliest funding application received;
+     - T_dec, the first decision recorded as an approval to fund.
+   - **New secondary decomposition** of the funding stage among funded substances: Medsafe consent to funding
+     application (T2→T_app) and application to listing (T_app→T3).
+   - **H3 extension.** The "7.7 years to a funding decision" claim is also checked on application-based durations
+     (T_app → decision, and T2 → decision), under the same three denominators: decided only; all applications with
+     undecided ones censored; all consented substances. H3's preregistered verdict still uses T2→T3.
+2. **Medsafe register snapshot** (`medsafe_register.csv`, 14,828 products, scraped by wildcard search on
+   2026-03-30). It is an independent scrape of the same register, used to cross-check T2 for every cohort substance
+   (agreement within 31 days, or both absent), alongside the 150-substance hand check. It is not used to fill gaps,
+   so the primary T2 remains this study's crawl.
+3. **TGA ARTG** (`tga_artg.csv`, 97,618 entries with RegistrationDate). T_TGA is the earliest RegistrationDate
+   among ARTG entries whose name contains the substance. This gives a new **secondary regulatory benchmark** for the
+   whole 2010–2024 cohort:
+   - median T2 − T_TGA among substances with both;
+   - Kaplan–Meier share approved by 2 and 5 years from T0, in NZ (T2) and Australia (T_TGA).
+
+   It compares regulators, not funders; H2 (PBS funding) is unchanged and still limited to T0 2019–2024. Limitation:
+   the ARTG public summary lists current entries, so a substance whose first entry was cancelled shows a later date.
+
+Licences: Pharmac CC BY 4.0; TGA CC BY 4.0; Medsafe Crown copyright. The report credits the repository.
