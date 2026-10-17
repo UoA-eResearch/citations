@@ -101,6 +101,8 @@ def parse(rid, meta):
             d[k] = num(raw[lc[k]])
         d = d[d.study.notna() & d.t.notna()].copy()
         d = d.dropna(subset=need, how="all")
+        d = d[~(d.n.fillna(0) <= 0)].copy()     # D4: empty arms (n = 0) are not data
+        d = d[d.groupby("study").t.transform("size") >= 2].copy()
         if typ == "binary" and ((d.r > d.n) | (d.n <= 0)).any():
             issues.append("r > n or n <= 0 in some arm")
     else:

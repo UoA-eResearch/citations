@@ -25,17 +25,15 @@ pairs_of <- function(D, kind, sm) {
 }
 
 largest_component <- function(P) {
+  # D4: components from netconnection's distance matrix (subnet.comparisons has one entry per distinct comparison,
+  # not per contrast row, so it cannot index P)
   nc <- netconnection(P$treat1, P$treat2, P$studlab)
   if (nc$n.subnets <= 1) return(P)
-  memb <- nc$subnet.comparisons
-  if (is.null(memb)) {
-    # fall back: component membership of treat1 via the distance matrix
-    dd <- nc$D.matrix
-    trts <- rownames(dd)
-    comp <- integer(length(trts)); names(comp) <- trts; k <- 0
-    for (tr in trts) if (comp[tr] == 0) { k <- k + 1; comp[trts[is.finite(dd[tr, ])]] <- k }
-    memb <- comp[as.character(P$treat1)]
-  }
+  dd <- nc$D.matrix
+  trts <- rownames(dd)
+  comp <- integer(length(trts)); names(comp) <- trts; k <- 0
+  for (tr in trts) if (comp[tr] == 0) { k <- k + 1; comp[trts[is.finite(dd[tr, ])]] <- k }
+  memb <- comp[as.character(P$treat1)]
   ns <- tapply(P$studlab, memb, function(x) length(unique(x)))
   P[memb == as.integer(names(ns)[which.max(ns)]), ]
 }

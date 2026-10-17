@@ -70,3 +70,26 @@ with infinite weights.
   consistent multi-arm contrasts from arm data.
 - **Checks in the same test.** The engine's P-score equals netmeta's `netrank(method = "P-score")` exactly, checked
   on 481107. A direct-evidence share of 0 is genuine when the top two treatments were never compared head to head.
+
+## D4 — 2026-10-18 06:36 NZDT — corrections from the independent review (review/review.md), before the refit
+
+1. **The largest-component rule never ran (review issue 1).** In `nma.R`, `netconnection()$subnet.comparisons`
+   has one entry per distinct comparison, not per contrast row. Indexing the contrasts with it errored on every
+   disconnected pre-update network, so the preregistered fallback never executed.
+   - **Affected fits.** 702 fits failed this way: T10 of 501229 (primary) and 501403 (iv), 10 secondary fits, and 687
+     random holdouts concentrated in 39 networks.
+   - **The fix.** Components now always come from the distance matrix.
+2. **Empty arms (review issue 3).** Arms with n = 0, or with no n, are dropped, as are studies left with one arm.
+   This changes the data of 479585, 479808 and 501307.
+3. **Two contrast-level direction calls were inverted (review issue 2).** In 501220 and 501274, my display showed the
+   hub treatment as t1, and I read it as t2.
+   - **501220.** The rows are CAF+CTG versus CAF, at +0.44.
+   - **501274.** The rows are FI versus FIB, at −0.42, the published FIB versus FI estimate.
+   - **The correction.** Both are now "bad", still high confidence. These two networks are in the sensitivity set
+     only.
+4. **The withheld share for contrast-level networks** counted split labels as studies. It is now counted by original
+   study id.
+5. **The refit.** `holdouts.py` was rerun; random holdouts are seeded per network, so unaffected jobs are
+   byte-identical. 44 networks are refitted with the fixed code (`data/jobs_refit.json`) and merged into
+   `data/fits.jsonl`. These are every network with any failed fit, the three with changed data, and the two
+   re-directed ones. The first-run fits are kept as `data/fits_v1.jsonl`.

@@ -149,8 +149,9 @@ def main():
         if "n" in d:
             nn = d.groupby("study").n.sum()
             wshare = float(nn[~nn.index.isin(used)].sum() / nn.sum())
-        else:
-            wshare = float(1 - len(used) / d.study.nunique())
+        else:   # D4: contrast-level studies, counted by original study id (split labels "id_k" map back)
+            used_ids = {str(u).split("_")[0] for u in used}
+            wshare = float(1 - len(used_ids & set(d.study.astype(str))) / d.study.nunique())
         row = {**base, "included": True, "reason": "", "withheld_share": wshare, "type": "contrast" if "TE" in d else "arm",
                "continuous": int("y" in d or rec in CONT),
                "multiarm_split": bool(full.get("multiarm_split"))}
