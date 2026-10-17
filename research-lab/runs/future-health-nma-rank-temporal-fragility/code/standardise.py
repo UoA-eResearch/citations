@@ -23,8 +23,10 @@ OUT = RUN / "data" / "std"
 SM = {"odds ratio": "OR", "risk ratio": "RR", "hazard ratio": "HR", "rate ratio": "IRR", "risk difference": "RD",
       "mean difference": "MD", "standardized mean difference": "SMD"}
 RATIO = {"OR", "RR", "HR", "IRR"}
-YEAR_COLS = ["study year", "year", "studyyear"]
-LABEL_COLS = ["study name", "study", "studyid", "study id", "author"]
+YEAR_COLS = ["study year", "year", "studyyear", "pub. year", "publication year", "pub year"]
+LABEL_COLS = ["study name", "study (name)", "study", "studyid", "study id", "author"]
+# D1: with no year column, a year written in the study label ("Smolen, 2008", "Black et al. (2007)") is used
+LABEL_YEAR = re.compile(r"(?:^|[\s,(\[])((?:19[5-9]|20[0-2])\d)[a-z]?(?=[\s,)\].;]|$)")
 
 
 def num(s):
@@ -79,6 +81,11 @@ def parse(rid, meta):
     d["year"] = raw[ycol].map(year_of) if ycol is not None else np.nan
     if ycol is None:
         issues.append("no year column")
+        if lcol is not None:
+            ly = raw[lcol].map(lambda v: float(LABEL_YEAR.findall(str(v))[-1]) if isinstance(v, str) and LABEL_YEAR.findall(v) else np.nan)
+            if ly.notna().any():
+                d["year"] = ly
+                issues.append("year from study label (D1)")
     if fmt in ("long", "wide"):
         d["t"] = num(raw[lc["t"]])
         need = {"binary": ["r", "n"], "continuous": ["y", "sd", "n"], "rate": ["r", "n", "time"]}.get(typ)
