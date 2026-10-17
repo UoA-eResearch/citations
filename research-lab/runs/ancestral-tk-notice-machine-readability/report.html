@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Local Contexts Metadata</title>
+<meta name="description" content="A preregistered test of whether sparse-autoencoder features of Pythia-160M are shared across independently pretrained models as often as across SAE retrainings on one model.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Ancestral Futures</div>
+  <h1>Does Indigenous-governance metadata survive the open-data pipeline?</h1>
+  <p class="subtitle">A census of Local Contexts Notices and TK/BC Labels across nine open research-data platforms, and a test of whether those elements survive the nine machine views through which a DOI&#x27;s metadata is copied onward.</p>
+  <div class="meta">
+    <span>Report · 2026-10-18 · pre-review draft</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ancestral-tk-notice-machine-readability/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ancestral-tk-notice-machine-readability/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ancestral-tk-notice-machine-readability/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: Supported, on both counts, with one large caveat.</strong> The open-data layer's Local Contexts metadata is
+almost entirely one repository's.</p>
+<ul>
+<li><strong>Community Labels are vanishingly rare (H1, Supported).</strong><ul>
+<li>Of 48,361 records carrying any Local Contexts element, <strong>one</strong> carries a TK or BC Label backed by a live Local
+Contexts Hub project: 0.002% (exact 95% CI 0.00005–0.012%), against a threshold of 0.1%.</li>
+<li>99.94% of element-bearing records come from one repository, the Neotoma Paleoecology Database. Without Neotoma it
+is 1 of 29 records.</li>
+</ul>
+</li>
+<li><strong>Machine views drop the element (H2, Supported).</strong> Across 1,998 sampled DOIs and up to nine views each, the
+  element is dropped in <strong>43.6%</strong> of record × view pairs (95% CI 43.5–43.7%), against a threshold of 40%.<ul>
+<li><strong>For publishers other than Neotoma</strong>, whose records more often carry the element in free text that citation
+formats keep, the share is 30.5% (25.4–35.2%).</li>
+</ul>
+</li>
+<li><strong>The loss is set by the format, not by the record.</strong><ul>
+<li><strong>Formats that keep it.</strong> DataCite XML, both OAI-PMH formats and Crosscite JSON carry it in every record that has
+it as a rights entry.</li>
+<li><strong>Formats that drop it.</strong> BibTeX, CSL-JSON, the formatted citation and the OpenAIRE Graph drop it almost always.</li>
+<li><strong>Schema.org JSON-LD</strong>, the format search engines read, merges it into <code>license</code>, where it cannot be told apart
+from the licence.</li>
+</ul>
+</li>
+<li><strong>No view says anything was dropped (H2b).</strong> None of the 17,762 views that returned a record warns that a rights
+  element was dropped.</li>
+</ul>
+<p>These counts describe repository systems, not communities. Labels may be meant to live in the Hub and on landing
+pages rather than in DOI metadata. The study measures what a machine consumer can see.</p>
+<h2>In plain terms</h2>
+<p>Indigenous communities now have a formal way to attach their own conditions to data about them: "Labels", applied
+through a system called Local Contexts. Institutions can also attach "Notices" saying that such conditions may
+apply. Repository systems have built support for both. We asked two plumbing questions:
+- Do these marks show up in the open research-data layer?
+- Do they survive when the record is copied into the standard formats that other systems read?</p>
+<p>We searched nine platforms and found about 48,000 records carrying a Local Contexts mark. Almost all came from one
+paleoecology database, which marks every record with the same institutional Notice. Only one record anywhere carried
+a community Label linked to a live Local Contexts project.</p>
+<p>We then followed 2,000 of these records through nine common export formats:
+- <strong>The full metadata formats kept the mark.</strong> These are DataCite XML, the OAI-PMH feeds and Crosscite JSON.
+- <strong>The citation formats lost it.</strong> BibTeX, CSL-JSON and the plain formatted citation, which reference managers
+  use, almost always threw it away.
+- <strong>The research graph lost it.</strong> So did OpenAIRE, a large European research-information graph.
+- <strong>The search-engine format blurred it.</strong> The schema.org format that search engines read folded it into the
+  licence, so a machine cannot tell the two apart.
+- <strong>No format ever said that something had been left out.</strong></p>
+<p>This is about the pipes, not the communities. Labels may be meant to live on the Local Contexts Hub, and absence
+from DOI records is not, by itself, a failing.</p>
+<h2>What was asked</h2>
+<p>The lead (<code>ancestral-tk-notice-machine-readability</code>, Ancestral Futures) asked whether Indigenous-governance metadata
+is present but not machine-readable downstream. Preregistered hypotheses (<code>plan.md</code>):
+- <strong>H1:</strong> fewer than 0.1% of element-bearing records carry a community-authored TK/BC Label resolvable to a Hub
+  project.
+- <strong>H2:</strong> the element is dropped in at least 40% of record × machine-view pairs.
+- <strong>H2b:</strong> no lossy view signals the loss.</p>
+<h2>What was already known</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Work</th>
+<th>What it established</th>
+<th>What it left open</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Local Contexts and the DataCite, Dryad, Dataverse and RAiD integrations (2022 onwards)</td>
+<td>a vocabulary of 30 Labels and 12 Notices, and rights-field support in major schemas</td>
+<td>no count of uptake across platforms</td>
+</tr>
+<tr>
+<td>Dataverse GitHub issues #8129, #5920, #4176</td>
+<td>rights fields can be lost in the dc:rights / oai_dc crosswalk</td>
+<td>no measurement across formats</td>
+</tr>
+<tr>
+<td>CARE principles; Te Mana Raraunga</td>
+<td>Indigenous data governance requires provenance and protocols to travel with data</td>
+<td>no test of whether the machinery carries them</td>
+</tr>
+</tbody>
+</table></div>
+<h2>How it was done</h2>
+<p><strong>Census (limb 1).</strong> Nine platforms were queried through their public APIs for Local Contexts URIs and exact
+vocabulary names:
+- DataCite: structured rights fields and free text;
+- Zenodo, Dryad, Harvard Dataverse, figshare and OSF;
+- GBIF, including machine tags;
+- RAiD and re3data.</p>
+<p>Every raw response is saved.
+- <strong>OSF's search failed</strong> with 503s and is reported as unavailable, not as zero.
+- <strong>Two paging bugs</strong> (Zenodo's page-size limit; RAiD's cursor) were fixed before the census was scanned (D2, D3).
+- <strong>Name-only hits.</strong> All 69 records matched only by a vocabulary name in free text were adjudicated by hand. 2 were
+  genuine; the rest were mostly empty template fields and texts about Local Contexts, and are dropped.
+- <strong>URIs.</strong> Every distinct Local Contexts URI was resolved: 21 of 24 live, and 3 Hub projects dead.</p>
+<p><strong>Crosswalks (limb 2).</strong>
+- <strong>The sample.</strong> All non-Neotoma element-bearing DataCite DOIs, with Neotoma filling the sample to 2,000 (seed
+  20261021).
+- <strong>The nine views.</strong> Six DOI content-negotiation formats (DataCite XML, schema.org JSON-LD, Crosscite JSON,
+  CSL-JSON, BibTeX, formatted citation); DataCite OAI-PMH <code>oai_dc</code> and <code>oai_datacite</code>; and the OpenAIRE Graph record.
+- <strong>Scoring</strong>, by a deterministic parser:
+    - <strong>preserve:</strong> the element's URI or name is in a rights-type field, distinct from the licence;
+    - <strong>degrade:</strong> it appears only in the licence field or in free text;
+    - <strong>drop:</strong> it is absent;
+    - views that return nothing are excluded.
+- <strong>Exclusion.</strong> Two sampled DOIs whose element was later judged not genuine (a conference abstract) are excluded
+  (D4).</p>
+<p><strong>Hand check.</strong> 100 record-views, stratified by view with each view's rare calls oversampled, were checked against
+the raw responses. All 100 scorer calls are right under the URI-or-name definition. In one DOI's citation formats,
+the Attribution Incomplete Notice's wording survives without its name or URI. That is a drop by definition, and
+unidentifiable to a machine.</p>
+<h2>Results</h2>
+<h3>H1: how many records carry a community Label?</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>records with any element</th>
+<th>Label with a live Hub project</th>
+<th>share (exact 95% CI)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>all platforms</td>
+<td>48,361</td>
+<td>1</td>
+<td>0.002% (0.00005–0.012%)</td>
+</tr>
+<tr>
+<td>without Neotoma</td>
+<td>29</td>
+<td>1</td>
+<td>3.4% (0.09–17.8%)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>H1, Supported.</strong> The upper end of the interval, 0.012%, is below 0.1%.
+- <strong>The one record</strong> is a Victoria University of Wellington figshare dataset (10.26686/wgtn.25790481), carrying a BC
+  Provenance Label and a live Hub project.
+- <strong>Neotoma's records.</strong> Neotoma's 48,332 records each carry the Open to Collaborate <em>Notice</em> URI, under the name of
+  the <em>TK Open to Collaboration Label</em> and with no Hub project. That naming mismatch is why "Label" names appear in
+  48,333 records, while none of those carries a community-applied Label.
+- <strong>The other 28 element-bearing records:</strong>
+    - 27 DataCite DOIs: the Gump South Pacific Research Station and Tetiaroa Society on Mo'orea, iPlaces, ADA
+    Dataverse (Dja Dja Wurrung material), Landcare Research's NZ Arthropod Collection, and Zenodo;
+    - a second Victoria University of Wellington figshare record.
+    - The Zenodo and GBIF platform hits duplicate DataCite DOIs and are counted once.
+- <strong>Notices dominate.</strong> Of 28 records with a Hub project link, most carry a BC or TK Notice. Notices are placed by
+  researchers or institutions, not by communities.</p>
+<figure><a href="results/figures/F1_census.png"><img src="results/figures/F1_census.png" alt="Figure 1"></a><figcaption>Records carrying a Local Contexts Notice or Label, by platform, after the free-text channel was adjudicated in full. One repository (Neotoma) accounts for nearly all of them. Zenodo and figshare hits also appear as DataCite DOIs, so platforms overlap.</figcaption></figure>
+<p><em>Figure 1. Records carrying a Local Contexts element, by platform (log scale). Neotoma is shown separately from every
+other DataCite publisher.</em></p>
+<h3>H2: what survives the crosswalks?</h3>
+<p><strong>H2, Supported.</strong> 7,750 of 17,762 record × view pairs drop the element: <strong>43.6%</strong> (record-cluster bootstrap 95% CI
+43.5–43.7%).
+- <strong>Why the interval is so narrow.</strong> Nearly every record behaves the same way in each view.
+- <strong>By stratum.</strong> The share is 43.8% for Neotoma's 1,971 DOIs and 30.5% (25.4–35.2%) for the 27 DOIs of other
+  publishers.
+- <strong>What drives the difference.</strong> The other publishers' records put the notice text in fields that CSL-JSON and
+  BibTeX carry as <code>copyright</code> or a note, so those views degrade instead of dropping it.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>view</th>
+<th>preserve</th>
+<th>degrade</th>
+<th>drop</th>
+<th>unavailable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DataCite XML</td>
+<td>1,992</td>
+<td>6</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>OAI-PMH oai_datacite</td>
+<td>1,992</td>
+<td>6</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>OAI-PMH oai_dc</td>
+<td>1,992</td>
+<td>6</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Crosscite JSON</td>
+<td>1,991</td>
+<td>7</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>schema.org JSON-LD</td>
+<td>0</td>
+<td>1,995</td>
+<td>3</td>
+<td>0</td>
+</tr>
+<tr>
+<td>CSL-JSON</td>
+<td>0</td>
+<td>10</td>
+<td>1,988</td>
+<td>0</td>
+</tr>
+<tr>
+<td>BibTeX</td>
+<td>0</td>
+<td>9</td>
+<td>1,989</td>
+<td>0</td>
+</tr>
+<tr>
+<td>formatted citation</td>
+<td>0</td>
+<td>0</td>
+<td>1,998</td>
+<td>0</td>
+</tr>
+<tr>
+<td>OpenAIRE Graph</td>
+<td>2</td>
+<td>4</td>
+<td>1,772</td>
+<td>220</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>The rights-bearing views keep it.</strong> These are DataCite's own XML, both OAI-PMH formats (including <code>oai_dc</code>,
+  despite the Dataverse crosswalk issues) and Crosscite JSON. Their few "degrade" calls are records whose repository
+  put the notice in the description in the first place; the crosswalk did not cause them.</li>
+<li><strong>Schema.org JSON-LD</strong>, the format read by dataset search engines, lists the Local Contexts URI in <code>license</code>,
+  alongside the Creative Commons licence. A consumer cannot tell a governance notice from a licence.</li>
+<li><strong>The citation formats drop it,</strong> as they were not designed to carry rights.</li>
+<li><strong>The OpenAIRE Graph,</strong> an aggregator copy, drops it in 99.7% of the records it holds.</li>
+</ul>
+<p><strong>H2b.</strong> None of the 17,762 views that returned a record contains a warning that a rights element was omitted.</p>
+<figure><a href="results/figures/F2_crosswalks.png"><img src="results/figures/F2_crosswalks.png" alt="Figure 2"></a><figcaption>For sampled DOIs carrying a Local Contexts element in DataCite, whether each machine view preserves it (in a rights field, distinct from the licence), degrades it (merged into the licence or free text), drops it, or returns nothing. Neotoma&#x27;s records are near-identical, so its panel is one pattern repeated.</figcaption></figure>
+<p><em>Figure 2. Whether each machine view preserves, degrades or drops the element, by view, for sampled DOIs. Other
+publishers (left) and Neotoma (right).</em></p>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>Uptake in the DOI layer is one institution's Notice.</strong> Community-applied Labels, the element designed to carry a
+  community's own conditions, are almost absent: one record across nine platforms. This may reflect where Labels are
+  meant to live, on the Hub and on landing pages, and the newness of the system. Absence from DOI metadata is not by
+  itself a failing.</li>
+<li><strong>Where the element is a proper rights entry, DataCite's own formats carry it faithfully.</strong> The loss happens in the
+  formats that most downstream tools use: citation formats, the schema.org markup search engines read, and an
+  aggregator graph. None of them says so.</li>
+<li><strong>The verdicts are dominated by one repository.</strong> H2's pooled share is effectively Neotoma's. Other publishers'
+  practice (free-text notices, Hub project links) is too sparse, 27 DOIs, to generalise.</li>
+<li><strong>Not shown:</strong> whether any community wants more visibility; landing pages and the Hub itself; non-DataCite DOI
+  registries; full-text recall outside the searched fields (counts are lower bounds).</li>
+<li><strong>Care note.</strong> No community's data was analysed, and no collection is judged. Engagement with Local Contexts, the
+  repositories and Te Mana Raraunga / Pacific data-governance advisers is recommended before these counts are used to
+  rank platforms.</li>
+</ul>
+<h2>Process and deviations</h2>
+<p>Preregistered in <code>plan.md</code>, with all code committed before the outputs it produces. Deviations are in
+<code>deviations.md</code>:
+- <strong>D1:</strong> testing on neutral terms only; OSF unavailability recorded; the aggregator is OpenAIRE only; the H2 unit;
+  the care note.
+- <strong>D2:</strong> the Zenodo page-size bug, fixed before the census was scanned.
+- <strong>D3:</strong> RAiD cursor paging.
+- <strong>D4:</strong> H2 excludes DOIs whose element was judged not genuine; the hand check.</p>
+<h2>Reproducing it</h2>
+<pre><code>venv/bin/python code/census.py; venv/bin/python code/census.py scan      # limb 1 (all raw responses saved)
+venv/bin/python code/precision.py                                       # adjudication of name-only hits
+venv/bin/python code/resolve_uris.py; venv/bin/python code/views.py      # limb 2 (18,000 record-views)
+venv/bin/python code/handcheck.py                                       # hand-check sheet
+venv/bin/python code/analysis.py; venv/bin/python code/figures.py
+</code></pre>
+<p><strong>Released</strong> in <code>results/tables/</code>:
+- <code>primary.json</code>;
+- the census and view matrices, including by stratum;
+- <code>precision.csv</code>, <code>handcheck.csv</code> and <code>vocabulary.json</code>.</p>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ancestral-tk-notice-machine-readability/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>
