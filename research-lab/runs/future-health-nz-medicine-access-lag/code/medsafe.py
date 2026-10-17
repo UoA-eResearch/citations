@@ -1,6 +1,6 @@
 """Query Medsafe's Product and Application searches for every cohort substance (plan section 4), in a headless browser
 (the search is a Blazor server app; results arrive over its interactive circuit, so a plain HTTP client gets the form
-back). One query at a time, ~1.5 s apart; resumable. If a multi-word name returns nothing, the longest word is tried.
+back). The page is polled until its "N records" line appears. One query at a time, ~1.5 s apart; resumable. If a multi-word name returns nothing, the longest word is tried.
 Saves data/raw/medsafe/html/<type>/<slug>.html.gz and data/raw/medsafe/log.jsonl."""
 import asyncio
 import gzip
@@ -30,11 +30,16 @@ async def search(pg, st, term):
     await pg.check(f"#opt{st}")
     await pg.fill("#txtIngredient", term)
     await pg.press("#txtIngredient", "Enter")
-    await pg.wait_for_url(re.compile(r"qry="), timeout=30000)
-    await pg.wait_for_load_state("networkidle")
-    await pg.wait_for_timeout(1200)
-    html = await pg.content()
-    return html, len(re.findall(r"ProductDetail\?Product_id=", html))
+    await pg.wait_for_url(re.compile(r"qry=" + st), timeout=30000)
+    # results stream in over the circuit: poll until the "N records" line (or a product link) appears, up to 20 s
+    for _ in range(40):
+        await pg.wait_for_timeout(500)
+        html = await pg.content()
+        n = len(re.findall(r"ProductDetail\?Product_id=", html))
+        m = re.search(r"\b(\d+)\s+records?\b", re.sub(r"<[^>]+>", " ", html))
+        if n or m:
+            return html, n, int(m.group(1)) if m else None
+    raise TimeoutError("no result count")
 
 
 async def main():
@@ -53,10 +58,12 @@ async def main():
                     for term in terms:
                         for attempt in range(3):
                             try:
-                                html, n = await search(pg, st, term)
+                                html, n, nrec = await search(pg, st, term)
+                                rec["n_records"] = nrec
                                 break
                             except Exception as e:
                                 html, n = None, -1; rec["error"] = str(e)[:120]
+                                pg = await b.new_page(user_agent=UA)
                                 await asyncio.sleep(10 * (attempt + 1))
                         if html is not None:
                             f = OUT / st / f"{slug(s)}.html.gz"
