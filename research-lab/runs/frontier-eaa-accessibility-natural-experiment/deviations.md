@@ -16,3 +16,17 @@ Every departure from the lead and from plan.md, timestamped with `date` when it 
    adopters improved their markup less (substitution), and S4 measures whether the Act drove overlay adoption.
 4. **Sector labels by rules plus a blind agent check**, not by a local LLM. The adjudicator is the agent running the
    study (plan section 5).
+
+## D2 — 2026-10-17 16:06 NZDT — after 7 CDX rows, before any archived page was fetched
+
+1. **CDX collapse.** The first rows returned up to 24,693 captures per domain and the index began answering 503. Queries
+   now ask for one capture per day (`collapse=timestamp:8`, the day's first). The rule picks the capture on the day
+   closest to the 15th, and the first capture of that day when there are several, so the selected snapshots are
+   unchanged; `n_captures` now counts days with a capture. The 7 rows already written were discarded and re-queried.
+2. **Public bodies.** Those 7 rows included bundestag.de, bayern.de and uni-hamburg.de: public bodies the frame's
+   label filter missed (it matches whole labels such as "gov" or "bund"). The plan excludes public bodies, which the
+   Web Accessibility Directive has covered since 2018–2020, so `sector.py` now marks a site "public" and excludes it
+   when its domain labels (gov, bund*, landtag, uni, univ, tu, stadt, gemeente, kommune, gmina, police terms) or its
+   page title (ministry, parliament, government, municipality, university, police terms in 14 languages) mark it as
+   one. The rule is applied before the sector rules, to the same earliest pre-period snapshot. The frame itself is
+   unchanged; public counts are reported.

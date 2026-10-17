@@ -8,6 +8,9 @@
     telecom    mobile / broadband tariff markers, e-book markers
   A site is in scope if any one sector has >= 2 distinct markers (or a bank-name domain); out of scope if no sector
   has any marker; otherwise ambiguous and excluded. Sectors themselves are reported, not used separately.
+  Public bodies (government, parliament, municipality, university, police), identified from the domain labels or the
+  page title, are "public" and excluded first: the Web Accessibility Directive has covered them since 2018-2020, and
+  the frame's label filter misses names such as bundestag.de or uni-hamburg.de (deviations D2).
 Writes data/sector.csv.
 """
 import gzip
@@ -36,6 +39,14 @@ M = {
 }
 BANK_DOMAIN = re.compile(r"bank|banque|banca|banco|sparkasse|volksbank|raiffeisen|kasa|spar", re.I)
 RX = {s: [re.compile(p, re.I) for p in ps] for s, ps in M.items()}
+PUBLIC_DOMAIN = re.compile(r"(^|[.-])(gov|govt|bund|bundes\w*|landtag|uni|univ|tu|stadt|gemeente|kommune|gmina|polizei|"
+                           r"politie|policja)([.-]|$)", re.I)
+PUBLIC_TITLE = re.compile(r"ministeri|minist[eè]re|bundes(amt|ministerium|tag|rat|regierung|agentur|anstalt)|landtag|"
+                          r"landesregierung|regierung|gouvernement|governo|gobierno|rijksoverheid|overheid|parlament|"
+                          r"parliament|assembl[ée]e nationale|senato|senado|\bsejm\b|riksdag|eduskunta|folketing|"
+                          r"gemeinde|kommune|municipality|ayuntamiento|comune di|\bgmina\b|kommun\b|\bkunta\b|mairie|"
+                          r"ville de|city council|county council|universit|hochschule|yliopisto|uniwersytet|politechnika|"
+                          r"polytechnic|polizei|politie|policja|gendarmerie|\bpolice\b", re.I)
 
 
 def text_and_attrs(html):
@@ -46,6 +57,10 @@ def text_and_attrs(html):
 
 
 def classify(domain, html):
+    t = re.search(r"<title[^>]*>(.*?)</title>", html, re.S | re.I)
+    if PUBLIC_DOMAIN.search(domain.rsplit(".", 2 if domain.count(".") >= 2 and domain.split(".")[-2] in ("co", "com") else 1)[0]) \
+            or (t and PUBLIC_TITLE.search(t.group(1))):
+        return "public", None, {}
     s = text_and_attrs(html)
     hits = {k: sum(bool(r.search(s)) for r in rx) for k, rx in RX.items()}
     if BANK_DOMAIN.search(domain.split(".")[0]):

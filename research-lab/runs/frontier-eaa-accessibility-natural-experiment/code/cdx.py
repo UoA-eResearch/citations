@@ -3,7 +3,8 @@
 Targets: 2024-01, 2024-04, 2024-07, 2024-10 (pre), 2025-01, 2025-04 (anticipation), 2025-07 (transition; the Act
 applies from 2025-06-28), 2025-10, 2026-01, 2026-04 (post). For each target month, the 200-status text/html capture of the homepage
 (https://<domain>/ or https://www.<domain>/, whichever the index holds) closest to the 15th within that month.
-Polite: 4 concurrent requests, exponential backoff on 429/5xx, resumable. Writes data/cdx/snapshots.jsonl.
+One capture per day (collapse=timestamp:8, the day's first; the closest-day rule is unchanged, so the
+selected snapshot is the same). Polite: 4 concurrent requests, exponential backoff on 429/5xx, resumable. Writes data/cdx/snapshots.jsonl.
 """
 import json
 import sys
@@ -22,7 +23,7 @@ UA = {"User-Agent": "research-lab accessibility study (mailto:noreply@anthropic.
 def query(domain):
     for host in (domain, "www." + domain):
         url = ("http://web.archive.org/cdx/search/cdx?url=" + host + "/&from=202401&to=202604&output=json"
-               "&filter=statuscode:200&filter=mimetype:text/html&fl=timestamp,original,digest")
+               "&filter=statuscode:200&filter=mimetype:text/html&fl=timestamp,original,digest&collapse=timestamp:8")
         for k in range(6):
             try:
                 r = requests.get(url, headers=UA, timeout=120)
