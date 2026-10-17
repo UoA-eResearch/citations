@@ -71,3 +71,13 @@ cohort before this entry.
    the ARTG public summary lists current entries, so a substance whose first entry was cancelled shows a later date.
 
 Licences: Pharmac CC BY 4.0; TGA CC BY 4.0; Medsafe Crown copyright. The report credits the repository.
+
+## D4 — 2026-10-17 18:53 NZDT — XML archive gap filled from Schedule Update PDFs, before any date was linked
+
+The community-Schedule XML archive has no editions for January 2018 or for June 2024 to December 2025 (20 months).
+That was checked against the archive's own directory listing: the files do not exist. The HML archive is complete.
+A community listing first made in the gap would otherwise be dated to the next available edition, up to 19 months
+late. `code/su_listings.py` therefore parses the detailed "New Listings – effective <date>" sections of every
+Schedule Update PDF (upper-case chemical headers). Listings effective inside the two gap windows are added as T3B
+candidates, and T3B is the earlier of the XML first edition and a gap-window Schedule Update listing. Outside the
+gaps, the PDFs are used only for validation.

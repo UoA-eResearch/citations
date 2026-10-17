@@ -38,6 +38,12 @@ def main():
     L["ed"] = pd.to_datetime(L.edition)
     L["text"] = (L.chemical.fillna("") + " " + L.formulations.fillna("")).map(norm)
     first_ed = L[L.source == "schedule"].ed.min()
+    # D4: the community-Schedule XML archive has no editions for Jan 2018 or Jun 2024 - Dec 2025; new listings
+    # effective in those windows come from the Schedule Update PDFs (code/su_listings.py)
+    SU = pd.read_csv(RUN / "data" / "su_listings.csv", dtype=str)
+    SU["eff"] = pd.to_datetime(SU.effective, errors="coerce")
+    SU = SU[((SU.eff >= "2018-01-01") & (SU.eff < "2018-02-01")) | ((SU.eff >= "2024-06-01") & (SU.eff < "2026-01-01"))].copy()
+    SU["text"] = SU.chemical.map(norm)
     W = pd.read_csv(RUN / "data" / "msw.csv", dtype=str) if (RUN / "data" / "msw.csv").exists() else pd.DataFrame(columns=["drug", "listed_date"])
     U = RUN / "data" / "raw" / "uoa_pharmac"
     APP = pd.read_csv(U / "pharmac_approvals.csv", dtype=str)
@@ -63,6 +69,9 @@ def main():
         pat = r"(?<![a-z0-9])" + re.escape(s) + r"(?![a-z0-9])"
         hit = L[L.text.str.contains(pat, regex=True)]
         b = hit[(hit.source == "schedule") & (hit.section == "B")].ed.min()
+        b_su = SU[SU.text.str.contains(pat, regex=True)].eff.min()
+        if pd.notna(b_su) and (pd.isna(b) or b_su < b):
+            b = b_su
         h = hit[hit.source == "HML"].ed.min()
         t3 = min([x for x in (b, h) if pd.notna(x)], default=pd.NaT)
         w = W[W.drug.map(lambda x: has(s, x))]
