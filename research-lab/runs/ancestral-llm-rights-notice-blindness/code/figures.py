@@ -66,15 +66,16 @@ def f1():
     ax.set_xlim(-1, 80)
     ax.set_xlabel("researcher framing: answers that do not name the element, %")
     ax.legend(frameon=False, fontsize=8, loc="lower right")
-    ax.set_title("Only OLMo-2 leaves elements unnamed, the CC BY-NC licence most", loc="left", fontsize=10,
-                 color=INK)
+    ax.set_title("OLMo-2 leaves most of the unnamed elements, the CC BY-NC licence most", loc="left",
+                 fontsize=10, color=INK)
     fig.savefig(F / "F1_omission.png", dpi=200)
     caption("F1_omission", """F1. Researcher framing ("can I reuse this, and under what conditions?"), the framing that
     tests whether a model volunteers the element; 221 answers per point. Here an element counts as passed on only if
     it is named (Local Contexts, TK, BC, the Label's name; the CC BY-NC licence; the agreement; the contact clause),
     because OLMo-2 attaches an invented NonCommercial term to plain CC BY in most of its researcher answers, so a
-    non-commercial statement alone cannot show that it read the CC BY-NC entry (deviations D7). Qwen3 and Mistral
-    name every element. OLMo-2 names the TK Non-Commercial Label in 98% of answers but the CC BY-NC licence in 35%.
+    non-commercial statement alone cannot show that it read the CC BY-NC entry (deviations D7). Mistral names every
+    element; Qwen3 every element but six (4 of 221 for TK Open to Collaboration without its URI, 2 for the contact
+    clause). OLMo-2 names the TK Non-Commercial Label in 98% of answers but the CC BY-NC licence in 35%.
     In the agent and direct framings, which ask the model to list every condition, no Local Contexts element is
     omitted.""")
 

@@ -119,3 +119,9 @@ the same. F1 rebuilt on the name rule in the researcher framing; the report rewr
 validation and service disclosures, H2 range, H3 decomposition, post-hoc reading against each element's text, the
 withdrawn LLM4RE citation, the added prior work).
 
+Confirmation pass (review/confirmation.md, publish with edits): five sentences corrected (Qwen3 omitted no Local
+Contexts element in the five preregistered conditions, but leaves six elements unnamed on the name rule in F1; the
+96-97% is a looser pattern, not a reading; "about as often" rather than "not more often"; hand-reading attributed to
+the AI agent and the AI reviewer; 31, not 30, OLMo CC BY-NC responses read). review_response.py's H2 re-scorings use
+1,000 bootstrap resamples rather than the plan's 2,000 (stable to the third decimal).
+

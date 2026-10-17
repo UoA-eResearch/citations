@@ -13,11 +13,12 @@ their structured advice, mostly to "unclear".** The lead predicted that models w
 What happened:
 
 - **Omission was rare.** The three models omitted a Local Contexts element in **0.5%** of 9,945 responses (95%
-  interval 0.4–0.6%; 0.46% after independent hand re-scoring).
+  interval 0.4–0.6%; 0.46% after independent re-scoring).
 - **One model, one framing.** Every omission came from OLMo-2-13B answering a researcher's open question. Qwen3-32B
-  and Mistral-Small-24B named every element every time.
-- **No penalty for being Indigenous.** Local Contexts elements were not omitted more often than conventional clauses:
-  the difference is between +0.3 and −2.1 points, depending on how one OLMo-2 cell is scored.
+  and Mistral-Small-24B omitted no Local Contexts element in the five preregistered conditions.
+- **No penalty for being Indigenous.** Local Contexts elements were omitted about as often as conventional clauses:
+  the difference is between +0.3 and −2.1 points, depending on how one OLMo-2 cell is scored, against a predicted
+  +25.
 - **The advice changed, mostly to "unclear".** In a structured reuse summary, an element changed the stated verdict
   in **85%** of cases, but 63% of those changes were moves to "unclear". A change to a definite different answer
   happened in **32%**: 95% of the time for TK Non-Commercial, 7–11% for the Notices and the TK Open to
@@ -36,7 +37,7 @@ assistants whether they can reuse a dataset. We wanted to know whether the AI pa
 We took 221 real dataset records and made copies of each with a different notice inserted: five kinds of Local
 Contexts notice, three ordinary conditions (such as a non-commercial licence), or nothing. We gave them to three
 openly available AI models, asking in three different ways. That gave nearly 20,000 answers, which a keyword rule
-scored; samples were read by hand.
+scored. Samples were read by the AI agent running the study and by an independent AI reviewer.
 
 The models almost always mentioned the notice. Only one model, answering an open question, sometimes left one out.
 The worry that AI simply ignores these notices is not borne out here.
@@ -120,7 +121,7 @@ as omissions, so this check could not estimate the rule's sensitivity (D7).
 
 **The independent check.** The adversarial reviewer (a separate model) read 270 main-set responses, including all 48
 Local Contexts scored omissions. All 191 scored mentions were genuine. 46 of the 48 Local Contexts omissions were
-real. But all 30 OLMo-2 CC BY-NC "omissions" it read were not (below).
+real. But all 31 OLMo-2 CC BY-NC "omissions" it read were not (below).
 
 **Hosted service.** Every response read by the agent or the reviewer passed through a hosted model service. Plan §3's
 "no record is sent to a third-party API" held for generation and scoring only.
@@ -140,8 +141,8 @@ The scored outcome was identical in 183 of 183 element responses, and 66 of 68 a
 
 **The conventional figure depends on one cell.** OLMo-2 answers the researcher question by reciting the CC BY
 licence, and in that recitation it attaches an invented NonCommercial term. Of its researcher answers to records
-with no extra element, 81% contain a sentence saying commercial use is forbidden or needs permission (the reviewer,
-reading them, put it at 96%, 212 of 221). When a CC BY-NC licence is added, the keyword rule therefore cannot tell whether OLMo-2 read
+with no extra element, 81% contain a sentence saying commercial use is forbidden or needs permission (a looser
+pattern that includes sentences saying the clause does not apply gives 96–97%). When a CC BY-NC licence is added, the keyword rule therefore cannot tell whether OLMo-2 read
 it. Two ways to score the cell:
 
 | scoring of OLMo-2 researcher CC BY-NC | conventional omission | H2: Local Contexts minus conventional | verdict |

@@ -80,7 +80,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
   <h1>Do AI models pass on Indigenous data-governance notices?</h1>
   <p class="subtitle">A within-record experiment on 221 real repository records: Local Contexts Notices and Labels, or conventional rights clauses, swapped into the same metadata slot and given to three open-weight models under three framings.</p>
   <div class="meta">
-    <span>Report · 2026-10-17 · pre-review draft</span>
+    <span>Report · 2026-10-17 · revised after independent review</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ancestral-llm-rights-notice-blindness/plan.md">Preregistration</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ancestral-llm-rights-notice-blindness/deviations.md">Deviations log</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ancestral-llm-rights-notice-blindness/code">Code</a>
@@ -99,11 +99,12 @@ their structured advice, mostly to "unclear".</strong> The lead predicted that m
 <p>What happened:</p>
 <ul>
 <li><strong>Omission was rare.</strong> The three models omitted a Local Contexts element in <strong>0.5%</strong> of 9,945 responses (95%
-  interval 0.4–0.6%; 0.46% after independent hand re-scoring).</li>
+  interval 0.4–0.6%; 0.46% after independent re-scoring).</li>
 <li><strong>One model, one framing.</strong> Every omission came from OLMo-2-13B answering a researcher's open question. Qwen3-32B
-  and Mistral-Small-24B named every element every time.</li>
-<li><strong>No penalty for being Indigenous.</strong> Local Contexts elements were not omitted more often than conventional clauses:
-  the difference is between +0.3 and −2.1 points, depending on how one OLMo-2 cell is scored.</li>
+  and Mistral-Small-24B omitted no Local Contexts element in the five preregistered conditions.</li>
+<li><strong>No penalty for being Indigenous.</strong> Local Contexts elements were omitted about as often as conventional clauses:
+  the difference is between +0.3 and −2.1 points, depending on how one OLMo-2 cell is scored, against a predicted
+  +25.</li>
 <li><strong>The advice changed, mostly to "unclear".</strong> In a structured reuse summary, an element changed the stated verdict
   in <strong>85%</strong> of cases, but 63% of those changes were moves to "unclear". A change to a definite different answer
   happened in <strong>32%</strong>: 95% of the time for TK Non-Commercial, 7–11% for the Notices and the TK Open to
@@ -119,7 +120,7 @@ assistants whether they can reuse a dataset. We wanted to know whether the AI pa
 <p>We took 221 real dataset records and made copies of each with a different notice inserted: five kinds of Local
 Contexts notice, three ordinary conditions (such as a non-commercial licence), or nothing. We gave them to three
 openly available AI models, asking in three different ways. That gave nearly 20,000 answers, which a keyword rule
-scored; samples were read by hand.</p>
+scored. Samples were read by the AI agent running the study and by an independent AI reviewer.</p>
 <p>The models almost always mentioned the notice. Only one model, answering an open question, sometimes left one out.
 The worry that AI simply ignores these notices is not borne out here.</p>
 <p>What the models then said varied by notice:</p>
@@ -212,7 +213,7 @@ to the rule. All 200 mentioned their element. The sample contained none of the p
 as omissions, so this check could not estimate the rule's sensitivity (D7).</p>
 <p><strong>The independent check.</strong> The adversarial reviewer (a separate model) read 270 main-set responses, including all 48
 Local Contexts scored omissions. All 191 scored mentions were genuine. 46 of the 48 Local Contexts omissions were
-real. But all 30 OLMo-2 CC BY-NC "omissions" it read were not (below).</p>
+real. But all 31 OLMo-2 CC BY-NC "omissions" it read were not (below).</p>
 <p><strong>Hosted service.</strong> Every response read by the agent or the reviewer passed through a hosted model service. Plan §3's
 "no record is sent to a third-party API" held for generation and scoring only.</p>
 <p><strong>Determinism.</strong> Batched serving is not bit-reproducible: of 204 prompts generated twice, 68 gave identical text.
@@ -247,8 +248,8 @@ The scored outcome was identical in 183 of 183 element responses, and 66 of 68 a
 </table></div>
 <p><strong>The conventional figure depends on one cell.</strong> OLMo-2 answers the researcher question by reciting the CC BY
 licence, and in that recitation it attaches an invented NonCommercial term. Of its researcher answers to records
-with no extra element, 81% contain a sentence saying commercial use is forbidden or needs permission (the reviewer,
-reading them, put it at 96%, 212 of 221). When a CC BY-NC licence is added, the keyword rule therefore cannot tell whether OLMo-2 read
+with no extra element, 81% contain a sentence saying commercial use is forbidden or needs permission (a looser
+pattern that includes sentences saying the clause does not apply gives 96–97%). When a CC BY-NC licence is added, the keyword rule therefore cannot tell whether OLMo-2 read
 it. Two ways to score the cell:</p>
 <div class="table-wrap"><table>
 <thead>
@@ -283,7 +284,7 @@ account of the first.</p>
 Knowledge, Indigenous) in 68–77% of answers for the three Labels and 100% for the two Notices, whose names contain
 the words. In the agent framing, mentions of the Labels are almost always the bare "TK …" string listed among the
 conditions (1–2% spelled out).</p>
-<figure><a href="results/figures/F1_omission.png"><img src="results/figures/F1_omission.png" alt="Researcher framing: answers that do not name the element"></a><figcaption>F1. Researcher framing (&quot;can I reuse this, and under what conditions?&quot;), the framing that tests whether a model volunteers the element; 221 answers per point. Here an element counts as passed on only if it is named (Local Contexts, TK, BC, the Label&#x27;s name; the CC BY-NC licence; the agreement; the contact clause), because OLMo-2 attaches an invented NonCommercial term to plain CC BY in most of its researcher answers, so a non-commercial statement alone cannot show that it read the CC BY-NC entry (deviations D7). Qwen3 and Mistral name every element. OLMo-2 names the TK Non-Commercial Label in 98% of answers but the CC BY-NC licence in 35%. In the agent and direct framings, which ask the model to list every condition, no Local Contexts element is omitted.</figcaption></figure>
+<figure><a href="results/figures/F1_omission.png"><img src="results/figures/F1_omission.png" alt="Researcher framing: answers that do not name the element"></a><figcaption>F1. Researcher framing (&quot;can I reuse this, and under what conditions?&quot;), the framing that tests whether a model volunteers the element; 221 answers per point. Here an element counts as passed on only if it is named (Local Contexts, TK, BC, the Label&#x27;s name; the CC BY-NC licence; the agreement; the contact clause), because OLMo-2 attaches an invented NonCommercial term to plain CC BY in most of its researcher answers, so a non-commercial statement alone cannot show that it read the CC BY-NC entry (deviations D7). Mistral names every element; Qwen3 every element but six (4 of 221 for TK Open to Collaboration without its URI, 2 for the contact clause). OLMo-2 names the TK Non-Commercial Label in 98% of answers but the CC BY-NC licence in 35%. In the agent and direct framings, which ask the model to list every condition, no Local Contexts element is omitted.</figcaption></figure>
 <h3>H3: Refuted. The elements change the verdict, mostly to "unclear"</h3>
 <p>In the agent framing, an element changed at least one of the two verdict fields, against the same record and model
 without it, in <strong>85.3% (84.1–86.4%)</strong> of 3,265 pairs (50 unparseable). The rule counts any change, so H3 is Refuted.
