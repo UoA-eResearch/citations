@@ -1,7 +1,7 @@
 {
- "n_records": 48361,
+ "n_records": 48362,
  "by_platform": {
-  "datacite": 48359,
+  "datacite": 48360,
   "figshare": 2,
   "gbif": 1,
   "zenodo": 1
@@ -11,47 +11,85 @@
   "genuine": 2
  },
  "H1_all": {
-  "n": 48361,
+  "n": 48362,
   "label_hub": 1,
-  "share": 2.0677818903662043e-05,
+  "share": 2.0677391340308505e-05,
   "ci": [
-   5.235169115018089e-07,
-   0.00011520398771432778
+   5.235060865405899e-07,
+   0.00011520160570897947
   ],
   "labels_any": 48333,
-  "notices": 48355,
-  "hub_any": 28
+  "notices": 48357,
+  "hub_any": 29
  },
  "H1_without_neotoma": {
-  "n": 29,
+  "n": 30,
   "label_hub": 1,
-  "share": 0.034482758620689655,
+  "share": 0.03333333333333333,
   "ci": [
-   0.000872646883579922,
-   0.1776442954887229
+   0.0008435709266304788,
+   0.17216945563341265
   ],
   "labels_any": 1,
-  "notices": 23,
-  "hub_any": 28
+  "notices": 25,
+  "hub_any": 29,
+  "verdict": "Inconclusive"
+ },
+ "H1_alternative_biocode": {
+  "all": {
+   "n": 48362,
+   "label_hub": 3,
+   "share": 6.203217402092552e-05,
+   "ci": [
+    1.2792708292694072e-05,
+    0.00018127352725728842
+   ],
+   "verdict": "Supported"
+  },
+  "without_neotoma": {
+   "n": 30,
+   "label_hub": 3,
+   "share": 0.1,
+   "ci": [
+    0.02111713702972257,
+    0.2652884504742081
+   ],
+   "verdict": "Refuted"
+  }
  },
  "H1_verdict": "Supported",
  "concentration": {
   "top_publisher": "Neotoma Paleoecology Database",
-  "top_share": 0.9994003432517938,
-  "hhi": 0.9988011089449158
+  "top_share": 0.9993796782597908,
+  "hhi": 0.998759804596711
  },
  "H2_excluded_not_genuine": 2,
  "H2": {
   "n_dois": 1998,
   "n_pairs": 17762,
-  "drop_share": 0.4363247382051571,
+  "drop_share": 0.436099538340277,
   "ci": [
-   0.4350126606488921,
-   0.43747197245800556
+   0.4347848131648866,
+   0.4372857438348542
   ],
   "verdict": "Supported",
   "warnings": 0
  },
+ "H2_view_sensitivity": {
+  "without_bibtex": 0.36532605937579293,
+  "without_citation_text": 0.36462826693732553,
+  "without_crosscite_json": 0.491372748033494,
+  "without_csl_json": 0.36538949505201723,
+  "without_datacite_xml": 0.491372748033494,
+  "without_oai_datacite": 0.491372748033494,
+  "without_oai_dc": 0.491372748033494,
+  "without_openaire": 0.37374874874874875,
+  "without_schemaorg_jsonld": 0.4911824410048211,
+  "doi_org_formats_only": 0.49833166499833165,
+  "views_with_a_rights_or_licence_field": 0.16591591591591592,
+  "unavailable_as_drop": 0.4429985541096652
+ },
+ "H2_distinct_record_patterns": 7,
  "H2_by_stratum": {
   "neotoma": {
    "n_dois": 1971,
@@ -70,25 +108,25 @@
   "other": {
    "n_dois": 27,
    "n_pairs": 226,
-   "drop_share": 0.3053097345132743,
+   "drop_share": 0.28761061946902655,
    "ci": [
-    0.25443752020038785,
-    0.3524229074889868
+    0.23999547511312216,
+    0.33624454148471616
    ],
    "results": {
-    "preserve": 85,
-    "degrade": 72,
-    "drop": 69
+    "preserve": 84,
+    "degrade": 77,
+    "drop": 65
    }
   }
  },
  "per_view": {
   "bibtex": {
-   "drop": 1989,
+   "drop": 1987,
    "n": 1998,
    "ci": [
-    0.991466342373723,
-    0.9979382477115778
+    0.9901705289129232,
+    0.9972485636374501
    ]
   },
   "citation_text": {
@@ -108,11 +146,11 @@
    ]
   },
   "csl_json": {
-   "drop": 1988,
+   "drop": 1986,
    "n": 1998,
    "ci": [
-    0.9908149391666617,
-    0.9975973750863972
+    0.9895322419199426,
+    0.996892872849137
    ]
   },
   "datacite_xml": {

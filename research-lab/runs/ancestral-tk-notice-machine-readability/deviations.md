@@ -45,3 +45,36 @@ under the D2 fix.
   later judged not genuine: a conference abstract and its version (10.5281/zenodo.17496296 and 17496297). H1 already
   drops adjudicated false positives. H2 now does the same, so its denominator is element-bearing records only. Of the
   other 1,998 DOIs, none were judged not genuine.
+
+## D5 — 2026-10-18 06:47 NZDT — corrections from the independent review (review/review.md)
+
+1. **Census recall (review issues 1–2).** DataCite's free-text query indexes URIs as domain tokens, so
+   `query=localcontexts` cannot see a Hub, Notice or Label URI outside rightsList.
+   - **The fix.** A supplementary pass, `census.py datacite_fields` with 13 queries, adds field-wildcard queries over
+     descriptions, relatedIdentifiers, identifiers, alternateIdentifiers, subjects and rights text. It also queries
+     the "Local Contexts" rights scheme, the two domains, and the two Notice names the first run omitted.
+   - **Result.** It finds one more element-bearing record, a DMPTool plan with a Hub project in relatedIdentifiers,
+     so the denominator is 48,362, and 30 without Neotoma.
+   - **Name-only recall** still covers only generic names. Specific Label names were not searched; the review's probes
+     of three found nothing element-bearing.
+2. **Detector (review issues 6, 13).**
+   - Notice names are matched with hyphens or underscores ("BC-Notice").
+   - Plural URI paths (/labels/, /notices/) are matched, except category pages such as
+     /labels/traditional-knowledge-labels/, which name no element. The plural pattern first caught one such reference-
+     list citation; the exclusion was added before the analysis was rerun.
+3. **Scorer (review issue 15).** Crosscite JSON and OpenAIRE rights fields are now parsed as JSON rather than read
+   through regex windows. All 18,000 saved bodies were re-scored offline (`rescore.py`; first-run scores kept as
+   `result_v1` and in `views_v1.jsonl`).
+   - **Changes.** 3 corrected calls (OpenAIRE preserve → degrade ×2; Crosscite degrade → preserve ×1), and 4 citation-
+     format views (drop → degrade) where "BC-Notice" is now recognised.
+4. **Further analyses (review issues 8, 10, 11, 21, 23).**
+   - a nine-platform table with status (`platforms.csv`);
+   - H1 without Neotoma, with its verdict by the same rule;
+   - an alternative H1 count including the two Moorea Biocode 1.0 DOIs, whose rights entries carry a BC Label's
+     template text and a live Hub project where that Label is applied;
+   - an H2 view-set sensitivity: leave one view out, the doi.org formats only, and the views with a rights field;
+   - a Hub cross-check of every linked project (`hub_check.py`; creator type only, no names).
+5. **The D4 ordering, restated (review issue 24).** D4 came before `analysis.py` was run, but the per-view result
+   distribution was necessarily seen when the hand-check sample was stratified. The by-stratum table was added to
+   `analysis.py` in the same commit as its outputs, a small breach of code-before-outputs. That table implements
+   plan §4, and changes no verdict.

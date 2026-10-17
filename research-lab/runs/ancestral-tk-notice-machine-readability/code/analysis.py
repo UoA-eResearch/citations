@@ -39,12 +39,41 @@ def main():
         k, n = int(g.label_hub.sum()), len(g)
         out[f"H1_{name}"] = dict(n=n, label_hub=k, share=k / n if n else None, ci=exact(k, n), labels_any=int(g.has_label.sum()),
                                  notices=int(g.has_notice.sum()), hub_any=int(g.hub_projects.map(bool).sum()))
+    # D5: the without-Neotoma verdict by the same rule, and the alternative count with the two Moorea Biocode 1.0 DOIs,
+    # whose rightsList carries a BC Label's template text (rightsIdentifier bc-consent/bc-label) and a live Hub project
+    # where that Label is applied, but neither the Label's name nor its URI (so the preregistered rule does not count them)
+    rule = lambda ci: "Supported" if ci[1] < 0.001 else "Refuted" if ci[0] >= 0.001 else "Inconclusive"
+    out["H1_without_neotoma"]["verdict"] = rule(out["H1_without_neotoma"]["ci"])
+    BIOCODE = {"10.17913/100501.9190", "10.60950/100501.9190"}
+    u = u.assign(label_hub_alt=u.label_hub | (u.doi.fillna("").str.lower().isin(BIOCODE) & u.hub_projects.map(live_project)))
+    out["H1_alternative_biocode"] = {}
+    for name, g in (("all", u), ("without_neotoma", u[~u.neotoma])):
+        k, n = int(g.label_hub_alt.sum()), len(g)
+        out["H1_alternative_biocode"][name] = dict(n=n, label_hub=k, share=k / n, ci=exact(k, n), verdict=rule(exact(k, n)))
     h = out["H1_all"]
     out["H1_verdict"] = "Supported" if h["ci"][1] is not None and h["ci"][1] < 0.001 else "Refuted" if h["ci"][0] is not None and h["ci"][0] >= 0.001 else "Inconclusive"
     top = u.groupby(u.publisher.fillna("?")).size().sort_values(ascending=False)
     out["concentration"] = dict(top_publisher=top.index[0] if len(top) else None, top_share=float(top.iloc[0] / top.sum()) if len(top) else None,
                                 hhi=float(((top / top.sum()) ** 2).sum()) if len(top) else None)
     u.groupby(["platform", "has_label", "has_notice"]).size().reset_index(name="n").to_csv(TAB / "census_by_platform.csv", index=False)
+    # D5 (review issue 8): all nine platforms, with status, so zeros are visible as zeros or as failures
+    errs = json.load(open(RUN / "data" / "census_errors.json")) if (RUN / "data" / "census_errors.json").exists() else {}
+    NOTE = {"datacite": "free text cannot see URIs; field queries added (D5)", "zenodo": "legacy JSON hides custom rights entries that DataCite shows",
+            "dryad": "", "dataverse": "Harvard Dataverse has no Local Contexts metadata block (structural zero)",
+            "figshare": "template fields (UTAS, VUW); 2 of 65 filled", "gbif": "machine-tag namespace not queried (unknown)",
+            "raid": "0 of 622 public RAiDs expose a TK label field", "osf": "search unavailable (HTTP 503)",
+            "re3data": "searches names, keywords and descriptions, not policies"}
+    prow = []
+    for pf in ["datacite", "zenodo", "dryad", "dataverse", "figshare", "gbif", "raid", "osf", "re3data"]:
+        fetched = 0
+        for sub in ([pf] + (["datacite_fields"] if pf == "datacite" else [])):
+            f = RUN / "data" / "raw" / sub / "records.jsonl"
+            if f.exists():
+                fetched += sum(1 for l in open(f) if not str(json.loads(l)["id"]).startswith(("_error", "_unavailable")))
+        g = c[c.platform == pf]
+        prow.append(dict(platform=pf, records_returned=fetched, element_bearing=int(len(g)), label_hub=int(g.label_hub.sum()),
+                         status="unavailable" if pf in errs and fetched == 0 else ("partial errors" if pf in errs else "ok"), note=NOTE[pf]))
+    pd.DataFrame(prow).to_csv(TAB / "platforms.csv", index=False)
     vf = RUN / "data" / "views.jsonl"
     if vf.exists():
         v = pd.DataFrame([json.loads(l) for l in open(vf)])
@@ -65,6 +94,14 @@ def main():
                          warnings=int(v.warning.sum()))
         m = v.pivot_table(index="view", columns="result", values="doi", aggfunc="count", fill_value=0)
         m.to_csv(TAB / "view_matrix.csv")
+        # D5 (review issue 21): the verdict depends on which views count; leave one out, and two natural subsets
+        share_of = lambda x: float(x["drop"].sum() / len(x)) if len(x) else None
+        vs = {f"without_{vw}": share_of(a[a.view != vw]) for vw in sorted(a.view.unique())}
+        vs["doi_org_formats_only"] = share_of(a[~a.view.isin(["oai_dc", "oai_datacite", "openaire"])])
+        vs["views_with_a_rights_or_licence_field"] = share_of(a[a.view.isin(["datacite_xml", "oai_datacite", "oai_dc", "crosscite_json", "schemaorg_jsonld", "csl_json"])])
+        vs["unavailable_as_drop"] = float(((v.result == "drop") | (v.result == "unavailable")).sum() / len(v))
+        out["H2_view_sensitivity"] = vs
+        out["H2_distinct_record_patterns"] = int(a.sort_values("view").groupby("doi").result.agg(lambda r: "|".join(r)).nunique())
         # plan section 4: the preserve/degrade/drop matrix by stratum (Neotoma vs other publishers), and H2 per stratum
         v["stratum"] = np.where(v.doi.str.lower().str.startswith("10.21233/"), "neotoma", "other")
         v.pivot_table(index=["stratum", "view"], columns="result", values="doi", aggfunc="count", fill_value=0).to_csv(TAB / "view_matrix_by_stratum.csv")

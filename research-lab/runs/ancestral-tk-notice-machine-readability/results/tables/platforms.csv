@@ -1,0 +1,10 @@
+platform,records_returned,element_bearing,label_hub,status,note
+datacite,52012,48360,0,ok,free text cannot see URIs; field queries added (D5)
+zenodo,697,1,0,ok,legacy JSON hides custom rights entries that DataCite shows
+dryad,42,0,0,ok,
+dataverse,196,0,0,ok,Harvard Dataverse has no Local Contexts metadata block (structural zero)
+figshare,2267,2,1,ok,"template fields (UTAS, VUW); 2 of 65 filled"
+gbif,156,1,0,ok,machine-tag namespace not queried (unknown)
+raid,622,0,0,ok,0 of 622 public RAiDs expose a TK label field
+osf,0,0,0,unavailable,search unavailable (HTTP 503)
+re3data,0,0,0,ok,"searches names, keywords and descriptions, not policies"

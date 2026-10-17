@@ -79,8 +79,9 @@ def f1():
     ax.grid(axis="x", color=GRID, lw=0.6); ax.set_axisbelow(True)
     fig.savefig(F / "F1_census.png", dpi=200); plt.close(fig)
     caption("F1_census", """Records carrying a Local Contexts Notice or Label, by platform, after the free-text channel
-    was adjudicated in full. One repository (Neotoma) accounts for nearly all of them. Zenodo and figshare hits also
-    appear as DataCite DOIs, so platforms overlap.""")
+    was adjudicated in full. One repository (Neotoma) accounts for nearly all of them. The Zenodo and GBIF hits also
+    appear as DataCite DOIs and are counted once there; the two figshare DOIs are registered but absent from DataCite's
+    public index.""")
 
 
 if __name__ == "__main__":
