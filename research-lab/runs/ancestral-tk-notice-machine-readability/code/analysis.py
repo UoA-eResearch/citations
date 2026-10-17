@@ -48,6 +48,10 @@ def main():
     vf = RUN / "data" / "views.jsonl"
     if vf.exists():
         v = pd.DataFrame([json.loads(l) for l in open(vf)])
+        # D4: DOIs whose element was judged not genuine (precision.csv) are not element-bearing
+        bad_doi = {str(r).lower() for p_, r in bad}
+        out["H2_excluded_not_genuine"] = int(v[v.doi.str.lower().isin(bad_doi)].doi.nunique())
+        v = v[~v.doi.str.lower().isin(bad_doi)].copy()
         a = v[v.result != "unavailable"].copy()
         a["drop"] = (a.result == "drop").astype(float)
         g = a.groupby("doi")["drop"].agg(["sum", "count"])

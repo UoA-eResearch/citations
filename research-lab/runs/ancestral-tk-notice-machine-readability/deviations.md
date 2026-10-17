@@ -32,3 +32,16 @@ The first run fetched only RAiD's default first page (25 of 622 records). The pu
 `limit=100` and `cursor=<pageInfo.endCursor>`, and `raid()` now follows it, with an error marker if the first
 page fails. re3data's 0 was checked: the API returns an empty list with status 200, a genuine zero. Zenodo is re-run
 under the D2 fix.
+
+## D4 — 2026-10-18 05:56 NZDT — H2 excludes DOIs judged not genuine; hand check done, before H2 was computed
+
+- **The hand check.** 100 record-views were checked by hand (plan §3; `code/handcheck.py`,
+  `results/tables/handcheck.csv`). The sample was stratified by view, with each view's rare calls oversampled. All
+  100 scorer calls are right under the preregistered URI-or-name definitions.
+  - **Notes.** In two views of one DOI, the Attribution Incomplete Notice's wording survives without its name or URI.
+    That is a drop by definition, and invisible to a machine. Several "degrade" calls are inherited from the source
+    record, which puts the notice in the description rather than in the rights list.
+- **The exclusion.** The views sample was drawn before the free-text hits were adjudicated, and two of its DOIs were
+  later judged not genuine: a conference abstract and its version (10.5281/zenodo.17496296 and 17496297). H1 already
+  drops adjudicated false positives. H2 now does the same, so its denominator is element-bearing records only. Of the
+  other 1,998 DOIs, none were judged not genuine.
