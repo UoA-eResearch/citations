@@ -1,0 +1,78 @@
+"""Assign each site's sector from its EARLIEST eligible pre-period snapshot, by fixed multilingual marker rules
+(plan section 5). Markers are searched in the page's visible text and in href / class / id attribute values.
+
+  in scope (the European Accessibility Act's consumer services):
+    ecommerce  shopping-cart / basket / checkout markers in links or attributes, in 14 EU languages and English
+    banking    online-banking markers, or a bank name in the domain
+    transport  passenger-transport markers (timetables, flights, train / bus tickets)
+    telecom    mobile / broadband tariff markers, e-book markers
+  A site is in scope if any one sector has >= 2 distinct markers (or a bank-name domain); out of scope if no sector
+  has any marker; otherwise ambiguous and excluded. Sectors themselves are reported, not used separately.
+Writes data/sector.csv.
+"""
+import gzip
+import json
+import re
+import sys
+from pathlib import Path
+
+RUN = Path(__file__).resolve().parents[1]
+M = {
+    "ecommerce": [r"\bcart\b", r"basket", r"checkout", r"warenkorb", r"\bkasse\b", r"panier", r"carrello", r"carrito",
+                  r"winkelwagen", r"winkelmand", r"koszyk", r"varukorg", r"ostoskori", r"indk[øo]bskurv", r"carrinho",
+                  r"ko[šs][íi]k", r"add[-_ ]to[-_ ]cart", r"in den warenkorb", r"ajouter au panier", r"aggiungi al carrello",
+                  r"a[ñn]adir al carrito", r"dodaj do koszyka", r"l[äa]gg i varukorgen"],
+    "banking": [r"online[- ]?banking", r"net ?bank", r"internet ?banking", r"e-banking", r"home ?banking",
+                r"banque en ligne", r"banca online", r"banca en l[íi]nea", r"bankowo[śs][ćc] internetowa", r"n[äa]tbank",
+                r"verkkopankki", r"internetov[ée] bankovnictv[íi]", r"\biban\b", r"girokonto", r"compte courant",
+                r"conto corrente", r"cuenta corriente", r"rachunek osobisty"],
+    "transport": [r"timetable", r"fahrplan", r"horaires", r"\borari[oa]", r"horarios?", r"dienstregeling",
+                  r"rozk[łl]ad jazdy", r"tidtabell", r"aikataulu", r"k[øo]replan", r"j[íi]zdn[íi] [řr][áa]d",
+                  r"\bflights?\b", r"fl[üu]ge", r"\bvols\b", r"\bvoli\b", r"vuelos", r"vluchten", r"\bloty\b",
+                  r"train tickets?", r"bus tickets?", r"fahrkarten?", r"billets? de train", r"biglietti"],
+    "telecom": [r"mobile plans?", r"handytarif", r"tarif[ea]?s? mobil", r"forfait", r"abbonamento", r"tarifa m[óo]vil",
+                r"\bprepaid\b", r"sim[- ]?kart", r"carte sim", r"broadband", r"glasfaser", r"\bfibr[ea]\b", r"\be-?books?\b",
+                r"h[öo]rb[üu]ch"],
+}
+BANK_DOMAIN = re.compile(r"bank|banque|banca|banco|sparkasse|volksbank|raiffeisen|kasa|spar", re.I)
+RX = {s: [re.compile(p, re.I) for p in ps] for s, ps in M.items()}
+
+
+def text_and_attrs(html):
+    attrs = " ".join(re.findall(r'(?:href|class|id)\s*=\s*"([^"]{0,300})"', html))
+    body = re.sub(r"<script.*?</script>|<style.*?</style>", " ", html, flags=re.S | re.I)
+    text = re.sub(r"<[^>]+>", " ", body)
+    return re.sub(r"\s+", " ", text)[:200000] + " " + attrs
+
+
+def classify(domain, html):
+    s = text_and_attrs(html)
+    hits = {k: sum(bool(r.search(s)) for r in rx) for k, rx in RX.items()}
+    if BANK_DOMAIN.search(domain.split(".")[0]):
+        hits["banking"] = max(hits["banking"], 2)
+    strong = [k for k, v in hits.items() if v >= 2]
+    if strong:
+        return "in_scope", max(strong, key=lambda k: hits[k]), hits
+    if not any(hits.values()):
+        return "out_of_scope", None, hits
+    return "ambiguous", None, hits
+
+
+def main():
+    rows = [json.loads(l) for l in open(RUN / "data" / "cdx" / "eligible.jsonl")]
+    out = []
+    for r in rows:
+        first = sorted(r["snapshots"])[0]
+        f = RUN / "data" / "html" / r["domain"] / f"{first}.html.gz"
+        if not f.exists():
+            out.append(dict(domain=r["domain"], status="no_html")); continue
+        html = gzip.decompress(f.read_bytes()).decode("utf-8", "ignore")
+        cls, sec, hits = classify(r["domain"], html)
+        out.append(dict(domain=r["domain"], status=cls, sector=sec, first=first, **{f"m_{k}": v for k, v in hits.items()}))
+    import pandas as pd
+    pd.DataFrame(out).to_csv(RUN / "data" / "sector.csv", index=False)
+    print(pd.DataFrame(out).status.value_counts().to_dict())
+
+
+if __name__ == "__main__":
+    sys.exit(main())

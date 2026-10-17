@@ -1,0 +1,16 @@
+{
+  "name": "frontier-eaa-accessibility-natural-experiment",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "axe-core": "^4.10.2",
+    "jsdom": "^25.0.1"
+  }
+}
