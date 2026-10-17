@@ -6,7 +6,8 @@ matching capture is used. Staged to save requests:
   2. the four pre crawls; it needs >= 2 of 4 to be eligible;
   3. the anticipation and transition crawls, for eligible domains only.
 A failed request (after retries) is recorded under "errors", never as absence, and is retried on the next run.
-3 concurrent requests, backoff on 429/5xx, resumable. Writes data/cdx/cc_snapshots.jsonl."""
+3 concurrent requests; transient 400/5xx errors (about a third of requests, 17 Oct 2026) are retried
+up to 10 times with short linear backoff; resumable. Writes data/cdx/cc_snapshots.jsonl."""
 import json
 import sys
 import time
@@ -31,18 +32,19 @@ def query(domain, target):
     url = (f"https://index.commoncrawl.org/{CRAWL[target]}-index?url={domain}&matchType=domain"
            f"&filter={quote('~url:' + rx)}&filter=status:200&output=json&limit=5"
            "&fl=url,timestamp,status,mime,mime-detected,length,offset,filename")
-    for k in range(6):
+    for k in range(10):
         try:
             r = S.get(url, timeout=120)
-            if r.status_code == 404:
+            if r.status_code == 404 and "No Captures" in r.text:
                 return "absent", None
             if r.status_code == 200:
                 rows = [json.loads(l) for l in r.text.splitlines() if l.strip()]
                 rows = [x for x in rows if "html" in (x.get("mime-detected") or x.get("mime") or "")]
                 return ("found", rows[0]) if rows else ("absent", None)
-            time.sleep(min(120, 5 * 2 ** k))
+            # the index server is overloaded: about a third of requests fail with a transient 400/502/503/504
+            time.sleep(2 + 2 * k)
         except Exception:
-            time.sleep(min(120, 5 * 2 ** k))
+            time.sleep(2 + 2 * k)
     return "error", None
 
 
