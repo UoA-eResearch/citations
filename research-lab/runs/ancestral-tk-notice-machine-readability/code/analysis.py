@@ -65,15 +65,22 @@ def main():
             "re3data": "searches names, keywords and descriptions, not policies"}
     prow = []
     for pf in ["datacite", "zenodo", "dryad", "dataverse", "figshare", "gbif", "raid", "osf", "re3data"]:
-        fetched = 0
+        ids = set()     # unique records returned (DataCite's two passes overlap)
         for sub in ([pf] + (["datacite_fields"] if pf == "datacite" else [])):
             f = RUN / "data" / "raw" / sub / "records.jsonl"
             if f.exists():
-                fetched += sum(1 for l in open(f) if not str(json.loads(l)["id"]).startswith(("_error", "_unavailable")))
+                ids |= {str(json.loads(l)["id"]) for l in open(f) if not str(json.loads(l)["id"]).startswith(("_error", "_unavailable"))}
+        fetched = len(ids)
         g = c[c.platform == pf]
+        wl = (lambda k, n: [float(x) for x in st.binomtest(k, n).proportion_ci(method="wilson")] if n else [None, None])(int(g.label_hub.sum()), int(len(g)))
         prow.append(dict(platform=pf, records_returned=fetched, element_bearing=int(len(g)), label_hub=int(g.label_hub.sum()),
+                         label_hub_wilson=wl,
                          status="unavailable" if pf in errs and fetched == 0 else ("partial errors" if pf in errs else "ok"), note=NOTE[pf]))
     pd.DataFrame(prow).to_csv(TAB / "platforms.csv", index=False)
+    # plan section 4 (completed after confirmation): concentration by resource type and by year
+    out["concentration_by_type"] = u.rtype.fillna("?").replace("", "?").value_counts().head(6).to_dict()
+    out["by_year"] = u.year.astype(str).str[:4].value_counts().sort_index().to_dict()
+    out["by_year_without_neotoma"] = u[~u.neotoma].year.astype(str).str[:4].value_counts().sort_index().to_dict()
     vf = RUN / "data" / "views.jsonl"
     if vf.exists():
         v = pd.DataFrame([json.loads(l) for l in open(vf)])

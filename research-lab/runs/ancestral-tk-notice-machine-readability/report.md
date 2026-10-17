@@ -92,7 +92,7 @@ vocabulary names, and every raw response is saved.
 
 | platform | records returned | element-bearing | Label with live Hub | note |
 | --- | --- | --- | --- | --- |
-| DataCite | 52,012 | 48,360 | 0 | free text cannot see URIs; field queries added (D5) |
+| DataCite | 51,965 | 48,360 | 0 | free text cannot see URIs; field queries added (D5) |
 | Zenodo | 697 | 1 | 0 | its public JSON omits custom rights entries that DataCite shows for the same DOIs |
 | Dryad | 42 | 0 | 0 | |
 | Harvard Dataverse | 196 | 0 | 0 | no Local Contexts metadata block installed: a structural zero |
@@ -102,7 +102,9 @@ vocabulary names, and every raw response is saved.
 | OSF | — | — | — | search unavailable (HTTP 503) |
 | re3data | 0 | 0 | 0 | searches names and descriptions, not policies |
 
-Platform counts are lower bounds. The Zenodo and GBIF hits duplicate DataCite DOIs and are counted once.
+Platform counts are lower bounds. The Zenodo and GBIF hits duplicate DataCite DOIs and are counted once. Nearly all
+element-bearing records are datasets (48,336 of 48,362). The 30 non-Neotoma records date from 2023 onward, apart from
+three older DOIs.
 
 **Crosswalks (limb 2).**
 - **The sample.** All non-Neotoma element-bearing DataCite DOIs at the time, with Neotoma filling the sample to 2,000
@@ -194,13 +196,14 @@ because the preregistered list holds four such views.
 
 - **DataCite's own formats keep it.** DataCite XML, both OAI-PMH formats and Crosscite JSON carry the element wherever
   the repository put it in the rights list. Their 6 "degrade" calls are records whose repository put the notice in the
-  description; the crosswalk did not cause them.
+  description (4) or an alternate identifier (2); the crosswalk did not cause them.
 - **`oai_dc` flattens it.** It keeps the element as untyped `dc:rights` strings and loses the scheme ("Local
   Contexts") that tells a machine what it is.
 - **The citation formats keep one rights entry.** CSL-JSON and BibTeX carry a single `copyright` field equal to the
   first rights entry, in every sampled DOI.
   - When the repository lists its licence first, as Neotoma does, the Notice is cut.
-  - All 17 sampled records that list the Local Contexts entry first carry it.
+  - All 17 sampled records that list the Local Contexts entry first carry it. In 6 of them the wording is one the
+    detector cannot recognise as a Notice or Label, so they are scored as drops.
   - We score those as "degrade" rather than "preserve", because `copyright` holds whatever came first rather than a
     typed rights entry.
 - **Schema.org JSON-LD** lists the Local Contexts URI in `license`, beside the Creative Commons licence. Only the

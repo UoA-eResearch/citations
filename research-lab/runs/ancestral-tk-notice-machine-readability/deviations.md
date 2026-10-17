@@ -78,3 +78,14 @@ under the D2 fix.
    distribution was necessarily seen when the hand-check sample was stratified. The by-stratum table was added to
    `analysis.py` in the same commit as its outputs, a small breach of code-before-outputs. That table implements
    plan §4, and changes no verdict.
+
+## D6 — 2026-10-18 06:56 NZDT — edits from the confirmation pass (review/confirmation.md: publish)
+
+- **Duplicate counting.** DataCite's "records returned" now counts unique DOIs across the two passes: 51,965, not
+  52,012.
+- **Plan §4, completed.** The per-platform Wilson intervals (`platforms.csv`) and concentration by resource type and
+  by year (`primary.json`) were promised by plan §4 and had been omitted.
+- **Two report clauses:**
+  - 6 of the 17 records that list the element first carry wording the detector cannot recognise;
+  - the 6 "degrade" calls in the rights views are 4 description and 2 alternate-identifier placements.
+- **Stale log.** `logs/census.log` predates the D2/D3 reruns and is annotated as such.

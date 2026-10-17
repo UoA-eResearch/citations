@@ -63,6 +63,30 @@
   "top_share": 0.9993796782597908,
   "hhi": 0.998759804596711
  },
+ "concentration_by_type": {
+  "Dataset": 48336,
+  "Project": 17,
+  "Text": 4,
+  "ConferencePaper": 2,
+  "?": 2,
+  "OutputManagementPlan": 1
+ },
+ "by_year": {
+  "2007": 2,
+  "2015": 1,
+  "2023": 2,
+  "2024": 13,
+  "2025": 41002,
+  "2026": 7342
+ },
+ "by_year_without_neotoma": {
+  "2007": 2,
+  "2015": 1,
+  "2023": 2,
+  "2024": 13,
+  "2025": 10,
+  "2026": 2
+ },
  "H2_excluded_not_genuine": 2,
  "H2": {
   "n_dois": 1998,
