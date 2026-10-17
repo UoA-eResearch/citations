@@ -1,60 +1,67 @@
 # Do AI models pass on Indigenous data-governance notices?
 
-*A within-record experiment on 221 real repository records: Local Contexts Notices and Labels, or matched
-conventional rights clauses, swapped into the same metadata slot and given to three open-weight models under three
-framings. 19,890 responses.*
+*A within-record experiment on 221 real repository records: Local Contexts Notices and Labels, or conventional rights
+clauses, swapped into the same metadata slot and given to three open-weight models under three framings.*
 
-**Verdict: Refuted, on all three preregistered hypotheses. The notices are passed on; they are not acted on.**
-The lead predicted that models would omit Local Contexts elements in at least 70% of reuse advice, 25 points more
-often than conventional clauses, and that an element would rarely change the advice.
+**Verdict: Refuted, on all three preregistered hypotheses. The models pass the elements on, and the elements change
+their structured advice, mostly to "unclear".** The lead predicted that models would be "notice-blind":
 
-- **Omission:** the models omitted a Local Contexts element in **0.5%** of responses (95% interval 0.4–0.6%),
-  slightly *less* often than conventional clauses (1.7%).
-- **Who omits:** almost every omission came from one model in one framing.
-- **Verdict change:** in the structured "agent" framing, an element changed the stated reuse verdict **85%** of the
-  time.
+- omitting Local Contexts elements in at least 70% of reuse advice;
+- omitting them 25 points more often than conventional clauses;
+- rarely changing their advice because of them.
 
-But post-hoc analysis shows what that change usually is: a move to *"unclear"*.
+What happened:
 
-- A conventional "please contact the data providers before reuse; collaboration is welcome" becomes "permission or
-  contact required: yes" in **100%** of agent summaries.
-- The TK Open to Collaboration Label, the matched Indigenous-governance invitation, becomes "yes" in **2%**.
-- A data use agreement becomes "yes" in 100%. TK Community Use Only, which Local Contexts describes as material
-  "not, and never was, free, public, or available for everyone", becomes "yes" in 28%, and "commercial use
-  allowed" in 31%.
+- **Omission was rare.** The three models omitted a Local Contexts element in **0.5%** of 9,945 responses (95%
+  interval 0.4–0.6%; 0.46% after independent hand re-scoring).
+- **One model, one framing.** Every omission came from OLMo-2-13B answering a researcher's open question. Qwen3-32B
+  and Mistral-Small-24B named every element every time.
+- **No penalty for being Indigenous.** Local Contexts elements were not omitted more often than conventional clauses:
+  the difference is between +0.3 and −2.1 points, depending on how one OLMo-2 cell is scored.
+- **The advice changed, mostly to "unclear".** In a structured reuse summary, an element changed the stated verdict
+  in **85%** of cases, but 63% of those changes were moves to "unclear". A change to a definite different answer
+  happened in **32%**: 95% of the time for TK Non-Commercial, 7–11% for the Notices and the TK Open to
+  Collaboration Label.
+
+The study tests three local models on bare metadata. It is not a judgement of what any community would consider
+respectful use.
 
 ## In plain terms
 
-Indigenous communities and institutions can attach "Notices" and "Labels" to datasets in online repositories:
-short, machine-readable statements such as *TK Community Use Only* or *Traditional Knowledge Notice*. They tell
-anyone reusing the data that there are cultural rights or community rules attached. Researchers increasingly ask
-AI assistants whether they can reuse a dataset. We wanted to know whether the AI passes these notices on.
+Indigenous communities and institutions can attach "Notices" and "Labels" to datasets in online repositories: short,
+machine-readable statements such as *TK Community Use Only* or *Traditional Knowledge Notice*. They tell anyone
+reusing the data that there are cultural rights or community rules attached. Researchers increasingly ask AI
+assistants whether they can reuse a dataset. We wanted to know whether the AI passes these notices on.
 
 We took 221 real dataset records and made copies of each with a different notice inserted: five kinds of Local
-Contexts notice, three ordinary conditions (such as "non-commercial use only"), or nothing. We gave them to three
-openly available AI models, asking in three different ways, and checked nearly 20,000 answers.
+Contexts notice, three ordinary conditions (such as a non-commercial licence), or nothing. We gave them to three
+openly available AI models, asking in three different ways. That gave nearly 20,000 answers, which a keyword rule
+scored; samples were read by hand.
 
-The models almost always mentioned the notice. Only one model, in one style of question, occasionally left it out.
-So the worry that AI simply ignores these notices is not borne out.
+The models almost always mentioned the notice. Only one model, answering an open question, sometimes left one out.
+The worry that AI simply ignores these notices is not borne out here.
 
-What the models did with them is another matter. When asked to fill in a short reuse summary, a plain request to
-"contact the providers before reuse" was always turned into "contact required". An Indigenous label asking for the
-same kind of collaboration almost never was; the models mostly answered "unclear". A label saying the material is
-for community use only still produced "commercial use allowed" about a third of the time.
+What the models then said varied by notice:
 
-The AI passes on the words. It does not reliably treat Indigenous notices as conditions in the way it treats
-ordinary ones.
+- **Non-commercial:** the Traditional Knowledge non-commercial label was treated like an ordinary non-commercial
+  licence; commercial use was ruled out.
+- **Notices and the collaboration label:** these say that cultural rights may apply, or that a community is open to
+  working together. The models mostly answered "unclear" when asked whether permission was needed.
+- **Plain request:** "please contact the providers before reuse" was always turned into "contact required".
+- **Community Use Only:** one model said commercial use was allowed nine times in ten. The others mostly said
+  "unclear".
+- **Separately:** one model often added restrictions to an ordinary open licence that the licence does not contain.
 
 ## What was asked
 
 The lead (scouted 2026-10-16, University of Auckland Ancestral Futures signature research area) asked whether
-open-weight models are "notice-blind". Do they omit Local Contexts elements they are given, more often than
-conventional non-standard rights clauses, without the element changing their advice?
+open-weight models omit Local Contexts elements they are given more often than conventional non-standard rights
+clauses, and whether the element changes their advice.
 
-The harvest made the lead's design impossible (D1). Of the 48,353 DataCite records carrying a Local Contexts URI,
-48,332 are from one repository, Neotoma, and all of those carry one element. Only 21 records anywhere else carry
-one. So the study became a **within-record experiment**. Each sampled record is shown with every condition in the
-same rightsList slot, after its CC BY licence, and nothing else changes.
+The harvest made the lead's three-arm design impossible (D1). Of the 48,353 DataCite records carrying a Local
+Contexts URI, 48,332 are from one repository, Neotoma, and all carry one element. Only 21 records anywhere else carry
+one. The study became a **within-record experiment**: each sampled record is shown with every condition appended to
+its rightsList, and nothing else changes.
 
 | hypothesis | prediction | decision rule |
 | --- | --- | --- |
@@ -64,179 +71,208 @@ same rightsList slot, after its CC BY licence, and nothing else changes.
 
 ## What was already known
 
-Three searches by the scouting critic found nothing that tests whether a model surfaces a rights element it was
-given, and nothing with an Indigenous-governance arm. The nearest work extracts licences into rights vocabularies
-(LLM4RE, arXiv 2510.18787), or documents reference fabrication that disadvantages marginalised scholarship. The
-Notices were designed to travel with data (Liggins, Hudson & Anderson 2021, *Mol. Ecol.*). DataCite documents them
-as part of its schema.
+The closest prior work asks whether models honour a copyright notice placed in the prompt ("Do LLMs Know to Respect
+Copyright Notice?", arXiv 2411.01136, 43,200 samples). Related work examines licence information for generated code
+(LiCoEval, arXiv 2408.02487) and machine-readable consent signals for AI use (Longpre et al., "Consent in Crisis",
+NeurIPS 2024). The Local Contexts Notices are "highly visible, machine-readable icons" (Liggins, Hudson & Anderson
+2021, *Mol. Ecol.* 30:2477). DataCite documents them as part of its schema. No study of models and Local Contexts
+elements, TK Labels or Indigenous data-governance metadata was found by the scouting critic, by our searches or by
+the reviewer. (An earlier draft cited arXiv 2510.18787 as licence-extraction work; it is a requirements-engineering
+study, and the citation is withdrawn.)
 
 ## How it was done
 
-**Records.** 200 Neotoma records drawn at random, plus all 21 non-Neotoma records (Pacific research stations at
-Gump and Tetiaroa, iPlaces, Zenodo). Existing Local Contexts elements were removed, and long lists were capped
-identically across conditions. A disjoint 20 Neotoma records formed a pilot set.
+**Records.** 200 Neotoma records drawn at random, plus all 21 non-Neotoma records (Pacific research stations at Gump
+and Tetiaroa, iPlaces, Zenodo). Existing Local Contexts elements were removed, and long lists were capped
+identically. 206 records keep a CC BY licence, so each inserted element sits beside it. For 15 of the 21
+non-Neotoma records the inserted element is the only rights entry.
 
-**Conditions** (wording and URIs from localcontexts.org):
+**Conditions.** Every element is inserted as a name plus a localcontexts.org URI, which is Neotoma's form:
 
-- *Local Contexts:* TK Open to Collaboration (Neotoma's real form), TK Non-Commercial, BC Notice, TK Notice, TK
-  Community Use Only, and TK Open to Collaboration without its URI.
-- *Conventional:* a CC BY-NC licence, "A data use agreement is required before reuse", and "Users are asked to
-  contact the data providers before reuse; collaboration is welcome".
-- *None.*
+- *Local Contexts:* TK Open to Collaboration, TK Non-Commercial, BC Notice, TK Notice, TK Community Use Only, and
+  TK Open to Collaboration without its URI;
+- *conventional:* a CC BY-NC licence, "A data use agreement is required before reuse", and "Users are asked to
+  contact the data providers before reuse; collaboration is welcome";
+- *none.*
 
-Matched pairs: TK NC against CC BY-NC (the same restriction), and TK CB against the contact clause (the same
-invitation).
+Real Notices deposited through the Local Contexts Hub usually carry the full Notice text (12 of the 21 non-Neotoma
+records), so the Notices here are a thinner signal than they often are in practice.
 
-**Models and framings.** Three models at greedy decoding, up to 1,100 new tokens, all run locally on vLLM. No record went to a
-third-party model for generation or scoring. The pilot adjudication was done by the agent running the study,
-so those 200 responses, which quote public metadata, did pass through the agent's own model service:
+**Models and framings.**
 
-- Qwen3-32B (non-thinking mode);
-- Mistral-Small-24B-Instruct-2501;
-- OLMo-2-1124-13B-Instruct.
+- **Models:** Qwen3-32B (non-thinking), Mistral-Small-24B-Instruct-2501 and OLMo-2-1124-13B-Instruct. Greedy
+  decoding, up to 1,100 new tokens, run locally on vLLM.
+- **Framings:**
+  - *researcher:* "can I reuse this, and under what conditions?";
+  - *agent:* a JSON summary with fields for commercial use and for whether permission or contact is required;
+  - *direct:* "list every condition, notice or restriction".
+- **Count:** 19,890 responses, 0 errors, 14 truncated.
 
-Three framings:
+Only the researcher framing tests whether a model *volunteers* an element. The other two ask it to list conditions,
+and copying the rightsList string counts.
 
-- a researcher asking "can I reuse this, and under what conditions?";
-- an agent producing a JSON summary with fields for commercial use and for whether permission or contact is
-  required;
-- "list every condition, notice or restriction".
+**Scoring.** A preregistered keyword rule per condition: does the response name the element or state what it asks?
 
-221 records × 10 conditions × 3 framings × 3 models = 19,890 responses. 0 errors; 14 truncated.
+**Disclosure about validation.** Before the main set was scored, the scorer was checked against 200 pilot responses
+judged by the agent running this study: the same LLM that wrote the scorer, judging blind to the rule's output but not
+to the rule. All 200 mentioned their element. The sample contained none of the pilot's 17 responses the rule scored
+as omissions, so this check could not estimate the rule's sensitivity (D7).
 
-**Scoring.** A preregistered lexical rule per condition: does the response name the element or state what it asks?
-Before the main set was scored, I adjudicated 200 pilot responses, blind to the rule (D4). All 200 mentioned the
-element, and the rule agreed on every one (sensitivity 1.00). Specificity comes from each pattern's hit rate on
-responses with no element: 1–2% for most patterns, 7–8% for the two non-commercial ones. A name-only secondary
-measure guards against that.
+**The independent check.** The adversarial reviewer (a separate model) read 270 main-set responses, including all 48
+Local Contexts scored omissions. All 191 scored mentions were genuine. 46 of the 48 Local Contexts omissions were
+real. But all 30 OLMo-2 CC BY-NC "omissions" it read were not (below).
 
-**Operational deviations** (D2, D3), all before any element-condition response was read:
+**Hosted service.** Every response read by the agent or the reviewer passed through a hosted model service. Plan §3's
+"no record is sent to a third-party API" held for generation and scoring only.
 
-- Two model servers failed to start in the first GPU window (one a context-length mismatch).
-- One script lacked a package.
-- The generation cap was raised from 700 to 1,100 tokens after a quarter of the first pilot responses hit it.
+**Determinism.** Batched serving is not bit-reproducible: of 204 prompts generated twice, 68 gave identical text.
+The scored outcome was identical in 183 of 183 element responses, and 66 of 68 agent verdicts.
 
 ## Results
 
-### H1 and H2: Refuted. The elements are passed on, almost always
+### H1 and H2: Refuted. The elements are passed on
 
 | | Local Contexts omission | conventional omission |
 | --- | --- | --- |
-| all (H1, H2) | **0.5% (0.4–0.6%)** | 1.7% |
-| difference, Local Contexts minus conventional (H2) | **−1.2 points (−1.5 to −1.0)** | |
-| Qwen3-32B | 0.0% | 0.0% |
-| Mistral-Small-24B | 0.0% | 0.2% |
-| OLMo-2-13B | 1.4% | 5.0% |
-| researcher framing | 1.4% | 4.8% |
-| agent / direct framing | 0.0% / 0.0% | 0.4% / 0.0% |
-| name-only measure (secondary) | 0.5% | 4.0% |
-| excluding the 14 truncated responses | 0.5% | 1.7% |
+| **all responses (H1, H2)** | **0.5% (0.4–0.6%)**; 0.46% after re-scoring | 0.15–2.6% (see below) |
+| researcher framing, Qwen3 / Mistral / OLMo-2 | 0% / 0% / 4.3% | 0% / 0% / see below |
+| agent and direct framings, all models | 0% | ≤ 0.6% |
 
-Every omission of a Local Contexts element comes from OLMo-2-13B's researcher answers. In that cell it drops the
-BC Notice 11% of the time and a CC BY-NC licence 42%. When a Local Contexts element is mentioned, it is named as
-such (Local Contexts, TK, BC, Indigenous or cultural rights) 99.9% of the time. Removing the localcontexts.org URI
-barely matters (TK CB omission 0.6% with it, 1.0% without).
+**The conventional figure depends on one cell.** OLMo-2 answers the researcher question by reciting the CC BY
+licence, and in that recitation it attaches an invented NonCommercial term. Of its researcher answers to records
+with no extra element, 81% contain a sentence saying commercial use is forbidden or needs permission (the reviewer,
+reading them, put it at 96%, 212 of 221). When a CC BY-NC licence is added, the keyword rule therefore cannot tell whether OLMo-2 read
+it. Two ways to score the cell:
 
-![Omission rate by element and model](results/figures/F1_omission.png)
+| scoring of OLMo-2 researcher CC BY-NC | conventional omission | H2: Local Contexts minus conventional | verdict |
+| --- | --- | --- | --- |
+| any non-commercial statement counts (the plan's content rule, literally) | 0.15% | +0.3 points (+0.2 to +0.5) | Refuted |
+| the licence must be named | 2.6% | −2.1 points (−2.3 to −1.8) | Refuted |
 
-### H3: Refuted. Elements change the verdict, mostly to "unclear"
+The preregistered scoring gave −1.2 points (−1.5 to −1.0), between the two. H2 is Refuted under every scoring, but
+the sign of the difference is not robust and is not reported as a finding. The draft's "OLMo-2 drops a CC BY-NC
+licence 42% of the time" was an artefact of the rule. What is real: OLMo-2 names the TK Non-Commercial Label in 98%
+of its researcher answers but the CC BY-NC licence in only 35%. It folds the second licence into its (often wrong)
+account of the first.
 
-In the agent framing an element changes at least one of the two verdict fields, against the same record and model
-without it, in **85.3% (84.1–86.4%)** of cases (50 of 3,315 pairs unparseable). The direction of the change is the
-substantive result, described post hoc below.
+Naming. In the researcher framing, Local Contexts mentions spell out the instrument (Local Contexts, Traditional
+Knowledge, Indigenous) in 68–77% of answers for the three Labels and 100% for the two Notices, whose names contain
+the words. In the agent framing, mentions of the Labels are almost always the bare "TK …" string listed among the
+conditions (1–2% spelled out).
 
-### Post hoc: conditions become "required", Local Contexts elements become "unclear" (D6)
+![Researcher framing: answers that do not name the element](results/figures/F1_omission.png)
 
-Agent framing, "permission_or_contact_required" (F2):
+### H3: Refuted. The elements change the verdict, mostly to "unclear"
+
+In the agent framing, an element changed at least one of the two verdict fields, against the same record and model
+without it, in **85.3% (84.1–86.4%)** of 3,265 pairs (50 unparseable). The rule counts any change, so H3 is Refuted.
+The decomposition:
+
+| | share of pairs |
+| --- | --- |
+| any change (H3) | 85.3% |
+| change only to "unclear" | 63% of the changes |
+| change to a definite different answer | **31.7% (30.4–33.1%)** |
+| …TK Non-Commercial / TK Community Use Only | 95% / 35% |
+| …TK Open to Collaboration / TK Notice / BC Notice | 11% / 10% / 7% |
+
+By model, any change is 98% (Qwen3), 95% (Mistral) and 61% (OLMo-2), whose own no-element answers are noisy (below).
+Under a definite-change reading, the Notices and TK Open to Collaboration would fall within H3's 20% line. TK
+Non-Commercial would not.
+
+### Post hoc: what the verdicts say, element by element (D6, D7)
+
+Agent framing, "permission_or_contact_required":
 
 | element | yes | unclear | no |
 | --- | --- | --- | --- |
-| contact providers; collaboration welcome | **100%** | 0% | 0% |
-| data use agreement required | **100%** | 0% | 0% |
+| "Users are asked to contact the data providers before reuse; collaboration is welcome." | 100% | 0% | 0% |
+| "A data use agreement is required before reuse." | 100% | 0% | 0% |
 | TK Community Use Only | 28% | 64% | 8% |
-| TK Open to Collaboration | **2%** | 64% | 33% |
+| TK Open to Collaboration | 2% | 64% | 33% |
 | TK Notice | 3% | 68% | 29% |
 | BC Notice | 2% | 80% | 18% |
 | no extra element | 4% | 6% | 91% |
 
 ![The agent verdict on permission or contact, by element](results/figures/F2_contact_verdict.png)
 
-Agent framing, "commercial_use_allowed":
+Each element against its own published text (Local Contexts' pages, saved in `data/raw/localcontexts/`):
 
-| element | no | unclear | yes |
-| --- | --- | --- | --- |
-| TK Non-Commercial | **98%** | 2% | 0% |
-| CC BY-NC licence | **91%** | 1% | 8% |
-| TK Community Use Only | 13% | 56% | **31%** |
-| no extra element | 6% | 9% | 86% |
+- **TK Non-Commercial** ("This material has been designated as being available for non-commercial use"). "No
+  commercial use" in 98% of agent summaries, as for a CC BY-NC licence (91%).
+- **TK Open to Collaboration** ("[community] is open to future engagement, collaboration, and partnership"). The text
+  asks nothing of the user, and models mostly answer "unclear" (Mistral 100%, Qwen3 86%) or "no" (OLMo-2 93%). The
+  conventional clause, which does ask users to contact the providers before reuse, becomes "contact required" in
+  every model. The plan paired these two as "the same invitation"; they are not, because only one makes a request.
+  The difference in answers follows the difference in texts.
+- **BC and TK Notices** ("appropriate permissions may need" to be sought). Mostly "unclear" (68–80%), with "no" in
+  18–29%. The Notices are inserted as a bare name and URI, without the Notice text that Hub deposits carry, so a model
+  sees little beyond the name.
+- **TK Community Use Only** ("not, and never was, free, public, or available for everyone"). For commercial use,
+  Qwen3 answers "allowed" in 91% of summaries, Mistral "unclear" in 91%, and OLMo-2 "unclear" in 72%. The Label
+  concerns circulation rather than commercial use, and the record's CC BY licence permits commercial use, so Qwen3
+  is following the licence where the Label is silent. For permission or contact, Qwen3 answers "yes" in 72%,
+  Mistral in 8% and OLMo-2 in 5%.
+- **"Not legally binding"** (lexical, descriptive). Responses describe the Local Contexts elements as not legally
+  binding in 4–12% of researcher and direct answers that mention them. This matches Local Contexts' own description
+  of the Labels as "an educative and informational strategy". It is not an error.
 
-Read against what each element says:
-
-- **The matched restriction is honoured equally.** TK Non-Commercial and a CC BY-NC licence both produce "no
-  commercial use" over 90% of the time.
-- **The matched invitation is not.** The conventional request to contact the providers is read as a requirement
-  every time, by every model. The TK Open to Collaboration Label, whose template text says the community "is open
-  to future engagement, collaboration, and partnership", is read as one 2% of the time. Arguably the conventional
-  request is over-read and the Label under-read; either way, the same kind of ask gets different treatment.
-- **The strongest restriction is often softened.** Local Contexts' template for TK Community Use Only says the
-  material "has specific conditions for circulation within the community" and "is not, and never was, free,
-  public, or available for everyone". Models answer "commercial use allowed: yes" in 31% of agent summaries:
-  OLMo-2 28%, Mistral 7% and Qwen3 5% chose "no", with the rest "unclear" or "yes".
-- **The Notices are acknowledged, not translated into conditions.** The BC and TK Notices say that "appropriate
-  permissions may need" to be sought; models mostly answer "unclear", and 18–29% answer "no".
-- **Prose framings** (lexical, unvalidated). Local Contexts elements are described as "not legally binding" or
-  similar in 3–12% of responses that mention them (BC Notice 12%, TK CB 12%). The conventional contact request is
-  described that way 30% of the time, which is accurate for a request.
-
-A separate finding: in the responses with no extra element, where the record carries only CC BY, **OLMo-2-13B
-attaches NonCommercial, NoDerivatives or ShareAlike terms to the licence in 51% of its prose answers**. Qwen3 does
-so in 4%, Mistral never. The pilot adjudication noted further characterisation errors: "BC" read as British
-Columbia, TK Community Use Only taken to mean "the paleoecology research community", and a CC BY-NC licence listed
-with "commercial use allowed: yes".
+A separate finding: **OLMo-2-13B adds restrictions to plain CC BY**. In its answers to records with only CC BY, 64%
+of its prose answers contain a sentence telling the user that commercial use is forbidden or needs permission
+(81% researcher, 47% direct), excluding sentences that say the clause does not apply. In the agent framing, its
+no-element answers say "no commercial use" in 17% and "contact required" in 11%; Qwen3 and Mistral say neither.
 
 ## What this does and does not show
 
 **It shows** that three current open-weight models, given a repository record's metadata, almost always pass on a
-Local Contexts Notice or Label, and by name. The "notice-blind" hypothesis is refuted for this setting. It also
-shows, post hoc, that in a structured reuse summary these models treat Local Contexts elements as uncertain far
-more often than conventional clauses that ask the same kind of thing.
+Local Contexts Notice or Label. The "notice-blind" hypothesis is refuted for this setting. In a structured summary,
+the Label that states a condition (TK Non-Commercial) is treated like the equivalent licence. The Notices and the
+collaboration Label are mostly marked "unclear", consistent with texts that acknowledge rights or express openness
+rather than impose a requirement.
 
 **It does not show**:
 
-1. **Hosted assistants.** These are three open-weight models at greedy decoding, not the hosted assistants most
+1. **That these answers are what communities would consider respectful.** That is a normative judgement this lab has
+   not made with the communities concerned; engagement is a care point, not a precondition (plan §8).
+2. **Hosted assistants.** These are three open-weight models at greedy decoding, not the hosted assistants most
    researchers use.
-2. **Other presentations.** The element sits in a metadata JSON. A landing page, a PDF, or a record with many
-   fields may be harder.
-3. **Whether "unclear" is the right answer.** For some elements it is defensible. What each element asks is taken
-   from Local Contexts' published text, but whether a given answer respects it is a normative judgement this lab
-   has not made with the communities concerned. That engagement is a care point, not a precondition (plan §8).
-4. **Real-world element variety.** Element types other than Neotoma's are inserted experimentally, using Local
-   Contexts' own names, because almost no real records carry them.
-5. **Validated post-hoc measures.** The verdict tables use the models' own structured fields, but the
-   "not binding" and invented-term counts are lexical and were not validated.
+3. **Real Hub deposits.** Elements are inserted as bare names and URIs; real Hub deposits carry the Notice text.
+4. **Single-licence records.** A CC BY licence sits beside every element, so a model can follow the licence where an
+   element is silent.
+5. **A validated scorer.** The keyword scorer has known blind spots in one cell (above); its validation rests on the
+   reviewer's 270-response re-scoring, not on the pilot.
 
 ## Scope and care
 
-The study used only public repository metadata and never asked a model to produce or elaborate Indigenous
-knowledge; only reuse statements were scored. The results describe models, not the communities, institutions or
-repositories involved.
+The study used only public repository metadata and never asked a model to produce or elaborate Indigenous knowledge;
+only reuse statements were scored. Results describe models, not communities, institutions or repositories.
 
 One data-quality point is worth passing to Neotoma and Local Contexts. Neotoma's element pairs the name of a TK
-*Label* ("TK Open to Collaboration (TK CB)") with the URI of the Open to Collaborate *Notice*, a different
+*Label* ("TK Open to Collaboration (TK CB)") with the URI of the Open to Collaborate *Notice*, an institutional
 instrument.
 
 ## Process and deviations
 
-Six logged deviations (`deviations.md`):
+Seven logged deviations (`deviations.md`):
 
-- D1: within-record design; no LLM judge, with agent adjudication of the pilot instead.
-- D2: GPU-stage failures: a start timeout, a context-length mismatch, a missing package.
+- D1: within-record design.
+- D2: GPU-stage failures, before any response existed:
+  - a start timeout;
+  - an OLMo-2 context-length crash;
+  - a missing package.
 - D3: generation cap raised to 1,100 tokens.
-- D4: pilot adjudicated; scorer frozen unchanged; name-only secondary added.
-- D5: a bootstrap relabelling bug, fixed before any result was printed.
+- D4: pilot adjudicated; scorer frozen; name-only secondary added.
+- D5: a bootstrap bug, fixed before any result.
 - D6: post-hoc verdict and wording checks.
+- D7: acting on the adversarial review (fix first, 17 issues):
+  - the OLMo-2 cell re-scored;
+  - H3 decomposed;
+  - false-positive rates by model and framing;
+  - the adjudication, service and determinism disclosures;
+  - the post-hoc reading rewritten against each element's text;
+  - the citation corrected.
 
-Commits: plan 1c953ad, scorer frozen 3f119ce, results 7d6b7a7.
+Commits: plan 1c953ad, scorer frozen 3f119ce, results 7d6b7a7, review response 721bfc2.
 
 ## Reproducing it
 
@@ -247,7 +283,9 @@ Commits: plan 1c953ad, scorer frozen 3f119ce, results 7d6b7a7.
     venv/bin/python code/pilot_sample.py sample # then adjudicate; `compare` checks the scorer
     venv/bin/python code/analysis.py main       # H1-H3 -> results/tables/primary_main.json
     venv/bin/python code/supplementary.py       # post-hoc verdicts and wording
+    venv/bin/python code/review_response.py     # re-scoring, H3 decomposition, FP rates, determinism
     venv/bin/python code/figures.py
 
-Released: the corpus (public metadata, `results/corpus/`), prompts, every response, every score, the pilot
-adjudication, and all code. Model weights are pinned by revision in `code/download_models.py`.
+Released: the corpus (public metadata, `results/corpus/`), prompts, every response (`results/generations/`), every
+score, the pilot adjudication, the reviewer's re-scoring, and all code. Outputs are reproducible at the outcome level,
+not bit-for-bit (batched serving).

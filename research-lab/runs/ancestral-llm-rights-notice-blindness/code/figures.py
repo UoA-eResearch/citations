@@ -43,33 +43,40 @@ def caption(name, text):
 
 
 def f1():
-    s = pd.read_csv(T / "scored_main.csv")
-    s = s[s.condition != "NONE"]
-    s["omit"] = 1 - s.mention
+    # researcher framing only (the one that tests whether a model volunteers the element), mention by NAME - the
+    # content rule cannot score OLMo-2's researcher answers to CV_NC, which already state an invented NC term for
+    # plain CC BY (deviations D7)
+    d = A.score_frame(A.load("main"))
+    d = d[(d.framing == "researcher") & (d.condition != "NONE")].copy()
+    d["omit_name"] = [0.0 if S.mentions_by_name(t, c) else 1.0 for t, c in zip(d.text, d.condition)]
     fig, ax = plt.subplots(figsize=(8.4, 4.4))
     fig.subplots_adjust(left=0.37, right=0.97, bottom=0.13, top=0.92)
     ax.grid(axis="x", color=GRID, lw=0.6); ax.set_axisbelow(True)
     for k, c in enumerate(ORDER):
         y = len(ORDER) - 1 - k + (0.0 if c.startswith("LC") else -0.6)
         for j, m in enumerate(COL):
-            g = s[(s.condition == c) & (s.model == m)]
-            v = 100 * g.omit.mean()
+            v = 100 * d[(d.condition == c) & (d.model == m)].omit_name.mean()
             ax.scatter([v], [y + (j - 1) * 0.22], color=COL[m], marker=MK[m], s=30, zorder=3,
                        label=NAME[m] if k == 0 else None)
         ax.text(-1.5, y, LAB[c], ha="right", va="center", fontsize=8.5, color=INK2)
     ax.axhline(len(ORDER) - 6.8, color=GRID, lw=0.8)
-    ax.text(48, len(ORDER) - 0.6, "Local Contexts", ha="right", fontsize=8, color=INK2)
-    ax.text(48, 1.7, "conventional", ha="right", fontsize=8, color=INK2)
+    ax.text(78, len(ORDER) - 0.6, "Local Contexts", ha="right", fontsize=8, color=INK2)
+    ax.text(40, 2.25, "conventional", ha="center", fontsize=8, color=INK2)
     ax.set_yticks([]); ax.spines["left"].set_visible(False)
-    ax.set_xlim(-1, 50)
-    ax.set_xlabel("responses that omit the element, % (all three framings pooled)")
+    ax.set_xlim(-1, 80)
+    ax.set_xlabel("researcher framing: answers that do not name the element, %")
     ax.legend(frameon=False, fontsize=8, loc="lower right")
-    ax.set_title("Models almost always pass the element on", loc="left", fontsize=10, color=INK)
+    ax.set_title("Only OLMo-2 leaves elements unnamed, the CC BY-NC licence most", loc="left", fontsize=10,
+                 color=INK)
     fig.savefig(F / "F1_omission.png", dpi=200)
-    caption("F1_omission", """F1. The preregistered outcome: the share of responses that omit the inserted rights element,
-    by element and model, each point pooling 663 responses (221 records x 3 framings). Local Contexts omission is 0.5%
-    overall (95% interval 0.4-0.6%), conventional-clause omission 1.7%. Almost every omission is OLMo-2-13B in the
-    researcher framing, where it drops the CC BY-NC licence 42% of the time and the BC Notice 11%.""")
+    caption("F1_omission", """F1. Researcher framing ("can I reuse this, and under what conditions?"), the framing that
+    tests whether a model volunteers the element; 221 answers per point. Here an element counts as passed on only if
+    it is named (Local Contexts, TK, BC, the Label's name; the CC BY-NC licence; the agreement; the contact clause),
+    because OLMo-2 attaches an invented NonCommercial term to plain CC BY in most of its researcher answers, so a
+    non-commercial statement alone cannot show that it read the CC BY-NC entry (deviations D7). Qwen3 and Mistral
+    name every element. OLMo-2 names the TK Non-Commercial Label in 98% of answers but the CC BY-NC licence in 35%.
+    In the agent and direct framings, which ask the model to list every condition, no Local Contexts element is
+    omitted.""")
 
 
 def f2():
@@ -101,9 +108,10 @@ def f2():
     caption("F2_contact_verdict", """F2. Post hoc (deviations D6). In the agent framing, models fill a field
     "permission_or_contact_required" (yes / no / unclear). A conventional request to contact the providers, or a
     data use agreement, becomes "yes" every time in every model. The Local Contexts elements mostly become
-    "unclear" - including TK Open to Collaboration, the matched equivalent of the contact request (2% "yes"), and
-    TK Community Use Only (28% "yes"). 663 responses per condition (221 records x 3 models), 50 unparseable
-    responses excluded.""")
+    "unclear": the BC and TK Notices, whose texts say permissions "may need" to be sought, and TK Open to
+    Collaboration, whose text expresses a community's openness to collaboration and asks nothing of the user.
+    TK Community Use Only is "yes" 28% of the time (Qwen3 72%). 663 responses per condition (221 records x 3
+    models), 50 unparseable responses excluded.""")
 
 
 if __name__ == "__main__":

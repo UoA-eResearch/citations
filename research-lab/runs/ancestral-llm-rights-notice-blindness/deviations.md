@@ -106,3 +106,16 @@ bit-reproducible; and the LLM4RE citation is wrong (arXiv 2510.18787 is a requir
 to the plan: section 3's bold sentence should have read "no record is sent to a third-party model for generation or
 scoring". code/review_response.py, written now and committed before it runs, reproduces the checks in the study's own
 code, using the reviewer's independent hand judgements for the corrected omission rates. The report is then revised.
+
+D7 outcomes (review_response.py): Local Contexts omission 0.46% after the reviewer's hand judgements (46 of 48
+scored omissions real); OLMo-2 researcher CV_NC re-scored: any non-commercial statement counts -> conventional
+omission 0.15%, H2 +0.3 points (+0.2 to +0.5); licence must be named -> 2.6%, H2 -2.1 (-2.3 to -1.8); H2 Refuted
+either way, sign not robust. OLMo-2 names TK NC in 98% of researcher answers, the CC BY-NC licence in 35%. H3: any
+change 85.3%, definite change 31.7% (30.4-33.1%), 63% of changes only to "unclear"; definite by element NC 95%, CO
+35%, CB 11%, TK 10%, BC 7%. TK CO "commercial yes": Qwen3 91%, Mistral 2%, OLMo-2 0.5%. OLMo-2 tells the user
+commercial use is forbidden or needs permission in 64% of its no-element prose answers (81% researcher, 47% direct),
+excluding disclaimer sentences. Determinism: 68 of 204 re-generated prompts identical; outcomes 183/183 and 66/68
+the same. F1 rebuilt on the name rule in the researcher framing; the report rewritten (verdict wording, the
+validation and service disclosures, H2 range, H3 decomposition, post-hoc reading against each element's text, the
+withdrawn LLM4RE citation, the added prior work).
+
