@@ -36,3 +36,37 @@ Every departure from the lead and from plan.md, timestamped with `date` when it 
 The archive began refusing plain-HTTP connections to web.archive.org (port 80) after the first rows, while HTTPS
 still answered (8–25 s per CDX query). `cdx.py` now queries over HTTPS; nothing else changes. The 7 rows already
 written are valid and kept, since the job resumes by domain.
+
+## D4 — 2026-10-17 16:46 NZDT — source changed from the Wayback Machine to Common Crawl, before any page was fetched
+
+1. **Why.** About 30 minutes into the CDX job (116 of 5,400 domains), web.archive.org stopped accepting connections
+   from this host altogether. Plain HTTP had already been refused (D3). The job was also recording failed queries as
+   "no captures" (24 of the 116 rows), which would have silently dropped sites. It was stopped, and the 116 rows are
+   discarded (`data/cdx/ia_partial_discarded.jsonl`). Even unblocked, the measured rate (about 3.6 domains a minute
+   for the index, before any page fetch) meant days of load on the Internet Archive.
+2. **Common Crawl instead.** Each target quarter-month maps to one crawl:
+
+   | target | crawl |
+   | --- | --- |
+   | 2024-01 | CC-MAIN-2024-10 (Feb/Mar 2024, the first 2024 crawl) |
+   | 2024-04 | 2024-18 |
+   | 2024-07 | 2024-30 |
+   | 2024-10 | 2024-42 |
+   | 2025-01 | 2025-05 |
+   | 2025-04 | 2025-18 |
+   | 2025-07 | 2025-30 |
+   | 2025-10 | 2025-43 |
+   | 2026-01 | 2026-04 |
+   | 2026-04 | 2026-17 |
+
+   - **Lookup.** One index request per domain per crawl, a domain match filtered to the homepage URL, status 200,
+     HTML.
+   - **Pages.** Fetched by range request from data.commoncrawl.org (`code/cc_index.py`, `code/fetch_cc.py`).
+   - **Unchanged:** the frame, the eligibility rule (≥ 2 of 4 pre, ≥ 2 of 3 post), the period labels, every
+     outcome and analysis rule.
+   - **Failures.** A failed request is recorded as an error and retried, never as absence.
+   - **Staging.** Queries are staged (post crawls first, then pre, then anticipation and transition for eligible
+     sites only). This saves requests without changing who is eligible.
+3. **New selection to disclose.** Common Crawl obeys robots.txt, and many sites, notably publishers, block CCBot.
+   Those sites are absent from every crawl and drop out as ineligible. Exclusion counts are reported by group and
+   sector. Capture dates within a crawl vary by site; the capture timestamp is kept.
