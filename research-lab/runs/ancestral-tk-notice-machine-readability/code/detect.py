@@ -27,6 +27,8 @@ def detect(text):
     t = text or ""
     out = dict(uri_labels=set(), uri_notices=set(), hub_projects=set(), name_labels=set(), name_notices=set())
     for kind, slug in URI_RE.findall(t):
+        if re.search(r"(?:^|-)(?:labels|notices)$", slug, re.I):   # D5: category pages name no element
+            continue
         k = kind.lower().rstrip("s") if kind.lower() != "projects" else "projects"
         if k == "label":
             out["uri_labels"].add(slug.lower())
