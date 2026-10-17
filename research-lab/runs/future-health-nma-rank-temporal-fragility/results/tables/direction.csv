@@ -155,7 +155,7 @@ record,format,type,catalogue,small_values,confidence,basis
 501215,long,Binary,Beneficial,bad,high,catalogue label (checked where labels disagree or the sheet has none)
 501216,iv,Continuous,Beneficial,,undetermined,"psychotherapies only, no placebo or waitlist node; sign convention cannot be determined - excluded"
 501217,long,Binary,Harmful,good,high,catalogue label (checked where labels disagree or the sheet has none)
-501220,iv,Continuous,Beneficial,good,high,"recession reduction (higher better); CAF (t1) vs CAF+CTG (t2) +0.44/+0.52, CTG known to add ~0.4 mm, so effect = t2 vs t1"
+501220,iv,Continuous,Beneficial,bad,high,"recession reduction (higher better); rows are CAF+CTG (t1) vs CAF (t2) +0.44/+0.52, CTG known to add ~0.4 mm, so effect = t1 vs t2 (D4: corrected after review; first call misread t1/t2)"
 501224,long,Binary,Harmful,good,high,catalogue label (checked where labels disagree or the sheet has none)
 501225,long,Continuous,Harmful,good,high,catalogue label (checked where labels disagree or the sheet has none)
 501226,long,Binary,Beneficial,bad,high,catalogue label (checked where labels disagree or the sheet has none)
@@ -182,7 +182,7 @@ record,format,type,catalogue,small_values,confidence,basis
 501269,iv,Binary,Harmful,,not adjudicated,not in the size/year-eligible set
 501272,long,Binary,Beneficial,bad,high,catalogue label (checked where labels disagree or the sheet has none)
 501273,iv,Survival,Harmful,,not adjudicated,not in the size/year-eligible set
-501274,iv,Survival,Harmful,good,high,"OS HR; FIB (t1) vs FI (t2) -0.42 = log 0.66 (Hurwitz 2004), effect = t1 vs t2"
+501274,iv,Survival,Harmful,bad,high,"OS HR; rows are FI (t1) vs FIB (t2) -0.42 = log 0.66, the published FIB vs FI HR (Hurwitz 2004): effect = t2 vs t1 (D4: corrected after review; first call misread t1/t2)"
 501277,long,Continuous,Harmful,good,high,catalogue label (checked where labels disagree or the sheet has none)
 501281,long,Binary,Beneficial,bad,high,catalogue label (checked where labels disagree or the sheet has none)
 501282,long,Continuous,Harmful,good,high,catalogue label (checked where labels disagree or the sheet has none)
