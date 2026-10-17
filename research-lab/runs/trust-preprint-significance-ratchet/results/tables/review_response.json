@@ -1,0 +1,224 @@
+{
+ "R1_exact_crossings": {
+  "v1": {
+   "n": 4,
+   "with_df": 2,
+   "p0_or_p1": 1,
+   "with_df_and_no_p01": 1
+  },
+  "all_versions": {
+   "n": 13,
+   "with_df": 3,
+   "p0_or_p1": 8,
+   "with_df_and_no_p01": 1
+  },
+  "exact_matches_without_df": 5232,
+  "exact_matches": 10031,
+  "v1_list": [
+   {
+    "pair": "10.1101/2021.02.01.21250493",
+    "pre": "r()=0.092 = 0.0029",
+    "pub": "r()=0.092 = 0.28",
+    "cls": "crossing_down"
+   },
+   {
+    "pair": "10.1101/2021.02.01.21250493",
+    "pre": "r()=0.092 = 0.28",
+    "pub": "r()=0.092 = 0.0029",
+    "cls": "crossing_up"
+   },
+   {
+    "pair": "10.21203/rs.3.rs-2183410/v1",
+    "pre": "f(2,40)=2.42 = 0.004",
+    "pub": "f(2,40)=2.43 = 0.101",
+    "cls": "crossing_down"
+   },
+   {
+    "pair": "10.21203/rs.3.rs-823166/v1",
+    "pre": "f(1,44)=0.55 = 0.0",
+    "pub": "f(1,44)=0.55 = 0.46",
+    "cls": "crossing_down"
+   }
+  ]
+ },
+ "R3_verified": {
+  "codes": {
+   "changed_analysis": {
+    "n": 12,
+    "up": 7
+   },
+   "changed_data": {
+    "n": 13,
+    "up": 9
+   },
+   "changed_unstated": {
+    "n": 16,
+    "up": 10
+   },
+   "correction_typo": {
+    "n": 8,
+    "up": 3
+   },
+   "duplicate": {
+    "n": 1,
+    "up": 1
+   },
+   "relabelled": {
+    "n": 2,
+    "up": 1
+   }
+  },
+  "census_changed_v1": {
+   "n": 33,
+   "up": 20,
+   "share": 0.6060606060606061,
+   "exact_ci": [
+    0.42139372138825043,
+    0.7709337616357992
+   ],
+   "n_papers": 28,
+   "paper_boot_ci": [
+    0.43333333333333335,
+    0.7777777777777778
+   ]
+  },
+  "census_changed_v1_minus_reviewer_rejections": {
+   "n": 31,
+   "up": 20,
+   "share": 0.6451612903225806,
+   "exact_ci": [
+    0.4536956019506384,
+    0.807732565574022
+   ],
+   "n_papers": 27,
+   "paper_boot_ci": [
+    0.4666666666666667,
+    0.8064516129032258
+   ]
+  },
+  "census_changed_v1_new_data_only": {
+   "n": 13,
+   "up": 9,
+   "share": 0.6923076923076923,
+   "exact_ci": [
+    0.3857383382492956,
+    0.9090796054279033
+   ],
+   "n_papers": 11,
+   "paper_boot_ci": [
+    0.36363636363636365,
+    0.9333333333333333
+   ]
+  },
+  "pooled_changed_in_v1_population": {
+   "n": 37,
+   "up": 23,
+   "share": 0.6216216216216216,
+   "exact_ci": [
+    0.44756802245081245,
+    0.7754238564195681
+   ],
+   "n_papers": 31,
+   "paper_boot_ci": [
+    0.45454545454545453,
+    0.7837837837837838
+   ]
+  },
+  "pooled_all_52_as_drafted": {
+   "n": 52,
+   "up": 31,
+   "share": 0.5961538461538461,
+   "exact_ci": [
+    0.45101577030155116,
+    0.7299402604083106
+   ],
+   "n_papers": 44,
+   "paper_boot_ci": [
+    0.45278394376618575,
+    0.7307692307692307
+   ]
+  },
+  "outside_v1_population": 6
+ },
+ "R8_glued": {
+  "strict_v1_crossings": 64,
+  "glued": 15,
+  "census_changed_glued": 6,
+  "census_changed_without_glued": {
+   "n": 27,
+   "up": 16,
+   "share": 0.5925925925925926,
+   "exact_ci": [
+    0.3879839302596818,
+    0.7761027086494185
+   ],
+   "n_papers": 24,
+   "paper_boot_ci": [
+    0.39285714285714285,
+    0.7857142857142857
+   ]
+  }
+ },
+ "R4_rates_per_1000": {
+  "prereg_route": 3.6500032335251893,
+  "prereg_determined": 46389,
+  "strict_route": 1.8048214515921104,
+  "strict_determined": 23271
+ },
+ "R13_S1_surviving_sentences": {
+  "n_dropped": 1250,
+  "share_sig_dropped": 0.708,
+  "n_added": 7752,
+  "share_sig_added": 0.8040505675954592,
+  "diff": 0.09605056759545927,
+  "ci": [
+   0.0056509671199825055,
+   0.18643442492621096
+  ],
+  "n_papers": 1899
+ },
+ "R14_S2": {
+  "aligned_tuple_pairs": 3460,
+  "evaluable": 1361,
+  "preprint_inconsistent": 187,
+  "verbatim_unchanged": 153,
+  "one_tailed_explicable": 52,
+  "repaired": 19,
+  "decision_inconsistent": 29,
+  "decision_repaired": 3
+ },
+ "R16_title_rejections": {
+  "candidates": 31261,
+  "rejected": 2664,
+  "by_server": {
+   "Authorea": 2,
+   "ChemRxiv": 29,
+   "Preprints (Basel)": 129,
+   "PsyArXiv": 11,
+   "Res Sq": 789,
+   "bioRxiv": 469,
+   "chemRxiv": 1,
+   "medRxiv": 1234
+  }
+ },
+ "R17_posting_gap": {
+  "papers": 28,
+  "known": 28,
+  "gap_le_30": 0,
+  "gap_negative": 0,
+  "census_changed_gap_over_30": {
+   "n": 33,
+   "up": 20,
+   "share": 0.6060606060606061,
+   "exact_ci": [
+    0.42139372138825043,
+    0.7709337616357992
+   ],
+   "n_papers": 28,
+   "paper_boot_ci": [
+    0.43333333333333335,
+    0.7777777777777778
+   ]
+  }
+ }
+}

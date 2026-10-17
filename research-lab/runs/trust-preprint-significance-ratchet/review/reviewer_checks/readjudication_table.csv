@@ -1,0 +1,125 @@
+sample,id,stratum,pair,reviewer_judgement,agent_judgement,reviewer_note
+v1,v001,crossing,10.1101/2024.02.16.24302938,0,0,table rows; Sex row (p=0.404) vs Ethnicity row (p=0.008)
+v1,v003,other,10.1101/2024.01.13.575508,1,1,same z-test (z = 2.48 p = 0.01)
+v1,v007,other,10.1101/2023.10.17.23297136,0,0,table cells differ (p=0.002 last row vs p=0.01)
+v1,v009,crossing,10.1101/2023.07.17.548989,1,1,same comparison (100% vs 10% contrast); re-analysed
+v1,v020,crossing,10.1101/2021.07.23.453593,1,1,labelled fragment 'Large F...'; plausible same test; weakly verifiable
+v1,v022,crossing,10.21203/rs.3.rs-2387106/v1,1,1,same statement; conclusion reversed
+v1,v024,other,10.21203/rs.3.rs-6528482/v1,1,1,same F-test; bare p in one version and tuple in the other
+v1,v025,other,10.20944/preprints202307.1065.v1,1,1,star-definition legend in both (boilerplate; should not be a statistic)
+v1,v034,other,10.1101/2025.01.17.633376,0,0,different condition (1 nM vs 0 nM siLMNA)
+v1,v037,crossing,10.1101/2020.08.21.261909,0,0,reordered list (VN vs IgG/IgM)
+v1,v044,other,10.21203/rs.3.rs-116697/v1,1,1,same (HERV-E p < 0.001)
+v1,v045,crossing,10.20944/preprints202301.0408.v1,0,0,different comparison
+v1,v048,crossing,10.1101/2021.09.28.21264250,1,1,same comparison (Wash-B.1.351); data changed
+v1,v049,crossing,10.1101/2021.06.24.21259107,0,0,text statistic vs a different table cell
+v1,v050,other,10.1101/2022.05.12.491746,1,1,star-definition legend in both (boilerplate)
+v1,v051,crossing,10.1101/2021.03.02.21252734,0,0,same statement but mojibake exponent read as p = 1 manufactures the crossing
+v1,v065,crossing,10.1101/2025.04.23.650243,0,0,reordered (VL vs VM)
+v1,v068,crossing,10.20944/preprints202102.0435.v1,0,0,different table cells; both values are glued-cell extraction errors (0.424115; 0.01018)
+v1,v073,crossing,10.1101/2021.10.27.21265563,1,1,same statistic; .46 -> 0.046
+v1,v076,crossing,10.1101/2022.07.11.499550,0,0,different statistic
+v1,v079,crossing,10.1101/2021.10.04.21264500,1,1,same comparison (total PTB <37 weeks); re-analysed
+v1,v080,crossing,10.1101/2021.09.28.21264250,1,1,same comparison (TNFi B.1.617.2); data changed
+v1,v085,other,10.1101/2020.11.20.20224691,0,0,different statistic
+v1,v087,crossing,10.1101/2020.11.11.20229914,0,0,same statement but comma decimal read as p = 0 manufactures the crossing
+v1,v089,crossing,10.1101/2021.10.24.21265447,0,0,different table cells
+v1,v090,other,10.21203/rs.3.rs-1700834/v2,1,1,same (t(104) p = .450)
+v1,v091,other,10.21203/rs.3.rs-650756/v1,1,1,same (p = 0.002)
+v1,v094,other,10.1101/2021.08.01.21261297,1,1,star-definition legend in both (boilerplate)
+v1,v097,other,10.1101/2021.04.07.21255010,1,1,same (p = .003)
+v1,v099,crossing,10.21203/rs.3.rs-5305875/v1,0,0,different table cells
+v1,v104,crossing,10.1101/2020.11.20.20224691,0,0,different table cells
+v1,v108,other,10.20944/preprints202307.1532.v1,1,1,same (p < 0.001)
+v1,v109,other,10.1101/2025.04.04.647157,1,1,star-definition legend in both (boilerplate)
+v1,v119,crossing,10.1101/2024.04.18.590099,1,1,same comparison (SGLT2 null; n = 5); p = 0.06 -> p < 0.05 with the same n
+v1,v120,other,10.1101/2020.03.25.20043703,0,0,tables of different structure; many identical 'p < 0.001' cells; which cell was aligned cannot be told from the v1 display
+v1,v123,crossing,10.1101/2021.09.16.21263170,0,0,different statistic and mojibake exponent read as p = 1
+v1,v130,other,10.21203/rs.3.rs-3100087/v1,0,0,RB1 dropped in one version; rank shifted
+v1,v132,other,10.1101/2021.04.20.21255810,1,1,same treatment effect (Seraph 100 on mortality); model specification differs
+v1,v133,crossing,10.1101/2024.04.04.24305329,1,1,same statement; comparator typo in one version
+v1,v135,other,10.1101/2021.03.18.21253888,0,0,both sides read as p = 0 from middle-dot decimals; cell identity unverifiable
+v1,v136,crossing,10.1101/2023.03.08.531684,0,1,"DISAGREE: fragment 'MD, p = ...; sham vs.' - identity cannot be verified from the fragment (same rule the agent applied to 'CLP + E-5' fragments in v2)"
+v1,v140,other,10.1101/2022.04.22.22274158,1,1,same (p > 0.999)
+v1,v141,crossing,10.1101/2023.05.01.23289358,0,0,different table cells
+v1,v143,crossing,10.1101/2025.10.29.685300,0,0,rural (p = 0.087) vs urban (p = 0.006); a glued preceding sentence shifted the rank
+v1,v144,other,10.1101/2025.10.01.679794,1,1,same (p < 0.001)
+v1,v145,other,10.1101/2023.12.12.23299868,1,1,same (p = 0.09)
+v1,v150,other,10.1101/2023.08.30.555457,1,1,same correlation; species set changed
+v1,v151,other,10.1101/2023.07.21.549656,1,1,same (p = 0.0002)
+v1,v152,other,10.1101/2021.02.24.21252396,0,0,same statement but mojibake exponent read as p = 3.89 (undetermined)
+v1,v154,crossing,10.1101/2025.01.17.633376,0,0,different condition (1 nM vs 10 nM)
+v1,v160,other,10.1101/2025.02.16.637469,1,1,same r-tuple
+v1,v161,other,10.1101/2024.07.17.603957,1,1,same (p = 0.24)
+v1,v175,crossing,10.1101/2021.06.30.21259796,1,1,same comparison (mild cases vs controls); data changed
+v1,v177,other,10.1101/2022.02.05.479274,1,1,same (p = 0.01)
+v1,v179,other,10.1101/2022.05.10.22274912,1,1,same (p < 0.0001)
+v1,v180,other,10.21203/rs.3.rs-6647283/v1,1,1,star-definition legend in both (boilerplate)
+v1,v182,crossing,10.1101/2021.02.13.431090,1,1,star-definition legend; '*p>0.05' typo in one version; same legend item but it is not a reported result and should not count as a crossing
+v1,v185,crossing,10.1101/2024.11.29.625975,0,0,different comparison; mojibake '<=' broke the first p and shifted ranks
+v1,v186,other,10.21203/rs.3.rs-898264/v1,1,1,same comparison (arrhythmias); p 0.068 -> 0.055
+v1,v189,other,10.1101/2020.05.01.20078360,0,0,lymphocyte count (p = 0.001) vs CK (p = 0.007); glued preceding sentence shifted the rank
+v2,w001,crossing,10.1101/2021.09.23.21263649,1,1,same statement; one version has a comparator typo (<= vs >); a typo not a changed result
+v2,w003,crossing,10.21203/rs.3.rs-3906183/v1,0,0,different statistic: a legend threshold (p<0.025) vs an estimate
+v2,w005,crossing,10.1101/2020.11.20.20235598,1,1,same slot (BMI balance of the validation set) but a different dataset (external vs temporal; N 1478 vs 5308); counted same comparison with data changed
+v2,w007,crossing,10.21203/rs.3.rs-1753398/v1,0,0,different analysis (change over 6 weeks vs baseline association)
+v2,w008,crossing,10.1101/2021.10.27.21265563,1,1,same statistic; .46 -> 0.046 correction
+v2,w010,crossing,10.1101/2020.09.30.20204503,1,1,same comparison; counts changed
+v2,w012,crossing,10.1101/2020.07.15.20154906,1,1,same comparison; counts changed (52/485 -> 11/504)
+v2,w014,crossing,10.21203/rs.3.rs-1966542/v1,0,0,different comparison (L1/L2 vs T11/T12)
+v2,w016,crossing,10.1101/2020.06.24.20138990,1,1,same coefficient (April 1); re-estimated per 100000
+v2,w017,crossing,10.21203/rs.3.rs-1305015/v1,1,1,same permutation test
+v2,w018,crossing,10.21203/rs.3.rs-9083519/v1,1,1,same comparison; identical medians and IQRs but a different p (re-analysis)
+v2,w019,crossing,10.21203/rs.3.rs-3348558/v1,1,1,same comparison; effect size and p changed
+v2,w020,crossing,10.1101/2022.01.07.22268729,1,1,same comparison; estimates changed
+v2,w021,crossing,10.21203/rs.3.rs-32474/v1,1,1,same comparison; identical means and SDs; p changed
+v2,w023,crossing,10.21203/rs.3.rs-3906183/v1,0,0,different statistic
+v2,w024,crossing,10.1101/2020.09.28.20202929,1,1,same label (third = S2 pool) but the same three values are reassigned across M/S1/S2 and the panel letters change; identity by label only; direction-neutral with w090; I would not count it as a changed result
+v2,w026,crossing,10.21203/rs.3.rs-2579394/v1,0,0,reordered list (interaction vs treatment)
+v2,w027,crossing,10.1101/2022.01.20.22269593,0,0,different statistic (fat-free mass vs fat percentage); S1 is table text glued to results text
+v2,w029,crossing,10.21203/rs.3.rs-1890415/v1,0,0,fragment 'CLP + E-5' occurs several times in the paper; pairing is arbitrary
+v2,w030,crossing,10.21203/rs.3.rs-1971685/v1,0,0,different comparison
+v2,w031,crossing,10.21203/rs.3.rs-82103/v1,1,1,same comparison (ICI vs targeted therapy); data changed
+v2,w033,crossing,10.1101/2021.06.10.21258685,1,1,same subgroup analysis with a category added (df 3 -> 4)
+v2,w035,crossing,10.1101/2020.12.23.20248773,1,1,same coefficient (female; anxiety); model changed (df)
+v2,w038,crossing,10.21203/rs.3.rs-2579394/v1,0,0,reordered list
+v2,w040,crossing,10.21203/rs.3.rs-1890415/v1,0,0,fragment; arbitrary pairing
+v2,w041,crossing,10.1101/2020.08.14.20175190,0,0,different comparison (fracture vs cholelithiasis)
+v2,w047,crossing,10.21203/rs.3.rs-3005279/v1,1,1,same comparison; identical counts but a different chi-square; S1 says 'significant difference' with p = .15 (internal contradiction)
+v2,w049,crossing,10.21203/rs.3.rs-97391/v1,1,1,same comparison; counts changed; same underlying result as w094 (abstract and results of one paper)
+v2,w050,crossing,10.1101/2020.12.18.20248449,1,1,same comparison; 'not significantly different (P < 0.0001)' in one version is a typo
+v2,w051,crossing,10.21203/rs.3.rs-3261636/v1,1,1,same comparison; test changed (ANOVA -> Student's t)
+v2,w053,crossing,10.1101/2020.05.12.20098889,0,1,DISAGREE: positional match in a 'respectively' pair whose items are unnamed in one version; rho -0.87 (n 15) -> -0.09 (n 13); identity cannot be verified from the sentences (the fragment rule applied consistently)
+v2,w054,crossing,10.21203/rs.3.rs-84890/v1,0,0,same statement; 'P=001' read as p = 1 manufactures the crossing (extraction)
+v2,w057,crossing,10.1101/2020.05.12.20098889,0,1,DISAGREE: as w053; rho 0.52 -> 0.26; same position only; identity unverifiable from the sentences
+v2,w059,crossing,10.1101/2020.08.14.20175190,0,0,different comparison
+v2,w060,crossing,10.21203/rs.3.rs-3342492/v1,0,0,same statement; 'p =0. 07' read as p = 0 manufactures the crossing (extraction)
+v2,w061,crossing,10.1101/2020.04.30.20086348,1,1,same comparison (COVID-19 positive); data changed; S2 is a fragment but labelled
+v2,w064,crossing,10.21203/rs.3.rs-2108333/v1,1,1,same comparison; identical percentages; p 0.47 -> 0.04 (likely a correction)
+v2,w065,crossing,10.21203/rs.3.rs-1093241/v1,1,1,same interaction; model changed
+v2,w066,crossing,10.1101/2020.08.14.20175190,0,0,different comparison
+v2,w067,crossing,10.21203/rs.3.rs-1890415/v1,0,0,fragment; arbitrary pairing
+v2,w070,crossing,10.1101/2020.05.01.20081026,1,1,same comparison; more patients
+v2,w074,crossing,10.21203/rs.3.rs-1396691/v1,0,0,different comparison (Acinetobacter vs MRSA)
+v2,w075,crossing,10.1101/2020.05.01.20081026,1,1,same comparison; more patients
+v2,w079,crossing,10.21203/rs.3.rs-142530/v1,1,1,same comparison (goal-oriented vs avoidance); value changed
+v2,w081,crossing,10.21203/rs.3.rs-403472/v1,1,1,same comparison; identical OR and CI; p 0.057 -> 0.045
+v2,w083,crossing,10.1101/2020.10.02.20205237,1,1,same comparison (language abilities); 'p < .008' with F = 3.98 is a typo; corrected to p > .050
+v2,w084,crossing,10.21203/rs.3.rs-6470825/v1,0,0,fragments with different panel references (S2 vs S4b); identity unverifiable
+v2,w085,crossing,10.21203/rs.3.rs-89225/v1,1,1,same comparison; data changed; 'p<0. 05' read as p<0 but the significance status is right
+v2,w086,crossing,10.21203/rs.3.rs-2036036/v1,1,1,same slot (deaths exposed vs comparator); exposure group redefined (SI -> IC) and counts changed; borderline
+v2,w089,crossing,10.21203/rs.3.rs-7149123/v1,1,1,same effect; re-estimated
+v2,w090,crossing,10.1101/2020.09.28.20202929,1,1,as w024 (second = S1 pool); permuted values; direction-neutral with w024
+v2,w091,crossing,10.21203/rs.3.rs-1890415/v1,0,0,fragment; arbitrary pairing
+v2,w093,crossing,10.21203/rs.3.rs-1966542/v1,1,1,same comparison; re-analysed
+v2,w094,crossing,10.21203/rs.3.rs-97391/v1,1,1,same comparison as w049 (duplicate of the same result in another section)
+v2,w095,crossing,10.21203/rs.3.rs-2387106/v1,1,1,same statement; conclusion reversed
+v2,w097,crossing,10.1101/2020.08.14.20175190,0,0,different comparison
+v2,w098,crossing,10.21203/rs.3.rs-2922325/v1,0,0,different subsets (all samples vs cancer only) at the marked positions
+v2,w101,crossing,10.21203/rs.3.rs-2036036/v1,1,1,same slot; exposure relabelled (IC -> SI); data changed; borderline as w086
+v2,w104,crossing,10.1101/2021.10.14.21264747,1,1,same comparison; counts changed
+v2,w105,crossing,10.21203/rs.3.rs-1093241/v1,1,1,same interaction; re-analysed
+v2,w106,crossing,10.1101/2020.12.23.20248773,1,1,same one-sample test; data changed
+v2,w107,crossing,10.1101/2022.01.20.22269593,0,0,different statistic; S2 is table text glued to results text
+v2,w108,crossing,10.1101/2020.08.15.20102699,1,1,same heterogeneity test; identical I2; p .40 vs .04 (typo in one version)
+v2,w110,crossing,10.1101/2021.05.21.21257626,1,1,same comparison; counts changed

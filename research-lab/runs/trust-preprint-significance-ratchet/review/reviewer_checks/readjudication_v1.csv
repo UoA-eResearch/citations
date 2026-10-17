@@ -1,0 +1,61 @@
+id,reviewer,agent,reviewer_note
+v001,0,0,table rows; Sex row (p=0.404) vs Ethnicity row (p=0.008)
+v003,1,1,same z-test (z = 2.48 p = 0.01)
+v007,0,0,table cells differ (p=0.002 last row vs p=0.01)
+v009,1,1,same comparison (100% vs 10% contrast); re-analysed
+v020,1,1,labelled fragment 'Large F...'; plausible same test; weakly verifiable
+v022,1,1,same statement; conclusion reversed
+v024,1,1,same F-test; bare p in one version and tuple in the other
+v025,1,1,star-definition legend in both (boilerplate; should not be a statistic)
+v034,0,0,different condition (1 nM vs 0 nM siLMNA)
+v037,0,0,reordered list (VN vs IgG/IgM)
+v044,1,1,same (HERV-E p < 0.001)
+v045,0,0,different comparison
+v048,1,1,same comparison (Wash-B.1.351); data changed
+v049,0,0,text statistic vs a different table cell
+v050,1,1,star-definition legend in both (boilerplate)
+v051,0,0,same statement but mojibake exponent read as p = 1 manufactures the crossing
+v065,0,0,reordered (VL vs VM)
+v068,0,0,different table cells; both values are glued-cell extraction errors (0.424115; 0.01018)
+v073,1,1,same statistic; .46 -> 0.046
+v076,0,0,different statistic
+v079,1,1,same comparison (total PTB <37 weeks); re-analysed
+v080,1,1,same comparison (TNFi B.1.617.2); data changed
+v085,0,0,different statistic
+v087,0,0,same statement but comma decimal read as p = 0 manufactures the crossing
+v089,0,0,different table cells
+v090,1,1,same (t(104) p = .450)
+v091,1,1,same (p = 0.002)
+v094,1,1,star-definition legend in both (boilerplate)
+v097,1,1,same (p = .003)
+v099,0,0,different table cells
+v104,0,0,different table cells
+v108,1,1,same (p < 0.001)
+v109,1,1,star-definition legend in both (boilerplate)
+v119,1,1,same comparison (SGLT2 null; n = 5); p = 0.06 -> p < 0.05 with the same n
+v120,0,0,tables of different structure; many identical 'p < 0.001' cells; which cell was aligned cannot be told from the v1 display
+v123,0,0,different statistic and mojibake exponent read as p = 1
+v130,0,0,RB1 dropped in one version; rank shifted
+v132,1,1,same treatment effect (Seraph 100 on mortality); model specification differs
+v133,1,1,same statement; comparator typo in one version
+v135,0,0,both sides read as p = 0 from middle-dot decimals; cell identity unverifiable
+v136,0,1,"DISAGREE: fragment 'MD, p = ...; sham vs.' - identity cannot be verified from the fragment (same rule the agent applied to 'CLP + E-5' fragments in v2)"
+v140,1,1,same (p > 0.999)
+v141,0,0,different table cells
+v143,0,0,rural (p = 0.087) vs urban (p = 0.006); a glued preceding sentence shifted the rank
+v144,1,1,same (p < 0.001)
+v145,1,1,same (p = 0.09)
+v150,1,1,same correlation; species set changed
+v151,1,1,same (p = 0.0002)
+v152,0,0,same statement but mojibake exponent read as p = 3.89 (undetermined)
+v154,0,0,different condition (1 nM vs 10 nM)
+v160,1,1,same r-tuple
+v161,1,1,same (p = 0.24)
+v175,1,1,same comparison (mild cases vs controls); data changed
+v177,1,1,same (p = 0.01)
+v179,1,1,same (p < 0.0001)
+v180,1,1,star-definition legend in both (boilerplate)
+v182,1,1,star-definition legend; '*p>0.05' typo in one version; same legend item but it is not a reported result and should not count as a crossing
+v185,0,0,different comparison; mojibake '<=' broke the first p and shifted ranks
+v186,1,1,same comparison (arrhythmias); p 0.068 -> 0.055
+v189,0,0,lymphocyte count (p = 0.001) vs CK (p = 0.007); glued preceding sentence shifted the rank

@@ -1,0 +1,55 @@
+id,code,duplicate_of,basis
+v009,changed_analysis,,same comparison re-analysed
+v020,changed_analysis,,same test re-analysed
+v022,changed_unstated,,conclusion reversed in the text
+v048,changed_unstated,,same comparison; value changed
+v073,correction_typo,,".46 vs .046 with otherwise identical sentence"
+v079,changed_unstated,,same comparison; estimate and p changed
+v080,changed_unstated,,same comparison; titres and p changed
+v119,changed_unstated,,trend in one version; significant in the other
+v133,correction_typo,,"p<0.05 beside 'no significant changes'"
+v136,changed_unstated,,fragment; reviewer rejects identity
+v175,changed_unstated,,same comparison; medians and p changed
+v182,correction_typo,,"star-legend typo (*p>0.05 for *p<0.05)"
+w001,correction_typo,,"p<=0.05 beside 'not statistically significant'"
+w005,changed_data,,validation dataset replaced
+w010,changed_data,,proportions changed
+w012,changed_data,,counts changed
+w016,changed_analysis,,coefficient re-estimated (units changed)
+w017,changed_unstated,,same permutation test; p changed
+w018,changed_unstated,,same comparison; text changed to 'not reaching significance'
+w019,changed_unstated,,effect sizes and p changed
+w020,changed_unstated,,ratio and interval changed
+w021,changed_unstated,,same comparison; p changed (other p values in the sentence shown to more decimals)
+w024,relabelled,,three values permuted across M/S1/S2 labels
+w031,changed_data,,OR and interval changed
+w033,changed_analysis,,a category added to the analysis
+w035,changed_analysis,,model re-specified (df changed)
+w047,changed_unstated,,chi-square value changed
+w049,changed_data,,counts changed
+w050,correction_typo,,"P<0.0001 beside 'not significantly different'"
+w051,changed_analysis,,test changed (ANOVA vs Student's t)
+w053,changed_data,,"n 15 -> 13; reviewer rejects positional identity"
+w057,changed_analysis,,reviewer rejects positional identity
+w061,changed_analysis,,percentages and p changed
+w064,correction_typo,,"identical percentages; p 0.47 vs 0.04 in a list of 'associated' factors"
+w065,changed_analysis,,model re-fitted (df changed)
+w070,changed_data,,more patients
+w075,changed_data,,more patients
+w079,changed_unstated,,neighbouring comparison relabelled; value changed
+w081,changed_unstated,,identical OR and interval; p changed
+w083,correction_typo,,"p<.008 beside 'but not language abilities'"
+w085,changed_unstated,,RR and conclusion changed
+w086,changed_data,,group redefined; counts changed
+w089,changed_analysis,,re-analysed (Exp(B) changed)
+w090,relabelled,,three values permuted across M/S1/S2 labels
+w093,changed_analysis,,re-analysed
+w094,duplicate,w049,same mortality comparison as w049 (abstract vs results)
+w101,changed_data,,group redefined; counts changed
+w104,changed_data,,counts changed
+w105,changed_analysis,,model re-fitted (df changed)
+w106,changed_data,,new sample (t and df changed)
+w108,correction_typo,,"heterogeneity P .40 vs .04 beside 'low level of heterogeneity'"
+w110,changed_data,,counts changed
+w008,correction_typo,,".46 vs .046 with otherwise identical sentence (also v073)"
+w095,changed_unstated,,conclusion reversed in the text (also v022)

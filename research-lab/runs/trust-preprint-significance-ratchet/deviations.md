@@ -91,3 +91,60 @@ papers, 0.489 [0.453, 0.526].
 3. Because the 64 strict crossings were adjudicated in full, the 42 correct ones are every verified strict crossing in
    the v1 population. Their direction is reported with an exact interval as a descriptive, exploratory result; they
    are not a random sample of all true crossings (the strict rule selects text-only, same-structure sentences).
+
+## D5 — 2026-10-17 17:04 NZDT — response to the adversarial review (fix first, 20 issues)
+
+The review (`review/review.md`, Fable 5.1) found that the verdict stands but the draft overstated several things.
+`code/review_response.py` computes every new number (`results/tables/review_response.json`).
+
+1. **The preregistered fallback is mostly artefacts.** Of the 4 exact-tuple crossings in the version-1 population:
+   - two are the same df-less `r = 0.092` matched to the other's partner;
+   - one is the typo `p = 0.0.46` read as p = 0;
+   - one is real: F(2,40) = 2.42, p = 0.004 → p = 0.101, a correction, down.
+
+   Across all versions, 10 of 13 exact crossings have no df and 8 have p = 0 or 1 on one side. 5,232 of 10,031
+   exact matches have no df. The verdict line now states the mechanical outcome and why it is not credited.
+2. **Verified crossings re-based.** Each verified crossing is coded explicitly (`results/tables/verified_coding.csv`)
+   as one of:
+   - a changed result (new data, re-analysis, or reason not stated);
+   - a correction or typo (a value that contradicts its own sentence);
+   - relabelled values;
+   - a duplicate.
+
+   The coding was done **after unblinding**, from the blind notes and the sentences. The lead verified estimate is
+   now the version-1 census restricted to changed results: **20 of 33 up** (0.61, exact 0.42–0.77; 28 papers).
+   Sensitivities:
+   - without the reviewer's rejections, 20/31;
+   - new data only, 9/13;
+   - without glued table text, 16/27;
+   - the pooled 52 as drafted.
+
+   All are Inconclusive. None of the 28 census papers was posted within 30 days of its journal version (Crossref).
+3. **Secondaries reworded.**
+   - S1 cannot detect selective removal, because most unmatched statistics are matching failures. A post hoc,
+     reviewer-suggested sharper comparison (statistics removed from or added to a sentence that survived) gives
+     70.8% vs 80.4% significant, +9.6 points (paper bootstrap 0.6–18.6). It is reported as exploratory and
+     suggestive, not as a finding.
+   - S2's "repair" figure is dominated by false positives and verbatim copies. Decision inconsistencies are now
+     reported: 29, of which 3 were repaired.
+4. **Literature corrected.**
+   - Bero et al. 2021: 67 COVID-19 studies.
+   - Janda et al. 2022: results concordant in 81.1%.
+   - Sommer et al. 2023: 27 of 161 changed; no significance change in 77 primary outcomes.
+   - The 2026 bioRxiv study: DOI 10.64898/2026.06.30.735556; 39.8% unchanged, 50.0% minor, 10.2% substantial.
+   - Added Nelson et al. 2022 and Brierley et al. 2022.
+   - The unsourced "121 preprints" figure is dropped.
+
+   All seven DOIs were verified in OpenAlex, and the three quoted abstracts were checked.
+5. **Disclosures added.**
+   - Blinding was to version labels only; copy-editing can reveal the order, and two notes show wrong guesses.
+   - Adjudication was done in two batch passes, and 44 rejections share a default note.
+   - Table and caption text leaks into result sections (20.8% of strict-eligible pairs), so the strict rule does not
+     fully exclude tables.
+   - p = 0 or 1, star legends and df-less tuples are added to the failure taxonomy.
+   - The title filter rejected 2,664 (8.5%), mostly retitled true pairs.
+   - Version-1 timing (reviewer's samples).
+   - 44% of pairs contribute no statistic, partly section typing.
+6. **Not done:** re-running the pipeline with the extraction fixes (stripping table and figure subtrees, splitting
+   glued sentences, p = 0 and 1 undetermined, star legends globally, df required for exact matches, the middle-dot
+   regression). They are listed as the methods lesson; the verdict does not depend on them.

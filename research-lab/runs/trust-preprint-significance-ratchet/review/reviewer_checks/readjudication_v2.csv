@@ -1,0 +1,65 @@
+id,reviewer,agent,reviewer_note
+w001,1,1,same statement; one version has a comparator typo (<= vs >); a typo not a changed result
+w003,0,0,different statistic: a legend threshold (p<0.025) vs an estimate
+w005,1,1,same slot (BMI balance of the validation set) but a different dataset (external vs temporal; N 1478 vs 5308); counted same comparison with data changed
+w007,0,0,different analysis (change over 6 weeks vs baseline association)
+w008,1,1,same statistic; .46 -> 0.046 correction
+w010,1,1,same comparison; counts changed
+w012,1,1,same comparison; counts changed (52/485 -> 11/504)
+w014,0,0,different comparison (L1/L2 vs T11/T12)
+w016,1,1,same coefficient (April 1); re-estimated per 100000
+w017,1,1,same permutation test
+w018,1,1,same comparison; identical medians and IQRs but a different p (re-analysis)
+w019,1,1,same comparison; effect size and p changed
+w020,1,1,same comparison; estimates changed
+w021,1,1,same comparison; identical means and SDs; p changed
+w023,0,0,different statistic
+w024,1,1,same label (third = S2 pool) but the same three values are reassigned across M/S1/S2 and the panel letters change; identity by label only; direction-neutral with w090; I would not count it as a changed result
+w026,0,0,reordered list (interaction vs treatment)
+w027,0,0,different statistic (fat-free mass vs fat percentage); S1 is table text glued to results text
+w029,0,0,fragment 'CLP + E-5' occurs several times in the paper; pairing is arbitrary
+w030,0,0,different comparison
+w031,1,1,same comparison (ICI vs targeted therapy); data changed
+w033,1,1,same subgroup analysis with a category added (df 3 -> 4)
+w035,1,1,same coefficient (female; anxiety); model changed (df)
+w038,0,0,reordered list
+w040,0,0,fragment; arbitrary pairing
+w041,0,0,different comparison (fracture vs cholelithiasis)
+w047,1,1,same comparison; identical counts but a different chi-square; S1 says 'significant difference' with p = .15 (internal contradiction)
+w049,1,1,same comparison; counts changed; same underlying result as w094 (abstract and results of one paper)
+w050,1,1,same comparison; 'not significantly different (P < 0.0001)' in one version is a typo
+w051,1,1,same comparison; test changed (ANOVA -> Student's t)
+w053,0,1,DISAGREE: positional match in a 'respectively' pair whose items are unnamed in one version; rho -0.87 (n 15) -> -0.09 (n 13); identity cannot be verified from the sentences (the fragment rule applied consistently)
+w054,0,0,same statement; 'P=001' read as p = 1 manufactures the crossing (extraction)
+w057,0,1,DISAGREE: as w053; rho 0.52 -> 0.26; same position only; identity unverifiable from the sentences
+w059,0,0,different comparison
+w060,0,0,same statement; 'p =0. 07' read as p = 0 manufactures the crossing (extraction)
+w061,1,1,same comparison (COVID-19 positive); data changed; S2 is a fragment but labelled
+w064,1,1,same comparison; identical percentages; p 0.47 -> 0.04 (likely a correction)
+w065,1,1,same interaction; model changed
+w066,0,0,different comparison
+w067,0,0,fragment; arbitrary pairing
+w070,1,1,same comparison; more patients
+w074,0,0,different comparison (Acinetobacter vs MRSA)
+w075,1,1,same comparison; more patients
+w079,1,1,same comparison (goal-oriented vs avoidance); value changed
+w081,1,1,same comparison; identical OR and CI; p 0.057 -> 0.045
+w083,1,1,same comparison (language abilities); 'p < .008' with F = 3.98 is a typo; corrected to p > .050
+w084,0,0,fragments with different panel references (S2 vs S4b); identity unverifiable
+w085,1,1,same comparison; data changed; 'p<0. 05' read as p<0 but the significance status is right
+w086,1,1,same slot (deaths exposed vs comparator); exposure group redefined (SI -> IC) and counts changed; borderline
+w089,1,1,same effect; re-estimated
+w090,1,1,as w024 (second = S1 pool); permuted values; direction-neutral with w024
+w091,0,0,fragment; arbitrary pairing
+w093,1,1,same comparison; re-analysed
+w094,1,1,same comparison as w049 (duplicate of the same result in another section)
+w095,1,1,same statement; conclusion reversed
+w097,0,0,different comparison
+w098,0,0,different subsets (all samples vs cancer only) at the marked positions
+w101,1,1,same slot; exposure relabelled (IC -> SI); data changed; borderline as w086
+w104,1,1,same comparison; counts changed
+w105,1,1,same interaction; re-analysed
+w106,1,1,same one-sample test; data changed
+w107,0,0,different statistic; S2 is table text glued to results text
+w108,1,1,same heterogeneity test; identical I2; p .40 vs .04 (typo in one version)
+w110,1,1,same comparison; counts changed
