@@ -1,5 +1,5 @@
 """New listings from the Schedule Update PDFs (deviations D4): the detailed "New Listings - effective <date>"
-sections, whose chemical names are upper-case headers. Used to fill the community-Schedule XML archive's gap
+sections (also "New Listings" with "Effective <date>" on the next line), whose chemical names are upper-case headers. Used to fill the community-Schedule XML archive's gap
 (June 2024 - December 2025 and January 2018), and kept for validation. Writes data/su_listings.csv
 (su_file, effective, chemical)."""
 import re
@@ -14,11 +14,16 @@ END = re.compile(r"^(Changes to |Delisted Items|Items to be Delisted|Section H |
 CHEM = re.compile(r"^([A-Z][A-Z0-9 ,'()/\-–+]{3,}?)(?:\s+[–-]\s+.*)?$")
 
 
+EFF2 = re.compile(r"^Effective\s+(\d{1,2}\s+\w+\s+\d{4})", re.I)
+
+
 def parse(txt):
-    out, eff = [], None
+    out, eff, prev = [], None, ""
     for line in txt.splitlines():
         s = line.strip()
-        m = HDR.search(s)
+        m = HDR.search(s) or (EFF2.match(s) if prev.lower().startswith("new listings") else None)
+        if s:
+            prev = s if not m else ""
         if m:
             eff = pd.to_datetime(m.group(1), errors="coerce"); continue
         if eff is None:
