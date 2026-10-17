@@ -80,7 +80,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
   <h1>How long does a new medicine take to reach New Zealanders, and which stage takes the time?</h1>
   <p class="subtitle">An open, stage-by-stage timeline for 694 new active substances first approved by the FDA (including CBER biologics) or the EMA in 2010–2024. For each: when it was first approved abroad, when its sponsor applied to Medsafe, when Medsafe consented, and when PHARMAC first funded it.</p>
   <div class="meta">
-    <span>Report · 2026-10-17 · pre-review draft</span>
+    <span>Report · 2026-10-18 · revised after independent review</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/future-health-nz-medicine-access-lag/plan.md">Preregistration</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/future-health-nz-medicine-access-lag/deviations.md">Deviations log</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/future-health-nz-medicine-access-lag/code">Code</a>
@@ -245,8 +245,8 @@ existed when the analysis ran.</p>
     - What it exposed: duplicate substances, and names Medsafe shortens ("Polatuzumab" for polatuzumab vedotin). These
     were fixed (D6).
 - <strong>Re-validation.</strong> A fresh 100 then gave T1 1.000, T2 0.990, T3 1.000.
-- <strong>Re-scoring after review.</strong> The review found four cells in these samples where a Section 23 provisional-consent
-  application was visible in the evidence but had been scored correct or "cannot tell" (D8b.5). Re-scored:
+- <strong>Re-scoring after review.</strong> The review found six cells, in four substances, where a Section 23
+  provisional-consent application was visible in the evidence but had been scored correct or "cannot tell" (D8b.5). Re-scored:
     - first check: 0.970 / 0.959 / 0.979;
     - re-validation: 0.980 / 0.980 / 1.000.
 - <strong>The reviewer's own re-adjudication</strong> of 70 substances gave T1 0.89, T2 0.94, T3 1.00. That sample was enriched
@@ -349,7 +349,7 @@ of funded medicines, NZ was not waiting for the sponsor at all.</p>
 Sponsors that applied in NZ first have a sponsor delay of 0. Stacked medians do not sum to the median total. 2020–23
 has only 4 substances so far.</em></p>
 <h3>H3: what "7.7 years" measures</h3>
-<p><strong>The source's definition.</strong> HealthiNZ's April 2023 report for Medicines NZ, quoted by Shawview (2023, pp. 10 and 26),
+<p><strong>The source's definition.</strong> HealthiNZ's April 2023 report for Medicines NZ, quoted by Shawview (2023, pp. 10 and 16),
 defines the figure.
 - <strong>The figure.</strong> For the 29 applications that achieved a funding decision, the decision came on average 7.7 years
   after the application was submitted to PHARMAC (median 6.5).
@@ -457,6 +457,8 @@ example, a 2027 listing of "isavuconazonium" counts for isavuconazole.</p>
 - 24 of the 125 have a lapsed or revoked consent.
 - One, alpha1-proteinase inhibitor, has since been excluded from the cohort as an old substance; it stays in the frozen
   forecast.
+- Conversely, tenofovir alafenamide is now known to be consented (2016) and unfunded, so it is at risk at the origin.
+  It is absent from the frozen forecast because its consent was found only after the freeze.
 - The review found that the model's time trend is extrapolated at the origin, and that its leave-one-snapshot-out
   skill is about zero. A null result in 2027 would not be a surprise.</p>
 <h2>What this does and does not show</h2>
@@ -487,6 +489,10 @@ converted from provisional consent, T2 is late by 1–4 years. A lower bound is 
 <li><strong>Missing T1.</strong> The Application search failed persistently for 16 substances, which leaves their T1 missing.</li>
 <li><strong>Prodrugs and esters of older moieties.</strong> Medsafe can list these under the old moiety. A brand-name match
 recovered one consent (tenofovir alafenamide). Others may remain.</li>
+<li><strong>CBER coverage.</strong> The scan for CBER-only products matched Purple Book proper names. It cannot see a product whose
+proper name is a generic class name. The review found one: Ixinity (trenonacog alfa, 2015), a recombinant factor
+IX listed as "Coagulation Factor IX (Recombinant)". It has no NZ record, so it would move only the cohort-wide
+denominators, by one.</li>
 <li><strong>The old-substance rule.</strong> It also excludes medicines that NZ consented first. Prochymal (remestemcel-L), for
 example, was consented in NZ in 2012, 12 years before FDA licensure.</li>
 <li><strong>Funding routes.</strong> Hospital and community listings are both counted as funding. Named Patient Pharmaceutical

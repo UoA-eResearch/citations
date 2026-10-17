@@ -224,3 +224,22 @@ new analytic choices. The report gives both sets of numbers; the verdict-bearing
   - The stage split and its decomposition use one population.
   - Both adjudications are reported, as scored and re-scored.
   - The pre-review numbers are kept beside the corrected ones.
+
+## D8e — 2026-10-18 00:33 NZDT — edits from the confirmation pass (review/confirmation.md)
+
+The reviewer recommended publication after six text edits, none of which affects a verdict.
+- **D8b.1 count.** "40 substances get an earlier T0" should read: 28 pre-existing entries get an earlier T0 through
+  the Purple Book (31 including the three brought into the window, 45 including the 14 CBER-only additions). 40 was
+  the number of entries matched to a CBER row, including those whose EMA date stayed earlier.
+- **Shawview page.** The second quotation of the 7.7-year definition is on p. 16, not p. 26. The report is corrected;
+  the error originated in review.md issue 1 and is noted in confirmation.md.
+- **Validation re-score.** It covers six cells in four substances, not four cells.
+- **CBER-only scan.** It cannot see products whose Purple Book proper name is a generic class name. One such product
+  exists: Ixinity (trenonacog alfa, 2015-04-29), listed as "Coagulation Factor IX (Recombinant)". It is stated as a
+  limitation, not added. It has no NZ record and would move only the cohort-wide denominators, by one.
+- **Plasminogen.** The old-substance rule excluded it because of a 1992 anistreplase product whose ingredient text
+  includes plasminogen. The rule fires on ingredient text, and the outcome is immaterial (no NZ record of Ryplazim).
+- **Issue 22.** One co-packaged FDA string affects a date: paritaprevir, a 26-day difference. D8d's "no change needed"
+  stands, but not its claim that no such case exists.
+- **The forecast.** The report notes that tenofovir alafenamide is at risk at the origin but absent from the frozen
+  forecast.

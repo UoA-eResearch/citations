@@ -122,8 +122,8 @@ existed when the analysis ran.
   - What it exposed: duplicate substances, and names Medsafe shortens ("Polatuzumab" for polatuzumab vedotin). These
     were fixed (D6).
 - **Re-validation.** A fresh 100 then gave T1 1.000, T2 0.990, T3 1.000.
-- **Re-scoring after review.** The review found four cells in these samples where a Section 23 provisional-consent
-  application was visible in the evidence but had been scored correct or "cannot tell" (D8b.5). Re-scored:
+- **Re-scoring after review.** The review found six cells, in four substances, where a Section 23
+  provisional-consent application was visible in the evidence but had been scored correct or "cannot tell" (D8b.5). Re-scored:
   - first check: 0.970 / 0.959 / 0.979;
   - re-validation: 0.980 / 0.980 / 1.000.
 - **The reviewer's own re-adjudication** of 70 substances gave T1 0.89, T2 0.94, T3 1.00. That sample was enriched
@@ -209,7 +209,7 @@ has only 4 substances so far.*
 
 ### H3: what "7.7 years" measures
 
-**The source's definition.** HealthiNZ's April 2023 report for Medicines NZ, quoted by Shawview (2023, pp. 10 and 26),
+**The source's definition.** HealthiNZ's April 2023 report for Medicines NZ, quoted by Shawview (2023, pp. 10 and 16),
 defines the figure.
 - **The figure.** For the 29 applications that achieved a funding decision, the decision came on average 7.7 years
   after the application was submitted to PHARMAC (median 6.5).
@@ -301,6 +301,8 @@ example, a 2027 listing of "isavuconazonium" counts for isavuconazole.
 - 24 of the 125 have a lapsed or revoked consent.
 - One, alpha1-proteinase inhibitor, has since been excluded from the cohort as an old substance; it stays in the frozen
   forecast.
+- Conversely, tenofovir alafenamide is now known to be consented (2016) and unfunded, so it is at risk at the origin.
+  It is absent from the frozen forecast because its consent was found only after the freeze.
 - The review found that the model's time trend is extrapolated at the origin, and that its leave-one-snapshot-out
   skill is about zero. A null result in 2027 would not be a surprise.
 
@@ -326,6 +328,10 @@ example, a 2027 listing of "isavuconazonium" counts for isavuconazole.
   - **Missing T1.** The Application search failed persistently for 16 substances, which leaves their T1 missing.
   - **Prodrugs and esters of older moieties.** Medsafe can list these under the old moiety. A brand-name match
     recovered one consent (tenofovir alafenamide). Others may remain.
+  - **CBER coverage.** The scan for CBER-only products matched Purple Book proper names. It cannot see a product whose
+    proper name is a generic class name. The review found one: Ixinity (trenonacog alfa, 2015), a recombinant factor
+    IX listed as "Coagulation Factor IX (Recombinant)". It has no NZ record, so it would move only the cohort-wide
+    denominators, by one.
   - **The old-substance rule.** It also excludes medicines that NZ consented first. Prochymal (remestemcel-L), for
     example, was consented in NZ in 2012, 12 years before FDA licensure.
   - **Funding routes.** Hospital and community listings are both counted as funding. Named Patient Pharmaceutical
