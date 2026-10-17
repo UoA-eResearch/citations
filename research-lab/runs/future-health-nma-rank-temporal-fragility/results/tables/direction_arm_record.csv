@@ -1,0 +1,179 @@
+record,catalogue,sheet,call,override,hand_checked,outcome,control_comparison,control_consistent_with_call
+473269,Beneficial,,bad,False,True,treatment success | proportion of patients achieving at least 30% reduction in intraoccular pressure,,
+473552,Beneficial,Beneficial,bad,False,False,ACR70 improvement | Efficacy of biologic therapies in rheumatoid arthritis,,
+474842,Harmful,Harmful,good,False,False,"recurrent venous thromboembolism | Efficacy associated with 8 anticoagulation options for treatment of venous thromboembolism (primary analysis used HR but sen",,
+479531,Beneficial,,bad,False,True,virologic supression | Efficacy of Dolutegravir Relative to Commonly Used Third Agents,,
+479585,Harmful,Harmful,good,False,False,"total adverse events | To compare the potential adverse effects of tumor necrosis factor inhibitor (adalimumab, certolizumab, etanercept, golimumab, infliximab)",control 0.707 vs others 0.76,no (check: safety outcome?)
+479600,Beneficial,Beneficial,bad,False,False,response to treatment (defined as achieving ACR50 response) | comparative efficacy of biologic disease modifying antirheumatic drugs (DMARDs) in improving RA sy,control 0.14 vs others 0.321,yes
+479603,Beneficial,Beneficial,bad,False,False,Reduction of migraine attacks by >50 percent from baseline | Effectiveness of preventive pharmacologic treatments for community-dwelling adults with episodic or,control 0.108 vs others 0.18,yes
+479622,Harmful,Harmful,good,False,True,Total symptom scores | Treatments effects in chronic prostatitis/chronic pelvic pain syndrome,control 19.7 vs others 15.9,yes
+479629,Harmful,Harmful,good,False,True,pain intensity | Efficacy of opioids in chronic pain,,
+479652,Harmful,Harmful,good,False,True,Diarrhoea duration | To quantify the benefit of antimicrobial treatment for patients with cholera,control 87.2 vs others 48.7,yes
+479661,Harmful,Harmful,good,False,False,all strokes | Efficacy of treatments for stroke,control 0.0601 vs others 0.0557,yes
+479664,Beneficial,Beneficial,bad,False,False,"the proportion of eyes healed at 14 days | To compare the relative effectiveness of antiviral agents, interferon, and corneal debridement in the treatment ofHSV",control 0.648 vs others 0.771,yes
+479767,Beneficial,Beneficial,bad,False,False,technical success | Technical success was defined as successful recanalization of the target vessel withno significant residual stenosis on completion angiogram,,
+479770,Harmful,Harmful,good,False,False,mortality | Effects of inodilators on survival in adult cardiac surgery patients,control 0.0661 vs others 0.0474,yes
+479773,Harmful,Harmful,good,False,False,Incidence of nonvertebral fractures | Efficacy of bazedoxifeneandoral bisphosphonates for the prevention of nonvertebral fractures(NVFs) in women with higher ri,control 0.0977 vs others 0.0801,yes
+479807,Beneficial,,bad,False,True,Psoriasis Area Severity Index reduction by 75% | Efficacy of the biological agents in patients with psoriasis,,
+479808,Beneficial,Beneficial,bad,False,False,50% improvement in patient- and physician-reported criteria of the American College of Rheumatology (ACR 50) | Efficacy of currently available biologic disease-,control 0.207 vs others 0.392,yes
+479816,Harmful,Beneficial,good,False,True,"systolic blood pressure reduction | To determine the dose-related decrease in systolic and/or diastolic blood pressure due to thiazide diuretics compared with ",,
+479907,Beneficial,Beneficial,bad,False,False,"responder (>=50% seizure reduction) | Evaluate the clinical comparability of new antiepileptic drugs (AEDs) in partial refractory epilepsy",control 0.151 vs others 0.348,yes
+479918,Beneficial,Beneficial,bad,False,False,Response Rate | To evaluate the clinical efficacy of the newer antiepileptic drugs (AEDs)  as adjunctive therapy for adults with partialonset seizures (POS),control 0.194 vs others 0.325,yes
+479969,Beneficial,Beneficial,bad,False,False,Overall response or global effect | Effectiveness of different treatment strategies for sciatica,control 0.429 vs others 0.687,yes
+479971,Harmful,Beneficial,good,False,True,adverse coronary events | Compare treatment options such as rivaroxaban or apixaban with dabigatran for the risk of acute coronary syndrome,control 0.0161 vs others 0.0161,no (check: safety outcome?)
+479974,Beneficial,Beneficial,bad,False,False,stone-free rate | Compare the effectiveness of various treatments used for lower pole renal calculi,,
+479993,Harmful,Beneficial,good,False,True,glycemic control : mean change in HbA1c from baseline to endpoint; proportionof patients achieving target HbA1c ( smaller than 7%) | Safety of the dipeptidylpep,,
+479999,Harmful,Harmful,good,False,False,rate of severe exacerbations | Comparative effectiveness of current maintenance strategies in preventing exacerbations of asthma,control 0.371 vs others 0.191,yes
+480001,Beneficial,Beneficial,bad,False,False,pathologically complete response (PCR) | Efficacy of neoadjuvant therapy for HER2-positive breast cancer,,
+480029,Harmful,Harmful,good,False,False,all-cause mortality | Εfficacy of different treatments for patients with localised prostate cancer,,
+480037,Beneficial,Beneficial,bad,False,False,Induction of clinical remission (Crohn's Disease Activity Index (CDAI)<150) | Efficacy of biologics agents of biologic-naïve patients with Crohn disease,control 0.26 vs others 0.362,yes
+480052,Harmful,Beneficial,good,False,True,clinical relapse with at least 6 months of follow-up evaluation after surgery | Efficacy of different pharmacologic interventions for postoperative prophylaxis ,,
+480060,Harmful,Harmful,good,False,False,any gastrointestinal related to adverse events | Comparative  gastrointestinal safety of bisphosphonates,control 0.267 vs others 0.248,yes
+480074,Beneficial,Beneficial,bad,False,False,incidence of sinus rhythm | Safety of different energy sources for surgical ablation for atrial fibrillation,,
+480430,Harmful,Harmful,good,False,False,symptomatic venous thromboembolism | Clinical outcomes with new oral anticoagulants for prophylaxis against venous thromboembolism after total hip or knee repla,,
+480492,Beneficial,Beneficial,bad,False,False,the proportion of responders | To investigate whether different types of placebo treatments are associated with different responses using the studies of migrain,control 0.314 vs others 0.423,yes
+480612,Beneficial,Beneficial,bad,False,True,change from baseline in forced expiratory volume in 1 s (FEV1(L)) | Comparisons of interventions for mild-to-moderate asthma patients,,
+480629,Beneficial,Beneficial,bad,False,False,American College of Rheumatology 50% improvement criteria ACR50 | Efficacy of biologic disease-modifying antirheumatic drugs (DMARDs) versus placebo with or wit,control 0.144 vs others 0.357,yes
+480655,Beneficial,Harmful,bad,False,True,"change in BMD in spine (abstracted)/fracture risk reduction | Effects of parathyroid hormone (PTH) alone or in combination with antiresorptive therapy on chang",,
+480666,Beneficial,Beneficial,bad,False,False,50% improvement on a symptom severity rating scale | Efficacy of specific treatments for persistent depressive disorder,,
+480667,Beneficial,Beneficial,bad,False,False,response to treatment | Efficacy of antidepressants in the primary care setting,control 0.396 vs others 0.53,yes
+480695,Beneficial,Harmful,bad,False,True,acute ischemic stroke | Efficacy of several commonly used drugs for acute ischemic stroke,control 0.691 vs others 0.861,yes
+480804,Harmful,Harmful,good,False,False,"preventing blood transfusion | Efficacy of ESAs (epoetin alfa, epoetin beta, darbepoetin alfa, or methoxy polyethylene glycol-epoetin beta, and biosimilar ESAs,",control 0.251 vs others 0.0837,yes
+480931,Harmful,Harmful,good,False,False,90-day mortality | The effect of different resuscitative fluids on mortality in patients with sepsis,,
+480967,Harmful,Harmful,good,False,False,incidence of nausea | Frequency of GI-related events with glucagon-like peptide-1 receptor agonists for the treatment of type 2 diabetes mellitus,,
+481009,Harmful,Harmful,good,False,False,grade II-IV acute GvHD | Comparative efficacy of immunospressant protocols for GvHD prophylaxis after hematopoietic stem cell transplantation,,
+481107,Harmful,Harmful,good,False,False,febrile neutropenia risk for all chemotherapy cycles without adjustment for relative dose intensity | Efficacy of granulocyte colony-stimulating factor (G-CSF) ,control 0.319 vs others 0.155,yes
+481140,Harmful,Harmful,good,False,True,"symptoms of schizophrenia | Efficacy between aripiprazole and olanzapine for schizophrenia",,
+481150,Harmful,Harmful,good,False,False,"incidence of venous thomboembolism definition 1   (""the composite of asymptomatic, systematically detected proximal DVT, symptomatic DVT (whether distal or prox",control 0.173 vs others 0.0237,yes
+481163,Beneficial,Beneficial,bad,False,False,response to treatment (ACR50) | Efficacy of biological drugs used in rheumatoid arthritis,control 0.1 vs others 0.398,yes
+481193,Beneficial,,bad,False,True,Improved erection dysfunction | Efficacy between phosphodiesterase-5 inhibitors,control 0.22 vs others 0.705,yes
+481216,Beneficial,Beneficial,bad,False,False,ACR criteria for 50% clinical improvement (ACR20) were 20% improvement | Efficacy of American College of Rheumatology (ACR) response to tocilizumab with those o,control 0.127 vs others 0.374,yes
+481323,Beneficial,Beneficial,bad,False,False,Adherence to treatment | Effectiveness of different interventions for improving Adherence in HIV-infected people living in Africa,,
+481378,Harmful,Harmful,good,False,False,vaginal delivery not achieved within 24-hours | Effectiveness of prostaglandins used for labour induction,,
+481384,Beneficial,,bad,False,True,Success Rates at 12 months | Effects after laparoscopic Heller myotomy (LHM),,
+481412,Harmful,Beneficial,good,False,True,"quality of life | Efficacy of treatment options for patients whose chronic obstructive pulmonary disease cannot be controlled by shortacting therapies alone",,
+481418,Harmful,Harmful,good,False,False,composite incidence of major adverse cardiovascular events (MACE) | clinical efficacy of adding cilostazol to aspirin plus clopidogrel (triple antiplatelet ther,,
+481470,Harmful,Beneficial,good,False,True,fasting blood glucose | the effects of a Mediterranean diet compared to other dietary interventions on glycaemic control irrespective of weight loss,,
+481551,Harmful,Harmful,good,False,False,mortality at 60 days | To compare the benefits and harms of different interventionmethods aimed at decreasing blood loss and/or allogeneic blood transfusion req,,
+481571,Beneficial,Beneficial,bad,False,False,"HBeAg-Positive Treatment-Naive Patients | Efficacy of adefovir, entecavir, lamivudine, telbivudine, tenofovir disoproxil fumarate, and nucleos(t)ide combination",,
+481588,Beneficial,Beneficial,bad,False,False,ACR20 | Εfficacy of biological disease modifying anti-rheumatic drugs for the treatment of established moderate to severe rheumatoid arthritis (RA),control 0.229 vs others 0.477,yes
+481589,Harmful,Beneficial,good,False,True,overall withdrawal | Efficacy of treatment discontinuations of 9 biologics with placebo in patients with rheumatoid arthritis,control 0.249 vs others 0.156,yes
+481695,Beneficial,Beneficial,bad,False,False,objective response rate | Efficacy of EGFR-tyrosine kinase inhibitors (EGFR-TKIs)for patients with advanced non-small-cell lung cancer (NSCLC),,
+481731,Harmful,Harmful,good,False,False,occurrence of odinated contrast-induced nephropathy | Effectiveness of treatments based on statins for the prevention of contrast-induced nephropathy,control 0.0663 vs others 0.0477,yes
+481733,Harmful,Beneficial,good,False,True,"endoscopic recurrence | Efficacy of 5-aminosalicylates, immunomodulators and biologics for postoperative prophylaxis of Crohn's disease recurrence",control 0.434 vs others 0.357,yes
+481734,Harmful,Harmful,good,False,False,new-onset diabetes | development of diabetes in patients treated with antihypertensive drugs,,
+481736,Harmful,Harmful,good,False,True,"allergic rhinoconjunctivitis symptom score | Efficacy of subcutaneous immunotherapy (SCIT) and sublingual immunotherapy (SLIT) for pollen allergies",control 50 vs others 47.3,yes
+481836,Beneficial,Beneficial,bad,False,True,trough forced expiratory volume in 1 second (FEV1) | Efficacy of treatments in patients of chronic obstructive pulmonary disease,control -0.0115 vs others 0.0985,yes
+481856,Harmful,Harmful,good,False,False,"at least one clinical recurrence | Effectiveness of three oral antiviral drugs (acyclovir, famciclovir and valacyclovir) prescribed to suppress genital herpes o",control 0.899 vs others 0.447,yes
+481908,Beneficial,Beneficial,bad,False,False,Sustained virologic response rate 6 months after treatment | Compare benefits of dual therapy with pegylated interferon-alfa 2a vs dual therapy with pegylated i,,
+481941,Harmful,Beneficial,good,False,True,onset time of rocuronium | Efficacy of pharmacological interventions in reducing the onset time of rocuronium,control 112 vs others 86.5,yes
+481942,Harmful,Beneficial,good,False,True,Response rate of injection pain or withdrawal movement (IPWM) | NR,control 0.748 vs others 0.271,yes
+481974,Harmful,Harmful,good,False,False,vertebral fracture | Efficacy of various treatments in preventing fracture,control 0.0195 vs others 0.0138,yes
+481988,Harmful,Harmful,good,False,False,Occurance of postoperative surgical site infections (SSI) | NR,,
+482001,Harmful,Harmful,good,False,False,pain response rate | Effectiveness of interventions for reducing pain from propofol injection,control 0.649 vs others 0.327,yes
+482004,Beneficial,Beneficial,bad,False,False,prevention of epidsodic migraine | Efficacy for Prevention of Episodic Migraine,control 0.236 vs others 0.452,yes
+482006,Beneficial,Beneficial,bad,False,False,clinical success of primary molar pulpotomy | Comparing the clinical outcomes in primary molar pulpotomy amongst different dressing materials,,
+482104,Harmful,Beneficial,good,False,True,"pain relief | Efficacy of commonly used tNSAIDs (diclofenac, ibuprofen, and naproxen) and COXIBs (celecoxib and etoricoxib) in patients with pain caused by os",,
+482109,Harmful,Harmful,good,False,False,venous thromboembolism | Efficacy between bid and once-daily enoxaparin by conducting a systematic review of randomized trials of new oral anticoagulants agains,,
+482120,Harmful,Harmful,good,False,False,hip fractures | Efficacy of reduction of fractures in post-menopausal women,control 0.019 vs others 0.0141,yes
+482156,Harmful,Harmful,good,False,False,all-cause mortality | Efficacy of revascularization versus standard treament in stable coronary artery disease,,
+482159,Beneficial,Beneficial,bad,False,False,number of responders | Efficacy of atypical neuroleptic drugs and haloperidol,,
+482258,Harmful,Harmful,good,False,False,mortality | the probability of death,control 0.273 vs others 0.257,yes
+482440,Beneficial,Beneficial,bad,False,False,response to treatment | ADHD-RS response was defined as the proportion of responders with at least a 25% reduction in score,control 0.374 vs others 0.707,yes
+482450,Harmful,Harmful,good,False,False,venous thromboembolism (VTE) | occurrence of proximal or distal deep venous thrombosis,,
+482451,Beneficial,Beneficial,bad,False,True,Probing pocket depth (PPD) | NR,,
+482465,Beneficial,Beneficial,bad,False,False,pain reduction for PHN | measured on an 11-point numeric rating scale (NRS) or 100m visual analog scale (VAS),control 0.289 vs others 0.435,yes
+482475,Harmful,Beneficial,good,False,True,weight change | change from baseline at 3 months,,
+482476,Beneficial,Beneficial,bad,False,False,healing of diabetic foot ulcers | number of ulcers completely healed within a specific time period,,
+482519,Beneficial,Beneficial,bad,False,False,induction of remission | at the last time-point assessment in the trial,,
+482527,Beneficial,Beneficial,bad,False,False,endoscopic healing rate at 4 weeks | Healing after the initiation of PPI treatment in patients with severe erosive oesophagitis at 4  weeks.,,
+482576,Beneficial,Beneficial,bad,False,False,ASAS 40 | The Assessment of Spondylo-Arthritis international society,,
+482630,Harmful,Beneficial,good,False,True,pain score change associated with nonoperative treatments | NR,,
+482734,Beneficial,Beneficial,bad,False,False,response to treatment | the number of patients who responded to depression treatment,,
+501192,Beneficial,,bad,False,True,efficacy | OCS Elimination in chronic asthma,,
+501194,Harmful,,good,False,True,Efficacy of pharmacological agents for the prevention of post-ERCP pancreatitis | incidence of  post-ERCP pancreatitis (PEP),,
+501195,Harmful,Harmful,good,False,True,pain score in chronic prostatitis | pain and voiding questionnaires,,
+501196,Harmful,Beneficial,good,False,True,clinical effectiveness  of three pharmacological interventions in obese patients | Weight change from baseline (kg) in 3 months,control -2.41 vs others -5.98,yes
+501197,Harmful,Harmful,good,False,False,"Adverse event (treatment related) leading to drug Discontinuation, no. of patients | Adverse event (treatment related) leading to drug discontinuation,",control 0.0507 vs others 0.0428,yes
+501201,Harmful,Harmful,good,False,False,exacerbation episodes in Chronic Obstructive Pulmonary Disease (COPD>=1) | episodes in Chronic Obstructive Pulmonary Disease (COPD>=1),,
+501204,Beneficial,Beneficial,bad,False,False,efficacy | clinical success at test of cure in the modified intention-to-treat population (MITT),,
+501206,Harmful,Harmful,good,False,False,association between antihypertensive drugs and cancer risk | cancer risk,,
+501207,Beneficial,Beneficial,bad,False,False,efficacy | PASI 75 response score for the treatment of psoriasis,,
+501209,Beneficial,Beneficial,bad,False,False,relative efficacy of existing cardioversion approaches | cardioversion within 2 h of treatment initiation (rapid cardioversion) among patients with short-durati,control 0.11 vs others 0.401,yes
+501214,Beneficial,,bad,False,True,Efficacy of antiepileptic drugs | response rate,,
+501215,Beneficial,Beneficial,bad,False,False,efficacy of topical therapies for scalp psoriasis in adults | IGA response after 4 weeks,,
+501217,Harmful,Harmful,good,False,False,effectiveness for the prevention of NSAID induced GI toxicity | serious GI complications,,
+501226,Beneficial,Beneficial,bad,False,False,"effectiveness of focused shock wave (FSW) therapy of different intensity levels and a new alternative, radial shock wave (RSW) for managing plantar fasciitis | ",control 0.32 vs others 0.519,yes
+501227,Harmful,,good,False,True,relative mortality benefit of β blockers in patients with heart failure as 20-35% | All cause death,,
+501228,Beneficial,Beneficial,bad,False,False,smoking cessation | Point prevalence abstinence measured at longest follow-up,control 0.136 vs others 0.154,yes
+501229,Harmful,,good,False,True,Efficacy of orlistat and lorcaserin in the treatment of overweight and obesity | waist circumference,,
+501235,Beneficial,Beneficial,bad,False,False,possession of a functioning alarm | household's possession of a functioning smoke alarm (yes/no)-number of smoke alarms,control 0.733 vs others 0.806,yes
+501236,Harmful,Harmful,good,False,False,Stroke prevention in patients with atrial fibrillation | Ischemic strokes,,
+501243,Beneficial,Harmful,good,True,True,relative effectiveness of second generation techniques in the treatment of heavy menstrual bleeding | event rates for heavy bleeding at 12 months,,
+501250,Harmful,,good,False,True,Efficacy of different classes of antithrombotic drugs | reduction the incidence of stroke,,
+501251,Harmful,Harmful,good,False,False,Risk of mortality for inhaled medications in patients with chronic obstructive pulmonary disease (COPD) | Overall death,,
+501253,Beneficial,Beneficial,bad,False,False,reversal of metabolic syndrome | proportion reversed,control 0.232 vs others 0.446,yes
+501256,Beneficial,Beneficial,bad,False,False,most rigorous criterion of abstinence in smoking cessation | continuous abstinence at 12 months,,
+501257,Harmful,Harmful,good,False,False,effect of antihypertensives on incidence diabetes mellitus | proportion of patients who developed diabetes,,
+501261,Harmful,,good,False,True,the relative effectiveness of immunomodulators and immunosuppressants in patients with MS | Recurrence of relapses,,
+501267,Harmful,Harmful,good,False,False,incidence of cardiovascular disease outcomes | total mortality,control 0.106 vs others 0.0813,yes
+501268,Harmful,,good,False,True,antibiotic prophylaxis in neutroneutropenic patients | all-cause mortality,,
+501272,Beneficial,Beneficial,bad,False,False,efficacy and effectiveness of second-generation anti- depressants for treatment of MDD | response rates,control 0.348 vs others 0.567,yes
+501277,Harmful,Harmful,good,False,True,insulin therapies in patients with type 2 diabetes | HbAIc change,,
+501281,Beneficial,,bad,False,True,The relative efficacy of eight treatments in nonimmunosuppressed participants for actinic keratosis | participant complete clearance,,
+501282,Harmful,Beneficial,good,False,True,efficacy | Health Assessment Questionnaire change from baseline (HAQ CFB),control -0.00199 vs others -0.312,yes
+501283,Beneficial,Beneficial,bad,False,False,efficacy | delivery successfully delayed for 48 hours,control 0.621 vs others 0.815,yes
+501287,Harmful,Harmful,good,False,False,efficacy and safety of bronchodilators and steroids | admission rates from emergency department  at day 1,control 0.32 vs others 0.24,yes
+501297,Harmful,Harmful,good,False,False,relative risks of death between antifibrinolytics and no treatment | mortality,,
+501299,Beneficial,Beneficial,bad,False,False,effectiveness of non-surgical treatments for women with stress urinary incontinence | cure,,
+501305,Beneficial,Beneficial,bad,False,False,Efficacy of anti-epileptic drugs | responder rate,,
+501307,Harmful,Beneficial,good,False,True,change in pain intensity | Composite patient-reported outcomes,control -11.8 vs others -19.6,yes
+501309,Harmful,Harmful,good,False,False,Combined resynchronisation and implantable defibrillator therapy in left ventricular dysfunction | all-cause mortality,,
+501311,Harmful,Harmful,good,False,False,efficacy | MACE (major adverse cardiac event) 30 days; 14 trials,control 0.119 vs others 0.0613,yes
+501312,Harmful,Harmful,good,False,False,Open retropubic colposuspension for urinary incontinence in women | number not cured within first year,,
+501313,Beneficial,Beneficial,bad,False,False,clinical efficacy of anticytokine agents for the treatment of rheumatoid arthritis (RA) | The American College of Rheumatology (ACR) response criteria; ACR20 (m,control 0.266 vs others 0.581,yes
+501317,Harmful,Harmful,good,False,True,effectiveness in resolving dentin hypersensitivity among different in-office desensitizing treatments | visual analogue scales (VAS) or verbal rating scales (VR,control -6.15 vs others -6.85,yes
+501318,Beneficial,Beneficial,bad,False,False,PASI 50 | achieving PASI 50 Reported between 10 and 16 weeks,control 0.0428 vs others 0.602,yes
+501321,Harmful,Beneficial,good,False,True,effectiveness | decrease in glycated haemoglobin A1c,,
+501324,Harmful,Harmful,good,False,False,Treatment failure | persistent discharge,,
+501325,Harmful,Harmful,good,False,False,Acute coronary events comprising either MI or ACS | based on individual reports,control 0.0146 vs others 0.0196,no (check: safety outcome?)
+501326,Harmful,,good,False,True,efficacy of renin-angiotensin system blockade on calcium channel blocker-associated peripheral edema | incidence,,
+501330,Beneficial,,bad,False,True,efficacy of topical NSAIDs for acute pain | 50% or more reduction,,
+501332,Harmful,Harmful,good,False,True,morphine-related outcomes | cumulative morphine consumption in the first 24 h post- surgery,control 44.1 vs others 33.7,yes
+501337,Beneficial,Beneficial,bad,False,False,"Completion of treatment | being retained in treatment up to the final day of its planned duration, ingestion of the final dose of study medication, or reaching ",,
+501343,Harmful,,good,False,True,effectiveness of antifungal treatment for invasive Candida infections | all cause mortality,,
+501345,Harmful,,good,False,True,effectiveness of statins in CVD | cardiovascular disease mortality,,
+501346,Harmful,,good,False,True,efficacy of statins for cardiovascular disease | all cause mortality,,
+501348,Beneficial,Beneficial,bad,False,False,Smoking Abstinence | Smoking Abstinence at approximately 4 weeks post-target quit date (TQD),,
+501351,Harmful,Harmful,good,False,False,Harms of individual statins | discontinuations because of adverse events,,
+501355,Beneficial,Beneficial,bad,False,False,ACR20 at 6 months for Rheumatoid arthritis | reduction by 20% or more in the number of tender and swollen joints plus 20% improvement in at least three of the f,,
+501363,Harmful,Harmful,good,False,False,Efficacy of antifungal prophylaxis strategies | risk of proven or probable invasive fungal infections (IFIs),,
+501365,Harmful,Harmful,good,False,False,Efficacy of thromboprophylaxis strategies | risk of deep venous thrombosis,control 0.0722 vs others 0.0341,yes
+501366,Harmful,Harmful,good,False,True,comparative efficacy | change in HbA1c level from baseline,,
+501367,Harmful,Harmful,good,False,False,Efficacy of oral anti-diabetic drugs for the prevention of Type 2 diabetes | number of patients developing new-onset diabetes,control 0.271 vs others 0.226,yes
+501368,Beneficial,Beneficial,bad,False,False,analgecic efficacy of proplylactic interventions for the prevention of pain on injection with propofol | no pain,,
+501370,Harmful,Harmful,good,False,False,Antifungal agents for preventing fungal infections in solid organ transplant recipients | mortality,,
+501373,Harmful,Harmful,good,False,False,"Antihypertensive Therapy-Coronary heart disease (CHD) including fatal and nonfatal events | Cardiovascular disease events included CHD, stroke, CHF, and other c",,
+501374,Harmful,Harmful,good,False,False,"exacerbation in patients with chronic obstructive pulmonary disease | event based (physician or emergency room visit, hospital admission) or symptom based (incr",,
+501377,Beneficial,Beneficial,bad,False,False,"effectiveness of all biologic agents indicated in the treatment of moderate to severe psoriasis | PASI 50, 75 and 90 response rates (PASI 90 - primary)",control 0.0131 vs others 0.332,yes
+501381,Beneficial,Beneficial,bad,False,False,efficacy for the treatment of fibromyalgia | 30% improvement in pain response,,
+501382,Harmful,Harmful,good,False,False,efficacy of treatments for stroke prevention in atrial fibrillation | ischemic stroke,,
+501383,Harmful,Harmful,good,False,False,"relative effects of treatment in relapsing-remitting multiple sclerosis (RRMS) | annualized relapse rate (ARR), defined as total number of relapses divided by t",,
+501384,Beneficial,Beneficial,bad,False,False,Efficacy of topical antifungals used in dermatophytosis treatment | mycologic cure at the end of treatment,,
+501387,Beneficial,Beneficial,bad,False,False,ACR50 response rates at week 24 in patients with rheumatoid arthritis despite methotrexate | at least 50% improvement according to the American College of Rheum,,
+501388,Beneficial,,bad,False,True,Efficacy of topical treatments in chronic plaque psoriasis | Clear or nearly clear status for trunk and limbs on either the Investigator's Assessment of Overall,,
+501392,Harmful,Harmful,good,False,False,the relative effectiveness of competing interventions for the prevention of rebleeding | variceal rebleeding,,
+501393,Beneficial,,bad,False,True,efficacy of biologics for rheumatoid arthritis | ACR50,,
+501395,Harmful,Harmful,good,False,False,pharmacological and/or psychosocial interventions for the prevention of relapse in people with bipolar disorder | admission to hospital,control 0.646 vs others 0.446,yes
+501404,Harmful,Harmful,good,False,False,efficacy of antiplatelet | prevention of serious vascular events after transient ischaemic attack or stroke,,
+501407,Harmful,Harmful,good,False,False,Coronary artery disease | death,,
+501409,Beneficial,Beneficial,bad,False,True,"treatment effects of GTR, EMD for periodontal infrabony lesions | probing pocket depth (PPD) reduction",,
+501412,Beneficial,,bad,False,True,efficacy for treating anxiety disorders in children and adolescents | improvement,,
+501414,Harmful,Beneficial,good,False,True,protective effect of ophthalmic viscoelastic devices | loss in endothelial cell density 3 months after surgery,,
+501423,Harmful,Harmful,good,False,True,absolute pain intensity in patients with osteoarthritis of hip or knee | pain scores,,
+501424,Harmful,Harmful,good,False,False,effectiveness of venous catheters for catheter-related infections | colonisation,,
+501425,Harmful,Harmful,good,False,False,Psychological Interventions in Coronary Heart Disease | Total mortality,,
+501430,Beneficial,Beneficial,bad,False,False,relative efficacy of nucleostides in the treatment of chronic hepatidis B | HBV DNA levels,,
+501431,Harmful,,good,False,True,Efficacy of different classes of renin-angiotensin system blockers | all cause mortality,,
+501434,Harmful,Harmful,good,False,False,effectiveness of inhaled anesthetics in reducing post-operative myocardial infractions after cardiac surgery | acute myocardial infarction (AMI),,
+501435,Beneficial,,bad,False,True,Efficacy of Oral Phosphodiesterase Type 5 Inhibitors for Erectile Dysfunction | Oral Phosphodiesterase type 5 inhibitors (PDE5-Is),,

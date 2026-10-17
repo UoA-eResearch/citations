@@ -1,0 +1,227 @@
+record,type,measure,catalogue,small_values,eff_safety,n_trt_names,old_trt_names,ctrl_arms,ctrl_val,act_val,screen,primary_outcome,outcome_desc,trts
+473269,Binary,RR,Beneficial,bad,Effectiveness,0,0,,,,,treatment success,proportion of patients achieving at least 30% reduction in intraoccular pressure,
+473552,Binary,OR,Beneficial,bad,Effectiveness,9,0,Placebo/Standard Care,0.09323583180987204,0.1964127009776198,consistent,ACR70 improvement,Efficacy of biologic therapies in rheumatoid arthritis,1=Placebo/Standard Car; 2=abatacept; 3=adalimumab; 4=certolizumab; 5=etanercept; 6=golimumab; 7=infliximab; 8=rituximab; 9=tocilizumab
+474842,Binary,OR,Harmful,good,Effectiveness,8,8,,,,,recurrent venous thromboembolism,"Efficacy associated with 8 anticoagulation options for treatment of venous thromboembolism
+(primary analysis used HR bu",1=UFH + vitamin K anta; 2=LMWH + vitamin K ant; 3=LMWH alone; 4=Fondaparinux + vitam; 5=Rivaroxaban; 6=LMWH-dabigatran; 7=LMWH-edoxaban; 8=Apixaban
+479531,Binary,OR,Beneficial,bad,Effectiveness,0,0,,,,,virologic supression,Efficacy of Dolutegravir Relative to Commonly Used Third Agents,
+479585,Binary,OR,Harmful,good,Safety,10,10,Control: any other therap,0.7067979669631512,0.7597829851090846,CONTROL LOOKS BETTER THAN ACTIVE UNDER THE CALL,total adverse events,"To compare the potential adverse effects of tumor necrosis factor inhibitor (adalimumab, certolizumab, etanercept, golim",1=Control: any other t; 2=Abatacept; 3=Adalimumab; 4=Anakinra; 5=Certolizumab; 6=Etanercept; 7=Golimumab; 8=Infliximab; 9=Tocilizumab; 10=Rituximab
+479600,Binary,OR,Beneficial,bad,Effectiveness,9,9,Placebo,0.14023372287145242,0.32087498189193103,consistent,response to treatment (defined as achieving ACR50 response),"comparative efficacy of biologic disease modifying
+antirheumatic drugs (DMARDs) in improving RA symptoms",1=Placebo; 2=Abatacept; 3=Infliximab; 4=Adalimumab; 5=Anakinra; 6=Etanercept; 7=Golimumab; 8=Rituximab; 9=Tocilizumab
+479603,Binary,OR,Beneficial,bad,Effectiveness,45,45,Placebo,0.10836124974362481,0.18037242655563265,consistent,Reduction of migraine attacks by >50 percent from baseline,Effectiveness of preventive pharmacologic treatments for community-dwelling adults with episodic or chronic migraine,1=Placebo; 2=Propranolol; 3=Topiramate; 4=Amitriptyline; 5=Levetiracetam; 6=Valproate; 7=Divalproex; 8=Cinnarizine; 9=Histamine; 10=Zonisamide; 11=Metoprolol; 12=Clonidine; 13=Femoxetine; 14=Nortriptyline; 15=Nifedipine; 16=Nadolol; 17=Aspirin; 18=Captopril; 19=Lisinopril; 20=Fluoxetine; 21=Venlafax
+479622,Continuous,MD,Harmful,good,Effectiveness,5,5,Placebo,19.74818181818182,15.903229426433915,consistent,Total symptom scores,Treatments effects in chronic prostatitis/chronic pelvic pain syndrome,1=Placebo; 2=α-Blockers; 3=Antibiotics; 4=α-Blockers + Antibio; 5=Anti-inflammatory
+479629,Continuous,MD,Harmful,good,Effectiveness,8,8,placebo,,42.67217135382603,,pain intensity,Efficacy of opioids in chronic pain,1=placebo; 2=WHO 1 non opioid; 3=WHO II opioids; 4=WHO III opioids; 5=AC; 6=WLC; 7=Physiotherapy; 8=Psychotherapy
+479652,Continuous,MD,Harmful,good,Safety,10,10,Placebo/no treatment,87.23116591928252,48.657076476282676,consistent,Diarrhoea duration,To quantify the benefit of antimicrobial treatment for patients with cholera,1=Placebo/no treatment; 2=Norfloxacin; 3=Ciprofloxacin; 4=Tetracycline; 5=Doxycycline; 6=Erythromycin; 7=TMP-SMX; 8=Chloramphenicol; 9=Furazolidone; 10=Azithromycin
+479661,Binary,OR,Harmful,good,Effectiveness,4,4,Control,0.060122123062470646,0.055709851331481784,consistent,all strokes,Efficacy of treatments for stroke,1=Control; 2=Warfarin; 3=Aspirin HD; 4=Aspirin LD
+479664,Binary,RR,Beneficial,bad,Effectiveness,13,13,Control,0.6477272727272727,0.7711658570437196,consistent,the proportion of eyes healed at 14 days,"To compare the relative effectiveness of antiviral agents, interferon, and corneal debridement in the treatment ofHSV ep",1=Control; 2=Idoxuridine; 3=Vidarabine; 4=Trifluridine; 5=Acyclovir; 6=Brivudine; 7=Ganciclovir; 8=Foscarnet; 9=Interferon; 10=Interferon + antivir; 11=Debridement; 12=Debridement + Interf; 13=Debridment + Antivir
+479767,Binary,OR,Beneficial,bad,Effectiveness,6,6,,,,,technical success,Technical success was defined as successful recanalization of the target vessel withno significant residual stenosis on ,1=BA; 2=BNS; 3=CNS; 4=PES; 5=SES; 6=PCB
+479770,Binary,OR,Harmful,good,Effectiveness,5,5,Placebo,0.06609195402298851,0.047411104179663134,consistent,mortality,Effects of inodilators on survival in adult cardiac surgery patients,1=Placebo; 2=Levosimendan; 3=Enoximone; 4=Milrinone; 5=Dobutamine
+479773,Binary,OR,Harmful,good,Effectiveness,5,5,PLACEBO,0.09772877984084881,0.08010230773702261,consistent,Incidence of nonvertebral fractures,"Efficacy of bazedoxifeneandoral
+bisphosphonates for the prevention of nonvertebral fractures(NVFs)
+in women with higher ",1=PLACEBO; 2=ALEN; 3=IBAN; 4=RISED; 5=BAZ
+479807,Binary,RD,Beneficial,bad,Effectiveness,0,0,,,,,Psoriasis Area Severity Index reduction by 75%,Efficacy of the biological agents in patients with psoriasis,
+479808,Binary,OR,Beneficial,bad,Effectiveness,7,7,placebo,0.20658769141866512,0.39215686274509803,consistent,"50% improvement in patient- and
+physician-reported criteria of the American Coll",Efficacy of currently available biologic disease-modifying anti-rheumatic drugs in adults with rheumatoid arthritis,1=placebo; 2=abatacept; 3=adalimumab; 4=anakinra; 5=etanercept; 6=infliximab; 7=rituximab
+479816,Continuous,MD,Harmful,good,Effectiveness,0,0,,,,,systolic blood pressure reduction,"To determine the dose-related decrease in systolic and/or diastolic
+blood pressure due to thiazide diuretics compared w",
+479907,Binary,OR,Beneficial,bad,Effectiveness,11,11,placebo,0.15136132902630364,0.3481404958677686,consistent,responder (>=50% seizure reduction),"Evaluate the clinical comparability of new
+antiepileptic drugs (AEDs) in partial refractory epilepsy",1=placebo; 2=OXC; 3=LTG; 4=TPM; 5=GBP; 6=PGB; 7=ZNS; 8=TGB; 9=LEV; 10=EBZ; 11=LCS
+479918,Binary,OR,Beneficial,bad,Effectiveness,7,7,placebo,0.19356540084388185,0.32465474303826125,consistent,Response Rate,To evaluate the clinical efficacy of the newer antiepileptic drugs (AEDs)  as adjunctive therapy for adults with partial,1=placebo; 2=ESL; 3=RTG; 4=CAR; 5=LAC; 6=BRI; 7=PER
+479969,Binary,OR,Beneficial,bad,Effectiveness,21,21,,,,,Overall response or global effect,Effectiveness of different treatment strategies for sciatica,1=inactive control; 2=Epidural injections/; 3=Chemonucleolysis; 4=Non-opioids; 5=Traction; 6=Manipulation; 7=Passive physical the; 8=Biological agents; 9=Opioid; 10=Neuropathic pain-mod; 11=Radiofrequency treat; 12=conventional care; 13=Disc surgery; 14=Exercise therapy; 15=Intra-operative inte; 16=
+479971,Binary,OR,Harmful,good,Safety,4,4,placebo,0.016060400351010813,0.016146393972012917,CONTROL LOOKS BETTER THAN ACTIVE UNDER THE CALL,adverse coronary events,Compare treatment options such as rivaroxaban or apixaban with dabigatran for the risk of acute coronary syndrome,1=placebo; 2=apixiban; 3=rivoroxiban; 4=dabigitran
+479974,Binary,RR,Beneficial,bad,Effectiveness,4,4,,,,,stone-free rate,"Compare the effectiveness of various treatments used for
+lower pole renal calculi",1=SWL; 2=SWL + adjuvant; 3=PNL; 4=URS
+479993,Continuous,MD,Harmful,good,Effectiveness,44,44,,,,,glycemic control : mean change in HbA1c from baseline to endpoint; proportionof ,"Safety of the dipeptidylpeptidase-4 (DPP-4) inhibitors in patients with type 2 diabetes and inadequate
+glycemic control",1=PL; 2=ALO; 3=PIO+MET; 4=ALO+MET+PIO; 5=PIO; 6=ALO+PIO; 7=MET; 8=ALO+MET; 9=VOG; 10=LIN; 11=LIN+MET; 12=SU+MET; 13=LIN+PIO; 14=LIN+MET+SU; 15=SAX+MET; 16=SU; 17=SAX+SU; 18=SIT+MET; 19=INS+MET; 20=EXE+INS+MET; 21=SIT+INS+MET; 22=INS GL+MET; 23=SIT; 24=SAX; 25=EXE+MET; 26=PIO+SIT; 27=SIT+SU; 28=SIT+S
+479999,Rate,IRR,Harmful,good,Effectiveness,16,16,Placebo,0.37104198633003205,0.1910873126444877,consistent,rate of severe exacerbations,Comparative effectiveness of current maintenance strategies in preventing exacerbations of asthma,1=Placebo; 2=ICS; 3=ICS H; 4=ICS+SABA; 5=ICS+LABA; 6=COMBI FIX; 7=COMBI FIX H; 8=COMBI MAR; 9=LABA; 10=LTRA; 11=Best Practice; 12=ICS H + LABA; 13=ICS H +SABA; 14=SABA; 15=ICS+LTRA; 16=COMBI AMD
+480001,Binary,OR,Beneficial,bad,Effectiveness,7,7,,,,,pathologically complete response (PCR),Efficacy of neoadjuvant therapy for HER2-positive breast cancer,1=CT; 2=CT+Tzmb; 3=CT + tzmb + pzmb; 4=CT + lpnb; 5=CT + pzmb; 6=CT + tzmb + lpnb; 7=Tzmb + pzmb
+480029,Binary,OR,Harmful,good,Safety,0,0,,,,,all-cause mortality,"Εfficacy of different treatments for patients with localised
+prostate cancer",
+480037,Binary,RR,Beneficial,bad,Effectiveness,7,7,placebo,0.26008492569002123,0.3616212792906903,consistent,Induction of clinical remission (Crohn's Disease Activity Index (CDAI)<150),Efficacy of biologics agents of biologic-naïve patients with Crohn disease,1=placebo; 2=infliximab; 3=adalimumab; 4=certolizumab; 5=usteinumab; 6=natalizumab; 7=vedolizumab
+480052,Binary,RR,Harmful,good,Safety,0,0,,,,,"clinical relapse with at
+least 6 months of follow-up evaluation after surgery","Efficacy of different pharmacologic
+interventions for postoperative prophylaxis of Crohn's disease",
+480060,Binary,OR,Harmful,good,Safety,5,5,placebo,0.2673818688068135,0.24842976779596498,consistent,any gastrointestinal related to adverse events,Comparative  gastrointestinal safety of bisphosphonates,1=placebo; 2=ALD; 3=ZLD; 4=RISD; 5=ETD
+480074,Binary,OR,Beneficial,bad,Safety,5,5,,,,,incidence of sinus rhythm,Safety of different energy sources for surgical ablation for atrial fibrillation,1=no ablation; 2=cut and sew; 3=radiofrequency; 4=cryoablation; 5=microwave
+480430,Binary,RR,Harmful,good,Safety,4,4,,,,,symptomatic venous thromboembolism,"Clinical outcomes with new oral anticoagulants
+for prophylaxis against venous thromboembolism after total hip or knee
+re",1=Enoxaparin; 2=Dabigatran; 3=Rivaroxaban; 4=Apixaban
+480492,Binary,OR,Beneficial,bad,Effectiveness,7,7,Placebo (Pharmacologic); Sham acupuncture; sham cognitive behavioura; No treatment,0.31420765027322406,0.4226716035317573,consistent,the proportion of responders,"To investigate whether different types of placebo treatments are associated with
+different responses using the studies o",1=Placebo (Pharmacolog; 2=Pharmacologic treatm; 3=Sham acupuncture; 4=acupuncture; 5=sham cognitive behav; 6=cognitive behavioura; 7=No treatment
+480612,Continuous,MD,Beneficial,bad,Effectiveness,5,5,PLB,0.0032357414448669214,0.25056618556701027,consistent,"change from baseline in forced expiratory
+volume in 1 s (FEV1(L))","Comparisons of interventions
+for mild-to-moderate asthma patients",1=PLB; 2=BUD; 3=MOM; 4=FP; 5=BDP
+480629,Binary,OR,Beneficial,bad,Effectiveness,10,10,Control,0.14440993788819875,0.35701872948445645,consistent,"American College of Rheumatology
+50% improvement criteria ACR50","Efficacy of biologic disease-modifying
+antirheumatic drugs (DMARDs) versus placebo with or without
+methotrexate, in trea",1=Control; 2=ABT; 3=ADA; 4=ANK; 5=CRT; 6=ETN; 7=GOL; 8=IFX; 9=RTX; 10=TOC
+480655,Continuous,MD,Beneficial,bad,Effectiveness,0,0,,,,,change in BMD in spine (abstracted)/fracture risk reduction,"Effects of parathyroid hormone (PTH) alone or in
+combination with antiresorptive therapy on changes in fracture risk",
+480666,Binary,OR,Beneficial,bad,Effectiveness,0,0,,,,,"50% improvement
+on a symptom severity rating scale",Efficacy of specific treatments for persistent depressive disorder,
+480667,Binary,OR,Beneficial,bad,Effectiveness,9,9,Placebo,0.39602053915276,0.5301620407508423,consistent,response to treatment,Efficacy of antidepressants in the primary care setting,1=Placebo; 2=TCAs; 3=SSRI; 4=SNRIS; 5=Hypericum; 6=NRIs; 7=NaSSAs; 8=SARIs; 9=MAO-A
+480695,Binary,RR,Beneficial,bad,Effectiveness,5,5,placebo,0.6914171656686626,0.8614072494669509,consistent,acute ischemic stroke,Efficacy of several commonly used drugs for acute ischemic stroke,1=placebo; 2=ozagrel; 3=ozagrel + edaravone; 4=Edaravone; 5=Edaravone + Kininoge
+480804,Binary,OR,Harmful,good,Effectiveness,6,6,placebo/no treatment,0.25077812361049356,0.08370108855545749,consistent,preventing blood transfusion,"Efficacy of ESAs (epoetin alfa, epoetin beta, darbepoetin alfa, or methoxy polyethylene glycol-epoetin beta, and biosimi",1=placebo/no treatment; 2=epo-alpha; 3=epo-beta; 4=Darbepoetin alfa; 5=Biosimilar ESA; 6=methoxy polyethylene
+480931,Binary,OR,Harmful,good,Effectiveness,6,6,,,,,90-day mortality,"The effect of different resuscitative fluids on
+mortality in patients with sepsis",1=Saline; 2=Albumin; 3=H-HES; 4=Gelatin; 5=Balanced crystalloid; 6=L-HES
+480967,Binary,OR,Harmful,good,Safety,0,0,,,,,incidence of nausea,Frequency of GI-related events with glucagon-like peptide-1 receptor agonists for the treatment of type 2 diabetes melli,
+481009,Binary,OR,Harmful,good,Effectiveness,13,13,,,,,grade II-IV acute GvHD,Comparative efficacy of immunospressant protocols for GvHD prophylaxis after hematopoietic stem cell transplantation,"1=MTX; 2=CsA; 3=CsA/MTX; 4=TAC, SIR +/-MTX; 5=TAC/MTX; 6=pse/CsA/MTX; 7=BDP/TAC/MTX; 8=ATG/CsA/MTX; 9=ATG/MTX; 10=MMF/TAC; 11=MMF/CsA; 12=pse/CsA; 13=pse/ATG/MTX"
+481107,Binary,OR,Harmful,good,Effectiveness,5,5,no primary G-CSF / placeb,0.3188711036225779,0.1553795740032769,consistent,"febrile
+neutropenia risk for all chemotherapy
+cycles without adjustment for
+rela","Efficacy of granulocyte colony-stimulating factor (G-CSF) products administered
+as primary prophylaxis (PP) to patients ",1=no primary G-CSF / p; 2=Primary pegfilgrasti; 3=Primary filgrastim; 4=Primary lenograstim; 5=Primary lipegfilgras
+481140,Continuous,MD,Harmful,good,Effectiveness,4,4,PLB,-7.30514506769826,-21.407026194144834,consistent,symptoms of schizophrenia,"Efficacy between
+aripiprazole and olanzapine for schizophrenia",1=ARP; 2=PLB; 3=RIS; 4=OLZ
+481150,Binary,RR,Harmful,good,Effectiveness,11,11,placebo/no treatment,0.17333333333333334,0.023679654485544613,consistent,"incidence of venous thomboembolism definition 1   (""the composite of asymptomati","Efficacy of treatments for venous
+thromboembolism prophylaxis",1=Enoxaparin 3000; 2=Enoxaparin 4000; 3=Apixaban; 4=Dabigatran 150mg; 5=Dabigatran 220mg; 6=Rivoraxaban; 7=ximelagatran; 8=fondaparinux; 9=semuloparin; 10=UFH; 11=placebo/no treatment
+481163,Binary,RD,Beneficial,bad,Effectiveness,8,8,placebo,0.1002906976744186,0.39820200951877316,consistent,response to treatment (ACR50),Efficacy of biological drugs used in rheumatoid arthritis,1=placebo; 2=adalimumab; 3=etanercept; 4=infliximab; 5=abatacept; 6=tocilizumab; 7=golimumab; 8=certolizumab
+481193,Binary,RR,Beneficial,bad,Effectiveness,4,4,Placebo,0.21998627944203064,0.7045520023048113,consistent,Improved erection dysfunction,Efficacy between phosphodiesterase-5 inhibitors,1=Placebo; 2=Sildenafil; 3=Tadalafil; 4=Vardenafil
+481216,Binary,RR,Beneficial,bad,Effectiveness,5,5,placebo,0.12702445220704986,0.3741250301713734,consistent,ACR criteria for 50% clinical improvement (ACR20) were 20% improvement,"Efficacy of American College of Rheumatology (ACR) response to
+tocilizumab with those of other biologic agents in patien",1=placebo; 2=TOC; 3=TNFi; 4=abatacept; 5=rituximab
+481323,Binary,OR,Beneficial,bad,Effectiveness,9,9,,,,,Adherence to treatment,Effectiveness of different interventions for improving Adherence in HIV-infected people living in Africa,1=SOC; 2=eSOC; 3=eSOC+Treatment suppo; 4=Alarm; 5=eSOC+Alarm; 6=Weekly SMS; 7=eSOC+Weekly SMS; 8=Daily SMS; 9=eSOC+calendar
+481378,Binary,OR,Harmful,good,Effectiveness,0,0,,,,,vaginal delivery not achieved within 24-hours,Effectiveness of prostaglandins used for labour induction,
+481384,Binary,OR,Beneficial,bad,Effectiveness,4,4,,,,,Success Rates at 12 months,Effects after laparoscopic Heller myotomy (LHM),1=EBD; 2=EBTI; 3=LHM; 4=OHM
+481412,Continuous,MD,Harmful,good,Effectiveness,0,0,,,,,quality of life,Efficacy of treatment options for patients whose chronic obstructive pulmonary disease cannot be controlled by shortacti,
+481418,Binary,OR,Harmful,good,Effectiveness,0,0,,,,,composite incidence of major adverse cardiovascular events (MACE),"clinical efficacy of adding cilostazol to aspirin plus clopidogrel (triple antiplatelet therapy, TAT) in patients underg",
+481470,Continuous,MD,Harmful,good,Effectiveness,7,7,,,,,fasting blood glucose,the effects of a Mediterranean diet compared to other dietary interventions on glycaemic control irrespective of weight ,1=Mediterranean diet +; 2=Mediterranean diet; 3=Palaeolithic diet + ; 4=healthy dietary advi; 5=Low fat diet +educat; 6=Written healthy diet; 7=Written Mediterranea
+481551,Binary,RR,Harmful,good,Effectiveness,0,0,,,,,mortality at 60 days,"To compare the benefits and harms of different interventionmethods
+aimed at decreasing blood loss and/or allogeneic bloo",
+481571,Binary,OR,Beneficial,bad,Effectiveness,0,0,,,,,HBeAg-Positive Treatment-Naive Patients,"Efficacy of adefovir, entecavir, lamivudine, telbivudine, tenofovir
+disoproxil fumarate, and nucleos(t)ide combinations ",
+481588,Binary,OR,Beneficial,bad,Effectiveness,18,18,Placebo,0.22927461139896374,0.4765217391304348,consistent,ACR20,"Εfficacy of biological disease modifying anti-rheumatic drugs for the treatment of
+established moderate to severe rheuma",1=Placebo; 2=MTX; 3=ABT+MTX; 4=INF+MTX; 5=ADA 40 mg every othe; 6=ADA 40 mg+MTX; 7=ANK+MTX; 8=CZP+MTX; 9=CZP; 10=ENT; 11=ENT+MTX; 12=ENT+SSZ; 13=SSZ; 14=GOL+MTX; 15=GOL; 16=RIT+MTX; 17=TOC+MTX; 18=TOC
+481589,Binary,OR,Harmful,good,Effectiveness,10,10,Placebo,0.2487732342007435,0.15598182735991922,consistent,overall withdrawal,"Efficacy of treatment discontinuations of 9 biologics
+with placebo in patients with rheumatoid arthritis",1=Abatacept; 2=Placebo; 3=Adalimumab; 4=Anakinra; 5=Certolizumab; 6=Etanercept; 7=Golimumab; 8=Infliximab; 9=Rituximab; 10=Tocilizumab
+481695,Binary,OR,Beneficial,bad,Effectiveness,0,0,,,,,objective response rate,Efficacy of EGFR-tyrosine kinase inhibitors (EGFR-TKIs)for patients with advanced non-small-cell lung cancer (NSCLC),
+481731,Binary,OR,Harmful,good,Safety,6,6,Placebo or no statin,0.06629392971246006,0.04769828064337216,consistent,occurrence of odinated contrast-induced nephropathy,"Effectiveness of treatments based on statins for the prevention of
+contrast-induced nephropathy",1=Placebo or no statin; 2=Atorvastatin high do; 3=Atorvastatin low dos; 4=Rosuvastatin high do; 5=Simvastatin high dos; 6=simvastatin low dose
+481733,Binary,OR,Harmful,good,Safety,4,4,,,,,endoscopic recurrence,"Efficacy of 5-aminosalicylates, immunomodulators and biologics for postoperative prophylaxis of Crohn's disease recurren",1=Placbeo; 2=5-ASA; 3=Biologics; 4=Immunomodulators
+481734,Binary,OR,Harmful,good,Safety,0,0,,,,,new-onset diabetes,development of diabetes in patients treated with antihypertensive drugs,
+481736,Continuous,SMD,Harmful,good,Safety,4,4,Placebo,50.01266755674232,47.27657206870799,consistent,allergic rhinoconjunctivitis symptom score,"Efficacy of subcutaneous immunotherapy (SCIT) and
+sublingual immunotherapy (SLIT) for pollen allergies",1=Placebo; 2=SCIT; 3=SLIT drops; 4=SlIT Tablets
+481836,Continuous,MD,Beneficial,bad,Effectiveness,9,9,Placebo,-0.011535313531353135,0.09852150256356598,consistent,trough forced expiratory volume in 1 second (FEV1),Efficacy of treatments in patients of chronic obstructive pulmonary disease,1=Placebo; 2=Olodaterol 5 mcg; 3=Olodaterol 10 mcg**; 4=Formoterol 12 mcg**; 5=Tiotropium 18 mcg; 6=Indacaterol  150 mcg; 7=Indacaterol  300 mcg; 8=Salmeterol 50 mcg; 9=Indacaterol 75 mcg
+481856,Binary,RR,Harmful,good,Safety,4,4,Placebo/no treatment/ccon,0.8990775908844275,0.44748749702310076,consistent,at least one clinical recurrence,"Effectiveness of three oral antiviral drugs (acyclovir, famciclovir and valacyclovir) prescribed to suppress
+genital her",1=Placebo/no treatment; 2=Acyclovir; 3=valcyclovir; 4=famcyclovir
+481908,Binary,RR,Beneficial,bad,Effectiveness,4,4,,,,,Sustained virologic response rate 6 months after treatment,"Compare benefits of dual therapy
+with pegylated interferon-alfa 2a vs dual therapy with
+pegylated interferon-alfa 2b",1=pegylated interferon; 2=pegylated interferon; 3=interferon alfa-2a; 4=interferon alfa-2b
+481941,Continuous,MD,Harmful,good,Safety,4,4,Control,112.38151658767772,86.46728395061729,consistent,onset time of rocuronium,Efficacy of pharmacological interventions in reducing the onset time of rocuronium,1=Control; 2=Rocuronium priming; 3=Magnesium sulphate p; 4=Ephedrine pretreatme
+481942,Binary,RR,Harmful,good,Effectiveness,6,6,Control,0.7475468331846565,0.27108784176847006,consistent,Response rate of injection pain or withdrawal movement (IPWM),NR,1=Control; 2=Opioid pretreatmen; 3=Lidocaine pretreatme; 4=Lidocaine with venou; 5=Opioid with venous o; 6=Sodium bicarbonate
+481974,Binary,RR,Harmful,good,Safety,6,6,Placebo,0.019461212721866836,0.013783783783783784,consistent,vertebral fracture,Efficacy of various treatments in preventing fracture,1=Placebo; 2=Alendronate; 3=Ibandronate; 4=Risedronate; 5=Raloxifene; 6=Teriparatide
+481988,Binary,OR,Harmful,good,Safety,6,6,,,,,Occurance of postoperative surgical site infections (SSI),NR,1=7.5% aqueous PI scru; 2=10% aqueous PI paint; 3=Film-forming paint (; 4=4% Chlorhexidine scr; 5=2% or 2.5% Chlorhexi; 6=Standard soap scrub 
+482001,Binary,RR,Harmful,good,Safety,7,7,,,,,pain response rate,Effectiveness of interventions for reducing pain from propofol injection,1=hand vein (control); 2=Antecubital vein; 3=lidocaine-propofol a; 4=Lidocaine pretreatme; 5=pretreatment with op; 6=pretreatment with ke; 7=pretreatment with no
+482004,Binary,OR,Beneficial,bad,Effectiveness,8,8,Placebo,0.23639362286970864,0.4524979524979525,consistent,prevention of epidsodic migraine,Efficacy for Prevention of Episodic Migraine,1=Placebo; 2=Divalproex; 3=Topiramate; 4=Propranolol; 5=Timolol; 6=Magnesium; 7=Gabapentin; 8=Nimodipine
+482006,Binary,OR,Beneficial,bad,Effectiveness,5,5,,,,,clinical success of primary molar pulpotomy,Comparing the clinical outcomes in primary molar pulpotomy amongst different dressing materials,1=Formocresol; 2=Ferric Sufate; 3=Ca(OH)2; 4=MTA; 5=Lasers
+482104,Continuous,SMD,Harmful,good,Effectiveness,7,0,Placebo,-18.549585791060423,-26.331503356495112,consistent,pain relief,"Efficacy of commonly used tNSAIDs
+(diclofenac, ibuprofen, and naproxen) and COXIBs (celecoxib
+and etoricoxib) in patie",1=Placebo; 2=Celecoxib 200mg; 3=Naproxen 1000mg; 4=Etoricoxib 30mg; 5=Ibuprofen 2400mg; 6=Acetaminophen 4000mg; 7=Diclofenac 150mg
+482109,Binary,RR,Harmful,good,Safety,6,6,,,,,venous thromboembolism,"Efficacy between bid and once-daily enoxaparin by conducting
+a systematic review of randomized trials of new
+oral antico",1=Enoxaparin 40 mg OD; 2=Enoxaparin 30 mg bid; 3=Dabigatran; 4=Rivaroxaban; 5=Apixaban; 6=Rivaroxaban bid
+482120,Binary,OR,Harmful,good,Safety,9,9,Placebo,0.01900300512639208,0.014105263157894737,consistent,hip fractures,Efficacy of reduction of fractures in post-menopausal women,1=Placebo; 2=Alendronate; 3=Denosumab; 4=Etidronate; 5=Raloxifene; 6=Risedronate; 7=Strontium; 8=Teriparatide; 9=Zoledronate
+482156,Rate,IRR,Harmful,good,Safety,9,9,,,,,all-cause mortality,Efficacy of revascularization versus standard treament in stable coronary artery disease,1=MEDICAL THERAPY; 2=CABG; 3=PTCA; 4=BMS; 5=PES; 6=SES; 7=E-ZES; 8=R-ZES; 9=EES
+482159,Binary,RR,Beneficial,bad,Effectiveness,6,0,placebo,0.2751445086705202,0.4369454545454545,consistent,number of responders,"Efficacy of atypical neuroleptic drugs and
+haloperidol",1=placebo; 2=risperidone; 3=olanzapine; 4=haloperidol; 5=clozapine; 6=aripiprazole
+482258,Binary,OR,Harmful,good,Effectiveness,4,4,Control,0.2726941968346371,0.25701766397370945,consistent,mortality,the probability of death,1=Control; 2=SDD; 3=SOD; 4=Chlorhexidine
+482440,Binary,RR,Beneficial,bad,Effectiveness,5,5,Placebo,0.37422037422037424,0.7074569789674953,consistent,response to treatment,ADHD-RS response was defined as the proportion of responders with at least a 25% reduction in score,1=Placebo; 2=ATX; 3=LDX; 4=MPH-SA; 5=MPH-LA
+482450,Binary,RR,Harmful,good,Effectiveness,4,4,,,,,venous thromboembolism (VTE),occurrence of proximal or distal deep venous thrombosis,1=Enoxaparin; 2=Rivaroxaban; 3=Apixaban; 4=Dabigatran
+482451,Continuous,MD,Beneficial,bad,Effectiveness,8,8,,,,,Probing pocket depth (PPD),NR,1=Debridement; 2=Er:YAG laser monothe; 3=Debridement + perioc; 4=vector system; 5=Air-abrasive; 6=Debridement + Local ; 7=Photodynamic; 8=Debridement + Chlorh
+482465,Binary,RR,Beneficial,bad,Effectiveness,10,10,Placebo,0.28861154446177845,0.43494736842105264,consistent,pain reduction for PHN,measured on an 11-point numeric rating scale (NRS) or 100m visual analog scale (VAS),1=Placebo; 2=NGX-4010 – 60 min; 3=Lidocaine 5% plaster; 4=Pregabalin 150 mg; 5=Tramadol; 6=Gabapentin; 7=Nortriptyline; 8=Opiod; 9=TCA; 10=Pregabalin =>300
+482475,Continuous,MD,Harmful,good,Effectiveness,0,0,,,,,weight change,change from baseline at 3 months,
+482476,Binary,OR,Beneficial,bad,Effectiveness,0,0,,,,,healing of diabetic foot ulcers,number of ulcers completely healed within a specific time period,
+482519,Binary,OR,Beneficial,bad,Effectiveness,0,0,,,,,induction of remission,at the last time-point assessment in the trial,
+482527,Binary,OR,Beneficial,bad,Effectiveness,5,5,,,,,endoscopic healing rate at 4 weeks,"Healing after the initiation of PPI treatment in patients with
+severe erosive oesophagitis at 4  weeks.",1=lansoprazole 30 mg; 2=omeprazole 20 mg; 3=esomeprazole 40 mg; 4=omeprazole 40 mg; 5=Pantoprazole 40 mg
+482576,Binary,RR,Beneficial,bad,Effectiveness,5,0,Placebo,0.13872832369942195,0.4672897196261682,consistent,ASAS 40,The Assessment of Spondylo-Arthritis international society,1=Placebo; 2=adalimumab; 3=infliximab; 4=golimumab; 5=etanercept
+482630,Continuous,MD,Harmful,good,Effectiveness,17,17,,,,,pain score change associated with nonoperative treatments,NR,1=PFMF+EXE; 2=EXE; 3=MAN+EXE; 4=KT+EXE; 5=NSAID+EXE; 6=COR+EXE; 7=DF+EXE; 8=HYA; 9=COR; 10=NON; 11=HYA+EXE; 12=SE+EXE; 13=MVD+EXE; 14=ACU+EXE; 15=US+EXE; 16=LLLT+EXE; 17=rESWT
+482734,Binary,OR,Beneficial,bad,Effectiveness,0,0,,,,,response to treatment,the number of patients who responded to depression treatment,
+501192,Binary,RR,Beneficial,bad,Effectiveness,0,0,,,,,efficacy,OCS Elimination in chronic asthma,
+501194,Binary,OR,Harmful,good,Effectiveness,0,0,,,,,Efficacy of pharmacological agents for the prevention of post-ERCP pancreatitis,incidence of  post-ERCP pancreatitis (PEP),
+501195,Continuous,SMD,Harmful,good,Effectiveness,4,0,placebo,8.227083333333333,6.644808743169399,consistent,pain score in chronic prostatitis,pain and voiding questionnaires,1=placebo; 2=a-blocker; 3=antibiotic; 4=Phytotherapy
+501196,Continuous,MD,Harmful,good,Effectiveness,8,8,Placebo; Standard care,-2.4091798941798945,-5.9750764279967825,consistent,clinical effectiveness  of three pharmacological interventions in obese patients,Weight change from baseline (kg) in 3 months,1=Placebo; 2=Standard care; 3=Orlistat; 4=Sibutramine 15 mg; 5=Sibutramine 10 mg; 6=Metformin; 7=Orlistat and sibutra; 8=Rimonabant
+501197,Binary,RR,Harmful,good,Safety,5,5,Placebo,0.05067406061764987,0.04279649411120241,consistent,"Adverse event (treatment related) leading to drug Discontinuation, no. of patien","Adverse event
+(treatment related)
+leading to drug
+discontinuation,",1=Placebo; 2=Simvastatin 40 mg/da; 3=Atorvastatin 80 mg/d; 4=Simvastatin 80 mg/da; 5=Rosuvastatin 40 mg/d
+501201,Binary,OR,Harmful,good,Effectiveness,8,0,Placebo,0.4300743281875357,0.41575166752180603,consistent,exacerbation episodes in Chronic Obstructive Pulmonary Disease (COPD>=1),episodes in Chronic Obstructive Pulmonary Disease (COPD>=1),1=Placebo; 2=Fluticasone; 3=Budesonide; 4=Salmeterol; 5=Formoterol; 6=Tiotropium; 7=Fluticasone+Salmeter; 8=Budesonide+Formotero
+501204,Binary,OR,Beneficial,bad,Effectiveness,7,7,,,,,efficacy,clinical success at test of cure in the modified intention-to-treat population (MITT),1=Vancomycin; 2=Linezolid; 3=Daptomycin; 4=Tigecycline; 5=Telavancin; 6=Ceftaroline; 7=Quinupristin/Dalfopr
+501206,Binary,OR,Harmful,good,Safety,0,0,,,,,association between antihypertensive drugs and cancer risk,cancer risk,
+501207,Binary,RR,Beneficial,bad,Effectiveness,0,0,,,,,efficacy,PASI 75 response score for the treatment of psoriasis,
+501209,Binary,OR,Beneficial,bad,Effectiveness,11,11,placebo,0.11023622047244094,0.40068298235628913,consistent,relative efficacy of existing cardioversion approaches,cardioversion within 2 h of treatment initiation (rapid cardioversion) among patients with short-duration AF,1=placebo; 2=Flecainide (IV); 3=Flecainide (oral); 4=Propafenone (oral); 5=propafenone (IV); 6=Amiodarone (oral); 7=Amiodarone (IV); 8=Vernakalant (IV); 9=Verapamil; 10=Procainamide (IV); 11=Ibutilide (IV)
+501214,Binary,OR,Beneficial,bad,Effectiveness,0,0,,,,,Efficacy of antiepileptic drugs,response rate,
+501215,Binary,RR,Beneficial,bad,Effectiveness,0,0,,,,,efficacy of topical therapies for scalp psoriasis in adults,IGA response after 4 weeks,
+501217,Binary,RR,Harmful,good,Safety,0,0,,,,,effectiveness for the prevention of NSAID induced GI toxicity,serious GI complications,
+501226,Binary,OR,Beneficial,bad,Effectiveness,5,5,Placebo,0.3200589970501475,0.5186615186615187,consistent,effectiveness of focused shock wave (FSW) therapy of different intensity levels ,success rates of treatment,1=Placebo; 2=Low intensity focuse; 3=Medium intensity foc; 4=High intensity focus; 5=Radial shock wave
+501227,Binary,OR,Harmful,good,Safety,0,0,,,,,relative mortality benefit of β blockers in patients with heart failure as 20-35,All cause death,
+501228,Binary,RR,Beneficial,bad,Effectiveness,9,9,Control,0.13563360815898584,0.15426018076571546,consistent,smoking cessation,Point prevalence abstinence measured at longest follow-up,1=Control; 2=Tailored printed mat; 3=Stand-alone computer; 4=Mobile telephone tex; 5=IVR; 6=Email; 7=Web; 8=Multiple; 9=Pharmacotherapy
+501229,Continuous,MD,Harmful,good,Effectiveness,0,0,,,,,Efficacy of orlistat and lorcaserin in the treatment of overweight and obesity,waist circumference,
+501235,Binary,OR,Beneficial,bad,Effectiveness,7,7,Usual Care,0.7327586206896551,0.8061614294516328,consistent,possession of a functioning alarm,household's possession of a functioning smoke alarm (yes/no)-number of smoke alarms,1=Usual Care; 2=Education; 3=education + low-cost; 4=education + low-cost; 5=education + low-cost; 6=education+home safet; 7=education + low-cost
+501236,Rate,IRR,Harmful,good,Effectiveness,9,0,Placebo,0.05353479761845199,0.021882783710094368,consistent,Stroke prevention in patients with atrial fibrillation,Ischemic strokes,1=Placebo; 2=Adjusted Standard do; 3=Adjusted Low dose wa; 4=Fixed Low dose warfa; 5=Aspirinn (ASP); 6=Fixed low-dose warfa; 7=ximelagatran (XML); 8=alternate day aspiri; 9=indobufen (IBF)
+501243,Binary,OR,Beneficial,good,Effectiveness,0,0,,,,,relative effectiveness of second generation techniques in the treatment of heavy,event rates for heavy bleeding at 12 months,
+501250,Binary,OR,Harmful,good,Effectiveness,0,0,,,,,Efficacy of different classes of antithrombotic drugs,reduction the incidence of stroke,
+501251,Binary,OR,Harmful,good,Safety,0,0,,,,,Risk of mortality for inhaled medications in patients with chronic obstructive p,Overall death,
+501253,Binary,OR,Beneficial,bad,Effectiveness,11,11,Control,0.23159636062861869,0.4458858413639733,consistent,reversal of metabolic syndrome,proportion reversed,1=Control; 2=Diet; 3=Exercise; 4=Diet and Exercise; 5=Anti-diabetes medica; 6=Anti-diabetes medica; 7=Anti-obesity medicat; 8=Anti-obesity medicat; 9=Statin; 10=Fenofibrate; 11=Statin + Fenofibrate
+501256,Binary,OR,Beneficial,bad,Effectiveness,0,0,,,,,most rigorous criterion of abstinence in smoking cessation,continuous abstinence at 12 months,
+501257,Binary,OR,Harmful,good,Safety,0,0,,,,,effect of antihypertensives on incidence diabetes mellitus,proportion of patients who developed diabetes,
+501261,Binary,OR,Harmful,good,Effectiveness,0,0,,,,,the relative effectiveness of immunomodulators and immunosuppressants in patient,Recurrence of relapses,
+501267,Binary,RR,Harmful,good,Effectiveness,9,9,Placebo,0.10561582641991066,0.0813414491396465,consistent,incidence of cardiovascular disease outcomes,total mortality,1=Placebo; 2=Conventional; 3=Diuretic; 4=Beta-Blocker; 5=ACE-inhibitor; 6=Diuretic/Beta-block; 7=CCB; 8=Alpha-blocker; 9=ARB
+501268,Binary,RR,Harmful,good,Effectiveness,0,0,,,,,antibiotic prophylaxis in neutroneutropenic patients,all-cause mortality,
+501272,Binary,OR,Beneficial,bad,Effectiveness,14,14,Placebo,0.3484297520661157,0.5670923998738568,consistent,efficacy and effectiveness of second-generation anti- depressants for treatment ,response rates,1=Placebo; 2=Desvenlafaxine; 3=Duloxetine; 4=Fluoxetine; 5=Fluvoxamine; 6=Nefazodone; 7=Paroxetine; 8=Sertraline; 9=Venlafaxine; 10=Escitalopram; 11=Bupropion; 12=Mirtazapine; 13=Citalopram; 14=Trazodone
+501277,Continuous,MD,Harmful,good,Effectiveness,0,0,,,,,insulin therapies in patients with type 2 diabetes,HbAIc change,
+501281,Binary,OR,Beneficial,bad,Effectiveness,0,0,,,,,The relative efficacy of eight treatments in nonimmunosuppressed participants fo,participant complete clearance,
+501282,Continuous,MD,Harmful,good,Effectiveness,9,9,Placebo +MTX,-0.001986917416189703,-0.31175675675675674,consistent,efficacy,Health Assessment Questionnaire change from baseline (HAQ CFB),1=Placebo +MTX; 2=Abatacept + MTX; 3=Adalimumab + MTX; 4=Certolizumab + MTX; 5=Etanercept + MTX; 6=Golimumab + MTX; 7=Infliximab + MTX; 8=Rituximab + MTX; 9=Tocilizumab + MTX
+501283,Binary,OR,Beneficial,bad,Effectiveness,17,17,Placebo,0.6210092687950567,0.8151468904998093,consistent,efficacy,delivery successfully delayed for 48 hours,1=Placebo; 2=Indomethacin; 3=Celecoxib; 4=Magnesium sulfate; 5=Ritodrine; 6=Nifedipine; 7=Terbutaline; 8=Nicapardine; 9=Salbutamol; 10=Astosiban; 11=Nitric Oxide; 12=Rofecoxib; 13=Nylidrin; 14=Isoxsuprine; 15=Nitroglycerin; 16=HCG; 17=Alcohol
+501287,Binary,RR,Harmful,good,Effectiveness,7,7,Placebo,0.31951640759930916,0.23987138263665594,consistent,efficacy and safety of bronchodilators and steroids,admission rates from emergency department  at day 1,1=Placebo; 2=Steroid; 3=Salbutamol; 4=salbutamol+steroid; 5=Adrenaline; 6=Adrenaline+Steroid; 7=Ipratropium + salbut
+501297,Binary,OR,Harmful,good,Safety,4,0,placebo,0.023024830699774266,0.027324088341037493,CONTROL LOOKS BETTER THAN ACTIVE UNDER THE CALL,relative risks of death between antifibrinolytics and no treatment,mortality,1=Aprotinin; 2=placebo; 3=TXA; 4=EACA
+501299,Binary,OR,Beneficial,bad,Effectiveness,0,0,,,,,effectiveness of non-surgical treatments for women with stress urinary incontine,cure,
+501305,Binary,OR,Beneficial,bad,Effectiveness,0,0,,,,,Efficacy of anti-epileptic drugs,responder rate,
+501307,Continuous,SMD,Harmful,good,Effectiveness,9,9,Placebo,-11.809483568075118,-19.912094508301404,consistent,change in pain intensity,Composite patient-reported outcomes,1=Placebo; 2=Glycosamine; 3=PRP; 4=Autologous Blood; 5=Glucocorticoid; 6=Botulinum Toxin; 7=Hyaluronic acid; 8=Prolotherapy; 9=Polidocanol
+501309,Binary,OR,Harmful,good,Effectiveness,0,0,,,,,Combined resynchronisation and implantable defibrillator therapy in left ventric,all-cause mortality,
+501311,Binary,RR,Harmful,good,Effectiveness,5,5,Usual care,0.11917808219178082,0.061326989162040706,consistent,efficacy,MACE (major adverse cardiac event) 30 days; 14 trials,1=Usual care; 2=Tirofiban (high dose; 3=Abciximab; 4=Tirofiban (medium do; 5=Tirofiban (low dose)
+501312,Binary,RR,Harmful,good,Effectiveness,0,0,,,,,Open retropubic colposuspension for urinary incontinence in women,number not cured within first year,
+501313,Binary,OR,Beneficial,bad,Effectiveness,8,8,Placebo,0.2655954631379962,0.5813253012048193,consistent,clinical efficacy of anticytokine agents for the treatment of rheumatoid arthrit,The American College of Rheumatology (ACR) response criteria; ACR20 (minimal therapeutic response) as the primary outcom,1=Placebo; 2=Infliximab; 3=Etanercept; 4=Adalimumab; 5=Golimumab; 6=Certolizumab pegol; 7=Anakinra; 8=Tocilizumab
+501317,Continuous,MD,Harmful,good,Effectiveness,6,6,placebo,-6.147327586206898,-6.849826245999085,consistent,effectiveness in resolving dentin hypersensitivity among different in-office des,visual analogue scales (VAS) or verbal rating scales (VRS) for pain assessment of DH,1=placebo; 2=physical occlusion; 3=chemical occlusion; 4=nerve desensitizatio; 5=Laser; 6=Combined Treatment
+501318,Binary,OR,Beneficial,bad,Effectiveness,7,7,Placebo,0.042759177087535294,0.6016131583109283,consistent,PASI 50,achieving PASI 50 Reported between 10 and 16 weeks,1=Placebo; 2=Adalimumab; 3=Methotrexate; 4=Alfacept; 5=Etanercept; 6=Infliximab; 7=Ustekinumab
+501321,Continuous,MD,Harmful,good,Effectiveness,0,0,,,,,effectiveness,decrease in glycated haemoglobin A1c,
+501324,Binary,RR,Harmful,good,Effectiveness,0,0,,,,,Treatment failure,persistent discharge,
+501325,Binary,OR,Harmful,good,Safety,5,5,Control,0.014600609540009923,0.01960365365098018,CONTROL LOOKS BETTER THAN ACTIVE UNDER THE CALL,Acute coronary events comprising either MI or ACS,based on individual reports,1=Control; 2=Ximelagatran; 3=Dabigatran; 4=Rivaroxaban; 5=Apixaban
+501326,Binary,RR,Harmful,good,Effectiveness,0,0,,,,,efficacy of renin-angiotensin system blockade on calcium channel blocker-associa,incidence,
+501330,Binary,RR,Beneficial,bad,Effectiveness,0,0,,,,,efficacy of topical NSAIDs for acute pain,50% or more reduction,
+501332,Continuous,MD,Harmful,good,Effectiveness,4,4,placebo,44.12111273080661,33.69897813141684,consistent,morphine-related outcomes,cumulative morphine consumption in the first 24 h post- surgery,1=placebo; 2=NSAID; 3=Parecetamol; 4=COXIB
+501337,Binary,OR,Beneficial,bad,Effectiveness,4,4,,,,,Completion of treatment,"being retained in treatment up to the final day of its planned duration, ingestion of the final dose of study medication",1=Methadone; 2=Lofexidine; 3=Clonidine; 4=Buprenorphine
+501343,Binary,RR,Harmful,good,Effectiveness,0,0,,,,,effectiveness of antifungal treatment for invasive Candida infections,all cause mortality,
+501345,Binary,RR,Harmful,good,Effectiveness,0,0,,,,,effectiveness of statins in CVD,cardiovascular disease mortality,
+501346,Binary,RR,Harmful,good,Effectiveness,0,0,,,,,efficacy of statins for cardiovascular disease,all cause mortality,
+501348,Binary,OR,Beneficial,bad,Effectiveness,0,0,,,,,Smoking Abstinence,Smoking Abstinence at approximately 4 weeks post-target quit date (TQD),
+501351,Binary,OR,Harmful,good,Safety,0,0,,,,,Harms of individual statins,discontinuations because of adverse events,
+501355,Binary,OR,Beneficial,bad,Effectiveness,0,0,,,,,ACR20 at 6 months for Rheumatoid arthritis,reduction by 20% or more in the number of tender and swollen joints plus 20% improvement in at least three of the follow,
+501363,Rate,IRR,Harmful,good,Effectiveness,9,0,Placebo,0.8023072889355009,0.21057347670250895,consistent,Efficacy of antifungal prophylaxis strategies,risk of proven or probable invasive fungal infections (IFIs),1=Placebo; 2=Fluconazole; 3=Itraconazole (tablet; 4=Itraconazole (soluti; 5=Liposomal AMB; 6=Micafungin; 7=Voriconazole; 8=Posaconazole; 9=Caspofungin
+501365,Binary,RR,Harmful,good,Effectiveness,4,4,Placebo,0.07215241183623834,0.03409552158030037,consistent,Efficacy of thromboprophylaxis strategies,risk of deep venous thrombosis,1=Placebo; 2=LMWH; 3=UFH 5000 U TID; 4=UFH 5000 U BID
+501366,Continuous,MD,Harmful,good,Effectiveness,0,0,,,,,comparative efficacy,change in HbA1c level from baseline,
+501367,Binary,RR,Harmful,good,Effectiveness,6,6,Placebo,0.2711570176199983,0.22587813007435262,consistent,Efficacy of oral anti-diabetic drugs for the prevention of Type 2 diabetes,number of patients developing new-onset diabetes,1=Placebo; 2=Sulphonylurea; 3=Biguanide; 4=AGI; 5=TZD; 6=Glinide
+501368,Binary,RR,Beneficial,bad,Effectiveness,0,0,,,,,analgecic efficacy of proplylactic interventions for the prevention of pain on i,no pain,
+501370,Binary,RR,Harmful,good,Effectiveness,0,0,,,,,Antifungal agents for preventing fungal infections in solid organ transplant rec,mortality,
+501373,Binary,RR,Harmful,good,Effectiveness,0,0,,,,,Antihypertensive Therapy-Coronary heart disease (CHD) including fatal and nonfat,"Cardiovascular disease events included CHD, stroke, CHF, and other cardiovascular disease mortality",
+501374,Binary,OR,Harmful,good,Effectiveness,0,0,,,,,exacerbation in patients with chronic obstructive pulmonary disease,"event based (physician or emergency room visit, hospital admission) or symptom based (increase of dysp- nea, sputum, or ",
+501377,Binary,RR,Beneficial,bad,Effectiveness,8,8,Placebo,0.0130956711531466,0.3320245817685217,consistent,effectiveness of all biologic agents indicated in the treatment of moderate to s,"PASI 50, 75 and 90 response rates (PASI 90 - primary)",1=Placebo; 2=Etanercept 25 mg; 3=Etanercept 50 mg; 4=Infliximab; 5=Adalimumab; 6=Efalizumab; 7=Ustekinumab 90 mg; 8=Ustekinumab 45 mg
+501381,Binary,RR,Beneficial,bad,Effectiveness,0,0,,,,,efficacy for the treatment of fibromyalgia,30% improvement in pain response,
+501382,Binary,RR,Harmful,good,Effectiveness,0,0,,,,,efficacy of treatments for stroke prevention in atrial fibrillation,ischemic stroke,
+501383,Rate,IRR,Harmful,good,Effectiveness,8,0,Placebo,0.8522022255531622,0.4627080003906989,consistent,relative effects of treatment in relapsing-remitting multiple sclerosis (RRMS),"annualized relapse rate (ARR), defined as total number of relapses divided by the total person-time at risk for relapse",1=Placebo; 2=Interferon beta-1a 2; 3=Interferon beta-1a 3; 4=Interferon beta-1a 4; 5=Interferon beta-1a 5; 6=Interferon beta-1a 2; 7=Glatiramer acetate 2; 8=Fingolimod 0.5 mg
+501384,Binary,OR,Beneficial,bad,Effectiveness,15,0,,,,,Efficacy of topical antifungals used in dermatophytosis treatment,mycologic cure at the end of treatment,1=Placebpo; 2=Terbinafine; 3=Naftifine; 4=Econazole; 5=Miconazole; 6=Sertaconazole; 7=Clotrimazole; 8=Butenafine; 9=Ciclopirox; 10=Oxiconazole; 11=Tioconazole; 12=Bifonazole; 13=Flutrimazole; 14=Amorolfine; 15=Ketoconazole
+501387,Binary,OR,Beneficial,bad,Effectiveness,0,0,,,,,ACR50 response rates at week 24 in patients with rheumatoid arthritis despite me,at least 50% improvement according to the American College of Rheumatology criteria in the number of swollen and ten- de,
+501388,Binary,OR,Beneficial,bad,Effectiveness,0,0,,,,,Efficacy of topical treatments in chronic plaque psoriasis,Clear or nearly clear status for trunk and limbs on either the Investigator's Assessment of Overall Global Improvement (,
+501392,Binary,OR,Harmful,good,Effectiveness,0,0,,,,,the relative effectiveness of competing interventions for the prevention of rebl,variceal rebleeding,
+501393,Binary,OR,Beneficial,bad,Effectiveness,0,0,,,,,efficacy of biologics for rheumatoid arthritis,ACR50,
+501395,Binary,OR,Harmful,good,Effectiveness,8,8,placebo,0.6457925636007827,0.4457762557077626,consistent,pharmacological and/or psychosocial interventions for the prevention of relapse ,admission to hospital,1=placebo; 2=lithium; 3=Lamotrigine; 4=carbamazepine; 5=Olanzapine; 6=lithium + imipramine; 7=valproate; 8=Imipramine
+501404,Binary,OR,Harmful,good,Safety,0,0,,,,,efficacy of antiplatelet,prevention of serious vascular events after transient ischaemic attack or stroke,
+501407,Binary,RR,Harmful,good,Effectiveness,4,0,,,,,Coronary artery disease,death,1=Medical Therapy; 2=PTCA (percutaneous t; 3=BMS (bare-metal sten; 4=DES (drug-eluting st
+501409,Continuous,MD,Beneficial,bad,Effectiveness,0,0,,,,,"treatment effects of GTR, EMD for periodontal infrabony lesions",probing pocket depth (PPD) reduction,
+501412,Binary,RR,Beneficial,bad,Effectiveness,0,0,,,,,efficacy for treating anxiety disorders in children and adolescents,improvement,
+501414,Continuous,MD,Harmful,good,Effectiveness,0,0,,,,,protective effect of ophthalmic viscoelastic devices,loss in endothelial cell density 3 months after surgery,
+501423,Continuous,SMD,Harmful,good,Effectiveness,0,0,,,,,absolute pain intensity in patients with osteoarthritis of hip or knee,pain scores,
+501424,Binary,OR,Harmful,good,Effectiveness,0,0,,,,,effectiveness of venous catheters for catheter-related infections,colonisation,
+501425,Binary,OR,Harmful,good,Effectiveness,0,0,,,,,Psychological Interventions in Coronary Heart Disease,Total mortality,
+501430,Binary,OR,Beneficial,bad,Effectiveness,0,0,,,,,relative efficacy of nucleostides in the treatment of chronic hepatidis B,HBV DNA levels,
+501431,Binary,OR,Harmful,good,Effectiveness,0,0,,,,,Efficacy of different classes of renin-angiotensin system blockers,all cause mortality,
+501434,Binary,OR,Harmful,good,Effectiveness,0,0,,,,,effectiveness of inhaled anesthetics in reducing post-operative myocardial infra,acute myocardial infarction (AMI),
+501435,Binary,RR,Beneficial,bad,Effectiveness,0,0,,,,,Efficacy of Oral Phosphodiesterase Type 5 Inhibitors for Erectile Dysfunction,Oral Phosphodiesterase type 5 inhibitors (PDE5-Is),

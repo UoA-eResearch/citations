@@ -112,12 +112,15 @@ def summarise(df, label):
 
 
 CONT = set()
+JOBS = {}
 
 
 def main():
     global CONT
     ss = pd.read_csv(RUN / "data" / "std_summary.csv", dtype={"record": str})
     CONT = set(ss[ss.type == "Continuous"].record)
+    global JOBS
+    JOBS = {j["record"]: {f["name"]: [str(x) for x in f["studies"]] for f in j["fits"]} for j in json.load(open(RUN / "data" / "jobs.json"))}
     hold = pd.read_csv(RUN / "data" / "holdouts.csv", dtype={"record": str}).set_index("record")
     dr = pd.read_csv(T / "direction.csv", dtype={"record": str}).set_index("record")
     fits = {}
@@ -168,6 +171,12 @@ def main():
                 fl.append(holdout_result(full, pre, small)["flip"])
         row["random_flip_prob"] = float(np.mean(fl)) if fl else float("nan")
         row["random_n"] = len(fl)
+        # D4 (review issue 8): participants withheld by the random holdouts, to compare with the temporal tranche
+        if "n" in d:
+            nn_s = d.groupby("study").n.sum()
+            shares = [float(nn_s[~nn_s.index.isin(set(JOBS[rec][name]))].sum() / nn_s.sum())
+                      for name, pre in F.items() if name.startswith("R") and not pre.get("error")]
+            row["random_withheld_share"] = float(np.mean(shares)) if shares else float("nan")
         rows.append(row)
     nr = pd.DataFrame(rows)
     nr.to_csv(T / "network_results.csv", index=False)
@@ -210,7 +219,11 @@ def main():
     nc["d"] = nc["T10_flip"] - nc["random_flip_prob"]
     ci_nc, _ = boot(nc, lambda x: float(x.d.mean()))
     out["negative_control"] = dict(n=len(nc), temporal_flip_rate=float(nc["T10_flip"].mean()), random_flip_rate=float(nc.random_flip_prob.mean()),
-                                   difference=float(nc.d.mean()), ci=ci_nc)
+                                   difference=float(nc.d.mean()), ci=ci_nc,
+                                   withheld_participants_temporal=float(nc.withheld_share.mean()) if "withheld_share" in nc else None,
+                                   withheld_participants_random=float(nc.random_withheld_share.mean()) if "random_withheld_share" in nc else None)
+    # D4 (review issue 9): retention when a new entrant that becomes top counts as a loss
+    out["retention_with_new_entrants"] = {nm: float(1 - ((view(P, nm).flip == 1) | (view(P, nm).new_entrant_top == 1)).mean()) for nm in ("T10", "S1", "S2", "S3")}
     # full predictor model
     fm = t10.merge(P[["record", "withheld_share", "type"]], on="record").dropna(subset=["gap", "n_studies_pre", "I2_pre", "prop_direct_top2"]).copy()
     fm["log_k"] = np.log(fm.n_studies_pre.astype(float))

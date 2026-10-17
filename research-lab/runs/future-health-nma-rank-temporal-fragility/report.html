@@ -78,7 +78,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 <header class="masthead">
   <div class="eyebrow">Research Lab · Deep dive · Future Health</div>
   <h1>Are network meta-analysis rankings a forecast or a snapshot?</h1>
-  <p class="subtitle">A temporal holdout across 176 published network meta-analyses from the open nmadb database. How often does the top-ranked treatment change when the newest studies are added back, and is the stated probability of being best calibrated against that?</p>
+  <p class="subtitle">A temporal holdout across 177 published network meta-analyses from the open nmadb database. How often does the top-ranked treatment change when the newest studies are added back, and is the stated probability of being best calibrated against that?</p>
   <div class="meta">
     <span>Report · 2026-10-18 · pre-review draft</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/future-health-nma-rank-temporal-fragility/plan.md">Preregistration</a>
@@ -91,51 +91,60 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 <main>
 <p><strong>Verdict: Refuted.</strong> Two of the lead's three claims fail; the third holds.
 - <strong>Rankings are less fragile than predicted (H1).</strong>
-- <strong>The probability of being best errs on the cautious side, not the confident one (H2).</strong>
+- <strong>For treatments already compared, the probability of being best errs on the cautious side (H2).</strong>
 - <strong>Which networks flip is hard to predict (H3, Supported).</strong></p>
 <ul>
 <li><strong>One ranking in five changes when the newest studies arrive (H1, Refuted).</strong><ul>
-<li><strong>The test.</strong> The newest tranche of studies was withheld: about 10% by plan, a median of 15% once whole
-publication years are kept together. When it is added back, the top-ranked treatment changes in <strong>19.9%</strong> of
-networks (95% CI 14.7–26.4%). The prediction was at least 30%.</li>
+<li><strong>The test.</strong> The newest tranche of studies was withheld: about 10% by plan, a median of 15% of studies (20% of
+participants) once whole publication years are kept together. When it is added back, the top-ranked treatment
+changes in <strong>19.8%</strong> of networks (95% CI 14.6–26.3%). The prediction was at least 30%.</li>
 <li><strong>Counting new treatments.</strong> The preregistered count looks only at treatments that were already in the network.
 Counting a newly added treatment that goes straight to the top, the leader changes in <strong>29%</strong> of networks.</li>
 </ul>
 </li>
-<li><strong>The probability of being best understates how often the top holds (H2, Refuted in the opposite direction).</strong><ul>
-<li><strong>The size of the gap.</strong> Before the update, the top treatment's average probability of being best is 0.61. It
-keeps its place in 80% of networks. The stated probability understates retention by 19 points (13–25), where
-the lead predicted an overstatement of at least 20.</li>
-<li><strong>Over a longer horizon</strong> (the oldest half of the studies, then all of them) the probability is nearly calibrated:
-0.59 against 66% retention.</li>
+<li><strong>Among treatments already compared, the probability of being best understates how often the top holds (H2,
+  Refuted in the opposite direction).</strong><ul>
+<li><strong>The size of the gap.</strong> Before the update, the top treatment's average probability of being best is 0.61. Among
+incumbents, it keeps its place in 80% of networks. The stated probability understates that by 20 points (13–26),
+where the lead predicted an overstatement of at least 20.</li>
+<li><strong>Counting new entrants as losses,</strong> retention is 71%, and the probability still understates it.</li>
+<li><strong>Over a longer horizon</strong> (the oldest half of the studies, then all of them), the probability is close to
+calibrated among incumbents: 0.59 against 67% retention. Counting new entrants, retention falls to 46%, and the
+probability overstates it.</li>
 </ul>
 </li>
 <li><strong>Which networks flip is hard to predict (H3, Supported).</strong> The gap between the top two treatments and the network's
-  size together explain a Nagelkerke R² of <strong>0.12</strong> (0.04–0.24) of which networks flip. A small gap is the one
+  size together explain a Nagelkerke R² of <strong>0.11</strong> (0.04–0.24) of which networks flip. A small gap is the one
   consistent warning sign.</li>
-<li><strong>New studies are barely more disruptive than any studies.</strong> Withholding a random set of studies of the same size
-  changes the top treatment 15.5% of the time, against 19.9% for the newest. The difference, 4.4 points (−0.6 to
-  9.7), could be chance.</li>
+<li><strong>Newest studies against random ones.</strong> We could not distinguish withholding the newest studies from withholding
+  random studies of the same number.<ul>
+<li>Random holdouts change the top treatment 15.4% of the time, against 19.8% for the newest: a difference of 4.4
+points (−0.8 to 9.7).</li>
+<li>The temporal tranche also removes more participants than the random holdouts (24% against 18%), so part of any
+difference is simply more evidence removed.</li>
+</ul>
+</li>
 </ul>
 <h2>In plain terms</h2>
 <p>When doctors and funding agencies compare many treatments for the same condition, they often rely on a "network
-meta-analysis". This combines all the trials into a ranking, and usually reports the chance that each treatment is
-the best. We asked whether that ranking behaves like a forecast: does the top treatment stay on top when more trials
+meta-analysis". This combines all the trials into a ranking, and usually reports the chance that each treatment is the
+best. We asked whether that ranking behaves like a forecast: does the top treatment stay on top when more trials
 arrive?</p>
-<p>We took 176 published analyses from an open database and replayed history. In each, we hid the most recent trials,
+<p>We took 177 published analyses from an open database and replayed history. In each, we hid the most recent trials,
 ranked the treatments without them, then added them back.</p>
 <ul>
-<li><strong>How often the winner changed.</strong> The top treatment changed about one time in five. If a brand-new treatment that
-  went straight to the top is counted, it was closer to three in ten. When the analysis started from only the oldest
-  half of the trials, the winner changed one time in three.</li>
-<li><strong>Hiding random trials did nearly as much.</strong> The newest trials were not much more disruptive than any other
-  trials of the same number.</li>
-<li><strong>The stated chance of being best was cautious.</strong> A treatment given a 60% chance of being best kept its top spot
-  about 80% of the time. Over the longer horizon, the stated chance was about right.</li>
+<li><strong>How often the winner changed.</strong> Among the treatments already compared, the top treatment changed about one time
+  in five. If a brand-new treatment that went straight to the top is counted, it was closer to three in ten.</li>
+<li><strong>Starting from only the oldest half of the trials,</strong> the winner changed one time in three, or about half the time
+  counting newcomers.</li>
+<li><strong>The newest trials were not clearly more disruptive</strong> than hiding the same number of trials at random.</li>
+<li><strong>The stated chance of being best was cautious for small updates.</strong> A treatment given a 60% chance of being best
+  usually kept its place. Over a longer horizon that included new treatments, the stated chance was too high.</li>
 <li><strong>The warning sign.</strong> Rankings were most likely to change when the top two treatments were close. Even so, the
   closeness of the race and the number of trials together predicted poorly which rankings would change.</li>
 </ul>
-<p>So a ranking is a reasonable but fallible snapshot. A narrow lead at the top deserves the least confidence.</p>
+<p>So a ranking is a reasonable but fallible snapshot. A narrow lead at the top, and the arrival of new treatments,
+deserve the least confidence.</p>
 <h2>What was asked</h2>
 <p>The lead (<code>future-health-nma-rank-temporal-fragility</code>) asked whether NMA treatment rankings behave like forecasts.
 Three preregistered hypotheses (<code>plan.md</code>):
@@ -156,18 +165,13 @@ Three preregistered hypotheses (<code>plan.md</code>):
 <tbody>
 <tr>
 <td>Daly et al., BMJ Open 2019</td>
-<td>leave-one-study-out rank agreement in five networks (kappa down to about 0.4)</td>
-<td>five networks; random, not temporal, removal; no calibration</td>
+<td>rank agreement when studies are removed one at a time, in five data sets (quadratic-weighted kappa down to 0.40)</td>
+<td>five data sets; one-at-a-time, not temporal, removal; no calibration</td>
 </tr>
 <tr>
 <td>Trinquart and colleagues; Salanti and colleagues</td>
 <td>ranking statistics carry large uncertainty and must be read with the certainty of evidence</td>
 <td>no comparison of stated probabilities with realised rank retention</td>
-</tr>
-<tr>
-<td>ISPOR "Souring on SUCRAs" (2022)</td>
-<td>network composition can shift SUCRA rankings</td>
-<td>no empirical rate</td>
 </tr>
 <tr>
 <td>Petropoulou et al., J Clin Epidemiol 2016 (nmadb)</td>
@@ -218,20 +222,22 @@ probability of being best.</p>
 <td>178 / 29</td>
 </tr>
 <tr>
-<td>full and pre-update fits succeed</td>
-<td><strong>176</strong> / 28</td>
+<td>the full-network fit succeeds</td>
+<td><strong>177</strong> / 29</td>
 </tr>
 </tbody>
 </table></div>
 <p><strong>Holdouts (plan §4).</strong>
 - <strong>The tranche.</strong> Studies were ordered by publication year. The newest tranche is the smallest set of whole latest
-  years holding at least 10% of studies. Same-year studies are never split, so the median tranche is 15% of studies
-  and 20% of participants.
+  years holding at least 10% of studies. Same-year studies are never split.
 - <strong>Secondary holdouts:</strong>
     - the newest 25%;
     - the latest year alone;
     - a longer horizon: the oldest half of the studies, then all of them.
-- <strong>The control.</strong> 200 random holdouts of the same size as the primary tranche, per network.</p>
+- <strong>The control.</strong> 200 random holdouts of the same number of studies as the primary tranche, per network.
+- <strong>Disconnection.</strong> A pre-update network that the withheld studies disconnect is reduced to its connected component
+  with the most studies. The independent review found that this rule had failed to run in the first analysis; it was
+  fixed and the affected 44 networks were refitted (D4).</p>
 <p><strong>Ranking.</strong>
 - <strong>The fit.</strong> Random-effects frequentist NMA (netmeta 3.6.1, DerSimonian–Laird), on each network's published effect
   measure.
@@ -239,27 +245,29 @@ probability of being best.</p>
 - <strong>The flip.</strong> The pre-update top treatment differs from the full-data top treatment, compared over the treatments
   in the pre-update network.
 - <strong>The probability of being best.</strong> From netmeta's resampling rankogram (10,000 draws, seeded).</p>
-<p><strong>Validation before any holdout result.</strong>
-- <strong>V1, parsing.</strong> 23 networks, oversampling the label-year ones, were compared with their raw sheets. 22 were right.
-  The one error was a missed year in one study, now fixed.
-- <strong>Direction of benefit (D2).</strong> The catalogue's "harmful/beneficial" label and the sheets' own labels often
+<p><strong>Validation.</strong>
+- <strong>V1, parsing.</strong> 23 networks, oversampling the label-year ones, were compared with their raw sheets. 22 were right;
+  the one error, a missed year in one study, is fixed.
+    - The independent review re-parsed 32 networks and found them exact.
+    - Empty arms (n = 0) were later dropped (D4).
+- <strong>Direction of benefit (D2, D4).</strong> The catalogue's "harmful/beneficial" label and the sheets' own labels often
   disagree.
-    - <strong>Arm-level networks.</strong> Every disagreement was checked against the outcome and the arm data. The catalogue was
-    right in all but one.
-    - <strong>Contrast-level networks.</strong> The label describes the outcome concept: "overall survival" is beneficial, though
-    the effect is a hazard of death. The sheets do not say which way round the contrast runs, and both conventions
-    occur. Each network was adjudicated from placebo-controlled contrasts and landmark trials whose published
-    estimates appear in the data. These networks form a sensitivity set.
+    - <strong>Arm-level networks.</strong> Every disagreement, and every continuous network, was checked against the outcome and
+    the arm data. The catalogue was right in all but one. The per-network record is released
+    (<code>direction_arm_record.csv</code>), and the review re-adjudicated 116 arm-level networks and agreed with every call.
+    - <strong>Contrast-level networks.</strong> The label describes the outcome concept, the sheets do not say which way round the
+    contrast runs, and both conventions occur.
+    - <strong>Calls in that set.</strong> Each network was adjudicated from placebo-controlled contrasts and landmark trials whose
+    estimates appear in the data. Two of 29 calls were inverted, both by misreading which treatment was t1. The review
+    found them, and they are corrected. These networks form a sensitivity set.
 - <strong>V2, counts.</strong> Parsed study counts match the catalogue in 165 of 207 networks, and treatment counts in 106 of 168.
   Most differences are reviews whose catalogue entry counts every outcome.
 - <strong>V3, the published best.</strong> For 30 random networks, the authors' abstract was read.
     - Where the authors name a best treatment (13 networks), the full-network top treatment matches in 9.
-    - In three of the four disagreements, the authors' choice ranks second or third here. Their analyses used different
-    models or outcome definitions.
     - Placebo or no treatment ranks at or near the bottom in all 19 networks where that could be checked.</p>
 <h2>Results</h2>
 <h3>H1: how often the top treatment changes</h3>
-<p><strong>H1, Refuted.</strong> In the primary holdout, 35 of 176 networks (<strong>19.9%</strong>, 95% CI 14.7–26.4%) have a different top
+<p><strong>H1, Refuted.</strong> In the primary holdout, 35 of 177 networks (<strong>19.8%</strong>, 95% CI 14.6–26.3%) have a different top
 treatment once the newest tranche is added back. Supported needed at least 30% with a lower bound of at least 25%;
 the upper bound is below 30%.</p>
 <div class="table-wrap"><table>
@@ -288,101 +296,119 @@ the upper bound is below 30%.</p>
 </tr>
 <tr>
 <td>the oldest half → all</td>
-<td>34% (27–41%)</td>
+<td>33% (26–40%)</td>
 <td>54%</td>
 </tr>
 </tbody>
 </table></div>
-<p><strong>New entrants.</strong> In 18 of 176 networks, the full-data top treatment did not exist in the pre-update network. The
+<p><strong>New entrants.</strong> In 19 of 177 networks, the full-data top treatment did not exist in the pre-update network. The
 plan counts these separately, because the decision before the update could not have chosen them. Counting them, the
-top changes in 51 of 176 networks (29%).</p>
-<p><strong>The control.</strong> Random holdouts of the same size flip a mean of <strong>15.5%</strong> of networks. The difference between newest
-and random studies is 4.4 points (95% CI −0.6 to 9.7). Losing the newest studies is barely more disruptive than losing
-any studies of the same number.</p>
+top changes in 52 of 177 networks (29%).</p>
+<p><strong>The control.</strong> We could not distinguish the newest studies from random studies of the same number.
+- <strong>The rates.</strong> Random holdouts flip a mean of <strong>15.4%</strong> of networks, against 19.8% for the newest tranche: a
+  difference of 4.4 points (95% CI −0.8 to 9.7). That is a 28% relative excess at the point estimate, and the interval
+  allows up to about 60%.
+- <strong>The participant asymmetry.</strong> The temporal tranche removes a mean of 24% of participants against 18% for the random
+  holdouts, so part of any excess reflects more evidence removed rather than newer evidence.</p>
 <p><strong>Rank agreement beyond the top.</strong> Kendall's τ between the pre-update and full P-scores has a median of 0.90. The
 top-two set changes in 43 networks (24%).</p>
 <p><strong>Robustness.</strong> The rate barely moves under other choices:
-- a common-effect model: 19.3%;
-- the resampling SUCRA in place of the P-score: 21.6%;
-- adding the 28 contrast-level networks: 18.1%;
-- adding only their high-confidence direction calls: 18.3%.</p>
-<figure><a href="results/figures/F1_flip_rates.png"><img src="results/figures/F1_flip_rates.png" alt="Figure 1"></a><figcaption>Share of 176 arm-level networks whose top-ranked treatment (by P-score) changes when the withheld studies are added back, by size of the update. Circles count changes among treatments present before the update (the preregistered definition); diamonds also count a newly added treatment that ranks first. The dashed line is the mean flip probability over 200 random holdouts of the same size as the primary tranche.</figcaption></figure>
+- a common-effect model: 19.2%;
+- the resampling SUCRA in place of the P-score: 21.5%;
+- adding the 29 contrast-level networks: 18.9%;
+- adding only their high-confidence direction calls: 19.1%.</p>
+<figure><a href="results/figures/F1_flip_rates.png"><img src="results/figures/F1_flip_rates.png" alt="Figure 1"></a><figcaption>Share of 177 arm-level networks whose top-ranked treatment (by P-score) changes when the withheld studies are added back, by size of the update. Circles count changes among treatments present before the update (the preregistered definition); diamonds also count a newly added treatment that ranks first. The dashed line is the mean flip probability over 200 random holdouts of the same size as the primary tranche.</figcaption></figure>
 <p><em>Figure 1. Share of networks whose top-ranked treatment changes, by size of the update. Circles: the preregistered
 definition (treatments already in the network), with 95% intervals. Diamonds: also counting a newly added treatment
 that ranks first. Dashed line: random holdouts of the primary size.</em></p>
 <h3>H2: is the probability of being best calibrated?</h3>
 <p><strong>H2, Refuted, in the opposite direction.</strong>
-- <strong>The numbers.</strong> The pre-update top treatment's mean probability of being best is <strong>0.61</strong>. It keeps top rank in
-  <strong>80%</strong> of networks, so the stated probability <em>understates</em> retention by 19 points (95% CI 13–25). The lead
-  predicted an overstatement of at least 20 points.
+- <strong>The numbers.</strong> The pre-update top treatment's mean probability of being best is <strong>0.61</strong>. Among the treatments
+  already compared, it keeps top rank in <strong>80%</strong> of networks. The stated probability understates retention by 20
+  points (95% CI 13–26). The lead predicted an overstatement of at least 20 points.
 - <strong>By bin.</strong>
     - Bins near 0.3 and 0.7 retain 71% and 88%.
     - The 0.5 bin is closest (0.50 against 63%).
     - Of the 32 networks with a probability above 0.8, 31 kept their top treatment.</p>
-<p><strong>This is partly by construction.</strong>
-- <strong>The probability measures something else.</strong> It estimates the chance that a treatment is <em>truly</em> best given current
+<p><strong>Two qualifications.</strong>
+- <strong>Counting new entrants.</strong> If a newly added treatment that ranks first counts as a loss, retention over the primary
+  update is 71%. The probability (0.61) still understates it, by about 10 points.
+- <strong>Partly by construction.</strong> The probability estimates the chance that a treatment is <em>truly</em> best given current
   evidence. Retention after a small update is higher than that, because the updated analysis shares most of its data
   with the old one.
-- <strong>The fairer forecast test</strong> is the longer horizon, where the evidence roughly doubles. There the mean probability is
-  0.59 against 66% retention, a gap of 7 points (−14 to −0.3), and the curve sits close to the diagonal (Figure 2).</p>
+    - <strong>The fairer test</strong> is the longer horizon, where the evidence roughly doubles. Among incumbents there, the mean
+    probability is 0.59 against 67% retention (a gap of 8 points, −15 to −1), close to the diagonal (Figure 2).
+    - <strong>Counting new entrants,</strong> longer-horizon retention is 46%, and the stated probability <em>overstates</em> it by about 13
+    points.</p>
 <figure><a href="results/figures/F2_calibration.png"><img src="results/figures/F2_calibration.png" alt="Figure 2"></a><figcaption>Calibration of the pre-update probability of being best of the top-ranked treatment against the share of networks in which that treatment is still top-ranked once the withheld studies are added back. Bins of width 0.2 with at least 3 networks; bars are 95% Wilson intervals. Points above the diagonal mean the stated probability understates how often the top rank holds.</figcaption></figure>
 <p><em>Figure 2. Calibration of the pre-update probability of being best against the share of networks whose top treatment
-keeps its place. Bins of width 0.2 with at least 3 networks; bars are 95% Wilson intervals.</em></p>
+keeps its place among the treatments already compared. Bins of width 0.2 with at least 3 networks; bars are 95%
+Wilson intervals.</em></p>
 <h3>H3: can fragile rankings be spotted in advance?</h3>
 <p><strong>H3, Supported.</strong> A logistic model of the flip on the pre-update top-two P-score gap and the log number of studies
-explains a Nagelkerke R² of <strong>0.12</strong> (95% CI 0.04–0.24; AUC 0.69).
+explains a Nagelkerke R² of <strong>0.11</strong> (95% CI 0.04–0.24; AUC 0.69).
 - <strong>The gap is the signal.</strong> Networks with a gap below 0.05 flip 24% of the time, and those with a gap of 0.2 or more
   flip 7% of the time.
-- <strong>Size is not.</strong> Network size adds little (p = 0.19 in the full model).
+- <strong>Size is not.</strong> Network size adds little (p = 0.18 in the full model).
 - <strong>The full preregistered predictor set.</strong> Number of treatments, I², the direct-evidence share of the top
   comparison, the withheld share of participants and the outcome type raise R² to 0.17 (AUC 0.73).
     - Only the gap (p &lt; 0.001) and, weakly, the number of treatments (p = 0.04) carry signal.</p>
-<figure><a href="results/figures/F3_gap.png"><img src="results/figures/F3_gap.png" alt="Figure 3"></a><figcaption>Each point is one of 176 networks, by the pre-update gap between its top two P-scores and whether its top treatment changed when the newest tranche was added back (jittered vertically). The curve is the H3 logistic model at the median number of pre-update studies; with network size it explains a Nagelkerke R² of 0.12 of which networks flip.</figcaption></figure>
+<figure><a href="results/figures/F3_gap.png"><img src="results/figures/F3_gap.png" alt="Figure 3"></a><figcaption>Each point is one of 177 networks, by the pre-update gap between its top two P-scores and whether its top treatment changed when the newest tranche was added back (jittered vertically). The curve is the H3 logistic model at the median number of pre-update studies; with network size it explains a Nagelkerke R² of 0.11 of which networks flip.</figcaption></figure>
 <p><em>Figure 3. Each network by its pre-update top-two P-score gap and whether its top treatment changed. The curve is the H3
 model at the median network size.</em></p>
 <h2>What this does and does not show</h2>
 <ul>
-<li><strong>Rankings from published NMAs are moderately stable.</strong> About one in five top treatments changes when the newest
-  studies are added back, and about one in three over a longer horizon. A newly approved treatment that goes straight
-  to the top is a separate, common route to a changed recommendation.</li>
-<li><strong>The probability of being best is not overconfident as a forecast.</strong> Over a small update it is conservative. Over
-  a horizon on which the evidence roughly doubles, it is about right. Reading it as "the chance this is still the top
-  treatment next time" is safe, perhaps too safe.</li>
-<li><strong>The newest studies are not special.</strong> Their removal moves rankings about as much as removing any studies of the
-  same number. This argues against a systematic "late-arriving evidence overturns early winners" pattern, at least in
-  this era of networks.</li>
+<li><strong>Rankings from published NMAs are moderately stable among the treatments already compared.</strong> About one in five top
+  treatments changes when the newest studies are added back, and about one in three over a longer horizon. A newly
+  available treatment that goes straight to the top is a separate and common route to a changed recommendation.</li>
+<li><strong>For the treatments already compared, over an update of this size, the stated probability was, if anything,
+  conservative.</strong> It is not a forecast of the next analysis's winner once new treatments can enter. Over a longer
+  horizon with new entrants, it is overconfident.</li>
+<li><strong>The newest studies could not be distinguished from random ones of the same number.</strong> That does not support a
+  strong "late-arriving evidence overturns early winners" pattern in this era of networks, but the data cannot rule out
+  a moderate one.</li>
 <li><strong>A narrow lead at the top is the warning sign, and a weak one.</strong> No simple feature of a network reliably separates
   fragile rankings from stable ones.</li>
 </ul>
 <p><strong>Limitations.</strong>
 - <strong>Retrospective.</strong> The "next tranche" is the last tranche the authors included, not evidence published after the
   review. Networks from 2000–2015 may differ from current practice.
+- <strong>Publication years come from the sheets and were not validated against the literature.</strong> They are sometimes wrong.
+  In 479888, a contrast-level network, MPACT (published 2013) is dated 2002 and a 2005 trial is dated 2013, so that
+  network's tranche holds the wrong studies. The holdouts inherit such errors.
 - <strong>Whole-year tranches.</strong> Keeping same-year studies together makes the primary tranche larger than 10% (median 15%).
   The latest-year-only holdout (15% flips) brackets this from below.
 - <strong>Frequentist ranking.</strong> P-scores and resampled probabilities stand in for the Bayesian SUCRA and probability of
   being best that many published networks reported. V3 shows the top treatment usually matches the authors'.
-- <strong>Direction of benefit.</strong> It is adjudicated for the contrast-level networks, which are therefore a sensitivity set.
-  For arm-level networks, it is checked against the data wherever the two labels disagree.
+- <strong>Direction of benefit.</strong> It is adjudicated for the contrast-level networks, which are therefore a sensitivity set;
+  two of those calls needed correction after review. In D2, "high confidence" meant that a landmark trial or a sheet
+  note pinned the call. It did not guarantee the call: the two errors were readings of the display, not uncertain
+  calls.
 - <strong>Not attempted.</strong> Reproducing each network's published estimates; the database does not store them.</p>
 <h2>Process and deviations</h2>
-<p>Preregistered in <code>plan.md</code> (6152aa8), with all code committed before the outputs it produces.
+<p>Preregistered in <code>plan.md</code> (6152aa8), with all code committed before the outputs it produces. An independent
+adversarial review (<code>review/review.md</code>) recommended "fix first". Its corrections are D4.
 - <strong>D1:</strong> year-column variants, and a study-label fallback for networks with no year column.
 - <strong>D2:</strong> the direction of benefit adjudicated per network; contrast-level networks moved to a sensitivity set; an
-  explicit list of natural-scale sheets. The "all positive means natural scale" rule had double-logged two networks.
-- <strong>D3:</strong> a split fallback for contrast-level multi-arm studies whose variances netmeta cannot invert (12 networks).</p>
+  explicit list of natural-scale sheets.
+- <strong>D3:</strong> a split fallback for contrast-level multi-arm studies whose variances netmeta cannot invert (13 networks).
+- <strong>D4:</strong> review corrections. The largest-component rule now runs (it had errored on every disconnected pre-update
+  network). Empty arms are dropped. Two contrast-level direction calls are corrected. The contrast-level withheld share
+  is fixed. 44 networks were refitted.</p>
 <h2>Reproducing it</h2>
 <pre><code>venv/bin/python code/fetch.py                  # nmadb catalogue + datasets (public token read from the CRAN source)
-venv/bin/python code/standardise.py; venv/bin/python code/direction.py
+venv/bin/python code/standardise.py; venv/bin/python code/direction.py; venv/bin/python code/direction_record.py
 venv/bin/python code/validate_parse.py         # V1 evidence; adjudication in results/tables/v1_parse_validation.csv
 venv/bin/python code/holdouts.py full_only; Rscript code/nma.R data/jobs_full.json data/fits_full.jsonl 24
 venv/bin/python code/validate_counts.py; venv/bin/python code/validate_published.py   # V2, V3
-venv/bin/python code/holdouts.py; Rscript code/nma.R data/jobs.json data/fits.jsonl 24   # 42,435 fits, ~20 min on 24 cores
+venv/bin/python code/holdouts.py; Rscript code/nma.R data/jobs.json data/fits.jsonl 24   # 42,435 fits, about 5 h on 24 cores
 venv/bin/python code/analysis.py; venv/bin/python code/figures.py
 </code></pre>
-<p>R 4.4.3 and netmeta 3.6.1 come from conda-forge. <strong>Released</strong> in <code>results/tables/</code>:
+<p>R 4.4.3 and netmeta 3.6.1 come from conda-forge. The D4 refit used <code>data/jobs_refit.json</code> and <code>code/merge_refit.py</code>.
+<strong>Released</strong> in <code>results/tables/</code>:
 - <code>primary.json</code>;
 - the per-network results (<code>network_results.csv</code>);
-- the direction table;
+- the direction tables;
 - the three validation files.</p>
 </main>
 <footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one

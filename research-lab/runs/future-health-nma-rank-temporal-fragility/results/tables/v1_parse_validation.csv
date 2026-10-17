@@ -20,5 +20,5 @@ record,studies_ok,arms_ok,treatments_ok,years_ok,values_ok,note
 501277,1,1,1,1,1,label years (D1)
 501253,1,1,1,1,1,
 501194,1,1,1,1,1,label years (D1); four labels without a year
-501220,1,1,1,0,1,label years (D1): 'Aichelmann-Reidy et al.2001' missed (no space before the year) - regex fixed in D2; combined labels take the later year
+501220,1,1,1,0,1,label years (D1): 'Aichelmann-Reidy et al.2001' missed (no space before the year) - regex fixed in D2; combined labels take the last year written in the label (D1 rule)
 501211,1,1,1,1,1,"label years (D1); iv MD - parsing right, but the sign convention needed adjudication (D2)"
