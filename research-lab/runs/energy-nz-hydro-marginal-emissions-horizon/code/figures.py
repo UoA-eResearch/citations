@@ -51,12 +51,13 @@ def main():
     ax.set_xscale("log"); ax.set_xticks(hours); ax.set_xticklabels([r["label"] for r in H])
     ax.set_ylim(-0.2, top + 0.15); ax.grid(axis="y", color=GRID, lw=0.6)
     ax.set_ylabel("t CO₂ per MWh of extra demand"); ax.set_xlabel("horizon over which emissions are counted")
-    fig.suptitle("Marginal emissions rise with the horizon: water used now is replaced by coal later", x=0.1, ha="left", fontsize=10.5, color=INK)
+    fig.suptitle("Marginal emissions rise with the horizon over which they are counted (preregistered specification)", x=0.1, ha="left", fontsize=10.5, color=INK)
     fig.savefig(F / "F1_mef_by_horizon.png", dpi=170); plt.close(fig)
     caption("F1_mef_by_horizon", f"""Marginal emissions factor MEF(h) by horizon, 2SLS with the heating-degree anomaly as instrument,
     2015-2024, n = {m['n']:,} half-hours. Bars are 95% calendar-month block-bootstrap intervals (999 resamples). Hollow
     markers: first-stage F below 10 (14 and 30 days), intervals clipped at the axis. Dashed line: mean AEF over the
-    period ({aef:.3f} t/MWh).""")
+    period ({aef:.3f} t/MWh). The levels depend on the control set (results/tables/sensitivity.json: 1 h -0.16 to 0.23,
+    7 d 0.13 to 0.79 across 17 specifications); the rise from 1 h to 1 d and to 7 d holds in every one.""")
     # F2
     S = [r for r in H if r["first_stage_F"] >= 10]
     x = np.array([r["h"] / 2 for r in S])
@@ -68,11 +69,12 @@ def main():
     ax.axhline(0, color=GRID, lw=1); ax.axhline(1, color=GRID, lw=1, ls=":")
     ax.set_xscale("log"); ax.set_xticks(x); ax.set_xticklabels([r["label"] for r in S])
     ax.set_ylabel("MWh generated per MWh of extra demand"); ax.set_xlabel("horizon"); ax.grid(axis="y", color=GRID, lw=0.6)
-    fig.suptitle("Hydro meets extra demand within the day; thermal plant takes over within a week", x=0.1, ha="left", fontsize=10.5, color=INK)
+    fig.suptitle("Where weather-driven demand is met under the preregistered controls (not robust; see text)", x=0.1, ha="left", fontsize=10.5, color=INK)
     fig.savefig(F / "F2_generation_response.png", dpi=170); plt.close(fig)
     caption("F2_generation_response", """2SLS response of cumulative hydro, thermal and geothermal generation to weather-driven demand,
     per MWh of extra demand, for the horizons with a first-stage F of at least 10. Wind over the window is held fixed by
-    design. Point estimates.""")
+    design. Point estimates under the preregistered controls; the split changes materially with the control set (with
+    window inflow controlled, hydro 0.49 and thermal 0.50 at 7 days).""")
     # F3
     bl = m["blocks_1d"]; ab = sim["aef_by_block_mean"]
     fig, ax = plt.subplots(figsize=(7.4, 3.6)); fig.subplots_adjust(left=0.1, right=0.97, bottom=0.16, top=0.86)
@@ -90,7 +92,7 @@ def main():
     ax.set_ylabel("t CO₂ per MWh"); ax.set_xlabel("start of the window (local time)")
     ax.plot([], [], "o", color=COL[0], label="MEF at 1 day (95% interval)"); ax.plot([], [], "s", color=COL[2], label="mean AEF")
     ax.legend(frameon=False, loc="upper left", fontsize=8)
-    fig.suptitle("The average signal barely moves through the day; the marginal one is 2-4 times higher", x=0.1, ha="left", fontsize=10.5, color=INK)
+    fig.suptitle("1-day MEF of windows starting in each block, against the block's average factor", x=0.1, ha="left", fontsize=10.5, color=INK)
     fig.savefig(F / "F3_blocks.png", dpi=170); plt.close(fig)
     caption("F3_blocks", """MEF at the 1-day horizon by 6-hour block of the window's start (fully interacted 2SLS), with
     95% month-block bootstrap intervals, against each block's mean AEF. The 00:00-06:00 block has a first-stage F of 4.2

@@ -53,3 +53,43 @@ inflow to each controlled lake, converted to energy:
   energy arriving.
 - **Population weights for temperature** (approximate 2023 populations, millions): Auckland 1.70, Hamilton 0.18,
   Wellington (city, Hutt, Porirua) 0.42, Christchurch 0.39, Dunedin 0.13.
+
+## D2 — 2026-10-18 16:31 NZDT — after the independent review (fix first): sensitivity analyses and disclosures; the preregistered pipeline and its results are unchanged
+
+**New: `code/sensitivity.py`** (exploratory, not preregistered) and `results/tables/sensitivity.json`. On the same
+common sample, they re-estimate MEF at 1 h, 1 d and 7 d under:
+- **seven control sets:**
+  - no lagged D/E;
+  - D lags only;
+  - E lags only;
+  - added lagged coal, gas and hydro;
+  - three days of anomaly history instead of lagged outcomes;
+  - each of the main sets with natural inflow summed over the window;
+  - no wind-window control;
+- **half-hour × month fixed effects.** Day-type dummies are kept. The reviewer's version without them gave 1.24 at
+  7 d with F 9.2; this one gives 0.72 with F 43.
+- **a calendar-aligned climatology.** The preregistered code caps day-of-year at 365, which shifts leap years by one
+  day after 29 February.
+- **three alternative instruments:** the next-7-day mean anomaly, including the 30-day horizon; the next-24-h mean;
+  the calendar-day mean.
+- **three subsamples:** dropping 2021 and 2024; 2015–2019; 2020–2024.
+
+**Also reported:**
+- the coal/gas/hydro composition under four control sets;
+- the response of window inflow to instrumented demand;
+- H2 rescored with block MEFs from the calendar-day-mean instrument.
+
+My code reproduces the reviewer's numbers for every specification both of us ran.
+
+**Disclosures:**
+- **The block-level weak-instrument rule was set after the results were seen.** The rule in `code/simulate.py`
+  (H2 is Inconclusive if a block carrying moved load has first-stage F < 10) was written after `mef.json` showed the
+  night block's F of 4.2. The plan's rule is horizon-level. Under the plan's literal rule, the capture ratio of 18
+  (0.83–127) would make H2 **Refuted**. The report keeps Inconclusive and states both.
+- **H2's "time-of-day MEF" is the 1-day MEF of windows starting in a block,** not the marginal factor of load placed
+  in that block. The construct, as preregistered, cannot answer H2 even with a strong instrument.
+- **The single half-hour instrument cannot identify 14- or 30-day windows by construction.** Its autocorrelation is
+  0.04 at 7 days, so the plan's instrument was mismatched to the H1 horizon.
+- **The storage level is not the Electricity Authority's "controlled storage".** HMD active-storage ranges for Te
+  Anau, Manapōuri, Wānaka and Wakatipu are about twice the schemes' active capacity. Each offset is constant, so the
+  anomaly used for H3 and the standardised control are unaffected. Wānaka's inflow is HMD's natural *outflow* series.

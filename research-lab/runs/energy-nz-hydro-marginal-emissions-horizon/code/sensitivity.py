@@ -55,7 +55,7 @@ def prepare():
     s["inflow7"] = s.date.map(di.shift(1).rolling(7).mean())
     s["inflow_hh"] = s.inflow * 1000 / 48                                       # MWh of inflow energy per half-hour
     new = {}
-    for h in sorted(set(HS + [1, 1440])):
+    for h in sorted(set(HS + [1, 24, 96, 1440])):
         for v, src in (("D", "D"), ("E", "E"), ("W", "wind"), ("I", "inflow_hh"), ("C", "coal"), ("GS", "gas"), ("Y", "hydro"), ("G", "geo")):
             new[f"{v}_{h}"] = mef.wsum(s[src].values, h)
     s = pd.concat([s, pd.DataFrame(new)], axis=1)
