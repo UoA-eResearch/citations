@@ -9,6 +9,7 @@ read directly: the file's tags and strip offsets, then one multi-range request f
 Writes pentad (yyyy.mm.k), status, station, value (mm/pentad; empty where the cell is masked)."""
 import csv
 import glob
+import os
 import re
 import struct
 import sys
@@ -121,8 +122,11 @@ def main(prod, y0=1981, y1=2025, part=""):
                         w.writerows([pid, "ok", s, "" if np.isnan(v) else round(float(v), 3)] for s, v in zip(st.id, vals))
                     except Exception as e:  # noqa: BLE001
                         w.writerow([pid, "error", "", str(e)[:120]])
+                        if "403" in str(e):
+                            raise SystemExit(f"{prod}: HTTP 403 from the server at {pid}; stopping")
                         time.sleep(30)
                     fh.flush(); n += 1
+                    time.sleep(float(os.environ.get("PAUSE", "0")))   # D1 addendum: polite pacing after the server's 403s
                     if n % 50 == 0:
                         print(prod, pid, n, flush=True)
     print(prod, "done", flush=True)
