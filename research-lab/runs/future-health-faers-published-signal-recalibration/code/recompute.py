@@ -87,8 +87,17 @@ def ror(a, b, c, d):
     return float(np.exp(l)), float(np.exp(l - 1.96 * se)), float(np.exp(l + 1.96 * se)), float(se)
 
 
-def main():
+def main(part="all"):
+    """part: 'all', 'signals' or 'nc' (the negative controls do not depend on the extraction and can run first)."""
     F = FAERS()
+    if part in ("all", "signals"):
+        signals(F)
+    if part in ("all", "nc"):
+        controls(F)
+    rxnorm.save()
+
+
+def signals(F):
     sig = pd.read_csv(RUN / "data" / "signals_eligible.csv", dtype={"paper": str})
     pub = {}
     for l in open(RUN / "data" / "raw" / "epmc" / "records.jsonl"):
@@ -117,6 +126,10 @@ def main():
         if len(rows) % 25 == 0:
             print(len(rows), "signals", flush=True)
     pd.DataFrame(rows).to_csv(RUN / "data" / "recomputed.csv", index=False)
+    print(len(rows), "signals")
+
+
+def controls(F):
     nc = pd.read_csv(RUN / "data" / "negative_controls.csv")
     win = F.window("2004Q1", "2025Q4")
     nrows = []
@@ -129,9 +142,8 @@ def main():
         r_, lo, hi, se = ror(a, b, c, d)
         nrows.append(dict(drug=r.drug, pt=pt, status="ok", a=a, b=b, c=c, d=d, ror=r_, lo=lo, hi=hi, se=se))
     pd.DataFrame(nrows).to_csv(RUN / "data" / "negative_controls_computed.csv", index=False)
-    rxnorm.save()
-    print(len(rows), "signals;", len(nrows), "negative controls")
+    print(len(nrows), "negative controls")
 
 
 if __name__ == "__main__":
-    main()
+    main(*sys.argv[1:2])
