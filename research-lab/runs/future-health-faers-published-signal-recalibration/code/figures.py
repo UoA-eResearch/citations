@@ -74,21 +74,27 @@ def main():
         rows.append((f"{lab}, MLE null", p["variants"][v]["survive_mle"], None))
     if "all_drugs_only" in p:
         rows.append(("all-drugs comparisons only, MLE null", p["all_drugs_only"]["share_surviving"], p["all_drugs_only"]["ci"]))
-    fig, ax = plt.subplots(figsize=(7.4, 3.8)); fig.subplots_adjust(left=0.38, right=0.97, bottom=0.14, top=0.86)
+    ns = T / "null_sensitivity.json"
+    if ns.exists():   # exploratory, added after the primary results were seen
+        z = json.load(open(ns))["centre_zero"]
+        rows.append(("exploratory: MLE width, centred at 0", z["share"], z["ci"]))
+    fig, ax = plt.subplots(figsize=(7.4, 4.1)); fig.subplots_adjust(left=0.38, right=0.97, bottom=0.13, top=0.87)
     for i, (lab, v, ci) in enumerate(rows):
         y = len(rows) - 1 - i
+        c = COL[1] if lab.startswith("exploratory") else COL[0]
         if ci:
-            ax.plot(ci, [y, y], color=COL[0], lw=2)
-        ax.plot(v, y, "o", color=COL[0], ms=7, mec=SURF, mew=1.5)
+            ax.plot(ci, [y, y], color=c, lw=2)
+        ax.plot(v, y, "o", color=c, ms=7, mec=SURF, mew=1.5)
         ax.text(v, y + 0.25, f"{v:.0%}", ha="center", fontsize=7.5, color=INK2)
     ax.axvline(0.6, color=COL[2], lw=1.2, ls="--"); ax.text(0.6, len(rows) - 0.4, "H1 bar 60%", color=COL[2], fontsize=8, ha="left")
     ax.set_yticks(range(len(rows))); ax.set_yticklabels([r[0] for r in rows][::-1]); ax.set_xlim(0, 1)
     ax.set_xlabel("share of published signals that survive"); ax.grid(axis="x", color=GRID, lw=0.6)
-    fig.suptitle("How many published signals survive one transparent protocol", x=0.38, ha="left", fontsize=10.5, color=INK)
+    fig.suptitle("How many published signals survive", x=0.38, ha="left", fontsize=10.5, color=INK)
     fig.savefig(F / "F3_survival.png", dpi=170); plt.close(fig)
     caption("F3_survival", """Share of eligible published signals that survive: recomputed ROR > 1 and calibrated BH q < 0.05
     (or, for the uncalibrated row, recomputed lower bound > 1 with at least 3 reports). Bars: paper-cluster bootstrap
-    95% intervals where computed.""")
+    95% intervals where computed. The last row (second colour) is exploratory, added after the primary results were
+    seen: the fitted null's width with its centre moved to zero.""")
     print("figures written")
 
 
