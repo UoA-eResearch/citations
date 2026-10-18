@@ -2,7 +2,7 @@
 
 Timestamps are Pacific/Auckland, from `date`.
 
-## D1 — 2026-10-18 15:35 NZDT — faster, parallel pixel reads (operational; no value changes; before any skill was computed)
+## D1 — 2026-10-18 15:07 NZDT — faster, parallel pixel reads (operational; no value changes; before any skill was computed)
 
 The single-stream extraction ran at 49 CHIRP and 253 CHIRPS pentads an hour, which put CHIRP alone at about 66 hours.
 

@@ -9,7 +9,7 @@ The first pass extracted 1,766 of 1,830 abstracts. For 58 of the 64 failures the
 16,384-token budget (`MAX_TOKENS=16384`). The prompt, schema and temperature are unchanged. Papers still failing are
 reported as extraction failures and stay in the denominator of papers processed.
 
-## D2 — 2026-10-18 15:05 NZDT — the extraction check failed; one prompt and schema revision, re-validated on a fresh sample (before any signal was recomputed)
+## D2 — 2026-10-18 15:00 NZDT — the extraction check failed; one prompt and schema revision, re-validated on a fresh sample (before any signal was recomputed)
 
 **Round 1 result** (`code/validation_adjudication.py`, `results/tables/extraction_validation.{csv,json}`):
 - 272 papers sampled (seed 20261019); 44 yielded candidate signals (a ROR with estimate and CI, lower bound > 1, a window).
