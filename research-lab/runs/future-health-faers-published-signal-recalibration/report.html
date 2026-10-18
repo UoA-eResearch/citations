@@ -80,7 +80,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
   <h1>Do published FAERS safety signals survive an independent, calibrated recomputation?</h1>
   <p class="subtitle">370 drug–event signals from 132 papers published in 2023–2025 were recomputed from the FDA&#x27;s public adverse-event files under one fixed protocol. They were then calibrated against an empirical null built from 190 negative-control drug–event pairs.</p>
   <div class="meta">
-    <span>Report · 2026-10-18 · pre-review draft</span>
+    <span>Report · 2026-10-18 · revised after independent review</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/future-health-faers-published-signal-recalibration/plan.md">Preregistration</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/future-health-faers-published-signal-recalibration/deviations.md">Deviations log</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/future-health-faers-published-signal-recalibration/code">Code</a>
@@ -189,12 +189,16 @@ duplicates, which years. It then reports reporting odds ratios (RORs) whose lowe
 - <strong>Eligibility.</strong> All of the following:
     - a ROR with a point estimate and 95% CI, and a lower bound above 1;
     - one active ingredient, mapped through RxNorm. After D4, abbreviations under 4 characters or in all capitals are
-    not mapped, and antibody–drug conjugates that map only to their antibody are excluded;
+    not mapped, and antibody–drug conjugates that map only to their antibody are excluded.
+        - These rules are conservative. They also removed 14 correctly mapped signals of the reviewed 406: every
+      sacituzumab govitecan and enfortumab vedotin signal, "CsA" and "BARICITINIB";
     - an event that is a MedDRA Preferred Term (PT) after a fixed US-to-UK spelling map;
     - a stated window;
     - the FAERS database, and a comparison other than an interaction.
 - <strong>Result.</strong> 443 signals were eligible. At most 5 per paper were kept at random (seed 20261018), giving 370 signals
-  from 132 papers.</p>
+  from 132 papers.
+    - Against the 406 reviewed, 328 are common and 42 are new.
+    - 78 were dropped: 15 found wrong, 25 by the two mapping rules, and 38 only because the cap was redrawn.</p>
 <p><strong>The recomputation</strong> (<code>code/recompute.py</code>):
 - <strong>Data.</strong> All FDA quarterly ASCII files, 2004Q1–2026Q2: 24.8 million report versions, in DuckDB.
 - <strong>Deduplication.</strong> The latest version of each case.
@@ -423,7 +427,8 @@ given the effect-size bar above.</li>
 <li><strong>Selection.</strong><ul>
 <li>Only abstract-level signals with a single ingredient, a PT-named event and a stated window are included.
 Class-level, SMQ-level and grouped-event signals are excluded, and they may behave differently.</li>
-<li>The spelling map misses some US spellings: 19 of 313 rejected events would pass with a fuller map.</li>
+<li>The spelling map misses some US spellings: 19 of 313 rejected events would pass with a fuller map (pre-review
+count; 303 are rejected after D4).</li>
 </ul>
 </li>
 <li><strong>Extraction.</strong> Precision was 0.90 in the review's sample, with errors clustered by paper. The 26 known-wrong
@@ -436,6 +441,7 @@ Class-level, SMQ-level and grouped-event signals are excluded, and they may beha
 <li>The negative-control mapping and the primary pipeline's code were committed before the outputs they produced.</li>
 <li>The exploratory <code>null_sensitivity.py</code>, a revision of <code>figures.py</code> and the report builder were committed with
 their outputs (d62a942).</li>
+<li>D4's code and outputs were committed together after review (c3516ec).</li>
 </ul>
 </li>
 <li><strong>D1:</strong> a larger token budget for 64 extraction failures.</li>

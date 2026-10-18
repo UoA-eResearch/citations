@@ -112,8 +112,12 @@ addressed here. Everything in this section comes after the results were seen.
    - a drug string shorter than 4 characters, or an all-capitals abbreviation, counts as not mapped. This removes
      "TAC" (mapped to triamcinolone), "CD" (pyrimethamine) and "CsA";
    - a conjugate (deruxtecan, emtansine, vedotin, govitecan, ozogamicin, mafodotin, tesirine, DM1, DXd) whose mapped
-     ingredient does not name the conjugate is ineligible. This removes the trastuzumab conjugates, which were
-     recomputed as "any trastuzumab product".
+     ingredient does not name the conjugate is ineligible. This removes the conjugates whose RxNorm ingredient is the
+     bare antibody. That includes the trastuzumab conjugates, which were recomputed as "any trastuzumab product", and
+     also sacituzumab govitecan and enfortumab vedotin, whose mappings were correct.
+
+   The two rules together removed 14 correctly mapped signals of the reviewed 406 (confirmation pass): a
+   conservative cost of a simple rule.
 
    The cap is then redrawn (seed 20261018) over the corrected eligible set, and rows already computed are reused.
 3. **The preregistered FAERS-only sensitivity (plan §3) was never run (review finding 6).** It is added as the
@@ -129,5 +133,5 @@ addressed here. Everything in this section comes after the results were seen.
 
    **The lead is therefore tagged Inconclusive.** H1's preregistered test still reads Refuted, and the report states
    both.
-- **Also added to the report:** the 39 windows starting before 2004Q1; the a ≥ 1 rule dropping 43% of controls;
+- **Also added to the report:** the windows starting before 2004Q1 (39 before D4, 34 after); the a ≥ 1 rule dropping 43% of controls;
   MedDRA version drift (48 signals); and the counting of combination products as exposure.

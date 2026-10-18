@@ -112,12 +112,16 @@ The study asks two preregistered questions (`plan.md`):
 - **Eligibility.** All of the following:
   - a ROR with a point estimate and 95% CI, and a lower bound above 1;
   - one active ingredient, mapped through RxNorm. After D4, abbreviations under 4 characters or in all capitals are
-    not mapped, and antibody–drug conjugates that map only to their antibody are excluded;
+    not mapped, and antibody–drug conjugates that map only to their antibody are excluded.
+    - These rules are conservative. They also removed 14 correctly mapped signals of the reviewed 406: every
+      sacituzumab govitecan and enfortumab vedotin signal, "CsA" and "BARICITINIB";
   - an event that is a MedDRA Preferred Term (PT) after a fixed US-to-UK spelling map;
   - a stated window;
   - the FAERS database, and a comparison other than an interaction.
 - **Result.** 443 signals were eligible. At most 5 per paper were kept at random (seed 20261018), giving 370 signals
   from 132 papers.
+  - Against the 406 reviewed, 328 are common and 42 are new.
+  - 78 were dropped: 15 found wrong, 25 by the two mapping rules, and 38 only because the cap was redrawn.
 
 **The recomputation** (`code/recompute.py`):
 - **Data.** All FDA quarterly ASCII files, 2004Q1–2026Q2: 24.8 million report versions, in DuckDB.
@@ -274,7 +278,8 @@ the most lenient null of all. The plan's assumption (§7) that its two null fits
 - **Selection.**
   - Only abstract-level signals with a single ingredient, a PT-named event and a stated window are included.
     Class-level, SMQ-level and grouped-event signals are excluded, and they may behave differently.
-  - The spelling map misses some US spellings: 19 of 313 rejected events would pass with a fuller map.
+  - The spelling map misses some US spellings: 19 of 313 rejected events would pass with a fuller map (pre-review
+    count; 303 are rejected after D4).
 - **Extraction.** Precision was 0.90 in the review's sample, with errors clustered by paper. The 26 known-wrong
   signals are removed, but similar errors likely remain among the rest at a few per cent.
 - **Pharmacovigilance limits.** FAERS reports are not incidences. No causal claim about any drug is made.
@@ -285,6 +290,7 @@ the most lenient null of all. The plan's assumption (§7) that its two null fits
   - The negative-control mapping and the primary pipeline's code were committed before the outputs they produced.
   - The exploratory `null_sensitivity.py`, a revision of `figures.py` and the report builder were committed with
     their outputs (d62a942).
+  - D4's code and outputs were committed together after review (c3516ec).
 - **D1:** a larger token budget for 64 extraction failures.
 - **D2:** the round-1 extraction check failed. The prompt and schema were revised once, and the revision passed on a
   fresh sample. This happened before any signal was recomputed.
