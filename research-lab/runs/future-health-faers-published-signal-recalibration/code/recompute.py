@@ -104,18 +104,36 @@ def signals(F):
         r = json.loads(l); pub[str(r["id"])] = r.get("firstPublicationDate") or r.get("pubYear")
     rows = []
     # D3: rows already computed in the as-run pass are reused (the computation is deterministic); only new signals run
-    prev = RUN / "data" / "recomputed_asrun.csv"
     cache = {}
-    if prev.exists():
-        for r in pd.read_csv(prev, dtype={"paper": str}).to_dict("records"):
-            if r["status"] == "ok":
-                cache[(r["paper"], int(r["k"]), r["ingredient"], r["event_pt"], r["win"])] = r
+    for prev in (RUN / "data" / "recomputed_asrun.csv", RUN / "data" / "recomputed.csv"):   # D4: the later file wins
+        if prev.exists():
+            for r in pd.read_csv(prev, dtype={"paper": str}).to_dict("records"):
+                if r["status"] == "ok":
+                    cache[(r["paper"], int(r["k"]), r["ingredient"], r["event_pt"], r["win"])] = r
+
+    def faers_only(out, s, pt):
+        """D4: the preregistered FAERS-only sensitivity (plan section 3): the window truncated to start at 2012Q4."""
+        if isinstance(out.get("faersonly_status"), str):
+            return out
+        m = re.match(r"(\d{4})Q(\d)-(\d{4})Q(\d)", s.win)
+        start, end = max(qstr(int(m[1]), int(m[2])), "2012Q4"), qstr(int(m[3]), int(m[4]))
+        if end < "2012Q4":
+            out["faersonly_status"] = "window ends before 2012Q4"; return out
+        dt = F.drug_table(s.ingredient + "|" + rxnorm.clean(s.drug).lower(), terms_for(s.ingredient, s.drug))
+        a, b, c, d = F.table2x2(dt, F.event_table(pt), F.window(start, end), ("PS",))
+        r_, lo, hi, se = ror(a, b, c, d)
+        out.update(faersonly_status="ok", faersonly_a=a, faersonly_b=b, faersonly_c=c, faersonly_d=d, faersonly_ror=r_,
+                   faersonly_lo=lo, faersonly_hi=hi, faersonly_se=se)
+        return out
     for s in sig.itertuples():
         pt = (s.event_uk or "").upper()
         base = dict(paper=s.paper, k=s.k, ingredient=s.ingredient, event_pt=pt, win=s.win)
         hit = cache.get((s.paper, int(s.k), s.ingredient, pt, s.win))
         if hit is not None:
-            rows.append(hit); continue
+            rows.append(faers_only(dict(hit), s, pt))
+            if len(rows) % 25 == 0:
+                print(len(rows), "signals", flush=True)
+            continue
         if pt not in F.pts:
             rows.append({**base, "status": "event not a FAERS PT"}); continue
         m = re.match(r"(\d{4})Q(\d)-(\d{4})Q(\d)", s.win)
@@ -132,7 +150,7 @@ def signals(F):
             r_, lo, hi, se = ror(a, b, c, d)
             out.update({f"{vname}_a": a, f"{vname}_b": b, f"{vname}_c": c, f"{vname}_d": d, f"{vname}_ror": r_, f"{vname}_lo": lo,
                         f"{vname}_hi": hi, f"{vname}_se": se})
-        rows.append(out)
+        rows.append(faers_only(out, s, pt))
         if len(rows) % 25 == 0:
             print(len(rows), "signals", flush=True)
     pd.DataFrame(rows).to_csv(RUN / "data" / "recomputed.csv", index=False)

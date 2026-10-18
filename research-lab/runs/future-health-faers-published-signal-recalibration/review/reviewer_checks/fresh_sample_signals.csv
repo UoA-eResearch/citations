@@ -1,0 +1,71 @@
+paper,k,drug,ingredient,event,event_uk,estimate,ci_low,ci_high,n_cases,comparison,win
+35491805,0,solifenacin,solifenacin,altered state of consciousness,altered state of consciousness,9.71,2.13,44.35,,comparator,2004Q1-2020Q2
+37130046,0,ipilimumab,ipilimumab,uveitis,uveitis,6.73,5.26,8.6,,all drugs,2004Q1-2021Q4
+37154187,0,remdesivir,remdesivir,renal failure,renal failure,2.8,2.03,3.86,,all drugs,2020Q1-2021Q4
+37154187,2,remdesivir,remdesivir,acute kidney injury,acute kidney injury,16.11,12.52,20.73,,all drugs,2020Q1-2021Q4
+37154187,8,remdesivir,remdesivir,pulseless electrical activity,pulseless electrical activity,43.57,13.64,139.2,,all drugs,2020Q1-2021Q4
+37154187,10,remdesivir,remdesivir,sinus bradycardia,sinus bradycardia,35.86,11.16,115.26,,all drugs,2020Q1-2021Q4
+37154187,12,remdesivir,remdesivir,ventricular tachycardia,ventricular tachycardia,8.73,3.55,21.45,,all drugs,2020Q1-2021Q4
+37240654,0,rosuvastatin,rosuvastatin,myopathy,myopathy,124.39,87.35,178.47,,all drugs,2004Q1-2022Q4
+37240654,1,atorvastatin,atorvastatin,myopathy,myopathy,68.53,51.93,90.43,,all drugs,2004Q1-2022Q4
+37240654,2,simvastatin,simvastatin,myopathy,myopathy,94.83,71.12,126.46,,all drugs,2004Q1-2022Q4
+37240654,3,rosuvastatin,rosuvastatin,rhabdomyolysis,rhabdomyolysis,156.34,96.21,254.05,,all drugs,2004Q1-2022Q4
+37240654,4,simvastatin,simvastatin,rhabdomyolysis,rhabdomyolysis,72.65,47.36,111.44,,all drugs,2004Q1-2022Q4
+37536976,0,Imatinib,imatinib,periorbital oedema,periorbital oedema,24.931,22.404,27.743,,all drugs,2004Q1-2021Q3
+37536976,1,Dasatinib,dasatinib,chylothorax,chylothorax,161.427,125.835,207.085,,all drugs,2004Q1-2021Q3
+37536976,2,Nilotinib,nilotinib,nipple swelling,nipple swelling,48.796,26.27,90.636,,all drugs,2004Q1-2021Q3
+37536976,4,Ponatinib,ponatinib,gallbladder oedema,gallbladder oedema,77.996,38.286,158.893,,all drugs,2004Q1-2021Q3
+37536976,7,Dasatinib,dasatinib,pulmonary oedema,pulmonary oedema,11.217,10.303,12.213,,all drugs,2004Q1-2021Q3
+37996645,5,tetracycline,tetracycline,vanishing bile duct syndrome,vanishing bile duct syndrome,4.02,1.5,10.77,,unclear,2004Q1-2022Q4
+38027003,3,Sacituzumab govitecan,sacituzumab,heart rate increased,heart rate increased,5.11,3.84,6.79,,all drugs,2020Q2-2023Q1
+38027003,4,Sacituzumab govitecan,sacituzumab,sepsis,sepsis,4.77,3.59,6.34,,all drugs,2020Q2-2023Q1
+38027003,5,Sacituzumab govitecan,sacituzumab,cholestasis,cholestasis,6.28,3.48,11.36,,all drugs,2020Q2-2023Q1
+38027003,6,Sacituzumab govitecan,sacituzumab,blood bilirubin increased,blood bilirubin increased,4.65,2.42,8.94,,all drugs,2020Q2-2023Q1
+38027003,7,Sacituzumab govitecan,sacituzumab,meningitis,meningitis,7.23,2.71,19.29,,all drugs,2020Q2-2023Q1
+38034088,3,sildenafil,sildenafil,death,death,3.211,2.52,4.06,,all drugs,2010Q1-2021Q4
+38034088,5,tadalafil,tadalafil,priapism,priapism,3.64,2.12,6.26,,all drugs,2010Q1-2021Q4
+38034088,7,vardenafil,vardenafil,drug administration error,drug administration error,2.6,1.86,3.63,,all drugs,2010Q1-2021Q4
+38041205,0,danaparoid,danaparoid,thrombocytopenia,thrombocytopenia,37.61,30.46,46.45,,all drugs,2004Q1-2022Q4
+38041205,1,eptifibatide,eptifibatide,thrombocytopenia,thrombocytopenia,34.75,30.65,39.4,,all drugs,2004Q1-2022Q4
+38041205,2,inotersen,inotersen,thrombocytopenia,thrombocytopenia,34.0,29.47,39.23,,all drugs,2004Q1-2022Q4
+38041205,3,niraparib,niraparib,thrombocytopenia,thrombocytopenia,30.53,29.42,31.69,,all drugs,2004Q1-2022Q4
+38041205,4,heparin,heparin,thrombocytopenia,thrombocytopenia,28.84,27.76,29.97,,all drugs,2004Q1-2022Q4
+38783948,0,Lumateperone,lumateperone,mania,mania,73.82,57.09,95.46,,all drugs,2019Q4-2023Q3
+38783948,2,Lumateperone,lumateperone,hypomania,hypomania,34.74,15.54,77.64,,all drugs,2019Q4-2023Q3
+38783948,4,Lumateperone,lumateperone,urinary retention,urinary retention,3.59,1.8,7.19,,all drugs,2019Q4-2023Q3
+38783948,6,Lumateperone,lumateperone,serotonin syndrome,serotonin syndrome,8.69,4.81,15.72,,all drugs,2019Q4-2023Q3
+39135789,0,doxycycline,doxycycline,tooth discoloration,tooth discolouration,20.11,9.48,42.67,7.0,all drugs,2005Q1-2023Q3
+39472591,7,pembrolizumab,pembrolizumab,hypertension,hypertension,3.75,1.87,7.51,40.0,all drugs,2015Q1-2023Q3
+39840315,0,CsA,cyclosporine,nephropathy toxic,nephropathy toxic,8.26,4.21,16.2,,all drugs,2003Q4-2024Q2
+39840315,1,CsA,cyclosporine,urine output decreased,urine output decreased,29.93,3.66,244.61,,all drugs,2003Q4-2024Q2
+39840315,2,CsA,cyclosporine,posterior reversible encephalopathy syndrome,posterior reversible encephalopathy syndrome,6.7,3.17,14.14,,all drugs,2003Q4-2024Q2
+39840315,4,TAC,triamcinolone,kidney fibrosis,kidney fibrosis,22.65,8.16,62.87,,all drugs,2003Q4-2024Q2
+39840315,5,TAC,triamcinolone,diabetic ketoacidosis,diabetic ketoacidosis,46.51,5.68,380.97,,all drugs,2003Q4-2024Q2
+40095047,1,daratumumab,daratumumab,cardiac failure,cardiac failure,4.42,3.91,4.99,322.0,subgroup,2015Q1-2023Q4
+40095047,2,daratumumab,daratumumab,pulmonary embolism,pulmonary embolism,2.44,2.09,2.85,162.0,all drugs,2015Q1-2023Q4
+40095047,3,daratumumab,daratumumab,deep vein thrombosis,deep vein thrombosis,2.95,2.47,3.52,126.0,all drugs,2015Q1-2023Q4
+40095047,6,isatuximab,isatuximab,atrial fibrillation,atrial fibrillation,2.54,1.9,3.4,46.0,all drugs,2015Q1-2023Q4
+40095047,11,elotuzumab,elotuzumab,atrial fibrillation,atrial fibrillation,3.68,2.82,4.79,56.0,all drugs,2015Q1-2023Q4
+40329904,0,cenegermin,cenegermin,periorbital pain,periorbital pain,25.34,20.7,31.01,,comparator,2019Q1-2023Q4
+40329904,2,cenegermin,cenegermin,eyelid pain,eyelid pain,22.96,19.39,27.19,,comparator,2019Q1-2023Q4
+40329904,4,cenegermin,cenegermin,eye pain,eye pain,20.02,18.77,21.35,,comparator,2019Q1-2023Q4
+40329904,10,cenegermin,cenegermin,surgery,surgery,9.57,6.14,14.93,,unclear,2019Q1-2023Q4
+40552159,0,irinotecan,irinotecan,skin toxicity,skin toxicity,33.89,27.79,41.34,100.0,all drugs,2004Q1-2024Q4
+40552159,4,irinotecan,irinotecan,aphasia,aphasia,3.57,2.8,4.55,65.0,all drugs,2004Q1-2024Q4
+40552159,8,irinotecan,irinotecan,hepatic failure,hepatic failure,3.09,2.38,4.02,56.0,all drugs,2004Q1-2024Q4
+40552159,12,irinotecan,irinotecan,fatigue,fatigue,4.69,3.71,5.93,73.0,all drugs,2004Q1-2024Q4
+40552159,16,irinotecan,irinotecan,hyperammonaemia,hyperammonaemia,7.24,5.56,9.27,67.0,all drugs,2004Q1-2024Q4
+40828435,1,entecavir,entecavir,metabolic acidosis,metabolic acidosis,2.36,1.3,4.26,11.0,unclear,2004Q1-2024Q3
+40828435,3,entecavir,entecavir,cell death,cell death,16.58,6.89,39.9,5.0,unclear,2004Q1-2024Q3
+40828435,5,tenofovir,tenofovir,vitamin D deficiency,vitamin d deficiency,27.7,26.03,29.48,1149.0,unclear,2004Q1-2024Q3
+40828435,7,tenofovir,tenofovir,dyslipidaemia,dyslipidaemia,2.85,2.26,3.6,72.0,unclear,2004Q1-2024Q3
+40828435,9,tenofovir,tenofovir,fat redistribution,fat redistribution,28.81,19.59,42.37,30.0,unclear,2004Q1-2024Q3
+40936323,0,Dimethyl fumarate,dimethyl fumarate,spinal fusion fracture,spinal fusion fracture,13.13,1.73,99.86,,all drugs,2004Q1-2024Q3
+40936323,6,Dimethyl fumarate,dimethyl fumarate,forearm fracture,forearm fracture,10.29,4.24,24.96,,subgroup,2004Q1-2024Q3
+40936323,7,Dimethyl fumarate,dimethyl fumarate,ankle fracture,ankle fracture,5.63,4.32,7.35,,subgroup,2004Q1-2024Q3
+41118058,1,ublituximab,ublituximab,urinary tract infection,urinary tract infection,4.31,2.97,6.27,28.0,all drugs,2022Q4-2024Q4
+41118058,2,ublituximab,ublituximab,Respiratory tract infection,respiratory tract infection,7.39,3.69,14.8,8.0,all drugs,2022Q4-2024Q4
+41118058,3,ublituximab,ublituximab,alopecia,alopecia,2.06,1.17,3.64,12.0,all drugs,2022Q4-2024Q4
+41118058,4,ublituximab,ublituximab,headache,headache,2.55,1.93,3.38,50.0,all drugs,2022Q4-2024Q4
+41560737,0,bortezomib,bortezomib,autonomic neuropathy,autonomic neuropathy,70.16,56.79,86.67,96.0,all drugs,2004Q1-2025Q2
+41560737,2,ixazomib,ixazomib,burning feet syndrome,burning feet syndrome,16.61,5.32,51.91,3.0,all drugs,2004Q1-2025Q2

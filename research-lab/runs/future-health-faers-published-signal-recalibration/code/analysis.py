@@ -59,7 +59,8 @@ def main():
     nulls = {"mle": fit_null_mle(lr, se), "sd": (float(np.mean(lr)), float(np.std(lr, ddof=1)))}
     out["null"] = {k: dict(mu=v[0], sigma=v[1], exp_mu=float(np.exp(v[0]))) for k, v in nulls.items()}
     out["negative_controls_uncalibrated_significant"] = int(((ncv.lo > 1) & (ncv.a >= 3)).sum())
-    for v in ("primary", "allsuspect", "nodedup", "fullwindow"):
+    VARS = ("primary", "allsuspect", "nodedup", "fullwindow") + (("faersonly",) if "faersonly_ror" in ok else ())   # D4
+    for v in VARS:
         lrv, sev = np.log(ok[f"{v}_ror"]), ok[f"{v}_se"]
         ok[f"{v}_sig_uncal"] = (ok[f"{v}_lo"] > 1) & (ok[f"{v}_a"] >= 3)
         for nm, (mu, sg) in nulls.items():
@@ -77,6 +78,30 @@ def main():
     out["uncalibrated_replication"] = dict(share=float(ok.primary_sig_uncal.mean()), ci=cluster_boot(ok, lambda x: float(x.primary_sig_uncal.mean())))
     out["variants"] = {v: dict(uncal=float(ok[f"{v}_sig_uncal"].mean()), survive_mle=float(ok[f"{v}_survive_mle"].fillna(False).mean()))
                        for v in ("primary", "allsuspect", "nodedup", "fullwindow")}
+    if "faersonly_ror" in ok:   # D4: the preregistered FAERS-only sensitivity, among signals with a window reaching 2012Q4
+        fo = ok[ok.faersonly_status == "ok"]
+        mu, sg = nulls["mle"]
+        q = bh(calibrated_p(np.log(fo.faersonly_ror.values), fo.faersonly_se.values, mu, sg))
+        fs = (fo.faersonly_ror.values > 1) & (q < 0.05)
+        out["variants"]["faersonly"] = dict(n=int(len(fo)), n_not_computable=int((ok.faersonly_status != "ok").sum()),
+                                            uncal=float(fo.faersonly_sig_uncal.mean()), survive_mle=float(fs.mean()),
+                                            primary_survive_same_signals=float(fo.primary_survive_mle.fillna(False).mean()))
+    # D4: H1 with the null's own sampling uncertainty (papers and negative controls resampled jointly, null refitted,
+    # BH within each draw)
+    rng = np.random.default_rng(20261018); papers = ok.paper.unique(); g = {p_: x for p_, x in ok.groupby("paper")}
+    ncs = np.arange(len(ncv)); draws = []
+    for _ in range(B):
+        s_ = pd.concat([g[p_] for p_ in rng.choice(papers, len(papers))]); j = rng.choice(ncs, len(ncs))
+        mu_b, sg_b = fit_null_mle(lr[j], se[j])
+        q_b = bh(calibrated_p(np.log(s_.primary_ror.values), s_.primary_se.values, mu_b, sg_b))
+        draws.append(float(np.nanmean(np.where(np.isfinite(q_b), (s_.primary_ror.values > 1) & (q_b < 0.05), False))))
+    out["H1_null_propagated"] = dict(ci=[float(np.percentile(draws, 2.5)), float(np.percentile(draws, 97.5))])
+    sv = ok.primary_survive_mle.fillna(False).astype(bool)
+    out["survival_threshold"] = dict(smallest_surviving_ror=float(ok.primary_ror[sv].min()),
+                                     largest_nonsurviving_ror_a3=float(ok.primary_ror[~sv & (ok.primary_a >= 3)].max()),
+                                     survivors_with_a_below_3=int((sv & (ok.primary_a < 3)).sum()))
+    out["control_median_ror"] = float(np.exp(np.median(lr)))
+    out["controls_designated"] = int(len(nc)); out["controls_a0"] = int(((nc.status == "ok") & (nc.a == 0)).sum())
     # D2 sensitivity: only signals whose published comparison is against all other drugs (BH recomputed within the subset)
     sub = ok[ok.comparison == "all drugs"].copy()
     mu, sg = nulls["mle"]
@@ -113,7 +138,7 @@ def main():
             out[name] = dict(n=int(len(xx)), error=str(ex)[:200])
     ok.to_csv(T / "signals_results.csv", index=False)
     json.dump(out, open(T / "primary.json", "w"), indent=1, default=float)
-    print(json.dumps({k: out[k] for k in ("eligible_signals", "papers", "status", "negative_controls_used", "null", "H1", "H1_sd_null", "H2", "uncalibrated_replication")}, indent=1, default=float))
+    print(json.dumps({k: out[k] for k in ("eligible_signals", "papers", "status", "negative_controls_used", "null", "H1", "H1_sd_null", "H1_null_propagated", "survival_threshold", "H2", "uncalibrated_replication", "variants")}, indent=1, default=float))
 
 
 if __name__ == "__main__":

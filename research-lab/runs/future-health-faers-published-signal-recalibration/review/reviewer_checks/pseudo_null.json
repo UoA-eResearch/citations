@@ -1,0 +1,29 @@
+{
+ "ohdsi_pt_crossproduct (control drugs x OHDSI outcome PTs, all pairs, not only the 332 designated)": {
+  "n_pairs": 2084,
+  "n_pairs_with_a0_excluded": true,
+  "mle_mu": -0.15864801149985708,
+  "mle_sigma": 1.2279520198034324,
+  "median_logror": -0.24306861350681053,
+  "share_lo_gt1": 0.18618042226487524,
+  "trimmed90_mu": -0.43083629513401733,
+  "trimmed90_sigma": 0.9218774894009678
+ },
+ "signal_pt_pairs (control drugs x published-signal PTs)": {
+  "n_pairs": 12236,
+  "n_pairs_with_a0_excluded": true,
+  "mle_mu": -0.1560651613014022,
+  "mle_sigma": 1.2424947454964934,
+  "median_logror": -0.2400469637523042,
+  "share_lo_gt1": 0.22384766263484798,
+  "trimmed90_mu": -0.4192778391193956,
+  "trimmed90_sigma": 0.9273123281991656
+ },
+ "signal_pts_with_ge5_pairs": 218,
+ "share_signal_pts_median_above_0": 0.42201834862385323,
+ "signal_pt_median_of_pt_medians": -0.13515170671448123,
+ "H1_share_under_pseudo_mle": 0.31527093596059114,
+ "H1_share_under_pseudo_trimmed": 0.6083743842364532,
+ "H1_share_event_specific_centres": 0.3817733990147783,
+ "signals_with_event_specific_centre": 390
+}

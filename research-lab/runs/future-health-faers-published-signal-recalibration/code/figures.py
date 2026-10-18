@@ -67,18 +67,23 @@ def main():
     maximum-likelihood systematic-error distribution fitted to them (black; mu = {mu:.2f}, sigma = {sg:.2f}), and the
     recomputed log RORs of the eligible published signals (blue outline).""")
     # F3
-    rows = [("primary protocol, MLE null", p["H1"]["share_surviving"], p["H1"]["ci"]),
+    rows = [("primary protocol, MLE null", p["H1"]["share_surviving"], p["H1"]["ci"])]
+    if "H1_null_propagated" in p:   # D4
+        rows.append(("  … with the null's uncertainty", p["H1"]["share_surviving"], p["H1_null_propagated"]["ci"]))
+    rows += [
             ("primary protocol, sample-SD null", p["H1_sd_null"]["share"], p["H1_sd_null"]["ci"]),
             ("uncalibrated (lower bound > 1, a ≥ 3)", p["uncalibrated_replication"]["share"], p["uncalibrated_replication"]["ci"])]
     for v, lab in (("allsuspect", "all suspect roles"), ("nodedup", "no deduplication"), ("fullwindow", "full window")):
         rows.append((f"{lab}, MLE null", p["variants"][v]["survive_mle"], None))
+    if "faersonly" in p["variants"]:   # D4
+        rows.append((f"FAERS era only ({p['variants']['faersonly']['n']}), MLE null", p["variants"]["faersonly"]["survive_mle"], None))
     if "all_drugs_only" in p:
-        rows.append(("all-drugs comparisons only, MLE null", p["all_drugs_only"]["share_surviving"], p["all_drugs_only"]["ci"]))
+        rows.append(("'all drugs' label only†, MLE null", p["all_drugs_only"]["share_surviving"], p["all_drugs_only"]["ci"]))
     ns = T / "null_sensitivity.json"
     if ns.exists():   # exploratory, added after the primary results were seen
         z = json.load(open(ns))["centre_zero"]
         rows.append(("exploratory: MLE width, centred at 0", z["share"], z["ci"]))
-    fig, ax = plt.subplots(figsize=(7.4, 4.1)); fig.subplots_adjust(left=0.38, right=0.97, bottom=0.13, top=0.87)
+    fig, ax = plt.subplots(figsize=(7.4, 4.6)); fig.subplots_adjust(left=0.38, right=0.97, bottom=0.12, top=0.88)
     for i, (lab, v, ci) in enumerate(rows):
         y = len(rows) - 1 - i
         c = COL[1] if lab.startswith("exploratory") else COL[0]
@@ -93,8 +98,11 @@ def main():
     fig.savefig(F / "F3_survival.png", dpi=170); plt.close(fig)
     caption("F3_survival", """Share of eligible published signals that survive: recomputed ROR > 1 and calibrated BH q < 0.05
     (or, for the uncalibrated row, recomputed lower bound > 1 with at least 3 reports). Bars: paper-cluster bootstrap
-    95% intervals where computed. The last row (second colour) is exploratory, added after the primary results were
-    seen: the fitted null's width with its centre moved to zero.""")
+    95% intervals where computed; the second row's interval also resamples the negative controls and refits the null
+    in each draw (added after review, D4). FAERS era only: windows truncated to start at 2012Q4 (the preregistered
+    sensitivity, run after review). †The 'all drugs' comparison label was right for only 76% of a fresh review sample.
+    The last row (second colour) is exploratory, added after the primary results were seen: the fitted null's width
+    with its centre moved to zero.""")
     print("figures written")
 
 

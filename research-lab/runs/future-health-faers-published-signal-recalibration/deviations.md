@@ -94,3 +94,40 @@ Checking why 279 of the 659 capped signals had no FAERS PT found two errors in t
 
 **Status.** The corrected analysis implements the preregistered text, so it is primary. These errors were found
 after the as-run results were seen, so the report gives both, with the as-run numbers beside the corrected ones.
+
+## D4 — 2026-10-18 19:08 NZDT — after the independent review (fix first): corrections, a missed sensitivity, and the null's uncertainty
+
+The review (`review/review.md`) reproduced the pipeline's numbers and the null. It found four problems, all
+addressed here. Everything in this section comes after the results were seen.
+
+1. **Known-wrong signals (review finding 1).** The review's fresh random sample of 70 eligible signals gave
+   extraction precision 0.90 (63/70), not the round-2 figure of 0.96. A targeted screen found more, and 26 of the 406
+   analysed signals are known to be wrong. They are removed at eligibility (`code/eligible.py`, `REVIEW_EXCLUDE`):
+   - three whole papers: 37240654 (daptomycin + statin interaction estimates), 40567936 and 38936945 (JADER studies);
+   - three signals: 40552159 k = 12 and 16 (JADER-specific), and 36697083 k = 0 (a dose-per-weight contrast).
+
+   The `comparison` label was right for 53/70 (0.76) in the review's sample, against 0.97 in round 2. So the
+   all-drugs-only sensitivity is reported as contaminated.
+2. **Drug mapping (review finding 2).** Two rules, applied to every signal:
+   - a drug string shorter than 4 characters, or an all-capitals abbreviation, counts as not mapped. This removes
+     "TAC" (mapped to triamcinolone), "CD" (pyrimethamine) and "CsA";
+   - a conjugate (deruxtecan, emtansine, vedotin, govitecan, ozogamicin, mafodotin, tesirine, DM1, DXd) whose mapped
+     ingredient does not name the conjugate is ineligible. This removes the trastuzumab conjugates, which were
+     recomputed as "any trastuzumab product".
+
+   The cap is then redrawn (seed 20261018) over the corrected eligible set, and rows already computed are reused.
+3. **The preregistered FAERS-only sensitivity (plan §3) was never run (review finding 6).** It is added as the
+   variant `faersonly`: each window is truncated to start no earlier than 2012Q4. Signals whose window ends before
+   2012Q4 are not computable under it.
+4. **H1's interval ignores the null's own uncertainty (review finding 4).** Reported beside the preregistered
+   interval:
+   - a joint bootstrap that resamples papers and negative controls and refits the null in each draw;
+   - the ROR threshold that "survive" amounts to in practice.
+
+   The plan's assumption (§7) that its two null fits bracket notoriety bias failed: both are centred far below zero.
+   The review's exploratory event-matched nulls give 32–61% survival.
+
+   **The lead is therefore tagged Inconclusive.** H1's preregistered test still reads Refuted, and the report states
+   both.
+- **Also added to the report:** the 39 windows starting before 2004Q1; the a ≥ 1 rule dropping 43% of controls;
+  MedDRA version drift (48 signals); and the counting of combination products as exposure.

@@ -78,7 +78,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 <header class="masthead">
   <div class="eyebrow">Research Lab · Deep dive · Future Health</div>
   <h1>Do published FAERS safety signals survive an independent, calibrated recomputation?</h1>
-  <p class="subtitle">406 drug–event signals from 142 papers published in 2023–2025 were recomputed from the FDA&#x27;s public adverse-event files under one fixed protocol. They were then calibrated against an empirical null built from 190 negative-control drug–event pairs.</p>
+  <p class="subtitle">370 drug–event signals from 132 papers published in 2023–2025 were recomputed from the FDA&#x27;s public adverse-event files under one fixed protocol. They were then calibrated against an empirical null built from 190 negative-control drug–event pairs.</p>
   <div class="meta">
     <span>Report · 2026-10-18 · pre-review draft</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/future-health-faers-published-signal-recalibration/plan.md">Preregistration</a>
@@ -89,54 +89,67 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 </header>
 <section class="tiles" aria-label="Key results"></section>
 <main>
-<p><strong>Verdict: Refuted, as preregistered, but the result depends heavily on where the null is centred.</strong></p>
+<p><strong>Verdict: Inconclusive.</strong> Whether most published signals survive depends on how the null is built, more than on
+anything in the papers.</p>
 <ul>
-<li><strong>H1 (fewer than 60% survive): Refuted.</strong><ul>
-<li>71% of the published signals survive, i.e. they stay significant after recomputation and calibration (289 of 406;
-paper-cluster bootstrap 95% CI 65–77%).</li>
-<li>Under the sample-SD null, reported beside the primary one, 63% survive (56–69%). That would have been
-Inconclusive.</li>
+<li><strong>H1 (fewer than 60% survive).</strong><ul>
+<li><strong>The preregistered test reads Refuted.</strong> 71% of signals survive, meaning they stay significant after
+recomputation and calibration (262 of 370). The paper-cluster bootstrap 95% CI is 64–77%, above the 60% bar.</li>
+<li><strong>That interval ignores the null's own uncertainty.</strong> Resampling the negative controls as well, and refitting the
+null each time, widens it to 57–82%. That is Inconclusive under the plan's thresholds.</li>
+<li><strong>The other nulls disagree.</strong> The sample-SD null, reported beside the primary one, gives 61% (54–68%). Exploratory
+nulls built in other defensible ways give 32–61%.</li>
+<li><strong>The plan's safeguard failed.</strong> It assumed its two null fits would bracket the bias in the controls, but both
+are centred far below "no association".</li>
 </ul>
 </li>
 <li><strong>H2 (published RORs at least 25% larger than recomputed ones): Refuted.</strong> The median ratio of published to
-  recomputed ROR is 1.08 (1.04–1.16).</li>
+  recomputed ROR is 1.07 (1.01–1.16).</li>
 </ul>
-<p><strong>What qualifies the H1 verdict:</strong></p>
+<p><strong>What "survive" means here.</strong> The null is wide (σ = 0.96 on the log scale) compared with any signal's own standard
+error, so calibration acts almost as a fixed effect-size bar. In practice a signal survives if its recomputed ROR is
+above about 3.35.
+- The smallest survivor is 3.34; the largest non-survivor with at least 3 reports is 3.38.
+- With the null centred at zero instead, the bar would be about 7, and 46% would survive (36–56%).</p>
+<p><strong>What holds regardless of the null:</strong></p>
 <ul>
-<li><strong>The null's centre.</strong> The negative controls put the null's centre far below "no association": a median control
-  ROR of about 0.43. That centre makes calibration lenient.<ul>
-<li>With the same null width centred at zero, only 45% survive (36–55%). This check is exploratory, added after the
-results were seen, and cannot change the verdict.</li>
-<li>So the answer to "do most published signals survive?" turns on a modelling choice that the negative-control
-method makes automatically and that FAERS may not support.</li>
+<li><strong>Strong signals reappear.</strong><ul>
+<li>93% of signals published with an ROR above 20 survive, and 81% of those between 5 and 20.</li>
+<li>Only 50% survive between 2 and 5, and 26% at 2 or below.</li>
 </ul>
 </li>
-<li><strong>Agreement at the median hides wide disagreement.</strong> The median ratio is near 1, but 119 of 392 recomputed RORs
-  differ from the published value by more than a factor of 2. Only 151 (39%) are within 0.8–1.25 of it.</li>
-<li><strong>Weak signals rarely survive.</strong><ul>
-<li>29% survive among published RORs up to 2, and 48% between 2 and 5.</li>
-<li>82% survive between 5 and 20, and 92% above 20.</li>
+<li><strong>The recomputation matches the papers on average but not one by one.</strong><ul>
+<li>The median ratio is near 1.</li>
+<li>But 101 of 359 recomputed RORs differ from the published value by more than a factor of 2. Only 141 (39%) are
+within 0.8–1.25 of it.</li>
 </ul>
 </li>
 </ul>
-<p><strong>Two implementation errors were found after the first analysis (deviation D3).</strong> The per-paper cap was applied
-before one eligibility rule, and the spelling map broke two UK spellings. Both were corrected. The first-pass result
-was 72% (66–78%) for H1 and 1.08 (1.02–1.16) for H2, with the same verdicts.</p>
+<p><strong>Corrections.</strong>
+- <strong>Before review (D3).</strong> After the first analysis, two implementation errors were found and corrected: the per-paper
+  cap ran before one eligibility rule, and the spelling map broke two UK spellings.
+- <strong>After review (D4).</strong> The independent review found 26 of the analysed signals to be wrong, through extraction or
+  drug mapping. They were removed, the mapping rules were tightened, and a preregistered sensitivity analysis that had
+  been missed was added.
+- <strong>None of these changed the direction of any result.</strong> The headline survival share went from 72% (first pass) to
+  71% (D3) to 71% (D4).</p>
 <h2>In plain terms</h2>
 <p>Thousands of papers mine the FDA's public database of adverse-event reports. They flag a drug as "reported
 disproportionately often" with some side effect, using a statistic called the reporting odds ratio. These flags are
 meant to prompt closer study, but how often do they hold up?</p>
-<p>We took 406 such flags from 142 recent papers. We recomputed each one from the same public database, using one fixed
+<p>We took 370 such flags from 132 recent papers. We recomputed each one from the same public database, using one fixed
 and fully published recipe. We then asked whether each flag still stood out once we allowed for the background noise
-this kind of data produces. To estimate that noise we used 190 drug and side-effect pairs that are known to be
-unrelated.</p>
-<p>About 7 in 10 flags held up. Flags that were very strong in the paper almost always held up. Weak ones (a ratio under
-about 5) often did not.</p>
-<p>But the "7 in 10" depends on a judgement call. The unrelated pairs looked <em>less</em> likely than average to be reported
-together. Measuring against them makes it easier for a flag to pass. Measured against a neutral baseline with the same
-noise, fewer than half the flags pass.</p>
-<p>Our recomputed numbers matched the papers' numbers on average. For nearly a third of flags, though, they differed by
-more than a factor of two.</p>
+this kind of data produces.</p>
+<p>To measure that noise we used 190 drug and side-effect pairs that earlier research, mostly in insurance and hospital
+records, had chosen as unrelated.</p>
+<p>About 7 in 10 flags held up. In practice, "held up" meant the recomputed ratio was above about 3.3.</p>
+<p>Flags that were very strong in the paper almost always held up. Weaker ones (a ratio under about 5) held up only half
+the time or less.</p>
+<p>But the "7 in 10" rests on a judgement call. The unrelated pairs were reported together <em>less</em> often than average,
+which makes the bar for a real flag lower. Measured against other reasonable baselines, anywhere from about 3 to 6 in
+10 flags hold up. So we cannot say whether most published flags are robust.</p>
+<p>Our recomputed numbers matched the papers' numbers on average. For more than a quarter of flags, though, they
+differed by more than a factor of two.</p>
 <p>None of this says whether any drug causes any side effect. These are reporting patterns, not rates of harm.</p>
 <h2>What was asked</h2>
 <p>Disproportionality analyses of the FDA Adverse Event Reporting System (FAERS) are among the most common pharmacovigilance
@@ -159,48 +172,67 @@ duplicates, which years. It then reports reporting odds ratios (RORs) whose lowe
 <h2>How it was done</h2>
 <p><strong>The published signals:</strong>
 - <strong>Search.</strong> A saved Europe PMC search for FAERS disproportionality papers published 2023–2025 returned 2,265
-  records; 1,830 research abstracts were processed.
+  records. The plan's pre-check had counted 2,228 hits; the index grew between the two queries. 1,830 research
+  abstracts were processed.
 - <strong>Extraction.</strong> A locally served open-weight model (Nemotron 3 Nano, temperature 0, JSON-schema-constrained output)
   extracted every reported drug–event estimate with its CI, case count and stated FAERS window.
-- <strong>The extraction check.</strong>
-    - <strong>Round 1 failed.</strong> On fully eligible signals, precision was 51/71 = 0.72 against a bar of 0.90. Most errors were
-    windows ("June 2023" read as 2023Q4) and estimates from other databases.
-    - <strong>Round 2 passed.</strong> As the plan allows, the prompt and schema were revised once (deviation D2). On a fresh sample
-    of 272 papers, precision was 68/71 = 0.96, with no eligible signal missed.
+- <strong>The extraction checks:</strong>
+    - <strong>Round 1 failed.</strong> Precision on fully eligible signals was 51/71 = 0.72, against a bar of 0.90.
+    - <strong>Round 2 passed.</strong> The prompt and schema were revised once (D2), and precision on a fresh sample was 68/71 = 0.96.
+    This round was adjudicated by the same agent that wrote the revision.
+    - <strong>The independent review drew a further fresh sample.</strong> Its precision was 63/70 = 0.90 (paper-cluster CI
+    0.74–1.00).
+        - The error types D2 targeted still occur: estimates from the Japanese JADER database labelled FAERS, and
+      interaction estimates attributed to one drug.
+        - The extracted <code>comparison</code> label was right for only 53/70 (0.76), not the 0.97 found in round 2.
+        - The 26 analysed signals the review found to be wrong were removed (D4).
 - <strong>Eligibility.</strong> All of the following:
     - a ROR with a point estimate and 95% CI, and a lower bound above 1;
-    - one active ingredient, mapped through RxNorm;
+    - one active ingredient, mapped through RxNorm. After D4, abbreviations under 4 characters or in all capitals are
+    not mapped, and antibody–drug conjugates that map only to their antibody are excluded;
     - an event that is a MedDRA Preferred Term (PT) after a fixed US-to-UK spelling map;
     - a stated window;
     - the FAERS database, and a comparison other than an interaction.
-- <strong>Result.</strong> 495 signals were eligible. At most 5 per paper were kept at random, giving 406 signals from 142 papers.</p>
+- <strong>Result.</strong> 443 signals were eligible. At most 5 per paper were kept at random (seed 20261018), giving 370 signals
+  from 132 papers.</p>
 <p><strong>The recomputation</strong> (<code>code/recompute.py</code>):
 - <strong>Data.</strong> All FDA quarterly ASCII files, 2004Q1–2026Q2: 24.8 million report versions, in DuckDB.
 - <strong>Deduplication.</strong> The latest version of each case.
 - <strong>Drug.</strong> The drug as primary suspect, matched on the active-ingredient field or on its RxNorm brand names.
+  Combination products containing the ingredient count as exposure. Many papers exclude them; the review found this
+  changes some counts substantially (tenofovir–vitamin D deficiency: 1,144 reports to 373) without changing survival.
 - <strong>Event.</strong> The event PT.
-- <strong>Statistic.</strong> A report-level 2×2 table over the paper's own window.
+- <strong>Statistic.</strong> A report-level 2×2 table over the paper's own window. The 34 windows that start before 2004Q1 are
+  recomputed from 2004Q1, the first public quarter.
 - <strong>Variants:</strong>
     - all suspect roles;
     - no deduplication;
-    - the full window up to the paper's publication.
+    - the full window up to the paper's publication;
+    - the FAERS era only (from 2012Q4). This sensitivity was preregistered, missed in the first draft, and run after
+    review.
 - <strong>The pipeline check.</strong> For the 10 eligible signals with the largest published case counts, the recomputed count is
-  a median 1.00 times the published one (<code>results/tables/pipeline_check.csv</code>).
-    - 8 of the 10 are within about 15%.
-    - The two exceptions are hydroxychloroquine–pemphigus and lanreotide–cholelithiasis. The first is a known cluster
-    of duplicated co-suspect reports: 84 primary-suspect cases recomputed against 1,545 published, and 5,990 with all
-    suspect roles.</p>
+  a median 1.00 times the published one (<code>results/tables/pipeline_check.csv</code>). 8 of the 10 are within about 15%.
+    - <strong>Hydroxychloroquine–pemphigus</strong> is a known cluster of duplicated co-suspect reports: 84 primary-suspect cases
+    recomputed against 1,545 published, and 5,990 with all suspect roles.
+    - <strong>Lanreotide–cholelithiasis</strong> is the other exception.
+- <strong>The review's independent SQL</strong> reproduced the 2×2 counts for 21 of 22 signals exactly, and the last differed by
+  one report.</p>
 <p><strong>The empirical null</strong> (<code>code/negative_controls.py</code>, <code>code/analysis.py</code>):
 - <strong>Controls.</strong> The OHDSI MethodEvaluation negative controls: 332 drug–PT pairs from 119 drugs and 64 PTs, mapped by a
   table fixed before any control was computed.
-- <strong>Computation.</strong> Each pair over 2004Q1–2025Q4. The 190 pairs with at least one report enter the fit.
+- <strong>Computation.</strong> Each pair over 2004Q1–2025Q4.
+    - As the plan specified, only the 190 pairs with at least one report enter the fit.
+    - The 142 pairs with no report are dropped. They are the most negative, so dropping them pulls the fitted centre
+    towards zero.
 - <strong>Fits.</strong>
-    - <strong>Primary:</strong> maximum likelihood with each pair's standard error (Schuemie). μ = −0.85, σ = 0.96.
+    - <strong>Primary:</strong> maximum likelihood with each pair's standard error (Schuemie). μ = −0.85, σ = 0.96, so the fitted
+    centre is an ROR of 0.43. The median control ROR is 0.38.
     - <strong>Beside it:</strong> the sample mean and SD. μ = −0.92, σ = 1.12.
-- <strong>Calibration.</strong> Each recomputed signal gets a calibrated p-value, then BH-FDR across all 406.
-- <strong>Survival.</strong> A signal survives if its recomputed ROR exceeds 1 and its calibrated q is below 0.05.
-    - The 14 signals with a zero cell have no recomputed ROR. They count as not surviving.
-- <strong>Inference.</strong> Intervals come from a paper-cluster bootstrap, 2,000 resamples.</p>
+- <strong>Calibration and survival.</strong> A calibrated p-value, then BH-FDR across the 359 signals with a finite recomputed ROR.
+  A signal survives if its recomputed ROR exceeds 1 and its calibrated q is below 0.05. The 11 signals with a zero
+  cell count as not surviving.
+- <strong>Inference.</strong> Intervals come from a paper-cluster bootstrap, 2,000 resamples. After review, a joint bootstrap
+  also resamples the controls and refits the null.</p>
 <h2>Results</h2>
 <h3>H1: survival (<code>results/tables/primary.json</code>, <code>results/figures/F3_survival.png</code>)</h3>
 <div class="table-wrap"><table>
@@ -213,28 +245,33 @@ duplicates, which years. It then reports reporting odds ratios (RORs) whose lowe
 </thead>
 <tbody>
 <tr>
-<td><strong>Primary: MLE null</strong></td>
-<td><strong>71% (289/406)</strong></td>
-<td><strong>65–77%</strong></td>
+<td><strong>Primary: MLE null (preregistered)</strong></td>
+<td><strong>71% (262/370)</strong></td>
+<td><strong>64–77%</strong></td>
+</tr>
+<tr>
+<td>… with the null's own uncertainty (D4)</td>
+<td>71%</td>
+<td>57–82%</td>
 </tr>
 <tr>
 <td>Sample-SD null</td>
-<td>63%</td>
-<td>56–69%</td>
+<td>61%</td>
+<td>54–68%</td>
 </tr>
 <tr>
 <td>Uncalibrated (recomputed lower bound &gt; 1, a ≥ 3)</td>
-<td>87%</td>
+<td>86%</td>
 <td>82–91%</td>
 </tr>
 <tr>
 <td>All suspect roles, MLE null</td>
-<td>74%</td>
+<td>73%</td>
 <td></td>
 </tr>
 <tr>
 <td>No deduplication, MLE null</td>
-<td>70%</td>
+<td>69%</td>
 <td></td>
 </tr>
 <tr>
@@ -243,37 +280,51 @@ duplicates, which years. It then reports reporting odds ratios (RORs) whose lowe
 <td></td>
 </tr>
 <tr>
-<td>All-drugs comparisons only (354), MLE null</td>
+<td>FAERS era only (365 computable), MLE null</td>
+<td>70%</td>
+<td></td>
+</tr>
+<tr>
+<td>"All drugs" comparison label only (317)†</td>
 <td>72%</td>
-<td>66–78%</td>
+<td>65–79%</td>
 </tr>
 <tr>
 <td><em>Exploratory: MLE width, centred at 0</em></td>
-<td><em>45%</em></td>
-<td><em>36–55%</em></td>
+<td><em>46%</em></td>
+<td><em>36–56%</em></td>
 </tr>
 </tbody>
 </table></div>
-<p>The bootstrap lower bound under the primary null, 65%, is above the 60% bar, so <strong>H1 is Refuted</strong>.</p>
-<p>Where the 117 non-survivors come from:
-- <strong>48 are not significant even before calibration.</strong> Of these:
-    - 14 have a zero cell;
+<p>†The label was right for only 76% of the review's sample, so this subset is not cleanly "all drugs" comparisons.</p>
+<ul>
+<li><strong>The preregistered rule.</strong> The paper-cluster lower bound, 64%, is above the 60% bar, so the test reads Refuted.</li>
+<li><strong>With the null's uncertainty</strong> the lower bound is 57%, and the result is Inconclusive.</li>
+<li><strong>The study's verdict is Inconclusive</strong>, for this reason and the null's dependence on its construction (next
+  section).</li>
+</ul>
+<p>Where the 108 non-survivors come from:
+- <strong>45 are not significant even before calibration.</strong> Of these:
+    - 11 have a zero cell;
     - 16 have a recomputed ROR at or below 1;
-    - 5 have an ROR above 1 but fewer than 3 reports;
-    - 13 have an interval that includes 1.
-- <strong>69 are significant before calibration but not after.</strong></p>
+    - 6 have an ROR above 1 but fewer than 3 reports;
+    - 12 have an interval that includes 1.
+- <strong>63 are significant before calibration but not after.</strong> These are signals with recomputed RORs between about 1
+  and 3.35.</p>
 <p>Five signals with only 1 or 2 recomputed reports survive calibration. The preregistered survival rule has no case
 minimum.</p>
-<figure><a href="results/figures/F3_survival.png"><img src="results/figures/F3_survival.png" alt="The share of published signals that survive"></a><figcaption>Share of eligible published signals that survive: recomputed ROR &gt; 1 and calibrated BH q &lt; 0.05 (or, for the uncalibrated row, recomputed lower bound &gt; 1 with at least 3 reports). Bars: paper-cluster bootstrap 95% intervals where computed. The last row (second colour) is exploratory, added after the primary results were seen: the fitted null&#x27;s width with its centre moved to zero.</figcaption></figure>
-<h3>The null and why it matters (<code>results/figures/F2_null.png</code>, <code>results/tables/null_sensitivity.json</code>)</h3>
-<p>The negative controls sit mostly below zero on the log scale. A drug in the control set is, on average, reported with
-these unrelated events less often than the rest of FAERS is. Only 14 of the 190 controls (7%) are significant before
+<figure><a href="results/figures/F3_survival.png"><img src="results/figures/F3_survival.png" alt="The share of published signals that survive"></a><figcaption>Share of eligible published signals that survive: recomputed ROR &gt; 1 and calibrated BH q &lt; 0.05 (or, for the uncalibrated row, recomputed lower bound &gt; 1 with at least 3 reports). Bars: paper-cluster bootstrap 95% intervals where computed; the second row&#x27;s interval also resamples the negative controls and refits the null in each draw (added after review, D4). FAERS era only: windows truncated to start at 2012Q4 (the preregistered sensitivity, run after review). †The &#x27;all drugs&#x27; comparison label was right for only 76% of a fresh review sample. The last row (second colour) is exploratory, added after the primary results were seen: the fitted null&#x27;s width with its centre moved to zero.</figcaption></figure>
+<h3>The null and why it decides the answer (<code>results/figures/F2_null.png</code>, <code>results/tables/null_sensitivity.json</code>)</h3>
+<p>The negative controls sit mostly below zero on the log scale. Only 14 of the 190 (7%) are significant before
 calibration.</p>
-<p>A plausible cause is the reporting background. Large patient-support programmes generate many reports listing
-everyday conditions such as sinusitis, allergies and dermatitis. Those reports inflate the comparison group's rate
-for the control outcomes. This study did not test that explanation.</p>
-<p>Calibrating against a null centred at an ROR of 0.43 lowers the bar for a positive signal. The exploratory grid
-(<code>null_sensitivity.json</code>) shows survival depending on both the null's centre and its width:</p>
+<p>The review showed why:
+- <strong>It is not an artefact of the PT mapping.</strong> Leaving out any one PT or drug moves μ only between −0.91 and −0.76.
+- <strong>It is not mainly the chronic outcomes.</strong> Acute-type and chronic-type control outcomes give μ = −0.73 and −1.01.
+- <strong>It is a property of the primary-suspect ROR for unrelated pairs.</strong> A drug's primary-suspect reports concentrate on
+  the events it is suspected of, so an unrelated event turns up in them less often than in the rest of FAERS. The drug
+  explains more of the variation in control RORs than the event does.</p>
+<p>Calibrating against a null centred at an ROR of about 0.4 lowers the bar for a positive signal. The exploratory grid
+shows survival depending on both the null's centre and its width:</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -287,94 +338,104 @@ for the control outcomes. This study did not test that explanation.</p>
 <tbody>
 <tr>
 <td>−0.85 (fitted)</td>
-<td>90%</td>
-<td>84%</td>
+<td>91%</td>
+<td>83%</td>
 <td><strong>71%</strong></td>
-<td>62%</td>
+<td>61%</td>
 </tr>
 <tr>
 <td>−0.50</td>
 <td>85%</td>
-<td>72%</td>
-<td>62%</td>
-<td>52%</td>
+<td>71%</td>
+<td>60%</td>
+<td>51%</td>
 </tr>
 <tr>
 <td>−0.25</td>
 <td>78%</td>
-<td>66%</td>
-<td>54%</td>
-<td>42%</td>
+<td>65%</td>
+<td>53%</td>
+<td>43%</td>
 </tr>
 <tr>
 <td>0</td>
 <td>72%</td>
-<td>59%</td>
-<td>45%</td>
-<td>35%</td>
+<td>58%</td>
+<td>46%</td>
+<td>36%</td>
 </tr>
 </tbody>
 </table></div>
-<p>Survival clears the 60% bar in the fitted corner of the grid, and falls below it once the centre moves towards zero
-at the fitted width.</p>
-<p>The plan's two null fits were meant to bracket notoriety bias. Both are centred well below zero, so neither brackets
-the centre. Whether the published signals' events share the control outcomes' reporting background is untested. This
-is the main limitation of the H1 verdict.</p>
+<p>The review built exploratory nulls closer to the published signals' own events. It paired the 119 control drugs with
+the published signals' PTs: 12,236 pairs, contaminated by some true associations.
+- The pooled centre is μ = −0.16, and survival under it is 32%.
+- After trimming the top decile the centre is −0.42, and survival is 61%.
+- With a centre for each event, survival is 38%.
+- These figures were computed on the pre-review set of 406 signals (<code>review/reviewer_checks/pseudo_null.json</code>).
+- Per-event centres range from −2.5 to above +2.</p>
+<p>Every alternative puts survival between 32% and 61%, around or below the 60% bar. The designated control pairs give
+the most lenient null of all. The plan's assumption (§7) that its two null fits would bracket notoriety bias did not hold.</p>
 <figure><a href="results/figures/F2_null.png"><img src="results/figures/F2_null.png" alt="The empirical null against the published signals"></a><figcaption>Recomputed log RORs of the OHDSI negative-control pairs with at least one report (green), the maximum-likelihood systematic-error distribution fitted to them (black; mu = -0.85, sigma = 0.96), and the recomputed log RORs of the eligible published signals (blue outline).</figcaption></figure>
 <h3>H2: inflation (<code>results/figures/F1_published_vs_recomputed.png</code>)</h3>
 <ul>
-<li><strong>The median.</strong> The published ROR is a median 1.08 times the recomputed one (392 signals with a finite recomputed
-  ROR; 95% CI 1.04–1.16). The upper bound is below 1.25, so <strong>H2 is Refuted</strong>. The all-drugs-only subset gives the
-  same median, 1.08.</li>
+<li><strong>The median.</strong> The published ROR is a median 1.07 times the recomputed one (359 signals with a finite recomputed
+  ROR; 95% CI 1.01–1.16). The upper bound is below 1.25, so <strong>H2 is Refuted</strong>. H2 does not depend on the null.</li>
 <li><strong>The spread.</strong><ul>
-<li>69 published RORs are more than twice the recomputed value, and 50 are less than half of it.</li>
-<li>So the protocol reproduces published values on average, but not signal by signal.</li>
-<li>Papers' own choices (comparators, roles, deduplication, MedDRA level, date handling) plausibly account for the
-spread. This study cannot attribute it.</li>
+<li>57 published RORs are more than twice the recomputed value, and 44 are less than half of it.</li>
+<li>Papers' own choices plausibly account for much of this: comparators, roles, deduplication, combination products,
+and MedDRA version.</li>
+<li>On MedDRA version: FAERS keeps each quarter in the version current at release. So for 48 of the pre-review 406
+signals, the event's PT did not exist for part of the window, for example "acute kidney injury" before 2013. Papers
+that recode to a current version count reports this protocol misses. Survival among those 48 was 73%, against
+71% overall, so this did not bias survival.</li>
 </ul>
 </li>
 </ul>
-<figure><a href="results/figures/F1_published_vs_recomputed.png"><img src="results/figures/F1_published_vs_recomputed.png" alt="Published against recomputed RORs"></a><figcaption>Each point is one eligible published signal (n = 392) whose recomputation gave an estimate. Solid line: identity; dotted: published = 1.25 x recomputed. Blue: recomputed ROR &gt; 1 and calibrated BH q &lt; 0.05 against the MLE empirical null.</figcaption></figure>
+<figure><a href="results/figures/F1_published_vs_recomputed.png"><img src="results/figures/F1_published_vs_recomputed.png" alt="Published against recomputed RORs"></a><figcaption>Each point is one eligible published signal (n = 359) whose recomputation gave an estimate. Solid line: identity; dotted: published = 1.25 x recomputed. Blue: recomputed ROR &gt; 1 and calibrated BH q &lt; 0.05 against the MLE empirical null.</figcaption></figure>
 <h3>Who survives (secondary, preregistered)</h3>
 <ul>
 <li><strong>Logistic regression of non-survival</strong> on the log published ROR, window length, top-5 journal and publication year
-  (406 signals, paper-clustered SEs):<ul>
-<li>A larger published ROR strongly predicts survival (coefficient −0.96 per log unit, p &lt; 0.001).</li>
-<li>Later publication years survive slightly more often (coefficient −0.47 per year, p = 0.025). By year: 2023 67%,
-2024 67%, 2025 76%.</li>
+  (370 signals, paper-clustered SEs):<ul>
+<li>A larger published ROR strongly predicts survival (coefficient −0.96 per log unit, p &lt; 0.001). This is expected,
+given the effect-size bar above.</li>
+<li>Later publication years survive somewhat more often (coefficient −0.52 per year, p = 0.017). By year: 2023 62%,
+2024 66%, 2025 77%.</li>
 <li>Window length and journal show nothing detectable.</li>
 </ul>
 </li>
-<li><strong>Adding the published case count</strong> is possible only for the 72 signals that report one. A larger count also
-  predicts survival (coefficient −0.60 per log unit, p = 0.018).</li>
-<li><strong>By paper.</strong> 18 of the 142 papers have no surviving signal, and 76 have all of theirs survive.</li>
+<li><strong>Adding the published case count</strong> is possible only for the 69 signals that report one. A larger count also
+  predicts survival (coefficient −0.63 per log unit, p = 0.023).</li>
+<li><strong>By paper.</strong> 17 of the 132 papers have no surviving signal, and 72 have all of theirs survive.</li>
 </ul>
 <h2>What this does and does not show</h2>
 <ul>
 <li><strong>It shows:</strong><ul>
-<li>most published FAERS signals with large RORs reappear under one transparent protocol;</li>
-<li>published and recomputed RORs agree on average;</li>
-<li>weak published signals (ROR below about 5) often do not survive calibration.</li>
+<li>published FAERS signals with large RORs almost always reappear under one transparent protocol;</li>
+<li>published and recomputed RORs agree on average, so there is no systematic inflation;</li>
+<li>weak published signals (ROR below about 5) survive about half the time or less.</li>
 </ul>
 </li>
-<li><strong>It does not show that most published signals are robust.</strong> The headline share swings from 71% to 45% with the
-  null's centre, and the negative-control null for FAERS is centred far from zero for reasons this study did not
-  establish.</li>
+<li><strong>It does not show whether most published signals are robust.</strong> The share is 71% under the preregistered null and
+  32–61% under others. No FAERS-specific null is established, and the designated negative controls give the most
+  lenient one.</li>
 <li><strong>One protocol by design.</strong> A paper's comparator, subgroup or role choices can explain non-replication. This
   measures robustness to one fixed recipe plus calibration, not error or misconduct.</li>
 <li><strong>Selection.</strong><ul>
 <li>Only abstract-level signals with a single ingredient, a PT-named event and a stated window are included.
 Class-level, SMQ-level and grouped-event signals are excluded, and they may behave differently.</li>
-<li>US spellings missing from the fixed map (for example "hyperprolactinemia", "gynecomastia") still fail the PT rule.</li>
+<li>The spelling map misses some US spellings: 19 of 313 rejected events would pass with a fuller map.</li>
 </ul>
 </li>
-<li><strong>Extraction.</strong> Precision 0.96 on the validation sample, so a small share of the 406 may be mis-extracted.</li>
+<li><strong>Extraction.</strong> Precision was 0.90 in the review's sample, with errors clustered by paper. The 26 known-wrong
+  signals are removed, but similar errors likely remain among the rest at a few per cent.</li>
 <li><strong>Pharmacovigilance limits.</strong> FAERS reports are not incidences. No causal claim about any drug is made.</li>
 </ul>
 <h2>Process and deviations</h2>
 <ul>
 <li><strong>Preregistration.</strong> The plan (<code>plan.md</code>, 2f4c30d) was committed before any signal was extracted.<ul>
-<li>The negative-control mapping and all pipeline code were committed before the outputs they produced.</li>
+<li>The negative-control mapping and the primary pipeline's code were committed before the outputs they produced.</li>
+<li>The exploratory <code>null_sensitivity.py</code>, a revision of <code>figures.py</code> and the report builder were committed with
+their outputs (d62a942).</li>
 </ul>
 </li>
 <li><strong>D1:</strong> a larger token budget for 64 extraction failures.</li>
@@ -383,11 +444,22 @@ Class-level, SMQ-level and grouped-event signals are excluded, and they may beha
 <li><strong>D3:</strong> after the first analysis, two implementation errors were found and corrected.<ul>
 <li>The plan's per-paper cap applies to fully eligible signals, but the code capped before the PT rule.</li>
 <li>The spelling map doubled a leading "o" ("ooesophagitis").</li>
-<li>Both the as-run results (<code>results/asrun/</code>) and the corrected ones are reported. The verdicts are the same.</li>
+<li>The fix drew 68 new signals, and one more was re-keyed by the spelling fix. Both the as-run results
+(<code>results/asrun/</code>) and the corrected ones were kept. The verdicts were the same.</li>
 </ul>
 </li>
-<li><strong>The null-centre sensitivity</strong> (<code>code/null_sensitivity.py</code>) and the last row of F3 are exploratory. They were added
-  after the results were seen.</li>
+<li><strong>The independent review</strong> (<code>review/review.md</code>) recommended "fix first". It found:<ul>
+<li>the 26 wrong signals;</li>
+<li>the mapping errors;</li>
+<li>the missed FAERS-only sensitivity;</li>
+<li>the H1 interval's omission of null uncertainty;</li>
+<li>and it recommended the Inconclusive tag.</li>
+</ul>
+</li>
+<li><strong>D4 records the post-review work.</strong> The verdicts of the preregistered tests did not change, and the study's tag
+  became Inconclusive.</li>
+<li><strong>Exploratory, added after results were seen:</strong> the null-centre sensitivity (<code>code/null_sensitivity.py</code>), the
+  last row of F3, the null-propagated interval, and the review's event-matched nulls.</li>
 </ul>
 <h2>Reproducing it</h2>
 <p><code>code/fetch_epmc.py</code>, <code>code/extract_signals.py v2</code>, <code>code/fetch_faers.py</code>, <code>code/faers_db.py</code>,
@@ -395,7 +467,8 @@ Class-level, SMQ-level and grouped-event signals are excluded, and they may beha
 <code>code/null_sensitivity.py</code>, <code>code/figures.py</code>.</p>
 <ul>
 <li><strong>The extraction validation</strong> is in <code>code/validation_adjudication.py</code> (rounds 1 and 2) and
-  <code>results/tables/extraction_validation*.{csv,json}</code>.</li>
+  <code>results/tables/extraction_validation*.{csv,json}</code>. The review's fresh sample is in
+  <code>review/reviewer_checks/fresh_sample_adjudication.csv</code>.</li>
 <li><strong>Results</strong> are in <code>results/tables/</code>: <code>primary.json</code>, <code>signals_results.csv</code>, <code>pipeline_check.csv</code> and
   <code>null_sensitivity.json</code>.</li>
 </ul>

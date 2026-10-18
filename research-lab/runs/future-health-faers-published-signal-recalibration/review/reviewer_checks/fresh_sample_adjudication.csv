@@ -1,0 +1,149 @@
+sample_kind,paper,k,drug,ingredient,event,estimate,comparison,extraction_correct,error,mapping_ok,comparison_label_ok,note
+random,41560737,0,bortezomib,bortezomib,autonomic neuropathy,70.16,all drugs,1,,1,1,
+random,41560737,2,ixazomib,ixazomib,burning feet syndrome,16.61,all drugs,1,,1,1,
+random,37536976,0,Imatinib,imatinib,periorbital oedema,24.931,all drugs,1,,1,1,
+random,37536976,1,Dasatinib,dasatinib,chylothorax,161.427,all drugs,1,,1,1,
+random,37536976,2,Nilotinib,nilotinib,nipple swelling,48.796,all drugs,1,,1,1,
+random,37536976,4,Ponatinib,ponatinib,gallbladder oedema,77.996,all drugs,1,,1,1,
+random,37536976,7,Dasatinib,dasatinib,pulmonary oedema,11.217,all drugs,1,,1,1,
+random,41118058,1,ublituximab,ublituximab,urinary tract infection,4.31,all drugs,1,,1,1,
+random,41118058,2,ublituximab,ublituximab,Respiratory tract infection,7.39,all drugs,1,,1,1,
+random,41118058,3,ublituximab,ublituximab,alopecia,2.06,all drugs,1,,1,1,
+random,41118058,4,ublituximab,ublituximab,headache,2.55,all drugs,1,,1,1,
+random,37130046,0,ipilimumab,ipilimumab,uveitis,6.73,all drugs,1,,1,1,
+random,40936323,0,Dimethyl fumarate,dimethyl fumarate,spinal fusion fracture,13.13,all drugs,1,,1,1,
+random,40936323,6,Dimethyl fumarate,dimethyl fumarate,forearm fracture,10.29,subgroup,1,,1,1,
+random,40936323,7,Dimethyl fumarate,dimethyl fumarate,ankle fracture,5.63,subgroup,1,,1,1,
+random,38783948,0,Lumateperone,lumateperone,mania,73.82,all drugs,1,,1,1,
+random,38783948,2,Lumateperone,lumateperone,hypomania,34.74,all drugs,1,,1,1,
+random,38783948,4,Lumateperone,lumateperone,urinary retention,3.59,all drugs,1,,1,1,
+random,38783948,6,Lumateperone,lumateperone,serotonin syndrome,8.69,all drugs,1,,1,1,
+random,38027003,3,Sacituzumab govitecan,sacituzumab,heart rate increased,5.11,all drugs,1,,1,1,
+random,38027003,4,Sacituzumab govitecan,sacituzumab,sepsis,4.77,all drugs,1,,1,1,
+random,38027003,5,Sacituzumab govitecan,sacituzumab,cholestasis,6.28,all drugs,1,,1,1,
+random,38027003,6,Sacituzumab govitecan,sacituzumab,blood bilirubin increased,4.65,all drugs,1,,1,1,
+random,38027003,7,Sacituzumab govitecan,sacituzumab,meningitis,7.23,all drugs,1,,1,1,
+random,38041205,0,danaparoid,danaparoid,thrombocytopenia,37.61,all drugs,1,,1,1,
+random,38041205,1,eptifibatide,eptifibatide,thrombocytopenia,34.75,all drugs,1,,1,1,
+random,38041205,2,inotersen,inotersen,thrombocytopenia,34.0,all drugs,1,,1,1,
+random,38041205,3,niraparib,niraparib,thrombocytopenia,30.53,all drugs,1,,1,1,
+random,38041205,4,heparin,heparin,thrombocytopenia,28.84,all drugs,1,,1,1,
+random,40828435,1,entecavir,entecavir,metabolic acidosis,2.36,unclear,1,,1,1,
+random,40828435,3,entecavir,entecavir,cell death,16.58,unclear,1,,1,1,
+random,40828435,5,tenofovir,tenofovir,vitamin D deficiency,27.7,unclear,1,,1,1,
+random,40828435,7,tenofovir,tenofovir,dyslipidaemia,2.85,unclear,1,,1,1,
+random,40828435,9,tenofovir,tenofovir,fat redistribution,28.81,unclear,1,,1,1,
+random,35491805,0,solifenacin,solifenacin,altered state of consciousness,9.71,comparator,1,,1,1,
+random,40329904,0,cenegermin,cenegermin,periorbital pain,25.34,comparator,1,,1,1,
+random,40329904,2,cenegermin,cenegermin,eyelid pain,22.96,comparator,1,,1,1,
+random,40329904,4,cenegermin,cenegermin,eye pain,20.02,comparator,1,,1,1,
+random,40329904,10,cenegermin,cenegermin,surgery,9.57,unclear,1,,1,1,
+random,38034088,3,sildenafil,sildenafil,death,3.211,all drugs,1,,1,1,
+random,38034088,5,tadalafil,tadalafil,priapism,3.64,all drugs,1,,1,1,
+random,38034088,7,vardenafil,vardenafil,drug administration error,2.6,all drugs,1,,1,1,
+random,37996645,5,tetracycline,tetracycline,vanishing bile duct syndrome,4.02,unclear,1,,1,1,probable class estimate (tetracyclines) attributed to the ingredient tetracycline; faithful to the abstract
+random,39840315,0,CsA,cyclosporine,nephropathy toxic,8.26,all drugs,1,,1,0,"subgroup, labelled all drugs"
+random,39840315,1,CsA,cyclosporine,urine output decreased,29.93,all drugs,1,,1,0,subgroup
+random,39840315,2,CsA,cyclosporine,posterior reversible encephalopathy syndrome,6.7,all drugs,1,,1,0,subgroup
+random,39840315,4,TAC,triamcinolone,kidney fibrosis,22.65,all drugs,1,,0,0,"TAC is tacrolimus, mapped to triamcinolone; analysis restricted to paediatric nephrotic-syndrome reports (subgroup)"
+random,39840315,5,TAC,triamcinolone,diabetic ketoacidosis,46.51,all drugs,1,,0,0,as k=4
+random,37240654,0,rosuvastatin,rosuvastatin,myopathy,124.39,all drugs,0,misattributed drug,1,0,daptomycin + statin combination estimate attributed to the statin alone; an interaction analysis
+random,37240654,1,atorvastatin,atorvastatin,myopathy,68.53,all drugs,0,misattributed drug,1,0,daptomycin + statin combination estimate attributed to the statin alone; an interaction analysis
+random,37240654,2,simvastatin,simvastatin,myopathy,94.83,all drugs,0,misattributed drug,1,0,daptomycin + statin combination estimate attributed to the statin alone; an interaction analysis
+random,37240654,3,rosuvastatin,rosuvastatin,rhabdomyolysis,156.34,all drugs,0,misattributed drug,1,0,daptomycin + statin combination estimate attributed to the statin alone; an interaction analysis
+random,37240654,4,simvastatin,simvastatin,rhabdomyolysis,72.65,all drugs,0,misattributed drug,1,0,daptomycin + statin combination estimate attributed to the statin alone; an interaction analysis
+random,37154187,0,remdesivir,remdesivir,renal failure,2.8,all drugs,1,,1,0,"restricted to COVID-19 reports (subgroup), labelled all drugs"
+random,37154187,2,remdesivir,remdesivir,acute kidney injury,16.11,all drugs,1,,1,0,"restricted to COVID-19 reports (subgroup), labelled all drugs"
+random,37154187,8,remdesivir,remdesivir,pulseless electrical activity,43.57,all drugs,1,,1,0,"restricted to COVID-19 reports (subgroup), labelled all drugs"
+random,37154187,10,remdesivir,remdesivir,sinus bradycardia,35.86,all drugs,1,,1,0,"restricted to COVID-19 reports (subgroup), labelled all drugs"
+random,37154187,12,remdesivir,remdesivir,ventricular tachycardia,8.73,all drugs,1,,1,0,"restricted to COVID-19 reports (subgroup), labelled all drugs"
+random,39135789,0,doxycycline,doxycycline,tooth discoloration,20.11,all drugs,1,,1,0,"children under 8 (subgroup), labelled all drugs"
+random,39472591,7,pembrolizumab,pembrolizumab,hypertension,3.75,all drugs,1,,1,0,"within HNSCC-treatment reports (comparator), labelled all drugs; n_cases is the total hypertension count"
+random,40095047,1,daratumumab,daratumumab,cardiac failure,4.42,subgroup,1,,1,1,"RG2 is a comparator (other MM drugs), labelled subgroup; not all drugs either way"
+random,40095047,2,daratumumab,daratumumab,pulmonary embolism,2.44,all drugs,1,,1,1,
+random,40095047,3,daratumumab,daratumumab,deep vein thrombosis,2.95,all drugs,1,,1,1,
+random,40095047,6,isatuximab,isatuximab,atrial fibrillation,2.54,all drugs,1,,1,1,
+random,40095047,11,elotuzumab,elotuzumab,atrial fibrillation,3.68,all drugs,1,,1,1,
+random,40552159,0,irinotecan,irinotecan,skin toxicity,33.89,all drugs,1,,1,1,
+random,40552159,4,irinotecan,irinotecan,aphasia,3.57,all drugs,1,,1,1,
+random,40552159,8,irinotecan,irinotecan,hepatic failure,3.09,all drugs,1,,1,1,
+random,40552159,12,irinotecan,irinotecan,fatigue,4.69,all drugs,0,non-FAERS database,1,1,JADER-specific signal labelled FAERS
+random,40552159,16,irinotecan,irinotecan,hyperammonaemia,7.24,all drugs,0,non-FAERS database,1,1,JADER-specific signal labelled FAERS
+targeted,40567936,0,ruxolitinib,ruxolitinib,anemia,18.49,all drugs,0,non-FAERS database,1,1,the whole study is JADER (propensity-adjusted ROR)
+targeted,40567936,1,ruxolitinib,ruxolitinib,myelosuppression,4.7,all drugs,0,non-FAERS database,1,1,the whole study is JADER (propensity-adjusted ROR)
+targeted,40567936,3,ruxolitinib,ruxolitinib,cardiac failure,2.29,all drugs,0,non-FAERS database,1,1,the whole study is JADER (propensity-adjusted ROR)
+targeted,40567936,5,ruxolitinib,ruxolitinib,herpes zoster,6.4,all drugs,0,non-FAERS database,1,1,the whole study is JADER (propensity-adjusted ROR)
+targeted,40567936,11,ruxolitinib,ruxolitinib,hemorrhage,1.99,all drugs,0,non-FAERS database,1,1,the whole study is JADER (propensity-adjusted ROR)
+targeted,36697083,0,olaparib,olaparib,anemia,4.483,all drugs,0,not a drug-event disproportionality,1,0,"aROR of dose per body weight within olaparib users (round-1 error type, still present)"
+targeted,38936945,0,remdesivir,remdesivir,acute kidney injury,2.45,all drugs,0,non-FAERS database,1,1,"JADER (round-1 error type, still present)"
+targeted,38936945,1,remdesivir,remdesivir,acute kidney injury,2.18,all drugs,0,non-FAERS database,1,1,JADER; adjusted ROR
+targeted,40115262,1,CD,pyrimethamine,dyskinesia,13.81,all drugs,1,,0,0,"CD is carbidopa, mapped to pyrimethamine; background restricted to oral PD drugs (comparator)"
+targeted,39842538,0,amiodarone,amiodarone,hyperthyroidism,39.1,all drugs,1,,1,0,"vs other antiarrhythmics, adults (comparator/subgroup), labelled all drugs"
+targeted,39842538,1,amiodarone,amiodarone,hyperthyroidism,23.4,all drugs,1,,1,0,"as k=0, older adults"
+targeted,39842538,2,amiodarone,amiodarone,hypothyroidism,36.9,all drugs,1,,1,0,as k=0
+targeted,39842538,3,amiodarone,amiodarone,hypothyroidism,24.5,all drugs,1,,1,0,as k=0
+targeted,39842538,6,amiodarone,amiodarone,bradycardia,1.6,subgroup,1,,1,1,
+targeted,38100054,0,trastuzumab deruxtecan,trastuzumab,interstitial lung disease,64.15,all drugs,1,,0,1,trastuzumab deruxtecan mapped to trastuzumab: exposure conflates all trastuzumab products
+targeted,38100054,1,enfortumab vedotin,enfortumab,interstitial lung disease,5.24,all drugs,1,,1,1,
+targeted,38100054,2,trastuzumab emtansine,trastuzumab,interstitial lung disease,3.62,all drugs,1,,0,1,trastuzumab emtansine mapped to trastuzumab
+targeted,38100054,3,brentuximab vedotin,brentuximab vedotin,interstitial lung disease,3.22,all drugs,1,,1,1,
+targeted,38100054,6,inotuzumab ozogamicin,inotuzumab ozogamicin,interstitial lung disease,2.33,all drugs,1,,1,1,
+targeted,40166653,0,trastuzumab deruxtecan,trastuzumab,interstitial lung disease,12.17,all drugs,1,,0,1,trastuzumab deruxtecan mapped to trastuzumab
+targeted,40166653,1,atezolizumab,atezolizumab,interstitial lung disease,6.04,all drugs,1,,1,1,
+targeted,40166653,2,everolimus,everolimus,interstitial lung disease,3.21,all drugs,1,,1,1,
+targeted,40166653,3,abemaciclib,abemaciclib,interstitial lung disease,2.87,all drugs,1,,1,1,
+targeted,40166653,5,olaparib,olaparib,interstitial lung disease,2.29,all drugs,1,,1,1,
+targeted,40620108,0,trastuzumab deruxtecan,trastuzumab,interstitial lung disease,31.28,all drugs,1,,0,1,trastuzumab deruxtecan mapped to trastuzumab
+targeted,40620108,1,trastuzumab emtansine,trastuzumab,interstitial lung disease,6.27,all drugs,1,,0,1,trastuzumab emtansine mapped to trastuzumab
+targeted,40620108,2,pertuzumab,pertuzumab,interstitial lung disease,6.08,all drugs,1,,1,1,
+targeted,40620108,3,trastuzumab,trastuzumab,interstitial lung disease,4.02,all drugs,1,,1,1,plain trastuzumab; its b includes the ADCs
+targeted,40620108,5,lapatinib,lapatinib,interstitial lung disease,1.37,all drugs,1,,1,1,
+targeted,40770257,0,T-DM1,trastuzumab,hepatotoxicity,6.0,all drugs,1,,0,1,T-DM1 mapped to trastuzumab
+targeted,40770257,1,trastuzumab,trastuzumab,hepatotoxicity,2.65,all drugs,1,,1,1,
+targeted,40770257,4,pertuzumab,pertuzumab,hepatotoxicity,1.73,all drugs,1,,1,1,
+targeted,40888754,0,Trastuzumab deruxtecan,trastuzumab,interstitial lung disease,49.04,all drugs,1,,0,1,trastuzumab deruxtecan mapped to trastuzumab
+targeted,41398841,0,trastuzumab deruxtecan,trastuzumab,interstitial lung disease,41.3,all drugs,1,,0,1,trastuzumab deruxtecan mapped to trastuzumab
+targeted,38878281,1,teprotumumab,teprotumumab,eyelid retraction,2094.17,all drugs,1,,1,1,
+targeted,38878281,4,teprotumumab,teprotumumab,inflammatory bowel disease,23.26,all drugs,1,,1,1,
+targeted,38878281,5,teprotumumab,teprotumumab,hyperglycemic hyperosmolar nonketotic syndrome,17.75,all drugs,1,,1,1,
+targeted,39431859,0,bupropion,bupropion,tachycardia,4.2,unclear,1,,1,1,
+targeted,39431859,3,methylphenidate,methylphenidate,palpitations,3.1,unclear,1,,1,1,
+targeted,39431859,5,reboxetine,reboxetine,myocardial infarction,2.7,unclear,1,,1,1,
+targeted,39431859,6,atomoxetine,atomoxetine,hypertension,2.9,unclear,1,,1,1,
+targeted,39431859,7,atomoxetine,atomoxetine,syncope,2.5,unclear,1,,1,1,
+targeted,39906745,0,gold sodium thiomalate,aurothiomalate,pemphigus,266.0,all drugs,1,,1,1,
+targeted,39906745,1,penicillamine,penicillamine,pemphigus,30.5,all drugs,1,,1,1,
+targeted,39906745,2,piroxicam,piroxicam,pemphigus,14.8,all drugs,1,,1,1,
+targeted,39906745,9,nivolumab,nivolumab,pemphigus,2.7,all drugs,1,,1,1,
+targeted,39906745,10,nifedipine,nifedipine,pemphigus,3.0,all drugs,1,,1,1,
+targeted,36909171,0,Methotrexate,methotrexate,interstitial lung disease,4.0,all drugs,1,,1,1,
+targeted,36909171,1,Methotrexate,methotrexate,hepatotoxicity,1.99,all drugs,1,,1,1,
+targeted,36909171,2,Methotrexate,methotrexate,myelosuppression,3.66,all drugs,1,,1,1,
+targeted,36909171,3,Methotrexate,methotrexate,tuberculosis,7.97,all drugs,1,,1,1,
+targeted,39635439,1,irbesartan,irbesartan,rhabdomyolysis,7.76,all drugs,1,,1,1,
+targeted,40133436,0,terazosin,terazosin,orthostatic hypotension,153.96,all drugs,1,,1,1,
+targeted,40133436,1,rasagiline,rasagiline,orthostatic hypotension,37.46,all drugs,1,,1,1,
+targeted,40133436,2,doxazosin,doxazosin,orthostatic hypotension,37.06,all drugs,1,,1,1,
+targeted,40383360,2,semaglutide,semaglutide,diabetic retinopathy,17.28,all drugs,1,,1,1,
+targeted,40814133,1,mesalazine,mesalamine,eosinophilic pneumonia,41.25,all drugs,1,,1,1,
+targeted,36778017,0,nivolumab,nivolumab,Aplastic anaemia,3.05,all drugs,1,,1,1,
+targeted,36778017,1,pembrolizumab,pembrolizumab,Aplastic anaemia,2.33,all drugs,1,,1,1,
+targeted,36778017,2,avelumab,avelumab,Aplastic anaemia,12.63,all drugs,1,,1,1,
+targeted,37507539,4,fluvoxamine,fluvoxamine,rhabdomyolysis,11.64,all drugs,1,,1,1,
+targeted,37507539,8,paroxetine,paroxetine,rhabdomyolysis,1.83,all drugs,1,,1,1,
+targeted,37608525,0,lenvatinib,lenvatinib,cardiac failure,7.7,all drugs,1,,1,1,
+targeted,37608525,1,lenvatinib,lenvatinib,acute myocardial infarction,7.91,all drugs,1,,1,1,
+targeted,37608525,3,sorafenib,sorafenib,acute myocardial infarction,2.22,all drugs,1,,1,1,
+targeted,37608525,4,sorafenib,sorafenib,acute coronary syndrome,2.81,all drugs,1,,1,1,
+targeted,37608525,5,sorafenib,sorafenib,atrial fibrillation,1.82,all drugs,1,,1,1,
+targeted,38179676,0,bosentan,bosentan,liver injury,3.38,comparator,1,,1,1,
+targeted,38860168,5,Liraglutide,liraglutide,pancreatitis,6.83,all drugs,1,,1,1,
+targeted,38902469,1,bosentan,bosentan,hepatocellular injury,5.63,all drugs,1,,1,1,
+targeted,38902469,3,macitentan,macitentan,hepatic failure,1.64,all drugs,1,,1,1,
+targeted,39419623,1,zanubrutinib,zanubrutinib,haemorrhage subcutaneous,190.8,all drugs,1,,1,1,
+targeted,39759530,0,hydroxychloroquine,hydroxychloroquine,pemphigus,282.647,all drugs,1,,1,1,
+targeted,41087308,0,atezolizumab,atezolizumab,nephrotic syndrome,6.84,all drugs,1,,1,1,
+targeted,41087308,1,avelumab,avelumab,nephrotic syndrome,5.54,all drugs,1,,1,1,
+targeted,41087308,2,nivolumab,nivolumab,nephrotic syndrome,4.37,all drugs,1,,1,1,
+targeted,41087308,4,durvalumab,durvalumab,nephrotic syndrome,2.03,all drugs,1,,1,1,
+targeted,41087308,5,ipilimumab,ipilimumab,nephrotic syndrome,2.05,all drugs,1,,1,1,

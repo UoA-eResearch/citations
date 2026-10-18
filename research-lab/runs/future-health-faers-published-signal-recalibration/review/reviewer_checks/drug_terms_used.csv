@@ -1,0 +1,739 @@
+kind,paper,k,drug,ingredient,key,table,n_terms,terms
+signal,35491805,0,solifenacin,solifenacin,solifenacin|solifenacin,d_solifenacin_solifenacin,2,SOLIFENACIN|VESICARE
+signal,36178002,0,romosozumab,romosozumab,romosozumab|romosozumab,d_romosozumab_romosozumab,2,EVENITY|ROMOSOZUMAB
+signal,36178002,1,romosozumab,romosozumab,romosozumab|romosozumab,d_romosozumab_romosozumab,2,EVENITY|ROMOSOZUMAB
+signal,36178002,2,romosozumab,romosozumab,romosozumab|romosozumab,d_romosozumab_romosozumab,2,EVENITY|ROMOSOZUMAB
+signal,36178002,3,romosozumab,romosozumab,romosozumab|romosozumab,d_romosozumab_romosozumab,2,EVENITY|ROMOSOZUMAB
+signal,36178002,4,romosozumab,romosozumab,romosozumab|romosozumab,d_romosozumab_romosozumab,2,EVENITY|ROMOSOZUMAB
+signal,36334066,0,sildenafil,sildenafil,sildenafil|sildenafil,d_sildenafil_sildenafil,5,LIQREV|REVATIO|SILDENAFIL|VIAGRA|VYBRIQUE
+signal,36334066,2,sildenafil,sildenafil,sildenafil|sildenafil,d_sildenafil_sildenafil,5,LIQREV|REVATIO|SILDENAFIL|VIAGRA|VYBRIQUE
+signal,36334066,4,tadalafil,tadalafil,tadalafil|tadalafil,d_tadalafil_tadalafil,7,ADCIRCA|ALYQ|CIALIS|ENTADFI|OPSYNVI|TADALAFIL|TADLIQ
+signal,36334066,8,vardenafil,vardenafil,vardenafil|vardenafil,d_vardenafil_vardenafil,3,LEVITRA|STAXYN|VARDENAFIL
+signal,36334066,10,vardenafil,vardenafil,vardenafil|vardenafil,d_vardenafil_vardenafil,3,LEVITRA|STAXYN|VARDENAFIL
+signal,36495205,0,ingenol mebutate,ingenol mebutate,ingenol mebutate|ingenol mebutate,d_ingenol_mebutate_ingenol_mebutate,1,INGENOL MEBUTATE
+signal,36495205,3,ingenol mebutate,ingenol mebutate,ingenol mebutate|ingenol mebutate,d_ingenol_mebutate_ingenol_mebutate,1,INGENOL MEBUTATE
+signal,36495205,4,imiquimod,imiquimod,imiquimod|imiquimod,d_imiquimod_imiquimod,2,IMIQUIMOD|ZYCLARA
+signal,36495205,5,imiquimod,imiquimod,imiquimod|imiquimod,d_imiquimod_imiquimod,2,IMIQUIMOD|ZYCLARA
+signal,36495205,6,imiquimod,imiquimod,imiquimod|imiquimod,d_imiquimod_imiquimod,2,IMIQUIMOD|ZYCLARA
+signal,36637688,0,alogliptin,alogliptin,alogliptin|alogliptin,d_alogliptin_alogliptin,4,ALOGLIPTIN|KAZANO|NESINA|OSENI
+signal,36697083,0,olaparib,olaparib,olaparib|olaparib,d_olaparib_olaparib,2,LYNPARZA|OLAPARIB
+signal,36778017,0,nivolumab,nivolumab,nivolumab|nivolumab,d_nivolumab_nivolumab,4,NIVOLUMAB|OPDIVO|OPDIVO QVANTIG|OPDUALAG
+signal,36778017,1,pembrolizumab,pembrolizumab,pembrolizumab|pembrolizumab,d_pembrolizumab_pembrolizumab,3,KEYTRUDA|KEYTRUDA QLEX|PEMBROLIZUMAB
+signal,36778017,2,avelumab,avelumab,avelumab|avelumab,d_avelumab_avelumab,2,AVELUMAB|BAVENCIO
+signal,36909171,0,Methotrexate,methotrexate,methotrexate|methotrexate,d_methotrexate_methotrexate,7,JYLAMVO|METHOTREXATE|OTREXUP|RASUVO|REDITREX|TREXALL|XATMEP
+signal,36909171,1,Methotrexate,methotrexate,methotrexate|methotrexate,d_methotrexate_methotrexate,7,JYLAMVO|METHOTREXATE|OTREXUP|RASUVO|REDITREX|TREXALL|XATMEP
+signal,36909171,2,Methotrexate,methotrexate,methotrexate|methotrexate,d_methotrexate_methotrexate,7,JYLAMVO|METHOTREXATE|OTREXUP|RASUVO|REDITREX|TREXALL|XATMEP
+signal,36909171,3,Methotrexate,methotrexate,methotrexate|methotrexate,d_methotrexate_methotrexate,7,JYLAMVO|METHOTREXATE|OTREXUP|RASUVO|REDITREX|TREXALL|XATMEP
+signal,36934109,0,voriconazole,voriconazole,voriconazole|voriconazole,d_voriconazole_voriconazole,2,VFEND|VORICONAZOLE
+signal,36964312,1,remdesivir,remdesivir,remdesivir|remdesivir,d_remdesivir_remdesivir,2,REMDESIVIR|VEKLURY
+signal,36964312,3,remdesivir,remdesivir,remdesivir|remdesivir,d_remdesivir_remdesivir,2,REMDESIVIR|VEKLURY
+signal,37026465,0,gefitinib,gefitinib,gefitinib|gefitinib,d_gefitinib_gefitinib,2,GEFITINIB|IRESSA
+signal,37130046,0,ipilimumab,ipilimumab,ipilimumab|ipilimumab,d_ipilimumab_ipilimumab,2,IPILIMUMAB|YERVOY
+signal,37154187,0,remdesivir,remdesivir,remdesivir|remdesivir,d_remdesivir_remdesivir,2,REMDESIVIR|VEKLURY
+signal,37154187,2,remdesivir,remdesivir,remdesivir|remdesivir,d_remdesivir_remdesivir,2,REMDESIVIR|VEKLURY
+signal,37154187,8,remdesivir,remdesivir,remdesivir|remdesivir,d_remdesivir_remdesivir,2,REMDESIVIR|VEKLURY
+signal,37154187,10,remdesivir,remdesivir,remdesivir|remdesivir,d_remdesivir_remdesivir,2,REMDESIVIR|VEKLURY
+signal,37154187,12,remdesivir,remdesivir,remdesivir|remdesivir,d_remdesivir_remdesivir,2,REMDESIVIR|VEKLURY
+signal,37170890,0,nirmatrelvir,nirmatrelvir,nirmatrelvir|nirmatrelvir,d_nirmatrelvir_nirmatrelvir,1,NIRMATRELVIR
+signal,37170890,1,nirmatrelvir,nirmatrelvir,nirmatrelvir|nirmatrelvir,d_nirmatrelvir_nirmatrelvir,1,NIRMATRELVIR
+signal,37170890,2,nirmatrelvir,nirmatrelvir,nirmatrelvir|nirmatrelvir,d_nirmatrelvir_nirmatrelvir,1,NIRMATRELVIR
+signal,37170890,3,nirmatrelvir,nirmatrelvir,nirmatrelvir|nirmatrelvir,d_nirmatrelvir_nirmatrelvir,1,NIRMATRELVIR
+signal,37170890,4,nirmatrelvir,nirmatrelvir,nirmatrelvir|nirmatrelvir,d_nirmatrelvir_nirmatrelvir,1,NIRMATRELVIR
+signal,37240654,0,rosuvastatin,rosuvastatin,rosuvastatin|rosuvastatin,d_rosuvastatin_rosuvastatin,4,CRESTOR|EZALLOR|ROSUVASTATIN|ROSZET
+signal,37240654,1,atorvastatin,atorvastatin,atorvastatin|atorvastatin,d_atorvastatin_atorvastatin,4,ATORVALIQ|ATORVASTATIN|CADUET|LIPITOR
+signal,37240654,2,simvastatin,simvastatin,simvastatin|simvastatin,d_simvastatin_simvastatin,4,FLOLIPID|SIMVASTATIN|VYTORIN|ZOCOR
+signal,37240654,3,rosuvastatin,rosuvastatin,rosuvastatin|rosuvastatin,d_rosuvastatin_rosuvastatin,4,CRESTOR|EZALLOR|ROSUVASTATIN|ROSZET
+signal,37240654,4,simvastatin,simvastatin,simvastatin|simvastatin,d_simvastatin_simvastatin,4,FLOLIPID|SIMVASTATIN|VYTORIN|ZOCOR
+signal,37265365,1,fludarabine,fludarabine,fludarabine|fludarabine,d_fludarabine_fludarabine,1,FLUDARABINE
+signal,37265365,2,thioguanine,thioguanine,thioguanine|thioguanine,d_thioguanine_thioguanine,2,TABLOID|THIOGUANINE
+signal,37377925,2,cabozantinib,cabozantinib,cabozantinib|cabozantinib,d_cabozantinib_cabozantinib,3,CABOMETYX|CABOZANTINIB|COMETRIQ
+signal,37377925,3,lenvatinib,lenvatinib,lenvatinib|lenvatinib,d_lenvatinib_lenvatinib,2,LENVATINIB|LENVIMA
+signal,37377925,4,sunitinib,sunitinib,sunitinib|sunitinib,d_sunitinib_sunitinib,2,SUNITINIB|SUTENT
+signal,37507539,4,fluvoxamine,fluvoxamine,fluvoxamine|fluvoxamine,d_fluvoxamine_fluvoxamine,1,FLUVOXAMINE
+signal,37507539,8,paroxetine,paroxetine,paroxetine|paroxetine,d_paroxetine_paroxetine,3,BRISDELLE|PAROXETINE|PAXIL
+signal,37536932,0,sevoflurane,sevoflurane,sevoflurane|sevoflurane,d_sevoflurane_sevoflurane,6,PETREM|SEVOFLO|SEVOFLURANE|SEVOSPIRE|SOJOURN|ULTANE
+signal,37536976,0,Imatinib,imatinib,imatinib|imatinib,d_imatinib_imatinib,3,GLEEVEC|IMATINIB|IMKELDI
+signal,37536976,1,Dasatinib,dasatinib,dasatinib|dasatinib,d_dasatinib_dasatinib,3,DASATINIB|PHYRAGO|SPRYCEL
+signal,37536976,2,Nilotinib,nilotinib,nilotinib|nilotinib,d_nilotinib_nilotinib,4,CAVHANZA|DANZITEN|NILOTINIB|TASIGNA
+signal,37536976,4,Ponatinib,ponatinib,ponatinib|ponatinib,d_ponatinib_ponatinib,2,ICLUSIG|PONATINIB
+signal,37536976,7,Dasatinib,dasatinib,dasatinib|dasatinib,d_dasatinib_dasatinib,3,DASATINIB|PHYRAGO|SPRYCEL
+signal,37608525,0,lenvatinib,lenvatinib,lenvatinib|lenvatinib,d_lenvatinib_lenvatinib,2,LENVATINIB|LENVIMA
+signal,37608525,1,lenvatinib,lenvatinib,lenvatinib|lenvatinib,d_lenvatinib_lenvatinib,2,LENVATINIB|LENVIMA
+signal,37608525,3,sorafenib,sorafenib,sorafenib|sorafenib,d_sorafenib_sorafenib,2,NEXAVAR|SORAFENIB
+signal,37608525,4,sorafenib,sorafenib,sorafenib|sorafenib,d_sorafenib_sorafenib,2,NEXAVAR|SORAFENIB
+signal,37608525,5,sorafenib,sorafenib,sorafenib|sorafenib,d_sorafenib_sorafenib,2,NEXAVAR|SORAFENIB
+signal,37610085,0,mepolizumab,mepolizumab,mepolizumab|mepolizumab,d_mepolizumab_mepolizumab,2,MEPOLIZUMAB|NUCALA
+signal,37610085,1,benralizumab,benralizumab,benralizumab|benralizumab,d_benralizumab_benralizumab,2,BENRALIZUMAB|FASENRA
+signal,37849732,0,levetiracetam,levetiracetam,levetiracetam|levetiracetam,d_levetiracetam_levetiracetam,5,ELEPSIA|KEPPRA|LEVETIRACETAM|ROWEEPRA|SPRITAM
+signal,37849732,1,lamotrigine,lamotrigine,lamotrigine|lamotrigine,d_lamotrigine_lamotrigine,3,LAMICTAL|LAMOTRIGINE|SUBVENITE
+signal,37849732,2,oxcarbazepine,oxcarbazepine,oxcarbazepine|oxcarbazepine,d_oxcarbazepine_oxcarbazepine,3,OXCARBAZEPINE|OXTELLAR|TRILEPTAL
+signal,37849732,4,lacosamide,lacosamide,lacosamide|lacosamide,d_lacosamide_lacosamide,3,LACOSAMIDE|MOTPOLY|VIMPAT
+signal,37849732,5,topiramate,topiramate,topiramate|topiramate,d_topiramate_topiramate,6,EPRONTIA|QSYMIA|QUDEXY|TOPAMAX|TOPIRAMATE|TROKENDI
+signal,37869095,3,Sacituzumab Govitecan,sacituzumab,sacituzumab|sacituzumab govitecan,d_sacituzumab_sacituzumab_govitecan,3,SACITUZUMAB|SACITUZUMAB GOVITECAN|TRODELVY
+signal,37869095,4,Sacituzumab Govitecan,sacituzumab,sacituzumab|sacituzumab govitecan,d_sacituzumab_sacituzumab_govitecan,3,SACITUZUMAB|SACITUZUMAB GOVITECAN|TRODELVY
+signal,37869095,5,Sacituzumab Govitecan,sacituzumab,sacituzumab|sacituzumab govitecan,d_sacituzumab_sacituzumab_govitecan,3,SACITUZUMAB|SACITUZUMAB GOVITECAN|TRODELVY
+signal,37869095,6,Sacituzumab Govitecan,sacituzumab,sacituzumab|sacituzumab govitecan,d_sacituzumab_sacituzumab_govitecan,3,SACITUZUMAB|SACITUZUMAB GOVITECAN|TRODELVY
+signal,37869095,7,Sacituzumab Govitecan,sacituzumab,sacituzumab|sacituzumab govitecan,d_sacituzumab_sacituzumab_govitecan,3,SACITUZUMAB|SACITUZUMAB GOVITECAN|TRODELVY
+signal,37996645,5,tetracycline,tetracycline,tetracycline|tetracycline,d_tetracycline_tetracycline,4,PYLERA|TETRACYCLINE|VIABECLINE|VITASTEM
+signal,38023143,4,regorafenib,regorafenib,regorafenib|regorafenib,d_regorafenib_regorafenib,2,REGORAFENIB|STIVARGA
+signal,38023143,6,regorafenib,regorafenib,regorafenib|regorafenib,d_regorafenib_regorafenib,2,REGORAFENIB|STIVARGA
+signal,38023143,8,regorafenib,regorafenib,regorafenib|regorafenib,d_regorafenib_regorafenib,2,REGORAFENIB|STIVARGA
+signal,38023143,10,regorafenib,regorafenib,regorafenib|regorafenib,d_regorafenib_regorafenib,2,REGORAFENIB|STIVARGA
+signal,38023143,12,regorafenib,regorafenib,regorafenib|regorafenib,d_regorafenib_regorafenib,2,REGORAFENIB|STIVARGA
+signal,38027003,3,Sacituzumab govitecan,sacituzumab,sacituzumab|sacituzumab govitecan,d_sacituzumab_sacituzumab_govitecan,3,SACITUZUMAB|SACITUZUMAB GOVITECAN|TRODELVY
+signal,38027003,4,Sacituzumab govitecan,sacituzumab,sacituzumab|sacituzumab govitecan,d_sacituzumab_sacituzumab_govitecan,3,SACITUZUMAB|SACITUZUMAB GOVITECAN|TRODELVY
+signal,38027003,5,Sacituzumab govitecan,sacituzumab,sacituzumab|sacituzumab govitecan,d_sacituzumab_sacituzumab_govitecan,3,SACITUZUMAB|SACITUZUMAB GOVITECAN|TRODELVY
+signal,38027003,6,Sacituzumab govitecan,sacituzumab,sacituzumab|sacituzumab govitecan,d_sacituzumab_sacituzumab_govitecan,3,SACITUZUMAB|SACITUZUMAB GOVITECAN|TRODELVY
+signal,38027003,7,Sacituzumab govitecan,sacituzumab,sacituzumab|sacituzumab govitecan,d_sacituzumab_sacituzumab_govitecan,3,SACITUZUMAB|SACITUZUMAB GOVITECAN|TRODELVY
+signal,38034088,3,sildenafil,sildenafil,sildenafil|sildenafil,d_sildenafil_sildenafil,5,LIQREV|REVATIO|SILDENAFIL|VIAGRA|VYBRIQUE
+signal,38034088,5,tadalafil,tadalafil,tadalafil|tadalafil,d_tadalafil_tadalafil,7,ADCIRCA|ALYQ|CIALIS|ENTADFI|OPSYNVI|TADALAFIL|TADLIQ
+signal,38034088,7,vardenafil,vardenafil,vardenafil|vardenafil,d_vardenafil_vardenafil,3,LEVITRA|STAXYN|VARDENAFIL
+signal,38041205,0,danaparoid,danaparoid,danaparoid|danaparoid,d_danaparoid_danaparoid,1,DANAPAROID
+signal,38041205,1,eptifibatide,eptifibatide,eptifibatide|eptifibatide,d_eptifibatide_eptifibatide,1,EPTIFIBATIDE
+signal,38041205,2,inotersen,inotersen,inotersen|inotersen,d_inotersen_inotersen,2,INOTERSEN|TEGSEDI
+signal,38041205,3,niraparib,niraparib,niraparib|niraparib,d_niraparib_niraparib,3,AKEEGA|NIRAPARIB|ZEJULA
+signal,38041205,4,heparin,heparin,heparin|heparin,d_heparin_heparin,1,HEPARIN
+signal,38100054,0,trastuzumab deruxtecan,trastuzumab,trastuzumab|trastuzumab deruxtecan,d_trastuzumab_trastuzumab_deruxtecan,13,ENHERTU|HERCEPTIN|HERCEPTIN HYLECTA|HERCESSI|HERZUMA|KADCYLA|KANJINTI|OGIVRI|ONTRUZANT|PHESGO|TRASTUZUMAB|TRASTUZUMAB DERUXTECAN|TRAZIMERA
+signal,38100054,1,enfortumab vedotin,enfortumab,enfortumab|enfortumab vedotin,d_enfortumab_enfortumab_vedotin,3,ENFORTUMAB|ENFORTUMAB VEDOTIN|PADCEV
+signal,38100054,2,trastuzumab emtansine,trastuzumab,trastuzumab|trastuzumab emtansine,d_trastuzumab_trastuzumab_emtansine,13,ENHERTU|HERCEPTIN|HERCEPTIN HYLECTA|HERCESSI|HERZUMA|KADCYLA|KANJINTI|OGIVRI|ONTRUZANT|PHESGO|TRASTUZUMAB|TRASTUZUMAB EMTANSINE|TRAZIMERA
+signal,38100054,3,brentuximab vedotin,brentuximab vedotin,brentuximab vedotin|brentuximab vedotin,d_brentuximab_vedotin_brentuximab_vedotin,2,ADCETRIS|BRENTUXIMAB VEDOTIN
+signal,38100054,6,inotuzumab ozogamicin,inotuzumab ozogamicin,inotuzumab ozogamicin|inotuzumab ozogamicin,d_inotuzumab_ozogamicin_inotuzumab_ozogami,2,BESPONSA|INOTUZUMAB OZOGAMICIN
+signal,38143955,0,nivolumab,nivolumab,nivolumab|nivolumab,d_nivolumab_nivolumab,4,NIVOLUMAB|OPDIVO|OPDIVO QVANTIG|OPDUALAG
+signal,38156529,0,secukinumab,secukinumab,secukinumab|secukinumab,d_secukinumab_secukinumab,2,COSENTYX|SECUKINUMAB
+signal,38156529,1,levofloxacin,levofloxacin,levofloxacin|levofloxacin,d_levofloxacin_levofloxacin,2,LEVAQUIN|LEVOFLOXACIN
+signal,38156529,2,pregabalin,pregabalin,pregabalin|pregabalin,d_pregabalin_pregabalin,3,BONQAT|LYRICA|PREGABALIN
+signal,38179676,0,bosentan,bosentan,bosentan|bosentan,d_bosentan_bosentan,2,BOSENTAN|TRACLEER
+signal,38294705,0,mepolizumab,mepolizumab,mepolizumab|mepolizumab,d_mepolizumab_mepolizumab,2,MEPOLIZUMAB|NUCALA
+signal,38294705,1,omalizumab,omalizumab,omalizumab|omalizumab,d_omalizumab_omalizumab,3,OMALIZUMAB|OMLYCLO|XOLAIR
+signal,38294705,2,benralizumab,benralizumab,benralizumab|benralizumab,d_benralizumab_benralizumab,2,BENRALIZUMAB|FASENRA
+signal,38295607,0,niraparib,niraparib,niraparib|niraparib,d_niraparib_niraparib,3,AKEEGA|NIRAPARIB|ZEJULA
+signal,38549677,1,lurbinectedin,lurbinectedin,lurbinectedin|lurbinectedin,d_lurbinectedin_lurbinectedin,2,LURBINECTEDIN|ZEPZELCA
+signal,38549677,2,lurbinectedin,lurbinectedin,lurbinectedin|lurbinectedin,d_lurbinectedin_lurbinectedin,2,LURBINECTEDIN|ZEPZELCA
+signal,38549677,3,lurbinectedin,lurbinectedin,lurbinectedin|lurbinectedin,d_lurbinectedin_lurbinectedin,2,LURBINECTEDIN|ZEPZELCA
+signal,38552079,0,nivolumab,nivolumab,nivolumab|nivolumab,d_nivolumab_nivolumab,4,NIVOLUMAB|OPDIVO|OPDIVO QVANTIG|OPDUALAG
+signal,38552079,1,pembrolizumab,pembrolizumab,pembrolizumab|pembrolizumab,d_pembrolizumab_pembrolizumab,3,KEYTRUDA|KEYTRUDA QLEX|PEMBROLIZUMAB
+signal,38552079,2,ipilimumab,ipilimumab,ipilimumab|ipilimumab,d_ipilimumab_ipilimumab,2,IPILIMUMAB|YERVOY
+signal,38552079,3,atezolizumab,atezolizumab,atezolizumab|atezolizumab,d_atezolizumab_atezolizumab,3,ATEZOLIZUMAB|TECENTRIQ|TECENTRIQ HYBREZA
+signal,38556566,1,clozapine,clozapine,clozapine|clozapine,d_clozapine_clozapine,3,CLOZAPINE|CLOZARIL|VERSACLOZ
+signal,38556566,2,clozapine,clozapine,clozapine|clozapine,d_clozapine_clozapine,3,CLOZAPINE|CLOZARIL|VERSACLOZ
+signal,38556566,4,clozapine,clozapine,clozapine|clozapine,d_clozapine_clozapine,3,CLOZAPINE|CLOZARIL|VERSACLOZ
+signal,38556566,7,clozapine,clozapine,clozapine|clozapine,d_clozapine_clozapine,3,CLOZAPINE|CLOZARIL|VERSACLOZ
+signal,38556566,8,clozapine,clozapine,clozapine|clozapine,d_clozapine_clozapine,3,CLOZAPINE|CLOZARIL|VERSACLOZ
+signal,38676603,1,colistin,colistin,colistin|colistin,d_colistin_colistin,3,COLISTIN|COLY MYCIN M|CORTISPORIN-TC
+signal,38722712,3,ivabradine,ivabradine,ivabradine|ivabradine,d_ivabradine_ivabradine,2,CORLANOR|IVABRADINE
+signal,38722712,5,ivabradine,ivabradine,ivabradine|ivabradine,d_ivabradine_ivabradine,2,CORLANOR|IVABRADINE
+signal,38724914,0,Oseltamivir,oseltamivir,oseltamivir|oseltamivir,d_oseltamivir_oseltamivir,2,OSELTAMIVIR|TAMIFLU
+signal,38724914,2,Oseltamivir,oseltamivir,oseltamivir|oseltamivir,d_oseltamivir_oseltamivir,2,OSELTAMIVIR|TAMIFLU
+signal,38724914,7,Oseltamivir,oseltamivir,oseltamivir|oseltamivir,d_oseltamivir_oseltamivir,2,OSELTAMIVIR|TAMIFLU
+signal,38724914,10,Baloxavir Marboxil,baloxavir marboxil,baloxavir marboxil|baloxavir marboxil,d_baloxavir_marboxil_baloxavir_marboxil,2,BALOXAVIR MARBOXIL|XOFLUZA
+signal,38724914,12,Baloxavir Marboxil,baloxavir marboxil,baloxavir marboxil|baloxavir marboxil,d_baloxavir_marboxil_baloxavir_marboxil,2,BALOXAVIR MARBOXIL|XOFLUZA
+signal,38760615,1,teprotumumab,teprotumumab,teprotumumab|teprotumumab,d_teprotumumab_teprotumumab,2,TEPEZZA|TEPROTUMUMAB
+signal,38783948,0,Lumateperone,lumateperone,lumateperone|lumateperone,d_lumateperone_lumateperone,2,CAPLYTA|LUMATEPERONE
+signal,38783948,2,Lumateperone,lumateperone,lumateperone|lumateperone,d_lumateperone_lumateperone,2,CAPLYTA|LUMATEPERONE
+signal,38783948,4,Lumateperone,lumateperone,lumateperone|lumateperone,d_lumateperone_lumateperone,2,CAPLYTA|LUMATEPERONE
+signal,38783948,6,Lumateperone,lumateperone,lumateperone|lumateperone,d_lumateperone_lumateperone,2,CAPLYTA|LUMATEPERONE
+signal,38831641,0,acalabrutinib,acalabrutinib,acalabrutinib|acalabrutinib,d_acalabrutinib_acalabrutinib,2,ACALABRUTINIB|CALQUENCE
+signal,38831641,2,acalabrutinib,acalabrutinib,acalabrutinib|acalabrutinib,d_acalabrutinib_acalabrutinib,2,ACALABRUTINIB|CALQUENCE
+signal,38831641,3,acalabrutinib,acalabrutinib,acalabrutinib|acalabrutinib,d_acalabrutinib_acalabrutinib,2,ACALABRUTINIB|CALQUENCE
+signal,38831641,4,acalabrutinib,acalabrutinib,acalabrutinib|acalabrutinib,d_acalabrutinib_acalabrutinib,2,ACALABRUTINIB|CALQUENCE
+signal,38831641,5,acalabrutinib,acalabrutinib,acalabrutinib|acalabrutinib,d_acalabrutinib_acalabrutinib,2,ACALABRUTINIB|CALQUENCE
+signal,38860168,5,Liraglutide,liraglutide,liraglutide|liraglutide,d_liraglutide_liraglutide,4,LIRAGLUTIDE|SAXENDA|VICTOZA|XULTOPHY
+signal,38878281,1,teprotumumab,teprotumumab,teprotumumab|teprotumumab,d_teprotumumab_teprotumumab,2,TEPEZZA|TEPROTUMUMAB
+signal,38878281,4,teprotumumab,teprotumumab,teprotumumab|teprotumumab,d_teprotumumab_teprotumumab,2,TEPEZZA|TEPROTUMUMAB
+signal,38878281,5,teprotumumab,teprotumumab,teprotumumab|teprotumumab,d_teprotumumab_teprotumumab,2,TEPEZZA|TEPROTUMUMAB
+signal,38902469,1,bosentan,bosentan,bosentan|bosentan,d_bosentan_bosentan,2,BOSENTAN|TRACLEER
+signal,38902469,3,macitentan,macitentan,macitentan|macitentan,d_macitentan_macitentan,3,MACITENTAN|OPSUMIT|OPSYNVI
+signal,38936945,0,remdesivir,remdesivir,remdesivir|remdesivir,d_remdesivir_remdesivir,2,REMDESIVIR|VEKLURY
+signal,38936945,1,remdesivir,remdesivir,remdesivir|remdesivir,d_remdesivir_remdesivir,2,REMDESIVIR|VEKLURY
+signal,38948471,2,capecitabine,capecitabine,capecitabine|capecitabine,d_capecitabine_capecitabine,2,CAPECITABINE|XELODA
+signal,38948471,4,capecitabine,capecitabine,capecitabine|capecitabine,d_capecitabine_capecitabine,2,CAPECITABINE|XELODA
+signal,39081961,0,lisinopril,lisinopril,lisinopril|lisinopril,d_lisinopril_lisinopril,5,LISINOPRIL|PRINIVIL|QBRELIS|ZESTORETIC|ZESTRIL
+signal,39081961,1,enalapril,enalapril,enalapril|enalapril,d_enalapril_enalapril,4,ENALAPRIL|EPANED|VASERETIC|VASOTEC
+signal,39081961,2,perindopril,perindopril,perindopril|perindopril,d_perindopril_perindopril,3,ACEON|PERINDOPRIL|PRESTALIA
+signal,39081961,3,alteplase,alteplase,alteplase|alteplase,d_alteplase_alteplase,2,ACTIVASE|ALTEPLASE
+signal,39081961,4,ramipril,ramipril,ramipril|ramipril,d_ramipril_ramipril,3,ALTACE|RAMIPRIL|VOSTALLY
+signal,39135789,0,doxycycline,doxycycline,doxycycline|doxycycline,d_doxycycline_doxycycline,15,ACTICLATE|ADOXA|ALODOX|AVIDOXY|DORYX|DOXY|DOXYCYCLINE|MONDOXYNE|MONODOX|MORGIDOX|OKEBO|ORACEA|PERIOSTAT|TARGADOX|VIBRAMYCIN
+signal,39141075,0,tirzepatide,tirzepatide,tirzepatide|tirzepatide,d_tirzepatide_tirzepatide,3,MOUNJARO|TIRZEPATIDE|ZEPBOUND
+signal,39141075,1,tirzepatide,tirzepatide,tirzepatide|tirzepatide,d_tirzepatide_tirzepatide,3,MOUNJARO|TIRZEPATIDE|ZEPBOUND
+signal,39141075,2,tirzepatide,tirzepatide,tirzepatide|tirzepatide,d_tirzepatide_tirzepatide,3,MOUNJARO|TIRZEPATIDE|ZEPBOUND
+signal,39141075,3,tirzepatide,tirzepatide,tirzepatide|tirzepatide,d_tirzepatide_tirzepatide,3,MOUNJARO|TIRZEPATIDE|ZEPBOUND
+signal,39144621,2,netupitant,netupitant,netupitant|netupitant,d_netupitant_netupitant,2,AKYNZEO|NETUPITANT
+signal,39164512,6,mavacamten,mavacamten,mavacamten|mavacamten,d_mavacamten_mavacamten,2,CAMZYOS|MAVACAMTEN
+signal,39164512,12,mavacamten,mavacamten,mavacamten|mavacamten,d_mavacamten_mavacamten,2,CAMZYOS|MAVACAMTEN
+signal,39286628,0,sevelamer carbonate,sevelamer,sevelamer|sevelamer carbonate,d_sevelamer_sevelamer_carbonate,4,RENAGEL|RENVELA|SEVELAMER|SEVELAMER CARBONATE
+signal,39290710,0,ide-cel,idecabtagene vicleucel,idecabtagene vicleucel|ide-cel,d_idecabtagene_vicleucel_ide_cel,3,ABECMA|IDE-CEL|IDECABTAGENE VICLEUCEL
+signal,39290710,1,ide-cel,idecabtagene vicleucel,idecabtagene vicleucel|ide-cel,d_idecabtagene_vicleucel_ide_cel,3,ABECMA|IDE-CEL|IDECABTAGENE VICLEUCEL
+signal,39290710,3,cilta-cel,ciltacabtagene autoleucel,ciltacabtagene autoleucel|cilta-cel,d_ciltacabtagene_autoleucel_cilta_cel,3,CARVYKTI|CILTA-CEL|CILTACABTAGENE AUTOLEUCEL
+signal,39350843,0,teduglutide,teduglutide,teduglutide|teduglutide,d_teduglutide_teduglutide,2,GATTEX|TEDUGLUTIDE
+signal,39419623,1,zanubrutinib,zanubrutinib,zanubrutinib|zanubrutinib,d_zanubrutinib_zanubrutinib,2,BRUKINSA|ZANUBRUTINIB
+signal,39431859,0,bupropion,bupropion,bupropion|bupropion,d_bupropion_bupropion,6,APLENZIN|AUVELITY|BUPROPION|CONTRAVE|FORFIVO|WELLBUTRIN
+signal,39431859,3,methylphenidate,methylphenidate,methylphenidate|methylphenidate,d_methylphenidate_methylphenidate,12,APTENSIO|CONCERTA|COTEMPLA|DAYTRANA|JORNAY|METADATE|METHYLIN|METHYLPHENIDATE|QUILLICHEW|QUILLIVANT|RELEXXII|RITALIN
+signal,39431859,5,reboxetine,reboxetine,reboxetine|reboxetine,d_reboxetine_reboxetine,1,REBOXETINE
+signal,39431859,6,atomoxetine,atomoxetine,atomoxetine|atomoxetine,d_atomoxetine_atomoxetine,3,ATOMOXETINE|ATONCY|STRATTERA
+signal,39431859,7,atomoxetine,atomoxetine,atomoxetine|atomoxetine,d_atomoxetine_atomoxetine,3,ATOMOXETINE|ATONCY|STRATTERA
+signal,39458907,2,elotuzumab,elotuzumab,elotuzumab|elotuzumab,d_elotuzumab_elotuzumab,2,ELOTUZUMAB|EMPLICITI
+signal,39458907,4,isatuximab,isatuximab,isatuximab|isatuximab,d_isatuximab_isatuximab,2,ISATUXIMAB|SARCLISA
+signal,39458907,8,belantamab mafodotin,belantamab mafodotin,belantamab mafodotin|belantamab mafodotin,d_belantamab_mafodotin_belantamab_mafodoti,2,BELANTAMAB MAFODOTIN|BLENREP
+signal,39458907,10,daratumumab,daratumumab,daratumumab|daratumumab,d_daratumumab_daratumumab,3,DARATUMUMAB|DARZALEX|DARZALEX FASPRO
+signal,39458907,22,elotuzumab,elotuzumab,elotuzumab|elotuzumab,d_elotuzumab_elotuzumab,2,ELOTUZUMAB|EMPLICITI
+signal,39472591,7,pembrolizumab,pembrolizumab,pembrolizumab|pembrolizumab,d_pembrolizumab_pembrolizumab,3,KEYTRUDA|KEYTRUDA QLEX|PEMBROLIZUMAB
+signal,39533148,0,remdesivir,remdesivir,remdesivir|remdesivir,d_remdesivir_remdesivir,2,REMDESIVIR|VEKLURY
+signal,39565078,0,osimertinib,osimertinib,osimertinib|osimertinib,d_osimertinib_osimertinib,2,OSIMERTINIB|TAGRISSO
+signal,39574910,4,mepolizumab,mepolizumab,mepolizumab|mepolizumab,d_mepolizumab_mepolizumab,2,MEPOLIZUMAB|NUCALA
+signal,39574910,5,mepolizumab,mepolizumab,mepolizumab|mepolizumab,d_mepolizumab_mepolizumab,2,MEPOLIZUMAB|NUCALA
+signal,39627439,0,Indocyanine green (ICG),indocyanine green,indocyanine green|indocyanine green,d_indocyanine_green_indocyanine_green,1,INDOCYANINE GREEN
+signal,39627439,1,Indocyanine green (ICG),indocyanine green,indocyanine green|indocyanine green,d_indocyanine_green_indocyanine_green,1,INDOCYANINE GREEN
+signal,39627439,2,Indocyanine green (ICG),indocyanine green,indocyanine green|indocyanine green,d_indocyanine_green_indocyanine_green,1,INDOCYANINE GREEN
+signal,39635439,1,irbesartan,irbesartan,irbesartan|irbesartan,d_irbesartan_irbesartan,3,AVALIDE|AVAPRO|IRBESARTAN
+signal,39659050,2,mogamulizumab,mogamulizumab,mogamulizumab|mogamulizumab,d_mogamulizumab_mogamulizumab,2,MOGAMULIZUMAB|POTELIGEO
+signal,39659050,3,mogamulizumab,mogamulizumab,mogamulizumab|mogamulizumab,d_mogamulizumab_mogamulizumab,2,MOGAMULIZUMAB|POTELIGEO
+signal,39659050,5,mogamulizumab,mogamulizumab,mogamulizumab|mogamulizumab,d_mogamulizumab_mogamulizumab,2,MOGAMULIZUMAB|POTELIGEO
+signal,39659050,7,mogamulizumab,mogamulizumab,mogamulizumab|mogamulizumab,d_mogamulizumab_mogamulizumab,2,MOGAMULIZUMAB|POTELIGEO
+signal,39659050,9,mogamulizumab,mogamulizumab,mogamulizumab|mogamulizumab,d_mogamulizumab_mogamulizumab,2,MOGAMULIZUMAB|POTELIGEO
+signal,39672542,0,cilta-cel,ciltacabtagene autoleucel,ciltacabtagene autoleucel|cilta-cel,d_ciltacabtagene_autoleucel_cilta_cel,3,CARVYKTI|CILTA-CEL|CILTACABTAGENE AUTOLEUCEL
+signal,39672542,4,ide-cel,idecabtagene vicleucel,idecabtagene vicleucel|ide-cel,d_idecabtagene_vicleucel_ide_cel,3,ABECMA|IDE-CEL|IDECABTAGENE VICLEUCEL
+signal,39696617,0,cetirizine,cetirizine,cetirizine|cetirizine,d_cetirizine_cetirizine,11,ALLER-TEC|ALLER-TEC D|ALLEROFF|CETIRIZINE|QUZYTTIR|WAL ZYR 24 HOUR ALLERGY|WAL ZYR D|WAL-ZYR|ZERVIATE|ZYRTEC|ZYRTEC-D
+signal,39696617,2,levocetirizine,levocetirizine,levocetirizine|levocetirizine,d_levocetirizine_levocetirizine,2,LEVOCETIRIZINE|XYZAL
+signal,39696617,4,loratadine,loratadine,loratadine|loratadine,d_loratadine_loratadine,12,ALAVERT|ALAVERT D|ALLERCLEAR|CLARITIN|CLARITIN-D|CLEARTIME INDOOR & OUTDOOR ALLERGIES|LORADAMED|LORATADINE|TAVIST NON-SEDATING|WAL-ITIN|WAL-ITIN D|WAL-VERT
+signal,39696617,6,desloratadine,desloratadine,desloratadine|desloratadine,d_desloratadine_desloratadine,3,CLARINEX|CLARINEX-D|DESLORATADINE
+signal,39696617,8,fexofenadine,fexofenadine,fexofenadine|fexofenadine,d_fexofenadine_fexofenadine,5,ALLEGRA|ALLEGRA-D|FEXOFENADINE|WAL-FEX|WAL-FEX D
+signal,39759530,0,hydroxychloroquine,hydroxychloroquine,hydroxychloroquine|hydroxychloroquine,d_hydroxychloroquine_hydroxychloroquine,3,HYDROXYCHLOROQUINE|PLAQUENIL|SOVUNA
+signal,39797988,0,Ziprasidone,ziprasidone,ziprasidone|ziprasidone,d_ziprasidone_ziprasidone,2,GEODON|ZIPRASIDONE
+signal,39797988,1,aripiprazole,aripiprazole,aripiprazole|aripiprazole,d_aripiprazole_aripiprazole,3,ABILIFY|ARIPIPRAZOLE|OPIPZA
+signal,39804489,1,infliximab,infliximab,infliximab|infliximab,d_infliximab_infliximab,6,AVSOLA|INFLECTRA|INFLIXIMAB|REMICADE|RENFLEXIS|ZYMFENTRA
+signal,39804489,2,etanercept,etanercept,etanercept|etanercept,d_etanercept_etanercept,3,ENBREL|ETANERCEPT|ETICOVO
+signal,39804489,3,adalimumab,adalimumab,adalimumab|adalimumab,d_adalimumab_adalimumab,12,ABRILADA|ADALIMUMAB|AMJEVITA|CYLTEZO|HADLIMA|HULIO|HUMIRA|HYRIMOZ|IDACIO|SIMLANDI|YUFLYMA|YUSIMRY
+signal,39840315,0,CsA,cyclosporine,cyclosporine|csa,d_cyclosporine_csa,13,ATOPICA|CEQUA|CYCLAVANCE|CYCLOSPORINE|GENGRAF|MODULIS|NEORAL|OPTIMMUNE|RESTASIS|SANDIMMUNE|SPORIMUNE|VERKAZIA|VEVYE
+signal,39840315,1,CsA,cyclosporine,cyclosporine|csa,d_cyclosporine_csa,13,ATOPICA|CEQUA|CYCLAVANCE|CYCLOSPORINE|GENGRAF|MODULIS|NEORAL|OPTIMMUNE|RESTASIS|SANDIMMUNE|SPORIMUNE|VERKAZIA|VEVYE
+signal,39840315,2,CsA,cyclosporine,cyclosporine|csa,d_cyclosporine_csa,13,ATOPICA|CEQUA|CYCLAVANCE|CYCLOSPORINE|GENGRAF|MODULIS|NEORAL|OPTIMMUNE|RESTASIS|SANDIMMUNE|SPORIMUNE|VERKAZIA|VEVYE
+signal,39840315,4,TAC,triamcinolone,triamcinolone|tac,d_triamcinolone_tac,14,ALLER-CORT|ALLERNAZE|GENESIS|HEXATRIONE|KENALOG|KOURZEQ|NASACORT|ORALONE|TRIAMCINOLONE|TRIANEX|TRIDERM|TRIESENCE|XIPERE|ZILRETTA
+signal,39840315,5,TAC,triamcinolone,triamcinolone|tac,d_triamcinolone_tac,14,ALLER-CORT|ALLERNAZE|GENESIS|HEXATRIONE|KENALOG|KOURZEQ|NASACORT|ORALONE|TRIAMCINOLONE|TRIANEX|TRIDERM|TRIESENCE|XIPERE|ZILRETTA
+signal,39842538,0,amiodarone,amiodarone,amiodarone|amiodarone,d_amiodarone_amiodarone,3,AMIODARONE|NEXTERONE|PACERONE
+signal,39842538,1,amiodarone,amiodarone,amiodarone|amiodarone,d_amiodarone_amiodarone,3,AMIODARONE|NEXTERONE|PACERONE
+signal,39842538,2,amiodarone,amiodarone,amiodarone|amiodarone,d_amiodarone_amiodarone,3,AMIODARONE|NEXTERONE|PACERONE
+signal,39842538,3,amiodarone,amiodarone,amiodarone|amiodarone,d_amiodarone_amiodarone,3,AMIODARONE|NEXTERONE|PACERONE
+signal,39842538,6,amiodarone,amiodarone,amiodarone|amiodarone,d_amiodarone_amiodarone,3,AMIODARONE|NEXTERONE|PACERONE
+signal,39867657,0,citalopram,citalopram,citalopram|citalopram,d_citalopram_citalopram,2,CELEXA|CITALOPRAM
+signal,39867657,1,citalopram,citalopram,citalopram|citalopram,d_citalopram_citalopram,2,CELEXA|CITALOPRAM
+signal,39867657,2,escitalopram,escitalopram,escitalopram|escitalopram,d_escitalopram_escitalopram,2,ESCITALOPRAM|LEXAPRO
+signal,39867657,3,escitalopram,escitalopram,escitalopram|escitalopram,d_escitalopram_escitalopram,2,ESCITALOPRAM|LEXAPRO
+signal,39867657,4,fluoxetine,fluoxetine,fluoxetine|fluoxetine,d_fluoxetine_fluoxetine,4,FLUOXETINE|PROZAC|RECONCILE|SYMBYAX
+signal,39873334,1,Semaglutide,semaglutide,semaglutide|semaglutide,d_semaglutide_semaglutide,4,OZEMPIC|RYBELSUS|SEMAGLUTIDE|WEGOVY
+signal,39873334,3,dulaglutide,dulaglutide,dulaglutide|dulaglutide,d_dulaglutide_dulaglutide,2,DULAGLUTIDE|TRULICITY
+signal,39906745,0,gold sodium thiomalate,aurothiomalate,aurothiomalate|gold sodium thiomalate,d_aurothiomalate_gold_sodium_thiomalate,2,AUROTHIOMALATE|GOLD SODIUM THIOMALATE
+signal,39906745,1,penicillamine,penicillamine,penicillamine|penicillamine,d_penicillamine_penicillamine,4,AAGYLUR|CUPRIMINE|DEPEN|PENICILLAMINE
+signal,39906745,2,piroxicam,piroxicam,piroxicam|piroxicam,d_piroxicam_piroxicam,2,FELDENE|PIROXICAM
+signal,39906745,9,nivolumab,nivolumab,nivolumab|nivolumab,d_nivolumab_nivolumab,4,NIVOLUMAB|OPDIVO|OPDIVO QVANTIG|OPDUALAG
+signal,39906745,10,nifedipine,nifedipine,nifedipine|nifedipine,d_nifedipine_nifedipine,3,AFEDITAB CR|NIFEDIPINE|PROCARDIA
+signal,39913410,0,nitrofurantoin,nitrofurantoin,nitrofurantoin|nitrofurantoin,d_nitrofurantoin_nitrofurantoin,4,FURADANTIN|MACROBID|MACRODANTIN|NITROFURANTOIN
+signal,39913410,1,minocycline,minocycline,minocycline|minocycline,d_minocycline_minocycline,10,AMZEEQ|ARESTIN|CLEERAVUE-M|EMROSI|MINOCIN|MINOCYCLINE|MINOLIRA|SOLODYN|XIMINO|ZILXI
+signal,39913410,2,nivolumab,nivolumab,nivolumab|nivolumab,d_nivolumab_nivolumab,4,NIVOLUMAB|OPDIVO|OPDIVO QVANTIG|OPDUALAG
+signal,39920868,0,hydralazine,hydralazine,hydralazine|hydralazine,d_hydralazine_hydralazine,2,BIDIL|HYDRALAZINE
+signal,39920868,1,dasatinib,dasatinib,dasatinib|dasatinib,d_dasatinib_dasatinib,3,DASATINIB|PHYRAGO|SPRYCEL
+signal,39920868,2,mesalazine,mesalamine,mesalamine|mesalazine,d_mesalamine_mesalazine,8,APRISO|CANASA|DELZICOL|LIALDA|MESALAMINE|MESALAZINE|PENTASA|ROWASA
+signal,39939437,2,carfilzomib,carfilzomib,carfilzomib|carfilzomib,d_carfilzomib_carfilzomib,2,CARFILZOMIB|KYPROLIS
+signal,40055402,1,omalizumab,omalizumab,omalizumab|omalizumab,d_omalizumab_omalizumab,3,OMALIZUMAB|OMLYCLO|XOLAIR
+signal,40055402,3,omalizumab,omalizumab,omalizumab|omalizumab,d_omalizumab_omalizumab,3,OMALIZUMAB|OMLYCLO|XOLAIR
+signal,40095047,1,daratumumab,daratumumab,daratumumab|daratumumab,d_daratumumab_daratumumab,3,DARATUMUMAB|DARZALEX|DARZALEX FASPRO
+signal,40095047,2,daratumumab,daratumumab,daratumumab|daratumumab,d_daratumumab_daratumumab,3,DARATUMUMAB|DARZALEX|DARZALEX FASPRO
+signal,40095047,3,daratumumab,daratumumab,daratumumab|daratumumab,d_daratumumab_daratumumab,3,DARATUMUMAB|DARZALEX|DARZALEX FASPRO
+signal,40095047,6,isatuximab,isatuximab,isatuximab|isatuximab,d_isatuximab_isatuximab,2,ISATUXIMAB|SARCLISA
+signal,40095047,11,elotuzumab,elotuzumab,elotuzumab|elotuzumab,d_elotuzumab_elotuzumab,2,ELOTUZUMAB|EMPLICITI
+signal,40115262,1,CD,pyrimethamine,pyrimethamine|cd,d_pyrimethamine_cd,3,DARAPRIM|PYRIMETHAMINE|REBALANCE
+signal,40132024,1,Sodium zirconium cyclosilicate,sodium zirconium cyclosilicate,sodium zirconium cyclosilicate|sodium zirconium cyclosilicate,d_sodium_zirconium_cyclosilicate_sodium_zi,2,LOKELMA|SODIUM ZIRCONIUM CYCLOSILICATE
+signal,40132024,2,Sodium zirconium cyclosilicate,sodium zirconium cyclosilicate,sodium zirconium cyclosilicate|sodium zirconium cyclosilicate,d_sodium_zirconium_cyclosilicate_sodium_zi,2,LOKELMA|SODIUM ZIRCONIUM CYCLOSILICATE
+signal,40132024,3,Sodium zirconium cyclosilicate,sodium zirconium cyclosilicate,sodium zirconium cyclosilicate|sodium zirconium cyclosilicate,d_sodium_zirconium_cyclosilicate_sodium_zi,2,LOKELMA|SODIUM ZIRCONIUM CYCLOSILICATE
+signal,40133436,0,terazosin,terazosin,terazosin|terazosin,d_terazosin_terazosin,2,TERAZOSIN|TEZRULY
+signal,40133436,1,rasagiline,rasagiline,rasagiline|rasagiline,d_rasagiline_rasagiline,2,AZILECT|RASAGILINE
+signal,40133436,2,doxazosin,doxazosin,doxazosin|doxazosin,d_doxazosin_doxazosin,2,CARDURA|DOXAZOSIN
+signal,40140707,0,olanzapine,olanzapine,olanzapine|olanzapine,d_olanzapine_olanzapine,4,LYBALVI|OLANZAPINE|SYMBYAX|ZYPREXA
+signal,40140707,2,ziprasidone,ziprasidone,ziprasidone|ziprasidone,d_ziprasidone_ziprasidone,2,GEODON|ZIPRASIDONE
+signal,40140707,3,risperidone,risperidone,risperidone|risperidone,d_risperidone_risperidone,5,PERSERIS|RISPERDAL|RISPERIDONE|RYKINDO|UZEDY
+signal,40140707,4,aripiprazole,aripiprazole,aripiprazole|aripiprazole,d_aripiprazole_aripiprazole,3,ABILIFY|ARIPIPRAZOLE|OPIPZA
+signal,40140707,5,clozapine,clozapine,clozapine|clozapine,d_clozapine_clozapine,3,CLOZAPINE|CLOZARIL|VERSACLOZ
+signal,40165303,0,rotigotine,rotigotine,rotigotine|rotigotine,d_rotigotine_rotigotine,2,NEUPRO|ROTIGOTINE
+signal,40165303,12,rotigotine,rotigotine,rotigotine|rotigotine,d_rotigotine_rotigotine,2,NEUPRO|ROTIGOTINE
+signal,40166653,0,trastuzumab deruxtecan,trastuzumab,trastuzumab|trastuzumab deruxtecan,d_trastuzumab_trastuzumab_deruxtecan,13,ENHERTU|HERCEPTIN|HERCEPTIN HYLECTA|HERCESSI|HERZUMA|KADCYLA|KANJINTI|OGIVRI|ONTRUZANT|PHESGO|TRASTUZUMAB|TRASTUZUMAB DERUXTECAN|TRAZIMERA
+signal,40166653,1,atezolizumab,atezolizumab,atezolizumab|atezolizumab,d_atezolizumab_atezolizumab,3,ATEZOLIZUMAB|TECENTRIQ|TECENTRIQ HYBREZA
+signal,40166653,2,everolimus,everolimus,everolimus|everolimus,d_everolimus_everolimus,5,AFINITOR|EVEROLIMUS|TORPENZ|YULITHIRA|ZORTRESS
+signal,40166653,3,abemaciclib,abemaciclib,abemaciclib|abemaciclib,d_abemaciclib_abemaciclib,2,ABEMACICLIB|VERZENIO
+signal,40166653,5,olaparib,olaparib,olaparib|olaparib,d_olaparib_olaparib,2,LYNPARZA|OLAPARIB
+signal,40213702,0,lansoprazole,lansoprazole,lansoprazole|lansoprazole,d_lansoprazole_lansoprazole,2,LANSOPRAZOLE|PREVACID
+signal,40213702,1,Xywav,oxybate,oxybate|xywav,d_oxybate_xywav,4,LUMRYZ|OXYBATE|XYREM|XYWAV
+signal,40213702,2,teduglutide,teduglutide,teduglutide|teduglutide,d_teduglutide_teduglutide,2,GATTEX|TEDUGLUTIDE
+signal,40266530,0,vemurafenib,vemurafenib,vemurafenib|vemurafenib,d_vemurafenib_vemurafenib,2,VEMURAFENIB|ZELBORAF
+signal,40266530,2,dabrafenib,dabrafenib,dabrafenib|dabrafenib,d_dabrafenib_dabrafenib,2,DABRAFENIB|TAFINLAR
+signal,40266530,4,encorafenib,encorafenib,encorafenib|encorafenib,d_encorafenib_encorafenib,2,BRAFTOVI|ENCORAFENIB
+signal,40285824,6,pralsetinib,pralsetinib,pralsetinib|pralsetinib,d_pralsetinib_pralsetinib,2,GAVRETO|PRALSETINIB
+signal,40303631,2,baclofen,baclofen,baclofen|baclofen,d_baclofen_baclofen,6,BACLOFEN|FLEQSUVY|GABLOFEN|LIORESAL|LYVISPAH|OZOBAX
+signal,40303631,4,baclofen,baclofen,baclofen|baclofen,d_baclofen_baclofen,6,BACLOFEN|FLEQSUVY|GABLOFEN|LIORESAL|LYVISPAH|OZOBAX
+signal,40303631,10,baclofen,baclofen,baclofen|baclofen,d_baclofen_baclofen,6,BACLOFEN|FLEQSUVY|GABLOFEN|LIORESAL|LYVISPAH|OZOBAX
+signal,40303631,14,baclofen,baclofen,baclofen|baclofen,d_baclofen_baclofen,6,BACLOFEN|FLEQSUVY|GABLOFEN|LIORESAL|LYVISPAH|OZOBAX
+signal,40303631,16,baclofen,baclofen,baclofen|baclofen,d_baclofen_baclofen,6,BACLOFEN|FLEQSUVY|GABLOFEN|LIORESAL|LYVISPAH|OZOBAX
+signal,40305875,0,alectinib,alectinib,alectinib|alectinib,d_alectinib_alectinib,2,ALECENSA|ALECTINIB
+signal,40329904,0,cenegermin,cenegermin,cenegermin|cenegermin,d_cenegermin_cenegermin,2,CENEGERMIN|OXERVATE
+signal,40329904,2,cenegermin,cenegermin,cenegermin|cenegermin,d_cenegermin_cenegermin,2,CENEGERMIN|OXERVATE
+signal,40329904,4,cenegermin,cenegermin,cenegermin|cenegermin,d_cenegermin_cenegermin,2,CENEGERMIN|OXERVATE
+signal,40329904,10,cenegermin,cenegermin,cenegermin|cenegermin,d_cenegermin_cenegermin,2,CENEGERMIN|OXERVATE
+signal,40350711,2,methadone,methadone,methadone|methadone,d_methadone_methadone,4,DISKETS|DOLOPHINE|METHADONE|METHADOSE
+signal,40350711,3,flurbiprofen,flurbiprofen,flurbiprofen|flurbiprofen,d_flurbiprofen_flurbiprofen,5,ANSAID|FLURBIPROFEN|LURBIPR|LURBIRO|OCUFEN
+signal,40376150,0,carisoprodol,carisoprodol,carisoprodol|carisoprodol,d_carisoprodol_carisoprodol,3,CARISOPRODOL|SOMA|VANADOM
+signal,40376150,1,sugammadex,sugammadex,sugammadex|sugammadex,d_sugammadex_sugammadex,2,BRIDION|SUGAMMADEX
+signal,40376150,2,regadenoson,regadenoson,regadenoson|regadenoson,d_regadenoson_regadenoson,1,REGADENOSON
+signal,40376150,3,alprazolam,alprazolam,alprazolam|alprazolam,d_alprazolam_alprazolam,2,ALPRAZOLAM|XANAX
+signal,40376150,4,propofol,propofol,propofol|propofol,d_propofol_propofol,5,DIPRIVAN|PROPOFLO|PROPOFOL|PROPOVAN|PROPOVEN
+signal,40380893,0,isotretinoin,isotretinoin,isotretinoin|isotretinoin,d_isotretinoin_isotretinoin,8,ABSORICA|ACCUTANE|AMNESTEEM|CLARAVIS|ISOTRETINOIN|MYORISAN|SOTRET|ZENATANE
+signal,40383360,2,semaglutide,semaglutide,semaglutide|semaglutide,d_semaglutide_semaglutide,4,OZEMPIC|RYBELSUS|SEMAGLUTIDE|WEGOVY
+signal,40389541,0,ertapenem,ertapenem,ertapenem|ertapenem,d_ertapenem_ertapenem,2,ERTAPENEM|INVANZ
+signal,40389541,1,ertapenem,ertapenem,ertapenem|ertapenem,d_ertapenem_ertapenem,2,ERTAPENEM|INVANZ
+signal,40419159,0,Ziprasidone,ziprasidone,ziprasidone|ziprasidone,d_ziprasidone_ziprasidone,2,GEODON|ZIPRASIDONE
+signal,40419159,1,lurasidone,lurasidone,lurasidone|lurasidone,d_lurasidone_lurasidone,2,LATUDA|LURASIDONE
+signal,40437077,0,Lanreotide,lanreotide,lanreotide|lanreotide,d_lanreotide_lanreotide,2,LANREOTIDE|SOMATULINE
+signal,40438599,0,baclofen,baclofen,baclofen|baclofen,d_baclofen_baclofen,6,BACLOFEN|FLEQSUVY|GABLOFEN|LIORESAL|LYVISPAH|OZOBAX
+signal,40438599,1,baclofen,baclofen,baclofen|baclofen,d_baclofen_baclofen,6,BACLOFEN|FLEQSUVY|GABLOFEN|LIORESAL|LYVISPAH|OZOBAX
+signal,40438599,2,baclofen,baclofen,baclofen|baclofen,d_baclofen_baclofen,6,BACLOFEN|FLEQSUVY|GABLOFEN|LIORESAL|LYVISPAH|OZOBAX
+signal,40438599,3,baclofen,baclofen,baclofen|baclofen,d_baclofen_baclofen,6,BACLOFEN|FLEQSUVY|GABLOFEN|LIORESAL|LYVISPAH|OZOBAX
+signal,40438599,4,baclofen,baclofen,baclofen|baclofen,d_baclofen_baclofen,6,BACLOFEN|FLEQSUVY|GABLOFEN|LIORESAL|LYVISPAH|OZOBAX
+signal,40447499,0,tacrolimus,tacrolimus,tacrolimus|tacrolimus,d_tacrolimus_tacrolimus,4,ASTAGRAF|ENVARSUS|PROGRAF|TACROLIMUS
+signal,40505686,0,Chlorpromazine,chlorpromazine,chlorpromazine|chlorpromazine,d_chlorpromazine_chlorpromazine,1,CHLORPROMAZINE
+signal,40505686,1,quetiapine,quetiapine,quetiapine|quetiapine,d_quetiapine_quetiapine,2,QUETIAPINE|SEROQUEL
+signal,40510111,0,idursulfase,idursulfase,idursulfase|idursulfase,d_idursulfase_idursulfase,2,ELAPRASE|IDURSULFASE
+signal,40510111,1,galsulfase,galsulfase,galsulfase|galsulfase,d_galsulfase_galsulfase,2,GALSULFASE|NAGLAZYME
+signal,40510111,4,anastrozole,anastrozole,anastrozole|anastrozole,d_anastrozole_anastrozole,2,ANASTROZOLE|ARIMIDEX
+signal,40510111,5,alendronic acid,alendronate,alendronate|alendronic acid,d_alendronate_alendronic_acid,5,ALENDRONATE|ALENDRONIC ACID|BINOSTO|FOSAMAX|FOSAMAX PLUS D
+signal,40510111,9,tafamidis,tafamidis,tafamidis|tafamidis,d_tafamidis_tafamidis,3,TAFAMIDIS|VYNDAMAX|VYNDAQEL
+signal,40522401,0,belzutifan,belzutifan,belzutifan|belzutifan,d_belzutifan_belzutifan,2,BELZUTIFAN|WELIREG
+signal,40522401,1,belzutifan,belzutifan,belzutifan|belzutifan,d_belzutifan_belzutifan,2,BELZUTIFAN|WELIREG
+signal,40523410,0,semaglutide,semaglutide,semaglutide|semaglutide,d_semaglutide_semaglutide,4,OZEMPIC|RYBELSUS|SEMAGLUTIDE|WEGOVY
+signal,40552159,0,irinotecan,irinotecan,irinotecan|irinotecan,d_irinotecan_irinotecan,3,CAMPTOSAR|IRINOTECAN|ONIVYDE
+signal,40552159,4,irinotecan,irinotecan,irinotecan|irinotecan,d_irinotecan_irinotecan,3,CAMPTOSAR|IRINOTECAN|ONIVYDE
+signal,40552159,8,irinotecan,irinotecan,irinotecan|irinotecan,d_irinotecan_irinotecan,3,CAMPTOSAR|IRINOTECAN|ONIVYDE
+signal,40552159,12,irinotecan,irinotecan,irinotecan|irinotecan,d_irinotecan_irinotecan,3,CAMPTOSAR|IRINOTECAN|ONIVYDE
+signal,40552159,16,irinotecan,irinotecan,irinotecan|irinotecan,d_irinotecan_irinotecan,3,CAMPTOSAR|IRINOTECAN|ONIVYDE
+signal,40567936,0,ruxolitinib,ruxolitinib,ruxolitinib|ruxolitinib,d_ruxolitinib_ruxolitinib,3,JAKAFI|OPZELURA|RUXOLITINIB
+signal,40567936,1,ruxolitinib,ruxolitinib,ruxolitinib|ruxolitinib,d_ruxolitinib_ruxolitinib,3,JAKAFI|OPZELURA|RUXOLITINIB
+signal,40567936,3,ruxolitinib,ruxolitinib,ruxolitinib|ruxolitinib,d_ruxolitinib_ruxolitinib,3,JAKAFI|OPZELURA|RUXOLITINIB
+signal,40567936,5,ruxolitinib,ruxolitinib,ruxolitinib|ruxolitinib,d_ruxolitinib_ruxolitinib,3,JAKAFI|OPZELURA|RUXOLITINIB
+signal,40567936,11,ruxolitinib,ruxolitinib,ruxolitinib|ruxolitinib,d_ruxolitinib_ruxolitinib,3,JAKAFI|OPZELURA|RUXOLITINIB
+signal,40620108,0,trastuzumab deruxtecan,trastuzumab,trastuzumab|trastuzumab deruxtecan,d_trastuzumab_trastuzumab_deruxtecan,13,ENHERTU|HERCEPTIN|HERCEPTIN HYLECTA|HERCESSI|HERZUMA|KADCYLA|KANJINTI|OGIVRI|ONTRUZANT|PHESGO|TRASTUZUMAB|TRASTUZUMAB DERUXTECAN|TRAZIMERA
+signal,40620108,1,trastuzumab emtansine,trastuzumab,trastuzumab|trastuzumab emtansine,d_trastuzumab_trastuzumab_emtansine,13,ENHERTU|HERCEPTIN|HERCEPTIN HYLECTA|HERCESSI|HERZUMA|KADCYLA|KANJINTI|OGIVRI|ONTRUZANT|PHESGO|TRASTUZUMAB|TRASTUZUMAB EMTANSINE|TRAZIMERA
+signal,40620108,2,pertuzumab,pertuzumab,pertuzumab|pertuzumab,d_pertuzumab_pertuzumab,3,PERJETA|PERTUZUMAB|PHESGO
+signal,40620108,3,trastuzumab,trastuzumab,trastuzumab|trastuzumab,d_trastuzumab_trastuzumab,12,ENHERTU|HERCEPTIN|HERCEPTIN HYLECTA|HERCESSI|HERZUMA|KADCYLA|KANJINTI|OGIVRI|ONTRUZANT|PHESGO|TRASTUZUMAB|TRAZIMERA
+signal,40620108,5,lapatinib,lapatinib,lapatinib|lapatinib,d_lapatinib_lapatinib,2,LAPATINIB|TYKERB
+signal,40637806,0,nirogacestat,nirogacestat,nirogacestat|nirogacestat,d_nirogacestat_nirogacestat,2,NIROGACESTAT|OGSIVEO
+signal,40637806,1,nirogacestat,nirogacestat,nirogacestat|nirogacestat,d_nirogacestat_nirogacestat,2,NIROGACESTAT|OGSIVEO
+signal,40637806,2,nirogacestat,nirogacestat,nirogacestat|nirogacestat,d_nirogacestat_nirogacestat,2,NIROGACESTAT|OGSIVEO
+signal,40637806,3,nirogacestat,nirogacestat,nirogacestat|nirogacestat,d_nirogacestat_nirogacestat,2,NIROGACESTAT|OGSIVEO
+signal,40637806,6,nirogacestat,nirogacestat,nirogacestat|nirogacestat,d_nirogacestat_nirogacestat,2,NIROGACESTAT|OGSIVEO
+signal,40643173,1,Topotecan,topotecan,topotecan|topotecan,d_topotecan_topotecan,2,HYCAMTIN|TOPOTECAN
+signal,40643173,5,ivacaftor,ivacaftor,ivacaftor|ivacaftor,d_ivacaftor_ivacaftor,3,IVACAFTOR|KALYDECO|ORKAMBI
+signal,40643173,9,prednisolone,prednisolone,prednisolone|prednisolone,d_prednisolone_prednisolone,12,BLEPHAMIDE|CORTAMINE|MILLIPRED|ORAPRED|PEDIAPRED|PRED FORTE|PRED MILD|PREDNISOLONE|PREDNISTAB|SUROLAN|TEMARIL-P|VERIPRED
+signal,40671159,0,Amiodarone hydrochloride,amiodarone,amiodarone|amiodarone hydrochloride,d_amiodarone_amiodarone_hydrochloride,4,AMIODARONE|AMIODARONE HYDROCHLORIDE|NEXTERONE|PACERONE
+signal,40717976,0,esomeprazole,esomeprazole,esomeprazole|esomeprazole,d_esomeprazole_esomeprazole,3,ESOMEPRAZOLE|NEXIUM|VIMOVO
+signal,40743475,2,hydroxychloroquine,hydroxychloroquine,hydroxychloroquine|hydroxychloroquine,d_hydroxychloroquine_hydroxychloroquine,3,HYDROXYCHLOROQUINE|PLAQUENIL|SOVUNA
+signal,40743475,3,hydroxychloroquine,hydroxychloroquine,hydroxychloroquine|hydroxychloroquine,d_hydroxychloroquine_hydroxychloroquine,3,HYDROXYCHLOROQUINE|PLAQUENIL|SOVUNA
+signal,40743475,4,hydroxychloroquine,hydroxychloroquine,hydroxychloroquine|hydroxychloroquine,d_hydroxychloroquine_hydroxychloroquine,3,HYDROXYCHLOROQUINE|PLAQUENIL|SOVUNA
+signal,40770257,0,T-DM1,trastuzumab,trastuzumab|t-dm1,d_trastuzumab_t_dm1,13,ENHERTU|HERCEPTIN|HERCEPTIN HYLECTA|HERCESSI|HERZUMA|KADCYLA|KANJINTI|OGIVRI|ONTRUZANT|PHESGO|T-DM1|TRASTUZUMAB|TRAZIMERA
+signal,40770257,1,trastuzumab,trastuzumab,trastuzumab|trastuzumab,d_trastuzumab_trastuzumab,12,ENHERTU|HERCEPTIN|HERCEPTIN HYLECTA|HERCESSI|HERZUMA|KADCYLA|KANJINTI|OGIVRI|ONTRUZANT|PHESGO|TRASTUZUMAB|TRAZIMERA
+signal,40770257,4,pertuzumab,pertuzumab,pertuzumab|pertuzumab,d_pertuzumab_pertuzumab,3,PERJETA|PERTUZUMAB|PHESGO
+signal,40776461,1,Obeticholic acid,obeticholic acid,obeticholic acid|obeticholic acid,d_obeticholic_acid_obeticholic_acid,2,OBETICHOLIC ACID|OCALIVA
+signal,40814133,1,mesalazine,mesalamine,mesalamine|mesalazine,d_mesalamine_mesalazine,8,APRISO|CANASA|DELZICOL|LIALDA|MESALAMINE|MESALAZINE|PENTASA|ROWASA
+signal,40817421,1,haloperidol,haloperidol,haloperidol|haloperidol,d_haloperidol_haloperidol,2,HALDOL|HALOPERIDOL
+signal,40817421,2,aripiprazole,aripiprazole,aripiprazole|aripiprazole,d_aripiprazole_aripiprazole,3,ABILIFY|ARIPIPRAZOLE|OPIPZA
+signal,40824302,0,desogestrel,desogestrel,desogestrel|desogestrel,d_desogestrel_desogestrel,1,DESOGESTREL
+signal,40824302,1,levonorgestrel,levonorgestrel,levonorgestrel|levonorgestrel,d_levonorgestrel_levonorgestrel,34,AFTER BANGER|AFTERA|AFTERPILL|AFTERPLAN|CLIMARA PRO|CURAE|E-CON|ECONTRA|FEM CHOICE|HER STYLE|ITHAPPENZ|JULIE|KYLEENA|LEVONORGESTREL|LILETTA|MIRENA|MORNING AFTER|MY AFTER PLAN|MY CHOICE|MY WAY|NEW DAY|NEXT CHOICE ONE DOSE|OPCICON ONE-STEP|OPTION 2|PLAN B ONE-STEP|POSTDAY ONE-STEP|PREVENTEZA|REACT|RESTART|SHEWISE|SKYLA|TAKE ACTION|TWIRLA|YOUR CHOICE
+signal,40824302,2,medroxyprogesterone acetate,medroxyprogesterone,medroxyprogesterone|medroxyprogesterone acetate,d_medroxyprogesterone_medroxyprogesterone_,5,DEPO-PROVERA|DEPO-SUBQ PROVERA|MEDROXYPROGESTERONE|MEDROXYPROGESTERONE ACETATE|PROVERA
+signal,40828435,1,entecavir,entecavir,entecavir|entecavir,d_entecavir_entecavir,2,BARACLUDE|ENTECAVIR
+signal,40828435,3,entecavir,entecavir,entecavir|entecavir,d_entecavir_entecavir,2,BARACLUDE|ENTECAVIR
+signal,40828435,5,tenofovir,tenofovir,tenofovir|tenofovir,d_tenofovir_tenofovir,1,TENOFOVIR
+signal,40828435,7,tenofovir,tenofovir,tenofovir|tenofovir,d_tenofovir_tenofovir,1,TENOFOVIR
+signal,40828435,9,tenofovir,tenofovir,tenofovir|tenofovir,d_tenofovir_tenofovir,1,TENOFOVIR
+signal,40859565,0,gabapentin,gabapentin,gabapentin|gabapentin,d_gabapentin_gabapentin,6,GABAPENTIN|GABARONE|GRALISE|HORIZANT|NEURONTIN|RELGAABI
+signal,40875084,0,mitomycin,mitomycin,mitomycin|mitomycin,d_mitomycin_mitomycin,5,JELMYTO|MITOMYCIN|MITOSOL|MUTAMYCIN|ZUSDURI
+signal,40875084,1,mitomycin,mitomycin,mitomycin|mitomycin,d_mitomycin_mitomycin,5,JELMYTO|MITOMYCIN|MITOSOL|MUTAMYCIN|ZUSDURI
+signal,40888754,0,Trastuzumab deruxtecan,trastuzumab,trastuzumab|trastuzumab deruxtecan,d_trastuzumab_trastuzumab_deruxtecan,13,ENHERTU|HERCEPTIN|HERCEPTIN HYLECTA|HERCESSI|HERZUMA|KADCYLA|KANJINTI|OGIVRI|ONTRUZANT|PHESGO|TRASTUZUMAB|TRASTUZUMAB DERUXTECAN|TRAZIMERA
+signal,40910004,1,laronidase,laronidase,laronidase|laronidase,d_laronidase_laronidase,2,ALDURAZYME|LARONIDASE
+signal,40910004,2,laronidase,laronidase,laronidase|laronidase,d_laronidase_laronidase,2,ALDURAZYME|LARONIDASE
+signal,40910004,4,laronidase,laronidase,laronidase|laronidase,d_laronidase_laronidase,2,ALDURAZYME|LARONIDASE
+signal,40910004,5,laronidase,laronidase,laronidase|laronidase,d_laronidase_laronidase,2,ALDURAZYME|LARONIDASE
+signal,40910004,7,laronidase,laronidase,laronidase|laronidase,d_laronidase_laronidase,2,ALDURAZYME|LARONIDASE
+signal,40920788,0,mogamulizumab,mogamulizumab,mogamulizumab|mogamulizumab,d_mogamulizumab_mogamulizumab,2,MOGAMULIZUMAB|POTELIGEO
+signal,40920788,1,imiquimod,imiquimod,imiquimod|imiquimod,d_imiquimod_imiquimod,2,IMIQUIMOD|ZYCLARA
+signal,40920788,2,chloroquine,chloroquine,chloroquine|chloroquine,d_chloroquine_chloroquine,1,CHLOROQUINE
+signal,40926006,1,bortezomib,bortezomib,bortezomib|bortezomib,d_bortezomib_bortezomib,3,BORTEZOMIB|BORUZU|VELCADE
+signal,40926006,2,dupilumab,dupilumab,dupilumab|dupilumab,d_dupilumab_dupilumab,2,DUPILUMAB|DUPIXENT
+signal,40926006,4,dupilumab,dupilumab,dupilumab|dupilumab,d_dupilumab_dupilumab,2,DUPILUMAB|DUPIXENT
+signal,40936323,0,Dimethyl fumarate,dimethyl fumarate,dimethyl fumarate|dimethyl fumarate,d_dimethyl_fumarate_dimethyl_fumarate,2,DIMETHYL FUMARATE|TECFIDERA
+signal,40936323,6,Dimethyl fumarate,dimethyl fumarate,dimethyl fumarate|dimethyl fumarate,d_dimethyl_fumarate_dimethyl_fumarate,2,DIMETHYL FUMARATE|TECFIDERA
+signal,40936323,7,Dimethyl fumarate,dimethyl fumarate,dimethyl fumarate|dimethyl fumarate,d_dimethyl_fumarate_dimethyl_fumarate,2,DIMETHYL FUMARATE|TECFIDERA
+signal,40963291,1,avelumab,avelumab,avelumab|avelumab,d_avelumab_avelumab,2,AVELUMAB|BAVENCIO
+signal,40963291,2,avelumab,avelumab,avelumab|avelumab,d_avelumab_avelumab,2,AVELUMAB|BAVENCIO
+signal,41041661,0,desflurane,desflurane,desflurane|desflurane,d_desflurane_desflurane,2,DESFLURANE|SUPRANE
+signal,41071822,0,sodium zirconium cyclosilicate,sodium zirconium cyclosilicate,sodium zirconium cyclosilicate|sodium zirconium cyclosilicate,d_sodium_zirconium_cyclosilicate_sodium_zi,2,LOKELMA|SODIUM ZIRCONIUM CYCLOSILICATE
+signal,41071822,1,sodium zirconium cyclosilicate,sodium zirconium cyclosilicate,sodium zirconium cyclosilicate|sodium zirconium cyclosilicate,d_sodium_zirconium_cyclosilicate_sodium_zi,2,LOKELMA|SODIUM ZIRCONIUM CYCLOSILICATE
+signal,41071822,2,sodium zirconium cyclosilicate,sodium zirconium cyclosilicate,sodium zirconium cyclosilicate|sodium zirconium cyclosilicate,d_sodium_zirconium_cyclosilicate_sodium_zi,2,LOKELMA|SODIUM ZIRCONIUM CYCLOSILICATE
+signal,41087308,0,atezolizumab,atezolizumab,atezolizumab|atezolizumab,d_atezolizumab_atezolizumab,3,ATEZOLIZUMAB|TECENTRIQ|TECENTRIQ HYBREZA
+signal,41087308,1,avelumab,avelumab,avelumab|avelumab,d_avelumab_avelumab,2,AVELUMAB|BAVENCIO
+signal,41087308,2,nivolumab,nivolumab,nivolumab|nivolumab,d_nivolumab_nivolumab,4,NIVOLUMAB|OPDIVO|OPDIVO QVANTIG|OPDUALAG
+signal,41087308,4,durvalumab,durvalumab,durvalumab|durvalumab,d_durvalumab_durvalumab,2,DURVALUMAB|IMFINZI
+signal,41087308,5,ipilimumab,ipilimumab,ipilimumab|ipilimumab,d_ipilimumab_ipilimumab,2,IPILIMUMAB|YERVOY
+signal,41089323,13,escitalopram,escitalopram,escitalopram|escitalopram,d_escitalopram_escitalopram,2,ESCITALOPRAM|LEXAPRO
+signal,41089323,14,sertraline,sertraline,sertraline|sertraline,d_sertraline_sertraline,2,SERTRALINE|ZOLOFT
+signal,41089323,16,fluoxetine,fluoxetine,fluoxetine|fluoxetine,d_fluoxetine_fluoxetine,4,FLUOXETINE|PROZAC|RECONCILE|SYMBYAX
+signal,41089323,20,citalopram,citalopram,citalopram|citalopram,d_citalopram_citalopram,2,CELEXA|CITALOPRAM
+signal,41089323,25,quetiapine,quetiapine,quetiapine|quetiapine,d_quetiapine_quetiapine,2,QUETIAPINE|SEROQUEL
+signal,41118058,1,ublituximab,ublituximab,ublituximab|ublituximab,d_ublituximab_ublituximab,2,BRIUMVI|UBLITUXIMAB
+signal,41118058,2,ublituximab,ublituximab,ublituximab|ublituximab,d_ublituximab_ublituximab,2,BRIUMVI|UBLITUXIMAB
+signal,41118058,3,ublituximab,ublituximab,ublituximab|ublituximab,d_ublituximab_ublituximab,2,BRIUMVI|UBLITUXIMAB
+signal,41118058,4,ublituximab,ublituximab,ublituximab|ublituximab,d_ublituximab_ublituximab,2,BRIUMVI|UBLITUXIMAB
+signal,41128788,0,omeprazole,omeprazole,omeprazole|omeprazole,d_omeprazole_omeprazole,9,GASTROBIM|KONVOMEP|OMEPRAZOLE|PRILOSEC|PRIMEGUARD|TALICIA|ULCERGARD|YOSPRALA|ZEGERID REFORMULATED AUG 2006
+signal,41128788,2,omeprazole,omeprazole,omeprazole|omeprazole,d_omeprazole_omeprazole,9,GASTROBIM|KONVOMEP|OMEPRAZOLE|PRILOSEC|PRIMEGUARD|TALICIA|ULCERGARD|YOSPRALA|ZEGERID REFORMULATED AUG 2006
+signal,41128788,4,omeprazole,omeprazole,omeprazole|omeprazole,d_omeprazole_omeprazole,9,GASTROBIM|KONVOMEP|OMEPRAZOLE|PRILOSEC|PRIMEGUARD|TALICIA|ULCERGARD|YOSPRALA|ZEGERID REFORMULATED AUG 2006
+signal,41128788,10,pantoprazole,pantoprazole,pantoprazole|pantoprazole,d_pantoprazole_pantoprazole,2,PANTOPRAZOLE|PROTONIX
+signal,41221037,0,pembrolizumab,pembrolizumab,pembrolizumab|pembrolizumab,d_pembrolizumab_pembrolizumab,3,KEYTRUDA|KEYTRUDA QLEX|PEMBROLIZUMAB
+signal,41221037,1,pembrolizumab,pembrolizumab,pembrolizumab|pembrolizumab,d_pembrolizumab_pembrolizumab,3,KEYTRUDA|KEYTRUDA QLEX|PEMBROLIZUMAB
+signal,41266479,0,alirocumab,alirocumab,alirocumab|alirocumab,d_alirocumab_alirocumab,2,ALIROCUMAB|PRALUENT
+signal,41311839,10,Pembrolizumab,pembrolizumab,pembrolizumab|pembrolizumab,d_pembrolizumab_pembrolizumab,3,KEYTRUDA|KEYTRUDA QLEX|PEMBROLIZUMAB
+signal,41394295,0,doxorubicin,doxorubicin,doxorubicin|doxorubicin,d_doxorubicin_doxorubicin,4,ADRIAMYCIN|CAELYX|DOXIL|DOXORUBICIN
+signal,41394295,1,pembrolizumab,pembrolizumab,pembrolizumab|pembrolizumab,d_pembrolizumab_pembrolizumab,3,KEYTRUDA|KEYTRUDA QLEX|PEMBROLIZUMAB
+signal,41394295,2,5-fluorouracil,fluorouracil,fluorouracil|5-fluorouracil,d_fluorouracil_5_fluorouracil,8,5-FLUOROURACIL|ADRUCIL|CARAC|EFUDEX|FAVLYXA|FLUOROPLEX|FLUOROURACIL|TOLAK
+signal,41398841,0,trastuzumab deruxtecan,trastuzumab,trastuzumab|trastuzumab deruxtecan,d_trastuzumab_trastuzumab_deruxtecan,13,ENHERTU|HERCEPTIN|HERCEPTIN HYLECTA|HERCESSI|HERZUMA|KADCYLA|KANJINTI|OGIVRI|ONTRUZANT|PHESGO|TRASTUZUMAB|TRASTUZUMAB DERUXTECAN|TRAZIMERA
+signal,41560737,0,bortezomib,bortezomib,bortezomib|bortezomib,d_bortezomib_bortezomib,3,BORTEZOMIB|BORUZU|VELCADE
+signal,41560737,2,ixazomib,ixazomib,ixazomib|ixazomib,d_ixazomib_ixazomib,2,IXAZOMIB|NINLARO
+signal,41656834,0,nivolumab,nivolumab,nivolumab|nivolumab,d_nivolumab_nivolumab,4,NIVOLUMAB|OPDIVO|OPDIVO QVANTIG|OPDUALAG
+signal,41656834,1,pembrolizumab,pembrolizumab,pembrolizumab|pembrolizumab,d_pembrolizumab_pembrolizumab,3,KEYTRUDA|KEYTRUDA QLEX|PEMBROLIZUMAB
+signal,41656834,2,ipilimumab,ipilimumab,ipilimumab|ipilimumab,d_ipilimumab_ipilimumab,2,IPILIMUMAB|YERVOY
+signal,41656834,3,atezolizumab,atezolizumab,atezolizumab|atezolizumab,d_atezolizumab_atezolizumab,3,ATEZOLIZUMAB|TECENTRIQ|TECENTRIQ HYBREZA
+signal,41656834,4,tislelizumab,tislelizumab,tislelizumab|tislelizumab,d_tislelizumab_tislelizumab,2,TEVIMBRA|TISLELIZUMAB
+nc,,-1,brinzolamide,brinzolamide,nc_brinzolamide,d_nc_brinzolamide,3,AZOPT|BRINZOLAMIDE|SIMBRINZA
+nc,,-1,levobunolol,levobunolol,nc_levobunolol,d_nc_levobunolol,2,BETAGAN|LEVOBUNOLOL
+nc,,-1,cevimeline,cevimeline,nc_cevimeline,d_nc_cevimeline,2,CEVIMELINE|EVOXAC
+nc,,-1,pilocarpine,pilocarpine,nc_pilocarpine,d_nc_pilocarpine,6,ISOPTOCARPINE|PILOCAR|PILOCARPINE|QLOSI|SALAGEN|VUITY
+nc,,-1,chlorzoxazone,chlorzoxazone,nc_chlorzoxazone,d_nc_chlorzoxazone,2,CHLORZOXAZONE|LORZONE
+nc,,-1,methocarbamol,methocarbamol,nc_methocarbamol,d_nc_methocarbamol,4,ATMEKSI|METHOCARBAMOL|ROBAXIN|TANLOR
+nc,,-1,cilostazol,cilostazol,nc_cilostazol,d_nc_cilostazol,1,CILOSTAZOL
+nc,,-1,fondaparinux,fondaparinux,nc_fondaparinux,d_nc_fondaparinux,2,ARIXTRA|FONDAPARINUX
+nc,,-1,desmopressin,desmopressin,nc_desmopressin,d_nc_desmopressin,6,DDAVP|DESMODA|DESMOPRESSIN|NOCDURNA|NOCTIVA|STIMATE
+nc,,-1,oxybutynin,oxybutynin,nc_oxybutynin,d_nc_oxybutynin,3,GELNIQUE|OXYBUTYNIN|OXYTROL
+nc,,-1,dyphylline,dyphylline,nc_dyphylline,d_nc_dyphylline,1,DYPHYLLINE
+nc,,-1,omalizumab,omalizumab,nc_omalizumab,d_nc_omalizumab,3,OMALIZUMAB|OMLYCLO|XOLAIR
+nc,,-1,epinastine,epinastine,nc_epinastine,d_nc_epinastine,1,EPINASTINE
+nc,,-1,levocetirizine,levocetirizine,nc_levocetirizine,d_nc_levocetirizine,2,LEVOCETIRIZINE|XYZAL
+nc,,-1,eszopiclone,eszopiclone,nc_eszopiclone,d_nc_eszopiclone,2,ESZOPICLONE|LUNESTA
+nc,,-1,triazolam,triazolam,nc_triazolam,d_nc_triazolam,2,HALCION|TRIAZOLAM
+nc,,-1,fesoterodine,fesoterodine,nc_fesoterodine,d_nc_fesoterodine,2,FESOTERODINE|TOVIAZ
+nc,,-1,follicle stimulating hormone,follicle stimulating hormone,nc_follicle stimulating hormone,d_nc_follicle_stimulating_hormone,3,FOLLICLE STIMULATING HORMONE|MENOPUR|PLUSET
+nc,,-1,ganirelix,ganirelix,nc_ganirelix,d_nc_ganirelix,2,FYREMADEL|GANIRELIX
+nc,,-1,ivermectin,ivermectin,nc_ivermectin,d_nc_ivermectin,27,AGRIMECTIN|BIMECTIN|BIMECTIN PLUS|DURAMECTIN|EQUIMAX|HEARTARMOR PLUS|HEARTGARD PLUS|IVERHART|IVERHART PLUS|IVERMAX|IVERMAX PLUS|IVERMECTIN|IVOMEC|IVOMEC PLUS|NOROMECTIN|PRAZIMECTIN|PRIVERMECTIN|PROMECTIN|SKLICE|SOOLANTRA|STRIDEGUARD|STROMECTOL|TRI-HEART PLUS|VETRIMEC|VETRIMEC PLUS|ZIMECTERIN|ZIMECTERIN GOLD
+nc,,-1,permethrin,permethrin,nc_permethrin,d_nc_permethrin,4,ACTICIN|ELIMITE|NIX CREAM RINSE|PERMETHRIN
+nc,,-1,luteinizing hormone,luteinizing hormone,nc_luteinizing hormone,d_nc_luteinizing_hormone,3,LUTEINIZING HORMONE|MENOPUR|PLUSET
+nc,,-1,chorionic gonadotropin,chorionic gonadotropin,nc_chorionic gonadotropin,d_nc_chorionic_gonadotropin,1,CHORIONIC GONADOTROPIN
+nc,,-1,olopatadine,olopatadine,nc_olopatadine,d_nc_olopatadine,4,OLOPATADINE|PATADAY|PATANASE|RYALTRIS
+nc,,-1,aminophylline,aminophylline,nc_aminophylline,d_nc_aminophylline,1,AMINOPHYLLINE
+nc,,-1,lubiprostone,lubiprostone,nc_lubiprostone,d_nc_lubiprostone,2,AMITIZA|LUBIPROSTONE
+nc,,-1,picosulfate sodium,picosulfate sodium,nc_picosulfate sodium,d_nc_picosulfate_sodium,2,CLENPIQ|PICOSULFATE SODIUM
+nc,,-1,bisacodyl,bisacodyl,nc_bisacodyl,d_nc_bisacodyl,11,ALOPHEN REFORMULATED JAN 2008|BISAC-EVAC|BISACODYL|CORRECT (NEW FORMULA)|CORRECTOL LAXATIVE REFORMULATED FEB 2008|DULCOLAX|EVAC-U-GEN REFORMULATED JAN 2008|EX-LAX ULTRA|FEEN-A-MINT REFORMULATED JAN 2008|LAXOMIL|THE MAGIC BULLET
+nc,,-1,prasugrel,prasugrel,nc_prasugrel,d_nc_prasugrel,2,EFFIENT|PRASUGREL
+nc,,-1,prilocaine,prilocaine,nc_prilocaine,d_nc_prilocaine,5,CITANEST|CITANEST FORTE|ORAQIX|PRILOCAINE|RELADOR
+nc,,-1,bupivacaine,bupivacaine,nc_bupivacaine,d_nc_bupivacaine,11,BUPIVACAINE|EXPAREL|MARCAINE|MARCAINE WITH EPINEPHRINE|NOCITA|POSIMIR|SENSORCAINE|SENSORCAINE WITH EPINEPHRINE|VIVACAINE|XARACOLL|ZYNRELEF
+nc,,-1,ramelteon,ramelteon,nc_ramelteon,d_nc_ramelteon,2,RAMELTEON|ROZEREM
+nc,,-1,scopolamine,scopolamine,nc_scopolamine,d_nc_scopolamine,4,DONNATAL|PHENOHYTRO|SCOPOLAMINE|TRANSDERM SCOP
+nc,,-1,ropivacaine,ropivacaine,nc_ropivacaine,d_nc_ropivacaine,2,NAROPIN|ROPIVACAINE
+nc,,-1,silodosin,silodosin,nc_silodosin,d_nc_silodosin,2,RAPAFLO|SILODOSIN
+nc,,-1,dutasteride,dutasteride,nc_dutasteride,d_nc_dutasteride,3,AVODART|DUTASTERIDE|JALYN
+nc,,-1,tadalafil,tadalafil,nc_tadalafil,d_nc_tadalafil,7,ADCIRCA|ALYQ|CIALIS|ENTADFI|OPSYNVI|TADALAFIL|TADLIQ
+nc,,-1,terazosin,terazosin,nc_terazosin,d_nc_terazosin,2,TERAZOSIN|TEZRULY
+nc,,-1,vardenafil,vardenafil,nc_vardenafil,d_nc_vardenafil,3,LEVITRA|STAXYN|VARDENAFIL
+nc,,-1,aliskiren,aliskiren,nc_aliskiren,d_nc_aliskiren,3,ALISKIREN|TEKTURNA|TEKTURNA HCT
+nc,,-1,eplerenone,eplerenone,nc_eplerenone,d_nc_eplerenone,2,EPLERENONE|INSPRA
+nc,,-1,alogliptin,alogliptin,nc_alogliptin,d_nc_alogliptin,4,ALOGLIPTIN|KAZANO|NESINA|OSENI
+nc,,-1,nateglinide,nateglinide,nc_nateglinide,d_nc_nateglinide,1,NATEGLINIDE
+nc,,-1,atomoxetine,atomoxetine,nc_atomoxetine,d_nc_atomoxetine,3,ATOMOXETINE|ATONCY|STRATTERA
+nc,,-1,methylphenidate,methylphenidate,nc_methylphenidate,d_nc_methylphenidate,12,APTENSIO|CONCERTA|COTEMPLA|DAYTRANA|JORNAY|METADATE|METHYLIN|METHYLPHENIDATE|QUILLICHEW|QUILLIVANT|RELEXXII|RITALIN
+nc,,-1,bethanechol,bethanechol,nc_bethanechol,d_nc_bethanechol,1,BETHANECHOL
+nc,,-1,pyridostigmine,pyridostigmine,nc_pyridostigmine,d_nc_pyridostigmine,3,MESTINON|PYRIDOSTIGMINE|REGONOL
+nc,,-1,brinzolamide,brinzolamide,nc_brinzolamide,d_nc_brinzolamide,3,AZOPT|BRINZOLAMIDE|SIMBRINZA
+nc,,-1,neostigmine,neostigmine,nc_neostigmine,d_nc_neostigmine,3,BLOXIVERZ|NEOSTIGMINE|PREVDUO
+nc,,-1,bupivacaine,bupivacaine,nc_bupivacaine,d_nc_bupivacaine,11,BUPIVACAINE|EXPAREL|MARCAINE|MARCAINE WITH EPINEPHRINE|NOCITA|POSIMIR|SENSORCAINE|SENSORCAINE WITH EPINEPHRINE|VIVACAINE|XARACOLL|ZYNRELEF
+nc,,-1,ropivacaine,ropivacaine,nc_ropivacaine,d_nc_ropivacaine,2,NAROPIN|ROPIVACAINE
+nc,,-1,clomiphene,clomiphene,nc_clomiphene,d_nc_clomiphene,3,CLOMID|CLOMIPHENE|MILOPHENE
+nc,,-1,chorionic gonadotropin,chorionic gonadotropin,nc_chorionic gonadotropin,d_nc_chorionic_gonadotropin,1,CHORIONIC GONADOTROPIN
+nc,,-1,desloratadine,desloratadine,nc_desloratadine,d_nc_desloratadine,3,CLARINEX|CLARINEX-D|DESLORATADINE
+nc,,-1,levocetirizine,levocetirizine,nc_levocetirizine,d_nc_levocetirizine,2,LEVOCETIRIZINE|XYZAL
+nc,,-1,epinastine,epinastine,nc_epinastine,d_nc_epinastine,1,EPINASTINE
+nc,,-1,follicle stimulating hormone,follicle stimulating hormone,nc_follicle stimulating hormone,d_nc_follicle_stimulating_hormone,3,FOLLICLE STIMULATING HORMONE|MENOPUR|PLUSET
+nc,,-1,ganirelix,ganirelix,nc_ganirelix,d_nc_ganirelix,2,FYREMADEL|GANIRELIX
+nc,,-1,lacosamide,lacosamide,nc_lacosamide,d_nc_lacosamide,3,LACOSAMIDE|MOTPOLY|VIMPAT
+nc,,-1,ethosuximide,ethosuximide,nc_ethosuximide,d_nc_ethosuximide,2,ETHOSUXIMIDE|ZARONTIN
+nc,,-1,triprolidine,triprolidine,nc_triprolidine,d_nc_triprolidine,8,A-PHEDRIN|APHEDRID|FLONASE NIGHTTIME|GENAC BRAND OF PSEUDOEPHEDRINE/TRIPROLIDINE|PEDIACLEAR CHILDRENS|TRIPROLIDINE|VI-SUDO|WAL-ACT
+nc,,-1,luteinizing hormone,luteinizing hormone,nc_luteinizing hormone,d_nc_luteinizing_hormone,3,LUTEINIZING HORMONE|MENOPUR|PLUSET
+nc,,-1,malathion,malathion,nc_malathion,d_nc_malathion,2,MALATHION|OVIDE
+nc,,-1,permethrin,permethrin,nc_permethrin,d_nc_permethrin,4,ACTICIN|ELIMITE|NIX CREAM RINSE|PERMETHRIN
+nc,,-1,phenobarbital,phenobarbital,nc_phenobarbital,d_nc_phenobarbital,5,DONNATAL|FIDOQUEL|PHENOBARBITAL|PHENOHYTRO|SEZABY
+nc,,-1,pilocarpine,pilocarpine,nc_pilocarpine,d_nc_pilocarpine,6,ISOPTOCARPINE|PILOCAR|PILOCARPINE|QLOSI|SALAGEN|VUITY
+nc,,-1,prilocaine,prilocaine,nc_prilocaine,d_nc_prilocaine,5,CITANEST|CITANEST FORTE|ORAQIX|PRILOCAINE|RELADOR
+nc,,-1,primidone,primidone,nc_primidone,d_nc_primidone,2,MYSOLINE|PRIMIDONE
+nc,,-1,ramelteon,ramelteon,nc_ramelteon,d_nc_ramelteon,2,RAMELTEON|ROZEREM
+nc,,-1,quazepam,quazepam,nc_quazepam,d_nc_quazepam,2,DORAL|QUAZEPAM
+nc,,-1,tetracaine,tetracaine,nc_tetracaine,d_nc_tetracaine,10,ALTACAINE|CETACAINE|KOVANAZE|NEO-PREDEF|NUMFAST|PLIAGLIS|PONTOCAINE|SYNERA|TETCAINE|TETRACAINE
+nc,,-1,scopolamine,scopolamine,nc_scopolamine,d_nc_scopolamine,4,DONNATAL|PHENOHYTRO|SCOPOLAMINE|TRANSDERM SCOP
+nc,,-1,silodosin,silodosin,nc_silodosin,d_nc_silodosin,2,RAPAFLO|SILODOSIN
+nc,,-1,dutasteride,dutasteride,nc_dutasteride,d_nc_dutasteride,3,AVODART|DUTASTERIDE|JALYN
+nc,,-1,terbutaline,terbutaline,nc_terbutaline,d_nc_terbutaline,1,TERBUTALINE
+nc,,-1,ephedrine,ephedrine,nc_ephedrine,d_nc_ephedrine,8,AKOVAZ|BRONKAID|BRONKAID MAX|EMERPHED|EPHEDRINE|PRIMATENE WITH EPHEDRINE|PRIMATENE WITH EPHEDRINE & GUAIFENESIN|REZIPRES
+nc,,-1,mepivacaine,mepivacaine,nc_mepivacaine,d_nc_mepivacaine,5,CARBOCAINE|CARBOCAINE WITH NEOCOBEFRIN|MEPIVACAINE|POLOCAINE|SCANDONEST
+nc,,-1,zafirlukast,zafirlukast,nc_zafirlukast,d_nc_zafirlukast,2,ACCOLATE|ZAFIRLUKAST
+nc,,-1,omalizumab,omalizumab,nc_omalizumab,d_nc_omalizumab,3,OMALIZUMAB|OMLYCLO|XOLAIR
+nc,,-1,atovaquone,atovaquone,nc_atovaquone,d_nc_atovaquone,3,ATOVAQUONE|MALARONE|MEPRON
+nc,,-1,tinidazole,tinidazole,nc_tinidazole,d_nc_tinidazole,2,TINDAMAX|TINIDAZOLE
+nc,,-1,cefaclor,cefaclor,nc_cefaclor,d_nc_cefaclor,1,CEFACLOR
+nc,,-1,cefixime,cefixime,nc_cefixime,d_nc_cefixime,2,CEFIXIME|SUPRAX
+nc,,-1,cefadroxil,cefadroxil,nc_cefadroxil,d_nc_cefadroxil,1,CEFADROXIL
+nc,,-1,cefuroxime,cefuroxime,nc_cefuroxime,d_nc_cefuroxime,1,CEFUROXIME
+nc,,-1,cefazolin,cefazolin,nc_cefazolin,d_nc_cefazolin,1,CEFAZOLIN
+nc,,-1,cefdinir,cefdinir,nc_cefdinir,d_nc_cefdinir,1,CEFDINIR
+nc,,-1,cefotaxime,cefotaxime,nc_cefotaxime,d_nc_cefotaxime,2,CEFOTAXIME|CLAFORAN
+nc,,-1,cefpodoxime,cefpodoxime,nc_cefpodoxime,d_nc_cefpodoxime,4,CEFPODERM|CEFPODOXIME|DERMACEPH|SIMPLICEF
+nc,,-1,ceftazidime,ceftazidime,nc_ceftazidime,d_nc_ceftazidime,4,AVYCAZ|CEFTAZIDIME|FORTAZ|TAZICEF
+nc,,-1,cevimeline,cevimeline,nc_cevimeline,d_nc_cevimeline,2,CEVIMELINE|EVOXAC
+nc,,-1,pilocarpine,pilocarpine,nc_pilocarpine,d_nc_pilocarpine,6,ISOPTOCARPINE|PILOCAR|PILOCARPINE|QLOSI|SALAGEN|VUITY
+nc,,-1,desloratadine,desloratadine,nc_desloratadine,d_nc_desloratadine,3,CLARINEX|CLARINEX-D|DESLORATADINE
+nc,,-1,levocetirizine,levocetirizine,nc_levocetirizine,d_nc_levocetirizine,2,LEVOCETIRIZINE|XYZAL
+nc,,-1,entecavir,entecavir,nc_entecavir,d_nc_entecavir,2,BARACLUDE|ENTECAVIR
+nc,,-1,famciclovir,famciclovir,nc_famciclovir,d_nc_famciclovir,1,FAMCICLOVIR
+nc,,-1,fesoterodine,fesoterodine,nc_fesoterodine,d_nc_fesoterodine,2,FESOTERODINE|TOVIAZ
+nc,,-1,solifenacin,solifenacin,nc_solifenacin,d_nc_solifenacin,2,SOLIFENACIN|VESICARE
+nc,,-1,griseofulvin,griseofulvin,nc_griseofulvin,d_nc_griseofulvin,2,FULVICIN P/G|GRISEOFULVIN
+nc,,-1,terbinafine,terbinafine,nc_terbinafine,d_nc_terbinafine,8,DUOTIC|FLORFINASONE|KLENTZ|LAMISIL|OSURNIA|SILKA CREAM|SIMPLERA|TERBINAFINE
+nc,,-1,ivermectin,ivermectin,nc_ivermectin,d_nc_ivermectin,27,AGRIMECTIN|BIMECTIN|BIMECTIN PLUS|DURAMECTIN|EQUIMAX|HEARTARMOR PLUS|HEARTGARD PLUS|IVERHART|IVERHART PLUS|IVERMAX|IVERMAX PLUS|IVERMECTIN|IVOMEC|IVOMEC PLUS|NOROMECTIN|PRAZIMECTIN|PRIVERMECTIN|PROMECTIN|SKLICE|SOOLANTRA|STRIDEGUARD|STROMECTOL|TRI-HEART PLUS|VETRIMEC|VETRIMEC PLUS|ZIMECTERIN|ZIMECTERIN GOLD
+nc,,-1,permethrin,permethrin,nc_permethrin,d_nc_permethrin,4,ACTICIN|ELIMITE|NIX CREAM RINSE|PERMETHRIN
+nc,,-1,lacosamide,lacosamide,nc_lacosamide,d_nc_lacosamide,3,LACOSAMIDE|MOTPOLY|VIMPAT
+nc,,-1,ethosuximide,ethosuximide,nc_ethosuximide,d_nc_ethosuximide,2,ETHOSUXIMIDE|ZARONTIN
+nc,,-1,epinastine,epinastine,nc_epinastine,d_nc_epinastine,1,EPINASTINE
+nc,,-1,paricalcitol,paricalcitol,nc_paricalcitol,d_nc_paricalcitol,2,PARICALCITOL|ZEMPLAR
+nc,,-1,doxercalciferol,doxercalciferol,nc_doxercalciferol,d_nc_doxercalciferol,2,DOXERCALCIFEROL|HECTOROL
+nc,,-1,petrolatum,petrolatum,nc_petrolatum,d_nc_petrolatum,37,A+D ORIGINAL|ALOE VESTA PROTECTIVE BARRIER|ALTALUBE|ANBESOL COLD SORE THERAPY|AQUAPHOR|BALMEX OINTMENT|BAZA CLEAR|BOROLEUM|CALMOSEPTINE|CORONA UDDER BUTTER|CRITIC-AID CLEAR MOISTURE|DERMACERIN|DERMAFIX|DERMAPHOR|DESITIN CLEAR|DR. SMITH'S RASH-N-ALL|ILEX SKIN|LUBRIFRESH P.M.|LYPSYL|MOISTUREWORX|PERIGUARD OINTMENT|PETROLATUM|RASH RELIEF CLEAR|RECTICARE ADVANCE CREAM|RESINOL|SKIN-LUBE|SOOTHE & COOL MOISTURE BARRIER|SOOTHE & COOL SKIN PASTE|SOOTHE NIGHT TIME|STYE|SUPRADERM|TEARS NATURALE PM|VASELINE|VUSION|WELMEDIX HOMECARE PRO|WELMEDIX HOMECARE PRO FRAGILE SKIN|Z-GUARD
+nc,,-1,silver sulfadiazine,silver sulfadiazine,nc_silver sulfadiazine,d_nc_silver_sulfadiazine,6,BAYTRIL OTIC|ENROPRO SILVER|ENROSITE SILVER|SILVADENE|SILVER SULFADIAZINE|THERMAZENE
+nc,,-1,picosulfate sodium,picosulfate sodium,nc_picosulfate sodium,d_nc_picosulfate_sodium,2,CLENPIQ|PICOSULFATE SODIUM
+nc,,-1,lubiprostone,lubiprostone,nc_lubiprostone,d_nc_lubiprostone,2,AMITIZA|LUBIPROSTONE
+nc,,-1,scopolamine,scopolamine,nc_scopolamine,d_nc_scopolamine,4,DONNATAL|PHENOHYTRO|SCOPOLAMINE|TRANSDERM SCOP
+nc,,-1,ramelteon,ramelteon,nc_ramelteon,d_nc_ramelteon,2,RAMELTEON|ROZEREM
+nc,,-1,aztreonam,aztreonam,nc_aztreonam,d_nc_aztreonam,4,AZACTAM|AZTREONAM|CAYSTON|EMBLAVEO
+nc,,-1,tobramycin,tobramycin,nc_tobramycin,d_nc_tobramycin,7,BETHKIS|KITABIS|TOBI|TOBRADEX|TOBRAMYCIN|TOBREX|ZYLET
+nc,,-1,isoniazid,isoniazid,nc_isoniazid,d_nc_isoniazid,1,ISONIAZID
+nc,,-1,ethambutol,ethambutol,nc_ethambutol,d_nc_ethambutol,2,ETHAMBUTOL|MYAMBUTOL
+nc,,-1,amikacin,amikacin,nc_amikacin,d_nc_amikacin,2,AMIKACIN|ARIKAYCE
+nc,,-1,atomoxetine,atomoxetine,nc_atomoxetine,d_nc_atomoxetine,3,ATOMOXETINE|ATONCY|STRATTERA
+nc,,-1,methylphenidate,methylphenidate,nc_methylphenidate,d_nc_methylphenidate,12,APTENSIO|CONCERTA|COTEMPLA|DAYTRANA|JORNAY|METADATE|METHYLIN|METHYLPHENIDATE|QUILLICHEW|QUILLIVANT|RELEXXII|RITALIN
+nc,,-1,bisoprolol,bisoprolol,nc_bisoprolol,d_nc_bisoprolol,1,BISOPROLOL
+nc,,-1,labetalol,labetalol,nc_labetalol,d_nc_labetalol,2,LABETALOL|TRANDATE
+nc,,-1,brimonidine,brimonidine,nc_brimonidine,d_nc_brimonidine,7,ALPHAGAN|BRIMONIDINE|COMBIGAN|LUMIFY|MIRVASO|SIMBRINZA|YUVEZZI
+nc,,-1,neostigmine,neostigmine,nc_neostigmine,d_nc_neostigmine,3,BLOXIVERZ|NEOSTIGMINE|PREVDUO
+nc,,-1,clomiphene,clomiphene,nc_clomiphene,d_nc_clomiphene,3,CLOMID|CLOMIPHENE|MILOPHENE
+nc,,-1,chorionic gonadotropin,chorionic gonadotropin,nc_chorionic gonadotropin,d_nc_chorionic_gonadotropin,1,CHORIONIC GONADOTROPIN
+nc,,-1,dorzolamide,dorzolamide,nc_dorzolamide,d_nc_dorzolamide,2,COSOPT|DORZOLAMIDE
+nc,,-1,doxazosin,doxazosin,nc_doxazosin,d_nc_doxazosin,2,CARDURA|DOXAZOSIN
+nc,,-1,tolterodine,tolterodine,nc_tolterodine,d_nc_tolterodine,2,DETROL|TOLTERODINE
+nc,,-1,dutasteride,dutasteride,nc_dutasteride,d_nc_dutasteride,3,AVODART|DUTASTERIDE|JALYN
+nc,,-1,terazosin,terazosin,nc_terazosin,d_nc_terazosin,2,TERAZOSIN|TEZRULY
+nc,,-1,finasteride,finasteride,nc_finasteride,d_nc_finasteride,4,ENTADFI|FINASTERIDE|PROPECIA|PROSCAR
+nc,,-1,insulin lispro,insulin lispro,nc_insulin lispro,d_nc_insulin_lispro,5,ADMELOG|HUMALOG|HUMALOG MIX|INSULIN LISPRO|LYUMJEV
+nc,,-1,insulin glargine,insulin glargine,nc_insulin glargine,d_nc_insulin_glargine,8,BASAGLAR|INSULIN GLARGINE|LANGLARA|LANTUS|REZVOGLAR|SEMGLEE|SOLIQUA|TOUJEO
+nc,,-1,irbesartan,irbesartan,nc_irbesartan,d_nc_irbesartan,3,AVALIDE|AVAPRO|IRBESARTAN
+nc,,-1,ramipril,ramipril,nc_ramipril,d_nc_ramipril,3,ALTACE|RAMIPRIL|VOSTALLY
+nc,,-1,nadolol,nadolol,nc_nadolol,d_nc_nadolol,2,CORGARD|NADOLOL
+nc,,-1,lidocaine,lidocaine,nc_lidocaine,d_nc_lidocaine,77,ABREVA RAPID PAIN RELIEF|AKTEN|ALLERCAINE|ALOCANE|ALOCANE MAX STRENGTH|ALOCANE PLUS|ANA-LEX|ANECREAM|BACTINE|BACTINE ANTIBIOTIC|BAND-AID HURT-FREE|BIO-KOOL|BRUSELIX|BURN JEL PLUS|CICLOFERON|COMFORTCAINE|CUTIECAINE|DERMA NUMB|DOLORACIN WITH LIDOCAINE|DR. NUMB|FLAVALTA|GLYDO|HEXA-CAINE|KEEPAN|KOOL-DOWN|LENZAGEL|LENZAPATCH|LIDO KING|LIDOCAINE|LIDOCAN|LIDOCARE|LIDOCREAM|LIDODERM|LIDOGUARD|LIDOGUARD PAIN RELIEF|LIDOPATCH|LIDOPRO|LIDOPRO PAIN RELIEVING PATCH|LIDOPRO PATCH|LIDOSTAT|LIDOTRAL|LIDOTRAN|LIDOZEN|LIDUM|LIGNOSPAN|LIPOCAINE|LYDEXA|MEDI-DERM WITH LIDOCAINE|ORAQIX|PLIAGLIS|PUROXCIN|RADIAGUARD|RECTICARE|RECTICARE ADVANCE CREAM|RECTICARE WIPES|REGENECARE|RELADOR|SOLARCAINE|SONACAINE|STAPHASEPTIC|SYNERA|TOPICAINE|TOPICAINE ULTRA|TRANZAREL|TRIDACAINE|TRIFENA|UBER NUMB|UNBURN|WORKVIE|XOLIDO|XYLOCAINE|XYLOCAINE WITH EPINEPHRINE|ZCAINE|ZENSA|ZINGO|ZIONODIL|ZTLIDO
+nc,,-1,bupivacaine,bupivacaine,nc_bupivacaine,d_nc_bupivacaine,11,BUPIVACAINE|EXPAREL|MARCAINE|MARCAINE WITH EPINEPHRINE|NOCITA|POSIMIR|SENSORCAINE|SENSORCAINE WITH EPINEPHRINE|VIVACAINE|XARACOLL|ZYNRELEF
+nc,,-1,meperidine,meperidine,nc_meperidine,d_nc_meperidine,2,DEMEROL|MEPERIDINE
+nc,,-1,scopolamine,scopolamine,nc_scopolamine,d_nc_scopolamine,4,DONNATAL|PHENOHYTRO|SCOPOLAMINE|TRANSDERM SCOP
+nc,,-1,nalbuphine,nalbuphine,nc_nalbuphine,d_nc_nalbuphine,1,NALBUPHINE
+nc,,-1,propofol,propofol,nc_propofol,d_nc_propofol,5,DIPRIVAN|PROPOFLO|PROPOFOL|PROPOVAN|PROPOVEN
+nc,,-1,midazolam,midazolam,nc_midazolam,d_nc_midazolam,2,MIDAZOLAM|NAYZILAM
+nc,,-1,raloxifene,raloxifene,nc_raloxifene,d_nc_raloxifene,2,EVISTA|RALOXIFENE
+nc,,-1,triazolam,triazolam,nc_triazolam,d_nc_triazolam,2,HALCION|TRIAZOLAM
+nc,,-1,solifenacin,solifenacin,nc_solifenacin,d_nc_solifenacin,2,SOLIFENACIN|VESICARE
+nc,,-1,tamsulosin,tamsulosin,nc_tamsulosin,d_nc_tamsulosin,3,FLOMAX|JALYN|TAMSULOSIN
+nc,,-1,timolol,timolol,nc_timolol,d_nc_timolol,6,BETIMOL|COMBIGAN|COSOPT|ISTALOL|TIMOLOL|TIMOPTIC
+nc,,-1,zoledronic acid,zoledronic acid,nc_zoledronic acid,d_nc_zoledronic_acid,2,RECLAST|ZOLEDRONIC ACID
+nc,,-1,ibandronate,ibandronate,nc_ibandronate,d_nc_ibandronate,2,BONIVA|IBANDRONATE
+nc,,-1,methadone,methadone,nc_methadone,d_nc_methadone,4,DISKETS|DOLOPHINE|METHADONE|METHADOSE
+nc,,-1,varenicline,varenicline,nc_varenicline,d_nc_varenicline,3,CHANTIX|TYRVAYA|VARENICLINE
+nc,,-1,ramelteon,ramelteon,nc_ramelteon,d_nc_ramelteon,2,RAMELTEON|ROZEREM
+nc,,-1,diclofenac,diclofenac,nc_diclofenac,d_nc_diclofenac,15,ALEVE ARTHRITIS PAIN|ARTHROTEC|CAMBIA|CATAFLAM|DICLOFENAC|FLECTOR|LICART|LOFENA|PENNSAID|SURPASS ANTI-INFLAMMATORY|TRIFENA|VOLTAREN|XICLO|ZIPSOR|ZORVOLEX
+nc,,-1,celecoxib,celecoxib,nc_celecoxib,d_nc_celecoxib,6,CELEBREX|CELECOXIB|CONSENSI|ELYXYB|SEGLENTIS|VYSCOXA
+nc,,-1,diclofenac,diclofenac,nc_diclofenac,d_nc_diclofenac,15,ALEVE ARTHRITIS PAIN|ARTHROTEC|CAMBIA|CATAFLAM|DICLOFENAC|FLECTOR|LICART|LOFENA|PENNSAID|SURPASS ANTI-INFLAMMATORY|TRIFENA|VOLTAREN|XICLO|ZIPSOR|ZORVOLEX
+nc,,-1,celecoxib,celecoxib,nc_celecoxib,d_nc_celecoxib,6,CELEBREX|CELECOXIB|CONSENSI|ELYXYB|SEGLENTIS|VYSCOXA
+nc,,-1,diclofenac,diclofenac,nc_diclofenac,d_nc_diclofenac,15,ALEVE ARTHRITIS PAIN|ARTHROTEC|CAMBIA|CATAFLAM|DICLOFENAC|FLECTOR|LICART|LOFENA|PENNSAID|SURPASS ANTI-INFLAMMATORY|TRIFENA|VOLTAREN|XICLO|ZIPSOR|ZORVOLEX
+nc,,-1,celecoxib,celecoxib,nc_celecoxib,d_nc_celecoxib,6,CELEBREX|CELECOXIB|CONSENSI|ELYXYB|SEGLENTIS|VYSCOXA
+nc,,-1,diclofenac,diclofenac,nc_diclofenac,d_nc_diclofenac,15,ALEVE ARTHRITIS PAIN|ARTHROTEC|CAMBIA|CATAFLAM|DICLOFENAC|FLECTOR|LICART|LOFENA|PENNSAID|SURPASS ANTI-INFLAMMATORY|TRIFENA|VOLTAREN|XICLO|ZIPSOR|ZORVOLEX
+nc,,-1,celecoxib,celecoxib,nc_celecoxib,d_nc_celecoxib,6,CELEBREX|CELECOXIB|CONSENSI|ELYXYB|SEGLENTIS|VYSCOXA
+nc,,-1,diclofenac,diclofenac,nc_diclofenac,d_nc_diclofenac,15,ALEVE ARTHRITIS PAIN|ARTHROTEC|CAMBIA|CATAFLAM|DICLOFENAC|FLECTOR|LICART|LOFENA|PENNSAID|SURPASS ANTI-INFLAMMATORY|TRIFENA|VOLTAREN|XICLO|ZIPSOR|ZORVOLEX
+nc,,-1,celecoxib,celecoxib,nc_celecoxib,d_nc_celecoxib,6,CELEBREX|CELECOXIB|CONSENSI|ELYXYB|SEGLENTIS|VYSCOXA
+nc,,-1,diclofenac,diclofenac,nc_diclofenac,d_nc_diclofenac,15,ALEVE ARTHRITIS PAIN|ARTHROTEC|CAMBIA|CATAFLAM|DICLOFENAC|FLECTOR|LICART|LOFENA|PENNSAID|SURPASS ANTI-INFLAMMATORY|TRIFENA|VOLTAREN|XICLO|ZIPSOR|ZORVOLEX
+nc,,-1,celecoxib,celecoxib,nc_celecoxib,d_nc_celecoxib,6,CELEBREX|CELECOXIB|CONSENSI|ELYXYB|SEGLENTIS|VYSCOXA
+nc,,-1,diclofenac,diclofenac,nc_diclofenac,d_nc_diclofenac,15,ALEVE ARTHRITIS PAIN|ARTHROTEC|CAMBIA|CATAFLAM|DICLOFENAC|FLECTOR|LICART|LOFENA|PENNSAID|SURPASS ANTI-INFLAMMATORY|TRIFENA|VOLTAREN|XICLO|ZIPSOR|ZORVOLEX
+nc,,-1,celecoxib,celecoxib,nc_celecoxib,d_nc_celecoxib,6,CELEBREX|CELECOXIB|CONSENSI|ELYXYB|SEGLENTIS|VYSCOXA
+nc,,-1,diclofenac,diclofenac,nc_diclofenac,d_nc_diclofenac,15,ALEVE ARTHRITIS PAIN|ARTHROTEC|CAMBIA|CATAFLAM|DICLOFENAC|FLECTOR|LICART|LOFENA|PENNSAID|SURPASS ANTI-INFLAMMATORY|TRIFENA|VOLTAREN|XICLO|ZIPSOR|ZORVOLEX
+nc,,-1,celecoxib,celecoxib,nc_celecoxib,d_nc_celecoxib,6,CELEBREX|CELECOXIB|CONSENSI|ELYXYB|SEGLENTIS|VYSCOXA
+nc,,-1,diclofenac,diclofenac,nc_diclofenac,d_nc_diclofenac,15,ALEVE ARTHRITIS PAIN|ARTHROTEC|CAMBIA|CATAFLAM|DICLOFENAC|FLECTOR|LICART|LOFENA|PENNSAID|SURPASS ANTI-INFLAMMATORY|TRIFENA|VOLTAREN|XICLO|ZIPSOR|ZORVOLEX
+nc,,-1,celecoxib,celecoxib,nc_celecoxib,d_nc_celecoxib,6,CELEBREX|CELECOXIB|CONSENSI|ELYXYB|SEGLENTIS|VYSCOXA
+nc,,-1,diclofenac,diclofenac,nc_diclofenac,d_nc_diclofenac,15,ALEVE ARTHRITIS PAIN|ARTHROTEC|CAMBIA|CATAFLAM|DICLOFENAC|FLECTOR|LICART|LOFENA|PENNSAID|SURPASS ANTI-INFLAMMATORY|TRIFENA|VOLTAREN|XICLO|ZIPSOR|ZORVOLEX
+nc,,-1,celecoxib,celecoxib,nc_celecoxib,d_nc_celecoxib,6,CELEBREX|CELECOXIB|CONSENSI|ELYXYB|SEGLENTIS|VYSCOXA
+nc,,-1,diclofenac,diclofenac,nc_diclofenac,d_nc_diclofenac,15,ALEVE ARTHRITIS PAIN|ARTHROTEC|CAMBIA|CATAFLAM|DICLOFENAC|FLECTOR|LICART|LOFENA|PENNSAID|SURPASS ANTI-INFLAMMATORY|TRIFENA|VOLTAREN|XICLO|ZIPSOR|ZORVOLEX
+nc,,-1,celecoxib,celecoxib,nc_celecoxib,d_nc_celecoxib,6,CELEBREX|CELECOXIB|CONSENSI|ELYXYB|SEGLENTIS|VYSCOXA
+nc,,-1,diclofenac,diclofenac,nc_diclofenac,d_nc_diclofenac,15,ALEVE ARTHRITIS PAIN|ARTHROTEC|CAMBIA|CATAFLAM|DICLOFENAC|FLECTOR|LICART|LOFENA|PENNSAID|SURPASS ANTI-INFLAMMATORY|TRIFENA|VOLTAREN|XICLO|ZIPSOR|ZORVOLEX
+nc,,-1,celecoxib,celecoxib,nc_celecoxib,d_nc_celecoxib,6,CELEBREX|CELECOXIB|CONSENSI|ELYXYB|SEGLENTIS|VYSCOXA
+nc,,-1,diclofenac,diclofenac,nc_diclofenac,d_nc_diclofenac,15,ALEVE ARTHRITIS PAIN|ARTHROTEC|CAMBIA|CATAFLAM|DICLOFENAC|FLECTOR|LICART|LOFENA|PENNSAID|SURPASS ANTI-INFLAMMATORY|TRIFENA|VOLTAREN|XICLO|ZIPSOR|ZORVOLEX
+nc,,-1,celecoxib,celecoxib,nc_celecoxib,d_nc_celecoxib,6,CELEBREX|CELECOXIB|CONSENSI|ELYXYB|SEGLENTIS|VYSCOXA
+nc,,-1,diclofenac,diclofenac,nc_diclofenac,d_nc_diclofenac,15,ALEVE ARTHRITIS PAIN|ARTHROTEC|CAMBIA|CATAFLAM|DICLOFENAC|FLECTOR|LICART|LOFENA|PENNSAID|SURPASS ANTI-INFLAMMATORY|TRIFENA|VOLTAREN|XICLO|ZIPSOR|ZORVOLEX
+nc,,-1,celecoxib,celecoxib,nc_celecoxib,d_nc_celecoxib,6,CELEBREX|CELECOXIB|CONSENSI|ELYXYB|SEGLENTIS|VYSCOXA
+nc,,-1,diclofenac,diclofenac,nc_diclofenac,d_nc_diclofenac,15,ALEVE ARTHRITIS PAIN|ARTHROTEC|CAMBIA|CATAFLAM|DICLOFENAC|FLECTOR|LICART|LOFENA|PENNSAID|SURPASS ANTI-INFLAMMATORY|TRIFENA|VOLTAREN|XICLO|ZIPSOR|ZORVOLEX
+nc,,-1,celecoxib,celecoxib,nc_celecoxib,d_nc_celecoxib,6,CELEBREX|CELECOXIB|CONSENSI|ELYXYB|SEGLENTIS|VYSCOXA
+nc,,-1,diclofenac,diclofenac,nc_diclofenac,d_nc_diclofenac,15,ALEVE ARTHRITIS PAIN|ARTHROTEC|CAMBIA|CATAFLAM|DICLOFENAC|FLECTOR|LICART|LOFENA|PENNSAID|SURPASS ANTI-INFLAMMATORY|TRIFENA|VOLTAREN|XICLO|ZIPSOR|ZORVOLEX
+nc,,-1,celecoxib,celecoxib,nc_celecoxib,d_nc_celecoxib,6,CELEBREX|CELECOXIB|CONSENSI|ELYXYB|SEGLENTIS|VYSCOXA
+nc,,-1,diclofenac,diclofenac,nc_diclofenac,d_nc_diclofenac,15,ALEVE ARTHRITIS PAIN|ARTHROTEC|CAMBIA|CATAFLAM|DICLOFENAC|FLECTOR|LICART|LOFENA|PENNSAID|SURPASS ANTI-INFLAMMATORY|TRIFENA|VOLTAREN|XICLO|ZIPSOR|ZORVOLEX
+nc,,-1,celecoxib,celecoxib,nc_celecoxib,d_nc_celecoxib,6,CELEBREX|CELECOXIB|CONSENSI|ELYXYB|SEGLENTIS|VYSCOXA
+nc,,-1,diclofenac,diclofenac,nc_diclofenac,d_nc_diclofenac,15,ALEVE ARTHRITIS PAIN|ARTHROTEC|CAMBIA|CATAFLAM|DICLOFENAC|FLECTOR|LICART|LOFENA|PENNSAID|SURPASS ANTI-INFLAMMATORY|TRIFENA|VOLTAREN|XICLO|ZIPSOR|ZORVOLEX
+nc,,-1,celecoxib,celecoxib,nc_celecoxib,d_nc_celecoxib,6,CELEBREX|CELECOXIB|CONSENSI|ELYXYB|SEGLENTIS|VYSCOXA
+nc,,-1,diclofenac,diclofenac,nc_diclofenac,d_nc_diclofenac,15,ALEVE ARTHRITIS PAIN|ARTHROTEC|CAMBIA|CATAFLAM|DICLOFENAC|FLECTOR|LICART|LOFENA|PENNSAID|SURPASS ANTI-INFLAMMATORY|TRIFENA|VOLTAREN|XICLO|ZIPSOR|ZORVOLEX
+nc,,-1,celecoxib,celecoxib,nc_celecoxib,d_nc_celecoxib,6,CELEBREX|CELECOXIB|CONSENSI|ELYXYB|SEGLENTIS|VYSCOXA
+nc,,-1,diclofenac,diclofenac,nc_diclofenac,d_nc_diclofenac,15,ALEVE ARTHRITIS PAIN|ARTHROTEC|CAMBIA|CATAFLAM|DICLOFENAC|FLECTOR|LICART|LOFENA|PENNSAID|SURPASS ANTI-INFLAMMATORY|TRIFENA|VOLTAREN|XICLO|ZIPSOR|ZORVOLEX
+nc,,-1,celecoxib,celecoxib,nc_celecoxib,d_nc_celecoxib,6,CELEBREX|CELECOXIB|CONSENSI|ELYXYB|SEGLENTIS|VYSCOXA
+nc,,-1,diclofenac,diclofenac,nc_diclofenac,d_nc_diclofenac,15,ALEVE ARTHRITIS PAIN|ARTHROTEC|CAMBIA|CATAFLAM|DICLOFENAC|FLECTOR|LICART|LOFENA|PENNSAID|SURPASS ANTI-INFLAMMATORY|TRIFENA|VOLTAREN|XICLO|ZIPSOR|ZORVOLEX
+nc,,-1,celecoxib,celecoxib,nc_celecoxib,d_nc_celecoxib,6,CELEBREX|CELECOXIB|CONSENSI|ELYXYB|SEGLENTIS|VYSCOXA
+nc,,-1,diclofenac,diclofenac,nc_diclofenac,d_nc_diclofenac,15,ALEVE ARTHRITIS PAIN|ARTHROTEC|CAMBIA|CATAFLAM|DICLOFENAC|FLECTOR|LICART|LOFENA|PENNSAID|SURPASS ANTI-INFLAMMATORY|TRIFENA|VOLTAREN|XICLO|ZIPSOR|ZORVOLEX
+nc,,-1,celecoxib,celecoxib,nc_celecoxib,d_nc_celecoxib,6,CELEBREX|CELECOXIB|CONSENSI|ELYXYB|SEGLENTIS|VYSCOXA
+nc,,-1,diclofenac,diclofenac,nc_diclofenac,d_nc_diclofenac,15,ALEVE ARTHRITIS PAIN|ARTHROTEC|CAMBIA|CATAFLAM|DICLOFENAC|FLECTOR|LICART|LOFENA|PENNSAID|SURPASS ANTI-INFLAMMATORY|TRIFENA|VOLTAREN|XICLO|ZIPSOR|ZORVOLEX
+nc,,-1,celecoxib,celecoxib,nc_celecoxib,d_nc_celecoxib,6,CELEBREX|CELECOXIB|CONSENSI|ELYXYB|SEGLENTIS|VYSCOXA
+nc,,-1,ciprofloxacin,ciprofloxacin,nc_ciprofloxacin,d_nc_ciprofloxacin,8,CETRAXAL|CILOXAN|CIPRO|CIPRO HC|CIPRODEX|CIPROFLOXACIN|OTOVEL|PROQUIN
+nc,,-1,azithromycin,azithromycin,nc_azithromycin,d_nc_azithromycin,3,AZASITE|AZITHROMYCIN|ZITHROMAX
+nc,,-1,ciprofloxacin,ciprofloxacin,nc_ciprofloxacin,d_nc_ciprofloxacin,8,CETRAXAL|CILOXAN|CIPRO|CIPRO HC|CIPRODEX|CIPROFLOXACIN|OTOVEL|PROQUIN
+nc,,-1,azithromycin,azithromycin,nc_azithromycin,d_nc_azithromycin,3,AZASITE|AZITHROMYCIN|ZITHROMAX
+nc,,-1,ciprofloxacin,ciprofloxacin,nc_ciprofloxacin,d_nc_ciprofloxacin,8,CETRAXAL|CILOXAN|CIPRO|CIPRO HC|CIPRODEX|CIPROFLOXACIN|OTOVEL|PROQUIN
+nc,,-1,azithromycin,azithromycin,nc_azithromycin,d_nc_azithromycin,3,AZASITE|AZITHROMYCIN|ZITHROMAX
+nc,,-1,ciprofloxacin,ciprofloxacin,nc_ciprofloxacin,d_nc_ciprofloxacin,8,CETRAXAL|CILOXAN|CIPRO|CIPRO HC|CIPRODEX|CIPROFLOXACIN|OTOVEL|PROQUIN
+nc,,-1,azithromycin,azithromycin,nc_azithromycin,d_nc_azithromycin,3,AZASITE|AZITHROMYCIN|ZITHROMAX
+nc,,-1,ciprofloxacin,ciprofloxacin,nc_ciprofloxacin,d_nc_ciprofloxacin,8,CETRAXAL|CILOXAN|CIPRO|CIPRO HC|CIPRODEX|CIPROFLOXACIN|OTOVEL|PROQUIN
+nc,,-1,azithromycin,azithromycin,nc_azithromycin,d_nc_azithromycin,3,AZASITE|AZITHROMYCIN|ZITHROMAX
+nc,,-1,ciprofloxacin,ciprofloxacin,nc_ciprofloxacin,d_nc_ciprofloxacin,8,CETRAXAL|CILOXAN|CIPRO|CIPRO HC|CIPRODEX|CIPROFLOXACIN|OTOVEL|PROQUIN
+nc,,-1,azithromycin,azithromycin,nc_azithromycin,d_nc_azithromycin,3,AZASITE|AZITHROMYCIN|ZITHROMAX
+nc,,-1,ciprofloxacin,ciprofloxacin,nc_ciprofloxacin,d_nc_ciprofloxacin,8,CETRAXAL|CILOXAN|CIPRO|CIPRO HC|CIPRODEX|CIPROFLOXACIN|OTOVEL|PROQUIN
+nc,,-1,azithromycin,azithromycin,nc_azithromycin,d_nc_azithromycin,3,AZASITE|AZITHROMYCIN|ZITHROMAX
+nc,,-1,ciprofloxacin,ciprofloxacin,nc_ciprofloxacin,d_nc_ciprofloxacin,8,CETRAXAL|CILOXAN|CIPRO|CIPRO HC|CIPRODEX|CIPROFLOXACIN|OTOVEL|PROQUIN
+nc,,-1,azithromycin,azithromycin,nc_azithromycin,d_nc_azithromycin,3,AZASITE|AZITHROMYCIN|ZITHROMAX
+nc,,-1,ciprofloxacin,ciprofloxacin,nc_ciprofloxacin,d_nc_ciprofloxacin,8,CETRAXAL|CILOXAN|CIPRO|CIPRO HC|CIPRODEX|CIPROFLOXACIN|OTOVEL|PROQUIN
+nc,,-1,azithromycin,azithromycin,nc_azithromycin,d_nc_azithromycin,3,AZASITE|AZITHROMYCIN|ZITHROMAX
+nc,,-1,ciprofloxacin,ciprofloxacin,nc_ciprofloxacin,d_nc_ciprofloxacin,8,CETRAXAL|CILOXAN|CIPRO|CIPRO HC|CIPRODEX|CIPROFLOXACIN|OTOVEL|PROQUIN
+nc,,-1,azithromycin,azithromycin,nc_azithromycin,d_nc_azithromycin,3,AZASITE|AZITHROMYCIN|ZITHROMAX
+nc,,-1,ciprofloxacin,ciprofloxacin,nc_ciprofloxacin,d_nc_ciprofloxacin,8,CETRAXAL|CILOXAN|CIPRO|CIPRO HC|CIPRODEX|CIPROFLOXACIN|OTOVEL|PROQUIN
+nc,,-1,azithromycin,azithromycin,nc_azithromycin,d_nc_azithromycin,3,AZASITE|AZITHROMYCIN|ZITHROMAX
+nc,,-1,ciprofloxacin,ciprofloxacin,nc_ciprofloxacin,d_nc_ciprofloxacin,8,CETRAXAL|CILOXAN|CIPRO|CIPRO HC|CIPRODEX|CIPROFLOXACIN|OTOVEL|PROQUIN
+nc,,-1,azithromycin,azithromycin,nc_azithromycin,d_nc_azithromycin,3,AZASITE|AZITHROMYCIN|ZITHROMAX
+nc,,-1,ciprofloxacin,ciprofloxacin,nc_ciprofloxacin,d_nc_ciprofloxacin,8,CETRAXAL|CILOXAN|CIPRO|CIPRO HC|CIPRODEX|CIPROFLOXACIN|OTOVEL|PROQUIN
+nc,,-1,azithromycin,azithromycin,nc_azithromycin,d_nc_azithromycin,3,AZASITE|AZITHROMYCIN|ZITHROMAX
+nc,,-1,ciprofloxacin,ciprofloxacin,nc_ciprofloxacin,d_nc_ciprofloxacin,8,CETRAXAL|CILOXAN|CIPRO|CIPRO HC|CIPRODEX|CIPROFLOXACIN|OTOVEL|PROQUIN
+nc,,-1,azithromycin,azithromycin,nc_azithromycin,d_nc_azithromycin,3,AZASITE|AZITHROMYCIN|ZITHROMAX
+nc,,-1,ciprofloxacin,ciprofloxacin,nc_ciprofloxacin,d_nc_ciprofloxacin,8,CETRAXAL|CILOXAN|CIPRO|CIPRO HC|CIPRODEX|CIPROFLOXACIN|OTOVEL|PROQUIN
+nc,,-1,azithromycin,azithromycin,nc_azithromycin,d_nc_azithromycin,3,AZASITE|AZITHROMYCIN|ZITHROMAX
+nc,,-1,ciprofloxacin,ciprofloxacin,nc_ciprofloxacin,d_nc_ciprofloxacin,8,CETRAXAL|CILOXAN|CIPRO|CIPRO HC|CIPRODEX|CIPROFLOXACIN|OTOVEL|PROQUIN
+nc,,-1,azithromycin,azithromycin,nc_azithromycin,d_nc_azithromycin,3,AZASITE|AZITHROMYCIN|ZITHROMAX
+nc,,-1,ciprofloxacin,ciprofloxacin,nc_ciprofloxacin,d_nc_ciprofloxacin,8,CETRAXAL|CILOXAN|CIPRO|CIPRO HC|CIPRODEX|CIPROFLOXACIN|OTOVEL|PROQUIN
+nc,,-1,azithromycin,azithromycin,nc_azithromycin,d_nc_azithromycin,3,AZASITE|AZITHROMYCIN|ZITHROMAX
+nc,,-1,ciprofloxacin,ciprofloxacin,nc_ciprofloxacin,d_nc_ciprofloxacin,8,CETRAXAL|CILOXAN|CIPRO|CIPRO HC|CIPRODEX|CIPROFLOXACIN|OTOVEL|PROQUIN
+nc,,-1,azithromycin,azithromycin,nc_azithromycin,d_nc_azithromycin,3,AZASITE|AZITHROMYCIN|ZITHROMAX
+nc,,-1,ciprofloxacin,ciprofloxacin,nc_ciprofloxacin,d_nc_ciprofloxacin,8,CETRAXAL|CILOXAN|CIPRO|CIPRO HC|CIPRODEX|CIPROFLOXACIN|OTOVEL|PROQUIN
+nc,,-1,azithromycin,azithromycin,nc_azithromycin,d_nc_azithromycin,3,AZASITE|AZITHROMYCIN|ZITHROMAX
+nc,,-1,ciprofloxacin,ciprofloxacin,nc_ciprofloxacin,d_nc_ciprofloxacin,8,CETRAXAL|CILOXAN|CIPRO|CIPRO HC|CIPRODEX|CIPROFLOXACIN|OTOVEL|PROQUIN
+nc,,-1,azithromycin,azithromycin,nc_azithromycin,d_nc_azithromycin,3,AZASITE|AZITHROMYCIN|ZITHROMAX
+nc,,-1,ciprofloxacin,ciprofloxacin,nc_ciprofloxacin,d_nc_ciprofloxacin,8,CETRAXAL|CILOXAN|CIPRO|CIPRO HC|CIPRODEX|CIPROFLOXACIN|OTOVEL|PROQUIN
+nc,,-1,azithromycin,azithromycin,nc_azithromycin,d_nc_azithromycin,3,AZASITE|AZITHROMYCIN|ZITHROMAX
+nc,,-1,metformin,metformin,nc_metformin,d_nc_metformin,15,ACTOPLUS MET|GLUCOPHAGE|GLUMETZA|INVOKAMET|JANUMET|JENTADUETO|KAZANO|KOMBIGLYZE|METFORMIN|RIOMET|SEGLUROMET|SYNJARDY|TRIJARDY|XIGDUO|ZITUVIMET
+nc,,-1,glipizide,glipizide,nc_glipizide,d_nc_glipizide,2,GLIPIZIDE|GLUCOTROL
+nc,,-1,metformin,metformin,nc_metformin,d_nc_metformin,15,ACTOPLUS MET|GLUCOPHAGE|GLUMETZA|INVOKAMET|JANUMET|JENTADUETO|KAZANO|KOMBIGLYZE|METFORMIN|RIOMET|SEGLUROMET|SYNJARDY|TRIJARDY|XIGDUO|ZITUVIMET
+nc,,-1,glipizide,glipizide,nc_glipizide,d_nc_glipizide,2,GLIPIZIDE|GLUCOTROL
+nc,,-1,metformin,metformin,nc_metformin,d_nc_metformin,15,ACTOPLUS MET|GLUCOPHAGE|GLUMETZA|INVOKAMET|JANUMET|JENTADUETO|KAZANO|KOMBIGLYZE|METFORMIN|RIOMET|SEGLUROMET|SYNJARDY|TRIJARDY|XIGDUO|ZITUVIMET
+nc,,-1,glipizide,glipizide,nc_glipizide,d_nc_glipizide,2,GLIPIZIDE|GLUCOTROL
+nc,,-1,metformin,metformin,nc_metformin,d_nc_metformin,15,ACTOPLUS MET|GLUCOPHAGE|GLUMETZA|INVOKAMET|JANUMET|JENTADUETO|KAZANO|KOMBIGLYZE|METFORMIN|RIOMET|SEGLUROMET|SYNJARDY|TRIJARDY|XIGDUO|ZITUVIMET
+nc,,-1,glipizide,glipizide,nc_glipizide,d_nc_glipizide,2,GLIPIZIDE|GLUCOTROL
+nc,,-1,metformin,metformin,nc_metformin,d_nc_metformin,15,ACTOPLUS MET|GLUCOPHAGE|GLUMETZA|INVOKAMET|JANUMET|JENTADUETO|KAZANO|KOMBIGLYZE|METFORMIN|RIOMET|SEGLUROMET|SYNJARDY|TRIJARDY|XIGDUO|ZITUVIMET
+nc,,-1,glipizide,glipizide,nc_glipizide,d_nc_glipizide,2,GLIPIZIDE|GLUCOTROL
+nc,,-1,metformin,metformin,nc_metformin,d_nc_metformin,15,ACTOPLUS MET|GLUCOPHAGE|GLUMETZA|INVOKAMET|JANUMET|JENTADUETO|KAZANO|KOMBIGLYZE|METFORMIN|RIOMET|SEGLUROMET|SYNJARDY|TRIJARDY|XIGDUO|ZITUVIMET
+nc,,-1,glipizide,glipizide,nc_glipizide,d_nc_glipizide,2,GLIPIZIDE|GLUCOTROL
+nc,,-1,metformin,metformin,nc_metformin,d_nc_metformin,15,ACTOPLUS MET|GLUCOPHAGE|GLUMETZA|INVOKAMET|JANUMET|JENTADUETO|KAZANO|KOMBIGLYZE|METFORMIN|RIOMET|SEGLUROMET|SYNJARDY|TRIJARDY|XIGDUO|ZITUVIMET
+nc,,-1,glipizide,glipizide,nc_glipizide,d_nc_glipizide,2,GLIPIZIDE|GLUCOTROL
+nc,,-1,metformin,metformin,nc_metformin,d_nc_metformin,15,ACTOPLUS MET|GLUCOPHAGE|GLUMETZA|INVOKAMET|JANUMET|JENTADUETO|KAZANO|KOMBIGLYZE|METFORMIN|RIOMET|SEGLUROMET|SYNJARDY|TRIJARDY|XIGDUO|ZITUVIMET
+nc,,-1,glipizide,glipizide,nc_glipizide,d_nc_glipizide,2,GLIPIZIDE|GLUCOTROL
+nc,,-1,metformin,metformin,nc_metformin,d_nc_metformin,15,ACTOPLUS MET|GLUCOPHAGE|GLUMETZA|INVOKAMET|JANUMET|JENTADUETO|KAZANO|KOMBIGLYZE|METFORMIN|RIOMET|SEGLUROMET|SYNJARDY|TRIJARDY|XIGDUO|ZITUVIMET
+nc,,-1,glipizide,glipizide,nc_glipizide,d_nc_glipizide,2,GLIPIZIDE|GLUCOTROL
+nc,,-1,metformin,metformin,nc_metformin,d_nc_metformin,15,ACTOPLUS MET|GLUCOPHAGE|GLUMETZA|INVOKAMET|JANUMET|JENTADUETO|KAZANO|KOMBIGLYZE|METFORMIN|RIOMET|SEGLUROMET|SYNJARDY|TRIJARDY|XIGDUO|ZITUVIMET
+nc,,-1,glipizide,glipizide,nc_glipizide,d_nc_glipizide,2,GLIPIZIDE|GLUCOTROL
+nc,,-1,metformin,metformin,nc_metformin,d_nc_metformin,15,ACTOPLUS MET|GLUCOPHAGE|GLUMETZA|INVOKAMET|JANUMET|JENTADUETO|KAZANO|KOMBIGLYZE|METFORMIN|RIOMET|SEGLUROMET|SYNJARDY|TRIJARDY|XIGDUO|ZITUVIMET
+nc,,-1,glipizide,glipizide,nc_glipizide,d_nc_glipizide,2,GLIPIZIDE|GLUCOTROL
+nc,,-1,metformin,metformin,nc_metformin,d_nc_metformin,15,ACTOPLUS MET|GLUCOPHAGE|GLUMETZA|INVOKAMET|JANUMET|JENTADUETO|KAZANO|KOMBIGLYZE|METFORMIN|RIOMET|SEGLUROMET|SYNJARDY|TRIJARDY|XIGDUO|ZITUVIMET
+nc,,-1,glipizide,glipizide,nc_glipizide,d_nc_glipizide,2,GLIPIZIDE|GLUCOTROL
+nc,,-1,metformin,metformin,nc_metformin,d_nc_metformin,15,ACTOPLUS MET|GLUCOPHAGE|GLUMETZA|INVOKAMET|JANUMET|JENTADUETO|KAZANO|KOMBIGLYZE|METFORMIN|RIOMET|SEGLUROMET|SYNJARDY|TRIJARDY|XIGDUO|ZITUVIMET
+nc,,-1,glipizide,glipizide,nc_glipizide,d_nc_glipizide,2,GLIPIZIDE|GLUCOTROL
+nc,,-1,metformin,metformin,nc_metformin,d_nc_metformin,15,ACTOPLUS MET|GLUCOPHAGE|GLUMETZA|INVOKAMET|JANUMET|JENTADUETO|KAZANO|KOMBIGLYZE|METFORMIN|RIOMET|SEGLUROMET|SYNJARDY|TRIJARDY|XIGDUO|ZITUVIMET
+nc,,-1,glipizide,glipizide,nc_glipizide,d_nc_glipizide,2,GLIPIZIDE|GLUCOTROL
+nc,,-1,metformin,metformin,nc_metformin,d_nc_metformin,15,ACTOPLUS MET|GLUCOPHAGE|GLUMETZA|INVOKAMET|JANUMET|JENTADUETO|KAZANO|KOMBIGLYZE|METFORMIN|RIOMET|SEGLUROMET|SYNJARDY|TRIJARDY|XIGDUO|ZITUVIMET
+nc,,-1,glipizide,glipizide,nc_glipizide,d_nc_glipizide,2,GLIPIZIDE|GLUCOTROL
+nc,,-1,metformin,metformin,nc_metformin,d_nc_metformin,15,ACTOPLUS MET|GLUCOPHAGE|GLUMETZA|INVOKAMET|JANUMET|JENTADUETO|KAZANO|KOMBIGLYZE|METFORMIN|RIOMET|SEGLUROMET|SYNJARDY|TRIJARDY|XIGDUO|ZITUVIMET
+nc,,-1,glipizide,glipizide,nc_glipizide,d_nc_glipizide,2,GLIPIZIDE|GLUCOTROL
+nc,,-1,metformin,metformin,nc_metformin,d_nc_metformin,15,ACTOPLUS MET|GLUCOPHAGE|GLUMETZA|INVOKAMET|JANUMET|JENTADUETO|KAZANO|KOMBIGLYZE|METFORMIN|RIOMET|SEGLUROMET|SYNJARDY|TRIJARDY|XIGDUO|ZITUVIMET
+nc,,-1,glipizide,glipizide,nc_glipizide,d_nc_glipizide,2,GLIPIZIDE|GLUCOTROL
+nc,,-1,metformin,metformin,nc_metformin,d_nc_metformin,15,ACTOPLUS MET|GLUCOPHAGE|GLUMETZA|INVOKAMET|JANUMET|JENTADUETO|KAZANO|KOMBIGLYZE|METFORMIN|RIOMET|SEGLUROMET|SYNJARDY|TRIJARDY|XIGDUO|ZITUVIMET
+nc,,-1,glipizide,glipizide,nc_glipizide,d_nc_glipizide,2,GLIPIZIDE|GLUCOTROL
+nc,,-1,metformin,metformin,nc_metformin,d_nc_metformin,15,ACTOPLUS MET|GLUCOPHAGE|GLUMETZA|INVOKAMET|JANUMET|JENTADUETO|KAZANO|KOMBIGLYZE|METFORMIN|RIOMET|SEGLUROMET|SYNJARDY|TRIJARDY|XIGDUO|ZITUVIMET
+nc,,-1,glipizide,glipizide,nc_glipizide,d_nc_glipizide,2,GLIPIZIDE|GLUCOTROL
+nc,,-1,metformin,metformin,nc_metformin,d_nc_metformin,15,ACTOPLUS MET|GLUCOPHAGE|GLUMETZA|INVOKAMET|JANUMET|JENTADUETO|KAZANO|KOMBIGLYZE|METFORMIN|RIOMET|SEGLUROMET|SYNJARDY|TRIJARDY|XIGDUO|ZITUVIMET
+nc,,-1,glipizide,glipizide,nc_glipizide,d_nc_glipizide,2,GLIPIZIDE|GLUCOTROL
+nc,,-1,metformin,metformin,nc_metformin,d_nc_metformin,15,ACTOPLUS MET|GLUCOPHAGE|GLUMETZA|INVOKAMET|JANUMET|JENTADUETO|KAZANO|KOMBIGLYZE|METFORMIN|RIOMET|SEGLUROMET|SYNJARDY|TRIJARDY|XIGDUO|ZITUVIMET
+nc,,-1,glipizide,glipizide,nc_glipizide,d_nc_glipizide,2,GLIPIZIDE|GLUCOTROL
+nc,,-1,metformin,metformin,nc_metformin,d_nc_metformin,15,ACTOPLUS MET|GLUCOPHAGE|GLUMETZA|INVOKAMET|JANUMET|JENTADUETO|KAZANO|KOMBIGLYZE|METFORMIN|RIOMET|SEGLUROMET|SYNJARDY|TRIJARDY|XIGDUO|ZITUVIMET
+nc,,-1,glipizide,glipizide,nc_glipizide,d_nc_glipizide,2,GLIPIZIDE|GLUCOTROL
+nc,,-1,metformin,metformin,nc_metformin,d_nc_metformin,15,ACTOPLUS MET|GLUCOPHAGE|GLUMETZA|INVOKAMET|JANUMET|JENTADUETO|KAZANO|KOMBIGLYZE|METFORMIN|RIOMET|SEGLUROMET|SYNJARDY|TRIJARDY|XIGDUO|ZITUVIMET
+nc,,-1,glipizide,glipizide,nc_glipizide,d_nc_glipizide,2,GLIPIZIDE|GLUCOTROL
+nc,,-1,sertraline,sertraline,nc_sertraline,d_nc_sertraline,2,SERTRALINE|ZOLOFT
+nc,,-1,venlafaxine,venlafaxine,nc_venlafaxine,d_nc_venlafaxine,2,EFFEXOR|VENLAFAXINE
+nc,,-1,sertraline,sertraline,nc_sertraline,d_nc_sertraline,2,SERTRALINE|ZOLOFT
+nc,,-1,venlafaxine,venlafaxine,nc_venlafaxine,d_nc_venlafaxine,2,EFFEXOR|VENLAFAXINE
+nc,,-1,sertraline,sertraline,nc_sertraline,d_nc_sertraline,2,SERTRALINE|ZOLOFT
+nc,,-1,venlafaxine,venlafaxine,nc_venlafaxine,d_nc_venlafaxine,2,EFFEXOR|VENLAFAXINE
+nc,,-1,sertraline,sertraline,nc_sertraline,d_nc_sertraline,2,SERTRALINE|ZOLOFT
+nc,,-1,venlafaxine,venlafaxine,nc_venlafaxine,d_nc_venlafaxine,2,EFFEXOR|VENLAFAXINE
+nc,,-1,sertraline,sertraline,nc_sertraline,d_nc_sertraline,2,SERTRALINE|ZOLOFT
+nc,,-1,venlafaxine,venlafaxine,nc_venlafaxine,d_nc_venlafaxine,2,EFFEXOR|VENLAFAXINE
+nc,,-1,sertraline,sertraline,nc_sertraline,d_nc_sertraline,2,SERTRALINE|ZOLOFT
+nc,,-1,venlafaxine,venlafaxine,nc_venlafaxine,d_nc_venlafaxine,2,EFFEXOR|VENLAFAXINE
+nc,,-1,sertraline,sertraline,nc_sertraline,d_nc_sertraline,2,SERTRALINE|ZOLOFT
+nc,,-1,venlafaxine,venlafaxine,nc_venlafaxine,d_nc_venlafaxine,2,EFFEXOR|VENLAFAXINE
+nc,,-1,sertraline,sertraline,nc_sertraline,d_nc_sertraline,2,SERTRALINE|ZOLOFT
+nc,,-1,venlafaxine,venlafaxine,nc_venlafaxine,d_nc_venlafaxine,2,EFFEXOR|VENLAFAXINE
+nc,,-1,sertraline,sertraline,nc_sertraline,d_nc_sertraline,2,SERTRALINE|ZOLOFT
+nc,,-1,venlafaxine,venlafaxine,nc_venlafaxine,d_nc_venlafaxine,2,EFFEXOR|VENLAFAXINE
+nc,,-1,sertraline,sertraline,nc_sertraline,d_nc_sertraline,2,SERTRALINE|ZOLOFT
+nc,,-1,venlafaxine,venlafaxine,nc_venlafaxine,d_nc_venlafaxine,2,EFFEXOR|VENLAFAXINE
+nc,,-1,sertraline,sertraline,nc_sertraline,d_nc_sertraline,2,SERTRALINE|ZOLOFT
+nc,,-1,venlafaxine,venlafaxine,nc_venlafaxine,d_nc_venlafaxine,2,EFFEXOR|VENLAFAXINE
+nc,,-1,sertraline,sertraline,nc_sertraline,d_nc_sertraline,2,SERTRALINE|ZOLOFT
+nc,,-1,venlafaxine,venlafaxine,nc_venlafaxine,d_nc_venlafaxine,2,EFFEXOR|VENLAFAXINE
+nc,,-1,sertraline,sertraline,nc_sertraline,d_nc_sertraline,2,SERTRALINE|ZOLOFT
+nc,,-1,venlafaxine,venlafaxine,nc_venlafaxine,d_nc_venlafaxine,2,EFFEXOR|VENLAFAXINE
+nc,,-1,sertraline,sertraline,nc_sertraline,d_nc_sertraline,2,SERTRALINE|ZOLOFT
+nc,,-1,venlafaxine,venlafaxine,nc_venlafaxine,d_nc_venlafaxine,2,EFFEXOR|VENLAFAXINE
+nc,,-1,sertraline,sertraline,nc_sertraline,d_nc_sertraline,2,SERTRALINE|ZOLOFT
+nc,,-1,venlafaxine,venlafaxine,nc_venlafaxine,d_nc_venlafaxine,2,EFFEXOR|VENLAFAXINE
+nc,,-1,sertraline,sertraline,nc_sertraline,d_nc_sertraline,2,SERTRALINE|ZOLOFT
+nc,,-1,venlafaxine,venlafaxine,nc_venlafaxine,d_nc_venlafaxine,2,EFFEXOR|VENLAFAXINE
+nc,,-1,sertraline,sertraline,nc_sertraline,d_nc_sertraline,2,SERTRALINE|ZOLOFT
+nc,,-1,venlafaxine,venlafaxine,nc_venlafaxine,d_nc_venlafaxine,2,EFFEXOR|VENLAFAXINE
+nc,,-1,sertraline,sertraline,nc_sertraline,d_nc_sertraline,2,SERTRALINE|ZOLOFT
+nc,,-1,venlafaxine,venlafaxine,nc_venlafaxine,d_nc_venlafaxine,2,EFFEXOR|VENLAFAXINE
+nc,,-1,sertraline,sertraline,nc_sertraline,d_nc_sertraline,2,SERTRALINE|ZOLOFT
+nc,,-1,venlafaxine,venlafaxine,nc_venlafaxine,d_nc_venlafaxine,2,EFFEXOR|VENLAFAXINE
+nc,,-1,sertraline,sertraline,nc_sertraline,d_nc_sertraline,2,SERTRALINE|ZOLOFT
+nc,,-1,venlafaxine,venlafaxine,nc_venlafaxine,d_nc_venlafaxine,2,EFFEXOR|VENLAFAXINE
+nc,,-1,sertraline,sertraline,nc_sertraline,d_nc_sertraline,2,SERTRALINE|ZOLOFT
+nc,,-1,venlafaxine,venlafaxine,nc_venlafaxine,d_nc_venlafaxine,2,EFFEXOR|VENLAFAXINE
+nc,,-1,sertraline,sertraline,nc_sertraline,d_nc_sertraline,2,SERTRALINE|ZOLOFT
+nc,,-1,venlafaxine,venlafaxine,nc_venlafaxine,d_nc_venlafaxine,2,EFFEXOR|VENLAFAXINE

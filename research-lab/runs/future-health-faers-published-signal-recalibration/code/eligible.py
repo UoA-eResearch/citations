@@ -28,6 +28,19 @@ UK = [(r"hemorrhag", "haemorrhag"), (r"\banemi", "anaemi"), (r"\bedema", "oedema
       (r"neutropeni", "neutropeni")]
 
 
+# D4 (after the independent review): signals found wrong in review, and two mapping rules
+REVIEW_EXCLUDE_PAPERS = {"37240654": "interaction estimates (daptomycin + statin) attributed to the statin",
+                         "40567936": "a JADER study, labelled FAERS", "38936945": "a JADER study, labelled FAERS"}
+REVIEW_EXCLUDE_SIGNALS = {("40552159", 12): "JADER-specific estimate", ("40552159", 16): "JADER-specific estimate",
+                          ("36697083", 0): "a dose-per-weight contrast, not a drug-event disproportionality"}
+CONJ = re.compile(r"deruxtecan|emtansine|vedotin|govitecan|ozogamicin|mafodotin|tesirine|T-DM1|T-DXd|\bDM1\b|\bDXd\b", re.I)
+
+
+def abbreviation(drug):
+    s = rxnorm.clean(drug)
+    return len(s) < 4 or re.fullmatch(r"[A-Z0-9\-]+", s) is not None
+
+
 def uk(event):
     s = (event or "").strip().lower()
     for a, b in UK:
@@ -56,9 +69,17 @@ def main():
                 reason = "not FAERS"
             elif s.get("comparison") == "interaction":   # D2
                 reason = "interaction or factor contrast"
+            if not reason and str(r["id"]) in REVIEW_EXCLUDE_PAPERS:   # D4
+                reason = "found wrong in review"
+            elif not reason and (str(r["id"]), k) in REVIEW_EXCLUDE_SIGNALS:   # D4
+                reason = "found wrong in review"
+            elif not reason and abbreviation(s.get("drug", "")):   # D4
+                reason = "abbreviation, not mapped"
             ings = rxnorm.ingredients(s.get("drug", "")) if not reason else []
             if not reason and len(ings) != 1:
                 reason = "not a single mapped ingredient" if ings else "drug not mapped"
+            if not reason and CONJ.search(s.get("drug") or "") and not CONJ.search(ings[0]):   # D4
+                reason = "conjugate mapped to its antibody"
             rows.append(dict(paper=r["id"], k=k, drug=s.get("drug"), ingredient=ings[0] if len(ings) == 1 else "", event=s.get("event"),
                              event_uk=uk(s.get("event")), level=s.get("level"), estimate=s.get("estimate"), ci_low=s.get("ci_low"),
                              ci_high=s.get("ci_high"), n_cases=s.get("n_cases"), comparison=s.get("comparison"), database=s.get("database"),

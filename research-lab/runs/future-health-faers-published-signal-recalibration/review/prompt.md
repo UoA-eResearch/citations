@@ -21,7 +21,7 @@ empirical null from negative-control pairs?
 
 **What to read:**
 - plan.md (preregistration), deviations.md (D1, D2, D2 outcome, D3);
-- report.md (pre-review draft);
+- report.md and report.html (pre-review draft, commit d62a942);
 - code/: fetch_epmc.py, extract_signals.py, validation_adjudication.py, validate_round2.py, rxnorm.py, eligible.py,
   fetch_faers.py, faers_db.py, negative_controls.py, recompute.py, validate_pipeline.py, analysis.py,
   null_sensitivity.py, figures.py;
