@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Outage Event-Day Ratchet</title>
+<meta name="description" content="Does the IEEE 1366 major-event-day rule hide the US power-outage trend it is meant to normalise? Daily SAIDI for 24 states and DC from EAGLE-I, 2015-2025, plus a Monte Carlo of detection power.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Energy</div>
+  <h1>Does the major-event-day rule hide the US outage trend it is meant to normalise?</h1>
+  <p class="subtitle">Daily outage minutes per customer for 24 US states and DC, 2015–2025, built from the EAGLE-I county outage snapshots and classified under the IEEE 1366 &quot;2.5β&quot; major-event-day rule and three alternatives, plus a Monte Carlo of how well each rule detects a real trend.</p>
+  <div class="meta">
+    <span>Report · 2026-10-18 · pre-review draft</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/energy-outage-major-event-day-ratchet/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/energy-outage-major-event-day-ratchet/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/energy-outage-major-event-day-ratchet/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: Refuted.</strong> The standard rule does not hide the trend in these data, and in simulation it keeps most of the
+power to detect one. Its weakness runs the other way: a rising rolling threshold lets storm growth leak into the
+"normal operations" index.</p>
+<ul>
+<li><strong>H1 (the rule masks an all-events trend): Inconclusive.</strong><ul>
+<li>All-events SAIDI has no trend over 2020–2025 (−3.4% a year, 95% CI −9.9 to +3.0), so there is nothing to mask.</li>
+<li>The MED-excluded index under the standard rolling rule rises <strong>+3.1% a year (+1.6 to +4.8)</strong>.</li>
+<li>So normalisation reveals a trend that storm noise hides, rather than the reverse.</li>
+</ul>
+</li>
+<li><strong>H2 (the rolling threshold removes more trend than a frozen one): Refuted.</strong><ul>
+<li>The rolling MED-excluded index rises 0.79 percentage points a year <em>faster</em> than the frozen one (+0.18 to +1.48).</li>
+<li>The rolling threshold rose from a median 4.0 to 4.9 minutes per customer-day, so fewer days were excluded.</li>
+<li>Under the preregistered coverage sensitivity the difference is +0.54 (−0.11 to +1.23), which is Inconclusive.
+It is never negative.</li>
+</ul>
+</li>
+<li><strong>H3 (the rolling rule has at most half an oracle's detection power): Refuted.</strong><ul>
+<li>In 2,000 simulated systems where normal-operations severity grows 3% a year, the rolling rule detects the trend
+in 44% and an oracle that knows the storm days in 59%. The ratio is 0.74 (0.70–0.78).</li>
+<li>The frozen threshold detects 36%, a fixed 99th-percentile rule 25%, and all events 8%.</li>
+</ul>
+</li>
+</ul>
+<p><strong>What the simulation adds.</strong> When storms, not normal operations, grow 5% a year, the rolling rule's "normal
+operations" index shows an upward trend in 33% of systems. The frozen threshold does so in 9% and the oracle in 3%.
+- A rising threshold reclassifies growing storm days as ordinary days.
+- The observed +3.1% a year could therefore be partly storm leakage rather than worsening routine reliability. The
+  frozen and fixed-quantile indices, which are less exposed to it, still rise about 2.3% a year.</p>
+<p><strong>Validation.</strong> Over 175 state-years (2018–2024), the EAGLE-I all-events index ranks states almost exactly as the
+utilities' own EIA-861 SAIDI (with major events) does: Spearman 0.94.</p>
+<h2>In plain terms</h2>
+<p>Power companies report how many minutes their customers are without power each year. Before comparing years,
+regulators usually remove "major event days", the worst storm days, using a standard statistical rule. Critics worry
+the rule's threshold creeps upwards as storms get worse. That could hide a real decline in everyday reliability.</p>
+<p>We rebuilt daily outage minutes for 24 US states and DC from a public federal dataset, covering 2015 to 2025. We then applied
+the standard rule and three alternatives.</p>
+<p>The worry did not hold up here. Including storms, there was no clear trend over 2020–2025, because storms swing too
+much from year to year. Once storm days are removed, everyday outage minutes rose about 2–3% a year under every rule,
+and fastest under the standard one.</p>
+<p>The standard rule's threshold did creep upwards, but that made it exclude <em>fewer</em> days, not more.</p>
+<p>We also simulated thousands of made-up power systems. When everyday reliability got worse, the standard rule caught
+it nearly three-quarters as often as a perfect rule would. That is better than the alternatives we tested.</p>
+<p>Its real weak spot ran the other way. When storms got worse, the standard rule's "everyday" figure sometimes rose too,
+because the rising threshold let bigger storm days count as ordinary ones. Some of the everyday rise we measured may
+be storms in disguise.</p>
+<p>These are state totals from outage maps, not individual utilities' official figures.</p>
+<h2>What was asked</h2>
+<p>IEEE Standard 1366 separates "major event days" (MEDs) from normal operations. Each year's threshold is
+exp(α + 2.5β), where α and β are the mean and standard deviation of the log of non-zero daily SAIDI over the previous
+five years. Regulators judge reliability on the MED-excluded index. If storms are getting worse, the threshold rises
+with them, and a critique raised at a 2025 CPUC technical session is that this can hide deteriorating performance.</p>
+<p>The study asks three preregistered questions (<code>plan.md</code>, 950d8c0):</p>
+<ul>
+<li><strong>H1 (masking).</strong> Does the MED-excluded index under the rolling rule grow at less than half the rate of the
+  all-events index?</li>
+<li><strong>H2 (ratchet).</strong> Does the rolling threshold remove more of the trend than a threshold frozen at 2015–2019?</li>
+<li><strong>H3 (detection power).</strong> In simulation, does the rolling rule detect a 3%-a-year deterioration in normal
+  operations at most half as often as an oracle that knows which days are storms?</li>
+</ul>
+<h2>What was already known</h2>
+<p>The novelty search (2026-10-18) found known critiques of the 2.5β method:
+- zero-SAIDI days (IEEE 2013);
+- log-normal tail misfit (IEEE 2011);
+- the CPUC session's warning that rising thresholds can hide localised problems.</p>
+<p>No study was found that quantifies, across a national panel, how much of the outage trend the rolling threshold
+removes, or the detection power of alternative rules.</p>
+<h2>How it was done</h2>
+<p><strong>Data.</strong>
+- <strong>Outages.</strong> The EAGLE-I outage dataset (Oak Ridge National Laboratory; figshare 24237376 v4, CC BY 4.0) gives
+  customers out by county in 15-minute snapshots, from utilities' public outage maps.
+    - 2015–2025, 11 GB, verified against the repository's MD5 sums.
+    - The 2023 file names its customers-out column <code>sum</code> (D1).
+- <strong>Customers.</strong> The dataset's modelled customer counts per county (MCC 2022).
+- <strong>Validation.</strong> EIA-861 reliability data (via PUDL).</p>
+<p><strong>Daily SAIDI</strong> (<code>code/build.py</code>). For each state and local day in the state's predominant time zone: the sum over
+its counties and snapshots of customers out × 15 minutes, divided by the state's MCC customers. Days with no record are
+zero. This gives 204,918 state-days.</p>
+<p><strong>Inclusion.</strong> A state is included if both hold:
+- its customer coverage is at least 80% in every year of the dataset's coverage history (2018–2022);
+- in every year 2015–2025, the number of its counties reporting any outage is within ±15% of its 2018–2022 median.</p>
+<p>24 states and DC qualify: 25 systems, called states below. Excluded:
+- AZ, CA, CO, CT, ID and MO, on reporting-county stability;
+- AR, IN, KY and MS, on coverage.</p>
+<p><strong>Rules compared</strong> (<code>code/analysis.py</code>), for 2020–2025:
+- (a) rolling 2.5β, the standard;
+- (b) 2.5β frozen at 2015–2019;
+- (c) a 10-year window, for 2025 only;
+- (d) a fixed 2015–2019 99th percentile;
+- (e) no normalisation (all events).</p>
+<p><strong>Trends.</strong> A panel regression of ln(annual index + 1 minute) on year with state fixed effects. Intervals come from a
+state-cluster bootstrap (2,000 resamples).</p>
+<p><strong>The Monte Carlo</strong> (<code>code/simulate.py</code>):
+- <strong>Calibration.</strong> Each simulated system is calibrated to a randomly drawn included state's 2015–2019 days: zero days,
+  a log-normal body, and a generalised Pareto tail above the 95th percentile.
+- <strong>Scenarios.</strong> 2,000 systems × 11 years each:
+    - A: normal operations +3% a year;
+    - B: storm frequency and size +5% a year;
+    - C: no trend.
+- <strong>Detection.</strong> A one-sided p &lt; 0.05 for a positive log-linear trend over the final six years.</p>
+<h2>Results</h2>
+<h3>The trends (<code>results/tables/primary.json</code>, <code>results/figures/F1_indices.png</code>, <code>F2_trends.png</code>)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>index</th>
+<th>trend 2020–2025, % per year</th>
+<th>coverage sensitivity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>all events</td>
+<td>−3.4 (−9.9 to +3.0)</td>
+<td>−3.8 (−10.2 to +2.6)</td>
+</tr>
+<tr>
+<td><strong>MED-excluded, rolling 2.5β (the standard)</strong></td>
+<td><strong>+3.1 (+1.6 to +4.8)</strong></td>
+<td>+2.6 (+1.0 to +4.3)</td>
+</tr>
+<tr>
+<td>MED-excluded, frozen 2.5β</td>
+<td>+2.3 (+0.7 to +4.0)</td>
+<td>+2.0 (+0.6 to +3.8)</td>
+</tr>
+<tr>
+<td>MED-excluded, fixed 99th percentile</td>
+<td>+2.2 (+0.8 to +3.9)</td>
+<td>+2.0 (+0.6 to +3.6)</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>H1 is Inconclusive</strong> by its preregistered rule: the all-events interval includes zero.<ul>
+<li>The "masking ratio" (rolling trend over all-events trend) is meaningless when its denominator is near zero:
+−0.89 (−9.8 to +9.5).</li>
+<li>All-events SAIDI is dominated by a few storm years (2020 and 2024), so it carries no detectable trend in six years.</li>
+</ul>
+</li>
+<li><strong>H2 is Refuted.</strong> Rolling minus frozen is +0.79 points (+0.18 to +1.48).<ul>
+<li>Under the coverage sensitivity it is +0.54 (−0.11 to +1.23), which is Inconclusive.</li>
+<li>In neither analysis does the rolling rule remove more trend.</li>
+</ul>
+</li>
+<li><strong>The 10-year window</strong> (rule (c), 2025 only) gives a total MED-excluded 2025 index within 1% of the rolling rule's.</li>
+</ul>
+<figure><a href="results/figures/F1_indices.png"><img src="results/figures/F1_indices.png" alt="Pooled annual indices"></a><figcaption>Annual SAIDI from EAGLE-I county outage snapshots, by normalisation policy, as the geometric mean across the 25 included states of (index + 1 minute), set to 100 in 2020. The all-events line includes major event days (MEDs); the others exclude days above each policy&#x27;s threshold.</figcaption></figure>
+<figure><a href="results/figures/F2_trends.png"><img src="results/figures/F2_trends.png" alt="Trends under each rule"></a><figcaption>Pooled log-linear trend of each annual index over 2020-2025, with state-cluster bootstrap 95% intervals (2,000 resamples). Purple: the preregistered coverage sensitivity, normalising by covered customers.</figcaption></figure>
+<h3>The threshold and the excluded days (<code>results/figures/F3_thresholds.png</code>)</h3>
+<ul>
+<li><strong>The threshold rose.</strong> The median state rolling threshold went from 4.0 minutes per customer-day in 2020 to 4.9 in
+  2025.</li>
+<li><strong>Fewer days were excluded.</strong> The rolling rule excluded fewer days than the frozen rule in every year after 2020:<ul>
+<li>2023: 8.8 vs 10.2 MEDs per state;</li>
+<li>2024: 11.7 vs 13.1;</li>
+<li>2025: 7.0 vs 8.5.</li>
+</ul>
+</li>
+<li><strong>Decomposition.</strong> Per state, the 2020-to-2025 change in all-events SAIDI is split into three parts:<ul>
+<li>normal-operations growth: median +14 minutes, positive in 20 of 25 states;</li>
+<li>reclassification as the threshold moves: median +5 minutes;</li>
+<li>storm change: median −161 minutes, since 2020 was a heavy storm year.</li>
+</ul>
+</li>
+</ul>
+<p>Reclassification adds to the normal-operations index rather than subtracting from it.</p>
+<figure><a href="results/figures/F3_thresholds.png"><img src="results/figures/F3_thresholds.png" alt="Thresholds and major event days"></a><figcaption>Left: the median across included states of the daily-SAIDI threshold exp(α + 2.5β), rolling (the previous five years) and frozen (2015-2019). Right: the mean number of major event days per state-year under each.</figcaption></figure>
+<h3>Detection power (H3; <code>results/tables/simulation.json</code>, <code>results/figures/F4_power.png</code>)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>rule</th>
+<th>A: normal ops +3%/yr</th>
+<th>B: storms +5%/yr</th>
+<th>C: no trend</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>oracle (knows storm days)</td>
+<td>59%</td>
+<td>3%</td>
+<td>4%</td>
+</tr>
+<tr>
+<td><strong>rolling 2.5β</strong></td>
+<td><strong>44%</strong></td>
+<td><strong>33%</strong></td>
+<td>5%</td>
+</tr>
+<tr>
+<td>frozen 2.5β</td>
+<td>36%</td>
+<td>9%</td>
+<td>5%</td>
+</tr>
+<tr>
+<td>fixed 99th percentile</td>
+<td>25%</td>
+<td>15%</td>
+<td>5%</td>
+</tr>
+<tr>
+<td>all events</td>
+<td>8%</td>
+<td>16%</td>
+<td>4%</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>H3 is Refuted.</strong> The rolling rule's power ratio to the oracle is 0.74 (0.70–0.78), far above 0.5. All rules hold
+  their nominal 5% false-positive rate under C.</li>
+<li><strong>Scenario B shows the rolling rule's real weakness.</strong><ul>
+<li>As storms grow, its threshold rises and more storm days pass as ordinary days.</li>
+<li>So the "normal operations" index trends upwards in a third of systems where normal operations did not change at
+all.</li>
+<li>The frozen threshold leaks far less (9%).</li>
+</ul>
+</li>
+<li><strong>The tails are heavy.</strong> For 14 of the 25 states, the fitted Pareto tail shape reached the code's cap of 0.9.
+  Infinite-variance tails make all-events trends nearly undetectable, which matches the 8% power of the all-events
+  index under A.</li>
+</ul>
+<figure><a href="results/figures/F4_power.png"><img src="results/figures/F4_power.png" alt="Detection in simulated systems"></a><figcaption>Monte Carlo, 2,000 systems per scenario, each calibrated to a randomly drawn included state&#x27;s 2015-2019 days (zero days, log-normal body, generalised Pareto tail above the 95th percentile). A: normal-operations severity grows 3% a year, storms unchanged. B: storm frequency and size grow 5% a year, normal operations unchanged, so any detection by a normalised index is leakage. C: no trend (the false-positive rate; dashed line 5%). Wilson 95% intervals.</figcaption></figure>
+<h3>Validation (<code>primary.json</code>)</h3>
+<p>The EIA side is utility SAIDI with major events, customer-weighted within each state, for utilities using the IEEE
+method. Over 175 state-years (2018–2024), its Spearman correlation with the EAGLE-I all-events index is 0.94 (0.96
+under the coverage sensitivity). That is well above the preregistered 0.6 bar, so the proxy is validated for ranking
+states.</p>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>It shows:</strong><ul>
+<li>in these 25 states, the standard rolling rule did not hide an outage trend over 2020–2025;</li>
+<li>every MED-excluded index rose about 2–3% a year while the all-events index showed no trend;</li>
+<li>in simulation, the rolling rule keeps about three-quarters of an oracle's power to detect deteriorating normal
+operations, more than the alternatives tested.</li>
+</ul>
+</li>
+<li><strong>It does not show that routine reliability is worsening by 3% a year.</strong><ul>
+<li>The simulation shows that the rolling rule also turns growing storms into a rising "normal operations" index.</li>
+<li>The frozen and fixed-quantile indices, less exposed to that, rise about 2.2% a year. That is a firmer lower
+estimate of the routine trend, if the outage-map coverage is stable.</li>
+</ul>
+</li>
+<li><strong>States are not utilities.</strong> Real thresholds are set per utility on its own daily SAIDI. State aggregation smooths
+  days, lowers β and changes which days count as MEDs. The conclusions are about the rule's behaviour on state
+  aggregates, not any utility's reported figures.</li>
+<li><strong>The data are outage maps.</strong> EAGLE-I captures what utilities publish. Coverage grew in 2015–2017, which the
+  inclusion rule and the coverage sensitivity address. Customers out are snapshots, so outages shorter than 15
+  minutes are partly missed.</li>
+<li><strong>Six annual points</strong> per state; inference is pooled.</li>
+<li><strong>The NZ external check</strong> named in the lead was descoped in the plan: New Zealand publishes annual, not daily, data.</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration.</strong> The plan (950d8c0) was committed before any outage series was built. The build, analysis and
+  simulation code (e868d1c) was committed before the data finished downloading.</li>
+<li><strong>D1:</strong> download integrity and the 2023 column name, recorded before any series was computed.</li>
+<li><strong>The figure code</strong> (<code>code/figures.py</code>) was written after the results.</li>
+</ul>
+<h2>Reproducing it</h2>
+<p><code>code/fetch.py</code>, <code>code/build.py</code>, <code>code/analysis.py</code>, <code>code/analysis.py coverage</code>, <code>code/simulate.py</code>,
+<code>code/figures.py</code>.</p>
+<ul>
+<li><strong>Raw files</strong> are in <code>data/raw/</code>, with checksums in <code>data/raw/SHA256SUMS</code>.</li>
+<li><strong>Results</strong> are in <code>results/tables/</code>: <code>primary.json</code>, <code>primary_coverage_sensitivity.json</code>, <code>state_year.csv</code>,
+  <code>decomposition.csv</code> and <code>simulation.json</code>.</li>
+</ul>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/energy-outage-major-event-day-ratchet/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>
