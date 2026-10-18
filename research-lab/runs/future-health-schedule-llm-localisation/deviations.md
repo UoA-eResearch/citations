@@ -22,3 +22,24 @@ Timestamps are Pacific/Auckland, from `date`.
 - **The criteria themselves:**
   - NZ: the MathML criterion texts in the chemical's Special Authority request forms;
   - AU: the prescribing texts linked to the chemical's GE items through their restrictions.
+
+## D2 — 2026-10-18 17:43 NZDT — family (a) balanced within each jurisdiction (after generation, before any model output)
+
+**Shortfall.** Under the 3-per-chemical cap and the stability rule, the generator found fewer valid negatives than
+planned: 100 for NZ and 66 for AU, against the plan's 150. With 150 positives each, a yes-leaning model would score
+higher on AU purely from the base rate.
+
+**Change.** Positives are therefore capped at the number of negatives found: NZ 100/100, AU 66/66. Families (b)
+(NZ 97 yes, 100 no; AU 100/100) and (d) (100/100 each) are unchanged. No model had been queried.
+
+## D3 — 2026-10-18 17:45 NZDT — evidence used for the answer-key check (before any model output)
+
+**AU.** The PBS website's item pages and its printed-Schedule archive are rendered by JavaScript and cannot be
+fetched as documents. The AU half of the 200-item check is therefore made against the raw PBS API JSON records, read
+directly:
+- every General Schedule item for the drug, with its form and benefit type;
+- the full restriction texts.
+
+This checks the generator's parsing, keying and flag logic. It does not check the API against the printed Schedule.
+
+**NZ.** The NZ half uses the October 2026 Schedule PDF text, a rendering independent of the XML the generator parsed.

@@ -158,7 +158,9 @@ def main():
         other = J["AU" if jur == "NZ" else "NZ"][0]
         pos = [dict(key=k, chemical=k[0], text=render(k)) for k in new if k[0] in chems and k in old]
         neg = [dict(key=k, chemical=k[0], text=render(k)) for k in other if k[0] in chems and k not in new and k not in old]
-        avail[f"{jur}_a"] = (take(pos, 150, "a", jur, "yes"), take(neg, 150, "a", jur, "no"))
+        # D2: positives are capped at the number of negatives found, so each jurisdiction's family (a) is balanced
+        n_neg = take(neg, 150, "a", jur, "no")
+        avail[f"{jur}_a"] = (take(pos, n_neg, "a", jur, "yes"), n_neg)
         yes = [dict(key=k, chemical=k[0], text=render(k)) for k, v in new.items() if k[0] in chems and v is True and old.get(k) is True]
         no = [dict(key=k, chemical=k[0], text=render(k)) for k, v in new.items() if k[0] in chems and v is False and old.get(k) is False]
         avail[f"{jur}_b"] = (take(yes, 100, "b", jur, "yes"), take(no, 100, "b", jur, "no"))
