@@ -51,3 +51,21 @@ only `comparison` = all drugs.
 - The round-1 sample is re-extracted with v2 as a development check only; it does not count towards the decision.
 - The v2 extraction then replaces v1 for every paper (`data/extract/signals_raw_v2.jsonl`).
 - The accuracy of the `comparison` label is reported separately; it affects only the sensitivity analysis.
+
+## D2 outcome — 2026-10-18 15:27 NZDT — the revised extraction passes the re-validation (before any signal was recomputed)
+
+Source: `results/tables/extraction_validation_round2.{csv,json}`, from `code/validation_adjudication.py 2`.
+
+- **Sample.** 272 fresh papers; 35 yielded candidate signals.
+- **Precision.** 97/106 = 0.92 on candidates. On fully eligible signals it is 68/71 = 0.96, above the 0.90 bar, so
+  the study proceeds on the v2 extraction.
+- **Remaining errors on candidates (9):**
+  - 6 in one paper whose drug-approval years (2014–2021) were read as its FAERS window;
+  - 3 within-drug sex or indication contrasts, labelled "subgroup" where "interaction" was meant.
+- **Recall.** No candidate-level signal was missed.
+- **The `comparison` label** is right for 103/106 candidates (0.97).
+- **Not counted towards the decision:** one non-candidate window ("2006Q1-2021Q3" read as null).
+- **Pipeline changes (D2):**
+  - `code/eligible.py` now reads the v2 file and applies the FAERS and non-interaction rules.
+  - `code/analysis.py` adds the all-drugs-only sensitivity, and reports how many windows start before 2004Q1.
+    Those windows are recomputed from 2004Q1, the first quarter in the public files.

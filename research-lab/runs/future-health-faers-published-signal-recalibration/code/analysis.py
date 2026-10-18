@@ -77,6 +77,15 @@ def main():
     out["uncalibrated_replication"] = dict(share=float(ok.primary_sig_uncal.mean()), ci=cluster_boot(ok, lambda x: float(x.primary_sig_uncal.mean())))
     out["variants"] = {v: dict(uncal=float(ok[f"{v}_sig_uncal"].mean()), survive_mle=float(ok[f"{v}_survive_mle"].fillna(False).mean()))
                        for v in ("primary", "allsuspect", "nodedup", "fullwindow")}
+    # D2 sensitivity: only signals whose published comparison is against all other drugs (BH recomputed within the subset)
+    sub = ok[ok.comparison == "all drugs"].copy()
+    mu, sg = nulls["mle"]
+    sub["q_sub"] = bh(calibrated_p(np.log(sub.primary_ror.values), sub.primary_se.values, mu, sg))
+    sub["surv_sub"] = (sub.primary_ror > 1) & (sub.q_sub < 0.05)
+    out["all_drugs_only"] = dict(n=int(len(sub)), share_surviving=float(sub.surv_sub.mean()),
+                                 ci=cluster_boot(sub, lambda x: float(x.surv_sub.mean())),
+                                 median_ratio=float(np.median((sub.estimate / sub.primary_ror)[lambda r: np.isfinite(r) & (r > 0)])))
+    out["windows_starting_before_2004"] = int((ok.win.str.slice(0, 4).astype(int) < 2004).sum())
     ok["ratio"] = ok.estimate / ok.primary_ror
     rr = ok[np.isfinite(ok.ratio) & (ok.ratio > 0)]
     med = lambda x: float(np.median(x.ratio))

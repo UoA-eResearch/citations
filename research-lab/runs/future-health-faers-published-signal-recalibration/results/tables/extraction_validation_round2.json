@@ -1,0 +1,35 @@
+{
+ "papers_sampled": 272,
+ "papers_with_cand": 35,
+ "cand": {
+  "n": 106,
+  "correct": 97,
+  "precision": 0.9150943396226415
+ },
+ "eligible": {
+  "n": 71,
+  "correct": 68,
+  "precision": 0.9577464788732394,
+  "papers": 26
+ },
+ "errors_cand": {
+  "window": 6,
+  "not a drug-event disproportionality": 3
+ },
+ "errors_eligible": {
+  "window": 2,
+  "not a drug-event disproportionality": 1
+ },
+ "errors_by_paper_eligible": {
+  "38722712": 2,
+  "40285824": 1
+ },
+ "missed_cand": 0,
+ "missed_eligible": 0,
+ "recall_eligible": 1.0,
+ "window_errors_noncand": [
+  "36725376"
+ ],
+ "comparison_label_accuracy": 0.9716981132075472,
+ "abort_rule": "pass"
+}

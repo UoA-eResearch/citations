@@ -1,8 +1,10 @@
 """Eligible published signals (plan section 2). From data/extract/signals_raw.jsonl: ROR with estimate and 95% CI,
 lower bound > 1, a single active ingredient (RxNorm), a stated window, and an event name (after the fixed US-to-UK
 spelling map) that the recomputation step later checks against the FAERS PT list. At most 5 per paper, at random
-(seed 20261018). Writes data/signals_all.csv (every extracted ROR signal with its eligibility reason) and
-data/signals_eligible.csv."""
+(seed 20261018). Deviation D2: reads the v2 extraction (data/extract/signals_raw_v2.jsonl) and also requires the
+signal's database to be FAERS and its comparison not to be an interaction; the comparison label is carried for the
+all-drugs-only sensitivity analysis. Writes data/signals_all.csv (every extracted ROR signal with its eligibility
+reason) and data/signals_eligible.csv."""
 import json
 import random
 import re
@@ -34,7 +36,7 @@ def uk(event):
 
 def main():
     rows = []
-    for l in open(RUN / "data" / "extract" / "signals_raw.jsonl"):
+    for l in open(RUN / "data" / "extract" / "signals_raw_v2.jsonl"):   # D2
         r = json.loads(l)
         if "out" not in r:
             continue
@@ -49,12 +51,16 @@ def main():
                 reason = "not significant as reported"
             elif not w:
                 reason = "no window"
+            elif s.get("database") != "FAERS":   # D2
+                reason = "not FAERS"
+            elif s.get("comparison") == "interaction":   # D2
+                reason = "interaction or factor contrast"
             ings = rxnorm.ingredients(s.get("drug", "")) if not reason else []
             if not reason and len(ings) != 1:
                 reason = "not a single mapped ingredient" if ings else "drug not mapped"
             rows.append(dict(paper=r["id"], k=k, drug=s.get("drug"), ingredient=ings[0] if len(ings) == 1 else "", event=s.get("event"),
                              event_uk=uk(s.get("event")), level=s.get("level"), estimate=s.get("estimate"), ci_low=s.get("ci_low"),
-                             ci_high=s.get("ci_high"), n_cases=s.get("n_cases"),
+                             ci_high=s.get("ci_high"), n_cases=s.get("n_cases"), comparison=s.get("comparison"), database=s.get("database"),
                              win=f"{w['start_year']}Q{w['start_quarter']}-{w['end_year']}Q{w['end_quarter']}" if w else "", reason=reason))
     rxnorm.save()
     a = pd.DataFrame(rows)

@@ -1,0 +1,107 @@
+paper,k,drug,event,estimate,ci_low,ci_high,correct,error,flag,note,single_ingredient,faers_pt,eligible,comparison,comparison_ok
+36334066,0,sildenafil,metastatic malignant melanoma,9.19,7.72,10.94,1,,,,1,1,1,unclear,1
+36334066,2,sildenafil,malignant melanoma stage II,132.23,95.49,183.11,1,,,,1,1,1,unclear,1
+36334066,4,tadalafil,metastatic malignant melanoma,6.79,5.41,8.54,1,,,,1,1,1,unclear,1
+36334066,6,tadalafil,malignant melanoma stage II,180.17,130.11,249.5,1,,,,1,1,1,unclear,1
+36334066,8,vardenafil,metastatic malignant melanoma,23.38,15.2,35.96,1,,,,1,1,1,unclear,1
+36334066,10,vardenafil,malignant melanoma stage III,245.77,154.42,391.16,1,,,,1,1,1,unclear,1
+36637688,0,alogliptin,acute kidney injury,3.082,2.156,4.406,1,,comparator,aROR against sitagliptin,1,1,1,comparator,1
+36651638,0,selexipag,headache(s),16.7,15.8,17.7,1,,,,1,0,0,all drugs,1
+36651638,1,epoprostenol,headache(s),11.7,10.8,12.7,1,,,,1,0,0,all drugs,1
+36651638,2,glecaprevir,headache(s),8.7,8.3,9.2,1,,,,1,0,0,all drugs,1
+36778017,0,nivolumab,Aplastic anaemia,3.05,1.73,5.38,1,,,,1,1,1,all drugs,1
+36778017,1,pembrolizumab,Aplastic anaemia,2.33,1.16,4.67,1,,,,1,1,1,all drugs,1
+36778017,2,avelumab,Aplastic anaemia,12.63,3.15,50.62,1,,,,1,1,1,all drugs,1
+36778017,3,ipilimumab/nivolumab,Aplastic anaemia,2.57,1.15,5.72,1,,combination,ipilimumab/nivolumab,0,1,0,all drugs,1
+36909171,0,Methotrexate,interstitial lung disease,4.0,3.83,4.17,1,,,"window starts 1997, before the FAERS files used",1,1,1,all drugs,1
+36909171,1,Methotrexate,hepatotoxicity,1.99,1.96,2.02,1,,,,1,1,1,all drugs,1
+36909171,2,Methotrexate,myelosuppression,3.66,3.58,3.74,1,,,,1,1,1,all drugs,1
+36909171,3,Methotrexate,tuberculosis,7.97,7.65,8.3,1,,,,1,1,1,all drugs,1
+37026465,0,gefitinib,interstitial lung disease,12.47,11.4,13.64,1,,,,1,1,1,all drugs,1
+37170890,0,nirmatrelvir,disease recurrence,413.2,395.6,431.59,1,,,,1,1,1,all drugs,1
+37170890,1,nirmatrelvir,dysgeusia,110.84,106.04,115.85,1,,,,1,1,1,all drugs,1
+37170890,2,nirmatrelvir,anosmia,15.21,12.76,18.11,1,,,,1,1,1,all drugs,1
+37170890,3,nirmatrelvir,ageusia,9.8,8.5,11.3,1,,,,1,1,1,all drugs,1
+37170890,4,nirmatrelvir,urticaria,1.91,1.69,2.17,1,,,,1,1,1,all drugs,1
+37170890,5,nirmatrelvir,life-threatening conditions,8.0,1.77,36.2,1,,subgroup,pregnant population,1,0,0,subgroup,1
+37194481,0,aripiprazole,OCD/OCS,23.87,21.01,27.13,1,,comparator,against other antipsychotics,1,0,0,comparator,1
+37849732,0,levetiracetam,rhabdomyolysis,8.01,7.26,8.84,1,,,,1,1,1,all drugs,1
+37849732,1,lamotrigine,rhabdomyolysis,3.78,3.25,4.4,1,,,,1,1,1,all drugs,1
+37849732,2,oxcarbazepine,rhabdomyolysis,3.47,2.53,4.75,1,,,,1,1,1,all drugs,1
+37849732,3,pregabalin,rhabdomyolysis,2.75,2.43,3.12,1,,,,1,1,1,all drugs,1
+37849732,4,lacosamide,rhabdomyolysis,1.85,1.29,2.65,1,,,,1,1,1,all drugs,1
+37849732,5,topiramate,rhabdomyolysis,1.64,1.25,2.15,1,,,,1,1,1,all drugs,1
+37849732,6,gabapentin,rhabdomyolysis,1.32,1.13,1.55,1,,,,1,1,1,all drugs,1
+37869095,0,Sacituzumab Govitecan,blood and lymphatic system disorders,7.23,6.43,8.14,1,,,,1,0,0,all drugs,1
+37869095,1,Sacituzumab Govitecan,gastrointestinal disorders,2.01,1.81,2.22,1,,,,1,0,0,all drugs,1
+37869095,2,Sacituzumab Govitecan,neutropenic sepsis,46.02,27.15,77.99,1,,,,1,1,1,all drugs,1
+37869095,3,Sacituzumab Govitecan,neutropenic colitis,188.02,120.09,294.37,1,,,,1,1,1,all drugs,1
+37869095,4,Sacituzumab Govitecan,large intestine perforation,10.77,3.47,33.45,1,,,,1,1,1,all drugs,1
+37869095,5,Sacituzumab Govitecan,hepatic failure,3.87,1.45,10.31,1,,,,1,1,1,all drugs,1
+37869095,6,Sacituzumab Govitecan,pneumonitis,9.93,5.75,17.12,1,,,,1,1,1,all drugs,1
+37869095,7,Sacituzumab Govitecan,neutropenic colitis,282.05,116.36,683.66,1,,subgroup,aged over 65,1,1,1,subgroup,1
+37869095,8,Sacituzumab Govitecan,neutropenic sepsis,101.11,41.83,244.43,1,,subgroup,aged over 65,1,1,1,subgroup,1
+37869095,9,Sacituzumab Govitecan,acute kidney injury,3.29,1.36,7.94,1,,subgroup,aged over 65,1,1,1,subgroup,1
+37869095,10,Sacituzumab Govitecan,atrial fibrillation,6.91,2.86,16.69,1,,subgroup,aged over 65,1,1,1,subgroup,1
+38038233,1,dupilumab,ocular surface reactions,1.29,1.2,1.4,0,not a drug-event disproportionality,,an indication or age contrast within dupilumab reports,1,0,0,subgroup,0
+38038233,2,dupilumab,ocular surface reactions,12.5,12.2,12.8,1,,,,1,0,0,all drugs,1
+38156529,0,secukinumab,anosmia,3.42,1.9,4.01,1,,,,1,1,1,all drugs,1
+38156529,1,levofloxacin,hyposmia,8.86,2.83,9.8,1,,,,1,1,1,all drugs,1
+38156529,2,pregabalin,parosmia,6.88,2.23,8.01,1,,,,1,1,1,all drugs,1
+38482864,0,ribociclib,QTp/TdP,10.1,8.56,11.92,1,,comparator,within breast-cancer reports,1,0,0,comparator,1
+38722712,0,sacubitril/valsartan,acute kidney injury,8.24,6.05,11.22,0,window,,2014-2021 are the drugs' approval years; no FAERS period is stated,0,1,0,all drugs,1
+38722712,1,sacubitril/valsartan,cardiac failure,4.8,3.82,6.05,0,window,,2014-2021 are the drugs' approval years; no FAERS period is stated,0,1,0,all drugs,1
+38722712,2,sacubitril/valsartan,hypotension,3.98,3.44,4.61,0,window,,2014-2021 are the drugs' approval years; no FAERS period is stated,0,1,0,all drugs,1
+38722712,3,ivabradine,tachycardia,11.94,8.35,17.08,0,window,,2014-2021 are the drugs' approval years; no FAERS period is stated,1,1,1,all drugs,1
+38722712,4,ivabradine,abnormal feeling,4.4,2.7,7.18,0,window,,2014-2021 are the drugs' approval years; no FAERS period is stated,1,0,0,all drugs,1
+38722712,5,ivabradine,dizziness,2.56,1.68,3.9,0,window,,2014-2021 are the drugs' approval years; no FAERS period is stated,1,1,1,all drugs,1
+38760615,0,teprotumumab,thyroid-stimulating immunoglobulin increase,662.89,182.4,2409.19,1,,,,1,0,0,all drugs,1
+38760615,1,teprotumumab,gingival recession,125.13,79.7,196.45,1,,,,1,1,1,all drugs,1
+39286628,0,sevelamer carbonate,constipation,115.51,110.14,121.15,1,,,,1,1,1,all drugs,1
+39290710,0,ide-cel,febrile bone marrow aplasia,69.1,39.12,122.03,1,,,,1,1,1,all drugs,1
+39290710,1,ide-cel,plasma cell myeloma,12.45,8.18,18.95,1,,,,1,1,1,all drugs,1
+39290710,2,cilta-cel,increased serum ferritin,24.98,8.0,77.58,1,,,,1,0,0,all drugs,1
+39290710,3,cilta-cel,large intestine perforation,18.57,5.98,57.69,1,,,,1,1,1,all drugs,1
+39565078,0,osimertinib,aplastic anemia,4.16,2.54,6.8,1,,,,1,1,1,all drugs,1
+39759530,0,hydroxychloroquine,pemphigus,282.647,260.951,306.148,1,,,,1,1,1,all drugs,1
+39856211,0,avapritinib,neuropsychiatric AEs,1.52,1.44,1.61,1,,,,1,0,0,all drugs,1
+39867657,0,citalopram,abnormal weight gain,4.0,3.1,5.2,1,,,,1,1,1,all drugs,1
+39867657,1,citalopram,hepatic steatosis,2.8,2.1,3.6,1,,,,1,1,1,all drugs,1
+39867657,2,escitalopram,gestational diabetes,9.1,6.6,12.4,1,,,,1,1,1,all drugs,1
+39867657,3,escitalopram,cholestasis,2.4,1.75,3.38,1,,,,1,1,1,all drugs,1
+39867657,4,fluoxetine,obesity,2.8,2.08,3.78,1,,,,1,1,1,all drugs,1
+39867657,5,fluvoxamine,arteriospasm coronary,13.87,4.47,43.1,1,,,,1,1,1,all drugs,1
+39867657,6,sertraline,neonatal jaundice,16.1,12.6,20.6,1,,,,1,0,0,all drugs,1
+39920868,0,hydralazine,pericardial effusion,27.11,22.28,33.0,1,,,,1,1,1,all drugs,1
+39920868,1,dasatinib,pericardial effusion,15.62,14.07,17.33,1,,,,1,1,1,all drugs,1
+39920868,2,mesalazine,pericardial effusion,8.99,6.84,11.8,1,,,,1,1,1,all drugs,1
+40132024,0,Sodium zirconium cyclosilicate,X-ray gastrointestinal tract abnormalities,3888.02,1051.8,14372.15,1,,,,1,0,0,all drugs,1
+40132024,1,Sodium zirconium cyclosilicate,blood potassium abnormal,212.53,134.73,335.26,1,,,,1,1,1,all drugs,1
+40132024,2,Sodium zirconium cyclosilicate,ileus,27.82,14.44,53.59,1,,,,1,1,1,all drugs,1
+40132024,3,Sodium zirconium cyclosilicate,death,17.49,15.7,19.49,1,,,,1,1,1,all drugs,1
+40132024,4,Sodium zirconium cyclosilicate,congestive cardiac failure,16.66,10.94,25.37,1,,,,1,0,0,all drugs,1
+40143928,0,BCR-ABL inhibitor monotherapy,cardiac arrhythmias,1.31,1.27,1.36,1,,class,BCR-ABL inhibitor monotherapy pooled,0,0,0,all drugs,1
+40143928,1,asciminib,cardiac arrhythmias,2.11,1.45,3.06,1,,,,1,0,0,all drugs,1
+40143928,2,nilotinib,cardiac arrhythmias,2.66,2.53,2.8,1,,,,1,0,0,all drugs,1
+40143928,3,ponatinib,cardiac arrhythmias,1.18,1.05,1.33,1,,,,1,0,0,all drugs,1
+40202446,1,ADCs,ophthalmotoxicity,1.25,1.11,1.4,0,not a drug-event disproportionality,,females vs males within ADC reports,0,0,0,subgroup,0
+40232264,0,Trastuzumab deruxtecan,ILD,56.25,51.27,61.72,1,,,,1,0,0,all drugs,1
+40232264,1,Ramucirumab,ILD,27.8,241.6,31.99,1,,,CI printed as 241.6-31.99 in the abstract,1,0,0,all drugs,1
+40232264,2,Amiodarone,ILD,24.35,22.82,25.99,1,,,,1,0,0,all drugs,1
+40232264,4,Gefitinib,ILD,23.02,20.66,25.66,1,,,,1,0,0,all drugs,1
+40232264,6,Doxorubicin,ILD,13.99,13.09,14.95,1,,,,1,0,0,all drugs,1
+40285824,6,pralsetinib,hypertension,1.8,1.06,3.05,0,not a drug-event disproportionality,,females vs males within pralsetinib reports,1,1,1,subgroup,0
+40389541,0,ertapenem,oropharyngeal edema,191.05,60.76,601.35,1,,,,1,1,1,all drugs,1
+40389541,1,ertapenem,granulomatous dermatitis,150.49,55.9,405.15,1,,,,1,1,1,all drugs,1
+40437077,0,Lanreotide,cholelithiasis,12.03,10.46,13.85,1,,,,1,1,1,all drugs,1
+40437077,1,Lanreotide,Injection site reactions,19.09,17.2,21.19,1,,,,1,0,0,all drugs,1
+40717976,0,esomeprazole,osteoporosis,8.83,8.53,9.13,1,,,,1,1,1,all drugs,1
+40776461,0,Obeticholic acid,oesophageal varices,58.39,43.67,78.08,1,,,,1,0,0,unclear,1
+40776461,1,Obeticholic acid,hepatic fibrosis,74.95,58.59,95.88,1,,,,1,1,1,unclear,1
+40888754,0,Trastuzumab deruxtecan,interstitial lung disease,49.04,44.41,54.17,1,,,,1,1,1,all drugs,1
+41071822,0,sodium zirconium cyclosilicate,blood potassium abnormal,180.224,119.925,270.842,1,,,,1,1,1,all drugs,1
+41071822,1,sodium zirconium cyclosilicate,blood potassium increased,98.789,78.835,123.792,1,,,,1,1,1,all drugs,1
+41071822,2,sodium zirconium cyclosilicate,blood sodium increased,35.248,14.624,84.961,1,,,,1,1,1,all drugs,1
+41266479,0,alirocumab,hypersensitivity,1.14,1.11,1.18,1,,,,1,1,1,all drugs,1
+41266479,2,alirocumab,anaphylaxis,1.3,1.26,1.33,1,,,,1,0,0,all drugs,1
+41458610,0,crizotinib,ocular AEs,3.46,3.3,3.63,1,,,,1,0,0,all drugs,1

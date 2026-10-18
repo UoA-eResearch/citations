@@ -1,148 +1,148 @@
-paper,k,drug,event,estimate,ci_low,ci_high,correct,error,flag,note,single_ingredient,faers_pt,eligible
-35349180,0,nilutamide,interstitial lung disease (ILD),32.14,11.03,93.63,1,,,,1,0,0
-35349180,1,flutamide,interstitial lung disease (ILD),9.93,3.62,27.21,1,,,,1,0,0
-35349180,2,bicalutamide,interstitial lung disease (ILD),8.19,6.01,11.16,1,,,,1,0,0
-35349180,3,goserelin,interstitial lung disease (ILD),3.74,2.61,5.37,1,,,,1,0,0
-35349180,4,degarelix,interstitial lung disease (ILD),2.41,1.55,3.75,1,,,,1,0,0
-35349180,5,apalutamide,interstitial lung disease (ILD),1.94,1.01,3.75,1,,,,1,0,0
-36697083,0,olaparib,anemia,4.483,3.009,6.68,0,not a drug-event disproportionality,,aROR of dose per body weight >=12 mg/kg among olaparib users,1,1,1
-36700393,0,infliximab,delayed cutaneous hypersensitivity reactions,2.14,1.2,3.81,1,,,composite event as written,1,0,0
-36830151,1,piperacillin-tazobactam,hypokalemia,2.61,2.17,3.14,1,,combination,,0,1,0
-37332342,0,anti-PD-1/L1 combined with anti-CTLA-4 therapy,vitiligo,55.89,42.34,73.78,1,,combination,,0,1,0
-37332342,1,combined anti-PD-1/L1 and VEGF (R)-TKIs,Palmar-plantar erythrodysesthesia,18.67,14.77,23.6,1,,combination,,0,0,0
-37332342,2,antiPD-1 inhibitors,Stevens-Johnson syndrome (SJS),3.07,2.68,3.52,1,,class,,0,0,0
-37507539,0,SSRIs,rhabdomyolysis,2.86,2.67,3.05,1,,class,,0,1,0
-37507539,1,fluvoxamine,rhabdomyolysis,11.64,8.0,16.93,1,,,,1,1,1
-37507539,2,paroxetine,rhabdomyolysis,1.83,1.55,2.15,1,,,,1,1,1
-37615268,0,olanzapine,venous thromboembolism,2.53,2.38,2.69,1,,,,1,0,0
-37615268,1,haloperidol,venous thromboembolism,2.17,1.91,2.46,1,,,,1,0,0
-37615268,2,paliperidone,venous thromboembolism,1.6,1.4,1.83,1,,,,1,0,0
-37615268,3,quetiapine,venous thromboembolism,1.37,1.28,1.47,1,,,,1,0,0
-38294705,0,mepolizumab,pneumonia,3.74,3.5,4.0,1,,,,1,1,1
-38294705,1,omalizumab,pneumonia,3.26,3.06,3.49,1,,,,1,1,1
-38294705,2,benralizumab,pneumonia,2.65,2.49,2.83,1,,,,1,1,1
-38384285,0,ADCs,peripheral neuropathy,16.98,14.94,19.3,1,,class,ADCs pooled,0,0,0
-38384285,1,ADCs,cerebral haemorrhage,9.45,7.01,12.73,1,,class,ADCs pooled,0,1,0
-38384285,2,ADCs,peripheral sensory neuropathy,47.87,33.13,69.19,1,,class,ADCs pooled,0,1,0
-38384285,3,ADCs,polyneuropathy,26.01,18.61,36.33,1,,class,ADCs pooled,0,1,0
-38384285,4,ADCs,encephalopathy,5.16,3.32,8.01,1,,class,ADCs pooled,0,1,0
-38384285,5,ADCs,progressive multifocal leukoencephalopathy,22.67,14.05,36.58,1,,class,ADCs pooled,0,1,0
-38384285,6,ADCs,taste disorder,26.09,15.92,42.76,1,,class,ADCs pooled,0,1,0
-38384285,7,ADCs,guillain barrier syndrome,17.844,10.11,31.51,1,,class,ADCs pooled,0,0,0
-38936945,0,remdesivir,acute kidney injury,2.45,1.91,3.14,0,non-FAERS database,,Japanese Adverse Event Reporting Database,1,1,1
-38936945,1,remdesivir,acute kidney injury,2.18,1.69,2.8,0,non-FAERS database,,Japanese Adverse Event Reporting Database,1,1,1
-38936945,2,nirmatrelvir/ritonavir,acute kidney injury,6.07,4.06,9.06,0,non-FAERS database,,Japanese Adverse Event Reporting Database,0,1,0
-38936945,3,nirmatrelvir/ritonavir,acute kidney injury,5.24,3.48,7.9,0,non-FAERS database,,Japanese Adverse Event Reporting Database,0,1,0
-38948476,0,ICI,autoimmune hepatitis,19.34,17.8,21.02,1,,class,ICIs pooled,0,1,0
-38948476,1,ICI,immune-mediated hepatitis,217.24,189.95,248.45,1,,class,ICIs pooled,0,1,0
-38948476,2,ICI,hepatitis fulminant,4.56,3.65,5.7,1,,class,ICIs pooled,0,1,0
-39031227,0,JAK inhibitors,DVT,2.52,1.95,3.25,0,non-FAERS database,,JADER,0,0,0
-39031227,2,baricitinib,DVT,4.37,2.83,6.73,0,non-FAERS database,,JADER,1,0,0
-39148544,2,evolocumab,AKI,1.4,1.54,1.69,0,not a drug-event disproportionality,,males vs females within evolocumab; CI excludes the estimate as printed,1,0,0
-39384812,0,primidone,congenital anomalies of the external ear,397.05,147.21,1070.9,1,,,,1,0,0
-39384812,2,valproic acid,congenital anomalies of the external ear,239.46,123.75,463.37,1,,,,1,0,0
-39384812,4,tapazole,congenital anomalies of the external ear,198.35,63.49,619.67,1,,,,0,0,0
-39384812,6,nevirapine,congenital anomalies of the external ear,138.24,82.9,230.51,1,,,,1,0,0
-39384812,8,sebivo,congenital anomalies of the external ear,117.1,48.51,282.67,1,,,,0,0,0
-39419512,0,HRZE,drug-induced liver injury,7.99,7.74,8.25,1,,combination,HRZE regimen,0,1,0
-39419512,1,BPaL,drug-induced liver injury,4.75,4.55,4.97,1,,combination,BPaL regimen,0,1,0
-39419623,0,zanubrutinib,blood and lymphatic system disorders,2.8,2.3,3.3,1,,,,1,0,0
-39419623,1,zanubrutinib,haemorrhage subcutaneous,190.8,128.0,284.5,1,,,,1,1,1
-39459005,0,inclisiran,Myalgia,2.43,1.94,3.04,0,non-FAERS database,,"EudraVigilance, PCSK9-antagonist comparator",1,1,1
-39459005,1,inclisiran,Low-density lipoprotein increased,11.95,9.1,15.52,0,non-FAERS database,,"EudraVigilance, PCSK9-antagonist comparator",1,0,0
-39459005,2,inclisiran,Drug ineffective,6.37,4.64,8.74,0,non-FAERS database,,"EudraVigilance, PCSK9-antagonist comparator",1,1,1
-39460482,0,programmed cell death 1 inhibitor,bullous pemphigoid,24.45,22.52,26.56,1,,class,PD-1 vs CTLA-4/PD-L1 inhibitors,0,0,0
-39473255,0,atorvastatin,Neurological AEs,9.77,9.56,9.99,0,window,,"stated March 2023, extracted 2023Q4",1,0,0
-39635439,0,irbesartan,acute pancreatitis,7.76,5.88,10.25,1,,,,1,0,0
-39635439,1,irbesartan,rhabdomyolysis,7.76,5.88,10.25,1,,,,1,1,1
-39635439,2,irbesartan,respiratory failure,6.76,3.2,14.26,0,non-FAERS database,,the respiratory-failure ROR is from JADER,1,1,1
-39672542,0,cilta-cel,Guillain-Barre syndrome,17.1,6.1,47.5,1,,,,1,1,1
-39672542,1,cilta-cel,intracranial hemorrhage and cerebrovascular accidents,2.9,1.8,4.8,1,,,,1,0,0
-39672542,2,cilta-cel,Haemophilus infections,34.2,11.8,98.9,1,,,,1,0,0
-39672542,3,cilta-cel,cytomegalovirus infections,3.9,1.6,9.5,1,,,,1,0,0
-39672542,4,ide-cel,parkinsonism,13.7,5.5,34.5,1,,,,1,1,1
-39672542,5,ide-cel,acute and chronic sarcoidosis,197.1,32.9,1180.1,1,,,,1,0,0
-39672542,6,ide-cel,ventricular arrhythmias,3.9,2.1,7.3,0,event split,,ROR belongs to the HLT ventricular arrhythmias and cardiac arrest,1,0,0
-39672542,7,ide-cel,cardiac arrest,3.9,2.1,7.3,0,event split,,ROR belongs to the HLT ventricular arrhythmias and cardiac arrest,1,1,1
-39738184,1,sacubitril/valsartan,hypoacusis,9.29,9.29,9.29,0,estimate is a bound,,ROR025 copied as estimate and CI,0,1,0
-39764463,0,Atazanavir,kidney stone formation,46.35,43.0,50.0,1,,,,1,0,0
-39764463,2,Topamax,kidney stone formation,19.44,17.66,21.4,1,,,,1,0,0
-39764463,4,Prevacid,kidney stone formation,12.67,11.62,13.82,1,,,,1,0,0
-39767190,4,exenatide,death,4.5,1.101,1.101,0,estimate is a bound,,IC025 copied as the ROR CI,1,1,1
-39888490,0,eravacycline,hypofibrinogenemia,2173.84,1208.8,3909.3,1,,,,1,0,0
-39888490,1,tigecycline,hypofibrinogenemia,747.34,619.03,902.24,1,,,,1,0,0
-39888490,2,crotalidae polyvalent immune Fab,hypofibrinogenemia,407.67,291.07,570.99,1,,,,0,0,0
-39888490,3,pegaspargase,hypofibrinogenemia,216.06,173.15,269.61,1,,,,1,0,0
-39888490,4,asparaginase,hypofibrinogenemia,184.93,132.18,258.72,1,,,,1,0,0
-40108669,0,gemcitabine,immune-mediated hepatitis,23.51,3.21,172.1,0,misattributed drug,,AG regimen subgroup estimate attributed to one component,1,1,1
-40108669,1,albumin-bound paclitaxel,presyncope,24.84,3.4,181.28,0,misattributed drug,,AG regimen subgroup estimate attributed to one component,1,1,1
-40108669,2,albumin-bound paclitaxel,falls,18.6,2.53,136.97,0,misattributed drug,,AG regimen subgroup estimate attributed to one component,1,0,0
-40140707,0,olanzapine,rhabdomyolysis,4.02,3.72,4.35,1,,,,1,1,1
-40140707,2,ziprasidone,rhabdomyolysis,2.76,2.19,3.49,1,,,,1,1,1
-40140707,3,risperidone,rhabdomyolysis,2.12,1.91,2.35,1,,,,1,1,1
-40140707,4,aripiprazole,rhabdomyolysis,2.0,1.8,2.21,1,,,,1,1,1
-40140707,5,clozapine,rhabdomyolysis,1.47,1.31,1.64,1,,,,1,1,1
-40213702,0,lansoprazole,nephrolithiasis,7.2,6.62,7.84,1,,,,1,1,1
-40213702,1,Xywav,nephrolithiasis,7.1,6.03,8.35,1,,,,1,1,1
-40213702,2,teduglutide,nephrolithiasis,5.54,4.83,6.36,1,,,,1,1,1
-40266530,0,vemurafenib,pancreatitis,2.46,1.95,3.1,1,,,,1,1,1
-40266530,1,dabrafenib,pancreatitis,1.56,1.22,2.0,1,,,,1,1,1
-40266530,2,encorafenib,pancreatitis,2.59,1.86,3.62,1,,,,1,1,1
-40303631,0,baclofen,somnolence,4.69,4.37,5.03,0,window,,"stated June 2023, extracted 2023Q4",1,1,1
-40303631,1,baclofen,tremor,2.76,2.5,3.04,0,window,,"stated June 2023, extracted 2023Q4",1,1,1
-40303631,2,baclofen,lethargy,6.37,5.71,7.1,0,window,,"stated June 2023, extracted 2023Q4",1,1,1
-40303631,3,baclofen,status epilepticus,8.71,7.07,10.73,0,window,,"stated June 2023, extracted 2023Q4",1,1,1
-40303631,4,baclofen,generalized tonic-clonic seizure,3.17,2.54,3.95,0,window,,"stated June 2023, extracted 2023Q4",1,0,0
-40303631,5,baclofen,cerebrospinal fluid leakage,229.56,197.76,266.47,0,window,,"stated June 2023, extracted 2023Q4",1,1,1
-40303631,6,baclofen,intracranial hypotension,428.52,355.18,517.0,0,window,,"stated June 2023, extracted 2023Q4",1,1,1
-40303631,7,baclofen,cognitive disorder,2.65,2.21,3.19,0,window,,"stated June 2023, extracted 2023Q4",1,1,1
-40303631,8,baclofen,anterograde amnesia,7.35,2.74,19.72,0,window,,"stated June 2023, extracted 2023Q4",1,1,1
-40303631,9,baclofen,metabolic encephalopathy,14.77,10.4,21.0,0,window,,"stated June 2023, extracted 2023Q4",1,1,1
-40303631,10,baclofen,myoclonus,5.98,4.7,7.59,0,window,,"stated June 2023, extracted 2023Q4",1,1,1
-40305875,0,alectinib,hemolysis,24.01,17.88,32.24,1,,,,1,1,1
-40305875,1,alectinib,bilirubin increase,18.86,15.92,22.34,1,,,,1,0,0
-40376150,0,carisoprodol,cardiac arrest,34.13,29.62,39.32,1,,,,1,1,1
-40376150,1,sugammadex,cardiac arrest,26.93,22.56,32.16,1,,,,1,1,1
-40376150,2,regadenoson,cardiac arrest,20.0,17.69,22.6,1,,,,1,1,1
-40376150,3,alprazolam,cardiac arrest,12.82,12.19,13.48,1,,,,1,1,1
-40376150,4,propofol,cardiac arrest,11.93,10.61,13.41,1,,,,1,1,1
-40380893,0,isotretinoin,night blindness,35.8,29.66,43.21,1,,,,1,1,1
-40465056,0,Siponimod,nervous system AEs,3.44,3.34,3.55,1,,,,1,0,0
-40510111,0,idursulfase,carpal tunnel syndrome,51.2,39.0,67.2,1,,,,1,1,1
-40510111,1,galsulfase,carpal tunnel syndrome,26.8,17.2,41.7,1,,,,1,1,1
-40510111,2,laronidase,carpal tunnel syndrome,20.9,14.4,30.3,1,,,,1,1,1
-40510111,3,tesamorelin,carpal tunnel syndrome,20.7,13.7,31.3,1,,,,1,1,1
-40510111,4,anastrozole,carpal tunnel syndrome,20.6,17.0,24.9,1,,,,1,1,1
-40510111,5,alendronic acid,carpal tunnel syndrome,17.1,14.5,20.1,1,,,,1,1,1
-40510111,6,gamma-hydroxybutyric acid (GHB),carpal tunnel syndrome,16.3,9.6,27.6,1,,,,1,1,1
-40510111,7,rofecoxib,carpal tunnel syndrome,16.1,14.3,18.2,1,,,,1,1,1
-40510111,8,alendronate,carpal tunnel syndrome,12.9,11.0,15.2,1,,,,1,1,1
-40510111,9,tafamidis,carpal tunnel syndrome,12.0,9.2,15.7,1,,,,1,1,1
-40520154,0,Abemaciclib,venous thromboembolism,2.57,2.24,2.96,1,,,,1,0,0
-40520154,1,ribociclib,cardiac arrhythmia,2.51,2.13,2.96,1,,,,1,0,0
-40520154,2,ribociclib,torsade de pointes/QT prolongation,5.7,5.0,6.5,1,,,,1,0,0
-40593869,0,bisphosphonates,cardiac arrhythmias,1.43,1.39,1.47,1,,class,bisphosphonates pooled,0,0,0
-40637806,0,nirogacestat,diarrhoea,10.58,9.22,12.13,1,,,,1,1,1
-40637806,1,nirogacestat,nausea,6.0,5.06,7.12,1,,,,1,1,1
-40637806,2,nirogacestat,fatigue,3.77,3.11,4.58,1,,,,1,1,1
-40637806,3,nirogacestat,ovarian dysfunction,963.62,306.61,3028.55,1,,,,1,1,1
-40637806,4,nirogacestat,ovarian failure,254.92,101.73,638.79,1,,,,1,1,1
-40637806,5,nirogacestat,decreased blood phosphorus,107.66,64.14,180.7,1,,,,1,0,0
-40637806,6,nirogacestat,photopsia,91.19,54.41,152.83,1,,,,1,1,1
-40817421,0,risperidone,hyperprolactinemia,212.0,203.0,221.0,1,,adjusted,,1,0,0
-40817421,1,haloperidol,dystonia,46.0,41.0,51.0,1,,adjusted,,1,1,1
-40817421,2,aripiprazole,akathisia,45.0,42.0,49.0,1,,adjusted,,1,1,1
-40824302,0,desogestrel,meningioma,2.22,1.29,3.83,1,,adjusted,within progestogen-contraceptive reports,1,1,1
-40824302,1,levonorgestrel,meningioma,3.21,2.11,4.86,1,,adjusted,within progestogen-contraceptive reports,1,1,1
-40824302,2,medroxyprogesterone acetate,meningioma,4.01,2.1,7.66,1,,adjusted,within progestogen-contraceptive reports,1,1,1
-40920788,0,mogamulizumab,vitiligo,73.93,39.62,137.94,1,,,,1,1,1
-40920788,1,imiquimod,vitiligo,72.0,43.24,119.89,1,,,,1,1,1
-40920788,2,chloroquine,vitiligo,53.33,17.13,166.02,1,,,,1,1,1
-41054114,0,contrast media,lactic acidosis,323.7,226.8,461.99,0,window,,"stated March 2024, extracted 2024Q4; a metformin interaction signal for contrast media",0,1,0
-41067279,0,hydroxychloroquine,COVID-19-related cardiotoxicity,3.26,1.87,6.94,1,,subgroup,paediatric,1,0,0
-41067279,1,hydroxychloroquine,hypokalaemia complications,25.77,18.7,35.52,1,,subgroup,paediatric,1,0,0
-41471316,0,IL-1 inhibitors,infections and infestations,2.31,2.25,2.37,1,,class,IL-1 inhibitors pooled,0,0,0
-41471316,1,IL-1 inhibitors,"congenital, familial, and genetic disorders",2.26,2.05,2.48,1,,class,IL-1 inhibitors pooled,0,0,0
-41471316,2,IL-1 inhibitors,pyrexia,5.27,5.03,5.53,1,,class,IL-1 inhibitors pooled,0,1,0
-41471316,3,IL-1 inhibitors,nasopharyngitis,2.31,2.1,2.54,1,,class,IL-1 inhibitors pooled,0,1,0
-41471316,4,IL-1 inhibitors,injection site erythema,6.09,5.67,6.55,1,,class,IL-1 inhibitors pooled,0,1,0
+paper,k,drug,event,estimate,ci_low,ci_high,correct,error,flag,note,single_ingredient,faers_pt,eligible,comparison,comparison_ok
+35349180,0,nilutamide,interstitial lung disease (ILD),32.14,11.03,93.63,1,,,,1,0,0,,
+35349180,1,flutamide,interstitial lung disease (ILD),9.93,3.62,27.21,1,,,,1,0,0,,
+35349180,2,bicalutamide,interstitial lung disease (ILD),8.19,6.01,11.16,1,,,,1,0,0,,
+35349180,3,goserelin,interstitial lung disease (ILD),3.74,2.61,5.37,1,,,,1,0,0,,
+35349180,4,degarelix,interstitial lung disease (ILD),2.41,1.55,3.75,1,,,,1,0,0,,
+35349180,5,apalutamide,interstitial lung disease (ILD),1.94,1.01,3.75,1,,,,1,0,0,,
+36697083,0,olaparib,anemia,4.483,3.009,6.68,0,not a drug-event disproportionality,,aROR of dose per body weight >=12 mg/kg among olaparib users,1,1,1,,
+36700393,0,infliximab,delayed cutaneous hypersensitivity reactions,2.14,1.2,3.81,1,,,composite event as written,1,0,0,,
+36830151,1,piperacillin-tazobactam,hypokalemia,2.61,2.17,3.14,1,,combination,,0,1,0,,
+37332342,0,anti-PD-1/L1 combined with anti-CTLA-4 therapy,vitiligo,55.89,42.34,73.78,1,,combination,,0,1,0,,
+37332342,1,combined anti-PD-1/L1 and VEGF (R)-TKIs,Palmar-plantar erythrodysesthesia,18.67,14.77,23.6,1,,combination,,0,0,0,,
+37332342,2,antiPD-1 inhibitors,Stevens-Johnson syndrome (SJS),3.07,2.68,3.52,1,,class,,0,0,0,,
+37507539,0,SSRIs,rhabdomyolysis,2.86,2.67,3.05,1,,class,,0,1,0,,
+37507539,1,fluvoxamine,rhabdomyolysis,11.64,8.0,16.93,1,,,,1,1,1,,
+37507539,2,paroxetine,rhabdomyolysis,1.83,1.55,2.15,1,,,,1,1,1,,
+37615268,0,olanzapine,venous thromboembolism,2.53,2.38,2.69,1,,,,1,0,0,,
+37615268,1,haloperidol,venous thromboembolism,2.17,1.91,2.46,1,,,,1,0,0,,
+37615268,2,paliperidone,venous thromboembolism,1.6,1.4,1.83,1,,,,1,0,0,,
+37615268,3,quetiapine,venous thromboembolism,1.37,1.28,1.47,1,,,,1,0,0,,
+38294705,0,mepolizumab,pneumonia,3.74,3.5,4.0,1,,,,1,1,1,,
+38294705,1,omalizumab,pneumonia,3.26,3.06,3.49,1,,,,1,1,1,,
+38294705,2,benralizumab,pneumonia,2.65,2.49,2.83,1,,,,1,1,1,,
+38384285,0,ADCs,peripheral neuropathy,16.98,14.94,19.3,1,,class,ADCs pooled,0,0,0,,
+38384285,1,ADCs,cerebral haemorrhage,9.45,7.01,12.73,1,,class,ADCs pooled,0,1,0,,
+38384285,2,ADCs,peripheral sensory neuropathy,47.87,33.13,69.19,1,,class,ADCs pooled,0,1,0,,
+38384285,3,ADCs,polyneuropathy,26.01,18.61,36.33,1,,class,ADCs pooled,0,1,0,,
+38384285,4,ADCs,encephalopathy,5.16,3.32,8.01,1,,class,ADCs pooled,0,1,0,,
+38384285,5,ADCs,progressive multifocal leukoencephalopathy,22.67,14.05,36.58,1,,class,ADCs pooled,0,1,0,,
+38384285,6,ADCs,taste disorder,26.09,15.92,42.76,1,,class,ADCs pooled,0,1,0,,
+38384285,7,ADCs,guillain barrier syndrome,17.844,10.11,31.51,1,,class,ADCs pooled,0,0,0,,
+38936945,0,remdesivir,acute kidney injury,2.45,1.91,3.14,0,non-FAERS database,,Japanese Adverse Event Reporting Database,1,1,1,,
+38936945,1,remdesivir,acute kidney injury,2.18,1.69,2.8,0,non-FAERS database,,Japanese Adverse Event Reporting Database,1,1,1,,
+38936945,2,nirmatrelvir/ritonavir,acute kidney injury,6.07,4.06,9.06,0,non-FAERS database,,Japanese Adverse Event Reporting Database,0,1,0,,
+38936945,3,nirmatrelvir/ritonavir,acute kidney injury,5.24,3.48,7.9,0,non-FAERS database,,Japanese Adverse Event Reporting Database,0,1,0,,
+38948476,0,ICI,autoimmune hepatitis,19.34,17.8,21.02,1,,class,ICIs pooled,0,1,0,,
+38948476,1,ICI,immune-mediated hepatitis,217.24,189.95,248.45,1,,class,ICIs pooled,0,1,0,,
+38948476,2,ICI,hepatitis fulminant,4.56,3.65,5.7,1,,class,ICIs pooled,0,1,0,,
+39031227,0,JAK inhibitors,DVT,2.52,1.95,3.25,0,non-FAERS database,,JADER,0,0,0,,
+39031227,2,baricitinib,DVT,4.37,2.83,6.73,0,non-FAERS database,,JADER,1,0,0,,
+39148544,2,evolocumab,AKI,1.4,1.54,1.69,0,not a drug-event disproportionality,,males vs females within evolocumab; CI excludes the estimate as printed,1,0,0,,
+39384812,0,primidone,congenital anomalies of the external ear,397.05,147.21,1070.9,1,,,,1,0,0,,
+39384812,2,valproic acid,congenital anomalies of the external ear,239.46,123.75,463.37,1,,,,1,0,0,,
+39384812,4,tapazole,congenital anomalies of the external ear,198.35,63.49,619.67,1,,,,0,0,0,,
+39384812,6,nevirapine,congenital anomalies of the external ear,138.24,82.9,230.51,1,,,,1,0,0,,
+39384812,8,sebivo,congenital anomalies of the external ear,117.1,48.51,282.67,1,,,,0,0,0,,
+39419512,0,HRZE,drug-induced liver injury,7.99,7.74,8.25,1,,combination,HRZE regimen,0,1,0,,
+39419512,1,BPaL,drug-induced liver injury,4.75,4.55,4.97,1,,combination,BPaL regimen,0,1,0,,
+39419623,0,zanubrutinib,blood and lymphatic system disorders,2.8,2.3,3.3,1,,,,1,0,0,,
+39419623,1,zanubrutinib,haemorrhage subcutaneous,190.8,128.0,284.5,1,,,,1,1,1,,
+39459005,0,inclisiran,Myalgia,2.43,1.94,3.04,0,non-FAERS database,,"EudraVigilance, PCSK9-antagonist comparator",1,1,1,,
+39459005,1,inclisiran,Low-density lipoprotein increased,11.95,9.1,15.52,0,non-FAERS database,,"EudraVigilance, PCSK9-antagonist comparator",1,0,0,,
+39459005,2,inclisiran,Drug ineffective,6.37,4.64,8.74,0,non-FAERS database,,"EudraVigilance, PCSK9-antagonist comparator",1,1,1,,
+39460482,0,programmed cell death 1 inhibitor,bullous pemphigoid,24.45,22.52,26.56,1,,class,PD-1 vs CTLA-4/PD-L1 inhibitors,0,0,0,,
+39473255,0,atorvastatin,Neurological AEs,9.77,9.56,9.99,0,window,,"stated March 2023, extracted 2023Q4",1,0,0,,
+39635439,0,irbesartan,acute pancreatitis,7.76,5.88,10.25,1,,,,1,0,0,,
+39635439,1,irbesartan,rhabdomyolysis,7.76,5.88,10.25,1,,,,1,1,1,,
+39635439,2,irbesartan,respiratory failure,6.76,3.2,14.26,0,non-FAERS database,,the respiratory-failure ROR is from JADER,1,1,1,,
+39672542,0,cilta-cel,Guillain-Barre syndrome,17.1,6.1,47.5,1,,,,1,1,1,,
+39672542,1,cilta-cel,intracranial hemorrhage and cerebrovascular accidents,2.9,1.8,4.8,1,,,,1,0,0,,
+39672542,2,cilta-cel,Haemophilus infections,34.2,11.8,98.9,1,,,,1,0,0,,
+39672542,3,cilta-cel,cytomegalovirus infections,3.9,1.6,9.5,1,,,,1,0,0,,
+39672542,4,ide-cel,parkinsonism,13.7,5.5,34.5,1,,,,1,1,1,,
+39672542,5,ide-cel,acute and chronic sarcoidosis,197.1,32.9,1180.1,1,,,,1,0,0,,
+39672542,6,ide-cel,ventricular arrhythmias,3.9,2.1,7.3,0,event split,,ROR belongs to the HLT ventricular arrhythmias and cardiac arrest,1,0,0,,
+39672542,7,ide-cel,cardiac arrest,3.9,2.1,7.3,0,event split,,ROR belongs to the HLT ventricular arrhythmias and cardiac arrest,1,1,1,,
+39738184,1,sacubitril/valsartan,hypoacusis,9.29,9.29,9.29,0,estimate is a bound,,ROR025 copied as estimate and CI,0,1,0,,
+39764463,0,Atazanavir,kidney stone formation,46.35,43.0,50.0,1,,,,1,0,0,,
+39764463,2,Topamax,kidney stone formation,19.44,17.66,21.4,1,,,,1,0,0,,
+39764463,4,Prevacid,kidney stone formation,12.67,11.62,13.82,1,,,,1,0,0,,
+39767190,4,exenatide,death,4.5,1.101,1.101,0,estimate is a bound,,IC025 copied as the ROR CI,1,1,1,,
+39888490,0,eravacycline,hypofibrinogenemia,2173.84,1208.8,3909.3,1,,,,1,0,0,,
+39888490,1,tigecycline,hypofibrinogenemia,747.34,619.03,902.24,1,,,,1,0,0,,
+39888490,2,crotalidae polyvalent immune Fab,hypofibrinogenemia,407.67,291.07,570.99,1,,,,0,0,0,,
+39888490,3,pegaspargase,hypofibrinogenemia,216.06,173.15,269.61,1,,,,1,0,0,,
+39888490,4,asparaginase,hypofibrinogenemia,184.93,132.18,258.72,1,,,,1,0,0,,
+40108669,0,gemcitabine,immune-mediated hepatitis,23.51,3.21,172.1,0,misattributed drug,,AG regimen subgroup estimate attributed to one component,1,1,1,,
+40108669,1,albumin-bound paclitaxel,presyncope,24.84,3.4,181.28,0,misattributed drug,,AG regimen subgroup estimate attributed to one component,1,1,1,,
+40108669,2,albumin-bound paclitaxel,falls,18.6,2.53,136.97,0,misattributed drug,,AG regimen subgroup estimate attributed to one component,1,0,0,,
+40140707,0,olanzapine,rhabdomyolysis,4.02,3.72,4.35,1,,,,1,1,1,,
+40140707,2,ziprasidone,rhabdomyolysis,2.76,2.19,3.49,1,,,,1,1,1,,
+40140707,3,risperidone,rhabdomyolysis,2.12,1.91,2.35,1,,,,1,1,1,,
+40140707,4,aripiprazole,rhabdomyolysis,2.0,1.8,2.21,1,,,,1,1,1,,
+40140707,5,clozapine,rhabdomyolysis,1.47,1.31,1.64,1,,,,1,1,1,,
+40213702,0,lansoprazole,nephrolithiasis,7.2,6.62,7.84,1,,,,1,1,1,,
+40213702,1,Xywav,nephrolithiasis,7.1,6.03,8.35,1,,,,1,1,1,,
+40213702,2,teduglutide,nephrolithiasis,5.54,4.83,6.36,1,,,,1,1,1,,
+40266530,0,vemurafenib,pancreatitis,2.46,1.95,3.1,1,,,,1,1,1,,
+40266530,1,dabrafenib,pancreatitis,1.56,1.22,2.0,1,,,,1,1,1,,
+40266530,2,encorafenib,pancreatitis,2.59,1.86,3.62,1,,,,1,1,1,,
+40303631,0,baclofen,somnolence,4.69,4.37,5.03,0,window,,"stated June 2023, extracted 2023Q4",1,1,1,,
+40303631,1,baclofen,tremor,2.76,2.5,3.04,0,window,,"stated June 2023, extracted 2023Q4",1,1,1,,
+40303631,2,baclofen,lethargy,6.37,5.71,7.1,0,window,,"stated June 2023, extracted 2023Q4",1,1,1,,
+40303631,3,baclofen,status epilepticus,8.71,7.07,10.73,0,window,,"stated June 2023, extracted 2023Q4",1,1,1,,
+40303631,4,baclofen,generalized tonic-clonic seizure,3.17,2.54,3.95,0,window,,"stated June 2023, extracted 2023Q4",1,0,0,,
+40303631,5,baclofen,cerebrospinal fluid leakage,229.56,197.76,266.47,0,window,,"stated June 2023, extracted 2023Q4",1,1,1,,
+40303631,6,baclofen,intracranial hypotension,428.52,355.18,517.0,0,window,,"stated June 2023, extracted 2023Q4",1,1,1,,
+40303631,7,baclofen,cognitive disorder,2.65,2.21,3.19,0,window,,"stated June 2023, extracted 2023Q4",1,1,1,,
+40303631,8,baclofen,anterograde amnesia,7.35,2.74,19.72,0,window,,"stated June 2023, extracted 2023Q4",1,1,1,,
+40303631,9,baclofen,metabolic encephalopathy,14.77,10.4,21.0,0,window,,"stated June 2023, extracted 2023Q4",1,1,1,,
+40303631,10,baclofen,myoclonus,5.98,4.7,7.59,0,window,,"stated June 2023, extracted 2023Q4",1,1,1,,
+40305875,0,alectinib,hemolysis,24.01,17.88,32.24,1,,,,1,1,1,,
+40305875,1,alectinib,bilirubin increase,18.86,15.92,22.34,1,,,,1,0,0,,
+40376150,0,carisoprodol,cardiac arrest,34.13,29.62,39.32,1,,,,1,1,1,,
+40376150,1,sugammadex,cardiac arrest,26.93,22.56,32.16,1,,,,1,1,1,,
+40376150,2,regadenoson,cardiac arrest,20.0,17.69,22.6,1,,,,1,1,1,,
+40376150,3,alprazolam,cardiac arrest,12.82,12.19,13.48,1,,,,1,1,1,,
+40376150,4,propofol,cardiac arrest,11.93,10.61,13.41,1,,,,1,1,1,,
+40380893,0,isotretinoin,night blindness,35.8,29.66,43.21,1,,,,1,1,1,,
+40465056,0,Siponimod,nervous system AEs,3.44,3.34,3.55,1,,,,1,0,0,,
+40510111,0,idursulfase,carpal tunnel syndrome,51.2,39.0,67.2,1,,,,1,1,1,,
+40510111,1,galsulfase,carpal tunnel syndrome,26.8,17.2,41.7,1,,,,1,1,1,,
+40510111,2,laronidase,carpal tunnel syndrome,20.9,14.4,30.3,1,,,,1,1,1,,
+40510111,3,tesamorelin,carpal tunnel syndrome,20.7,13.7,31.3,1,,,,1,1,1,,
+40510111,4,anastrozole,carpal tunnel syndrome,20.6,17.0,24.9,1,,,,1,1,1,,
+40510111,5,alendronic acid,carpal tunnel syndrome,17.1,14.5,20.1,1,,,,1,1,1,,
+40510111,6,gamma-hydroxybutyric acid (GHB),carpal tunnel syndrome,16.3,9.6,27.6,1,,,,1,1,1,,
+40510111,7,rofecoxib,carpal tunnel syndrome,16.1,14.3,18.2,1,,,,1,1,1,,
+40510111,8,alendronate,carpal tunnel syndrome,12.9,11.0,15.2,1,,,,1,1,1,,
+40510111,9,tafamidis,carpal tunnel syndrome,12.0,9.2,15.7,1,,,,1,1,1,,
+40520154,0,Abemaciclib,venous thromboembolism,2.57,2.24,2.96,1,,,,1,0,0,,
+40520154,1,ribociclib,cardiac arrhythmia,2.51,2.13,2.96,1,,,,1,0,0,,
+40520154,2,ribociclib,torsade de pointes/QT prolongation,5.7,5.0,6.5,1,,,,1,0,0,,
+40593869,0,bisphosphonates,cardiac arrhythmias,1.43,1.39,1.47,1,,class,bisphosphonates pooled,0,0,0,,
+40637806,0,nirogacestat,diarrhoea,10.58,9.22,12.13,1,,,,1,1,1,,
+40637806,1,nirogacestat,nausea,6.0,5.06,7.12,1,,,,1,1,1,,
+40637806,2,nirogacestat,fatigue,3.77,3.11,4.58,1,,,,1,1,1,,
+40637806,3,nirogacestat,ovarian dysfunction,963.62,306.61,3028.55,1,,,,1,1,1,,
+40637806,4,nirogacestat,ovarian failure,254.92,101.73,638.79,1,,,,1,1,1,,
+40637806,5,nirogacestat,decreased blood phosphorus,107.66,64.14,180.7,1,,,,1,0,0,,
+40637806,6,nirogacestat,photopsia,91.19,54.41,152.83,1,,,,1,1,1,,
+40817421,0,risperidone,hyperprolactinemia,212.0,203.0,221.0,1,,adjusted,,1,0,0,,
+40817421,1,haloperidol,dystonia,46.0,41.0,51.0,1,,adjusted,,1,1,1,,
+40817421,2,aripiprazole,akathisia,45.0,42.0,49.0,1,,adjusted,,1,1,1,,
+40824302,0,desogestrel,meningioma,2.22,1.29,3.83,1,,adjusted,within progestogen-contraceptive reports,1,1,1,,
+40824302,1,levonorgestrel,meningioma,3.21,2.11,4.86,1,,adjusted,within progestogen-contraceptive reports,1,1,1,,
+40824302,2,medroxyprogesterone acetate,meningioma,4.01,2.1,7.66,1,,adjusted,within progestogen-contraceptive reports,1,1,1,,
+40920788,0,mogamulizumab,vitiligo,73.93,39.62,137.94,1,,,,1,1,1,,
+40920788,1,imiquimod,vitiligo,72.0,43.24,119.89,1,,,,1,1,1,,
+40920788,2,chloroquine,vitiligo,53.33,17.13,166.02,1,,,,1,1,1,,
+41054114,0,contrast media,lactic acidosis,323.7,226.8,461.99,0,window,,"stated March 2024, extracted 2024Q4; a metformin interaction signal for contrast media",0,1,0,,
+41067279,0,hydroxychloroquine,COVID-19-related cardiotoxicity,3.26,1.87,6.94,1,,subgroup,paediatric,1,0,0,,
+41067279,1,hydroxychloroquine,hypokalaemia complications,25.77,18.7,35.52,1,,subgroup,paediatric,1,0,0,,
+41471316,0,IL-1 inhibitors,infections and infestations,2.31,2.25,2.37,1,,class,IL-1 inhibitors pooled,0,0,0,,
+41471316,1,IL-1 inhibitors,"congenital, familial, and genetic disorders",2.26,2.05,2.48,1,,class,IL-1 inhibitors pooled,0,0,0,,
+41471316,2,IL-1 inhibitors,pyrexia,5.27,5.03,5.53,1,,class,IL-1 inhibitors pooled,0,1,0,,
+41471316,3,IL-1 inhibitors,nasopharyngitis,2.31,2.1,2.54,1,,class,IL-1 inhibitors pooled,0,1,0,,
+41471316,4,IL-1 inhibitors,injection site erythema,6.09,5.67,6.55,1,,class,IL-1 inhibitors pooled,0,1,0,,
