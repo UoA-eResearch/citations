@@ -119,7 +119,7 @@ def pbs(code):
             for pid in pts_of.get(rc, ()):
                 p = pt.get(pid)
                 if p and (p.get("prescribing_type") or "").upper() in ("CRITERIA", "INDICATION", "TREATMENT_CRITERIA", "CLINICAL_CRITERIA"):
-                    t = ws(p.get("prescribing_txt"))
+                    t = re.sub(r"^[A-Za-z ]{0,40}criteria:\s*", "", ws(p.get("prescribing_txt")), flags=re.I)   # "Clinical criteria: ..."
                     if 15 <= len(t) <= 300:
                         crit[c].add(t)
     return items, crit
