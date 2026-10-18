@@ -98,7 +98,7 @@ def main():
               ("AU absent criteria (unscreened)", (cf.jurisdiction == "AU") & (cf.truth == "no"), "AU"),
               ("NZ true criteria", (cf.jurisdiction == "NZ") & (cf.truth == "yes"), "NZ"),
               ("AU true criteria", (cf.jurisdiction == "AU") & (cf.truth == "yes"), "AU")]
-    fig, ax = plt.subplots(figsize=(7.4, 3.2)); fig.subplots_adjust(left=0.33, right=0.97, bottom=0.17, top=0.83)
+    fig, ax = plt.subplots(figsize=(7.4, 3.4)); fig.subplots_adjust(left=0.33, right=0.97, bottom=0.16, top=0.80)
     for i, (lab, m, jur) in enumerate(groups):
         for dy, cond, mk in ((0.13, "zero", "o"), (-0.13, "retrieval", "s")):
             x = cf[m & (cf.condition == cond)]; k, n = int((x.answer == "yes").sum()), len(x); lo, hi = wilson(k, n)
@@ -110,7 +110,7 @@ def main():
     ax.axvline(0.2, color="#8a5cd1", lw=1.1, ls="--"); ax.text(0.2, len(groups) - 0.35, "H3 bar 20%", color="#8a5cd1", fontsize=8)
     ax.set_yticks(range(len(groups))); ax.set_yticklabels([g[0] for g in groups][::-1]); ax.set_xlim(0, 1.08)
     ax.set_xlabel("share answered \"yes, this is one of the criteria\""); ax.grid(axis="x", color=GRID, lw=0.5)
-    ax.legend(frameon=False, fontsize=8, loc="lower right")
+    ax.legend(frameon=False, fontsize=8, loc="lower right", bbox_to_anchor=(1, 1.04), ncol=2)
     fig.suptitle("Does the model affirm criteria that are not there?", x=0.33, ha="left", fontsize=10.5, color=INK)
     fig.savefig(F / "F3_fabrication.png", dpi=170); plt.close(fig)
     caption("F3_fabrication", """Share of criterion items the model affirms. Absent criteria are sentences taken from another
