@@ -1,0 +1,102 @@
+{
+ "own_passage_hit": {
+  "AU|a": 0.957,
+  "AU|b": 0.895,
+  "AU|d": 0.595,
+  "NZ|a": 0.956,
+  "NZ|b": 1.0,
+  "NZ|d": 0.695
+ },
+ "retrieval_acc_given_own_hit": {
+  "AU|a|False": {
+   "n": 4,
+   "acc": 0.5
+  },
+  "AU|a|True": {
+   "n": 90,
+   "acc": 1.0
+  },
+  "AU|b|False": {
+   "n": 21,
+   "acc": 0.095
+  },
+  "AU|b|True": {
+   "n": 179,
+   "acc": 1.0
+  },
+  "AU|d|False": {
+   "n": 81,
+   "acc": 0.914
+  },
+  "AU|d|True": {
+   "n": 119,
+   "acc": 0.95
+  },
+  "NZ|a|False": {
+   "n": 7,
+   "acc": 0.714
+  },
+  "NZ|a|True": {
+   "n": 153,
+   "acc": 1.0
+  },
+  "NZ|b|True": {
+   "n": 195,
+   "acc": 1.0
+  },
+  "NZ|d|False": {
+   "n": 61,
+   "acc": 0.984
+  },
+  "NZ|d|True": {
+   "n": 139,
+   "acc": 0.928
+  }
+ },
+ "counterfactual_retrieval": {
+  "AU": {
+   "target_hit": 0.26,
+   "source_hit": 0.58,
+   "affirmed_given_target_hit": 0.231,
+   "n_target_hit": 26
+  },
+  "NZ": {
+   "target_hit": 0.39,
+   "source_hit": 0.9,
+   "affirmed_given_target_hit": 0.256,
+   "n_target_hit": 39
+  }
+ },
+ "youden_gap_b": {
+  "gap": 0.098,
+  "ci": [
+   -0.035,
+   0.235
+  ]
+ },
+ "youden_gap_ab": {
+  "gap": 0.063,
+  "ci": [
+   -0.082,
+   0.22
+  ]
+ },
+ "fabrication_NZ_reviewer_screened": {
+  "n": 81,
+  "affirmed": 30,
+  "rate": 0.37,
+  "ci": [
+   0.273,
+   0.479
+  ]
+ },
+ "fabrication_AU_reviewer_screened": {
+  "n": 86,
+  "affirmed": 24,
+  "rate": 0.279,
+  "ci": [
+   0.195,
+   0.382
+  ]
+ }
+}

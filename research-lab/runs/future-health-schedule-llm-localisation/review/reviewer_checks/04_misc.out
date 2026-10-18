@@ -1,0 +1,57 @@
+== (A) determinism: regenerate in two fresh interpreters (random hash seeds) and under PYTHONHASHSEED=0/1 ==
+rand1: 1049 items; differ from data/items.jsonl in 400 positions; by family {'d': 400}
+rand2: 1049 items; differ from data/items.jsonl in 400 positions; by family {'d': 400}
+hs0: 1049 items; differ from data/items.jsonl in 400 positions; by family {'d': 400}
+hs1: 1049 items; differ from data/items.jsonl in 400 positions; by family {'d': 400}
+rand1 vs rand2 differ in 400 positions
+families a,b identical to file in all runs: True
+
+== (B) duplicates ==
+dup (jur,fam,text): 59  by family: Counter({'d': 59})
+dup (jur,fam,chemical,text): 0
+  e.g. NZ d Baseline measurement of overall tumour burden is documented clinically and radio -> chemicals: ['trametinib', 'erlotinib', 'ribociclib', 'sunitinib']
+  e.g. NZ d A sign of that new inflammatory activity is new T2 lesions compared with a previ -> chemicals: ['fingolimod', 'dimethylfumarate']
+  e.g. NZ d Patient has had at least one significant attack of MS in the previous 12 months  -> chemicals: ['fingolimod', 'teriflunomide']
+
+== (C) own-passage token length: AU (b) misses vs hits ==
+AU (b): own passage retrieved: n=179 median len=81; NOT retrieved: n=21 median len=365
+AU (d): own passage retrieved: n=119 median len=242; NOT retrieved: n=81 median len=135
+NZ (b): own passage retrieved: n=195 median len=72; NOT retrieved: n=0 median len=nan
+NZ (d): own passage retrieved: n=139 median len=161; NOT retrieved: n=61 median len=150
+AU (b) yes items: own passage hit rate 0.81  no items: 0.98
+NZ (b) yes items: own passage hit rate 1.0  no items: 1.0
+median own-passage length NZ (b) yes: 156.0  AU (b) yes: 180.0
+NZ (d) truth=yes: own passage in top3 1.00
+NZ (d) truth=no: own passage in top3 0.39
+AU (d) truth=yes: own passage in top3 0.93
+AU (d) truth=no: own passage in top3 0.26
+
+== (F) job order: index at which NZ-d zero-shot calls begin ==
+NZ-d zero-shot calls start at job 1104 of 3247 (34.0%); run 17:56:52-19:20:39 = 83.8 min -> uniform-rate ETA 1105.4 min = 18:25; screen saved 18:13:48
+runs.jsonl lines are written in job order (ex.map); the screen could only have been influenced by NZ-d output if > 1104 jobs had completed by 18:13:48 (17 min in).
+
+== (G) NZ single-ingredient 'Tab'/'Cap' formulations rejected by key_of ==
+   Sodium alginate | Tab 500 mg with sodium bicarbonate 267 mg and calcium carbonate 160 mg - peppermint flavour
+   Senna | Tab, standardised
+   Vitamin B complex | Tab, strong, BPC
+   Vitamins | Tab (BPC cap strength)
+   Vitamins | Cap (fat soluble vitamins A, D, E, K)
+   Multivitamin renal | Cap
+   Potassium chloride | Tab eff 548 mg (14 m eq) with chloride 285 mg (8 m eq)
+   Tolvaptan | Tab 45 mg + 15 mg
+   Tolvaptan | Tab 60 mg + 30 mg
+   Tolvaptan | Tab 90 mg + 30 mg
+   Oestrogens | Conjugated, equine tab 300 mcg
+   Oestrogens | Conjugated, equine tab 625 mcg
+   Nystatin | Tab 500,000 u
+   Nystatin | Cap 500,000 u
+   Topiramate | Sprinkle cap 15 mg
+   Topiramate | Sprinkle cap 25 mg
+   Aprepitant | Cap 2 x 80 mg and 1 x 125 mg
+   Varenicline tartrate | Tab 0.5 mg x 11 and 1 mg x 42
+
+== (I) generic/boilerplate language among TRUE-criterion controls (the GENERIC bar is applied only to counterfactuals) ==
+NZ: 26/100 true criteria match GENERIC; e.g.: ['Pirfenidone is to be discontinued at disease progression (See Note)', 'The patient has discontinued sunitinib within 3 months of starting tre', 'The treatment remains appropriate and the patient is benefiting from t', 'Patient’s disease must have experienced a partial or complete response']
+AU: 20/100 true criteria match GENERIC; e.g.: ['Patient must have evidence of EGFR T790M mutation in tumour material a', 'The condition must be stable for the prescriber to consider the listed', 'Patient must have stable or responding disease according to the Respon', 'Patient must have received insufficient therapy with this drug under t']
+NZ: zero-shot affirm rate, generic true criteria 0.62 (n=26) vs specific true criteria 0.86 (n=74)
+AU: zero-shot affirm rate, generic true criteria 0.75 (n=20) vs specific true criteria 0.84 (n=80)

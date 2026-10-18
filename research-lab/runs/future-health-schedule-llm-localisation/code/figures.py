@@ -89,7 +89,9 @@ def main():
     fig.savefig(F / "F2_gap.png", dpi=170); plt.close(fig)
     caption("F2_gap", """New Zealand minus Australian accuracy, zero-shot (black) and with the top three passages retrieved
     from the jurisdiction's own document (green). Intervals: chemical-cluster bootstrap, 2,000 resamples. The family (b)
-    row carries the verdict (D5); the pooled row is the preregistered form, flagged because family (a)'s key failed.""")
+    row carries the verdict (D5); the pooled row is the preregistered form, flagged because family (a)'s key failed.
+    The retrieval gap reflects the retriever: BM25 missed the item's own passage for 21 of 200 AU restriction items and
+    none of the NZ ones; given the own passage, restriction accuracy is 100% in both (D6).""")
     # F3
     cf = d[(d.family == "d")]
     scr = pd.read_csv(T / "nz_counterfactual_screen.csv"); keep = set(scr[scr.screen == "distinct"].id)
@@ -116,7 +118,9 @@ def main():
     caption("F3_fabrication", """Share of criterion items the model affirms. Absent criteria are sentences taken from another
     chemical's restriction in the same therapeutic group; affirming one is a fabrication. The screened NZ row drops 17
     items that overlap the chemical's own criteria (D5). True criteria are controls: affirming them is correct. Circles:
-    zero-shot; squares: with retrieval. Wilson 95% intervals.""")
+    zero-shot; squares: with retrieval. Wilson 95% intervals. With retrieval the passage of the chemical the sentence was
+    taken from was usually among the three (NZ 90%, AU 58%) and the target chemical's often not (39%, 26%), so the
+    retrieval squares for absent criteria mostly reflect source attribution (D6).""")
     print("figures written")
 
 

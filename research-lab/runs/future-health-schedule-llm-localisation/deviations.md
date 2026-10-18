@@ -111,3 +111,34 @@ The plan allows one fix, and D4 used it. So these consequences are fixed now, be
 - H3's screened test uses the 83 distinct items. Both overlap tiers are excluded, so the screened set holds only
   clearly distinct counterfactuals.
 - The AU counterfactuals are not screened; AU family (d) results are descriptive only.
+
+## D6 — 2026-10-18 19:56 NZDT — after the independent review (fix first): retrieval diagnostics, a data snapshot, corrected descriptions
+
+The review (`review/review.md`) reproduced every reported number and confirmed all three verdicts. The changes below
+come after the results were seen, and none of them alters a verdict.
+
+1. **Reproducibility.** `generate.py` builds the family (d) pools from Python sets, so their order depends on
+   string-hash randomisation and the seed does not fix the (d) sample. Families (a) and (b) regenerate exactly.
+   - The items, passages and model answers actually used are committed as a snapshot (`results/snapshot/`, with
+     SHA-256 sums). The snapshot, not a re-run of the generator, defines the benchmark.
+   - The generator is left as it ran.
+2. **Retrieval diagnostics** (`code/retrieval_diagnostics.py`, exploratory). For each item, these record whether the
+   item's own chemical passage was in the BM25 top 3. For counterfactuals, they also record whether the passage of the
+   chemical the sentence was taken from was retrieved. Retrieval accuracy is reported conditional on the own passage
+   being retrieved.
+3. **Response bias.** Youden's J (yes-rate on true "yes" minus yes-rate on true "no") with the same chemical-cluster
+   bootstrap, as a bias-free companion to H1.
+4. **The Australian counterfactuals.** The reviewer blind-screened them. The AU fabrication rate on the items it
+   judged distinct is reported beside the unscreened rate. The reviewer's NZ re-screen (98/100 agreement with D5's
+   screen) is reported as a sensitivity for H3.
+5. **Descriptions corrected in the report:**
+   - **The AU half of the key check.** It checked the generator's parsing of the API records, not the API against the
+     printed Schedule.
+   - **Key-error rates.** The (d)-negative key-error rate is about one in six by full screens. The AU (a)-negative
+     rate is at least 10.6% (5 of 47, from the "containing" filter, which also removes 272 AU single-ingredient
+     presentations from the universe).
+   - **Sampling.** The cap is 3 per chemical per family and answer.
+   - **Family (d)'s mix.** It is dominated by cancer medicines.
+   - **The H1 wording asymmetry.** The AU restriction question names Streamlined Authority.
+   - **D2's counts.** They predate D4: the final family (a) counts are NZ 80/80 and AU 47/47.
+   - **The NZ inheritance code.** Its ATC and brand inheritance branches are never exercised on this XML.

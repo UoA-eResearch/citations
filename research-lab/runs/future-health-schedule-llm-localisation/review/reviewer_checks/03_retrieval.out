@@ -1,0 +1,259 @@
+passages per jurisdiction: {'NZ': 482, 'AU': 575}
+passage token lengths: median 52 max 3578
+
+== own chemical passage in top 3, by jurisdiction x family ==
+           n    hit  rank1
+jur fam                   
+AU  a     94  0.957  0.926
+    b    200  0.895  0.865
+    d    200  0.595  0.410
+NZ  a    160  0.956  0.919
+    b    195  1.000  0.954
+    d    200  0.695  0.515
+
+items whose own passage was NOT retrieved: 174
+             id          chemical truth  ret        abst
+3     NZ-a-0003        cinacalcet    no   no  not stated
+24    NZ-a-0024         sirolimus    no   no  not stated
+27    NZ-a-0027        budesonide    no   no  not stated
+64    NZ-a-0064        fingolimod    no   no  not stated
+79    NZ-a-0079        budesonide    no   no  not stated
+83    NZ-a-0083        cinacalcet   yes   no  not stated
+143   NZ-a-0143        fingolimod   yes   no  not stated
+456   NZ-d-0456       palbociclib    no   no  not stated
+458   NZ-d-0458         erlotinib    no   no  not stated
+459   NZ-d-0459       entrectinib    no   no  not stated
+460   NZ-d-0460         ibrutinib    no   no  not stated
+462   NZ-d-0462         dasatinib    no   no  not stated
+463   NZ-d-0463       palbociclib    no   no  not stated
+465   NZ-d-0465       osimertinib    no   no  not stated
+467   NZ-d-0467        dabrafenib    no   no  not stated
+468   NZ-d-0468         gefitinib    no   no  not stated
+469   NZ-d-0469        everolimus    no   no  not stated
+470   NZ-d-0470        crizotinib    no   no  not stated
+471   NZ-d-0471       entrectinib    no   no          no
+473   NZ-d-0473         gefitinib    no   no  not stated
+474   NZ-d-0474         niraparib    no   no  not stated
+475   NZ-d-0475        ribociclib    no   no  not stated
+476   NZ-d-0476       ruxolitinib    no   no  not stated
+478   NZ-d-0478         dasatinib    no   no  not stated
+480   NZ-d-0480         sunitinib    no   no  not stated
+481   NZ-d-0481       ruxolitinib    no   no  not stated
+483   NZ-d-0483        venetoclax    no   no  not stated
+487   NZ-d-0487       entrectinib    no   no  not stated
+488   NZ-d-0488      temozolomide    no   no  not stated
+489   NZ-d-0489          olaparib    no   no  not stated
+490   NZ-d-0490         nilotinib    no   no  not stated
+491   NZ-d-0491        trametinib    no   no  not stated
+492   NZ-d-0492        crizotinib    no   no  not stated
+493   NZ-d-0493         niraparib    no   no  not stated
+494   NZ-d-0494        lenvatinib    no   no  not stated
+495   NZ-d-0495          axitinib    no   no  not stated
+496   NZ-d-0496        trametinib    no   no  not stated
+497   NZ-d-0497          axitinib    no   no  not stated
+499   NZ-d-0499        ribociclib    no   no  not stated
+500   NZ-d-0500       palbociclib    no   no  not stated
+501   NZ-d-0501        venetoclax    no   no  not stated
+503   NZ-d-0503         pazopanib    no   no  not stated
+504   NZ-d-0504         alectinib    no   no  not stated
+508   NZ-d-0508         sunitinib    no   no  not stated
+509   NZ-d-0509         gefitinib    no   no  not stated
+510   NZ-d-0510         nilotinib    no   no  not stated
+513   NZ-d-0513         niraparib    no   no  not stated
+514   NZ-d-0514       ruxolitinib    no   no  not stated
+515   NZ-d-0515         pazopanib    no   no  not stated
+516   NZ-d-0516        trametinib    no   no  not stated
+518   NZ-d-0518         ibrutinib    no   no  not stated
+522   NZ-d-0522         pazopanib    no   no  not stated
+523   NZ-d-0523         nilotinib    no   no  not stated
+524   NZ-d-0524         alectinib    no   no  not stated
+525   NZ-d-0525          olaparib    no   no  not stated
+527   NZ-d-0527      upadacitinib    no   no  not stated
+529   NZ-d-0529       osimertinib    no   no  not stated
+531   NZ-d-0531       stiripentol    no   no  not stated
+532   NZ-d-0532        olanzapine    no  yes         yes
+534   NZ-d-0534         sirolimus    no   no  not stated
+541   NZ-d-0541      posaconazole    no   no  not stated
+542   NZ-d-0542        vigabatrin    no   no          no
+543   NZ-d-0543      posaconazole    no   no  not stated
+546   NZ-d-0546       fluconazole    no   no  not stated
+548   NZ-d-0548      itraconazole    no   no  not stated
+552   NZ-d-0552      itraconazole    no   no  not stated
+553   NZ-d-0553         acitretin    no   no  not stated
+554   NZ-d-0554        eplerenone    no   no  not stated
+584   AU-a-0584         melatonin    no   no  not stated
+585   AU-a-0585       montelukast    no   no  not stated
+633   AU-a-0633        everolimus   yes   no  not stated
+639   AU-a-0639          imatinib   yes   no  not stated
+655   AU-b-0655        ribociclib   yes   no  not stated
+658   AU-b-0658         niraparib   yes   no  not stated
+661   AU-b-0661      upadacitinib   yes   no  not stated
+666   AU-b-0666         dasatinib   yes   no  not stated
+668   AU-b-0668         modafinil   yes   no  not stated
+670   AU-b-0670       varenicline   yes   no  not stated
+673   AU-b-0673     empagliflozin   yes   no  not stated
+680   AU-b-0680       entrectinib   yes   no  not stated
+684   AU-b-0684      upadacitinib   yes   no  not stated
+690   AU-b-0690       terbinafine   yes   no  not stated
+701   AU-b-0701          olaparib   yes   no  not stated
+710   AU-b-0710        venetoclax   yes   no  not stated
+711   AU-b-0711       osimertinib   yes   no  not stated
+721   AU-b-0721          olaparib   yes   no  not stated
+722   AU-b-0722       osimertinib   yes   no  not stated
+726   AU-b-0726        venetoclax   yes   no  not stated
+733   AU-b-0733        lenvatinib   yes   no  not stated
+737   AU-b-0737        crizotinib   yes   no  not stated
+741   AU-b-0741        lenvatinib   yes   no  not stated
+782   AU-b-0782     dexamethasone    no   no  not stated
+797   AU-b-0797     dexamethasone    no   no  not stated
+876   AU-d-0876         gefitinib   yes   no  not stated
+882   AU-d-0882        everolimus   yes   no  not stated
+887   AU-d-0887        topiramate   yes   no  not stated
+917   AU-d-0917      upadacitinib   yes   no  not stated
+925   AU-d-0925     dexamethasone   yes   no  not stated
+944   AU-d-0944        everolimus   yes  yes          no
+945   AU-d-0945          olaparib   yes   no  not stated
+950   AU-d-0950         sirolimus    no   no  not stated
+951   AU-d-0951       entrectinib    no   no  not stated
+952   AU-d-0952        venetoclax    no   no  not stated
+953   AU-d-0953         glipizide    no   no  not stated
+957   AU-d-0957      methotrexate    no   no  not stated
+961   AU-d-0961         niraparib    no   no  not stated
+962   AU-d-0962         gefitinib    no   no  not stated
+963   AU-d-0963      temozolomide    no   no  not stated
+964   AU-d-0964         ibrutinib    no   no  not stated
+965   AU-d-0965      capecitabine    no   no  not stated
+966   AU-d-0966         niraparib    no   no  not stated
+967   AU-d-0967      trimethoprim    no   no  not stated
+968   AU-d-0968        crizotinib    no   no  not stated
+969   AU-d-0969          axitinib    no   no  not stated
+970   AU-d-0970          olaparib    no   no  not stated
+971   AU-d-0971         niraparib    no   no  not stated
+972   AU-d-0972       vinorelbine    no   no  not stated
+975   AU-d-0975         gefitinib    no   no  not stated
+976   AU-d-0976        lenvatinib    no   no  not stated
+977   AU-d-0977        trametinib    no   no  not stated
+978   AU-d-0978       clindamycin    no   no  not stated
+979   AU-d-0979        crizotinib    no   no  not stated
+981   AU-d-0981  cyclophosphamide    no   no  not stated
+982   AU-d-0982       vinorelbine    no   no  not stated
+983   AU-d-0983        venetoclax    no   no  not stated
+985   AU-d-0985  cyclophosphamide    no   no  not stated
+986   AU-d-0986      temozolomide    no   no  not stated
+987   AU-d-0987          imatinib    no   no  not stated
+988   AU-d-0988     carbamazepine    no   no  not stated
+989   AU-d-0989         gefitinib    no   no  not stated
+990   AU-d-0990         letrozole    no   no  not stated
+991   AU-d-0991       clindamycin    no   no  not stated
+992   AU-d-0992        trametinib    no   no  not stated
+993   AU-d-0993      temozolomide    no   no  not stated
+994   AU-d-0994      aripiprazole    no   no  not stated
+995   AU-d-0995          axitinib    no   no  not stated
+996   AU-d-0996         nilotinib    no   no  not stated
+997   AU-d-0997  cyclophosphamide    no   no  not stated
+1000  AU-d-1000        ribociclib    no   no  not stated
+1003  AU-d-1003         alectinib    no   no  not stated
+1005  AU-d-1005      capecitabine    no   no  not stated
+1006  AU-d-1006          imatinib    no   no  not stated
+1007  AU-d-1007        ribociclib    no   no  not stated
+1008  AU-d-1008       entrectinib    no   no  not stated
+1009  AU-d-1009         ibrutinib    no   no  not stated
+1012  AU-d-1012        exemestane    no   no  not stated
+1013  AU-d-1013         nilotinib    no   no  not stated
+1014  AU-d-1014         ibrutinib    no   no  not stated
+1016  AU-d-1016         alectinib    no   no  not stated
+1017  AU-d-1017     sulfasalazine    no   no  not stated
+1018  AU-d-1018       palbociclib    no   no  not stated
+1019  AU-d-1019       vinorelbine    no   no  not stated
+1020  AU-d-1020          olaparib    no   no  not stated
+1021  AU-d-1021      methotrexate    no  NaN          no
+1022  AU-d-1022        olanzapine    no   no  not stated
+1023  AU-d-1023      methotrexate    no   no  not stated
+1024  AU-d-1024      posaconazole    no   no  not stated
+1025  AU-d-1025      capecitabine    no   no  not stated
+1026  AU-d-1026         erlotinib    no   no  not stated
+1027  AU-d-1027       entrectinib    no   no  not stated
+1028  AU-d-1028        famotidine    no   no  not stated
+1029  AU-d-1029     penicillamine    no   no  not stated
+1030  AU-d-1030      itraconazole    no   no  not stated
+1031  AU-d-1031        exemestane    no   no  not stated
+1034  AU-d-1034       terbinafine    no   no  not stated
+1035  AU-d-1035       osimertinib    no   no  not stated
+1036  AU-d-1036         erlotinib    no   no  not stated
+1037  AU-d-1037         ibuprofen    no   no  not stated
+1038  AU-d-1038        ribociclib    no   no  not stated
+1041  AU-d-1041         cefalexin    no   no  not stated
+1042  AU-d-1042        gabapentin    no   no  not stated
+1043  AU-d-1043       osimertinib    no   no  not stated
+1044  AU-d-1044         primidone    no   no  not stated
+1047  AU-d-1047        lenvatinib    no   no  not stated
+
+retrieval accuracy when own passage retrieved vs not:
+               size   mean
+jur fam hit               
+AU  a   False     4  0.500
+        True     90  1.000
+    b   False    21  0.095
+        True    179  1.000
+    d   False    81  0.914
+        True    119  0.950
+NZ  a   False     7  0.714
+        True    153  1.000
+    b   True    195  1.000
+    d   False    61  0.984
+        True    139  0.928
+
+== counterfactual items: source chemical's passage retrieved? ==
+NZ: source passage in top3 for 90/100; own passage in top3 for 39/100
+   src_in_top=True: n=90 retrieval 'yes'=10 (0.11); abstain 'yes'=11 not_stated=64
+   src_in_top=False: n=10 retrieval 'yes'=1 (0.10); abstain 'yes'=1 not_stated=5
+AU: source passage in top3 for 58/100; own passage in top3 for 26/100
+   src_in_top=True: n=58 retrieval 'yes'=1 (0.02); abstain 'yes'=1 not_stated=52
+   src_in_top=False: n=42 retrieval 'yes'=5 (0.12); abstain 'yes'=5 not_stated=36
+
+NZ CF retrieval 'yes' by screen label x source-in-top:
+                         n  ret_yes  zero_yes
+screen      src_in_top                       
+distinct    False        8        0         5
+            True        75        0        27
+equivalent  False        1        1         1
+            True        11        9        11
+overlapping False        1        0         1
+            True         4        1         4
+
+== the AU family-(b) retrieval misses ==
+19 misses; truth counts {'yes': 19} own_rank counts {0: 19}
+passage_tokens of missed items: median 0  vs all AU (b): 78
+ctx_tokens of missed items: median 338  vs all AU (b): 325
+            id       chemical truth ret        abst  own_rank  passage_tokens  ctx_tokens
+655  AU-b-0655     ribociclib   yes  no  not stated         0               0         378
+658  AU-b-0658      niraparib   yes  no  not stated         0               0         418
+661  AU-b-0661   upadacitinib   yes  no  not stated         0               0         283
+666  AU-b-0666      dasatinib   yes  no  not stated         0               0         626
+668  AU-b-0668      modafinil   yes  no  not stated         0               0         418
+670  AU-b-0670    varenicline   yes  no  not stated         0               0         369
+673  AU-b-0673  empagliflozin   yes  no  not stated         0               0         308
+680  AU-b-0680    entrectinib   yes  no  not stated         0               0         278
+684  AU-b-0684   upadacitinib   yes  no  not stated         0               0         394
+690  AU-b-0690    terbinafine   yes  no  not stated         0               0         289
+701  AU-b-0701       olaparib   yes  no  not stated         0               0         436
+710  AU-b-0710     venetoclax   yes  no  not stated         0               0         418
+711  AU-b-0711    osimertinib   yes  no  not stated         0               0         311
+721  AU-b-0721       olaparib   yes  no  not stated         0               0         418
+722  AU-b-0722    osimertinib   yes  no  not stated         0               0         306
+726  AU-b-0726     venetoclax   yes  no  not stated         0               0         338
+733  AU-b-0733     lenvatinib   yes  no  not stated         0               0         332
+737  AU-b-0737     crizotinib   yes  no  not stated         0               0         275
+741  AU-b-0741     lenvatinib   yes  no  not stated         0               0         260
+
+AU-b-0655 ribociclib: passage starts: Australian PBS General Schedule. Chemical: ribociclib. Listed: ribociclib 200 mg tablet; Authority required (incl. Streamlined): yes. Criteria: Early breast cancer | Locally advanced or metastatic breast cancer | Must be treated by a medical practitioner | Must be treated by a medical practitioner; 
+   mentions 'varies': False  listed lines: 1
+
+AU-b-0658 niraparib: passage starts: Australian PBS General Schedule. Chemical: niraparib. Listed: niraparib 100 mg tablet; Authority required (incl. Streamlined): yes. Criteria: High grade stage III/IV epithelial ovarian, fallopian tube or primary peritoneal cancer | Must be treated by a medical practitioner; OR Must be treated by a n
+   mentions 'varies': False  listed lines: 1
+
+AU-b-0661 upadacitinib: passage starts: Australian PBS General Schedule. Chemical: upadacitinib. Listed: upadacitinib 15 mg tablet; Authority required (incl. Streamlined): yes. Listed: upadacitinib 30 mg tablet; Authority required (incl. Streamlined): yes. Listed: upadacitinib 45 mg tablet; Authority required (incl. Streamlined): yes. Cri
+   mentions 'varies': False  listed lines: 3
+
+AU-b-0666 dasatinib: passage starts: Australian PBS General Schedule. Chemical: dasatinib. Listed: dasatinib 100 mg tablet; Authority required (incl. Streamlined): yes. Listed: dasatinib 20 mg tablet; Authority required (incl. Streamlined): yes. Listed: dasatinib 50 mg tablet; Authority required (incl. Streamlined): yes. Listed: dasati
+   mentions 'varies': False  listed lines: 4

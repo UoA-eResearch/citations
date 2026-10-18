@@ -1,0 +1,107 @@
+== (i) does the committed generator reproduce data/items.jsonl? ==
+regenerated items identical to data/items.jsonl: False (1049 vs 1049)
+first diff: {'chemical': 'upadacitinib', 'text': 'Individual is currently on treatment with upadacitinib for ulcerative colitis and met all remaining criteria prior to commencing treatment', 'family': 'd', 'jurisdiction': 'NZ', 'answer': 'yes', 'id': 'NZ-d-0355'} {'chemical': 'cinacalcet', 'text': 'The patient has had a kidney transplant, and following a treatment free interval of at least 12 weeks a clinically acceptable parathyroid hormone (PTH) level to support ongoing cessation of treatment has not been reached', 'family': 'd', 'jurisdiction': 'NZ', 'answer': 'yes', 'id': 'NZ-d-0355'}
+regenerated passages identical: True
+regenerated stats: {  "nz_chems": 393,  "au_chems": 341,  "matched": 201,  "available_taken": {   "NZ_a": [    80,    80   ],   "NZ_b": [    95,    100   ],   "NZ_d": [    100,    100   ],   "AU_a": [    47,    47   ],   "AU_b": [    100,    100   ],   "AU_d": [    100,    100   ]  },  "items": 1049 }
+
+== (ii) caps and balance ==
+max items per chemical per family: 6  per family x answer: 3
+chemicals with >3 items in a family: 47 [('AU', 'a', 'metoprolol'), ('AU', 'b', 'everolimus'), ('AU', 'd', 'axitinib'), ('AU', 'd', 'crizotinib'), ('AU', 'd', 'gefitinib'), ('AU', 'd', 'ibrutinib'), ('AU', 'd', 'imatinib'), ('AU', 'd', 'lenvatinib'), ('AU', 'd', 'nilotinib'), ('AU', 'd', 'olaparib'), ('AU', 'd', 'osimertinib'), ('AU', 'd', 'palbociclib')]
+cells: [(('AU', 'a', 'no'), 47), (('AU', 'a', 'yes'), 47), (('AU', 'b', 'no'), 100), (('AU', 'b', 'yes'), 100), (('AU', 'd', 'no'), 100), (('AU', 'd', 'yes'), 100), (('NZ', 'a', 'no'), 80), (('NZ', 'a', 'yes'), 80), (('NZ', 'b', 'no'), 100), (('NZ', 'b', 'yes'), 95), (('NZ', 'd', 'no'), 100), (('NZ', 'd', 'yes'), 100)]
+distinct chemicals per (jur, fam): {('AU', 'a'): 70, ('AU', 'b'): 130, ('AU', 'd'): 97, ('NZ', 'a'): 105, ('NZ', 'b'): 130, ('NZ', 'd'): 54}
+duplicate question texts within (jur, fam): 59
+(a) chemicals NZ=105 AU=70 both=40 union=135
+(b) chemicals NZ=130 AU=130 both=90 union=170
+(d) chemicals NZ=54 AU=97 both=42 union=109
+
+== (iii) ATC2 grouping of counterfactuals ==
+CF items: 200  with atc2 None: 0  source in same ATC2: 200
+ATC2 groups used (NZ CFs): [('A2501', 66), ('A1604', 12), ('A2507', 9), ('A2207', 7), ('A2222', 2), ('A0731', 2), ('A1019', 2)]
+ATC2 groups used (AU CFs): [('A2501', 70), ('A2207', 5), ('A1603', 4), ('A2504', 4), ('A2507', 3), ('A1604', 3), ('A2222', 2), ('A0407', 2), ('A0113', 1), ('A2201', 1), ('A2205', 1), ('A0104', 1), ('A0110', 1), ('A1907', 1), ('A1904', 1)]
+distinct source chemicals NZ: 29  AU: 46
+true-criterion chemicals NZ: 48  AU: 67
+median criterion length (chars) NZ true/cf: 89 83  AU true/cf: 93 71
+
+== (iv) AU family-(a) negatives listed in another PBS program; NZ negatives in other NZ sections ==
+AU (a) negatives with a same-strength tablet/capsule in ANY PBS program (incl. GE = key error): 10 of 47
+   ('AU-a-0564', 'metoprolol 50 mg tablet', [('GE', 'Tablet containing metoprolol tartrate 50 mg')])
+   ('AU-a-0565', 'nitrofurantoin 100 mg tablet', [('GE', 'Capsule 100 mg')])
+   ('AU-a-0566', 'phenytoin 30 mg capsule', [('GE', 'Capsule containing phenytoin sodium 30 mg')])
+   ('AU-a-0569', 'omeprazole 10 mg capsule', [('GE', 'Tablet 10 mg (as magnesium)')])
+   ('AU-a-0570', 'phenytoin 100 mg capsule', [('GE', 'Capsule containing phenytoin sodium 100 mg')])
+   ('AU-a-0571', 'desmopressin 200 mcg tablet', [('GE', 'Tablet containing desmopressin acetate 200 micrograms')])
+   ('AU-a-0572', 'nitrofurantoin 50 mg tablet', [('GE', 'Capsule 50 mg')])
+   ('AU-a-0580', 'metoprolol 100 mg tablet', [('GE', 'Tablet containing metoprolol tartrate 100 mg')])
+   ('AU-a-0587', 'ibrutinib 140 mg tablet', [('GE', 'Capsule 140 mg')])
+   ('AU-a-0596', 'prazosin 5 mg capsule', [('GE', 'Tablet 5 mg (as hydrochloride)')])
+NZ XML sections: ['B', 'C', 'D', 'I']
+
+== (v) form vocabularies the key parser skips ==
+NZ single-ingredient formulations mentioning tab/cap that key_of() rejects, by prefix: [('Tab', 6), ('Cap', 3), ('Conjugated, equine tab', 2), ('Sprinkle cap', 2), ('Tab, standardised', 1), ('Tab, strong, BPC', 1), ('Tab (BPC cap strength)', 1), ('Cap (fat soluble vitamins A, D, E, K)', 1), ('Tab eff', 1)]
+AU GE single-ingredient li_forms mentioning tablet/capsule that key_of() rejects: 272
+   ('Abiraterone', 'Tablet containing abiraterone acetate 250 mg')
+   ('Abiraterone', 'Tablet containing abiraterone acetate 500 mg')
+   ('Acamprosate', 'Tablet (enteric coated) containing acamprosate calcium 333 mg')
+   ('Amantadine', 'Capsule containing amantadine hydrochloride 100 mg')
+   ('Amiodarone', 'Tablet containing amiodarone hydrochloride 100 mg')
+   ('Amiodarone', 'Tablet containing amiodarone hydrochloride 200 mg')
+   ('Amitriptyline', 'Tablet containing amitriptyline hydrochloride 10 mg')
+   ('Amitriptyline', 'Tablet containing amitriptyline hydrochloride 25 mg')
+   ('Amitriptyline', 'Tablet containing amitriptyline hydrochloride 50 mg')
+   ('Apremilast', 'Pack containing 4 tablets 10 mg, 4 tablets 20 mg and 19 tablets 30 mg')
+   ('Balsalazide', 'Capsule containing balsalazide sodium 750 mg')
+   ('Benzatropine', 'Tablet containing benzatropine mesilate 2 mg')
+   ('Bisoprolol', 'Tablet containing bisoprolol fumarate 10 mg')
+   ('Bisoprolol', 'Tablet containing bisoprolol fumarate 2.5 mg')
+   ('Bisoprolol', 'Tablet containing bisoprolol fumarate 5 mg')
+   ('Brigatinib', 'Pack containing 7 tablets 90 mg and 21 tablets 180 mg')
+   ('Bupropion', 'Tablet containing bupropion hydrochloride 150 mg (sustained release)')
+   ('Candesartan', 'Tablet containing candesartan cilexetil 16 mg')
+   ('Candesartan', 'Tablet containing candesartan cilexetil 32 mg')
+   ('Candesartan', 'Tablet containing candesartan cilexetil 4 mg')
+   ('Candesartan', 'Tablet containing candesartan cilexetil 8 mg')
+   ('Chlorpromazine', 'Tablet containing chlorpromazine hydrochloride 100 mg')
+   ('Chlorpromazine', 'Tablet containing chlorpromazine hydrochloride 25 mg')
+   ('Clomifene', 'Tablet containing clomifene citrate 50 mg')
+   ('Clomipramine', 'Tablet containing clomipramine hydrochloride 25 mg')
+   ('Clonidine', 'Tablet containing clonidine hydrochloride 100 micrograms')
+   ('Clonidine', 'Tablet containing clonidine hydrochloride 150 micrograms')
+   ('Codeine', 'Tablet containing codeine phosphate hemihydrate 30 mg')
+   ('Cortisone', 'Tablet containing cortisone acetate 25 mg')
+   ('Cortisone', 'Tablet containing cortisone acetate 5 mg')
+   ('Cyproterone', 'Tablet containing cyproterone acetate 100 mg')
+   ('Cyproterone', 'Tablet containing cyproterone acetate 50 mg')
+   ('Dantrolene', 'Capsule containing dantrolene sodium hemiheptahydrate 25 mg')
+   ('Desmopressin', 'Tablet containing desmopressin acetate 200 micrograms')
+   ('Dexamfetamine', 'Tablet containing dexamfetamine sulfate 5 mg')
+   ('Diclofenac', 'Tablet (enteric coated) containing diclofenac sodium 25 mg')
+   ('Diclofenac', 'Tablet (enteric coated) containing diclofenac sodium 50 mg')
+   ('Diltiazem', 'Capsule (controlled delivery) containing diltiazem hydrochloride 180 mg')
+   ('Diltiazem', 'Capsule (controlled delivery) containing diltiazem hydrochloride 240 mg')
+   ('Diltiazem', 'Capsule (controlled delivery) containing diltiazem hydrochloride 360 mg')
+
+== (vi) question templates (from run.py) ==
+('a', 'NZ') | Is {text} listed for subsidy in the community section of the New Zealand Pharmaceutical Schedule (Pharmac)?
+   para: Does Pharmac fund {text} for community dispensing in New Zealand?
+('a', 'AU') | Is {text} listed on the Australian Pharmaceutical Benefits Scheme (PBS) General Schedule?
+   para: Is {text} subsidised under the PBS General Schedule in Australia?
+('b', 'NZ') | Does Pharmac subsidy of {text} in the community require a Special Authority?
+   para: In New Zealand, is a Special Authority needed for {text} to be subsidised by Pharmac?
+('b', 'AU') | Does PBS subsidy of {text} require an authority prescription (Authority Required, including Streamlined Authority)?
+   para: In Australia, is an authority prescription needed for {text} to be PBS-subsidised?
+('d', 'NZ') | Under Pharmac's Special Authority criteria for {chemical}, is the following one of the criteria: "{text}"?
+   para: Is "{text}" among the Special Authority criteria Pharmac sets for {chemical}?
+('d', 'AU') | Under the PBS restriction criteria for {chemical}, is the following one of the criteria: "{text}"?
+   para: Is "{text}" among the PBS restriction criteria for {chemical}?
+
+CF texts mentioning some other benchmark chemical by name: 10
+   ('NZ-d-0472', 'The patient has documented treatment-limiting intolerance, or toxicity to, imatinib')
+   ('NZ-d-0541', 'Patient has fluconazole resistant candidiasis')
+   ('NZ-d-0542', 'Seizures have been inadequately controlled by appropriate courses of sodium valproate, clo')
+   ('NZ-d-0550', 'Patient has fluconazole resistant candidiasis')
+   ('AU-d-0959', 'Patient must be receiving PBS-subsidised dabrafenib concomitantly for this condition')
+   ('AU-d-0976', 'Patient must have failed an adequate trial of PBS-subsidised second-line treatment with ni')
+   ('AU-d-0985', 'Patient must have documented failure with an adequate trial of PBS-subsidised first-line t')
+   ('AU-d-1003', 'Patient must have previously received PBS-subsidised treatment with this drug for this con')
+   ('AU-d-1023', 'Patient must have failed treatment with imatinib')
+   ('AU-d-1032', 'Patient must be receiving PBS-subsidised dabrafenib concomitantly for this condition')

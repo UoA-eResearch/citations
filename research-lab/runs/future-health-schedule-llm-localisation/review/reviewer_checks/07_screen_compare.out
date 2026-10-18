@@ -1,0 +1,33 @@
+reviewer screen counts: {('AU', 'distinct'): 86, ('AU', 'equivalent'): 4, ('AU', 'overlapping'): 10, ('NZ', 'distinct'): 81, ('NZ', 'equivalent'): 9, ('NZ', 'overlapping'): 10}
+
+agent counts: {'distinct': 83, 'equivalent': 12, 'overlapping': 5}
+agreement on distinct vs not: 0.98 (98/100)
+exact 3-way label agreement: 0.95
+
+DISAGREEMENTS (distinct vs non-distinct):
+           id   chemical    screen reviewer_screen                                                    reviewer_note note
+35  NZ-d-0490  nilotinib  distinct     overlapping                   no combination chemo vs own 'monotherapy only'  NaN
+71  NZ-d-0526   olaparib  distinct     overlapping  monotherapy vs own 'not in combination with other chemotherapy'  NaN
+
+Tier disagreements (both non-distinct, different tier):
+           id      screen reviewer_screen                                                    reviewer_note
+29  NZ-d-0484  equivalent     overlapping             moderate-to-high risk of IFI vs own 'at risk of IFI'
+65  NZ-d-0520  equivalent     overlapping  remains at moderate-to-high risk of IFI vs own 'at risk of IFI'
+90  NZ-d-0545  equivalent     overlapping             at risk of IFI vs own 'moderate to high risk of IFI'
+
+== H3 (NZ, zero-shot) under alternative screens ==
+all 100 (preregistered)                          affirmed  49/100 = 0.490  Wilson (0.394, 0.587)  -> Supported
+agent's 83 distinct                              affirmed  32/ 83 = 0.386  Wilson (0.288, 0.493)  -> Supported
+reviewer's 81 distinct                           affirmed  30/ 81 = 0.370  Wilson (0.273, 0.479)  -> Supported
+distinct under BOTH screens (81)                 affirmed  30/ 81 = 0.370  Wilson (0.273, 0.479)  -> Supported
+distinct under EITHER screen (83)                affirmed  32/ 83 = 0.386  Wilson (0.288, 0.493)  -> Supported
+agent's 17 non-distinct                          affirmed  17/ 17 = 1.000  Wilson (0.816, 1.000)  -> Supported
+reviewer's 19 non-distinct                       affirmed  19/ 19 = 1.000  Wilson (0.832, 1.000)  -> Supported
+affirmed among reviewer's non-distinct by tier: {'size': {'equivalent': 9, 'overlapping': 10}, 'sum': {'equivalent': 9, 'overlapping': 10}}
+break-even: removing 9 more affirmed items from the 81-item both-screens set (21/72) drops the Wilson lower bound to 0.199 < 0.20
+
+== AU (unscreened in the study) under the reviewer's screen ==
+AU all 100                                       affirmed  35/100 = 0.350  Wilson (0.264, 0.447)  -> Supported
+AU reviewer-distinct (86)                        affirmed  24/ 86 = 0.279  Wilson (0.195, 0.382)  -> Inconclusive
+AU reviewer non-distinct (14)                    affirmed  11/ 14 = 0.786  Wilson (0.524, 0.924)  -> Supported
+AU distinct excl. borderline                     affirmed  22/ 83 = 0.265  Wilson (0.182, 0.369)  -> Inconclusive

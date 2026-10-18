@@ -1,0 +1,116 @@
+== counts ==
+items 1049 runs 3247 dup (id,cond) 0
+item cells: [(('AU', 'a', 'no'), 47), (('AU', 'a', 'yes'), 47), (('AU', 'b', 'no'), 100), (('AU', 'b', 'yes'), 100), (('AU', 'd', 'no'), 100), (('AU', 'd', 'yes'), 100), (('NZ', 'a', 'no'), 80), (('NZ', 'a', 'yes'), 80), (('NZ', 'b', 'no'), 100), (('NZ', 'b', 'yes'), 95), (('NZ', 'd', 'no'), 100), (('NZ', 'd', 'yes'), 100)]
+errors 5
+             id  condition answer                                                          error
+1257  NZ-d-0404    abstain    NaN  the JSON object must be str, bytes or bytearray, not NoneType
+1598  NZ-d-0513       zero    NaN  the JSON object must be str, bytes or bytearray, not NoneType
+2836  AU-d-0917       zero    NaN  the JSON object must be str, bytes or bytearray, not NoneType
+3125  AU-d-1011       zero    NaN  the JSON object must be str, bytes or bytearray, not NoneType
+3157  AU-d-1021  retrieval    NaN  the JSON object must be str, bytes or bytearray, not NoneType
+conditions: {'zero': 1049, 'retrieval': 1049, 'abstain': 1049, 'paraphrase': 100}
+items with all 3 main conditions: 1049 of 1049
+paraphrase ids match run.py draw: True
+
+== accuracy by cell vs primary.json accuracy_by_cell ==
+abstain    AU a n=  94 acc=0.489 ref=0.489
+abstain    AU b n= 200 acc=0.895 ref=0.895
+abstain    AU d n= 200 acc=0.495 ref=0.495
+abstain    NZ a n= 160 acc=0.594 ref=0.594
+abstain    NZ b n= 195 acc=1.000 ref=1.0
+abstain    NZ d n= 200 acc=0.590 ref=0.59
+paraphrase AU a n=   3 acc=0.333 ref=0.333
+paraphrase AU b n=  16 acc=0.688 ref=0.688
+paraphrase AU d n=  19 acc=0.421 ref=0.421
+paraphrase NZ a n=  18 acc=0.778 ref=0.778
+paraphrase NZ b n=  21 acc=0.667 ref=0.667
+paraphrase NZ d n=  23 acc=0.565 ref=0.565
+retrieval  AU a n=  94 acc=0.979 ref=0.979
+retrieval  AU b n= 200 acc=0.905 ref=0.905
+retrieval  AU d n= 200 acc=0.935 ref=0.935
+retrieval  NZ a n= 160 acc=0.988 ref=0.988
+retrieval  NZ b n= 195 acc=1.000 ref=1.0
+retrieval  NZ d n= 200 acc=0.945 ref=0.945
+zero       AU a n=  94 acc=0.511 ref=0.511
+zero       AU b n= 200 acc=0.635 ref=0.635
+zero       AU d n= 200 acc=0.730 ref=0.73
+zero       NZ a n= 160 acc=0.562 ref=0.562
+zero       NZ b n= 195 acc=0.677 ref=0.677
+zero       NZ d n= 200 acc=0.650 ref=0.65
+mismatches: 0
+
+== H1 cluster bootstrap (own implementation; same seed sequence as analysis.py, then a second seed) ==
+b: chemicals=170 gap0=+0.0419 CI=(-0.0604,+0.1495)  ref gap=+0.0419 CI=(-0.0604,+0.1495) | retrieval gap=+0.0950 CI=(+0.0484,+0.1497)
+a+b: chemicals=184 gap0=+0.0301 CI=(-0.0516,+0.1181)  ref gap=+0.0301 CI=(-0.0516,+0.1181) | retrieval gap=+0.0658 CI=(+0.0299,+0.1071)
+seed 7 b: gap0=+0.0419 CI=(-0.0635,+0.1484)
+seed 7 a+b: gap0=+0.0301 CI=(-0.0587,+0.1153)
+(b) naive unclustered CI: +0.0419 +/- 0.0938
+
+== H3 ==
+screen labels: {'distinct': 83, 'equivalent': 12, 'overlapping': 5}
+NZ all 100       zero       yes= 49/100 = 0.490 Wilson=(0.394,0.587)
+NZ all 100       retrieval  yes= 11/100 = 0.110 Wilson=(0.063,0.186)
+NZ all 100       abstain    yes= 12/100 = 0.120 Wilson=(0.070,0.198) not_stated=69
+NZ all 100       paraphrase yes=  6/ 11 = 0.545 Wilson=(0.280,0.787)
+NZ screened      zero       yes= 32/ 83 = 0.386 Wilson=(0.288,0.493)
+NZ screened      retrieval  yes=  0/ 83 = 0.000 Wilson=(-0.000,0.044)
+NZ screened      abstain    yes=  0/ 83 = 0.000 Wilson=(-0.000,0.044) not_stated=66
+NZ screened      paraphrase yes=  4/  9 = 0.444 Wilson=(0.189,0.733)
+NZ overlapping   zero       yes= 17/ 17 = 1.000 Wilson=(0.816,1.000)
+NZ overlapping   retrieval  yes= 11/ 17 = 0.647 Wilson=(0.413,0.827)
+NZ overlapping   abstain    yes= 12/ 17 = 0.706 Wilson=(0.469,0.867) not_stated=3
+NZ overlapping   paraphrase yes=  2/  2 = 1.000 Wilson=(0.342,1.000)
+AU all 100       zero       yes= 35/100 = 0.350 Wilson=(0.264,0.447)
+AU all 100       retrieval  yes=  6/100 = 0.060 Wilson=(0.028,0.125)
+AU all 100       abstain    yes=  6/100 = 0.060 Wilson=(0.028,0.125) not_stated=88
+AU all 100       paraphrase yes=  8/ 12 = 0.667 Wilson=(0.391,0.862)
+true criteria NZ zero       yes=80/100 = 0.800
+true criteria NZ retrieval  yes=100/100 = 1.000
+true criteria NZ abstain    yes=99/100 = 0.990
+true criteria AU zero       yes=82/100 = 0.820
+true criteria AU retrieval  yes=94/100 = 0.940
+true criteria AU abstain    yes=93/100 = 0.930
+
+== zero-shot yes-rates by truth (report table 'Response bias') ==
+(a) NZ: yes|truth=yes 0.450 (n=80)  yes|truth=no 0.325 (n=80)
+(a) AU: yes|truth=yes 0.745 (n=47)  yes|truth=no 0.723 (n=47)
+(b) NZ: yes|truth=yes 0.968 (n=95)  yes|truth=no 0.600 (n=100)
+(b) AU: yes|truth=yes 0.950 (n=100)  yes|truth=no 0.680 (n=100)
+(d) NZ: yes|truth=yes 0.800 (n=100)  yes|truth=no 0.490 (n=100)
+(d) AU: yes|truth=yes 0.820 (n=100)  yes|truth=no 0.350 (n=100)
+
+== retrieval errors by cell (truth x answer) ==
+AU (a): wrong=2  by truth->answer: Counter({('yes', 'no'): 2})
+AU (b): wrong=19  by truth->answer: Counter({('yes', 'no'): 19})
+AU (d): wrong=13  by truth->answer: Counter({('yes', 'no'): 6, ('no', 'yes'): 6, ('no', 'ERR'): 1})
+NZ (a): wrong=2  by truth->answer: Counter({('yes', 'no'): 2})
+NZ (b): wrong=0  by truth->answer: Counter()
+NZ (d): wrong=11  by truth->answer: Counter({('no', 'yes'): 11})
+
+== abstention ==
+AU (a) truth=no  n= 47 not_stated=0.979  acc among answered=1.000 (n=1)
+AU (a) truth=yes n= 47 not_stated=0.043  acc among answered=1.000 (n=45)
+AU (b) truth=no  n=100 not_stated=0.020  acc among answered=1.000 (n=98)
+AU (b) truth=yes n=100 not_stated=0.190  acc among answered=1.000 (n=81)
+AU (d) truth=no  n=100 not_stated=0.880  acc among answered=0.500 (n=12)
+AU (d) truth=yes n=100 not_stated=0.060  acc among answered=0.989 (n=94)
+NZ (a) truth=no  n= 80 not_stated=0.787  acc among answered=1.000 (n=17)
+NZ (a) truth=yes n= 80 not_stated=0.025  acc among answered=1.000 (n=78)
+NZ (b) truth=no  n=100 not_stated=0.000  acc among answered=1.000 (n=100)
+NZ (b) truth=yes n= 95 not_stated=0.000  acc among answered=1.000 (n=95)
+NZ (d) truth=no  n=100 not_stated=0.690  acc among answered=0.613 (n=31)
+NZ (d) truth=yes n=100 not_stated=0.000  acc among answered=1.000 (n=99)
+AU: not_stated=0.330 acc_answered=0.979 (ref {'rate': 0.3299595141700405, 'acc_answered': 0.9788519637462235})
+NZ: not_stated=0.241 acc_answered=0.971 (ref {'rate': 0.24144144144144145, 'acc_answered': 0.9691211401425178})
+
+== paraphrase ==
+n= 1046 both answered= 100
+agree= 0.77  zero acc= 0.66  para acc= 0.61
+agreement by family: {'size': {'a': 21, 'b': 37, 'd': 42}, 'mean': {'a': 0.6190476190476191, 'b': 0.8378378378378378, 'd': 0.7857142857142857}}
+paraphrase cells: Counter({('NZ', 'd'): 23, ('NZ', 'b'): 21, ('AU', 'd'): 19, ('NZ', 'a'): 18, ('AU', 'b'): 16, ('AU', 'a'): 3})
+  (a) NZ: n=18 zero acc=0.61 para acc=0.78
+  (a) AU: n=3 zero acc=0.67 para acc=0.33
+  (b) NZ: n=21 zero acc=0.81 para acc=0.67
+  (b) AU: n=16 zero acc=0.75 para acc=0.69
+  (d) NZ: n=23 zero acc=0.61 para acc=0.57
+  (d) AU: n=19 zero acc=0.53 para acc=0.42

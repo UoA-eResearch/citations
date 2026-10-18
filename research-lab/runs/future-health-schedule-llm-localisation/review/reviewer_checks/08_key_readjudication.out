@@ -1,0 +1,39 @@
+== reviewer key re-adjudication (96 fresh items, none in either validation sample) ==
+overall wrong: 3 / 96 = 0.031
+                n  wrong
+family answer           
+a      no      16      0
+       yes     16      0
+b      no      16      0
+       yes     16      0
+d      no      16      3
+       yes     16      0
+                            n  wrong
+jurisdiction family answer          
+AU           a      no      8      0
+                    yes     8      0
+             b      no      8      0
+                    yes     8      0
+             d      no      8      1
+                    yes     8      0
+NZ           a      no      8      0
+                    yes     8      0
+             b      no      8      0
+                    yes     8      0
+             d      no      8      2
+                    yes     8      0
+agent round 2 by cell: {'a_no': {'n': 24, 'errors': 2, 'rate': 0.083}, 'a_yes': {'n': 26, 'errors': 0, 'rate': 0.0}, 'b_no': {'n': 44, 'errors': 0, 'rate': 0.0}, 'b_yes': {'n': 31, 'errors': 0, 'rate': 0.0}, 'd_no': {'n': 31, 'errors': 2, 'rate': 0.065}, 'd_yes': {'n': 44, 'errors': 0, 'rate': 0.0}}
+
+== Youden's J (TPR + TNR - 1) for family (b), zero-shot, chemical-cluster bootstrap ==
+b: J_NZ=0.368 J_AU=0.270 diff=+0.098 CI=(-0.035,+0.235)
+a+b: J_NZ=0.254 J_AU=0.190 diff=+0.063 CI=(-0.081,+0.213)
+
+== ATC2 group names (NZ XML) for the groups supplying counterfactuals ==
+A2501 -> Chemotherapeutic Agents
+A1604 -> Antifungals
+A2507 -> Immunosuppressants
+A2207 -> Antiepilepsy Drugs
+A1603 -> Antibacterials
+A2504 -> Endocrine Therapy
+CF items whose target is in A2501: {'NZ': 66, 'AU': 70}
+true-criterion items whose chemical is in A2501: {'NZ': 38, 'AU': 32}
