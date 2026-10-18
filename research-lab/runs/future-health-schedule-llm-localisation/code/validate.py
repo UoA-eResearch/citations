@@ -25,14 +25,18 @@ def nkey(t):
     return re.sub(r"[^a-z0-9]+", " ", t.lower()).strip()
 
 
-def main():
+def main(rnd="1"):
     V.mkdir(parents=True, exist_ok=True)
     items = [json.loads(l) for l in open(RUN / "data" / "items.jsonl")]
-    rng = random.Random(20261019)
+    if rnd == "2":   # D4: a fresh sample from the regenerated items, excluding any question checked in round 1
+        seen = {tuple(x) for x in json.load(open(V / "round1_questions.json"))}
+        items = [i for i in items if (i["jurisdiction"], i["family"], i["chemical"], i["text"]) not in seen]
+    rng = random.Random(20261019 if rnd == "1" else 20261020)
     pick = []
     for j in ("NZ", "AU"):
         pick += rng.sample([i for i in items if i["jurisdiction"] == j], 100)
-    json.dump([i["id"] for i in pick], open(V / "sample.json", "w"))
+    suffix = "" if rnd == "1" else "_round2"
+    json.dump([i["id"] for i in pick], open(V / f"sample{suffix}.json", "w"))
     pdf = open(RUN / "data" / "raw" / "nz" / "Schedule_2026-10.txt").read().split("\n")
     pdfn = nkey(" ".join(pdf))
     load = lambda ep: [x for f in sorted(glob.glob(str(RUN / "data" / "raw" / "pbs" / f"4751_{ep}_*.json"))) for x in json.load(open(f))["data"]]
@@ -65,9 +69,10 @@ def main():
                 found = any(nkey(it["text"])[:120] in nkey(t) for t in rtexts)
                 out.append(f"  criterion text in this drug's restriction texts: {found} ({len(rtexts)} restriction texts)")
         out.append("")
-    (V / "sheet.txt").write_text("\n".join(out))
+    (V / f"sheet{suffix}.txt").write_text("\n".join(out))
     print(len(pick), "items in the sheet")
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    main(*sys.argv[1:2])

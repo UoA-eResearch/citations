@@ -28,22 +28,29 @@ def ws(s):
 
 
 def key_of(chem, form):
-    """(chemical, strength, form class, modified-release) for a single-ingredient tablet or capsule, else None."""
+    """(chemical, strength in mg, form class) for a single-ingredient tablet or capsule, else None. D4: thousands
+    separators removed, g and mcg converted to mg, wafers counted as tablets, and no modified-release flag (the two
+    documents label release type inconsistently)."""
     f = form.lower()
-    fc = "tablet" if re.match(r"\s*(tab|tablet)", f) else "capsule" if re.match(r"\s*(cap|capsule)", f) else None
+    fc = "tablet" if re.match(r"\s*(tab|tablet|wafer)", f) else "capsule" if re.match(r"\s*(cap|capsule)", f) else None
     if fc is None or re.search(r"\bwith\b|\+| and |containing", f):
         return None
-    m = STR.search(form)
+    m = STR.search(re.sub(r"(\d),(\d{3})\b", r"\1\2", form))
     if not m:
         return None
-    unit = m.group(2).lower(); unit = "mcg" if unit in ("µg", "microgram", "micrograms") else unit
-    val = float(m.group(1)); val = int(val) if val == int(val) else val
-    return (chem, f"{val} {unit}", fc, bool(MR.search(form)))
+    unit = m.group(2).lower()
+    mg = float(m.group(1)) * (1000 if unit == "g" else 0.001 if unit in ("mcg", "µg", "microgram", "micrograms") else 1)
+    return (chem, round(mg, 6), fc)
 
 
 def render(k):
-    chem, strength, fc, mr = k
-    return f"{chem} {strength} {fc}" + (" (modified release)" if mr else "")
+    chem, mg, fc = k
+    s = f"{mg * 1000:g} mcg" if mg < 1 else f"{mg / 1000:g} g" if mg >= 1000 and mg % 1000 == 0 else f"{mg:g} mg"
+    return f"{chem} {s} {fc}"
+
+
+ION_ONLY = {"ferrous", "ferric"}   # D4: names left after salt stripping (e.g. ferrous fumarate)
+GENERIC = re.compile(r"progress|benefit|stable|respon|complian|tolerat|clinically appropriate|maximum quantity|continu", re.I)
 
 
 def single(name):
@@ -70,7 +77,10 @@ def nz(path):
                 name = ch.findtext(NS + "Name") or ""
                 if not single(name):
                     continue
-                c = norm(name); atc2.setdefault(c, a2)
+                c = norm(name)
+                if c in ION_ONLY or not c:
+                    continue
+                atc2.setdefault(c, a2)
                 crules = anc_rules + ch.findall(NS + "Rule")
                 for f in ch.findall(NS + "Formulation"):
                     k = key_of(c, f.findtext(NS + "Name") or "")
@@ -110,6 +120,8 @@ def pbs(code):
         if not single(name):
             continue
         c = norm(name)
+        if c in ION_ONLY or not c:
+            continue
         k = key_of(c, x.get("li_form") or "")
         auth = x.get("benefit_type_code") in ("A", "S")
         if k:
@@ -174,7 +186,7 @@ def main():
         for c, ts in stable.items():
             own = {nkey(t) for t in cr[c] | cr_old.get(c, set())}
             for c2, t in by_grp[atc2.get(c)]:
-                if c2 != c and nkey(t) not in own and c2 not in t.lower() and c not in t.lower():
+                if c2 != c and nkey(t) not in own and c2 not in t.lower() and c not in t.lower() and not GENERIC.search(t):   # D4
                     cf.append(dict(chemical=c, text=t, source_chemical=c2))
         avail[f"{jur}_d"] = (take(true, 100, "d", jur, "yes"), take(cf, 100, "d", jur, "no"))
     for i, it in enumerate(items):

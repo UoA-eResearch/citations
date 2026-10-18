@@ -43,3 +43,29 @@ directly:
 This checks the generator's parsing, keying and flag logic. It does not check the API against the printed Schedule.
 
 **NZ.** The NZ half uses the October 2026 Schedule PDF text, a rendering independent of the XML the generator parsed.
+
+## D4 — 2026-10-18 17:49 NZDT — the answer-key check found generator bugs; one fix, then a fresh check (before any model output)
+
+**Round 1** (`results/tables/key_validation_round1.csv`): 9 of 200 keys are wrong (4.5%), under the 5% bar
+overall. But 7 of the 9 are among the 29 family (a) negatives (24%), from three generator bugs:
+- **Units and separators.** NZ "Tab 1,000 mg" was read as 0 mg. PBS "500 micrograms" was not matched to 0.5 mg.
+- **Release labelling.** Release type is labelled inconsistently: NZ "Cap 75 mg" is Enlafax XR, and PBS "Tablet
+  15 mg" is Rinvoq (modified release).
+- **Form vocabulary.** An NZ "Wafer" is an orally disintegrating tablet.
+
+The other two errors:
+- a malformed name from salt stripping ("ferrous");
+- a generic renewal phrase ("No evidence of disease progression") used as a counterfactual for a chemical whose
+  renewal criterion means the same thing.
+
+**Using the plan's one allowed fix** (§5):
+- separators removed, and strengths converted to mg;
+- no release-type flag in the key or the rendering;
+- wafers counted as tablets;
+- ion-only names (ferrous, ferric) excluded;
+- counterfactual criteria barred if they contain generic progression, response, benefit, stability, tolerance or
+  continuation language.
+
+**Re-check.** The items are regenerated, and a fresh 200 (seed 20261020) are checked by hand. The fresh sample
+excludes any question already checked in round 1. Errors are now also reported per family, and the round-2 bar
+applies both overall (≤ 5%) and to family (a) negatives. The v1 items are kept in `data/items_v1.jsonl`.
