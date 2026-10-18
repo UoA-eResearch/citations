@@ -216,7 +216,7 @@ resamples). Fabrication rates use Wilson intervals.
 - **The retrieval column for counterfactuals mostly shows source attribution.** The sentence's source drug's passage
   was retrieved for 90% of NZ and 58% of AU counterfactuals; the target drug's for 39% and 26%.
   - When the target drug's passage was retrieved, the model affirmed 26% (NZ) and 23% (AU) of counterfactuals.
-  - On NZ, all of those affirmations were overlapping items.
+  - On NZ, all 10 were among the 17 equivalent or overlapping items.
 
 ![Affirming absent criteria](results/figures/F3_fabrication.png)
 
@@ -253,9 +253,11 @@ resamples). Fabrication rates use Wilson intervals.
 - **Accuracy mixes knowledge with response bias.** The model's "yes" habit sets much of each accuracy figure. A
   benchmark with a different yes/no balance would give different accuracies with the same model.
 - **The answer keys are the structured data.**
-  - The Schedule XML and the PBS API were checked against the PDF and the raw API records.
-  - Family (a) failed that check, and the NZ counterfactuals needed a full hand screen. The AU counterfactuals were
-    not screened.
+  - The NZ keys were checked against the Schedule PDF. The AU check verified only the generator's parsing of the API
+    records.
+  - Family (a) failed that check.
+  - The NZ counterfactuals needed a full hand screen. We did not screen the AU ones; the reviewer's blind screen is
+    reported alongside.
 - **Retrieval here is the best case for reading, but not for search.** The passages are rendered from the same data
   as the key. Even so, BM25 missed the right chemical for 30–40% of criterion items and for a tenth of AU restriction
   items. A real deployment retrieving from the published PDF or website would face both problems.

@@ -80,7 +80,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
   <h1>Does a general language model know which medicines New Zealand funds?</h1>
   <p class="subtitle">1,049 yes/no questions about New Zealand&#x27;s Pharmaceutical Schedule and Australia&#x27;s PBS, built from the two countries&#x27; structured data and asked of one locally served open model, Nemotron 3 Nano Omni. The questions cover which tablets and capsules are listed, which need prior approval, and what the eligibility criteria say.</p>
   <div class="meta">
-    <span>Report · 2026-10-18 · pre-review draft</span>
+    <span>Report · 2026-10-18 · revised after independent review</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/future-health-schedule-llm-localisation/plan.md">Preregistration</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/future-health-schedule-llm-localisation/deviations.md">Deviations log</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/future-health-schedule-llm-localisation/code">Code</a>
@@ -386,7 +386,7 @@ ranked out.</li>
 <li><strong>The retrieval column for counterfactuals mostly shows source attribution.</strong> The sentence's source drug's passage
   was retrieved for 90% of NZ and 58% of AU counterfactuals; the target drug's for 39% and 26%.<ul>
 <li>When the target drug's passage was retrieved, the model affirmed 26% (NZ) and 23% (AU) of counterfactuals.</li>
-<li>On NZ, all of those affirmations were overlapping items.</li>
+<li>On NZ, all 10 were among the 17 equivalent or overlapping items.</li>
 </ul>
 </li>
 </ul>
@@ -458,9 +458,11 @@ ranked out.</li>
 <li><strong>Accuracy mixes knowledge with response bias.</strong> The model's "yes" habit sets much of each accuracy figure. A
   benchmark with a different yes/no balance would give different accuracies with the same model.</li>
 <li><strong>The answer keys are the structured data.</strong><ul>
-<li>The Schedule XML and the PBS API were checked against the PDF and the raw API records.</li>
-<li>Family (a) failed that check, and the NZ counterfactuals needed a full hand screen. The AU counterfactuals were
-not screened.</li>
+<li>The NZ keys were checked against the Schedule PDF. The AU check verified only the generator's parsing of the API
+records.</li>
+<li>Family (a) failed that check.</li>
+<li>The NZ counterfactuals needed a full hand screen. We did not screen the AU ones; the reviewer's blind screen is
+reported alongside.</li>
 </ul>
 </li>
 <li><strong>Retrieval here is the best case for reading, but not for search.</strong> The passages are rendered from the same data
