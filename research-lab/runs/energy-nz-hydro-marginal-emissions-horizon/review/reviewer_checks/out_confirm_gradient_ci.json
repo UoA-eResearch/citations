@@ -1,0 +1,240 @@
+{
+ "preregistered": {
+  "d_7d_1h": 0.541,
+  "ci_7d_1h": [
+   0.384,
+   0.79
+  ],
+  "share_pos_7d": 1.0,
+  "d_1d_1h": 0.16,
+  "ci_1d_1h": [
+   0.115,
+   0.209
+  ],
+  "share_pos_1d": 1.0
+ },
+ "no lagged D/E": {
+  "d_7d_1h": 0.268,
+  "ci_7d_1h": [
+   0.137,
+   0.389
+  ],
+  "share_pos_7d": 1.0,
+  "d_1d_1h": 0.074,
+  "ci_1d_1h": [
+   0.023,
+   0.117
+  ],
+  "share_pos_1d": 0.995
+ },
+ "D lags only": {
+  "d_7d_1h": 0.433,
+  "ci_7d_1h": [
+   0.25,
+   0.595
+  ],
+  "share_pos_7d": 1.0,
+  "d_1d_1h": 0.201,
+  "ci_1d_1h": [
+   0.121,
+   0.292
+  ],
+  "share_pos_1d": 1.0
+ },
+ "E lags only": {
+  "d_7d_1h": 0.382,
+  "ci_7d_1h": [
+   0.292,
+   0.493
+  ],
+  "share_pos_7d": 1.0,
+  "d_1d_1h": 0.153,
+  "ci_1d_1h": [
+   0.122,
+   0.186
+  ],
+  "share_pos_1d": 1.0
+ },
+ "D, E and fuel lags": {
+  "d_7d_1h": 0.561,
+  "ci_7d_1h": [
+   0.398,
+   0.811
+  ],
+  "share_pos_7d": 1.0,
+  "d_1d_1h": 0.143,
+  "ci_1d_1h": [
+   0.099,
+   0.193
+  ],
+  "share_pos_1d": 1.0
+ },
+ "no lagged outcomes, 3 days of anomaly history": {
+  "d_7d_1h": 0.273,
+  "ci_7d_1h": [
+   0.133,
+   0.405
+  ],
+  "share_pos_7d": 1.0,
+  "d_1d_1h": 0.063,
+  "ci_1d_1h": [
+   0.019,
+   0.103
+  ],
+  "share_pos_1d": 0.994
+ },
+ "preregistered + window inflow": {
+  "d_7d_1h": 0.395,
+  "ci_7d_1h": [
+   0.232,
+   0.628
+  ],
+  "share_pos_7d": 1.0,
+  "d_1d_1h": 0.142,
+  "ci_1d_1h": [
+   0.098,
+   0.191
+  ],
+  "share_pos_1d": 1.0
+ },
+ "no lagged D/E + window inflow": {
+  "d_7d_1h": 0.116,
+  "ci_7d_1h": [
+   -0.027,
+   0.234
+  ],
+  "share_pos_7d": 0.945,
+  "d_1d_1h": 0.052,
+  "ci_1d_1h": [
+   -0.001,
+   0.095
+  ],
+  "share_pos_1d": 0.972
+ },
+ "3 days of anomaly history + window inflow": {
+  "d_7d_1h": 0.118,
+  "ci_7d_1h": [
+   -0.05,
+   0.262
+  ],
+  "share_pos_7d": 0.92,
+  "d_1d_1h": 0.04,
+  "ci_1d_1h": [
+   -0.009,
+   0.079
+  ],
+  "share_pos_1d": 0.947
+ },
+ "no wind-window control": {
+  "d_7d_1h": 0.623,
+  "ci_7d_1h": [
+   0.456,
+   0.894
+  ],
+  "share_pos_7d": 1.0,
+  "d_1d_1h": 0.238,
+  "ci_1d_1h": [
+   0.186,
+   0.302
+  ],
+  "share_pos_1d": 1.0
+ },
+ "half-hour x month fixed effects": {
+  "d_7d_1h": 0.569,
+  "ci_7d_1h": [
+   0.399,
+   0.826
+  ],
+  "share_pos_7d": 1.0,
+  "d_1d_1h": 0.167,
+  "ci_1d_1h": [
+   0.12,
+   0.218
+  ],
+  "share_pos_1d": 1.0
+ },
+ "calendar-aligned climatology": {
+  "d_7d_1h": 0.639,
+  "ci_7d_1h": [
+   0.441,
+   0.986
+  ],
+  "share_pos_7d": 1.0,
+  "d_1d_1h": 0.169,
+  "ci_1d_1h": [
+   0.122,
+   0.223
+  ],
+  "share_pos_1d": 1.0
+ },
+ "7-day-mean instrument": {
+  "d_7d_1h": 0.182,
+  "ci_7d_1h": [
+   0.12,
+   0.255
+  ],
+  "share_pos_7d": 1.0,
+  "d_1d_1h": 0.075,
+  "ci_1d_1h": [
+   0.047,
+   0.116
+  ],
+  "share_pos_1d": 1.0
+ },
+ "next-24-h-mean instrument": {
+  "d_7d_1h": 0.375,
+  "ci_7d_1h": [
+   0.265,
+   0.515
+  ],
+  "share_pos_7d": 1.0,
+  "d_1d_1h": 0.072,
+  "ci_1d_1h": [
+   0.043,
+   0.104
+  ],
+  "share_pos_1d": 1.0
+ },
+ "drop 2021 and 2024": {
+  "d_7d_1h": 0.5,
+  "ci_7d_1h": [
+   0.331,
+   0.752
+  ],
+  "share_pos_7d": 1.0,
+  "d_1d_1h": 0.117,
+  "ci_1d_1h": [
+   0.071,
+   0.17
+  ],
+  "share_pos_1d": 1.0
+ },
+ "2015-2019": {
+  "d_7d_1h": 0.48,
+  "ci_7d_1h": [
+   0.25,
+   0.824
+  ],
+  "share_pos_7d": 1.0,
+  "d_1d_1h": 0.072,
+  "ci_1d_1h": [
+   0.022,
+   0.134
+  ],
+  "share_pos_1d": 0.996
+ },
+ "2020-2024": {
+  "d_7d_1h": 0.574,
+  "ci_7d_1h": [
+   0.395,
+   0.852
+  ],
+  "share_pos_7d": 1.0,
+  "d_1d_1h": 0.23,
+  "ci_1d_1h": [
+   0.166,
+   0.312
+  ],
+  "share_pos_1d": 1.0
+ }
+}

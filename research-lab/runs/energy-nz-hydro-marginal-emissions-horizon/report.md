@@ -12,11 +12,14 @@ as the instrument. The question is whether carbon-aware load shifting cuts emiss
   - the time-of-day construct the plan chose cannot answer the question even where the instrument is strong.
 - **H3:** storage state makes no detectable difference.
 
-**What holds in every specification we tried (17 control sets, instruments and subsamples):**
+**What holds across the 17 specifications we tried (control sets, instruments and subsamples):**
 
 - **The carbon cost of extra demand grows with the time over which it is counted.**
-  - MEF(7 d) exceeds MEF(1 h) in every specification, by 0.12 to 0.64 t CO2/MWh.
-  - MEF(1 d) exceeds MEF(1 h) by 0.04 to 0.24.
+  - In every specification, the point estimate of MEF(7 d) exceeds MEF(1 h), by 0.12 to 0.64 t CO2/MWh.
+  - The interval of that difference excludes zero in 15 of the 17.
+  - **The two exceptions** are the specifications that both drop the lagged outcomes and hold window inflow fixed.
+    These are the two that address both main concerns at once: 0.12 (−0.03 to 0.23) and 0.12 (−0.05 to 0.26).
+  - MEF(1 d) − MEF(1 h) behaves the same way: 0.04 to 0.24, with the interval excluding zero in 15 of 17.
   - Under the preregistered specification, the factor is 0.15 t/MWh over an hour (95% CI 0.13–0.17), 0.31 over a day
     (0.27–0.37) and 0.69 over a week (0.54–0.94).
   - **The levels are not robust.** Across specifications, the one-hour factor ranges from −0.16 to 0.23 and the
@@ -52,8 +55,8 @@ which push demand up for reasons nobody chose, to see what happens to emissions 
 Two things came out clearly.
 
 **First, the extra emissions build up over days.** The carbon cost of extra demand is smaller counted over the next
-hour than over the next day, and smaller over a day than over a week. That held in every version of the analysis we
-tried. But the size of the effect depends a lot on modelling choices: counted over a week, anywhere from about 1.3 to
+hour than over the next day, and smaller over a day than over a week. That held in almost every version of the analysis we tried. In the two versions that remove both of the main
+concerns at once, the rise is smaller and no longer statistically clear. But the size of the effect depends a lot on modelling choices: counted over a week, anywhere from about 1.3 to
 8 times the grid's average intensity. We also cannot tell whether the lakes are being drawn down and refilled with
 fossil power later, or whether cold weather simply tends to come with dry weather.
 
@@ -159,15 +162,15 @@ about 1 by construction, because demand is the sum of the generation series. The
 - **Why the instrument fails at 30 days.** A single half-hour's cold anomaly is nearly uncorrelated with the weather a
   week or a month later (autocorrelation 0.04 at 7 days), so it cannot move a 30-day demand total. The plan's
   instrument was mismatched to the horizon H1 asked about. That was foreseeable, and it is our error of design.
-- **Exploratory, with a matched instrument.** Using the mean anomaly over the next 7 days:
+- **Exploratory, with a matched instrument** (`sensitivity.json`). Using the mean anomaly over the next 7 days:
   - MEF(30 d) = 1.52 (0.86–3.65; F 10.8);
   - MEF(30 d) − MEF(1 h) = 1.32 (0.66–3.45).
 - **The identified range.** Within the strongly identified horizons, and descriptively:
   - MEF(1 d) − MEF(1 h) = 0.16 (0.11–0.21);
   - MEF(7 d) − MEF(1 h) = 0.54 (0.38–0.79).
 
-  This is the contrast H1 would have used had the plan chosen 7 days. Its size is specification-dependent (0.12–0.64)
-  and its sign is not.
+  This is the contrast H1 would have used had the plan chosen 7 days. Its point estimate is positive in all 17
+  specifications (0.12–0.64), and its interval excludes zero in 15 (`sensitivity.json`, `gradient_differences`).
 
 ### How robust are the levels? (exploratory, `results/tables/sensitivity.json`)
 
@@ -181,7 +184,7 @@ about 1 by construction, because demand is the sum of the generation series. The
 | 3 days of weather history instead of lagged outcomes | 0.069 | 0.132 | 0.341 | 159 / 120 / 63 |
 | preregistered + inflow over the window | 0.153 | 0.295 | 0.548 | 203 / 85 / 32 |
 | no lagged outcomes + window inflow | 0.013 | 0.065 | 0.129 | 128 / 122 / 70 |
-| weather history + window inflow | 0.058 | 0.098 | 0.176 | 160 / 123 / 57 |
+| weather history + window inflow | 0.058 | 0.098 | 0.176 | 160 / 123 / 56 |
 | no wind-window control | 0.161 | 0.399 | 0.784 | 204 / 87 / 40 |
 | half-hour × month fixed effects | 0.147 | 0.314 | 0.716 | 388 / 91 / 43 |
 | calendar-aligned climatology | 0.155 | 0.324 | 0.794 | 200 / 81 / 29 |
@@ -192,9 +195,11 @@ about 1 by construction, because demand is the sum of the generation series. The
 | 2020–2024 only | 0.160 | 0.391 | 0.734 | 175 / 48 / 27 |
 
 **Reading the table:**
+- **Fixed effects.** A richer fixed-effects variant, keeping half-hour × day type and adding half-hour × month, gives
+  MEF(7 d) = 1.24, with the first stage (F 9.2) below the plan's threshold.
 - **Lagged outcomes.** The preregistered controls include the previous half-hour's and previous day's demand and
   emissions. Those are outcomes of earlier weather that is correlated with today's anomaly (day-to-day
-  autocorrelation 0.59). Removing them, or replacing them with three days of weather history, lowers every level
+  autocorrelation 0.59; `sensitivity.json`). Removing them, or replacing them with three days of weather history, lowers every level
   severalfold. The data cannot say which conditioning is right.
 - **Inflow.** The instrument predicts lower natural inflow over the window: −2.7 MWh of inflow energy per MWh of
   induced demand at 1 h, −3.7 at 1 d and −8.0 at 7 d. Cold spells are dry spells. Holding window inflow fixed (the
@@ -266,9 +271,12 @@ highest. The low-minus-high difference is −0.02 (−0.14 to 0.11). All tercile
 ### Other checks
 
 - **Geothermal placebo.** Geothermal should not respond.
-  - It responds by 0.04–0.06 MWh/MWh from 12 hours to 2 days. Intervals are near zero at their lower ends; at 2 days
-    it is 0.004–0.12.
-  - The plan's flag ("interval excludes ±0.05") is ambiguous. Read as "excludes zero", it fires at 2 days.
+  - In the preregistered `mef.json` it responds by:
+    - 0.039 MWh/MWh (0.003–0.076) at 12 h;
+    - 0.056 (0.003–0.116) at 1 d;
+    - 0.059 (0.004–0.119) at 2 d.
+  - The plan's flag ("interval excludes ±0.05") is ambiguous. Read as "excludes zero", it fires at all three
+    horizons.
   - **A direct supply channel exists.** Air-cooled binary geothermal plants produce more in cold air, so the
     instrument moves some supply directly. Gas turbines behave the same way.
   - The emissions consequence is about 0.006 t/MWh.
@@ -284,7 +292,8 @@ highest. The low-minus-high difference is −0.02 (−0.14 to 0.11). All tercile
 
 - **It shows two things.**
   - In this grid, the emissions consequence of extra weather-driven demand is larger counted over days than over
-    hours, under every specification tried.
+    hours. That holds in the point estimate of every specification tried, and with an interval excluding zero in 15
+    of 17.
   - The average emissions factor varies by less than ±3% through the day, so it gives an intraday scheduler almost
     nothing to act on.
 - **It does not establish the size of the marginal factor.** The one-week value lies anywhere from 0.13 to 0.79 t/MWh

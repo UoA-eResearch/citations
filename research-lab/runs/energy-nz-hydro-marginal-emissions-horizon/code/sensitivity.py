@@ -169,6 +169,17 @@ def main():
         rd = MWH * (draws @ cnt) / claimed
         out[f"h2_day_mean_{name}"] = dict(claimed_t=float(claimed), realised_t=float(MWH * cnt @ mefs), capture=float(MWH * cnt @ mefs / claimed),
                                           ci=[float(np.percentile(rd, 2.5)), float(np.percentile(rd, 97.5))])
+    # confirmation item 1: intervals of the horizon differences (same month resamples within each specification)
+    out["gradient_differences"] = {}
+    for k, v in out["specs"].items():
+        e = {h: np.asarray(v[h]["E_draws"]) for h in v}
+        dd = {}
+        for a, b in (("336", "2"), ("48", "2")) + ((("1440", "2"),) if "1440" in e else ()):
+            x = e[a] - e[b]
+            dd[f"{a}-{b}"] = dict(diff=v[a]["E"] - v[b]["E"], ci=[float(np.percentile(x, 2.5)), float(np.percentile(x, 97.5))])
+        out["gradient_differences"][k] = dd
+    zz = s.z.values
+    out["anomaly_autocorrelation"] = {str(l): float(np.corrcoef(zz[:-l], zz[l:])[0, 1]) for l in (48, 336, 1440)}
     for k in list(out["specs"]):
         for h in out["specs"][k]:
             out["specs"][k][h] = {a: b for a, b in out["specs"][k][h].items() if not a.endswith("_draws")}

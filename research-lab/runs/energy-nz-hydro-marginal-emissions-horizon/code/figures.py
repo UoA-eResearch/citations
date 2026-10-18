@@ -51,13 +51,15 @@ def main():
     ax.set_xscale("log"); ax.set_xticks(hours); ax.set_xticklabels([r["label"] for r in H])
     ax.set_ylim(-0.2, top + 0.15); ax.grid(axis="y", color=GRID, lw=0.6)
     ax.set_ylabel("t CO₂ per MWh of extra demand"); ax.set_xlabel("horizon over which emissions are counted")
-    fig.suptitle("Marginal emissions rise with the horizon over which they are counted (preregistered specification)", x=0.1, ha="left", fontsize=10.5, color=INK)
+    fig.suptitle("MEF by counting horizon (preregistered specification)", x=0.1, ha="left", fontsize=10.5, color=INK)
     fig.savefig(F / "F1_mef_by_horizon.png", dpi=170); plt.close(fig)
     caption("F1_mef_by_horizon", f"""Marginal emissions factor MEF(h) by horizon, 2SLS with the heating-degree anomaly as instrument,
     2015-2024, n = {m['n']:,} half-hours. Bars are 95% calendar-month block-bootstrap intervals (999 resamples). Hollow
     markers: first-stage F below 10 (14 and 30 days), intervals clipped at the axis. Dashed line: mean AEF over the
     period ({aef:.3f} t/MWh). The levels depend on the control set (results/tables/sensitivity.json: 1 h -0.16 to 0.23,
-    7 d 0.13 to 0.79 across 17 specifications); the rise from 1 h to 1 d and to 7 d holds in every one.""")
+    7 d 0.13 to 0.79 across 17 specifications). The point estimate rises from 1 h to 1 d and to 7 d in every
+    specification; the interval of the difference excludes zero in 15 of 17 (not when window inflow is controlled
+    without lagged outcomes).""")
     # F2
     S = [r for r in H if r["first_stage_F"] >= 10]
     x = np.array([r["h"] / 2 for r in S])
@@ -69,7 +71,7 @@ def main():
     ax.axhline(0, color=GRID, lw=1); ax.axhline(1, color=GRID, lw=1, ls=":")
     ax.set_xscale("log"); ax.set_xticks(x); ax.set_xticklabels([r["label"] for r in S])
     ax.set_ylabel("MWh generated per MWh of extra demand"); ax.set_xlabel("horizon"); ax.grid(axis="y", color=GRID, lw=0.6)
-    fig.suptitle("Where weather-driven demand is met under the preregistered controls (not robust; see text)", x=0.1, ha="left", fontsize=10.5, color=INK)
+    fig.suptitle("Generation response by horizon (preregistered controls; not robust)", x=0.1, ha="left", fontsize=10.5, color=INK)
     fig.savefig(F / "F2_generation_response.png", dpi=170); plt.close(fig)
     caption("F2_generation_response", """2SLS response of cumulative hydro, thermal and geothermal generation to weather-driven demand,
     per MWh of extra demand, for the horizons with a first-stage F of at least 10. Wind over the window is held fixed by

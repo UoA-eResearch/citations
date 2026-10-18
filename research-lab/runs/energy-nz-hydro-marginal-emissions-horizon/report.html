@@ -80,14 +80,14 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
   <h1>How much carbon does an extra megawatt-hour cost New Zealand, and when?</h1>
   <p class="subtitle">Horizon-resolved marginal emissions for a hydro-dominated grid. The data are ten years of half-hourly metered generation, an emissions ledger calibrated to the Ministry for the Environment&#x27;s grid factors, and cold-weather demand as the instrument. The question is whether carbon-aware load shifting cuts emissions.</p>
   <div class="meta">
-    <span>Report · 2026-10-18 · pre-review draft</span>
+    <span>Report · 2026-10-18 · revised after independent review</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/energy-nz-hydro-marginal-emissions-horizon/plan.md">Preregistration</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/energy-nz-hydro-marginal-emissions-horizon/deviations.md">Deviations log</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/energy-nz-hydro-marginal-emissions-horizon/code">Code</a>
     <a href="../../index.html">All research leads</a>
   </div>
 </header>
-<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">MEF over 1 hour</div><div class="tile-value">−0.16 to 0.23</div><div class="tile-note">t CO₂/MWh across 17 specifications; 0.15 preregistered</div></div><div class="tile"><div class="tile-label">MEF over 1 week</div><div class="tile-value">0.13 to 0.79</div><div class="tile-note">t CO₂/MWh; 0.69 preregistered; always above the 1-hour value</div></div><div class="tile"><div class="tile-label">Average factor (AEF)</div><div class="tile-value">0.10 t/MWh</div><div class="tile-note">within ±2.5% in every 6-hour block</div></div><div class="tile"><div class="tile-label">Hypotheses</div><div class="tile-value">3 Inconclusive</div><div class="tile-note">instrument weak at 30 days and at night</div></div></section>
+<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">MEF over 1 hour</div><div class="tile-value">−0.16 to 0.23</div><div class="tile-note">t CO₂/MWh across 17 specifications; 0.15 preregistered</div></div><div class="tile"><div class="tile-label">MEF over 1 week</div><div class="tile-value">0.13 to 0.79</div><div class="tile-note">t CO₂/MWh; 0.69 preregistered; above the 1-hour value in all 17 point estimates, clearly so in 15</div></div><div class="tile"><div class="tile-label">Average factor (AEF)</div><div class="tile-value">0.10 t/MWh</div><div class="tile-note">within ±2.5% in every 6-hour block</div></div><div class="tile"><div class="tile-label">Hypotheses</div><div class="tile-value">3 Inconclusive</div><div class="tile-note">instrument weak at 30 days and at night</div></div></section>
 <main>
 <p><strong>Verdict: Inconclusive.</strong> All three preregistered hypotheses are Inconclusive.</p>
 <ul>
@@ -99,11 +99,14 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 </li>
 <li><strong>H3:</strong> storage state makes no detectable difference.</li>
 </ul>
-<p><strong>What holds in every specification we tried (17 control sets, instruments and subsamples):</strong></p>
+<p><strong>What holds across the 17 specifications we tried (control sets, instruments and subsamples):</strong></p>
 <ul>
 <li><strong>The carbon cost of extra demand grows with the time over which it is counted.</strong><ul>
-<li>MEF(7 d) exceeds MEF(1 h) in every specification, by 0.12 to 0.64 t CO2/MWh.</li>
-<li>MEF(1 d) exceeds MEF(1 h) by 0.04 to 0.24.</li>
+<li>In every specification, the point estimate of MEF(7 d) exceeds MEF(1 h), by 0.12 to 0.64 t CO2/MWh.</li>
+<li>The interval of that difference excludes zero in 15 of the 17.</li>
+<li><strong>The two exceptions</strong> are the specifications that both drop the lagged outcomes and hold window inflow fixed.
+These are the two that address both main concerns at once: 0.12 (−0.03 to 0.23) and 0.12 (−0.05 to 0.26).</li>
+<li>MEF(1 d) − MEF(1 h) behaves the same way: 0.04 to 0.24, with the interval excluding zero in 15 of 17.</li>
 <li>Under the preregistered specification, the factor is 0.15 t/MWh over an hour (95% CI 0.13–0.17), 0.31 over a day
 (0.27–0.37) and 0.69 over a week (0.54–0.94).</li>
 <li><strong>The levels are not robust.</strong> Across specifications, the one-hour factor ranges from −0.16 to 0.23 and the
@@ -140,8 +143,8 @@ use around in time actually reduces emissions there.</p>
 which push demand up for reasons nobody chose, to see what happens to emissions when demand rises.</p>
 <p>Two things came out clearly.</p>
 <p><strong>First, the extra emissions build up over days.</strong> The carbon cost of extra demand is smaller counted over the next
-hour than over the next day, and smaller over a day than over a week. That held in every version of the analysis we
-tried. But the size of the effect depends a lot on modelling choices: counted over a week, anywhere from about 1.3 to
+hour than over the next day, and smaller over a day than over a week. That held in almost every version of the analysis we tried. In the two versions that remove both of the main
+concerns at once, the rise is smaller and no longer statistically clear. But the size of the effect depends a lot on modelling choices: counted over a week, anywhere from about 1.3 to
 8 times the grid's average intensity. We also cannot tell whether the lakes are being drawn down and refilled with
 fossil power later, or whether cold weather simply tends to come with dry weather.</p>
 <p><strong>Second, the "clean hours" signal barely changes through the day.</strong> So shifting work from one hour to another has
@@ -209,7 +212,7 @@ of future data:
 alternative specifications. These are exploratory and not preregistered.</p>
 <h2>Results</h2>
 <h3>The marginal emissions factor by horizon (preregistered specification)</h3>
-<figure><a href="results/figures/F1_mef_by_horizon.png"><img src="results/figures/F1_mef_by_horizon.png" alt="MEF by horizon"></a><figcaption>Marginal emissions factor MEF(h) by horizon, 2SLS with the heating-degree anomaly as instrument, 2015-2024, n = 173,569 half-hours. Bars are 95% calendar-month block-bootstrap intervals (999 resamples). Hollow markers: first-stage F below 10 (14 and 30 days), intervals clipped at the axis. Dashed line: mean AEF over the period (0.098 t/MWh). The levels depend on the control set (results/tables/sensitivity.json: 1 h -0.16 to 0.23, 7 d 0.13 to 0.79 across 17 specifications); the rise from 1 h to 1 d and to 7 d holds in every one.</figcaption></figure>
+<figure><a href="results/figures/F1_mef_by_horizon.png"><img src="results/figures/F1_mef_by_horizon.png" alt="MEF by horizon"></a><figcaption>Marginal emissions factor MEF(h) by horizon, 2SLS with the heating-degree anomaly as instrument, 2015-2024, n = 173,569 half-hours. Bars are 95% calendar-month block-bootstrap intervals (999 resamples). Hollow markers: first-stage F below 10 (14 and 30 days), intervals clipped at the axis. Dashed line: mean AEF over the period (0.098 t/MWh). The levels depend on the control set (results/tables/sensitivity.json: 1 h -0.16 to 0.23, 7 d 0.13 to 0.79 across 17 specifications). The point estimate rises from 1 h to 1 d and to 7 d in every specification; the interval of the difference excludes zero in 15 of 17 (not when window inflow is controlled without lagged outcomes).</figcaption></figure>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -324,14 +327,14 @@ about 1 by construction, because demand is the sum of the generation series. The
 - <strong>Why the instrument fails at 30 days.</strong> A single half-hour's cold anomaly is nearly uncorrelated with the weather a
   week or a month later (autocorrelation 0.04 at 7 days), so it cannot move a 30-day demand total. The plan's
   instrument was mismatched to the horizon H1 asked about. That was foreseeable, and it is our error of design.
-- <strong>Exploratory, with a matched instrument.</strong> Using the mean anomaly over the next 7 days:
+- <strong>Exploratory, with a matched instrument</strong> (<code>sensitivity.json</code>). Using the mean anomaly over the next 7 days:
     - MEF(30 d) = 1.52 (0.86–3.65; F 10.8);
     - MEF(30 d) − MEF(1 h) = 1.32 (0.66–3.45).
 - <strong>The identified range.</strong> Within the strongly identified horizons, and descriptively:
     - MEF(1 d) − MEF(1 h) = 0.16 (0.11–0.21);
     - MEF(7 d) − MEF(1 h) = 0.54 (0.38–0.79).</p>
-<p>This is the contrast H1 would have used had the plan chosen 7 days. Its size is specification-dependent (0.12–0.64)
-  and its sign is not.</p>
+<p>This is the contrast H1 would have used had the plan chosen 7 days. Its point estimate is positive in all 17
+  specifications (0.12–0.64), and its interval excludes zero in 15 (<code>sensitivity.json</code>, <code>gradient_differences</code>).</p>
 <h3>How robust are the levels? (exploratory, <code>results/tables/sensitivity.json</code>)</h3>
 <div class="table-wrap"><table>
 <thead>
@@ -405,7 +408,7 @@ about 1 by construction, because demand is the sum of the generation series. The
 <td>0.058</td>
 <td>0.098</td>
 <td>0.176</td>
-<td>160 / 123 / 57</td>
+<td>160 / 123 / 56</td>
 </tr>
 <tr>
 <td>no wind-window control</td>
@@ -466,9 +469,11 @@ about 1 by construction, because demand is the sum of the generation series. The
 </tbody>
 </table></div>
 <p><strong>Reading the table:</strong>
+- <strong>Fixed effects.</strong> A richer fixed-effects variant, keeping half-hour × day type and adding half-hour × month, gives
+  MEF(7 d) = 1.24, with the first stage (F 9.2) below the plan's threshold.
 - <strong>Lagged outcomes.</strong> The preregistered controls include the previous half-hour's and previous day's demand and
   emissions. Those are outcomes of earlier weather that is correlated with today's anomaly (day-to-day
-  autocorrelation 0.59). Removing them, or replacing them with three days of weather history, lowers every level
+  autocorrelation 0.59; <code>sensitivity.json</code>). Removing them, or replacing them with three days of weather history, lowers every level
   severalfold. The data cannot say which conditioning is right.
 - <strong>Inflow.</strong> The instrument predicts lower natural inflow over the window: −2.7 MWh of inflow energy per MWh of
   induced demand at 1 h, −3.7 at 1 d and −8.0 at 7 d. Cold spells are dry spells. Holding window inflow fixed (the
@@ -555,9 +560,14 @@ highest. The low-minus-high difference is −0.02 (−0.14 to 0.11). All tercile
 <h3>Other checks</h3>
 <ul>
 <li><strong>Geothermal placebo.</strong> Geothermal should not respond.<ul>
-<li>It responds by 0.04–0.06 MWh/MWh from 12 hours to 2 days. Intervals are near zero at their lower ends; at 2 days
-it is 0.004–0.12.</li>
-<li>The plan's flag ("interval excludes ±0.05") is ambiguous. Read as "excludes zero", it fires at 2 days.</li>
+<li>In the preregistered <code>mef.json</code> it responds by:<ul>
+<li>0.039 MWh/MWh (0.003–0.076) at 12 h;</li>
+<li>0.056 (0.003–0.116) at 1 d;</li>
+<li>0.059 (0.004–0.119) at 2 d.</li>
+</ul>
+</li>
+<li>The plan's flag ("interval excludes ±0.05") is ambiguous. Read as "excludes zero", it fires at all three
+horizons.</li>
 <li><strong>A direct supply channel exists.</strong> Air-cooled binary geothermal plants produce more in cold air, so the
 instrument moves some supply directly. Gas turbines behave the same way.</li>
 <li>The emissions consequence is about 0.006 t/MWh.</li>
@@ -577,7 +587,8 @@ instrument moves some supply directly. Gas turbines behave the same way.</li>
 <ul>
 <li><strong>It shows two things.</strong><ul>
 <li>In this grid, the emissions consequence of extra weather-driven demand is larger counted over days than over
-hours, under every specification tried.</li>
+hours. That holds in the point estimate of every specification tried, and with an interval excluding zero in 15
+of 17.</li>
 <li>The average emissions factor varies by less than ±3% through the day, so it gives an intraday scheduler almost
 nothing to act on.</li>
 </ul>

@@ -66,8 +66,9 @@ common sample, they re-estimate MEF at 1 h, 1 d and 7 d under:
   - three days of anomaly history instead of lagged outcomes;
   - each of the main sets with natural inflow summed over the window;
   - no wind-window control;
-- **half-hour × month fixed effects.** Day-type dummies are kept. The reviewer's version without them gave 1.24 at
-  7 d with F 9.2; this one gives 0.72 with F 43.
+- **half-hour × month fixed effects**, replacing half-hour × day type, with a day-type main effect: 0.72 at 7 d (F 43).
+  The reviewer's richer variant keeps half-hour × day type and adds half-hour × month. It gives 1.24 at 7 d with
+  F 9.2, pushing the 7-day first stage below the plan's threshold of 10.
 - **a calendar-aligned climatology.** The preregistered code caps day-of-year at 365, which shifts leap years by one
   day after 29 February.
 - **three alternative instruments:** the next-7-day mean anomaly, including the 30-day horizon; the next-24-h mean;
@@ -93,3 +94,11 @@ My code reproduces the reviewer's numbers for every specification both of us ran
 - **The storage level is not the Electricity Authority's "controlled storage".** HMD active-storage ranges for Te
   Anau, Manapōuri, Wānaka and Wakatipu are about twice the schemes' active capacity. Each offset is constant, so the
   anomaly used for H3 and the standardised control are unaffected. Wānaka's inflow is HMD's natural *outflow* series.
+
+**Confirmation-pass edits** (review/confirmation.md: publish with edits):
+- the gradient is stated as positive in all 17 point estimates, with its interval excluding zero in 15
+  (`gradient_differences` in sensitivity.json);
+- the geothermal placebo is quoted from the preregistered mef.json;
+- the hh × month wording above is corrected;
+- the H1 matched-instrument difference and the anomaly autocorrelations are added to sensitivity.json;
+- the F1 and F2 titles are shortened.
