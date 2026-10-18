@@ -128,7 +128,9 @@ def secondary(st, daily, rng):
 def read_parts(prod):
     fs = [f for f in glob.glob(str(RUN / "data" / "extract" / f"{prod}*.csv")) if re.fullmatch(prod + r"(_[a-z0-9]+)?\.csv", Path(f).name)]
     e = pd.concat([pd.read_csv(f, dtype={"pentad": str, "station": str}) for f in fs])
-    return e[e.status == "ok"].drop_duplicates(["pentad", "station"])
+    e = e[e.status == "ok"].drop_duplicates(["pentad", "station"]).copy()
+    e["value"] = pd.to_numeric(e.value)   # error rows carry their message in this column, so it reads as text
+    return e
 
 
 def main():
