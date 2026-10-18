@@ -1,6 +1,6 @@
 """Eligible published signals (plan section 2). From data/extract/signals_raw.jsonl: ROR with estimate and 95% CI,
 lower bound > 1, a single active ingredient (RxNorm), a stated window, and an event name (after the fixed US-to-UK
-spelling map) that the recomputation step later checks against the FAERS PT list. At most 5 per paper, at random
+spelling map) that is a PT in the FAERS reaction table (deviation D3: checked here, before the cap). At most 5 per paper, at random
 (seed 20261018). Deviation D2: reads the v2 extraction (data/extract/signals_raw_v2.jsonl) and also requires the
 signal's database to be FAERS and its comparison not to be an interaction; the comparison label is carried for the
 all-drugs-only sensitivity analysis. Writes data/signals_all.csv (every extracted ROR signal with its eligibility
@@ -11,17 +11,18 @@ import re
 import sys
 from pathlib import Path
 
+import duckdb
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import rxnorm  # noqa: E402
 
 RUN = Path(__file__).resolve().parents[1]
-UK = [(r"hemorrhag", "haemorrhag"), (r"\banemi", "anaemi"), (r"\bedema", "oedema"), (r"diarrhea", "diarrhoea"), (r"esophag", "oesophag"),
+UK = [(r"hemorrhag", "haemorrhag"), (r"\banemi", "anaemi"), (r"\bedema", "oedema"), (r"diarrhea", "diarrhoea"), (r"(?<!o)esophag", "oesophag"),
       (r"tumor", "tumour"), (r"leukemi", "leukaemi"), (r"ischemi", "ischaemi"), (r"hematom", "haematom"), (r"hematur", "haematur"),
       (r"hemoly", "haemoly"), (r"hemoglobin", "haemoglobin"), (r"pediatric", "paediatric"), (r"apnea", "apnoea"), (r"dyspnea", "dyspnoea"),
       (r"hypoglycemi", "hypoglycaemi"), (r"hyperglycemi", "hyperglycaemi"), (r"glycemi", "glycaemi"), (r"kalemi", "kalaemi"),
-      (r"natremi", "natraemi"), (r"cecum", "caecum"), (r"orthopedic", "orthopaedic"), (r"estrogen", "oestrogen"), (r"fetal", "foetal"),
+      (r"natremi", "natraemi"), (r"cecum", "caecum"), (r"orthopedic", "orthopaedic"), (r"(?<!o)estrogen", "oestrogen"), (r"fetal", "foetal"),
       (r"sulfa", "sulpha"), (r"color", "colour"), (r"behavior", "behaviour"), (r"gynecolog", "gynaecolog"), (r"septicemi", "septicaemi"),
       (r"bacteremi", "bacteraemi"), (r"uremi", "uraemi"), (r"lipemi", "lipaemi"), (r"anesthe", "anaesthe"), (r"hematotox", "haematotox"),
       (r"neutropeni", "neutropeni")]
@@ -64,6 +65,12 @@ def main():
                              win=f"{w['start_year']}Q{w['start_quarter']}-{w['end_year']}Q{w['end_quarter']}" if w else "", reason=reason))
     rxnorm.save()
     a = pd.DataFrame(rows)
+    a.to_csv(RUN / "data" / "signals_all.csv", index=False)
+    # D3: rule 4 (the event is a FAERS PT) is checked here, before the per-paper cap, as the plan orders it
+    db = duckdb.connect(str(RUN / "data" / "faers.duckdb"), read_only=True)
+    pts = {r[0] for r in db.execute("SELECT DISTINCT pt FROM reac").fetchall()}
+    db.close()
+    a.loc[(a.reason == "") & ~a.event_uk.fillna("").str.upper().isin(pts), "reason"] = "event not a FAERS PT"
     a.to_csv(RUN / "data" / "signals_all.csv", index=False)
     e = a[a.reason == ""].copy()
     rnd = random.Random(20261018)

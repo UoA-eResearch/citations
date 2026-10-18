@@ -69,3 +69,28 @@ Source: `results/tables/extraction_validation_round2.{csv,json}`, from `code/val
   - `code/eligible.py` now reads the v2 file and applies the FAERS and non-interaction rules.
   - `code/analysis.py` adds the all-drugs-only sensitivity, and reports how many windows start before 2004Q1.
     Those windows are recomputed from 2004Q1, the first quarter in the public files.
+
+## D3 — 2026-10-18 18:12 NZDT — two implementation errors found after the first analysis; corrected, as-run results kept
+
+The first analysis ran (as-run results are kept in `results/asrun/` and `data/recomputed_asrun.csv`):
+- H1 survival 0.724 (95% CI 0.663–0.782), Refuted;
+- H2 median published/recomputed ROR 1.079 (1.018–1.162), Refuted.
+
+Checking why 279 of the 659 capped signals had no FAERS PT found two errors in the code, not in the plan:
+
+1. **The cap came before rule 4.** The plan (§2) caps at 5 *eligible* signals per paper, and eligibility includes rule 4
+   (the event is a FAERS PT). The code capped first and checked rule 4 later, inside the recomputation. Papers with
+   non-PT signals among their 5 random picks therefore lost eligible signals.
+2. **The spelling map broke two UK spellings.** "esophag" → "oesophag" and "estrogen" → "oestrogen" also fired on
+   words already in UK spelling, giving "ooesophagitis".
+
+**Correction.**
+- `code/eligible.py` now checks rule 4 against the FAERS reaction table before the cap. The two map entries no longer
+  fire after an "o". The map is otherwise unchanged, so US spellings it does not list (e.g. "hyperprolactinemia",
+  "gynecomastia") still fail rule 4. This is a stated limitation.
+- Result: 495 fully eligible signals, 406 after the cap, from 142 papers.
+  - 337 of the 406 were already computed in the as-run pass and are reused, since the computation is deterministic.
+  - 69 are new. 43 as-run signals are no longer drawn, because the draw now runs over a different eligible set.
+
+**Status.** The corrected analysis implements the preregistered text, so it is primary. These errors were found
+after the as-run results were seen, so the report gives both, with the as-run numbers beside the corrected ones.

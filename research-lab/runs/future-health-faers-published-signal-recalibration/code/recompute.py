@@ -103,9 +103,19 @@ def signals(F):
     for l in open(RUN / "data" / "raw" / "epmc" / "records.jsonl"):
         r = json.loads(l); pub[str(r["id"])] = r.get("firstPublicationDate") or r.get("pubYear")
     rows = []
+    # D3: rows already computed in the as-run pass are reused (the computation is deterministic); only new signals run
+    prev = RUN / "data" / "recomputed_asrun.csv"
+    cache = {}
+    if prev.exists():
+        for r in pd.read_csv(prev, dtype={"paper": str}).to_dict("records"):
+            if r["status"] == "ok":
+                cache[(r["paper"], int(r["k"]), r["ingredient"], r["event_pt"], r["win"])] = r
     for s in sig.itertuples():
         pt = (s.event_uk or "").upper()
         base = dict(paper=s.paper, k=s.k, ingredient=s.ingredient, event_pt=pt, win=s.win)
+        hit = cache.get((s.paper, int(s.k), s.ingredient, pt, s.win))
+        if hit is not None:
+            rows.append(hit); continue
         if pt not in F.pts:
             rows.append({**base, "status": "event not a FAERS PT"}); continue
         m = re.match(r"(\d{4})Q(\d)-(\d{4})Q(\d)", s.win)
