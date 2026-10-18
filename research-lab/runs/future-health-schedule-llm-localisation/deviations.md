@@ -100,3 +100,14 @@ The plan allows one fix, and D4 used it. So these consequences are fixed now, be
    - H3 is tested on all 100, as preregistered, and on the items that pass the screen.
    - It gets a Supported or Refuted verdict only if both tests agree. Otherwise it is Inconclusive.
 4. Nothing else changes: conditions, prompts, the bootstrap and the thresholds stay as written.
+
+**D5 addendum — 2026-10-18 18:13 NZDT — the NZ counterfactual screen (done while the runs were in progress, before any output was opened).**
+- 17 of the 100 NZ counterfactual items overlap the chemical's own criteria (`results/tables/nz_counterfactual_screen.csv`):
+  - 12 are equivalent. Two differ from an own criterion only by "the"; others restate ECOG 0–2, "at risk of invasive
+    fungal infection" or "immunocompromised";
+  - 5 overlap: the counterfactual is implied by, or is a narrower or broader form of, an own criterion.
+- The round-2 sample drew 17 of these 100 items and caught only one of the 17. The cell's true key-error rate is far
+  above that sample's 1/17.
+- H3's screened test uses the 83 distinct items. Both overlap tiers are excluded, so the screened set holds only
+  clearly distinct counterfactuals.
+- The AU counterfactuals are not screened; AU family (d) results are descriptive only.
