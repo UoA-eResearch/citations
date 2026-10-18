@@ -103,12 +103,14 @@ def main():
     x["top5_journal"] = x.journal.isin(top5).astype(int)
     x["year"] = x.paper.map(lambda p: int(recs.get(p, {}).get("pubYear") or 0))
     x["log_cases"] = np.log(x.n_cases.where(x.n_cases > 0))
-    cols = ["log_pub", "win_years", "top5_journal", "year"]
-    try:
-        m = sm.Logit(x.nonsurv, sm.add_constant(x[cols].astype(float))).fit(disp=0, cov_type="cluster", cov_kwds={"groups": pd.factorize(x.paper)[0]})
-        out["secondary"] = dict(n=int(len(x)), coef=dict(zip(["const"] + cols, map(float, m.params))), p=dict(zip(["const"] + cols, map(float, m.pvalues))))
-    except Exception as ex:  # noqa: BLE001
-        out["secondary"] = dict(error=str(ex)[:200])
+    # plan section 6: (1) all signals without the case count; (2) the subset reporting a case count, with log cases
+    for name, cols, xx in (("secondary", ["log_pub", "win_years", "top5_journal", "year"], x),
+                           ("secondary_with_cases", ["log_pub", "log_cases", "win_years", "top5_journal", "year"], x[x.log_cases.notna()])):
+        try:
+            m = sm.Logit(xx.nonsurv, sm.add_constant(xx[cols].astype(float))).fit(disp=0, cov_type="cluster", cov_kwds={"groups": pd.factorize(xx.paper)[0]})
+            out[name] = dict(n=int(len(xx)), coef=dict(zip(["const"] + cols, map(float, m.params))), p=dict(zip(["const"] + cols, map(float, m.pvalues))))
+        except Exception as ex:  # noqa: BLE001
+            out[name] = dict(n=int(len(xx)), error=str(ex)[:200])
     ok.to_csv(T / "signals_results.csv", index=False)
     json.dump(out, open(T / "primary.json", "w"), indent=1, default=float)
     print(json.dumps({k: out[k] for k in ("eligible_signals", "papers", "status", "negative_controls_used", "null", "H1", "H1_sd_null", "H2", "uncalibrated_replication")}, indent=1, default=float))
