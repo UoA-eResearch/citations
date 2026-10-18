@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NZ Marginal Emissions</title>
+<meta name="description" content="Horizon-resolved marginal emissions for New Zealand's hydro-dominated grid, from ten years of half-hourly metered generation and cold-weather demand as the instrument: does carbon-aware load shifting cut emissions?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Energy</div>
+  <h1>How much carbon does an extra megawatt-hour cost New Zealand, and when?</h1>
+  <p class="subtitle">Horizon-resolved marginal emissions for a hydro-dominated grid. The data are ten years of half-hourly metered generation, an emissions ledger calibrated to the Ministry for the Environment&#x27;s grid factors, and cold-weather demand as the instrument. The question is whether carbon-aware load shifting cuts emissions.</p>
+  <div class="meta">
+    <span>Report · 2026-10-18 · pre-review draft</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/energy-nz-hydro-marginal-emissions-horizon/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/energy-nz-hydro-marginal-emissions-horizon/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/energy-nz-hydro-marginal-emissions-horizon/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">MEF within 1 hour</div><div class="tile-value">0.15 t/MWh</div><div class="tile-note">95% CI 0.13–0.17; hydro meets the extra demand</div></div><div class="tile"><div class="tile-label">MEF over 1 week</div><div class="tile-value">0.69 t/MWh</div><div class="tile-note">0.54–0.94; mostly coal at Huntly</div></div><div class="tile"><div class="tile-label">Average factor (AEF)</div><div class="tile-value">0.10 t/MWh</div><div class="tile-note">the same in every 6-hour block</div></div><div class="tile"><div class="tile-label">Hypotheses</div><div class="tile-value">3 Inconclusive</div><div class="tile-note">weak instrument at 30 days and at night</div></div></section>
+<main>
+<p><strong>Verdict: Inconclusive.</strong> All three preregistered hypotheses are Inconclusive.</p>
+<ul>
+<li><strong>H1 and H2: the instrument is too weak where those tests look.</strong><ul>
+<li>H1 compares 30 days with 1 hour, and the weather instrument has no strength at 30 days.</li>
+<li>H2's daily scheduler moves most of its load into the night, where the instrument is weak.</li>
+</ul>
+</li>
+<li><strong>H3: storage state makes no detectable difference.</strong></li>
+</ul>
+<p><strong>What the data do show clearly:</strong></p>
+<ul>
+<li><strong>An extra MWh costs more carbon the longer emissions are counted.</strong> These horizons are strongly identified
+  (first-stage F of at least 40).<ul>
+<li>Counted over the next hour, an extra MWh of weather-driven demand adds <strong>0.15 t CO2</strong> (95% CI 0.13–0.17).</li>
+<li>Over a day it adds <strong>0.31 t</strong> (0.27–0.37), and over a week <strong>0.69 t</strong> (0.54–0.94).</li>
+<li>The rise from 1 hour to 7 days is 0.55 t/MWh (0.38–0.79). This is descriptive, not the preregistered test.</li>
+</ul>
+</li>
+<li><strong>The mechanism is visible in the generation data.</strong><ul>
+<li>Within the hour, hydro meets all of the extra demand: 1.03 MWh of hydro per MWh of demand.</li>
+<li>Within a week, hydro's share falls to 0.17 and thermal plant supplies 0.75, mostly coal at Huntly.</li>
+<li>Water used now is made up with fossil generation later.</li>
+</ul>
+</li>
+<li><strong>The average signal a carbon-aware scheduler reads barely moves.</strong> The average emissions factor (AEF) is
+  0.095–0.100 t/MWh in every 6-hour block of the day.<ul>
+<li>The marginal factor is 2–4 times higher at the 1-day horizon, and up to 7 times higher at a week.</li>
+<li>Shifting a 20 MW, 4-hour daily load to the lowest-AEF hours "saves" only 0.012 t per MWh moved, by the AEF's own
+accounting.</li>
+</ul>
+</li>
+<li><strong>Where the moved load stays within well-identified hours, a third of the claim survives.</strong> With a ±1-hour window,
+  the realised saving is 0.34 of the claimed one (−0.08 to 0.75). The interval is too wide to be decisive.</li>
+</ul>
+<h2>In plain terms</h2>
+<p>Some software, data centres and smart appliances now try to run "when the grid is clean". They read a signal of the
+grid's average carbon intensity and move work to the hours when it is lowest.</p>
+<p>New Zealand's grid is mostly hydro, with a little coal and gas. We wanted to know whether moving electricity use
+around in time actually burns less fossil fuel there.</p>
+<p>We built a half-hourly record of how much carbon each power station emitted from 2015 to 2024. We then used cold
+snaps, which push demand up for reasons nobody chose, to see what happens to emissions when demand rises unexpectedly.</p>
+<p>The answer depends on how long you wait. In the first hour, the hydro lakes absorb nearly all the extra demand, and
+the extra emissions are modest. But the water used is then missing later. Over the following week, coal at Huntly
+makes up most of it. Counted over a week, each extra unit of electricity costs about seven times the grid's average
+carbon intensity.</p>
+<p>The average signal that carbon-aware tools use hardly changes through the day, so shifting work between hours can
+claim very little saving. We could not measure precisely how much of even that small claim is real. Our method is
+weak at night and over a month. What we can say is that, in New Zealand, the carbon cost of using more electricity is
+much larger than the average suggests, and it arrives days later.</p>
+<h2>What was asked</h2>
+<p>Carbon-aware schedulers usually consume an average emissions factor. In a hydro-dominated grid, the lakes balance most
+short-run changes in demand. So an hour-to-hour shift may simply move water around, and the emissions it causes arrive
+when thermal plant later refills the gap.</p>
+<p>The study estimates the <strong>marginal</strong> emissions factor as a function of the horizon over which emissions are counted.
+It then asks three preregistered questions (<code>plan.md</code>):</p>
+<ul>
+<li><strong>H1:</strong> Is MEF(30 d) larger than MEF(1 h)?</li>
+<li><strong>H2:</strong> Does an AEF-guided daily scheduler capture less than half of its claimed saving?</li>
+<li><strong>H3:</strong> Is the 1-day MEF higher when national hydro storage is low?</li>
+</ul>
+<h2>What was already known</h2>
+<p>The novelty search (2026-10-18) found no published horizon-resolved MEF for New Zealand.</p>
+<ul>
+<li><strong>Electricity Authority.</strong> It reports which fuel is marginal (hydro or thermal about 95% of the time) and publishes
+  an allocation factor that is not a marginal one.</li>
+<li><strong>Merit-order price effects.</strong> A 2026 <em>Energies</em> paper studies state-dependent price effects in the same market,
+  not emissions.</li>
+<li><strong>Reservoir hydro elsewhere.</strong> WattTime explains why reservoir hydro moves emissions in time. Hydrothermal marginal
+  CO2 modelling exists for Chile (<em>Applied Energy</em>, 2017).</li>
+<li><strong>What is new here.</strong> An estimate from metered data, with a horizon axis, plus a test of the scheduling claim.</li>
+</ul>
+<h2>How it was done</h2>
+<p><strong>Data</strong>, all open, 2015-01-01 to 2024-12-31 (local), 175,344 half-hours:
+- <strong>Generation.</strong> EMI <code>Generation_MD</code>, every metered unit by trading period.
+- <strong>Smelter and HVDC.</strong> The Tiwai smelter offtake and HVDC transfers.
+- <strong>Hydrology.</strong> The Electricity Authority's Hydrological Modelling Dataset gives daily controlled storage for ten
+  lakes, converted to GWh with the dataset's specific energy, and natural inflows to nine of them, energy-weighted.
+- <strong>Temperature.</strong> Open-Meteo (ERA5) hourly temperature for five cities, population-weighted.</p>
+<p><strong>The emissions ledger</strong> (<code>code/series.py</code>):
+- Each thermal unit's metered output is multiplied by a stated heat rate and the MfE fuel factor. Geothermal output
+  is taken at 0.10 t CO2/MWh.
+- Each year, fossil emissions are scaled so that the ledger matches MfE's annual grid-average CO2 factor.
+    - This is deviation D1. MBIE's quarterly tables, named in the plan, block scripted download.
+    - The scale factors are 0.87–1.10. Against MfE's quarterly factors for 2023–2024, which were not used to fit, the
+    ledger is within 0.01 t/MWh in seven of eight quarters.
+- <strong>The demand measure</strong> is total metered generation. It tracks 2024 grid offtake almost perfectly (r = 0.997; it is
+  9% larger because it includes embedded generation and losses).</p>
+<p><strong>The estimator</strong> (<code>code/mef.py</code>):
+- <strong>Regression.</strong> For each horizon h (30 minutes to 30 days), emissions summed over the next h are regressed on demand
+  summed over the same window, by 2SLS.
+- <strong>Instrument.</strong> The population-weighted heating-degree anomaly in the starting half-hour, against a
+  half-hour-by-day-of-year climatology.
+- <strong>Controls:</strong>
+    - the previous day's anomalies;
+    - lagged demand and emissions;
+    - storage, and the week's inflow;
+    - the previous day's HVDC and Tiwai;
+    - <strong>wind over the same window</strong>, so the cold-and-windy channel is held fixed;
+    - fixed effects for half-hour by day type, month and year.
+- <strong>Inference.</strong> Intervals come from a calendar-month block bootstrap: 999 resamples of 120 months.
+- <strong>Rule.</strong> The plan fixed that a horizon whose first-stage F is below 10 is weakly identified, and a hypothesis that
+  rests on it is Inconclusive.</p>
+<h2>Results</h2>
+<h3>The marginal emissions factor by horizon</h3>
+<figure><a href="results/figures/F1_mef_by_horizon.png"><img src="results/figures/F1_mef_by_horizon.png" alt="MEF by horizon"></a><figcaption>Marginal emissions factor MEF(h) by horizon, 2SLS with the heating-degree anomaly as instrument, 2015-2024, n = 173,569 half-hours. Bars are 95% calendar-month block-bootstrap intervals (999 resamples). Hollow markers: first-stage F below 10 (14 and 30 days), intervals clipped at the axis. Dashed line: mean AEF over the period (0.098 t/MWh).</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Horizon</th>
+<th>MEF (t CO2/MWh)</th>
+<th>95% CI</th>
+<th>First-stage F</th>
+<th>Hydro</th>
+<th>Thermal</th>
+<th>Geothermal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.5 h</td>
+<td>0.153</td>
+<td>0.132–0.175</td>
+<td>189</td>
+<td>1.18</td>
+<td>−0.16</td>
+<td>0.02</td>
+</tr>
+<tr>
+<td>1 h</td>
+<td>0.154</td>
+<td>0.133–0.175</td>
+<td>202</td>
+<td>1.03</td>
+<td>−0.02</td>
+<td>0.02</td>
+</tr>
+<tr>
+<td>2 h</td>
+<td>0.157</td>
+<td>0.137–0.177</td>
+<td>228</td>
+<td>0.91</td>
+<td>0.09</td>
+<td>0.02</td>
+</tr>
+<tr>
+<td>4 h</td>
+<td>0.164</td>
+<td>0.143–0.184</td>
+<td>273</td>
+<td>0.83</td>
+<td>0.16</td>
+<td>0.02</td>
+</tr>
+<tr>
+<td>12 h</td>
+<td>0.229</td>
+<td>0.199–0.263</td>
+<td>215</td>
+<td>0.73</td>
+<td>0.23</td>
+<td>0.04</td>
+</tr>
+<tr>
+<td>1 d</td>
+<td>0.314</td>
+<td>0.267–0.367</td>
+<td>85</td>
+<td>0.66</td>
+<td>0.28</td>
+<td>0.06</td>
+</tr>
+<tr>
+<td>2 d</td>
+<td>0.367</td>
+<td>0.314–0.439</td>
+<td>60</td>
+<td>0.55</td>
+<td>0.39</td>
+<td>0.06</td>
+</tr>
+<tr>
+<td>7 d</td>
+<td>0.695</td>
+<td>0.541–0.937</td>
+<td>40</td>
+<td>0.17</td>
+<td>0.75</td>
+<td>0.06</td>
+</tr>
+<tr>
+<td>14 d</td>
+<td>1.55</td>
+<td>0.97–4.67</td>
+<td><strong>7.7</strong></td>
+<td>−0.89</td>
+<td>1.68</td>
+<td>0.16</td>
+</tr>
+<tr>
+<td>30 d</td>
+<td>11.9</td>
+<td>−85.9 to 62.4</td>
+<td><strong>0.18</strong></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p>The generation columns are MWh generated per MWh of extra demand. Wind over the window is held fixed. At 14 and 30
+days the responses are not interpretable.</p>
+<p><strong>H1 (horizon gradient): Inconclusive (weak instrument).</strong>
+- The preregistered contrast, MEF(30 d) − MEF(1 h), is 11.7 t/MWh (−86 to 62).
+- The 30-day first stage has F = 0.18. A half-hour of cold weather says almost nothing about the next month's total
+  demand once the controls are in.
+- <strong>The gradient itself is clear over the identified range.</strong> Descriptively, not as the preregistered test, the
+  differences are:
+    - MEF(1 d) − MEF(1 h) = 0.16 (0.12–0.21);
+    - MEF(7 d) − MEF(1 h) = 0.55 (0.38–0.79).</p>
+<figure><a href="results/figures/F2_generation_response.png"><img src="results/figures/F2_generation_response.png" alt="Where demand is met"></a><figcaption>2SLS response of cumulative hydro, thermal and geothermal generation to weather-driven demand, per MWh of extra demand, for the horizons with a first-stage F of at least 10. Wind over the window is held fixed by design. Point estimates.</figcaption></figure>
+<h3>Does AEF-guided shifting capture its claimed saving? (H2)</h3>
+<figure><a href="results/figures/F3_blocks.png"><img src="results/figures/F3_blocks.png" alt="Time-of-day MEF"></a><figcaption>MEF at the 1-day horizon by 6-hour block of the window&#x27;s start (fully interacted 2SLS), with 95% month-block bootstrap intervals, against each block&#x27;s mean AEF. The 00:00-06:00 block has a first-stage F of 4.2 and is weakly identified (hollow; interval clipped).</figcaption></figure>
+<p><strong>Time-of-day MEFs at 1 day.</strong>
+- 06:00–12:00: <strong>0.22</strong> (0.15–0.28).
+- 12:00–18:00: <strong>0.27</strong> (0.22–0.32).
+- 18:00–24:00: <strong>0.40</strong> (0.29–0.58).
+- 00:00–06:00: <strong>weakly identified</strong> (F = 4.2; point estimate −0.37, interval reaching −3.8). Heating demand at night
+  responds little to the temperature anomaly.</p>
+<p><strong>The H2 scheduler and its result.</strong>
+- <strong>The scheduler.</strong> A 20 MW load runs 10:00–14:00 by default. The scheduler moves it each day to the 8 consecutive
+  half-hours of lowest AEF.
+- <strong>Where the load goes.</strong> 41% of the moved load lands in 00:00–06:00.
+- <strong>Rule.</strong> The realised saving there rests on the weak block, so by the preregistered rule <strong>H2 is Inconclusive
+  (weak instrument)</strong>.
+- <strong>The raw ratio is meaningless.</strong> It is 18 (0.8–127), driven by the weak block's negative point estimate.</p>
+<p><strong>Variants (descriptive):</strong>
+- <strong>±1-hour window.</strong> It moves load only within the two well-identified daytime blocks.
+    - It claims 470 t over ten years and realises 159 t.
+    - The capture ratio is 0.34 (−0.08 to 0.75).
+- <strong>7-day window.</strong> It also lands in the weak night block. Its 7-day block MEFs are weakly identified for the morning
+  and night blocks, so it was scored with the 1-day blocks, and it is equally uninformative.</p>
+<p><strong>What the AEF itself shows.</strong>
+- The AEF averages 0.095, 0.098, 0.098 and 0.100 t/MWh in the four blocks.
+- The daily scheduler's claimed saving is 3,618 t over ten years for 292,000 MWh moved: 0.012 t per MWh. The AEF
+  signal has almost nothing to work with, whichever accounting is used.</p>
+<h3>Storage state (H3)</h3>
+<p><strong>H3: Inconclusive.</strong> The 1-day MEF is 0.30 (0.21–0.40) in the lowest storage tercile and 0.32 (0.25–0.39) in the
+highest. The low-minus-high difference is −0.02 (−0.14 to 0.11). All terciles are well identified (F 26–40).</p>
+<h3>Checks</h3>
+<ul>
+<li><strong>Energy balance.</strong> Hydro + thermal + geothermal responses sum to 0.98–1.03 MWh per MWh at every identified horizon.</li>
+<li><strong>Geothermal placebo.</strong> Geothermal should not respond.<ul>
+<li>Its response is 0.02 MWh/MWh for horizons up to 4 h, and 0.04–0.06 from 12 h to 7 d.</li>
+<li>Its intervals all reach below 0.05, so the preregistered flag is not raised.</li>
+<li>From 12 h to 2 d, though, the intervals exclude zero (lower bounds 0.003–0.004). Some small geothermal
+flexibility, or a small exclusion failure, cannot be ruled out.</li>
+</ul>
+</li>
+<li><strong>Sensitivity of the level, not the shape.</strong> Each alternative ledger moves the levels and keeps the gradient:</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Ledger</th>
+<th>MEF(1 d)</th>
+<th>MEF(7 d)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Geothermal 0.05 t/MWh</td>
+<td>0.35</td>
+<td>0.78</td>
+</tr>
+<tr>
+<td>Geothermal 0.15 t/MWh</td>
+<td>0.28</td>
+<td>0.61</td>
+</tr>
+<tr>
+<td>Huntly Rankine 70% coal / 30% gas</td>
+<td>0.29</td>
+<td>0.65</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>The OLS alternative</strong> regresses on demand innovations, not weather. It gives much larger factors from 2 hours on
+  (1.0 at 1 day). Demand innovations are partly driven by the system itself, which is why the plan made the
+  weather-instrumented estimate primary.</li>
+<li><strong>Tiwai (descriptive only).</strong> One smelter demand-response episode meets the rule: a cut of at least 100 MW for at
+  least 7 days, 9–19 August 2024, a cut of 138 MW.<ul>
+<li>Thermal output was 29.9 GWh a day during it, against 31.5 in the month before. The AEF was 0.161 against 0.172.</li>
+<li>These episodes are called in dry, tight periods by design, so they cannot be read causally.</li>
+</ul>
+</li>
+</ul>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>It shows</strong> that, in this grid, the emissions consequence of extra demand builds up over days.<ul>
+<li>It is about 0.15 t/MWh within the hour and about 0.7 t/MWh within a week.</li>
+<li>These factors are 1.5–7 times the average emissions factor.</li>
+<li>The average factor hardly varies through the day, so it is a poor guide either to the carbon cost of extra load
+or to the value of shifting it.</li>
+</ul>
+</li>
+<li><strong>It does not settle</strong> whether daily shifting captures less than half of what it claims (H2). The method cannot see
+  clearly at night, where an AEF scheduler puts the load. It also cannot see the month-scale factor that H1 asked
+  about.</li>
+<li><strong>Exclusion is the main threat.</strong><ul>
+<li>Cold spells also coincide with gas-supply tightness in some winters (2021, 2024).</li>
+<li><strong>The composition shows it.</strong> At the half-hour horizon, the thermal response is coal up by 0.46 MWh and gas down
+by 0.63 MWh per MWh of demand. That looks more like cold-weather fuel switching than marginal dispatch.</li>
+<li>The short-horizon level (0.15) may therefore partly reflect what fuel is available in cold weather.</li>
+<li>By 7 days the response is almost all coal (0.71 coal, 0.02 gas), which matches the water-replacement mechanism.</li>
+<li>Year and month fixed effects absorb dry years and seasons, not within-month fuel shocks.</li>
+</ul>
+</li>
+<li><strong>The ledger.</strong> Heat rates are stated assumptions, and the calibration is annual. A uniform scale error cancels in
+  the gradient and in ratios, and the sensitivity ledgers bracket the fuel split and the geothermal factor.</li>
+<li><strong>Scope.</strong> National totals, 2015–2024. Results for a future grid with a different thermal fleet may differ.</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration.</strong> The plan was committed before any series was downloaded (df14d01).</li>
+<li><strong>D1 (<code>deviations.md</code>)</strong> was recorded before any emissions series was computed:<ul>
+<li>annual MfE calibration, because MBIE's quarterly tables are behind bot protection;</li>
+<li>the stated ledger assumptions;</li>
+<li>energy-weighted natural inflows;</li>
+<li>approximate population weights.</li>
+</ul>
+</li>
+<li><strong>Descoped in the plan:</strong> the Australian NEM placebo, replaced by the geothermal placebo.</li>
+<li><strong>Descriptive, not preregistered:</strong><ul>
+<li>the ±1-hour scheduler result;</li>
+<li>the identified-range gradient, MEF(7 d) − MEF(1 h);</li>
+<li>the coal/gas composition.</li>
+</ul>
+</li>
+<li><strong>Review.</strong> An independent adversarial review follows in <code>review/</code>.</li>
+</ul>
+<h2>Reproducing it</h2>
+<p><code>code/fetch.py</code>, then <code>code/series.py</code>, then <code>code/mef.py</code>, then <code>code/simulate.py</code>, then <code>code/checks.py</code>, then
+<code>code/figures.py</code>.</p>
+<ul>
+<li><strong>Raw inputs.</strong> Downloaded to <code>data/raw/</code> (checksums in <code>data/raw/SHA256SUMS</code>).</li>
+<li><strong>Results.</strong> Every number above is in <code>results/tables/</code>: <code>mef.json</code>, <code>mef_horizons.csv</code>, <code>simulation.json</code>,
+  <code>checks.json</code> and <code>ledger_calibration.csv</code>.</li>
+</ul>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/energy-nz-hydro-marginal-emissions-horizon/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>
