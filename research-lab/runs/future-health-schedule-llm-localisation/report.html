@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Schedule Localisation Benchmark</title>
+<meta name="description" content="Does a general open language model answer questions about New Zealand's funded medicines worse than matched questions about Australia's PBS, and does it invent eligibility criteria?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Future Health</div>
+  <h1>Does a general language model know which medicines New Zealand funds?</h1>
+  <p class="subtitle">1,049 yes/no questions about New Zealand&#x27;s Pharmaceutical Schedule and Australia&#x27;s PBS, built from the two countries&#x27; structured data and asked of one locally served open model, Nemotron 3 Nano Omni. The questions cover which tablets and capsules are listed, which need prior approval, and what the eligibility criteria say.</p>
+  <div class="meta">
+    <span>Report · 2026-10-18 · pre-review draft</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/future-health-schedule-llm-localisation/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/future-health-schedule-llm-localisation/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/future-health-schedule-llm-localisation/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: Inconclusive on the localisation gap; fabrication Supported.</strong></p>
+<ul>
+<li><strong>H1 (New Zealand answered worse than Australia): Inconclusive.</strong><ul>
+<li>The test uses the restriction family (b), as fixed in D5 before any output was read. Zero-shot accuracy is 67.7%
+for New Zealand and 63.5% for Australia: a gap of +4.2 points (95% CI −6.0 to +14.9).</li>
+<li>The preregistered pooled analysis of families (a) and (b) agrees: +3.0 points (−5.2 to +11.8).</li>
+<li>The point estimates favour New Zealand. No gap against it was detected.</li>
+</ul>
+</li>
+<li><strong>H2 (retrieval closes the gap): Inconclusive</strong>, because the plan only evaluates it when H1 is Supported.</li>
+<li><strong>H3 (the model affirms invented criteria for at least 20% of NZ items): Supported.</strong><ul>
+<li>Zero-shot, the model affirms 49 of 100 NZ criteria that are not in the chemical's Special Authority (95% CI
+39–59%).</li>
+<li>Among the 83 that a hand screen found clearly distinct from the chemical's own criteria, it affirms 32 (39%, 29–49%).</li>
+<li>For Australia the rate is 35% (26–45%), on items that were not screened.</li>
+</ul>
+</li>
+</ul>
+<p><strong>What else the data show:</strong></p>
+<ul>
+<li><strong>Zero-shot answers are dominated by a response bias, not knowledge.</strong><ul>
+<li><strong>Restriction questions (b).</strong> The model says "approval required" for 60% of NZ and 68% of AU presentations that
+need none. Accuracy is high on the "yes" items only.</li>
+<li><strong>Listing questions (a).</strong> It barely discriminates listed from unlisted presentations: for Australia it says
+"listed" to 75% of listed and 72% of unlisted ones. Family (a)'s answer key also failed its check (D5), so these
+numbers are descriptive.</li>
+</ul>
+</li>
+<li><strong>Retrieval almost solves the task in both countries.</strong> With three passages from the country's own document,
+  accuracy is 90–100% in every family. Fabrication of NZ criteria drops from 39% to 0% on the screened items.<ul>
+<li><strong>But the passages are rendered from the same structured data as the answer key.</strong> So this measures reading
+comprehension, not real-world document lookup.</li>
+</ul>
+</li>
+<li><strong>Rewording changes answers.</strong> Asking 100 items again in different words changes 23% of the answers.</li>
+<li><strong>The benchmark was harder to build than to run.</strong><ul>
+<li>The plan's 200-item answer-key check passed overall (2.0% wrong) but hid two weak cells.</li>
+<li>Family (a) negatives were 8% wrong.</li>
+<li>The New Zealand counterfactual criteria: a full screen found 17 of 100 restating one of the chemical's real
+criteria in other words. The model affirmed all 17.</li>
+</ul>
+</li>
+</ul>
+<h2>In plain terms</h2>
+<p>People increasingly ask chatbots whether a medicine is funded and who qualifies. We wanted to know whether a typical
+open AI model answers these questions worse for New Zealand than for Australia, whose scheme is larger and more
+written about.</p>
+<p>We built about a thousand yes/no questions from each country's official funding data and asked them of one model. The
+questions were of three kinds: is this tablet funded, does it need special approval, and is this one of the
+eligibility rules.</p>
+<p>We found no sign that New Zealand questions were answered worse. If anything they were answered slightly better, but
+not by a clear margin. The bigger problem was the same in both countries: the model mostly guessed. It tended to say
+"approval needed" whether or not it was. It could barely tell a funded tablet from an unfunded one.</p>
+<p>It also often agreed that a made-up eligibility rule was real. We took a genuine rule from a similar medicine and
+asked whether it applied. The model said yes about 4 times in 10 for New Zealand, and about 1 time in 3 for
+Australia.</p>
+<p>When we gave the model the relevant text from the funding document, it answered almost everything correctly. That text
+came straight from the same data we marked the answers against, so this is the easiest possible version of "looking
+it up".</p>
+<p>The practical lesson: for funding questions, a model like this should be made to read the actual Schedule entry, not
+answer from memory. This is one model, and it says nothing about clinical advice.</p>
+<h2>What was asked</h2>
+<p>General-purpose language models are increasingly asked practical questions about medicines, including whether a
+medicine is funded and what a patient must meet to get it. Funding rules are national. New Zealand's Pharmaceutical
+Schedule is far smaller than Australia's Pharmaceutical Benefits Scheme (PBS), and far less written about. A model
+trained mostly on international text might know Australia's rules better.</p>
+<p>The study asks three preregistered questions (<code>plan.md</code>) of one locally served open model, Nemotron 3 Nano Omni:</p>
+<ul>
+<li><strong>H1 (localisation gap):</strong> is zero-shot accuracy lower on New Zealand questions than on matched Australian ones?</li>
+<li><strong>H2 (retrieval closes it):</strong> if so, does giving the model three passages from the jurisdiction's own document
+  close at least half the gap?</li>
+<li><strong>H3 (fabrication):</strong> does the model affirm a plausible but absent eligibility criterion for at least 20% of New
+  Zealand counterfactual items?</li>
+</ul>
+<h2>What was already known</h2>
+<p>The novelty search (2026-10-18) found one close relative: a Korean benchmark of reimbursement eligibility for
+anticancer drugs (<em>JMIR</em> 2026), in which models filled information gaps rather than abstain. No benchmark of New
+Zealand or Australian funding rules was found.</p>
+<h2>How it was done</h2>
+<p><strong>Sources.</strong>
+- <strong>New Zealand.</strong> The Pharmac Schedule XML, Community section, October 2026 for the answers and November 2025 for the
+  stability rule.
+- <strong>Australia.</strong> The PBS API v3 (public key), General Schedule items, restrictions and prescribing texts for October
+  2026 (schedule 4751), and November 2025 (the API's earliest) for the stability rule.
+- Chemicals are matched across the two by normalised INN name; only the 201 chemicals present in both are used.
+- An item's answer must be the same in both editions of its jurisdiction.</p>
+<p><strong>Question families</strong> (<code>code/generate.py</code>), each a yes/no question with a key from the structured data:
+- <strong>(a) Listed presentation.</strong> "Is [chemical strength form] listed …?" Single-ingredient tablets and capsules only.
+  Negatives are presentations listed in the other jurisdiction but not in this one. NZ 80 yes / 80 no; AU 47 / 47.
+- <strong>(b) Restriction.</strong> "Does subsidy of [presentation] require a Special Authority / an authority prescription?"
+  NZ 95 yes / 100 no; AU 100 / 100.
+- <strong>(d) Criterion.</strong> "Under the criteria for [chemical], is '[sentence]' one of the criteria?" 100 true criteria
+  (the chemical's own) and 100 counterfactuals (a sentence from another chemical's restriction in the same ATC level-2
+  group, absent from this chemical's text by normalised string match) per jurisdiction.
+- 1,049 items in all, at most 3 per chemical per family.</p>
+<p><strong>The answer-key check.</strong> 200 random items were checked by hand against sources the generator did not parse: the
+Schedule PDF for New Zealand and the raw PBS API records for Australia (D3).
+- <strong>Round 1:</strong> 9 of 200 wrong (4.5%), but 7 of the 29 family (a) negatives. The plan's one allowed fix was applied
+  (D4) and the items regenerated.
+- <strong>Round 2</strong> (a fresh 200): 4 of 200 wrong (2.0%), passing the plan's 5% bar. But 2 of 24 family (a) negatives were
+  wrong, failing the stricter bar D4 set for that cell, and 2 of 31 counterfactuals restated one of the chemical's own
+  criteria in other words.
+- <strong>Consequences, fixed before any model output (D5):</strong>
+    - family (a) is descriptive only;
+    - H1 and H2 are decided on family (b), with the preregistered pooled (a)+(b) analysis reported alongside;
+    - all 100 NZ counterfactuals were screened by hand: 17 overlap the chemical's own criteria (12 equivalent, 5
+    overlapping). H3 is tested on all 100 and on the 83 distinct ones, and is decided only if both agree.</p>
+<p><strong>Model runs</strong> (<code>code/run.py</code>). Nemotron 3 Nano Omni on the lab's local vLLM server, temperature 0, JSON-schema
+answers (yes / no, plus "not stated" when abstention is offered), up to 16,384 tokens, under three conditions:
+- <strong>zero-shot:</strong> the question alone;
+- <strong>retrieval:</strong> the question with the top 3 passages from a BM25 index of the jurisdiction's own document (one
+  passage per chemical, rendering its listed presentations, restriction flag and criteria);
+- <strong>retrieval with abstention.</strong>
+- A paraphrase check re-asks 100 random items zero-shot in different words.</p>
+<p><strong>Analysis</strong> (<code>code/analysis.py</code>). Exact-match accuracy. The NZ − AU gap uses a chemical-cluster bootstrap (2,000
+resamples). Fabrication rates use Wilson intervals.</p>
+<h2>Results</h2>
+<h3>Accuracy (<code>results/tables/accuracy.csv</code>, <code>results/figures/F1_accuracy.png</code>)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>family</th>
+<th>NZ zero-shot</th>
+<th>AU zero-shot</th>
+<th>NZ retrieval</th>
+<th>AU retrieval</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(a) listed presentation*</td>
+<td>56.3% (160)</td>
+<td>51.1% (94)</td>
+<td>98.8%</td>
+<td>97.9%</td>
+</tr>
+<tr>
+<td>(b) restriction</td>
+<td>67.7% (195)</td>
+<td>63.5% (200)</td>
+<td>100%</td>
+<td>90.5%</td>
+</tr>
+<tr>
+<td>(d) criterion, true and absent</td>
+<td>65.0% (200)</td>
+<td>73.0% (200)</td>
+<td>94.5%</td>
+<td>93.5%</td>
+</tr>
+</tbody>
+</table></div>
+<p>*Descriptive only: family (a)'s key failed its check on negatives (D5).</p>
+<ul>
+<li><strong>Errors.</strong> Five of the 3,247 calls returned no answer after one retry. As preregistered, they are scored as
+  incorrect.</li>
+<li><strong>Retrieval misses.</strong> The Australian restriction misses (19 "yes" items answered "no") concentrate in oncology and
+  immunology drugs with long restriction texts. The cause was not investigated.</li>
+</ul>
+<figure><a href="results/figures/F1_accuracy.png"><img src="results/figures/F1_accuracy.png" alt="Accuracy by family and jurisdiction"></a><figcaption>Share of items answered correctly by Nemotron 3 Nano Omni (temperature 0, yes/no), New Zealand (blue) and Australia (orange), with Wilson 95% intervals. The dashed line is 50%, the score of a coin flip on a balanced family. *Family (a) is descriptive only: its answer key failed the check on negatives (D5).</figcaption></figure>
+<h3>H1 and H2: the localisation gap (<code>results/tables/primary.json</code>, <code>results/figures/F2_gap.png</code>)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>NZ − AU, zero-shot</th>
+<th>NZ − AU, retrieval</th>
+<th>H1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>(b) alone: confirmatory (170 chemicals)</strong></td>
+<td><strong>+4.2 points (−6.0 to +14.9)</strong></td>
+<td>+9.5 (+4.8 to +15.0)</td>
+<td><strong>Inconclusive</strong></td>
+</tr>
+<tr>
+<td>(a)+(b) pooled: preregistered (184 chemicals)</td>
+<td>+3.0 (−5.2 to +11.8)</td>
+<td>+6.6 (+3.0 to +10.7)</td>
+<td>Inconclusive</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>H1.</strong> Neither interval excludes zero, so H1 is Inconclusive under both analyses.<ul>
+<li>Its Supported condition, an upper bound below 0, is far from met: the data lean the other way.</li>
+<li>H1 could not be Refuted either, because the lower bounds are below zero.</li>
+</ul>
+</li>
+<li><strong>H2</strong> is evaluated only if H1 is Supported, so it is Inconclusive.</li>
+<li><strong>With retrieval, New Zealand comes out ahead.</strong> NZ restriction answers are perfect, and the Australian ones miss 19
+  approval-required items.</li>
+</ul>
+<figure><a href="results/figures/F2_gap.png"><img src="results/figures/F2_gap.png" alt="The localisation gap"></a><figcaption>New Zealand minus Australian accuracy, zero-shot (black) and with the top three passages retrieved from the jurisdiction&#x27;s own document (green). Intervals: chemical-cluster bootstrap, 2,000 resamples. The family (b) row carries the verdict (D5); the pooled row is the preregistered form, flagged because family (a)&#x27;s key failed.</figcaption></figure>
+<h3>H3: affirming criteria that are not there (<code>results/figures/F3_fabrication.png</code>)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>criteria shown</th>
+<th>zero-shot "yes"</th>
+<th>with retrieval</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NZ absent, all 100 (preregistered)</strong></td>
+<td><strong>49% (39–59%)</strong></td>
+<td>11%</td>
+</tr>
+<tr>
+<td><strong>NZ absent, screened 83 (D5)</strong></td>
+<td><strong>39% (29–49%)</strong></td>
+<td>0%</td>
+</tr>
+<tr>
+<td>NZ absent, the 17 that overlap own criteria</td>
+<td>17 of 17</td>
+<td>11 of 17</td>
+</tr>
+<tr>
+<td>AU absent, unscreened 100</td>
+<td>35% (26–45%)</td>
+<td>6%</td>
+</tr>
+<tr>
+<td>NZ true criteria (controls)</td>
+<td>80%</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>AU true criteria (controls)</td>
+<td>82%</td>
+<td>94%</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>H3 is Supported.</strong> Both Wilson lower bounds are above 20%: 39% on all items and 29% on the screened ones.</li>
+<li><strong>The control rows show the source.</strong> Affirming true criteria 80% of the time and absent ones 39–49% of the time
+  is a yes-leaning model with some, but limited, knowledge of the rules.</li>
+<li><strong>The screen worked as intended.</strong> Every one of the 17 overlapping NZ items was affirmed. Without the screen, the
+  fabrication rate would be overstated by about 10 points.</li>
+<li><strong>The AU counterfactuals were not screened.</strong> If they overlap as often as the NZ ones did, the AU rate is similarly
+  overstated.</li>
+</ul>
+<figure><a href="results/figures/F3_fabrication.png"><img src="results/figures/F3_fabrication.png" alt="Affirming absent criteria"></a><figcaption>Share of criterion items the model affirms. Absent criteria are sentences taken from another chemical&#x27;s restriction in the same therapeutic group; affirming one is a fabrication. The screened NZ row drops 17 items that overlap the chemical&#x27;s own criteria (D5). True criteria are controls: affirming them is correct. Circles: zero-shot; squares: with retrieval. Wilson 95% intervals.</figcaption></figure>
+<h3>Response bias, abstention and wording</h3>
+<p><strong>Yes-rates, zero-shot.</strong> A model with no knowledge would show the same rate in both columns.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>yes when truly "yes"</th>
+<th>yes when truly "no"</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(a) NZ</td>
+<td>45%</td>
+<td>33%</td>
+</tr>
+<tr>
+<td>(a) AU</td>
+<td>75%</td>
+<td>72%</td>
+</tr>
+<tr>
+<td>(b) NZ</td>
+<td>97%</td>
+<td>60%</td>
+</tr>
+<tr>
+<td>(b) AU</td>
+<td>95%</td>
+<td>68%</td>
+</tr>
+<tr>
+<td>(d) NZ</td>
+<td>80%</td>
+<td>49%</td>
+</tr>
+<tr>
+<td>(d) AU</td>
+<td>82%</td>
+<td>35%</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Accuracy comparisons between countries mix knowledge and bias.</strong><ul>
+<li>In family (a), the model leans to "not listed" for New Zealand and to "listed" for Australia.</li>
+<li>So family (a)'s NZ advantage reflects how the questions are balanced, not knowledge.</li>
+</ul>
+</li>
+<li><strong>Abstention.</strong> When "not stated" is allowed alongside retrieval, the model uses it mostly where the passages
+  genuinely lack the answer:<ul>
+<li>79–98% of family (a) negatives;</li>
+<li>69–88% of family (d) negatives.</li>
+</ul>
+</li>
+</ul>
+<p>When it does answer, it is right 97% (NZ) and 98% (AU) of the time.
+- <strong>Paraphrase.</strong> Re-asking 100 random items zero-shot in different words gives the same answer for 77.</p>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>One model.</strong> These results describe Nemotron 3 Nano Omni at temperature 0 with fixed prompts, not language models
+  in general. Larger or newer models may know these rules better, or show a gap this one does not.</li>
+<li><strong>No New Zealand penalty was detected, but none was ruled out.</strong> The confirmatory interval runs from 6 points worse
+  for New Zealand to 15 points better.</li>
+<li><strong>Accuracy mixes knowledge with response bias.</strong> The model's "yes" habit sets much of each accuracy figure. A
+  benchmark with a different yes/no balance would give different accuracies with the same model.</li>
+<li><strong>The answer keys are the structured data.</strong><ul>
+<li>The Schedule XML and the PBS API were checked against the PDF and the raw API records.</li>
+<li>Family (a) failed that check, and the NZ counterfactuals needed a full hand screen. The AU counterfactuals were
+not screened.</li>
+</ul>
+</li>
+<li><strong>Retrieval here is the best case.</strong> The passages are rendered from the same data as the key, and BM25 found the
+  right chemical most of the time. A real deployment that retrieves from the published PDF or website would do worse.</li>
+<li><strong>Training staleness</strong> applies to both countries. The stability rule removes listing changes within the 11 months
+  before October 2026, not older ones.</li>
+<li><strong>Scope.</strong><ul>
+<li>Single-ingredient tablets and capsules for families (a) and (b).</li>
+<li>The NZ Community section and the PBS General Schedule.</li>
+<li>The 201 chemicals funded in both countries.</li>
+</ul>
+</li>
+<li><strong>No clinical advice</strong> was evaluated. These are facts about funding rules.</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration.</strong> The plan (<code>plan.md</code>) was committed at 6bd3e3c, before any item was generated or model queried.</li>
+<li><strong>D1:</strong> generator details fixed before generation. These include the November 2025 stability edition (the PBS API's
+  earliest), tablets and capsules only, and the AU authority definition (benefit A or S).</li>
+<li><strong>D2:</strong> family (a) balanced within each jurisdiction.</li>
+<li><strong>D3:</strong> the evidence used for the AU half of the key check is the raw API records, because the PBS website is
+  rendered by JavaScript.</li>
+<li><strong>D4:</strong> the round-1 key check found generator bugs (units, separators, release labels, wafers, ion-only names,
+  generic counterfactuals). The plan's one fix was applied, and a fresh 200 was drawn.</li>
+<li><strong>D5:</strong> round 2 passed overall but failed the D4 bar for family (a) negatives.<ul>
+<li>Family (a) became descriptive, and H1 and H2 were decided on family (b).</li>
+<li>The NZ counterfactual screen was added for H3.</li>
+<li>The model runs started after D5 was committed (17:56). The screen (0cc4cba), the analysis code implementing D5
+(b405223) and the figure code (6f0063a) were committed while the runs were in progress, before any output was
+opened.</li>
+</ul>
+</li>
+<li><strong>Errors.</strong> Five calls failed after a retry and are scored as incorrect, as preregistered.</li>
+</ul>
+<h2>Reproducing it</h2>
+<p><code>code/fetch.py</code> (needs the public PBS key in <code>PBS_KEY</code>), <code>code/generate.py</code>, <code>code/validate.py 2</code>, <code>code/run.py</code>,
+<code>code/analysis.py</code>, <code>code/figures.py</code>.</p>
+<ul>
+<li><strong>The answer-key checks</strong> are in <code>results/tables/key_validation_round{1,2}.{csv,json}</code>, and the NZ counterfactual
+  screen in <code>results/tables/nz_counterfactual_screen.csv</code>.</li>
+<li><strong>The model</strong> is served by vLLM on localhost:8000 as <code>nemotron_3_nano_omni</code>.</li>
+<li><strong>Results</strong> are in <code>results/tables/primary.json</code> and <code>results/tables/accuracy.csv</code>. The raw answers are in
+  <code>data/runs.jsonl</code>.</li>
+</ul>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/future-health-schedule-llm-localisation/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

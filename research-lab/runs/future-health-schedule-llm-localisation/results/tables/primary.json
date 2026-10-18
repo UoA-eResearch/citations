@@ -1,0 +1,186 @@
+{
+ "items": 1049,
+ "calls": 3247,
+ "errors": 5,
+ "H1": {
+  "families": "b",
+  "chemicals": 170,
+  "nz_n": 195,
+  "au_n": 200,
+  "nz_acc": 0.676923076923077,
+  "au_acc": 0.635,
+  "gap": 0.04192307692307695,
+  "ci": [
+   -0.06038108506701377,
+   0.1494510029321605
+  ],
+  "verdict": "Inconclusive"
+ },
+ "H2": {
+  "gap_retrieval": 0.09499999999999997,
+  "gap_retrieval_ci": [
+   0.048387096774193505,
+   0.14973930481283423
+  ],
+  "closure": -1.2660550458715574,
+  "closure_ci": [
+   -19.999999999999858,
+   18.269602272727212
+  ],
+  "verdict": "Inconclusive (H1 not Supported; no gap to close)"
+ },
+ "H1_pooled_ab": {
+  "families": "a+b",
+  "chemicals": 184,
+  "nz_n": 355,
+  "au_n": 294,
+  "nz_acc": 0.6253521126760564,
+  "au_acc": 0.5952380952380952,
+  "gap": 0.03011401743796116,
+  "ci": [
+   -0.051574214420526704,
+   0.11809695808081346
+  ],
+  "verdict": "Inconclusive"
+ },
+ "H2_pooled_ab": {
+  "gap_retrieval": 0.06579476861167,
+  "gap_retrieval_ci": [
+   0.029877000616296483,
+   0.10708315488053335
+  ],
+  "closure": -1.1848552338530016,
+  "closure_ci": [
+   -16.9825943705646,
+   21.19968650250767
+  ],
+  "verdict": "Inconclusive (H1 not Supported; no gap to close)"
+ },
+ "H1_agrees_with_pooled": true,
+ "family_a_descriptive": {
+  "key_error_negatives": {
+   "n": 24,
+   "errors": 2,
+   "rate": 0.083
+  },
+  "key_error_positives": {
+   "n": 26,
+   "errors": 0,
+   "rate": 0.0
+  },
+  "accuracy": {
+   "abstain|AU": 0.489,
+   "abstain|NZ": 0.594,
+   "paraphrase|AU": 0.333,
+   "paraphrase|NZ": 0.778,
+   "retrieval|AU": 0.979,
+   "retrieval|NZ": 0.988,
+   "zero|AU": 0.511,
+   "zero|NZ": 0.562
+  }
+ },
+ "fabrication_NZ": {
+  "n": 100,
+  "affirmed": 49,
+  "rate": 0.49,
+  "ci": [
+   0.3942199885796587,
+   0.5865198813957212
+  ]
+ },
+ "fabrication_AU": {
+  "n": 100,
+  "affirmed": 35,
+  "rate": 0.35,
+  "ci": [
+   0.2636424818146032,
+   0.4474555678160957
+  ]
+ },
+ "fabrication_NZ_screened": {
+  "n": 83,
+  "affirmed": 32,
+  "rate": 0.3855421686746988,
+  "ci": [
+   0.288111571233246,
+   0.49309892148807993
+  ]
+ },
+ "fabrication_NZ_overlapping": {
+  "n": 17,
+  "affirmed": 17
+ },
+ "H3": {
+  "all": {
+   "n": 100,
+   "affirmed": 49,
+   "rate": 0.49,
+   "ci": [
+    0.3942199885796587,
+    0.5865198813957212
+   ],
+   "verdict": "Supported"
+  },
+  "screened": {
+   "n": 83,
+   "affirmed": 32,
+   "rate": 0.3855421686746988,
+   "ci": [
+    0.288111571233246,
+    0.49309892148807993
+   ],
+   "verdict": "Supported"
+  },
+  "verdict": "Supported"
+ },
+ "true_criterion_accuracy": {
+  "abstain|AU": 0.93,
+  "abstain|NZ": 0.99,
+  "paraphrase|AU": 0.571,
+  "paraphrase|NZ": 0.667,
+  "retrieval|AU": 0.94,
+  "retrieval|NZ": 1.0,
+  "zero|AU": 0.82,
+  "zero|NZ": 0.8
+ },
+ "abstention": {
+  "AU": {
+   "rate": 0.3299595141700405,
+   "acc_answered": 0.9788519637462235
+  },
+  "NZ": {
+   "rate": 0.24144144144144145,
+   "acc_answered": 0.9691211401425178
+  }
+ },
+ "paraphrase_agreement": {
+  "n": 100,
+  "agree": 0.77
+ },
+ "accuracy_by_cell": {
+  "abstain|AU|a": 0.489,
+  "abstain|AU|b": 0.895,
+  "abstain|AU|d": 0.495,
+  "abstain|NZ|a": 0.594,
+  "abstain|NZ|b": 1.0,
+  "abstain|NZ|d": 0.59,
+  "paraphrase|AU|a": 0.333,
+  "paraphrase|AU|b": 0.688,
+  "paraphrase|AU|d": 0.421,
+  "paraphrase|NZ|a": 0.778,
+  "paraphrase|NZ|b": 0.667,
+  "paraphrase|NZ|d": 0.565,
+  "retrieval|AU|a": 0.979,
+  "retrieval|AU|b": 0.905,
+  "retrieval|AU|d": 0.935,
+  "retrieval|NZ|a": 0.988,
+  "retrieval|NZ|b": 1.0,
+  "retrieval|NZ|d": 0.945,
+  "zero|AU|a": 0.511,
+  "zero|AU|b": 0.635,
+  "zero|AU|d": 0.73,
+  "zero|NZ|a": 0.562,
+  "zero|NZ|b": 0.677,
+  "zero|NZ|d": 0.65
+ }
+}
