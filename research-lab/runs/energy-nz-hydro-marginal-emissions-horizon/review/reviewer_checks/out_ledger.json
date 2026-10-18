@@ -1,0 +1,902 @@
+{
+ "fuel_factors_kg_per_GJ": {
+  "gas": 54.14,
+  "coal": 92.6046511627907,
+  "diesel": 69.27083333333334
+ },
+ "implied_t_per_MWh_by_unit": {
+  "huntly_1_4": 0.954,
+  "huntly_e3p": 0.39,
+  "huntly_p40": 0.52,
+  "otahuhu_b": 0.379,
+  "southdown": 0.433,
+  "stratford": 0.433,
+  "McKee": 0.514,
+  "junctionroad": 0.514,
+  "te_rapa": 0.325,
+  "kapuni": 0.325,
+  "whareroa": 0.325,
+  "whirinaki": 0.762,
+  "glenbrook_kilns": 0.0
+ },
+ "thermal_GWh_by_unit_year": {
+  "2015": {
+   "McKee": 211.3,
+   "glenbrook_kilns": 585.4,
+   "huntly_1_4": 1271.5,
+   "huntly_e3p": 2747.2,
+   "huntly_p40": 53.4,
+   "kapuni": 135.3,
+   "otahuhu_b": 1318.0,
+   "southdown": 315.3,
+   "stratford": 674.1,
+   "te_rapa": 202.8,
+   "whareroa": 125.9,
+   "whirinaki": 0.8
+  },
+  "2016": {
+   "McKee": 225.8,
+   "glenbrook_kilns": 560.8,
+   "huntly_1_4": 830.7,
+   "huntly_e3p": 2746.5,
+   "huntly_p40": 49.4,
+   "kapuni": 119.3,
+   "southdown": 0.0,
+   "stratford": 1046.0,
+   "te_rapa": 216.5,
+   "whareroa": 102.7,
+   "whirinaki": 1.5
+  },
+  "2017": {
+   "McKee": 347.8,
+   "glenbrook_kilns": 595.4,
+   "huntly_1_4": 904.0,
+   "huntly_e3p": 2991.6,
+   "huntly_p40": 83.9,
+   "kapuni": 129.8,
+   "stratford": 1772.8,
+   "te_rapa": 251.3,
+   "whareroa": 149.0,
+   "whirinaki": 3.2
+  },
+  "2018": {
+   "McKee": 242.4,
+   "glenbrook_kilns": 567.8,
+   "huntly_1_4": 1172.1,
+   "huntly_e3p": 2344.6,
+   "huntly_p40": 71.9,
+   "kapuni": 111.1,
+   "stratford": 1493.6,
+   "te_rapa": 203.5,
+   "whareroa": 117.3,
+   "whirinaki": 6.4,
+   "southdown": 0.3
+  },
+  "2019": {
+   "McKee": 454.3,
+   "glenbrook_kilns": 649.7,
+   "huntly_1_4": 1611.7,
+   "huntly_e3p": 2656.8,
+   "huntly_p40": 59.6,
+   "kapuni": 117.0,
+   "southdown": 1.0,
+   "stratford": 1214.0,
+   "te_rapa": 194.6,
+   "whareroa": 118.0,
+   "whirinaki": 2.7
+  },
+  "2020": {
+   "McKee": 397.8,
+   "glenbrook_kilns": 586.4,
+   "huntly_1_4": 1733.9,
+   "huntly_e3p": 2539.6,
+   "huntly_p40": 93.6,
+   "junctionroad": 228.9,
+   "kapuni": 119.7,
+   "southdown": 1.2,
+   "stratford": 1199.1,
+   "te_rapa": 201.2,
+   "whareroa": 177.6,
+   "whirinaki": 4.4
+  },
+  "2021": {
+   "McKee": 112.5,
+   "glenbrook_kilns": 646.7,
+   "huntly_1_4": 2541.3,
+   "huntly_e3p": 2274.9,
+   "huntly_p40": 94.8,
+   "junctionroad": 302.3,
+   "kapuni": 105.0,
+   "southdown": 1.0,
+   "stratford": 865.1,
+   "te_rapa": 199.9,
+   "whareroa": 187.7,
+   "whirinaki": 17.9
+  },
+  "2022": {
+   "McKee": 221.5,
+   "glenbrook_kilns": 584.2,
+   "huntly_1_4": 955.2,
+   "huntly_e3p": 1940.4,
+   "huntly_p40": 75.7,
+   "junctionroad": 242.8,
+   "kapuni": 78.5,
+   "southdown": 0.3,
+   "stratford": 775.2,
+   "te_rapa": 153.3,
+   "whareroa": 159.9,
+   "whirinaki": 3.3
+  },
+  "2023": {
+   "McKee": 191.8,
+   "glenbrook_kilns": 526.7,
+   "huntly_1_4": 1563.8,
+   "huntly_e3p": 1019.6,
+   "huntly_p40": 90.5,
+   "junctionroad": 224.2,
+   "kapuni": 67.4,
+   "southdown": 0.0,
+   "stratford": 952.2,
+   "te_rapa": 57.9,
+   "whareroa": 108.9,
+   "whirinaki": 0.9
+  },
+  "2024": {
+   "McKee": 129.8,
+   "glenbrook_kilns": 579.5,
+   "huntly_1_4": 1876.1,
+   "huntly_e3p": 1615.9,
+   "huntly_p40": 50.1,
+   "junctionroad": 273.3,
+   "kapuni": 56.4,
+   "stratford": 1290.7,
+   "te_rapa": 0.0,
+   "whareroa": 152.4,
+   "whirinaki": 19.1
+  }
+ },
+ "calibration_compare": [
+  {
+   "ledger": "E",
+   "year": 2015,
+   "scale_mine": 1.099241,
+   "scale_theirs": 1.099241,
+   "target_mine_t": 4571370.798824,
+   "target_theirs_t": 4571370.798824,
+   "series_E_t": 4571370.798824,
+   "series_E_over_D_kg_per_kWh": 0.112041,
+   "mfe": 0.112041,
+   "fossil_raw_mine_t": 3499501.944027,
+   "raw_t_theirs": 4224076.649844,
+   "raw_mine_incl_geo": 4224076.649844
+  },
+  {
+   "ledger": "E_geo05",
+   "year": 2015,
+   "scale_mine": 1.202766,
+   "scale_theirs": 1.202766,
+   "target_mine_t": 4571370.798824,
+   "target_theirs_t": 4571370.798824,
+   "series_E_t": 4571370.798824,
+   "series_E_over_D_kg_per_kWh": 0.112041,
+   "mfe": 0.112041,
+   "fossil_raw_mine_t": 3499501.944027,
+   "raw_t_theirs": 3861789.296936,
+   "raw_mine_incl_geo": 3861789.296936
+  },
+  {
+   "ledger": "E_geo15",
+   "year": 2015,
+   "scale_mine": 0.995716,
+   "scale_theirs": 0.995716,
+   "target_mine_t": 4571370.798824,
+   "target_theirs_t": 4571370.798824,
+   "series_E_t": 4571370.798824,
+   "series_E_over_D_kg_per_kWh": 0.112041,
+   "mfe": 0.112041,
+   "fossil_raw_mine_t": 3499501.944027,
+   "raw_t_theirs": 4586364.002752,
+   "raw_mine_incl_geo": 4586364.002752
+  },
+  {
+   "ledger": "E_rk70",
+   "year": 2015,
+   "scale_mine": 1.148853,
+   "scale_theirs": 1.148853,
+   "target_mine_t": 4571370.798824,
+   "target_theirs_t": 4571370.798824,
+   "series_E_t": 4571370.798824,
+   "series_E_over_D_kg_per_kWh": 0.112041,
+   "mfe": 0.112041,
+   "fossil_raw_mine_t": 3348380.138756,
+   "raw_t_theirs": 4072954.844572,
+   "raw_mine_incl_geo": 4072954.844572
+  },
+  {
+   "ledger": "E",
+   "year": 2016,
+   "scale_mine": 1.073938,
+   "scale_theirs": 1.073938,
+   "target_mine_t": 3521382.79986,
+   "target_theirs_t": 3521382.79986,
+   "series_E_t": 3521382.79986,
+   "series_E_over_D_kg_per_kWh": 0.087317,
+   "mfe": 0.087316,
+   "fossil_raw_mine_t": 2601399.80254,
+   "raw_t_theirs": 3329040.926736,
+   "raw_mine_incl_geo": 3329040.926736
+  },
+  {
+   "ledger": "E_geo05",
+   "year": 2016,
+   "scale_mine": 1.213794,
+   "scale_theirs": 1.213794,
+   "target_mine_t": 3521382.79986,
+   "target_theirs_t": 3521382.79986,
+   "series_E_t": 3521382.79986,
+   "series_E_over_D_kg_per_kWh": 0.087317,
+   "mfe": 0.087316,
+   "fossil_raw_mine_t": 2601399.80254,
+   "raw_t_theirs": 2965220.364638,
+   "raw_mine_incl_geo": 2965220.364638
+  },
+  {
+   "ledger": "E_geo15",
+   "year": 2016,
+   "scale_mine": 0.934082,
+   "scale_theirs": 0.934082,
+   "target_mine_t": 3521382.79986,
+   "target_theirs_t": 3521382.79986,
+   "series_E_t": 3521382.79986,
+   "series_E_over_D_kg_per_kWh": 0.087317,
+   "mfe": 0.087316,
+   "fossil_raw_mine_t": 2601399.80254,
+   "raw_t_theirs": 3692861.488833,
+   "raw_mine_incl_geo": 3692861.488833
+  },
+  {
+   "ledger": "E_rk70",
+   "year": 2016,
+   "scale_mine": 1.116307,
+   "scale_theirs": 1.116307,
+   "target_mine_t": 3521382.79986,
+   "target_theirs_t": 3521382.79986,
+   "series_E_t": 3521382.79986,
+   "series_E_over_D_kg_per_kWh": 0.087316,
+   "mfe": 0.087316,
+   "fossil_raw_mine_t": 2502665.143352,
+   "raw_t_theirs": 3230306.267548,
+   "raw_mine_incl_geo": 3230306.267548
+  },
+  {
+   "ledger": "E",
+   "year": 2017,
+   "scale_mine": 1.035666,
+   "scale_theirs": 1.035666,
+   "target_mine_t": 4042202.69212,
+   "target_theirs_t": 4042202.69212,
+   "series_E_t": 4042202.69212,
+   "series_E_over_D_kg_per_kWh": 0.099218,
+   "mfe": 0.099218,
+   "fossil_raw_mine_t": 3193374.80948,
+   "raw_t_theirs": 3928309.032923,
+   "raw_mine_incl_geo": 3928309.032923
+  },
+  {
+   "ledger": "E_geo05",
+   "year": 2017,
+   "scale_mine": 1.150737,
+   "scale_theirs": 1.150737,
+   "target_mine_t": 4042202.69212,
+   "target_theirs_t": 4042202.69212,
+   "series_E_t": 4042202.69212,
+   "series_E_over_D_kg_per_kWh": 0.099218,
+   "mfe": 0.099218,
+   "fossil_raw_mine_t": 3193374.80948,
+   "raw_t_theirs": 3560841.921202,
+   "raw_mine_incl_geo": 3560841.921202
+  },
+  {
+   "ledger": "E_geo15",
+   "year": 2017,
+   "scale_mine": 0.920594,
+   "scale_theirs": 0.920594,
+   "target_mine_t": 4042202.69212,
+   "target_theirs_t": 4042202.69212,
+   "series_E_t": 4042202.69212,
+   "series_E_over_D_kg_per_kWh": 0.099218,
+   "mfe": 0.099218,
+   "fossil_raw_mine_t": 3193374.80948,
+   "raw_t_theirs": 4295776.144645,
+   "raw_mine_incl_geo": 4295776.144645
+  },
+  {
+   "ledger": "E_rk70",
+   "year": 2017,
+   "scale_mine": 1.071726,
+   "scale_theirs": 1.071726,
+   "target_mine_t": 4042202.69212,
+   "target_theirs_t": 4042202.69212,
+   "series_E_t": 4042202.69212,
+   "series_E_over_D_kg_per_kWh": 0.099218,
+   "mfe": 0.099218,
+   "fossil_raw_mine_t": 3085927.877455,
+   "raw_t_theirs": 3820862.100898,
+   "raw_mine_incl_geo": 3820862.100898
+  },
+  {
+   "ledger": "E",
+   "year": 2018,
+   "scale_mine": 1.043283,
+   "scale_theirs": 1.043283,
+   "target_mine_t": 3834160.963828,
+   "target_theirs_t": 3834160.963828,
+   "series_E_t": 3834160.963828,
+   "series_E_over_D_kg_per_kWh": 0.094205,
+   "mfe": 0.094205,
+   "fossil_raw_mine_t": 2986221.716515,
+   "raw_t_theirs": 3704906.894726,
+   "raw_mine_incl_geo": 3704906.894726
+  },
+  {
+   "ledger": "E_geo05",
+   "year": 2018,
+   "scale_mine": 1.163617,
+   "scale_theirs": 1.163617,
+   "target_mine_t": 3834160.963828,
+   "target_theirs_t": 3834160.963828,
+   "series_E_t": 3834160.963828,
+   "series_E_over_D_kg_per_kWh": 0.094205,
+   "mfe": 0.094205,
+   "fossil_raw_mine_t": 2986221.716515,
+   "raw_t_theirs": 3345564.30562,
+   "raw_mine_incl_geo": 3345564.30562
+  },
+  {
+   "ledger": "E_geo15",
+   "year": 2018,
+   "scale_mine": 0.92295,
+   "scale_theirs": 0.92295,
+   "target_mine_t": 3834160.963828,
+   "target_theirs_t": 3834160.963828,
+   "series_E_t": 3834160.963828,
+   "series_E_over_D_kg_per_kWh": 0.094205,
+   "mfe": 0.094205,
+   "fossil_raw_mine_t": 2986221.716515,
+   "raw_t_theirs": 4064249.483831,
+   "raw_mine_incl_geo": 4064249.483831
+  },
+  {
+   "ledger": "E_rk70",
+   "year": 2018,
+   "scale_mine": 1.094336,
+   "scale_theirs": 1.094336,
+   "target_mine_t": 3834160.963828,
+   "target_theirs_t": 3834160.963828,
+   "series_E_t": 3834160.963828,
+   "series_E_over_D_kg_per_kWh": 0.094205,
+   "mfe": 0.094205,
+   "fossil_raw_mine_t": 2846910.33155,
+   "raw_t_theirs": 3565595.509761,
+   "raw_mine_incl_geo": 3565595.509761
+  },
+  {
+   "ledger": "E",
+   "year": 2019,
+   "scale_mine": 1.047998,
+   "scale_theirs": 1.047998,
+   "target_mine_t": 4394625.354437,
+   "target_theirs_t": 4394625.354437,
+   "series_E_t": 4394625.354437,
+   "series_E_over_D_kg_per_kWh": 0.107121,
+   "mfe": 0.107121,
+   "fossil_raw_mine_t": 3505407.621334,
+   "raw_t_theirs": 4226373.603435,
+   "raw_mine_incl_geo": 4226373.603435
+  },
+  {
+   "ledger": "E_geo05",
+   "year": 2019,
+   "scale_mine": 1.150834,
+   "scale_theirs": 1.150834,
+   "target_mine_t": 4394625.354437,
+   "target_theirs_t": 4394625.354437,
+   "series_E_t": 4394625.354437,
+   "series_E_over_D_kg_per_kWh": 0.107121,
+   "mfe": 0.107121,
+   "fossil_raw_mine_t": 3505407.621334,
+   "raw_t_theirs": 3865890.612384,
+   "raw_mine_incl_geo": 3865890.612384
+  },
+  {
+   "ledger": "E_geo15",
+   "year": 2019,
+   "scale_mine": 0.945162,
+   "scale_theirs": 0.945162,
+   "target_mine_t": 4394625.354437,
+   "target_theirs_t": 4394625.354437,
+   "series_E_t": 4394625.354437,
+   "series_E_over_D_kg_per_kWh": 0.107121,
+   "mfe": 0.107121,
+   "fossil_raw_mine_t": 3505407.621334,
+   "raw_t_theirs": 4586856.594486,
+   "raw_mine_incl_geo": 4586856.594486
+  },
+  {
+   "ledger": "E_rk70",
+   "year": 2019,
+   "scale_mine": 1.108577,
+   "scale_theirs": 1.108577,
+   "target_mine_t": 4394625.354437,
+   "target_theirs_t": 4394625.354437,
+   "series_E_t": 4394625.354437,
+   "series_E_over_D_kg_per_kWh": 0.107121,
+   "mfe": 0.107121,
+   "fossil_raw_mine_t": 3313851.733369,
+   "raw_t_theirs": 4034817.715471,
+   "raw_mine_incl_geo": 4034817.715471
+  },
+  {
+   "ledger": "E",
+   "year": 2020,
+   "scale_mine": 1.095498,
+   "scale_theirs": 1.095498,
+   "target_mine_t": 4808557.767916,
+   "target_theirs_t": 4808557.767916,
+   "series_E_t": 4808557.767916,
+   "series_E_over_D_kg_per_kWh": 0.118376,
+   "mfe": 0.118376,
+   "fossil_raw_mine_t": 3699862.9128,
+   "raw_t_theirs": 4455227.1006,
+   "raw_mine_incl_geo": 4455227.1006
+  },
+  {
+   "ledger": "E_geo05",
+   "year": 2020,
+   "scale_mine": 1.197578,
+   "scale_theirs": 1.197578,
+   "target_mine_t": 4808557.767916,
+   "target_theirs_t": 4808557.767916,
+   "series_E_t": 4808557.767916,
+   "series_E_over_D_kg_per_kWh": 0.118376,
+   "mfe": 0.118376,
+   "fossil_raw_mine_t": 3699862.9128,
+   "raw_t_theirs": 4077545.0067,
+   "raw_mine_incl_geo": 4077545.0067
+  },
+  {
+   "ledger": "E_geo15",
+   "year": 2020,
+   "scale_mine": 0.993418,
+   "scale_theirs": 0.993418,
+   "target_mine_t": 4808557.767916,
+   "target_theirs_t": 4808557.767916,
+   "series_E_t": 4808557.767916,
+   "series_E_over_D_kg_per_kWh": 0.118376,
+   "mfe": 0.118376,
+   "fossil_raw_mine_t": 3699862.9128,
+   "raw_t_theirs": 4832909.1945,
+   "raw_mine_incl_geo": 4832909.1945
+  },
+  {
+   "ledger": "E_rk70",
+   "year": 2020,
+   "scale_mine": 1.160116,
+   "scale_theirs": 1.160116,
+   "target_mine_t": 4808557.767916,
+   "target_theirs_t": 4808557.767916,
+   "series_E_t": 4808557.767916,
+   "series_E_over_D_kg_per_kWh": 0.118376,
+   "mfe": 0.118376,
+   "fossil_raw_mine_t": 3493781.677686,
+   "raw_t_theirs": 4249145.865486,
+   "raw_mine_incl_geo": 4249145.865486
+  },
+  {
+   "ledger": "E",
+   "year": 2021,
+   "scale_mine": 1.012642,
+   "scale_theirs": 1.012642,
+   "target_mine_t": 4930563.932088,
+   "target_theirs_t": 4930563.932088,
+   "series_E_t": 4930563.932088,
+   "series_E_over_D_kg_per_kWh": 0.120322,
+   "mfe": 0.120322,
+   "fossil_raw_mine_t": 4122164.945838,
+   "raw_t_theirs": 4878449.493138,
+   "raw_mine_incl_geo": 4878449.493138
+  },
+  {
+   "ledger": "E_geo05",
+   "year": 2021,
+   "scale_mine": 1.104376,
+   "scale_theirs": 1.104376,
+   "target_mine_t": 4930563.932088,
+   "target_theirs_t": 4930563.932088,
+   "series_E_t": 4930563.932088,
+   "series_E_over_D_kg_per_kWh": 0.120322,
+   "mfe": 0.120322,
+   "fossil_raw_mine_t": 4122164.945838,
+   "raw_t_theirs": 4500307.219488,
+   "raw_mine_incl_geo": 4500307.219488
+  },
+  {
+   "ledger": "E_geo15",
+   "year": 2021,
+   "scale_mine": 0.920909,
+   "scale_theirs": 0.920909,
+   "target_mine_t": 4930563.932088,
+   "target_theirs_t": 4930563.932088,
+   "series_E_t": 4930563.932088,
+   "series_E_over_D_kg_per_kWh": 0.120322,
+   "mfe": 0.120322,
+   "fossil_raw_mine_t": 4122164.945838,
+   "raw_t_theirs": 5256591.766788,
+   "raw_mine_incl_geo": 5256591.766788
+  },
+  {
+   "ledger": "E_rk70",
+   "year": 2021,
+   "scale_mine": 1.092709,
+   "scale_theirs": 1.092709,
+   "target_mine_t": 4930563.932088,
+   "target_theirs_t": 4930563.932088,
+   "series_E_t": 4930563.932088,
+   "series_E_over_D_kg_per_kWh": 0.120322,
+   "mfe": 0.120322,
+   "fossil_raw_mine_t": 3820119.430428,
+   "raw_t_theirs": 4576403.977728,
+   "raw_mine_incl_geo": 4576403.977728
+  },
+  {
+   "ledger": "E",
+   "year": 2022,
+   "scale_mine": 1.022454,
+   "scale_theirs": 1.022454,
+   "target_mine_t": 3208013.187781,
+   "target_theirs_t": 3208013.187781,
+   "series_E_t": 3208013.187781,
+   "series_E_over_D_kg_per_kWh": 0.078881,
+   "mfe": 0.078881,
+   "fossil_raw_mine_t": 2411322.823469,
+   "raw_t_theirs": 3153869.861069,
+   "raw_mine_incl_geo": 3153869.861069
+  },
+  {
+   "ledger": "E_geo05",
+   "year": 2022,
+   "scale_mine": 1.176425,
+   "scale_theirs": 1.176425,
+   "target_mine_t": 3208013.187781,
+   "target_theirs_t": 3208013.187781,
+   "series_E_t": 3208013.187781,
+   "series_E_over_D_kg_per_kWh": 0.078881,
+   "mfe": 0.078881,
+   "fossil_raw_mine_t": 2411322.823469,
+   "raw_t_theirs": 2782596.342269,
+   "raw_mine_incl_geo": 2782596.342269
+  },
+  {
+   "ledger": "E_geo15",
+   "year": 2022,
+   "scale_mine": 0.868483,
+   "scale_theirs": 0.868483,
+   "target_mine_t": 3208013.187781,
+   "target_theirs_t": 3208013.187781,
+   "series_E_t": 3208013.187781,
+   "series_E_over_D_kg_per_kWh": 0.078881,
+   "mfe": 0.078881,
+   "fossil_raw_mine_t": 2411322.823469,
+   "raw_t_theirs": 3525143.379869,
+   "raw_mine_incl_geo": 3525143.379869
+  },
+  {
+   "ledger": "E_rk70",
+   "year": 2022,
+   "scale_mine": 1.072972,
+   "scale_theirs": 1.072972,
+   "target_mine_t": 3208013.187781,
+   "target_theirs_t": 3208013.187781,
+   "series_E_t": 3208013.187781,
+   "series_E_over_D_kg_per_kWh": 0.078881,
+   "mfe": 0.078881,
+   "fossil_raw_mine_t": 2297790.645266,
+   "raw_t_theirs": 3040337.682866,
+   "raw_mine_incl_geo": 3040337.682866
+  },
+  {
+   "ledger": "E",
+   "year": 2023,
+   "scale_mine": 0.868586,
+   "scale_theirs": 0.868586,
+   "target_mine_t": 3006674.779479,
+   "target_theirs_t": 3006674.779479,
+   "series_E_t": 3006674.779479,
+   "series_E_over_D_kg_per_kWh": 0.074061,
+   "mfe": 0.074061,
+   "fossil_raw_mine_t": 2639191.780701,
+   "raw_t_theirs": 3353501.850801,
+   "raw_mine_incl_geo": 3353501.850801
+  },
+  {
+   "ledger": "E_geo05",
+   "year": 2023,
+   "scale_mine": 1.003913,
+   "scale_theirs": 1.003913,
+   "target_mine_t": 3006674.779479,
+   "target_theirs_t": 3006674.779479,
+   "series_E_t": 3006674.779479,
+   "series_E_over_D_kg_per_kWh": 0.074061,
+   "mfe": 0.074061,
+   "fossil_raw_mine_t": 2639191.780701,
+   "raw_t_theirs": 2996346.815751,
+   "raw_mine_incl_geo": 2996346.815751
+  },
+  {
+   "ledger": "E_geo15",
+   "year": 2023,
+   "scale_mine": 0.733258,
+   "scale_theirs": 0.733258,
+   "target_mine_t": 3006674.779479,
+   "target_theirs_t": 3006674.779479,
+   "series_E_t": 3006674.779479,
+   "series_E_over_D_kg_per_kWh": 0.074061,
+   "mfe": 0.074061,
+   "fossil_raw_mine_t": 2639191.780701,
+   "raw_t_theirs": 3710656.885851,
+   "raw_mine_incl_geo": 3710656.885851
+  },
+  {
+   "ledger": "E_rk70",
+   "year": 2023,
+   "scale_mine": 0.93439,
+   "scale_theirs": 0.93439,
+   "target_mine_t": 3006674.779479,
+   "target_theirs_t": 3006674.779479,
+   "series_E_t": 3006674.779479,
+   "series_E_over_D_kg_per_kWh": 0.074061,
+   "mfe": 0.074061,
+   "fossil_raw_mine_t": 2453327.404668,
+   "raw_t_theirs": 3167637.474768,
+   "raw_mine_incl_geo": 3167637.474768
+  },
+  {
+   "ledger": "E",
+   "year": 2024,
+   "scale_mine": 0.957681,
+   "scale_theirs": 0.957681,
+   "target_mine_t": 3990915.578196,
+   "target_theirs_t": 3990915.578196,
+   "series_E_t": 3990915.578196,
+   "series_E_over_D_kg_per_kWh": 0.096777,
+   "mfe": 0.096777,
+   "fossil_raw_mine_t": 3294181.311254,
+   "raw_t_theirs": 4130321.966254,
+   "raw_mine_incl_geo": 4130321.966254
+  },
+  {
+   "ledger": "E_geo05",
+   "year": 2024,
+   "scale_mine": 1.084593,
+   "scale_theirs": 1.084593,
+   "target_mine_t": 3990915.578196,
+   "target_theirs_t": 3990915.578196,
+   "series_E_t": 3990915.578196,
+   "series_E_over_D_kg_per_kWh": 0.096777,
+   "mfe": 0.096777,
+   "fossil_raw_mine_t": 3294181.311254,
+   "raw_t_theirs": 3712251.638754,
+   "raw_mine_incl_geo": 3712251.638754
+  },
+  {
+   "ledger": "E_geo15",
+   "year": 2024,
+   "scale_mine": 0.830769,
+   "scale_theirs": 0.830769,
+   "target_mine_t": 3990915.578196,
+   "target_theirs_t": 3990915.578196,
+   "series_E_t": 3990915.578196,
+   "series_E_over_D_kg_per_kWh": 0.096777,
+   "mfe": 0.096777,
+   "fossil_raw_mine_t": 3294181.311254,
+   "raw_t_theirs": 4548392.293754,
+   "raw_mine_incl_geo": 4548392.293754
+  },
+  {
+   "ledger": "E_rk70",
+   "year": 2024,
+   "scale_mine": 1.027216,
+   "scale_theirs": 1.027216,
+   "target_mine_t": 3990915.578196,
+   "target_theirs_t": 3990915.578196,
+   "series_E_t": 3990915.578196,
+   "series_E_over_D_kg_per_kWh": 0.096777,
+   "mfe": 0.096777,
+   "fossil_raw_mine_t": 3071190.384385,
+   "raw_t_theirs": 3907331.039385,
+   "raw_mine_incl_geo": 3907331.039385
+  }
+ ],
+ "max_abs_scale_diff": 6.661338147750939e-16,
+ "max_rel_E_over_D_vs_mfe": 3.178732039835416e-16,
+ "E_raw_consistency_max_rel_diff": 2.0904042680340467e-16,
+ "within_year_scale_constant": {
+  "2015": [
+   1.0992410218753588,
+   1.0992410218753597
+  ],
+  "2016": [
+   1.0739378364434824,
+   1.0739378364434833
+  ],
+  "2017": [
+   1.0356656095797891,
+   1.03566560957979
+  ],
+  "2018": [
+   1.0432834803883981,
+   1.043283480388399
+  ],
+  "2019": [
+   1.0479977706381003,
+   1.0479977706381018
+  ],
+  "2020": [
+   1.095498313219509,
+   1.0954983132195106
+  ],
+  "2021": [
+   1.0126424923880668,
+   1.0126424923880692
+  ],
+  "2022": [
+   1.0224537860233052,
+   1.0224537860233116
+  ],
+  "2023": [
+   0.8685858777458758,
+   0.8685858777458861
+  ],
+  "2024": [
+   0.9576810215083937,
+   0.9576810215084017
+  ]
+ },
+ "aef_mean": 0.09766861219256297,
+ "aef_by_block": {
+  "0": 0.095,
+  "1": 0.0978,
+  "2": 0.0978,
+  "3": 0.1001
+ },
+ "fossil_t_per_thermal_MWh_by_year": {
+  "2015": 0.503,
+  "2016": 0.474,
+  "2017": 0.458,
+  "2018": 0.492,
+  "2019": 0.519,
+  "2020": 0.557,
+  "2021": 0.568,
+  "2022": 0.475,
+  "2023": 0.477,
+  "2024": 0.522
+ },
+ "geo_share_of_E_by_year": {
+  "2015": 0.159,
+  "2016": 0.207,
+  "2017": 0.182,
+  "2018": 0.187,
+  "2019": 0.164,
+  "2020": 0.157,
+  "2021": 0.153,
+  "2022": 0.231,
+  "2023": 0.238,
+  "2024": 0.21
+ },
+ "quarterly_check": [
+  {
+   "quarter": "2023Q1",
+   "mfe": 0.0740866,
+   "ledger": 0.06448185379932984,
+   "diff": -0.009604746200670158,
+   "within_0_01": true
+  },
+  {
+   "quarter": "2023Q2",
+   "mfe": 0.0508473,
+   "ledger": 0.04811054524804096,
+   "diff": -0.0027367547519590377,
+   "within_0_01": true
+  },
+  {
+   "quarter": "2023Q3",
+   "mfe": 0.0977978,
+   "ledger": 0.10830668950259097,
+   "diff": 0.010508889502590962,
+   "within_0_01": false
+  },
+  {
+   "quarter": "2023Q4",
+   "mfe": 0.0715502,
+   "ledger": 0.07148553241621407,
+   "diff": -6.466758378592674e-05,
+   "within_0_01": true
+  },
+  {
+   "quarter": "2024Q1",
+   "mfe": 0.0855611,
+   "ledger": 0.08613024547769027,
+   "diff": 0.0005691454776902694,
+   "within_0_01": true
+  },
+  {
+   "quarter": "2024Q2",
+   "mfe": 0.131975,
+   "ledger": 0.12609638519991936,
+   "diff": -0.005878614800080645,
+   "within_0_01": true
+  },
+  {
+   "quarter": "2024Q3",
+   "mfe": 0.127607,
+   "ledger": 0.12951656435603578,
+   "diff": 0.0019095643560357867,
+   "within_0_01": true
+  },
+  {
+   "quarter": "2024Q4",
+   "mfe": 0.0358888,
+   "ledger": 0.03890178578622397,
+   "diff": 0.0030129857862239706,
+   "within_0_01": true
+  }
+ ],
+ "quarters_within_0_01": 7,
+ "quarterly_mean_diff_2023": -0.0004743197584560401,
+ "quarterly_mean_diff_2024": -9.672979503265455e-05,
+ "quarterly_rmse": 0.005676579896227679,
+ "quarterly_mfe_std": 0.03174444210325447,
+ "coal_series_is_huntly_1_4_only": true,
+ "coal_GWh_series_vs_huntly_1_4_raw": {
+  "2015": [
+   1271.4721599999998,
+   1271.5
+  ],
+  "2016": [
+   830.7098380599999,
+   830.7
+  ],
+  "2017": [
+   904.0110558599999,
+   904.0
+  ],
+  "2018": [
+   1172.1044970000003,
+   1172.1
+  ],
+  "2019": [
+   1611.6666830000001,
+   1611.7
+  ],
+  "2020": [
+   1733.8765420000002,
+   1733.9
+  ],
+  "2021": [
+   2541.277635,
+   2541.3
+  ],
+  "2022": [
+   955.2096310000001,
+   955.2
+  ],
+  "2023": [
+   1563.780814,
+   1563.8
+  ],
+  "2024": [
+   1876.147224,
+   1876.1
+  ]
+ }
+}

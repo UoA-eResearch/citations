@@ -1,0 +1,21 @@
+1h base MEF 0.154 F 202.2 | inflow resp (MWh/MWh) -2.669 +- 0.567 | storage change resp -186.657 +- 23.176 | temp sum resp -0.0876 | hvdc resp 0.23 | tiwai resp -0.001 || MEF with window inflow ctrl 0.153 F 202.6 hydro 1.042 thermal -0.025
+4h base MEF 0.1636 F 273.0 | inflow resp (MWh/MWh) -1.271 +- 0.232 | storage change resp -18.416 +- 2.205 | temp sum resp -0.0394 | hvdc resp 0.149 | tiwai resp 0.0 || MEF with window inflow ctrl 0.1619 F 274.0 hydro 0.839 thermal 0.157
+1d base MEF 0.3136 F 84.7 | inflow resp (MWh/MWh) -3.673 +- 0.573 | storage change resp -5.308 +- 0.782 | temp sum resp -0.0538 | hvdc resp 0.207 | tiwai resp 0.0 || MEF with window inflow ctrl 0.2949 F 85.3 hydro 0.707 thermal 0.249
+2d base MEF 0.3675 F 59.7 | inflow resp (MWh/MWh) -4.546 +- 0.689 | storage change resp -6.262 +- 0.93 | temp sum resp -0.0466 | hvdc resp 0.205 | tiwai resp 0.001 || MEF with window inflow ctrl 0.3283 F 59.3 hydro 0.634 thermal 0.325
+7d base MEF 0.6949 F 40.1 | inflow resp (MWh/MWh) -8.034 +- 1.578 | storage change resp -9.281 +- 1.691 | temp sum resp -0.0408 | hvdc resp 0.427 | tiwai resp -0.001 || MEF with window inflow ctrl 0.548 F 31.7 hydro 0.493 thermal 0.5
+14d base MEF 1.5474 F 7.7 | inflow resp (MWh/MWh) -14.152 +- 5.464 | storage change resp -13.235 +- 4.855 | temp sum resp -0.0559 | hvdc resp 0.516 | tiwai resp -0.005 || MEF with window inflow ctrl 1.1677 F 5.1 hydro -0.031 thermal 0.997
+{
+ "z_autocorr": {
+  "1d": 0.5853944195182961,
+  "7d": 0.04466412564856788,
+  "14d": 0.051942362164818415,
+  "30d": 0.02924358419186396
+ },
+ "corr_z_with_window_mean_z": {
+  "1d": 0.7936361837999167,
+  "7d": 0.3554996088949827,
+  "14d": 0.27988907835488813,
+  "30d": 0.21650072359230227
+ }
+}
+written /mnt/citations/research-lab/runs/energy-nz-hydro-marginal-emissions-horizon/review/reviewer_checks/out_reestimate2.json
