@@ -36,7 +36,7 @@ def main():
     pr = sk[sk.variant == "primary"]
     rng = np.random.default_rng(1)
     # F1
-    fig, ax = plt.subplots(figsize=(7.4, 3.8)); fig.subplots_adjust(left=0.1, right=0.97, bottom=0.14, top=0.84)
+    fig, ax = plt.subplots(figsize=(7.4, 3.8)); fig.subplots_adjust(left=0.1, right=0.88, bottom=0.14, top=0.84)
     for i, (st, lab) in enumerate((("supported", "supported (input ≤ 25 km)"), ("independent", "independent (none ≤ 100 km)"))):
         g = pr[pr.stratum == st].gain.values
         ax.scatter(i + rng.uniform(-0.18, 0.18, len(g)), g, s=14, color=COL[i], alpha=0.6, lw=0)
@@ -61,7 +61,7 @@ def main():
         ss = pd.read_csv(T / "station_skill_secondary.csv")
         rows.append(("PERSIANN-CDR vs PERSIANN (secondary)", sec["dkge_independent"], sec["dkge_independent_ci"],
                      ss[ss.stratum == "independent"].dkge.values))
-    fig, ax = plt.subplots(figsize=(7.4, 1.6 + 1.0 * len(rows))); fig.subplots_adjust(left=0.36, right=0.97, bottom=0.25, top=0.78)
+    fig, ax = plt.subplots(figsize=(7.4, 1.6 + 1.0 * len(rows))); fig.subplots_adjust(left=0.42, right=0.97, bottom=0.25, top=0.78)
     for i, (lab, m, ci, v) in enumerate(rows):
         y = len(rows) - 1 - i
         ax.scatter(v, y + rng.uniform(-0.15, 0.15, len(v)), s=12, color=COL[0], alpha=0.45, lw=0)
@@ -69,7 +69,7 @@ def main():
     ax.axvline(0, color=COL[2], lw=1.2, ls="--")
     ax.set_yticks(range(len(rows))); ax.set_yticklabels([x[0] for x in rows][::-1])
     ax.set_xlabel("ΔKGE at independent gauges (blended − satellite-only)"); ax.grid(axis="x", color=GRID, lw=0.6)
-    fig.suptitle("Is the blended product better where it saw no gauge? (H2)", x=0.36, ha="left", fontsize=10.5, color=INK)
+    fig.suptitle("Is the blended product better where it saw no gauge? (H2)", x=0.42, ha="left", fontsize=10.5, color=INK)
     fig.savefig(F / "F2_dkge_independent.png", dpi=170); plt.close(fig)
     caption("F2_dkge_independent", """Station ΔKGE (blended minus satellite-only twin) at independent gauges (dots) with the
     station mean and its 95% station-block bootstrap interval. Left of the dashed line the satellite-only twin is better.""")

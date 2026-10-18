@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pacific Rainfall Circularity</title>
+<meta name="description" content="Is gridded rainfall skill over Pacific Island countries circular? CHIRPS against its satellite-only twin CHIRP at gauges it did and did not ingest, 122 GHCN stations, 1981-2025.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Ancestral Futures</div>
+  <h1>Is gridded rainfall skill over Pacific Island countries circular?</h1>
+  <p class="subtitle">Gauge-blended rainfall products look more skilful than their satellite-only twins at Pacific Island gauges. This study asks how much of that advantage survives at gauges the blend never saw. It compares CHIRPS v2.0 with its satellite-only twin CHIRP at 122 GHCN-Daily stations in 18 Pacific countries and territories, 1981–2025.</p>
+  <div class="meta">
+    <span>Report · 2026-10-19 · pre-review draft</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ancestral-pacific-rainfall-gauge-circularity/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ancestral-pacific-rainfall-gauge-circularity/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ancestral-pacific-rainfall-gauge-circularity/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: Supported (circularity); the blended product is still marginally better where it saw no gauge.</strong></p>
+<ul>
+<li><strong>H1 (the blending gain at independent gauges is at most half the gain at supported gauges): Supported.</strong><ul>
+<li><strong>Supported gauges</strong> (CHIRPS ingested a station within 25 km that month): blending cuts the pentad RMSE by 10.1%
+(95% CI 6.5–13.2%).</li>
+<li><strong>Independent gauges</strong> (no input station within 100 km): it cuts it by 1.0% (−1.5 to +3.3%).</li>
+<li>The ratio is 0.10 (−0.15 to 0.35), below the 0.5 bar across the whole interval.</li>
+<li>It stays below 0.5 under both alternative distance thresholds and on log-transformed rainfall (0.31, 0.22–0.40).</li>
+</ul>
+</li>
+<li><strong>H2 (at independent gauges the satellite-only twin is better): Refuted.</strong><ul>
+<li>CHIRPS still edges CHIRP on the Kling–Gupta efficiency at independent gauges: ΔKGE +0.034 (+0.007 to +0.059).</li>
+<li>Under the widest distance threshold the interval includes zero (+0.021, −0.007 to +0.047).</li>
+</ul>
+</li>
+<li><strong>The secondary pair (PERSIANN-CDR against PERSIANN, 2001–2020) points the same way but is weaker.</strong><ul>
+<li>Its gain ratio is 0.72 (0.49–1.00), which is Inconclusive.</li>
+<li>At gauge-free cells, CDR is clearly better on KGE (+0.108).</li>
+<li>This pair also differs in algorithm, and its gauge label is far coarser: a 2.5° GPCC cell, not 25 km.</li>
+</ul>
+</li>
+</ul>
+<p><strong>What this means for users.</strong> Validating CHIRPS at Pacific gauges overstates its advantage over CHIRP about tenfold,
+because about two-thirds of gauge-months sit within 25 km of a station CHIRPS blended in. Away from input stations,
+the blending is close to neutral: it slightly improves the overall skill score, but barely moves the error.</p>
+<h2>In plain terms</h2>
+<p>Satellite rainfall maps are widely used in the Pacific, where rain gauges are few. The best-known maps blend
+satellite estimates with the gauges that do exist, and they are usually checked against those same gauges. That is a
+bit like marking a test against the answer key the student was given.</p>
+<p>We used the fact that one popular product, CHIRPS, has a twin built the same way but without any gauges (CHIRP), and
+that CHIRPS publishes which stations it used each month. That let us compare the two products at gauges CHIRPS had
+used, and at gauges more than 100 km from any it used.</p>
+<p>At gauges CHIRPS had used, the blended map was about 10% more accurate than its satellite-only twin. At gauges it had
+not used, the improvement almost disappeared, to about 1%.</p>
+<p>So the usual checks make the blended map look much better than it is across most of the ocean region, where there
+are no gauges. It is not worse than the satellite-only version there, and is still slightly better on one combined
+skill score.</p>
+<p>In any decade, CHIRPS uses about a third of Pacific gauges. A benchmark built only from the others would give Pacific
+climate services a fairer test of any rainfall map. The station lists and labels from this study are released for
+that purpose.</p>
+<h2>What was asked</h2>
+<p>Over Pacific islands, rainfall products are validated at the few long-running gauges, mostly airports. Those are also
+the gauges blended into products such as CHIRPS. The study asks two preregistered questions (<code>plan.md</code>):</p>
+<ul>
+<li><strong>H1 (circularity).</strong> At gauges CHIRPS did not ingest, is the blending gain at most half what it is at gauges it
+  did?</li>
+<li><strong>H2 (ranking reversal).</strong> At those independent gauges, is the satellite-only twin actually better?</li>
+</ul>
+<h2>What was already known</h2>
+<ul>
+<li><strong>Wild, Chua &amp; Kuleshov (2021, <em>Remote Sensing</em> 13:3929)</strong> evaluated products over six south-west Pacific
+  sub-regions against MSWEP, which is itself gauge-blended. It is not gauge-based and not twin-based.</li>
+<li><strong>A 2026 Fiji study</strong> evaluated products against national gauges without separating ingested from independent
+  ones.</li>
+<li><strong>No study was found</strong> that uses a twin pair and the published input-station lists to separate circular from
+  independent skill over the Pacific (search 2026-10-18).</li>
+</ul>
+<h2>How it was done</h2>
+<p><strong>Gauges.</strong>
+- GHCN-Daily precipitation for every Pacific Island station: 148 stations with data after 1985.
+- Only values with a blank quality flag are kept, and runs of five or more identical non-zero days are removed.
+- Pentad totals use the CHIRPS calendar (six per month) and complete pentads only.</p>
+<p><strong>Products.</strong>
+- <strong>CHIRP and CHIRPS v2.0 pentads</strong> at 0.05°, 1981–2025: 3,240 pentads each, every one read, at all 148 station
+  pixels.
+    - Pixels were read by HTTP range requests.
+    - The data server refused parallel readers partway through (D1 addendum). Extraction resumed as one paced stream.
+    - Failed reads were recorded as errors and re-read later, never as zero rain.
+    - The plan's pre-check grid masked 14 stations as ocean. The CHIRPS pentad files used here have values at 147 of the
+    148.
+    - The exception (FMC00914251, Micronesia) is masked as ocean, so it has no CHIRPS skill. It is reported as a masked
+    station: 410 gauge pentads, all independent.
+- <strong>The secondary pair:</strong> PERSIANN (satellite-only) and PERSIANN-CDR (bias-adjusted to GPCP, which uses GPCC gauges),
+  daily at 0.25°, 2001–2020: 7,305 days each, complete.</p>
+<p><strong>Timing.</strong> Each station's gauge pentads are formed with a day shift of −1, 0 or +1, chosen to maximise the
+correlation with CHIRP (the satellite-only twin) and then applied to every product.
+- 67 stations take +1, 53 take 0 and 2 take −1.
+- The +1 shifts are consistent with gauges recording rain for the 24 hours to a morning observation.</p>
+<p><strong>Labels.</strong> Each gauge-month is labelled by its distance to the nearest station in CHIRPS's published input list for
+that month:
+- supported: within 25 km;
+- independent: none within 100 km;
+- intermediate: in between, excluded.</p>
+<p>For the secondary pair, a gauge-month is supported if its 2.5° GPCC cell held at least one gauge.</p>
+<p><strong>Skill.</strong> For each station and stratum with at least 30 pentads:
+- the blending gain g = 1 − RMSE(blended)/RMSE(satellite-only);
+- ΔKGE = KGE(blended) − KGE(satellite-only).</p>
+<p>Stations need at least 100 valid pentads: 122 qualify. H1 uses the ratio of station-mean gains, and both hypotheses
+use a station-block bootstrap (2,000 resamples).</p>
+<h2>Results</h2>
+<h3>H1: circularity (<code>results/tables/primary.json</code>, <code>results/figures/F1_gain_by_stratum.png</code>)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>stations (sup / ind)</th>
+<th>gain, supported</th>
+<th>gain, independent</th>
+<th>ratio (H1)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Primary: 25 / 100 km</strong></td>
+<td>100 / 65</td>
+<td><strong>10.1% (6.5–13.2)</strong></td>
+<td><strong>1.0% (−1.5 to 3.3)</strong></td>
+<td><strong>0.10 (−0.15 to 0.35)</strong></td>
+</tr>
+<tr>
+<td>Thresholds 10 / 50 km</td>
+<td>97 / 71</td>
+<td>10.0%</td>
+<td>1.3%</td>
+<td>0.13 (−0.09 to 0.39)</td>
+</tr>
+<tr>
+<td>Thresholds 50 / 150 km</td>
+<td>104 / 53</td>
+<td>10.0%</td>
+<td>−0.9%</td>
+<td>−0.09 (−0.41 to 0.17)</td>
+</tr>
+<tr>
+<td>log(1 + P) pentads</td>
+<td>100 / 65</td>
+<td>12.8%</td>
+<td>3.9%</td>
+<td>0.31 (0.22 to 0.40)</td>
+</tr>
+<tr>
+<td><em>Secondary: PERSIANN-CDR vs PERSIANN</em></td>
+<td>102 / 28</td>
+<td>10.7%</td>
+<td>7.7%</td>
+<td>0.72 (0.49 to 1.00)</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>H1 is Supported.</strong> The ratio's upper bound, 0.35, is below 0.5, and every sensitivity analysis agrees.</li>
+<li><strong>The farther from an input station, the smaller the gain.</strong> At the 150 km threshold, the independent gain is
+  slightly negative.</li>
+<li><strong>The secondary pair is Inconclusive.</strong> Its "independent" label (no gauge in a 2.5° cell) is much coarser, and it
+  has only 28 independent stations.</li>
+</ul>
+<figure><a href="results/figures/F1_gain_by_stratum.png"><img src="results/figures/F1_gain_by_stratum.png" alt="Blending gain by stratum"></a><figcaption>Blending gain per station and stratum on pentad totals (1981-2025), primary thresholds (25 / 100 km). Points: stations with at least 30 pentads in the stratum. Black bars: station means with 95% station-block bootstrap intervals (2,000 resamples). The H1 ratio is the independent mean over the supported mean.</figcaption></figure>
+<h3>H2: ranking reversal (<code>results/figures/F2_dkge_independent.png</code>)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>pair / variant</th>
+<th>ΔKGE at independent gauges</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CHIRPS − CHIRP (primary)</strong></td>
+<td><strong>+0.034 (+0.007 to +0.059)</strong></td>
+</tr>
+<tr>
+<td>thresholds 10 / 50 km</td>
+<td>+0.037 (+0.012 to +0.058)</td>
+</tr>
+<tr>
+<td>thresholds 50 / 150 km</td>
+<td>+0.021 (−0.007 to +0.047)</td>
+</tr>
+<tr>
+<td>log(1 + P)</td>
+<td>+0.038 (+0.016 to +0.058)</td>
+</tr>
+<tr>
+<td>PERSIANN-CDR − PERSIANN (secondary)</td>
+<td>+0.108 (+0.056 to +0.161)</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>H2 is Refuted.</strong> At independent gauges CHIRPS is not worse than CHIRP. It is slightly better on KGE, which
+  weighs correlation, bias and variability together, even though it barely improves RMSE there.</li>
+<li><strong>Where the KGE gain comes from</strong> (<code>station_skill.csv</code>, station means at independent gauges):<ul>
+<li>mostly bias and variability: the bias ratio β and variability ratio γ move closer to 1 by 0.026 and 0.031;</li>
+<li>a little from correlation: r rises by 0.015.</li>
+</ul>
+</li>
+</ul>
+<figure><a href="results/figures/F2_dkge_independent.png"><img src="results/figures/F2_dkge_independent.png" alt="ΔKGE at independent gauges"></a><figcaption>Station ΔKGE (blended minus satellite-only twin) at independent gauges (dots) with the station mean and its 95% station-block bootstrap interval. Left of the dashed line the satellite-only twin is better.</figcaption></figure>
+<h3>How often Pacific gauges are independent (<code>results/figures/F3_label_shares.png</code>, <code>by_country</code>)</h3>
+<ul>
+<li><strong>Most gauge-months are supported.</strong> Across all 148 stations, about 62–68% of gauge-months are supported in every
+  decade since the 1980s, and only 22–28% are independent.</li>
+<li><strong>About a third of Pacific gauges are ingested.</strong> In any decade, CHIRPS ingests 32–41% of the Pacific gauges
+  themselves.</li>
+<li><strong>Independent pentads are concentrated in a few places.</strong> Of 221,730 usable station-pentads, 37,938 (17%) are
+  independent, mostly in Fiji (20,275) and Palau (8,306).</li>
+<li><strong>Guam's 14 stations have no independent pentads at all.</strong></li>
+</ul>
+<figure><a href="results/figures/F3_label_shares.png"><img src="results/figures/F3_label_shares.png" alt="Label shares by decade"></a><figcaption>Share of station-months whose nearest CHIRPS input station that month is within 25 km (supported), 25-100 km (intermediate) or beyond 100 km (independent), by decade, from the CHIRPS monthly stations-used lists, for all 148 GHCN-Daily Pacific stations whether or not they report.</figcaption></figure>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>It shows that the standard gauge validation of CHIRPS over the Pacific is largely circular.</strong> The blending
+  advantage measured at ingested gauges (10%) is about ten times what holds at independent gauges (1%).</li>
+<li><strong>It does not show that blending hurts away from gauges.</strong> On KGE, CHIRPS is marginally better than CHIRP even at
+  independent gauges.</li>
+<li><strong>The label is monthly.</strong> CHIRPS blends at pentad scale with its own station set, so a monthly list can miss
+  pentad-only inputs. That would make some "independent" gauges actually supported, which would bias the independent
+  gain upwards, against H1.</li>
+<li><strong>Independent gauges are not a random sample.</strong> They cluster in Fiji and Palau. Island representativeness affects
+  both twins equally, so it moves skill but not, in principle, the within-pair gain.</li>
+<li><strong>One product family.</strong> CHIRPS and CHIRP are the only twin pair with published input lists. The PERSIANN pair is
+  suggestive only.</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration.</strong> The plan was committed before any product value was compared with any gauge.</li>
+<li><strong>D1:</strong> faster pixel reads. A direct reader was verified identical to GDAL on 1,776 cells, and parallel workers were
+  added.</li>
+<li><strong>D1 addendum:</strong> the CHC server returned HTTP 403 to the parallel workers. Extraction resumed as one paced stream
+  with a resume probe, and every pentad was eventually read.</li>
+<li><strong>Two fixes in <code>code/analysis.py</code> after the results:</strong><ul>
+<li><strong>Before any result.</strong> Error rows had made the pentad-value column text, so the analysis now reads it as numbers.
+The first run failed before producing anything (<code>git log</code>).</li>
+<li><strong>After the results.</strong> The masked-station check missed a station whose CHIRPS pentads were all empty. The count
+went from 0 to 1, with no effect on any skill number.</li>
+</ul>
+</li>
+<li><strong>The figures' margins</strong> were adjusted after the results.</li>
+</ul>
+<h2>Reproducing it</h2>
+<p><code>code/gauges.py</code>, <code>code/labels.py</code>, <code>code/extract_pentads.py chirp</code> and <code>chirps</code>, <code>code/fetch_persiann.py</code>,
+<code>code/extract_persiann.py</code>, <code>code/analysis.py</code>, <code>code/figures.py</code>.</p>
+<ul>
+<li><strong>The direct CHIRP reader</strong> is checked by <code>code/check_chirp_reader.py</code>.</li>
+<li><strong>Results</strong> are in <code>results/tables/</code>: <code>primary.json</code>, <code>station_skill.csv</code>, <code>station_skill_secondary.csv</code> and
+  <code>benchmark_stations.csv</code>. The last is the released list of stations with their labels.</li>
+</ul>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ancestral-pacific-rainfall-gauge-circularity/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

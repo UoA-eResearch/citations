@@ -143,7 +143,8 @@ def main():
         e = read_parts(prod)
         ex[prod] = e.pivot_table(index="pentad", columns="station", values="value", aggfunc="first")
     out = dict(extract_pentads={p: int(len(v)) for p, v in ex.items()})
-    masked = [s for s in st.id if s in ex["chirps"].columns and ex["chirps"][s].isna().all()]
+    # a station is CHIRPS-masked if every successfully read CHIRPS pentad is empty (pivot_table drops all-empty columns)
+    masked = [s for s in st.id if s not in ex["chirps"].columns or ex["chirps"][s].isna().all()]
     rows, shifts, per_country = [], {}, []
     for s in st.itertuples():
         d = daily[daily.station == s.id]

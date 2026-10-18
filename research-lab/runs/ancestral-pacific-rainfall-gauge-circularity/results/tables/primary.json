@@ -1,0 +1,294 @@
+{
+ "extract_pentads": {
+  "chirp": 3240,
+  "chirps": 3240
+ },
+ "stations_with_pentads": 122,
+ "chirps_masked_stations": 1,
+ "shift_counts": {
+  "1": 67,
+  "0": 53,
+  "-1": 2
+ },
+ "results": {
+  "primary": {
+   "n_stations_supported": 100,
+   "n_stations_independent": 65,
+   "gain_supported": 0.10083383882993895,
+   "gain_supported_ci": [
+    0.06517234145233873,
+    0.13160647779990806
+   ],
+   "gain_independent": 0.010418695168806707,
+   "gain_independent_ci": [
+    -0.015008213560955257,
+    0.03322528733618203
+   ],
+   "ratio": 0.10332538451083204,
+   "ratio_ci": [
+    -0.1543979672363854,
+    0.348531451500941
+   ],
+   "dkge_independent": 0.033597464612213614,
+   "dkge_independent_ci": [
+    0.007456319395798475,
+    0.05894935486998536
+   ],
+   "H1_verdict": "Supported",
+   "H2_verdict": "Refuted"
+  },
+  "t10_50": {
+   "n_stations_supported": 97,
+   "n_stations_independent": 71,
+   "gain_supported": 0.099946881884582,
+   "gain_supported_ci": [
+    0.06144032638019841,
+    0.1335424019285701
+   ],
+   "gain_independent": 0.012933293784044102,
+   "gain_independent_ci": [
+    -0.007932596851988567,
+    0.03341010001313379
+   ],
+   "ratio": 0.12940167357076116,
+   "ratio_ci": [
+    -0.08594621541781336,
+    0.38991123591556986
+   ],
+   "dkge_independent": 0.036518684808034385,
+   "dkge_independent_ci": [
+    0.012294997429141315,
+    0.05822910734022802
+   ]
+  },
+  "t50_150": {
+   "n_stations_supported": 104,
+   "n_stations_independent": 53,
+   "gain_supported": 0.09977702307434114,
+   "gain_supported_ci": [
+    0.06663171031754582,
+    0.12843990734781519
+   ],
+   "gain_independent": -0.008616192511498803,
+   "gain_independent_ci": [
+    -0.03810928721446399,
+    0.01723139087322731
+   ],
+   "ratio": -0.08635447567000584,
+   "ratio_ci": [
+    -0.41180193720565117,
+    0.17247324582064483
+   ],
+   "dkge_independent": 0.0205170887538618,
+   "dkge_independent_ci": [
+    -0.0069462101657038955,
+    0.046600839263324895
+   ]
+  },
+  "log": {
+   "n_stations_supported": 100,
+   "n_stations_independent": 65,
+   "gain_supported": 0.1277099469665604,
+   "gain_supported_ci": [
+    0.11541422286068787,
+    0.140927722657777
+   ],
+   "gain_independent": 0.03927707031026846,
+   "gain_independent_ci": [
+    0.028234638857575024,
+    0.050611477586858473
+   ],
+   "ratio": 0.307549029994921,
+   "ratio_ci": [
+    0.2179787143175916,
+    0.4029323278414299
+   ],
+   "dkge_independent": 0.03805399214749443,
+   "dkge_independent_ci": [
+    0.016128660560728397,
+    0.05832528248167542
+   ]
+  }
+ },
+ "secondary": {
+  "n_stations_supported": 102,
+  "n_stations_independent": 28,
+  "gain_supported": 0.10679317228522915,
+  "gain_supported_ci": [
+   0.08706814544652372,
+   0.1278944820971759
+  ],
+  "gain_independent": 0.07708111878155081,
+  "gain_independent_ci": [
+   0.053155363390491074,
+   0.09930122741271712
+  ],
+  "ratio": 0.721779465223472,
+  "ratio_ci": [
+   0.49322053251554676,
+   1.0045059867672395
+  ],
+  "dkge_independent": 0.10840248836567683,
+  "dkge_independent_ci": [
+   0.05631101650226414,
+   0.161061280945299
+  ],
+  "H1_verdict": "Inconclusive",
+  "H2_verdict": "Refuted",
+  "status": "done",
+  "pair": "gain = 1 - RMSE(PERSIANN-CDR)/RMSE(PERSIANN); dKGE = KGE(CDR) - KGE(PERSIANN)"
+ },
+ "by_country": [
+  {
+   "cc": "AQ",
+   "stations": 6,
+   "pentads": 7468,
+   "independent": 174,
+   "supported": 7294,
+   "masked": 0
+  },
+  {
+   "cc": "BP",
+   "stations": 3,
+   "pentads": 2558,
+   "independent": 262,
+   "supported": 2296,
+   "masked": 0
+  },
+  {
+   "cc": "CQ",
+   "stations": 5,
+   "pentads": 9532,
+   "independent": 146,
+   "supported": 8823,
+   "masked": 0
+  },
+  {
+   "cc": "CW",
+   "stations": 1,
+   "pentads": 749,
+   "independent": 70,
+   "supported": 679,
+   "masked": 0
+  },
+  {
+   "cc": "FJ",
+   "stations": 25,
+   "pentads": 70398,
+   "independent": 20275,
+   "supported": 20071,
+   "masked": 0
+  },
+  {
+   "cc": "FM",
+   "stations": 27,
+   "pentads": 49315,
+   "independent": 4731,
+   "supported": 44584,
+   "masked": 1
+  },
+  {
+   "cc": "FP",
+   "stations": 8,
+   "pentads": 15905,
+   "independent": 423,
+   "supported": 15482,
+   "masked": 0
+  },
+  {
+   "cc": "GQ",
+   "stations": 14,
+   "pentads": 18492,
+   "independent": 0,
+   "supported": 18480,
+   "masked": 0
+  },
+  {
+   "cc": "JQ",
+   "stations": 1,
+   "pentads": 1465,
+   "independent": 164,
+   "supported": 1301,
+   "masked": 0
+  },
+  {
+   "cc": "KR",
+   "stations": 1,
+   "pentads": 1072,
+   "independent": 41,
+   "supported": 1029,
+   "masked": 0
+  },
+  {
+   "cc": "MQ",
+   "stations": 2,
+   "pentads": 1540,
+   "independent": 23,
+   "supported": 1517,
+   "masked": 0
+  },
+  {
+   "cc": "NC",
+   "stations": 2,
+   "pentads": 3810,
+   "independent": 119,
+   "supported": 3686,
+   "masked": 0
+  },
+  {
+   "cc": "NH",
+   "stations": 6,
+   "pentads": 6599,
+   "independent": 1119,
+   "supported": 5362,
+   "masked": 0
+  },
+  {
+   "cc": "PP",
+   "stations": 4,
+   "pentads": 5300,
+   "independent": 56,
+   "supported": 5244,
+   "masked": 0
+  },
+  {
+   "cc": "PS",
+   "stations": 5,
+   "pentads": 8306,
+   "independent": 8306,
+   "supported": 0,
+   "masked": 0
+  },
+  {
+   "cc": "RM",
+   "stations": 9,
+   "pentads": 17388,
+   "independent": 1940,
+   "supported": 15420,
+   "masked": 0
+  },
+  {
+   "cc": "TN",
+   "stations": 1,
+   "pentads": 299,
+   "independent": 4,
+   "supported": 295,
+   "masked": 0
+  },
+  {
+   "cc": "TV",
+   "stations": 2,
+   "pentads": 1534,
+   "independent": 85,
+   "supported": 1449,
+   "masked": 0
+  }
+ ],
+ "ingested_share_by_decade": {
+  "1980s": 0.375,
+  "1990s": 0.412,
+  "2000s": 0.35,
+  "2010s": 0.315,
+  "2020s": 0.345
+ }
+}
