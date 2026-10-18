@@ -1,0 +1,48 @@
+{
+ "papers_sampled": 272,
+ "papers_with_cand": 44,
+ "cand": {
+  "n": 147,
+  "correct": 115,
+  "precision": 0.782312925170068
+ },
+ "eligible": {
+  "n": 71,
+  "correct": 51,
+  "precision": 0.7183098591549296,
+  "papers": 22
+ },
+ "errors_cand": {
+  "window": 13,
+  "non-FAERS database": 10,
+  "misattributed drug": 3,
+  "not a drug-event disproportionality": 2,
+  "event split": 2,
+  "estimate is a bound": 2
+ },
+ "errors_eligible": {
+  "window": 10,
+  "non-FAERS database": 5,
+  "misattributed drug": 2,
+  "not a drug-event disproportionality": 1,
+  "event split": 1,
+  "estimate is a bound": 1
+ },
+ "errors_by_paper_eligible": {
+  "40303631": 10,
+  "38936945": 2,
+  "39459005": 2,
+  "40108669": 2,
+  "36697083": 1,
+  "39635439": 1,
+  "39672542": 1,
+  "39767190": 1
+ },
+ "missed_cand": 11,
+ "missed_eligible": 0,
+ "recall_eligible": 1.0,
+ "window_errors_noncand": [
+  "40251175"
+ ],
+ "abort_rule": "fail: revise the prompt once, re-validate on a fresh sample"
+}
