@@ -1,0 +1,77 @@
+{
+ "24h": {
+  "claimed_t": 3618.389910814849,
+  "realised_t": 66073.19077399853,
+  "capture_ratio": 18.260384425823,
+  "capture_ci": [
+   0.8341786271347676,
+   126.78869526861827
+  ],
+  "blocks_used": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "weak_block": true,
+  "scheduled_share_by_block": {
+   "0": 0.4102792225568026,
+   "1": 0.2162263892690939,
+   "2": 0.2115726799890501,
+   "3": 0.1619217081850534
+  },
+  "note": "",
+  "share_days_sign_reversal": 0.3640843142622502,
+  "verdict": "Inconclusive (weak instrument)"
+ },
+ "1h": {
+  "claimed_t": 470.292236665141,
+  "realised_t": 159.4260275270128,
+  "capture_ratio": 0.3389935344404331,
+  "capture_ci": [
+   -0.07823747035633768,
+   0.752779018004599
+  ],
+  "blocks_used": [
+   1,
+   2
+  ],
+  "weak_block": false,
+  "scheduled_share_by_block": {
+   "0": 0.0,
+   "1": 0.510744593484807,
+   "2": 0.489255406515193,
+   "3": 0.0
+  },
+  "note": ""
+ },
+ "7d": {
+  "claimed_t": 5971.36061313709,
+  "realised_t": 49199.71567594494,
+  "capture_ratio": 8.239280603436471,
+  "capture_ci": [
+   -0.16485541069729182,
+   59.64783644568836
+  ],
+  "blocks_used": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "weak_block": true,
+  "scheduled_share_by_block": {
+   "0": 0.32317658349328215,
+   "1": 0.24715519605154923,
+   "2": 0.2418083356183164,
+   "3": 0.1878598848368522
+  },
+  "note": "MEF(7d) blocks weakly identified; scored with 1-day blocks"
+ },
+ "aef_by_block_mean": {
+  "0": 0.095,
+  "1": 0.0978,
+  "2": 0.0978,
+  "3": 0.1001
+ }
+}
