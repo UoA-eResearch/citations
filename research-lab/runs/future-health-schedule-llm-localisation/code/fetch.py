@@ -1,8 +1,7 @@
 """Fetch the sources (plan section 2) into data/raw/.
 NZ: Pharmac Schedule XML and PDF for 2025-11-01 (stability edition, per-month archive folder) and 2026-10 (answers).
 AU: PBS API v3 for schedule 4751 (2026-10-01; items, restrictions, item-restriction relationships, prescribing texts,
-restriction-prescribing-text relationships) and schedule 3834 (2025-11-01, the earliest available; items, restrictions,
-item-restriction relationships). The public unregistered-user subscription key is read from the PBS_KEY environment
+restriction-prescribing-text relationships) and schedule 3834 (2025-11-01, the earliest available; the same five tables). The public unregistered-user subscription key is read from the PBS_KEY environment
 variable at run time and never written anywhere; the unregistered rate limit is one request per 20 s, so requests are
 21 s apart. Resumable per page; SHA-256 to data/raw/SHA256SUMS."""
 import hashlib
@@ -22,7 +21,7 @@ NZ = {"Schedule_2025-11.xml": "/pub/schedule/archive/2025/2025-11-01/Schedule_20
       "Schedule_2026-10.xml": "/pub/schedule/archive/Schedule_2026-10.xml"}
 API = "https://data-api.health.gov.au/pbs/api/v3/"
 PBS = {4751: ["items", "restrictions", "item-restriction-relationships", "prescribing-texts", "restriction-prescribing-text-relationships"],
-       3834: ["items", "restrictions", "item-restriction-relationships"]}
+       3834: ["items", "restrictions", "item-restriction-relationships", "prescribing-texts", "restriction-prescribing-text-relationships"]}
 LIMIT = 1000
 
 
