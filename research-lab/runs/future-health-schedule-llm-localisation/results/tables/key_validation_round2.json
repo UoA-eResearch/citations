@@ -1,0 +1,43 @@
+{
+ "n": 200,
+ "errors": 4,
+ "rate": 0.02,
+ "by_cell": {
+  "a_no": {
+   "n": 24,
+   "errors": 2,
+   "rate": 0.083
+  },
+  "a_yes": {
+   "n": 26,
+   "errors": 0,
+   "rate": 0.0
+  },
+  "b_no": {
+   "n": 44,
+   "errors": 0,
+   "rate": 0.0
+  },
+  "b_yes": {
+   "n": 31,
+   "errors": 0,
+   "rate": 0.0
+  },
+  "d_no": {
+   "n": 31,
+   "errors": 2,
+   "rate": 0.065
+  },
+  "d_yes": {
+   "n": 44,
+   "errors": 0,
+   "rate": 0.0
+  }
+ },
+ "errors_by_jurisdiction": {
+  "NZ": 2,
+  "AU": 2
+ },
+ "bar_overall_pass": true,
+ "bar_family_a_negatives_pass": false
+}

@@ -69,3 +69,34 @@ The other two errors:
 **Re-check.** The items are regenerated, and a fresh 200 (seed 20261020) are checked by hand. The fresh sample
 excludes any question already checked in round 1. Errors are now also reported per family, and the round-2 bar
 applies both overall (≤ 5%) and to family (a) negatives. The v1 items are kept in `data/items_v1.jsonl`.
+
+## D5 — 2026-10-18 17:56 NZDT — round 2 passes overall but fails the family (a) bar; consequences fixed before any model output
+
+**Round 2** (`results/tables/key_validation_round2.{csv,json}`): 4 of 200 keys are wrong (2.0%). This passes the
+plan's overall bar (§5). Per cell:
+- family (a) negatives: 2 of 24 (8.3%). This **fails** the bar D4 added for this cell;
+- family (d) negatives: 2 of 31 (6.5%). No per-family bar was set for this cell;
+- every other cell: 0 errors (a yes 0/26, b no 0/44, b yes 0/31, d yes 0/44).
+
+The four errors:
+- **Two parser misses, family (a).** NZ "Sprinkle cap 15 mg" (topiramate) was not read as a capsule. PBS "Tablet
+  containing desmopressin acetate 200 micrograms" was filtered out as a combination, because of the word "containing".
+- **Two near-duplicate counterfactuals, family (d).**
+  - "Patient remains at moderate to high risk of invasive fungal infection" for voriconazole, whose own prophylaxis
+    criteria say "The patient is at risk of invasive fungal infection".
+  - "The treatment must be the sole PBS-subsidised therapy for this condition" for erlotinib, whose restrictions say
+    "The treatment must be as monotherapy".
+
+The plan allows one fix, and D4 used it. So these consequences are fixed now, before any model output exists:
+
+1. **Family (a)** is reported as not constructible from these data at the bar set in D4. Its items are still run.
+   Its accuracy is reported descriptively, next to its key-error rate.
+2. **H1 and H2.** The confirmatory verdicts use family (b) alone. The preregistered pooled (a)+(b) analysis is
+   reported alongside, flagged as resting on a family whose key failed its bar. If the two disagree, the report says
+   so, and the verdict follows family (b).
+3. **H3.** Near-duplicate counterfactuals inflate the fabrication rate. Before any model output is opened, all 100
+   NZ counterfactual items are screened by hand against the chemical's own Special Authority text
+   (`results/tables/nz_counterfactual_screen.csv`).
+   - H3 is tested on all 100, as preregistered, and on the items that pass the screen.
+   - It gets a Supported or Refuted verdict only if both tests agree. Otherwise it is Inconclusive.
+4. Nothing else changes: conditions, prompts, the bootstrap and the thresholds stay as written.
