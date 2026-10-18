@@ -8,6 +8,8 @@ import sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
+import os
+
 import requests
 
 RUN = Path(__file__).resolve().parents[1]
@@ -43,7 +45,7 @@ def is_article(r):
 
 def call(rec):
     ab = re.sub(r"<[^>]+>", " ", rec.get("abstractText") or "")
-    body = dict(model="nemotron_3_nano_omni", temperature=0, max_tokens=4096,
+    body = dict(model="nemotron_3_nano_omni", temperature=0, max_tokens=int(os.environ.get("MAX_TOKENS", 4096)),   # D1
                 messages=[{"role": "user", "content": PROMPT + ab}],
                 response_format={"type": "json_schema", "json_schema": {"name": "extraction", "schema": SCHEMA}})
     try:
