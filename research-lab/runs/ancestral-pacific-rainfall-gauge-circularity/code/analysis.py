@@ -1,7 +1,10 @@
-"""Primary analysis (plan sections 1, 3, 4) for the CHIRP/CHIRPS pair. Reads data/gauge_daily.csv.gz, data/labels.csv,
-data/extract/chirp.csv and data/extract/chirps.csv. Writes results/tables/primary.json, results/tables/station_skill.csv
-and results/tables/benchmark_stations.csv."""
+"""Primary analysis (plan sections 1, 3, 4) for the CHIRP/CHIRPS pair, and the secondary PERSIANN/PERSIANN-CDR pair.
+Reads data/gauge_daily.csv.gz, data/labels.csv, data/extract/chirp*.csv and chirps*.csv (worker part files, D1), and for
+the secondary pair data/extract/persiann_daily.csv and data/labels_gpcc.csv. Writes results/tables/primary.json,
+results/tables/station_skill.csv, results/tables/station_skill_secondary.csv and results/tables/benchmark_stations.csv."""
+import glob
 import json
+import re
 from pathlib import Path
 
 import numpy as np
@@ -64,6 +67,70 @@ def summarise(sk, rng):
                 gain_independent=float(gi), gain_independent_ci=q(1), ratio=float(R), ratio_ci=q(2), dkge_independent=float(dk), dkge_independent_ci=q(3))
 
 
+def verdicts(p):
+    lo, hi = p["ratio_ci"]
+    if p["gain_supported_ci"][0] <= 0:
+        p["H1_verdict"] = "Inconclusive (no gain to shrink)"
+    else:
+        p["H1_verdict"] = "Supported" if hi < 0.5 else "Refuted" if lo >= 0.5 else "Inconclusive"
+    l2, u2 = p["dkge_independent_ci"]
+    p["H2_verdict"] = "Supported" if u2 < 0 else "Refuted" if l2 > 0 else "Inconclusive"
+    return p
+
+
+def secondary(st, daily, rng):
+    """PERSIANN (satellite-only) against PERSIANN-CDR, 2001-2020; label from the GPCC gauge count of the 2.5 deg cell
+    (supported >= 1, independent 0). Same QC, timing (shift chosen against PERSIANN), inclusion and statistics."""
+    f = RUN / "data" / "extract" / "persiann_daily.csv"
+    if not f.exists():
+        return dict(status="not done: inputs not retrieved (plan section 2 feasibility rule)")
+    pd_ = pd.read_csv(f, parse_dates=["date"])
+    lab = pd.read_csv(RUN / "data" / "labels_gpcc.csv")
+    rows = []
+    for s in st.itertuples():
+        x = pd_[pd_.station == s.id].set_index("date")[["persiann", "cdr"]].asfreq("D")
+        if x.empty:
+            continue
+        x["pentad"] = pentad_id(x.index.to_series())
+        g = x.groupby("pentad").agg(persiann=("persiann", "sum"), cdr=("cdr", "sum"), np_=("persiann", "count"), nc=("cdr", "count"),
+                                    days=("persiann", "size"))
+        g = g[(g.np_ == g.days) & (g.nc == g.days)]
+        d = daily[(daily.station == s.id) & (daily.date >= "2000-12-30") & (daily.date <= "2021-01-02")]
+        if d.empty:
+            continue
+        best = None
+        for sh in (-1, 0, 1):
+            gp = gauge_pentads(d, sh)
+            j = pd.concat([gp.rename("obs"), g.persiann], axis=1).dropna()
+            if len(j) >= MIN_PENTADS:
+                rho = spearmanr(j.obs, j.persiann).statistic
+                if best is None or rho > best[1]:
+                    best = (sh, rho, gp)
+        if best is None:
+            continue
+        j = pd.concat([best[2].rename("obs"), g.persiann.rename("chirp"), g.cdr.rename("chirps")], axis=1).dropna()
+        j["ym"] = j.index.str[:4] + "-" + j.index.str[5:7]
+        j = j.merge(lab[lab.station == s.id][["ym", "numgauge"]], on="ym", how="left").set_index(j.index).dropna(subset=["numgauge"])
+        j["stratum"] = np.where(j.numgauge >= 1, "supported", "independent")
+        for sv, gg in j.groupby("stratum"):
+            if len(gg) >= MIN_STRATUM:
+                rows.append(dict(variant="secondary", station=s.id, cc=s.cc, stratum=sv, shift=best[0], **metrics(gg)))
+    sk = pd.DataFrame(rows)
+    ren = {c: c.replace("chirps", "cdr").replace("chirp", "persiann") for c in sk.columns}
+    sk.rename(columns=ren).to_csv(T / "station_skill_secondary.csv", index=False)
+    if sk.empty or not (sk.stratum == "supported").any() or not (sk.stratum == "independent").any():
+        return dict(status="done", note="a stratum has no qualifying station", n_station_strata=int(len(sk)))
+    r = verdicts(summarise(sk, rng))
+    r["status"] = "done"; r["pair"] = "gain = 1 - RMSE(PERSIANN-CDR)/RMSE(PERSIANN); dKGE = KGE(CDR) - KGE(PERSIANN)"
+    return r
+
+
+def read_parts(prod):
+    fs = [f for f in glob.glob(str(RUN / "data" / "extract" / f"{prod}*.csv")) if re.fullmatch(prod + r"(_[a-z0-9]+)?\.csv", Path(f).name)]
+    e = pd.concat([pd.read_csv(f, dtype={"pentad": str, "station": str}) for f in fs])
+    return e[e.status == "ok"].drop_duplicates(["pentad", "station"])
+
+
 def main():
     rng = np.random.default_rng(20261018)
     st = pd.read_csv(RUN / "data" / "raw" / "ghcn" / "stations.csv")
@@ -71,8 +138,7 @@ def main():
     lab = pd.read_csv(RUN / "data" / "labels.csv")
     ex = {}
     for prod in ("chirp", "chirps"):
-        e = pd.read_csv(RUN / "data" / "extract" / f"{prod}.csv", dtype={"pentad": str, "station": str})
-        e = e[e.status == "ok"]
+        e = read_parts(prod)
         ex[prod] = e.pivot_table(index="pentad", columns="station", values="value", aggfunc="first")
     out = dict(extract_pentads={p: int(len(v)) for p, v in ex.items()})
     masked = [s for s in st.id if s in ex["chirps"].columns and ex["chirps"][s].isna().all()]
@@ -120,15 +186,9 @@ def main():
     out["stations_with_pentads"] = int(len(pc)); out["chirps_masked_stations"] = len(masked)
     out["shift_counts"] = pd.Series(shifts).value_counts().to_dict()
     res = {v: summarise(sk[sk.variant == v], rng) for v in ("primary", "t10_50", "t50_150", "log")}
-    p = res["primary"]
-    lo, hi = p["ratio_ci"]
-    if p["gain_supported_ci"][0] <= 0:
-        p["H1_verdict"] = "Inconclusive (no gain to shrink)"
-    else:
-        p["H1_verdict"] = "Supported" if hi < 0.5 else "Refuted" if lo >= 0.5 else "Inconclusive"
-    l2, u2 = p["dkge_independent_ci"]
-    p["H2_verdict"] = "Supported" if u2 < 0 else "Refuted" if l2 > 0 else "Inconclusive"
+    verdicts(res["primary"])
     out["results"] = res
+    out["secondary"] = secondary(st, daily, np.random.default_rng(20261018))
     out["by_country"] = pc.groupby("cc").agg(stations=("station", "size"), pentads=("pentads", "sum"), independent=("independent", "sum"),
                                              supported=("supported", "sum"), masked=("chirps_masked", "sum")).reset_index().to_dict("records")
     lab["decade"] = lab.ym.str[:3] + "0s"
