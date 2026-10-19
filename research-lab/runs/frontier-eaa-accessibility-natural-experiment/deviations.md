@@ -98,3 +98,16 @@ written are valid and kept, since the job resumes by domain.
   - `metrics.py` is unchanged. It runs Node from /mnt/research-lab-tools, as before.
 - **Sector counts** from `sector.py`: in scope 322, out of scope 1,045, ambiguous 321 (excluded), public 50
   (excluded), no HTML 3.
+
+## D7 — 2026-10-20 08:25 NZDT — the accessibility-metrics run is made timeout-safe and resumable (before any metric was analysed)
+
+The first `metrics.py` run stopped after 1,750 of 16,666 snapshots. One 25-page batch made the Node/axe process run
+past its 1,800-second timeout, and the exception ended the whole run.
+
+**Changes:**
+- **Timeouts.** A batch now has 900 seconds. If it times out, its pages are rerun one at a time with 120 seconds each,
+  and a page that still times out is recorded as an axe error. The preregistered analysis (`did.py`) already drops
+  axe-error snapshots and counts them.
+- **Resumption and output order.** The run resumes from the 1,750 snapshots already measured, and writes results as
+  batches complete rather than in order.
+- **Unchanged:** the rule subset, jsdom settings and outcome.
