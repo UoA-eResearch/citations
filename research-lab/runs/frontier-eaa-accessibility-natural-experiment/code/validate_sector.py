@@ -29,7 +29,7 @@ def visible(html):
 
 
 def sample():
-    s = pd.read_csv(RUN / "data" / "sector.csv")
+    s = pd.read_csv(RUN / "data" / "sector.csv", dtype={"first": str})   # rows without HTML leave gaps, which made it float
     rnd = random.Random(20261019)
     pick = [("in_scope", d) for d in rnd.sample(list(s[s.status == "in_scope"].domain), 60)] + \
            [("out_of_scope", d) for d in rnd.sample(list(s[s.status == "out_of_scope"].domain), 60)]
