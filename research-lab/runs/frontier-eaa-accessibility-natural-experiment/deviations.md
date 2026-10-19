@@ -86,3 +86,15 @@ written are valid and kept, since the job resumes by domain.
    (`data/frame/sample_d5.csv`, also in `results/tables/`, sha256 a8479b8bf0b33a6a…).
 4. **Unchanged:** targets, eligibility (≥ 2 of 4 pre, ≥ 2 of 3 post), sector rules, outcome, analysis, decision rules.
    Lower power is the cost, and the report will give the achieved minimum detectable effect.
+
+## D6 — 2026-10-20 07:26 NZDT — the sector check's adjudicator, and two code fixes (before any accessibility metric or label was read)
+
+- **The adjudicator.** Plan §5 names "the agent running the study" as the sector adjudicator. The 120-site blind
+  sheet is adjudicated by a subagent of that agent. It sees only the domain, title and visible text, and is told not
+  to open any file holding the rule labels. This keeps 150 KB of page text out of the main session's context, and
+  keeps the adjudicator blind to the rule by construction.
+- **Two code fixes:**
+  - `validate_sector.py` read the snapshot id as a float (gaps made it 202401.0), so it now reads it as text;
+  - `metrics.py` is unchanged. It runs Node from /mnt/research-lab-tools, as before.
+- **Sector counts** from `sector.py`: in scope 322, out of scope 1,045, ambiguous 321 (excluded), public 50
+  (excluded), no HTML 3.
