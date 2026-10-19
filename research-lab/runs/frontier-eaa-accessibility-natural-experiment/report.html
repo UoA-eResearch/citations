@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accessibility Act Natural Experiment</title>
+<meta name="description" content="Did the European Accessibility Act change the web? A difference-in-differences on archived EU homepages, in-scope consumer sectors against out-of-scope sites, with a non-EU placebo.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Frontier</div>
+  <h1>Did the European Accessibility Act change the web?</h1>
+  <p class="subtitle">A difference-in-differences on archived homepages. It compares sites in the consumer sectors the European Accessibility Act covers with sites it does not, across 14 EU country domains, before and after the Act applied on 28 June 2025, and repeats the comparison outside the EU as a placebo.</p>
+  <div class="meta">
+    <span>Report · 2026-10-20 · pre-review draft</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/frontier-eaa-accessibility-natural-experiment/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/frontier-eaa-accessibility-natural-experiment/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/frontier-eaa-accessibility-natural-experiment/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: Supported.</strong> Measured accessibility failures on in-scope EU sites fell relative to out-of-scope sites once
+the Act applied. The placebo is too imprecise to rule out a global trend.</p>
+<ul>
+<li><strong>H1 (the EU in-scope relative change is −15% or larger): Supported.</strong><ul>
+<li>Violation density on in-scope EU homepages fell 17% relative to out-of-scope ones: 95% CI −29% to −4%. That is
+1,023 sites, 230 of them in scope, and 6,645 snapshots.</li>
+<li><strong>The event study has the shape the Act predicts.</strong><ul>
+<li>Pre-period differences are close to zero (+2%, +7%, +3% relative to 2024-10).</li>
+<li>The anticipation quarters are flat (−1%, +2%).</li>
+<li>The gap opens at the transition quarter (−10%) and stays open afterwards (−14%, −12%, −18%).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>H2 (the placebo contrast changes by less than 5%): Inconclusive.</strong><ul>
+<li>The same contrast on .com.au, .co.nz and .ca sites gives +3%, but the interval runs from −21% to +35%.</li>
+<li>With 221 placebo sites the study could not have detected less than about a 32% change.</li>
+</ul>
+</li>
+<li><strong>H3 (sites newly installing an overlay improve less): not testable.</strong> Only one in-scope EU site newly installed an
+  accessibility overlay script, so the preregistered rule's "Refuted" reading rests on a single site. Overlay use
+  barely moved at all: about 0.5% of EU snapshots before and about 1% after.</li>
+</ul>
+<p><strong>How much the placebo leaves open.</strong> The triple difference (the EU change minus the placebo change) is −20%, but its
+interval (−41% to +8%) includes zero. The pattern fits an effect of the Act: no pre-trend, a break at the deadline,
+and nothing similar outside the EU. But the data cannot exclude a worldwide shift in in-scope sectors' markup over the
+same months.</p>
+<h2>In plain terms</h2>
+<p>Since 28 June 2025, EU law has required online shops, banks, transport operators, telecoms and e-book sellers to make
+their websites and apps accessible to people with disabilities. Other kinds of websites, such as news sites or
+company brochures, are not covered.</p>
+<p>We used that boundary as a natural experiment. We took about 1,000 EU websites from the Internet Archive and checked
+their homepages each quarter from early 2024 to April 2026. The check counted accessibility errors that can be
+detected automatically, such as images without text descriptions, form fields without labels, and buttons without
+names.</p>
+<p>Covered sites and uncovered sites tracked each other closely through 2024 and early 2025. After the law applied, the
+covered sites' error rate fell about 17% relative to the others, and stayed lower.</p>
+<p>We ran the same comparison for Australian, New Zealand and Canadian sites, where the EU law does not apply. That
+comparison showed no clear change, but it was too small to rule one out.</p>
+<p>So the evidence is consistent with the law making a difference to the code these sites send. It cannot prove it,
+because a global change in how shops and banks build websites could produce a similar pattern.</p>
+<p>These checks catch only some accessibility problems. They miss colour contrast and keyboard use, for example, and say
+nothing about whether disabled people can actually complete a purchase.</p>
+<h2>What was asked</h2>
+<p>The European Accessibility Act (Directive (EU) 2019/882) has applied to private-sector consumer services since
+28 June 2025. The study asks three preregistered questions (<code>plan.md</code>):</p>
+<ul>
+<li><strong>H1:</strong> among EU sites, did automatically detectable failures fall by at least 15% in covered sectors relative to
+  uncovered ones?</li>
+<li><strong>H2:</strong> is the same contrast flat (within ±5%) outside the EU?</li>
+<li><strong>H3:</strong> did in-scope sites that newly installed an "overlay" widget improve their underlying markup less?</li>
+</ul>
+<h2>What was already known</h2>
+<p>The novelty search (2026-10-17) found:
+- vendor scans comparing the EU with the US at one point in time;
+- single-time-point audits that describe themselves as pre-deadline baselines (Slovenian e-commerce, Austrian video
+  platforms).</p>
+<p>No before-after design with a comparison group was found.</p>
+<h2>How it was done</h2>
+<p><strong>Sites.</strong>
+- <strong>Frame.</strong> The Tranco list, restricted to:
+    - 14 EU country-code domains;
+    - .co.uk, reported separately;
+    - .com.au, .co.nz and .ca as the placebo.
+- <strong>Sample.</strong> A seeded half-sample of 150 sites per jurisdiction (D5): 2,700 sites. 1,741 had enough archived
+  homepages to be eligible: at least 2 of 4 pre-period and 2 of 3 post-period quarters.
+- <strong>Exclusions.</strong> Public-sector domains were excluded.</p>
+<p><strong>Snapshots.</strong>
+- <strong>Source.</strong> Internet Archive homepage captures closest to the 15th of each target month (D5), fetched politely, one
+  request at a time.
+- <strong>Months.</strong>
+    - Pre: 2024-01, -04, -07, -10.
+    - Anticipation: 2025-01, -04.
+    - Transition: 2025-07.
+    - Post: 2025-10, 2026-01, 2026-04.
+- <strong>Volume.</strong> 16,666 snapshots were measured.</p>
+<p><strong>Outcome.</strong>
+- <strong>The measure.</strong> log(1 + violation nodes per 1,000 DOM elements). It is measured by axe-core 4.10.2 under jsdom,
+  with no page scripts run, on a frozen set of 19 rules a static page can evaluate (alt text, labels, names, language,
+  ARIA validity, heading order, lists and others).
+- <strong>Drops.</strong> Snapshots with fewer than 50 elements or an axe error were dropped and counted: 619 EU, 151 placebo,
+  43 UK. These include the 79 pages whose axe run timed out (D7).</p>
+<p><strong>Sector.</strong> Sector was assigned once, from the site's earliest eligible snapshot, by fixed multilingual marker rules
+(cart and checkout terms; online banking; timetables and tickets; tariffs and e-books).
+- <strong>Labels.</strong> In scope 322, out of scope 1,045, ambiguous 321 (excluded), public 50 (excluded).
+- <strong>Blind check.</strong> 120 sites (D6) gave precision 0.87 for in scope and 0.88 for out of scope. Both are above the 0.80
+  bar that would have downgraded a Refuted H1.</p>
+<p><strong>Model.</strong>
+- <strong>Specification.</strong> Site and period fixed effects, with InScope × Post, and standard errors clustered by site.
+  Anticipation and transition quarters are excluded from H1–H3 and kept in the event study.
+- <strong>Decision rules:</strong>
+    - H1 needs the point estimate at −15% or below and the upper bound below 0;
+    - H2 needs the interval inside ±5%.</p>
+<h2>Results</h2>
+<h3>H1: the EU contrast (<code>results/tables/primary.json</code>, <code>results/figures/F1_event_study.png</code>)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>relative change after the Act</th>
+<th>95% CI</th>
+<th>sites (in scope)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>H1: EU</strong></td>
+<td><strong>−17.3%</strong></td>
+<td><strong>−28.8% to −3.9%</strong></td>
+<td>1,023 (230)</td>
+</tr>
+<tr>
+<td>S5: EU, the lead's literal windows (2024-01/04 vs 2026-01/04)</td>
+<td>−19.4%</td>
+<td>−33.5% to −2.3%</td>
+<td>1,022 (230)</td>
+</tr>
+<tr>
+<td>S2: UK (partly treated)</td>
+<td>−11.2%</td>
+<td>−45.1% to +43.7%</td>
+<td>82 (24)</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>H1 is Supported.</strong> The point estimate (−17.3%) is below −15%, and the interval's upper end (−3.9%) is below zero.</li>
+<li><strong>Detectable effect.</strong> At 80% power the achieved minimum detectable effect is about 19% (SE of b = 0.077), so the
+  study was powered close to the preregistered threshold.</li>
+</ul>
+<figure><a href="results/figures/F1_event_study.png"><img src="results/figures/F1_event_study.png" alt="EU event study"></a><figcaption>Event study (S3): the relative difference in violation density (violation nodes per 1,000 DOM elements, frozen 19-rule axe subset) between EU sites offering in-scope consumer services and out-of-scope sites, by quarterly snapshot, relative to 2024-10, with site and period fixed effects and site-clustered 95% intervals. Grey: pre-period; purple: anticipation quarters; orange: the transition quarter; blue: post-period. Dashed line: the preregistered -15% bar.</figcaption></figure>
+<h3>H2 and the triple difference (<code>results/figures/F2_estimates.png</code>)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>relative change</th>
+<th>95% CI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H2: placebo (.com.au, .co.nz, .ca; 221 sites, 68 in scope)</td>
+<td>+3.4%</td>
+<td>−20.7% to +34.8%</td>
+</tr>
+<tr>
+<td>S1: triple difference, EU vs placebo</td>
+<td>−20.1%</td>
+<td>−41.1% to +8.2%</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>H2 is Inconclusive.</strong> The interval is far wider than the ±5% band, with a minimum detectable effect of about
+  32%.</li>
+<li><strong>The triple difference has the expected sign and size, but its interval includes zero.</strong></li>
+</ul>
+<figure><a href="results/figures/F2_estimates.png"><img src="results/figures/F2_estimates.png" alt="Difference-in-differences estimates"></a><figcaption>exp(b) - 1 with site-clustered 95% intervals. Post-period: 2025-10, 2026-01, 2026-04; pre-period: 2024-01 to 2024-10; anticipation and transition quarters excluded. Dashed line: the preregistered -15% bar for H1.</figcaption></figure>
+<h3>H3 and overlays</h3>
+<ul>
+<li><strong>Hardly any overlays, and no shift towards them.</strong><ul>
+<li>Overlay scripts (accessiBe, UserWay, EqualWeb and similar) were detected in 188 of 16,666 snapshots.</li>
+<li>Among EU sites the share went from about 0.5% of snapshots in 2024 to about 1% in 2026.</li>
+<li>Overlay adoption as an outcome (S4) shows no in-scope difference: EU +0.0 points (−1.0 to +0.8), placebo −0.5
+(−4.8 to +3.8).</li>
+</ul>
+</li>
+<li><strong>H3 rests on one site.</strong> Only one in-scope EU site newly installed an overlay between the periods. Its estimate
+  (−75%) and the preregistered rule's "Refuted" say nothing beyond that one site, so H3 is reported as not testable.</li>
+</ul>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>It shows that the EAA boundary separated EU homepages' measured accessibility after June 2025.</strong> In-scope sites'
+  automatically detectable failures fell about a sixth relative to out-of-scope sites, with flat pre-trends and the
+  change starting at the deadline.</li>
+<li><strong>It does not establish that the Act caused it.</strong> The placebo is too small to exclude a worldwide change in how
+  shops, banks and transport sites are built. Platform-level fixes, such as theme or CMS updates, would reach in-scope
+  sites everywhere. The triple difference points the right way but is not significant.</li>
+<li><strong>It measures markup, not accessibility.</strong><ul>
+<li>The 19 static rules are a fraction of WCAG. Contrast, keyboard, focus and dynamic content are not measured.</li>
+<li>Homepages are not checkouts.</li>
+<li>Scripts were not run, so the measure is the server-delivered page.</li>
+</ul>
+</li>
+<li><strong>Selection.</strong><ul>
+<li>Archived homepages only; sites without enough captures drop out.</li>
+<li>Sector rules misclassify about one site in eight, which biases the estimate towards zero.</li>
+<li>Microenterprises, which the Act exempts, cannot be identified.</li>
+</ul>
+</li>
+<li><strong>Half-sample.</strong> Power is lower than planned (D5).</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration.</strong> The plan and its code were committed before any archived page was fetched.</li>
+<li><strong>Data source (D1–D5).</strong> The study moved from the Wayback Machine to Common Crawl and back, because of access
+  blocks. It finally used one polite request at a time on a seeded half-sample. All of this was before any page was
+  fetched.</li>
+<li><strong>D6:</strong> the sector check was adjudicated blind by a subagent, and a snapshot-id type fix was made in the validation
+  code.</li>
+<li><strong>D7:</strong> the metrics run was made timeout-safe and resumable. Pages whose axe run still timed out are counted as axe
+  errors.</li>
+<li><strong>Exploratory, added after the results:</strong> the figure code, and the achieved minimum detectable effects (promised in
+  D5).</li>
+</ul>
+<h2>Reproducing it</h2>
+<p><code>code/frame.py</code>, <code>code/cdx_v2.py</code>, <code>code/fetch.py</code>, <code>code/sector.py</code>, <code>code/validate_sector.py sample</code> and <code>merge</code>,
+<code>code/metrics.py</code> (Node and axe in <code>code/axe_run.js</code>), <code>code/did.py</code>, <code>code/figures.py</code>.</p>
+<ul>
+<li><strong>Results</strong> are in <code>results/tables/</code>: <code>primary.json</code>, <code>sector_validation.csv</code> and the frame samples.</li>
+</ul>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/frontier-eaa-accessibility-natural-experiment/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>
