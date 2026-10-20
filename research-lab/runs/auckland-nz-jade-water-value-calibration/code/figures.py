@@ -73,16 +73,21 @@ def main():
     fig.subplots_adjust(left=0.12, right=0.97, bottom=0.17, top=0.8)
     centres = np.arange(10) * 0.1 + 0.05
     ax.bar(centres, hist, width=0.088, color=BAND, edgecolor=SURF, lw=1.2)
-    ax.bar(centres[-1:], hist[-1:], width=0.088, color=HIT, edgecolor=SURF, lw=1.2)
+    # both end bins are failures: the week finished outside the simulated 10th-90th range
+    ax.bar(centres[[0, -1]], hist[[0, -1]], width=0.088, color=HIT, edgecolor=SURF, lw=1.2)
     ax.axhline(hist.sum() / 10, color=INK2, lw=1.2, ls="--")
-    ax.annotate("what a calibrated model\nwould give in each bin", (0.46, hist.sum() / 10), xytext=(0, 14),
+    ax.annotate("what a calibrated model\nwould give in each bin", (0.5, hist.sum() / 10), xytext=(0, 16),
                 textcoords="offset points", fontsize=7.4, color=INK2, ha="center")
+    ax.annotate(f"{int(hist[-1])} weeks\nabove the band", (centres[-1], hist[-1]), xytext=(-6, -26),
+                textcoords="offset points", fontsize=7.4, color="#8f3a12", ha="right")
+    ax.annotate(f"{int(hist[0])} weeks\nbelow it", (centres[0], hist[0]), xytext=(8, 6),
+                textcoords="offset points", fontsize=7.4, color="#8f3a12")
     ax.set_xlabel("where the realised price fell in its own simulated distribution")
     ax.set_ylabel("weekly runs")
     ax.set_xticks(np.arange(0, 1.01, 0.1))
     ax.set_xticklabels([f"{int(v * 100)}%" for v in np.arange(0, 1.01, 0.1)], fontsize=7.4)
     ax.grid(axis="y", color=GRID, lw=0.5)
-    fig.suptitle("The realised price lands in the top bin far too often", x=0.12, ha="left", fontsize=10.5,
+    fig.suptitle("Almost every week finished outside the simulated range", x=0.12, ha="left", fontsize=10.5,
                  color=INK)
     fig.savefig(F / "F2_pit.png", dpi=170); plt.close(fig)
     caption("F2_pit", """The probability integral transform. For every weekly run, the share of its 91 simulated
@@ -98,9 +103,10 @@ def main():
     h2 = p.get("H2", {})
     extra = []
     if h2.get("scored"):
-        extra = [("low storage", h2["rate_low"], None, None), ("other weeks", h2["rate_high"], None, None)]
-    fig, ax = plt.subplots(figsize=(7.4, 3.3))
-    fig.subplots_adjust(left=0.28, right=0.96, bottom=0.18, top=0.8)
+        extra = [(f"lakes in the bottom fifth (n={h2['n_low']})", h2["rate_low"], None, None),
+                 (f"other weeks (n={h2['n_high']})", h2["rate_high"], None, None)]
+    fig, ax = plt.subplots(figsize=(7.6, 3.5))
+    fig.subplots_adjust(left=0.33, right=0.96, bottom=0.17, top=0.8)
     allrows = [(labels[i], rate[i], lo[i], hi[i]) for i in range(len(bs))] + extra
     for k, (lab, v, l, h) in enumerate(allrows):
         c = HIT if "primary" in lab else INK2
@@ -111,15 +117,16 @@ def main():
                     fontsize=7.6, color=INK2)
     ax.axvline(0.10, color=INK2, lw=1.0, ls="--")
     ax.axvline(0.20, color=HIT, lw=1.0, ls=":")
-    ax.annotate("nominal 10%", (0.10, len(allrows) - 0.4), xytext=(4, 0), textcoords="offset points",
-                fontsize=7.2, color=INK2)
-    ax.annotate("H1 threshold", (0.20, len(allrows) - 0.4), xytext=(4, 0), textcoords="offset points",
-                fontsize=7.2, color=HIT)
+    ax.set_ylim(-0.9, len(allrows) - 0.4)
+    ax.annotate("what calibration would give: 10%", (0.10, -0.82), xytext=(4, 0),
+                textcoords="offset points", fontsize=7.2, color=INK2, va="center")
+    ax.annotate("H1 threshold: 20%", (0.20, -0.35), xytext=(4, 0), textcoords="offset points",
+                fontsize=7.2, color=HIT, va="center")
     ax.set_yticks(range(len(allrows))); ax.set_yticklabels([a[0] for a in allrows])
     ax.set_xlabel("share of weeks above the simulated 90th percentile")
     ax.set_xlim(left=0)
     ax.grid(axis="x", color=GRID, lw=0.5)
-    fig.suptitle("Exceedance by forecast horizon, and by how full the lakes were", x=0.28, ha="left",
+    fig.suptitle("Exceedance by forecast horizon, and by how full the lakes were", x=0.33, ha="left",
                  fontsize=10.5, color=INK)
     fig.savefig(F / "F3_exceedance.png", dpi=170); plt.close(fig)
     caption("F3_exceedance", """The share of weekly runs whose realised price exceeded the simulated 90th

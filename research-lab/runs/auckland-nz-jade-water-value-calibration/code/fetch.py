@@ -12,6 +12,7 @@ logs/fetch.log. Resumable: anything already written is skipped.
 A single connection to the blob store runs at about 700 KB/s, so the 152 runs are streamed over WORKERS
 connections at once; the store is a public Azure container built for concurrent reads.
 """
+import calendar
 import csv
 import io
 from concurrent.futures import ThreadPoolExecutor
@@ -27,12 +28,13 @@ DATA = RUN / "data"
 BLOB = "https://emidatasets.blob.core.windows.net/publicdata"
 WV = "Datasets/Wholesale/Expected water values/"
 FEP = "Datasets/Wholesale/DispatchAndPricing/FinalEnergyPrices/ByMonth/"
+FEP_DAY = "Datasets/Wholesale/DispatchAndPricing/FinalEnergyPrices/"
 HMD = "Datasets/Environment/HydrologicalModellingDataset/"
 NODES = ("HAY2201", "BEN2201", "OTA2201")
 KEEP_TYPES = {"prices", "total_storage", "reslevel"}
 MAX_STAGE = 4
 UA = {"User-Agent": "UoA research-lab (JADE calibration audit)"}
-WORKERS = 6
+WORKERS = 12
 
 
 def log(msg):
@@ -163,23 +165,42 @@ def main():
                 out = DATA / "prices" / f"{ym}.csv"
                 if out.exists() and out.stat().st_size > 0:
                     continue
+                # stream() is a generator, so a download failure surfaces while it is being iterated, not when
+                # it is constructed: the whole read has to sit inside the try, or one bad month kills the pass
+                tmp = out.with_suffix(".part")
                 kept = 0
-                try:
-                    rdr = csv.reader(stream(f"{FEP}{ym}_FinalEnergyPrices.csv"))
-                except RuntimeError:
-                    log(f"  prices {ym}: unavailable")
+                # the consolidated month, or, where the Authority has not finalised one (December 2025 is
+                # published only as *_incomplete.csv), the daily files for that month instead
+                sources = [f"{FEP}{ym}_FinalEnergyPrices.csv"]
+                fallback = [f"{FEP_DAY}{ym}{d:02d}_FinalEnergyPrices.csv"
+                            for d in range(1, calendar.monthrange(y, mth)[1] + 1)]
+                used = None
+                for attempt, paths in (("month", sources), ("daily", fallback)):
+                    kept, wrote_header = 0, False
+                    try:
+                        with open(tmp, "w", newline="") as fh:
+                            w = csv.writer(fh)
+                            for path in paths:
+                                rdr = csv.reader(stream(path, tries=2))
+                                header = next(rdr, None)
+                                clean = [c.strip().lstrip("\ufeff") for c in (header or [])]
+                                col = {c: i for i, c in enumerate(clean)}
+                                node_col = next((col[c] for c in ("PointOfConnection", "PointofConnection",
+                                                                  "Node") if c in col), 0)
+                                if not wrote_header:
+                                    w.writerow(clean); wrote_header = True
+                                for row in rdr:
+                                    if row and row[node_col] in NODES:
+                                        w.writerow(row); kept += 1
+                        used = attempt
+                        break
+                    except Exception as e:               # noqa: BLE001
+                        log(f"  prices {ym}: {attempt} source unavailable ({type(e).__name__})")
+                if used is None:
+                    tmp.unlink(missing_ok=True)
                     continue
-                header = next(rdr, None)
-                clean = [c.strip().lstrip("﻿") for c in (header or [])]
-                col = {c: i for i, c in enumerate(clean)}
-                node_col = next((col[c] for c in ("PointOfConnection", "PointofConnection", "Node") if c in col), 0)
-                with open(out, "w", newline="") as fh:
-                    w = csv.writer(fh)
-                    w.writerow(clean)
-                    for row in rdr:
-                        if row and row[node_col] in NODES:
-                            w.writerow(row); kept += 1
-                log(f"  prices {ym}: {kept} rows at {len(NODES)} nodes")
+                tmp.rename(out)
+                log(f"  prices {ym}: {kept} rows at {len(NODES)} nodes (from {used} files)")
 
     if what in ("all", "hmd"):
         (DATA / "hmd").mkdir(parents=True, exist_ok=True)

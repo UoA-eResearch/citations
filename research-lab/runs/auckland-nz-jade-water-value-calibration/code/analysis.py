@@ -376,7 +376,32 @@ def main():
             "ci": ci(d2)}
     out["H2"] = h2
 
+    # how the simulated spread compares with the spread that actually occurred: the published runs vary only
+    # the inflow sequence, so this says how much of realised price variation inflow uncertainty can reach
+    a = np.array([r[f"s{PRIMARY_STAGE}_actual"] for r in usable], float)
+    p10a = np.array([r[f"s{PRIMARY_STAGE}_p10"] for r in usable], float)
+    p50a = np.array([r[f"s{PRIMARY_STAGE}_p50"] for r in usable], float)
+    p90a = np.array([r[f"s{PRIMARY_STAGE}_p90"] for r in usable], float)
+    exceeding = a > p90a
+    out["spread"] = {
+        "median_band_width": float(np.median(p90a - p10a)),
+        "median_band_ratio": float(np.median(p90a / p10a)),
+        "median_simulated_p50": float(np.median(p50a)),
+        "median_realised": float(np.median(a)),
+        "realised_p10_to_p90_across_weeks": [float(np.percentile(a, 10)), float(np.percentile(a, 90))],
+        "realised_spread_across_weeks": float(np.percentile(a, 90) - np.percentile(a, 10)),
+        "band_width_as_share_of_realised_spread":
+            float(np.median(p90a - p10a) / (np.percentile(a, 90) - np.percentile(a, 10))),
+        "median_actual_over_p90_when_exceeding":
+            float(np.median(a[exceeding] / p90a[exceeding])) if exceeding.any() else None,
+        "max_actual_over_p90": float(np.max(a / p90a)),
+        "outside_band_share": float(np.mean((a > p90a) | (a < p10a))),
+    }
+
     # validation
+    monthly = {}
+    for d, vals in real.get(NODE_REAL, {}).items():
+        monthly.setdefault(d.strftime("%Y-%m"), []).extend(vals)
     nsims = [r.get(f"s{PRIMARY_STAGE}_nsim") for r in rows if r.get(f"s{PRIMARY_STAGE}_nsim")]
     out["validation"] = {
         "n_sequences": {"min": min(nsims) if nsims else None, "median": float(np.median(nsims)) if nsims else None,
@@ -387,6 +412,11 @@ def main():
         "period_counts": sorted({r.get(f"s{PRIMARY_STAGE}_periods") for r in usable}),
         "median_actual": float(np.median([r[f"s{PRIMARY_STAGE}_actual"] for r in usable])) if n else None,
         "median_sim_p50": float(np.median([r[f"s{PRIMARY_STAGE}_p50"] for r in usable])) if n else None,
+        # the realised series against the market's own history: the August 2024 gas-shortage peak and the
+        # collapse that followed heavy rain are both unmistakable, and the half-hourly counts confirm that the
+        # daylight-saving days (50 periods in April, 46 in September) are handled
+        "realised_monthly_mean": {k: round(float(np.mean(v)), 2) for k, v in sorted(monthly.items())},
+        "realised_monthly_periods": {k: len(v) for k, v in sorted(monthly.items())},
     }
 
     json.dump(out, open(T / "primary.json", "w"), indent=1)
