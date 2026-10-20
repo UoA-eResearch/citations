@@ -57,6 +57,9 @@ def main():
         k = (r["basis"], r["field"], int(r["year"]))
         if k not in best or r["capture"] > best[k]:
             best[k], act[k] = r["capture"], f(r["pj"]) or 0.0
+    vmax = {}
+    for (v, _, t) in fc:
+        vmax[v] = max(vmax.get(v, t), t)                     # the last year each vintage's profile covers
     years_act = sorted({y for (_, _, y) in act})
     tmax = max(years_act)
     fields = sorted({fld for (_, fld, _) in act} | {fld for (_, fld, _) in fc})
@@ -78,14 +81,21 @@ def main():
             for v in sorted({vv for (vv, _, _) in fc}):
                 if not (v <= t <= tmax) or (v, fld, t) in fc:
                     continue
-                if any(k[0] == v for k in fc if k[1] == fld):      # field known to that vintage but not that year
-                    continue
                 if not any(k[0] == v for k in fc):
                     continue
+                # The field produced in year t but the vintage gives no number for it. Either the field is absent
+                # from the vintage's profile altogether, or it is listed but its cell for that year is blank. Both
+                # are a zero forecast under the preregistered union rule (plan §3). The draft skipped the second
+                # case, which dropped, for instance, the 2019 vintage's blank Maui cells for 2022 and 2023 (D2).
+                listed = any(k[0] == v and k[1] == fld for k in fc)
+                if listed and t > vmax.get(v, t):
+                    continue                                    # beyond the vintage's own profile horizon
                 pairs.append(dict(basis=basis, vintage=v, field=fld, year=t, h=t - v, forecast=0.0, realised=A,
-                                  e=float(np.log(EPS / (A + EPS))), missing_from_profile=True))
+                                  e=float(np.log(EPS / (A + EPS))), missing_from_profile=not listed,
+                                  blank_cell=listed))
     with open(T / "pairs.csv", "w", newline="") as fh:
-        cols = ["basis", "vintage", "field", "year", "h", "forecast", "realised", "e", "missing_from_profile"]
+        cols = ["basis", "vintage", "field", "year", "h", "forecast", "realised", "e", "missing_from_profile",
+                "blank_cell"]
         w = csv.DictWriter(fh, fieldnames=cols, extrasaction="ignore")
         w.writeheader(); w.writerows(pairs)
 
@@ -190,12 +200,25 @@ def main():
         w = csv.DictWriter(fh, fieldnames=list(natsum[0])); w.writeheader(); w.writerows(natsum)
 
     # ---- reserve-category calibration: ultimate recoverable revisions between consecutive vintages
+    # Keyed on the harmonised field, with the raw names that map to it summed within a vintage. The draft keyed on
+    # raw names, so a field renamed between vintages ("Turangi" / "Turangi and Turangi McKee Overthrust") dropped
+    # out of the comparison (D2). "Others" is a changing basket of small fields, not a field, and is excluded.
+    # One capture per vintage, the latest, as for the profiles.
+    rkeep = {}
+    for r in rows("reserves.csv"):
+        v = int(r["vintage_year"])
+        if v not in rkeep or r["capture"] > rkeep[v]:
+            rkeep[v] = r["capture"]
     ur = defaultdict(dict)
     for r in rows("reserves.csv"):
+        v = int(r["vintage_year"])
+        if r["capture"] != rkeep[v] or r["field"] in NOT_A_FIELD or r["field"] in ("Others", "UNMAPPED"):
+            continue
         for k in ("1", "2", "3"):
-            v = f(r[f"ur{k}"])
-            if v is not None:
-                ur[k].setdefault(int(r["vintage_year"]), {})[r["field_raw"].strip()] = v
+            x = f(r[f"ur{k}"])
+            if x is not None:
+                d = ur[k].setdefault(v, {})
+                d[r["field"]] = d.get(r["field"], 0.0) + x
     revs, rev_rows = {}, []
     for k in ("1", "2", "3"):
         vs = sorted(ur[k])
@@ -222,6 +245,12 @@ def main():
     with open(T / "revisions.csv", "w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=list(rev_rows[0])); w.writeheader(); w.writerows(rev_rows)
     out["revisions"] = revs
+    # the volume behind the sign count: net PJ revision of ultimate recoverable, by category and vintage pair
+    pj = defaultdict(dict)
+    for x in rev_rows:
+        key = f"{x['v_from']}-{x['v_to']}"
+        pj[x["category"]][key] = pj[x["category"]].get(key, 0.0) + (x["ur_to"] - x["ur_from"])
+    out["revisions_pj"] = {c: {k: round(v, 1) for k, v in sorted(d.items())} for c, d in pj.items()}
     r2 = revs.get("2P")
     out["H2"] = dict(**(r2 or {}), threshold=0.50, lead_reference=0.60,
                      verdict=("Supported" if r2 and r2["lo"] > 0.50 else
