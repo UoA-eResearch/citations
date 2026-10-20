@@ -27,6 +27,8 @@ PRIMARY_STAGE = 2
 NODE_SIM, NODE_REAL = "HAY", "HAY2201"
 OTHER_NODES = ("BEN2201", "OTA2201")
 SEED, B, BLOCK = 20261020, 2000, 4
+MIN_SIMS = 50      # the published runs carry 80-91 inflow sequences, not a fixed 91 (deviations D1)
+MIN_PERIODS = 330  # a full settled week is 336 half-hours, 334 or 338 when the clocks change
 LOW_STORAGE_Q = 0.20
 
 
@@ -277,7 +279,18 @@ def main():
                 row["storage_hist_n"] = len(hist)
         rows.append(row)
 
-    usable = [r for r in rows if r.get(f"s{PRIMARY_STAGE}_exceed") is not None]
+    def is_usable(r):
+        return (r.get(f"s{PRIMARY_STAGE}_exceed") is not None
+                and r.get(f"s{PRIMARY_STAGE}_days") == 7
+                and (r.get(f"s{PRIMARY_STAGE}_periods") or 0) >= MIN_PERIODS
+                and (r.get(f"s{PRIMARY_STAGE}_nsim") or 0) >= MIN_SIMS)
+
+    for r in rows:
+        if r.get(f"s{PRIMARY_STAGE}_exceed") is not None and not is_usable(r):
+            excluded.append((r["tag"], f"incomplete week or too few sequences: days={r.get(f's{PRIMARY_STAGE}_days')} "
+                                       f"periods={r.get(f's{PRIMARY_STAGE}_periods')} "
+                                       f"nsim={r.get(f's{PRIMARY_STAGE}_nsim')}"))
+    usable = [r for r in rows if is_usable(r)]
     n = len(usable)
     exc = np.array([r[f"s{PRIMARY_STAGE}_exceed"] for r in usable], float)
     pits = np.array([r[f"s{PRIMARY_STAGE}_pit"] for r in usable], float)
@@ -301,7 +314,9 @@ def main():
     out["lower_tail"]["rate"] = float(np.mean([r[f"s{PRIMARY_STAGE}_below"] for r in usable])) if n else None
 
     for stage in STAGES:
-        sub = [r for r in rows if r.get(f"s{stage}_exceed") is not None]
+        sub = [r for r in rows if r.get(f"s{stage}_exceed") is not None
+               and r.get(f"s{stage}_days") == 7 and (r.get(f"s{stage}_periods") or 0) >= MIN_PERIODS
+               and (r.get(f"s{stage}_nsim") or 0) >= MIN_SIMS]
         if not sub:
             continue
         e = np.array([r[f"s{stage}_exceed"] for r in sub], float)
@@ -362,8 +377,11 @@ def main():
     out["H2"] = h2
 
     # validation
+    nsims = [r.get(f"s{PRIMARY_STAGE}_nsim") for r in rows if r.get(f"s{PRIMARY_STAGE}_nsim")]
     out["validation"] = {
-        "runs_with_91_sims": sum(1 for r in rows if r.get(f"s{PRIMARY_STAGE}_nsim") == 91),
+        "n_sequences": {"min": min(nsims) if nsims else None, "median": float(np.median(nsims)) if nsims else None,
+                        "max": max(nsims) if nsims else None,
+                        "distribution": {str(k): nsims.count(k) for k in sorted(set(nsims))}},
         "runs_with_168_hours": sum(1 for r in rows if r.get(f"s{PRIMARY_STAGE}_hours") == 168),
         "runs_with_7_price_days": sum(1 for r in usable if r.get(f"s{PRIMARY_STAGE}_days") == 7),
         "period_counts": sorted({r.get(f"s{PRIMARY_STAGE}_periods") for r in usable}),
