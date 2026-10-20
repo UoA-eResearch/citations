@@ -62,7 +62,7 @@ def main():
     fig.savefig(F / "F1_band_vs_actual.png", dpi=170); plt.close(fig)
     caption("F1_band_vs_actual", f"""For each published weekly JADE run, the simulated distribution of the average
     wholesale price at Haywards in the run's first fully out-of-sample week (stage 2), against the price actually
-    settled in that week. The band spans the 10th to 90th percentile of the run's 80 to 91 historical inflow sequences. The scored week is priced risk-neutrally at the run's flat long-run fuel assumption, which in a fuel shortage sits far below the price of fuel.
+    settled in that week. The band spans the 10th to 90th percentile of the run's 80 to 91 historical inflow sequences. The scored week is priced risk-neutrally at the run's flat long-run fuel assumption, which in the 2024 gas shortage sat far below its own figure for the freeze week.
     Orange markers are weeks when the realised price finished above the simulated 90th percentile, which a
     calibrated model would do about a tenth of the time; here it happens in {int(exceed.sum())} of {len(rows)}
     weeks. Log scale.""")

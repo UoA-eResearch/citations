@@ -266,3 +266,53 @@ either recompute it with energy weights or drop "agrees" for "flags a superset".
   `thermal_stations.csv`), fuel-cost excerpts for four runs, the JADE documentation's risk-setting and output pages,
   the text of the Authority's 2022 EPOC slides, the full blob listing (17,991 names) and SHA-256 sums of the
   re-downloaded files.
+
+## Confirmation pass (commit 262f85e, 2026-10-21)
+
+Checked: `report.md` (rewritten), `report.html`, `deviations.md` D2, `code/figures.py` and the regenerated F1/F2
+captions and F1 legend. `git diff 96c8a7c 262f85e -- results/tables code/analysis.py code/fetch.py data` is empty, so
+no pipeline code or result table changed. Every number quoted from my checks appears in both report formats with the
+same value (`1.79`, `18 of 20`, `1 of 16`, `$0.36`, `$796.87`, `71.1%`, `$13.20`, `$28.31`, `61.2%`, the 41-79% interval,
+the effective sample of 19); the only decimals present in the HTML and not the Markdown are CSS sizes. The F1 PNG now
+carries "80-91 inflow years" in its legend.
+
+| finding | status | where |
+|---|---|---|
+| 1. Risk-neutral, long-run-fuel benchmark misread as "hydrology alone" | **Resolved.** Verdict names the not-a-forecaster point and the reason; risk neutrality (no risk parameters, JADE default), the flat forward fuel assumption with the week-32/33 figures, the $128-184 stack and the $530 tranche, the Authority's 2022 wording, and an explicit withdrawal of the earlier reading are all present. | `report.md:6-8, 22-37, 58-64, 227-234`; D2 item 1 |
+| 2. 10th-90th spread called "the range" | **Resolved.** Full range $0.36-$796.87 stated; $265 explained as a pooled percentile spread and called the least fair comparison; the three yardsticks and the 71.1% envelope statistic added. | `report.md:39-43, 139-149` |
+| 3. H2 ceiling, two spells, quintiles | **Resolved.** 1/0.56 = 1.79 ceiling in the verdict and H2 section; "the effect is real" gone; two spells with their counts; quintile table; confound stated in the limitations. | `report.md:15-20, 196-211, 235` |
+| 4. Bootstrap dependence | **Resolved.** ACF 0.66, effective n ≈ 19, 41-79% under longer blocks, "only just" twice the threshold, MDE understated by ~1.4. | `report.md:10-14, 153-159` |
+| 5. Bias separated from spread | **Resolved.** 61.2% above the median, median ratio 1.32, PIT asymmetry, persistence baseline with its caveat. | `report.md:137, 172-179`; F2 caption |
+| 6. Undeclared deviations; volume-sum sensitivity | **Resolved.** All three recorded in D2 item 6; the sensitivity withdrawn as corroboration with the Mm³ problem and the superset explanation; BEN/OTA shown as review-derived, not study-scored. The ratio MDE remains uncomputed, now declared; given the ceiling it is moot. | D2 item 6; `report.md:236-237` |
+| 7. "91" and minor items | **Resolved.** "80 to 91" / "about 90" in text, table, legend and captions; the remaining minor items listed in D2 item 7. | `report.md:24, 49, 55, 133`; D2 item 7 |
+
+### New or remaining problems in the revision
+
+Two wording errors should be fixed before publication; the rest are optional.
+
+1. **Fix: "exceedance falls monotonically by storage quintile" (`report.md:18`).** The quintile rates are 90.0%, 85.0%,
+   88.9%, 42.9%, 6.3% — the third quintile is higher than the second. Say "sits at 85-90% in the bottom three fifths
+   and falls to 43% and 6% in the top two". (My own review called it a "monotone trend"; that was loose and I withdraw
+   the word.)
+2. **Fix: attribution to the Authority (`report.md:63-64`).** "The Authority says plainly that these runs ... exist to
+   work out how to use water, not to forecast prices." The 2022 slides state the purpose ("a steady state water release
+   policy in presence of uncertain inflows") and the assumptions; they do not say the runs are not price forecasts.
+   That is the study's inference and should be worded as such, e.g. "The Authority describes the runs as built on
+   simplifying assumptions to work out how to use water; it does not present them as price forecasts, and our check
+   confirms they should not be read as one."
+3. Optional: "the gas price input follows the observed series up to that week" (`report.md:29`) — the source of the
+   weekly pre-freeze series is not documented in the run; "a weekly series" is all that can be claimed.
+4. Optional: "assumed gas at less than half what it actually cost" (`report.md:60`) — verified only against the run's
+   own week-32 input ($28.31); "less than half its own figure for the week before" is the supportable form.
+5. Optional: "Storage matters strongly" (`report.md:18`) reads causally; the confound is stated at `:235`, but
+   "exceedance is strongly associated with storage" would match it.
+6. Optional: the F1 caption's "in a fuel shortage sits far below the price of fuel" generalises from the one shortage
+   in the window; "in the 2024 shortage sat far below" is exact.
+7. Optional: D1 item 5 (`deviations.md:29`) still reads "it agrees with the primary split". D2 supersedes it, but a
+   bracketed pointer "(superseded: see D2 item 6)" would stop a reader who finishes at D1.
+
+### Fit to publish
+
+Yes, once items 1 and 2 are corrected; each is a one-line edit. The primary results are unchanged and were verified
+in the first pass; the revised interpretation is consistent with the Authority's run files and its own description of
+the runs; H1 Supported and H2 "Refuted by a rule that could not be met" are stated with their limits.

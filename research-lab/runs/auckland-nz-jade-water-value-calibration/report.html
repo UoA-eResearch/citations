@@ -80,7 +80,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
   <h1>Not a price forecast: the Electricity Authority&#x27;s published water-value runs against the prices that followed</h1>
   <p class="subtitle">Every one of the 152 weekly JADE runs the Electricity Authority published from 2023 to 2025, scored against the price the market then settled at Haywards in the run&#x27;s first fully out-of-sample week.</p>
   <div class="meta">
-    <span>Report · 2026-10-20 · pre-review draft</span>
+    <span>Report · 2026-10-21 · pre-review draft</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-jade-water-value-calibration/plan.md">Preregistration</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-jade-water-value-calibration/deviations.md">Deviations log</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-jade-water-value-calibration/code">Code</a>
@@ -101,8 +101,8 @@ hydrology matters.</strong></p>
 <li><strong>H2 (three times worse when the lakes are low): Refuted by its rule, but the rule was unreachable.</strong> Low-storage
   weeks did fail more often, 90% against 56%, a ratio of 1.61. But with the comparison group already failing 56% of
   the time, the largest ratio any data could give is 1/0.56 = 1.79, so the threefold test could not be passed once H1
-  held. Storage matters strongly: exceedance falls monotonically by storage quintile, from 18 of 20 weeks in the
-  lowest fifth to 1 of 16 in the highest. The 20 low-storage weeks are two consecutive spells (December 2023 to
+  held. Storage is strongly associated with exceedance: 85–90% of weeks in each of the bottom three storage fifths,
+  falling to 43% and then 6% in the top two. The 20 low-storage weeks are two consecutive spells (December 2023 to
   January 2024, and the gas shortage of May to August 2024), so even the 1.61 rests on two episodes.</li>
 </ul>
 <p><strong>What the runs are, and why the band is narrow.</strong> JADE is a stochastic dual dynamic programming model. The
@@ -111,7 +111,7 @@ which of 80 to 91 historical inflow sequences the year follows. The Authority it
 laden: risk neutrality, single scenario re: demand forecast, fuel prices", built to produce "a steady state water
 release policy in presence of uncertain inflows" and published to support trading-conduct monitoring.</p>
 <p>The scored week is priced at a <strong>flat long-run fuel assumption</strong>, not the fuel prices of the moment. In the run
-frozen in week 32 of 2024, during the gas shortage, the gas price input follows the observed series up to that week
+frozen in week 32 of 2024, during the gas shortage, the gas price input follows a weekly series up to that week
 ($28.31/GJ) and then drops to <strong>$13.20/GJ</strong> from week 33 — the week scored — for every week thereafter; the carbon
 price input rises from $51.65 to $64.13. At $13.20 gas the model's thermal stack spans roughly $128 to $184/MWh,
 and the next price level is load shedding at $530. So that run's 91 sequences gave $139 to $173 for the week, while
@@ -135,10 +135,10 @@ did the real price land among their prices?</p>
 prices the run produced, or below the lowest.</p>
 <p>That is not because rainfall hardly matters. It is because of what the run assumes. It takes the cost of gas and coal
 from a single long-run figure, not today's price, and it sets prices as if no one were worried about running short.
-In August 2024, during a gas shortage, the run assumed gas at less than half what it actually cost. Its prices for
+In August 2024, during a gas shortage, the run assumed gas at less than half its own figure for the week before. Its prices for
 that week ran from $139 to $173. The market paid $449.</p>
-<p>The Authority says plainly that these runs are built on simplifying assumptions and exist to work out how to use
-water, not to forecast prices. Our check confirms they should not be read as a forecast of what a week will cost.</p>
+<p>The Authority says plainly that these runs rest on simplifying assumptions and exist to work out how to use water.
+Our check shows they should not be read as a forecast of what a week will cost.</p>
 <p>Low lakes made things worse: when the lakes were at their lowest, the real price beat the run's range in nearly every
 week.</p>
 <h2>What was asked</h2>
@@ -188,7 +188,7 @@ week, is below the 20th percentile for the same week of the year in other years.
 2,000 resamples, seed 20261020), as preregistered.</p>
 <h2>Results</h2>
 <h3>What was simulated, and what happened (<code>results/figures/F1_band_vs_actual.png</code>)</h3>
-<figure><a href="results/figures/F1_band_vs_actual.png"><img src="results/figures/F1_band_vs_actual.png" alt="Simulated band against realised price"></a><figcaption>For each published weekly JADE run, the simulated distribution of the average wholesale price at Haywards in the run&#x27;s first fully out-of-sample week (stage 2), against the price actually settled in that week. The band spans the 10th to 90th percentile of the run&#x27;s 80 to 91 historical inflow sequences. The scored week is priced risk-neutrally at the run&#x27;s flat long-run fuel assumption, which in a fuel shortage sits far below the price of fuel. Orange markers are weeks when the realised price finished above the simulated 90th percentile, which a calibrated model would do about a tenth of the time; here it happens in 90 of 152 weeks. Log scale.</figcaption></figure>
+<figure><a href="results/figures/F1_band_vs_actual.png"><img src="results/figures/F1_band_vs_actual.png" alt="Simulated band against realised price"></a><figcaption>For each published weekly JADE run, the simulated distribution of the average wholesale price at Haywards in the run&#x27;s first fully out-of-sample week (stage 2), against the price actually settled in that week. The band spans the 10th to 90th percentile of the run&#x27;s 80 to 91 historical inflow sequences. The scored week is priced risk-neutrally at the run&#x27;s flat long-run fuel assumption, which in the 2024 gas shortage sat far below its own figure for the freeze week. Orange markers are weeks when the realised price finished above the simulated 90th percentile, which a calibrated model would do about a tenth of the time; here it happens in 90 of 152 weeks. Log scale.</figcaption></figure>
 <div class="table-wrap"><table>
 <thead>
 <tr>

@@ -15,8 +15,8 @@ hydrology matters.**
 - **H2 (three times worse when the lakes are low): Refuted by its rule, but the rule was unreachable.** Low-storage
   weeks did fail more often, 90% against 56%, a ratio of 1.61. But with the comparison group already failing 56% of
   the time, the largest ratio any data could give is 1/0.56 = 1.79, so the threefold test could not be passed once H1
-  held. Storage matters strongly: exceedance falls monotonically by storage quintile, from 18 of 20 weeks in the
-  lowest fifth to 1 of 16 in the highest. The 20 low-storage weeks are two consecutive spells (December 2023 to
+  held. Storage is strongly associated with exceedance: 85–90% of weeks in each of the bottom three storage fifths,
+  falling to 43% and then 6% in the top two. The 20 low-storage weeks are two consecutive spells (December 2023 to
   January 2024, and the gas shortage of May to August 2024), so even the 1.61 rests on two episodes.
 
 **What the runs are, and why the band is narrow.** JADE is a stochastic dual dynamic programming model. The
@@ -26,7 +26,7 @@ laden: risk neutrality, single scenario re: demand forecast, fuel prices", built
 release policy in presence of uncertain inflows" and published to support trading-conduct monitoring.
 
 The scored week is priced at a **flat long-run fuel assumption**, not the fuel prices of the moment. In the run
-frozen in week 32 of 2024, during the gas shortage, the gas price input follows the observed series up to that week
+frozen in week 32 of 2024, during the gas shortage, the gas price input follows a weekly series up to that week
 ($28.31/GJ) and then drops to **$13.20/GJ** from week 33 — the week scored — for every week thereafter; the carbon
 price input rises from $51.65 to $64.13. At $13.20 gas the model's thermal stack spans roughly $128 to $184/MWh,
 and the next price level is load shedding at $530. So that run's 91 sequences gave $139 to $173 for the week, while
@@ -57,11 +57,11 @@ prices the run produced, or below the lowest.
 
 That is not because rainfall hardly matters. It is because of what the run assumes. It takes the cost of gas and coal
 from a single long-run figure, not today's price, and it sets prices as if no one were worried about running short.
-In August 2024, during a gas shortage, the run assumed gas at less than half what it actually cost. Its prices for
+In August 2024, during a gas shortage, the run assumed gas at less than half its own figure for the week before. Its prices for
 that week ran from $139 to $173. The market paid $449.
 
-The Authority says plainly that these runs are built on simplifying assumptions and exist to work out how to use
-water, not to forecast prices. Our check confirms they should not be read as a forecast of what a week will cost.
+The Authority says plainly that these runs rest on simplifying assumptions and exist to work out how to use water.
+Our check shows they should not be read as a forecast of what a week will cost.
 
 Low lakes made things worse: when the lakes were at their lowest, the real price beat the run's range in nearly every
 week.

@@ -26,7 +26,7 @@ added after the results, and is descriptive only.
    ends 2024-12-31, so the storage percentile exists for the 2023 and 2024 runs only. Both groups still clear the
    plan's ten-run minimum (20 low, 84 other), so H2 is scored on them. A sensitivity covering all 152 runs uses
    JADE's own run-start reservoir sum with two seasonal harmonics removed, flagging the bottom fifth of residuals;
-   it agrees with the primary split.
+   it agrees with the primary split (superseded: see D2 item 6, which withdraws this sensitivity as corroboration).
 6. **Spread statistics added after the results.** The preregistered tests are one-sided, but the realised price
    fell *below* the simulated 10th percentile in 28% of weeks as well as above the 90th in 59%. Statistics
    describing the width of the simulated band against the spread of realised prices were added to report that
