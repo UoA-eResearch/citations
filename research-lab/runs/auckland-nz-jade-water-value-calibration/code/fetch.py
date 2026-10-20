@@ -8,9 +8,13 @@ final-price archives under `ByMonth/`, filtered to the three nodes of interest.
 Writes data/runs/<year>_<week>.csv (filtered simulation output), data/runs/<year>_<week>_hours.csv,
 data/run_index.csv (one row per run, with the input-freeze timestamp), data/prices/<yyyymm>.csv and
 logs/fetch.log. Resumable: anything already written is skipped.
+
+A single connection to the blob store runs at about 700 KB/s, so the 152 runs are streamed over WORKERS
+connections at once; the store is a public Azure container built for concurrent reads.
 """
 import csv
 import io
+from concurrent.futures import ThreadPoolExecutor
 import re
 import sys
 import time
@@ -28,6 +32,7 @@ NODES = ("HAY2201", "BEN2201", "OTA2201")
 KEEP_TYPES = {"prices", "total_storage", "reslevel"}
 MAX_STAGE = 4
 UA = {"User-Agent": "UoA research-lab (JADE calibration audit)"}
+WORKERS = 6
 
 
 def log(msg):
@@ -90,6 +95,15 @@ def main():
         names = listing(WV)
         log(f"{len(names)} blobs in the water-values dataset")
         tidy = sorted(n for n in names if n.lower().endswith("tidy_results.csv"))
+        # one pass over the listing: per run folder, the input-freeze stamps and the hours file
+        stamps, hours_of = {}, {}
+        for n in names:
+            parts = n.split("/")
+            if len(parts) > 7 and parts[5] == "Inputs" and parts[6] == "data_files":
+                key = (parts[3], parts[4])
+                stamps.setdefault(key, set()).add(parts[7])
+                if n.endswith("hours_per_block.csv"):
+                    hours_of[key] = n
         index = []
         for path in tidy:
             parts = path.split("/")
@@ -98,24 +112,28 @@ def main():
             if not m:
                 continue
             week = int(m.group(1))
-            tag = f"{year}_{week:02d}"
-            # the input-freeze timestamp is the folder name under Inputs/data_files/
-            stamps = sorted({n.split("/")[7] for n in names
-                             if n.startswith(f"{WV}{year}/{folder}/Inputs/data_files/") and len(n.split("/")) > 7})
-            hours = [n for n in names if n.startswith(f"{WV}{year}/{folder}/Inputs/data_files/")
-                     and n.endswith("hours_per_block.csv")]
-            index.append(dict(tag=tag, year=int(year), week=week, folder=folder,
-                              input_stamp=stamps[-1] if stamps else "", tidy=path))
+            st = sorted(stamps.get((year, folder), []))
+            index.append(dict(tag=f"{year}_{week:02d}", year=int(year), week=week, folder=folder,
+                              input_stamp=st[-1] if st else "", tidy=path))
+        with open(DATA / "run_index.csv", "w", newline="") as fh:
+            w = csv.DictWriter(fh, fieldnames=["tag", "year", "week", "folder", "input_stamp", "tidy"])
+            w.writeheader(); w.writerows(index)
+        log(f"{len(index)} weekly runs indexed")
+
+        def one(rec):
+            tag = rec["tag"]
+            hp = hours_of.get((str(rec["year"]), rec["folder"]))
+            if hp:
+                get(hp, DATA / "runs" / f"{tag}_hours.csv")
             out = DATA / "runs" / f"{tag}.csv"
-            if hours:
-                get(hours[-1], DATA / "runs" / f"{tag}_hours.csv")
             if out.exists() and out.stat().st_size > 0:
-                continue
+                return f"{tag}: already present"
+            tmp = out.with_suffix(".part")
             kept = 0
-            with open(out, "w", newline="") as fh:
+            with open(tmp, "w", newline="") as fh:
                 w = csv.writer(fh)
                 w.writerow(["simulation", "stage", "year", "week", "type", "name", "demand", "node", "value"])
-                rdr = csv.reader(stream(path))
+                rdr = csv.reader(stream(rec["tidy"]))
                 header = next(rdr, None)
                 col = {c: i for i, c in enumerate(header or [])}
                 for row in rdr:
@@ -129,11 +147,12 @@ def main():
                     w.writerow([row[col[c]] for c in ("simulation", "stage", "year", "week", "type", "name",
                                                       "demand", "node", "value")])
                     kept += 1
-            log(f"  {tag}: kept {kept} rows (stamp {index[-1]['input_stamp']})")
-        with open(DATA / "run_index.csv", "w", newline="") as fh:
-            w = csv.DictWriter(fh, fieldnames=["tag", "year", "week", "folder", "input_stamp", "tidy"])
-            w.writeheader(); w.writerows(index)
-        log(f"{len(index)} weekly runs indexed")
+            tmp.rename(out)
+            return f"{tag}: kept {kept} rows (stamp {rec['input_stamp']})"
+
+        with ThreadPoolExecutor(max_workers=WORKERS) as ex:
+            for k, msg in enumerate(ex.map(one, index), 1):
+                log(f"  [{k}/{len(index)}] {msg}")
 
     if what in ("all", "prices"):
         for y in (2023, 2024, 2025, 2026):
@@ -164,11 +183,11 @@ def main():
 
     if what in ("all", "hmd"):
         (DATA / "hmd").mkdir(parents=True, exist_ok=True)
-        got = 0
-        for n in listing(HMD):
-            if n.lower().endswith((".csv", ".zip")) and get(n, DATA / "hmd" / Path(n).name):
-                got += 1
-        log(f"hydrological dataset: {got} files")
+        wanted = [n for n in listing(HMD)
+                  if ("/3_1_Storage/" in n and n.endswith(".csv"))
+                  or "EnergyStorageCapacity" in n]
+        got = sum(1 for n in wanted if get(n, DATA / "hmd" / Path(n).name))
+        log(f"hydrological dataset: {got}/{len(wanted)} files (lake storage + derived energy capacity)")
 
 
 if __name__ == "__main__":
