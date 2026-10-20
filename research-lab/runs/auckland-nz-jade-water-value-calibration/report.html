@@ -77,8 +77,8 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 <div class="page">
 <header class="masthead">
   <div class="eyebrow">Research Lab · Deep dive · The Energy Movement</div>
-  <h1>A $15 band in a $265 market: how wide the Electricity Authority&#x27;s published water-value runs actually are</h1>
-  <p class="subtitle">Every one of the 152 weekly JADE runs the Electricity Authority published from 2023 to 2025, scored against the price the market then settled at Haywards.</p>
+  <h1>Not a price forecast: the Electricity Authority&#x27;s published water-value runs against the prices that followed</h1>
+  <p class="subtitle">Every one of the 152 weekly JADE runs the Electricity Authority published from 2023 to 2025, scored against the price the market then settled at Haywards in the run&#x27;s first fully out-of-sample week.</p>
   <div class="meta">
     <span>Report · 2026-10-20 · pre-review draft</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-jade-water-value-calibration/plan.md">Preregistration</a>
@@ -89,70 +89,77 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 </header>
 <section class="tiles" aria-label="Key results"></section>
 <main>
-<p><strong>Verdict: H1 Supported, H2 Refuted — and the headline is larger than either hypothesis.</strong></p>
+<p><strong>Verdict: H1 Supported; H2 Refuted, though by a test that could not be passed. The runs' price distributions are far
+too narrow to read as forecasts of price — and the reason is how the runs price future weeks, not how little
+hydrology matters.</strong></p>
 <ul>
 <li><strong>H1 (the upper tail is far too thin): Supported.</strong> The realised price finished above the run's simulated 90th
-  percentile in <strong>59.2% of weeks</strong> (95% CI 46.1% to 73.0%). A calibrated distribution would do that a tenth of
-  the time; the hypothesis asked only for 20%, and the interval's lower bound is more than twice that.</li>
-<li><strong>H2 (three times worse when the lakes are low): Refuted.</strong> Low-storage weeks do fail more often — 90.0% against
-  56.0% — but the ratio is <strong>1.61</strong> (95% CI 1.12 to 2.36), and the upper bound sits below the threefold threshold
-  the plan set. The effect is real and it is not threefold.</li>
+  percentile in <strong>59.2% of weeks</strong>, against a nominal 10% and a preregistered threshold of 20%. The preregistered
+  interval is 46.1% to 73.0%. Consecutive weekly runs are strongly dependent (lag-one autocorrelation 0.66, an
+  effective sample of about 19 weeks), so with longer resampling blocks the interval widens to about 41% to 79% — its
+  lower bound still twice the threshold, only just.</li>
+<li><strong>H2 (three times worse when the lakes are low): Refuted by its rule, but the rule was unreachable.</strong> Low-storage
+  weeks did fail more often, 90% against 56%, a ratio of 1.61. But with the comparison group already failing 56% of
+  the time, the largest ratio any data could give is 1/0.56 = 1.79, so the threefold test could not be passed once H1
+  held. Storage matters strongly: exceedance falls monotonically by storage quintile, from 18 of 20 weeks in the
+  lowest fifth to 1 of 16 in the highest. The 20 low-storage weeks are two consecutive spells (December 2023 to
+  January 2024, and the gas shortage of May to August 2024), so even the 1.61 rests on two episodes.</li>
 </ul>
-<p><strong>The finding that matters more than either test: the published distributions are not thin on one side, they are
-narrow on both.</strong></p>
-<ul>
-<li>The realised price finished <strong>outside</strong> the simulated 10th-to-90th-percentile band in <strong>86.8% of weeks</strong> — 59.2%
-  above it and 27.6% below it. Almost nothing lands in the middle.</li>
-<li>The median simulated band is <strong>$15.03/MWh wide</strong>, a 90th percentile only <strong>14% above</strong> the 10th. Realised weekly
-  prices over the same three years ran from <strong>$25.94 to $290.88</strong>. The band spans <strong>5.7%</strong> of the range prices
-  actually took.</li>
-<li>Nominal coverage collapses accordingly: the 50% interval contained the outcome 5.3% of the time, the 80%
-  interval 13.2%, the 90% interval 17.1%.</li>
-<li>This is stable, not an artefact of one crisis. Exceedance runs 61.5% in 2023, 63.5% in 2024 and 52.1% in 2025,
-  and is essentially flat across forecast horizons (57.2%, 59.2%, 58.6%, 54.6% at stages 1 to 4).</li>
-</ul>
-<p><strong>Why, and what it does not mean.</strong> JADE's published runs vary <em>one thing</em>: which of 91 historical inflow
-sequences the year follows. Demand, fuel costs, station outages and offer behaviour are held as given. So this
-result is best read not as "the model is wrong" but as a measurement of something useful in its own right:
-<strong>hydrological uncertainty alone accounts for a band about one-twentieth as wide as the variation prices actually
-show.</strong> Everything else — gas, outages, and how generators choose to offer — lives outside these percentiles.
-Anyone reading them as a forecast interval for price would be badly misled, and that is worth stating plainly
-because the runs are published, open, and used.</p>
+<p><strong>What the runs are, and why the band is narrow.</strong> JADE is a stochastic dual dynamic programming model. The
+Authority's runs are risk-neutral (no risk parameters are set, and JADE's default is risk neutrality) and vary only
+which of 80 to 91 historical inflow sequences the year follows. The Authority itself describes them as "assumption
+laden: risk neutrality, single scenario re: demand forecast, fuel prices", built to produce "a steady state water
+release policy in presence of uncertain inflows" and published to support trading-conduct monitoring.</p>
+<p>The scored week is priced at a <strong>flat long-run fuel assumption</strong>, not the fuel prices of the moment. In the run
+frozen in week 32 of 2024, during the gas shortage, the gas price input follows the observed series up to that week
+($28.31/GJ) and then drops to <strong>$13.20/GJ</strong> from week 33 — the week scored — for every week thereafter; the carbon
+price input rises from $51.65 to $64.13. At $13.20 gas the model's thermal stack spans roughly $128 to $184/MWh,
+and the next price level is load shedding at $530. So that run's 91 sequences gave $139 to $173 for the week, while
+the market settled at $449 — a price the model could not reach without shedding load.</p>
+<p>So the narrowness of the band is a property of risk-neutral, cost-based price formation at a fixed fuel assumption.
+It is not a measure of how much hydrology contributes to price risk, and an earlier draft that read it that way was
+wrong.</p>
+<p><strong>The size of the gap.</strong> The realised price fell <strong>outside the entire envelope of every inflow sequence</strong> — above
+the highest simulated price or below the lowest — in <strong>71.1%</strong> of weeks (above it in 55.3%). Outside the 10th-to-90th
+band it fell in 86.8%: 59.2% above and 27.6% below. The nominal 50%, 80% and 90% intervals contained the outcome
+5.3%, 13.2% and 17.1% of the time. The median simulated band is $15.03/MWh wide, its 90th percentile 14% above its
+10th; the spread of the run's own forecast errors (10th to 90th percentile) is $231, about 15 times wider.</p>
 <h2>In plain terms</h2>
-<p>New Zealand's electricity market runs on water. The Electricity Authority publishes a weekly computer run, using a
-model built at the University of Auckland, that works out what the water stored in the hydro lakes is worth. Each
-run plays the year ahead 91 times over, once for each year of rainfall on record, and reports the range of
-electricity prices that come out.</p>
-<p>We took all 152 of those published runs from 2023 to 2025 and asked a simple question: when the week they were
-forecasting actually arrived, where did the real price land in the range they gave?</p>
-<p>Almost never inside it. In 59 weeks out of every 100 the real price finished above everything but the top tenth of
-the model's range, and in another 28 it finished below the bottom tenth. The typical published range was about $15
-wide. Real prices over those three years ranged over $265.</p>
-<p>One week shows it clearly. In mid-August 2024, during the gas shortage, the model's 91 runs produced prices
-between $139 and $173. The market settled that week at $449.</p>
-<p>This is not really a mistake in the model. The run only changes one thing between its 91 tries: the rainfall.
-Everything else that moves prices — gas, broken power stations, how generators choose to bid — stays fixed. So the
-honest reading is that rainfall alone explains a band about one-twentieth as wide as prices really move. The
-numbers are sound for what they are. They just should not be read as a forecast of what a week will cost.</p>
+<p>New Zealand's electricity market runs on water. Every week the Electricity Authority publishes a run of a computer
+model, built at the University of Auckland, that works out what the water stored in the hydro lakes is worth. Each
+run plays the year ahead about 90 times, once for each year of rainfall on record, and reports the electricity prices
+that come out.</p>
+<p>We took all 152 of those runs from 2023 to 2025 and asked: when the week they were looking at actually arrived, where
+did the real price land among their prices?</p>
+<p>Mostly outside them altogether. In seven weeks out of ten the real price was above the highest of the roughly 90
+prices the run produced, or below the lowest.</p>
+<p>That is not because rainfall hardly matters. It is because of what the run assumes. It takes the cost of gas and coal
+from a single long-run figure, not today's price, and it sets prices as if no one were worried about running short.
+In August 2024, during a gas shortage, the run assumed gas at less than half what it actually cost. Its prices for
+that week ran from $139 to $173. The market paid $449.</p>
+<p>The Authority says plainly that these runs are built on simplifying assumptions and exist to work out how to use
+water, not to forecast prices. Our check confirms they should not be read as a forecast of what a week will cost.</p>
+<p>Low lakes made things worse: when the lakes were at their lowest, the real price beat the run's range in nearly every
+week.</p>
 <h2>What was asked</h2>
-<p>Since 2023 the Electricity Authority has published weekly runs of JADE as its benchmark for the value of water
-held in New Zealand's hydro lakes. JADE is a stochastic dual dynamic programming model of the hydro-thermal
-system, developed by the Electric Power Optimization Centre at the University of Auckland and released as open
-source. Each weekly run looks a year ahead over 52 weekly stages, under historical inflow sequences, and produces
-a distribution of wholesale prices as well as the water values the Authority publishes.</p>
+<p>Since 2023 the Electricity Authority has published weekly runs of JADE as its benchmark for the value of water held
+in New Zealand's hydro lakes. JADE is a stochastic dual dynamic programming model of the hydro-thermal system,
+developed by the Electric Power Optimization Centre at the University of Auckland and released as open source. Each
+weekly run looks a year ahead over 52 weekly stages and produces a distribution of wholesale prices as well as the
+water values the Authority publishes.</p>
 <p>The preregistration (<code>plan.md</code>) sets two hypotheses:</p>
 <ul>
 <li><strong>H1:</strong> does the realised price exceed the simulated 90th percentile in at least 20% of weeks, twice the
   nominal 10%?</li>
 <li><strong>H2:</strong> is that at least three times more common in weeks that begin with the lakes unusually low?</li>
 </ul>
-<p>This is a calibration audit of a published official model. It is not a claim that JADE is the wrong model for the
-job the Authority uses it for, and the limitations below say why that distinction matters.</p>
+<p>This is a calibration audit of a published official model's price output. It is not a test of whether JADE is the
+right model for the job the Authority uses it for.</p>
 <h2>What was already known</h2>
-<p>The Authority publishes the runs, chiefly to support trading-conduct monitoring, and an EPOC workshop presentation
-describes that publication and notes that JADE superseded the earlier DOASA model. An arXiv paper on capacity
-planning uses the JADE New Zealand dataset. No published check of whether the runs' price distributions match the
-prices that followed was found, and the Authority does not publish one (searches 2026-10-20).</p>
+<p>The Authority publishes the runs and describes them in an EPOC workshop presentation (Bishop and Nguyen, 2022),
+which states their purpose and their simplifying assumptions and notes that JADE superseded the earlier DOASA model.
+An arXiv paper on capacity planning uses the JADE New Zealand dataset. No published check of whether the runs' price
+distributions match the prices that followed was found (searches 2026-10-20).</p>
 <h2>How it was done</h2>
 <p><strong>Data.</strong> Everything is published by the Electricity Authority on EMI and downloaded from its blob store:</p>
 <ul>
@@ -161,27 +168,27 @@ prices that followed was found, and the Authority does not publish one (searches
   flight to the rows the study needs — 13.4 GB read, 104 MB kept;</li>
 <li>each run's <strong>input-freeze timestamp</strong>, from the <code>Inputs/data_files/&lt;YYYYMMDDHHMM&gt;/</code> folder name, and its own
   <code>hours_per_block.csv</code>;</li>
-<li><strong>final energy prices</strong>, half-hourly by node, for HAY2201, with BEN2201 and OTA2201 alongside;</li>
+<li><strong>final energy prices</strong>, half-hourly by node, for HAY2201;</li>
 <li>the <strong>Hydrological Modelling Dataset</strong>: per-lake active storage from 1980, and the derived capacity series
   giving each scheme its GWh per million cubic metres.</li>
 </ul>
 <p><strong>The out-of-sample boundary.</strong> Stage 1 of a run is the week its inputs were frozen, and is partly elapsed when
 the run is made; stage 2 is the first week wholly after the freeze, and is the week scored. This was verified
-rather than assumed: every run's input timestamp falls inside its own stage-1 week, which also confirms that JADE
-week <em>w</em> of year <em>Y</em> begins on 1 January plus 7(<em>w</em>-1) days.</p>
+rather than assumed: every run's input timestamp falls one to three days after its own stage-1 week begins, which
+also confirms that JADE week <em>w</em> of year <em>Y</em> begins on 1 January plus 7(<em>w</em>−1) days.</p>
 <p><strong>Measures.</strong> For each run and each inflow sequence, the stage-2 block prices at HAY are combined into a weekly
 average weighted by that run's own hours per block. The realised figure is the time-weighted average of settled
 half-hourly prices at HAY2201 over the same seven days. The study records where the realised price fell within its
 own simulated distribution (the probability integral transform) and whether it exceeded the simulated 90th
 percentile.</p>
 <p><strong>National storage.</strong> Lake volumes cannot be added across lakes, so each lake's active storage is converted to
-energy with its own GWh-per-Mm3 ratio before summing. A run is low-storage if that figure, averaged over its first
+energy with its own GWh-per-Mm³ ratio before summing. A run is low-storage if that figure, averaged over its first
 week, is below the 20th percentile for the same week of the year in other years.</p>
 <p><strong>Intervals</strong> come from a moving-block bootstrap over runs in calendar order (blocks of four consecutive runs,
-2,000 resamples, seed 20261020), because consecutive weekly runs share inputs and market conditions.</p>
+2,000 resamples, seed 20261020), as preregistered.</p>
 <h2>Results</h2>
 <h3>What was simulated, and what happened (<code>results/figures/F1_band_vs_actual.png</code>)</h3>
-<figure><a href="results/figures/F1_band_vs_actual.png"><img src="results/figures/F1_band_vs_actual.png" alt="Simulated band against realised price"></a><figcaption>For each published weekly JADE run, the simulated distribution of the average wholesale price at Haywards in the run&#x27;s first fully out-of-sample week (stage 2), against the price actually settled in that week. The band spans the 10th to 90th percentile of the run&#x27;s 91 historical inflow sequences. Orange markers are weeks when the realised price finished above the simulated 90th percentile, which a calibrated model would do about a tenth of the time; here it happens in 90 of 152 weeks. Log scale.</figcaption></figure>
+<figure><a href="results/figures/F1_band_vs_actual.png"><img src="results/figures/F1_band_vs_actual.png" alt="Simulated band against realised price"></a><figcaption>For each published weekly JADE run, the simulated distribution of the average wholesale price at Haywards in the run&#x27;s first fully out-of-sample week (stage 2), against the price actually settled in that week. The band spans the 10th to 90th percentile of the run&#x27;s 80 to 91 historical inflow sequences. The scored week is priced risk-neutrally at the run&#x27;s flat long-run fuel assumption, which in a fuel shortage sits far below the price of fuel. Orange markers are weeks when the realised price finished above the simulated 90th percentile, which a calibrated model would do about a tenth of the time; here it happens in 90 of 152 weeks. Log scale.</figcaption></figure>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -195,52 +202,79 @@ week, is below the 20th percentile for the same week of the year in other years.
 <td><strong>152</strong> (52 in 2023, 52 in 2024, 48 in 2025); none excluded</td>
 </tr>
 <tr>
+<td>inflow sequences per run</td>
+<td>80 to 91 (91 in 101 runs)</td>
+</tr>
+<tr>
 <td>median simulated 10th-90th band</td>
-<td><strong>$15.03/MWh</strong> (90th percentile 1.14x the 10th)</td>
+<td><strong>$15.03/MWh</strong> (90th percentile 1.14 times the 10th)</td>
 </tr>
 <tr>
-<td>realised weekly prices, 10th to 90th percentile across weeks</td>
-<td><strong>$25.94 to $290.88</strong> (a spread of $264.94)</td>
+<td>realised outside the envelope of all sequences</td>
+<td><strong>71.1%</strong> of weeks (55.3% above, 15.8% below)</td>
 </tr>
 <tr>
-<td>band as a share of that spread</td>
-<td><strong>5.7%</strong></td>
+<td>realised outside the 10th-90th band</td>
+<td><strong>86.8%</strong> of weeks (59.2% above, 27.6% below)</td>
 </tr>
 <tr>
-<td>median simulated median</td>
-<td>$107.56/MWh</td>
-</tr>
-<tr>
-<td>median realised</td>
-<td>$132.58/MWh</td>
-</tr>
-<tr>
-<td>realised outside the simulated band</td>
-<td><strong>86.8% of weeks</strong></td>
+<td>realised above the simulated median</td>
+<td>61.2% of weeks; median realised/median simulated 1.32</td>
 </tr>
 </tbody>
 </table></div>
-<p>Two of these rows measure different things and should not be run together. The band is one run's uncertainty
-about one week; the realised spread is variation across three years of weeks. A model could in principle be well
-calibrated week by week and still show a narrow band, if prices were genuinely predictable a week out. <strong>The
-evidence that the band is too narrow is the coverage below, not the ratio</strong> — the nominal 90% interval contains
-the outcome 17.1% of the time. The $15-against-$265 comparison is an illustration of magnitude, and the title
-should be read as one.</p>
+<p>How wide the band is, against three yardsticks (post-review analysis, <code>review/reviewer_checks/percentile_fairness.out</code>):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>the band's median width as a share of…</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>the spread of the run's own forecast errors (10th to 90th percentile, $231)</td>
+<td>6.5%</td>
+</tr>
+<tr>
+<td>the spread of the realised week-to-week change ($110)</td>
+<td>13.7%</td>
+</tr>
+<tr>
+<td>the spread of realised weekly prices across weeks, by year</td>
+<td>13.5% (2023), 4.6% (2024), 5.4% (2025)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Realised weekly prices over the three years ran from $0.36 to $796.87; the earlier draft's "$265" was the spread
+between their 10th and 90th percentiles across weeks, which pools three different years and is the least fair of
+these comparisons.</p>
 <h3>H1: the upper tail (<code>results/figures/F3_exceedance.png</code>)</h3>
 <ul>
-<li><strong>Exceedance rate 59.2%</strong> (95% CI 46.1% to 73.0%), against a nominal 10% and a 20% threshold. <strong>H1 is
-  Supported</strong>: the lower bound is more than double the threshold. Minimum detectable effect 18.7 percentage
-  points.</li>
-<li>When the price did exceed the 90th percentile, it did so by a median factor of <strong>1.69</strong>, and at most <strong>4.68</strong>.</li>
-<li><strong>By horizon:</strong> 57.2% (stage 1), 59.2% (stage 2), 58.6% (stage 3), 54.6% (stage 4). The miscalibration is
-  present in the very week the inputs were frozen and does not grow with horizon.</li>
+<li><strong>Exceedance rate 59.2%</strong> (preregistered 95% interval 46.1% to 73.0%), against a nominal 10% and a 20% threshold.
+  <strong>H1 is Supported.</strong></li>
+<li>The weekly outcomes are strongly autocorrelated: lag-one 0.66, falling to 0.16 by lag eight, for an effective sample
+  of about 19. Under longer moving blocks (13 to 26 weeks) or a stationary bootstrap the interval is about 41% to 79%
+  (<code>review/reviewer_checks/bootstrap_sensitivity.out</code>). The verdict is unchanged; the preregistered four-run block
+  understates the uncertainty, and the minimum detectable effect it implies (18.7 points) is too small by a factor of
+  about 1.4.</li>
+<li>When the price exceeded the 90th percentile, it did so by a median factor of <strong>1.69</strong>, and at most <strong>4.68</strong>.</li>
+<li><strong>By horizon:</strong> 57.2% (stage 1), 59.2% (stage 2), 58.6% (stage 3), 54.6% (stage 4). Only stages 1 to 4 were
+  retained, so this shows no growth over four weeks; it says nothing about longer horizons.</li>
 <li><strong>By year:</strong> 61.5% (2023), 63.5% (2024), 52.1% (2025).</li>
+<li><strong>Robust to how the weekly price is formed.</strong> A block-matched average gives the same 59.2%; exceedance by demand
+  block is 57–62%; using the weekly median or a trimmed mean of realised prices gives 57.9% and 56.6%. Mapping JADE's
+  NI, HAY and SI nodes onto Otahuhu, Haywards and Benmore in other combinations gives 57–63%.</li>
 </ul>
 <figure><a href="results/figures/F3_exceedance.png"><img src="results/figures/F3_exceedance.png" alt="Exceedance by horizon and storage"></a><figcaption>The share of weekly runs whose realised price exceeded the simulated 90th percentile, by forecast horizon (stage 1 is the week the inputs were frozen, stage 2 the first fully out-of-sample week) and, where the hydrological record allows the split, by whether national energy storage was in the bottom fifth of its history for that week of the year. Bars are moving-block bootstrap 95% intervals. A calibrated model would sit on the dashed line.</figcaption></figure>
-<h3>The other tail, and the shape of the failure (<code>results/figures/F2_pit.png</code>)</h3>
+<h3>The other tail, and bias (<code>results/figures/F2_pit.png</code>)</h3>
 <p>The realised price fell <strong>below</strong> the simulated 10th percentile in <strong>27.6%</strong> of weeks. The probability integral
-transform is U-shaped and almost empty in the middle: of 152 weeks, 90 landed in the top tenth of their own
-distribution and 42 in the bottom tenth, leaving 20 for the eight bins between.</p>
+transform is U-shaped and almost empty in the middle — 90 weeks in the top tenth of their own distribution, 42 in the
+bottom tenth, 20 in the eight bins between — but it is not symmetric. The realised price exceeded the simulated median
+in 61.2% of weeks, with a median ratio of 1.32: the runs are biased low as well as too narrow.</p>
+<p>A naive persistence forecast — last completed week's price — is closer to the realised price than the runs' median:
+a median absolute error of $32 against $65, with JADE's median the closer of the two in only 34% of weeks. This is a
+statement about the runs as price forecasts, which they are not built to be.</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -263,7 +297,7 @@ distribution and 42 in the bottom tenth, leaving 20 for the eight bins between.<
 </tr>
 </tbody>
 </table></div>
-<figure><a href="results/figures/F2_pit.png"><img src="results/figures/F2_pit.png" alt="Probability integral transform"></a><figcaption>The probability integral transform. For every weekly run, the share of its 91 simulated prices that were below the price actually realised. A calibrated model spreads these evenly across the ten bins (dashed line). Weight piled into the right-hand bin means the model&#x27;s upper tail is too thin: the market repeatedly settled above almost everything the model simulated.</figcaption></figure>
+<figure><a href="results/figures/F2_pit.png"><img src="results/figures/F2_pit.png" alt="Probability integral transform"></a><figcaption>The probability integral transform. For every weekly run, the share of its 80 to 91 simulated prices that were below the price actually realised. A calibrated model spreads these evenly across the ten bins (dashed line). Weight piled into the right-hand bin means the model&#x27;s upper tail is too thin: the market repeatedly settled above almost everything the model simulated; the asymmetry (more weight above than below) is the runs&#x27; low bias.</figcaption></figure>
 <h3>H2: storage state</h3>
 <div class="table-wrap"><table>
 <thead>
@@ -287,36 +321,71 @@ distribution and 42 in the bottom tenth, leaving 20 for the eight bins between.<
 </tbody>
 </table></div>
 <ul>
-<li><strong>Ratio 1.61</strong> (95% CI 1.12 to 2.36). The interval excludes 1, so low storage genuinely makes things worse, but
-  its upper bound is below 3. <strong>H2 is Refuted</strong> by the preregistered rule.</li>
-<li>The split covers the 104 runs in 2023 and 2024, because the hydrological dataset ends 2024-12-31 (D1).</li>
-<li>A sensitivity covering all 152 runs, using JADE's own run-start reservoir sum with the season removed, agrees:
-  90.3% against 51.2%, a ratio of <strong>1.76</strong> (95% CI 1.31 to 2.42).</li>
+<li><strong>Ratio 1.61</strong> (preregistered interval 1.12 to 2.36; 1.01 to 2.72 under longer blocks). <strong>H2 is Refuted</strong> by its
+  rule, but the rule could not be met: with the comparison group at 56%, no data could give a ratio above 1.79.</li>
+<li>The 20 low-storage runs fall in two spells: December 2023 to January 2024 (6 of 6 exceeding) and late May to
+  August 2024 (12 of 14). The second is the gas shortage, so low storage and high fuel prices coincide there.</li>
+<li>Exceedance by storage quintile shows the relationship the bottom-fifth split hides
+  (<code>review/reviewer_checks/storage_split.out</code>):</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>storage percentile for the week of the year</th>
+<th>exceeded</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0–20%</td>
+<td>18 of 20</td>
+</tr>
+<tr>
+<td>20–40%</td>
+<td>17 of 20</td>
+</tr>
+<tr>
+<td>40–60%</td>
+<td>16 of 18</td>
+</tr>
+<tr>
+<td>60–80%</td>
+<td>12 of 28</td>
+</tr>
+<tr>
+<td>80–100%</td>
+<td>1 of 16</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>The split covers the 104 runs in 2023 and 2024, because the hydrological dataset ends 2024-12-31.</li>
 </ul>
 <h3>One week in detail</h3>
-<p>The run published for week 32 of 2024 forecast the week beginning 12 August 2024, during the gas shortage. Across
-all 91 inflow sequences its weekly average price at Haywards ranged from <strong>$139.33 to $173.04</strong>, with a 90th
-percentile of <strong>$167.07</strong>. The market settled that week at <strong>$449.36</strong>, with daily averages from $350 to $599 —
-<strong>2.69 times</strong> the 90th percentile, and well beyond the highest of the 91 sequences. This week was recomputed by
-hand from the raw files, independently of the analysis code, and matches.</p>
+<p>The run published for week 32 of 2024 forecast the week beginning 12 August 2024. Across all 91 inflow sequences its
+weekly average price at Haywards ranged from <strong>$139.33 to $173.04</strong>, with a 90th percentile of <strong>$167.07</strong>. The market
+settled that week at <strong>$449.36</strong>, with daily averages from $350 to $599 — <strong>2.69 times</strong> the 90th percentile and well
+beyond the highest sequence. That run priced the week with gas at $13.20/GJ, against $28.31 in its own input for the
+week before. This week was recomputed by hand from the raw files, independently of the analysis code, and again by
+the reviewer; both match.</p>
 <h2>What this does and does not show</h2>
 <ul>
-<li><strong>It shows</strong> that the price percentiles in the Authority's published weekly runs are far narrower than realised
-  prices, in both directions, consistently across three years and across forecast horizons; and that the gap
-  widens when storage is low, though by less than threefold.</li>
-<li><strong>It does not show that JADE is a poor scheduling model, or that its water values are wrong.</strong> The runs vary
-  only the inflow sequence, holding demand, fuel costs, outages and offer behaviour fixed. A narrow price band is
-  the arithmetic consequence of that design, not evidence of an error in it. What the study quantifies is how much
-  of realised price variation that design can reach: about a twentieth.</li>
-<li><strong>It cannot attribute the gap</strong> between simulated and realised prices to particular causes. Gas, outages and
-  offer behaviour are all candidates and none is separated here.</li>
-<li><strong>The storage split is partly out of sample.</strong> The preregistered version covers 2023 and 2024 only; the
-  all-years sensitivity uses a different storage measure and agrees, but neither is a substitute for a
-  hydrological record that reaches 2025.</li>
-<li><strong>Prices can be revised.</strong> The latest published monthly files were used, and December 2025 was assembled from
-  daily files because the Authority publishes that month's consolidation only as incomplete (D1).</li>
-<li><strong>One node.</strong> HAY2201 is the reference node for the model's HAY output; Otahuhu and Benmore are recorded in
-  <code>runs.csv</code> but not scored.</li>
+<li><strong>It shows</strong> that the price distributions in the Authority's published weekly runs are far too narrow, and biased
+  low, as forecasts of the price the market then set — consistently across three years, at every stage examined, and
+  more so when storage is low.</li>
+<li><strong>It shows why, in part:</strong> the scored week is priced risk-neutrally at a flat long-run fuel assumption, so the
+  runs' prices sit on the thermal cost stack. In a fuel shortage that assumption is far below the price of fuel, and
+  the band cannot reach the market price.</li>
+<li><strong>It does not show that JADE's water values are wrong, or that JADE is a poor scheduling model.</strong> The runs are built
+  to produce a water-release policy and are explicitly assumption-laden. This audit is of their price output read as
+  a forecast, which is not their purpose.</li>
+<li><strong>It does not measure hydrology's contribution to price risk.</strong> The band reflects the model's pricing assumptions;
+  a run with market fuel prices or a risk-averse setting would give a different band.</li>
+<li><strong>The storage result is confounded in 2024</strong> with the gas shortage, and rests on two spells.</li>
+<li><strong>One node is scored.</strong> HAY2201 is the reference node for the model's HAY output; Otahuhu and Benmore were planned
+  to be reported alongside and are summarised above from the review rather than scored in the study's own code.</li>
+<li><strong>Prices can be revised.</strong> The latest published monthly files were used, and December 2025 was assembled from daily
+  files because the Authority publishes that month's consolidation only as incomplete (D1).</li>
 <li><strong>No personal or community data</strong>: market prices, model outputs and reservoir levels only.</li>
 </ul>
 <h2>Process and deviations</h2>
@@ -327,12 +396,18 @@ hand from the raw files, independently of the analysis code, and matches.</p>
   <code>figures.py</code> was written after the results.</li>
 <li><strong>D1</strong> records the 152-run count, the varying number of inflow sequences, the complete-week rule, the December
   2025 assembly, the storage measure and its coverage, and the spread statistics added after the results.</li>
-<li><strong>Validation</strong> in <code>primary.json</code> checks the inflow-sequence distribution, the 168-hour weeks, the half-hourly
-  period counts (including the 334- and 338-period daylight-saving weeks) and the realised monthly means, which
-  reproduce the market's own history — the August 2024 peak of $465/MWh and the collapse to $29 that November.</li>
+<li><strong>D2 (after independent review)</strong> records the reinterpretation, the post-review analyses, the deviations the draft
+  did not declare, and a correction to the description of the storage sensitivity.</li>
+<li><strong>Review.</strong> An independent adversarial review (<code>review/review.md</code>) re-derived three runs to the cent, confirmed the
+  week alignment to the day and the cached data against fresh downloads, and found H1 robust. It found the draft's
+  interpretation wrong — attributing the narrow band to hydrology rather than to the runs' fuel and risk assumptions —
+  and its "range" and H2 statements overstated; all are corrected here.</li>
 </ul>
 <h2>Reproducing it</h2>
-<p><code>code/fetch.py</code>, then <code>code/analysis.py</code>, then <code>code/figures.py</code>.</p>
+<p><code>code/fetch.py</code>, then <code>code/analysis.py</code>, then <code>code/figures.py</code>. The post-review analyses are in
+<code>review/reviewer_checks/</code> (<code>bootstrap_sensitivity.py</code>, <code>percentile_fairness.py</code>, <code>realised_average.py</code>,
+<code>storage_split.py</code>, <code>node_mapping.py</code>), with the Authority's run configuration and fuel-cost excerpts in
+<code>review/reviewer_checks/evidence/</code>.</p>
 <ul>
 <li><strong>Inputs</strong> are cached under <code>data/</code>: <code>runs/&lt;year&gt;_&lt;week&gt;.csv</code>, <code>runs/&lt;year&gt;_&lt;week&gt;_hours.csv</code>, <code>run_index.csv</code>,
   <code>prices/&lt;yyyymm&gt;.csv</code> and <code>hmd/</code>.</li>

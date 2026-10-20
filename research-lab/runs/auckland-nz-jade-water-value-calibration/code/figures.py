@@ -41,7 +41,7 @@ def main():
     # F1: the band against what happened
     fig, ax = plt.subplots(figsize=(7.8, 3.9))
     fig.subplots_adjust(left=0.1, right=0.97, bottom=0.14, top=0.83)
-    ax.fill_between(x, p10, p90, color=BAND, alpha=0.55, lw=0, label="JADE 10th-90th percentile (91 inflow years)")
+    ax.fill_between(x, p10, p90, color=BAND, alpha=0.55, lw=0, label="JADE 10th-90th percentile (80-91 inflow years)")
     ax.plot(x, p50, "-", color=LINE, lw=1.3, label="JADE median")
     ax.plot(x, act, "-", color=INK, lw=1.5, label="realised price at Haywards")
     ax.plot(x[exceed], act[exceed], "o", color=HIT, ms=5, mec=SURF, mew=0.8,
@@ -62,7 +62,7 @@ def main():
     fig.savefig(F / "F1_band_vs_actual.png", dpi=170); plt.close(fig)
     caption("F1_band_vs_actual", f"""For each published weekly JADE run, the simulated distribution of the average
     wholesale price at Haywards in the run's first fully out-of-sample week (stage 2), against the price actually
-    settled in that week. The band spans the 10th to 90th percentile of the run's 91 historical inflow sequences.
+    settled in that week. The band spans the 10th to 90th percentile of the run's 80 to 91 historical inflow sequences. The scored week is priced risk-neutrally at the run's flat long-run fuel assumption, which in a fuel shortage sits far below the price of fuel.
     Orange markers are weeks when the realised price finished above the simulated 90th percentile, which a
     calibrated model would do about a tenth of the time; here it happens in {int(exceed.sum())} of {len(rows)}
     weeks. Log scale.""")
@@ -90,10 +90,10 @@ def main():
     fig.suptitle("Almost every week finished outside the simulated range", x=0.12, ha="left", fontsize=10.5,
                  color=INK)
     fig.savefig(F / "F2_pit.png", dpi=170); plt.close(fig)
-    caption("F2_pit", """The probability integral transform. For every weekly run, the share of its 91 simulated
+    caption("F2_pit", """The probability integral transform. For every weekly run, the share of its 80 to 91 simulated
     prices that were below the price actually realised. A calibrated model spreads these evenly across the ten
     bins (dashed line). Weight piled into the right-hand bin means the model's upper tail is too thin: the market
-    repeatedly settled above almost everything the model simulated.""")
+    repeatedly settled above almost everything the model simulated; the asymmetry (more weight above than below) is the runs' low bias.""")
 
     # F3: by horizon and by storage
     bs = list(csv.DictReader(open(T / "by_stage.csv")))
