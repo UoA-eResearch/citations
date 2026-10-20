@@ -15,6 +15,7 @@ the Golden Quadrant artifact until it has been through an independent adversaria
 | `frontier-eaa-accessibility-natural-experiment` | 0c44d7a | H1 Supported, H2 Inconclusive, H3 not testable | not started |
 | `energy-nz-gas-production-forecast-calibration` | b53e197 | H1 Supported, H2 Inconclusive, H3 Supported | not started |
 | `movement-nz-ev-policy-discount-vs-ruc` | 60012cc | H1 Inconclusive, H2 Inconclusive | not started |
+| `auckland-nz-jade-water-value-calibration` | (this draft) | H1 Supported, H2 Refuted | not started |
 
 ## Order to run them in
 
@@ -23,7 +24,11 @@ the Golden Quadrant artifact until it has been through an independent adversaria
 2. `energy-nz-gas-production-forecast-calibration` — a Supported headline, so it carries the most risk if wrong.
 3. `ancestral-pacific-rainfall-gauge-circularity` — also Supported.
 4. `frontier-eaa-accessibility-natural-experiment` — Supported, but the effect is modest and well hedged.
-5. `movement-nz-ev-policy-discount-vs-ruc` — both verdicts Inconclusive, so the least exposed.
+5. `auckland-nz-jade-water-value-calibration` — a Supported headline about a *named public agency's published
+   model*, so it carries the most reputational risk of any draft here and the reviewer brief leads with the
+   question the whole study stands on: whether JADE's HAY price and the HAY2201 settled price are comparable
+   quantities at all. Run it early if the queue is reordered.
+6. `movement-nz-ev-policy-discount-vs-ruc` — both verdicts Inconclusive, so the least exposed.
 
 ## After each review
 

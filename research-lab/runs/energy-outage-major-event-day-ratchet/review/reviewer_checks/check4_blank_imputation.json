@@ -1,0 +1,209 @@
+{
+ "annual_ratio_imputed_over_dropped": {
+  "2017": {
+   "DC": 1.0004,
+   "FL": 1.0001,
+   "IL": 1.0004,
+   "IA": 1.0028,
+   "LA": 1.0005,
+   "MI": 1.0015,
+   "NV": 1.0011,
+   "VT": 1.0006
+  },
+  "2018": {
+   "DC": 1.0001,
+   "FL": 1.0214,
+   "IL": 1.0061,
+   "IA": 1.0532,
+   "LA": 1.0107,
+   "MI": 1.0579,
+   "NV": 1.2116,
+   "VT": 1.002
+  },
+  "2019": {
+   "DC": 1.0251,
+   "FL": 1.0129,
+   "IL": 1.0062,
+   "IA": 1.123,
+   "LA": 1.0085,
+   "MI": 1.0066,
+   "NV": 1.0147,
+   "VT": 1.0012
+  },
+  "2020": {
+   "DC": 1.0792,
+   "FL": 1.0103,
+   "IL": 1.0035,
+   "IA": 1.0068,
+   "LA": 1.0043,
+   "MI": 1.0487,
+   "NV": 1.0047,
+   "VT": 1.0068
+  },
+  "2021": {
+   "DC": 1.0,
+   "FL": 1.015,
+   "IL": 1.0031,
+   "IA": 1.0188,
+   "LA": 1.0035,
+   "MI": 1.025,
+   "NV": 1.0083,
+   "VT": 1.0015
+  },
+  "2025": {
+   "DC": 1.0,
+   "FL": 1.0099,
+   "IL": 1.0974,
+   "IA": 1.0115,
+   "LA": 1.0053,
+   "MI": 1.0024,
+   "NV": 1.0212,
+   "VT": 1.1266
+  }
+ },
+ "blank_share_customer_minutes_if_interpolated": {
+  "2017": {
+   "DC": 0.0004,
+   "FL": 0.0001,
+   "IL": 0.0004,
+   "IA": 0.0028,
+   "LA": 0.0005,
+   "MI": 0.0015,
+   "NV": 0.0011,
+   "VT": 0.0006
+  },
+  "2018": {
+   "DC": 0.0001,
+   "FL": 0.021,
+   "IL": 0.006,
+   "IA": 0.0505,
+   "LA": 0.0106,
+   "MI": 0.0548,
+   "NV": 0.1746,
+   "VT": 0.002
+  },
+  "2019": {
+   "DC": 0.0245,
+   "FL": 0.0127,
+   "IL": 0.0062,
+   "IA": 0.1096,
+   "LA": 0.0085,
+   "MI": 0.0066,
+   "NV": 0.0145,
+   "VT": 0.0012
+  },
+  "2020": {
+   "DC": 0.0733,
+   "FL": 0.0102,
+   "IL": 0.0035,
+   "IA": 0.0067,
+   "LA": 0.0043,
+   "MI": 0.0464,
+   "NV": 0.0047,
+   "VT": 0.0067
+  },
+  "2021": {
+   "DC": 0.0,
+   "FL": 0.0148,
+   "IL": 0.0031,
+   "IA": 0.0184,
+   "LA": 0.0035,
+   "MI": 0.0244,
+   "NV": 0.0082,
+   "VT": 0.0015
+  },
+  "2025": {
+   "DC": 0.0,
+   "FL": 0.0098,
+   "IL": 0.0887,
+   "IA": 0.0114,
+   "LA": 0.0053,
+   "MI": 0.0024,
+   "NV": 0.0208,
+   "VT": 0.1124
+  }
+ },
+ "neighbours": {
+  "2017_blank": {
+   "n_rows": 26345,
+   "n_with_nonzero_neighbour": 6935,
+   "neighbour_median": 1.0,
+   "neighbour_p90": 45.0,
+   "neighbour_mean": 52.49949531362653,
+   "nonblank_nonzero_median": 6.0,
+   "nonblank_nonzero_mean": 823.3589490603661
+  },
+  "2018_blank": {
+   "n_rows": 472983,
+   "n_with_nonzero_neighbour": 72810,
+   "neighbour_median": 1.0,
+   "neighbour_p90": 34.0,
+   "neighbour_mean": 73.48070320010987,
+   "nonblank_nonzero_median": 5.0,
+   "nonblank_nonzero_mean": 163.06359299255428
+  },
+  "2019_blank": {
+   "n_rows": 219616,
+   "n_with_nonzero_neighbour": 65493,
+   "neighbour_median": 2.0,
+   "neighbour_p90": 43.0,
+   "neighbour_mean": 38.26538714061045,
+   "nonblank_nonzero_median": 5.0,
+   "nonblank_nonzero_mean": 126.83514354488346
+  },
+  "2020_blank": {
+   "n_rows": 270088,
+   "n_with_nonzero_neighbour": 75824,
+   "neighbour_median": 1.0,
+   "neighbour_p90": 31.0,
+   "neighbour_mean": 118.6046106773581,
+   "nonblank_nonzero_median": 5.0,
+   "nonblank_nonzero_mean": 343.61025281352016
+  },
+  "2021_blank": {
+   "n_rows": 132541,
+   "n_with_nonzero_neighbour": 54013,
+   "neighbour_median": 1.0,
+   "neighbour_p90": 37.0,
+   "neighbour_mean": 325.51308018440005,
+   "nonblank_nonzero_median": 5.0,
+   "nonblank_nonzero_mean": 415.54197600094784
+  },
+  "2022_zero": {
+   "n_rows": 173323,
+   "n_with_nonzero_neighbour": 92963,
+   "neighbour_median": 1.0,
+   "neighbour_p90": 30.0,
+   "neighbour_mean": 64.13964695631596,
+   "nonblank_nonzero_median": 5.0,
+   "nonblank_nonzero_mean": 328.1676841507213
+  },
+  "2023_zero": {
+   "n_rows": 206642,
+   "n_with_nonzero_neighbour": 104338,
+   "neighbour_median": 1.0,
+   "neighbour_p90": 23.0,
+   "neighbour_mean": 25.36502520654028,
+   "nonblank_nonzero_median": 5.0,
+   "nonblank_nonzero_mean": 235.20230214769975
+  },
+  "2024_zero": {
+   "n_rows": 134050,
+   "n_with_nonzero_neighbour": 68951,
+   "neighbour_median": 1.0,
+   "neighbour_p90": 25.0,
+   "neighbour_mean": 34.89048744760772,
+   "nonblank_nonzero_median": 5.0,
+   "nonblank_nonzero_mean": 368.85649699904246
+  },
+  "2025_blank": {
+   "n_rows": 491023,
+   "n_with_nonzero_neighbour": 62510,
+   "neighbour_median": 2.0,
+   "neighbour_p90": 31.0,
+   "neighbour_mean": 27.961030235162372,
+   "nonblank_nonzero_median": 5.0,
+   "nonblank_nonzero_mean": 120.30671309120974
+  }
+ }
+}

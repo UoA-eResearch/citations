@@ -1,0 +1,762 @@
+[
+ {
+  "year": 2015,
+  "columns": [
+   "fips_code",
+   "county",
+   "state",
+   "customers_out",
+   "run_start_time"
+  ],
+  "cust_col": "customers_out",
+  "rows": 12939157,
+  "rows_nan_cust": 0,
+  "rows_zero_cust": 0,
+  "rows_bad_time": 0,
+  "rows_bad_fips": 0,
+  "rows_state_mismatch": 0,
+  "sum_cust": 1565317037.0,
+  "n_distinct_fips": 2498,
+  "t_min": "2015-01-01 00:00:00",
+  "t_max": "2015-12-31 00:00:00",
+  "n_distinct_timestamps": 34519,
+  "expected_slots_full_year": 35040,
+  "n_timestamps_off_15min_grid": 0,
+  "n_distinct_slots": 34519,
+  "gap_minutes_between_distinct_timestamps": {
+   "<15": 0,
+   "=15": 34260,
+   "15-30": 225,
+   "30-60": 22,
+   "60-180": 10,
+   "180-1440": 0,
+   ">1440": 1
+  },
+  "minutes_missing_vs_15min_grid": 6390.0,
+  "largest_gap_minutes": 1470.0,
+  "largest_gaps": [
+   {
+    "start": "2015-01-06 22:45:00",
+    "minutes": 1470.0
+   },
+   {
+    "start": "2015-04-02 09:30:00",
+    "minutes": 180.0
+   },
+   {
+    "start": "2015-12-21 20:45:00",
+    "minutes": 120.0
+   },
+   {
+    "start": "2015-07-07 01:30:00",
+    "minutes": 105.0
+   },
+   {
+    "start": "2015-07-19 01:30:00",
+    "minutes": 90.0
+   }
+  ],
+  "dup_exact_rows": 0,
+  "dup_exact_cust_sum": 0.0,
+  "dup_slot_rows": 0,
+  "dup_slot_cust_sum": 0.0,
+  "dup_slot_keys": 0,
+  "rows_per_slot_median": 362.0,
+  "rows_per_slot_p05": 157.0,
+  "utc_days_present": 365,
+  "utc_days_in_year": 365,
+  "hours_coverage_first_utc_day": 24.0,
+  "hours_coverage_last_utc_day": 0.25
+ },
+ {
+  "year": 2016,
+  "columns": [
+   "fips_code",
+   "county",
+   "state",
+   "customers_out",
+   "run_start_time"
+  ],
+  "cust_col": "customers_out",
+  "rows": 13306024,
+  "rows_nan_cust": 0,
+  "rows_zero_cust": 0,
+  "rows_bad_time": 0,
+  "rows_bad_fips": 0,
+  "rows_state_mismatch": 0,
+  "sum_cust": 2064484348.0,
+  "n_distinct_fips": 2405,
+  "t_min": "2016-01-01 00:00:00",
+  "t_max": "2016-12-31 00:00:00",
+  "n_distinct_timestamps": 34764,
+  "expected_slots_full_year": 35136,
+  "n_timestamps_off_15min_grid": 0,
+  "n_distinct_slots": 34764,
+  "gap_minutes_between_distinct_timestamps": {
+   "<15": 0,
+   "=15": 34683,
+   "15-30": 60,
+   "30-60": 6,
+   "60-180": 8,
+   "180-1440": 6,
+   ">1440": 0
+  },
+  "minutes_missing_vs_15min_grid": 4155.0,
+  "largest_gap_minutes": 1050.0,
+  "largest_gaps": [
+   {
+    "start": "2016-03-12 01:45:00",
+    "minutes": 1050.0
+   },
+   {
+    "start": "2016-08-12 14:15:00",
+    "minutes": 390.0
+   },
+   {
+    "start": "2016-11-06 11:45:00",
+    "minutes": 330.0
+   },
+   {
+    "start": "2016-10-08 17:30:00",
+    "minutes": 300.0
+   },
+   {
+    "start": "2016-11-05 09:30:00",
+    "minutes": 270.0
+   }
+  ],
+  "dup_exact_rows": 0,
+  "dup_exact_cust_sum": 0.0,
+  "dup_slot_rows": 0,
+  "dup_slot_cust_sum": 0.0,
+  "dup_slot_keys": 0,
+  "rows_per_slot_median": 374.0,
+  "rows_per_slot_p05": 163.0,
+  "utc_days_present": 366,
+  "utc_days_in_year": 366,
+  "hours_coverage_first_utc_day": 24.0,
+  "hours_coverage_last_utc_day": 0.25
+ },
+ {
+  "year": 2017,
+  "columns": [
+   "fips_code",
+   "county",
+   "state",
+   "customers_out",
+   "run_start_time"
+  ],
+  "cust_col": "customers_out",
+  "rows": 15078364,
+  "rows_nan_cust": 162648,
+  "rows_zero_cust": 0,
+  "rows_bad_time": 0,
+  "rows_bad_fips": 0,
+  "rows_state_mismatch": 0,
+  "sum_cust": 4378327281.0,
+  "n_distinct_fips": 2887,
+  "t_min": "2017-01-01 00:00:00",
+  "t_max": "2017-12-31 00:00:00",
+  "n_distinct_timestamps": 34705,
+  "expected_slots_full_year": 35040,
+  "n_timestamps_off_15min_grid": 3,
+  "n_distinct_slots": 34705,
+  "gap_minutes_between_distinct_timestamps": {
+   "<15": 3,
+   "=15": 34656,
+   "15-30": 29,
+   "30-60": 5,
+   "60-180": 6,
+   "180-1440": 5,
+   ">1440": 0
+  },
+  "minutes_missing_vs_15min_grid": 3600.25,
+  "largest_gap_minutes": 1020.0,
+  "largest_gaps": [
+   {
+    "start": "2017-04-01 18:00:00",
+    "minutes": 1020.0
+   },
+   {
+    "start": "2017-07-06 22:30:00",
+    "minutes": 780.0
+   },
+   {
+    "start": "2017-04-22 11:00:00",
+    "minutes": 420.0
+   },
+   {
+    "start": "2017-08-14 13:45:00",
+    "minutes": 240.0
+   },
+   {
+    "start": "2017-06-02 07:30:00",
+    "minutes": 225.0
+   }
+  ],
+  "dup_exact_rows": 0,
+  "dup_exact_cust_sum": 0.0,
+  "dup_slot_rows": 0,
+  "dup_slot_cust_sum": 0.0,
+  "dup_slot_keys": 0,
+  "rows_per_slot_median": 419.0,
+  "rows_per_slot_p05": 179.0,
+  "utc_days_present": 365,
+  "utc_days_in_year": 365,
+  "hours_coverage_first_utc_day": 24.0,
+  "hours_coverage_last_utc_day": 0.25
+ },
+ {
+  "year": 2018,
+  "columns": [
+   "fips_code",
+   "county",
+   "state",
+   "customers_out",
+   "run_start_time"
+  ],
+  "cust_col": "customers_out",
+  "rows": 21776806,
+  "rows_nan_cust": 2027828,
+  "rows_zero_cust": 0,
+  "rows_bad_time": 0,
+  "rows_bad_fips": 0,
+  "rows_state_mismatch": 0,
+  "sum_cust": 3296135480.0,
+  "n_distinct_fips": 2895,
+  "t_min": "2018-01-01 00:00:00",
+  "t_max": "2018-12-31 00:00:00",
+  "n_distinct_timestamps": 34775,
+  "expected_slots_full_year": 35040,
+  "n_timestamps_off_15min_grid": 32,
+  "n_distinct_slots": 34775,
+  "gap_minutes_between_distinct_timestamps": {
+   "<15": 29,
+   "=15": 34687,
+   "15-30": 47,
+   "30-60": 1,
+   "60-180": 6,
+   "180-1440": 4,
+   ">1440": 0
+  },
+  "minutes_missing_vs_15min_grid": 2551.2333333333336,
+  "largest_gap_minutes": 675.0,
+  "largest_gaps": [
+   {
+    "start": "2018-05-24 23:00:00",
+    "minutes": 675.0
+   },
+   {
+    "start": "2018-09-14 21:30:00",
+    "minutes": 390.0
+   },
+   {
+    "start": "2018-02-02 16:00:00",
+    "minutes": 375.0
+   },
+   {
+    "start": "2018-11-10 11:30:00",
+    "minutes": 210.0
+   },
+   {
+    "start": "2018-01-25 14:45:24",
+    "minutes": 164.6
+   }
+  ],
+  "dup_exact_rows": 0,
+  "dup_exact_cust_sum": 0.0,
+  "dup_slot_rows": 0,
+  "dup_slot_cust_sum": 0.0,
+  "dup_slot_keys": 0,
+  "rows_per_slot_median": 609.0,
+  "rows_per_slot_p05": 318.0,
+  "utc_days_present": 365,
+  "utc_days_in_year": 365,
+  "hours_coverage_first_utc_day": 24.0,
+  "hours_coverage_last_utc_day": 0.25
+ },
+ {
+  "year": 2019,
+  "columns": [
+   "fips_code",
+   "county",
+   "state",
+   "customers_out",
+   "run_start_time"
+  ],
+  "cust_col": "customers_out",
+  "rows": 24074122,
+  "rows_nan_cust": 1366771,
+  "rows_zero_cust": 0,
+  "rows_bad_time": 0,
+  "rows_bad_fips": 0,
+  "rows_state_mismatch": 0,
+  "sum_cust": 2824598528.0,
+  "n_distinct_fips": 3025,
+  "t_min": "2019-01-01 00:00:00",
+  "t_max": "2019-12-31 00:00:00",
+  "n_distinct_timestamps": 34903,
+  "expected_slots_full_year": 35040,
+  "n_timestamps_off_15min_grid": 1,
+  "n_distinct_slots": 34902,
+  "gap_minutes_between_distinct_timestamps": {
+   "<15": 2,
+   "=15": 34893,
+   "15-30": 0,
+   "30-60": 4,
+   "60-180": 2,
+   "180-1440": 1,
+   ">1440": 0
+  },
+  "minutes_missing_vs_15min_grid": 645.0,
+  "largest_gap_minutes": 375.0,
+  "largest_gaps": [
+   {
+    "start": "2019-01-12 10:30:00",
+    "minutes": 375.0
+   },
+   {
+    "start": "2019-04-07 09:45:00",
+    "minutes": 120.0
+   },
+   {
+    "start": "2019-07-08 02:00:00",
+    "minutes": 75.0
+   },
+   {
+    "start": "2019-07-08 00:30:00",
+    "minutes": 45.0
+   },
+   {
+    "start": "2019-07-08 01:15:00",
+    "minutes": 45.0
+   }
+  ],
+  "dup_exact_rows": 0,
+  "dup_exact_cust_sum": 0.0,
+  "dup_slot_rows": 262,
+  "dup_slot_cust_sum": 2572.0,
+  "dup_slot_keys": 131,
+  "rows_per_slot_median": 668.0,
+  "rows_per_slot_p05": 337.0,
+  "utc_days_present": 365,
+  "utc_days_in_year": 365,
+  "hours_coverage_first_utc_day": 24.0,
+  "hours_coverage_last_utc_day": 0.25
+ },
+ {
+  "year": 2020,
+  "columns": [
+   "fips_code",
+   "county",
+   "state",
+   "customers_out",
+   "run_start_time"
+  ],
+  "cust_col": "customers_out",
+  "rows": 25545517,
+  "rows_nan_cust": 2101520,
+  "rows_zero_cust": 0,
+  "rows_bad_time": 0,
+  "rows_bad_fips": 0,
+  "rows_state_mismatch": 0,
+  "sum_cust": 5219277476.0,
+  "n_distinct_fips": 3072,
+  "t_min": "2020-01-01 00:00:00",
+  "t_max": "2020-12-31 00:00:00",
+  "n_distinct_timestamps": 35029,
+  "expected_slots_full_year": 35136,
+  "n_timestamps_off_15min_grid": 3,
+  "n_distinct_slots": 35029,
+  "gap_minutes_between_distinct_timestamps": {
+   "<15": 2,
+   "=15": 35012,
+   "15-30": 14,
+   "30-60": 0,
+   "60-180": 0,
+   "180-1440": 0,
+   ">1440": 0
+  },
+  "minutes_missing_vs_15min_grid": 182.0,
+  "largest_gap_minutes": 30.0,
+  "largest_gaps": [
+   {
+    "start": "2020-02-20 00:00:00",
+    "minutes": 30.0
+   },
+   {
+    "start": "2020-03-24 13:15:00",
+    "minutes": 30.0
+   },
+   {
+    "start": "2020-11-02 22:45:00",
+    "minutes": 30.0
+   },
+   {
+    "start": "2020-06-10 19:15:00",
+    "minutes": 30.0
+   },
+   {
+    "start": "2020-04-16 01:00:00",
+    "minutes": 30.0
+   }
+  ],
+  "dup_exact_rows": 0,
+  "dup_exact_cust_sum": 0.0,
+  "dup_slot_rows": 0,
+  "dup_slot_cust_sum": 0.0,
+  "dup_slot_keys": 0,
+  "rows_per_slot_median": 698.0,
+  "rows_per_slot_p05": 373.0,
+  "utc_days_present": 366,
+  "utc_days_in_year": 366,
+  "hours_coverage_first_utc_day": 24.0,
+  "hours_coverage_last_utc_day": 0.25
+ },
+ {
+  "year": 2021,
+  "columns": [
+   "fips_code",
+   "county",
+   "state",
+   "customers_out",
+   "run_start_time"
+  ],
+  "cust_col": "customers_out",
+  "rows": 24826102,
+  "rows_nan_cust": 1104738,
+  "rows_zero_cust": 0,
+  "rows_bad_time": 0,
+  "rows_bad_fips": 0,
+  "rows_state_mismatch": 0,
+  "sum_cust": 5325390318.0,
+  "n_distinct_fips": 3045,
+  "t_min": "2021-01-01 00:00:00",
+  "t_max": "2021-12-31 00:00:00",
+  "n_distinct_timestamps": 34926,
+  "expected_slots_full_year": 35040,
+  "n_timestamps_off_15min_grid": 1,
+  "n_distinct_slots": 34926,
+  "gap_minutes_between_distinct_timestamps": {
+   "<15": 1,
+   "=15": 34910,
+   "15-30": 11,
+   "30-60": 2,
+   "60-180": 1,
+   "180-1440": 0,
+   ">1440": 0
+  },
+  "minutes_missing_vs_15min_grid": 286.0,
+  "largest_gap_minutes": 75.0,
+  "largest_gaps": [
+   {
+    "start": "2021-10-21 02:00:00",
+    "minutes": 75.0
+   },
+   {
+    "start": "2021-10-21 04:00:00",
+    "minutes": 60.0
+   },
+   {
+    "start": "2021-10-21 03:15:00",
+    "minutes": 45.0
+   },
+   {
+    "start": "2021-02-23 18:15:00",
+    "minutes": 30.0
+   },
+   {
+    "start": "2021-05-19 22:45:00",
+    "minutes": 30.0
+   }
+  ],
+  "dup_exact_rows": 0,
+  "dup_exact_cust_sum": 0.0,
+  "dup_slot_rows": 0,
+  "dup_slot_cust_sum": 0.0,
+  "dup_slot_keys": 0,
+  "rows_per_slot_median": 683.0,
+  "rows_per_slot_p05": 358.0,
+  "utc_days_present": 365,
+  "utc_days_in_year": 365,
+  "hours_coverage_first_utc_day": 24.0,
+  "hours_coverage_last_utc_day": 0.25
+ },
+ {
+  "year": 2022,
+  "columns": [
+   "fips_code",
+   "county",
+   "state",
+   "customers_out",
+   "run_start_time"
+  ],
+  "cust_col": "customers_out",
+  "rows": 25796465,
+  "rows_nan_cust": 0,
+  "rows_zero_cust": 1280476,
+  "rows_bad_time": 0,
+  "rows_bad_fips": 0,
+  "rows_state_mismatch": 0,
+  "sum_cust": 4971843138.0,
+  "n_distinct_fips": 3057,
+  "t_min": "2022-01-01 00:00:00",
+  "t_max": "2022-12-31 23:45:00",
+  "n_distinct_timestamps": 35037,
+  "expected_slots_full_year": 35040,
+  "n_timestamps_off_15min_grid": 0,
+  "n_distinct_slots": 35037,
+  "gap_minutes_between_distinct_timestamps": {
+   "<15": 0,
+   "=15": 35034,
+   "15-30": 1,
+   "30-60": 1,
+   "60-180": 0,
+   "180-1440": 0,
+   ">1440": 0
+  },
+  "minutes_missing_vs_15min_grid": 45.0,
+  "largest_gap_minutes": 45.0,
+  "largest_gaps": [
+   {
+    "start": "2022-10-19 00:00:00",
+    "minutes": 45.0
+   },
+   {
+    "start": "2022-10-18 23:00:00",
+    "minutes": 30.0
+   },
+   {
+    "start": "2022-05-02 16:15:00",
+    "minutes": 15.0
+   },
+   {
+    "start": "2022-05-02 16:00:00",
+    "minutes": 15.0
+   },
+   {
+    "start": "2022-05-02 15:45:00",
+    "minutes": 15.0
+   }
+  ],
+  "dup_exact_rows": 0,
+  "dup_exact_cust_sum": 0.0,
+  "dup_slot_rows": 0,
+  "dup_slot_cust_sum": 0.0,
+  "dup_slot_keys": 0,
+  "rows_per_slot_median": 707.0,
+  "rows_per_slot_p05": 386.0,
+  "utc_days_present": 365,
+  "utc_days_in_year": 365,
+  "hours_coverage_first_utc_day": 24.0,
+  "hours_coverage_last_utc_day": 24.0
+ },
+ {
+  "year": 2023,
+  "columns": [
+   "fips_code",
+   "county",
+   "state",
+   "sum",
+   "run_start_time"
+  ],
+  "cust_col": "sum",
+  "rows": 26101051,
+  "rows_nan_cust": 0,
+  "rows_zero_cust": 1306670,
+  "rows_bad_time": 0,
+  "rows_bad_fips": 0,
+  "rows_state_mismatch": 0,
+  "sum_cust": 4236839997.0,
+  "n_distinct_fips": 3058,
+  "t_min": "2023-01-01 00:00:00",
+  "t_max": "2023-12-31 23:45:00",
+  "n_distinct_timestamps": 35024,
+  "expected_slots_full_year": 35040,
+  "n_timestamps_off_15min_grid": 1,
+  "n_distinct_slots": 35024,
+  "gap_minutes_between_distinct_timestamps": {
+   "<15": 1,
+   "=15": 35010,
+   "15-30": 11,
+   "30-60": 0,
+   "60-180": 1,
+   "180-1440": 0,
+   ">1440": 0
+  },
+  "minutes_missing_vs_15min_grid": 241.0,
+  "largest_gap_minutes": 105.0,
+  "largest_gaps": [
+   {
+    "start": "2023-06-11 12:00:00",
+    "minutes": 105.0
+   },
+   {
+    "start": "2023-06-07 18:15:00",
+    "minutes": 30.0
+   },
+   {
+    "start": "2023-07-25 14:00:00",
+    "minutes": 30.0
+   },
+   {
+    "start": "2023-06-15 18:45:00",
+    "minutes": 30.0
+   },
+   {
+    "start": "2023-01-08 15:00:00",
+    "minutes": 30.0
+   }
+  ],
+  "dup_exact_rows": 0,
+  "dup_exact_cust_sum": 0.0,
+  "dup_slot_rows": 0,
+  "dup_slot_cust_sum": 0.0,
+  "dup_slot_keys": 0,
+  "rows_per_slot_median": 708.5,
+  "rows_per_slot_p05": 385.0,
+  "utc_days_present": 365,
+  "utc_days_in_year": 365,
+  "hours_coverage_first_utc_day": 24.0,
+  "hours_coverage_last_utc_day": 24.0
+ },
+ {
+  "year": 2024,
+  "columns": [
+   "fips_code",
+   "county",
+   "state",
+   "customers_out",
+   "run_start_time",
+   "total_customers"
+  ],
+  "cust_col": "customers_out",
+  "rows": 27701334,
+  "rows_nan_cust": 0,
+  "rows_zero_cust": 1085214,
+  "rows_bad_time": 0,
+  "rows_bad_fips": 0,
+  "rows_state_mismatch": 0,
+  "sum_cust": 7566722642.0,
+  "n_distinct_fips": 3061,
+  "t_min": "2024-01-01 00:00:00",
+  "t_max": "2024-12-31 23:45:00",
+  "n_distinct_timestamps": 35095,
+  "expected_slots_full_year": 35136,
+  "n_timestamps_off_15min_grid": 0,
+  "n_distinct_slots": 35095,
+  "gap_minutes_between_distinct_timestamps": {
+   "<15": 0,
+   "=15": 35089,
+   "15-30": 3,
+   "30-60": 1,
+   "60-180": 0,
+   "180-1440": 1,
+   ">1440": 0
+  },
+  "minutes_missing_vs_15min_grid": 615.0,
+  "largest_gap_minutes": 555.0,
+  "largest_gaps": [
+   {
+    "start": "2024-05-24 00:00:00",
+    "minutes": 555.0
+   },
+   {
+    "start": "2024-05-23 01:15:00",
+    "minutes": 45.0
+   },
+   {
+    "start": "2024-12-19 19:45:00",
+    "minutes": 30.0
+   },
+   {
+    "start": "2024-10-17 18:15:00",
+    "minutes": 30.0
+   },
+   {
+    "start": "2024-04-24 17:45:00",
+    "minutes": 30.0
+   }
+  ],
+  "dup_exact_rows": 0,
+  "dup_exact_cust_sum": 0.0,
+  "dup_slot_rows": 0,
+  "dup_slot_cust_sum": 0.0,
+  "dup_slot_keys": 0,
+  "rows_per_slot_median": 757.0,
+  "rows_per_slot_p05": 419.0,
+  "utc_days_present": 366,
+  "utc_days_in_year": 366,
+  "hours_coverage_first_utc_day": 24.0,
+  "hours_coverage_last_utc_day": 24.0
+ },
+ {
+  "year": 2025,
+  "columns": [
+   "fips_code",
+   "county",
+   "state",
+   "customers_out",
+   "run_start_time"
+  ],
+  "cust_col": "customers_out",
+  "rows": 30482141,
+  "rows_nan_cust": 1972650,
+  "rows_zero_cust": 1139675,
+  "rows_bad_time": 0,
+  "rows_bad_fips": 0,
+  "rows_state_mismatch": 0,
+  "sum_cust": 3570957200.0,
+  "n_distinct_fips": 3076,
+  "t_min": "2025-01-01 00:00:00",
+  "t_max": "2025-12-31 23:45:00",
+  "n_distinct_timestamps": 35149,
+  "expected_slots_full_year": 35040,
+  "n_timestamps_off_15min_grid": 121,
+  "n_distinct_slots": 35028,
+  "gap_minutes_between_distinct_timestamps": {
+   "<15": 242,
+   "=15": 34905,
+   "15-30": 0,
+   "30-60": 0,
+   "60-180": 0,
+   "180-1440": 1,
+   ">1440": 0
+  },
+  "minutes_missing_vs_15min_grid": 180.0,
+  "largest_gap_minutes": 195.0,
+  "largest_gaps": [
+   {
+    "start": "2025-03-20 20:15:00",
+    "minutes": 195.0
+   },
+   {
+    "start": "2025-05-04 16:45:00",
+    "minutes": 15.0
+   },
+   {
+    "start": "2025-05-04 16:30:00",
+    "minutes": 15.0
+   },
+   {
+    "start": "2025-05-04 16:15:00",
+    "minutes": 15.0
+   },
+   {
+    "start": "2025-05-04 16:00:00",
+    "minutes": 15.0
+   }
+  ],
+  "dup_exact_rows": 0,
+  "dup_exact_cust_sum": 0.0,
+  "dup_slot_rows": 242,
+  "dup_slot_cust_sum": 76205.0,
+  "dup_slot_keys": 121,
+  "rows_per_slot_median": 841.0,
+  "rows_per_slot_p05": 446.0,
+  "utc_days_present": 365,
+  "utc_days_in_year": 365,
+  "hours_coverage_first_utc_day": 24.0,
+  "hours_coverage_last_utc_day": 24.0
+ }
+]
