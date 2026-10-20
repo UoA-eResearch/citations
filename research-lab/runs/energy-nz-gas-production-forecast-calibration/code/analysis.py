@@ -131,6 +131,31 @@ def main():
     out["H1"] = dict(basis="net", m1=m1, m3=m3, threshold_h1_pct=5.0, threshold_h3_pct=15.0,
                      verdict="Supported" if sup else "Refuted" if ref else "Inconclusive")
 
+    # ---- sensitivities (plan section 4)
+    sens = {}
+    for nm, keep_fn in (("exclude_others", lambda q: q["field"] != "Others"),
+                        ("realised_above_0p5PJ", lambda q: q["realised"] > 0.5),
+                        ("exclude_others_and_small", lambda q: q["field"] != "Others" and q["realised"] > 0.5)):
+        sens[nm] = {}
+        for h in (1, 3):
+            sel = [q for q in pairs if q["basis"] == "net" and q["h"] == h and keep_fn(q)]
+            m, lo, hi, se, n, nf = boot_median(sel)
+            sens[nm][h] = dict(median_e=m, lo=lo, hi=hi, n_pairs=n, n_fields=nf,
+                               pct=None if m is None else 100 * (np.exp(m) - 1))
+    for nm in ("cluster_by_vintage",):
+        sens[nm] = {}
+        for h in (1, 3):
+            sel = [q for q in pairs if q["basis"] == "net" and q["h"] == h]
+            by = defaultdict(list)
+            for q in sel:
+                by[q["vintage"]].append(q["e"])
+            ks = sorted(by)
+            draws = [np.median([x for i in rng.choice(len(ks), len(ks)) for x in by[ks[i]]]) for _ in range(B)]
+            sens[nm][h] = dict(median_e=float(np.median([x for k in ks for x in by[k]])),
+                               lo=float(np.percentile(draws, 2.5)), hi=float(np.percentile(draws, 97.5)),
+                               n_vintages=len(ks))
+    out["sensitivity"] = sens
+
     # ---- national. MBIE's energy overview series "Indigenous Production -> Natural gas" reproduces the sum of
     # the field-level NET production exactly for every overlapping year (validation below), and its 2025 value
     # matches MBIE's published 102 PJ, so it is the net series extended to 2025.

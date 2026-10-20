@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gas Forecast Calibration</title>
+<meta name="description" content="Are New Zealand's gas production forecasts systematically optimistic? Six vintages of operators' field-level profiles reported to MBIE, recovered from the Internet Archive and compared with realised production.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · The Energy Movement</div>
+  <h1>Are New Zealand&#x27;s gas production forecasts systematically optimistic?</h1>
+  <p class="subtitle">Six vintages of the production profiles that field operators report to MBIE, recovered from the Internet Archive and compared, field by field and year by year, with the gas that was actually produced.</p>
+  <div class="meta">
+    <span>Report · 2026-10-20 · pre-review draft</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/energy-nz-gas-production-forecast-calibration/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/energy-nz-gas-production-forecast-calibration/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/energy-nz-gas-production-forecast-calibration/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: Supported.</strong> The forecasts are optimistic, and the gap widens the further ahead they look.</p>
+<ul>
+<li><strong>H1 (over-forecasting that grows with horizon): Supported.</strong><ul>
+<li>Across fields, the median profile exceeds realised production by <strong>37% one year ahead</strong> (95% CI +15% to +83%)
+and by <strong>49% three years ahead</strong> (+15% to +131%), against preregistered bars of +5% and +15%.</li>
+<li>At the national level the pattern is cleaner still: <strong>every one of the 24 vintage-and-horizon comparisons is
+an over-forecast</strong>, from +0.3% to +101%. The median national error is +32% one year out, +50% at three years
+and +57% at four.</li>
+<li>75% of individual field-year forecasts one year ahead are too high.</li>
+</ul>
+</li>
+<li><strong>H2 (reserve volumes are overstated): Inconclusive.</strong> Between consecutive vintages, the proved-plus-probable
+  (2P) ultimate recoverable volume was revised <strong>down in exactly half</strong> of the 72 field-years that moved by more
+  than 1% (95% CI 39–61%). There is no sign of a one-way bias in the volumes themselves.</li>
+<li><strong>H3 (the proved category is not conservative): Supported.</strong> The proved (1P) ultimate recoverable volume was
+  revised down in 43% of field-years (29 of 68; 95% CI 32–54%), far above the 10% a genuinely 90%-confident
+  estimate implies.</li>
+</ul>
+<p><strong>What that combination means.</strong> The totals are not systematically overstated, but the schedule is: operators
+expect the gas sooner and faster than it arrives. The shortfall looks like optimism about rate and timing rather
+than about how much gas exists. With 72 field-years and wide intervals, that reading is suggestive rather than
+settled.</p>
+<p><strong>One number for the scale of it.</strong> The workbook published as at 1 January 2022 forecast <strong>206 PJ</strong> of gas for
+2025. New Zealand produced <strong>102 PJ</strong>.</p>
+<p><strong>The caveat that matters most.</strong> The Internet Archive holds no copy of the 2025 and 2026 releases, because MBIE
+moved them to URLs it never captured. This study therefore covers the vintages from 2019 to 2024 and <strong>not</strong> the
+two most recent releases, including the one that cut 2P reserves 23% to 731 PJ.</p>
+<h2>In plain terms</h2>
+<p>New Zealand is running short of natural gas, and faster than expected. Each year the companies that own the gas
+fields tell the government how much they expect to produce for the next fourteen years. Those forecasts feed into
+decisions about electricity supply, about big industrial users, and about whether the country needs to import gas.</p>
+<p>We found six past copies of those forecasts in a web archive, going back to 2019, and compared each with what the
+fields actually produced.</p>
+<p>The forecasts were consistently too high. Not once in 24 comparisons did the country produce as much as the
+forecast said. One year ahead, the typical forecast was about a third too high. Three years ahead, about half too
+high. The 2022 forecast for 2025 was double what was actually produced.</p>
+<p>Oddly, the companies' estimates of the <em>total</em> gas left in each field were not one-sided: they were revised down
+about as often as up. So the problem is less "there is less gas than we thought" and more "it is not coming out as
+fast as we said it would".</p>
+<p>One exception is worth noting: the "proved" category, which is supposed to be a conservative floor that is
+exceeded nine times out of ten, was revised downward in more than four cases in ten. It is not behaving like a
+floor.</p>
+<p>Anyone planning against these profiles should expect less gas, sooner than the numbers suggest.</p>
+<h2>What was asked</h2>
+<p>Under the Crown Minerals Act, field operators file an annual summary report with MBIE giving their remaining
+reserves and a roughly fourteen-year expected production profile. MBIE publishes these as the petroleum reserves
+workbook. The profiles feed MBIE's gas outlooks, the system operator's security-of-supply work, and commercial and
+policy decisions.</p>
+<p>The study asks three preregistered questions (<code>plan.md</code>):</p>
+<ul>
+<li><strong>H1:</strong> do the profiles exceed realised production, and does the gap grow with horizon?</li>
+<li><strong>H2:</strong> are proved-plus-probable (2P) volumes revised down more often than up?</li>
+<li><strong>H3:</strong> is the proved (1P) category behaving as a conservative floor?</li>
+</ul>
+<h2>What was already known</h2>
+<p>MBIE reports shortfalls descriptively. <em>Energy in New Zealand 2026</em> notes that 2025 net production was 102 PJ,
+4.1% below the 107 PJ profile published in June 2025, and the May 2026 release notes that 2P reserves fell 23% to
+731 PJ with the 2026 profile 15% below the previous year's. A TIMES-NZ methodology page reproduces an MBIE chart
+comparing profiles with outcomes for 2020–2025 and observes that actual production "often fell short".</p>
+<p>The international literature on overconfidence in petroleum estimates (Capen 1976; Bratvold and Begg) is not about
+New Zealand. No horizon-resolved, field-level calibration of these profiles, and no test of whether the
+probabilistic reserve categories are calibrated, was found (searches 2026-10-20).</p>
+<h2>How it was done</h2>
+<p><strong>The forecasts.</strong> Every retrievable vintage of MBIE's petroleum reserves workbook, taken from Internet Archive
+raw copies because MBIE's own site refuses scripted downloads. Seven distinct workbooks give <strong>six vintages, as at
+1 January 2019 through 1 January 2024</strong>; the 2021 workbook was published twice and the later version is used (D1).
+The vintage is read from the text inside each workbook, never from the capture date. Each gives a gas production
+profile by field, in petajoules, running about fourteen years ahead.</p>
+<p><strong>The outcomes.</strong>
+- <strong>By field:</strong> MBIE's gas data tables, gross and net production per field, 1974–2023.
+- <strong>National:</strong> MBIE's energy overview, to 2025. That series reproduces the sum of the published field-level net
+  production to within 0.05 PJ in every overlapping year, and its 2025 value (102.4 PJ) matches the 102 PJ MBIE
+  published, so it is the net series (D1). Net is the headline basis, as in MBIE's own comparison.
+- <strong>Cross-check:</strong> Gas Industry Co's daily production for the four field groups it publishes.</p>
+<p><strong>Matching.</strong> The workbooks name more fields than MBIE publishes, so the finer names are mapped onto MBIE's
+published fields by a table written from the two name lists alone and committed before any pairing. Fields without
+a published counterpart fall into MBIE's "Others" residual. A field enters the analysis if it was forecast <strong>or</strong>
+produced, so a field that produced without being forecast counts against the hypothesis rather than being dropped.</p>
+<p><strong>The measure.</strong> For vintage <em>v</em>, field <em>f</em> and year <em>t</em>, the error is ln((F + ε)/(A + ε)) with ε = 0.05 PJ fixed in
+advance; positive means over-forecast. The horizon is h = t − Y(v). The headline statistic is the median over
+(vintage, field) pairs at each horizon, with a field-cluster bootstrap (2,000 resamples). Because the field-level
+outcome series ends in 2023 and the national one in 2025, the national comparison reaches further out.</p>
+<p><strong>Reserve calibration.</strong> Rather than relying on a production series, the reserve tests use the <strong>ultimate
+recoverable</strong> volume, which should change between vintages only through genuine re-estimation. Among field-years
+that moved by more than 1%, the share revised downward is compared with what each category implies.</p>
+<h2>Results</h2>
+<h3>H1: the forecasts are too high, and increasingly so (<code>results/tables/by_horizon.csv</code>)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>years ahead</th>
+<th>median field-level error</th>
+<th>95% CI</th>
+<th>vintages</th>
+<th>national total error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0 (part-observed)</td>
+<td>+21%</td>
+<td>+2% to +40%</td>
+<td>5</td>
+<td>+9%</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>+37%</strong></td>
+<td><strong>+15% to +83%</strong></td>
+<td>4</td>
+<td>+32%</td>
+</tr>
+<tr>
+<td>2</td>
+<td>+48%</td>
+<td>+14% to +92%</td>
+<td>3</td>
+<td>+39%</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>+49%</strong></td>
+<td><strong>+15% to +131%</strong></td>
+<td>2</td>
+<td>+50%</td>
+</tr>
+<tr>
+<td>4</td>
+<td>+35%</td>
+<td>−1% to +167%</td>
+<td>1</td>
+<td>+57%</td>
+</tr>
+</tbody>
+</table></div>
+<p>The preregistered rule asks for +5% at one year and +15% at three, with intervals excluding zero. Both hold, so
+<strong>H1 is Supported</strong>.</p>
+<ul>
+<li><strong>Every national comparison overshoots.</strong> Across the 24 (vintage, horizon) pairs with a realised outcome, the
+  error runs from +0.3% (the 2021 vintage's view of 2021) to +101% (the 2022 vintage's view of 2025). None is
+  negative.</li>
+<li><strong>The sensitivities preregistered in the plan all hold</strong> (<code>primary.json</code>, <code>sensitivity</code>):</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>variant</th>
+<th>1 year</th>
+<th>3 years</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>preregistered</td>
+<td>+37%</td>
+<td>+49%</td>
+</tr>
+<tr>
+<td>excluding the "Others" residual</td>
+<td>+28%</td>
+<td>+41%</td>
+</tr>
+<tr>
+<td>only fields producing above 0.5 PJ</td>
+<td>+50%</td>
+<td>+54%</td>
+</tr>
+<tr>
+<td>clustering by vintage rather than field</td>
+<td>+37%</td>
+<td>+49%</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>It is not uniform across fields.</strong> Over horizons 1–3 the most over-forecast named fields are Tui (+1,300%,
+  which stopped producing), Ngatoro (+257%), Kowhai (+157%), Waihapa (+108%) and Maari (+102%); the largest field,
+  Maui, was <strong>under</strong>-forecast by 21%, as was Rimu by 62% and Mangahewa by 5%. Fourteen of the eighteen fields
+  were over-forecast on balance.</li>
+</ul>
+<figure><a href="results/figures/F1_profiles_vs_realised.png"><img src="results/figures/F1_profiles_vs_realised.png" alt="Profiles against realised production"></a><figcaption>Coloured lines: the national total of the field-by-field gas production profile that operators reported to MBIE in each vintage of the petroleum reserves workbook (the vintage is the &#x27;as at 1 January&#x27; date inside the workbook). Black: realised net production, from MBIE&#x27;s energy overview, which reproduces the sum of the published field-level net production and whose 2025 value matches MBIE&#x27;s published 102 PJ. Profiles run 14 years ahead; the axis is cut at 2032.</figcaption></figure>
+<figure><a href="results/figures/F2_error_by_horizon.png"><img src="results/figures/F2_error_by_horizon.png" alt="Error by horizon"></a><figcaption>Blue: the median over (vintage, field) pairs of the forecast-to-realised ratio on the net basis, with field-cluster bootstrap 95% intervals (2,000 resamples); the label below each interval gives the number of vintages contributing. Orange squares: the same ratio for the national profile total, which is not sensitive to small fields and extends to 2025 because national realised production is published sooner than the field detail. Dashed lines: the preregistered thresholds.</figcaption></figure>
+<h3>H2 and H3: the volumes are even-handed, the proved category is not (<code>results/tables/revisions.csv</code>)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>category</th>
+<th>revised down</th>
+<th>share</th>
+<th>95% CI</th>
+<th>what calibration implies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>proved (1P)</td>
+<td>29 of 68</td>
+<td>43%</td>
+<td>32–54%</td>
+<td>rarely down (about 10%)</td>
+</tr>
+<tr>
+<td>proved + probable (2P)</td>
+<td>36 of 72</td>
+<td>50%</td>
+<td>39–61%</td>
+<td>about half</td>
+</tr>
+<tr>
+<td>proved + probable + possible (3P)</td>
+<td>40 of 79</td>
+<td>51%</td>
+<td>40–61%</td>
+<td>often down</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>H2 is Inconclusive</strong>: the 2P interval straddles 50%, so no one-way bias in the volumes is detected, and none is
+  ruled out either.</li>
+<li><strong>H3 is Supported</strong>: a proved volume that is exceeded nine times in ten should rarely be cut, and this one is cut
+  in more than four field-years in ten.</li>
+<li><strong>3P behaves like 2P</strong>, which is not what a 10%-probability upper case implies, though the interval is wide.</li>
+</ul>
+<figure><a href="results/figures/F3_reserve_revisions.png"><img src="results/figures/F3_reserve_revisions.png" alt="Reserve revisions"></a><figcaption>Among field-years whose ultimate recoverable gas volume changed by more than 1% between consecutive vintages, the share revised downward, with Wilson 95% intervals. A calibrated proved (1P) estimate should rarely be revised down (dashed line at 10%); a calibrated proved-plus-probable (2P) estimate should be revised down about half the time (solid line).</figcaption></figure>
+<h3>Power</h3>
+<p>The minimum detectable effect, from the bootstrap standard errors, is about <strong>42%</strong> at one year and <strong>61%</strong> at
+three. The measured effects (+37% and +49%) sit near those limits, which is why the intervals are wide even though
+the direction is unambiguous. The direction rests on 24 national comparisons that all point the same way; the
+<em>size</em> is imprecise.</p>
+<h3>Validation (<code>primary.json</code>, <code>validation</code>)</h3>
+<ul>
+<li>National net production reproduces MBIE's published 2025 figure: 102.4 PJ against 102 PJ.</li>
+<li>The national series matches the sum of published field-level net production to within 0.05 PJ in 2019–2023.</li>
+<li>Gas Industry Co's four published field groups track the same decline (121.7 PJ in 2018 to 72.1 PJ in 2025).</li>
+<li>First-year profile totals: 192 PJ (2019 vintage), 189, 158, 189, 167, 139 (2024).</li>
+</ul>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>It shows</strong> that, over 2019–2024, the published profiles were optimistic at every horizon tested, on a basis
+  that matches MBIE's own, and that the proved reserve category is not behaving as a conservative floor.</li>
+<li><strong>It does not cover the two most recent releases.</strong> The 2025 and 2026 workbooks are not in the Internet Archive.
+  MBIE's own statements about them point the same way, but they are outside this analysis.</li>
+<li><strong>It cannot separate optimism from changed plans.</strong> A profile is conditional on a development plan that may later
+  change for commercial or technical reasons. The study measures the calibration of the published numbers, not
+  intent.</li>
+<li><strong>The size is imprecise.</strong> Two vintages contribute at three years on the field-level measure, and the
+  field-cluster bootstrap treats fields as independent when a bad year hits them together. The national table,
+  where every comparison overshoots, is the more robust statement of direction.</li>
+<li><strong>"Others" is a residual bucket</strong> and the single most over-forecast "field"; the sensitivity excluding it is
+  reported.</li>
+<li><strong>It is not a resource assessment.</strong> Nothing here says how much gas is in the ground.</li>
+<li><strong>Units are fields and company filings</strong>, not people or communities.</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration.</strong> <code>plan.md</code> was committed before any forecast was paired with any outcome, and after only the
+  structure of one workbook and the archive listings had been examined.</li>
+<li><strong>Code before outputs.</strong> <code>fetch.py</code>, <code>parse.py</code>, <code>analysis.py</code> were each committed before the outputs they
+  produced; <code>figures.py</code> was written after the results, as the report states.</li>
+<li><strong>D1</strong> records what the archive could give (six vintages, not the latest two), the one-capture-per-vintage rule,
+  the 2023 cut-off on field-level outcomes, and the identification of the national series as the net basis.</li>
+<li><strong>A first analysis run double-counted the 2021 vintage</strong> because two captures carry it; the rule in D1 was added
+  and the run repeated before any result was written down.</li>
+</ul>
+<h2>Reproducing it</h2>
+<p><code>code/fetch.py</code>, then <code>code/parse.py</code>, <code>code/analysis.py</code>, <code>code/figures.py</code>.</p>
+<ul>
+<li><strong>Raw inputs</strong> are Internet Archive raw copies listed with their sha256 in <code>data/raw/MANIFEST.json</code>.</li>
+<li><strong>Results</strong> are in <code>results/tables/</code>: <code>primary.json</code>, <code>by_horizon.csv</code>, <code>pairs.csv</code>, <code>national_pairs.csv</code>,
+  <code>revisions.csv</code> and <code>vintages.csv</code>.</li>
+</ul>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/energy-nz-gas-production-forecast-calibration/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>
