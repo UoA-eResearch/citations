@@ -1,7 +1,7 @@
 {
  "generated": "2026-09-01",
  "hardware": "32-core Intel Xeon Cascade Lake, 94GB RAM, NVIDIA A100 80GB, ~600GB free disk",
- "method": "10 domain scouts + completeness critic + 2 gap-fill scouts (research-lead-scout workflow, 13 agents, ~107 web searches/tool uses). Critic findings applied as score adjustments with visible critic_note fields; original scout scores preserved as scout_*_score. | Round 2 (2026-10-02): 8 domain scouts over the round-1 critic's unscouted angles + 1 calibration critic (research-lead-scout-round2 workflow, 9 agents, 637 tool uses); critic scores applied, scout scores preserved as scout_*_score where changed. | Auckland/NZ round (2026-10-03): 4 local-context scouts (hazards & climate, urban systems, health & society, environment & biodiversity) + 1 calibration critic; Te Mana Raraunga handling checked per lead; fields local_relevance, time_sensitive and needs_engagement added. | Signature-areas round (2026-10-16): 6 scouts, one per University of Auckland signature research area (Blue Pacific Horizons, Ancestral Futures, Frontier Technologies, The Energy Movement, Future Health, Advancing Trust in Knowledge), then one calibration critic. 24 candidates, 21 kept, 3 cut as already answered or premise-false. The critic awarded no 7s and moved 13 leads to 5 or below; scout scores preserved as scout_*_score. Indigenous data governance was a hard constraint: the lab does not analyse Maori or Pacific data without community governance, so leads target systems and institutions, and needs_engagement names who must be engaged before the affected step runs.",
+ "method": "10 domain scouts + completeness critic + 2 gap-fill scouts (research-lead-scout workflow, 13 agents, ~107 web searches/tool uses). Critic findings applied as score adjustments with visible critic_note fields; original scout scores preserved as scout_*_score. | Round 2 (2026-10-02): 8 domain scouts over the round-1 critic's unscouted angles + 1 calibration critic (research-lead-scout-round2 workflow, 9 agents, 637 tool uses); critic scores applied, scout scores preserved as scout_*_score where changed. | Auckland/NZ round (2026-10-03): 4 local-context scouts (hazards & climate, urban systems, health & society, environment & biodiversity) + 1 calibration critic; Te Mana Raraunga handling checked per lead; fields local_relevance, time_sensitive and needs_engagement added. | Signature-areas round (2026-10-16): 6 scouts, one per University of Auckland signature research area (Blue Pacific Horizons, Ancestral Futures, Frontier Technologies, The Energy Movement, Future Health, Advancing Trust in Knowledge), then one calibration critic. 24 candidates, 21 kept, 3 cut as already answered or premise-false. The critic awarded no 7s and moved 13 leads to 5 or below; scout scores preserved as scout_*_score. Indigenous data governance was a hard constraint: the lab does not analyse Maori or Pacific data without community governance, so leads target systems and institutions, and needs_engagement names who must be engaged before the affected step runs. | Energy and Movement gap-fill round (2026-10-20): main-loop scouting (no workflow) over the calibration critic's two Energy and Movement gaps (no transport lead; nothing on the distribution network, demand side or gas market; three of four leads on the same EMI tables). Access and novelty checked by web search and direct downloads; 5 leads added, none drawing on the EMI wholesale tables as their main source (MBIE reserves workbooks via Wayback, Commerce Commission disclosures x2, NZTA Motor Vehicle Register, Auckland Transport GTFS-Realtime). Scores self-calibrated with a critic_note on each.",
  "rubric": {
   "cost_score": "1-2 hours-to-a-day CPU-only | 3-4 days, some GPU, <50GB | 5-6 one-two weeks, 50-300GB | 7-8 weeks, near hardware limits | 9-10 exceeds this machine",
   "value_score": "2-3 minor replication | 4-5 solid incremental | 6-7 fills actively-discussed gap | 8-10 major open question / broad impact"
@@ -8160,9 +8160,300 @@
    "verdict_tag": "Refuted",
    "verdict_note": "Refuted on H1 and H2, Supported on H3. Temporal holdout across 177 arm-level nmadb networks: adding back the newest ~10% of studies (median 15%, whole years) changes the P-score top treatment in 19.8% (14.6-26.3%) vs the predicted >=30%; 29% counting a new treatment that ranks first. Among incumbents the pre-update P(best) (0.61) UNDERstates retention (80%) by 20 points (13-26), the opposite of the predicted overstatement; over the oldest-half->all horizon it is near calibrated (0.59 vs 67%) but overstates once new entrants count (46%). Top-two gap + size explain Nagelkerke R2 0.11 of flips. Random holdouts of the same size flip 15.4% (diff 4.4, -0.8 to 9.7).",
    "headline": "Network meta-analysis rankings are moderately stable: one top treatment in five changes when the newest studies are added back (one in three over a longer horizon), the stated probability of being best is conservative for treatments already compared but overconfident once new treatments can enter, and a narrow lead at the top is the only, weak, warning sign."
+  },
+  {
+   "id": "energy-nz-gas-production-forecast-calibration",
+   "title": "Are New Zealand's gas production forecasts systematically optimistic? A multi-vintage, field-by-field calibration of operators' production profiles and reserve revisions",
+   "domain": "energy-movement",
+   "hypothesis": "Across every available vintage of MBIE's petroleum reserves workbook, operators' field-level gas production profiles over-forecast realised production, and the bias grows with horizon: the national forecast exceeds realised production by at least 5% at a 1-year horizon and by at least 15% at a 3-year horizon (median across vintages, field-cluster bootstrap interval excluding 0). Secondary: 2P (P50) remaining-reserve revisions are downward in more than 60% of field-years (an unbiased P50 implies about half), and 1P (P90) remaining reserves are revised down in more than 10% of field-years (a calibrated P90 is exceeded downward at most about 10% of the time).",
+   "gap": "New Zealand's gas shortfall is the binding constraint on its electricity system and the confounder in two of the lab's energy leads, and the field operators' production profiles reported to MBIE are the input to MBIE's gas outlooks, the system operator's security-of-supply assessments and industrial decisions (Methanex, ETS). MBIE notes one-year shortfalls descriptively: 2025 production was 4.1% below the June 2025 profile, and the 2026 release cut 2026 production 15% and 2P reserves 23% (to 731 PJ). A TIMES-NZ methodology page reproduces an MBIE profile-versus-actual chart for 2020-2025 saying actual production 'often fell short'. No systematic, horizon-resolved, field-level calibration of the profiles, or calibration test of the probabilistic reserve categories (P90/P50/P10), was found. The reserves-overconfidence literature (Capen 1976; Bratvold and Begg) is international and does not cover New Zealand's fields.",
+   "value_score": 6,
+   "cost_score": 2,
+   "value_rationale": "Gives a measured bias, by horizon and field, for the single most policy-relevant energy forecast in New Zealand right now, with an immediate use: a correction factor for anyone planning against the operators' profiles (electricity security of supply, gas-dependent industry, the ETS). It is falsifiable in both directions; if the profiles turn out calibrated, the shortfall is luck and geology rather than optimism, which also matters.",
+   "cost_rationale": "A handful of workbooks of ~0.1 MB each plus realised production series; pandas on a laptop. The work is assembling vintages and aligning field names, not compute.",
+   "est_wall_time": "3-5 days",
+   "est_data_gb": 0.1,
+   "feasibility": "local",
+   "requirements_if_out_of_reach": "",
+   "datasets": [
+    {
+     "name": "MBIE petroleum reserves workbook (field-level 1P/2P/3P remaining reserves, contingent resources, deliverability, and 'Gas LPG Production Profile (Forecast)' by field for ~14 years ahead)",
+     "url": "https://www.mbie.govt.nz/assets/Data-Files/Energy/nz-energy-quarterly-and-energy-in-nz/petroleum-reserves.xlsx",
+     "access": "open, but MBIE's site serves an Incapsula bot challenge to scripted downloads; Wayback Machine raw copies (id_) download fine",
+     "size": "~0.1 MB per vintage; Wayback CDX verified 2026-10-20 with 200-status copies from Dec 2021, Jan/Apr 2022, Jan/Feb/Nov 2023, May/Aug/Sep 2024, Feb/Sep 2025, Apr/May 2026; the Sep 2025 copy was opened and contains the production-profile sheets"
+    },
+    {
+     "name": "Realised annual gas production by field (MBIE Energy in New Zealand gas tables; NZP&M annual production data)",
+     "url": "https://www.mbie.govt.nz/building-and-energy/energy-and-natural-resources/energy-statistics-and-modelling/energy-publications-and-technical-papers/energy-in-new-zealand",
+     "access": "open (same bot challenge; Wayback copies)",
+     "size": "<1 MB"
+    },
+    {
+     "name": "Gas Industry Co gas reserves and supply reports (cross-check)",
+     "url": "https://www.gasindustry.co.nz/data/gas-reserves/",
+     "access": "open",
+     "size": "small"
+    }
+   ],
+   "lit_for": [
+    "MBIE Energy in New Zealand 2026: 2025 net gas production 102 PJ, 4.1% below the June 2025 profile (107 PJ); Pohokura underperformance (POW-5), Mangahewa above expectation",
+    "MBIE 2026 reserves release (14 May 2026): 2P down 23% to 731 PJ; operators' 2026 profile 85 PJ, 15% below the previous year's profile",
+    "TIMES-NZ methodology (domestic production) reproduces MBIE's 2020-2025 profile-versus-actual comparison: actual production often fell short",
+    "Gas Industry Co: 2023 production 146.5 PJ against forecasts of 167.5 PJ",
+    "Capen (1976) and Bratvold and Begg on overconfidence in petroleum estimates (international)"
+   ],
+   "lit_against": [
+    "MBIE's own descriptive profile-versus-actual comparisons cover part of the question; the contribution is horizon-resolved, field-level and probabilistic-category calibration across all vintages, not the existence of a shortfall",
+    "Operators' profiles are submitted under the Crown Minerals Act annual summary report rules and may be conditional on development plans that later change, so some 'bias' is plan change rather than optimism"
+   ],
+   "method": "Assemble every retrievable vintage of the reserves workbook (Wayback raw copies; search for earlier filenames before 2021), parse the gas production-profile sheet and the remaining-reserves sheets by field, and harmonise field names across vintages. Pair each forecast (vintage v, field f, year t) with realised production for (f, t). Estimate the median log forecast error by horizon h = t - v nationally and by field, with a field-cluster bootstrap. For reserves, classify each field-year revision of 1P, 2P and 3P remaining reserves (net of the year's production) as up or down, and compare the downward-revision rate with the nominal exceedance probability of each category. Attribute large errors to documented events (well failures, development deferrals) from MBIE and operator releases, descriptively.",
+   "plan": [
+    "Recover all vintages (Wayback CDX for the current URL and older filenames); record the sha256 and capture date of each; confirm the vintage date inside each workbook ('as at 1 January YYYY').",
+    "Preregister the horizons, thresholds, field-matching rules, how fields that start or stop are handled, and the revision-direction test before pairing any forecast with an outcome.",
+    "Build the realised production series by field and check national totals against MBIE's published annual gas production.",
+    "Compute horizon-resolved errors and revision-direction rates; bootstrap by field.",
+    "Report the bias table by horizon and field, the calibration of 1P/2P/3P, and a correction factor for the latest profile."
+   ],
+   "risks": "Only about five distinct vintages may be recoverable before 2021, which limits long horizons; the profiles may cover producing fields only, so new-field optimism is out of scope; field names and aggregations change between vintages; realised by-field production may need to come from a different MBIE table than the profiles. If fewer than four vintages are recoverable, the study reduces to a descriptive audit.",
+   "plain_summary": "New Zealand is running short of natural gas faster than expected. Each year, gas field operators tell the government how much gas they expect to produce over the next decade, and those forecasts feed into electricity planning and big industrial decisions. We will collect every past set of these forecasts we can find and compare them with what the fields actually produced, to measure whether, and by how much, the forecasts have been too optimistic, and whether that gets worse the further ahead they look.",
+   "local_relevance": "Directly bears on New Zealand's gas and electricity security of supply in 2026-2030, on MBIE and system-operator outlooks, and on how much weight planners should put on operators' profiles; also a confounder control for the lab's hydro and curtailment leads.",
+   "scout_value_score": 6,
+   "scout_cost_score": 2,
+   "critic_note": "Main-loop scouting with access verified on 2026-10-20: MBIE's own site blocks scripted downloads (Incapsula), but Wayback raw copies of the workbook exist from Dec 2021 onwards and the Sep 2025 copy contains field-level 14-year production profiles. Novelty is about the systematic, horizon-resolved and probabilistic calibration, not the shortfall itself, which MBIE reports. Scores kept: value 6 because the forecast is policy-binding now; cost 2 (days, CPU, <1 GB). Main risk is the number of recoverable vintages before 2021."
+  },
+  {
+   "id": "energy-nz-edb-quality-standard-ratchet",
+   "title": "Do New Zealand's price-quality resets ratchet reliability limits upward? Distributor SAIDI limits, major-event boundary values and outcomes across DPP1-DPP4",
+   "domain": "energy-movement",
+   "hypothesis": "For electricity distributors on the default price-quality path, each five-yearly reset raises the unplanned SAIDI limit in step with the storms of the preceding reference period: from DPP2 (2015) to DPP4 (2025) the median distributor's unplanned SAIDI limit rises by at least 20%, while the share of raw unplanned SAIDI removed by major-event normalisation does not rise, so the limits absorb worsening weather rather than isolating it. Secondary: on the 2024-2025 interruption-level data, the IEEE 1366 2.5-beta rule and the DPP boundary-value rule classify different days as major events, and swapping the rule changes at least two distributors' compliance outcome.",
+   "gap": "The lab's outage study (US states, EAGLE-I) found that a rolling major-event threshold rises with storms and lets storm growth leak into the 'normal operations' index. New Zealand regulates the same thing differently: the Commerce Commission sets each distributor's SAIDI/SAIFI limits and major-event boundary values from a historical reference period at every reset (2010, 2015, 2020, 2025), and enforces them through two-out-of-three-year compliance rules (contraventions: Unison and Wellington Electricity 2017-18, Top Energy 2023). Distributors argued in 2019 that the normalisation does not remove major events. No analysis of how limits and boundary values have moved across resets relative to outcomes was found, and the Commission's 2022 disclosure changes now publish interruption-level data that allows daily SAIDI to be rebuilt.",
+   "value_score": 5,
+   "cost_score": 3,
+   "value_rationale": "Tests a regulatory design question with a natural cross-reset panel in a small, well-documented regime, and gives the lab an external replication of its US outage finding with official data rather than outage-map proxies. Relevant to DPP5 design and to how the Commission treats extreme weather after Cyclone Gabrielle.",
+   "cost_rationale": "The full disclosure dataset is a 14 MB Parquet file; the DPP determinations are four PDFs whose limit and boundary-value schedules must be transcribed (about 17 non-exempt distributors per reset). CPU only.",
+   "est_wall_time": "5-8 days",
+   "est_data_gb": 0.2,
+   "feasibility": "local",
+   "requirements_if_out_of_reach": "",
+   "datasets": [
+    {
+     "name": "Commerce Commission EDB information disclosure, all years (Parquet/CSV.GZ) with data dictionary",
+     "url": "https://www.comcom.govt.nz/regulated-industries/electricity-lines/electricity-distributor-performance-and-data/information-disclosed-by-electricity-distributors/",
+     "access": "open",
+     "size": "EDB_ID_Full_2026-06-01.parquet 14 MB; per-period XLSX 34-39 MB; 2008-2012 historic XLS 15 MB"
+    },
+    {
+     "name": "EDB ID interruptions 2025 (Schedule 10a, interruption-level) and worst-performing feeders",
+     "url": "https://www.comcom.govt.nz/regulated-industries/electricity-lines/electricity-distributor-performance-and-data/information-disclosed-by-electricity-distributors/",
+     "access": "open",
+     "size": "2.6 MB Parquet"
+    },
+    {
+     "name": "Default price-quality path determinations 2010, 2015, 2020, 2025 (quality standard schedules: SAIDI/SAIFI limits, boundary values, targets)",
+     "url": "https://comcom.govt.nz/__data/assets/pdf_file/0027/363276/5BFINAL5D-Electricity-Distribution-Services-Default-Price-Quality-Path-Determination-2025-5B20245D-20-November-2024.pdf",
+     "access": "open",
+     "size": "PDF"
+    }
+   ],
+   "lit_for": [
+    "Commerce Commission DPP determinations set quality standards from reference-period data; DPP4 final determination [2024] NZCC 28, 20 November 2024",
+    "ENA letter on quality of service (23 August 2019): normalisation does not remove the effect of major events; planning at limit minus six boundary values",
+    "Compliance advice: Unison (AP2017-18), Wellington Electricity (2017-18), Top Energy (AP2023)",
+    "The lab's own outage study (runs/energy-outage-major-event-day-ratchet): a rising rolling threshold lets storm growth into the normal-operations index"
+   ],
+   "lit_against": [
+    "The Commission's reset decisions and reasons papers discuss reference periods and extreme weather; part of the 'ratchet' may be a deliberate policy choice the reasons papers already justify",
+    "Disclosure definitions changed (2022 targeted review: successive interruptions), so pre/post-2024 SAIDI series need a break term"
+   ],
+   "method": "Transcribe each non-exempt distributor's unplanned SAIDI and SAIFI limits, targets and boundary values for DPP1-DPP4 from the determinations; join to annual raw and normalised SAIDI/SAIFI from the disclosure panel. Measure, per distributor and reset, the change in limit and boundary value against the change in the reference-period outcomes and the share of raw SAIDI removed by normalisation; pool with distributor fixed effects and a distributor-cluster bootstrap. On the 2024-2025 interruption data, rebuild daily SAIDI per distributor, apply the 2.5-beta rule and the DPP boundary values, and compare the days classified and the compliance outcome under each.",
+   "plan": [
+    "Read the data dictionary to confirm the reliability fields (raw and normalised SAIDI/SAIFI, major-event values) and the 2024 definition break.",
+    "Transcribe the four determinations' quality schedules (double entry) and commit them before joining any outcome.",
+    "Preregister the ratchet measure, thresholds and the 2.5-beta comparison.",
+    "Run the panel and the interruption-level comparison; report by distributor."
+   ],
+   "risks": "Only four resets and about 17 regulated distributors per reset, so the pooled estimate is coarse; consumer-owned distributors are exempt from the DPP and must be handled separately; the interruption-level data cover too few years for a 2.5-beta window (five years), so that part may need the annual series as a proxy or be descriptive.",
+   "plain_summary": "Power companies that run local lines in New Zealand are allowed a certain amount of outage time each year before they are in breach, and big storm days are partly excused. Every five years the regulator resets those allowances based on recent history. If storms are getting worse, the allowances may simply creep up with them. We will compare the allowances set at each reset since 2010 with what actually happened on each network, and test whether the system quietly loosens as the weather worsens.",
+   "local_relevance": "Bears on the Commerce Commission's next default price-quality path, on how extreme weather after Cyclone Gabrielle is treated in reliability regulation, and on what consumers can expect from their lines company.",
+   "scout_value_score": 5,
+   "scout_cost_score": 3,
+   "critic_note": "Access verified 2026-10-20: the Commission publishes all years of disclosures as one 14 MB Parquet plus interruption-level data from 2025. The interruption-level series is short, so the 2.5-beta replication is a secondary, partly descriptive component. Novelty: no reset-dynamics analysis found. Value 5 (one regulator, a coarse panel, but a clean external check of the outage study); cost 3 because of manual transcription of four determinations."
+  },
+  {
+   "id": "energy-nz-embedded-solar-edb-demand",
+   "title": "Rooftop solar on New Zealand's local networks: how much energy delivered, and how much midday demand, has it displaced, distributor by distributor, 2013-2026?",
+   "domain": "energy-movement",
+   "hypothesis": "In a panel of New Zealand's 29 distributors (2013-2026), each additional MW of installed distributed solar reduces annual energy delivered to customers by at least 1.0 GWh (close to rooftop solar's expected NZ yield of about 1.2-1.4 GWh per MW), while the distributor's maximum coincident (winter evening) demand is unaffected (95% interval within plus or minus 0.1 MW per MW). Secondary: at grid exit points, summer midday minimum demand falls faster where the network's solar uptake is higher.",
+   "gap": "New Zealand's rooftop solar has grown fast, and the Electricity Authority now requires distributors to pay peak-time export rebates. MBIE and Rewiring Aotearoa modelling (2025-2026) and EECA's household study model solar's effects, but no empirical, network-level measurement of how much of the distributors' energy base solar has displaced, versus its effect on the winter peak that drives network investment, was found. Both questions bear on distribution pricing (who pays for the network as energy sold falls) and are answerable from the Commission's disclosure panel, which also diversifies the lab's energy leads away from the EMI wholesale tables.",
+   "value_score": 5,
+   "cost_score": 3,
+   "value_rationale": "A measured displacement rate per MW and a peak-effect check per network give a direct input to the distribution-pricing and 'utility death spiral' debate in New Zealand, using official data. It is falsifiable: if displacement is much below the yield, much solar output is being exported or curtailed rather than displacing purchases.",
+   "cost_rationale": "The disclosure Parquet (14 MB) plus the Authority's installed-DG series and modest weather controls; the optional grid-exit-point part uses EMI metered data (about 1-2 GB). CPU only.",
+   "est_wall_time": "5-8 days",
+   "est_data_gb": 2,
+   "feasibility": "local",
+   "requirements_if_out_of_reach": "",
+   "datasets": [
+    {
+     "name": "Commerce Commission EDB information disclosure, all years (energy delivered, maximum coincident system demand, ICPs, distributed generation connections and capacity)",
+     "url": "https://www.comcom.govt.nz/regulated-industries/electricity-lines/electricity-distributor-performance-and-data/information-disclosed-by-electricity-distributors/",
+     "access": "open",
+     "size": "14 MB Parquet"
+    },
+    {
+     "name": "Electricity Authority installed distributed generation trends (registry-based, by network, monthly, from Sep 2013)",
+     "url": "https://forum.emi.ea.govt.nz/thread/installed-distributed-generation-dg-trends-report-now-tracks-size-of-new-installations/",
+     "access": "open (EMI report; exact export path to confirm at planning)",
+     "size": "small"
+    },
+    {
+     "name": "EMI grid exit point half-hourly metered offtake (optional midday-minimum test)",
+     "url": "https://www.emi.ea.govt.nz/Wholesale/Datasets/Metered_data/Grid_import",
+     "access": "open",
+     "size": "~1-2 GB"
+    },
+    {
+     "name": "Open-Meteo / ERA5 temperature and irradiance by network area (weather controls)",
+     "url": "https://open-meteo.com/",
+     "access": "open",
+     "size": "small"
+    }
+   ],
+   "lit_for": [
+    "EECA, Understanding the value of residential solar PV and storage in NZ (47,000 consumers, four cities)",
+    "MBIE briefings and Rewiring Aotearoa/ANSA modelling of high rooftop-solar and battery uptake (2025-2026): network capex substantial if exports unmanaged",
+    "Electricity Authority decision requiring distributors to pay peak-time export rebates (up to 45 kW)"
+   ],
+   "lit_against": [
+    "Disclosure DG fields may record connections or capacity inconsistently across distributors and years; the registry-based EA series may be the better exposure variable",
+    "Energy delivered also moves with electrification, industrial load and weather; identification relies on within-network variation in solar growth with year effects"
+   ],
+   "method": "Build a distributor-year panel: energy delivered, maximum coincident demand and ICPs from the disclosures; installed distributed solar capacity from the EA registry series (cross-checked with the disclosures); heating and cooling degree days and irradiance as controls. Estimate displacement per MW with distributor and year fixed effects and a distributor-cluster bootstrap, separately for energy and peak. For the secondary test, compute summer midday minimum offtake at each grid exit point and relate its trend to the supplying network's solar uptake.",
+   "plan": [
+    "Confirm the DG and demand fields in the data dictionary and the EA series coverage by network; map grid exit points to networks.",
+    "Preregister the displacement threshold, the peak band and the grid-exit test.",
+    "Build the panel and run the models; report by network.",
+    "Compare the displacement with expected yield and discuss exports versus self-consumption."
+   ],
+   "risks": "Twenty-nine units over 13 years is a small panel and solar growth is collinear with time; the peak result is close to certain by construction (winter evening peaks), so its value is as a check rather than a finding; the grid-exit mapping is many-to-many for some networks.",
+   "plain_summary": "Many New Zealand homes now have solar panels. Those panels mean local lines companies deliver less electricity, but the networks are built for the coldest winter evenings, when solar produces nothing. We will measure, network by network, how much electricity rooftop solar has taken off the lines companies' books and whether it has made any difference to the winter peaks that drive network costs, because that decides who ends up paying for the poles and wires.",
+   "local_relevance": "Bears on distribution pricing reform and export rebates (Electricity Authority), on distributors' investment plans, and on household bills as more consumers install solar.",
+   "scout_value_score": 5,
+   "scout_cost_score": 3,
+   "critic_note": "Access verified for the disclosure Parquet; the EA installed-DG report and grid-exit data are known EMI products but their exact download paths should be checked at planning (the DG report is referenced by its EMI forum announcement and its export path still needs confirming). The peak half of the hypothesis is near-certain in a winter-peaking system and should be framed as a check; the energy-displacement rate is the contribution. Value 5, cost 3."
+  },
+  {
+   "id": "movement-nz-ev-policy-discount-vs-ruc",
+   "title": "Clean Car Discount removal versus road-user charges: separating two 2024 policy shocks to New Zealand's EV uptake with the Motor Vehicle Register",
+   "domain": "energy-movement",
+   "hypothesis": "The collapse in battery-EV share of light-vehicle first registrations in early 2024 is mostly the end of the Clean Car Discount (31 December 2023) and its pull-forward, not the road-user charges applied to light EVs and PHEVs from 1 April 2024: (1) at least half of the apparent first-quarter 2024 fall relative to the 2023 trend is offset by excess December 2023 registrations (bunching); (2) the incremental drop in BEV and PHEV registrations at 1 April 2024, relative to non-plug hybrids (which lost the rebate but pay no RUC), is less than one-third of the January 2024 drop.",
+   "gap": "The end of the discount and the arrival of EV road-user charges came three months apart, and public debate attributes the EV slump to both (and to a change in government messaging). News coverage reports monthly market shares (BEVs about 3% in January 2024 after a December spike), and the Ministry of Transport's pre-decision regulatory impact statement described the discount as working, but no analysis separating the two shocks was found. Powertrains were exposed differently: non-plug hybrids lost a rebate but pay no RUC, BEVs and PHEVs lost the rebate and gained RUC, and new and used imports had different rebate schedules, which gives a difference-in-differences design on open register data.",
+   "value_score": 5,
+   "cost_score": 2,
+   "value_rationale": "Answers a live policy question (what actually stalled EV uptake) with a transparent design on open data, relevant to any return of purchase incentives or changes to RUC, and to transport emissions budgets. It is falsifiable: the RUC increment could prove large.",
+   "cost_rationale": "One monthly Motor Vehicle Register snapshot (a few hundred MB CSV) plus NZTA monthly first-registration statistics; pandas and fixed-effects regressions on monthly counts.",
+   "est_wall_time": "3-5 days",
+   "est_data_gb": 1,
+   "feasibility": "local",
+   "requirements_if_out_of_reach": "",
+   "datasets": [
+    {
+     "name": "NZTA Motor Vehicle Register open data (monthly snapshot of registered vehicles: make, model, class, motive power, import status, year and month of first registration)",
+     "url": "https://catalogue.data.govt.nz/dataset/motor-vehicle-register-api1",
+     "access": "open, CC BY 4.0",
+     "size": "a few hundred MB CSV per snapshot"
+    },
+    {
+     "name": "NZTA monthly first-registration statistics by vehicle type, import status and fuel type",
+     "url": "https://nzta2.cwp.govt.nz/resources/new-zealand-motor-vehicle-register-statistics",
+     "access": "open",
+     "size": "small"
+    },
+    {
+     "name": "Clean Car Discount rebate and fee schedules; RUC rates for light EVs and PHEVs from 1 April 2024",
+     "url": "https://www.transport.govt.nz/",
+     "access": "open",
+     "size": "documents"
+    }
+   ],
+   "lit_for": [
+    "Ministry of Transport regulatory impact statement (30 November 2023): the discount was achieving its objective; uptake several years ahead of expectation",
+    "Reported January 2024 registrations: 244 BEVs of 8,116 vehicles (about 3%) after a December 2023 spike; Infometrics attributes a substantial effect to the discount",
+    "Motor Industry Association: the drop may also reflect a change in government messaging"
+   ],
+   "lit_against": [
+    "The register snapshot holds currently registered vehicles, so vehicles deregistered since are missing (small for 2023-2025)",
+    "Messaging and supply changes (model availability, prices) coincide with both dates; the hybrid comparison controls for common shocks only if hybrids were not themselves affected by the RUC debate"
+   ],
+   "method": "Build monthly first-registration counts by powertrain (BEV, PHEV, non-plug hybrid, petrol, diesel), new versus used import and vehicle class, January 2021 to the latest month. Estimate the December 2023 bunching against a pre-trend and the missing mass in January-March 2024. Estimate the 1 April 2024 change for BEV/PHEV relative to non-plug hybrids with month and segment fixed effects, with placebo dates and a donut around each policy date.",
+   "plan": [
+    "Download one recent register snapshot and the monthly statistics; check the motive-power and first-registration fields and reconcile monthly totals with NZTA's published counts.",
+    "Preregister the bunching window, the comparison groups, the thresholds and placebos.",
+    "Run the bunching and difference-in-differences analyses; report by segment.",
+    "Document the rebate and RUC schedules used to define exposure."
+   ],
+   "risks": "Model launches and price cuts (e.g. Tesla, BYD) cluster in these months and can masquerade as policy effects; hybrid rebates were smaller than BEV rebates, so the hybrid comparison is imperfect; the register's first-registration month is the New Zealand first registration, which for used imports differs from sale timing.",
+   "plain_summary": "At the start of 2024 New Zealand ended its rebate for buying electric cars, and three months later started charging EV owners road-user charges. EV sales collapsed. We will use the public register of every vehicle to separate the two: how much of the fall was people buying early in December before the rebate ended, how much was losing the rebate, and how much the new road charges added.",
+   "local_relevance": "Directly bears on New Zealand transport-emissions policy, any future EV incentive design, and road-user charge settings.",
+   "scout_value_score": 5,
+   "scout_cost_score": 2,
+   "critic_note": "Open data confirmed (register snapshot, CC BY 4.0); exact column names should be checked at planning. Novelty: monthly shares are widely reported, but no separation of the two shocks was found. Value 5, cost 2. Identification depends on the hybrid comparison; preregister placebo dates."
+  },
+  {
+   "id": "movement-akl-crl-full-timetable-reliability",
+   "title": "Does running more trains through the City Rail Link cost punctuality? A GTFS-Realtime archive across Auckland's transitional-to-full timetable step-up",
+   "domain": "energy-movement",
+   "hypothesis": "When Auckland Transport moves from the transitional City Rail Link timetable to the full timetable (committed within six months of the 13 September 2026 opening, so by about March 2027), rail on-time performance (departure within 5 minutes of schedule at every stop, from GTFS-Realtime trip updates) falls by at least 3 percentage points on lines whose peak frequency rises, relative to lines and periods whose frequency does not change (difference-in-differences), and late running propagates to connecting bus feeders at interchanges.",
+   "gap": "The CRL opened on 13 September 2026 on a reduced transitional timetable after full-scale rehearsals exposed junction congestion; the full timetable is a dated, announced frequency increase on a network with known capacity limits, which makes it a rare natural experiment in the capacity-reliability trade-off. Thomas Lumley (University of Auckland) runs bots that report Auckland punctuality and cancellations from the AT feed, and the Auditor-General's 2025 report found reliability had fallen across the network, but no preregistered before-after study of this step-up exists, and the pre-period can only be captured now: the AT feed is live-only, with no public archive.",
+   "value_score": 5,
+   "cost_score": 4,
+   "value_rationale": "A measured answer to whether CRL's promised frequency comes at a reliability cost, at stop and line level, with a reusable public archive of Auckland's real-time feed. It complements the lab's CRL patronage forecast and speed-limit work, which already use the same scheduling infrastructure.",
+   "cost_rationale": "Polling three GTFS-RT endpoints every 30-60 seconds for about six months produces tens of GB of protobuf (compressible); compute is light. The cost is calendar time and a reliable collector.",
+   "est_wall_time": "6-7 months of collection, about 1 week of analysis",
+   "est_data_gb": 40,
+   "feasibility": "local",
+   "requirements_if_out_of_reach": "A free Auckland Transport developer API subscription key (developer portal registration under AT's API terms); the lab cannot register an account itself, so the owner would need to create one and store the key outside the repo.",
+   "datasets": [
+    {
+     "name": "Auckland Transport GTFS-Realtime (trip updates, vehicle positions, service alerts)",
+     "url": "https://at.govt.nz/about-us/at-data-sources",
+     "access": "free API key from AT's developer portal under AT's API terms; live only, no public archive",
+     "size": "~0.1-0.3 GB per day raw protobuf"
+    },
+    {
+     "name": "Auckland Transport static GTFS (every published version)",
+     "url": "https://at.govt.nz/about-us/at-data-sources",
+     "access": "open",
+     "size": "~100 MB per version"
+    }
+   ],
+   "lit_for": [
+    "Auckland Transport: CRL opens 13 September 2026 on a transitional timetable, full timetable within six months",
+    "1News (July 2026): rehearsals exposed junction congestion; most stations keep six trains an hour at peak during the transition",
+    "Office of the Auditor-General (2025): evidence that reliability has reduced across Auckland's public transport network",
+    "Thomas Lumley's Auckland GTFS-RT bots (punctuality, cancellations, headways) show the feed supports these measures"
+   ],
+   "lit_against": [
+    "Feed quality: Lumley documents implausible timestamps and driver-entered trip errors; on-time definitions must handle them",
+    "The full timetable date may slip, and other changes (rolling stock, closures) may coincide with it"
+   ],
+   "method": "Start a collector now (cron, as for the lab's NSLR snapshots) that saves every GTFS-RT message with its fetch time and every static GTFS version; rebuild stop-level departure delays per trip; compute on-time and cancellation rates by line, direction, hour and day. Estimate the step-up effect as a difference-in-differences between lines whose frequency rises and those that do not, with event-study weeks, and measure delay propagation to bus trips scheduled to connect at Britomart, Te Waihorotiu, Karanga-a-Hape, Maungawhau, Newmarket and Henderson.",
+   "plan": [
+    "Owner creates an AT developer key; store it outside the repo and read it at run time.",
+    "Start the collector immediately (pre-period) with self-checks and gap logging; preregister the measures and design once the full-timetable date is announced.",
+    "Collect at least three months after the step-up; freeze the archive with checksums.",
+    "Analyse, publish the derived punctuality panel, and offer the archive."
+   ],
+   "risks": "Without an API key the lead cannot start; collector gaps (VM restarts, as on 2026-10-13) would bias period comparisons unless logged and handled; if the full timetable is introduced line by line, the design becomes staggered; if it slips beyond the archive window, the study is descriptive.",
+   "plain_summary": "Auckland's City Rail Link opened in September 2026 with a cut-down timetable, and Auckland Transport has promised the full, more frequent timetable within six months. More trains through the same junctions could mean more delays. Live train-tracking data are not stored publicly, so we would start recording them now, before the change, and then measure whether trains become less punctual once the full timetable starts, and whether delays spill over to connecting buses.",
+   "local_relevance": "Auckland's largest transport investment; bears on Auckland Transport's timetable decisions, public trust after years of rail disruption, and the University's own Energy Movement area.",
+   "time_sensitive": "Yes: the pre-period can only be captured from now until the full timetable starts (by about March 2027); the AT feed has no public archive.",
+   "scout_value_score": 5,
+   "scout_cost_score": 4,
+   "critic_note": "Value 5: a genuine, dated natural experiment, but on one network and dependent on AT's schedule. Cost 4 mainly in calendar time. Hard requirement: a free AT API key the lab cannot obtain itself. Thomas Lumley's existing bots reduce novelty of the measures but not of the before-after design; consider asking him about any archived feed."
   }
  ],
- "updated": "2026-10-17",
+ "updated": "2026-10-20",
  "critique_assessment_round2": "Coverage is broad: 10 domains and 31 leads, mostly audit-style or meta-science, with a few constructive benchmarks (PCBA-2026, the GloBI snapshot benchmark, the SWE cross-audit matrix). My web-search budget was used up, so novelty checks ran through the OpenAlex and arXiv APIs, arXiv abstract pages, and direct data or source checks (GBIF S3, the GBIF blog, tracker READMEs and issues). These checks are narrower than full web search, so there is residual risk of missed grey literature, especially econ working papers and law reviews.\n\nNo lead was killed. The one material pre-emption is arXiv 2602.16733 'Scaling Reproducibility', which automatically matches re-executed outputs at scale and invalidates the R-drift lead's gap statement; that lead should be reframed. The Boltz-2 decoy-shift hypothesis is contradicted in direction by the 2026 Pose-to-Affinity study.\n\nScouts over-scored: 10 values were lowered by 1-2 points, mostly 7s that are really audits of one preprint or folklore. Cost was well calibrated except Boltz-2 (6 to 4).\n\nLeads cluster around shared infrastructure, which affects scheduling more than it creates duplication. Pairs to schedule together: the two QuakeScope leads (same 111 GB archive), the three quantum mitigation and convergence leads (shared patch and noise code), R drift with agent repair (shared ground truth), and phantom citations with precedent erosion (same CourtListener dump). There are no true duplicates of existing leads. The SAE and transcoder seed leads are thematically close to llm-ml-science-curation-vs-seed-noise but measure different objects.\n\nStrongest picks: the 98-qubit peaked-circuit crack, the 74-qubit noisy twin, the activity-cliff noise ceiling, the NPP-vs-incompleteness-aware ETAS test, and the certified Lean contamination DiD.",
  "unscouted_angles_round1": [
   "Ecology and biodiversity informatics (GBIF, eBird, GLOBI, IUCN, TRY): sampling-effort-corrected range-shift estimation, species-distribution-model benchmark leakage and spatial-block validation, whether published climate-driven range shifts survive observer-effort nulls",
@@ -8187,5 +8478,11 @@
   "Measles 2025-26: an immunity-gap and outbreak-size model for Auckland suburbs, combining PHF Science notifications with the coverage files (an extension of the immunisation lead).",
   "Urban heat equity: Landsat/ECOSTRESS land-surface temperature against the LiDAR canopy-change rasters, extending the upzoning lead to heat exposure by deprivation.",
   "T\u012bkapa Moana / Hauraki Gulf marine protection (2025 Act): a Sentinel-2 baseline of kelp forest and kina barrens. Needs mana whenua partnership before scoping."
+ ],
+ "unscouted_angles_energy_movement": [
+  "Freight and rail reliability across Cook Strait: the Aratere, the only rail-enabled ferry, retired on 18 August 2025, so rail freight is road-bridged until new ferries (expected 2029). Not added: no continuous NZTA heavy-vehicle counter was confirmed on the SH1 Picton-Blenheim-Kaikoura corridor (40 of 96 telemetry sites went offline in 2022), and the Strait carries about 5% of rail tonnage, so the road signal is small.",
+  "EV charging reliability: EVRoam (NZTA, run by EECA since 2025) carries live charger status where operators supply it, but no public API or licence was found; EECA's open charger map is static and DC-only (25 kW+). Revisit if EVRoam access is granted.",
+  "Gas market prices and demand response (Methanex idling, gas swaps with generators): emsTradepoint and First Gas transmission data were not checked in this round.",
+  "Hydro inflow non-stationarity versus the system operator's risk-curve assumption that history predicts the future (EA hydrological dataset from 1932; historical risk curves on EMI)."
  ]
 }
