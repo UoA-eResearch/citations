@@ -66,3 +66,48 @@ the stoplist and posting cap in `namenorm.py` and `build_names.py`. The screen w
 examples, so five of five is an in-sample figure and is reported as such. The independent check is the recall
 calibration on Charlotin incidents present in the corpus (plan §4 step 6); that is a measurement and will not
 be used to retune the screen.
+
+## D3 — 2026-10-21 10:29 NZDT — the CSV dialect, a pilot on out-of-window opinions, and the freeze moved
+
+D2 declared the screen frozen. That was premature: its first run on real opinion text, below, exposed problems
+the ten validation cases could not. The freeze now applies from the end of the in-window pilot described at the
+end of this entry, still before any in-window opinion is screened for counting.
+
+**1. The bulk files' CSV dialect.** CourtListener writes its bulk CSVs with PostgreSQL `ESCAPE '\'`, so a quote
+inside a field is `\"`, not doubled. Read with Python's default, a 315 MB sample of opinions — HTML-heavy text —
+came back as 1,104,813 rows instead of 12,439. All readers now go through `code/clcsv.py`, with `newline=''` on
+every stream. Both indices were rebuilt and compared with the old ones: across the whole snapshot the default
+dialect had lost **1** cluster (outside the study window) and added 100 spurious ones; the citation index was
+unchanged (numeric fields only). An earlier extrapolation of about 1,800 lost clusters, from a 400 MB sample, was
+wrong — the sample had been cut mid-row. No opinion had been screened, so no result was affected.
+
+**2. A pilot on out-of-window opinions.** The first downloaded part of the opinions archive decompresses on its
+own and holds 12,438 opinions — 84% OCR'd, almost all filed before 2020, so outside the study window. Screening
+1,500 of them flagged **99.5 phantom candidates per 1,000 citations**, far too many to verify. Four causes, each
+fixed in shared code:
+
+- *Noisy extracted names.* eyecite's party names carry bracketed years, star-page markers and leading citation
+  signals (`Carlton v. Board [1969]`, `*464 Stratman`). They are now cleaned (`clean_cited`).
+- *Intersecting the rarest tokens.* A single junk token — a year — could be the rarest and empty the candidate
+  pool, scoring a real case 0. Candidates are now the union of the three rarest tokens' postings.
+- *Whole-name consistency on the resolved route.* A correct citation with a noisy name failed to match its own
+  case. The test is now whether any distinctive cited token appears in the resolved case's name. Checked first
+  against the three *Mata* fabrications that resolve by page: each lands in an unrelated case (*J.D. v. Azar*,
+  *United States v. ISS Marine Services*, *Greenleaf v. Garlock*) sharing no distinctive token.
+- *One-word captions.* A cluster captioned just "petersen" scored 100 against "petersen v iran air", since a
+  single word is a subset of any name containing it. A one-sided candidate must now match each cited party.
+
+After the fixes the pilot flags **24.4 per 1,000**, all in OCR'd opinions citing nineteenth-century reporters,
+and they read as OCR misspellings of real names: "thallhiner v brinkerhoff" against *Thalimer v. Brinkerhoff*
+(77.8), "ewen v hobbs" against *Owen v. Hobbs* (75.0).
+
+**3. Validation now tests the screen's own code.** The decision for one citation is a single function,
+`parse.judge()`, and `validate_detection.py` calls it rather than reimplementing it. Of the six *Mata*
+fabrications, four are phantoms and one (*Miller*) a misattribution; none of the four real cases is flagged.
+*Martinez v. Delta Airlines* is missed: it matched *Martin v. Trans World Airlines Inc* at exactly the threshold,
+80.0. It was deliberately **not** tuned away — that would be fitting the screen to one of its own ten test
+cases. The screen resolves ambiguity toward "this case exists", so the phantom count it produces is a lower bound.
+
+**4. Next, before the freeze:** a seeded random sample of 2,000 in-window opinions (2019-2026) will be drawn as a
+pilot once the archive is complete. Tuning may use it and the out-of-window pilot only. The screen is then frozen,
+and the full in-window screen run once. Manual verification remains the arbiter of every count.

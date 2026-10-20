@@ -39,17 +39,49 @@ def sides(norm):
 
 
 def party_score(fuzz, a, b):
-    """How well two normalised case names match, scored side by side.
+    """How well a cited name `a` matches a corpus case name `b`, scored side by side.
 
     Scoring the whole name with token_set_ratio lets a shared defendant carry the match: "martinez v delta
     airlines inc" scores 90.9 against "doe v delta airlines inc" although the plaintiffs have nothing in common.
-    The plaintiff is usually the most identifying part of a caption, so each side is scored separately and the
-    weaker side decides. Both orderings are tried, since captions reverse on appeal. Names without a 'v' (In re,
-    Ex parte) fall back to the whole name.
+    So each side is scored separately and the weaker side decides, with both orderings tried since captions
+    reverse on appeal.
+
+    A corpus name with no 'v' cannot confirm two parties. token_set_ratio scores a single word as a perfect
+    subset of any name containing it, so a cluster captioned just "petersen" scored 100 against "petersen v
+    iran air" (D3). When the citation names two parties and the candidate names one, the candidate has to match
+    each cited side, and the weaker decides. Only when the citation itself has no 'v' (In re, Ex parte) is the
+    whole name compared.
     """
     sa, sb = sides(a), sides(b)
-    if not (sa and sb):
-        return fuzz.token_set_ratio(a, b)
-    straight = min(fuzz.token_set_ratio(sa[0], sb[0]), fuzz.token_set_ratio(sa[1], sb[1]))
-    crossed = min(fuzz.token_set_ratio(sa[0], sb[1]), fuzz.token_set_ratio(sa[1], sb[0]))
-    return max(straight, crossed)
+    if sa and sb:
+        straight = min(fuzz.token_set_ratio(sa[0], sb[0]), fuzz.token_set_ratio(sa[1], sb[1]))
+        crossed = min(fuzz.token_set_ratio(sa[0], sb[1]), fuzz.token_set_ratio(sa[1], sb[0]))
+        return max(straight, crossed)
+    if sa and not sb:
+        return min(fuzz.token_set_ratio(sa[0], b), fuzz.token_set_ratio(sa[1], b))
+    return fuzz.token_set_ratio(a, b)
+
+
+# --- cleaning what eyecite extracts as party names (added after the pilot on out-of-window opinions, D3)
+_BRACKET = re.compile(r"\[[^\]]*\]|\([^)]*\)")
+_PAGEMARK = re.compile(r"\*\s*\d+")
+_SIGNALS = {"see", "also", "cf", "accord", "but", "compare", "contra", "e", "g", "eg", "tide", "in", "the"}
+
+
+def clean_party(s):
+    """Strip what is not a name: bracketed years, star-page markers, digits, and leading citation signals."""
+    s = _PAGEMARK.sub(" ", _BRACKET.sub(" ", s or ""))
+    w = [t for t in WORD.findall(s.lower()) if not t.isdigit()]
+    while w and w[0] in _SIGNALS:
+        w = w[1:]
+    return " ".join(w)
+
+
+def clean_cited(plaintiff, defendant):
+    p, d = clean_party(plaintiff), clean_party(defendant)
+    return f"{p} v {d}" if p and d else (p or d)
+
+
+def distinctive(norm, dropped):
+    """Tokens that can identify a case: indexed, not too common, not numbers, at least four letters."""
+    return {t for t in tokens_of(norm) - dropped if len(t) >= 4 and not t.isdigit()}

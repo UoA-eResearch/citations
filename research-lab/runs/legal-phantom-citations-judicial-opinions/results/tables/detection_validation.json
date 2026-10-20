@@ -3,194 +3,124 @@
   {
    "case": "Varghese v. China Southern Airlines Co.",
    "cite": "925 F.3d 1339",
-   "citation_route": {
-    "route": "citation",
-    "verdict": "RESOLVES",
-    "cluster": 4629684,
-    "why": "inside the case beginning at 1291"
-   },
-   "name_route": {
-    "route": "name",
-    "verdict": "NO SUCH CASE",
-    "best_score": 52.9,
-    "best_match": "varghese v china shenghuo pharmaceutical holdings inc",
-    "candidates": 2,
-    "missing_tokens": []
-   }
+   "resolved_to": 4629684,
+   "route": "resolved-elsewhere",
+   "resolved_name": "j d v alex azar ii",
+   "best_name_score": 66.7,
+   "absent_tokens": [],
+   "capped": false,
+   "best_name": "agee v northwest airlines inc",
+   "best_cluster": 2491866,
+   "verdict": "phantom"
   },
   {
    "case": "Shaboon v. Egyptair",
    "cite": null,
-   "citation_route": {
-    "route": "citation",
-    "verdict": "not a reporter citation"
-   },
-   "name_route": {
-    "route": "name",
-    "verdict": "NO SUCH CASE",
-    "tokens": [
-     "egyptair",
-     "shaboon"
-    ],
-    "why": "no case name contains both ['shaboon', 'egyptair']",
-    "missing_tokens": []
-   }
+   "resolved_to": null,
+   "route": "not a reporter citation",
+   "best_name_score": 37.5,
+   "absent_tokens": [],
+   "capped": false,
+   "best_name": "boeing co v egyptair misr insurance",
+   "best_cluster": 8704316,
+   "verdict": "phantom"
   },
   {
    "case": "Petersen v. Iran Air",
    "cite": "905 F. Supp. 2d 121",
-   "citation_route": {
-    "route": "citation",
-    "verdict": "RESOLVES",
-    "cluster": 2661490,
-    "why": "exact first page"
-   },
-   "name_route": {
-    "route": "name",
-    "verdict": "NO SUCH CASE",
-    "tokens": [
-     "air",
-     "iran",
-     "petersen"
-    ],
-    "why": "no case name contains both ['iran', 'petersen']",
-    "missing_tokens": []
-   }
+   "resolved_to": 2661490,
+   "route": "resolved-elsewhere",
+   "resolved_name": "united states of america v iss marine services inc",
+   "best_name_score": 66.7,
+   "absent_tokens": [],
+   "capped": false,
+   "best_name": "peterson v islamic republic of iran",
+   "best_cluster": 4330935,
+   "verdict": "phantom"
   },
   {
    "case": "Martinez v. Delta Airlines, Inc.",
    "cite": null,
-   "citation_route": {
-    "route": "citation",
-    "verdict": "not a reporter citation"
-   },
-   "name_route": {
-    "route": "name",
-    "verdict": "NO SUCH CASE",
-    "best_score": 76.6,
-    "best_match": "in re delta air lines northwest airlines corp northwest airlines inc u",
-    "candidates": 300,
-    "missing_tokens": []
-   }
+   "resolved_to": null,
+   "route": "not a reporter citation",
+   "best_name_score": 80.0,
+   "absent_tokens": [],
+   "capped": true,
+   "best_name": "martin v trans world airlines inc",
+   "best_cluster": 2084343,
+   "verdict": "name-exists"
   },
   {
    "case": "Estate of Durden v. KLM Royal Dutch Airlines",
    "cite": null,
-   "citation_route": {
-    "route": "citation",
-    "verdict": "not a reporter citation"
-   },
-   "name_route": {
-    "route": "name",
-    "verdict": "NO SUCH CASE",
-    "tokens": [
-     "airlines",
-     "durden",
-     "dutch",
-     "estate",
-     "klm",
-     "royal"
-    ],
-    "why": "no case name contains both ['klm', 'durden']",
-    "missing_tokens": []
-   }
+   "resolved_to": null,
+   "route": "not a reporter citation",
+   "best_name_score": 72.7,
+   "absent_tokens": [],
+   "capped": false,
+   "best_name": "state of delaware v royal",
+   "best_cluster": 3170508,
+   "verdict": "phantom"
   },
   {
    "case": "Miller v. United Airlines, Inc.",
    "cite": "174 F.3d 366",
-   "citation_route": {
-    "route": "citation",
-    "verdict": "RESOLVES",
-    "cluster": 3011108,
-    "why": "inside the case beginning at 352"
-   },
-   "name_route": {
-    "route": "name",
-    "verdict": "found",
-    "best_score": 100.0,
-    "best_match": "miller margaret v united airlines allied aviation services company of ",
-    "candidates": 21,
-    "missing_tokens": []
-   }
+   "resolved_to": 3011108,
+   "route": "resolved-elsewhere",
+   "resolved_name": "greenleaf v garlock inc",
+   "best_name_score": 100.0,
+   "absent_tokens": [],
+   "capped": true,
+   "best_name": "miller margaret v united airlines allied aviation services company of pennsylvania inc",
+   "best_cluster": 427926,
+   "resolved_score": 26.7,
+   "verdict": "misattribution"
   }
  ],
  "real": [
   {
    "case": "Mata v. Avianca, Inc.",
    "cite": null,
-   "citation_route": {
-    "route": "citation",
-    "verdict": "not a reporter citation"
-   },
-   "name_route": {
-    "route": "name",
-    "verdict": "found",
-    "best_score": 100.0,
-    "best_match": "mata v avianca inc",
-    "candidates": 3,
-    "missing_tokens": []
-   }
+   "resolved_to": null,
+   "route": "not a reporter citation",
+   "best_name_score": 100.0,
+   "absent_tokens": [],
+   "capped": false,
+   "best_name": "mata v avianca inc",
+   "best_cluster": 9885388,
+   "verdict": "name-exists"
   },
   {
    "case": "Roe v. Wade",
    "cite": "410 U.S. 113",
-   "citation_route": {
-    "route": "citation",
-    "verdict": "RESOLVES",
-    "cluster": 108713,
-    "why": "exact first page"
-   },
-   "name_route": {
-    "route": "name",
-    "verdict": "found",
-    "best_score": 100.0,
-    "best_match": "roe v wade",
-    "candidates": 11,
-    "missing_tokens": []
-   }
+   "resolved_to": 108713,
+   "route": "resolved",
+   "resolved_name": "roe v wade",
+   "verdict": "consistent"
   },
   {
    "case": "Brown v. Board of Education",
    "cite": "347 U.S. 483",
-   "citation_route": {
-    "route": "citation",
-    "verdict": "RESOLVES",
-    "cluster": 105221,
-    "why": "exact first page"
-   },
-   "name_route": {
-    "route": "name",
-    "verdict": "found",
-    "best_score": 100.0,
-    "best_match": "state ex rel rolling hills local school district board of education v ",
-    "candidates": 218,
-    "missing_tokens": []
-   }
+   "resolved_to": 105221,
+   "route": "resolved",
+   "resolved_name": "brown v board of education",
+   "verdict": "consistent"
   },
   {
    "case": "Gideon v. Wainwright",
    "cite": "372 U.S. 335",
-   "citation_route": {
-    "route": "citation",
-    "verdict": "RESOLVES",
-    "cluster": 8954562,
-    "why": "exact first page"
-   },
-   "name_route": {
-    "route": "name",
-    "verdict": "found",
-    "best_score": 100.0,
-    "best_match": "gideon v wainwright",
-    "candidates": 3,
-    "missing_tokens": []
-   }
+   "resolved_to": 8954562,
+   "route": "resolved",
+   "resolved_name": "gideon v wainwright",
+   "verdict": "consistent"
   }
  ],
  "summary": {
   "fabricated": 6,
-  "caught_by_name": 5,
-  "would_be_cleared_by_citation_alone": 3,
+  "phantom": 4,
+  "misattribution": 1,
+  "missed": 1,
   "real_controls": 4,
-  "real_found_by_name": 4
+  "real_wrongly_flagged": 0
  }
 }

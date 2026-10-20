@@ -14,6 +14,9 @@ import json
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import clcsv  # noqa: E402  the bulk files' PostgreSQL CSV dialect
+
 import numpy as np
 
 RUN = Path(__file__).resolve().parents[1]
@@ -32,8 +35,8 @@ def main():
     kinds = {}
     n = bad = wild = 0
     MAX_PAGE, MAX_VOL = 999_999, 999_999   # the table carries a few absurd values (one page of 5,837,932,014)
-    with bz2.open(RAW / "citations.csv.bz2", "rt", encoding="utf-8", errors="ignore") as fh:
-        for row in csv.DictReader(fh):
+    with bz2.open(RAW / "citations.csv.bz2", "rt", encoding="utf-8", errors="ignore", newline="") as fh:
+        for row in clcsv.reader(fh):
             try:
                 vol = int(row["volume"])
                 page = int(row["page"])

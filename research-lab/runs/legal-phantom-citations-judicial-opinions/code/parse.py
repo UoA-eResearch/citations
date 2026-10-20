@@ -32,7 +32,8 @@ from pathlib import Path
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from namenorm import norm_name, party_score, tokens_of  # noqa: E402
+import clcsv  # noqa: E402  the bulk files' PostgreSQL CSV dialect
+from namenorm import clean_cited, distinctive, norm_name, party_score, tokens_of  # noqa: E402
 
 RUN = Path(__file__).resolve().parents[1]
 RAW, IDX, OUT = RUN / "data" / "raw", RUN / "data" / "index", RUN / "data" / "screen"
@@ -98,30 +99,64 @@ def resolve(rep, vol, page):
 
 
 def name_search(cited):
-    """Best-scoring case name anywhere in the corpus for a cited name.
+    """Best-scoring case name anywhere in the corpus for a cleaned cited name.
 
-    Returns (score, row, capped, absent). A token can be missing from the index for two opposite reasons: it is
-    in so many names that it was dropped as useless (inc, people, state, states, united), or it is in none at
-    all. The first is skipped; the second is returned as `absent`, because a party name containing a word that
-    appears in no case caption anywhere is strong evidence the case does not exist.
+    Returns (score, row, capped, absent). Tokens dropped as too common are skipped; tokens in no caption anywhere
+    are returned as `absent`, which is evidence. Candidates are the union of the postings of the three rarest
+    distinctive tokens, not their intersection: in the pilot (D3) an intersection let a single junk token -- a
+    year, an OCR fragment -- empty the pool and turn a real case into a phantom candidate.
     """
-    want = tokens_of(norm_name(cited)) - G["dropped"]
+    norm = norm_name(cited)
+    want = distinctive(norm, G["dropped"])
     pools = {t: G["tokens"].get(t) for t in want}
     absent = sorted(t for t, p in pools.items() if p is None or not len(p))
     present = {t: p for t, p in pools.items() if p is not None and len(p)}
     if not present:
         return 0.0, None, False, absent
-    rarest = sorted(present, key=lambda t: len(present[t]))[:2]
-    cand = present[rarest[0]]
-    for t in rarest[1:]:
-        cand = np.intersect1d(cand, present[t], assume_unique=False)
-    capped = len(cand) > MAX_CANDIDATES
-    if not len(cand):
-        return 0.0, None, False, absent
-    target = norm_name(cited)
+    rarest = sorted(present, key=lambda t: len(present[t]))[:3]
+    per = MAX_CANDIDATES // len(rarest)
+    capped = any(len(present[t]) > per for t in rarest)
+    cand = np.unique(np.concatenate([present[t][:per] for t in rarest]))
     names, fz = G["names"], G["fuzz"]
-    best, bi = max((party_score(fz, target, str(names[i])), int(i)) for i in cand[:MAX_CANDIDATES])
+    best, bi = max((party_score(fz, norm, str(names[i])), int(i)) for i in cand)
     return float(best), bi, capped, absent
+
+
+def judge(rep, vol, page, cited):
+    """The screen's decision for one citation. The validator calls this same function, so the check it reports
+    is the check the screen runs (D2: two copies of this logic had drifted apart once already).
+
+    Returns a dict: verdict is one of consistent | phantom | misattribution | name-exists | unscreenable.
+    """
+    hit, why = resolve(rep, vol, page) if (rep and vol and page) else (None, "not a reporter citation")
+    out = {"resolved_to": hit, "route": why}
+    if hit is not None:
+        row = G["row_of"].get(hit)
+        out["resolved_name"] = str(G["names"][row]) if row is not None else None
+        ct = distinctive(norm_name(cited), G["dropped"]) if cited else set()
+        if not ct or (row is not None and ct & set(str(G["names"][row]).split())):
+            out["verdict"] = "consistent"
+            return out
+        out["route"] = "resolved-elsewhere"
+    if not cited:
+        out["verdict"] = "unscreenable"
+        return out
+    score, bi, cap, absent = name_search(cited)
+    out.update(best_name_score=round(score, 1), absent_tokens=absent, capped=cap,
+               best_name=str(G["names"][bi])[:90] if bi is not None else None,
+               best_cluster=int(G["ids"][bi]) if bi is not None else None)
+    if score < NAME_MATCH:
+        out["verdict"] = "phantom"
+        return out
+    # the name exists somewhere: a misattribution if the citation resolved into an unrelated case
+    if hit is not None and out["best_cluster"] != hit:
+        row = G["row_of"].get(hit)
+        rs = party_score(G["fuzz"], norm_name(cited), str(G["names"][row])) if row is not None else 0.0
+        out["resolved_score"] = round(float(rs), 1)
+        out["verdict"] = "misattribution" if rs < MISATTRIB_MAX else "name-exists"
+    else:
+        out["verdict"] = "name-exists"
+    return out
 
 
 def screen(task):
@@ -148,50 +183,29 @@ def screen(task):
         n_full += 1
         md = c.metadata
         plaintiff, defendant = (getattr(md, "plaintiff", None) or ""), (getattr(md, "defendant", None) or "")
-        cited = f"{plaintiff} v. {defendant}" if plaintiff and defendant else (plaintiff or defendant)
+        cited = clean_cited(plaintiff, defendant)
         key = f"{norm_reporter(rep)}|{vol}"
         vols[key + "|n"] += 1
-        hit, why = resolve(rep, vol, page)
-        if hit is not None:
+        j = judge(rep, vol, page, cited)
+        if j["resolved_to"] is not None:
             vols[key + "|res"] += 1
             n_resolved += 1
-            row = G["row_of"].get(hit)
-            if not cited or (row is not None and party_score(fz, norm_name(cited), str(names[row])) >= NAME_MATCH):
-                n_consistent += 1
-                continue
-        if not cited:
-            continue                                   # an unresolved citation with no names cannot be screened
-        score, bi, cap, absent = name_search(cited)
-        capped += int(cap)
-        if score >= NAME_MATCH:
-            # The name exists somewhere. If the citation also resolved, but to a case with an unrelated name, the
-            # citation and the name do not belong together: the plan's misattribution class (plan §4 step 4).
-            # Fabrications that reuse a common name land here -- Miller v. United Airlines, 174 F.3d 366, from the
-            # Mata filings, names a real case but points into a different one. Not a phantom under plan §1, so it
-            # is recorded separately rather than counted. Near-miss typos that land in an adjacent case with a
-            # similar name are excluded by MISATTRIB_MAX.
-            row = G["row_of"].get(hit) if hit is not None else None
-            if row is not None and G["ids"][bi] != hit:
-                rs = party_score(fz, norm_name(cited), str(names[row]))
-                if rs < MISATTRIB_MAX:
-                    s0, e0 = c.span()
-                    misattrib.append({
-                        "opinion_id": oid, "cluster_id": cid, "date": date, "court": court,
-                        "cite": f"{vol} {rep} {page}", "cited_name": cited, "resolved_to": hit,
-                        "resolved_name": str(names[row])[:90], "resolved_score": round(float(rs), 1),
-                        "name_found_as": str(names[bi])[:90], "name_found_cluster": int(G["ids"][bi]),
-                        "context": text[max(0, s0 - 200):e0 + 200]})
+        capped += int(j.get("capped", False))
+        if j["verdict"] == "consistent":
+            n_consistent += 1
             continue
-        s, e = c.span()
-        cands.append({
-            "opinion_id": oid, "cluster_id": cid, "date": date, "court": court,
-            "cite": f"{vol} {rep} {page}", "cited_name": cited, "year": getattr(md, "year", None),
-            "pin": getattr(md, "pin_cite", None), "route": "resolved-elsewhere" if hit else why,
-            "resolved_to": hit, "resolved_name": str(names[G["row_of"][hit]]) if hit in G["row_of"] else None,
-            "best_name_score": round(score, 1), "best_name": str(names[bi])[:90] if bi is not None else None,
-            "absent_tokens": absent,
-            "context": text[max(0, s - CONTEXT):e + CONTEXT],
-        })
+        if j["verdict"] not in ("phantom", "misattribution"):
+            continue
+        s0, e0 = c.span()
+        rec = {"opinion_id": oid, "cluster_id": cid, "date": date, "court": court,
+               "cite": f"{vol} {rep} {page}", "cited_name": cited, "year": getattr(md, "year", None),
+               "pin": getattr(md, "pin_cite", None), **j}
+        if j["verdict"] == "phantom":
+            rec["context"] = text[max(0, s0 - CONTEXT):e0 + CONTEXT]
+            cands.append(rec)
+        else:
+            rec["context"] = text[max(0, s0 - 200):e0 + 200]
+            misattrib.append(rec)
     return (oid, cid, date, court, n_full, n_resolved, n_consistent), cands, misattrib, vols, capped
 
 
@@ -203,8 +217,8 @@ def scope():
     want_dockets = set(int(d) for d in dockets[keep])
     court = {}
     import bz2
-    with bz2.open(RAW / "dockets.csv.bz2", "rt", encoding="utf-8", errors="ignore") as fh:
-        for row in csv.DictReader(fh):
+    with bz2.open(RAW / "dockets.csv.bz2", "rt", encoding="utf-8", errors="ignore", newline="") as fh:
+        for row in clcsv.reader(fh):
             try:
                 d = int(row["id"])
             except (ValueError, TypeError):
@@ -220,7 +234,7 @@ def reader(inscope, q, nworkers):
     seen = kept = 0
     with indexed_bzip2.open(str(RAW / "opinions.csv.bz2"), parallelization=8) as raw:
         import io
-        for row in csv.DictReader(io.TextIOWrapper(raw, encoding="utf-8", errors="ignore")):
+        for row in clcsv.reader(io.TextIOWrapper(raw, encoding="utf-8", errors="ignore", newline="")):
             seen += 1
             try:
                 cid = int(row.get("cluster_id") or 0)

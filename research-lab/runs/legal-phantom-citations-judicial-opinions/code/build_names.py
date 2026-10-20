@@ -19,6 +19,7 @@ from pathlib import Path
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import clcsv  # noqa: E402  the bulk files' PostgreSQL CSV dialect
 from namenorm import norm_name, tokens_of  # noqa: E402  one shared definition, see namenorm.py
 
 RUN = Path(__file__).resolve().parents[1]
@@ -57,10 +58,10 @@ def main():
     IDX.mkdir(parents=True, exist_ok=True)
     ids, dates, dockets, status, names, norms = [], [], [], [], [], []
     n = 0
-    with bz2.open(RAW / "opinion-clusters.csv.bz2", "rt", encoding="utf-8", errors="ignore") as fh, \
+    with bz2.open(RAW / "opinion-clusters.csv.bz2", "rt", encoding="utf-8", errors="ignore", newline="") as fh, \
             open(IDX / "clusters.tsv", "w", encoding="utf-8") as out:
         out.write("cluster_id\tdate_filed\tdocket_id\tprecedential_status\tcase_name\n")
-        for row in csv.DictReader(fh):
+        for row in clcsv.reader(fh):
             try:
                 cid = int(row["id"])
             except (ValueError, TypeError, KeyError):
