@@ -7,7 +7,9 @@ Nothing is decompressed here; parse.py streams the archives.
 Files (snapshot 2026-09-30): opinions 55.3 GB, dockets 5.1 GB, opinion-clusters 2.5 GB, citations 0.13 GB, plus
 the Charlotin AI Hallucination Cases database used for recall calibration.
 """
+import fcntl
 import os
+import subprocess
 import sys
 import time
 import urllib.error
@@ -114,6 +116,10 @@ def fetch(name, url):
             fh.write((parts_dir / f"{i:05d}").read_bytes())
     if out.stat().st_size != total:
         raise RuntimeError(f"{name}: assembled {out.stat().st_size} != {total}")
+    # the size can be right while the bytes are wrong, so test the archive before trusting it
+    if subprocess.run(["bzip2", "-t", str(out)], capture_output=True).returncode != 0:
+        out.unlink()
+        raise RuntimeError(f"{name}: assembled file failed its bzip2 integrity test; parts discarded")
     for i in range(len(spans)):
         os.remove(parts_dir / f"{i:05d}")
     parts_dir.rmdir()
@@ -122,6 +128,13 @@ def fetch(name, url):
 
 def main():
     RAW.mkdir(parents=True, exist_ok=True)
+    # one instance at a time: concurrent runs would write the same part files and corrupt them silently
+    lock = open(RUN / "logs" / "fetch.lock", "w")
+    try:
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError:
+        log("another fetch is already running; exiting")
+        return
     only = sys.argv[1:] or list(FILES)
     dest = RAW / "charlotin.csv"
     if not dest.exists() or dest.stat().st_size == 0:
