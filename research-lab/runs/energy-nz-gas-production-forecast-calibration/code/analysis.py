@@ -1,0 +1,217 @@
+"""Calibration of the forecasts and of the reserve categories (plan sections 1, 4, 5, 6).
+
+Reads data/profiles.csv, data/realised.csv, data/national.csv, data/reserves.csv and data/gic_annual.csv.
+Writes results/tables/primary.json, pairs.csv, by_horizon.csv, revisions.csv and validation.json.
+
+Nothing here chooses a threshold: the hypotheses, the error measure (epsilon = 0.05 PJ), the horizons, the
+field-cluster bootstrap and the decision rules are all as preregistered in plan.md.
+"""
+import csv
+import json
+from collections import defaultdict
+from pathlib import Path
+
+import numpy as np
+
+RUN = Path(__file__).resolve().parents[1]
+T = RUN / "results" / "tables"
+EPS, B, SEED = 0.05, 2000, 20261020
+NOT_A_FIELD = {"Manufactured Production"}
+H1_T1, H1_T3 = np.log(1.05), np.log(1.15)
+
+
+def rows(name):
+    with open(RUN / "data" / name) as fh:
+        return list(csv.DictReader(fh))
+
+
+def f(x):
+    try:
+        return float(x)
+    except (TypeError, ValueError):
+        return None
+
+
+def main():
+    # ---- forecasts: one value per (vintage, mapped field, target year)
+    fc = defaultdict(float)
+    for r in rows("profiles.csv"):
+        if r["field"] in NOT_A_FIELD:
+            continue
+        fc[(int(r["vintage_year"]), r["field"], int(r["year"]))] += f(r["pj"]) or 0.0
+
+    # ---- realised by field: latest capture wins (MBIE revises back years)
+    best, act = {}, {}
+    for r in rows("realised.csv"):
+        if r["field"] in NOT_A_FIELD:
+            continue
+        k = (r["basis"], r["field"], int(r["year"]))
+        if k not in best or r["capture"] > best[k]:
+            best[k], act[k] = r["capture"], f(r["pj"]) or 0.0
+    years_act = sorted({y for (_, _, y) in act})
+    tmax = max(years_act)
+    fields = sorted({fld for (_, fld, _) in act} | {fld for (_, fld, _) in fc})
+
+    # ---- pairs, union rule: a field enters if it was forecast OR produced
+    pairs = []
+    for basis in ("net", "gross"):
+        for (v, fld, t), F in fc.items():
+            if t > tmax or t < v:
+                continue
+            A = act.get((basis, fld, t))
+            if A is None:
+                continue
+            pairs.append(dict(basis=basis, vintage=v, field=fld, year=t, h=t - v, forecast=F, realised=A,
+                              e=float(np.log((F + EPS) / (A + EPS)))))
+        for (b, fld, t), A in act.items():
+            if b != basis or A <= 0:
+                continue
+            for v in sorted({vv for (vv, _, _) in fc}):
+                if not (v <= t <= tmax) or (v, fld, t) in fc:
+                    continue
+                if any(k[0] == v for k in fc if k[1] == fld):      # field known to that vintage but not that year
+                    continue
+                if not any(k[0] == v for k in fc):
+                    continue
+                pairs.append(dict(basis=basis, vintage=v, field=fld, year=t, h=t - v, forecast=0.0, realised=A,
+                                  e=float(np.log(EPS / (A + EPS))), missing_from_profile=True))
+    with open(T / "pairs.csv", "w", newline="") as fh:
+        cols = ["basis", "vintage", "field", "year", "h", "forecast", "realised", "e", "missing_from_profile"]
+        w = csv.DictWriter(fh, fieldnames=cols, extrasaction="ignore")
+        w.writeheader(); w.writerows(pairs)
+
+    rng = np.random.default_rng(SEED)
+
+    def boot_median(sel):
+        """Median of e with a field-cluster bootstrap; returns (median, lo, hi, se, n, n_fields)."""
+        by = defaultdict(list)
+        for p in sel:
+            by[p["field"]].append(p["e"])
+        ks = sorted(by)
+        if not ks:
+            return (None,) * 4 + (0, 0)
+        allv = [x for k in ks for x in by[k]]
+        draws = []
+        for _ in range(B):
+            pick = rng.choice(len(ks), len(ks))
+            vals = [x for i in pick for x in by[ks[i]]]
+            draws.append(np.median(vals))
+        return (float(np.median(allv)), float(np.percentile(draws, 2.5)), float(np.percentile(draws, 97.5)),
+                float(np.std(draws, ddof=1)), len(allv), len(ks))
+
+    out = {"vintages": sorted({v for (v, _, _) in fc}), "realised_years": [min(years_act), tmax],
+           "fields": fields, "epsilon_pj": EPS, "bootstrap": B}
+    horizon = []
+    for basis in ("net", "gross"):
+        for h in range(0, 6):
+            sel = [p for p in pairs if p["basis"] == basis and p["h"] == h]
+            m, lo, hi, se, n, nf = boot_median(sel)
+            vint = sorted({p["vintage"] for p in sel})
+            horizon.append(dict(basis=basis, h=h, median_e=m, lo=lo, hi=hi, se=se, n_pairs=n, n_fields=nf,
+                                n_vintages=len(vint), vintages=";".join(map(str, vint)),
+                                pct=None if m is None else 100 * (np.exp(m) - 1),
+                                mde_pct=None if se is None else 100 * (np.exp(2.8 * se) - 1)))
+    with open(T / "by_horizon.csv", "w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=list(horizon[0])); w.writeheader(); w.writerows(horizon)
+
+    def at(basis, h):
+        return next(r for r in horizon if r["basis"] == basis and r["h"] == h)
+    m1, m3 = at("net", 1), at("net", 3)
+    sup = (m1["median_e"] >= H1_T1 and m3["median_e"] >= H1_T3 and m1["lo"] > 0 and m3["lo"] > 0)
+    ref = (m1["hi"] < H1_T1 and m3["hi"] < H1_T3)
+    out["H1"] = dict(basis="net", m1=m1, m3=m3, threshold_h1_pct=5.0, threshold_h3_pct=15.0,
+                     verdict="Supported" if sup else "Refuted" if ref else "Inconclusive")
+
+    # ---- national: the profile total against national realised production
+    nat = {}
+    for r in rows("national.csv"):
+        nat[int(r["year"])] = f(r["gross_pj"])
+    natnet = defaultdict(float)
+    for (b, fld, t), A in act.items():
+        if b == "net":
+            natnet[t] += A
+    natsum = []
+    for v in sorted({vv for (vv, _, _) in fc}):
+        for t in range(v, max(nat) + 1):
+            F = sum(val for (vv, _, tt), val in fc.items() if vv == v and tt == t)
+            if F <= 0:
+                continue
+            row = dict(vintage=v, year=t, h=t - v, forecast_total=F,
+                       realised_gross=nat.get(t), realised_net=natnet.get(t) or None)
+            for k, a in (("gross", row["realised_gross"]), ("net", row["realised_net"])):
+                row[f"e_{k}"] = float(np.log(F / a)) if a else None
+            natsum.append(row)
+    out["national"] = {}
+    for basis in ("gross", "net"):
+        byh = defaultdict(list)
+        for r in natsum:
+            if r[f"e_{basis}"] is not None:
+                byh[r["h"]].append(r[f"e_{basis}"])
+        out["national"][basis] = {h: dict(n_vintages=len(v), median_pct=100 * (np.exp(np.median(v)) - 1),
+                                          min_pct=100 * (np.exp(min(v)) - 1), max_pct=100 * (np.exp(max(v)) - 1))
+                                  for h, v in sorted(byh.items()) if h <= 6}
+    with open(T / "national_pairs.csv", "w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=list(natsum[0])); w.writeheader(); w.writerows(natsum)
+
+    # ---- reserve-category calibration: ultimate recoverable revisions between consecutive vintages
+    ur = defaultdict(dict)
+    for r in rows("reserves.csv"):
+        for k in ("1", "2", "3"):
+            v = f(r[f"ur{k}"])
+            if v is not None:
+                ur[k].setdefault(int(r["vintage_year"]), {})[r["field_raw"].strip()] = v
+    revs, rev_rows = {}, []
+    for k in ("1", "2", "3"):
+        vs = sorted(ur[k])
+        down = tot = 0
+        for a, b in zip(vs, vs[1:]):
+            if b - a != 1:
+                continue
+            for fld, va in ur[k][a].items():
+                vb = ur[k][b].get(fld)
+                if vb is None or va <= 0:
+                    continue
+                rel = vb / va - 1
+                rev_rows.append(dict(category=f"{k}P", field=fld, v_from=a, v_to=b, ur_from=va, ur_to=vb,
+                                     rel_change=rel))
+                if abs(rel) > 0.01:
+                    tot += 1
+                    down += rel < 0
+        if tot:
+            p = down / tot
+            lo, hi = (lambda c, hw: (c - hw, c + hw))(
+                (p + 1.96 ** 2 / (2 * tot)) / (1 + 1.96 ** 2 / tot),
+                1.96 * np.sqrt(p * (1 - p) / tot + 1.96 ** 2 / (4 * tot ** 2)) / (1 + 1.96 ** 2 / tot))
+            revs[f"{k}P"] = dict(n_revised=tot, n_down=down, share_down=p, lo=float(lo), hi=float(hi))
+    with open(T / "revisions.csv", "w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=list(rev_rows[0])); w.writeheader(); w.writerows(rev_rows)
+    out["revisions"] = revs
+    r2 = revs.get("2P")
+    out["H2"] = dict(**(r2 or {}), threshold=0.50, lead_reference=0.60,
+                     verdict=("Supported" if r2 and r2["lo"] > 0.50 else
+                              "Refuted" if r2 and r2["hi"] <= 0.50 else "Inconclusive"))
+    r1 = revs.get("1P")
+    out["H3"] = dict(**(r1 or {}), threshold=0.10,
+                     verdict=("Supported" if r1 and r1["lo"] > 0.10 else
+                              "Refuted" if r1 and r1["hi"] <= 0.10 else "Inconclusive"))
+
+    # ---- validation (plan section 5)
+    val = {}
+    for v in sorted({vv for (vv, _, _) in fc}):
+        F = sum(val2 for (vv, _, tt), val2 in fc.items() if vv == v and tt == v)
+        val[f"profile_total_first_year_{v}"] = round(F, 2)
+    val["national_gross_by_year"] = {y: round(nat[y], 1) for y in sorted(nat) if y >= 2018}
+    val["national_net_by_year_from_fields"] = {y: round(natnet[y], 1) for y in sorted(natnet) if y >= 2018}
+    gic = defaultdict(float)
+    for r in rows("gic_annual.csv"):
+        if int(r["days"]) >= 365:
+            gic[int(r["year"])] += f(r["pj"]) or 0.0
+    val["gic_four_group_total_by_year"] = {y: round(v, 1) for y, v in sorted(gic.items())}
+    out["validation"] = val
+    json.dump(out, open(T / "primary.json", "w"), indent=1, default=float)
+    print(json.dumps({k: out[k] for k in ("vintages", "realised_years", "H1", "H2", "H3", "national")},
+                     indent=1, default=float)[:4000])
+
+
+if __name__ == "__main__":
+    main()
