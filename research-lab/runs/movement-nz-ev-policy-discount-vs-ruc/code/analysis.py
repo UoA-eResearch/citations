@@ -184,6 +184,30 @@ def main():
         if base in sec:
             sec[key]["vs_hev_pct"] = sec[key]["ruc_diff_pct"] - sec[base]["ruc_diff_pct"]
     out["secondary"] = sec
+    # preregistered sensitivities for H1 (plan section 4)
+    sens = {}
+    for nm, start, extra in (("window_from_2022", (2022, 1), []),
+                             ("excess_includes_nov", FIT_FROM, [idx(2023, 11)])):
+        f_ix = [i for i in months if idx(*start) <= i <= idx(*FIT_TO)]
+        Xf = np.column_stack([np.ones(len(f_ix)), (np.array(f_ix) - f_ix[0]) / 12.0]
+                             + [(np.array(f_ix) % 12 == m).astype(float) for m in range(1, 12)])
+        yv = np.log(np.array([treated.get(i, 0) for i in f_ix]) + 1.0)
+        bb, *_ = np.linalg.lstsq(Xf, yv, rcond=None)
+        Xa = np.column_stack([np.ones(len(months)), (np.array(months) - f_ix[0]) / 12.0]
+                             + [(np.array(months) % 12 == m).astype(float) for m in range(1, 12)])
+        lev = np.exp(Xa @ bb) - 1.0
+        ex = sum((np.exp(y_tr[pos0[i]]) - 1.0) - lev[pos0[i]] for i in [idx(2023, 12)] + extra)
+        sh = sum(lev[pos0[idx(2024, m)]] - (np.exp(y_tr[pos0[idx(2024, m)]]) - 1.0) for m in (1, 2, 3))
+        sens[nm] = dict(excess=float(ex), shortfall=float(sh), R=float(ex / sh) if sh > 0 else None)
+    out["H1_sensitivity"] = sens
+
+    # the high-emission fee also ended at E1: diesel utilities, descriptive
+    ute = defaultdict(float)
+    for r in rows:
+        if r["vehicle_type"] == "GOODS VAN/TRUCK/UTILITY" and r["motive_power"] == "DIESEL":
+            ute[idx(int(r["year"]), int(r["month"]))] += float(r["n"])
+    out["diesel_utes_monthly"] = {label(i): int(ute.get(i, 0)) for i in months}
+
     out["annual_totals"] = {str(y): int(sum(v for i, v in treated.items() if i // 12 == y)) for y in range(2021, 2027)}
     out["share_treated_pct"] = {label(i): round(100 * treated[i] / max(sum(series[g].get(i, 0) for g in ("BEV", "PHEV", "HEV", "ICE")), 1), 2)
                                 for i in months}
