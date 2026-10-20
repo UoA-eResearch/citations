@@ -42,6 +42,42 @@ GROUPS = {
             (QUARTERLY, "gas-quarterly-webtable-december-2025.xlsx")],
 }
 FAILED = []
+# Inputs that are not reserves workbooks: fetched from fixed sources and recorded with their hashes (D2 -- the draft
+# used these without any fetch record). The two MBIE tables are exact Internet Archive captures; the Gas Industry Co
+# file is a live workbook that GIC replaces, so it is fetched once and its hash recorded rather than re-downloaded.
+OTHER = [
+    ("mbie_other/energy-overview_20260917134627.xlsx",
+     "https://web.archive.org/web/20260917134627id_/https://www.mbie.govt.nz/assets/Data-Files/Energy/"
+     "nz-energy-quarterly-and-energy-in-nz/energy-overview.xlsx", False),
+    ("mbie_other/energy-balance-tables_20260927185007.xlsx",
+     "https://web.archive.org/web/20260927185007id_/https://www.mbie.govt.nz/assets/Data-Files/Energy/"
+     "nz-energy-quarterly-and-energy-in-nz/energy-balance-tables.xlsx", False),
+    ("gic/ProductionConsumption.xlsx",
+     "https://weblink.blob.core.windows.net/$web/ProductionConsumption.xlsx", True),   # linked from
+    # https://www.gasindustry.co.nz/data/gas-production-and-consumption/
+]
+
+
+def fetch_other(man):
+    rows = man.setdefault("other", {})
+    for rel, url, live in OTHER:
+        dest = RAW / rel
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        if live and dest.exists():
+            body = dest.read_bytes()
+            note = "kept the copy already on disk (live source, not re-downloaded)"
+        else:
+            time.sleep(2)
+            body = get(url)
+            if not body or body[:2] != b"PK":
+                FAILED.append(url); log(f"  {rel}: download failed"); continue
+            if dest.exists() and hashlib.sha256(dest.read_bytes()).hexdigest() != hashlib.sha256(body).hexdigest():
+                log(f"  {rel}: WARNING fresh download differs from the copy on disk")
+            dest.write_bytes(body)
+            note = "downloaded"
+        rows[rel] = dict(url=url, bytes=len(body), sha256=hashlib.sha256(body).hexdigest(), live_source=live,
+                         note=note)
+        log(f"  {rel}: {len(body)} bytes, sha256 {rows[rel]['sha256'][:16]} ({note})")
 UA = {"User-Agent": "UoA research-lab (gas production forecast calibration); contact via github.com/UoA-eResearch"}
 
 
@@ -89,8 +125,11 @@ def main():
     only = sys.argv[1] if len(sys.argv) > 1 else None
     man_path = RAW / "MANIFEST.json"
     man = json.load(open(man_path)) if man_path.exists() else {}
+    if only in (None, "other"):
+        fetch_other(man)
+        json.dump(man, open(man_path, "w"), indent=1)
     for group, names in GROUPS.items():
-        if only and group != only:
+        if only == "other" or (only and group != only):
             continue
         d = RAW / group
         d.mkdir(parents=True, exist_ok=True)
@@ -123,7 +162,7 @@ def main():
     for g, rows in man.items():
         if g.startswith("_"):
             continue
-        log(f"{g}: {len(rows)} captures, {sum(1 for v in rows.values() if not v['duplicate_of_earlier'])} distinct files")
+        log(f"{g}: {len(rows)} captures, {sum(1 for v in rows.values() if not v.get('duplicate_of_earlier', False))} distinct files")
     if FAILED:
         log(f"FAILED QUERIES: {FAILED}")
         sys.exit(1)

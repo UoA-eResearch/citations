@@ -276,6 +276,69 @@ def main():
         if int(r["days"]) >= 365:
             gic[int(r["year"])] += f(r["pj"]) or 0.0
     val["gic_four_group_total_by_year"] = {y: round(v, 1) for y, v in sorted(gic.items())}
+    # ---- plan §5: three published MBIE statements, reproducible now that the 2025 and 2026 vintages are in hand
+    # (the draft dropped them on the false premise that those releases were not archived; D2)
+    def prof_total(v, t):
+        return sum(F for (vv, _, tt), F in fc.items() if vv == v and tt == t)
+    def rr2_total(v):
+        tot = 0.0
+        for r in rows("reserves.csv"):
+            if int(r["vintage_year"]) == v and r["capture"] == rkeep.get(v) and f(r["rr2"]) is not None \
+                    and r["field"] not in NOT_A_FIELD:
+                tot += f(r["rr2"])
+        return tot
+    mbie = {}
+    if 2025 in {k[0] for k in fc} and 2025 in nat:
+        p25, a25 = prof_total(2025, 2025), nat[2025]
+        mbie["1_2025_realised_vs_2025_profile"] = dict(profile=round(p25, 2), realised=round(a25, 2),
+            pct=round(100 * (a25 / p25 - 1), 1), published_pct=-4.1)
+    if {2025, 2026} <= {k[0] for k in fc}:
+        a, b = prof_total(2025, 2026), prof_total(2026, 2026)
+        mbie["2_2026_profile_vs_2025_profile_for_2026"] = dict(v2025=round(a, 2), v2026=round(b, 2),
+            pct=round(100 * (b / a - 1), 1), published_pct=-15.0)
+    if {2025, 2026} <= set(rkeep):
+        a, b = rr2_total(2025), rr2_total(2026)
+        mbie["3_2P_remaining_2026_vs_2025"] = dict(v2025=round(a, 1), v2026=round(b, 1),
+            pct=round(100 * (b / a - 1), 1), published_2026_pj=731, published_pct=-23.0,
+            diff_from_published_pct=round(100 * (b / 731 - 1), 1))
+    val["mbie_statements"] = mbie
+
+    # ---- plan §4, reported alongside: error by vintage, and the zero-forecast / zero-outcome shares
+    byv = {}
+    for v in sorted({q["vintage"] for q in pairs}):
+        for h in (0, 1, 2, 3):
+            es = [q["e"] for q in pairs if q["basis"] == "net" and q["vintage"] == v and q["h"] == h]
+            if es:
+                byv.setdefault(str(v), {})[str(h)] = dict(n=len(es), median_pct=round(100 * (np.exp(np.median(es)) - 1), 1))
+    out["error_by_vintage"] = byv
+    net = [q for q in pairs if q["basis"] == "net" and q["h"] >= 1]
+    out["zero_shares"] = dict(
+        n_pairs=len(net),
+        forecast_positive_realised_zero=round(np.mean([q["forecast"] > 0 and q["realised"] <= 0 for q in net]), 3),
+        forecast_zero_realised_positive=round(np.mean([q["forecast"] <= 0 and q["realised"] > 0 for q in net]), 3))
+
+    # ---- plan §4 sensitivity omitted from the draft: trim the largest 5% of absolute errors, and the
+    # union-rule pairs (the result without any zero-forecast pair added by the union rule)
+    def h_summary(sel):
+        med, lo, hi = boot_median(sel)[:3]            # boot_median returns a tuple
+        if med is None:
+            return dict(n=0)
+        return dict(median_pct=round(100 * (np.exp(med) - 1), 1), lo_pct=round(100 * (np.exp(lo) - 1), 1),
+                    hi_pct=round(100 * (np.exp(hi) - 1), 1), n=len(sel))
+    extra = {}
+    for nm, keep_fn in (("trim_largest_5pct_abs_error", None),
+                        ("without_union_rule_pairs", lambda q: not q.get("missing_from_profile") and not q.get("blank_cell"))):
+        extra[nm] = {}
+        for h in (1, 3):
+            sel = [q for q in pairs if q["basis"] == "net" and q["h"] == h]
+            if keep_fn is None:
+                cut = np.percentile([abs(q["e"]) for q in sel], 95)
+                sel = [q for q in sel if abs(q["e"]) <= cut]
+            else:
+                sel = [q for q in sel if keep_fn(q)]
+            extra[nm][str(h)] = h_summary(sel)
+    out["sensitivity_post_review"] = extra
+
     out["validation"] = val
     json.dump(out, open(T / "primary.json", "w"), indent=1, default=float)
     print(json.dumps({k: out[k] for k in ("vintages", "realised_years", "H1", "H2", "H3", "national")},
