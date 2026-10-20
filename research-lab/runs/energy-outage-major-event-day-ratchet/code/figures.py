@@ -110,8 +110,11 @@ def main():
         caption("F4_power", """Monte Carlo, 2,000 systems per scenario, each calibrated to a randomly drawn included state's
         2015-2019 days (zero days, log-normal body, generalised Pareto tail above the 95th percentile). A: normal-operations
         severity grows 3% a year, storms unchanged. B: storm frequency and size grow 5% a year, normal operations
-        unchanged, so any detection by a normalised index is leakage. C: no trend (the false-positive rate; dashed line 5%).
-        Wilson 95% intervals.""")
+        unchanged. A "storm" here is any day above the 95th percentile of non-zero days, and most such days (57-66%) fall
+        below the 2.5beta threshold, so under IEEE 1366 they count as normal operations: detection in B mostly reflects more
+        sub-threshold bad-weather days entering every normalised index, not storm days slipping past the threshold. With
+        storms defined at major-event scale, B detection falls to 8% (rolling) against 4% (oracle). C: no trend (the
+        false-positive rate; dashed line 5%). Wilson 95% intervals.""")
     print("figures written")
 
 
