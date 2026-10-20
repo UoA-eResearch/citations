@@ -97,8 +97,8 @@ def main():
     ax.set_ylim(-22, None)
     ax.annotate("preregistered bars: +5% at 1 year, +15% at 3 years", (6.2, 2), fontsize=7.2, color=INK2, ha="right")
     ax.set_xlabel("years ahead of the vintage"); ax.set_ylabel("forecast over realised, %")
-    ax.grid(axis="y", color=GRID, lw=0.5); ax.legend(frameon=False, fontsize=8, loc="upper left", bbox_to_anchor=(0.0, 1.0))
-    fig.suptitle("Gas production forecasts exceed what follows, and more so further out", x=0.1, ha="left",
+    ax.grid(axis="y", color=GRID, lw=0.5); ax.legend(frameon=False, fontsize=8, loc="upper right", bbox_to_anchor=(1.0, 1.0))
+    fig.suptitle("Gas production forecasts exceed what follows, most at one to two years ahead", x=0.1, ha="left",
                  fontsize=10.5, color=INK)
     fig.savefig(F / "F2_error_by_horizon.png", dpi=170); plt.close(fig)
     caption("F2_error_by_horizon", """Blue: the median over (vintage, field) pairs of the forecast-to-realised ratio on
