@@ -15,7 +15,7 @@ the Golden Quadrant artifact until it has been through an independent adversaria
 | `frontier-eaa-accessibility-natural-experiment` | 0c44d7a | H1 Supported, H2 Inconclusive, H3 not testable | not started |
 | `energy-nz-gas-production-forecast-calibration` | b53e197 | H1 Supported, H2 Inconclusive, H3 Supported | not started |
 | `movement-nz-ev-policy-discount-vs-ruc` | 60012cc | H1 Inconclusive, H2 Inconclusive | not started |
-| `auckland-nz-jade-water-value-calibration` | (this draft) | H1 Supported, H2 Refuted | not started |
+| `auckland-nz-jade-water-value-calibration` | 96c8a7c | H1 Supported, H2 Refuted | not started |
 
 ## Order to run them in
 
