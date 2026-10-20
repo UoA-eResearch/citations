@@ -4,18 +4,17 @@ Each of these is complete through a pre-review draft: preregistration, code, res
 reviewer brief in `runs/<id>/review/prompt.md`. None may be published to `leads.json`, `index.html`, the README or
 the Golden Quadrant artifact until it has been through an independent adversarial review and a confirmation pass.
 
-**Why they are queued:** the independent reviewer runs on Fable, and that model's usage limit is exhausted
-(last attempt 2026-10-20, HTTP 429). Reviews resume when the limit resets or credits are added
-(`/usage-credits`); the alternative is to run them on Opus, which the owner has not chosen.
+**Status 2026-10-21:** Fable quota is available again (owner's quota reset). Reviews run three at a time,
+highest exposure first, so that if the limit is hit again the most consequential drafts are the ones finished.
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
-| `energy-outage-major-event-day-ratchet` | 2b5cb6b | H1 Inconclusive, H2 Refuted, H3 Refuted | **partial** — reviewer completed checks 1–7 before the limit hit; scripts in `review/reviewer_checks/`, no `review.md` yet. Resume the same agent to keep that work. |
+| `energy-outage-major-event-day-ratchet` | 2b5cb6b | H1 Inconclusive, H2 Refuted, H3 Refuted | **in review** (wave 1) — the original reviewer resumed with its checks 1–7 intact |
 | `ancestral-pacific-rainfall-gauge-circularity` | 0a73d80 | H1 Supported, H2 Refuted | not started |
 | `frontier-eaa-accessibility-natural-experiment` | 0c44d7a | H1 Supported, H2 Inconclusive, H3 not testable | not started |
-| `energy-nz-gas-production-forecast-calibration` | b53e197 | H1 Supported, H2 Inconclusive, H3 Supported | not started |
+| `energy-nz-gas-production-forecast-calibration` | b53e197 | H1 Supported, H2 Inconclusive, H3 Supported | **in review** (wave 1) |
 | `movement-nz-ev-policy-discount-vs-ruc` | 60012cc | H1 Inconclusive, H2 Inconclusive | not started |
-| `auckland-nz-jade-water-value-calibration` | 96c8a7c | H1 Supported, H2 Refuted | not started |
+| `auckland-nz-jade-water-value-calibration` | 96c8a7c | H1 Supported, H2 Refuted | **in review** (wave 1) |
 
 ## Order to run them in
 
