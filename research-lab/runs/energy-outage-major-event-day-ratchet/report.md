@@ -20,9 +20,10 @@ preregistered baseline, and that baseline includes 2015, the year with the thinn
     construct and its classification of major events, not to US routine reliability.
 - **H2 (the rolling threshold removes more trend than a frozen one): Refuted, under the preregistered baseline only.**
   - With the frozen threshold set on 2015–2019, the rolling index rises 0.79 points a year *faster* (+0.18 to +1.48).
-  - **Under every cleaner baseline the result is Inconclusive** (post-review analysis): frozen on 2017–2019, +0.56
-    (−0.10 to +1.25); on 2018–2022, +0.64 (−0.15 to +1.52); and under the study's own preregistered coverage
-    sensitivity, +0.54 (−0.11 to +1.23). None is negative, so the rolling rule never removes *more* trend.
+  - **Under every baseline that also drops 2016, and under the preregistered coverage sensitivity, the result is
+    Inconclusive** (post-review analysis): frozen on 2017–2019, +0.56 (−0.10 to +1.25); on 2018–2022, +0.64 (−0.15
+    to +1.52); coverage sensitivity, +0.54 (−0.11 to +1.23). Dropping 2015 alone leaves it marginally Refuted: +0.67
+    (+0.02 to +1.35). None is negative, so the rolling rule never removes *more* trend.
   - 2015 is the problem. Its typical daily outage level sits 0.26 log points below 2017–2019, and Nevada has no data
     at all from January to mid-June 2015, though it passes the county-count inclusion rule.
 - **H3 (the rolling rule has at most half an oracle's detection power): Refuted, robustly.**
@@ -47,8 +48,7 @@ applied the standard rule and three alternatives.
 Including storms, there was no clear trend over 2020–2025: storms swing too much from year to year to see one.
 
 The standard rule's cut-off did not throw away more of a trend than a fixed cut-off would have. But that result
-depends on including 2015 in the starting years, and the 2015 data are patchy; leave it out and the test cannot tell
-either way.
+depends on the patchy early years: start the comparison after 2016 and the test cannot tell either way.
 
 With storm days removed, our measure of everyday outages rose about 3% a year. The power companies' own figures for
 the same states and years show no rise at all. So that increase comes from how a state-wide measure sorts storm days
@@ -221,7 +221,8 @@ The two EIA rows are a post-review analysis over the same 25 states and 150 stat
 
 - **H3 is Refuted.** The rolling rule's power ratio to the oracle is 0.74 (0.70–0.78), far above 0.5. All rules hold
   their nominal 5% false-positive rate under C. Among systems where the trend is detected under A, every normalised
-  rule takes a median of five years to first detect it (all events, four).
+  rule first detects it after a median of five annual values of the post-baseline series (all events, four), taking
+  the shortest prefix of at least three values that detects.
 - **What scenario B measures.** The simulation's "storm" is any day above the 95th percentile of non-zero days. The
   2.5β threshold sits at a median 2.7 times that level, so most simulated storm days — 57–66% — fall *below* the
   threshold, and under IEEE 1366 they are normal operations. The real data look the same: 58% of the top-5% days of
@@ -255,8 +256,8 @@ method.
 ## What this does and does not show
 
 - **It shows:**
-  - in these 25 states, the standard rolling rule did not remove more of the 2020–2025 trend than a frozen threshold
-    would have, though only under the preregistered 2015–2019 baseline;
+  - in these 25 states, the standard rolling rule removed less of the 2020–2025 trend than a frozen threshold in
+    every specification tried, significantly so only under the preregistered 2015–2019 baseline;
   - in simulation, the rolling rule keeps about three-quarters of an oracle's power to detect deteriorating normal
     operations, more than the alternatives tested, under every variant tried.
 - **It does not show that routine reliability is worsening.** Every MED-excluded index built here rises 2–3% a year,

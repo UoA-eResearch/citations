@@ -246,3 +246,41 @@ does not alter the computation, so no analytic choice was informed. Timeline oth
 - report.md:150–151: "the median state rolling threshold went from 4.0 ... to 4.9" should carry the window-composition
   caveat of finding 2.
 - F3 title "The rolling threshold rose, so fewer days were excluded" is correct as a description of the counts.
+
+## Confirmation pass (revision b3a87e1, 2026-10-21)
+
+Checked: `report.md` (every number against `results/tables/*`, `review/reviewer_checks/check5*/check6*/check7.json`
+and `simulation.json`), `report.html` (all numbers present and identical to `report.md`), `deviations.md` D2,
+`code/figures.py` (F4 caption only) and `results/figures/F4_power.txt`. `git diff 2b5cb6b b3a87e1` touches nothing
+else: no pipeline code and no result table changed. The Eto et al. summary was checked against the full OpenAlex
+abstract (W2476114777): accurate, and the volume/issue/pages are correct.
+
+| finding | status | note |
+|---|---|---|
+| 1 storm-leakage framing | **resolved** | Withdrawn from headline, simulation section, plain terms, "does not show" list and F4 caption. The mechanism split (size-only 5%/4%, frequency-only 32%/14%, MED-scale 8%/4%/4%), the 2.7x, 57–66%, 58% and 21% figures and the 1.11 ratio all match check6/check5. |
+| 2 H2 depends on 2015 | **resolved, one inconsistency** | Headline, H2 bullets, the alternative-window table and the threshold paragraph are correct (all intervals, -0.26/-0.06/-0.12, 5.7%, 3.7% match check5; Nevada disclosed). But report.md:23 ("Under every cleaner baseline the result is Inconclusive") and :49–51 ("leave it out and the test cannot tell either way") contradict the table at :177, where 2016–2019 (2015 alone dropped) is "Refuted, marginally" (+0.02 lower bound). Say "under every baseline that also drops 2016, and under the coverage sensitivity", and in plain terms "leave out 2015 and 2016". |
+| 3 utilities' MED-excluded trend | **resolved** | -0.05 (-1.1, +1.1), gap +3.1 (+1.9, +4.4), -3.0 (-9.2, +2.7), 150 state-years and the MED-share rows match check7. The 2022 EIA share is 0.645 in check7.json; 64% and 65% are both fair roundings. |
+| 4 prior work | **resolved** | Eto et al. cited with an accurate account of its result; novelty narrowed to what is new. |
+| 5 coverage-sensitivity reach | **resolved** | report.md:270–273 now says 2018–2022 only and names the county-count rule's limit. |
+| 6 verdict wording | **resolved** | report.md:7–11 and :14–15 as suggested. |
+| 7 data-quality disclosure | **resolved** | report.md:108–115 and :125–126; all figures match check1–4. |
+| 8 decomposition label | **resolved** | report.md:204–206 names the residual and gives plan §5's -156. |
+| 9 ξ cap and years to detection | **resolved** | D2 item 1 and report.md:140, :238–240 (0.76). The years-to-detection sentence (:223–224) is right in substance but imprecise: the "five years" are five annual index values of the post-baseline series (year 10 of the 11-year simulation), and the median is over systems where any prefix of at least three values triggers detection, not only those detected on the full six. Optional rewording. |
+| 10 D1 wording | **resolved** | report.md:281–283. |
+| 11 small inconsistencies | **resolved** | "2.3/2.2" gone (:262 "2–3% a year"); within-state Spearman and year-on-year 0.95 added (:34–36, :250–251); "almost exactly" gone. |
+
+**New problems introduced by the revision**
+
+- **N1 (wording, report.md:258–259).** "the standard rolling rule did not remove more of the 2020–2025 trend than a
+  frozen threshold would have, though only under the preregistered 2015–2019 baseline" conflates two things. The
+  point estimate is positive (the rolling rule removes *less*) in every specification, as :183 says; what holds only
+  under the preregistered baseline is that the difference is significantly positive (Refuted). Reword: "the rolling
+  rule removed less of the trend than a frozen threshold in every specification — the opposite of the ratchet
+  critique — but significantly so only under the preregistered 2015–2019 baseline."
+- **N2 (wording, report.md:23 and :49–51)** as in finding 2 above.
+- Nothing else: the EIA rows are clearly labelled post-review and unpreregistered; "under every variant tried" (:9,
+  :261) is true of the three variants run; D2 is an accurate record, including of commit 96c8a7c; the F4 caption is
+  consistent with the text; `report.html` matches `report.md`.
+
+**Fit to publish:** yes, with the two sentence-level edits N1 and N2 (and optionally the finding-9 rewording). Neither
+needs a re-run or another review pass.

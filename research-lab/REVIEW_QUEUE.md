@@ -9,7 +9,7 @@ highest exposure first, so that if the limit is hit again the most consequential
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
-| `energy-outage-major-event-day-ratchet` | 2b5cb6b | H1 Inconclusive, H2 Refuted, H3 Refuted | **revised** (b3a87e1) after a fix-first review; confirmation pass with the same reviewer |
+| `energy-outage-major-event-day-ratchet` | 2b5cb6b | H1 Inconclusive, H2 Refuted, H3 Refuted | **published** 2026-10-21 (Refuted on H3; H2 only with the 2015 baseline; H1 Inconclusive) |
 | `ancestral-pacific-rainfall-gauge-circularity` | 0a73d80 | H1 Supported, H2 Refuted | **in review** (wave 2) |
 | `frontier-eaa-accessibility-natural-experiment` | 0c44d7a | H1 Supported, H2 Inconclusive, H3 not testable | not started |
 | `energy-nz-gas-production-forecast-calibration` | b53e197 | H1 Supported, H2 Inconclusive, H3 Supported | **in review** (wave 1) |
