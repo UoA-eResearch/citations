@@ -46,29 +46,40 @@ def size_of(url):
 
 
 def get_range(url, start, end, dest, tries=6):
-    """Download one byte range to `dest`, resuming if a partial part is already there."""
+    """Download one byte range to `dest`.
+
+    Each attempt rewrites the part from scratch rather than appending to what is already there: a server that
+    ignores the Range header, or an error body, would otherwise be appended to a partial part and silently
+    corrupt it (an earlier version of this grew a 127 MB file to 534 MB that way). The response must be 206 with
+    a Content-Range that starts where we asked, and the part must end up exactly the requested length.
+    """
     want = end - start + 1
     if dest.exists() and dest.stat().st_size == want:
         return want
     for k in range(tries):
-        have = dest.stat().st_size if dest.exists() else 0
-        if have == want:
-            return want
-        req = urllib.request.Request(url, headers={**UA, "Range": f"bytes={start + have}-{end}"})
         try:
-            with urllib.request.urlopen(req, timeout=900) as r, open(dest, "ab") as fh:
-                while True:
-                    buf = r.read(1 << 20)
-                    if not buf:
-                        break
-                    fh.write(buf)
+            req = urllib.request.Request(url, headers={**UA, "Range": f"bytes={start}-{end}"})
+            with urllib.request.urlopen(req, timeout=900) as r:
+                if r.status != 206:
+                    raise RuntimeError(f"expected 206, got {r.status}")
+                cr = r.headers.get("Content-Range", "")
+                if not cr.startswith(f"bytes {start}-{end}/"):
+                    raise RuntimeError(f"bad Content-Range {cr!r}")
+                with open(dest, "wb") as fh:
+                    while True:
+                        buf = r.read(1 << 20)
+                        if not buf:
+                            break
+                        fh.write(buf)
+            got = dest.stat().st_size
+            if got == want:
+                return got
+            raise RuntimeError(f"short part: {got} of {want}")
         except Exception as e:                      # noqa: BLE001
-            log(f"    {dest.name} attempt {k + 1}/{tries}: {type(e).__name__}")
+            log(f"    {dest.name} attempt {k + 1}/{tries}: {type(e).__name__}: {e}")
+            dest.unlink(missing_ok=True)
             time.sleep(4 * (k + 1))
-    got = dest.stat().st_size if dest.exists() else 0
-    if got != want:
-        raise RuntimeError(f"{dest.name}: got {got} of {want} bytes")
-    return got
+    raise RuntimeError(f"{dest.name}: could not fetch bytes {start}-{end}")
 
 
 def fetch(name, url):
