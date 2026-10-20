@@ -6,9 +6,16 @@ as captured, without the Wayback toolbar). Each capture is downloaded, hashed an
 of the same file are the same workbook.
 
 Targets:
-  reserves   .../petroleum-reserves.xlsx and any older name (petroleum-reserves-2019.xlsx, reserves.xlsx)
-             - field-level 1P/2P/3P reserves and the 14-year production profiles that this study calibrates
+  reserves   every vintage: .../Energy/petroleum-reserves/petroleum-reserves-1-jan-YYYY.xlsx (2014-2026), plus the
+             older names under .../nz-energy-quarterly-and-energy-in-nz/ - field-level 1P/2P/3P reserves and the
+             14-year production profiles that this study calibrates
   gas        .../Gas.xlsx and the gas quarterly web tables - realised production, for the outcome series
+
+An earlier version searched only the nz-energy-quarterly directory, never .../Energy/petroleum-reserves/, where
+every vintage from 2014 to 2026 is archived; and it logged a failed archive query as "CDX gave nothing", the same
+message as a genuine empty result. Together these produced a false claim that the 2025 and 2026 releases were not
+archived (corrected in deviations D2). A failed query is now recorded in the manifest and makes the run exit
+non-zero, so absence can never be inferred from a failure.
 
 Writes data/raw/<group>/<timestamp>.xlsx, data/raw/MANIFEST.json (capture timestamp, URL, bytes, sha256) and
 logs/fetch.log. Nothing is parsed here.
@@ -23,12 +30,18 @@ from pathlib import Path
 
 RUN = Path(__file__).resolve().parents[1]
 RAW = RUN / "data" / "raw"
-BASE = "mbie.govt.nz/assets/Data-Files/Energy/nz-energy-quarterly-and-energy-in-nz/"
+QUARTERLY = "mbie.govt.nz/assets/Data-Files/Energy/nz-energy-quarterly-and-energy-in-nz/"
+RESERVES = "mbie.govt.nz/assets/Data-Files/Energy/petroleum-reserves/"
 CDX = "https://web.archive.org/cdx/search/cdx"
+# group -> list of (directory, filename prefix); each prefix is queried with a trailing wildcard
 GROUPS = {
-    "reserves": ["petroleum-reserves.xlsx", "petroleum-reserves-2019.xlsx", "reserves.xlsx"],
-    "gas": ["Gas.xlsx", "gas-quarterly-webtable.xlsx", "gas-quarterly-webtable-december-2025.xlsx"],
+    "reserves": [(RESERVES, "petroleum-reserves-1-jan-"),
+                 (QUARTERLY, "petroleum-reserves.xlsx"), (QUARTERLY, "petroleum-reserves-2019.xlsx"),
+                 (QUARTERLY, "reserves.xlsx")],
+    "gas": [(QUARTERLY, "Gas.xlsx"), (QUARTERLY, "gas-quarterly-webtable.xlsx"),
+            (QUARTERLY, "gas-quarterly-webtable-december-2025.xlsx")],
 }
+FAILED = []
 UA = {"User-Agent": "UoA research-lab (gas production forecast calibration); contact via github.com/UoA-eResearch"}
 
 
@@ -51,12 +64,16 @@ def get(url, tries=6, timeout=120):
     return None
 
 
-def captures(name):
-    """Every HTTP-200 capture of one filename, oldest first (the Archive is polite: one query at a time)."""
-    url = f"{CDX}?url={BASE}{name}*&output=json&fl=timestamp,original,statuscode,length&limit=300"
+def captures(base, name):
+    """Every HTTP-200 capture under one directory and filename prefix, oldest first (one query at a time)."""
+    url = f"{CDX}?url={base}{name}*&output=json&fl=timestamp,original,statuscode,length&limit=300"
     body = get(url)
-    if not body:
-        log(f"{name}: CDX gave nothing")
+    if body is None:
+        log(f"{base}{name}: CDX QUERY FAILED after retries -- this is not evidence the file is absent")
+        FAILED.append(f"{base}{name}")
+        return []
+    if not body.strip():
+        log(f"{base}{name}: CDX returned an empty response (no captures)")
         return []
     try:
         rows = json.loads(body)[1:]
@@ -77,11 +94,14 @@ def main():
             continue
         d = RAW / group
         d.mkdir(parents=True, exist_ok=True)
-        seen = {v["sha256"] for v in man.get(group, {}).values()}
+        seen = {v["sha256"] for v in man.get(group, {}).values() if isinstance(v, dict)}
         rows = man.setdefault(group, {})
-        for name in names:
-            for ts, orig in captures(name):
-                if ts in rows:
+        for base, name in names:
+            for ts, orig in captures(base, name):
+                # Several vintages were archived in the same second, so a capture is identified by timestamp AND
+                # URL; keying by timestamp alone kept one file per second and silently dropped the rest.
+                key = f"{ts}|{orig}"
+                if key in rows or (ts in rows and isinstance(rows[ts], dict) and rows[ts].get("url") == orig):
                     continue
                 time.sleep(2)
                 body = get(f"https://web.archive.org/web/{ts}id_/{orig}")
@@ -90,16 +110,23 @@ def main():
                     continue
                 h = hashlib.sha256(body).hexdigest()
                 dup = h in seen
+                fname = f"{ts}_{orig.rstrip('/').split('/')[-1]}"
                 if not dup:
-                    (d / f"{ts}.xlsx").write_bytes(body)
+                    (d / fname).write_bytes(body)
                     seen.add(h)
-                rows[ts] = dict(url=orig, bytes=len(body), sha256=h, duplicate_of_earlier=dup,
-                                file=None if dup else f"{group}/{ts}.xlsx")
+                rows[key] = dict(url=orig, bytes=len(body), sha256=h, duplicate_of_earlier=dup,
+                                 file=None if dup else f"{group}/{fname}")
                 log(f"  {name} {ts}: {len(body)} bytes{' (duplicate content)' if dup else ' SAVED'}")
                 json.dump(man, open(man_path, "w"), indent=1)
+    man["_failed_queries"] = FAILED
     json.dump(man, open(man_path, "w"), indent=1)
     for g, rows in man.items():
+        if g.startswith("_"):
+            continue
         log(f"{g}: {len(rows)} captures, {sum(1 for v in rows.values() if not v['duplicate_of_earlier'])} distinct files")
+    if FAILED:
+        log(f"FAILED QUERIES: {FAILED}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":

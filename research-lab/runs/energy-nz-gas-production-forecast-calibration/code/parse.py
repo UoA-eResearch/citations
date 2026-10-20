@@ -33,14 +33,25 @@ FIELD_MAP = {
     "chealandcardiff": "Cheal", "chealcardiff": "Cheal", "waihapangaere": "Waihapa", "waihapa": "Waihapa",
     "sidewinder": "Sidewinder", "coppermoki": "Coppermoki", "surrey": "Surrey",
     "tariki": "TarikiAhuroa", "tarikiahuroa": "TarikiAhuroa",
+    # MBIE publishes realised production for Rimu and Kauri as one series ("Rimu/Kauri"), so the workbooks' Kauri
+    # forecast belongs with Rimu. Mapping it to Others (the draft) split one field across two rows (D2).
+    "kauri": "Rimu", "kaurimanutahi": "Rimu",
+    # names used by the 2014-2018 vintages
+    "greaterngatoro": "Ngatoro", "turangiandturangimckeeoverthrust": "Turangi", "ahuroa": "TarikiAhuroa",
     # named in the reserves workbooks but not published separately by MBIE
-    "kauri": "Others", "kaurimanutahi": "Others", "radnor": "Others", "supplejack": "Others",
+    "radnor": "Others", "supplejack": "Others", "onaero": "Others", "moturoa": "Others", "puka": "Others",
     "hanmersprings": "Others", "ngaere": "Others", "goldie": "Others", "kaimiro": "Others",
 }
 
 
 def norm(s):
     return re.sub(r"[^a-z0-9]", "", str(s).lower())
+
+
+def field_key(name):
+    """FIELD_MAP key for a field name: footnote markers like "(1)" and "*" are stripped first, so "Cheal(1)" maps
+    as "cheal" rather than "cheal1". Header matching keeps using norm()."""
+    return norm(re.sub(r"\(\d+\)|\*", "", str(name)))
 
 
 def num(v):
@@ -73,13 +84,24 @@ def vintage_year(wb):
     return None
 
 
+def as_year(c):
+    """A header cell as a year: the 2017, 2018 and 2026 vintages write year headers as text ('2017')."""
+    if isinstance(c, int) and 1900 < c < 2100:
+        return c
+    if isinstance(c, float) and c.is_integer() and 1900 < c < 2100:
+        return int(c)
+    if isinstance(c, str) and re.fullmatch(r"\s*(19|20)\d\d\s*", c):
+        return int(c)
+    return None
+
+
 def parse_profile(rows):
     """The gas block of the production-profile sheet: (field_raw, year, pj)."""
-    h = find(rows, lambda r: any(norm(c) == "field" for c in r) and sum(isinstance(c, int) and 1900 < c < 2100 for c in r) >= 3)
+    h = find(rows, lambda r: any(norm(c) == "field" for c in r) and sum(as_year(c) is not None for c in r) >= 3)
     if h is None:
         return []
     fc = next(i for i, c in enumerate(rows[h]) if norm(c) == "field")
-    years = {i: c for i, c in enumerate(rows[h]) if isinstance(c, int) and 1900 < c < 2100}
+    years = {i: as_year(c) for i, c in enumerate(rows[h]) if as_year(c) is not None}
     out = []
     for r in rows[h + 1:]:
         name = str(r[fc]).strip() if fc < len(r) and r[fc] is not None else ""
@@ -97,11 +119,24 @@ def parse_profile(rows):
 def parse_reserves(rows):
     """Ultimate recoverable and remaining reserves in PJ, by field, for 1P/2P/3P.
 
-    Two layouts occur: the block labels and "Field" share one row, or the labels sit one row above the units row
-    that carries "Field". The field column is therefore searched for in the label row and the one below it."""
-    h = find(rows, lambda r: any("ultimaterecoverable" in norm(c) for c in r))
-    if h is None:
+    Two header layouts occur: the block labels and "Field" share one row, or the labels sit one row above the units
+    row that carries "Field". The 2014-2016 vintages keep gas reserves on a "Gas and LPG" sheet holding two tables --
+    "Natural Gas and LPG Reserves" (fields marked as including LPG) and then "Natural Gas Reserves" -- so the
+    gas-only table is chosen by its title, and reading stops at the table's own total. The draft read both tables,
+    giving those vintages every field twice, once inflated by LPG (D2)."""
+    heads = [i for i, r in enumerate(rows) if any("ultimaterecoverable" in norm(c) for c in r)]
+    if not heads:
         return []
+
+    def titles(i):
+        """Title cells in the rows just above a header. Judged cell by cell: in the 2016 sheet the gas-only and
+        LPG tables sit side by side, so one row carries both "Natural Gas Reserves" and "LPG Reserves"."""
+        out = []
+        for j in range(i - 1, max(-1, i - 4), -1):
+            out += [str(c).lower() for c in rows[j] if c is not None and "reserve" in str(c).lower()]
+        return out
+    gas_only = [h for h in heads if any("natural gas reserves" in t and "lpg" not in t for t in titles(h))]
+    h = gas_only[0] if gas_only else heads[0]
     fc = None
     for r in (rows[h], rows[h + 1] if h + 1 < len(rows) else []):
         for i, c in enumerate(r):
@@ -112,16 +147,26 @@ def parse_reserves(rows):
             break
     if fc is None:
         return []
-    blocks, cur = [], None
-    for i, c in enumerate(rows[h]):
+    # a table placed to the right of this one starts at the next "Field" cell; never read into it
+    limit = next((i for i in range(fc + 1, len(rows[h])) if norm(rows[h][i]) == "field"), None)
+    if limit is None and h + 1 < len(rows):
+        limit = next((i for i in range(fc + 1, len(rows[h + 1])) if norm(rows[h + 1][i]) == "field"), None)
+    limit = limit or max(len(rows[h]), len(rows[h + 1]) if h + 1 < len(rows) else 0)
+    blocks = []
+    for i, c in enumerate(rows[h][:limit]):
         n = norm(c)
         if "ultimaterecoverable" in n or "remainingreserve" in n:
-            cur = ("ur" if "ultimate" in n else "rr") + re.search(r"([123])p", n).group(1)
-            blocks.append((i, cur))
+            m = re.search(r"([123])p", n)
+            pm = re.search(r"p(90|50|10)", n)
+            # the 2014 vintage labels the categories P90/P50/P10 instead of 1P/2P/3P
+            cat = m.group(1) if m else ({"90": "1", "50": "2", "10": "3"}[pm.group(1)] if pm else None)
+            if cat is None:
+                continue
+            blocks.append((i, ("ur" if "ultimate" in n else "rr") + cat))
     units = rows[h + 1]
     cols = {}
     for k, (start, name) in enumerate(blocks):
-        end = blocks[k + 1][0] if k + 1 < len(blocks) else len(units)
+        end = blocks[k + 1][0] if k + 1 < len(blocks) else min(len(units), limit)
         for i in range(start, min(end, len(units))):
             if norm(units[i]) == "pj":
                 cols[name] = i
@@ -130,7 +175,9 @@ def parse_reserves(rows):
     for r in rows[h + 2:]:
         name = str(r[fc]).strip() if fc < len(r) and r[fc] is not None else ""
         n = norm(name)
-        if not name or n.startswith(("total", "arithmetictotal", "probabilistictotal", "allfields", "note")):
+        if n.startswith(("total", "arithmetictotal", "probabilistictotal", "allfields")):
+            break                                   # end of this table
+        if not name or n.startswith("note"):
             continue
         rec = {k: num(r[i]) if i < len(r) else None for k, i in cols.items()}
         if any(v is not None for v in rec.values()):
@@ -211,7 +258,8 @@ def main():
         wb = openpyxl.load_workbook(f, read_only=True, data_only=True)
         vy = vintage_year(wb)
         pn = [s for s in wb.sheetnames if "production profile" in s.lower() and "gas" in s.lower()]
-        gn = [s for s in wb.sheetnames if norm(s) == "gas"]
+        # gas reserves are on "Gas", or on "Gas and LPG" in the 2014-2016 vintages (gas is the PJ column of each block)
+        gn = [s for s in wb.sheetnames if norm(s) == "gas"] or [s for s in wb.sheetnames if norm(s) == "gasandlpg"]
         p = parse_profile(grid(wb[pn[0]])) if pn else []
         r = parse_reserves(grid(wb[gn[0]])) if gn else []
         vint.append(dict(capture=ts, vintage_year=vy, file=rec["file"], sha256=rec["sha256"][:16],
@@ -219,10 +267,10 @@ def main():
                          profile_years=f"{min((x[1] for x in p), default='')}-{max((x[1] for x in p), default='')}",
                          reserve_fields=len(r)))
         for name, y, v in p:
-            prof.append(dict(vintage_year=vy, capture=ts, field_raw=name, field=FIELD_MAP.get(norm(name), "UNMAPPED"),
+            prof.append(dict(vintage_year=vy, capture=ts, field_raw=name, field=FIELD_MAP.get(field_key(name), "UNMAPPED"),
                              year=y, pj=v))
         for name, rec2 in r:
-            res.append(dict(vintage_year=vy, capture=ts, field_raw=name, field=FIELD_MAP.get(norm(name), "UNMAPPED"),
+            res.append(dict(vintage_year=vy, capture=ts, field_raw=name, field=FIELD_MAP.get(field_key(name), "UNMAPPED"),
                             **{k: rec2.get(k) for k in ("ur1", "ur2", "ur3", "rr1", "rr2", "rr3")}))
         wb.close()
         print(f"{ts}: vintage {vy}, {len(p)} profile cells, {len(r)} reserve fields", flush=True)
@@ -236,7 +284,7 @@ def main():
             print(f"  gas {ts}: {type(e).__name__}"); continue
         for basis, name, y, v in rows:
             real.append(dict(capture=ts, basis=basis, field_raw=name,
-                             field=FIELD_MAP.get(norm(name), name.strip()), year=y, pj=v))
+                             field=FIELD_MAP.get(field_key(name), name.strip()), year=y, pj=v))
         print(f"  gas {ts}: {len(rows)} cells", flush=True)
 
     def write(path, rows, cols):
