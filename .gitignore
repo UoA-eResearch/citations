@@ -1,154 +1,130 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
+
 *$py.class
-
-# C extensions
-*.so
-
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-pip-wheel-metadata/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-
-# PyInstaller
-#  Usually these files are written by a python script from a template
+#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
+# Both forms of each path: the trailing slash matches only a real directory, and these are symlinks to
+build/
+# Byte-compiled / optimized / DLL files
+.cache
+celerybeat.pid
+celerybeat-schedule
+# Celery stuff
+# C extensions
+*.cover
 .coverage
 .coverage.*
-.cache
-nosetests.xml
 coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
-
-# Translations
-*.mo
-*.pot
-
-# Django stuff:
-*.log
-local_settings.py
 db.sqlite3
 db.sqlite3-journal
-
-# Flask stuff:
-instance/
-.webassets-cache
-
-# Scrapy stuff:
-.scrapy
-
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-target/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
-
-# pyenv
-.python-version
-
-# pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-#Pipfile.lock
-
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow
-__pypackages__/
-
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
-
-# SageMath parsed files
-*.sage.py
-
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
-.mypy_cache/
+develop-eggs/
+dist/
+# Distribution / packaging
+# Django stuff:
 .dmypy.json
 dmypy.json
-
-# Pyre type checker
-.pyre/
-
-.vscode
-
-# research-lab run scratch (venvs, raw data, mocks) — keep plan/code/results/report
-# Both forms of each path: the trailing slash matches only a real directory, and these are symlinks to
+docs/_build/
+downloads/
+*.egg
+*.egg-info/
+.eggs/
+eggs/
+.env
+env/
+ENV/
+env.bak/
+# Environments
+# Flask stuff:
+#   having no cross-platform support, pipenv may install dependencies that don't work, or not
+#   However, in case of collaboration, if having platform-specific dependencies or dependencies
+htmlcov/
+.hypothesis/
+#   install all needed dependencies.
+.installed.cfg
+# Installer logs
+instance/
+.ipynb_checkpoints
+# IPython
+ipython_config.py
+# Jupyter Notebook
+lib/
+lib64/
+local_settings.py
+*.log
+*.manifest
+MANIFEST
+# mkdocs documentation
 # /mnt/data (the HDD) on any run whose heavy trees have been offloaded from the NVMe.
-research-lab/runs/*/venv/
-research-lab/runs/*/venv
-research-lab/runs/*/data/
-research-lab/runs/*/data
-research-lab/runs/*/out/
-research-lab/runs/*/out
-research-lab/runs/*/logs/
-research-lab/runs/*/logs
-research-lab/runs/*/code/__pycache__/
+*.mo
+# mypy
+.mypy_cache/
+nosetests.xml
+.nox/
+parts/
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow
+pip-delete-this-directory.txt
+# pipenv
+#Pipfile.lock
+pip-log.txt
+pip-wheel-metadata/
+*.pot
+profile_default/
+# PyBuilder
+__pycache__/
+*.py[cod]
+*.py,cover
+# pyenv
+# PyInstaller
+__pypackages__/
+.pyre/
+# Pyre type checker
+.pytest_cache/
+.Python
+.python-version
 # research-lab fit binaries (nautilus checkpoints, posterior arrays: ~1.9 GB) -- keep summary.json only
+research-lab/runs/*/code/__pycache__/
+# research-lab run scratch (venvs, raw data, mocks) — keep plan/code/results/report
+research-lab/runs/*/data
+research-lab/runs/*/data/
+research-lab/runs/formal-math-selfplay-vacuity-drift/results/rows/
+research-lab/runs/*/lean/
+research-lab/runs/legal-phantom-citations-judicial-opinions/data
+research-lab/runs/*/logs
+research-lab/runs/*/logs/
+research-lab/runs/*/out
+research-lab/runs/*/out/
 research-lab/runs/*/results/fits/**/*.h5
 research-lab/runs/*/results/fits/**/*.npz
-research-lab/runs/*/results/tables/*.npy
 research-lab/runs/*/results/forecasts/
-research-lab/runs/*/lean/
-research-lab/runs/formal-math-selfplay-vacuity-drift/results/rows/
+research-lab/runs/*/results/tables/*.npy
+research-lab/runs/*/review/reviewer_checks/blind_*.md
 research-lab/runs/*/review/reviewer_checks/cache
 research-lab/runs/*/review/reviewer_checks/cache/
-research-lab/runs/*/review/reviewer_checks/blind_*.md
+research-lab/runs/*/venv
+research-lab/runs/*/venv/
+.ropeproject
+# Rope project settings
+# SageMath parsed files
+*.sage.py
+.scrapy
+# Scrapy stuff:
+sdist/
+share/python-wheels/
+/site
+*.so
+*.spec
+# Sphinx documentation
+.spyderproject
+# Spyder project settings
+.spyproject
+target/
+.tox/
+# Translations
+# Unit test / coverage reports
+#  Usually these files are written by a python script from a template
+var/
+.venv
+venv/
+venv.bak/
+.vscode
+.webassets-cache
+wheels/
