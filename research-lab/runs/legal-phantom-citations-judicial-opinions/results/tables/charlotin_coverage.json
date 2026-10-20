@@ -1,0 +1,68 @@
+{
+ "incidents_us_in_window": 1516,
+ "matched_to_a_cluster": 854,
+ "judge_attributed": 9,
+ "judge_attributed_matched": 4,
+ "by_party": {
+  "Pro Se Litigant": [
+   873,
+   550
+  ],
+  "Lawyer": [
+   610,
+   292
+  ],
+  "Expert": [
+   11,
+   4
+  ],
+  "(blank)": [
+   5,
+   0
+  ],
+  "Governement Lawyer": [
+   2,
+   1
+  ],
+  "Lawyer; Judge": [
+   2,
+   0
+  ],
+  "Judge; Lawyer": [
+   2,
+   2
+  ],
+  "Judge; Prosecutor": [
+   1,
+   1
+  ],
+  "Prosecutor": [
+   2,
+   1
+  ],
+  "Lawyer; Pro Se Litigant": [
+   1,
+   1
+  ],
+  "Judge": [
+   4,
+   1
+  ],
+  "Paralegal": [
+   1,
+   0
+  ],
+  "Federal Defender": [
+   1,
+   1
+  ],
+  "Paralegal; Lawyer": [
+   1,
+   0
+  ]
+ },
+ "match_threshold": 85,
+ "max_days": 45,
+ "same_day_threshold": 75,
+ "same_day_window": 3
+}

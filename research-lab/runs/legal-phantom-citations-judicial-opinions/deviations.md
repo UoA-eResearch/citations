@@ -111,3 +111,27 @@ cases. The screen resolves ambiguity toward "this case exists", so the phantom c
 **4. Next, before the freeze:** a seeded random sample of 2,000 in-window opinions (2019-2026) will be drawn as a
 pilot once the archive is complete. Tuning may use it and the out-of-window pilot only. The screen is then frozen,
 and the full in-window screen run once. Manual verification remains the arbiter of every count.
+
+## D4 — 2026-10-21 10:33 NZDT — building the recall-calibration set
+
+Recorded before any opinion was screened. Nothing here touches the screen or the hypotheses; it fixes which
+publicised incidents are used to *measure* the screen (plan §4 step 6).
+
+1. **A larger calibration set than planned.** The plan anticipated calibrating on the roughly nine US
+   judge-attributed incidents. But the Charlotin database's lawyer and pro se incidents mostly have a court order
+   that discusses — and often quotes — the fabricated citations, so their orders are true positives for the
+   *detection* step too. There are 1,516 plausibly US incidents dated inside the screened window. Recall is now
+   measured two ways: **detection recall** (of the in-corpus orders discussing fabricated citations, the share
+   the screen flags), and **reliance recall** (of the judge-attributed incidents, the share it flags as
+   reliance rather than flag). These orders are flag-type by construction, so they also test the reliance/flag
+   classifier's specificity.
+2. **Matching incidents to clusters** (`code/match_charlotin.py`): party names scored side by side, filing date
+   within 45 days. The name threshold is 85, stricter than the screen's 80, because a false calibration match
+   would bias recall downward. An audit of borderline matches showed that 85 alone misses clear same-day matches
+   (*Adams v. Board of Trustees* at 82.8; *Bell v. City of Clairton* at 84.2), whose corpus captions carry first
+   names the database omits. A score of 75 is therefore accepted when the dates agree within three days. This
+   added 46 matches; a seeded random audit of 12 found 11 plainly correct and one uncertain (*Twyla Leach*: same
+   plaintiff and day, different defendant, possibly another case by the same litigant).
+3. **Coverage:** 854 of the 1,516 in-window US incidents match a corpus cluster (56%), and 4 of the 9
+   judge-attributed ones. The 44% not found are themselves informative — CourtListener does not hold every
+   order — and bear on the capture-recapture estimate, which assumes both sources could in principle see a case.
