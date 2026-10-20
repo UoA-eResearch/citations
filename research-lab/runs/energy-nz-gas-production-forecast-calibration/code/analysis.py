@@ -33,12 +33,21 @@ def f(x):
 
 
 def main():
-    # ---- forecasts: one value per (vintage, mapped field, target year)
+    # ---- forecasts: one value per (vintage, mapped field, target year).
+    # Two captures can carry the same vintage (MBIE re-published the "as at 1 January 2021" workbook); the later
+    # capture is the more revised publication, so one capture per vintage year is kept.
+    prof = [r for r in rows("profiles.csv") if r["field"] not in NOT_A_FIELD]
+    keep = {}
+    for r in prof:
+        v = int(r["vintage_year"])
+        if v not in keep or r["capture"] > keep[v]:
+            keep[v] = r["capture"]
     fc = defaultdict(float)
-    for r in rows("profiles.csv"):
-        if r["field"] in NOT_A_FIELD:
+    for r in prof:
+        v = int(r["vintage_year"])
+        if r["capture"] != keep[v]:
             continue
-        fc[(int(r["vintage_year"]), r["field"], int(r["year"]))] += f(r["pj"]) or 0.0
+        fc[(v, r["field"], int(r["year"]))] += f(r["pj"]) or 0.0
 
     # ---- realised by field: latest capture wins (MBIE revises back years)
     best, act = {}, {}
@@ -122,14 +131,16 @@ def main():
     out["H1"] = dict(basis="net", m1=m1, m3=m3, threshold_h1_pct=5.0, threshold_h3_pct=15.0,
                      verdict="Supported" if sup else "Refuted" if ref else "Inconclusive")
 
-    # ---- national: the profile total against national realised production
+    # ---- national. MBIE's energy overview series "Indigenous Production -> Natural gas" reproduces the sum of
+    # the field-level NET production exactly for every overlapping year (validation below), and its 2025 value
+    # matches MBIE's published 102 PJ, so it is the net series extended to 2025.
     nat = {}
     for r in rows("national.csv"):
         nat[int(r["year"])] = f(r["gross_pj"])
     natnet = defaultdict(float)
+    natgross = defaultdict(float)
     for (b, fld, t), A in act.items():
-        if b == "net":
-            natnet[t] += A
+        (natnet if b == "net" else natgross)[t] += A
     natsum = []
     for v in sorted({vv for (vv, _, _) in fc}):
         for t in range(v, max(nat) + 1):
@@ -137,7 +148,7 @@ def main():
             if F <= 0:
                 continue
             row = dict(vintage=v, year=t, h=t - v, forecast_total=F,
-                       realised_gross=nat.get(t), realised_net=natnet.get(t) or None)
+                       realised_net=nat.get(t), realised_gross=natgross.get(t) or None)
             for k, a in (("gross", row["realised_gross"]), ("net", row["realised_net"])):
                 row[f"e_{k}"] = float(np.log(F / a)) if a else None
             natsum.append(row)
@@ -200,8 +211,12 @@ def main():
     for v in sorted({vv for (vv, _, _) in fc}):
         F = sum(val2 for (vv, _, tt), val2 in fc.items() if vv == v and tt == v)
         val[f"profile_total_first_year_{v}"] = round(F, 2)
-    val["national_gross_by_year"] = {y: round(nat[y], 1) for y in sorted(nat) if y >= 2018}
-    val["national_net_by_year_from_fields"] = {y: round(natnet[y], 1) for y in sorted(natnet) if y >= 2018}
+    val["national_net_mbie_overview"] = {y: round(nat[y], 1) for y in sorted(nat) if y >= 2018}
+    val["national_net_summed_from_fields"] = {y: round(natnet[y], 1) for y in sorted(natnet) if y >= 2018}
+    val["national_gross_summed_from_fields"] = {y: round(natgross[y], 1) for y in sorted(natgross) if y >= 2018}
+    val["overview_matches_field_net"] = {y: round(nat[y] - natnet[y], 3) for y in sorted(natnet) if y >= 2018}
+    val["mbie_published_2025_net_pj"] = 102.0
+    val["kept_capture_per_vintage"] = {str(k): v for k, v in sorted(keep.items())}
     gic = defaultdict(float)
     for r in rows("gic_annual.csv"):
         if int(r["days"]) >= 365:
