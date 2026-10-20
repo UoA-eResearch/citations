@@ -95,11 +95,23 @@ def parse_profile(rows):
 
 
 def parse_reserves(rows):
-    """Ultimate recoverable and remaining reserves in PJ, by field, for 1P/2P/3P."""
-    h = find(rows, lambda r: any(norm(c) == "field" for c in r) and any("ultimaterecoverable" in norm(c) for c in r))
+    """Ultimate recoverable and remaining reserves in PJ, by field, for 1P/2P/3P.
+
+    Two layouts occur: the block labels and "Field" share one row, or the labels sit one row above the units row
+    that carries "Field". The field column is therefore searched for in the label row and the one below it."""
+    h = find(rows, lambda r: any("ultimaterecoverable" in norm(c) for c in r))
     if h is None:
         return []
-    fc = next(i for i, c in enumerate(rows[h]) if norm(c) == "field")
+    fc = None
+    for r in (rows[h], rows[h + 1] if h + 1 < len(rows) else []):
+        for i, c in enumerate(r):
+            if norm(c) == "field":
+                fc = i
+                break
+        if fc is not None:
+            break
+    if fc is None:
+        return []
     blocks, cur = [], None
     for i, c in enumerate(rows[h]):
         n = norm(c)
@@ -117,7 +129,8 @@ def parse_reserves(rows):
     out = []
     for r in rows[h + 2:]:
         name = str(r[fc]).strip() if fc < len(r) and r[fc] is not None else ""
-        if not name or norm(name) in ("total", "arithmetictotal", "probabilistictotal"):
+        n = norm(name)
+        if not name or n.startswith(("total", "arithmetictotal", "probabilistictotal", "allfields", "note")):
             continue
         rec = {k: num(r[i]) if i < len(r) else None for k, i in cols.items()}
         if any(v is not None for v in rec.values()):
@@ -150,6 +163,42 @@ def parse_realised(path):
                     out.append((basis, name, y, v))
     wb.close()
     return out
+
+
+def parse_national(path):
+    """National gross gas production (PJ) from MBIE's energy overview: Indigenous Production -> Natural gas."""
+    wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
+    ws = wb[[s for s in wb.sheetnames if norm(s) == "annualpj"][0]]
+    rows = grid(ws)
+    hy = find(rows, lambda r: norm(r[0]).startswith("calendaryear") and sum(isinstance(c, int) for c in r) > 10)
+    years = {i: c for i, c in enumerate(rows[hy]) if isinstance(c, int) and 1900 < c < 2100}
+    ip = find(rows, lambda r: norm(r[0]) == "indigenousproduction", hy)
+    g = find(rows, lambda r: norm(r[0]) == "naturalgas", ip)
+    out = [(years[i], num(rows[g][i])) for i in years if num(rows[g][i]) is not None]
+    wb.close()
+    return out
+
+
+def parse_gic(path):
+    """Gas Industry Co daily production (TJ/day) for the four published field groups -> annual PJ."""
+    wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
+    ws = wb["Prod_Cons"]
+    rows = grid(ws)
+    hdr = rows[0]
+    cols = {i: str(c).strip() for i, c in enumerate(hdr)
+            if c and str(c).strip() in ("Pohokura", "Maui", "McKee/Mangahewa", "Turangi and Kowhai")}
+    agg, days = {}, {}
+    for r in rows[1:]:
+        d = r[0]
+        if not hasattr(d, "year"):
+            continue
+        days[d.year] = days.get(d.year, 0) + 1
+        for i, nm in cols.items():
+            v = num(r[i]) if i < len(r) else None
+            if v is not None:
+                agg[(d.year, nm)] = agg.get((d.year, nm), 0.0) + v / 1000.0     # TJ -> PJ
+    wb.close()
+    return [(y, nm, v, days.get(y, 0)) for (y, nm), v in sorted(agg.items())]
 
 
 def main():
@@ -199,6 +248,19 @@ def main():
     write(RUN / "data" / "reserves.csv", res, ["vintage_year", "capture", "field_raw", "field",
                                                "ur1", "ur2", "ur3", "rr1", "rr2", "rr3"])
     write(RUN / "data" / "realised.csv", real, ["capture", "basis", "field_raw", "field", "year", "pj"])
+    nat = []
+    for f in sorted((RAW / "mbie_other").glob("energy-overview_*.xlsx")):
+        for y, v in parse_national(f):
+            nat.append(dict(capture=f.stem.split("_")[-1], year=y, gross_pj=v))
+        print(f"  national {f.name}: {len(nat)} years", flush=True)
+    write(RUN / "data" / "national.csv", nat, ["capture", "year", "gross_pj"])
+    gic = []
+    gp = RAW / "gic" / "ProductionConsumption.xlsx"
+    if gp.exists():
+        for y, nm, v, nd in parse_gic(gp):
+            gic.append(dict(year=y, field_group=nm, pj=round(v, 4), days=nd))
+        print(f"  gic: {len(gic)} field-years", flush=True)
+    write(RUN / "data" / "gic_annual.csv", gic, ["year", "field_group", "pj", "days"])
     write(RUN / "results" / "tables" / "vintages.csv", vint, list(vint[0]) if vint else ["capture"])
     un = sorted({r["field_raw"] for r in prof + res if r["field"] == "UNMAPPED"})
     print(f"\n{len(vint)} vintages, {len(prof)} profile cells, {len(res)} reserve rows, {len(real)} realised cells")
