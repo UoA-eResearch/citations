@@ -135,3 +135,21 @@ publicised incidents are used to *measure* the screen (plan §4 step 6).
 3. **Coverage:** 854 of the 1,516 in-window US incidents match a corpus cluster (56%), and 4 of the 9
    judge-attributed ones. The 44% not found are themselves informative — CourtListener does not hold every
    order — and bear on the capture-recapture estimate, which assumes both sources could in principle see a case.
+
+## D5 — 2026-10-21 10:34 NZDT — analysis parameters fixed before any output
+
+Set in `code/analysis.py`, committed before the screen has produced a single in-window candidate.
+
+1. **Completeness needs enough citations to estimate.** Plan §1 sets the threshold at 98% but not how many
+   citations a reporter-volume must receive before that rate means anything; a volume cited once and resolved
+   once is "100% complete". A volume must receive at least **20** citations across the screened opinions to be
+   assessed; below that it is unassessable, and candidates into it are dropped and counted.
+2. **Sheet size.** Every opinion on a verification sheet is checked by hand up to **300**; above that, a seeded
+   random sample of 300 opinions is verified and the count scaled, with a Wilson interval (plan §5.2).
+3. **The flag classifier is measured, not assumed.** Reliance and flag are split by a lexicon on ±400 characters
+   of context (fabricated, nonexistent, hallucinated, sanction, show cause, ChatGPT and the like). Some of these
+   words occur for unrelated reasons, so a genuine reliance phantom near one would be routed to flag and silently
+   leave the H1 count. The plan verifies only the reliance sheet in the screened period; the screened flag sheet
+   will also be verified on its sample, recording for each whether it is truly flag-type, to measure that rate.
+4. **Misattributions** are verified on a fixed seeded sample of 100 in the screened period and reported
+   separately; they never count toward H1.
