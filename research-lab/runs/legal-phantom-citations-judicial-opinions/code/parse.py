@@ -57,20 +57,46 @@ def norm_reporter(r):
 
 
 def init():
-    """Load the indices once per worker. Forked workers share these pages copy-on-write."""
+    """Load the indices once, in the parent, before the workers are forked.
+
+    Each worker loading its own copy cost 2.79 GB, so 22 workers would need 61 GB of the machine's 82 GB free.
+    Forking after loading shares pages copy-on-write -- but only for flat numpy buffers: touching a Python object
+    writes its reference count and copies its page, so ten million name strings or a ten-million-entry dict would
+    be duplicated piecemeal into every worker over the run. Names are therefore one UTF-8 blob with an offset
+    table, and cluster id -> row is a sorted array searched with searchsorted.
+    """
     from rapidfuzz import fuzz
     from eyecite import get_citations
     from eyecite.models import FullCaseCitation
     z = np.load(IDX / "pages.npz", allow_pickle=False)
     G.update(offs=z["offs"], pages=z["pages"], clusters=z["clusters"],
              keymap={(r, int(v)): i for i, (r, v) in enumerate(zip(z["reporters"], z["volumes"]))},
-             names=np.load(IDX / "names.npy", allow_pickle=True),
+             
              tokens=pickle.load(open(IDX / "tokens.pkl", "rb")),
              dropped=set(json.load(open(IDX / "dropped_tokens.json"))["dropped"]),
              fuzz=fuzz, get_citations=get_citations, FullCaseCitation=FullCaseCitation)
+    names = np.load(IDX / "names.npy", allow_pickle=True)
+    enc = [str(n).encode("utf-8") for n in names]
+    G["name_off"] = np.zeros(len(enc) + 1, dtype=np.int64)
+    G["name_off"][1:] = np.cumsum([len(b) for b in enc])
+    G["name_blob"] = np.frombuffer(b"".join(enc), dtype=np.uint8)
+    del names, enc
     m = np.load(IDX / "cluster_meta.npz")
     G["ids"] = m["ids"]
-    G["row_of"] = {int(c): i for i, c in enumerate(m["ids"])}
+    G["id_order"] = np.argsort(G["ids"], kind="stable")
+    G["ids_sorted"] = G["ids"][G["id_order"]]
+
+
+def name_at(i):
+    a, b = G["name_off"][i], G["name_off"][i + 1]
+    return G["name_blob"][a:b].tobytes().decode("utf-8")
+
+
+def row_of(cid):
+    j = int(np.searchsorted(G["ids_sorted"], cid))
+    if j < len(G["ids_sorted"]) and int(G["ids_sorted"][j]) == cid:
+        return int(G["id_order"][j])
+    return None
 
 
 def text_of(row):
@@ -117,8 +143,8 @@ def name_search(cited):
     per = MAX_CANDIDATES // len(rarest)
     capped = any(len(present[t]) > per for t in rarest)
     cand = np.unique(np.concatenate([present[t][:per] for t in rarest]))
-    names, fz = G["names"], G["fuzz"]
-    best, bi = max((party_score(fz, norm, str(names[i])), int(i)) for i in cand)
+    fz = G["fuzz"]
+    best, bi = max((party_score(fz, norm, name_at(int(i))), int(i)) for i in cand)
     return float(best), bi, capped, absent
 
 
@@ -131,10 +157,10 @@ def judge(rep, vol, page, cited):
     hit, why = resolve(rep, vol, page) if (rep and vol and page) else (None, "not a reporter citation")
     out = {"resolved_to": hit, "route": why}
     if hit is not None:
-        row = G["row_of"].get(hit)
-        out["resolved_name"] = str(G["names"][row]) if row is not None else None
+        row = row_of(hit)
+        out["resolved_name"] = name_at(row) if row is not None else None
         ct = distinctive(norm_name(cited), G["dropped"]) if cited else set()
-        if not ct or (row is not None and ct & set(str(G["names"][row]).split())):
+        if not ct or (row is not None and ct & set(name_at(row).split())):
             out["verdict"] = "consistent"
             return out
         out["route"] = "resolved-elsewhere"
@@ -143,15 +169,15 @@ def judge(rep, vol, page, cited):
         return out
     score, bi, cap, absent = name_search(cited)
     out.update(best_name_score=round(score, 1), absent_tokens=absent, capped=cap,
-               best_name=str(G["names"][bi])[:90] if bi is not None else None,
+               best_name=name_at(bi)[:90] if bi is not None else None,
                best_cluster=int(G["ids"][bi]) if bi is not None else None)
     if score < NAME_MATCH:
         out["verdict"] = "phantom"
         return out
     # the name exists somewhere: a misattribution if the citation resolved into an unrelated case
     if hit is not None and out["best_cluster"] != hit:
-        row = G["row_of"].get(hit)
-        rs = party_score(G["fuzz"], norm_name(cited), str(G["names"][row])) if row is not None else 0.0
+        row = row_of(hit)
+        rs = party_score(G["fuzz"], norm_name(cited), name_at(row)) if row is not None else 0.0
         out["resolved_score"] = round(float(rs), 1)
         out["verdict"] = "misattribution" if rs < MISATTRIB_MAX else "name-exists"
     else:
@@ -162,7 +188,6 @@ def judge(rep, vol, page, cited):
 def screen(task):
     """Screen one opinion. Returns (summary row, candidates, per-volume counters, capped searches)."""
     oid, cid, date, court, text = task
-    fz, names = G["fuzz"], G["names"]
     vols = Counter()
     cands, misattrib, n_full, n_resolved, n_consistent, capped = [], [], 0, 0, 0, 0
     try:
@@ -256,7 +281,6 @@ def reader(inscope, q, nworkers):
 
 
 def worker(q, r):
-    init()
     while True:
         t = q.get()
         if t is None:
@@ -270,6 +294,7 @@ def main():
     t0 = time.time()
     inscope = scope()
     print(f"{len(inscope):,} in-scope clusters ({DATE_FROM}-{DATE_TO}) in {time.time() - t0:.0f}s", flush=True)
+    init()                                   # once, before forking: workers share it copy-on-write
     nworkers = max(1, mp.cpu_count() - 6)
     q, r = mp.Queue(maxsize=nworkers * 64), mp.Queue(maxsize=nworkers * 64)
     ctx_procs = [mp.Process(target=worker, args=(q, r), daemon=True) for _ in range(nworkers)]
