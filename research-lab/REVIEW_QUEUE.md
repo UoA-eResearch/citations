@@ -9,8 +9,8 @@ highest exposure first, so that if the limit is hit again the most consequential
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
-| `energy-outage-major-event-day-ratchet` | 2b5cb6b | H1 Inconclusive, H2 Refuted, H3 Refuted | **in review** (wave 1) — the original reviewer resumed with its checks 1–7 intact |
-| `ancestral-pacific-rainfall-gauge-circularity` | 0a73d80 | H1 Supported, H2 Refuted | not started |
+| `energy-outage-major-event-day-ratchet` | 2b5cb6b | H1 Inconclusive, H2 Refuted, H3 Refuted | **revised** (b3a87e1) after a fix-first review; confirmation pass with the same reviewer |
+| `ancestral-pacific-rainfall-gauge-circularity` | 0a73d80 | H1 Supported, H2 Refuted | **in review** (wave 2) |
 | `frontier-eaa-accessibility-natural-experiment` | 0c44d7a | H1 Supported, H2 Inconclusive, H3 not testable | not started |
 | `energy-nz-gas-production-forecast-calibration` | b53e197 | H1 Supported, H2 Inconclusive, H3 Supported | **in review** (wave 1) |
 | `movement-nz-ev-policy-discount-vs-ruc` | 60012cc | H1 Inconclusive, H2 Inconclusive | not started |
