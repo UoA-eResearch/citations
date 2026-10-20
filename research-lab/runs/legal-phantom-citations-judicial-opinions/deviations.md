@@ -31,3 +31,38 @@ Recorded while building the index, before any opinion text had been extracted.
 
    The completeness filter is still applied as preregistered, and the share of candidates it removes will be
    reported, but the report will state plainly that it is not what finds the fabrications.
+
+## D2 — 2026-10-21 09:30 NZDT — validating the screen on known cases, three defects fixed, and the parameters frozen
+
+Run before any opinion was screened, using only the six citations invented in the *Mata v. Avianca* filings and
+four well-known real cases (`code/validate_detection.py`, `results/tables/detection_validation.json`).
+
+**Three defects, each of which would have distorted the count:**
+
+1. **The index builder and the lookup used different stopword lists.** The builder omitted "board", so the
+   lookup was told no case name contains it and reported *Brown v. Board of Education* as a case that does not
+   exist. At scale this manufactures phantom citations out of ordinary captions. Both now import one definition
+   (`code/namenorm.py`), and the stoplist is cut to connectives that carry no identity.
+2. **A token too common to index looked the same as a token found nowhere.** Five tokens exceed the posting cap
+   and are dropped (`inc`, `people`, `state`, `states`, `united`). Absence from the index meant either "in too
+   many names to help" or "in no name at all" — opposite things. The dropped list is now recorded
+   (`data/index/dropped_tokens.json`); lookups skip dropped tokens and report genuinely absent ones as evidence.
+3. **Whole-name fuzzy scoring let a shared defendant carry the match.** *Martinez v. Delta Airlines* scored 90.9
+   against *Doe v. Delta Airlines Inc* although the plaintiffs have nothing in common. Names are now scored side
+   by side, the weaker side deciding, both orderings tried (`party_score`).
+
+**Result after the fixes:** five of the six fabrications are reported as no such case; all four real cases are
+found. The sixth, *Miller v. United Airlines*, 174 F.3d 366, is correctly *not* a phantom under plan §1: a real
+*Miller v. United Airlines* exists in the corpus, at a different citation, while 174 F.3d 366 points into an
+unrelated case. That is the plan's misattribution class (§4 step 4).
+
+**Misattributions are now recorded as a secondary class**: a citation that resolves to a case whose name is
+unrelated (side-by-side score below 50) while the cited name exists elsewhere. They do not count toward H1 and
+will be reported separately, verified on a sample, because fabrications that reuse a common name land here
+alongside ordinary wrong-volume errors.
+
+**Frozen from this point**, before any opinion is screened: name-match threshold 80, misattribution cut 50,
+the stoplist and posting cap in `namenorm.py` and `build_names.py`. The screen was adjusted on these ten
+examples, so five of five is an in-sample figure and is reported as such. The independent check is the recall
+calibration on Charlotin incidents present in the corpus (plan §4 step 6); that is a measurement and will not
+be used to retune the screen.

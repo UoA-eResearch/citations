@@ -116,8 +116,12 @@ def fetch(name, url):
             fh.write((parts_dir / f"{i:05d}").read_bytes())
     if out.stat().st_size != total:
         raise RuntimeError(f"{name}: assembled {out.stat().st_size} != {total}")
-    # the size can be right while the bytes are wrong, so test the archive before trusting it
-    if subprocess.run(["bzip2", "-t", str(out)], capture_output=True).returncode != 0:
+    # The size can be right while the bytes are wrong, so test the archive before trusting it. The opinions
+    # archive is exempt: at 55 GB the test costs about two and a half hours, and parse.py decompresses the whole
+    # file anyway, so a corrupt archive raises there for the same CPU rather than twice over.
+    if name == "opinions.csv.bz2":
+        log(f"{name}: skipping the separate integrity test; the parse pass decompresses and validates it")
+    elif subprocess.run(["bzip2", "-t", str(out)], capture_output=True).returncode != 0:
         out.unlink()
         raise RuntimeError(f"{name}: assembled file failed its bzip2 integrity test; parts discarded")
     for i in range(len(spans)):
