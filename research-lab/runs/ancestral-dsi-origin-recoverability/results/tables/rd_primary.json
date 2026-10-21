@@ -1,44 +1,44 @@
 {
- "n_samples": 21043805,
- "n_owners": 43275,
+ "n_samples": 20863614,
+ "n_owners": 43055,
  "window": [
   "2021-06-01",
   "2025-06-01"
  ],
  "usable": {
-  "jump_pp": 2.754,
-  "share_pre": 0.8524,
-  "share_post": 0.7939,
+  "jump_pp": 2.903,
+  "share_pre": 0.8527,
+  "share_post": 0.7938,
   "ci_pp": [
-   -6.276,
-   10.502
+   -5.853,
+   10.817
   ]
  },
  "placeholder": {
-  "jump_pp": 9.033,
-  "share_pre": 0.0434,
-  "share_post": 0.1679,
+  "jump_pp": 9.133,
+  "share_pre": 0.0426,
+  "share_post": 0.1681,
   "ci_pp": [
-   1.727,
-   18.719
+   1.752,
+   18.202
   ]
  },
  "malformed": {
-  "jump_pp": 0.122,
-  "share_pre": 0.0004,
-  "share_post": 0.0008,
+  "jump_pp": -0.007,
+  "share_pre": 0.0002,
+  "share_post": 0.0002,
   "ci_pp": [
-   -0.013,
-   0.258
+   -0.024,
+   0.017
   ]
  },
  "absent": {
-  "jump_pp": -11.909,
-  "share_pre": 0.1038,
-  "share_post": 0.0374,
+  "jump_pp": -12.029,
+  "share_pre": 0.1045,
+  "share_post": 0.0379,
   "ci_pp": [
-   -16.023,
-   -8.475
+   -15.997,
+   -8.655
   ]
  },
  "H1": "Inconclusive"

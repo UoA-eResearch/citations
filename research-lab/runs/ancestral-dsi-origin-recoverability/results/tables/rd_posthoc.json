@@ -1,212 +1,212 @@
 {
- "sars_cov_2_share_of_window": 0.4093,
+ "sars_cov_2_share_of_window": 0.4129,
  "rd_without_sars_cov_2_cutoff_2023_06_01": {
   "usable": {
-   "jump_pp": 2.641,
-   "share_pre": 0.6482,
-   "share_post": 0.7684,
+   "jump_pp": 2.866,
+   "share_pre": 0.6457,
+   "share_post": 0.768,
    "ci_pp": [
-    -3.998,
-    10.817
+    -4.258,
+    11.128
    ]
   },
   "placeholder": {
-   "jump_pp": 10.248,
-   "share_pre": 0.1032,
-   "share_post": 0.1887,
+   "jump_pp": 10.349,
+   "share_pre": 0.1022,
+   "share_post": 0.1892,
    "ci_pp": [
-    1.405,
-    19.975
+    1.76,
+    20.837
    ]
   },
   "malformed": {
-   "jump_pp": 0.168,
-   "share_pre": 0.0008,
-   "share_post": 0.0009,
+   "jump_pp": 0.005,
+   "share_pre": 0.0006,
+   "share_post": 0.0002,
    "ci_pp": [
-    -0.015,
-    0.35
+    -0.022,
+    0.031
    ]
   },
   "absent": {
-   "jump_pp": -13.057,
-   "share_pre": 0.2477,
-   "share_post": 0.0421,
+   "jump_pp": -13.219,
+   "share_pre": 0.2516,
+   "share_post": 0.0427,
    "ci_pp": [
-    -18.363,
-    -8.841
+    -19.641,
+    -8.966
    ]
   }
  },
  "within_owner_cutoff_2023_06_01": {
-  "owners_in_both": 10191,
-  "samples": 17714870,
+  "owners_in_both": 10149,
+  "samples": 17576730,
   "usable": {
-   "change_pp": 0.537,
+   "change_pp": 0.599,
    "ci_pp": [
-    -4.277,
-    8.981
+    -4.094,
+    8.827
    ]
   },
   "placeholder": {
-   "change_pp": 5.808,
+   "change_pp": 5.827,
    "ci_pp": [
-    3.031,
-    7.694
+    2.969,
+    7.955
    ]
   },
   "malformed": {
-   "change_pp": 0.043,
+   "change_pp": -0.015,
    "ci_pp": [
-    -0.016,
-    0.079
+    -0.027,
+    0.005
    ]
   },
   "absent": {
-   "change_pp": -6.388,
+   "change_pp": -6.411,
    "ci_pp": [
-    -14.376,
-    -2.419
+    -14.19,
+    -2.47
    ]
   }
  },
  "rd_without_sars_cov_2_placebo_2021_06_01": {
   "usable": {
-   "jump_pp": 3.575,
-   "share_pre": 0.5591,
-   "share_post": 0.6369,
+   "jump_pp": 3.896,
+   "share_pre": 0.5566,
+   "share_post": 0.6343,
    "ci_pp": [
-    -5.82,
-    14.944
+    -4.765,
+    15.151
    ]
   },
   "placeholder": {
-   "jump_pp": -2.676,
-   "share_pre": 0.0639,
-   "share_post": 0.1061,
+   "jump_pp": -3.122,
+   "share_pre": 0.0632,
+   "share_post": 0.105,
    "ci_pp": [
-    -4.772,
-    -0.118
+    -5.064,
+    -0.289
    ]
   },
   "malformed": {
-   "jump_pp": 0.065,
-   "share_pre": 0.001,
-   "share_post": 0.0008,
+   "jump_pp": 0.04,
+   "share_pre": 0.0004,
+   "share_post": 0.0005,
    "ci_pp": [
-    -0.055,
-    0.158
+    0.009,
+    0.074
    ]
   },
   "absent": {
-   "jump_pp": -0.964,
-   "share_pre": 0.3759,
-   "share_post": 0.2563,
+   "jump_pp": -0.815,
+   "share_pre": 0.3798,
+   "share_post": 0.2602,
    "ci_pp": [
-    -12.684,
-    9.387
+    -13.419,
+    9.216
    ]
   }
  },
  "within_owner_placebo_2021_06_01": {
-  "owners_in_both": 8787,
-  "samples": 14917145,
+  "owners_in_both": 8751,
+  "samples": 14822446,
   "usable": {
-   "change_pp": 14.282,
+   "change_pp": 14.355,
    "ci_pp": [
-    1.03,
-    23.219
+    1.09,
+    23.147
    ]
   },
   "placeholder": {
-   "change_pp": 0.504,
+   "change_pp": 0.515,
    "ci_pp": [
-    -0.442,
-    2.901
+    -0.488,
+    2.939
    ]
   },
   "malformed": {
-   "change_pp": -0.047,
+   "change_pp": -0.014,
    "ci_pp": [
-    -0.084,
-    0.021
+    -0.033,
+    0.026
    ]
   },
   "absent": {
-   "change_pp": -14.74,
+   "change_pp": -14.855,
    "ci_pp": [
-    -22.771,
-    -2.717
+    -22.834,
+    -2.836
    ]
   }
  },
  "rd_without_sars_cov_2_placebo_2022_06_01": {
   "usable": {
-   "jump_pp": -6.539,
-   "share_pre": 0.6217,
-   "share_post": 0.6849,
+   "jump_pp": -6.601,
+   "share_pre": 0.6189,
+   "share_post": 0.6836,
    "ci_pp": [
-    -13.113,
-    -0.545
+    -12.719,
+    -0.052
    ]
   },
   "placeholder": {
-   "jump_pp": 1.39,
-   "share_pre": 0.0693,
-   "share_post": 0.1723,
+   "jump_pp": 1.133,
+   "share_pre": 0.0686,
+   "share_post": 0.1722,
    "ci_pp": [
-    -1.437,
-    4.773
+    -1.705,
+    4.336
    ]
   },
   "malformed": {
-   "jump_pp": -0.136,
-   "share_pre": 0.0011,
-   "share_post": 0.0011,
+   "jump_pp": -0.011,
+   "share_pre": 0.0006,
+   "share_post": 0.0005,
    "ci_pp": [
-    -0.268,
-    0.005
+    -0.055,
+    0.046
    ]
   },
   "absent": {
-   "jump_pp": 5.286,
-   "share_pre": 0.3079,
-   "share_post": 0.1417,
+   "jump_pp": 5.479,
+   "share_pre": 0.3119,
+   "share_post": 0.1437,
    "ci_pp": [
-    -1.013,
-    11.714
+    -1.466,
+    12.026
    ]
   }
  },
  "within_owner_placebo_2022_06_01": {
-  "owners_in_both": 9506,
-  "samples": 17344668,
+  "owners_in_both": 9473,
+  "samples": 17224440,
   "usable": {
-   "change_pp": 0.098,
+   "change_pp": 0.143,
    "ci_pp": [
-    -2.581,
-    6.0
+    -2.708,
+    6.004
    ]
   },
   "placeholder": {
-   "change_pp": 4.121,
+   "change_pp": 4.089,
    "ci_pp": [
-    2.655,
-    7.635
+    2.63,
+    7.491
    ]
   },
   "malformed": {
-   "change_pp": 0.049,
+   "change_pp": 0.019,
    "ci_pp": [
-    -0.022,
-    0.091
+    -0.01,
+    0.034
    ]
   },
   "absent": {
-   "change_pp": -4.268,
+   "change_pp": -4.251,
    "ci_pp": [
-    -11.927,
-    -1.069
+    -11.731,
+    -0.896
    ]
   }
  }
