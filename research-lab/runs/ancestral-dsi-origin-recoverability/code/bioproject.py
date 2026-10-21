@@ -3,6 +3,7 @@
   data/bioprojects.parquet: accession, title, description (first 2,000 characters), pubmed ids, submitter
   organisation (kept for the asymmetric-error analysis only; never used as evidence of origin)
 """
+import re
 from pathlib import Path
 
 import pandas as pd
@@ -14,7 +15,8 @@ SRC = RUN / "data" / "raw" / "ncbi" / "bioproject.xml"
 
 def first_text(el, path):
     x = el.find(path)
-    return " ".join((x.text or "").split()) if x is not None and x.text else ""
+    t = re.sub(r"<[^>]+>", " ", x.text) if x is not None and x.text else ""     # descriptions carry HTML tags
+    return " ".join(t.split())
 
 
 def main():
