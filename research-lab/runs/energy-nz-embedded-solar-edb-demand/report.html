@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Solar and the Networks</title>
+<meta name="description" content="What rooftop solar has done to New Zealand's electricity networks: annual disclosures cannot see it; half-hourly grid offtake at summer midday can.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · The Energy Movement</div>
+  <h1>What rooftop solar has done to New Zealand&#x27;s electricity networks: invisible in the annual books, visible at summer midday</h1>
+  <p class="subtitle">Twenty-nine electricity distributors, 2014–2026: their annual information disclosures, the Electricity Authority&#x27;s registry of installed solar, and half-hourly metered offtake at every grid exit point, used to measure how much grid energy distributed solar displaces and whether it touches the winter peak.</p>
+  <div class="meta">
+    <span>Report · 2026-10-21 · pre-review draft</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/energy-nz-embedded-solar-edb-demand/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/energy-nz-embedded-solar-edb-demand/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/energy-nz-embedded-solar-edb-demand/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: Inconclusive on the three annual tests; Supported on summer-midday grid offtake, with a caveat on size.</strong>
+Distributed solar on the 29 networks grew from about 17 MW to 363 MW behind the meter (about 490 MW including solar
+farms) over the panel's years. That is too small a share of annual energy for the distributors' annual disclosures to
+detect, so the annual tests cannot answer their questions. Half-hourly grid data can: where solar grew, the networks
+draw less from the national grid at summer midday.</p>
+<ul>
+<li><strong>H1 (net grid supply falls by at least 1.0 GWh per MW): Inconclusive.</strong> −2.33 GWh per MW (95% interval −7.06 to
+  +5.54). The minimum detectable slope at 80% power is about 8 GWh per MW, against an expected 1.0–1.4.</li>
+<li><strong>H2 (energy delivered to customers falls by at least 0.3 GWh per MW): Inconclusive.</strong> −0.65 (−17.2 to +8.8);
+  minimum detectable slope about 18.</li>
+<li><strong>H3 (the winter peak moves by less than 0.2 MW per MW): Inconclusive.</strong> +0.53 (−2.24 to +1.91); minimum detectable
+  slope about 2.8.</li>
+<li><strong>H4 (summer-midday grid offtake falls by at least 0.3 MW per MW): Supported.</strong> −0.84 MW per MW (−1.01 to −0.16),
+  stable when any one network is left out (−0.90 to −0.72).<ul>
+<li><strong>The size is overstated.</strong> In a check added after the results (not preregistered), evening and night offtake
+fell with solar too: −0.49 and −0.33 MW per MW, intervals including zero. Networks adding solar fastest also drew
+less from the grid at hours when panels produce nothing.</li>
+<li><strong>Netting that out</strong>, midday minus evening offtake falls <strong>−0.35 MW per MW (−0.44 to −0.26)</strong>, and midday minus
+night −0.51 (−0.56 to −0.25). That is within the 0.4–0.6 range expected for average summer-midday output per MW
+installed.</li>
+</ul>
+</li>
+</ul>
+<h2>In plain terms</h2>
+<p>Rooftop solar is spreading fast in New Zealand. We asked what it has done to the electricity networks that carry
+power to homes and businesses. Has it cut how much energy they deliver, and has it lowered the winter evening peak
+that drives the cost of building them?</p>
+<p>The yearly figures every network publishes cannot tell us. Solar is still only about one or two percent of the
+energy they carry, and the yearly totals move around far more than that for other reasons. All three of our tests
+on the yearly figures came back "can't tell".</p>
+<p>The half-hourly meter readings where each network connects to the national grid tell a clearer story. On summer
+afternoons, networks where solar grew draw noticeably less power from the grid. A fair estimate is that each
+megawatt of panels cuts summer midday demand on the grid by about a third to half a megawatt, which is about what
+panels produce on an average summer afternoon.</p>
+<p>Our first estimate was larger than that. Some of the networks that added the most solar also drew less power in the
+evening and at night, when panels produce nothing, so part of the first number was not the solar at all. We took that
+into account to get the fairer estimate.</p>
+<h2>What was asked</h2>
+<p>New Zealand's distributed solar has roughly doubled every two years since 2013. Ministry and agency modelling
+(MBIE's 2025–2026 reports, EECA's study of residential solar and storage) project its effects, but no empirical,
+network-level measurement was found. The preregistration (<code>plan.md</code>) set four tests, all per MW of installed solar:</p>
+<ul>
+<li><strong>H1:</strong> net supply from the grid falls by at least 1.0 GWh a year.</li>
+<li><strong>H2:</strong> energy delivered to customers falls by at least 0.3 GWh a year.</li>
+<li><strong>H3:</strong> the network's maximum coincident demand moves by less than 0.2 MW either way.</li>
+<li><strong>H4:</strong> summer-midday offtake at grid exit points falls by at least 0.3 MW.</li>
+</ul>
+<p><strong>Why H1 and H2 differ.</strong> Solar output that a household uses itself never passes the meter, so it lowers the energy
+the distributor delivers. Output the household exports is delivered to a neighbour, so it does not lower delivered
+energy, but it does lower what the network takes from the national grid. The lead this study came from put "at least
+1.0 GWh per MW" on delivered energy; by this accounting that figure belongs to grid supply (H1), and delivered energy
+should fall only by the self-consumed share (H2).</p>
+<h2>How it was done</h2>
+<p><strong>Outcomes.</strong>
+- <em>Annual (H1–H3):</em> the Commerce Commission's information disclosures, Schedule 9e, for disclosure years
+  (April–March) 2015–2025: energy delivered to ICPs; electricity entering the system minus electricity supplied
+  from distributed generation (net grid supply); maximum coincident system demand.
+- <em>Summer (H4):</em> the Electricity Authority's half-hourly metered flows at every grid exit point (Grid_export minus
+  Grid_import), December–February, summers 2014/15 to 2025/26.</p>
+<p><strong>Exposure.</strong> The Authority's registry-based count of installed solar by network, monthly:
+- <em>behind the meter</em> (residential and commercial segments, H2 and H3);
+- <em>all distribution-connected solar</em>, including the farms in the industrial segment (H1 and H4).</p>
+<p><strong>Model.</strong> Outcome per customer connection (ICP) on solar kW per ICP, so the slope reads in GWh (or MW) per MW;
+weighted by ICPs; distributor and year fixed effects; heating degree-days (H4: mean daily maximum temperature). 95%
+intervals from a distributor-cluster bootstrap (4,999 resamples). Networks that share grid exit points are merged for
+H4, giving 24 units.</p>
+<h2>Results</h2>
+<h3>Installed solar (<code>results/figures/F1_installed_solar.png</code>)</h3>
+<figure><a href="results/figures/F1_installed_solar.png"><img src="results/figures/F1_installed_solar.png" alt="Installed solar"></a><figcaption>Installed distributed solar on the 29 distributors&#x27; networks, month-end, from the Electricity Authority&#x27;s registry-based series. Behind-the-meter solar is the residential and commercial segments; the gap to all solar is the industrial segment, which holds the solar farms.</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>disclosure year</th>
+<th>behind the meter, MW</th>
+<th>all solar, MW</th>
+<th>energy delivered, GWh</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2015</td>
+<td>17</td>
+<td>19</td>
+<td>31,305</td>
+</tr>
+<tr>
+<td>2020</td>
+<td>102</td>
+<td>110</td>
+<td>32,574</td>
+</tr>
+<tr>
+<td>2025</td>
+<td>363</td>
+<td>489</td>
+<td>33,583</td>
+</tr>
+</tbody>
+</table></div>
+<p>At an expected 1.2 GWh per MW, the 2025 stock would displace about 0.6 TWh of grid supply, under 2% of the energy
+the networks carry, and less than the year-to-year movement in many networks' totals.</p>
+<h3>The four tests (<code>results/figures/F2_slopes.png</code>)</h3>
+<figure><a href="results/figures/F2_slopes.png"><img src="results/figures/F2_slopes.png" alt="The four slopes"></a><figcaption>Each preregistered slope with its 95% distributor-cluster bootstrap interval (blue), the preregistered threshold (dashed; for H3 the grey band is the +/-0.2 equivalence band) and the range expected from yield and self-consumption (shaded). The last row is the exploratory midday-minus-evening contrast of D4, which nets out changes in offtake common to all hours. Note the different horizontal scales: the annual intervals for H1-H3 are many times wider than the effects they were meant to detect.</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>test</th>
+<th>estimate</th>
+<th>95% interval</th>
+<th>minimum detectable</th>
+<th>verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H1 net grid supply, GWh/MW</td>
+<td>−2.33</td>
+<td>−7.06 to +5.54</td>
+<td>7.95</td>
+<td>Inconclusive</td>
+</tr>
+<tr>
+<td>H2 energy delivered, GWh/MW</td>
+<td>−0.65</td>
+<td>−17.22 to +8.75</td>
+<td>18.27</td>
+<td>Inconclusive</td>
+</tr>
+<tr>
+<td>H3 winter peak, MW/MW</td>
+<td>+0.53</td>
+<td>−2.24 to +1.91</td>
+<td>2.81</td>
+<td>Inconclusive</td>
+</tr>
+<tr>
+<td>H4 summer-midday offtake, MW/MW</td>
+<td><strong>−0.84</strong></td>
+<td><strong>−1.01 to −0.16</strong></td>
+<td>0.55</td>
+<td><strong>Supported</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>The annual tests could not have succeeded.</strong> Their minimum detectable slopes are five to thirty times the
+effects they were designed to find. Every robustness variant agrees (<code>results/tables/robustness.json</code>): levels,
+unweighted, first differences, without degree-days, without 2021, without network-years whose outcome jumped more
+than 15%, and with the disclosures' own ICP counts. All give wide intervals spanning zero.
+The implied self-consumption share, about 11%, is equally uninformative.</p>
+<h3>Summer midday (<code>results/figures/F3_change_vs_change.png</code>)</h3>
+<figure><a href="results/figures/F3_change_vs_change.png"><img src="results/figures/F3_change_vs_change.png" alt="Change versus change"></a><figcaption>Each point is one of the 24 grid-exit units (networks sharing grid exit points merged): the change between the first and last summers in mean net grid offtake per ICP against the change in installed solar per ICP (all distribution-connected solar, including farms). The two units with the largest solar growth per ICP are labelled; both added solar farms. Evening offtake fell with solar too, so the right-hand panel nets it out. The estimates in the report use all twelve summers with unit and summer fixed effects and temperature; this figure is descriptive.</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>variant</th>
+<th>MW per MW</th>
+<th>95% interval</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>preregistered (per ICP, weighted)</td>
+<td>−0.84</td>
+<td>−1.01 to −0.16</td>
+</tr>
+<tr>
+<td>levels, ICPs as a control</td>
+<td>−0.50</td>
+<td>−1.07 to −0.15</td>
+</tr>
+<tr>
+<td>unweighted</td>
+<td>−0.89</td>
+<td>−0.99 to −0.24</td>
+</tr>
+<tr>
+<td>first differences</td>
+<td>−0.58</td>
+<td>−0.86 to +0.43</td>
+</tr>
+<tr>
+<td>leave one unit out (range)</td>
+<td>−0.90 to −0.72</td>
+<td>—</td>
+</tr>
+<tr>
+<td><em>placebo:</em> evening 18:00–21:00</td>
+<td>−0.49</td>
+<td>−0.65 to +0.21</td>
+</tr>
+<tr>
+<td><em>placebo:</em> night 02:00–05:00</td>
+<td>−0.33</td>
+<td>−0.54 to +0.24</td>
+</tr>
+<tr>
+<td><em>exploratory:</em> midday minus evening</td>
+<td><strong>−0.35</strong></td>
+<td><strong>−0.44 to −0.26</strong></td>
+</tr>
+<tr>
+<td><em>exploratory:</em> midday minus night</td>
+<td>−0.51</td>
+<td>−0.56 to −0.25</td>
+</tr>
+</tbody>
+</table></div>
+<p>The evening and night rows and the two differences were added after the primary results (D3, D4).</p>
+<p><strong>The placebo did not come back clean.</strong> Evening and night offtake also fell where solar grew, by roughly half to
+three-fifths of the midday slope, though neither interval excludes zero. The two units with the largest growth in
+solar per ICP, Top Energy and EA Networks, both added solar farms. EA Networks serves a heavily irrigated district, where summer
+load can shift for reasons unrelated to solar. The leave-one-out range shows no single
+unit drives the estimate.</p>
+<p><strong>Comparing midday with the same network's evening removes whatever moved all hours together.</strong> What remains,
+−0.35 MW per MW, has a tight interval and is the study's best estimate of solar's effect on summer-midday grid
+demand. Midday minus night gives −0.51. The preregistered −0.84 should be read as an upper end.</p>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>It shows</strong> that by summer 2025/26 distributed solar measurably reduces what New Zealand's networks take from the
+  national grid at midday: on the netted estimate, about a third to a half of installed capacity. That is
+  consistent with average summer-midday output.</li>
+<li><strong>It does not show</strong> whether solar has eroded the distributors' delivered-energy base or left the winter peak
+  untouched. The annual disclosures are too coarse to tell, and the tests were Inconclusive, not null results. The
+  peak result would be expected on physical grounds, since winter evening peaks fall after dark, but this study
+  cannot confirm it.</li>
+<li><strong>Confounding.</strong> Networks with faster solar uptake differ in other ways: irrigation, industry, electrification,
+  growth. The placebo shows this matters for H4's size. The within-network contrast is the main guard, and it is
+  exploratory.</li>
+<li><strong>Exposure.</strong> Installed capacity is the Authority's registry count; the inverter-versus-panel rating and system
+  orientation are unknown, so per-MW output figures are approximate.</li>
+<li><strong>Data corrections</strong>, all made before any estimate:<ul>
+<li>ICP counts are taken from the registry, because four disclosure-derived counts were wrong (D2): Westpower 2024
+implied 91,158 ICPs against about 14,300.</li>
+<li>Six distributor-years with no distributed-generation figure are left out of H1.</li>
+<li>The market data's flow directions are named from the grid's side, which the plan had reversed (D1).</li>
+</ul>
+</li>
+<li><strong>No personal data.</strong> All inputs are network-level aggregates.</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration.</strong> <code>plan.md</code> was committed before any outcome series was built; the panel and analysis code
+  were committed before they were run.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>):<ul>
+<li>D1 corrected the grid-exit flow direction and set the H4 specification, before any panel was built.</li>
+<li>D2 replaced the disclosure-derived ICP counts with registry counts, before any estimate.</li>
+<li>D3 completed the preregistered robustness set for H4 and added the post hoc placebo.</li>
+<li>D4 added the exploratory midday-minus-evening contrast after the placebo.</li>
+</ul>
+</li>
+</ul>
+<h2>Reproducing it</h2>
+<p><code>code/fetch.py</code> (inputs and a hashed manifest), <code>code/build_panel.py</code>, <code>code/analysis.py</code>, <code>code/figures.py</code>.</p>
+<ul>
+<li><strong>Inputs</strong> are public: the Commerce Commission's disclosure Parquet; the Authority's installed-generation report
+  (EMI GUEHMT) and metered grid flows; Open-Meteo historical temperatures.</li>
+<li><strong>Results</strong> are in <code>results/tables/</code>: <code>panel_annual.csv</code>, <code>panel_summer.csv</code>, <code>panel_log.json</code>, <code>primary.json</code>
+  and <code>robustness.json</code>.</li>
+</ul>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/energy-nz-embedded-solar-edb-demand/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

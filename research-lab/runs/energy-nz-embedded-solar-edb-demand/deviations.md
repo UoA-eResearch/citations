@@ -48,3 +48,13 @@ The first run gave H1–H3 Inconclusive with minimum detectable slopes far above
    faster solar uptake, rather than solar output, offtake in hours when panels produce nothing would fall too. The same
    H4 model is run on mean offtake 18:00–21:00 (trading periods 37–42) and 02:00–05:00 (5–10). Reported as
    exploratory; it does not change H4's verdict.
+
+## D4 — 2026-10-21 20:16 NZDT — after the placebo: a midday-minus-evening contrast (exploratory)
+
+D3's placebo did not come back clean. Per MW of solar, evening offtake (18:00–21:00) moves −0.49 (95% interval
+−0.65 to +0.21) and night offtake (02:00–05:00) −0.33 (−0.54 to +0.24). Both intervals include zero, but the
+point estimates are large: networks adding solar faster also draw less from the grid at hours when panels produce
+nothing. Part of H4's −0.84 may therefore be a network-wide trend rather than solar output. The same model is run on
+midday offtake minus offtake in each placebo window, which nets out changes common to all hours in a
+network-summer. Exploratory; H4's preregistered verdict is unchanged and is reported with this beside it. The bootstrap
+was also moved onto precomputed arrays (same scheme and seed; it reproduces the first run's intervals exactly).

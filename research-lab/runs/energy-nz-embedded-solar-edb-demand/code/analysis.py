@@ -212,8 +212,13 @@ def main():
     for w in ("eve", "night"):
         s[w + "_pi"] = s[w + "_mw"] * 1000 / s.icps
         rob["H4"][f"placebo_{w}"] = spec(s, w + "_pi", "solar_all_pi", ["tmax"], unit="unit", time="summer")
+    # post hoc (D4): midday minus each placebo window, which nets out network-wide changes in offtake
+    for w in ("eve", "night"):
+        s[f"mid_minus_{w}_pi"] = s.mid_pi - s[w + "_pi"]
+        rob["H4"][f"mid_minus_{w}"] = spec(s, f"mid_minus_{w}_pi", "solar_all_pi", ["tmax"], unit="unit",
+                                           time="summer")
     json.dump(rob, open(TAB / "robustness.json", "w"), indent=1)
-    print(json.dumps({k: {kk: (vv["estimate"] if isinstance(vv, dict) else vv) for kk, vv in v.items()}
+    print(json.dumps({k: {kk: (vv.get("estimate", "...") if isinstance(vv, dict) else vv) for kk, vv in v.items()}
                       for k, v in rob.items()}, indent=1))
 
 
