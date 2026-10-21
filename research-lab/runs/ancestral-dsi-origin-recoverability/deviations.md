@@ -44,3 +44,14 @@ labels. The arms are not run until both passes are complete.
 3. **Culture-collection strains.** In the gold set, natural isolates held in culture collections are labelled "not
    stated", since they have a real origin that is not given. Laboratory lineages (inbred mice, reference yeast and
    *E. coli* strains, cell lines) are "inapplicable". Scoring is unaffected.
+
+## D4 — 2026-10-22 09:44 NZDT — classifier fix: apostrophes and accents
+
+During gold-set labelling, a sample whose own country field reads "Cote d'Ivoire: Lamto" turned out to have been
+classed malformed. The vocabulary file, copied from the INSDC page, spells it with a curly apostrophe ("Cote
+d’Ivoire"), so a straight apostrophe, or the accented "Côte", failed to match, and the "Ivory Coast" variant pointed to
+the same mis-spelling. `countries.norm()` now straightens apostrophes and strips accents on both sides of the match;
+every vocabulary entry still resolves to itself. `code/reclassify.py` re-applies the classifier to the stored field
+of every parsed sample and logs every class change. Limb 1 is then re-run with the D3 filter. The interrupted D3
+re-run is superseded, and `results/tables/pre_d3/` keeps the original tables. Gold records whose own field now
+resolves are no longer untagged; they are labelled and then excluded from scoring, and the exclusion is reported.

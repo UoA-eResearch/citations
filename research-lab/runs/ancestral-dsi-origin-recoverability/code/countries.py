@@ -8,10 +8,11 @@ malformed    present but neither
 absent       no country attribute
 """
 import re
+import unicodedata
 from pathlib import Path
 
 VOCAB = [l.strip() for l in open(Path(__file__).with_name("insdc_geo_loc_names.txt")) if l.strip()]
-CANON = {v.lower(): v for v in VOCAB}
+CANON = {}                                   # filled after norm() is defined
 VARIANTS = {"united states": "USA", "united states of america": "USA", "us": "USA", "u.s.a.": "USA",
             "u.s.": "USA", "uk": "United Kingdom", "great britain": "United Kingdom", "england": "United Kingdom",
             "scotland": "United Kingdom", "wales": "United Kingdom", "korea": "South Korea",
@@ -28,15 +29,22 @@ QUALIFIED = re.compile(r"^(missing|not applicable|not collected|not provided|res
 
 
 def norm(s):
-    return re.sub(r"\s+", " ", (s or "").strip().strip(".").lower())
+    """Lower case, collapsed spaces, straight apostrophes, accents removed (D4: the vocabulary file has a curly
+    apostrophe in "Cote d'Ivoire", so a straight one, or "Côte", had been classed malformed)."""
+    s = unicodedata.normalize("NFKD", (s or "").replace("\u2019", "'").replace("\u2018", "'"))
+    s = "".join(c for c in s if not unicodedata.combining(c))
+    return re.sub(r"\s+", " ", s.strip().strip(".").lower())
+
+
+CANON.update({norm(v): v for v in VOCAB})
 
 
 def resolve(part):
     p = norm(part)
     if p in CANON:
         return CANON[p]
-    if p in VARIANTS and VARIANTS[p].lower() in CANON:
-        return CANON[VARIANTS[p].lower()]
+    if p in VARIANTS and norm(VARIANTS[p]) in CANON:
+        return CANON[norm(VARIANTS[p])]
     return None
 
 
