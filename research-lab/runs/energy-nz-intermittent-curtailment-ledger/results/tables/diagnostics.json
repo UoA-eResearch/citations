@@ -1,0 +1,94 @@
+{
+ "baseline_2020": {
+  "available_mwh": 2128382.8,
+  "curtailed_mwh_by_class": {
+   "offer-limited": 6.7,
+   "other": 669.2,
+   "price-driven": 361.9,
+   "unconstrained (noise by construction)": 47181.9
+  },
+  "share_of_available_by_class": {
+   "offer-limited": 0.0,
+   "other": 0.00031,
+   "price-driven": 0.00017,
+   "unconstrained (noise by construction)": 0.02217
+  },
+  "tps_by_class": {
+   "offer-limited": 2,
+   "other": 2894,
+   "price-driven": 924,
+   "unconstrained (noise by construction)": 156692
+  },
+  "flag_rate_by_class": {
+   "offer-limited": 0.5,
+   "other": 0.0401,
+   "price-driven": 0.0563,
+   "unconstrained (noise by construction)": 0.0501
+  }
+ },
+ "recent_2025_26": {
+  "available_mwh": 4170719.0,
+  "curtailed_mwh_by_class": {
+   "offer-limited": 890.4,
+   "other": 33055.2,
+   "price-driven": 92382.7,
+   "unconstrained (noise by construction)": 90470.4
+  },
+  "share_of_available_by_class": {
+   "offer-limited": 0.00021,
+   "other": 0.00793,
+   "price-driven": 0.02215,
+   "unconstrained (noise by construction)": 0.02169
+  },
+  "tps_by_class": {
+   "offer-limited": 142,
+   "other": 36032,
+   "price-driven": 23463,
+   "unconstrained (noise by construction)": 276971
+  },
+  "flag_rate_by_class": {
+   "offer-limited": 0.1338,
+   "other": 0.0694,
+   "price-driven": 0.1825,
+   "unconstrained (noise by construction)": 0.0468
+  }
+ },
+ "by_12_month_window": {
+  "2020-01..2021-06": {
+   "primary_share": 0.02409,
+   "price_driven_share": 0.00011,
+   "share_of_tps_at_or_below_offer_price": 0.0044,
+   "available_gwh": 3217.3
+  },
+  "2021-07..2022-06": {
+   "primary_share": 0.0274,
+   "price_driven_share": 0.00233,
+   "share_of_tps_at_or_below_offer_price": 0.0154,
+   "available_gwh": 2631.3
+  },
+  "2022-07..2023-06": {
+   "primary_share": 0.04291,
+   "price_driven_share": 0.01102,
+   "share_of_tps_at_or_below_offer_price": 0.0422,
+   "available_gwh": 2697.5
+  },
+  "2023-07..2024-06": {
+   "primary_share": 0.02636,
+   "price_driven_share": 0.0007,
+   "share_of_tps_at_or_below_offer_price": 0.0042,
+   "available_gwh": 3510.1
+  },
+  "2024-07..2025-06": {
+   "primary_share": 0.03857,
+   "price_driven_share": 0.00766,
+   "share_of_tps_at_or_below_offer_price": 0.0259,
+   "available_gwh": 3897.1
+  },
+  "2025-07..2026-06": {
+   "primary_share": 0.05198,
+   "price_driven_share": 0.02215,
+   "share_of_tps_at_or_below_offer_price": 0.0697,
+   "available_gwh": 4170.7
+  }
+ }
+}
