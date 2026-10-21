@@ -1,0 +1,62 @@
+{
+ "all": {
+  "own_unmarked": {
+   "estimate": 0.0277,
+   "ci": [
+    0.0124,
+    0.0565
+   ],
+   "n": 18061,
+   "clusters": 1550
+  },
+  "sidecar_flag_missing": {
+   "estimate": 0.0438,
+   "ci": [
+    0.0251,
+    0.0736
+   ],
+   "n": 18061,
+   "clusters": 1550
+  }
+ },
+ "without_crossref_self_update_dates": {
+  "own_unmarked": {
+   "estimate": 0.0216,
+   "ci": [
+    0.0106,
+    0.0405
+   ],
+   "n": 17649,
+   "clusters": 1458
+  },
+  "sidecar_flag_missing": {
+   "estimate": 0.0311,
+   "ci": [
+    0.0181,
+    0.0515
+   ],
+   "n": 17649,
+   "clusters": 1458
+  }
+ },
+ "retraction_watch_dated_only": {
+  "own_unmarked": {
+   "estimate": 0.0189,
+   "ci": [
+    0.0078,
+    0.04
+   ],
+   "n": 15997,
+   "clusters": 1333
+  },
+  "sidecar_flag_missing": {
+   "estimate": 0.0284,
+   "ci": [
+    0.0152,
+    0.0513
+   ],
+   "n": 15997,
+   "clusters": 1333
+  }
+ }
+}

@@ -1,0 +1,124 @@
+"""Figures for the report (each PNG has a .txt caption). Written after the results.
+
+  F1  unmarked share by publisher (own XML marker, reference lists ignored) and missing sidecar flag, top 15
+  F2  marked share by months since retraction: the 180 days before the snapshot, then the primary cohort
+  F3  unmarked share by the source of the retraction date
+  F4  peS2o: marked share among matched retracted documents, by source (if pes2o.json exists)
+"""
+import json
+from pathlib import Path
+
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt  # noqa: E402
+import pandas as pd  # noqa: E402
+
+RUN = Path(__file__).resolve().parents[1]
+T, F = RUN / "results" / "tables", RUN / "results" / "figures"
+F.mkdir(parents=True, exist_ok=True)
+INK, INK2, GRID, SURF = "#0b0b0b", "#52514e", "#e6e5e0", "#fcfcfb"
+XML, FLAG = "#2a78d6", "#e8a317"
+plt.rcParams.update({"font.size": 9, "axes.edgecolor": GRID, "axes.labelcolor": INK2, "xtick.color": INK2,
+                     "ytick.color": INK2, "axes.facecolor": SURF, "figure.facecolor": SURF,
+                     "axes.spines.top": False, "axes.spines.right": False})
+S = pd.Timestamp("2026-10-21")
+
+
+def caption(name, text):
+    (F / f"{name}.txt").write_text(" ".join(text.split()) + "\n")
+
+
+def main():
+    o = pd.read_csv(RUN / "results" / "overlay" / "retraction_overlay.csv.gz", parse_dates=["date"])
+    docs = pd.read_csv(T / "documents.csv.gz")[["pmcid", "publisher_name"]]
+    o = o[o.in_snapshot].merge(docs, on="pmcid", how="left")
+    o["flag"] = o.sidecar_flag.fillna(False).astype(bool)
+    o["own"] = o.own_marker.fillna(False).astype(bool)
+    C = o[o.stratum == "primary"]
+
+    # F1 publishers
+    top = C.publisher_name.value_counts().head(15).index[::-1]
+    g = C[C.publisher_name.isin(top)].groupby("publisher_name").agg(n=("pmcid", "size"), unm=("own", lambda s: 1 - s.mean()),
+                                                                     nof=("flag", lambda s: 1 - s.mean())).loc[top]
+    fig, ax = plt.subplots(figsize=(7.4, 4.6))
+    fig.subplots_adjust(left=0.36, right=0.97, bottom=0.1, top=0.88)
+    y = range(len(g))
+    ax.barh([i + 0.2 for i in y], 100 * g.unm, height=0.38, color=XML, label="no retraction marker of its own in the XML")
+    ax.barh([i - 0.2 for i in y], 100 * g.nof, height=0.38, color=FLAG, label="PMC's sidecar flag not set")
+    ax.set_yticks(list(y)); ax.set_yticklabels([f"{p[:34]} ({n:,})" for p, n in zip(g.index, g.n)], fontsize=7.5)
+    ax.set_xlabel("% of the publisher's retracted documents in the primary cohort"); ax.grid(axis="x", color=GRID, lw=0.5)
+    ax.legend(frameon=False, fontsize=7.5, loc="upper right")
+    fig.suptitle("Where the retraction marker is missing: by publisher (top 15 by count)", x=0.02, ha="left",
+                 fontsize=10.5, color=INK)
+    fig.savefig(F / "F1_publishers.png", dpi=170); plt.close(fig)
+    caption("F1_publishers", f"""Primary cohort ({len(C):,} retracted documents in the PMC Open Access bucket,
+    retracted at least 180 days before the 2026-10-21 snapshot), by publisher as named by Retraction Watch or the XML.
+    Blue: no retraction marker in the document's own XML (reference lists ignored, withdrawal wording counted; D3).
+    Orange: PMC's sidecar flag is_retracted not set. Counts in brackets.""")
+
+    # F2 latency
+    R = o[o.stratum == "recent"].copy()
+    R["m"] = ((S - R.date).dt.days // 30).clip(0, 5)
+    lat = R.groupby("m").agg(own=("own", "mean"), flag=("flag", "mean"), n=("pmcid", "size"))
+    fig, ax = plt.subplots(figsize=(7.4, 3.4))
+    fig.subplots_adjust(left=0.1, right=0.97, bottom=0.21, top=0.85)
+    xs = list(lat.index) + [6.5]
+    ax.plot(xs, list(100 * lat.own) + [100 * C.own.mean()], marker="o", ms=5, lw=2, color=XML, label="own XML marker")
+    ax.plot(xs, list(100 * lat.flag) + [100 * C.flag.mean()], marker="o", ms=5, lw=2, color=FLAG, label="sidecar flag")
+    ax.set_xticks(xs); ax.set_xticklabels([f"{m}" for m in lat.index] + ["6+\n(primary)"])
+    for x, n in zip(xs, list(lat.n) + [len(C)]):
+        ax.text(x, 74, f"n={n:,}", ha="center", fontsize=7, color=INK2)
+    ax.set_ylim(72, 101); ax.set_xlabel("months between retraction and the snapshot"); ax.set_ylabel("% marked")
+    ax.grid(axis="y", color=GRID, lw=0.5); ax.legend(frameon=False, fontsize=8, loc="center left", bbox_to_anchor=(0.12, 0.45))
+    fig.suptitle("Markers arrive within about a month of the retraction", x=0.1, ha="left", fontsize=10.5, color=INK)
+    fig.savefig(F / "F2_latency.png", dpi=170); plt.close(fig)
+    caption("F2_latency", """Share of retracted documents marked, by whole months between the retraction date and
+    the snapshot (cross-sectional: each point is a different set of documents). Months 0-5 are the documents
+    retracted in the 180 days before the snapshot; the last point is the primary cohort. Dates are Retraction
+    Watch's, else Crossref's.""")
+
+    # F3 date source
+    g = C.groupby("date_source").agg(n=("pmcid", "size"), unm=("own", lambda s: 1 - s.mean()))
+    order = [k for k in ("retraction-watch", "crossref", "crossref-self-update (issue date)") if k in g.index]
+    g = g.loc[order]
+    fig, ax = plt.subplots(figsize=(7.4, 2.6))
+    fig.subplots_adjust(left=0.36, right=0.97, bottom=0.2, top=0.8)
+    ax.barh(range(len(g)), 100 * g.unm, color=XML, height=0.55)
+    ax.set_yticks(range(len(g))); ax.set_yticklabels([f"{k} ({n:,})" for k, n in zip(g.index, g.n)], fontsize=8)
+    for i, v in enumerate(g.unm):
+        ax.text(100 * v + 0.4, i, f"{100 * v:.1f}%", va="center", fontsize=8, color=INK)
+    ax.invert_yaxis(); ax.set_xlabel("% with no marker of its own"); ax.grid(axis="x", color=GRID, lw=0.5)
+    fig.suptitle("The unmarked residue concentrates where the retraction date is doubtful", x=0.02, ha="left",
+                 fontsize=10.5, color=INK)
+    fig.savefig(F / "F3_date_source.png", dpi=170); plt.close(fig)
+    caption("F3_date_source", """Primary cohort by the source of the retraction date. Crossref self-updates (the
+    article's own record asserts its retraction; mostly Elsevier) carry the issue date, not the retraction date
+    (D4), so some of these are recent retractions placed in the primary cohort.""")
+
+    # F4 peS2o
+    p = T / "pes2o.json"
+    if p.exists():
+        j = json.load(open(p))
+        bs = j.get("by_source", {})
+        if bs:
+            fig, ax = plt.subplots(figsize=(7.4, 2.4))
+            fig.subplots_adjust(left=0.3, right=0.97, bottom=0.22, top=0.8)
+            ks = list(bs)
+            ax.barh(range(len(ks)), [100 * bs[k]["mean"] for k in ks], color=XML, height=0.5)
+            ax.set_yticks(range(len(ks))); ax.set_yticklabels([f"{k} ({bs[k]['size']:,})" for k in ks], fontsize=8)
+            for i, k in enumerate(ks):
+                ax.text(100 * bs[k]["mean"] + 0.5, i, f"{100 * bs[k]['mean']:.1f}%", va="center", fontsize=8)
+            ax.set_xlim(0, 100); ax.set_xlabel("% of matched retracted documents with a textual marker")
+            ax.grid(axis="x", color=GRID, lw=0.5)
+            fig.suptitle("peS2o v2: the marker rarely survives into the pretraining text", x=0.02, ha="left",
+                         fontsize=10.5, color=INK)
+            fig.savefig(F / "F4_pes2o.png", dpi=170); plt.close(fig)
+            caption("F4_pes2o", f"""peS2o v2 (knowledge cutoff 2023-01-03): documents matched by Semantic Scholar
+            corpus id to {j['with_corpus_id']:,} DOIs retracted on or before 2022-07-07. A document is marked if its
+            text carries a retraction title prefix, statement or the token RETRACTED. s2orc documents are full text,
+            s2ag documents title and abstract only.""")
+    print("figures written")
+
+
+if __name__ == "__main__":
+    main()

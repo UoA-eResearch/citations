@@ -56,7 +56,7 @@ No verdict changes.
 For a retraction asserted by the article's own Crossref record (a self-update; mostly Elsevier, e.g. Heliyon), the
 `updated` date is the article's issue date, not the retraction date. Ten of the 50 documents checked in 8b carry
 a "RETRACTED:" title in Crossref, a 2026 erratum and an issue date in 2020-2024. Their retraction probably came in
-2026, possibly inside the 180-day buffer. The primary cohort's 408 documents dated only this way are 29% unmarked,
-against 1.9% for documents dated by Retraction Watch. They are reported as their own stratum; no verdict depends on
+2026, possibly inside the 180-day buffer. The primary cohort's 412 documents dated only this way (the overlay's `date_source`; a DOI with both a
+self-update and a separate notice counts here) are 28.9% unmarked, against 1.9% for documents dated by Retraction Watch. They are reported as their own stratum; no verdict depends on
 them. Validation 8b also found 6 of 50 unmarked documents not to be retractions of the document in question (errata,
 corrigenda, earlier versions or the notice itself), and 1 unclear.
