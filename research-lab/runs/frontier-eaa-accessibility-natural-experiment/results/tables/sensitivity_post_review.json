@@ -1,0 +1,67 @@
+{
+ "preregistered": {
+  "rel_pct": -16.2,
+  "ci_pct": [
+   -28.2,
+   -2.3
+  ],
+  "n_sites": 1010,
+  "n_treated": 222,
+  "clears_15": true
+ },
+ "drop_zero_violation_snapshots": {
+  "rel_pct": -12.3,
+  "ci_pct": [
+   -24.2,
+   1.5
+  ],
+  "n_sites": 914,
+  "n_treated": 218,
+  "clears_15": false
+ },
+ "drop_sites_ever_at_zero": {
+  "rel_pct": -11.9,
+  "ci_pct": [
+   -24.0,
+   2.2
+  ],
+  "n_sites": 727,
+  "n_treated": 182,
+  "clears_15": false
+ },
+ "unnormalised_log1p_nodes": {
+  "rel_pct": -13.5,
+  "ci_pct": [
+   -26.5,
+   1.9
+  ],
+  "n_sites": 1010,
+  "n_treated": 222,
+  "clears_15": false
+ },
+ "treated_ecommerce_only": {
+  "rel_pct": -15.6,
+  "ci_pct": [
+   -28.4,
+   -0.5
+  ],
+  "n_sites": 986,
+  "n_treated": 198,
+  "clears_15": true
+ },
+ "treated_non_ecommerce_only": {
+  "rel_pct": -21.1,
+  "ci_pct": [
+   -45.5,
+   14.2
+  ],
+  "n_sites": 812,
+  "n_treated": 24,
+  "clears_15": false
+ },
+ "ratio_of_means_raw_density_pct": -11.0,
+ "composition": {
+  "inscope_sites": 222,
+  "inscope_ecommerce": 198
+ }
+}

@@ -111,3 +111,29 @@ past its 1,800-second timeout, and the exception ended the whole run.
 - **Resumption and output order.** The run resumes from the 1,750 snapshots already measured, and writes results as
   batches complete rather than in order.
 - **Unchanged:** the rule subset, jsdom settings and outcome.
+
+## D8 — 2026-10-21 17:51 NZDT — H3 reported as not testable (recorded after review)
+
+The preregistered rule scores H3 from the overlay-adoption contrast. Only one in-scope EU site (domainhotelli.fi) newly
+installed an overlay between the periods, so the rule's mechanical "Refuted" (−75%) describes one site. The draft
+reported H3 as "not testable" without logging this as a departure from the rule; it is logged here. The reading is
+unchanged.
+
+## D9 — 2026-10-21 17:51 NZDT — sector labels re-derived after review, and the model re-run
+
+The review found that `sector.py` labelled any page with no marker "out of scope", including redirect stubs, language
+choosers and empty captures: 56 EU control sites were labelled from pages under 200 visible characters, among them
+treated firms (drei.at, vodafone.nl, csob.cz, skyscanner.pt, apoteket.se). It also found two marker leaks: "basket"
+matched "Basketball" (putting tv2.dk in scope), and "spar" in the bank-domain pattern matched valsparpaint.co.uk.
+
+1. A site is now labelled from its earliest pre-period snapshot with at least 300 visible characters; a site with no
+   such snapshot is "unclassifiable" and excluded (69 sites). "basket" needs word boundaries; "spar" is dropped from
+   the bank-domain pattern ("sparkasse" still matches). The fixes are exactly those the review specified.
+2. `did.py` was re-run unchanged on the new labels. H1: −16.2% (−28.2% to −2.3%), still Supported, against −17.3%
+   with the draft labels. Both are reported; the draft-label results are kept as `primary_v1_draft.json`.
+3. A post-review sensitivity (`code/sensitivity_post_review.py`) recomputes the magnitude variants on the corrected
+   labels; the review's own table was computed on the draft labels from a cached panel. Three variants give intervals
+   that include zero; this is reported, and the verdict line is qualified accordingly.
+4. Disclosures the draft omitted are added: the in-scope group is 198/222 e-commerce; the 530 domains without usable
+   captures are mostly redirecting roots and DNS or CDN hosts; 11 archive-index errors, 44 unretried fetch failures and
+   14 selector errors; the rise in in-scope drops; and jsdom's parsing of `<noscript>` content.
