@@ -47,6 +47,7 @@ def calibrate(d, margin=1.0, floor_q=95, bias=True, use="P"):
     ky = ratio.groupby([d.poc, d.year]).transform("median")
     nq = big.groupby([d.poc, d.quarter]).transform("sum")
     k = (kq.where(nq >= 200, ky) if bias else pd.Series(1.0, index=d.index)).fillna(1.0)
+    d["k"] = k
     d["P_hat"] = k * pot
     d["g"] = d.P_hat - d.G
     gq = d.g.where(unc)
@@ -76,9 +77,11 @@ def period(d, lo, hi):
 def estimate(d, **kw):
     """Shares for the baseline and recent periods with calibration done within each period."""
     above = kw.pop("above_floor", False)
-    b = shares(calibrate(period(d, *BASE), **kw), above)
-    r = shares(calibrate(period(d, *RECENT), **kw), above)
-    return b, r
+    min_k = kw.pop("min_k", None)
+    cb, cr = calibrate(period(d, *BASE), **kw), calibrate(period(d, *RECENT), **kw)
+    if min_k is not None:                      # D1 item 6: drop POC-quarters whose metering covers part of the plant
+        cb, cr = cb[cb.k >= min_k], cr[cr.k >= min_k]
+    return shares(cb, above), shares(cr, above)
 
 
 def block_resample(d, rng):
@@ -136,7 +139,8 @@ def main():
 
     rob = {}
     for name, kw in {"no_bias_correction": dict(bias=False), "above_floor_only": dict(above_floor=True),
-                     "floor_p90": dict(floor_q=90), "floor_p99": dict(floor_q=99), "margin_10": dict(margin=10.0)}.items():
+                     "floor_p90": dict(floor_q=90), "floor_p99": dict(floor_q=99), "margin_10": dict(margin=10.0),
+                     "exclude_k_below_0_5": dict(min_k=0.5)}.items():
         bb, rr = estimate(d, **kw)
         rob[name] = {"baseline_share": bb["share"], "recent_share": rr["share"], "recent_nonprice": rr["nonprice_share"]}
     if d.MaximumOutputMegawatts.notna().mean() > 0.5 if "MaximumOutputMegawatts" in d else False:

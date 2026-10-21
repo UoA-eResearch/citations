@@ -1,0 +1,300 @@
+{
+ "offer_pocs": [
+  "ASB0661",
+  "BPE0331",
+  "DVK0111",
+  "EDG0331",
+  "GOR0331",
+  "HLY0331",
+  "HRP2201",
+  "HWB0331",
+  "ISL0661",
+  "KIW2201",
+  "KOE1101",
+  "KPU0661",
+  "LTN0331",
+  "LTN2201",
+  "MPE1101",
+  "MTO0331",
+  "NMA0331",
+  "TMK0331",
+  "TWC2201",
+  "TWH0331",
+  "WAI0331",
+  "WDV1101",
+  "WHU1101",
+  "WIL0331",
+  "WVY1101",
+  "WWD1102",
+  "WWD1103"
+ ],
+ "generation_pocs_wind_solar": [
+  "ASB0661",
+  "BPE0331",
+  "DVK0111",
+  "EDG0331",
+  "GOR0331",
+  "HRP2201",
+  "ISL0661",
+  "KIW2201",
+  "KOE1101",
+  "KPU0661",
+  "LTN0331",
+  "LTN2201",
+  "MPE1101",
+  "MTO0331",
+  "NMA0331",
+  "TMK0331",
+  "TWC2201",
+  "TWH0331",
+  "WAI0331",
+  "WDV1101",
+  "WHU1101",
+  "WIL0331",
+  "WVY1101",
+  "WWD1102",
+  "WWD1103"
+ ],
+ "offer_pocs_without_generation": [
+  "HLY0331",
+  "HWB0331"
+ ],
+ "generation_pocs_without_offers": [],
+ "panel_rows": 1782232,
+ "rows_missing_output": 163282,
+ "rows_missing_price": 672,
+ "first_date_with_potential": "2019-10-24",
+ "pocs_by_fuel": {
+  "Solar": [
+   "ASB0661",
+   "DVK0111",
+   "EDG0331",
+   "ISL0661",
+   "KOE1101",
+   "KPU0661",
+   "MTO0331",
+   "TMK0331",
+   "WAI0331",
+   "WHU1101"
+  ],
+  "Wind": [
+   "BPE0331",
+   "GOR0331",
+   "HRP2201",
+   "KIW2201",
+   "LTN0331",
+   "LTN2201",
+   "MPE1101",
+   "NMA0331",
+   "TWC2201",
+   "TWH0331",
+   "WDV1101",
+   "WIL0331",
+   "WVY1101",
+   "WWD1102",
+   "WWD1103"
+  ]
+ },
+ "poc_check": [
+  {
+   "poc": "ASB0661",
+   "mean_P": 9.68,
+   "mean_G": 10.004,
+   "rows": 21886,
+   "units": 1,
+   "G_over_P": 1.033
+  },
+  {
+   "poc": "BPE0331",
+   "mean_P": 11.952,
+   "mean_G": 12.294,
+   "rows": 121584,
+   "units": 1,
+   "G_over_P": 1.029
+  },
+  {
+   "poc": "DVK0111",
+   "mean_P": 2.093,
+   "mean_G": 1.556,
+   "rows": 7294,
+   "units": 1,
+   "G_over_P": 0.744
+  },
+  {
+   "poc": "EDG0331",
+   "mean_P": 5.978,
+   "mean_G": 5.358,
+   "rows": 45008,
+   "units": 2,
+   "G_over_P": 0.896
+  },
+  {
+   "poc": "GOR0331",
+   "mean_P": 17.27,
+   "mean_G": 14.73,
+   "rows": 53998,
+   "units": 1,
+   "G_over_P": 0.853
+  },
+  {
+   "poc": "HRP2201",
+   "mean_P": 53.278,
+   "mean_G": 53.093,
+   "rows": 53110,
+   "units": 1,
+   "G_over_P": 0.997
+  },
+  {
+   "poc": "ISL0661",
+   "mean_P": 12.735,
+   "mean_G": 0.0,
+   "rows": 2018,
+   "units": 1,
+   "G_over_P": 0.0
+  },
+  {
+   "poc": "KIW2201",
+   "mean_P": 41.564,
+   "mean_G": 42.192,
+   "rows": 8712,
+   "units": 1,
+   "G_over_P": 1.015
+  },
+  {
+   "poc": "KOE1101",
+   "mean_P": 8.746,
+   "mean_G": 6.333,
+   "rows": 48144,
+   "units": 3,
+   "G_over_P": 0.724
+  },
+  {
+   "poc": "KPU0661",
+   "mean_P": 4.938,
+   "mean_G": 0.006,
+   "rows": 15438,
+   "units": 1,
+   "G_over_P": 0.001
+  },
+  {
+   "poc": "LTN0331",
+   "mean_P": 12.961,
+   "mean_G": 13.177,
+   "rows": 121584,
+   "units": 1,
+   "G_over_P": 1.017
+  },
+  {
+   "poc": "LTN2201",
+   "mean_P": 73.662,
+   "mean_G": 71.929,
+   "rows": 91054,
+   "units": 1,
+   "G_over_P": 0.976
+  },
+  {
+   "poc": "MPE1101",
+   "mean_P": 8.193,
+   "mean_G": 0.0,
+   "rows": 4294,
+   "units": 1,
+   "G_over_P": 0.0
+  },
+  {
+   "poc": "MTO0331",
+   "mean_P": 3.569,
+   "mean_G": 0.764,
+   "rows": 31896,
+   "units": 2,
+   "G_over_P": 0.214
+  },
+  {
+   "poc": "NMA0331",
+   "mean_P": 15.55,
+   "mean_G": 15.266,
+   "rows": 121584,
+   "units": 1,
+   "G_over_P": 0.982
+  },
+  {
+   "poc": "TMK0331",
+   "mean_P": 4.689,
+   "mean_G": 0.0,
+   "rows": 2206,
+   "units": 1,
+   "G_over_P": 0.0
+  },
+  {
+   "poc": "TWC2201",
+   "mean_P": 45.834,
+   "mean_G": 45.644,
+   "rows": 121584,
+   "units": 2,
+   "G_over_P": 0.996
+  },
+  {
+   "poc": "TWH0331",
+   "mean_P": 24.458,
+   "mean_G": 24.243,
+   "rows": 121584,
+   "units": 1,
+   "G_over_P": 0.991
+  },
+  {
+   "poc": "WAI0331",
+   "mean_P": 6.638,
+   "mean_G": 6.031,
+   "rows": 32192,
+   "units": 1,
+   "G_over_P": 0.909
+  },
+  {
+   "poc": "WDV1101",
+   "mean_P": 27.958,
+   "mean_G": 27.461,
+   "rows": 121584,
+   "units": 1,
+   "G_over_P": 0.982
+  },
+  {
+   "poc": "WHU1101",
+   "mean_P": 4.53,
+   "mean_G": 4.183,
+   "rows": 7268,
+   "units": 1,
+   "G_over_P": 0.923
+  },
+  {
+   "poc": "WIL0331",
+   "mean_P": 26.106,
+   "mean_G": 26.085,
+   "rows": 118272,
+   "units": 1,
+   "G_over_P": 0.999
+  },
+  {
+   "poc": "WVY1101",
+   "mean_P": 50.172,
+   "mean_G": 49.702,
+   "rows": 103488,
+   "units": 1,
+   "G_over_P": 0.991
+  },
+  {
+   "poc": "WWD1102",
+   "mean_P": 34.443,
+   "mean_G": 34.284,
+   "rows": 121584,
+   "units": 1,
+   "G_over_P": 0.995
+  },
+  {
+   "poc": "WWD1103",
+   "mean_P": 21.172,
+   "mean_G": 20.905,
+   "rows": 121584,
+   "units": 1,
+   "G_over_P": 0.987
+  }
+ ]
+}

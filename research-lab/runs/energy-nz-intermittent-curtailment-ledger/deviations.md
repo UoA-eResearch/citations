@@ -20,3 +20,11 @@
    is excluded. Rotohiko (HLY0331) is a battery (fuel `ELE`) and is excluded as not wind or solar. KOE1101 carries
    three offer units but two metered solar farms (Kohira, Pukenui); its output is 0.72 of its potential, and it is
    kept, with the bias correction absorbing the difference, and named in the leave-one-out.
+6. **Partial or missing metering.** Some matched plants have metered output far below their potential:
+   - Kōwhai Park (ISL0661, from August 2026) and Kaiwaikawe (MPE1101, from July 2026) report only zeros;
+   - Pāmu Rā ki Whitianga (KPU0661, from November 2025) reports commissioning-scale values;
+   - Maungaturoto (MTO0331) offers two units but has one metered generator (output 0.21 of potential).
+
+   The preregistered bias correction already scales potential to metered output per plant-quarter, so a plant with
+   *k* near zero contributes almost nothing to either curtailed or available energy. Added before any curtailment
+   figure was computed: a variant dropping plant-quarters with *k* below 0.5.
