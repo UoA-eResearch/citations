@@ -1,0 +1,156 @@
+/mnt/citations/research-lab/runs/energy-nz-intermittent-curtailment-ledger/review/reviewer_checks/check2_panel.py:74: RuntimeWarning: invalid value encountered in scalar divide
+  print(" wind only:", round(g4.median(), 3), " solar only:", round(cr[cr.fuel == "Solar"].groupby("poc").apply(lambda x: x.f.median() / x.P_hat.mean()).median(), 3))
+== (a) rows missing output by POC (dropped silently in prepare):
+              n      first       last
+poc                                  
+ASB0661   12386 2024-10-16 2025-06-30
+DVK0111      48 2026-04-30 2026-04-30
+GOR0331    1104 2023-08-09 2023-08-31
+HLY0331   18212 2025-09-15 2026-09-30
+HWB0331  121584 2019-10-24 2026-09-30
+KOE1101    3248 2023-10-25 2023-12-31
+TMK0331    3100 2026-06-11 2026-08-14
+WIL0331    3312 2019-10-24 2019-12-31
+WVY1101     288 2020-10-29 2020-11-03
+rows missing price by POC: {'WVY1101': 672}
+
+== (b) maxprice (highest offered price with MW>0) by POC, 2025/26: median, share<=0.01, share>1, share>100
+         median  le001    gt1  gt100      n
+poc                                        
+ASB0661    0.01  1.000  0.000  0.000  17520
+BPE0331    0.01  1.000  0.000  0.000  17520
+DVK0111    0.01  1.000  0.000  0.000   2928
+EDG0331    0.01  1.000  0.000  0.000  17520
+GOR0331    1.60  0.001  0.998  0.000  17520
+HRP2201    0.01  1.000  0.000  0.000  17520
+KIW2201    0.01  0.863  0.000  0.000   4346
+KOE1101    0.01  1.000  0.000  0.000  17520
+KPU0661    0.01  1.000  0.000  0.000  11072
+LTN0331    0.01  1.000  0.000  0.000  17520
+LTN2201    0.02  0.038  0.000  0.000  17520
+MTO0331    0.01  1.000  0.000  0.000  17520
+NMA0331    0.01  0.991  0.009  0.000  17520
+TWC2201    0.01  1.000  0.000  0.000  17520
+TWH0331    0.01  0.999  0.001  0.001  17520
+WAI0331    0.01  1.000  0.000  0.000  17520
+WDV1101    0.01  1.000  0.000  0.000  17520
+WHU1101    0.01  0.999  0.000  0.000   2902
+WIL0331    0.01  1.000  0.000  0.000  17520
+WVY1101    0.01  1.000  0.000  0.000  17520
+WWD1102    0.01  0.980  0.020  0.011  17520
+WWD1103    0.01  0.980  0.020  0.011  17520
+
+share of TPs with offered < P (plant offers less than its potential), 2025/26, by POC:
+poc
+ASB0661    0.000
+BPE0331    0.000
+DVK0111    0.000
+EDG0331    0.000
+GOR0331    0.000
+HRP2201    0.000
+KIW2201    0.000
+KOE1101    0.000
+KPU0661    0.000
+LTN0331    0.000
+LTN2201    0.000
+MTO0331    0.000
+NMA0331    0.000
+TWC2201    0.000
+TWH0331    0.000
+WAI0331    0.000
+WDV1101    0.000
+WHU1101    0.000
+WIL0331    0.000
+WVY1101    0.001
+WWD1102    0.001
+WWD1103    0.001
+
+== (c) price-driven class composition, 2025/26 (curtailed energy MWh):
+ price <= 0.01: 59284  price in (0.01, 1]: 29317  price > 1: 3782
+ price-driven MWh with price > 0.01, by POC and that POC's median maxprice in those TPs:
+           mwh  med_maxprice  med_price     n
+poc                                          
+GOR0331  18020          1.60      0.270  1457
+LTN2201  14216          0.02      0.020   314
+WWD1102    506         15.00      5.235    34
+WWD1103    329         15.00      4.460    27
+TWH0331     14        322.00    111.830     1
+NMA0331     13         15.00      5.480     1
+ curtailed energy at price exactly 0: 143  at 0<price<=0.01: 59140
+
+ 'other' class composition (curtailed MWh): price<1: 31249  maxprice<price<maxprice+1 (price>=1): 1806  offered<P (price>=maxprice+1): 0  total: 33055
+ 'other' flagged TPs with price<1 by POC: {'ASB0661': 84, 'BPE0331': 112, 'DVK0111': 21, 'EDG0331': 114, 'GOR0331': 1, 'HRP2201': 109, 'KIW2201': 12, 'KOE1101': 124, 'LTN0331': 101, 'LTN2201': 620, 'MTO0331': 29, 'NMA0331': 147, 'TWC2201': 84, 'TWH0331': 117, 'WAI0331': 112, 'WDV1101': 106, 'WIL0331': 113, 'WVY1101': 114, 'WWD1102': 94, 'WWD1103': 90}
+
+== (d) heteroscedasticity: mean P_hat (MW) and mean gap on flagged TPs by class, 2025/26
+        mean_Phat       n
+cls                      
+offlim       70.0     142
+other        33.4   36032
+price        31.7   23463
+unc          23.1  276971
+        mean_Phat_flagged  mean_gap  mean_floor
+cls                                            
+offlim              106.0      93.7        17.2
+other                75.5      26.4        13.1
+price                73.0      43.1        14.8
+unc                  41.6      14.0         8.5
+ 2020: share of available by class, study floor vs potential-decile-matched floor; flag rate with matched floor
+         study  matched  flag_rate_matched
+cls                                       
+offlim  0.0000   0.0000             0.5000
+other   0.0003   0.0003             0.0411
+price   0.0002   0.0002             0.0509
+unc     0.0222   0.0181             0.0476
+ 2025/26: share of available by class, study floor vs potential-decile-matched floor; flag rate with matched floor
+         study  matched  flag_rate_matched
+cls                                       
+offlim  0.0002   0.0002             0.1831
+other   0.0079   0.0058             0.0498
+price   0.0222   0.0217             0.1863
+unc     0.0217   0.0161             0.0413
+
+== (e) gate: study value and variants
+ study: 0.271  n POCs: 21
+ POC median k in 2025/26: {'ASB0661': 1.04, 'BPE0331': 1.02, 'DVK0111': 0.51, 'EDG0331': 0.98, 'GOR0331': 0.96, 'HRP2201': 1.0, 'KIW2201': 1.02, 'KOE1101': 0.62, 'KPU0661': 0.0, 'LTN0331': 1.01, 'LTN2201': 1.02, 'MTO0331': 0.0, 'NMA0331': 0.99, 'TWC2201': 1.0, 'TWH0331': 0.98, 'WAI0331': 0.95, 'WDV1101': 1.0, 'WHU1101': 1.0, 'WIL0331': 0.99, 'WVY1101': 1.0, 'WWD1102': 1.01, 'WWD1103': 1.0}
+ excluding POCs with median k<0.5: 0.271 n= 20
+ floor over mean raw P (not P_hat): 0.271
+ wind only: 0.269  solar only: 0.62
+
+ floor/mean P_hat by FY for the main wind plants (is the 2025 intra-period timing visible?):
+         2020  2021  2022  2023  2024  2025  2026
+poc                                              
+BPE0331  0.40  0.50  0.52  0.42  0.28  0.31  0.27
+GOR0331   NaN   NaN   NaN   NaN  0.47  0.56  0.60
+HRP2201   NaN   NaN   NaN   NaN  0.34  0.36  0.27
+KIW2201   NaN   NaN   NaN   NaN   NaN   NaN  0.45
+LTN0331  0.37  0.46  0.47  0.38  0.24  0.25  0.24
+LTN2201   NaN   NaN  0.32  0.29  0.32  0.37  0.26
+NMA0331  0.37  0.38  0.51  0.61  0.36  0.38  0.32
+TWC2201  0.31  0.36  0.36  0.30  0.25  0.29  0.26
+TWH0331  0.30  0.33  0.29  0.45  0.30  0.32  0.27
+WDV1101  0.30  0.31  0.29  0.60  0.28  0.30  0.31
+WIL0331  0.24  0.26  0.26  0.37  0.26  0.26  0.25
+WVY1101   NaN  0.40  0.40  0.43  0.40  0.44  0.38
+WWD1102  0.20  0.29  0.25  0.50  0.20  0.25  0.27
+WWD1103  0.22  0.20  0.22  0.66   NaN  0.32  0.21
+
+== (g) windows: 12-month window rows and calendar 2020 price-driven
+ 2020-01-01..2020-12-31: days=366 primary=0.0227 price-driven=0.00017
+ 2020-07-01..2021-06-30: days=365 primary=0.0248 price-driven=0.00014
+ 2020-01-01..2021-06-30: days=547 primary=0.0241 price-driven=0.00011
+
+== (i) monthly price-driven curtailment from the ledger: top 10 months and share of 2025/26 price-driven in its top 3 months
+          pd_mwh     avail     curt  pd_share
+month                                        
+2026-01  30018.8  388738.3  40565.2       0.1
+2025-10  22811.9  497606.3  44612.8       0.0
+2025-12  20082.9  398089.4  33647.1       0.1
+2022-09  15435.5  225229.9  27988.7       0.1
+2024-09  10526.8  438349.6  38458.5       0.0
+2026-02   8673.1  293120.1  18494.6       0.0
+2026-09   5551.6  459596.0  18892.1       0.0
+2024-10   5337.3  367742.1  14933.5       0.0
+2024-08   3952.3  394200.4  11604.8       0.0
+2022-08   3882.0  249025.6   7354.2       0.0
+ 2025/26 price-driven MWh (ledger, whole-panel calibration): 92383  top-3 months share: 0.79
+ by POC 2025/26 price-driven MWh: {'LTN2201': 53721.0, 'GOR0331': 25436.0, 'WVY1101': 6544.0, 'HRP2201': 2378.0, 'WWD1102': 1000.0, 'WWD1103': 585.0, 'WAI0331': 570.0, 'NMA0331': 440.0}

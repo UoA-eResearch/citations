@@ -77,8 +77,8 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 <div class="page">
 <header class="masthead">
   <div class="eyebrow">Research Lab · Deep dive · The Energy Movement</div>
-  <h1>How much New Zealand wind and solar output is curtailed? Measured from the plants&#x27; own forecasts, the answer is mostly noise, with a growing price-driven core</h1>
-  <p class="subtitle">Every offered wind and solar plant in New Zealand, January 2020 to September 2026: each half-hour&#x27;s dispatch-time forecast of generation potential, from the plant&#x27;s own offers, set against its metered output and the price at its node, to build the country&#x27;s first curtailment ledger.</p>
+  <h1>How much New Zealand wind and solar output is curtailed? Not measurable from the plants&#x27; own forecasts, and what does show is mostly two wind farms</h1>
+  <p class="subtitle">Every offered wind and solar plant in New Zealand, January 2020 to September 2026: each half-hour&#x27;s latest forecast of generation potential, from the plant&#x27;s own offers, set against its metered output and the price at its node, to build the country&#x27;s first curtailment ledger.</p>
   <div class="meta">
     <span>Report · 2026-10-22 · pre-review draft</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/energy-nz-intermittent-curtailment-ledger/plan.md">Preregistration</a>
@@ -89,43 +89,52 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 </header>
 <section class="tiles" aria-label="Key results"></section>
 <main>
-<p><strong>Verdict: not reliably measurable from offers alone, by the study's own preregistered gate.</strong> In 2025/26 the
-median plant's detection floor, the size of gap that forecast error alone produces, is 27% of its mean potential,
-above the 25% gate. By their rules, H1 is Refuted and H2 Supported. But both readings are dominated by forecast noise,
-which the preregistered measure counts by construction. The clearest real signal is curtailment in half-hours when
-the node price was at or below the plant's own offer price. It rose from almost nothing in 2020 to <strong>2.2% of
-available wind and solar energy in 2025/26</strong>.</p>
+<p><strong>Verdict: Inconclusive. By the study's own preregistered gate, curtailment is not reliably measurable from offers
+alone.</strong> In 2025/26 the median plant's detection floor, the size of gap that forecast error alone produces, is 27% of
+its mean potential, above the 25% gate. By their rules H1 is Refuted and H2 Supported, but both readings are dominated
+by forecast noise that the preregistered measure counts by construction.</p>
+<p>The clearest signal is curtailment in half-hours when the node price was at or below the plant's own offer: the plant
+was <strong>dispatched down</strong>. It reached 2.2% of available wind and solar energy in 2025/26, but 86% of that is at two wind
+farms, Turitea and Kaiwera Downs. Those are the only plants that offer above $0.01/MWh and still forecast their
+potential before the half-hour begins. Without them the rest of the fleet shows 0.4% in 2025/26, below the 0.9% of
+2022/23. There is no clear trend, only spells.</p>
 <ul>
 <li><strong>H1 (curtailment rose from below 0.5% in 2020 to at least 2.0% in 2025/26): Refuted by its rule.</strong> The measure
   reads 2.27% in 2020 (95% interval 2.13–2.42%) and 5.20% in 2025/26 (4.36–6.32%). The 2020 value is almost entirely
-  the noise mass the rule flags by construction (2.22 of the 2.27 percentage points), so the refutation reflects the
-  measure's floor rather than real curtailment in 2020.</li>
-<li><strong>H2 (at least half of 2025/26 curtailment happens when prices exceed $0.01/MWh, i.e. is not price-driven):
-  Supported by its rule, but reversed once the noise is removed.</strong> 72.7% (64.1–82.3%) of the measured curtailed
-  energy falls in such half-hours, but half of the measured total is the noise mass, which sits in unconstrained
-  half-hours by definition. Of the curtailment outside that mass (126 GWh, 3.0% of available energy), 73% occurs when
-  the price was at or below the plant's own offer.</li>
+  the noise mass the rule flags by construction (2.22 of the 2.27 points), so the refutation reflects the measure's
+  floor.</li>
+<li><strong>H2 (at least half of 2025/26 curtailment happens when prices exceed $0.01/MWh): Supported by its rule.</strong> 72.7%
+  (64.1–82.3%) of measured curtailed energy falls in such half-hours, but half of the measured total is the noise mass,
+  which sits in unconstrained half-hours by definition. For the curtailment outside that mass (126 GWh), where the
+  line is drawn decides the answer:<ul>
+<li>53% is above $0.01, the plan's line;</li>
+<li>27% is above the plant's own offer;</li>
+<li>5% is above $1.</li>
 </ul>
+</li>
+</ul>
+<p>Nearly all of it happens at near-zero prices, and the $0.01 line splits it evenly only because the two dominant
+  plants offer at $0.02 and $1.60.</p>
 <h2>In plain terms</h2>
 <p>When there is more wind or sun than the grid can use or wants to pay for, wind and solar farms are turned down or
 switched off. That is "curtailment". Other countries publish how much of it happens; New Zealand does not. We tried
 to measure it.</p>
-<p>Every wind and solar farm tells the market, every half-hour, how much it could generate. We compared that with
-what each farm actually produced. In principle, the difference is curtailment.</p>
-<p>In practice, the farms' forecasts are off by a lot even when nothing is holding them back, and our method counted
-some of that forecasting error as curtailment. By the test we set ourselves in advance, we cannot measure
-curtailment reliably this way.</p>
-<p>One part is clear, though. Sometimes the price at a farm's connection falls to or below the price it asked for.
-Then it is turned down because the power is not wanted. That kind of curtailment was almost nil in 2020. In the year
-to June 2026 it reached about 2% of everything the wind and solar farms could have produced. It comes in spells,
-with big ones in 2022 and in late 2025.</p>
+<p>Every wind and solar farm tells the market, every half-hour, how much it could generate. We compared that with what
+it actually produced.</p>
+<p>The farms' forecasts are off by a lot even when nothing is holding them back, so most of the gap is forecasting
+error, not curtailment. By the test we set ourselves in advance, we cannot measure curtailment reliably this way. In
+the last year, most wind farms also started sending their forecast after the half-hour had already begun, which can
+hide any turning-down.</p>
+<p>What does show up clearly is two wind farms, Turitea and Kaiwera Downs, being turned down when power was cheap,
+especially in spring and summer 2025/26. They ask a little more than other wind farms for their power, so they are
+the first to be turned down.</p>
 <h2>What was asked</h2>
 <p>New Zealand's wind and solar build-out is accelerating, and the Electricity Authority is changing how intermittent
 generators share reserve costs, but no curtailment statistic exists. The preregistration (<code>plan.md</code>) asked two
 questions:
 - <strong>H1:</strong> did curtailment grow from under 0.5% of available energy in 2020 to at least 2.0% in the 12 months to
   June 2026?
-- <strong>H2:</strong> is at least half of it not price-driven, i.e. does it happen when the node price exceeds $0.01/MWh?</p>
+- <strong>H2:</strong> is at least half of it not price-driven (node price above $0.01/MWh)?</p>
 <p>It also set a gate: if forecast error swamps the signal, say so whatever H1 and H2 return.</p>
 <h2>How it was done</h2>
 <p><strong>Data.</strong> All from the Electricity Authority's EMI service:
@@ -134,15 +143,20 @@ questions:
 - final prices by node.</p>
 <p>25 points of connection were matched: 15 wind, 10 solar. Mahinerangi wind farm has no matching metered generator,
 and Rotohiko is a battery, so both are excluded.</p>
+<p>Half-hours without metered output are dropped (9% of rows; listed below).</p>
 <p><strong>Measure</strong> (plan section 1).
-- <strong>Potential</strong> is the plant's latest dispatch-time forecast.
+- <strong>Potential</strong> is the plant's latest potential on file for the half-hour, from the highest-numbered latest
+  submission.
 - <strong>Unconstrained half-hours</strong> are those in which the price exceeded every price the plant offered at by $1 or
   more, and the plant offered at least its potential.
-- <strong>Bias correction.</strong> Per plant and quarter, the potential is scaled by the median ratio of output to potential in
-  unconstrained half-hours.
-- <strong>Curtailed half-hours</strong> are those whose gap (scaled potential minus output) exceeds the plant-quarter's 95th
-  percentile of unconstrained gaps; curtailed energy sums those gaps.
-- <strong>Intervals</strong> come from a 7-day block bootstrap with the calibration re-estimated in every resample.</p>
+- <strong>Bias correction.</strong> Per plant and quarter, potential is scaled by the median ratio of output to potential in
+  unconstrained half-hours, pooled to the year when a quarter is thin. When the year is thin too, the scale is 1 and
+  no floor is set, so those half-hours count as available but can never be flagged.
+- <strong>Curtailed half-hours</strong> are those whose gap exceeds the plant-quarter's 95th percentile of unconstrained gaps.
+- <strong>Intervals</strong> come from a 7-day block bootstrap with calibration re-estimated in each resample. Resampled days
+  take the calendar position they are placed in, so their quarters are relabelled. The review's check against
+  true quarters (150 resamples) moved the 2025/26 interval slightly (4.45–6.07% against 4.34–5.91%) and left 2020
+  unchanged.</p>
 <h2>Results</h2>
 <h3>The measure and its floor (<code>results/figures/F1_windows.png</code>)</h3>
 <figure><a href="results/figures/F1_windows.png"><img src="results/figures/F1_windows.png" alt="By 12-month window"></a><figcaption>Curtailed energy as a share of available (bias-corrected potential) energy for New Zealand&#x27;s offered wind and solar plants, by 12-month window (the first window is January 2020 to June 2021). The full bar is the preregistered measure. Its grey part includes the mass that the rule flags by construction in unconstrained periods (about 5% of them), which is forecast error rather than curtailment. The blue part is curtailment in periods whose node price was at or below the plant&#x27;s own offer price.</figcaption></figure>
@@ -171,7 +185,7 @@ and Rotohiko is a battery, so both are excluded.</p>
 <td>2.17%</td>
 </tr>
 <tr>
-<td>… at or below the plant's own offer price (price-driven)</td>
+<td>… dispatched down (price at or below the plant's own offer)</td>
 <td>0.02%</td>
 <td><strong>2.22%</strong></td>
 </tr>
@@ -189,57 +203,85 @@ and Rotohiko is a battery, so both are excluded.</p>
 </table></div>
 <p><strong>The noise mass.</strong> The rule flags a half-hour when its gap exceeds the 95th percentile of gaps in unconstrained
 half-hours, and it counts unconstrained half-hours too. So it flags about 5% of them by construction: 5.0% in 2020,
-4.7% in 2025/26. Their gaps are forecast error. That mass is about 2.2% of available energy in both periods, a floor
-under the measure, and it is what makes the 2020 baseline 2.27% rather than near zero.</p>
-<p><strong>Above the floor.</strong> In half-hours where the price was at or below the plant's offer, 18% were flagged in 2025/26,
-nearly four times the noise rate, so most of that mass is real. Price-driven curtailment by 12-month window:</p>
+4.7% in 2025/26. That mass is about 2.2% of available energy in both periods. A floor matched to the size of the
+forecast (by potential decile, a review check) leaves the dispatched-down figure almost unchanged (2.17% against
+2.22%).</p>
+<h3>Who is dispatched down (<code>results/figures/F3_monthly_price_driven.png</code>)</h3>
+<figure><a href="results/figures/F3_monthly_price_driven.png"><img src="results/figures/F3_monthly_price_driven.png" alt="Monthly dispatched-down curtailment"></a><figcaption>Monthly curtailed energy in half-hours when the plant&#x27;s node price was at or below its own highest offer price, by plant (calibration by plant and quarter over the whole panel, so monthly values differ slightly from the 12-month figures). Turitea moved its offer from $0.01 to $0.02/MWh in 2025/26 and Kaiwera Downs offers at $1.60/MWh; most other wind farms offer at $0.01 and, from 2025/26, mostly submit their potential after the half-hour has begun.</figcaption></figure>
 <div class="table-wrap"><table>
 <thead>
 <tr>
 <th>window</th>
-<th>price-driven share of available energy</th>
-<th>half-hours at or below the offer price</th>
+<th>dispatched-down share of available energy</th>
+<th>without the two largest plants</th>
+<th>the two largest</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td>2020 (calendar)</td>
+<td>0.02%</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
 <td>Jan 2020–Jun 2021</td>
 <td>0.01%</td>
-<td>0.4%</td>
+<td>0.00%</td>
+<td>White Hill, West Wind</td>
 </tr>
 <tr>
 <td>Jul 2021–Jun 2022</td>
 <td>0.23%</td>
-<td>1.5%</td>
+<td>0.06%</td>
+<td>Waipipi, White Hill</td>
 </tr>
 <tr>
 <td>Jul 2022–Jun 2023</td>
 <td>1.10%</td>
-<td>4.2%</td>
+<td>0.89%</td>
+<td>Waipipi, Te Āpiti</td>
 </tr>
 <tr>
 <td>Jul 2023–Jun 2024</td>
 <td>0.07%</td>
-<td>0.4%</td>
+<td>0.03%</td>
+<td>Waipipi, Turitea</td>
 </tr>
 <tr>
 <td>Jul 2024–Jun 2025</td>
 <td>0.77%</td>
-<td>2.6%</td>
+<td>0.45%</td>
+<td>Waipipi, Kaiwera Downs</td>
 </tr>
 <tr>
 <td>Jul 2025–Jun 2026</td>
 <td><strong>2.22%</strong></td>
-<td><strong>7.0%</strong></td>
+<td><strong>0.41%</strong></td>
+<td><strong>Turitea (54 GWh), Kaiwera Downs (25 GWh)</strong></td>
 </tr>
 </tbody>
 </table></div>
-<figure><a href="results/figures/F3_monthly_price_driven.png"><img src="results/figures/F3_monthly_price_driven.png" alt="Monthly price-driven curtailment"></a><figcaption>Monthly curtailed energy, in periods when the plant&#x27;s node price was at or below its own offer price, summed over New Zealand&#x27;s offered wind and solar plants (calibration by plant and quarter over the whole panel, so monthly values differ slightly from the 12-month figures).</figcaption></figure>
+<p>Two things make Turitea and Kaiwera Downs the plants that show it:</p>
+<ul>
+<li><strong>Offer price.</strong> Almost every wind farm offers at $0.01/MWh. Turitea moved to $0.02 in 2025/26, and Kaiwera Downs
+  offers at $1.60. A plant offering a little above the floor is the one dispatched down first when prices collapse.</li>
+<li><strong>Timing of the potential.</strong> For most of the panel, plants submitted their latest potential a few minutes before
+  the half-hour began (median lead 2–15 minutes to 2024/25). In 2025/26 most established wind farms switched to
+  submitting it after the half-hour had started (median 1.2–11.6 minutes late, 76–89% of half-hours). A potential
+  revised after the fact can absorb a turn-down and hide it. Turitea, Kaiwera Downs and Waipipi still submit
+  beforehand.</li>
+</ul>
+<p>So the 2025/26 rise is partly about which plants are marginal and how they report, not only how often wind is turned
+down.</p>
 <h3>The gate (<code>results/figures/F2_gate.png</code>)</h3>
-<figure><a href="results/figures/F2_gate.png"><img src="results/figures/F2_gate.png" alt="Detection floor by plant"></a><figcaption>For each plant (point of connection), the detection floor, the 95th percentile of the gap between bias-corrected potential and metered output in unconstrained periods, divided by the plant&#x27;s mean potential, July 2025 to June 2026. The plan set a gate: if the median exceeds 25%, curtailment is not reliably measurable from offers alone. Solar plants sit high partly because their mean potential includes nights.</figcaption></figure>
-<p>The median plant's floor is 27% of its mean potential in 2025/26 (gate 25%). Wind plants range from 22% to 60%
-(median about 27%). Solar plants sit higher, partly because their mean potential includes nights. <strong>The gate fails.</strong></p>
-<h3>Robustness (<code>results/tables/robustness.json</code>)</h3>
+<figure><a href="results/figures/F2_gate.png"><img src="results/figures/F2_gate.png" alt="Detection floor by plant"></a><figcaption>For each plant (point of connection), the detection floor, the 95th percentile of the gap between bias-corrected potential and metered output in unconstrained periods, divided by the plant&#x27;s mean potential, July 2025 to June 2026. The plan set a gate: if the median exceeds 25%, curtailment is not reliably measurable from offers alone. Solar plants sit high because their potentials are typically submitted days ahead, so they are stale forecasts (their floors are still 42-45% of mean potential on daytime half-hours alone).</figcaption></figure>
+<p>The median plant's floor is 27% of its mean potential in 2025/26, against the 25% gate. The review found it about
+0.27 under every variant, and 0.269 for wind alone. Wind plants range from 22% to 60%. Solar plants sit higher because
+their potentials are stale: most are submitted days ahead (median leads of about 1.7 to 6.4 days for most solar
+plants and years). The review found their floors are 42–45% of mean potential even on daytime half-hours alone.
+<strong>The gate fails.</strong></p>
+<h3>Robustness (<code>results/tables/robustness.json</code>, <code>sensitivity_post_review.json</code>)</h3>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -297,33 +339,45 @@ nearly four times the noise rate, so most of that mass is real. Price-driven cur
 </tbody>
 </table></div>
 <ul>
-<li>The offered maximum output, a planned alternative to the potential forecast, is empty for these plants, so that
-  variant cannot be run.</li>
-<li>Before and after real-time pricing (November 2022) the measure reads 2.91% and 3.95%.</li>
-<li>The potential forecasts track ERA5 weather at most plants: correlations of 0.44–0.85 with 100 m wind speed or
-  solar radiation. Two new solar farms are lower (Dannevirke 0.14, Tauhei 0.07).</li>
+<li><strong>The offered maximum output</strong>, planned as an alternative to the potential forecast, was not run. It is a nameplate
+  value, populated in 2019/20, partly in 2020/21 and 2024/25, and fully from 2025/26, but empty in 2021/22 to
+  2023/24; the panel builder did not carry it.</li>
+<li><strong>Real-time pricing.</strong> Before and after November 2022 the measure reads 2.91% and 3.95%.</li>
+<li><strong>Weather.</strong> The potential forecasts track ERA5 weather at most plants, with correlations of 0.44–0.85 against
+  100 m wind speed or solar radiation. Two new solar farms are lower: Dannevirke 0.14, Tauhei 0.07.</li>
+<li><strong>Rows without metered output.</strong> Half-hours with no metered output were dropped:<ul>
+<li>Lauriston solar, October 2024 to June 2025 (12,386 half-hours; at that time Generation_MD shows only the
+Highbank hydro station at its point);</li>
+<li>Kohira/Pukenui, October to December 2023;</li>
+<li>Kaiwera Downs, August 2023;</li>
+<li>Mill Creek, October to December 2019;</li>
+<li>Waipipi, October to November 2020;</li>
+<li>Clandeboye, June to August 2026;</li>
+<li>Dannevirke, one day.</li>
+</ul>
+</li>
 </ul>
 <p><strong>Projection, frozen for scoring after June 2027.</strong> By the preregistered rule (the 2025/26 share scaled by projected
-available energy from plants operating by September 2026), the measure would read <strong>5.65%</strong> for the 12 months to
-June 2027. Given the floor, the price-driven component is the more useful thing to watch; it is not projected here.</p>
+available energy from plants operating by September 2026), the measure would read <strong>5.65%</strong> for the 12 months to June
+2027. Four new plants have no usable metering yet (Tauhei, Kaiwaikawe, Kōwhai Park, Pāmu Rā), so they enter that
+rule with no available energy. Projecting them from their potential instead gives 5.93%. Kaiwera Downs stage 2 is
+annualised from six commissioning months. Both figures are recorded. Given the floor, and the reporting change above,
+neither is a forecast of real curtailment, and the dispatched-down component is not projected.</p>
 <h2>What this does and does not show</h2>
 <ul>
-<li><strong>It shows</strong> that price-driven curtailment of New Zealand's wind and solar has become material. These are
-  half-hours in which the plant's node price fell to or below its own offer, and its output fell short of its
-  forecast potential by more than forecast error usually does. They were almost absent in 2020 and reached about
-  2.2% of available energy in 2025/26, in spells.</li>
-<li><strong>It does not provide</strong> a reliable all-cause curtailment statistic. The plants' own potential forecasts err by
-  more than a quarter of their mean output at the 95th percentile, and the preregistered measure folds that error
-  in. A better measure would compare constrained half-hours with forecast-matched unconstrained ones, or use the
-  system operator's dispatch records.</li>
-<li><strong>It does not show</strong> that most curtailment is network- or security-constrained. Once the noise mass is set aside,
-  most identifiable curtailment is price-driven.</li>
-<li><strong>Caveats.</strong><ul>
-<li>The price-driven class also contains some noise, at roughly the 5% base rate.</li>
-<li>"Price at or below the offer" is an economic condition, so this class mixes market-driven spill with
-constraints that drive the local price down.</li>
-<li>Partial metering at some new plants is absorbed by the bias correction.</li>
-<li>One day (31 August 2026) is not published.</li>
+<li><strong>It does not provide</strong> a reliable curtailment statistic. The plants' own potential forecasts err by more than a
+  quarter of their mean output at the 95th percentile. Solar potentials are days old. Since 2025/26 most wind
+  potentials arrive after the half-hour has begun.</li>
+<li><strong>It shows</strong> that wind farms offering slightly above the $0.01 floor are dispatched down in low-price spells: about
+  80 GWh at Turitea and Kaiwera Downs in 2025/26, concentrated in October 2025 to January 2026. The rest of the fleet
+  shows similar spells (largest in 2022/23) but no rising trend.</li>
+<li><strong>It does not separate</strong> market-driven dispatch-down from network constraints. A constrained node's price falls to
+  the marginal offer, so "price at or below the plant's offer" includes plants constrained off. The system operator's
+  dispatch records would be needed to tell them apart.</li>
+<li><strong>Better measures.</strong> A sounder measure would:<ul>
+<li>use potentials fixed before the half-hour (or an independent weather-based potential);</li>
+<li>count only candidate half-hours against a forecast-matched reference, not every half-hour above a percentile;</li>
+<li>use dispatch records to classify cause.</li>
 </ul>
 </li>
 </ul>
@@ -332,20 +386,30 @@ constraints that drive the local price down.</li>
 <li><strong>Preregistration.</strong> <code>plan.md</code> was committed before any series was built. It fixed a 2020 baseline, since the
   potential field is empty before late 2019. The fetch, build and analysis code were committed before their outputs.</li>
 <li><strong>Deviations</strong> (<code>deviations.md</code>):<ul>
-<li>D1, before any series was built: an unpublished day; December 2025 prices assembled from daily files; generation
-column-name case; the two fuel codings that had left out ten newer plants; partial metering, with a variant
-added.</li>
-<li>D2 records the failed gate and the post hoc decomposition (<code>code/diagnostics.py</code>), written after seeing the
-results.</li>
+<li>D1, before any series: an unpublished day; December 2025 prices assembled from daily files; generation
+column-name case; the two fuel codings; partial metering.</li>
+<li>D2: the failed gate and the post hoc decomposition (<code>code/diagnostics.py</code>).</li>
+<li>D3, after independent review:<ul>
+<li>the dispatched-down relabelling, the per-plant series, offer prices and potential lead times
+  (<code>code/sensitivity_post_review.py</code>);</li>
+<li>the corrected maximum-output statement, the dropped rows and the projection variant;</li>
+<li>the bootstrap and pooling notes.</li>
 </ul>
 </li>
 </ul>
+</li>
+<li><strong>Review.</strong> An independent adversarial review (<code>review/review.md</code>) reproduced every number and the fetch filter
+  exactly. It found the two-plant concentration, the post-period potentials, the stale solar potentials and the
+  projection issue, all addressed here.</li>
+</ul>
 <h2>Reproducing it</h2>
-<p><code>code/fetch.py</code>, <code>code/build.py</code>, <code>code/analysis.py</code>, <code>code/diagnostics.py</code>, <code>code/figures.py</code>.</p>
+<p><code>code/fetch.py</code>, <code>code/build.py</code>, <code>code/analysis.py</code>, <code>code/diagnostics.py</code>, <code>code/sensitivity_post_review.py</code>,
+<code>code/figures.py</code>.</p>
 <ul>
 <li><strong>Inputs</strong> are public EMI files from the Azure blob store, plus Open-Meteo ERA5.</li>
-<li><strong>Results</strong> are in <code>results/tables/</code>: <code>primary.json</code>, <code>robustness.json</code>, <code>diagnostics.json</code>, <code>ledger_monthly.csv</code>
-  (the open ledger by plant and month), <code>build_log.json</code> and <code>output_validation_monthly.csv</code>.</li>
+<li><strong>Results</strong> are in <code>results/tables/</code>: <code>primary.json</code>, <code>robustness.json</code>, <code>diagnostics.json</code>,
+  <code>sensitivity_post_review.json</code>, <code>ledger_monthly.csv</code> (the open ledger by plant and month), <code>build_log.json</code> and
+  <code>output_validation_monthly.csv</code>.</li>
 </ul>
 </main>
 <footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one

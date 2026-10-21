@@ -42,7 +42,7 @@ def main():
     x = np.arange(len(labels))
     fig, ax = plt.subplots(figsize=(7.6, 3.8))
     fig.subplots_adjust(left=0.09, right=0.98, bottom=0.2, top=0.84)
-    ax.bar(x, price, color=PRICE, width=0.62, label="at or below the plant's own offer price (price-driven)")
+    ax.bar(x, price, color=PRICE, width=0.62, label="node price at or below the plant's own offer (dispatched down)")
     ax.bar(x, rest, bottom=price, color=NOISE, width=0.62, label="all other flagged periods (mostly forecast noise)")
     for i in range(len(x)):
         ax.text(x[i], prim[i] + 0.1, f"{prim[i]:.1f}%", ha="center", fontsize=7.5, color=INK2)
@@ -51,7 +51,7 @@ def main():
     ax.set_xticks(x); ax.set_xticklabels([k.replace("..", " to\n") for k in labels], fontsize=7.5)
     ax.set_ylabel("curtailed share of available energy, %"); ax.grid(axis="y", color=GRID, lw=0.5)
     ax.legend(frameon=False, fontsize=7.6, loc="upper left")
-    fig.suptitle("The preregistered measure has a floor of about 2%; price-driven curtailment grew from almost nil",
+    fig.suptitle("The preregistered measure has a floor of about 2%; the dispatched-down part is small and spiky",
                  x=0.09, ha="left", fontsize=9.8, color=INK)
     fig.savefig(F / "F1_windows.png", dpi=170); plt.close(fig)
     caption("F1_windows", """Curtailed energy as a share of available (bias-corrected potential) energy for New Zealand's
@@ -78,22 +78,31 @@ def main():
     caption("F2_gate", """For each plant (point of connection), the detection floor, the 95th percentile of the gap
     between bias-corrected potential and metered output in unconstrained periods, divided by the plant's mean
     potential, July 2025 to June 2026. The plan set a gate: if the median exceeds 25%, curtailment is not reliably
-    measurable from offers alone. Solar plants sit high partly because their mean potential includes nights.""")
+    measurable from offers alone. Solar plants sit high because their potentials are typically submitted days ahead,
+    so they are stale forecasts (their floors are still 42-45% of mean potential on daytime half-hours alone).""")
 
-    # F3: monthly price-driven curtailment from the ledger
+    # F3: monthly dispatched-down curtailment from the ledger, Turitea and Kaiwera Downs apart from the rest
     led = pd.read_csv(T / "ledger_monthly.csv")
-    m = led.groupby("month")[["available_mwh", "curtailed_price-driven_mwh"]].sum()
+    led["grp"] = led.poc.map({"LTN2201": "Turitea", "GOR0331": "Kaiwera Downs"}).fillna("all other plants")
+    m = led.pivot_table(index="month", columns="grp", values="curtailed_price-driven_mwh", aggfunc="sum").fillna(0) / 1000
     m.index = pd.PeriodIndex(m.index, freq="M").to_timestamp()
-    fig, ax = plt.subplots(figsize=(7.6, 3.4))
-    fig.subplots_adjust(left=0.09, right=0.98, bottom=0.13, top=0.85)
-    ax.bar(m.index, m["curtailed_price-driven_mwh"] / 1000, width=25, color=PRICE)
-    ax.set_ylabel("price-driven curtailment, GWh a month"); ax.grid(axis="y", color=GRID, lw=0.5)
-    fig.suptitle("Price-driven curtailment comes in spells; the largest were in 2022 and 2025/26", x=0.09, ha="left",
-                 fontsize=10, color=INK)
+    fig, ax = plt.subplots(figsize=(7.6, 3.6))
+    fig.subplots_adjust(left=0.09, right=0.98, bottom=0.13, top=0.84)
+    bottom = np.zeros(len(m))
+    for grp, col in (("all other plants", "#b8b6ae"), ("Kaiwera Downs", "#eb6834"), ("Turitea", PRICE)):
+        if grp in m:
+            ax.bar(m.index, m[grp], width=25, bottom=bottom, color=col, label=grp)
+            bottom += m[grp].to_numpy()
+    ax.set_ylabel("dispatched-down curtailment, GWh a month"); ax.grid(axis="y", color=GRID, lw=0.5)
+    ax.legend(frameon=False, fontsize=7.6, loc="upper left")
+    fig.suptitle("Dispatched-down curtailment comes in spells; in 2025/26 it is mostly two wind farms", x=0.09,
+                 ha="left", fontsize=10, color=INK)
     fig.savefig(F / "F3_monthly_price_driven.png", dpi=170); plt.close(fig)
-    caption("F3_monthly_price_driven", """Monthly curtailed energy, in periods when the plant's node price was at or
-    below its own offer price, summed over New Zealand's offered wind and solar plants (calibration by plant and
-    quarter over the whole panel, so monthly values differ slightly from the 12-month figures).""")
+    caption("F3_monthly_price_driven", """Monthly curtailed energy in half-hours when the plant's node price was at or
+    below its own highest offer price, by plant (calibration by plant and quarter over the whole panel, so monthly
+    values differ slightly from the 12-month figures). Turitea moved its offer from $0.01 to $0.02/MWh in 2025/26 and
+    Kaiwera Downs offers at $1.60/MWh; most other wind farms offer at $0.01 and, from 2025/26, mostly submit their
+    potential after the half-hour has begun.""")
     print("figures written")
 
 

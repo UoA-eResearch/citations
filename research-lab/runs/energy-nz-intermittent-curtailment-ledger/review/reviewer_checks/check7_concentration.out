@@ -1,0 +1,44 @@
+2025/26 non-noise curtailed MWh: 126328
+  share of non-noise curtailed energy with price <= 0.01 (plan's H2 line): 0.47
+  share of non-noise curtailed energy with price <= own offer (report's post hoc): 0.73
+  share of non-noise curtailed energy with price < 1 $/MWh: 0.95
+  share of non-noise curtailed energy with price < 5 $/MWh: 0.99
+
+price-driven (post hoc) share of fleet available energy, 2025/26, leaving plants out:
+  all plants: 0.0222
+  without ['LTN2201']: 0.0115
+  without ['GOR0331']: 0.0167
+  without ['LTN2201', 'GOR0331']: 0.0041
+  plant's own price-driven share of its own available energy (top 6):
+poc
+GOR0331    0.1683
+LTN2201    0.0665
+WVY1101    0.0144
+WAI0331    0.0087
+MTO0331    0.0047
+HRP2201    0.0040
+  share of TPs at or below own offer, by plant (top 6): {'GOR0331': 0.215, 'LTN2201': 0.087, 'WWD1102': 0.075, 'WWD1103': 0.075, 'KPU0661': 0.075, 'NMA0331': 0.075}
+
+median highest offered price ($/MWh) by plant and FY (ending June):
+fy       2020  2021  2022  2023  2024  2025  2026  2027
+poc                                                    
+LTN2201   NaN   NaN  0.01  0.01  0.01  0.01  0.02  0.02
+GOR0331   NaN   NaN   NaN   NaN  0.00  1.60  1.60  1.60
+WVY1101   NaN  0.01  0.01  0.01  0.01  0.01  0.01  0.01
+HRP2201   NaN   NaN   NaN   NaN  0.01  0.01  0.01  0.01
+WWD1102  0.01  0.01  0.01  0.01  0.01  0.01  0.01  0.01
+TWH0331  0.01  0.01  0.01  0.01  0.01  0.01  0.01  0.01
+BPE0331  0.01  0.01  0.01  0.01  0.01  0.01  0.01  0.01
+
+Turitea share of TPs with maxprice > 0.01 by FY: {2022: 0.0, 2023: 0.0, 2024: 0.0, 2025: 0.0, 2026: 0.96, 2027: 1.0}
+price-driven (post hoc) curtailed MWh by plant and FY window (window calibration):
+         FY2021  FY2022  FY2023  FY2024  FY2025  FY2026
+poc                                                    
+LTN2201       0     253     849     407    3863   53721
+GOR0331       0       0       0       0    7214   25436
+WVY1101       0    2688    6976    1378    7606    6544
+HRP2201       0       0       0     164    3717    2378
+WWD1102      51     143    4430      94    1385    1000
+WWD1103      34     212    3808       0     244     585
+WAI0331       0       0       0       0       0     570
+NMA0331     208    2109    3433      51    2528     440
