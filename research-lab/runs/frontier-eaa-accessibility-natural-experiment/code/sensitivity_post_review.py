@@ -39,6 +39,13 @@ def main():
     eu["y_nodes"] = np.log1p(eu.violation_nodes)
     out["unnormalised_log1p_nodes"] = fmt(D.did(eu, y="y_nodes"))
     out["treated_ecommerce_only"] = fmt(D.did(eu[(eu.inscope == 0) | (eu.sector == "ecommerce")]))
+    # added at the confirmation pass: variants that do not condition on the outcome
+    periods = set(D.PRE + D.POST)
+    full = eu[eu.target.isin(periods)].groupby("domain").target.nunique()
+    out["balanced_panel"] = fmt(D.did(eu[eu.domain.isin(full[full == len(periods)].index)]))
+    for cc in ("fi", "pt"):
+        out[f"leave_out_{cc}"] = fmt(D.did(eu[~eu.tld.astype(str).str.lstrip(".").eq(cc)]))
+    out["in_time_placebo_2024"] = fmt(D.did(eu, pre=["202401", "202404"], post=["202407", "202410"]))
     out["treated_non_ecommerce_only"] = fmt(D.did(eu[(eu.inscope == 0) | (eu.sector != "ecommerce")]))
 
     # ratio of means on raw density: the change a reader of "violation density fell X%" would expect
