@@ -24,7 +24,7 @@ import pandas as pd
 RUN = Path(__file__).resolve().parents[1]
 DATA = RUN / "data"
 TAB = RUN / "results" / "tables"
-FUELS = {"Wind", "Solar"}
+FUELS = {"Wind": "Wind", "Solar": "Solar", "WIN": "Wind", "SOL": "Solar"}   # old and new fuel codes (D1)
 
 
 def generation():
@@ -35,7 +35,8 @@ def generation():
                                         "Trading_Date"]}
         x = x.rename(columns={c: canon.get(c.lower(), c.upper() if c.lower().startswith("tp") else c)
                               for c in x.columns})       # column case varies between months (D1)
-        x = x[x.Fuel_Code.isin(FUELS)]
+        x = x[x.Fuel_Code.isin(FUELS)].copy()
+        x["Fuel_Code"] = x.Fuel_Code.map(FUELS)
         for c in [c for c in x.columns if c.startswith("TP")]:
             x[c] = pd.to_numeric(x[c], errors="coerce")
         tps = [c for c in x.columns if c.startswith("TP")]

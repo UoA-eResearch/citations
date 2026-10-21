@@ -12,3 +12,11 @@
 4. **The offer layout**, read before the plan was written: each tranche row of the latest submission repeats that
    submission's potential, while tranches carried over from earlier submissions keep stale potentials, so *P* is
    taken from the highest-numbered latest submission, as `build.py` does.
+5. **Fuel codes.** Generation_MD labels older plants `Wind`/`Solar` and newer ones `WIN`/`SOL` (technology
+   `ONW`/`PV`). The first build matched only the older labels, which left out eight solar farms (Dannevirke,
+   Kōwhai Park, Pāmu Rā ki Whitianga, Te Herenga o te Rā, Clandeboye, Tauhei, and two at Maungaturoto) and two wind
+   farms (Kaiwaikawe, Kaiwera Downs stage 2). Both codings are now read. Mahinerangi (offer unit MAH0 at HWB0331)
+   has no wind generator in Generation_MD, only the Waipori hydro scheme at that point, so it remains unmatched and
+   is excluded. Rotohiko (HLY0331) is a battery (fuel `ELE`) and is excluded as not wind or solar. KOE1101 carries
+   three offer units but two metered solar farms (Kohira, Pukenui); its output is 0.72 of its potential, and it is
+   kept, with the bias correction absorbing the difference, and named in the leave-one-out.
