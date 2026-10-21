@@ -19,3 +19,6 @@ Two changes:
 
 OpenAlex-only entries flagged by identifier remain excluded; OpenAlex marks notices as retracted, a known flaw.
 `match_log.json` reports how many documents rule 2 keeps.
+
+The same rule is applied to the peS2o registry (secondary 7), whose first run was stopped during its download.
+There, a DOI listed as a retracted original with a date is never treated as a notice.

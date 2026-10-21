@@ -29,7 +29,8 @@ HF = "https://huggingface.co/datasets/allenai/peS2o/resolve/main/data/v2/"
 def registry():
     rw = pd.read_csv(RAW / "retraction_watch.csv", dtype=str, encoding="utf-8", encoding_errors="replace")
     rw["date"] = pd.to_datetime(rw.RetractionDate, format="%m/%d/%Y %H:%M", errors="coerce")
-    notices = {ndoi(x) for x in rw.RetractionDOI if ndoi(x)}
+    # D1: a notice identifier equal to the original's (or a Crossref assertion pointing at itself) is not a notice
+    notices = {ndoi(a) for a, b in zip(rw.RetractionDOI, rw.OriginalPaperDOI) if ndoi(a) and ndoi(a) != ndoi(b)}
     reinst = {ndoi(x) for x in rw[rw.RetractionNature == "Reinstatement"].OriginalPaperDOI if ndoi(x)}
     dates = {}
     for r in rw[rw.RetractionNature == "Retraction"].itertuples():
@@ -38,14 +39,16 @@ def registry():
             dates[k] = min(dates.get(k, r.date), r.date)
     for line in open(RAW / "crossref_notices.jsonl"):
         it = json.loads(line)
-        if ndoi(it.get("DOI")):
-            notices.add(ndoi(it["DOI"]))
+        own = ndoi(it.get("DOI"))
+        if own and any(ndoi(u.get("DOI")) != own for u in it.get("update-to") or []
+                       if (u.get("type") or "").lower() == "retraction"):
+            notices.add(own)
         for u in it.get("update-to") or []:
             k = ndoi(u.get("DOI"))
             dp = ((u.get("updated") or {}).get("date-parts") or [[None]])[0]
             if (u.get("type") or "").lower() == "retraction" and k and k not in dates and dp and dp[0]:
                 dates[k] = pd.Timestamp(year=dp[0], month=dp[1] if len(dp) > 1 else 1, day=dp[2] if len(dp) > 2 else 1)
-    return {k: v for k, v in dates.items() if v <= CUT and k not in notices}
+    return {k: v for k, v in dates.items() if v <= CUT and k not in notices - set(dates)}
 
 
 def corpus_ids(dois):
