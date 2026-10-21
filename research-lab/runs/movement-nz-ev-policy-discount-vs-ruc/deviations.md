@@ -21,3 +21,31 @@ Recorded after the registration series was built and before any effect was inter
    extends to September 2026.
 4. **Everything else is as preregistered**: the groups, the two events, both hypotheses and their decision rules,
    the estimation window for the baseline, the donut around April 2024, and the block bootstrap.
+
+## D2 — 2026-10-21 17:57 NZDT — after independent review
+
+An independent adversarial review (`review/review.md`) matched the counts to NZTA's service cell for cell and
+reproduced both Inconclusive verdicts exactly. No pipeline code or result table changed. Each figure taken from the
+review was checked against its outputs, and the preprint claim against OpenAlex, before use.
+
+1. **The prior preprint was readable all along.** D1 item 3 said only the title of Hoang (2026, Research Square
+   rs-11080967) could be retrieved; OpenAlex lists an open-access PDF (CC BY), verified here. The preprint does quantify
+   pull-forward (1,206 vehicles in the final eight weeks), uses weekly new registrations to December 2025, and does not
+   consider road user charges. The report's prior-work section and its claim that no study had quantified the
+   December 2023 pull-forward are corrected; the separation of the two shocks remains new.
+2. **"It did not last" is withdrawn.** Over the preprint's window the plug-in share averaged 6.6% (January 2024 to
+   December 2025) against 13.4% before, consistent with "lasting". Recovery begins in March 2026, after that window;
+   "back to 18–22%" was 13.7–21.7% by month, and a nine-month total had been compared with a twelve-month one.
+3. **H1's "about a tenth" is replaced by a range.** The ratio runs from 0.09 to 0.46 across defensible baselines, the
+   preregistered one being the most aggressive extrapolation; the argument against H1 rests on a break-even, which is
+   now given, and on the minimum detectable effect (about 1.0), now reported.
+4. **H2 is confounded as well as underpowered**: the rebound from the January trough, the battery-electric versus
+   plug-in hybrid contrast, a broader placebo distribution, contamination of the control by mild-hybrid utilities, and
+   the opposite-signed market-share version. The draft's placebo dates were described as policy-free; they are not.
+5. **Preregistered analyses the draft omitted**: H1 on new vehicles only (plan §5.1), a market-share outcome for H2,
+   and the minimum detectable effect for H1, all reported from the review's reanalysis.
+6. **The ute series** now counts diesel utilities of 3,500 kg or less; the study's universe includes about 37,300
+   heavier vehicles, which do not affect H1 or H2.
+7. **Snapshot attrition** is quantified against NZTA's May 2023 snapshot (the draft's suggested April 2021 service does
+   not exist): about a point a year, too small to drive the results.
+8. **D1 item 1 was not a deviation**: the plan already specified September 2026.
