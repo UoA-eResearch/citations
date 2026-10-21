@@ -213,7 +213,7 @@ def parse_realised(path):
 
 
 def parse_national(path):
-    """National gross gas production (PJ) from MBIE's energy overview: Indigenous Production -> Natural gas."""
+    """National net gas production (PJ) from MBIE's energy overview: Indigenous Production -> Natural gas."""
     wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
     ws = wb[[s for s in wb.sheetnames if norm(s) == "annualpj"][0]]
     rows = grid(ws)
@@ -299,9 +299,9 @@ def main():
     nat = []
     for f in sorted((RAW / "mbie_other").glob("energy-overview_*.xlsx")):
         for y, v in parse_national(f):
-            nat.append(dict(capture=f.stem.split("_")[-1], year=y, gross_pj=v))
+            nat.append(dict(capture=f.stem.split("_")[-1], year=y, net_pj=v))
         print(f"  national {f.name}: {len(nat)} years", flush=True)
-    write(RUN / "data" / "national.csv", nat, ["capture", "year", "gross_pj"])
+    write(RUN / "data" / "national.csv", nat, ["capture", "year", "net_pj"])
     gic = []
     gp = RAW / "gic" / "ProductionConsumption.xlsx"
     if gp.exists():

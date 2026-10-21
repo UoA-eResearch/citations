@@ -171,7 +171,7 @@ def main():
     # matches MBIE's published 102 PJ, so it is the net series extended to 2025.
     nat = {}
     for r in rows("national.csv"):
-        nat[int(r["year"])] = f(r["gross_pj"])
+        nat[int(r["year"])] = f(r["net_pj"])
     natnet = defaultdict(float)
     natgross = defaultdict(float)
     for (b, fld, t), A in act.items():
