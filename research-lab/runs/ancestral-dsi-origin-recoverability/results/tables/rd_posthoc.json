@@ -1,0 +1,213 @@
+{
+ "sars_cov_2_share_of_window": 0.4093,
+ "rd_without_sars_cov_2_cutoff_2023_06_01": {
+  "usable": {
+   "jump_pp": 2.641,
+   "share_pre": 0.6482,
+   "share_post": 0.7684,
+   "ci_pp": [
+    -3.998,
+    10.817
+   ]
+  },
+  "placeholder": {
+   "jump_pp": 10.248,
+   "share_pre": 0.1032,
+   "share_post": 0.1887,
+   "ci_pp": [
+    1.405,
+    19.975
+   ]
+  },
+  "malformed": {
+   "jump_pp": 0.168,
+   "share_pre": 0.0008,
+   "share_post": 0.0009,
+   "ci_pp": [
+    -0.015,
+    0.35
+   ]
+  },
+  "absent": {
+   "jump_pp": -13.057,
+   "share_pre": 0.2477,
+   "share_post": 0.0421,
+   "ci_pp": [
+    -18.363,
+    -8.841
+   ]
+  }
+ },
+ "within_owner_cutoff_2023_06_01": {
+  "owners_in_both": 10191,
+  "samples": 17714870,
+  "usable": {
+   "change_pp": 0.537,
+   "ci_pp": [
+    -4.277,
+    8.981
+   ]
+  },
+  "placeholder": {
+   "change_pp": 5.808,
+   "ci_pp": [
+    3.031,
+    7.694
+   ]
+  },
+  "malformed": {
+   "change_pp": 0.043,
+   "ci_pp": [
+    -0.016,
+    0.079
+   ]
+  },
+  "absent": {
+   "change_pp": -6.388,
+   "ci_pp": [
+    -14.376,
+    -2.419
+   ]
+  }
+ },
+ "rd_without_sars_cov_2_placebo_2021_06_01": {
+  "usable": {
+   "jump_pp": 3.575,
+   "share_pre": 0.5591,
+   "share_post": 0.6369,
+   "ci_pp": [
+    -5.82,
+    14.944
+   ]
+  },
+  "placeholder": {
+   "jump_pp": -2.676,
+   "share_pre": 0.0639,
+   "share_post": 0.1061,
+   "ci_pp": [
+    -4.772,
+    -0.118
+   ]
+  },
+  "malformed": {
+   "jump_pp": 0.065,
+   "share_pre": 0.001,
+   "share_post": 0.0008,
+   "ci_pp": [
+    -0.055,
+    0.158
+   ]
+  },
+  "absent": {
+   "jump_pp": -0.964,
+   "share_pre": 0.3759,
+   "share_post": 0.2563,
+   "ci_pp": [
+    -12.684,
+    9.387
+   ]
+  }
+ },
+ "within_owner_placebo_2021_06_01": {
+  "owners_in_both": 8787,
+  "samples": 14917145,
+  "usable": {
+   "change_pp": 14.282,
+   "ci_pp": [
+    1.03,
+    23.219
+   ]
+  },
+  "placeholder": {
+   "change_pp": 0.504,
+   "ci_pp": [
+    -0.442,
+    2.901
+   ]
+  },
+  "malformed": {
+   "change_pp": -0.047,
+   "ci_pp": [
+    -0.084,
+    0.021
+   ]
+  },
+  "absent": {
+   "change_pp": -14.74,
+   "ci_pp": [
+    -22.771,
+    -2.717
+   ]
+  }
+ },
+ "rd_without_sars_cov_2_placebo_2022_06_01": {
+  "usable": {
+   "jump_pp": -6.539,
+   "share_pre": 0.6217,
+   "share_post": 0.6849,
+   "ci_pp": [
+    -13.113,
+    -0.545
+   ]
+  },
+  "placeholder": {
+   "jump_pp": 1.39,
+   "share_pre": 0.0693,
+   "share_post": 0.1723,
+   "ci_pp": [
+    -1.437,
+    4.773
+   ]
+  },
+  "malformed": {
+   "jump_pp": -0.136,
+   "share_pre": 0.0011,
+   "share_post": 0.0011,
+   "ci_pp": [
+    -0.268,
+    0.005
+   ]
+  },
+  "absent": {
+   "jump_pp": 5.286,
+   "share_pre": 0.3079,
+   "share_post": 0.1417,
+   "ci_pp": [
+    -1.013,
+    11.714
+   ]
+  }
+ },
+ "within_owner_placebo_2022_06_01": {
+  "owners_in_both": 9506,
+  "samples": 17344668,
+  "usable": {
+   "change_pp": 0.098,
+   "ci_pp": [
+    -2.581,
+    6.0
+   ]
+  },
+  "placeholder": {
+   "change_pp": 4.121,
+   "ci_pp": [
+    2.655,
+    7.635
+   ]
+  },
+  "malformed": {
+   "change_pp": 0.049,
+   "ci_pp": [
+    -0.022,
+    0.091
+   ]
+  },
+  "absent": {
+   "change_pp": -4.268,
+   "ci_pp": [
+    -11.927,
+    -1.069
+   ]
+  }
+ }
+}
