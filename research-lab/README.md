@@ -109,6 +109,16 @@ A 74-qubit twin at the weaker hardware noise would be harder still. The prior ev
 
 Skipped after a feasibility check (7 October 2026): `comp-social-science-ai-edit-survival`. The text of deleted Wikipedia articles is visible only to administrators (the API returns `permissiondenied` for deleted revisions), so the first revisions of deleted articles cannot be scored retrospectively. Since August 2025, suspected LLM articles can also be speedy-deleted because they look AI-generated, which makes the outcome partly circular. A prospective version would need months of collection and could no longer test the March 2026 policy change.
 
+Skipped after a novelty check (21 October 2026): `energy-nz-edb-quality-standard-ratchet`. The Commerce Commission's
+DPP4 reasons paper (Attachment E, 20 November 2024) already answers the primary question. Since DPP3, movement in each
+distributor's unplanned SAIDI and SAIFI targets and limits between reference periods is capped at ±5% in either
+direction, so the lead's "median limit rises by at least 20% from DPP2 to DPP4" cannot happen by construction. The
+paper's Table E16 tabulates the uncapped and capped DPP3-to-DPP4 changes for all 16 non-exempt distributors: the median
+uncapped change in the unplanned SAIDI limit is about +1% (Vector +31.9% and The Lines Company +25.1% held to +5%;
+Orion −37.1% and Nelson −27.4% held to −5%). The Commission also discusses climate change and the 2.3-MED expectation
+(E389–E394). The remaining secondary question (2.5β rule versus DPP boundary values on a year or two of
+interruption-level data) is too thin for a deep dive alone.
+
 Lessons from the first deep dive, to carry into the next ones (details in its deviations log, D19–D29 and D27c):
 
 - **Get independent review before stating a verdict.** Both reviewers found real problems the main analysis had missed:
