@@ -58,3 +58,34 @@ nothing. Part of H4's −0.84 may therefore be a network-wide trend rather than 
 midday offtake minus offtake in each placebo window, which nets out changes common to all hours in a
 network-summer. Exploratory; H4's preregistered verdict is unchanged and is reported with this beside it. The bootstrap
 was also moved onto precomputed arrays (same scheme and seed; it reproduces the first run's intervals exactly).
+
+## D5 — 2026-10-21 23:31 NZDT — after independent review
+
+The review (`review/review.md`, fix first) reproduced the H4 bootstrap exactly, and confirmed the accounting, D1,
+D2, the merged units and the trading-period timing. Its findings were checked with the study's own estimator in
+`code/sensitivity_post_review.py` (same bootstrap and seed) before the report was changed:
+
+1. **H4 rests on two units.** Without EA Networks and Top Energy, the two networks that added solar farms, the slope
+   is −0.48 (−1.31 to +0.19). Without the 11 units holding at least 5 MW of industrial-segment solar it is −0.95
+   (−3.40 to +0.15); the review's narrower set of seven farm units gave −0.05. The report no longer calls the result
+   stable.
+2. **Rooftop solar is not separately detectable.** Behind-the-meter capacity alone gives −1.49 (−2.67 to +0.23),
+   industrial capacity alone −0.96 (−1.27 to −0.11). The title, verdict and plain-terms section no longer credit
+   rooftop solar.
+3. **The 18:00–21:00 window has sun** in a New Zealand summer (elevation 26–35° at 18:00 daylight time), so the
+   midday-minus-evening contrast of D4 subtracted solar output. It is withdrawn, along with "best estimate". The
+   night window (02:00–05:00) replaces it: midday minus night −0.51 (−0.56 to −0.25), and −0.33 (−0.61 to −0.06)
+   without the two farm units. Exploratory.
+4. **Confounds disclosed.**
+   - Solar capacity two years ahead predicts lower offtake now (midday −0.22, night −0.26): a pre-trend.
+   - Top Energy has been a net grid injector since summer 2020/21, after its geothermal expansion.
+   - EA Networks' night offtake swings with irrigation.
+   - Non-solar DG as a control gives −0.80 (−1.02 to −0.31).
+5. **Plan section 4 for H4, completed.** The 15% jump filter gives −0.62 (−1.53 to +0.33), and it removes the farm
+   years themselves; first differences (−0.58, −0.86 to +0.43) are now discussed.
+6. **Segments** contain some farm-sized steps; the excluded embedded networks hold 0.9% of capacity. Disclosed.
+7. **Process.** D4's code and outputs were committed together (8f12116); recorded.
+8. **Wording.** "Half to three-fifths" becomes "two-fifths to three-fifths" (now moot with the evening window
+   withdrawn); "could not have succeeded" is qualified as "with the disclosed annual totals".
+
+H4's verdict under the preregistered rule is unchanged: Supported.

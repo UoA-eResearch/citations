@@ -35,6 +35,7 @@ def caption(name, text):
 def main():
     p = json.load(open(T / "primary.json"))
     rob = json.load(open(T / "robustness.json"))
+    post = json.load(open(T / "sensitivity_post_review.json"))
     s = pd.read_csv(T / "panel_summer.csv")
 
     # F1 installed solar
@@ -61,10 +62,12 @@ def main():
             ("H2 energy delivered\nGWh per MW (annual)", p["H2"], -0.3, (-0.7, -0.35)),
             ("H3 winter peak\nMW per MW (annual)", p["H3"], None, (-0.05, 0.05)),
             ("H4 summer-midday offtake\nMW per MW (12 summers)", p["H4"], -0.3, (-0.6, -0.4)),
-            ("midday minus evening\n(exploratory, D4)", {**rob["H4"]["mid_minus_eve"], "verdict": "not tested"},
+            ("H4 without EA Networks\nand Top Energy (D5)", {**post["drop_EASH_TOPE"], "verdict": "not tested"},
+             -0.3, (-0.6, -0.4)),
+            ("midday minus night\n(exploratory, D5)", {**post["mid_minus_night"], "verdict": "not tested"},
              -0.3, (-0.6, -0.4))]
-    fig, axs = plt.subplots(len(rows), 1, figsize=(7.4, 6.4))
-    fig.subplots_adjust(left=0.27, right=0.97, bottom=0.06, top=0.9, hspace=0.95)
+    fig, axs = plt.subplots(len(rows), 1, figsize=(7.4, 7.4))
+    fig.subplots_adjust(left=0.27, right=0.97, bottom=0.05, top=0.91, hspace=1.0)
     for ax, (lab, r, thr, exp) in zip(axs, rows):
         lo, hi = r["ci"]
         ax.axvspan(*exp, color=SUN, alpha=0.25, lw=0)
@@ -80,18 +83,19 @@ def main():
         ax.set_xlim(-span, span)
         ax.text(1.0, 1.15, f"{r['estimate']:+.2f} ({lo:+.2f} to {hi:+.2f}); {r['verdict']}; MDE {r['mde_80']:.2f}",
                 transform=ax.transAxes, ha="right", fontsize=7.5, color=INK2)
-    fig.suptitle("Annual totals cannot see the solar; the half-hourly grid data can", x=0.03, ha="left",
+    fig.suptitle("Annual totals cannot see the solar; summer-midday offtake can, through two solar farms", x=0.03, ha="left",
                  fontsize=10.5, color=INK)
     fig.savefig(F / "F2_slopes.png", dpi=170); plt.close(fig)
     caption("F2_slopes", """Each preregistered slope with its 95% distributor-cluster bootstrap interval (blue), the
     preregistered threshold (dashed; for H3 the grey band is the +/-0.2 equivalence band) and the range expected from
-    yield and self-consumption (shaded). The last row is the exploratory midday-minus-evening contrast of D4, which
-    nets out changes in offtake common to all hours. Note the different horizontal scales: the annual intervals for H1-H3 are many
+    yield and self-consumption (shaded). The last two rows were added after review (D5): H4 without the two units
+    that added solar farms, and the exploratory midday-minus-night contrast, which nets out changes common to all
+    hours in a network-summer. Note the different horizontal scales: the annual intervals for H1-H3 are many
     times wider than the effects they were meant to detect.""")
 
     # F3 change vs change: midday, evening, and midday minus evening
     s["mid_pi"] = s.mid_mw * 1000 / s.icps
-    s["eve_pi"] = s.eve_mw * 1000 / s.icps
+    s["eve_pi"] = s.night_mw * 1000 / s.icps          # night window, 02:00-05:00 (D5: the evening window has sun)
     s["con_pi"] = s.mid_pi - s.eve_pi
     s["sol_pi"] = s.solar_all_mw * 1000 / s.icps
     a, b = s[s.summer == s.summer.min()].set_index("unit"), s[s.summer == s.summer.max()].set_index("unit")
@@ -99,8 +103,8 @@ def main():
     names = {pid: n for pid, n in bp.PARTICIPANT.items()}
     fig, axs = plt.subplots(1, 3, figsize=(8.6, 3.6), sharey=True)
     fig.subplots_adjust(left=0.09, right=0.98, bottom=0.15, top=0.8, wspace=0.08)
-    for ax, col, c, t in ((axs[0], "mid_pi", SUN, "midday 12:00-15:00"), (axs[1], "eve_pi", EVE, "evening 18:00-21:00"),
-                          (axs[2], "con_pi", ALL, "midday minus evening")):
+    for ax, col, c, t in ((axs[0], "mid_pi", SUN, "midday 12:00-15:00"), (axs[1], "eve_pi", EVE, "night 02:00-05:00"),
+                          (axs[2], "con_pi", ALL, "midday minus night")):
         ax.axhline(0, color=INK2, lw=0.8)
         ax.scatter(d.sol_pi, d[col], s=22, color=c, edgecolor=SURF, lw=0.8, zorder=3)
         ax.set_title(t, fontsize=8.5, color=INK, loc="left")
@@ -109,14 +113,15 @@ def main():
             ax.annotate(names.get(u, u), (d.sol_pi[u], d[col][u]), xytext=off, textcoords="offset points",
                         fontsize=6.8, color=INK2, ha="right")
     axs[0].set_ylabel("change in summer grid offtake,\nkW per ICP")
-    fig.suptitle("Summer 2014/15 to 2025/26: offtake fell most where solar grew, at midday and in the evening alike",
+    fig.suptitle("Summer 2014/15 to 2025/26: two units that added solar farms carry the midday fall",
                  x=0.09, ha="left", fontsize=9.6, color=INK)
     fig.savefig(F / "F3_change_vs_change.png", dpi=170); plt.close(fig)
     caption("F3_change_vs_change", """Each point is one of the 24 grid-exit units (networks sharing grid exit points
     merged): the change between the first and last summers in mean net grid offtake per ICP against the change in
     installed solar per ICP (all distribution-connected solar, including farms). The two units with the largest
-    solar growth per ICP are labelled; both added solar farms. Evening offtake fell with solar too, so the right-hand
-    panel nets it out. The estimates in the report use all twelve summers with unit and summer fixed effects and
+    solar growth per ICP are labelled; both added solar farms, and Top Energy also became a net grid injector after
+    its geothermal expansion (2020/21), which lowers its offtake at every hour. Night offtake moved too, so the
+    right-hand panel nets it out. The estimates in the report use all twelve summers with unit and summer fixed effects and
     temperature; this figure is descriptive.""")
     print("figures written")
 

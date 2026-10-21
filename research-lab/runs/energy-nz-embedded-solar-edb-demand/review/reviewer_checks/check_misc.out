@@ -1,0 +1,12 @@
+202601 solar-shaped injection POCs (night<2% of peak): peak TP -> {'ASB0661/EASH/GN': 'TP27 (4 MW)', 'CYD2201/CTCT/GG': 'TP20 (137 MW)', 'HLY0331/WAIK/GN': 'TP28 (7 MW)', 'HLY2201/GENE/GG': 'TP20 (58 MW)', 'MTO0331/NPOW/GN': 'TP28 (7 MW)', 'OHK2201/MRPL/GG': 'TP36 (41 MW)', 'ROX1101/CTCT/GG': 'TP20 (43 MW)', 'WAI0331/LODE/GG': 'TP24 (23 MW)', 'WKM2201/MRPL/GG': 'TP38 (54 MW)'}
+202501 solar-shaped injection POCs (night<2% of peak): peak TP -> {'MKE1101/TODD/GG': 'TP20 (8 MW)', 'WAI0331/LODE/GG': 'TP30 (6 MW)'}
+Commercial-segment monthly steps > 3 MW: [('HEDL', '2026-05', 28.8), ('MPOW', '2026-03', 5.5), ('NPOW', '2025-11', 9.0), ('NPOW', '2026-04', 8.7), ('TOPE', '2025-05', 20.0), ('WAIK', '2024-09', 3.4)]
+Residential-segment monthly steps > 3 MW: [('HAWK', '2024-05', 5.1), ('ORON', '2025-07', 8.9), ('POCO', '2023-11', 11.5), ('POCO', '2026-07', 3.3), ('POCO', '2026-09', 3.0), ('WAIP', '2025-07', 9.3)]
+reproduced percentile CI: [-1.009, -0.158]
+draws by whether EASH/TOPE absent (both0=neither drawn; oneof=exactly one absent):
+              size  median  <lambda_0>  <lambda_1>
+both0 oneof                                      
+False False  2016  -0.873      -0.980      -0.765
+      True   2332  -0.835      -1.005      -0.575
+True  False   651  -0.473      -1.254       0.163
+share of draws > -0.3: 0.042 ; share > 0: 0.011

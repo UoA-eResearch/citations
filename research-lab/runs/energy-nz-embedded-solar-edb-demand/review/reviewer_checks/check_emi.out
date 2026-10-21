@@ -1,0 +1,84 @@
+
+== 201501 Grid_export: rows=7626 GENTYPE={'GN': 5332, 'GG': 1364, 'GD': 930} UNIT={'kWh': 7626} FLOW={'X': 7626} STATUS={'F': 7626}
+   GN kWh rows=5332 dup(POC,NWK,date)=0 POCs=165 ; zero-midday share=0.063
+   HAM0331 GN kWh: n=31 nwk=['WAIK'] mean mid kWh/day=222718
+   non-GN POC counts: {'GD': 28, 'GG': 44} ; sample: [['ARA2201', 'MRPL', 'GG'], ['ARG1101', 'TRUS', 'GG'], ['ARI1101', 'MRPL', 'GG'], ['ARI1102', 'MRPL', 'GG'], ['ASY0111', 'MPOW', 'GD']]
+
+== 201501 Grid_import: rows=3441 GENTYPE={'GN': 1674, 'GG': 1457, 'GD': 310} UNIT={'kWh': 3441} FLOW={'I': 3441} STATUS={'F': 3441}
+   GN kWh rows=1674 dup(POC,NWK,date)=0 POCs=53 ; zero-midday share=0.792
+   HAM0331 GN kWh: n=0 nwk=[] mean mid kWh/day=nan
+   top import GN POCs (kWh midday, month): {'WKM2201/TUAR': 8770684, 'TWC2201/TRPG': 3839103, 'GLN0332/NZST': 3564894, 'ATI2201/MRPL': 3472320, 'KIN0112/POCO': 2761372, 'WRK0331/HAWK': 947859, 'MAT1101/BOPD': 854650, 'WIL0331/CKHK': 831614}
+
+== 202001 Grid_export: rows=7370 GENTYPE={'GN': 5177, 'GG': 1387, 'GD': 806} UNIT={'kWh': 7370} FLOW={'X': 7370} STATUS={'F': 7370}
+   GN kWh rows=5177 dup(POC,NWK,date)=0 POCs=160 ; zero-midday share=0.083
+   HAM0331 GN kWh: n=31 nwk=['WAIK'] mean mid kWh/day=223738
+   non-GN POC counts: {'GD': 24, 'GG': 44} ; sample: [['ARA2201', 'MRPL', 'GG'], ['ARG1101', 'TRUS', 'GG'], ['ARI1101', 'MRPL', 'GG'], ['ARI1102', 'MRPL', 'GG'], ['ASY0111', 'MPAS', 'GD']]
+
+== 202001 Grid_import: rows=3929 GENTYPE={'GN': 2201, 'GG': 1449, 'GD': 279} UNIT={'kWh': 3929} FLOW={'I': 3929} STATUS={'F': 3929}
+   GN kWh rows=2201 dup(POC,NWK,date)=0 POCs=70 ; zero-midday share=0.784
+   HAM0331 GN kWh: n=0 nwk=[] mean mid kWh/day=nan
+   top import GN POCs (kWh midday, month): {'WKM2201/TUAR': 7606045, 'TWC2201/TRPG': 5711972, 'ATI2201/MRPL': 3697907, 'GLN0332/NZST': 2512235, 'KIN0112/POCO': 2412552, 'KAW0112/SKOG': 1972687, 'WRK0331/HAWK': 1594113, 'WIL0331/CKHK': 1327585}
+
+== 202501 Grid_export: rows=7378 GENTYPE={'GN': 5053, 'GG': 1550, 'GD': 775} UNIT={'kWh': 7378} FLOW={'X': 7378} STATUS={'F': 7378}
+   GN kWh rows=5053 dup(POC,NWK,date)=0 POCs=156 ; zero-midday share=0.073
+   HAM0331 GN kWh: n=31 nwk=['WAIK'] mean mid kWh/day=243736
+   non-GN POC counts: {'GD': 23, 'GG': 49} ; sample: [['ARA2201', 'MRPL', 'GG'], ['ARG1101', 'CNIR', 'GG'], ['ARI1101', 'MRPL', 'GG'], ['ARI1102', 'MRPL', 'GG'], ['ASY0111', 'MPAS', 'GD']]
+
+== 202501 Grid_import: rows=4402 GENTYPE={'GN': 2480, 'GG': 1612, 'GD': 310} UNIT={'kWh': 4402} FLOW={'I': 4402} STATUS={'F': 4402}
+   GN kWh rows=2480 dup(POC,NWK,date)=0 POCs=79 ; zero-midday share=0.823
+   HAM0331 GN kWh: n=0 nwk=[] mean mid kWh/day=nan
+   top import GN POCs (kWh midday, month): {'WKM2201/TUAR': 6436025, 'TAB0331/HAWK': 4287173, 'ATI2201/MRPL': 2880820, 'KOE1101/TOPE': 2839316, 'TWC2201/TRPG': 2291534, 'GLN0332/NZST': 2096570, 'KIN0112/POCO': 1732561, 'KAW0111/HEDL': 1094615}
+
+== 202512 Grid_export: rows=7471 GENTYPE={'GN': 5084, 'GG': 1612, 'GD': 775} UNIT={'kWh': 7471} FLOW={'X': 7471} STATUS={'F': 7471}
+   GN kWh rows=5084 dup(POC,NWK,date)=0 POCs=157 ; zero-midday share=0.073
+   HAM0331 GN kWh: n=31 nwk=['WAIK'] mean mid kWh/day=224203
+   non-GN POC counts: {'GD': 23, 'GG': 51} ; sample: [['ARA2201', 'MRPL', 'GG'], ['ARG1101', 'CNIR', 'GG'], ['ARI1101', 'MRPL', 'GG'], ['ARI1102', 'MRPL', 'GG'], ['ASY0111', 'MPAS', 'GD']]
+
+== 202512 Grid_import: rows=4650 GENTYPE={'GN': 2666, 'GG': 1674, 'GD': 310} UNIT={'kWh': 4650} FLOW={'I': 4650} STATUS={'F': 4650}
+   GN kWh rows=2666 dup(POC,NWK,date)=0 POCs=85 ; zero-midday share=0.807
+   HAM0331 GN kWh: n=0 nwk=[] mean mid kWh/day=nan
+   top import GN POCs (kWh midday, month): {'WKM2201/TUAR': 6943205, 'KOE1101/TOPE': 4481836, 'TWC2201/TRPG': 4429815, 'GLN0332/NZST': 2864258, 'TAB0331/HAWK': 2808620, 'ATI2201/MRPL': 1937290, 'WRK0331/HAWK': 1896320, 'WIL0331/CKHK': 1674932}
+
+share of zero-midday POC-days by network, 202512: {'TUAR': 1.0, 'BOPD': 0.968, 'TOPE': 0.968, 'NZST': 0.903, 'TRPG': 0.871, 'MRPL': 0.581, 'WATA': 0.25, 'HAWK': 0.208, 'TASM': 0.177, 'ELEC': 0.177, 'WPOW': 0.101, 'DUNE': 0.058, 'WAIK': 0.056, 'TPCO': 0.052, 'CKHK': 0.048, 'NPOW': 0.043, 'BUEL': 0.032, 'NELS': 0.032, 'LINE': 0.016, 'VECT': 0.01, 'HEDL': 0.008, 'POCO': 0.002, 'CHBP': 0.0, 'ALPE': 0.0, 'EASH': 0.0, 'COUP': 0.0, 'EAST': 0.0, 'ELIN': 0.0, 'MPOW': 0.0, 'MARL': 0.0, 'LLNW': 0.0, 'OTPO': 0.0, 'SCAN': 0.0, 'NZAS': 0.0, 'ORON': 0.0, 'WAIP': 0.0}
+
+GN POCs per network by Dec file:
+           201412  201712  202012  202312  202512
+NWK_CODE                                        
+ALPE           7       7       7       7       7
+BOPD           1       1       1       1       1
+BUEL           3       2       2       2       2
+CHBP           1       1       1       1       1
+CKHK          12      12      12      12      12
+COUP           3       3       3       3       2
+DUNE           6       6       5       5       5
+EASH           2       2       1       1       1
+EAST           3       1       1       1       1
+ELEC           2       2       2       2       2
+ELIN           1       1       1       1       1
+HAWK           8       8       8       8       9
+HEDL           4       4       4       4       4
+LINE           6       5       6       6       6
+LLNW           1       1       1       1       1
+MARL           1       1       1       1       1
+MPOW           6       8       8       7       7
+MRPL           1       1       1       1       1
+NELS           1       1       1       1       1
+NPOW           4       3       3       3       3
+NZAS           1       1       1       1       1
+NZST           1       1       1       1       1
+ORON          14      10      10      11      11
+OTPO           4       4       3       3       3
+POCO          29      29      28      29      29
+SCAN           2       2       2       2       2
+SKOG           0       1       1       0       0
+TASM           6       4       4       4       4
+TOPE           1       1       1       1       1
+TPCO           4       4       4       4       5
+TRPG           0       1       1       1       1
+TUAR           1       1       1       1       1
+VECT          18      19      19      19      19
+WAIK           5       4       4       4       4
+WAIP           2       2       2       2       3
+WATA           3       4       4       4       4
+WNST           0       0       1       1       0
+WPOW           8       8       8       7       7

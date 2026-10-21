@@ -1,0 +1,170 @@
+{
+ "farm_units_industrial_solar_ge_5MW": [
+  "EASH",
+  "EAST",
+  "HEDL",
+  "LINE",
+  "MARL",
+  "NELS",
+  "NPOW",
+  "ORON",
+  "TOPE",
+  "VECT",
+  "WAIK"
+ ],
+ "preregistered": {
+  "estimate": -0.8426,
+  "ci": [
+   -1.0094,
+   -0.1581
+  ],
+  "se": 0.1979,
+  "mde_80": 0.5541,
+  "n": 288,
+  "draws": 4999
+ },
+ "drop_EASH_TOPE": {
+  "estimate": -0.4798,
+  "ci": [
+   -1.3097,
+   0.1901
+  ],
+  "se": 0.3899,
+  "mde_80": 1.0918,
+  "n": 264,
+  "draws": 4999
+ },
+ "drop_farm_units": {
+  "estimate": -0.9545,
+  "ci": [
+   -3.3964,
+   0.1492
+  ],
+  "se": 0.9353,
+  "mde_80": 2.6189,
+  "n": 156,
+  "draws": 4999
+ },
+ "btm_exposure_only": {
+  "estimate": -1.4905,
+  "ci": [
+   -2.6688,
+   0.2348
+  ],
+  "se": 0.7407,
+  "mde_80": 2.0741,
+  "n": 288,
+  "draws": 4999
+ },
+ "industrial_exposure_only": {
+  "estimate": -0.9568,
+  "ci": [
+   -1.2741,
+   -0.1126
+  ],
+  "se": 0.243,
+  "mde_80": 0.6805,
+  "n": 288,
+  "draws": 4999
+ },
+ "joint_btm_coefficient": {
+  "estimate": -0.5056,
+  "ci": [
+   -1.8878,
+   0.5355
+  ],
+  "se": 0.597,
+  "mde_80": 1.6716,
+  "n": 288,
+  "draws": 4999
+ },
+ "joint_ind_coefficient": {
+  "estimate": -0.9038,
+  "ci": [
+   -1.0365,
+   -0.0777
+  ],
+  "se": 0.2429,
+  "mde_80": 0.6801,
+  "n": 288,
+  "draws": 4999
+ },
+ "nonsolar_dg_control": {
+  "estimate": -0.7972,
+  "ci": [
+   -1.0249,
+   -0.3093
+  ],
+  "se": 0.187,
+  "mde_80": 0.5235,
+  "n": 288,
+  "draws": 4999
+ },
+ "night_with_nonsolar_dg_control": {
+  "estimate": -0.28,
+  "ci": [
+   -0.5881,
+   0.1186
+  ],
+  "se": 0.1739,
+  "mde_80": 0.4868,
+  "n": 288,
+  "draws": 4999
+ },
+ "mid_minus_night": {
+  "estimate": -0.5125,
+  "ci": [
+   -0.5647,
+   -0.2541
+  ],
+  "se": 0.0774,
+  "mde_80": 0.2168,
+  "n": 288,
+  "draws": 4999
+ },
+ "mid_minus_night_drop_EASH_TOPE": {
+  "estimate": -0.3336,
+  "ci": [
+   -0.6115,
+   -0.064
+  ],
+  "se": 0.1368,
+  "mde_80": 0.383,
+  "n": 264,
+  "draws": 4999
+ },
+ "placebo_lead2_midday": {
+  "estimate": -0.215,
+  "ci": [
+   -0.8683,
+   0.0095
+  ],
+  "se": 0.245,
+  "mde_80": 0.6859,
+  "n": 240,
+  "draws": 4999
+ },
+ "placebo_lead2_night": {
+  "estimate": -0.2615,
+  "ci": [
+   -0.9651,
+   -0.0342
+  ],
+  "se": 0.2551,
+  "mde_80": 0.7144,
+  "n": 240,
+  "draws": 4999
+ },
+ "drop_jumps_15pct": {
+  "estimate": -0.6196,
+  "ci": [
+   -1.5256,
+   0.3304
+  ],
+  "se": 0.4967,
+  "mde_80": 1.3906,
+  "n": 242,
+  "draws": 4999
+ },
+ "drop_jumps_15pct_rows_dropped": 46
+}

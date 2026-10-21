@@ -1,14 +1,14 @@
-# What rooftop solar has done to New Zealand's electricity networks: invisible in the annual books, visible at summer midday
+# What distributed solar has done to New Zealand's electricity networks: invisible in the annual books, and at summer midday a signal carried by two solar farms
 
 *Twenty-nine electricity distributors, 2014–2026: their annual information disclosures, the Electricity Authority's
 registry of installed solar, and half-hourly metered offtake at every grid exit point, used to measure how much
 grid energy distributed solar displaces and whether it touches the winter peak.*
 
-**Verdict: Inconclusive on the three annual tests; Supported on summer-midday grid offtake, with a caveat on size.**
-Distributed solar on the 29 networks grew from about 17 MW to 363 MW behind the meter (about 490 MW including solar
-farms) over the panel's years. That is too small a share of annual energy for the distributors' annual disclosures to
-detect, so the annual tests cannot answer their questions. Half-hourly grid data can: where solar grew, the networks
-draw less from the national grid at summer midday.
+**Verdict: Inconclusive on the three annual tests. H4 (summer-midday grid offtake) is Supported under its
+preregistered rule, but the result comes from the two networks that added solar farms, and rooftop solar's own
+effect is not detectable.** Distributed solar on the 29 networks grew from about 17 MW behind the meter (19 MW in all)
+to 363 MW behind the meter (about 490 MW including solar farms) over the panel's years. That is too small a share of
+annual energy for the distributors' annual disclosures to detect.
 
 - **H1 (net grid supply falls by at least 1.0 GWh per MW): Inconclusive.** −2.33 GWh per MW (95% interval −7.06 to
   +5.54). The minimum detectable slope at 80% power is about 8 GWh per MW, against an expected 1.0–1.4.
@@ -16,33 +16,36 @@ draw less from the national grid at summer midday.
   minimum detectable slope about 18.
 - **H3 (the winter peak moves by less than 0.2 MW per MW): Inconclusive.** +0.53 (−2.24 to +1.91); minimum detectable
   slope about 2.8.
-- **H4 (summer-midday grid offtake falls by at least 0.3 MW per MW): Supported.** −0.84 MW per MW (−1.01 to −0.16),
-  stable when any one network is left out (−0.90 to −0.72).
-  - **The size is overstated.** In a check added after the results (not preregistered), evening and night offtake
-    fell with solar too: −0.49 and −0.33 MW per MW, intervals including zero. Networks adding solar fastest also drew
-    less from the grid at hours when panels produce nothing.
-  - **Netting that out**, midday minus evening offtake falls **−0.35 MW per MW (−0.44 to −0.26)**, and midday minus
-    night −0.51 (−0.56 to −0.25). That is within the 0.4–0.6 range expected for average summer-midday output per MW
-    installed.
+- **H4 (summer-midday grid offtake falls by at least 0.3 MW per MW): Supported under the preregistered rule, from
+  two units.** −0.84 MW per MW (−1.01 to −0.16).
+  - **Two networks carry it.** EA Networks and Top Energy, which added solar farms (3.3 and 2.4 kW per ICP, against
+    0.1–0.6 elsewhere), supply about four-fifths of the variation in exposure. Without them the slope is −0.48
+    (−1.31 to +0.19), and in 13% of bootstrap draws neither is present.
+  - **Rooftop solar alone is not detectable.** On behind-the-meter capacity alone the slope is −1.49 (−2.67 to
+    +0.23); on solar-farm capacity alone, −0.96 (−1.27 to −0.11).
+  - **There are confounds.** Top Energy became a net injector into the grid in 2020/21, when its geothermal
+    generation expanded, so its offtake fell at every hour before its solar farms arrived. Solar capacity two years
+    ahead also predicts lower offtake now (midday −0.22, −0.87 to +0.01; night −0.26, −0.97 to −0.03): a pre-trend.
+  - **The cleanest within-network comparison** (exploratory, after review) is midday minus night offtake. It gives
+    −0.51 MW per MW (−0.56 to −0.25), and −0.33 (−0.61 to −0.06) without the two farm networks.
 
 ## In plain terms
 
-Rooftop solar is spreading fast in New Zealand. We asked what it has done to the electricity networks that carry
-power to homes and businesses. Has it cut how much energy they deliver, and has it lowered the winter evening peak
-that drives the cost of building them?
+Solar panels are spreading fast in New Zealand, on roofs and, lately, in solar farms connected to local networks.
+We asked what this has done to the networks that carry power to homes and businesses. Has it cut how much energy
+they deliver, and has it lowered the winter evening peak that drives the cost of building them?
 
 The yearly figures every network publishes cannot tell us. Solar is still only about one or two percent of the
 energy they carry, and the yearly totals move around far more than that for other reasons. All three of our tests
 on the yearly figures came back "can't tell".
 
-The half-hourly meter readings where each network connects to the national grid tell a clearer story. On summer
-afternoons, networks where solar grew draw noticeably less power from the grid. A fair estimate is that each
-megawatt of panels cuts summer midday demand on the grid by about a third to half a megawatt, which is about what
-panels produce on an average summer afternoon.
+The half-hourly meter readings where each network connects to the national grid show more. On summer afternoons,
+networks where solar grew draw less power from the grid. But almost all of that evidence comes from two networks,
+in Ashburton and the Far North, which each added large solar farms. In the Far North a geothermal power station also
+expanded, which cut the network's draw from the grid at every hour.
 
-Our first estimate was larger than that. Some of the networks that added the most solar also drew less power in the
-evening and at night, when panels produce nothing, so part of the first number was not the solar at all. We took that
-into account to get the fairer estimate.
+Across the other networks, where most solar is on rooftops, we could not tell the effect apart from zero. So these
+numbers tell us more about what solar farms do than about what rooftop panels do.
 
 ## What was asked
 
@@ -105,7 +108,7 @@ the networks carry, and less than the year-to-year movement in many networks' to
 | H3 winter peak, MW/MW | +0.53 | −2.24 to +1.91 | 2.81 | Inconclusive |
 | H4 summer-midday offtake, MW/MW | **−0.84** | **−1.01 to −0.16** | 0.55 | **Supported** |
 
-**The annual tests could not have succeeded.** Their minimum detectable slopes are five to thirty times the
+**With the disclosed annual totals, the annual tests could not have succeeded.** Their minimum detectable slopes are five to thirty times the
 effects they were designed to find. Every robustness variant agrees (`results/tables/robustness.json`): levels,
 unweighted, first differences, without degree-days, without 2021, without network-years whose outcome jumped more
 than 15%, and with the disclosures' own ICP counts. All give wide intervals spanning zero.
@@ -122,37 +125,62 @@ The implied self-consumption share, about 11%, is equally uninformative.
 | unweighted | −0.89 | −0.99 to −0.24 |
 | first differences | −0.58 | −0.86 to +0.43 |
 | leave one unit out (range) | −0.90 to −0.72 | — |
-| *placebo:* evening 18:00–21:00 | −0.49 | −0.65 to +0.21 |
-| *placebo:* night 02:00–05:00 | −0.33 | −0.54 to +0.24 |
-| *exploratory:* midday minus evening | **−0.35** | **−0.44 to −0.26** |
+| dropping unit-summers whose midday offtake moved more than 15% (46 rows) | −0.62 | −1.53 to +0.33 |
+| *after review:* without EA Networks and Top Energy | −0.48 | −1.31 to +0.19 |
+| *after review:* without the 11 units with at least 5 MW of industrial-segment solar | −0.95 | −3.40 to +0.15 |
+| *after review:* behind-the-meter capacity as the exposure | −1.49 | −2.67 to +0.23 |
+| *after review:* solar-farm (industrial) capacity as the exposure | −0.96 | −1.27 to −0.11 |
+| *after review:* non-solar distributed generation as a control | −0.80 | −1.02 to −0.31 |
+| *placebo:* solar two years ahead, midday | −0.22 | −0.87 to +0.01 |
+| *placebo:* night offtake 02:00–05:00 | −0.33 | −0.54 to +0.24 |
 | *exploratory:* midday minus night | −0.51 | −0.56 to −0.25 |
+| *exploratory:* midday minus night, without the two farm units | −0.33 | −0.61 to −0.06 |
 
-The evening and night rows and the two differences were added after the primary results (D3, D4).
+Rows marked *after review* are in `results/tables/sensitivity_post_review.json` (D5); the others in
+`robustness.json` (D3, D4).
 
-**The placebo did not come back clean.** Evening and night offtake also fell where solar grew, by roughly half to
-three-fifths of the midday slope, though neither interval excludes zero. The two units with the largest growth in
-solar per ICP, Top Energy and EA Networks, both added solar farms. EA Networks serves a heavily irrigated district, where summer
-load can shift for reasons unrelated to solar. The leave-one-out range shows no single
-unit drives the estimate.
+**The preregistered pass depends on two networks.** EA Networks (a 48 MW solar farm in November 2024) and Top
+Energy (farms in November 2023 and September 2025) are the only units whose solar per ICP rose by more than about
+1.2 kW. Leaving out either one moves the slope little, which the leave-one-out range shows, but leaving out both
+leaves an interval that includes zero. Several other variants also reach zero: first differences, the jump filter,
+and dropping every unit with substantial farm capacity. The minimum detectable slope and the lopsided interval
+are themselves consequences of that concentration.
 
-**Comparing midday with the same network's evening removes whatever moved all hours together.** What remains,
-−0.35 MW per MW, has a tight interval and is the study's best estimate of solar's effect on summer-midday grid
-demand. Midday minus night gives −0.51. The preregistered −0.84 should be read as an upper end.
+**What the farms show is a real solar signature.** Within each of the two units, midday offtake fell relative to
+night offtake as the farms came on: by about 0.5 MW per MW at Top Energy and 0.7 at EA Networks. But the networks
+also changed in other ways:
+- Top Energy has been a net injector into the grid since summer 2020/21, when its geothermal generation expanded;
+  its offtake fell by about 17 MW at every hour then, before the farms.
+- EA Networks' summer load is dominated by irrigation, and its night offtake ranges from 53 to 110 MW across
+  summers.
+
+**Rooftop solar, on its own, does not register.** Behind-the-meter capacity grew everywhere but slowly, and its slope
+on its own is not distinguishable from zero.
+
+**An earlier draft overstated this.** It called a midday-minus-evening contrast (−0.35) the best estimate. But in a
+New Zealand summer the sun is 26–35° up at 18:00 daylight time, and panels still produce a fifth to two-fifths of
+their midday output in that window. So that contrast subtracted solar output and understated it. It has been
+replaced by the night window above.
 
 ## What this does and does not show
 
-- **It shows** that by summer 2025/26 distributed solar measurably reduces what New Zealand's networks take from the
-  national grid at midday: on the netted estimate, about a third to a half of installed capacity. That is
-  consistent with average summer-midday output.
-- **It does not show** whether solar has eroded the distributors' delivered-energy base or left the winter peak
-  untouched. The annual disclosures are too coarse to tell, and the tests were Inconclusive, not null results. The
-  peak result would be expected on physical grounds, since winter evening peaks fall after dark, but this study
-  cannot confirm it.
-- **Confounding.** Networks with faster solar uptake differ in other ways: irrigation, industry, electrification,
-  growth. The placebo shows this matters for H4's size. The within-network contrast is the main guard, and it is
-  exploratory.
-- **Exposure.** Installed capacity is the Authority's registry count; the inverter-versus-panel rating and system
-  orientation are unknown, so per-MW output figures are approximate.
+- **It shows** that the two networks that added solar farms draw markedly less from the national grid at summer
+  midday since the farms came on, by roughly half a megawatt or more per megawatt installed. Across the 29 networks
+  that is enough to pass the preregistered test, but not robustly.
+- **It does not show** an effect of rooftop solar, whether solar has eroded the distributors' delivered-energy base,
+  or whether it has left the winter peak untouched. The annual disclosures are too coarse to tell, and the tests
+  were Inconclusive, not null results. The peak result would be expected on physical grounds, since winter evening
+  peaks fall after dark, but this study cannot confirm it.
+- **Confounding is visible.** The two-years-ahead placebo shows a pre-trend: networks about to add solar were already
+  drawing less. Top Energy's geothermal expansion and EA Networks' irrigation load move offtake at all hours. The
+  midday-minus-night contrast nets out what moves all hours together. It is exploratory, and night loads (hot-water
+  ripple control, EV charging, irrigation pumping, batteries) have their own trends.
+- **Exposure.**
+  - Installed capacity is the Authority's registry count; inverter-versus-panel rating and orientation are unknown.
+  - The residential and commercial segments contain some farm-sized steps: Top Energy commercial +20 MW in May 2025;
+    Powerco residential +11.5 MW in November 2023; Waipa and Orion residential about +9 MW in July 2025.
+  - Residential + commercial + industrial matches the all-segment total within 1.6%.
+  - The excluded embedded networks hold 11.5 MW (0.9%).
 - **Data corrections**, all made before any estimate:
   - ICP counts are taken from the registry, because four disclosure-derived counts were wrong (D2): Westpower 2024
     implied 91,158 ICPs against about 14,300.
@@ -167,14 +195,20 @@ demand. Midday minus night gives −0.51. The preregistered −0.84 should be re
 - **Deviations** (`deviations.md`):
   - D1 corrected the grid-exit flow direction and set the H4 specification, before any panel was built.
   - D2 replaced the disclosure-derived ICP counts with registry counts, before any estimate.
-  - D3 completed the preregistered robustness set for H4 and added the post hoc placebo.
-  - D4 added the exploratory midday-minus-evening contrast after the placebo.
+  - D3 completed the preregistered robustness set for H4 and added the post hoc evening and night placebos.
+  - D4 added a midday-minus-evening contrast; its code and outputs were committed together.
+  - D5, after independent review, adds the two-unit, exposure-split, confound and night-contrast analyses, and
+    withdraws the evening contrast and the rooftop framing.
+- **Review.** An independent adversarial review (`review/review.md`) confirmed the accounting, D1, D2, the merged
+  units and the trading-period timing, and reproduced the bootstrap exactly. It found the H4 dependence on two units,
+  the evening window's sunlight, and the undisclosed confounds, all addressed here.
 
 ## Reproducing it
 
-`code/fetch.py` (inputs and a hashed manifest), `code/build_panel.py`, `code/analysis.py`, `code/figures.py`.
+`code/fetch.py` (inputs and a hashed manifest), `code/build_panel.py`, `code/analysis.py`,
+`code/sensitivity_post_review.py`, `code/figures.py`.
 
 - **Inputs** are public: the Commerce Commission's disclosure Parquet; the Authority's installed-generation report
   (EMI GUEHMT) and metered grid flows; Open-Meteo historical temperatures.
 - **Results** are in `results/tables/`: `panel_annual.csv`, `panel_summer.csv`, `panel_log.json`, `primary.json`
-  and `robustness.json`.
+  `robustness.json` and `sensitivity_post_review.json`.

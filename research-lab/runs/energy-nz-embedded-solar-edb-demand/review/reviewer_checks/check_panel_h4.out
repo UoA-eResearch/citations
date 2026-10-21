@@ -1,0 +1,62 @@
+/mnt/citations/research-lab/runs/energy-outage-major-event-day-ratchet/venv/lib/python3.12/site-packages/pandas/core/arraylike.py:402: RuntimeWarning: invalid value encountered in log
+  result = getattr(ufunc, method)(*inputs, **kwargs)
+annual cols: ['edb', 'disc_yr', 'entering_gwh', 'gxp_export_gwh', 'gxp_gwh', 'dg_supplied_gwh', 'peak_mw', 'delivered_gwh', 'kwh_per_icp', 'icps_disclosure', 'grid_net_gwh', 'btm_mw', 'solar_all_mw', 'res_mw', 'nonsolar_dg_mw', 'months', 'icps_registry', 'icps', 'hdd']
+summer cols: ['unit', 'summer', 'mid_mwh_day', 'eve_mwh_day', 'night_mwh_day', 'days', 'mid_mw', 'eve_mw', 'night_mw', 'solar_all_mw', 'icps', 'tmax']
+2015 btm 17 all 19 delivered 31305 n 29 months [12]
+2020 btm 102 all 110 delivered 32574 n 29 months [12]
+2025 btm 363 all 489 delivered 33583 n 29 months [12]
+grid_net - (gxp - gxp_export): abs>1 GWh rows: 66 of 284 ; worst: [['Network Tasman', 2019, 486.1, 580.9, -94.9], ['Network Tasman', 2018, 454.4, 548.7, -94.3], ['Network Tasman', 2016, 465.6, 559.2, -93.6], ['Network Tasman', 2020, 468.3, 560.8, -92.5], ['Network Tasman', 2015, 604.7, 697.1, -92.4]]
+days per unit-summer: {90: 216, 91: 72}
+missing in summer panel: {}
+2025/26: unit, solar MW, ICPs, kW/ICP, mid MW, eve MW, night MW:
+ unit  solar_all_mw      icps  solar_pi  mid_mw  eve_mw  night_mw
+EASH         70.38  21423.32      3.29   33.09   62.46     59.60
+TOPE         83.64  34713.68      2.41  -45.93   -9.95    -19.74
+HEDL         29.78  25447.33      1.17   32.54   52.11     41.80
+MARL         25.08  26773.00      0.94   35.73   46.30     31.58
+NPOW         51.88  63637.34      0.82   75.48   93.40     63.53
+WAIP         22.43  29648.67      0.76   50.42   58.52     35.21
+NELS         30.70  53150.34      0.58   61.96   69.78     46.50
+WAIK         54.06 103092.95      0.52  133.49  149.54     87.18
+MPOW         20.62  45499.65      0.45   62.99   74.77     48.84
+CHBP          3.98   8972.34      0.44   14.51   16.58     10.92
+LINE        155.10 376759.00      0.41  467.79  515.46    328.61
+EAST         10.10  26240.66      0.38   32.04   35.73     22.34
+COUP         18.76  50313.67      0.37   72.73   78.75     46.78
+HAWK         39.80 118637.01      0.34  101.79  109.72     27.04
+ELEC         13.39  47433.01      0.28   37.06   43.33     27.82
+ORON         64.07 230816.75      0.28  378.74  385.54    268.39
+DUNE         29.90 113368.72      0.26  164.08  178.23    115.57
+ALPE         10.61  47700.66      0.22  133.61  131.25    106.63
+SCAN          1.41   6859.00      0.21    9.01    9.64      5.49
+VECT        113.16 638267.64      0.18 1066.52 1048.88    646.48
+CKHK         24.98 177107.57      0.14  217.95  218.85    116.96
+ELIN          6.19  56119.00      0.11  138.28  128.17    106.82
+WPOW          1.46  14648.97      0.10   18.33   15.18     11.06
+BUEL          0.40   4994.34      0.08    4.90    3.50      3.94
+share of weighted within-variance of solar/ICP by unit: {'EASH': 0.537, 'TOPE': 0.277, 'VECT': 0.049, 'HEDL': 0.031, 'NPOW': 0.03, 'CKHK': 0.018}
+H4 variants:
+  preregistered (reproduce)                        est -0.843  ci [-1.009, -0.158]  n=288
+  drop EASH and TOPE                               est -0.480  ci [-1.310, +0.190]  n=264
+  drop 7 farm units                                est -0.054  ci [-1.449, +0.553]  n=216
+  summers to 2023/24 only                          est -1.046  ci [-1.377, +0.666]  n=240
+  check: btm+ind vs solar_all max abs diff MW: 0.0
+  exposure = behind-the-meter only                 est -1.490  ci [-2.669, +0.235]  n=288
+  exposure = industrial only                       est -0.957  ci [-1.274, -0.113]  n=288
+  btm with ind as control (btm coef)               est -0.506  ci [-1.888, +0.535]
+  ind with btm as control (ind coef)               est -0.904  ci [-1.036, -0.078]
+  lead-2 placebo coefficient (midday)              est -0.215  ci [-0.868, +0.009]  n=240
+  lead-2 placebo coefficient (night)               est -0.262  ci [-0.965, -0.034]
+  unit-summers with |dlog mid| > 0.15: [['ALPE', 2021, 0.16], ['ALPE', 2022, 0.15], ['ALPE', 2023, 0.15], ['BUEL', 2015, 0.2], ['BUEL', 2016, 0.34], ['BUEL', 2017, 0.34], ['BUEL', 2019, 0.17], ['BUEL', 2022, 0.16], ['BUEL', 2024, 0.15], ['EASH', 2015, 0.17], ['EASH', 2017, 0.2], ['EASH', 2019, 0.37], ['EASH', 2020, 0.21], ['EASH', 2021, 0.38], ['EASH', 2022, 0.18], ['EASH', 2023, 0.33], ['EASH', 2024, 0.52], ['EASH', 2025, 0.75], ['ELEC', 2016, 0.25], ['ELEC', 2017, 0.34], ['ELEC', 2018, 0.18], ['ELEC', 2019, 0.19], ['ELIN', 2023, 0.2], ['ELIN', 2024, 0.3], ['HAWK', 2024, 0.25], ['HEDL', 2018, 0.52], ['HEDL', 2024, 0.96], ['HEDL', 2025, 1.03], ['MARL', 2025, 0.23], ['MPOW', 2019, 0.17], ['MPOW', 2024, 0.19], ['NELS', 2016, 0.24], ['NELS', 2017, 0.19], ['NPOW', 2022, 0.31], ['TOPE', 2020, 2.13], ['WAIK', 2023, 0.3], ['WPOW', 2016, 0.77], ['WPOW', 2017, 0.55], ['WPOW', 2020, 0.21], ['WPOW', 2022, 0.32], ['WPOW', 2023, 0.3], ['WPOW', 2024, 0.38]]
+  drop unit-summers with midday jump > 15%         est -0.783  ci [-1.256, +0.214]  n=246
+  LOO mid-eve    range [-0.370, -0.332]  most influential: {'TOPE': 0.02, 'EASH': 0.018, 'VECT': 0.017}
+  LOO mid-night  range [-0.539, -0.461]  most influential: {'EASH': 0.051, 'VECT': 0.027, 'NPOW': 0.011}
+  LOO eve        range [-0.530, -0.350]  most influential: {'EASH': 0.14, 'VECT': 0.04, 'HEDL': 0.038}
+  LOO night      range [-0.368, -0.260]  most influential: {'EASH': 0.07, 'NPOW': 0.04, 'HEDL': 0.038}
+  mid-eve, drop EASH and TOPE                      est -0.313  ci [-0.551, -0.134]  n=264
+  mid-night, drop EASH and TOPE                    est -0.334  ci [-0.612, -0.064]  n=264
+  night placebo, drop EASH and TOPE                est -0.146  ci [-0.989, +0.590]  n=264
+  eve placebo, drop EASH and TOPE                  est -0.167  ci [-0.960, +0.530]  n=264
+  mid-eve, exposure btm only                       est -0.652  ci [-1.043, -0.062]  n=288
+  mid-night, exposure btm only                     est -0.761  ci [-1.286, +0.054]  n=288
+typical kW/ICP: mid 1.496 eve 1.568 night 0.953
