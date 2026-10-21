@@ -128,9 +128,11 @@ def main():
                                                           "proved + probable + possible (3P)"][::-1])
     ax.set_xlim(0, 85); ax.set_xlabel("share of field-years whose ultimate recoverable volume was revised down")
     ax.grid(axis="x", color=GRID, lw=0.5)
-    fig.suptitle("Reserve volumes are revised down about as often as up", x=0.33, ha="left", fontsize=10.5, color=INK)
+    fig.suptitle("How often each reserve category was revised down", x=0.33, ha="left", fontsize=10.5, color=INK)
     fig.savefig(F / "F3_reserve_revisions.png", dpi=170); plt.close(fig)
-    caption("F3_reserve_revisions", """Among field-years whose ultimate recoverable gas volume changed by more than 1%
+    caption("F3_reserve_revisions", """The sign count here hides a turn in volume: 2P ultimate recoverable was revised up by
+    227-305 PJ a year between the 2018 and 2021 editions and down every year from 2022 (see the report's PJ table).
+    Among field-years whose ultimate recoverable gas volume changed by more than 1%
     between consecutive vintages, the share revised downward, with Wilson 95% intervals. A calibrated proved (1P)
     estimate should rarely be revised down (dashed line at 10%); a calibrated proved-plus-probable (2P) estimate
     should be revised down about half the time (solid line).""")

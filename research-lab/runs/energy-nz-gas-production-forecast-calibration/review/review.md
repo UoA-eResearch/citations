@@ -279,3 +279,76 @@ way" — in `primary.json` but not in the report.
 `extra_checks.py` (findings 5–7, 9; `cache/extra_checks_report.txt`), `new_vintages.py` / `new_vintages2.py`
 (findings 1–3; `cache/new_vintages2_report.txt`), `union_sensitivity.py` (finding 2). Downloads: one CDX query and
 nine workbook fetches from web.archive.org, 3 s apart, in `cache/new_vintages/` with `MANIFEST_reviewer.json`.
+
+---
+
+## Confirmation pass
+
+Revised study at commits b63d203 → b449f11, checked 2026-10-21 against the files on disk. Scripts:
+`reviewer_checks/confirm_captures.py`, `confirm_stats.py`, `confirm_extra.py`; outputs in `cache/confirm_*.txt`.
+
+### Verdict on the revision: **publish with edits** (minor; nothing requires another run)
+
+The fetch, parse and analysis fixes are correct, every number in the revised report reproduces from the revised
+tables, and the Inconclusive tag is the right call — for a reason that is stronger than the one the report gives.
+
+### Each earlier finding
+
+| # | finding | status |
+|---|---|---|
+| 1 | 2025/2026 and 2014–2018 editions not fetched | **Resolved.** 13 editions in `data/raw/reserves/` (81 captures, 20 distinct files); fetch searches both directories; a failed CDX query is recorded in `_failed_queries` and fatal; all three plan §5 statements reproduce (−4.1%, −14.7%, −22.6%). |
+| 2 | H1 verdict an artefact of the six-edition window | **Resolved.** All editions used; "widens with horizon" withdrawn; F2 retitled; the fragility is stated. My +13% vs the study's +15.1% at h = 3 is the Kauri→Rimu and blank-cell choices, both now reported. |
+| 3 | "schedule not volumes" | **Resolved** in the text (PJ table by edition pair; reading withdrawn). Residual: F3's title still says "revised down about as often as up" with no hint of the turn in volumes — retitle or add the PJ turn to the caption. |
+| 4 | provenance | **Resolved** for the inputs: `MANIFEST.json` now has an `other` group with URL and sha256 for the energy overview, energy balance and GIC files; all three hashes match the files on disk; the two MBIE files were re-downloaded from exact captures. Still true that `data/` and the MANIFEST are gitignored, so the record the report points to (L243–244) is not in the repository; commit the MANIFEST or copy its hashes into `results/`. |
+| 5 | blank cells skipped | **Resolved.** Blank cells in listed fields are zero forecasts within the edition's own horizon; 106 union-rule pairs (71 absent fields, 35 blank cells). The remaining asymmetry — a blank cell with zero outcome is excluded, an explicit zero cell with zero outcome (2017/2018 workbooks) enters as e = 0 — involves 2 and 4 cells and moves nothing (h = 3 without the four: +16.1% [+0.4, +42.9]). |
+| 6 | Kauri mapped away from Rimu | **Resolved.** Residual judgement call: the 2015 edition's "Onaero" is sent to Others, though the later workbooks' own footnote places Onaero in the Turangi group; moving it changes h = 1 to +27.1% and leaves h = 3 at +15.1% (`confirm_stats.py`). Either is defensible; say which and why. |
+| 7 | revisions keyed on raw names | **Resolved.** Harmonised fields, raw names summed within an edition, Others excluded. |
+| 8 | clustering, "24 comparisons", gross national | **Resolved.** Cluster-by-edition now carries intervals (6 clusters at h = 3) and reads Inconclusive; the by-edition table shows the year-shock structure; gross national errors reported (+7.8%, +5.4%, −1.1%); the "24" claim is gone. |
+| 9 | basis settled by assertion | **Resolved.** Gross alongside net; the series is called net; D1's "labelled gross … but" sentence survives only as superseded history. |
+| 10 | H3 over-interpreted | **Resolved** (L181–184). The report says the tolerance/size check "was not repeated on all editions"; it is now: 1P revised down 44% at 0% tolerance, 43% at 1%, 33% [24, 45] at 5%; 43% for fields ≥ 10 PJ and ≥ 100 PJ; 47% [37, 56] over 2017→2026 alone (`confirm_extra.py`). The report may cite these. |
+| 11 | missing preregistered outputs | **Resolved** except deliverability, which D2 §6 states was not done. |
+| 12 | process statements | **Resolved.** The false "code before outputs" sentence is gone; D2 records the sequence. |
+| 13 | numeric slips | **Resolved.** Every quoted number re-derived (see below). Maari by volume rounds to −24% in my computation against the report's −25%; immaterial. |
+
+### The new parse and analysis
+
+- **Re-captures.** "Latest capture wins" now selects 2025-06-09 or 2026-01 captures for the 2019–2024 editions. I
+  compared every multiply-captured edition cell by cell: 0 differing profile cells and 0 differing reserve rows in all
+  seven comparisons (`confirm_captures.py`). The report (L90) could say the captures are identical.
+- **2014–2016 gas-only table.** The "Gas and LPG" sheet carries "Natural Gas and LPG Reserves" first and "Natural Gas
+  Reserves" second; the parser takes the second, and `reserves.csv` has Kupe 1P = 249.6 (2015), 247.9 (2016), 335.8
+  (2017) — gas-only, as stated. Year headers stored as text, the leading blank column and the P90/P50/P10 labels are
+  handled; the 2017 and 2018 profiles read explicit zeros (700 and 684 cells), which is correct.
+- **Statistics.** Replicating the RNG order from `pairs.csv`: h = 0…5 net +12.6, +27.5, +24.4, +15.1, +6.0, +6.0%
+  with intervals [+3.2, +34.0], [+9.1, +60.9], [+6.3, +64.0], [+0.7, +41.2], [−11.2, +28.9], [−17.5, +39.7]; gross
+  +5.8, +15.3, +14.9, +8.3, 0.0, −3.5%; MDE 35.7% / 33.8%; by volume +14.9% / +12.0%; by edition at h = 1 (+0.6, +4.1,
+  +14.8, +34.7, +11.5, +76.6, +48.9, +41.5%); by field (Pohokura +19/+24, Mangahewa −5/−1, Maui −1/−2, Kupe −2/+3,
+  Turangi +29/+34, Kapuni +12/+19, Kowhai +108/+91, McKee +69/+65, Ngatoro +172/+172; 11 of 18 over on the median);
+  zero shares 5.6% / 16.6%; national net +4.4, +17.8, +18.0, +15.4, +8.9, +12.3%; revisions 60/138, 71/142, 85/155
+  with the stated Wilson intervals; the 2P PJ table to the PJ; first-year totals; the three MBIE statements. All
+  reproduce exactly. The rule's margin at h = 3 is 0.0012 in log terms (0.1 point), as stated.
+
+### The Inconclusive tag
+
+Agree, and the report should give the stronger reason. The preregistered rule needs the h = 3 interval to exclude
+zero. With the preregistered seed the lower bound is +0.67%; over 20 other seeds at B = 2,000 it ranges from −0.62%
+to +0.68% and **15 of 20 seeds would read Inconclusive**; at B = 20,000 with the study's seed it is +0.00%
+(P(draw ≤ 0) = 0.026). The pass is therefore inside the bootstrap's own Monte Carlo error, on top of the 0.1-point
+median margin. The seed was fixed in advance, so "Supported by its rule" is a legitimate statement of what the
+preregistered procedure returned; but a test whose outcome flips with the random seed cannot carry a one-word
+Supported, and the FAERS precedent applies cleanly. Suggested wording for L11–14 and L216–217: "the three-year median
+clears its bar by 0.1 point and its interval's exclusion of zero depends on the bootstrap seed (lower bound −0.6% to
++0.7% across seeds)". The one-year result is robust in every variant and should stay the headline of what *is* shown.
+
+### Anything new
+
+- **F3 title** (above): the only place the withdrawn reading still shows.
+- **2014 edition methodology.** Six fields in the 2014 gas table (Kowhai, Ngatoro, Onaero, Cheal, Moturoa, Surrey)
+  are footnoted "a reserve depletion method has been applied", so their 2014→2015 revisions partly reflect a change
+  of method. Verdicts do not depend on it (H3 over 2017→2026 alone: 47% [37, 56]); one clause in the report suffices.
+- **2015–2016 profile basis.** Those editions' reserves mark starred fields "includes LPG"; whether their gas
+  *profiles* also include LPG cannot be read from the workbooks (the 2016 sheet has a separate LPG block, the 2015
+  sheet does not). The h = 0 national errors of +2% and +1% suggest gas-only. State it as unverifiable.
+- **Gitignored record** (finding 4): unchanged.
+
+Nothing else is wrong that I could find. The report's plain-terms section now matches the results.

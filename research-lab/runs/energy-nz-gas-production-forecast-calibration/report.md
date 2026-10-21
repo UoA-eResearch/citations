@@ -142,7 +142,10 @@ The national total uses MBIE's net series to 2025, so it reaches more editions a
 series, which ends in 2023. On the gross basis the national error is smaller: +7.8% one year ahead, +5.4% at three,
 −1.1% at four.
 
-**H1 by its rule is Supported**, but every way of probing it moves the three-year figure across or near its bar:
+**H1 by its rule is Supported**, but the pass is within the bootstrap's own Monte Carlo error: the three-year lower
+bound is +0.7% with the preregistered seed, but across 20 other seeds it ranges from −0.6% to +0.7% and 15 of the 20
+would read Inconclusive; with 20,000 resamples it is +0.0%. Every way of probing it moves the three-year figure across
+or near its bar:
 
 | variant | 1 year | 3 years | verdict |
 |---|---|---|---|
@@ -180,8 +183,9 @@ The one-year over-forecast is robust: its lower bound is positive in every varia
 - **H2 is Inconclusive**: the 2P share is exactly half.
 - **H3 is Supported**: a proved volume that is exceeded nine times in ten should rarely be cut; this one is cut in
   more than four field-years in ten. A revision is not a full test of a 90% interval — 1P can also fall when a
-  development plan changes — but the frequency is far from what the category implies. In the draft's six-edition
-  window the review found it stable across tolerances and field sizes; that check was not repeated on all editions.
+  development plan changes — but the frequency is far from what the category implies. It holds across tolerances
+  (44%, 43% and 33% at 0%, 1% and 5%) and field sizes (43% for fields of at least 10 PJ and at least 100 PJ), and on
+  the 2017–2026 editions alone (47%, 37–56%).
 
 **The volumes behind the counts** (net change in ultimate recoverable, PJ, between consecutive editions):
 
@@ -220,7 +224,12 @@ Inconclusive it was never supported, and the volumes have been falling for four 
 - **The field-level outcome series ends in 2023**, so the 2023–2026 editions enter H1 only through the national
   series, and editions contribute unequally across horizons.
 - **The field map is by name.** MBIE's "Others" residual and the merged Rimu/Kauri series make small-field errors
-  noisy; the sensitivity excluding Others is reported.
+  noisy; the sensitivity excluding Others is reported. Onaero is mapped to Others by name, although the 2015
+  workbook's footnote places it in the Turangi group; mapping it there gives +27.1% and +15.1%, changing nothing.
+- **Two things the workbooks do not say.** Whether the 2015 and 2016 gas profiles include LPG for the fields starred
+  as including it cannot be read from the files; the national errors in their publication years (+2% and +1%)
+  suggest gas only. And six fields in the 2014 reserves table were derived by a "reserve depletion method", so the
+  2014→2015 revisions partly reflect a change of method rather than re-estimation.
 - **It is not a resource assessment**, and the units are fields and company filings, not people or communities.
 
 ## Process and deviations
@@ -240,7 +249,8 @@ Inconclusive it was never supported, and the volumes have been falling for four 
 
 `code/fetch.py`, then `code/parse.py`, `code/analysis.py`, `code/figures.py`.
 
-- **Raw inputs** are Internet Archive raw copies and two fixed sources, listed with their sha256 in
-  `data/raw/MANIFEST.json`.
+- **Raw inputs** are Internet Archive raw copies and two fixed sources, listed with their URLs and sha256 in
+  `results/tables/inputs_manifest.json` (a copy of `data/raw/MANIFEST.json`, which sits outside the repository with
+  the data).
 - **Results** are in `results/tables/`: `primary.json`, `by_horizon.csv`, `pairs.csv`, `national_pairs.csv`,
   `revisions.csv` and `vintages.csv`.
