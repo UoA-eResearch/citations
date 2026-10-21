@@ -15,6 +15,7 @@ import gzip
 import html as htmlmod
 import json
 import multiprocessing as mp
+import pickle
 import random
 import re
 import sys
@@ -48,15 +49,36 @@ def records(paths, keep=None):
 
 
 def work(args):
-    paths, keep = args
+    paths, keep = args[0], args[1]
+    chunk, nchunks = (args[2], args[3]) if len(args) > 2 else (0, 1)
     rows, cands, mis, vols, capped = [], [], [], Counter(), 0
-    for rec in records(paths, keep):
+    for i, rec in enumerate(records(paths, keep)):
+        if i % nchunks != chunk:                   # D7: a shard is split into interleaved chunks for load balance
+            continue
         row, c, m, v, cap = parse.screen((rec["opinion_id"], rec["cluster_id"], rec["date"], "", text_of(rec)))
         rows.append(row + (rec.get("ocr"), rec.get("type")))
         for x in c:
             x["ocr"] = rec.get("ocr")
         cands += c; mis += m; vols.update(v); capped += cap
     return rows, cands, mis, vols, capped
+
+
+CHUNKS = 8
+WORKERS = int(sys.argv[sys.argv.index("--workers") + 1]) if "--workers" in sys.argv else None
+
+
+def part_name(job):
+    return f"{Path(job[0][0]).name.split('.')[0]}_c{job[2]}of{job[3]}.pkl"
+
+
+def work_saved(job):
+    r = work(job)
+    out = RUN / "data" / "screen" / ("pilot" if job[1] is not None else "") / "parts" / part_name(job)
+    tmp = out.with_suffix(".tmp")
+    with open(tmp, "wb") as fh:
+        pickle.dump(r, fh)
+    tmp.rename(out)
+    return job, None
 
 
 def main():
@@ -71,9 +93,20 @@ def main():
         print(f"pilot: {len(keep):,} of {len(ids):,} in-window opinions, seed {SEED}", flush=True)
     t0 = time.time()
     parse.init()                                   # once, before forking
-    jobs = [([p], keep) for p in paths]
-    with mp.get_context("fork").Pool(max(1, mp.cpu_count() - 6)) as pool:
-        results = pool.map(work, jobs, chunksize=1)
+    # D7: scheduling only. Each shard is split into CHUNKS interleaved parts, each part's result is saved as it
+    # completes (so an interrupted run resumes), and parts are merged in a fixed order. The decision for every
+    # opinion is parse.screen(), unchanged.
+    nchunks = 1 if sample else CHUNKS
+    parts = out / "parts"
+    parts.mkdir(exist_ok=True)
+    jobs = [([p], keep, c, nchunks) for p in paths for c in range(nchunks)]
+    todo = [j for j in jobs if not (parts / part_name(j)).exists()]
+    print(f"{len(todo)} of {len(jobs)} parts to screen", flush=True)
+    with mp.get_context("fork").Pool(WORKERS or max(1, mp.cpu_count() - 6)) as pool:
+        for k, (j, r) in enumerate(pool.imap_unordered(work_saved, todo), 1):
+            if k % 16 == 0:
+                print(f"  {k}/{len(todo)} parts, {(time.time() - t0) / 60:.0f} min", flush=True)
+    results = [pickle.load(open(parts / part_name(j), "rb")) for j in jobs]
     rows, cands, mis, vols, capped = [], [], [], Counter(), 0
     for r in results:
         rows += r[0]; cands += r[1]; mis += r[2]; vols.update(r[3]); capped += r[4]

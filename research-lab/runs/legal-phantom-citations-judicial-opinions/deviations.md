@@ -203,3 +203,15 @@ finding. The Charlotin calibration (plan step 6) measures that loss of recall, a
 
 **Freeze.** `parse.py`, `namenorm.py`, `abbrev.py`, `screen_shards.py` and `analysis.py` are frozen at this
 commit. The full in-window screen is run once from it.
+
+## D7 — 2026-10-21 23:08 NZDT — the full screen rescheduled in chunks (no decision changed)
+
+The first launch of the full screen (one task per shard: 32 shards on 22 workers) had read about a third of each of
+its first 22 shards after three hours. The last 10 shards would then have run as a second wave on 10 workers, for
+roughly 17 hours in all. It was stopped. No output had been written, since results were only returned at the end.
+
+`screen_shards.py` now splits each shard into eight interleaved chunks (opinion *i* goes to chunk *i* mod 8),
+giving 256 tasks on 26 workers. It saves each chunk's result as it completes, so an interrupted run resumes, and
+merges the chunks in a fixed order. The decision for every opinion is still `parse.screen()`, which is unchanged
+since the D6 freeze, as are `parse.py`, `namenorm.py`, `abbrev.py` and `analysis.py`. Output order changes; the
+analysis sorts opinions by id before any sampling, so nothing downstream depends on it.
