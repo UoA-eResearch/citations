@@ -53,7 +53,10 @@ def main():
     for r in rw[rw.RetractionNature == "Reinstatement"].itertuples():
         reinst |= {k for k in (ndoi(r.OriginalPaperDOI), npmid(r.OriginalPaperPubMedID)) if k}
     for r in rw[rw.RetractionNature.isin(["Retraction", "Expression of concern", "Correction", "Reinstatement"])].itertuples():
-        p = pmc(r.RetractionDOI, r.RetractionPubMedID)
+        # D1: a notice identifier equal to the original's is a self-reference, not a separate notice
+        nd = ndoi(r.RetractionDOI) if ndoi(r.RetractionDOI) != ndoi(r.OriginalPaperDOI) else None
+        nm = npmid(r.RetractionPubMedID) if npmid(r.RetractionPubMedID) != npmid(r.OriginalPaperPubMedID) else None
+        p = pmc(nd, nm)
         if p:
             notices.add(p)
     rr = rw[rw.RetractionNature == "Retraction"]
@@ -76,9 +79,12 @@ def main():
     n_cr, n_map = 0, 0
     for line in open(RAW / "crossref_notices.jsonl"):
         it = json.loads(line)
-        p = pmc(it.get("DOI"))
-        if p:
-            notices.add(p)
+        own = ndoi(it.get("DOI"))
+        # D1: a work whose retraction assertion points at itself is a retracted original, not a notice
+        if any(ndoi(u.get("DOI")) != own for u in it.get("update-to") or [] if (u.get("type") or "").lower() == "retraction"):
+            p = pmc(own)
+            if p:
+                notices.add(p)
         for u in it.get("update-to") or []:
             if (u.get("type") or "").lower() != "retraction":
                 continue
@@ -120,7 +126,10 @@ def main():
     log["openalex_works"], log["openalex_mapped_to_pmc"] = n_oa, n_map
     d = pd.DataFrame([{"pmcid": k, **v} for k, v in rec.items()])
     d["date"] = d.rw_date.fillna(d.cr_date)
-    d["notice"] = d.pmcid.isin(notices)
+    d["notice_id"] = d.pmcid.isin(notices)
+    # D1: a document a curated layer lists as the retracted original is not excluded by identifier; true notices
+    # among them are caught by the XML article-type check at parse time
+    d["notice"] = d.notice_id & ~(d.rw | d.pubmed | d.crossref)
     snap = pd.read_parquet(RUN / "data" / "snapshot" / "latest_versions.parquet")
     d = d.merge(snap[["pmcid", "version", "key"]], on="pmcid", how="left")
     d["in_snapshot"] = d.key.notna()
@@ -131,6 +140,7 @@ def main():
     d.to_parquet(RUN / "data" / "cohort.parquet", index=False)
     log["union_pmcids"] = len(d)
     log["notices_excluded_by_id"] = int(d.notice.sum())
+    log["notice_id_but_curated_original"] = int((d.notice_id & ~d.notice).sum())
     log["in_snapshot_by_stratum"] = d[d.in_snapshot & ~d.notice].stratum.value_counts().to_dict()
     log["not_in_snapshot_by_stratum"] = d[~d.in_snapshot & ~d.notice].stratum.value_counts().to_dict()
     json.dump(log, open(RUN / "results" / "tables" / "match_log.json", "w"), indent=1, default=str)

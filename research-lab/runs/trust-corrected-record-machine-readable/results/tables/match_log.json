@@ -1,0 +1,25 @@
+{
+ "rw_retractions": 67896,
+ "rw_mapped_to_pmc": 18172,
+ "rw_reinstated_ids": 295,
+ "crossref_targets": 113832,
+ "crossref_mapped_to_pmc": 35675,
+ "pubmed_ids": 35195,
+ "pubmed_mapped_to_pmc": 21027,
+ "openalex_works": 137044,
+ "openalex_mapped_to_pmc": 42634,
+ "union_pmcids": 42690,
+ "notices_excluded_by_id": 20354,
+ "notice_id_but_curated_original": 318,
+ "in_snapshot_by_stratum": {
+  "primary": 18156,
+  "recent": 1106,
+  "undated": 797,
+  "after_snapshot": 1
+ },
+ "not_in_snapshot_by_stratum": {
+  "primary": 2063,
+  "undated": 159,
+  "recent": 54
+ }
+}
