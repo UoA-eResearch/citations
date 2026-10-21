@@ -28,3 +28,19 @@
    The preregistered bias correction already scales potential to metered output per plant-quarter, so a plant with
    *k* near zero contributes almost nothing to either curtailed or available energy. Added before any curtailment
    figure was computed: a variant dropping plant-quarters with *k* below 0.5.
+
+## D2 — 2026-10-22 01:41 NZDT — after the primary results: the measurability gate fails, and a post hoc decomposition
+
+The first full run gave the following:
+- **Gate:** the median plant's detection floor is 27% of its mean potential in 2025/26, above the 25% gate, so by
+  plan section 3 curtailment is **not reliably measurable from offers alone**.
+- **H1:** Refuted by its rule; the 2020 share is 2.27% (2.13 to 2.42).
+- **H2:** Supported by its rule; 72.7% of curtailed energy is non-price (64.1 to 82.3).
+
+The rule in plan section 1 flags a TP as curtailed when its gap exceeds the 95th percentile of gaps on unconstrained
+TPs, and counts all TPs, so about 5% of *unconstrained* TPs are flagged by construction and forecast error alone
+yields a positive share. Unconstrained TPs are, by definition, ones where prices exceed the unit's offer, so this noise
+mass also lands in H2's "non-price" share. `code/diagnostics.py` (written after seeing the results; exploratory)
+splits curtailed energy by the class of TP it falls in (unconstrained, offer-limited, price-driven, other). It also
+tracks, by 12-month window, curtailment in TPs where the node price is at or below the unit's own offer price, the
+clearest real signal. Verdicts are reported as the rules give them, with the gate's statement leading.

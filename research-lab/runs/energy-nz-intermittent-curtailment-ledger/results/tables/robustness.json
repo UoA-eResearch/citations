@@ -1,0 +1,282 @@
+{
+ "no_bias_correction": {
+  "baseline_share": 0.022819009153546926,
+  "recent_share": 0.05577697275415156,
+  "recent_nonprice": 0.7429194367524373
+ },
+ "above_floor_only": {
+  "baseline_share": 0.008437017855380103,
+  "recent_share": 0.027187078178412195,
+  "recent_nonprice": 0.6514957176177387
+ },
+ "floor_p90": {
+  "baseline_share": 0.034136248365412555,
+  "recent_share": 0.06485470703116639,
+  "recent_nonprice": 0.7702074248801494
+ },
+ "floor_p99": {
+  "baseline_share": 0.007590906659842449,
+  "recent_share": 0.03007990164660808,
+  "recent_nonprice": 0.6044945534666821
+ },
+ "margin_10": {
+  "baseline_share": 0.022640833222629192,
+  "recent_share": 0.05425199979235434,
+  "recent_nonprice": 0.7328200673373542
+ },
+ "exclude_k_below_0_5": {
+  "baseline_share": 0.02265554508173598,
+  "recent_share": 0.05192479040974395,
+  "recent_nonprice": 0.7251864138026228
+ },
+ "max_output_instead_of_potential": "not estimable: MaximumOutputMegawatts is empty for these units",
+ "leave_one_poc_out": {
+  "ASB0661": {
+   "baseline_share": 0.02265554508173598,
+   "recent_share": 0.05182384383593164
+  },
+  "BPE0331": {
+   "baseline_share": 0.02202182626953175,
+   "recent_share": 0.05271433524374993
+  },
+  "DVK0111": {
+   "baseline_share": 0.02265554508173598,
+   "recent_share": 0.05197267100556405
+  },
+  "EDG0331": {
+   "baseline_share": 0.02265554508173598,
+   "recent_share": 0.051794206656152565
+  },
+  "GOR0331": {
+   "baseline_share": 0.02265554508173598,
+   "recent_share": 0.04593968421423032
+  },
+  "HRP2201": {
+   "baseline_share": 0.02265554508173598,
+   "recent_share": 0.056704168367213405
+  },
+  "ISL0661": {
+   "baseline_share": 0.02265554508173598,
+   "recent_share": 0.05198115548079527
+  },
+  "KIW2201": {
+   "baseline_share": 0.02265554508173598,
+   "recent_share": 0.05223188441038887
+  },
+  "KOE1101": {
+   "baseline_share": 0.02265554508173598,
+   "recent_share": 0.05183085655305888
+  },
+  "KPU0661": {
+   "baseline_share": 0.02265554508173598,
+   "recent_share": 0.05198115548079527
+  },
+  "LTN0331": {
+   "baseline_share": 0.02215654388347209,
+   "recent_share": 0.05290465514265209
+  },
+  "LTN2201": {
+   "baseline_share": 0.02265554508173598,
+   "recent_share": 0.037991042831418576
+  },
+  "MPE1101": {
+   "baseline_share": 0.02265554508173598,
+   "recent_share": 0.05198115548079527
+  },
+  "MTO0331": {
+   "baseline_share": 0.02265554508173598,
+   "recent_share": 0.051921809026911944
+  },
+  "NMA0331": {
+   "baseline_share": 0.021958302870909212,
+   "recent_share": 0.05277806827004584
+  },
+  "TMK0331": {
+   "baseline_share": 0.02265554508173598,
+   "recent_share": 0.05198115548079527
+  },
+  "TWC2201": {
+   "baseline_share": 0.02267465932821461,
+   "recent_share": 0.05521497769790126
+  },
+  "TWH0331": {
+   "baseline_share": 0.02275294202033529,
+   "recent_share": 0.05363495071447873
+  },
+  "WAI0331": {
+   "baseline_share": 0.02265554508173598,
+   "recent_share": 0.051727310950811
+  },
+  "WDV1101": {
+   "baseline_share": 0.0228639307016053,
+   "recent_share": 0.05323926245783183
+  },
+  "WHU1101": {
+   "baseline_share": 0.02265554508173598,
+   "recent_share": 0.051969673568887785
+  },
+  "WIL0331": {
+   "baseline_share": 0.02307989647099227,
+   "recent_share": 0.05387595437834837
+  },
+  "WVY1101": {
+   "baseline_share": 0.022464818169770275,
+   "recent_share": 0.052522935884144764
+  },
+  "WWD1102": {
+   "baseline_share": 0.023014417221582345,
+   "recent_share": 0.05396722954325311
+  },
+  "WWD1103": {
+   "baseline_share": 0.023729973445633434,
+   "recent_share": 0.05344328610019176
+  }
+ },
+ "wind_only": {
+  "baseline_share": 0.02265554508173598,
+  "recent_share": 0.05110866496971366,
+  "recent_nonprice": 0.7076802448223662
+ },
+ "pre_rtp_2020_to_oct2022": {
+  "share": 0.02914063921467755,
+  "curtailed_mwh": 200320.4292610909,
+  "available_mwh": 6874263.388161834,
+  "nonprice_share": 0.937299669348725
+ },
+ "post_rtp_nov2022_to_jun2026": {
+  "share": 0.03953542185500753,
+  "curtailed_mwh": 523494.7839683817,
+  "available_mwh": 13241158.419612922,
+  "nonprice_share": 0.8207714675137753
+ },
+ "weather_check": {
+  "ASB0661": {
+   "weather": "swr",
+   "n": 14399,
+   "corr_potential": 0.852,
+   "corr_output": 0.794
+  },
+  "BPE0331": {
+   "weather": "wind100",
+   "n": 105703,
+   "corr_potential": 0.785,
+   "corr_output": 0.779
+  },
+  "DVK0111": {
+   "weather": "swr",
+   "n": 2658,
+   "corr_potential": 0.142,
+   "corr_output": 0.142
+  },
+  "EDG0331": {
+   "weather": "swr",
+   "n": 36225,
+   "corr_potential": 0.776,
+   "corr_output": 0.788
+  },
+  "GOR0331": {
+   "weather": "wind100",
+   "n": 42805,
+   "corr_potential": 0.82,
+   "corr_output": 0.74
+  },
+  "KOE1101": {
+   "weather": "swr",
+   "n": 39278,
+   "corr_potential": 0.696,
+   "corr_output": 0.762
+  },
+  "KPU0661": {
+   "weather": "swr",
+   "n": 8920,
+   "corr_potential": 0.685,
+   "corr_output": 0.153
+  },
+  "LTN0331": {
+   "weather": "wind100",
+   "n": 105694,
+   "corr_potential": 0.779,
+   "corr_output": 0.773
+  },
+  "LTN2201": {
+   "weather": "wind100",
+   "n": 78192,
+   "corr_potential": 0.738,
+   "corr_output": 0.711
+  },
+  "MTO0331": {
+   "weather": "swr",
+   "n": 23957,
+   "corr_potential": 0.622,
+   "corr_output": 0.397
+  },
+  "NMA0331": {
+   "weather": "wind100",
+   "n": 103890,
+   "corr_potential": 0.439,
+   "corr_output": 0.424
+  },
+  "TWC2201": {
+   "weather": "wind100",
+   "n": 105116,
+   "corr_potential": 0.809,
+   "corr_output": 0.8
+  },
+  "TWH0331": {
+   "weather": "wind100",
+   "n": 105801,
+   "corr_potential": 0.756,
+   "corr_output": 0.749
+  },
+  "WAI0331": {
+   "weather": "swr",
+   "n": 24132,
+   "corr_potential": 0.707,
+   "corr_output": 0.684
+  },
+  "WDV1101": {
+   "weather": "wind100",
+   "n": 105685,
+   "corr_potential": 0.725,
+   "corr_output": 0.708
+  },
+  "WHU1101": {
+   "weather": "swr",
+   "n": 2633,
+   "corr_potential": 0.066,
+   "corr_output": 0.088
+  },
+  "WIL0331": {
+   "weather": "wind100",
+   "n": 105687,
+   "corr_potential": 0.848,
+   "corr_output": 0.838
+  },
+  "WVY1101": {
+   "weather": "wind100",
+   "n": 90689,
+   "corr_potential": 0.79,
+   "corr_output": 0.785
+  },
+  "WWD1102": {
+   "weather": "wind100",
+   "n": 105403,
+   "corr_potential": 0.766,
+   "corr_output": 0.76
+  },
+  "WWD1103": {
+   "weather": "wind100",
+   "n": 105386,
+   "corr_potential": 0.565,
+   "corr_output": 0.568
+  }
+ },
+ "projection_2026_27": {
+  "recent_share": 0.05198115548079527,
+  "available_2025_26_mwh": 4170718.9657590752,
+  "available_projected_mwh": 4533831.707526756,
+  "projected_share": 0.05650675887000575,
+  "rule": "2025/26 share x projected available energy / 2025/26 available energy; plants first seen after 1 July 2025 annualised from their months to Sep 2026",
+  "score_after": "2027-06-30"
+ }
+}
