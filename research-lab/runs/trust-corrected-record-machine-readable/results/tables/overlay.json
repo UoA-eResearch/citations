@@ -1,0 +1,24 @@
+{
+ "rows": 22174,
+ "in_snapshot": 19898,
+ "snapshot_docs_without_own_marker_or_flag": 619,
+ "primary_without_own_marker_or_flag": 501,
+ "by_stratum": {
+  "after_snapshot": {
+   "n": 1,
+   "without_marker_or_flag": 1
+  },
+  "primary": {
+   "n": 18061,
+   "without_marker_or_flag": 501
+  },
+  "recent": {
+   "n": 1106,
+   "without_marker_or_flag": 46
+  },
+  "undated": {
+   "n": 730,
+   "without_marker_or_flag": 71
+  }
+ }
+}

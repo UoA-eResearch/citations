@@ -1,0 +1,346 @@
+{
+ "marker_kinds_share_of_C": {
+  "related-article": 0.9608,
+  "statement": 0.1358,
+  "title-prefix": 0.0962,
+  "token": 0.086,
+  "custom-meta": 0.0004
+ },
+ "structured_share": 0.9608,
+ "textual_only_share": 0.0151,
+ "by_publisher": {
+  "Hindawi": {
+   "n": 6507,
+   "unmarked": 0.0022,
+   "sidecar_flag": 0.9978
+  },
+  "Wiley": {
+   "n": 1641,
+   "unmarked": 0.0116,
+   "sidecar_flag": 0.9762
+  },
+  "PLoS": {
+   "n": 1350,
+   "unmarked": 0.0,
+   "sidecar_flag": 1.0
+  },
+  "Elsevier - Cell Press": {
+   "n": 788,
+   "unmarked": 0.1332,
+   "sidecar_flag": 0.8236
+  },
+  "Springer - Nature Publishing Group": {
+   "n": 717,
+   "unmarked": 0.0209,
+   "sidecar_flag": 0.9512
+  },
+  "Springer - Biomed Central (BMC)": {
+   "n": 600,
+   "unmarked": 0.0017,
+   "sidecar_flag": 0.9933
+  },
+  "Frontiers": {
+   "n": 575,
+   "unmarked": 0.0035,
+   "sidecar_flag": 0.9948
+  },
+  "Taylor and Francis - Dove Press": {
+   "n": 564,
+   "unmarked": 0.0,
+   "sidecar_flag": 1.0
+  },
+  "Spandidos": {
+   "n": 515,
+   "unmarked": 0.0,
+   "sidecar_flag": 1.0
+  },
+  "Elsevier": {
+   "n": 507,
+   "unmarked": 0.2347,
+   "sidecar_flag": 0.6055
+  },
+  "Springer": {
+   "n": 312,
+   "unmarked": 0.0801,
+   "sidecar_flag": 0.7724
+  },
+  "MDPI": {
+   "n": 247,
+   "unmarked": 0.0,
+   "sidecar_flag": 1.0
+  },
+  "SAGE Publications": {
+   "n": 244,
+   "unmarked": 0.0041,
+   "sidecar_flag": 0.9959
+  },
+  "unknown": {
+   "n": 218,
+   "unmarked": 0.1651,
+   "sidecar_flag": 0.4037
+  },
+  "Cureus (Part of Springer Nature as of December 2022)": {
+   "n": 198,
+   "unmarked": 0.0051,
+   "sidecar_flag": 0.9949
+  }
+ },
+ "by_retraction_year": {
+  "1966": {
+   "n": 1,
+   "unmarked": 0.0,
+   "sidecar": 1.0
+  },
+  "1987": {
+   "n": 1,
+   "unmarked": 0.0,
+   "sidecar": 1.0
+  },
+  "1990": {
+   "n": 1,
+   "unmarked": 0.0,
+   "sidecar": 1.0
+  },
+  "1997": {
+   "n": 2,
+   "unmarked": 0.0,
+   "sidecar": 1.0
+  },
+  "2001": {
+   "n": 2,
+   "unmarked": 0.0,
+   "sidecar": 1.0
+  },
+  "2002": {
+   "n": 1,
+   "unmarked": 0.0,
+   "sidecar": 1.0
+  },
+  "2003": {
+   "n": 3,
+   "unmarked": 0.0,
+   "sidecar": 1.0
+  },
+  "2004": {
+   "n": 2,
+   "unmarked": 0.0,
+   "sidecar": 1.0
+  },
+  "2005": {
+   "n": 2,
+   "unmarked": 0.0,
+   "sidecar": 1.0
+  },
+  "2006": {
+   "n": 7,
+   "unmarked": 0.1429,
+   "sidecar": 0.8571
+  },
+  "2007": {
+   "n": 9,
+   "unmarked": 0.0,
+   "sidecar": 1.0
+  },
+  "2008": {
+   "n": 11,
+   "unmarked": 0.0,
+   "sidecar": 1.0
+  },
+  "2009": {
+   "n": 23,
+   "unmarked": 0.0435,
+   "sidecar": 0.913
+  },
+  "2010": {
+   "n": 32,
+   "unmarked": 0.0625,
+   "sidecar": 0.9062
+  },
+  "2011": {
+   "n": 56,
+   "unmarked": 0.1071,
+   "sidecar": 0.8929
+  },
+  "2012": {
+   "n": 118,
+   "unmarked": 0.0932,
+   "sidecar": 0.8898
+  },
+  "2013": {
+   "n": 102,
+   "unmarked": 0.0784,
+   "sidecar": 0.8922
+  },
+  "2014": {
+   "n": 138,
+   "unmarked": 0.0652,
+   "sidecar": 0.9275
+  },
+  "2015": {
+   "n": 204,
+   "unmarked": 0.0196,
+   "sidecar": 0.9706
+  },
+  "2016": {
+   "n": 292,
+   "unmarked": 0.0548,
+   "sidecar": 0.9349
+  },
+  "2017": {
+   "n": 197,
+   "unmarked": 0.0508,
+   "sidecar": 0.9137
+  },
+  "2018": {
+   "n": 306,
+   "unmarked": 0.0229,
+   "sidecar": 0.9444
+  },
+  "2019": {
+   "n": 381,
+   "unmarked": 0.0604,
+   "sidecar": 0.9239
+  },
+  "2020": {
+   "n": 609,
+   "unmarked": 0.0558,
+   "sidecar": 0.8391
+  },
+  "2021": {
+   "n": 991,
+   "unmarked": 0.0272,
+   "sidecar": 0.8759
+  },
+  "2022": {
+   "n": 1335,
+   "unmarked": 0.0157,
+   "sidecar": 0.9461
+  },
+  "2023": {
+   "n": 6926,
+   "unmarked": 0.0051,
+   "sidecar": 0.99
+  },
+  "2024": {
+   "n": 2581,
+   "unmarked": 0.0387,
+   "sidecar": 0.9539
+  },
+  "2025": {
+   "n": 2878,
+   "unmarked": 0.0146,
+   "sidecar": 0.975
+  },
+  "2026": {
+   "n": 850,
+   "unmarked": 0.0918,
+   "sidecar": 0.8776
+  }
+ },
+ "hindawi_vs_rest": {
+  "hindawi": {
+   "estimate": 0.0022,
+   "ci": [
+    0.0007,
+    0.005
+   ],
+   "n": 6507,
+   "clusters": 88
+  },
+  "rest": {
+   "estimate": 0.0364,
+   "ci": [
+    0.0174,
+    0.0678
+   ],
+   "n": 11554,
+   "clusters": 1483
+  }
+ },
+ "recent_by_months_since_retraction": {
+  "0": {
+   "n": 257,
+   "xml_marked": 0.856,
+   "sidecar": 0.8288
+  },
+  "1": {
+   "n": 133,
+   "xml_marked": 0.9925,
+   "sidecar": 0.985
+  },
+  "2": {
+   "n": 152,
+   "xml_marked": 0.9868,
+   "sidecar": 0.9868
+  },
+  "3": {
+   "n": 165,
+   "xml_marked": 0.9818,
+   "sidecar": 0.9758
+  },
+  "4": {
+   "n": 180,
+   "xml_marked": 1.0,
+   "sidecar": 1.0
+  },
+  "5": {
+   "n": 219,
+   "xml_marked": 1.0,
+   "sidecar": 0.9863
+  }
+ },
+ "undated": {
+  "n": 730,
+  "unmarked": 0.0945,
+  "sidecar_flag": 0.8699,
+  "layers": {
+   "rw": 0,
+   "crossref": 0,
+   "pubmed": 646,
+   "openalex": 727
+  },
+  "openalex_only": 84
+ },
+ "layers_in_C": {
+  "rw": 15997,
+  "crossref": 17901,
+  "pubmed": 17303,
+  "openalex": 18036
+ },
+ "layer_patterns_in_C": {
+  "1111": 15439,
+  "0111": 1719,
+  "1101": 394,
+  "0101": 344,
+  "1011": 135,
+  "1000": 13,
+  "1010": 7,
+  "1001": 5,
+  "1110": 3,
+  "1100": 1,
+  "0100": 1
+ },
+ "version_in_C": {
+  "1.0": 17923,
+  "2.0": 135,
+  "3.0": 1,
+  "319.0": 2
+ },
+ "unmarked_by_version": {
+  "1.0": 0.0238,
+  "2.0": 0.0519,
+  "3.0": 0.6667
+ },
+ "sidecar_by_xml": {
+  "false": {
+   "false": 435,
+   "true": 0
+  },
+  "true": {
+   "false": 356,
+   "true": 17270
+  }
+ },
+ "neither_marker_nor_flag": 435,
+ "is_manuscript_in_C": 509
+}

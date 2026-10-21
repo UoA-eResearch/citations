@@ -1,0 +1,38 @@
+{
+ "documents_parsed": 20059,
+ "notice_type_excluded": 162,
+ "primary_cohort": 18061,
+ "primary_without_xml": 0,
+ "H1_unmarked_share": {
+  "estimate": 0.0241,
+  "ci": [
+   0.0114,
+   0.0473
+  ],
+  "n": 18061,
+  "clusters": 1550
+ },
+ "H1": "Refuted",
+ "H2_sidecar_flag_share": {
+  "estimate": 0.9562,
+  "ci": [
+   0.9264,
+   0.9749
+  ],
+  "n": 18061,
+  "clusters": 1550
+ },
+ "H2": "Supported",
+ "H3_xml_minus_txt": {
+  "estimate": 0.0121,
+  "ci": [
+   0.0067,
+   0.02
+  ],
+  "n": 18061,
+  "clusters": 1550,
+  "xml_marked_share": 0.9759,
+  "txt_marked_share": 0.9638
+ },
+ "H3": "Refuted"
+}

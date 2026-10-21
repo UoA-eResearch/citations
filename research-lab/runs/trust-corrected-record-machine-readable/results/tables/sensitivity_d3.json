@@ -1,0 +1,108 @@
+{
+ "n": 18061,
+ "preregistered_unmarked": {
+  "estimate": 0.0241,
+  "ci": [
+   0.0114,
+   0.0473
+  ],
+  "n": 18061,
+  "clusters": 1550
+ },
+ "own_unmarked": {
+  "estimate": 0.0282,
+  "ci": [
+   0.0128,
+   0.0569
+  ],
+  "n": 18061,
+  "clusters": 1550
+ },
+ "own_plus_withdrawal_unmarked": {
+  "estimate": 0.0277,
+  "ci": [
+   0.0124,
+   0.0565
+  ],
+  "n": 18061,
+  "clusters": 1550
+ },
+ "marked_only_via_reference_lists": 75,
+ "withdrawal_wording_adds": 9,
+ "txt_header_share": 0.9562,
+ "H3_own": {
+  "estimate": 0.0086,
+  "ci": [
+   0.0046,
+   0.0153
+  ],
+  "n": 18061,
+  "clusters": 1550
+ },
+ "own_marked_share": 0.9723,
+ "txt_own_share": 0.9636,
+ "sidecar_given_own_unmarked": 0.0,
+ "neither_own_marker_nor_flag": 501,
+ "own_unmarked_by_publisher": {
+  "Hindawi": {
+   "n": 6507,
+   "unmarked": 0.0022
+  },
+  "Wiley": {
+   "n": 1641,
+   "unmarked": 0.0128
+  },
+  "PLoS": {
+   "n": 1350,
+   "unmarked": 0.0
+  },
+  "Elsevier - Cell Press": {
+   "n": 788,
+   "unmarked": 0.1764
+  },
+  "Springer - Nature Publishing Group": {
+   "n": 717,
+   "unmarked": 0.0209
+  },
+  "Springer - Biomed Central (BMC)": {
+   "n": 600,
+   "unmarked": 0.0017
+  },
+  "Frontiers": {
+   "n": 575,
+   "unmarked": 0.0052
+  },
+  "Taylor and Francis - Dove Press": {
+   "n": 564,
+   "unmarked": 0.0
+  },
+  "Spandidos": {
+   "n": 515,
+   "unmarked": 0.0
+  },
+  "Elsevier": {
+   "n": 507,
+   "unmarked": 0.2604
+  },
+  "Springer": {
+   "n": 312,
+   "unmarked": 0.0833
+  },
+  "MDPI": {
+   "n": 247,
+   "unmarked": 0.0
+  },
+  "SAGE Publications": {
+   "n": 244,
+   "unmarked": 0.0041
+  },
+  "unknown": {
+   "n": 218,
+   "unmarked": 0.1651
+  },
+  "Cureus (Part of Springer Nature as of December 2022)": {
+   "n": 198,
+   "unmarked": 0.0051
+  }
+ }
+}

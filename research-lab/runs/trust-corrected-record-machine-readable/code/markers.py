@@ -92,3 +92,54 @@ if __name__ == "__main__":       # self-test on synthetic documents (no corpus f
     for name, doc in (("a", a), ("b", b), ("c", c)):
         print(name, xml_markers(doc))
     print(txt_markers("RETRACTED ARTICLE: Effects of X\n\nAbstract ..."), txt_markers("Effects of X\nAbstract"))
+
+
+# ---------------- D3: the same rules, ignoring reference lists (validation found PMC flags *cited* retracted works
+# with related-article inside <ref>, so a link or retraction wording there says nothing about the citing article)
+def _in_refs(el):
+    return any(_local(a.tag) in ("ref", "ref-list") for a in el.iterancestors())
+
+
+def xml_markers_own(data):
+    try:
+        root = etree.fromstring(data, parser=etree.XMLParser(recover=True, huge_tree=True, resolve_entities=False,
+                                                              no_network=True))
+    except etree.XMLSyntaxError:
+        return {"structured": False, "textual": False, "kinds": ["unparseable"]}
+    if root is None:
+        return {"structured": False, "textual": False, "kinds": ["unparseable"]}
+    kinds, parts = [], []
+    for el in root.iter():
+        if _in_refs(el):
+            continue
+        t = _local(el.tag)
+        if t == "related-article" and "retract" in _attr(el, "related-article-type").lower():
+            kinds.append("related-article")
+        elif t == "notes" and "retract" in _attr(el, "notes-type").lower():
+            kinds.append("notes")
+        elif t == "custom-meta" and "retract" in " ".join(el.itertext()).lower():
+            kinds.append("custom-meta")
+        elif t == "event" and "retract" in _attr(el, "event-type").lower():
+            kinds.append("pub-history-event")
+        elif t == "article-version" and "retract" in " ".join(el.itertext()).lower():
+            kinds.append("article-version")
+        if el.text and not isinstance(el.tag, type(etree.Comment)):
+            parts.append(el.text)
+        if el.tail and el.getparent() is not None and not _in_refs(el.getparent()) and _local(el.getparent().tag) not in ("ref", "ref-list"):
+            parts.append(el.tail)
+    title = ""
+    for el in root.iter():
+        if _local(el.tag) == "article-title" and not _in_refs(el) \
+                and any(_local(a.tag) == "title-group" for a in el.iterancestors()) \
+                and any(_local(a.tag) == "article-meta" for a in el.iterancestors()):
+            title = " ".join(" ".join(el.itertext()).split())
+            break
+    text = " ".join(parts)
+    tk = []
+    if TITLE.search(title):
+        tk.append("title-prefix")
+    if STATEMENT.search(text):
+        tk.append("statement")
+    if TOKEN.search(text):
+        tk.append("token")
+    return {"structured": bool(kinds), "textual": bool(tk), "kinds": sorted(set(kinds)) + tk}
