@@ -20,9 +20,12 @@ MIN_PENTADS, MIN_STRATUM = 100, 30
 # construction. A station is "no estimate" if CHIRP averages under 2 mm/pentad or under 10% of the gauge. The no-
 # estimate stations sit at 0-6% of the gauge; the next lowest, Koumac at 13%, is a gauge error, handled below.
 NO_EST_MM, NO_EST_SHARE = 2.0, 0.10
-# A station-year whose gauge total exceeds five times the satellite-only total is a probable unit or keying error
-# (Koumac 1980-2003 runs about ten times too high) and is dropped.
-IMPLAUSIBLE_RATIO = 5.0
+# A well-sampled station-year (at least 30 matched pentads) in which the gauge and the satellite-only product disagree
+# by more than fivefold, in either direction, cannot evaluate blending: one of the two is wrong. Koumac 1981-2003 runs
+# about ten times too high; French Polynesia's 1981 gauges about 14-54 times too low. Requiring 30 pentads and testing
+# both directions follows the confirmation pass: the first, one-sided version also removed single-pentad years and
+# years where the product, not the gauge, had failed (D2).
+IMPLAUSIBLE_RATIO, IMPLAUSIBLE_MIN_PENTADS = 5.0, 30
 
 
 def pentad_id(dates):
@@ -178,8 +181,10 @@ def main():
         bad_years = []
         if not no_est:
             yr = pd.Series(j.index.str[:4], index=j.index)
-            g = j.groupby(yr)[["obs", "chirp"]].sum()
-            bad_years = sorted(g.index[(g.chirp > 0) & (g.obs > IMPLAUSIBLE_RATIO * g.chirp)])
+            g = j.groupby(yr)[["obs", "chirp"]].agg(["sum", "size"])
+            n, o, c = g[("obs", "size")], g[("obs", "sum")], g[("chirp", "sum")]
+            off = (o > IMPLAUSIBLE_RATIO * c) | (c > IMPLAUSIBLE_RATIO * o)
+            bad_years = sorted(g.index[(n >= IMPLAUSIBLE_MIN_PENTADS) & (c > 0) & (o > 0) & off])
             if bad_years:
                 implausible[s.id] = bad_years
                 j = j[~yr.isin(bad_years)]
