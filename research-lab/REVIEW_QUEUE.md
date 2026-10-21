@@ -15,9 +15,10 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-21 ~17:52 | `frontier-eaa-accessibility-natural-experiment` | confirmation pass |
 | 2026-10-21 ~18:01 | `movement-nz-ev-policy-discount-vs-ruc` | confirmation pass |
 | 2026-10-21 23:06 | `energy-nz-embedded-solar-edb-demand` | review |
+| `energy-nz-intermittent-curtailment-ledger` | f83332e | gate fails; H1 Refuted, H2 Supported by rule (noise-dominated; price-driven core 2.2%) | **awaiting review** |
 
 **Next Fable slot: not before 2026-10-22 04:06 NZDT.** Queue: 1. solar confirmation pass (revision 6e2e4eb).
-2. phantom-citations review (draft pending: full screen running). 3. curtailment review (draft pending).
+2. curtailment review (draft ready). 3. phantom-citations review (draft pending: full screen running).
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
