@@ -32,6 +32,20 @@ SITE = re.compile(r"\b(sampl\w*|collect\w*|isolat\w*|site|located|location|regio
                   r"village|lake|river|forest|farm|hospital|coast|island|sea|ocean|latitude|longitude|°\s*[NSEW])\b", re.I)
 
 
+def read_parts(cols):
+    """Read the sample parts; evidence columns exist only in parts holding samples from the evidence window."""
+    import pyarrow.parquet as pq
+    out = []
+    for f in sorted(glob.glob(str(RUN / "data" / "samples" / "*.parquet"))):
+        have = [c for c in cols if c in pq.read_schema(f).names]
+        x = pd.read_parquet(f, columns=have)
+        for c in cols:
+            if c not in x:
+                x[c] = None
+        out.append(x[cols])
+    return pd.concat(out, ignore_index=True)
+
+
 def get_json(url):
     for t in range(3):
         try:
@@ -76,7 +90,7 @@ def main():
     GOLD.mkdir(parents=True, exist_ok=True)
     cols = ["accession", "submission_date", "country_class", "country_raw", "organism", "package", "owner", "host",
             "bioprojects", "title", "isolation_source", "lat_lon", "attributes_text", "comment"]
-    d = pd.concat([pd.read_parquet(f, columns=cols) for f in sorted(glob.glob(str(RUN / "data" / "samples" / "*.parquet")))])
+    d = read_parts(cols)
     d = d[(d.submission_date >= "2023-06-01") & (d.submission_date <= "2025-05-31") & (d.country_class != "usable")]
     bp = pd.read_parquet(RUN / "data" / "bioprojects.parquet").set_index("accession")
     d["bp1"] = d.bioprojects.fillna("").str.split(";").str[0]

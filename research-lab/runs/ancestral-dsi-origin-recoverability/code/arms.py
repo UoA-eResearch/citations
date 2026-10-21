@@ -38,6 +38,20 @@ CITY_STOP = {"Mobile", "Reading", "Split", "Nice", "Bath", "Wells", "Male", "Med
 W = {"lat_lon": 5.0, "sampling": 3.0, "abstract": 2.0, "bioproject": 2.0, "sample": 2.0}
 
 
+def read_parts(cols):
+    """Read the sample parts; evidence columns exist only in parts holding samples from the evidence window."""
+    import pyarrow.parquet as pq
+    out = []
+    for f in sorted(glob.glob(str(RUN / "data" / "samples" / "*.parquet"))):
+        have = [c for c in cols if c in pq.read_schema(f).names]
+        x = pd.read_parquet(f, columns=have)
+        for c in cols:
+            if c not in x:
+                x[c] = None
+        out.append(x[cols])
+    return pd.concat(out, ignore_index=True)
+
+
 def insdc(name):
     if not name:
         return None
@@ -120,7 +134,7 @@ def classifier_predictions(recs):
     from sklearn.linear_model import SGDClassifier
     cols = ["submission_date", "country_class", "country_resolved", "bioprojects", "title", "isolation_source",
             "attributes_text", "comment"]
-    d = pd.concat([pd.read_parquet(f, columns=cols) for f in sorted(glob.glob(str(RUN / "data" / "samples" / "*.parquet")))])
+    d = read_parts(cols)
     d = d[(d.submission_date >= "2023-06-01") & (d.submission_date <= "2025-05-31") & (d.country_class == "usable")]
     d = d.sample(n=min(200_000, len(d)), random_state=SEED)
     bp = pd.read_parquet(RUN / "data" / "bioprojects.parquet").set_index("accession")
