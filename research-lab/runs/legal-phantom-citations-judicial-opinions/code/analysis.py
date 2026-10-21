@@ -79,14 +79,21 @@ def load_jsonl(p):
 
 def prepare():
     vols = json.load(open(S / "volumes.json"))["volumes"]
-    complete = {}
-    for k, n in vols.items():
-        if k.endswith("|n"):
-            base = k[:-2]
-            res = vols.get(base + "|res", 0)
-            complete[base] = n >= COMPLETE_MIN_CITES and res / n >= COMPLETE_RATE
     cands = load_jsonl(S / "candidates.jsonl")
     mis = load_jsonl(S / "misattributions.jsonl")
+    # D6: a volume is complete for a candidate if, leaving out that candidate's own opinion's uncovered citations
+    # into it, at least 98% of at least 20 citations find their case in the corpus (verdict consistent or
+    # name-exists). Resolution alone is not coverage: a citation to a case the corpus lacks still "resolves" by
+    # landing inside a neighbouring case's page range.
+    uncovered = Counter()
+    for c in cands + mis:
+        vk = volume_key(c["cite"])
+        if vk:
+            uncovered[(c["opinion_id"], vk)] += 1
+
+    def complete_for(c, vk):
+        n = vols.get(vk + "|n", 0) - uncovered[(c["opinion_id"], vk)]
+        return n >= COMPLETE_MIN_CITES and vols.get(vk + "|cov", 0) / n >= COMPLETE_RATE
 
     kept, drop = [], Counter()
     for c in cands:
@@ -94,7 +101,7 @@ def prepare():
         if p is None:
             drop["outside both periods"] += 1; continue
         vk = volume_key(c["cite"])
-        if vk is None or not complete.get(vk, False):
+        if vk is None or not complete_for(c, vk):
             drop["incomplete or unassessable reporter-volume"] += 1; continue
         c["period"] = p
         c["type"] = "flag" if FLAG.search(c.get("context", "")) else "reliance"

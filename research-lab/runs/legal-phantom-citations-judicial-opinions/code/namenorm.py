@@ -77,8 +77,12 @@ def clean_party(s):
     return " ".join(w)
 
 
+# Ohio-style docket tails that eyecite keeps in the defendant: "8th Dist. Cuyahoga No. 94458", "Franklin App. No."
+_DOCKET_TAIL = re.compile(r"\b(\d+(st|nd|rd|th) dist\b|\w+ app no\b|case no\b).*$")
+
+
 def clean_cited(plaintiff, defendant):
-    p, d = clean_party(plaintiff), clean_party(defendant)
+    p, d = clean_party(plaintiff), _DOCKET_TAIL.sub("", clean_party(defendant)).strip()
     return f"{p} v {d}" if p and d else (p or d)
 
 

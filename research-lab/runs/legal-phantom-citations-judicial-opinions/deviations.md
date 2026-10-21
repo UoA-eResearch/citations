@@ -153,3 +153,53 @@ Set in `code/analysis.py`, committed before the screen has produced a single in-
    will also be verified on its sample, recording for each whether it is truly flag-type, to measure that rate.
 4. **Misattributions** are verified on a fixed seeded sample of 100 in the screened period and reported
    separately; they never count toward H1.
+
+## D6 — 2026-10-21 20:11 NZDT — the in-window pilot, two more fixes, and the freeze
+
+The seeded pilot of 2,000 in-window opinions (D3 item 4; seed 20261021; 28,620 full citations) was screened three
+times while tuning. Tuning used only this pilot and the out-of-window pilot of D3. No other in-window opinion has
+been screened.
+
+**Run 1 (screen as frozen in D3):** 53.1 phantom candidates per 1,000 citations. Restricted to reporters that
+resolved at least 98% of pilot citations, 90 candidates in 74 opinions remained, and every one read as a real case.
+There were four causes:
+
+- *Bluebook abbreviations.* "Mo. Pac. R.R. v. R.R. Comm'n of Tex." shares no token with the corpus's "Missouri
+  Pacific Railroad v. Railroad Commission of Texas", and "Hosp. Bldg. Co. v. Rex Hosp. Tr." failed because "rex" is
+  under four letters and "hosp" is not "hospital".
+- *Misspellings in the opinion*, e.g. "Hotzclaw" for Holtzclaw and "Lownschuss" for Lowenschuss.
+- *Truncated party names from eyecite.*
+- *Real cases the corpus lacks.* A citation to a missing case still "resolves" by landing inside a neighbouring
+  case's page range (*J.K.J. v. Polk County* landing in *United States v. Smithers*).
+
+**Fix 1, `code/abbrev.py`.** A cited token now matches a corpus token in three further ways:
+- through a table of Bluebook abbreviations;
+- as a prefix of four letters or more;
+- by near-identity (rapidfuzz ratio ≥ 85, both tokens five letters or more).
+
+Abbreviations standing only for generic words (company, state, county and the like) or for tokens too common to
+index are not used. The name search also runs on the name with abbreviations spelled out, and the better score is
+kept. **Run 2:** 39 candidates in 34 opinions among the same reporters, and again every one read as a real case. Most
+were cases the corpus lacks, so the citation landed in another case's page range.
+
+**Fix 2, completeness measured as coverage.** Plan §1 defines a complete reporter-volume by whether the cited pages
+are present in the corpus. D5 put that into practice as "at least 98% of citations into it resolve", but resolution
+counts page-range landings, so volumes with missing modern cases passed. A citation now counts as **covered** when
+the screen finds its case in the corpus, either by citation (verdict consistent) or by name (name-exists). A
+volume is complete for a candidate when at least 98% of at least 20 citations into it are covered. The candidate's
+own opinion's uncovered citations into that volume are left out, so one fabricated citation cannot disqualify its own
+volume. **Run 3:** 86.5% of pilot citations are covered. Of the 89 volumes with at least 20 pilot citations, 42 reach
+98%, most of them U.S. Reports volumes.
+
+**Fix 3.** Ohio-style docket tails that eyecite keeps in the defendant's name ("8th Dist. Cuyahoga No. 94458",
+"Franklin App. No.", "Case No.") are stripped.
+
+**Validation after each fix:** unchanged. Of the six *Mata* fabrications, four are phantoms and one a
+misattribution, and none of the four real cases is flagged. *Martinez* is still missed and was again not tuned.
+
+**What this costs.** The screen is now confined to reporter-volumes that the corpus covers almost completely.
+Fabricated citations into thinly covered modern volumes (F.4th, F. Supp. 3d, many state reporters) cannot produce a
+finding. The Charlotin calibration (plan step 6) measures that loss of recall, and the counts remain a lower bound.
+
+**Freeze.** `parse.py`, `namenorm.py`, `abbrev.py`, `screen_shards.py` and `analysis.py` are frozen at this
+commit. The full in-window screen is run once from it.

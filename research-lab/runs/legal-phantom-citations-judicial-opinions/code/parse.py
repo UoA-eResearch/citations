@@ -34,6 +34,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import clcsv  # noqa: E402  the bulk files' PostgreSQL CSV dialect
 from namenorm import clean_cited, distinctive, norm_name, party_score, tokens_of  # noqa: E402
+import abbrev  # noqa: E402  Bluebook abbreviations and tolerant token match (D6)
 
 RUN = Path(__file__).resolve().parents[1]
 RAW, IDX, OUT = RUN / "data" / "raw", RUN / "data" / "index", RUN / "data" / "screen"
@@ -133,6 +134,16 @@ def name_search(cited):
     year, an OCR fragment -- empty the pool and turn a real case into a phantom candidate.
     """
     norm = norm_name(cited)
+    first = _name_search_norm(norm)
+    exp = abbrev.expanded_name(norm)                   # D6: also search the name with abbreviations spelled out
+    if exp != norm:
+        second = _name_search_norm(exp)
+        if second[0] > first[0]:
+            return second[0], second[1], first[2] or second[2], first[3]
+    return first
+
+
+def _name_search_norm(norm):
     want = distinctive(norm, G["dropped"])
     pools = {t: G["tokens"].get(t) for t in want}
     absent = sorted(t for t, p in pools.items() if p is None or not len(p))
@@ -159,8 +170,9 @@ def judge(rep, vol, page, cited):
     if hit is not None:
         row = row_of(hit)
         out["resolved_name"] = name_at(row) if row is not None else None
-        ct = distinctive(norm_name(cited), G["dropped"]) if cited else set()
-        if not ct or (row is not None and ct & set(name_at(row).split())):
+        nc = norm_name(cited) if cited else ""
+        ct = abbrev.cited_tokens(nc, distinctive(nc, G["dropped"]), G["dropped"]) if cited else set()
+        if not ct or (row is not None and abbrev.shares_token(G["fuzz"], ct, name_at(row))):
             out["verdict"] = "consistent"
             return out
         out["route"] = "resolved-elsewhere"
@@ -215,6 +227,8 @@ def screen(task):
         if j["resolved_to"] is not None:
             vols[key + "|res"] += 1
             n_resolved += 1
+        if j["verdict"] in ("consistent", "name-exists"):   # D6: the cited case is in the corpus
+            vols[key + "|cov"] += 1
         capped += int(j.get("capped", False))
         if j["verdict"] == "consistent":
             n_consistent += 1
