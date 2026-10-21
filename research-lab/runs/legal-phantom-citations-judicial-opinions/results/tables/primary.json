@@ -1,0 +1,85 @@
+{
+ "opinions_screened": {
+  "screened": 836076,
+  "placebo": 829251
+ },
+ "screened_reliance": {
+  "verified": 0,
+  "estimate": 0.0,
+  "sampled": true,
+  "ci": [
+   0.0,
+   40.2
+  ],
+  "per_10k_opinions": 0.0,
+  "per_10k_ci": [
+   0.0,
+   0.046
+  ]
+ },
+ "screened_flag": {
+  "verified": 45,
+  "estimate": 45,
+  "sampled": false,
+  "per_10k_opinions": 0.538,
+  "per_10k_ci": [
+   0.402,
+   0.72
+  ]
+ },
+ "placebo_reliance": {
+  "verified": 0,
+  "estimate": 0.0,
+  "sampled": true,
+  "ci": [
+   0.0,
+   46.1
+  ],
+  "per_10k_opinions": 0.0,
+  "per_10k_ci": [
+   -0.0,
+   0.046
+  ]
+ },
+ "placebo_flag": {
+  "verified": 0,
+  "estimate": 0,
+  "sampled": false,
+  "per_10k_opinions": 0.0,
+  "per_10k_ci": [
+   -0.0,
+   0.046
+  ]
+ },
+ "H1": {
+  "count": 0.0,
+  "verdict": "Refuted",
+  "rule": ">= 20 Supported, < 10 Refuted"
+ },
+ "H2": {
+  "placebo_rate": 0.0,
+  "screened_rate": 0.0,
+  "ratio": null,
+  "verdict": "not scorable"
+ },
+ "recall_detection": {
+  "orders": 854,
+  "flagged": 453,
+  "recall": 0.53,
+  "ci": [
+   0.497,
+   0.564
+  ]
+ },
+ "recall_reliance": {
+  "judge_attributed_in_corpus": 4,
+  "flagged_as_reliance": 1
+ },
+ "recall_corrected_screened_reliance": 0.0,
+ "capture_recapture": {
+  "screen": 0,
+  "database": 4,
+  "both": 0,
+  "chapman_N": 4.0
+ }
+}

@@ -1,0 +1,36 @@
+{
+ "candidates_from_screen": 859471,
+ "dropped": {
+  "incomplete or unassessable reporter-volume": 851400
+ },
+ "kept": 8071,
+ "misattributions_from_screen": 2052115,
+ "sheets": {
+  "verify_placebo_flag.csv": {
+   "opinions": 116,
+   "candidates": 130,
+   "sampled": false,
+   "opinions_on_sheet": 116
+  },
+  "verify_placebo_reliance.csv": {
+   "opinions": 3646,
+   "candidates": 4242,
+   "sampled": true,
+   "opinions_on_sheet": 300
+  },
+  "verify_screened_flag.csv": {
+   "opinions": 202,
+   "candidates": 221,
+   "sampled": false,
+   "opinions_on_sheet": 202
+  },
+  "verify_screened_reliance.csv": {
+   "opinions": 3182,
+   "candidates": 3478,
+   "sampled": true,
+   "opinions_on_sheet": 300
+  }
+ },
+ "misattributions_screened_period": 1027677,
+ "misattributions_sampled_for_verification": 100
+}

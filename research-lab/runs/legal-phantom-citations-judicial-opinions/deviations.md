@@ -215,3 +215,39 @@ giving 256 tasks on 26 workers. It saves each chunk's result as it completes, so
 merges the chunks in a fixed order. The decision for every opinion is still `parse.screen()`, which is unchanged
 since the D6 freeze, as are `parse.py`, `namenorm.py`, `abbrev.py` and `analysis.py`. Output order changes; the
 analysis sorts opinions by id before any sampling, so nothing downstream depends on it.
+
+## D8 — 2026-10-22 12:01 NZDT — verification rules, applied while verifying, before scoring
+
+The plan says only that candidates are "checked by hand against the corpus and against external lookup". These
+rules were fixed while reading the sheets, before `analysis.py score` was run:
+
+1. **External lookup.** CourtListener's public search API (anonymous). A cited case counts as **real** if any of
+   the following holds:
+   - the index or CourtListener holds it under the cited or a corrected citation (typo, wrong reporter, transposed
+     digits);
+   - independent CourtListener opinions cite it;
+   - an official reporter lists it. One case, *State v. Liason*, 2026-Ohio-243, is absent from CourtListener and
+     was confirmed on the Ohio Reporter of Decisions through a web search.
+
+   A citation is a **phantom** only if the case is found nowhere. A real case cited at a wrong citation is
+   **real**, however wrong the citation.
+2. **Courts' own findings.** When the opinion itself states that a cited case does not exist or cannot be located,
+   that statement, together with the index check, verifies the phantom (flag type). One exception: where the court
+   adds that the case exists elsewhere (*Hatahly*; *Bajakajian* cited as "Kajakajian"; *Messina*; *Main St. Legal
+   Servs.*), it is real.
+3. **Party filings.** CourtListener's opinion corpus contains documents that are not court opinions:
+   - pro se motions carrying a judge's memo endorsement;
+   - a pro se plaintiff's filing in bankruptcy court;
+   - an appellant's reply brief (Tex. App., filed as a "combined opinion").
+
+   Every verified phantom's document was read. A phantom in a party filing is recorded as `phantom-party-filing`,
+   or `party-filing-unverified` where the citation could not be resolved either way. These are not counted as
+   judicial reliance; `score` counts `phantom` only. The rate denominators (opinions screened) include an
+   unmeasured share of such filings. The report must say so.
+4. **Unverifiable.** A citation whose case name is too garbled to identify (OCR) is `unverifiable` and not
+   counted.
+5. **Misattribution sample.** Verdicts are `index-artefact` when resolution merely returned the case spanning the
+   page because the cited case is missing from the index (Westlaw, neutral and new F.4th citations), or a verdict
+   from the categories above.
+6. **Reading aid.** `code/verify_aid.py` adds the case names the index holds at the cited reporter-volume-page.
+   It decides nothing.
