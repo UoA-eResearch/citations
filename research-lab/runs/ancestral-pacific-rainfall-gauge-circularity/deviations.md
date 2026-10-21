@@ -44,10 +44,15 @@ code and reproduced the primary results. Four changes followed, each re-run; bot
    under 2 mm/pentad or under 10% of the gauge. The rule's thresholds were set after the review had identified the
    affected stations; they fall in a clear gap (the nine stations caught sit at 0–6% of the gauge, the next lowest at
    13% is a gauge error, item 2). Nine stations are caught: five Palau, Johnston, Lukunoch, Chuuk WSO AP, Woleai.
-   With them removed, the ratio is 0.12 (−0.16 to 0.40) and ΔKGE +0.046 (+0.017 to +0.074), against 0.10 and +0.034
-   in the draft.
-2. **Gauge plausibility.** The QC had no plausibility screen. A station-year whose gauge total exceeds five times the
-   satellite-only total is now dropped: Koumac 1981–2003 (about ten times too high) and 10 other station-years.
+   With them removed (and the screen in item 2), the ratio is 0.12 (−0.17 to 0.39) and ΔKGE +0.046 (+0.017 to
+   +0.073), against 0.10 and +0.034 in the draft.
+2. **Gauge plausibility.** The QC had no plausibility screen. A well-sampled station-year (at least 30 matched
+   pentads) in which gauge and satellite-only product disagree by more than fivefold in either direction is now
+   dropped: Koumac 1981–2003 (about ten times too high), seven French Polynesia stations in 1981 (far too low) and
+   ten other station-years. The first version of this screen was one-sided and had no pentad minimum; the
+   confirmation pass showed it removed single-pentad years and years where the product rather than the gauge had
+   failed, while leaving the French Polynesia 1981 errors in. Either version moves the results by under 0.01 in the
+   ratio. With the revised screen: ratio 0.12 (−0.17 to 0.39), ΔKGE +0.046 (+0.017 to +0.073).
 3. **Shares** are now computed over station-months in which the gauge reported, with "ingested" at 10 km as well as
    5 km, because 6.7% of Pacific entries in the input lists are rounded to 0.1°. The draft's "about a third" becomes
    half to two-thirds, which strengthens the circularity finding.

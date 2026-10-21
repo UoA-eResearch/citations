@@ -197,3 +197,83 @@ length, so a record that starts or ends mid-pentad yields one "complete" partial
   v2.0 COGs (plan §1: "the two differ only by the station blending"); nothing here contradicts it, but it is an
   assumption, and the 38% RMS difference at cells 300 km from any listed input should be stated as a property of the
   pair rather than explained away.
+
+## Confirmation pass (commits f2ab088, 98be6ec, 1fa4d85; 2026-10-21)
+
+Check script `reviewer_checks/16_confirmation_pass.py`, output `reviewer_checks/cache/16_output.txt`. No network use.
+
+**Verdict on the revision: publish with edits** (two substantive, listed first). Every number in the revised
+report traces to the new tables, and the four variant summaries recompute exactly from the new `station_skill.csv`
+with the study's seed sequence (R 0.1210 (−0.1629, 0.4033); ΔKGE +0.0461 (+0.0173, +0.0735)); H1 Supported, H2
+Refuted stand.
+
+### Finding by finding
+
+1. **No-estimate rule: resolved.** Thresholds (< 2 mm/pentad or < 10% of the gauge) are disclosed as post hoc in
+   D2, and the gap they sit in is real: the nine caught stations have CHIRP at 0.0–5.9% of the gauge, Koumac is next
+   at 13.4% (a gauge error, item 5), then the two Agana cells on Guam at 24.5% and 26.3%, then 49%. Palau, Johnston
+   and the three FSM atolls are out of the country table and flagged in the benchmark (17,270 pentads, 9 stations,
+   112 evaluated: all verified). Note for the release: the two Agana cells (GQC00914002, GQ1GUGU0009) have CHIRPS
+   equal to zero in 60% of pentads and CHIRP at a quarter of the gauge; they pass the rule but are half-estimates, and
+   the benchmark should carry a flag.
+2. **Shares: resolved, and fairly described.** 65–75% / 18–22% / 37–46% / 58–70% all verified on reporting
+   station-months. On whether 10 km is fair: of the 9,990 reporting station-months in the 5–10 km band, 9,848 (99%)
+   are at stations that never have an entry within 5 km, and at the big contributors (Nadi 528 months, Tubuai, Chuuk
+   WSO, Tahiti-Faaa, Kwajalein, Mangareva, Bora-Bora, Nausori, Kosrae, Tanna, Koumac, Port Moresby) the distance is
+   the same value every month: the WMO station's own entry with 0.1° coordinates, not a neighbour. Only 18 of 148
+   gauges have two or more list entries within 10 km (12 on Guam, where the gauges are within 5 km anyway). So the
+   10 km figure is closer to the truth than the 5 km one, and "half to two-thirds" is, if anything, conservative. One
+   wording edit: the heading "Half to two-thirds of reporting gauges are themselves CHIRPS inputs" and the plain-terms
+   sentence describe station-months; say "reporting station-months" in the technical heading.
+3. **Missing outputs: reported, with one new omission (see A below).** Co-located case, non-evaluable countries and
+   per-country table are present and their numbers verified (202,357 evaluable pentads, 25,391 independent = 12.5%,
+   20,275 Fijian, RM 1,940, NH 1,111).
+4. **Label caveat on H2: resolved.** Stated in the summary and in "What this does and does not show".
+5. **Plausibility screen: Koumac resolved; the other ten station-years are overreach in form, immaterial in
+   effect.** Koumac 1981–2003 runs 5.4–16× CHIRP and is a demonstrated 10× unit error. The ten others are not
+   "probable unit or keying errors": two are single pentads (Sola 1998: one pentad, gauge 23 mm vs CHIRP 2; Port
+   Moresby 2014), four more have six matched pentads, and in several the implausible side is CHIRP, not the gauge
+   (Andersen 2019: CHIRP 4 mm over six pentads, 2% of its own rate; Inarajan 2008: CHIRP at 7% of its own rate with
+   the gauge at 58% of normal; Pirates Cove 2004: CHIRP 1 mm over six pentads). Dropping those removes product
+   failures from the evaluation, which a screen built on the product under test will always tend to do. The rule is
+   also one-sided: its mirror (CHIRP > 5× gauge) flags 35 station-years, among them all seven French Polynesia
+   stations in 1981 (CHIRP 14–54× the gauge over 30–47 pentads each, a likely gauge unit error the other way) that the
+   current screen leaves in. Effect: the screen moves R by about 0.006 and ΔKGE by 0.0002 (no-estimate-only numbers
+   from check 12: 0.115 (−0.188, 0.393), +0.0459). Fix: either (a) a gauge-only criterion (station-year total above
+   3× the station's own median annual total, or a daily value ≥ 500 mm), which catches Koumac and nothing spurious, or
+   (b) keep the ratio rule but require ≥ 30 matched pentads in the station-year and apply it both ways, then report
+   FP 1981. Either way, re-run (numbers move within rounding) and reword "probable unit or keying error" to fit.
+6. **"Tenfold": resolved** ("several-fold, at least threefold on the interval").
+7. **Within-station and heterogeneity: resolved and verified.** 45 stations, 12.6% vs 1.8%, +10.9 points (6.8–15.0),
+   84% positive; Guam −9.2% (14), CNMI −16.6% (5), 15.8% without them: all match.
+8–9. **Not done, as stated.** The "147 of 148" sentence still lacks the one-line explanation (the COGs use a wider
+   land mask than the 2015-vintage pre-check grid); the partial-pentad note is absent. Both minor.
+
+### New points
+
+A. **(Substantive) The co-located ratio's interval reaches 0.50 and the table hides it.** `primary.json`
+   `colocated_5km.ratio_ci` is (−0.17, 0.50); over ten other seeds the upper bound is 0.49–0.53. The H1 table gives
+   this row a bare "0.13" while every other row carries its interval, and the text says "every sensitivity analysis
+   agrees". Under the plan's own rule the co-located case is Inconclusive, not Supported. The co-located case is the
+   plan's check on label resolution (§5.1), so it matters: with the strictest "ingested" definition (65 stations) the
+   bound is not met, mainly because fewer supported stations widen the interval, not because the point estimate moves
+   (0.13). Fix: print the interval, say it straddles 0.5, and change "every sensitivity analysis agrees" to "the three
+   preregistered sensitivity analyses agree; the co-located variant, with 65 supported stations, has an upper bound of
+   0.50".
+B. **(Minor) The secondary pair was not screened.** `station_skill_secondary.csv` still carries Koumac (its 2001–2003
+   gauge years are the bad ones) and four Palau stations. Palau is fine there (PERSIANN has real values at 0.25°),
+   Koumac is an inconsistency with D2 item 2; its effect on a 102/28-station summary is nil, but apply the same
+   screen or say why not.
+C. **(Trivial) Rounding slips.** γ moves by 0.0419 and r by 0.0247 at independent gauges; the report prints 0.041
+   and 0.024 (truncated, not rounded).
+D. **(Note) t50_150 ΔKGE lower bound** is +0.0001, printed as "+0.000 ... reaches zero": accurate.
+
+### Was anything new overstated?
+
+- "The same held comparing a single station's supported and independent months" (plain terms): supported by the
+  within-station result.
+- "That CHIRPS has no real estimate over Palau or the Chuuk-lagoon atolls is a finding in its own right": supported
+  (server values 0–1.4 mm across every Palau land cell; both products at 0–6% of the gauge).
+- "every sensitivity analysis agrees": overstated (point A).
+- "A station-year whose gauge total exceeds five times the satellite-only total is dropped as a probable unit or
+  keying error": overstated for ten of the eleven cases (point 5).

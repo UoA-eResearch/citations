@@ -10,15 +10,15 @@ where neither product carries an estimate, so CHIRPS cannot be evaluated there a
 - **H1 (the blending gain at independent gauges is at most half the gain at supported gauges): Supported.**
   - **Supported gauges** (CHIRPS ingested a station within 25 km that month): blending cuts the pentad RMSE by 10.5%
     (95% CI 6.9–13.8%).
-  - **Independent gauges** (no input station within 100 km): it cuts it by 1.3% (−1.7 to +3.8%).
-  - The ratio is 0.12 (−0.16 to 0.40), below the 0.5 bar across the whole interval.
+  - **Independent gauges** (no input station within 100 km): it cuts it by 1.2% (−1.7 to +3.7%).
+  - The ratio is 0.12 (−0.17 to 0.39), below the 0.5 bar across the whole interval.
   - It stays below 0.5 under both alternative distance thresholds and on log-transformed rainfall (0.34, 0.24–0.44).
-  - **Within the same 45 stations**, measured in both strata, the gain is 12.6% where supported and 1.8% where
-    independent — a difference of 10.9 points (6.8–15.0), positive at 84% of stations — so the contrast is not an
+  - **Within the same 45 stations**, measured in both strata, the gain is 12.7% where supported and 1.7% where
+    independent — a difference of 11.0 points (7.0–15.1), positive at 87% of stations — so the contrast is not an
     artefact of which stations fall in which stratum.
 - **H2 (at independent gauges the satellite-only twin is better): Refuted.**
-  - CHIRPS still edges CHIRP on the Kling–Gupta efficiency at independent gauges: ΔKGE +0.046 (+0.017 to +0.074).
-  - Under the widest distance threshold the interval reaches zero (+0.034, +0.000 to +0.065).
+  - CHIRPS still edges CHIRP on the Kling–Gupta efficiency at independent gauges: ΔKGE +0.046 (+0.017 to +0.073).
+  - Under the widest distance threshold the interval includes zero (+0.031, −0.002 to +0.063).
   - The monthly input lists can miss gauges CHIRPS used only at pentad stage. Such hidden inputs would make some
     "independent" gauges supported, which inflates the independent gain and so pushes towards refuting H2 as well as
     against H1.
@@ -86,8 +86,8 @@ the gauges blended into products such as CHIRPS. The study asks two preregistere
   - Pixels were read by HTTP range requests.
   - The data server refused parallel readers partway through (D1 addendum). Extraction resumed as one paced stream.
   - Failed reads were recorded as errors and re-read later, never as zero rain.
-  - The plan's pre-check grid masked 14 stations as ocean. The CHIRPS pentad files used here have values at 147 of the
-    148.
+  - The plan's pre-check grid masked 14 stations as ocean. The CHIRPS pentad files used here, which use a wider land
+    mask, have values at 147 of the 148.
   - The exception (FMC00914251, Micronesia) is masked as ocean, so it has no CHIRPS skill. It is reported as a masked
     station: 410 gauge pentads, all independent.
 - **The secondary pair:** PERSIANN (satellite-only) and PERSIANN-CDR (bias-adjusted to GPCP, which uses GPCC gauges),
@@ -116,10 +116,12 @@ use a station-block bootstrap (2,000 resamples).
 **Where there is no estimate, and implausible gauge years** (D2). At some cells the products carry no climatology and
 are filled with near-zero values rather than marked missing, so the plan's "masked" test (every value empty) never
 fired; there the blending gain is zero by construction. A station is treated as having no estimate if CHIRP averages
-under 2 mm/pentad or under 10% of the gauge: nine stations, with CHIRP at 0–6% of the gauge. A station-year whose
-gauge total exceeds five times the satellite-only total is dropped as a probable unit or keying error. That removes
-Koumac 1981–2003, whose record runs about ten times too high, and 10 other station-years (Guam ×5, Vanuatu ×3, and
-one each at Port Moresby, Papua New Guinea, and Nanumea, Tuvalu). With one ocean-masked station, 112 stations are evaluated.
+under 2 mm/pentad or under 10% of the gauge: nine stations, with CHIRP at 0–6% of the gauge. A well-sampled
+station-year (at least 30 matched pentads) in which the gauge and the satellite-only product disagree by more than
+fivefold, in either direction, is dropped, because one of the two is wrong. That removes Koumac 1981–2003, whose record
+runs about ten times too high; seven French Polynesia stations in 1981, whose gauges run far too low; and ten other
+station-years (Vanuatu ×3 and Tonga in 1981, Guam ×4, and one each in the Federated States of Micronesia and the
+Marshall Islands). With one ocean-masked station, 112 stations are evaluated.
 
 ## Results
 
@@ -127,16 +129,18 @@ one each at Port Moresby, Papua New Guinea, and Nanumea, Tuvalu). With one ocean
 
 | | stations (sup / ind) | gain, supported | gain, independent | ratio (H1) |
 |---|---|---|---|---|
-| **Primary: 25 / 100 km** | 97 / 55 | **10.5% (6.9–13.8)** | **1.3% (−1.7 to 3.8)** | **0.12 (−0.16 to 0.40)** |
-| Thresholds 10 / 50 km | 94 / 61 | 10.5% | 1.5% | 0.14 (−0.10 to 0.39) |
-| Thresholds 50 / 150 km | 101 / 43 | 10.4% | −1.0% | −0.10 (−0.45 to 0.24) |
-| log(1 + P) pentads | 97 / 55 | 13.2% | 4.4% | 0.34 (0.24 to 0.44) |
-| Co-located: input within 5 km (preregistered) | 65 / 55 | 10.0% (4.6–14.6) | 1.3% | 0.13 |
+| **Primary: 25 / 100 km** | 97 / 55 | **10.5% (6.9–13.8)** | **1.2% (−1.7 to 3.7)** | **0.12 (−0.17 to 0.39)** |
+| Thresholds 10 / 50 km | 94 / 61 | 10.4% | 1.5% | 0.14 (−0.10 to 0.40) |
+| Thresholds 50 / 150 km | 101 / 42 | 10.4% | −1.4% | −0.14 (−0.51 to 0.19) |
+| log(1 + P) pentads | 97 / 55 | 13.4% | 4.5% | 0.34 (0.24 to 0.44) |
+| Co-located: input within 5 km (preregistered) | 65 / 55 | 9.9% (4.5–14.5) | 1.2% | 0.12 (−0.19 to 0.49) |
 | *Secondary: PERSIANN-CDR vs PERSIANN* | 102 / 28 | 10.7% | 7.7% | 0.72 (0.49 to 1.00) |
 
-- **H1 is Supported.** The ratio's upper bound, 0.40, is below 0.5, and every sensitivity analysis agrees.
+- **H1 is Supported.** The ratio's upper bound, 0.39, is below 0.5, and so it is in the three preregistered
+  sensitivity variants. The co-located case is borderline: its interval reaches 0.49, and crosses 0.5 under other
+  bootstrap seeds.
 - **The supported gain is not uniform.** Guam's 14 stations and the Northern Marianas' 5 have negative supported gains
-  (−9.2% and −16.6%): there CHIRPS is worse than CHIRP even at ingested gauges. Without them the supported gain is
+  (−9.3% and −16.6%): there CHIRPS is worse than CHIRP even at ingested gauges. Without them the supported gain is
   15.8%, so they make the contrast smaller, not larger.
 - **The farther from an input station, the smaller the gain.** At the 150 km threshold, the independent gain is
   slightly negative.
@@ -149,16 +153,16 @@ one each at Port Moresby, Papua New Guinea, and Nanumea, Tuvalu). With one ocean
 
 | pair / variant | ΔKGE at independent gauges |
 |---|---|
-| **CHIRPS − CHIRP (primary)** | **+0.046 (+0.017 to +0.074)** |
-| thresholds 10 / 50 km | +0.048 (+0.023 to +0.071) |
-| thresholds 50 / 150 km | +0.034 (+0.000 to +0.065) |
+| **CHIRPS − CHIRP (primary)** | **+0.046 (+0.017 to +0.073)** |
+| thresholds 10 / 50 km | +0.048 (+0.023 to +0.070) |
+| thresholds 50 / 150 km | +0.031 (−0.002 to +0.063) |
 | log(1 + P) | +0.061 (+0.047 to +0.077) |
 | PERSIANN-CDR − PERSIANN (secondary) | +0.108 (+0.056 to +0.161) |
 
 - **H2 is Refuted.** At independent gauges CHIRPS is not worse than CHIRP. It is slightly better on KGE, which
   weighs correlation, bias and variability together, even though it barely improves RMSE there.
 - **Where the KGE gain comes from** (`station_skill.csv`, station means at independent gauges):
-  - mostly bias and variability: the bias ratio β and variability ratio γ move closer to 1 by 0.030 and 0.041;
+  - mostly bias and variability: the bias ratio β and variability ratio γ move closer to 1 by 0.030 and 0.040;
   - a little from correlation: r rises by 0.024.
 
 ![ΔKGE at independent gauges](results/figures/F2_dkge_independent.png)
@@ -167,11 +171,11 @@ one each at Port Moresby, Papua New Guinea, and Nanumea, Tuvalu). With one ocean
 
 Shares are counted over station-months in which the gauge reported (D2).
 - **Most reporting station-months are supported:** 65–75% in every decade since the 1980s; 18–22% are independent.
-- **Half to two-thirds of reporting gauges are themselves CHIRPS inputs.** Within 5 km of a listed input, 37–46% by
-  decade; within 10 km, 58–70%. The wider radius matters because 6.7% of Pacific entries in the input lists are rounded
+- **In half to two-thirds of reporting station-months the gauge is itself a CHIRPS input.** Within 5 km of a listed
+  input, 37–46% by decade; within 10 km, 58–70%. The wider radius matters because 6.7% of Pacific entries in the input lists are rounded
   to 0.1°: Nadi's own entry sits 7.4 km from the Nadi gauge every month.
-- **Independent pentads are concentrated in Fiji.** Of 202,357 evaluable station-pentads, 25,391 (12.5%) are
-  independent, and 20,275 of those are Fijian; the next largest are the Marshall Islands (1,940) and Vanuatu (1,111).
+- **Independent pentads are concentrated in Fiji.** Of 201,750 evaluable station-pentads, 25,322 (12.6%) are
+  independent, and 20,275 of those are Fijian; the next largest are the Marshall Islands (1,940) and Vanuatu (1,052).
 - **Guam's 14 stations have no independent pentads at all.**
 
 ### Where CHIRPS cannot be evaluated
@@ -183,13 +187,15 @@ Shares are counted over station-months in which the gauge reported (D2).
 - **No evaluable station:** Johnston, Palau, Niue and Tokelau; Nauru, Samoa, Wallis and Futuna, and Pitcairn have no
   GHCN-Daily station at all.
 - These stations are flagged in `benchmark_stations.csv` and are not offered as benchmarks.
+- **A caution for benchmark users:** two Guam cells at Agana pass the rule but are weak — CHIRP runs at about a
+  quarter of the gauge there, and CHIRPS is zero in 60% of pentads.
 
 ![Label shares by decade](results/figures/F3_label_shares.png)
 
 ## What this does and does not show
 
 - **It shows that the standard gauge validation of CHIRPS over the Pacific is largely circular.** The blending
-  advantage measured at ingested gauges (10.5%) is several times what holds at independent gauges (1.3%) — at least
+  advantage measured at ingested gauges (10.5%) is several times what holds at independent gauges (1.2%) — at least
   three times on the interval — and the same contrast appears within single stations.
 - **It does not show that blending hurts away from gauges.** On KGE, CHIRPS is marginally better than CHIRP even at
   independent gauges.
@@ -200,7 +206,7 @@ Shares are counted over station-months in which the gauge reported (D2).
   representativeness affects both twins equally, so it moves skill but not, in principle, the within-pair gain; the
   within-station contrast addresses selection directly.
 - **One product family.** CHIRPS and CHIRP are the only twin pair with published input lists. The PERSIANN pair is
-  suggestive only.
+  suggestive only, and it was not re-screened for D2: Koumac's bad years remain in it, with no effect on its result.
 
 ## Process and deviations
 

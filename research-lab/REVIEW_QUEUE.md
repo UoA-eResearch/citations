@@ -11,7 +11,7 @@ fixes and send its confirmation pass, then start the next. A reviewer cut off by
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
 | `energy-outage-major-event-day-ratchet` | 2b5cb6b | H1 Inconclusive, H2 Refuted, H3 Refuted | **published** 2026-10-21 (Refuted on H3; H2 only with the 2015 baseline; H1 Inconclusive) |
-| `ancestral-pacific-rainfall-gauge-circularity` | 0a73d80 | H1 Supported, H2 Refuted | **revised** (98be6ec); confirmation pass running (the only Fable task) |
+| `ancestral-pacific-rainfall-gauge-circularity` | 0a73d80 | H1 Supported, H2 Refuted | **published** 2026-10-21 (verdicts unchanged after removing no-estimate stations and implausible gauge years) |
 | `frontier-eaa-accessibility-natural-experiment` | 0c44d7a | H1 Supported, H2 Inconclusive, H3 not testable | **fix-first review returned; fixes in progress** (sector relabelling from non-stub snapshots, sensitivity table, wording, D8/D9) |
 | `energy-nz-gas-production-forecast-calibration` | b53e197 | H1 Supported, H2 Inconclusive, H3 Supported | **published** 2026-10-21 (Inconclusive: H1 passes only within Monte Carlo error; re-run on all editions) |
 | `movement-nz-ev-policy-discount-vs-ruc` | 60012cc | H1 Inconclusive, H2 Inconclusive | **paused** — reviewer cut off by the limit; resume after the EAA review and its confirmation pass |
