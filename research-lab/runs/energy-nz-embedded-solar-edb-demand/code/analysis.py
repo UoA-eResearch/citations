@@ -168,6 +168,20 @@ def main():
     rob["H4"] = {"levels_with_icps": spec(s2, "mid_mw", "solar_all_mw", ["tmax", "icps"], unit="unit", time="summer",
                                           w=None),
                  "unweighted": spec(s2, "mid_pi", "solar_all_pi", ["tmax"], unit="unit", time="summer", w=None)}
+    # plan section 4 applies to H4 too: leave-one-unit-out and first differences (D3)
+    loo = [fe_ols(s[s.unit != u], "mid_pi", "solar_all_pi", ["tmax"], "unit", "summer", "icps")[0]
+           for u in sorted(s.unit.unique())]
+    rob["H4"]["leave_one_out_range"] = [round(min(loo), 4), round(max(loo), 4)]
+    rob["H4"]["leave_one_out"] = {u: round(v, 4) for u, v in zip(sorted(s.unit.unique()), loo)}
+    sd = s.sort_values(["unit", "summer"]).copy()
+    for c in ("mid_pi", "solar_all_pi", "tmax"):
+        sd["d_" + c] = sd.groupby("unit")[c].diff()
+    rob["H4"]["first_differences"] = spec(sd, "d_mid_pi", "d_solar_all_pi", ["d_tmax"], unit="unit", time="summer",
+                                          unit_fe=False)
+    # post hoc placebo (D3): offtake when solar output is nil should not respond to installed solar
+    for w in ("eve", "night"):
+        s[w + "_pi"] = s[w + "_mw"] * 1000 / s.icps
+        rob["H4"][f"placebo_{w}"] = spec(s, w + "_pi", "solar_all_pi", ["tmax"], unit="unit", time="summer")
     json.dump(rob, open(TAB / "robustness.json", "w"), indent=1)
     print(json.dumps({k: {kk: (vv["estimate"] if isinstance(vv, dict) else vv) for kk, vv in v.items()}
                       for k, v in rob.items()}, indent=1))

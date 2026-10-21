@@ -1,0 +1,141 @@
+{
+ "participants_excluded": [
+  "AIAL",
+  "CPTS",
+  "EDCL",
+  "KIPT",
+  "LLNW",
+  "MACQ",
+  "MOPO",
+  "OYST",
+  "PFIL",
+  "PPNZ",
+  "RUAK",
+  "SMRT",
+  "TENC",
+  "TUIH",
+  "WENE"
+ ],
+ "participants_missing": [],
+ "annual_rows": 319,
+ "annual_missing": {
+  "gxp_export_gwh": 35,
+  "dg_supplied_gwh": 6,
+  "grid_net_gwh": 6
+ },
+ "distributors": 29,
+ "h4_shared_pocs": {
+  "FKN0331": [
+   "DUNE",
+   "LLNW"
+  ],
+  "GLN0332": [
+   "COUP",
+   "NZST"
+  ],
+  "HWB0331": [
+   "DUNE",
+   "OTPO"
+  ],
+  "INV0331": [
+   "ELIN",
+   "TPCO"
+  ],
+  "OKN0111": [
+   "LINE",
+   "POCO"
+  ],
+  "STK0331": [
+   "NELS",
+   "TASM"
+  ],
+  "TNG0111": [
+   "LINE",
+   "WNST"
+  ],
+  "TWZ0331": [
+   "ALPE",
+   "WATA"
+  ]
+ },
+ "h4_units": {
+  "ALPE": [
+   "ALPE",
+   "WATA"
+  ],
+  "BUEL": [
+   "BUEL"
+  ],
+  "CHBP": [
+   "CHBP"
+  ],
+  "CKHK": [
+   "CKHK"
+  ],
+  "COUP": [
+   "COUP"
+  ],
+  "DUNE": [
+   "DUNE",
+   "OTPO"
+  ],
+  "EASH": [
+   "EASH"
+  ],
+  "EAST": [
+   "EAST"
+  ],
+  "ELEC": [
+   "ELEC"
+  ],
+  "ELIN": [
+   "ELIN",
+   "TPCO"
+  ],
+  "HAWK": [
+   "HAWK"
+  ],
+  "HEDL": [
+   "HEDL"
+  ],
+  "LINE": [
+   "LINE",
+   "POCO"
+  ],
+  "MARL": [
+   "MARL"
+  ],
+  "MPOW": [
+   "MPOW"
+  ],
+  "NELS": [
+   "NELS",
+   "TASM"
+  ],
+  "NPOW": [
+   "NPOW"
+  ],
+  "ORON": [
+   "ORON"
+  ],
+  "SCAN": [
+   "SCAN"
+  ],
+  "TOPE": [
+   "TOPE"
+  ],
+  "VECT": [
+   "VECT"
+  ],
+  "WAIK": [
+   "WAIK"
+  ],
+  "WAIP": [
+   "WAIP"
+  ],
+  "WPOW": [
+   "WPOW"
+  ]
+ },
+ "summer_rows": 288
+}

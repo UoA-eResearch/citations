@@ -110,15 +110,18 @@ def summer_panel(cap, log):
                 x.columns = [c.upper() for c in x.columns]
                 x = x.rename(columns={"NWK_CODE": "NWK_Code"})
                 tps = [f"TP{k}" for k in range(25, 31)]
+                # D3 placebo windows (post hoc): evening 18:00-21:00 (TP37-42) and night 02:00-05:00 (TP5-10)
+                for nm, rg in (("eve_kwh", range(37, 43)), ("night_kwh", range(5, 11))):
+                    x[nm] = x[[f"TP{k}" for k in rg]].apply(pd.to_numeric, errors="coerce").sum(axis=1)
                 x = x[(x.UNIT_MEASURE.str.lower() == "kwh") & (x.GENERATION_TYPE == "GN")].copy()
                 x["mid_kwh"] = x[tps].apply(pd.to_numeric, errors="coerce").sum(axis=1)
                 x["date"] = pd.to_datetime(x.TRADING_DATE, format="mixed", dayfirst=True)
-                g = x.groupby(["POC", "NWK_Code", "date"]).mid_kwh.sum().reset_index()
-                g["mid_kwh"] *= sign
+                g = x.groupby(["POC", "NWK_Code", "date"])[["mid_kwh", "eve_kwh", "night_kwh"]].sum().reset_index()
+                g[["mid_kwh", "eve_kwh", "night_kwh"]] *= sign
                 g["summer"] = y
                 rows.append(g)
     m = pd.concat(rows, ignore_index=True)
-    m = m.groupby(["summer", "POC", "NWK_Code", "date"]).mid_kwh.sum().reset_index()
+    m = m.groupby(["summer", "POC", "NWK_Code", "date"])[["mid_kwh", "eve_kwh", "night_kwh"]].sum().reset_index()
     # a POC recorded under more than one network code is shared: merge those networks into one unit
     codes = m.groupby("POC").NWK_Code.unique()
     shared = {p: sorted(c) for p, c in codes.items() if len(c) > 1}
@@ -135,10 +138,14 @@ def summer_panel(cap, log):
     log["h4_units"] = {u: sorted(k for k, v in unit.items() if v == u) for u in sorted(set(unit.values()))}
     m = m[m.NWK_Code.isin(PARTICIPANT)]
     m["unit"] = m.NWK_Code.map(unit)
-    day = m.groupby(["unit", "summer", "date"]).mid_kwh.sum().reset_index()
+    day = m.groupby(["unit", "summer", "date"])[["mid_kwh", "eve_kwh", "night_kwh"]].sum().reset_index()
     out = day.groupby(["unit", "summer"]).agg(mid_mwh_day=("mid_kwh", lambda v: v.mean() / 1000),
+                                              eve_mwh_day=("eve_kwh", lambda v: v.mean() / 1000),
+                                              night_mwh_day=("night_kwh", lambda v: v.mean() / 1000),
                                               days=("date", "nunique")).reset_index()
     out["mid_mw"] = out.mid_mwh_day / 3.0                       # six half-hours = 3 hours
+    out["eve_mw"] = out.eve_mwh_day / 3.0
+    out["night_mw"] = out.night_mwh_day / 3.0
     c = cap[cap.pid.isin(PARTICIPANT)].copy()
     c["unit"] = c.pid.map(unit)
     c = c[c.month.dt.month.isin([12, 1, 2])]

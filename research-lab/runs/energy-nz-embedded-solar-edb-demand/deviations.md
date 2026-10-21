@@ -35,3 +35,16 @@ not imputed.
 H4's merged units, from points of connection shared in the metered data (rule fixed in plan section 3): Alpine with
 Network Waitaki, Aurora with OtagoNet, Electricity Invercargill with The Power Company, The Lines Company with
 Powerco, Nelson Electricity with Network Tasman: 24 units.
+
+## D3 — 2026-10-21 19:35 NZDT — after the primary results: H4 robustness completed, and a post hoc placebo
+
+The first run gave H1–H3 Inconclusive with minimum detectable slopes far above the expected effects, and H4 Supported
+(−0.84 MW per MW, −1.01 to −0.16). Two additions, made after seeing those results:
+
+1. **Plan section 4 applied to H4 as well.** The first run carried only the levels and unweighted variants for H4.
+   Leave-one-unit-out (24 units) and first differences are added, as section 4 lists them without restricting them
+   to H1–H3.
+2. **A post hoc placebo, not preregistered.** If the midday slope reflected general load trends in networks with
+   faster solar uptake, rather than solar output, offtake in hours when panels produce nothing would fall too. The same
+   H4 model is run on mean offtake 18:00–21:00 (trading periods 37–42) and 02:00–05:00 (5–10). Reported as
+   exploratory; it does not change H4's verdict.

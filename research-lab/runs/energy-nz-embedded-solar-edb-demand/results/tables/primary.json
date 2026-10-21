@@ -1,0 +1,62 @@
+{
+ "H1": {
+  "estimate": -2.3308,
+  "ci": [
+   -7.058,
+   5.5391
+  ],
+  "se": 2.8408,
+  "mde_80": 7.9543,
+  "n": 313,
+  "draws": 4999,
+  "verdict": "Inconclusive"
+ },
+ "H2": {
+  "estimate": -0.6483,
+  "ci": [
+   -17.2239,
+   8.7523
+  ],
+  "se": 6.5251,
+  "mde_80": 18.2704,
+  "n": 319,
+  "draws": 4999,
+  "verdict": "Inconclusive"
+ },
+ "H3": {
+  "estimate": 0.5271,
+  "ci": [
+   -2.2368,
+   1.9071
+  ],
+  "se": 1.0049,
+  "mde_80": 2.8138,
+  "n": 319,
+  "draws": 4999,
+  "verdict": "Inconclusive"
+ },
+ "H4": {
+  "estimate": -0.8426,
+  "ci": [
+   -1.0094,
+   -0.1581
+  ],
+  "se": 0.1979,
+  "mde_80": 0.5541,
+  "n": 288,
+  "draws": 4999,
+  "verdict": "Supported"
+ },
+ "export_slope": {
+  "estimate": 5.0164,
+  "ci": [
+   -14.0188,
+   21.4525
+  ],
+  "se": 9.4298,
+  "mde_80": 26.4035,
+  "n": 313,
+  "draws": 4999
+ },
+ "implied_self_consumption_share": 0.114
+}
