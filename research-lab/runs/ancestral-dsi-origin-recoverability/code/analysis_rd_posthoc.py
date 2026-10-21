@@ -51,9 +51,10 @@ def within_owner(d, cut, months=24, donut=1, b=A.B, seed=A.SEED):
 
 def main():
     import glob
-    cols = ["submission_date", "owner", "country_class", "country_raw", "package", "taxonomy_id"]
+    cols = ["submission_date", "owner", "country_class", "country_raw", "package", "taxonomy_id", "organism", "host"]
     d = pd.concat([pd.read_parquet(f, columns=cols) for f in sorted(glob.glob(str(A.RUN / "data" / "samples" / "*.parquet")))],
                   ignore_index=True)
+    d = d[~A.human_host_metagenome(d)]        # D3
     d["date"] = pd.to_datetime(d.submission_date, errors="coerce")
     d = d.dropna(subset=["date"])
     out = {}

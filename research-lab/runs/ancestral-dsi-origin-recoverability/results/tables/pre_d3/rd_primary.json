@@ -1,0 +1,45 @@
+{
+ "n_samples": 21043805,
+ "n_owners": 43275,
+ "window": [
+  "2021-06-01",
+  "2025-06-01"
+ ],
+ "usable": {
+  "jump_pp": 2.754,
+  "share_pre": 0.8524,
+  "share_post": 0.7939,
+  "ci_pp": [
+   -6.276,
+   10.502
+  ]
+ },
+ "placeholder": {
+  "jump_pp": 9.033,
+  "share_pre": 0.0434,
+  "share_post": 0.1679,
+  "ci_pp": [
+   1.727,
+   18.719
+  ]
+ },
+ "malformed": {
+  "jump_pp": 0.122,
+  "share_pre": 0.0004,
+  "share_post": 0.0008,
+  "ci_pp": [
+   -0.013,
+   0.258
+  ]
+ },
+ "absent": {
+  "jump_pp": -11.909,
+  "share_pre": 0.1038,
+  "share_post": 0.0374,
+  "ci_pp": [
+   -16.023,
+   -8.475
+  ]
+ },
+ "H1": "Inconclusive"
+}

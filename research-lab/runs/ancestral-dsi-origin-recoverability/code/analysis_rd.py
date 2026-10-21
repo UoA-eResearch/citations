@@ -28,10 +28,16 @@ INAPPLICABLE = ("missing: lab stock", "missing: synthetic construct", "missing: 
                 "missing: sample group", "not applicable")
 
 
+def human_host_metagenome(d):
+    return (d.organism.str.contains("metagenome", case=False, na=False)
+            & d.host.str.contains(r"homo sapiens|\bhuman\b", case=False, na=False))
+
+
 def load():
-    cols = ["submission_date", "owner", "country_class", "country_raw", "package"]
+    cols = ["submission_date", "owner", "country_class", "country_raw", "package", "organism", "host"]
     parts = [pd.read_parquet(f, columns=cols) for f in sorted(glob.glob(str(RUN / "data" / "samples" / "*.parquet")))]
     d = pd.concat(parts, ignore_index=True)
+    d = d[~human_host_metagenome(d)]          # D3: care filter extended to metagenomes from a human host
     d["date"] = pd.to_datetime(d.submission_date, errors="coerce")
     d = d.dropna(subset=["date"])
     raw = d.country_raw.fillna("").str.strip().str.lower()

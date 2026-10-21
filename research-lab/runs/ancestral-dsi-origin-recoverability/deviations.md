@@ -30,3 +30,17 @@ reported, because it shows how much of the missing metadata is legitimately miss
 **Pass 1** labels every record in sheet order and writes `data/gold/pass1_labels.csv` (sheet id, label, basis).
 **Pass 2** follows at least five hours later, from `pass2.md` (its own order and ids), without reading pass 1's
 labels. The arms are not run until both passes are complete.
+
+## D3 — 2026-10-22 09:40 NZDT — care filter extended; an attribute variant; culture-collection labels
+
+1. **Human-host metagenomes.** A gold record (a human colon-tissue microbiome carrying per-person attributes) showed
+   that the first filter misses metagenomes whose organism is just "metagenome" but whose host is *Homo sapiens*.
+   There are 180,191 of these in the analysis window (0.86%). They are now excluded everywhere, consistent with the
+   plan's care rule. Limb 1 is re-run with the extended filter; the earlier tables are kept in
+   `results/tables/pre_d3/`. The gold record is excluded, leaving 499 records.
+2. **An ENA attribute variant.** 2,190 window samples (0.01%) give their country only under an ENA-style attribute
+   ("geographic location, country and/or sea") rather than `geo_loc_name`, and are classified absent. This is
+   negligible and is disclosed rather than corrected, to keep the preregistered classifier unchanged.
+3. **Culture-collection strains.** In the gold set, natural isolates held in culture collections are labelled "not
+   stated", since they have a real origin that is not given. Laboratory lineages (inbred mice, reference yeast and
+   *E. coli* strains, cell lines) are "inapplicable". Scoring is unaffected.
