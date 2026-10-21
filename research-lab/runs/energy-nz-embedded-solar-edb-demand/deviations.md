@@ -89,3 +89,19 @@ D2, the merged units and the trading-period timing. Its findings were checked wi
    withdrawn); "could not have succeeded" is qualified as "with the disclosed annual totals".
 
 H4's verdict under the preregistered rule is unchanged: Supported.
+
+## D6 — 2026-10-22 04:10 NZDT — confirmation pass; study tag set to Inconclusive
+
+The confirmation review (publish with edits) found all eight findings resolved and every post-review number
+matching `sensitivity_post_review.json`. Four wording edits were applied:
+- the title now refers to networks with solar farms;
+- the four-tests table qualifies H4's "Supported";
+- the evening output proxy reads "a fifth to almost half";
+- the process note records that `figures.py` was committed with its figures.
+
+**The study tag is Inconclusive.** H4 passes its preregistered rule, but the rule presupposes a valid 95% interval.
+A 24-cluster bootstrap in which two clusters carry about four-fifths of the identifying variation does not give one,
+and the night pre-trend placebo excludes zero. As with the lab's gas and EAA studies, a fragile preregistered pass
+is tagged Inconclusive, and the report states what the rule returned. The exploratory midday-minus-night contrast
+(−0.51; −0.33 without the two farm networks) points the hypothesised way. A follow-up with more farm-summers could
+preregister it.

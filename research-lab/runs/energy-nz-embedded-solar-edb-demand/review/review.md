@@ -141,3 +141,47 @@ say that rather than omit it. First differences (−0.58, −0.86 to +0.43) alre
   GLN0332, Winstone at TNG0111, LLNW at FKN0331) are correctly left out. Every unit-summer has 90 or 91 days.
 - **Weighting.** Unweighted (−0.89) and weighted (−0.84) agree; the Powerco-dominated LINE unit is not the issue.
 - **Power.** 2.8 × SE is the standard 80%-power, 5% two-sided formula.
+
+## Confirmation pass (commit 6e2e4eb, 2026-10-22)
+
+Checked against report.md, report.html, deviations.md (D5), `code/sensitivity_post_review.py` (committed before its
+output, d94cbeb 23:28 → 6e2e4eb 23:31), `results/tables/sensitivity_post_review.json` and the figure captions.
+
+**Verdict: publish with edits** (the three edits below are wording; no re-analysis needed).
+
+Findings 1–8: **all resolved.**
+- 1: two-unit dependence stated in the verdict line, bullets, body and F2; "stable" gone; drop-both, farm-free and
+  split rows in the table. Every number in the new rows matches sensitivity_post_review.json, and the ones I ran
+  match mine to the rounding (drop-both −0.48, btm −1.49, ind −0.96, joint −0.51/−0.90, DG control −0.80, mid−night
+  −0.51 and −0.33, lead-2 −0.22/−0.26). "13% of draws", "four-fifths", "3.3 and 2.4 kW per ICP" are right.
+- 2: title, verdict and plain terms no longer credit rooftop solar; the behind-the-meter row is shown as Inconclusive.
+- 3: evening contrast withdrawn with the sun-elevation paragraph; mid−night carries its confounds.
+- 4: pre-trend, Top Energy's net-injector status (the "about 17 MW at every hour" step and the within-unit 0.5/0.7
+  MW per MW signatures check against the series in `check_units_tp.out`), EA Networks' irrigation range 53–110 MW.
+- 5–8: jump filter and first differences discussed; segment steps and 0.9% disclosed; D4 commit noted; wording fixed.
+
+The two differences from my checks are legitimate and disclosed: the 11-unit farm set (≥5 MW industrial-segment
+solar) is a defensible definition and gives −0.95 (−3.40, +0.15), which reaches zero just as my seven-unit set did;
+the jump filter drops 46 rows rather than 42 because sign changes (Top Energy turning net injector) are treated as
+infinite jumps. Neither changes a conclusion.
+
+New, minor:
+- (a) Title says "a signal carried by two solar farms"; the body says Top Energy added farms in November 2023 and
+  September 2025 (and a farm-sized 20 MW commercial step in May 2025). Say "two networks with solar farms".
+- (b) The four-tests table still prints a bare **Supported** for H4 while the verdict line says "Supported under the
+  preregistered rule, from two units". Add "(two units; see below)" in the cell so the table cannot be quoted alone.
+- (c) "a fifth to two-fifths of their midday output": my clear-sky proxy runs 0.20–0.46 (Invercargill highest); "a
+  fifth to almost half".
+- (d) figures.py was committed with its PNGs (as in 8f12116); harmless for descriptive figures, but the process
+  paragraph's "code committed before it was run" should say it covers the panel, analysis and sensitivity code.
+
+**The tag.** Recommend **Inconclusive** for the study's one-word tag, with H4's line reading "passes the
+preregistered rule; not robust". The reasoning is not taste but validity: the rule presupposes a valid 95% interval,
+and a 24-cluster pairs bootstrap in which two clusters carry 81% of the identifying variation does not deliver one
+(the interval is a mixture whose upper tail is the 13% of draws lacking both units). On top of that the study's own
+pre-trend placebo fails at night (−0.26, −0.97 to −0.03), and first differences, the jump filter, the farm-free set
+and the drop-both variant all reach zero. That is the same situation in which the lab tagged gas and EAA
+Inconclusive after a fragile preregistered pass, and consistency matters more than the letter of one rule. Keep the
+sentence that the exploratory midday-minus-night contrast, with and without the two units, points the preregistered
+way: that is the honest residue, and it is what a follow-up with more farm-summers can test as a preregistered
+hypothesis.

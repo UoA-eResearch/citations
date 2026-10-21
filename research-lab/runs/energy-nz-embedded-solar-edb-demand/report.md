@@ -1,12 +1,12 @@
-# What distributed solar has done to New Zealand's electricity networks: invisible in the annual books, and at summer midday a signal carried by two solar farms
+# What distributed solar has done to New Zealand's electricity networks: invisible in the annual books, and at summer midday a signal carried by two networks with solar farms
 
 *Twenty-nine electricity distributors, 2014–2026: their annual information disclosures, the Electricity Authority's
 registry of installed solar, and half-hourly metered offtake at every grid exit point, used to measure how much
 grid energy distributed solar displaces and whether it touches the winter peak.*
 
-**Verdict: Inconclusive on the three annual tests. H4 (summer-midday grid offtake) is Supported under its
-preregistered rule, but the result comes from the two networks that added solar farms, and rooftop solar's own
-effect is not detectable.** Distributed solar on the 29 networks grew from about 17 MW behind the meter (19 MW in all)
+**Verdict: Inconclusive.** The three annual tests are Inconclusive. H4 (summer-midday grid offtake) passes its
+preregistered rule but is not robust: the result comes from the two networks that added solar farms, a pre-trend
+placebo excludes zero, and rooftop solar's own effect is not detectable. Distributed solar on the 29 networks grew from about 17 MW behind the meter (19 MW in all)
 to 363 MW behind the meter (about 490 MW including solar farms) over the panel's years. That is too small a share of
 annual energy for the distributors' annual disclosures to detect.
 
@@ -16,8 +16,8 @@ annual energy for the distributors' annual disclosures to detect.
   minimum detectable slope about 18.
 - **H3 (the winter peak moves by less than 0.2 MW per MW): Inconclusive.** +0.53 (−2.24 to +1.91); minimum detectable
   slope about 2.8.
-- **H4 (summer-midday grid offtake falls by at least 0.3 MW per MW): Supported under the preregistered rule, from
-  two units.** −0.84 MW per MW (−1.01 to −0.16).
+- **H4 (summer-midday grid offtake falls by at least 0.3 MW per MW): passes the preregistered rule; not robust.**
+  −0.84 MW per MW (−1.01 to −0.16).
   - **Two networks carry it.** EA Networks and Top Energy, which added solar farms (3.3 and 2.4 kW per ICP, against
     0.1–0.6 elsewhere), supply about four-fifths of the variation in exposure. Without them the slope is −0.48
     (−1.31 to +0.19), and in 13% of bootstrap draws neither is present.
@@ -106,7 +106,7 @@ the networks carry, and less than the year-to-year movement in many networks' to
 | H1 net grid supply, GWh/MW | −2.33 | −7.06 to +5.54 | 7.95 | Inconclusive |
 | H2 energy delivered, GWh/MW | −0.65 | −17.22 to +8.75 | 18.27 | Inconclusive |
 | H3 winter peak, MW/MW | +0.53 | −2.24 to +1.91 | 2.81 | Inconclusive |
-| H4 summer-midday offtake, MW/MW | **−0.84** | **−1.01 to −0.16** | 0.55 | **Supported** |
+| H4 summer-midday offtake, MW/MW | **−0.84** | **−1.01 to −0.16** | 0.55 | **Supported** (two units; see below) |
 
 **With the disclosed annual totals, the annual tests could not have succeeded.** Their minimum detectable slopes are five to thirty times the
 effects they were designed to find. Every robustness variant agrees (`results/tables/robustness.json`): levels,
@@ -158,7 +158,7 @@ also changed in other ways:
 on its own is not distinguishable from zero.
 
 **An earlier draft overstated this.** It called a midday-minus-evening contrast (−0.35) the best estimate. But in a
-New Zealand summer the sun is 26–35° up at 18:00 daylight time, and panels still produce a fifth to two-fifths of
+New Zealand summer the sun is 26–35° up at 18:00 daylight time, and panels still produce a fifth to almost half of
 their midday output in that window. So that contrast subtracted solar output and understated it. It has been
 replaced by the night window above.
 
@@ -190,8 +190,8 @@ replaced by the night window above.
 
 ## Process and deviations
 
-- **Preregistration.** `plan.md` was committed before any outcome series was built; the panel and analysis code
-  were committed before they were run.
+- **Preregistration.** `plan.md` was committed before any outcome series was built. The panel, analysis and
+  post-review sensitivity code were committed before they were run; `figures.py` was committed with its figures.
 - **Deviations** (`deviations.md`):
   - D1 corrected the grid-exit flow direction and set the H4 specification, before any panel was built.
   - D2 replaced the disclosure-derived ICP counts with registry counts, before any estimate.

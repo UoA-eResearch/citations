@@ -77,7 +77,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 <div class="page">
 <header class="masthead">
   <div class="eyebrow">Research Lab · Deep dive · The Energy Movement</div>
-  <h1>What distributed solar has done to New Zealand&#x27;s electricity networks: invisible in the annual books, and at summer midday a signal carried by two solar farms</h1>
+  <h1>What distributed solar has done to New Zealand&#x27;s electricity networks: invisible in the annual books, and at summer midday a signal carried by two networks with solar farms</h1>
   <p class="subtitle">Twenty-nine electricity distributors, 2014–2026: their annual information disclosures, the Electricity Authority&#x27;s registry of installed solar, and half-hourly metered offtake at every grid exit point, used to measure how much grid energy distributed solar displaces and whether it touches the winter peak.</p>
   <div class="meta">
     <span>Report · 2026-10-21 · pre-review draft</span>
@@ -89,9 +89,9 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 </header>
 <section class="tiles" aria-label="Key results"></section>
 <main>
-<p><strong>Verdict: Inconclusive on the three annual tests. H4 (summer-midday grid offtake) is Supported under its
-preregistered rule, but the result comes from the two networks that added solar farms, and rooftop solar's own
-effect is not detectable.</strong> Distributed solar on the 29 networks grew from about 17 MW behind the meter (19 MW in all)
+<p><strong>Verdict: Inconclusive.</strong> The three annual tests are Inconclusive. H4 (summer-midday grid offtake) passes its
+preregistered rule but is not robust: the result comes from the two networks that added solar farms, a pre-trend
+placebo excludes zero, and rooftop solar's own effect is not detectable. Distributed solar on the 29 networks grew from about 17 MW behind the meter (19 MW in all)
 to 363 MW behind the meter (about 490 MW including solar farms) over the panel's years. That is too small a share of
 annual energy for the distributors' annual disclosures to detect.</p>
 <ul>
@@ -101,8 +101,8 @@ annual energy for the distributors' annual disclosures to detect.</p>
   minimum detectable slope about 18.</li>
 <li><strong>H3 (the winter peak moves by less than 0.2 MW per MW): Inconclusive.</strong> +0.53 (−2.24 to +1.91); minimum detectable
   slope about 2.8.</li>
-<li><strong>H4 (summer-midday grid offtake falls by at least 0.3 MW per MW): Supported under the preregistered rule, from
-  two units.</strong> −0.84 MW per MW (−1.01 to −0.16).<ul>
+<li><strong>H4 (summer-midday grid offtake falls by at least 0.3 MW per MW): passes the preregistered rule; not robust.</strong>
+  −0.84 MW per MW (−1.01 to −0.16).<ul>
 <li><strong>Two networks carry it.</strong> EA Networks and Top Energy, which added solar farms (3.3 and 2.4 kW per ICP, against
 0.1–0.6 elsewhere), supply about four-fifths of the variation in exposure. Without them the slope is −0.48
 (−1.31 to +0.19), and in 13% of bootstrap draws neither is present.</li>
@@ -232,7 +232,7 @@ the networks carry, and less than the year-to-year movement in many networks' to
 <td><strong>−0.84</strong></td>
 <td><strong>−1.01 to −0.16</strong></td>
 <td>0.55</td>
-<td><strong>Supported</strong></td>
+<td><strong>Supported</strong> (two units; see below)</td>
 </tr>
 </tbody>
 </table></div>
@@ -347,7 +347,7 @@ also changed in other ways:
 <p><strong>Rooftop solar, on its own, does not register.</strong> Behind-the-meter capacity grew everywhere but slowly, and its slope
 on its own is not distinguishable from zero.</p>
 <p><strong>An earlier draft overstated this.</strong> It called a midday-minus-evening contrast (−0.35) the best estimate. But in a
-New Zealand summer the sun is 26–35° up at 18:00 daylight time, and panels still produce a fifth to two-fifths of
+New Zealand summer the sun is 26–35° up at 18:00 daylight time, and panels still produce a fifth to almost half of
 their midday output in that window. So that contrast subtracted solar output and understated it. It has been
 replaced by the night window above.</p>
 <h2>What this does and does not show</h2>
@@ -382,8 +382,8 @@ implied 91,158 ICPs against about 14,300.</li>
 </ul>
 <h2>Process and deviations</h2>
 <ul>
-<li><strong>Preregistration.</strong> <code>plan.md</code> was committed before any outcome series was built; the panel and analysis code
-  were committed before they were run.</li>
+<li><strong>Preregistration.</strong> <code>plan.md</code> was committed before any outcome series was built. The panel, analysis and
+  post-review sensitivity code were committed before they were run; <code>figures.py</code> was committed with its figures.</li>
 <li><strong>Deviations</strong> (<code>deviations.md</code>):<ul>
 <li>D1 corrected the grid-exit flow direction and set the H4 specification, before any panel was built.</li>
 <li>D2 replaced the disclosure-derived ICP counts with registry counts, before any estimate.</li>
