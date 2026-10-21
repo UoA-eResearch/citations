@@ -4,16 +4,17 @@ Each of these is complete through a pre-review draft: preregistration, code, res
 reviewer brief in `runs/<id>/review/prompt.md`. None may be published to `leads.json`, `index.html`, the README or
 the Golden Quadrant artifact until it has been through an independent adversarial review and a confirmation pass.
 
-**Status 2026-10-21:** Fable quota is available again (owner's quota reset). Reviews run three at a time,
-highest exposure first, so that if the limit is hit again the most consequential drafts are the ones finished.
+**Pacing (owner, 2026-10-21): one Fable review at a time, with a gap between them.** Three concurrent reviews
+exhausted a freshly reset quota within hours. Start one review, do the lab's own work while it runs, apply its
+fixes and send its confirmation pass, then start the next. A reviewer cut off by a limit is resumed, not relaunched.
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
 | `energy-outage-major-event-day-ratchet` | 2b5cb6b | H1 Inconclusive, H2 Refuted, H3 Refuted | **published** 2026-10-21 (Refuted on H3; H2 only with the 2015 baseline; H1 Inconclusive) |
 | `ancestral-pacific-rainfall-gauge-circularity` | 0a73d80 | H1 Supported, H2 Refuted | **fix-first review returned; fixes not started** — drop 12 no-estimate stations (verdicts hold), recompute shares on reporting months, add missing outputs, flag Koumac |
-| `frontier-eaa-accessibility-natural-experiment` | 0c44d7a | H1 Supported, H2 Inconclusive, H3 not testable | **in review** (may have been cut off by the usage limit; resume the same reviewer) |
+| `frontier-eaa-accessibility-natural-experiment` | 0c44d7a | H1 Supported, H2 Inconclusive, H3 not testable | **in review** — resumed 2026-10-21 17:11 after the limit reset; the only review running |
 | `energy-nz-gas-production-forecast-calibration` | b53e197 | H1 Supported, H2 Inconclusive, H3 Supported | **fix-first review returned; revision half done** — all 13 vintages fetched, parser and analysis fixed and re-run (b63d203 onward); plan §5 validations now pass. Re-run gives H1 Supported only narrowly (m(3) clears +15% by 0.1 pt; fragile across sensitivities; optimism peaks at 1–2 yrs and does not grow), H2 Inconclusive, H3 Supported; 2P revised down 107–233 PJ every year since 2022. **report.md still the old draft — do not publish.** Next: rewrite report, D2, HTML, confirmation pass to the same reviewer. |
-| `movement-nz-ev-policy-discount-vs-ruc` | 60012cc | H1 Inconclusive, H2 Inconclusive | **in review** (may have been cut off by the usage limit; resume the same reviewer) |
+| `movement-nz-ev-policy-discount-vs-ruc` | 60012cc | H1 Inconclusive, H2 Inconclusive | **paused** — reviewer cut off by the limit; resume after the EAA review and its confirmation pass |
 | `auckland-nz-jade-water-value-calibration` | 96c8a7c | H1 Supported, H2 Refuted | **published** 2026-10-21 (H1 Supported; H2 Refuted but unreachable; reinterpreted) |
 
 ## Order to run them in
