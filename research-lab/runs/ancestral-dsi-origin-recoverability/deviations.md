@@ -14,3 +14,19 @@ surveillance, so a jump at any date mostly measures composition. Two checks, wri
    weighted by their samples, with an organisation-cluster bootstrap, at the real and placebo cutoffs.
 
 H1's verdict stays the preregistered estimate's. The checks describe how far that estimate can be trusted.
+
+## D2 — 2026-10-22 09:34 NZDT — gold-set labels (before any record was labelled)
+
+The gold set was drawn as planned: 500 records, 250 with a linked publication, all of whose texts were retrieved. A
+first look at six records showed that many untagged samples are laboratory organisms: mice, a medaka strain, grafted
+tomato plants, a mouse-brain atlas. For these a country of collection is legitimately inapplicable. The plan's
+"not determinable" label is therefore recorded in two kinds:
+- **inapplicable**: laboratory stock, model organism raised in a lab, cell line, synthetic or engineered material;
+- **not stated**: a country could exist, but the evidence does not give it.
+
+Scoring is unchanged: both count as "not determinable", so a prediction on either counts as wrong. The split is
+reported, because it shows how much of the missing metadata is legitimately missing.
+
+**Pass 1** labels every record in sheet order and writes `data/gold/pass1_labels.csv` (sheet id, label, basis).
+**Pass 2** follows at least five hours later, from `pass2.md` (its own order and ids), without reading pass 1's
+labels. The arms are not run until both passes are complete.
