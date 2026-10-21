@@ -15,10 +15,10 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-21 ~17:52 | `frontier-eaa-accessibility-natural-experiment` | confirmation pass |
 | 2026-10-21 ~18:01 | `movement-nz-ev-policy-discount-vs-ruc` | confirmation pass |
 | 2026-10-21 23:06 | `energy-nz-embedded-solar-edb-demand` | review |
-| `energy-nz-intermittent-curtailment-ledger` | f83332e | gate fails; H1 Refuted, H2 Supported by rule (noise-dominated; price-driven core 2.2%) | **awaiting review** |
+| 2026-10-22 04:07 | `energy-nz-embedded-solar-edb-demand` | confirmation pass |
 
-**Next Fable slot: not before 2026-10-22 04:06 NZDT.** Queue: 1. solar confirmation pass (revision 6e2e4eb).
-2. curtailment review (draft ready). 3. phantom-citations review (draft pending: full screen running).
+**Next Fable slot: not before 2026-10-22 09:07 NZDT.** Queue: 1. curtailment review (draft f83332e).
+2. phantom-citations review (draft pending: full screen running). 3. DSI origin (in progress).
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
@@ -28,7 +28,8 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | `energy-nz-gas-production-forecast-calibration` | b53e197 | H1 Supported, H2 Inconclusive, H3 Supported | **published** 2026-10-21 (Inconclusive: H1 passes only within Monte Carlo error; re-run on all editions) |
 | `movement-nz-ev-policy-discount-vs-ruc` | 60012cc | H1 Inconclusive, H2 Inconclusive | **published** 2026-10-21 (Inconclusive) |
 | `auckland-nz-jade-water-value-calibration` | 96c8a7c | H1 Supported, H2 Refuted | **published** 2026-10-21 (H1 Supported; H2 Refuted but unreachable; reinterpreted) |
-| `energy-nz-embedded-solar-edb-demand` | 8f12116 | H1-H3 Inconclusive (underpowered), H4 Supported (size overstated; exploratory contrast -0.35) | **revised** (6e2e4eb) after a fix-first review; confirmation pass at the 04:06 slot |
+| `energy-nz-embedded-solar-edb-demand` | 8f12116 | H1-H3 Inconclusive (underpowered), H4 Supported (size overstated; exploratory contrast -0.35) | **revised** (6e2e4eb) after a fix-first review; confirmation pass running (04:07) |
+| `energy-nz-intermittent-curtailment-ledger` | f83332e | gate fails; H1 Refuted, H2 Supported by rule (noise-dominated; price-driven core 2.2%) | **awaiting review** |
 
 ## Order to run them in
 
