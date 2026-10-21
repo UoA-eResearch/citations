@@ -12,6 +12,13 @@
   page title, are "public" and excluded first: the Web Accessibility Directive has covered them since 2018-2020, and
   the frame's label filter misses names such as bundestag.de or uni-hamburg.de (deviations D2).
 Writes data/sector.csv.
+
+D9 (after review): a site is labelled from its earliest pre-period snapshot with at least MIN_VISIBLE visible
+characters, not simply its earliest snapshot. The draft labelled any page with no marker "out of scope", including
+redirect stubs, language choosers and empty captures, which put treated firms (drei.at, vodafone.nl, csob.cz) in the
+control group. A site with no such snapshot is "unclassifiable" and excluded. Two marker leaks are also closed:
+"basket" now needs word boundaries (it matched "Basketball"), and "spar" is dropped from the bank-domain pattern (it
+matched valsparpaint.co.uk); "sparkasse" still matches.
 """
 import gzip
 import json
@@ -20,8 +27,10 @@ import sys
 from pathlib import Path
 
 RUN = Path(__file__).resolve().parents[1]
+MIN_VISIBLE = 300          # visible characters a snapshot needs before its markers are trusted (D9)
+PRE_END = "20250628"       # the Act applied from 28 June 2025; labelling snapshots must predate it
 M = {
-    "ecommerce": [r"\bcart\b", r"basket", r"checkout", r"warenkorb", r"\bkasse\b", r"panier", r"carrello", r"carrito",
+    "ecommerce": [r"\bcart\b", r"\bbaskets?\b", r"checkout", r"warenkorb", r"\bkasse\b", r"panier", r"carrello", r"carrito",
                   r"winkelwagen", r"winkelmand", r"koszyk", r"varukorg", r"ostoskori", r"indk[øo]bskurv", r"carrinho",
                   r"ko[šs][íi]k", r"add[-_ ]to[-_ ]cart", r"in den warenkorb", r"ajouter au panier", r"aggiungi al carrello",
                   r"a[ñn]adir al carrito", r"dodaj do koszyka", r"l[äa]gg i varukorgen"],
@@ -37,7 +46,7 @@ M = {
                 r"\bprepaid\b", r"sim[- ]?kart", r"carte sim", r"broadband", r"glasfaser", r"\bfibr[ea]\b", r"\be-?books?\b",
                 r"h[öo]rb[üu]ch"],
 }
-BANK_DOMAIN = re.compile(r"bank|banque|banca|banco|sparkasse|volksbank|raiffeisen|kasa|spar", re.I)
+BANK_DOMAIN = re.compile(r"bank|banque|banca|banco|sparkasse|volksbank|raiffeisen|kasa", re.I)
 RX = {s: [re.compile(p, re.I) for p in ps] for s, ps in M.items()}
 PUBLIC_DOMAIN = re.compile(r"(^|[.-])(gov|govt|bund|bundes\w*|landtag|uni|univ|tu|stadt|gemeente|kommune|gmina|polizei|"
                            r"politie|policja)([.-]|$)", re.I)
@@ -54,6 +63,11 @@ def text_and_attrs(html):
     body = re.sub(r"<script.*?</script>|<style.*?</style>", " ", html, flags=re.S | re.I)
     text = re.sub(r"<[^>]+>", " ", body)
     return re.sub(r"\s+", " ", text)[:200000] + " " + attrs
+
+
+def visible_chars(html):
+    body = re.sub(r"<script.*?</script>|<style.*?</style>|<noscript.*?</noscript>", " ", html, flags=re.S | re.I)
+    return len(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", body)).strip())
 
 
 def classify(domain, html):
@@ -77,13 +91,24 @@ def main():
     rows = [json.loads(l) for l in open(RUN / "data" / "cdx" / "eligible.jsonl")]
     out = []
     for r in rows:
-        first = sorted(r["snapshots"])[0]
-        f = RUN / "data" / "html" / r["domain"] / f"{first}.html.gz"
-        if not f.exists():
-            out.append(dict(domain=r["domain"], status="no_html")); continue
-        html = gzip.decompress(f.read_bytes()).decode("utf-8", "ignore")
+        chosen, html, seen_any = None, None, False
+        for ts in sorted(r["snapshots"]):
+            if ts >= PRE_END:
+                break
+            f = RUN / "data" / "html" / r["domain"] / f"{ts}.html.gz"
+            if not f.exists():
+                continue
+            seen_any = True
+            h = gzip.decompress(f.read_bytes()).decode("utf-8", "ignore")
+            if visible_chars(h) >= MIN_VISIBLE:
+                chosen, html = ts, h
+                break
+        if chosen is None:
+            out.append(dict(domain=r["domain"], status="unclassifiable" if seen_any else "no_html"))
+            continue
         cls, sec, hits = classify(r["domain"], html)
-        out.append(dict(domain=r["domain"], status=cls, sector=sec, first=first, **{f"m_{k}": v for k, v in hits.items()}))
+        out.append(dict(domain=r["domain"], status=cls, sector=sec, first=chosen, visible=visible_chars(html),
+                        **{f"m_{k}": v for k, v in hits.items()}))
     import pandas as pd
     pd.DataFrame(out).to_csv(RUN / "data" / "sector.csv", index=False)
     print(pd.DataFrame(out).status.value_counts().to_dict())
