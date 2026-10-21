@@ -30,8 +30,14 @@ FUELS = {"Wind", "Solar"}
 def generation():
     rows = []
     for f in sorted(glob.glob(str(DATA / "gen" / "*_Generation_MD.csv"))):
-        x = pd.read_csv(f, dtype={"POC_Code": str, "Gen_Code": str})
+        x = pd.read_csv(f, dtype=str)
+        canon = {c.lower(): c for c in ["Site_Code", "POC_Code", "Nwk_Code", "Gen_Code", "Fuel_Code", "Tech_Code",
+                                        "Trading_Date"]}
+        x = x.rename(columns={c: canon.get(c.lower(), c.upper() if c.lower().startswith("tp") else c)
+                              for c in x.columns})       # column case varies between months (D1)
         x = x[x.Fuel_Code.isin(FUELS)]
+        for c in [c for c in x.columns if c.startswith("TP")]:
+            x[c] = pd.to_numeric(x[c], errors="coerce")
         tps = [c for c in x.columns if c.startswith("TP")]
         m = x.melt(id_vars=["POC_Code", "Gen_Code", "Fuel_Code", "Trading_Date"], value_vars=tps,
                    var_name="tp", value_name="kwh").dropna(subset=["kwh"])
