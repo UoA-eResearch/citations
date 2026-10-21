@@ -88,10 +88,42 @@ def per_icp(a):
     return a
 
 
+def fast_bootstrap(d, y, x, controls, unit, time, w, unit_fe, b=B, seed=SEED):
+    """The same cluster pairs bootstrap as bootstrap(), on precomputed arrays (a draw costs about a millisecond).
+    A cluster drawn twice enters as two clusters with their own fixed effects; time effects drop the first period
+    present in the draw."""
+    rng = np.random.default_rng(seed)
+    Y = d[y].to_numpy(dtype=float)
+    X = d[[x] + controls].to_numpy(dtype=float)
+    W = np.sqrt(d[w].to_numpy(dtype=float)) if w else np.ones(len(d))
+    tcode = pd.factorize(d[time])[0]
+    units = pd.unique(d[unit])
+    rows = {u: np.flatnonzero(d[unit].to_numpy() == u) for u in units}
+    draws = []
+    for _ in range(b):
+        pick = rng.choice(len(units), size=len(units), replace=True)
+        idx = np.concatenate([rows[units[k]] for k in pick])
+        cl = np.concatenate([np.full(len(rows[units[k]]), j) for j, k in enumerate(pick)])
+        m = len(idx)
+        U = np.zeros((m, len(pick))) if unit_fe else np.ones((m, 1))
+        if unit_fe:
+            U[np.arange(m), cl] = 1.0
+        tt = tcode[idx]
+        present = np.unique(tt)
+        T = (tt[:, None] == present[None, 1:]).astype(float)
+        M = np.column_stack([X[idx], U, T]) * W[idx, None]
+        try:
+            beta, *_ = np.linalg.lstsq(M, Y[idx] * W[idx], rcond=None)
+        except np.linalg.LinAlgError:
+            continue
+        draws.append(beta[0])
+    return np.array(draws)
+
+
 def spec(a, y, x, controls, unit="edb", time="disc_yr", w="icps", unit_fe=True):
-    f = lambda d: fe_ols(d, y, x, controls, unit, time, w, unit_fe)[0]
     est, n = fe_ols(a, y, x, controls, unit, time, w, unit_fe)
-    return summarise(est, n, bootstrap(a.dropna(subset=[y, x] + controls), f, unit))
+    d = a.dropna(subset=[y, x] + controls + ([w] if w else []))
+    return summarise(est, n, fast_bootstrap(d, y, x, controls, unit, time, w, unit_fe))
 
 
 def main():
@@ -151,9 +183,7 @@ def main():
         if k in ("H1", "H2"):
             lx = "lead2_solar_all_pi" if k == "H1" else "lead2_btm_pi"
             sub = a.dropna(subset=[lx])
-            f = lambda dd: fe_ols(dd, h["y"], lx, [h["x"]] + h["c"], "edb", "disc_yr", "icps")[0]
-            est, n = fe_ols(sub, h["y"], lx, [h["x"]] + h["c"], "edb", "disc_yr", "icps")
-            rk["placebo_lead2_coefficient"] = summarise(est, n, bootstrap(sub, f, "edb"))
+            rk["placebo_lead2_coefficient"] = spec(sub, h["y"], lx, [h["x"]] + h["c"])
         rob[k] = rk
     # D2 sensitivity: ICPs derived from the disclosures (energy delivered / kWh per ICP), Westpower 2024 excluded
     # (its disclosed ratio implies 91,158 ICPs against about 14,300 in the registry)
