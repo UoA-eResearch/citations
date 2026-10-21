@@ -15,8 +15,8 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-21 ~17:52 | `frontier-eaa-accessibility-natural-experiment` | confirmation pass |
 | 2026-10-21 ~18:01 | `movement-nz-ev-policy-discount-vs-ruc` | confirmation pass |
 
-**Next Fable slot: not before 2026-10-21 23:05 NZDT.** Queue: (empty; next candidates are the phantom-citations and
-embedded-solar studies once their drafts are complete).
+**Next Fable slot: not before 2026-10-21 23:05 NZDT.** Queue: 1. `energy-nz-embedded-solar-edb-demand` (review).
+Then the phantom-citations study once its draft is complete.
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
@@ -26,6 +26,7 @@ embedded-solar studies once their drafts are complete).
 | `energy-nz-gas-production-forecast-calibration` | b53e197 | H1 Supported, H2 Inconclusive, H3 Supported | **published** 2026-10-21 (Inconclusive: H1 passes only within Monte Carlo error; re-run on all editions) |
 | `movement-nz-ev-policy-discount-vs-ruc` | 60012cc | H1 Inconclusive, H2 Inconclusive | **published** 2026-10-21 (Inconclusive) |
 | `auckland-nz-jade-water-value-calibration` | 96c8a7c | H1 Supported, H2 Refuted | **published** 2026-10-21 (H1 Supported; H2 Refuted but unreachable; reinterpreted) |
+| `energy-nz-embedded-solar-edb-demand` | 8f12116 | H1-H3 Inconclusive (underpowered), H4 Supported (size overstated; exploratory contrast -0.35) | **awaiting review** (next Fable slot) |
 
 ## Order to run them in
 
