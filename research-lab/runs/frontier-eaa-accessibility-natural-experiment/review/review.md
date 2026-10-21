@@ -216,3 +216,91 @@ randomisation inference, sensitivities); `c7_zero_violation_influence.py` (site-
 leave-one-site-out → `cache/loo_influence.csv`); `c8_fresh_blind_sample.py` (fresh 60-site blind draw; labels and
 merge in `cache/fresh_blind_*.csv`); `c9_shell_check_and_counts.py` (full-page test for newly-zero sites, PPML,
 overlay count); `c10_stub_controls.py` (stub-labelled sites by label and group).
+
+## Confirmation pass (revision through 9756f47, 2026-10-21)
+
+Checked: the diff 0c44d7a..9756f47, `code/sector.py`, `code/sensitivity_post_review.py` and its JSON, the relabelled
+`data/sector.csv`, `primary.json`, `deviations.md`, `report.md`/`report.html`, plus an independent recomputation of
+the variants on the corrected labels (`reviewer_checks/c11_confirm_corrected_labels.py`, output `c11_output.txt`).
+`did.py`, `axe_run.js` and `metrics.py` are unchanged.
+
+**Verdict on the revision: publish with edits.** Two edits are required (below), and one judgement call on the tag.
+
+### Finding-by-finding
+
+| # | status | evidence |
+|---|---|---|
+| 1 magnitude fragility | resolved in text; sensitivity table incomplete | verdict line now "Supported under the preregistered specification, with the size uncertain"; plain terms says "between a tenth and a sixth". Table omits three variants that also include zero on the corrected labels (see below). |
+| 2 exp(b)−1 ≠ density | resolved | "What −16% means" paragraph; ratio of means −11% alongside. |
+| 3 stub labels, regexes, composition | resolved | `MIN_VISIBLE = 300`, `PRE_END` guard, `\bbaskets?\b`, `spar` removed, exactly as specified; 69 unclassifiable; drei.at, csob.cz, skyscanner.pt, apoteket.se, staples.pt, neonet.pl, swiatksiazki.pl now excluded; vodafone.nl in scope; tv2.dk ambiguous; 198/222 e-commerce stated. Residual: banqueducanada.ca and bankenverband.de still in scope via `bank|banque` in the domain (2 sites); vikingline.fi and willys.se remain out of scope with ≥300 characters but no marker. Negligible; disclose or leave. |
+| 4 H2 untestable | resolved | SE 0.136 vs ~0.025; MDE −32%/+46% given. |
+| 5 exclusions, CDX/fetch errors | resolved | report lines 83–85, 184. |
+| 6 H3 deviation | resolved | D8. |
+| 7 D6 "by construction" | **not resolved** | `deviations.md:95` still reads "keeps the adjudicator blind to the rule by construction". Change to "by instruction; the subagent's transcript shows it read only `sector_sample.jsonl`". |
+| 8 drops, timeouts, 14 selector errors | resolved | report lines 94–95. |
+| 9 noscript | resolved | line 95. |
+| 10 wording | mostly resolved | "powered close to its threshold" (line 125–126) is still soft: at MDE 19% a true −15% effect is detected less than half the time. |
+
+### The sensitivity script
+
+`sensitivity_post_review.py` is correct: it reuses `did.load()` and `did.did()` on the corrected labels, and every
+figure in its JSON matches my independent Frisch–Waugh recomputation to the decimal (−16.2 / −12.3 / −11.9 / −13.5 /
+−15.6 / −11.0). Its `n_treated` counts all in-scope sites (222), mine counts sites with a post observation (218);
+same panel. It is incomplete, though. On the corrected labels, three further variants that were fine on the draft
+labels now also have intervals including zero, and the mean-based estimate collapses:
+
+| variant (corrected labels) | relative change | 95% CI |
+|---|---|---|
+| balanced panel (sites in all 7 quarters; 137 treated) | −16.3% | −31.2, +1.8 |
+| leave out .fi | −13.6% | upper +0.9% |
+| leave out .pt | −14.5% | upper +0.4% |
+| PPML (Poisson, offset log elements, site + period FE) | −0.5% | −21.4, +26.1 |
+| ratio of means | −11.0% | |
+| randomisation inference (600 permutations) | two-sided p = 0.008; 1.0% of permutations reach −15% | |
+| in-time placebo 2024-01/04 vs 07/10 | −0.3% | −9.0, +9.3 |
+
+Add the first four rows to `sensitivity_post_review.py` and the report's table. The PPML result matters: it says the
+mean density change, weighted the way a Poisson model weights it, is indistinguishable from zero, so the
+"between a tenth and a sixth" range in plain terms should become "between nothing we can distinguish from zero and a
+sixth, depending on how you count; our preregistered measure gives a sixth".
+
+Precision, re-keyed to the corrected rule (the cited 0.87/0.88 and 0.77/0.83 were measured against the draft rule):
+D6 sheet 50/58 = 0.86 in scope, 49/54 = 0.91 out of scope; fresh sheet 23/28 = 0.82, 24/28 = 0.86. Both clear 0.80.
+Cite these as the corrected rule's precision.
+
+### The judgement call: Supported (qualified) or Inconclusive?
+
+My recommendation is **Inconclusive on H1 as stated, with the direction reported as supported**, and the one-word
+tag Inconclusive. Reasons:
+
+1. H1 is a claim about size: "fell by at least 15%". On the corrected labels the point estimate clears the bar by
+   1.2 points against a standard error of roughly 6.5 points on the same scale; the interval (−28%, −2%) is as
+   compatible with −8% as with −24%. Nothing in the data distinguishes "at least 15%" from "about 10%".
+2. Fragility is now wider than a few outcome-conditioned variants. On the corrected labels, six variants have
+   intervals including zero (three outcome definitions, the balanced panel, and two leave-one-country-out runs), and
+   the mean-based PPML is −0.5%. The outcome-conditioned variants (dropping zero-violation snapshots or sites) are
+   biased toward zero by construction and should carry less weight; the balanced panel, the country leave-outs and the
+   PPML are not, and they point the same way.
+3. The lab tagged the gas forecast study Inconclusive when its preregistered test was fragile. The same standard
+   applies here; the one-word tag travels into the index without the qualifier the report attaches.
+4. What survives is the direction: the preregistered outcome falls relative to the controls (RI p = 0.008), with
+   flat pre-trends, a null in-time placebo, and a break at the deadline. That is worth stating as a supported finding
+   in its own right, and it is a more defensible headline than a 15% bar passed by a sixth of a standard error.
+
+If the lab prefers to keep "Supported" on the ground that the preregistered rule contains no robustness clause, that
+is procedurally defensible, but the qualifier must then accompany the tag everywhere it appears (lead index, memory,
+`verdict_tag`), not only in the report, and the plain summary must carry the PPML null.
+
+Suggested verdict line: "**H1: Inconclusive on the preregistered size.** The index fell by about a sixth relative to
+uncovered sites under the preregistered model (−16%, 95% CI −28% to −2%), and the fall is robust in sign (permutation
+p = 0.008), but its size is not: variants give −12% to −16% with intervals that include zero, and a mean-based model
+gives no change. The preregistered '−15% or larger' bar is cleared by 1.2 points and should not be read as established."
+
+### Required edits before publication
+
+1. `deviations.md` D6: "by construction" → "by instruction, verified from the subagent transcript" (finding 7).
+2. Add the balanced-panel, leave-out-.fi/.pt and PPML rows to `sensitivity_post_review.py`, its JSON and the report
+   table; cite the corrected-rule precision (0.86/0.91 and 0.82/0.86); soften the "powered close to its threshold"
+   sentence.
+3. Decide the tag per the judgement call above; my recommendation is Inconclusive with the direction stated as
+   supported.

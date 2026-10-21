@@ -92,7 +92,8 @@ written are valid and kept, since the job resumes by domain.
 - **The adjudicator.** Plan §5 names "the agent running the study" as the sector adjudicator. The 120-site blind
   sheet is adjudicated by a subagent of that agent. It sees only the domain, title and visible text, and is told not
   to open any file holding the rule labels. This keeps 150 KB of page text out of the main session's context, and
-  keeps the adjudicator blind to the rule by construction.
+  keeps the adjudicator blind to the rule by instruction: the subagent was told to open only the sample sheet, and the review
+  verified from its transcript that it did.
 - **Two code fixes:**
   - `validate_sector.py` read the snapshot id as a float (gaps made it 202401.0), so it now reads it as text;
   - `metrics.py` is unchanged. It runs Node from /mnt/research-lab-tools, as before.
@@ -137,3 +138,14 @@ matched "Basketball" (putting tv2.dk in scope), and "spar" in the bank-domain pa
 4. Disclosures the draft omitted are added: the in-scope group is 198/222 e-commerce; the 530 domains without usable
    captures are mostly redirecting roots and DNS or CDN hosts; 11 archive-index errors, 44 unretried fetch failures and
    14 selector errors; the rise in in-scope drops; and jsdom's parsing of `<noscript>` content.
+
+## D10 — 2026-10-21 18:04 NZDT — study tag set to Inconclusive after the confirmation pass
+
+H1 is a claim about size (a relative fall of at least 15%). The preregistered estimate on the corrected labels is −16.2%
+(−28.2% to −2.3%): it clears the bar by 1.2 points against a standard error of about 6.5. The confirmation pass found
+three further variants on the corrected labels whose intervals include zero (balanced panel; leaving out Finland;
+leaving out Portugal), in addition to the three in D9, and a Poisson count model at −0.5% (−21% to +26%). Following the
+lab's practice when a preregistered test passes fragilely (the gas study), the study tag is Inconclusive on the size,
+and the report states that the preregistered rule reads Supported. The direction — a relative fall after the Act — is
+reported as supported: flat pre-trends, a break at the deadline, an in-time placebo of −0.3%, and randomisation
+inference p = 0.008. The sector precisions are now quoted against the corrected rule (0.86/0.91 and 0.82/0.86).

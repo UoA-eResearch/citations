@@ -49,6 +49,46 @@
   "n_treated": 198,
   "clears_15": true
  },
+ "balanced_panel": {
+  "rel_pct": -16.3,
+  "ci_pct": [
+   -31.2,
+   1.8
+  ],
+  "n_sites": 719,
+  "n_treated": 137,
+  "clears_15": false
+ },
+ "leave_out_fi": {
+  "rel_pct": -13.6,
+  "ci_pct": [
+   -26.0,
+   0.9
+  ],
+  "n_sites": 945,
+  "n_treated": 205,
+  "clears_15": false
+ },
+ "leave_out_pt": {
+  "rel_pct": -14.5,
+  "ci_pct": [
+   -27.1,
+   0.4
+  ],
+  "n_sites": 936,
+  "n_treated": 202,
+  "clears_15": false
+ },
+ "in_time_placebo_2024": {
+  "rel_pct": -0.3,
+  "ci_pct": [
+   -9.0,
+   9.3
+  ],
+  "n_sites": 1006,
+  "n_treated": 222,
+  "clears_15": false
+ },
  "treated_non_ecommerce_only": {
   "rel_pct": -21.1,
   "ci_pct": [

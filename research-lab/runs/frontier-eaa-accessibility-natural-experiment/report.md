@@ -4,22 +4,26 @@
 Accessibility Act covers with sites it does not, across 14 EU country domains, before and after the Act applied on
 28 June 2025, and repeats the comparison outside the EU as a placebo.*
 
-**Verdict: Supported under the preregistered specification, with the size uncertain.** Automatically detectable
-accessibility failures on in-scope EU homepages fell relative to out-of-scope ones once the Act applied. The fall is
-concentrated among a minority of sites that cleared their failures entirely, its size runs from about −11% to −16%
-depending on how it is measured, and the placebo cannot rule out a global trend. The in-scope group is nine-tenths
-online shops, so this is in practice an e-commerce result.
+**Verdict: Inconclusive on the preregistered size; the direction is supported.** Automatically detectable
+accessibility failures on in-scope EU homepages fell relative to out-of-scope ones once the Act applied: no pre-trend,
+a break at the deadline, a null in-time placebo, and randomisation inference p = 0.008. But H1 is a claim about size —
+a fall of at least 15% — and the preregistered estimate clears that bar by 1.2 points against a standard error of about
+6.5; across reasonable variants the size runs from about −11% to −16%, six intervals include zero, and a count model
+shows no fall at all. The in-scope group is nine-tenths online shops, so this is in practice an e-commerce result.
 
-- **H1 (the EU in-scope relative change is −15% or larger): Supported, narrowly.**
+- **H1 (the EU in-scope relative change is −15% or larger): Inconclusive on size.** The preregistered rule reads
+  Supported, but the pass does not survive reasonable variation.
   - Under the preregistered model the change is **−16.2%** (95% CI −28.2% to −2.3%): 1,010 sites, 222 of them in
-    scope, 6,591 snapshots. It clears the −15% bar, and the interval excludes zero.
+    scope, 6,591 snapshots. It clears the −15% bar by 1.2 points, and its interval cannot tell a fall of 15% from one
+    of 10%.
   - **The event study has the shape the Act predicts.** Pre-period differences are close to zero (−0.2%, +4.8%, +3.4%
     against 2024-10), the anticipation quarters flat (−0.8%, +2.2%), and the gap opens at the transition quarter
     (−10%) and stays open (−14%, −11%, −18%).
-  - **The −15% bar is not robust.** Measured as a ratio of mean densities the change is −11%; dropping the sites that
-    ever reached zero failures gives −11.9%, and counting failures without normalising by page size −13.5%, with
-    intervals that include zero. Those sites' pages are genuine — the review checked that they serve full content —
-    so the fall is real but carried by the sites that fixed everything, not spread evenly.
+  - **The size is not robust.** A balanced panel, and dropping either Finland or Portugal, give intervals that reach
+    zero; so do dropping the sites that ever reached zero failures and counting failures without normalising by page
+    size. A Poisson count model gives −0.5% (−21% to +26%), and a ratio of mean densities −11%. The sites that reached
+    zero serve genuine full pages, so the fall that does appear is real, but it is carried by the sites that fixed
+    everything.
 - **H2 (the placebo contrast changes by less than 5%): Inconclusive, and untestable as designed.** The same contrast on
   .com.au, .co.nz and .ca sites gives +3.8% (−20.4% to +35.5%). Confirming a change within ±5% would have needed a
   standard error near 0.025; 219 placebo sites delivered 0.136. The minimum detectable change was about −32% or +46%.
@@ -45,9 +49,9 @@ their homepages each quarter from early 2024 to April 2026, counting accessibili
 as images without text descriptions and buttons without names.
 
 Covered and uncovered sites tracked each other closely through 2024 and early 2025. After the law applied, the covered
-sites' errors fell relative to the others, by somewhere between a tenth and a sixth depending on how you count. Most of
-that came from a smaller group of sites that fixed every detectable error. Almost all the covered sites in the study
-are online shops.
+sites' errors fell relative to the others. How much is unclear: depending on how you count, somewhere from about a
+tenth to a sixth, and one way of counting shows no fall at all. What fall there is came mostly from a smaller group of
+sites that fixed every detectable error. Almost all the covered sites in the study are online shops.
 
 The same comparison for Australian, New Zealand and Canadian sites showed no clear change, but it was too small to
 rule one out. So the evidence fits the law making a difference, without proving it: a worldwide change in how online
@@ -103,9 +107,9 @@ now "unclassifiable" and excluded.
 - **Labels (all groups):** in scope 311, out of scope 1,001, ambiguous 313 and unclassifiable 69 (both excluded),
   public 47 (excluded).
 - **Composition:** 198 of the 222 EU in-scope sites are e-commerce.
-- **Accuracy:** a blind check of 120 sites (D6) gave precision 0.87 in scope and 0.88 out of scope; a fresh blind sample
-  of 60 in the review gave 0.77 and 0.83, and the pooled figures are 0.83 and 0.87. Misclassification biases the
-  estimate towards zero.
+- **Accuracy:** against the corrected rule, the blind check of 120 sites (D6) gives precision 0.86 in scope and 0.91
+  out of scope, and the review's fresh blind sample of 60 gives 0.82 and 0.86 — all above the plan's 0.80 bar.
+  Misclassification biases the estimate towards zero.
 
 **Model.** Site and period fixed effects, with InScope × Post, and standard errors clustered by site. Anticipation and
 transition quarters are excluded from H1–H3 and kept in the event study. H1 needs the point estimate at −15% or below
@@ -122,8 +126,9 @@ and the upper bound below 0; H2 needs the interval inside ±5%.
 | S5: EU, the lead's literal windows (2024-01/04 vs 2026-01/04) | −17.3% | −32.0% to +0.7% | — |
 | S2: UK (partly treated) | −13.3% | −48.0% to +44.5% | 80 (22) |
 
-**H1 is Supported**: −16.2% is below −15% and the upper bound is below zero. With the minimum detectable effect about
-19%, the study was powered close to its threshold.
+By its preregistered rule H1 reads Supported (−16.2% is below −15% and the upper bound below zero), but the study tag
+is Inconclusive, because the rule is about size and the size does not hold up (D10). The minimum detectable effect was
+about 19%, so the study could not reliably detect an effect of exactly the preregistered size.
 
 **How robust the size is** (post-review, corrected labels; `results/tables/sensitivity_post_review.json`):
 
@@ -131,20 +136,25 @@ and the upper bound below 0; H2 needs the interval inside ±5%.
 |---|---|---|
 | preregistered | −16.2% | −28.2% to −2.3% |
 | treated sites limited to e-commerce | −15.6% | −28.4% to −0.5% |
+| balanced panel (sites observed in all seven quarters) | −16.3% | −31.2% to +1.8% |
+| leave out Finland | −13.6% | −26.0% to +0.9% |
+| leave out Portugal | −14.5% | −27.1% to +0.4% |
 | treated sites limited to banking, transport and telecom (24 sites) | −21.1% | −45.5% to +14.2% |
 | drop snapshots with zero violations | −12.3% | −24.2% to +1.5% |
 | drop sites that ever reached zero violations | −11.9% | −24.0% to +2.2% |
 | violation nodes without normalising by page size | −13.5% | −26.5% to +1.9% |
 | ratio of mean densities | −11.0% | — |
+| Poisson count model (offset log elements, site and period effects; review) | −0.5% | −21.4% to +26.1% |
+| in-time placebo, 2024-01/04 vs 2024-07/10 | −0.3% | −9.0% to +9.3% |
 
 The change is concentrated: in the review's analysis of the draft labels, 20 of the in-scope sites carried more than
 half of the in-scope change, mostly sites that reached zero failures after the Act. The review checked that 19 of those
 20 serve full pages after the change, with as many links and as much text as before, so the improvement is real markup
 change rather than an archive artefact.
 
-The review's independent re-implementation reproduced the preregistered estimate to four decimals, found no joint
-pre-trend (p = 0.39), an in-time placebo near zero (−2.3%), and a randomisation-inference p of 0.002, all on the draft
-labels.
+The direction holds: on the corrected labels the review's randomisation inference gives a two-sided p of 0.008, and
+the in-time placebo is −0.3%. Its independent re-implementation also reproduced every corrected-label variant above to
+the decimal.
 
 ![EU event study](results/figures/F1_event_study.png)
 
