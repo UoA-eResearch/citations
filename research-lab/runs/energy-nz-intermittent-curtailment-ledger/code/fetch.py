@@ -18,6 +18,7 @@ import json
 import sys
 import threading
 import time
+import urllib.error
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
@@ -95,8 +96,13 @@ def plain(kind, ym):
     out.parent.mkdir(parents=True, exist_ok=True)
     for attempt in range(4):
         try:
-            with open_url(f"{BLOB}/{path}") as r:
-                body = r.read()
+            try:
+                with open_url(f"{BLOB}/{path}") as r:
+                    body = r.read()
+            except urllib.error.HTTPError as e:
+                if kind != "prices" or e.code != 404:
+                    raise
+                body = month_from_days(ym)          # a month missing from ByMonth: join its daily files
             if len(body) < 1000:
                 raise RuntimeError(f"{len(body)} bytes")
             out.write_bytes(body)
@@ -107,6 +113,17 @@ def plain(kind, ym):
             time.sleep(10 * (attempt + 1))
     log({"file": name, "kind": kind, "status": "failed", "error": err})
     return name, -1, -1
+
+
+def month_from_days(ym):
+    y, m = int(ym[:4]), int(ym[4:])
+    d, parts = dt.date(y, m, 1), []
+    while d.month == m:
+        with open_url(f"{BLOB}/DispatchAndPricing/FinalEnergyPrices/{d:%Y%m%d}_FinalEnergyPrices.csv") as r:
+            text = r.read().decode("utf-8")
+        parts.append(text if not parts else text.split("\n", 1)[1])
+        d += dt.timedelta(days=1)
+    return "".join(p if p.endswith("\n") else p + "\n" for p in parts).encode("utf-8")
 
 
 def months():
