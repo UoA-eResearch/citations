@@ -102,12 +102,17 @@ def summer_panel(cap, log):
     rows = []
     for y in SUMMERS:
         for ym in (f"{y}12", f"{y + 1}01", f"{y + 1}02"):
-            for kind, sign in (("Grid_import", 1.0), ("Grid_export", -1.0)):
-                x = pd.read_csv(RAW / "emi" / kind / f"{ym}_{kind}.csv", dtype={"POC": str, "NWK_Code": str})
+            # EMI names flows from the grid's side: Grid_export (flow X) leaves the grid into a network (offtake);
+            # Grid_import (flow I) enters the grid from it (embedded generation spilling upstream). Net offtake is
+            # export minus import, at grid-exit (GN) points of connection only. Column case changed in 2020.
+            for kind, sign in (("Grid_export", 1.0), ("Grid_import", -1.0)):
+                x = pd.read_csv(RAW / "emi" / kind / f"{ym}_{kind}.csv", dtype=str)
+                x.columns = [c.upper() for c in x.columns]
+                x = x.rename(columns={"NWK_CODE": "NWK_Code"})
                 tps = [f"TP{k}" for k in range(25, 31)]
-                x = x[x.UNIT_MEASURE.str.lower() == "kwh"]
+                x = x[(x.UNIT_MEASURE.str.lower() == "kwh") & (x.GENERATION_TYPE == "GN")].copy()
                 x["mid_kwh"] = x[tps].apply(pd.to_numeric, errors="coerce").sum(axis=1)
-                x["date"] = pd.to_datetime(x.TRADING_DATE, dayfirst=True)
+                x["date"] = pd.to_datetime(x.TRADING_DATE, format="mixed", dayfirst=True)
                 g = x.groupby(["POC", "NWK_Code", "date"]).mid_kwh.sum().reset_index()
                 g["mid_kwh"] *= sign
                 g["summer"] = y
