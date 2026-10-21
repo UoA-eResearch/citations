@@ -155,6 +155,15 @@ def main():
             est, n = fe_ols(sub, h["y"], lx, [h["x"]] + h["c"], "edb", "disc_yr", "icps")
             rk["placebo_lead2_coefficient"] = summarise(est, n, bootstrap(sub, f, "edb"))
         rob[k] = rk
+    # D2 sensitivity: ICPs derived from the disclosures (energy delivered / kWh per ICP), Westpower 2024 excluded
+    # (its disclosed ratio implies 91,158 ICPs against about 14,300 in the registry)
+    dsc = pd.read_csv(TAB / "panel_annual.csv")
+    dsc = dsc[~((dsc.edb == "Westpower") & (dsc.disc_yr == 2024))].copy()
+    dsc["icps"] = dsc.icps_disclosure
+    dsc = per_icp(dsc)
+    for k in ("H1", "H2", "H3"):
+        h = H[k]
+        rob[k]["disclosure_icps"] = spec(dsc, h["y"], h["x"], h["c"])
     s2 = s.copy()
     rob["H4"] = {"levels_with_icps": spec(s2, "mid_mw", "solar_all_mw", ["tmax", "icps"], unit="unit", time="summer",
                                           w=None),

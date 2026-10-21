@@ -164,6 +164,16 @@ def main():
     log["participants_excluded"] = sorted(set(cap.pid) - set(PARTICIPANT))
     log["participants_missing"] = sorted(set(PARTICIPANT) - set(cap.pid))
     a = d.merge(annual_exposure(cap), on=["edb", "disc_yr"], how="left")
+    # D2: ICPs from the Authority's registry (ICPs with solar / uptake rate), mean of the disclosure year's month-ends;
+    # the disclosure-derived count is kept as icps_disclosure for the sensitivity
+    r = ea("solar_All_All_Total.csv")
+    r = r[r.pid.isin(PARTICIPANT) & (r.uptake_pct > 0)].copy()
+    r["reg"] = r.icp_count / (r.uptake_pct / 100)
+    r["edb"] = r.pid.map(PARTICIPANT)
+    r["disc_yr"] = r.month.dt.year + (r.month.dt.month >= 4)
+    reg = r.groupby(["edb", "disc_yr"]).reg.mean().rename("icps_registry").reset_index()
+    a = a.rename(columns={"icps": "icps_disclosure"}).merge(reg, on=["edb", "disc_yr"], how="left")
+    a["icps"] = a.icps_registry
     hdd, tmax = weather.controls()
     a = a.merge(hdd, on=["edb", "disc_yr"], how="left")
     log["annual_rows"] = len(a)

@@ -17,3 +17,21 @@ Found while checking file formats, before `build_panel.py` was run:
    per-ICP form. H4 is estimated per ICP, weighted by ICPs, as for H1–H3; the levels form with ICPs as a control is
    reported with the robustness set. ICPs for H4 come from the Authority's registry (ICPs with solar ÷ uptake rate),
    because summer 2025/26 falls in a disclosure year not yet published.
+
+## D2 — 2026-10-21 18:39 NZDT — ICPs from the Authority's registry (after building the panel, before any estimate)
+
+The plan derived average ICPs from Schedule 1 (energy delivered ÷ energy delivered per average ICP). Checked against
+the Authority's registry (ICPs with solar ÷ uptake rate, mean of the disclosure year's month-ends) before any slope was
+estimated, the two agree closely (median ratio 1.00, interquartile range 1.00–1.02) except in four places: Westpower 2024
+(its disclosed ratio of 2,520 kWh per ICP implies 91,158 ICPs against about 14,300), Electra 2015 (0.92) and MainPower
+2015 (1.16), and OtagoNet, whose derived count drifts from 1.07 to 1.33 times the registry over 2018–2025. The derived
+count also depends on energy delivered itself, one of the outcomes. **The registry count is used for all
+normalisation and weights.** The disclosure-derived count, with Westpower 2024 excluded, is reported as a sensitivity.
+
+Six distributor-years leave "electricity supplied from distributed generation" blank (Centralines 2015, Electricity
+Invercargill 2021, Network Waitaki 2015, Scanpower 2018, 2021, 2023). They are left out of H1 and the export slope,
+not imputed.
+
+H4's merged units, from points of connection shared in the metered data (rule fixed in plan section 3): Alpine with
+Network Waitaki, Aurora with OtagoNet, Electricity Invercargill with The Power Company, The Lines Company with
+Powerco, Nelson Electricity with Network Tasman: 24 units.
