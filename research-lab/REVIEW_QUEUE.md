@@ -19,7 +19,8 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-22 09:08 | `energy-nz-intermittent-curtailment-ledger` | review |
 
 **Next Fable slot: not before 2026-10-22 14:09 NZDT.** Queue: 1. curtailment confirmation (revision 2c2a8b1).
-2. phantom-citations review (draft pending). 3. DSI origin (limb 2 in progress).
+2. phantom-citations review (draft 09c9990). 3. retraction markers review (draft; peS2o arm still downloading).
+4. DSI origin (limb 2 in progress).
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
@@ -31,6 +32,8 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | `auckland-nz-jade-water-value-calibration` | 96c8a7c | H1 Supported, H2 Refuted | **published** 2026-10-21 (H1 Supported; H2 Refuted but unreachable; reinterpreted) |
 | `energy-nz-embedded-solar-edb-demand` | 8f12116 | H1-H3 Inconclusive, H4 Supported by rule | **published** 2026-10-22 (Inconclusive: H4 passes its rule but is carried by two solar-farm networks) |
 | `energy-nz-intermittent-curtailment-ledger` | f83332e | gate fails; H1 Refuted, H2 Supported by rule (noise-dominated; price-driven core 2.2%) | **revised** (2c2a8b1) after a fix-first review; confirmation pass at the 14:09 slot |
+| `legal-phantom-citations-judicial-opinions` | 09c9990 | H1 Refuted by rule (0 of 300 sampled; upper bound 40; recall 0/4 judge incidents) - not robust; H2 not scorable; 45 court-flagged opinions | awaiting review |
+| `trust-corrected-record-machine-readable` | (pending) | H1 Refuted (2.4% unmarked), H2 Supported (sidecar 95.6%), H3 Refuted | draft; peS2o secondary downloading |
 
 ## Order to run them in
 
