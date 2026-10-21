@@ -30,7 +30,8 @@ review was checked against its outputs, and the preprint claim against OpenAlex,
 
 1. **The prior preprint was readable all along.** D1 item 3 said only the title of Hoang (2026, Research Square
    rs-11080967) could be retrieved; OpenAlex lists an open-access PDF (CC BY), verified here. The preprint does quantify
-   pull-forward (1,206 vehicles in the final eight weeks), uses weekly new registrations to December 2025, and does not
+   pull-forward (1,206 vehicles in the final eight weeks), uses weekly registrations to December 2025 split by fuel
+   type (including plug-in hybrids) and by new versus used import, and does not
    consider road user charges. The report's prior-work section and its claim that no study had quantified the
    December 2023 pull-forward are corrected; the separation of the two shocks remains new.
 2. **"It did not last" is withdrawn.** Over the preprint's window the plug-in share averaged 6.6% (January 2024 to
@@ -46,6 +47,16 @@ review was checked against its outputs, and the preprint claim against OpenAlex,
    and the minimum detectable effect for H1, all reported from the review's reanalysis.
 6. **The ute series** now counts diesel utilities of 3,500 kg or less; the study's universe includes about 37,300
    heavier vehicles, which do not affect H1 or H2.
-7. **Snapshot attrition** is quantified against NZTA's May 2023 snapshot (the draft's suggested April 2021 service does
+7. **Snapshot attrition** is quantified against NZTA's May 2023 snapshot (the April 2021 service suggested in the review brief does
    not exist): about a point a year, too small to drive the results.
 8. **D1 item 1 was not a deviation**: the plan already specified September 2026.
+
+## D3 — 2026-10-21 18:10 NZDT — confirmation pass
+
+The confirmation review (publish with edits) found every revised number matched. Corrected here: the prior preprint
+includes used imports and plug-in hybrids (verified against its text), so this study's additions are the road-charge
+separation, the combined plug-in treated group and the data to September 2026; it is described as a preprint not yet
+peer-reviewed; the one point of disagreement (petrol and diesel registrations at the deadline) is stated; F2's title and
+F3's caption were regenerated (F3 no longer calls the placebo dates policy-free); and smaller wording fixes. The review's
+scripts and raw service outputs are committed under `review/reviewer_checks/`, except its excerpts of the preprint's
+text.

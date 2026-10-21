@@ -276,3 +276,75 @@ The last residual can never be drawn (`analysis.py:132` upper bound), which is i
 3. Findings 4-6: reframe H2 as confounded as well as underpowered; add the placebo-in-time distribution and the
    control-without-diesel-hybrids estimate; relabel the placebos.
 4. Findings 7-9, 13: universe/ute numbers, the share comparison, the missing preregistered results, -35%.
+
+## Confirmation pass (revision 9552d6d, 2026-10-21)
+
+**Verdict: publish with edits** — four small text/figure fixes below, none needing a further review round. Every
+number in the revised report.md was checked against `reviewer_checks/*.out` or recomputed; all match. Findings 1-13 are
+resolved as described in the coordinator's message, with the residuals noted here. report.html mirrors report.md.
+
+### Resolved
+
+1-2 (preprint, "did not last"): the prior-work section, summary bullets and D2 now state the preprint's window
+(Dec 2021-Dec 2025), its pull-forward figure (1,206) and its silence on RUC; "did not last" is replaced by "lasted
+about two years" with the 6.6% vs 13.4% comparison, the 13.7-21.7% range and the like-for-like 29,402 vs 23,293.
+Correct. Not attributing the 2026 recovery is the right call.
+3 (H1): the baseline table (0.09-0.46, local-level 0.15-0.23, new-only -0.07 to 0.19) matches `reanalysis.out`;
+break-even 2,850 vs 4,156, MDE ~1.0 (2.8 x 0.359), P(R >= 0.5) 9-16% all correct. "Leaning against" now rests on the
+break-even, as recommended.
+4-6 (H2): slopes +0.24/+0.05, BEV vs PHEV +33%, +42% to +54%, 38 placebos / SD 0.38 / 18 of 38, diesel-hybrid
++41%, share -1.7 pp, lower CI -35%: all correct. The placebo text now names 1 April 2022 and 1 July 2023.
+7 (utes): 515 and 3,649 are the light-only (<= 3,500 kg) figures; "a quarter of their October-November level" is now
+right (515 / 2,048 = 25%). The new claim at report.md:37 that the pattern recurs at the other fee dates was only
+verified on the truck-inclusive series in my first pass; I re-queried the light-only series
+(`reviewer_checks/raw/c3_light_ute_other_fee_dates.json`): March/April 2022 **9,049 -> 662**, June/July 2023
+**5,488 -> 948**. Confirmed, and sharper than the truck-inclusive numbers.
+8 (shares): Nov->Feb 19.5% -> 4.1% is given with the mechanism; the "one in five to one in twenty-five" plain-terms
+version is accurate.
+9 (omitted preregistered analyses): new-only H1, market-share H2 and the H1 MDE are now reported.
+10 (attrition, D1 item 1): figures match `attrition_snapshots.out`; D1 item 1 is recorded as not a deviation.
+
+### Residual issues (fix before publishing)
+
+**C1. The preprint is not restricted to new vehicles, and it includes PHEVs** (report.md:75 "weekly *new*
+registrations"; :81-83 "What this study adds: ... first registrations including used imports, and plug-in hybrids
+alongside battery-electric vehicles"; D2 item 1 "weekly new registrations"). The preprint's "new registrations" means
+newly registered vehicles: it aggregates "by fuel type (BEV, PHEV, HEV, ICEV), import status (new vs. used)"
+(preprint line 410), reports new-versus-used heterogeneity (section 5.1, Table 9, Figure 6: used BEV share +0.8 pp,
+n.s.; used BEV count -152/week) and PHEV effects (Table 13: PHEV -234.5/week). So two of the three claimed
+additions are not additions. What this study genuinely adds: the RUC separation; a combined BEV+PHEV treated group
+and monthly first registrations in a passenger-plus-goods universe; data to September 2026. **Fix:** delete "*new*"
+(say "weekly first registrations, new and used"), and reword the additions paragraph and D2 item 1 accordingly.
+
+**C2. The figures were not regenerated.** `code/figures.py:88` still titles F2 "Pull-forward explains little of the
+collapse (ratio 0.09)", presenting the lower end of the range as the headline, and `code/figures.py:123` /
+`results/figures/F3_ruc_did.txt` still say the placebo years are "dates with no policy change", which report.md:146-147
+now contradicts (the phrase survives once in report.html via the caption). F1's caption still says "light vehicles".
+**Fix:** retitle F2 (e.g. "Pull-forward explains a tenth to under half of the collapse, by baseline"), rewrite the F3
+caption ("placebo dates; 2022 and 2023 coincide with Clean Car Discount changes"), rerun `figures.py` and
+`build_report_html.py`.
+
+**C3. "A study published in September 2026" (report.md:58) should be "a preprint posted in September 2026, not yet
+peer-reviewed".** With that change the plain-terms sentence is fair: the preprint finds a 24.1 pp permanent fall in
+BEV share over its window and 1,206 vehicles bunched into the final eight weeks (28.8% above trend) with the static
+price effect dominating; this study finds a sharp fall lasting about two years and a December excess of 951-2,620
+vehicles that is well under half the shortfall. Same direction, similar magnitudes, same conclusion on the rush's
+relative size. Two honest caveats are optional but would strengthen it: the preprint's bunching window is eight weeks
+(November-December) while this study's excess is December only (November 2023 sat slightly below the baseline); and
+the preprint reports ICEV registrations "unaffected" at the deadline, whereas this study's monthly data show the
+sharp ICE deferral across it (the ute result) — a point of disagreement, not confirmation.
+
+**C4. `review/reviewer_checks/` is untracked** (git status `??`), yet report.md:186-187 and D2 cite its scripts as the
+post-review analyses. Commit it (about 120 KB including the cached `raw/` JSON; no secrets; `attrition_snapshots.py`
+takes the 1.4 GB May-2023 CSV path as an argument and does not need the file in the repo).
+
+### Minor wording
+
+- report.md:3 and :44 still say "light vehicles" while :90 discloses ~37,300 heavier vehicles; say "passenger cars,
+  vans and goods vehicles" or add "(including about 37,000 trucks)".
+- report.md:131 "above the October-November actuals": above their average (4,156); November alone was 4,604.
+- report.md:51-52 "plug-in sales only started climbing back in 2026": 2025 was already 16,946 against 12,101 in 2024
+  (share 7.7% vs 6.3% for May-Dec 2024); "stayed low through 2025 and climbed back sharply from March 2026" is more
+  exact.
+- report.md:55 "more than quadrupled": January was seven times December on the light-only series (3,649 / 515).
+- D2 item 7: the April 2021 service was the review brief's suggestion, not the draft's.

@@ -1,0 +1,116 @@
+== a. key months, MOTIVE_POWER x VEHICLE_TYPE: reviewer vs study
+2023-11: reviewer total 23,561 study total 23,561
+    PETROL HYBRID                    PASSENGER CAR/VAN        reviewer   8,410 study   8,410
+    PETROL                           PASSENGER CAR/VAN        reviewer   6,654 study   6,654
+    ELECTRIC                         PASSENGER CAR/VAN        reviewer   3,057 study   3,057
+    DIESEL                           GOODS VAN/TRUCK/UTILITY  reviewer   2,701 study   2,701
+    PLUGIN PETROL HYBRID             PASSENGER CAR/VAN        reviewer   1,455 study   1,455
+    DIESEL                           PASSENGER CAR/VAN        reviewer     761 study     761
+    PETROL                           GOODS VAN/TRUCK/UTILITY  reviewer     221 study     221
+    PETROL ELECTRIC HYBRID           PASSENGER CAR/VAN        reviewer     191 study     191
+    ELECTRIC                         GOODS VAN/TRUCK/UTILITY  reviewer      92 study      92
+2023-12: reviewer total 21,875 study total 21,875
+    PETROL HYBRID                    PASSENGER CAR/VAN        reviewer   9,931 study   9,931
+    ELECTRIC                         PASSENGER CAR/VAN        reviewer   4,282 study   4,282
+    PETROL                           PASSENGER CAR/VAN        reviewer   4,118 study   4,118
+    PLUGIN PETROL HYBRID             PASSENGER CAR/VAN        reviewer   1,588 study   1,588
+    DIESEL                           GOODS VAN/TRUCK/UTILITY  reviewer     988 study     988
+    PETROL ELECTRIC HYBRID           PASSENGER CAR/VAN        reviewer     458 study     458
+    DIESEL                           PASSENGER CAR/VAN        reviewer     285 study     285
+    PETROL                           GOODS VAN/TRUCK/UTILITY  reviewer     108 study     108
+    ELECTRIC                         GOODS VAN/TRUCK/UTILITY  reviewer     104 study     104
+2024-01: reviewer total 21,201 study total 21,201
+    PETROL                           PASSENGER CAR/VAN        reviewer   8,843 study   8,843
+    PETROL HYBRID                    PASSENGER CAR/VAN        reviewer   5,899 study   5,899
+    DIESEL                           GOODS VAN/TRUCK/UTILITY  reviewer   4,245 study   4,245
+    DIESEL                           PASSENGER CAR/VAN        reviewer   1,004 study   1,004
+    PETROL                           GOODS VAN/TRUCK/UTILITY  reviewer     396 study     396
+    PLUGIN PETROL HYBRID             PASSENGER CAR/VAN        reviewer     302 study     302
+    ELECTRIC                         PASSENGER CAR/VAN        reviewer     277 study     277
+    PETROL ELECTRIC HYBRID           PASSENGER CAR/VAN        reviewer     209 study     209
+2024-04: reviewer total 17,661 study total 17,661
+    PETROL                           PASSENGER CAR/VAN        reviewer   6,919 study   6,919
+    PETROL HYBRID                    PASSENGER CAR/VAN        reviewer   6,084 study   6,084
+    DIESEL                           GOODS VAN/TRUCK/UTILITY  reviewer   2,775 study   2,775
+    DIESEL                           PASSENGER CAR/VAN        reviewer     555 study     555
+    ELECTRIC                         PASSENGER CAR/VAN        reviewer     355 study     355
+    PLUGIN PETROL HYBRID             PASSENGER CAR/VAN        reviewer     294 study     294
+    DIESEL HYBRID                    GOODS VAN/TRUCK/UTILITY  reviewer     224 study     224
+    PETROL                           GOODS VAN/TRUCK/UTILITY  reviewer     213 study     213
+    PETROL ELECTRIC HYBRID           PASSENGER CAR/VAN        reviewer     212 study     212
+    ELECTRIC                         GOODS VAN/TRUCK/UTILITY  reviewer      25 study      25
+2026-03: reviewer total 23,192 study total 23,192
+    PETROL HYBRID                    PASSENGER CAR/VAN        reviewer   6,936 study   6,936
+    PETROL                           PASSENGER CAR/VAN        reviewer   6,025 study   6,025
+    DIESEL                           GOODS VAN/TRUCK/UTILITY  reviewer   3,361 study   3,361
+    ELECTRIC                         PASSENGER CAR/VAN        reviewer   2,876 study   2,876
+    PLUGIN PETROL HYBRID             PASSENGER CAR/VAN        reviewer   1,208 study   1,208
+    DIESEL HYBRID                    GOODS VAN/TRUCK/UTILITY  reviewer     933 study     933
+    DIESEL                           PASSENGER CAR/VAN        reviewer     732 study     732
+    PLUGIN PETROL HYBRID             GOODS VAN/TRUCK/UTILITY  reviewer     332 study     332
+    PETROL ELECTRIC HYBRID           PASSENGER CAR/VAN        reviewer     299 study     299
+    PETROL                           GOODS VAN/TRUCK/UTILITY  reviewer     264 study     264
+    ELECTRIC                         GOODS VAN/TRUCK/UTILITY  reviewer     108 study     108
+    DIESEL HYBRID                    PASSENGER CAR/VAN        reviewer      87 study      87
+    ELECTRIC [PETROL EXTENDED]       PASSENGER CAR/VAN        reviewer      30 study      30
+2026-09: reviewer total 25,063 study total 25,063
+    PETROL HYBRID                    PASSENGER CAR/VAN        reviewer   8,546 study   8,546
+    PETROL                           PASSENGER CAR/VAN        reviewer   7,193 study   7,193
+    ELECTRIC                         PASSENGER CAR/VAN        reviewer   2,897 study   2,897
+    DIESEL                           GOODS VAN/TRUCK/UTILITY  reviewer   2,684 study   2,684
+    PLUGIN PETROL HYBRID             PASSENGER CAR/VAN        reviewer   1,302 study   1,302
+    DIESEL                           PASSENGER CAR/VAN        reviewer     724 study     724
+    DIESEL HYBRID                    GOODS VAN/TRUCK/UTILITY  reviewer     555 study     555
+    PETROL ELECTRIC HYBRID           PASSENGER CAR/VAN        reviewer     432 study     432
+    PLUGIN PETROL HYBRID             GOODS VAN/TRUCK/UTILITY  reviewer     267 study     267
+    PETROL                           GOODS VAN/TRUCK/UTILITY  reviewer     218 study     218
+    DIESEL HYBRID                    PASSENGER CAR/VAN        reviewer     122 study     122
+    ELECTRIC                         GOODS VAN/TRUCK/UTILITY  reviewer      75 study      75
+    ELECTRIC [PETROL EXTENDED]       PASSENGER CAR/VAN        reviewer      33 study      33
+mismatching cells: 0
+
+== b. MOTIVE_POWER categories, light universe, 2021-2026 (by year)
+  PETROL                               total   598,877  2021:155,717 2022:127,784 2023:88,945 2024:89,759 2025:80,018 2026:56,654
+  PETROL HYBRID                        total   370,707  2021:35,154 2022:48,009 2023:82,170 2024:71,264 2025:75,291 2026:58,819
+  DIESEL                               total   284,827  2021:66,331 2022:60,545 2023:46,143 2024:43,831 2025:39,343 2026:28,634
+  ELECTRIC                             total    89,096  2021:9,346 2022:19,395 2023:25,825 2024:7,559 2025:9,184 2026:17,787
+  PLUGIN PETROL HYBRID                 total    47,708  2021:3,454 2022:9,027 2023:11,736 2024:4,522 2025:7,568 2026:11,401
+  DIESEL HYBRID                        total    16,420  2021:26 2022:25 2023:184 2024:4,172 2025:6,771 2026:5,242
+  PETROL ELECTRIC HYBRID               total    11,188  2021:491 2022:1,036 2023:2,684 2024:1,834 2025:2,393 2026:2,750
+  ELECTRIC [PETROL EXTENDED]           total       495  2021:43 2022:35 2023:15 2024:0 2025:189 2026:213
+  ELECTRIC FUEL CELL HYDROGEN          total        35  2021:1 2022:9 2023:4 2024:20 2025:1 2026:0
+  DIESEL ELECTRIC HYBRID               total        27  2021:7 2022:9 2023:3 2024:6 2025:1 2026:1
+  LPG                                  total        15  2021:4 2022:4 2023:4 2024:1 2025:1 2026:1
+  PLUG IN FUEL CELL HYDROGEN HYBRID    total         6  2021:1 2022:0 2023:0 2024:0 2025:4 2026:1
+  CNG                                  total         3  2021:1 2022:0 2023:1 2024:0 2025:0 2026:1
+  OTHER                                total         3  2021:1 2022:0 2023:0 2024:2 2025:0 2026:0
+  PLUGIN DIESEL HYBRID                 total         3  2021:0 2022:2 2023:1 2024:0 2025:0 2026:0
+
+== c. GOODS VAN/TRUCK/UTILITY by gross-mass band and year (DIESEL only), and all motive powers
+  2021: diesel goods GVM<=3500 44,248  GVM>3500 7,087  GVM null 0  heavy share 13.8%
+  2022: diesel goods GVM<=3500 38,766  GVM>3500 7,809  GVM null 0  heavy share 16.8%
+  2023: diesel goods GVM<=3500 28,872  GVM>3500 7,475  GVM null 0  heavy share 20.6%
+  2024: diesel goods GVM<=3500 29,021  GVM>3500 6,331  GVM null 0  heavy share 17.9%
+  2025: diesel goods GVM<=3500 25,359  GVM>3500 4,450  GVM null 0  heavy share 14.9%
+  2026: diesel goods GVM<=3500 19,438  GVM>3500 3,066  GVM null 0  heavy share 13.6%
+  all >3500 kg GVM in the study universe 2021-2026 by motive power: {'CNG': 3, 'DIESEL': 36295, 'DIESEL ELECTRIC HYBRID': 24, 'DIESEL HYBRID': 301, 'ELECTRIC': 337, 'ELECTRIC FUEL CELL HYDROGEN': 2, 'LPG': 2, 'PETROL': 190, 'PLUG IN FUEL CELL HYDROGEN HYBRID': 6, 'PLUGIN PETROL HYBRID': 157}
+
+== c2. diesel GOODS VAN/TRUCK/UTILITY <=3500 kg by month, Oct 2023 - Mar 2024 (is the ute trough/spike in light vehicles?)
+  2023-10: 2,092
+  2023-11: 2,005
+  2023-12: 515
+  2024-01: 3,649
+  2024-02: 2,877
+  2024-03: 3,225
+
+== d. 2026 light registrations by month (completeness of September)
+  2026-1: 19,388
+  2026-2: 17,115
+  2026-3: 23,192
+  2026-4: 16,729
+  2026-5: 18,569
+  2026-6: 21,065
+  2026-7: 19,917
+  2026-8: 20,466
+  2026-9: 25,063
+  rows with null month by year: {}

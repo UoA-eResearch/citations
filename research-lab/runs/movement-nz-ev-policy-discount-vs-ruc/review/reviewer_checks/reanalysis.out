@@ -1,0 +1,90 @@
+series check vs results/tables/monthly.csv: mismatches 0 | months 69 | total 1419410
+
+== H1: R under alternative baselines (treated = BEV+PHEV unless stated)
+  actual: Dec 2023 5,976; Jan-Mar 2024 2,296; Oct-Nov 2023 3,708, 4,604
+  spec                                                       E        M      R  pred Dec  pred Q1/mo
+  loglin   fit 2021-01..2023-09                              951   10,578   0.09     5,025     4,291
+  level    fit 2021-01..2023-09                            2,399    7,746   0.31     3,577     3,347
+  poisson  fit 2021-01..2023-09                            1,521    9,115   0.17     4,455     3,804
+  loglin   fit 2021-01..2023-11                            1,015   10,360   0.10     4,961     4,219
+  level    fit 2021-01..2023-11                            2,306    8,118   0.28     3,670     3,471
+  poisson  fit 2021-01..2023-11                            1,535    9,073   0.17     4,441     3,790
+  loglin   fit 2022-01..2023-09                            2,456    5,614   0.44     3,520     2,637
+  level    fit 2022-01..2023-09                            2,620    5,727   0.46     3,356     2,674
+  poisson  fit 2022-01..2023-09                            2,478    5,679   0.44     3,498     2,658
+  loglin   fit 2022-01..2023-11                            2,335    6,025   0.39     3,641     2,774
+  level    fit 2022-01..2023-11                            2,469    6,404   0.39     3,507     2,900
+  poisson  fit 2022-01..2023-11                            2,318    6,214   0.37     3,658     2,837
+  loglin 2021-01..2023-09, excess incl Nov (prereg sens)     -92   10,578  -0.01
+  NEW ONLY loglin   fit 2021-01..2023-09 (plan s5.1 robustness)     -664    9,929  -0.07     5,076     3,886
+  NEW ONLY level    fit 2021-01..2023-09 (plan s5.1 robustness)    1,288    6,650   0.19     3,124     2,793
+  NEW ONLY poisson  fit 2021-01..2023-09 (plan s5.1 robustness)      172    8,144   0.02     4,240     3,291
+  local level (Oct-Nov 2023 anchor, fitted month effects, no trend)   1,721    7,520   0.23     4,255     3,272
+  local level (Oct-Nov 2023 anchor, fitted month effects, fitted trend)   1,412    9,397   0.15     4,564     3,898
+  break-even: a flat counterfactual must be <= 2,850/month for R >= 0.5 (Oct-Nov 2023 actual averaged 4,156)
+
+== Bootstrap: reproduce the study's scheme, then alternatives
+  point: R 0.0899 E 950.9 M 10,578.3 d_ccd -1.6825 (-81.4%) d_ruc 0.2742 (31.55%) Q 0.1630
+  CI endpoints in %: exp(-0.4373)-1 = -35.42% (report says -36%); upper 153.2%
+  residual SD: pre-fit treated 0.317 (leverage-corrected 0.408, n=33, p=13); post windows treated 0.430; control pre 0.164 post 0.116
+  Jan-Mar 2024 within-window residuals, treated: [-0.241  0.002  0.239]  (window-mean residuals shrink variance by (n-1)/n; the Dec 2023 residual is exactly 0.000)
+  study scheme (block 3, mixed residuals) - reproduction     R CI [ -0.40,  1.07] dropped(M<=0)    0/2000  P(R>=0.5) 0.131  (E-0.5M) CI [-12,227,  4,213]  d_ruc CI % [  -35,  153] se 0.342  Q CI [0.01,0.53]
+  study scheme, circular blocks                              R CI [ -0.36,  1.09] dropped(M<=0)    0/2000  P(R>=0.5) 0.132  (E-0.5M) CI [-12,566,  4,268]  d_ruc CI % [  -36,  150] se 0.348  Q CI [0.01,0.54]
+  pre-period fit residuals only, leverage-inflated, block 1  R CI [ -0.41,  1.10] dropped(M<=0)    0/2000  P(R>=0.5) 0.136  (E-0.5M) CI [-12,001,  5,139]  d_ruc CI % [  -30,  148] se 0.329  Q CI [0.01,0.52]
+  pre-period fit residuals only, leverage-inflated, block 3  R CI [ -0.44,  1.13] dropped(M<=0)    0/2000  P(R>=0.5) 0.141  (E-0.5M) CI [-12,176,  5,027]  d_ruc CI % [  -33,  154] se 0.346  Q CI [0.01,0.50]
+  pre-period fit residuals only, leverage-inflated, block 6  R CI [ -0.42,  1.05] dropped(M<=0)    0/2000  P(R>=0.5) 0.129  (E-0.5M) CI [-12,856,  4,748]  d_ruc CI % [  -28,  142] se 0.310  Q CI [0.01,0.48]
+  pre-period fit residuals only, leverage-inflated, block 12 R CI [ -0.43,  1.22] dropped(M<=0)    0/2000  P(R>=0.5) 0.157  (E-0.5M) CI [-13,250,  4,904]  d_ruc CI % [  -22,  131] se 0.294  Q CI [0.01,0.49]
+  pre-period fit residuals only, NOT inflated, block 3       R CI [ -0.31,  0.78] dropped(M<=0)    0/2000  P(R>=0.5) 0.092  (E-0.5M) CI [-10,225,  2,466]  d_ruc CI % [  -22,  120] se 0.269  Q CI [0.01,0.42]
+  pre-fit residual ACF treated lag1..4: [-0.02, 0.36, 0.04, 0.07]  control: [-0.25, 0.01, 0.14, -0.18]
+
+== H2: components, pre-trend, alternative controls / windows / outcomes
+  treated Jan-Mar 2024 mean 765 -> May-Oct 2024 mean 1,032 (+35% in logs); hybrids 6,252 -> 6,408 (+3%)
+  pre-trend inside the pre window: treated Jan->Feb->Mar 2024 = [590, 752, 954] (log slope +0.240/month); hybrids [6122, 5835, 6800] (+0.053/month)
+  DIESEL HYBRID in control: Jan-Mar 2024 [14, 66, 69], May-Oct 2024 [452, 409, 440, 479, 429, 567]
+  control HEV (prereg)               May-Oct 2024 (prereg):   +32%  May-Dec 2024:   +42%  May 2024-Mar 2025:   +49%  May 2024-Sep 2025:   +54%
+  control HEV excl. DIESEL HYBRID    May-Oct 2024 (prereg):   +41%  May-Dec 2024:   +52%  May 2024-Mar 2025:   +60%  May 2024-Sep 2025:   +66%
+  control ICE                        May-Oct 2024 (prereg):   +59%  May-Dec 2024:   +79%  May 2024-Mar 2025:   +90%  May 2024-Sep 2025:  +104%
+  control HEV+ICE                    May-Oct 2024 (prereg):   +49%  May-Dec 2024:   +65%  May 2024-Mar 2025:   +74%  May 2024-Sep 2025:   +84%
+  treated split vs HEV, prereg window: BEV +48%, PHEV +11%, BEV|new +55%, BEV|used +11%, PHEV|new +29%, PHEV|used -26%
+  dose check: BEV (full RUC) vs PHEV (reduced RUC): +33%  (a deterrent predicts negative)
+  share outcome (pp of light registrations): treated share 3.9 -> 5.6 pp; HEV share 31.5 -> 35.0 pp; DiD -1.7 pp
+  log-share DiD equals the log-count DiD by construction: +31.6%
+
+== Placebo-in-time distribution of the DiD statistic (3 pre, 1 skipped, 6 post), windows not touching Oct 2023-Oct 2024
+  n=38  mean +0.168  SD 0.379  |placebo| >= |real 0.274|: 18/38  placebo >= real: 14
+  placebos (skipped month -> DiD %): 2021-04:+34, 2021-05:+58, 2021-06:+90, 2021-07:+121, 2021-08:+77, 2021-09:+70, 2021-10:+2, 2021-11:+23, 2021-12:+3, 2022-01:+24, 2022-02:+29, 2022-03:+14, 2022-04:-14, 2022-05:-11, 2022-06:+1, 2022-07:+47, 2022-08:+33, 2022-09:+5, 2022-10:-15, 2022-11:-33, 2022-12:-39, 2023-01:-41, 2023-02:-38, 2023-03:-17, 2025-02:-5, 2025-03:-16, 2025-04:-4, 2025-05:+4, 2025-06:+11, 2025-07:-6, 2025-08:-5, 2025-09:+14, 2025-10:+60, 2025-11:+99, 2025-12:+124, 2026-01:+132, 2026-02:+110, 2026-03:+81
+  preregistered April placebos as the study computes them (2026 has only May-Sep in the post window): 2022: -14%, 2023: -5%, 2025: -4%, 2026: +43%
+  policy events inside placebo windows: treated/HEV/ICE by month
+    2022-02: plug-in  1,484  HEV  2,909  ICE 17,979  plug-in share   6.6%
+    2022-03: plug-in  2,860  HEV  2,273  ICE 38,394  plug-in share   6.6%
+    2022-04: plug-in  2,047  HEV  5,078  ICE  8,535  plug-in share  13.1%
+    2022-05: plug-in  1,904  HEV  4,273  ICE 13,351  plug-in share   9.8%
+    2023-05: plug-in  2,434  HEV  6,913  ICE 13,148  plug-in share  10.8%
+    2023-06: plug-in  4,419  HEV 10,575  ICE 24,631  plug-in share  11.2%
+    2023-07: plug-in  1,616  HEV  4,746  ICE  5,964  plug-in share  13.1%
+    2023-08: plug-in  2,210  HEV  7,067  ICE  8,777  plug-in share  12.2%
+    2026-01: plug-in  1,768  HEV  7,137  ICE 10,483  plug-in share   9.1%
+    2026-02: plug-in  1,618  HEV  5,784  ICE  9,713  plug-in share   9.5%
+    2026-03: plug-in  4,554  HEV  8,255  ICE 10,383  plug-in share  19.6%
+    2026-04: plug-in  2,584  HEV  6,963  ICE  7,182  plug-in share  15.4%
+    2026-05: plug-in  3,001  HEV  6,765  ICE  8,803  plug-in share  16.2%
+
+== Recovery / share claims
+  Nov 2023: plug-in share 19.5%  BEV share 13.4%  ICE 10,337  total 23,561
+  Dec 2023: plug-in share 27.3%  BEV share 20.1%  ICE 5,499  total 21,875
+  Jan 2024: plug-in share 2.8%  BEV share 1.4%  ICE 14,489  total 21,201
+  Feb 2024: plug-in share 4.1%  BEV share 2.7%  ICE 11,594  total 18,181
+  2023 Jan-Sep               mean plug-in share  12.3%  mean BEV share   8.3%  plug-ins  23,293  BEVs  15,741
+  2023 Apr-Sep (mid-2023)    mean plug-in share  12.8%  mean BEV share   8.3%  plug-ins  16,164  BEVs  10,462
+  2023 full                  mean plug-in share  14.5%  mean BEV share   9.9%  plug-ins  37,581  BEVs  25,844
+  2024 May-Dec               mean plug-in share   6.3%  mean BEV share   4.0%  plug-ins   9,130  BEVs   5,819
+  2025 full                  mean plug-in share   7.7%  mean BEV share   4.3%  plug-ins  16,946  BEVs   9,374
+  2026 Jan-Sep               mean plug-in share  15.9%  mean BEV share   9.7%  plug-ins  29,402  BEVs  18,000
+  2026 Apr-Sep               mean plug-in share  17.5%  mean BEV share  10.7%  plug-ins  21,462  BEVs  13,170
+  2026 Apr-Sep monthly plug-in share range 13.7-21.7% (report: 'back to 18-22%')
+  preprint's window (24 months after Dec 2023 = through Dec 2025): mean plug-in share Jan 2024-Dec 2025 6.6% vs Jan-Nov 2023 13.4%
+
+== Ute claim (study's series includes trucks >3,500 kg; light-only numbers from the service are in verify_counts.out)
+  study series: Oct-Nov 2023 mean 2,696; Dec 2023 988 (37% of Oct-Nov); Jan 2024 4,245; Feb-Jun 2024 [3475, 3872, 2775, 3138, 2823]
+  same pattern at the other fee dates: Mar/Apr 2022 9,793/1,219; Jun/Jul 2023 6,203/1,541
+  heavy (>3,500 kg) vehicles in the 'light' universe: see verify_counts.out (36,295 diesel; ~37,300 total of 1,419,410)

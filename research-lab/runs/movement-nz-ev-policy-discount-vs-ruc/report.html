@@ -78,9 +78,9 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 <header class="masthead">
   <div class="eyebrow">Research Lab · Deep dive · The Energy Movement</div>
   <h1>Rebate or road charge? Separating two 2024 shocks to New Zealand&#x27;s EV uptake</h1>
-  <p class="subtitle">1.4 million first registrations of light vehicles, January 2021 to September 2026, from New Zealand&#x27;s Motor Vehicle Register, used to tell apart two policy changes three months apart: the end of the Clean Car Discount on 31 December 2023 and the arrival of road user charges for electric vehicles on 1 April 2024.</p>
+  <p class="subtitle">1.4 million first registrations of passenger cars, vans and utilities, January 2021 to September 2026, from New Zealand&#x27;s Motor Vehicle Register, used to tell apart two policy changes three months apart: the end of the Clean Car Discount on 31 December 2023 and the arrival of road user charges for electric vehicles on 1 April 2024.</p>
   <div class="meta">
-    <span>Report · 2026-10-20 · pre-review draft</span>
+    <span>Report · 2026-10-21 · pre-review draft</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/movement-nz-ev-policy-discount-vs-ruc/plan.md">Preregistration</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/movement-nz-ev-policy-discount-vs-ruc/deviations.md">Deviations log</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/movement-nz-ev-policy-discount-vs-ruc/code">Code</a>
@@ -124,18 +124,18 @@ confident answer, and the road-charge comparison is confounded as well as underp
 <h2>In plain terms</h2>
 <p>New Zealand ended its rebate for electric cars on 31 December 2023 and three months later started charging EV drivers
 road user charges. EV sales fell off a cliff. Which change did it?</p>
-<p>We counted every light vehicle registered in New Zealand from 2021 to September 2026, grouped by what powers it.</p>
+<p>We counted every car, van and ute registered in New Zealand from 2021 to September 2026, grouped by what powers it.</p>
 <p>The rebate's end is unmistakable. Plug-in vehicles went from about one registration in five in November 2023 to about
 one in twenty-five in February 2024. The road user charge left no mark we could find, but our way of looking for one
 was not good enough to rule an effect in or out.</p>
 <p>Some buyers rushed to register before the rebate ended, but probably well under half of the drop is explained that
-way: most of it was people not buying. The slump lasted about two years, and plug-in sales only started climbing back
-in 2026.</p>
+way: most of it was people not buying. The slump lasted about two years: plug-in sales edged up in 2025 and climbed
+back past their 2023 level in 2026.</p>
 <p>There is a neat check. The same law charged a fee on high-emission vehicles, ending on the same day. Diesel ute buyers
-did the opposite of EV buyers: they waited. Ute registrations fell to a quarter of normal in December 2023, then more
-than quadrupled in January. Same deadline, opposite incentive, opposite behaviour.</p>
-<p>A study published in September 2026 measured the rebate's end in a different way and reached similar conclusions about
-the fall and the early rush; ours adds the road-charge question and the 2026 recovery.</p>
+did the opposite of EV buyers: they waited. Ute registrations fell to a quarter of normal in December 2023, then rose
+seven-fold in January. Same deadline, opposite incentive, opposite behaviour.</p>
+<p>A preprint posted in September 2026, not yet peer-reviewed, measured the rebate's end in a different way and reached
+similar conclusions about the fall and the early rush; ours adds the road-charge question and the 2026 recovery.</p>
 <h2>What was asked</h2>
 <p>Two policy changes landed three months apart, and public debate attributes the EV slump to both. The study asks two
 preregistered questions (<code>plan.md</code>):</p>
@@ -147,15 +147,19 @@ preregistered questions (<code>plan.md</code>):</p>
 user charges, so they are a control for the road-charge shock, not for the rebate shock.</p>
 <h2>What was already known</h2>
 <p><strong>Hoang (2026)</strong>, a Research Square preprint from Victoria University of Wellington (doi:10.21203/rs.3.rs-11080967/v1,
-CC BY), estimates the Clean Car Discount's removal by regression discontinuity on weekly <em>new</em> registrations from
-December 2021 to December 2025. It reports a permanent fall of about 24.1 percentage points in battery-electric market
-share and documents 1,206 vehicles brought forward in the final eight weeks. It does not consider road user charges.
+CC BY; not yet peer-reviewed), estimates the Clean Car Discount's removal by regression discontinuity in time on
+weekly registrations from December 2021 to December 2025, by fuel type (including plug-in hybrids) and by new versus used
+import. It reports a permanent fall of about 24.1 percentage points in battery-electric market share and documents 1,206
+vehicles brought forward in the final eight weeks. It does not consider road user charges.
 The earlier draft of this study said only the preprint's title could be retrieved; its full text is openly available,
 and the draft's claim that no study had quantified the December 2023 pull-forward was wrong.</p>
 <p>What this study adds: the separation of the road-charge shock from the rebate shock, which the preprint does not
-attempt; first registrations including used imports, and plug-in hybrids alongside battery-electric vehicles; and data
+attempt; a combined battery-electric and plug-in hybrid treated group in a universe of cars, vans and utilities; and data
 to September 2026, which show the 2026 recovery after the preprint's window closes. Over the preprint's own window the
-two studies agree that there was no recovery.</p>
+two studies agree that there was no recovery. They differ in one respect: the preprint reports petrol and diesel
+registrations unaffected by the rebate's end, while at the deadline itself our monthly data show them deferred into
+January (10,337 in November, 5,499 in December, 14,489 in January). Its bunching window is also eight weeks, against
+December alone here.</p>
 <h2>How it was done</h2>
 <p><strong>Data.</strong> NZTA's Motor Vehicle Register through its ArcGIS service, which answers aggregation queries; counts were
 obtained grouped by month, motive power, import status and vehicle type, and no vehicle-level record was retrieved.
@@ -278,10 +282,10 @@ bootstrap (2,000 resamples).</p>
 </tbody>
 </table></div>
 <p>The preregistered log-linear baseline is the most aggressive extrapolation (it predicts 4,291 a month for early 2024,
-above the October–November actuals), so 0.09 is a lower end, not a central estimate. No baseline reaches 0.5; the
+above the October–November average of 4,156), so 0.09 is a lower end, not a central estimate. No baseline reaches 0.5; the
 review's alternative bootstraps put the probability of R ≥ 0.5 at 9–16%. <strong>H1 is Inconclusive</strong>, and the evidence
 leans against it through the break-even above.</p>
-<figure><a href="results/figures/F2_pullforward.png"><img src="results/figures/F2_pullforward.png" alt="Pull-forward"></a><figcaption>Monthly plug-in first registrations. The shaded span is the window the baseline was fitted on (January 2021 to September 2023, a linear trend with calendar-month effects); the December 2023 excess and the January-March 2024 shortfall are measured against that baseline projected forward. H1 asked whether the excess offsets at least half the shortfall.</figcaption></figure>
+<figure><a href="results/figures/F2_pullforward.png"><img src="results/figures/F2_pullforward.png" alt="Pull-forward"></a><figcaption>Monthly plug-in first registrations. The shaded span is the window the baseline was fitted on (January 2021 to September 2023, a linear trend with calendar-month effects); the December 2023 excess and the January-March 2024 shortfall are measured against that baseline projected forward. H1 asked whether the excess offsets at least half the shortfall. The ratio is 0.09 under the preregistered baseline and 0.09-0.46 across the alternatives in the report.</figcaption></figure>
 <h3>H2: no detectable road-user-charge effect, and a design that could not find one (<code>results/figures/F3_ruc_did.png</code>)</h3>
 <ul>
 <li><strong>Preregistered:</strong> +32% (−35% to +153%); Q = 0.16 (0.01 to 0.53). <strong>H2 is Inconclusive.</strong></li>
@@ -298,7 +302,7 @@ leans against it through the break-even above.</p>
   May–October 2024; excluding it moves the estimate from +32% to +41%.</li>
 <li><strong>On market shares</strong> rather than counts, the contrast is −1.7 percentage points, the opposite sign.</li>
 </ul>
-<figure><a href="results/figures/F3_ruc_did.png"><img src="results/figures/F3_ruc_did.png" alt="Road-user-charge difference-in-differences"></a><figcaption>Difference-in-differences: the change in plug-in registrations from January-March to May-October, minus the same change for non-plug hybrids, which were not moved to road user charges. April is excluded as a transition month. The 2024 estimate carries a block-bootstrap 95% interval; the placebo years use the identical windows on dates with no policy change.</figcaption></figure>
+<figure><a href="results/figures/F3_ruc_did.png"><img src="results/figures/F3_ruc_did.png" alt="Road-user-charge difference-in-differences"></a><figcaption>Difference-in-differences: the change in plug-in registrations from January-March to May-October, minus the same change for non-plug hybrids, which were not moved to road user charges. April is excluded as a transition month. The 2024 estimate carries a block-bootstrap 95% interval; the placebo years use the identical windows; those dates are not policy-free (1 April 2022 began the full Clean Car Discount, and rebate cuts took effect on 1 July 2023).</figcaption></figure>
 <h2>What this does and does not show</h2>
 <ul>
 <li><strong>It shows</strong> an abrupt fall in plug-in registrations at the rebate's end, most of it not explained by early

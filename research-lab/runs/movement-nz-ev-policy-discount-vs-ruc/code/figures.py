@@ -85,13 +85,14 @@ def main():
                 arrowprops=dict(arrowstyle="->", color=CCD, lw=0.9))
     ax.axvline(xc, color=CCD, lw=1.3, ls="--"); ax.axvline(xr, color=RUC, lw=1.3, ls=":")
     xticks(ax); ax.set_ylabel("plug-in first registrations a month"); ax.grid(axis="y", color=GRID, lw=0.5)
-    fig.suptitle(f"Pull-forward explains little of the collapse (ratio {p['H1']['R']:.2f})", x=0.1, ha="left",
+    fig.suptitle("Pull-forward explains under half of the collapse on every baseline tried", x=0.1, ha="left",
                  fontsize=10.5, color=INK)
     fig.savefig(F / "F2_pullforward.png", dpi=170); plt.close(fig)
     caption("F2_pullforward", """Monthly plug-in first registrations. The shaded span is the window the baseline was
     fitted on (January 2021 to September 2023, a linear trend with calendar-month effects); the December 2023 excess
     and the January-March 2024 shortfall are measured against that baseline projected forward. H1 asked whether the
-    excess offsets at least half the shortfall.""")
+    excess offsets at least half the shortfall. The ratio is 0.09 under the preregistered baseline and 0.09-0.46 across
+    the alternatives in the report.""")
 
     # F3
     pl = list(csv.DictReader(open(T / "placebos.csv")))
@@ -120,7 +121,8 @@ def main():
     caption("F3_ruc_did", """Difference-in-differences: the change in plug-in registrations from January-March to
     May-October, minus the same change for non-plug hybrids, which were not moved to road user charges. April is
     excluded as a transition month. The 2024 estimate carries a block-bootstrap 95% interval; the placebo years use
-    the identical windows on dates with no policy change.""")
+    the identical windows; those dates are not policy-free (1 April 2022 began the full Clean Car Discount, and rebate
+    cuts took effect on 1 July 2023).""")
     print("figures written")
 
 

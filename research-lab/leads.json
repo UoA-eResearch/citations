@@ -8418,11 +8418,16 @@
     "Document the rebate and RUC schedules used to define exposure."
    ],
    "risks": "Model launches and price cuts (e.g. Tesla, BYD) cluster in these months and can masquerade as policy effects; hybrid rebates were smaller than BEV rebates, so the hybrid comparison is imperfect; the register's first-registration month is the New Zealand first registration, which for used imports differs from sale timing.",
-   "plain_summary": "At the start of 2024 New Zealand ended its rebate for buying electric cars, and three months later started charging EV owners road-user charges. EV sales collapsed. We will use the public register of every vehicle to separate the two: how much of the fall was people buying early in December before the rebate ended, how much was losing the rebate, and how much the new road charges added.",
+   "plain_summary": "New Zealand ended its EV rebate on 31 December 2023 and started charging EV drivers road user charges three months later. We counted every car, van and ute registered from 2021 to September 2026. Plug-in vehicles went from about one registration in five to one in twenty-five when the rebate ended; the road charge left no mark we could find, though our test could not rule an effect in or out. Some buyers rushed to beat the deadline, but probably well under half the drop was that. The slump lasted about two years before plug-ins climbed back in 2026. Diesel ute buyers, facing a fee that ended the same day, did the opposite: they waited.",
    "local_relevance": "Directly bears on New Zealand transport-emissions policy, any future EV incentive design, and road-user charge settings.",
    "scout_value_score": 5,
    "scout_cost_score": 2,
-   "critic_note": "Open data confirmed (register snapshot, CC BY 4.0); exact column names should be checked at planning. Novelty: monthly shares are widely reported, but no separation of the two shocks was found. Value 5, cost 2. Identification depends on the hybrid comparison; preregister placebo dates."
+   "critic_note": "Open data confirmed (register snapshot, CC BY 4.0); exact column names should be checked at planning. Novelty: monthly shares are widely reported, but no separation of the two shocks was found. Value 5, cost 2. Identification depends on the hybrid comparison; preregister placebo dates.",
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass)",
+   "report_url": "runs/movement-nz-ev-policy-discount-vs-ruc/report.html",
+   "verdict_tag": "Inconclusive",
+   "verdict_note": "Inconclusive on both preregistered tests. 1.42 million first registrations of cars, vans and utilities (NZTA register, Jan 2021-Sep 2026). H1 (the Jan 2024 collapse was mostly pull-forward): ratio of the December 2023 excess to the Jan-Mar 2024 shortfall 0.09 under the preregistered baseline (-0.40 to 1.07), 0.09-0.46 across alternatives, never 0.5; a break-even (counterfactual <= 2,850/month vs 4,156 actually registered in Oct-Nov 2023) leans against it. H2 (road user charges did far less): plug-ins +32% relative to hybrids after 1 April 2024 (-35% to +153%), confounded by the rebound from the January trough; 18 of 38 placebo dates give a larger contrast. Plug-in share fell 19.5% to 4.1% (Nov 2023 to Feb 2024), averaged 6.6% through 2025 and recovered from March 2026.",
+   "headline": "New Zealand's plug-in slump followed the end of the Clean Car Discount, not road user charges, and most of it was buyers not buying rather than buying early; it lasted two years."
   },
   {
    "id": "movement-akl-crl-full-timetable-reliability",
