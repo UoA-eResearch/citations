@@ -32,3 +32,28 @@ By then:
 
 The direct CHIRP reader is kept, because it makes 3 small requests per pentad instead of whole-strip reads. Error
 rows are retried on resumption and are never read as values.
+
+## D2 — 2026-10-21 17:23 NZDT — after independent review
+
+An independent adversarial review (`review/review.md`) re-implemented the pipeline without importing the study's
+code and reproduced the primary results. Four changes followed, each re-run; both verdicts are unchanged.
+
+1. **No-estimate stations.** The plan's "masked" category (§3: CHIRPS has no estimate there) was implemented as
+   "every CHIRPS value empty", but the product fills cells without a climatology with near-zero values, not nodata.
+   At such a cell the blending gain is zero by construction. A station now counts as no-estimate if CHIRP averages
+   under 2 mm/pentad or under 10% of the gauge. The rule's thresholds were set after the review had identified the
+   affected stations; they fall in a clear gap (the nine stations caught sit at 0–6% of the gauge, the next lowest at
+   13% is a gauge error, item 2). Nine stations are caught: five Palau, Johnston, Lukunoch, Chuuk WSO AP, Woleai.
+   With them removed, the ratio is 0.12 (−0.16 to 0.40) and ΔKGE +0.046 (+0.017 to +0.074), against 0.10 and +0.034
+   in the draft.
+2. **Gauge plausibility.** The QC had no plausibility screen. A station-year whose gauge total exceeds five times the
+   satellite-only total is now dropped: Koumac 1981–2003 (about ten times too high) and 10 other station-years.
+3. **Shares** are now computed over station-months in which the gauge reported, with "ingested" at 10 km as well as
+   5 km, because 6.7% of Pacific entries in the input lists are rounded to 0.1°. The draft's "about a third" becomes
+   half to two-thirds, which strengthens the circularity finding.
+4. **Preregistered outputs** the draft computed or implied but did not report: the co-located ≤5 km case, the
+   per-country table and the countries that cannot be evaluated. The within-station contrast is added as a
+   post-review analysis; it addresses station selection directly.
+
+Wording: "tenfold" becomes "several-fold, at least threefold on the interval"; the label-resolution caveat now
+applies to H2 as well as H1.

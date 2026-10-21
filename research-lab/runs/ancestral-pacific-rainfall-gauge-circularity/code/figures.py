@@ -75,6 +75,11 @@ def main():
     station mean and its 95% station-block bootstrap interval. Left of the dashed line the satellite-only twin is better.""")
     # F3
     lab = pd.read_csv(RUN / "data" / "labels.csv")
+    # only station-months in which the gauge reported (D2): the draft counted every station x month, so a gauge that
+    # closed in 1998 kept contributing through 2025
+    daily = pd.read_csv(RUN / "data" / "gauge_daily.csv.gz", usecols=["station", "date", "prcp_mm"], parse_dates=["date"])
+    rep = set(zip(daily.dropna(subset=["prcp_mm"]).station, daily.dropna(subset=["prcp_mm"]).date.dt.strftime("%Y-%m")))
+    lab = lab[[(a, b) in rep for a, b in zip(lab.station, lab.ym)]].copy()
     lab["decade"] = lab.ym.str[:3] + "0s"
     lab["cls"] = np.where(lab.nearest_km <= 25, "supported", np.where(lab.nearest_km > 100, "independent", "intermediate"))
     sh = lab.groupby("decade").cls.value_counts(normalize=True).unstack().fillna(0)[["supported", "intermediate", "independent"]]
@@ -85,12 +90,12 @@ def main():
         bottom += sh[c].values
     for k, c in enumerate(sh.columns):
         ax.text(len(sh) - 0.55, sh.iloc[-1][: k + 1].sum() - sh.iloc[-1][c] / 2, c, va="center", fontsize=8.5, color=INK2)
-    ax.set_ylabel("share of gauge-months (all 148 stations)"); ax.set_ylim(0, 1)
+    ax.set_ylabel("share of reporting station-months"); ax.set_ylim(0, 1)
     fig.suptitle("How often a Pacific gauge has a CHIRPS input station nearby", x=0.1, ha="left", fontsize=10.5, color=INK)
     fig.savefig(F / "F3_label_shares.png", dpi=170); plt.close(fig)
     caption("F3_label_shares", """Share of station-months whose nearest CHIRPS input station that month is within 25 km
     (supported), 25-100 km (intermediate) or beyond 100 km (independent), by decade, from the CHIRPS monthly
-    stations-used lists, for all 148 GHCN-Daily Pacific stations whether or not they report.""")
+    stations-used lists, counting only months in which the GHCN-Daily gauge reported.""")
     print("figures written")
 
 
