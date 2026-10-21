@@ -4,9 +4,19 @@ Each of these is complete through a pre-review draft: preregistration, code, res
 reviewer brief in `runs/<id>/review/prompt.md`. None may be published to `leads.json`, `index.html`, the README or
 the Golden Quadrant artifact until it has been through an independent adversarial review and a confirmation pass.
 
-**Pacing (owner, 2026-10-21): one Fable review at a time, with a gap between them.** Three concurrent reviews
-exhausted a freshly reset quota within hours. Start one review, do the lab's own work while it runs, apply its
-fixes and send its confirmation pass, then start the next. A reviewer cut off by a limit is resumed, not relaunched.
+**Pacing (owner, 2026-10-21 18:30 NZDT): at most one Fable run per 5-hour period.** A run is a review or a
+confirmation pass; never two at once. The next run may start only 5 hours after the previous run started (see the
+log below). A reviewer cut off by a limit is resumed, not relaunched, and the resume counts as a run.
+
+### Fable run log (start times, NZDT)
+
+| start | study | run |
+|---|---|---|
+| 2026-10-21 ~17:52 | `frontier-eaa-accessibility-natural-experiment` | confirmation pass |
+| 2026-10-21 ~18:01 | `movement-nz-ev-policy-discount-vs-ruc` | confirmation pass |
+
+**Next Fable slot: not before 2026-10-21 23:05 NZDT.** Queue: (empty; next candidates are the phantom-citations and
+embedded-solar studies once their drafts are complete).
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
