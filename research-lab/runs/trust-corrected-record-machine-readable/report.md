@@ -141,6 +141,8 @@ This subsection is on the preregistered cohort of 18,061. The structured link do
 
 ### Where the marker is missing (`results/figures/F1_publishers.png`)
 
+![Unmarked share by publisher](results/figures/F1_publishers.png)
+
 | | documents | no marker of its own (D3) | sidecar flag not set |
 |---|---:|---:|---:|
 | Hindawi | 6,507 | 0.2% | 0.2% |
@@ -156,11 +158,15 @@ everything else.
 
 ### How fast (`results/figures/F2_latency.png`)
 
+![Marked share by months since retraction](results/figures/F2_latency.png)
+
 Of documents retracted in the 30 days before the snapshot, 84% carried an XML marker of their own and 83% the flag. In
 each later month up to six, 98–100% carried the marker and 97.6–100% the flag. This is a cross-section, not a
 follow-up of the same documents.
 
 ### The date problem (`results/figures/F3_date_source.png`)
+
+![Unmarked share by source of the retraction date](results/figures/F3_date_source.png)
 
 In the cohort as preregistered:
 
@@ -204,6 +210,8 @@ In the cohort as preregistered:
 509 author manuscripts in the preregistered cohort: 5.9% unmarked, against 2.3% for publisher versions.
 
 ### peS2o: the marker after derivation (`results/figures/F4_pes2o.png`)
+
+![The same papers in PMC and in peS2o](results/figures/F4_pes2o.png)
 
 peS2o v2 (Allen Institute; knowledge cutoff 2023-01-03) was streamed in full: 38,972,211 documents, 22 shards.
 

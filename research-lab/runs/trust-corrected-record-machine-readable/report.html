@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Retraction Markers</title>
+<meta name="description" content="Do retracted papers carry a machine-readable retraction marker in the PubMed Central Open Access files, and in peS2o, an open pretraining corpus derived from them?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Advancing Trust in Knowledge</div>
+  <h1>Does the corrected record reach the machines? PubMed Central marks almost every retracted article in its own files; the same papers in peS2o, an open pretraining corpus, mostly lose the marker</h1>
+  <p class="subtitle">Source: the PMC Open Access bucket on AWS, as listed on 21 October 2026. Since August 2026 it is the only distribution channel for PubMed Central&#x27;s Open Access subset. It was joined to the union of four retraction registries: Retraction Watch, Crossref, PubMed and OpenAlex. Every retracted document&#x27;s XML, plain text and metadata sidecar was read for a machine-readable retraction marker. A secondary arm looks at peS2o, an open pretraining corpus derived from Semantic Scholar. This version incorporates an independent review (`review/review.md`; changes logged as D5).</p>
+  <div class="meta">
+    <span>Report · 2026-10-23 · revised after independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/trust-corrected-record-machine-readable/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/trust-corrected-record-machine-readable/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/trust-corrected-record-machine-readable/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: Refuted for the source corpus.</strong></p>
+<p>The lead's hypothesis was that most retracted articles in open full-text corpora carry no machine-readable marker. In
+the PMC bucket the opposite holds. One step downstream the hypothesis holds for the same papers: of 3,235 retracted
+papers that are in both PMC and peS2o, PMC's files mark 95.7%, and peS2o's text marks 9.1%.</p>
+<ul>
+<li><strong>H1 (more than 50% of retracted articles are unmarked in the distributed XML): Refuted.</strong><ul>
+<li>1.9% are unmarked (95% interval 1.0–3.3%), over 17,649 documents in 1,458 journals retracted at least 180 days
+before the snapshot.</li>
+<li>With the D3 fix (links on <em>cited</em> works no longer count), 2.2% (1.1–4.1%) are unmarked.</li>
+<li>As first computed, with 412 documents that have no real retraction date still in the cohort, the figure was
+2.4% (1.1–4.7%). D5 moved those 412 to the undated stratum.</li>
+</ul>
+</li>
+<li><strong>H2 (PMC's own <code>is_retracted</code> flag covers at least 90%): Supported.</strong> 96.9% (94.9–98.2%).</li>
+<li><strong>H3 (the plain-text rendition loses at least 5 points of markers relative to the XML): Refuted.</strong> 0.8 points
+  (0.4–1.3). PMC writes "RETRACTED ARTICLE" into the header of the text file itself.</li>
+<li><strong>Where the corrected record does not reach.</strong><ul>
+<li>382 dated retracted documents (2.2%) carry neither a marker of their own nor PMC's flag. They concentrate at Cell
+Press (18% of 788) and Elsevier (13% of 332).</li>
+<li>119 more are among the 412 undatable documents, which are mostly Elsevier.</li>
+</ul>
+</li>
+<li><strong>Markers arrive fast.</strong> Of articles retracted in the last 30 days before the snapshot, 84% were already marked.
+  After the first month the figure is 98–100%.</li>
+<li><strong>peS2o (secondary).</strong> peS2o v2 holds 17,416 matched retracted papers. 47.2% of them say so in their text, a lower
+  bound.<ul>
+<li><strong>The marked share is high only because of IEEE.</strong> Three-quarters of the marked documents are IEEE's 2009–2011
+retractions, whose records are retitled "Notice of Retraction" (title and abstract only). Without IEEE, 19.0% are
+marked.</li>
+<li><strong>Full text:</strong> 12.5% marked.</li>
+<li><strong>The same papers as PMC:</strong> 9.1% marked.</li>
+</ul>
+</li>
+<li><strong>Correction after review.</strong> The draft reported 12% for peS2o, because its pattern missed "Notice of Retraction"
+  when run into the title. The draft also reported a staleness effect that does not exist.</li>
+</ul>
+<h2>In plain terms</h2>
+<p>When a scientific paper is retracted, the publisher posts a notice, and the paper is supposed to be flagged everywhere
+it appears. A worry behind this study is that the copies used to build AI search tools and to train language models
+never get the flag, so a model keeps treating withdrawn research as sound.</p>
+<p>We checked this at PubMed Central's Open Access collection, the biggest open source of full-text biomedical papers and
+what most open AI pipelines download. We looked at about 18,000 papers retracted at least six months earlier:
+- 98% carried a marker in the file itself, almost always a structured link from the paper to its retraction notice;
+- PubMed Central's own "retracted" flag covered 97%;
+- even the plain-text version is labelled "RETRACTED ARTICLE" at the top;
+- new retractions are marked within about a month.</p>
+<p>So the lead's claim that most retracted papers go unmarked is false for this source.</p>
+<p>The gap at the source is small but real: about 400 retracted papers had no marker and no flag, about half of them
+from Elsevier and Cell Press journals. The bigger problem is one step downstream. In peS2o, an open dataset built from the
+same kinds of papers to train language models, the copies of PubMed Central's retracted papers almost never say they
+were retracted: about one in eleven do, against 96 in 100 at the source. The markers are there, but the pipeline that
+built peS2o did not keep them.</p>
+<h2>What was asked</h2>
+<p>The lead (<code>trust-corrected-record-machine-readable</code>, Advancing Trust in Knowledge) proposed that, in the open full-text
+corpora that retrieval-augmented generation (RAG) and pretraining pipelines ingest, more than half of the documents
+retracted by the freeze date carry no machine-readable retraction marker in the file as distributed.</p>
+<p><strong>Prior work</strong> compared retraction flags across bibliographic databases (Ortega &amp; Delgado-Quirós 2024; Schneider et
+al. 2023; Hauschke &amp; Nazarovets 2025). Propagation from Retraction Watch to Crossref and OpenAlex was being measured
+(Lux 2026). Nobody had measured the marker inside the full-text files themselves.</p>
+<p>The plan (<code>plan.md</code>, committed before any file was fetched) set three tests:
+- <strong>H1:</strong> more than 50% of the primary cohort unmarked in the XML. Supported if the interval's lower bound exceeds
+  50%; Refuted if its upper bound is below 50%.
+- <strong>H2:</strong> PMC's sidecar flag covering at least 90%.
+- <strong>H3:</strong> the XML marked at least 5 points more often than the text.</p>
+<p><strong>Scope changes, made before any data were seen:</strong>
+- the lead's RAG testbed was dropped, because it needs the shared GPU;
+- Europe PMC was not treated as a separate corpus, because its Open Access full text is built from the same XML.</p>
+<h2>How it was done</h2>
+<ul>
+<li><strong>Snapshot.</strong> The bucket's daily inventory of 21 October 2026 lists 9,273,077 PMCIDs. For each, the latest version
+  was taken.</li>
+<li><strong>Registry.</strong> Four layers, fetched on 22 October 2026:<ul>
+<li>Retraction Watch: 67,896 retractions, with reinstated papers dropped;</li>
+<li>the targets of Crossref retraction assertions: 113,832;</li>
+<li>PubMed's "Retracted Publication": 35,195;</li>
+<li>OpenAlex's <code>is_retracted</code>: 137,044.</li>
+</ul>
+</li>
+</ul>
+<p>These were matched to PMC by PMID, else DOI, through NCBI's PMC-ids file.
+- <strong>Exclusions.</strong>
+    - Retraction notices themselves, by identifier and by XML <code>article-type</code> = retraction (162). OpenAlex flags notices
+    as retracted, so 20,354 OpenAlex-only entries were excluded as notices.
+    - A first version of the rule also excluded originals whose registry entry reuses the original's own identifier
+    for the notice: 29,611 Crossref self-updates, and Retraction Watch rows giving the original's DOI or PMID as the
+    notice's. This was corrected before any file was read (D1).
+    - <strong>Contamination left in.</strong> 73 primary documents (0.4%) are notices or retracted corrigenda that the type check
+    let in: corrections, a JBC "Withdrawal:" typed as a correction, and two "Retraction and republication" notices.
+    98% of them count as marked, and excluding them moves the D3 unmarked share (preregistered cohort) from 2.77% to 2.79% (review, finding
+    5).
+- <strong>Cohort.</strong> 17,649 documents retracted on or before 24 April 2026 (180 days before the snapshot), dated by Retraction
+  Watch, else by a separate Crossref retraction notice.
+    - <strong>Latency set:</strong> 1,106 retracted in the last 180 days.
+    - <strong>Undated:</strong> 1,142 documents. These are 730 dated by neither source (PubMed-only or OpenAlex-only), plus 412 whose
+    only "date" is a Crossref self-update, which carries the issue date rather than a retraction date (D4, D5).
+- <strong>Markers</strong> (code committed before any file was parsed):
+    - <strong>Structured JATS:</strong> a <code>related-article</code> of a retraction type; <code>notes</code>, <code>custom-meta</code>, a <code>pub-history</code> event or
+    an <code>article-version</code> naming retraction.
+    - <strong>Textual:</strong> a title beginning "Retracted", "Retraction" or "Withdrawn"; a retraction statement; the token
+    "RETRACTED".
+    - <strong>Plain text:</strong> the textual rules.
+    - <strong>Sidecar:</strong> <code>is_retracted</code>.
+- <strong>Intervals.</strong> A cluster bootstrap over journals, 2,000 resamples.
+    - The cluster key is the ISSN found first in the XML. 24 journals are split across print and electronic ISSNs.
+    - Alternative keys give the same picture: journal name 1.4–4.9%, publisher 1.0–6.9%, against 1.2–5.7% for the D3
+    share in the first cut.
+- <strong>Validation, by the study's AI agent:</strong>
+    - (a) 100 documents, stratified by the detector's verdict, labelled from the title, the front-matter elements and
+    every passage matching retract or withdraw (selected by regular expression, not the full XML). This check is
+    therefore not independent of the detector's vocabulary.
+    - (b) 50 unmarked documents checked against Crossref and Retraction Watch for a real retraction.</p>
+<h2>Results</h2>
+<p>The figures below are for the D5 cohort of 17,649 documents unless stated.</p>
+<h3>What the markers are</h3>
+<p>This subsection is on the preregistered cohort of 18,061. The structured link does nearly all the work: 95.6% of the preregistered cohort carry a <code>related-article</code> of type
+<code>retraction-forward</code> pointing to the notice, outside the reference list (D3).
+- <strong>How PMC adds it.</strong> The link is added when the notice is deposited, and PMC rewrites the article's files in place
+  (D2). 18,060 of the 18,061 cohort sidecars, version 1 included, were last modified after the retraction; the
+  exception is PMC8736302. 99% of the cohort is still at version 1.
+- <strong>Text markers.</strong> A title prefix ("RETRACTED:", "RETRACTED ARTICLE:", "Retracted:") appears in 9.6% of documents,
+  and a retraction statement in 13.6%. Only 1.5% are marked by text alone.
+- <strong>Flag and header.</strong> PMC's sidecar flag and the "RETRACTED ARTICLE" header of the text file are the same piece of
+  PMC metadata. Neither appears on a document without an XML marker. 356 documents carry an XML marker without the
+  flag.</p>
+<h3>Where the marker is missing (<code>results/figures/F1_publishers.png</code>)</h3>
+<figure><a href="results/figures/F1_publishers.png"><img src="results/figures/F1_publishers.png" alt="Unmarked share by publisher"></a><figcaption>Primary cohort (17,649 retracted documents in the PMC Open Access bucket, retracted at least 180 days before the 2026-10-21 snapshot), by publisher as named by Retraction Watch or the XML. Blue: no retraction marker in the document&#x27;s own XML (reference lists ignored, withdrawal wording counted; D3). Orange: PMC&#x27;s sidecar flag is_retracted not set. Counts in brackets.</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align: right;">documents</th>
+<th style="text-align: right;">no marker of its own (D3)</th>
+<th style="text-align: right;">sidecar flag not set</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hindawi</td>
+<td style="text-align: right;">6,507</td>
+<td style="text-align: right;">0.2%</td>
+<td style="text-align: right;">0.2%</td>
+</tr>
+<tr>
+<td>Wiley</td>
+<td style="text-align: right;">1,638</td>
+<td style="text-align: right;">1.2%</td>
+<td style="text-align: right;">2.2%</td>
+</tr>
+<tr>
+<td>PLOS</td>
+<td style="text-align: right;">1,350</td>
+<td style="text-align: right;">0%</td>
+<td style="text-align: right;">0%</td>
+</tr>
+<tr>
+<td>Elsevier – Cell Press</td>
+<td style="text-align: right;">788</td>
+<td style="text-align: right;">17.6%</td>
+<td style="text-align: right;">17.6%</td>
+</tr>
+<tr>
+<td>Springer – Nature</td>
+<td style="text-align: right;">717</td>
+<td style="text-align: right;">2.1%</td>
+<td style="text-align: right;">4.9%</td>
+</tr>
+<tr>
+<td>Elsevier</td>
+<td style="text-align: right;">332</td>
+<td style="text-align: right;">13.0%</td>
+<td style="text-align: right;">32.2%</td>
+</tr>
+<tr>
+<td>Springer</td>
+<td style="text-align: right;">306</td>
+<td style="text-align: right;">8.5%</td>
+<td style="text-align: right;">21.9%</td>
+</tr>
+</tbody>
+</table></div>
+<p>The mass Hindawi retractions of 2023 are almost all marked: 0.2% unmarked (0.07–0.5%), against 3.3% (1.6–5.9%) for
+everything else.</p>
+<h3>How fast (<code>results/figures/F2_latency.png</code>)</h3>
+<figure><a href="results/figures/F2_latency.png"><img src="results/figures/F2_latency.png" alt="Marked share by months since retraction"></a><figcaption>Share of retracted documents marked, by whole months between the retraction date and the snapshot (cross-sectional: each point is a different set of documents). Months 0-5 are the documents retracted in the 180 days before the snapshot; the last point is the primary cohort. Dates are Retraction Watch&#x27;s, else Crossref&#x27;s.</figcaption></figure>
+<p>Of documents retracted in the 30 days before the snapshot, 84% carried an XML marker of their own and 83% the flag. In
+each later month up to six, 98–100% carried the marker and 97.6–100% the flag. This is a cross-section, not a
+follow-up of the same documents.</p>
+<h3>The date problem (<code>results/figures/F3_date_source.png</code>)</h3>
+<figure><a href="results/figures/F3_date_source.png"><img src="results/figures/F3_date_source.png" alt="Unmarked share by source of the retraction date"></a><figcaption>The cohort as preregistered, by the source of the retraction date. Crossref self-updates (the article&#x27;s own record asserts its retraction; mostly Elsevier) carry the issue date, not the retraction date (D4); D5 moves these 412 documents to the undated stratum.</figcaption></figure>
+<p>In the cohort as preregistered:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>date source</th>
+<th style="text-align: right;">unmarked (D3 measure)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Retraction Watch</td>
+<td style="text-align: right;">1.9%</td>
+</tr>
+<tr>
+<td>a separate Crossref notice</td>
+<td style="text-align: right;">4.8%</td>
+</tr>
+<tr>
+<td>a Crossref self-update only (412 documents, mostly Elsevier)</td>
+<td style="text-align: right;">28.9%</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>What a self-update date is.</strong> In a self-update, the article's own Crossref record asserts the retraction, and the
+  date it carries is the article's issue date.</li>
+<li><strong>The review's check.</strong> It looked at 15 of these documents. On all 15, the date equals the issue month. Ten are
+  Heliyon records with a 2026 erratum and a 2026 deposit, so they were probably retracted recently and are latency,
+  not failure. Four were deposited in 2024–25 with no erratum, so some are genuine old misses.</li>
+<li><strong>D5</strong> treats all 412 as undatable. In the undated stratum, which now holds 1,142 documents, 16.6% carry no
+  marker of their own.</li>
+</ul>
+<h3>Validation</h3>
+<ul>
+<li><strong>(a) Detector.</strong><ul>
+<li>Of 50 documents the detector marked, 49 were marked. The one false positive was a retraction link on a <em>cited</em>
+work in the reference list; PMC flags retracted references this way.</li>
+<li>Of 50 it left unmarked, 47 were unmarked. Two of the three "misses" (A-009 and A-038) are themselves withdrawal
+notices that the type check let into the cohort. The third is a withdrawal statement ("has been withdrawn").</li>
+<li>Corrected across the whole cohort, 75 documents had been marked only through their references, and withdrawal
+wording adds 9 (D3).</li>
+</ul>
+</li>
+<li><strong>(b) Registry.</strong> Of 50 unmarked documents, 43 were real retractions or withdrawals, and one was unclear. Six were
+  not retractions of the document in question:<ul>
+<li>one linked by Crossref to a withdrawn erratum of another paper (B-030);</li>
+<li>one linked to the erratum of its own paper, which Elsevier deposited as a retraction of ten papers (B-011);</li>
+<li>a republished version flagged by its predecessor's retraction;</li>
+<li>a corrigendum's retraction;</li>
+<li>an earlier duplicate's withdrawal;</li>
+<li>a withdrawal notice itself.</li>
+</ul>
+</li>
+</ul>
+<p>If about 12% of the unmarked are registry errors, the unmarked share among true retractions is about 2.4% in the
+  preregistered cohort, rather than 2.8%.</p>
+<h3>Author manuscripts</h3>
+<p>509 author manuscripts in the preregistered cohort: 5.9% unmarked, against 2.3% for publisher versions.</p>
+<h3>peS2o: the marker after derivation (<code>results/figures/F4_pes2o.png</code>)</h3>
+<figure><a href="results/figures/F4_pes2o.png"><img src="results/figures/F4_pes2o.png" alt="The same papers in PMC and in peS2o"></a><figcaption>Top two bars: the 3,235 retracted papers (retracted on or before 2022-07-07, not notices) that are both in the PMC Open Access snapshot and in peS2o v2 (knowledge cutoff 2023-01-03): the share whose PMC XML carries its own retraction marker, and the share whose peS2o text does. Bottom two: all 17,416 matched peS2o documents by source, under the D5 rule (the study rule plus &quot;notice of retraction&quot; run into the title, as peS2o renders IEEE&#x27;s retitled records). The full-text documents come largely from PMC; the title-and-abstract share is high because of IEEE&#x27;s 2009-2011 retractions.</figcaption></figure>
+<p>peS2o v2 (Allen Institute; knowledge cutoff 2023-01-03) was streamed in full: 38,972,211 documents, 22 shards.</p>
+<ul>
+<li><strong>Matching.</strong> 36,894 dated registry DOIs retracted on or before 2022-07-07 (notices excluded under the D1 rule) were
+  mapped to Semantic Scholar corpus ids through the public Graph API. 35,024 had an id, and 17,416 of these are in
+  peS2o: 4,375 full text (s2orc) and 13,041 title and abstract (s2ag).</li>
+<li><strong>Markers.</strong> The plain-text rules of §2 apply, with D5's fix: "notice of retraction" is also matched when run into
+  the following title ("Notice of RetractionThe Effects of…"), as peS2o renders IEEE's retitled records.<ul>
+<li>47.2% of matched documents are marked: 58.9% of title-and-abstract records and 12.5% of full texts.</li>
+<li>6,160 of them are marked only through the run-together notice, nearly all with DOI prefix 10.1109 (IEEE).</li>
+<li>The draft's rule, without the fix, found 11.9%. The broader sensitivity rule ("retract" anywhere in the first
+line) finds 47.4%.</li>
+</ul>
+</li>
+<li><strong>By retraction year.</strong> Most of the marked share is IEEE's 2009–2011 retractions: 74% of the 738 retracted in 2009,
+  89% of 2,174 in 2010 and 91% of 3,688 in 2011. From 2014 on, 15–33% of each year's retractions are marked.</li>
+<li><strong>The same papers in PMC (the downstream test).</strong> 3,235 matched documents are also in the PMC snapshot and are not
+  notices. PMC's own files mark 95.7% of them. Their peS2o text marks <strong>9.1%</strong>: 9.2% of the 2,957 full texts and 8.3%
+  of the 278 title-and-abstract records. Outside the PMC registry, peS2o marks 59.3%.<ul>
+<li><strong>Dating.</strong> The peS2o registry still dates 166 matched documents (1.0%, mostly Elsevier) by a Crossref
+self-update, the date D5 treats as undatable in the PMC arm. Some may have been retracted after peS2o's cutoff.
+Excluding them moves the whole-set share from 47.2% to 47.6%, and the overlap from 95.7% / 9.1% to 96.2% / 9.1%
+(n 3,132; confirmation pass, <code>review/reviewer_checks/confirm_pes2o.py</code>).</li>
+<li><strong>Two undated documents.</strong> 2 of the 3,235 overlap documents are undated in the PMC arm. Without them the figures
+are 95.8% / 9.1%.</li>
+<li><strong>Added after retraction.</strong> Within the overlap, documents that entered peS2o after their retraction are marked
+6.4% of the time, against 10.1% for those added before (confirmation pass). A paper ingested after its retraction
+did not bring the marker with it.</li>
+</ul>
+</li>
+<li><strong>Staleness: no evidence either way.</strong> Semantic Scholar's "added" date is mostly its 2017–18 bulk ingest, so whether
+  a paper was added before or after its retraction is confounded with retraction year. Within retractions from 2015
+  on, papers added after their retraction are marked 19.9% of the time (n 2,305), and those added before 20.5%
+  (n 6,281).</li>
+<li><strong>Lower bound.</strong> These counts are a lower bound on unmarked retracted content in peS2o: unmatched DOIs and silent
+  retractions are not counted.</li>
+</ul>
+<h3>The overlay</h3>
+<p><code>results/overlay/retraction_overlay.csv.gz</code> is the released overlay.
+- <strong>Contents.</strong> It holds 22,174 PMC documents in the union registry, with their layers, the retraction date and its
+  source. For the 19,898 that are in the snapshot, it also records what their own files say.
+- <strong>Its use.</strong> 619 snapshot documents have neither a marker of their own nor PMC's flag. For those, the overlay is the
+  only machine-readable record of the retraction in this corpus.
+- <strong>Rebuild:</strong> <code>registry.py</code> → <code>match.py</code> → <code>fetch.py</code> → <code>analysis.py parse</code> → <code>sensitivity_d3.py</code> → <code>overlay.py</code>.</p>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>The lead's premise fails at the source.</strong> PMC marks retracted articles inside the distributed files: in the
+  structure (a JATS link), in its own metadata flag, and in the text header. A pipeline that reads PMC XML or text
+  and looks for the marker can find it for about 98% of retracted articles.</li>
+<li><strong>But "can find" is not "does find", and peS2o shows the difference.</strong><ul>
+<li>The same retracted papers that PMC marks 96% of the time carry a marker in peS2o's text 9% of the time.</li>
+<li>The marker is a <code>related-article</code> element and a header line, and a pipeline that strips front matter or keeps
+body text discards both.</li>
+<li>This study measured one derived corpus, not every pipeline.</li>
+</ul>
+</li>
+<li><strong>The high peS2o share is mostly IEEE.</strong> It reflects IEEE's practice of retitling its retracted records. It does
+  not show that peS2o keeps markers in general.</li>
+<li><strong>Snapshots age.</strong> PMC rewrites files in place (D2), so a corpus copied from the bucket before an article's
+  retraction keeps the unmarked file. This study saw the bucket as it was on 22 October 2026 and cannot see older
+  copies.</li>
+<li><strong>Conditional on the registry.</strong> Silent retractions are invisible here. Among sampled unmarked documents, about 12%
+  were not retractions of that document.</li>
+<li><strong>AI adjudication.</strong> Both validations were done by the study's AI agent, which also wrote the detector. The
+  independent review re-read 16 of the 8a items and checked the 8b labels on Crossref, and found every label correct.</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration:</strong> <code>plan.md</code>. Novelty search on 22 October 2026.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>):<ul>
+<li>D1: self-referencing notice identifiers, fixed before any file was fetched.</li>
+<li>D2: files rewritten in place; local copies hashed in <code>snapshot_files_sha256.csv.gz</code>.</li>
+<li>D3: reference-list links and withdrawal wording. This is a sensitivity analysis; the preregistered figures are
+kept.</li>
+<li>D4: Crossref self-update dates.</li>
+<li>D5: the changes after the independent review:<ul>
+<li>the peS2o rule for run-together notices;</li>
+<li>the staleness, by-year and downstream analyses, moved into committed code (<code>pes2o_secondary.py</code>);</li>
+<li>the self-update-dated documents moved to the undated stratum (<code>post_review.py</code>);</li>
+<li>notice contamination and the validation wording.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>The preregistered H1–H3 values on the first cohort (<code>primary.json</code>) remain in the record. No verdict depends on a
+  deviation.
+- <strong>Independent review:</strong> Fable, 2026-10-23, "fix first" (<code>review/review.md</code>). The PMC arm was reproduced; the peS2o
+  arm was not. The fixes are in this version, and a confirmation pass follows.</p>
+<h2>Reproducing it</h2>
+<ol>
+<li><strong>Registry and corpus:</strong> <code>code/registry.py</code>, <code>code/snapshot.py</code>, <code>code/match.py</code>, <code>code/fetch.py</code>.</li>
+<li><strong>Analysis:</strong> <code>code/analysis.py parse</code> and <code>run</code>; <code>code/validation.py sheets</code> and <code>score</code> (labels in
+   <code>data/validation/</code>); <code>code/sensitivity_d3.py</code>, <code>code/sensitivity_d4.py</code>, <code>code/overlay.py</code>.</li>
+<li><strong>Post-review headline:</strong> <code>code/post_review.py</code> (→ <code>results/tables/primary_d5.json</code>).</li>
+<li><strong>peS2o:</strong> <code>code/pes2o.py</code>, then <code>code/pes2o_secondary.py</code> (→ <code>pes2o_secondary.json</code>).</li>
+<li><strong>Figures:</strong> <code>code/figures.py</code>.</li>
+</ol>
+<p>The Python environment is in <code>venv/</code> (pandas, lxml, pyarrow, matplotlib).</p>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/trust-corrected-record-machine-readable/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>
