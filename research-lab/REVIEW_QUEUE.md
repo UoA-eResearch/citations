@@ -17,8 +17,9 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-21 23:06 | `energy-nz-embedded-solar-edb-demand` | review |
 | 2026-10-22 04:07 | `energy-nz-embedded-solar-edb-demand` | confirmation pass |
 | 2026-10-22 09:08 | `energy-nz-intermittent-curtailment-ledger` | review |
+| 2026-10-22 14:13 | `energy-nz-intermittent-curtailment-ledger` | confirmation pass |
 
-**Next Fable slot: not before 2026-10-22 14:09 NZDT.** Queue: 1. curtailment confirmation (revision 2c2a8b1).
+**Next Fable slot: not before 2026-10-22 19:13 NZDT.** Queue: 1. curtailment confirmation (running, started 14:13).
 2. phantom-citations review (draft 09c9990). 3. retraction markers review (draft 72af844).
 4. DSI origin (limb 2 in progress).
 
