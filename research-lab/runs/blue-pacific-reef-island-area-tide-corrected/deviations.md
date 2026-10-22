@@ -146,3 +146,21 @@ The screen now uses a physical test instead:
   - MNDWI at 0: 1.6% and 23% (at 30 m, mixed shoreline pixels often keep a small islet's MNDWI above 0, and that
     series is a sensitivity analysis only).
 - The median Sentinel-2-to-OSM area ratio among retained islets is 1.14 (10th–90th percentile 0.93–1.98).
+
+## D6 — 2026-10-23 01:13 NZDT — the guard's minimum span (AFTER the first full rates run)
+
+**This change was made after seeing the first run's output.** That run (`logs/rates.log`, first version) gave:
+- the sensor-step guard: **0 islets**, so H1 read "not testable";
+- H1 without the guard: D = +0.15%/yr (−0.52 to +0.86), Inconclusive;
+- H2: Supported.
+
+**The fault.** The plan requires rates to rest on at least 20 usable scenes spanning at least 6 years. That is right
+for the epochs (17 and 10 years), and it was satisfiable in the plan's guard window, 2016–2023: 6 of 8 years. D1 cut
+the guard window to 2016–2021, because Collection 1 ends in 2021. Sentinel-2 over these atolls starts in late 2015 or
+2016, so a 6.0-year span became impossible and every islet dropped out of the guard. D1 did not notice this.
+
+**The change.** The guard requires a span of at least 4.5 years, which is 75% of its 6-year window, the same share as
+the plan's 6 of 8. The 20-scene minimum and everything else are unchanged.
+
+**Why the change cannot pick the verdict.** H1 without the guard is already Inconclusive. The guard can therefore
+only decide between "not testable" and "Inconclusive". The report gives both readings.

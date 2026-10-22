@@ -27,7 +27,7 @@ from inventory import ATOLLS  # noqa: E402
 RUN = Path(__file__).resolve().parents[1]
 T = RUN / "results" / "tables"
 SEED, B = 20261022, 2000
-MIN_SCENES, MIN_SPAN = 20, 6.0
+MIN_SCENES, MIN_SPAN, GUARD_MIN_SPAN = 20, 6.0, 4.5      # D6: the guard window is 2016-2021
 
 
 def load_areas():
@@ -122,7 +122,7 @@ def theil_sen(t, y):
     return float(np.median((y[j] - y[i])[m] / dt[m])) if m.any() else np.nan
 
 
-def islet_rate(df, col, ref_m2, robust=False):
+def islet_rate(df, col, ref_m2, robust=False, min_span=MIN_SPAN):
     """(rate %/yr corrected, rate %/yr uncorrected, tide slope m2/m, n, span) for one islet's series. D3: the Theil-Sen
     slope is taken on area in m2 and expressed as a percentage of one sensor-independent reference, the islet's OSM
     area, so that Landsat's mixed-pixel inflation of absolute area does not rescale its rates."""
@@ -131,7 +131,7 @@ def islet_rate(df, col, ref_m2, robust=False):
         return None
     t = (d.time.dt.year + (d.time.dt.dayofyear - 1) / 365.25).to_numpy()
     span = t.max() - t.min()
-    if span < MIN_SPAN:
+    if span < min_span:
         return None
     y, h = d[col].to_numpy(float), d.level_m.to_numpy(float)
     if robust:
@@ -199,7 +199,8 @@ def main():
                 continue
             for islet, g in d.groupby("islet"):
                 for robust in ((False, True) if (fam in ("E1", "E2") and col == "area_otsu") else (False,)):
-                    r = islet_rate(g, col, inv.area_ha[islet] * 1e4, robust=robust)
+                    r = islet_rate(g, col, inv.area_ha[islet] * 1e4, robust=robust,
+                                   min_span=GUARD_MIN_SPAN if fam.startswith("guard") else MIN_SPAN)
                     if r:
                         rows.append({"islet": islet, "atoll": inv.atoll[islet], "area_ha": inv.area_ha[islet],
                                      "engineered": int(inv.engineered[islet]), "possible_loss": int(islet in loss),
