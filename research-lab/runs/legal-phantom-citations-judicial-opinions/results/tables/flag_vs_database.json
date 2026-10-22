@@ -1,5 +1,14 @@
 {
- "flag_opinions": 45,
- "in_database": 26,
- "not_in_database": 19
+ "flag_opinions": 43,
+ "clusters": 43,
+ "in_database_by_cluster": 26,
+ "in_database_by_cluster_or_name": 41,
+ "found_by_hand": {
+  "10772904": "Zaykariya v. Freedom Mortgage Corporation (W.D. Okla., 2026-01-09)",
+  "10808040": "Bolden v. Baltimore Gas & Electric Co (In re: Eric Chibueze Nwaubani) (4th Cir., 2026-03-11)"
+ },
+ "in_database_total": 43,
+ "not_in_database": 0,
+ "us_incidents_in_window": 1532,
+ "note": "automatic: cluster match or a date-free caption match at the matcher's threshold; the rest checked by hand against the database"
 }

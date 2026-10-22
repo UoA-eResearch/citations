@@ -29,7 +29,7 @@ def main():
     vol = json.load(open(S / "volumes.json"))
     prep = json.load(open(T / "prepare_summary.json"))
     ver = list(csv.DictReader(open(S / "verified.csv")))
-    flag_ops = {(v["opinion_id"]) for v in ver if v["verdict"] == "phantom" and v["type"] == "flag"}
+    flag_ops = {(v["opinion_id"]) for v in ver if v["verdict"] == "phantom-flag"}          # D9 vocabulary
     rel_ops = {(v["opinion_id"]) for v in ver if v["verdict"] == "phantom" and v["type"] == "reliance"}
     steps = [("full case citations", vol["full_citations"]), ("phantom candidates", vol["candidates"]),
              ("in complete reporter-volumes", prep["kept"]),
@@ -62,9 +62,11 @@ def main():
     fig.suptitle("Opinions in which a court flags a nonexistent citation, by quarter", x=0.02, ha="left", fontsize=10.5, color=INK)
     fig.savefig(F / "F2_flagged_by_quarter.png", dpi=170); plt.close(fig)
     caption("F2_flagged_by_quarter", """Opinions on the flag sheets (context words such as sanction, fictitious,
-    non-existent, AI) in complete reporter-volumes, verified in full: those in which the court identifies a cited case
-    as nonexistent. 45 in 2023 to September 2026; none in 2019-2022 (116 flag-sheet opinions verified). Counts are
-    limited to citations into complete reporter-volumes, so they are a floor.""")
+    non-existent, AI) in complete reporter-volumes, verified in full: those in which the court itself identifies a cited
+    case as nonexistent (D9). 43 from 2023 to September 2026, plus 2 in which the court only reports a party's
+    assertion (not drawn). None in 2019-2022 among the 116 flag-sheet opinions verified; two placebo-period courts
+    flagged litigants' miscited real cases. Counts are limited to citations into complete reporter-volumes, so they
+    are a floor; all 43 are already in the AI Hallucination Cases database.""")
     print("figures written")
 
 

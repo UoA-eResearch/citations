@@ -18,13 +18,13 @@
   ]
  },
  "screened_flag": {
-  "verified": 45,
-  "estimate": 45,
+  "verified": 43,
+  "estimate": 43,
   "sampled": false,
-  "per_10k_opinions": 0.538,
+  "per_10k_opinions": 0.514,
   "per_10k_ci": [
-   0.402,
-   0.72
+   0.382,
+   0.693
   ]
  },
  "placebo_reliance": {
@@ -51,10 +51,14 @@
    0.046
   ]
  },
+ "flag_opinions_party_asserted_only": {
+  "screened": 2
+ },
  "H1": {
   "count": 0.0,
-  "verdict": "Refuted",
-  "rule": ">= 20 Supported, < 10 Refuted"
+  "verdict": "Inconclusive",
+  "rule": "sampled sheet (D9): Supported if the 95% lower bound >= 20, Refuted if the upper bound < 10, otherwise Inconclusive; the plan's rule (>= 20 / < 10) was written for a full count",
+  "point_estimate_band": "Refuted"
  },
  "H2": {
   "placebo_rate": 0.0,
@@ -63,23 +67,218 @@
   "verdict": "not scorable"
  },
  "recall_detection": {
-  "orders": 854,
-  "flagged": 453,
-  "recall": 0.53,
-  "ci": [
-   0.497,
-   0.564
-  ]
+  "incident_rows_matched": 879,
+  "orders": 869,
+  "pre_filter": {
+   "flagged": 465,
+   "recall": 0.5351,
+   "ci": [
+    0.5019,
+    0.568
+   ]
+  },
+  "post_filter": {
+   "flagged": 42,
+   "recall": 0.0483,
+   "ci": [
+    0.036,
+    0.0647
+   ]
+  },
+  "note": "'flagged' means any candidate in the order, not necessarily the fabricated citation; the pre-filter figure is an upper bound on detecting the fabricated citations"
  },
  "recall_reliance": {
-  "judge_attributed_in_corpus": 4,
-  "flagged_as_reliance": 1
+  "judge_attributed_in_window": 9,
+  "judge_attributed_matched": 5,
+  "documents": {
+   "10873094": {
+    "case": "Henry County Schools et al. v. Grant et al.",
+    "court": "CA Georgia",
+    "document": "reviewing-court opinion",
+    "pre_filter": [
+     "flag",
+     "reliance"
+    ],
+    "post_filter": []
+   },
+   "10865888": {
+    "case": "H. C. v. Contreras",
+    "court": "CA California (5d)",
+    "document": "reviewing-court opinion",
+    "pre_filter": [],
+    "post_filter": []
+   },
+   "10853110": {
+    "case": "Hannah Renee Payne v. The State",
+    "court": "SC Georgia",
+    "document": "reviewing-court opinion",
+    "pre_filter": [],
+    "post_filter": []
+   },
+   "10621620": {
+    "case": "In Re CorMedix",
+    "court": "D. New Jersey",
+    "document": "relying opinion",
+    "pre_filter": [
+     "reliance"
+    ],
+    "post_filter": []
+   },
+   "10620062": {
+    "case": "Shahid v. Esaam",
+    "court": "CA Georgia",
+    "document": "reviewing-court opinion",
+    "pre_filter": [],
+    "post_filter": []
+   }
+  },
+  "relying_opinions_in_corpus": 1,
+  "relying_flagged_as_reliance_pre_filter": 1,
+  "relying_flagged_as_reliance_post_filter": 0
  },
- "recall_corrected_screened_reliance": 0.0,
+ "recall_corrected_screened_reliance": {
+  "post_filter_recall": 0.0483,
+  "estimate": 0.0,
+  "upper_bound": 832.0,
+  "note": "the sample's 95% upper bound divided by the post-filter detection recall"
+ },
+ "flag_vs_database": {
+  "flag_opinions": 43,
+  "clusters": 43,
+  "in_database_by_cluster": 26,
+  "in_database_by_cluster_or_name": 41,
+  "found_by_hand": {
+   "10772904": "Zaykariya v. Freedom Mortgage Corporation (W.D. Okla., 2026-01-09)",
+   "10808040": "Bolden v. Baltimore Gas & Electric Co (In re: Eric Chibueze Nwaubani) (4th Cir., 2026-03-11)"
+  },
+  "in_database_total": 43,
+  "not_in_database": 0,
+  "us_incidents_in_window": 1532,
+  "note": "automatic: cluster match or a date-free caption match at the matcher's threshold; the rest checked by hand against the database"
+ },
+ "reporters": {
+  "total_candidates": 859471,
+  "kept": 8071,
+  "by_reporter": {
+   "wl": {
+    "candidates": 650612,
+    "kept": 1
+   },
+   "usdistlexis": {
+    "candidates": 30010,
+    "kept": 0
+   },
+   "fsupp3d": {
+    "candidates": 22061,
+    "kept": 209
+   },
+   "prdec": {
+    "candidates": 13767,
+    "kept": 61
+   },
+   "f3d": {
+    "candidates": 10359,
+    "kept": 2335
+   },
+   "f4th": {
+    "candidates": 9252,
+    "kept": 0
+   },
+   "calapp5th": {
+    "candidates": 8438,
+    "kept": 28
+   },
+   "ohio": {
+    "candidates": 8403,
+    "kept": 3
+   },
+   "mspr": {
+    "candidates": 8065,
+    "kept": 3
+   },
+   "fappx": {
+    "candidates": 6931,
+    "kept": 220
+   },
+   "p3d": {
+    "candidates": 4604,
+    "kept": 111
+   },
+   "orapp": {
+    "candidates": 4432,
+    "kept": 31
+   },
+   "sw3d": {
+    "candidates": 4314,
+    "kept": 135
+   },
+   "so3d": {
+    "candidates": 4229,
+    "kept": 0
+   },
+   "a3d": {
+    "candidates": 4076,
+    "kept": 6
+   },
+   "ad3d": {
+    "candidates": 2954,
+    "kept": 193
+   },
+   "br": {
+    "candidates": 2826,
+    "kept": 46
+   },
+   "frd": {
+    "candidates": 2815,
+    "kept": 40
+   },
+   "nw2d": {
+    "candidates": 2724,
+    "kept": 167
+   },
+   "sct": {
+    "candidates": 2636,
+    "kept": 169
+   },
+   "se2d": {
+    "candidates": 2420,
+    "kept": 76
+   },
+   "nc": {
+    "candidates": 2303,
+    "kept": 16
+   },
+   "us": {
+    "candidates": 2168,
+    "kept": 1065
+   },
+   "ne3d": {
+    "candidates": 2049,
+    "kept": 1
+   },
+   "texapplexis": {
+    "candidates": 2046,
+    "kept": 0
+   },
+   "f2d": {
+    "candidates": 1981,
+    "kept": 696
+   },
+   "fsupp2d": {
+    "candidates": 270,
+    "kept": 217
+   },
+   "nyslipop": {
+    "candidates": 370,
+    "kept": 195
+   }
+  }
+ },
  "capture_recapture": {
   "screen": 0,
-  "database": 4,
+  "database": 5,
   "both": 0,
-  "chapman_N": 4.0
+  "chapman_N": 5.0,
+  "note": "uninformative: no verified reliance and no overlap (D9)"
  }
 }

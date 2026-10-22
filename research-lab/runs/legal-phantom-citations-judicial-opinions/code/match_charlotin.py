@@ -25,7 +25,7 @@ import numpy as np
 from rapidfuzz import fuzz
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from namenorm import distinctive, norm_name, party_score  # noqa: E402
+from namenorm import distinctive, norm_name, party_score, sides  # noqa: E402
 
 RUN = Path(__file__).resolve().parents[1]
 RAW, IDX, OUT, T = (RUN / "data" / "raw", RUN / "data" / "index", RUN / "data" / "screen",
@@ -40,7 +40,7 @@ MAX_DAYS = 45         # the order addressing the fabrication is usually filed cl
 MATCH_SAME_DAY, SAME_DAY = 75, 3
 NON_US = re.compile(
     r"\b(Canada|UK|England|Australia|India|Israel|South Africa|New Zealand|Ireland|Wales|Scotland|Netherlands|"
-    r"Spain|Brazil|Argentina|Chubut|Turkey|KKTC|Yarg|Colombia|Mexico|Germany|Italy|France|Trinidad|Philippines|"
+    r"Spain|Brazil|Argentina|Chubut|Turkey|KKTC|Yarg|Colombia|(?<!New )Mexico|Germany|Italy|France|Trinidad|Philippines|"
     r"Kenya|Nigeria|Singapore|Malaysia|Hong Kong|Ontario|Quebec|British Columbia|Alberta|NSW|Victoria|"
     r"Queensland|FCA|FWC|EWHC|EWCA|UKUT|UKFTT|BCSC|ONSC)\b", re.I)
 
@@ -76,6 +76,12 @@ def main():
         want = distinctive(cited, dropped)
         pools = [tokens[t] for t in want if t in tokens]
         best = (0.0, None, None)
+        # D9: a same-day cluster whose name holds every distinctive token of the caption, where both sides of the
+        # caption contribute one and there are at least two (one-token captions such as "Sanders v. USA" are too weak)
+        contained = None
+        sd = sides(cited)
+        both = [distinctive(x, dropped) for x in sd] if sd else [set(), set()]
+        strict = want if (both[0] and both[1] and len(want) >= 2) else None
         if pools:
             rarest = sorted(pools, key=len)[:3]
             cand = np.unique(np.concatenate([p[:20000] for p in rarest]))
@@ -87,8 +93,13 @@ def main():
                 s = party_score(fuzz, cited, str(names[i]))
                 if s > best[0] or (s == best[0] and best[2] is not None and gap < best[2]):
                     best = (s, int(i), gap)
+                if (gap <= SAME_DAY and strict and strict <= distinctive(norm_name(str(names[i])), dropped)
+                        and (contained is None or gap < contained[2])):
+                    contained = (s, int(i), gap)
         s, i, gap = best
         ok = (s >= MATCH) or (s >= MATCH_SAME_DAY and gap is not None and gap <= SAME_DAY)
+        if not ok and contained is not None:
+            (s, i, gap), ok = contained, True
         out.append({
             "case_name": r["Case Name"], "court": r["Court"], "date": r["Date"], "party": r["Party(ies)"],
             "matched": int(ok), "score": round(s, 1),
