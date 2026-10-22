@@ -40,3 +40,20 @@ The sea is now every cell connected to the open sea that meets any of these:
 
 Intertidal flats above 0 m stay land and route down to the harbour. The share of sea cells contributed by each source
 is logged.
+
+## D2 — 2026-10-23 01:30 NZDT — routing by priority-flood (before any exposure is computed)
+
+The first routing run (pysheds: fill pits, fill depressions, resolve flats, D8) left 2,484 land cells with no
+outflow (pysheds codes −1 and −2). Flow paths ending there absorbed 5.3 million of the 23.0 million land cells, 23% of
+the land. Only 70.8% of land reached the sea, and 21% of the remaining paths ended at the domain edge. The largest
+interior sink took about 620,000 cells (248 km²). Contributing land built on that routing would have silently lost
+whole catchments.
+
+Routing is now a priority-flood (Barnes, Lehman and Mulla 2014):
+- Every sea cell next to land, and every land cell on the domain edge, is a seed.
+- Land is flooded upward in elevation order, and each land cell drains to the neighbour (of 8) it was reached from.
+- This is depression filling and D8 drainage in one pass. Every land cell drains either to a sea cell or off the
+  domain edge, and no interior sinks remain.
+
+The outlet, C(R), the radius-only sensitivity and every threshold are unchanged. The share of land draining to the sea
+and to the edge is logged.
