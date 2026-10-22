@@ -20,7 +20,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-22 14:13 | `energy-nz-intermittent-curtailment-ledger` | confirmation pass |
 | 2026-10-22 19:13 | `legal-phantom-citations-judicial-opinions` | review |
 
-**Next Fable slot: not before 2026-10-23 00:13 NZDT.** In progress: phantom-citations review (started 19:13; a Claude Code restart at ~19:30 will cut it off before review.md - its checks so far are in runs/legal-phantom-citations-judicial-opinions/review/reviewer_checks/. At 00:13 relaunch it with the same prompt plus "reuse review/reviewer_checks/"; the relaunch counts as a run). Queue: 1. phantom-citations confirmation pass. 2. retraction markers review (draft 72af844).
+**Next Fable slot: not before 2026-10-23 00:13 NZDT.** Phantom-citations review FINISHED (19:13 run): verdict **fix first** (review/review.md; 12 findings - H1 should be Inconclusive; the frozen screen marks known fabricated California cites consistent; post-filter recall 39/854; 3 of 4 'judge incidents' are appellate opinions; ~11 of the 19 unmatched flag opinions are in Charlotin; New Mexico dropped by a regex). Queue: 1. apply phantom fixes, then its confirmation pass (00:13 slot). 2. retraction markers review (draft 72af844).
 3. DSI origin review (draft 87273a8).
 
 | study | draft commit | verdicts in the draft | review status |
@@ -33,7 +33,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | `auckland-nz-jade-water-value-calibration` | 96c8a7c | H1 Supported, H2 Refuted | **published** 2026-10-21 (H1 Supported; H2 Refuted but unreachable; reinterpreted) |
 | `energy-nz-embedded-solar-edb-demand` | 8f12116 | H1-H3 Inconclusive, H4 Supported by rule | **published** 2026-10-22 (Inconclusive: H4 passes its rule but is carried by two solar-farm networks) |
 | `energy-nz-intermittent-curtailment-ledger` | f83332e | gate fails; H1 Refuted, H2 Supported by rule (noise-dominated; price-driven core 2.2%) | **published** 2026-10-22 (Inconclusive: gate fails; dispatched-down core is two wind farms) |
-| `legal-phantom-citations-judicial-opinions` | 09c9990 | H1 Refuted by rule (0 of 300 sampled; upper bound 40; recall 0/4 judge incidents) - not robust; H2 not scorable; 45 court-flagged opinions | awaiting review |
+| `legal-phantom-citations-judicial-opinions` | 09c9990 | H1 Refuted by rule (0 of 300 sampled; upper bound 40; recall 0/4 judge incidents) - not robust; H2 not scorable; 45 court-flagged opinions | reviewed 2026-10-22: **fix first** (12 findings; apply, then confirmation) |
 | `trust-corrected-record-machine-readable` | 72af844 | H1 Refuted (2.4% unmarked in PMC XML), H2 Supported (sidecar 95.6%), H3 Refuted; peS2o 11.9% marked | awaiting review |
 | `ancestral-dsi-origin-recoverability` | 87273a8 | H1 Inconclusive (usable +2.9 pp, -5.9 to +10.8; placeholders +9.1); H2 Refuted (24/300 test records determinable; 61% lab material, 30% not stated, 9% findable) | awaiting review |
 

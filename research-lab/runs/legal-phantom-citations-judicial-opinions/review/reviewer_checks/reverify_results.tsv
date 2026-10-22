@@ -1,0 +1,114 @@
+sheet	k	opinion_id	cite	cited_name	label	reviewer
+screened_reliance	1	9364446	911 F.2d 261	haaland v ftc	real(default)	agree; Ukiah Valley Med. Ctr. v. FTC at 911 F.2d 261 (index); page header interleaved into the name
+screened_reliance	24	9897483	107 Nev. 438	sirns v state	real(default)	agree; OCR 'Sirns' = Sims v. State at 107 Nev. 438 (index)
+screened_reliance	91	10366358	541 F.2d 999	adiman	real(default)	agree; 'Adiman' = In re Adlman at 541 F.2d 999 (index)
+screened_reliance	124	10591643	589 F. Supp. 2d 76	sae prods inc v f b i	real(default)	agree; SAE Productions v. FBI at 589 F. Supp. 2d 76 (index); 'prods' not expanded to 'productions'
+screened_reliance	128	10609765	790 S.E.2d 752	t d no coa15	real(default)	agree; In re T.D., unpublished N.C. App. table page 790 S.E.2d 752 (index holds other table entries at 752)
+screened_reliance	131	10629324	2005 WI 6	barbara b v dorian h	real(default)	agree; 2005 WI 6 is In re Paternity of John R.B. (Barbara B. v. Dorian H.) (index)
+screened_reliance	141	10669774	99 F.R.D. 465	doc no fact	unverifiable	DISAGREE with label: identifiable - Schwarzer, 'Summary Judgment Under the Federal Rules: Defining Genuine Issues of Material Fact', 99 F.R.D. 465 (1984), an article; should be real/not-a-case; no count effect
+screened_reliance	157	10724582	2003 WI App 89	tasker v chieftain wildrice co	real(default)	agree; Tasker v. Chieftain Wild Rice Co., 2003 WI App 89, 263 Wis. 2d 432 is a real case; neutral cite absent from index
+screened_reliance	198	10847805	207 Ill. 2d 288	kaczmerak	real(default)	agree; People v. Kaczmarek at 207 Ill. 2d 288 (index)
+screened_reliance	204	11047146	62 N.Y.2d 90	matter uft v bd of educ	party-filing-unverified	agree document is a pro se motion with a memo endorsement (read); citation unresolved
+screened_reliance	211	11068586	95 F.3d 480	s e c v worthen	real	agree; SEC v. Worthen is 98 F.3d 480; quoted miscite
+screened_reliance	248	11154973	667 F. Supp. 2d 1184	mack v south bay beer distribs	real	agree; mangled cite - 667 F. Supp. 2d 1184 is D.K. v. Solano County (index), Mack v. South Bay Beer is 798 F.2d 1279
+screened_reliance	258	11180120	198 S.W.3d 819	el koury v hammer	phantom-party-filing	agree document is a pro se 'Memorandum of Authorities' in Bankr. N.D. Tex. (read); 198 S.W.3d 819 is Vega v. State (index)
+screened_reliance	325	11438575	167 L. Ed. 2d 15	post return harassment allegations and	real(default)	agree; two-column text; Sinochem at 167 L. Ed. 2d 15 (index)
+screened_reliance	331	11454304	248 A.D.3d 909	matter barton v n y c employee ret sys	real	agree; Matter of Barton, 248 A.D.3d 909 (2026) - too new for the index
+screened_flag	15	10226470	515 U.S. 472	due process clause	real(default)	agree; eyecite took 'Due Process Clause' as the name; Sandin v. Conner at 515 U.S. 472 (index)
+screened_flag	27	10278730	618 F.3d 277	year of acct	real(default)	agree; Ario v. Underwriting Members ... 618 F.3d 277 (index)
+screened_flag	28	10284912	2003 NMCA 99	cruces sun news v city of las cruces	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	29	10284912	2003 NMCA 99	cruces sun news v city of las cruces	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	31	10285188	441 F.3d 1212	tatum v oklahoma city	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	32	10285188	829 F.3d 869	chilson v experian information solutions inc	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	33	10301116	436 F.3d 1140	united states v baghat	real(default)	agree; 'Baghat' = United States v. Bhagat at 436 F.3d 1140 (index)
+screened_flag	37	10352027	556 F.2d 713	wire spring co v o neal steel inc	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	38	10352027	905 F. Supp. 2d 121	petersen v iran air	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	39	10366976	847 F. Supp. 2d 513	2d cir affirming	real(default)	agree; Tankisi v. Comm'r at 847 F. Supp. 2d 513 (index); name parsed as '2d cir affirming'
+screened_flag	44	10405295	618 F.3d 277	year of acct	real(default)	agree; as k=27
+screened_flag	56	10651177	515 U.S. 472	due process clause	real(default)	agree; as k=15
+screened_flag	57	10651178	515 U.S. 472	due process clause	real(default)	agree; as k=15
+screened_flag	79	10767843	528 F. App'x 485	solis v la hacienda mexican caf	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	84	10794526	953 F. Supp. 938	lazarevitz	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	87	10813927	535 F. Supp. 2d 837	hilliard v city of ferndale	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	88	10815560	515 U.S. 472	due process clause	real(default)	agree; as k=15
+screened_flag	100	10842973	588 F.2d 1355	sullivan v taglianetti	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	105	10996444	608 F. Supp. 2d 269	shell petroleum n v v republic of costa rica	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	106	11014134	259 F.3d 824	gunn v mckinney	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	107	11014134	570 F.3d 473	treadwell v illinois dep t of children family services	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	109	11049424	245 Ga. App. 294	morrow v highsmith	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	110	11049424	276 Ga. 519	georgia pacific corp v cundiff	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	112	11059836	631 F.3d 880	curtis v trevino	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	115	11081358	707 S.W.2d 465	younker v farmers ins co	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	116	11083851	194 Or. App. 227	estate riddell v city of portland	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	117	11085685	627 F.3d 1083	huddleson v united states	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	118	11096884	130 S.W.3d 420	caldwell v div of employment sec	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	119	11097140	903 S.W.2d 838	winters v kim	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	120	11097140	447 S.W.3d 885	weber v city of cape girardeau	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	121	11097140	913 S.W.2d 229	huett v dollar tree stores inc	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	122	11097140	329 S.W.3d 622	great southern bank v edie	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	123	11097140	342 S.W.3d 241	schaffer v county of cape girardeau	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	124	11103541	101 Cal. App. 4th 165	barker v tanaka	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	125	11103541	227 Cal. App. 4th 1059	orser v c i r	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	126	11103541	96 Cal. App. 3d 10	canter v crilly	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	127	11103753	194 Or. App. 227	estate riddell v city of portland	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	129	11111598	20 Cal. App. 5th 1045	klein v cheung	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	131	11123462	535 F. Supp. 2d 983	katzenmeier v oppenheimer	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	134	11130284	269 F. Supp. 3d 904	dearborn heights v comcast	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	137	11141286	256 U.S. 148	conveyor co v u s	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	145	11174950	297 F. Supp. 2d 435	klingenstein v pettit	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	147	11177883	390 S.W.3d 599	sterner v marriott int l inc	phantom-party-filing	agree document is an appellant's reply brief e-filed in Tex. 15th COA (read); 390 S.W.3d 599 not Sterner (index)
+screened_flag	149	11197293	486 F. Supp. 2d 1077	cafasso v central refrigerated servs inc	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	155	11216112	697 S.E.2d 132	cline v mazzone	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	156	11226034	16 Or. Tax 350	rev v sec y of state	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	157	11227600	55 Cal. 4th 659	recovery assoc v king	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	158	11231760	555 F.3d 630	kelley v conan	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	159	11235370	850 F. Supp. 188	marrero v camden steel co	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	160	11236093	886 F.3d 1073	brownell v bank of am n a	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	161	11239489	347 F. Supp. 2d 349	mcewen v mccullough	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	166	11259679	827 F.3d 129	hinkle v cbe grp	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	167	11267635	206 Ga. App. 514	knight v pierson inc	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	168	11272143	235 Ariz. 163	arok construction co v shipley	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	169	11274781	611 F.3d 1330	commodity futures trading commission v glencore ltd	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	170	11278676	510 U.S. 540	likeky v united states	real	agree; Liteky v. United States at 510 U.S. 540 (index)
+screened_flag	173	11279721	408 F. Supp. 2d 1127	hendges v bank of america n a	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	174	11280162	990 F. Supp. 2d 1035	knakmuhs v minneapolis pub sch	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	175	11281233	200 N.C. App. 648	commc v hillsborough holdings llc	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	176	11281233	447 F. Supp. 2d 999	lindner v countrywide hom loans inc	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	177	11281270	602 F. Supp. 2d 832	schuh v weltman weinberg reis co lpa	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	178	11296343	19 S.W.3d 803	medical education assistance corporation v metha	real	agree; MEAC v. State at 19 S.W.3d 803 (index)
+screened_flag	180	11307235	261 Ill. App. 3d 552	bjorlin v aluminum co of america	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	181	11307235	94 Ill. App. 3d 125	suttonhouse v rockford savings loan ass n	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	185	11316117	602 S.W.2d 695	exxon corp v alembik	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	191	11345273	515 U.S. 472	due process clause	real(default)	agree; as k=15
+screened_flag	194	11361357	425 S.W.2d 662	missouri pac r r co v shiflet	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	195	11361357	425 S.W.2d 662	pac r r co v shiflet	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	201	11367669	728 F.2d 1260	mazza v washoe cnty	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	205	11403397	108 P.3d 974	state v maluai	real	agree; State v. Maluia at 108 P.3d 974 (index)
+screened_flag	209	11429405	453 F.3d 772	hernandez v shaughnessy	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	214	11438442	26 Cal. App. 5th 265	ai dowds v basehore	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+screened_flag	215	11438442	26 Cal. App. 5th 265	dowds v basehore	phantom	phantom row: court states the litigant's case does not exist / cannot be located; context read, consistent with the note
+placebo_reliance	2	4361743	466 U.S. 668	slricklana v washl ngton	real(default)	agree; OCR; Strickland v. Washington at 466 U.S. 668 (index)
+placebo_reliance	29	4422150	323 F.2d 817	ltd v lundstrorn	real(default)	agree; 'Lundstrorn' = Am. President Lines v. Lundstrom at 323 F.2d 817 (index)
+placebo_reliance	58	4504107	473 U.S. 667	united states v baciley	real(default)	agree; 'Baciley' = United States v. Bagley at 473 U.S. 667 (index)
+placebo_reliance	72	4531785	279 F.3d 1180	nrdc ii	real(default)	agree; NRDC v. EPA at 279 F.3d 1180 (index)
+placebo_reliance	164	7254718	247 F.2d 819	hatahly v u s	real	agree under D8 r.2 exception: court says the litigant's 'Hatahly v. U.S., 247 F.2d 819' does not appear to exist and names the real 351 U.S. 173; note this is a court flag the FLAG regex missed (reliance sheet)
+placebo_reliance	179	8484411	394 P.2d 337	peta v bobby berosini ltd nev	real(default)	agree; PETA v. Bobby Berosini is 894 P.2d 337; court typo 394
+placebo_reliance	189	10005893	734 F.3d 800	am flca v haun	real(default)	agree; 734 F.3d 800 is Page v. Farm Credit Servs. of Am. (In re Haun) (index: 'page v farm credit services')
+placebo_reliance	199	10086511	578 U.S. 412	christianburg garment co v o c	real	agree; Christiansburg Garment is 434 U.S. 412
+placebo_reliance	247	10287657	99 F.R.D. 465	genuine issues of material fact	unverifiable	DISAGREE with label: same Schwarzer article as screened k=141; should be real/not-a-case; no count effect
+placebo_reliance	250	10290778	237 F.3d 788	u s v enslin	real(default)	agree; United States v. Enslin is 327 F.3d 788; court typo 237
+placebo_reliance	252	10293436	207 F.3d 11236	chiron corp v ortho diagnostic sys inc	real	agree; Chiron is 207 F.3d 1126; typo 11236
+placebo_reliance	308	10647954	866 F. Supp. 2d 735	temple v pflugner	real(default)	probably real: Temple v. Pflugner (E.D. Ky. 2011) at 866 F. Supp. 2d 735 - index shows Brinkley v. Houk at 735, so cite may be wrong; not resolved by API (throttled)
+placebo_reliance	310	10679695	142 F.3d 1279	southmark corp v f d i c	real(default)	agree; Southmark Corp. v. FDIC, 142 F.3d 1279 (5th Cir. 1998) unpublished table
+placebo_flag	8	4435084	683 F. Supp. 334	curry v usps	real(default)	probably real: Curry v. USPS, 683 F. Supp. 334 (S.D. Ohio 1984) quoted inside a 5th Cir. quotation; page 334 absent from the index; not resolved by API (throttled)
+placebo_flag	13	4521157	310 F.3d 709	racketeer influenced and corrupt organizations act	real(default)	agree; United States v. Peter at 310 F.3d 709 (index); name parsed as the RICO Act
+placebo_flag	18	4642328	734 F.3d 460	aclu michigan v fbi	real(default)	agree; ACLU v. FBI at 734 F.3d 460 (index)
+placebo_flag	28	5132438	22 Vet. App. 227	lamb v peake	real(default)	agree; Lamb v. Peake at 22 Vet. App. 227 (index)
+placebo_flag	42	8406611	126 N.H. 1	cocap	real(default)	agree; OCR garbage; Eshleman's Case at 126 N.H. 1 (index)
+placebo_flag	52	9992774	521 U.S. 321	united states v kajakajian	real	agree under D8 r.2: court found no 'Kajakajian 521 U.S. 321'; Bajakajian is 524 U.S. 321
+placebo_flag	53	9994049	97 A. 26	moreover	real	agree; '97 A.R. 26' is an administrative-record cite
+placebo_flag	55	10020060	512 U.S. 472	sandin v o connor	real	agree; Sandin v. Conner 515 U.S. 472; typo 512 and O'Connor
+placebo_flag	62	10175036	49 F.3d 673	10th cir	real(default)	agree; Fratus v. Deland at 49 F.3d 673 (index); name parsed as '10th cir'
+placebo_flag	69	10224950	515 U.S. 472	due process clause	real(default)	agree; as screened_flag k=15
+placebo_flag	76	10225018	515 U.S. 472	due process clause	real(default)	agree; as screened_flag k=15
+placebo_flag	123	10812167	2000 ME 12	state v wheddle	real(default)	agree; State v. Weddle, 2020 ME 12 (opinion dated 2020-02-20 cites '2000 ME 12'); typo in year and name

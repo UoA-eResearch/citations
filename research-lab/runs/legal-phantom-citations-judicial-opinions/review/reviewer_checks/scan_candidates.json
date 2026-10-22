@@ -1,0 +1,628 @@
+{
+ "kept": {
+  "placebo": 4372,
+  "screened": 3699
+ },
+ "dropped": {
+  "placebo": 346628,
+  "screened": 504772
+ },
+ "sheets": {
+  "placebo_reliance": 4242,
+  "screened_reliance": 3478,
+  "screened_flag": 221,
+  "placebo_flag": 130
+ },
+ "route_kept": {
+  "resolved-elsewhere": 7770,
+  "below the volume": 15,
+  "reporter-volume absent": 286
+ },
+ "route_dropped": {
+  "resolved-elsewhere": 492347,
+  "reporter-volume absent": 343282,
+  "below the volume": 15771
+ },
+ "ocr_kept": {
+  "f": 5728,
+  "t": 2343
+ },
+ "ocr_dropped": {
+  "f": 472236,
+  "t": 379164
+ },
+ "recall_detection_any_candidate": {
+  "orders": 854,
+  "flagged": 448
+ },
+ "recall_detection_after_completeness_filter": {
+  "orders": 854,
+  "flagged": 39
+ },
+ "judge_incidents": [
+  {
+   "case": "H. C. v. Contreras",
+   "court": "CA California (5d)",
+   "date": "2026-05-28",
+   "party": "Judge; Lawyer",
+   "cluster_id": 10865888,
+   "types_any": [],
+   "types_kept": []
+  },
+  {
+   "case": "Hannah Renee Payne v. The State",
+   "court": "SC Georgia",
+   "date": "2026-05-05",
+   "party": "Judge; Prosecutor",
+   "cluster_id": 10853110,
+   "types_any": [],
+   "types_kept": []
+  },
+  {
+   "case": "In Re CorMedix",
+   "court": "D. New Jersey",
+   "date": "2025-07-23",
+   "party": "Judge",
+   "cluster_id": 10621620,
+   "types_any": [
+    "reliance"
+   ],
+   "types_kept": []
+  },
+  {
+   "case": "Shahid v. Esaam",
+   "court": "CA Georgia",
+   "date": "2025-06-30",
+   "party": "Judge; Lawyer",
+   "cluster_id": 10620062,
+   "types_any": [],
+   "types_kept": []
+  }
+ ],
+ "judge_candidates": [
+  {
+   "opinion_id": 11088208,
+   "cluster_id": 10621620,
+   "date": 20250630,
+   "cite": "2017 WL 2213147",
+   "cited_name": "bauer v eagle pharms inc no",
+   "route": "resolved-elsewhere",
+   "best_name_score": 72.7,
+   "ocr": "t",
+   "flag": false,
+   "period": "screened",
+   "type": "reliance",
+   "complete_volume": false,
+   "vol_n": 156246,
+   "vol_cov": 26586
+  },
+  {
+   "opinion_id": 11088208,
+   "cluster_id": 10621620,
+   "date": 20250630,
+   "cite": "2018 WL 902266",
+   "cited_name": "hoey v insmed inc no",
+   "route": "reporter-volume absent",
+   "best_name_score": 70.6,
+   "ocr": "t",
+   "flag": false,
+   "period": "screened",
+   "type": "reliance",
+   "complete_volume": false,
+   "vol_n": 174112,
+   "vol_cov": 106658
+  },
+  {
+   "opinion_id": 11088208,
+   "cluster_id": 10621620,
+   "date": 20250630,
+   "cite": "2018 WL 6891832",
+   "cited_name": "no",
+   "route": "reporter-volume absent",
+   "best_name_score": 0.0,
+   "ocr": "t",
+   "flag": false,
+   "period": "screened",
+   "type": "reliance",
+   "complete_volume": false,
+   "vol_n": 174112,
+   "vol_cov": 106658
+  }
+ ],
+ "top_dropped_reporters": [
+  [
+   "wl",
+   650611
+  ],
+  [
+   "usdistlexis",
+   30010
+  ],
+  [
+   "fsupp3d",
+   21852
+  ],
+  [
+   "prdec",
+   13706
+  ],
+  [
+   "f4th",
+   9252
+  ],
+  [
+   "calapp5th",
+   8410
+  ],
+  [
+   "ohio",
+   8400
+  ],
+  [
+   "mspr",
+   8062
+  ],
+  [
+   "f3d",
+   8024
+  ],
+  [
+   "fappx",
+   6711
+  ],
+  [
+   "p3d",
+   4493
+  ],
+  [
+   "orapp",
+   4401
+  ],
+  [
+   "so3d",
+   4229
+  ],
+  [
+   "sw3d",
+   4179
+  ],
+  [
+   "a3d",
+   4070
+  ],
+  [
+   "br",
+   2780
+  ],
+  [
+   "frd",
+   2775
+  ],
+  [
+   "ad3d",
+   2761
+  ],
+  [
+   "nw2d",
+   2557
+  ],
+  [
+   "sct",
+   2467
+  ],
+  [
+   "se2d",
+   2344
+  ],
+  [
+   "nc",
+   2287
+  ],
+  [
+   "ne3d",
+   2048
+  ],
+  [
+   "texapplexis",
+   2046
+  ],
+  [
+   "guam",
+   1590
+  ],
+  [
+   "michapp",
+   1429
+  ],
+  [
+   "f2d",
+   1285
+  ],
+  [
+   "misc3d",
+   1274
+  ],
+  [
+   "us",
+   1103
+  ],
+  [
+   "ohioapplexis",
+   1082
+  ],
+  [
+   "njsuper",
+   1067
+  ],
+  [
+   "usapplexis",
+   1014
+  ],
+  [
+   "a2d",
+   959
+  ],
+  [
+   "mass",
+   895
+  ],
+  [
+   "nj",
+   877
+  ],
+  [
+   "ariz",
+   866
+  ],
+  [
+   "ny3d",
+   861
+  ],
+  [
+   "ncapp",
+   826
+  ],
+  [
+   "washapp2d",
+   769
+  ],
+  [
+   "nev",
+   725
+  ]
+ ],
+ "top_kept_reporters": [
+  [
+   "f3d",
+   2335
+  ],
+  [
+   "us",
+   1065
+  ],
+  [
+   "f2d",
+   696
+  ],
+  [
+   "fappx",
+   220
+  ],
+  [
+   "fsupp2d",
+   217
+  ],
+  [
+   "fsupp3d",
+   209
+  ],
+  [
+   "nyslipop",
+   195
+  ],
+  [
+   "ad3d",
+   193
+  ],
+  [
+   "sct",
+   169
+  ],
+  [
+   "nw2d",
+   167
+  ],
+  [
+   "sw3d",
+   135
+  ],
+  [
+   "p2d",
+   120
+  ],
+  [
+   "p3d",
+   111
+  ],
+  [
+   "nm",
+   95
+  ],
+  [
+   "a2d",
+   83
+  ],
+  [
+   "wis2d",
+   82
+  ],
+  [
+   "wash2d",
+   82
+  ],
+  [
+   "nev",
+   78
+  ],
+  [
+   "se2d",
+   76
+  ],
+  [
+   "sw2d",
+   74
+  ],
+  [
+   "fsupp",
+   74
+  ],
+  [
+   "utapp",
+   65
+  ],
+  [
+   "prdec",
+   61
+  ],
+  [
+   "nj",
+   55
+  ],
+  [
+   "ne2d",
+   55
+  ],
+  [
+   "me",
+   51
+  ],
+  [
+   "br",
+   46
+  ],
+  [
+   "led2d",
+   45
+  ],
+  [
+   "ga",
+   41
+  ],
+  [
+   "frd",
+   40
+  ],
+  [
+   "fedcl",
+   40
+  ],
+  [
+   "ny2d",
+   39
+  ],
+  [
+   "njsuper",
+   37
+  ],
+  [
+   "cal4th",
+   35
+  ],
+  [
+   "ny3d",
+   34
+  ],
+  [
+   "orapp",
+   31
+  ],
+  [
+   "nmca",
+   29
+  ],
+  [
+   "calapp5th",
+   28
+  ],
+  [
+   "neb",
+   28
+  ],
+  [
+   "michapp",
+   27
+  ]
+ ],
+ "volumes_by_reporter": {
+  "us": {
+   "assessable": 606,
+   "complete": 372,
+   "volumes_cited": 983
+  },
+  "sct": {
+   "assessable": 146,
+   "complete": 74,
+   "volumes_cited": 316
+  },
+  "led2d": {
+   "assessable": 224,
+   "complete": 147,
+   "volumes_cited": 278
+  },
+  "f2d": {
+   "assessable": 981,
+   "complete": 530,
+   "volumes_cited": 1077
+  },
+  "f3d": {
+   "assessable": 1000,
+   "complete": 628,
+   "volumes_cited": 1237
+  },
+  "f4th": {
+   "assessable": 184,
+   "complete": 0,
+   "volumes_cited": 241
+  },
+  "fsupp": {
+   "assessable": 785,
+   "complete": 289,
+   "volumes_cited": 1006
+  },
+  "fsupp2d": {
+   "assessable": 998,
+   "complete": 834,
+   "volumes_cited": 1030
+  },
+  "fsupp3d": {
+   "assessable": 831,
+   "complete": 338,
+   "volumes_cited": 937
+  },
+  "fappx": {
+   "assessable": 861,
+   "complete": 444,
+   "volumes_cited": 925
+  },
+  "wl": {
+   "assessable": 66,
+   "complete": 0,
+   "volumes_cited": 653
+  },
+  "so2d": {
+   "assessable": 986,
+   "complete": 80,
+   "volumes_cited": 1010
+  },
+  "so3d": {
+   "assessable": 433,
+   "complete": 2,
+   "volumes_cited": 609
+  },
+  "sw2d": {
+   "assessable": 980,
+   "complete": 560,
+   "volumes_cited": 1011
+  },
+  "sw3d": {
+   "assessable": 733,
+   "complete": 497,
+   "volumes_cited": 929
+  },
+  "ne2d": {
+   "assessable": 962,
+   "complete": 242,
+   "volumes_cited": 1020
+  },
+  "ne3d": {
+   "assessable": 267,
+   "complete": 1,
+   "volumes_cited": 435
+  },
+  "nw2d": {
+   "assessable": 999,
+   "complete": 541,
+   "volumes_cited": 1017
+  },
+  "nw3d": {
+   "assessable": 36,
+   "complete": 0,
+   "volumes_cited": 102
+  },
+  "p2d": {
+   "assessable": 988,
+   "complete": 173,
+   "volumes_cited": 1014
+  },
+  "p3d": {
+   "assessable": 592,
+   "complete": 71,
+   "volumes_cited": 880
+  },
+  "a2d": {
+   "assessable": 996,
+   "complete": 181,
+   "volumes_cited": 1048
+  },
+  "a3d": {
+   "assessable": 358,
+   "complete": 12,
+   "volumes_cited": 751
+  },
+  "se2d": {
+   "assessable": 927,
+   "complete": 451,
+   "volumes_cited": 949
+  },
+  "calrptr3d": {
+   "assessable": 273,
+   "complete": 101,
+   "volumes_cited": 348
+  },
+  "ny3d": {
+   "assessable": 45,
+   "complete": 19,
+   "volumes_cited": 97
+  },
+  "ad3d": {
+   "assessable": 250,
+   "complete": 18,
+   "volumes_cited": 301
+  },
+  "nys3d": {
+   "assessable": 229,
+   "complete": 7,
+   "volumes_cited": 289
+  },
+  "ohio": {
+   "assessable": 37,
+   "complete": 6,
+   "volumes_cited": 72
+  },
+  "br": {
+   "assessable": 676,
+   "complete": 412,
+   "volumes_cited": 699
+  },
+  "fedcl": {
+   "assessable": 154,
+   "complete": 89,
+   "volumes_cited": 168
+  }
+ },
+ "volume f3d|925": {
+  "n": 6348,
+  "cov": 6291,
+  "complete": true
+ },
+ "volume fsupp2d|905": {
+  "n": 569,
+  "cov": 555,
+  "complete": false
+ },
+ "volume f3d|174": {
+  "n": 4964,
+  "cov": 4920,
+  "complete": true
+ }
+}

@@ -1,0 +1,218 @@
+{
+ "flag_rows": 60,
+ "distinct_opinions": 45,
+ "distinct_clusters": 45,
+ "matched_by_cluster": 26,
+ "unmatched": 19,
+ "unmatched_refuzzed": [
+  {
+   "cluster_id": "10327938",
+   "cluster_date": "20250205",
+   "cluster_name": "OF HOUSE FREELAND v. SELENE FINANCE LP",
+   "overlap": 0.33,
+   "tsr": 53.96825396825397,
+   "charlotin": "Perry v. Exeter Finance LLC",
+   "charlotin_date": "2026-02-26",
+   "party": "Pro Se Litigant",
+   "court": "D. Arizona"
+  },
+  {
+   "cluster_id": "10347339",
+   "cluster_date": "20250227",
+   "cluster_name": "Carrington v. Detroit Buildings Safety Engineering and Environment Department",
+   "overlap": 0.5,
+   "tsr": 69.0909090909091,
+   "charlotin": "Volesky v. Department of Child Safety",
+   "charlotin_date": "2026-01-21",
+   "party": "Pro Se Litigant",
+   "court": "CA Arizona"
+  },
+  {
+   "cluster_id": "10376385",
+   "cluster_date": "20250410",
+   "cluster_name": "Puerto Rico Soccer League NFP, Corp. v. Federacion Puertorriquena de Futbol",
+   "overlap": 0.75,
+   "tsr": 92.0,
+   "charlotin": "Puerto Rico Soccer League NFP, Corp., et al. v. Federaci\u00f3n Puertorrique\u00f1a de Futbol, et al.",
+   "charlotin_date": "2025-09-23",
+   "party": "Lawyer",
+   "court": "D. Puerto Rico"
+  },
+  {
+   "cluster_id": "10529856",
+   "cluster_date": "20250505",
+   "cluster_name": "Flowz Digital LLC v. Flowz Staffing LLC",
+   "overlap": 0.67,
+   "tsr": 69.76744186046511,
+   "charlotin": "Flowz Digital v. Caroline Dalal",
+   "charlotin_date": "2025-05-05",
+   "party": "Lawyer",
+   "court": "C.D. California"
+  },
+  {
+   "cluster_id": "10547546",
+   "cluster_date": "20250506",
+   "cluster_name": "Qamar v. Board of Trustees of Gov. State Uni. (GSU)",
+   "overlap": 1.0,
+   "tsr": 77.77777777777777,
+   "charlotin": "H.F. v. State",
+   "charlotin_date": "2026-02-10",
+   "party": "Lawyer",
+   "court": "CC New York"
+  },
+  {
+   "cluster_id": "10582836",
+   "cluster_date": "20250509",
+   "cluster_name": "JACKSON v. AUTO OWNERS INSURANCE COMPANY",
+   "overlap": 1.0,
+   "tsr": 100.0,
+   "charlotin": "Woodrow Jackson v. Auto-Owners Insurance Company",
+   "charlotin_date": "2025-07-14",
+   "party": "Lawyer",
+   "court": "M.D. Georgia"
+  },
+  {
+   "cluster_id": "10593248",
+   "cluster_date": "20250527",
+   "cluster_name": "Brick v. Breuner",
+   "overlap": 0.5,
+   "tsr": 63.63636363636363,
+   "charlotin": "Brick v. Gallatin County, et al.",
+   "charlotin_date": "2025-12-01",
+   "party": "Pro Se Litigant",
+   "court": "D. Montana"
+  },
+  {
+   "cluster_id": "10614770",
+   "cluster_date": "20250620",
+   "cluster_name": "Gittemeier v. Liberty Mutual Personal Insurance Company",
+   "overlap": 1.0,
+   "tsr": 100.0,
+   "charlotin": "Gittemeier v. Liberty Mutual Personal Insurance Company",
+   "charlotin_date": "2025-11-17",
+   "party": "Lawyer",
+   "court": "E.D. Missouri"
+  },
+  {
+   "cluster_id": "10619097",
+   "cluster_date": "20250627",
+   "cluster_name": "Carter v. UZGlobal LLC",
+   "overlap": 1.0,
+   "tsr": 100.0,
+   "charlotin": "Rasheem Carter, et al. v. UZGlobal LLC, et al.",
+   "charlotin_date": "2026-05-01",
+   "party": "Lawyer",
+   "court": "D. New Mexico"
+  },
+  {
+   "cluster_id": "10637166",
+   "cluster_date": "20250718",
+   "cluster_name": "Schoene v. Oregon Department of Human Services",
+   "overlap": 1.0,
+   "tsr": 100.0,
+   "charlotin": "Schoene v. Oregon Department of Human Services",
+   "charlotin_date": "2025-06-25",
+   "party": "Pro Se Litigant",
+   "court": "D. Oregon"
+  },
+  {
+   "cluster_id": "10749527",
+   "cluster_date": "20251208",
+   "cluster_name": "Tearria and Clinton Simmons, Individuals, their children, A.B.P., O.S.S., and R.T.S., by and through their mother, and Billy Lee Coram, an individual, pro se v. City of Hurricane, a municipality, Scott Edwards, Mayor of the City of Hurricane, in his individual capacity, Chief Michael Mullins, Chief of Hurricane Police Department, in his individual capacity, Corporal Brett Johnson, Patrolman, W.D. Allen, Patrolman Payton Carr, Sergeant Makenzie White, Detective Jonathan Payne, and Officer John Does 1-10, inclusive, in their individual capacities, and Alyson Denison, a worker for Child Protective Services, in her individual capacity",
+   "overlap": 0.67,
+   "tsr": 75.86206896551724,
+   "charlotin": "Farrow v. John Does",
+   "charlotin_date": "2025-12-03",
+   "party": "Pro Se Litigant",
+   "court": "E.D. New York"
+  },
+  {
+   "cluster_id": "10769508",
+   "cluster_date": "20260105",
+   "cluster_name": "Tarani-Alike Johnson, et al. v. Wells Fargo Bank N.A., et al.",
+   "overlap": 0.75,
+   "tsr": 84.61538461538461,
+   "charlotin": "Jackson v. Wells Fargo Bank, N.A.",
+   "charlotin_date": "2026-09-30",
+   "party": "Pro Se Litigant",
+   "court": "E.D. Michigan"
+  },
+  {
+   "cluster_id": "10793037",
+   "cluster_date": "20260212",
+   "cluster_name": "Seth Cameron Virgil v. Experian Information Solutions Inc, et al.",
+   "overlap": 1.0,
+   "tsr": 100.0,
+   "charlotin": "Virgil v. Experian Information Solutions, et al.",
+   "charlotin_date": "2026-09-11",
+   "party": "Lawyer",
+   "court": "S.D. Indiana"
+  },
+  {
+   "cluster_id": "10808040",
+   "cluster_date": "20260311",
+   "cluster_name": "In re: Eric Chibueze Nwaubani",
+   "overlap": 1.0,
+   "tsr": 100.0,
+   "charlotin": "Bolden v. Baltimore Gas & Electric Co (In re: Eric Chibueze Nwaubani)",
+   "charlotin_date": "2026-03-11",
+   "party": "Lawyer",
+   "court": "CA Fourth Circuit"
+  },
+  {
+   "cluster_id": "10812968",
+   "cluster_date": "20260320",
+   "cluster_name": "U.S. Bank National Association, as Trustee, on behalf of the Holders of the Asset Backed Securities Corporation Home Equity Loan Trust, Series NC 2005-HE8, Asset Backed Pass-Through Certificates, Series NC 2005-HE8 v. Eric Richmond, a/k/a Eric H. Richmond and Citimortgage, Inc., f/k/a Citigroup Mortgage, Inc.",
+   "overlap": 1.0,
+   "tsr": 100.0,
+   "charlotin": "U.S. Bank National Association v. Richmond",
+   "charlotin_date": "2025-10-27",
+   "party": "Pro Se Litigant",
+   "court": "D. Maine"
+  },
+  {
+   "cluster_id": "10961798",
+   "cluster_date": "20260827",
+   "cluster_name": "Marissa S. Piper v. State of Indiana, Indiana Department of Child Services, Clarissa Hallett DCS Caseworker (individually and in official capacity), Kimberly Byrum DCS Caseworker Supervisor (individually and in official capacity), Steven Owens Judge (individually and in official capacity), Marilyn Tucker Fullen",
+   "overlap": 1.0,
+   "tsr": 77.77777777777777,
+   "charlotin": "H.F. v. State",
+   "charlotin_date": "2026-02-10",
+   "party": "Lawyer",
+   "court": "CC New York"
+  },
+  {
+   "cluster_id": "9818300",
+   "cluster_date": "20231023",
+   "cluster_name": "Morgan v. Community Against Violence",
+   "overlap": 1.0,
+   "tsr": 100.0,
+   "charlotin": "Morgan v. Community Against Violence",
+   "charlotin_date": "2023-10-23",
+   "party": "Pro Se Litigant",
+   "court": "D. New Mexico"
+  },
+  {
+   "cluster_id": "9818576",
+   "cluster_date": "20240119",
+   "cluster_name": "Morgan v. Community Against Violence",
+   "overlap": 1.0,
+   "tsr": 100.0,
+   "charlotin": "Morgan v. Community Against Violence",
+   "charlotin_date": "2023-10-23",
+   "party": "Pro Se Litigant",
+   "court": "D. New Mexico"
+  },
+  {
+   "cluster_id": "10772904",
+   "cluster_date": "20260109",
+   "cluster_name": "Ankit Devarsh Zaykariyav. Freedom Mortgage Corporation, et al.",
+   "overlap": 0.75,
+   "tsr": 87.61904761904762,
+   "charlotin": "Zaykariya v. Freedom Mortgage Corporation, et al.",
+   "charlotin_date": "2026-01-09",
+   "party": "Pro Se Litigant",
+   "court": "W.D. Oklahoma"
+  }
+ ]
+}
