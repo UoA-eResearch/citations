@@ -1,0 +1,10 @@
+{"model": "small", "cond": "fp16", "split": "test", "size_bits": 3170893824, "size_ratio_vs_w4": 3.764705882352941, "quantize_s": 3.1, "total_s": 480.2}
+{"model": "small", "cond": "fp16", "split": "validation", "size_bits": 3170893824, "size_ratio_vs_w4": 3.764705882352941, "quantize_s": 2.9, "total_s": 452.7}
+{"model": "small", "cond": "rtn_w8", "split": "test", "size_bits": 1634992128, "size_ratio_vs_w4": 1.9411764705882353, "quantize_s": 3.4, "total_s": 435.1}
+{"model": "small", "cond": "rtn_w4", "split": "test", "size_bits": 842268672, "size_ratio_vs_w4": 1.0, "quantize_s": 3.7, "total_s": 446.0}
+{"model": "small", "cond": "gptq_w4_us_s0", "split": "test", "size_bits": 842268672, "size_ratio_vs_w4": 1.0, "quantize_s": 59.9, "total_s": 537.3}
+{"model": "small", "cond": "gptq_w4_balanced_s0", "split": "test", "size_bits": 842268672, "size_ratio_vs_w4": 1.0, "quantize_s": 58.1, "total_s": 491.5}
+{"model": "small", "cond": "gptq_w4_us_s1", "split": "test", "size_bits": 842268672, "size_ratio_vs_w4": 1.0, "quantize_s": 65.9, "total_s": 497.0}
+{"model": "small", "cond": "gptq_w4_balanced_s1", "split": "test", "size_bits": 842268672, "size_ratio_vs_w4": 1.0, "quantize_s": 55.7, "total_s": 497.9}
+{"model": "small", "cond": "gptq_w4_us_s2", "split": "test", "size_bits": 842268672, "size_ratio_vs_w4": 1.0, "quantize_s": 55.0, "total_s": 509.8}
+{"model": "small", "cond": "gptq_w4_balanced_s2", "split": "test", "size_bits": 842268672, "size_ratio_vs_w4": 1.0, "quantize_s": 67.2, "total_s": 507.1}

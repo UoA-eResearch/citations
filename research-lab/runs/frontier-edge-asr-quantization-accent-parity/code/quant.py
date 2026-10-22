@@ -200,24 +200,25 @@ def size_bits(model, bits_of):
     return tot
 
 
-def mixed_allocation(model, err_worst, err_best, promote_share=0.05):
-    """Promote the most accent-differential layers to W8 (>= 5% of weights); demote the least to W3 to match W4 bits."""
+def mixed_allocation(model, err_worst, err_best, promote_share=0.05, base=4, hi=8, lo=3):
+    """Promote the most accent-differential layers to `hi` bits (>= 5% of weights); demote the least to `lo` bits until
+    total bits match uniform `base` (plan section 4: base 4, hi 8, lo 3; D1 fallback: base 3, hi 8, lo 2)."""
     mods = block_linears(model)
     score = {k: err_worst[k] - err_best[k] for k in mods}
     order = sorted(mods, key=lambda k: score[k], reverse=True)
     total = sum(m.weight.numel() for m in mods.values())
-    bits = {k: 4 for k in mods}
+    bits = {k: base for k in mods}
     target = size_bits(model, bits)
     promoted = 0
     for k in order:
         if promoted >= promote_share * total:
             break
-        bits[k] = 8
+        bits[k] = hi
         promoted += mods[k].weight.numel()
     for k in reversed(order):
         if size_bits(model, bits) <= target:
             break
-        if bits[k] == 4:
-            bits[k] = 3
+        if bits[k] == base:
+            bits[k] = lo
     # step back if overshot below target by more than 1%
     return bits, score, size_bits(model, bits) / target

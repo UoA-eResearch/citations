@@ -3,7 +3,7 @@
   decode.py MODEL COND SPLIT
     MODEL  small | large-v3
     COND   fp16 | rtn_w8 | rtn_w4 | gptq_w4_<comp>_s<seed> | gptq_w3_<comp>_s<seed> | awq_w4_<comp>_s<seed>
-           | mp_<comp>_s<seed>        comp: us | balanced | worst
+           | mp_<comp>_s<seed> | mp3_<comp>_s<seed> (D1)        comp: us | balanced | worst
     SPLIT  test | validation
 
 Writes data/hyps/<MODEL>/<COND>_<SPLIT>.jsonl and appends the condition's packed size to results/tables/conditions.jsonl.
@@ -112,7 +112,7 @@ def apply(model, cond, proc, m):
     if kind in ("gptq", "awq"):
         b, comp, s = rest.split("_")
         b, seed = int(b[1:]), int(s[1:])
-    else:                                   # mp_<comp>_s<seed>
+    else:                                   # mp_ / mp3_<comp>_s<seed>
         comp, s = rest.split("_")
         seed = int(s[1:])
     cal = batches(model, proc, m, calib_windows(model, comp, seed))
@@ -122,7 +122,7 @@ def apply(model, cond, proc, m):
         return bits, {}
     if kind == "awq":
         return {k: b for k in mods}, {"alpha": quant.quantize_awq(m, cal, b)}
-    alloc = json.loads((TAB / f"mp_allocation_{model}.json").read_text())
+    alloc = json.loads((TAB / f"{kind}_allocation_{model}.json").read_text())
     quant.quantize_gptq(m, cal, alloc["bits"])
     return alloc["bits"], {}
 

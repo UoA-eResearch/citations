@@ -161,6 +161,8 @@ def analyze(model):
         out[f"H2_{bits}"] = decide(f"gptq_{bits}_us", f"gptq_{bits}_worst")
     out["H3"] = decide("gptq_w4_us", "mp_us")
     out["H3_bal"] = decide("gptq_w4_balanced", "mp_balanced")
+    out["H3_w3"] = decide("gptq_w3_us", "mp3_us")                 # D1 fallback
+    out["H3_bal_w3"] = decide("gptq_w3_balanced", "mp3_balanced")
     out["awq"] = {k: decide("awq_w4_us", f"awq_w4_{k}") for k in ("balanced", "worst")}
     (TAB / f"analysis_{model}.json").write_text(json.dumps(out, indent=1))
     print(json.dumps({k: v for k, v in out.items() if k != "per_condition"}, indent=1))

@@ -1,0 +1,450 @@
+{
+ "model": "small",
+ "conditions": [
+  "fp16",
+  "gptq_w4_balanced_s0",
+  "gptq_w4_balanced_s1",
+  "gptq_w4_balanced_s2",
+  "gptq_w4_us_s0",
+  "gptq_w4_us_s1",
+  "gptq_w4_us_s2",
+  "rtn_w4",
+  "rtn_w8"
+ ],
+ "named_groups": [
+  "Bulgarian",
+  "Chinese",
+  "Indian English",
+  "Irish English",
+  "Jamaican English",
+  "Kenyan English",
+  "Latin American",
+  "Lithuanian",
+  "Mainstream US English",
+  "Nigerian English",
+  "Scottish English",
+  "Southern British English",
+  "Spanish",
+  "Vietnamese"
+ ],
+ "fp16_group_wer": {
+  "Bulgarian": 0.10231,
+  "Chinese": 0.19308,
+  "Indian English": 0.14694,
+  "Irish English": 0.14511,
+  "Jamaican English": 0.27123,
+  "Kenyan English": 0.30034,
+  "Latin American": 0.14035,
+  "Lithuanian": 0.23716,
+  "Mainstream US English": 0.19614,
+  "Nigerian English": 0.26467,
+  "Scottish English": 0.22002,
+  "Southern British English": 0.2306,
+  "Spanish": 0.23301,
+  "Vietnamese": 0.31497
+ },
+ "worst3_fp16": [
+  "Jamaican English",
+  "Kenyan English",
+  "Vietnamese"
+ ],
+ "best3_fp16": [
+  "Bulgarian",
+  "Latin American",
+  "Irish English"
+ ],
+ "per_condition": {
+  "fp16": {
+   "agg_wer": 0.22522,
+   "agg_wer_ci": [
+    0.20728,
+    0.24335
+   ],
+   "gap": 0.15963,
+   "gap_ci": [
+    0.08202,
+    0.26319
+   ],
+   "penalty": 0.0,
+   "penalty_ci": [
+    0.0,
+    0.0
+   ],
+   "literal_gap": 0.21266,
+   "loop_rate": 0.00328,
+   "group_wer": {
+    "Bulgarian": 0.10231,
+    "Chinese": 0.19308,
+    "Indian English": 0.14694,
+    "Irish English": 0.14511,
+    "Jamaican English": 0.27123,
+    "Kenyan English": 0.30034,
+    "Latin American": 0.14035,
+    "Lithuanian": 0.23716,
+    "Mainstream US English": 0.19614,
+    "Nigerian English": 0.26467,
+    "Scottish English": 0.22002,
+    "Southern British English": 0.2306,
+    "Spanish": 0.23301,
+    "Vietnamese": 0.31497
+   }
+  },
+  "gptq_w4_balanced_s0": {
+   "agg_wer": 0.23501,
+   "agg_wer_ci": [
+    0.21922,
+    0.25141
+   ],
+   "gap": 0.10791,
+   "gap_ci": [
+    0.05185,
+    0.18615
+   ],
+   "penalty": -0.05172,
+   "penalty_ci": [
+    -0.12384,
+    0.0119
+   ],
+   "literal_gap": 0.24027,
+   "loop_rate": 0.00363,
+   "group_wer": {
+    "Bulgarian": 0.11118,
+    "Chinese": 0.21744,
+    "Indian English": 0.15383,
+    "Irish English": 0.20441,
+    "Jamaican English": 0.27407,
+    "Kenyan English": 0.2719,
+    "Latin American": 0.13479,
+    "Lithuanian": 0.23975,
+    "Mainstream US English": 0.20466,
+    "Nigerian English": 0.27248,
+    "Scottish English": 0.22609,
+    "Southern British English": 0.35145,
+    "Spanish": 0.23378,
+    "Vietnamese": 0.32149
+   }
+  },
+  "gptq_w4_balanced_s1": {
+   "agg_wer": 0.24089,
+   "agg_wer_ci": [
+    0.22103,
+    0.26019
+   ],
+   "gap": 0.17021,
+   "gap_ci": [
+    0.10103,
+    0.2525
+   ],
+   "penalty": 0.01058,
+   "penalty_ci": [
+    -0.04113,
+    0.04827
+   ],
+   "literal_gap": 0.2572,
+   "loop_rate": 0.00398,
+   "group_wer": {
+    "Bulgarian": 0.10704,
+    "Chinese": 0.18857,
+    "Indian English": 0.14924,
+    "Irish English": 0.15608,
+    "Jamaican English": 0.36424,
+    "Kenyan English": 0.28836,
+    "Latin American": 0.13222,
+    "Lithuanian": 0.23726,
+    "Mainstream US English": 0.20267,
+    "Nigerian English": 0.30192,
+    "Scottish English": 0.22447,
+    "Southern British English": 0.35538,
+    "Spanish": 0.26071,
+    "Vietnamese": 0.32306
+   }
+  },
+  "gptq_w4_balanced_s2": {
+   "agg_wer": 0.23849,
+   "agg_wer_ci": [
+    0.22115,
+    0.25672
+   ],
+   "gap": 0.15677,
+   "gap_ci": [
+    0.0905,
+    0.23519
+   ],
+   "penalty": -0.00286,
+   "penalty_ci": [
+    -0.05004,
+    0.03169
+   ],
+   "literal_gap": 0.24822,
+   "loop_rate": 0.00398,
+   "group_wer": {
+    "Bulgarian": 0.10645,
+    "Chinese": 0.19338,
+    "Indian English": 0.1494,
+    "Irish English": 0.15331,
+    "Jamaican English": 0.30356,
+    "Kenyan English": 0.2881,
+    "Latin American": 0.1395,
+    "Lithuanian": 0.28394,
+    "Mainstream US English": 0.22733,
+    "Nigerian English": 0.28537,
+    "Scottish English": 0.21921,
+    "Southern British English": 0.35467,
+    "Spanish": 0.2354,
+    "Vietnamese": 0.32183
+   }
+  },
+  "gptq_w4_us_s0": {
+   "agg_wer": 0.24204,
+   "agg_wer_ci": [
+    0.22489,
+    0.25988
+   ],
+   "gap": 0.14208,
+   "gap_ci": [
+    0.06092,
+    0.235
+   ],
+   "penalty": -0.01755,
+   "penalty_ci": [
+    -0.0875,
+    0.04063
+   ],
+   "literal_gap": 0.24741,
+   "loop_rate": 0.0041,
+   "group_wer": {
+    "Bulgarian": 0.1094,
+    "Chinese": 0.18827,
+    "Indian English": 0.14448,
+    "Irish English": 0.14993,
+    "Jamaican English": 0.27222,
+    "Kenyan English": 0.33969,
+    "Latin American": 0.31921,
+    "Lithuanian": 0.28017,
+    "Mainstream US English": 0.20255,
+    "Nigerian English": 0.29404,
+    "Scottish English": 0.22569,
+    "Southern British English": 0.35681,
+    "Spanish": 0.23206,
+    "Vietnamese": 0.318
+   }
+  },
+  "gptq_w4_us_s1": {
+   "agg_wer": 0.24038,
+   "agg_wer_ci": [
+    0.22268,
+    0.25877
+   ],
+   "gap": 0.13159,
+   "gap_ci": [
+    0.04598,
+    0.23499
+   ],
+   "penalty": -0.02804,
+   "penalty_ci": [
+    -0.08265,
+    0.01888
+   ],
+   "literal_gap": 0.25296,
+   "loop_rate": 0.00363,
+   "group_wer": {
+    "Bulgarian": 0.10349,
+    "Chinese": 0.19729,
+    "Indian English": 0.14735,
+    "Irish English": 0.15355,
+    "Jamaican English": 0.27634,
+    "Kenyan English": 0.31705,
+    "Latin American": 0.31793,
+    "Lithuanian": 0.19764,
+    "Mainstream US English": 0.20405,
+    "Nigerian English": 0.28582,
+    "Scottish English": 0.22164,
+    "Southern British English": 0.35645,
+    "Spanish": 0.29842,
+    "Vietnamese": 0.32228
+   }
+  },
+  "gptq_w4_us_s2": {
+   "agg_wer": 0.24217,
+   "agg_wer_ci": [
+    0.22422,
+    0.26051
+   ],
+   "gap": 0.12482,
+   "gap_ci": [
+    0.0421,
+    0.22039
+   ],
+   "penalty": -0.0348,
+   "penalty_ci": [
+    -0.09824,
+    0.01904
+   ],
+   "literal_gap": 0.22314,
+   "loop_rate": 0.0041,
+   "group_wer": {
+    "Bulgarian": 0.10408,
+    "Chinese": 0.31218,
+    "Indian English": 0.1458,
+    "Irish English": 0.1509,
+    "Jamaican English": 0.27619,
+    "Kenyan English": 0.29575,
+    "Latin American": 0.31408,
+    "Lithuanian": 0.23677,
+    "Mainstream US English": 0.2067,
+    "Nigerian English": 0.29225,
+    "Scottish English": 0.2188,
+    "Southern British English": 0.23883,
+    "Spanish": 0.28987,
+    "Vietnamese": 0.32722
+   }
+  },
+  "rtn_w4": {
+   "agg_wer": 0.24115,
+   "agg_wer_ci": [
+    0.22227,
+    0.25931
+   ],
+   "gap": 0.16055,
+   "gap_ci": [
+    0.10021,
+    0.23345
+   ],
+   "penalty": 0.00092,
+   "penalty_ci": [
+    -0.05071,
+    0.0398
+   ],
+   "literal_gap": 0.28313,
+   "loop_rate": 0.00445,
+   "group_wer": {
+    "Bulgarian": 0.10526,
+    "Chinese": 0.20662,
+    "Indian English": 0.15161,
+    "Irish English": 0.15186,
+    "Jamaican English": 0.27705,
+    "Kenyan English": 0.27005,
+    "Latin American": 0.14591,
+    "Lithuanian": 0.20459,
+    "Mainstream US English": 0.20427,
+    "Nigerian English": 0.31706,
+    "Scottish English": 0.23177,
+    "Southern British English": 0.24562,
+    "Spanish": 0.25618,
+    "Vietnamese": 0.3884
+   }
+  },
+  "rtn_w8": {
+   "agg_wer": 0.22515,
+   "agg_wer_ci": [
+    0.20704,
+    0.24421
+   ],
+   "gap": 0.17147,
+   "gap_ci": [
+    0.0858,
+    0.28938
+   ],
+   "penalty": 0.01185,
+   "penalty_ci": [
+    -0.00129,
+    0.03161
+   ],
+   "literal_gap": 0.23121,
+   "loop_rate": 0.00328,
+   "group_wer": {
+    "Bulgarian": 0.10704,
+    "Chinese": 0.19579,
+    "Indian English": 0.14563,
+    "Irish English": 0.14692,
+    "Jamaican English": 0.27322,
+    "Kenyan English": 0.31342,
+    "Latin American": 0.13907,
+    "Lithuanian": 0.19476,
+    "Mainstream US English": 0.19581,
+    "Nigerian English": 0.2665,
+    "Scottish English": 0.2184,
+    "Southern British English": 0.22846,
+    "Spanish": 0.23489,
+    "Vietnamese": 0.33824
+   }
+  }
+ },
+ "H1_w4": {
+  "verdict": "Inconclusive",
+  "ref": [
+   "gptq_w4_us_s0",
+   "gptq_w4_us_s1",
+   "gptq_w4_us_s2"
+  ],
+  "arm": [
+   "gptq_w4_balanced_s0",
+   "gptq_w4_balanced_s1",
+   "gptq_w4_balanced_s2"
+  ],
+  "positive_control_penalty": -0.0268,
+  "positive_control_ci": [
+   -0.08944,
+   0.02605
+  ],
+  "positive_control_holds": false,
+  "arm_penalty": -0.01466,
+  "arm_penalty_ci": [
+   -0.06265,
+   0.02421
+  ],
+  "reduction_R": 0.4528,
+  "penalty_difference": -0.01213,
+  "penalty_difference_ci": [
+   -0.0709,
+   0.03649
+  ],
+  "agg_wer_change": -0.0034,
+  "agg_wer_change_ci": [
+   -0.01078,
+   0.00398
+  ],
+  "seed_R": {
+   "s0": -1.9467,
+   "s1": 1.3775,
+   "s2": 0.9179
+  }
+ },
+ "H2_w4": {
+  "status": "not run",
+  "ref": "gptq_w4_us",
+  "arm": "gptq_w4_worst"
+ },
+ "H1_w3": {
+  "status": "not run",
+  "ref": "gptq_w3_us",
+  "arm": "gptq_w3_balanced"
+ },
+ "H2_w3": {
+  "status": "not run",
+  "ref": "gptq_w3_us",
+  "arm": "gptq_w3_worst"
+ },
+ "H3": {
+  "status": "not run",
+  "ref": "gptq_w4_us",
+  "arm": "mp_us"
+ },
+ "H3_bal": {
+  "status": "not run",
+  "ref": "gptq_w4_balanced",
+  "arm": "mp_balanced"
+ },
+ "awq": {
+  "balanced": {
+   "status": "not run",
+   "ref": "awq_w4_us",
+   "arm": "awq_w4_balanced"
+  },
+  "worst": {
+   "status": "not run",
+   "ref": "awq_w4_us",
+   "arm": "awq_w4_worst"
+  }
+ }
+}
