@@ -56,7 +56,7 @@ of every parsed sample and logs every class change. Limb 1 is then re-run with t
 re-run is superseded, and `results/tables/pre_d3/` keeps the original tables. Gold records whose own field now
 resolves are no longer untagged; they are labelled and then excluded from scoring, and the exclusion is reported.
 
-## D5 — 2026-10-22 15:30 NZDT — pass 2 conditions, a display truncation, and label spelling (before `score.py agree`)
+## D5 — 2026-10-22 15:26 NZDT — pass 2 conditions, a display truncation, and label spelling (before `score.py agree`)
 
 1. **Pass 2 was done in the same working session as pass 1.** It began more than five hours after pass 1 was sealed,
    from its own sheet and order, and pass 1's labels file was not opened. But the labeller is the same agent, with the
@@ -89,7 +89,7 @@ resolves are no longer untagged; they are labelled and then excluded from scorin
    A laboratory animal's housing facility is not a sampling site. Of the 17, three end as a country (Spain, Czechia,
    China); the rest are not determinable.
 
-## D6 — 2026-10-22 15:55 NZDT — LLM arm output budget (before any arm is run)
+## D6 — 2026-10-22 15:32 NZDT — LLM arm output budget (before any arm is run)
 
 The locally served model (nemotron_3_nano_omni) writes its reasoning before its answer. Two earlier studies in this
 lab found that small output budgets truncate its replies before the answer (FAERS recalibration, D1–D2; the
@@ -97,7 +97,7 @@ Schedule-LLM study used 16,384 tokens). `arms.py` had a 400-token budget, which 
 replies as "unknown". The budget is now 16,384 tokens and the request timeout 900 s; requests run eight at a time.
 The prompt, temperature (0), evidence and parsing are unchanged. No arm had been run.
 
-## D7 — 2026-10-22 16:40 NZDT — post-hoc analysis (after limb-2 results were read)
+## D7 — 2026-10-22 15:45 NZDT — post-hoc analysis (after limb-2 results were read)
 
 Only 24 of the 300 test records turned out to have a determinable country, so H2's 40% recovery bar was out of reach
 for any arm. To show what recovery looks like where it is possible, `code/posthoc_natural.py` repeats the arm
@@ -108,7 +108,7 @@ changes no preregistered verdict.
 A note on reading `limb2_secondary.json`: for an arm with no tuned threshold (gazetteer, LLM), the
 "test_at_threshold" asymmetric-error row counts every prediction, so it is an any-confidence row.
 
-## D8 — 2026-10-22 17:05 NZDT — full-text check of the publication cap (post hoc)
+## D8 — 2026-10-22 15:50 NZDT — full-text check of the publication cap (post hoc)
 
 The evidence keeps, from each open-access paper, the first 12 sentences with a sampling cue (at most 2,500
 characters). All 186 gold records with full text reached that cap, so a sampling statement later in a paper could
@@ -118,7 +118,7 @@ a country with a sampling cue, and every hit was read (`results/tables/fulltext_
 none states a single sampling country; three are not open access. No label changes. Had all 12 been countries, the
 projected country share would rise by at most 1.3 points.
 
-## D9 — 2026-10-22 17:15 NZDT — mirror agreement run late
+## D9 — 2026-10-22 15:51 NZDT — mirror agreement run late
 
 The plan's mirror check (§5: 10,000 random accessions against the ENA portal) had not been run with limb 1. It was
 run now (`code/mirror.py`), after both limbs' results were read. It is descriptive, with no decision rule, and it
