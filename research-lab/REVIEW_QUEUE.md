@@ -20,8 +20,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-22 14:13 | `energy-nz-intermittent-curtailment-ledger` | confirmation pass |
 | 2026-10-22 19:13 | `legal-phantom-citations-judicial-opinions` | review |
 
-**Next Fable slot: not before 2026-10-23 00:13 NZDT.** Phantom-citations review FINISHED (19:13 run): verdict **fix first** (review/review.md; 12 findings - H1 should be Inconclusive; the frozen screen marks known fabricated California cites consistent; post-filter recall 39/854; 3 of 4 'judge incidents' are appellate opinions; ~11 of the 19 unmatched flag opinions are in Charlotin; New Mexico dropped by a regex). Fixes applied in 7a6e6b8 (D9; H1 Inconclusive; all 43 court-flagged opinions in the database). Queue: 1. phantom confirmation pass (00:13 slot). 2. retraction markers review (draft 72af844).
-3. DSI origin review (draft 87273a8).
+**Next Fable slot: not before 2026-10-23 00:13 NZDT.** Phantom-citations review FINISHED (19:13 run): verdict **fix first** (review/review.md; 12 findings - H1 should be Inconclusive; the frozen screen marks known fabricated California cites consistent; post-filter recall 39/854; 3 of 4 'judge incidents' are appellate opinions; ~11 of the 19 unmatched flag opinions are in Charlotin; New Mexico dropped by a regex). Fixes applied in 7a6e6b8 (D9; H1 Inconclusive; all 43 court-flagged opinions in the database). Queue: 1. phantom confirmation pass (00:13 slot). 2. retraction markers review (draft 72af844). 3. DSI origin review (draft 87273a8). 4. retraction-risk forecast review (draft b314e0f).
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
@@ -36,6 +35,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | `legal-phantom-citations-judicial-opinions` | 09c9990 | H1 Refuted by rule (0 of 300 sampled; upper bound 40; recall 0/4 judge incidents) - not robust; H2 not scorable; 45 court-flagged opinions | reviewed 2026-10-22: **fix first** (12 findings; apply, then confirmation) |
 | `trust-corrected-record-machine-readable` | 72af844 | H1 Refuted (2.4% unmarked in PMC XML), H2 Supported (sidecar 95.6%), H3 Refuted; peS2o 11.9% marked | awaiting review |
 | `ancestral-dsi-origin-recoverability` | 87273a8 | H1 Inconclusive (usable +2.9 pp, -5.9 to +10.8; placeholders +9.1); H2 Refuted (24/300 test records determinable; 61% lab material, 30% not stated, 9% findable) | awaiting review |
+| `trust-retraction-risk-frozen-forecast` | b314e0f | H1 Inconclusive (E@1% 3.7x, 1.4-13.3); H2 Supported (authors+references 11.4x, 6.0-14.1); H3 sealed for 2028-12-31 | awaiting review |
 
 ## Order to run them in
 
