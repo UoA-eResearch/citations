@@ -113,6 +113,18 @@ A 74-qubit twin at the weaker hardware noise would be harder still. The prior ev
 
 Skipped after a feasibility check (7 October 2026): `comp-social-science-ai-edit-survival`. The text of deleted Wikipedia articles is visible only to administrators (the API returns `permissiondenied` for deleted revisions), so the first revisions of deleted articles cannot be scored retrospectively. Since August 2025, suspected LLM articles can also be speedy-deleted because they look AI-generated, which makes the outcome partly circular. A prospective version would need months of collection and could no longer test the March 2026 policy change.
 
+Skipped after a novelty check (23 October 2026): `quantum-simulation-mitigation-bias-vs-ci`. Both halves are
+largely done by the target papers:
+- **(a) ZNE bias for the 74-qubit Floquet magnetization.** Qedma's paper (arXiv:2607.24937) runs a 28-qubit noisy
+  twin with the same extrapolation (its Appendix D). This is why the companion lead `quantum-simulation-floquet-74q-
+  noisy-twin` was skipped.
+- **(b) Global rescaling of the operator Loschmidt echo.** Algorithmiq's paper (arXiv:2607.25998) compares the
+  rescaled estimate with converged tensor-network ground truth at depths 2-4, describing "a small positive bias". It
+  also tests the rescaling assumption with gate-duration and synthetic Pauli-noise injection across five settings, and
+  offers PEC with derived bounds as its accuracy route.
+- **What is left** is a number for the size of the rescaling bias at the target depth on 20-28-qubit patches. It needs
+  GPU trajectories, and the GPU is committed to the ASR study.
+
 Skipped after a feasibility check (22 October 2026): `frontier-photonic-inverse-design-seed-budget`. Two problems:
 - **The leaderboard is too thin.** The public invrs-io leaderboard (latest commit 2025-10-22) has enough entries for a
   best-to-median spread on only two of the six planned challenges: the mode converter (92 entries) and the metagrating
