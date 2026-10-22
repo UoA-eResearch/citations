@@ -86,3 +86,39 @@ A check of measured against OSM area per islet and scene on Funafuti (no rates o
   index. Its residual standard deviation after tide regression is 12.1% of islet area, against 14.4% for NDWI. Its
   tide correlation is −0.90, and no area is zero. The index is unchanged.
 - Landsat measurements are much noisier: a residual standard deviation of about 49% of islet area.
+
+## D5 — 2026-10-23 00:49 NZDT — which OSM features are islets, and gross-failure scenes (before any rate is computed)
+
+A check of measured against OSM area per islet and scene (no rates or trends computed) found that some OSM features
+are not land.
+- **Penrhyn.** 28% of clear Sentinel-2 measurements so far are under a quarter of the OSM area. Failure is
+  concentrated in small features (1–2.5 ha): 12 fail in 69–90% of their scenes. It does not depend on tide (the same
+  share in every tide quintile). Imagery of one (penrhyn_126) shows a submerged lagoon coral knoll. The scene that
+  "measures" it as land has a cloud over it that the scene classification missed.
+- **Tarawa.** All of the near-zero rows belong to one 181 ha polygon (tarawa_004). It is mostly intertidal reef flat,
+  with dry sand only in small patches.
+
+The plan takes islets from OSM at 1 ha or more and has no rule for features that are not land. Measuring a
+submerged knoll or a reef flat gives either zero or cloud contamination, and the tide regression is not robust to
+either.
+
+**Rules** (in `rates.py`, applied the same way to every atoll, sensor and epoch):
+1. **Land screen.** An OSM feature is an islet for this study if its Sentinel-2 MNDWI-Otsu area, uncorrected for
+   tide, is at least 25% of its OSM area in at least half of its clear Sentinel-2 scenes. The screen uses only
+   Sentinel-2, so one decision covers both epochs. It uses the whole record's share, not its time course.
+   - Features that fail are listed in `results/tables/land_screen.csv` with their detection share by year.
+   - A feature whose share is at least 0.5 in 2016–2018 and below 0.5 in 2024–2026 is flagged as a possible real
+     loss. It is reported and inspected, not silently dropped, and is excluded from the primary analysis but included
+     in a sensitivity analysis.
+2. **Gross-failure scenes.** Within each retained islet, for each sensor family (Sentinel-2; Landsat 5/7/8) and each
+   area series, a scene's value is set aside if its log area is more than 5 scaled MADs (1.4826 × MAD) from the
+   islet's median. Theil–Sen is already robust to such values; the tide regression is not.
+3. **Not measurable.** An islet whose window fits inside no Sentinel-2 tile is never measured. These are counted and
+   listed, with no change to the code (Tarawa: 1 of 33 features of 1 ha or more).
+
+**Unchanged:**
+- The D3 reference: rates are expressed as a percentage of the OSM area.
+- Every threshold and estimand in plan §3–4.
+
+`land_screen.csv` reports the Sentinel-2-to-OSM area ratio among retained islets, so that any dilution by
+over-drawn OSM polygons is visible.
