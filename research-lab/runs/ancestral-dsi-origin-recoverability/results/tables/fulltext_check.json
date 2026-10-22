@@ -1,0 +1,18 @@
+{
+ "note": "Post hoc (D8). The 12 with-publication gold records whose final label is 'not stated': full open-access text searched for sentences naming an INSDC country together with a sampling cue (collect, sampl, isolat, obtain, field, site, farm, captur, purchas); every hit read.",
+ "records": {
+  "R105": {"open_access": true, "single_sampling_country_in_full_text": false, "basis": "patient gut isolates; country sentences are reagent suppliers only"},
+  "R111": {"open_access": true, "single_sampling_country_in_full_text": false, "basis": "no country with a sampling cue"},
+  "R116": {"open_access": false, "single_sampling_country_in_full_text": null, "basis": "not open access"},
+  "R235": {"open_access": true, "single_sampling_country_in_full_text": false, "basis": "culture-collection release paper; no per-strain origin"},
+  "R236": {"open_access": true, "single_sampling_country_in_full_text": false, "basis": "same paper as R235"},
+  "R237": {"open_access": true, "single_sampling_country_in_full_text": false, "basis": "same paper as R235"},
+  "R238": {"open_access": true, "single_sampling_country_in_full_text": false, "basis": "same paper as R235"},
+  "R239": {"open_access": true, "single_sampling_country_in_full_text": false, "basis": "same paper as R235"},
+  "R245": {"open_access": false, "single_sampling_country_in_full_text": null, "basis": "not open access"},
+  "R246": {"open_access": false, "single_sampling_country_in_full_text": null, "basis": "not open access"},
+  "R248": {"open_access": true, "single_sampling_country_in_full_text": false, "basis": "dog cohorts in the USA and the UK/Europe; no single country per sample"},
+  "R249": {"open_access": true, "single_sampling_country_in_full_text": false, "basis": "reference-centre isolates; country sentences are suppliers only"}
+ },
+ "changed_labels": 0
+}

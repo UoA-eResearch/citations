@@ -1,0 +1,134 @@
+{
+ "groups_as_of": "2023-06-01",
+ "pre": {
+  "n": 10163838,
+  "cbd": {
+   "Party": {
+    "n": 5986086,
+    "share": 0.589
+   },
+   "not a Party": {
+    "n": 4075615,
+    "share": 0.401
+   },
+   "not a country": {
+    "n": 50955,
+    "share": 0.005
+   },
+   "territory or other": {
+    "n": 51182,
+    "share": 0.005
+   }
+  },
+  "nagoya": {
+   "Party": {
+    "n": 5458702,
+    "share": 0.5371
+   },
+   "not a Party": {
+    "n": 4602999,
+    "share": 0.4529
+   },
+   "not a country": {
+    "n": 50955,
+    "share": 0.005
+   },
+   "territory or other": {
+    "n": 51182,
+    "share": 0.005
+   }
+  },
+  "income": {
+   "High income": {
+    "n": 8834234,
+    "share": 0.8692
+   },
+   "Low income": {
+    "n": 57108,
+    "share": 0.0056
+   },
+   "Lower middle income": {
+    "n": 203099,
+    "share": 0.02
+   },
+   "Upper middle income": {
+    "n": 994804,
+    "share": 0.0979
+   },
+   "not a country": {
+    "n": 50955,
+    "share": 0.005
+   },
+   "not classified": {
+    "n": 23638,
+    "share": 0.0023
+   }
+  }
+ },
+ "post": {
+  "n": 6045743,
+  "cbd": {
+   "Party": {
+    "n": 4150536,
+    "share": 0.6865
+   },
+   "not a Party": {
+    "n": 1626379,
+    "share": 0.269
+   },
+   "not a country": {
+    "n": 176361,
+    "share": 0.0292
+   },
+   "territory or other": {
+    "n": 92467,
+    "share": 0.0153
+   }
+  },
+  "nagoya": {
+   "Party": {
+    "n": 3484474,
+    "share": 0.5764
+   },
+   "not a Party": {
+    "n": 2292441,
+    "share": 0.3792
+   },
+   "not a country": {
+    "n": 176361,
+    "share": 0.0292
+   },
+   "territory or other": {
+    "n": 92467,
+    "share": 0.0153
+   }
+  },
+  "income": {
+   "High income": {
+    "n": 4010369,
+    "share": 0.6633
+   },
+   "Low income": {
+    "n": 91071,
+    "share": 0.0151
+   },
+   "Lower middle income": {
+    "n": 215845,
+    "share": 0.0357
+   },
+   "Upper middle income": {
+    "n": 1500193,
+    "share": 0.2481
+   },
+   "not a country": {
+    "n": 176361,
+    "share": 0.0292
+   },
+   "not classified": {
+    "n": 51904,
+    "share": 0.0086
+   }
+  }
+ },
+ "unmapped_names": []
+}

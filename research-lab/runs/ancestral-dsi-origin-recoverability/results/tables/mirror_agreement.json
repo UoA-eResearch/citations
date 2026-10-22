@@ -1,0 +1,21 @@
+{
+ "sampled": 10000,
+ "found_in_ena": 9729,
+ "biosample_class_counts": {
+  "usable": 8088,
+  "placeholder": 829,
+  "absent": 806,
+  "malformed": 6
+ },
+ "ena_class_counts": {
+  "usable": 8081,
+  "absent": 1111,
+  "placeholder": 525,
+  "malformed": 12
+ },
+ "usable_agreement": 0.9989,
+ "usable_in_biosample_not_ena": 9,
+ "usable_in_ena_not_biosample": 2,
+ "both_usable": 8079,
+ "same_country_when_both_usable": 1.0
+}

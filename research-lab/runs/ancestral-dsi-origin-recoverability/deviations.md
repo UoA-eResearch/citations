@@ -96,3 +96,30 @@ lab found that small output budgets truncate its replies before the answer (FAER
 Schedule-LLM study used 16,384 tokens). `arms.py` had a 400-token budget, which would have scored most truncated
 replies as "unknown". The budget is now 16,384 tokens and the request timeout 900 s; requests run eight at a time.
 The prompt, temperature (0), evidence and parsing are unchanged. No arm had been run.
+
+## D7 — 2026-10-22 16:40 NZDT — post-hoc analysis (after limb-2 results were read)
+
+Only 24 of the 300 test records turned out to have a determinable country, so H2's 40% recovery bar was out of reach
+for any arm. To show what recovery looks like where it is possible, `code/posthoc_natural.py` repeats the arm
+evaluation among *natural* samples only, with records labelled "inapplicable" (laboratory material) removed. It uses
+every arm's predictions at any confidence. This analysis was not preregistered and is reported as exploratory. It
+changes no preregistered verdict.
+
+A note on reading `limb2_secondary.json`: for an arm with no tuned threshold (gazetteer, LLM), the
+"test_at_threshold" asymmetric-error row counts every prediction, so it is an any-confidence row.
+
+## D8 — 2026-10-22 17:05 NZDT — full-text check of the publication cap (post hoc)
+
+The evidence keeps, from each open-access paper, the first 12 sentences with a sampling cue (at most 2,500
+characters). All 186 gold records with full text reached that cap, so a sampling statement later in a paper could
+have been missed. Only records labelled "not stated" can be affected (laboratory material is inapplicable whatever
+the text says), and only those with a publication: 12 records. Their full texts were searched for any sentence naming
+a country with a sampling cue, and every hit was read (`results/tables/fulltext_check.json`). Nine are open access;
+none states a single sampling country; three are not open access. No label changes. Had all 12 been countries, the
+projected country share would rise by at most 1.3 points.
+
+## D9 — 2026-10-22 17:15 NZDT — mirror agreement run late
+
+The plan's mirror check (§5: 10,000 random accessions against the ENA portal) had not been run with limb 1. It was
+run now (`code/mirror.py`), after both limbs' results were read. It is descriptive, with no decision rule, and it
+does not bear on any verdict: usable-country status agrees in 99.9% of the 9,729 samples found.

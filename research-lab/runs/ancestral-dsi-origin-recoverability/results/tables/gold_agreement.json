@@ -1,0 +1,43 @@
+{
+ "records": 500,
+ "excluded_by_code": {
+  "R400": "human-host metagenome (D3)",
+  "R426": "human-host metagenome (D3)",
+  "R497": "own country field resolves after D4"
+ },
+ "excluded_label_vs_code": {
+  "pass1": [
+   "R400",
+   "R426"
+  ],
+  "pass2": [
+   "R400",
+   "R426"
+  ]
+ },
+ "scored_records": 497,
+ "kappa_full": 0.9253,
+ "raw_agreement_full": 0.9658,
+ "kappa_scoring": 0.942,
+ "raw_agreement_scoring": 0.992,
+ "kappa_coarse": 0.9246,
+ "raw_agreement_coarse": 0.9658,
+ "pass1_counts": {
+  "inapplicable": 342,
+  "country": 38,
+  "not stated": 117
+ },
+ "pass2_counts": {
+  "inapplicable": 353,
+  "not stated": 110,
+  "country": 34
+ },
+ "disagreements": 17,
+ "disagreements_scoring": 4,
+ "disagreement_kinds": {
+  "country / not stated": 2,
+  "inapplicable / not stated": 2,
+  "country / inapplicable": 2,
+  "not stated / inapplicable": 11
+ }
+}

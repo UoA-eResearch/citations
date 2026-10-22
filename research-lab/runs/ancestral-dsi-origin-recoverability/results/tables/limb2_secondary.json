@@ -1,0 +1,358 @@
+{
+ "population_untagged": {
+  "with_publication": 456061,
+  "without_publication": 1201362
+ },
+ "projection_label_shares": {
+  "inapplicable": {
+   "samples": 1006273,
+   "ci": [
+    929753,
+    1082794
+   ],
+   "share_of_untagged": 0.6071,
+   "share_ci": [
+    0.561,
+    0.6533
+   ],
+   "strata": {
+    "with_publication": {
+     "n_gold": 250,
+     "share": 0.916
+    },
+    "without_publication": {
+     "n_gold": 247,
+     "share": 0.4899
+    }
+   }
+  },
+  "not stated": {
+   "samples": 498545,
+   "ci": [
+    424257,
+    572832
+   ],
+   "share_of_untagged": 0.3008,
+   "share_ci": [
+    0.256,
+    0.3456
+   ],
+   "strata": {
+    "with_publication": {
+     "n_gold": 250,
+     "share": 0.048
+    },
+    "without_publication": {
+     "n_gold": 247,
+     "share": 0.3968
+    }
+   }
+  },
+  "country": {
+   "samples": 152605,
+   "ci": [
+    103952,
+    201258
+   ],
+   "share_of_untagged": 0.0921,
+   "share_ci": [
+    0.0627,
+    0.1214
+   ],
+   "strata": {
+    "with_publication": {
+     "n_gold": 250,
+     "share": 0.036
+    },
+    "without_publication": {
+     "n_gold": 247,
+     "share": 0.1134
+    }
+   }
+  }
+ },
+ "projection_recoverable_test": {
+  "gazetteer": {
+   "samples": 0,
+   "ci": [
+    0,
+    0
+   ],
+   "share_of_untagged": 0.0,
+   "share_ci": [
+    0.0,
+    0.0
+   ],
+   "strata": {
+    "with_publication": {
+     "n_gold": 141,
+     "share": 0.0
+    },
+    "without_publication": {
+     "n_gold": 159,
+     "share": 0.0
+    }
+   }
+  },
+  "classifier": {
+   "samples": 37779,
+   "ci": [
+    5189,
+    70368
+   ],
+   "share_of_untagged": 0.0228,
+   "share_ci": [
+    0.0031,
+    0.0425
+   ],
+   "strata": {
+    "with_publication": {
+     "n_gold": 141,
+     "share": 0.0
+    },
+    "without_publication": {
+     "n_gold": 159,
+     "share": 0.0314
+    }
+   }
+  },
+  "llm": {
+   "samples": 0,
+   "ci": [
+    0,
+    0
+   ],
+   "share_of_untagged": 0.0,
+   "share_ci": [
+    0.0,
+    0.0
+   ],
+   "strata": {
+    "with_publication": {
+     "n_gold": 141,
+     "share": 0.0
+    },
+    "without_publication": {
+     "n_gold": 159,
+     "share": 0.0
+    }
+   }
+  }
+ },
+ "calibration": {
+  "gazetteer": {
+   "predictions": 156,
+   "brier": 0.7481,
+   "bins": [
+    {
+     "bin": [
+      0.2,
+      0.4
+     ],
+     "n": 5,
+     "mean_conf": 0.338,
+     "accuracy": 0.0
+    },
+    {
+     "bin": [
+      0.4,
+      0.6
+     ],
+     "n": 19,
+     "mean_conf": 0.511,
+     "accuracy": 0.105
+    },
+    {
+     "bin": [
+      0.6,
+      0.8
+     ],
+     "n": 7,
+     "mean_conf": 0.665,
+     "accuracy": 0.0
+    },
+    {
+     "bin": [
+      0.8,
+      0.9
+     ],
+     "n": 3,
+     "mean_conf": 0.854,
+     "accuracy": 0.0
+    },
+    {
+     "bin": [
+      0.9,
+      1.0
+     ],
+     "n": 122,
+     "mean_conf": 1.0,
+     "accuracy": 0.131
+    }
+   ]
+  },
+  "classifier": {
+   "predictions": 497,
+   "brier": 0.4252,
+   "bins": [
+    {
+     "bin": [
+      0,
+      0.2
+     ],
+     "n": 8,
+     "mean_conf": 0.166,
+     "accuracy": 0.0
+    },
+    {
+     "bin": [
+      0.2,
+      0.4
+     ],
+     "n": 69,
+     "mean_conf": 0.316,
+     "accuracy": 0.0
+    },
+    {
+     "bin": [
+      0.4,
+      0.6
+     ],
+     "n": 105,
+     "mean_conf": 0.505,
+     "accuracy": 0.01
+    },
+    {
+     "bin": [
+      0.6,
+      0.8
+     ],
+     "n": 169,
+     "mean_conf": 0.709,
+     "accuracy": 0.024
+    },
+    {
+     "bin": [
+      0.8,
+      0.9
+     ],
+     "n": 114,
+     "mean_conf": 0.849,
+     "accuracy": 0.079
+    },
+    {
+     "bin": [
+      0.9,
+      1.0
+     ],
+     "n": 32,
+     "mean_conf": 0.941,
+     "accuracy": 0.375
+    }
+   ]
+  },
+  "llm": {
+   "predictions": 50,
+   "brier": 0.4183,
+   "bins": [
+    {
+     "bin": [
+      0.6,
+      0.8
+     ],
+     "n": 1,
+     "mean_conf": 0.7,
+     "accuracy": 0.0
+    },
+    {
+     "bin": [
+      0.9,
+      1.0
+     ],
+     "n": 49,
+     "mean_conf": 0.966,
+     "accuracy": 0.551
+    }
+   ]
+  }
+ },
+ "asymmetric_error": {
+  "gazetteer": {
+   "test_at_threshold": {
+    "errors": 82,
+    "errors_with_submitter_country": 44,
+    "naming_submitter_country": 16,
+    "share": 0.3636,
+    "share_ci": [
+     0.2378,
+     0.5113
+    ],
+    "errors_on_not_determinable": 74
+   },
+   "all_records_any_confidence": {
+    "errors": 138,
+    "errors_with_submitter_country": 78,
+    "naming_submitter_country": 26,
+    "share": 0.3333,
+    "share_ci": [
+     0.2387,
+     0.4436
+    ],
+    "errors_on_not_determinable": 125
+   }
+  },
+  "classifier": {
+   "test_at_threshold": {
+    "errors": 0,
+    "errors_with_submitter_country": 0,
+    "naming_submitter_country": 0,
+    "share": null,
+    "share_ci": [
+     0.0,
+     1.0
+    ],
+    "errors_on_not_determinable": 0
+   },
+   "all_records_any_confidence": {
+    "errors": 471,
+    "errors_with_submitter_country": 279,
+    "naming_submitter_country": 160,
+    "share": 0.5735,
+    "share_ci": [
+     0.5148,
+     0.6301
+    ],
+    "errors_on_not_determinable": 460
+   }
+  },
+  "llm": {
+   "test_at_threshold": {
+    "errors": 9,
+    "errors_with_submitter_country": 6,
+    "naming_submitter_country": 4,
+    "share": 0.6667,
+    "share_ci": [
+     0.3,
+     0.9032
+    ],
+    "errors_on_not_determinable": 8
+   },
+   "all_records_any_confidence": {
+    "errors": 23,
+    "errors_with_submitter_country": 15,
+    "naming_submitter_country": 9,
+    "share": 0.6,
+    "share_ci": [
+     0.3575,
+     0.8018
+    ],
+    "errors_on_not_determinable": 21
+   }
+  }
+ },
+ "gold_country_equals_submitter_country": {
+  "determinable": 37,
+  "same": 9,
+  "submitter_country_known": 12
+ }
+}

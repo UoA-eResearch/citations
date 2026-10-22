@@ -1,0 +1,200 @@
+{
+ "scored": 497,
+ "tune": 197,
+ "test": 300,
+ "labels": {
+  "all": {
+   "inapplicable": 350,
+   "country": 37,
+   "not stated": 110
+  },
+  "tune": {
+   "inapplicable": 143,
+   "not stated": 41,
+   "country": 13
+  },
+  "test": {
+   "country": 24,
+   "inapplicable": 207,
+   "not stated": 69
+  }
+ },
+ "labels_by_stratum": {
+  "with_publication": {
+   "inapplicable": 229,
+   "country": 9,
+   "not stated": 12
+  },
+  "without_publication": {
+   "inapplicable": 121,
+   "not stated": 98,
+   "country": 28
+  }
+ },
+ "gold_countries": {
+  "USA": 12,
+  "China": 9,
+  "Japan": 2,
+  "Pacific Ocean": 2,
+  "Czechia": 1,
+  "Spain": 1,
+  "Israel": 1,
+  "Thailand": 1,
+  "Malaysia": 1,
+  "Italy": 1,
+  "France": 1,
+  "Nigeria": 1,
+  "Arctic Ocean": 1,
+  "United Kingdom": 1,
+  "Germany": 1,
+  "Atlantic Ocean": 1
+ },
+ "arms": {
+  "gazetteer": {
+   "tuning": {
+    "threshold": null
+   },
+   "test": {
+    "n": 300,
+    "predictions": 0,
+    "correct": 0,
+    "recovery": 0.0,
+    "recovery_ci": [
+     0.0,
+     0.0126
+    ],
+    "precision": null,
+    "precision_ci": [
+     0.0,
+     1.0
+    ],
+    "determinable": 24,
+    "recall_of_determinable": 0.0,
+    "recall_ci": [
+     0.0,
+     0.138
+    ]
+   },
+   "test_any_confidence": {
+    "n": 300,
+    "predictions": 95,
+    "correct": 13,
+    "recovery": 0.0433,
+    "recovery_ci": [
+     0.0255,
+     0.0727
+    ],
+    "precision": 0.1368,
+    "precision_ci": [
+     0.0817,
+     0.2202
+    ],
+    "determinable": 24,
+    "recall_of_determinable": 0.5417,
+    "recall_ci": [
+     0.3507,
+     0.7211
+    ]
+   }
+  },
+  "classifier": {
+   "tuning": {
+    "threshold": 0.9712,
+    "tune_predictions": 2,
+    "tune_correct": 2,
+    "tune_precision": 1.0
+   },
+   "test": {
+    "n": 300,
+    "predictions": 5,
+    "correct": 5,
+    "recovery": 0.0167,
+    "recovery_ci": [
+     0.0071,
+     0.0384
+    ],
+    "precision": 1.0,
+    "precision_ci": [
+     0.5655,
+     1.0
+    ],
+    "determinable": 24,
+    "recall_of_determinable": 0.2083,
+    "recall_ci": [
+     0.0924,
+     0.4047
+    ]
+   },
+   "test_any_confidence": {
+    "n": 300,
+    "predictions": 300,
+    "correct": 18,
+    "recovery": 0.06,
+    "recovery_ci": [
+     0.0383,
+     0.0928
+    ],
+    "precision": 0.06,
+    "precision_ci": [
+     0.0383,
+     0.0928
+    ],
+    "determinable": 24,
+    "recall_of_determinable": 0.75,
+    "recall_ci": [
+     0.551,
+     0.88
+    ]
+   }
+  },
+  "llm": {
+   "tuning": {
+    "threshold": null
+   },
+   "test": {
+    "n": 300,
+    "predictions": 0,
+    "correct": 0,
+    "recovery": 0.0,
+    "recovery_ci": [
+     0.0,
+     0.0126
+    ],
+    "precision": null,
+    "precision_ci": [
+     0.0,
+     1.0
+    ],
+    "determinable": 24,
+    "recall_of_determinable": 0.0,
+    "recall_ci": [
+     0.0,
+     0.138
+    ]
+   },
+   "test_any_confidence": {
+    "n": 300,
+    "predictions": 28,
+    "correct": 19,
+    "recovery": 0.0633,
+    "recovery_ci": [
+     0.0409,
+     0.0968
+    ],
+    "precision": 0.6786,
+    "precision_ci": [
+     0.4934,
+     0.8207
+    ],
+    "determinable": 24,
+    "recall_of_determinable": 0.7917,
+    "recall_ci": [
+     0.5953,
+     0.9076
+    ]
+   }
+  }
+ },
+ "H2": "Refuted",
+ "H2_arms_meeting_rule": []
+}
