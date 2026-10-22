@@ -1,0 +1,70 @@
+{
+ "islets": 146,
+ "atolls": 6,
+ "dep_late_pct_vs_rate_corr": {
+  "n": 146,
+  "pearson": -0.199,
+  "spearman": -0.174,
+  "mean_diff_ours_minus_dep": 0.225,
+  "mean_abs_diff": 8.843
+ },
+ "dep_late_pct_vs_rate_uncorr": {
+  "n": 146,
+  "pearson": -0.147,
+  "spearman": -0.099,
+  "mean_diff_ours_minus_dep": 0.07,
+  "mean_abs_diff": 9.608
+ },
+ "dep_area_rate_pct_vs_rate_corr": {
+  "n": 146,
+  "pearson": -0.029,
+  "spearman": -0.036,
+  "mean_diff_ours_minus_dep": -4.189,
+  "mean_abs_diff": 5.056
+ },
+ "dep_area_rate_pct_vs_rate_uncorr": {
+  "n": 146,
+  "pearson": -0.05,
+  "spearman": -0.15,
+  "mean_diff_ours_minus_dep": -4.344,
+  "mean_abs_diff": 6.244
+ },
+ "by_atoll_late": {
+  "funafuti": {
+   "islets": 15,
+   "dep_late_mean": -1.847,
+   "ours_corr_mean": 0.976,
+   "ours_uncorr_mean": 4.195
+  },
+  "kiritimati": {
+   "islets": 2,
+   "dep_late_mean": -1.587,
+   "ours_corr_mean": -2.302,
+   "ours_uncorr_mean": 0.474
+  },
+  "kwajalein": {
+   "islets": 49,
+   "dep_late_mean": -2.421,
+   "ours_corr_mean": -0.622,
+   "ours_uncorr_mean": -1.52
+  },
+  "majuro": {
+   "islets": 29,
+   "dep_late_mean": -0.244,
+   "ours_corr_mean": -0.159,
+   "ours_uncorr_mean": -1.273
+  },
+  "penrhyn": {
+   "islets": 31,
+   "dep_late_mean": 1.148,
+   "ours_corr_mean": 0.081,
+   "ours_uncorr_mean": 0.702
+  },
+  "tarawa": {
+   "islets": 20,
+   "dep_late_mean": 2.472,
+   "ours_corr_mean": -0.808,
+   "ours_uncorr_mean": -1.779
+  }
+ }
+}
