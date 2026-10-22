@@ -55,3 +55,25 @@ every vocabulary entry still resolves to itself. `code/reclassify.py` re-applies
 of every parsed sample and logs every class change. Limb 1 is then re-run with the D3 filter. The interrupted D3
 re-run is superseded, and `results/tables/pre_d3/` keeps the original tables. Gold records whose own field now
 resolves are no longer untagged; they are labelled and then excluded from scoring, and the exclusion is reported.
+
+## D5 — 2026-10-22 15:30 NZDT — pass 2 conditions, a display truncation, and label spelling (before `score.py agree`)
+
+1. **Pass 2 was done in the same working session as pass 1.** It began more than five hours after pass 1 was sealed,
+   from its own sheet and order, and pass 1's labels file was not opened. But the labeller is the same agent, with the
+   same rules in mind, and its working notes from pass 1 were in context. Agreement between the passes is therefore an
+   upper bound on what two independent labellers would reach, and is reported as such.
+2. **A display truncation, found and checked.** While labelling, the reading aid's output was further cut to 280–320
+   characters per line for some batches. One pass-2 record (an ENA plastisphere sample) gives its country under the
+   ENA attribute "geographic location, country and/or sea" past that cut; it was found and labelled from the full
+   record. A scan of every attribute and comment line in both sheets for location values past the cuts found no other
+   pass-2 record affected, and no pass-1 record with a location value past the reading aid's own limits (500
+   characters of attributes, 300 of comment). Disagreements go to pass 3 in any case.
+3. **A cap that gold and arms share.** `parse.py` stores at most 600 characters of a sample's other attributes. The
+   gold sheets and all three arms read the same stored fields, so they are scored on the same evidence; but a
+   location written past that cap is invisible to both. Recoverability is therefore measured on the stored evidence,
+   which can understate what the full BioSample record holds. Three gold records end inside a "geographic location"
+   attribute at the cap. A sensitivity count from the raw records is reported if the raw XML is still available.
+4. **Label spelling.** `score.py` compared labels as raw strings. Country labels are now mapped to their INSDC
+   spelling through `countries.resolve`, the function the arms use for their predictions, and a label outside the
+   vocabulary stops the script. This changes no label's meaning; it only stops "Cote d'Ivoire" with a straight
+   apostrophe from differing from the vocabulary's curly one.

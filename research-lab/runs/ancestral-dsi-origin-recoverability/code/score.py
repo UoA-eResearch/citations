@@ -80,11 +80,21 @@ def exclusion(x):
     return None
 
 
+def canon(label):
+    """D5: a country label is mapped to its INSDC spelling through the arms' own resolver, so that a straight or a
+    curly apostrophe, or an accent, is not scored as a disagreement; a label outside the vocabulary is an error."""
+    if label in ("inapplicable", "not stated", "excluded"):
+        return label
+    c = countries.resolve(label)
+    assert c, f"label {label!r} is not an INSDC name"
+    return c
+
+
 def labels(k):
     key = pd.read_csv(GOLD / f"pass{k}_key.csv").set_index("sheet_id").record
     lab = pd.read_csv(GOLD / f"pass{k}_labels.csv", keep_default_na=False)
     assert lab.sheet_id.is_unique and set(lab.sheet_id) <= set(key.index), f"pass {k}: bad sheet ids"
-    return dict(zip(lab.sheet_id.map(key), lab.label.str.strip()))
+    return dict(zip(lab.sheet_id.map(key), lab.label.str.strip().map(canon)))
 
 
 def agree():
