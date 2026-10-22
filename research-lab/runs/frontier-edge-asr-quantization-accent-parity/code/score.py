@@ -98,9 +98,11 @@ def analyze(model):
     def stats(c):
         e, n = C * E[c], C * N
         eg, ng = e @ G, n @ G
-        gap = eg[:, worst3].sum(1) / ng[:, worst3].sum(1) - eg[:, best3].sum(1) / ng[:, best3].sum(1)
+        w3 = eg[:, worst3].sum(1) / ng[:, worst3].sum(1)
+        b3 = eg[:, best3].sum(1) / ng[:, best3].sum(1)
         wg = eg / ng
-        return {"gap": gap, "agg": e.sum(1) / n.sum(1), "literal_gap": wg.max(1) - wg.min(1), "group_wer": wg}
+        return {"gap": w3 - b3, "worst3": w3, "best3": b3, "agg": e.sum(1) / n.sum(1),
+                "literal_gap": wg.max(1) - wg.min(1), "group_wer": wg}
 
     S = {c: stats(c) for c in conds}
     P = {c: S[c]["gap"] - S["fp16"]["gap"] for c in conds}
@@ -154,6 +156,8 @@ def analyze(model):
             "gap": round(float(S[c]["gap"][0]), 5), "gap_ci": ci(S[c]["gap"]),
             "penalty": round(float(P[c][0]), 5), "penalty_ci": ci(P[c]),
             "literal_gap": round(float(S[c]["literal_gap"][0]), 5),
+            # descriptive (added after the W3 results were read): where a gap change comes from
+            "worst3_wer": round(float(S[c]["worst3"][0]), 5), "best3_wer": round(float(S[c]["best3"][0]), 5),
             "loop_rate": round(float(L[c].sum() / nutt.sum()), 5),
             "group_wer": {g: round(float(w), 5) for g, w in zip(named, S[c]["group_wer"][0])}}
     for bits in ("w4", "w3"):
