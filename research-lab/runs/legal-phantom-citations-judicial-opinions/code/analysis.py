@@ -162,9 +162,13 @@ JUDGE_DOC = {10621620: "relying opinion",            # In re CorMedix (D.N.J.), 
              10873094: "reviewing-court opinion"}     # Henry County Schools v. Grant (Ga. Ct. App.)
 
 
-# D9: flag opinions the name match missed, checked by hand against the database (garbled or "In re" captions)
+# D9/D10: flag opinions the name match missed, found by hand in the database under another caption or date
 HAND_DB = {10772904: "Zaykariya v. Freedom Mortgage Corporation (W.D. Okla., 2026-01-09)",
-           10808040: "Bolden v. Baltimore Gas & Electric Co (In re: Eric Chibueze Nwaubani) (4th Cir., 2026-03-11)"}
+           10808040: "Bolden v. Baltimore Gas & Electric Co (In re: Eric Chibueze Nwaubani) (4th Cir., 2026-03-11)",
+           10376385: "Puerto Rico Soccer League NFP, Corp. v. Federacion Puertorriquena de Futbol (D.P.R., 2025-09-23)",
+           10547546: "X v. Board of Trustees of Governors State University (N.D. Ill., 2025-05-06)",
+           10529856: "Flowz Digital v. Caroline Dalal (C.D. Cal., 2025-05-05)",
+           10593248: "Brick v. Gallatin County (D. Mont., 2025-05-27)"}
 
 
 def flag_vs_database(flag_ops, ver):
@@ -174,22 +178,24 @@ def flag_vs_database(flag_ops, ver):
     import numpy as np
     from rapidfuzz import fuzz
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-    from match_charlotin import NON_US, WIN_FROM, WIN_TO, MATCH
-    from namenorm import norm_name, party_score
+    from match_charlotin import is_us, WIN_FROM, WIN_TO, MATCH
+    from namenorm import norm_name, party_score, tokens_of
     idx = RUN / "data" / "index"
     names = np.load(idx / "names.npy", allow_pickle=True)
     ids = np.load(idx / "cluster_meta.npz")["ids"]
     pos = {int(c): i for i, c in enumerate(ids)}
     clusters = sorted({int(v["cluster_id"]) for v in ver if v["opinion_id"] in flag_ops})
     db = [r for r in csv.DictReader(open(RUN / "data" / "raw" / "charlotin.csv", encoding="utf-8"))
-          if not NON_US.search(r["Court"] + " " + r.get("State(s)", "")) and WIN_FROM <= (r["Date"] or "") <= WIN_TO]
+          if is_us(r) and WIN_FROM <= (r["Date"] or "") <= WIN_TO]
     db_names = [norm_name(r["Case Name"]) for r in db]
+    # D10: a caption with no indexable token (a Cyrillic one normalises to "v") matches anything with a "v"
+    usable = [i for i, d in enumerate(db_names) if tokens_of(d)]
     matched_clusters = {int(r["cluster_id"]) for r in csv.DictReader(open(S / "charlotin_matched.csv"))
                         if r["matched"] == "1"}
     rows = []
     for c in clusters:
         nm = norm_name(str(names[pos[c]])) if c in pos else ""
-        best = max(((party_score(fuzz, d, nm), i) for i, d in enumerate(db_names)), default=(0, None))
+        best = max(((party_score(fuzz, db_names[i], nm), i) for i in usable), default=(0, None))
         rows.append({"cluster_id": c, "name": nm[:80], "by_cluster": c in matched_clusters,
                      "by_name": best[0] >= MATCH, "best_score": round(best[0], 1),
                      "best_case": db[best[1]]["Case Name"][:80] if best[1] is not None else ""})
@@ -197,10 +203,13 @@ def flag_vs_database(flag_ops, ver):
         w = csv.DictWriter(fh, fieldnames=list(rows[0])); w.writeheader(); w.writerows(rows)
     inn = [r for r in rows if r["by_cluster"] or r["by_name"]]
     hand = {c: HAND_DB[c] for c in (r["cluster_id"] for r in rows if not (r["by_cluster"] or r["by_name"])) if c in HAND_DB}
+    absent = [r for r in rows if not (r["by_cluster"] or r["by_name"]) and r["cluster_id"] not in hand]
     return {"flag_opinions": len(flag_ops), "clusters": len(clusters), "in_database_by_cluster":
             sum(r["by_cluster"] for r in rows), "in_database_by_cluster_or_name": len(inn),
+            "by_caption": [r["name"] for r in rows if r["by_name"] and not r["by_cluster"]],
             "found_by_hand": hand, "in_database_total": len(inn) + len(hand),
-            "not_in_database": len(rows) - len(inn) - len(hand), "us_incidents_in_window": len(db),
+            "not_in_database": len(absent), "not_in_database_clusters": {r["cluster_id"]: r["name"] for r in absent},
+            "us_incidents_in_window": len(db), "degenerate_captions_skipped": len(db) - len(usable),
             "note": "automatic: cluster match or a date-free caption match at the matcher's threshold; the rest "
                     "checked by hand against the database"}
 

@@ -66,7 +66,7 @@ def main():
     case as nonexistent (D9). 43 from 2023 to September 2026, plus 2 in which the court only reports a party's
     assertion (not drawn). None in 2019-2022 among the 116 flag-sheet opinions verified; two placebo-period courts
     flagged litigants' miscited real cases. Counts are limited to citations into complete reporter-volumes, so they
-    are a floor; all 43 are already in the AI Hallucination Cases database.""")
+    are a floor; 38 of the 43 are in the AI Hallucination Cases database and five are not.""")
     print("figures written")
 
 

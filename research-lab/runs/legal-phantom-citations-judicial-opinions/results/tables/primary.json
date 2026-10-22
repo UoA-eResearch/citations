@@ -146,14 +146,34 @@
   "flag_opinions": 43,
   "clusters": 43,
   "in_database_by_cluster": 26,
-  "in_database_by_cluster_or_name": 41,
+  "in_database_by_cluster_or_name": 32,
+  "by_caption": [
+   "morgan v community against violence",
+   "jackson v auto owners insurance company",
+   "carter v uzglobal llc",
+   "schoene v oregon department of human services",
+   "seth cameron virgil v experian information solutions inc et al",
+   "u s bank national association as trustee on behalf of the holders of the asset b"
+  ],
   "found_by_hand": {
+   "10376385": "Puerto Rico Soccer League NFP, Corp. v. Federacion Puertorriquena de Futbol (D.P.R., 2025-09-23)",
+   "10529856": "Flowz Digital v. Caroline Dalal (C.D. Cal., 2025-05-05)",
+   "10547546": "X v. Board of Trustees of Governors State University (N.D. Ill., 2025-05-06)",
+   "10593248": "Brick v. Gallatin County (D. Mont., 2025-05-27)",
    "10772904": "Zaykariya v. Freedom Mortgage Corporation (W.D. Okla., 2026-01-09)",
    "10808040": "Bolden v. Baltimore Gas & Electric Co (In re: Eric Chibueze Nwaubani) (4th Cir., 2026-03-11)"
   },
-  "in_database_total": 43,
-  "not_in_database": 0,
-  "us_incidents_in_window": 1532,
+  "in_database_total": 38,
+  "not_in_database": 5,
+  "not_in_database_clusters": {
+   "10327938": "of house freeland v selene finance lp",
+   "10347339": "carrington v detroit buildings safety engineering and environment department",
+   "10749527": "tearria and clinton simmons individuals their children a b p o s s and r t s by ",
+   "10769508": "tarani alike johnson et al v wells fargo bank n a et al",
+   "10961798": "marissa s piper v state of indiana indiana department of child services clarissa"
+  },
+  "us_incidents_in_window": 1474,
+  "degenerate_captions_skipped": 8,
   "note": "automatic: cluster match or a date-free caption match at the matcher's threshold; the rest checked by hand against the database"
  },
  "reporters": {

@@ -22,10 +22,10 @@ incorporates an independent review (`review/review.md`; changes logged as D9).*
   the ratio is undefined.
 - **What the screen did find: courts flagging litigants' fakes.**
   - 43 opinions from 2023–2026 in which the court itself identifies a cited case as nonexistent: 0.51 per 10,000
-    opinions (0.38–0.69). These are 42 cases, since one case has two orders.
+    opinions (0.38–0.69). These are 41 cases: two cases have two documents each, one an amended re-issue.
   - In 2 more opinions the court only reports a party's assertion.
   - None appear among the 116 placebo-period flag-sheet opinions.
-  - **All 43 are already in the public AI Hallucination Cases database**, so the screen adds no unrecorded incidents.
+  - **38 of the 43 are already in the public AI Hallucination Cases database; five court-flagged opinions are not.**
 - **And a corpus problem.** CourtListener's "opinions" include party filings: pro se motions with a judge's
   endorsement, a pro se bankruptcy filing, and briefs e-filed in the Texas Fifteenth Court of Appeals. Two of these
   carry citations that exist nowhere. They are litigants' phantoms, not judges' (D8).
@@ -44,14 +44,15 @@ But this does not show the iceberg is absent. The screen could only judge citati
 the archive covers fully. It missed the fake citations in every known judicial incident we could test it on: a
 California-style citation slipped through as genuine, and fake Georgia cases were taken for misattributed real ones.
 What the screen found plainly is the other side of the problem: 43 opinions since 2023 in which a court calls out a
-litigant's fake citations, none before 2023. Every one of them is already in the main public list of such incidents.
+litigant's fake citations, none before 2023. All but five of them are already in the main public list of such
+incidents.
 
 ## What was asked
 
 The lead (`legal-digital-humanities-phantom-citations-judicial-opinions`) proposed a systematic screen of judicial
 opinions, not filings, for citations to nonexistent authority.
 - **The public record is incident-driven.** Charlotin's AI Hallucination Cases database (2,203 incidents on
-  2026-10-21; 1,532 US incidents dated in the screened window, 9 attributed to a judge) counts what someone noticed.
+  2026-10-21; 1,474 US incidents dated in the screened window, 9 attributed to a judge) counts what someone noticed.
 - **The plan** (`plan.md`, committed before any opinion text was extracted) set two tests:
   - **H1:** at least 20 verified opinions filed 2023-01-01 to 2026-09-30 that *rely* on a phantom citation
     (Supported if at least 20; Refuted if fewer than 10);
@@ -136,9 +137,9 @@ older federal reporters and the U.S. Reports, which are not where recent fabrica
 
 ### What the screen can and cannot see (recall)
 
-- **Known incident orders.** Of the 1,532 US incidents in the database dated in the window, 879 were matched to 869
+- **Known incident orders.** Of the 1,474 US incidents in the database dated in the window, 879 were matched to 869
   distinct orders in the corpus (D9 fixed a regex that had dropped New Mexico courts and added a same-day caption
-  rule).
+  rule; D10 selects US incidents by the database's own country field).
   - Before the completeness filter, the screen produced *some* candidate in 465 of the 869 (53.5%; 50.2–56.8%).
     That counts any candidate in the order, not necessarily the fabricated citation, so it is an upper bound.
   - After the filter, which is what the verified counts rest on, only **42 of 869 (4.8%; 3.6–6.5%)** keep any
@@ -180,16 +181,27 @@ older federal reporters and the U.S. Reports, which are not where recent fabrica
     tables of "Fictitious citation" entries.
   - For "Las Cruces Sun-News", CourtListener holds a real near-namesake (2003-NMCA-102). The court's finding is kept.
   - In 2 further opinions the court only reports a party's assertion that a case does not exist (D9).
-  - The 43 opinions are 42 cases, since one case has two orders.
+  - The 43 opinions are 41 cases: *Morgan* and *Schoene* each have two documents, and Schoene's second is an amended
+    re-issue of the first.
 - **Placebo period (2019–2022).** None among the 116 flag-sheet opinions. The only court flags there are of
   litigants' *miscited real* cases: "United States v. Kajakajian" for *Bajakajian* (2021), and *Hatahly* (2019), which
   the context-word list missed.
-- **The public database.** All 43 are already in it.
-  - 26 by matching the order itself; 15 more by caption, because the database lists the case under another order or
-    date (the draft matched only the nearest order within 45 days).
-  - The last 2 by hand: a garbled caption and an "In re" case.
+- **The public database.** 38 of the 43 are in it.
+  - 26 by matching the order itself.
+  - 6 more by caption, because the database lists the case under another order or date (the draft matched only the
+    nearest order within 45 days).
+  - 6 by hand, where the corpus caption is garbled or differs from the database's: *Zaykariya*, *In re Nwaubani*,
+    *Puerto Rico Soccer League* (name score 84.2, just under the threshold), *Qamar* (anonymised in the database as
+    "X v. Board of Trustees of Governors State University"), *Flowz Digital* and *Brick*.
+- **Five court-flagged opinions appear in no field of the database:**
+  - *Freeland v. Selene Finance* (M.D.N.C., 2025-02-05);
+  - *Carrington v. Detroit Buildings, Safety Engineering and Environment Department* (E.D. Mich., 2025-02-27);
+  - *Simmons v. City of Hurricane* (S.D. W. Va., 2025-12-08);
+  - *Tarani-Alike Johnson v. Wells Fargo Bank* (N.D. Cal., 2026-01-05);
+  - *Piper v. State of Indiana* (S.D. Ind., 2026-08-27).
 
-  The draft's "19 not in the database" was wrong. The screen adds no unrecorded incidents.
+  Both earlier versions were wrong. The draft said 19 were not in the database. The first revision said none were,
+  because its name match was vacuous: three Cyrillic captions normalised to "v" and matched every caption (D10).
 
 ### Party filings in the opinion corpus
 
@@ -222,7 +234,7 @@ citations can sit among the 1,027,677 screened-period misattributions without be
   cannot exclude several hundred undetected opinions. Answering H1 needs an instrument that verifies misattributions
   and quotations, and reaches Westlaw citations and modern reporters.
 - **Courts calling out fabricated citations is recent and well recorded.** 43 opinions since 2023, none in
-  2019–2022, and all already in the public database.
+  2019–2022. 38 are already in the public database, and five are not.
 - **The corpus is not purely opinions.** About 0.15% or more of "opinions" are party filings, and they produced most
   of the phantom-type items found.
 - **Adjudication.** All verification was done by the study's AI agent, which also wrote the screen, at a pace of
@@ -242,9 +254,14 @@ citations can sit among the 1,027,677 screened-period misattributions without be
   - D9: changes after the independent review — label vocabulary, two party-asserted flags, the F.R.D. article, the
     matcher's New Mexico bug and same-day rule, recall before and after the filter, the H1 rule for a sampled sheet,
     the database comparison in code, and two items not delivered (rates by court level, because the court field is
-    empty; and an uninformative capture–recapture estimate).
-- **Independent review:** Fable, 2026-10-22, "fix first" (`review/review.md`). The fixes are in this version; a
-  confirmation pass follows.
+    empty; and an uninformative capture–recapture estimate);
+  - D10: changes after the confirmation pass — the vacuous name match in the database comparison, US incidents
+    selected by the database's country field (1,474, not 1,532; matches unchanged), four more hand matches, and
+    41 cases, not 42.
+- **Independent review:** Fable, 2026-10-22, "fix first" (`review/review.md`). Confirmation pass 2026-10-23
+  (`review/confirmation.md`): every finding fixed except the database comparison, whose fix had introduced the
+  vacuous name match. That is repaired in D10, and the re-run reproduces the reviewer's recount exactly (38 of 43;
+  the same five unrecorded).
 
 ## Reproducing it
 

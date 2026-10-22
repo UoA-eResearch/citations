@@ -1,0 +1,900 @@
+{
+ "us_in_window": 1532,
+ "degenerate_captions": 12,
+ "states": {
+  "USA": 1472,
+  "Poland": 6,
+  "China": 5,
+  "Tanzania": 2,
+  "South Korea": 8,
+  "Domestic Arbitration; USA": 1,
+  "Costa Rica": 6,
+  "Belgium": 8,
+  "Chile": 3,
+  "Russian Federation": 1,
+  "USA; Domestic Arbitration": 1,
+  "Portugal": 1,
+  "Ukraine": 2,
+  "Uganda": 1,
+  "WIPO": 2,
+  "UAE": 2,
+  "Denmark": 2,
+  "Czech Republic": 2,
+  "Qatar": 1,
+  "Austria": 2,
+  "International Arbitration": 1,
+  "The Bahamas": 1,
+  "Zimbabwe": 1,
+  "Papua New Guinea": 1
+ },
+ "clusters": [
+  {
+   "cluster_id": 9818300,
+   "name": "morgan v community against violence",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "Morgan v. Community Against Violence",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Morgan v. Community Against Violence",
+   "recomputed_best_court_date": "D. New Mexico 2023-10-23",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 9818576,
+   "name": "morgan v community against violence",
+   "by_cluster": false,
+   "reported_by_name": true,
+   "reported_best": "Morgan v. Community Against Violence",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Morgan v. Community Against Violence",
+   "recomputed_best_court_date": "D. New Mexico 2023-10-23",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 9885417,
+   "name": "mata v avianca inc",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "Mata v. Avianca, Inc",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Mata v. Avianca, Inc",
+   "recomputed_best_court_date": "S.D. New York 2023-06-22",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10301255,
+   "name": "vargas v salazar son s group llc",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "Vargas v. Salazar",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Vargas v. Salazar",
+   "recomputed_best_court_date": "S.D. Texas 2024-11-01",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10327938,
+   "name": "of house freeland v selene finance lp",
+   "by_cluster": false,
+   "reported_by_name": true,
+   "reported_best": "ООО «Точка опоры» v. ООО «ЦСС»",
+   "recomputed_best_score": 50.0,
+   "recomputed_best_case": "Safe Choice, LLC v. City of Cleveland",
+   "recomputed_best_court_date": "N.D. Ohio 2025-10-30",
+   "by_name_recomputed": false,
+   "hand_search_tokens": [
+    "finance",
+    "freeland",
+    "house",
+    "selene"
+   ],
+   "hand_search_hits": [
+    {
+     "case": "Abudahou v Metro Finance Pty Ltd",
+     "court": "Federal Court",
+     "date": "2026-08-05",
+     "party": "Pro Se Litigant",
+     "score": 40.0
+    },
+    {
+     "case": "Principal, Woodland House School & Ors. v. Shakeel Ahmad Malik",
+     "court": "HC Jammu & Kashmir and Ladakh, Srinagar",
+     "date": "2026-06-06",
+     "party": "Judge",
+     "score": 38.9
+    },
+    {
+     "case": "Credit One Finance Limited v Cheung Yiu Cho and another",
+     "court": "District Court",
+     "date": "2026-09-15",
+     "party": "Pro Se Litigant",
+     "score": 37.2
+    },
+    {
+     "case": "Credit One Finance Limited v Cheung Yiu Cho & another",
+     "court": "District Court",
+     "date": "2026-03-20",
+     "party": "Pro Se Litigant",
+     "score": 35.9
+    },
+    {
+     "case": "Brian Smith v. TD Auto Finance LLC, et al.",
+     "court": "N.D. Mississippi",
+     "date": "2026-04-14",
+     "party": "Pro Se Litigant",
+     "score": 35.7
+    },
+    {
+     "case": "Preston House v. TH Foods, Inc.",
+     "court": "D. Nevada",
+     "date": "2026-06-18",
+     "party": "Pro Se Litigant",
+     "score": 34.5
+    },
+    {
+     "case": "Preston House v. TH Foods, Inc.",
+     "court": "D. Nevada",
+     "date": "2025-12-11",
+     "party": "Pro Se Litigant",
+     "score": 34.5
+    },
+    {
+     "case": "Candice Dias v Angle Auto Finance",
+     "court": "Fair Work Commission",
+     "date": "2025-01-20",
+     "party": "Pro Se Litigant",
+     "score": 34.5
+    }
+   ]
+  },
+  {
+   "cluster_id": 10347339,
+   "name": "carrington v detroit buildings safety engineering and environment department",
+   "by_cluster": false,
+   "reported_by_name": true,
+   "reported_best": "ООО «Точка опоры» v. ООО «ЦСС»",
+   "recomputed_best_score": 46.2,
+   "recomputed_best_case": "Christine Thomas v. United States Department of Justice, et al.",
+   "recomputed_best_court_date": "E.D. North Carolina 2026-07-15",
+   "by_name_recomputed": false,
+   "hand_search_tokens": [
+    "carrington"
+   ],
+   "hand_search_hits": [
+    {
+     "case": "Carrington v TAFE Queensland",
+     "court": "Queensland IRC",
+     "date": "2025-12-05",
+     "party": "Lawyer",
+     "score": 28.2
+    }
+   ]
+  },
+  {
+   "cluster_id": 10376385,
+   "name": "puerto rico soccer league nfp corp v federacion puertorriquena de futbol",
+   "by_cluster": false,
+   "reported_by_name": true,
+   "reported_best": "ООО «Точка опоры» v. ООО «ЦСС»",
+   "recomputed_best_score": 84.2,
+   "recomputed_best_case": "Puerto Rico Soccer League NFP, Corp., et al. v. Federación Puertorriqueña de Futbol, et al.",
+   "recomputed_best_court_date": "D. Puerto Rico 2025-09-23",
+   "by_name_recomputed": false,
+   "hand_search_tokens": [
+    "federacion",
+    "futbol",
+    "league",
+    "puerto",
+    "puertorriquena",
+    "soccer"
+   ],
+   "hand_search_hits": [
+    {
+     "case": "Puerto Rico Soccer League NFP, Corp., et al. v. Federación Puertorriqueña de Futbol, et al",
+     "court": "D. Puerto Rico",
+     "date": "2025-09-23",
+     "party": "Lawyer",
+     "score": 84.2
+    }
+   ]
+  },
+  {
+   "cluster_id": 10529856,
+   "name": "flowz digital llc v flowz staffing llc",
+   "by_cluster": false,
+   "reported_by_name": true,
+   "reported_best": "ООО «Точка опоры» v. ООО «ЦСС»",
+   "recomputed_best_score": 47.3,
+   "recomputed_best_case": "Matter of: Adapt Forward, LLC",
+   "recomputed_best_court_date": "GAO 2026-02-18",
+   "by_name_recomputed": false,
+   "hand_search_tokens": [
+    "flowz"
+   ],
+   "hand_search_hits": [
+    {
+     "case": "Flowz Digital v. Caroline Dalal",
+     "court": "C.D. California",
+     "date": "2025-05-05",
+     "party": "Lawyer",
+     "score": 32.3
+    }
+   ]
+  },
+  {
+   "cluster_id": 10547546,
+   "name": "qamar v board of trustees of gov state uni gsu",
+   "by_cluster": false,
+   "reported_by_name": true,
+   "reported_best": "ООО «Точка опоры» v. ООО «ЦСС»",
+   "recomputed_best_score": 50.0,
+   "recomputed_best_case": "In re the Marriage of D.X. and S.P.",
+   "recomputed_best_court_date": "CA California 2025-09-30",
+   "by_name_recomputed": false,
+   "hand_search_tokens": [
+    "qamar"
+   ],
+   "hand_search_hits": []
+  },
+  {
+   "cluster_id": 10582836,
+   "name": "jackson v auto owners insurance company",
+   "by_cluster": false,
+   "reported_by_name": true,
+   "reported_best": "Woodrow Jackson v. Auto-Owners Insurance Company",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Woodrow Jackson v. Auto-Owners Insurance Company",
+   "recomputed_best_court_date": "M.D. Georgia 2025-07-14",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10593248,
+   "name": "brick v breuner",
+   "by_cluster": false,
+   "reported_by_name": true,
+   "reported_best": "ООО «Точка опоры» v. ООО «ЦСС»",
+   "recomputed_best_score": 50.0,
+   "recomputed_best_case": "Rule v. Braiman",
+   "recomputed_best_court_date": "N.D. New York 2024-09-04",
+   "by_name_recomputed": false,
+   "hand_search_tokens": [
+    "breuner",
+    "brick"
+   ],
+   "hand_search_hits": [
+    {
+     "case": "Brick v. Gallatin County, et al.",
+     "court": "D. Montana",
+     "date": "2025-12-01",
+     "party": "Pro Se Litigant",
+     "score": 21.4
+    },
+    {
+     "case": "Brick v. Gallatin County",
+     "court": "D. Montana",
+     "date": "2025-05-27",
+     "party": "Pro Se Litigant",
+     "score": 18.2
+    }
+   ]
+  },
+  {
+   "cluster_id": 10617263,
+   "name": "schoene v oregon department of human services",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "Schoene v. Oregon Department of Human Services",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Schoene v. Oregon Department of Human Services",
+   "recomputed_best_court_date": "D. Oregon 2025-06-25",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10619097,
+   "name": "carter v uzglobal llc",
+   "by_cluster": false,
+   "reported_by_name": true,
+   "reported_best": "Rasheem Carter, et al. v. UZGlobal LLC, et al.",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Rasheem Carter, et al. v. UZGlobal LLC, et al.",
+   "recomputed_best_court_date": "D. New Mexico 2026-05-01",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10630297,
+   "name": "royce jones v simploy inc and division of employment security",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "Jones v. Simploy",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Jones v. Simploy",
+   "recomputed_best_court_date": "Missouri CA 2024-09-24",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10630553,
+   "name": "molly kruse v jonathan r karlen",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "Kruse v. Karlen",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Kruse v. Karlen",
+   "recomputed_best_court_date": "CA Missouri 2024-02-13",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10636954,
+   "name": "rescore hollywood v samules ca2 3",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "Rescore Hollywood, LLC v. Samules",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Rescore Hollywood, LLC v. Samules",
+   "recomputed_best_court_date": "CA California (2d) 2025-07-18",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10637166,
+   "name": "schoene v oregon department of human services",
+   "by_cluster": false,
+   "reported_by_name": true,
+   "reported_best": "Schoene v. Oregon Department of Human Services",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Schoene v. Oregon Department of Human Services",
+   "recomputed_best_court_date": "D. Oregon 2025-06-25",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10645011,
+   "name": "coronavirus reporter corporation v apple inc",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "Coronavirus Reporter Corporation v. Apple Inc.",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Coronavirus Reporter Corporation v. Apple Inc.",
+   "recomputed_best_court_date": "N.D. California 2025-07-30",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10656875,
+   "name": "garces v hernandez",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "Garces v. Hernandez",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Garces v. Hernandez",
+   "recomputed_best_court_date": "Fifth Circuit CA 2025-08-19",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10663697,
+   "name": "lothamer tax resolution inc v kimmel",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "Lothamer Tax Resolution, Inc. v. Paul Kimmel (1)",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Lothamer Tax Resolution, Inc. v. Paul Kimmel (1)",
+   "recomputed_best_court_date": "W.D. Michigan 2025-08-29",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10674699,
+   "name": "martin v redstone federal credit union",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "Martin v. Redstone Federal Credit Union",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Martin v. Redstone Federal Credit Union",
+   "recomputed_best_court_date": "N.D. Alabama 2025-09-19",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10708363,
+   "name": "leila kasso v police officers federation of minneapolis",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "Leila Kasso v. Police Officers’ Federation of Minneapolis",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Leila Kasso v. Police Officers’ Federation of Minneapolis",
+   "recomputed_best_court_date": "D. Minnesota 2025-10-21",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10730708,
+   "name": "todd e glass v foley lardner llp",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "Todd E. Glass v. Foley & Lardner LLP",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Todd E. Glass v. Foley & Lardner LLP",
+   "recomputed_best_court_date": "W.D. Wisconsin 2025-11-04",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10749527,
+   "name": "tearria and clinton simmons individuals their children a b p o s s and r t s by and through their mother and billy lee coram an individual pro se v city of hurricane a municipality scott edwards mayor of the city of hurricane in his individual capacity chief michael mullins chief of hurricane police department in his individual capacity corporal brett johnson patrolman w d allen patrolman payton carr sergeant makenzie white detective jonathan payne and officer john does 1 10 inclusive in their individual capacities and alyson denison a worker for child protective services in her individual capacity",
+   "by_cluster": false,
+   "reported_by_name": true,
+   "reported_best": "ОСОБА_1 v. Головне управління Пенсійного фонду України в Житомирській області",
+   "recomputed_best_score": 80.0,
+   "recomputed_best_case": "In the Interest of S.M.T. and S.J.T., Children",
+   "recomputed_best_court_date": "CA Texas 2026-07-30",
+   "by_name_recomputed": false,
+   "hand_search_tokens": [
+    "allen",
+    "alyson",
+    "billy",
+    "brett",
+    "capacities",
+    "capacity",
+    "chief",
+    "child",
+    "coram",
+    "corporal",
+    "denison",
+    "detective",
+    "edwards",
+    "hurricane",
+    "inclusive",
+    "individual",
+    "johnson",
+    "jonathan",
+    "makenzie",
+    "mayor",
+    "michael",
+    "mother",
+    "mullins",
+    "municipality",
+    "officer",
+    "patrolman",
+    "payne",
+    "payton",
+    "police",
+    "protective",
+    "scott",
+    "sergeant",
+    "simmons",
+    "tearria",
+    "through",
+    "white",
+    "worker"
+   ],
+   "hand_search_hits": [
+    {
+     "case": "D (A Child) (Recusal)",
+     "court": "Court of Appeal",
+     "date": "2025-12-09",
+     "party": "Pro Se Litigant",
+     "score": 69.2
+    },
+    {
+     "case": "In re: Tracy Johnson",
+     "court": "CA Texas",
+     "date": "2025-10-30",
+     "party": "Pro Se Litigant",
+     "score": 69.0
+    },
+    {
+     "case": "In the Interest of W.G., Minor Child",
+     "court": "CA Iowa",
+     "date": "2026-04-01",
+     "party": "Pro Se Litigant",
+     "score": 66.7
+    },
+    {
+     "case": "In the Matter of the Application of Jonathan David Rinaldi",
+     "court": "SC New York",
+     "date": "2026-04-27",
+     "party": "Pro Se Litigant",
+     "score": 52.2
+    },
+    {
+     "case": "Michael Cohen Matter",
+     "court": "SDNY",
+     "date": "2024-03-20",
+     "party": "Pro Se Litigant",
+     "score": 51.9
+    },
+    {
+     "case": "The Father v The Mother",
+     "court": "High Court",
+     "date": "2025-07-30",
+     "party": "Pro Se Litigant",
+     "score": 46.2
+    },
+    {
+     "case": "In re Scott Mitchell Obeginski",
+     "court": "CA Texas (9th)",
+     "date": "2026-03-12",
+     "party": "Lawyer",
+     "score": 42.1
+    },
+    {
+     "case": "Body by Michael Pty Ltd and Industry Innovation and Science Australia",
+     "court": "Administrative Review Tribunal",
+     "date": "2025-01-24",
+     "party": "Pro Se Litigant",
+     "score": 35.4
+    }
+   ]
+  },
+  {
+   "cluster_id": 10761015,
+   "name": "jpmorgan chase bank v buenzli ca3",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "ООО «Точка опоры» v. ООО «ЦСС»",
+   "recomputed_best_score": 77.8,
+   "recomputed_best_case": "JPMorgan Chase Bank, N.A. v. Christina Buenzli",
+   "recomputed_best_court_date": "CA California 2025-12-18",
+   "by_name_recomputed": false
+  },
+  {
+   "cluster_id": 10765175,
+   "name": "gary levy v google llc",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "Levy v. Google LLC",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Levy v. Google LLC",
+   "recomputed_best_court_date": "W.D. Washington 2025-12-22",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10768785,
+   "name": "jorge paredes guevara v a p restaurant corp anastasio gionnopoulos and peter gionnopoulos",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "ООО «Точка опоры» v. ООО «ЦСС»",
+   "recomputed_best_score": 86.4,
+   "recomputed_best_case": "Jorge Paredes Guevara v. A&P Restaurant Corp., et al.",
+   "recomputed_best_court_date": "S.D. New York 2025-11-18",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10769508,
+   "name": "tarani alike johnson et al v wells fargo bank n a et al",
+   "by_cluster": false,
+   "reported_by_name": true,
+   "reported_best": "ООО «Точка опоры» v. ООО «ЦСС»",
+   "recomputed_best_score": 56.5,
+   "recomputed_best_case": "Ariel Mendones, et al. v. Cushman and Wakefield et al",
+   "recomputed_best_court_date": "SC California 2025-09-09",
+   "by_name_recomputed": false,
+   "hand_search_tokens": [
+    "alike",
+    "johnson",
+    "tarani"
+   ],
+   "hand_search_hits": [
+    {
+     "case": "In re: Tracy Johnson",
+     "court": "CA Texas",
+     "date": "2025-10-30",
+     "party": "Pro Se Litigant",
+     "score": 53.8
+    },
+    {
+     "case": "Darrin L. Johnson, Jr. v. Nationstar Mortgage LLC, et al.",
+     "court": "D. Maryland",
+     "date": "2026-08-26",
+     "party": "Pro Se Litigant",
+     "score": 47.3
+    },
+    {
+     "case": "Darrin L. Johnson, Jr. v. Nationstar Mortgage, LLC, et al.",
+     "court": "D. Maryland",
+     "date": "2026-04-30",
+     "party": "Pro Se Litigant",
+     "score": 47.3
+    },
+    {
+     "case": "Johnson v. Florida Department of Juvenile Justice et al",
+     "court": "M.D. Florida",
+     "date": "2026-02-19",
+     "party": "Pro Se Litigant",
+     "score": 42.9
+    },
+    {
+     "case": "Marques Johnson v. Capital One Financial Corporation",
+     "court": "E.D. Michigan",
+     "date": "2025-11-10",
+     "party": "Pro Se Litigant",
+     "score": 40.7
+    },
+    {
+     "case": "Melinda L'Shay Johnson v. MINI of Las Vegas",
+     "court": "D. Nevada",
+     "date": "2025-09-24",
+     "party": "Pro Se Litigant",
+     "score": 37.2
+    },
+    {
+     "case": "Primerica Life Insurance Company v. Daniel Vett Finlayson; Michelle Johnson",
+     "court": "D. Utah",
+     "date": "2026-04-22",
+     "party": "Lawyer",
+     "score": 34.5
+    },
+    {
+     "case": "Johnson / Estate of Fisher v. City of Annapolis",
+     "court": "D. Maryland",
+     "date": "2025-12-13",
+     "party": "Lawyer",
+     "score": 32.6
+    }
+   ]
+  },
+  {
+   "cluster_id": 10772904,
+   "name": "ankit devarsh zaykariyav freedom mortgage corporation et al",
+   "by_cluster": false,
+   "reported_by_name": false,
+   "reported_best": "Peterkin et al v. McIntyre et al",
+   "recomputed_best_score": 52.6,
+   "recomputed_best_case": "Peterkin et al v. McIntyre et al",
+   "recomputed_best_court_date": "D. New Jersey 2026-06-26",
+   "by_name_recomputed": false,
+   "hand_search_tokens": [
+    "ankit",
+    "devarsh",
+    "freedom",
+    "zaykariyav"
+   ],
+   "hand_search_hits": [
+    {
+     "case": "Zaykariya v. Freedom Mortgage Corporation, et al.",
+     "court": "W.D. Oklahoma",
+     "date": "2026-01-09",
+     "party": "Pro Se Litigant",
+     "score": 26.5
+    }
+   ]
+  },
+  {
+   "cluster_id": 10793037,
+   "name": "seth cameron virgil v experian information solutions inc et al",
+   "by_cluster": false,
+   "reported_by_name": true,
+   "reported_best": "ООО «Точка опоры» v. ООО «ЦСС»",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Virgil v. Experian Information Solutions, et al.",
+   "recomputed_best_court_date": "S.D. Indiana 2026-09-11",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10800912,
+   "name": "edwin hicks v city of albany",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "Hicks v. City of Albany",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Hicks v. City of Albany",
+   "recomputed_best_court_date": "CA Georgia 2026-02-26",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10805407,
+   "name": "eric gerow v anthony falcone tom blackwell blackwell automotive inc and ray lata",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "Gerow v. Falcone",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Gerow v. Falcone",
+   "recomputed_best_court_date": "D. Arizona 2026-02-20",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10808040,
+   "name": "in re eric chibueze nwaubani",
+   "by_cluster": false,
+   "reported_by_name": false,
+   "reported_best": "In re Boy",
+   "recomputed_best_score": 71.4,
+   "recomputed_best_case": "In re Boy",
+   "recomputed_best_court_date": "CA Illinois 2025-07-21",
+   "by_name_recomputed": false,
+   "hand_search_tokens": [
+    "chibueze",
+    "nwaubani"
+   ],
+   "hand_search_hits": [
+    {
+     "case": "Bolden v. Baltimore Gas & Electric Co (In re: Eric Chibueze Nwaubani)",
+     "court": "CA Fourth Circuit",
+     "date": "2026-03-11",
+     "party": "Lawyer",
+     "score": 17.6
+    }
+   ]
+  },
+  {
+   "cluster_id": 10812968,
+   "name": "u s bank national association as trustee on behalf of the holders of the asset backed securities corporation home equity loan trust series nc 2005 he8 asset backed pass through certificates series nc 2005 he8 v eric richmond a k a eric h richmond and citimortgage inc f k a citigroup mortgage inc",
+   "by_cluster": false,
+   "reported_by_name": true,
+   "reported_best": "U.S. Bank National Association v. Richmond",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "U.S. Bank National Association v. Richmond",
+   "recomputed_best_court_date": "D. Maine 2025-10-27",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10813408,
+   "name": "jana james v national board of osteopathic examiners inc",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "Jana James v. National Board of Osteopathic Examiners, Inc.",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Jana James v. National Board of Osteopathic Examiners, Inc.",
+   "recomputed_best_court_date": "S.D. Indiana 2026-03-19",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10814479,
+   "name": "ebony sherisse lucas v charles w scharf wells fargo bank n a and ellen r patterson",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "ООО «Точка опоры» v. ООО «ЦСС»",
+   "recomputed_best_score": 84.2,
+   "recomputed_best_case": "Ebony Sherisse Lucas v. Charles W. Scharf, et al.",
+   "recomputed_best_court_date": "W.D. North Carolina 2026-02-24",
+   "by_name_recomputed": false
+  },
+  {
+   "cluster_id": 10814516,
+   "name": "colin traver and angela bolton v general motors financial company inc americredit financial services inc d b a gm financial et al santander consumer usa inc united auto recovery and eastern recovery inc",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "Traver v. General Motors Financial Company Inc., et al.",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Traver v. General Motors Financial Company Inc., et al.",
+   "recomputed_best_court_date": "D. Massachusetts 2026-03-11",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10839891,
+   "name": "hulvat v gumina",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "Robert S. Hulvat v. Juli Gumina, STG Divorce Law, and Jennifer B. Hulvat",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Robert S. Hulvat v. Juli Gumina, STG Divorce Law, and Jennifer B. Hulvat",
+   "recomputed_best_court_date": "CA Illinois (3d) 2026-04-09",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10848739,
+   "name": "lance j meyer and kerry l meyer v castroville state bank",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "Meyer v. Castroville State Bank",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Meyer v. Castroville State Bank",
+   "recomputed_best_court_date": "Texas Court of Appeals (4th Dist.) 2026-04-22",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10893829,
+   "name": "compania general de combustibles s a et al v rgr global logistics llc et al",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "ООО «Точка опоры» v. ООО «ЦСС»",
+   "recomputed_best_score": 100.0,
+   "recomputed_best_case": "Compania General de Combustibles S.A., et al. v. RGR Global Logistics, LLC, et al.",
+   "recomputed_best_court_date": "S.D. Texas 2026-06-23",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10900141,
+   "name": "ryan adam dixon v multicare health system a washington non profit corporation in its capacity as a plan administrator multicare health system 401 k plan multicare health system 403 b employee savings plan",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "ООО «Точка опоры» v. ООО «ЦСС»",
+   "recomputed_best_score": 95.8,
+   "recomputed_best_case": "Ryan Adam Dixon v. MultiCare Health System (1)",
+   "recomputed_best_court_date": "W.D. Washington 2026-03-04",
+   "by_name_recomputed": true
+  },
+  {
+   "cluster_id": 10961798,
+   "name": "marissa s piper v state of indiana indiana department of child services clarissa hallett dcs caseworker individually and in official capacity kimberly byrum dcs caseworker supervisor individually and in official capacity steven owens judge individually and in official capacity marilyn tucker fullen",
+   "by_cluster": false,
+   "reported_by_name": true,
+   "reported_best": "ООО «Точка опоры» v. ООО «ЦСС»",
+   "recomputed_best_score": 51.2,
+   "recomputed_best_case": "Matter of: KE System Services, Inc.",
+   "recomputed_best_court_date": "GAO 2025-12-22",
+   "by_name_recomputed": false,
+   "hand_search_tokens": [
+    "byrum",
+    "capacity",
+    "caseworker",
+    "child",
+    "clarissa",
+    "fullen",
+    "hallett",
+    "individually",
+    "judge",
+    "kimberly",
+    "marilyn",
+    "marissa",
+    "official",
+    "owens",
+    "piper",
+    "steven",
+    "supervisor",
+    "tucker"
+   ],
+   "hand_search_hits": [
+    {
+     "case": "In the Interest of W.G., Minor Child",
+     "court": "CA Iowa",
+     "date": "2026-04-01",
+     "party": "Pro Se Litigant",
+     "score": 48.9
+    },
+    {
+     "case": "D (A Child) (Recusal)",
+     "court": "Court of Appeal",
+     "date": "2025-12-09",
+     "party": "Pro Se Litigant",
+     "score": 45.5
+    },
+    {
+     "case": "Arkansas DHS v. April Ward and Minor Child Respondents",
+     "court": "SC Arkansas",
+     "date": "2026-02-05",
+     "party": "Lawyer",
+     "score": 38.3
+    },
+    {
+     "case": "Hilpert v. 16 Judge SPV LLC",
+     "court": "SC New York",
+     "date": "2025-12-04",
+     "party": "Pro Se Litigant",
+     "score": 36.4
+    },
+    {
+     "case": "State ex rel. Soretha Marie Eldridge v. Judge Ashley Kilbane",
+     "court": "CA Ohio",
+     "date": "2025-10-31",
+     "party": "Pro Se Litigant",
+     "score": 36.0
+    },
+    {
+     "case": "Megan E. Bryan v. Child Support Enforcement Agency, State of Hawaiʻi",
+     "court": "SC Hawaiʻi",
+     "date": "2026-03-30",
+     "party": "Pro Se Litigant",
+     "score": 35.7
+    },
+    {
+     "case": "Herzel Hagigi v. Official Receiver",
+     "court": "Supreme Court",
+     "date": "2025-12-28",
+     "party": "Pro Se Litigant",
+     "score": 35.7
+    },
+    {
+     "case": "Kimberly A. Graves v. Pacific Gas and Electric Company",
+     "court": "E.D. California",
+     "date": "2026-07-24",
+     "party": "Pro Se Litigant",
+     "score": 34.0
+    }
+   ]
+  },
+  {
+   "cluster_id": 10970821,
+   "name": "southland homes etc v lam",
+   "by_cluster": true,
+   "reported_by_name": true,
+   "reported_best": "ООО «Точка опоры» v. ООО «ЦСС»",
+   "recomputed_best_score": 88.2,
+   "recomputed_best_case": "Southland Homes & Real Estate and Investment, LLC v. Lam",
+   "recomputed_best_court_date": "SC California 2026-08-05",
+   "by_name_recomputed": true
+  }
+ ]
+}

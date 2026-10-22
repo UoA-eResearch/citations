@@ -45,6 +45,13 @@ NON_US = re.compile(
     r"Queensland|FCA|FWC|EWHC|EWCA|UKUT|UKFTT|BCSC|ONSC)\b", re.I)
 
 
+
+def is_us(r):
+    """D10: a US incident by the database's own State(s) field. The NON_US regex above passed rows from South Korea,
+    Belgium, Poland and elsewhere whose court names it does not list; it is kept for the record only."""
+    return "USA" in (r.get("State(s)") or "")
+
+
 def to_int(d):
     return int(d.replace("-", "")) if d and len(d) >= 10 else 0
 
@@ -67,8 +74,7 @@ def main():
     dropped = set(json.load(open(IDX / "dropped_tokens.json"))["dropped"])
 
     rows = list(csv.DictReader(open(RAW / "charlotin.csv", encoding="utf-8")))
-    inc = [r for r in rows if not NON_US.search(r["Court"] + " " + r.get("State(s)", ""))
-           and WIN_FROM <= (r["Date"] or "") <= WIN_TO]
+    inc = [r for r in rows if is_us(r) and WIN_FROM <= (r["Date"] or "") <= WIN_TO]
 
     out = []
     for r in inc:
