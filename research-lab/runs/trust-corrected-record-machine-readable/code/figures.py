@@ -3,7 +3,8 @@
   F1  unmarked share by publisher (own XML marker, reference lists ignored) and missing sidecar flag, top 15
   F2  marked share by months since retraction: the 180 days before the snapshot, then the primary cohort
   F3  unmarked share by the source of the retraction date
-  F4  peS2o: marked share among matched retracted documents, by source (if pes2o.json exists)
+  F4  peS2o (D5 rule): the same papers in PMC and in peS2o, and peS2o overall by source
+Cohort (D5): the primary cohort without the documents dated only by a Crossref self-update, which are undated.
 """
 import json
 from pathlib import Path
@@ -34,7 +35,8 @@ def main():
     o = o[o.in_snapshot].merge(docs, on="pmcid", how="left")
     o["flag"] = o.sidecar_flag.fillna(False).astype(bool)
     o["own"] = o.own_marker.fillna(False).astype(bool)
-    C = o[o.stratum == "primary"]
+    C_all = o[o.stratum == "primary"]
+    C = C_all[C_all.date_source != "crossref-self-update (issue date)"]        # D5
 
     # F1 publishers
     top = C.publisher_name.value_counts().head(15).index[::-1]
@@ -78,7 +80,7 @@ def main():
     Watch's, else Crossref's.""")
 
     # F3 date source
-    g = C.groupby("date_source").agg(n=("pmcid", "size"), unm=("own", lambda s: 1 - s.mean()))
+    g = C_all.groupby("date_source").agg(n=("pmcid", "size"), unm=("own", lambda s: 1 - s.mean()))
     order = [k for k in ("retraction-watch", "crossref", "crossref-self-update (issue date)") if k in g.index]
     g = g.loc[order]
     fig, ax = plt.subplots(figsize=(7.4, 2.6))
@@ -91,36 +93,33 @@ def main():
     fig.suptitle("The unmarked residue concentrates where the retraction date is doubtful", x=0.02, ha="left",
                  fontsize=10.5, color=INK)
     fig.savefig(F / "F3_date_source.png", dpi=170); plt.close(fig)
-    caption("F3_date_source", """Primary cohort by the source of the retraction date. Crossref self-updates (the
-    article's own record asserts its retraction; mostly Elsevier) carry the issue date, not the retraction date
-    (D4), so some of these are recent retractions placed in the primary cohort.""")
+    caption("F3_date_source", """The cohort as preregistered, by the source of the retraction date. Crossref
+    self-updates (the article's own record asserts its retraction; mostly Elsevier) carry the issue date, not the
+    retraction date (D4); D5 moves these 412 documents to the undated stratum.""")
 
-    # F4 peS2o against PMC
-    p = T / "pes2o.json"
-    if p.exists():
-        d = pd.read_csv(T / "pes2o_documents.csv")
-        d["kind"] = d.source.str.split("/").str[0]
-        pm = json.load(open(T / "sensitivity_d3.json"))
-        bars = [("PMC bucket: XML, own marker", pm["own_marked_share"], pm["n"], XML),
-                ("PMC bucket: plain text", pm["txt_own_share"], pm["n"], XML),
-                ("peS2o: full text (s2orc)", d[d.kind == "s2orc"].marked.mean(), int((d.kind == "s2orc").sum()), FLAG),
-                ("peS2o: title + abstract (s2ag)", d[d.kind == "s2ag"].marked.mean(), int((d.kind == "s2ag").sum()), FLAG)]
-        fig, ax = plt.subplots(figsize=(7.4, 2.8))
-        fig.subplots_adjust(left=0.34, right=0.95, bottom=0.2, top=0.82)
-        for i, (lab, v, n, col) in enumerate(bars):
-            ax.barh(i, 100 * v, color=col, height=0.55)
-            ax.text(100 * v + 1, i, f"{100 * v:.1f}%", va="center", fontsize=8, color=INK)
-        ax.set_yticks(range(len(bars))); ax.set_yticklabels([f"{b[0]} ({b[2]:,})" for b in bars], fontsize=8)
-        ax.invert_yaxis(); ax.set_xlim(0, 110); ax.set_xlabel("% of retracted documents carrying a retraction marker")
-        ax.grid(axis="x", color=GRID, lw=0.5)
-        fig.suptitle("Marked at the source, lost downstream", x=0.02, ha="left", fontsize=10.5, color=INK)
-        fig.savefig(F / "F4_pes2o.png", dpi=170); plt.close(fig)
-        j = json.load(open(p))
-        caption("F4_pes2o", f"""Blue: the PMC Open Access bucket's primary cohort (retracted 180+ days before the
-        2026-10-21 snapshot), own XML marker (reference lists ignored) and plain-text marker. Orange: peS2o v2
-        (knowledge cutoff 2023-01-03), documents matched by Semantic Scholar corpus id to {j['with_corpus_id']:,} DOIs
-        retracted on or before 2022-07-07; a document is marked if its text carries a retraction title prefix, statement
-        or the token RETRACTED. The two corpora cover different retraction windows.""")
+    # F4 peS2o against PMC (D5)
+    j = json.load(open(T / "pes2o_secondary.json"))
+    ds = j["downstream_pmc_overlap"]
+    bars = [("same papers: PMC XML, own marker", ds["pmc_own_marker_share"], ds["n"], XML),
+            ("same papers: peS2o text", ds["pes2o_v2_marked_share"], ds["n"], FLAG),
+            ("all matched peS2o: full text (s2orc)", j["by_source"]["s2orc"]["v2"], j["by_source"]["s2orc"]["n"], FLAG),
+            ("all matched peS2o: title + abstract (s2ag)", j["by_source"]["s2ag"]["v2"], j["by_source"]["s2ag"]["n"], FLAG)]
+    fig, ax = plt.subplots(figsize=(7.4, 2.9))
+    fig.subplots_adjust(left=0.4, right=0.95, bottom=0.2, top=0.82)
+    for i, (lab, v, n, col) in enumerate(bars):
+        ax.barh(i, 100 * v, color=col, height=0.55)
+        ax.text(100 * v + 1, i, f"{100 * v:.1f}%", va="center", fontsize=8, color=INK)
+    ax.set_yticks(range(len(bars))); ax.set_yticklabels([f"{b[0]} ({b[2]:,})" for b in bars], fontsize=8)
+    ax.invert_yaxis(); ax.set_xlim(0, 110); ax.set_xlabel("% of retracted documents carrying a retraction marker")
+    ax.grid(axis="x", color=GRID, lw=0.5)
+    fig.suptitle("The same retracted papers: marked in PMC, unmarked in peS2o", x=0.02, ha="left", fontsize=10.5, color=INK)
+    fig.savefig(F / "F4_pes2o.png", dpi=170); plt.close(fig)
+    caption("F4_pes2o", f"""Top two bars: the {ds['n']:,} retracted papers (retracted on or before 2022-07-07, not
+    notices) that are both in the PMC Open Access snapshot and in peS2o v2 (knowledge cutoff 2023-01-03): the share
+    whose PMC XML carries its own retraction marker, and the share whose peS2o text does. Bottom two: all
+    {j['matched_documents']:,} matched peS2o documents by source, under the D5 rule (the study rule plus "notice of
+    retraction" run into the title, as peS2o renders IEEE's retitled records). The full-text documents come largely
+    from PMC; the title-and-abstract share is high because of IEEE's 2009-2011 retractions.""")
     print("figures written")
 
 

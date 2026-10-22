@@ -60,3 +60,36 @@ a "RETRACTED:" title in Crossref, a 2026 erratum and an issue date in 2020-2024.
 self-update and a separate notice counts here) are 28.9% unmarked, against 1.9% for documents dated by Retraction Watch. They are reported as their own stratum; no verdict depends on
 them. Validation 8b also found 6 of 50 unmarked documents not to be retractions of the document in question (errata,
 corrigenda, earlier versions or the notice itself), and 1 unclear.
+
+## D5 — 2026-10-23 09:53 NZDT — changes after the independent review (review/review.md, "fix first"), before re-scoring
+
+1. **The peS2o marker rule** (finding 1). peS2o renders IEEE's retitled records as "Notice of RetractionThe Effects
+   of…", with the title run into the notice and no separator. The STATEMENT pattern's closing word boundary, and the
+   TITLE pattern, therefore missed 6,159 documents that carry the plan's own "notice of retraction" marker.
+   - **Primary peS2o rule** (`code/pes2o_secondary.py`): the study rule, OR "notice of retraction" anywhere with no
+     closing boundary, OR a first line beginning "Retracted", "Retraction" or "Withdrawn" followed by a separator or
+     a capital letter (run-together titles).
+   - **Sensitivity rule** (the reviewer's broader one): "retract" anywhere in the first line.
+   - The PMC XML arm keeps its preregistered rules. Its JATS titles and statements are separate elements, and the
+     review found its detector complete.
+2. **Staleness, by-year, and the downstream comparison** (findings 2 and 3).
+   - **Code.** These were computed by uncommitted code. They now come from `code/pes2o_secondary.py` and are written
+     to `results/tables/pes2o_secondary.json`.
+   - **Staleness.** Semantic Scholar's "added" date is mostly its 2017–18 bulk ingest, so the added-before/after split
+     is confounded with retraction year. It is reported within retraction years 2015 and later only.
+   - **The downstream test** is the subset of peS2o documents that are also in the PMC snapshot, are not notices, and
+     are in the primary or recent stratum: PMC's own marker rate against peS2o's.
+3. **Self-update dates** (finding 4). The 412 documents dated only by an Elsevier Crossref self-update (D4) have no
+   retraction date. They move from the primary cohort to the undated stratum. The headline residue becomes the dated
+   documents plus an undatable count. The preregistered verdicts are unchanged (`sensitivity_d4.json`).
+4. **Notice contamination** (finding 5). 73 primary documents (0.4%) are notices or retracted corrigenda that D1's
+   type check let in. This is reported rather than excluded: excluding them moves the unmarked share from 2.77% to
+   2.79%. Two of the three validation-8a "misses" are such notices, and the report says so.
+5. **Wording and numbers** (findings 6–8):
+   - the related-article share is 95.6% under D3;
+   - 18,060 of 18,061 sidecars were modified after retraction;
+   - B-011's erratum is of its own paper;
+   - the journal-cluster key is described, with the alternative keys' intervals;
+   - 8a was labelled from excerpts selected by regular expression;
+   - the "errors fall on the unmarked side" sentence is replaced by the quantitative estimate (6 of 50 unmarked are
+     registry errors, so the unmarked share conditional on a true retraction is about 2.4%).

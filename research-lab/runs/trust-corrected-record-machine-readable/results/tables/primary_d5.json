@@ -1,0 +1,122 @@
+{
+ "primary_cohort_dated": 17649,
+ "moved_to_undated": 412,
+ "H1_unmarked_share": {
+  "estimate": 0.0185,
+  "ci": [
+   0.0096,
+   0.0328
+  ],
+  "n": 17649,
+  "clusters": 1458
+ },
+ "H1": "Refuted",
+ "H2_sidecar_flag_share": {
+  "estimate": 0.9689,
+  "ci": [
+   0.9485,
+   0.9819
+  ],
+  "n": 17649,
+  "clusters": 1458
+ },
+ "H2": "Supported",
+ "H3_xml_minus_txt": {
+  "estimate": 0.0076,
+  "ci": [
+   0.0037,
+   0.0133
+  ],
+  "n": 17649,
+  "clusters": 1458
+ },
+ "H3": "Refuted",
+ "own_unmarked_D3": {
+  "estimate": 0.0216,
+  "ci": [
+   0.0106,
+   0.0405
+  ],
+  "n": 17649,
+  "clusters": 1458
+ },
+ "residue_dated": 382,
+ "residue_dated_share": 0.0216,
+ "residue_moved_to_undated": 119,
+ "undated_stratum_after_d5": {
+  "n": 1142,
+  "own_unmarked": 0.1664
+ },
+ "by_publisher": {
+  "Hindawi": {
+   "n": 6507,
+   "own_unmarked": 0.0022,
+   "flag_missing": 0.0022
+  },
+  "Wiley": {
+   "n": 1638,
+   "own_unmarked": 0.0122,
+   "flag_missing": 0.022
+  },
+  "PLoS": {
+   "n": 1350,
+   "own_unmarked": 0.0,
+   "flag_missing": 0.0
+  },
+  "Elsevier - Cell Press": {
+   "n": 788,
+   "own_unmarked": 0.1764,
+   "flag_missing": 0.1764
+  },
+  "Springer - Nature Publishing Group": {
+   "n": 717,
+   "own_unmarked": 0.0209,
+   "flag_missing": 0.0488
+  },
+  "Springer - Biomed Central (BMC)": {
+   "n": 600,
+   "own_unmarked": 0.0017,
+   "flag_missing": 0.0067
+  },
+  "Frontiers": {
+   "n": 575,
+   "own_unmarked": 0.0052,
+   "flag_missing": 0.0052
+  },
+  "Taylor and Francis - Dove Press": {
+   "n": 564,
+   "own_unmarked": 0.0,
+   "flag_missing": 0.0
+  },
+  "Elsevier": {
+   "n": 332,
+   "own_unmarked": 0.1295,
+   "flag_missing": 0.3223
+  },
+  "Springer": {
+   "n": 306,
+   "own_unmarked": 0.085,
+   "flag_missing": 0.219
+  }
+ },
+ "hindawi_vs_rest_own_unmarked": {
+  "hindawi": {
+   "estimate": 0.0022,
+   "ci": [
+    0.0007,
+    0.005
+   ],
+   "n": 6507,
+   "clusters": 88
+  },
+  "rest": {
+   "estimate": 0.033,
+   "ci": [
+    0.0161,
+    0.0585
+   ],
+   "n": 11142,
+   "clusters": 1391
+  }
+ }
+}
