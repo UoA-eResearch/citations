@@ -20,8 +20,9 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-22 14:13 | `energy-nz-intermittent-curtailment-ledger` | confirmation pass |
 | 2026-10-22 19:13 | `legal-phantom-citations-judicial-opinions` | review |
 | 2026-10-23 00:13 | `legal-phantom-citations-judicial-opinions` | confirmation pass (fresh agent; the original could not be resumed after the restart) |
+| 2026-10-23 09:21 | `trust-corrected-record-machine-readable` | review |
 
-**Next Fable slot: not before 2026-10-23 05:13 NZDT.** Phantom confirmation pass (00:13) FINISHED: **fix first** on one item (the D9 name match was vacuous - Cyrillic captions normalise to 'v'); repaired in D10, the re-run reproduces the reviewer's recount exactly (38 of 43 in the database, five unrecorded); PUBLISHED 2026-10-23 (Inconclusive) without a second pass, since the reviewer specified the fix and the expected result. Phantom-citations review FINISHED (19:13 run): verdict **fix first** (review/review.md; 12 findings - H1 should be Inconclusive; the frozen screen marks known fabricated California cites consistent; post-filter recall 39/854; 3 of 4 'judge incidents' are appellate opinions; ~11 of the 19 unmatched flag opinions are in Charlotin; New Mexico dropped by a regex). Fixes applied in 7a6e6b8 (D9; H1 Inconclusive; all 43 court-flagged opinions in the database). Queue: 1. retraction markers review (draft 72af844). 2. DSI origin review (draft 87273a8). 3. retraction-risk forecast review (draft b314e0f). 4. reef islands review (draft ed14c61). 5. ASR accent parity review (once H4 is in).
+**Next Fable slot: not before 2026-10-23 14:21 NZDT.** Retraction-markers review started 09:21 (the 05:13 slot was missed while the estuary bare-ground job ran). Queue: 1. DSI origin review (draft 87273a8). 2. retraction-risk forecast review (draft b314e0f). 3. reef islands review (draft ed14c61). 4. ASR accent parity review (once H4 is in). Phantom citations PUBLISHED 2026-10-23 (confirmation fix first on one item, repaired in D10).
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
