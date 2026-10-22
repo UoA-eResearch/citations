@@ -1,0 +1,52 @@
+{
+ "kwajalein": {
+  "s2": 5529,
+  "s2_items_without_bands": 1,
+  "landsat": 1064,
+  "landsat_by_platform": {
+   "landsat-8": 755,
+   "landsat-7": 159,
+   "landsat-9": 150
+  }
+ },
+ "kanton": {
+  "s2": 497,
+  "s2_items_without_bands": 0,
+  "landsat": 282,
+  "landsat_by_platform": {
+   "landsat-8": 213,
+   "landsat-9": 40,
+   "landsat-7": 29
+  }
+ },
+ "kiritimati": {
+  "s2": 6573,
+  "s2_items_without_bands": 0,
+  "landsat": 705,
+  "landsat_by_platform": {
+   "landsat-8": 447,
+   "landsat-7": 175,
+   "landsat-9": 83
+  }
+ },
+ "penrhyn": {
+  "s2": 3261,
+  "s2_items_without_bands": 0,
+  "landsat": 299,
+  "landsat_by_platform": {
+   "landsat-8": 218,
+   "landsat-7": 41,
+   "landsat-9": 40
+  }
+ },
+ "kapingamarangi": {
+  "s2": 642,
+  "s2_items_without_bands": 0,
+  "landsat": 243,
+  "landsat_by_platform": {
+   "landsat-8": 181,
+   "landsat-9": 33,
+   "landsat-7": 29
+  }
+ }
+}

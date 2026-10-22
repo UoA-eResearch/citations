@@ -64,7 +64,7 @@ def main():
                  "baseline": f["properties"].get("s2:processing_baseline"),
                  **{f"{b}_scale": (f["assets"][b].get("raster:bands") or [{}])[0].get("scale", 1e-4) for b in ("green", "swir16", "nir")},
                  **{f"{b}_offset": (f["assets"][b].get("raster:bands") or [{}])[0].get("offset", 0.0) for b in ("green", "swir16", "nir")}}
-                for f in s2]
+                for f in s2 if all(k in f["assets"] for k in ("green", "swir16", "nir", "scl"))]
         pd.DataFrame(rows).to_parquet(OUT / f"{name}_s2.parquet", index=False)
         ls = search(PC, {"collections": ["landsat-c2-l2"], "bbox": bbox, "limit": 200,
                          "datetime": "1999-01-01T00:00:00Z/2023-12-31T23:59:59Z",
@@ -77,9 +77,10 @@ def main():
                **{f"{b}_scale": (f["assets"][a].get("raster:bands") or [{}])[0].get("scale", 2.75e-5)
                   for b, a in (("green", "green"), ("swir16", "swir16"), ("nir", "nir08"))},
                **{f"{b}_offset": (f["assets"][a].get("raster:bands") or [{}])[0].get("offset", -0.2)
-                  for b, a in (("green", "green"), ("swir16", "swir16"), ("nir", "nir08"))}} for f in ls]
+                  for b, a in (("green", "green"), ("swir16", "swir16"), ("nir", "nir08"))}} for f in ls
+              if all(k in f["assets"] for k in ("green", "swir16", "nir08", "qa_pixel"))]
         pd.DataFrame(rl).to_parquet(OUT / f"{name}_ls.parquet", index=False)
-        log[name] = {"s2": len(rows), "landsat": len(rl),
+        log[name] = {"s2": len(rows), "s2_items_without_bands": len(s2) - len(rows), "landsat": len(rl),
                      "landsat_by_platform": pd.Series([r["platform"] for r in rl]).value_counts().to_dict() if rl else {}}
         print(name, log[name], flush=True)
     json.dump(log, open(RUN / "results" / "tables" / "scenes_log.json", "w"), indent=1)
