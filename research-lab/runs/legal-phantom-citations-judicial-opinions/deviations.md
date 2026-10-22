@@ -294,3 +294,34 @@ rules were fixed while reading the sheets, before `analysis.py score` was run:
 - Rates by court level (plan §4 step 8): the `court` field is empty for every document, because `screen_shards.py`
   never filled it. This is reported here rather than repaired, because re-running the screen is out of scope.
 - The capture–recapture estimate (Chapman N = 4) rests on a single overlap of zero and is uninformative.
+
+## D10 — 2026-10-23 00:29 NZDT — changes after the confirmation pass (review/confirmation.md), before re-scoring
+
+The confirmation pass found that the D9 name match in `flag_vs_database()` was vacuous. The `NON_US` regex let three
+Cyrillic captions (one Russian, two Ukrainian) into the "US in-window" incidents. `norm_name()` keeps only `[a-z0-9]`,
+so they normalise to "v" or "1 v", and `party_score()` then scores "v" at 100 against any caption with a standalone
+"v". The name match was therefore true for 41 of the 43 clusters whatever the database held, and "all 43 in the
+database" was wrong.
+
+**Code:**
+- **US incidents are selected by the database's own `State(s)` field** (it contains "USA"), in both
+  `match_charlotin.py` and `flag_vs_database()`, instead of the `NON_US` regex, which also passed 58 rows from other
+  countries (South Korea, Belgium, Poland, Costa Rica, China and others). None of those 58 matched a cluster, so the
+  matched set (879 rows, 869 clusters) and every recall figure are unchanged. The US in-window count becomes 1,474.
+- **Database captions with no indexable token** (`tokens_of()` empty) are skipped in the name match.
+- **`HAND_DB`** gains the four flag opinions that the reviewer found in the database under another caption or
+  date, keeping Zaykariya and Nwaubani:
+  - *Puerto Rico Soccer League v. Federación Puertorriqueña de Fútbol* (name score 84.2, just under the threshold;
+    the same case, D.P.R. 2025-09-23);
+  - *Qamar v. Board of Trustees of Governors State University* (the database anonymises it as "X v. Board of
+    Trustees of Governors State University", N.D. Ill., same day);
+  - *Flowz Digital v. Caroline Dalal* (the corpus caption reads "v. Flowz Staffing"; C.D. Cal., same day);
+  - *Brick v. Gallatin County* (the corpus caption reads "Brick v. Breuner"; D. Mont., same day).
+- **The five flag opinions found in no field of the database** are listed in `primary.json` by name, court and date.
+
+**Wording:**
+- "43 opinions are 42 cases" becomes **41 cases**: *Morgan* and *Schoene* each contribute two documents, and
+  Schoene's second is an amended re-issue of the first.
+
+The reviewer's expected result, which this re-run must reproduce: 26 by cluster, 6 by caption, 6 by hand, so 38 of
+43 in the database and 5 unrecorded.
