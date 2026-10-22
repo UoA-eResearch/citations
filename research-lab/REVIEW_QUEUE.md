@@ -22,14 +22,14 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-23 00:13 | `legal-phantom-citations-judicial-opinions` | confirmation pass (fresh agent; the original could not be resumed after the restart) |
 | 2026-10-23 09:21 | `trust-corrected-record-machine-readable` | review |
 | 2026-10-23 12:28 | `trust-corrected-record-machine-readable` | confirmation pass | owner relaxed the 5 h limit until the 16:00 quota reset
-| 2026-10-23 12:28 | `ancestral-dsi-origin-recoverability` | review | owner relaxed the 5 h limit until the 16:00 quota reset
-| 2026-10-23 12:28 | `trust-retraction-risk-frozen-forecast` | review | owner relaxed the 5 h limit until the 16:00 quota reset
-| 2026-10-23 12:28 | `blue-pacific-reef-island-area-tide-corrected` | review | owner relaxed the 5 h limit until the 16:00 quota reset
-| 2026-10-23 12:28 | `auckland-nz-2023-storms-estuary-mud-natural-experiment` | review | owner relaxed the 5 h limit until the 16:00 quota reset
-| 2026-10-23 12:28 | `auckland-nz-kauri-dieback-multitemporal-lidar` | review | owner relaxed the 5 h limit until the 16:00 quota reset
-| 2026-10-23 12:28 | `frontier-edge-asr-quantization-accent-parity` | review (H4 pending) | owner relaxed the 5 h limit until the 16:00 quota reset
+| 2026-10-23 12:28 | `ancestral-dsi-origin-recoverability` | review | STOPPED within ~2 min (still reading) on the owner's advice to run sequentially; to be resumed one at a time
+| 2026-10-23 12:28 | `trust-retraction-risk-frozen-forecast` | review | STOPPED within ~2 min (still reading) on the owner's advice to run sequentially; to be resumed one at a time
+| 2026-10-23 12:28 | `blue-pacific-reef-island-area-tide-corrected` | review | STOPPED within ~2 min (still reading) on the owner's advice to run sequentially; to be resumed one at a time
+| 2026-10-23 12:28 | `auckland-nz-2023-storms-estuary-mud-natural-experiment` | review | STOPPED within ~2 min (still reading) on the owner's advice to run sequentially; to be resumed one at a time
+| 2026-10-23 12:28 | `auckland-nz-kauri-dieback-multitemporal-lidar` | review | STOPPED within ~2 min (still reading) on the owner's advice to run sequentially; to be resumed one at a time
+| 2026-10-23 12:28 | `frontier-edge-asr-quantization-accent-parity` | review (H4 pending) | STOPPED within ~2 min (still reading) on the owner's advice to run sequentially; to be resumed one at a time
 
-**Fable limit RELAXED by the owner until the 2026-10-23 16:00 quota reset ("relax the Fable review limitation until then. Use it up").** Seven runs started 12:28 in parallel: retraction-markers confirmation; reviews of DSI, retraction risk, reef islands, estuary mud, kauri dieback, ASR (H4 pending). After 16:00 the 1-per-5h rule applies again.
+**Fable limit RELAXED by the owner until the 2026-10-23 16:00 quota reset, but SEQUENTIAL (owner: "7 at once would likely hit the 5h limit, I'd still recommend sequential").** Running now: retraction-markers confirmation (12:28). Then, one at a time until 16:00: DSI, retraction risk, reef islands, estuary mud, kauri, ASR (resume the stopped agents, which had only read files). After 16:00 the 1-per-5h rule applies again.
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
