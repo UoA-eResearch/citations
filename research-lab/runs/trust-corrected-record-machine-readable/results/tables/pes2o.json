@@ -1,0 +1,41 @@
+{
+ "registry_dois_retracted_by_2022_07_07": 36894,
+ "with_corpus_id": 35024,
+ "pes2o_documents": 38972211,
+ "matched_documents": 17416,
+ "marked_share": 0.1186,
+ "by_source": {
+  "s2ag/train": {
+   "size": 13040,
+   "mean": 0.1163
+  },
+  "s2ag/valid": {
+   "size": 1,
+   "mean": 1.0
+  },
+  "s2orc/train": {
+   "size": 4375,
+   "mean": 0.125
+  }
+ },
+ "kinds": {
+  "": 15351,
+  "title-prefix": 1594,
+  "statement": 1228,
+  "token": 921
+ },
+ "by_added_vs_retraction": {
+  "added_after_retraction": {
+   "n": 11155,
+   "marked": 0.0714
+  },
+  "added_before_retraction": {
+   "n": 6261,
+   "marked": 0.2025
+  }
+ },
+ "retraction_watch_dated_only": {
+  "n": 16946,
+  "marked_share": 0.1198
+ }
+}

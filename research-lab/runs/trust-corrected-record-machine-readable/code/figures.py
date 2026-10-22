@@ -95,28 +95,32 @@ def main():
     article's own record asserts its retraction; mostly Elsevier) carry the issue date, not the retraction date
     (D4), so some of these are recent retractions placed in the primary cohort.""")
 
-    # F4 peS2o
+    # F4 peS2o against PMC
     p = T / "pes2o.json"
     if p.exists():
+        d = pd.read_csv(T / "pes2o_documents.csv")
+        d["kind"] = d.source.str.split("/").str[0]
+        pm = json.load(open(T / "sensitivity_d3.json"))
+        bars = [("PMC bucket: XML, own marker", pm["own_marked_share"], pm["n"], XML),
+                ("PMC bucket: plain text", pm["txt_own_share"], pm["n"], XML),
+                ("peS2o: full text (s2orc)", d[d.kind == "s2orc"].marked.mean(), int((d.kind == "s2orc").sum()), FLAG),
+                ("peS2o: title + abstract (s2ag)", d[d.kind == "s2ag"].marked.mean(), int((d.kind == "s2ag").sum()), FLAG)]
+        fig, ax = plt.subplots(figsize=(7.4, 2.8))
+        fig.subplots_adjust(left=0.34, right=0.95, bottom=0.2, top=0.82)
+        for i, (lab, v, n, col) in enumerate(bars):
+            ax.barh(i, 100 * v, color=col, height=0.55)
+            ax.text(100 * v + 1, i, f"{100 * v:.1f}%", va="center", fontsize=8, color=INK)
+        ax.set_yticks(range(len(bars))); ax.set_yticklabels([f"{b[0]} ({b[2]:,})" for b in bars], fontsize=8)
+        ax.invert_yaxis(); ax.set_xlim(0, 110); ax.set_xlabel("% of retracted documents carrying a retraction marker")
+        ax.grid(axis="x", color=GRID, lw=0.5)
+        fig.suptitle("Marked at the source, lost downstream", x=0.02, ha="left", fontsize=10.5, color=INK)
+        fig.savefig(F / "F4_pes2o.png", dpi=170); plt.close(fig)
         j = json.load(open(p))
-        bs = j.get("by_source", {})
-        if bs:
-            fig, ax = plt.subplots(figsize=(7.4, 2.4))
-            fig.subplots_adjust(left=0.3, right=0.97, bottom=0.22, top=0.8)
-            ks = list(bs)
-            ax.barh(range(len(ks)), [100 * bs[k]["mean"] for k in ks], color=XML, height=0.5)
-            ax.set_yticks(range(len(ks))); ax.set_yticklabels([f"{k} ({bs[k]['size']:,})" for k in ks], fontsize=8)
-            for i, k in enumerate(ks):
-                ax.text(100 * bs[k]["mean"] + 0.5, i, f"{100 * bs[k]['mean']:.1f}%", va="center", fontsize=8)
-            ax.set_xlim(0, 100); ax.set_xlabel("% of matched retracted documents with a textual marker")
-            ax.grid(axis="x", color=GRID, lw=0.5)
-            fig.suptitle("peS2o v2: the marker rarely survives into the pretraining text", x=0.02, ha="left",
-                         fontsize=10.5, color=INK)
-            fig.savefig(F / "F4_pes2o.png", dpi=170); plt.close(fig)
-            caption("F4_pes2o", f"""peS2o v2 (knowledge cutoff 2023-01-03): documents matched by Semantic Scholar
-            corpus id to {j['with_corpus_id']:,} DOIs retracted on or before 2022-07-07. A document is marked if its
-            text carries a retraction title prefix, statement or the token RETRACTED. s2orc documents are full text,
-            s2ag documents title and abstract only.""")
+        caption("F4_pes2o", f"""Blue: the PMC Open Access bucket's primary cohort (retracted 180+ days before the
+        2026-10-21 snapshot), own XML marker (reference lists ignored) and plain-text marker. Orange: peS2o v2
+        (knowledge cutoff 2023-01-03), documents matched by Semantic Scholar corpus id to {j['with_corpus_id']:,} DOIs
+        retracted on or before 2022-07-07; a document is marked if its text carries a retraction title prefix, statement
+        or the token RETRACTED. The two corpora cover different retraction windows.""")
     print("figures written")
 
 

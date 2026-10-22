@@ -1,4 +1,4 @@
-# Does the corrected record reach the machines? In PubMed Central's distributed files it does: 97% of retracted articles carry their own retraction marker
+# Does the corrected record reach the machines? PubMed Central marks 97% of retracted articles in its own files; peS2o, an open pretraining corpus built from them, keeps the marker on 12%
 
 *The PMC Open Access bucket on AWS, which since August 2026 is the only distribution channel for PubMed Central's
 Open Access subset, as listed on 21 October 2026, joined to the union of four retraction registries (Retraction
@@ -6,8 +6,9 @@ Watch, Crossref, PubMed, OpenAlex). Every retracted document's XML, plain text a
 machine-readable retraction marker. A secondary arm looks at peS2o, an open pretraining corpus derived from Semantic
 Scholar.*
 
-**Verdict: Refuted.** The lead's hypothesis was that most retracted articles in the open full-text corpora carry no
-machine-readable marker. In the PMC bucket, the opposite holds.
+**Verdict: Refuted for the source corpus.** The lead's hypothesis was that most retracted articles in the open
+full-text corpora carry no machine-readable marker. In the PMC bucket, the opposite holds. The hypothesis holds,
+strongly, one step downstream: in peS2o, the marker is gone for 88% of retracted papers.
 
 - **H1 (more than 50% of retracted articles are unmarked in the distributed XML): Refuted.** 2.4% are unmarked
   (95% interval 1.1–4.7%; n = 18,061 documents retracted at least 180 days before the snapshot, 1,550 journals).
@@ -24,7 +25,15 @@ machine-readable marker. In the PMC bucket, the opposite holds.
 - **Markers arrive fast.** Of articles retracted in the last 30 days before the snapshot, 84% were already marked;
   after the first month, 98–100%.
 
-PES2O_PLACEHOLDER
+- **Downstream, the marker is lost (secondary, peS2o v2).** peS2o is the open pretraining corpus derived from
+  Semantic Scholar (knowledge cutoff 2023-01-03; 38,972,211 documents). It holds 17,416 papers retracted on or before
+  2022-07-07, matched by Semantic Scholar id; matching is lossy, so this is a lower bound.
+  - Only **11.9%** carry any textual marker in their text. That is 12.5% of full-text documents and 11.6% of
+    title-and-abstract documents; 12.0% (n = 16,946) with Retraction Watch dates alone.
+  - The marker structures that do the work in PMC (the JATS link, the sidecar, the text header) do not survive into
+    the plain text.
+  - Papers that entered the corpus *after* their retraction are even less often marked (7.1%, n = 11,155) than those
+    added before it (20.3%, n = 6,261), so stale ingestion is not the explanation.
 
 ## In plain terms
 
@@ -40,7 +49,9 @@ at the top. New retractions are marked within about a month. So the lead's claim
 unmarked is false for this source.
 
 The gap is narrower but real: about 500 retracted papers had no marker and no flag, most of them from Elsevier
-journals. And the markers only help a pipeline that reads them. PES2O_PLAIN
+journals. And the markers only help a pipeline that reads them. One step downstream, they mostly are not read: in peS2o, an open dataset built from the
+same kind of papers to train language models, only about one retracted paper in eight still says so in its text,
+even among papers added to the dataset after they were retracted.
 
 ## What was asked
 
@@ -156,7 +167,24 @@ Without the self-update-dated documents the unmarked share is 2.2% (1.1–4.1%);
 - **Undated stratum** (730; PubMed-only or OpenAlex-only, mostly PubMed): 9.5% unmarked, flag 87%.
 - **Author manuscripts** in the cohort (509): 5.9% unmarked, against 2.3% for publisher versions.
 
-PES2O_SECTION
+### peS2o: the marker after derivation (`results/figures/F4_pes2o.png`)
+
+peS2o v2 (Allen Institute; knowledge cutoff 2023-01-03) was streamed in full: 38,972,211 documents, 22 shards.
+- **Matching.** 36,894 dated registry DOIs retracted on or before 2022-07-07 (notices excluded under the D1 rule)
+  were mapped to Semantic Scholar corpus ids through the public Graph API; 35,024 had an id. 17,416 of these are in
+  peS2o: 4,375 full-text (s2orc) and 13,041 title-and-abstract (s2ag).
+- **Markers.** The plain-text rules of §2 find a marker in 11.9%:
+  - a title prefix in 1,594 documents;
+  - a retraction statement in 1,228;
+  - the token in 921.
+
+  The rate is 12.0% with Retraction Watch dates only. Earlier retraction cohorts are marked least: 1.5% of the 3,688
+  retracted in 2011, 33% of those retracted in 2022.
+- **Staleness.** Each peS2o document records when it was added. Of documents added *after* their retraction, 7.1%
+  are marked (n = 11,155); of those added before, 20.3% (n = 6,261). A refresh after retraction did not bring the
+  marker with it.
+- **Lower bound.** This is a lower bound on unmarked retracted content in peS2o: unmatched DOIs and silent
+  retractions are not counted.
 
 ### The overlay
 

@@ -13,6 +13,9 @@ by its 2026-10-21 inventory; registry: the union of Retraction Watch, Crossref r
 - **Reported:** H1 (more than 50% of 18,061 documents retracted 180+ days before the snapshot are unmarked in the
   XML) Refuted: 2.4% (1.1-4.7), 2.8% after the D3 detector fix. H2 (PMC's sidecar `is_retracted` covers 90%)
   Supported: 95.6%. H3 (XML marked 5+ points more often than the .txt) Refuted: 1.2 points.
+- **Secondary (peS2o v2):** 17,416 retracted papers matched by Semantic Scholar id; 11.9% carry a textual marker
+  (12.0% with Retraction Watch dates), 7.1% of those added after their retraction. The headline contrasts this with
+  PMC's 97%.
 - **Deviations:** D1 (self-referencing notice identifiers, before any file was fetched), D2 (files rewritten in
   place), D3 (links inside reference lists; withdrawal wording), D4 (Crossref self-update dates are issue dates).
 
