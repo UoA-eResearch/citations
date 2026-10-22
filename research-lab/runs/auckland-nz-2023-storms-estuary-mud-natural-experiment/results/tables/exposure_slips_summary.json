@@ -1,0 +1,14 @@
+{
+ "patches": 10622,
+ "patches_le_1ha": 9990,
+ "share_of_bare_px_in_patches_le_1ha": 0.1427,
+ "share_of_bare_px_in_patches_gt_5ha": 0.6253,
+ "E_slip_quantiles": {
+  "0": 0.000184,
+  "0.25": 0.000542,
+  "0.5": 0.000697,
+  "0.75": 0.001059,
+  "1": 0.002342
+ },
+ "spearman_with_primary_E": 0.555
+}

@@ -57,3 +57,21 @@ Routing is now a priority-flood (Barnes, Lehman and Mulla 2014):
 
 The outlet, C(R), the radius-only sensitivity and every threshold are unchanged. The share of land draining to the sea
 and to the edge is logged.
+
+## D3 — 2026-10-23 09:22 NZDT — an added exposure sensitivity: slip-sized patches (after the exposure froze, before any outcome result was read)
+
+**Why.** A map of the frozen newly bare layer (descriptive, after the `exposure.csv` commit d2411cf) shows that it is
+dominated by large, blocky patches:
+- market-garden harvest around Pukekohe;
+- plantation-forest harvest, for example Woodhill.
+
+The forested Waitākere slip country shows few newly bare cells. The primary exposure therefore mixes storm slips with
+seasonal harvest. It stays primary, as preregistered.
+
+**Added secondary analysis** (reported as such):
+- Newly bare 20 m cells are grouped into 8-connected patches.
+- The exposure counts only patches of at most 1 ha (25 cells), the size of most rainfall-triggered slips.
+- Terciles and the H1 and H2 models are re-run on this exposure.
+
+It was defined while `analysis.py` was running and before any of its output was read. The share of newly bare area in
+patches larger than 5 ha is reported, as a measure of how much of the primary exposure is harvest-like.
