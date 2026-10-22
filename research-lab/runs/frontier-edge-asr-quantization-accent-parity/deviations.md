@@ -17,3 +17,11 @@ applied one step down, fixed here before any W3 condition is decoded:
 
 The code is generalised for this (`quant.mixed_allocation` base/hi/lo, `mp_alloc.py MODEL 3`, conditions
 `mp3_<comp>_s<seed>`, `score.py` H3_w3). The W4 allocation and its conditions are unchanged.
+
+## D2 — 2026-10-22 19:14 NZDT — H4 follows the same positive-control fallback (before any Whisper-large-v3 decoding)
+
+The plan states H4 as "the same rules on Whisper-large-v3, with GPTQ-W4 under US-only, balanced and worst-weighted
+calibration, three seeds each, plus FP16 and RTN-W4". It does not say whether the positive-control fallback of
+section 5 (written for H1–H3) applies. It is applied: if the large-v3 GPTQ-W4 US-only penalty has a lower 95% bound at
+or below 0, H4 is tested at W3 with the same three compositions and seeds (`code/run_large.sh`). The large-v3
+worst-weighted sets use large-v3's own FP16 validation WER, as the plan says. Mixed precision is not part of H4.
