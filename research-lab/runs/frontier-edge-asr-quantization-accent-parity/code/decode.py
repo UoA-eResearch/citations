@@ -26,7 +26,8 @@ RUN = Path(__file__).resolve().parents[1]
 MAN = RUN / "data" / "manifest"
 TAB = RUN / "results" / "tables"
 NAMES = {"small": "openai/whisper-small", "large-v3": "openai/whisper-large-v3"}
-BS = {"small": 32, "large-v3": 16}
+BS = {"small": 32, "large-v3": 4}           # D3: large-v3 at 16 ran out of GPU memory
+LONG_BS = {"small": 8, "large-v3": 1}
 GEN = dict(language="en", task="transcribe")
 
 
@@ -54,7 +55,7 @@ def transcribe_short(proc, m, audios, bs):
     return [t.strip() for t in out]
 
 
-def transcribe_long(proc, m, audios, bs=8):
+def transcribe_long(proc, m, audios, bs):
     out = []
     for i in range(0, len(audios), bs):
         f = proc(audios[i:i + bs], sampling_rate=16000, return_tensors="pt", truncation=False, padding="longest",
@@ -143,7 +144,7 @@ def main(model, cond, split):
     man = man.sort_values("dur")
     short, long_ = man[man.dur <= 30], man[man.dur > 30]
     hyp = transcribe_short(proc, m, [aud.get(s, r) for s, r in zip(short.shard, short.row)], BS[model])
-    hyp += transcribe_long(proc, m, [aud.get(s, r) for s, r in zip(long_.shard, long_.row)])
+    hyp += transcribe_long(proc, m, [aud.get(s, r) for s, r in zip(long_.shard, long_.row)], LONG_BS[model])
     keys = list(zip(short.shard, short.row)) + list(zip(long_.shard, long_.row))
     tmp = out.with_suffix(".tmp")
     with open(tmp, "w") as fh:

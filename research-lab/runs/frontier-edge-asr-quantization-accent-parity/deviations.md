@@ -25,3 +25,12 @@ calibration, three seeds each, plus FP16 and RTN-W4". It does not say whether th
 section 5 (written for H1–H3) applies. It is applied: if the large-v3 GPTQ-W4 US-only penalty has a lower 95% bound at
 or below 0, H4 is tested at W3 with the same three compositions and seeds (`code/run_large.sh`). The large-v3
 worst-weighted sets use large-v3's own FP16 validation WER, as the plan says. Mixed precision is not part of H4.
+
+## D3 — 2026-10-22 22:00 NZDT — Whisper-large-v3 batch sizes (before any large-v3 output)
+
+The first large-v3 decode, FP16 on the test split, ran out of GPU memory at batch 16. Only about 8.6 GiB is free next
+to the co-tenant vLLM server, and large-v3's self- and cross-attention caches grow with the batch. Large-v3 now
+decodes short segments in batches of 4 and long-form segments one at a time. Greedy decoding with identical settings
+can still differ slightly with batch composition. So every large-v3 condition uses these same sizes, and no large-v3
+result is compared with a Whisper-small one except through the per-model penalties. No large-v3 hypothesis was
+written, and the pipeline was stopped and restarted from the beginning.
