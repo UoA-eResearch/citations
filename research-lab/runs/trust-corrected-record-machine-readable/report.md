@@ -25,13 +25,14 @@ papers that are in both PMC and peS2o, PMC's files mark 95.7%, and peS2o's text 
 - **Where the corrected record does not reach.**
   - 382 dated retracted documents (2.2%) carry neither a marker of their own nor PMC's flag. They concentrate at Cell
     Press (18% of 788) and Elsevier (13% of 332).
-  - 119 more are among the 412 undatable Elsevier documents.
+  - 119 more are among the 412 undatable documents, which are mostly Elsevier.
 - **Markers arrive fast.** Of articles retracted in the last 30 days before the snapshot, 84% were already marked.
   After the first month the figure is 98–100%.
 - **peS2o (secondary).** peS2o v2 holds 17,416 matched retracted papers. 47.2% of them say so in their text, a lower
   bound.
-  - **The marked share is high only because of IEEE.** It comes almost entirely from IEEE's 2009–2011 retractions,
-    whose records are retitled "Notice of Retraction" (title and abstract only).
+  - **The marked share is high only because of IEEE.** Three-quarters of the marked documents are IEEE's 2009–2011
+    retractions, whose records are retitled "Notice of Retraction" (title and abstract only). Without IEEE, 19.0% are
+    marked.
   - **Full text:** 12.5% marked.
   - **The same papers as PMC:** 9.1% marked.
 - **Correction after review.** The draft reported 12% for peS2o, because its pattern missed "Notice of Retraction"
@@ -52,8 +53,8 @@ what most open AI pipelines download. We looked at about 18,000 papers retracted
 
 So the lead's claim that most retracted papers go unmarked is false for this source.
 
-The gap at the source is small but real: about 400 retracted papers had no marker and no flag, most of them from
-Elsevier and Cell Press journals. The bigger problem is one step downstream. In peS2o, an open dataset built from the
+The gap at the source is small but real: about 400 retracted papers had no marker and no flag, about half of them
+from Elsevier and Cell Press journals. The bigger problem is one step downstream. In peS2o, an open dataset built from the
 same kinds of papers to train language models, the copies of PubMed Central's retracted papers almost never say they
 were retracted: about one in eleven do, against 96 in 100 at the source. The markers are there, but the pipeline that
 built peS2o did not keep them.
@@ -97,7 +98,7 @@ The plan (`plan.md`, committed before any file was fetched) set three tests:
     notice's. This was corrected before any file was read (D1).
   - **Contamination left in.** 73 primary documents (0.4%) are notices or retracted corrigenda that the type check
     let in: corrections, a JBC "Withdrawal:" typed as a correction, and two "Retraction and republication" notices.
-    98% of them count as marked, and excluding them moves the D3 unmarked share from 2.77% to 2.79% (review, finding
+    98% of them count as marked, and excluding them moves the D3 unmarked share (preregistered cohort) from 2.77% to 2.79% (review, finding
     5).
 - **Cohort.** 17,649 documents retracted on or before 24 April 2026 (180 days before the snapshot), dated by Retraction
   Watch, else by a separate Crossref retraction notice.
@@ -213,12 +214,22 @@ peS2o v2 (Allen Institute; knowledge cutoff 2023-01-03) was streamed in full: 38
   the following title ("Notice of RetractionThe Effects of…"), as peS2o renders IEEE's retitled records.
   - 47.2% of matched documents are marked: 58.9% of title-and-abstract records and 12.5% of full texts.
   - 6,160 of them are marked only through the run-together notice, nearly all with DOI prefix 10.1109 (IEEE).
-  - The draft's rule, without the fix, found 11.9%.
+  - The draft's rule, without the fix, found 11.9%. The broader sensitivity rule ("retract" anywhere in the first
+    line) finds 47.4%.
 - **By retraction year.** Most of the marked share is IEEE's 2009–2011 retractions: 74% of the 738 retracted in 2009,
   89% of 2,174 in 2010 and 91% of 3,688 in 2011. From 2014 on, 15–33% of each year's retractions are marked.
 - **The same papers in PMC (the downstream test).** 3,235 matched documents are also in the PMC snapshot and are not
   notices. PMC's own files mark 95.7% of them. Their peS2o text marks **9.1%**: 9.2% of the 2,957 full texts and 8.3%
   of the 278 title-and-abstract records. Outside the PMC registry, peS2o marks 59.3%.
+  - **Dating.** The peS2o registry still dates 166 matched documents (1.0%, mostly Elsevier) by a Crossref
+    self-update, the date D5 treats as undatable in the PMC arm. Some may have been retracted after peS2o's cutoff.
+    Excluding them moves the whole-set share from 47.2% to 47.6%, and the overlap from 95.7% / 9.1% to 96.2% / 9.1%
+    (n 3,132; confirmation pass, `review/reviewer_checks/confirm_pes2o.py`).
+  - **Two undated documents.** 2 of the 3,235 overlap documents are undated in the PMC arm. Without them the figures
+    are 95.8% / 9.1%.
+  - **Added after retraction.** Within the overlap, documents that entered peS2o after their retraction are marked
+    6.4% of the time, against 10.1% for those added before (confirmation pass). A paper ingested after its retraction
+    did not bring the marker with it.
 - **Staleness: no evidence either way.** Semantic Scholar's "added" date is mostly its 2017–18 bulk ingest, so whether
   a paper was added before or after its retraction is confounded with retraction year. Within retractions from 2015
   on, papers added after their retraction are marked 19.9% of the time (n 2,305), and those added before 20.5%

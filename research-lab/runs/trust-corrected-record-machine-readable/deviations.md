@@ -77,8 +77,14 @@ corrigenda, earlier versions or the notice itself), and 1 unclear.
      to `results/tables/pes2o_secondary.json`.
    - **Staleness.** Semantic Scholar's "added" date is mostly its 2017–18 bulk ingest, so the added-before/after split
      is confounded with retraction year. It is reported within retraction years 2015 and later only.
-   - **The downstream test** is the subset of peS2o documents that are also in the PMC snapshot, are not notices, and
-     are in the primary or recent stratum: PMC's own marker rate against peS2o's.
+   - **The downstream test** is the subset of peS2o documents that are also in the PMC snapshot and are not notices,
+     with no stratum filter: 3,235 documents, 2 of them undated. It compares PMC's own marker rate with peS2o's.
+   - **Corrections from the confirmation pass:**
+     - The stratum wording above was corrected.
+     - The peS2o registry still dates 166 matched documents by Crossref self-updates. This is reported in the peS2o
+       section: excluding them moves 47.2% to 47.6%, and the overlap to 96.2% / 9.1%.
+     - The review-check files keep article titles, which are bibliographic metadata of the kind Retraction Watch
+       publishes. Passages of article text are not committed.
 3. **Self-update dates** (finding 4). The 412 documents dated only by an Elsevier Crossref self-update (D4) have no
    retraction date. They move from the primary cohort to the undated stratum. The headline residue becomes the dated
    documents plus an undatable count. The preregistered verdicts are unchanged (`sensitivity_d4.json`).
