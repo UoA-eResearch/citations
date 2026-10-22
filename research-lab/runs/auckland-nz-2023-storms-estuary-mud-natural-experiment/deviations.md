@@ -26,3 +26,17 @@ details change. No exposure or outcome has been computed.
    The mosaic uses the clearest scene per tile from the "after" window. A flow path ends at its first sea cell.
 
 **Added sensitivity analysis.** Newly bare share of all land within R km of the site, with no routing.
+
+**D1 addendum — sea cells at or below 0 m (before any exposure is computed).** A plot of the first sea mask against
+the DEM showed two problems:
+- The LiDAR DEM carries values over harbour water. The Waitematā is hydro-flattened at about −1.15 m (NZVD2016).
+- The Sentinel-2 test (the 3 clearest after-window scenes per tile) missed most of the upper Waitematā. Some of it
+  was under cloud, and some was exposed mudflat.
+
+The sea is now every cell connected to the open sea that meets any of these:
+- it is DEM no-data;
+- its elevation is at or below 0 m (about mean sea level);
+- it is Sentinel-2 water.
+
+Intertidal flats above 0 m stay land and route down to the harbour. The share of sea cells contributed by each source
+is logged.
