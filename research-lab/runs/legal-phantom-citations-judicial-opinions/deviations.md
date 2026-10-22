@@ -251,3 +251,46 @@ rules were fixed while reading the sheets, before `analysis.py score` was run:
    from the categories above.
 6. **Reading aid.** `code/verify_aid.py` adds the case names the index holds at the cited reporter-volume-page.
    It decides nothing.
+
+## D9 — 2026-10-22 20:18 NZDT — changes after the independent review (review/review.md), before re-scoring
+
+**Labels** (`data/screen/labels/`, assembled by the new `code/assemble_verified.py`):
+- **New vocabulary.**
+  - `phantom-flag`: the court itself identifies a cited case as nonexistent.
+  - `phantom-party-asserted`: only a party says so.
+
+  Previously both were "phantom" on a flag sheet. `score()` now counts a `phantom-flag` as a flag whatever sheet it
+  sits on, so a court flag missed by the FLAG regex can never count as judicial reliance.
+- **Two flag rows become party-asserted** (screened_flag k=115 and k=156). The court relays a party's statement and
+  makes no finding of its own. Each is its opinion's only phantom, so opinions with a court-flagged phantom go from 45
+  to 43; the two are reported separately.
+- **k=161 stays a court finding:** the court itself says the cases "appear to be hallucinations".
+- **Las Cruces stays a court finding**, with a CourtListener near-namesake noted (2003-NMCA-102).
+- **The two "unverifiable" rows become real, not a case** (screened_reliance k=141, placebo_reliance k=247). Both are
+  Schwarzer, 99 F.R.D. 465 (1984), an article in F.R.D.
+- **Unwritten defaults stay real**, recorded with `labelled = 0`. 117 of the 1,036 sheet rows carry a written verdict.
+  The pace of verification is stated in the report.
+
+**Code:**
+- **`match_charlotin.py`.**
+  - The NON_US regex no longer drops New Mexico courts ("Mexico" now excludes "New Mexico").
+  - A same-day match is also accepted when every distinctive token of the database caption appears in the cluster's
+    name, on top of the existing name-score rules. This catches captions that carry extra names, such as *Henry
+    County Schools v. Grant*.
+- **`analysis.py score()`.**
+  - **Recall** is computed per distinct cluster, both before the completeness filter (any candidate in the order) and
+    after it (a candidate that survives the filter). The post-filter recall governs the verified counts, and the
+    recall-corrected upper bound is the sample's upper bound divided by it.
+  - **The judge-attributed matches** are classified as either the relying opinion or a reviewing court's opinion
+    about a lower court's order. This is a fixed list, from reading each document.
+  - **Flag opinions versus the database** is computed in code by a date-free name match, at the same thresholds,
+    against all in-window US incidents.
+  - **Reporters:** a table of the reporters that survive the completeness filter.
+- **The H1 verdict for a sampled sheet** follows the interval: Supported if its lower bound is at least 20, Refuted
+  if its upper bound is below 10, otherwise Inconclusive. The plan's rule was written for a full count, and a sample
+  whose interval spans the bands cannot decide it.
+
+**Not delivered:**
+- Rates by court level (plan §4 step 8): the `court` field is empty for every document, because `screen_shards.py`
+  never filled it. This is reported here rather than repaired, because re-running the screen is out of scope.
+- The capture–recapture estimate (Chapman N = 4) rests on a single overlap of zero and is uninformative.

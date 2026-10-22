@@ -1,70 +1,70 @@
 k,verdict,note
-28,phantom,court flags plaintiff's fake 'Las Cruces Sun-News v. City of Las Cruces (2003-NMCA-099)'; the cite is State v. Foster
-29,phantom,same opinion and citation as 28
-31,phantom,court lists 'Tatum v. Oklahoma City' among hallucinated cases in plaintiff's reply; not on CourtListener
-32,phantom,court lists 'Chilson v. Experian' among hallucinated cases in plaintiff's reply; not on CourtListener
-37,phantom,court: 'Gen. Wire Spring Co. v. O'Neal Steel' does not exist; the page is United States v. Clerkley
-38,phantom,court: the 'Petersen' decision does not exist
+28,phantom-flag,"court flags plaintiff's fake 'Las Cruces Sun-News v. City of Las Cruces (2003-NMCA-099)'; the cite is State v. Foster; CourtListener holds a near-namesake, Board of Commissioners v. Las Cruces Sun-News, 2003-NMCA-102 (reviewer); kept as the court's finding"
+29,phantom-flag,"same opinion and citation as 28; CourtListener holds a near-namesake, Board of Commissioners v. Las Cruces Sun-News, 2003-NMCA-102 (reviewer); kept as the court's finding"
+31,phantom-flag,court lists 'Tatum v. Oklahoma City' among hallucinated cases in plaintiff's reply; not on CourtListener
+32,phantom-flag,court lists 'Chilson v. Experian' among hallucinated cases in plaintiff's reply; not on CourtListener
+37,phantom-flag,court: 'Gen. Wire Spring Co. v. O'Neal Steel' does not exist; the page is United States v. Clerkley
+38,phantom-flag,court: the 'Petersen' decision does not exist
 46,real,OCR typo: In re Wrenn 791 F.2d 1542
-79,phantom,court cannot locate 'Solis v. La Hacienda Mexican Cafe'
-84,phantom,court unable to locate 'Murphy v. Lazarevitz'
-87,phantom,court: 'Hilliard v. City of Ferndale' does not exist
-100,phantom,court could not locate 'Sullivan v. Taglianetti'; none of the cases exist as cited
-105,phantom,court unable to locate 'Shell Petroleum N.V. v. Republic of Costa Rica'
-106,phantom,neither counsel nor court can locate 'Gunn v. McKinney'
-107,phantom,court: 'Treadwell v. Illinois DCFS' cannot be located
-109,phantom,court: none of the listed cases exist ('Morrow v. Highsmith')
-110,phantom,court: none of the listed cases exist ('Georgia-Pacific Corp. v. Cundiff' 276 Ga. 519)
-112,phantom,court: non-existent case 'Curtis v. Trevino'
-115,phantom,court: 'Younker v. Farmers Ins. Co.' does not exist
-116,phantom,court: 'Estate of Riddell v. City of Portland' does not exist (AI hallmarks)
-117,phantom,court: 'Huddleson v. United States' appears non-existent
-118,phantom,court: 'Caldwell v. Div. of Employment Sec.' does not exist
-119,phantom,court table: 'Winters v. Kim' fictitious citation
-120,phantom,court table: 'Weber v. City of Cape Girardeau' fictitious citation
-121,phantom,court table: 'Huett v. Dollar Tree Stores' fictitious citation
-122,phantom,court table: 'Great Southern Bank v. Edie' fictitious citation
-123,phantom,court table: 'Schaffer v. County of Cape Girardeau' fictitious citation
-124,phantom,court: apparently nonexistent 'Barker v. Tanaka'
-125,phantom,court: apparently nonexistent 'Orser v. C.I.R.'
-126,phantom,court: apparently nonexistent 'Canter v. Crilly'
-127,phantom,court: 'Estate of Riddell v. City of Portland' does not exist
-129,phantom,court: 'Klein v. Cheung' does not exist
-131,phantom,court: nonexistent authority 'Katzenmeier v. Oppenheimer'
-134,phantom,court: cannot be found at the locations given ('Dearborn Heights v. Comcast'); no match on CourtListener
-137,phantom,court: non-existent 'Allied Steel & Conveyor Co. v. U.S.'
-145,phantom,court: 'Klingenstein v. Pettit' does not exist
+79,phantom-flag,court cannot locate 'Solis v. La Hacienda Mexican Cafe'
+84,phantom-flag,court unable to locate 'Murphy v. Lazarevitz'
+87,phantom-flag,court: 'Hilliard v. City of Ferndale' does not exist
+100,phantom-flag,court could not locate 'Sullivan v. Taglianetti'; none of the cases exist as cited
+105,phantom-flag,court unable to locate 'Shell Petroleum N.V. v. Republic of Costa Rica'
+106,phantom-flag,neither counsel nor court can locate 'Gunn v. McKinney'
+107,phantom-flag,court: 'Treadwell v. Illinois DCFS' cannot be located
+109,phantom-flag,court: none of the listed cases exist ('Morrow v. Highsmith')
+110,phantom-flag,court: none of the listed cases exist ('Georgia-Pacific Corp. v. Cundiff' 276 Ga. 519)
+112,phantom-flag,court: non-existent case 'Curtis v. Trevino'
+115,phantom-party-asserted,"plaintiff says 'Younker v. Farmers Ins. Co.' does not exist; the court reports it without its own finding (D9, review finding 7)"
+116,phantom-flag,court: 'Estate of Riddell v. City of Portland' does not exist (AI hallmarks)
+117,phantom-flag,court: 'Huddleson v. United States' appears non-existent
+118,phantom-flag,court: 'Caldwell v. Div. of Employment Sec.' does not exist
+119,phantom-flag,court table: 'Winters v. Kim' fictitious citation
+120,phantom-flag,court table: 'Weber v. City of Cape Girardeau' fictitious citation
+121,phantom-flag,court table: 'Huett v. Dollar Tree Stores' fictitious citation
+122,phantom-flag,court table: 'Great Southern Bank v. Edie' fictitious citation
+123,phantom-flag,court table: 'Schaffer v. County of Cape Girardeau' fictitious citation
+124,phantom-flag,court: apparently nonexistent 'Barker v. Tanaka'
+125,phantom-flag,court: apparently nonexistent 'Orser v. C.I.R.'
+126,phantom-flag,court: apparently nonexistent 'Canter v. Crilly'
+127,phantom-flag,court: 'Estate of Riddell v. City of Portland' does not exist
+129,phantom-flag,court: 'Klein v. Cheung' does not exist
+131,phantom-flag,court: nonexistent authority 'Katzenmeier v. Oppenheimer'
+134,phantom-flag,court: cannot be found at the locations given ('Dearborn Heights v. Comcast'); no match on CourtListener
+137,phantom-flag,court: non-existent 'Allied Steel & Conveyor Co. v. U.S.'
+145,phantom-flag,court: 'Klingenstein v. Pettit' does not exist
 147,phantom-party-filing,document is a pro se appellant's reply brief (Tex. App. 15th); 'Sterner v. Marriott' appears in no other CourtListener document
-149,phantom,court: 'Cafasso v. Central Refrigerated' does not exist
+149,phantom-flag,court: 'Cafasso v. Central Refrigerated' does not exist
 151,real,real case miscited: Main St. Legal Servs. v. NSC is 811 F.3d 542 (2d Cir. 2016)
 153,real,real case miscited: Messina v. N. Cent. Distrib. is 821 F.3d 1047 (8th Cir. 2016)
-155,phantom,court unable to locate 'State ex rel. Cline v. Mazzone'
-156,phantom,'Dept. of Rev. v. Sec'y of State' 16 OTR 350: party says it plainly does not exist; page is a gap in the index
-157,phantom,court: 'Portfolio Recovery Assoc. v. King' does not exist
-158,phantom,court unable to locate 'Kelley v. Conan'
-159,phantom,court: 'Marrero v. Camden Steel' does not exist
-160,phantom,court could not locate 'Brownell v. Bank of Am.'
-161,phantom,court: suspected AI citations incl. 'McEwen v. McCullough'
-166,phantom,court: 'Hinkle v. CBE Grp.' non-existent
-167,phantom,court could not locate 'Knight v. Pierson'
-168,phantom,court: 'AROK Construction Co. v. Shipley' does not exist at the citation
-169,phantom,court: nonexistent 'CFTC v. Glencore'
+155,phantom-flag,court unable to locate 'State ex rel. Cline v. Mazzone'
+156,phantom-party-asserted,defendant's reply says 'Dept. of Rev. v. Sec'y of State' 16 OTR 350 plainly does not exist; the court quotes it without its own finding; the page is a gap in the index (D9)
+157,phantom-flag,court: 'Portfolio Recovery Assoc. v. King' does not exist
+158,phantom-flag,court unable to locate 'Kelley v. Conan'
+159,phantom-flag,court: 'Marrero v. Camden Steel' does not exist
+160,phantom-flag,court could not locate 'Brownell v. Bank of Am.'
+161,phantom-flag,court: suspected AI citations incl. 'McEwen v. McCullough'; the court's own words: the cases 'appear to be hallucinations'
+166,phantom-flag,court: 'Hinkle v. CBE Grp.' non-existent
+167,phantom-flag,court could not locate 'Knight v. Pierson'
+168,phantom-flag,court: 'AROK Construction Co. v. Shipley' does not exist at the citation
+169,phantom-flag,court: nonexistent 'CFTC v. Glencore'
 170,real,name typo: Liteky
-173,phantom,court: 'Hendges v. Bank of America' does not exist at this citation and could not be found
-174,phantom,court unable to locate 'Knakmuhs v. Minneapolis Pub. Sch.'
-175,phantom,court: fake case 'Commc'ns v. Hillsborough Holdings'
-176,phantom,court: fake case 'Lindner v. Countrywide Hom Loans'
-177,phantom,court: nonexistent 'Schuh v. Weltman'
+173,phantom-flag,court: 'Hendges v. Bank of America' does not exist at this citation and could not be found
+174,phantom-flag,court unable to locate 'Knakmuhs v. Minneapolis Pub. Sch.'
+175,phantom-flag,court: fake case 'Commc'ns v. Hillsborough Holdings'
+176,phantom-flag,court: fake case 'Lindner v. Countrywide Hom Loans'
+177,phantom-flag,court: nonexistent 'Schuh v. Weltman'
 178,real,misnamed: MEAC v. State at 19 S.W.3d 803
-180,phantom,court: nonexistent 'Bjorlin v. Aluminum Co. of America'
-181,phantom,court: nonexistent 'Suttonhouse v. Rockford S&L'
-185,phantom,court: 'Exxon Corp. v. Alembik' does not exist
+180,phantom-flag,court: nonexistent 'Bjorlin v. Aluminum Co. of America'
+181,phantom-flag,court: nonexistent 'Suttonhouse v. Rockford S&L'
+185,phantom-flag,court: 'Exxon Corp. v. Alembik' does not exist
 189,real,State v. Liason 2026-Ohio-243 (7th Dist. Jan. 23 2026) on the Ohio Reporter of Decisions; missing from CourtListener
-194,phantom,court unable to locate 'Missouri Pac. R.R. Co. v. Shiflet' and orders a copy
-195,phantom,same as 194
-201,phantom,court: non-existent 'Mazza v. Washoe Cnty.'
+194,phantom-flag,court unable to locate 'Missouri Pac. R.R. Co. v. Shiflet' and orders a copy
+195,phantom-flag,same as 194
+201,phantom-flag,court: non-existent 'Mazza v. Washoe Cnty.'
 204,real,OCR: In re Cochener 382 B.R. 311
 205,real,typo: State v. Maluia
-209,phantom,court: 'Hernandez v. Shaughnessy' does not appear to exist
-214,phantom,court: 'Dowds v. Basehore' fabricated by generative AI
-215,phantom,same as 214
+209,phantom-flag,court: 'Hernandez v. Shaughnessy' does not appear to exist
+214,phantom-flag,court: 'Dowds v. Basehore' fabricated by generative AI
+215,phantom-flag,same as 214
