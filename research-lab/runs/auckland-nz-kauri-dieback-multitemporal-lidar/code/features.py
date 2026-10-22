@@ -105,8 +105,21 @@ def tracks(bounds):
     q = f'[out:json][timeout:180];way["highway"~"^(path|footway|track)$"]({la[0]},{lo[0]},{la[1]},{lo[1]});out geom;'
     req = urllib.request.Request("https://overpass-api.de/api/interpreter", data=urllib.parse.urlencode({"data": q}).encode(),
                                  headers={"User-Agent": "research-lab (University of Auckland)"})
-    r = json.load(urllib.request.urlopen(req, timeout=300))
-    json.dump(r, open(DATA / "raw" / "osm_tracks.json", "w"))
+    cache = DATA / "raw" / "osm_tracks.json"
+    if cache.exists():
+        r = json.load(open(cache))
+    else:
+        import time
+        for k in range(5):
+            try:
+                r = json.loads(urllib.request.urlopen(req, timeout=300).read())
+                break
+            except Exception as e:
+                print("overpass retry", k, repr(e)[:80], flush=True)
+                time.sleep(30 * (k + 1))
+        else:
+            raise RuntimeError("Overpass failed repeatedly")
+        json.dump(r, open(cache, "w"))
     back = pyproj.Transformer.from_crs(4326, 2193, always_xy=True)
     pts = []
     for w in r["elements"]:
