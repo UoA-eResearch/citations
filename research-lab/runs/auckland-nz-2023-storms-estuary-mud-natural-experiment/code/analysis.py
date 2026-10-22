@@ -233,8 +233,11 @@ def main():
     oth = {}
     for ind in ("Macrofauna", "Copper", "Zinc", "Lead"):
         x = load(ind)
-        if x.empty or (x.year == 2023).sum() < 10:
-            oth[ind] = {"rows": int(len(x)), "rows_2023": int((x.year == 2023).sum()), "note": "too few 2023 rows"}
+        n_top = int(((x.year == 2023) & (x.tercile == "top")).sum())
+        n_bot = int(((x.year == 2023) & (x.tercile == "bottom")).sum())
+        if x.empty or n_top < 3 or n_bot < 3:          # D4: otherwise the 2023 contrast is not estimable
+            oth[ind] = {"rows": int(len(x)), "rows_2023": int((x.year == 2023).sum()), "rows_2023_top": n_top,
+                        "rows_2023_bottom": n_bot, "note": "not estimable: fewer than 3 top and 3 bottom rows in 2023"}
             continue
         Wx = weights(x.estuary.nunique())
         a = h1(x, Wx)

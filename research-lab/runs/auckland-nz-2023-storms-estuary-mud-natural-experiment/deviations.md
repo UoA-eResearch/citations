@@ -75,3 +75,11 @@ seasonal harvest. It stays primary, as preregistered.
 
 It was defined while `analysis.py` was running and before any of its output was read. The share of newly bare area in
 patches larger than 5 ha is reported, as a measure of how much of the primary exposure is harvest-like.
+
+## D4 — 2026-10-23 09:35 NZDT — metals reported as not estimable (after the analysis ran)
+
+The first analysis run reported copper, zinc and lead as β = 0 with interval [0, 0]. In 2023 those metals were
+sampled at 12 Auckland sites: 8 in the bottom exposure tercile and none in the top. The treatment column was therefore
+all zeros, and the pseudo-inverse returned 0. These outcomes are now reported as not estimable whenever there are
+fewer than 3 top-tercile and 3 bottom-tercile rows in 2023. Nothing else changes, and no verdict depends on these
+outcomes.

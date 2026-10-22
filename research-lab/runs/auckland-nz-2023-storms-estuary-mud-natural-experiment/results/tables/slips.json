@@ -1,0 +1,72 @@
+{
+ "H1_model": {
+  "n_obs": 476,
+  "sites": 37,
+  "harbours": 12,
+  "top_2023": {
+   "estimate": 1.244,
+   "wild_ci": [
+    -4.674,
+    8.263
+   ],
+   "wild_p_zero": 0.7012,
+   "cr2_se": 2.732,
+   "cr2_ci": [
+    -4.769,
+    7.258
+   ]
+  },
+  "top_2024": {
+   "estimate": -2.448,
+   "wild_ci": [
+    -5.281,
+    -0.027
+   ],
+   "wild_p_zero": 0.048,
+   "cr2_se": 1.166,
+   "cr2_ci": [
+    -5.014,
+    0.118
+   ]
+  }
+ },
+ "H1_rule_reading": "Inconclusive",
+ "H2_model": {
+  "n_obs": 712,
+  "sites": 56,
+  "harbours": 13,
+  "E_2023": {
+   "estimate": -93.724,
+   "wild_ci": [
+    -7183.395,
+    9917.57
+   ],
+   "wild_p_zero": 0.9756,
+   "cr2_se": 2853.014,
+   "cr2_ci": [
+    -6309.908,
+    6122.46
+   ]
+  },
+  "E_2024": {
+   "estimate": -1682.772,
+   "wild_ci": [
+    -5993.371,
+    87.988
+   ],
+   "wild_p_zero": 0.0565,
+   "cr2_se": 1069.641,
+   "cr2_ci": [
+    -4013.32,
+    647.776
+   ]
+  }
+ },
+ "E_slip_iqr": 0.000517,
+ "delta_per_iqr": -0.048,
+ "delta_per_iqr_wild_ci": [
+  -3.715,
+  5.129
+ ],
+ "H2_rule_reading": "Inconclusive"
+}

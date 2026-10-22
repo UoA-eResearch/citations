@@ -1,0 +1,118 @@
+{
+ "auckland": {
+  "sites": 56,
+  "dev_2023": 4.261,
+  "dev_2023_site_bootstrap_ci": [
+   2.262,
+   6.298
+  ],
+  "dev_2024": 1.104,
+  "pre_year_mean_range": [
+   -1.27,
+   1.679
+  ],
+  "share_sites_up_2023": 0.696,
+  "dev_2023_by_tercile": {
+   "bottom": 1.393,
+   "middle": 7.882,
+   "top": 3.357
+  }
+ },
+ "regions": {
+  "Auckland": {
+   "sites_2023": 56,
+   "dev_2023": 4.26,
+   "dev_2024": 2.26,
+   "pre_year_mean_range": [
+    -1.63,
+    1.39
+   ],
+   "months_2023": [
+    10,
+    11
+   ]
+  },
+  "Canterbury ": {
+   "sites_2023": 8,
+   "dev_2023": -2.14,
+   "dev_2024": -1.67,
+   "pre_year_mean_range": [
+    -6.05,
+    4.37
+   ],
+   "months_2023": [
+    2,
+    3
+   ]
+  },
+  "Hawke's Bay": {
+   "sites_2023": 8,
+   "dev_2023": -7.12,
+   "dev_2024": 1.28,
+   "pre_year_mean_range": [
+    -7.53,
+    12.75
+   ],
+   "months_2023": [
+    1,
+    3,
+    4
+   ]
+  },
+  "Northland": {
+   "sites_2023": 9,
+   "dev_2023": -3.11,
+   "dev_2024": null,
+   "pre_year_mean_range": [
+    -2.03,
+    1.84
+   ],
+   "months_2023": [
+    2,
+    3,
+    4
+   ]
+  },
+  "Southland": {
+   "sites_2023": 14,
+   "dev_2023": 0.36,
+   "dev_2024": 0.44,
+   "pre_year_mean_range": [
+    -9.44,
+    3.83
+   ],
+   "months_2023": [
+    1,
+    2,
+    3
+   ]
+  },
+  "Waikato": {
+   "sites_2023": 6,
+   "dev_2023": 5.4,
+   "dev_2024": 4.45,
+   "pre_year_mean_range": [
+    -6.31,
+    7.53
+   ],
+   "months_2023": [
+    10,
+    11
+   ]
+  },
+  "Wellington": {
+   "sites_2023": 20,
+   "dev_2023": 4.12,
+   "dev_2024": null,
+   "pre_year_mean_range": [
+    -5.52,
+    4.62
+   ],
+   "months_2023": [
+    1,
+    11,
+    12
+   ]
+  }
+ }
+}

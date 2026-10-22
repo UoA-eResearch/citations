@@ -1,0 +1,257 @@
+{
+ "panel": {
+  "rows": 712,
+  "sites": 56,
+  "harbours": 13,
+  "years": [
+   2010,
+   2024
+  ]
+ },
+ "H1": {
+  "n_obs": 473,
+  "sites": 37,
+  "harbours": 11,
+  "top_2023": {
+   "estimate": 1.932,
+   "wild_ci": [
+    -2.331,
+    5.666
+   ],
+   "wild_p_zero": 0.2813,
+   "cr2_se": 1.621,
+   "cr2_ci": [
+    -1.68,
+    5.545
+   ]
+  },
+  "top_2024": {
+   "estimate": 0.475,
+   "wild_ci": [
+    -3.375,
+    3.766
+   ],
+   "wild_p_zero": 0.7552,
+   "cr2_se": 1.496,
+   "cr2_ci": [
+    -2.859,
+    3.81
+   ]
+  },
+  "verdict": "Inconclusive"
+ },
+ "H2": {
+  "n_obs": 712,
+  "sites": 56,
+  "harbours": 13,
+  "E_2023": {
+   "estimate": -349.322,
+   "wild_ci": [
+    -5110.651,
+    5332.648
+   ],
+   "wild_p_zero": 0.3647,
+   "cr2_se": 272.308,
+   "cr2_ci": [
+    -942.63,
+    243.987
+   ]
+  },
+  "E_2024": {
+   "estimate": -155.07,
+   "wild_ci": [
+    -1822.67,
+    1834.567
+   ],
+   "wild_p_zero": 0.3182,
+   "cr2_se": 135.236,
+   "cr2_ci": [
+    -449.724,
+    139.585
+   ]
+  },
+  "E_iqr": 0.0006,
+  "delta_per_iqr": -0.209,
+  "delta_per_iqr_wild_ci": [
+   -3.062,
+   3.195
+  ],
+  "eta_per_iqr": -0.093,
+  "eta_per_iqr_wild_ci": [
+   -1.092,
+   1.099
+  ],
+  "verdict": "Inconclusive"
+ },
+ "placebo_beta": {
+  "2015": 0.315,
+  "2016": 0.011,
+  "2017": -0.848,
+  "2018": -0.991,
+  "2019": -0.213,
+  "2020": 0.563,
+  "2021": -0.289
+ },
+ "placebo_abs_ge_beta_share": 0.0,
+ "leave_one_harbour_out": {
+  "Kaipara Harbour (South)": {
+   "beta": 2.631,
+   "delta_per_iqr": -0.14
+  },
+  "Mahurangi Harbour": {
+   "beta": 1.39,
+   "delta_per_iqr": -0.275
+  },
+  "Mangemangeroa": {
+   "beta": 0.997,
+   "delta_per_iqr": -0.212
+  },
+  "Manukau Harbour": {
+   "beta": 2.149,
+   "delta_per_iqr": -0.38
+  },
+  "P\u016bhoi": {
+   "beta": 1.932,
+   "delta_per_iqr": -0.227
+  },
+  "T\u016branga": {
+   "beta": 2.236,
+   "delta_per_iqr": -0.21
+  },
+  "Waik\u014dpua": {
+   "beta": 1.482,
+   "delta_per_iqr": -0.208
+  },
+  "Waitemat\u0101 Harbour (Central)": {
+   "beta": 1.331,
+   "delta_per_iqr": -0.316
+  },
+  "Waitemat\u0101 Harbour (Upper)": {
+   "beta": 2.288,
+   "delta_per_iqr": -0.163
+  },
+  "Waiwera": {
+   "beta": 1.932,
+   "delta_per_iqr": -0.176
+  },
+  "Whangateau": {
+   "beta": 1.931,
+   "delta_per_iqr": -0.236
+  },
+  "\u014ckura": {
+   "beta": 1.714,
+   "delta_per_iqr": -0.209
+  },
+  "\u014crewa": {
+   "beta": 2.759,
+   "delta_per_iqr": -0.152
+  }
+ },
+ "exposure_definitions": {
+  "E_route_2": {
+   "beta": -2.556,
+   "beta_wild_ci": [
+    -8.445,
+    4.539
+   ],
+   "delta_per_iqr": -0.194,
+   "delta_per_iqr_wild_ci": [
+    -2.1,
+    1.819
+   ]
+  },
+  "E_route_10": {
+   "beta": 1.522,
+   "beta_wild_ci": [
+    -4.851,
+    7.748
+   ],
+   "delta_per_iqr": -0.096,
+   "delta_per_iqr_wild_ci": [
+    -1.164,
+    2.243
+   ]
+  },
+  "E_radius_2": {
+   "beta": -2.149,
+   "beta_wild_ci": [
+    -11.33,
+    5.812
+   ],
+   "delta_per_iqr": -0.138,
+   "delta_per_iqr_wild_ci": [
+    -1.267,
+    1.467
+   ]
+  },
+  "E_radius_5": {
+   "beta": -2.056,
+   "beta_wild_ci": [
+    -9.538,
+    3.92
+   ],
+   "delta_per_iqr": -0.292,
+   "delta_per_iqr_wild_ci": [
+    -5.601,
+    4.158
+   ]
+  },
+  "E_radius_10": {
+   "beta": 2.539,
+   "beta_wild_ci": [
+    -5.185,
+    9.472
+   ],
+   "delta_per_iqr": -0.064,
+   "delta_per_iqr_wild_ci": [
+    -0.828,
+    1.726
+   ]
+  }
+ },
+ "drop_year_only_rows": {
+  "rows": 657,
+  "beta": 1.447,
+  "beta_wild_ci": [
+   -3.213,
+   5.807
+  ]
+ },
+ "other_outcomes": {
+  "Macrofauna": {
+   "rows": 683,
+   "rows_2023": 55,
+   "beta_2023": 0.094,
+   "beta_2023_wild_ci": [
+    -0.453,
+    0.424
+   ],
+   "gamma_2024": -0.197,
+   "gamma_2024_wild_ci": [
+    -0.587,
+    0.203
+   ]
+  },
+  "Copper": {
+   "rows": 142,
+   "rows_2023": 12,
+   "rows_2023_top": 0,
+   "rows_2023_bottom": 8,
+   "note": "not estimable: fewer than 3 top and 3 bottom rows in 2023"
+  },
+  "Zinc": {
+   "rows": 142,
+   "rows_2023": 12,
+   "rows_2023_top": 0,
+   "rows_2023_bottom": 8,
+   "note": "not estimable: fewer than 3 top and 3 bottom rows in 2023"
+  },
+  "Lead": {
+   "rows": 142,
+   "rows_2023": 12,
+   "rows_2023_top": 0,
+   "rows_2023_bottom": 8,
+   "note": "not estimable: fewer than 3 top and 3 bottom rows in 2023"
+  }
+ }
+}
