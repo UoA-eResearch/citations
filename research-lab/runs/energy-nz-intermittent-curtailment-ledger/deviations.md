@@ -52,11 +52,11 @@ day) and the git order. Its findings were checked in `code/sensitivity_post_revi
 
 1. **"Price-driven" is renamed "dispatched down"** (node price at or below the plant's own highest offer). It
    includes plants constrained off, because a constrained node's price falls to the marginal offer. Of non-noise
-   curtailment in 2025/26, 46.9% is at prices at or below /bin/bash.01, 73.1% at or below the plant's offer, and 94.9% below
-   . "Reverses H2's reading" is withdrawn.
+   curtailment in 2025/26, 46.9% is at prices at or below $0.01, 73.1% at or below the plant's offer, and 94.9% below
+   $1. "Reverses H2's reading" is withdrawn.
 2. **Two plants.** Turitea (53.7 GWh) and Kaiwera Downs (25.4 GWh) are 86% of 2025/26 dispatch-down. The rest of
-   the fleet shows 0.41%, below 2022/23's 0.89%. Per-plant series and the offer-price history (Turitea /bin/bash.01 to /bin/bash.02
-   in 2025/26; Kaiwera Downs .60) are now reported, and the headline is changed.
+   the fleet shows 0.41%, below 2022/23's 0.89%. Per-plant series and the offer-price history (Turitea $0.01 to $0.02
+   in 2025/26; Kaiwera Downs $1.60) are now reported, and the headline is changed.
 3. **The potential is the latest on file, not dispatch-time.** In 2025/26 most established wind farms submitted it
    after the half-hour had begun (median 1.2–11.6 minutes late, 76–89% of half-hours); solar potentials are days
    old. Both are reported, and the solar explanation in the gate figure is corrected.
