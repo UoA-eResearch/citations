@@ -165,12 +165,12 @@ Evidence:
 
 
 def llm(x, model):
-    body = {"model": model, "temperature": 0, "max_tokens": 400,
+    body = {"model": model, "temperature": 0, "max_tokens": 16384,   # D6: the model reasons before answering
             "messages": [{"role": "user", "content": PROMPT + evidence(x)[:6000]}]}
     req = urllib.request.Request("http://localhost:8000/v1/chat/completions", data=json.dumps(body).encode(),
                                  headers={"Content-Type": "application/json"})
     try:
-        with urllib.request.urlopen(req, timeout=180) as r:
+        with urllib.request.urlopen(req, timeout=900) as r:
             out = json.loads(r.read())["choices"][0]["message"]["content"] or ""
     except Exception as e:
         return None, 0.0, f"error: {e!r}"
@@ -197,9 +197,11 @@ def main():
     gz = [gazetteer(x, g) for x in recs]
     cl, info = classifier_predictions(recs)
     model = json.loads(urllib.request.urlopen("http://localhost:8000/v1/models", timeout=30).read())["data"][0]["id"]
+    from concurrent.futures import ThreadPoolExecutor   # D6: 8 requests at a time; temperature 0 throughout
+    with ThreadPoolExecutor(8) as ex:
+        lm = list(ex.map(lambda x: llm(x, model), recs))
     out = []
-    for x, a, b in zip(recs, gz, cl):
-        c, p, note = llm(x, model)
+    for x, a, b, (c, p, note) in zip(recs, gz, cl, lm):
         out.append({"record": x["record"], "gazetteer": a[0], "gazetteer_conf": round(a[1], 4),
                     "classifier": b[0], "classifier_conf": round(b[1], 4), "llm": c, "llm_conf": round(p, 4),
                     "llm_note": note})

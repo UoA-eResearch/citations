@@ -62,12 +62,16 @@ resolves are no longer untagged; they are labelled and then excluded from scorin
    from its own sheet and order, and pass 1's labels file was not opened. But the labeller is the same agent, with the
    same rules in mind, and its working notes from pass 1 were in context. Agreement between the passes is therefore an
    upper bound on what two independent labellers would reach, and is reported as such.
-2. **A display truncation, found and checked.** While labelling, the reading aid's output was further cut to 280–320
-   characters per line for some batches. One pass-2 record (an ENA plastisphere sample) gives its country under the
-   ENA attribute "geographic location, country and/or sea" past that cut; it was found and labelled from the full
-   record. A scan of every attribute and comment line in both sheets for location values past the cuts found no other
-   pass-2 record affected, and no pass-1 record with a location value past the reading aid's own limits (500
-   characters of attributes, 300 of comment). Disagreements go to pass 3 in any case.
+2. **A display truncation in pass 2.** For P2-000 to P2-416 the reading aid's output was further cut to 280–420
+   characters per line; pass 1 used the aid without that cut (session log). The cut hid text in attribute, comment
+   and publication-cue lines. One record (an ENA plastisphere sample whose country sits under "geographic location,
+   country and/or sea") was caught while labelling and labelled from the full record. An audit of the 417 cut
+   records (`results/tables/gold_pass2_cut_audit.txt`) finds a location cue past the cut in 58. Two hid a real
+   sampling site: an Iberian-pig farm in Spain and a Czech reservoir supplying fish broodstock. Both disagree with
+   pass 1 and go to pass 3, which read them in full. The other 56 are supplier addresses, laboratory methods or the
+   mislinked yak paper. Where the cut hid evidence that pass 1 used, the result is a disagreement, so the cut lowers
+   agreement but does not enter a final label. No pass-1 record has a location value past the reading aid's own
+   limits (500 characters of attributes, 300 of comment).
 3. **A cap that gold and arms share.** `parse.py` stores at most 600 characters of a sample's other attributes. The
    gold sheets and all three arms read the same stored fields, so they are scored on the same evidence; but a
    location written past that cap is invisible to both. Recoverability is therefore measured on the stored evidence,
@@ -77,3 +81,18 @@ resolves are no longer untagged; they are labelled and then excluded from scorin
    spelling through `countries.resolve`, the function the arms use for their predictions, and a label outside the
    vocabulary stops the script. This changes no label's meaning; it only stops "Cote d'Ivoire" with a straight
    apostrophe from differing from the vocabulary's curly one.
+5. **Pass 3 (17 records, blind to both earlier labels).** It applied the plan's fixed rule, reading "sampling site"
+   as the place where the organism was taken from its source population. Three readings are recorded:
+   - livestock sampled at a named farm facility take that country (as a national herd survey does);
+   - experimental first-generation crosses from broodstock caught at a stated site take that site's country;
+   - genebank accessions with no stated origin are "not stated", by analogy with culture-collection isolates (D3).
+   A laboratory animal's housing facility is not a sampling site. Of the 17, three end as a country (Spain, Czechia,
+   China); the rest are not determinable.
+
+## D6 — 2026-10-22 15:55 NZDT — LLM arm output budget (before any arm is run)
+
+The locally served model (nemotron_3_nano_omni) writes its reasoning before its answer. Two earlier studies in this
+lab found that small output budgets truncate its replies before the answer (FAERS recalibration, D1–D2; the
+Schedule-LLM study used 16,384 tokens). `arms.py` had a 400-token budget, which would have scored most truncated
+replies as "unknown". The budget is now 16,384 tokens and the request timeout 900 s; requests run eight at a time.
+The prompt, temperature (0), evidence and parsing are unchanged. No arm had been run.
