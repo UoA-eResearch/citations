@@ -47,6 +47,55 @@ def load_areas():
     return a
 
 
+LAND_RATIO, LAND_SHARE, MAD_Z = 0.10, 0.5, 5.0
+AREA_COLS = ["area_otsu", "area_fixed", "area_ndwi", "area_otsu_30m"]
+
+
+def land_screen(a, inv):
+    """D5 (revised): an OSM feature is an islet if dry land -- MNDWI below 0, SWIR brighter than green, which no water
+    depth gives -- covers at least 10% of its OSM area in at least half of its clear Sentinel-2 scenes. Otsu cannot
+    decide this: in an all-water window it splits shallow from deep water. One decision from Sentinel-2 covers both
+    epochs."""
+    s = a[(a.sensor == "s2") & a.area_otsu.notna()].copy()
+    s["osm_m2"] = inv.area_ha.reindex(s.islet).to_numpy() * 1e4
+    s["land"] = s.area_fixed >= LAND_RATIO * s.osm_m2
+    s["ratio"] = s.area_otsu / s.osm_m2
+    g = s.groupby("islet")
+    t = pd.DataFrame({"atoll": g.atoll.first(), "osm_ha": g.osm_m2.first() / 1e4, "scenes": g.size(),
+                      "land_share": g.land.mean(), "median_s2_to_osm": g.ratio.median()})
+    by_year = s.groupby(["islet", "year"]).land.mean().unstack()
+    early = s[s.year <= 2018].groupby("islet").land.mean()
+    late = s[s.year >= 2024].groupby("islet").land.mean()
+    t["share_2016_18"], t["share_2024_26"] = early, late
+    t["retained"] = t.land_share >= LAND_SHARE
+    t["possible_loss"] = ~t.retained & (t.share_2016_18 >= LAND_SHARE) & (t.share_2024_26 < LAND_SHARE)
+    t = t.join(by_year.add_prefix("share_"), how="left")
+    t.reset_index().to_csv(T / "land_screen.csv", index=False)
+    return t
+
+
+def gross_filter(a):
+    """D5: within each islet, sensor family and area series, a value more than 5 scaled MADs of log area from the
+    islet's median is set aside (NaN). Returns the filtered frame and the share set aside per series and family."""
+    a = a.copy()
+    fam = np.where(a.sensor == "s2", "s2", "landsat")
+    dropped = {}
+    for col in AREA_COLS:
+        if col not in a:
+            continue
+        lg = np.log(a[col].where(a[col] > 0))
+        key = [a.islet, fam]
+        med = lg.groupby(key).transform("median")
+        mad = (lg - med).abs().groupby(key).transform("median") * 1.4826
+        z = (lg - med) / mad.where(mad > 0)
+        bad = (z.abs() > MAD_Z) | (a[col].notna() & ~(a[col] > 0))
+        for f in ("s2", "landsat"):
+            m = (fam == f) & a[col].notna()
+            dropped[f"{col}_{f}"] = round(float(bad[m].mean()), 4) if m.any() else None
+        a.loc[bad, col] = np.nan
+    return a, dropped
+
+
 def attach_levels(a):
     out = []
     for name, (gid, _) in ATOLLS.items():
@@ -120,6 +169,19 @@ def main():
     inv = pd.read_csv(RUN / "data" / "inventory.csv").set_index("islet")
     a = attach_levels(load_areas())
     a["year"] = a.time.dt.year
+    # D5: the land screen, then gross-failure values
+    ls_ = land_screen(a, inv)
+    keep = set(ls_.index[ls_.retained])
+    loss = set(ls_.index[ls_.possible_loss])
+    a_all = a
+    a = a[a.islet.isin(keep | loss)]       # possible-loss features are rated for the sensitivity analysis only
+    a, dropped = gross_filter(a)
+    qa = {"features_measured": int(len(ls_)), "retained": int(len(keep)), "failed_land_screen": int((~ls_.retained).sum()),
+          "possible_loss": sorted(loss), "values_set_aside_share": dropped,
+          "retained_by_atoll": {k: int(v) for k, v in ls_[ls_.retained].groupby("atoll").size().items()},
+          "failed_by_atoll": {k: int(v) for k, v in ls_[~ls_.retained].groupby("atoll").size().items()},
+          "median_s2_to_osm_retained": round(float(ls_[ls_.retained].median_s2_to_osm.median()), 3),
+          "not_measured_ge_1ha": sorted(set(inv.index[inv.area_ha >= 1]) - set(a_all.islet))}
     is_s2 = a.sensor == "s2"
     l1 = a.sensor.isin(["LT05", "LE07", "LC08"])        # Collection 1 Level-1 (D1)
     fams = {
@@ -140,12 +202,15 @@ def main():
                     r = islet_rate(g, col, inv.area_ha[islet] * 1e4, robust=robust)
                     if r:
                         rows.append({"islet": islet, "atoll": inv.atoll[islet], "area_ha": inv.area_ha[islet],
-                                     "engineered": int(inv.engineered[islet]), "family": fam, "series": col,
+                                     "engineered": int(inv.engineered[islet]), "possible_loss": int(islet in loss),
+                                     "family": fam, "series": col,
                                      "robust_slope": int(robust), **r})
     R = pd.DataFrame(rows)
     R.to_csv(T / "islet_rates.csv", index=False)
+    R_all = R
+    R = R[R.possible_loss == 0]
     prim = lambda fam, col="area_otsu", rob=0: R[(R.family == fam) & (R.series == col) & (R.robust_slope == rob)]
-    out = {"scenes_used": {f: int(len(d)) for f, d in fams.items()},
+    out = {"qa_d5": qa, "scenes_used": {f: int(len(d)) for f, d in fams.items()},
            "levels_missing_share": round(float(a.level_m.isna().mean()), 4)}
     # sensor-step guard
     gl, gs = prim("guard_ls").set_index("islet"), prim("guard_s2_30m", "area_otsu_30m").set_index("islet")
@@ -195,6 +260,13 @@ def main():
     z["D"] = z.rate_corr_e2 - z.rate_corr
     sens["robust_tide_slope"] = {"islets": int(len(z)), "D": round(float(z.D.mean()), 4) if len(z) else None,
                                  "ci": boot_mean(z, "D") if len(z) else None}
+    if loss:
+        q = lambda fam: R_all[(R_all.family == fam) & (R_all.series == "area_otsu") & (R_all.robust_slope == 0)].set_index("islet")
+        z = q("E1")[["rate_corr", "atoll", "engineered", "area_ha"]].join(q("E2")[["rate_corr"]], rsuffix="_e2", how="inner")
+        z = z[(z.engineered == 0) & (z.area_ha >= 5)].reset_index()
+        z["D"] = z.rate_corr_e2 - z.rate_corr
+        sens["with_possible_loss_features"] = {"islets": int(len(z)), "D": round(float(z.D.mean()), 4) if len(z) else None,
+                                               "ci": boot_mean(z, "D") if len(z) else None}
     small = e2[(e2.engineered == 0) & (e2.area_ha >= 1) & (e2.area_ha < 5)]
     sens["E2_islets_1_to_5_ha"] = {"islets": int(len(small)),
                                    "mean_rate": round(float(small.rate_corr.mean()), 4) if len(small) else None}

@@ -122,3 +122,27 @@ either.
 
 `land_screen.csv` reports the Sentinel-2-to-OSM area ratio among retained islets, so that any dilution by
 over-drawn OSM polygons is visible.
+
+**D5 revised — 2026-10-23 00:52 NZDT, still before any rate is computed.** The land screen as first written above
+(Otsu area at least 25% of OSM area in half of the scenes) was tested on the QA outputs only. It kept most Penrhyn
+lagoon knolls. Imagery of one (penrhyn_036, kept with 62%) shows why: in a window that is all water, Otsu's threshold
+splits shallow water over the knoll from deep lagoon water, so the knoll top is classed as "land" in about 60% of
+scenes, independent of tide.
+
+The screen now uses a physical test instead:
+- **Dry land:** MNDWI below 0, meaning SWIR brighter than green. No depth of water gives that, because water
+  absorbs SWIR within centimetres.
+- **The rule:** a feature is an islet if dry land covers at least 10% of its OSM area in at least half of its clear
+  Sentinel-2 scenes. The possible-loss flag uses the same test, by year.
+
+**On the atolls measured so far** (Penrhyn and Kapingamarangi still running):
+- The share is bimodal. On Penrhyn, 123 features are at or below 5% and 37 are at or above 80%.
+- Every Funafuti, Kapingamarangi and Majuro feature passes. Tarawa loses tarawa_004 (the reef flat). Kwajalein loses
+  kwajalein_056 (4.7 ha, never dry) and two islets of about 1 ha (shares 0.41 and 0.44). kwajalein_078 is flagged
+  as a possible loss.
+- **Gross-failure values set aside:**
+  - MNDWI-Otsu: Sentinel-2 0.6%, Landsat 2.3%;
+  - NDWI: 1.5% and 2.1%;
+  - MNDWI at 0: 1.6% and 23% (at 30 m, mixed shoreline pixels often keep a small islet's MNDWI above 0, and that
+    series is a sensitivity analysis only).
+- The median Sentinel-2-to-OSM area ratio among retained islets is 1.14 (10th–90th percentile 0.93–1.98).
