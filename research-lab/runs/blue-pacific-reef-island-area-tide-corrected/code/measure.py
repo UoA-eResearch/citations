@@ -131,6 +131,25 @@ def coarse30(gR, sR, clear, tf, aoi_g, ring_g):
     return {"area_otsu_30m": islet_area(m3 < t, am, rm, abs(tf3.a * tf3.e)), "clear_30m": round(float(c3[am].mean()), 4)}
 
 
+def precheck(q, sensor, islets_, shp, tf, geoms, aoi):
+    """The D2 cloud test from the cloud band alone: would each islet pass it (nodata judged from the cloud band)?"""
+    if sensor == "s2":
+        cl_out, cl_in, nod = np.isin(q, [3, 8, 9, 10]), np.isin(q, [3, 9, 10]), q == 0
+    else:
+        cc, sc_ = (q >> 5) & 3, (q >> 7) & 3
+        cl_out = (((q >> 4) & 1) == 1) | (cc >= 2) | (sc_ >= 2)
+        cl_in, nod = (cc == 3) | (sc_ >= 2), (q & 1) == 1
+    res = {}
+    for i in islets_:
+        am = ~geometry_mask([aoi[i]], out_shape=shp, transform=tf)
+        inner = ~geometry_mask([geoms[i].buffer(2 * abs(tf.a))], out_shape=shp, transform=tf) & am
+        outer = am & ~inner
+        ok = bool(am.any() and outer.any() and inner.any() and nod[am].mean() <= 0.01
+                  and cl_out[outer].mean() <= 0.05 and cl_in[inner].mean() <= 0.05)
+        res[i] = ok
+    return res
+
+
 def scene(row, sensor, inv, wins, geoms, aoi):
     out = []
     try:
@@ -146,16 +165,29 @@ def scene(row, sensor, inv, wins, geoms, aoi):
             for w in wins:
                 if not fb.contains(shapely.box(*w["bounds"])):
                     continue
-                gr, tf = read(g, w["bounds"])
-                if gr.size == 0:
+                # the window's grid from the green band's header; the cloud band is read first, and the reflectance
+                # bands only if some islet in the window passes the cloud test (efficiency; same decisions)
+                win = from_bounds(*w["bounds"], transform=g.transform).round_offsets().round_lengths()
+                win = win.intersection(Window(0, 0, g.width, g.height))
+                shp, tf = (int(win.height), int(win.width)), g.window_transform(win)
+                if shp[0] == 0 or shp[1] == 0:
                     continue
-                shp = gr.shape
-                s1, _ = read(sw, w["bounds"], shp)
-                n1, _ = read(ni, w["bounds"], shp)
                 q, _ = read(qa, w["bounds"], shp) if sensor == "s2" else read(qa, w["bounds"])
                 q = q.astype(np.int64)
                 if q.shape != shp:
                     q = q[:shp[0], :shp[1]]
+                    if q.shape != shp:
+                        continue
+                pre = precheck(q, sensor, w["islets"], shp, tf, geoms, aoi)
+                if not any(pre.values()):
+                    for i in w["islets"]:
+                        out.append({"atoll": inv.atoll[i], "islet": inv.islet[i], "scene": row["id"],
+                                    "datetime": row["datetime"], "sensor": sensor if sensor == "s2" else row["platform"],
+                                    "aoi_pixels": -1, "clear": 0.0, "skipped_by_cloud_precheck": 1})
+                    continue
+                gr = g.read(1, window=win)
+                s1, _ = read(sw, w["bounds"], shp)
+                n1, _ = read(ni, w["bounds"], shp)
                 gR = np.clip(gr * row["green_scale"] + row["green_offset"], 0, None)     # D2: clip at 0
                 sR = np.clip(s1 * row["swir16_scale"] + row["swir16_offset"], 0, None)
                 nR = np.clip(n1 * row["nir_scale"] + row["nir_offset"], 0, None)

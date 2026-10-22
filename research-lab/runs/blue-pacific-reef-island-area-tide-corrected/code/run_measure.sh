@@ -5,7 +5,7 @@ for a in funafuti tarawa majuro kwajalein penrhyn kapingamarangi kanton kiritima
   until [ -e "data/scenes/${a}_s2.parquet" ] && [ -e "data/scenes/${a}_ls.parquet" ]; do sleep 60; done
   [ -e "data/scenes/${a}_l1.parquet" ] || venv/bin/python -I code/gcp_scenes.py >> logs/gcp_scenes.log 2>&1
   echo "$(date '+%H:%M:%S') start $a"
-  venv/bin/python -I code/measure.py "$a" s2 --threads 40 > "logs/measure_${a}_s2.log" 2>&1 &
+  venv/bin/python -I code/measure.py "$a" s2 --threads 96 > "logs/measure_${a}_s2.log" 2>&1 &
   p1=$!
   venv/bin/python -I code/measure.py "$a" l1 --threads 24 > "logs/measure_${a}_l1.log" 2>&1 &
   p2=$!
