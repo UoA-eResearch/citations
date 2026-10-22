@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phantom Precedents</title>
+<meta name="description" content="A preregistered screen of 1.67 million US court opinions, 2019-2026, for citations to cases that do not exist, verified by hand and calibrated against the AI Hallucination Cases database.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Law and digital humanities</div>
+  <h1>Fabricated citations in US court opinions: a screen of 1.67 million opinions found no judge relying on one, but it could not see the ones already known</h1>
+  <p class="subtitle">Every US opinion in CourtListener&#x27;s 2026-09-30 snapshot filed from 2019 to September 2026 (1,665,327 documents, 23.96 million full case citations) was screened for citations to cases that cannot be found by citation or by name. The surviving candidates were verified by hand against the corpus and CourtListener&#x27;s public search. This version incorporates an independent review and a confirmation pass (`review/review.md`, `review/confirmation.md`; changes logged as D9 and D10).</p>
+  <div class="meta">
+    <span>Report · 2026-10-23 · revised after independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/legal-phantom-citations-judicial-opinions/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/legal-phantom-citations-judicial-opinions/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/legal-phantom-citations-judicial-opinions/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: Inconclusive.</strong></p>
+<ul>
+<li><strong>H1 (at least 20 opinions from 2023–2026 rely on a phantom citation): Inconclusive.</strong><ul>
+<li><strong>The sample.</strong> No verified case of a judge relying on a nonexistent authority, in a seeded sample of 300 of the
+3,182 opinions with reliance-type candidates in reporter-volumes complete enough to judge. The 95% upper bound is
+<strong>40 opinions</strong>, which spans the Refuted (&lt;10), Inconclusive and Supported (≥20) bands. The plan's rule was
+written for a full count, so a sample whose interval spans the bands cannot decide it (D9).</li>
+<li><strong>The instrument.</strong> It is nearly blind where it matters.<ul>
+<li>After the completeness filter, only <strong>42 of 869 (4.8%)</strong> known incident orders keep any candidate.</li>
+<li>On the three in-corpus opinions that quote a judge's fabricated authorities, the screen flags <strong>none of the
+  fabricated citations</strong>.</li>
+<li>Divided by the 4.8% recall, the sample's upper bound becomes roughly <strong>830 opinions</strong> that the data cannot rule
+  out.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>H2 (the 2019–2022 placebo period is near-empty): not scorable.</strong> Both periods have zero verified reliance, so
+  the ratio is undefined.</li>
+<li><strong>What the screen did find: courts flagging litigants' fakes.</strong><ul>
+<li>43 opinions from 2023–2026 in which the court itself identifies a cited case as nonexistent: 0.51 per 10,000
+opinions (0.38–0.69). These are 41 cases: two cases have two documents each, one an amended re-issue.</li>
+<li>In 2 more opinions the court only reports a party's assertion.</li>
+<li>None appear among the 116 placebo-period flag-sheet opinions.</li>
+<li><strong>38 of the 43 are already in the public AI Hallucination Cases database; five court-flagged opinions are not.</strong></li>
+</ul>
+</li>
+<li><strong>And a corpus problem.</strong> CourtListener's "opinions" include party filings: pro se motions with a judge's
+  endorsement, a pro se bankruptcy filing, and briefs e-filed in the Texas Fifteenth Court of Appeals. Two of these
+  carry citations that exist nowhere. They are litigants' phantoms, not judges' (D8).</li>
+</ul>
+<h2>In plain terms</h2>
+<p>Lawyers and self-represented litigants have been caught citing court cases that do not exist, often invented by AI
+chatbots. A handful of judges have too. The worry is that the known cases are the tip of an iceberg: judges' opinions
+quietly relying on fake cases that nobody has noticed.</p>
+<p>We screened every US court opinion from 2019 to September 2026 in the largest open archive, looking for cited cases
+that cannot be found anywhere. In a random sample of the suspicious citations, every one traced to a real case with a
+typo, a scanning error or an unusual citation style. So we found no judge relying on a fake case.</p>
+<p>But this does not show the iceberg is absent. The screen could only judge citations to older federal reporters that
+the archive covers fully. It missed the fake citations in every known judicial incident we could test it on: a
+California-style citation slipped through as genuine, and fake Georgia cases were taken for misattributed real ones.
+What the screen found plainly is the other side of the problem: 43 opinions since 2023 in which a court calls out a
+litigant's fake citations, none before 2023. All but five of them are already in the main public list of such
+incidents.</p>
+<h2>What was asked</h2>
+<p>The lead (<code>legal-digital-humanities-phantom-citations-judicial-opinions</code>) proposed a systematic screen of judicial
+opinions, not filings, for citations to nonexistent authority.
+- <strong>The public record is incident-driven.</strong> Charlotin's AI Hallucination Cases database (2,203 incidents on
+  2026-10-21; 1,474 US incidents dated in the screened window, 9 attributed to a judge) counts what someone noticed.
+- <strong>The plan</strong> (<code>plan.md</code>, committed before any opinion text was extracted) set two tests:
+    - <strong>H1:</strong> at least 20 verified opinions filed 2023-01-01 to 2026-09-30 that <em>rely</em> on a phantom citation
+    (Supported if at least 20; Refuted if fewer than 10);
+    - <strong>H2:</strong> a placebo-period (2019–2022) reliance rate at most a quarter of the screened-period rate.
+- <strong>Flags are separate.</strong> Opinions that <em>flag</em> somebody else's bad citation are the known phenomenon and are reported
+  separately.</p>
+<h2>How it was done</h2>
+<ol>
+<li><strong>Index.</strong> 17.6 million citation rows (reporter-volume-page to case) and 10 million case names from the
+   CourtListener bulk data (D1–D3).</li>
+<li><strong>Screen</strong> (<code>screen_shards.py</code>; frozen at D6, rescheduled in chunks at D7, 743 minutes on 26 workers).<ul>
+<li>eyecite extracts every full case citation in 1,665,327 opinions dated 2019-01-01 to 2026-09-30.</li>
+<li>A citation that resolves by reporter-volume-page to a case sharing a distinctive token with the cited name is
+ consistent. Otherwise the cited name is searched across all case names, with abbreviations expanded (D6).</li>
+<li>A citation that neither resolves to a matching case nor matches any name is a candidate: 859,471 of them.</li>
+</ul>
+</li>
+<li><strong>Completeness filter (preregistered).</strong> Only citations into reporter-volumes where at least 98% of known pages are
+   present can be phantoms; coverage is measured leave-one-opinion-out (D6). This drops 851,400 candidates (99.1%)
+   and keeps 8,071.</li>
+<li><strong>Reliance or flag</strong>, by a fixed list of context words (sanction, fictitious, non-existent, AI, ...).</li>
+<li><strong>Verification sheets</strong> (<code>analysis.py prepare</code>). Every opinion is verified up to 300 per sheet; above that, a
+   seeded random sample of 300.<ul>
+<li>Sampled: the screened-reliance sheet (3,182 opinions) and the placebo-reliance sheet (3,646).</li>
+<li>Verified in full: the screened-flag (202) and placebo-flag (116) sheets.</li>
+<li>Also: a sample of 100 misattributions.</li>
+</ul>
+</li>
+<li><strong>Verification</strong> (D8, D9). Each candidate was read with the index's names at the cited page (<code>verify_aid.py</code>, a
+   reading aid), and doubtful ones were looked up in CourtListener's public search. The labels are:<ul>
+<li><strong>real:</strong> a case the index or CourtListener holds under the cited or a corrected citation, that independent
+ opinions cite, or that an official reporter lists;</li>
+<li><strong>phantom:</strong> a case found nowhere;</li>
+<li><strong>phantom-flag:</strong> the court itself says the case does not exist;</li>
+<li><strong>phantom-party-asserted:</strong> only a party says so.</li>
+</ul>
+</li>
+</ol>
+<p>The document holding every phantom was read to confirm it is an opinion.
+      - <strong>Pace.</strong> All 1,036 sheet rows and 100 misattributions were labelled in about 26 minutes. 117 rows carry a
+     written verdict; the rest, read and found real, default to "real" (<code>labelled = 0</code> in <code>verified.csv</code>).
+      - <strong>Independent check.</strong> The reviewer re-checked 113 rows: all 60 phantom rows, the party-filing and unverifiable
+     rows, and a seeded sample of 48 "real" rows, 36 of them unwritten defaults. Every "real" call was confirmed.</p>
+<h2>Results</h2>
+<h3>The sample of reliance candidates (<code>results/figures/F1_funnel.png</code>)</h3>
+<figure><a href="results/figures/F1_funnel.png"><img src="results/figures/F1_funnel.png" alt="Screening funnel from 1.67 million opinions to verified candidates"></a><figcaption>US opinions dated 2019-01-01 to 2026-09-30 in the CourtListener 2026-09-30 snapshot (1,665,327 documents). Candidates are citations that neither resolve to a matching case nor match any case name; only those in reporter-volumes with at least 98% page coverage can be phantoms. Court-flagged opinions were verified in full; reliance-type candidates in a seeded sample of 300 opinions (of 3,182), none of which was a phantom.</figcaption></figure>
+<p>Of the 335 candidates in the 300 sampled screened-period opinions:
+- 333 were real cases or not cases at all. Two "unverifiable" rows (one in each period) turned out to be an article in
+  F.R.D., Schwarzer, 99 F.R.D. 465 (1984), and are now real (D9).
+- The other two sit in party filings that CourtListener holds as opinions (see below).</p>
+<p>The real ones were mis-scored for four reasons:
+- <strong>Citation style the parser misread.</strong> California's "(10th Cir. 1984) 732 F.2d 775" form made the cited "name"
+  "10th cir". Other names came out as abbreviations: "DYFS v. A.W.", "NRDC v. FAA", "CREW v. FEC".
+- <strong>Typos by the courts themselves.</strong> <em>Feist</em> cited as 499 U.S. 240 instead of 340. <em>Plyler v. Doe</em> as 457 U.S. 2020.
+  <em>Christiansburg Garment</em> as 484 U.S. 412 instead of 434. <em>Garamendi v. Henin</em> as 684 F.3d instead of 683. The sample
+  holds 14 such volume or page slips and 3 wrong reporters.
+- <strong>OCR damage.</strong> "Blurne v. State" for <em>Blume</em>, "Slricklana v. Washl ngton" for <em>Strickland</em>.
+- <strong>Index gaps.</strong> Unpublished table decisions, and cases missing from CourtListener. <em>State v. Liason</em>,
+  2026-Ohio-243, is missing from CourtListener but appears in the Ohio Reporter of Decisions.</p>
+<p>The placebo-period sample (350 candidates, 300 opinions) looks the same. The sample-based estimate is 0 opinions of
+3,182 (95% interval 0–40), or 0 per 10,000 screened-period opinions (0–0.046).</p>
+<h3>What the filter leaves (<code>primary.json</code> → <code>reporters</code>)</h3>
+<p>The completeness filter is what makes a miss meaningful, but it keeps almost nothing in the reporters where
+2023–2026 citations land:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>reporter</th>
+<th>candidates</th>
+<th>kept</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Westlaw (WL)</td>
+<td>650,612</td>
+<td>1</td>
+</tr>
+<tr>
+<td>F.4th</td>
+<td>9,252</td>
+<td>0</td>
+</tr>
+<tr>
+<td>F. Supp. 3d</td>
+<td>22,061</td>
+<td>209</td>
+</tr>
+<tr>
+<td>Cal.App.5th</td>
+<td>8,438</td>
+<td>28</td>
+</tr>
+<tr>
+<td>So.3d</td>
+<td>4,229</td>
+<td>0</td>
+</tr>
+<tr>
+<td>A.3d</td>
+<td>4,076</td>
+<td>6</td>
+</tr>
+<tr>
+<td>N.E.3d</td>
+<td>2,049</td>
+<td>1</td>
+</tr>
+<tr>
+<td>F.3d</td>
+<td>10,359</td>
+<td>2,335</td>
+</tr>
+<tr>
+<td>U.S.</td>
+<td>2,168</td>
+<td>1,065</td>
+</tr>
+<tr>
+<td>F.2d</td>
+<td>1,981</td>
+<td>696</td>
+</tr>
+</tbody>
+</table></div>
+<p>Of the 8,071 kept candidates, 51% are in F.3d, U.S. Reports and F.2d. In effect, H1 was tested on citations into
+older federal reporters and the U.S. Reports, which are not where recent fabricated citations land.</p>
+<h3>What the screen can and cannot see (recall)</h3>
+<ul>
+<li><strong>Known incident orders.</strong> Of the 1,474 US incidents in the database dated in the window, 879 were matched to 869
+  distinct orders in the corpus (D9 fixed a regex that had dropped New Mexico courts and added a same-day caption
+  rule; D10 selects US incidents by the database's own country field).<ul>
+<li>Before the completeness filter, the screen produced <em>some</em> candidate in 465 of the 869 (53.5%; 50.2–56.8%).
+That counts any candidate in the order, not necessarily the fabricated citation, so it is an upper bound.</li>
+<li>After the filter, which is what the verified counts rest on, only <strong>42 of 869 (4.8%; 3.6–6.5%)</strong> keep any
+candidate.</li>
+</ul>
+</li>
+<li><strong>Judge-attributed incidents.</strong> Five of the nine are in the corpus. Four of the five are a <em>reviewing</em> court's
+  opinion about a trial court's order (<em>H.C. v. Contreras</em>, <em>Payne v. State</em>, <em>Shahid v. Esaam</em>, <em>Henry County Schools
+  v. Grant</em>); the trial-court orders themselves are not in CourtListener. Only <em>In re CorMedix</em> is the opinion that
+  relied.<ul>
+<li>CorMedix was caught as reliance before the filter, on three Westlaw citations, and lost to the filter.</li>
+<li>So reliance recall is 1 of 1 before the filter and 0 of 1 after it.</li>
+</ul>
+</li>
+<li><strong>Blind to the known pattern.</strong> The frozen screen was run on the three reviewing-court opinions that quote the
+  fabricated authorities (reviewer's check, <code>review/reviewer_checks/judge_test.*</code>). It marks none of the fabricated
+  citations as a candidate:<ul>
+<li>In <em>H.C. v. Contreras</em> the fictitious "Enrique M. v. Angelina V. (2005) 15 Cal.App.5th 788" resolves into an
+unrelated case. Because the parser extracts no case name from California-style citations, the screen marks it
+<strong>consistent</strong> (an empty cited name is treated as consistent).</li>
+<li>In <em>Shahid v. Esaam</em>, a dozen fictitious Georgia cases with full citations land as <strong>misattributions</strong>: a real
+case sits at the cited page under a different name. Misattributions are verified only as a sample and never
+counted. Two others pass as <strong>consistent</strong> because one shared surname is enough (<em>Brown v. Brown</em> resolving to
+<em>Brown v. State</em>).</li>
+<li>In <em>Payne v. State</em>, the nonexistent <em>Bryant v. State</em>, 268 Ga. App. 362, is a <strong>misattribution</strong>.</li>
+</ul>
+</li>
+<li><strong>Why so blind.</strong> The draft's explanation (Westlaw citations and misquoted real cases) holds only for CorMedix. The
+  other fabrications are invisible for three reasons:<ul>
+<li>a fabricated citation with a plausible volume and page lands inside a real case;</li>
+<li>the screen reads such a mismatch as a misattribution rather than a phantom;</li>
+<li>California-format citations carry no name to compare.</li>
+</ul>
+</li>
+</ul>
+<p>Add the completeness filter, which removes the modern reporters altogether. A better instrument would check every
+  misattribution and compare quotations and holdings, not only existence.
+- <strong>Recall-corrected bound.</strong> The sample's upper bound of 40, divided by the 4.8% post-filter recall, is about 830
+  opinions. The plan promised a recall-corrected count, and this is the honest version of it: a bound, not an estimate.
+- <strong>Capture–recapture.</strong> With no verified reliance and no overlap, the two-source estimate is uninformative.</p>
+<h3>Courts flagging litigants (the flag sheets; <code>results/figures/F2_flagged_by_quarter.png</code>)</h3>
+<figure><a href="results/figures/F2_flagged_by_quarter.png"><img src="results/figures/F2_flagged_by_quarter.png" alt="Opinions in which a court flags a nonexistent citation, by quarter"></a><figcaption>Opinions on the flag sheets (context words such as sanction, fictitious, non-existent, AI) in complete reporter-volumes, verified in full: those in which the court itself identifies a cited case as nonexistent (D9). 43 from 2023 to September 2026, plus 2 in which the court only reports a party&#x27;s assertion (not drawn). None in 2019-2022 among the 116 flag-sheet opinions verified; two placebo-period courts flagged litigants&#x27; miscited real cases. Counts are limited to citations into complete reporter-volumes, so they are a floor; 38 of the 43 are in the AI Hallucination Cases database and five are not.</figcaption></figure>
+<ul>
+<li><strong>Screened period (2023–2026).</strong> All 202 flag-sheet opinions were verified.<ul>
+<li>In 43 of them the court itself identifies at least one cited case as nonexistent: 58 citations, such as "Las Cruces
+Sun-News v. City of Las Cruces", "Petersen v. Iran Air", "Estate of Riddell v. City of Portland", and Missouri
+tables of "Fictitious citation" entries.</li>
+<li>For "Las Cruces Sun-News", CourtListener holds a real near-namesake (2003-NMCA-102). The court's finding is kept.</li>
+<li>In 2 further opinions the court only reports a party's assertion that a case does not exist (D9).</li>
+<li>The 43 opinions are 41 cases: <em>Morgan</em> and <em>Schoene</em> each have two documents, and Schoene's second is an amended
+re-issue of the first.</li>
+</ul>
+</li>
+<li><strong>Placebo period (2019–2022).</strong> None among the 116 flag-sheet opinions. The only court flags there are of
+  litigants' <em>miscited real</em> cases: "United States v. Kajakajian" for <em>Bajakajian</em> (2021), and <em>Hatahly</em> (2019), which
+  the context-word list missed.</li>
+<li><strong>The public database.</strong> 38 of the 43 are in it.<ul>
+<li>26 by matching the order itself.</li>
+<li>6 more by caption, because the database lists the case under another order or date (the draft matched only the
+nearest order within 45 days).</li>
+<li>6 by hand, where the corpus caption is garbled or differs from the database's: <em>Zaykariya</em>, <em>In re Nwaubani</em>,
+<em>Puerto Rico Soccer League</em> (name score 84.2, just under the threshold), <em>Qamar</em> (anonymised in the database as
+"X v. Board of Trustees of Governors State University"), <em>Flowz Digital</em> and <em>Brick</em>.</li>
+</ul>
+</li>
+<li><strong>Five court-flagged opinions appear in no field of the database:</strong><ul>
+<li><em>Freeland v. Selene Finance</em> (M.D.N.C., 2025-02-05);</li>
+<li><em>Carrington v. Detroit Buildings, Safety Engineering and Environment Department</em> (E.D. Mich., 2025-02-27);</li>
+<li><em>Simmons v. City of Hurricane</em> (S.D. W. Va., 2025-12-08);</li>
+<li><em>Tarani-Alike Johnson v. Wells Fargo Bank</em> (N.D. Cal., 2026-01-05);</li>
+<li><em>Piper v. State of Indiana</em> (S.D. Ind., 2026-08-27).</li>
+</ul>
+</li>
+</ul>
+<p>Both earlier versions were wrong. The draft said 19 were not in the database. The first revision said none were,
+  because its name match was vacuous: three Cyrillic captions normalised to "v" and matched every caption (D10).</p>
+<h3>Party filings in the opinion corpus</h3>
+<ul>
+<li><strong>What was found.</strong> Reading the documents behind the candidates showed that CourtListener's opinion corpus
+  includes papers that are not opinions:<ul>
+<li>a pro se motion carrying a magistrate judge's "Denied … SO ORDERED" endorsement;</li>
+<li>a pro se filing in the Bankruptcy Court for the Northern District of Texas;</li>
+<li>an appellant's reply brief e-filed in the Texas Fifteenth Court of Appeals.</li>
+</ul>
+</li>
+<li><strong>Phantoms in filings.</strong> Two of these cite cases that exist nowhere (<em>El-Koury v. Hammer</em>, 198 S.W.3d 819; <em>Sterner
+  v. Marriott Int'l</em>, 390 S.W.3d 599). They are recorded as litigants' phantoms and not counted.</li>
+<li><strong>How common filings are.</strong> The reviewer's scan of one shard puts a floor of about 0.15% on filings among
+  screened-period documents (about 1,200 of 836,076), concentrated in the Texas Fifteenth Court of Appeals' e-filing
+  feed. That is negligible for rate denominators, but it matters for the numerator: 2 of the 3 phantom-type items in
+  the reliance samples were filings.</li>
+</ul>
+<h3>Misattributions</h3>
+<p>The 100 sampled misattributions are artefacts, with one exception: citations whose case is missing from the index
+(Westlaw numbers, neutral citations, new F.4th cases), where resolution returned the case spanning that page. The
+exception is a court noting that it "cannot locate the State v. Flores, 185 A.3d 1283 (Del. 2018) decision" that a
+party claimed it had issued. The judge-incident checks above show the limit of a 100-row sample: fabricated
+citations can sit among the 1,027,677 screened-period misattributions without being seen.</p>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>No judge was found relying on an invented case, in the part of the record this screen can see.</strong> Every sampled
+  suspicious citation traced to a real case.</li>
+<li><strong>That part excludes the cases at issue.</strong> The screen sees only citations into fully covered, mostly older
+  reporters. It flagged none of the fabricated citations in the known judicial incidents in the corpus. The data
+  cannot exclude several hundred undetected opinions. Answering H1 needs an instrument that verifies misattributions
+  and quotations, and reaches Westlaw citations and modern reporters.</li>
+<li><strong>Courts calling out fabricated citations is recent and well recorded.</strong> 43 opinions since 2023, none in
+  2019–2022. 38 are already in the public database, and five are not.</li>
+<li><strong>The corpus is not purely opinions.</strong> About 0.15% or more of "opinions" are party filings, and they produced most
+  of the phantom-type items found.</li>
+<li><strong>Adjudication.</strong> All verification was done by the study's AI agent, which also wrote the screen, at a pace of
+  about 26 minutes for 1,136 rows. An independent re-check of 113 rows found no wrong "real" call. External lookup was
+  CourtListener's public search, plus one official reporter.</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration:</strong> <code>plan.md</code>.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>):<ul>
+<li>D1–D3: index construction, pilot fixes, and the validator calling the screen's own <code>judge()</code>;</li>
+<li>D4: the recall set;</li>
+<li>D5: analysis parameters fixed before output;</li>
+<li>D6: abbreviation-aware matching, coverage-based completeness, the freeze;</li>
+<li>D7: chunked scheduling;</li>
+<li>D8: verification rules, including party filings;</li>
+<li>D9: changes after the independent review — label vocabulary, two party-asserted flags, the F.R.D. article, the
+matcher's New Mexico bug and same-day rule, recall before and after the filter, the H1 rule for a sampled sheet,
+the database comparison in code, and two items not delivered (rates by court level, because the court field is
+empty; and an uninformative capture–recapture estimate);</li>
+<li>D10: changes after the confirmation pass — the vacuous name match in the database comparison, US incidents
+selected by the database's country field (1,474, not 1,532; matches unchanged), four more hand matches, and
+41 cases, not 42.</li>
+</ul>
+</li>
+<li><strong>Independent review:</strong> Fable, 2026-10-22, "fix first" (<code>review/review.md</code>). Confirmation pass 2026-10-23
+  (<code>review/confirmation.md</code>): every finding fixed except the database comparison, whose fix had introduced the
+  vacuous name match. That is repaired in D10, and the re-run reproduces the reviewer's recount exactly (38 of 43;
+  the same five unrecorded).</li>
+</ul>
+<h2>Reproducing it</h2>
+<ol>
+<li><strong>Index and screen:</strong> <code>code/build_index.py</code>, <code>code/build_names.py</code>, <code>code/extract.py</code>,
+   <code>code/screen_shards.py --workers 26</code>.</li>
+<li><strong>Sheets:</strong> <code>code/analysis.py prepare</code>.</li>
+<li><strong>Labels:</strong> <code>code/verify_aid.py</code> (a reading aid). The hand labels are in <code>data/screen/labels/</code> (copied to
+   <code>results/verification/</code>) and are assembled into <code>verified.csv</code> by <code>code/assemble_verified.py</code>.</li>
+<li><strong>Scoring:</strong> <code>code/match_charlotin.py</code>, then <code>code/analysis.py score</code>.</li>
+<li><strong>Outputs:</strong> <code>results/tables/prepare_summary.json</code>, <code>primary.json</code> (incl. <code>flag_vs_database</code>, <code>reporters</code>,
+   <code>recall_detection</code>, <code>recall_reliance</code>), <code>charlotin_coverage.json</code>.</li>
+</ol>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/legal-phantom-citations-judicial-opinions/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

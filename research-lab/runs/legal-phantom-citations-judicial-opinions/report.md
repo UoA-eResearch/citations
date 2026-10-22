@@ -3,7 +3,8 @@
 *Every US opinion in CourtListener's 2026-09-30 snapshot filed from 2019 to September 2026 (1,665,327 documents,
 23.96 million full case citations) was screened for citations to cases that cannot be found by citation or by name.
 The surviving candidates were verified by hand against the corpus and CourtListener's public search. This version
-incorporates an independent review (`review/review.md`; changes logged as D9).*
+incorporates an independent review and a confirmation pass (`review/review.md`, `review/confirmation.md`;
+changes logged as D9 and D10).*
 
 **Verdict: Inconclusive.**
 
@@ -96,6 +97,8 @@ opinions, not filings, for citations to nonexistent authority.
 
 ### The sample of reliance candidates (`results/figures/F1_funnel.png`)
 
+![Screening funnel from 1.67 million opinions to verified candidates](results/figures/F1_funnel.png)
+
 Of the 335 candidates in the 300 sampled screened-period opinions:
 - 333 were real cases or not cases at all. Two "unverifiable" rows (one in each period) turned out to be an article in
   F.R.D., Schwarzer, 99 F.R.D. 465 (1984), and are now real (D9).
@@ -174,6 +177,8 @@ older federal reporters and the U.S. Reports, which are not where recent fabrica
 - **Capture–recapture.** With no verified reliance and no overlap, the two-source estimate is uninformative.
 
 ### Courts flagging litigants (the flag sheets; `results/figures/F2_flagged_by_quarter.png`)
+
+![Opinions in which a court flags a nonexistent citation, by quarter](results/figures/F2_flagged_by_quarter.png)
 
 - **Screened period (2023–2026).** All 202 flag-sheet opinions were verified.
   - In 43 of them the court itself identifies at least one cited case as nonexistent: 58 citations, such as "Las Cruces
