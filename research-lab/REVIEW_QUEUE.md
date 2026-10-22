@@ -20,7 +20,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-22 14:13 | `energy-nz-intermittent-curtailment-ledger` | confirmation pass |
 
 **Next Fable slot: not before 2026-10-22 19:13 NZDT.** Queue: 1. phantom-citations review (draft 09c9990). 2. retraction markers review (draft 72af844).
-3. DSI origin (limb 2 in progress).
+3. DSI origin review (draft 87273a8).
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
@@ -34,6 +34,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | `energy-nz-intermittent-curtailment-ledger` | f83332e | gate fails; H1 Refuted, H2 Supported by rule (noise-dominated; price-driven core 2.2%) | **published** 2026-10-22 (Inconclusive: gate fails; dispatched-down core is two wind farms) |
 | `legal-phantom-citations-judicial-opinions` | 09c9990 | H1 Refuted by rule (0 of 300 sampled; upper bound 40; recall 0/4 judge incidents) - not robust; H2 not scorable; 45 court-flagged opinions | awaiting review |
 | `trust-corrected-record-machine-readable` | 72af844 | H1 Refuted (2.4% unmarked in PMC XML), H2 Supported (sidecar 95.6%), H3 Refuted; peS2o 11.9% marked | awaiting review |
+| `ancestral-dsi-origin-recoverability` | 87273a8 | H1 Inconclusive (usable +2.9 pp, -5.9 to +10.8; placeholders +9.1); H2 Refuted (24/300 test records determinable; 61% lab material, 30% not stated, 9% findable) | awaiting review |
 
 ## Order to run them in
 
