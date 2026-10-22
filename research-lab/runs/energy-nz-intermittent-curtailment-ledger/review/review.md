@@ -105,8 +105,9 @@ and in `F2_gate.txt`.
 Evidence (check5 output; `code/analysis.py:184-205`; `plan.md` section 4):
 
 - Four plants commissioned by 30 September 2026 enter with **zero** projected available energy because their
-  metered output is zero or near zero in the panel (k = 0 makes P_hat = 0): Tauhei TMK0331 (solar, about 200 MW),
-  Kaiwaikawe MPE1101 (wind), Kōwhai Park ISL0661 and Pāmu Rā ki Whitianga KPU0661. Kaiwera Downs 2 KIW2201 is
+  metered output is zero or near zero in the panel (k = 0 makes P_hat = 0): Clandeboye TMK0331 (solar; this review
+  first misnamed it Tauhei, corrected in the confirmation pass: Tauhei is WHU1101, which is metered), Kaiwaikawe
+  MPE1101 (wind), Kōwhai Park ISL0661 and Pāmu Rā ki Whitianga KPU0661. Kaiwera Downs 2 KIW2201 is
   annualised from six months (April to September 2026) that include its commissioning ramp. The projected available
   energy (4,534 GWh) is therefore not "available energy projected from units commissioned by 30 September 2026".
 - The projected share (5.65%) is the noise-dominated measure; the report says as much, but the plan's rule is still
@@ -195,3 +196,41 @@ property of the measure, as the report says. Leading with the gate is what the p
 3. Report the lead-time distribution of the potential; correct "dispatch-time" and the solar "nights" sentence.
 4. Re-freeze the projection with the four unmetered plants included by a stated rule.
 5. Correct the `MaximumOutputMegawatts` sentence; list the dropped plant-periods.
+
+## Confirmation pass
+
+Reviewer: Claude (Fable 5.1), 2026-10-22, on commits 2c2a8b1 and f603d05. Check: `reviewer_checks/check9_confirmation.py`
+(.out). `code/sensitivity_post_review.py` is tracked in git; `results/tables/sensitivity_post_review.json` is its
+output; D3 is logged in `deviations.md` with dollar amounts restored.
+
+**Verdict: publish with edits** (two wording fixes, one of them a plant name; no number changes).
+
+Verified against `sensitivity_post_review.json`: non-noise split 46.9% / 73.1% / 94.9% (report gives the complements
+53% / 27% / 5%); dispatched-down series by window and "without the two largest" (0.011/0.004, 0.233/0.064,
+1.102/0.892, 0.070/0.030, 0.766/0.454, 2.215/0.412%), top-two names per window, Turitea 53.72 and Kaiwera Downs
+25.44 GWh (86%); offer prices (Turitea $0.01 to $0.02 in FY2026, Kaiwera Downs $1.60 from FY2025); FY2026 wind
+lead times (median -1.2 to -11.6 min, 76.2-89.1% after the start; Turitea 7%, Kaiwera Downs 0.1%, Waipipi 0.7%);
+solar median leads 1.74-6.39 days; MaximumOutputMegawatts populated share by FY (1.0, 0.346, 0, 0, 0, 0.358, 1.0);
+dropped rows by plant and month; projection variant 5.925% beside the rule's 5.65%; bootstrap and pooling notes;
+calendar-2020 dispatched-down 0.02%. Title, verdict line, plain terms, F2 and F3 captions and report.html match. Edits
+1-5 of the original review are implemented.
+
+Remaining edits:
+
+1. **Plant name in the projection paragraph.** The four unmetered plants are Clandeboye (TMK0331), Kaiwaikawe,
+   Kōwhai Park and Pāmu Rā; the report says "Tauhei". Tauhei is WHU1101 (Generation_MD `tauhei_solar_farm`, NSP
+   table "Tauhei Solar Farm"), is metered (k = 1.0) and is already in the projection (annualised from five months).
+   The report's own dropped-rows list has TMK0331 as Clandeboye. The misnaming originated in this review's finding 4,
+   now corrected above.
+2. **The summary's comparison.** "Without them the rest of the fleet shows 0.4% in 2025/26, below the 0.9% of
+   2022/23": the 0.9% is 2022/23 without *that* window's two largest (Waipipi, Te Āpiti), not without Turitea and
+   Kaiwera Downs. Say "the fleet without its two largest contributors showed 0.9% in 2022/23", as the table does.
+3. **Optional, supports the text.** The claim that post-period potentials "can absorb a turn-down and hide it" is
+   stated without evidence in the report. check9 gives some: among half-hours at or below the plant's own offer, the
+   flag rate fell from FY2025 to FY2026 at every wind farm that moved to post-period submission (White Hill 0.36 to
+   0.06, Tararua 3 0.20 to 0.03, Harapaki 0.24 to 0.12, Te Āpiti 0.13 to 0.04, West Wind 0.20 to 0.09) and rose at
+   the two pre-period plants (Turitea 0.29 to 0.71, Kaiwera Downs 0.47 to 0.55); but it also fell at Waipipi (0.50
+   to 0.28), which still submits beforehand, so the mechanism is plausible, not shown. Cite the table, or keep the
+   hedge ("can").
+4. **Optional.** "The only plants that offer above $0.01/MWh" holds at the median; Kaiwera Downs stage 2 (KIW2201)
+   offers above $0.01 in about 14% of its half-hours.

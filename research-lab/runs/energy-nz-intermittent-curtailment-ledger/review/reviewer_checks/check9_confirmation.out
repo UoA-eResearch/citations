@@ -1,0 +1,45 @@
+wind plants FY2026: median lead (min), share after start
+  BPE0331: lead -1.2  after 0.891   (FY2025 lead 1.9, after 0.008)
+  GOR0331: lead 2.0  after 0.001   (FY2025 lead 2.0, after 0.0)
+  HRP2201: lead -11.6  after 0.884   (FY2025 lead 6.4, after 0.001)
+  KIW2201: lead 31.8  after 0.003   (FY2025 lead nan, after nan)
+  LTN0331: lead -1.2  after 0.876   (FY2025 lead 1.9, after 0.008)
+  LTN2201: lead 2.0  after 0.073   (FY2025 lead 2.0, after 0.0)
+  MPE1101: lead nan  after nan   (FY2025 lead nan, after nan)
+  NMA0331: lead -11.6  after 0.88   (FY2025 lead 7.6, after 0.0)
+  TWC2201: lead 14.9  after 0.442   (FY2025 lead 15.0, after 0.003)
+  TWH0331: lead -11.6  after 0.868   (FY2025 lead 5.8, after 0.0)
+  WDV1101: lead -11.6  after 0.847   (FY2025 lead 7.4, after 0.001)
+  WIL0331: lead -11.6  after 0.86   (FY2025 lead 6.5, after 0.0)
+  WVY1101: lead 14.8  after 0.007   (FY2025 lead 14.8, after 0.0)
+  WWD1102: lead -11.6  after 0.875   (FY2025 lead 7.6, after 0.0)
+  WWD1103: lead -11.6  after 0.762   (FY2025 lead 7.8, after 0.0)
+wind FY2021-FY2025 median leads range: 1.7 to 9323.7
+solar median leads (days) by FY:
+  ASB0661: FY2025: 5.83, FY2026: 0.14, FY2027: 6.02
+  DVK0111: FY2026: 6.18, FY2027: 6.02
+  EDG0331: FY2024: 3.48, FY2025: 0.21, FY2026: 4.22, FY2027: 5.99
+  ISL0661: FY2027: 2.20
+  KOE1101: FY2024: 2.98, FY2025: 2.71, FY2026: 1.74, FY2027: 5.99
+  KPU0661: FY2026: 2.57, FY2027: 6.02
+  MTO0331: FY2025: 6.39, FY2026: 2.62, FY2027: 6.02
+  TMK0331: FY2026: 6.27, FY2027: 6.08
+  WAI0331: FY2025: 6.05, FY2026: 5.01, FY2027: 6.02
+  WHU1101: FY2026: 5.96, FY2027: 5.96
+        n_at_or_below         flag_rate        mean_gap_flagged         post_period_FY2026
+fy             FY2025  FY2026    FY2025 FY2026           FY2025  FY2026                   
+poc                                                                                       
+BPE0331         403.0  1011.0     0.055  0.031            8.620   7.076              0.891
+GOR0331        1390.0  3762.0     0.472  0.546           21.995  24.780              0.001
+HRP2201         409.0  1105.0     0.240  0.123           75.863  34.970              0.884
+KIW2201           NaN    30.0       NaN  0.167              NaN  17.069              0.003
+LTN0331         404.0  1011.0     0.045  0.025            5.404   5.331              0.876
+LTN2201         404.0  1530.0     0.290  0.707           66.035  99.299              0.073
+NMA0331         423.0  1309.0     0.362  0.063           33.052  10.737              0.880
+TWC2201         404.0  1014.0     0.203  0.033           40.200  16.346              0.442
+TWH0331         393.0   988.0     0.097  0.063           11.200   9.663              0.868
+WDV1101         418.0  1012.0     0.127  0.042           36.204   9.041              0.847
+WIL0331         406.0  1017.0     0.086  0.053           17.198  10.284              0.860
+WVY1101         469.0  1029.0     0.499  0.284           65.004  44.824              0.007
+WWD1102         411.0  1322.0     0.195  0.088           34.630  17.241              0.875
+WWD1103         410.0  1320.0     0.076  0.061           15.742  14.451              0.762

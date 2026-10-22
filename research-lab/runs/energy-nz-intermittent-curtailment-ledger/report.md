@@ -11,9 +11,10 @@ by forecast noise that the preregistered measure counts by construction.
 
 The clearest signal is curtailment in half-hours when the node price was at or below the plant's own offer: the plant
 was **dispatched down**. It reached 2.2% of available wind and solar energy in 2025/26, but 86% of that is at two wind
-farms, Turitea and Kaiwera Downs. Those are the only plants that offer above $0.01/MWh and still forecast their
-potential before the half-hour begins. Without them the rest of the fleet shows 0.4% in 2025/26, below the 0.9% of
-2022/23. There is no clear trend, only spells.
+farms, Turitea and Kaiwera Downs. Those are the only plants whose median offer is above $0.01/MWh and that still
+forecast their potential before the half-hour begins. Without them the fleet shows 0.4% in 2025/26. In 2022/23 the
+fleet without that year's two largest contributors (Waipipi and Te Āpiti) showed 0.9%. There is no clear trend, only
+spells.
 
 - **H1 (curtailment rose from below 0.5% in 2020 to at least 2.0% in 2025/26): Refuted by its rule.** The measure
   reads 2.27% in 2020 (95% interval 2.13–2.42%) and 5.20% in 2025/26 (4.36–6.32%). The 2020 value is almost entirely
@@ -127,8 +128,11 @@ Two things make Turitea and Kaiwera Downs the plants that show it:
 - **Timing of the potential.** For most of the panel, plants submitted their latest potential a few minutes before
   the half-hour began (median lead 2–15 minutes to 2024/25). In 2025/26 most established wind farms switched to
   submitting it after the half-hour had started (median 1.2–11.6 minutes late, 76–89% of half-hours). A potential
-  revised after the fact can absorb a turn-down and hide it. Turitea, Kaiwera Downs and Waipipi still submit
-  beforehand.
+  revised after the fact may absorb a turn-down and hide it. Among half-hours at or below the plant's own offer, the
+  share flagged as curtailed fell from 2024/25 to 2025/26 at every plant that moved to post-period submission
+  (White Hill 0.36 to 0.06, Tararua 3 0.20 to 0.03, Harapaki 0.24 to 0.12, Te Āpiti 0.13 to 0.04, West Wind 0.20
+  to 0.09). But it also fell at Waipipi, which did not move (0.50 to 0.28), so this is plausible, not shown (review
+  check 9). Turitea, Kaiwera Downs and Waipipi still submit beforehand.
 
 So the 2025/26 rise is partly about which plants are marginal and how they report, not only how often wind is turned
 down.
@@ -175,7 +179,7 @@ plants and years). The review found their floors are 42–45% of mean potential 
 
 **Projection, frozen for scoring after June 2027.** By the preregistered rule (the 2025/26 share scaled by projected
 available energy from plants operating by September 2026), the measure would read **5.65%** for the 12 months to June
-2027. Four new plants have no usable metering yet (Tauhei, Kaiwaikawe, Kōwhai Park, Pāmu Rā), so they enter that
+2027. Four new plants have no usable metering yet (Clandeboye, Kaiwaikawe, Kōwhai Park, Pāmu Rā), so they enter that
 rule with no available energy. Projecting them from their potential instead gives 5.93%. Kaiwera Downs stage 2 is
 annualised from six commissioning months. Both figures are recorded. Given the floor, and the reporting change above,
 neither is a forecast of real curtailment, and the dispatched-down component is not projected.

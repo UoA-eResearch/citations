@@ -19,9 +19,8 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-22 09:08 | `energy-nz-intermittent-curtailment-ledger` | review |
 | 2026-10-22 14:13 | `energy-nz-intermittent-curtailment-ledger` | confirmation pass |
 
-**Next Fable slot: not before 2026-10-22 19:13 NZDT.** Queue: 1. curtailment confirmation (running, started 14:13).
-2. phantom-citations review (draft 09c9990). 3. retraction markers review (draft 72af844).
-4. DSI origin (limb 2 in progress).
+**Next Fable slot: not before 2026-10-22 19:13 NZDT.** Queue: 1. phantom-citations review (draft 09c9990). 2. retraction markers review (draft 72af844).
+3. DSI origin (limb 2 in progress).
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
@@ -32,7 +31,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | `movement-nz-ev-policy-discount-vs-ruc` | 60012cc | H1 Inconclusive, H2 Inconclusive | **published** 2026-10-21 (Inconclusive) |
 | `auckland-nz-jade-water-value-calibration` | 96c8a7c | H1 Supported, H2 Refuted | **published** 2026-10-21 (H1 Supported; H2 Refuted but unreachable; reinterpreted) |
 | `energy-nz-embedded-solar-edb-demand` | 8f12116 | H1-H3 Inconclusive, H4 Supported by rule | **published** 2026-10-22 (Inconclusive: H4 passes its rule but is carried by two solar-farm networks) |
-| `energy-nz-intermittent-curtailment-ledger` | f83332e | gate fails; H1 Refuted, H2 Supported by rule (noise-dominated; price-driven core 2.2%) | **revised** (2c2a8b1) after a fix-first review; confirmation pass at the 14:09 slot |
+| `energy-nz-intermittent-curtailment-ledger` | f83332e | gate fails; H1 Refuted, H2 Supported by rule (noise-dominated; price-driven core 2.2%) | **published** 2026-10-22 (Inconclusive: gate fails; dispatched-down core is two wind farms) |
 | `legal-phantom-citations-judicial-opinions` | 09c9990 | H1 Refuted by rule (0 of 300 sampled; upper bound 40; recall 0/4 judge incidents) - not robust; H2 not scorable; 45 court-flagged opinions | awaiting review |
 | `trust-corrected-record-machine-readable` | 72af844 | H1 Refuted (2.4% unmarked in PMC XML), H2 Supported (sidecar 95.6%), H3 Refuted; peS2o 11.9% marked | awaiting review |
 
