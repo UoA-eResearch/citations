@@ -1,0 +1,41 @@
+{
+ "train_articles": 7758062,
+ "train_positive": 2813,
+ "field_codes": {
+  "27": 1,
+  "13": 2,
+  "11": 3,
+  "36": 4,
+  "28": 5,
+  "24": 6,
+  "29": 7,
+  "35": 8,
+  "30": 9,
+  "34": 10
+ },
+ "models": {
+  "hgb_full.pkl": {
+   "sha256": "26abe8d3361f57c0a31db972321daa07b458e6bccf47ab2fd33f06f01db0019f",
+   "iterations": 10
+  },
+  "hgb_no_A.pkl": {
+   "sha256": "b644ff52e1f051ae16a9e43ea69278dfef8b578457c83730544f0af1faab1632",
+   "iterations": 32
+  },
+  "hgb_A_only.pkl": {
+   "sha256": "f92e19e264f75a15392cf7e7878540de6a58387adb2d0074ea290d2518c8b370",
+   "iterations": 64
+  },
+  "hgb_B_only.pkl": {
+   "sha256": "ab327fe49691cbeeb25b3cb7856e7ea8c8b9122da34867193d36d10811f5defb",
+   "iterations": 27
+  },
+  "hgb_C_only.pkl": {
+   "sha256": "9d7130159c58b72cc8ed958459aaf88488707efde788944126896d45ba83d163",
+   "iterations": 26
+  },
+  "lr_full.pkl": {
+   "sha256": "ae82ce362b3307778145417e27c1d6c3a3cb8d1de5724d5b511ce6f38f762447"
+  }
+ }
+}
