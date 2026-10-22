@@ -71,8 +71,10 @@ def theil_sen(t, y):
     return float(np.median((y[j] - y[i])[m] / dt[m])) if m.any() else np.nan
 
 
-def islet_rate(df, col, slope_from=None, robust=False):
-    """(rate %/yr corrected, rate %/yr uncorrected, tide slope m2/m, n, span) for one islet's series."""
+def islet_rate(df, col, ref_m2, robust=False):
+    """(rate %/yr corrected, rate %/yr uncorrected, tide slope m2/m, n, span) for one islet's series. D3: the Theil-Sen
+    slope is taken on area in m2 and expressed as a percentage of one sensor-independent reference, the islet's OSM
+    area, so that Landsat's mixed-pixel inflation of absolute area does not rescale its rates."""
     d = df.dropna(subset=[col, "level_m"])
     if len(d) < MIN_SCENES:
         return None
@@ -87,8 +89,8 @@ def islet_rate(df, col, slope_from=None, robust=False):
     else:
         beta = float(np.polyfit(h, y, 1)[0]) if np.ptp(h) > 0 else 0.0
     yc = y - beta * h
-    rc = theil_sen(t, 100 * yc / np.median(yc))
-    ru = theil_sen(t, 100 * y / np.median(y))
+    rc = theil_sen(t, 100 * yc / ref_m2)
+    ru = theil_sen(t, 100 * y / ref_m2)
     return {"rate_corr": rc, "rate_uncorr": ru, "tide_slope_m2_per_m": beta, "n": len(d), "span": round(span, 2),
             "median_area_ha": float(np.median(yc) / 1e4)}
 
@@ -133,7 +135,7 @@ def main():
                 continue
             for islet, g in d.groupby("islet"):
                 for robust in ((False, True) if (fam in ("E1", "E2") and col == "area_otsu") else (False,)):
-                    r = islet_rate(g, col, robust=robust)
+                    r = islet_rate(g, col, inv.area_ha[islet] * 1e4, robust=robust)
                     if r:
                         rows.append({"islet": islet, "atoll": inv.atoll[islet], "area_ha": inv.area_ha[islet],
                                      "engineered": int(inv.engineered[islet]), "family": fam, "series": col,

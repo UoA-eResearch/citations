@@ -53,3 +53,12 @@ A test on the six least cloudy Funafuti Sentinel-2 scenes showed two problems wi
 
 In the corrected test, measured areas are close to the OpenStreetMap areas: an islet mapped at 43.7 ha measures
 39.6–44.7 ha in most scenes. About 39% of islet-scene pairs pass on these scenes. No rate or trend has been computed.
+
+## D3 — 2026-10-22 22:21 NZDT — rates on a common reference area (before any rate is computed)
+
+On Funafuti, Landsat at 30 m measures islet areas well above the OSM areas (54.5 against 43.7 ha; 13.9 against
+5.4 ha), from mixed shoreline pixels. The plan expresses each rate as a percentage of the islet's own epoch median, so
+an inflated Landsat median would shrink 1999–2015 rates relative to Sentinel-2 rates and build a spurious difference
+into H1. Rates are now the Theil–Sen slope of the tide-corrected area in m² per year, divided by one sensor-independent
+reference, the islet's OSM area, in both epochs. Uncorrected rates use the same reference. Everything else in plan §3
+is unchanged.
