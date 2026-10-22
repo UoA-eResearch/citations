@@ -34,6 +34,8 @@ def load_areas():
     parts = []
     for p in sorted((RUN / "data" / "areas").glob("*.parquet")):
         d = pd.read_parquet(p)
+        if d.empty or "islet" not in d:
+            continue
         if "error" in d:
             d = d[d.error.isna()]
         parts.append(d[d.islet.astype(str) != ""])

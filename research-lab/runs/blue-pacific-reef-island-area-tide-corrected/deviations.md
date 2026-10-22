@@ -62,3 +62,27 @@ an inflated Landsat median would shrink 1999–2015 rates relative to Sentinel-2
 into H1. Rates are now the Theil–Sen slope of the tide-corrected area in m² per year, divided by one sensor-independent
 reference, the islet's OSM area, in both epochs. Uncorrected rates use the same reference. Everything else in plan §3
 is unchanged.
+
+## D4 — 2026-10-22 22:58 NZDT — two measurement bugs fixed, and every area re-measured (before any rate is computed)
+
+A check of measured against OSM area per islet and scene on Funafuti (no rates or trends) found two faults.
+
+1. **NaN in the Otsu step.**
+   - *The fault:* where both reflectances clip to 0, MNDWI is 0/0. The NaN made the guard `v.min() < v.max()` false,
+     so the code fell back to a threshold of 0, which counts bright coral sand (MNDWI slightly above 0) as water and
+     gave near-zero areas. The D2 rewrite had dropped the earlier finite-value filter.
+   - *The fix:* non-finite values are now removed before Otsu. A scene with no finite threshold is left without an
+     area.
+2. **Sentinel-2 offsets.**
+   - *The fault:* some items with processing baseline 04.00 or later carry the −0.1 offset in their metadata, but
+     their data no longer contains it. Open-ocean SWIR reads 4 DN in one such item, impossible if a +1000 offset were
+     present, so subtracting 0.1 drove water and sand reflectance negative.
+   - *The fix:* within each window, if the 1st percentile of valid SWIR DN is below 500, the offset is taken as
+     already removed, and the metadata offset is not applied.
+
+**Results.**
+- All area files were re-measured. The faulty ones are kept in `data/areas_buggy/` and are not used.
+- After the fixes, on Funafuti's Sentinel-2 series, MNDWI with Otsu (the preregistered primary) is the most precise
+  index. Its residual standard deviation after tide regression is 12.1% of islet area, against 14.4% for NDWI. Its
+  tide correlation is −0.90, and no area is zero. The index is unchanged.
+- Landsat measurements are much noisier: a residual standard deviation of about 49% of islet area.

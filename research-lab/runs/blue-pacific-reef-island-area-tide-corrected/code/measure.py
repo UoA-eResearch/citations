@@ -188,10 +188,15 @@ def scene(row, sensor, inv, wins, geoms, aoi):
                 gr = g.read(1, window=win)
                 s1, _ = read(sw, w["bounds"], shp)
                 n1, _ = read(ni, w["bounds"], shp)
-                gR = np.clip(gr * row["green_scale"] + row["green_offset"], 0, None)     # D2: clip at 0
-                sR = np.clip(s1 * row["swir16_scale"] + row["swir16_offset"], 0, None)
-                nR = np.clip(n1 * row["nir_scale"] + row["nir_offset"], 0, None)
                 valid = (gr > 0) & (s1 > 0)
+                off = {b: row[f"{b}_offset"] for b in ("green", "swir16", "nir")}
+                if sensor == "s2" and off["swir16"] < 0 and valid.any() and np.percentile(s1[valid], 1) < 500:
+                    # D4: clear water cannot have negative SWIR reflectance; DN this low means the +1000 offset is
+                    # already removed from this item's data, so the metadata offset is not applied again
+                    off = {b: 0.0 for b in off}
+                gR = np.clip(gr * row["green_scale"] + off["green"], 0, None)     # D2: clip at 0
+                sR = np.clip(s1 * row["swir16_scale"] + off["swir16"], 0, None)
+                nR = np.clip(n1 * row["nir_scale"] + off["nir"], 0, None)
                 # D2: cloud is judged separately over the water around the islet (any cloud or shadow) and over the
                 # islet itself (high-confidence cloud, cirrus or shadow only), because the scene classification marks
                 # bright coral sand and roofs as medium-probability cloud or unclassified
@@ -223,9 +228,14 @@ def scene(row, sensor, inv, wins, geoms, aoi):
                            "clear": round(1 - max(co, ci), 4)}
                     if n and vshare >= 0.99 and co <= 0.05 and ci <= 0.05 and rm.any():
                         v = mndwi[am & valid]
-                        t = float(threshold_otsu(v)) if v.size > 10 and v.min() < v.max() else 0.0
+                        v = v[np.isfinite(v)]          # 0/0 where both reflectances clip to 0 (bug fix, D4)
+                        t = float(threshold_otsu(v)) if v.size > 10 and v.min() < v.max() else np.nan
                         vn = ndwi[am & valid]
-                        tn = float(threshold_otsu(vn)) if vn.size > 10 and vn.min() < vn.max() else 0.0
+                        vn = vn[np.isfinite(vn)]
+                        tn = float(threshold_otsu(vn)) if vn.size > 10 and vn.min() < vn.max() else np.nan
+                        if not (np.isfinite(t) and np.isfinite(tn)):
+                            out.append(rec)
+                            continue
                         rec.update({"otsu_t": round(t, 4), "area_otsu": islet_area(mndwi < t, am, rm, pix),
                                     "area_fixed": islet_area(mndwi < 0, am, rm, pix),
                                     "area_ndwi": islet_area(ndwi < tn, am, rm, pix), "pixel_m2": pix})
