@@ -18,33 +18,63 @@ P1, OUT = RUN / "data" / "pass1", RUN / "data" / "lookup"
 YEARS = [2015, 2016, 2017, 2018, 2019, 2021, 2022, 2025, 2026]
 
 
+KIND = {"S": 0, "H": 1, "I": 2}
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     files = sorted(glob.glob(str(P1 / "*.npz")), key=lambda f: Path(f).stem.split("_", 1)[1])   # by partition date
+    log = {}
+    # works: one pass, then sort; the copy from the latest partition wins
     W = {k: [] for k in ("wid", "year", "src", "host", "ret", "order")}
-    AF_a, AF_y, AR_a, AR_r, ENT = [], [], [], [], []
     for i, f in enumerate(files):
         z = np.load(f)
         for k in ("wid", "year", "src", "host", "ret"):
             W[k].append(z[k])
-        W["order"].append(np.full(len(z["wid"]), i, dtype=np.int32))
-        AF_a.append(z["af_a"]); AF_y.append(z["af_y"]); AR_a.append(z["ar_a"]); AR_r.append(z["ar_r"])
-        ENT.append(pd.DataFrame({"k": z["ent_k"], "e": z["ent_e"], "y": z["ent_y"], "r": z["ent_r"], "n": z["ent_n"]}))
+        W["order"].append(np.full(len(z["wid"]), i, dtype=np.int16))
     W = {k: np.concatenate(v) for k, v in W.items()}
     o = np.lexsort((W["order"], W["wid"]))
+    del W["order"]
     wid = W["wid"][o]
-    last = np.r_[wid[1:] != wid[:-1], True]                      # keep the latest partition's copy
+    last = np.r_[wid[1:] != wid[:-1], True]
     keep = o[last]
-    log = {"rows": int(len(wid)), "unique_works": int(last.sum()), "duplicates_dropped": int((~last).sum())}
+    del o, wid
+    log.update({"rows": int(len(last)), "unique_works": int(last.sum()), "duplicates_dropped": int((~last).sum())})
     for k in ("wid", "year", "src", "host", "ret"):
         np.save(OUT / f"w_{k}.npy", W[k][keep])
-    del W
-    af = pd.DataFrame({"a": np.concatenate(AF_a), "y": np.concatenate(AF_y)}).groupby("a").y.min()
-    np.save(OUT / "a_id.npy", af.index.values); np.save(OUT / "a_first.npy", af.values.astype(np.int16))
-    ar = pd.DataFrame({"a": np.concatenate(AR_a), "r": np.concatenate(AR_r)}).sort_values(["a", "r"])
+    del W, keep, last
+    # authors' first year
+    a, y = [], []
+    for f in files:
+        z = np.load(f)
+        a.append(z["af_a"]); y.append(z["af_y"])
+    a, y = np.concatenate(a), np.concatenate(y)
+    o = np.lexsort((y, a))
+    a, y = a[o], y[o]
+    first = np.r_[True, a[1:] != a[:-1]]
+    np.save(OUT / "a_id.npy", a[first]); np.save(OUT / "a_first.npy", y[first].astype(np.int16))
+    log["authors"] = int(first.sum())
+    del a, y, o, first
+    # authorships of retracted works
+    a, r = [], []
+    for f in files:
+        z = np.load(f)
+        a.append(z["ar_a"]); r.append(z["ar_r"])
+    ar = pd.DataFrame({"a": np.concatenate(a), "r": np.concatenate(r)}).sort_values(["a", "r"])
     np.save(OUT / "ar_a.npy", ar.a.values); np.save(OUT / "ar_r.npy", ar.r.values.astype(np.int16))
-    log.update({"authors": int(len(af)), "retracted_authorships": int(len(ar))})
-    ent = pd.concat(ENT).groupby(["k", "e", "y", "r"]).n.sum().reset_index()
+    log["retracted_authorships"] = int(len(ar))
+    # entity counts, aggregated in batches
+    parts, batch = [], []
+    for i, f in enumerate(files):
+        z = np.load(f)
+        batch.append(pd.DataFrame({"k": np.array([KIND[c] for c in z["ent_k"]], dtype=np.int8) if len(z["ent_k"]) else
+                                   np.array([], dtype=np.int8), "e": z["ent_e"], "y": z["ent_y"], "r": z["ent_r"],
+                                   "n": z["ent_n"]}))
+        if len(batch) == 200 or i == len(files) - 1:
+            parts.append(pd.concat(batch).groupby(["k", "e", "y", "r"]).n.sum().reset_index())
+            batch = []
+    ent = pd.concat(parts).groupby(["k", "e", "y", "r"]).n.sum().reset_index()
+    del parts
     rows = []
     for Y in YEARS:
         w = ent[(ent.y >= Y - 3) & (ent.y <= Y - 1)]
@@ -56,6 +86,7 @@ def main():
         r["Y"] = Y
         rows.append(r.reset_index())
     rates = pd.concat(rows)
+    rates["k"] = rates.k.map({v: c for c, v in KIND.items()})
     rates["rate"] = rates.bad / rates.tot.clip(lower=1)
     rates.to_parquet(OUT / "rates.parquet", index=False)
     log["rate_rows"] = int(len(rates))
