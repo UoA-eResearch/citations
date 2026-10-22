@@ -19,8 +19,9 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-22 09:08 | `energy-nz-intermittent-curtailment-ledger` | review |
 | 2026-10-22 14:13 | `energy-nz-intermittent-curtailment-ledger` | confirmation pass |
 | 2026-10-22 19:13 | `legal-phantom-citations-judicial-opinions` | review |
+| 2026-10-23 00:13 | `legal-phantom-citations-judicial-opinions` | confirmation pass (fresh agent; the original could not be resumed after the restart) |
 
-**Next Fable slot: not before 2026-10-23 00:13 NZDT.** Phantom-citations review FINISHED (19:13 run): verdict **fix first** (review/review.md; 12 findings - H1 should be Inconclusive; the frozen screen marks known fabricated California cites consistent; post-filter recall 39/854; 3 of 4 'judge incidents' are appellate opinions; ~11 of the 19 unmatched flag opinions are in Charlotin; New Mexico dropped by a regex). Fixes applied in 7a6e6b8 (D9; H1 Inconclusive; all 43 court-flagged opinions in the database). Queue: 1. phantom confirmation pass (00:13 slot). 2. retraction markers review (draft 72af844). 3. DSI origin review (draft 87273a8). 4. retraction-risk forecast review (draft b314e0f).
+**Next Fable slot: not before 2026-10-23 05:13 NZDT.** Phantom confirmation pass started 00:13. Phantom-citations review FINISHED (19:13 run): verdict **fix first** (review/review.md; 12 findings - H1 should be Inconclusive; the frozen screen marks known fabricated California cites consistent; post-filter recall 39/854; 3 of 4 'judge incidents' are appellate opinions; ~11 of the 19 unmatched flag opinions are in Charlotin; New Mexico dropped by a regex). Fixes applied in 7a6e6b8 (D9; H1 Inconclusive; all 43 court-flagged opinions in the database). Queue: 1. retraction markers review (draft 72af844). 2. DSI origin review (draft 87273a8). 3. retraction-risk forecast review (draft b314e0f). 4. ASR accent parity review (once H4 is in).
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
