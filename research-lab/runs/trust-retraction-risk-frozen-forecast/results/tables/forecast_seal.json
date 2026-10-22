@@ -1,0 +1,18 @@
+{
+ "sealed_utc": "2026-10-22T08:11:10+00:00",
+ "score_file_sha256": "973d5968204e5b3acadc3268199845949a573d7c414851bcfe5f73e0ff052c2d",
+ "model_file_sha256": "2950dd43a584d3655dcea30e72bec474a85cbf54d4a784c5e5e1310ccbc735ec",
+ "train_articles": 7254025,
+ "train_positive": 9959,
+ "iterations": 10,
+ "forward_articles": 4375482,
+ "forward_by_year": {
+  "2025": 2362349,
+  "2026": 2013133
+ },
+ "top_1pct_size": 43755,
+ "top_1pct_threshold": 0.0050263063915367565,
+ "forward_retracted_already_at_seal": 822,
+ "rule": "H3: E@1% >= 3 against the retraction registry on 2028-12-31, publisher-clustered bootstrap as H1",
+ "note": "the per-article score file is never published; only these hashes and aggregates"
+}

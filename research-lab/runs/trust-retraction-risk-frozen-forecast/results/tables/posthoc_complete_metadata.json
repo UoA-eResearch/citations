@@ -1,0 +1,156 @@
+{
+ "complete_articles": 2820712,
+ "share_of_test": 0.7126,
+ "retracted": 7061,
+ "base_rate": 0.002503,
+ "models": {
+  "hgb_full.pkl": {
+   "E@0.01": 4.858,
+   "ci": [
+    2.251,
+    11.212
+   ]
+  },
+  "hgb_no_A.pkl": {
+   "E@0.01": 10.579,
+   "ci": [
+    5.817,
+    12.673
+   ]
+  },
+  "hgb_A_only.pkl": {
+   "E@0.01": 8.497,
+   "ci": [
+    2.373,
+    16.713
+   ]
+  },
+  "hgb_B_only.pkl": {
+   "E@0.01": 4.787,
+   "ci": [
+    4.044,
+    6.017
+   ]
+  },
+  "hgb_C_only.pkl": {
+   "E@0.01": 4.914,
+   "ci": [
+    3.665,
+    5.646
+   ]
+  },
+  "lr_full.pkl": {
+   "E@0.01": 1.997,
+   "ci": [
+    0.685,
+    7.618
+   ]
+  }
+ },
+ "country_audit_with_retraction_shares": {
+  "hgb_full.pkl": {
+   "": {
+    "cohort_share": 0.1828,
+    "top1_share": 0.1076,
+    "retraction_share": 0.0629
+   },
+   "US": {
+    "cohort_share": 0.137,
+    "top1_share": 0.0492,
+    "retraction_share": 0.0244
+   },
+   "CN": {
+    "cohort_share": 0.1194,
+    "top1_share": 0.5409,
+    "retraction_share": 0.6714
+   },
+   "IN": {
+    "cohort_share": 0.0483,
+    "top1_share": 0.0238,
+    "retraction_share": 0.05
+   },
+   "JP": {
+    "cohort_share": 0.0322,
+    "top1_share": 0.0441,
+    "retraction_share": 0.0044
+   },
+   "BR": {
+    "cohort_share": 0.0305,
+    "top1_share": 0.0059,
+    "retraction_share": 0.004
+   },
+   "ID": {
+    "cohort_share": 0.0305,
+    "top1_share": 0.0018,
+    "retraction_share": 0.0021
+   },
+   "GB": {
+    "cohort_share": 0.0302,
+    "top1_share": 0.0106,
+    "retraction_share": 0.0064
+   },
+   "DE": {
+    "cohort_share": 0.0265,
+    "top1_share": 0.0125,
+    "retraction_share": 0.0022
+   },
+   "IT": {
+    "cohort_share": 0.0243,
+    "top1_share": 0.0302,
+    "retraction_share": 0.0044
+   }
+  },
+  "hgb_no_A.pkl": {
+   "": {
+    "cohort_share": 0.1828,
+    "top1_share": 0.0485,
+    "retraction_share": 0.0629
+   },
+   "US": {
+    "cohort_share": 0.137,
+    "top1_share": 0.0543,
+    "retraction_share": 0.0244
+   },
+   "CN": {
+    "cohort_share": 0.1194,
+    "top1_share": 0.5134,
+    "retraction_share": 0.6714
+   },
+   "IN": {
+    "cohort_share": 0.0483,
+    "top1_share": 0.0581,
+    "retraction_share": 0.05
+   },
+   "JP": {
+    "cohort_share": 0.0322,
+    "top1_share": 0.0137,
+    "retraction_share": 0.0044
+   },
+   "BR": {
+    "cohort_share": 0.0305,
+    "top1_share": 0.0081,
+    "retraction_share": 0.004
+   },
+   "ID": {
+    "cohort_share": 0.0305,
+    "top1_share": 0.0031,
+    "retraction_share": 0.0021
+   },
+   "GB": {
+    "cohort_share": 0.0302,
+    "top1_share": 0.0149,
+    "retraction_share": 0.0064
+   },
+   "DE": {
+    "cohort_share": 0.0265,
+    "top1_share": 0.0084,
+    "retraction_share": 0.0022
+   },
+   "IT": {
+    "cohort_share": 0.0243,
+    "top1_share": 0.0189,
+    "retraction_share": 0.0044
+   }
+  }
+ }
+}
