@@ -111,6 +111,19 @@ A 74-qubit twin at the weaker hardware noise would be harder still. The prior ev
 
 Skipped after a feasibility check (7 October 2026): `comp-social-science-ai-edit-survival`. The text of deleted Wikipedia articles is visible only to administrators (the API returns `permissiondenied` for deleted revisions), so the first revisions of deleted articles cannot be scored retrospectively. Since August 2025, suspected LLM articles can also be speedy-deleted because they look AI-generated, which makes the outcome partly circular. A prospective version would need months of collection and could no longer test the March 2026 policy change.
 
+Skipped after a feasibility check (22 October 2026): `frontier-photonic-inverse-design-seed-budget`. Two problems:
+- **The leaderboard is too thin.** The public invrs-io leaderboard (latest commit 2025-10-22) has enough entries for a
+  best-to-median spread on only two of the six planned challenges: the mode converter (92 entries) and the metagrating
+  (23). The waveguide bend and power splitter have one each, and the beam splitter and WDM have none. The lead's counts
+  of 3–5 included README files.
+- **The compute is out of reach.** At the challenges' native resolution, one optimizer step on the ceviche waveguide
+  bend did not finish in 47 minutes on this machine's CPU. Each step runs scipy's single-threaded SuperLU and needs
+  9 GB per process. The lightweight variant takes 1.2 s per step, but it has no leaderboard. Twenty seeds of hundreds
+  of steps on even two challenges would take weeks.
+- **Setup notes for anyone retrying.** Pin OMP/OpenBLAS/MKL and XLA to one thread per process; thread
+  oversubscription otherwise stalls even the lightweight challenge. The timing probe is in
+  `runs/frontier-photonic-inverse-design-seed-budget/code/timing_probe.py`.
+
 Skipped after a novelty check (21 October 2026): `energy-nz-edb-quality-standard-ratchet`. The Commerce Commission's
 DPP4 reasons paper (Attachment E, 20 November 2024) already answers the primary question. Since DPP3, movement in each
 distributor's unplanned SAIDI and SAIFI targets and limits between reference periods is capped at ±5% in either
