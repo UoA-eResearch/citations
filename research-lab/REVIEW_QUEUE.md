@@ -21,8 +21,15 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-22 19:13 | `legal-phantom-citations-judicial-opinions` | review |
 | 2026-10-23 00:13 | `legal-phantom-citations-judicial-opinions` | confirmation pass (fresh agent; the original could not be resumed after the restart) |
 | 2026-10-23 09:21 | `trust-corrected-record-machine-readable` | review |
+| 2026-10-23 12:28 | `trust-corrected-record-machine-readable` | confirmation pass | owner relaxed the 5 h limit until the 16:00 quota reset
+| 2026-10-23 12:28 | `ancestral-dsi-origin-recoverability` | review | owner relaxed the 5 h limit until the 16:00 quota reset
+| 2026-10-23 12:28 | `trust-retraction-risk-frozen-forecast` | review | owner relaxed the 5 h limit until the 16:00 quota reset
+| 2026-10-23 12:28 | `blue-pacific-reef-island-area-tide-corrected` | review | owner relaxed the 5 h limit until the 16:00 quota reset
+| 2026-10-23 12:28 | `auckland-nz-2023-storms-estuary-mud-natural-experiment` | review | owner relaxed the 5 h limit until the 16:00 quota reset
+| 2026-10-23 12:28 | `auckland-nz-kauri-dieback-multitemporal-lidar` | review | owner relaxed the 5 h limit until the 16:00 quota reset
+| 2026-10-23 12:28 | `frontier-edge-asr-quantization-accent-parity` | review (H4 pending) | owner relaxed the 5 h limit until the 16:00 quota reset
 
-**Next Fable slot: not before 2026-10-23 14:21 NZDT.** Retraction-markers review started 09:21 (the 05:13 slot was missed while the estuary bare-ground job ran). Retraction-markers review FINISHED: fix first (peS2o regex missed run-together 'Notice of Retraction': 47% not 12%; staleness null; 412 self-update docs undated); fixes in 9ba23d6 (D5). Queue: 0. retraction-markers CONFIRMATION (review/confirm_prompt.md) at the 14:21 slot. 1. DSI origin review (draft 87273a8). 2. retraction-risk forecast review (draft b314e0f). 3. reef islands review (draft ed14c61). 4. estuary mud review (draft fb30a30). 5. kauri dieback review (draft e8a1bff). 6. ASR accent parity review (once H4 is in). Phantom citations PUBLISHED 2026-10-23 (confirmation fix first on one item, repaired in D10).
+**Fable limit RELAXED by the owner until the 2026-10-23 16:00 quota reset ("relax the Fable review limitation until then. Use it up").** Seven runs started 12:28 in parallel: retraction-markers confirmation; reviews of DSI, retraction risk, reef islands, estuary mud, kauri dieback, ASR (H4 pending). After 16:00 the 1-per-5h rule applies again.
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
