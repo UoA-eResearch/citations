@@ -22,7 +22,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-23 00:13 | `legal-phantom-citations-judicial-opinions` | confirmation pass (fresh agent; the original could not be resumed after the restart) |
 | 2026-10-23 09:21 | `trust-corrected-record-machine-readable` | review |
 
-**Next Fable slot: not before 2026-10-23 14:21 NZDT.** Retraction-markers review started 09:21 (the 05:13 slot was missed while the estuary bare-ground job ran). Retraction-markers review FINISHED: fix first (peS2o regex missed run-together 'Notice of Retraction': 47% not 12%; staleness null; 412 self-update docs undated); fixes in 9ba23d6 (D5). Queue: 0. retraction-markers CONFIRMATION (review/confirm_prompt.md) at the 14:21 slot. 1. DSI origin review (draft 87273a8). 2. retraction-risk forecast review (draft b314e0f). 3. reef islands review (draft ed14c61). 4. estuary mud review (draft fb30a30). 5. ASR accent parity review (once H4 is in). Phantom citations PUBLISHED 2026-10-23 (confirmation fix first on one item, repaired in D10).
+**Next Fable slot: not before 2026-10-23 14:21 NZDT.** Retraction-markers review started 09:21 (the 05:13 slot was missed while the estuary bare-ground job ran). Retraction-markers review FINISHED: fix first (peS2o regex missed run-together 'Notice of Retraction': 47% not 12%; staleness null; 412 self-update docs undated); fixes in 9ba23d6 (D5). Queue: 0. retraction-markers CONFIRMATION (review/confirm_prompt.md) at the 14:21 slot. 1. DSI origin review (draft 87273a8). 2. retraction-risk forecast review (draft b314e0f). 3. reef islands review (draft ed14c61). 4. estuary mud review (draft fb30a30). 5. kauri dieback review (draft e8a1bff). 6. ASR accent parity review (once H4 is in). Phantom citations PUBLISHED 2026-10-23 (confirmation fix first on one item, repaired in D10).
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
@@ -40,6 +40,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | `trust-retraction-risk-frozen-forecast` | b314e0f | H1 Inconclusive (E@1% 3.7x, 1.4-13.3); H2 Supported (authors+references 11.4x, 6.0-14.1); H3 sealed for 2028-12-31 | awaiting review |
 | `blue-pacific-reef-island-area-tide-corrected` | ed14c61 | H1 not testable (guard: Landsat C1 vs S2-30m +1.24%/yr; Inconclusive without it, D +0.15, -0.52 to +0.86); H2 Supported (tide bias 2.08%/yr, 1.57-2.65; noise floor 0.29); D6 made after the first rates run | awaiting review (brief: review/prompt.md) |
 | `auckland-nz-2023-storms-estuary-mud-natural-experiment` | fb30a30 | H1 Inconclusive (+1.93 pp, -2.33 to +5.67); H2 Inconclusive (-0.21 pp/IQR, -3.06 to +3.20); exposure mostly harvest; post hoc region-wide 2023 pulse +4.26 pp | awaiting review (brief: review/prompt.md) |
+| `auckland-nz-kauri-dieback-multitemporal-lidar` | e8a1bff | H1 Refuted (change AUC 0.51, 0.44-0.56); H2 Inconclusive (gain +0.048); 2021 labels faint (0.55) | awaiting review (brief: review/prompt.md) |
 
 ## Order to run them in
 
