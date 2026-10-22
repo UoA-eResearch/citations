@@ -1,0 +1,152 @@
+{
+ "test_segments": 9228,
+ "test_hours": 16.38,
+ "named_groups": {
+  "Bulgarian": {
+   "speakers": 2,
+   "minutes": 19.3
+  },
+  "Chinese": {
+   "speakers": 2,
+   "minutes": 24.3
+  },
+  "Indian English": {
+   "speakers": 3,
+   "minutes": 66.8
+  },
+  "Irish English": {
+   "speakers": 3,
+   "minutes": 48.6
+  },
+  "Jamaican English": {
+   "speakers": 4,
+   "minutes": 44.6
+  },
+  "Kenyan English": {
+   "speakers": 2,
+   "minutes": 93.6
+  },
+  "Latin American": {
+   "speakers": 2,
+   "minutes": 15.8
+  },
+  "Lithuanian": {
+   "speakers": 2,
+   "minutes": 55.9
+  },
+  "Mainstream US English": {
+   "speakers": 9,
+   "minutes": 112.6
+  },
+  "Nigerian English": {
+   "speakers": 5,
+   "minutes": 147.7
+  },
+  "Scottish English": {
+   "speakers": 2,
+   "minutes": 13.1
+  },
+  "Southern British English": {
+   "speakers": 2,
+   "minutes": 18.2
+  },
+  "Spanish": {
+   "speakers": 5,
+   "minutes": 83.5
+  },
+  "Vietnamese": {
+   "speakers": 6,
+   "minutes": 71.8
+  }
+ },
+ "other_stratum": {
+  "speakers": 11,
+  "minutes": 167.2
+ },
+ "long_segments_over_30s": 323,
+ "calibration_windows_available": {
+  "Brazilian": 16,
+  "Bulgarian": 16,
+  "Catalan": 48,
+  "Chinese": 52,
+  "Don't know": 83,
+  "Dutch": 13,
+  "Eastern European": 118,
+  "Egyptian": 87,
+  "European": 29,
+  "French": 10,
+  "German": 14,
+  "Indian English": 42,
+  "Indonesian English": 41,
+  "Irish English": 138,
+  "Italian": 92,
+  "Jamaican English": 43,
+  "Japanese": 19,
+  "Latin": 10,
+  "Latin American": 15,
+  "Mainstream US English": 136,
+  "Scottish English": 65,
+  "South African English": 49,
+  "Southern British English": 181,
+  "Spanish": 39,
+  "Vietnamese": 63
+ },
+ "calibration_groups_balanced": [
+  "Brazilian",
+  "Bulgarian",
+  "Catalan",
+  "Chinese",
+  "Dutch",
+  "Eastern European",
+  "Egyptian",
+  "European",
+  "French",
+  "German",
+  "Indian English",
+  "Indonesian English",
+  "Irish English",
+  "Italian",
+  "Jamaican English",
+  "Japanese",
+  "Latin",
+  "Latin American",
+  "Mainstream US English",
+  "Scottish English",
+  "South African English",
+  "Southern British English",
+  "Spanish",
+  "Vietnamese"
+ ],
+ "calibration_sets": {
+  "us_s0": {
+   "windows": 48,
+   "speech_s": 1259.0,
+   "speakers": 8
+  },
+  "balanced_s0": {
+   "windows": 48,
+   "speech_s": 1247.2,
+   "speakers": 33
+  },
+  "us_s1": {
+   "windows": 48,
+   "speech_s": 1239.4,
+   "speakers": 8
+  },
+  "balanced_s1": {
+   "windows": 48,
+   "speech_s": 1247.4,
+   "speakers": 33
+  },
+  "us_s2": {
+   "windows": 48,
+   "speech_s": 1259.7,
+   "speakers": 8
+  },
+  "balanced_s2": {
+   "windows": 48,
+   "speech_s": 1258.7,
+   "speakers": 34
+  }
+ }
+}
