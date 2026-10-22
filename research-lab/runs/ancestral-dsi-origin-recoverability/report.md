@@ -222,7 +222,8 @@ A random 10,000 window samples were looked up in the ENA portal; 9,729 were foun
 
 - **Preregistration:** `plan.md`.
 - **Deviations** (`deviations.md`):
-  - D1: parsing;
+  - D1: after the limb-1 results, the failed placebo cutoffs and the post-hoc checks (without SARS-CoV-2, within
+    submitters);
   - D2: the two kinds of not-determinable label;
   - D3: the care filter extended to human-host metagenomes, an ENA attribute variant, culture-collection labels;
   - D4: the classifier apostrophe fix and limb 1 re-run;
