@@ -1,0 +1,203 @@
+"""Tide correction, rates, the sensor-step guard, H1 and H2 (plan sections 3-4).
+
+Inputs:
+- data/areas/<atoll>_<s2|ls>.parquet: per islet and scene;
+- data/tides/<gauge>.parquet: hourly sea level;
+- data/inventory.csv.
+
+Writes:
+- results/tables/islet_rates.csv: one row per islet x epoch x series;
+- results/tables/h1_h2.json.
+
+Families and epochs:
+  E1     Landsat 5/7/8 Collection 1 Level-1 (D1), 1999-2015 (corrected with a Landsat slope fitted on E1)
+  E2     Sentinel-2 at 10 m, 2016-2026-09 (corrected with a Sentinel-2 slope fitted on E2)
+  guard  2016-2021 (D1): Collection 1 Landsat 8, and Sentinel-2 at 30 m, each corrected with its own slope
+"""
+import json
+import sys
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from inventory import ATOLLS  # noqa: E402
+
+RUN = Path(__file__).resolve().parents[1]
+T = RUN / "results" / "tables"
+SEED, B = 20261022, 2000
+MIN_SCENES, MIN_SPAN = 20, 6.0
+
+
+def load_areas():
+    parts = []
+    for p in sorted((RUN / "data" / "areas").glob("*.parquet")):
+        d = pd.read_parquet(p)
+        if "error" in d:
+            d = d[d.error.isna()]
+        parts.append(d[d.islet.astype(str) != ""])
+    a = pd.concat(parts, ignore_index=True)
+    a["time"] = pd.to_datetime(a.datetime, utc=True, format="ISO8601")
+    # one row per islet and acquisition (overlapping Sentinel-2 tiles list the same pass twice)
+    a["tmin"] = a.time.dt.floor("min")
+    a = a.sort_values(["aoi_pixels", "clear"], ascending=False).drop_duplicates(["islet", "sensor", "tmin"])
+    return a
+
+
+def attach_levels(a):
+    out = []
+    for name, (gid, _) in ATOLLS.items():
+        g = pd.read_parquet(RUN / "data" / "tides" / f"{gid:03d}.parquet").sort_values("time")
+        mean = g[(g.time >= "1999-01-01") & (g.time < "2026-10-01")].level_mm.mean()
+        tg = g.time.astype("int64").to_numpy() / 3.6e12          # hours
+        lv = (g.level_mm.to_numpy() - mean) / 1000.0             # metres relative to the 1999-2026 mean
+        x = a[a.atoll == name].copy()
+        tx = x.time.astype("int64").to_numpy() / 3.6e12
+        i = np.searchsorted(tg, tx)
+        ok = (i > 0) & (i < len(tg))
+        i = np.clip(i, 1, len(tg) - 1)
+        before, after = tx - tg[i - 1], tg[i] - tx
+        ok &= (before <= 2.0) & (after <= 2.0)                    # a gauge reading within 2 h on each side
+        x["level_m"] = np.where(ok, np.interp(tx, tg, lv), np.nan)
+        out.append(x)
+    return pd.concat(out, ignore_index=True)
+
+
+def theil_sen(t, y):
+    i, j = np.triu_indices(len(t), 1)
+    dt = t[j] - t[i]
+    m = dt > 1e-6
+    return float(np.median((y[j] - y[i])[m] / dt[m])) if m.any() else np.nan
+
+
+def islet_rate(df, col, slope_from=None, robust=False):
+    """(rate %/yr corrected, rate %/yr uncorrected, tide slope m2/m, n, span) for one islet's series."""
+    d = df.dropna(subset=[col, "level_m"])
+    if len(d) < MIN_SCENES:
+        return None
+    t = (d.time.dt.year + (d.time.dt.dayofyear - 1) / 365.25).to_numpy()
+    span = t.max() - t.min()
+    if span < MIN_SPAN:
+        return None
+    y, h = d[col].to_numpy(float), d.level_m.to_numpy(float)
+    if robust:
+        from sklearn.linear_model import HuberRegressor
+        beta = float(HuberRegressor().fit(h.reshape(-1, 1), y).coef_[0])
+    else:
+        beta = float(np.polyfit(h, y, 1)[0]) if np.ptp(h) > 0 else 0.0
+    yc = y - beta * h
+    rc = theil_sen(t, 100 * yc / np.median(yc))
+    ru = theil_sen(t, 100 * y / np.median(y))
+    return {"rate_corr": rc, "rate_uncorr": ru, "tide_slope_m2_per_m": beta, "n": len(d), "span": round(span, 2),
+            "median_area_ha": float(np.median(yc) / 1e4)}
+
+
+def boot_mean(df, col, by="atoll"):
+    rng = np.random.default_rng(SEED)
+    groups = [g[col].to_numpy() for _, g in df.groupby(by)]
+    m = []
+    for _ in range(B):
+        m.append(np.mean(np.concatenate([g[rng.integers(0, len(g), len(g))] for g in groups])))
+    return [round(float(np.percentile(m, 2.5)), 4), round(float(np.percentile(m, 97.5)), 4)]
+
+
+def mixed(df, col):
+    import statsmodels.formula.api as smf
+    try:
+        r = smf.mixedlm(f"{col} ~ 1", df, groups=df["atoll"]).fit(reml=True)
+        lo, hi = r.conf_int().loc["Intercept"]
+        return {"estimate": round(float(r.params["Intercept"]), 4), "ci": [round(float(lo), 4), round(float(hi), 4)]}
+    except Exception as e:
+        return {"error": repr(e)[:120]}
+
+
+def main():
+    inv = pd.read_csv(RUN / "data" / "inventory.csv").set_index("islet")
+    a = attach_levels(load_areas())
+    a["year"] = a.time.dt.year
+    is_s2 = a.sensor == "s2"
+    l1 = a.sensor.isin(["LT05", "LE07", "LC08"])        # Collection 1 Level-1 (D1)
+    fams = {
+        "E1": a[l1 & (a.year <= 2015)],
+        "E2": a[is_s2],
+        "guard_ls": a[(a.sensor == "LC08") & (a.year >= 2016) & (a.year <= 2021)],
+        "guard_s2_30m": a[is_s2 & (a.year >= 2016) & (a.year <= 2021)],
+    }
+    series = {"E1": ["area_otsu", "area_fixed", "area_ndwi"], "E2": ["area_otsu", "area_fixed", "area_ndwi"],
+              "guard_ls": ["area_otsu"], "guard_s2_30m": ["area_otsu_30m"]}
+    rows = []
+    for fam, d in fams.items():
+        for col in series[fam]:
+            if col not in d:
+                continue
+            for islet, g in d.groupby("islet"):
+                for robust in ((False, True) if (fam in ("E1", "E2") and col == "area_otsu") else (False,)):
+                    r = islet_rate(g, col, robust=robust)
+                    if r:
+                        rows.append({"islet": islet, "atoll": inv.atoll[islet], "area_ha": inv.area_ha[islet],
+                                     "engineered": int(inv.engineered[islet]), "family": fam, "series": col,
+                                     "robust_slope": int(robust), **r})
+    R = pd.DataFrame(rows)
+    R.to_csv(T / "islet_rates.csv", index=False)
+    prim = lambda fam, col="area_otsu", rob=0: R[(R.family == fam) & (R.series == col) & (R.robust_slope == rob)]
+    out = {"scenes_used": {f: int(len(d)) for f, d in fams.items()},
+           "levels_missing_share": round(float(a.level_m.isna().mean()), 4)}
+    # sensor-step guard
+    gl, gs = prim("guard_ls").set_index("islet"), prim("guard_s2_30m", "area_otsu_30m").set_index("islet")
+    gj = gl[["rate_corr", "atoll", "engineered", "area_ha"]].join(gs[["rate_corr"]], rsuffix="_s2", how="inner")
+    gj = gj[(gj.engineered == 0) & (gj.area_ha >= 5)]
+    gj["diff"] = gj.rate_corr - gj.rate_corr_s2
+    gci = boot_mean(gj, "diff") if len(gj) else [np.nan, np.nan]
+    out["guard"] = {"islets": int(len(gj)), "mean_diff": round(float(gj["diff"].mean()), 4) if len(gj) else None,
+                    "ci": gci, "valid": bool(len(gj) and gci[0] >= -0.2 and gci[1] <= 0.2)}
+    # H1
+    e1 = prim("E1").set_index("islet"); e2 = prim("E2").set_index("islet")
+    x = e1[["rate_corr", "atoll", "engineered", "area_ha"]].join(e2[["rate_corr"]], rsuffix="_e2", how="inner")
+    x = x[(x.engineered == 0) & (x.area_ha >= 5)].reset_index()
+    x["D"] = x.rate_corr_e2 - x.rate_corr
+    ci = boot_mean(x, "D") if len(x) else [np.nan, np.nan]
+    v = ("not testable (sensor-step guard fails)" if not out["guard"]["valid"] else
+         "Supported" if ci[0] >= -0.2 else "Refuted" if ci[1] < -0.2 else "Inconclusive")
+    out["H1"] = {"islets": int(len(x)), "atolls": int(x.atoll.nunique()) if len(x) else 0,
+                 "mean_rate_E1": round(float(x.rate_corr.mean()), 4) if len(x) else None,
+                 "mean_rate_E2": round(float(x.rate_corr_e2.mean()), 4) if len(x) else None,
+                 "D": round(float(x.D.mean()), 4) if len(x) else None, "ci": ci,
+                 "mixed_model": mixed(x, "D") if len(x) > 3 else None, "verdict": v,
+                 "verdict_ignoring_guard": "Supported" if ci[0] >= -0.2 else "Refuted" if ci[1] < -0.2 else "Inconclusive"}
+    # H2
+    y = e2[(e2.engineered == 0) & (e2.area_ha >= 1)].reset_index()
+    y["bias"] = (y.rate_uncorr - y.rate_corr).abs()
+    ci2 = boot_mean(y, "bias") if len(y) else [np.nan, np.nan]
+    out["H2"] = {"islets": int(len(y)), "mean_abs_bias": round(float(y.bias.mean()), 4) if len(y) else None, "ci": ci2,
+                 "mean_signed_bias": round(float((y.rate_uncorr - y.rate_corr).mean()), 4) if len(y) else None,
+                 "verdict": "Supported" if ci2[0] >= 0.3 else "Refuted" if ci2[1] < 0.3 else "Inconclusive"}
+    # secondaries
+    out["by_atoll_E2"] = {k: {"islets": int(len(g)), "mean_rate": round(float(g.rate_corr.mean()), 4)}
+                          for k, g in e2[(e2.engineered == 0)].groupby("atoll")}
+    out["engineered_E2"] = {"islets": int((e2.engineered == 1).sum()),
+                            "mean_rate": round(float(e2[e2.engineered == 1].rate_corr.mean()), 4) if (e2.engineered == 1).any() else None}
+    sens = {}
+    for col in ("area_fixed", "area_ndwi"):
+        s1, s2 = prim("E1", col).set_index("islet"), prim("E2", col).set_index("islet")
+        z = s1[["rate_corr", "atoll", "engineered", "area_ha"]].join(s2[["rate_corr"]], rsuffix="_e2", how="inner")
+        z = z[(z.engineered == 0) & (z.area_ha >= 5)].reset_index()
+        z["D"] = z.rate_corr_e2 - z.rate_corr
+        sens[col] = {"islets": int(len(z)), "D": round(float(z.D.mean()), 4) if len(z) else None,
+                     "ci": boot_mean(z, "D") if len(z) else None}
+    r1, r2 = prim("E1", rob=1).set_index("islet"), prim("E2", rob=1).set_index("islet")
+    z = r1[["rate_corr", "atoll", "engineered", "area_ha"]].join(r2[["rate_corr"]], rsuffix="_e2", how="inner")
+    z = z[(z.engineered == 0) & (z.area_ha >= 5)].reset_index()
+    z["D"] = z.rate_corr_e2 - z.rate_corr
+    sens["robust_tide_slope"] = {"islets": int(len(z)), "D": round(float(z.D.mean()), 4) if len(z) else None,
+                                 "ci": boot_mean(z, "D") if len(z) else None}
+    small = e2[(e2.engineered == 0) & (e2.area_ha >= 1) & (e2.area_ha < 5)]
+    sens["E2_islets_1_to_5_ha"] = {"islets": int(len(small)),
+                                   "mean_rate": round(float(small.rate_corr.mean()), 4) if len(small) else None}
+    out["sensitivity"] = sens
+    json.dump(out, open(T / "h1_h2.json", "w"), indent=1, default=str)
+    print(json.dumps(out, indent=1, default=str))
+
+
+if __name__ == "__main__":
+    main()
