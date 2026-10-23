@@ -1,0 +1,28 @@
+{
+ "segment_rule": "plan",
+ "pairs_with_dvv": 53,
+ "pairs_scored": 32,
+ "median_heldout_r2": -0.1238,
+ "ci": [
+  -0.6712,
+  -0.0281
+ ],
+ "share_pairs_r2_ge_0_5": 0.0,
+ "verdict": "Refuted",
+ "median_resid_2sd_pct": 0.136,
+ "noise_floor_le_0_05pct": false,
+ "lockdown": {
+  "median_step_pct": 0.0068,
+  "pairs_step_gt_2sd": 2
+ },
+ "tau_counts": {
+  "1": 11,
+  "500": 9,
+  "20": 3,
+  "200": 3,
+  "100": 2,
+  "2": 2,
+  "5": 1,
+  "50": 1
+ }
+}

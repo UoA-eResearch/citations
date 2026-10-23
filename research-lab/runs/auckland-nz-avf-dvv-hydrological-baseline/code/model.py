@@ -10,13 +10,15 @@ nothing is fitted on held-out data. Scored pairs: mean training coherence >= 0.5
 Writes results/tables/fit.csv (per pair) and results/tables/primary.json.
 """
 import json
+import sys
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 from scipy.special import erfc
 
-import dvv as D
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import dvv as D  # noqa: E402
 
 RUN = Path(__file__).resolve().parents[1]
 T = RUN / "results" / "tables"
