@@ -70,6 +70,8 @@ def predict(p, N, D):
 
 def load():
     d = pd.read_csv(T / "losses.csv")
+    # D1: fp32 for the ladder and 1B/1.4B; Pythia-2.8B only exists in fp16 here
+    d = d[(d.dtype == "float32") | ((d["size"] == "2.8b") & (d.dtype == "float16"))]
     lad = d[d["size"].isin(SIZES)].copy()
     tgt = d[~d["size"].isin(SIZES)].set_index("size")
     return lad, tgt

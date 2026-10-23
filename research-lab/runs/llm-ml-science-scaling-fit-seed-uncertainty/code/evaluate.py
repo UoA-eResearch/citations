@@ -61,10 +61,11 @@ def corpus():
     print(a.shape, h)
 
 
-def seq_losses(model_id, revision, toks, bs):
+def seq_losses(model_id, revision, toks, bs, dtype="float32"):
     import torch
     from transformers import AutoModelForCausalLM
-    m = AutoModelForCausalLM.from_pretrained(model_id, revision=revision, torch_dtype=torch.bfloat16).cuda().eval()
+    # D1: fp32 (bf16 corrupts late Pythia checkpoints); fp16 only where fp32 does not fit next to the shared server
+    m = AutoModelForCausalLM.from_pretrained(model_id, revision=revision, dtype=getattr(torch, dtype)).cuda().eval()
     n_params = sum(p.numel() for n, p in m.named_parameters() if "embed" not in n)
     out = []
     with torch.no_grad():
@@ -91,33 +92,35 @@ def run():
     done = set()
     if out.exists():
         d = pd.read_csv(out)
-        done = set(zip(d.model, d.step))
-    jobs = [(repo(s, sd), s, sd, st) for s in SIZES for sd in SEEDS for st in STEPS]
-    jobs += [(f"EleutherAI/pythia-{t}", t, 0, 143000) for t in TARGETS]
+        done = set(zip(d.model, d.step, d.dtype))
+    jobs = [(repo(s, sd), s, sd, st, "float32") for s in SIZES for sd in SEEDS for st in STEPS]
+    jobs += [("EleutherAI/pythia-1b", "1b", 0, 143000, "float32"), ("EleutherAI/pythia-1.4b", "1.4b", 0, 143000, "float32"),
+             ("EleutherAI/pythia-2.8b", "2.8b", 0, 143000, "float16"),
+             ("EleutherAI/pythia-1b", "1b", 0, 143000, "float16"), ("EleutherAI/pythia-1.4b", "1.4b", 0, 143000, "float16")]
     bs = {"14m": 4, "31m": 4, "70m": 4, "160m": 4, "410m": 4, "1b": 2, "1.4b": 2, "2.8b": 1}   # logits are 0.4 GB per sequence
-    for model_id, size, seed, step in jobs:
-        if (model_id, step) in done:
+    for model_id, size, seed, step, dtype in jobs:
+        if (model_id, step, dtype) in done:
             continue
         t0 = time.time()
         for k in range(5):
             try:
-                ls, n = seq_losses(model_id, f"step{step}", toks, bs[size])
+                ls, n = seq_losses(model_id, f"step{step}", toks, bs[size], dtype)
                 break
             except Exception as ex:
                 print("retry", model_id, step, str(ex)[:200], flush=True)
                 time.sleep(30 * (k + 1))
         else:
             raise RuntimeError(f"{model_id} step{step} failed")
-        np.save(DATA / "seqloss" / f"{model_id.split('/')[1]}_step{step}.npy", ls) if (DATA / "seqloss").exists() else None
+        np.save(DATA / "seqloss" / f"{model_id.split('/')[1]}_step{step}_{dtype}.npy", ls)
         row = pd.DataFrame([{"model": model_id, "size": size, "seed": seed, "step": step, "N": n,
-                             "D": step * TOKENS_PER_STEP, "loss": float(ls.mean())}])
+                             "D": step * TOKENS_PER_STEP, "loss": float(ls.mean()), "dtype": dtype}])
         row.to_csv(out, mode="a", header=not out.exists(), index=False)
         clear_cache()
         print(model_id, step, round(float(ls.mean()), 4), round(time.time() - t0), "s", flush=True)
 
 
 def evalnoise():
-    ls = np.load(DATA / "seqloss" / "pythia-410m_step143000.npy")
+    ls = np.load(DATA / "seqloss" / "pythia-410m_step143000_float32.npy")
     docs = np.load(DATA / "eval_docs.npy")
     ud = np.unique(docs)
     rng = np.random.default_rng(20261024)
