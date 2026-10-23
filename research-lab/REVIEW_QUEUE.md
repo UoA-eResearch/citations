@@ -35,7 +35,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | `legal-digital-humanities-precedent-erosion-before-overruling` | e09bf03 | H1 not testable (D(+5) 0.27, -0.13 to 0.49); co-cite exclusion pre-share 0.31; D1 post-result 2019 coverage break; post hoc pre-2019: cited 55% MORE before overruling | queued (review/prompt.md) |
 | `frontier-edge-asr-quantization-accent-parity` | (draft 2f02159 review) | H1 Inconclusive; H2 Supported by rule, not robust, not replicated on Common Voice; H3 Refuted (this rule); H4 not testable (no penalty in large-v3) | reviewed 2026-10-23: **fix first**; fixes in f8a6d4d (D4 robustness, D5 Common Voice replication, H4 complete); confirmation queued (review/confirm_prompt.md) |
 
-**The owner's exception ended at 16:00 on 2026-10-23; the 1-per-5 h rule applies again. Reef confirmation started 2026-10-24 01:39; next Fable run not before 06:39.** Order: confirmations of DSI (b0149e2), reef (d7c2ace), estuary (3dd86a7), kauri (920bde5) and retraction risk (6d4c885), one per 5 h slot; then the ASR confirmation (fixes in f8a6d4d); then the EDB ratchet review (fb7efde), then the Public Domain Day review (26ff608), then the AVF dv/v review (35e9d7a).
+**The owner's exception ended at 16:00 on 2026-10-23; the 1-per-5 h rule applies again. Estuary confirmation started 2026-10-24 06:39; next Fable run not before 11:39.** Order: confirmations of DSI (b0149e2), reef (d7c2ace), estuary (3dd86a7), kauri (920bde5) and retraction risk (6d4c885), one per 5 h slot; then the ASR confirmation (fixes in f8a6d4d); then the EDB ratchet review (fb7efde), then the Public Domain Day review (26ff608), then the AVF dv/v review (35e9d7a).
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
