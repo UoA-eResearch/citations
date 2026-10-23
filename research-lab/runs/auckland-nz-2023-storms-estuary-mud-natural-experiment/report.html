@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Estuary Mud After Gabrielle</title>
+<meta name="description" content="Did Auckland estuary monitoring sites get muddier after the January-February 2023 storms, and did a satellite exposure measure explain where?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Auckland</div>
+  <h1>Auckland&#x27;s estuary sites were muddier in the spring after the 2023 storms; a satellite exposure measure, which mostly captured harvest rather than slips, did not explain where</h1>
+  <p class="subtitle">56 Auckland Council estuary monitoring sites (13 harbours) with mud content in at least 5 years from 2010 to 2022 and a survey in October–November 2023. Each site was given an exposure: the share of land draining to the coast within 5 km of it that turned from vegetated to bare between November–December 2022 and February–April 2023, mapped from Sentinel-2. The site list, the exposure and its terciles were frozen and committed before any outcome was read. This version incorporates an independent review (`review/review.md`; D5).</p>
+  <div class="meta">
+    <span>Report · 2026-10-23 · revised after independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-2023-storms-estuary-mud-natural-experiment/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-2023-storms-estuary-mud-natural-experiment/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-2023-storms-estuary-mud-natural-experiment/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: Inconclusive (H1 and H2).</strong></p>
+<ul>
+<li><strong>H1 (the most exposed third of sites gained at least 4 percentage points more mud in 2023 than the least exposed
+  third): Inconclusive.</strong><ul>
+<li>The difference is <strong>+1.9 pp</strong> (95% wild cluster bootstrap −2.3 to +5.7; CR2 −1.7 to +5.5), on 37 sites in 11
+harbours.</li>
+<li>It is below the 4 pp threshold, but the interval does not exclude 4. By 2024 the difference is +0.5 pp (−3.4 to
++3.8).</li>
+</ul>
+</li>
+<li><strong>H2 (mud rose with exposure, as a dose-response): Inconclusive.</strong><ul>
+<li>The estimate is <strong>−0.2 pp</strong> per interquartile range of exposure (wild bootstrap −3.1 to +3.2), on all 56 sites.</li>
+<li><strong>It is in effect a two-site test.</strong> 87% of the identifying variation comes from two Manukau sites beside the
+Pukekohe market-garden belt (Auckland Airport and Clarks Beach). The effective number of clusters is about 1 of
+13.</li>
+<li>The CR2 interval (−0.6 to +0.1) is anti-conservative with so few effective clusters. The wild bootstrap governs.</li>
+</ul>
+</li>
+<li><strong>The 2023 difference.</strong><ul>
+<li>The top-minus-bottom difference of +1.96 is the largest in the 15-year series and larger than every placebo year
+(2015–2021, −1.0 to +0.6).</li>
+<li>But 2022, before the storms, was already +1.45, so 2023 exceeds the pre-storm year by only about 0.5 pp.</li>
+</ul>
+</li>
+<li><strong>What did happen (post hoc): a region-wide 2023 mud pulse.</strong><ul>
+<li>Across all 56 sites, 2023 mud content was <strong>+4.3 pp</strong> above each site's own 2010–2022 mean (site bootstrap 2.3 to
+6.3; harbour-clustered 2.3 to 7.0). Every earlier year's mean lies between −1.3 and +1.7.</li>
+<li>70% of sites rose. By 2024 the excess was +1.1, and that fade holds within the same 42 sites.</li>
+<li><strong>It is concentrated, not universal.</strong> Six harbours rose by 4–16 pp, seven by 2.6 or less, and the site median
+is +2.6.</li>
+<li>It survives the review's artefact checks: continuously sampled sites, leaving each year out, and the change of
+value format (2020).</li>
+<li>The fixed-effects design absorbs any shared jump into the year effect, so H1 and H2 cannot see it.</li>
+<li>With no clean control region, the pulse is consistent with the storms but cannot be attributed to them.</li>
+</ul>
+</li>
+<li><strong>The exposure measure is mostly harvest, not slips, so H1 and H2 did not test storm exposure.</strong><ul>
+<li>63% of newly bare area is in patches over 5 ha: market-garden and plantation harvest.</li>
+<li>Newly bare density is 3.3% around Pukekohe and 1.1% at Woodhill forest, against 0.02–0.12% in the known slip
+clusters (Muriwai, Piha, Titirangi, Birkenhead).</li>
+<li>The two most exposed sites sit beside the Pukekohe market-garden belt.</li>
+<li>An added exposure counting only slip-sized patches (1 ha or less; D3) gives the same answer: +1.2 pp (−4.7 to
++8.3) and −0.05 pp per IQR (−3.7 to +5.1).</li>
+</ul>
+</li>
+</ul>
+<h2>In plain terms</h2>
+<p>In January and February 2023, record rain and Cyclone Gabrielle set off thousands of slips around Auckland. Mud
+smothers estuary life, so we asked whether the estuaries that received the most stripped land got muddier.</p>
+<p>Auckland Council samples the mud at dozens of estuary sites every spring. We used satellite images to measure, for
+each site, how much nearby land had gone from green to bare over the storm summer. We fixed those numbers and wrote
+them down before looking at any 2023 mud results.</p>
+<p>In the spring after the storms, Auckland's estuary sites were muddier than usual, by about 4 percentage points on
+average. That is a larger jump than in any year since 2010, concentrated in about half the harbours. A year later most
+of that extra mud was gone. We cannot prove the storms caused it, because there is no clean comparison region, but
+nothing else about 2023 stands out in the record.</p>
+<p>Our satellite measure turned out mostly to capture vegetable gardens and pine plantations being harvested, not storm
+slips. So the main test, whether the most exposed sites got muddiest, was really a test of land near harvest, not near
+slips. The sites nearest harvested land gained about 2 points more than the least exposed, but they were already about
+that much muddier in 2022, before the storms. The study cannot rule out an effect of the size we looked for. It could
+not test whether slips specifically fed the extra mud, and a single survey each spring may miss mud that washed
+through within weeks.</p>
+<h2>What was asked</h2>
+<p>The lead (<code>auckland-nz-2023-storms-estuary-mud-natural-experiment</code>, Auckland signature area) asked whether the 2023
+storms produced an exposure-graded step change in estuary mud. It was framed as a natural experiment on a monitoring
+network with a 13-year pre-period. No exposure-graded test was found in the literature or in Auckland Council's
+reporting. Auckland Council's pilot mapped bare-earth sources in five catchments, but did not link them to estuary
+outcomes.</p>
+<p>The plan (<code>plan.md</code>) was committed before any 2023 or 2024 value was viewed.</p>
+<h2>How it was done</h2>
+<ul>
+<li><strong>Sites and outcome:</strong><ul>
+<li>LAWA Estuary Health v2 (data to September 2025): Auckland Council sites with mud content (% finer than 63 µm) in
+at least 5 years from 2010 to 2022 and a 2023 survey. That gives 56 sites, 42 of which also have 2024.</li>
+<li>Every 2023 and 2024 survey is dated October or November, after both storms.</li>
+</ul>
+</li>
+<li><strong>Exposure (frozen in commit d2411cf before any outcome was read):</strong>
+  1. <strong>Elevation.</strong> The LINZ national LiDAR mosaic, read at 20 m (D1). Harbour water is hydro-flattened in the DEM,
+     so the sea is DEM no-data, cells at or below 0 m, or Sentinel-2 water, wherever connected to the open sea (D1
+     addendum).
+  2. <strong>Routing</strong> by priority-flood (D2), after pysheds left interior sinks that absorbed 23% of the land.
+          - 91.8% of land drains to the sea, and the rest off the domain edge.
+          - Each site's contributing land is every land cell whose coastal outlet lies within 5 km of it (median 67 km²).
+  3. <strong>Newly bare.</strong> Per-pixel median Sentinel-2 NDVI at 10 m over clear land observations:
+          - at least 0.5 in 1 November – 31 December 2022, and at most 0.3 in 15 February – 30 April 2023;
+          - at least 2 clear observations in each window;
+          - 115 and 163 scenes; 24 blocks of 20 km.
+  4. <strong>Exposure:</strong> newly bare pixels as a share of valid pixels in the contributing land. The median valid share is
+     0.81.</li>
+<li><strong>Models:</strong><ul>
+<li>Site and year fixed effects, 2010–2024.</li>
+<li><strong>H1:</strong> top against bottom tercile, with Top × 2023 and Top × 2024 terms.</li>
+<li><strong>H2:</strong> all sites, with Exposure × 2023 and Exposure × 2024 terms, scaled to the exposure IQR.</li>
+<li><strong>Inference:</strong> a wild cluster restricted bootstrap by harbour (Webb weights, 9,999 draws, interval by test
+inversion). CR2 (Bell–McCaffrey) intervals alongside.</li>
+</ul>
+</li>
+<li><strong>Secondary analyses:</strong><ul>
+<li>an event study and seven placebo years;</li>
+<li>leaving out each harbour;</li>
+<li>exposure radius 2 and 10 km, and radius-only exposure without routing;</li>
+<li>dropping year-only rows;</li>
+<li>macrofauna and metals;</li>
+<li>the slip-sized exposure (D3).</li>
+</ul>
+</li>
+<li><strong>Validation against the pilot.</strong> The council's pilot bare-earth layer could not be used. Its terms restrict it to
+  the pilot viewer.</li>
+</ul>
+<h2>Results</h2>
+<h3>Exposure (<code>results/figures/F1_exposure_map.png</code>)</h3>
+<figure><a href="results/figures/F1_exposure_map.png"><img src="results/figures/F1_exposure_map.png" alt="Exposure map"></a><figcaption>Newly bare: median Sentinel-2 NDVI at least 0.5 in November-December 2022 and at most 0.3 in 15 February - 30 April 2023, with at least 2 clear observations in each window; shown as the share of valid 10 m pixels per 200 m cell, darker is more. Sites are coloured by the frozen tercile of exposure, the newly bare share of land draining to the coast within 5 km (median 0.13%, tercile cuts 0.100% and 0.147%). 63% of newly bare area lies in patches over 5 ha, mostly market-garden and plantation harvest (south and west), and 14% in slip-sized patches of 1 ha or less.</figcaption></figure>
+<ul>
+<li><strong>Size.</strong> Newly bare land is a small share of the land draining to each site:<ul>
+<li>median 0.13% (range 0.02% to 1.29%);</li>
+<li>tercile cuts at 0.100% and 0.147%.</li>
+</ul>
+</li>
+<li><strong>What it is.</strong> It is concentrated in large rectangular patches:<ul>
+<li>market gardens around Pukekohe and the Manukau's southern shore;</li>
+<li>plantation-forest harvest on the west coast.</li>
+</ul>
+</li>
+<li><strong>Patch sizes.</strong> Slip-sized patches (1 ha or less) hold 14% of newly bare area, and patches over 5 ha hold 63%.</li>
+<li><strong>Sensitivity to the definition.</strong> Exposure at 5 km correlates only moderately with exposure at 2 km (Spearman
+  0.57) or with radius-only exposure at 5 km (0.40).</li>
+</ul>
+<h3>H1 and the event study (<code>results/figures/F2_event_study.png</code>)</h3>
+<figure><a href="results/figures/F2_event_study.png"><img src="results/figures/F2_event_study.png" alt="Event study"></a><figcaption>Line: mean deviation of mud content from each site&#x27;s 2010-2022 mean, top-tercile sites minus bottom-tercile sites, by survey year (37 sites). Squares: the same fixed-effects contrast with each of 2015-2021 treated as a fake event year, on pre-2023 data. Diamond: the preregistered H1 estimate for 2023, +1.93 pp (95% wild cluster bootstrap -2.33 to +5.67; 11 harbours). 2022, before the storms, already sat at +1.45.</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>estimate (pp)</th>
+<th>95% wild bootstrap</th>
+<th>95% CR2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>top − bottom tercile, 2023 (H1)</td>
+<td>+1.93</td>
+<td>−2.33 to +5.67</td>
+<td>−1.68 to +5.55</td>
+</tr>
+<tr>
+<td>top − bottom tercile, 2024</td>
+<td>+0.48</td>
+<td>−3.38 to +3.77</td>
+<td>−2.86 to +3.81</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Placebo years</strong> (2015–2021, pre-2023 data only): −0.99 to +0.56. None is as large as 2023. With the same estimator,
+  the pre-storm 2022 value is +1.61.</li>
+<li><strong>The event study</strong> (top minus bottom tercile, each site against its own 2010–2022 mean):<ul>
+<li>+1.45 in 2022, before the storms;</li>
+<li>+1.96 in 2023;</li>
+<li>+0.49 in 2024.</li>
+</ul>
+</li>
+</ul>
+<p>The 2012 and 2013 values swing by similar amounts (+1.39 and −1.30).
+- <strong>Leaving out one harbour at a time:</strong> H1 runs from +1.0 to +2.8.
+- <strong>Dropping year-only rows:</strong> +1.45 (−3.21 to +5.81). This removes the 11 biennially sampled Waitematā Central
+  sites, 7 of them in the bottom tercile.
+- <strong>Other exposure definitions:</strong>
+    - routed 2 km: −2.56; routed 10 km: +1.52;
+    - radius-only: −2.15 (2 km), −2.06 (5 km), +2.54 (10 km);
+    - every interval includes 0.</p>
+<h3>H2: dose-response (<code>results/figures/F3_dose_response.png</code>)</h3>
+<figure><a href="results/figures/F3_dose_response.png"><img src="results/figures/F3_dose_response.png" alt="Dose-response"></a><figcaption>Each point is a site with a 2023 survey (56 sites): its 2023 mud content minus its own 2010-2022 mean, against its frozen exposure. The preregistered H2 slope, with site and year fixed effects, is -0.21 pp per interquartile range of exposure (95% wild cluster bootstrap -3.06 to +3.19). The two most exposed sites (Auckland Airport and Clarks Beach, Manukau Harbour) sit beside the Pukekohe market-garden belt.</figcaption></figure>
+<ul>
+<li><strong>Estimate:</strong> −0.21 pp per IQR of exposure (wild bootstrap −3.06 to +3.20; CR2 −0.57 to +0.15). For 2024: −0.09
+  (−1.09 to +1.10).</li>
+<li><strong>Why the two intervals differ.</strong> The wild bootstrap interval is about ten times the CR2 interval.<ul>
+<li>Two Manukau sites have far more exposure than the rest (Auckland Airport 1.29% and Clarks Beach 0.94%, against an
+IQR of 0.06%).</li>
+<li>87% of the identifying variation is in Manukau, and the effective number of clusters is 1.3.</li>
+<li>With so few effective clusters CR2 understates the uncertainty, and the wild bootstrap interval is the honest
+one.</li>
+<li>Dropping the Airport site gives −0.18 (CR2 ±0.75).</li>
+</ul>
+</li>
+<li><strong>Leaving out one harbour at a time:</strong> −0.38 to −0.14 per IQR.</li>
+</ul>
+<h3>A region-wide 2023 pulse (post hoc; <code>code/regional.py</code>, <code>results/tables/regional_2023.json</code>)</h3>
+<p>This analysis was added after the H1 and H2 results were read, because F3 showed large 2023 rises at middle-tercile
+sites that H1 leaves out.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>2023 mean deviation from 2010–2022 site mean (pp)</th>
+<th>range of 2010–2022 yearly means</th>
+<th>2024</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>all 56 sites</td>
+<td>+4.26 (site bootstrap 2.26 to 6.30)</td>
+<td>−1.27 to +1.68</td>
+<td>+1.10</td>
+</tr>
+<tr>
+<td>bottom / middle / top tercile</td>
+<td>+1.39 / +7.88 / +3.36</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<p>The regional table's Auckland row (2024: +2.26) uses all Auckland sites with at least 5 pre-2023 years; the +1.10
+here uses the 56 frozen sites.</p>
+<ul>
+<li><strong>Breadth:</strong> 70% of sites rose in 2023.</li>
+<li><strong>Why H1 and H2 miss it:</strong> the year fixed effects absorb a shared 2023 jump. H1 and H2 test only whether it was
+  graded by exposure.</li>
+<li><strong>Other regions</strong> (sites with at least 5 pre-2023 years; exploratory) give no clean control:<ul>
+<li>Waikato (Firth of Thames, Raglan, Tairua), sampled October–November, as Auckland is: +5.4 (6 sites), driven by
+one site at +24.6.</li>
+<li>Wellington: +4.1 (20 sites).</li>
+<li>Northland (−3.1) and Hawke's Bay (−7.1) were sampled January to April 2023, around or just after Gabrielle.</li>
+<li>Canterbury (−2.1) and Southland (+0.4) were not storm-hit.</li>
+<li>Pre-2023 yearly means swing widely in these small samples.</li>
+</ul>
+</li>
+<li><strong>Reading.</strong> The pulse fits a storm effect that reached many of Auckland's estuaries, but it cannot be separated
+  from a region-wide change in sampling or analysis.</li>
+</ul>
+<h3>Slip-sized exposure (D3)</h3>
+<p>Counting only newly bare patches of 1 ha or less (Spearman 0.56 with the primary exposure):
+- H1 contrast: +1.24 pp (−4.67 to +8.26);
+- H2: −0.05 pp per IQR (−3.72 to +5.13).</p>
+<p>Both are Inconclusive by the same rules.</p>
+<h3>Other outcomes</h3>
+<ul>
+<li><strong>Macrofauna.</strong> LAWA's "Macrofauna – benthic health score" (values 0.3–6.0; by its range an AMBI-type disturbance
+  score) shows no 2023 contrast (+0.09, −0.45 to +0.42) and no 2024 contrast (−0.20, −0.59 to +0.20).</li>
+<li><strong>Copper, zinc and lead</strong> were sampled at 12 sites in 2023: 8 in the bottom tercile and none in the top. These
+  contrasts are therefore not estimable (D4).</li>
+</ul>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>A region-wide jump.</strong><ul>
+<li>Mud content at Auckland's monitoring sites rose by about 4 pp in the spring after the storms, more than in any
+year since 2010, and most of the rise had faded by 2024.</li>
+<li>It is concentrated in about half the harbours.</li>
+<li>This is post hoc and descriptive, with no control region.</li>
+</ul>
+</li>
+<li><strong>The exposure test did not test storm exposure.</strong><ul>
+<li>The frozen exposure mostly measures harvest.</li>
+<li>The most-exposed-minus-least-exposed difference (+1.9 pp) is the largest in the series, but barely above the
+pre-storm 2022 value.</li>
+<li>The dose-response rests on two sites, so its interval (±3 pp per IQR) cannot show its absence.</li>
+</ul>
+</li>
+<li><strong>An effect of the preregistered size (4 pp) is not ruled out.</strong><ul>
+<li>The H1 upper bound is +5.7 pp (p = 0.21 at 4 pp).</li>
+<li>The design is weaker than planned: co-located sites share almost all their contributing land, so the top tercile
+holds about 7 distinct exposures, not 19.</li>
+</ul>
+</li>
+<li><strong>The exposure measure is the weakest link.</strong><ul>
+<li><strong>Mixed causes.</strong> Optical "newly bare" mixes storm slips with harvest and construction, and harvest dominates.</li>
+<li><strong>Gaps.</strong> Cloudy post-storm imagery leaves about a fifth of contributing land without a valid comparison.</li>
+<li><strong>Distance.</strong> The sediment reaching a site may come from far up a harbour.</li>
+<li><strong>Slip-only test.</strong> The slip-sized exposure removes most harvest. It does not change the answer, but it is
+noisier.</li>
+</ul>
+</li>
+<li><strong>Timing.</strong> Annual October–November surveys measure mud 8–10 months after the storms. Fine sediment delivered in
+  January–February may have been flushed or redistributed by then, and a transient pulse would be invisible here.</li>
+<li><strong>Not shown:</strong><ul>
+<li>that the storms left estuaries unharmed;</li>
+<li>anything about sites outside the monitoring network, about subtidal or channel sediments, or about sediment
+accumulation rates.</li>
+</ul>
+</li>
+<li><strong>Care.</strong> No Māori data were used. The Kaipara and Manukau harbours are taonga under active mana whenua
+  kaitiakitanga. Results like these belong with the forums that care for them, such as Kaipara Moana Remediation
+  and the Manukau Harbour Forum. The lab cannot do that engagement itself.</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration:</strong> <code>plan.md</code>. The site list was frozen from dates and counts only.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>):<ul>
+<li><strong>D1:</strong> national LiDAR mosaic at 20 m and a sea mask. Its addendum adds cells at or below 0 m, after the first
+sea mask missed the Waitematā.</li>
+<li><strong>D2:</strong> priority-flood routing, after pysheds left interior sinks.</li>
+<li><strong>D3:</strong> the slip-sized exposure. It was added after the exposure froze and the harvest problem was seen, and
+before any outcome result was read.</li>
+<li><strong>D4:</strong> metals reported as not estimable, after the analysis ran. No verdict depends on them.</li>
+</ul>
+</li>
+</ul>
+<p>D1–D3 were made before any outcome was read.
+- <strong>Post hoc and descriptive:</strong>
+    - the region-wide 2023 pulse and the regional comparison (<code>code/regional.py</code>), added after the H1 and H2 results
+    were read;
+    - the high-leverage check for H2;
+    - the patch-size shares;
+    - the macrofauna scale description.
+    - D5: framing after the review (the exposure is harvest, so H1/H2 did not test storm exposure; H2 is a two-site
+    test; the 2023 difference is the series maximum but barely above 2022; the pulse is concentrated; smaller wording
+    fixes).
+- <strong>Independent review:</strong> Fable, 2026-10-23, "publish with edits" (<code>review/review.md</code>). The verdicts and every number
+  were reproduced. A confirmation pass follows.</p>
+<h2>Reproducing it</h2>
+<ol>
+<li><strong>Site list:</strong> <code>code/sites.py</code>.</li>
+<li><strong>Exposure pipeline:</strong> <code>code/dem.py</code>, <code>code/seamask.py</code>, <code>code/route.py</code>, <code>code/bare.py</code> (about 8 hours of
+   Sentinel-2 reads), <code>code/exposure.py</code> and <code>code/exposure_slips.py</code>.</li>
+<li><strong>Analysis:</strong> <code>code/analysis.py</code> (H1, H2 and secondary analyses → <code>results/tables/primary.json</code>,
+   <code>event_study.csv</code>), <code>code/analysis_slips.py</code> (→ <code>slips.json</code>) and <code>code/regional.py</code> (→ <code>regional_2023.json</code>).</li>
+<li><strong>Figures:</strong> <code>code/figures.py</code>.</li>
+</ol>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-2023-storms-estuary-mud-natural-experiment/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

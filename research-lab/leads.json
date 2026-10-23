@@ -6290,7 +6290,12 @@
    "local_relevance": "Auckland Council's Healthy Waters and Environmental Evaluation teams, and the Kaipara Moana Remediation and Manukau Harbour programmes, could use the exposure-graded estimates to target erosion control and to set expectations for estuary recovery. The open Sentinel-2 storm-exposure method can be reused after future extreme rain events.",
    "time_sensitive": "",
    "needs_engagement": "",
-   "scout_round": "auckland-nz"
+   "scout_round": "auckland-nz",
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass)",
+   "report_url": "runs/auckland-nz-2023-storms-estuary-mud-natural-experiment/report.html",
+   "verdict_tag": "Inconclusive",
+   "verdict_note": "H1 and H2 Inconclusive. 56 Auckland Council estuary sites with a frozen Sentinel-2 exposure (newly bare land draining within 5 km, Nov-Dec 2022 to Feb-Apr 2023): the most exposed third gained +1.9 pp more mud than the least exposed in spring 2023 (wild cluster bootstrap -2.3 to +5.7; 4 pp not ruled out), but the same sites were already +1.45 in 2022; the dose-response (-0.2 pp per IQR, -3.1 to +3.2) is in effect a two-site test (87% of identifying variation at two Manukau sites). The exposure mostly measured market-garden and plantation harvest, not storm slips, so H1/H2 did not test storm exposure. Post hoc: a region-wide 2023 pulse, +4.3 pp above each site's 2010-2022 mean (2.3 to 6.3), concentrated in six harbours and mostly gone by 2024; with no clean control region it cannot be attributed to the storms.",
+   "headline": "Auckland's estuary sites were about 4 points muddier in the spring after the 2023 storms, but a satellite exposure measure that mostly caught harvest rather than slips could not say where, or whether the storms caused it."
   },
   {
    "id": "auckland-nz-kauri-dieback-multitemporal-lidar",

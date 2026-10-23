@@ -115,3 +115,14 @@ No computation changes. The verdicts stand: H1 and H2 Inconclusive. The text cha
    - The sea mask also classes the lower Waikato River, Lakes Waikare and Whangape, and the Aka Aka polder as sea. All
      are more than 20 km from any site, with no effect on contributing land.
 6. **F3's title** no longer claims "no dose-response".
+
+## D6 — 2026-10-24 06:42 NZDT — edits after the confirmation pass (review/confirmation.md, "publish with edits")
+
+Wording and layout only.
+- The pulse table is reassembled.
+- The H2 interval explanation is aligned with D5: 87% of the identifying variation is in Manukau, the effective number
+  of clusters is 1.3, and CR2 understates the uncertainty.
+- The header says "exposure", not "storm exposure".
+- "Most of Auckland's estuaries" became "many".
+- The macrofauna line is joined.
+- The 2022 same-estimator value (+1.61) is added to the placebo bullet.

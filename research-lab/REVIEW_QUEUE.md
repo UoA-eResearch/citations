@@ -25,7 +25,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-23 12:28 | six reviews started in parallel (DSI, retraction risk, reef, estuary, kauri, ASR) | five stopped within ~2 min on the owner's advice to run sequentially; DSI ran on |
 | 2026-10-23 ~12:50–14:15 | `trust-retraction-risk-frozen-forecast` | review, resumed after DSI finished |
 | 2026-10-23 14:15 | `blue-pacific-reef-island-area-tide-corrected` | ed14c61 | H1 not testable (guard -0.58, -1.17 to +0.14); H2 Supported (tide bias 0.88%/yr after the Theil-Sen fix) | **published** 2026-10-24 (Supported on H2; review fix first -> D7 d7c2ace incl. Theil-Sen bug; confirmation publish with edits -> D8) |
-| 2026-10-23 14:54 | `auckland-nz-2023-storms-estuary-mud-natural-experiment` | review, resumed |
+| 2026-10-23 14:54 | `auckland-nz-2023-storms-estuary-mud-natural-experiment` | fb30a30 | H1/H2 Inconclusive; post hoc region-wide 2023 pulse | **published** 2026-10-24 (Inconclusive; review publish with edits -> D5 3dd86a7; confirmation publish with edits -> D6) |
 | 2026-10-23 15:21 | `auckland-nz-kauri-dieback-multitemporal-lidar` | review, resumed |
 | 2026-10-23 15:39 | `frontier-edge-asr-quantization-accent-parity` | review (H4 pending), resumed; last run under the exception |
 | 2026-10-23 20:39 | `ancestral-dsi-origin-recoverability` | 87273a8 | H1 Inconclusive; H2 Refuted (19/300 test records determinable after D10; all arms 0% at 90% precision; 61% lab material) | **published** 2026-10-23 (Refuted on recovery; review publish with edits -> D10 b0149e2; confirmation publish, wording edits applied) |

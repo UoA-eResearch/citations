@@ -1,7 +1,7 @@
 # Auckland's estuary sites were muddier in the spring after the 2023 storms; a satellite exposure measure, which mostly captured harvest rather than slips, did not explain where
 
 *56 Auckland Council estuary monitoring sites (13 harbours) with mud content in at least 5 years from 2010 to 2022 and
-a survey in October–November 2023. Each site was given a storm exposure: the share of land draining to the coast
+a survey in October–November 2023. Each site was given an exposure: the share of land draining to the coast
 within 5 km of it that turned from vegetated to bare between November–December 2022 and February–April 2023, mapped
 from Sentinel-2. The site list, the exposure and its terciles were frozen and committed before any outcome was read.
 This version incorporates an independent review (`review/review.md`; D5).*
@@ -133,7 +133,8 @@ The plan (`plan.md`) was committed before any 2023 or 2024 value was viewed.
 | top − bottom tercile, 2023 (H1) | +1.93 | −2.33 to +5.67 | −1.68 to +5.55 |
 | top − bottom tercile, 2024 | +0.48 | −3.38 to +3.77 | −2.86 to +3.81 |
 
-- **Placebo years** (2015–2021, pre-2023 data only): −0.99 to +0.56. None is as large as 2023.
+- **Placebo years** (2015–2021, pre-2023 data only): −0.99 to +0.56. None is as large as 2023. With the same estimator,
+  the pre-storm 2022 value is +1.61.
 - **The event study** (top minus bottom tercile, each site against its own 2010–2022 mean):
   - +1.45 in 2022, before the storms;
   - +1.96 in 2023;
@@ -154,9 +155,13 @@ The plan (`plan.md`) was committed before any 2023 or 2024 value was viewed.
 
 - **Estimate:** −0.21 pp per IQR of exposure (wild bootstrap −3.06 to +3.20; CR2 −0.57 to +0.15). For 2024: −0.09
   (−1.09 to +1.10).
-- **Why the two intervals differ.** The wild bootstrap interval is about ten times the CR2 interval. Two Manukau sites
-  have far more exposure than the rest (Auckland Airport 1.29% and Clarks Beach 0.94%, against an IQR of 0.06%), and
-  with 13 harbours the bootstrap is sensitive to them. Dropping the Airport site gives −0.18 (CR2 ±0.75).
+- **Why the two intervals differ.** The wild bootstrap interval is about ten times the CR2 interval.
+  - Two Manukau sites have far more exposure than the rest (Auckland Airport 1.29% and Clarks Beach 0.94%, against an
+    IQR of 0.06%).
+  - 87% of the identifying variation is in Manukau, and the effective number of clusters is 1.3.
+  - With so few effective clusters CR2 understates the uncertainty, and the wild bootstrap interval is the honest
+    one.
+  - Dropping the Airport site gives −0.18 (CR2 ±0.75).
 - **Leaving out one harbour at a time:** −0.38 to −0.14 per IQR.
 
 ### A region-wide 2023 pulse (post hoc; `code/regional.py`, `results/tables/regional_2023.json`)
@@ -167,10 +172,10 @@ sites that H1 leaves out.
 | | 2023 mean deviation from 2010–2022 site mean (pp) | range of 2010–2022 yearly means | 2024 |
 |---|---|---|---|
 | all 56 sites | +4.26 (site bootstrap 2.26 to 6.30) | −1.27 to +1.68 | +1.10 |
+| bottom / middle / top tercile | +1.39 / +7.88 / +3.36 | | |
 
 The regional table's Auckland row (2024: +2.26) uses all Auckland sites with at least 5 pre-2023 years; the +1.10
 here uses the 56 frozen sites.
-| bottom / middle / top tercile | +1.39 / +7.88 / +3.36 | | |
 
 - **Breadth:** 70% of sites rose in 2023.
 - **Why H1 and H2 miss it:** the year fixed effects absorb a shared 2023 jump. H1 and H2 test only whether it was
@@ -182,8 +187,8 @@ here uses the 56 frozen sites.
   - Northland (−3.1) and Hawke's Bay (−7.1) were sampled January to April 2023, around or just after Gabrielle.
   - Canterbury (−2.1) and Southland (+0.4) were not storm-hit.
   - Pre-2023 yearly means swing widely in these small samples.
-- **Reading.** The pulse fits a storm effect that reached most of Auckland's estuaries, but it cannot be separated from
-  a region-wide change in sampling or analysis.
+- **Reading.** The pulse fits a storm effect that reached many of Auckland's estuaries, but it cannot be separated
+  from a region-wide change in sampling or analysis.
 
 ### Slip-sized exposure (D3)
 
@@ -196,8 +201,7 @@ Both are Inconclusive by the same rules.
 ### Other outcomes
 
 - **Macrofauna.** LAWA's "Macrofauna – benthic health score" (values 0.3–6.0; by its range an AMBI-type disturbance
-  score) shows no
-  2023 contrast (+0.09, −0.45 to +0.42) and no 2024 contrast (−0.20, −0.59 to +0.20).
+  score) shows no 2023 contrast (+0.09, −0.45 to +0.42) and no 2024 contrast (−0.20, −0.59 to +0.20).
 - **Copper, zinc and lead** were sampled at 12 sites in 2023: 8 in the bottom tercile and none in the top. These
   contrasts are therefore not estimable (D4).
 
