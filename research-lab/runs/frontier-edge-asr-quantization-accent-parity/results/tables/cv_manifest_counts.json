@@ -1,0 +1,69 @@
+{
+ "source": "huggingface.co/datasets/fsicoli/common_voice_17_0 (CC0 mirror of Common Voice 17.0)",
+ "sha256": {
+  "test.tsv": "b4d4db369413fcacacebee7de48e94c96c4f63383d6582e18a9b0856c5c8461a",
+  "dev.tsv": "d2fae3f98cbf44c7c47d6cc94449e2b6b68400c2048d73a19cb645b5df642236",
+  "en_test_0.tar": "47160ec67fb545f41eba8103b0c0d7035dbb4ca3924043974449c7052c6f4775",
+  "en_dev_0.tar": "ac2162d60fd048df3d481bbed50d4f07a7ba8bfbc3f9fd5f8e391c76cd70eb91"
+ },
+ "clips": 4012,
+ "speakers": 2331,
+ "max_dur_s": 142.536,
+ "groups": {
+  "Australian English": {
+   "clips": 95,
+   "speakers": 60,
+   "hours": 0.149
+  },
+  "Canadian English": {
+   "clips": 166,
+   "speakers": 92,
+   "hours": 0.3
+  },
+  "England English": {
+   "clips": 464,
+   "speakers": 285,
+   "hours": 0.762
+  },
+  "Filipino": {
+   "clips": 31,
+   "speakers": 15,
+   "hours": 0.059
+  },
+  "Hong Kong English": {
+   "clips": 48,
+   "speakers": 28,
+   "hours": 0.073
+  },
+  "India and South Asia (India, Pakistan, Sri Lanka)": {
+   "clips": 811,
+   "speakers": 463,
+   "hours": 1.356
+  },
+  "Irish English": {
+   "clips": 52,
+   "speakers": 30,
+   "hours": 0.091
+  },
+  "New Zealand English": {
+   "clips": 35,
+   "speakers": 18,
+   "hours": 0.059
+  },
+  "Southern African (South Africa, Zimbabwe, Namibia)": {
+   "clips": 75,
+   "speakers": 43,
+   "hours": 0.13
+  },
+  "United States English": {
+   "clips": 1852,
+   "speakers": 1061,
+   "hours": 3.028
+  },
+  "other": {
+   "clips": 383,
+   "speakers": 236,
+   "hours": 0.654
+  }
+ }
+}
