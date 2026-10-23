@@ -171,6 +171,11 @@ asks whether the choice of rule changes compliance.
   - D1: panel checks; 2025 is unusable, so the window ends in 2024; a planned descriptive item is impossible because
     DPP4's first assessment year is 2026.
   - D2: a day-first date-parsing bug, caught by the validation gate before any hypothesis statistic.
+- **History.** This lead was first skipped on 21 October 2026, after a novelty check. The Commission's DPP4 reasons
+  paper (Attachment E, Table E16) already tabulates the uncapped and capped DPP3 → DPP4 limit changes, which answers
+  the lead's level question, and the remaining rule comparison looked too thin on one or two years of interruption
+  data. It was revisited because the Commission's model bundles hold interruption-level data for 2009–2024. Plan
+  section 0 reports the level answer descriptively, consistent with Table E16.
 - **Independent review:** queued (Fable), per the lab's pacing rule.
 
 ## Reproducing it

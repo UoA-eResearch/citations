@@ -140,6 +140,13 @@ Skipped after a feasibility check (22 October 2026): `frontier-photonic-inverse-
   oversubscription otherwise stalls even the lightweight challenge. The timing probe is in
   `runs/frontier-photonic-inverse-design-seed-budget/code/timing_probe.py`.
 
+Skipped after a novelty check (23 October 2026): `chem-materials-conformal-dft-budget`. Fu (2026, Zenodo
+10.5281/zenodo.21130294; submitted to J. Chem. Phys.) already audits chemistry-stratified reliability of confidence-based
+abstention on all 256,963 WBM structures, including leave-one-element-out controls, a 32-model roster and stratified
+calibration shortfalls of the hull-margin probabilities. Kurban & Kurban (2026, Comput. Mater. Sci.) quantify error
+correlation across 15 universal potentials on WBM (4.3 effective models), which undercuts the committee arm. What remains
+(distribution-free FDR control and simulated DFT budgets) brings the value to about 4, below the next leads.
+
 Skipped after a novelty check (21 October 2026): `energy-nz-edb-quality-standard-ratchet`. The Commerce Commission's
 DPP4 reasons paper (Attachment E, 20 November 2024) already answers the primary question. Since DPP3, movement in each
 distributor's unplanned SAIDI and SAIFI targets and limits between reference periods is capped at ±5% in either
@@ -149,6 +156,10 @@ uncapped change in the unplanned SAIDI limit is about +1% (Vector +31.9% and The
 Orion −37.1% and Nelson −27.4% held to −5%). The Commission also discusses climate change and the 2.3-MED expectation
 (E389–E394). The remaining secondary question (2.5β rule versus DPP boundary values on a year or two of
 interruption-level data) is too thin for a deep dive alone.
+**Revisited 23 October 2026** (draft fb7efde, under review). The Commission's DPP3 and DPP4 model bundles turned out to
+publish interruption-level data for 2009–2024, with its R and Stata code, so the rule comparison is no longer thin. The
+draft reports the level question descriptively, as Table E16 does, and tests trend masking, the ratchet mechanism and
+whether the major-event rule changes compliance.
 
 Lessons from the first deep dive, to carry into the next ones (details in its deviations log, D19–D29 and D27c):
 
