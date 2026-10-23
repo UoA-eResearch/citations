@@ -123,3 +123,39 @@ projected country share would rise by at most 1.3 points.
 The plan's mirror check (§5: 10,000 random accessions against the ENA portal) had not been run with limb 1. It was
 run now (`code/mirror.py`), after both limbs' results were read. It is descriptive, with no decision rule, and it
 does not bear on any verdict: usable-country status agrees in 99.9% of the 9,729 samples found.
+
+## D10 — 2026-10-23 13:08 NZDT — changes after the independent review (review/review.md, "publish with edits"), before re-scoring
+
+1. **Gold labels brought back to the plan's rule** (review findings 2 and 4). The plan (§3) gives a country only for
+   an explicit sampling-site statement and says the submitter's institution is not evidence of origin. Nine final
+   labels broke that rule and become "not stated". This is applied in `score.py` as a fixed list, so the sealed
+   label files are unchanged.
+   - **R240, R241, R242, R243, R244 and R475 (USA).** The only origin cue is a US state code in
+     `collected_by`/`sequenced_by` and the PulseNet programme name.
+   - **R477 (China).** The country comes from a provincial CDC named as collector. Pass 2 had flagged it as a
+     judgement call.
+   - **R054 (Spain).** A diet experiment at a research facility. D5 §5 itself says a facility is not a sampling site,
+     and three records of the same design were labelled inapplicable.
+   - **R461 (China).** A USDA germplasm accession's grow-out site. D5 §5's genebank reading makes it "not stated".
+   - The scores under the labels as first adjudicated are kept: `limb2_primary_pre_d10.json` and the rest, written
+     by `score.py score --pre-d10`.
+2. **The placeholder claim** (finding 1). The independent review ran the limb-1 specification at 55 month-start
+   cutoffs (`review/reviewer_checks/rd_replicate.py`).
+   - Placeholder jumps at those dates have a standard deviation of 5.5 points. 9 of 55 match or exceed the real +9.1,
+     a placebo-calibrated p of about 0.16.
+   - The report therefore describes the rise in placeholders and the fall in blanks as a trend visible across the
+     rule, not as an effect of the rule. The title changes accordingly.
+3. **D3 §2 undercounted the country-bearing attribute variants** (finding 7). Besides the 2,190 window samples with a
+   country only under "geographic location, country and/or sea", a further 4,445 untagged window samples carry a
+   resolvable country under `geo_location` (review count): 6,635 in all, 0.18% of untagged window samples. Two gold
+   countries are such records. That part of the "findable" share is already recorded, under another field name.
+4. **The LLM arm discarded two confident answers outside the INSDC vocabulary** (finding 8): R357, and R401 (a test
+   record whose gold is Pacific Ocean). They are reported. Raw answers were not retained.
+5. **Wording** (findings 3, 5, 6, 9 and 10).
+   - "Inapplicable" is described as "no collection origin applies or none is recorded for lab-propagated material",
+     with the 21 field, agricultural or genebank records inside it counted.
+   - The CBD comparison uses origins stated in the linked publication only.
+   - The plain-terms section gives the population share.
+   - The report notes that H1's rule is one-sided, and that the raw usable share fell across the cutoff (85.3% →
+     79.4%).
+   - The gold set's frame differs slightly from the population's.

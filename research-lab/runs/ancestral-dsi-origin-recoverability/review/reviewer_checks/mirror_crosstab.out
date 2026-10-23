@@ -1,0 +1,11 @@
+found in ENA: 9729
+ena_class      absent  malformed  placeholder  usable   All
+country_class                                              
+absent            806          0            0       0   806
+malformed           0          5            0       1     6
+placeholder       304          0          524       1   829
+usable              1          7            1    8079  8088
+All              1111         12          525    8081  9729
+
+of BioSample placeholders, ENA says: {'placeholder': 524, 'absent': 304, 'usable': 1}
+share of BioSample placeholders that ENA records as absent: 0.3667

@@ -1,0 +1,15 @@
+
+--- as reported
+  gazetteer  threshold=None tune_prec=None test_calls=0 correct=0 recovery=0.0 ci=[0.0, 0.0126]
+  classifier threshold=0.9712 tune_prec=1.0 test_calls=5 correct=5 recovery=0.0167 ci=[0.0071, 0.0384]
+  llm        threshold=None tune_prec=None test_calls=0 correct=0 recovery=0.0 ci=[0.0, 0.0126]
+
+--- R475 (USA from collected_by=MN) -> not stated
+  gazetteer  threshold=None tune_prec=None test_calls=0 correct=0 recovery=0.0 ci=[0.0, 0.0126]
+  classifier threshold=None tune_prec=None test_calls=0 correct=0 recovery=0.0 ci=[0.0, 0.0126]
+  llm        threshold=None tune_prec=None test_calls=0 correct=0 recovery=0.0 ci=[0.0, 0.0126]
+
+--- all 7 agency-derived labels -> not stated
+  gazetteer  threshold=None tune_prec=None test_calls=0 correct=0 recovery=0.0 ci=[0.0, 0.0126]
+  classifier threshold=None tune_prec=None test_calls=0 correct=0 recovery=0.0 ci=[0.0, 0.0126]
+  llm        threshold=None tune_prec=None test_calls=0 correct=0 recovery=0.0 ci=[0.0, 0.0126]

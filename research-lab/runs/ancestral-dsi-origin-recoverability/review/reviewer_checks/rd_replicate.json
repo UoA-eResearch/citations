@@ -1,0 +1,405 @@
+{
+ "window_samples": 20863614,
+ "samples_with_empty_owner": 0,
+ "empty_owner_share": 0.0,
+ "replicated_2023_06_01": {
+  "usable": 2.903,
+  "placeholder": 9.133,
+  "malformed": -0.007,
+  "absent": -12.029
+ },
+ "replicated_placebo_2021_06_01": {
+  "usable": 17.609,
+  "placeholder": -4.892,
+  "malformed": 0.003,
+  "absent": -12.72
+ },
+ "replicated_placebo_2022_06_01": {
+  "usable": -15.749,
+  "placeholder": 2.074,
+  "malformed": 0.011,
+  "absent": 13.664
+ },
+ "placebo_sweep": {
+  "2020-06-01": {
+   "usable": 2.125,
+   "placeholder": 0.924,
+   "malformed": 0.146,
+   "absent": -3.194
+  },
+  "2020-07-01": {
+   "usable": 4.518,
+   "placeholder": 0.328,
+   "malformed": 0.138,
+   "absent": -4.985
+  },
+  "2020-08-01": {
+   "usable": 2.419,
+   "placeholder": 0.788,
+   "malformed": 0.056,
+   "absent": -3.264
+  },
+  "2020-09-01": {
+   "usable": 4.205,
+   "placeholder": 0.345,
+   "malformed": 0.042,
+   "absent": -4.592
+  },
+  "2020-10-01": {
+   "usable": 6.089,
+   "placeholder": -0.774,
+   "malformed": -0.04,
+   "absent": -5.275
+  },
+  "2020-11-01": {
+   "usable": 10.148,
+   "placeholder": -1.042,
+   "malformed": -0.039,
+   "absent": -9.068
+  },
+  "2020-12-01": {
+   "usable": 13.412,
+   "placeholder": -2.386,
+   "malformed": -0.039,
+   "absent": -10.986
+  },
+  "2021-01-01": {
+   "usable": 15.579,
+   "placeholder": -2.378,
+   "malformed": -0.025,
+   "absent": -13.176
+  },
+  "2021-02-01": {
+   "usable": 16.8,
+   "placeholder": -4.246,
+   "malformed": -0.031,
+   "absent": -12.523
+  },
+  "2021-03-01": {
+   "usable": 14.916,
+   "placeholder": -3.534,
+   "malformed": -0.018,
+   "absent": -11.364
+  },
+  "2021-04-01": {
+   "usable": 16.303,
+   "placeholder": -5.222,
+   "malformed": -0.004,
+   "absent": -11.078
+  },
+  "2021-05-01": {
+   "usable": 17.769,
+   "placeholder": -5.288,
+   "malformed": 0.013,
+   "absent": -12.494
+  },
+  "2021-06-01": {
+   "usable": 17.609,
+   "placeholder": -4.892,
+   "malformed": 0.003,
+   "absent": -12.72
+  },
+  "2021-07-01": {
+   "usable": 17.076,
+   "placeholder": -4.763,
+   "malformed": 0.013,
+   "absent": -12.326
+  },
+  "2021-08-01": {
+   "usable": 12.632,
+   "placeholder": -3.943,
+   "malformed": -0.014,
+   "absent": -8.675
+  },
+  "2021-09-01": {
+   "usable": 10.685,
+   "placeholder": -3.209,
+   "malformed": -0.016,
+   "absent": -7.459
+  },
+  "2021-10-01": {
+   "usable": 6.41,
+   "placeholder": -2.176,
+   "malformed": -0.008,
+   "absent": -4.226
+  },
+  "2021-11-01": {
+   "usable": 1.823,
+   "placeholder": -1.298,
+   "malformed": -0.015,
+   "absent": -0.511
+  },
+  "2021-12-01": {
+   "usable": -1.74,
+   "placeholder": -0.46,
+   "malformed": -0.005,
+   "absent": 2.205
+  },
+  "2022-01-01": {
+   "usable": -5.381,
+   "placeholder": 0.527,
+   "malformed": 0.007,
+   "absent": 4.847
+  },
+  "2022-02-01": {
+   "usable": -8.868,
+   "placeholder": 1.199,
+   "malformed": 0.018,
+   "absent": 7.651
+  },
+  "2022-03-01": {
+   "usable": -10.693,
+   "placeholder": 1.97,
+   "malformed": 0.027,
+   "absent": 8.696
+  },
+  "2022-04-01": {
+   "usable": -14.422,
+   "placeholder": 2.773,
+   "malformed": 0.028,
+   "absent": 11.621
+  },
+  "2022-05-01": {
+   "usable": -17.229,
+   "placeholder": 3.554,
+   "malformed": 0.048,
+   "absent": 13.626
+  },
+  "2022-06-01": {
+   "usable": -15.749,
+   "placeholder": 2.074,
+   "malformed": 0.011,
+   "absent": 13.664
+  },
+  "2022-07-01": {
+   "usable": -16.914,
+   "placeholder": 2.001,
+   "malformed": 0.022,
+   "absent": 14.891
+  },
+  "2022-08-01": {
+   "usable": -15.014,
+   "placeholder": 0.9,
+   "malformed": -0.009,
+   "absent": 14.123
+  },
+  "2022-09-01": {
+   "usable": -14.971,
+   "placeholder": 0.796,
+   "malformed": -0.001,
+   "absent": 14.176
+  },
+  "2022-10-01": {
+   "usable": -12.832,
+   "placeholder": 1.481,
+   "malformed": 0.006,
+   "absent": 11.345
+  },
+  "2022-11-01": {
+   "usable": -10.251,
+   "placeholder": 1.252,
+   "malformed": 0.001,
+   "absent": 8.998
+  },
+  "2022-12-01": {
+   "usable": -7.167,
+   "placeholder": 1.773,
+   "malformed": 0.015,
+   "absent": 5.379
+  },
+  "2023-01-01": {
+   "usable": -5.133,
+   "placeholder": 1.984,
+   "malformed": 0.017,
+   "absent": 3.132
+  },
+  "2023-02-01": {
+   "usable": -4.183,
+   "placeholder": 2.143,
+   "malformed": 0.034,
+   "absent": 2.006
+  },
+  "2023-03-01": {
+   "usable": -1.648,
+   "placeholder": 2.404,
+   "malformed": 0.05,
+   "absent": -0.805
+  },
+  "2023-04-01": {
+   "usable": 2.118,
+   "placeholder": 1.649,
+   "malformed": 0.067,
+   "absent": -3.834
+  },
+  "2023-05-01": {
+   "usable": 2.319,
+   "placeholder": 5.956,
+   "malformed": 0.115,
+   "absent": -8.39
+  },
+  "2023-06-01": {
+   "usable": 2.903,
+   "placeholder": 9.133,
+   "malformed": -0.007,
+   "absent": -12.029
+  },
+  "2023-07-01": {
+   "usable": 4.913,
+   "placeholder": 8.171,
+   "malformed": 0.004,
+   "absent": -13.089
+  },
+  "2023-08-01": {
+   "usable": 3.466,
+   "placeholder": 7.871,
+   "malformed": -0.101,
+   "absent": -11.236
+  },
+  "2023-09-01": {
+   "usable": 6.292,
+   "placeholder": 3.936,
+   "malformed": -0.081,
+   "absent": -10.147
+  },
+  "2023-10-01": {
+   "usable": 7.673,
+   "placeholder": 1.256,
+   "malformed": -0.071,
+   "absent": -8.858
+  },
+  "2023-11-01": {
+   "usable": 7.601,
+   "placeholder": -1.647,
+   "malformed": -0.05,
+   "absent": -5.904
+  },
+  "2023-12-01": {
+   "usable": 10.788,
+   "placeholder": -6.041,
+   "malformed": -0.036,
+   "absent": -4.711
+  },
+  "2024-01-01": {
+   "usable": 10.031,
+   "placeholder": -9.458,
+   "malformed": -0.014,
+   "absent": -0.56
+  },
+  "2024-02-01": {
+   "usable": 11.359,
+   "placeholder": -11.84,
+   "malformed": -0.008,
+   "absent": 0.489
+  },
+  "2024-03-01": {
+   "usable": 11.916,
+   "placeholder": -12.61,
+   "malformed": 0.001,
+   "absent": 0.693
+  },
+  "2024-04-01": {
+   "usable": 11.543,
+   "placeholder": -13.715,
+   "malformed": 0.006,
+   "absent": 2.166
+  },
+  "2024-05-01": {
+   "usable": 11.99,
+   "placeholder": -13.491,
+   "malformed": 0.016,
+   "absent": 1.485
+  },
+  "2024-06-01": {
+   "usable": 10.217,
+   "placeholder": -13.258,
+   "malformed": -0.012,
+   "absent": 3.053
+  },
+  "2024-07-01": {
+   "usable": 9.896,
+   "placeholder": -11.823,
+   "malformed": -0.004,
+   "absent": 1.93
+  },
+  "2024-08-01": {
+   "usable": 6.744,
+   "placeholder": -9.45,
+   "malformed": -0.039,
+   "absent": 2.745
+  },
+  "2024-09-01": {
+   "usable": 5.153,
+   "placeholder": -6.227,
+   "malformed": -0.027,
+   "absent": 1.1
+  },
+  "2024-10-01": {
+   "usable": 1.419,
+   "placeholder": -2.879,
+   "malformed": -0.014,
+   "absent": 1.473
+  },
+  "2024-11-01": {
+   "usable": -1.998,
+   "placeholder": 1.002,
+   "malformed": -0.011,
+   "absent": 1.007
+  },
+  "2024-12-01": {
+   "usable": -6.344,
+   "placeholder": 5.382,
+   "malformed": -0.002,
+   "absent": 0.963
+  },
+  "2025-01-01": {
+   "usable": -11.692,
+   "placeholder": 10.484,
+   "malformed": -0.002,
+   "absent": 1.21
+  }
+ },
+ "sweep_usable": {
+  "real_cutoff_jump_pp": 2.903,
+  "n_placebo_dates": 55,
+  "placebo_mean": 2.613,
+  "placebo_sd": 10.222,
+  "placebo_abs_p90": 16.601,
+  "placebo_min": -17.229,
+  "placebo_max": 17.769,
+  "placebo_dates_with_abs_jump_at_least_real": 46,
+  "share_of_placebo_dates_at_least_as_large": 0.836
+ },
+ "sweep_placeholder": {
+  "real_cutoff_jump_pp": 9.133,
+  "n_placebo_dates": 55,
+  "placebo_mean": -1.511,
+  "placebo_sd": 5.534,
+  "placebo_abs_p90": 11.287,
+  "placebo_min": -13.715,
+  "placebo_max": 10.484,
+  "placebo_dates_with_abs_jump_at_least_real": 9,
+  "share_of_placebo_dates_at_least_as_large": 0.164
+ },
+ "sweep_malformed": {
+  "real_cutoff_jump_pp": -0.007,
+  "n_placebo_dates": 55,
+  "placebo_mean": 0.003,
+  "placebo_sd": 0.044,
+  "placebo_abs_p90": 0.069,
+  "placebo_min": -0.101,
+  "placebo_max": 0.146,
+  "placebo_dates_with_abs_jump_at_least_real": 43,
+  "share_of_placebo_dates_at_least_as_large": 0.782
+ },
+ "sweep_absent": {
+  "real_cutoff_jump_pp": -12.029,
+  "n_placebo_dates": 55,
+  "placebo_mean": -1.105,
+  "placebo_sd": 8.128,
+  "placebo_abs_p90": 13.141,
+  "placebo_min": -13.176,
+  "placebo_max": 14.891,
+  "placebo_dates_with_abs_jump_at_least_real": 11,
+  "share_of_placebo_dates_at_least_as_large": 0.2
+ }
+}

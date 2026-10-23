@@ -1,0 +1,9 @@
+classifier calls at threshold 0.9712 on test:
+  R470 pred=USA conf=0.9894 gold=USA label=USA correct=True
+  R472 pred=USA conf=0.9881 gold=USA label=USA correct=True
+  R473 pred=USA conf=0.989 gold=USA label=USA correct=True
+  R474 pred=USA conf=0.9895 gold=USA label=USA correct=True
+  R496 pred=USA conf=0.9836 gold=USA label=USA correct=True
+classifier tuning calls at threshold:
+  R425 pred=China conf=0.9712 gold=China
+  R475 pred=USA conf=0.9765 gold=USA

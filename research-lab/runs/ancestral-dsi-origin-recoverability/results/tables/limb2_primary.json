@@ -5,39 +5,38 @@
  "labels": {
   "all": {
    "inapplicable": 350,
-   "country": 37,
-   "not stated": 110
+   "country": 28,
+   "not stated": 119
   },
   "tune": {
    "inapplicable": 143,
-   "not stated": 41,
-   "country": 13
+   "not stated": 45,
+   "country": 9
   },
   "test": {
-   "country": 24,
+   "country": 19,
    "inapplicable": 207,
-   "not stated": 69
+   "not stated": 74
   }
  },
  "labels_by_stratum": {
   "with_publication": {
    "inapplicable": 229,
-   "country": 9,
-   "not stated": 12
+   "country": 3,
+   "not stated": 18
   },
   "without_publication": {
    "inapplicable": 121,
-   "not stated": 98,
-   "country": 28
+   "not stated": 101,
+   "country": 25
   }
  },
  "gold_countries": {
-  "USA": 12,
-  "China": 9,
+  "China": 7,
+  "USA": 6,
   "Japan": 2,
   "Pacific Ocean": 2,
   "Czechia": 1,
-  "Spain": 1,
   "Israel": 1,
   "Thailand": 1,
   "Malaysia": 1,
@@ -68,82 +67,79 @@
      0.0,
      1.0
     ],
-    "determinable": 24,
+    "determinable": 19,
     "recall_of_determinable": 0.0,
     "recall_ci": [
      0.0,
-     0.138
+     0.1682
     ]
    },
    "test_any_confidence": {
     "n": 300,
     "predictions": 95,
-    "correct": 13,
-    "recovery": 0.0433,
+    "correct": 12,
+    "recovery": 0.04,
     "recovery_ci": [
-     0.0255,
-     0.0727
+     0.023,
+     0.0686
     ],
-    "precision": 0.1368,
+    "precision": 0.1263,
     "precision_ci": [
-     0.0817,
-     0.2202
+     0.0738,
+     0.2079
     ],
-    "determinable": 24,
-    "recall_of_determinable": 0.5417,
+    "determinable": 19,
+    "recall_of_determinable": 0.6316,
     "recall_ci": [
-     0.3507,
-     0.7211
+     0.4104,
+     0.8085
     ]
    }
   },
   "classifier": {
    "tuning": {
-    "threshold": 0.9712,
-    "tune_predictions": 2,
-    "tune_correct": 2,
-    "tune_precision": 1.0
+    "threshold": null
    },
    "test": {
     "n": 300,
-    "predictions": 5,
-    "correct": 5,
-    "recovery": 0.0167,
+    "predictions": 0,
+    "correct": 0,
+    "recovery": 0.0,
     "recovery_ci": [
-     0.0071,
-     0.0384
+     0.0,
+     0.0126
     ],
-    "precision": 1.0,
+    "precision": null,
     "precision_ci": [
-     0.5655,
+     0.0,
      1.0
     ],
-    "determinable": 24,
-    "recall_of_determinable": 0.2083,
+    "determinable": 19,
+    "recall_of_determinable": 0.0,
     "recall_ci": [
-     0.0924,
-     0.4047
+     0.0,
+     0.1682
     ]
    },
    "test_any_confidence": {
     "n": 300,
     "predictions": 300,
-    "correct": 18,
-    "recovery": 0.06,
+    "correct": 14,
+    "recovery": 0.0467,
     "recovery_ci": [
-     0.0383,
-     0.0928
+     0.028,
+     0.0768
     ],
-    "precision": 0.06,
+    "precision": 0.0467,
     "precision_ci": [
-     0.0383,
-     0.0928
+     0.028,
+     0.0768
     ],
-    "determinable": 24,
-    "recall_of_determinable": 0.75,
+    "determinable": 19,
+    "recall_of_determinable": 0.7368,
     "recall_ci": [
-     0.551,
-     0.88
+     0.5121,
+     0.8819
     ]
    }
   },
@@ -165,32 +161,32 @@
      0.0,
      1.0
     ],
-    "determinable": 24,
+    "determinable": 19,
     "recall_of_determinable": 0.0,
     "recall_ci": [
      0.0,
-     0.138
+     0.1682
     ]
    },
    "test_any_confidence": {
     "n": 300,
     "predictions": 28,
-    "correct": 19,
-    "recovery": 0.0633,
+    "correct": 16,
+    "recovery": 0.0533,
     "recovery_ci": [
-     0.0409,
-     0.0968
+     0.0331,
+     0.0849
     ],
-    "precision": 0.6786,
+    "precision": 0.5714,
     "precision_ci": [
-     0.4934,
-     0.8207
+     0.3907,
+     0.7349
     ],
-    "determinable": 24,
-    "recall_of_determinable": 0.7917,
+    "determinable": 19,
+    "recall_of_determinable": 0.8421,
     "recall_ci": [
-     0.5953,
-     0.9076
+     0.6243,
+     0.9448
     ]
    }
   }

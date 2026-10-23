@@ -1,0 +1,125 @@
+{
+ "window_samples": 20863614,
+ "samples_with_empty_owner": 0,
+ "empty_owner_share": 0.0,
+ "replicated_2023_06_01": {
+  "usable": 2.903,
+  "placeholder": 9.133,
+  "malformed": -0.007,
+  "absent": -12.029
+ },
+ "replicated_placebo_2021_06_01": {
+  "usable": 17.609,
+  "placeholder": -4.892,
+  "malformed": 0.003,
+  "absent": -12.72
+ },
+ "replicated_placebo_2022_06_01": {
+  "usable": -15.749,
+  "placeholder": 2.074,
+  "malformed": 0.011,
+  "absent": 13.664
+ },
+ "sweep_usable": {
+  "real_cutoff_jump_pp": 2.903,
+  "n_placebo_dates": 55,
+  "placebo_mean": 2.613,
+  "placebo_sd": 10.222,
+  "placebo_abs_p90": 16.601,
+  "placebo_min": -17.229,
+  "placebo_max": 17.769,
+  "placebo_dates_with_abs_jump_at_least_real": 46,
+  "share_of_placebo_dates_at_least_as_large": 0.836
+ },
+ "sweep_placeholder": {
+  "real_cutoff_jump_pp": 9.133,
+  "n_placebo_dates": 55,
+  "placebo_mean": -1.511,
+  "placebo_sd": 5.534,
+  "placebo_abs_p90": 11.287,
+  "placebo_min": -13.715,
+  "placebo_max": 10.484,
+  "placebo_dates_with_abs_jump_at_least_real": 9,
+  "share_of_placebo_dates_at_least_as_large": 0.164
+ },
+ "sweep_malformed": {
+  "real_cutoff_jump_pp": -0.007,
+  "n_placebo_dates": 55,
+  "placebo_mean": 0.003,
+  "placebo_sd": 0.044,
+  "placebo_abs_p90": 0.069,
+  "placebo_min": -0.101,
+  "placebo_max": 0.146,
+  "placebo_dates_with_abs_jump_at_least_real": 43,
+  "share_of_placebo_dates_at_least_as_large": 0.782
+ },
+ "sweep_absent": {
+  "real_cutoff_jump_pp": -12.029,
+  "n_placebo_dates": 55,
+  "placebo_mean": -1.105,
+  "placebo_sd": 8.128,
+  "placebo_abs_p90": 13.141,
+  "placebo_min": -13.176,
+  "placebo_max": 14.891,
+  "placebo_dates_with_abs_jump_at_least_real": 11,
+  "share_of_placebo_dates_at_least_as_large": 0.2
+ }
+}
+
+placebo sweep (usable, placeholder, absent) by cutoff:
+  2020-06-01  usable     2.12  placeholder     0.92  absent    -3.19
+  2020-07-01  usable     4.52  placeholder     0.33  absent    -4.99
+  2020-08-01  usable     2.42  placeholder     0.79  absent    -3.26
+  2020-09-01  usable     4.21  placeholder     0.34  absent    -4.59
+  2020-10-01  usable     6.09  placeholder    -0.77  absent    -5.28
+  2020-11-01  usable    10.15  placeholder    -1.04  absent    -9.07
+  2020-12-01  usable    13.41  placeholder    -2.39  absent   -10.99
+  2021-01-01  usable    15.58  placeholder    -2.38  absent   -13.18
+  2021-02-01  usable    16.80  placeholder    -4.25  absent   -12.52
+  2021-03-01  usable    14.92  placeholder    -3.53  absent   -11.36
+  2021-04-01  usable    16.30  placeholder    -5.22  absent   -11.08
+  2021-05-01  usable    17.77  placeholder    -5.29  absent   -12.49
+  2021-06-01  usable    17.61  placeholder    -4.89  absent   -12.72
+  2021-07-01  usable    17.08  placeholder    -4.76  absent   -12.33
+  2021-08-01  usable    12.63  placeholder    -3.94  absent    -8.68
+  2021-09-01  usable    10.69  placeholder    -3.21  absent    -7.46
+  2021-10-01  usable     6.41  placeholder    -2.18  absent    -4.23
+  2021-11-01  usable     1.82  placeholder    -1.30  absent    -0.51
+  2021-12-01  usable    -1.74  placeholder    -0.46  absent     2.21
+  2022-01-01  usable    -5.38  placeholder     0.53  absent     4.85
+  2022-02-01  usable    -8.87  placeholder     1.20  absent     7.65
+  2022-03-01  usable   -10.69  placeholder     1.97  absent     8.70
+  2022-04-01  usable   -14.42  placeholder     2.77  absent    11.62
+  2022-05-01  usable   -17.23  placeholder     3.55  absent    13.63
+  2022-06-01  usable   -15.75  placeholder     2.07  absent    13.66
+  2022-07-01  usable   -16.91  placeholder     2.00  absent    14.89
+  2022-08-01  usable   -15.01  placeholder     0.90  absent    14.12
+  2022-09-01  usable   -14.97  placeholder     0.80  absent    14.18
+  2022-10-01  usable   -12.83  placeholder     1.48  absent    11.35
+  2022-11-01  usable   -10.25  placeholder     1.25  absent     9.00
+  2022-12-01  usable    -7.17  placeholder     1.77  absent     5.38
+  2023-01-01  usable    -5.13  placeholder     1.98  absent     3.13
+  2023-02-01  usable    -4.18  placeholder     2.14  absent     2.01
+  2023-03-01  usable    -1.65  placeholder     2.40  absent    -0.81
+  2023-04-01  usable     2.12  placeholder     1.65  absent    -3.83
+  2023-05-01  usable     2.32  placeholder     5.96  absent    -8.39
+  2023-06-01  usable     2.90  placeholder     9.13  absent   -12.03
+  2023-07-01  usable     4.91  placeholder     8.17  absent   -13.09
+  2023-08-01  usable     3.47  placeholder     7.87  absent   -11.24
+  2023-09-01  usable     6.29  placeholder     3.94  absent   -10.15
+  2023-10-01  usable     7.67  placeholder     1.26  absent    -8.86
+  2023-11-01  usable     7.60  placeholder    -1.65  absent    -5.90
+  2023-12-01  usable    10.79  placeholder    -6.04  absent    -4.71
+  2024-01-01  usable    10.03  placeholder    -9.46  absent    -0.56
+  2024-02-01  usable    11.36  placeholder   -11.84  absent     0.49
+  2024-03-01  usable    11.92  placeholder   -12.61  absent     0.69
+  2024-04-01  usable    11.54  placeholder   -13.71  absent     2.17
+  2024-05-01  usable    11.99  placeholder   -13.49  absent     1.49
+  2024-06-01  usable    10.22  placeholder   -13.26  absent     3.05
+  2024-07-01  usable     9.90  placeholder   -11.82  absent     1.93
+  2024-08-01  usable     6.74  placeholder    -9.45  absent     2.75
+  2024-09-01  usable     5.15  placeholder    -6.23  absent     1.10
+  2024-10-01  usable     1.42  placeholder    -2.88  absent     1.47
+  2024-11-01  usable    -2.00  placeholder     1.00  absent     1.01
+  2024-12-01  usable    -6.34  placeholder     5.38  absent     0.96
+  2025-01-01  usable   -11.69  placeholder    10.48  absent     1.21

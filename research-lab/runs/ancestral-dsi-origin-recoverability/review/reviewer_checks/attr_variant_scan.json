@@ -1,0 +1,32 @@
+{
+ "ena_long": {
+  "rows": 2190,
+  "resolved": 2190,
+  "examples": [
+   "France : Banyuls-sur-Mer Bay, North-Western Mediterranean Sea, eastern",
+   "France : Banyuls-sur-Mer Bay, North-Western Mediterranean Sea, eastern",
+   "France : Banyuls-sur-Mer Bay, North-Western Mediterranean Sea, eastern",
+   "France : Brest bay, Pointe du Ch\ufffdteau, North-Estern Atlantic Ocean, We",
+   "France : Brest bay, Pointe du Ch\ufffdteau, North-Estern Atlantic Ocean, We",
+   "France : Brest bay, Pointe du Ch\ufffdteau, North-Estern Atlantic Ocean, We"
+  ]
+ },
+ "geo_location": {
+  "rows": 4445,
+  "resolved": 4445,
+  "examples": [
+   "USA: N/A",
+   "USA: MO",
+   "USA: N/A",
+   "USA: missing",
+   "USA: missing",
+   "USA: missing"
+  ]
+ },
+ "geographic_location_country": {
+  "rows": 201,
+  "resolved": 0,
+  "examples": []
+ },
+ "_window_untagged_rows": 3600638
+}

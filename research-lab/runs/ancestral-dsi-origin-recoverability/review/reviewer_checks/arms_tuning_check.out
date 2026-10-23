@@ -1,0 +1,31 @@
+LLM outcomes over 500 records: {'unknown/none': 450, 'country': 50}
+
+gazetteer: tune calls=61 correct=5
+   conf>=1.0000: n= 50 correct=  5 precision=0.100
+   conf>=0.8333: n= 51 correct=  5 precision=0.098
+   conf>=0.7692: n= 52 correct=  5 precision=0.096
+   conf>=0.6667: n= 54 correct=  5 precision=0.093
+   conf>=0.6250: n= 55 correct=  5 precision=0.091
+   conf>=0.5000: n= 61 correct=  5 precision=0.082
+
+classifier: tune calls=197 correct=8
+   conf>=0.9765: n=  1 correct=  1 precision=1.000
+   conf>=0.9712: n=  2 correct=  2 precision=1.000
+   conf>=0.9709: n=  3 correct=  2 precision=0.667
+   conf>=0.9493: n=  4 correct=  2 precision=0.500
+   conf>=0.9474: n=  5 correct=  2 precision=0.400
+   conf>=0.9184: n=  6 correct=  2 precision=0.333
+   conf>=0.9118: n=  7 correct=  3 precision=0.429
+   conf>=0.9014: n=  8 correct=  3 precision=0.375
+
+llm: tune calls=22 correct=8
+   conf>=1.0000: n=  3 correct=  1 precision=0.333
+   conf>=0.9900: n=  9 correct=  4 precision=0.444
+   conf>=0.9600: n= 11 correct=  5 precision=0.455
+   conf>=0.9500: n= 20 correct=  8 precision=0.400
+   conf>=0.9000: n= 21 correct=  8 precision=0.381
+   conf>=0.7000: n= 22 correct=  8 precision=0.364
+
+LLM calls by label: {'country': 29, 'inapplicable': 15, 'not stated': 6}
+LLM wrong calls on inapplicable with conf>=0.95: 14 of 15
+LLM calls on 'not stated': 6

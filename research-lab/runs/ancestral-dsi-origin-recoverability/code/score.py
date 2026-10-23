@@ -131,6 +131,15 @@ def agree():
     print(json.dumps({k: v for k, v in out.items() if k != "excluded_by_code"}, indent=1, default=str))
 
 
+# D10: final labels that broke the plan's rule (an explicit sampling-site statement; institutions are not evidence)
+D10_NOT_STATED = {"R240": "US state code in collected_by only", "R241": "US state code in collected_by only",
+                  "R242": "US state code in collected_by only", "R243": "US state code in collected_by only",
+                  "R244": "US state code in collected_by only", "R475": "US state code in collected_by only",
+                  "R477": "provincial CDC named as collector", "R054": "diet experiment at a research facility",
+                  "R461": "USDA germplasm accession's grow-out site"}
+APPLY_D10 = "--pre-d10" not in sys.argv
+
+
 def final_labels():
     R = records()
     l1, l2 = labels(1), labels(2)
@@ -144,6 +153,10 @@ def final_labels():
         else:
             assert i in p3, f"{i}: disagreement without a pass-3 label"
             fin[i] = p3[i]
+    if APPLY_D10:
+        for i in D10_NOT_STATED:
+            if i in fin:
+                fin[i] = "not stated"
     return R, fin
 
 

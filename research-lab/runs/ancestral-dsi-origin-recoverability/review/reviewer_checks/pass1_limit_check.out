@@ -1,0 +1,14 @@
+=== records whose earliest location value in `attributes` sits past the pass-1 aid limit of 500 chars
+  -> 0 records
+
+=== records whose earliest location value in `comment` sits past the aid limit of 300 chars
+  -> 0 records
+
+=== where in `attributes` the ENA country variant sits (D3 s2 / D5 s2's caught record)
+  R339 key='geographic location, country and/or sea=' offset=360 (pass-1 aid cut 500) value='geographic location, country and/or sea=France : Brest bay, Pointe du Ch�teau, North-Ester'
+  R496 key='geo_location=' offset=150 (pass-1 aid cut 500) value='geo_location=USA: missing; collection_date=2024-01-01; source_type=human; strain=PNUSAS461'
+
+=== LLM answers dropped because they did not resolve to an INSDC name (llm null but conf > 0)
+  2 of 500: [('R357', 0.99), ('R401', 0.99)]
+  gazetteer null with conf>0: 0
+  classifier null: 0

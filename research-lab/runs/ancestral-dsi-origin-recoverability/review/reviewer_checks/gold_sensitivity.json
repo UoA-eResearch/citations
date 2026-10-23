@@ -1,0 +1,283 @@
+{
+ "records_moved": [
+  "R240",
+  "R241",
+  "R242",
+  "R243",
+  "R244",
+  "R475",
+  "R477"
+ ],
+ "as_reported": {
+  "tag": "as reported",
+  "test_determinable": 24,
+  "test_ceiling": 0.08,
+  "test_ceiling_ci": [
+   0.0543,
+   0.1163
+  ],
+  "labels_497": {
+   "inapplicable": 350,
+   "not stated": 110,
+   "country": 37
+  },
+  "projection": {
+   "inapplicable": {
+    "samples": 1006273,
+    "share": 0.6071,
+    "share_ci": [
+     0.561,
+     0.6533
+    ]
+   },
+   "not stated": {
+    "samples": 498545,
+    "share": 0.3008,
+    "share_ci": [
+     0.256,
+     0.3456
+    ]
+   },
+   "country": {
+    "samples": 152605,
+    "share": 0.0921,
+    "share_ci": [
+     0.0627,
+     0.1214
+    ]
+   }
+  },
+  "test_arms_any_conf": {
+   "gazetteer": {
+    "calls": 95,
+    "correct": 13,
+    "precision": 0.1368,
+    "precision_ci": [
+     0.0817,
+     0.2202
+    ],
+    "recall_of_determinable": 0.5417
+   },
+   "classifier": {
+    "calls": 300,
+    "correct": 18,
+    "precision": 0.06,
+    "precision_ci": [
+     0.0383,
+     0.0928
+    ],
+    "recall_of_determinable": 0.75
+   },
+   "llm": {
+    "calls": 28,
+    "correct": 19,
+    "precision": 0.6786,
+    "precision_ci": [
+     0.4934,
+     0.8207
+    ],
+    "recall_of_determinable": 0.7917
+   }
+  },
+  "natural_all_arms_any_conf": {
+   "gazetteer": {
+    "calls": 58,
+    "correct": 18,
+    "precision": 0.3103,
+    "precision_ci": [
+     0.2062,
+     0.438
+    ],
+    "recall_of_determinable": 0.4865
+   },
+   "classifier": {
+    "calls": 147,
+    "correct": 26,
+    "precision": 0.1769,
+    "precision_ci": [
+     0.1237,
+     0.2465
+    ],
+    "recall_of_determinable": 0.7027
+   },
+   "llm": {
+    "calls": 35,
+    "correct": 27,
+    "precision": 0.7714,
+    "precision_ci": [
+     0.6098,
+     0.8793
+    ],
+    "recall_of_determinable": 0.7297
+   }
+  },
+  "natural_test_arms_any_conf": {
+   "gazetteer": {
+    "calls": 39,
+    "correct": 13,
+    "precision": 0.3333,
+    "precision_ci": [
+     0.2063,
+     0.4902
+    ],
+    "recall_of_determinable": 0.5417
+   },
+   "classifier": {
+    "calls": 93,
+    "correct": 18,
+    "precision": 0.1935,
+    "precision_ci": [
+     0.1261,
+     0.2853
+    ],
+    "recall_of_determinable": 0.75
+   },
+   "llm": {
+    "calls": 23,
+    "correct": 19,
+    "precision": 0.8261,
+    "precision_ci": [
+     0.6286,
+     0.9302
+    ],
+    "recall_of_determinable": 0.7917
+   }
+  }
+ },
+ "sensitivity": {
+  "tag": "agency-derived country labels (7) moved to 'not stated'",
+  "test_determinable": 21,
+  "test_ceiling": 0.07,
+  "test_ceiling_ci": [
+   0.0462,
+   0.1046
+  ],
+  "labels_497": {
+   "inapplicable": 350,
+   "not stated": 117,
+   "country": 30
+  },
+  "projection": {
+   "inapplicable": {
+    "samples": 1006273,
+    "share": 0.6071,
+    "share_ci": [
+     0.561,
+     0.6533
+    ]
+   },
+   "not stated": {
+    "samples": 517394,
+    "share": 0.3122,
+    "share_ci": [
+     0.267,
+     0.3574
+    ]
+   },
+   "country": {
+    "samples": 133756,
+    "share": 0.0807,
+    "share_ci": [
+     0.0526,
+     0.1088
+    ]
+   }
+  },
+  "test_arms_any_conf": {
+   "gazetteer": {
+    "calls": 95,
+    "correct": 13,
+    "precision": 0.1368,
+    "precision_ci": [
+     0.0817,
+     0.2202
+    ],
+    "recall_of_determinable": 0.619
+   },
+   "classifier": {
+    "calls": 300,
+    "correct": 15,
+    "precision": 0.05,
+    "precision_ci": [
+     0.0305,
+     0.0808
+    ],
+    "recall_of_determinable": 0.7143
+   },
+   "llm": {
+    "calls": 28,
+    "correct": 18,
+    "precision": 0.6429,
+    "precision_ci": [
+     0.4583,
+     0.7929
+    ],
+    "recall_of_determinable": 0.8571
+   }
+  },
+  "natural_all_arms_any_conf": {
+   "gazetteer": {
+    "calls": 58,
+    "correct": 18,
+    "precision": 0.3103,
+    "precision_ci": [
+     0.2062,
+     0.438
+    ],
+    "recall_of_determinable": 0.6
+   },
+   "classifier": {
+    "calls": 147,
+    "correct": 19,
+    "precision": 0.1293,
+    "precision_ci": [
+     0.0843,
+     0.1931
+    ],
+    "recall_of_determinable": 0.6333
+   },
+   "llm": {
+    "calls": 35,
+    "correct": 25,
+    "precision": 0.7143,
+    "precision_ci": [
+     0.5494,
+     0.8367
+    ],
+    "recall_of_determinable": 0.8333
+   }
+  },
+  "natural_test_arms_any_conf": {
+   "gazetteer": {
+    "calls": 39,
+    "correct": 13,
+    "precision": 0.3333,
+    "precision_ci": [
+     0.2063,
+     0.4902
+    ],
+    "recall_of_determinable": 0.619
+   },
+   "classifier": {
+    "calls": 93,
+    "correct": 15,
+    "precision": 0.1613,
+    "precision_ci": [
+     0.1002,
+     0.2492
+    ],
+    "recall_of_determinable": 0.7143
+   },
+   "llm": {
+    "calls": 23,
+    "correct": 18,
+    "precision": 0.7826,
+    "precision_ci": [
+     0.581,
+     0.9034
+    ],
+    "recall_of_determinable": 0.8571
+   }
+  }
+ }
+}

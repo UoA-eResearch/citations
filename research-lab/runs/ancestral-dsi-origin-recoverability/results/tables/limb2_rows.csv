@@ -53,7 +53,7 @@ R050,test,True,inapplicable,not determinable,,0.0,China,0.7485,,0.0
 R051,test,True,inapplicable,not determinable,,0.0,USA,0.4415,,0.0
 R052,test,True,inapplicable,not determinable,USA,1.0,USA,0.5371,,0.0
 R053,test,True,inapplicable,not determinable,Pakistan,1.0,USA,0.8824,,0.0
-R054,test,True,Spain,Spain,USA,0.8333,USA,0.2611,Spain,0.99
+R054,test,True,not stated,not determinable,USA,0.8333,USA,0.2611,Spain,0.99
 R055,tune,True,inapplicable,not determinable,Czechia,1.0,USA,0.6007,,0.0
 R056,test,True,inapplicable,not determinable,,0.0,China,0.7461,,0.0
 R057,test,True,inapplicable,not determinable,,0.0,USA,0.3955,,0.0
@@ -239,11 +239,11 @@ R236,tune,True,not stated,not determinable,Germany,1.0,USA,0.4898,,0.0
 R237,test,True,not stated,not determinable,Germany,1.0,USA,0.4882,,0.0
 R238,tune,True,not stated,not determinable,Germany,1.0,USA,0.4661,,0.0
 R239,test,True,not stated,not determinable,Germany,1.0,USA,0.4627,,0.0
-R240,tune,True,USA,USA,Germany,1.0,USA,0.831,USA,0.99
-R241,test,True,USA,USA,Germany,0.5,USA,0.8677,,0.0
-R242,test,True,USA,USA,Germany,0.5,USA,0.8656,,0.0
-R243,tune,True,USA,USA,Germany,0.5,USA,0.8677,,0.0
-R244,tune,True,USA,USA,Germany,0.5,USA,0.8683,,0.0
+R240,tune,True,not stated,not determinable,Germany,1.0,USA,0.831,USA,0.99
+R241,test,True,not stated,not determinable,Germany,0.5,USA,0.8677,,0.0
+R242,test,True,not stated,not determinable,Germany,0.5,USA,0.8656,,0.0
+R243,tune,True,not stated,not determinable,Germany,0.5,USA,0.8677,,0.0
+R244,tune,True,not stated,not determinable,Germany,0.5,USA,0.8683,,0.0
 R245,test,True,not stated,not determinable,,0.0,China,0.5984,,0.0
 R246,test,True,not stated,not determinable,,0.0,China,0.5409,,0.0
 R247,tune,True,inapplicable,not determinable,United Kingdom,1.0,USA,0.7383,,0.0
@@ -458,7 +458,7 @@ R457,tune,False,inapplicable,not determinable,Indonesia,1.0,China,0.6408,,0.0
 R458,tune,False,inapplicable,not determinable,Puerto Rico,0.6667,USA,0.9005,USA,0.99
 R459,tune,False,inapplicable,not determinable,,0.0,China,0.9014,,0.0
 R460,tune,False,inapplicable,not determinable,,0.0,China,0.8221,,0.0
-R461,test,False,China,China,China,1.0,China,0.7441,China,0.99
+R461,test,False,not stated,not determinable,China,1.0,China,0.7441,China,0.99
 R462,test,False,not stated,not determinable,,0.0,USA,0.4964,,0.0
 R463,test,False,not stated,not determinable,,0.0,China,0.2179,,0.0
 R464,tune,False,not stated,not determinable,,0.0,USA,0.6537,,0.0
@@ -472,9 +472,9 @@ R471,test,False,not stated,not determinable,,0.0,USA,0.2007,,0.0
 R472,test,False,USA,USA,USA,1.0,USA,0.9881,USA,0.9
 R473,test,False,USA,USA,USA,1.0,USA,0.989,,0.0
 R474,test,False,USA,USA,USA,1.0,USA,0.9895,USA,0.95
-R475,tune,False,USA,USA,,0.0,USA,0.9765,,0.0
+R475,tune,False,not stated,not determinable,,0.0,USA,0.9765,,0.0
 R476,test,False,China,China,China,1.0,China,0.8227,China,0.99
-R477,test,False,China,China,,0.0,China,0.5165,China,0.95
+R477,test,False,not stated,not determinable,,0.0,China,0.5165,China,0.95
 R478,test,False,inapplicable,not determinable,,0.0,China,0.5963,,0.0
 R479,test,False,inapplicable,not determinable,,0.0,China,0.928,,0.0
 R480,tune,False,not stated,not determinable,,0.0,China,0.5604,,0.0

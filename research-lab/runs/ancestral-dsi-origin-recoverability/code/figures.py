@@ -97,8 +97,7 @@ def f2():
     plt.close(fig)
     caption("F2_gold_and_recovery", """Left: final gold labels of the 497 scored untagged records, by whether the
     sample's BioProject links a publication. Right: share of the 300 test records for which each arm names the correct
-    country, at the confidence threshold tuned for 90% precision (gazetteer and LLM never reached 90% on the tuning
-    split, so they make no calls) and at any confidence. The orange line is the ceiling set by the records that have a
+    country, at the confidence threshold tuned for 90% precision (after D10 no arm reaches 90% on the tuning split, so none makes calls) and at any confidence. The orange line is the ceiling set by the records that have a
     findable country at all; the dashed line is H2's 40% bar.""")
 
 
@@ -128,7 +127,7 @@ def f3():
     fig.savefig(F / "F3_posthoc_natural.png", dpi=170)
     plt.close(fig)
     caption("F3_posthoc_natural", """Post hoc (D7, not preregistered). Among the 147 gold records that are not
-    laboratory material, 25% have a findable country (orange). Bars give each arm's correct calls as a share of those
+    laboratory material, 19% have a findable country after D10 (orange). Bars give each arm's correct calls as a share of those
     records and the precision of its calls, at any confidence, across all 497 gold records' natural subset.""")
 
 

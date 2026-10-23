@@ -27,46 +27,46 @@
    }
   },
   "not stated": {
-   "samples": 498545,
+   "samples": 524082,
    "ci": [
-    424257,
-    572832
+    448988,
+    599175
    ],
-   "share_of_untagged": 0.3008,
+   "share_of_untagged": 0.3162,
    "share_ci": [
-    0.256,
-    0.3456
+    0.2709,
+    0.3615
    ],
    "strata": {
     "with_publication": {
      "n_gold": 250,
-     "share": 0.048
+     "share": 0.072
     },
     "without_publication": {
      "n_gold": 247,
-     "share": 0.3968
+     "share": 0.4089
     }
    }
   },
   "country": {
-   "samples": 152605,
+   "samples": 127068,
    "ci": [
-    103952,
-    201258
+    81462,
+    172674
    ],
-   "share_of_untagged": 0.0921,
+   "share_of_untagged": 0.0767,
    "share_ci": [
-    0.0627,
-    0.1214
+    0.0491,
+    0.1042
    ],
    "strata": {
     "with_publication": {
      "n_gold": 250,
-     "share": 0.036
+     "share": 0.012
     },
     "without_publication": {
      "n_gold": 247,
-     "share": 0.1134
+     "share": 0.1012
     }
    }
   }
@@ -95,15 +95,15 @@
    }
   },
   "classifier": {
-   "samples": 37779,
+   "samples": 0,
    "ci": [
-    5189,
-    70368
+    0,
+    0
    ],
-   "share_of_untagged": 0.0228,
+   "share_of_untagged": 0.0,
    "share_ci": [
-    0.0031,
-    0.0425
+    0.0,
+    0.0
    ],
    "strata": {
     "with_publication": {
@@ -112,7 +112,7 @@
     },
     "without_publication": {
      "n_gold": 159,
-     "share": 0.0314
+     "share": 0.0
     }
    }
   },
@@ -142,7 +142,7 @@
  "calibration": {
   "gazetteer": {
    "predictions": 156,
-   "brier": 0.7481,
+   "brier": 0.7546,
    "bins": [
     {
      "bin": [
@@ -187,13 +187,13 @@
      ],
      "n": 122,
      "mean_conf": 1.0,
-     "accuracy": 0.131
+     "accuracy": 0.123
     }
    ]
   },
   "classifier": {
    "predictions": 497,
-   "brier": 0.4252,
+   "brier": 0.4354,
    "bins": [
     {
      "bin": [
@@ -220,7 +220,7 @@
      ],
      "n": 105,
      "mean_conf": 0.505,
-     "accuracy": 0.01
+     "accuracy": 0.0
     },
     {
      "bin": [
@@ -229,7 +229,7 @@
      ],
      "n": 169,
      "mean_conf": 0.709,
-     "accuracy": 0.024
+     "accuracy": 0.018
     },
     {
      "bin": [
@@ -238,7 +238,7 @@
      ],
      "n": 114,
      "mean_conf": 0.849,
-     "accuracy": 0.079
+     "accuracy": 0.035
     },
     {
      "bin": [
@@ -247,13 +247,13 @@
      ],
      "n": 32,
      "mean_conf": 0.941,
-     "accuracy": 0.375
+     "accuracy": 0.344
     }
    ]
   },
   "llm": {
    "predictions": 50,
-   "brier": 0.4183,
+   "brier": 0.4951,
    "bins": [
     {
      "bin": [
@@ -271,7 +271,7 @@
      ],
      "n": 49,
      "mean_conf": 0.966,
-     "accuracy": 0.551
+     "accuracy": 0.469
     }
    ]
   }
@@ -279,80 +279,80 @@
  "asymmetric_error": {
   "gazetteer": {
    "test_at_threshold": {
-    "errors": 82,
-    "errors_with_submitter_country": 44,
-    "naming_submitter_country": 16,
-    "share": 0.3636,
+    "errors": 83,
+    "errors_with_submitter_country": 45,
+    "naming_submitter_country": 17,
+    "share": 0.3778,
     "share_ci": [
-     0.2378,
-     0.5113
+     0.2511,
+     0.5237
     ],
-    "errors_on_not_determinable": 74
+    "errors_on_not_determinable": 78
    },
    "all_records_any_confidence": {
-    "errors": 138,
-    "errors_with_submitter_country": 78,
-    "naming_submitter_country": 26,
-    "share": 0.3333,
+    "errors": 139,
+    "errors_with_submitter_country": 79,
+    "naming_submitter_country": 27,
+    "share": 0.3418,
     "share_ci": [
-     0.2387,
-     0.4436
+     0.2467,
+     0.4515
     ],
-    "errors_on_not_determinable": 125
+    "errors_on_not_determinable": 132
    }
   },
   "classifier": {
    "test_at_threshold": {
-    "errors": 0,
-    "errors_with_submitter_country": 0,
-    "naming_submitter_country": 0,
-    "share": null,
+    "errors": 286,
+    "errors_with_submitter_country": 166,
+    "naming_submitter_country": 99,
+    "share": 0.5964,
     "share_ci": [
-     0.0,
-     1.0
+     0.5204,
+     0.668
     ],
-    "errors_on_not_determinable": 0
+    "errors_on_not_determinable": 281
    },
    "all_records_any_confidence": {
-    "errors": 471,
-    "errors_with_submitter_country": 279,
-    "naming_submitter_country": 160,
-    "share": 0.5735,
+    "errors": 479,
+    "errors_with_submitter_country": 281,
+    "naming_submitter_country": 162,
+    "share": 0.5765,
     "share_ci": [
-     0.5148,
-     0.6301
+     0.5181,
+     0.6329
     ],
-    "errors_on_not_determinable": 460
+    "errors_on_not_determinable": 469
    }
   },
   "llm": {
    "test_at_threshold": {
-    "errors": 9,
-    "errors_with_submitter_country": 6,
-    "naming_submitter_country": 4,
-    "share": 0.6667,
+    "errors": 12,
+    "errors_with_submitter_country": 8,
+    "naming_submitter_country": 6,
+    "share": 0.75,
     "share_ci": [
-     0.3,
-     0.9032
+     0.4093,
+     0.9285
     ],
-    "errors_on_not_determinable": 8
+    "errors_on_not_determinable": 11
    },
    "all_records_any_confidence": {
-    "errors": 23,
-    "errors_with_submitter_country": 15,
-    "naming_submitter_country": 9,
-    "share": 0.6,
+    "errors": 27,
+    "errors_with_submitter_country": 17,
+    "naming_submitter_country": 11,
+    "share": 0.6471,
     "share_ci": [
-     0.3575,
-     0.8018
+     0.413,
+     0.8269
     ],
-    "errors_on_not_determinable": 21
+    "errors_on_not_determinable": 25
    }
   }
  },
  "gold_country_equals_submitter_country": {
-  "determinable": 37,
-  "same": 9,
-  "submitter_country_known": 12
+  "determinable": 28,
+  "same": 7,
+  "submitter_country_known": 10
  }
 }

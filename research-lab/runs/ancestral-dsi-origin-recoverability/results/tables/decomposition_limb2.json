@@ -2,101 +2,54 @@
  "gold_countries": {
   "cbd": {
    "Party": {
-    "n": 21,
-    "share": 0.5676
+    "n": 18,
+    "share": 0.6429
    },
    "not a Party": {
-    "n": 12,
-    "share": 0.3243
+    "n": 6,
+    "share": 0.2143
    },
    "not a country": {
     "n": 4,
-    "share": 0.1081
+    "share": 0.1429
    }
   },
   "nagoya": {
    "Party": {
-    "n": 18,
-    "share": 0.4865
+    "n": 15,
+    "share": 0.5357
    },
    "not a Party": {
-    "n": 15,
-    "share": 0.4054
+    "n": 9,
+    "share": 0.3214
    },
    "not a country": {
     "n": 4,
-    "share": 0.1081
+    "share": 0.1429
    }
   },
   "income": {
    "High income": {
-    "n": 21,
-    "share": 0.5676
+    "n": 14,
+    "share": 0.5
    },
    "Lower middle income": {
     "n": 1,
-    "share": 0.027
+    "share": 0.0357
    },
    "Upper middle income": {
-    "n": 11,
-    "share": 0.2973
+    "n": 9,
+    "share": 0.3214
    },
    "not a country": {
     "n": 4,
-    "share": 0.1081
+    "share": 0.1429
    }
   }
  },
  "arms": {
   "gazetteer": null,
-  "classifier": {
-   "cbd": {
-    "Party": {
-     "determinable": 21,
-     "recovered": 1
-    },
-    "not a Party": {
-     "determinable": 12,
-     "recovered": 6
-    },
-    "not a country": {
-     "determinable": 4,
-     "recovered": 0
-    }
-   },
-   "nagoya": {
-    "Party": {
-     "determinable": 18,
-     "recovered": 1
-    },
-    "not a Party": {
-     "determinable": 15,
-     "recovered": 6
-    },
-    "not a country": {
-     "determinable": 4,
-     "recovered": 0
-    }
-   },
-   "income": {
-    "High income": {
-     "determinable": 21,
-     "recovered": 6
-    },
-    "Lower middle income": {
-     "determinable": 1,
-     "recovered": 0
-    },
-    "Upper middle income": {
-     "determinable": 11,
-     "recovered": 1
-    },
-    "not a country": {
-     "determinable": 4,
-     "recovered": 0
-    }
-   }
-  },
+  "classifier": null,
   "llm": null
  }
 }
