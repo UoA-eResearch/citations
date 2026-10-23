@@ -6368,7 +6368,12 @@
    "local_relevance": "Auckland Council's kauri dieback and biosecurity teams, together with Te Kawerau \u0101 Maki and Hunua mana whenua as kaitiaki, could use the screening layer to prioritise ground surveys, track management and hygiene investment. Biosecurity NZ could reuse the method nationally wherever repeat LiDAR exists.",
    "time_sensitive": "",
    "needs_engagement": "Blocking: seek guidance from Te Kawerau \u0101 Maki (Wait\u0101kere r\u0101hui), Hunua mana whenua and the council kauri programme before preregistration; publish only aggregated layers and honour any request to restrict",
-   "scout_round": "auckland-nz"
+   "scout_round": "auckland-nz",
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass)",
+   "report_url": "runs/auckland-nz-kauri-dieback-multitemporal-lidar/report.html",
+   "verdict_tag": "Refuted",
+   "verdict_note": "H1 and H2 Refuted. Kauri graded along Waitakere tracks in Auckland Council's ObsKauri 2014-15 survey (6,871 non-symptomatic, 299 possible or severe, duplicates merged within 2 m) against the change in open LINZ LiDAR canopy height within 15 m between 2016-18 and 2024: the change model's AUC within spatially blocked test folds is 0.55 (0.47-0.58), against a within-block shuffle null of 0.48 and the 0.70 bar; adding change to elevation, slope, canopy height and track distance gains +0.021 (-0.034 to +0.045). The test is largely a verdict on label geometry: a symptomatic tree's nearest healthy record is a median 3.2 m away and its 15 m circle is 23% symptomatic. Time-aligned 2021 labels give 0.557 against a place null of 0.539. Canopy measured 1.25 m taller in 2024 even at random forest points, rising with canopy height - consistent with denser 2024 point clouds. Review replaced a biased pooled out-of-fold AUC (null 0.36) with per-fold AUC (D1).",
+   "headline": "Open repeat LiDAR does not pick out kauri graded sick from the track in 2014-15, but sick and healthy trees stand a few metres apart, so the test says more about the labels than about LiDAR."
   },
   {
    "id": "meta-research-preregistration-first-self-audit",

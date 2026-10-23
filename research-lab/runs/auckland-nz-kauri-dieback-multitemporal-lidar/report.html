@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kauri Dieback LiDAR</title>
+<meta name="description" content="Can open repeat LiDAR of Auckland see kauri dieback in trees graded symptomatic on the ground?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Auckland</div>
+  <h1>Can open repeat LiDAR see kauri dieback? Not at trees graded from the track in 2014–15, where sick and healthy trees stand metres apart</h1>
+  <p class="subtitle">Ground survey: Auckland Council&#x27;s ObsKauri public layer. Trees graded along Waitākere tracks in 2014–15 (6,871 non-symptomatic, 299 with possible or severe dieback symptoms, after merging duplicate records within 2 m) were compared with the change in LiDAR canopy height within 15 m of each tree. The change runs between the LINZ Auckland North 2016–18 survey and the Auckland 2024 survey. The test is prognostic: the labels predate the first LiDAR epoch. This version incorporates an independent review (`review/review.md`; D1).</p>
+  <div class="meta">
+    <span>Report · 2026-10-23 · revised after independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-kauri-dieback-multitemporal-lidar/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-kauri-dieback-multitemporal-lidar/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-kauri-dieback-multitemporal-lidar/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: H1 Refuted; H2 Refuted.</strong></p>
+<ul>
+<li><strong>H1 (LiDAR crown change separates trees graded symptomatic, AUC at least 0.70): Refuted.</strong><ul>
+<li>The change model's AUC, computed within spatially blocked test folds, is <strong>0.55</strong> (95% block bootstrap 0.47–0.58).</li>
+<li>A within-block label shuffle gives 0.48 on average (95th percentile 0.52). So the change model sits slightly
+above that "place" chance level, but far below the 0.70 bar.</li>
+</ul>
+</li>
+<li><strong>H2 (change adds at least 0.05 AUC to elevation, slope, canopy height and distance to track): Refuted.</strong> The gain
+  is +0.021 (−0.034 to +0.045).</li>
+<li><strong>This tests the label geometry as much as the LiDAR.</strong><ul>
+<li>In the 2014–15 survey, a symptomatic tree's nearest healthy record is a median 3.2 m away. The nearest record of
+any status is a median 1.4 m away.</li>
+<li>92% of symptomatic trees have a healthy record within 15 m.</li>
+<li>A symptomatic tree's 15 m circle is a median 23% symptomatic.</li>
+</ul>
+</li>
+</ul>
+<p>At the feature scale, sick and healthy labels share most of their canopy (review).
+- <strong>With time-aligned labels (2021 survey, secondary)</strong> the change model reaches 0.557, against a place null of 0.539
+  (95th percentile 0.560), so no signal beyond place can be claimed.
+- <strong>The surveys differ.</strong> Canopy height rose by 1.25 m on average even at random forest points. The rise grows with
+  canopy height (about 0 under 5 m, about +3 m above 30 m), consistent with a difference in point density between the
+  surveys rather than growth.</p>
+<h2>In plain terms</h2>
+<p>Kauri dieback kills Aotearoa's giant kauri, and finding sick trees on foot is slow and can spread the disease. We
+asked whether free laser scans of Auckland, flown in 2016–18 and again in 2024, can show which kauri are dying, by
+measuring how much each tree's crown thinned or dropped between the two scans.</p>
+<p>We used the council's ground survey of 2014–15, when people walked the Waitākere tracks grading every kauri they
+could see. The trees graded as sick then did not lose clearly more crown than the trees graded healthy, nowhere near
+enough to map sick trees. But the survey's sick and healthy trees often stand about three metres apart along the
+same track. At the 15-metre scale the scans can measure, they share the same patch of canopy, so this test could hardly
+have told them apart.</p>
+<p>Trees graded in 2021 showed no clearer difference once the patch of forest they stand in is allowed for. The two scans
+also differ: the tall canopy measured up to 3 metres taller in 2024, more than any group difference. That is
+consistent with the 2024 scan having more laser points, rather than with growth.</p>
+<p>Open LiDAR at this resolution does not give an early-warning map from these survey labels. Whether crown-level data or
+labels for isolated trees would do better is left open.</p>
+<h2>What was asked</h2>
+<p>The lead (<code>auckland-nz-kauri-dieback-multitemporal-lidar</code>, Auckland signature area) asked whether open repeat LiDAR
+can see kauri dieback, using ObsKauri field surveys as the answer key. The critic's note reframed it as a prognostic
+test, because the 2014–15 labels predate the first LiDAR epoch, and added the 2021 survey as a time-aligned check. No
+dieback study using repeat LiDAR or ObsKauri was found.</p>
+<p>The plan (<code>plan.md</code>) was committed before any LiDAR was read.</p>
+<h2>How it was done</h2>
+<ul>
+<li><strong>Labels.</strong> ObsKauri, downloaded in full on 2026-10-23 (52,867 records).<ul>
+<li>Primary set: the Waitakere Track Survey 2014-2015. Positive is status 3 (possible) or 4 (severe); negative is
+status 1.</li>
+<li>Records within 2 m with the same status were merged by single linkage (D1; the first run used a 2 m grid, which
+under-merged). That leaves 6,871 status-1 and 299 symptomatic trees.</li>
+<li>28 trees were dropped by the slip mask (more than half their circle had ground change over 1 m), and 57 in the
+2021 set.</li>
+<li>56 locations carry records with conflicting statuses. They are kept and counted.</li>
+</ul>
+</li>
+<li><strong>Canopy height.</strong> DSM minus DEM at 1 m for each epoch (Auckland North 2016–2018; Auckland 2024 Parts 1 and 2).</li>
+<li><strong>Features within 15 m of each tree:</strong><ul>
+<li>change in P95 and P50 canopy height, and in the share of cover above 15 m;</li>
+<li>static features: elevation, slope, 2016–18 P95, and distance to the nearest OSM path or track.</li>
+</ul>
+</li>
+<li><strong>Models.</strong> Logistic regression on standardised features, with spatially blocked 5-fold CV over 500 m blocks and 5
+  repeats.<ul>
+<li><strong>AUC</strong> is computed within each test fold and averaged (D1). Pooling out-of-fold predictions across blocked folds
+is biased downward: a within-block label shuffle gave 0.36.</li>
+<li><strong>Intervals</strong> come from a block bootstrap of the per-fold AUC. The H2 gain is paired.</li>
+<li><strong>A within-block shuffle null</strong> (200 shuffles) gives the relevant chance level.</li>
+</ul>
+</li>
+</ul>
+<h2>Results</h2>
+<h3>H1 and H2 (<code>results/figures/F1_auc.png</code>)</h3>
+<figure><a href="results/figures/F1_auc.png"><img src="results/figures/F1_auc.png" alt="AUC by model and label set"></a><figcaption>AUC computed within each test fold and averaged (D1; logistic regression, 500 m blocks, 5-fold, 5 repeats) for trees graded possible or severe kauri dieback (status 3-4) against non-symptomatic (status 1). Change features: P95, P50 and cover above 15 m of the canopy height model within 15 m of each tree, 2024 minus 2016-18. Static: elevation, slope, 2016-18 P95 and distance to the nearest track. Labels in brackets: symptomatic / all trees. Primary: change AUC 0.55 (0.47-0.58); the dotted line is the H1 threshold of 0.70. A within-block label shuffle gives 0.48 on average (95th percentile 0.52), the relevant &quot;chance&quot; level.</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>labels</th>
+<th>symptomatic / trees</th>
+<th>change AUC</th>
+<th>static</th>
+<th>static + change</th>
+<th>gain</th>
+<th>place null (mean / 95th pct)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2014–15 (primary)</td>
+<td>299 / 7,142</td>
+<td>0.55 (0.47–0.58)</td>
+<td>0.57 (0.52–0.63)</td>
+<td>0.59 (0.53–0.63)</td>
+<td>+0.021 (−0.034 to +0.045)</td>
+<td>0.48 / 0.52</td>
+</tr>
+<tr>
+<td>2014–15, severe only</td>
+<td>77 / 6,920</td>
+<td>0.51 (0.43–0.58)</td>
+<td>0.54</td>
+<td>0.56</td>
+<td>+0.012 (−0.032 to +0.054)</td>
+<td></td>
+</tr>
+<tr>
+<td>2014–15, 10 m circle</td>
+<td>297 / 7,134</td>
+<td>0.51 (0.44–0.55)</td>
+<td>0.60</td>
+<td>0.61</td>
+<td>+0.010 (−0.032 to +0.030)</td>
+<td></td>
+</tr>
+<tr>
+<td>2014–15, 20 m circle</td>
+<td>299 / 7,145</td>
+<td>0.52 (0.45–0.55)</td>
+<td>0.57</td>
+<td>0.59</td>
+<td>+0.019 (−0.031 to +0.042)</td>
+<td></td>
+</tr>
+<tr>
+<td>2014–15, no slip mask</td>
+<td>299 / 7,170</td>
+<td>0.54 (0.47–0.58)</td>
+<td>0.57</td>
+<td>0.59</td>
+<td>+0.018 (−0.036 to +0.040)</td>
+<td></td>
+</tr>
+<tr>
+<td>2021 (time-aligned)</td>
+<td>633 / 1,800</td>
+<td>0.56 (0.52–0.59)</td>
+<td>0.59</td>
+<td>0.61</td>
+<td>+0.020 (+0.003 to +0.039)</td>
+<td>0.54 / 0.56</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Per-repeat spread.</strong> AUCs vary across the five repeated splits about as much as the reported intervals. The
+  bootstrap holds each repeat's fold predictions fixed.</li>
+</ul>
+<h3>Canopy change by status (<code>results/figures/F2_change_by_status.png</code>)</h3>
+<figure><a href="results/figures/F2_change_by_status.png"><img src="results/figures/F2_change_by_status.png" alt="Change by status"></a><figcaption>Mean change (95% block bootstrap) in the 95th percentile of canopy height within 15 m of each surveyed tree, after masking cells whose ground height changed by more than 1 m. Random forest points: 1,000 points with 2016-18 canopy above 15 m, at least 50 m from any survey record; their mean rise of 1.25 m includes any systematic difference between the two LiDAR surveys. The 2014-15 trees stand by tracks (median 5 m away); the 2021 trees stand deeper in the forest.</figcaption></figure>
+<ul>
+<li><strong>2014–15.</strong> Mean P95 change was:<ul>
+<li>+1.58 m (1.46–1.69) around non-symptomatic trees;</li>
+<li>+1.42 m (1.17–1.70) around possible;</li>
+<li>+1.37 m (1.07–1.72) around severe.</li>
+</ul>
+</li>
+<li><strong>Within the same blocks (confirmation pass, on the merged tree set),</strong> the 2014–15 difference is −0.12 m (−0.26 to
+  −0.01) and the 2021 difference is
+  −0.10 m (−0.21 to +0.02).</li>
+<li><strong>2021.</strong> Mean P95 change was +2.16 m around non-symptomatic trees, +1.97 m around possible and +1.56 m around
+  severe. These trees stand deeper in the forest, under taller canopy, where the between-survey rise is larger.</li>
+<li><strong>Random forest points:</strong> +1.25 m (1.04–1.45).<ul>
+<li>The rise depends on canopy height and on how it is defined (1.06–1.88 m).</li>
+<li>Ground change is +0.05 m and bare-ground canopy height +0.01 m, so it is not a datum shift.</li>
+</ul>
+</li>
+</ul>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>No usable prognostic signal from track-side ground grades.</strong> Trees graded symptomatic in 2014–15 lost slightly
+  more crown than healthy ones within the same blocks, but by about 0.1 m, far from a usable classifier.</li>
+<li><strong>The test could hardly have succeeded with these labels.</strong> A symptomatic tree's nearest healthy record is a median
+  3.2 m away, and
+  a 15 m circle mixes them. "Refuted" is a verdict on this design, open LiDAR at this resolution with track-side
+  labels, not on repeat LiDAR in general.</li>
+<li><strong>No signal beyond place with 2021 labels.</strong></li>
+<li><strong>Not shown:</strong><ul>
+<li>that LiDAR cannot see dieback with crown segmentation, full point clouds or isolated trees;</li>
+<li>anything about Hunua.</li>
+</ul>
+</li>
+<li><strong>Care.</strong> Kauri are taonga, and the Waitākere Ranges are under a rāhui placed by Te Kawerau ā Maki. This study entered
+  no forest and used only open data. It publishes features by record identifier only, with no coordinates. Methods
+  like this belong with the kaitiaki and the council's kauri programme.</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration:</strong> <code>plan.md</code>.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>):<ul>
+<li>the Overpass retry, an edit to <code>features.py</code> after its pre-computation commit;</li>
+<li>D1, after the review: the true 2 m merge, the per-fold AUC with a within-block shuffle null, and wording.</li>
+<li>The first run's results are in <code>primary_pre_d1.json</code>.</li>
+</ul>
+</li>
+<li><strong>Independent review:</strong> Fable, 2026-10-23, "fix first" (<code>review/review.md</code>). The features reproduced exactly; the
+  review found the estimator and label-geometry problems. A confirmation pass follows.</li>
+</ul>
+<h2>Reproducing it</h2>
+<ol>
+<li><code>code/fetch_obskauri.py</code>.</li>
+<li><code>code/features.py mosaics</code>, then <code>code/features.py trees</code>.</li>
+<li><code>code/model.py</code>.</li>
+<li><code>code/figures.py</code>.</li>
+</ol>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-kauri-dieback-multitemporal-lidar/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

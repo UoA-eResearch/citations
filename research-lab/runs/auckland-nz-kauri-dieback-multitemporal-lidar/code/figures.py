@@ -69,7 +69,7 @@ def f2(p):
     ax.set_yticks(range(len(order))); ax.set_yticklabels([f"{lab} ({g[k]['n']:,})" for k, lab in order], fontsize=8)
     ax.invert_yaxis(); ax.axvline(0, color=INK2, lw=0.8, ls="--")
     ax.set_xlabel("mean change in P95 canopy height within 15 m, 2016-18 to 2024 (m)"); ax.grid(axis="x", color=GRID, lw=0.5)
-    fig.suptitle("Canopy rose almost everywhere; symptomatic trees rose slightly less", x=0.02, ha="left", fontsize=10.5, color=INK)
+    fig.suptitle("Canopy rose almost everywhere; trees graded symptomatic do not stand out", x=0.02, ha="left", fontsize=10.5, color=INK)
     fig.savefig(F / "F2_change_by_status.png", dpi=170); plt.close(fig)
     caption("F2_change_by_status", f"""Mean change (95% block bootstrap) in the 95th percentile of canopy height within
     15 m of each surveyed tree, after masking cells whose ground height changed by more than 1 m. Random forest points:

@@ -15,9 +15,10 @@ This version incorporates an independent review (`review/review.md`; D1).*
 - **H2 (change adds at least 0.05 AUC to elevation, slope, canopy height and distance to track): Refuted.** The gain
   is +0.021 (−0.034 to +0.045).
 - **This tests the label geometry as much as the LiDAR.**
-  - In the 2014–15 survey, a symptomatic tree's nearest healthy record is a median 1.4 m away.
+  - In the 2014–15 survey, a symptomatic tree's nearest healthy record is a median 3.2 m away. The nearest record of
+    any status is a median 1.4 m away.
   - 92% of symptomatic trees have a healthy record within 15 m.
-  - A symptomatic tree's 15 m circle is a median 25% symptomatic.
+  - A symptomatic tree's 15 m circle is a median 23% symptomatic.
 
   At the feature scale, sick and healthy labels share most of their canopy (review).
 - **With time-aligned labels (2021 survey, secondary)** the change model reaches 0.557, against a place null of 0.539
@@ -34,13 +35,13 @@ measuring how much each tree's crown thinned or dropped between the two scans.
 
 We used the council's ground survey of 2014–15, when people walked the Waitākere tracks grading every kauri they
 could see. The trees graded as sick then did not lose clearly more crown than the trees graded healthy, nowhere near
-enough to map sick trees. But the survey's sick and healthy trees often stand a metre or two apart along the same
-track. At the 15-metre scale the scans can measure, they share the same patch of canopy, so this test could hardly
+enough to map sick trees. But the survey's sick and healthy trees often stand about three metres apart along the
+same track. At the 15-metre scale the scans can measure, they share the same patch of canopy, so this test could hardly
 have told them apart.
 
 Trees graded in 2021 showed no clearer difference once the patch of forest they stand in is allowed for. The two scans
-also differ: the tall canopy measured up to 3 metres taller in 2024, more than any group difference, and probably
-because the 2024 scan has more laser points.
+also differ: the tall canopy measured up to 3 metres taller in 2024, more than any group difference. That is
+consistent with the 2024 scan having more laser points, rather than with growth.
 
 Open LiDAR at this resolution does not give an early-warning map from these survey labels. Whether crown-level data or
 labels for isolated trees would do better is left open.
@@ -61,7 +62,9 @@ The plan (`plan.md`) was committed before any LiDAR was read.
     status 1.
   - Records within 2 m with the same status were merged by single linkage (D1; the first run used a 2 m grid, which
     under-merged). That leaves 6,871 status-1 and 299 symptomatic trees.
-  - 28 trees were dropped by the slip mask (more than half their circle had ground change over 1 m).
+  - 28 trees were dropped by the slip mask (more than half their circle had ground change over 1 m), and 57 in the
+    2021 set.
+  - 56 locations carry records with conflicting statuses. They are kept and counted.
 - **Canopy height.** DSM minus DEM at 1 m for each epoch (Auckland North 2016–2018; Auckland 2024 Parts 1 and 2).
 - **Features within 15 m of each tree:**
   - change in P95 and P50 canopy height, and in the share of cover above 15 m;
@@ -99,7 +102,8 @@ The plan (`plan.md`) was committed before any LiDAR was read.
   - +1.58 m (1.46–1.69) around non-symptomatic trees;
   - +1.42 m (1.17–1.70) around possible;
   - +1.37 m (1.07–1.72) around severe.
-- **Within the same blocks (review),** the 2014–15 difference is −0.13 m (−0.27 to −0.02) and the 2021 difference is
+- **Within the same blocks (confirmation pass, on the merged tree set),** the 2014–15 difference is −0.12 m (−0.26 to
+  −0.01) and the 2021 difference is
   −0.10 m (−0.21 to +0.02).
 - **2021.** Mean P95 change was +2.16 m around non-symptomatic trees, +1.97 m around possible and +1.56 m around
   severe. These trees stand deeper in the forest, under taller canopy, where the between-survey rise is larger.
@@ -111,7 +115,8 @@ The plan (`plan.md`) was committed before any LiDAR was read.
 
 - **No usable prognostic signal from track-side ground grades.** Trees graded symptomatic in 2014–15 lost slightly
   more crown than healthy ones within the same blocks, but by about 0.1 m, far from a usable classifier.
-- **The test could hardly have succeeded with these labels.** Sick and healthy trees stand a median 1.4 m apart, and
+- **The test could hardly have succeeded with these labels.** A symptomatic tree's nearest healthy record is a median
+  3.2 m away, and
   a 15 m circle mixes them. "Refuted" is a verdict on this design, open LiDAR at this resolution with track-side
   labels, not on repeat LiDAR in general.
 - **No signal beyond place with 2021 labels.**
