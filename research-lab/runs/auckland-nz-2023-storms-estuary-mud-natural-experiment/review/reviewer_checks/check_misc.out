@@ -1,0 +1,32 @@
+== (a) Waikato sites with >= 5 pre-2023 years and a 2023 value ==
+               Site name                 Estuary name  month   dev
+            Miranda (MI)              Firth of Thames     10 -1.00
+        Kuranui Bay (KB)              Firth of Thames     10 24.58
+          Okete Bay (OB) Whaingaroa (Raglan) Harbour      11  7.65
+Whatitirinui Island (WI) Whaingaroa (Raglan) Harbour      11  2.56
+        Manaia Road (MR)               Tairua Harbour     11  0.73
+       Oturu Stream (OS)               Tairua Harbour     11 -2.09
+
+== (b) regional_2023.json 'regions.Auckland' vs 'auckland' ==
+Auckland sites with >=5 pre years (regions block): 92 ; with 2023: 56 ; with 2024: 51 of which in the 56: 42
+2024 mean dev, regions-block set: 2.26 ; restricted to the 56: 1.1 ; the extra sites (not among the 56, no 2023 survey): 7.64 n = 9
+extra 2024 sites:           Site name              Estuary name  dev
+  Rangitōpuni Creek Waitematā Harbour (Upper) -7.2
+               MNG9             Mangemangeroa 12.4
+         Anns Creek           Manukau Harbour  7.2
+   Māngere Cemetery           Manukau Harbour  7.9
+Pahurehure Papakura           Manukau Harbour 20.3
+      Puhinui Upper           Manukau Harbour  8.0
+     Pukaki Airport           Manukau Harbour 16.7
+           Tararata           Manukau Harbour  0.8
+   Waimahia Central           Manukau Harbour  2.6
+
+== (c) 2024 rows by tercile (H1 persistence term) ==
+tercile  bottom  middle  top
+year                        
+2023         18      19   19
+2024         10      14   18
+
+== (d) H1 contrast = which harbours ==
+top {'Mangemangeroa': 3, 'Ōkura': 3, 'Ōrewa': 3, 'Tūranga': 3, 'Waikōpua': 3, 'Kaipara Harbour (South)': 2, 'Manukau Harbour': 2}
+bottom {'Waitematā Harbour (Central)': 10, 'Whangateau': 3, 'Waitematā Harbour (Upper)': 2, 'Mahurangi Harbour': 2, 'Kaipara Harbour (South)': 1}

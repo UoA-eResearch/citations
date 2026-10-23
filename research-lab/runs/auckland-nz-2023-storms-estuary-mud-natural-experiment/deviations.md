@@ -83,3 +83,35 @@ sampled at 12 Auckland sites: 8 in the bottom exposure tercile and none in the t
 all zeros, and the pseudo-inverse returned 0. These outcomes are now reported as not estimable whenever there are
 fewer than 3 top-tercile and 3 bottom-tercile rows in 2023. Nothing else changes, and no verdict depends on these
 outcomes.
+
+## D5 — 2026-10-23 15:22 NZDT — changes after the independent review (review/review.md, "publish with edits")
+
+No computation changes. The verdicts stand: H1 and H2 Inconclusive. The text changes as follows.
+
+1. **The exposure.** It measures newly bare land, which is mostly harvest. Newly bare density is 3.3% at Pukekohe and
+   1.1% at Woodhill, against 0.02–0.12% in the known slip clusters. H1 and H2 therefore did not test storm exposure,
+   and the title and conclusions no longer say the mud "did not follow the stripped land".
+2. **H2 is a two-site test.** 87% of its identifying variation is in Manukau (Auckland Airport 59%, Clarks Beach 28%);
+   the effective number of clusters is 1.3 of 13. The CR2 interval is anti-conservative here, so "would read as
+   Refuted" is struck.
+3. **The 2023 top-minus-bottom difference.** At +1.96 it is the largest in the 15-year series (2.9 SD of 2010–2021) and
+   larger than every placebo. But 2022 was already +1.45 (event study) or +1.61 (same estimator), so 2023 exceeds the
+   pre-storm year by about 0.3–0.5 pp.
+4. **The region-wide pulse** survives the review's artefact checks:
+   - continuous sites +4.58 against returning sites +2.98;
+   - the 2024 fade holds within the same 42 sites;
+   - leaving each year out, 2023 is still the largest;
+   - the value format changed in 2020, not 2023.
+
+   But it is concentrated: 6 harbours at +4 to +16, and 7 at +2.6 or less; the site median is +2.6, and the
+   harbour-clustered interval 2.3–7.0. The Waikato comparison sites are the Firth of Thames, Raglan and Tairua, and
+   their +5.4 comes from one site at +24.6. `regional_2023.json` carries two Auckland 2024 values (1.10 and 2.26)
+   because the site sets differ (the 56 frozen sites against all Auckland sites with at least 5 pre-years).
+5. **Smaller items:**
+   - Dropping year-only rows drops the 11 biennially sampled Waitematā Central sites.
+   - Co-located sites share almost all their contributing land (Jaccard 0.92–1.00), so the top tercile holds about 7
+     distinct exposures; H1's effective number of clusters is 7.6 of 11.
+   - LAWA's own label is "Macrofauna – benthic health score".
+   - The sea mask also classes the lower Waikato River, Lakes Waikare and Whangape, and the Aka Aka polder as sea. All
+     are more than 20 km from any site, with no effect on contributing land.
+6. **F3's title** no longer claims "no dose-response".

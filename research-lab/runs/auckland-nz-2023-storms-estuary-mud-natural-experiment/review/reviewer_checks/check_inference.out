@@ -1,0 +1,41 @@
+IQR of E_route_5: 0.000599222414770675 ; range/IQR = 21.2
+
+== A. study's own functions: determinism of wild_p at 0 (primary.json: H1 0.2813, H2 0.3647) ==
+H1 wild_p(0) study code: 0.28132813281328134
+H2 wild_p(0) study code: 0.3647364736473647
+Webb weights in study code: [-1.2247 -1.     -0.7071  0.7071  1.      1.2247] ; W shape (13, 9999) ; unique values used: 6
+
+== B. independent restricted wild cluster bootstrap (new seed, B = 4999) ==
+H1: beta = 1.932, p(0) = 0.281   (study 1.932, 0.2813)
+H2: delta = -349.3 per unit E -> -0.209 per IQR, p(0) = 0.368   (study -0.209, 0.3647)
+H1 grid 95% CI (0.25 pp grid): [-2.5, 5.5]  (study wild_ci -2.331, 5.666)
+   p-curve: -4.00:0.02 -3.00:0.03 -2.00:0.07 -1.00:0.14 +0.00:0.28 +1.00:0.57 +2.00:0.97 +3.00:0.50 +4.00:0.21 +5.00:0.08 +6.00:0.04 +7.00:0.02 +8.00:0.01
+H2 grid 95% CI per IQR: [-3.00, 3.00]  (study -3.062, 3.195)
+   p-curve (per IQR): -6.00:0.00 -5.00:0.00 -4.00:0.01 -3.00:0.06 -2.00:0.15 -1.00:0.26 +0.00:0.37 +1.00:0.16 +2.00:0.12 +3.00:0.06 +4.00:0.03 +5.00:0.01 +6.00:0.00
+[21 s]
+
+== C. CR2 and CV3 (jackknife) reference intervals ==
+H1 top_2023: est +1.932; CR1 se 1.650; CR2 se 1.621 -> [-1.68, +5.54]; CV3 se 1.708 -> [-1.87, +5.74]
+   leave-one-cluster-out estimates: [2.63 1.39 1.   2.15 1.71 2.76 2.24 1.48 1.33 2.29 1.93]
+H2 E_2023 per IQR: est -0.209; CR1 se 0.159; CR2 se 0.163 -> [-0.56, +0.15]; CV3 se 0.225 -> [-0.70, +0.28]
+   leave-one-cluster-out estimates: [-0.14 -0.27 -0.21 -0.38 -0.21 -0.15 -0.23 -0.21 -0.21 -0.32 -0.16 -0.18
+ -0.24]
+
+== D. H2 leverage: where does the identifying variation in E x 2023 come from? ==
+share of partialled-out SS by harbour: {'Manukau Harbour': 0.867, 'Waitematā Harbour (Central)': 0.046, 'Ōrewa': 0.023, 'Kaipara Harbour (South)': 0.02, 'Mahurangi Harbour': 0.019}
+share by site (top 5): {'Auckland Airport': 0.59, 'Clarks Beach': 0.277, 'Ngapuke Creek': 0.012, 'Te Kapa Inlet': 0.011, 'ORW8': 0.009}
+effective number of clusters G* (CSS 2017, homoskedastic): 1.3 of 13
+H1 G*: 7.6 of 11
+
+== E. H2 without the high-leverage sites (report: dropping the Airport gives -0.18, CR2 +/-0.75) ==
+drop Auckland Airport: delta per full-sample IQR -0.179 (per own IQR -0.180); wild p(0) 0.564; wild grid CI [-2.75, +3.75]; CR2 +/- 0.74; harbours 13
+drop Airport and Clarks Beach: delta per full-sample IQR -0.380 (per own IQR -0.368); wild p(0) 0.764; wild grid CI [-4.75, +4.25]; CR2 +/- 2.75; harbours 12
+
+== F. exploratory: H2 with rank and log exposure (reviewer-side; not preregistered) ==
+rank(E)/56: delta per IQR +0.519; wild p(0) 0.802; wild grid CI [-6.00, +4.75]
+log10(E): delta per IQR +0.028; wild p(0) 0.975; wild grid CI [-4.50, +3.00]
+
+== G. verdicts by interval ==
+H1 rule: Supported if est>=4 & lo>0; Refuted if hi<4. Wild hi 5.67, CR2 hi 5.55 -> Inconclusive under both.
+H2 rule: Supported if lo>0; Refuted if hi<1 (per IQR). Wild hi 3.20 -> Inconclusive; CR2 hi 0.15 -> Refuted.
+[51 s total]

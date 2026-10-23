@@ -1,0 +1,30 @@
+/mnt/citations/research-lab/runs/auckland-nz-2023-storms-estuary-mud-natural-experiment/review/reviewer_checks/check_month.py:17: UserWarning: obj.round has no effect with datetime, timedelta, or period dtypes. Use obj.dt.round(...) instead.
+  print("2023 November sites:", d23[d23.month == 11][["site_id", "estuary", "dt", "dev"]].sort_values("dev").round(1).to_string(index=False))
+2023 deviation by sampling month:
+       mean  median  count
+month                     
+10     3.96    2.31     41
+11     5.09    3.55     15
+2023 November sites:     site_id                     estuary         dt  dev
+LAWA-103217 Waitematā Harbour (Central) 2023-11-01 -9.2
+LAWA-103211 Waitematā Harbour (Central) 2023-11-01 -0.4
+LAWA-103206 Waitematā Harbour (Central) 2023-11-01 -0.1
+LAWA-103214 Waitematā Harbour (Central) 2023-11-01  0.2
+LAWA-103219 Waitematā Harbour (Central) 2023-11-01  0.3
+LAWA-103124   Waitematā Harbour (Upper) 2023-11-01  1.8
+LAWA-103208 Waitematā Harbour (Central) 2023-11-01  2.5
+LAWA-103218 Waitematā Harbour (Central) 2023-11-01  3.5
+LAWA-103213 Waitematā Harbour (Central) 2023-11-01  4.3
+LAWA-103207 Waitematā Harbour (Central) 2023-11-01  4.4
+LAWA-103221 Waitematā Harbour (Central) 2023-11-01  6.3
+LAWA-103123   Waitematā Harbour (Upper) 2023-11-01  6.7
+LAWA-103122   Waitematā Harbour (Upper) 2023-11-01 16.6
+LAWA-103125   Waitematā Harbour (Upper) 2023-11-01 18.6
+LAWA-103220 Waitematā Harbour (Central) 2023-11-01 20.8
+
+2023 sampling dates (distinct): ['2023-10-01', '2023-11-01']
+usual month of each November-2023 site in 2015-2022:
+{'LAWA-103122': [11], 'LAWA-103123': [11], 'LAWA-103124': [11], 'LAWA-103125': [11], 'LAWA-103206': [1], 'LAWA-103207': [1], 'LAWA-103208': [1], 'LAWA-103211': [1], 'LAWA-103213': [1], 'LAWA-103214': [1], 'LAWA-103217': [1], 'LAWA-103218': [1], 'LAWA-103219': [1], 'LAWA-103220': [1], 'LAWA-103221': [1]}
+
+year-only (1 Jan) rows: sites and years
+{'LAWA-103206': [2010, 2012, 2015, 2017, 2019], 'LAWA-103207': [2010, 2012, 2015, 2017, 2019], 'LAWA-103208': [2010, 2012, 2015, 2017, 2019], 'LAWA-103211': [2011, 2013, 2016, 2018, 2020], 'LAWA-103213': [2011, 2013, 2016, 2018, 2020], 'LAWA-103214': [2011, 2013, 2016, 2018, 2020], 'LAWA-103217': [2010, 2012, 2015, 2017, 2019], 'LAWA-103218': [2010, 2012, 2015, 2017, 2019], 'LAWA-103219': [2011, 2013, 2016, 2018, 2020], 'LAWA-103220': [2011, 2013, 2016, 2018, 2020], 'LAWA-103221': [2011, 2013, 2016, 2018, 2020]}

@@ -1,9 +1,10 @@
-# Auckland's estuaries were muddier almost everywhere in the spring after the 2023 storms, but not more so where the storms stripped more land
+# Auckland's estuary sites were muddier in the spring after the 2023 storms; a satellite exposure measure, which mostly captured harvest rather than slips, did not explain where
 
 *56 Auckland Council estuary monitoring sites (13 harbours) with mud content in at least 5 years from 2010 to 2022 and
 a survey in October–November 2023. Each site was given a storm exposure: the share of land draining to the coast
 within 5 km of it that turned from vegetated to bare between November–December 2022 and February–April 2023, mapped
-from Sentinel-2. The site list, the exposure and its terciles were frozen and committed before any outcome was read.*
+from Sentinel-2. The site list, the exposure and its terciles were frozen and committed before any outcome was read.
+This version incorporates an independent review (`review/review.md`; D5).*
 
 **Verdict: Inconclusive (H1 and H2).**
 
@@ -15,19 +16,28 @@ from Sentinel-2. The site list, the exposure and its terciles were frozen and co
     +3.8).
 - **H2 (mud rose with exposure, as a dose-response): Inconclusive.**
   - The estimate is **−0.2 pp** per interquartile range of exposure (wild bootstrap −3.1 to +3.2), on all 56 sites.
-  - The CR2 interval is far narrower, −0.6 to +0.1. It would read as Refuted, but the preregistered inference is the
-    wild bootstrap.
-- **The 2023 difference is not unusual.**
-  - It is larger than any of seven placebo years (2015–2021, range −1.0 to +0.6).
-  - But in 2022, before the storms, top-tercile sites already sat +1.5 pp above bottom-tercile sites against their own
-    means. 2023 was +2.0.
+  - **It is in effect a two-site test.** 87% of the identifying variation comes from two Manukau sites beside the
+    Pukekohe market-garden belt (Auckland Airport and Clarks Beach). The effective number of clusters is about 1 of
+    13.
+  - The CR2 interval (−0.6 to +0.1) is anti-conservative with so few effective clusters. The wild bootstrap governs.
+- **The 2023 difference.**
+  - The top-minus-bottom difference of +1.96 is the largest in the 15-year series and larger than every placebo year
+    (2015–2021, −1.0 to +0.6).
+  - But 2022, before the storms, was already +1.45, so 2023 exceeds the pre-storm year by only about 0.5 pp.
 - **What did happen (post hoc): a region-wide 2023 mud pulse.**
   - Across all 56 sites, 2023 mud content was **+4.3 pp** above each site's own 2010–2022 mean (site bootstrap 2.3 to
-    6.3). Every earlier year's mean lies between −1.3 and +1.7. 70% of sites rose, and by 2024 the excess was +1.1.
+    6.3; harbour-clustered 2.3 to 7.0). Every earlier year's mean lies between −1.3 and +1.7.
+  - 70% of sites rose. By 2024 the excess was +1.1, and that fade holds within the same 42 sites.
+  - **It is concentrated, not universal.** Six harbours rose by 4–16 pp, seven by 2.6 or less, and the site median
+    is +2.6.
+  - It survives the review's artefact checks: continuously sampled sites, leaving each year out, and the change of
+    value format (2020).
   - The fixed-effects design absorbs any shared jump into the year effect, so H1 and H2 cannot see it.
   - With no clean control region, the pulse is consistent with the storms but cannot be attributed to them.
-- **The exposure measure is mostly harvest, not slips.**
+- **The exposure measure is mostly harvest, not slips, so H1 and H2 did not test storm exposure.**
   - 63% of newly bare area is in patches over 5 ha: market-garden and plantation harvest.
+  - Newly bare density is 3.3% around Pukekohe and 1.1% at Woodhill forest, against 0.02–0.12% in the known slip
+    clusters (Muriwai, Piha, Titirangi, Birkenhead).
   - The two most exposed sites sit beside the Pukekohe market-garden belt.
   - An added exposure counting only slip-sized patches (1 ha or less; D3) gives the same answer: +1.2 pp (−4.7 to
     +8.3) and −0.05 pp per IQR (−3.7 to +5.1).
@@ -41,19 +51,17 @@ Auckland Council samples the mud at dozens of estuary sites every spring. We use
 each site, how much nearby land had gone from green to bare over the storm summer. We fixed those numbers and wrote
 them down before looking at any 2023 mud results.
 
-In the spring after the storms, Auckland's estuary sites were muddier than usual almost across the board, by about 4
-percentage points on average, a larger jump than in any year since 2010. A year later most of that extra mud was gone.
+In the spring after the storms, Auckland's estuary sites were muddier than usual, by about 4 percentage points on
+average. That is a larger jump than in any year since 2010, concentrated in about half the harbours. A year later most
+of that extra mud was gone. We cannot prove the storms caused it, because there is no clean comparison region, but
+nothing else about 2023 stands out in the record.
 
-But the extra mud did not follow the stripped land. The most exposed sites gained only about 2 points more than the
-least exposed, which is within the normal year-to-year wobble, and the same sites were already that much muddier in
-2022, before the storms. The biggest rises were at moderately exposed sites. We cannot prove the storms caused the
-region-wide jump, because there is no clean comparison region, but nothing else about 2023 stands out in the
-record.
-
-There is a catch. Most of the land that turned bare was vegetable gardens and pine plantations being harvested, not
-storm slips, so our measure of "storm damage" was blurred. And a single survey each spring may miss mud that arrived
-and washed away within weeks. The study cannot rule out an effect of the size we were looking for. It does show that
-the storms left no large, lasting, exposure-graded mud signal at the monitoring sites.
+Our satellite measure turned out mostly to capture vegetable gardens and pine plantations being harvested, not storm
+slips. So the main test, whether the most exposed sites got muddiest, was really a test of land near harvest, not near
+slips. The sites nearest harvested land gained about 2 points more than the least exposed, but they were already about
+that much muddier in 2022, before the storms. The study cannot rule out an effect of the size we looked for. It could
+not test whether slips specifically fed the extra mud, and a single survey each spring may miss mud that washed
+through within weeks.
 
 ## What was asked
 
@@ -133,7 +141,8 @@ The plan (`plan.md`) was committed before any 2023 or 2024 value was viewed.
 
   The 2012 and 2013 values swing by similar amounts (+1.39 and −1.30).
 - **Leaving out one harbour at a time:** H1 runs from +1.0 to +2.8.
-- **Dropping year-only rows:** +1.45 (−3.21 to +5.81).
+- **Dropping year-only rows:** +1.45 (−3.21 to +5.81). This removes the 11 biennially sampled Waitematā Central
+  sites, 7 of them in the bottom tercile.
 - **Other exposure definitions:**
   - routed 2 km: −2.56; routed 10 km: +1.52;
   - radius-only: −2.15 (2 km), −2.06 (5 km), +2.54 (10 km);
@@ -158,13 +167,17 @@ sites that H1 leaves out.
 | | 2023 mean deviation from 2010–2022 site mean (pp) | range of 2010–2022 yearly means | 2024 |
 |---|---|---|---|
 | all 56 sites | +4.26 (site bootstrap 2.26 to 6.30) | −1.27 to +1.68 | +1.10 |
+
+The regional table's Auckland row (2024: +2.26) uses all Auckland sites with at least 5 pre-2023 years; the +1.10
+here uses the 56 frozen sites.
 | bottom / middle / top tercile | +1.39 / +7.88 / +3.36 | | |
 
 - **Breadth:** 70% of sites rose in 2023.
 - **Why H1 and H2 miss it:** the year fixed effects absorb a shared 2023 jump. H1 and H2 test only whether it was
   graded by exposure.
 - **Other regions** (sites with at least 5 pre-2023 years; exploratory) give no clean control:
-  - Waikato, mostly Coromandel and storm-hit, sampled October–November, as Auckland is: +5.4 (6 sites).
+  - Waikato (Firth of Thames, Raglan, Tairua), sampled October–November, as Auckland is: +5.4 (6 sites), driven by
+    one site at +24.6.
   - Wellington: +4.1 (20 sites).
   - Northland (−3.1) and Hawke's Bay (−7.1) were sampled January to April 2023, around or just after Gabrielle.
   - Canterbury (−2.1) and Southland (+0.4) were not storm-hit.
@@ -182,22 +195,28 @@ Both are Inconclusive by the same rules.
 
 ### Other outcomes
 
-- **Macrofauna.** LAWA's macrofauna index (values 0.3–6.0; by its range an AMBI-type disturbance score) shows no
+- **Macrofauna.** LAWA's "Macrofauna – benthic health score" (values 0.3–6.0; by its range an AMBI-type disturbance
+  score) shows no
   2023 contrast (+0.09, −0.45 to +0.42) and no 2024 contrast (−0.20, −0.59 to +0.20).
 - **Copper, zinc and lead** were sampled at 12 sites in 2023: 8 in the bottom tercile and none in the top. These
   contrasts are therefore not estimable (D4).
 
 ## What this does and does not show
 
-- **A region-wide jump, not a graded one.** Mud content at Auckland's monitoring sites rose by about 4 pp in the
-  spring after the storms, more than in any year since 2010, and most of the rise had faded by 2024. This is post hoc
-  and descriptive, with no control region.
-- **No large, exposure-graded mud signal at the 2023 spring survey.**
-  - The 2023 difference between the most and least exposed sites (+1.9 pp) is the size of ordinary year-to-year
-    swings in this panel, and similar to the pre-storm 2022 value.
-  - There is no dose-response under any exposure definition.
-- **An effect of the preregistered size (4 pp) is not ruled out.** The H1 upper bound is +5.7 pp. As the critic
-  noted in advance, power was about 50%.
+- **A region-wide jump.**
+  - Mud content at Auckland's monitoring sites rose by about 4 pp in the spring after the storms, more than in any
+    year since 2010, and most of the rise had faded by 2024.
+  - It is concentrated in about half the harbours.
+  - This is post hoc and descriptive, with no control region.
+- **The exposure test did not test storm exposure.**
+  - The frozen exposure mostly measures harvest.
+  - The most-exposed-minus-least-exposed difference (+1.9 pp) is the largest in the series, but barely above the
+    pre-storm 2022 value.
+  - The dose-response rests on two sites, so its interval (±3 pp per IQR) cannot show its absence.
+- **An effect of the preregistered size (4 pp) is not ruled out.**
+  - The H1 upper bound is +5.7 pp (p = 0.21 at 4 pp).
+  - The design is weaker than planned: co-located sites share almost all their contributing land, so the top tercile
+    holds about 7 distinct exposures, not 19.
 - **The exposure measure is the weakest link.**
   - **Mixed causes.** Optical "newly bare" mixes storm slips with harvest and construction, and harvest dominates.
   - **Gaps.** Cloudy post-storm imagery leaves about a fifth of contributing land without a valid comparison.
@@ -232,7 +251,11 @@ Both are Inconclusive by the same rules.
   - the high-leverage check for H2;
   - the patch-size shares;
   - the macrofauna scale description.
-- **Independent review:** queued (Fable), per the lab's pacing rule.
+  - D5: framing after the review (the exposure is harvest, so H1/H2 did not test storm exposure; H2 is a two-site
+    test; the 2023 difference is the series maximum but barely above 2022; the pulse is concentrated; smaller wording
+    fixes).
+- **Independent review:** Fable, 2026-10-23, "publish with edits" (`review/review.md`). The verdicts and every number
+  were reproduced. A confirmation pass follows.
 
 ## Reproducing it
 

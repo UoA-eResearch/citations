@@ -115,7 +115,7 @@ def f3():
     ax.set_xscale("log"); ax.set_xlabel("exposure: newly bare share of contributing land (%, log scale)")
     ax.set_ylabel("2023 mud minus 2010-2022 mean (pp)"); ax.grid(color=GRID, lw=0.5); ax.legend(frameon=False, fontsize=8)
     h2 = p["H2"]
-    fig.suptitle("No dose-response: 2023 mud change against storm exposure", x=0.02, ha="left", fontsize=10.5, color=INK)
+    fig.suptitle("2023 mud change against the newly bare exposure (mostly harvest)", x=0.02, ha="left", fontsize=10.5, color=INK)
     fig.savefig(F / "F3_dose_response.png", dpi=170); plt.close(fig)
     caption("F3_dose_response", f"""Each point is a site with a 2023 survey ({len(x)} sites): its 2023 mud content
     minus its own 2010-2022 mean, against its frozen exposure. The preregistered H2 slope, with site and year fixed

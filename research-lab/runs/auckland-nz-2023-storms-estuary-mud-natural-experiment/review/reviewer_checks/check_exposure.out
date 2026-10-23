@@ -1,0 +1,142 @@
+grid (8466, 7037) res 20.0 origin (1676240.0, 6019480.0)
+
+== 1. sea mask: what the '<= 0 m' and 'Sentinel-2 water' rules added beyond DEM no-data ==
+sea cells: 36592496 ; no-data: 33501923 ; <=0 m (not no-data): 2925873 ; S2 water with DEM > 0 m: 164700
+components of '<= 0 m' sea (outside no-data): 95 components; 43 with >= 500 cells; total 2925873 cells (1170 km2)
+    1404058 cells   561.6 km2  centroid lon 174.414 lat -36.610  elev median -1.14 m  (rows 0-7453, cols 126-4735)
+     722990 cells   289.2 km2  centroid lon 174.846 lat -36.692  elev median -1.14 m  (rows 0-7102, cols 2695-7036)
+     165000 cells    66.0 km2  centroid lon 175.122 lat -36.818  elev median -1.34 m  (rows 4358-5437, cols 5020-6075)
+     156413 cells    62.6 km2  centroid lon 175.334 lat -36.169  elev median -1.10 m  (rows 434-1801, cols 6436-7036)
+      66924 cells    26.8 km2  centroid lon 174.747 lat -37.358  elev median -0.61 m  (rows 7262-8425, cols 3580-4632)
+      59175 cells    23.7 km2  centroid lon 174.900 lat -36.780  elev median -0.50 m  (rows 4286-4861, cols 4300-4947)
+      46106 cells    18.4 km2  centroid lon 174.844 lat -36.427  elev median -1.60 m  (rows 2414-2809, cols 4276-4635)
+      39699 cells    15.9 km2  centroid lon 175.371 lat -36.513  elev median -0.90 m  (rows 2846-3709, cols 6580-7036)
+components of S2-water sea above 0 m (rivers, wet flats): 2627 components; 25 with >= 200 cells; total 164700 cells (66 km2)
+      83337 cells    33.3 km2  centroid lon 175.201 lat -37.440  elev median 5.05 m  (rows 8082-8465, cols 5725-6105)
+      20555 cells     8.2 km2  centroid lon 175.056 lat -37.464  elev median 4.49 m  (rows 8298-8465, cols 5132-5410)
+      19922 cells     8.0 km2  centroid lon 175.050 lat -37.356  elev median 2.98 m  (rows 7319-8465, cols 4692-5715)
+       4138 cells     1.7 km2  centroid lon 174.807 lat -37.018  elev median 0.35 m  (rows 5858-5933, cols 4140-4295)
+       3469 cells     1.4 km2  centroid lon 174.835 lat -37.069  elev median 0.66 m  (rows 6101-6256, cols 4259-4432)
+       2689 cells     1.1 km2  centroid lon 173.899 lat -36.134  elev median 0.70 m  (rows 582-1282, cols 0-456)
+       2649 cells     1.1 km2  centroid lon 174.774 lat -37.088  elev median 0.49 m  (rows 6257-6316, cols 4019-4145)
+       2369 cells     0.9 km2  centroid lon 174.762 lat -37.006  elev median 0.37 m  (rows 5787-5863, cols 3983-4076)
+elevation of S2-water sea cells above 0 m: quantiles [ 5.01  5.05  5.05 17.19]
+
+== 2. is each site's own cell sea or land, and how high is it? ==
+sites whose own cell is sea: 49 of 56 ; site-cell DEM (m) quantiles: [-1.31 -0.86 -0.57 -0.17  1.2 ] ; no-data at site: 0
+
+== 3. contributing land C(R): nesting, extent and overlap ==
+                   site                     estuary tercile  C2<C5  C5<C10  any_sea_in_C5  any_nodata_C5  C5_km2  p50_dist_km  p95_dist_km  max_dist_km  share_C5_within_5km  share_C5_in_radius5
+        Henderson Creek Waitematā Harbour (Central)  bottom   True    True          False          False   81.50         4.84        11.33        13.58                 0.52                 0.52
+            Hobsonville Waitematā Harbour (Central)  middle   True    True          False          False   55.62         3.73         5.58         7.18                 0.88                 0.88
+             Meola Reef Waitematā Harbour (Central)  middle   True    True          False          False   61.06         4.41         8.18         9.72                 0.64                 0.64
+        Shoal Bay Upper Waitematā Harbour (Central)  bottom   True    True          False          False   50.16         3.65         6.18         7.08                 0.76                 0.76
+             Whau River Waitematā Harbour (Central)  bottom   True    True          False          False  167.69         7.28        12.10        13.95                 0.27                 0.27
+         Hellyers Creek   Waitematā Harbour (Upper)  middle   True    True          False          False   48.34         3.10         5.46         6.61                 0.92                 0.92
+    Herald Island North   Waitematā Harbour (Upper)  bottom   True    True          False          False   63.71         3.55         5.81         7.30                 0.86                 0.86
+Herald Island Waiarohia   Waitematā Harbour (Upper)  bottom   True    True          False          False   69.23         3.84         6.02         8.10                 0.79                 0.79
+            Lucas Creek   Waitematā Harbour (Upper)  middle   True    True          False          False   83.51         4.09         7.16         9.09                 0.68                 0.68
+           Kaipara Bank     Kaipara Harbour (South)  middle   True    True          False          False   86.42         5.04         7.45         9.06                 0.49                 0.49
+         Kakaraia Flats     Kaipara Harbour (South)  bottom   True    True          False          False   50.04         5.59         9.52        10.75                 0.41                 0.41
+          Ngapuke Creek     Kaipara Harbour (South)     top   True    True          False          False   38.55         4.72         7.79         8.98                 0.58                 0.58
+         Te Ngaio Point     Kaipara Harbour (South)     top   True    True          False          False   36.31         3.52         5.36         6.13                 0.90                 0.90
+            Dyers Creek           Mahurangi Harbour  bottom   True    True          False          False   66.31         3.89         7.19         9.47                 0.82                 0.82
+       Hamilton Landing           Mahurangi Harbour  middle   True    True          False          False   61.11         3.66         6.06         7.33                 0.86                 0.86
+           Jamieson Bay           Mahurangi Harbour  middle   True    True          False          False   98.67         5.42        10.51        11.96                 0.44                 0.44
+            Mid Harbour           Mahurangi Harbour  middle   True    True          False          False   54.68         3.72         6.43         7.64                 0.79                 0.79
+          Te Kapa Inlet           Mahurangi Harbour  bottom   True    True          False          False   51.21         4.30         6.59         7.88                 0.70                 0.70
+                   MNG3               Mangemangeroa     top   True    True          False          False   67.29         4.43         7.53         9.19                 0.61                 0.61
+                   MNG5               Mangemangeroa     top   True    True          False          False   67.28         4.49         7.57         9.19                 0.60                 0.60
+                   MNG6               Mangemangeroa     top   True    True          False          False   67.25         4.50         7.55         9.15                 0.60                 0.60
+       Auckland Airport             Manukau Harbour     top   True    True          False          False   55.96         4.04         8.48        10.80                 0.73                 0.73
+           Clarks Beach             Manukau Harbour     top   True    True          False          False   69.97         5.23         8.81        10.21                 0.46                 0.46
+                   OKR1                       Ōkura     top   True    True          False          False   51.11         3.58         5.93         7.79                 0.87                 0.87
+                   OKR9                       Ōkura     top   True    True          False          False   43.37         2.74         4.64         6.06                 0.98                 0.98
+                   OKR7                       Ōkura     top   True    True          False          False   43.58         2.89         4.90         6.54                 0.96                 0.96
+                   ORW1                       Ōrewa     top   True    True          False          False   80.22         4.44         7.62         9.40                 0.64                 0.64
+                   ORW4                       Ōrewa     top   True    True          False          False   75.20         4.14         7.10         8.82                 0.70                 0.70
+                   ORW8                       Ōrewa     top   True    True          False          False   73.38         3.85         6.60         8.29                 0.74                 0.74
+                   PUH1                       Pūhoi  middle   True    True          False          False  112.12         6.77        10.83        12.21                 0.35                 0.35
+                   PUH4                       Pūhoi  middle   True    True          False          False  115.33         6.42        10.60        11.80                 0.36                 0.36
+                   PUH7                       Pūhoi  middle   True    True          False          False  113.75         5.91        10.06        11.44                 0.42                 0.42
+                   TRN1                     Tūranga     top   True    True          False          False   81.78         4.47         7.71         9.90                 0.61                 0.61
+                   TRN4                     Tūranga     top   True    True          False          False   66.38         4.02         6.94         8.73                 0.71                 0.71
+                   TRN7                     Tūranga     top   True    True          False          False   65.22         3.63         6.22         7.97                 0.81                 0.81
+                   WKP1                    Waikōpua     top   True    True          False          False   81.92         4.67         8.26        10.46                 0.57                 0.57
+                   WKP3                    Waikōpua     top   True    True          False          False   81.83         4.47         7.98        10.21                 0.61                 0.61
+                   WKP6                    Waikōpua     top   True    True          False          False   81.45         4.33         8.10        10.36                 0.64                 0.64
+                   WWR1                     Waiwera  middle   True    True          False          False  113.84         6.47        10.61        12.35                 0.36                 0.36
+                   WWR3                     Waiwera  middle   True    True          False          False  113.88         6.39        10.52        12.17                 0.37                 0.37
+                   WWR8                     Waiwera  middle   True    True          False          False  113.80         5.84         9.99        11.72                 0.42                 0.42
+                   WNG1                  Whangateau  bottom   True    True          False          False   85.74         4.45         8.40        10.32                 0.59                 0.59
+                   WNG4                  Whangateau  bottom   True    True          False          False   51.23         3.39         5.47         6.53                 0.90                 0.90
+                   WNG7                  Whangateau  bottom   True    True          False          False   51.17         3.23         5.19         6.37                 0.93                 0.93
+                Chelsea Waitematā Harbour (Central)  bottom   True    True          False          False   60.21         4.39         8.65        10.36                 0.64                 0.64
+               Coxs Bay Waitematā Harbour (Central)  middle   True    True          False          False   59.21         4.17         7.75         9.28                 0.69                 0.69
+        Henderson Lower Waitematā Harbour (Central)  bottom   True    True          False          False  125.21         7.16        12.50        14.06                 0.35                 0.35
+            Meola Inner Waitematā Harbour (Central)  middle   True    True          False          False   60.46         4.15         7.29         8.71                 0.74                 0.74
+                Motions Waitematā Harbour (Central)  middle   True    True          False          False   59.18         4.11         7.29         8.71                 0.75                 0.75
+           Oakley Creek Waitematā Harbour (Central)  bottom   True    True          False          False   80.95         4.25         6.85         8.04                 0.68                 0.68
+    Shoal Bay Hillcrest Waitematā Harbour (Central)  bottom   True    True          False          False   50.02         3.47         6.12         7.16                 0.79                 0.79
+          Whau Entrance Waitematā Harbour (Central)  bottom   True    True          False          False  164.21         6.90        11.25        12.95                 0.30                 0.30
+             Whau Lower Waitematā Harbour (Central)  bottom   True    True          False          False  173.48         5.97         9.78        11.76                 0.36                 0.36
+             Whau Upper Waitematā Harbour (Central)  middle   True    True          False          False   55.74         3.18         6.56         8.06                 0.85                 0.85
+            Whau Wairau Waitematā Harbour (Central)  bottom   True    True          False          False  113.80         4.50         9.15        11.10                 0.59                 0.59
+                   OKR3                       Ōkura  middle   True    True          False          False   44.60         3.19         5.58         7.31                 0.91                 0.91
+nesting violations: 0 0 ; sea/nodata cells in C5: 0 0
+
+== 4. within-harbour overlap of C(5) (Jaccard) -> how many distinct exposures the terciles really contain ==
+   Kaipara Harbour (South)        n= 4  Jaccard C5 min 0.00 median 0.00  E range 0.097-0.332%
+   Mahurangi Harbour              n= 5  Jaccard C5 min 0.15 median 0.47  E range 0.018-0.121%
+   Mangemangeroa                  n= 3  Jaccard C5 min 1.00 median 1.00  E range 0.180-0.180%
+   Manukau Harbour                n= 2  Jaccard C5 min 0.00 median 0.00  E range 0.936-1.288%
+   Pūhoi                          n= 3  Jaccard C5 min 0.95 median 0.96  E range 0.135-0.137%
+   Tūranga                        n= 3  Jaccard C5 min 0.80 median 0.81  E range 0.158-0.184%
+   Waikōpua                       n= 3  Jaccard C5 min 0.98 median 0.98  E range 0.158-0.158%
+   Waitematā Harbour (Central)    n=16  Jaccard C5 min 0.00 median 0.14  E range 0.061-0.129%
+   Waitematā Harbour (Upper)      n= 4  Jaccard C5 min 0.50 median 0.66  E range 0.091-0.113%
+   Waiwera                        n= 3  Jaccard C5 min 1.00 median 1.00  E range 0.138-0.138%
+   Whangateau                     n= 3  Jaccard C5 min 0.50 median 0.50  E range 0.064-0.099%
+   Ōkura                          n= 4  Jaccard C5 min 0.85 median 0.92  E range 0.146-0.148%
+   Ōrewa                          n= 3  Jaccard C5 min 0.91 median 0.94  E range 0.288-0.308%
+Whitford embayment (Mangemangeroa+Turanga+Waikopua, 9 sites): shared/union C5 = 0.78
+
+== 5. newly bare: patches, where the big ones are, and the slip-sized share ==
+patches 10622; newly bare 10 m px 341217 (3412 ha); cells<=25 share 0.143; cells>125 share 0.625
+   patches of <= 1 cells: 5393 (1.8% of area)
+   patches of <= 2 cells: 7273 (3.3% of area)
+   patches of <= 5 cells: 8854 (6.0% of area)
+   patches of <= 10 cells: 9489 (8.7% of area)
+   patches of <= 25 cells: 9990 (14.3% of area)
+largest 12 patches:
+      7872 px    78.7 ha  lon 174.431 lat -36.499  cells 2225
+      6344 px    63.4 ha  lon 174.898 lat -37.351  cells 1734
+      6126 px    61.3 ha  lon 175.002 lat -37.315  cells 1847
+      6043 px    60.4 ha  lon 174.808 lat -37.117  cells 1751
+      5804 px    58.0 ha  lon 174.969 lat -37.347  cells 1565
+      4960 px    49.6 ha  lon 174.251 lat -36.469  cells 1447
+      4648 px    46.5 ha  lon 174.984 lat -37.318  cells 1323
+      4497 px    45.0 ha  lon 174.712 lat -37.217  cells 1304
+      4208 px    42.1 ha  lon 175.000 lat -37.302  cells 1193
+      3970 px    39.7 ha  lon 174.783 lat -37.111  cells 1112
+      3890 px    38.9 ha  lon 174.877 lat -37.333  cells 1138
+      3560 px    35.6 ha  lon 174.896 lat -37.338  cells 1041
+   Muriwai (slips)                  land     62 km2  valid share 0.99  newly bare 0.116% of valid
+   Piha/Karekare (slips)            land     48 km2  valid share 0.85  newly bare 0.112% of valid
+   Titirangi (slips)                land     56 km2  valid share 0.91  newly bare 0.023% of valid
+   North Shore Birkenhead (slips)   land     55 km2  valid share 0.87  newly bare 0.070% of valid
+   Pukekohe market gardens          land     79 km2  valid share 0.79  newly bare 3.306% of valid
+   Woodhill forest                  land     78 km2  valid share 1.00  newly bare 1.063% of valid
+   Riverhead/Kumeu                  land     78 km2  valid share 0.96  newly bare 0.294% of valid
+   Clevedon                         land     78 km2  valid share 0.95  newly bare 0.547% of valid
+
+== 6. exposure vs data quality ==
+Spearman E_route_5 vs valid_share_route_5: 0.362
+valid share by tercile: {'bottom': 0.8, 'middle': 0.73, 'top': 0.97}
+contour-filled share (any site > 0?): 0.0
+tercile agreement primary vs slip exposure:
+tercile_slip  bottom  middle  top
+tercile                          
+bottom            12       5    1
+middle             3       7    9
+top                3       7    9

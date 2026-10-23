@@ -1,0 +1,298 @@
+sheets: ['Site list', 'Data', 'Dataset Notices']
+columns: ['Council/Agency', 'Region', 'LAWA Site ID', 'Site name', 'Estuary name', 'Latitude', 'Longitude', 'Date sampled (YYYY/MM/DD)', 'Indicator', 'Units', 'Indicator value', 'Standard deviation']
+
+== 1. one row per site-year? ==
+site-years with >1 row: 0 ; NaN values: 0
+rows 2010-2024: 712 (primary.json panel rows = 712)
+rows outside 2010-2024 at these sites: {}
+year-only (1 Jan) rows by year: {2010: 5, 2011: 6, 2012: 5, 2013: 6, 2015: 5, 2016: 6, 2017: 5, 2018: 6, 2019: 5, 2020: 6}
+month of sampling by year (counts):
+dt    1   9   10  11
+year                
+2010   5   0  36   4
+2011   6  25  12   4
+2012   5  25  12   4
+2013   6  25  12   4
+2014   0   0  39   4
+2015   5   0  41   4
+2016   6   0  41   4
+2017   5   0  39   4
+2018   6   0  40   4
+2019   5   0  41   4
+2020   6   0  39   4
+2021   0   0  40   4
+2022   0   0  40   4
+2023   0   0  41  15
+2024   0   0  38   4
+
+== 2. design matrix rank ==
+H1: n = 473 k = 53 rank = 53
+H2: n = 712 k = 72 rank = 72
+
+== 3. terciles: built from exposure only? ==
+terciles() in analysis.py reproduces exposure.csv tercile: True
+tercile counts: {'middle': 19, 'top': 19, 'bottom': 18}
+tercile by harbour (sites):
+tercile                      bottom  middle  top
+estuary                                         
+Kaipara Harbour (South)           1       1    2
+Mahurangi Harbour                 2       3    0
+Mangemangeroa                     0       0    3
+Manukau Harbour                   0       0    2
+Pūhoi                             0       3    0
+Tūranga                           0       0    3
+Waikōpua                          0       0    3
+Waitematā Harbour (Central)      10       6    0
+Waitematā Harbour (Upper)         2       2    0
+Waiwera                           0       3    0
+Whangateau                        3       0    0
+Ōkura                             0       1    3
+Ōrewa                             0       0    3
+
+== 4. site composition by year and tercile ==
+tercile  bottom  middle  top  All
+year                             
+2010         13      15   17   45
+2011         12      17   18   47
+2012         13      15   18   46
+2013         12      17   18   47
+2014         10      14   19   43
+2015         15      16   19   50
+2016         14      18   19   51
+2017         14      15   19   48
+2018         14      17   19   50
+2019         15      16   19   50
+2020         13      17   19   49
+2021         11      14   19   44
+2022         11      15   18   44
+2023         18      19   19   56
+2024         10      14   18   42
+All         195     239  278  712
+
+sites with exactly 5-6 pre-2023 years: their sampled years
+  LAWA-103115 Henderson Creek        Waitematā Harbour (Central)    tercile=bottom  years=[2015, 2016, 2018, 2019, 2021, 2022, 2023]
+  LAWA-103117 Meola Reef             Waitematā Harbour (Central)    tercile=middle  years=[2015, 2016, 2019, 2021, 2022, 2023]
+  LAWA-103206 Chelsea                Waitematā Harbour (Central)    tercile=bottom  years=[2010, 2012, 2015, 2017, 2019, 2023]
+  LAWA-103207 Coxs Bay               Waitematā Harbour (Central)    tercile=middle  years=[2010, 2012, 2015, 2017, 2019, 2023]
+  LAWA-103208 Henderson Lower        Waitematā Harbour (Central)    tercile=bottom  years=[2010, 2012, 2015, 2017, 2019, 2023]
+  LAWA-103211 Meola Inner            Waitematā Harbour (Central)    tercile=middle  years=[2011, 2013, 2016, 2018, 2020, 2023]
+  LAWA-103213 Motions                Waitematā Harbour (Central)    tercile=middle  years=[2011, 2013, 2016, 2018, 2020, 2023]
+  LAWA-103214 Oakley Creek           Waitematā Harbour (Central)    tercile=bottom  years=[2011, 2013, 2016, 2018, 2020, 2023]
+  LAWA-103217 Shoal Bay Hillcrest    Waitematā Harbour (Central)    tercile=bottom  years=[2010, 2012, 2015, 2017, 2019, 2023]
+  LAWA-103218 Whau Entrance          Waitematā Harbour (Central)    tercile=bottom  years=[2010, 2012, 2015, 2017, 2019, 2023]
+  LAWA-103219 Whau Lower             Waitematā Harbour (Central)    tercile=bottom  years=[2011, 2013, 2016, 2018, 2020, 2023]
+  LAWA-103220 Whau Upper             Waitematā Harbour (Central)    tercile=middle  years=[2011, 2013, 2016, 2018, 2020, 2023]
+  LAWA-103221 Whau Wairau            Waitematā Harbour (Central)    tercile=bottom  years=[2011, 2013, 2016, 2018, 2020, 2023]
+
+last pre-2023 sampling year per site (counts):
+{2019: 5, 2020: 6, 2021: 1, 2022: 44}
+
+== 5. the post-hoc 2023 pulse: composition ==
+all 56: mean dev 2023 = 4.261  median = 2.603
+sites last sampled 2021-22 (n=45): mean dev 2023 = 4.575, median 2.716, share up 0.69
+sites returning after a gap (last pre year < 2021; n=11): mean dev 2023 = 2.975, median 2.491
+    site_id                     estuary tercile  last_pre  gap     y   dev  base
+LAWA-103206 Waitematā Harbour (Central)  bottom      2019    4 11.43 -0.05 11.49
+LAWA-103207 Waitematā Harbour (Central)  middle      2019    4 12.17  4.43  7.74
+LAWA-103208 Waitematā Harbour (Central)  bottom      2019    4 92.68  2.49 90.18
+LAWA-103211 Waitematā Harbour (Central)  middle      2020    3 61.93 -0.40 62.33
+LAWA-103213 Waitematā Harbour (Central)  middle      2020    3 25.57  4.34 21.23
+LAWA-103214 Waitematā Harbour (Central)  bottom      2020    3 79.07  0.19 78.88
+LAWA-103217 Waitematā Harbour (Central)  bottom      2019    4 77.27 -9.19 86.46
+LAWA-103218 Waitematā Harbour (Central)  bottom      2019    4 18.19  3.55 14.64
+LAWA-103219 Waitematā Harbour (Central)  bottom      2020    3 92.86  0.34 92.52
+LAWA-103220 Waitematā Harbour (Central)  middle      2020    3 75.93 20.76 55.17
+LAWA-103221 Waitematā Harbour (Central)  bottom      2020    3 80.74  6.28 74.46
+
+2023 mean dev by tercile, continuous sites only:
+         mean  median  count
+tercile                     
+bottom   1.95   -0.16     11
+middle   8.04    3.74     15
+top      3.36    2.72     19
+2023 mean dev by tercile, all:
+         mean  median  count
+tercile                     
+bottom   1.39    0.26     18
+middle   7.88    4.34     19
+top      3.36    2.72     19
+
+2023 mean dev by harbour:
+                              mean  median  count
+estuary                                          
+Pūhoi                        -1.17   -0.52      3
+Ōrewa                        -1.03   -2.35      3
+Mahurangi Harbour             0.65   -0.39      5
+Whangateau                    1.43   -0.31      3
+Manukau Harbour               1.47    1.47      2
+Tūranga                       1.69    0.05      3
+Waitematā Harbour (Central)   2.61    1.41     16
+Ōkura                         4.31    5.08      4
+Waikōpua                      5.68    3.12      3
+Mangemangeroa                 8.46    5.86      3
+Kaipara Harbour (South)       9.43    5.90      4
+Waitematā Harbour (Upper)    10.91   11.64      4
+Waiwera                      15.62   16.46      3
+
+2024: sites with 2024 = 42 ; their 2023 mean dev = 4.67 ; their 2024 mean dev = 1.104
+sites without 2024: their 2023 mean dev = 3.032 n = 14
+
+== 6. yearly mean deviation, leave-that-year-out baseline (fair comparison for 'largest since 2010') ==
+ year  n  mean_dev_loo  median_dev_loo  mean_dev_in_baseline
+ 2010 45         -0.21           -0.46                 -0.18
+ 2011 47          1.84            0.19                  1.68
+ 2012 46          0.80           -0.26                  0.74
+ 2013 47         -1.32           -0.66                 -1.21
+ 2014 43         -1.08           -0.78                 -0.99
+ 2015 50         -1.39           -0.92                 -1.27
+ 2016 51         -0.60           -0.79                 -0.58
+ 2017 48          0.10            0.01                  0.07
+ 2018 50          1.27            0.50                  1.11
+ 2019 50          0.64            0.05                  0.59
+ 2020 49         -0.07           -0.12                  0.02
+ 2021 44         -0.52           -0.68                 -0.47
+ 2022 44          0.45           -0.42                  0.42
+ 2023 56          4.26            2.60                  4.26
+ 2024 42          1.10            0.51                  1.10
+
+== 7. harbour-cluster bootstrap for the 2023 pulse (site bootstrap in the report) ==
+harbour-cluster bootstrap 95%: [2.33 6.96] (report: site bootstrap 2.26 to 6.30)
+continuous sites only, harbour-cluster bootstrap 95%: [2.08 7.36]
+SD of pre-2023 yearly means (in-baseline): 0.9
+
+== 8. value precision by year (a laboratory/reporting change would show here) ==
+dec   0  1   2  3  4  5   6
+year                       
+2010  0  4  32  1  0  0   8
+2011  1  1  19  1  0  3  22
+2012  0  1  15  5  0  4  21
+2013  0  2  19  1  1  3  21
+2014  0  1  16  1  0  2  23
+2015  0  3  17  0  0  5  25
+2016  0  6  13  7  0  3  22
+2017  0  3  16  4  1  1  23
+2018  1  1  23  0  0  3  22
+2019  0  3  14  0  1  2  30
+2020  0  0   0  1  0  2  46
+2021  0  0   0  0  0  2  42
+2022  0  0   0  0  2  0  42
+2023  0  0   1  0  1  2  52
+2024  0  0   0  0  0  2  40
+share of values that are whole numbers, by year:
+{2010: 0.0, 2011: 0.02, 2012: 0.0, 2013: 0.0, 2014: 0.0, 2015: 0.0, 2016: 0.0, 2017: 0.0, 2018: 0.02, 2019: 0.0, 2020: 0.0, 2021: 0.0, 2022: 0.0, 2023: 0.0, 2024: 0.0}
+
+== 9. event study: pre-period variability of top-minus-bottom ==
+2010-2021 top-bottom: mean -0.1 SD 0.71 ; 2022 = 1.454 ; 2023 = 1.964 (2.9 SD)
+FE placebo beta for 2022 (pre-2023 data): 1.61
+FE linear differential pre-trend (pp per year, top vs bottom, 2010-2022): 0.02
+
+== 10. other outcomes: macrofauna values and metadata ==
+Macrofauna value range: {'count': 1056.0, 'mean': 3.8, 'std': 1.15, 'min': 0.34, '25%': 2.85, '50%': 4.0, '75%': 4.79, 'max': 5.97}
+Indicators: ['Arsenic', 'Copper', 'Lead', 'Macrofauna', 'Mercury', 'Mud_content', 'Zinc', 'Cadmium', 'Total_PAH', 'Chromium', 'Nickel', 'Silver', 'cadmium', 'Zinc ', 'Total_DDT']
+--- sheet Site list: shape (449, 23)
+                  0         1             2                       3                                                                                 4                        5          6           7                                             8                    9                              10         11           12         13            14             15           16           17            18            19   20         21                                 22
+0     Council/Agency    Region  LAWA Site ID               Site name                                                                        Estuary ID             Estuary name   Latitude   Longitude                                  Estuary type  Intertidal/Subtidal  Monitored indicators (Yes/No)        NaN          NaN        NaN           NaN            NaN          NaN          NaN           NaN           NaN  NaN        NaN                                NaN
+1                NaN       NaN           NaN                     NaN  Taken from NIWAs Coastal Explorer database, or assigned by LAWA if not available                      NaN        NaN         NaN  One of Estuary Trophic Index classifications                  NaN                    Mud content  Lead (Pb)  Copper (Cu)  Zinc (Zn)  Cadmium (Cd)  Chromium (Cr)  Nickel (Ni)  Silver (Ag)  Mercury (Hg)  Arsenic (As)  PAH  Total DDT  Macrofauna - benthic health score
+2   Auckland Council  Auckland   LAWA-103130          Haratahi Creek                                                                               221  Kaipara Harbour (South) -36.481818  174.288547                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+3   Auckland Council  Auckland   LAWA-103131            Kaipara Bank                                                                               221  Kaipara Harbour (South) -36.600732  174.396127                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+4   Auckland Council  Auckland   LAWA-103132           Kaipara Flats                                                                               221  Kaipara Harbour (South) -36.497253  174.363742                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+5   Auckland Council  Auckland   LAWA-103133          Kakaraia Flats                                                                               221  Kaipara Harbour (South) -36.428884  174.381989                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+6   Auckland Council  Auckland   LAWA-103134           Ngapuke Creek                                                                               221  Kaipara Harbour (South) -36.557277  174.384283                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+7   Auckland Council  Auckland   LAWA-103135          Te Ngaio Point                                                                               221  Kaipara Harbour (South)  -36.39404  174.296217                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+8   Auckland Council  Auckland   LAWA-103136              Cowans Bay                                                                                78        Mahurangi Harbour -36.449806  174.712343                                          SIDE                  NaN                            Yes        Yes          Yes        Yes           Yes             No           No           No           Yes           Yes   No         No                                Yes
+9   Auckland Council  Auckland   LAWA-103137             Dyers Creek                                                                                78        Mahurangi Harbour -36.459288  174.708657                                          SIDE                  NaN                            Yes        Yes          Yes        Yes           Yes             No           No           No           Yes           Yes   No         No                                Yes
+10  Auckland Council  Auckland   LAWA-103138        Hamilton Landing                                                                                78        Mahurangi Harbour -36.434883  174.715841                                          SIDE                  NaN                            Yes        Yes          Yes        Yes           Yes             No           No           No           Yes           Yes   No         No                                Yes
+11  Auckland Council  Auckland   LAWA-103139            Jamieson Bay                                                                                78        Mahurangi Harbour -36.495061  174.715817                                          SIDE                  NaN                            Yes        Yes          Yes        Yes           Yes             No           No           No           Yes           Yes   No         No                                Yes
+12  Auckland Council  Auckland   LAWA-103140             Mid Harbour                                                                                78        Mahurangi Harbour -36.452194  174.729288                                          SIDE                  NaN                            Yes        Yes          Yes        Yes           Yes             No           No           No           Yes           Yes   No         No                                Yes
+13  Auckland Council  Auckland   LAWA-103141           Te Kapa Inlet                                                                                78        Mahurangi Harbour -36.478507   174.73417                                          SIDE                  NaN                            Yes        Yes          Yes        Yes           Yes             No           No           No           Yes           Yes   No         No                                Yes
+14  Auckland Council  Auckland   LAWA-103142                    MNG3                                                                                90            Mangemangeroa    -36.911  174.955517                                          DSDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+15  Auckland Council  Auckland   LAWA-103143                    MNG5                                                                                90            Mangemangeroa  -36.91095  174.953883                                          DSDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+16  Auckland Council  Auckland   LAWA-103144                    MNG6                                                                                90            Mangemangeroa -36.911317  174.953417                                          DSDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+17  Auckland Council  Auckland   LAWA-103145                    MNG9                                                                                90            Mangemangeroa -36.914633  174.948817                                          DSDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+18  Auckland Council  Auckland   LAWA-103178              Anns Creek                                                                               219          Manukau Harbour -36.929831  174.822102                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+19  Auckland Council  Auckland   LAWA-103146        Auckland Airport                                                                               219          Manukau Harbour -37.017407  174.820055                                          SIDE                  NaN                            Yes         No           No         No            No             No           No           No            No            No   No         No                                Yes
+20  Auckland Council  Auckland   LAWA-103179               Big Muddy                                                                               219          Manukau Harbour -36.973715  174.619504                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+21  Auckland Council  Auckland   LAWA-103180          Blockhouse Bay                                                                               219          Manukau Harbour -36.929139  174.709837                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+22  Auckland Council  Auckland   LAWA-103181          Bottle Top Bay                                                                               219          Manukau Harbour -37.070722  174.905946                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+23  Auckland Council  Auckland   LAWA-103147               Cape Horn                                                                               219          Manukau Harbour -36.957295   174.67392                                          SIDE                  NaN                            Yes         No           No         No            No             No           No           No            No            No   No         No                                Yes
+24  Auckland Council  Auckland   LAWA-103148            Clarks Beach                                                                               219          Manukau Harbour  -37.12254  174.702698                                          SIDE                  NaN                            Yes         No           No         No            No             No           No           No            No            No   No         No                                Yes
+25  Auckland Council  Auckland   LAWA-103182          Doc Island Mud                                                                               219          Manukau Harbour -37.092535  174.915943                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+26  Auckland Council  Auckland   LAWA-103183             Drury Inner                                                                               219          Manukau Harbour -37.089475   174.91842                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+27  Auckland Council  Auckland   LAWA-103149           Elletts Beach                                                                               219          Manukau Harbour -37.082227  174.794774                                          SIDE                  NaN                            Yes         No           No         No            No             No           No           No            No            No   No         No                                Yes
+28  Auckland Council  Auckland   LAWA-103184                 Harania                                                                               219          Manukau Harbour -36.944376  174.818687                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+29  Auckland Council  Auckland   LAWA-103185            Hillsborough                                                                               219          Manukau Harbour -36.928698  174.760394                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+30  Auckland Council  Auckland   LAWA-103150            Karaka Point                                                                               219          Manukau Harbour -37.046482  174.833006                                          SIDE                  NaN                            Yes         No           No         No            No             No           No           No            No            No   No         No                                Yes
+31  Auckland Council  Auckland   LAWA-103200  Karaka/Te Hihi Estuary                                                                               219          Manukau Harbour -37.094904  174.793914                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+32  Auckland Council  Auckland   LAWA-103186            Little Muddy                                                                               219          Manukau Harbour -36.956067   174.64504                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+33  Auckland Council  Auckland   LAWA-103187        Māngere Cemetery                                                                               219          Manukau Harbour -36.931494  174.795735                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+34  Auckland Council  Auckland   LAWA-103197   Mauku/Taihiki River A                                                                               219          Manukau Harbour -37.156382  174.731518                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+35  Auckland Council  Auckland   LAWA-103198   Mauku/Taihiki River B                                                                               219          Manukau Harbour   -37.1569  174.736147                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+36  Auckland Council  Auckland   LAWA-103188                Mill Bay                                                                               219          Manukau Harbour -36.994523  174.607202                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+37  Auckland Council  Auckland   LAWA-103189       Pahurehure Middle                                                                               219          Manukau Harbour -37.058949  174.884678                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+38  Auckland Council  Auckland   LAWA-103190     Pahurehure Papakura                                                                               219          Manukau Harbour -37.060426  174.926212                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+39  Auckland Council  Auckland   LAWA-103191        Pahurehure Upper                                                                               219          Manukau Harbour -37.054086  174.907531                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+40  Auckland Council  Auckland   LAWA-103192          Papakura Lower                                                                               219          Manukau Harbour -37.048246  174.897929                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+41  Auckland Council  Auckland   LAWA-103151          Puhinui Stream                                                                               219          Manukau Harbour -37.035442  174.841712                                          SIDE                  NaN                            Yes         No           No         No            No             No           No           No            No            No   No         No                                Yes
+42  Auckland Council  Auckland   LAWA-103193           Puhinui Upper                                                                               219          Manukau Harbour -37.027277  174.855544                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+43  Auckland Council  Auckland   LAWA-103194          Pukaki Airport                                                                               219          Manukau Harbour -37.000512  174.805639                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+44  Auckland Council  Auckland   LAWA-103195            Pukaki Upper                                                                               219          Manukau Harbour -36.989716  174.802519                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+45  Auckland Council  Auckland   LAWA-103196         Pukaki Waokauri                                                                               219          Manukau Harbour -36.995317  174.815292                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+46  Auckland Council  Auckland   LAWA-103199                Tararata                                                                               219          Manukau Harbour -36.945034  174.802768                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+47  Auckland Council  Auckland   LAWA-103201        Waimahia Central                                                                               219          Manukau Harbour  -37.04684  174.875281                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+48  Auckland Council  Auckland   LAWA-103202                  Waiuku                                                                               219          Manukau Harbour -37.241451  174.729326                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+49  Auckland Council  Auckland   LAWA-103203             Whangamaire                                                                               219          Manukau Harbour -37.070581  174.877497                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+50  Auckland Council  Auckland   LAWA-103204             Whangapouri                                                                               219          Manukau Harbour -37.101086  174.911568                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+51  Auckland Council  Auckland   LAWA-103152                    OKR1                                                                                86                    Ōkura   -36.6654   174.73445                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+52  Auckland Council  Auckland   LAWA-104074                    OKR3                                                                                86                    Ōkura   -36.6677  174.729717                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+53  Auckland Council  Auckland   LAWA-103155                    OKR7                                                                                86                    Ōkura -36.670967  174.721883                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+54  Auckland Council  Auckland   LAWA-103154                    OKR9                                                                                86                    Ōkura -36.673667  174.717683                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+55  Auckland Council  Auckland   LAWA-103156                    ORW1                                                                                82                    Ōrewa -36.599183  174.696933                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+56  Auckland Council  Auckland   LAWA-103157                    ORW4                                                                                82                    Ōrewa -36.599867  174.690383                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+57  Auckland Council  Auckland   LAWA-103158                    ORW8                                                                                82                    Ōrewa -36.597583  174.682983                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+58  Auckland Council  Auckland   LAWA-103159                    PUH1                                                                                80                    Pūhoi -36.526867  174.710017                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+59  Auckland Council  Auckland   LAWA-103160                    PUH4                                                                                80                    Pūhoi -36.530267  174.707333                                          SIDE                  NaN                            Yes        Yes          Yes        Yes            No             No           No           No           Yes           Yes   No         No                                Yes
+--- sheet Dataset Notices: shape (28, 1)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        0
+0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Dataset Notices
+1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  This file contains the results from Estuary Health indicators shown on the LAWA Estuary Health topic:  https://www.lawa.org.nz/explore-data/estuaries/
+2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     NaN
+3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            File version
+4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Version 2: Data as at 3 September 2025. This version was published on 22 June 2026, and updates the previous version published 15 October 2025. 
+5                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     This version has updates to meet data licensing arrangements for the Avon-Heathcote Estuary/Ihutai.
+6                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          Downloadable LAWA datafiles available at https://www.lawa.org.nz/download-data
+7                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     NaN
+8                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               Ownership
+9                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          The organisation specified under the Council/Agency attribute.
+10                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    NaN
+11                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             Disclaimer
+12                                                                                                                                                                                                                                                                                                                 LAWA provides this information in good faith to support open access to estuary health data collected by LAWA partners. While every reasonable effort has been made to ensure the accuracy and completeness of the data, LAWA and its partner organisations make no warranty, express or implied, regarding its accuracy, reliability, currency, or fitness for any particular purpose.
+13                                                                                                                                                                                                                                                                                                                                                                                                           To the fullest extent permitted by law, LAWA and its partners accept no liability for any loss, damage, cost, or expense (including indirect or consequential loss) arising from the use of, or reliance on, this information, or from any error, omission, or other deficiency in the data.
+14                                                                                                                                                                                                                                                                                                                                                                                                                                                                             Use of this dataset is at the user’s own risk and constitutes acceptance of this disclaimer. Users are encouraged to acknowledge LAWA as the source when using or sharing this data, in line with open data best practice.
+15                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    NaN
+16                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Licence
+17                                                                                                                                                                                                                                                                                                                                                                                                                                                      Except where otherwise stated, this data is licensed for re-use under the Creative Commons Attribution 4.0 International Licence (CC BY 4.0). You are free to copy, distribute, and adapt the data, provided appropriate credit is given to LAWA.
+18                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    NaN
+19                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Attribution
+20                                                                                                                                                                                                                                                                                                                                                                                                                                                          If you use or adapt this data, please acknowledge the source as: “Data sourced from LAWA (Land, Air, Water Aotearoa) and LAWA partner organisations, available under the Creative Commons Attribution 4.0 International Licence (CC BY 4.0).”
+21                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Include a link to the LAWA website: https://www.lawa.org.nz/, and the licence: https://creativecommons.org/licenses/by/4.0/
+22                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    NaN
+23                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Contact
+24                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       info@lawa.org.nz
+25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    NaN
+26                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         About LAWA\n\n
+27  Land, Air, Water Aotearoa (LAWA) has been established by like-minded organisations with a view to helping local communities find the balance between using natural resources and maintaining their quality and availability.  LAWA connects us with the environment by sharing environmental data and information.   Initially a collaboration between New Zealand’s 16 regional councils and unitary authorities, LAWA is now a partnership between the Te Uru Kahika - Regional and Unitary Councils Aotearoa, Cawthron Institute, the Ministry for the Environment, the Department of Conservation, Statistics New Zealand and has been supported by the Tindall Foundation and Massey University.
+
+== 11. Waikato 2023 sites (report: 'mostly Coromandel') ==
+LAWA Site ID                Site name                 Estuary name
+ LAWA-103063     Awakanae Stream (AS)           Coromandel Harbour
+ LAWA-103062      Brickfield Bay (BB)           Coromandel Harbour
+ LAWA-103061     Coromandel Town (CT)           Coromandel Harbour
+ LAWA-103060        McGregor Bay (MG)           Coromandel Harbour
+ LAWA-103047         Kuranui Bay (KB)              Firth of Thames
+ LAWA-103046             Miranda (MI)              Firth of Thames
+ LAWA-103911             Maraetai Bay                Port Waikato 
+ LAWA-103056         Manaia Road (MR)               Tairua Harbour
+ LAWA-103059        Oturu Stream (OS)               Tairua Harbour
+ LAWA-103054         Kaitoke Bay (KT) Whaingaroa (Raglan) Harbour 
+ LAWA-103050           Okete Bay (OB) Whaingaroa (Raglan) Harbour 
+ LAWA-103052 Whatitirinui Island (WI) Whaingaroa (Raglan) Harbour 

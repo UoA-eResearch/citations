@@ -1,0 +1,24 @@
+
+pre: 4 scenes cover the window centre (174.626, -36.810); tiles ['60HTE']
+
+pre: S2B_60HTE_20221219_0_L2A  cloud 15.081868  baseline 05.09  red raster:bands scale/offset 0.0001/-0.1  href https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/60/H/TE/20
+  s2.py decision in this window: offset_already_removed = True  (0.5th pct red DN = 84)
+  SCL 6 water          n= 113151  red DN p0.5/5/50/95 = [  90.  124.  517. 1396.]  nir DN p5/50/95 = [  40.  175. 1682.]
+  SCL 4 vegetation     n= 228898  red DN p0.5/5/50/95 = [ 105.  202.  515. 1136.]  nir DN p5/50/95 = [1715. 3815. 6042.]
+  SCL 5 not vegetated  n=  57563  red DN p0.5/5/50/95 = [ 580.  860. 1440. 3446.]  nir DN p5/50/95 = [1454. 2572. 4981.]
+  vegetation NDVI, offset kept   : p10/50/90 = [0.53 0.77 0.86]  share >= 0.5: 0.92  share <= 0.3: 0.00
+  vegetation NDVI, offset removed: p10/50/90 = [1.01 1.31 3.19]  share >= 0.5: 1.00  share <= 0.3: 0.00
+  not-vegetated NDVI, offset kept   : p10/50/90 = [0.06 0.23 0.47]; offset removed: [0.11 0.49 1.02]
+  s2.reflectance red for vegetation: median 0.052 (physically ~0.02-0.06 for dense vegetation)
+
+post: 7 scenes cover the window centre (174.626, -36.810); tiles ['60HTE']
+
+post: S2B_60HTE_20230319_0_L2A  cloud 9.81803  baseline 05.09  red raster:bands scale/offset 0.0001/-0.1  href https://sentinel-cogs.s3.us-west-2.amazonaws.com/sentinel-s2-l2a-cogs/60/H/TE/20
+  s2.py decision in this window: offset_already_removed = True  (0.5th pct red DN = 60)
+  SCL 6 water          n= 141320  red DN p0.5/5/50/95 = [ 219.  274.  522. 1268.]  nir DN p5/50/95 = [  42.  116. 1626.]
+  SCL 4 vegetation     n= 250131  red DN p0.5/5/50/95 = [  93.  145.  442. 1026.]  nir DN p5/50/95 = [1238. 3105. 5635.]
+  SCL 5 not vegetated  n=  64250  red DN p0.5/5/50/95 = [ 209.  455. 1180. 2556.]  nir DN p5/50/95 = [ 927. 2033. 4808.]
+  vegetation NDVI, offset kept   : p10/50/90 = [0.55 0.77 0.86]  share >= 0.5: 0.94  share <= 0.3: 0.00
+  vegetation NDVI, offset removed: p10/50/90 = [1.11e+00 1.56e+00 9.64e+04]  share >= 0.5: 1.00  share <= 0.3: 0.00
+  not-vegetated NDVI, offset kept   : p10/50/90 = [0.11 0.26 0.51]; offset removed: [2.20e-01 7.20e-01 2.07e+04]
+  s2.reflectance red for vegetation: median 0.044 (physically ~0.02-0.06 for dense vegetation)
