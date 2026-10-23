@@ -1,0 +1,29 @@
+{
+ "all": {
+  "n": 300,
+  "linked": 90,
+  "unsure": 4,
+  "precision": 0.8111,
+  "precision_n": 90,
+  "recall": 0.3763,
+  "recall_n": 194
+ },
+ "renewed": {
+  "n": 150,
+  "linked": 41,
+  "unsure": 2,
+  "precision": 0.7805,
+  "precision_n": 41,
+  "recall": 0.2857,
+  "recall_n": 112
+ },
+ "not_renewed": {
+  "n": 150,
+  "linked": 49,
+  "unsure": 2,
+  "precision": 0.8367,
+  "precision_n": 49,
+  "recall": 0.5,
+  "recall_n": 82
+ }
+}

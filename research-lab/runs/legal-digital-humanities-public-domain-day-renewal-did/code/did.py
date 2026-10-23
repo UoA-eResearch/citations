@@ -64,6 +64,13 @@ def fit(p, shift=0):
                 q[c] = m.astype(float)
                 cols.append((c, g, e))
     q = q[q.groupby("work").y.transform("sum") > 0]               # all-zero works carry no information in PPML
+    # D1: a cohort x event dummy whose cells sum to zero is perfectly separated (MLE -inf): drop its observations and
+    # do not estimate it (the ppmlhdfe convention); aggregates then average the identified cells only
+    separated = [(c, g, e) for c, g, e in cols if q.loc[q[c] == 1, "y"].sum() == 0]
+    for c, _, _ in separated:
+        q = q[q[c] == 0].drop(columns=c)
+    cols = [x for x in cols if x not in separated]
+    q = q[q.groupby("work").y.transform("sum") > 0]
     fml = "y ~ " + " + ".join(c for c, _, _ in cols) + " | work + year"
     m = pf.fepois(fml, data=q, vcov={"CRV1": "work"})
     b = m.coef()
@@ -76,6 +83,8 @@ def fit(p, shift=0):
         for c, g, e in cols:
             if e in evs and c in names:
                 w[c] = size[g]
+        if w.sum() == 0:
+            return float("nan"), float("nan")
         w = w / w.sum()
         est = float(w @ b)
         se = float(np.sqrt(w @ Vm @ w))
@@ -94,14 +103,15 @@ def fit(p, shift=0):
         for c, g, ee in cols:
             if ee == e and c in names:
                 w[c] = size[g]
-        W.append((w / w.sum()).to_numpy())
+        if w.sum() > 0:
+            W.append((w / w.sum()).to_numpy())
     W = np.array(W)
     v = W @ b.to_numpy()
     S = W @ Vm.to_numpy() @ W.T
     from scipy import stats
     wald = float(v @ np.linalg.pinv(S) @ v)
     p_pre = float(1 - stats.chi2.cdf(wald, df=len(v)))
-    out = {"works_in_model": int(q.work.nunique()), "treated_works": int(q[q.cohort > 0].work.nunique()),
+    out = {"separated_cells_dropped": [f"{g}:{e}" for _, g, e in separated], "works_in_model": int(q.work.nunique()), "treated_works": int(q[q.cohort > 0].work.nunique()),
            "control_works": int(q[q.cohort == 0].work.nunique()), "obs": int(len(q)),
            "cohort_sizes": {int(k): int(v_) for k, v_ in size.items()},
            "rr": round(float(np.exp(est)), 4), "rr_ci": [round(float(np.exp(est - 1.96 * se)), 4), round(float(np.exp(est + 1.96 * se)), 4)],
