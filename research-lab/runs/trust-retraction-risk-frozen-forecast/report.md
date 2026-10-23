@@ -1,4 +1,4 @@
-# Forecasting retractions from what is known at publication: author and reference signals concentrate future retractions about 11-fold, venue signals do not hold up, and the flags fall mostly on one country
+# Forecasting retractions from what is known at publication: author and reference signals concentrate future retractions 7–11-fold, the preregistered full model failed to fit, and the flags fall mostly on one country
 
 *Every biomedical research article in OpenAlex was used, at its real base rate:
 - 16.1 million articles in total;
@@ -6,21 +6,29 @@
 - 4.0 million from 2021–2022 for testing, against the retraction registry of October 2026;
 - 4.4 million from 2025–2026 for a sealed forecast, to be scored at the end of 2028.
 
-Only aggregate results are published; no per-paper score is.*
+Only aggregate results are published; no per-paper score is. This version incorporates an independent review
+(`review/review.md`; changes logged as D3).*
 
 **Verdict: Inconclusive on the full model; Supported for the author-and-reference model.**
 
 - **H1 (the full model concentrates 2021–2022 retractions at least 5-fold in its top 1%): Inconclusive.**
   - Enrichment in the top 1% is **3.7× (95% interval 1.4–13.3)**, with intervals from a bootstrap clustered by
     publisher.
-  - One publisher, Hindawi, holds 57% of the test-period retractions, largely from its 2023 mass retraction. Without
-    it, the refitted model reaches 5.1×, but with an equally wide interval (1.5–19.8).
+  - **The frozen full model is a failed fit.** It stopped after 10 trees, with validation log-loss worse than
+    predicting the base rate. 59% of its top 1% are articles hosted by PubMed Central, a repository whose prior
+    retraction rate jumped 30-fold between the training and test windows.
+  - **Without that host,** the same frozen model reaches 6.6× (4.1–11.5).
+  - **The review's refits** (not frozen) give 2.9–6.9× with other seeds and 9.7× (4.6–12.3) with a fixed 100 trees.
+  - So H1's verdict reflects the preregistered fitting recipe, not a lack of signal in venue features.
+  - One publisher, Hindawi, holds 57% of the test-period retractions, largely from its 2023 mass retraction.
 - **H2 (paper triage, not only publisher triage: the model without venue features reaches at least 3-fold): Supported.**
   - Using only author and reference-list features, enrichment in the top 1% is **11.4× (6.0–14.1)**, and 31× in the
     top 0.1%.
-  - It holds at 10.6× (5.8–12.7) among articles with complete metadata (D2), so it is not only a sign of
-    well-deposited records.
-  - The venue features, which the full model includes, make it *worse* on this period.
+  - **Without Hindawi,** the frozen model reaches **7.4× (5.4–9.3)**. Refitted without it (the review's refit) it
+    reaches 6.7× (5.1–8.4), and other seeds give 8.1–9.9×. "About 7–11×" is the honest range.
+  - It holds at 10.6× (5.8–12.7) among articles with complete metadata (D2).
+  - **Much of it is institution triage.** 90% of the top 1% have an institution with prior retractions (57% of the
+    cohort), and 41% have an author with a prior retraction (10% of the cohort).
 - **H3 (forward forecast): sealed, not yet scorable.** 4,375,482 articles from 2025–2026 are scored by the same
   pipeline refitted on information known by 2024. The score file's and model's SHA-256 are committed; the file stays
   local. The preregistered test is enrichment of at least 3× in the top 1% against the registry on 2028-12-31.
@@ -28,7 +36,8 @@ Only aggregate results are published; no per-paper score is.*
   - Articles whose first author is in China are 12% of the test cohort, 67% of the retractions detected by October
     2026, and about half (51–54%) of each model's top 1%.
   - Country is not a feature. The models learn where *detected* retractions fall, so a triage list built this way
-    would concentrate scrutiny on one country's output.
+    would concentrate scrutiny on one country's output, and on institutions with past retractions.
+  - Part of the country concentration reflects the Hindawi era, and it will be re-measured in 2028.
 
 ## In plain terms
 
@@ -38,17 +47,21 @@ what it cites, where it appears) pick out the papers most likely to be retracted
 
 We trained a model only on what was known up to the end of 2020, then asked it to rank 4 million biomedical papers
 published in 2021–2022, about 2 in every 1,000 of which have since been retracted.
-- **Author and reference signals worked.** Using only those, the 1% of papers the model ranked riskiest held 11 times
-  more later retractions than average. These signals include authors who already had retracted papers and reference
-  lists that cite already-retracted work.
-- **Journal signals did not.** Adding signals about the journal made the ranking worse. One publisher's mass
-  retraction dominates the period, and journals' past records did not foresee it.
+- **Author and reference signals worked.** Using only those, the 1% of papers the model ranked riskiest held 7 to 11
+  times more later retractions than average, depending on whether one publisher's mass retraction is counted.
+  - These signals include institutions and authors with retracted papers in their past, and reference lists that
+    cite already-retracted work.
+- **The full model, journal signals included, failed for a technical reason.** Its fitting stopped after ten steps,
+  before it had learned anything useful. It then flagged a large block of papers hosted by PubMed Central, a
+  repository, because that repository's past retraction count had jumped. Fitted properly (a check, not part of the
+  preregistered test), journal signals help rather than hurt.
 
 Two cautions.
 - **Not misconduct.** A retraction is not proof of misconduct, and these are only the retractions someone found.
-- **One country.** Half of the papers the model flags have a first author in China, because two-thirds of the
-  detected retractions do. A screening tool built like this would point most of its suspicion at one country's
-  researchers. We publish only these totals, never a list of flagged papers.
+- **One country, and past records.** Half of the papers the model flags have a first author in China, because
+  two-thirds of the detected retractions do. Most flagged papers come from institutions with past retractions. A
+  screening tool built like this would point its suspicion at one country's researchers and at institutions with a
+  history, and would be self-reinforcing. We publish only these totals, never a list of flagged papers.
 
 We have also sealed a forecast for papers published in 2025–2026, to be checked against reality at the end of 2028.
 
@@ -93,6 +106,13 @@ mass-retraction clusters, and a sealed forward forecast.
 4. **Model** (`model.py`).
    - **Primary:** gradient-boosted trees fitted on all training positives and a 5% sample of negatives, reweighted.
      Default settings, with early stopping on a 10% validation split. It stopped at 10 iterations.
+   - **The fit, read after the review** (`posthoc_review.json`):
+     - The full model's validation log-loss went from −0.00323 (the constant base-rate predictor) to −0.00585 at
+       iteration 10, worse than constant.
+     - The cause: scikit-learn's defaults (no L2 regularisation, a leaf minimum counted in samples) at a 20:1 weight
+       ratio let near-pure positive leaves saturate.
+     - The author-and-reference model trained for 32 iterations and improved slightly on the constant (−0.00323 to
+       −0.00317).
    - **Also fitted:** block ablations and a logistic regression.
    - **Frozen first:** all were frozen, and their SHA-256 committed (660d682), before any test label was read.
 5. **Evaluation.**
@@ -107,7 +127,7 @@ mass-retraction clusters, and a sealed forward forecast.
 
 | model | E@0.1% | E@1% (95% CI) | E@5% | E@10% | PR-AUC |
 |---|---|---|---|---|---|
-| full (H1) | 5.2 | **3.7 (1.4–13.3)** | 5.1 | 4.2 | 0.0067 |
+| full (H1; failed fit) | 5.2 | **3.7 (1.4–13.3)** | 5.1 | 4.2 | 0.0067 |
 | authors + references (H2) | 31.3 | **11.4 (6.0–14.1)** | 6.3 | 4.5 | 0.0128 |
 | venue only | 9.3 | 8.0 (1.7–24.9) | 3.0 | 2.9 | 0.0064 |
 | authors only | 6.9 | 5.8 (4.8–7.3) | 4.5 | 4.0 | 0.0069 |
@@ -128,9 +148,35 @@ The base rate is 0.19% (7,660 of 3,958,510).
   - Elsevier: 5.8× (3.6–15.0);
   - Springer: 3.9× (1.2–20.5).
 - **Why the intervals are so wide.** Resampling publishers lets one cluster move the result.
-- **Why the venue block can mislead.** The full model's venue features reflect which venues had retracted papers
-  before 2021. The 2023 mass retraction hit venues with little such history, so venue history misleads in this period.
-  The author and reference signals transfer.
+- **Hosts in the top 1%** (`posthoc_review.json`, aggregate):
+
+  | host | share of cohort | top 1%, full | top 1%, H2 |
+  |---|---|---|---|
+  | National Institutes of Health (PubMed Central, a repository) | 0.9% | **59.0%** | 0.1% |
+  | Elsevier | 16.6% | 7.6% | 21.0% |
+  | Frontiers | 3.5% | 5.7% | 8.7% |
+  | MDPI | 5.9% | 1.5% | 7.8% |
+  | Wiley | 6.0% | 1.9% | 5.9% |
+  | Springer | 5.0% | 3.8% | 5.5% |
+  | Hindawi | 0.75% | – | 4.7% |
+  | no host | 16.7% | – | 6.9% |
+
+  The PubMed Central host's prior retraction rate was 0.00003–0.00005 in every training year, then 0.0013–0.0015 for
+  2021–2022: COVID-era retracted works whose primary location is PMC. The model learned "a host rate near 1e-3 is
+  risky" from real publishers and fired on a repository. Its own retraction rate is 0.035%, a fifth of the base rate.
+- **Without hosts** (frozen models, publisher-clustered intervals):
+
+  | | full | H2 |
+  |---|---|---|
+  | all | 3.7 (1.4–13.3) | 11.4 (6.0–14.1) |
+  | without PubMed Central | 6.6 (4.1–11.5) | 11.4 (6.1–14.2) |
+  | without Hindawi | 4.7 (1.7–15.2) | 7.4 (5.4–9.3) |
+  | without both | 7.4 (4.3–12.6) | 7.5 (5.4–9.5) |
+
+- **The bootstrap choice decides H1's label.** An iid-article bootstrap would give 3.3–4.2 for the full model
+  (Refuted) and 10.7–12.1 for H2. Clustered by publisher, as preregistered, the full model's interval spans the bar.
+- **Leave-one-publisher-out** drops the publisher's articles but keeps its history in the feature tables (plan §5
+  allows this), and its refits share the 10-iteration fit.
 
 ### Metadata completeness (D2)
 
@@ -157,25 +203,48 @@ misconduct actually occurs cannot be told from retraction data, because retracti
 ### The sealed forecast (H3; `results/tables/forecast_seal.json`)
 
 - **The refit.** The pipeline was refitted on 2018–2019 and 2021–2022 articles, with labels known by 2024 (D1: 2020
-  was not extracted). It had 9,959 positives and stopped at 10 iterations.
+  was not extracted). It had 9,959 positives and stopped at 10 iterations, so it very likely shares the primary
+  model's failed fit. The model file was not reopened.
 - **The scoring.** It scored 4,375,482 articles from 2025–2026; the top 1% is 43,755 articles.
 - **The seal.** The score file (SHA-256 `973d5968…`) and the model (SHA-256 `2950dd43…`) are kept on local disk.
   822 of the articles were already retracted when sealed.
 - **The preregistered test:** E@1% of at least 3 against the registry on 2028-12-31.
+- **The H3 addendum** (D3 §6, committed 2026-10-23, long before any 2028 label exists):
+  - **Decision rule:** Supported if the lower bound of the publisher-clustered interval is at least 3; Refuted if
+    the upper bound is below 3.
+  - **Registry:** Retraction Watch and Crossref retraction assertions, fetched on or after 2028-12-31. Crossref-only
+    self-update dates are not used for anything.
+  - **Cohort:** the sealed works only, keyed by `data/forecast/forward_wid_doi.csv` (SHA-256 `486a8f592c82d286b521993b21609af62d3926e64cb034cd8de8bd4870fde61a`;
+    4,375,482 works).
+  - **Excluded:** the 822 works already retracted at sealing (`forward_retracted_at_seal_wids.csv`, SHA-256
+    `9e9a5e62b899829638e63e9fc449925fe7aaaf392bd9ece0daf2ef4d2b685c76`).
 
 ## What this does and does not show
 
-- **Publication-time signals carry real information about later retraction, at the real base rate.** About an
-  11-fold concentration in the top 1% comes from authors' earlier retractions, institutions' records and the
-  reference list. It survives removing the dominant publisher's influence on the venue block, and restricting to
-  well-deposited records.
-- **Venue history alone is not a reliable forecaster in a period shaped by one publisher's mass retraction.** The full
-  model fails the preregistered bar for that reason.
+- **Publication-time signals carry real information about later retraction, at the real base rate.**
+  - A 7–11-fold concentration in the top 1% comes from institutions' and authors' earlier retractions and the
+    reference list.
+  - It holds without Hindawi (7.4×) and on well-deposited records.
+  - Much of it is institution triage, an entity-level proxy with the same equity risks as country.
+- **The preregistered full model failed to fit.** That, not venue information, is why it misses the bar. One feature
+  also misfires: venue rate features treat a repository host like a publisher. A future forecast should exclude
+  repository locations or flag them, and should regularise the fit.
+- **Label dating is a leak channel.** For Crossref-only self-updates, the retraction "date" is usually the paper's own
+  deposit year. 256 of 2,813 training positives (9%) carry such dates, and author and reference features inherit
+  them. The review's bound, a one-year as-of buffer, moves H2 only from 11.36× to 11.21×.
+- **Retraction notices in the cohort.** 2,252 notices sit in the cohort as "articles" (956 in the test window), and
+  the plan's OpenAlex is_retracted check had not been run. The review ran it: 7,617 of 8,789 OpenAlex-flagged test
+  articles overlap the labels, and most of the rest are notices. The effect on E@k is negligible (0.02% of the test
+  set).
 - **This is a forecast of *detected* retraction.** It inherits who investigates: publishers that run mass
   integrity sweeps, and the sleuths who target paper mills. The country concentration of its flags is the clearest
   sign. Retraction is not proof of misconduct, and a high score is not evidence against any paper.
-- **The models are deliberately simple.** The primary model stopped after 10 boosting rounds, so better-tuned models
-  might do more. The plan fixed the settings in advance to keep the test honest.
+- **The settings were fixed in advance to keep the test honest,** and they failed for the full model. Better-fitted
+  models do more (the review's refits). Any next forecast should be preregistered with a regularised recipe.
+- **Smaller notes:**
+  - `newcomer_share` counts a first year equal to Y as a newcomer;
+  - "top 20 fields" is 10 codes;
+  - publisher ids are OpenAlex host organisations (Hindawi P4310319869; PubMed Central's host I1299303238).
 - **Not included:** full-text signals (tortured phrases, statistical inconsistencies), which other work finds
   informative.
 
@@ -184,9 +253,17 @@ misconduct actually occurs cannot be told from retraction data, because retracti
 - **Preregistration:** `plan.md`.
 - **Deviations** (`deviations.md`):
   - D1: the forward refit's years, year granularity, labels, and the Poisson cluster bootstrap;
-  - D2: the post-hoc completeness check, the country audit for both models, and the publisher names.
-- **Models frozen** in 660d682 before scoring.
-- **Independent review:** queued (Fable), per the lab's pacing rule.
+  - D2: the post-hoc completeness check, the country audit for both models, and the publisher names;
+  - D3: after the review:
+    - the failed fit;
+    - the PubMed Central host;
+    - the self-update dates;
+    - H2's Hindawi robustness and institution component;
+    - notices;
+    - the H3 addendum.
+- **Models frozen** in 660d682 before scoring, and never refitted in place.
+- **Independent review:** Fable, 2026-10-23, "fix first" (`review/review.md`). Both preregistered verdicts stand;
+  the explanation changed. A confirmation pass follows.
 
 ## Reproducing it
 
@@ -194,6 +271,7 @@ misconduct actually occurs cannot be told from retraction data, because retracti
 2. **Cohort and features:** `code/pass2.py`, `code/features.py`.
 3. **Models:** `code/model.py fit`, then `code/model.py score`.
 4. **Forecast:** `code/forecast.py`.
-5. **Checks and figures:** `code/posthoc_complete.py`, `code/figures.py`.
+5. **Checks and figures:** `code/posthoc_complete.py`, `code/posthoc_review.py` (D3), `code/figures.py`. The review's
+   refits and the buffer test are in `review/reviewer_checks/`.
 6. **Data:** the OpenAlex works snapshot (22 September 2026, a local sparse column copy) and the registry layers
    fetched for `trust-corrected-record-machine-readable`.

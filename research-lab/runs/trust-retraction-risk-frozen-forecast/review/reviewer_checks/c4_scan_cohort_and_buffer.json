@@ -1,0 +1,124 @@
+{
+ "notice_dois_total": 51547,
+ "labelled_in_cohort": 16087,
+ "notices_in_cohort": 2252,
+ "notices_in_cohort_by_window": {
+  "test": 956,
+  "train": 935,
+  "forward": 361
+ },
+ "notices_in_test_by_host_top5": {
+  "4310320348": 228,
+  "4310320412": 188,
+  "4310319869": 170,
+  "4310320990": 115,
+  "4310320062": 45
+ },
+ "labelled_by_window": {
+  "test": 7660,
+  "train": 7605,
+  "forward": 822
+ },
+ "labelled_rel_by_window": {
+  "forward": {
+   "ret_same_year": 460,
+   "ret_after_pub": 361,
+   "ret_before_pub": 1
+  },
+  "test": {
+   "ret_after_pub": 6922,
+   "ret_same_year": 734,
+   "ret_before_pub": 4
+  },
+  "train": {
+   "ret_after_pub": 6712,
+   "ret_same_year": 884,
+   "ret_before_pub": 9
+  }
+ },
+ "test_positives_by_source": {
+  "rw": 6698,
+  "crossref_only_other": 767,
+  "crossref_only_self_update": 195
+ },
+ "test_rel_by_source": {
+  "crossref_only_other": {
+   "ret_after_pub": 726,
+   "ret_same_year": 39,
+   "ret_before_pub": 2
+  },
+  "crossref_only_self_update": {
+   "ret_same_year": 157,
+   "ret_after_pub": 38
+  },
+  "rw": {
+   "ret_after_pub": 6158,
+   "ret_same_year": 538,
+   "ret_before_pub": 2
+  }
+ },
+ "train_positives_ry_le_2020_by_source": {
+  "rw": 2482,
+  "crossref_only_self_update": 256,
+  "crossref_only_other": 75
+ },
+ "train_positives_ry_le_2020_same_year_by_source": {
+  "rw": 664,
+  "crossref_only_self_update": 184,
+  "crossref_only_other": 36
+ },
+ "train_labelled_but_ry_gt_2020": 4792,
+ "test_positives_by_ret_year": {
+  "2017": 1,
+  "2019": 1,
+  "2020": 1,
+  "2021": 330,
+  "2022": 854,
+  "2023": 4222,
+  "2024": 1244,
+  "2025": 505,
+  "2026": 502
+ },
+ "test_hindawi_positives_by_ret_year": {
+  "2022": 135,
+  "2023": 3557,
+  "2024": 557,
+  "2025": 67,
+  "2026": 58
+ },
+ "forward_already_retracted": 822,
+ "buffer_check": {
+  "test_rows": 3958510,
+  "rows_with_recomputed_features": 3958510,
+  "recomputed_Y-1_matches_stored_auth_prior_ret_n": 1.0,
+  "recomputed_Y-1_matches_stored_ref_retracted_share": 1.0,
+  "share_auth_prior_gt0_Y-1": 0.1009,
+  "share_auth_prior_gt0_Y-2": 0.0867,
+  "retracted_share_auth_prior_gt0_Y-1": 0.2351,
+  "retracted_share_auth_prior_gt0_Y-2": 0.1813,
+  "hgb_no_A.pkl": {
+   "E1_stored_features": 11.358,
+   "E1_buffered_Y-2": 11.214,
+   "E0.1_stored": 31.328,
+   "E0.1_buffered_Y-2": 29.892
+  },
+  "hgb_full.pkl": {
+   "E1_stored_features": 3.734,
+   "E1_buffered_Y-2": 3.433,
+   "E0.1_stored": 5.221,
+   "E0.1_buffered_Y-2": 6.918
+  },
+  "hgb_B_only.pkl": {
+   "E1_stored_features": 5.836,
+   "E1_buffered_Y-2": 5.705,
+   "E0.1_stored": 6.918,
+   "E0.1_buffered_Y-2": 6.657
+  },
+  "hgb_C_only.pkl": {
+   "E1_stored_features": 6.044,
+   "E1_buffered_Y-2": 5.418,
+   "E0.1_stored": 9.007,
+   "E0.1_buffered_Y-2": 4.96
+  }
+ }
+}

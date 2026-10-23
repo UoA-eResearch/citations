@@ -1,0 +1,123 @@
+{
+ "openalex_is_retracted_works": 137044,
+ "openalex_with_doi": 135972,
+ "labels": 78857,
+ "both": 77845,
+ "labels_only": 1012,
+ "openalex_only": 58127,
+ "test": {
+  "articles": 3958510,
+  "labelled_retracted": 7660,
+  "openalex_flagged": 8789,
+  "both": 7617,
+  "labelled_not_flagged": 43,
+  "flagged_not_labelled": 1172,
+  "flagged_not_labelled_top_hosts": {
+   "4310320348": 246,
+   "4310320412": 200,
+   "4310319869": 170,
+   "4310320990": 139,
+   "4310320595": 70
+  }
+ },
+ "retracted_works_article_type_share_by_retraction_year": {
+  "2015": {
+   "n": 1644,
+   "article_share": 0.715
+  },
+  "2016": {
+   "n": 1701,
+   "article_share": 0.771
+  },
+  "2017": {
+   "n": 1617,
+   "article_share": 0.785
+  },
+  "2018": {
+   "n": 2108,
+   "article_share": 0.827
+  },
+  "2019": {
+   "n": 2211,
+   "article_share": 0.764
+  },
+  "2020": {
+   "n": 3759,
+   "article_share": 0.646
+  },
+  "2021": {
+   "n": 5530,
+   "article_share": 0.66
+  },
+  "2022": {
+   "n": 6448,
+   "article_share": 0.724
+  },
+  "2023": {
+   "n": 14813,
+   "article_share": 0.943
+  },
+  "2024": {
+   "n": 9352,
+   "article_share": 0.927
+  },
+  "2025": {
+   "n": 9313,
+   "article_share": 0.78
+  },
+  "2026": {
+   "n": 5099,
+   "article_share": 0.935
+  }
+ },
+ "retracted_works_article_type_share_by_pub_year": {
+  "2015": {
+   "n": 2118,
+   "article_share": 0.835
+  },
+  "2016": {
+   "n": 2062,
+   "article_share": 0.845
+  },
+  "2017": {
+   "n": 2639,
+   "article_share": 0.861
+  },
+  "2018": {
+   "n": 3490,
+   "article_share": 0.878
+  },
+  "2019": {
+   "n": 4127,
+   "article_share": 0.847
+  },
+  "2020": {
+   "n": 6368,
+   "article_share": 0.745
+  },
+  "2021": {
+   "n": 9834,
+   "article_share": 0.719
+  },
+  "2022": {
+   "n": 13203,
+   "article_share": 0.949
+  },
+  "2023": {
+   "n": 5813,
+   "article_share": 0.799
+  },
+  "2024": {
+   "n": 4608,
+   "article_share": 0.782
+  },
+  "2025": {
+   "n": 2475,
+   "article_share": 0.654
+  },
+  "2026": {
+   "n": 496,
+   "article_share": 0.677
+  }
+ }
+}
