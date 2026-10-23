@@ -1437,7 +1437,7 @@
    -0.06265,
    0.02421
   ],
-  "reduction_R": 0.4528,
+  "reduction_R": null,
   "penalty_difference": -0.01213,
   "penalty_difference_ci": [
    -0.0709,
@@ -1449,9 +1449,9 @@
    0.00398
   ],
   "seed_R": {
-   "s0": -1.9467,
-   "s1": 1.3775,
-   "s2": 0.9179
+   "s0": null,
+   "s1": null,
+   "s2": null
   }
  },
  "H2_w4": {
@@ -1477,7 +1477,7 @@
    -0.02466,
    0.02578
   ],
-  "reduction_R": 1.1609,
+  "reduction_R": null,
   "penalty_difference": -0.03111,
   "penalty_difference_ci": [
    -0.08003,
@@ -1489,9 +1489,9 @@
    0.00107
   ],
   "seed_R": {
-   "s0": -0.1204,
-   "s1": 1.5558,
-   "s2": 1.4889
+   "s0": null,
+   "s1": null,
+   "s2": null
   }
  },
  "H1_w3": {
@@ -1597,7 +1597,7 @@
    -0.01396,
    0.06058
   ],
-  "reduction_R": 2.0382,
+  "reduction_R": null,
   "penalty_difference": -0.05462,
   "penalty_difference_ci": [
    -0.11235,
@@ -1609,9 +1609,9 @@
    0.02005
   ],
   "seed_R": {
-   "s0": 2.082,
-   "s1": 1.9783,
-   "s2": 2.0643
+   "s0": null,
+   "s1": null,
+   "s2": null
   }
  },
  "H3_bal": {
@@ -1637,7 +1637,7 @@
    -0.04608,
    0.03941
   ],
-  "reduction_R": 1.1748,
+  "reduction_R": null,
   "penalty_difference": -0.01723,
   "penalty_difference_ci": [
    -0.04116,
@@ -1649,9 +1649,9 @@
    0.0149
   ],
   "seed_R": {
-   "s0": 0.9663,
-   "s1": 1.0852,
-   "s2": 4.6195
+   "s0": null,
+   "s1": null,
+   "s2": null
   }
  },
  "H3_w3": {
@@ -1717,7 +1717,7 @@
    -0.0014,
    0.22323
   ],
-  "reduction_R": -4.1775,
+  "reduction_R": null,
   "penalty_difference": -0.08419,
   "penalty_difference_ci": [
    -0.22325,
@@ -1729,9 +1729,9 @@
    0.21782
   ],
   "seed_R": {
-   "s0": 0.4804,
-   "s1": 8.8755,
-   "s2": -2.4971
+   "s0": null,
+   "s1": null,
+   "s2": null
   }
  },
  "awq": {
@@ -1754,7 +1754,7 @@
     -0.03719,
     0.02516
    ],
-   "reduction_R": 1.5705,
+   "reduction_R": null,
    "penalty_difference": 0.00437,
    "penalty_difference_ci": [
     -0.01112,
@@ -1766,7 +1766,7 @@
     0.01301
    ],
    "seed_R": {
-    "s0": 1.5705
+    "s0": null
    }
   },
   "worst": {
@@ -1788,7 +1788,7 @@
     -0.02197,
     0.04475
    ],
-   "reduction_R": -4.6892,
+   "reduction_R": null,
    "penalty_difference": -0.01305,
    "penalty_difference_ci": [
     -0.05202,
@@ -1800,7 +1800,7 @@
     0.0129
    ],
    "seed_R": {
-    "s0": -4.6892
+    "s0": null
    }
   }
  }

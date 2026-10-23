@@ -1,0 +1,6545 @@
+{
+ "model": "small",
+ "utterances": 8537,
+ "utterances_looped_in_any_condition": 753,
+ "variants": {
+  "prereg": {
+   "refixed": {
+    "worst3": [
+     "Jamaican English",
+     "Kenyan English",
+     "Vietnamese"
+    ],
+    "best3": [
+     "Bulgarian",
+     "Latin American",
+     "Irish English"
+    ],
+    "penalties": {
+     "awq_w4_balanced": {
+      "penalty": -0.00159,
+      "ci": [
+       -0.03719,
+       0.02516
+      ]
+     },
+     "awq_w4_us": {
+      "penalty": 0.00278,
+      "ci": [
+       -0.04555,
+       0.03789
+      ]
+     },
+     "awq_w4_worst": {
+      "penalty": 0.01583,
+      "ci": [
+       -0.02197,
+       0.04475
+      ]
+     },
+     "gptq_w3_balanced": {
+      "penalty": 0.02015,
+      "ci": [
+       -0.03161,
+       0.06949
+      ]
+     },
+     "gptq_w3_us": {
+      "penalty": 0.0741,
+      "ci": [
+       0.0347,
+       0.11818
+      ]
+     },
+     "gptq_w3_worst": {
+      "penalty": 0.02348,
+      "ci": [
+       -0.00945,
+       0.05742
+      ]
+     },
+     "gptq_w4_balanced": {
+      "penalty": -0.01466,
+      "ci": [
+       -0.06265,
+       0.02421
+      ]
+     },
+     "gptq_w4_us": {
+      "penalty": -0.0268,
+      "ci": [
+       -0.08944,
+       0.02605
+      ]
+     },
+     "gptq_w4_worst": {
+      "penalty": 0.00431,
+      "ci": [
+       -0.02466,
+       0.02578
+      ]
+     },
+     "mp3_balanced": {
+      "penalty": 0.10434,
+      "ci": [
+       -0.0014,
+       0.22323
+      ]
+     },
+     "mp3_us": {
+      "penalty": 0.19265,
+      "ci": [
+       0.0629,
+       0.34273
+      ]
+     },
+     "mp_balanced": {
+      "penalty": 0.00256,
+      "ci": [
+       -0.04608,
+       0.03941
+      ]
+     },
+     "mp_us": {
+      "penalty": 0.02782,
+      "ci": [
+       -0.01396,
+       0.06058
+      ]
+     }
+    },
+    "tests": {
+     "H1_w4": {
+      "verdict": "Inconclusive",
+      "ref_penalty": -0.0268,
+      "ref_penalty_ci": [
+       -0.08944,
+       0.02605
+      ],
+      "control_holds": false,
+      "arm_penalty": -0.01466,
+      "arm_penalty_ci": [
+       -0.06265,
+       0.02421
+      ],
+      "R": null,
+      "difference": -0.01213,
+      "difference_ci": [
+       -0.0709,
+       0.03649
+      ],
+      "agg_change": -0.0034,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H2_w4": {
+      "verdict": "Inconclusive",
+      "ref_penalty": -0.0268,
+      "ref_penalty_ci": [
+       -0.08944,
+       0.02605
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.00431,
+      "arm_penalty_ci": [
+       -0.02466,
+       0.02578
+      ],
+      "R": null,
+      "difference": -0.03111,
+      "difference_ci": [
+       -0.08003,
+       0.00475
+      ],
+      "agg_change": -0.00481,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H1_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.0741,
+      "ref_penalty_ci": [
+       0.0347,
+       0.11818
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.02015,
+      "arm_penalty_ci": [
+       -0.03161,
+       0.06949
+      ],
+      "R": 0.728,
+      "difference": 0.05395,
+      "difference_ci": [
+       -0.0085,
+       0.12103
+      ],
+      "agg_change": -0.02304,
+      "seed_R": {
+       "s0": -0.2329,
+       "s1": 1.3258,
+       "s2": 0.805
+      }
+     },
+     "H2_w3": {
+      "verdict": "Supported (fragile across seeds)",
+      "ref_penalty": 0.0741,
+      "ref_penalty_ci": [
+       0.0347,
+       0.11818
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.02348,
+      "arm_penalty_ci": [
+       -0.00945,
+       0.05742
+      ],
+      "R": 0.6831,
+      "difference": 0.05062,
+      "difference_ci": [
+       0.01207,
+       0.09066
+      ],
+      "agg_change": -0.00655,
+      "seed_R": {
+       "s0": 0.1798,
+       "s1": 1.443,
+       "s2": 0.2064
+      }
+     },
+     "H3_w3": {
+      "verdict": "Refuted",
+      "ref_penalty": 0.0741,
+      "ref_penalty_ci": [
+       0.0347,
+       0.11818
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.19265,
+      "arm_penalty_ci": [
+       0.0629,
+       0.34273
+      ],
+      "R": -1.5997,
+      "difference": -0.11855,
+      "difference_ci": [
+       -0.23606,
+       -0.01782
+      ],
+      "agg_change": 0.24256,
+      "seed_R": {
+       "s0": -1.3243,
+       "s1": 0.1775,
+       "s2": -3.8761
+      }
+     }
+    }
+   },
+   "prereg_groups": {
+    "worst3": [
+     "Jamaican English",
+     "Kenyan English",
+     "Vietnamese"
+    ],
+    "best3": [
+     "Bulgarian",
+     "Latin American",
+     "Irish English"
+    ],
+    "penalties": {
+     "awq_w4_balanced": {
+      "penalty": -0.00159,
+      "ci": [
+       -0.03719,
+       0.02516
+      ]
+     },
+     "awq_w4_us": {
+      "penalty": 0.00278,
+      "ci": [
+       -0.04555,
+       0.03789
+      ]
+     },
+     "awq_w4_worst": {
+      "penalty": 0.01583,
+      "ci": [
+       -0.02197,
+       0.04475
+      ]
+     },
+     "gptq_w3_balanced": {
+      "penalty": 0.02015,
+      "ci": [
+       -0.03161,
+       0.06949
+      ]
+     },
+     "gptq_w3_us": {
+      "penalty": 0.0741,
+      "ci": [
+       0.0347,
+       0.11818
+      ]
+     },
+     "gptq_w3_worst": {
+      "penalty": 0.02348,
+      "ci": [
+       -0.00945,
+       0.05742
+      ]
+     },
+     "gptq_w4_balanced": {
+      "penalty": -0.01466,
+      "ci": [
+       -0.06265,
+       0.02421
+      ]
+     },
+     "gptq_w4_us": {
+      "penalty": -0.0268,
+      "ci": [
+       -0.08944,
+       0.02605
+      ]
+     },
+     "gptq_w4_worst": {
+      "penalty": 0.00431,
+      "ci": [
+       -0.02466,
+       0.02578
+      ]
+     },
+     "mp3_balanced": {
+      "penalty": 0.10434,
+      "ci": [
+       -0.0014,
+       0.22323
+      ]
+     },
+     "mp3_us": {
+      "penalty": 0.19265,
+      "ci": [
+       0.0629,
+       0.34273
+      ]
+     },
+     "mp_balanced": {
+      "penalty": 0.00256,
+      "ci": [
+       -0.04608,
+       0.03941
+      ]
+     },
+     "mp_us": {
+      "penalty": 0.02782,
+      "ci": [
+       -0.01396,
+       0.06058
+      ]
+     }
+    },
+    "tests": {
+     "H1_w4": {
+      "verdict": "Inconclusive",
+      "ref_penalty": -0.0268,
+      "ref_penalty_ci": [
+       -0.08944,
+       0.02605
+      ],
+      "control_holds": false,
+      "arm_penalty": -0.01466,
+      "arm_penalty_ci": [
+       -0.06265,
+       0.02421
+      ],
+      "R": null,
+      "difference": -0.01213,
+      "difference_ci": [
+       -0.0709,
+       0.03649
+      ],
+      "agg_change": -0.0034,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H2_w4": {
+      "verdict": "Inconclusive",
+      "ref_penalty": -0.0268,
+      "ref_penalty_ci": [
+       -0.08944,
+       0.02605
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.00431,
+      "arm_penalty_ci": [
+       -0.02466,
+       0.02578
+      ],
+      "R": null,
+      "difference": -0.03111,
+      "difference_ci": [
+       -0.08003,
+       0.00475
+      ],
+      "agg_change": -0.00481,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H1_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.0741,
+      "ref_penalty_ci": [
+       0.0347,
+       0.11818
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.02015,
+      "arm_penalty_ci": [
+       -0.03161,
+       0.06949
+      ],
+      "R": 0.728,
+      "difference": 0.05395,
+      "difference_ci": [
+       -0.0085,
+       0.12103
+      ],
+      "agg_change": -0.02304,
+      "seed_R": {
+       "s0": -0.2329,
+       "s1": 1.3258,
+       "s2": 0.805
+      }
+     },
+     "H2_w3": {
+      "verdict": "Supported (fragile across seeds)",
+      "ref_penalty": 0.0741,
+      "ref_penalty_ci": [
+       0.0347,
+       0.11818
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.02348,
+      "arm_penalty_ci": [
+       -0.00945,
+       0.05742
+      ],
+      "R": 0.6831,
+      "difference": 0.05062,
+      "difference_ci": [
+       0.01207,
+       0.09066
+      ],
+      "agg_change": -0.00655,
+      "seed_R": {
+       "s0": 0.1798,
+       "s1": 1.443,
+       "s2": 0.2064
+      }
+     },
+     "H3_w3": {
+      "verdict": "Refuted",
+      "ref_penalty": 0.0741,
+      "ref_penalty_ci": [
+       0.0347,
+       0.11818
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.19265,
+      "arm_penalty_ci": [
+       0.0629,
+       0.34273
+      ],
+      "R": -1.5997,
+      "difference": -0.11855,
+      "difference_ci": [
+       -0.23606,
+       -0.01782
+      ],
+      "agg_change": 0.24256,
+      "seed_R": {
+       "s0": -1.3243,
+       "s1": 0.1775,
+       "s2": -3.8761
+      }
+     }
+    }
+   }
+  },
+  "capped": {
+   "refixed": {
+    "worst3": [
+     "Nigerian English",
+     "Jamaican English",
+     "Vietnamese"
+    ],
+    "best3": [
+     "Bulgarian",
+     "Latin American",
+     "Irish English"
+    ],
+    "penalties": {
+     "awq_w4_balanced": {
+      "penalty": 0.00525,
+      "ci": [
+       0.0007,
+       0.00978
+      ]
+     },
+     "awq_w4_us": {
+      "penalty": 0.00482,
+      "ci": [
+       0.00131,
+       0.00887
+      ]
+     },
+     "awq_w4_worst": {
+      "penalty": 0.00362,
+      "ci": [
+       -0.00146,
+       0.00903
+      ]
+     },
+     "gptq_w3_balanced": {
+      "penalty": 0.01433,
+      "ci": [
+       0.00472,
+       0.02629
+      ]
+     },
+     "gptq_w3_us": {
+      "penalty": 0.01922,
+      "ci": [
+       0.00766,
+       0.0326
+      ]
+     },
+     "gptq_w3_worst": {
+      "penalty": 0.01559,
+      "ci": [
+       0.00562,
+       0.02583
+      ]
+     },
+     "gptq_w4_balanced": {
+      "penalty": 0.00202,
+      "ci": [
+       -0.00331,
+       0.0094
+      ]
+     },
+     "gptq_w4_us": {
+      "penalty": 0.0006,
+      "ci": [
+       -0.00615,
+       0.00751
+      ]
+     },
+     "gptq_w4_worst": {
+      "penalty": 0.00294,
+      "ci": [
+       -0.0005,
+       0.00799
+      ]
+     },
+     "mp3_balanced": {
+      "penalty": 0.02748,
+      "ci": [
+       -0.00688,
+       0.07125
+      ]
+     },
+     "mp3_us": {
+      "penalty": 0.01494,
+      "ci": [
+       -0.02883,
+       0.07624
+      ]
+     },
+     "mp_balanced": {
+      "penalty": 0.00442,
+      "ci": [
+       -0.0026,
+       0.01249
+      ]
+     },
+     "mp_us": {
+      "penalty": 0.00497,
+      "ci": [
+       -0.00087,
+       0.0119
+      ]
+     }
+    },
+    "tests": {
+     "H1_w4": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.0006,
+      "ref_penalty_ci": [
+       -0.00615,
+       0.00751
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.00202,
+      "arm_penalty_ci": [
+       -0.00331,
+       0.0094
+      ],
+      "R": null,
+      "difference": -0.00142,
+      "difference_ci": [
+       -0.0097,
+       0.00467
+      ],
+      "agg_change": -0.00034,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H2_w4": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.0006,
+      "ref_penalty_ci": [
+       -0.00615,
+       0.00751
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.00294,
+      "arm_penalty_ci": [
+       -0.0005,
+       0.00799
+      ],
+      "R": null,
+      "difference": -0.00234,
+      "difference_ci": [
+       -0.00908,
+       0.0034
+      ],
+      "agg_change": -0.00212,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H1_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.01922,
+      "ref_penalty_ci": [
+       0.00766,
+       0.0326
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.01433,
+      "arm_penalty_ci": [
+       0.00472,
+       0.02629
+      ],
+      "R": 0.2545,
+      "difference": 0.00489,
+      "difference_ci": [
+       -0.00373,
+       0.01148
+      ],
+      "agg_change": -0.00076,
+      "seed_R": {
+       "s0": 0.1125,
+       "s1": 0.1693,
+       "s2": 0.4258
+      }
+     },
+     "H2_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.01922,
+      "ref_penalty_ci": [
+       0.00766,
+       0.0326
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.01559,
+      "arm_penalty_ci": [
+       0.00562,
+       0.02583
+      ],
+      "R": 0.189,
+      "difference": 0.00363,
+      "difference_ci": [
+       -0.00234,
+       0.01094
+      ],
+      "agg_change": 0.0018,
+      "seed_R": {
+       "s0": 0.3057,
+       "s1": 0.3367,
+       "s2": -0.0071
+      }
+     },
+     "H3_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.01922,
+      "ref_penalty_ci": [
+       0.00766,
+       0.0326
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.01494,
+      "arm_penalty_ci": [
+       -0.02883,
+       0.07624
+      ],
+      "R": 0.2226,
+      "difference": 0.00428,
+      "difference_ci": [
+       -0.04764,
+       0.04124
+      ],
+      "agg_change": 0.10251,
+      "seed_R": {
+       "s0": 0.8642,
+       "s1": 1.4646,
+       "s2": -1.1626
+      }
+     }
+    }
+   },
+   "prereg_groups": {
+    "worst3": [
+     "Jamaican English",
+     "Kenyan English",
+     "Vietnamese"
+    ],
+    "best3": [
+     "Bulgarian",
+     "Latin American",
+     "Irish English"
+    ],
+    "penalties": {
+     "awq_w4_balanced": {
+      "penalty": 0.001,
+      "ci": [
+       -0.00308,
+       0.00575
+      ]
+     },
+     "awq_w4_us": {
+      "penalty": 0.00453,
+      "ci": [
+       0.00165,
+       0.00755
+      ]
+     },
+     "awq_w4_worst": {
+      "penalty": 0.00135,
+      "ci": [
+       -0.00398,
+       0.00682
+      ]
+     },
+     "gptq_w3_balanced": {
+      "penalty": 0.00753,
+      "ci": [
+       5e-05,
+       0.01496
+      ]
+     },
+     "gptq_w3_us": {
+      "penalty": 0.01247,
+      "ci": [
+       0.00248,
+       0.02301
+      ]
+     },
+     "gptq_w3_worst": {
+      "penalty": 0.01014,
+      "ci": [
+       0.00072,
+       0.0208
+      ]
+     },
+     "gptq_w4_balanced": {
+      "penalty": 0.00087,
+      "ci": [
+       -0.00258,
+       0.00608
+      ]
+     },
+     "gptq_w4_us": {
+      "penalty": -0.00143,
+      "ci": [
+       -0.00737,
+       0.00474
+      ]
+     },
+     "gptq_w4_worst": {
+      "penalty": 0.00204,
+      "ci": [
+       -0.00045,
+       0.00498
+      ]
+     },
+     "mp3_balanced": {
+      "penalty": 0.00572,
+      "ci": [
+       -0.02066,
+       0.03826
+      ]
+     },
+     "mp3_us": {
+      "penalty": -0.01283,
+      "ci": [
+       -0.05199,
+       0.04147
+      ]
+     },
+     "mp_balanced": {
+      "penalty": 0.00094,
+      "ci": [
+       -0.00506,
+       0.00802
+      ]
+     },
+     "mp_us": {
+      "penalty": 0.00424,
+      "ci": [
+       0.00127,
+       0.00816
+      ]
+     }
+    },
+    "tests": {
+     "H1_w4": {
+      "verdict": "Inconclusive",
+      "ref_penalty": -0.00143,
+      "ref_penalty_ci": [
+       -0.00737,
+       0.00474
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.00087,
+      "arm_penalty_ci": [
+       -0.00258,
+       0.00608
+      ],
+      "R": null,
+      "difference": -0.0023,
+      "difference_ci": [
+       -0.01039,
+       0.00373
+      ],
+      "agg_change": -0.00034,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H2_w4": {
+      "verdict": "Inconclusive",
+      "ref_penalty": -0.00143,
+      "ref_penalty_ci": [
+       -0.00737,
+       0.00474
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.00204,
+      "arm_penalty_ci": [
+       -0.00045,
+       0.00498
+      ],
+      "R": null,
+      "difference": -0.00347,
+      "difference_ci": [
+       -0.0097,
+       0.00206
+      ],
+      "agg_change": -0.00212,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H1_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.01247,
+      "ref_penalty_ci": [
+       0.00248,
+       0.02301
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.00753,
+      "arm_penalty_ci": [
+       5e-05,
+       0.01496
+      ],
+      "R": 0.396,
+      "difference": 0.00494,
+      "difference_ci": [
+       -0.00063,
+       0.01175
+      ],
+      "agg_change": -0.00076,
+      "seed_R": {
+       "s0": 0.1673,
+       "s1": 0.3055,
+       "s2": 0.5869
+      }
+     },
+     "H2_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.01247,
+      "ref_penalty_ci": [
+       0.00248,
+       0.02301
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.01014,
+      "arm_penalty_ci": [
+       0.00072,
+       0.0208
+      ],
+      "R": 0.1865,
+      "difference": 0.00233,
+      "difference_ci": [
+       -0.00363,
+       0.0078
+      ],
+      "agg_change": 0.0018,
+      "seed_R": {
+       "s0": 0.1046,
+       "s1": -0.0879,
+       "s2": 0.3602
+      }
+     },
+     "H3_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.01247,
+      "ref_penalty_ci": [
+       0.00248,
+       0.02301
+      ],
+      "control_holds": true,
+      "arm_penalty": -0.01283,
+      "arm_penalty_ci": [
+       -0.05199,
+       0.04147
+      ],
+      "R": 2.0295,
+      "difference": 0.0253,
+      "difference_ci": [
+       -0.02212,
+       0.05903
+      ],
+      "agg_change": 0.10251,
+      "seed_R": {
+       "s0": 3.0398,
+       "s1": 6.481,
+       "s2": -0.5781
+      }
+     }
+    }
+   }
+  },
+  "no_loops": {
+   "refixed": {
+    "worst3": [
+     "Nigerian English",
+     "Jamaican English",
+     "Vietnamese"
+    ],
+    "best3": [
+     "Bulgarian",
+     "Latin American",
+     "Irish English"
+    ],
+    "penalties": {
+     "awq_w4_balanced": {
+      "penalty": 0.00024,
+      "ci": [
+       -0.00314,
+       0.00586
+      ]
+     },
+     "awq_w4_us": {
+      "penalty": 0.00017,
+      "ci": [
+       -0.00319,
+       0.00475
+      ]
+     },
+     "awq_w4_worst": {
+      "penalty": -0.00077,
+      "ci": [
+       -0.00462,
+       0.00451
+      ]
+     },
+     "gptq_w3_balanced": {
+      "penalty": 0.0049,
+      "ci": [
+       -0.00453,
+       0.01446
+      ]
+     },
+     "gptq_w3_us": {
+      "penalty": 0.00633,
+      "ci": [
+       -0.00126,
+       0.01458
+      ]
+     },
+     "gptq_w3_worst": {
+      "penalty": 0.0106,
+      "ci": [
+       0.00125,
+       0.01899
+      ]
+     },
+     "gptq_w4_balanced": {
+      "penalty": 0.00228,
+      "ci": [
+       -0.00197,
+       0.00705
+      ]
+     },
+     "gptq_w4_us": {
+      "penalty": 0.00127,
+      "ci": [
+       -0.00213,
+       0.00518
+      ]
+     },
+     "gptq_w4_worst": {
+      "penalty": 0.00251,
+      "ci": [
+       0.00011,
+       0.00722
+      ]
+     },
+     "mp3_balanced": {
+      "penalty": 0.01821,
+      "ci": [
+       -0.00623,
+       0.04541
+      ]
+     },
+     "mp3_us": {
+      "penalty": 0.01895,
+      "ci": [
+       -0.01677,
+       0.05279
+      ]
+     },
+     "mp_balanced": {
+      "penalty": 0.00257,
+      "ci": [
+       -0.00291,
+       0.00846
+      ]
+     },
+     "mp_us": {
+      "penalty": -0.00108,
+      "ci": [
+       -0.0053,
+       0.0038
+      ]
+     }
+    },
+    "tests": {
+     "H1_w4": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.00127,
+      "ref_penalty_ci": [
+       -0.00213,
+       0.00518
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.00228,
+      "arm_penalty_ci": [
+       -0.00197,
+       0.00705
+      ],
+      "R": null,
+      "difference": -0.00101,
+      "difference_ci": [
+       -0.00455,
+       0.00283
+      ],
+      "agg_change": -0.00013,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H2_w4": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.00127,
+      "ref_penalty_ci": [
+       -0.00213,
+       0.00518
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.00251,
+      "arm_penalty_ci": [
+       0.00011,
+       0.00722
+      ],
+      "R": null,
+      "difference": -0.00124,
+      "difference_ci": [
+       -0.00603,
+       0.0025
+      ],
+      "agg_change": -0.00155,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H1_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.00633,
+      "ref_penalty_ci": [
+       -0.00126,
+       0.01458
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.0049,
+      "arm_penalty_ci": [
+       -0.00453,
+       0.01446
+      ],
+      "R": null,
+      "difference": 0.00143,
+      "difference_ci": [
+       -0.0058,
+       0.00836
+      ],
+      "agg_change": 0.00072,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H2_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.00633,
+      "ref_penalty_ci": [
+       -0.00126,
+       0.01458
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.0106,
+      "arm_penalty_ci": [
+       0.00125,
+       0.01899
+      ],
+      "R": null,
+      "difference": -0.00427,
+      "difference_ci": [
+       -0.00862,
+       0.0008
+      ],
+      "agg_change": 0.00041,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H3_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.00633,
+      "ref_penalty_ci": [
+       -0.00126,
+       0.01458
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.01895,
+      "arm_penalty_ci": [
+       -0.01677,
+       0.05279
+      ],
+      "R": null,
+      "difference": -0.01261,
+      "difference_ci": [
+       -0.04083,
+       0.01711
+      ],
+      "agg_change": 0.07167,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     }
+    }
+   },
+   "prereg_groups": {
+    "worst3": [
+     "Jamaican English",
+     "Kenyan English",
+     "Vietnamese"
+    ],
+    "best3": [
+     "Bulgarian",
+     "Latin American",
+     "Irish English"
+    ],
+    "penalties": {
+     "awq_w4_balanced": {
+      "penalty": -0.00073,
+      "ci": [
+       -0.00337,
+       0.00201
+      ]
+     },
+     "awq_w4_us": {
+      "penalty": 0.00216,
+      "ci": [
+       -0.00088,
+       0.00541
+      ]
+     },
+     "awq_w4_worst": {
+      "penalty": -0.00224,
+      "ci": [
+       -0.00762,
+       0.00257
+      ]
+     },
+     "gptq_w3_balanced": {
+      "penalty": 0.00202,
+      "ci": [
+       -0.00732,
+       0.00918
+      ]
+     },
+     "gptq_w3_us": {
+      "penalty": 0.00475,
+      "ci": [
+       -0.0025,
+       0.01214
+      ]
+     },
+     "gptq_w3_worst": {
+      "penalty": 0.00993,
+      "ci": [
+       0.00041,
+       0.01761
+      ]
+     },
+     "gptq_w4_balanced": {
+      "penalty": 0.00237,
+      "ci": [
+       -0.00118,
+       0.00589
+      ]
+     },
+     "gptq_w4_us": {
+      "penalty": 0.00172,
+      "ci": [
+       -0.00144,
+       0.00477
+      ]
+     },
+     "gptq_w4_worst": {
+      "penalty": 0.00251,
+      "ci": [
+       0.00051,
+       0.00509
+      ]
+     },
+     "mp3_balanced": {
+      "penalty": 0.0161,
+      "ci": [
+       -0.00759,
+       0.04039
+      ]
+     },
+     "mp3_us": {
+      "penalty": 0.01187,
+      "ci": [
+       -0.02359,
+       0.04079
+      ]
+     },
+     "mp_balanced": {
+      "penalty": 0.00165,
+      "ci": [
+       -0.00267,
+       0.00647
+      ]
+     },
+     "mp_us": {
+      "penalty": -0.00013,
+      "ci": [
+       -0.00431,
+       0.00393
+      ]
+     }
+    },
+    "tests": {
+     "H1_w4": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.00172,
+      "ref_penalty_ci": [
+       -0.00144,
+       0.00477
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.00237,
+      "arm_penalty_ci": [
+       -0.00118,
+       0.00589
+      ],
+      "R": null,
+      "difference": -0.00064,
+      "difference_ci": [
+       -0.00301,
+       0.00184
+      ],
+      "agg_change": -0.00013,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H2_w4": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.00172,
+      "ref_penalty_ci": [
+       -0.00144,
+       0.00477
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.00251,
+      "arm_penalty_ci": [
+       0.00051,
+       0.00509
+      ],
+      "R": null,
+      "difference": -0.00078,
+      "difference_ci": [
+       -0.00419,
+       0.00237
+      ],
+      "agg_change": -0.00155,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H1_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.00475,
+      "ref_penalty_ci": [
+       -0.0025,
+       0.01214
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.00202,
+      "arm_penalty_ci": [
+       -0.00732,
+       0.00918
+      ],
+      "R": null,
+      "difference": 0.00273,
+      "difference_ci": [
+       -0.00259,
+       0.00816
+      ],
+      "agg_change": 0.00072,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H2_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.00475,
+      "ref_penalty_ci": [
+       -0.0025,
+       0.01214
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.00993,
+      "arm_penalty_ci": [
+       0.00041,
+       0.01761
+      ],
+      "R": null,
+      "difference": -0.00519,
+      "difference_ci": [
+       -0.01056,
+       -0.00086
+      ],
+      "agg_change": 0.00041,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H3_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.00475,
+      "ref_penalty_ci": [
+       -0.0025,
+       0.01214
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.01187,
+      "arm_penalty_ci": [
+       -0.02359,
+       0.04079
+      ],
+      "R": null,
+      "difference": -0.00713,
+      "difference_ci": [
+       -0.03181,
+       0.02207
+      ],
+      "agg_change": 0.07167,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     }
+    }
+   }
+  },
+  "sub_del": {
+   "refixed": {
+    "worst3": [
+     "Kenyan English",
+     "Nigerian English",
+     "Vietnamese"
+    ],
+    "best3": [
+     "Bulgarian",
+     "Latin American",
+     "Irish English"
+    ],
+    "penalties": {
+     "awq_w4_balanced": {
+      "penalty": 0.0016,
+      "ci": [
+       -0.00211,
+       0.00654
+      ]
+     },
+     "awq_w4_us": {
+      "penalty": 0.00338,
+      "ci": [
+       0.00077,
+       0.00677
+      ]
+     },
+     "awq_w4_worst": {
+      "penalty": 0.00111,
+      "ci": [
+       -0.00279,
+       0.00582
+      ]
+     },
+     "gptq_w3_balanced": {
+      "penalty": 0.01043,
+      "ci": [
+       0.00226,
+       0.01942
+      ]
+     },
+     "gptq_w3_us": {
+      "penalty": 0.01532,
+      "ci": [
+       0.00766,
+       0.02558
+      ]
+     },
+     "gptq_w3_worst": {
+      "penalty": 0.01506,
+      "ci": [
+       0.00613,
+       0.02482
+      ]
+     },
+     "gptq_w4_balanced": {
+      "penalty": 0.00152,
+      "ci": [
+       -0.00244,
+       0.00716
+      ]
+     },
+     "gptq_w4_us": {
+      "penalty": 0.00262,
+      "ci": [
+       -1e-05,
+       0.0061
+      ]
+     },
+     "gptq_w4_worst": {
+      "penalty": 0.00161,
+      "ci": [
+       -0.00124,
+       0.00566
+      ]
+     },
+     "mp3_balanced": {
+      "penalty": 0.02494,
+      "ci": [
+       -0.00364,
+       0.06065
+      ]
+     },
+     "mp3_us": {
+      "penalty": 0.01442,
+      "ci": [
+       -0.0218,
+       0.06611
+      ]
+     },
+     "mp_balanced": {
+      "penalty": 0.00309,
+      "ci": [
+       -0.003,
+       0.01051
+      ]
+     },
+     "mp_us": {
+      "penalty": 0.00347,
+      "ci": [
+       -0.00034,
+       0.00824
+      ]
+     }
+    },
+    "tests": {
+     "H1_w4": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.00262,
+      "ref_penalty_ci": [
+       -1e-05,
+       0.0061
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.00152,
+      "arm_penalty_ci": [
+       -0.00244,
+       0.00716
+      ],
+      "R": null,
+      "difference": 0.0011,
+      "difference_ci": [
+       -0.00194,
+       0.00325
+      ],
+      "agg_change": 0.0003,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H2_w4": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.00262,
+      "ref_penalty_ci": [
+       -1e-05,
+       0.0061
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.00161,
+      "arm_penalty_ci": [
+       -0.00124,
+       0.00566
+      ],
+      "R": null,
+      "difference": 0.00101,
+      "difference_ci": [
+       -0.00061,
+       0.00209
+      ],
+      "agg_change": -0.00108,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H1_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.01532,
+      "ref_penalty_ci": [
+       0.00766,
+       0.02558
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.01043,
+      "arm_penalty_ci": [
+       0.00226,
+       0.01942
+      ],
+      "R": 0.3191,
+      "difference": 0.00489,
+      "difference_ci": [
+       -0.00021,
+       0.00899
+      ],
+      "agg_change": 0.00061,
+      "seed_R": {
+       "s0": 0.2398,
+       "s1": 0.2264,
+       "s2": 0.4751
+      }
+     },
+     "H2_w3": {
+      "verdict": "Refuted",
+      "ref_penalty": 0.01532,
+      "ref_penalty_ci": [
+       0.00766,
+       0.02558
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.01506,
+      "arm_penalty_ci": [
+       0.00613,
+       0.02482
+      ],
+      "R": 0.0166,
+      "difference": 0.00025,
+      "difference_ci": [
+       -0.00409,
+       0.00466
+      ],
+      "agg_change": 0.0018,
+      "seed_R": {
+       "s0": 0.2966,
+       "s1": -0.2375,
+       "s2": -0.1546
+      }
+     },
+     "H3_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.01532,
+      "ref_penalty_ci": [
+       0.00766,
+       0.02558
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.01442,
+      "arm_penalty_ci": [
+       -0.0218,
+       0.06611
+      ],
+      "R": 0.0586,
+      "difference": 0.0009,
+      "difference_ci": [
+       -0.04151,
+       0.03112
+      ],
+      "agg_change": 0.08943,
+      "seed_R": {
+       "s0": 0.8972,
+       "s1": 1.027,
+       "s2": -1.5846
+      }
+     }
+    }
+   },
+   "prereg_groups": {
+    "worst3": [
+     "Jamaican English",
+     "Kenyan English",
+     "Vietnamese"
+    ],
+    "best3": [
+     "Bulgarian",
+     "Latin American",
+     "Irish English"
+    ],
+    "penalties": {
+     "awq_w4_balanced": {
+      "penalty": -0.00357,
+      "ci": [
+       -0.00781,
+       0.00182
+      ]
+     },
+     "awq_w4_us": {
+      "penalty": 0.00212,
+      "ci": [
+       -0.00072,
+       0.0058
+      ]
+     },
+     "awq_w4_worst": {
+      "penalty": -0.00201,
+      "ci": [
+       -0.0066,
+       0.00297
+      ]
+     },
+     "gptq_w3_balanced": {
+      "penalty": 0.00569,
+      "ci": [
+       -0.00188,
+       0.01309
+      ]
+     },
+     "gptq_w3_us": {
+      "penalty": 0.01057,
+      "ci": [
+       0.00354,
+       0.01852
+      ]
+     },
+     "gptq_w3_worst": {
+      "penalty": 0.01064,
+      "ci": [
+       0.00224,
+       0.01986
+      ]
+     },
+     "gptq_w4_balanced": {
+      "penalty": -0.00011,
+      "ci": [
+       -0.00336,
+       0.00478
+      ]
+     },
+     "gptq_w4_us": {
+      "penalty": 0.00013,
+      "ci": [
+       -0.00216,
+       0.003
+      ]
+     },
+     "gptq_w4_worst": {
+      "penalty": -0.00021,
+      "ci": [
+       -0.00279,
+       0.0028
+      ]
+     },
+     "mp3_balanced": {
+      "penalty": 0.00782,
+      "ci": [
+       -0.01609,
+       0.03431
+      ]
+     },
+     "mp3_us": {
+      "penalty": -0.00461,
+      "ci": [
+       -0.03886,
+       0.04371
+      ]
+     },
+     "mp_balanced": {
+      "penalty": 0.00067,
+      "ci": [
+       -0.00474,
+       0.00774
+      ]
+     },
+     "mp_us": {
+      "penalty": 0.00137,
+      "ci": [
+       -0.00089,
+       0.00499
+      ]
+     }
+    },
+    "tests": {
+     "H1_w4": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.00013,
+      "ref_penalty_ci": [
+       -0.00216,
+       0.003
+      ],
+      "control_holds": false,
+      "arm_penalty": -0.00011,
+      "arm_penalty_ci": [
+       -0.00336,
+       0.00478
+      ],
+      "R": null,
+      "difference": 0.00024,
+      "difference_ci": [
+       -0.00291,
+       0.00238
+      ],
+      "agg_change": 0.0003,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H2_w4": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.00013,
+      "ref_penalty_ci": [
+       -0.00216,
+       0.003
+      ],
+      "control_holds": false,
+      "arm_penalty": -0.00021,
+      "arm_penalty_ci": [
+       -0.00279,
+       0.0028
+      ],
+      "R": null,
+      "difference": 0.00034,
+      "difference_ci": [
+       -0.00083,
+       0.00149
+      ],
+      "agg_change": -0.00108,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H1_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.01057,
+      "ref_penalty_ci": [
+       0.00354,
+       0.01852
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.00569,
+      "arm_penalty_ci": [
+       -0.00188,
+       0.01309
+      ],
+      "R": 0.4618,
+      "difference": 0.00488,
+      "difference_ci": [
+       0.00178,
+       0.00831
+      ],
+      "agg_change": 0.00061,
+      "seed_R": {
+       "s0": 0.3555,
+       "s1": 0.3055,
+       "s2": 0.6421
+      }
+     },
+     "H2_w3": {
+      "verdict": "Refuted",
+      "ref_penalty": 0.01057,
+      "ref_penalty_ci": [
+       0.00354,
+       0.01852
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.01064,
+      "arm_penalty_ci": [
+       0.00224,
+       0.01986
+      ],
+      "R": -0.0067,
+      "difference": -7e-05,
+      "difference_ci": [
+       -0.00495,
+       0.00364
+      ],
+      "agg_change": 0.0018,
+      "seed_R": {
+       "s0": 0.2541,
+       "s1": -1.2023,
+       "s2": 0.0889
+      }
+     },
+     "H3_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.01057,
+      "ref_penalty_ci": [
+       0.00354,
+       0.01852
+      ],
+      "control_holds": true,
+      "arm_penalty": -0.00461,
+      "arm_penalty_ci": [
+       -0.03886,
+       0.04371
+      ],
+      "R": 1.4363,
+      "difference": 0.01518,
+      "difference_ci": [
+       -0.02571,
+       0.04372
+      ],
+      "agg_change": 0.08943,
+      "seed_R": {
+       "s0": 1.8922,
+       "s1": 6.3174,
+       "s2": -0.7708
+      }
+     }
+    }
+   }
+  },
+  "short": {
+   "prereg_groups": {
+    "worst3": [
+     "Jamaican English",
+     "Kenyan English",
+     "Vietnamese"
+    ],
+    "best3": [
+     "Bulgarian",
+     "Latin American",
+     "Irish English"
+    ],
+    "penalties": {
+     "awq_w4_balanced": {
+      "penalty": -0.00361,
+      "ci": [
+       -0.04988,
+       0.02872
+      ]
+     },
+     "awq_w4_us": {
+      "penalty": 0.00341,
+      "ci": [
+       -0.06093,
+       0.04513
+      ]
+     },
+     "awq_w4_worst": {
+      "penalty": 0.01524,
+      "ci": [
+       -0.03391,
+       0.04846
+      ]
+     },
+     "gptq_w3_balanced": {
+      "penalty": 0.0026,
+      "ci": [
+       -0.08257,
+       0.07786
+      ]
+     },
+     "gptq_w3_us": {
+      "penalty": 0.08898,
+      "ci": [
+       0.03756,
+       0.1406
+      ]
+     },
+     "gptq_w3_worst": {
+      "penalty": 0.02549,
+      "ci": [
+       -0.03003,
+       0.07859
+      ]
+     },
+     "gptq_w4_balanced": {
+      "penalty": -0.02324,
+      "ci": [
+       -0.09463,
+       0.03366
+      ]
+     },
+     "gptq_w4_us": {
+      "penalty": 0.00944,
+      "ci": [
+       -0.02803,
+       0.03564
+      ]
+     },
+     "gptq_w4_worst": {
+      "penalty": 0.01014,
+      "ci": [
+       -0.02498,
+       0.03426
+      ]
+     },
+     "mp3_balanced": {
+      "penalty": 0.09407,
+      "ci": [
+       -0.06047,
+       0.24101
+      ]
+     },
+     "mp3_us": {
+      "penalty": 0.22612,
+      "ci": [
+       0.08045,
+       0.39143
+      ]
+     },
+     "mp_balanced": {
+      "penalty": 0.01143,
+      "ci": [
+       -0.05037,
+       0.05337
+      ]
+     },
+     "mp_us": {
+      "penalty": 0.03028,
+      "ci": [
+       -0.02884,
+       0.07626
+      ]
+     }
+    },
+    "tests": {
+     "H1_w4": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.00944,
+      "ref_penalty_ci": [
+       -0.02803,
+       0.03564
+      ],
+      "control_holds": false,
+      "arm_penalty": -0.02324,
+      "arm_penalty_ci": [
+       -0.09463,
+       0.03366
+      ],
+      "R": null,
+      "difference": 0.03268,
+      "difference_ci": [
+       -0.0038,
+       0.07515
+      ],
+      "agg_change": -0.00114,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H2_w4": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.00944,
+      "ref_penalty_ci": [
+       -0.02803,
+       0.03564
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.01014,
+      "arm_penalty_ci": [
+       -0.02498,
+       0.03426
+      ],
+      "R": null,
+      "difference": -0.0007,
+      "difference_ci": [
+       -0.00461,
+       0.00284
+      ],
+      "agg_change": -0.00193,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H1_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.08898,
+      "ref_penalty_ci": [
+       0.03756,
+       0.1406
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.0026,
+      "arm_penalty_ci": [
+       -0.08257,
+       0.07786
+      ],
+      "R": 0.9707,
+      "difference": 0.08637,
+      "difference_ci": [
+       -0.01594,
+       0.198
+      ],
+      "agg_change": -0.03356,
+      "seed_R": {
+       "s0": -0.1271,
+       "s1": 1.7804,
+       "s2": 1.041
+      }
+     },
+     "H2_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.08898,
+      "ref_penalty_ci": [
+       0.03756,
+       0.1406
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.02549,
+      "arm_penalty_ci": [
+       -0.03003,
+       0.07859
+      ],
+      "R": 0.7136,
+      "difference": 0.06349,
+      "difference_ci": [
+       -0.00059,
+       0.13358
+      ],
+      "agg_change": -0.01762,
+      "seed_R": {
+       "s0": 0.3571,
+       "s1": 1.4565,
+       "s2": 0.1819
+      }
+     },
+     "H3_w3": {
+      "verdict": "Refuted",
+      "ref_penalty": 0.08898,
+      "ref_penalty_ci": [
+       0.03756,
+       0.1406
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.22612,
+      "arm_penalty_ci": [
+       0.08045,
+       0.39143
+      ],
+      "R": -1.5413,
+      "difference": -0.13714,
+      "difference_ci": [
+       -0.2656,
+       -0.0274
+      ],
+      "agg_change": 0.25458,
+      "seed_R": {
+       "s0": -1.3275,
+       "s1": -0.2834,
+       "s2": -3.1902
+      }
+     }
+    }
+   }
+  },
+  "long": {
+   "prereg_groups": {
+    "worst3": [
+     "Jamaican English",
+     "Kenyan English",
+     "Vietnamese"
+    ],
+    "best3": [
+     "Bulgarian",
+     "Latin American",
+     "Irish English"
+    ],
+    "penalties": {
+     "awq_w4_balanced": {
+      "penalty": -0.00311,
+      "ci": [
+       -0.00925,
+       0.00521
+      ]
+     },
+     "awq_w4_us": {
+      "penalty": -0.00031,
+      "ci": [
+       -0.00623,
+       0.00588
+      ]
+     },
+     "awq_w4_worst": {
+      "penalty": 0.00244,
+      "ci": [
+       -0.00623,
+       0.01225
+      ]
+     },
+     "gptq_w3_balanced": {
+      "penalty": 0.02908,
+      "ci": [
+       -0.01016,
+       0.08842
+      ]
+     },
+     "gptq_w3_us": {
+      "penalty": 0.00492,
+      "ci": [
+       -0.02537,
+       0.03773
+      ]
+     },
+     "gptq_w3_worst": {
+      "penalty": 0.01315,
+      "ci": [
+       -0.03828,
+       0.06502
+      ]
+     },
+     "gptq_w4_balanced": {
+      "penalty": 0.00011,
+      "ci": [
+       -0.0147,
+       0.02334
+      ]
+     },
+     "gptq_w4_us": {
+      "penalty": -0.07963,
+      "ci": [
+       -0.21539,
+       0.00296
+      ]
+     },
+     "gptq_w4_worst": {
+      "penalty": -0.00864,
+      "ci": [
+       -0.01963,
+       0.00458
+      ]
+     },
+     "mp3_balanced": {
+      "penalty": 0.071,
+      "ci": [
+       -0.03031,
+       0.18898
+      ]
+     },
+     "mp3_us": {
+      "penalty": 0.03146,
+      "ci": [
+       -0.05128,
+       0.1415
+      ]
+     },
+     "mp_balanced": {
+      "penalty": -0.01421,
+      "ci": [
+       -0.02717,
+       0.00102
+      ]
+     },
+     "mp_us": {
+      "penalty": -0.00572,
+      "ci": [
+       -0.01278,
+       0.00277
+      ]
+     }
+    },
+    "tests": {
+     "H1_w4": {
+      "verdict": "Inconclusive",
+      "ref_penalty": -0.07963,
+      "ref_penalty_ci": [
+       -0.21539,
+       0.00296
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.00011,
+      "arm_penalty_ci": [
+       -0.0147,
+       0.02334
+      ],
+      "R": null,
+      "difference": -0.07974,
+      "difference_ci": [
+       -0.21821,
+       0.00609
+      ],
+      "agg_change": -0.00937,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H2_w4": {
+      "verdict": "Inconclusive",
+      "ref_penalty": -0.07963,
+      "ref_penalty_ci": [
+       -0.21539,
+       0.00296
+      ],
+      "control_holds": false,
+      "arm_penalty": -0.00864,
+      "arm_penalty_ci": [
+       -0.01963,
+       0.00458
+      ],
+      "R": null,
+      "difference": -0.07099,
+      "difference_ci": [
+       -0.2111,
+       0.01235
+      ],
+      "agg_change": -0.01238,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H1_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.00492,
+      "ref_penalty_ci": [
+       -0.02537,
+       0.03773
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.02908,
+      "arm_penalty_ci": [
+       -0.01016,
+       0.08842
+      ],
+      "R": null,
+      "difference": -0.02416,
+      "difference_ci": [
+       -0.08933,
+       0.02357
+      ],
+      "agg_change": 0.00472,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H2_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.00492,
+      "ref_penalty_ci": [
+       -0.02537,
+       0.03773
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.01315,
+      "arm_penalty_ci": [
+       -0.03828,
+       0.06502
+      ],
+      "R": null,
+      "difference": -0.00823,
+      "difference_ci": [
+       -0.06685,
+       0.05311
+      ],
+      "agg_change": 0.02265,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H3_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.00492,
+      "ref_penalty_ci": [
+       -0.02537,
+       0.03773
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.03146,
+      "arm_penalty_ci": [
+       -0.05128,
+       0.1415
+      ],
+      "R": null,
+      "difference": -0.02654,
+      "difference_ci": [
+       -0.14503,
+       0.06129
+      ],
+      "agg_change": 0.21083,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     }
+    }
+   }
+  }
+ },
+ "draw_bootstrap": {
+  "H1_w4": {
+   "difference": -0.01213,
+   "speaker_ci": [
+    -0.0709,
+    0.03649
+   ],
+   "speaker_and_draw_ci": [
+    -0.07721,
+    0.054
+   ],
+   "per_seed_difference": [
+    0.03417,
+    -0.03862,
+    -0.03195
+   ]
+  },
+  "H2_w4": {
+   "difference": -0.03111,
+   "speaker_ci": [
+    -0.08003,
+    0.00475
+   ],
+   "speaker_and_draw_ci": [
+    -0.08584,
+    0.01977
+   ],
+   "per_seed_difference": [
+    0.00211,
+    -0.04362,
+    -0.05182
+   ]
+  },
+  "H1_w3": {
+   "difference": 0.05395,
+   "speaker_ci": [
+    -0.0085,
+    0.12103
+   ],
+   "speaker_and_draw_ci": [
+    -0.02565,
+    0.14904
+   ],
+   "per_seed_difference": [
+    -0.01401,
+    0.11533,
+    0.06053
+   ]
+  },
+  "H2_w3": {
+   "difference": 0.05062,
+   "speaker_ci": [
+    0.01207,
+    0.09066
+   ],
+   "speaker_and_draw_ci": [
+    -0.0145,
+    0.13289
+   ],
+   "per_seed_difference": [
+    0.01081,
+    0.12552,
+    0.01552
+   ]
+  },
+  "H3_w3": {
+   "difference": -0.11855,
+   "speaker_ci": [
+    -0.23606,
+    -0.01782
+   ],
+   "speaker_and_draw_ci": [
+    -0.32941,
+    0.03225
+   ],
+   "per_seed_difference": [
+    -0.07964,
+    0.01544,
+    -0.29144
+   ]
+  }
+ },
+ "literal_gap_penalty": {
+  "awq_w4_balanced": {
+   "penalty": 0.04102,
+   "ci": [
+    -0.07686,
+    0.2033
+   ]
+  },
+  "awq_w4_us": {
+   "penalty": 0.03698,
+   "ci": [
+    -0.11114,
+    0.2004
+   ]
+  },
+  "awq_w4_worst": {
+   "penalty": 0.01733,
+   "ci": [
+    -0.04165,
+    0.11551
+   ]
+  },
+  "gptq_w3_balanced": {
+   "penalty": 0.09112,
+   "ci": [
+    -0.02056,
+    0.1645
+   ]
+  },
+  "gptq_w3_us": {
+   "penalty": 0.16564,
+   "ci": [
+    0.06445,
+    0.44835
+   ]
+  },
+  "gptq_w3_worst": {
+   "penalty": 0.08273,
+   "ci": [
+    -0.00146,
+    0.21143
+   ]
+  },
+  "gptq_w4_balanced": {
+   "penalty": 0.0359,
+   "ci": [
+    -0.11064,
+    0.19886
+   ]
+  },
+  "gptq_w4_us": {
+   "penalty": 0.02851,
+   "ci": [
+    -0.05109,
+    0.23068
+   ]
+  },
+  "gptq_w4_worst": {
+   "penalty": 0.01161,
+   "ci": [
+    -0.05057,
+    0.02592
+   ]
+  },
+  "mp3_balanced": {
+   "penalty": 0.32891,
+   "ci": [
+    0.16339,
+    0.70172
+   ]
+  },
+  "mp3_us": {
+   "penalty": 0.47847,
+   "ci": [
+    0.27134,
+    0.9408
+   ]
+  },
+  "mp_balanced": {
+   "penalty": 0.02474,
+   "ci": [
+    -0.11385,
+    0.07351
+   ]
+  },
+  "mp_us": {
+   "penalty": 0.07623,
+   "ci": [
+    -0.00672,
+    0.19431
+   ]
+  },
+  "rtn_w4": {
+   "penalty": 0.07047,
+   "ci": [
+    -0.12411,
+    0.16003
+   ]
+  },
+  "rtn_w8": {
+   "penalty": 0.01855,
+   "ci": [
+    -0.01505,
+    0.06683
+   ]
+  }
+ },
+ "loops": {
+  "awq_w4_balanced_s0": {
+   "loop_rate": 0.00457,
+   "error_share_in_looped": 0.1276,
+   "insertion_share": 0.1829,
+   "excess_over_cap_share": 0.1029
+  },
+  "awq_w4_us_s0": {
+   "loop_rate": 0.0041,
+   "error_share_in_looped": 0.1075,
+   "insertion_share": 0.163,
+   "excess_over_cap_share": 0.0873
+  },
+  "awq_w4_worst_s0": {
+   "loop_rate": 0.00422,
+   "error_share_in_looped": 0.1185,
+   "insertion_share": 0.1744,
+   "excess_over_cap_share": 0.0985
+  },
+  "fp16": {
+   "loop_rate": 0.00328,
+   "error_share_in_looped": 0.0753,
+   "insertion_share": 0.1424,
+   "excess_over_cap_share": 0.0625
+  },
+  "gptq_w3_balanced_s0": {
+   "loop_rate": 0.00445,
+   "error_share_in_looped": 0.164,
+   "insertion_share": 0.21,
+   "excess_over_cap_share": 0.1411
+  },
+  "gptq_w3_balanced_s1": {
+   "loop_rate": 0.00515,
+   "error_share_in_looped": 0.1739,
+   "insertion_share": 0.2208,
+   "excess_over_cap_share": 0.151
+  },
+  "gptq_w3_balanced_s2": {
+   "loop_rate": 0.00445,
+   "error_share_in_looped": 0.1583,
+   "insertion_share": 0.2113,
+   "excess_over_cap_share": 0.1392
+  },
+  "gptq_w3_us_s0": {
+   "loop_rate": 0.00609,
+   "error_share_in_looped": 0.2216,
+   "insertion_share": 0.2699,
+   "excess_over_cap_share": 0.1932
+  },
+  "gptq_w3_us_s1": {
+   "loop_rate": 0.0075,
+   "error_share_in_looped": 0.2681,
+   "insertion_share": 0.2999,
+   "excess_over_cap_share": 0.238
+  },
+  "gptq_w3_us_s2": {
+   "loop_rate": 0.00586,
+   "error_share_in_looped": 0.2121,
+   "insertion_share": 0.2585,
+   "excess_over_cap_share": 0.1882
+  },
+  "gptq_w3_worst_s0": {
+   "loop_rate": 0.00656,
+   "error_share_in_looped": 0.2503,
+   "insertion_share": 0.2842,
+   "excess_over_cap_share": 0.2127
+  },
+  "gptq_w3_worst_s1": {
+   "loop_rate": 0.0048,
+   "error_share_in_looped": 0.1616,
+   "insertion_share": 0.2117,
+   "excess_over_cap_share": 0.1369
+  },
+  "gptq_w3_worst_s2": {
+   "loop_rate": 0.00609,
+   "error_share_in_looped": 0.2245,
+   "insertion_share": 0.2627,
+   "excess_over_cap_share": 0.1957
+  },
+  "gptq_w4_balanced_s0": {
+   "loop_rate": 0.00363,
+   "error_share_in_looped": 0.0923,
+   "insertion_share": 0.1501,
+   "excess_over_cap_share": 0.0743
+  },
+  "gptq_w4_balanced_s1": {
+   "loop_rate": 0.00398,
+   "error_share_in_looped": 0.1155,
+   "insertion_share": 0.1776,
+   "excess_over_cap_share": 0.0998
+  },
+  "gptq_w4_balanced_s2": {
+   "loop_rate": 0.00398,
+   "error_share_in_looped": 0.105,
+   "insertion_share": 0.1643,
+   "excess_over_cap_share": 0.0889
+  },
+  "gptq_w4_us_s0": {
+   "loop_rate": 0.0041,
+   "error_share_in_looped": 0.1251,
+   "insertion_share": 0.1816,
+   "excess_over_cap_share": 0.1043
+  },
+  "gptq_w4_us_s1": {
+   "loop_rate": 0.00363,
+   "error_share_in_looped": 0.1105,
+   "insertion_share": 0.1714,
+   "excess_over_cap_share": 0.0946
+  },
+  "gptq_w4_us_s2": {
+   "loop_rate": 0.0041,
+   "error_share_in_looped": 0.1156,
+   "insertion_share": 0.1784,
+   "excess_over_cap_share": 0.0987
+  },
+  "gptq_w4_worst_s0": {
+   "loop_rate": 0.00387,
+   "error_share_in_looped": 0.0956,
+   "insertion_share": 0.1539,
+   "excess_over_cap_share": 0.0764
+  },
+  "gptq_w4_worst_s1": {
+   "loop_rate": 0.00328,
+   "error_share_in_looped": 0.0768,
+   "insertion_share": 0.1428,
+   "excess_over_cap_share": 0.064
+  },
+  "gptq_w4_worst_s2": {
+   "loop_rate": 0.00433,
+   "error_share_in_looped": 0.1411,
+   "insertion_share": 0.1965,
+   "excess_over_cap_share": 0.127
+  },
+  "mp3_balanced_s0": {
+   "loop_rate": 0.02015,
+   "error_share_in_looped": 0.4683,
+   "insertion_share": 0.4377,
+   "excess_over_cap_share": 0.3642
+  },
+  "mp3_balanced_s1": {
+   "loop_rate": 0.01546,
+   "error_share_in_looped": 0.3822,
+   "insertion_share": 0.3721,
+   "excess_over_cap_share": 0.3058
+  },
+  "mp3_balanced_s2": {
+   "loop_rate": 0.01148,
+   "error_share_in_looped": 0.2751,
+   "insertion_share": 0.2785,
+   "excess_over_cap_share": 0.21
+  },
+  "mp3_us_s0": {
+   "loop_rate": 0.01874,
+   "error_share_in_looped": 0.418,
+   "insertion_share": 0.3916,
+   "excess_over_cap_share": 0.3187
+  },
+  "mp3_us_s1": {
+   "loop_rate": 0.01687,
+   "error_share_in_looped": 0.3909,
+   "insertion_share": 0.3628,
+   "excess_over_cap_share": 0.2938
+  },
+  "mp3_us_s2": {
+   "loop_rate": 0.02296,
+   "error_share_in_looped": 0.5356,
+   "insertion_share": 0.5277,
+   "excess_over_cap_share": 0.4788
+  },
+  "mp_balanced_s0": {
+   "loop_rate": 0.00422,
+   "error_share_in_looped": 0.0979,
+   "insertion_share": 0.1553,
+   "excess_over_cap_share": 0.0805
+  },
+  "mp_balanced_s1": {
+   "loop_rate": 0.00433,
+   "error_share_in_looped": 0.1396,
+   "insertion_share": 0.192,
+   "excess_over_cap_share": 0.1147
+  },
+  "mp_balanced_s2": {
+   "loop_rate": 0.00433,
+   "error_share_in_looped": 0.1275,
+   "insertion_share": 0.1816,
+   "excess_over_cap_share": 0.1075
+  },
+  "mp_us_s0": {
+   "loop_rate": 0.00445,
+   "error_share_in_looped": 0.1394,
+   "insertion_share": 0.2,
+   "excess_over_cap_share": 0.1245
+  },
+  "mp_us_s1": {
+   "loop_rate": 0.00457,
+   "error_share_in_looped": 0.1741,
+   "insertion_share": 0.2305,
+   "excess_over_cap_share": 0.1562
+  },
+  "mp_us_s2": {
+   "loop_rate": 0.00469,
+   "error_share_in_looped": 0.169,
+   "insertion_share": 0.2253,
+   "excess_over_cap_share": 0.1512
+  },
+  "rtn_w4": {
+   "loop_rate": 0.00445,
+   "error_share_in_looped": 0.1099,
+   "insertion_share": 0.1633,
+   "excess_over_cap_share": 0.0903
+  },
+  "rtn_w8": {
+   "loop_rate": 0.00328,
+   "error_share_in_looped": 0.0722,
+   "insertion_share": 0.1404,
+   "excess_over_cap_share": 0.0599
+  }
+ },
+ "split_half_bias": {
+  "awq_w4_balanced": {
+   "mean": -0.0017,
+   "range": [
+    -0.07354,
+    0.09165
+   ]
+  },
+  "awq_w4_us": {
+   "mean": 0.0011,
+   "range": [
+    -0.03028,
+    0.0506
+   ]
+  },
+  "awq_w4_worst": {
+   "mean": 0.00144,
+   "range": [
+    -0.0499,
+    0.03907
+   ]
+  },
+  "gptq_w3_balanced": {
+   "mean": -0.00275,
+   "range": [
+    -0.08526,
+    0.04858
+   ]
+  },
+  "gptq_w3_us": {
+   "mean": -0.01343,
+   "range": [
+    -0.07713,
+    0.06842
+   ]
+  },
+  "gptq_w3_worst": {
+   "mean": -0.00346,
+   "range": [
+    -0.05898,
+    0.084
+   ]
+  },
+  "gptq_w4_balanced": {
+   "mean": -8e-05,
+   "range": [
+    -0.05351,
+    0.06414
+   ]
+  },
+  "gptq_w4_us": {
+   "mean": -0.00681,
+   "range": [
+    -0.07064,
+    0.05207
+   ]
+  },
+  "gptq_w4_worst": {
+   "mean": 0.00072,
+   "range": [
+    -0.01553,
+    0.02589
+   ]
+  },
+  "mp3_balanced": {
+   "mean": -0.00443,
+   "range": [
+    -0.26041,
+    0.24814
+   ]
+  },
+  "mp3_us": {
+   "mean": -0.00931,
+   "range": [
+    -0.15628,
+    0.26451
+   ]
+  },
+  "mp_balanced": {
+   "mean": 0.00493,
+   "range": [
+    -0.03978,
+    0.06507
+   ]
+  },
+  "mp_us": {
+   "mean": 0.0035,
+   "range": [
+    -0.03528,
+    0.05988
+   ]
+  },
+  "rtn_w4": {
+   "mean": 0.00571,
+   "range": [
+    -0.03126,
+    0.07615
+   ]
+  },
+  "rtn_w8": {
+   "mean": 0.00643,
+   "range": [
+    -0.01326,
+    0.03998
+   ]
+  }
+ },
+ "drivers": {
+  "awq_w4_balanced_s0": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.1035,
+    "extra_errors": 2,
+    "top1_share": 2.0,
+    "top3_share": 4.5,
+    "top1": {
+     "utt": "test-00000:896",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 73,
+     "hyp_words": 70,
+     "fp16_hyp_words": 67,
+     "errors": 15,
+     "fp16_errors": 11,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.1546,
+    "extra_errors": 79,
+    "top1_share": 0.203,
+    "top3_share": 0.494,
+    "top1": {
+     "utt": "test-00007:356",
+     "speaker": "EDACC-C47-B",
+     "ref_words": 25,
+     "hyp_words": 3,
+     "fp16_hyp_words": 26,
+     "errors": 24,
+     "fp16_errors": 8,
+     "loop": false
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.2708,
+    "extra_errors": -3,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00007:844",
+     "speaker": "EDACC-C52-B",
+     "ref_words": 25,
+     "hyp_words": 39,
+     "fp16_hyp_words": 26,
+     "errors": 23,
+     "fp16_errors": 13,
+     "loop": false
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.3092,
+    "extra_errors": 139,
+    "top1_share": 2.942,
+    "top3_share": 4.482,
+    "top1": {
+     "utt": "test-00004:821",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 35,
+     "hyp_words": 439,
+     "fp16_hyp_words": 30,
+     "errors": 417,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1361,
+    "extra_errors": -10,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00001:570",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 73,
+     "hyp_words": 65,
+     "fp16_hyp_words": 69,
+     "errors": 15,
+     "fp16_errors": 9,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.3145,
+    "extra_errors": -4,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00009:68",
+     "speaker": "EDACC-C67-B",
+     "ref_words": 48,
+     "hyp_words": 34,
+     "fp16_hyp_words": 41,
+     "errors": 25,
+     "fp16_errors": 16,
+     "loop": false
+    }
+   }
+  },
+  "awq_w4_us_s0": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.1047,
+    "extra_errors": 4,
+    "top1_share": 0.5,
+    "top3_share": 1.5,
+    "top1": {
+     "utt": "test-00000:890",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 180,
+     "hyp_words": 170,
+     "fp16_hyp_words": 168,
+     "errors": 23,
+     "fp16_errors": 21,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.1509,
+    "extra_errors": 48,
+    "top1_share": 0.333,
+    "top3_share": 0.646,
+    "top1": {
+     "utt": "test-00007:356",
+     "speaker": "EDACC-C47-B",
+     "ref_words": 25,
+     "hyp_words": 3,
+     "fp16_hyp_words": 26,
+     "errors": 24,
+     "fp16_errors": 8,
+     "loop": false
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.3038,
+    "extra_errors": 230,
+    "top1_share": 0.904,
+    "top3_share": 0.961,
+    "top1": {
+     "utt": "test-00007:750",
+     "speaker": "EDACC-C52-B",
+     "ref_words": 16,
+     "hyp_words": 220,
+     "fp16_hyp_words": 13,
+     "errors": 220,
+     "fp16_errors": 12,
+     "loop": true
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.2972,
+    "extra_errors": -49,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00004:821",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 35,
+     "hyp_words": 439,
+     "fp16_hyp_words": 30,
+     "errors": 417,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1408,
+    "extra_errors": 1,
+    "top1_share": 6.0,
+    "top3_share": 15.0,
+    "top1": {
+     "utt": "test-00001:570",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 73,
+     "hyp_words": 64,
+     "fp16_hyp_words": 69,
+     "errors": 15,
+     "fp16_errors": 9,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.3198,
+    "extra_errors": 43,
+    "top1_share": 0.233,
+    "top3_share": 0.628,
+    "top1": {
+     "utt": "test-00008:683",
+     "speaker": "EDACC-C59-A",
+     "ref_words": 133,
+     "hyp_words": 95,
+     "fp16_hyp_words": 104,
+     "errors": 47,
+     "fp16_errors": 37,
+     "loop": false
+    }
+   }
+  },
+  "awq_w4_worst_s0": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.0999,
+    "extra_errors": -4,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00000:893",
+     "speaker": "EDACC-C25-B",
+     "ref_words": 119,
+     "hyp_words": 112,
+     "fp16_hyp_words": 115,
+     "errors": 8,
+     "fp16_errors": 5,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.1556,
+    "extra_errors": 87,
+    "top1_share": 0.184,
+    "top3_share": 0.46,
+    "top1": {
+     "utt": "test-00007:356",
+     "speaker": "EDACC-C47-B",
+     "ref_words": 25,
+     "hyp_words": 3,
+     "fp16_hyp_words": 26,
+     "errors": 24,
+     "fp16_errors": 8,
+     "loop": false
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.3299,
+    "extra_errors": 414,
+    "top1_share": 0.894,
+    "top3_share": 0.937,
+    "top1": {
+     "utt": "test-00007:777",
+     "speaker": "EDACC-C52-A",
+     "ref_words": 25,
+     "hyp_words": 385,
+     "fp16_hyp_words": 20,
+     "errors": 378,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.3201,
+    "extra_errors": 310,
+    "top1_share": 1.319,
+    "top3_share": 1.981,
+    "top1": {
+     "utt": "test-00004:821",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 35,
+     "hyp_words": 439,
+     "fp16_hyp_words": 30,
+     "errors": 417,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1429,
+    "extra_errors": 6,
+    "top1_share": 0.833,
+    "top3_share": 2.167,
+    "top1": {
+     "utt": "test-00001:570",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 73,
+     "hyp_words": 65,
+     "fp16_hyp_words": 69,
+     "errors": 14,
+     "fp16_errors": 9,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.3155,
+    "extra_errors": 5,
+    "top1_share": 1.8,
+    "top3_share": 4.6,
+    "top1": {
+     "utt": "test-00009:140",
+     "speaker": "EDACC-C67-B",
+     "ref_words": 89,
+     "hyp_words": 67,
+     "fp16_hyp_words": 77,
+     "errors": 23,
+     "fp16_errors": 14,
+     "loop": false
+    }
+   }
+  },
+  "gptq_w3_balanced_s0": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.1224,
+    "extra_errors": 34,
+    "top1_share": 0.382,
+    "top3_share": 0.735,
+    "top1": {
+     "utt": "test-00000:897",
+     "speaker": "EDACC-C25-B",
+     "ref_words": 61,
+     "hyp_words": 50,
+     "fp16_hyp_words": 63,
+     "errors": 17,
+     "fp16_errors": 4,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.1702,
+    "extra_errors": 208,
+    "top1_share": 0.077,
+    "top3_share": 0.216,
+    "top1": {
+     "utt": "test-00009:401",
+     "speaker": "EDACC-C63-A",
+     "ref_words": 123,
+     "hyp_words": 102,
+     "fp16_hyp_words": 117,
+     "errors": 31,
+     "fp16_errors": 15,
+     "loop": false
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.3238,
+    "extra_errors": 371,
+    "top1_share": 0.593,
+    "top3_share": 0.687,
+    "top1": {
+     "utt": "test-00008:7",
+     "speaker": "EDACC-C52-B",
+     "ref_words": 3,
+     "hyp_words": 220,
+     "fp16_hyp_words": 3,
+     "errors": 220,
+     "fp16_errors": 0,
+     "loop": true
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.4026,
+    "extra_errors": 1604,
+    "top1_share": 0.269,
+    "top3_share": 0.681,
+    "top1": {
+     "utt": "test-00004:739",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 31,
+     "hyp_words": 440,
+     "fp16_hyp_words": 31,
+     "errors": 438,
+     "fp16_errors": 6,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1412,
+    "extra_errors": 2,
+    "top1_share": 4.0,
+    "top3_share": 9.0,
+    "top1": {
+     "utt": "test-00001:568",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 37,
+     "hyp_words": 31,
+     "fp16_hyp_words": 34,
+     "errors": 12,
+     "fp16_errors": 4,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.427,
+    "extra_errors": 996,
+    "top1_share": 0.315,
+    "top3_share": 0.815,
+    "top1": {
+     "utt": "test-00009:92",
+     "speaker": "EDACC-C67-B",
+     "ref_words": 22,
+     "hyp_words": 330,
+     "fp16_hyp_words": 18,
+     "errors": 319,
+     "fp16_errors": 5,
+     "loop": true
+    }
+   }
+  },
+  "gptq_w3_balanced_s1": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.113,
+    "extra_errors": 18,
+    "top1_share": 0.5,
+    "top3_share": 1.0,
+    "top1": {
+     "utt": "test-00000:892",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 229,
+     "hyp_words": 219,
+     "fp16_hyp_words": 212,
+     "errors": 35,
+     "fp16_errors": 26,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.2835,
+    "extra_errors": 1148,
+    "top1_share": 0.376,
+    "top3_share": 0.834,
+    "top1": {
+     "utt": "test-00007:356",
+     "speaker": "EDACC-C47-B",
+     "ref_words": 25,
+     "hyp_words": 440,
+     "fp16_hyp_words": 26,
+     "errors": 440,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.3006,
+    "extra_errors": 207,
+    "top1_share": 0.063,
+    "top3_share": 0.164,
+    "top1": {
+     "utt": "test-00007:547",
+     "speaker": "EDACC-C48-B",
+     "ref_words": 175,
+     "hyp_words": 175,
+     "fp16_hyp_words": 172,
+     "errors": 20,
+     "fp16_errors": 7,
+     "loop": false
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.3447,
+    "extra_errors": 695,
+    "top1_share": 0.627,
+    "top3_share": 0.961,
+    "top1": {
+     "utt": "test-00004:928",
+     "speaker": "EDACC-C35-A",
+     "ref_words": 5,
+     "hyp_words": 440,
+     "fp16_hyp_words": 1,
+     "errors": 440,
+     "fp16_errors": 4,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1391,
+    "extra_errors": -3,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00001:568",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 37,
+     "hyp_words": 30,
+     "fp16_hyp_words": 34,
+     "errors": 11,
+     "fp16_errors": 4,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.4483,
+    "extra_errors": 1186,
+    "top1_share": 0.363,
+    "top3_share": 0.715,
+    "top1": {
+     "utt": "test-00008:843",
+     "speaker": "EDACC-C60-B",
+     "ref_words": 11,
+     "hyp_words": 440,
+     "fp16_hyp_words": 9,
+     "errors": 432,
+     "fp16_errors": 2,
+     "loop": true
+    }
+   }
+  },
+  "gptq_w3_balanced_s2": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.1402,
+    "extra_errors": 64,
+    "top1_share": 0.219,
+    "top3_share": 0.625,
+    "top1": {
+     "utt": "test-00000:893",
+     "speaker": "EDACC-C25-B",
+     "ref_words": 119,
+     "hyp_words": 103,
+     "fp16_hyp_words": 115,
+     "errors": 19,
+     "fp16_errors": 5,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.2068,
+    "extra_errors": 512,
+    "top1_share": 0.688,
+    "top3_share": 0.738,
+    "top1": {
+     "utt": "test-00007:358",
+     "speaker": "EDACC-C47-B",
+     "ref_words": 18,
+     "hyp_words": 367,
+     "fp16_hyp_words": 19,
+     "errors": 360,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.3606,
+    "extra_errors": 630,
+    "top1_share": 0.686,
+    "top3_share": 0.721,
+    "top1": {
+     "utt": "test-00007:835",
+     "speaker": "EDACC-C52-A",
+     "ref_words": 10,
+     "hyp_words": 440,
+     "fp16_hyp_words": 8,
+     "errors": 436,
+     "fp16_errors": 4,
+     "loop": true
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.3345,
+    "extra_errors": 535,
+    "top1_share": 0.391,
+    "top3_share": 1.144,
+    "top1": {
+     "utt": "test-00004:5",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 18,
+     "hyp_words": 220,
+     "fp16_hyp_words": 12,
+     "errors": 217,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.154,
+    "extra_errors": 32,
+    "top1_share": 0.344,
+    "top3_share": 0.656,
+    "top1": {
+     "utt": "test-00001:568",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 37,
+     "hyp_words": 29,
+     "fp16_hyp_words": 34,
+     "errors": 15,
+     "fp16_errors": 4,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.4116,
+    "extra_errors": 859,
+    "top1_share": 0.256,
+    "top3_share": 0.744,
+    "top1": {
+     "utt": "test-00008:715",
+     "speaker": "EDACC-C60-B",
+     "ref_words": 5,
+     "hyp_words": 220,
+     "fp16_hyp_words": 5,
+     "errors": 220,
+     "fp16_errors": 0,
+     "loop": true
+    }
+   }
+  },
+  "gptq_w3_us_s0": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.1106,
+    "extra_errors": 14,
+    "top1_share": 0.5,
+    "top3_share": 1.143,
+    "top1": {
+     "utt": "test-00000:893",
+     "speaker": "EDACC-C25-B",
+     "ref_words": 119,
+     "hyp_words": 111,
+     "fp16_hyp_words": 115,
+     "errors": 12,
+     "fp16_errors": 5,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.1773,
+    "extra_errors": 267,
+    "top1_share": 0.644,
+    "top3_share": 0.768,
+    "top1": {
+     "utt": "test-00009:463",
+     "speaker": "EDACC-C63-A",
+     "ref_words": 89,
+     "hyp_words": 246,
+     "fp16_hyp_words": 84,
+     "errors": 186,
+     "fp16_errors": 14,
+     "loop": true
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.4245,
+    "extra_errors": 1081,
+    "top1_share": 0.398,
+    "top3_share": 0.797,
+    "top1": {
+     "utt": "test-00007:826",
+     "speaker": "EDACC-C52-B",
+     "ref_words": 13,
+     "hyp_words": 440,
+     "fp16_hyp_words": 15,
+     "errors": 440,
+     "fp16_errors": 10,
+     "loop": true
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.3987,
+    "extra_errors": 1542,
+    "top1_share": 0.282,
+    "top3_share": 0.696,
+    "top1": {
+     "utt": "test-00004:1",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 5,
+     "hyp_words": 440,
+     "fp16_hyp_words": 1,
+     "errors": 440,
+     "fp16_errors": 5,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.2311,
+    "extra_errors": 212,
+    "top1_share": 0.948,
+    "top3_share": 0.981,
+    "top1": {
+     "utt": "test-00001:574",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 83,
+     "hyp_words": 284,
+     "fp16_hyp_words": 87,
+     "errors": 233,
+     "fp16_errors": 32,
+     "loop": true
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.3761,
+    "extra_errors": 544,
+    "top1_share": 0.399,
+    "top3_share": 0.789,
+    "top1": {
+     "utt": "test-00008:719",
+     "speaker": "EDACC-C60-B",
+     "ref_words": 6,
+     "hyp_words": 220,
+     "fp16_hyp_words": 5,
+     "errors": 220,
+     "fp16_errors": 3,
+     "loop": true
+    }
+   }
+  },
+  "gptq_w3_us_s1": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.1076,
+    "extra_errors": 9,
+    "top1_share": 0.444,
+    "top3_share": 0.889,
+    "top1": {
+     "utt": "test-00000:896",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 73,
+     "hyp_words": 64,
+     "fp16_hyp_words": 67,
+     "errors": 15,
+     "fp16_errors": 11,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.196,
+    "extra_errors": 422,
+    "top1_share": 0.502,
+    "top3_share": 0.64,
+    "top1": {
+     "utt": "test-00009:359",
+     "speaker": "EDACC-C63-A",
+     "ref_words": 8,
+     "hyp_words": 222,
+     "fp16_hyp_words": 5,
+     "errors": 217,
+     "fp16_errors": 5,
+     "loop": true
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.392,
+    "extra_errors": 852,
+    "top1_share": 0.255,
+    "top3_share": 0.757,
+    "top1": {
+     "utt": "test-00008:19",
+     "speaker": "EDACC-C52-B",
+     "ref_words": 3,
+     "hyp_words": 220,
+     "fp16_hyp_words": 3,
+     "errors": 217,
+     "fp16_errors": 0,
+     "loop": true
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.39,
+    "extra_errors": 1406,
+    "top1_share": 0.289,
+    "top3_share": 0.597,
+    "top1": {
+     "utt": "test-00005:69",
+     "speaker": "EDACC-C35-A",
+     "ref_words": 29,
+     "hyp_words": 438,
+     "fp16_hyp_words": 28,
+     "errors": 414,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1553,
+    "extra_errors": 35,
+    "top1_share": 0.314,
+    "top3_share": 0.686,
+    "top1": {
+     "utt": "test-00001:568",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 37,
+     "hyp_words": 27,
+     "fp16_hyp_words": 34,
+     "errors": 15,
+     "fp16_errors": 4,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.5049,
+    "extra_errors": 1689,
+    "top1_share": 0.251,
+    "top3_share": 0.541,
+    "top1": {
+     "utt": "test-00009:16",
+     "speaker": "EDACC-C60-B",
+     "ref_words": 21,
+     "hyp_words": 440,
+     "fp16_hyp_words": 14,
+     "errors": 435,
+     "fp16_errors": 11,
+     "loop": true
+    }
+   }
+  },
+  "gptq_w3_us_s2": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.1064,
+    "extra_errors": 7,
+    "top1_share": 1.0,
+    "top3_share": 2.286,
+    "top1": {
+     "utt": "test-00000:890",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 180,
+     "hyp_words": 165,
+     "fp16_hyp_words": 168,
+     "errors": 28,
+     "fp16_errors": 21,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.1722,
+    "extra_errors": 225,
+    "top1_share": 0.084,
+    "top3_share": 0.213,
+    "top1": {
+     "utt": "test-00009:303",
+     "speaker": "EDACC-C63-A",
+     "ref_words": 257,
+     "hyp_words": 245,
+     "fp16_hyp_words": 256,
+     "errors": 55,
+     "fp16_errors": 36,
+     "loop": false
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.4004,
+    "extra_errors": 911,
+    "top1_share": 0.482,
+    "top3_share": 0.738,
+    "top1": {
+     "utt": "test-00007:673",
+     "speaker": "EDACC-C52-A",
+     "ref_words": 1,
+     "hyp_words": 440,
+     "fp16_hyp_words": 1,
+     "errors": 440,
+     "fp16_errors": 1,
+     "loop": true
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.3504,
+    "extra_errors": 785,
+    "top1_share": 0.274,
+    "top3_share": 0.79,
+    "top1": {
+     "utt": "test-00003:917",
+     "speaker": "EDACC-C35-A",
+     "ref_words": 10,
+     "hyp_words": 223,
+     "fp16_hyp_words": 9,
+     "errors": 218,
+     "fp16_errors": 3,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1438,
+    "extra_errors": 8,
+    "top1_share": 1.125,
+    "top3_share": 2.75,
+    "top1": {
+     "utt": "test-00001:568",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 37,
+     "hyp_words": 26,
+     "fp16_hyp_words": 34,
+     "errors": 13,
+     "fp16_errors": 4,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.4609,
+    "extra_errors": 1298,
+    "top1_share": 0.331,
+    "top3_share": 0.817,
+    "top1": {
+     "utt": "test-00008:843",
+     "speaker": "EDACC-C60-B",
+     "ref_words": 11,
+     "hyp_words": 440,
+     "fp16_hyp_words": 9,
+     "errors": 432,
+     "fp16_errors": 2,
+     "loop": true
+    }
+   }
+  },
+  "gptq_w3_worst_s0": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.236,
+    "extra_errors": 226,
+    "top1_share": 0.912,
+    "top3_share": 0.96,
+    "top1": {
+     "utt": "test-00000:898",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 114,
+     "hyp_words": 274,
+     "fp16_hyp_words": 101,
+     "errors": 228,
+     "fp16_errors": 22,
+     "loop": true
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.2079,
+    "extra_errors": 521,
+    "top1_share": 0.589,
+    "top3_share": 0.647,
+    "top1": {
+     "utt": "test-00007:474",
+     "speaker": "EDACC-C47-B",
+     "ref_words": 26,
+     "hyp_words": 330,
+     "fp16_hyp_words": 9,
+     "errors": 324,
+     "fp16_errors": 17,
+     "loop": true
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.3587,
+    "extra_errors": 617,
+    "top1_share": 0.695,
+    "top3_share": 0.729,
+    "top1": {
+     "utt": "test-00007:892",
+     "speaker": "EDACC-C52-B",
+     "ref_words": 10,
+     "hyp_words": 440,
+     "fp16_hyp_words": 7,
+     "errors": 437,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.3722,
+    "extra_errors": 1127,
+    "top1_share": 0.359,
+    "top3_share": 0.849,
+    "top1": {
+     "utt": "test-00005:69",
+     "speaker": "EDACC-C35-A",
+     "ref_words": 29,
+     "hyp_words": 437,
+     "fp16_hyp_words": 28,
+     "errors": 413,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1451,
+    "extra_errors": 11,
+    "top1_share": 0.818,
+    "top3_share": 1.636,
+    "top1": {
+     "utt": "test-00001:561",
+     "speaker": "EDACC-C26-B",
+     "ref_words": 102,
+     "hyp_words": 78,
+     "fp16_hyp_words": 91,
+     "errors": 29,
+     "fp16_errors": 20,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.513,
+    "extra_errors": 1761,
+    "top1_share": 0.246,
+    "top3_share": 0.615,
+    "top1": {
+     "utt": "test-00008:627",
+     "speaker": "EDACC-C59-A",
+     "ref_words": 90,
+     "hyp_words": 502,
+     "fp16_hyp_words": 87,
+     "errors": 450,
+     "fp16_errors": 17,
+     "loop": true
+    }
+   }
+  },
+  "gptq_w3_worst_s1": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.2998,
+    "extra_errors": 334,
+    "top1_share": 0.976,
+    "top3_share": 1.009,
+    "top1": {
+     "utt": "test-00000:885",
+     "speaker": "EDACC-C25-B",
+     "ref_words": 79,
+     "hyp_words": 378,
+     "fp16_hyp_words": 80,
+     "errors": 334,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.2059,
+    "extra_errors": 504,
+    "top1_share": 0.677,
+    "top3_share": 0.732,
+    "top1": {
+     "utt": "test-00007:356",
+     "speaker": "EDACC-C47-B",
+     "ref_words": 25,
+     "hyp_words": 353,
+     "fp16_hyp_words": 26,
+     "errors": 349,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.303,
+    "extra_errors": 224,
+    "top1_share": 0.085,
+    "top3_share": 0.223,
+    "top1": {
+     "utt": "test-00007:526",
+     "speaker": "EDACC-C48-A",
+     "ref_words": 35,
+     "hyp_words": 20,
+     "fp16_hyp_words": 33,
+     "errors": 25,
+     "fp16_errors": 6,
+     "loop": false
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.3253,
+    "extra_errors": 391,
+    "top1_share": 0.824,
+    "top3_share": 1.877,
+    "top1": {
+     "utt": "test-00004:193",
+     "speaker": "EDACC-C35-A",
+     "ref_words": 86,
+     "hyp_words": 382,
+     "fp16_hyp_words": 84,
+     "errors": 340,
+     "fp16_errors": 18,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1528,
+    "extra_errors": 29,
+    "top1_share": 0.276,
+    "top3_share": 0.724,
+    "top1": {
+     "utt": "test-00001:568",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 37,
+     "hyp_words": 29,
+     "fp16_hyp_words": 34,
+     "errors": 12,
+     "fp16_errors": 4,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.3589,
+    "extra_errors": 391,
+    "top1_share": 0.555,
+    "top3_share": 0.614,
+    "top1": {
+     "utt": "test-00008:719",
+     "speaker": "EDACC-C60-B",
+     "ref_words": 6,
+     "hyp_words": 220,
+     "fp16_hyp_words": 5,
+     "errors": 220,
+     "fp16_errors": 3,
+     "loop": true
+    }
+   }
+  },
+  "gptq_w3_worst_s2": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.1165,
+    "extra_errors": 24,
+    "top1_share": 0.292,
+    "top3_share": 0.625,
+    "top1": {
+     "utt": "test-00000:890",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 180,
+     "hyp_words": 173,
+     "fp16_hyp_words": 168,
+     "errors": 28,
+     "fp16_errors": 21,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.1655,
+    "extra_errors": 169,
+    "top1_share": 0.095,
+    "top3_share": 0.219,
+    "top1": {
+     "utt": "test-00007:356",
+     "speaker": "EDACC-C47-B",
+     "ref_words": 25,
+     "hyp_words": 3,
+     "fp16_hyp_words": 26,
+     "errors": 24,
+     "fp16_errors": 8,
+     "loop": false
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.3912,
+    "extra_errors": 846,
+    "top1_share": 0.26,
+    "top3_share": 0.767,
+    "top1": {
+     "utt": "test-00008:7",
+     "speaker": "EDACC-C52-B",
+     "ref_words": 3,
+     "hyp_words": 220,
+     "fp16_hyp_words": 3,
+     "errors": 220,
+     "fp16_errors": 0,
+     "loop": true
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.3465,
+    "extra_errors": 724,
+    "top1_share": 0.594,
+    "top3_share": 1.012,
+    "top1": {
+     "utt": "test-00004:298",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 10,
+     "hyp_words": 440,
+     "fp16_hyp_words": 6,
+     "errors": 438,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1468,
+    "extra_errors": 15,
+    "top1_share": 0.4,
+    "top3_share": 1.133,
+    "top1": {
+     "utt": "test-00001:568",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 37,
+     "hyp_words": 29,
+     "fp16_hyp_words": 34,
+     "errors": 10,
+     "fp16_errors": 4,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.4107,
+    "extra_errors": 851,
+    "top1_share": 0.403,
+    "top3_share": 0.791,
+    "top1": {
+     "utt": "test-00009:134",
+     "speaker": "EDACC-C67-B",
+     "ref_words": 13,
+     "hyp_words": 353,
+     "fp16_hyp_words": 10,
+     "errors": 352,
+     "fp16_errors": 9,
+     "loop": true
+    }
+   }
+  },
+  "gptq_w4_balanced_s0": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.1112,
+    "extra_errors": 15,
+    "top1_share": 0.667,
+    "top3_share": 1.333,
+    "top1": {
+     "utt": "test-00000:890",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 180,
+     "hyp_words": 160,
+     "fp16_hyp_words": 168,
+     "errors": 31,
+     "fp16_errors": 21,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.2044,
+    "extra_errors": 492,
+    "top1_share": 0.878,
+    "top3_share": 0.941,
+    "top1": {
+     "utt": "test-00007:358",
+     "speaker": "EDACC-C47-B",
+     "ref_words": 18,
+     "hyp_words": 440,
+     "fp16_hyp_words": 19,
+     "errors": 440,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.2741,
+    "extra_errors": 20,
+    "top1_share": 0.35,
+    "top3_share": 0.75,
+    "top1": {
+     "utt": "test-00007:526",
+     "speaker": "EDACC-C48-A",
+     "ref_words": 35,
+     "hyp_words": 31,
+     "fp16_hyp_words": 33,
+     "errors": 13,
+     "fp16_errors": 6,
+     "loop": false
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.2719,
+    "extra_errors": -446,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00004:739",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 31,
+     "hyp_words": 222,
+     "fp16_hyp_words": 31,
+     "errors": 220,
+     "fp16_errors": 6,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1348,
+    "extra_errors": -13,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00001:574",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 83,
+     "hyp_words": 95,
+     "fp16_hyp_words": 87,
+     "errors": 35,
+     "fp16_errors": 32,
+     "loop": true
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.3215,
+    "extra_errors": 58,
+    "top1_share": 0.138,
+    "top3_share": 0.397,
+    "top1": {
+     "utt": "test-00009:68",
+     "speaker": "EDACC-C67-B",
+     "ref_words": 48,
+     "hyp_words": 33,
+     "fp16_hyp_words": 41,
+     "errors": 24,
+     "fp16_errors": 16,
+     "loop": false
+    }
+   }
+  },
+  "gptq_w4_balanced_s1": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.107,
+    "extra_errors": 8,
+    "top1_share": 1.5,
+    "top3_share": 2.0,
+    "top1": {
+     "utt": "test-00000:894",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 137,
+     "hyp_words": 148,
+     "fp16_hyp_words": 133,
+     "errors": 18,
+     "fp16_errors": 6,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.1561,
+    "extra_errors": 91,
+    "top1_share": 0.253,
+    "top3_share": 0.538,
+    "top1": {
+     "utt": "test-00009:303",
+     "speaker": "EDACC-C63-A",
+     "ref_words": 257,
+     "hyp_words": 220,
+     "fp16_hyp_words": 256,
+     "errors": 59,
+     "fp16_errors": 36,
+     "loop": false
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.3642,
+    "extra_errors": 656,
+    "top1_share": 0.648,
+    "top3_share": 0.989,
+    "top1": {
+     "utt": "test-00007:777",
+     "speaker": "EDACC-C52-A",
+     "ref_words": 25,
+     "hyp_words": 440,
+     "fp16_hyp_words": 20,
+     "errors": 433,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.2884,
+    "extra_errors": -188,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00004:789",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 14,
+     "hyp_words": 330,
+     "fp16_hyp_words": 11,
+     "errors": 328,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1322,
+    "extra_errors": -19,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00001:527",
+     "speaker": "EDACC-C26-B",
+     "ref_words": 69,
+     "hyp_words": 65,
+     "fp16_hyp_words": 68,
+     "errors": 6,
+     "fp16_errors": 3,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.3231,
+    "extra_errors": 72,
+    "top1_share": 0.181,
+    "top3_share": 0.347,
+    "top1": {
+     "utt": "test-00008:683",
+     "speaker": "EDACC-C59-A",
+     "ref_words": 133,
+     "hyp_words": 96,
+     "fp16_hyp_words": 104,
+     "errors": 50,
+     "fp16_errors": 37,
+     "loop": false
+    }
+   }
+  },
+  "gptq_w4_balanced_s2": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.1064,
+    "extra_errors": 7,
+    "top1_share": 0.857,
+    "top3_share": 2.0,
+    "top1": {
+     "utt": "test-00000:890",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 180,
+     "hyp_words": 160,
+     "fp16_hyp_words": 168,
+     "errors": 27,
+     "fp16_errors": 21,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.1533,
+    "extra_errors": 68,
+    "top1_share": 0.176,
+    "top3_share": 0.441,
+    "top1": {
+     "utt": "test-00009:313",
+     "speaker": "EDACC-C63-A",
+     "ref_words": 142,
+     "hyp_words": 141,
+     "fp16_hyp_words": 140,
+     "errors": 33,
+     "fp16_errors": 21,
+     "loop": false
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.3036,
+    "extra_errors": 228,
+    "top1_share": 0.934,
+    "top3_share": 0.978,
+    "top1": {
+     "utt": "test-00008:11",
+     "speaker": "EDACC-C52-B",
+     "ref_words": 6,
+     "hyp_words": 222,
+     "fp16_hyp_words": 8,
+     "errors": 217,
+     "fp16_errors": 4,
+     "loop": true
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.2881,
+    "extra_errors": -192,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00004:789",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 14,
+     "hyp_words": 330,
+     "fp16_hyp_words": 11,
+     "errors": 328,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1395,
+    "extra_errors": -2,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00001:529",
+     "speaker": "EDACC-C26-B",
+     "ref_words": 133,
+     "hyp_words": 128,
+     "fp16_hyp_words": 126,
+     "errors": 19,
+     "fp16_errors": 14,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.3218,
+    "extra_errors": 61,
+    "top1_share": 0.148,
+    "top3_share": 0.377,
+    "top1": {
+     "utt": "test-00008:683",
+     "speaker": "EDACC-C59-A",
+     "ref_words": 133,
+     "hyp_words": 99,
+     "fp16_hyp_words": 104,
+     "errors": 46,
+     "fp16_errors": 37,
+     "loop": false
+    }
+   }
+  },
+  "gptq_w4_us_s0": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.1094,
+    "extra_errors": 12,
+    "top1_share": 0.833,
+    "top3_share": 1.25,
+    "top1": {
+     "utt": "test-00000:890",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 180,
+     "hyp_words": 160,
+     "fp16_hyp_words": 168,
+     "errors": 31,
+     "fp16_errors": 21,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.1499,
+    "extra_errors": 40,
+    "top1_share": 0.375,
+    "top3_share": 0.7,
+    "top1": {
+     "utt": "test-00009:313",
+     "speaker": "EDACC-C63-A",
+     "ref_words": 142,
+     "hyp_words": 140,
+     "fp16_hyp_words": 140,
+     "errors": 36,
+     "fp16_errors": 21,
+     "loop": false
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.2722,
+    "extra_errors": 7,
+    "top1_share": 0.714,
+    "top3_share": 2.0,
+    "top1": {
+     "utt": "test-00007:680",
+     "speaker": "EDACC-C52-B",
+     "ref_words": 18,
+     "hyp_words": 30,
+     "fp16_hyp_words": 28,
+     "errors": 22,
+     "fp16_errors": 17,
+     "loop": false
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.3397,
+    "extra_errors": 617,
+    "top1_share": 0.519,
+    "top3_share": 1.217,
+    "top1": {
+     "utt": "test-00004:789",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 14,
+     "hyp_words": 330,
+     "fp16_hyp_words": 11,
+     "errors": 328,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.3192,
+    "extra_errors": 418,
+    "top1_share": 0.983,
+    "top3_share": 1.002,
+    "top1": {
+     "utt": "test-00001:574",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 83,
+     "hyp_words": 502,
+     "fp16_hyp_words": 87,
+     "errors": 443,
+     "fp16_errors": 32,
+     "loop": true
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.318,
+    "extra_errors": 27,
+    "top1_share": 0.481,
+    "top3_share": 1.074,
+    "top1": {
+     "utt": "test-00008:685",
+     "speaker": "EDACC-C59-A",
+     "ref_words": 52,
+     "hyp_words": 27,
+     "fp16_hyp_words": 39,
+     "errors": 30,
+     "fp16_errors": 17,
+     "loop": false
+    }
+   }
+  },
+  "gptq_w4_us_s1": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.1035,
+    "extra_errors": 2,
+    "top1_share": 1.5,
+    "top3_share": 3.5,
+    "top1": {
+     "utt": "test-00000:890",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 180,
+     "hyp_words": 165,
+     "fp16_hyp_words": 168,
+     "errors": 24,
+     "fp16_errors": 21,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.1535,
+    "extra_errors": 70,
+    "top1_share": 0.229,
+    "top3_share": 0.457,
+    "top1": {
+     "utt": "test-00007:356",
+     "speaker": "EDACC-C47-B",
+     "ref_words": 25,
+     "hyp_words": 3,
+     "fp16_hyp_words": 26,
+     "errors": 24,
+     "fp16_errors": 8,
+     "loop": false
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.2763,
+    "extra_errors": 36,
+    "top1_share": 0.278,
+    "top3_share": 0.667,
+    "top1": {
+     "utt": "test-00007:526",
+     "speaker": "EDACC-C48-A",
+     "ref_words": 35,
+     "hyp_words": 33,
+     "fp16_hyp_words": 33,
+     "errors": 16,
+     "fp16_errors": 6,
+     "loop": false
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.3171,
+    "extra_errors": 262,
+    "top1_share": 1.221,
+    "top3_share": 1.294,
+    "top1": {
+     "utt": "test-00004:789",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 14,
+     "hyp_words": 330,
+     "fp16_hyp_words": 11,
+     "errors": 328,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.3179,
+    "extra_errors": 415,
+    "top1_share": 1.0,
+    "top3_share": 1.014,
+    "top1": {
+     "utt": "test-00001:574",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 83,
+     "hyp_words": 504,
+     "fp16_hyp_words": 87,
+     "errors": 447,
+     "fp16_errors": 32,
+     "loop": true
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.3223,
+    "extra_errors": 65,
+    "top1_share": 0.154,
+    "top3_share": 0.385,
+    "top1": {
+     "utt": "test-00008:892",
+     "speaker": "EDACC-C60-A",
+     "ref_words": 27,
+     "hyp_words": 30,
+     "fp16_hyp_words": 23,
+     "errors": 23,
+     "fp16_errors": 13,
+     "loop": false
+    }
+   }
+  },
+  "gptq_w4_us_s2": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.1041,
+    "extra_errors": 3,
+    "top1_share": 1.333,
+    "top3_share": 3.333,
+    "top1": {
+     "utt": "test-00000:890",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 180,
+     "hyp_words": 168,
+     "fp16_hyp_words": 168,
+     "errors": 25,
+     "fp16_errors": 21,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.1509,
+    "extra_errors": 48,
+    "top1_share": 0.25,
+    "top3_share": 0.542,
+    "top1": {
+     "utt": "test-00007:310",
+     "speaker": "EDACC-C47-B",
+     "ref_words": 65,
+     "hyp_words": 57,
+     "fp16_hyp_words": 65,
+     "errors": 12,
+     "fp16_errors": 0,
+     "loop": false
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.2762,
+    "extra_errors": 35,
+    "top1_share": 0.343,
+    "top3_share": 0.8,
+    "top1": {
+     "utt": "test-00007:582",
+     "speaker": "EDACC-C48-A",
+     "ref_words": 387,
+     "hyp_words": 385,
+     "fp16_hyp_words": 387,
+     "errors": 60,
+     "fp16_errors": 48,
+     "loop": false
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.2958,
+    "extra_errors": -72,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00004:542",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 3,
+     "hyp_words": 220,
+     "fp16_hyp_words": 2,
+     "errors": 220,
+     "fp16_errors": 3,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.3141,
+    "extra_errors": 406,
+    "top1_share": 1.027,
+    "top3_share": 1.037,
+    "top1": {
+     "utt": "test-00001:574",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 83,
+     "hyp_words": 504,
+     "fp16_hyp_words": 87,
+     "errors": 449,
+     "fp16_errors": 32,
+     "loop": true
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.3272,
+    "extra_errors": 109,
+    "top1_share": 0.138,
+    "top3_share": 0.275,
+    "top1": {
+     "utt": "test-00008:683",
+     "speaker": "EDACC-C59-A",
+     "ref_words": 133,
+     "hyp_words": 93,
+     "fp16_hyp_words": 104,
+     "errors": 52,
+     "fp16_errors": 37,
+     "loop": false
+    }
+   }
+  },
+  "gptq_w4_worst_s0": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.0976,
+    "extra_errors": -8,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00000:900",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 2,
+     "hyp_words": 1,
+     "fp16_hyp_words": 2,
+     "errors": 2,
+     "fp16_errors": 0,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.1605,
+    "extra_errors": 128,
+    "top1_share": 1.039,
+    "top3_share": 1.125,
+    "top1": {
+     "utt": "test-00009:347",
+     "speaker": "EDACC-C63-A",
+     "ref_words": 86,
+     "hyp_words": 166,
+     "fp16_hyp_words": 78,
+     "errors": 156,
+     "fp16_errors": 23,
+     "loop": true
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.2692,
+    "extra_errors": -14,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00007:891",
+     "speaker": "EDACC-C52-A",
+     "ref_words": 20,
+     "hyp_words": 23,
+     "fp16_hyp_words": 21,
+     "errors": 14,
+     "fp16_errors": 9,
+     "loop": false
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.2783,
+    "extra_errors": -345,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00004:739",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 31,
+     "hyp_words": 222,
+     "fp16_hyp_words": 31,
+     "errors": 220,
+     "fp16_errors": 6,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1404,
+    "extra_errors": 0,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00001:529",
+     "speaker": "EDACC-C26-B",
+     "ref_words": 133,
+     "hyp_words": 126,
+     "fp16_hyp_words": 126,
+     "errors": 18,
+     "fp16_errors": 14,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.32,
+    "extra_errors": 45,
+    "top1_share": 0.244,
+    "top3_share": 0.644,
+    "top1": {
+     "utt": "test-00009:140",
+     "speaker": "EDACC-C67-B",
+     "ref_words": 89,
+     "hyp_words": 66,
+     "fp16_hyp_words": 77,
+     "errors": 25,
+     "fp16_errors": 14,
+     "loop": false
+    }
+   }
+  },
+  "gptq_w4_worst_s1": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.1064,
+    "extra_errors": 7,
+    "top1_share": 1.143,
+    "top3_share": 1.857,
+    "top1": {
+     "utt": "test-00000:890",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 180,
+     "hyp_words": 160,
+     "fp16_hyp_words": 168,
+     "errors": 29,
+     "fp16_errors": 21,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.1449,
+    "extra_errors": -2,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00009:421",
+     "speaker": "EDACC-C63-A",
+     "ref_words": 20,
+     "hyp_words": 16,
+     "fp16_hyp_words": 19,
+     "errors": 10,
+     "fp16_errors": 4,
+     "loop": false
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.281,
+    "extra_errors": 69,
+    "top1_share": 0.145,
+    "top3_share": 0.406,
+    "top1": {
+     "utt": "test-00007:849",
+     "speaker": "EDACC-C52-A",
+     "ref_words": 20,
+     "hyp_words": 2,
+     "fp16_hyp_words": 14,
+     "errors": 20,
+     "fp16_errors": 10,
+     "loop": false
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.3269,
+    "extra_errors": 417,
+    "top1_share": 0.767,
+    "top3_share": 1.261,
+    "top1": {
+     "utt": "test-00004:789",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 14,
+     "hyp_words": 330,
+     "fp16_hyp_words": 11,
+     "errors": 328,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1459,
+    "extra_errors": 13,
+    "top1_share": 0.538,
+    "top3_share": 0.923,
+    "top1": {
+     "utt": "test-00001:529",
+     "speaker": "EDACC-C26-B",
+     "ref_words": 133,
+     "hyp_words": 129,
+     "fp16_hyp_words": 126,
+     "errors": 21,
+     "fp16_errors": 14,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.3209,
+    "extra_errors": 53,
+    "top1_share": 0.132,
+    "top3_share": 0.377,
+    "top1": {
+     "utt": "test-00009:140",
+     "speaker": "EDACC-C67-B",
+     "ref_words": 89,
+     "hyp_words": 70,
+     "fp16_hyp_words": 77,
+     "errors": 21,
+     "fp16_errors": 14,
+     "loop": false
+    }
+   }
+  },
+  "gptq_w4_worst_s2": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.1082,
+    "extra_errors": 10,
+    "top1_share": 0.6,
+    "top3_share": 1.0,
+    "top1": {
+     "utt": "test-00000:890",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 180,
+     "hyp_words": 166,
+     "fp16_hyp_words": 168,
+     "errors": 27,
+     "fp16_errors": 21,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.1498,
+    "extra_errors": 39,
+    "top1_share": 0.231,
+    "top3_share": 0.538,
+    "top1": {
+     "utt": "test-00009:313",
+     "speaker": "EDACC-C63-A",
+     "ref_words": 142,
+     "hyp_words": 137,
+     "fp16_hyp_words": 140,
+     "errors": 30,
+     "fp16_errors": 21,
+     "loop": false
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.2702,
+    "extra_errors": -7,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00007:582",
+     "speaker": "EDACC-C48-A",
+     "ref_words": 387,
+     "hyp_words": 382,
+     "fp16_hyp_words": 387,
+     "errors": 57,
+     "fp16_errors": 48,
+     "loop": false
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.3381,
+    "extra_errors": 592,
+    "top1_share": 0.541,
+    "top3_share": 1.238,
+    "top1": {
+     "utt": "test-00004:789",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 14,
+     "hyp_words": 330,
+     "fp16_hyp_words": 11,
+     "errors": 328,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1344,
+    "extra_errors": -14,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00001:568",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 37,
+     "hyp_words": 29,
+     "fp16_hyp_words": 34,
+     "errors": 11,
+     "fp16_errors": 4,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.3198,
+    "extra_errors": 43,
+    "top1_share": 0.256,
+    "top3_share": 0.558,
+    "top1": {
+     "utt": "test-00009:140",
+     "speaker": "EDACC-C67-B",
+     "ref_words": 89,
+     "hyp_words": 68,
+     "fp16_hyp_words": 77,
+     "errors": 25,
+     "fp16_errors": 14,
+     "loop": false
+    }
+   }
+  },
+  "mp3_balanced_s0": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.3424,
+    "extra_errors": 406,
+    "top1_share": 0.527,
+    "top3_share": 0.727,
+    "top1": {
+     "utt": "test-00000:895",
+     "speaker": "EDACC-C25-B",
+     "ref_words": 45,
+     "hyp_words": 238,
+     "fp16_hyp_words": 44,
+     "errors": 219,
+     "fp16_errors": 5,
+     "loop": true
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.6159,
+    "extra_errors": 3906,
+    "top1_share": 0.111,
+    "top3_share": 0.322,
+    "top1": {
+     "utt": "test-00007:431",
+     "speaker": "EDACC-C47-A",
+     "ref_words": 7,
+     "hyp_words": 440,
+     "fp16_hyp_words": 3,
+     "errors": 440,
+     "fp16_errors": 5,
+     "loop": true
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.8265,
+    "extra_errors": 3916,
+    "top1_share": 0.111,
+    "top3_share": 0.329,
+    "top1": {
+     "utt": "test-00008:35",
+     "speaker": "EDACC-C52-B",
+     "ref_words": 9,
+     "hyp_words": 440,
+     "fp16_hyp_words": 8,
+     "errors": 440,
+     "fp16_errors": 5,
+     "loop": true
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.5908,
+    "extra_errors": 4555,
+    "top1_share": 0.096,
+    "top3_share": 0.232,
+    "top1": {
+     "utt": "test-00004:818",
+     "speaker": "EDACC-C35-A",
+     "ref_words": 2,
+     "hyp_words": 440,
+     "fp16_hyp_words": 2,
+     "errors": 439,
+     "fp16_errors": 0,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1973,
+    "extra_errors": 133,
+    "top1_share": 0.158,
+    "top3_share": 0.361,
+    "top1": {
+     "utt": "test-00001:534",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 105,
+     "hyp_words": 88,
+     "fp16_hyp_words": 102,
+     "errors": 28,
+     "fp16_errors": 7,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.7821,
+    "extra_errors": 4154,
+    "top1_share": 0.105,
+    "top3_share": 0.302,
+    "top1": {
+     "utt": "test-00008:623",
+     "speaker": "EDACC-C59-A",
+     "ref_words": 139,
+     "hyp_words": 518,
+     "fp16_hyp_words": 130,
+     "errors": 453,
+     "fp16_errors": 17,
+     "loop": true
+    }
+   }
+  },
+  "mp3_balanced_s1": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.3873,
+    "extra_errors": 482,
+    "top1_share": 0.427,
+    "top3_share": 0.687,
+    "top1": {
+     "utt": "test-00000:898",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 114,
+     "hyp_words": 276,
+     "fp16_hyp_words": 101,
+     "errors": 228,
+     "fp16_errors": 22,
+     "loop": true
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.346,
+    "extra_errors": 1667,
+    "top1_share": 0.156,
+    "top3_share": 0.403,
+    "top1": {
+     "utt": "test-00009:249",
+     "speaker": "EDACC-C63-A",
+     "ref_words": 86,
+     "hyp_words": 279,
+     "fp16_hyp_words": 86,
+     "errors": 269,
+     "fp16_errors": 9,
+     "loop": true
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.7702,
+    "extra_errors": 3519,
+    "top1_share": 0.124,
+    "top3_share": 0.325,
+    "top1": {
+     "utt": "test-00007:774",
+     "speaker": "EDACC-C52-B",
+     "ref_words": 9,
+     "hyp_words": 440,
+     "fp16_hyp_words": 7,
+     "errors": 439,
+     "fp16_errors": 2,
+     "loop": true
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.6361,
+    "extra_errors": 5266,
+    "top1_share": 0.081,
+    "top3_share": 0.224,
+    "top1": {
+     "utt": "test-00004:495",
+     "speaker": "EDACC-C35-A",
+     "ref_words": 20,
+     "hyp_words": 439,
+     "fp16_hyp_words": 18,
+     "errors": 433,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.3265,
+    "extra_errors": 435,
+    "top1_share": 0.483,
+    "top3_share": 0.715,
+    "top1": {
+     "utt": "test-00001:583",
+     "speaker": "EDACC-C26-B",
+     "ref_words": 97,
+     "hyp_words": 243,
+     "fp16_hyp_words": 98,
+     "errors": 212,
+     "fp16_errors": 2,
+     "loop": true
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.8666,
+    "extra_errors": 4906,
+    "top1_share": 0.088,
+    "top3_share": 0.257,
+    "top1": {
+     "utt": "test-00008:843",
+     "speaker": "EDACC-C60-B",
+     "ref_words": 11,
+     "hyp_words": 440,
+     "fp16_hyp_words": 9,
+     "errors": 432,
+     "fp16_errors": 2,
+     "loop": true
+    }
+   }
+  },
+  "mp3_balanced_s2": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.3726,
+    "extra_errors": 457,
+    "top1_share": 0.473,
+    "top3_share": 0.713,
+    "top1": {
+     "utt": "test-00000:898",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 114,
+     "hyp_words": 269,
+     "fp16_hyp_words": 101,
+     "errors": 238,
+     "fp16_errors": 22,
+     "loop": true
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.3492,
+    "extra_errors": 1693,
+    "top1_share": 0.204,
+    "top3_share": 0.447,
+    "top1": {
+     "utt": "test-00009:475",
+     "speaker": "EDACC-C63-A",
+     "ref_words": 131,
+     "hyp_words": 441,
+     "fp16_hyp_words": 134,
+     "errors": 372,
+     "fp16_errors": 27,
+     "loop": true
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.6885,
+    "extra_errors": 2943,
+    "top1_share": 0.119,
+    "top3_share": 0.31,
+    "top1": {
+     "utt": "test-00007:891",
+     "speaker": "EDACC-C52-A",
+     "ref_words": 20,
+     "hyp_words": 363,
+     "fp16_hyp_words": 21,
+     "errors": 360,
+     "fp16_errors": 9,
+     "loop": true
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.4672,
+    "extra_errors": 2616,
+    "top1_share": 0.12,
+    "top3_share": 0.343,
+    "top1": {
+     "utt": "test-00004:32",
+     "speaker": "EDACC-C35-A",
+     "ref_words": 45,
+     "hyp_words": 349,
+     "fp16_hyp_words": 45,
+     "errors": 327,
+     "fp16_errors": 13,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.2756,
+    "extra_errors": 316,
+    "top1_share": 0.222,
+    "top3_share": 0.528,
+    "top1": {
+     "utt": "test-00001:529",
+     "speaker": "EDACC-C26-B",
+     "ref_words": 133,
+     "hyp_words": 56,
+     "fp16_hyp_words": 126,
+     "errors": 84,
+     "fp16_errors": 14,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.5838,
+    "extra_errors": 2391,
+    "top1_share": 0.116,
+    "top3_share": 0.342,
+    "top1": {
+     "utt": "test-00008:917",
+     "speaker": "EDACC-C60-B",
+     "ref_words": 16,
+     "hyp_words": 285,
+     "fp16_hyp_words": 15,
+     "errors": 282,
+     "fp16_errors": 4,
+     "loop": true
+    }
+   }
+  },
+  "mp3_us_s0": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.3572,
+    "extra_errors": 431,
+    "top1_share": 0.401,
+    "top3_share": 0.682,
+    "top1": {
+     "utt": "test-00000:890",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 180,
+     "hyp_words": 291,
+     "fp16_hyp_words": 168,
+     "errors": 194,
+     "fp16_errors": 21,
+     "loop": true
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.471,
+    "extra_errors": 2704,
+    "top1_share": 0.158,
+    "top3_share": 0.367,
+    "top1": {
+     "utt": "test-00007:514",
+     "speaker": "EDACC-C47-B",
+     "ref_words": 56,
+     "hyp_words": 440,
+     "fp16_hyp_words": 54,
+     "errors": 432,
+     "fp16_errors": 5,
+     "loop": true
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.797,
+    "extra_errors": 3708,
+    "top1_share": 0.118,
+    "top3_share": 0.302,
+    "top1": {
+     "utt": "test-00007:729",
+     "speaker": "EDACC-C52-A",
+     "ref_words": 1,
+     "hyp_words": 440,
+     "fp16_hyp_words": 2,
+     "errors": 440,
+     "fp16_errors": 2,
+     "loop": true
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.6696,
+    "extra_errors": 5790,
+    "top1_share": 0.075,
+    "top3_share": 0.224,
+    "top1": {
+     "utt": "test-00004:326",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 5,
+     "hyp_words": 440,
+     "fp16_hyp_words": 6,
+     "errors": 440,
+     "fp16_errors": 6,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.2435,
+    "extra_errors": 241,
+    "top1_share": 0.34,
+    "top3_share": 0.548,
+    "top1": {
+     "utt": "test-00001:529",
+     "speaker": "EDACC-C26-B",
+     "ref_words": 133,
+     "hyp_words": 43,
+     "fp16_hyp_words": 126,
+     "errors": 96,
+     "fp16_errors": 14,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.7182,
+    "extra_errors": 3586,
+    "top1_share": 0.079,
+    "top3_share": 0.207,
+    "top1": {
+     "utt": "test-00008:904",
+     "speaker": "EDACC-C60-A",
+     "ref_words": 27,
+     "hyp_words": 314,
+     "fp16_hyp_words": 21,
+     "errors": 303,
+     "fp16_errors": 20,
+     "loop": true
+    }
+   }
+  },
+  "mp3_us_s1": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.4979,
+    "extra_errors": 669,
+    "top1_share": 0.353,
+    "top3_share": 0.771,
+    "top1": {
+     "utt": "test-00000:890",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 180,
+     "hyp_words": 342,
+     "fp16_hyp_words": 168,
+     "errors": 257,
+     "fp16_errors": 21,
+     "loop": true
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.3936,
+    "extra_errors": 2062,
+    "top1_share": 0.117,
+    "top3_share": 0.335,
+    "top1": {
+     "utt": "test-00009:481",
+     "speaker": "EDACC-C63-A",
+     "ref_words": 45,
+     "hyp_words": 287,
+     "fp16_hyp_words": 57,
+     "errors": 260,
+     "fp16_errors": 18,
+     "loop": true
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.5388,
+    "extra_errors": 1887,
+    "top1_share": 0.187,
+    "top3_share": 0.441,
+    "top1": {
+     "utt": "test-00007:680",
+     "speaker": "EDACC-C52-B",
+     "ref_words": 18,
+     "hyp_words": 371,
+     "fp16_hyp_words": 28,
+     "errors": 370,
+     "fp16_errors": 17,
+     "loop": true
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.5431,
+    "extra_errors": 3807,
+    "top1_share": 0.088,
+    "top3_share": 0.239,
+    "top1": {
+     "utt": "test-00004:586",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 8,
+     "hyp_words": 346,
+     "fp16_hyp_words": 1,
+     "errors": 344,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.2833,
+    "extra_errors": 334,
+    "top1_share": 0.59,
+    "top3_share": 0.695,
+    "top1": {
+     "utt": "test-00001:561",
+     "speaker": "EDACC-C26-B",
+     "ref_words": 102,
+     "hyp_words": 278,
+     "fp16_hyp_words": 91,
+     "errors": 217,
+     "fp16_errors": 20,
+     "loop": true
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.8136,
+    "extra_errors": 4434,
+    "top1_share": 0.098,
+    "top3_share": 0.259,
+    "top1": {
+     "utt": "test-00008:627",
+     "speaker": "EDACC-C59-A",
+     "ref_words": 90,
+     "hyp_words": 501,
+     "fp16_hyp_words": 87,
+     "errors": 451,
+     "fp16_errors": 17,
+     "loop": true
+    }
+   }
+  },
+  "mp3_us_s2": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.2218,
+    "extra_errors": 202,
+    "top1_share": 0.173,
+    "top3_share": 0.441,
+    "top1": {
+     "utt": "test-00000:890",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 180,
+     "hyp_words": 139,
+     "fp16_hyp_words": 168,
+     "errors": 56,
+     "fp16_errors": 21,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.5113,
+    "extra_errors": 3038,
+    "top1_share": 0.145,
+    "top3_share": 0.415,
+    "top1": {
+     "utt": "test-00007:361",
+     "speaker": "EDACC-C47-A",
+     "ref_words": 1,
+     "hyp_words": 440,
+     "fp16_hyp_words": 1,
+     "errors": 440,
+     "fp16_errors": 1,
+     "loop": true
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 1.1864,
+    "extra_errors": 6455,
+    "top1_share": 0.068,
+    "top3_share": 0.204,
+    "top1": {
+     "utt": "test-00007:798",
+     "speaker": "EDACC-C52-B",
+     "ref_words": 1,
+     "hyp_words": 440,
+     "fp16_hyp_words": 1,
+     "errors": 440,
+     "fp16_errors": 0,
+     "loop": true
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.7399,
+    "extra_errors": 6893,
+    "top1_share": 0.064,
+    "top3_share": 0.19,
+    "top1": {
+     "utt": "test-00004:518",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 1,
+     "hyp_words": 440,
+     "fp16_hyp_words": 1,
+     "errors": 440,
+     "fp16_errors": 1,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1968,
+    "extra_errors": 132,
+    "top1_share": 0.106,
+    "top3_share": 0.28,
+    "top1": {
+     "utt": "test-00001:556",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 37,
+     "hyp_words": 28,
+     "fp16_hyp_words": 35,
+     "errors": 19,
+     "fp16_errors": 5,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 1.091,
+    "extra_errors": 6901,
+    "top1_share": 0.064,
+    "top3_share": 0.191,
+    "top1": {
+     "utt": "test-00008:739",
+     "speaker": "EDACC-C60-B",
+     "ref_words": 1,
+     "hyp_words": 440,
+     "fp16_hyp_words": 1,
+     "errors": 440,
+     "fp16_errors": 1,
+     "loop": true
+    }
+   }
+  },
+  "mp_balanced_s0": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.1059,
+    "extra_errors": 6,
+    "top1_share": 1.667,
+    "top3_share": 2.5,
+    "top1": {
+     "utt": "test-00000:892",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 229,
+     "hyp_words": 203,
+     "fp16_hyp_words": 212,
+     "errors": 36,
+     "fp16_errors": 26,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.1557,
+    "extra_errors": 88,
+    "top1_share": 0.545,
+    "top3_share": 0.773,
+    "top1": {
+     "utt": "test-00007:306",
+     "speaker": "EDACC-C47-B",
+     "ref_words": 341,
+     "hyp_words": 285,
+     "fp16_hyp_words": 332,
+     "errors": 61,
+     "fp16_errors": 13,
+     "loop": false
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.3122,
+    "extra_errors": 289,
+    "top1_share": 0.74,
+    "top3_share": 0.834,
+    "top1": {
+     "utt": "test-00008:11",
+     "speaker": "EDACC-C52-B",
+     "ref_words": 6,
+     "hyp_words": 222,
+     "fp16_hyp_words": 8,
+     "errors": 218,
+     "fp16_errors": 4,
+     "loop": true
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.2856,
+    "extra_errors": -232,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00004:542",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 3,
+     "hyp_words": 220,
+     "fp16_hyp_words": 2,
+     "errors": 220,
+     "fp16_errors": 3,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1335,
+    "extra_errors": -16,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00001:568",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 37,
+     "hyp_words": 34,
+     "fp16_hyp_words": 34,
+     "errors": 8,
+     "fp16_errors": 4,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.3249,
+    "extra_errors": 88,
+    "top1_share": 0.091,
+    "top3_share": 0.239,
+    "top1": {
+     "utt": "test-00008:683",
+     "speaker": "EDACC-C59-A",
+     "ref_words": 133,
+     "hyp_words": 108,
+     "fp16_hyp_words": 104,
+     "errors": 45,
+     "fp16_errors": 37,
+     "loop": false
+    }
+   }
+  },
+  "mp_balanced_s1": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.1177,
+    "extra_errors": 26,
+    "top1_share": 0.346,
+    "top3_share": 0.885,
+    "top1": {
+     "utt": "test-00000:890",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 180,
+     "hyp_words": 162,
+     "fp16_hyp_words": 168,
+     "errors": 30,
+     "fp16_errors": 21,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.1542,
+    "extra_errors": 75,
+    "top1_share": 0.187,
+    "top3_share": 0.52,
+    "top1": {
+     "utt": "test-00009:281",
+     "speaker": "EDACC-C63-A",
+     "ref_words": 237,
+     "hyp_words": 213,
+     "fp16_hyp_words": 223,
+     "errors": 44,
+     "fp16_errors": 30,
+     "loop": false
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.2752,
+    "extra_errors": 28,
+    "top1_share": 0.286,
+    "top3_share": 0.786,
+    "top1": {
+     "utt": "test-00007:568",
+     "speaker": "EDACC-C48-A",
+     "ref_words": 145,
+     "hyp_words": 124,
+     "fp16_hyp_words": 131,
+     "errors": 32,
+     "fp16_errors": 24,
+     "loop": false
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.2963,
+    "extra_errors": -63,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00004:542",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 3,
+     "hyp_words": 220,
+     "fp16_hyp_words": 2,
+     "errors": 220,
+     "fp16_errors": 3,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1361,
+    "extra_errors": -10,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00001:568",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 37,
+     "hyp_words": 28,
+     "fp16_hyp_words": 34,
+     "errors": 10,
+     "fp16_errors": 4,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.342,
+    "extra_errors": 240,
+    "top1_share": 0.887,
+    "top3_share": 0.938,
+    "top1": {
+     "utt": "test-00009:84",
+     "speaker": "EDACC-C67-B",
+     "ref_words": 36,
+     "hyp_words": 220,
+     "fp16_hyp_words": 32,
+     "errors": 218,
+     "fp16_errors": 5,
+     "loop": true
+    }
+   }
+  },
+  "mp_balanced_s2": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.1177,
+    "extra_errors": 26,
+    "top1_share": 0.385,
+    "top3_share": 0.923,
+    "top1": {
+     "utt": "test-00000:889",
+     "speaker": "EDACC-C25-B",
+     "ref_words": 81,
+     "hyp_words": 64,
+     "fp16_hyp_words": 78,
+     "errors": 20,
+     "fp16_errors": 10,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.1699,
+    "extra_errors": 206,
+    "top1_share": 0.612,
+    "top3_share": 0.718,
+    "top1": {
+     "utt": "test-00009:347",
+     "speaker": "EDACC-C63-A",
+     "ref_words": 86,
+     "hyp_words": 161,
+     "fp16_hyp_words": 78,
+     "errors": 149,
+     "fp16_errors": 23,
+     "loop": true
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.3097,
+    "extra_errors": 271,
+    "top1_share": 0.812,
+    "top3_share": 0.897,
+    "top1": {
+     "utt": "test-00008:7",
+     "speaker": "EDACC-C52-B",
+     "ref_words": 3,
+     "hyp_words": 220,
+     "fp16_hyp_words": 3,
+     "errors": 220,
+     "fp16_errors": 0,
+     "loop": true
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.3017,
+    "extra_errors": 22,
+    "top1_share": 14.545,
+    "top3_share": 15.364,
+    "top1": {
+     "utt": "test-00004:789",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 14,
+     "hyp_words": 330,
+     "fp16_hyp_words": 11,
+     "errors": 328,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1416,
+    "extra_errors": 3,
+    "top1_share": 2.333,
+    "top3_share": 5.667,
+    "top1": {
+     "utt": "test-00001:568",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 37,
+     "hyp_words": 29,
+     "fp16_hyp_words": 34,
+     "errors": 11,
+     "fp16_errors": 4,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.3866,
+    "extra_errors": 637,
+    "top1_share": 0.527,
+    "top3_share": 0.881,
+    "top1": {
+     "utt": "test-00008:792",
+     "speaker": "EDACC-C60-A",
+     "ref_words": 33,
+     "hyp_words": 357,
+     "fp16_hyp_words": 22,
+     "errors": 350,
+     "fp16_errors": 14,
+     "loop": true
+    }
+   }
+  },
+  "mp_us_s0": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.1183,
+    "extra_errors": 27,
+    "top1_share": 0.333,
+    "top3_share": 0.852,
+    "top1": {
+     "utt": "test-00000:894",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 137,
+     "hyp_words": 123,
+     "fp16_hyp_words": 133,
+     "errors": 15,
+     "fp16_errors": 6,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.1475,
+    "extra_errors": 20,
+    "top1_share": 0.45,
+    "top3_share": 1.0,
+    "top1": {
+     "utt": "test-00009:313",
+     "speaker": "EDACC-C63-A",
+     "ref_words": 142,
+     "hyp_words": 145,
+     "fp16_hyp_words": 140,
+     "errors": 30,
+     "fp16_errors": 21,
+     "loop": false
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.3027,
+    "extra_errors": 222,
+    "top1_share": 0.955,
+    "top3_share": 1.023,
+    "top1": {
+     "utt": "test-00007:743",
+     "speaker": "EDACC-C52-A",
+     "ref_words": 11,
+     "hyp_words": 220,
+     "fp16_hyp_words": 11,
+     "errors": 219,
+     "fp16_errors": 7,
+     "loop": true
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.334,
+    "extra_errors": 528,
+    "top1_share": 0.606,
+    "top3_share": 1.036,
+    "top1": {
+     "utt": "test-00004:789",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 14,
+     "hyp_words": 330,
+     "fp16_hyp_words": 11,
+     "errors": 328,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1455,
+    "extra_errors": 12,
+    "top1_share": 1.167,
+    "top3_share": 2.25,
+    "top1": {
+     "utt": "test-00001:534",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 105,
+     "hyp_words": 88,
+     "fp16_hyp_words": 102,
+     "errors": 21,
+     "fp16_errors": 7,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.3152,
+    "extra_errors": 2,
+    "top1_share": 4.5,
+    "top3_share": 10.5,
+    "top1": {
+     "utt": "test-00008:866",
+     "speaker": "EDACC-C60-A",
+     "ref_words": 26,
+     "hyp_words": 13,
+     "fp16_hyp_words": 18,
+     "errors": 21,
+     "fp16_errors": 12,
+     "loop": false
+    }
+   }
+  },
+  "mp_us_s1": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.1023,
+    "extra_errors": 0,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00000:890",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 180,
+     "hyp_words": 165,
+     "fp16_hyp_words": 168,
+     "errors": 24,
+     "fp16_errors": 21,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.202,
+    "extra_errors": 472,
+    "top1_share": 0.888,
+    "top3_share": 0.924,
+    "top1": {
+     "utt": "test-00009:265",
+     "speaker": "EDACC-C63-A",
+     "ref_words": 22,
+     "hyp_words": 438,
+     "fp16_hyp_words": 22,
+     "errors": 435,
+     "fp16_errors": 16,
+     "loop": true
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.3201,
+    "extra_errors": 345,
+    "top1_share": 0.826,
+    "top3_share": 0.878,
+    "top1": {
+     "utt": "test-00007:554",
+     "speaker": "EDACC-C48-A",
+     "ref_words": 8,
+     "hyp_words": 293,
+     "fp16_hyp_words": 7,
+     "errors": 288,
+     "fp16_errors": 3,
+     "loop": true
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.4072,
+    "extra_errors": 1675,
+    "top1_share": 0.258,
+    "top3_share": 0.691,
+    "top1": {
+     "utt": "test-00004:53",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 7,
+     "hyp_words": 440,
+     "fp16_hyp_words": 8,
+     "errors": 439,
+     "fp16_errors": 7,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1391,
+    "extra_errors": -3,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00001:568",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 37,
+     "hyp_words": 33,
+     "fp16_hyp_words": 34,
+     "errors": 9,
+     "fp16_errors": 4,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.3207,
+    "extra_errors": 51,
+    "top1_share": 0.216,
+    "top3_share": 0.569,
+    "top1": {
+     "utt": "test-00009:9",
+     "speaker": "EDACC-C60-A",
+     "ref_words": 167,
+     "hyp_words": 141,
+     "fp16_hyp_words": 142,
+     "errors": 66,
+     "fp16_errors": 55,
+     "loop": false
+    }
+   }
+  },
+  "mp_us_s2": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.1112,
+    "extra_errors": 15,
+    "top1_share": 0.867,
+    "top3_share": 1.333,
+    "top1": {
+     "utt": "test-00000:890",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 180,
+     "hyp_words": 157,
+     "fp16_hyp_words": 168,
+     "errors": 34,
+     "fp16_errors": 21,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.1581,
+    "extra_errors": 108,
+    "top1_share": 0.148,
+    "top3_share": 0.38,
+    "top1": {
+     "utt": "test-00007:356",
+     "speaker": "EDACC-C47-B",
+     "ref_words": 25,
+     "hyp_words": 3,
+     "fp16_hyp_words": 26,
+     "errors": 24,
+     "fp16_errors": 8,
+     "loop": false
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.3099,
+    "extra_errors": 273,
+    "top1_share": 0.806,
+    "top3_share": 0.868,
+    "top1": {
+     "utt": "test-00008:7",
+     "speaker": "EDACC-C52-B",
+     "ref_words": 3,
+     "hyp_words": 220,
+     "fp16_hyp_words": 3,
+     "errors": 220,
+     "fp16_errors": 0,
+     "loop": true
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.3308,
+    "extra_errors": 477,
+    "top1_share": 0.671,
+    "top3_share": 1.574,
+    "top1": {
+     "utt": "test-00004:789",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 14,
+     "hyp_words": 330,
+     "fp16_hyp_words": 11,
+     "errors": 328,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1395,
+    "extra_errors": -2,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00001:570",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 73,
+     "hyp_words": 66,
+     "fp16_hyp_words": 69,
+     "errors": 15,
+     "fp16_errors": 9,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.3973,
+    "extra_errors": 732,
+    "top1_share": 0.537,
+    "top3_share": 0.831,
+    "top1": {
+     "utt": "test-00008:684",
+     "speaker": "EDACC-C59-B",
+     "ref_words": 40,
+     "hyp_words": 432,
+     "fp16_hyp_words": 39,
+     "errors": 399,
+     "fp16_errors": 6,
+     "loop": true
+    }
+   }
+  },
+  "rtn_w4": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.1053,
+    "extra_errors": 5,
+    "top1_share": 1.0,
+    "top3_share": 2.4,
+    "top1": {
+     "utt": "test-00000:890",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 180,
+     "hyp_words": 167,
+     "fp16_hyp_words": 168,
+     "errors": 26,
+     "fp16_errors": 21,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.1519,
+    "extra_errors": 56,
+    "top1_share": 0.286,
+    "top3_share": 0.554,
+    "top1": {
+     "utt": "test-00007:356",
+     "speaker": "EDACC-C47-B",
+     "ref_words": 25,
+     "hyp_words": 3,
+     "fp16_hyp_words": 26,
+     "errors": 24,
+     "fp16_errors": 8,
+     "loop": false
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.277,
+    "extra_errors": 41,
+    "top1_share": 0.244,
+    "top3_share": 0.488,
+    "top1": {
+     "utt": "test-00007:601",
+     "speaker": "EDACC-C48-B",
+     "ref_words": 31,
+     "hyp_words": 14,
+     "fp16_hyp_words": 29,
+     "errors": 20,
+     "fp16_errors": 10,
+     "loop": false
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.2701,
+    "extra_errors": -475,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00004:739",
+     "speaker": "EDACC-C35-B",
+     "ref_words": 31,
+     "hyp_words": 222,
+     "fp16_hyp_words": 31,
+     "errors": 220,
+     "fp16_errors": 6,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1459,
+    "extra_errors": 13,
+    "top1_share": 0.385,
+    "top3_share": 0.846,
+    "top1": {
+     "utt": "test-00001:570",
+     "speaker": "EDACC-C26-A",
+     "ref_words": 73,
+     "hyp_words": 68,
+     "fp16_hyp_words": 69,
+     "errors": 14,
+     "fp16_errors": 9,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.3884,
+    "extra_errors": 653,
+    "top1_share": 0.533,
+    "top3_share": 0.884,
+    "top1": {
+     "utt": "test-00008:773",
+     "speaker": "EDACC-C60-B",
+     "ref_words": 5,
+     "hyp_words": 352,
+     "fp16_hyp_words": 3,
+     "errors": 352,
+     "fp16_errors": 4,
+     "loop": true
+    }
+   }
+  },
+  "rtn_w8": {
+   "Bulgarian": {
+    "group_wer_fp16": 0.1023,
+    "group_wer": 0.107,
+    "extra_errors": 8,
+    "top1_share": 0.5,
+    "top3_share": 1.0,
+    "top1": {
+     "utt": "test-00000:890",
+     "speaker": "EDACC-C25-A",
+     "ref_words": 180,
+     "hyp_words": 166,
+     "fp16_hyp_words": 168,
+     "errors": 25,
+     "fp16_errors": 21,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.1451,
+    "group_wer": 0.1469,
+    "extra_errors": 15,
+    "top1_share": 1.067,
+    "top3_share": 1.333,
+    "top1": {
+     "utt": "test-00007:356",
+     "speaker": "EDACC-C47-B",
+     "ref_words": 25,
+     "hyp_words": 3,
+     "fp16_hyp_words": 26,
+     "errors": 24,
+     "fp16_errors": 8,
+     "loop": false
+    }
+   },
+   "Jamaican English": {
+    "group_wer_fp16": 0.2712,
+    "group_wer": 0.2732,
+    "extra_errors": 14,
+    "top1_share": 0.357,
+    "top3_share": 0.857,
+    "top1": {
+     "utt": "test-00007:568",
+     "speaker": "EDACC-C48-A",
+     "ref_words": 145,
+     "hyp_words": 124,
+     "fp16_hyp_words": 131,
+     "errors": 29,
+     "fp16_errors": 24,
+     "loop": false
+    }
+   },
+   "Kenyan English": {
+    "group_wer_fp16": 0.3003,
+    "group_wer": 0.3134,
+    "extra_errors": 205,
+    "top1_share": 0.917,
+    "top3_share": 0.956,
+    "top1": {
+     "utt": "test-00004:193",
+     "speaker": "EDACC-C35-A",
+     "ref_words": 86,
+     "hyp_words": 262,
+     "fp16_hyp_words": 84,
+     "errors": 206,
+     "fp16_errors": 18,
+     "loop": true
+    }
+   },
+   "Latin American": {
+    "group_wer_fp16": 0.1404,
+    "group_wer": 0.1391,
+    "extra_errors": -3,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "test-00006:624",
+     "speaker": "EDACC-C28-A",
+     "ref_words": 13,
+     "hyp_words": 13,
+     "fp16_hyp_words": 13,
+     "errors": 1,
+     "fp16_errors": 1,
+     "loop": false
+    }
+   },
+   "Vietnamese": {
+    "group_wer_fp16": 0.315,
+    "group_wer": 0.3382,
+    "extra_errors": 207,
+    "top1_share": 0.976,
+    "top3_share": 1.024,
+    "top1": {
+     "utt": "test-00008:802",
+     "speaker": "EDACC-C60-A",
+     "ref_words": 18,
+     "hyp_words": 223,
+     "fp16_hyp_words": 16,
+     "errors": 217,
+     "fp16_errors": 15,
+     "loop": true
+    }
+   }
+  }
+ }
+}
