@@ -1,0 +1,1989 @@
+{
+ "model": "small",
+ "utterances": 4012,
+ "utterances_looped_in_any_condition": 13,
+ "variants": {
+  "prereg": {
+   "refixed": {
+    "worst3": [
+     "India and South Asia (India, Pakistan, Sri Lanka)",
+     "Southern African (South Africa, Zimbabwe, Namibia)",
+     "Hong Kong English"
+    ],
+    "best3": [
+     "New Zealand English",
+     "Australian English",
+     "Irish English"
+    ],
+    "penalties": {
+     "gptq_w3_balanced": {
+      "penalty": 0.03079,
+      "ci": [
+       0.00833,
+       0.05819
+      ]
+     },
+     "gptq_w3_us": {
+      "penalty": 0.04728,
+      "ci": [
+       0.01393,
+       0.08918
+      ]
+     },
+     "gptq_w3_worst": {
+      "penalty": 0.07302,
+      "ci": [
+       0.01657,
+       0.15521
+      ]
+     }
+    },
+    "tests": {
+     "H1_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.04728,
+      "ref_penalty_ci": [
+       0.01393,
+       0.08918
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.03079,
+      "arm_penalty_ci": [
+       0.00833,
+       0.05819
+      ],
+      "R": 0.3488,
+      "difference": 0.01649,
+      "difference_ci": [
+       -0.01724,
+       0.05626
+      ],
+      "agg_change": -0.00814,
+      "seed_R": {
+       "s0": -4.455,
+       "s1": 0.7719,
+       "s2": 0.8805
+      }
+     },
+     "H2_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.04728,
+      "ref_penalty_ci": [
+       0.01393,
+       0.08918
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.07302,
+      "arm_penalty_ci": [
+       0.01657,
+       0.15521
+      ],
+      "R": -0.5443,
+      "difference": -0.02574,
+      "difference_ci": [
+       -0.10753,
+       0.03952
+      ],
+      "agg_change": 0.00604,
+      "seed_R": {
+       "s0": 0.2548,
+       "s1": 0.3442,
+       "s2": -2.8034
+      }
+     }
+    }
+   },
+   "prereg_groups": {
+    "worst3": [
+     "India and South Asia (India, Pakistan, Sri Lanka)",
+     "Southern African (South Africa, Zimbabwe, Namibia)",
+     "Hong Kong English"
+    ],
+    "best3": [
+     "New Zealand English",
+     "Australian English",
+     "Irish English"
+    ],
+    "penalties": {
+     "gptq_w3_balanced": {
+      "penalty": 0.03079,
+      "ci": [
+       0.00833,
+       0.05819
+      ]
+     },
+     "gptq_w3_us": {
+      "penalty": 0.04728,
+      "ci": [
+       0.01393,
+       0.08918
+      ]
+     },
+     "gptq_w3_worst": {
+      "penalty": 0.07302,
+      "ci": [
+       0.01657,
+       0.15521
+      ]
+     }
+    },
+    "tests": {
+     "H1_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.04728,
+      "ref_penalty_ci": [
+       0.01393,
+       0.08918
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.03079,
+      "arm_penalty_ci": [
+       0.00833,
+       0.05819
+      ],
+      "R": 0.3488,
+      "difference": 0.01649,
+      "difference_ci": [
+       -0.01724,
+       0.05626
+      ],
+      "agg_change": -0.00814,
+      "seed_R": {
+       "s0": -4.455,
+       "s1": 0.7719,
+       "s2": 0.8805
+      }
+     },
+     "H2_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.04728,
+      "ref_penalty_ci": [
+       0.01393,
+       0.08918
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.07302,
+      "arm_penalty_ci": [
+       0.01657,
+       0.15521
+      ],
+      "R": -0.5443,
+      "difference": -0.02574,
+      "difference_ci": [
+       -0.10753,
+       0.03952
+      ],
+      "agg_change": 0.00604,
+      "seed_R": {
+       "s0": 0.2548,
+       "s1": 0.3442,
+       "s2": -2.8034
+      }
+     }
+    }
+   }
+  },
+  "capped": {
+   "refixed": {
+    "worst3": [
+     "Southern African (South Africa, Zimbabwe, Namibia)",
+     "India and South Asia (India, Pakistan, Sri Lanka)",
+     "Hong Kong English"
+    ],
+    "best3": [
+     "New Zealand English",
+     "Australian English",
+     "Irish English"
+    ],
+    "penalties": {
+     "gptq_w3_balanced": {
+      "penalty": 0.01248,
+      "ci": [
+       0.00148,
+       0.02352
+      ]
+     },
+     "gptq_w3_us": {
+      "penalty": 0.01286,
+      "ci": [
+       5e-05,
+       0.02545
+      ]
+     },
+     "gptq_w3_worst": {
+      "penalty": 0.01065,
+      "ci": [
+       -0.00217,
+       0.02298
+      ]
+     }
+    },
+    "tests": {
+     "H1_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.01286,
+      "ref_penalty_ci": [
+       5e-05,
+       0.02545
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.01248,
+      "arm_penalty_ci": [
+       0.00148,
+       0.02352
+      ],
+      "R": 0.0295,
+      "difference": 0.00038,
+      "difference_ci": [
+       -0.00942,
+       0.01043
+      ],
+      "agg_change": -0.00199,
+      "seed_R": {
+       "s0": 0.2367,
+       "s1": -1.5441,
+       "s2": 0.6654
+      }
+     },
+     "H2_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.01286,
+      "ref_penalty_ci": [
+       5e-05,
+       0.02545
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.01065,
+      "arm_penalty_ci": [
+       -0.00217,
+       0.02298
+      ],
+      "R": 0.1716,
+      "difference": 0.00221,
+      "difference_ci": [
+       -0.00764,
+       0.01283
+      ],
+      "agg_change": 0.00097,
+      "seed_R": {
+       "s0": 0.383,
+       "s1": -0.4832,
+       "s2": 0.337
+      }
+     }
+    }
+   },
+   "prereg_groups": {
+    "worst3": [
+     "India and South Asia (India, Pakistan, Sri Lanka)",
+     "Southern African (South Africa, Zimbabwe, Namibia)",
+     "Hong Kong English"
+    ],
+    "best3": [
+     "New Zealand English",
+     "Australian English",
+     "Irish English"
+    ],
+    "penalties": {
+     "gptq_w3_balanced": {
+      "penalty": 0.01248,
+      "ci": [
+       0.00148,
+       0.02352
+      ]
+     },
+     "gptq_w3_us": {
+      "penalty": 0.01286,
+      "ci": [
+       5e-05,
+       0.02545
+      ]
+     },
+     "gptq_w3_worst": {
+      "penalty": 0.01065,
+      "ci": [
+       -0.00217,
+       0.02298
+      ]
+     }
+    },
+    "tests": {
+     "H1_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.01286,
+      "ref_penalty_ci": [
+       5e-05,
+       0.02545
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.01248,
+      "arm_penalty_ci": [
+       0.00148,
+       0.02352
+      ],
+      "R": 0.0295,
+      "difference": 0.00038,
+      "difference_ci": [
+       -0.00942,
+       0.01043
+      ],
+      "agg_change": -0.00199,
+      "seed_R": {
+       "s0": 0.2367,
+       "s1": -1.5441,
+       "s2": 0.6654
+      }
+     },
+     "H2_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.01286,
+      "ref_penalty_ci": [
+       5e-05,
+       0.02545
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.01065,
+      "arm_penalty_ci": [
+       -0.00217,
+       0.02298
+      ],
+      "R": 0.1716,
+      "difference": 0.00221,
+      "difference_ci": [
+       -0.00764,
+       0.01283
+      ],
+      "agg_change": 0.00097,
+      "seed_R": {
+       "s0": 0.383,
+       "s1": -0.4832,
+       "s2": 0.337
+      }
+     }
+    }
+   }
+  },
+  "no_loops": {
+   "refixed": {
+    "worst3": [
+     "Southern African (South Africa, Zimbabwe, Namibia)",
+     "India and South Asia (India, Pakistan, Sri Lanka)",
+     "Hong Kong English"
+    ],
+    "best3": [
+     "New Zealand English",
+     "Australian English",
+     "Canadian English"
+    ],
+    "penalties": {
+     "gptq_w3_balanced": {
+      "penalty": 0.01846,
+      "ci": [
+       0.00756,
+       0.02934
+      ]
+     },
+     "gptq_w3_us": {
+      "penalty": 0.01908,
+      "ci": [
+       0.0086,
+       0.02928
+      ]
+     },
+     "gptq_w3_worst": {
+      "penalty": 0.01855,
+      "ci": [
+       0.00754,
+       0.02979
+      ]
+     }
+    },
+    "tests": {
+     "H1_w3": {
+      "verdict": "Refuted",
+      "ref_penalty": 0.01908,
+      "ref_penalty_ci": [
+       0.0086,
+       0.02928
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.01846,
+      "arm_penalty_ci": [
+       0.00756,
+       0.02934
+      ],
+      "R": 0.0323,
+      "difference": 0.00062,
+      "difference_ci": [
+       -0.00759,
+       0.00905
+      ],
+      "agg_change": -0.00174,
+      "seed_R": {
+       "s0": -0.1988,
+       "s1": -0.1149,
+       "s2": 0.3457
+      }
+     },
+     "H2_w3": {
+      "verdict": "Refuted",
+      "ref_penalty": 0.01908,
+      "ref_penalty_ci": [
+       0.0086,
+       0.02928
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.01855,
+      "arm_penalty_ci": [
+       0.00754,
+       0.02979
+      ],
+      "R": 0.028,
+      "difference": 0.00053,
+      "difference_ci": [
+       -0.00766,
+       0.00898
+      ],
+      "agg_change": 0.00113,
+      "seed_R": {
+       "s0": 0.1275,
+       "s1": -0.2662,
+       "s2": 0.2211
+      }
+     }
+    }
+   },
+   "prereg_groups": {
+    "worst3": [
+     "India and South Asia (India, Pakistan, Sri Lanka)",
+     "Southern African (South Africa, Zimbabwe, Namibia)",
+     "Hong Kong English"
+    ],
+    "best3": [
+     "New Zealand English",
+     "Australian English",
+     "Irish English"
+    ],
+    "penalties": {
+     "gptq_w3_balanced": {
+      "penalty": 0.0116,
+      "ci": [
+       0.00023,
+       0.02333
+      ]
+     },
+     "gptq_w3_us": {
+      "penalty": 0.01147,
+      "ci": [
+       -0.00179,
+       0.02433
+      ]
+     },
+     "gptq_w3_worst": {
+      "penalty": 0.01053,
+      "ci": [
+       -0.00289,
+       0.02265
+      ]
+     }
+    },
+    "tests": {
+     "H1_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.01147,
+      "ref_penalty_ci": [
+       -0.00179,
+       0.02433
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.0116,
+      "arm_penalty_ci": [
+       0.00023,
+       0.02333
+      ],
+      "R": null,
+      "difference": -0.00013,
+      "difference_ci": [
+       -0.01024,
+       0.01029
+      ],
+      "agg_change": -0.00174,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H2_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.01147,
+      "ref_penalty_ci": [
+       -0.00179,
+       0.02433
+      ],
+      "control_holds": false,
+      "arm_penalty": 0.01053,
+      "arm_penalty_ci": [
+       -0.00289,
+       0.02265
+      ],
+      "R": null,
+      "difference": 0.00094,
+      "difference_ci": [
+       -0.00933,
+       0.01186
+      ],
+      "agg_change": 0.00113,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     }
+    }
+   }
+  },
+  "sub_del": {
+   "refixed": {
+    "worst3": [
+     "India and South Asia (India, Pakistan, Sri Lanka)",
+     "Southern African (South Africa, Zimbabwe, Namibia)",
+     "Hong Kong English"
+    ],
+    "best3": [
+     "New Zealand English",
+     "Australian English",
+     "Canadian English"
+    ],
+    "penalties": {
+     "gptq_w3_balanced": {
+      "penalty": 0.01768,
+      "ci": [
+       0.00954,
+       0.02622
+      ]
+     },
+     "gptq_w3_us": {
+      "penalty": 0.01566,
+      "ci": [
+       0.00729,
+       0.02364
+      ]
+     },
+     "gptq_w3_worst": {
+      "penalty": 0.01378,
+      "ci": [
+       0.00556,
+       0.02175
+      ]
+     }
+    },
+    "tests": {
+     "H1_w3": {
+      "verdict": "Refuted",
+      "ref_penalty": 0.01566,
+      "ref_penalty_ci": [
+       0.00729,
+       0.02364
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.01768,
+      "arm_penalty_ci": [
+       0.00954,
+       0.02622
+      ],
+      "R": -0.1292,
+      "difference": -0.00202,
+      "difference_ci": [
+       -0.00909,
+       0.00506
+      ],
+      "agg_change": -0.00126,
+      "seed_R": {
+       "s0": -0.2789,
+       "s1": -0.2913,
+       "s2": 0.1871
+      }
+     },
+     "H2_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.01566,
+      "ref_penalty_ci": [
+       0.00729,
+       0.02364
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.01378,
+      "arm_penalty_ci": [
+       0.00556,
+       0.02175
+      ],
+      "R": 0.12,
+      "difference": 0.00188,
+      "difference_ci": [
+       -0.005,
+       0.00889
+      ],
+      "agg_change": 0.00097,
+      "seed_R": {
+       "s0": 0.33,
+       "s1": -0.1521,
+       "s2": 0.2106
+      }
+     }
+    }
+   },
+   "prereg_groups": {
+    "worst3": [
+     "India and South Asia (India, Pakistan, Sri Lanka)",
+     "Southern African (South Africa, Zimbabwe, Namibia)",
+     "Hong Kong English"
+    ],
+    "best3": [
+     "New Zealand English",
+     "Australian English",
+     "Irish English"
+    ],
+    "penalties": {
+     "gptq_w3_balanced": {
+      "penalty": 0.01373,
+      "ci": [
+       0.00475,
+       0.02236
+      ]
+     },
+     "gptq_w3_us": {
+      "penalty": 0.01289,
+      "ci": [
+       0.00307,
+       0.0221
+      ]
+     },
+     "gptq_w3_worst": {
+      "penalty": 0.00985,
+      "ci": [
+       0.00021,
+       0.01943
+      ]
+     }
+    },
+    "tests": {
+     "H1_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.01289,
+      "ref_penalty_ci": [
+       0.00307,
+       0.0221
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.01373,
+      "arm_penalty_ci": [
+       0.00475,
+       0.02236
+      ],
+      "R": -0.0653,
+      "difference": -0.00084,
+      "difference_ci": [
+       -0.00827,
+       0.00711
+      ],
+      "agg_change": -0.00126,
+      "seed_R": {
+       "s0": 0.3798,
+       "s1": -1.965,
+       "s2": 0.4538
+      }
+     },
+     "H2_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.01289,
+      "ref_penalty_ci": [
+       0.00307,
+       0.0221
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.00985,
+      "arm_penalty_ci": [
+       0.00021,
+       0.01943
+      ],
+      "R": 0.2358,
+      "difference": 0.00304,
+      "difference_ci": [
+       -0.0043,
+       0.01127
+      ],
+      "agg_change": 0.00097,
+      "seed_R": {
+       "s0": 0.6473,
+       "s1": -0.543,
+       "s2": 0.1833
+      }
+     }
+    }
+   }
+  },
+  "short": {
+   "prereg_groups": {
+    "worst3": [
+     "India and South Asia (India, Pakistan, Sri Lanka)",
+     "Southern African (South Africa, Zimbabwe, Namibia)",
+     "Hong Kong English"
+    ],
+    "best3": [
+     "New Zealand English",
+     "Australian English",
+     "Irish English"
+    ],
+    "penalties": {
+     "gptq_w3_balanced": {
+      "penalty": 0.03079,
+      "ci": [
+       0.00833,
+       0.05819
+      ]
+     },
+     "gptq_w3_us": {
+      "penalty": 0.04728,
+      "ci": [
+       0.01393,
+       0.08918
+      ]
+     },
+     "gptq_w3_worst": {
+      "penalty": 0.07302,
+      "ci": [
+       0.01657,
+       0.15521
+      ]
+     }
+    },
+    "tests": {
+     "H1_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.04728,
+      "ref_penalty_ci": [
+       0.01393,
+       0.08918
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.03079,
+      "arm_penalty_ci": [
+       0.00833,
+       0.05819
+      ],
+      "R": 0.3488,
+      "difference": 0.01649,
+      "difference_ci": [
+       -0.01724,
+       0.05626
+      ],
+      "agg_change": -0.00788,
+      "seed_R": {
+       "s0": -4.455,
+       "s1": 0.7719,
+       "s2": 0.8805
+      }
+     },
+     "H2_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": 0.04728,
+      "ref_penalty_ci": [
+       0.01393,
+       0.08918
+      ],
+      "control_holds": true,
+      "arm_penalty": 0.07302,
+      "arm_penalty_ci": [
+       0.01657,
+       0.15521
+      ],
+      "R": -0.5443,
+      "difference": -0.02574,
+      "difference_ci": [
+       -0.10753,
+       0.03952
+      ],
+      "agg_change": 0.00689,
+      "seed_R": {
+       "s0": 0.2548,
+       "s1": 0.3442,
+       "s2": -2.8034
+      }
+     }
+    }
+   }
+  },
+  "long": {
+   "prereg_groups": {
+    "worst3": [
+     "India and South Asia (India, Pakistan, Sri Lanka)",
+     "Southern African (South Africa, Zimbabwe, Namibia)",
+     "Hong Kong English"
+    ],
+    "best3": [
+     "New Zealand English",
+     "Australian English",
+     "Irish English"
+    ],
+    "penalties": {
+     "gptq_w3_balanced": {
+      "penalty": NaN,
+      "ci": [
+       NaN,
+       NaN
+      ]
+     },
+     "gptq_w3_us": {
+      "penalty": NaN,
+      "ci": [
+       NaN,
+       NaN
+      ]
+     },
+     "gptq_w3_worst": {
+      "penalty": NaN,
+      "ci": [
+       NaN,
+       NaN
+      ]
+     }
+    },
+    "tests": {
+     "H1_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": NaN,
+      "ref_penalty_ci": [
+       NaN,
+       NaN
+      ],
+      "control_holds": false,
+      "arm_penalty": NaN,
+      "arm_penalty_ci": [
+       NaN,
+       NaN
+      ],
+      "R": null,
+      "difference": NaN,
+      "difference_ci": [
+       NaN,
+       NaN
+      ],
+      "agg_change": -0.68889,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     },
+     "H2_w3": {
+      "verdict": "Inconclusive",
+      "ref_penalty": NaN,
+      "ref_penalty_ci": [
+       NaN,
+       NaN
+      ],
+      "control_holds": false,
+      "arm_penalty": NaN,
+      "arm_penalty_ci": [
+       NaN,
+       NaN
+      ],
+      "R": null,
+      "difference": NaN,
+      "difference_ci": [
+       NaN,
+       NaN
+      ],
+      "agg_change": -2.26667,
+      "seed_R": {
+       "s0": null,
+       "s1": null,
+       "s2": null
+      }
+     }
+    }
+   }
+  }
+ },
+ "draw_bootstrap": {
+  "H1_w3": {
+   "difference": 0.01649,
+   "speaker_ci": [
+    -0.01724,
+    0.05626
+   ],
+   "speaker_and_draw_ci": [
+    -0.05257,
+    0.10363
+   ],
+   "per_seed_difference": [
+    -0.05483,
+    0.06936,
+    0.03495
+   ]
+  },
+  "H2_w3": {
+   "difference": -0.02574,
+   "speaker_ci": [
+    -0.10753,
+    0.03952
+   ],
+   "speaker_and_draw_ci": [
+    -0.16419,
+    0.0771
+   ],
+   "per_seed_difference": [
+    0.00314,
+    0.03092,
+    -0.11127
+   ]
+  }
+ },
+ "literal_gap_penalty": {
+  "gptq_w3_balanced": {
+   "penalty": 0.13659,
+   "ci": [
+    -0.03833,
+    0.49413
+   ]
+  },
+  "gptq_w3_us": {
+   "penalty": 0.18706,
+   "ci": [
+    -0.01555,
+    0.70694
+   ]
+  },
+  "gptq_w3_worst": {
+   "penalty": 0.22469,
+   "ci": [
+    0.00144,
+    0.73681
+   ]
+  }
+ },
+ "loops": {
+  "fp16": {
+   "loop_rate": 0.00025,
+   "error_share_in_looped": 0.0108,
+   "insertion_share": 0.1698,
+   "excess_over_cap_share": 0.0181
+  },
+  "gptq_w3_balanced_s0": {
+   "loop_rate": 0.001,
+   "error_share_in_looped": 0.0904,
+   "insertion_share": 0.2447,
+   "excess_over_cap_share": 0.0927
+  },
+  "gptq_w3_balanced_s1": {
+   "loop_rate": 0.0005,
+   "error_share_in_looped": 0.1211,
+   "insertion_share": 0.2622,
+   "excess_over_cap_share": 0.1251
+  },
+  "gptq_w3_balanced_s2": {
+   "loop_rate": 0.00025,
+   "error_share_in_looped": 0.0076,
+   "insertion_share": 0.1848,
+   "excess_over_cap_share": 0.0153
+  },
+  "gptq_w3_us_s0": {
+   "loop_rate": 0.00025,
+   "error_share_in_looped": 0.0278,
+   "insertion_share": 0.1911,
+   "excess_over_cap_share": 0.0378
+  },
+  "gptq_w3_us_s1": {
+   "loop_rate": 0.00125,
+   "error_share_in_looped": 0.1312,
+   "insertion_share": 0.2722,
+   "excess_over_cap_share": 0.128
+  },
+  "gptq_w3_us_s2": {
+   "loop_rate": 0.00075,
+   "error_share_in_looped": 0.1556,
+   "insertion_share": 0.3111,
+   "excess_over_cap_share": 0.1605
+  },
+  "gptq_w3_worst_s0": {
+   "loop_rate": 0.00025,
+   "error_share_in_looped": 0.0728,
+   "insertion_share": 0.2355,
+   "excess_over_cap_share": 0.0822
+  },
+  "gptq_w3_worst_s1": {
+   "loop_rate": 0.00075,
+   "error_share_in_looped": 0.104,
+   "insertion_share": 0.2591,
+   "excess_over_cap_share": 0.1071
+  },
+  "gptq_w3_worst_s2": {
+   "loop_rate": 0.0015,
+   "error_share_in_looped": 0.2124,
+   "insertion_share": 0.3409,
+   "excess_over_cap_share": 0.2116
+  }
+ },
+ "split_half_bias": {
+  "gptq_w3_balanced": {
+   "mean": -0.03511,
+   "range": [
+    -0.13954,
+    0.06823
+   ]
+  },
+  "gptq_w3_us": {
+   "mean": -0.03182,
+   "range": [
+    -0.14428,
+    0.04149
+   ]
+  },
+  "gptq_w3_worst": {
+   "mean": -0.02223,
+   "range": [
+    -0.11896,
+    0.10073
+   ]
+  }
+ },
+ "drivers": {
+  "gptq_w3_balanced_s0": {
+   "Australian English": {
+    "group_wer_fp16": 0.0744,
+    "group_wer": 0.0919,
+    "extra_errors": 16,
+    "top1_share": 0.5,
+    "top3_share": 0.812,
+    "top1": {
+     "utt": "cv:325",
+     "speaker": "60867be5d8fc075a",
+     "ref_words": 12,
+     "hyp_words": 15,
+     "fp16_hyp_words": 12,
+     "errors": 8,
+     "fp16_errors": 0,
+     "loop": false
+    }
+   },
+   "Hong Kong English": {
+    "group_wer_fp16": 0.2297,
+    "group_wer": 0.2273,
+    "extra_errors": -1,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "cv:66",
+     "speaker": "15f1e0c06a2feafb",
+     "ref_words": 9,
+     "hyp_words": 11,
+     "fp16_hyp_words": 10,
+     "errors": 6,
+     "fp16_errors": 2,
+     "loop": false
+    }
+   },
+   "India and South Asia (India, Pakistan, Sri Lanka)": {
+    "group_wer_fp16": 0.1572,
+    "group_wer": 0.2367,
+    "extra_errors": 639,
+    "top1_share": 0.333,
+    "top3_share": 0.51,
+    "top1": {
+     "utt": "cv:48",
+     "speaker": "1007df6f93aa5fa2",
+     "ref_words": 7,
+     "hyp_words": 220,
+     "fp16_hyp_words": 2,
+     "errors": 220,
+     "fp16_errors": 7,
+     "loop": true
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.104,
+    "group_wer": 0.1588,
+    "extra_errors": 30,
+    "top1_share": 0.133,
+    "top3_share": 0.3,
+    "top1": {
+     "utt": "cv:3177",
+     "speaker": "814a9f453e47e3f3",
+     "ref_words": 8,
+     "hyp_words": 7,
+     "fp16_hyp_words": 10,
+     "errors": 8,
+     "fp16_errors": 4,
+     "loop": false
+    }
+   },
+   "New Zealand English": {
+    "group_wer_fp16": 0.0423,
+    "group_wer": 0.0503,
+    "extra_errors": 3,
+    "top1_share": 0.333,
+    "top3_share": 1.0,
+    "top1": {
+     "utt": "cv:3167",
+     "speaker": "80c419a3c38a283d",
+     "ref_words": 12,
+     "hyp_words": 12,
+     "fp16_hyp_words": 12,
+     "errors": 1,
+     "fp16_errors": 0,
+     "loop": false
+    }
+   },
+   "Southern African (South Africa, Zimbabwe, Namibia)": {
+    "group_wer_fp16": 0.1614,
+    "group_wer": 0.4524,
+    "extra_errors": 229,
+    "top1_share": 0.948,
+    "top3_share": 0.974,
+    "top1": {
+     "utt": "cv:1468",
+     "speaker": "66bee6916ff45ba0",
+     "ref_words": 7,
+     "hyp_words": 222,
+     "fp16_hyp_words": 6,
+     "errors": 222,
+     "fp16_errors": 5,
+     "loop": true
+    }
+   }
+  },
+  "gptq_w3_balanced_s1": {
+   "Australian English": {
+    "group_wer_fp16": 0.0744,
+    "group_wer": 0.0788,
+    "extra_errors": 4,
+    "top1_share": 0.75,
+    "top3_share": 1.75,
+    "top1": {
+     "utt": "cv:2882",
+     "speaker": "5dc2ed50df3f64d6",
+     "ref_words": 10,
+     "hyp_words": 12,
+     "fp16_hyp_words": 10,
+     "errors": 4,
+     "fp16_errors": 1,
+     "loop": false
+    }
+   },
+   "Hong Kong English": {
+    "group_wer_fp16": 0.2297,
+    "group_wer": 0.2105,
+    "extra_errors": -8,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "cv:1951",
+     "speaker": "cf5f8f95f735f819",
+     "ref_words": 7,
+     "hyp_words": 9,
+     "fp16_hyp_words": 7,
+     "errors": 4,
+     "fp16_errors": 0,
+     "loop": false
+    }
+   },
+   "India and South Asia (India, Pakistan, Sri Lanka)": {
+    "group_wer_fp16": 0.1572,
+    "group_wer": 0.1915,
+    "extra_errors": 276,
+    "top1_share": 0.025,
+    "top3_share": 0.072,
+    "top1": {
+     "utt": "cv:1959",
+     "speaker": "d183daaff0ffb60f",
+     "ref_words": 3,
+     "hyp_words": 8,
+     "fp16_hyp_words": 3,
+     "errors": 8,
+     "fp16_errors": 1,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.104,
+    "group_wer": 0.1277,
+    "extra_errors": 13,
+    "top1_share": 0.231,
+    "top3_share": 0.615,
+    "top1": {
+     "utt": "cv:3405",
+     "speaker": "9e8e2e1fe973627e",
+     "ref_words": 14,
+     "hyp_words": 15,
+     "fp16_hyp_words": 14,
+     "errors": 5,
+     "fp16_errors": 2,
+     "loop": false
+    }
+   },
+   "New Zealand English": {
+    "group_wer_fp16": 0.0423,
+    "group_wer": 0.0529,
+    "extra_errors": 4,
+    "top1_share": 0.5,
+    "top3_share": 1.5,
+    "top1": {
+     "utt": "cv:1629",
+     "speaker": "87e67afcf57797e1",
+     "ref_words": 13,
+     "hyp_words": 12,
+     "fp16_hyp_words": 13,
+     "errors": 4,
+     "fp16_errors": 2,
+     "loop": false
+    }
+   },
+   "Southern African (South Africa, Zimbabwe, Namibia)": {
+    "group_wer_fp16": 0.1614,
+    "group_wer": 0.1957,
+    "extra_errors": 27,
+    "top1_share": 0.185,
+    "top3_share": 0.444,
+    "top1": {
+     "utt": "cv:3164",
+     "speaker": "807840ae979c0140",
+     "ref_words": 9,
+     "hyp_words": 9,
+     "fp16_hyp_words": 10,
+     "errors": 7,
+     "fp16_errors": 2,
+     "loop": false
+    }
+   }
+  },
+  "gptq_w3_balanced_s2": {
+   "Australian English": {
+    "group_wer_fp16": 0.0744,
+    "group_wer": 0.0941,
+    "extra_errors": 18,
+    "top1_share": 0.333,
+    "top3_share": 0.722,
+    "top1": {
+     "utt": "cv:836",
+     "speaker": "e76735d2667afecb",
+     "ref_words": 13,
+     "hyp_words": 19,
+     "fp16_hyp_words": 14,
+     "errors": 11,
+     "fp16_errors": 5,
+     "loop": false
+    }
+   },
+   "Hong Kong English": {
+    "group_wer_fp16": 0.2297,
+    "group_wer": 0.2177,
+    "extra_errors": -5,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "cv:2946",
+     "speaker": "65f3fddde7d2fdff",
+     "ref_words": 6,
+     "hyp_words": 8,
+     "fp16_hyp_words": 6,
+     "errors": 7,
+     "fp16_errors": 4,
+     "loop": false
+    }
+   },
+   "India and South Asia (India, Pakistan, Sri Lanka)": {
+    "group_wer_fp16": 0.1572,
+    "group_wer": 0.1914,
+    "extra_errors": 275,
+    "top1_share": 0.025,
+    "top3_share": 0.073,
+    "top1": {
+     "utt": "cv:3008",
+     "speaker": "708bd10d9ba677ad",
+     "ref_words": 10,
+     "hyp_words": 10,
+     "fp16_hyp_words": 10,
+     "errors": 7,
+     "fp16_errors": 0,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.104,
+    "group_wer": 0.1442,
+    "extra_errors": 22,
+    "top1_share": 0.091,
+    "top3_share": 0.273,
+    "top1": {
+     "utt": "cv:3487",
+     "speaker": "aa2dd79d12a3c06d",
+     "ref_words": 14,
+     "hyp_words": 15,
+     "fp16_hyp_words": 14,
+     "errors": 2,
+     "fp16_errors": 0,
+     "loop": false
+    }
+   },
+   "New Zealand English": {
+    "group_wer_fp16": 0.0423,
+    "group_wer": 0.0582,
+    "extra_errors": 6,
+    "top1_share": 0.333,
+    "top3_share": 0.833,
+    "top1": {
+     "utt": "cv:1629",
+     "speaker": "87e67afcf57797e1",
+     "ref_words": 13,
+     "hyp_words": 12,
+     "fp16_hyp_words": 13,
+     "errors": 4,
+     "fp16_errors": 2,
+     "loop": false
+    }
+   },
+   "Southern African (South Africa, Zimbabwe, Namibia)": {
+    "group_wer_fp16": 0.1614,
+    "group_wer": 0.1677,
+    "extra_errors": 5,
+    "top1_share": 1.0,
+    "top3_share": 2.0,
+    "top1": {
+     "utt": "cv:3164",
+     "speaker": "807840ae979c0140",
+     "ref_words": 9,
+     "hyp_words": 9,
+     "fp16_hyp_words": 10,
+     "errors": 7,
+     "fp16_errors": 2,
+     "loop": false
+    }
+   }
+  },
+  "gptq_w3_us_s0": {
+   "Australian English": {
+    "group_wer_fp16": 0.0744,
+    "group_wer": 0.0952,
+    "extra_errors": 19,
+    "top1_share": 0.211,
+    "top3_share": 0.474,
+    "top1": {
+     "utt": "cv:1424",
+     "speaker": "5e615edf9a98b23d",
+     "ref_words": 8,
+     "hyp_words": 11,
+     "fp16_hyp_words": 8,
+     "errors": 4,
+     "fp16_errors": 0,
+     "loop": false
+    }
+   },
+   "Hong Kong English": {
+    "group_wer_fp16": 0.2297,
+    "group_wer": 0.2344,
+    "extra_errors": 2,
+    "top1_share": 1.5,
+    "top3_share": 4.0,
+    "top1": {
+     "utt": "cv:2946",
+     "speaker": "65f3fddde7d2fdff",
+     "ref_words": 6,
+     "hyp_words": 8,
+     "fp16_hyp_words": 6,
+     "errors": 7,
+     "fp16_errors": 4,
+     "loop": false
+    }
+   },
+   "India and South Asia (India, Pakistan, Sri Lanka)": {
+    "group_wer_fp16": 0.1572,
+    "group_wer": 0.198,
+    "extra_errors": 328,
+    "top1_share": 0.027,
+    "top3_share": 0.076,
+    "top1": {
+     "utt": "cv:1097",
+     "speaker": "1f71364b9c1a2806",
+     "ref_words": 13,
+     "hyp_words": 3,
+     "fp16_hyp_words": 12,
+     "errors": 12,
+     "fp16_errors": 3,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.104,
+    "group_wer": 0.1551,
+    "extra_errors": 28,
+    "top1_share": 0.214,
+    "top3_share": 0.536,
+    "top1": {
+     "utt": "cv:720",
+     "speaker": "c4bfed23b28895a8",
+     "ref_words": 6,
+     "hyp_words": 10,
+     "fp16_hyp_words": 7,
+     "errors": 8,
+     "fp16_errors": 2,
+     "loop": false
+    }
+   },
+   "New Zealand English": {
+    "group_wer_fp16": 0.0423,
+    "group_wer": 0.045,
+    "extra_errors": 1,
+    "top1_share": 2.0,
+    "top3_share": 3.0,
+    "top1": {
+     "utt": "cv:1239",
+     "speaker": "3afb6bb643cf29eb",
+     "ref_words": 13,
+     "hyp_words": 12,
+     "fp16_hyp_words": 13,
+     "errors": 2,
+     "fp16_errors": 0,
+     "loop": false
+    }
+   },
+   "Southern African (South Africa, Zimbabwe, Namibia)": {
+    "group_wer_fp16": 0.1614,
+    "group_wer": 0.1931,
+    "extra_errors": 25,
+    "top1_share": 0.16,
+    "top3_share": 0.44,
+    "top1": {
+     "utt": "cv:3874",
+     "speaker": "dcc15f5f6b9c2ded",
+     "ref_words": 9,
+     "hyp_words": 11,
+     "fp16_hyp_words": 9,
+     "errors": 4,
+     "fp16_errors": 0,
+     "loop": false
+    }
+   }
+  },
+  "gptq_w3_us_s1": {
+   "Australian English": {
+    "group_wer_fp16": 0.0744,
+    "group_wer": 0.0941,
+    "extra_errors": 18,
+    "top1_share": 0.278,
+    "top3_share": 0.611,
+    "top1": {
+     "utt": "cv:1425",
+     "speaker": "5e615edf9a98b23d",
+     "ref_words": 11,
+     "hyp_words": 12,
+     "fp16_hyp_words": 11,
+     "errors": 6,
+     "fp16_errors": 1,
+     "loop": false
+    }
+   },
+   "Hong Kong English": {
+    "group_wer_fp16": 0.2297,
+    "group_wer": 0.2105,
+    "extra_errors": -8,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "cv:2946",
+     "speaker": "65f3fddde7d2fdff",
+     "ref_words": 6,
+     "hyp_words": 7,
+     "fp16_hyp_words": 6,
+     "errors": 7,
+     "fp16_errors": 4,
+     "loop": false
+    }
+   },
+   "India and South Asia (India, Pakistan, Sri Lanka)": {
+    "group_wer_fp16": 0.1572,
+    "group_wer": 0.2457,
+    "extra_errors": 712,
+    "top1_share": 0.303,
+    "top3_share": 0.614,
+    "top1": {
+     "utt": "cv:3563",
+     "speaker": "b23b4b8e4d7c751b",
+     "ref_words": 13,
+     "hyp_words": 220,
+     "fp16_hyp_words": 13,
+     "errors": 220,
+     "fp16_errors": 4,
+     "loop": true
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.104,
+    "group_wer": 0.1533,
+    "extra_errors": 27,
+    "top1_share": 0.185,
+    "top3_share": 0.481,
+    "top1": {
+     "utt": "cv:3179",
+     "speaker": "814a9f453e47e3f3",
+     "ref_words": 7,
+     "hyp_words": 9,
+     "fp16_hyp_words": 7,
+     "errors": 5,
+     "fp16_errors": 0,
+     "loop": false
+    }
+   },
+   "New Zealand English": {
+    "group_wer_fp16": 0.0423,
+    "group_wer": 0.0503,
+    "extra_errors": 3,
+    "top1_share": 0.667,
+    "top3_share": 1.667,
+    "top1": {
+     "utt": "cv:1239",
+     "speaker": "3afb6bb643cf29eb",
+     "ref_words": 13,
+     "hyp_words": 12,
+     "fp16_hyp_words": 13,
+     "errors": 2,
+     "fp16_errors": 0,
+     "loop": false
+    }
+   },
+   "Southern African (South Africa, Zimbabwe, Namibia)": {
+    "group_wer_fp16": 0.1614,
+    "group_wer": 0.629,
+    "extra_errors": 368,
+    "top1_share": 0.948,
+    "top3_share": 0.973,
+    "top1": {
+     "utt": "cv:613",
+     "speaker": "a9a1efcb3b0e411f",
+     "ref_words": 8,
+     "hyp_words": 352,
+     "fp16_hyp_words": 9,
+     "errors": 352,
+     "fp16_errors": 3,
+     "loop": true
+    }
+   }
+  },
+  "gptq_w3_us_s2": {
+   "Australian English": {
+    "group_wer_fp16": 0.0744,
+    "group_wer": 0.0875,
+    "extra_errors": 12,
+    "top1_share": 0.25,
+    "top3_share": 0.667,
+    "top1": {
+     "utt": "cv:1732",
+     "speaker": "a13c1a30d4195468",
+     "ref_words": 13,
+     "hyp_words": 14,
+     "fp16_hyp_words": 13,
+     "errors": 4,
+     "fp16_errors": 1,
+     "loop": false
+    }
+   },
+   "Hong Kong English": {
+    "group_wer_fp16": 0.2297,
+    "group_wer": 0.2368,
+    "extra_errors": 3,
+    "top1_share": 0.667,
+    "top3_share": 1.667,
+    "top1": {
+     "utt": "cv:3112",
+     "speaker": "7a5466f732bbf60c",
+     "ref_words": 10,
+     "hyp_words": 12,
+     "fp16_hyp_words": 11,
+     "errors": 4,
+     "fp16_errors": 2,
+     "loop": false
+    }
+   },
+   "India and South Asia (India, Pakistan, Sri Lanka)": {
+    "group_wer_fp16": 0.1572,
+    "group_wer": 0.2258,
+    "extra_errors": 552,
+    "top1_share": 0.375,
+    "top3_share": 0.404,
+    "top1": {
+     "utt": "cv:663",
+     "speaker": "b50b26223a413fa6",
+     "ref_words": 13,
+     "hyp_words": 220,
+     "fp16_hyp_words": 7,
+     "errors": 220,
+     "fp16_errors": 13,
+     "loop": true
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.104,
+    "group_wer": 0.1496,
+    "extra_errors": 25,
+    "top1_share": 0.24,
+    "top3_share": 0.56,
+    "top1": {
+     "utt": "cv:3127",
+     "speaker": "7be98f85c8a5ed0f",
+     "ref_words": 14,
+     "hyp_words": 16,
+     "fp16_hyp_words": 14,
+     "errors": 8,
+     "fp16_errors": 2,
+     "loop": false
+    }
+   },
+   "New Zealand English": {
+    "group_wer_fp16": 0.0423,
+    "group_wer": 0.0529,
+    "extra_errors": 4,
+    "top1_share": 0.5,
+    "top3_share": 1.25,
+    "top1": {
+     "utt": "cv:1239",
+     "speaker": "3afb6bb643cf29eb",
+     "ref_words": 13,
+     "hyp_words": 12,
+     "fp16_hyp_words": 13,
+     "errors": 2,
+     "fp16_errors": 0,
+     "loop": false
+    }
+   },
+   "Southern African (South Africa, Zimbabwe, Namibia)": {
+    "group_wer_fp16": 0.1614,
+    "group_wer": 0.1842,
+    "extra_errors": 18,
+    "top1_share": 0.222,
+    "top3_share": 0.556,
+    "top1": {
+     "utt": "cv:1468",
+     "speaker": "66bee6916ff45ba0",
+     "ref_words": 7,
+     "hyp_words": 9,
+     "fp16_hyp_words": 6,
+     "errors": 9,
+     "fp16_errors": 5,
+     "loop": false
+    }
+   }
+  },
+  "gptq_w3_worst_s0": {
+   "Australian English": {
+    "group_wer_fp16": 0.0744,
+    "group_wer": 0.0963,
+    "extra_errors": 20,
+    "top1_share": 0.1,
+    "top3_share": 0.3,
+    "top1": {
+     "utt": "cv:3309",
+     "speaker": "92a72445998c178c",
+     "ref_words": 7,
+     "hyp_words": 8,
+     "fp16_hyp_words": 7,
+     "errors": 4,
+     "fp16_errors": 2,
+     "loop": false
+    }
+   },
+   "Hong Kong English": {
+    "group_wer_fp16": 0.2297,
+    "group_wer": 0.2201,
+    "extra_errors": -4,
+    "top1_share": null,
+    "top3_share": null,
+    "top1": {
+     "utt": "cv:1951",
+     "speaker": "cf5f8f95f735f819",
+     "ref_words": 7,
+     "hyp_words": 8,
+     "fp16_hyp_words": 7,
+     "errors": 3,
+     "fp16_errors": 0,
+     "loop": false
+    }
+   },
+   "India and South Asia (India, Pakistan, Sri Lanka)": {
+    "group_wer_fp16": 0.1572,
+    "group_wer": 0.1933,
+    "extra_errors": 290,
+    "top1_share": 0.024,
+    "top3_share": 0.069,
+    "top1": {
+     "utt": "cv:110",
+     "speaker": "211b3d8d98bf2db3",
+     "ref_words": 8,
+     "hyp_words": 11,
+     "fp16_hyp_words": 8,
+     "errors": 7,
+     "fp16_errors": 0,
+     "loop": false
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.104,
+    "group_wer": 0.1478,
+    "extra_errors": 24,
+    "top1_share": 0.167,
+    "top3_share": 0.375,
+    "top1": {
+     "utt": "cv:913",
+     "speaker": "fbc7bbabb6f3cf5e",
+     "ref_words": 13,
+     "hyp_words": 15,
+     "fp16_hyp_words": 13,
+     "errors": 4,
+     "fp16_errors": 0,
+     "loop": false
+    }
+   },
+   "New Zealand English": {
+    "group_wer_fp16": 0.0423,
+    "group_wer": 0.0529,
+    "extra_errors": 4,
+    "top1_share": 0.25,
+    "top3_share": 0.75,
+    "top1": {
+     "utt": "cv:3704",
+     "speaker": "c5072f9f49404b02",
+     "ref_words": 10,
+     "hyp_words": 10,
+     "fp16_hyp_words": 10,
+     "errors": 1,
+     "fp16_errors": 0,
+     "loop": false
+    }
+   },
+   "Southern African (South Africa, Zimbabwe, Namibia)": {
+    "group_wer_fp16": 0.1614,
+    "group_wer": 0.2122,
+    "extra_errors": 40,
+    "top1_share": 0.275,
+    "top3_share": 0.5,
+    "top1": {
+     "utt": "cv:1468",
+     "speaker": "66bee6916ff45ba0",
+     "ref_words": 7,
+     "hyp_words": 16,
+     "fp16_hyp_words": 6,
+     "errors": 16,
+     "fp16_errors": 5,
+     "loop": false
+    }
+   }
+  },
+  "gptq_w3_worst_s1": {
+   "Australian English": {
+    "group_wer_fp16": 0.0744,
+    "group_wer": 0.0919,
+    "extra_errors": 16,
+    "top1_share": 0.312,
+    "top3_share": 0.688,
+    "top1": {
+     "utt": "cv:1425",
+     "speaker": "5e615edf9a98b23d",
+     "ref_words": 11,
+     "hyp_words": 12,
+     "fp16_hyp_words": 11,
+     "errors": 6,
+     "fp16_errors": 1,
+     "loop": false
+    }
+   },
+   "Hong Kong English": {
+    "group_wer_fp16": 0.2297,
+    "group_wer": 0.2632,
+    "extra_errors": 14,
+    "top1_share": 0.286,
+    "top3_share": 0.714,
+    "top1": {
+     "utt": "cv:1851",
+     "speaker": "b85e02629c8c2ff4",
+     "ref_words": 5,
+     "hyp_words": 12,
+     "fp16_hyp_words": 8,
+     "errors": 11,
+     "fp16_errors": 7,
+     "loop": false
+    }
+   },
+   "India and South Asia (India, Pakistan, Sri Lanka)": {
+    "group_wer_fp16": 0.1572,
+    "group_wer": 0.2482,
+    "extra_errors": 732,
+    "top1_share": 0.577,
+    "top3_share": 0.605,
+    "top1": {
+     "utt": "cv:1335",
+     "speaker": "4e0e657e3310c731",
+     "ref_words": 13,
+     "hyp_words": 437,
+     "fp16_hyp_words": 16,
+     "errors": 434,
+     "fp16_errors": 12,
+     "loop": true
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.104,
+    "group_wer": 0.1515,
+    "extra_errors": 26,
+    "top1_share": 0.346,
+    "top3_share": 0.577,
+    "top1": {
+     "utt": "cv:460",
+     "speaker": "819c7b4740afb4f5",
+     "ref_words": 11,
+     "hyp_words": 5,
+     "fp16_hyp_words": 11,
+     "errors": 11,
+     "fp16_errors": 2,
+     "loop": false
+    }
+   },
+   "New Zealand English": {
+    "group_wer_fp16": 0.0423,
+    "group_wer": 0.0503,
+    "extra_errors": 3,
+    "top1_share": 0.333,
+    "top3_share": 1.0,
+    "top1": {
+     "utt": "cv:3705",
+     "speaker": "c5072f9f49404b02",
+     "ref_words": 10,
+     "hyp_words": 10,
+     "fp16_hyp_words": 10,
+     "errors": 1,
+     "fp16_errors": 0,
+     "loop": false
+    }
+   },
+   "Southern African (South Africa, Zimbabwe, Namibia)": {
+    "group_wer_fp16": 0.1614,
+    "group_wer": 0.1931,
+    "extra_errors": 25,
+    "top1_share": 0.2,
+    "top3_share": 0.44,
+    "top1": {
+     "utt": "cv:3876",
+     "speaker": "dcc15f5f6b9c2ded",
+     "ref_words": 9,
+     "hyp_words": 12,
+     "fp16_hyp_words": 9,
+     "errors": 5,
+     "fp16_errors": 0,
+     "loop": false
+    }
+   }
+  },
+  "gptq_w3_worst_s2": {
+   "Australian English": {
+    "group_wer_fp16": 0.0744,
+    "group_wer": 0.1007,
+    "extra_errors": 24,
+    "top1_share": 0.292,
+    "top3_share": 0.542,
+    "top1": {
+     "utt": "cv:1424",
+     "speaker": "5e615edf9a98b23d",
+     "ref_words": 8,
+     "hyp_words": 12,
+     "fp16_hyp_words": 8,
+     "errors": 7,
+     "fp16_errors": 0,
+     "loop": false
+    }
+   },
+   "Hong Kong English": {
+    "group_wer_fp16": 0.2297,
+    "group_wer": 0.2368,
+    "extra_errors": 3,
+    "top1_share": 1.333,
+    "top3_share": 3.0,
+    "top1": {
+     "utt": "cv:2946",
+     "speaker": "65f3fddde7d2fdff",
+     "ref_words": 6,
+     "hyp_words": 8,
+     "fp16_hyp_words": 6,
+     "errors": 8,
+     "fp16_errors": 4,
+     "loop": false
+    }
+   },
+   "India and South Asia (India, Pakistan, Sri Lanka)": {
+    "group_wer_fp16": 0.1572,
+    "group_wer": 0.3064,
+    "extra_errors": 1200,
+    "top1_share": 0.281,
+    "top3_share": 0.725,
+    "top1": {
+     "utt": "cv:1335",
+     "speaker": "4e0e657e3310c731",
+     "ref_words": 13,
+     "hyp_words": 350,
+     "fp16_hyp_words": 16,
+     "errors": 349,
+     "fp16_errors": 12,
+     "loop": true
+    }
+   },
+   "Irish English": {
+    "group_wer_fp16": 0.104,
+    "group_wer": 0.1423,
+    "extra_errors": 21,
+    "top1_share": 0.143,
+    "top3_share": 0.333,
+    "top1": {
+     "utt": "cv:1147",
+     "speaker": "26391572dc1dd6d1",
+     "ref_words": 9,
+     "hyp_words": 10,
+     "fp16_hyp_words": 9,
+     "errors": 3,
+     "fp16_errors": 0,
+     "loop": false
+    }
+   },
+   "New Zealand English": {
+    "group_wer_fp16": 0.0423,
+    "group_wer": 0.0556,
+    "extra_errors": 5,
+    "top1_share": 0.6,
+    "top3_share": 1.0,
+    "top1": {
+     "utt": "cv:1239",
+     "speaker": "3afb6bb643cf29eb",
+     "ref_words": 13,
+     "hyp_words": 12,
+     "fp16_hyp_words": 13,
+     "errors": 3,
+     "fp16_errors": 0,
+     "loop": false
+    }
+   },
+   "Southern African (South Africa, Zimbabwe, Namibia)": {
+    "group_wer_fp16": 0.1614,
+    "group_wer": 0.7255,
+    "extra_errors": 444,
+    "top1_share": 0.968,
+    "top3_share": 0.977,
+    "top1": {
+     "utt": "cv:1469",
+     "speaker": "66bee6916ff45ba0",
+     "ref_words": 8,
+     "hyp_words": 438,
+     "fp16_hyp_words": 9,
+     "errors": 438,
+     "fp16_errors": 8,
+     "loop": true
+    }
+   }
+  }
+ }
+}

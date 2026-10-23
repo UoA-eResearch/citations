@@ -1,0 +1,503 @@
+{
+ "model": "small",
+ "conditions": [
+  "fp16",
+  "gptq_w3_balanced_s0",
+  "gptq_w3_balanced_s1",
+  "gptq_w3_balanced_s2",
+  "gptq_w3_us_s0",
+  "gptq_w3_us_s1",
+  "gptq_w3_us_s2",
+  "gptq_w3_worst_s0",
+  "gptq_w3_worst_s1",
+  "gptq_w3_worst_s2"
+ ],
+ "named_groups": [
+  "Australian English",
+  "Canadian English",
+  "England English",
+  "Filipino",
+  "Hong Kong English",
+  "India and South Asia (India, Pakistan, Sri Lanka)",
+  "Irish English",
+  "New Zealand English",
+  "Southern African (South Africa, Zimbabwe, Namibia)",
+  "United States English"
+ ],
+ "fp16_group_wer": {
+  "Australian English": 0.0744,
+  "Canadian English": 0.12957,
+  "England English": 0.12335,
+  "Filipino": 0.13016,
+  "Hong Kong English": 0.22967,
+  "India and South Asia (India, Pakistan, Sri Lanka)": 0.15719,
+  "Irish English": 0.10401,
+  "New Zealand English": 0.04233,
+  "Southern African (South Africa, Zimbabwe, Namibia)": 0.16137,
+  "United States English": 0.11345
+ },
+ "worst3_fp16": [
+  "India and South Asia (India, Pakistan, Sri Lanka)",
+  "Southern African (South Africa, Zimbabwe, Namibia)",
+  "Hong Kong English"
+ ],
+ "best3_fp16": [
+  "New Zealand English",
+  "Australian English",
+  "Irish English"
+ ],
+ "per_condition": {
+  "fp16": {
+   "agg_wer": 0.12553,
+   "agg_wer_ci": [
+    0.11902,
+    0.13273
+   ],
+   "gap": 0.0842,
+   "gap_ci": [
+    0.06152,
+    0.10765
+   ],
+   "penalty": 0.0,
+   "penalty_ci": [
+    0.0,
+    0.0
+   ],
+   "literal_gap": 0.18734,
+   "worst3_wer": 0.16083,
+   "best3_wer": 0.07663,
+   "loop_rate": 0.00025,
+   "group_wer": {
+    "Australian English": 0.0744,
+    "Canadian English": 0.12957,
+    "England English": 0.12335,
+    "Filipino": 0.13016,
+    "Hong Kong English": 0.22967,
+    "India and South Asia (India, Pakistan, Sri Lanka)": 0.15719,
+    "Irish English": 0.10401,
+    "New Zealand English": 0.04233,
+    "Southern African (South Africa, Zimbabwe, Namibia)": 0.16137,
+    "United States English": 0.11345
+   }
+  },
+  "gptq_w3_balanced_s0": {
+   "agg_wer": 0.16587,
+   "agg_wer_ci": [
+    0.14989,
+    0.1852
+   ],
+   "gap": 0.15134,
+   "gap_ci": [
+    0.08584,
+    0.23603
+   ],
+   "penalty": 0.06714,
+   "penalty_ci": [
+    0.00773,
+    0.14562
+   ],
+   "literal_gap": 0.40209,
+   "worst3_wer": 0.2546,
+   "best3_wer": 0.10326,
+   "loop_rate": 0.001,
+   "group_wer": {
+    "Australian English": 0.0919,
+    "Canadian English": 0.13917,
+    "England English": 0.15597,
+    "Filipino": 0.16508,
+    "Hong Kong English": 0.22727,
+    "India and South Asia (India, Pakistan, Sri Lanka)": 0.23666,
+    "Irish English": 0.15876,
+    "New Zealand English": 0.05026,
+    "Southern African (South Africa, Zimbabwe, Namibia)": 0.45235,
+    "United States English": 0.13448
+   }
+  },
+  "gptq_w3_balanced_s1": {
+   "agg_wer": 0.16679,
+   "agg_wer_ci": [
+    0.14283,
+    0.20419
+   ],
+   "gap": 0.10469,
+   "gap_ci": [
+    0.07991,
+    0.12983
+   ],
+   "penalty": 0.02049,
+   "penalty_ci": [
+    0.00757,
+    0.03401
+   ],
+   "literal_gap": 0.4102,
+   "worst3_wer": 0.19273,
+   "best3_wer": 0.08804,
+   "loop_rate": 0.0005,
+   "group_wer": {
+    "Australian English": 0.07877,
+    "Canadian English": 0.46311,
+    "England English": 0.15187,
+    "Filipino": 0.15556,
+    "Hong Kong English": 0.21053,
+    "India and South Asia (India, Pakistan, Sri Lanka)": 0.19152,
+    "Irish English": 0.12774,
+    "New Zealand English": 0.05291,
+    "Southern African (South Africa, Zimbabwe, Namibia)": 0.19568,
+    "United States English": 0.14156
+   }
+  },
+  "gptq_w3_balanced_s2": {
+   "agg_wer": 0.15147,
+   "agg_wer_ci": [
+    0.14419,
+    0.15926
+   ],
+   "gap": 0.08894,
+   "gap_ci": [
+    0.06114,
+    0.11645
+   ],
+   "penalty": 0.00474,
+   "penalty_ci": [
+    -0.01068,
+    0.01936
+   ],
+   "literal_gap": 0.1595,
+   "worst3_wer": 0.19057,
+   "best3_wer": 0.10163,
+   "loop_rate": 0.00025,
+   "group_wer": {
+    "Australian English": 0.09409,
+    "Canadian English": 0.13857,
+    "England English": 0.15749,
+    "Filipino": 0.18413,
+    "Hong Kong English": 0.2177,
+    "India and South Asia (India, Pakistan, Sri Lanka)": 0.19139,
+    "Irish English": 0.14416,
+    "New Zealand English": 0.0582,
+    "Southern African (South Africa, Zimbabwe, Namibia)": 0.16773,
+    "United States English": 0.13606
+   }
+  },
+  "gptq_w3_us_s0": {
+   "agg_wer": 0.1555,
+   "agg_wer_ci": [
+    0.1456,
+    0.16828
+   ],
+   "gap": 0.0965,
+   "gap_ci": [
+    0.06773,
+    0.12515
+   ],
+   "penalty": 0.01231,
+   "penalty_ci": [
+    -0.00767,
+    0.03054
+   ],
+   "literal_gap": 0.18948,
+   "worst3_wer": 0.19922,
+   "best3_wer": 0.10272,
+   "loop_rate": 0.00025,
+   "group_wer": {
+    "Australian English": 0.09519,
+    "Canadian English": 0.22795,
+    "England English": 0.1577,
+    "Filipino": 0.13968,
+    "Hong Kong English": 0.23445,
+    "India and South Asia (India, Pakistan, Sri Lanka)": 0.19799,
+    "Irish English": 0.15511,
+    "New Zealand English": 0.04497,
+    "Southern African (South Africa, Zimbabwe, Namibia)": 0.19314,
+    "United States English": 0.13361
+   }
+  },
+  "gptq_w3_us_s1": {
+   "agg_wer": 0.16992,
+   "agg_wer_ci": [
+    0.14925,
+    0.19861
+   ],
+   "gap": 0.17405,
+   "gap_ci": [
+    0.08811,
+    0.2941
+   ],
+   "penalty": 0.08986,
+   "penalty_ci": [
+    0.00657,
+    0.20695
+   ],
+   "literal_gap": 0.57871,
+   "worst3_wer": 0.27677,
+   "best3_wer": 0.10272,
+   "loop_rate": 0.00125,
+   "group_wer": {
+    "Australian English": 0.09409,
+    "Canadian English": 0.13617,
+    "England English": 0.16634,
+    "Filipino": 0.14286,
+    "Hong Kong English": 0.21053,
+    "India and South Asia (India, Pakistan, Sri Lanka)": 0.24574,
+    "Irish English": 0.15328,
+    "New Zealand English": 0.05026,
+    "Southern African (South Africa, Zimbabwe, Namibia)": 0.62897,
+    "United States English": 0.13219
+   }
+  },
+  "gptq_w3_us_s2": {
+   "agg_wer": 0.18314,
+   "agg_wer_ci": [
+    0.15395,
+    0.21969
+   ],
+   "gap": 0.12389,
+   "gap_ci": [
+    0.07916,
+    0.18468
+   ],
+   "penalty": 0.03969,
+   "penalty_ci": [
+    0.00541,
+    0.09286
+   ],
+   "literal_gap": 0.35501,
+   "worst3_wer": 0.2228,
+   "best3_wer": 0.09891,
+   "loop_rate": 0.00075,
+   "group_wer": {
+    "Australian English": 0.08753,
+    "Canadian English": 0.40792,
+    "England English": 0.16807,
+    "Filipino": 0.18095,
+    "Hong Kong English": 0.23684,
+    "India and South Asia (India, Pakistan, Sri Lanka)": 0.22584,
+    "Irish English": 0.14964,
+    "New Zealand English": 0.05291,
+    "Southern African (South Africa, Zimbabwe, Namibia)": 0.18424,
+    "United States English": 0.16053
+   }
+  },
+  "gptq_w3_worst_s0": {
+   "agg_wer": 0.16504,
+   "agg_wer_ci": [
+    0.14773,
+    0.19443
+   ],
+   "gap": 0.09337,
+   "gap_ci": [
+    0.06774,
+    0.11849
+   ],
+   "penalty": 0.00917,
+   "penalty_ci": [
+    -0.00436,
+    0.02289
+   ],
+   "literal_gap": 0.35321,
+   "worst3_wer": 0.19608,
+   "best3_wer": 0.10272,
+   "loop_rate": 0.00025,
+   "group_wer": {
+    "Australian English": 0.09628,
+    "Canadian English": 0.40612,
+    "England English": 0.16224,
+    "Filipino": 0.15238,
+    "Hong Kong English": 0.2201,
+    "India and South Asia (India, Pakistan, Sri Lanka)": 0.19326,
+    "Irish English": 0.14781,
+    "New Zealand English": 0.05291,
+    "Southern African (South Africa, Zimbabwe, Namibia)": 0.2122,
+    "United States English": 0.13715
+   }
+  },
+  "gptq_w3_worst_s1": {
+   "agg_wer": 0.17112,
+   "agg_wer_ci": [
+    0.15134,
+    0.20032
+   ],
+   "gap": 0.14313,
+   "gap_ci": [
+    0.07525,
+    0.25969
+   ],
+   "penalty": 0.05893,
+   "penalty_ci": [
+    0.00095,
+    0.16527
+   ],
+   "literal_gap": 0.21289,
+   "worst3_wer": 0.24421,
+   "best3_wer": 0.10109,
+   "loop_rate": 0.00075,
+   "group_wer": {
+    "Australian English": 0.0919,
+    "Canadian English": 0.14337,
+    "England English": 0.2089,
+    "Filipino": 0.2,
+    "Hong Kong English": 0.26316,
+    "India and South Asia (India, Pakistan, Sri Lanka)": 0.24823,
+    "Irish English": 0.15146,
+    "New Zealand English": 0.05026,
+    "Southern African (South Africa, Zimbabwe, Namibia)": 0.19314,
+    "United States English": 0.13655
+   }
+  },
+  "gptq_w3_worst_s2": {
+   "agg_wer": 0.19051,
+   "agg_wer_ci": [
+    0.15987,
+    0.22938
+   ],
+   "gap": 0.23515,
+   "gap_ci": [
+    0.11267,
+    0.40248
+   ],
+   "penalty": 0.15096,
+   "penalty_ci": [
+    0.03439,
+    0.31547
+   ],
+   "literal_gap": 0.66998,
+   "worst3_wer": 0.33896,
+   "best3_wer": 0.1038,
+   "loop_rate": 0.0015,
+   "group_wer": {
+    "Australian English": 0.10066,
+    "Canadian English": 0.15597,
+    "England English": 0.2048,
+    "Filipino": 0.17143,
+    "Hong Kong English": 0.23684,
+    "India and South Asia (India, Pakistan, Sri Lanka)": 0.30643,
+    "Irish English": 0.14234,
+    "New Zealand English": 0.05556,
+    "Southern African (South Africa, Zimbabwe, Namibia)": 0.72554,
+    "United States English": 0.13263
+   }
+  }
+ },
+ "H1_w4": {
+  "status": "not run",
+  "ref": "gptq_w4_us",
+  "arm": "gptq_w4_balanced"
+ },
+ "H2_w4": {
+  "status": "not run",
+  "ref": "gptq_w4_us",
+  "arm": "gptq_w4_worst"
+ },
+ "H1_w3": {
+  "verdict": "Inconclusive",
+  "ref": [
+   "gptq_w3_us_s0",
+   "gptq_w3_us_s1",
+   "gptq_w3_us_s2"
+  ],
+  "arm": [
+   "gptq_w3_balanced_s0",
+   "gptq_w3_balanced_s1",
+   "gptq_w3_balanced_s2"
+  ],
+  "positive_control_penalty": 0.04728,
+  "positive_control_ci": [
+   0.01393,
+   0.08918
+  ],
+  "positive_control_holds": true,
+  "arm_penalty": 0.03079,
+  "arm_penalty_ci": [
+   0.00833,
+   0.05819
+  ],
+  "reduction_R": 0.3488,
+  "penalty_difference": 0.01649,
+  "penalty_difference_ci": [
+   -0.01724,
+   0.05626
+  ],
+  "agg_wer_change": -0.00814,
+  "agg_wer_change_ci": [
+   -0.02042,
+   0.00226
+  ],
+  "seed_R": {
+   "s0": -4.455,
+   "s1": 0.7719,
+   "s2": 0.8805
+  }
+ },
+ "H2_w3": {
+  "verdict": "Inconclusive",
+  "ref": [
+   "gptq_w3_us_s0",
+   "gptq_w3_us_s1",
+   "gptq_w3_us_s2"
+  ],
+  "arm": [
+   "gptq_w3_worst_s0",
+   "gptq_w3_worst_s1",
+   "gptq_w3_worst_s2"
+  ],
+  "positive_control_penalty": 0.04728,
+  "positive_control_ci": [
+   0.01393,
+   0.08918
+  ],
+  "positive_control_holds": true,
+  "arm_penalty": 0.07302,
+  "arm_penalty_ci": [
+   0.01657,
+   0.15521
+  ],
+  "reduction_R": -0.5443,
+  "penalty_difference": -0.02574,
+  "penalty_difference_ci": [
+   -0.10753,
+   0.03952
+  ],
+  "agg_wer_change": 0.00604,
+  "agg_wer_change_ci": [
+   -0.01131,
+   0.02671
+  ],
+  "seed_R": {
+   "s0": 0.2548,
+   "s1": 0.3442,
+   "s2": -2.8034
+  }
+ },
+ "H3": {
+  "status": "not run",
+  "ref": "gptq_w4_us",
+  "arm": "mp_us"
+ },
+ "H3_bal": {
+  "status": "not run",
+  "ref": "gptq_w4_balanced",
+  "arm": "mp_balanced"
+ },
+ "H3_w3": {
+  "status": "not run",
+  "ref": "gptq_w3_us",
+  "arm": "mp3_us"
+ },
+ "H3_bal_w3": {
+  "status": "not run",
+  "ref": "gptq_w3_balanced",
+  "arm": "mp3_balanced"
+ },
+ "awq": {
+  "balanced": {
+   "status": "not run",
+   "ref": "awq_w4_us",
+   "arm": "awq_w4_balanced"
+  },
+  "worst": {
+   "status": "not run",
+   "ref": "awq_w4_us",
+   "arm": "awq_w4_worst"
+  }
+ }
+}

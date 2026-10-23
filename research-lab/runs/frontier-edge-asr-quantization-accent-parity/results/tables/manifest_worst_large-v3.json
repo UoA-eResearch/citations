@@ -1,0 +1,40 @@
+{
+ "allocation": {
+  "Brazilian": 1,
+  "Bulgarian": 3,
+  "Catalan": 2,
+  "Chinese": 3,
+  "Dutch": 3,
+  "Eastern European": 2,
+  "Egyptian": 1,
+  "European": 2,
+  "French": 2,
+  "German": 1,
+  "Indian English": 2,
+  "Indonesian English": 4,
+  "Irish English": 2,
+  "Italian": 1,
+  "Jamaican English": 2,
+  "Japanese": 2,
+  "Latin": 2,
+  "Latin American": 2,
+  "Mainstream US English": 2,
+  "Scottish English": 1,
+  "South African English": 1,
+  "Southern British English": 2,
+  "Spanish": 2,
+  "Vietnamese": 3
+ },
+ "worst_large-v3_s0": {
+  "windows": 48,
+  "speech_s": 1259.5
+ },
+ "worst_large-v3_s1": {
+  "windows": 48,
+  "speech_s": 1236.2
+ },
+ "worst_large-v3_s2": {
+  "windows": 48,
+  "speech_s": 1250.5
+ }
+}

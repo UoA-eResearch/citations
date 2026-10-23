@@ -34,15 +34,15 @@ UTT = RUN / "data" / "utt"
 B, SEED = score.B, score.SEED
 
 
-def utt(model):
+def utt(model, split="test"):
     UTT.mkdir(parents=True, exist_ok=True)
-    man = pd.read_csv(score.MAN / "eval_segments.csv", keep_default_na=False)
-    man = man[(man.split == "test") & (man.text != "IGNORE_TIME_SEGMENT_IN_SCORING")]
+    man = pd.read_csv(score.MAN / {"test": "eval_segments.csv", "cv": "cv_segments.csv"}[split], keep_default_na=False)
+    man = man[(man.split == split) & (man.text != "IGNORE_TIME_SEGMENT_IN_SCORING")]
     man = man.assign(ref_n=man.text.map(score.norm))
     man = man[man.ref_n.str.len() > 0]
     rows = []
-    for c in score.conditions(model):
-        h = pd.read_json(score.HYP / model / f"{c}_test.jsonl", lines=True)
+    for c in score.conditions(model, split):
+        h = pd.read_json(score.HYP / model / f"{c}_{split}.jsonl", lines=True)
         d = man.merge(h, on=["shard", "row"], how="left", validate="1:1")
         assert d.hyp.notna().all(), c
         for r in d.itertuples():
@@ -53,12 +53,12 @@ def utt(model):
         print(c, flush=True)
     out = pd.DataFrame(rows, columns=["cond", "shard", "row", "speaker", "group", "dur", "sub", "del", "ins", "hits",
                                       "hyp_words", "loop"])
-    out.to_parquet(UTT / f"{model}.parquet", index=False)
+    out.to_parquet(UTT / (f"{model}.parquet" if split == "test" else f"{model}_{split}.parquet"), index=False)
     print(len(out), "rows")
 
 
-def load(model):
-    d = pd.read_parquet(UTT / f"{model}.parquet")
+def load(model, split="test"):
+    d = pd.read_parquet(UTT / (f"{model}.parquet" if split == "test" else f"{model}_{split}.parquet"))
     conds = sorted(d.cond.unique())
     base = d[d.cond == "fp16"].sort_values(["shard", "row"]).reset_index(drop=True)
     X = {}
@@ -134,7 +134,9 @@ def decide(p, ref, arm):
             "agg_change": round(float(dagg[0]), 5), "seed_R": seedR}
 
 
-def tests(model):
+def tests(model, split="test"):
+    if split == "cv":                                       # D5: the replication tests H1/H2 at W3 only
+        return {"H1_w3": ("gptq_w3_us", "gptq_w3_balanced"), "H2_w3": ("gptq_w3_us", "gptq_w3_worst")}
     if model == "small":
         return {"H1_w4": ("gptq_w4_us", "gptq_w4_balanced"), "H2_w4": ("gptq_w4_us", "gptq_w4_worst"),
                 "H1_w3": ("gptq_w3_us", "gptq_w3_balanced"), "H2_w3": ("gptq_w3_us", "gptq_w3_worst"),
@@ -143,8 +145,8 @@ def tests(model):
             "H4_w3_balanced": ("gptq_w3_us", "gptq_w3_balanced"), "H4_w3_worst": ("gptq_w3_us", "gptq_w3_worst")}
 
 
-def analyze(model):
-    conds, base, X = load(model)
+def analyze(model, split="test"):
+    conds, base, X = load(model, split)
     spk = sorted(base.speaker.unique())
     sgroup = base.groupby("speaker").group.first().reindex(spk)
     named = sorted(g for g in sgroup.unique() if g != "other")
@@ -172,7 +174,7 @@ def analyze(model):
         "no_loops": (ERR, ~anyloop), "sub_del": (SD, allm), "short": (ERR, ~long_), "long": (ERR, long_)}
     out = {"model": model, "utterances": int(len(base)), "utterances_looped_in_any_condition": int(anyloop.sum()),
            "variants": {}}
-    T = tests(model)
+    T = tests(model, split)
     for name, (err, mask) in variants.items():
         res = {}
         for label, groups in (("refixed", None), ("prereg_groups", fixed)):
@@ -260,7 +262,7 @@ def analyze(model):
                                 "fp16_hyp_words": int(X["fp16"].hyp_words[top[0]]), "errors": int(ERR[c][top[0]]),
                                 "fp16_errors": int(ERR["fp16"][top[0]]), "loop": bool(LOOP[c][top[0]])}}
         out["drivers"][c] = rows
-    (score.TAB / f"robustness_{model}.json").write_text(json.dumps(out, indent=1))
+    (score.TAB / (f"robustness_{model}.json" if split == "test" else f"robustness_{model}_{split}.json")).write_text(json.dumps(out, indent=1))
     pv = out["variants"]
     for name in pv:
         for label, r in pv[name].items():
@@ -273,4 +275,4 @@ def analyze(model):
 
 
 if __name__ == "__main__":
-    {"utt": utt, "analyze": analyze}[sys.argv[1]](sys.argv[2])
+    {"utt": utt, "analyze": analyze}[sys.argv[1]](*sys.argv[2:])
