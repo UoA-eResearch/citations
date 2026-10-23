@@ -34,7 +34,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | `auckland-nz-avf-dvv-hydrological-baseline` | 35e9d7a | H1 Refuted (median held-out R2 -0.12, -0.67 to -0.03; 32 pairs; noise floor 0.136%); robust to segment rule, temperature, frozen drift and draining kernel (post hoc) | queued (review/prompt.md) |
 | `legal-digital-humanities-precedent-erosion-before-overruling` | e09bf03 | H1 not testable (D(+5) 0.27, -0.13 to 0.49); co-cite exclusion pre-share 0.31; D1 post-result 2019 coverage break; post hoc pre-2019: cited 55% MORE before overruling | queued (review/prompt.md) |
 
-**The owner's exception ended at 16:00 on 2026-10-23; the 1-per-5 h rule applies again. DSI confirmation started 20:39; next Fable run not before 2026-10-24 01:39.** Order: confirmations of DSI (b0149e2), reef (d7c2ace), estuary (3dd86a7), kauri (920bde5) and retraction risk (6d4c885), one per 5 h slot; then the ASR confirmation once its fixes (after H4) are in; then the EDB ratchet review (fb7efde), then the Public Domain Day review (26ff608), then the AVF dv/v review (35e9d7a).
+**The owner's exception ended at 16:00 on 2026-10-23; the 1-per-5 h rule applies again. Reef confirmation started 2026-10-24 01:39; next Fable run not before 06:39.** Order: confirmations of DSI (b0149e2), reef (d7c2ace), estuary (3dd86a7), kauri (920bde5) and retraction risk (6d4c885), one per 5 h slot; then the ASR confirmation once its fixes (after H4) are in; then the EDB ratchet review (fb7efde), then the Public Domain Day review (26ff608), then the AVF dv/v review (35e9d7a).
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
