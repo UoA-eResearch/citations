@@ -1,0 +1,538 @@
+{
+ "split_speaker_overlap": [],
+ "sets": {
+  "us_s0": {
+   "windows": 48,
+   "speech_s": 1259.0,
+   "speakers": 8,
+   "bad_speaker": 0,
+   "bad_consecutive": 0,
+   "bad_duration": 0,
+   "bad_segment": 0,
+   "in_test": 0,
+   "not_validation": 0,
+   "within_5pct_of_1200s": true,
+   "accents": {
+    "Mainstream US English": 48
+   }
+  },
+  "us_s1": {
+   "windows": 48,
+   "speech_s": 1239.4,
+   "speakers": 8,
+   "bad_speaker": 0,
+   "bad_consecutive": 0,
+   "bad_duration": 0,
+   "bad_segment": 0,
+   "in_test": 0,
+   "not_validation": 0,
+   "within_5pct_of_1200s": true,
+   "accents": {
+    "Mainstream US English": 48
+   }
+  },
+  "us_s2": {
+   "windows": 48,
+   "speech_s": 1259.7,
+   "speakers": 8,
+   "bad_speaker": 0,
+   "bad_consecutive": 0,
+   "bad_duration": 0,
+   "bad_segment": 0,
+   "in_test": 0,
+   "not_validation": 0,
+   "within_5pct_of_1200s": true,
+   "accents": {
+    "Mainstream US English": 48
+   }
+  },
+  "balanced_s0": {
+   "windows": 48,
+   "speech_s": 1247.2,
+   "speakers": 33,
+   "bad_speaker": 0,
+   "bad_consecutive": 0,
+   "bad_duration": 0,
+   "bad_segment": 0,
+   "in_test": 0,
+   "not_validation": 0,
+   "within_5pct_of_1200s": true,
+   "accents": {
+    "Brazilian": 2,
+    "Bulgarian": 2,
+    "Catalan": 2,
+    "Chinese": 2,
+    "Dutch": 2,
+    "Eastern European": 2,
+    "Egyptian": 2,
+    "European": 2,
+    "French": 2,
+    "German": 2,
+    "Indian English": 2,
+    "Indonesian English": 2,
+    "Irish English": 2,
+    "Italian": 2,
+    "Jamaican English": 2,
+    "Japanese": 2,
+    "Latin": 2,
+    "Latin American": 2,
+    "Mainstream US English": 2,
+    "Scottish English": 2,
+    "South African English": 2,
+    "Southern British English": 2,
+    "Spanish": 2,
+    "Vietnamese": 2
+   }
+  },
+  "balanced_s1": {
+   "windows": 48,
+   "speech_s": 1247.4,
+   "speakers": 33,
+   "bad_speaker": 0,
+   "bad_consecutive": 0,
+   "bad_duration": 0,
+   "bad_segment": 0,
+   "in_test": 0,
+   "not_validation": 0,
+   "within_5pct_of_1200s": true,
+   "accents": {
+    "Brazilian": 2,
+    "Bulgarian": 2,
+    "Catalan": 2,
+    "Chinese": 2,
+    "Dutch": 2,
+    "Eastern European": 2,
+    "Egyptian": 2,
+    "European": 2,
+    "French": 2,
+    "German": 2,
+    "Indian English": 2,
+    "Indonesian English": 2,
+    "Irish English": 2,
+    "Italian": 2,
+    "Jamaican English": 2,
+    "Japanese": 2,
+    "Latin": 2,
+    "Latin American": 2,
+    "Mainstream US English": 2,
+    "Scottish English": 2,
+    "South African English": 2,
+    "Southern British English": 2,
+    "Spanish": 2,
+    "Vietnamese": 2
+   }
+  },
+  "balanced_s2": {
+   "windows": 48,
+   "speech_s": 1258.7,
+   "speakers": 34,
+   "bad_speaker": 0,
+   "bad_consecutive": 0,
+   "bad_duration": 0,
+   "bad_segment": 0,
+   "in_test": 0,
+   "not_validation": 0,
+   "within_5pct_of_1200s": true,
+   "accents": {
+    "Brazilian": 2,
+    "Bulgarian": 2,
+    "Catalan": 2,
+    "Chinese": 2,
+    "Dutch": 2,
+    "Eastern European": 2,
+    "Egyptian": 2,
+    "European": 2,
+    "French": 2,
+    "German": 2,
+    "Indian English": 2,
+    "Indonesian English": 2,
+    "Irish English": 2,
+    "Italian": 2,
+    "Jamaican English": 2,
+    "Japanese": 2,
+    "Latin": 2,
+    "Latin American": 2,
+    "Mainstream US English": 2,
+    "Scottish English": 2,
+    "South African English": 2,
+    "Southern British English": 2,
+    "Spanish": 2,
+    "Vietnamese": 2
+   }
+  },
+  "worst_small_s0": {
+   "windows": 48,
+   "speech_s": 1204.5,
+   "speakers": 31,
+   "bad_speaker": 0,
+   "bad_consecutive": 0,
+   "bad_duration": 0,
+   "bad_segment": 0,
+   "in_test": 0,
+   "not_validation": 0,
+   "within_5pct_of_1200s": true,
+   "accents": {
+    "Brazilian": 1,
+    "Bulgarian": 3,
+    "Catalan": 2,
+    "Chinese": 2,
+    "Dutch": 2,
+    "Eastern European": 2,
+    "Egyptian": 2,
+    "European": 2,
+    "French": 2,
+    "German": 1,
+    "Indian English": 3,
+    "Indonesian English": 3,
+    "Irish English": 2,
+    "Italian": 1,
+    "Jamaican English": 3,
+    "Japanese": 2,
+    "Latin": 1,
+    "Latin American": 2,
+    "Mainstream US English": 2,
+    "Scottish English": 1,
+    "South African English": 2,
+    "Southern British English": 2,
+    "Spanish": 2,
+    "Vietnamese": 3
+   }
+  },
+  "worst_small_s1": {
+   "windows": 48,
+   "speech_s": 1251.4,
+   "speakers": 32,
+   "bad_speaker": 0,
+   "bad_consecutive": 0,
+   "bad_duration": 0,
+   "bad_segment": 0,
+   "in_test": 0,
+   "not_validation": 0,
+   "within_5pct_of_1200s": true,
+   "accents": {
+    "Brazilian": 1,
+    "Bulgarian": 3,
+    "Catalan": 2,
+    "Chinese": 2,
+    "Dutch": 2,
+    "Eastern European": 2,
+    "Egyptian": 2,
+    "European": 2,
+    "French": 2,
+    "German": 1,
+    "Indian English": 3,
+    "Indonesian English": 3,
+    "Irish English": 2,
+    "Italian": 1,
+    "Jamaican English": 3,
+    "Japanese": 2,
+    "Latin": 1,
+    "Latin American": 2,
+    "Mainstream US English": 2,
+    "Scottish English": 1,
+    "South African English": 2,
+    "Southern British English": 2,
+    "Spanish": 2,
+    "Vietnamese": 3
+   }
+  },
+  "worst_small_s2": {
+   "windows": 48,
+   "speech_s": 1237.5,
+   "speakers": 33,
+   "bad_speaker": 0,
+   "bad_consecutive": 0,
+   "bad_duration": 0,
+   "bad_segment": 0,
+   "in_test": 0,
+   "not_validation": 0,
+   "within_5pct_of_1200s": true,
+   "accents": {
+    "Brazilian": 1,
+    "Bulgarian": 3,
+    "Catalan": 2,
+    "Chinese": 2,
+    "Dutch": 2,
+    "Eastern European": 2,
+    "Egyptian": 2,
+    "European": 2,
+    "French": 2,
+    "German": 1,
+    "Indian English": 3,
+    "Indonesian English": 3,
+    "Irish English": 2,
+    "Italian": 1,
+    "Jamaican English": 3,
+    "Japanese": 2,
+    "Latin": 1,
+    "Latin American": 2,
+    "Mainstream US English": 2,
+    "Scottish English": 1,
+    "South African English": 2,
+    "Southern British English": 2,
+    "Spanish": 2,
+    "Vietnamese": 3
+   }
+  }
+ },
+ "duration_spread_pct": 4.6,
+ "draws_reproduced_from_seeds": {
+  "us_s0": true,
+  "balanced_s0": true,
+  "worst_small_s0": true,
+  "us_s1": true,
+  "balanced_s1": true,
+  "worst_small_s1": true,
+  "us_s2": true,
+  "balanced_s2": true,
+  "worst_small_s2": true
+ },
+ "windows_available": {
+  "Brazilian": 16,
+  "Bulgarian": 16,
+  "Catalan": 48,
+  "Chinese": 52,
+  "Don't know": 83,
+  "Dutch": 13,
+  "Eastern European": 118,
+  "Egyptian": 87,
+  "European": 29,
+  "French": 10,
+  "German": 14,
+  "Indian English": 42,
+  "Indonesian English": 41,
+  "Irish English": 138,
+  "Italian": 92,
+  "Jamaican English": 43,
+  "Japanese": 19,
+  "Latin": 10,
+  "Latin American": 15,
+  "Mainstream US English": 136,
+  "Scottish English": 65,
+  "South African English": 49,
+  "Southern British English": 181,
+  "Spanish": 39,
+  "Vietnamese": 63
+ },
+ "balanced_needs_2_per_accent_ok": true,
+ "worst_allocation_matches": true,
+ "worst_allocation_raw": {
+  "Brazilian": 1.25,
+  "Bulgarian": 2.75,
+  "Catalan": 1.85,
+  "Chinese": 2.36,
+  "Dutch": 2.29,
+  "Eastern European": 1.76,
+  "Egyptian": 1.59,
+  "European": 1.85,
+  "French": 1.81,
+  "German": 1.21,
+  "Indian English": 3.29,
+  "Indonesian English": 2.98,
+  "Irish English": 2.23,
+  "Italian": 1.38,
+  "Jamaican English": 2.5,
+  "Japanese": 2.2,
+  "Latin": 1.47,
+  "Latin American": 1.54,
+  "Mainstream US English": 1.77,
+  "Scottish English": 0.99,
+  "South African English": 1.73,
+  "Southern British English": 2.14,
+  "Spanish": 1.84,
+  "Vietnamese": 3.19
+ },
+ "worst_vs_balanced_window_moves": 5,
+ "window_overlap": {
+  "s0": {
+   "balanced&worst": 6,
+   "balanced&us": 1,
+   "worst&us": 2,
+   "balanced_speakers": 33,
+   "worst_speakers": 31,
+   "speakers_shared_bal_worst": 26
+  },
+  "s1": {
+   "balanced&worst": 5,
+   "balanced&us": 1,
+   "worst&us": 1,
+   "balanced_speakers": 33,
+   "worst_speakers": 32,
+   "speakers_shared_bal_worst": 24
+  },
+  "s2": {
+   "balanced&worst": 3,
+   "balanced&us": 2,
+   "worst&us": 1,
+   "balanced_speakers": 34,
+   "worst_speakers": 33,
+   "speakers_shared_bal_worst": 24
+  }
+ },
+ "calib_text": {
+  "cached_keys": 359,
+  "needed_keys": 331,
+  "missing": 0,
+  "empty": 0,
+  "looping_3gram_x5": 4,
+  "words_min_median_max": [
+   17,
+   63,
+   293
+  ]
+ },
+ "val_vs_test_accent_wer": {
+  "shared_accents": [
+   "Bulgarian",
+   "Chinese",
+   "Indian English",
+   "Irish English",
+   "Jamaican English",
+   "Latin American",
+   "Mainstream US English",
+   "Scottish English",
+   "Southern British English",
+   "Spanish",
+   "Vietnamese"
+  ],
+  "spearman_rho": 0.045,
+  "p": NaN,
+  "validation_worst3": [
+   "Indonesian English",
+   "Vietnamese",
+   "Indian English"
+  ],
+  "validation_best3": [
+   "Scottish English",
+   "German",
+   "Brazilian"
+  ],
+  "test_worst3": [
+   "Jamaican English",
+   "Kenyan English",
+   "Vietnamese"
+  ],
+  "test_best3": [
+   "Bulgarian",
+   "Latin American",
+   "Irish English"
+  ],
+  "pairs": {
+   "Bulgarian": [
+    0.30928,
+    0.10231
+   ],
+   "Chinese": [
+    0.26513,
+    0.19308
+   ],
+   "Indian English": [
+    0.36983,
+    0.14694
+   ],
+   "Irish English": [
+    0.25071,
+    0.14511
+   ],
+   "Jamaican English": [
+    0.28114,
+    0.27123
+   ],
+   "Latin American": [
+    0.17315,
+    0.14035
+   ],
+   "Mainstream US English": [
+    0.19896,
+    0.19614
+   ],
+   "Scottish English": [
+    0.11101,
+    0.22002
+   ],
+   "Southern British English": [
+    0.23993,
+    0.2306
+   ],
+   "Spanish": [
+    0.20686,
+    0.23301
+   ],
+   "Vietnamese": [
+    0.35794,
+    0.31497
+   ]
+  }
+ },
+ "test_groups": {
+  "Bulgarian": {
+   "speakers": 2,
+   "minutes": 19.3
+  },
+  "Chinese": {
+   "speakers": 2,
+   "minutes": 24.3
+  },
+  "Indian English": {
+   "speakers": 3,
+   "minutes": 66.8
+  },
+  "Irish English": {
+   "speakers": 3,
+   "minutes": 48.6
+  },
+  "Jamaican English": {
+   "speakers": 4,
+   "minutes": 44.6
+  },
+  "Kenyan English": {
+   "speakers": 2,
+   "minutes": 93.6
+  },
+  "Latin American": {
+   "speakers": 2,
+   "minutes": 15.8
+  },
+  "Lithuanian": {
+   "speakers": 2,
+   "minutes": 55.9
+  },
+  "Mainstream US English": {
+   "speakers": 9,
+   "minutes": 112.6
+  },
+  "Nigerian English": {
+   "speakers": 5,
+   "minutes": 147.7
+  },
+  "Scottish English": {
+   "speakers": 2,
+   "minutes": 13.1
+  },
+  "Southern British English": {
+   "speakers": 2,
+   "minutes": 18.2
+  },
+  "Spanish": {
+   "speakers": 5,
+   "minutes": 83.5
+  },
+  "Vietnamese": {
+   "speakers": 6,
+   "minutes": 71.8
+  },
+  "other": {
+   "speakers": 11,
+   "minutes": 167.2
+  }
+ },
+ "test_only_accents": [
+  "Ghanain English",
+  "Indonesian",
+  "Israeli",
+  "Kenyan English",
+  "Lithuanian",
+  "Nigerian English",
+  "Romanian"
+ ]
+}

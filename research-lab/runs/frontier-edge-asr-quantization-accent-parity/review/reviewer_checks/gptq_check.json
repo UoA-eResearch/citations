@@ -1,0 +1,189 @@
+{
+ "n_cal_windows": 8,
+ "n_heldout_windows": 4,
+ "layers": {
+  "encoder.0.fc1": {
+   "in": 768,
+   "out": 3072,
+   "dead_cols": 0,
+   "first_damping_factorises": true,
+   "heldout_rows": 6000,
+   "w4": {
+    "rel_err_rtn_heldout": 0.0011571994621940986,
+    "rel_err_gptq_heldout": 0.0002554656559565317,
+    "gptq_over_rtn_heldout": 0.22076198987524426,
+    "hessian_obj_gptq_over_rtn": 0.1933686156576694
+   },
+   "w3": {
+    "rel_err_rtn_heldout": 0.005536642660984902,
+    "rel_err_gptq_heldout": 0.001185197782707216,
+    "gptq_over_rtn_heldout": 0.21406434463595733,
+    "hessian_obj_gptq_over_rtn": 0.19187280036690757
+   },
+   "identity_hessian_equals_rtn": true
+  },
+  "encoder.5.self_attn.q_proj": {
+   "in": 768,
+   "out": 768,
+   "dead_cols": 0,
+   "first_damping_factorises": true,
+   "heldout_rows": 6000,
+   "w4": {
+    "rel_err_rtn_heldout": 0.005241836703197189,
+    "rel_err_gptq_heldout": 0.00348827799482191,
+    "gptq_over_rtn_heldout": 0.6654686500810452,
+    "hessian_obj_gptq_over_rtn": 0.539730133773125
+   },
+   "w3": {
+    "rel_err_rtn_heldout": 0.02232515528780139,
+    "rel_err_gptq_heldout": 0.015223453852013569,
+    "gptq_over_rtn_heldout": 0.6818968851845686,
+    "hessian_obj_gptq_over_rtn": 0.5561273906858558
+   },
+   "identity_hessian_equals_rtn": true
+  },
+  "encoder.11.fc2": {
+   "in": 3072,
+   "out": 768,
+   "dead_cols": 0,
+   "first_damping_factorises": true,
+   "heldout_rows": 6000,
+   "w4": {
+    "rel_err_rtn_heldout": 0.013113726804252109,
+    "rel_err_gptq_heldout": 0.009260594208625877,
+    "gptq_over_rtn_heldout": 0.7061756239746539,
+    "hessian_obj_gptq_over_rtn": 0.4034185164761791
+   },
+   "w3": {
+    "rel_err_rtn_heldout": 0.06210766173357919,
+    "rel_err_gptq_heldout": 0.043937363901454494,
+    "gptq_over_rtn_heldout": 0.7074387068367005,
+    "hessian_obj_gptq_over_rtn": 0.4069215935475009
+   },
+   "identity_hessian_equals_rtn": true
+  },
+  "decoder.0.self_attn.k_proj": {
+   "in": 768,
+   "out": 768,
+   "dead_cols": 0,
+   "first_damping_factorises": true,
+   "heldout_rows": 341,
+   "w4": {
+    "rel_err_rtn_heldout": 0.009591741144619614,
+    "rel_err_gptq_heldout": 0.0037777437498136956,
+    "gptq_over_rtn_heldout": 0.3938538053576207,
+    "hessian_obj_gptq_over_rtn": 0.08769176632209535
+   },
+   "w3": {
+    "rel_err_rtn_heldout": 0.04501141060103138,
+    "rel_err_gptq_heldout": 0.017658672232129236,
+    "gptq_over_rtn_heldout": 0.3923154594876129,
+    "hessian_obj_gptq_over_rtn": 0.09066435895073086
+   },
+   "identity_hessian_equals_rtn": true
+  },
+  "decoder.3.encoder_attn.v_proj": {
+   "in": 768,
+   "out": 768,
+   "dead_cols": 0,
+   "first_damping_factorises": true,
+   "heldout_rows": 6000,
+   "w4": {
+    "rel_err_rtn_heldout": 0.014869724026243557,
+    "rel_err_gptq_heldout": 0.008980612577129798,
+    "gptq_over_rtn_heldout": 0.6039528750688262,
+    "hessian_obj_gptq_over_rtn": 0.46996839385301964
+   },
+   "w3": {
+    "rel_err_rtn_heldout": 0.05743902628340465,
+    "rel_err_gptq_heldout": 0.03729211699173364,
+    "gptq_over_rtn_heldout": 0.6492470260156225,
+    "hessian_obj_gptq_over_rtn": 0.5046544069530053
+   },
+   "identity_hessian_equals_rtn": true
+  },
+  "decoder.6.fc1": {
+   "in": 768,
+   "out": 3072,
+   "dead_cols": 0,
+   "first_damping_factorises": true,
+   "heldout_rows": 341,
+   "w4": {
+    "rel_err_rtn_heldout": 0.0023297269442279626,
+    "rel_err_gptq_heldout": 0.0013694390143301825,
+    "gptq_over_rtn_heldout": 0.5878109525766739,
+    "hessian_obj_gptq_over_rtn": 0.1630728357695538
+   },
+   "w3": {
+    "rel_err_rtn_heldout": 0.010654245979596393,
+    "rel_err_gptq_heldout": 0.006511799522721658,
+    "gptq_over_rtn_heldout": 0.6111929023595097,
+    "hessian_obj_gptq_over_rtn": 0.17359170071227983
+   },
+   "identity_hessian_equals_rtn": true
+  },
+  "decoder.8.encoder_attn.out_proj": {
+   "in": 768,
+   "out": 768,
+   "dead_cols": 0,
+   "first_damping_factorises": true,
+   "heldout_rows": 341,
+   "w4": {
+    "rel_err_rtn_heldout": 0.007350521320773204,
+    "rel_err_gptq_heldout": 0.007269997488912209,
+    "gptq_over_rtn_heldout": 0.9890451536228556,
+    "hessian_obj_gptq_over_rtn": 0.24531859511490803
+   },
+   "w3": {
+    "rel_err_rtn_heldout": 0.03398788783329063,
+    "rel_err_gptq_heldout": 0.0352552850208723,
+    "gptq_over_rtn_heldout": 1.0372896719501432,
+    "hessian_obj_gptq_over_rtn": 0.2649661125741021
+   },
+   "identity_hessian_equals_rtn": true
+  },
+  "decoder.11.fc2": {
+   "in": 3072,
+   "out": 768,
+   "dead_cols": 0,
+   "first_damping_factorises": true,
+   "heldout_rows": 341,
+   "w4": {
+    "rel_err_rtn_heldout": 0.005580606987611467,
+    "rel_err_gptq_heldout": 0.0028245897634274725,
+    "gptq_over_rtn_heldout": 0.5061438244438019,
+    "hessian_obj_gptq_over_rtn": 0.04712326241473653
+   },
+   "w3": {
+    "rel_err_rtn_heldout": 0.02588480733837447,
+    "rel_err_gptq_heldout": 0.013415826924826388,
+    "gptq_over_rtn_heldout": 0.5182896186728536,
+    "hessian_obj_gptq_over_rtn": 0.05232823945745541
+   },
+   "identity_hessian_equals_rtn": true
+  }
+ },
+ "size": {
+  "block_linear_weights": 198180864,
+  "n_layers": 192,
+  "w4_bits_formula": 842268672,
+  "study_w4_bits": 842268672,
+  "fp16_bits": 3170893824,
+  "all_in_features_multiple_of_128": true,
+  "modules_with_bias_not_counted": 156
+ },
+ "unquantised_2d_params": {
+  "model.encoder.embed_positions.weight": [
+   1500,
+   768
+  ],
+  "model.decoder.embed_tokens.weight": [
+   51865,
+   768
+  ],
+  "model.decoder.embed_positions.weight": [
+   448,
+   768
+  ]
+ }
+}
