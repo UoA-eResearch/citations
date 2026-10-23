@@ -4,7 +4,6 @@
 """
 import json
 import sys
-from multiprocessing import Pool
 from pathlib import Path
 
 import numpy as np
@@ -52,6 +51,8 @@ def build(variant="primary"):
         p = p[p.section == "Statutory"]
     elif variant == "post1990":
         p = p[p.overruling_year > 1990]
+    elif variant == "pre2019":                                     # D1 (post hoc): windows before the coverage break
+        p = p[p.overruling_year <= 2013]
     treated, excluded = [], {"too_young": 0, "under_50": 0, "not_in_citation_data": 0}
     for r in p.itertuples():
         cands = [int(x) for x in str(r.overruled_clusters).split(";") if x and int(x) in wide.index]
@@ -118,8 +119,8 @@ def long_panel(stacks, wide, cites=None, excl_overruling=False):
             for y, n in zip(yrs, np.asarray(ycol, float)):
                 rows.append((st["stack"], c, y, y - T0, tr, n))
     d = pd.DataFrame(rows, columns=["stack", "case", "year", "ev", "treated", "y"])
-    d["cs"] = d.stack.astype(str) + "_" + d.case.astype(str)
-    d["ys"] = d.stack.astype(str) + "_" + d.year.astype(str)
+    d["cs"] = d["stack"].astype(str) + "_" + d.case.astype(str)
+    d["ys"] = d["stack"].astype(str) + "_" + d.year.astype(str)
     return d
 
 
@@ -152,7 +153,7 @@ def _boot(args):
     pick = rng.choice(stacks_ids, len(stacks_ids))
     parts = []
     for k, s in enumerate(pick):
-        x = d[d.stack == s].copy()
+        x = d[d["stack"] == s].copy()
         x["stack"] = k
         x["cs"] = str(k) + "_" + x.case.astype(str)
         x["ys"] = str(k) + "_" + x.year.astype(str)
@@ -169,14 +170,23 @@ def run(variant="primary", boot=True):
     cites, cl, wide, listed, treated, excluded = build(variant)
     stacks, bal = match(cl, wide, listed, treated)
     d = long_panel(stacks, wide, cites, excl_overruling=(variant == "excl_cocite"))
+    if variant == "pre2019":
+        d = d[d.year <= 2018]
     beta = fit(d)
     D, pre, pooled = stats(beta)
     out = {"variant": variant, "treated": len(treated), "excluded": excluded, "balance": bal,
            "D": {int(e): round(v, 4) for e, v in D.items()}, "pre_share": round(float(pre), 4), "pooled_ratio": round(float(pooled), 4)}
     if boot:
-        ids = sorted(d.stack.unique())
-        with Pool(8) as pool:
-            bs = [r for r in pool.map(_boot, [(d, ids, SEED + i) for i in range(B)]) if r]
+        ids = sorted(d["stack"].unique())
+        # spawn, not fork: forked workers deadlock once pyfixest's thread pools exist in the parent
+        import multiprocessing as mp
+        bs = []
+        with mp.get_context("spawn").Pool(8) as pool:
+            for i, r in enumerate(pool.imap_unordered(_boot, [(d, ids, SEED + i) for i in range(B)], chunksize=4)):
+                if r:
+                    bs.append(r)
+                if (i + 1) % 100 == 0:
+                    print(variant, "bootstrap", i + 1, flush=True)
         bs = pd.DataFrame(bs)
         q = lambda v: [round(float(np.nanpercentile(v, 2.5)), 4), round(float(np.nanpercentile(v, 97.5)), 4)]
         out.update({"boot_ok": int(len(bs)), "pre_share_ci": q(bs.pre), "pooled_ratio_ci": q(bs.pooled),
@@ -193,6 +203,11 @@ def run(variant="primary", boot=True):
 
 
 def main():
+    if sys.argv[1:] == ["pre2019"]:                               # D1 (post hoc)
+        o, d, _ = run("pre2019")
+        (T / "posthoc_pre2019.json").write_text(json.dumps(o, indent=1, default=str))
+        print(json.dumps(o, indent=1, default=str))
+        return
     res = {}
     prim, d, stacks = run("primary")
     res["primary"] = prim
