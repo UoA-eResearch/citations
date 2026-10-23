@@ -94,7 +94,7 @@ def run():
         done = set(zip(d.model, d.step))
     jobs = [(repo(s, sd), s, sd, st) for s in SIZES for sd in SEEDS for st in STEPS]
     jobs += [(f"EleutherAI/pythia-{t}", t, 0, 143000) for t in TARGETS]
-    bs = {"14m": 32, "31m": 32, "70m": 16, "160m": 16, "410m": 8, "1b": 4, "1.4b": 2, "2.8b": 1}
+    bs = {"14m": 4, "31m": 4, "70m": 4, "160m": 4, "410m": 4, "1b": 2, "1.4b": 2, "2.8b": 1}   # logits are 0.4 GB per sequence
     for model_id, size, seed, step in jobs:
         if (model_id, step) in done:
             continue
