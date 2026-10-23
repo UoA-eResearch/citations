@@ -23,6 +23,7 @@ DATA, RAW = RUN / "data", RUN / "data" / "raw"
 WORD = re.compile(r"[a-z0-9]+")
 ARTICLES = {"the", "a", "an"}
 YEAR = re.compile(r"(1[5-9]\d\d|20[0-2]\d)")
+WORKKEY = re.compile(r'"(/works/OL\d+W)"')
 
 
 def norm(s):
@@ -123,6 +124,9 @@ def editions():
     with gzip.open(RAW / "ol_dump_editions_latest.txt.gz", "rt", encoding="utf-8", errors="replace") as fh:
         for line in fh:
             n += 1
+            # parse JSON only for lines that name a linked work (a regex pre-filter; the JSON check below decides)
+            if not any(m.group(1) in want for m in WORKKEY.finditer(line)):
+                continue
             parts = line.rstrip("\n").split("\t")
             if len(parts) < 5:
                 continue
@@ -136,8 +140,7 @@ def editions():
             rows.append({"work": hit[0], "edition": parts[1], "pub_year": int(m.group(1)) if m else None,
                          "publishers": "; ".join(j.get("publishers", []))[:200], "created": created[:10],
                          "isbn": bool(j.get("isbn_10") or j.get("isbn_13"))})
-            if n % 10_000_000 == 0:
-                print(n, "edition lines;", len(rows), "kept", flush=True)
+
     pd.DataFrame(rows).to_parquet(DATA / "editions.parquet", index=False)
     print("edition lines", n, "kept", len(rows), flush=True)
 
