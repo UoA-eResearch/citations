@@ -1,0 +1,95 @@
+{
+ "past": "0.6",
+ "future": "0.11",
+ "auroc": {
+  "random": {
+   "effort": 0.9509,
+   "rdpg": 0.9416,
+   "taxgb": 0.991
+  },
+  "temporal": {
+   "effort": 0.8801,
+   "rdpg": 0.8054,
+   "taxgb": 0.9476
+  }
+ },
+ "best": "taxgb",
+ "A_random": 0.0401,
+ "A_random_ci": [
+  0.0288,
+  0.0542
+ ],
+ "A_temporal": 0.0675,
+ "A_temporal_ci": [
+  0.0526,
+  0.0753
+ ],
+ "rho": 1.6834,
+ "rho_ci": [
+  1.0986,
+  2.3031
+ ],
+ "n": {
+  "random": {
+   "pos": 72666,
+   "neg": 726660
+  },
+  "temporal": {
+   "pos": 411702,
+   "neg": 4117020
+  }
+ },
+ "temporal_sets": {
+  "trophic": {
+   "future_new_pairs": 827885,
+   "positives": 213620,
+   "share_new_namespace": 0.8175873045594981,
+   "share_cold": 0.2511937084542646
+  },
+  "pollination": {
+   "future_new_pairs": 199350,
+   "positives": 72106,
+   "share_new_namespace": 0.5368901339694339,
+   "share_cold": 0.1808726042215627
+  },
+  "host": {
+   "future_new_pairs": 386201,
+   "positives": 125976,
+   "share_new_namespace": 0.6738823267924049,
+   "share_cold": 0.2694560868736902
+  }
+ },
+ "H1": "Refuted",
+ "temporal_subsets": {
+  "new_dataset": {
+   "pos": 298259,
+   "effort": 0.8702,
+   "rdpg": 0.789,
+   "taxgb": 0.9404
+  },
+  "existing_dataset": {
+   "pos": 113443,
+   "effort": 0.9063,
+   "rdpg": 0.8486,
+   "taxgb": 0.9667
+  },
+  "cold_start": {
+   "pos": 100647,
+   "effort": 0.7184,
+   "rdpg": 0.7041,
+   "taxgb": 0.8818
+  }
+ },
+ "degree_matched": {
+  "random": {
+   "effort": 0.6822,
+   "rdpg": 0.8949,
+   "taxgb": 0.9581
+  },
+  "temporal": {
+   "effort": 0.5681,
+   "rdpg": 0.7476,
+   "taxgb": 0.8501
+  }
+ }
+}
