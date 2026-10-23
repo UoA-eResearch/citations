@@ -4,7 +4,7 @@
     MODEL  small | large-v3
     COND   fp16 | rtn_w8 | rtn_w4 | gptq_w4_<comp>_s<seed> | gptq_w3_<comp>_s<seed> | awq_w4_<comp>_s<seed>
            | mp_<comp>_s<seed> | mp3_<comp>_s<seed> (D1)        comp: us | balanced | worst
-    SPLIT  test | validation
+    SPLIT  test | validation | cv (D5: Common Voice replication)
 
 Writes data/hyps/<MODEL>/<COND>_<SPLIT>.jsonl and appends the condition's packed size to results/tables/conditions.jsonl.
 """
@@ -29,6 +29,7 @@ NAMES = {"small": "openai/whisper-small", "large-v3": "openai/whisper-large-v3"}
 BS = {"small": 32, "large-v3": 4}           # D3: large-v3 at 16 ran out of GPU memory
 LONG_BS = {"small": 8, "large-v3": 1}
 GEN = dict(language="en", task="transcribe")
+MANIFEST = {"test": "eval_segments.csv", "validation": "edacc_all_segments.csv", "cv": "cv_segments.csv"}   # cv: D5
 
 
 def load(model):
@@ -138,7 +139,7 @@ def main(model, cond, split):
     proc, m = load(model)
     bits, extra = apply(model, cond, proc, m)
     tq = time.time() - t0
-    man = pd.read_csv(MAN / ("eval_segments.csv" if split == "test" else "edacc_all_segments.csv"), keep_default_na=False)
+    man = pd.read_csv(MAN / MANIFEST[split], keep_default_na=False)
     man = man[(man.split == split) & (man.text != "IGNORE_TIME_SEGMENT_IN_SCORING")]
     aud = Audio(split)
     man = man.sort_values("dur")

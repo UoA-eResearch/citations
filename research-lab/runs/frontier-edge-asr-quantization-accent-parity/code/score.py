@@ -2,6 +2,7 @@
 
   score.py valgroups MODEL   FP16 validation WER by accent -> results/tables/fp16_validation_group_wer_<MODEL>.json
   score.py analyze MODEL     every decoded test condition -> results/tables/analysis_<MODEL>.json
+  score.py analyze MODEL cv  D5: the Common Voice replication -> results/tables/analysis_<MODEL>_cv.json
 """
 import json
 import re
@@ -38,7 +39,8 @@ def looped(h, r):
 
 
 def utterances(model, cond, split):
-    man = pd.read_csv(MAN / ("eval_segments.csv" if split == "test" else "edacc_all_segments.csv"), keep_default_na=False)
+    man = pd.read_csv(MAN / {"test": "eval_segments.csv", "validation": "edacc_all_segments.csv", "cv": "cv_segments.csv"}[split],
+                      keep_default_na=False)
     man = man[(man.split == split) & (man.text != "IGNORE_TIME_SEGMENT_IN_SCORING")]
     if "group" not in man:
         man = man.assign(group=man.accent)
@@ -65,14 +67,14 @@ def valgroups(model):
     print(json.dumps(out, indent=1))
 
 
-def conditions(model):
-    return sorted(p.name[:-len("_test.jsonl")] for p in (HYP / model).glob("*_test.jsonl"))
+def conditions(model, split="test"):
+    return sorted(p.name[:-len(f"_{split}.jsonl")] for p in (HYP / model).glob(f"*_{split}.jsonl"))
 
 
-def analyze(model):
-    conds = conditions(model)
+def analyze(model, split="test"):
+    conds = conditions(model, split)
     assert "fp16" in conds
-    U = {c: utterances(model, c, "test") for c in conds}
+    U = {c: utterances(model, c, split) for c in conds}
     base = U["fp16"]
     spk = sorted(base.speaker.unique())
     sgroup = base.groupby("speaker").group.first().reindex(spk)
@@ -125,16 +127,16 @@ def analyze(model):
         if pr is None or pa is None:
             return {"status": "not run", "ref": ref_prefix, "arm": arm_prefix}
         d = pr - pa
-        R = 1 - pa[0] / pr[0] if pr[0] != 0 else float("nan")
         control = ci(pr)[0] > 0
+        R = 1 - pa[0] / pr[0] if (control and pr[0] > 0) else None        # D4: null when not meaningful
         dagg = agg_mean(acs) - agg_mean(rcs)
         seedR = {}
         for c in acs:
             s = c.rsplit("_", 1)[1]
             rc = f"{ref_prefix}_{s}"
             if rc in P:
-                seedR[s] = round(float(1 - P[c][0] / P[rc][0]), 4) if P[rc][0] != 0 else None
-        if control and R >= 0.5 and ci(d)[0] > 0 and dagg[0] <= 0.005:
+                seedR[s] = round(float(1 - P[c][0] / P[rc][0]), 4) if (control and P[rc][0] > 0) else None
+        if control and R is not None and R >= 0.5 and ci(d)[0] > 0 and dagg[0] <= 0.005:
             v = "Supported" + (" (fragile across seeds)" if any(r is not None and r < 0.25 for r in seedR.values()) else "")
         elif control and ci(d)[1] < 0.5 * pr[0]:
             v = "Refuted"
@@ -142,7 +144,7 @@ def analyze(model):
             v = "Inconclusive"
         return {"verdict": v, "ref": rcs, "arm": acs, "positive_control_penalty": round(float(pr[0]), 5),
                 "positive_control_ci": ci(pr), "positive_control_holds": bool(control), "arm_penalty": round(float(pa[0]), 5),
-                "arm_penalty_ci": ci(pa), "reduction_R": round(float(R), 4), "penalty_difference": round(float(d[0]), 5),
+                "arm_penalty_ci": ci(pa), "reduction_R": None if R is None else round(float(R), 4), "penalty_difference": round(float(d[0]), 5),
                 "penalty_difference_ci": ci(d), "agg_wer_change": round(float(dagg[0]), 5), "agg_wer_change_ci": ci(dagg),
                 "seed_R": seedR}
 
@@ -168,9 +170,9 @@ def analyze(model):
     out["H3_w3"] = decide("gptq_w3_us", "mp3_us")                 # D1 fallback
     out["H3_bal_w3"] = decide("gptq_w3_balanced", "mp3_balanced")
     out["awq"] = {k: decide("awq_w4_us", f"awq_w4_{k}") for k in ("balanced", "worst")}
-    (TAB / f"analysis_{model}.json").write_text(json.dumps(out, indent=1))
+    (TAB / (f"analysis_{model}.json" if split == "test" else f"analysis_{model}_{split}.json")).write_text(json.dumps(out, indent=1))
     print(json.dumps({k: v for k, v in out.items() if k != "per_condition"}, indent=1))
 
 
 if __name__ == "__main__":
-    {"valgroups": valgroups, "analyze": analyze}[sys.argv[1]](sys.argv[2])
+    {"valgroups": valgroups, "analyze": analyze}[sys.argv[1]](*sys.argv[2:])
