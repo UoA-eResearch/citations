@@ -2,7 +2,7 @@
 
   F1  H2: uncorrected against tide-corrected Sentinel-2 rates per islet, and the bias against tide slope x the trend
       in overpass-time water level
-  F2  the sensor-step guard (Landsat Collection 1 vs Sentinel-2 at 30 m, 2016-2021) and the H1 epochs
+  F2  the sensor-step guard (Landsat Collection 1 vs Sentinel-2 at 30 m, 2017-2021) and the H1 epochs
   F3  the D5 land screen: share of clear Sentinel-2 scenes in which dry land covers at least 10% of the OSM feature
 """
 import json
@@ -44,7 +44,7 @@ def f1():
     one_to_one(ax[0], (-12, 12))
     ax[0].scatter(x.rate_corr, x.rate_uncorr, s=14, color=BLUE, alpha=0.75, edgecolor=SURF, lw=0.5, zorder=2)
     ax[0].set_xlabel("tide-corrected rate (%/yr of OSM area)"); ax[0].set_ylabel("uncorrected rate (%/yr)")
-    ax[0].set_title("a  Sentinel-2 epoch, 2016-2026", loc="left", fontsize=9.5, color=INK)
+    ax[0].set_title("a  Sentinel-2 epoch, 2017-2026", loc="left", fontsize=9.5, color=INK)
     lim = (-8, 12)
     one_to_one(ax[1], lim)
     ax[1].scatter(x.beta_pct_per_m * x.level_trend_m_yr, x.bias, s=14, color=BLUE, alpha=0.75, edgecolor=SURF,
@@ -84,23 +84,24 @@ def f2():
     ax[0].scatter(g.rate_corr_s2, g.rate_corr, s=22, color=ORANGE, edgecolor=SURF, lw=0.5, zorder=2)
     ax[0].set_xlabel("Sentinel-2 at 30 m (%/yr)"); ax[0].set_ylabel("Landsat 8 Collection 1 (%/yr)")
     gd = h["guard"]
-    ax[0].set_title(f"a  guard, 2016-2021: Landsat minus S2 {gd['mean_diff']:+.2f} ({gd['ci'][0]:.2f} to "
+    ax[0].set_title(f"a  guard, 2017-2021: Landsat minus S2 {gd['mean_diff']:+.2f} ({gd['ci'][0]:.2f} to "
                     f"{gd['ci'][1]:.2f})", loc="left", fontsize=9.5, color=INK)
     one_to_one(ax[1], (-6, 6))
     ax[1].scatter(e.rate_corr, e.rate_corr_e2, s=22, color=BLUE, edgecolor=SURF, lw=0.5, zorder=2)
-    ax[1].set_xlabel("1999-2015, Landsat (%/yr)"); ax[1].set_ylabel("2016-2026, Sentinel-2 (%/yr)")
+    ax[1].set_xlabel("1999-2015, Landsat (%/yr)"); ax[1].set_ylabel("2017-2026, Sentinel-2 (%/yr)")
     hd = h["H1"]
     ax[1].set_title(f"b  H1 epochs: D = {hd['D']:+.2f} ({hd['ci'][0]:.2f} to {hd['ci'][1]:.2f})", loc="left",
                     fontsize=9.5, color=INK)
     for a in ax:
         a.grid(color=GRID, lw=0.5)
-    fig.suptitle("The two sensors disagree in the overlap, so the cross-epoch test is not valid", x=0.02, ha="left",
+    fig.suptitle("The two sensors are not shown to agree in the overlap, so the cross-epoch test is not licensed", x=0.02, ha="left",
                  fontsize=10.5, color=INK)
     fig.savefig(F / "F2_guard_and_epochs.png", dpi=170); plt.close(fig)
     caption("F2_guard_and_epochs", f"""Non-engineered islets of at least 5 ha, tide-corrected rates as % of OSM area
     per year; dashed lines are equality. (a) The preregistered sensor-step guard: the same {gd['islets']} islets
-    measured with Landsat 8 Collection 1 and with Sentinel-2 resampled to 30 m over 2016-2021. The mean difference
-    lies outside the +/-0.2%/yr band, so H1 is not testable by the plan's rule. (b) The H1 comparison it would have
+    measured with Landsat 8 Collection 1 and with Sentinel-2 resampled to 30 m within each islet's Sentinel-2 window
+    (2017-2021). The interval of the mean difference is not inside the +/-0.2%/yr band (it includes zero, so the sensors
+    are not shown to disagree either), so H1 is not testable by the plan's rule. (b) The H1 comparison it would have
     licensed: {hd['islets']} islets in {hd['atolls']} atolls with rates in both epochs.""")
 
 

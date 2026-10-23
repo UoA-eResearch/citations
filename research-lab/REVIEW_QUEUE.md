@@ -24,7 +24,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-23 12:28 | `trust-corrected-record-machine-readable` | confirmation pass (owner relaxed the 5 h limit until the 16:00 quota reset) |
 | 2026-10-23 12:28 | six reviews started in parallel (DSI, retraction risk, reef, estuary, kauri, ASR) | five stopped within ~2 min on the owner's advice to run sequentially; DSI ran on |
 | 2026-10-23 ~12:50–14:15 | `trust-retraction-risk-frozen-forecast` | review, resumed after DSI finished |
-| 2026-10-23 14:15 | `blue-pacific-reef-island-area-tide-corrected` | review, resumed |
+| 2026-10-23 14:15 | `blue-pacific-reef-island-area-tide-corrected` | ed14c61 | H1 not testable (guard -0.58, -1.17 to +0.14); H2 Supported (tide bias 0.88%/yr after the Theil-Sen fix) | **published** 2026-10-24 (Supported on H2; review fix first -> D7 d7c2ace incl. Theil-Sen bug; confirmation publish with edits -> D8) |
 | 2026-10-23 14:54 | `auckland-nz-2023-storms-estuary-mud-natural-experiment` | review, resumed |
 | 2026-10-23 15:21 | `auckland-nz-kauri-dieback-multitemporal-lidar` | review, resumed |
 | 2026-10-23 15:39 | `frontier-edge-asr-quantization-accent-parity` | review (H4 pending), resumed; last run under the exception |

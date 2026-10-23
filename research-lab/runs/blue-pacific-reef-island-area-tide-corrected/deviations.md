@@ -205,3 +205,24 @@ order, every rate in the study (E1, E2, guard and H2) was the median over an arb
 half of them. The slope (y_j − y_i)/(t_j − t_i) is the same whichever point comes first, so the fix uses every pair
 with |dt| > 0. This changes every rate. All results are re-run, and the previous outputs are kept
 (`h1_h2_run1_before_D6.json`, `h1_h2_before_D7.json`). The verdicts are reported as they come out.
+
+## D8 — 2026-10-24 01:47 NZDT — edits after the confirmation pass (review/confirmation.md, "publish with edits")
+
+No computation changes.
+
+- **D6's rationale is out of date.** D6 said that H1 without the guard was already Inconclusive. After D7's fixes it
+  is not: ignoring the guard, D = +0.38%/yr (+0.03 to +0.75), and the rule would return Supported. The verdict
+  therefore depends on the guard. It does not depend on D6's span: every span tried gives −0.51 to −0.64%/yr, with
+  every interval including zero and none inside ±0.2 (`review/reviewer_checks/confirm_recompute.out`).
+- **D7's Sentinel-2-window restriction**, recorded for transparency:
+  - without it, the guard has 13 islets and gives −0.29 (−0.85 to +0.30);
+  - with it, 11 islets and −0.58 (−1.17 to +0.14).
+
+  Neither passes.
+- **Wording.**
+  - "The guard fails" and "the sensors disagree" became "not passed" and "not shown to agree", because the interval
+    includes zero.
+  - Figure years are corrected to 2017–2026 and 2017–2021.
+  - The Landsat 5 sentence now says the archive lists no scene for these path/rows.
+- **`h2_diagnostics.json`** is annotated. Its per-islet-median level trends and its bias-versus-predicted
+  correlation are superseded.

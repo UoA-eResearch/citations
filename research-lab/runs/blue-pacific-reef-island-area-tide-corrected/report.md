@@ -15,9 +15,12 @@ applying it (`review/review.md`; D7).*
     it is 0.82 (0.66 to 0.97).
   - The direction varies from islet to islet. On average, uncorrected images overstate growth by 0.6%/yr.
 - **H1 (no acceleration of loss): not testable by the preregistered rule.**
-  - **The guard fails.** Landsat 8 and Sentinel-2 at 30 m, on the same islets and years, give rates that differ by
-    −0.58%/yr (−1.17 to +0.14). That interval is not inside the ±0.2%/yr tolerance. There are 11 islets at three
-    atolls (Kwajalein +0.01, Majuro −0.93, Penrhyn −0.84).
+  - **The guard is not passed.** Landsat 8 and Sentinel-2 at 30 m, on the same islets and years, give rates that
+    differ by −0.58%/yr (−1.17 to +0.14). The interval is not inside the ±0.2%/yr tolerance. It also includes zero,
+    so the sensors are not shown to disagree; the guard simply cannot confirm that they agree.
+  - There are 11 islets at three atolls (Kwajalein +0.01, Majuro −0.93, Penrhyn −0.84, a single islet).
+  - Every guard span tried gives −0.51 to −0.64%/yr, each interval including zero and none inside ±0.2
+    (`review/reviewer_checks/confirm_recompute.out`), so the result does not depend on D6's span.
   - **The early epoch is itself two sensors.** Per islet it holds a median of 5 Landsat 7 images (1999–2012) and 20
     Landsat 8 images (2013–2015), and its rate tracks the Landsat 8 minus Landsat 7 step (r = 0.66).
   - The epoch comparison (D = +0.38%/yr, +0.03 to +0.75) is therefore not interpretable as a change in the islets.
@@ -72,7 +75,7 @@ bias on the same islets. The plan (`plan.md`) was committed before any scene was
   ring. Clouds are screened with a split rule (D2).
   - **Sentinel-2 L2A:** 161,845 islet-image records after the land screen, including those rejected for cloud.
   - **Landsat Collection 1 Level-1, 1999–2015:** 27,401 records. When an acquisition exists in several processings,
-    the final tier is kept (D7). No usable Landsat 5 image survived the screens.
+    the final tier is kept (D7). The archive lists no Landsat 5 scene for these path/rows.
   - **Gross failures** (more than 5 robust standard deviations from the islet's median) were set aside.
 - **Image windows, from the archive:**
   - Sentinel-2 starts in January 2017 at Kwajalein, Majuro and Penrhyn, June 2018 at Kiritimati, October 2019 at
@@ -128,7 +131,13 @@ bias on the same islets. The plan (`plan.md`) was committed before any scene was
 
 ![Guard and H1 epochs](results/figures/F2_guard_and_epochs.png)
 
-- **The guard.** It fails: −0.58%/yr (−1.17 to +0.14) over 11 islets. Two of the three atolls are clearly negative.
+- **The guard.** It is not passed: −0.58%/yr (−1.17 to +0.14) over 11 islets. By atoll:
+  - Kwajalein +0.01 (4 islets);
+  - Majuro −0.93 (6 islets);
+  - Penrhyn −0.84, from a single islet.
+
+  Without D7's restriction of the Landsat side to each islet's Sentinel-2 window, the guard has 13 islets and gives
+  −0.29 (−0.85 to +0.30), which also does not pass.
   - The interval treats islets as independent, but islets at one atoll share scenes and tides, so the effective
     sample is three atolls.
   - The D6 span change was checked by the review: the result does not depend on it.
@@ -136,7 +145,9 @@ bias on the same islets. The plan (`plan.md`) was committed before any scene was
   images (2013–2015), with no Landsat 5. Its rate correlates 0.66 with each islet's Landsat 8 minus Landsat 7 area
   step, so the "17-year" slope is mostly a sensor step. No guard tests Landsat 7 against Landsat 8.
 - **For the record only:**
-  - **Bootstrap:** D = +0.38%/yr (+0.03 to +0.75) on 33 islets in 4 atolls.
+  - **Bootstrap:** D = +0.38%/yr (+0.03 to +0.75) on 33 islets in 4 atolls. Read without the guard, the H1 rule
+    would return Supported (no acceleration of loss), so the verdict depends on the guard. No guard span passes,
+    though, so it does not depend on the span (D8).
   - **Mixed model:** +1.22 (−0.88 to +3.33).
   - **Sensitivity analyses:** NDWI +0.08 (−0.57 to +0.69); robust tide slopes +0.32 (+0.09 to +0.58); fixed threshold
     −0.23 (−0.60 to +0.18).
@@ -184,7 +195,8 @@ bias on the same islets. The plan (`plan.md`) was committed before any scene was
 - **Islets did not shrink on average over 2017–2026.** The corrected mean is +0.4%/yr. That is consistent with the
   literature's finding that most atoll islands are stable or growing on decadal scales.
 - **Acceleration is not testable with these sensors.**
-  - Landsat 8 and Sentinel-2 disagree in the overlap.
+  - Landsat 8 and Sentinel-2 are not shown to agree in the overlap.
+  - The guard's interval includes zero but extends well beyond the ±0.2%/yr tolerance.
   - The early epoch mixes Landsat 7 and Landsat 8.
   - A credible test needs a sensor-consistent series: Landsat alone with intercalibrated sensors, or Sentinel-2
     alone once it is long enough.

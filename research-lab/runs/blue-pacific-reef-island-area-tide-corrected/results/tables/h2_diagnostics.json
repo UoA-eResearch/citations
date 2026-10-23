@@ -71,5 +71,6 @@
    "mean_abs_bias": 0.414,
    "mean_perm_abs_bias": 0.081
   }
- }
+ },
+ "_note_D8": "level_trend_mm_yr (per-islet medians) and corr_bias_vs_predicted are superseded and not used in the report: per-atoll level trends on the union of acquisitions are in review_fixes.json (level_trend_union); the 0.92 correlation is largely an identity of the correction (review finding)."
 }
