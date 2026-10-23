@@ -1,0 +1,780 @@
+{
+ "entry_A_vs_B": {
+  "DPP2": {
+   "rows_manual": 17,
+   "rows_parsed": 17,
+   "identical": true
+  },
+  "DPP3": {
+   "rows_manual": 17,
+   "rows_parsed": 17,
+   "identical": true
+  },
+  "DPP4": {
+   "rows_manual": 16,
+   "rows_parsed": 16,
+   "identical": true
+  }
+ },
+ "second_sources": {
+  "DPP2_vs_disclosures": {
+   "edb_years": 49,
+   "saidi_match": 35,
+   "saifi_match": 31,
+   "mismatches": [
+    {
+     "edb": "Firstlight Network",
+     "year": 2016,
+     "saidi_disc": 285.775,
+     "saidi_det": 274.075,
+     "saifi_disc": 3.766,
+     "saifi_det": 3.529,
+     "saidi_match": false,
+     "saifi_match": false
+    },
+    {
+     "edb": "Firstlight Network",
+     "year": 2017,
+     "saidi_disc": 285.775,
+     "saidi_det": 274.075,
+     "saifi_disc": 3.766,
+     "saifi_det": 3.529,
+     "saidi_match": false,
+     "saifi_match": false
+    },
+    {
+     "edb": "Firstlight Network",
+     "year": 2018,
+     "saidi_disc": 285.775,
+     "saidi_det": 274.075,
+     "saifi_disc": 3.766,
+     "saifi_det": 3.529,
+     "saidi_match": false,
+     "saifi_match": false
+    },
+    {
+     "edb": "Firstlight Network",
+     "year": 2019,
+     "saidi_disc": 285.775,
+     "saidi_det": 274.075,
+     "saifi_disc": 3.766,
+     "saifi_det": 3.529,
+     "saidi_match": false,
+     "saifi_match": false
+    },
+    {
+     "edb": "Network Tasman",
+     "year": 2016,
+     "saidi_disc": 157.792,
+     "saidi_det": 129.818,
+     "saifi_disc": 1.676,
+     "saifi_det": 1.422,
+     "saidi_match": false,
+     "saifi_match": false
+    },
+    {
+     "edb": "Network Tasman",
+     "year": 2017,
+     "saidi_disc": 157.792,
+     "saidi_det": 129.818,
+     "saifi_disc": 1.676,
+     "saifi_det": 1.422,
+     "saidi_match": false,
+     "saifi_match": false
+    },
+    {
+     "edb": "Network Tasman",
+     "year": 2018,
+     "saidi_disc": 148.313,
+     "saidi_det": 129.818,
+     "saifi_disc": 1.565,
+     "saifi_det": 1.422,
+     "saidi_match": false,
+     "saifi_match": false
+    },
+    {
+     "edb": "Orion NZ",
+     "year": 2016,
+     "saidi_disc": 94.7,
+     "saidi_det": 73.4,
+     "saifi_disc": 1.21,
+     "saifi_det": 0.87,
+     "saidi_match": false,
+     "saifi_match": false
+    },
+    {
+     "edb": "Orion NZ",
+     "year": 2017,
+     "saidi_disc": 91.0,
+     "saidi_det": 73.4,
+     "saifi_disc": 1.16,
+     "saifi_det": 0.87,
+     "saidi_match": false,
+     "saifi_match": false
+    },
+    {
+     "edb": "Orion NZ",
+     "year": 2018,
+     "saidi_disc": 82.4,
+     "saidi_det": 73.4,
+     "saifi_disc": 1.02,
+     "saifi_det": 0.87,
+     "saidi_match": false,
+     "saifi_match": false
+    },
+    {
+     "edb": "Powerco",
+     "year": 2016,
+     "saidi_disc": 210.629,
+     "saidi_det": 210.629,
+     "saifi_disc": 2.52,
+     "saifi_det": 2.273,
+     "saidi_match": true,
+     "saifi_match": false
+    },
+    {
+     "edb": "Powerco",
+     "year": 2017,
+     "saidi_disc": 210.6,
+     "saidi_det": 210.629,
+     "saifi_disc": 2.52,
+     "saifi_det": 2.273,
+     "saidi_match": true,
+     "saifi_match": false
+    },
+    {
+     "edb": "Powerco",
+     "year": 2018,
+     "saidi_disc": 210.629,
+     "saidi_det": 210.629,
+     "saifi_disc": 2.52,
+     "saifi_det": 2.273,
+     "saidi_match": true,
+     "saifi_match": false
+    },
+    {
+     "edb": "Top Energy",
+     "year": 2016,
+     "saidi_disc": 579.7,
+     "saidi_det": 516.675,
+     "saifi_disc": 7.66,
+     "saifi_det": 6.248,
+     "saidi_match": false,
+     "saifi_match": false
+    },
+    {
+     "edb": "Vector Lines",
+     "year": 2016,
+     "saidi_disc": 127.3,
+     "saidi_det": 104.173,
+     "saifi_disc": 1.86,
+     "saifi_det": 1.395,
+     "saidi_match": false,
+     "saifi_match": false
+    },
+    {
+     "edb": "Vector Lines",
+     "year": 2017,
+     "saidi_disc": 127.3,
+     "saidi_det": 104.173,
+     "saifi_disc": 1.86,
+     "saifi_det": 1.395,
+     "saidi_match": false,
+     "saifi_match": false
+    },
+    {
+     "edb": "Vector Lines",
+     "year": 2018,
+     "saidi_disc": 127.3,
+     "saidi_det": 104.173,
+     "saifi_disc": 1.86,
+     "saifi_det": 1.395,
+     "saidi_match": false,
+     "saifi_match": false
+    },
+    {
+     "edb": "Wellington Electricity",
+     "year": 2018,
+     "saidi_disc": 40.63,
+     "saidi_det": 40.63,
+     "saifi_disc": 0.63,
+     "saifi_det": 0.625,
+     "saidi_match": true,
+     "saifi_match": false
+    }
+   ]
+  },
+  "DPP4_vs_commission_uncapped": {
+   "edbs": 16,
+   "boundary_values_match": 16,
+   "saidi_limit_equals_clamp": 14,
+   "saifi_limit_equals_clamp": 14,
+   "rows": [
+    {
+     "edb": "Alpine Energy",
+     "saidi_uncapped": 110.25,
+     "saidi_final": 118.47,
+     "saidi_bv_uncapped": 8.4741,
+     "saidi_bv_final": 8.47,
+     "saifi_uncapped": 0.9409,
+     "saifi_final": 1.1372,
+     "saidi_dpp3": 124.71,
+     "saifi_dpp3": 1.197,
+     "saidi_clamped": 118.4745,
+     "saifi_clamped": 1.1372,
+     "bv_match": true,
+     "clamp_match": true,
+     "clamp_match_saifi": true
+    },
+    {
+     "edb": "Aurora Energy",
+     "saidi_uncapped": 128.3638,
+     "saidi_final": 128.36,
+     "saidi_bv_uncapped": 7.0545,
+     "saidi_bv_final": 7.05,
+     "saifi_uncapped": 1.9418,
+     "saifi_final": 1.9675,
+     "saidi_dpp3": 81.89,
+     "saifi_dpp3": 1.4687,
+     "saidi_clamped": 85.9845,
+     "saifi_clamped": 1.5421,
+     "bv_match": true,
+     "clamp_match": false,
+     "clamp_match_saifi": false
+    },
+    {
+     "edb": "EA Networks",
+     "saidi_uncapped": 83.5876,
+     "saidi_final": 87.38,
+     "saidi_bv_uncapped": 4.9493,
+     "saidi_bv_final": 4.95,
+     "saifi_uncapped": 1.2416,
+     "saifi_final": 1.2416,
+     "saidi_dpp3": 91.98,
+     "saifi_dpp3": 1.2826,
+     "saidi_clamped": 87.381,
+     "saifi_clamped": 1.2416,
+     "bv_match": true,
+     "clamp_match": true,
+     "clamp_match_saifi": true
+    },
+    {
+     "edb": "Electricity Invercargill",
+     "saidi_uncapped": 30.367,
+     "saidi_final": 27.15,
+     "saidi_bv_uncapped": 5.0008,
+     "saidi_bv_final": 5.0,
+     "saifi_uncapped": 0.6302,
+     "saifi_final": 0.6608,
+     "saidi_dpp3": 25.86,
+     "saifi_dpp3": 0.6956,
+     "saidi_clamped": 27.153,
+     "saifi_clamped": 0.6608,
+     "bv_match": true,
+     "clamp_match": true,
+     "clamp_match_saifi": true
+    },
+    {
+     "edb": "Firstlight Network",
+     "saidi_uncapped": 264.2389,
+     "saidi_final": 230.43,
+     "saidi_bv_uncapped": 18.7987,
+     "saidi_bv_final": 18.8,
+     "saifi_uncapped": 3.3839,
+     "saifi_final": 3.3101,
+     "saidi_dpp3": 219.46,
+     "saifi_dpp3": 3.1525,
+     "saidi_clamped": 230.433,
+     "saifi_clamped": 3.3101,
+     "bv_match": true,
+     "clamp_match": true,
+     "clamp_match_saifi": true
+    },
+    {
+     "edb": "Horizon Energy",
+     "saidi_uncapped": 180.7619,
+     "saidi_final": 184.8,
+     "saidi_bv_uncapped": 12.0853,
+     "saidi_bv_final": 12.09,
+     "saifi_uncapped": 2.039,
+     "saifi_final": 2.2709,
+     "saidi_dpp3": 194.53,
+     "saifi_dpp3": 2.3904,
+     "saidi_clamped": 184.8035,
+     "saifi_clamped": 2.2709,
+     "bv_match": true,
+     "clamp_match": true,
+     "clamp_match_saifi": true
+    },
+    {
+     "edb": "Nelson Electricity",
+     "saidi_uncapped": 14.2194,
+     "saidi_final": 18.62,
+     "saidi_bv_uncapped": 6.0271,
+     "saidi_bv_final": 6.03,
+     "saifi_uncapped": 0.2886,
+     "saifi_final": 0.4063,
+     "saidi_dpp3": 19.6,
+     "saifi_dpp3": 0.4277,
+     "saidi_clamped": 18.62,
+     "saifi_clamped": 0.4063,
+     "bv_match": true,
+     "clamp_match": true,
+     "clamp_match_saifi": true
+    },
+    {
+     "edb": "Network Tasman",
+     "saidi_uncapped": 98.3287,
+     "saidi_final": 98.33,
+     "saidi_bv_uncapped": 6.8707,
+     "saidi_bv_final": 6.87,
+     "saifi_uncapped": 1.0126,
+     "saifi_final": 1.1358,
+     "saidi_dpp3": 101.03,
+     "saifi_dpp3": 1.1956,
+     "saidi_clamped": 98.3287,
+     "saifi_clamped": 1.1358,
+     "bv_match": true,
+     "clamp_match": true,
+     "clamp_match_saifi": true
+    },
+    {
+     "edb": "Orion NZ",
+     "saidi_uncapped": 53.3228,
+     "saidi_final": 80.47,
+     "saidi_bv_uncapped": 3.0992,
+     "saidi_bv_final": 3.1,
+     "saifi_uncapped": 0.7114,
+     "saifi_final": 0.9819,
+     "saidi_dpp3": 84.71,
+     "saifi_dpp3": 1.0336,
+     "saidi_clamped": 80.4745,
+     "saifi_clamped": 0.9819,
+     "bv_match": true,
+     "clamp_match": true,
+     "clamp_match_saifi": true
+    },
+    {
+     "edb": "OtagoNet",
+     "saidi_uncapped": 173.2988,
+     "saidi_final": 168.37,
+     "saidi_bv_uncapped": 11.4388,
+     "saidi_bv_final": 11.44,
+     "saifi_uncapped": 2.3401,
+     "saifi_final": 2.3401,
+     "saidi_dpp3": 160.35,
+     "saifi_dpp3": 2.4172,
+     "saidi_clamped": 168.3675,
+     "saifi_clamped": 2.3401,
+     "bv_match": true,
+     "clamp_match": true,
+     "clamp_match_saifi": true
+    },
+    {
+     "edb": "Powerco",
+     "saidi_uncapped": 190.5616,
+     "saidi_final": 189.27,
+     "saidi_bv_uncapped": 8.8371,
+     "saidi_bv_final": 8.84,
+     "saifi_uncapped": 2.0646,
+     "saifi_final": 2.155,
+     "saidi_dpp3": 180.25,
+     "saifi_dpp3": 2.2684,
+     "saidi_clamped": 189.2625,
+     "saifi_clamped": 2.155,
+     "bv_match": true,
+     "clamp_match": false,
+     "clamp_match_saifi": true
+    },
+    {
+     "edb": "The Lines Company",
+     "saidi_uncapped": 227.0012,
+     "saidi_final": 190.55,
+     "saidi_bv_uncapped": 14.0904,
+     "saidi_bv_final": 14.09,
+     "saifi_uncapped": 3.2839,
+     "saifi_final": 3.2839,
+     "saidi_dpp3": 181.48,
+     "saifi_dpp3": 3.2715,
+     "saidi_clamped": 190.554,
+     "saifi_clamped": 3.2839,
+     "bv_match": true,
+     "clamp_match": true,
+     "clamp_match_saifi": true
+    },
+    {
+     "edb": "Top Energy",
+     "saidi_uncapped": 403.1535,
+     "saidi_final": 399.25,
+     "saidi_bv_uncapped": 26.7781,
+     "saidi_bv_final": 26.78,
+     "saifi_uncapped": 4.3062,
+     "saifi_final": 4.8196,
+     "saidi_dpp3": 380.24,
+     "saifi_dpp3": 5.0732,
+     "saidi_clamped": 399.252,
+     "saifi_clamped": 4.8195,
+     "bv_match": true,
+     "clamp_match": true,
+     "clamp_match_saifi": true
+    },
+    {
+     "edb": "Unison Networks",
+     "saidi_uncapped": 81.5159,
+     "saidi_final": 81.52,
+     "saidi_bv_uncapped": 3.6669,
+     "saidi_bv_final": 3.67,
+     "saifi_uncapped": 1.69,
+     "saifi_final": 1.7244,
+     "saidi_dpp3": 82.34,
+     "saifi_dpp3": 1.8152,
+     "saidi_clamped": 81.5159,
+     "saifi_clamped": 1.7244,
+     "bv_match": true,
+     "clamp_match": true,
+     "clamp_match_saifi": true
+    },
+    {
+     "edb": "Vector Lines",
+     "saidi_uncapped": 138.2737,
+     "saidi_final": 110.07,
+     "saidi_bv_uncapped": 5.7907,
+     "saidi_bv_final": 5.79,
+     "saifi_uncapped": 1.4449,
+     "saifi_final": 1.4034,
+     "saidi_dpp3": 104.83,
+     "saifi_dpp3": 1.3366,
+     "saidi_clamped": 110.0715,
+     "saifi_clamped": 1.4034,
+     "bv_match": true,
+     "clamp_match": true,
+     "clamp_match_saifi": true
+    },
+    {
+     "edb": "Wellington Electricity",
+     "saidi_uncapped": 35.9141,
+     "saidi_final": 37.82,
+     "saidi_bv_uncapped": 1.6537,
+     "saidi_bv_final": 1.65,
+     "saifi_uncapped": 0.5369,
+     "saifi_final": 0.5829,
+     "saidi_dpp3": 39.81,
+     "saifi_dpp3": 0.6135,
+     "saidi_clamped": 37.8195,
+     "saifi_clamped": 0.5828,
+     "bv_match": true,
+     "clamp_match": true,
+     "clamp_match_saifi": false
+    }
+   ]
+  }
+ },
+ "DPP1_disclosed_limits": [
+  {
+   "edb": "Alpine Energy",
+   "disc_yr": 2013.0,
+   "SAIDI": 164.2206,
+   "SAIFI": 1.6943
+  },
+  {
+   "edb": "Alpine Energy",
+   "disc_yr": 2014.0,
+   "SAIDI": 164.2206,
+   "SAIFI": 1.6937
+  },
+  {
+   "edb": "Alpine Energy",
+   "disc_yr": 2015.0,
+   "SAIDI": 164.2206,
+   "SAIFI": 1.6937
+  },
+  {
+   "edb": "Aurora Energy",
+   "disc_yr": 2013.0,
+   "SAIDI": 98.3,
+   "SAIFI": 1.67
+  },
+  {
+   "edb": "Aurora Energy",
+   "disc_yr": 2014.0,
+   "SAIDI": 218.32,
+   "SAIFI": 3.685
+  },
+  {
+   "edb": "Aurora Energy",
+   "disc_yr": 2015.0,
+   "SAIDI": 218.32,
+   "SAIFI": 3.68
+  },
+  {
+   "edb": "Centralines",
+   "disc_yr": 2013.0,
+   "SAIDI": 197.5487,
+   "SAIFI": 4.526
+  },
+  {
+   "edb": "Centralines",
+   "disc_yr": 2014.0,
+   "SAIDI": 197.55,
+   "SAIFI": 4.25
+  },
+  {
+   "edb": "Centralines",
+   "disc_yr": 2015.0,
+   "SAIDI": 197.5487,
+   "SAIFI": 4.2538
+  },
+  {
+   "edb": "EA Networks",
+   "disc_yr": 2013.0,
+   "SAIDI": 222.0731,
+   "SAIFI": 1.9966
+  },
+  {
+   "edb": "EA Networks",
+   "disc_yr": 2014.0,
+   "SAIDI": 222.0731,
+   "SAIFI": 1.9966
+  },
+  {
+   "edb": "EA Networks",
+   "disc_yr": 2015.0,
+   "SAIDI": 222.0731,
+   "SAIFI": 1.9966
+  },
+  {
+   "edb": "Electricity Invercargill",
+   "disc_yr": 2013.0,
+   "SAIDI": 45.65,
+   "SAIFI": 1.13
+  },
+  {
+   "edb": "Electricity Invercargill",
+   "disc_yr": 2014.0,
+   "SAIDI": 45.65,
+   "SAIFI": 1.13
+  },
+  {
+   "edb": "Electricity Invercargill",
+   "disc_yr": 2015.0,
+   "SAIDI": 45.65,
+   "SAIFI": 1.13
+  },
+  {
+   "edb": "Firstlight Network",
+   "disc_yr": 2013.0,
+   "SAIDI": 302.3793,
+   "SAIFI": 4.26
+  },
+  {
+   "edb": "Firstlight Network",
+   "disc_yr": 2014.0,
+   "SAIDI": 302.38,
+   "SAIFI": 4.26
+  },
+  {
+   "edb": "Firstlight Network",
+   "disc_yr": 2015.0,
+   "SAIDI": 302.38,
+   "SAIFI": 4.26
+  },
+  {
+   "edb": "Horizon Networks",
+   "disc_yr": 2013.0,
+   "SAIDI": 220.0583,
+   "SAIFI": 2.3962
+  },
+  {
+   "edb": "Horizon Networks",
+   "disc_yr": 2014.0,
+   "SAIDI": 220.0583,
+   "SAIFI": 2.3962
+  },
+  {
+   "edb": "Horizon Networks",
+   "disc_yr": 2015.0,
+   "SAIDI": 220.0583,
+   "SAIFI": 2.3962
+  },
+  {
+   "edb": "Nelson Electricity",
+   "disc_yr": 2013.0,
+   "SAIDI": 71.5364,
+   "SAIFI": 1.1256
+  },
+  {
+   "edb": "Nelson Electricity",
+   "disc_yr": 2014.0,
+   "SAIDI": 71.5364,
+   "SAIFI": 1.1256
+  },
+  {
+   "edb": "Nelson Electricity",
+   "disc_yr": 2015.0,
+   "SAIDI": 71.5364,
+   "SAIFI": 1.1256
+  },
+  {
+   "edb": "Network Tasman",
+   "disc_yr": 2013.0,
+   "SAIDI": 162.5,
+   "SAIFI": 1.74
+  },
+  {
+   "edb": "Network Tasman",
+   "disc_yr": 2014.0,
+   "SAIDI": 162.5,
+   "SAIFI": 1.74
+  },
+  {
+   "edb": "Network Tasman",
+   "disc_yr": 2015.0,
+   "SAIDI": 162.5348,
+   "SAIFI": 1.744
+  },
+  {
+   "edb": "Orion NZ",
+   "disc_yr": 2013.0,
+   "SAIDI": 59.17,
+   "SAIFI": 0.767
+  },
+  {
+   "edb": "Orion NZ",
+   "disc_yr": 2014.0,
+   "SAIDI": 61.06,
+   "SAIFI": 0.808
+  },
+  {
+   "edb": "Orion NZ",
+   "disc_yr": 2015.0,
+   "SAIDI": 103.8,
+   "SAIFI": 1.36
+  },
+  {
+   "edb": "OtagoNet",
+   "disc_yr": 2013.0,
+   "SAIDI": 361.08,
+   "SAIFI": 3.12
+  },
+  {
+   "edb": "OtagoNet",
+   "disc_yr": 2014.0,
+   "SAIDI": 361.11,
+   "SAIFI": 3.12
+  },
+  {
+   "edb": "OtagoNet",
+   "disc_yr": 2015.0,
+   "SAIDI": 361.07,
+   "SAIFI": 3.11
+  },
+  {
+   "edb": "Powerco",
+   "disc_yr": 2013.0,
+   "SAIDI": 210.13,
+   "SAIFI": 2.8
+  },
+  {
+   "edb": "Powerco",
+   "disc_yr": 2014.0,
+   "SAIDI": 210.1261,
+   "SAIFI": 2.7983
+  },
+  {
+   "edb": "Powerco",
+   "disc_yr": 2015.0,
+   "SAIDI": 210.13,
+   "SAIFI": 2.798
+  },
+  {
+   "edb": "The Lines Company",
+   "disc_yr": 2013.0,
+   "SAIDI": 307.69,
+   "SAIFI": 4.15
+  },
+  {
+   "edb": "The Lines Company",
+   "disc_yr": 2014.0,
+   "SAIDI": 307.6921,
+   "SAIFI": 4.1547
+  },
+  {
+   "edb": "The Lines Company",
+   "disc_yr": 2015.0,
+   "SAIDI": 307.6921,
+   "SAIFI": 4.1547
+  },
+  {
+   "edb": "Top Energy",
+   "disc_yr": 2013.0,
+   "SAIDI": 579.6811,
+   "SAIFI": 7.6627
+  },
+  {
+   "edb": "Top Energy",
+   "disc_yr": 2014.0,
+   "SAIDI": 579.6811,
+   "SAIFI": 7.6627
+  },
+  {
+   "edb": "Top Energy",
+   "disc_yr": 2015.0,
+   "SAIDI": 579.7,
+   "SAIFI": 7.66
+  },
+  {
+   "edb": "Unison Networks",
+   "disc_yr": 2013.0,
+   "SAIDI": 148.0942,
+   "SAIFI": 2.717
+  },
+  {
+   "edb": "Unison Networks",
+   "disc_yr": 2014.0,
+   "SAIDI": 148.09,
+   "SAIFI": 2.72
+  },
+  {
+   "edb": "Unison Networks",
+   "disc_yr": 2015.0,
+   "SAIDI": 148.0,
+   "SAIFI": 2.725
+  },
+  {
+   "edb": "Vector Lines",
+   "disc_yr": 2013.0,
+   "SAIDI": 127.3,
+   "SAIFI": 1.86
+  },
+  {
+   "edb": "Vector Lines",
+   "disc_yr": 2014.0,
+   "SAIDI": 127.0,
+   "SAIFI": 1.86
+  },
+  {
+   "edb": "Vector Lines",
+   "disc_yr": 2015.0,
+   "SAIDI": 127.3,
+   "SAIFI": 1.86
+  },
+  {
+   "edb": "Wellington Electricity",
+   "disc_yr": 2013.0,
+   "SAIDI": 40.74,
+   "SAIFI": 0.6
+  },
+  {
+   "edb": "Wellington Electricity",
+   "disc_yr": 2014.0,
+   "SAIDI": 40.7444,
+   "SAIFI": 0.6016
+  },
+  {
+   "edb": "Wellington Electricity",
+   "disc_yr": 2015.0,
+   "SAIDI": 40.74,
+   "SAIFI": 0.602
+  }
+ ]
+}
