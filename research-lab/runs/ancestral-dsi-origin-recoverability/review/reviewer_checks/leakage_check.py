@@ -39,16 +39,18 @@ for arm in ("gazetteer", "classifier", "llm"):
         calls = (sub[arm] != "").sum()
         print(f"{arm:10s} {grp:12s} n={len(sub):3d} calls={calls:3d} errors={len(err):3d} errors_with_known_owner={len(known):3d} naming_owner_country={hit}")
 # gold countries: does any coincide with an institution-type attribute value's country?
-print("\nGold-country records carrying institution-type attributes:")
+print("\nGold-country records carrying institution-type attributes (attribute KEYS only; values redacted):")
 for i in rows.index[rows.gold != "not determinable"]:
-    if i in have: print(" ", i, rows.loc[i, "gold"], have[i])
+    if i in have: print(" ", i, rows.loc[i, "gold"], sorted(have[i]))
 # D5 s3: attribute cap
 cap = [i for i, x in R.items() if len(x.get("attributes") or "") >= 600]
-print("\nrecords at the 600-char attribute cap:", len(cap))
+print("\nrecords at the 600-char attribute cap (attribute text redacted; reporting only whether the truncated tail "
+      "ends inside a geographic attribute):")
 for i in cap:
     tail = R[i]["attributes"][-90:]
     lab = rows.loc[i, "label"] if i in rows.index else "excluded"
-    print(f"  {i} label={lab:14s} tail=...{tail!r}")
+    geo = "yes" if "geographic location" in tail or "lat_lon" in tail else "no"
+    print(f"  {i} label={lab:14s} tail_ends_in_geographic_attribute={geo}")
 # D8: publications and the 12-sentence cap
 nfull = [i for i, x in R.items() if any(p.get("methods_sentences") for p in x["publications"])]
 at12 = [i for i in nfull if any(len(p.get("methods_sentences", "").split(" | ")) >= 12 for p in R[i]["publications"])]

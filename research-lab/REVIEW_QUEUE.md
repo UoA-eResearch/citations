@@ -28,7 +28,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-23 14:54 | `auckland-nz-2023-storms-estuary-mud-natural-experiment` | review, resumed |
 | 2026-10-23 15:21 | `auckland-nz-kauri-dieback-multitemporal-lidar` | review, resumed |
 | 2026-10-23 15:39 | `frontier-edge-asr-quantization-accent-parity` | review (H4 pending), resumed; last run under the exception |
-| 2026-10-23 20:39 | `ancestral-dsi-origin-recoverability` | confirmation pass (original reviewer resumed) |
+| 2026-10-23 20:39 | `ancestral-dsi-origin-recoverability` | 87273a8 | H1 Inconclusive; H2 Refuted (19/300 test records determinable after D10; all arms 0% at 90% precision; 61% lab material) | **published** 2026-10-23 (Refuted on recovery; review publish with edits -> D10 b0149e2; confirmation publish, wording edits applied) |
 | `energy-nz-edb-quality-standard-ratchet` | fb7efde | H1 Inconclusive (no national trend, -0.7%/yr), H2 Inconclusive, H3 Supported (major-event rule changes 3 of 15 distributors' exceedance years); reset target rise mostly outcomes (+104 of +115 min) | queued (review/prompt.md) |
 | `legal-digital-humanities-public-domain-day-renewal-did` | 26ff608 | Inconclusive: preregistered PPML degenerate (RR 0.33, separation); post-result D1 fix RR 1.86 (1.01-3.43) not robust (no-POD/lag fail pre-trend); Gutenberg 1.8% vs 0.25%; linkage recall 0.29 renewed vs 0.50 | queued (review/prompt.md) |
 | `auckland-nz-avf-dvv-hydrological-baseline` | 35e9d7a | H1 Refuted (median held-out R2 -0.12, -0.67 to -0.03; 32 pairs; noise floor 0.136%); robust to segment rule, temperature, frozen drift and draining kernel (post hoc) | queued (review/prompt.md) |

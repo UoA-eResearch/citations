@@ -99,14 +99,15 @@ The prompt, temperature (0), evidence and parsing are unchanged. No arm had been
 
 ## D7 — 2026-10-22 15:45 NZDT — post-hoc analysis (after limb-2 results were read)
 
-Only 24 of the 300 test records turned out to have a determinable country, so H2's 40% recovery bar was out of reach
+Only 24 of the 300 test records turned out to have a determinable country (19 after D10), so H2's 40% recovery bar was out of reach
 for any arm. To show what recovery looks like where it is possible, `code/posthoc_natural.py` repeats the arm
 evaluation among *natural* samples only, with records labelled "inapplicable" (laboratory material) removed. It uses
 every arm's predictions at any confidence. This analysis was not preregistered and is reported as exploratory. It
 changes no preregistered verdict.
 
-A note on reading `limb2_secondary.json`: for an arm with no tuned threshold (gazetteer, LLM), the
-"test_at_threshold" asymmetric-error row counts every prediction, so it is an any-confidence row.
+A note on reading `limb2_secondary.json`: for an arm with no tuned threshold, the "test_at_threshold"
+asymmetric-error row counts every prediction, so it is an any-confidence row. Before D10 this applied to the
+gazetteer and the LLM; after D10 no arm has a tuned threshold, so it applies to all three.
 
 ## D8 — 2026-10-22 15:50 NZDT — full-text check of the publication cap (post hoc)
 

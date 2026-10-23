@@ -1,0 +1,47 @@
+H2: Refuted | scored/tune/test: 497 197 300
+labels: {'all': {'inapplicable': 350, 'country': 28, 'not stated': 119}, 'tune': {'inapplicable': 143, 'not stated': 45, 'country': 9}, 'test': {'country': 19, 'inapplicable': 207, 'not stated': 74}}
+labels_by_stratum: {'with_publication': {'inapplicable': 229, 'country': 3, 'not stated': 18}, 'without_publication': {'inapplicable': 121, 'not stated': 101, 'country': 25}}
+gold_countries: {'China': 7, 'USA': 6, 'Japan': 2, 'Pacific Ocean': 2, 'Czechia': 1, 'Israel': 1, 'Thailand': 1, 'Malaysia': 1, 'Italy': 1, 'France': 1, 'Nigeria': 1, 'Arctic Ocean': 1, 'United Kingdom': 1, 'Germany': 1, 'Atlantic Ocean': 1}
+gazetteer  tuning={'threshold': None} test: calls=0 correct=0 rec=0.0 ci=[0.0, 0.0126] det=19 | any: calls=95 correct=12 rec=0.04 prec=0.1263 recall=0.6316
+classifier tuning={'threshold': None} test: calls=0 correct=0 rec=0.0 ci=[0.0, 0.0126] det=19 | any: calls=300 correct=14 rec=0.0467 prec=0.0467 recall=0.7368
+llm        tuning={'threshold': None} test: calls=0 correct=0 rec=0.0 ci=[0.0, 0.0126] det=19 | any: calls=28 correct=16 rec=0.0533 prec=0.5714 recall=0.8421
+
+population: {'with_publication': 456061, 'without_publication': 1201362}
+projection inapplicable  share=0.6071 ci=[0.561, 0.6533] samples=1006273 ci=[929753, 1082794] strata={'with_publication': {'n_gold': 250, 'share': 0.916}, 'without_publication': {'n_gold': 247, 'share': 0.4899}}
+projection not stated    share=0.3162 ci=[0.2709, 0.3615] samples=524082 ci=[448988, 599175] strata={'with_publication': {'n_gold': 250, 'share': 0.072}, 'without_publication': {'n_gold': 247, 'share': 0.4089}}
+projection country       share=0.0767 ci=[0.0491, 0.1042] samples=127068 ci=[81462, 172674] strata={'with_publication': {'n_gold': 250, 'share': 0.012}, 'without_publication': {'n_gold': 247, 'share': 0.1012}}
+gold==submitter: {'determinable': 28, 'same': 7, 'submitter_country_known': 10}
+asym gazetteer  all-records: 27/79 share=0.3418 ci=[0.2467, 0.4515]
+asym classifier all-records: 162/281 share=0.5765 ci=[0.5181, 0.6329]
+asym llm        all-records: 11/17 share=0.6471 ci=[0.413, 0.8269]
+brier: {'gazetteer': 0.7546, 'classifier': 0.4354, 'llm': 0.4951}
+
+posthoc all: natural=147 det=28 ceiling=0.1905 ci=[0.1352, 0.2615]
+   gazetteer  calls=58 correct=17 prec=0.2931 ci=[0.1918, 0.4201] recall=0.6071
+   classifier calls=147 correct=18 prec=0.1224 ci=[0.0789, 0.1853] recall=0.6429
+   llm        calls=35 correct=23 prec=0.6571 ci=[0.4915, 0.7917] recall=0.8214
+
+posthoc test: natural=93 det=19 ceiling=0.2043 ci=[0.1349, 0.2972]
+   gazetteer  calls=39 correct=12 prec=0.3077 ci=[0.1857, 0.4642] recall=0.6316
+   classifier calls=93 correct=14 prec=0.1505 ci=[0.0918, 0.237] recall=0.7368
+   llm        calls=23 correct=16 prec=0.6957 ci=[0.4913, 0.844] recall=0.8421
+
+decomposition cbd: {'Party': (18, 0.6429), 'not a Party': (6, 0.2143), 'not a country': (4, 0.1429)}
+pre_d10 file present: limb2_primary_pre_d10.json True
+pre_d10 file present: limb2_secondary_pre_d10.json True
+pre_d10 file present: limb2_posthoc_natural_pre_d10.json True
+pre_d10 file present: decomposition_limb2_pre_d10.json True
+pre_d10 file present: limb2_rows_pre_d10.csv True
+pre_d10 labels: {'inapplicable': 350, 'country': 37, 'not stated': 110} | classifier test: 0.0167 | det: 24
+
+records whose label changed vs pre_d10: ['R054', 'R240', 'R241', 'R242', 'R243', 'R244', 'R461', 'R475', 'R477']
+  all now 'not stated'?: True | old labels: ['Spain', 'USA', 'USA', 'USA', 'USA', 'USA', 'China', 'USA', 'China']
+test determinable (recomputed): 19 of 300 = 0.0633 [0.0409, 0.0968]
+labels 497 (recomputed): {'inapplicable': 350, 'not stated': 119, 'country': 28}
+projection inapplicable  recomputed share=0.6071 ci=[0.5610, 0.6533] samples=1006273
+projection not stated    recomputed share=0.3162 ci=[0.2709, 0.3615] samples=524082
+projection country       recomputed share=0.0767 ci=[0.0491, 0.1042] samples=127068
+natural all: 147 det 28 ceiling 0.1905
+LLM natural-all calls/correct: 35 23
+LLM test any-conf calls/correct: 28 16
+publication-linked records with a country label: 3 of 250 ['R001', 'R129', 'R234']

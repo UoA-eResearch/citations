@@ -10,7 +10,7 @@ Reviewer: Fable, 2026-10-23. Adversarial review against `review/prompt.md`. All 
 **What replicated.** The limb-1 point estimates reproduce exactly from the parsed samples (usable +2.903,
 placeholder +9.133, malformed −0.007, absent −12.029 pp; placebos +17.609 and −15.749; 20,863,614 window samples) —
 `reviewer_checks/rd_replicate.out`. `code/gold_cut_audit.py` re-run is byte-identical to the stored audit
-(`diff` clean, 58 records) — `reviewer_checks/cut_audit_rerun.txt`. Every number I checked in `report.md` traces to
+(`diff` clean, 58 records) — `data/review_evidence/cut_audit_rerun.txt`. Every number I checked in `report.md` traces to
 the tables (κ 0.925/0.942, 17/4 disagreements, label counts 350/110/37, strata 92/5/4 and 49/40/11, the 16 gold
 countries, arm recoveries and Wilson intervals, Brier 0.75/0.43/0.42, asymmetric-error shares, D7's 147/25%/77%/73%,
 the projection 60.7/30.1/9.2% with CI, D8's +1.3 points, the mirror figures, the decomposition's 9.8→24.8% and
@@ -24,7 +24,7 @@ usable`) and the gold set (`!= usable`) are disjoint by construction, and R497 �
 excluded from scoring; I found no gold-label leakage.
 
 **My own re-labelling.** I re-labelled 40 records drawn at random (seed 20261023) blind to the study's labels
-(`reviewer_checks/reviewer_labels.csv`, evidence in `blind40_evidence.txt`), then compared:
+(`reviewer_checks/reviewer_labels.csv`, evidence in `data/review_evidence/blind40_evidence.txt`), then compared:
 **39/40 agree, and 0 of the differences change the scoring label** (`relabel_compare.out`). The single difference is
 R190 (*Ciona robusta* embryos: I read a wild-caught marine ascidian with no stated site as "not stated"; the study
 read a model organism as "inapplicable"). I also read all 37 country records and all 8 judgement-call rows
@@ -77,13 +77,13 @@ gives a country only where there is "an explicit sampling-site statement".
 
 For R240, R241, R242, R243, R244 and R475 the only origin cue in the whole evidence is a US state postal code in
 `collected_by`/`sequenced_by` (NJ, GA, NY, GA, MA, MN) plus the programme name "PulseNet"; the only literal "USA" in
-the text is the substring inside the PulseNet strain identifiers (`PNUSAE160343`, `PNUSAL020593`), and the only
-country *words* are reagent-supplier addresses — which is exactly why the gazetteer answered "Germany" (Hamburg,
-from the DNA-kit sentence) on all five. R477's "China" comes from `collected_by=Zhejiang Provincial Center for
-Disease Control and Prevention`; pass 2 flagged it itself as "JUDGEMENT CALL … (collector field; no site field)".
-Under the plan's own rule all seven are "not stated". (The other five USA records are fine: R470/R472/R473/R474 have
-"PulseNet **USA** surveillance" in the BioProject description and R496 carries `geo_location=USA`.)
-Evidence dumps: `reviewer_checks/gold_sensitivity.out`.
+the text is a substring inside the PulseNet strain identifiers themselves, and the only country *words* are
+reagent-supplier addresses in the methods — which is exactly why the gazetteer answered "Germany", a supplier's
+city, on all five. R477's "China" comes from a named provincial CDC in `collected_by`; pass 2 flagged it itself as
+"JUDGEMENT CALL … (collector field; no site field)". Under the plan's own rule all seven are "not stated". (The
+other five USA records are fine: R470/R472/R473/R474 name PulseNet USA surveillance in the BioProject description
+and R496 carries a `geo_location` value that resolves to the USA.)
+Evidence dumps (record and publication text, kept out of git): `data/review_evidence/gold_sensitivity.out`.
 
 Consequences (`reviewer_checks/gold_sensitivity.json`, `tuning_fragility.out`):
 
@@ -106,11 +106,11 @@ collection country does not apply"; `report.md:43-44` "laboratory animals, cell 
 country of origin in the relevant sense".
 
 Lab-propagated organisms receive a country whenever their source happens to be stated, and "inapplicable" when it is
-not: R450 (*Arabidopsis halleri* lab stock, own field `missing: lab stock`, comment "originated from Japan:Hyogo,
-Taka, Omoide river") → Japan; R234 (cold-acclimated *D. ananassae* isofemale lines, paper: "isofemale lines collected
-from a population … in Bangkok, Thailand") → Thailand; while R317 (soybean cultivar), R335 (wheat cultivar), R457
+not: R450 (*Arabidopsis halleri* lab stock, own country field `missing: lab stock`, whose comment names a Japanese
+river as the stock's origin) → Japan; R234 (cold-acclimated *D. ananassae* isofemale lines, whose paper names the
+Thai city the source population was collected from) → Thailand; while R317 (soybean cultivar), R335 (wheat cultivar), R457
 (Dendrobium hybrid cultivar), R341, R371, R456, R460, R466 (breeding/mapping populations) → inapplicable.
-`reviewer_checks/construct_check.out` lists 21 of the 350 "inapplicable" records whose own recorded basis is field,
+`data/review_evidence/construct_check.out` lists 21 of the 350 "inapplicable" records whose own recorded basis is field,
 agricultural or genebank material. The bulk of the category is genuine (234 of 350 are *Mus musculus*), so this is a
 wording and reporting fix, not a reclassification: the category is "material whose collection origin is inapplicable
 **or unstated**", and the 61%/30% split is therefore not a clean biological partition. On the prompt's construct
@@ -124,17 +124,17 @@ count inside it.
 ### F4. Medium — two of the three pass-3 readings in D5 §5 contradict D5 §5's own principles
 
 `deviations.md:85-90`. Both affected records are in the test split, so both enter the 24-record ceiling
-(`reviewer_checks/construct_check.out`).
+(`data/review_evidence/construct_check.out`).
 
-- **R054 → Spain** ("livestock sampled at a named farm facility … as a national herd survey does"). The paper says
-  "The experiment was carried out at the animal facilities of El Dehesón del Encinar (Oropesa, Toledo, Spain)" — a
-  maternal-diet experiment at a research facility, not a herd survey. D5 §5's own next sentence excludes it: "A
-  laboratory animal's housing facility is not a sampling site." It is the same design as R297 (chicken diet trial),
+- **R054 → Spain** ("livestock sampled at a named farm facility … as a national herd survey does"). The paper's
+  methods state that the work was carried out at a named Spanish animal-research facility — a maternal-diet
+  experiment at a research facility, not a herd survey. D5 §5's own next sentence excludes it: "A laboratory
+  animal's housing facility is not a sampling site." It is the same design as R297 (chicken diet trial),
   R414 (bass feeding trial) and R440 (sheep heat-stress trial), all labelled inapplicable in the same pass.
-- **R461 → China.** `cultivar=PI 342486-1` (a USDA Plant Introduction accession), `dev_stage=seedling`,
-  `isolation_source=Shanghai,China`, BioProject "Development of the core lettuce germplasm collection" — Shanghai is
-  the grow-out site, not the accession's origin. D5 §5's third reading ("genebank accessions with no stated origin
-  are 'not stated'") was applied to R449 and R451 and inverted here.
+- **R461 → China.** The record is a USDA Plant Introduction accession (a PI number in `cultivar`) at seedling stage,
+  from a BioProject assembling a lettuce germplasm collection, and its `isolation_source` names the Chinese city it
+  was grown in — the grow-out site, not the accession's origin. D5 §5's third reading ("genebank accessions with no
+  stated origin are 'not stated'") was applied to R449 and R451 and inverted here.
 - **R001 → Czechia** (F1 crosses from stated broodstock) is defensible but strained: the sampled fish were
   hatchery-bred and aquarium-reared, and the stated site is the parents' capture site. It is harmless only because
   the hatchery and the reservoir are both in Czechia.
@@ -217,7 +217,8 @@ arithmetic and intervals independently. Worth one sentence in the limits.
 3. **Arms.** No gold-label leakage; the classifier's training pool is disjoint from the gold set. Institution text
    *is* inside the evidence for 108 of 500 records (`insdc center name`, `collected_by`, `sequenced_by`,
    `biomaterial_provider`), which the plan said would never be evidence — but it shows no measurable inflation of
-   owner-country errors (classifier: 4/8 of such errors name the owner country vs 156/271 elsewhere,
+   owner-country errors (classifier: 6/10 of such errors name the owner country vs 156/271 elsewhere, on the D10
+   labels; 4/8 vs 156/271 as first adjudicated,
    `leakage_check.out`). The damage is to the gold labels, not the arms (F2). LLM budget fair (F8 caveat).
    Thresholds computed as the plan says (F8).
 4. **Limb 1.** Replicated exactly. Kernel, donut, owner clustering and the multinomial cluster bootstrap are all

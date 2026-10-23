@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DSI Origin Recoverability</title>
+<meta name="description" content="Can the country of origin of genetic sequence records be recovered from their metadata, and did the 2023 INSDC country rule change how often it is usable?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Ancestral Futures</div>
+  <h1>Countries of origin on sequence samples: the 2023 INSDC rule left the usable-country share unresolved, and most untagged samples have no origin to recover</h1>
+  <p class="subtitle">Every non-human sample submitted to NCBI BioSample from June 2021 to May 2025 (20.9 million) was classified by its country field. A regression discontinuity tested the June 2023 INSDC rule. Then a 500-record gold set tested whether the missing countries can be recovered automatically from the sample&#x27;s own record, its BioProject and its linked publication. This version incorporates an independent review (`review/review.md`; changes logged as D10).</p>
+  <div class="meta">
+    <span>Report · 2026-10-23 · revised after independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ancestral-dsi-origin-recoverability/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ancestral-dsi-origin-recoverability/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ancestral-dsi-origin-recoverability/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: H1 Inconclusive; H2 Refuted.</strong></p>
+<ul>
+<li><strong>H1 (the rule raised the usable-country share by less than 10 points): Inconclusive.</strong><ul>
+<li>The jump at 1 June 2023 is <strong>+2.9 points (95% interval −5.9 to +10.8)</strong>. The upper bound crosses the 10-point
+line.</li>
+<li>Records after the rule more often carry a placeholder ("missing", "not collected" and so on) where earlier ones
+were blank: placeholders +9.1 points (+1.8 to +18.2), absent fields −12.0 (−16.0 to −8.7).</li>
+<li>That shift is a trend visible across the rule, not an effect the design can attribute to it. At 55 placebo
+cutoffs, placeholder jumps have a standard deviation of 5.5 points, and 9 of 55 are as large as the real one
+(review).</li>
+<li>The raw usable share actually fell across the cutoff, from 85.3% to 79.4%. The +2.9 estimate is the local-linear
+extrapolation's.</li>
+<li>Within submitters active on both sides, the usable share barely moved (+0.6; −4.1 to +8.8).</li>
+<li>Placebo dates a year and two years earlier show jumps of +17.6 and −15.7 points. The series swings too much for
+this design to measure a 10-point effect precisely.</li>
+</ul>
+</li>
+<li><strong>H2 (an automatic method recovers a correct country for at least 40% of untagged samples at 90% precision):
+  Refuted.</strong><ul>
+<li>Only <strong>19 of the 300 test records (6.3%)</strong> have a country that any evidence states, as an explicit sampling site.
+No method could reach 40%.</li>
+<li>At their tuned thresholds the three methods recover 0%. The upper bounds of their intervals are 1.3%.</li>
+</ul>
+</li>
+<li><strong>Why: most untagged samples have no origin to find.</strong><ul>
+<li>Projected to the 1.66 million untagged samples submitted from June 2023 to May 2025:<ul>
+<li><strong>61% are laboratory or cultivated material</strong> (lab mice, cell lines, reference strains, cultivars), for which
+  no collection origin applies or none is recorded;</li>
+<li><strong>32% are natural samples whose origin no evidence states</strong>;</li>
+<li><strong>8% (about 127,000; 81,000 to 173,000) have a stated sampling country somewhere in the evidence.</strong> Some of
+  these already carry it, under a different field name.</li>
+</ul>
+</li>
+<li>Samples whose BioProject links a publication are 92% laboratory material.</li>
+</ul>
+</li>
+<li><strong>Correction after review.</strong> Nine gold labels had taken a country from a collector's address or an experimental
+  facility. The plan excludes both. Relabelled, the ceiling falls from 8% to 6.3%, and the one method that had
+  recovered anything (1.7%) recovers nothing (D10).</li>
+</ul>
+<h2>In plain terms</h2>
+<p>When a scientist deposits a DNA sample from a plant, an animal or a microbe, the record is supposed to say which
+country it came from. International rules on sharing the benefits of genetic resources depend on that: you cannot
+pay a country back for a resource if nobody recorded where it came from. In 2023 the world's DNA archives made the
+country field compulsory.</p>
+<p>We checked 20.9 million sample records. Over these years, fewer records left the field blank and more wrote "missing"
+or "not collected" instead, but this was a gradual trend we cannot pin on the rule. The share naming a real country did
+not clearly rise.</p>
+<p>Then we asked whether the missing countries could be filled in automatically, by reading the sample's description
+and the paper it belongs to. Mostly they cannot, because there is nothing to find. Six in ten of the samples without
+a country were laboratory animals, cell lines, lab strains or crop cultivars, for which no place of collection applies
+or none is recorded. Most of the rest never say where they were collected, anywhere. Only about one in thirteen had a
+sampling country written down somewhere else in their records. A language model found most of those when allowed to
+guess, but it also guessed countries for lab samples, usually the country of the lab. Held to the 90% accuracy the
+plan required, no method made any calls.</p>
+<h2>What was asked</h2>
+<p>The lead (<code>ancestral-dsi-origin-recoverability</code>) asked two things:
+- whether the INSDC's spatiotemporal metadata rule (in force 1 June 2023) put countries of origin on sequence
+  samples;
+- whether the origins still missing can be recovered at archive scale.</p>
+<p>This matters for the Convention on Biological Diversity's arrangements on digital sequence information, including
+the Cali Fund: traceability to a provider country starts with a country on the record. The plan (<code>plan.md</code>) was
+written before the archive was parsed.</p>
+<h2>How it was done</h2>
+<ol>
+<li><strong>Classification</strong> (<code>parse.py</code>, <code>countries.py</code>). Each BioSample's <code>geo_loc_name</code> (or <code>country</code>) is:<ul>
+<li><strong>usable</strong> if its country part resolves to an INSDC country or ocean;</li>
+<li><strong>placeholder</strong> if it is an INSDC missing-value term or a common equivalent;</li>
+<li><strong>malformed</strong> or <strong>absent</strong> otherwise.</li>
+</ul>
+</li>
+</ol>
+<p>Human samples and human-host metagenomes are removed (care filter, D3). D4 fixed an apostrophe bug that had
+   classed "Cote d'Ivoire" malformed (10,183 samples reclassified).
+2. <strong>Limb 1</strong> (<code>analysis_rd.py</code>). A local-linear regression discontinuity on daily shares at 1 June 2023:
+      - 24 months either side, with a one-month donut;
+      - intervals from a cluster bootstrap over 43,055 submitting organisations;
+      - secondaries: the 1 January 2025 extension, placebo dates, bandwidths, no donut, package fixed effects, and
+     placeholder terms for inapplicable material removed;
+      - post hoc (<code>analysis_rd_posthoc.py</code>): without SARS-CoV-2, and within submitters.
+3. <strong>The gold set</strong> (<code>goldset.py</code>). 500 untagged samples from June 2023 to May 2025, half with a linked publication,
+   stratified by package; 200 tuning and 300 test.
+      - <strong>Evidence:</strong> the sample's attributes, its BioProject title and description, and for a publication its title,
+     abstract and up to 12 sampling sentences from the open-access full text.
+      - <strong>Never evidence:</strong> submitter institutions.
+4. <strong>Labels.</strong> Each record is a country, <strong>inapplicable</strong> (laboratory material) or <strong>not stated</strong> (D2).
+      - Two blind passes by the study's AI agent, more than five hours apart, each in its own shuffled order.
+      - A blind third pass on the disagreements, under the plan's fixed rule (D5).
+      - Three records are excluded by code: two human-host metagenomes, and one whose own country field resolves after
+     D4. That leaves 497.
+5. <strong>Recovery arms</strong> (<code>arms.py</code>), run only after all labels were fixed:
+      - a GeoNames gazetteer with reverse geocoding of coordinates;
+      - a TF-IDF classifier trained on 196,561 tagged samples from the same period;
+      - the locally served open-weight LLM (Nemotron 3 Nano Omni), asked for the collection country or "unknown", with
+     its stated probability as confidence (D6: output budget raised before running).</p>
+<p>Each arm's threshold is the lowest giving 90% precision on the tuning split. A call on a record without a
+   determinable country counts as wrong.</p>
+<h2>Results</h2>
+<h3>Limb 1: what the rule changed (<code>results/figures/F1_monthly_shares.png</code>)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>class</th>
+<th>jump at 1 June 2023 (points)</th>
+<th>95% interval</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>usable country</td>
+<td>+2.9</td>
+<td>−5.9 to +10.8</td>
+</tr>
+<tr>
+<td>placeholder</td>
+<td>+9.1</td>
+<td>+1.8 to +18.2</td>
+</tr>
+<tr>
+<td>absent</td>
+<td>−12.0</td>
+<td>−16.0 to −8.7</td>
+</tr>
+<tr>
+<td>malformed</td>
+<td>−0.0</td>
+<td>−0.0 to +0.0</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Robustness.</strong> The usable-share jump stays small and uncertain under every variant:<ul>
+<li>12-month bandwidth: −0.0 (−13.7 to +14.2);</li>
+<li>36-month bandwidth: +3.1 (−8.3 to +9.7);</li>
+<li>no donut: +2.6 (−1.3 to +9.9);</li>
+<li>placeholder terms for inapplicable material removed from the denominator: +2.7 (−5.9 to +10.6);</li>
+<li>package fixed effects: +6.0;</li>
+<li>without SARS-CoV-2 samples (41% of the window): +2.9 (−4.3 to +11.1).</li>
+</ul>
+</li>
+</ul>
+<p>The fall in absent fields holds in every variant. The placeholder rise holds in every variant except the 12- and
+  36-month bandwidths, where its interval includes zero (+11.3, −1.8 to +26.3; +3.7, −4.3 to +16.4).
+- <strong>Within submitters</strong> (10,149 organisations active on both sides):
+    - usable +0.6 (−4.1 to +8.8);
+    - placeholder +5.8 (+3.0 to +8.0);
+    - absent −6.4 (−14.2 to −2.5).
+- <strong>Why H1 stays Inconclusive.</strong> The placebo dates (1 June 2021 and 2022) produce usable-share jumps of +17.6 and
+  −15.7, and the 2025 extension gives −11.7 (−22.9 to +2.4). Submission volumes, led by SARS-CoV-2 surveillance in
+  2021–22, move the shares by more than the effect H1 is about. The design cannot pin the usable-share change to
+  within 10 points.
+    - <strong>Not placeholders either.</strong> The independent review ran the same specification at 55 month-start cutoffs
+    (<code>review/reviewer_checks/rd_replicate.json</code>). The placebo standard deviations are:
+        - usable 10.2 points;
+        - placeholder 5.5;
+        - absent 8.1.</p>
+<pre><code>9 of 55 placebo placeholder jumps are as large as the real +9.1 (placebo-calibrated p ≈ 0.16), and 11 of 55 of
+the absent ones. The yearly shares follow a smooth trend: absent 41% → 0.9% and placeholder 5.5% → 36% from 2019
+to 2025. A jump appears wherever the window is centred.
+- **H1's rule is one-sided**, so a large decrease would also read "Supported". The raw usable share fell across the
+cutoff (85.3% → 79.4%), and the +2.9 estimate comes from the local-linear extrapolation.
+</code></pre>
+<ul>
+<li><strong>Where usable countries point.</strong> Among samples with a usable country, the share from upper-middle-income countries
+  rose from 9.8% (before) to 24.8% (after), and from CBD Parties from 58.9% to 68.7% (descriptive).</li>
+</ul>
+<h3>The gold set (<code>results/figures/F2_gold_and_recovery.png</code>)</h3>
+<ul>
+<li><strong>Agreement</strong> (<code>gold_agreement.json</code>).<ul>
+<li>The two passes agree with Cohen's κ = 0.93 on the full labels, and κ = 0.94 on what scoring uses (a country
+versus not determinable). That is 17 disagreements, 4 of which change a scoring outcome.</li>
+<li>One agent made both passes in one working session (D5), so these figures are upper bounds on what independent
+labellers would reach.</li>
+<li>The third pass gave 3 of the 17 a country.</li>
+</ul>
+</li>
+<li><strong>Final labels after D10</strong> (497 records):<ul>
+<li>inapplicable 350 (70%), not stated 119 (24%), country 28 (6%);</li>
+<li>with a linked publication: 92% inapplicable, 7% not stated, 1% country;</li>
+<li>without: 49% inapplicable, 41% not stated, 10% country.</li>
+<li>"Inapplicable" means no collection origin applies or none is recorded for lab-propagated material. 234 of the
+350 are <em>Mus musculus</em>. 21 are field, agricultural or genebank material with no stated source (review), so the
+category is not a clean biological partition.</li>
+</ul>
+</li>
+<li><strong>The 28 countries:</strong> China 7, USA 6, Japan 2, the Pacific Ocean 2, and one each for 11 others.<ul>
+<li>By the CBD: 64% are Parties, 21% are not (the USA), and 14% are oceans.</li>
+<li>Where the submitter's country is known (10 records), it equals the sample's country in 7.</li>
+</ul>
+</li>
+<li><strong>Labels as first adjudicated</strong> (<code>*_pre_d10</code> tables): 37 countries, including 12 USA (6 from a US state code in a
+  collector field), Spain (an experimental facility) and China (a germplasm grow-out site).</li>
+<li><strong>Projected to the 1,657,423 untagged window samples</strong> (stratified by publication link):<ul>
+<li>inapplicable 60.7% (56.1–65.3%);</li>
+<li>not stated 31.6% (27.1–36.2%);</li>
+<li>country 7.7% (4.9–10.4%), about 127,000 samples (81,000–173,000). Before D10 this was 9.2%.</li>
+</ul>
+</li>
+<li><strong>Some of that 7.7% is already recorded.</strong> Besides <code>geo_loc_name</code>, a country can sit under "geographic location,
+  country and/or sea" (2,190 window samples, D3) or <code>geo_location</code> (a further 4,445, found in review). Two of the 28
+  gold countries are of this kind, so part of the share is recorded under another field name rather than
+  recoverable by mining.</li>
+<li><strong>Full-text check (D8).</strong> Each paper contributed at most 12 sampling sentences, and every open-access paper hit
+  that cap. The 12 publication-linked "not stated" records were checked against their full texts: none gives a
+  single sampling country. Even if every one had, the projected country share would rise by at most 1.3 points.</li>
+</ul>
+<h3>Limb 2: recovery (<code>limb2_primary.json</code>)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>arm</th>
+<th>threshold (tuning)</th>
+<th>test calls</th>
+<th>correct</th>
+<th>recovery (95% CI)</th>
+<th>precision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gazetteer</td>
+<td>none reaches 90%</td>
+<td>0</td>
+<td>0</td>
+<td>0% (0–1.3%)</td>
+<td>–</td>
+</tr>
+<tr>
+<td>classifier</td>
+<td>none reaches 90%</td>
+<td>0</td>
+<td>0</td>
+<td>0% (0–1.3%)</td>
+<td>–</td>
+</tr>
+<tr>
+<td>LLM</td>
+<td>none reaches 90%</td>
+<td>0</td>
+<td>0</td>
+<td>0% (0–1.3%)</td>
+<td>–</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Before D10</strong> the classifier reached 90% on two tuning calls (threshold 0.971) and recovered 1.7% (0.7–3.8%) at
+  100% precision. One of those two tuning calls was R475, a label D10 removes.</li>
+<li><strong>At any confidence</strong> on the test split:<ul>
+<li>gazetteer: 4.0% correct, at 12.6% precision;</li>
+<li>classifier: 4.7% correct, at 4.7% precision (it always names a country);</li>
+<li>LLM: 5.3% correct (16 of 300), at 57.1% precision (16 of 28 calls). It finds 16 of the 19 test records that
+have a country.</li>
+</ul>
+</li>
+<li><strong>Two discarded answers.</strong> The LLM arm discarded two confident answers that fell outside the INSDC vocabulary: R357,
+  and R401 (a test record whose gold is the Pacific Ocean). Raw answers were not kept, so this slightly understates
+  its recall.</li>
+<li><strong>The ceiling is the binding constraint.</strong> With 19 determinable records in 300, even a perfect arm would recover
+  6.3%.</li>
+<li>
+<p><strong>Asymmetric error</strong> (secondary).</p>
+<ul>
+<li>Where an arm names the wrong country and the submitter's country is known, it names the submitter's country in
+(test split, predictions at any confidence, since after D10 no arm has a tuned threshold):<ul>
+<li>75% of the LLM's errors (6 of 8; 41–93%);</li>
+<li>60% of the classifier's (52–67%);</li>
+<li>38% of the gazetteer's (25–52%).</li>
+</ul>
+</li>
+</ul>
+<p>Over all 497 records the shares are 64.7% (11 of 17), 57.7% and 34.2%.
+- Most of these errors are calls on laboratory material, such as naming the lab's country for lab mice. INSDC's own
+vocabulary has "missing: lab stock" for exactly this case.
+- <strong>Calibration</strong> (Brier score, all records): gazetteer 0.75, classifier 0.44, LLM 0.50. The LLM states 0.95–1.00 for
+  many wrong calls.</p>
+</li>
+</ul>
+<h3>Post hoc: natural samples only (D7; <code>results/figures/F3_posthoc_natural.png</code>)</h3>
+<ul>
+<li><strong>The ceiling.</strong> Removing laboratory material leaves 147 gold records, of which 19% (14–26%) have a findable
+  country.</li>
+<li><strong>The LLM</strong> names a country for 35 of them and is right on 23 (66% precision; 49–79%), finding 82% of the
+  determinable ones.</li>
+<li><strong>The gazetteer and classifier</strong> reach 29% and 12% precision.</li>
+<li>So once laboratory material is filtered out, an LLM finds most of what can be found, but still short of 90%
+  precision.</li>
+</ul>
+<h3>Mirror agreement (plan §5; <code>mirror_agreement.json</code>)</h3>
+<p>A random 10,000 window samples were looked up in the ENA portal; 9,729 were found.
+- <strong>Country.</strong> Whether a sample has a usable country agrees in 99.9% of them. Where both mirrors have one (8,079),
+  it is the same country every time.
+- <strong>Absence.</strong> The mirrors record it differently. Among the found samples, BioSample holds 829 placeholders and
+  806 absent fields; ENA holds 525 and 1,111. So part of what limb 1 counts as placeholders appears in ENA as a blank.
+- <strong>Conclusion.</strong> The usable-country results do not depend on which mirror is read. The placeholder/absent split
+  does: 304 of 829 BioSample placeholders (37%) are plain blanks in ENA. This is another reason not to treat the
+  placeholder shift as a measured effect.</p>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>Neither change can be attributed to the rule.</strong><ul>
+<li>Over 2019–2025, blanks gave way to placeholders, which the rule asks for when a country cannot be given. But the
+change was gradual, and the design's own placebos produce jumps as large as the one at the rule.</li>
+<li>Whether the usable share rose by less than 10 points cannot be settled with this design: the series moves by
+more than that in years with no rule change.</li>
+</ul>
+</li>
+<li><strong>The traceability gap is mostly not a recovery problem.</strong><ul>
+<li>About 61% of untagged samples are laboratory material, whose missing country is legitimate.</li>
+<li>About 32% are natural samples whose origin is recorded nowhere we looked.</li>
+<li>About one in thirteen states a sampling country somewhere in its evidence, and some of those already carry it
+under another field.</li>
+<li>Improving traceability for provider countries therefore means recording origin at collection. Mining records
+afterwards cannot supply it.</li>
+</ul>
+</li>
+<li><strong>This contrasts with an earlier estimate.</strong><ul>
+<li>The CBD's traceability study found that 44% of checked untagged GenBank entries state an origin in the linked
+publication. Here, 3 of 250 publication-linked untagged <em>BioSamples</em> (1.2%) have a stated sampling country in any
+evidence, because 92% of them are laboratory material.</li>
+<li>The populations differ (GenBank sequence entries against BioSample records, which are dominated by expression
+studies of lab organisms), and so does the evidence (abstracts and up to 12 sampling sentences of open-access full
+text, not the whole paper).</li>
+</ul>
+</li>
+<li><strong>Limits.</strong><ul>
+<li>All labelling was done by the study's AI agent, in two passes and a third, with no human adjudicator.</li>
+<li>The evidence is what the archive stores and the open-access literature holds. It excludes closed papers,
+supplementary tables, and attributes past a 600-character cap.</li>
+<li>Laboratory animals, their housing facilities and experimental sites were not treated as having an origin (D5,
+D10). A different construct, "where was this sample taken", would put a country on many of them, and then the
+arms' "errors" on lab material would count as recoveries.</li>
+<li>The gold set was drawn from the classification before D3/D4, while the projection counts the population after
+them. The effect is well under a point.</li>
+</ul>
+</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration:</strong> <code>plan.md</code>.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>):<ul>
+<li>D1: after the limb-1 results, the failed placebo cutoffs and the post-hoc checks (without SARS-CoV-2, within
+submitters);</li>
+<li>D2: the two kinds of not-determinable label;</li>
+<li>D3: the care filter extended to human-host metagenomes, an ENA attribute variant, culture-collection labels;</li>
+<li>D4: the classifier apostrophe fix and limb 1 re-run;</li>
+<li>D5: pass-2 conditions, a display truncation in pass 2 (audited; it enters no final label), the shared attribute
+cap, label spelling, and the third pass's readings;</li>
+<li>D6: the LLM output budget, before running;</li>
+<li>D7: the post-hoc natural-sample analysis;</li>
+<li>D8: the full-text check;</li>
+<li>D9: the mirror check, run late;</li>
+<li>D10: changes after the review:<ul>
+<li>nine gold labels brought back to the plan's evidence rule;</li>
+<li>the placeholder claim withdrawn as an effect;</li>
+<li>the attribute-variant count corrected;</li>
+<li>the two discarded LLM answers;</li>
+<li>wording.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Independent review:</strong> Fable, 2026-10-23, "publish with edits" (<code>review/review.md</code>). Both verdicts stand.</li>
+</ul>
+<h2>Reproducing it</h2>
+<ul>
+<li><strong>Limb 1:</strong> <code>code/parse.py</code>, <code>code/reclassify.py</code>, <code>code/analysis_rd.py</code>, <code>code/analysis_rd_posthoc.py</code>,
+  <code>code/decomposition.py limb1</code>.</li>
+<li><strong>Gold set:</strong> <code>code/goldset.py</code>, <code>code/bioproject.py</code>, <code>code/owner_countries.py</code>. The hand labels are in
+  <code>results/gold/</code> (pass 1, pass 2 and pass 3, with keys). <code>code/score.py agree</code> computes agreement.</li>
+<li><strong>Limb 2:</strong> <code>code/arms.py</code>, <code>code/score.py score</code>, <code>code/decomposition.py limb2</code>, <code>code/posthoc_natural.py</code>,
+  <code>code/mirror.py</code>, <code>code/monthly.py</code>, <code>code/figures.py</code>.</li>
+<li><strong>Tables:</strong> <code>results/tables/</code>.</li>
+</ul>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ancestral-dsi-origin-recoverability/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

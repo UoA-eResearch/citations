@@ -39,9 +39,8 @@ for f in sorted(glob.glob(str(RUN / "data" / "samples" / "*.parquet"))):
         vals = sub.str.extract(re.escape(key) + r"([^;]*)", expand=False).fillna("")
         rv = vals.map(lambda v: countries.resolve(v.split(":")[0].strip()))
         res[name]["resolved"] += int(rv.notna().sum())
-        for v in vals[rv.notna()].head(3):
-            if len(res[name]["examples"]) < 6:
-                res[name]["examples"].append(v[:70])
+        # verbatim attribute values are deliberately not recorded; counts only
+        res[name]["examples"] = "redacted (counts only)"
     del d
 
 (OUT / "attr_variant_scan.json").write_text(json.dumps(res, indent=1))

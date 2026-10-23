@@ -1,0 +1,20 @@
+
+--- all 497 records, any confidence
+  gazetteer  errors=139 with_known_owner= 79 naming_owner= 27 share=0.3418 ci=[0.2467, 0.4515]
+  classifier errors=479 with_known_owner=281 naming_owner=162 share=0.5765 ci=[0.5181, 0.6329]
+  llm        errors= 27 with_known_owner= 17 naming_owner= 11 share=0.6471 ci=[0.413, 0.8269]
+
+--- test split only, any confidence
+  gazetteer  errors= 83 with_known_owner= 45 naming_owner= 17 share=0.3778 ci=[0.2511, 0.5237]
+  classifier errors=286 with_known_owner=166 naming_owner= 99 share=0.5964 ci=[0.5204, 0.668]
+  llm        errors= 12 with_known_owner=  8 naming_owner=  6 share=0.75 ci=[0.4093, 0.9285]
+
+--- rows actually stored in limb2_secondary.json
+  gazetteer  test_at_threshold            errors=83 known=45 naming=17 share=0.3778 ci=[0.2511, 0.5237]
+  gazetteer  all_records_any_confidence   errors=139 known=79 naming=27 share=0.3418 ci=[0.2467, 0.4515]
+  classifier test_at_threshold            errors=286 known=166 naming=99 share=0.5964 ci=[0.5204, 0.668]
+  classifier all_records_any_confidence   errors=479 known=281 naming=162 share=0.5765 ci=[0.5181, 0.6329]
+  llm        test_at_threshold            errors=12 known=8 naming=6 share=0.75 ci=[0.4093, 0.9285]
+  llm        all_records_any_confidence   errors=27 known=17 naming=11 share=0.6471 ci=[0.413, 0.8269]
+
+report.md claims: llm 75% (6 of 8; 41-93); classifier 60% (52-67); gazetteer 38% (25-52)

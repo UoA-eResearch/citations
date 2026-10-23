@@ -197,10 +197,13 @@ written before the archive was parsed.
 - **The ceiling is the binding constraint.** With 19 determinable records in 300, even a perfect arm would recover
   6.3%.
 - **Asymmetric error** (secondary).
-  - Where an arm names the wrong country and the submitter's country is known, it names the submitter's country in:
+  - Where an arm names the wrong country and the submitter's country is known, it names the submitter's country in
+    (test split, predictions at any confidence, since after D10 no arm has a tuned threshold):
     - 75% of the LLM's errors (6 of 8; 41–93%);
     - 60% of the classifier's (52–67%);
     - 38% of the gazetteer's (25–52%).
+
+    Over all 497 records the shares are 64.7% (11 of 17), 57.7% and 34.2%.
   - Most of these errors are calls on laboratory material, such as naming the lab's country for lab mice. INSDC's own
     vocabulary has "missing: lab stock" for exactly this case.
 - **Calibration** (Brier score, all records): gazetteer 0.75, classifier 0.44, LLM 0.50. The LLM states 0.95–1.00 for

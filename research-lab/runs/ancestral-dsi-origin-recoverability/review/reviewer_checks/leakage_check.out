@@ -1,59 +1,51 @@
 records with institution-type attributes in the evidence: 108 of 500
  by key: Counter({'insdc center name': 81, 'submitter id': 81, 'collected_by': 21, 'sequenced_by': 11, 'insdc center alias': 11, 'biomaterial_provider': 8, 'center': 1, 'biomaterial_rpovider': 1, 'lab_host': 1})
 records whose BioSample owner name appears verbatim in the evidence: 13 ['R006', 'R014', 'R053', 'R098', 'R101', 'R150', 'R151', 'R222', 'R224', 'R248', 'R439', 'R447', 'R486']
-gazetteer  inst-attr    n=107 calls= 49 errors= 39 errors_with_known_owner=  1 naming_owner_country=1
+gazetteer  inst-attr    n=107 calls= 49 errors= 40 errors_with_known_owner=  2 naming_owner_country=2
 gazetteer  no-inst-attr n=390 calls=107 errors= 99 errors_with_known_owner= 77 naming_owner_country=25
-classifier inst-attr    n=107 calls=107 errors= 92 errors_with_known_owner=  8 naming_owner_country=4
+classifier inst-attr    n=107 calls=107 errors=100 errors_with_known_owner= 10 naming_owner_country=6
 classifier no-inst-attr n=390 calls=390 errors=379 errors_with_known_owner=271 naming_owner_country=156
-llm        inst-attr    n=107 calls= 20 errors=  7 errors_with_known_owner=  1 naming_owner_country=1
-llm        no-inst-attr n=390 calls= 30 errors= 16 errors_with_known_owner= 14 naming_owner_country=8
+llm        inst-attr    n=107 calls= 20 errors= 10 errors_with_known_owner=  3 naming_owner_country=3
+llm        no-inst-attr n=390 calls= 30 errors= 17 errors_with_known_owner= 14 naming_owner_country=8
 
-Gold-country records carrying institution-type attributes:
-  R240 USA {'collected_by': 'NJ', 'sequenced_by': 'NJ'}
-  R241 USA {'collected_by': 'GA', 'sequenced_by': 'GA'}
-  R242 USA {'collected_by': 'NY', 'sequenced_by': 'NYC'}
-  R243 USA {'collected_by': 'GA', 'sequenced_by': 'GA'}
-  R244 USA {'collected_by': 'MA', 'sequenced_by': 'MA'}
-  R264 Malaysia {'insdc center name': 'Sime Darby Plantation Technology Centre Sdn Bhd', 'submitter id': 'TG3'}
-  R290 Japan {'insdc center name': 'SC', 'submitter id': 'cc266aee-d44b-11e7-81ba-3c4a9275d6c8'}
-  R304 Italy {'insdc center alias': 'University of Salerno', 'insdc center name': 'University of Salerno', 'submitter id': 'E-MTAB-13058:2019_CO_41_S81'}
-  R339 France {'insdc center name': 'UBO', 'submitter id': 'ITS-BES_78_2'}
-  R369 Nigeria {'insdc center name': 'School of Health and Life Sciences', 'submitter id': 'E-MTAB-13719:Sample 2'}
-  R461 China {'collected_by': 'SAGC'}
-  R470 USA {'collected_by': 'NY', 'sequenced_by': 'NYC'}
-  R472 USA {'collected_by': 'RI', 'sequenced_by': 'RI'}
-  R473 USA {'collected_by': 'GA', 'sequenced_by': 'GA'}
-  R474 USA {'collected_by': 'MD', 'sequenced_by': 'DC'}
-  R475 USA {'collected_by': 'MN', 'sequenced_by': 'MN'}
-  R476 China {'collected_by': 'China'}
-  R477 China {'collected_by': 'Zhejiang Provincial Center for Disease Control and Prevention'}
-  R496 USA {'collected_by': 'CDC'}
+Gold-country records carrying institution-type attributes (attribute KEYS only; values redacted):
+  R264 Malaysia ['insdc center name', 'submitter id']
+  R290 Japan ['insdc center name', 'submitter id']
+  R304 Italy ['insdc center alias', 'insdc center name', 'submitter id']
+  R339 France ['insdc center name', 'submitter id']
+  R369 Nigeria ['insdc center name', 'submitter id']
+  R470 USA ['collected_by', 'sequenced_by']
+  R472 USA ['collected_by', 'sequenced_by']
+  R473 USA ['collected_by', 'sequenced_by']
+  R474 USA ['collected_by', 'sequenced_by']
+  R476 China ['collected_by']
+  R496 USA ['collected_by']
 
-records at the 600-char attribute cap: 24
-  R269 label=not stated     tail=...'e=checkm2 0.1.3; contamination score=0.02; env_medium=stool; geographic location (latitude'
-  R287 label=not stated     tail=...'on score=1.16; env_medium=aquatic; geographic location (latitude)=not provided; geographic'
-  R296 label=inapplicable   tail=...'post analysis well quality=pass; sample_name=E-MTAB-12738_2:Sample 3884; scientific_name=M'
-  R302 label=inapplicable   tail=...'late6_325; age=4.3; broker name=ArrayExpress; collection_date=not collected; common name=z'
-  R304 label=Italy          tail=...'ame=Mycobacterium tuberculosis; strain=H37Rv; type-material=type strain of Mycobacterium t'
-  R310 label=not stated     tail=...'ion score=0.29; env_medium=aquatic; geographic location (latitude)=not provided; geographi'
-  R320 label=inapplicable   tail=...'late2_104; age=3.7; broker name=ArrayExpress; collection_date=not collected; common name=z'
-  R324 label=not stated     tail=...'t with default parameter of the metaWRAP pipeline. Bin refinement module used from metaWRA'
-  R339 label=France         tail=...'t=coastal sea water; project_name=MYCOPLAST; sample_name=ITS-BES_78_2; scientific_name=pla'
-  R345 label=not stated     tail=...'e=checkm2 0.1.3; contamination score=1.74; env_medium=stool; geographic location (latitude'
-  R356 label=inapplicable   tail=...'late7_110; age=4.3; broker name=ArrayExpress; collection_date=not collected; common name=z'
-  R357 label=not stated     tail=...'ale=Ocean water; env_local_scale=Ocean water; env_medium=Ocean water; geographic location '
-  R368 label=not stated     tail=...'tion score=0.33; env_medium=aquatic; geographic location (latitude)=not provided; geograph'
-  R375 label=inapplicable   tail=...'st analysis well quality=pass; sample_name=E-MTAB-12738_2:Sample 1522; scientific_name=Mus'
-  R388 label=inapplicable   tail=...'t analysis well quality=pass; sample_name=E-MTAB-12738_2:Sample 3574; scientific_name=Mus '
-  R395 label=not stated     tail=...'on score=0.44; env_medium=aquatic; geographic location (latitude)=not provided; geographic'
-  R397 label=not stated     tail=...'ole organism; phenotype=normal beta glucan masking; sample_name=E-MTAB-10986:4035c; scient'
-  R439 label=inapplicable   tail=...'h light/dark cycle. Animals were tested for the presence of viruses, bacteria, and parasit'
-  R441 label=inapplicable   tail=...'missing; phenotype=missing; specimen_voucher=missing; store_cond=missing; stud_book_number'
-  R442 label=inapplicable   tail=...'=missing; store_cond=missing; stud_book_number=missing; treatment=missing; lat_lon=missing'
-  R447 label=inapplicable   tail=...'ght/dark cycle. Animals were tested for the presence of viruses, bacteria, and parasites i'
-  R458 label=inapplicable   tail=...'l mRNA; store_cond=-80 deg C; exposure_duration=24h; treatment=DMSO; nominal_conc=0; nomin'
-  R477 label=China          tail=...'erotype=missing; serovar=missing; specimen_voucher=missing; subgroup=missing; subtype=miss'
-  R488 label=not stated     tail=...'ink_class_info=missing; link_climate_info=missing; local_class=missing; local_class_meth=m'
+records at the 600-char attribute cap (attribute text redacted; reporting only whether the truncated tail ends inside a geographic attribute):
+  R269 label=not stated     tail_ends_in_geographic_attribute=yes
+  R287 label=not stated     tail_ends_in_geographic_attribute=yes
+  R296 label=inapplicable   tail_ends_in_geographic_attribute=no
+  R302 label=inapplicable   tail_ends_in_geographic_attribute=no
+  R304 label=Italy          tail_ends_in_geographic_attribute=no
+  R310 label=not stated     tail_ends_in_geographic_attribute=yes
+  R320 label=inapplicable   tail_ends_in_geographic_attribute=no
+  R324 label=not stated     tail_ends_in_geographic_attribute=no
+  R339 label=France         tail_ends_in_geographic_attribute=no
+  R345 label=not stated     tail_ends_in_geographic_attribute=yes
+  R356 label=inapplicable   tail_ends_in_geographic_attribute=no
+  R357 label=not stated     tail_ends_in_geographic_attribute=yes
+  R368 label=not stated     tail_ends_in_geographic_attribute=yes
+  R375 label=inapplicable   tail_ends_in_geographic_attribute=no
+  R388 label=inapplicable   tail_ends_in_geographic_attribute=no
+  R395 label=not stated     tail_ends_in_geographic_attribute=yes
+  R397 label=not stated     tail_ends_in_geographic_attribute=no
+  R439 label=inapplicable   tail_ends_in_geographic_attribute=no
+  R441 label=inapplicable   tail_ends_in_geographic_attribute=no
+  R442 label=inapplicable   tail_ends_in_geographic_attribute=yes
+  R447 label=inapplicable   tail_ends_in_geographic_attribute=no
+  R458 label=inapplicable   tail_ends_in_geographic_attribute=no
+  R477 label=not stated     tail_ends_in_geographic_attribute=no
+  R488 label=not stated     tail_ends_in_geographic_attribute=no
 
 records with any full-text sampling sentences: 186 | with a publication at the 12-sentence cap: 172
 records with_pub but no full-text sentences (abstract only): 64
