@@ -164,3 +164,44 @@ the plan's 6 of 8. The 20-scene minimum and everything else are unchanged.
 
 **Why the change cannot pick the verdict.** H1 without the guard is already Inconclusive. The guard can therefore
 only decide between "not testable" and "Inconclusive". The report gives both readings.
+
+## D7 — 2026-10-23 14:56 NZDT — changes after the independent review (review/review.md, "fix first")
+
+**Data handling, in `rates.py`.** These change E1 and the guard; H2 uses Sentinel-2 only.
+1. **Landsat tiers.** When one Landsat acquisition exists in several Collection 1 processings, the final tier is kept
+   (T1, then T2, then the preliminary Real-Time RT). Before, the copy with the most pixels was kept, which retained RT
+   for 313 of the guard's 580 acquisitions.
+2. **The guard's Landsat side** is restricted to each islet's Sentinel-2 window, so both sensors cover the same years.
+3. **`not_measured_ge_1ha`** lists features with no Otsu area at all: the main islands of Kanton, Kiritimati and
+   Tarawa. Before, it tested only for any row.
+
+**Post hoc checks, in `code/review_fixes.py` → `results/tables/review_fixes.json`.**
+4. **Tide response per atoll.** The pooled within-islet correlation of area with gauge level, for each index. An atoll
+   whose Otsu area does not respond (r > −0.2) is reported as a measurement failure, and its rates are also given from
+   the NDWI series. The review found this for Tarawa and Kiritimati.
+5. **The water-level trend at image times**, computed once per atoll on the union of acquisitions, with a bootstrap
+   interval. It replaces the per-islet median "drift". The r = 0.97 between bias and tide slope × level trend is an
+   identity of the correction, not evidence for a mechanism, and is withdrawn as such. Fixed-local-time sampling
+   cannot produce a decadal drift. The bias comes from chance trends in a finite sample of overpass tide levels.
+6. **E1's composition.** Per H1 islet, Landsat 7 (1999–2012) against Landsat 8 (2013–2015) images. The E1 rate is
+   compared with each islet's Landsat 8 minus Landsat 7 step. The early epoch is itself a two-sensor series, and no
+   guard tests it.
+7. **Actual Sentinel-2 spans per atoll.** No Sentinel-2 imagery exists before 2017, and none before late 2019 at
+   Funafuti and Tarawa.
+8. **The guard by atoll.** The interval treats islets as independent, but the 13 islets are at three atolls.
+9. **H2 sensitivity:** tide slopes set to 0 unless negative beyond 2 SE.
+
+**Wording:**
+- kwajalein_078 is an intertidal sand cay whose detection depends on tide phase; no change is inferred.
+- Funafuti's corrected rate is positive.
+- DEP "closer" comparisons where the signs disagree are removed.
+- Image counts, bin edges and the land-screened record count are corrected.
+
+**The preregistered verdicts stand:** H1 not testable, H2 Supported.
+
+**D7 addendum — a Theil–Sen bug, found at 14:59 NZDT while running the review checks, after the first D7 re-run.**
+`theil_sen()` used only index pairs with a positive time difference (`dt > 1e-6`). Because the rows are not in time
+order, every rate in the study (E1, E2, guard and H2) was the median over an arbitrary subset of the pairs, about
+half of them. The slope (y_j − y_i)/(t_j − t_i) is the same whichever point comes first, so the fix uses every pair
+with |dt| > 0. This changes every rate. All results are re-run, and the previous outputs are kept
+(`h1_h2_run1_before_D6.json`, `h1_h2_before_D7.json`). The verdicts are reported as they come out.

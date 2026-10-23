@@ -1,0 +1,208 @@
+{
+ "tide_response": {
+  "funafuti": {
+   "area_otsu": -0.66,
+   "area_fixed": -0.647,
+   "area_ndwi": -0.547
+  },
+  "kanton": {
+   "area_otsu": null,
+   "area_fixed": null,
+   "area_ndwi": null
+  },
+  "kapingamarangi": {
+   "area_otsu": -0.696,
+   "area_fixed": -0.658,
+   "area_ndwi": -0.678
+  },
+  "kiritimati": {
+   "area_otsu": -0.054,
+   "area_fixed": 0.103,
+   "area_ndwi": -0.415
+  },
+  "kwajalein": {
+   "area_otsu": -0.696,
+   "area_fixed": -0.664,
+   "area_ndwi": -0.768
+  },
+  "majuro": {
+   "area_otsu": -0.653,
+   "area_fixed": -0.731,
+   "area_ndwi": -0.616
+  },
+  "penrhyn": {
+   "area_otsu": -0.335,
+   "area_fixed": -0.367,
+   "area_ndwi": -0.385
+  },
+  "tarawa": {
+   "area_otsu": 0.201,
+   "area_fixed": -0.251,
+   "area_ndwi": 0.032
+  }
+ },
+ "level_trend_union": {
+  "funafuti": {
+   "acquisitions": 354,
+   "mm_per_yr": -7.3,
+   "ci": [
+    -32.9,
+    17.2
+   ]
+  },
+  "kanton": {
+   "acquisitions": 123,
+   "mm_per_yr": 52.0,
+   "ci": [
+    10.6,
+    98.8
+   ]
+  },
+  "kapingamarangi": {
+   "acquisitions": 321,
+   "mm_per_yr": 18.1,
+   "ci": [
+    -5.2,
+    42.1
+   ]
+  },
+  "kiritimati": {
+   "acquisitions": 1211,
+   "mm_per_yr": 3.7,
+   "ci": [
+    -0.9,
+    8.5
+   ]
+  },
+  "kwajalein": {
+   "acquisitions": 1415,
+   "mm_per_yr": -3.3,
+   "ci": [
+    -10.4,
+    3.6
+   ]
+  },
+  "majuro": {
+   "acquisitions": 1026,
+   "mm_per_yr": 1.7,
+   "ci": [
+    -7.1,
+    10.2
+   ]
+  },
+  "penrhyn": {
+   "acquisitions": 887,
+   "mm_per_yr": -0.9,
+   "ci": [
+    -3.4,
+    1.5
+   ]
+  },
+  "tarawa": {
+   "acquisitions": 406,
+   "mm_per_yr": 1.5,
+   "ci": [
+    -22.0,
+    23.9
+   ]
+  }
+ },
+ "s2_span": {
+  "funafuti": {
+   "first": "2019-10-24",
+   "last": "2026-09-17"
+  },
+  "kanton": {
+   "first": "2022-10-04",
+   "last": "2026-08-14"
+  },
+  "kapingamarangi": {
+   "first": "2022-06-16",
+   "last": "2026-08-29"
+  },
+  "kiritimati": {
+   "first": "2018-06-07",
+   "last": "2026-09-28"
+  },
+  "kwajalein": {
+   "first": "2017-01-05",
+   "last": "2026-09-20"
+  },
+  "majuro": {
+   "first": "2017-01-19",
+   "last": "2026-09-19"
+  },
+  "penrhyn": {
+   "first": "2017-01-10",
+   "last": "2026-09-10"
+  },
+  "tarawa": {
+   "first": "2019-10-23",
+   "last": "2026-09-26"
+  }
+ },
+ "e1_composition": {
+  "islets": 33,
+  "median_l7_images": 5.0,
+  "median_l8_images": 20.0,
+  "l5_images_total": 0,
+  "corr_e1_rate_vs_l8_l7_step": 0.66
+ },
+ "guard_by_atoll": {
+  "kwajalein": {
+   "islets": 4,
+   "mean_diff": 0.013
+  },
+  "majuro": {
+   "islets": 6,
+   "mean_diff": -0.928
+  },
+  "penrhyn": {
+   "islets": 1,
+   "mean_diff": -0.843
+  }
+ },
+ "h2_significant_slopes_only": {
+  "islets": 150,
+  "slopes_used": 126,
+  "mean_abs_bias": 0.816,
+  "ci": [
+   0.6649,
+   0.9747
+  ],
+  "by_atoll_rate": {
+   "funafuti": 1.239,
+   "kiritimati": 0.652,
+   "kwajalein": -0.091,
+   "majuro": 0.818,
+   "penrhyn": 0.395,
+   "tarawa": 0.182
+  }
+ },
+ "e2_ndwi_rate_by_atoll": {
+  "funafuti": {
+   "islets": 17,
+   "mean_rate": 0.775
+  },
+  "kiritimati": {
+   "islets": 2,
+   "mean_rate": -0.201
+  },
+  "kwajalein": {
+   "islets": 52,
+   "mean_rate": -0.248
+  },
+  "majuro": {
+   "islets": 29,
+   "mean_rate": 0.348
+  },
+  "penrhyn": {
+   "islets": 31,
+   "mean_rate": 0.303
+  },
+  "tarawa": {
+   "islets": 21,
+   "mean_rate": 0.298
+  }
+ }
+}

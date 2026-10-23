@@ -1,0 +1,152 @@
+{
+ "qa_d5": {
+  "features_measured": 361,
+  "retained": 228,
+  "failed_land_screen": 133,
+  "possible_loss": [
+   "kwajalein_078"
+  ],
+  "values_set_aside_share": {
+   "area_otsu_s2": 0.0062,
+   "area_otsu_landsat": 0.0226,
+   "area_fixed_s2": 0.0168,
+   "area_fixed_landsat": 0.227,
+   "area_ndwi_s2": 0.0151,
+   "area_ndwi_landsat": 0.0208,
+   "area_otsu_30m_s2": 0.0066,
+   "area_otsu_30m_landsat": null
+  },
+  "retained_by_atoll": {
+   "funafuti": 20,
+   "kanton": 1,
+   "kapingamarangi": 18,
+   "kiritimati": 3,
+   "kwajalein": 83,
+   "majuro": 35,
+   "penrhyn": 37,
+   "tarawa": 31
+  },
+  "failed_by_atoll": {
+   "kiritimati": 3,
+   "kwajalein": 3,
+   "penrhyn": 126,
+   "tarawa": 1
+  },
+  "median_s2_to_osm_retained": 1.139,
+  "not_measured_ge_1ha": []
+ },
+ "scenes_used": {
+  "E1": 27401,
+  "E2": 161845,
+  "guard_ls": 25687,
+  "guard_s2_30m": 75770
+ },
+ "levels_missing_share": 0.0174,
+ "guard": {
+  "islets": 11,
+  "mean_diff": 1.8082,
+  "ci": [
+   1.0183,
+   2.6296
+  ],
+  "valid": false
+ },
+ "H1": {
+  "islets": 33,
+  "atolls": 4,
+  "mean_rate_E1": 0.0966,
+  "mean_rate_E2": -0.331,
+  "D": -0.4276,
+  "ci": [
+   -1.8856,
+   0.9678
+  ],
+  "mixed_model": {
+   "estimate": -0.4487,
+   "ci": [
+    -2.1712,
+    1.2738
+   ]
+  },
+  "verdict": "not testable (sensor-step guard fails)",
+  "verdict_ignoring_guard": "Inconclusive"
+ },
+ "H2": {
+  "islets": 150,
+  "mean_abs_bias": 2.0835,
+  "ci": [
+   1.567,
+   2.649
+  ],
+  "mean_signed_bias": -0.2759,
+  "verdict": "Supported"
+ },
+ "by_atoll_E2": {
+  "funafuti": {
+   "islets": 16,
+   "mean_rate": 0.9439
+  },
+  "kiritimati": {
+   "islets": 2,
+   "mean_rate": -2.3018
+  },
+  "kwajalein": {
+   "islets": 52,
+   "mean_rate": -0.6537
+  },
+  "majuro": {
+   "islets": 29,
+   "mean_rate": -0.1589
+  },
+  "penrhyn": {
+   "islets": 31,
+   "mean_rate": 0.081
+  },
+  "tarawa": {
+   "islets": 20,
+   "mean_rate": -0.8084
+  }
+ },
+ "engineered_E2": {
+  "islets": 23,
+  "mean_rate": -0.5795
+ },
+ "sensitivity": {
+  "area_fixed": {
+   "islets": 19,
+   "D": -0.8225,
+   "ci": [
+    -1.9682,
+    0.1019
+   ]
+  },
+  "area_ndwi": {
+   "islets": 33,
+   "D": -0.1494,
+   "ci": [
+    -1.2337,
+    0.866
+   ]
+  },
+  "robust_tide_slope": {
+   "islets": 33,
+   "D": -0.7022,
+   "ci": [
+    -2.1783,
+    0.6351
+   ]
+  },
+  "with_possible_loss_features": {
+   "islets": 33,
+   "D": -0.4276,
+   "ci": [
+    -1.8856,
+    0.9678
+   ]
+  },
+  "E2_islets_1_to_5_ha": {
+   "islets": 79,
+   "mean_rate": -0.0145
+  }
+ }
+}

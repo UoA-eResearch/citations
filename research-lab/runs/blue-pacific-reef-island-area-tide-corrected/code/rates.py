@@ -43,7 +43,10 @@ def load_areas():
     a["time"] = pd.to_datetime(a.datetime, utc=True, format="ISO8601")
     # one row per islet and acquisition (overlapping Sentinel-2 tiles list the same pass twice)
     a["tmin"] = a.time.dt.floor("min")
-    a = a.sort_values(["aoi_pixels", "clear"], ascending=False).drop_duplicates(["islet", "sensor", "tmin"])
+    # D7: for Landsat Collection 1, keep the final tier of an acquisition (T1, then T2, then Real-Time RT)
+    a["tier_rank"] = a.scene.astype(str).str[-2:].map({"T1": 0, "T2": 1, "RT": 2}).fillna(0)
+    a = a.sort_values(["tier_rank", "aoi_pixels", "clear"], ascending=[True, False, False]) \
+         .drop_duplicates(["islet", "sensor", "tmin"])
     return a
 
 
@@ -116,9 +119,11 @@ def attach_levels(a):
 
 
 def theil_sen(t, y):
+    """Median of pairwise slopes over every pair with distinct times (D7: the earlier dt > 0 mask on unsorted rows
+    dropped about half of the pairs)."""
     i, j = np.triu_indices(len(t), 1)
     dt = t[j] - t[i]
-    m = dt > 1e-6
+    m = np.abs(dt) > 1e-6
     return float(np.median((y[j] - y[i])[m] / dt[m])) if m.any() else np.nan
 
 
@@ -181,13 +186,15 @@ def main():
           "retained_by_atoll": {k: int(v) for k, v in ls_[ls_.retained].groupby("atoll").size().items()},
           "failed_by_atoll": {k: int(v) for k, v in ls_[~ls_.retained].groupby("atoll").size().items()},
           "median_s2_to_osm_retained": round(float(ls_[ls_.retained].median_s2_to_osm.median()), 3),
-          "not_measured_ge_1ha": sorted(set(inv.index[inv.area_ha >= 1]) - set(a_all.islet))}
+          "not_measured_by_s2_ge_1ha": sorted(set(inv.index[inv.area_ha >= 1]) - set(a_all[(a_all.sensor == "s2") & a_all.area_otsu.notna()].islet))}
     is_s2 = a.sensor == "s2"
     l1 = a.sensor.isin(["LT05", "LE07", "LC08"])        # Collection 1 Level-1 (D1)
     fams = {
         "E1": a[l1 & (a.year <= 2015)],
         "E2": a[is_s2],
-        "guard_ls": a[(a.sensor == "LC08") & (a.year >= 2016) & (a.year <= 2021)],
+        # D7: the Landsat side of the guard is restricted to each islet's Sentinel-2 window
+        "guard_ls": a[(a.sensor == "LC08") & (a.year >= 2016) & (a.year <= 2021)
+                      & (a.time >= a.islet.map(a[is_s2].groupby("islet").time.min()))],
         "guard_s2_30m": a[is_s2 & (a.year >= 2016) & (a.year <= 2021)],
     }
     series = {"E1": ["area_otsu", "area_fixed", "area_ndwi"], "E2": ["area_otsu", "area_fixed", "area_ndwi"],

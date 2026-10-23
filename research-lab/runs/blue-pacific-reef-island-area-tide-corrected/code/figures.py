@@ -50,11 +50,11 @@ def f1():
     ax[1].scatter(x.beta_pct_per_m * x.level_trend_m_yr, x.bias, s=14, color=BLUE, alpha=0.75, edgecolor=SURF,
                   lw=0.5, zorder=2)
     ax[1].set_xlabel("tide slope x overpass water-level trend (%/yr)"); ax[1].set_ylabel("uncorrected minus corrected (%/yr)")
-    ax[1].set_title(f"b  bias tracks the sampled water level (r = {h['corr_bias_vs_predicted']:.2f})", loc="left",
+    ax[1].set_title("b  the difference is tide slope x sampled-level trend (an identity)", loc="left",
                     fontsize=9.5, color=INK)
     for a in ax:
         a.grid(color=GRID, lw=0.5)
-    fig.suptitle("Tide correction changes Sentinel-2-era islet rates by about 2%/yr", x=0.02, ha="left",
+    fig.suptitle("Tide correction changes Sentinel-2-era islet rates by about 1%/yr", x=0.02, ha="left",
                  fontsize=10.5, color=INK)
     fig.savefig(F / "F1_tide_bias.png", dpi=170); plt.close(fig)
     caption("F1_tide_bias", f"""Each point is a retained, non-engineered islet of at least 1 ha with a Sentinel-2
@@ -62,8 +62,9 @@ def f1():
     each islet's tide response; the dashed line is equality. The mean absolute difference is
     {h['mean_abs_bias']:.2f}%/yr (H2, preregistered); with water levels permuted within each islet it is
     {h['mean_abs_bias_under_permuted_levels']:.2f}%/yr (post hoc noise floor). (b) The difference against the islet's
-    tide slope (% of area per metre) times the Theil-Sen trend of the gauge water level at the image times; the
-    sampled water level drifts by tens of millimetres a year at some atolls over the decade, and the bias follows.
+    tide slope (% of area per metre) times the Theil-Sen trend of the gauge water level at that islet's own usable
+    images. This relation is an identity of the correction, not evidence of a mechanism: each islet's finite sample of
+    overpass tide levels has a chance trend, and the uncorrected rate carries it.
     {int(((x.rate_corr.abs() > 12) | (x.rate_uncorr.abs() > 12)).sum())} islets lie outside the axes of (a).""")
 
 

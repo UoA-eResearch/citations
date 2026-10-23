@@ -1,0 +1,309 @@
+E2 primary set: 150 islets; atolls {'kwajalein': 52, 'penrhyn': 31, 'majuro': 29, 'tarawa': 20, 'funafuti': 16, 'kiritimati': 2}
+
+=== A. area-level correlation by lag (hours added to the image time), E2 primary islets, pooled within-islet z-scores
+     atoll    n  r_lag0  best_lag_h  r_best    r-3    r-2    r-1    r+1    r+2    r+3
+  funafuti 1073  -0.895           0  -0.895  0.725 -0.803  0.601  0.657 -0.704  0.632
+kiritimati   84   0.001          -3  -0.126 -0.126  0.149 -0.012 -0.035 -0.081  0.053
+ kwajalein 3615  -0.811           0  -0.811  0.639 -0.621  0.591  0.524 -0.590  0.567
+    majuro 2786  -0.732           0  -0.732  0.546 -0.598  0.473  0.505 -0.506  0.507
+   penrhyn 3360  -0.535           0  -0.535 -0.006 -0.246 -0.040  0.023 -0.237  0.087
+    tarawa 1914   0.093           5  -0.166 -0.087  0.137 -0.133 -0.149  0.205 -0.146
+per-islet corr(area, level) at lag 0, by atoll: median, share r<-0.3, share r>+0.3
+            median   neg   pos   n
+atoll                             
+funafuti     -0.91  1.00  0.00  16
+kiritimati    0.18  0.00  0.50   2
+kwajalein    -0.87  0.94  0.00  52
+majuro       -0.78  0.93  0.03  29
+penrhyn      -0.55  0.90  0.00  31
+tarawa        0.28  0.15  0.45  20
+pooled lag-0 correlation with area_fixed: {'funafuti': -0.862, 'kiritimati': 0.128, 'kwajalein': -0.776, 'majuro': -0.8, 'penrhyn': -0.494, 'tarawa': -0.373}
+pooled lag-0 correlation with area_ndwi: {'funafuti': -0.843, 'kiritimati': -0.252, 'kwajalein': -0.865, 'majuro': -0.652, 'penrhyn': -0.643, 'tarawa': -0.326}
+pooled lag-0 correlation with area_otsu_30m: {'funafuti': -0.874, 'kiritimati': 0.013, 'kwajalein': -0.774, 'majuro': -0.713, 'penrhyn': -0.467, 'tarawa': 0.068}
+Tarawa and Kiritimati per islet (E2 primary):
+         islet     ha   n  r_otsu  r_fixed  r_ndwi  beta_pct_m  otsu_over_osm  fixed_over_osm  otsu_t  cv_otsu  rate_corr  rate_uncorr
+kiritimati_001  36.04  20    0.53     0.29   -0.67       20.71           0.92            0.83    0.19     0.09      -6.67        -1.44
+kiritimati_003  19.39  64   -0.16     0.08   -0.11      -13.83           0.98            1.41   -0.19     0.17       2.07         2.39
+    tarawa_007 105.80  47    0.64    -0.44    0.38        1.92           0.97            0.93    0.14     0.01      -0.06         0.15
+    tarawa_012  38.71  81    0.46    -0.48   -0.70        1.83           1.06            1.03    0.06     0.02      -0.02        -0.12
+    tarawa_013  37.02  57   -0.15    -0.47    0.07       -1.58           1.12            1.00    0.16     0.04      -0.76        -0.82
+    tarawa_015  21.16  67    0.73     0.24    0.60       62.33           0.75            0.69    0.08     0.36      -8.17        -7.54
+    tarawa_016  18.99  75    0.47    -0.37   -0.06       11.29           1.28            1.38   -0.05     0.07      -1.63        -2.17
+    tarawa_017  17.66  96   -0.08    -0.57   -0.26       -0.83           1.08            0.99    0.13     0.04      -2.37        -2.25
+    tarawa_018  15.54  51    0.61    -0.37   -0.26       19.08           1.57            1.58    0.03     0.07       1.91         3.19
+    tarawa_019  11.83  73    0.35    -0.25    0.79        9.19           1.23            1.33   -0.04     0.08       0.36        -1.61
+    tarawa_020   8.83  81   -0.30    -0.20   -0.84       -8.11           1.60            1.21    0.20     0.07      -1.16        -0.68
+    tarawa_021   8.53 113    0.60     0.05    0.38       21.51           1.18            0.99    0.10     0.12      -2.01        -4.28
+    tarawa_022   7.51  98    0.70     0.01   -0.84       19.68           1.05            1.02    0.02     0.11      -2.51        -1.33
+    tarawa_023   5.88 119    0.02    -0.71   -0.68        0.30           0.85            0.66    0.22     0.08      -0.22        -0.12
+    tarawa_024   4.49 135    0.28    -0.56    0.60        4.93           1.69            1.73   -0.01     0.04      -0.39        -1.26
+    tarawa_025   3.43  76   -0.02    -0.35   -0.68       -0.99           1.99            1.60    0.14     0.08       1.15         1.16
+    tarawa_026   2.01 121   -0.70    -0.62   -0.86      -19.86           1.82            1.49    0.18     0.07      -1.46        -1.28
+    tarawa_027   1.97 117    0.61    -0.07   -0.61       59.93           2.16            2.41   -0.03     0.18       5.86        -5.87
+    tarawa_028   1.85 178   -0.59    -0.65   -0.69      -26.28           1.48            1.17    0.21     0.12       0.48         1.16
+    tarawa_030   1.52 102    0.28    -0.48   -0.84       29.32           2.17            2.26    0.02     0.19       2.90        -0.28
+    tarawa_031   1.45 131   -0.52    -0.23   -0.52      -35.82           2.80            1.61    0.31     0.10      -7.98       -11.62
+    tarawa_032   1.00  96   -0.03    -0.45    0.01       -1.45           2.78            2.53    0.09     0.06      -0.07         0.00
+for comparison, Funafuti per islet:
+       islet    ha   n  r_otsu  beta_pct_m  otsu_over_osm  fixed_over_osm  otsu_t  cv_otsu
+funafuti_001 43.65  53   -0.96      -45.73           1.05            0.81    0.28     0.17
+funafuti_003 14.69  30   -0.72      -35.07           1.12            0.92    0.19     0.16
+funafuti_004 13.33  28   -0.94      -82.57           0.97            0.66    0.32     0.25
+funafuti_005 12.87  39   -0.89      -20.12           0.91            0.75    0.26     0.11
+funafuti_007  7.27  84   -0.91      -64.76           1.05            0.73    0.26     0.26
+funafuti_009  5.43  73   -0.91      -76.58           1.85            1.04    0.34     0.20
+funafuti_010  5.37  72   -0.90      -68.36           1.49            1.17    0.22     0.22
+funafuti_011  4.65  55   -0.92      -40.98           1.05            0.55    0.36     0.17
+funafuti_012  3.91 142   -0.93      -53.83           1.29            1.09    0.19     0.18
+funafuti_013  3.22 136   -0.92     -100.39           1.37            1.05    0.21     0.30
+funafuti_014  2.25  56   -0.72      -36.85           1.19            0.71    0.36     0.19
+funafuti_015  2.01  74   -0.91     -106.88           1.41            1.13    0.24     0.31
+funafuti_016  1.90  70   -0.88      -90.42           2.47            2.13    0.15     0.19
+funafuti_017  1.80  37   -0.92     -140.75           1.52            0.67    0.38     0.35
+funafuti_018  1.24  40   -0.82     -106.46           2.27            1.88    0.23     0.23
+funafuti_019  1.10  84   -0.89     -211.08           2.05            1.34    0.24     0.46
+
+=== B. per atoll: trend of the water level at image times vs the gauge's own trend over the same window (mm/yr)
+     atoll  images                 window  ts_level_at_images  boot95  ts_dailymean_on_image_days  ts_tidal_anomaly_at_images  ols_gauge_monthly_means  ts_gauge_monthly_means  mean_hour_utc
+  funafuti     269 2019-10-24..2026-08-28               -21.0 -64..13                        -7.4                       -15.7                     -8.3                    -9.6           22.5
+kiritimati      74 2018-06-07..2026-05-11               -15.1 -42..15                        -4.2                        -1.6                     -6.7                    -7.6           21.1
+ kwajalein     590 2017-01-05..2026-08-26                -5.5  -20..9                         1.3                        -6.6                      0.3                     0.4           23.4
+    majuro     435 2017-01-19..2026-08-30               -11.2  -26..9                        -1.2                        -8.8                     -3.6                    -2.6           23.1
+   penrhyn     561 2017-01-10..2026-08-21                -2.8   -8..1                        -2.0                        -1.2                      0.2                    -0.8           21.0
+    tarawa     296 2019-10-23..2026-08-27               -12.1 -52..25                        10.0                       -19.7                      5.6                     6.8           22.9
+
+gauge annual means (mm, relative to the 1999-2026 mean), hours, FD share -- the RQ->FD seam is where fd goes 0->1
+         mean                                                  fd                                           
+     funafuti kiritimati kwajalein majuro penrhyn tarawa funafuti kiritimati kwajalein majuro penrhyn tarawa
+time                                                                                                        
+2014     50.0       77.0     -24.0  -28.0    58.0   59.0      0.0        0.0       0.0    0.0     0.0    0.0
+2015     39.0      113.0    -128.0 -125.0    78.0   67.0      0.0        0.0       0.0    0.0     0.0    0.0
+2016    -28.0      154.0       7.0   55.0    53.0  -63.0      0.0        0.0       0.0    0.0     0.0    0.0
+2017     43.0      -25.0      41.0   44.0    -4.0   -3.0      0.0        0.0       0.0    0.0     0.0    0.0
+2018    103.0       74.0     -27.0   27.0    43.0   72.0      0.0        0.0       0.0    0.0     0.0    0.0
+2019     78.0       56.0      23.0   52.0    70.0   79.0      0.0        0.0       0.0    0.0     0.0    0.0
+2020     96.0        1.0      11.0   31.0    39.0   -6.0      0.0        0.0       0.0    0.0     0.0    0.0
+2021     79.0       -7.0      49.0   48.0     3.0    5.0      0.0        0.0       0.0    0.0     0.0    0.0
+2022     85.0       13.0      36.0   37.0    -2.0   20.0      1.0        0.0       1.0    1.0     0.0    1.0
+2023     52.0       91.0      25.0    2.0    10.0   77.0      1.0        0.0       1.0    1.0     0.0    1.0
+2024     41.0      -11.0       4.0    2.0    79.0  -22.0      1.0        0.0       1.0    1.0     0.0    1.0
+2025     66.0      -26.0      60.0   46.0    20.0    7.0      1.0        1.0       1.0    1.0     1.0    1.0
+2026     67.0      175.0     -29.0  -15.0    28.0  104.0      1.0        1.0       1.0    1.0     1.0    1.0
+
+=== C. tide regression variants on the E2 primary set: two-step OLS (study), joint area~level+time, quadratic in level
+islets: 150
+mean |uncorr-corr| (H2 stat): two-step 2.084  joint 2.049  quadratic 2.172
+pooled mean corrected rate: two-step -0.278  joint -0.270  quadratic -0.308;  mean |joint-two-step| 0.067, mean |quad-two-step| 0.378
+beta two-step vs joint: median |diff| 0.5 %/m; corr 0.999
+quadratic term |t|>2.6 (p<0.01) in 25% of islets; median curvature index -0.88% of area (top vs middle level tertile); median R2 linear 0.58
+             n   beta    r2  curv  sig_quad  rate_corr  rate_joint  rate_quad  lvl_range
+atoll                                                                                   
+funafuti    16 -72.47  0.83 -0.28      0.38       0.94        1.01       0.73       1.49
+kiritimati   2   3.44  0.15  0.94      0.00      -2.30       -2.28      -2.91       0.75
+kwajalein   52 -34.64  0.76 -0.48      0.21      -0.65       -0.68      -0.57       1.17
+majuro      29 -53.84  0.61 -2.95      0.45      -0.16       -0.18      -0.30       1.31
+penrhyn     31 -57.22  0.30 -0.11      0.06       0.08        0.14       0.11       0.43
+tarawa      20   1.88  0.22 -2.67      0.30      -0.81       -0.79      -0.86       1.50
+by size: mean |bias| two-step / quadratic; mean corrected rate two-step / quadratic
+                         n  abs_bias  abs_bias_quad  median_abs_bias   rate  rate_quad  median_beta
+area_ha                                                                                            
+(0.0, 5.0]            79.0     3.171          3.299            2.116 -0.014     -0.093      -63.128
+(5.0, 20.0]           52.0     0.732          0.760            0.481 -0.368     -0.320      -23.292
+(20.0, 1000000000.0]  19.0     1.263          1.347            0.631 -1.131     -1.170      -17.295
+tide slope positive (wrong sign) in 14 of 150 islets; not significantly negative (t > -2) in 24; by atoll:
+             n  beta_pos  not_sig
+atoll                            
+funafuti    16         0        0
+kiritimati   2         1        2
+kwajalein   52         0        2
+majuro      29         1        1
+penrhyn     31         0        3
+tarawa      20        12       16
+islets with positive beta: mean |uncorr-corr| 2.28, mean corrected rate -0.54, mean uncorrected rate -1.21
+with the slope set to 0 unless significantly negative: H2 mean |bias| 1.855 CI [1.3592, 2.4164]; pooled corrected rate -0.350; by atoll {'funafuti': 0.94, 'kiritimati': 0.47, 'kwajalein': -0.68, 'majuro': -0.07, 'penrhyn': 0.07, 'tarawa': -1.66}
+H2 on >=5 ha only: n 71 mean |bias| 0.874  CI [0.6495, 1.1488]
+
+=== D. H2: bias against beta x level trend (near-identity?)
+corr(bias, beta x TS level trend) = 0.967; regression slope 1.02; mean |bias - pred| 0.606 vs mean |bias| 2.084
+per-islet TS trend of level at that islet's own image times (recomputed) vs h2_diagnostics_islets.csv; and the union-of-acquisitions value above
+            n_islets  median_recomputed  median_study    p10    p90   first    last
+atoll                                                                              
+funafuti          16              -19.2         -19.2 -118.8  102.2  2019.0  2026.0
+kiritimati         2               33.0          33.0   -2.6   68.5  2018.0  2026.0
+kwajalein         52                2.2           2.2  -40.0   89.9  2017.0  2026.0
+majuro            29               22.2          22.2  -32.5   62.8  2017.0  2026.0
+penrhyn           31               -5.2          -5.2  -15.7    9.8  2017.0  2026.0
+tarawa            20              -25.2         -25.2 -168.1   61.6  2019.0  2026.0
+max |recomputed - study| per islet: 0.00 mm/yr
+the same with OLS instead of Theil-Sen (exact identity expected):
+corr 1.0000
+noise floor with beta kept (SE(beta) x |level trend|), mean over islets:
+0.203 %/yr
+
+=== E. the sensor-step guard
+baseline guard set (20 scenes, 4.5 y):
+        islet     atoll  area_ha  n_ls  n_s2  span_ls  span_s2  rate_ls  rate_s2  beta_ls  beta_s2  diff
+   majuro_004    majuro    30.45    52    68     5.87     4.91     0.68    -0.09   -24.03   -19.98  0.76
+   majuro_005    majuro    15.10    56    55     5.87     4.94     0.92    -0.73   -34.78   -28.34  1.65
+   majuro_006    majuro    14.43    54    87     5.82     4.94     0.72    -1.40   -11.53   -19.09  2.12
+   majuro_008    majuro     9.02    51    45     5.82     4.89     0.05    -0.77   -36.04   -19.47  0.82
+   majuro_010    majuro     7.24    60    58     5.82     4.90     0.79    -4.60   -40.81   -52.25  5.39
+   majuro_011    majuro     6.39    57   136     5.82     4.94    -1.11    -0.96   -44.90   -41.73 -0.15
+kwajalein_012 kwajalein    36.08    30   105     5.47     4.98    -1.30    -0.22   -29.98   -19.11 -1.08
+kwajalein_016 kwajalein    27.18    25    73     5.56     4.97    -0.35    -1.72   -22.54   -25.58  1.37
+kwajalein_026 kwajalein    20.54    26    44     5.56     4.97     1.12    -1.24   -18.87   -24.32  2.37
+kwajalein_030 kwajalein    15.68    25    54     5.56     4.94     1.30    -0.47    -2.85   -27.00  1.77
+kwajalein_031 kwajalein    15.15    54    56     5.87     4.83    -2.26    -1.85   -41.72   -24.86 -0.41
+kwajalein_045 kwajalein     9.80    44    40     5.47     4.94     1.91    -1.21   -58.75   -27.27  3.13
+  penrhyn_037   penrhyn     6.24    46   105     5.82     4.65    -0.21     1.37    10.32    -8.02 -1.59
+mean diff 1.241 CI [0.456, 2.0733]
+
+scan over minimum scenes x minimum span:
+  min_scenes 15 min_span 3.0: islets  44  mean diff +1.23  CI [0.5084, 1.881]  atolls {'kwajalein': 26, 'penrhyn': 9, 'majuro': 8, 'kiritimati': 1}  median diff +0.58
+  min_scenes 15 min_span 3.5: islets  38  mean diff +0.92  CI [0.1724, 1.629]  atolls {'kwajalein': 24, 'majuro': 8, 'penrhyn': 6}  median diff +0.74
+  min_scenes 15 min_span 4.0: islets  27  mean diff +1.04  CI [0.3374, 1.713]  atolls {'kwajalein': 15, 'majuro': 6, 'penrhyn': 6}  median diff +0.82
+  min_scenes 15 min_span 4.5: islets  13  mean diff +1.24  CI [0.456, 2.0733]  atolls {'majuro': 6, 'kwajalein': 6, 'penrhyn': 1}  median diff +1.37
+  min_scenes 15 min_span 5.0: 0 islets
+  min_scenes 15 min_span 5.5: 0 islets
+  min_scenes 20 min_span 3.0: islets  38  mean diff +0.86  CI [0.0704, 1.6379]  atolls {'kwajalein': 24, 'penrhyn': 8, 'majuro': 6}  median diff +0.74
+  min_scenes 20 min_span 3.5: islets  35  mean diff +0.92  CI [0.1005, 1.6992]  atolls {'kwajalein': 23, 'majuro': 6, 'penrhyn': 6}  median diff +0.76
+  min_scenes 20 min_span 4.0: islets  27  mean diff +1.04  CI [0.3374, 1.713]  atolls {'kwajalein': 15, 'majuro': 6, 'penrhyn': 6}  median diff +0.82
+  min_scenes 20 min_span 4.5: islets  13  mean diff +1.24  CI [0.456, 2.0733]  atolls {'majuro': 6, 'kwajalein': 6, 'penrhyn': 1}  median diff +1.37
+  min_scenes 20 min_span 5.0: 0 islets
+  min_scenes 20 min_span 5.5: 0 islets
+
+S2 at 10 m vs S2 at 30 m for the same islets/window (same scenes): mean (30m - 10m) -0.096; mean (LS - S2_10m) 1.145
+
+Landsat 8 scenes used by the 13 guard islets, tier by year:
+tier  RT  T1  T2
+year            
+2016   0  45  39
+2017  42  35  18
+2018  85  32   2
+2019  34  10   8
+2020  74  28  10
+2021  78  31   9
+tier of the row kept after de-duplication by acquisition minute (all LC08 2016-2021 rows, guard islets): {'RT': 313, 'T1': 181, 'T2': 86}
+LC08 rows per (islet, acquisition minute) after load_areas dedup: max 1 (load_areas already dedups; raw parquet check below)
+raw LC08 (islet, acquisition) tier combinations: {'RT+T2': 29732, 'T2': 23760, 'RT+T1': 12020, 'T1': 10249, 'RT+T1+T2': 1357, 'T1+T2': 943, 'RT': 41}
+
+normalised corrected area by tier within the guard islets (tier mean minus islet mean, % of OSM area):
+      islets  scenes  mean_dev  median_dev
+tier                                      
+RT      13.0   313.0      0.06        0.57
+T1      12.0   181.0     -1.52       -0.65
+T2      13.0    86.0      3.71        1.82
+
+guard with T1-only Landsat 8 scenes:
+  islets 1 mean diff (np.float64(-0.195), [-0.1946, -0.1946])
+guard without RT scenes: islets 8 mean diff (np.float64(2.238), [0.1508, 4.5764])
+guard without RT scenes, min 15 scenes: islets 11 mean diff (np.float64(1.612), [-0.0353, 3.4049])
+
+year means of normalised corrected area, Landsat 8 vs S2-30m, averaged over the 13 guard islets (% of OSM area, islet-demeaned):
+       islets       scenes          dev      
+sensor     LS    S2     LS     S2    LS    S2
+year                                         
+2016     13.0   NaN   84.0    NaN  0.53   NaN
+2017     13.0  13.0   95.0   82.0  0.99 -2.29
+2018     13.0  13.0  119.0  201.0  0.57 -1.18
+2019     12.0  13.0   52.0  229.0  5.37  2.41
+2020     13.0  13.0  112.0  178.0 -2.60 -0.46
+2021     13.0  13.0  118.0  236.0  0.00 -0.12
+mean normalised area level (uncorrected for tide) LS vs S2-30m, guard islets: {'LS': 119.7, 'S2': 102.6}
+
+=== F. E1 (1999-2015): a Landsat 7 -> Landsat 8 step inside the early epoch?
+H1 islets: 33 {'kwajalein': 23, 'majuro': 6, 'funafuti': 2, 'penrhyn': 2}
+E1 usable scenes for the H1 islets by platform and period:
+period  1999-2003  2004-2012  2013-2015
+sensor                                 
+LC08            0          0        705
+LE07          101         81          4
+tier     T1   T2
+sensor          
+LC08    483  222
+LE07     54  132
+         n   n_l7   n_l8  n_l5  rate_ts  ols_trend  ols_trend_with_platform_fe  l8_step_pct  l8_minus_l7_mean_nc  resid_sd_pct
+mean  27.0   5.64  21.36   0.0    -0.48       0.14                        0.46        -2.92                 1.36         20.46
+50%   26.0   5.00  20.00   0.0     0.12       0.40                        0.04         3.88                 4.10         19.46
+min   20.0   1.00  13.00   0.0    -9.20      -4.82                       -5.40      -145.23               -61.41          3.78
+max   40.0  11.00  37.00   0.0     2.54       2.13                        8.42        70.09                21.59         58.51
+corr(E1 Theil-Sen rate, L8-minus-L7 corrected-area step) = 0.67; mean E1 rate -0.48 -> with a platform fixed effect (OLS) 0.46 (plain OLS 0.14)
+E1 Landsat residual SD after the tide fit, median 19% of OSM area (E2 Sentinel-2: 9%)
+
+=== G. Sentinel-2: a step at the processing-baseline change (2022-01-25)? islet-level mean of normalised corrected area, +/-2 y
+  cut 2020-01-25: islets 72, mean after-minus-before -0.42% of area (median -0.74); by atoll {'kiritimati': -0.06, 'kwajalein': -3.01, 'majuro': -2.15, 'penrhyn': 4.73}
+  cut 2022-01-25: islets 107, mean after-minus-before +1.35% of area (median +1.21); by atoll {'funafuti': 7.4, 'kiritimati': 7.47, 'kwajalein': 0.0, 'majuro': 3.87, 'penrhyn': 0.44, 'tarawa': -2.69}
+  cut 2024-01-25: islets 96, mean after-minus-before -1.24% of area (median -0.93); by atoll {'funafuti': -6.74, 'kiritimati': -1.41, 'kwajalein': -0.64, 'majuro': -1.56, 'penrhyn': -5.73, 'tarawa': 5.47}
+scene groups (boa_offset_applied/metadata offset) among used E2 records: {'True/-0.1': 10222, 'False/0.0': 2274, 'False/-0.1': 336}
+Otsu threshold and normalised area by offset group, islet-demeaned within the same calendar year (2022+ where groups coexist):
+               n  otsu_t_dm  nc_dm
+grp                               
+False/-0.1   336     -0.004 -3.829
+False/0.0     78      0.023 -3.913
+True/-0.1   6002     -0.000  0.265
+otsu_t by group overall (median): {'False/-0.1': 0.219, 'False/0.0': 0.255, 'True/-0.1': 0.229}
+
+=== H. the land screen (D5)
+land_share distribution by atoll (counts in bins):
+land_share      (-0.01, 0.05]  (0.05, 0.2]  (0.4, 0.5]  (0.5, 0.6]  (0.6, 0.8]  (0.8, 1.0]
+atoll                                                                                     
+funafuti                    0            0           0           0           0          20
+kanton                      0            0           0           0           0           1
+kapingamarangi              0            0           0           0           0          18
+kiritimati                  3            0           0           0           0           3
+kwajalein                   1            0           2           1           2          80
+majuro                      0            0           0           0           0          35
+penrhyn                   123            3           0           0           0          37
+tarawa                      1            0           0           0           0          31
+borderline features (0.3 < share < 0.7):
+                   atoll  osm_ha  scenes  land_share  median_s2_to_osm  share_2016_18  share_2024_26  retained
+islet                                                                                                         
+kwajalein_076  kwajalein    1.71     202        0.64              0.58           0.57           0.58      True
+kwajalein_077  kwajalein    1.42     113        0.65              2.11           0.69           0.59      True
+kwajalein_078  kwajalein    1.32      52        0.44              0.87           0.50           0.41     False
+kwajalein_083  kwajalein    1.09     147        0.41              1.39           0.38           0.39     False
+kwajalein_084  kwajalein    1.01      32        0.53              1.08           1.00           0.69      True
+non-retained features dry in >= half of 2024-26 scenes but not in 2016-18 (no 'possible gain' flag exists): 0 []
+removed features outside Penrhyn:
+                     atoll  osm_ha  scenes  land_share  median_s2_to_osm  share_2016_18  share_2024_26
+islet                                                                                                 
+kiritimati_004  kiritimati   13.43     125        0.00              0.90           0.00           0.00
+kiritimati_005  kiritimati    1.68     189        0.00              2.65           0.00           0.00
+kiritimati_006  kiritimati    1.49     137        0.00              1.87           0.00           0.00
+kwajalein_056    kwajalein    4.69      69        0.00              1.16           0.00           0.00
+kwajalein_078    kwajalein    1.32      52        0.44              0.87           0.50           0.41
+kwajalein_083    kwajalein    1.09     147        0.41              1.39           0.38           0.39
+tarawa_004          tarawa  181.04     158        0.00              0.13            NaN           0.00
+Penrhyn removed: median S2-Otsu/OSM ratio 1.17 (IQR 0.00-2.32); Penrhyn kept: 1.13
+retained islets < 5 ha: share of scenes 'dry' by level quartile: {'low': 0.995, 'midlow': 0.99, 'midhigh': 0.977, 'high': 0.951}
+borderline features: share 'dry' by level quartile: {'low': 0.946, 'midlow': 0.778, 'midhigh': 0.353, 'high': 0.048}
+kwajalein_078 by year: dry share and S2/OSM ratio
+year         2018  2019  2020  2021  2022  2023  2024  2025  2026
+n            4.00  7.00  6.00  5.00  8.00  5.00  5.00  7.00  5.00
+dry          0.50  0.29  0.33  0.80  0.38  0.60  0.40  0.43  0.40
+ratio        0.89  0.87  0.93  0.87  0.60  1.21  0.98  0.93  0.68
+fixed_ratio  0.10  0.02  0.00  0.11  0.03  0.30  0.10  0.05  0.00
+
+=== I. coverage and the report's numbers
+                 first        last  islets  span_y
+atoll                                             
+funafuti    2019-10-24  2026-08-28      16     6.8
+kiritimati  2018-06-07  2026-05-11       2     7.9
+kwajalein   2017-01-05  2026-08-26      52     9.6
+majuro      2017-01-19  2026-08-30      29     9.6
+penrhyn     2017-01-10  2026-08-21      31     9.6
+tarawa      2019-10-23  2026-08-27      20     6.8
+median per-islet span (years) in the E2 primary set by atoll: {'funafuti': 6.6, 'kiritimati': 7.7, 'kwajalein': 8.6, 'majuro': 9.4, 'penrhyn': 9.2, 'tarawa': 6.6}
+median usable images per islet: E2 primary 75; E1 (H1 islets) 26; E2 (H1 islets) 60
+pooled E2 corrected rate: mean -0.278 median -0.253 CI [-0.5864, 0.0372]
+inventory features >= 1 ha: 364 ; measured (land_screen rows): 361 ; never got an Otsu area: ['kanton_000', 'kiritimati_000', 'tarawa_000']
+engineered >= 1 ha: 38 non-engineered >= 1 ha: 326
+retained non-engineered >= 1 ha by atoll: {'funafuti': 18, 'kanton': 1, 'kapingamarangi': 16, 'kiritimati': 3, 'kwajalein': 67, 'majuro': 30, 'penrhyn': 36, 'tarawa': 22}
+of which with an E2 rate: {'kwajalein': 52, 'penrhyn': 31, 'majuro': 29, 'tarawa': 20, 'funafuti': 16, 'kiritimati': 2}
+1-5 ha count: [1,5) 79, (1,5] 76
+E2 usable images per year (primary islets, unique acquisitions per atoll summed): {2017: 69, 2018: 174, 2019: 234, 2020: 272, 2021: 310, 2022: 269, 2023: 255, 2024: 235, 2025: 247, 2026: 160}
+
+=== J. without the gross-failure filter
+islets 150; H2 mean |bias| 2.115 CI [1.5978, 2.6719]; pooled rate -0.314
+
+done
