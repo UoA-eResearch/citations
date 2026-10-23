@@ -28,8 +28,9 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-23 14:54 | `auckland-nz-2023-storms-estuary-mud-natural-experiment` | review, resumed |
 | 2026-10-23 15:21 | `auckland-nz-kauri-dieback-multitemporal-lidar` | review, resumed |
 | 2026-10-23 15:39 | `frontier-edge-asr-quantization-accent-parity` | review (H4 pending), resumed; last run under the exception |
+| `energy-nz-edb-quality-standard-ratchet` | fb7efde | H1 Inconclusive (no national trend, -0.7%/yr), H2 Inconclusive, H3 Supported (major-event rule changes 3 of 15 distributors' exceedance years); reset target rise mostly outcomes (+104 of +115 min) | queued (review/prompt.md) |
 
-**The owner's exception ended at 16:00 on 2026-10-23; the 1-per-5 h rule applies again. Next Fable run not before 2026-10-23 20:39.** Order: confirmations of DSI (b0149e2), reef (d7c2ace), estuary (3dd86a7), kauri (920bde5) and retraction risk (6d4c885), one per 5 h slot; then the ASR confirmation once its fixes (after H4) are in.
+**The owner's exception ended at 16:00 on 2026-10-23; the 1-per-5 h rule applies again. Next Fable run not before 2026-10-23 20:39.** Order: confirmations of DSI (b0149e2), reef (d7c2ace), estuary (3dd86a7), kauri (920bde5) and retraction risk (6d4c885), one per 5 h slot; then the ASR confirmation once its fixes (after H4) are in; then the EDB ratchet review (fb7efde).
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
