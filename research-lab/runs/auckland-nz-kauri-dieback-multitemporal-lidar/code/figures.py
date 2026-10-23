@@ -38,19 +38,21 @@ def f1(p):
             ax.plot([lo, hi], [i + off] * 2, color=col, lw=1.6)
             ax.plot(r[key], i + off, "o", color=col, ms=5, label=["LiDAR change", "static", "static + change"][k] if i == 0 else None)
     ax.set_yticks(range(len(rows))); ax.set_yticklabels([f"{l} ({r['positives']}/{r['n']})" for l, r in rows], fontsize=8)
-    ax.invert_yaxis(); ax.set_xlim(0.3, 0.85); ax.set_xlabel("AUC, spatially blocked cross-validation (95% block bootstrap)")
+    ax.invert_yaxis(); ax.set_xlim(0.3, 0.85); ax.set_xlabel("AUC within test folds, spatially blocked CV (95% block bootstrap)")
     ax.grid(axis="x", color=GRID, lw=0.5); ax.legend(frameon=False, fontsize=8, loc="lower right")
     ax.text(0.705, -0.6, "H1 bar", fontsize=7.5, color=BLUE)
     fig.suptitle("Crown change from repeat LiDAR does not pick out kauri graded symptomatic", x=0.02, ha="left",
                  fontsize=10.5, color=INK)
     fig.savefig(F / "F1_auc.png", dpi=170); plt.close(fig)
     pr = p["primary"]
-    caption("F1_auc", f"""Out-of-fold AUC (logistic regression, 500 m blocks, 5-fold, 5 repeats) for trees graded
+    caption("F1_auc", f"""AUC computed within each test fold and averaged (D1; logistic regression, 500 m blocks, 5-fold, 5 repeats) for trees graded
     possible or severe kauri dieback (status 3-4) against non-symptomatic (status 1). Change features: P95, P50 and
     cover above 15 m of the canopy height model within 15 m of each tree, 2024 minus 2016-18. Static: elevation, slope,
     2016-18 P95 and distance to the nearest track. Labels in brackets: symptomatic / all trees. Primary: change AUC
     {pr['auc_change']:.2f} ({pr['auc_change_ci'][0]:.2f}-{pr['auc_change_ci'][1]:.2f}); the dotted line is the H1
-    threshold of 0.70.""")
+    threshold of 0.70. A within-block label shuffle gives
+    {pr['within_block_shuffle_null_change']['mean']:.2f} on average (95th percentile
+    {pr['within_block_shuffle_null_change']['p95']:.2f}), the relevant "chance" level.""")
 
 
 def f2(p):

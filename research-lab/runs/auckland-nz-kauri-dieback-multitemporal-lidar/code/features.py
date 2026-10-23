@@ -88,11 +88,18 @@ def labels():
     d = d[d.SurveyName.isin(SURVEYS) & d.KDBFieldStatus.isin([1, 3, 4])].copy()
     d["survey"] = d.SurveyName.map(SURVEYS)
     d["status"] = d.KDBFieldStatus.astype(int)
+    from scipy.sparse import coo_matrix
+    from scipy.sparse.csgraph import connected_components
+    from scipy.spatial import cKDTree
     rows = []
     for (sv, st), g in d.groupby(["survey", "status"]):
-        g = g.sort_values("OBJECTID")
-        key = (np.round(g.x / 2.0).astype(int).astype(str) + "_" + np.round(g.y / 2.0).astype(int).astype(str))
-        rows.append(g.loc[~key.duplicated()])          # merge records within the same 2 m cell and status
+        g = g.sort_values("OBJECTID").reset_index(drop=True)
+        # D1: single-linkage merge of records within 2 m of each other with the same status (the plan's rule)
+        pairs = cKDTree(g[["x", "y"]].to_numpy()).query_pairs(2.0, output_type="ndarray")
+        n = len(g)
+        adj = coo_matrix((np.ones(len(pairs)), (pairs[:, 0], pairs[:, 1])), shape=(n, n)) if len(pairs) else coo_matrix((n, n))
+        _, comp = connected_components(adj, directed=False)
+        rows.append(g.loc[~pd.Series(comp).duplicated().to_numpy()])
     t = pd.concat(rows)
     return t[["OBJECTID", "survey", "status", "x", "y"]].reset_index(drop=True)
 

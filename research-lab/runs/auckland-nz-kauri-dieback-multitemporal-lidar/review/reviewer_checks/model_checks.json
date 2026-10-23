@@ -1,0 +1,116 @@
+{
+ "primary_reproduced": {
+  "n": 9359,
+  "positives": 320,
+  "auc_change": 0.5076,
+  "auc_change_ci_newseed": [
+   0.44,
+   0.564
+  ],
+  "per_repeat_auc_change": [
+   0.5068,
+   0.4818,
+   0.4999,
+   0.4815,
+   0.5756
+  ],
+  "auc_static": 0.5448,
+  "auc_all": 0.5925,
+  "gain": 0.0477,
+  "gain_ci_paired": [
+   -0.024,
+   0.094
+  ],
+  "gain_ci_unpaired_for_contrast": [
+   -0.053,
+   0.142
+  ]
+ },
+ "univariate_auc_negated_feature": {
+  "s2014": {
+   "dp95_m": 0.576,
+   "dc15_m": 0.534,
+   "dp50_m": 0.529,
+   "dp95_u": 0.573,
+   "dc15_u": 0.534,
+   "dp50_u": 0.525,
+   "elev": 0.475,
+   "slope": 0.572,
+   "p95_e1_m_r15": 0.452,
+   "dist_track": 0.463,
+   "n": 9359
+  },
+  "s2021": {
+   "dp95_m": 0.572,
+   "dc15_m": 0.504,
+   "dp50_m": 0.522,
+   "dp95_u": 0.56,
+   "dc15_u": 0.503,
+   "dp50_u": 0.518,
+   "elev": 0.576,
+   "slope": 0.554,
+   "p95_e1_m_r15": 0.469,
+   "dist_track": 0.57,
+   "n": 1801
+  }
+ },
+ "positive_controls_and_nulls": {
+  "synthetic_label_from_dp95": {
+   "positives": 650,
+   "auc_change": 0.778,
+   "auc_static": 0.574
+  },
+  "survey_membership_2021_vs_2014": {
+   "auc_static": 0.979,
+   "auc_change": 0.776
+  },
+  "stable_points_vs_2014_trees": {
+   "auc_change": 0.521
+  },
+  "s2021_change_auc": 0.5492,
+  "s2021_within_block_label_shuffle_null_auc": {
+   "mean": 0.524,
+   "max": 0.56,
+   "n": 20
+  }
+ },
+ "within_block_dp95_difference": {
+  "s2014": {
+   "raw_diff_m": -0.194,
+   "mixed_blocks": 71,
+   "within_block_weighted_diff_m": -0.131,
+   "ci": [
+    -0.267,
+    -0.018
+   ],
+   "within_block_diff_after_p95e1_adjust_m": -0.146,
+   "slope_dp95_on_p95e1": 0.0424,
+   "spearman_dp95_vs_p95e1": 0.343,
+   "median_p95e1_pos": 14.65,
+   "median_p95e1_neg": 14.88
+  },
+  "s2021": {
+   "raw_diff_m": -0.215,
+   "mixed_blocks": 172,
+   "within_block_weighted_diff_m": -0.098,
+   "ci": [
+    -0.212,
+    0.019
+   ],
+   "within_block_diff_after_p95e1_adjust_m": -0.101,
+   "slope_dp95_on_p95e1": 0.0054,
+   "spearman_dp95_vs_p95e1": 0.015,
+   "median_p95e1_pos": 22.96,
+   "median_p95e1_neg": 22.28
+  }
+ },
+ "s2021_auc_p95e1_alone_negated": 0.469,
+ "s2021_auc_dist_track_alone": 0.43,
+ "blocks": {
+  "s2014": 242,
+  "s2014_blocks_with_positives": 73,
+  "s2014_trees_per_block_median": 9.0,
+  "s2021": 411,
+  "s2021_blocks_with_positives": 220
+ }
+}

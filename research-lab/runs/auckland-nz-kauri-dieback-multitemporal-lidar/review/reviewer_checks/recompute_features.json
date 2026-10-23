@@ -1,0 +1,73 @@
+{
+ "n_checked": 1020,
+ "by_survey": {
+  "s2014": 720,
+  "s2021": 200,
+  "stable": 100
+ },
+ "agreement_with_trees_csv": {
+  "valid_r15": {
+   "n_both": 1020,
+   "max_abs_diff": 0.0,
+   "mine_nan_theirs_not": 0,
+   "theirs_nan_mine_not": 0
+  },
+  "valid_masked_r15": {
+   "n_both": 1020,
+   "max_abs_diff": 0.0,
+   "mine_nan_theirs_not": 0,
+   "theirs_nan_mine_not": 0
+  },
+  "p95_e1_m_r15": {
+   "n_both": 1016,
+   "max_abs_diff": 0.0,
+   "mine_nan_theirs_not": 0,
+   "theirs_nan_mine_not": 0
+  },
+  "p95_e2_m_r15": {
+   "n_both": 1016,
+   "max_abs_diff": 0.0,
+   "mine_nan_theirs_not": 0,
+   "theirs_nan_mine_not": 0
+  },
+  "p50_e1_m_r15": {
+   "n_both": 1016,
+   "max_abs_diff": 0.0,
+   "mine_nan_theirs_not": 0,
+   "theirs_nan_mine_not": 0
+  },
+  "c15_e1_m_r15": {
+   "n_both": 1016,
+   "max_abs_diff": 0.0,
+   "mine_nan_theirs_not": 0,
+   "theirs_nan_mine_not": 0
+  },
+  "c15_e2_m_r15": {
+   "n_both": 1016,
+   "max_abs_diff": 0.0,
+   "mine_nan_theirs_not": 0,
+   "theirs_nan_mine_not": 0
+  }
+ },
+ "dp95_max_abs_diff": 0.0,
+ "edge_water_audit": {
+  "trees_with_partial_circle": 0,
+  "by_survey": {},
+  "dropped_lt_50pct_masked": 87,
+  "dropped_by_survey": {
+   "s2014": 30,
+   "s2021": 57
+  },
+  "partial_circle_valid_quantiles": {
+   "0.05": NaN,
+   "0.25": NaN,
+   "0.5": NaN,
+   "0.75": NaN
+  },
+  "n_oob_cells_gt0 (true raster edge)": 0,
+  "partial_circles_with_negative_chm_gt10pct": 0
+ },
+ "negative_chm_share_in_circle_median": 0.0,
+ "elev_nan": 0,
+ "slope_nan": 0
+}

@@ -1,0 +1,294 @@
+{
+ "labels_2014": {
+  "1": 9069,
+  "3": 234,
+  "4": 86
+ },
+ "dropped_for_validity_2014": 30,
+ "primary": {
+  "n": 9359,
+  "positives": 320,
+  "blocks": 242,
+  "auc_change": 0.5076,
+  "auc_change_ci": [
+   0.4425,
+   0.563
+  ],
+  "auc_static": 0.5448,
+  "auc_static_ci": [
+   0.4801,
+   0.6199
+  ],
+  "auc_static_plus_change": 0.5925,
+  "auc_static_plus_change_ci": [
+   0.5233,
+   0.6531
+  ],
+  "gain": 0.0477,
+  "gain_ci": [
+   -0.0213,
+   0.0915
+  ]
+ },
+ "H1": "Refuted",
+ "H2": "Inconclusive",
+ "secondary": {
+  "s2021": {
+   "n": 1801,
+   "positives": 633,
+   "blocks": 411,
+   "auc_change": 0.5492,
+   "auc_change_ci": [
+    0.5107,
+    0.5868
+   ],
+   "auc_static": 0.5884,
+   "auc_static_ci": [
+    0.5443,
+    0.6286
+   ],
+   "auc_static_plus_change": 0.6097,
+   "auc_static_plus_change_ci": [
+    0.572,
+    0.6457
+   ],
+   "gain": 0.0213,
+   "gain_ci": [
+    0.0023,
+    0.0409
+   ]
+  },
+  "severe_only_2014": {
+   "n": 9125,
+   "positives": 86,
+   "blocks": 240,
+   "auc_change": 0.4541,
+   "auc_change_ci": [
+    0.3677,
+    0.5394
+   ],
+   "auc_static": 0.4676,
+   "auc_static_ci": [
+    0.386,
+    0.5746
+   ],
+   "auc_static_plus_change": 0.51,
+   "auc_static_plus_change_ci": [
+    0.4114,
+    0.5971
+   ],
+   "gain": 0.0424,
+   "gain_ci": [
+    -0.0486,
+    0.0968
+   ]
+  },
+  "radius_10": {
+   "n": 9349,
+   "positives": 317,
+   "blocks": 241,
+   "auc_change": 0.4682,
+   "auc_change_ci": [
+    0.41,
+    0.5195
+   ],
+   "auc_static": 0.5697,
+   "auc_static_ci": [
+    0.493,
+    0.6598
+   ],
+   "auc_static_plus_change": 0.6096,
+   "auc_static_plus_change_ci": [
+    0.5361,
+    0.6757
+   ],
+   "gain": 0.0399,
+   "gain_ci": [
+    -0.0259,
+    0.0756
+   ]
+  },
+  "radius_20": {
+   "n": 9362,
+   "positives": 320,
+   "blocks": 242,
+   "auc_change": 0.4729,
+   "auc_change_ci": [
+    0.4122,
+    0.5291
+   ],
+   "auc_static": 0.5325,
+   "auc_static_ci": [
+    0.4686,
+    0.606
+   ],
+   "auc_static_plus_change": 0.5787,
+   "auc_static_plus_change_ci": [
+    0.5095,
+    0.6392
+   ],
+   "gain": 0.0461,
+   "gain_ci": [
+    -0.018,
+    0.0891
+   ]
+  },
+  "no_slip_mask": {
+   "n": 9389,
+   "positives": 320,
+   "blocks": 242,
+   "auc_change": 0.4985,
+   "auc_change_ci": [
+    0.4382,
+    0.5514
+   ],
+   "auc_static": 0.5474,
+   "auc_static_ci": [
+    0.4825,
+    0.6228
+   ],
+   "auc_static_plus_change": 0.5911,
+   "auc_static_plus_change_ci": [
+    0.5196,
+    0.6543
+   ],
+   "gain": 0.0437,
+   "gain_ci": [
+    -0.0212,
+    0.083
+   ]
+  }
+ },
+ "stable_area_dp95": {
+  "n": 1000,
+  "quantiles": {
+   "0.05": -0.594,
+   "0.25": 0.87,
+   "0.5": 1.407,
+   "0.75": 2.104,
+   "0.95": 3.794
+  },
+  "mean": 1.25
+ },
+ "group_means": {
+  "s2014_status1": {
+   "n": 9039,
+   "dp95_m_r15": {
+    "mean": 1.579,
+    "ci": [
+     1.4622,
+     1.6919
+    ]
+   },
+   "dc15_m_r15": {
+    "mean": 0.089,
+    "ci": [
+     0.0742,
+     0.1045
+    ]
+   }
+  },
+  "s2014_status3": {
+   "n": 234,
+   "dp95_m_r15": {
+    "mean": 1.399,
+    "ci": [
+     1.1561,
+     1.6871
+    ]
+   },
+   "dc15_m_r15": {
+    "mean": 0.073,
+    "ci": [
+     0.0529,
+     0.1037
+    ]
+   }
+  },
+  "s2014_status4": {
+   "n": 86,
+   "dp95_m_r15": {
+    "mean": 1.346,
+    "ci": [
+     1.0538,
+     1.7032
+    ]
+   },
+   "dc15_m_r15": {
+    "mean": 0.077,
+    "ci": [
+     0.0484,
+     0.1161
+    ]
+   }
+  },
+  "s2021_status1": {
+   "n": 1168,
+   "dp95_m_r15": {
+    "mean": 2.157,
+    "ci": [
+     2.0837,
+     2.2369
+    ]
+   },
+   "dc15_m_r15": {
+    "mean": 0.14,
+    "ci": [
+     0.1343,
+     0.1451
+    ]
+   }
+  },
+  "s2021_status3": {
+   "n": 592,
+   "dp95_m_r15": {
+    "mean": 1.969,
+    "ci": [
+     1.8636,
+     2.0727
+    ]
+   },
+   "dc15_m_r15": {
+    "mean": 0.14,
+    "ci": [
+     0.1329,
+     0.1481
+    ]
+   }
+  },
+  "s2021_status4": {
+   "n": 41,
+   "dp95_m_r15": {
+    "mean": 1.563,
+    "ci": [
+     1.2913,
+     1.8299
+    ]
+   },
+   "dc15_m_r15": {
+    "mean": 0.11,
+    "ci": [
+     0.0909,
+     0.1259
+    ]
+   }
+  },
+  "stable_status0": {
+   "n": 1000,
+   "dp95_m_r15": {
+    "mean": 1.25,
+    "ci": [
+     1.0377,
+     1.4492
+    ]
+   },
+   "dc15_m_r15": {
+    "mean": 0.091,
+    "ci": [
+     0.0824,
+     0.0989
+    ]
+   }
+  }
+ }
+}

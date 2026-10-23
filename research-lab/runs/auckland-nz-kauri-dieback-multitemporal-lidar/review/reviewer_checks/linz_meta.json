@@ -1,0 +1,284 @@
+{
+ "e1_dsm": {
+  "title": "Auckland North LiDAR 1m DSM (2016-2018)",
+  "description": "Digital Surface Model within the Auckland region captured in 2016-2018.",
+  "linz:geospatial_category": "dsm",
+  "linz:lifecycle": "completed",
+  "extent_temporal": {
+   "interval": [
+    [
+     "2016-08-15T12:00:00Z",
+     "2018-08-08T12:00:00Z"
+    ]
+   ]
+  },
+  "n_items": 192,
+  "summaries": {},
+  "item_props": {
+   "start_datetime": "2016-08-15T12:00:00Z",
+   "end_datetime": "2018-08-08T12:00:00Z",
+   "datetime": null,
+   "created": "2024-03-14T00:00:00Z",
+   "updated": "2024-03-14T00:00:00Z"
+  },
+  "tile": {
+   "transform_gdal": [
+    1727200.0,
+    1.0,
+    0.0,
+    5996400.0,
+    0.0,
+    -1.0
+   ],
+   "crs": "EPSG:2193",
+   "dtype": "float32",
+   "nodata": -9999.0,
+   "size": [
+    4800,
+    7200
+   ],
+   "tags": {
+    "AREA_OR_POINT": "Area"
+   }
+  }
+ },
+ "e1_dem": {
+  "title": "Auckland North LiDAR 1m DEM (2016-2018)",
+  "description": "Digital Elevation Model within the Auckland region captured in 2016-2018.",
+  "linz:geospatial_category": "dem",
+  "linz:lifecycle": "completed",
+  "extent_temporal": {
+   "interval": [
+    [
+     "2016-08-15T12:00:00Z",
+     "2018-08-08T12:00:00Z"
+    ]
+   ]
+  },
+  "n_items": 187,
+  "summaries": {},
+  "item_props": {
+   "start_datetime": "2016-08-15T12:00:00Z",
+   "end_datetime": "2018-08-08T12:00:00Z",
+   "datetime": null,
+   "created": "2024-03-14T00:00:00Z",
+   "updated": "2024-03-14T00:00:00Z"
+  },
+  "tile": {
+   "transform_gdal": [
+    1727200.0,
+    1.0,
+    0.0,
+    5996400.0,
+    0.0,
+    -1.0
+   ],
+   "crs": "EPSG:2193",
+   "dtype": "float32",
+   "nodata": -9999.0,
+   "size": [
+    4800,
+    7200
+   ],
+   "tags": {
+    "AREA_OR_POINT": "Area"
+   }
+  }
+ },
+ "e2p1_dsm": {
+  "title": "Auckland Part 1 LiDAR 1m DSM (2024)",
+  "description": "Digital Surface Model within the Auckland region captured in 2024.",
+  "linz:geospatial_category": "dsm",
+  "linz:lifecycle": "completed",
+  "extent_temporal": {
+   "interval": [
+    [
+     "2024-04-29T12:00:00Z",
+     "2024-06-26T12:00:00Z"
+    ]
+   ]
+  },
+  "n_items": 109,
+  "summaries": {},
+  "item_props": {
+   "created": "2025-04-10T21:51:28Z",
+   "updated": "2025-04-10T21:51:28Z",
+   "processing:datetime": "2025-04-10T21:51:28Z",
+   "processing:software": {
+    "gdal": "GDAL 3.9.0, released 2024/05/07",
+    "linz/topo-imagery": "https://github.com/linz/topo-imagery/commit/761b78235f8b280e00d26d2370ab390f747ad98d"
+   },
+   "processing:version": "v7.4.1",
+   "start_datetime": "2024-04-29T12:00:00Z",
+   "end_datetime": "2024-06-26T12:00:00Z",
+   "datetime": null
+  },
+  "tile": {
+   "transform_gdal": [
+    1722400.0,
+    1.0,
+    0.0,
+    5953200.0,
+    0.0,
+    -1.0
+   ],
+   "crs": "EPSG:2193",
+   "dtype": "float32",
+   "nodata": -9999.0,
+   "size": [
+    4800,
+    7200
+   ],
+   "tags": {
+    "AREA_OR_POINT": "Area"
+   }
+  }
+ },
+ "e2p1_dem": {
+  "title": "Auckland Part 1 LiDAR 1m DEM (2024)",
+  "description": "Digital Elevation Model within the Auckland region captured in 2024.",
+  "linz:geospatial_category": "dem",
+  "linz:lifecycle": "completed",
+  "extent_temporal": {
+   "interval": [
+    [
+     "2024-04-29T12:00:00Z",
+     "2024-06-26T12:00:00Z"
+    ]
+   ]
+  },
+  "n_items": 109,
+  "summaries": {},
+  "item_props": {
+   "created": "2025-04-10T21:33:02Z",
+   "updated": "2026-01-13T03:02:19Z",
+   "processing:datetime": "2026-01-13T03:02:19Z",
+   "processing:software": {
+    "gdal": "GDAL 3.10.3, released 2025/04/01",
+    "linz/topo-imagery": "https://github.com/linz/topo-imagery/commit/e0bac515cfb3e5ceebf4d5bba3ac5d41ac633b34"
+   },
+   "processing:version": "v7.14.0",
+   "start_datetime": "2024-04-29T12:00:00Z",
+   "end_datetime": "2024-06-26T12:00:00Z",
+   "datetime": null
+  },
+  "tile": {
+   "transform_gdal": [
+    1722400.0,
+    1.0,
+    0.0,
+    5953200.0,
+    0.0,
+    -1.0
+   ],
+   "crs": "EPSG:2193",
+   "dtype": "float32",
+   "nodata": -9999.0,
+   "size": [
+    4800,
+    7200
+   ],
+   "tags": {
+    "AREA_OR_POINT": "Area"
+   }
+  }
+ },
+ "e2p2_dsm": {
+  "title": "Auckland Part 2 LiDAR 1m DSM (2024)",
+  "description": "Digital Surface Model within the Auckland region captured in 2024.",
+  "linz:geospatial_category": "dsm",
+  "linz:lifecycle": "completed",
+  "extent_temporal": {
+   "interval": [
+    [
+     "2024-06-25T12:00:00Z",
+     "2024-11-03T11:00:00Z"
+    ]
+   ]
+  },
+  "n_items": 172,
+  "summaries": {},
+  "item_props": {
+   "created": "2025-07-02T02:57:58Z",
+   "updated": "2025-07-02T02:57:58Z",
+   "processing:datetime": "2025-07-02T02:57:58Z",
+   "processing:software": {
+    "gdal": "GDAL 3.9.0, released 2024/05/07",
+    "linz/topo-imagery": "https://github.com/linz/topo-imagery/commit/dfbc5666d3c98dd5cf23687fc68f44481b09fd96"
+   },
+   "processing:version": "v7.7.0",
+   "start_datetime": "2024-06-25T12:00:00Z",
+   "end_datetime": "2024-11-03T11:00:00Z",
+   "datetime": null
+  },
+  "tile": {
+   "transform_gdal": [
+    1722400.0,
+    1.0,
+    0.0,
+    5989200.0,
+    0.0,
+    -1.0
+   ],
+   "crs": "EPSG:2193",
+   "dtype": "float32",
+   "nodata": -9999.0,
+   "size": [
+    4800,
+    7200
+   ],
+   "tags": {
+    "AREA_OR_POINT": "Area"
+   }
+  }
+ },
+ "e2p2_dem": {
+  "title": "Auckland Part 2 LiDAR 1m DEM (2024)",
+  "description": "Digital Elevation Model within the Auckland region captured in 2024.",
+  "linz:geospatial_category": "dem",
+  "linz:lifecycle": "completed",
+  "extent_temporal": {
+   "interval": [
+    [
+     "2024-06-25T12:00:00Z",
+     "2024-11-03T11:00:00Z"
+    ]
+   ]
+  },
+  "n_items": 172,
+  "summaries": {},
+  "item_props": {
+   "created": "2025-07-02T02:45:03Z",
+   "updated": "2026-01-13T21:29:07Z",
+   "processing:datetime": "2026-01-13T21:29:07Z",
+   "processing:software": {
+    "gdal": "GDAL 3.10.3, released 2025/04/01",
+    "linz/topo-imagery": "https://github.com/linz/topo-imagery/commit/e0bac515cfb3e5ceebf4d5bba3ac5d41ac633b34"
+   },
+   "processing:version": "v7.14.0",
+   "start_datetime": "2024-06-25T12:00:00Z",
+   "end_datetime": "2024-11-03T11:00:00Z",
+   "datetime": null
+  },
+  "tile": {
+   "transform_gdal": [
+    1722400.0,
+    1.0,
+    0.0,
+    5989200.0,
+    0.0,
+    -1.0
+   ],
+   "crs": "EPSG:2193",
+   "dtype": "float32",
+   "nodata": -9999.0,
+   "size": [
+    4800,
+    7200
+   ],
+   "tags": {
+    "AREA_OR_POINT": "Area"
+   }
+  }
+ }
+}

@@ -1,0 +1,76 @@
+{
+ "s2014": {
+  "change": {
+   "pooled_oof_auc (study)": 0.5076,
+   "mean_per_fold_auc": 0.5573
+  },
+  "static": {
+   "pooled_oof_auc (study)": 0.5448,
+   "mean_per_fold_auc": 0.5726
+  },
+  "static_plus_change": {
+   "pooled_oof_auc (study)": 0.5925,
+   "mean_per_fold_auc": 0.5995
+  },
+  "test_fold_positives_min_max": [
+   18,
+   110
+  ],
+  "training_prevalence_min_max": [
+   0.0278,
+   0.0418
+  ],
+  "null_change_model": {
+   "n": 60,
+   "pooled_mean": 0.3596,
+   "pooled_q05_q95": [
+    0.3094,
+    0.4126
+   ],
+   "per_fold_mean": 0.4743,
+   "per_fold_q05_q95": [
+    0.4348,
+    0.5157
+   ],
+   "p_pooled": 0.0,
+   "p_per_fold": 0.0
+  }
+ },
+ "s2021": {
+  "change": {
+   "pooled_oof_auc (study)": 0.5492,
+   "mean_per_fold_auc": 0.5567
+  },
+  "static": {
+   "pooled_oof_auc (study)": 0.5884,
+   "mean_per_fold_auc": 0.5906
+  },
+  "static_plus_change": {
+   "pooled_oof_auc (study)": 0.6097,
+   "mean_per_fold_auc": 0.6106
+  },
+  "test_fold_positives_min_max": [
+   89,
+   170
+  ],
+  "training_prevalence_min_max": [
+   0.3324,
+   0.3696
+  ],
+  "null_change_model": {
+   "n": 60,
+   "pooled_mean": 0.5306,
+   "pooled_q05_q95": [
+    0.5026,
+    0.5599
+   ],
+   "per_fold_mean": 0.5423,
+   "per_fold_q05_q95": [
+    0.52,
+    0.5663
+   ],
+   "p_pooled": 0.167,
+   "p_per_fold": 0.167
+  }
+ }
+}

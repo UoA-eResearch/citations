@@ -1,0 +1,156 @@
+{
+ "s2014": {
+  "n_trees": 9359,
+  "positives": 320,
+  "records_within_15m_median": {
+   "pos": 13.0,
+   "neg": 18.0
+  },
+  "share_of_circle_records_symptomatic_median": {
+   "pos": 0.25,
+   "neg": 0.0
+  },
+  "positives_with_healthy_record_within_15m": 0.919,
+  "positives_whose_circle_is_mostly_healthy (>50% status 1)": 0.606,
+  "negatives_with_any_status_2-4_within_15m": 0.326,
+  "auc_neg_dp95_all": [
+   0.576,
+   [
+    0.467,
+    0.652
+   ]
+  ],
+  "auc_neg_dp95_isolated_pos_no_healthy_within_5m_vs_clean_neg": {
+   "n_pos": 118,
+   "n_neg": 6090,
+   "auc_ci": [
+    0.613,
+    [
+     0.462,
+     0.733
+    ]
+   ]
+  },
+  "auc_neg_dp95_isolated_pos_no_healthy_within_10m_vs_clean_neg": {
+   "n_pos": 50,
+   "n_neg": 6090,
+   "auc_ci": [
+    0.614,
+    [
+     0.447,
+     0.764
+    ]
+   ]
+  },
+  "auc_neg_dp95_isolated_pos_no_healthy_within_15m_vs_clean_neg": {
+   "n_pos": 26,
+   "n_neg": 6090,
+   "auc_ci": [
+    0.557,
+    [
+     0.411,
+     0.695
+    ]
+   ]
+  },
+  "auc_neg_dp95_pos_majority_of_circle_vs_clean_neg": {
+   "n_pos": 54,
+   "auc_ci": [
+    0.635,
+    [
+     0.479,
+     0.736
+    ]
+   ]
+  },
+  "auc_neg_dc15_all": [
+   0.534,
+   [
+    0.444,
+    0.595
+   ]
+  ],
+  "corr_dp95_positive_vs_nearest_negative": {
+   "pearson": 0.812,
+   "median_dist_m": 3.4,
+   "share_identical_feature": 0.116
+  }
+ },
+ "s2021": {
+  "n_trees": 1801,
+  "positives": 633,
+  "records_within_15m_median": {
+   "pos": 1.0,
+   "neg": 1.0
+  },
+  "share_of_circle_records_symptomatic_median": {
+   "pos": 1.0,
+   "neg": 0.0
+  },
+  "positives_with_healthy_record_within_15m": 0.055,
+  "positives_whose_circle_is_mostly_healthy (>50% status 1)": 0.002,
+  "negatives_with_any_status_2-4_within_15m": 0.052,
+  "auc_neg_dp95_all": [
+   0.572,
+   [
+    0.536,
+    0.609
+   ]
+  ],
+  "auc_neg_dp95_isolated_pos_no_healthy_within_5m_vs_clean_neg": {
+   "n_pos": 631,
+   "n_neg": 1107,
+   "auc_ci": [
+    0.575,
+    [
+     0.536,
+     0.613
+    ]
+   ]
+  },
+  "auc_neg_dp95_isolated_pos_no_healthy_within_10m_vs_clean_neg": {
+   "n_pos": 616,
+   "n_neg": 1107,
+   "auc_ci": [
+    0.574,
+    [
+     0.536,
+     0.613
+    ]
+   ]
+  },
+  "auc_neg_dp95_isolated_pos_no_healthy_within_15m_vs_clean_neg": {
+   "n_pos": 598,
+   "n_neg": 1107,
+   "auc_ci": [
+    0.574,
+    [
+     0.535,
+     0.613
+    ]
+   ]
+  },
+  "auc_neg_dp95_pos_majority_of_circle_vs_clean_neg": {
+   "n_pos": 587,
+   "auc_ci": [
+    0.573,
+    [
+     0.532,
+     0.611
+    ]
+   ]
+  },
+  "auc_neg_dc15_all": [
+   0.504,
+   [
+    0.472,
+    0.534
+   ]
+  ],
+  "corr_dp95_positive_vs_nearest_negative": {
+   "pearson": 0.334,
+   "median_dist_m": 97.4,
+   "share_identical_feature": 0.0
+  }
+ }
+}
