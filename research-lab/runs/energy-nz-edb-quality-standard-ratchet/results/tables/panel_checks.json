@@ -1,0 +1,129 @@
+{
+ "centralines": {
+  "years": [
+   2014,
+   2015,
+   2016,
+   2017,
+   2018,
+   2019
+  ],
+  "unison_dpp3": [
+   80.638,
+   85.991,
+   61.21,
+   155.754,
+   313.144,
+   77.23
+  ],
+  "centralines_dpp3": [
+   84.139,
+   90.392,
+   38.073,
+   54.655,
+   118.428,
+   63.652
+  ],
+  "unison_dpp4": [
+   80.638,
+   85.991,
+   61.21,
+   155.754,
+   313.144,
+   77.23
+  ],
+  "dpp4_unison_equals_sum_within_5pct": false
+ },
+ "overlap": {
+  "edb_years": 96,
+  "within_5pct": 96,
+  "share_within_5pct": 1.0,
+  "worst": [
+   [
+    "Unison Networks",
+    "2017",
+    "0.0"
+   ],
+   [
+    "Aurora Energy",
+    "2019",
+    "0.0"
+   ],
+   [
+    "EA Networks",
+    "2015",
+    "0.0"
+   ],
+   [
+    "Alpine Energy",
+    "2017",
+    "0.0"
+   ],
+   [
+    "Horizon Energy",
+    "2014",
+    "0.0"
+   ],
+   [
+    "Horizon Energy",
+    "2015",
+    "0.0"
+   ],
+   [
+    "Electricity Invercargill",
+    "2016",
+    "0.0"
+   ],
+   [
+    "Electricity Invercargill",
+    "2015",
+    "0.0"
+   ]
+  ],
+  "passes": true
+ },
+ "id2025": {
+  "rows": 37538,
+  "planned_or_unplanned": {
+   "Unplanned": 19699,
+   "Planned": 17839
+  },
+  "section": {
+   "10a(i): Raw interruption data": 37538
+  },
+  "cause_top": {
+   "Planned interruption": 10580,
+   "Defective equipment": 3393,
+   "Planned": 3236,
+   "Unknown": 2298,
+   "PLANNED SHUTDOWN - CAPITAL WORKS": 2280,
+   "Vegetation": 1868,
+   "Wildlife": 1578,
+   "Defective Equipment": 1570,
+   "Third party interference": 1189,
+   "Planned Interruption": 985,
+   "Lightning": 934,
+   "DEFECTIVE EQUIPMENT - OH EQUIPMENT FAILURE": 685,
+   "Adverse weather": 681,
+   "Cause unknown": 519,
+   "Other cause": 439
+  },
+  "disc_yr": {
+   "2025.0": 37538
+  },
+  "edbs": 29,
+  "unplanned_vs_class_c": {
+   "edbs": 28,
+   "within_5pct": 20,
+   "worst": {
+    "Top Energy": 1.2989,
+    "Westpower": 0.9876,
+    "Aurora Energy": 0.7984,
+    "Firstlight Network": 0.752,
+    "Vector Lines": 0.6788,
+    "Unison Networks": 0.6749
+   }
+  },
+  "usable": false
+ }
+}
