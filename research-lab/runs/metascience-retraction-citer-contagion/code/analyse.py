@@ -135,7 +135,7 @@ def main():
             e_, c_, n_ = boot_mean(mm_, rng)
             out["by_domain"][name] = {"did": round(e_, 5), "ci": [round(x, 5) for x in c_], "retractions": n_}
     for era, (a, b) in {"2000-2010": (2000, 2010), "2011-2021": (2011, 2021)}.items():
-        mm_ = m1[m1.ret.isin(R[(R.T >= a) & (R.T <= b)].ret)]
+        mm_ = m1[m1.ret.isin(R[(R["T"] >= a) & (R["T"] <= b)].ret)]
         e_, c_, n_ = boot_mean(mm_, rng)
         out.setdefault("by_era", {})[era] = {"did": round(e_, 5), "ci": [round(x, 5) for x in c_], "retractions": n_}
     # sensitivity: exact matching on pre-period counts

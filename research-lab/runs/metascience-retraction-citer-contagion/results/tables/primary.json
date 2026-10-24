@@ -1,0 +1,134 @@
+{
+ "exposed": {
+  "1": 86463,
+  "2": 69865
+ },
+ "matched_pairs": {
+  "1": 38134,
+  "2": 22506
+ },
+ "retractions": {
+  "1": 4355,
+  "2": 3827
+ },
+ "H1": {
+  "did": 0.06776,
+  "ci": [
+   0.05431,
+   0.08152
+  ],
+  "retractions": 4355,
+  "pct": 7.01,
+  "verdict": "Inconclusive"
+ },
+ "H2": {
+  "penalty_misconduct": -0.06048,
+  "penalty_honest": -0.08815,
+  "n_misconduct": 2867,
+  "n_honest": 487,
+  "C": 0.11582,
+  "C_ci": [
+   0.02578,
+   0.20484
+  ],
+  "verdict": "Supported",
+  "did_misconduct": {
+   "did": 0.06048,
+   "ci": [
+    0.04364,
+    0.07806
+   ],
+   "n": 2867
+  },
+  "did_honest": {
+   "did": 0.08815,
+   "ci": [
+    0.04381,
+    0.13226
+   ],
+   "n": 487
+  },
+  "did_other": {
+   "did": 0.0787,
+   "ci": [
+    0.0533,
+    0.10254
+   ],
+   "n": 1001
+  }
+ },
+ "H3": {
+  "did": 0.08795,
+  "ci": [
+   0.07347,
+   0.10157
+  ],
+  "retractions": 3827,
+  "verdict": "Refuted"
+ },
+ "pretrend": {
+  "1": -0.07501,
+  "2": -0.10099
+ },
+ "by_domain": {
+  "life sciences": {
+   "did": 0.05327,
+   "ci": [
+    0.0322,
+    0.07404
+   ],
+   "retractions": 2459
+  },
+  "social sciences": {
+   "did": 0.10428,
+   "ci": [
+    0.05343,
+    0.15609
+   ],
+   "retractions": 394
+  },
+  "physical sciences": {
+   "did": 0.07828,
+   "ci": [
+    0.04425,
+    0.11212
+   ],
+   "retractions": 1136
+  },
+  "health sciences": {
+   "did": 0.07083,
+   "ci": [
+    0.05172,
+    0.09053
+   ],
+   "retractions": 2791
+  }
+ },
+ "by_era": {
+  "2000-2010": {
+   "did": 0.08002,
+   "ci": [
+    0.03698,
+    0.12464
+   ],
+   "retractions": 352
+  },
+  "2011-2021": {
+   "did": 0.06668,
+   "ci": [
+    0.05207,
+    0.08081
+   ],
+   "retractions": 4003
+  }
+ },
+ "sensitivity_exact_match": {
+  "did": 0.08621,
+  "ci": [
+   0.071,
+   0.10167
+  ],
+  "retractions": 3845,
+  "pairs": 18179
+ }
+}
