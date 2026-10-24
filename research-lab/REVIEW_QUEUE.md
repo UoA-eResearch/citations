@@ -36,7 +36,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | `frontier-edge-asr-quantization-accent-parity` | (draft 2f02159 review) | H1 Inconclusive; H2 Supported by rule, not robust, not replicated on Common Voice; H3 Refuted (this rule); H4 not testable (no penalty in large-v3) | reviewed 2026-10-23: **fix first**; fixes in f8a6d4d (D4 robustness, D5 Common Voice replication, H4 complete); confirmation queued (review/confirm_prompt.md) |
 | `ecology-biodiversity-globi-temporal-link-holdout` | bfe2f58 | H1 Refuted (taxonomic advantage over effort grows on future records: rho 1.68, 1.10-2.30) | queued (review/prompt.md) |
 
-**The owner's exception ended at 16:00 on 2026-10-23; the 1-per-5 h rule applies again. Kauri confirmation started 2026-10-24 11:39; next Fable run not before 16:39.** Order: confirmations of DSI (b0149e2), reef (d7c2ace), estuary (3dd86a7), kauri (920bde5) and retraction risk (6d4c885), one per 5 h slot; then the ASR confirmation (fixes in f8a6d4d); then the EDB ratchet review (fb7efde), then the Public Domain Day review (26ff608), then the AVF dv/v review (35e9d7a).
+**The owner's exception ended at 16:00 on 2026-10-23; the 1-per-5 h rule applies again. Retraction-risk confirmation started 2026-10-24 16:39; next Fable run not before 21:39.** Order: confirmations of DSI (b0149e2), reef (d7c2ace), estuary (3dd86a7), kauri (920bde5) and retraction risk (6d4c885), one per 5 h slot; then the ASR confirmation (fixes in f8a6d4d); then the EDB ratchet review (fb7efde), then the Public Domain Day review (26ff608), then the AVF dv/v review (35e9d7a).
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
