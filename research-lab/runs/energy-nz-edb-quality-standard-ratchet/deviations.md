@@ -65,3 +65,18 @@
    - the Table E3 reproduction is cited as the assessment-mode validation;
    - H1's sign-blind rule is explained for the primary, no-2023 and SAIFI cases;
    - the title is narrowed to what is shown.
+
+## D4 — 2026-10-25 07:47 NZDT — edits after the confirmation pass (review/confirmation.md, "publish with edits")
+
+No verdict changes.
+1. **The 2014–2024 window**, a preregistered sensitivity (plan §4), is added: raw −1.8% a year (−5.6 to +2.5), and
+   −0.1% with major-event days excluded. It is reported as qualifying the 2014–2025 fall, which rests on 2025's low
+   point.
+2. **The 2025 recording-basis caveat** is stated per distributor: 6 of 15 change by more than 1.5× in rows or SAIDI
+   per row, and there are 1.24 rows per interruption identifier.
+3. **Top Energy 2025's compositional effect** is stated, using the confirmation's imputation (88.4 → 91.7; trend
+   −4.0%).
+4. **Figure captions and titles** are updated (F1–F3).
+5. **The Table E3 reproduction** is attributed to the review's check.
+6. **The H3 strictness convention** is stated.
+7. **Interpolation of missing ICP years** is stated.

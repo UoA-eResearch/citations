@@ -14,6 +14,8 @@ This version incorporates an independent review (`review/review.md`; changes log
   - Storm years dominate it: 2023, the year of Cyclone Gabrielle, recorded 426 minutes, against 88–277 in other
     years.
   - With major-event days excluded: −1.7% a year (−3.7 to +0.5).
+  - **The fall rests on 2025's low year.** The plan's 2014–2024 sensitivity gives −1.8% a year raw (−5.6 to +2.5;
+    the interval includes zero) and −0.1% with major-event days excluded.
   - The preregistered ratio test (0.40, −0.28 to +0.72) was designed for a rising trend. With a falling one it does
     not measure masking.
 - **H2 (a rolling threshold removes more of the trend than a frozen one): Inconclusive.** The difference is +0.24
@@ -70,10 +72,15 @@ Two things changed the plan before it was committed (plan section 0):
 - **Data.**
   - The Commission's DPP3 model data supplies disclosure years 2009–2013, and its DPP4 model data (the
     "transitional" series) 2014–2024. They agree exactly in all 96 overlapping distributor-years.
-  - The 2025 interruption disclosure passes the plan's identification check (D3). Comparing unplanned totals with
+  - The 2025 interruption disclosure passes the plan's identification check (D3), but its recording basis is not
+    uniform. The median distributor's counts (×0.93) and SAIDI per record (×0.86) are close to 2024. Six of 15
+    distributors change by more than 1.5× on one of these: Firstlight's rows halved while SAIDI per row doubled;
+    Network Tasman's rows doubled while SAIDI per row fell to 0.32×; Orion's SAIDI per row fell to 0.36×. The 2025
+    file also has 1.24 rows per interruption identifier. Comparing unplanned totals with
     the disclosed Class C SAIDI ("All" network rows), 26 of the 28 distributors with data are within 5%. Among study
     distributors only Top Energy fails, and Nelson has no Class C rows. Top Energy's 2025 is excluded, because its unplanned total includes
-    Transpower-caused interruptions it cannot separate.
+    Transpower-caused interruptions it cannot separate. Imputing its disclosed 2025 Class C total instead would raise
+    the 2025 national point from 88.4 to 91.7 minutes and give −4.0% a year (−7.0 to −0.3; confirmation check).
   - Eastland is Firstlight. Centralines is dropped, because the DPP4 file's Unison excludes it.
 - **The Commission's rule** is re-implemented from its R (DPP4) and Stata (DPP3) code:
   - interruptions are rounded to the half-hour, and rolling 24-hour totals are formed;
@@ -86,13 +93,17 @@ Two things changed the plan before it was committed (plan section 0):
   - all 17 DPP3 boundary values within 0.15%;
   - all 17 DPP3 uncapped limits within 0.05% of the Stata model's own output.
 - **Assessment mode.** The study's rule (a) with the determinations' limits reproduces the Commission's published
-  DPP3 non-compliance record exactly: DPP4 reasons paper, Attachment E, Table E3 (review check 2).
+  DPP3 non-compliance record exactly: DPP4 reasons paper, Attachment E, Table E3. This check was run by the
+  independent review (`review/reviewer_checks/02_h3_robustness.py`), not by the pipeline.
+- **Strictness.** As in the Commission's own models, the reference window uses "≥ boundary" (Stata) and assessment
+  "> boundary" (R). Changing either makes no difference to H3.
 - **The IEEE 1366 rule** works on calendar-day SAIDI. The threshold is exp(α + 2.5β) of ln(daily SAIDI) on the
   non-zero days of the previous five years (rolling) or of 2009–2013 (frozen), and major-event days are excluded.
 - **National index.** The ICP-weighted mean of distributor SAIDI.
-  - ICP counts are a proxy (ICP minutes ÷ SAIDI) with a plausibility guard. Five distributor-years outside 1/3 to
-    3 times the distributor's median are interpolated (D3), including a corrupt Alpine 2017 value that had taken
-    99.5% of that year's weight.
+  - ICP counts are a proxy (ICP minutes ÷ SAIDI) with a plausibility guard (D3). Five distributor-years outside 1/3
+    to 3 times the distributor's median are interpolated, including a corrupt Alpine 2017 value that had taken 99.5%
+    of that year's weight. Missing distributor-years (Alpine 2020; Nelson 2021 and 2025; Top Energy 2025) are filled
+    the same way.
   - The trend is the slope of the index's log on year, with a distributor-cluster bootstrap (B = 2,000). A year
     bootstrap is a sensitivity.
 
@@ -109,6 +120,8 @@ Two things changed the plan before it was committed (plan section 0):
 | major-event days excluded, frozen threshold | −1.42 | −3.56 to +0.82 | −4.04 to +1.27 |
 | frozen minus rolling (H2) | +0.24 pp | −0.06 to +0.50 | −0.11 to +0.62 |
 | ratio, excluded (rolling) / raw | 0.40 | −0.28 to +0.72 | −1.06 to +2.07 |
+| raw, window 2014–2024 (plan §4) | −1.79 | −5.62 to +2.50 | |
+| excluded (rolling), window 2014–2024 | −0.06 | −2.26 to +2.12 | |
 
 - **Major-event days are rare under IEEE in New Zealand.** The rolling rule flags 0.06–1.6 days per distributor per
   year, against the 2.3 events a year the Commission's rule fixes by construction. Daily outage minutes in New

@@ -1,8 +1,8 @@
 """Figures for the report (each PNG has a .txt caption). Written after analysis.py.
 
-  F1  national unplanned SAIDI 2014-2024: raw, and with IEEE major-event days excluded (rolling and frozen threshold)
+  F1  national unplanned SAIDI 2014-2025: raw, and with IEEE major-event days excluded (rolling and frozen threshold)
   F2  DPP3 -> DPP4 change in each distributor's normalised target, split into boundary re-estimation and outcomes
-  F3  H3: assessed unplanned SAIDI against the limit under the Commission's rule and the IEEE rule, 2021-2024
+  F3  H3: assessed unplanned SAIDI against the limit under the Commission's rule and the IEEE rule, 2021-2025
 """
 import json
 from pathlib import Path
@@ -39,13 +39,13 @@ def f1(p):
     ax.set_ylim(bottom=0); ax.legend(frameon=False, fontsize=8, loc="upper left")
     ax.annotate("Cyclone Gabrielle", (2023, n["raw"]["2023"]), xytext=(2020.3, n["raw"]["2023"] * 0.95), fontsize=8, color=INK2,
                 arrowprops=dict(arrowstyle="-", color=GREY, lw=0.8))
-    fig.suptitle("No trend to mask: storm years dominate raw outage minutes; the storm-excluded index is flat", x=0.02, ha="left", fontsize=10.5, color=INK)
+    fig.suptitle("No rising trend to mask: storm years dominate raw outage minutes, which if anything fell", x=0.02, ha="left", fontsize=10.5, color=INK)
     fig.savefig(F / "F1_national.png", dpi=170); plt.close(fig)
     h = p["H1_H2"]
     tr = h["trend_pct_per_yr"]; c = h["cluster"]
     caption("F1_national", f"""ICP-weighted national unplanned SAIDI of the 16 non-exempt distributors, by disclosure year (April-March),
     from the Commerce Commission's interruption-level DPP model data. IEEE 1366 2.5-beta rule on calendar-day SAIDI; the rolling
-    threshold for each year uses the previous five years. Trends 2014-2024: raw {tr['raw']:+.1f}% a year ({c['raw_ci'][0]:+.1f} to
+    threshold for each year uses the previous five years. Top Energy 2025 is omitted (not separable). Trends 2014-2025: raw {tr['raw']:+.1f}% a year ({c['raw_ci'][0]:+.1f} to
     {c['raw_ci'][1]:+.1f}, distributor-cluster bootstrap), rolling-excluded {tr['excl_rolling']:+.1f}%, frozen-excluded {tr['excl_frozen']:+.1f}%.""")
 
 
@@ -67,7 +67,8 @@ def f2():
     major-event half-hours at boundary / 48) under the Commission's DPP3/DPP4 rule, recomputed on its 2010-2019 and 2015-2024
     reference windows. Blue: change at the fixed DPP3 boundary value; orange: the further change from re-estimating the
     boundary on the DPP4 window. Totals across distributors: {d.d_target.sum():+.0f} minutes, of which
-    {d.d_boundary_part.sum():+.0f} from the boundary.""")
+    {d.d_boundary_part.sum():+.0f} from the boundary when outcomes change first; {d.d_boundary_first.sum():+.0f} when the
+    boundary changes first (Shapley {d.d_boundary_shapley.sum():+.0f}).""")
 
 
 def f3(p):
@@ -86,12 +87,13 @@ def f3(p):
         ax.set_ylim(bottom=0); ax.grid(axis="y", color=GRID, lw=0.5); ax.tick_params(axis="y", labelsize=7.5)
     fig.text(0.02, 0.9, "solid: assessed unplanned SAIDI; dotted: limit.  blue: Commission's rule; orange: IEEE 2.5-beta daily. * outcome differs",
              fontsize=7.5, color=INK2)
-    fig.suptitle("Which distributors exceed depends on the major-event rule", x=0.02, ha="left", fontsize=10.5, color=INK)
+    fig.suptitle("Which distributors exceed can depend on the major-event rule", x=0.02, ha="left", fontsize=10.5, color=INK)
     fig.savefig(F / "F3_compliance.png", dpi=170); plt.close(fig)
-    caption("F3_compliance", f"""Assessment years 2021-2024 (disclosure years, April-March) for the distributors that exceed
+    caption("F3_compliance", f"""Assessment years 2021-2025 (2021-2024 for Top Energy; disclosure years, April-March) for the distributors that exceed
     a limit under either rule. Commission's rule: rolling 24-hour major events against the DPP3 boundary value, limit = target
     + 2 SD on 2010-2019. IEEE rule: daily SAIDI capped at the 2.5-beta threshold of 2010-2019, limit computed the same way.
-    {p['H3']['differing']} of {p['H3']['distributors']} distributors have a different set of exceedance years.""")
+    {p['H3']['differing']} of {p['H3']['distributors']} distributors have a different set of exceedance years; 2 with the
+    determinations' limits, {p['H3']['variant_exclude_differing']} with IEEE major-event days excluded rather than capped.""")
 
 
 if __name__ == "__main__":

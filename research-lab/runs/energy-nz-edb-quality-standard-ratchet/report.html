@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NZ Outage Limit Ratchet</title>
+<meta name="description" content="Do New Zealand electricity distributors' outage limits ratchet upward with storms, and does the major-event rule change who breaches?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Energy</div>
+  <h1>No sign that New Zealand&#x27;s outage limits ratchet with storms: the 2025 reset&#x27;s target rises came from ordinary-day outages, not a moving storm threshold, and a ±5% cap has bound limits since 2020; the major-event rule can change who breaches</h1>
+  <p class="subtitle">16 non-exempt electricity distributors. The data are the Commerce Commission&#x27;s interruption-level records, published with its 2020 (DPP3) and 2025 (DPP4) price-quality path models, for disclosure years 2009–2024, plus the 2025 interruption disclosures. They are combined with the reliability limits and boundary values of the 2015, 2020 and 2025 determinations, transcribed by double entry. The plan was committed before any interruption outcome was aggregated. This version incorporates an independent review (`review/review.md`; changes logged as D3).</p>
+  <div class="meta">
+    <span>Report · 2026-10-25 · revised after independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/energy-nz-edb-quality-standard-ratchet/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/energy-nz-edb-quality-standard-ratchet/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/energy-nz-edb-quality-standard-ratchet/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: H1 Inconclusive; H2 Inconclusive; H3 Supported.</strong></p>
+<ul>
+<li><strong>H1 (the IEEE 2.5-beta rule masks a rising outage trend): Inconclusive, and there is no rising trend to mask.</strong><ul>
+<li>National unplanned SAIDI <strong>fell 4.1% a year</strong> over 2014–2025 (95% distributor-cluster bootstrap −7.3 to −0.5;
+the year bootstrap, −9.6 to +4.7, includes zero).</li>
+<li>Storm years dominate it: 2023, the year of Cyclone Gabrielle, recorded 426 minutes, against 88–277 in other
+years.</li>
+<li>With major-event days excluded: −1.7% a year (−3.7 to +0.5).</li>
+<li><strong>The fall rests on 2025's low year.</strong> The plan's 2014–2024 sensitivity gives −1.8% a year raw (−5.6 to +2.5;
+the interval includes zero) and −0.1% with major-event days excluded.</li>
+<li>The preregistered ratio test (0.40, −0.28 to +0.72) was designed for a rising trend. With a falling one it does
+not measure masking.</li>
+</ul>
+</li>
+<li><strong>H2 (a rolling threshold removes more of the trend than a frozen one): Inconclusive.</strong> The difference is +0.24
+  percentage points a year (−0.06 to +0.50).</li>
+<li><strong>H3 (the major-event rule can change compliance): Supported, under every convention tried.</strong><ul>
+<li>For <strong>3 of 15 distributors</strong>, the Commission's rolling-24-hour rule and the IEEE daily 2.5-beta rule give
+different exceedance years in 2021–2025, each limit computed from the same 2010–2019 window.</li>
+<li>Against the determinations' own DPP3 limits, 2 differ. With IEEE major-event days excluded rather than capped,
+4 differ.</li>
+<li>The robust case is Firstlight Network. For Electricity Invercargill the IEEE rule removes nothing in the
+reference window, so its difference is a raw-versus-normalised contrast. Vector's 2023 sits at 0.998 of the
+Commission-rule limit.</li>
+<li>IEEE boundaries are 1.3 to 25 times the Commission's.</li>
+</ul>
+</li>
+<li><strong>The reset: outcomes, not the moving boundary.</strong><ul>
+<li>Across distributors, targets rose by 115 minutes from the DPP3 to the DPP4 reference window.</li>
+<li>Changing outcomes first, the boundary's re-estimation accounts for +11 and outcomes for +104. Changing the
+boundary first gives −5 and +120. The Shapley average gives the boundary +3.</li>
+<li>The Commission's own uncapped DPP4 limits differ from DPP3's by a median of −1% (15 distributors; Aurora,
+whose period was varied, +57%).</li>
+<li>The ±5% inter-period target cap, in force since the 2020 reset, bound for 13 of 15 distributors in 2025.</li>
+</ul>
+</li>
+</ul>
+<h2>In plain terms</h2>
+<p>Each local power company in New Zealand is allowed a set number of outage minutes a year before it is in breach.
+Days hit by big storms are partly excused. Every five years the regulator resets the allowance from the previous
+ten years. The worry was that, as storms get worse, the allowance quietly creeps up with them, so the system loosens
+exactly when it should bite.</p>
+<p>We rebuilt the regulator's calculations from its own outage records and reproduced its numbers. Over 2014–2025,
+outage minutes did not rise. They jump around with storm years, Cyclone Gabrielle above all, and if anything fell.
+Where allowances did rise at the 2025 reset, it was mostly because those networks had more ordinary outages, not
+because the storm threshold moved. Since 2020 the regulator has also capped any allowance's move at 5% per reset,
+and that cap bound for almost every company.</p>
+<p>What can matter is how a "storm day" is defined. The regulator uses a rolling 24-hour window with a fixed number of
+storm events a year. The international standard (IEEE 1366) uses a statistical threshold on calendar days. Swapping
+one for the other changed "in breach" for two to four of fifteen companies in at least one year, depending on
+details. So the excusing rule is more than a technicality.</p>
+<h2>What was asked</h2>
+<p>The lead (<code>energy-nz-edb-quality-standard-ratchet</code>, Energy signature area) asked whether the five-yearly resets ratchet
+reliability limits upward with the storms of the reference period. It is an external check of the lab's US finding
+(<code>runs/energy-outage-major-event-day-ratchet</code>), using official data instead of outage-map proxies.</p>
+<p>Two things changed the plan before it was committed (plan section 0):
+- <strong>The published parameters already answer the level question.</strong> The DPP4 boundary values, the Commission's uncapped
+  limits and the cap, read during the double-entry check, already show it.
+- <strong>The lead's DPP2 → DPP4 limit comparison is not like for like.</strong> DPP2 limits cover 0.5 × planned + unplanned
+  SAIDI with a daily boundary. DPP3 and DPP4 cover unplanned SAIDI with a rolling, fixed-count boundary.</p>
+<h2>How it was done</h2>
+<ul>
+<li><strong>Data.</strong><ul>
+<li>The Commission's DPP3 model data supplies disclosure years 2009–2013, and its DPP4 model data (the
+"transitional" series) 2014–2024. They agree exactly in all 96 overlapping distributor-years.</li>
+<li>The 2025 interruption disclosure passes the plan's identification check (D3), but its recording basis is not
+uniform. The median distributor's counts (×0.93) and SAIDI per record (×0.86) are close to 2024. Six of 15
+distributors change by more than 1.5× on one of these: Firstlight's rows halved while SAIDI per row doubled;
+Network Tasman's rows doubled while SAIDI per row fell to 0.32×; Orion's SAIDI per row fell to 0.36×. The 2025
+file also has 1.24 rows per interruption identifier. Comparing unplanned totals with
+the disclosed Class C SAIDI ("All" network rows), 26 of the 28 distributors with data are within 5%. Among study
+distributors only Top Energy fails, and Nelson has no Class C rows. Top Energy's 2025 is excluded, because its unplanned total includes
+Transpower-caused interruptions it cannot separate. Imputing its disclosed 2025 Class C total instead would raise
+the 2025 national point from 88.4 to 91.7 minutes and give −4.0% a year (−7.0 to −0.3; confirmation check).</li>
+<li>Eastland is Firstlight. Centralines is dropped, because the DPP4 file's Unison excludes it.</li>
+</ul>
+</li>
+<li><strong>The Commission's rule</strong> is re-implemented from its R (DPP4) and Stata (DPP3) code:<ul>
+<li>interruptions are rounded to the half-hour, and rolling 24-hour totals are formed;</li>
+<li>the boundary is the total ranked 1,104th over ten years (2.3 major events a year), with small-distributor
+adjustments;</li>
+<li>half-hours inside a major event are capped at boundary ÷ 48;</li>
+<li>target = mean annual normalised SAIDI, and limit = target + 2 SD.</li>
+</ul>
+</li>
+<li><strong>The validation gate passed</strong> after a date-parsing fix (D2):<ul>
+<li>all 16 DPP4 boundary values exactly, and DPP4 targets and uncapped limits within 0.6%;</li>
+<li>all 17 DPP3 boundary values within 0.15%;</li>
+<li>all 17 DPP3 uncapped limits within 0.05% of the Stata model's own output.</li>
+</ul>
+</li>
+<li><strong>Assessment mode.</strong> The study's rule (a) with the determinations' limits reproduces the Commission's published
+  DPP3 non-compliance record exactly: DPP4 reasons paper, Attachment E, Table E3. This check was run by the
+  independent review (<code>review/reviewer_checks/02_h3_robustness.py</code>), not by the pipeline.</li>
+<li><strong>Strictness.</strong> As in the Commission's own models, the reference window uses "≥ boundary" (Stata) and assessment
+  "&gt; boundary" (R). Changing either makes no difference to H3.</li>
+<li><strong>The IEEE 1366 rule</strong> works on calendar-day SAIDI. The threshold is exp(α + 2.5β) of ln(daily SAIDI) on the
+  non-zero days of the previous five years (rolling) or of 2009–2013 (frozen), and major-event days are excluded.</li>
+<li><strong>National index.</strong> The ICP-weighted mean of distributor SAIDI.<ul>
+<li>ICP counts are a proxy (ICP minutes ÷ SAIDI) with a plausibility guard (D3). Five distributor-years outside 1/3
+to 3 times the distributor's median are interpolated, including a corrupt Alpine 2017 value that had taken 99.5%
+of that year's weight. Missing distributor-years (Alpine 2020; Nelson 2021 and 2025; Top Energy 2025) are filled
+the same way.</li>
+<li>The trend is the slope of the index's log on year, with a distributor-cluster bootstrap (B = 2,000). A year
+bootstrap is a sensitivity.</li>
+</ul>
+</li>
+</ul>
+<h2>Results</h2>
+<h3>H1 and H2: no rising trend to mask (<code>results/figures/F1_national.png</code>)</h3>
+<figure><a href="results/figures/F1_national.png"><img src="results/figures/F1_national.png" alt="National unplanned SAIDI"></a><figcaption>ICP-weighted national unplanned SAIDI of the 16 non-exempt distributors, by disclosure year (April-March), from the Commerce Commission&#x27;s interruption-level DPP model data. IEEE 1366 2.5-beta rule on calendar-day SAIDI; the rolling threshold for each year uses the previous five years. Top Energy 2025 is omitted (not separable). Trends 2014-2025: raw -4.1% a year (-7.3 to -0.5, distributor-cluster bootstrap), rolling-excluded -1.7%, frozen-excluded -1.4%.</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>series, 2014–2025</th>
+<th>trend, % a year</th>
+<th>cluster bootstrap</th>
+<th>year bootstrap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>raw unplanned SAIDI</td>
+<td>−4.11</td>
+<td>−7.27 to −0.48</td>
+<td>−9.57 to +4.69</td>
+</tr>
+<tr>
+<td>major-event days excluded, rolling threshold</td>
+<td>−1.66</td>
+<td>−3.69 to +0.51</td>
+<td>−4.45 to +1.03</td>
+</tr>
+<tr>
+<td>major-event days excluded, frozen threshold</td>
+<td>−1.42</td>
+<td>−3.56 to +0.82</td>
+<td>−4.04 to +1.27</td>
+</tr>
+<tr>
+<td>frozen minus rolling (H2)</td>
+<td>+0.24 pp</td>
+<td>−0.06 to +0.50</td>
+<td>−0.11 to +0.62</td>
+</tr>
+<tr>
+<td>ratio, excluded (rolling) / raw</td>
+<td>0.40</td>
+<td>−0.28 to +0.72</td>
+<td>−1.06 to +2.07</td>
+</tr>
+<tr>
+<td>raw, window 2014–2024 (plan §4)</td>
+<td>−1.79</td>
+<td>−5.62 to +2.50</td>
+<td></td>
+</tr>
+<tr>
+<td>excluded (rolling), window 2014–2024</td>
+<td>−0.06</td>
+<td>−2.26 to +2.12</td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Major-event days are rare under IEEE in New Zealand.</strong> The rolling rule flags 0.06–1.6 days per distributor per
+  year, against the 2.3 events a year the Commission's rule fixes by construction. Daily outage minutes in New
+  Zealand have heavy tails, which inflates β.</li>
+<li><strong>Sensitivities:</strong><ul>
+<li><strong>Without Aurora:</strong> −4.3% a year raw, still Inconclusive.</li>
+<li><strong>Without 2023:</strong> −7.0% a year raw (−10.1 to −3.7). The rule returns "Supported" (ratio 0.33), but, as for the
+primary, a falling raw trend is not masked growth, and this is not evidence for H1.</li>
+</ul>
+</li>
+<li><strong>SAIFI.</strong> −2.6% a year raw (−4.3 to −1.4), with the excluded series falling as fast (ratio 0.99, 0.85 to 1.07).
+  The sign-blind rule returns "Refuted". Read correctly, nothing masks a falling SAIFI trend. H2 for SAIFI is
+  Inconclusive (+0.10 pp, −0.13 to +0.28).</li>
+<li><strong>National SAIDI with major-event days excluded</strong> (ICP-weighted, minutes) varies within 77–134, with no rising
+  trend.</li>
+</ul>
+<h3>The reset itself: outcomes, not the moving boundary (<code>results/figures/F2_decomposition.png</code>)</h3>
+<figure><a href="results/figures/F2_decomposition.png"><img src="results/figures/F2_decomposition.png" alt="Decomposition"></a><figcaption>Each distributor&#x27;s normalised unplanned SAIDI target (mean annual SAIDI after capping major-event half-hours at boundary / 48) under the Commission&#x27;s DPP3/DPP4 rule, recomputed on its 2010-2019 and 2015-2024 reference windows. Blue: change at the fixed DPP3 boundary value; orange: the further change from re-estimating the boundary on the DPP4 window. Totals across distributors: +115 minutes, of which +11 from the boundary when outcomes change first; -5 when the boundary changes first (Shapley +3).</figcaption></figure>
+<ul>
+<li><strong>Size of the change.</strong> Moving the reference window from 2010–2019 to 2015–2024 raises the median distributor's
+  recomputed, uncapped normalised target by 4.7% and its limit by 3.3%. The Commission's published uncapped limits
+  imply a median of −1% (15 distributors, without Aurora).</li>
+<li><strong>What drives it.</strong> Targets rose by 115 minutes in total. The split depends on the order of the two changes:<ul>
+<li>outcomes first (the boundary evaluated on 2015–2024 outcomes): boundary +11, outcomes +104;</li>
+<li>boundary first (the boundary evaluated on 2010–2019 outcomes): boundary −5, outcomes +120;</li>
+<li>Shapley average: boundary +3.</li>
+</ul>
+</li>
+</ul>
+<p>Either way, outcomes dominate. The largest rises are at Firstlight (+37), The Lines Company (+36), Aurora (+29),
+  Top Energy (+28) and Vector (+16). Orion's fall (−23) reflects the 2011 Canterbury earthquakes leaving its window.
+- <strong>Share removed by normalisation.</strong> The median share of raw unplanned SAIDI that normalisation removes fell from
+  47% to 40%.
+- <strong>Gabrielle and Unison.</strong> Unison's raw reference-window mean more than doubled (123 → 283 minutes, Cyclone
+  Gabrielle), but its target rose by only 1.4 minutes. The fixed-count rule absorbed the cyclone, as intended.
+- <strong>The cap.</strong> The DPP3 target was limited to a ±5% change from a consistently normalised DPP2 target (DPP3 reasons
+  paper, Attachment J, Table J1). Stata target × (1 + J1 adjustment) + 2 SD reproduces every DPP3 determination limit
+  to 0.02% (review check 3; D3). The same ±5% cap applied in 2025 and bound for 13 of 15.</p>
+<h3>H3: the rule can change who exceeds (<code>results/figures/F3_compliance.png</code>)</h3>
+<figure><a href="results/figures/F3_compliance.png"><img src="results/figures/F3_compliance.png" alt="Compliance"></a><figcaption>Assessment years 2021-2025 (2021-2024 for Top Energy; disclosure years, April-March) for the distributors that exceed a limit under either rule. Commission&#x27;s rule: rolling 24-hour major events against the DPP3 boundary value, limit = target + 2 SD on 2010-2019. IEEE rule: daily SAIDI capped at the 2.5-beta threshold of 2010-2019, limit computed the same way. 3 of 15 distributors have a different set of exceedance years; 2 with the determinations&#x27; limits, 4 with IEEE major-event days excluded rather than capped.</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>distributor</th>
+<th>Commission's rule: years over limit</th>
+<th>IEEE rule: years over limit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Electricity Invercargill</td>
+<td>none</td>
+<td>2022</td>
+</tr>
+<tr>
+<td>Firstlight Network</td>
+<td>2023, 2024, 2025</td>
+<td>2022, 2023, 2024, 2025</td>
+</tr>
+<tr>
+<td>The Lines Company</td>
+<td>2023</td>
+<td>2023</td>
+</tr>
+<tr>
+<td>Top Energy (2021–2024)</td>
+<td>2023</td>
+<td>2023</td>
+</tr>
+<tr>
+<td>Vector Lines</td>
+<td>none</td>
+<td>2023</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Counts.</strong> 5 exceedances under the Commission's rule and 8 under IEEE, across 15 distributors.</li>
+<li><strong>Conventions:</strong><ul>
+<li>with the determinations' own DPP3 limits (including the ±5% cap), Vector also exceeds in 2023 under the
+Commission's rule, so 2 differ (Invercargill and Firstlight);</li>
+<li>with IEEE major-event days excluded rather than capped, 4 differ (Invercargill, Firstlight, OtagoNet and The
+Lines Company);</li>
+<li>for SAIFI, 3 differ.</li>
+</ul>
+</li>
+</ul>
+<p>At least two differ under every convention, so H3 is Supported throughout. The named set changes.
+- <strong>Inert cases.</strong> For Electricity Invercargill, Nelson and Network Tasman no reference-window day exceeds the IEEE
+  threshold, so the IEEE rule there compares raw SAIDI with a raw limit. Invercargill's difference is of that kind.
+- <strong>Margins.</strong> Firstlight 2022 sits at 0.98 of the Commission-rule limit, and Vector 2023 at 0.998.</p>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>No sign of a storm ratchet over 2014–2025.</strong> Raw outage minutes did not rise, and if anything fell, but the
+  interval is wide (the year bootstrap admits +4.7% a year). This is absence of evidence for a rising trend, not
+  proof of none.<ul>
+<li>Where reset targets rose, the rise came mainly from more outage minutes on ordinary days, under either ordering
+of the decomposition.</li>
+<li>The ±5% cap, in force since 2020, held most limits near their previous values.</li>
+</ul>
+</li>
+<li><strong>The US result does not transfer.</strong> The rule behaves the same way, but New Zealand's series, unlike the US one,
+  shows no rising trend over this window.</li>
+<li><strong>The rule can be consequential.</strong> IEEE's daily 2.5-beta threshold sits 1.3–25 times above the Commission's
+  fixed-count threshold for New Zealand's heavy-tailed outage data. It changes compliance for 2–4 of 15 distributors,
+  depending on conventions; the robust case is Firstlight.</li>
+<li><strong>Not shown:</strong><ul>
+<li><strong>Enforcement.</strong> Under DPP3, exceeding the limit in an assessment period is a contravention, subject to
+enforcement discretion and to the regime's extreme-event and major-external-factor provisions, which are not
+modelled.</li>
+<li><strong>Trends beyond 2025,</strong> and causes: network condition and recording practice are not separated from weather.
+A 2024–2025 recording-basis check shows comparable interruption counts (median ratio 0.93) and SAIDI per
+interruption (0.86).</li>
+</ul>
+</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration:</strong> <code>plan.md</code>, committed after the double-entry transcription and before any outcome aggregate.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>):<ul>
+<li>D1, now withdrawn by D3: it had excluded 2025 because of a double-counting error.</li>
+<li>D2: a day-first date-parsing bug, caught by the validation gate before any hypothesis statistic, and the DPP3
+limit mechanism (the ±5% cap; D3).</li>
+<li>D3, after the review:<ul>
+<li>corrupt ICP weights guarded and interpolated;</li>
+<li>2025 included as preregistered;</li>
+<li>the DPP3 cap explained;</li>
+<li>H3 conventions and inert cases;</li>
+<li>both decomposition orderings;</li>
+<li>wording.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>History.</strong> This lead was first skipped on 21 October 2026, after a novelty check. The Commission's DPP4 reasons
+  paper (Attachment E, Table E16) already tabulates the uncapped and capped DPP3 → DPP4 limit changes. It was
+  revisited because the Commission's model bundles hold interruption-level data for 2009–2024.</li>
+<li><strong>Independent review:</strong> Fable, 2026-10-25, "fix first" (<code>review/review.md</code>). Fixes are D3; a confirmation pass
+  follows.</li>
+</ul>
+<h2>Reproducing it</h2>
+<ol>
+<li><code>code/transcribe.py</code>.</li>
+<li><code>code/panel.py load</code>, then <code>check</code>, then <code>build</code>.</li>
+<li><code>code/rules.py validate</code>.</li>
+<li><code>code/analysis.py</code>.</li>
+<li><code>code/figures.py</code>.</li>
+</ol>
+<p>The data are the Commission's DPP3 and DPP4 model bundles and the EDB information-disclosure files, all public.</p>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/energy-nz-edb-quality-standard-ratchet/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

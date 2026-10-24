@@ -8347,7 +8347,12 @@
    "local_relevance": "Bears on the Commerce Commission's next default price-quality path, on how extreme weather after Cyclone Gabrielle is treated in reliability regulation, and on what consumers can expect from their lines company.",
    "scout_value_score": 5,
    "scout_cost_score": 3,
-   "critic_note": "Access verified 2026-10-20: the Commission publishes all years of disclosures as one 14 MB Parquet plus interruption-level data from 2025. The interruption-level series is short, so the 2.5-beta replication is a secondary, partly descriptive component. Novelty: no reset-dynamics analysis found. Value 5 (one regulator, a coarse panel, but a clean external check of the outage study); cost 3 because of manual transcription of four determinations."
+   "critic_note": "Access verified 2026-10-20: the Commission publishes all years of disclosures as one 14 MB Parquet plus interruption-level data from 2025. The interruption-level series is short, so the 2.5-beta replication is a secondary, partly descriptive component. Novelty: no reset-dynamics analysis found. Value 5 (one regulator, a coarse panel, but a clean external check of the outage study); cost 3 because of manual transcription of four determinations.",
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass)",
+   "report_url": "runs/energy-nz-edb-quality-standard-ratchet/report.html",
+   "verdict_tag": "Inconclusive",
+   "verdict_note": "H1 Inconclusive, H2 Inconclusive, H3 Supported. 16 non-exempt NZ electricity distributors, Commerce Commission interruption-level DPP model data 2009-2024 plus 2025 disclosures: national unplanned SAIDI fell 4.1% a year over 2014-2025 (cluster bootstrap -7.3 to -0.5), but the preregistered 2014-2024 window gives -1.8% (-5.6 to +2.5), so there is no rising trend for the IEEE major-event rule to mask, and a frozen vs rolling threshold differs by +0.24 pp (-0.06 to +0.50). At the 2025 reset, recomputed targets rose 115 minutes in total, of which the boundary re-estimation explains +11 (outcomes first) or -5 (boundary first); a +/-5% inter-period cap has bound limits since 2020. Swapping the Commission's rolling-24-hour rule for IEEE 1366's daily 2.5-beta rule changes exceedance years for 2-4 of 15 distributors depending on conventions (robust case: Firstlight). Review found corrupt ICP weights and a 2025 aggregation error (fixed, D3).",
+   "headline": "No sign that New Zealand's outage limits ratchet with storms: reset target rises came from ordinary-day outages, a 5% cap has bound limits since 2020, and the storm-day rule can change who breaches."
   },
   {
    "id": "energy-nz-embedded-solar-edb-demand",

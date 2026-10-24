@@ -217,7 +217,8 @@ def main():
     a.to_csv(T / "annual_rules.csv", index=False)
     out["H1_H2"] = h12(a, W, "primary")
     out["sensitivity"] = {"no_2023": h12(a, W, "no 2023", drop_years=(2023,)),
-                          "no_aurora": h12(a, W, "no Aurora", drop_edbs=("Aurora Energy",))}
+                          "no_aurora": h12(a, W, "no Aurora", drop_edbs=("Aurora Energy",)),
+                          "window_2014_2024": h12(a, W, "window 2014-2024 (plan section 4)", drop_years=(2025,))}
     af = annual_rules(U, "saifi")
     af.to_csv(T / "annual_rules_saifi.csv", index=False)
     out["saifi_H1_H2"] = h12(af, W, "SAIFI")

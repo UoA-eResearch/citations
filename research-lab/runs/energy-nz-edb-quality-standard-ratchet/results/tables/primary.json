@@ -182,6 +182,67 @@
    },
    "H1": "Inconclusive",
    "H2": "Inconclusive"
+  },
+  "window_2014_2024": {
+   "label": "window 2014-2024 (plan section 4)",
+   "edbs": 16,
+   "years": [
+    2014,
+    2024
+   ],
+   "trend_pct_per_yr": {
+    "raw": -1.7915,
+    "excl_rolling": -0.0612,
+    "excl_frozen": 0.095
+   },
+   "ratio": 0.0342,
+   "diff_pp": 0.1562,
+   "cluster": {
+    "raw_ci": [
+     -5.6189,
+     2.5021
+    ],
+    "excl_rolling_ci": [
+     -2.26,
+     2.1241
+    ],
+    "excl_frozen_ci": [
+     -2.0827,
+     2.3187
+    ],
+    "ratio_ci": [
+     -4.0381,
+     5.3576
+    ],
+    "diff_ci": [
+     -0.0125,
+     0.3883
+    ]
+   },
+   "years_bootstrap": {
+    "raw_ci": [
+     -9.7138,
+     8.4309
+    ],
+    "excl_rolling_ci": [
+     -2.1011,
+     1.5128
+    ],
+    "excl_frozen_ci": [
+     -1.9215,
+     1.8602
+    ],
+    "ratio_ci": [
+     -1.441,
+     1.4379
+    ],
+    "diff_ci": [
+     -0.1658,
+     0.6926
+    ]
+   },
+   "H1": "Inconclusive (raw trend interval includes 0)",
+   "H2": "Inconclusive"
   }
  },
  "saifi_H1_H2": {
