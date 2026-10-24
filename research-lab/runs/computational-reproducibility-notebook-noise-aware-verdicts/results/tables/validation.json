@@ -1,0 +1,48 @@
+{
+ "pairs": 100,
+ "agree": 94,
+ "disagree": 6,
+ "disagreements": [
+  {
+   "index": 0,
+   "kind": "png",
+   "comparator": "mismatch",
+   "hand": "same result, cosmetic rendering difference"
+  },
+  {
+   "index": 15,
+   "kind": "png",
+   "comparator": "mismatch",
+   "hand": "same result, cosmetic rendering difference"
+  },
+  {
+   "index": 31,
+   "kind": "png",
+   "comparator": "mismatch",
+   "hand": "same result, cosmetic rendering difference"
+  },
+  {
+   "index": 52,
+   "kind": "png",
+   "comparator": "mismatch",
+   "hand": "same result, cosmetic rendering difference"
+  },
+  {
+   "index": 63,
+   "kind": "png",
+   "comparator": "mismatch",
+   "hand": "same result, cosmetic rendering difference"
+  },
+  {
+   "index": 68,
+   "kind": "png",
+   "comparator": "mismatch",
+   "hand": "same result, cosmetic rendering difference"
+  }
+ ],
+ "text_pairs": 70,
+ "text_agree": 70,
+ "png_pairs": 30,
+ "png_agree": 24,
+ "notes": "Labels by the agent after viewing stored vs rerun outputs (text side by side; images as contact sheets). Cells whose PNG matched but text differed were labelled on the text."
+}

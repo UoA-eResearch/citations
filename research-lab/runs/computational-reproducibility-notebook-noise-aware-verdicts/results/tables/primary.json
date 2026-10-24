@@ -1,0 +1,31 @@
+{
+ "completed_with_3_reps": 57,
+ "exact_mismatch": 34,
+ "all_intrinsic": 7,
+ "H1_share": 0.2059,
+ "H1_wilson": [
+  0.1035,
+  0.368
+ ],
+ "H1_repo_bootstrap": [
+  0.0789,
+  0.3667
+ ],
+ "H1": "Inconclusive",
+ "exact_fail_rate": 0.5965,
+ "noise_aware_fail_rate": 0.4737,
+ "overstatement": 1.2593,
+ "overstatement_ci": [
+  1.0857,
+  1.5789
+ ],
+ "H2": "Inconclusive",
+ "drift_share_of_stable_cells": 0.1107,
+ "cells": {
+  "total": 453,
+  "mismatch": 180,
+  "intrinsic": 28,
+  "varies": 29,
+  "envelope": 181
+ }
+}

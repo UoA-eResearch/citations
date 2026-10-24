@@ -28,7 +28,8 @@ VOLATILE = [re.compile(p) for p in (
     r"\b\d+(?:\.\d+)?\s?(?:ms|µs|us|ns|s|sec|secs|seconds|min|mins|minutes)\b", r"(?:/tmp|/home|/Users|/work|/root)[^\s'\"]*",
     r"[A-Za-z]:\\[^\s'\"]*", r"\bpid[ =:]\d+", r"\bat 0x[0-9a-f]+", r"\b(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)\b[^\n]{0,30}\d{4}")]
 TAG = re.compile(r"<[^>]+>")
-PHASH_TOL = 6
+import os
+PHASH_TOL = int(os.environ.get("PHASH_TOL", "6"))      # post hoc sensitivity: PHASH_TOL=12
 
 
 def mask(s):
@@ -186,6 +187,13 @@ def run():
     C.to_parquet(D / "interim" / "cells.parquet", index=False)
     N.to_csv(TAB / "notebooks.csv", index=False)
     comp = N[N.reps_ok]
+    if os.environ.get("EXCL_SHELL"):                         # post hoc: drop notebooks with "not found" shell output
+        bad = set()
+        for nb in comp.nbid:
+            t = (D / "runs" / nb / "asof_1.ipynb").read_text(errors="replace")
+            if "not found" in t and ("/usr/bin/sh" in t or "command not found" in t):
+                bad.add(nb)
+        comp = comp[~comp.nbid.isin(bad)]
     ex = comp[comp.exact_mismatch]
     k, n = int(ex.all_intrinsic.sum()), len(ex)
     out = {"completed_with_3_reps": int(len(comp)), "exact_mismatch": n, "all_intrinsic": k,
@@ -213,7 +221,7 @@ def run():
     out["drift_share_of_stable_cells"] = round(float(sm.latest_differs.mean()), 4) if len(sm) else None
     out["cells"] = {"total": int(len(C)), "mismatch": int(C.mismatch.sum()), "intrinsic": int(C.intrinsic.sum()),
                     "varies": int(C.varies.sum()), "envelope": int(C.envelope.sum())}
-    (TAB / "primary.json").write_text(json.dumps(out, indent=1) + "\n")
+    (TAB / os.environ.get("OUT_JSON", "primary.json")).write_text(json.dumps(out, indent=1) + "\n")
     print(json.dumps(out, indent=1))
 
 
