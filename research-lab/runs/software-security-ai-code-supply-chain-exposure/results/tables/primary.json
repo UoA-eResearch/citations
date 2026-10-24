@@ -1,0 +1,1757 @@
+{
+ "H1": {
+  "by_eco": {
+   "npm": {
+    "packages": 10000,
+    "cloned": 9757,
+    "with_graph": 9663,
+    "p": 0.2164,
+    "p_ci": [
+     0.2082,
+     0.2244
+    ],
+    "P_w": 0.2228,
+    "P_w_ci": [
+     0.2058,
+     0.2411
+    ],
+    "unweighted_exposure": 0.3162,
+    "R": 1.03,
+    "R_ci": [
+     0.9514,
+     1.1139
+    ]
+   },
+   "pypi": {
+    "packages": 10000,
+    "cloned": 8934,
+    "with_graph": 9649,
+    "p": 0.1857,
+    "p_ci": [
+     0.1779,
+     0.1935
+    ],
+    "P_w": 0.3551,
+    "P_w_ci": [
+     0.3073,
+     0.4093
+    ],
+    "unweighted_exposure": 0.4835,
+    "R": 1.912,
+    "R_ci": [
+     1.6541,
+     2.2096
+    ]
+   }
+  },
+  "H1a": "Refuted",
+  "H1b": "Refuted",
+  "verdict": "Refuted",
+  "node_coverage": {
+   "npm": 0.9774,
+   "pypi": 0.9942
+  },
+  "release_methods": {
+   "tag": 283022,
+   "date": 134584,
+   "tag_date": 5344,
+   "inactive": 231
+  },
+  "latest_release_in_window": {
+   "npm": 264679.0,
+   "pypi": 158502.0
+  }
+ },
+ "sensitivity": {
+  "no_monorepos": {
+   "npm": {
+    "packages": 5307,
+    "cloned": 5067,
+    "with_graph": 5202,
+    "p": 0.0598,
+    "p_ci": [
+     0.0535,
+     0.0665
+    ],
+    "P_w": 0.0614,
+    "P_w_ci": [
+     0.0482,
+     0.0778
+    ],
+    "unweighted_exposure": 0.0936,
+    "R": 1.026,
+    "R_ci": [
+     0.8248,
+     1.2674
+    ]
+   },
+   "pypi": {
+    "packages": 8152,
+    "cloned": 7098,
+    "with_graph": 7932,
+    "p": 0.1436,
+    "p_ci": [
+     0.1357,
+     0.1516
+    ],
+    "P_w": 0.2873,
+    "P_w_ci": [
+     0.2366,
+     0.3439
+    ],
+    "unweighted_exposure": 0.4541,
+    "R": 2.001,
+    "R_ci": [
+     1.6485,
+     2.3927
+    ]
+   }
+  },
+  "tag_only": {
+   "npm": {
+    "packages": 10000,
+    "cloned": 9757,
+    "with_graph": 9663,
+    "p": 0.1428,
+    "p_ci": [
+     0.1357,
+     0.1499
+    ],
+    "P_w": 0.1492,
+    "P_w_ci": [
+     0.1349,
+     0.1646
+    ],
+    "unweighted_exposure": 0.2185,
+    "R": 1.045,
+    "R_ci": [
+     0.9483,
+     1.1518
+    ]
+   },
+   "pypi": {
+    "packages": 10000,
+    "cloned": 8934,
+    "with_graph": 9649,
+    "p": 0.1167,
+    "p_ci": [
+     0.1103,
+     0.1232
+    ],
+    "P_w": 0.2473,
+    "P_w_ci": [
+     0.2078,
+     0.2937
+    ],
+    "unweighted_exposure": 0.3792,
+    "R": 2.119,
+    "R_ci": [
+     1.7668,
+     2.5116
+    ]
+   }
+  }
+ },
+ "H2": {
+  "pairs": 296806,
+  "repos": 2528,
+  "unmatched_ai": 65399,
+  "median_ai_days": 6.79,
+  "median_human_days": 6.73,
+  "ratio": 1.009,
+  "ratio_ci": [
+   0.987,
+   1.109
+  ],
+  "verdict": "Refuted",
+  "by_eco": {
+   "npm": {
+    "pairs": 199570,
+    "median_ai_days": 5.43,
+    "median_human_days": 5.25
+   },
+   "pypi": {
+    "pairs": 97236,
+    "median_ai_days": 13.1,
+    "median_human_days": 12.17
+   }
+  }
+ },
+ "monthly": {
+  "npm": {
+   "commits": [
+    {
+     "month": "2024-06",
+     "commits": 34542,
+     "ai": 0,
+     "share": 0.0
+    },
+    {
+     "month": "2024-07",
+     "commits": 37367,
+     "ai": 0,
+     "share": 0.0
+    },
+    {
+     "month": "2024-08",
+     "commits": 36031,
+     "ai": 0,
+     "share": 0.0
+    },
+    {
+     "month": "2024-09",
+     "commits": 34009,
+     "ai": 1,
+     "share": 3e-05
+    },
+    {
+     "month": "2024-10",
+     "commits": 38737,
+     "ai": 2,
+     "share": 5e-05
+    },
+    {
+     "month": "2024-11",
+     "commits": 35835,
+     "ai": 3,
+     "share": 8e-05
+    },
+    {
+     "month": "2024-12",
+     "commits": 32038,
+     "ai": 3,
+     "share": 9e-05
+    },
+    {
+     "month": "2025-01",
+     "commits": 36063,
+     "ai": 17,
+     "share": 0.00047
+    },
+    {
+     "month": "2025-02",
+     "commits": 33812,
+     "ai": 14,
+     "share": 0.00041
+    },
+    {
+     "month": "2025-03",
+     "commits": 37378,
+     "ai": 48,
+     "share": 0.00128
+    },
+    {
+     "month": "2025-04",
+     "commits": 35530,
+     "ai": 62,
+     "share": 0.00175
+    },
+    {
+     "month": "2025-05",
+     "commits": 33263,
+     "ai": 131,
+     "share": 0.00394
+    },
+    {
+     "month": "2025-06",
+     "commits": 32722,
+     "ai": 384,
+     "share": 0.01174
+    },
+    {
+     "month": "2025-07",
+     "commits": 34643,
+     "ai": 655,
+     "share": 0.01891
+    },
+    {
+     "month": "2025-08",
+     "commits": 33670,
+     "ai": 706,
+     "share": 0.02097
+    },
+    {
+     "month": "2025-09",
+     "commits": 35579,
+     "ai": 645,
+     "share": 0.01813
+    },
+    {
+     "month": "2025-10",
+     "commits": 38261,
+     "ai": 839,
+     "share": 0.02193
+    },
+    {
+     "month": "2025-11",
+     "commits": 36414,
+     "ai": 875,
+     "share": 0.02403
+    },
+    {
+     "month": "2025-12",
+     "commits": 40662,
+     "ai": 1188,
+     "share": 0.02922
+    },
+    {
+     "month": "2026-01",
+     "commits": 49377,
+     "ai": 2351,
+     "share": 0.04761
+    },
+    {
+     "month": "2026-02",
+     "commits": 53007,
+     "ai": 3437,
+     "share": 0.06484
+    },
+    {
+     "month": "2026-03",
+     "commits": 62618,
+     "ai": 4636,
+     "share": 0.07404
+    },
+    {
+     "month": "2026-04",
+     "commits": 65248,
+     "ai": 4353,
+     "share": 0.06671
+    },
+    {
+     "month": "2026-05",
+     "commits": 69564,
+     "ai": 5311,
+     "share": 0.07635
+    },
+    {
+     "month": "2026-06",
+     "commits": 59697,
+     "ai": 5859,
+     "share": 0.09815
+    },
+    {
+     "month": "2026-07",
+     "commits": 66117,
+     "ai": 6171,
+     "share": 0.09333
+    },
+    {
+     "month": "2026-08",
+     "commits": 69030,
+     "ai": 7097,
+     "share": 0.10281
+    },
+    {
+     "month": "2026-09",
+     "commits": 84337,
+     "ai": 9146,
+     "share": 0.10845
+    },
+    {
+     "month": "2026-10",
+     "commits": 76852,
+     "ai": 9789,
+     "share": 0.12737
+    }
+   ],
+   "agents_total": {
+    "claude": 43518,
+    "copilot": 10071,
+    "cursor": 6230,
+    "codex": 1475,
+    "devin": 1253,
+    "amp": 576,
+    "gemini": 412,
+    "jules": 172,
+    "aider": 14,
+    "junie": 2
+   },
+   "agents_by_month": [
+    {
+     "month": "2024-09",
+     "aider": 0,
+     "amp": 0,
+     "claude": 0,
+     "codex": 0,
+     "copilot": 1,
+     "cursor": 0,
+     "devin": 0,
+     "gemini": 0,
+     "jules": 0,
+     "junie": 0
+    },
+    {
+     "month": "2024-10",
+     "aider": 0,
+     "amp": 0,
+     "claude": 0,
+     "codex": 0,
+     "copilot": 2,
+     "cursor": 0,
+     "devin": 0,
+     "gemini": 0,
+     "jules": 0,
+     "junie": 0
+    },
+    {
+     "month": "2024-11",
+     "aider": 0,
+     "amp": 0,
+     "claude": 0,
+     "codex": 0,
+     "copilot": 2,
+     "cursor": 0,
+     "devin": 1,
+     "gemini": 0,
+     "jules": 0,
+     "junie": 0
+    },
+    {
+     "month": "2024-12",
+     "aider": 0,
+     "amp": 0,
+     "claude": 0,
+     "codex": 0,
+     "copilot": 1,
+     "cursor": 0,
+     "devin": 2,
+     "gemini": 0,
+     "jules": 0,
+     "junie": 0
+    },
+    {
+     "month": "2025-01",
+     "aider": 0,
+     "amp": 0,
+     "claude": 0,
+     "codex": 0,
+     "copilot": 5,
+     "cursor": 0,
+     "devin": 12,
+     "gemini": 0,
+     "jules": 0,
+     "junie": 0
+    },
+    {
+     "month": "2025-02",
+     "aider": 0,
+     "amp": 0,
+     "claude": 1,
+     "codex": 0,
+     "copilot": 8,
+     "cursor": 0,
+     "devin": 5,
+     "gemini": 0,
+     "jules": 0,
+     "junie": 0
+    },
+    {
+     "month": "2025-03",
+     "aider": 13,
+     "amp": 0,
+     "claude": 3,
+     "codex": 0,
+     "copilot": 17,
+     "cursor": 0,
+     "devin": 14,
+     "gemini": 0,
+     "jules": 1,
+     "junie": 0
+    },
+    {
+     "month": "2025-04",
+     "aider": 0,
+     "amp": 0,
+     "claude": 4,
+     "codex": 1,
+     "copilot": 40,
+     "cursor": 0,
+     "devin": 17,
+     "gemini": 0,
+     "jules": 0,
+     "junie": 0
+    },
+    {
+     "month": "2025-05",
+     "aider": 0,
+     "amp": 0,
+     "claude": 26,
+     "codex": 0,
+     "copilot": 77,
+     "cursor": 0,
+     "devin": 25,
+     "gemini": 0,
+     "jules": 3,
+     "junie": 0
+    },
+    {
+     "month": "2025-06",
+     "aider": 0,
+     "amp": 0,
+     "claude": 106,
+     "codex": 0,
+     "copilot": 207,
+     "cursor": 26,
+     "devin": 38,
+     "gemini": 1,
+     "jules": 6,
+     "junie": 0
+    },
+    {
+     "month": "2025-07",
+     "aider": 1,
+     "amp": 2,
+     "claude": 257,
+     "codex": 0,
+     "copilot": 270,
+     "cursor": 51,
+     "devin": 55,
+     "gemini": 16,
+     "jules": 3,
+     "junie": 0
+    },
+    {
+     "month": "2025-08",
+     "aider": 0,
+     "amp": 0,
+     "claude": 224,
+     "codex": 0,
+     "copilot": 380,
+     "cursor": 21,
+     "devin": 30,
+     "gemini": 23,
+     "jules": 28,
+     "junie": 0
+    },
+    {
+     "month": "2025-09",
+     "aider": 0,
+     "amp": 0,
+     "claude": 278,
+     "codex": 9,
+     "copilot": 278,
+     "cursor": 8,
+     "devin": 18,
+     "gemini": 36,
+     "jules": 18,
+     "junie": 0
+    },
+    {
+     "month": "2025-10",
+     "aider": 0,
+     "amp": 1,
+     "claude": 376,
+     "codex": 0,
+     "copilot": 365,
+     "cursor": 27,
+     "devin": 23,
+     "gemini": 38,
+     "jules": 9,
+     "junie": 0
+    },
+    {
+     "month": "2025-11",
+     "aider": 0,
+     "amp": 0,
+     "claude": 381,
+     "codex": 0,
+     "copilot": 426,
+     "cursor": 21,
+     "devin": 11,
+     "gemini": 35,
+     "jules": 1,
+     "junie": 0
+    },
+    {
+     "month": "2025-12",
+     "aider": 0,
+     "amp": 2,
+     "claude": 559,
+     "codex": 0,
+     "copilot": 521,
+     "cursor": 39,
+     "devin": 29,
+     "gemini": 27,
+     "jules": 11,
+     "junie": 0
+    },
+    {
+     "month": "2026-01",
+     "aider": 0,
+     "amp": 36,
+     "claude": 1570,
+     "codex": 2,
+     "copilot": 537,
+     "cursor": 80,
+     "devin": 61,
+     "gemini": 21,
+     "jules": 44,
+     "junie": 0
+    },
+    {
+     "month": "2026-02",
+     "aider": 0,
+     "amp": 41,
+     "claude": 2161,
+     "codex": 36,
+     "copilot": 705,
+     "cursor": 425,
+     "devin": 28,
+     "gemini": 24,
+     "jules": 17,
+     "junie": 0
+    },
+    {
+     "month": "2026-03",
+     "aider": 0,
+     "amp": 43,
+     "claude": 3241,
+     "codex": 151,
+     "copilot": 914,
+     "cursor": 184,
+     "devin": 50,
+     "gemini": 41,
+     "jules": 11,
+     "junie": 1
+    },
+    {
+     "month": "2026-04",
+     "aider": 0,
+     "amp": 20,
+     "claude": 2689,
+     "codex": 202,
+     "copilot": 959,
+     "cursor": 228,
+     "devin": 214,
+     "gemini": 39,
+     "jules": 2,
+     "junie": 0
+    },
+    {
+     "month": "2026-05",
+     "aider": 0,
+     "amp": 3,
+     "claude": 2869,
+     "codex": 137,
+     "copilot": 1011,
+     "cursor": 1133,
+     "devin": 129,
+     "gemini": 27,
+     "jules": 2,
+     "junie": 0
+    },
+    {
+     "month": "2026-06",
+     "aider": 0,
+     "amp": 1,
+     "claude": 4051,
+     "codex": 88,
+     "copilot": 816,
+     "cursor": 726,
+     "devin": 143,
+     "gemini": 27,
+     "jules": 7,
+     "junie": 0
+    },
+    {
+     "month": "2026-07",
+     "aider": 0,
+     "amp": 6,
+     "claude": 4733,
+     "codex": 151,
+     "copilot": 594,
+     "cursor": 576,
+     "devin": 85,
+     "gemini": 22,
+     "jules": 3,
+     "junie": 1
+    },
+    {
+     "month": "2026-08",
+     "aider": 0,
+     "amp": 407,
+     "claude": 4950,
+     "codex": 162,
+     "copilot": 587,
+     "cursor": 866,
+     "devin": 106,
+     "gemini": 14,
+     "jules": 5,
+     "junie": 0
+    },
+    {
+     "month": "2026-09",
+     "aider": 0,
+     "amp": 5,
+     "claude": 6802,
+     "codex": 322,
+     "copilot": 759,
+     "cursor": 1170,
+     "devin": 74,
+     "gemini": 14,
+     "jules": 0,
+     "junie": 0
+    },
+    {
+     "month": "2026-10",
+     "aider": 0,
+     "amp": 9,
+     "claude": 8237,
+     "codex": 214,
+     "copilot": 589,
+     "cursor": 649,
+     "devin": 83,
+     "gemini": 7,
+     "jules": 1,
+     "junie": 0
+    }
+   ],
+   "releases_flagged_by_month": [
+    {
+     "month": "2024-06",
+     "mean": 0.0,
+     "size": 6945
+    },
+    {
+     "month": "2024-07",
+     "mean": 0.0004,
+     "size": 7927
+    },
+    {
+     "month": "2024-08",
+     "mean": 0.0003,
+     "size": 7422
+    },
+    {
+     "month": "2024-09",
+     "mean": 0.0017,
+     "size": 8089
+    },
+    {
+     "month": "2024-10",
+     "mean": 0.0022,
+     "size": 8558
+    },
+    {
+     "month": "2024-11",
+     "mean": 0.0013,
+     "size": 8237
+    },
+    {
+     "month": "2024-12",
+     "mean": 0.0035,
+     "size": 6945
+    },
+    {
+     "month": "2025-01",
+     "mean": 0.0013,
+     "size": 7786
+    },
+    {
+     "month": "2025-02",
+     "mean": 0.0154,
+     "size": 7294
+    },
+    {
+     "month": "2025-03",
+     "mean": 0.0049,
+     "size": 8730
+    },
+    {
+     "month": "2025-04",
+     "mean": 0.0116,
+     "size": 8169
+    },
+    {
+     "month": "2025-05",
+     "mean": 0.0296,
+     "size": 8047
+    },
+    {
+     "month": "2025-06",
+     "mean": 0.0825,
+     "size": 8434
+    },
+    {
+     "month": "2025-07",
+     "mean": 0.1205,
+     "size": 9151
+    },
+    {
+     "month": "2025-08",
+     "mean": 0.1269,
+     "size": 8164
+    },
+    {
+     "month": "2025-09",
+     "mean": 0.1131,
+     "size": 9790
+    },
+    {
+     "month": "2025-10",
+     "mean": 0.1535,
+     "size": 9761
+    },
+    {
+     "month": "2025-11",
+     "mean": 0.1571,
+     "size": 8790
+    },
+    {
+     "month": "2025-12",
+     "mean": 0.2004,
+     "size": 8274
+    },
+    {
+     "month": "2026-01",
+     "mean": 0.2323,
+     "size": 10772
+    },
+    {
+     "month": "2026-02",
+     "mean": 0.2971,
+     "size": 10234
+    },
+    {
+     "month": "2026-03",
+     "mean": 0.3498,
+     "size": 10937
+    },
+    {
+     "month": "2026-04",
+     "mean": 0.3367,
+     "size": 10352
+    },
+    {
+     "month": "2026-05",
+     "mean": 0.3626,
+     "size": 10581
+    },
+    {
+     "month": "2026-06",
+     "mean": 0.3525,
+     "size": 10739
+    },
+    {
+     "month": "2026-07",
+     "mean": 0.3157,
+     "size": 12076
+    },
+    {
+     "month": "2026-08",
+     "mean": 0.3408,
+     "size": 10927
+    },
+    {
+     "month": "2026-09",
+     "mean": 0.3699,
+     "size": 11667
+    },
+    {
+     "month": "2026-10",
+     "mean": 0.4083,
+     "size": 9881
+    }
+   ]
+  },
+  "pypi": {
+   "commits": [
+    {
+     "month": "2024-06",
+     "commits": 73373,
+     "ai": 26,
+     "share": 0.00035
+    },
+    {
+     "month": "2024-07",
+     "commits": 77820,
+     "ai": 266,
+     "share": 0.00342
+    },
+    {
+     "month": "2024-08",
+     "commits": 77392,
+     "ai": 1100,
+     "share": 0.01421
+    },
+    {
+     "month": "2024-09",
+     "commits": 73101,
+     "ai": 471,
+     "share": 0.00644
+    },
+    {
+     "month": "2024-10",
+     "commits": 84050,
+     "ai": 360,
+     "share": 0.00428
+    },
+    {
+     "month": "2024-11",
+     "commits": 71912,
+     "ai": 550,
+     "share": 0.00765
+    },
+    {
+     "month": "2024-12",
+     "commits": 71480,
+     "ai": 744,
+     "share": 0.01041
+    },
+    {
+     "month": "2025-01",
+     "commits": 80190,
+     "ai": 633,
+     "share": 0.00789
+    },
+    {
+     "month": "2025-02",
+     "commits": 79170,
+     "ai": 384,
+     "share": 0.00485
+    },
+    {
+     "month": "2025-03",
+     "commits": 86381,
+     "ai": 1238,
+     "share": 0.01433
+    },
+    {
+     "month": "2025-04",
+     "commits": 80757,
+     "ai": 585,
+     "share": 0.00724
+    },
+    {
+     "month": "2025-05",
+     "commits": 89007,
+     "ai": 821,
+     "share": 0.00922
+    },
+    {
+     "month": "2025-06",
+     "commits": 94802,
+     "ai": 863,
+     "share": 0.0091
+    },
+    {
+     "month": "2025-07",
+     "commits": 94140,
+     "ai": 1152,
+     "share": 0.01224
+    },
+    {
+     "month": "2025-08",
+     "commits": 96645,
+     "ai": 1447,
+     "share": 0.01497
+    },
+    {
+     "month": "2025-09",
+     "commits": 91048,
+     "ai": 1486,
+     "share": 0.01632
+    },
+    {
+     "month": "2025-10",
+     "commits": 103766,
+     "ai": 1925,
+     "share": 0.01855
+    },
+    {
+     "month": "2025-11",
+     "commits": 94417,
+     "ai": 1990,
+     "share": 0.02108
+    },
+    {
+     "month": "2025-12",
+     "commits": 92133,
+     "ai": 2900,
+     "share": 0.03148
+    },
+    {
+     "month": "2026-01",
+     "commits": 101280,
+     "ai": 5088,
+     "share": 0.05024
+    },
+    {
+     "month": "2026-02",
+     "commits": 106518,
+     "ai": 9107,
+     "share": 0.0855
+    },
+    {
+     "month": "2026-03",
+     "commits": 128731,
+     "ai": 12328,
+     "share": 0.09577
+    },
+    {
+     "month": "2026-04",
+     "commits": 122396,
+     "ai": 12951,
+     "share": 0.10581
+    },
+    {
+     "month": "2026-05",
+     "commits": 118280,
+     "ai": 11908,
+     "share": 0.10068
+    },
+    {
+     "month": "2026-06",
+     "commits": 124657,
+     "ai": 13536,
+     "share": 0.10859
+    },
+    {
+     "month": "2026-07",
+     "commits": 136018,
+     "ai": 15807,
+     "share": 0.11621
+    },
+    {
+     "month": "2026-08",
+     "commits": 151950,
+     "ai": 16553,
+     "share": 0.10894
+    },
+    {
+     "month": "2026-09",
+     "commits": 184915,
+     "ai": 24602,
+     "share": 0.13304
+    },
+    {
+     "month": "2026-10",
+     "commits": 164048,
+     "ai": 23699,
+     "share": 0.14446
+    }
+   ],
+   "agents_total": {
+    "claude": 111822,
+    "copilot": 21450,
+    "devin": 9320,
+    "cursor": 6553,
+    "aider": 5792,
+    "openhands": 4377,
+    "codex": 2460,
+    "gemini": 1822,
+    "jules": 405,
+    "amp": 334,
+    "junie": 185
+   },
+   "agents_by_month": [
+    {
+     "month": "2024-06",
+     "aider": 19,
+     "amp": 0,
+     "claude": 0,
+     "codex": 0,
+     "copilot": 0,
+     "cursor": 0,
+     "devin": 7,
+     "gemini": 0,
+     "jules": 0,
+     "junie": 0,
+     "openhands": 0
+    },
+    {
+     "month": "2024-07",
+     "aider": 264,
+     "amp": 0,
+     "claude": 0,
+     "codex": 0,
+     "copilot": 0,
+     "cursor": 0,
+     "devin": 2,
+     "gemini": 0,
+     "jules": 0,
+     "junie": 0,
+     "openhands": 0
+    },
+    {
+     "month": "2024-08",
+     "aider": 1099,
+     "amp": 0,
+     "claude": 0,
+     "codex": 0,
+     "copilot": 0,
+     "cursor": 0,
+     "devin": 1,
+     "gemini": 0,
+     "jules": 0,
+     "junie": 0,
+     "openhands": 0
+    },
+    {
+     "month": "2024-09",
+     "aider": 466,
+     "amp": 0,
+     "claude": 1,
+     "codex": 0,
+     "copilot": 1,
+     "cursor": 0,
+     "devin": 3,
+     "gemini": 0,
+     "jules": 0,
+     "junie": 0,
+     "openhands": 0
+    },
+    {
+     "month": "2024-10",
+     "aider": 345,
+     "amp": 0,
+     "claude": 0,
+     "codex": 0,
+     "copilot": 0,
+     "cursor": 0,
+     "devin": 1,
+     "gemini": 0,
+     "jules": 0,
+     "junie": 0,
+     "openhands": 14
+    },
+    {
+     "month": "2024-11",
+     "aider": 521,
+     "amp": 0,
+     "claude": 0,
+     "codex": 0,
+     "copilot": 4,
+     "cursor": 0,
+     "devin": 3,
+     "gemini": 0,
+     "jules": 0,
+     "junie": 0,
+     "openhands": 22
+    },
+    {
+     "month": "2024-12",
+     "aider": 627,
+     "amp": 0,
+     "claude": 1,
+     "codex": 0,
+     "copilot": 8,
+     "cursor": 0,
+     "devin": 56,
+     "gemini": 0,
+     "jules": 0,
+     "junie": 0,
+     "openhands": 52
+    },
+    {
+     "month": "2025-01",
+     "aider": 481,
+     "amp": 0,
+     "claude": 0,
+     "codex": 0,
+     "copilot": 6,
+     "cursor": 1,
+     "devin": 47,
+     "gemini": 0,
+     "jules": 0,
+     "junie": 0,
+     "openhands": 98
+    },
+    {
+     "month": "2025-02",
+     "aider": 276,
+     "amp": 0,
+     "claude": 0,
+     "codex": 0,
+     "copilot": 10,
+     "cursor": 0,
+     "devin": 35,
+     "gemini": 0,
+     "jules": 0,
+     "junie": 0,
+     "openhands": 63
+    },
+    {
+     "month": "2025-03",
+     "aider": 1035,
+     "amp": 0,
+     "claude": 11,
+     "codex": 0,
+     "copilot": 45,
+     "cursor": 0,
+     "devin": 54,
+     "gemini": 1,
+     "jules": 2,
+     "junie": 0,
+     "openhands": 90
+    },
+    {
+     "month": "2025-04",
+     "aider": 324,
+     "amp": 0,
+     "claude": 21,
+     "codex": 0,
+     "copilot": 81,
+     "cursor": 0,
+     "devin": 56,
+     "gemini": 1,
+     "jules": 7,
+     "junie": 0,
+     "openhands": 95
+    },
+    {
+     "month": "2025-05",
+     "aider": 200,
+     "amp": 0,
+     "claude": 53,
+     "codex": 0,
+     "copilot": 231,
+     "cursor": 0,
+     "devin": 160,
+     "gemini": 4,
+     "jules": 36,
+     "junie": 0,
+     "openhands": 137
+    },
+    {
+     "month": "2025-06",
+     "aider": 39,
+     "amp": 0,
+     "claude": 301,
+     "codex": 0,
+     "copilot": 248,
+     "cursor": 35,
+     "devin": 40,
+     "gemini": 15,
+     "jules": 70,
+     "junie": 0,
+     "openhands": 115
+    },
+    {
+     "month": "2025-07",
+     "aider": 9,
+     "amp": 5,
+     "claude": 330,
+     "codex": 0,
+     "copilot": 421,
+     "cursor": 116,
+     "devin": 81,
+     "gemini": 60,
+     "jules": 27,
+     "junie": 0,
+     "openhands": 103
+    },
+    {
+     "month": "2025-08",
+     "aider": 35,
+     "amp": 1,
+     "claude": 449,
+     "codex": 0,
+     "copilot": 580,
+     "cursor": 57,
+     "devin": 33,
+     "gemini": 87,
+     "jules": 26,
+     "junie": 1,
+     "openhands": 178
+    },
+    {
+     "month": "2025-09",
+     "aider": 6,
+     "amp": 2,
+     "claude": 432,
+     "codex": 6,
+     "copilot": 581,
+     "cursor": 50,
+     "devin": 39,
+     "gemini": 105,
+     "jules": 26,
+     "junie": 0,
+     "openhands": 239
+    },
+    {
+     "month": "2025-10",
+     "aider": 0,
+     "amp": 2,
+     "claude": 752,
+     "codex": 1,
+     "copilot": 750,
+     "cursor": 22,
+     "devin": 65,
+     "gemini": 131,
+     "jules": 15,
+     "junie": 0,
+     "openhands": 187
+    },
+    {
+     "month": "2025-11",
+     "aider": 4,
+     "amp": 0,
+     "claude": 772,
+     "codex": 0,
+     "copilot": 814,
+     "cursor": 56,
+     "devin": 88,
+     "gemini": 121,
+     "jules": 6,
+     "junie": 0,
+     "openhands": 129
+    },
+    {
+     "month": "2025-12",
+     "aider": 5,
+     "amp": 3,
+     "claude": 1346,
+     "codex": 0,
+     "copilot": 714,
+     "cursor": 69,
+     "devin": 367,
+     "gemini": 195,
+     "jules": 47,
+     "junie": 0,
+     "openhands": 154
+    },
+    {
+     "month": "2026-01",
+     "aider": 0,
+     "amp": 10,
+     "claude": 2725,
+     "codex": 1,
+     "copilot": 1435,
+     "cursor": 107,
+     "devin": 389,
+     "gemini": 194,
+     "jules": 15,
+     "junie": 0,
+     "openhands": 212
+    },
+    {
+     "month": "2026-02",
+     "aider": 14,
+     "amp": 7,
+     "claude": 5561,
+     "codex": 53,
+     "copilot": 2197,
+     "cursor": 564,
+     "devin": 325,
+     "gemini": 130,
+     "jules": 17,
+     "junie": 0,
+     "openhands": 239
+    },
+    {
+     "month": "2026-03",
+     "aider": 11,
+     "amp": 13,
+     "claude": 8799,
+     "codex": 255,
+     "copilot": 2040,
+     "cursor": 263,
+     "devin": 477,
+     "gemini": 138,
+     "jules": 20,
+     "junie": 0,
+     "openhands": 312
+    },
+    {
+     "month": "2026-04",
+     "aider": 11,
+     "amp": 6,
+     "claude": 8797,
+     "codex": 305,
+     "copilot": 2590,
+     "cursor": 215,
+     "devin": 517,
+     "gemini": 154,
+     "jules": 26,
+     "junie": 3,
+     "openhands": 327
+    },
+    {
+     "month": "2026-05",
+     "aider": 0,
+     "amp": 6,
+     "claude": 8379,
+     "codex": 244,
+     "copilot": 1622,
+     "cursor": 725,
+     "devin": 355,
+     "gemini": 112,
+     "jules": 17,
+     "junie": 1,
+     "openhands": 447
+    },
+    {
+     "month": "2026-06",
+     "aider": 0,
+     "amp": 6,
+     "claude": 10670,
+     "codex": 132,
+     "copilot": 1254,
+     "cursor": 666,
+     "devin": 280,
+     "gemini": 120,
+     "jules": 27,
+     "junie": 5,
+     "openhands": 376
+    },
+    {
+     "month": "2026-07",
+     "aider": 0,
+     "amp": 5,
+     "claude": 12699,
+     "codex": 190,
+     "copilot": 1396,
+     "cursor": 704,
+     "devin": 500,
+     "gemini": 95,
+     "jules": 1,
+     "junie": 8,
+     "openhands": 209
+    },
+    {
+     "month": "2026-08",
+     "aider": 1,
+     "amp": 114,
+     "claude": 12619,
+     "codex": 375,
+     "copilot": 1572,
+     "cursor": 813,
+     "devin": 813,
+     "gemini": 84,
+     "jules": 17,
+     "junie": 16,
+     "openhands": 129
+    },
+    {
+     "month": "2026-09",
+     "aider": 0,
+     "amp": 72,
+     "claude": 17801,
+     "codex": 531,
+     "copilot": 1529,
+     "cursor": 1258,
+     "devin": 2978,
+     "gemini": 52,
+     "jules": 3,
+     "junie": 90,
+     "openhands": 288
+    },
+    {
+     "month": "2026-10",
+     "aider": 0,
+     "amp": 82,
+     "claude": 19303,
+     "codex": 367,
+     "copilot": 1321,
+     "cursor": 832,
+     "devin": 1548,
+     "gemini": 23,
+     "jules": 0,
+     "junie": 61,
+     "openhands": 162
+    }
+   ],
+   "releases_flagged_by_month": [
+    {
+     "month": "2024-06",
+     "mean": 0.0026,
+     "size": 4299
+    },
+    {
+     "month": "2024-07",
+     "mean": 0.0043,
+     "size": 4647
+    },
+    {
+     "month": "2024-08",
+     "mean": 0.0057,
+     "size": 5246
+    },
+    {
+     "month": "2024-09",
+     "mean": 0.0042,
+     "size": 4783
+    },
+    {
+     "month": "2024-10",
+     "mean": 0.0063,
+     "size": 5547
+    },
+    {
+     "month": "2024-11",
+     "mean": 0.012,
+     "size": 4907
+    },
+    {
+     "month": "2024-12",
+     "mean": 0.0216,
+     "size": 4353
+    },
+    {
+     "month": "2025-01",
+     "mean": 0.0096,
+     "size": 5498
+    },
+    {
+     "month": "2025-02",
+     "mean": 0.0114,
+     "size": 5250
+    },
+    {
+     "month": "2025-03",
+     "mean": 0.0258,
+     "size": 5398
+    },
+    {
+     "month": "2025-04",
+     "mean": 0.0322,
+     "size": 5615
+    },
+    {
+     "month": "2025-05",
+     "mean": 0.0354,
+     "size": 4830
+    },
+    {
+     "month": "2025-06",
+     "mean": 0.0429,
+     "size": 5061
+    },
+    {
+     "month": "2025-07",
+     "mean": 0.0685,
+     "size": 5296
+    },
+    {
+     "month": "2025-08",
+     "mean": 0.1364,
+     "size": 5189
+    },
+    {
+     "month": "2025-09",
+     "mean": 0.0841,
+     "size": 4685
+    },
+    {
+     "month": "2025-10",
+     "mean": 0.0996,
+     "size": 5812
+    },
+    {
+     "month": "2025-11",
+     "mean": 0.1325,
+     "size": 5526
+    },
+    {
+     "month": "2025-12",
+     "mean": 0.1269,
+     "size": 5273
+    },
+    {
+     "month": "2026-01",
+     "mean": 0.1991,
+     "size": 5398
+    },
+    {
+     "month": "2026-02",
+     "mean": 0.2328,
+     "size": 5498
+    },
+    {
+     "month": "2026-03",
+     "mean": 0.3216,
+     "size": 6281
+    },
+    {
+     "month": "2026-04",
+     "mean": 0.2868,
+     "size": 6310
+    },
+    {
+     "month": "2026-05",
+     "mean": 0.3144,
+     "size": 6103
+    },
+    {
+     "month": "2026-06",
+     "mean": 0.3279,
+     "size": 6152
+    },
+    {
+     "month": "2026-07",
+     "mean": 0.319,
+     "size": 6355
+    },
+    {
+     "month": "2026-08",
+     "mean": 0.3129,
+     "size": 6462
+    },
+    {
+     "month": "2026-09",
+     "mean": 0.3251,
+     "size": 6573
+    },
+    {
+     "month": "2026-10",
+     "mean": 0.3396,
+     "size": 6155
+    }
+   ]
+  }
+ },
+ "top_flagged": [
+  {
+   "eco": "npm",
+   "name": "react-is",
+   "downloads": 1528152783,
+   "roots_including": 101
+  },
+  {
+   "eco": "npm",
+   "name": "readable-stream",
+   "downloads": 1480786512,
+   "roots_including": 30
+  },
+  {
+   "eco": "npm",
+   "name": "entities",
+   "downloads": 1397425281,
+   "roots_including": 31
+  },
+  {
+   "eco": "npm",
+   "name": "zod",
+   "downloads": 1341079564,
+   "roots_including": 53
+  },
+  {
+   "eco": "npm",
+   "name": "typescript",
+   "downloads": 1247213024,
+   "roots_including": 19
+  },
+  {
+   "eco": "npm",
+   "name": "https-proxy-agent",
+   "downloads": 1100752141,
+   "roots_including": 25
+  },
+  {
+   "eco": "pypi",
+   "name": "cryptography",
+   "downloads": 1068178556,
+   "roots_including": 902
+  },
+  {
+   "eco": "npm",
+   "name": "@babel/code-frame",
+   "downloads": 1050665310,
+   "roots_including": 285
+  },
+  {
+   "eco": "npm",
+   "name": "@babel/helper-validator-identifier",
+   "downloads": 1043746691,
+   "roots_including": 375
+  },
+  {
+   "eco": "pypi",
+   "name": "cffi",
+   "downloads": 947049149,
+   "roots_including": 1052
+  },
+  {
+   "eco": "npm",
+   "name": "@types/estree",
+   "downloads": 944947816,
+   "roots_including": 157
+  },
+  {
+   "eco": "npm",
+   "name": "tr46",
+   "downloads": 941530247,
+   "roots_including": 4
+  },
+  {
+   "eco": "pypi",
+   "name": "setuptools",
+   "downloads": 936502582,
+   "roots_including": 480
+  },
+  {
+   "eco": "npm",
+   "name": "whatwg-url",
+   "downloads": 935298823,
+   "roots_including": 3
+  },
+  {
+   "eco": "pypi",
+   "name": "pluggy",
+   "downloads": 856331218,
+   "roots_including": 331
+  },
+  {
+   "eco": "npm",
+   "name": "@babel/template",
+   "downloads": 845318245,
+   "roots_including": 192
+  },
+  {
+   "eco": "npm",
+   "name": "@babel/compat-data",
+   "downloads": 807117530,
+   "roots_including": 137
+  },
+  {
+   "eco": "pypi",
+   "name": "numpy",
+   "downloads": 802155590,
+   "roots_including": 1175
+  },
+  {
+   "eco": "npm",
+   "name": "scheduler",
+   "downloads": 794878787,
+   "roots_including": 12
+  },
+  {
+   "eco": "npm",
+   "name": "es-module-lexer",
+   "downloads": 773981365,
+   "roots_including": 71
+  },
+  {
+   "eco": "npm",
+   "name": "react",
+   "downloads": 772199411,
+   "roots_including": 4
+  },
+  {
+   "eco": "pypi",
+   "name": "pytest",
+   "downloads": 761970029,
+   "roots_including": 200
+  },
+  {
+   "eco": "npm",
+   "name": "@typescript-eslint/types",
+   "downloads": 751236345,
+   "roots_including": 33
+  },
+  {
+   "eco": "npm",
+   "name": "@babel/helper-validator-option",
+   "downloads": 747841104,
+   "roots_including": 140
+  },
+  {
+   "eco": "npm",
+   "name": "@babel/helper-module-imports",
+   "downloads": 745404652,
+   "roots_including": 143
+  }
+ ]
+}
