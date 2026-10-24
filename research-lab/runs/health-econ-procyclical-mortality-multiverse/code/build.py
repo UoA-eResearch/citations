@@ -41,7 +41,7 @@ DIVISION = {"CT": 1, "ME": 1, "MA": 1, "NH": 1, "RI": 1, "VT": 1, "NJ": 2, "NY":
             "NC": 5, "SC": 5, "VA": 5, "WV": 5, "AL": 6, "KY": 6, "MS": 6, "TN": 6, "AR": 7, "LA": 7, "OK": 7, "TX": 7, "AZ": 8,
             "CO": 8, "ID": 8, "MT": 8, "NV": 8, "NM": 8, "UT": 8, "WY": 8, "AK": 9, "CA": 9, "HI": 9, "OR": 9, "WA": 9}
 STD2000 = np.array([13818, 55317, 145565, 138646, 135573, 162613, 134834, 87247, 66037, 44842, 15508]) / 1e6   # 11 NCHS groups
-SEER_TO_11 = [0, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10]                     # SEER 19 groups -> NCHS 11
+SEER_TO_11 = [0, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10]                 # SEER 20 groups (18 = 85-89, 19 = 90+) -> NCHS 11
 
 
 def state_code(v):
@@ -81,6 +81,9 @@ def nber():
 
 
 def seer():
+    cache = INT / "seer_state.parquet"
+    if cache.exists():
+        return pd.read_parquet(cache)
     widths = [4, 2, 2, 3, 2, 1, 1, 1, 2, 8]
     names = ["year", "state", "fips", "county", "reg", "race", "origin", "sex", "age", "pop"]
     d = pd.read_fwf(RAW / "seer" / "us.1969_2024.20ages.adjusted.txt.gz", widths=widths, names=names,
@@ -91,10 +94,12 @@ def seer():
     by11 = d.groupby(["state", "year", "age11"]).pop.sum().unstack("age11").fillna(0)
     by11.columns = [f"pop_a{int(c)}" for c in by11.columns]
     a = d.groupby(["state", "year", "age"]).pop.sum().unstack("age").fillna(0)
-    sh = pd.DataFrame({"sh_u5": (a[0] + a[1]) / a.sum(1), "sh_65": a[list(range(14, 19))].sum(1) / a.sum(1),
-                       "sh_85": a[18] / a.sum(1), "pop15": a[list(range(4, 19))].sum(1)})
+    sh = pd.DataFrame({"sh_u5": (a[0] + a[1]) / a.sum(1), "sh_65": a[list(range(14, 20))].sum(1) / a.sum(1),
+                       "sh_85": (a[18] + a[19]) / a.sum(1), "pop15": a[list(range(4, 20))].sum(1)})
     sh["sh_black"] = d[d.race == "2"].groupby(["state", "year"]).pop.sum() / tot
-    return pd.concat([tot, by11, sh], axis=1).reset_index()
+    out = pd.concat([tot, by11, sh], axis=1).reset_index()
+    out.to_parquet(cache, index=False)
+    return out
 
 
 def weekly_calendar():
@@ -106,7 +111,7 @@ def weekly_calendar():
     w = pd.concat([a, b])
     w["state"] = w["Jurisdiction of Occurrence"].map(NAME)
     w = w.dropna(subset=["state"])
-    w["end"] = pd.to_datetime(w["Week Ending Date"])
+    w["end"] = pd.to_datetime(w["Week Ending Date"], format="mixed")        # 2014-2019 file m/d/Y, 2020-2023 ISO
     w = w.groupby(["state", "end"]).deaths.sum().reset_index()         # NYC added to NY
     rec = []
     for _, r in w.iterrows():
@@ -185,6 +190,11 @@ def panel():
     vs = vs.groupby(["state", "Year"]).drug_vsrr.sum(min_count=1).reset_index().rename(columns={"Year": "year"})
     o = dp.merge(vs, on=["state", "year"])
     o = o[o.year.between(2015, 2018)].dropna()
+    # D1: VSRR counts behave like occurrence counts (DC, NV high); calibrate 2019-2023 to NCHS residence counts as for the weekly series
+    dfac = np.log(o.drug_nchs / o.drug_vsrr).groupby(o.state).mean()
+    vs["drug_vsrr_cal"] = vs.drug_vsrr * np.exp(vs.state.map(dfac))
+    val["vsrr_calibration_factor"] = {"min": round(float(np.exp(dfac.min())), 4), "max": round(float(np.exp(dfac.max())), 4),
+                                      "median": round(float(np.exp(dfac.median())), 4), "state_min": dfac.idxmin()}
     val["vsrr_vs_nchs_2015_2018"] = {"n": int(len(o)), "median_abs_log_ratio": round(float(np.log(o.drug_vsrr / o.drug_nchs).abs().median()), 5),
                                      "max_abs_log_ratio": round(float(np.log(o.drug_vsrr / o.drug_nchs).abs().max()), 5)}
     # assemble
@@ -192,11 +202,27 @@ def panel():
     P = P[P.year.between(1975, 2023)]
     P = P.merge(nbt, on=["state", "year"], how="left").merge(lc, on=["state", "year"], how="left") \
          .merge(wk[["state", "year", "deaths_wk_cal"]], on=["state", "year"], how="left") \
-         .merge(dp, on=["state", "year"], how="left").merge(vs, on=["state", "year"], how="left")
-    P["deaths"] = np.where(P.year <= 1998, P.deaths_nber, np.where(P.year <= 2017, P.deaths_lc, P.deaths_wk_cal))
-    P["source"] = np.where(P.year <= 1998, "nber", np.where(P.year <= 2017, "leading_causes", "weekly_calibrated"))
+         .merge(dp, on=["state", "year"], how="left").merge(vs[["state", "year", "drug_vsrr", "drug_vsrr_cal"]], on=["state", "year"], how="left")
+    # D1: the 2020-2023 weekly file ends in September 2023, so 2023 uses the VSRR quarterly all-cause crude rate (12 months
+    # ending 2023 Q4, residence) x SEER population
+    q = pd.read_csv(RAW / "cdc" / "489q-934x.csv")
+    q = q[(q["Cause of Death"] == "All causes") & (q["Year and Quarter"] == "2023 Q4") & (q["Time Period"] == "12 months ending with quarter")
+          & (q["Rate Type"] == "Crude")]
+    assert len(q) == 1
+    q23 = pd.DataFrame([{"state": NAME[c[5:]], "year": 2023, "rate_q23": float(q.iloc[0][c])} for c in q.columns
+                        if c.startswith("Rate ") and c[5:] in NAME and c[5:] != "New York City"])
+    P = P.merge(q23, on=["state", "year"], how="left")
+    P["deaths_q23"] = P.rate_q23 * P["pop"] / 1e5
+    c23 = P[P.year == 2023]
+    val["year2023_quarterly_vs_weekly_dayscaled"] = {"median_abs_log_ratio": round(float(np.log(c23.deaths_q23 / c23.deaths_wk_cal).abs().median()), 5),
+                                                     "max_abs_log_ratio": round(float(np.log(c23.deaths_q23 / c23.deaths_wk_cal).abs().max()), 5),
+                                                     "weekly_days_covered_2023": int(wk[wk.year == 2023].days.max())}
+    P["deaths"] = np.where(P.year <= 1998, P.deaths_nber, np.where(P.year <= 2017, P.deaths_lc,
+                           np.where(P.year <= 2022, P.deaths_wk_cal, P.deaths_q23)))
+    P["source"] = np.where(P.year <= 1998, "nber", np.where(P.year <= 2017, "leading_causes",
+                           np.where(P.year <= 2022, "weekly_calibrated", "vsrr_quarterly_rate")))
     P["aadr"] = np.where(P.year <= 1998, P.aadr_nber, np.where(P.year <= 2017, P.aadr_lc, np.nan))
-    P["drug"] = np.where(P.year <= 2018, P.drug_nchs, P.drug_vsrr)
+    P["drug"] = np.where(P.year <= 2018, P.drug_nchs, P.drug_vsrr_cal)
     P["crude"] = P.deaths / P["pop"] * 1e5
     P["drug_crude"] = P.drug / P["pop"] * 1e5
     P["epop_neg"] = -100 * P.emp / P.pop15

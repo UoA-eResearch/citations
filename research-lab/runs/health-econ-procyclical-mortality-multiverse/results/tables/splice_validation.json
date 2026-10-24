@@ -1,0 +1,42 @@
+{
+ "weekly_vs_lc_2014_2017": {
+  "median_abs_log_ratio_raw": 0.01329,
+  "max_abs_state_mean": 0.17147,
+  "median_within_state_sd": 0.00156,
+  "state_max_mean": "DC"
+ },
+ "nber_vs_lc_1999_2004": {
+  "n": 306,
+  "median_abs_log_ratio_deaths": 0.0,
+  "max_abs_log_ratio_deaths": 0.0,
+  "median_abs_log_ratio_aadr": 4e-05,
+  "max_abs_log_ratio_aadr": 0.01367
+ },
+ "vsrr_calibration_factor": {
+  "min": 0.879,
+  "max": 1.0648,
+  "median": 1.003,
+  "state_min": "DC"
+ },
+ "vsrr_vs_nchs_2015_2018": {
+  "n": 204,
+  "median_abs_log_ratio": 0.0151,
+  "max_abs_log_ratio": 0.14964
+ },
+ "year2023_quarterly_vs_weekly_dayscaled": {
+  "median_abs_log_ratio": 0.03643,
+  "max_abs_log_ratio": 0.11264,
+  "weekly_days_covered_2023": 259
+ },
+ "panel": {
+  "states": 51,
+  "years": [
+   1975,
+   2023
+  ],
+  "missing_deaths_1976_2023": 0,
+  "missing_drug_1999_2023": 0,
+  "zero_drug_1999_2023": 0,
+  "missing_ur": 0
+ }
+}
