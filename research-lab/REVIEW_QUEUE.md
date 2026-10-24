@@ -61,6 +61,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | `frontier-edge-asr-quantization-accent-parity` | (draft 2f02159 review) | H1 Inconclusive; H2 Supported by rule, not robust, not replicated; H3 Refuted; H4 not testable | **published** 2026-10-24 (Inconclusive; review fix first -> D4/D5 f8a6d4d; confirmation publish with edits -> D6) |
 | `ecology-biodiversity-globi-temporal-link-holdout` | bfe2f58 | H1 Refuted (taxonomic advantage over effort grows on future records: rho 1.68, 1.10-2.30) | queued (review/prompt.md) |
 | `health-econ-procyclical-mortality-multiverse` | ed2f4fc | H1 Inconclusive (47.4% of 2,304 specs negative-significant; joint test p<0.002; window and measure decide it); H2 Refuted (1.6% of 576 post-2010 drug specs) | queued (review/prompt.md) |
+| `software-security-ai-code-supply-chain-exposure` | 3cfbf04 | H1 Refuted (npm R 1.03, P_w 22.3% < 30%; PyPI R 1.91); H2 Refuted (latency ratio 1.01); a third of releases flagged by Sep 2026 | queued (review/prompt.md) |
 
 ## Order to run them in
 
