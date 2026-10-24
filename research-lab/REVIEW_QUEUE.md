@@ -10,8 +10,8 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 
 ### Fable run log (start times, NZDT)
 
-| start | study | run |
-|---|---|---|
+| start | study | run | outcome |
+|---|---|---|---|
 | 2026-10-21 ~17:52 | `frontier-eaa-accessibility-natural-experiment` | confirmation pass |
 | 2026-10-21 ~18:01 | `movement-nz-ev-policy-discount-vs-ruc` | confirmation pass |
 | 2026-10-21 23:06 | `energy-nz-embedded-solar-edb-demand` | review |
@@ -24,19 +24,18 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-23 12:28 | `trust-corrected-record-machine-readable` | confirmation pass (owner relaxed the 5 h limit until the 16:00 quota reset) |
 | 2026-10-23 12:28 | six reviews started in parallel (DSI, retraction risk, reef, estuary, kauri, ASR) | five stopped within ~2 min on the owner's advice to run sequentially; DSI ran on |
 | 2026-10-23 ~12:50–14:15 | `trust-retraction-risk-frozen-forecast` | review, resumed after DSI finished |
-| 2026-10-23 14:15 | `blue-pacific-reef-island-area-tide-corrected` | ed14c61 | H1 not testable (guard -0.58, -1.17 to +0.14); H2 Supported (tide bias 0.88%/yr after the Theil-Sen fix) | **published** 2026-10-24 (Supported on H2; review fix first -> D7 d7c2ace incl. Theil-Sen bug; confirmation publish with edits -> D8) |
-| 2026-10-23 14:54 | `auckland-nz-2023-storms-estuary-mud-natural-experiment` | fb30a30 | H1/H2 Inconclusive; post hoc region-wide 2023 pulse | **published** 2026-10-24 (Inconclusive; review publish with edits -> D5 3dd86a7; confirmation publish with edits -> D6) |
-| 2026-10-23 15:21 | `auckland-nz-kauri-dieback-multitemporal-lidar` | e8a1bff | H1 Refuted, H2 Refuted after D1 | **published** 2026-10-24 (Refuted; review fix first -> D1 920bde5; confirmation publish with edits -> D2) |
+| 2026-10-23 14:15 | `blue-pacific-reef-island-area-tide-corrected` | review, resumed |
+| 2026-10-23 14:54 | `auckland-nz-2023-storms-estuary-mud-natural-experiment` | review, resumed |
+| 2026-10-23 15:21 | `auckland-nz-kauri-dieback-multitemporal-lidar` | review, resumed |
 | 2026-10-23 15:39 | `frontier-edge-asr-quantization-accent-parity` | review (H4 pending), resumed; last run under the exception |
-| 2026-10-23 20:39 | `ancestral-dsi-origin-recoverability` | 87273a8 | H1 Inconclusive; H2 Refuted (19/300 test records determinable after D10; all arms 0% at 90% precision; 61% lab material) | **published** 2026-10-23 (Refuted on recovery; review publish with edits -> D10 b0149e2; confirmation publish, wording edits applied) |
-| `energy-nz-edb-quality-standard-ratchet` | fb7efde | H1 Inconclusive (no national trend, -0.7%/yr), H2 Inconclusive, H3 Supported (major-event rule changes 3 of 15 distributors' exceedance years); reset target rise mostly outcomes (+104 of +115 min) | queued (review/prompt.md) |
-| `legal-digital-humanities-public-domain-day-renewal-did` | 26ff608 | Inconclusive: preregistered PPML degenerate (RR 0.33, separation); post-result D1 fix RR 1.86 (1.01-3.43) not robust (no-POD/lag fail pre-trend); Gutenberg 1.8% vs 0.25%; linkage recall 0.29 renewed vs 0.50 | queued (review/prompt.md) |
-| `auckland-nz-avf-dvv-hydrological-baseline` | 35e9d7a | H1 Refuted (median held-out R2 -0.12, -0.67 to -0.03; 32 pairs; noise floor 0.136%); robust to segment rule, temperature, frozen drift and draining kernel (post hoc) | queued (review/prompt.md) |
-| `legal-digital-humanities-precedent-erosion-before-overruling` | e09bf03 | H1 not testable (D(+5) 0.27, -0.13 to 0.49); co-cite exclusion pre-share 0.31; D1 post-result 2019 coverage break; post hoc pre-2019: cited 55% MORE before overruling | queued (review/prompt.md) |
-| `frontier-edge-asr-quantization-accent-parity` | (draft 2f02159 review) | H1 Inconclusive; H2 Supported by rule, not robust, not replicated on Common Voice; H3 Refuted (this rule); H4 not testable (no penalty in large-v3) | reviewed 2026-10-23: **fix first**; fixes in f8a6d4d (D4 robustness, D5 Common Voice replication, H4 complete); confirmation queued (review/confirm_prompt.md) |
-| `ecology-biodiversity-globi-temporal-link-holdout` | bfe2f58 | H1 Refuted (taxonomic advantage over effort grows on future records: rho 1.68, 1.10-2.30) | queued (review/prompt.md) |
+| 2026-10-23 20:39 | `ancestral-dsi-origin-recoverability` | confirmation pass (original reviewer resumed) | publish -> PUBLISHED |
+| 2026-10-24 01:39 | `blue-pacific-reef-island-area-tide-corrected` | confirmation pass (original reviewer resumed) | publish with edits -> PUBLISHED |
+| 2026-10-24 06:39 | `auckland-nz-2023-storms-estuary-mud-natural-experiment` | confirmation pass (original reviewer resumed) | publish with edits -> PUBLISHED |
+| 2026-10-24 11:39 | `auckland-nz-kauri-dieback-multitemporal-lidar` | confirmation pass (original reviewer resumed) | publish with edits -> PUBLISHED |
+| 2026-10-24 16:39 | `trust-retraction-risk-frozen-forecast` | confirmation pass (original reviewer resumed) | publish with edits -> PUBLISHED |
+| 2026-10-24 21:39 | `frontier-edge-asr-quantization-accent-parity` | confirmation pass (original reviewer resumed) |
 
-**The owner's exception ended at 16:00 on 2026-10-23; the 1-per-5 h rule applies again. Retraction-risk confirmation started 2026-10-24 16:39; next Fable run not before 21:39.** Order: confirmations of DSI (b0149e2), reef (d7c2ace), estuary (3dd86a7), kauri (920bde5) and retraction risk (6d4c885), one per 5 h slot; then the ASR confirmation (fixes in f8a6d4d); then the EDB ratchet review (fb7efde), then the Public Domain Day review (26ff608), then the AVF dv/v review (35e9d7a).
+**The owner's exception ended at 16:00 on 2026-10-23; the 1-per-5 h rule applies again. ASR confirmation started 2026-10-24 21:39; next Fable run not before 2026-10-25 02:39.** Order: confirmations of DSI (b0149e2), reef (d7c2ace), estuary (3dd86a7), kauri (920bde5) and retraction risk (6d4c885), one per 5 h slot; then the ASR confirmation (fixes in f8a6d4d); then the EDB ratchet review (fb7efde), then the Public Domain Day review (26ff608), then the AVF dv/v review (35e9d7a).
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
@@ -50,11 +49,17 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | `energy-nz-intermittent-curtailment-ledger` | f83332e | gate fails; H1 Refuted, H2 Supported by rule (noise-dominated; price-driven core 2.2%) | **published** 2026-10-22 (Inconclusive: gate fails; dispatched-down core is two wind farms) |
 | `legal-phantom-citations-judicial-opinions` | 09c9990 | H1 Refuted by rule (0 of 300 sampled; upper bound 40; recall 0/4 judge incidents) - not robust; H2 not scorable; 45 court-flagged opinions | **published** 2026-10-23 (Inconclusive; review fix first, confirmation fix first on one item repaired in D10: 38 of 43 flags in the database, five unrecorded) |
 | `trust-corrected-record-machine-readable` | 72af844 | H1 Refuted (2.4% unmarked in PMC XML), H2 Supported (sidecar 95.6%), H3 Refuted; peS2o 11.9% marked | **published** 2026-10-23 (Refuted at the source; peS2o downstream loss on the PMC overlap; review fix first, confirmation publish with edits) |
-| `ancestral-dsi-origin-recoverability` | 87273a8 | H1 Inconclusive (usable +2.9 pp, -5.9 to +10.8; placeholders +9.1); H2 Refuted (24/300 test records determinable; 61% lab material, 30% not stated, 9% findable) | reviewed 2026-10-23: **publish with edits**; fixes in b0149e2 (D10: nine gold labels to the plan's rule, ceiling 6.3%, all arms 0%; placeholder claim withdrawn); confirmation queued (review/confirm_prompt.md) |
+| `ancestral-dsi-origin-recoverability` | 87273a8 | H1 Inconclusive; H2 Refuted (19/300 test records determinable after D10; all arms 0% at 90% precision; 61% lab material) | **published** 2026-10-23 (Refuted on recovery; review publish with edits -> D10 b0149e2; confirmation publish, wording edits applied) |
 | `trust-retraction-risk-frozen-forecast` | b314e0f | H1 Inconclusive; H2 Supported; H3 sealed | **published** 2026-10-24 (review fix first -> D3 6d4c885; confirmation publish with edits -> D4) |
-| `blue-pacific-reef-island-area-tide-corrected` | ed14c61 | H1 not testable (guard: Landsat C1 vs S2-30m +1.24%/yr; Inconclusive without it, D +0.15, -0.52 to +0.86); H2 Supported (tide bias 2.08%/yr, 1.57-2.65; noise floor 0.29); D6 made after the first rates run | reviewed 2026-10-23: **fix first**; fixes in d7c2ace (D7) incl. a Theil-Sen bug found while fixing: H2 Supported at 0.88%/yr (not 2.08), guard -0.58 fails, corrected rate +0.42%/yr; confirmation queued (review/confirm_prompt.md) |
-| `auckland-nz-2023-storms-estuary-mud-natural-experiment` | fb30a30 | H1 Inconclusive (+1.93 pp, -2.33 to +5.67); H2 Inconclusive (-0.21 pp/IQR, -3.06 to +3.20); exposure mostly harvest; post hoc region-wide 2023 pulse +4.26 pp | reviewed 2026-10-23: **publish with edits**; edits in 3dd86a7 (D5); confirmation queued (review/confirm_prompt.md) |
-| `auckland-nz-kauri-dieback-multitemporal-lidar` | e8a1bff | H1 Refuted (change AUC 0.51, 0.44-0.56); H2 Inconclusive (gain +0.048); 2021 labels faint (0.55) | reviewed 2026-10-23: **fix first**; fixes in 920bde5 (D1: true 2 m merge; per-fold AUC + place null; H1 and H2 Refuted); confirmation queued |
+| `blue-pacific-reef-island-area-tide-corrected` | ed14c61 | H1 not testable (guard -0.58, -1.17 to +0.14); H2 Supported (tide bias 0.88%/yr after the Theil-Sen fix) | **published** 2026-10-24 (Supported on H2; review fix first -> D7 d7c2ace incl. Theil-Sen bug; confirmation publish with edits -> D8) |
+| `auckland-nz-2023-storms-estuary-mud-natural-experiment` | fb30a30 | H1/H2 Inconclusive; post hoc region-wide 2023 pulse | **published** 2026-10-24 (Inconclusive; review publish with edits -> D5 3dd86a7; confirmation publish with edits -> D6) |
+| `auckland-nz-kauri-dieback-multitemporal-lidar` | e8a1bff | H1 Refuted, H2 Refuted after D1 | **published** 2026-10-24 (Refuted; review fix first -> D1 920bde5; confirmation publish with edits -> D2) |
+| `energy-nz-edb-quality-standard-ratchet` | fb7efde | H1 Inconclusive (no national trend, -0.7%/yr), H2 Inconclusive, H3 Supported (major-event rule changes 3 of 15 distributors' exceedance years); reset target rise mostly outcomes (+104 of +115 min) | queued (review/prompt.md) |
+| `legal-digital-humanities-public-domain-day-renewal-did` | 26ff608 | Inconclusive: preregistered PPML degenerate (RR 0.33, separation); post-result D1 fix RR 1.86 (1.01-3.43) not robust (no-POD/lag fail pre-trend); Gutenberg 1.8% vs 0.25%; linkage recall 0.29 renewed vs 0.50 | queued (review/prompt.md) |
+| `auckland-nz-avf-dvv-hydrological-baseline` | 35e9d7a | H1 Refuted (median held-out R2 -0.12, -0.67 to -0.03; 32 pairs; noise floor 0.136%); robust to segment rule, temperature, frozen drift and draining kernel (post hoc) | queued (review/prompt.md) |
+| `legal-digital-humanities-precedent-erosion-before-overruling` | e09bf03 | H1 not testable (D(+5) 0.27, -0.13 to 0.49); co-cite exclusion pre-share 0.31; D1 post-result 2019 coverage break; post hoc pre-2019: cited 55% MORE before overruling | queued (review/prompt.md) |
+| `frontier-edge-asr-quantization-accent-parity` | (draft 2f02159 review) | H1 Inconclusive; H2 Supported by rule, not robust, not replicated on Common Voice; H3 Refuted (this rule); H4 not testable (no penalty in large-v3) | reviewed 2026-10-23: **fix first**; fixes in f8a6d4d (D4 robustness, D5 Common Voice replication, H4 complete); confirmation queued (review/confirm_prompt.md) |
+| `ecology-biodiversity-globi-temporal-link-holdout` | bfe2f58 | H1 Refuted (taxonomic advantage over effort grows on future records: rho 1.68, 1.10-2.30) | queued (review/prompt.md) |
 
 ## Order to run them in
 
