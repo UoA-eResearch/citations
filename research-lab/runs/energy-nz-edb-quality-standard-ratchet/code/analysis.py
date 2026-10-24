@@ -1,6 +1,6 @@
 """H1-H3 and the secondary analyses (plan sections 2 and 4, D1-D2) -> results/tables/primary.json, annual_rules.csv.
 
-Trend window 2014-2024 (D1). Daily SAIDI is by calendar day of interruption start; the IEEE threshold for disclosure
+Trend window 2014-2025 (the plan; D3 withdrew D1). H3 assessment years 2021-2025. Daily SAIDI is by calendar day of interruption start; the IEEE threshold for disclosure
 year t uses the non-zero days of years t-5..t-1 (rolling) or 2009-2013 (frozen); major-event days are excluded.
 National index = ICP-weighted mean of distributor SAIDI. Trend = slope of ln(index) on year, as % a year.
 """
@@ -17,11 +17,12 @@ import rules as R  # noqa: E402
 RUN = R.RUN
 T = R.T
 B, SEED = 2000, 20261023
-YEARS = list(range(2014, 2025))
+YEARS = list(range(2014, 2026))
+MISSING = {("Top Energy", 2025)}        # D3: not separable from Transpower-caused interruptions
 
 
 def daily_by_year(u, col="saidi"):
-    d = R.daily(u, "2008-04-01", "2024-03-31", col)
+    d = R.daily(u, "2008-04-01", "2025-03-31", col)
     return d, pd.Series(R.disc_year(d.index), index=d.index)
 
 
@@ -31,6 +32,8 @@ def annual_rules(U, col="saidi"):
         d, dy = daily_by_year(u, col)
         frozen = R.ieee_threshold(d[dy.between(2009, 2013)])
         for t in YEARS:
+            if (e, t) in MISSING:
+                continue
             thr = R.ieee_threshold(d[dy.between(t - 5, t - 1)])
             x = d[dy == t]
             rows.append({"edb": e, "disc_yr": t, "raw": x.sum(), "excl_rolling": x[x <= thr].sum(),
@@ -58,7 +61,8 @@ def national(P, col, rows=None):
     V, Wt = P[col].to_numpy(float), P["icps"].to_numpy(float)
     if rows is not None:
         V, Wt = V[rows], Wt[rows]
-    return pd.Series((V * Wt).sum(0) / Wt.sum(0), index=P[col].columns)
+    Wt = np.where(np.isnan(V), 0.0, Wt)          # D3: a missing distributor-year drops out of that year's weights
+    return pd.Series(np.nansum(V * Wt, 0) / Wt.sum(0), index=P[col].columns)
 
 
 def trends(P, rows=None, years=None):
@@ -124,12 +128,14 @@ def h3(U, col="saidi", use_det_limits=False):
     for e, u in U.groupby("edb"):
         if e == "Aurora Energy" or e not in det.index:
             continue
-        yrs = [2024] if e == "Powerco" else [2021, 2022, 2023, 2024]
+        yrs = [2024, 2025] if e == "Powerco" else [2021, 2022, 2023, 2024, 2025]
+        if e == "Top Energy":
+            yrs = [y for y in yrs if y != 2025]          # D3: Top Energy 2025 not separable (Transpower-caused included)
         bv = float(det.loc[e, bvc])
         # (a) the Commission's rule with the determination's boundary value
         ref = R.commission(u, "2009-03-31 00:00", "2019-03-31 23:30", list(range(2010, 2020)), 1104, bound=bv, strict=False, col=col)
         la = float(det.loc[e, limc]) if use_det_limits else ref["limit"]
-        ass = R.commission(u, "2020-03-31 00:00", "2024-03-31 23:30", [2021], 1104, bound=bv, strict=True, col=col)
+        ass = R.commission(u, "2020-03-31 00:00", "2025-03-31 23:30", [2021], 1104, bound=bv, strict=True, col=col)
         dy = R.disc_year(ass["grid"])
         aa = {y: float(ass["xn"][dy == y].sum()) for y in yrs}
         # (b) IEEE 2.5-beta daily, boundary from the non-zero days of 2010-2019, days capped at the boundary
@@ -141,16 +147,29 @@ def h3(U, col="saidi", use_det_limits=False):
         sdb = rn.std(ddof=1) * np.sqrt(365.25)
         lb = tb + 2 * sdb
         ab = {y: float(d[ddy == y].clip(upper=thr).sum()) for y in yrs}
+        # D3 variant: major-event days excluded rather than capped (the H1/H2 convention)
+        rx = refd[refd <= thr]
+        lbx = rx.sum() / 10 + 2 * refd.where(refd <= thr, 0).std(ddof=1) * np.sqrt(365.25)
+        abx = {y: float(d[(ddy == y) & (d <= thr)].sum()) for y in yrs}
         ea = [y for y in yrs if aa[y] > la]
         eb = [y for y in yrs if ab[y] > lb]
+        ebx = [y for y in yrs if abx[y] > lbx]
         rows.append({"edb": e, "years": yrs, "a_boundary": bv, "a_limit": round(la, 4), "a_assessed": {y: round(v, 3) for y, v in aa.items()},
                      "a_exceed": ea, "b_boundary": round(thr, 4), "b_limit": round(lb, 4),
                      "b_assessed": {y: round(v, 3) for y, v in ab.items()}, "b_exceed": eb, "differs": ea != eb,
+                     "b_excl_exceed": ebx, "differs_excl": ea != ebx,
+                     "ref_days_over_ieee": int((refd > thr).sum()), "ref_share_removed_ieee": round(float(1 - rn.sum() / refd.sum()), 4) if refd.sum() else 0.0,
+                     "ieee_to_commission_boundary": round(thr / bv, 3) if bv else None,
+                     "margin_a": {y: round(aa[y] / la, 3) for y in yrs},
                      "raw": {y: round(float(d[ddy == y].sum()), 3) for y in yrs}})
     r = pd.DataFrame(rows)
     n = int(r.differs.sum())
     v = "Supported" if n >= 2 else "Refuted" if n == 0 else "Inconclusive"
-    return {"verdict": v, "distributors": int(len(r)), "differing": n,
+    nx = int(r.differs_excl.sum())
+    return {"verdict": v, "distributors": int(len(r)), "differing": n, "differing_names": r[r.differs].edb.tolist(),
+            "variant_exclude_differing": nx, "variant_exclude_names": r[r.differs_excl].edb.tolist(),
+            "inert_ieee_edbs": r[r.ref_days_over_ieee == 0].edb.tolist(),
+            "ieee_to_commission_boundary_range": [float(r.ieee_to_commission_boundary.min()), float(r.ieee_to_commission_boundary.max())],
             "exceedances_a": int(r.a_exceed.map(len).sum()), "exceedances_b": int(r.b_exceed.map(len).sum()),
             "rows": r.to_dict(orient="records")}
 
@@ -169,11 +188,14 @@ def decomposition(U):
         w4f = R.commission(gg, "2014-03-31 00:00", "2024-03-31 23:30", list(range(2015, 2025)), n4, bound=float(det3.loc[e, "saidi_bv"]))
         g3 = u[u.start.dt.normalize() >= "2009-03-31"]
         w3 = R.commission(g3, "2009-03-31 00:00", "2019-03-31 23:30", list(range(2010, 2020)), n3, rank_from="2009-04-01 00:00", strict=False)
+        w3f = R.commission(g3, "2009-03-31 00:00", "2019-03-31 23:30", list(range(2010, 2020)), n3, rank_from="2009-04-01 00:00",
+                           strict=False, bound=w4["bound"])      # D3: the other ordering (boundary first, on 2010-2019 outcomes)
         raw3 = w3["x"][np.isin(R.disc_year(w3["grid"]), range(2010, 2020))].sum() / 10
         raw4 = w4["x"][np.isin(R.disc_year(w4["grid"]), range(2015, 2025))].sum() / 10
         rows.append({"edb": e, "bv3": round(w3["bound"], 3), "bv4": round(w4["bound"], 3), "raw_mean3": round(raw3, 3),
                      "raw_mean4": round(raw4, 3), "target3": round(w3["target"], 3), "target4": round(w4["target"], 3),
-                     "target4_at_bv3": round(w4f["target"], 3), "limit3": round(w3["limit"], 3), "limit4": round(w4["limit"], 3),
+                     "target4_at_bv3": round(w4f["target"], 3), "target3_at_bv4": round(w3f["target"], 3),
+                     "limit3": round(w3["limit"], 3), "limit4": round(w4["limit"], 3),
                      "limit4_at_bv3": round(w4f["limit"], 3),
                      "removed_share3": round(1 - w3["target"] / raw3, 4) if raw3 else None,
                      "removed_share4": round(1 - w4["target"] / raw4, 4) if raw4 else None})
@@ -181,6 +203,9 @@ def decomposition(U):
     r["d_target"] = r.target4 - r.target3
     r["d_boundary_part"] = r.target4 - r.target4_at_bv3
     r["d_outcome_part"] = r.target4_at_bv3 - r.target3
+    r["d_boundary_first"] = r.target3_at_bv4 - r.target3              # D3: boundary changed first
+    r["d_outcome_second"] = r.target4 - r.target3_at_bv4
+    r["d_boundary_shapley"] = (r.d_boundary_part + r.d_boundary_first) / 2
     return r
 
 
@@ -207,6 +232,9 @@ def main():
                             "sum_d_target": round(float(dec.d_target.sum()), 2),
                             "sum_boundary_part": round(float(dec.d_boundary_part.sum()), 2),
                             "sum_outcome_part": round(float(dec.d_outcome_part.sum()), 2),
+                            "sum_boundary_first": round(float(dec.d_boundary_first.sum()), 2),
+                            "sum_outcome_second": round(float(dec.d_outcome_second.sum()), 2),
+                            "sum_boundary_shapley": round(float(dec.d_boundary_shapley.sum()), 2),
                             "median_removed_share3": round(float(dec.removed_share3.median()), 4),
                             "median_removed_share4": round(float(dec.removed_share4.median()), 4)}
     P = pivots(a, W)

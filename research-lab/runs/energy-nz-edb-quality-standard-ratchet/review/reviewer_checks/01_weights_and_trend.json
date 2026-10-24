@@ -1,0 +1,861 @@
+{
+ "anomalies": [
+  {
+   "edb": "Alpine Energy",
+   "disc_yr": 2017,
+   "icps": 327876212.787,
+   "med": 31804.0,
+   "ratio": 10309.276
+  },
+  {
+   "edb": "Alpine Energy",
+   "disc_yr": 2020,
+   "icps": NaN,
+   "med": 31804.0,
+   "ratio": NaN
+  },
+  {
+   "edb": "OtagoNet",
+   "disc_yr": 2023,
+   "icps": 19361.0,
+   "med": 15448.5,
+   "ratio": 1.253
+  },
+  {
+   "edb": "OtagoNet",
+   "disc_yr": 2024,
+   "icps": 20029.0,
+   "med": 15448.5,
+   "ratio": 1.297
+  },
+  {
+   "edb": "The Lines Company",
+   "disc_yr": 2020,
+   "icps": 2019.499,
+   "med": 24341.319,
+   "ratio": 0.083
+  }
+ ],
+ "national_raw": {
+  "study": {
+   "2014": 208.07,
+   "2015": 276.81,
+   "2016": 129.72,
+   "2017": 100.24,
+   "2018": 218.56,
+   "2019": 254.48,
+   "2020": 116.08,
+   "2021": 99.51,
+   "2022": 172.01,
+   "2023": 426.4,
+   "2024": 120.55
+  },
+  "interpolated": {
+   "2014": 208.07,
+   "2015": 276.81,
+   "2016": 129.72,
+   "2017": 182.96,
+   "2018": 218.56,
+   "2019": 254.48,
+   "2020": 117.99,
+   "2021": 99.51,
+   "2022": 172.01,
+   "2023": 426.48,
+   "2024": 120.47
+  },
+  "fixed_median": {
+   "2014": 208.59,
+   "2015": 277.02,
+   "2016": 129.68,
+   "2017": 183.2,
+   "2018": 218.84,
+   "2019": 254.04,
+   "2020": 118.31,
+   "2021": 100.02,
+   "2022": 173.05,
+   "2023": 429.41,
+   "2024": 121.03
+  }
+ },
+ "national_excl_rolling": {
+  "study": {
+   "2014": 112.18,
+   "2015": 113.96,
+   "2016": 109.79,
+   "2017": 99.96,
+   "2018": 134.44,
+   "2019": 128.5,
+   "2020": 113.42,
+   "2021": 97.85,
+   "2022": 107.75,
+   "2023": 133.12,
+   "2024": 113.28
+  },
+  "interpolated": {
+   "2014": 112.18,
+   "2015": 113.96,
+   "2016": 109.79,
+   "2017": 127.16,
+   "2018": 134.44,
+   "2019": 128.5,
+   "2020": 114.91,
+   "2021": 97.85,
+   "2022": 107.75,
+   "2023": 133.09,
+   "2024": 113.26
+  },
+  "fixed_median": {
+   "2014": 112.17,
+   "2015": 114.05,
+   "2016": 109.76,
+   "2017": 127.14,
+   "2018": 134.46,
+   "2019": 128.74,
+   "2020": 115.15,
+   "2021": 98.34,
+   "2022": 108.26,
+   "2023": 133.83,
+   "2024": 113.97
+  }
+ },
+ "h12": {
+  "study": {
+   "primary": {
+    "label": "primary",
+    "edbs": 16,
+    "years": [
+     2014,
+     2024
+    ],
+    "trend_pct_per_yr": {
+     "raw": -0.7261,
+     "excl_rolling": 0.3653,
+     "excl_frozen": 0.4617
+    },
+    "ratio": -0.5031,
+    "diff_pp": 0.0964,
+    "cluster": {
+     "raw_ci": [
+      -5.259,
+      3.3719
+     ],
+     "excl_rolling_ci": [
+      -2.3158,
+      2.566
+     ],
+     "excl_frozen_ci": [
+      -2.1363,
+      2.779
+     ],
+     "ratio_ci": [
+      -5.4797,
+      6.6505
+     ],
+     "diff_ci": [
+      -0.0959,
+      0.3827
+     ]
+    },
+    "years_bootstrap": {
+     "raw_ci": [
+      -8.7869,
+      10.8113
+     ],
+     "excl_rolling_ci": [
+      -1.443,
+      2.1294
+     ],
+     "excl_frozen_ci": [
+      -1.3205,
+      2.4572
+     ],
+     "ratio_ci": [
+      -1.667,
+      1.827
+     ],
+     "diff_ci": [
+      -0.2289,
+      0.5624
+     ]
+    },
+    "H1": "Inconclusive (raw trend interval includes 0)",
+    "H2": "Inconclusive"
+   },
+   "no_2023": {
+    "label": "no 2023",
+    "edbs": 16,
+    "years": [
+     2014,
+     2024
+    ],
+    "trend_pct_per_yr": {
+     "raw": -5.0223,
+     "excl_rolling": -0.2892,
+     "excl_frozen": -0.2561
+    },
+    "ratio": 0.0576,
+    "diff_pp": 0.0331,
+    "cluster": {
+     "raw_ci": [
+      -9.2038,
+      -1.3214
+     ],
+     "excl_rolling_ci": [
+      -3.043,
+      1.8113
+     ],
+     "excl_frozen_ci": [
+      -2.9106,
+      1.9757
+     ],
+     "ratio_ci": [
+      -1.3077,
+      0.3371
+     ],
+     "diff_ci": [
+      -0.208,
+      0.3735
+     ]
+    },
+    "years_bootstrap": {
+     "raw_ci": [
+      -10.4989,
+      1.7673
+     ],
+     "excl_rolling_ci": [
+      -2.0156,
+      1.2998
+     ],
+     "excl_frozen_ci": [
+      -1.7993,
+      1.5453
+     ],
+     "ratio_ci": [
+      -0.6165,
+      0.8704
+     ],
+     "diff_ci": [
+      -0.2827,
+      0.593
+     ]
+    },
+    "H1": "Supported",
+    "H2": "Inconclusive"
+   },
+   "no_aurora": {
+    "label": "no Aurora",
+    "edbs": 15,
+    "years": [
+     2014,
+     2024
+    ],
+    "trend_pct_per_yr": {
+     "raw": -0.851,
+     "excl_rolling": 0.1674,
+     "excl_frozen": 0.2096
+    },
+    "ratio": -0.1967,
+    "diff_pp": 0.0422,
+    "cluster": {
+     "raw_ci": [
+      -5.6522,
+      3.4945
+     ],
+     "excl_rolling_ci": [
+      -2.8752,
+      2.3824
+     ],
+     "excl_frozen_ci": [
+      -2.7183,
+      2.4712
+     ],
+     "ratio_ci": [
+      -5.3565,
+      5.4312
+     ],
+     "diff_ci": [
+      -0.1304,
+      0.2795
+     ]
+    },
+    "years_bootstrap": {
+     "raw_ci": [
+      -9.3118,
+      11.066
+     ],
+     "excl_rolling_ci": [
+      -1.6197,
+      1.9873
+     ],
+     "excl_frozen_ci": [
+      -1.6206,
+      2.2309
+     ],
+     "ratio_ci": [
+      -1.4027,
+      1.3767
+     ],
+     "diff_ci": [
+      -0.2708,
+      0.4407
+     ]
+    },
+    "H1": "Inconclusive (raw trend interval includes 0)",
+    "H2": "Inconclusive"
+   },
+   "saifi": {
+    "label": "SAIFI",
+    "edbs": 16,
+    "years": [
+     2014,
+     2024
+    ],
+    "trend_pct_per_yr": {
+     "raw": -1.0468,
+     "excl_rolling": -1.2046,
+     "excl_frozen": -1.0251
+    },
+    "ratio": 1.1507,
+    "diff_pp": 0.1795,
+    "cluster": {
+     "raw_ci": [
+      -3.4958,
+      0.2204
+     ],
+     "excl_rolling_ci": [
+      -3.4785,
+      0.0649
+     ],
+     "excl_frozen_ci": [
+      -3.4774,
+      0.1483
+     ],
+     "ratio_ci": [
+      -0.1483,
+      2.3701
+     ],
+     "diff_ci": [
+      -0.0738,
+      0.4437
+     ]
+    },
+    "years_bootstrap": {
+     "raw_ci": [
+      -3.4672,
+      2.3864
+     ],
+     "excl_rolling_ci": [
+      -3.2357,
+      1.7416
+     ],
+     "excl_frozen_ci": [
+      -3.1224,
+      2.0828
+     ],
+     "ratio_ci": [
+      -3.0094,
+      3.7586
+     ],
+     "diff_ci": [
+      -0.0176,
+      0.4456
+     ]
+    },
+    "H1": "Inconclusive (raw trend interval includes 0)",
+    "H2": "Inconclusive"
+   }
+  },
+  "interpolated": {
+   "primary": {
+    "label": "primary",
+    "edbs": 16,
+    "years": [
+     2014,
+     2024
+    ],
+    "trend_pct_per_yr": {
+     "raw": -1.7941,
+     "excl_rolling": -0.0623,
+     "excl_frozen": 0.0928
+    },
+    "ratio": 0.0348,
+    "diff_pp": 0.1551,
+    "cluster": {
+     "raw_ci": [
+      -5.6312,
+      2.4999
+     ],
+     "excl_rolling_ci": [
+      -2.2632,
+      2.1242
+     ],
+     "excl_frozen_ci": [
+      -2.0899,
+      2.3162
+     ],
+     "ratio_ci": [
+      -4.0496,
+      5.2356
+     ],
+     "diff_ci": [
+      -0.0136,
+      0.3882
+     ]
+    },
+    "years_bootstrap": {
+     "raw_ci": [
+      -9.7138,
+      8.4293
+     ],
+     "excl_rolling_ci": [
+      -2.1022,
+      1.5113
+     ],
+     "excl_frozen_ci": [
+      -1.9239,
+      1.8586
+     ],
+     "ratio_ci": [
+      -1.4534,
+      1.4349
+     ],
+     "diff_ci": [
+      -0.1675,
+      0.6926
+     ]
+    },
+    "H1": "Inconclusive (raw trend interval includes 0)",
+    "H2": "Inconclusive"
+   },
+   "no_2023": {
+    "label": "no 2023",
+    "edbs": 16,
+    "years": [
+     2014,
+     2024
+    ],
+    "trend_pct_per_yr": {
+     "raw": -5.9874,
+     "excl_rolling": -0.6851,
+     "excl_frozen": -0.5966
+    },
+    "ratio": 0.1144,
+    "diff_pp": 0.0884,
+    "cluster": {
+     "raw_ci": [
+      -9.6257,
+      -2.2715
+     ],
+     "excl_rolling_ci": [
+      -2.9768,
+      1.4281
+     ],
+     "excl_frozen_ci": [
+      -2.8925,
+      1.603
+     ],
+     "ratio_ci": [
+      -0.5764,
+      0.319
+     ],
+     "diff_ci": [
+      -0.1293,
+      0.3788
+     ]
+    },
+    "years_bootstrap": {
+     "raw_ci": [
+      -11.2194,
+      -0.301
+     ],
+     "excl_rolling_ci": [
+      -3.0009,
+      1.1177
+     ],
+     "excl_frozen_ci": [
+      -2.5915,
+      1.4133
+     ],
+     "ratio_ci": [
+      -0.2882,
+      0.7792
+     ],
+     "diff_ci": [
+      -0.2326,
+      0.7287
+     ]
+    },
+    "H1": "Supported",
+    "H2": "Inconclusive"
+   },
+   "no_aurora": {
+    "label": "no Aurora",
+    "edbs": 15,
+    "years": [
+     2014,
+     2024
+    ],
+    "trend_pct_per_yr": {
+     "raw": -1.956,
+     "excl_rolling": -0.2737,
+     "excl_frozen": -0.1701
+    },
+    "ratio": 0.1399,
+    "diff_pp": 0.1036,
+    "cluster": {
+     "raw_ci": [
+      -5.9741,
+      2.3581
+     ],
+     "excl_rolling_ci": [
+      -2.783,
+      1.9214
+     ],
+     "excl_frozen_ci": [
+      -2.6432,
+      2.0675
+     ],
+     "ratio_ci": [
+      -3.8772,
+      4.4971
+     ],
+     "diff_ci": [
+      -0.0594,
+      0.2859
+     ]
+    },
+    "years_bootstrap": {
+     "raw_ci": [
+      -10.1572,
+      8.7485
+     ],
+     "excl_rolling_ci": [
+      -2.3514,
+      1.3135
+     ],
+     "excl_frozen_ci": [
+      -2.2268,
+      1.6673
+     ],
+     "ratio_ci": [
+      -1.2104,
+      1.5964
+     ],
+     "diff_ci": [
+      -0.2124,
+      0.5655
+     ]
+    },
+    "H1": "Inconclusive (raw trend interval includes 0)",
+    "H2": "Inconclusive"
+   },
+   "saifi": {
+    "label": "SAIFI",
+    "edbs": 16,
+    "years": [
+     2014,
+     2024
+    ],
+    "trend_pct_per_yr": {
+     "raw": -1.909,
+     "excl_rolling": -2.0469,
+     "excl_frozen": -1.8688
+    },
+    "ratio": 1.0722,
+    "diff_pp": 0.178,
+    "cluster": {
+     "raw_ci": [
+      -3.6651,
+      -0.685
+     ],
+     "excl_rolling_ci": [
+      -3.6487,
+      -0.7885
+     ],
+     "excl_frozen_ci": [
+      -3.5961,
+      -0.694
+     ],
+     "ratio_ci": [
+      0.8479,
+      1.3122
+     ],
+     "diff_ci": [
+      -0.0739,
+      0.4427
+     ]
+    },
+    "years_bootstrap": {
+     "raw_ci": [
+      -4.1876,
+      0.1614
+     ],
+     "excl_rolling_ci": [
+      -4.0998,
+      -0.4328
+     ],
+     "excl_frozen_ci": [
+      -4.0427,
+      -0.095
+     ],
+     "ratio_ci": [
+      -0.246,
+      2.8636
+     ],
+     "diff_ci": [
+      -0.0174,
+      0.436
+     ]
+    },
+    "H1": "Refuted",
+    "H2": "Inconclusive"
+   }
+  },
+  "fixed_median": {
+   "primary": {
+    "label": "primary",
+    "edbs": 16,
+    "years": [
+     2014,
+     2024
+    ],
+    "trend_pct_per_yr": {
+     "raw": -1.7377,
+     "excl_rolling": 0.0084,
+     "excl_frozen": 0.1646
+    },
+    "ratio": -0.0048,
+    "diff_pp": 0.1562,
+    "cluster": {
+     "raw_ci": [
+      -5.5348,
+      2.508
+     ],
+     "excl_rolling_ci": [
+      -2.1596,
+      2.1363
+     ],
+     "excl_frozen_ci": [
+      -2.032,
+      2.3214
+     ],
+     "ratio_ci": [
+      -4.654,
+      6.1427
+     ],
+     "diff_ci": [
+      -0.0161,
+      0.3844
+     ]
+    },
+    "years_bootstrap": {
+     "raw_ci": [
+      -9.6535,
+      8.5257
+     ],
+     "excl_rolling_ci": [
+      -2.0264,
+      1.5788
+     ],
+     "excl_frozen_ci": [
+      -1.8408,
+      1.9245
+     ],
+     "ratio_ci": [
+      -1.3755,
+      1.463
+     ],
+     "diff_ci": [
+      -0.1649,
+      0.6906
+     ]
+    },
+    "H1": "Inconclusive (raw trend interval includes 0)",
+    "H2": "Inconclusive"
+   },
+   "no_2023": {
+    "label": "no 2023",
+    "edbs": 16,
+    "years": [
+     2014,
+     2024
+    ],
+    "trend_pct_per_yr": {
+     "raw": -5.942,
+     "excl_rolling": -0.6164,
+     "excl_frozen": -0.5255
+    },
+    "ratio": 0.1037,
+    "diff_pp": 0.0909,
+    "cluster": {
+     "raw_ci": [
+      -9.5331,
+      -2.2176
+     ],
+     "excl_rolling_ci": [
+      -2.8897,
+      1.4676
+     ],
+     "excl_frozen_ci": [
+      -2.8025,
+      1.608
+     ],
+     "ratio_ci": [
+      -0.5841,
+      0.3062
+     ],
+     "diff_ci": [
+      -0.1276,
+      0.3712
+     ]
+    },
+    "years_bootstrap": {
+     "raw_ci": [
+      -11.1458,
+      -0.2328
+     ],
+     "excl_rolling_ci": [
+      -2.9069,
+      1.1504
+     ],
+     "excl_frozen_ci": [
+      -2.4864,
+      1.4429
+     ],
+     "ratio_ci": [
+      -0.3228,
+      0.8065
+     ],
+     "diff_ci": [
+      -0.228,
+      0.7256
+     ]
+    },
+    "H1": "Supported",
+    "H2": "Inconclusive"
+   },
+   "no_aurora": {
+    "label": "no Aurora",
+    "edbs": 15,
+    "years": [
+     2014,
+     2024
+    ],
+    "trend_pct_per_yr": {
+     "raw": -1.9001,
+     "excl_rolling": -0.1977,
+     "excl_frozen": -0.0931
+    },
+    "ratio": 0.1041,
+    "diff_pp": 0.1046,
+    "cluster": {
+     "raw_ci": [
+      -5.8824,
+      2.3394
+     ],
+     "excl_rolling_ci": [
+      -2.7041,
+      1.9367
+     ],
+     "excl_frozen_ci": [
+      -2.5642,
+      2.076
+     ],
+     "ratio_ci": [
+      -4.2869,
+      4.5814
+     ],
+     "diff_ci": [
+      -0.0611,
+      0.2801
+     ]
+    },
+    "years_bootstrap": {
+     "raw_ci": [
+      -10.1267,
+      8.8444
+     ],
+     "excl_rolling_ci": [
+      -2.2643,
+      1.3914
+     ],
+     "excl_frozen_ci": [
+      -2.1217,
+      1.7399
+     ],
+     "ratio_ci": [
+      -1.3991,
+      1.4161
+     ],
+     "diff_ci": [
+      -0.2078,
+      0.564
+     ]
+    },
+    "H1": "Inconclusive (raw trend interval includes 0)",
+    "H2": "Inconclusive"
+   },
+   "saifi": {
+    "label": "SAIFI",
+    "edbs": 16,
+    "years": [
+     2014,
+     2024
+    ],
+    "trend_pct_per_yr": {
+     "raw": -1.843,
+     "excl_rolling": -1.9858,
+     "excl_frozen": -1.8125
+    },
+    "ratio": 1.0775,
+    "diff_pp": 0.1733,
+    "cluster": {
+     "raw_ci": [
+      -3.5953,
+      -0.645
+     ],
+     "excl_rolling_ci": [
+      -3.5589,
+      -0.7708
+     ],
+     "excl_frozen_ci": [
+      -3.5083,
+      -0.6604
+     ],
+     "ratio_ci": [
+      0.8485,
+      1.328
+     ],
+     "diff_ci": [
+      -0.0747,
+      0.4392
+     ]
+    },
+    "years_bootstrap": {
+     "raw_ci": [
+      -4.1319,
+      0.2285
+     ],
+     "excl_rolling_ci": [
+      -4.0258,
+      -0.3737
+     ],
+     "excl_frozen_ci": [
+      -3.9739,
+      -0.0369
+     ],
+     "ratio_ci": [
+      -1.2258,
+      3.0031
+     ],
+     "diff_ci": [
+      -0.0171,
+      0.425
+     ]
+    },
+    "H1": "Refuted",
+    "H2": "Inconclusive"
+   }
+  }
+ }
+}

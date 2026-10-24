@@ -114,16 +114,113 @@
   "edbs": 29,
   "unplanned_vs_class_c": {
    "edbs": 28,
-   "within_5pct": 20,
+   "within_5pct": 26,
    "worst": {
     "Top Energy": 1.2989,
     "Westpower": 0.9876,
-    "Aurora Energy": 0.7984,
-    "Firstlight Network": 0.752,
-    "Vector Lines": 0.6788,
-    "Unison Networks": 0.6749
+    "Alpine Energy": 0.0146,
+    "The Lines Company": 0.0052,
+    "Firstlight Network": 0.0024,
+    "Vector Lines": 0.0003
    }
   },
-  "usable": false
+  "usable": true,
+  "basis_2024_vs_2025": {
+   "edbs": 15,
+   "median_ratio_count": 0.932,
+   "median_ratio_saidi_per_interruption": 0.864,
+   "by_edb": {
+    "Alpine Energy": {
+     "n2024": 562.0,
+     "n2025": 524.0,
+     "saidi_per_int_2024": 0.3836,
+     "saidi_per_int_2025": 0.2055
+    },
+    "Aurora Energy": {
+     "n2024": 1097.0,
+     "n2025": 930.0,
+     "saidi_per_int_2024": 0.1268,
+     "saidi_per_int_2025": 0.0989
+    },
+    "EA Networks": {
+     "n2024": 306.0,
+     "n2025": 240.0,
+     "saidi_per_int_2024": 0.1937,
+     "saidi_per_int_2025": 0.2387
+    },
+    "Electricity Invercargill": {
+     "n2024": 62.0,
+     "n2025": 48.0,
+     "saidi_per_int_2024": 0.2753,
+     "saidi_per_int_2025": 0.4375
+    },
+    "Firstlight Network": {
+     "n2024": 1782.0,
+     "n2025": 911.0,
+     "saidi_per_int_2024": 0.2642,
+     "saidi_per_int_2025": 0.5432
+    },
+    "Horizon Energy": {
+     "n2024": 195.0,
+     "n2025": 176.0,
+     "saidi_per_int_2024": 0.7656,
+     "saidi_per_int_2025": 0.8425
+    },
+    "Network Tasman": {
+     "n2024": 118.0,
+     "n2025": 238.0,
+     "saidi_per_int_2024": 1.1276,
+     "saidi_per_int_2025": 0.3624
+    },
+    "Orion NZ": {
+     "n2024": 1067.0,
+     "n2025": 1155.0,
+     "saidi_per_int_2024": 0.057,
+     "saidi_per_int_2025": 0.0203
+    },
+    "OtagoNet": {
+     "n2024": 967.0,
+     "n2025": 771.0,
+     "saidi_per_int_2024": 0.2384,
+     "saidi_per_int_2025": 0.2443
+    },
+    "Powerco": {
+     "n2024": 3098.0,
+     "n2025": 2879.0,
+     "saidi_per_int_2024": 0.0473,
+     "saidi_per_int_2025": 0.042
+    },
+    "The Lines Company": {
+     "n2024": 1096.0,
+     "n2025": 1289.0,
+     "saidi_per_int_2024": 0.1777,
+     "saidi_per_int_2025": 0.1535
+    },
+    "Top Energy": {
+     "n2024": 471.0,
+     "n2025": 468.0,
+     "saidi_per_int_2024": 0.949,
+     "saidi_per_int_2025": 1.2676
+    },
+    "Unison Networks": {
+     "n2024": 671.0,
+     "n2025": 732.0,
+     "saidi_per_int_2024": 0.1276,
+     "saidi_per_int_2025": 0.0745
+    },
+    "Vector Lines": {
+     "n2024": 1716.0,
+     "n2025": 1885.0,
+     "saidi_per_int_2024": 0.0656,
+     "saidi_per_int_2025": 0.0489
+    },
+    "Wellington Electricity": {
+     "n2024": 219.0,
+     "n2025": 208.0,
+     "saidi_per_int_2024": 0.1952,
+     "saidi_per_int_2025": 0.1447
+    }
+   }
+  }
  }
 }

@@ -19,7 +19,7 @@ RAW = RUN / "data" / "raw"
 COM = RAW / "comcom"
 INT = RUN / "data" / "interim"
 T = RUN / "results" / "tables"
-ALIAS = {"Eastland Network": "Firstlight Network"}
+ALIAS = {"Eastland Network": "Firstlight Network", "Horizon Networks": "Horizon Energy"}   # D3: 2025 disclosure name
 
 
 def _ts(v):
@@ -102,7 +102,8 @@ def check():
     # 2025 unplanned totals against the disclosed Class C SAIDI for 2025 (aggregate; identification check only)
     p = pd.read_parquet(RAW / "EDB_ID_Full_2026-06-01.parquet")
     cc = p[(p.section == "10(i): Interruptions") & (p.category == "SAIFI and SAIDI by class") & (p.sub_category == "SAIDI")
-           & p.description.str.startswith("Class C", na=False) & (p.disc_yr == 2025)].groupby("edb").value.sum()
+           & p.description.str.startswith("Class C", na=False) & (p.disc_yr == 2025)
+           & (p.network.astype(str) == "All")].groupby("edb").value.sum()      # D3: the "All" row only, not sub-networks too
     un5 = i5[i5.planned_or_unplanned.astype(str).str.lower().str.startswith("unplanned")].groupby("edb").saidi_value.sum()
     j = pd.concat({"class_c_disclosed": cc, "unplanned_10a": un5}, axis=1).dropna()
     j = j[j.class_c_disclosed > 0]
@@ -110,6 +111,17 @@ def check():
     out["id2025"]["unplanned_vs_class_c"] = {"edbs": int(len(j)), "within_5pct": int((r <= 0.05).sum()),
                                              "worst": r.sort_values(ascending=False).head(6).round(4).to_dict()}
     out["id2025"]["usable"] = bool(len(j) >= 12 and (r <= 0.05).mean() >= 0.8)
+    # D3: recording basis, 2025 against 2024 (unplanned interruptions per distributor and SAIDI per interruption)
+    d4 = pd.read_parquet(INT / "dpp4.parquet")
+    u4 = d4[(d4.pu == "unplanned") & (d4.disc_yr == 2024)]
+    u5 = i5[i5.planned_or_unplanned.astype(str).str.lower().str.startswith("unplanned")].copy()
+    u5["edb"] = u5.edb.replace(ALIAS)
+    b = pd.concat({"n2024": u4.groupby("edb").size(), "n2025": u5.groupby("edb").size(),
+                   "saidi_per_int_2024": u4.groupby("edb").saidi.mean(), "saidi_per_int_2025": u5.groupby("edb").saidi_value.mean()},
+                  axis=1).dropna()
+    out["id2025"]["basis_2024_vs_2025"] = {"edbs": int(len(b)), "median_ratio_count": round(float((b.n2025 / b.n2024).median()), 3),
+                                           "median_ratio_saidi_per_interruption": round(float((b.saidi_per_int_2025 / b.saidi_per_int_2024).median()), 3),
+                                           "by_edb": b.round(4).to_dict(orient="index")}
     (T / "panel_checks.json").write_text(json.dumps(out, indent=1, default=str))
     print(json.dumps(out, indent=1, default=str))
 
@@ -128,18 +140,33 @@ def build():
     parts.append(d4[d4.disc_yr >= 2014].assign(src="dpp4"))
     if chk["id2025"]["usable"]:
         i5 = pd.read_parquet(INT / "id2025_raw.parquet")
+        i5 = i5[i5.edb.replace(ALIAS).isin(keep)]      # D3: study distributors only (MainPower's 164 off-year rows are not)
         i5 = i5.rename(columns={"start_datetime": "start", "saidi_value": "saidi", "saifi_value": "saifi",
                                 "icp_interruption_minutes": "icp_min", "planned_or_unplanned": "pu"})
         i5 = _std(i5.rename(columns={"edb": "EDB"}), {"EDB": "edb", "disc_yr": "disc_yr", "start": "start", "pu": "pu",
                                                        "saidi": "saidi", "saifi": "saifi", "icp_min": "icp_min"})
         i5["pu"] = np.where(i5.pu.str.startswith("unplanned"), "unplanned", "planned")
-        parts.append(i5[i5.edb.isin(keep)].assign(src="id2025"))
+        # D3: Top Energy's 2025 unplanned total includes Transpower-caused interruptions it cannot separate
+        parts.append(i5[i5.edb.isin(keep) & (i5.edb != "Top Energy")].assign(src="id2025"))
     d = pd.concat(parts, ignore_index=True)
     u = d[d.pu == "unplanned"].copy()
     u.to_parquet(INT / "unplanned.parquet", index=False)
     # ICP count per distributor-year: median of ICP minutes / SAIDI over interruptions
     v = u[(u.saidi > 0) & (u.icp_min > 0)]
     icp = (v.icp_min / v.saidi).groupby([v.edb, v.disc_yr]).median().rename("icps")
+    # D3: plausibility guard (a corrupt ICP-minutes column gave Alpine 2017 a count 10,000 times its median): values
+    # outside 1/3 to 3 times the distributor's median are replaced by linear interpolation within the distributor
+    ic = icp.reset_index()
+    med = ic.groupby("edb").icps.transform("median")
+    bad = (ic.icps > 3 * med) | (ic.icps < med / 3)
+    flags = ic[bad].assign(median=med[bad]).round(1).to_dict(orient="records")
+    ic.loc[bad, "icps"] = np.nan
+    full = pd.MultiIndex.from_product([sorted(u.edb.unique()), sorted(u.disc_yr.unique())], names=["edb", "disc_yr"])
+    ic = ic.set_index(["edb", "disc_yr"]).reindex(full)
+    ic["icps"] = ic.groupby(level=0).icps.transform(lambda s: s.interpolate(limit_direction="both"))
+    icp = ic.icps
+    (T / "icp_flags.json").write_text(json.dumps({"rule": "outside 1/3-3x distributor median, or missing: interpolated",
+                                                   "flagged": flags}, indent=1, default=str))
     ann = pd.concat([u.groupby(["edb", "disc_yr"]).saidi.sum().rename("raw_saidi"),
                      u.groupby(["edb", "disc_yr"]).saifi.sum().rename("raw_saifi"), icp], axis=1).reset_index()
     ann.to_csv(T / "panel_annual.csv", index=False)

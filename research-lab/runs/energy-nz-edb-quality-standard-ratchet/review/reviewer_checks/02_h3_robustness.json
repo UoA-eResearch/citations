@@ -1,0 +1,608 @@
+{
+ "study (ref >=, assess >, det bv, IEEE 10y, cap)": {
+  "differing": [
+   "Electricity Invercargill",
+   "Firstlight Network",
+   "Vector Lines"
+  ],
+  "n_differing": 3,
+  "exc_a": 4,
+  "exc_b": 7,
+  "a_exceed": {
+   "Firstlight Network": [
+    2023,
+    2024
+   ],
+   "The Lines Company": [
+    2023
+   ],
+   "Top Energy": [
+    2023
+   ]
+  },
+  "b_exceed": {
+   "Electricity Invercargill": [
+    2022
+   ],
+   "Firstlight Network": [
+    2022,
+    2023,
+    2024
+   ],
+   "The Lines Company": [
+    2023
+   ],
+   "Top Energy": [
+    2023
+   ],
+   "Vector Lines": [
+    2023
+   ]
+  }
+ },
+ "assess >= (consistent with ref)": {
+  "differing": [
+   "Electricity Invercargill",
+   "Firstlight Network",
+   "Vector Lines"
+  ],
+  "n_differing": 3,
+  "exc_a": 4,
+  "exc_b": 7,
+  "a_exceed": {
+   "Firstlight Network": [
+    2023,
+    2024
+   ],
+   "The Lines Company": [
+    2023
+   ],
+   "Top Energy": [
+    2023
+   ]
+  },
+  "b_exceed": {
+   "Electricity Invercargill": [
+    2022
+   ],
+   "Firstlight Network": [
+    2022,
+    2023,
+    2024
+   ],
+   "The Lines Company": [
+    2023
+   ],
+   "Top Energy": [
+    2023
+   ],
+   "Vector Lines": [
+    2023
+   ]
+  }
+ },
+ "ref > (consistent with assess)": {
+  "differing": [
+   "Electricity Invercargill",
+   "Firstlight Network",
+   "Vector Lines"
+  ],
+  "n_differing": 3,
+  "exc_a": 4,
+  "exc_b": 7,
+  "a_exceed": {
+   "Firstlight Network": [
+    2023,
+    2024
+   ],
+   "The Lines Company": [
+    2023
+   ],
+   "Top Energy": [
+    2023
+   ]
+  },
+  "b_exceed": {
+   "Electricity Invercargill": [
+    2022
+   ],
+   "Firstlight Network": [
+    2022,
+    2023,
+    2024
+   ],
+   "The Lines Company": [
+    2023
+   ],
+   "Top Energy": [
+    2023
+   ],
+   "Vector Lines": [
+    2023
+   ]
+  }
+ },
+ "unrounded recomputed bv": {
+  "differing": [
+   "Electricity Invercargill",
+   "Firstlight Network",
+   "Vector Lines"
+  ],
+  "n_differing": 3,
+  "exc_a": 4,
+  "exc_b": 7,
+  "a_exceed": {
+   "Firstlight Network": [
+    2023,
+    2024
+   ],
+   "The Lines Company": [
+    2023
+   ],
+   "Top Energy": [
+    2023
+   ]
+  },
+  "b_exceed": {
+   "Electricity Invercargill": [
+    2022
+   ],
+   "Firstlight Network": [
+    2022,
+    2023,
+    2024
+   ],
+   "The Lines Company": [
+    2023
+   ],
+   "Top Energy": [
+    2023
+   ],
+   "Vector Lines": [
+    2023
+   ]
+  }
+ },
+ "IEEE threshold on 5 years 2015-2019": {
+  "differing": [
+   "Electricity Invercargill",
+   "Firstlight Network",
+   "Vector Lines"
+  ],
+  "n_differing": 3,
+  "exc_a": 4,
+  "exc_b": 7,
+  "a_exceed": {
+   "Firstlight Network": [
+    2023,
+    2024
+   ],
+   "The Lines Company": [
+    2023
+   ],
+   "Top Energy": [
+    2023
+   ]
+  },
+  "b_exceed": {
+   "Electricity Invercargill": [
+    2022
+   ],
+   "Firstlight Network": [
+    2022,
+    2023,
+    2024
+   ],
+   "The Lines Company": [
+    2023
+   ],
+   "Top Energy": [
+    2023
+   ],
+   "Vector Lines": [
+    2023
+   ]
+  }
+ },
+ "IEEE ddof=0": {
+  "differing": [
+   "Electricity Invercargill",
+   "Firstlight Network",
+   "Vector Lines"
+  ],
+  "n_differing": 3,
+  "exc_a": 4,
+  "exc_b": 7,
+  "a_exceed": {
+   "Firstlight Network": [
+    2023,
+    2024
+   ],
+   "The Lines Company": [
+    2023
+   ],
+   "Top Energy": [
+    2023
+   ]
+  },
+  "b_exceed": {
+   "Electricity Invercargill": [
+    2022
+   ],
+   "Firstlight Network": [
+    2022,
+    2023,
+    2024
+   ],
+   "The Lines Company": [
+    2023
+   ],
+   "Top Energy": [
+    2023
+   ],
+   "Vector Lines": [
+    2023
+   ]
+  }
+ },
+ "IEEE exclude days instead of cap": {
+  "differing": [
+   "Electricity Invercargill",
+   "Firstlight Network",
+   "OtagoNet",
+   "The Lines Company"
+  ],
+  "n_differing": 4,
+  "exc_a": 4,
+  "exc_b": 8,
+  "a_exceed": {
+   "Firstlight Network": [
+    2023,
+    2024
+   ],
+   "The Lines Company": [
+    2023
+   ],
+   "Top Energy": [
+    2023
+   ]
+  },
+  "b_exceed": {
+   "Electricity Invercargill": [
+    2022
+   ],
+   "Firstlight Network": [
+    2022,
+    2023,
+    2024
+   ],
+   "OtagoNet": [
+    2023
+   ],
+   "The Lines Company": [
+    2021,
+    2023
+   ],
+   "Top Energy": [
+    2023
+   ]
+  }
+ },
+ "determination limits for (a)": {
+  "differing": [
+   "Electricity Invercargill",
+   "Firstlight Network"
+  ],
+  "n_differing": 2,
+  "exc_a": 5,
+  "exc_b": 7,
+  "a_exceed": {
+   "Firstlight Network": [
+    2023,
+    2024
+   ],
+   "The Lines Company": [
+    2023
+   ],
+   "Top Energy": [
+    2023
+   ],
+   "Vector Lines": [
+    2023
+   ]
+  },
+  "b_exceed": {
+   "Electricity Invercargill": [
+    2022
+   ],
+   "Firstlight Network": [
+    2022,
+    2023,
+    2024
+   ],
+   "The Lines Company": [
+    2023
+   ],
+   "Top Energy": [
+    2023
+   ],
+   "Vector Lines": [
+    2023
+   ]
+  }
+ },
+ "margins_within_5pct": [
+  {
+   "edb": "Firstlight Network",
+   "year": 2022,
+   "a_ratio": 0.9819,
+   "b_ratio": 1.123
+  },
+  {
+   "edb": "Vector Lines",
+   "year": 2023,
+   "a_ratio": 0.9982,
+   "b_ratio": 1.0836
+  }
+ ],
+ "ieee_diagnostics": [
+  {
+   "edb": "Alpine Energy",
+   "bv": 9.17,
+   "b_thr": 32.1699,
+   "b_limit": 211.4001,
+   "b_thr_over_b_limit": 0.1522,
+   "ref_days_over_thr": 7,
+   "ref_nonzero_days": 1175,
+   "a_removed_share_ref": 0.5731,
+   "b_removed_share_ref": 0.3712,
+   "ieee_over_commission_bv": 3.5082
+  },
+  {
+   "edb": "EA Networks",
+   "bv": 6.25,
+   "b_thr": 18.695,
+   "b_limit": 151.8511,
+   "b_thr_over_b_limit": 0.1231,
+   "ref_days_over_thr": 10,
+   "ref_nonzero_days": 1747,
+   "a_removed_share_ref": 0.6055,
+   "b_removed_share_ref": 0.4259,
+   "ieee_over_commission_bv": 2.9912
+  },
+  {
+   "edb": "Electricity Invercargill",
+   "bv": 4.13,
+   "b_thr": 55.8876,
+   "b_limit": 55.924,
+   "b_thr_over_b_limit": 0.9993,
+   "ref_days_over_thr": 0,
+   "ref_nonzero_days": 210,
+   "a_removed_share_ref": 0.4728,
+   "b_removed_share_ref": 0.0,
+   "ieee_over_commission_bv": 13.5321
+  },
+  {
+   "edb": "Firstlight Network",
+   "bv": 13.1,
+   "b_thr": 32.8301,
+   "b_limit": 323.477,
+   "b_thr_over_b_limit": 0.1015,
+   "ref_days_over_thr": 8,
+   "ref_nonzero_days": 1636,
+   "a_removed_share_ref": 0.5676,
+   "b_removed_share_ref": 0.4162,
+   "ieee_over_commission_bv": 2.5061
+  },
+  {
+   "edb": "Horizon Energy",
+   "bv": 14.69,
+   "b_thr": 55.5474,
+   "b_limit": 317.7666,
+   "b_thr_over_b_limit": 0.1748,
+   "ref_days_over_thr": 2,
+   "ref_nonzero_days": 936,
+   "a_removed_share_ref": 0.479,
+   "b_removed_share_ref": 0.2449,
+   "ieee_over_commission_bv": 3.7813
+  },
+  {
+   "edb": "Nelson Electricity",
+   "bv": 8.68,
+   "b_thr": 213.2674,
+   "b_limit": 109.7684,
+   "b_thr_over_b_limit": 1.9429,
+   "ref_days_over_thr": 0,
+   "ref_nonzero_days": 52,
+   "a_removed_share_ref": 0.7638,
+   "b_removed_share_ref": 0.0,
+   "ieee_over_commission_bv": 24.57
+  },
+  {
+   "edb": "Network Tasman",
+   "bv": 7.22,
+   "b_thr": 75.7737,
+   "b_limit": 174.9203,
+   "b_thr_over_b_limit": 0.4332,
+   "ref_days_over_thr": 0,
+   "ref_nonzero_days": 987,
+   "a_removed_share_ref": 0.3217,
+   "b_removed_share_ref": 0.0,
+   "ieee_over_commission_bv": 10.495
+  },
+  {
+   "edb": "Orion NZ",
+   "bv": 7.6,
+   "b_thr": 13.8958,
+   "b_limit": 132.6337,
+   "b_thr_over_b_limit": 0.1048,
+   "ref_days_over_thr": 9,
+   "ref_nonzero_days": 2769,
+   "a_removed_share_ref": 0.8673,
+   "b_removed_share_ref": 0.8143,
+   "ieee_over_commission_bv": 1.8284
+  },
+  {
+   "edb": "OtagoNet",
+   "bv": 11.81,
+   "b_thr": 39.9834,
+   "b_limit": 271.5666,
+   "b_thr_over_b_limit": 0.1472,
+   "ref_days_over_thr": 6,
+   "ref_nonzero_days": 1301,
+   "a_removed_share_ref": 0.3707,
+   "b_removed_share_ref": 0.0774,
+   "ieee_over_commission_bv": 3.3856
+  },
+  {
+   "edb": "Powerco",
+   "bv": 9.82,
+   "b_thr": 12.6185,
+   "b_limit": 220.8538,
+   "b_thr_over_b_limit": 0.0571,
+   "ref_days_over_thr": 18,
+   "ref_nonzero_days": 3564,
+   "a_removed_share_ref": 0.3019,
+   "b_removed_share_ref": 0.1944,
+   "ieee_over_commission_bv": 1.285
+  },
+  {
+   "edb": "The Lines Company",
+   "bv": 11.17,
+   "b_thr": 17.2046,
+   "b_limit": 248.9867,
+   "b_thr_over_b_limit": 0.0691,
+   "ref_days_over_thr": 13,
+   "ref_nonzero_days": 2689,
+   "a_removed_share_ref": 0.293,
+   "b_removed_share_ref": 0.0841,
+   "ieee_over_commission_bv": 1.5403
+  },
+  {
+   "edb": "Top Energy",
+   "bv": 27.92,
+   "b_thr": 55.2014,
+   "b_limit": 563.2375,
+   "b_thr_over_b_limit": 0.098,
+   "ref_days_over_thr": 10,
+   "ref_nonzero_days": 1836,
+   "a_removed_share_ref": 0.4604,
+   "b_removed_share_ref": 0.2603,
+   "ieee_over_commission_bv": 1.9771
+  },
+  {
+   "edb": "Unison Networks",
+   "bv": 4.48,
+   "b_thr": 16.6988,
+   "b_limit": 132.5591,
+   "b_thr_over_b_limit": 0.126,
+   "ref_days_over_thr": 7,
+   "ref_nonzero_days": 2092,
+   "a_removed_share_ref": 0.4621,
+   "b_removed_share_ref": 0.2448,
+   "ieee_over_commission_bv": 3.7274
+  },
+  {
+   "edb": "Vector Lines",
+   "bv": 4.83,
+   "b_thr": 13.2888,
+   "b_limit": 163.0737,
+   "b_thr_over_b_limit": 0.0815,
+   "ref_days_over_thr": 12,
+   "ref_nonzero_days": 3392,
+   "a_removed_share_ref": 0.4618,
+   "b_removed_share_ref": 0.3404,
+   "ieee_over_commission_bv": 2.7513
+  },
+  {
+   "edb": "Wellington Electricity",
+   "bv": 2.16,
+   "b_thr": 16.7323,
+   "b_limit": 68.936,
+   "b_thr_over_b_limit": 0.2427,
+   "ref_days_over_thr": 3,
+   "ref_nonzero_days": 1421,
+   "a_removed_share_ref": 0.4798,
+   "b_removed_share_ref": 0.2589,
+   "ieee_over_commission_bv": 7.7464
+  }
+ ],
+ "ieee_over_commission_bv_range": [
+  1.28,
+  24.57
+ ],
+ "table_E3_comparison": {
+  "n": 57,
+  "within_1pct": 51,
+  "over_1pct": [
+   {
+    "edb": "Electricity Invercargill",
+    "year": 2023,
+    "study_a": 18.04,
+    "comcom_E3": 17.8,
+    "rel_diff": 0.0136
+   },
+   {
+    "edb": "Orion NZ",
+    "year": 2022,
+    "study_a": 42.9,
+    "comcom_E3": 52.95,
+    "rel_diff": -0.1898
+   },
+   {
+    "edb": "The Lines Company",
+    "year": 2022,
+    "study_a": 165.69,
+    "comcom_E3": 159.78,
+    "rel_diff": 0.037
+   },
+   {
+    "edb": "The Lines Company",
+    "year": 2023,
+    "study_a": 245.55,
+    "comcom_E3": 238.94,
+    "rel_diff": 0.0276
+   },
+   {
+    "edb": "Top Energy",
+    "year": 2024,
+    "study_a": 302.32,
+    "comcom_E3": 292.29,
+    "rel_diff": 0.0343
+   }
+  ]
+ },
+ "exceedances_vs_E3": {
+  "study_rule_a_det_limits": {
+   "Firstlight Network": [
+    2023,
+    2024
+   ],
+   "The Lines Company": [
+    2023
+   ],
+   "Top Energy": [
+    2023
+   ],
+   "Vector Lines": [
+    2023
+   ]
+  },
+  "commission_E3": {
+   "Firstlight Network": [
+    2023,
+    2024
+   ],
+   "The Lines Company": [
+    2023
+   ],
+   "Top Energy": [
+    2023
+   ],
+   "Vector Lines": [
+    2023
+   ]
+  },
+  "identical": true
+ }
+}

@@ -31,3 +31,37 @@
   Nelson −11%). The determination's limits therefore include something beyond target + 2 SD on the reference
   window. As planned, H3 uses limits recomputed under each rule. Compliance against the determination's own DPP3
   limits is reported alongside.
+
+## D3 — 2026-10-25 03:05 NZDT — fixes after the independent review (review/review.md, "fix first")
+
+1. **ICP weights** (finding 1). The ICP-count proxy had corrupt values: Alpine 2017 at 327,876,213, which took 99.5%
+   of that year's national weight, and The Lines Company 2020 at 2,020. A plausibility guard now replaces values
+   outside 1/3 to 3 times the distributor's median with linear interpolation within the distributor. Five
+   distributor-years are flagged (`results/tables/icp_flags.json`). Every H1/H2 number, the national index and F1 are
+   recomputed.
+2. **2025** (finding 2). D1's identification check summed sub-network rows with the "All" row of the disclosure
+   table. Corrected to the "All" row, 26 of 28 distributors are within 5% and the plan's rule returns usable, so **D1
+   is withdrawn** and the preregistered windows apply: 2014–2025 for H1/H2, 2021–2025 for H3.
+   - Horizon's 2025 disclosure name ("Horizon Networks") is mapped.
+   - Top Energy 2025 is excluded: its unplanned total includes Transpower-caused interruptions it cannot separate.
+   - MainPower's 164 off-year rows are outside the study set.
+   - The national index is computed over available distributor-years.
+   - A recording-basis check (2025 against 2024) is added: median count ratio 0.93, SAIDI per interruption 0.86.
+3. **The DPP3 limit mismatch** (finding 3, replacing D2's "unexplained residual"). It is the Commission's ±5%
+   inter-period target cap (DPP3 reasons, Attachment J, Table J1): target × (1 + J1 adjustment) + 2 SD reproduces
+   the determination's limits to 0.02%. The validation gate now also compares the uncapped limits with the Stata
+   output (all within 0.052%).
+4. **H3** (findings 4, 10). Added:
+   - a variant with IEEE major-event days excluded rather than capped (4 differ);
+   - the reference days over the IEEE threshold (0 for Invercargill, Nelson and Network Tasman: the rule is inert
+     there);
+   - margins;
+   - the boundary ratio range, corrected to 1.3–25×.
+   Wording "decides" is softened to "can change".
+5. **The decomposition** (finding 5). Both orderings and the Shapley average are reported.
+6. **Descriptives and wording** (findings 6–9):
+   - the median published uncapped limit change is −1% without Aurora (with Aurora, +2.4%);
+   - DPP3's rule is an annual contravention, not a two-of-three-year rule;
+   - the Table E3 reproduction is cited as the assessment-mode validation;
+   - H1's sign-blind rule is explained for the primary, no-2023 and SAIFI cases;
+   - the title is narrowed to what is shown.

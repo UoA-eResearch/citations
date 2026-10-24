@@ -142,6 +142,14 @@ def validate():
                      "saifi_bv_rel_diff": round(abs(cf["bound"] / dd.saifi_bv - 1), 5),
                      "limit_rel_diff": round(abs(c["limit"] / dd.saidi_limit - 1), 5)})
     v3 = pd.DataFrame(rows)
+    # D3: the uncapped limits against the Stata model's own output (the determination applies a +/-5% target cap, Table J1)
+    st = pd.read_stata(COM / "dpp3_zip" / "Final model - Publication version" / "Outputs" / "Unplanned parameters.dta")
+    st["edb"] = st.edb.replace({"Eastland Network": "Firstlight Network"})
+    st = st.set_index("edb")
+    v3["stata_saidi_limit"] = [round(float(st.loc[e, "saidi_cap"]), 3) if e in st.index else None for e in v3.edb]
+    v3["limit_vs_stata_rel"] = [round(abs(l / sl - 1), 5) if sl else None for l, sl in zip(v3.saidi_limit, v3.stata_saidi_limit)]
+    out["dpp3_vs_stata"] = {"edbs": int(v3.stata_saidi_limit.notna().sum()), "max_rel_diff": float(v3.limit_vs_stata_rel.max()),
+                            "all_within_0_1pct": bool((v3.limit_vs_stata_rel.dropna() <= 0.001).all())}
     out["dpp3"] = {"edbs": int(len(v3)), "bv_all_within_1pct": bool((v3.bv_rel_diff <= 0.01).all()),
                    "saifi_bv_all_within_1pct": bool((v3.saifi_bv_rel_diff <= 0.01).all()),
                    "limit_within_1pct": int((v3.limit_rel_diff <= 0.01).sum()), "rows": v3.to_dict(orient="records")}

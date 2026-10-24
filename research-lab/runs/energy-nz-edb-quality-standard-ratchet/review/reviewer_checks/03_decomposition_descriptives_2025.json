@@ -1,0 +1,592 @@
+{
+ "decomposition": {
+  "rows": [
+   {
+    "edb": "Alpine Energy",
+    "d_target": -13.307,
+    "boundary_study": -4.67,
+    "outcome_study": -8.637,
+    "boundary_alt": -5.065,
+    "outcome_alt": -8.243,
+    "boundary_shapley": -4.867
+   },
+   {
+    "edb": "Aurora Energy",
+    "d_target": 28.577,
+    "boundary_study": 11.342,
+    "outcome_study": 17.235,
+    "boundary_alt": 5.805,
+    "outcome_alt": 22.772,
+    "boundary_shapley": 8.573
+   },
+   {
+    "edb": "EA Networks",
+    "d_target": -5.919,
+    "boundary_study": -4.848,
+    "outcome_study": -1.071,
+    "boundary_alt": -4.614,
+    "outcome_alt": -1.305,
+    "boundary_shapley": -4.731
+   },
+   {
+    "edb": "Electricity Invercargill",
+    "d_target": 3.112,
+    "boundary_study": 2.302,
+    "outcome_study": 0.81,
+    "boundary_alt": 1.713,
+    "outcome_alt": 1.399,
+    "boundary_shapley": 2.008
+   },
+   {
+    "edb": "Firstlight Network",
+    "d_target": 37.427,
+    "boundary_study": 11.792,
+    "outcome_study": 25.635,
+    "boundary_alt": 14.65,
+    "outcome_alt": 22.777,
+    "boundary_shapley": 13.221
+   },
+   {
+    "edb": "Horizon Energy",
+    "d_target": -6.639,
+    "boundary_study": -4.298,
+    "outcome_study": -2.341,
+    "boundary_alt": -7.955,
+    "outcome_alt": 1.316,
+    "boundary_shapley": -6.126
+   },
+   {
+    "edb": "Nelson Electricity",
+    "d_target": -1.869,
+    "boundary_study": -0.694,
+    "outcome_study": -1.175,
+    "boundary_alt": -0.711,
+    "outcome_alt": -1.158,
+    "boundary_shapley": -0.703
+   },
+   {
+    "edb": "Network Tasman",
+    "d_target": -1.791,
+    "boundary_study": -0.057,
+    "outcome_study": -1.735,
+    "boundary_alt": -1.387,
+    "outcome_alt": -0.404,
+    "boundary_shapley": -0.722
+   },
+   {
+    "edb": "Orion NZ",
+    "d_target": -22.583,
+    "boundary_study": -7.16,
+    "outcome_study": -15.423,
+    "boundary_alt": -11.605,
+    "outcome_alt": -10.978,
+    "boundary_shapley": -9.383
+   },
+   {
+    "edb": "OtagoNet",
+    "d_target": 8.994,
+    "boundary_study": -1.142,
+    "outcome_study": 10.136,
+    "boundary_alt": -0.109,
+    "outcome_alt": 9.102,
+    "boundary_shapley": -0.626
+   },
+   {
+    "edb": "Powerco",
+    "d_target": 11.355,
+    "boundary_study": -2.079,
+    "outcome_study": 13.434,
+    "boundary_alt": -2.806,
+    "outcome_alt": 14.161,
+    "boundary_shapley": -2.442
+   },
+   {
+    "edb": "The Lines Company",
+    "d_target": 35.481,
+    "boundary_study": 12.841,
+    "outcome_study": 22.64,
+    "boundary_alt": 9.909,
+    "outcome_alt": 25.572,
+    "boundary_shapley": 11.375
+   },
+   {
+    "edb": "Top Energy",
+    "d_target": 28.228,
+    "boundary_study": -3.083,
+    "outcome_study": 31.311,
+    "boundary_alt": -0.513,
+    "outcome_alt": 28.741,
+    "boundary_shapley": -1.798
+   },
+   {
+    "edb": "Unison Networks",
+    "d_target": 1.369,
+    "boundary_study": -1.225,
+    "outcome_study": 2.594,
+    "boundary_alt": -1.667,
+    "outcome_alt": 3.036,
+    "boundary_shapley": -1.446
+   },
+   {
+    "edb": "Vector Lines",
+    "d_target": 16.031,
+    "boundary_study": 3.968,
+    "outcome_study": 12.064,
+    "boundary_alt": 2.29,
+    "outcome_alt": 13.741,
+    "boundary_shapley": 3.129
+   },
+   {
+    "edb": "Wellington Electricity",
+    "d_target": -3.199,
+    "boundary_study": -1.763,
+    "outcome_study": -1.436,
+    "boundary_alt": -2.813,
+    "outcome_alt": -0.386,
+    "boundary_shapley": -2.288
+   }
+  ],
+  "sums": {
+   "d_target": 115.26,
+   "boundary_study": 11.22,
+   "outcome_study": 104.04,
+   "boundary_alt": -4.88,
+   "outcome_alt": 120.14,
+   "boundary_shapley": 3.17
+  },
+  "study_csv_sums": {
+   "d_target": 115.26,
+   "boundary": 11.22
+  }
+ },
+ "section0": {
+  "median_pct_change_uncapped_16": 2.36,
+  "median_pct_change_uncapped_15_no_aurora": -1.0,
+  "range_no_aurora": [
+   -37.1,
+   31.9
+  ],
+  "aurora_pct": 56.8,
+  "bound_of_15": 13,
+  "held_up": 6,
+  "held_down": 7,
+  "bv_fell_of_16": 11
+ },
+ "id2025_redo": {
+  "rows": [
+   {
+    "edb": "Alpine Energy",
+    "class_c_all": 106.111,
+    "all_unplanned_classes": 206.196,
+    "raw10a_unplanned": 107.664,
+    "rel_c": 0.015,
+    "rel_allcls": -0.478
+   },
+   {
+    "edb": "Aurora Energy",
+    "class_c_all": 92.023,
+    "all_unplanned_classes": 94.436,
+    "raw10a_unplanned": 92.023,
+    "rel_c": 0.0,
+    "rel_allcls": -0.026
+   },
+   {
+    "edb": "EA Networks",
+    "class_c_all": 57.28,
+    "all_unplanned_classes": 58.28,
+    "raw10a_unplanned": 57.282,
+    "rel_c": 0.0,
+    "rel_allcls": -0.017
+   },
+   {
+    "edb": "Electricity Invercargill",
+    "class_c_all": 21.0,
+    "all_unplanned_classes": 30.273,
+    "raw10a_unplanned": 21.0,
+    "rel_c": -0.0,
+    "rel_allcls": -0.306
+   },
+   {
+    "edb": "Firstlight Network",
+    "class_c_all": 493.639,
+    "all_unplanned_classes": 493.639,
+    "raw10a_unplanned": 494.822,
+    "rel_c": 0.002,
+    "rel_allcls": 0.002
+   },
+   {
+    "edb": "Horizon Energy",
+    "class_c_all": 148.284,
+    "all_unplanned_classes": 162.541,
+    "raw10a_unplanned": 148.284,
+    "rel_c": -0.0,
+    "rel_allcls": -0.088
+   },
+   {
+    "edb": "Nelson Electricity",
+    "class_c_all": 0.0,
+    "all_unplanned_classes": 0.0,
+    "raw10a_unplanned": NaN,
+    "rel_c": NaN,
+    "rel_allcls": NaN
+   },
+   {
+    "edb": "Network Tasman",
+    "class_c_all": 86.254,
+    "all_unplanned_classes": 86.254,
+    "raw10a_unplanned": 86.254,
+    "rel_c": -0.0,
+    "rel_allcls": -0.0
+   },
+   {
+    "edb": "Orion NZ",
+    "class_c_all": 23.391,
+    "all_unplanned_classes": 23.866,
+    "raw10a_unplanned": 23.391,
+    "rel_c": 0.0,
+    "rel_allcls": -0.02
+   },
+   {
+    "edb": "OtagoNet",
+    "class_c_all": 188.349,
+    "all_unplanned_classes": 193.309,
+    "raw10a_unplanned": 188.349,
+    "rel_c": -0.0,
+    "rel_allcls": -0.026
+   },
+   {
+    "edb": "Powerco",
+    "class_c_all": 120.976,
+    "all_unplanned_classes": 152.091,
+    "raw10a_unplanned": 120.976,
+    "rel_c": 0.0,
+    "rel_allcls": -0.205
+   },
+   {
+    "edb": "The Lines Company",
+    "class_c_all": 198.904,
+    "all_unplanned_classes": 239.345,
+    "raw10a_unplanned": 197.868,
+    "rel_c": -0.005,
+    "rel_allcls": -0.173
+   },
+   {
+    "edb": "Top Energy",
+    "class_c_all": 258.063,
+    "all_unplanned_classes": 593.258,
+    "raw10a_unplanned": 593.258,
+    "rel_c": 1.299,
+    "rel_allcls": -0.0
+   },
+   {
+    "edb": "Unison Networks",
+    "class_c_all": 54.51,
+    "all_unplanned_classes": 135.969,
+    "raw10a_unplanned": 54.51,
+    "rel_c": -0.0,
+    "rel_allcls": -0.599
+   },
+   {
+    "edb": "Vector Lines",
+    "class_c_all": 92.3,
+    "all_unplanned_classes": 92.4,
+    "raw10a_unplanned": 92.269,
+    "rel_c": -0.0,
+    "rel_allcls": -0.001
+   },
+   {
+    "edb": "Wellington Electricity",
+    "class_c_all": 30.101,
+    "all_unplanned_classes": 30.101,
+    "raw10a_unplanned": 30.101,
+    "rel_c": 0.0,
+    "rel_allcls": 0.0
+   }
+  ],
+  "within_5pct_of_class_c": 14,
+  "n": 16,
+  "usable_by_plan_rule": true,
+  "missing": [],
+  "study_sum_inflation": {
+   "Aurora Energy": 4.96,
+   "Firstlight Network": 4.04,
+   "OtagoNet": 2.46,
+   "Powerco": 3.0,
+   "Unison Networks": 3.08,
+   "Vector Lines": 3.11
+  }
+ },
+ "model_vs_class_c": {
+  "cells": 175,
+  "off_by_more_than_1pct": [
+   {
+    "edb": "Alpine Energy",
+    "disc_yr": 2023.0,
+    "cc": 104.655,
+    "model": 106.759,
+    "rel": 0.02
+   },
+   {
+    "edb": "Aurora Energy",
+    "disc_yr": 2016.0,
+    "cc": 202.912,
+    "model": 198.681,
+    "rel": -0.021
+   },
+   {
+    "edb": "Horizon Energy",
+    "disc_yr": 2014.0,
+    "cc": 181.524,
+    "model": 199.616,
+    "rel": 0.1
+   },
+   {
+    "edb": "Horizon Energy",
+    "disc_yr": 2017.0,
+    "cc": 177.954,
+    "model": 184.462,
+    "rel": 0.037
+   },
+   {
+    "edb": "Horizon Energy",
+    "disc_yr": 2018.0,
+    "cc": 1035.859,
+    "model": 1070.572,
+    "rel": 0.034
+   },
+   {
+    "edb": "Network Tasman",
+    "disc_yr": 2014.0,
+    "cc": 75.88,
+    "model": 79.614,
+    "rel": 0.049
+   },
+   {
+    "edb": "Network Tasman",
+    "disc_yr": 2024.0,
+    "cc": 128.52,
+    "model": 133.06,
+    "rel": 0.035
+   },
+   {
+    "edb": "OtagoNet",
+    "disc_yr": 2014.0,
+    "cc": 317.3,
+    "model": 326.443,
+    "rel": 0.029
+   },
+   {
+    "edb": "OtagoNet",
+    "disc_yr": 2019.0,
+    "cc": 138.475,
+    "model": 141.737,
+    "rel": 0.024
+   },
+   {
+    "edb": "Top Energy",
+    "disc_yr": 2024.0,
+    "cc": 436.957,
+    "model": 446.992,
+    "rel": 0.023
+   },
+   {
+    "edb": "Unison Networks",
+    "disc_yr": 2019.0,
+    "cc": 74.069,
+    "model": 77.23,
+    "rel": 0.043
+   },
+   {
+    "edb": "Unison Networks",
+    "disc_yr": 2024.0,
+    "cc": 89.907,
+    "model": 85.652,
+    "rel": -0.047
+   },
+   {
+    "edb": "Vector Lines",
+    "disc_yr": 2021.0,
+    "cc": 85.0,
+    "model": 86.31,
+    "rel": 0.015
+   }
+  ]
+ },
+ "dpp3_limits_reconciliation": {
+  "rows": [
+   {
+    "edb": "Alpine Energy",
+    "stata_uncapped_limit": 127.735,
+    "rules_py_limit": 127.735,
+    "rules_vs_stata_rel": 0.0,
+    "J1_adj_pct": -3.19,
+    "reconstructed_det_limit": 124.71,
+    "determination": 124.71,
+    "recon_rel_diff": 0.0
+   },
+   {
+    "edb": "Aurora Energy",
+    "stata_uncapped_limit": 92.783,
+    "rules_py_limit": 92.831,
+    "rules_vs_stata_rel": 0.00051,
+    "J1_adj_pct": -14.66,
+    "reconstructed_det_limit": 81.89,
+    "determination": 81.89,
+    "recon_rel_diff": 0.0001
+   },
+   {
+    "edb": "Centralines",
+    "stata_uncapped_limit": 70.312,
+    "rules_py_limit": 70.312,
+    "rules_vs_stata_rel": 1e-05,
+    "J1_adj_pct": 26.84,
+    "reconstructed_det_limit": 83.61,
+    "determination": 83.61,
+    "recon_rel_diff": 0.0001
+   },
+   {
+    "edb": "EA Networks",
+    "stata_uncapped_limit": 91.975,
+    "rules_py_limit": 91.975,
+    "rules_vs_stata_rel": 0.0,
+    "J1_adj_pct": 0.0,
+    "reconstructed_det_limit": 91.98,
+    "determination": 91.98,
+    "recon_rel_diff": 0.0
+   },
+   {
+    "edb": "Eastland Network",
+    "stata_uncapped_limit": 218.531,
+    "rules_py_limit": 218.531,
+    "rules_vs_stata_rel": 0.0,
+    "J1_adj_pct": 0.54,
+    "reconstructed_det_limit": 219.46,
+    "determination": 219.46,
+    "recon_rel_diff": 0.0
+   },
+   {
+    "edb": "Electricity Invercargill",
+    "stata_uncapped_limit": 25.043,
+    "rules_py_limit": 25.043,
+    "rules_vs_stata_rel": 1e-05,
+    "J1_adj_pct": 5.57,
+    "reconstructed_det_limit": 25.86,
+    "determination": 25.86,
+    "recon_rel_diff": 0.0002
+   },
+   {
+    "edb": "Horizon Energy",
+    "stata_uncapped_limit": 194.527,
+    "rules_py_limit": 194.527,
+    "rules_vs_stata_rel": 0.0,
+    "J1_adj_pct": 0.0,
+    "reconstructed_det_limit": 194.53,
+    "determination": 194.53,
+    "recon_rel_diff": 0.0
+   },
+   {
+    "edb": "Nelson Electricity",
+    "stata_uncapped_limit": 17.415,
+    "rules_py_limit": 17.415,
+    "rules_vs_stata_rel": 0.0,
+    "J1_adj_pct": 29.68,
+    "reconstructed_det_limit": 19.6,
+    "determination": 19.6,
+    "recon_rel_diff": 0.0002
+   },
+   {
+    "edb": "Network Tasman",
+    "stata_uncapped_limit": 101.032,
+    "rules_py_limit": 101.032,
+    "rules_vs_stata_rel": 0.0,
+    "J1_adj_pct": 0.0,
+    "reconstructed_det_limit": 101.03,
+    "determination": 101.03,
+    "recon_rel_diff": 0.0
+   },
+   {
+    "edb": "Orion NZ",
+    "stata_uncapped_limit": 84.71,
+    "rules_py_limit": 84.744,
+    "rules_vs_stata_rel": 0.0004,
+    "J1_adj_pct": 0.0,
+    "reconstructed_det_limit": 84.71,
+    "determination": 84.71,
+    "recon_rel_diff": 0.0
+   },
+   {
+    "edb": "OtagoNet",
+    "stata_uncapped_limit": 164.29,
+    "rules_py_limit": 164.29,
+    "rules_vs_stata_rel": 0.0,
+    "J1_adj_pct": -3.17,
+    "reconstructed_det_limit": 160.36,
+    "determination": 160.35,
+    "recon_rel_diff": 0.0001
+   },
+   {
+    "edb": "Powerco",
+    "stata_uncapped_limit": 180.253,
+    "rules_py_limit": 180.253,
+    "rules_vs_stata_rel": 0.0,
+    "J1_adj_pct": 0.0,
+    "reconstructed_det_limit": 180.25,
+    "determination": 180.25,
+    "recon_rel_diff": 0.0
+   },
+   {
+    "edb": "The Lines Company",
+    "stata_uncapped_limit": 182.078,
+    "rules_py_limit": 182.078,
+    "rules_vs_stata_rel": 0.0,
+    "J1_adj_pct": -0.42,
+    "reconstructed_det_limit": 181.47,
+    "determination": 181.48,
+    "recon_rel_diff": 0.0
+   },
+   {
+    "edb": "Top Energy",
+    "stata_uncapped_limit": 371.131,
+    "rules_py_limit": 371.14,
+    "rules_vs_stata_rel": 2e-05,
+    "J1_adj_pct": 3.11,
+    "reconstructed_det_limit": 380.24,
+    "determination": 380.24,
+    "recon_rel_diff": 0.0
+   },
+   {
+    "edb": "Unison Networks",
+    "stata_uncapped_limit": 80.444,
+    "rules_py_limit": 80.444,
+    "rules_vs_stata_rel": 0.0,
+    "J1_adj_pct": 2.88,
+    "reconstructed_det_limit": 82.34,
+    "determination": 82.34,
+    "recon_rel_diff": 0.0
+   },
+   {
+    "edb": "Vector Lines",
+    "stata_uncapped_limit": 118.943,
+    "rules_py_limit": 118.943,
+    "rules_vs_stata_rel": 0.0,
+    "J1_adj_pct": -13.65,
+    "reconstructed_det_limit": 104.83,
+    "determination": 104.83,
+    "recon_rel_diff": 0.0
+   },
+   {
+    "edb": "Wellington Electricity",
+    "stata_uncapped_limit": 40.426,
+    "rules_py_limit": 40.426,
+    "rules_vs_stata_rel": 0.0,
+    "J1_adj_pct": -1.94,
+    "reconstructed_det_limit": 39.81,
+    "determination": 39.81,
+    "recon_rel_diff": 0.0
+   }
+  ],
+  "max_rules_vs_stata_rel": 0.00051,
+  "max_recon_rel_diff": 0.0002,
+  "n_J1_adjusted": 12
+ }
+}

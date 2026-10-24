@@ -262,6 +262,11 @@
    }
   ]
  },
+ "dpp3_vs_stata": {
+  "edbs": 17,
+  "max_rel_diff": 0.00052,
+  "all_within_0_1pct": true
+ },
  "dpp3": {
   "edbs": 17,
   "bv_all_within_1pct": true,
@@ -280,7 +285,9 @@
     "det_saifi_limit": 1.197,
     "bv_rel_diff": 0.00049,
     "saifi_bv_rel_diff": 0.00024,
-    "limit_rel_diff": 0.02426
+    "limit_rel_diff": 0.02426,
+    "stata_saidi_limit": 127.735,
+    "limit_vs_stata_rel": 0.0
    },
    {
     "edb": "Aurora Energy",
@@ -294,7 +301,9 @@
     "det_saifi_limit": 1.4687,
     "bv_rel_diff": 0.00012,
     "saifi_bv_rel_diff": 0.00038,
-    "limit_rel_diff": 0.13361
+    "limit_rel_diff": 0.13361,
+    "stata_saidi_limit": 92.783,
+    "limit_vs_stata_rel": 0.00052
    },
    {
     "edb": "Centralines",
@@ -308,7 +317,9 @@
     "det_saifi_limit": 3.1616,
     "bv_rel_diff": 0.00058,
     "saifi_bv_rel_diff": 0.00018,
-    "limit_rel_diff": 0.15905
+    "limit_rel_diff": 0.15905,
+    "stata_saidi_limit": 70.312,
+    "limit_vs_stata_rel": 0.0
    },
    {
     "edb": "EA Networks",
@@ -322,7 +333,9 @@
     "det_saifi_limit": 1.2826,
     "bv_rel_diff": 0.00015,
     "saifi_bv_rel_diff": 0.00021,
-    "limit_rel_diff": 5e-05
+    "limit_rel_diff": 5e-05,
+    "stata_saidi_limit": 91.975,
+    "limit_vs_stata_rel": 0.0
    },
    {
     "edb": "Electricity Invercargill",
@@ -336,7 +349,9 @@
     "det_saifi_limit": 0.6956,
     "bv_rel_diff": 0.00028,
     "saifi_bv_rel_diff": 0.00033,
-    "limit_rel_diff": 0.03158
+    "limit_rel_diff": 0.03158,
+    "stata_saidi_limit": 25.043,
+    "limit_vs_stata_rel": 0.0
    },
    {
     "edb": "Firstlight Network",
@@ -350,7 +365,9 @@
     "det_saifi_limit": 3.1525,
     "bv_rel_diff": 0.00012,
     "saifi_bv_rel_diff": 2e-05,
-    "limit_rel_diff": 0.00423
+    "limit_rel_diff": 0.00423,
+    "stata_saidi_limit": 218.531,
+    "limit_vs_stata_rel": 0.0
    },
    {
     "edb": "Horizon Energy",
@@ -364,7 +381,9 @@
     "det_saifi_limit": 2.3904,
     "bv_rel_diff": 0.00028,
     "saifi_bv_rel_diff": 0.00024,
-    "limit_rel_diff": 2e-05
+    "limit_rel_diff": 2e-05,
+    "stata_saidi_limit": 194.527,
+    "limit_vs_stata_rel": 0.0
    },
    {
     "edb": "Nelson Electricity",
@@ -378,7 +397,9 @@
     "det_saifi_limit": 0.4277,
     "bv_rel_diff": 0.00031,
     "saifi_bv_rel_diff": 0.00011,
-    "limit_rel_diff": 0.11148
+    "limit_rel_diff": 0.11148,
+    "stata_saidi_limit": 17.415,
+    "limit_vs_stata_rel": 0.0
    },
    {
     "edb": "Network Tasman",
@@ -392,7 +413,9 @@
     "det_saifi_limit": 1.1956,
     "bv_rel_diff": 0.00064,
     "saifi_bv_rel_diff": 0.00054,
-    "limit_rel_diff": 2e-05
+    "limit_rel_diff": 2e-05,
+    "stata_saidi_limit": 101.032,
+    "limit_vs_stata_rel": 0.0
    },
    {
     "edb": "Orion NZ",
@@ -406,7 +429,9 @@
     "det_saifi_limit": 1.0336,
     "bv_rel_diff": 0.00039,
     "saifi_bv_rel_diff": 0.00022,
-    "limit_rel_diff": 0.0004
+    "limit_rel_diff": 0.0004,
+    "stata_saidi_limit": 84.71,
+    "limit_vs_stata_rel": 0.0004
    },
    {
     "edb": "OtagoNet",
@@ -420,7 +445,9 @@
     "det_saifi_limit": 2.4172,
     "bv_rel_diff": 0.00014,
     "saifi_bv_rel_diff": 4e-05,
-    "limit_rel_diff": 0.02457
+    "limit_rel_diff": 0.02457,
+    "stata_saidi_limit": 164.29,
+    "limit_vs_stata_rel": 0.0
    },
    {
     "edb": "Powerco",
@@ -434,7 +461,9 @@
     "det_saifi_limit": 2.2684,
     "bv_rel_diff": 0.00015,
     "saifi_bv_rel_diff": 0.00071,
-    "limit_rel_diff": 2e-05
+    "limit_rel_diff": 2e-05,
+    "stata_saidi_limit": 180.253,
+    "limit_vs_stata_rel": 0.0
    },
    {
     "edb": "The Lines Company",
@@ -448,7 +477,9 @@
     "det_saifi_limit": 3.2715,
     "bv_rel_diff": 0.00028,
     "saifi_bv_rel_diff": 0.00013,
-    "limit_rel_diff": 0.0033
+    "limit_rel_diff": 0.0033,
+    "stata_saidi_limit": 182.078,
+    "limit_vs_stata_rel": 0.0
    },
    {
     "edb": "Top Energy",
@@ -462,7 +493,9 @@
     "det_saifi_limit": 5.0732,
     "bv_rel_diff": 0.00011,
     "saifi_bv_rel_diff": 0.00016,
-    "limit_rel_diff": 0.02393
+    "limit_rel_diff": 0.02393,
+    "stata_saidi_limit": 371.131,
+    "limit_vs_stata_rel": 2e-05
    },
    {
     "edb": "Unison Networks",
@@ -476,7 +509,9 @@
     "det_saifi_limit": 1.8152,
     "bv_rel_diff": 0.00062,
     "saifi_bv_rel_diff": 0.00037,
-    "limit_rel_diff": 0.02303
+    "limit_rel_diff": 0.02303,
+    "stata_saidi_limit": 80.444,
+    "limit_vs_stata_rel": 0.0
    },
    {
     "edb": "Vector Lines",
@@ -490,7 +525,9 @@
     "det_saifi_limit": 1.3366,
     "bv_rel_diff": 0.00103,
     "saifi_bv_rel_diff": 0.00124,
-    "limit_rel_diff": 0.13463
+    "limit_rel_diff": 0.13463,
+    "stata_saidi_limit": 118.943,
+    "limit_vs_stata_rel": 0.0
    },
    {
     "edb": "Wellington Electricity",
@@ -504,7 +541,9 @@
     "det_saifi_limit": 0.6135,
     "bv_rel_diff": 0.00151,
     "saifi_bv_rel_diff": 0.00101,
-    "limit_rel_diff": 0.01547
+    "limit_rel_diff": 0.01547,
+    "stata_saidi_limit": 40.426,
+    "limit_vs_stata_rel": 0.0
    }
   ]
  },
