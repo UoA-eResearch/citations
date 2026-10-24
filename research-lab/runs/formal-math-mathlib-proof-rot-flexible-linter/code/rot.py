@@ -47,7 +47,7 @@ def parse(text):
         m = re.match(r"^namespace\s+(\S+)", l)
         if m:
             ns.append(("ns", m.group(1))); continue
-        if re.match(r"^section\b", l):
+        if re.match(r"^(?:@\[[^\]]*\]\s*)?(?:(?:public|private|noncomputable|meta)\s+)*section\b", l):
             ns.append(("sec", "")); continue
         m = re.match(r"^end\b\s*(\S*)", l)
         if m and ns:
@@ -151,9 +151,21 @@ def label(o):
     P = pd.concat(pops).drop_duplicates(["file", "name"])
     files = sorted(P.file.unique())
 
+    inject = "FlexibleLinter" not in (SNAPS / o / "Mathlib" / "Init.lean").read_text()     # D1
+    tmp = WORK / f"label_{o}"
+    tmp.mkdir(exist_ok=True)
+
     def one(f):
-        code, out = lean(o, SNAPS / o / f, ["-Dlinter.flexible=true"])
-        ms = messages(out)
+        if inject:
+            t = tmp / f.replace("/", "__")
+            t.write_text("import Mathlib.Tactic.Linter.FlexibleLinter\n" + (SNAPS / o / f).read_text())
+            code, out = lean(o, t, ["-Dweak.linter.flexible=true"])
+            ms = messages(out)
+            for m in ms:
+                m["line"] -= 1
+        else:
+            code, out = lean(o, SNAPS / o / f, ["-Dweak.linter.flexible=true"])
+            ms = messages(out)
         rows = []
         for r in P[P.file == f].itertuples():
             inside = [m for m in ms if r.o_start <= m["line"] <= r.o_end]
@@ -258,6 +270,8 @@ end Foo
     assert features(ds[2]["body"])["nonterm_simp"] and ds[2]["statement"] == "(n : Nat) : n = n", ds[2]["statement"]
     assert not features("\n  constructor\n  · simp\n  · simp")["nonterm_simp"]
     assert features("\n  simp; ring_nf")["nonterm_simp"]
+    src2 = "namespace A\n\n@[expose] public section\n\ntheorem t : True := by\n  simp\n  trivial\n\nend\n\ntheorem u : True := by\n  simp\n  trivial\n\nend A\n"
+    assert [d["name"] for d in parse(src2)] == ["A.t", "A.u"], [d["name"] for d in parse(src2)]
     print("rot tests pass")
 
 
