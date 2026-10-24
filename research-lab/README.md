@@ -145,6 +145,11 @@ Skipped after a feasibility check (22 October 2026): `frontier-photonic-inverse-
   oversubscription otherwise stalls even the lightweight challenge. The timing probe is in
   `runs/frontier-photonic-inverse-design-seed-budget/code/timing_probe.py`.
 
+Skipped after a feasibility check (24 October 2026): `extra-open-energy-system-modeling-tsfm-vs-tso-forecasts`. The TSOs'
+published day-ahead load, wind and solar forecasts are only on the ENTSO-E Transparency Platform, whose API needs a
+personal security token from a free registration that the lab cannot make itself; Open Power System Data, the open
+mirror, ends in 2020. It can resume if the owner registers and supplies a token (kept out of the repository).
+
 Skipped after a novelty check (23 October 2026): `chem-materials-conformal-dft-budget`. Fu (2026, Zenodo
 10.5281/zenodo.21130294; submitted to J. Chem. Phys.) already audits chemistry-stratified reliability of confidence-based
 abstention on all 256,963 WBM structures, including leave-one-element-out controls, a 32-model roster and stratified
