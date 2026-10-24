@@ -1,0 +1,168 @@
+{
+ "pairs_compared": 8441,
+ "reversals": 527,
+ "reversal_share": 0.0624,
+ "reversal_share_ci": [
+  0.0487,
+  0.0737
+ ],
+ "H1": "Refuted",
+ "per_season_horizon": {
+  "2022-23 h1": {
+   "reversals": 5,
+   "pairs": 427
+  },
+  "2022-23 h2": {
+   "reversals": 2,
+   "pairs": 427
+  },
+  "2022-23 h3": {
+   "reversals": 4,
+   "pairs": 427
+  },
+  "2022-23 h4": {
+   "reversals": 1,
+   "pairs": 427
+  },
+  "2023-24 h0": {
+   "reversals": 25,
+   "pairs": 653
+  },
+  "2023-24 h1": {
+   "reversals": 19,
+   "pairs": 653
+  },
+  "2023-24 h2": {
+   "reversals": 21,
+   "pairs": 653
+  },
+  "2023-24 h3": {
+   "reversals": 14,
+   "pairs": 652
+  },
+  "2024-25 h0": {
+   "reversals": 178,
+   "pairs": 1076
+  },
+  "2024-25 h1": {
+   "reversals": 113,
+   "pairs": 1076
+  },
+  "2024-25 h2": {
+   "reversals": 75,
+   "pairs": 985
+  },
+  "2024-25 h3": {
+   "reversals": 70,
+   "pairs": 985
+  }
+ },
+ "best_changed": [
+  "2024-25 h1",
+  "2024-25 h2"
+ ],
+ "best_changed_bootstrap_share": {
+  "2022-23 h1": 0.068,
+  "2022-23 h2": 0.056,
+  "2022-23 h3": 0.044,
+  "2022-23 h4": 0.004,
+  "2023-24 h0": 0.078,
+  "2023-24 h1": 0.034,
+  "2023-24 h2": 0.02,
+  "2023-24 h3": 0.012,
+  "2024-25 h0": 0.782,
+  "2024-25 h1": 0.612,
+  "2024-25 h2": 0.528,
+  "2024-25 h3": 0.364
+ },
+ "best": {
+  "2022-23 h1": {
+   "first": "PSI-DICE",
+   "final": "PSI-DICE"
+  },
+  "2022-23 h2": {
+   "first": "MOBS-GLEAM_FLUH",
+   "final": "MOBS-GLEAM_FLUH"
+  },
+  "2022-23 h3": {
+   "first": "MOBS-GLEAM_FLUH",
+   "final": "MOBS-GLEAM_FLUH"
+  },
+  "2022-23 h4": {
+   "first": "MOBS-GLEAM_FLUH",
+   "final": "MOBS-GLEAM_FLUH"
+  },
+  "2023-24 h0": {
+   "first": "UMass-flusion",
+   "final": "UMass-flusion"
+  },
+  "2023-24 h1": {
+   "first": "UMass-flusion",
+   "final": "UMass-flusion"
+  },
+  "2023-24 h2": {
+   "first": "UMass-flusion",
+   "final": "UMass-flusion"
+  },
+  "2023-24 h3": {
+   "first": "UMass-flusion",
+   "final": "UMass-flusion"
+  },
+  "2024-25 h0": {
+   "first": "PSI-PROF",
+   "final": "PSI-PROF"
+  },
+  "2024-25 h1": {
+   "first": "PSI-PROF",
+   "final": "PSI-PROF_beta"
+  },
+  "2024-25 h2": {
+   "first": "CEPH-Rtrend_fluH",
+   "final": "PSI-PROF_beta"
+  },
+  "2024-25 h3": {
+   "first": "PSI-PROF_beta",
+   "final": "PSI-PROF_beta"
+  }
+ },
+ "H2": "Supported",
+ "revision": {
+  "2022-23": {
+   "median_abs_pct": 1.01,
+   "share_over_10pct": 0.2744,
+   "median_signed_pct": 0.0,
+   "n": 5099
+  },
+  "2023-24": {
+   "median_abs_pct": 0.0,
+   "share_over_10pct": 0.102,
+   "median_signed_pct": 0.0,
+   "n": 3167
+  },
+  "2024-25": {
+   "median_abs_pct": 5.36,
+   "share_over_10pct": 0.3568,
+   "median_signed_pct": -4.13,
+   "n": 2433
+  }
+ },
+ "rank_agreement": {
+  "2022-23 h1": 0.9929,
+  "2022-23 h2": 1.0,
+  "2022-23 h3": 0.9929,
+  "2022-23 h4": 1.0,
+  "2023-24 h0": 0.9815,
+  "2023-24 h1": 0.9897,
+  "2023-24 h2": 0.9932,
+  "2023-24 h3": 0.9923,
+  "2024-25 h0": 0.8524,
+  "2024-25 h1": 0.9403,
+  "2024-25 h2": 0.9577,
+  "2024-25 h3": 0.9711
+ },
+ "mean_wis": {
+  "first": 144.015,
+  "final": 155.627,
+  "forecasts": 563252
+ }
+}
