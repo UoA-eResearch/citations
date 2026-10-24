@@ -20,3 +20,18 @@ contradicts their published curves. bf16 is the problem. Late Pythia checkpoints
 - **What the 2.8B loss affects.** Only secondary 1, extrapolation accuracy. H1 and H2 use only its N.
 
 The bf16 table is kept for the record. No fit had been run.
+
+## D2 — 2026-10-25 01:36 NZDT — batch sizes, and post hoc checks after the fits
+
+1. **Batch sizes.** At 16:39 on 2026-10-24 the fp32 run entered an out-of-memory loop at 410M, because the shared
+   server had taken more GPU memory. It was restarted with batch 2 at 410M and batch 1 at 1B–2.8B. Batch size does
+   not change a sequence's loss: the 410M seed-4 final checkpoint, first evaluated at batch 4, gives 2.406874 at
+   batch 1 too (spike_check.csv).
+2. **Post hoc checks, after primary.json** (not preregistered):
+   - **Neighbouring checkpoints** (`code/spike_check.py`). These test whether the late jumps of 410M seeds 3 and 4
+     (and the late rises of small models) are evaluation artefacts. They are not: 410M seed 4 is 2.43 / 2.42 / 2.41
+     at steps 141k / 142k / 143k; seed 3 is 2.18 / 2.17 / 2.17 at 99k / 100k / 101k; seed 0 is 1.98 at 142k.
+   - **Robustness** (`code/posthoc.py`): W₁ without the ladders that use those two runs, and fresh fits on
+     ladders cut at step 64k.
+
+   Neither changes a preregistered verdict, and both are labelled post hoc in the report.

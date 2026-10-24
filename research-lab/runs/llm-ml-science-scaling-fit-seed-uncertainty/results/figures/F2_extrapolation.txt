@@ -1,0 +1,1 @@
+Extrapolated loss of Pythia-2.8B (N of its config, D = 300B) from 2,000 single-seed ladders (one random seed per size, 40 points each), each fitted with the Chinchilla form by Huber loss on log L. Dashed: 5th and 95th percentiles. Orange: the actual 2.8B loss (seed 0, fp16). Values above 2.3 are clipped into the last bin. Three-seed averaging narrows the range only to 0.103.

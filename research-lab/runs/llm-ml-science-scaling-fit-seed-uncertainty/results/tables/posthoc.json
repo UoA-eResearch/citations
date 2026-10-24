@@ -1,0 +1,22 @@
+{
+ "W1_excluding_410m_seeds_3_4": {
+  "ladders": 1578,
+  "W1": 0.05144,
+  "median_error": 0.06226
+ },
+ "cut64k_n1": {
+  "W": 0.08614,
+  "median_error": 0.12982,
+  "share_overshoot": 1.0,
+  "alpha_median": 0.2855,
+  "beta_median": 0.8515
+ },
+ "cut64k_n3": {
+  "W": 0.07338,
+  "median_error": 0.13484,
+  "share_overshoot": 1.0,
+  "alpha_median": 0.2837,
+  "beta_median": 0.8876
+ },
+ "cut64k_shrinkage_1_3": 0.1481
+}
