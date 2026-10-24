@@ -145,6 +145,13 @@ Skipped after a feasibility check (22 October 2026): `frontier-photonic-inverse-
   oversubscription otherwise stalls even the lightweight challenge. The timing probe is in
   `runs/frontier-photonic-inverse-design-seed-budget/code/timing_probe.py`.
 
+Skipped after a novelty check (25 October 2026): `experimental-math-txgraffiti-adversarial-audit`. TxGraffiti's open
+conjectures are being resolved one by one in 2026. Published counterexamples cover at least three: harmonic index
+against minimum maximal matching (MATCH Commun. Math. Comput. Chem. 2026), independent domination against minimum
+maximal matching in cubic graphs (a 50-vertex graph, Zenodo 2026), and zero forcing against independence for
+subcubic and cubic graphs (24 and 36 vertices, arXiv 2607.23664). The lead's hypothesis (at least three false) is
+therefore already settled, and the conjectures exist only as paper text, so a corpus-wide attack adds little.
+
 Skipped after a feasibility check (24 October 2026): `extra-open-energy-system-modeling-tsfm-vs-tso-forecasts`. The TSOs'
 published day-ahead load, wind and solar forecasts are only on the ENTSO-E Transparency Platform, whose API needs a
 personal security token from a free registration that the lab cannot make itself; Open Power System Data, the open
