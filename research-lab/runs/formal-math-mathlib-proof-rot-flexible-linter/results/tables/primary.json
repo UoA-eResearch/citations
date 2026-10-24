@@ -1,0 +1,106 @@
+{
+ "primary": {
+  "or": 1.4805,
+  "ci": [
+   0.9178,
+   2.3881
+  ],
+  "p": 0.10774,
+  "n": 2723,
+  "files": 1294,
+  "fail_flagged": 0.4364,
+  "fail_unflagged": 0.2511,
+  "n_flagged": 110
+ },
+ "H1": "Inconclusive",
+ "primary_population": {
+  "declarations": 2723,
+  "flagged": 110,
+  "fail_rate": 0.2585,
+  "same_body_fail_rate": 0.0,
+  "changed_body_fail_rate": 0.4961
+ },
+ "error_classes": {
+  "unknown_identifier": 258,
+  "unsolved_goals": 179,
+  "other": 122,
+  "type_mismatch": 83,
+  "function_expected": 31,
+  "no_goals": 27,
+  "timeout": 4
+ },
+ "excluding_unknown_identifier_only": {
+  "or": 1.6186,
+  "ci": [
+   1.0102,
+   2.5935
+  ],
+  "p": 0.04528,
+  "n": 2723,
+  "files": 1294,
+  "fail_flagged": 0.4182,
+  "fail_unflagged": 0.225,
+  "n_flagged": 110
+ },
+ "decay": {
+  "O+6": {
+   "fail_flagged": 0.3,
+   "fail_unflagged": 0.1296,
+   "n": 3115
+  },
+  "O+12": {
+   "fail_flagged": 0.4364,
+   "fail_unflagged": 0.2511,
+   "n": 2723
+  },
+  "O+6_gee": {
+   "or": 1.6733,
+   "ci": [
+    1.0116,
+    2.7678
+   ],
+   "p": 0.04496,
+   "n": 3115,
+   "files": 1433,
+   "fail_flagged": 0.3,
+   "fail_unflagged": 0.1296,
+   "n_flagged": 130
+  }
+ },
+ "secondary_pair": {
+  "or": 0.9943,
+  "ci": [
+   0.5545,
+   1.7829
+  ],
+  "p": 0.98459,
+  "n": 3930,
+  "files": 1751,
+  "fail_flagged": 0.2261,
+  "fail_unflagged": 0.1667,
+  "n_flagged": 115
+ },
+ "pooled": {
+  "or": 1.2946,
+  "ci": [
+   0.8923,
+   1.8782
+  ],
+  "p": 0.17383,
+  "n": 6653,
+  "files": 3045,
+  "fail_flagged": 0.3289,
+  "fail_unflagged": 0.201,
+  "n_flagged": 225
+ },
+ "secondary_error_classes": {
+  "type_mismatch": 196,
+  "unknown_identifier": 175,
+  "other": 121,
+  "unsolved_goals": 91,
+  "function_expected": 45,
+  "no_goals": 32,
+  "timeout": 1,
+  "rewrite_failed": 1
+ }
+}

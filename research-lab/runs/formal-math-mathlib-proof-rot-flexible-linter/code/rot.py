@@ -183,14 +183,15 @@ def label(o):
     print("flagged", int(L.flagged.sum()), "of", len(L), "| O-side error-free", round(float((L.o_errors == 0).mean()), 4))
 
 
-ERR = [("unknown_identifier", r"unknown (identifier|constant)|unknown namespace"), ("simp_no_progress", r"simp made no progress|simp_all made no progress"),
+ERR = [("unknown_identifier", r"unknown (identifier|constant)|unknown namespace"), ("function_expected", r"function expected"),
+       ("no_goals", r"no goals( to be (solved|proved))?"), ("simp_no_progress", r"simp made no progress|simp_all made no progress"),
        ("rewrite_failed", r"did not find instance of the pattern|motive is not type correct|rewrite failed"),
        ("type_mismatch", r"type mismatch"), ("unsolved_goals", r"unsolved goals"), ("timeout", r"heartbeats|TIMEOUT|deterministic")]
 
 
 def eclass(msgs):
     for k, pat in ERR:
-        if any(re.search(pat, m) for m in msgs):
+        if any(re.search(pat, m, re.I) for m in msgs):          # D2: case-insensitive (newer Lean capitalises)
             return k
     return "other"
 
@@ -230,7 +231,8 @@ def replay(o, n):
             errs = [m["msg"] for m in ms if m["sev"] == "error" and d["start"] <= m["line"] <= d["end"]]
             to = outp == "TIMEOUT"
             rows.append({"file": f, "name": r.name, "fail": bool(errs) or to, "eclass": "timeout" if to else (eclass(errs) if errs else ""),
-                         "n_err": len(errs), "only_unknown_id": bool(errs) and all(re.search(ERR[0][1], e) for e in errs)})
+                         "n_err": len(errs), "only_unknown_id": bool(errs) and all(re.search(ERR[0][1], e, re.I) for e in errs),
+                         "msgs": " || ".join(e[:200].replace("\n", " ") for e in errs[:3])})
         return rows
     rows = []
     files = sorted(P.file.unique())
