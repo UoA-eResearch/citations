@@ -35,8 +35,9 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-24 16:39 | `trust-retraction-risk-frozen-forecast` | confirmation pass (original reviewer resumed) | publish with edits -> PUBLISHED |
 | 2026-10-24 21:39 | `frontier-edge-asr-quantization-accent-parity` | confirmation pass (original reviewer resumed) | publish with edits -> PUBLISHED |
 | 2026-10-25 02:39 | `energy-nz-edb-quality-standard-ratchet` | review (fresh agent) | fix first |
+| 2026-10-25 07:39 | `energy-nz-edb-quality-standard-ratchet` | confirmation pass (original reviewer resumed) |  |
 
-**The owner's exception ended at 16:00 on 2026-10-23; the 1-per-5 h rule applies again. EDB review started 2026-10-25 02:39; next Fable run not before 07:39.** Order: confirmations of DSI (b0149e2), reef (d7c2ace), estuary (3dd86a7), kauri (920bde5) and retraction risk (6d4c885), one per 5 h slot; then the ASR confirmation (fixes in f8a6d4d); then the EDB ratchet review (fb7efde), then the Public Domain Day review (26ff608), then the AVF dv/v review (35e9d7a).
+**The owner's exception ended at 16:00 on 2026-10-23; the 1-per-5 h rule applies again. EDB confirmation started 2026-10-25 07:39; next Fable run not before 12:39.** Order: confirmations of DSI (b0149e2), reef (d7c2ace), estuary (3dd86a7), kauri (920bde5) and retraction risk (6d4c885), one per 5 h slot; then the ASR confirmation (fixes in f8a6d4d); then the EDB ratchet review (fb7efde), then the Public Domain Day review (26ff608), then the AVF dv/v review (35e9d7a).
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
