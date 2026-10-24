@@ -106,7 +106,7 @@ def execute(nb, arm, rep):
     bj = json.loads((OUT / nb.nbid / f"build_{arm}.json").read_text())
     image = bj.get("image", f"python:{nb.pyver}-slim")
     code, o, e = docker(["--network", "none", "--user", f"{os.getuid()}:{os.getgid()}", "-e", "HOME=/tmp",
-                         "-e", "JUPYTER_PATH=/runner/share/jupyter", "-e", "MPLBACKEND=Agg",
+                         "-e", "JUPYTER_PATH=/runner/share/jupyter",
                          "-v", f"{ENVS / (nb.nbid + '_' + arm)}:/env:ro", "-v", f"{RUNNERS / nb.pyver}:/runner:ro",
                          "-v", f"{work}:/work", "-v", f"{OUT / nb.nbid}:/out", "--cpus", "2", "--memory", "6g",
                          "-w", nbdir, image, "/runner/bin/python", "/out/exec.py",

@@ -20,3 +20,15 @@ and the `-slim` images have none (for example `kiwisolver==1.0.1` for `matplotli
 retried in the full `python:{version}` image, which has build tools, and their AS-OF executions run in the same
 image. LATEST environments stay `-slim`. No output comparison had been computed. The first-pass status is kept in
 `data/interim/run_status_pass1.csv`, and both passes are reported in the selection flow.
+
+## D3 — 2026-10-25 06:38 NZDT — an execution bug found by the comparator validation; all executions re-run (post-result)
+
+While drawing the plan's 100-cell validation sample, after a first comparison had been computed, many pairs showed a
+stored figure against no output at all. The cause is in the runner: executions set `MPLBACKEND=Agg`, which overrides
+the notebook's inline backend, so no figure was emitted as an output. Every plot cell became a spurious stable
+mismatch.
+
+The setting is removed, and every build and execution is redone with the same per-notebook image choice (D2). The first
+comparison is kept for the record (`results/tables/primary_pass_agg_bug.json`: 57 completed, 41 exact mismatches,
+5 all-intrinsic, H1 and H2 Refuted). The corrected run is primary. The validation sample is redrawn from the corrected
+run.
