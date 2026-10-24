@@ -146,11 +146,27 @@ def run():
                 rel += out[0]; cr += out[1]; cms.append(out[2]); ais += out[3]
             if k % 500 == 0:
                 print(k, "repos", flush=True)
+    # D1: repositories with no commits since 2024-01-01 cannot be shallow-cloned; their releases have no AI commits
+    inactive = inactive_repos()
+    for repo, pk in jobs:
+        if repo in inactive and not repo_dir(repo).exists():
+            for (e, n), x in pk:
+                for r in x[x.published >= WINDOW].itertuples():
+                    rel.append({"eco": e, "name": n, "version": r.version, "published": r.published, "method": "inactive",
+                                "n_commits": 0, "n_ai": 0, "agents": "", "flagged": False})
     pd.DataFrame(rel).to_parquet(INT / "release_flags.parquet", index=False)
     pd.DataFrame(cr).to_parquet(INT / "commit_releases.parquet", index=False)
     pd.concat(cms).drop_duplicates(["repo", "sha"]).to_parquet(INT / "commits.parquet", index=False)
     pd.DataFrame(ais).drop_duplicates(["repo", "sha"]).to_parquet(INT / "ai_matches.parquet", index=False)
     print("releases", len(rel), "commit-release rows", len(cr))
+
+
+def inactive_repos():
+    f = INT / "clone_failures.tsv"
+    if not f.exists():
+        return set()
+    t = pd.read_csv(f, sep="\t", names=["repo", "status"])
+    return set(t[t.status == "inactive"].repo)
 
 
 def clone_list():

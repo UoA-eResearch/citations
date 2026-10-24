@@ -26,7 +26,9 @@ def load():
     F = pd.read_parquet(INT / "release_flags.parquet")
     G = pd.read_parquet(INT / "graphs.parquet")
     S = pd.read_parquet(INT / "graph_status.parquet")
-    P["cloned"] = P.repo.map(lambda r: isinstance(r, str) and (REPOS / (r.replace("/", "__") + ".git") / "HEAD").exists())
+    f = INT / "clone_failures.tsv"
+    inactive = set(pd.read_csv(f, sep="\t", names=["repo", "status"]).query("status == 'inactive'").repo) if f.exists() else set()
+    P["cloned"] = P.repo.map(lambda r: isinstance(r, str) and ((REPOS / (r.replace("/", "__") + ".git") / "HEAD").exists() or r in inactive))
     P["key"] = [norm(e, n) for e, n in zip(P.eco, P.name)]
     F["key"] = [norm(e, n) for e, n in zip(F.eco, F.name)]
     G["key"] = [norm(e, n) for e, n in zip(G.eco, G.node)]
