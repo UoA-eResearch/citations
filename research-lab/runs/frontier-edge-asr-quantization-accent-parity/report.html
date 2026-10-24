@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Edge ASR Accent Parity</title>
+<meta name="description" content="Does quantizing Whisper for edge devices widen the gap between accents, and can accent-aware calibration repair it?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Frontier</div>
+  <h1>Compressing Whisper for devices: no accent penalty at 4 bits, and the 3-bit penalty is mostly runaway repetition loops that accent-aware calibration does not reliably fix</h1>
+  <p class="subtitle">Whisper-small and Whisper-large-v3 were quantized with an in-house GPTQ implementation (groups of 128), calibrated on three accent mixes of EdAcc validation speakers (three random draws each), and decoded on the EdAcc test set: 8,537 scored utterances, 60 speakers, 14 named accent groups. A preregistered replication used 4,012 accent-labelled Common Voice 17.0 clips (D5). This version incorporates an independent review (`review/review.md`; analyses added as D4 and D5) and a confirmation pass (`review/confirmation.md`; edits as D6).</p>
+  <div class="meta">
+    <span>Report · 2026-10-24 · revised after independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/frontier-edge-asr-quantization-accent-parity/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/frontier-edge-asr-quantization-accent-parity/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/frontier-edge-asr-quantization-accent-parity/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: Inconclusive.</strong>
+- <strong>H1:</strong> Inconclusive.
+- <strong>H2:</strong> Supported by the preregistered rule, but not robust. It does not survive loop-robust scoring or calibration-draw
+  uncertainty, and it does not replicate on Common Voice.
+- <strong>H3:</strong> Refuted, for this allocation rule.
+- <strong>H4 (Whisper-large-v3):</strong> not testable, because there is no penalty to repair at 4 or 3 bits.</p>
+<ul>
+<li><strong>At 4 bits there is no accent penalty.</strong><ul>
+<li>With US-only calibration, the preregistered statistic is −2.7 points (−8.9 to +2.6), so the positive control
+fails.</li>
+<li>That number rests on one utterance. On one Latin American speaker's 31.9-second clip, the 4-bit model emits a
+500-word "na na na …" against 83 reference words, in all three calibration draws.</li>
+<li>Scored robustly, the 4-bit penalty is +0.1 (−0.6 to +0.8) with errors capped at each utterance's reference length,
+and +0.1 (−0.2 to +0.5) with looped utterances removed.</li>
+</ul>
+</li>
+<li><strong>At 3 bits, the preregistered penalty is +7.4 points (+3.5 to +11.8), and most of it is loops.</strong><ul>
+<li>Greedy decoding with Whisper's fallbacks switched off (as preregistered) lets a few hypotheses run to the
+440-token cap. 0.44–0.75% of utterances loop at 3 bits, against 0.33% in FP16, and they carry 21–27% of all
+errors.</li>
+<li>Scored robustly, the 3-bit penalty is +0.6 to +1.9 points.</li>
+</ul>
+</li>
+<li><strong>H1 (accent-balanced calibration repairs half the 3-bit penalty): Inconclusive.</strong><ul>
+<li>The penalty difference is +5.4 (−0.9 to +12.1).</li>
+<li>Under robust scoring the repair is 0.1–0.5 points.</li>
+</ul>
+</li>
+<li><strong>H2 (worst-group-weighted calibration repairs half): Supported by the rule, but not robust.</strong><ul>
+<li><strong>By the rule:</strong> R = 0.68, difference +5.1 (+1.2 to +9.1).</li>
+<li><strong>Calibration draws:</strong> the effect is one of the three draws. Resampled with speakers, the interval is −1.5 to
++13.3.</li>
+<li><strong>Robust scoring:</strong> Inconclusive with errors capped (R 0.19), and Refuted with substitutions and deletions only
+(R 0.02).</li>
+<li><strong>Common Voice:</strong> the worst-weighted arm is worse than US-only (difference −2.6, −10.8 to +4.0), and with loops
+removed both arms are Refuted (R 0.03) when the groups are re-fixed on that data. With the preregistered groups
+held fixed, the control fails and both are Inconclusive. Either way, H2 does not replicate.</li>
+</ul>
+</li>
+<li><strong>H3 (accent-aware mixed precision): Refuted for this rule.</strong><ul>
+<li>Promoting 5% of weights to 8 bits forces 26% down to 2 bits, and the model breaks (aggregate WER 47–54%).</li>
+<li>The layer ranking's signal is about 0.2% of the error it ranks.</li>
+</ul>
+</li>
+<li><strong>H4 (Whisper-large-v3): not testable.</strong><ul>
+<li>The penalty is +0.4 (−0.1 to +1.2) at 4 bits and −0.04 (−0.5 to +0.5) at 3 bits.</li>
+<li>Loop rates stay at FP16 levels (0.25–0.33%).</li>
+</ul>
+</li>
+</ul>
+<h2>In plain terms</h2>
+<p>To run speech recognition on a phone or offline device, the model is shrunk by storing its numbers with fewer bits.
+Earlier work found that shrinking hurts speakers with less common accents more. The shrinking is tuned on a small
+sample of recordings, usually American English, so we tried tuning it on a mix of accents instead.</p>
+<p>At 4 bits, the usual level for devices, we found no extra harm to less common accents in Whisper-small. The
+apparent effects in either direction were one recording on which the shrunk model got stuck repeating a sound
+hundreds of times. At 3 bits, the extra harm we first measured turned out to be mostly a handful of such runaway
+repetitions, which tend to land on a few short recordings from a few speakers. Counted sensibly, the extra harm is
+about 1–2 percentage points.</p>
+<p>Tuning on accented speech seemed to fix two-thirds of it. But that depended on which recordings happened to be
+picked, it vanished when the runaway repetitions were set aside, and it did not hold up when we repeated the test on
+a different collection of accented speech (Mozilla Common Voice). The larger Whisper model showed no extra harm at
+all. The practical lesson is to keep the decoder's safeguards against repetition switched on, and to check for
+repetition loops before blaming compression for unfairness.</p>
+<h2>What was asked</h2>
+<p>The lead (<code>frontier-edge-asr-quantization-accent-parity</code>) asked whether the compression penalty that post-training
+quantization imposes on under-served accents can be repaired within the quantization recipe, at unchanged model size.
+It proposed two routes: calibration composition, and accent-aware mixed precision.</p>
+<p><strong>Closest prior work:</strong>
+- arXiv 2609.28739, which finds INT4 HQQ compounding transcript loops 5–7-fold on West African accents
+  (AfriSpeech-200), and accent-gap doubling under 50% Wanda pruning of large-v3;
+- TARQ (calibration for rare words);
+- Edge-ASR (a fixed English calibration set).</p>
+<p>The plan was committed before any model was quantized.</p>
+<h2>How it was done</h2>
+<ul>
+<li><strong>Data.</strong><ul>
+<li>EdAcc test (60 speakers) for evaluation. 9,228 segments, of which 691 have empty references after tag removal and
+are dropped, as the plan specifies, leaving 8,537.</li>
+<li>EdAcc validation (62 speakers, disjoint) for calibration.</li>
+<li><strong>Named groups:</strong> accents with at least 2 test speakers and 10 minutes.</li>
+<li><strong>Gap groups</strong>, fixed from FP16:<ul>
+<li>Whisper-small: worst Jamaican, Kenyan and Vietnamese; best Bulgarian, Latin American and Irish English;</li>
+<li>Whisper-large-v3: worst Spanish, Jamaican and Vietnamese; best Bulgarian, Indian and Irish English.</li>
+</ul>
+</li>
+<li><strong>Test-only accents:</strong> Nigerian, Kenyan, Ghanaian, Lithuanian, Israeli, Indonesian and Romanian have no validation
+speakers. (The validation label "Indonesian English" probably names the same accent as the test label
+"Indonesian".)</li>
+</ul>
+</li>
+<li><strong>Calibration sets.</strong> 48 windows of 20–30 s (about 21 minutes), three random draws per composition:<ul>
+<li>US-only;</li>
+<li>balanced: 2 windows per accent;</li>
+<li>worst-weighted: windows in proportion to FP16 validation WER.</li>
+</ul>
+</li>
+<li><strong>Quantizers:</strong><ul>
+<li>GPTQ (in-house: FP16-input Hessian, 1% damping, non-sequential);</li>
+<li>round-to-nearest at W8 and W4;</li>
+<li>an AWQ-style scale search at W4. This simulates the per-channel input scale as free for every layer, which it is
+not for fc2 and out_proj in Whisper.</li>
+</ul>
+</li>
+<li><strong>Mixed precision:</strong><ul>
+<li>at W4, 5.1% of weights promoted to W8 and 20.5% demoted to W3;</li>
+<li>at W3 (D1), 5.1% to W8 and 25.6% to W2.</li>
+</ul>
+</li>
+<li><strong>Decoding.</strong> Greedy, English, with no temperature or compression-ratio fallback, and a 440-token cap (all
+  preregistered). Segments over 30 s use the long-form algorithm.</li>
+<li><strong>Statistics.</strong><ul>
+<li><strong>Gap:</strong> pooled WER of the worst 3 minus the best 3 FP16 groups.</li>
+<li><strong>Penalty:</strong> the gap minus the FP16 gap, averaged over three draws.</li>
+<li><strong>Intervals:</strong> a speaker-clustered bootstrap (B = 2,000).</li>
+<li><strong>R</strong> is now left null when the control fails or the reference penalty is not positive (D4). The verdicts are
+unchanged.</li>
+</ul>
+</li>
+<li><strong>Added after review</strong> (D4, <code>code/robustness.py</code>):<ul>
+<li><strong>scoring variants:</strong> capped at 100% per utterance; looped utterances removed; substitutions + deletions; short-
+and long-form separately;</li>
+<li>a bootstrap that resamples calibration draws as well as speakers;</li>
+<li>the literal re-ranked gap;</li>
+<li>a split-half check of group selection;</li>
+<li>per-utterance drivers.</li>
+</ul>
+</li>
+<li><strong>Common Voice replication</strong> (D5, preregistered before decoding):<ul>
+<li>4,012 single-label accented clips from the test and dev splits, through the CC0 mirror <code>fsicoli/common_voice_17_0</code>.
+The official repository was emptied in October 2025.</li>
+<li>10 named groups with at least 30 clips.</li>
+<li>The same W3 conditions and calibration sets.</li>
+</ul>
+</li>
+</ul>
+<h2>Results</h2>
+<h3>Whisper-small on EdAcc (<code>results/figures/F1_penalty_small.png</code>, <code>F2_groups_small.png</code>, <code>F3_robust_w3.png</code>)</h3>
+<figure><a href="results/figures/F3_robust_w3.png"><img src="results/figures/F3_robust_w3.png" alt="Robust W3 penalties"></a><figcaption>Whisper-small, GPTQ-W3 g128, three calibration draws per composition averaged; penalty = (pooled WER of the 3 worst FP16 groups minus the 3 best) minus the same in FP16, groups re-fixed from FP16 under each scoring; 95% speaker-clustered bootstrap (calibration draws not resampled). Capped: errors per utterance at most the reference length. Looped utterances removed: any utterance looped in any condition. Substitutions + deletions: insertions dropped. D4 and D5, after the independent review.</figcaption></figure>
+<p>Penalty in WER points, three-draw means (95% speaker bootstrap):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>condition</th>
+<th>preregistered</th>
+<th>capped</th>
+<th>loops removed</th>
+<th>substitutions + deletions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GPTQ W4, US-only</td>
+<td>−2.7 (−8.9 to +2.6)</td>
+<td>+0.1 (−0.6 to +0.8)</td>
+<td>+0.1 (−0.2 to +0.5)</td>
+<td>+0.3 (−0.0 to +0.6)</td>
+</tr>
+<tr>
+<td>GPTQ W3, US-only</td>
+<td><strong>+7.4 (+3.5 to +11.8)</strong></td>
+<td>+1.9 (+0.8 to +3.3)</td>
+<td>+0.6 (−0.1 to +1.5)</td>
+<td>+1.5 (+0.8 to +2.6)</td>
+</tr>
+<tr>
+<td>GPTQ W3, balanced</td>
+<td>+2.0 (−3.2 to +6.9)</td>
+<td>+1.4 (+0.5 to +2.6)</td>
+<td>+0.5 (−0.5 to +1.4)</td>
+<td>+1.0 (+0.2 to +1.9)</td>
+</tr>
+<tr>
+<td>GPTQ W3, worst-weighted</td>
+<td>+2.3 (−0.9 to +5.7)</td>
+<td>+1.6 (+0.6 to +2.6)</td>
+<td>+1.1 (+0.1 to +1.9)</td>
+<td>+1.5 (+0.6 to +2.5)</td>
+</tr>
+<tr>
+<td>mixed precision W3, US-only</td>
+<td>+19.3 (+6.3 to +34.3)</td>
+<td>+1.5 (−2.9 to +7.6)</td>
+<td>+1.9 (−1.7 to +5.3)</td>
+<td>+1.4 (−2.2 to +6.6)</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>The decision rules under each scoring.</strong> In the variants, the worst-3 and best-3 groups are re-fixed from FP16 on
+  that variant's data; the preregistered groups give the same verdicts.<ul>
+<li><strong>H1:</strong> Inconclusive everywhere.</li>
+<li><strong>H2:</strong> Supported (fragile) under the preregistered scoring only. It is Inconclusive capped (R 0.19) and with loops
+removed (control fails), and Refuted on substitutions and deletions (R 0.02).</li>
+<li><strong>Short-form segments only:</strong> both are Inconclusive.</li>
+</ul>
+</li>
+<li><strong>Calibration draws.</strong> H2's per-draw differences are +1.1, +12.6 and +1.6 points. With draws resampled, the 95%
+  interval is −1.5 to +13.3 (speakers only: +1.2 to +9.1). For H1 it is −2.6 to +14.9.</li>
+<li><strong>The two "repairing" compositions are nearly the same set</strong> (review).<ul>
+<li>Worst-weighted gives 1–3 windows per accent where balanced gives 2, so only 5 of 48 windows differ.</li>
+<li>Validation accent WER does not predict test accent WER (Spearman 0.05 over the 11 shared accents).</li>
+<li>H1 against H2 is therefore noise, not a composition effect.</li>
+</ul>
+</li>
+<li><strong>What the loops are.</strong><ul>
+<li>Looped utterances carry 7.5% of errors in FP16, 11–13% at W4, 21–27% at W3 and 28–54% under 3-bit mixed
+precision.</li>
+<li>One to three utterances carry most of each large group swing. Examples include a 439-word repetition on a
+10-word, 3.4-second Scottish clip, and 220 repetitions of "no" on a 3-word Jamaican one.</li>
+<li>Loop rates: 0.33–0.46% at W4, 0.44–0.75% at W3, 1.15–2.30% under 3-bit mixed precision.</li>
+<li>4 of the 331 FP16 teacher-forcing transcripts used for calibration are themselves loops.</li>
+</ul>
+</li>
+<li><strong>Literal re-ranked gap</strong> (preregistered secondary). It is biased upward by noise, because it takes the maximum
+  minus the minimum of noisy groups.<ul>
+<li>W3 US-only: +16.6 (+6.4 to +44.8);</li>
+<li>balanced: +9.1;</li>
+<li>worst-weighted: +8.3;</li>
+<li>W4 compositions: +1.2 to +3.6.</li>
+</ul>
+</li>
+<li><strong>Group selection.</strong> The groups are chosen on the same FP16 data on which the penalties are measured. A split-half
+  check puts that selection bias at −1.3 to +0.6 points on average, with a wide spread. The review's version put it
+  at +0.6 to +1.8. Both 20-replicate means have standard errors of 0.5–0.8 points.<ul>
+<li><strong>With 300 replicates (confirmation pass) both schemes agree.</strong> In-sample penalties are 0.3–0.7 points below
+out-of-sample for the W3 compositions, 1.7 below for RTN-W4, and 0.3–0.5 above for the loop-affected GPTQ-W4.</li>
+<li>The bias is under one point, and it does not affect the verdicts.</li>
+</ul>
+</li>
+<li><strong>Mixed precision.</strong><ul>
+<li>At W3 the allocation rule follows the plan, but demoting 25.6% of weights to 2 bits breaks the model. Other
+readings of "the same design" would not have.</li>
+<li>The accent-differential layer scores (median difference 1.5 × 10⁻⁵ on errors of about 6 × 10⁻³) are mostly
+noise.</li>
+<li>At W4 the rule widens the gap (+2.8).</li>
+</ul>
+</li>
+</ul>
+<h3>Whisper-large-v3 (H4)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>aggregate WER</th>
+<th>penalty, US-only</th>
+<th>penalty difference, US − balanced</th>
+<th>penalty difference, US − worst</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FP16</td>
+<td>18.1%</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>GPTQ W4</td>
+<td>18.6–18.8%</td>
+<td>+0.4 (−0.1 to +1.2)</td>
+<td>+0.3</td>
+<td>+0.4</td>
+</tr>
+<tr>
+<td>GPTQ W3</td>
+<td>18.7–19.0%</td>
+<td>−0.04 (−0.5 to +0.5)</td>
+<td>−0.6</td>
+<td>−0.8</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>Both positive controls fail, so H4 is not testable: there is no penalty to repair.</li>
+<li><strong>Robust scoring agrees on the verdict.</strong><ul>
+<li>A penalty of about half a point is detectable at W3 under loop-robust scoring. The largest is with balanced
+calibration and errors capped: +0.7 (+0.2 to +1.4).</li>
+<li>Neither composition reduces it.</li>
+<li>Under capped and substitution-plus-deletion scoring, the W3 US-only control technically holds (+0.47, +0.04 to
++0.87), but neither composition repairs it.</li>
+</ul>
+</li>
+<li>Loop rates are flat (0.25–0.33%).</li>
+</ul>
+<h3>Common Voice replication (D5; <code>results/tables/analysis_small_cv.json</code>, <code>robustness_small_cv.json</code>)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>preregistered</th>
+<th>capped</th>
+<th>loops removed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>W3 US-only penalty</td>
+<td>+4.7 (+1.4 to +8.9)</td>
+<td>+1.3 (0.0 to 2.5)</td>
+<td>+1.9 (+0.9 to +2.9)</td>
+</tr>
+<tr>
+<td>H1 (balanced): difference, R</td>
+<td>+1.6 (−1.7 to +5.6), 0.35: Inconclusive</td>
+<td>+0.0, 0.03: Inconclusive</td>
+<td>+0.1, 0.03: Refuted</td>
+</tr>
+<tr>
+<td>H2 (worst-weighted): difference, R</td>
+<td>−2.6 (−10.8 to +4.0), −0.54: Inconclusive</td>
+<td>+0.2, 0.17: Inconclusive</td>
+<td>+0.1, 0.03: Refuted</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Groups.</strong> Worst: India and South Asia, Southern Africa, Hong Kong. Best: New Zealand, Australia, Ireland.</li>
+<li><strong>Loops removed.</strong> The table's "loops removed" column re-fixes the groups on the loop-removed data. With the
+  preregistered Common Voice groups held fixed, the control fails and both arms are Inconclusive.</li>
+<li><strong>The result.</strong> The positive control holds on Common Voice, but no calibration composition repairs the penalty. By
+  D5's rule, <strong>H2 does not replicate</strong>: Refuted or Inconclusive depending on how the groups are fixed.</li>
+</ul>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>No measurable accent penalty at 4 bits</strong> in Whisper-small or Whisper-large-v3, and none at 3 bits in large-v3,
+  with GPTQ g128 on EdAcc.</li>
+<li><strong>Whisper-small's 3-bit penalty is mostly repetition loops.</strong> That matches the mechanism arXiv 2609.28739 reports for
+  INT4 HQQ, which compounds transcript loops on West African accents. There the loops appear at 4 bits with HQQ; here
+  only at 3 bits with GPTQ g128.<ul>
+<li><strong>Not compared:</strong> this study did not reproduce the HQQ recipe, and EdAcc's West African speakers are test-only
+(Nigerian, 5 speakers; Ghanaian pooled), so it cannot speak to that paper's population.</li>
+<li><strong>The Wanda result there is pruning, not quantization.</strong></li>
+</ul>
+</li>
+<li><strong>Calibration composition is not a reliable lever.</strong><ul>
+<li>Its apparent repair at 3 bits depends on one calibration draw and on how loops are scored, and it fails on
+Common Voice.</li>
+<li>Practical advice: keep Whisper's compression-ratio fallback on, score with loop-aware diagnostics, and average
+over calibration draws.</li>
+</ul>
+</li>
+<li><strong>This mixed-precision rule fails;</strong> mixed precision in general was not tested. Promoting to 8 bits at a 3-bit
+  budget forces too much to 2 bits, and the layer ranking is mostly noise.</li>
+<li><strong>Limits.</strong><ul>
+<li>Groups have 2–5 test speakers. Penalties are coarse, and group selection on FP16 data carries a bias of unclear
+sign.</li>
+<li>Quantization is simulated, so latency was not measured.</li>
+<li>EdAcc has no Māori- or Pacific-identified group.</li>
+</ul>
+</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration:</strong> <code>plan.md</code>.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>):<ul>
+<li>D1: the W3 fallback and mixed precision at W3;</li>
+<li>D2: H4 follows the same fallback;</li>
+<li>D3: large-v3 batch sizes;</li>
+<li>D4 (after the review): the robustness analyses, and R left null when it is not meaningful;</li>
+<li>D5 (after the review, before decoding): the Common Voice protocol.</li>
+</ul>
+</li>
+<li><strong>Independent review:</strong> Fable, 2026-10-23, "fix first" (<code>review/review.md</code>). Its recomputation reproduced every
+  preregistered number. The robustness analyses here independently reproduce its loop-robust results. A confirmation
+  pass follows.</li>
+</ul>
+<h2>Reproducing it</h2>
+<ol>
+<li><strong>Data:</strong> <code>code/manifest.py build</code>, <code>code/audio.py test validation</code>, <code>code/cv.py build</code>.</li>
+<li><strong>Decodes:</strong> <code>code/run_queue.sh</code>, <code>code/run_large.sh</code>, <code>code/run_cv.sh</code>.</li>
+<li><strong>Scoring:</strong><ul>
+<li><code>code/score.py valgroups small</code>, <code>code/manifest.py worst small</code> and <code>code/mp_alloc.py small [3]</code>;</li>
+<li><code>code/score.py analyze small|large-v3</code>, and <code>code/score.py analyze small cv</code>.</li>
+</ul>
+</li>
+<li><strong>Robustness:</strong> <code>code/robustness.py utt|analyze small|large-v3</code>, and <code>code/robustness.py utt|analyze small cv</code>.</li>
+<li><strong>Figures:</strong> <code>code/figures.py small</code> and <code>code/figures_robust.py</code>, with any Python that has matplotlib.</li>
+</ol>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/frontier-edge-asr-quantization-accent-parity/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

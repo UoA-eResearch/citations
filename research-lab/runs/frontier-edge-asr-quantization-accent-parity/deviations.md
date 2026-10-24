@@ -86,7 +86,8 @@ fixed here.
   - GPTQ-W3 under US-only, balanced and worst-weighted calibration, three seeds each.
 
   These are the same EdAcc calibration sets and code as H1/H2 at W3, which is where H2 was Supported. W4 is not
-  decoded. All clips are short-form, decoded in batches of 32 as on EdAcc.
+  decoded. All clips but one are short-form, decoded in batches of 32 as on EdAcc. One 142.5 s Canadian English clip
+  was decoded long-form (D6).
 - **Statistics.** These are exactly plan section 5:
   - the worst-3 and best-3 named groups by FP16 WER on this data;
   - speaker-clustered bootstrap within groups (B = 2,000, seed 20261022);
@@ -94,3 +95,20 @@ fixed here.
 
   The D4 robustness variants are reported alongside. The replication counts as replicating H2 only if H2 is
   Supported on Common Voice by the same rule.
+
+## D6 — 2026-10-24 21:48 NZDT — edits after the confirmation pass (review/confirmation.md, "publish with edits")
+
+No verdict changes.
+- **Loop shares.** Under 3-bit mixed precision, loops carry 28–54% of errors, not 39–54% (`mp3_balanced_s2` is
+  27.5%). The W4 loop rates are 0.33–0.46% (RTN 0.45%, AWQ-style up to 0.46%), not 0.33–0.43%.
+- **Common Voice with loops removed.** Both arms are Refuted (R 0.03) only when the groups are re-fixed on the
+  loop-removed data. With the preregistered groups held fixed, the control fails and both are Inconclusive. "Does
+  not replicate" holds either way.
+- **large-v3 under loop-robust scoring.** The largest penalty is +0.7 (+0.2 to +1.4), with balanced calibration and
+  errors capped, not +0.5. Under capped and substitution-plus-deletion scoring, the W3 US-only control technically
+  holds (+0.47, +0.04 to +0.87), with neither composition repairing it. H4 stays not testable under the preregistered
+  scoring.
+- **Split-half bias.** The confirmation's 300-replicate re-run puts it under one point, in-sample slightly lower for
+  the W3 compositions. This replaces "direction not established".
+- **One Common Voice clip** (142.5 s, Canadian English) was decoded long-form. `robustness_small_cv.json` held a NaN
+  for that clip's "long" variant; it is rewritten with null, and `robustness.py` now writes strict JSON.

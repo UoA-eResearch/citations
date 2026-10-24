@@ -1,0 +1,130 @@
+{
+ "within_speaker_both_dirs_300": {
+  "rtn_w4": {
+   "in_minus_out_mean_pp": -1.66,
+   "se_pp": 0.13,
+   "sd_pp": 3.08,
+   "n": 600
+  },
+  "gptq_w4_us": {
+   "in_minus_out_mean_pp": 0.27,
+   "se_pp": 0.16,
+   "sd_pp": 4.02,
+   "n": 600
+  },
+  "gptq_w3_us": {
+   "in_minus_out_mean_pp": -0.48,
+   "se_pp": 0.15,
+   "sd_pp": 3.76,
+   "n": 600
+  },
+  "gptq_w3_balanced": {
+   "in_minus_out_mean_pp": -0.58,
+   "se_pp": 0.12,
+   "sd_pp": 2.9,
+   "n": 600
+  },
+  "gptq_w3_worst": {
+   "in_minus_out_mean_pp": -0.65,
+   "se_pp": 0.14,
+   "sd_pp": 3.46,
+   "n": 600
+  }
+ },
+ "bernoulli_both_dirs_300": {
+  "rtn_w4": {
+   "in_minus_out_mean_pp": -1.69,
+   "se_pp": 0.13,
+   "sd_pp": 3.23,
+   "n": 600
+  },
+  "gptq_w4_us": {
+   "in_minus_out_mean_pp": 0.49,
+   "se_pp": 0.16,
+   "sd_pp": 3.9,
+   "n": 600
+  },
+  "gptq_w3_us": {
+   "in_minus_out_mean_pp": -0.3,
+   "se_pp": 0.15,
+   "sd_pp": 3.79,
+   "n": 600
+  },
+  "gptq_w3_balanced": {
+   "in_minus_out_mean_pp": -0.61,
+   "se_pp": 0.13,
+   "sd_pp": 3.07,
+   "n": 600
+  },
+  "gptq_w3_worst": {
+   "in_minus_out_mean_pp": -0.6,
+   "se_pp": 0.14,
+   "sd_pp": 3.54,
+   "n": 600
+  }
+ },
+ "bernoulli_one_dir_20_like_D4": {
+  "rtn_w4": {
+   "in_minus_out_mean_pp": -0.57,
+   "se_pp": 0.54,
+   "sd_pp": 2.43,
+   "n": 20
+  },
+  "gptq_w4_us": {
+   "in_minus_out_mean_pp": 0.68,
+   "se_pp": 0.74,
+   "sd_pp": 3.29,
+   "n": 20
+  },
+  "gptq_w3_us": {
+   "in_minus_out_mean_pp": 1.34,
+   "se_pp": 0.79,
+   "sd_pp": 3.55,
+   "n": 20
+  },
+  "gptq_w3_balanced": {
+   "in_minus_out_mean_pp": 0.27,
+   "se_pp": 0.67,
+   "sd_pp": 2.98,
+   "n": 20
+  },
+  "gptq_w3_worst": {
+   "in_minus_out_mean_pp": 0.35,
+   "se_pp": 0.8,
+   "sd_pp": 3.57,
+   "n": 20
+  }
+ },
+ "within_speaker_both_dirs_20_like_review": {
+  "rtn_w4": {
+   "in_minus_out_mean_pp": -1.56,
+   "se_pp": 0.49,
+   "sd_pp": 3.12,
+   "n": 40
+  },
+  "gptq_w4_us": {
+   "in_minus_out_mean_pp": 0.97,
+   "se_pp": 0.77,
+   "sd_pp": 4.87,
+   "n": 40
+  },
+  "gptq_w3_us": {
+   "in_minus_out_mean_pp": -0.64,
+   "se_pp": 0.67,
+   "sd_pp": 4.22,
+   "n": 40
+  },
+  "gptq_w3_balanced": {
+   "in_minus_out_mean_pp": -1.78,
+   "se_pp": 0.52,
+   "sd_pp": 3.31,
+   "n": 40
+  },
+  "gptq_w3_worst": {
+   "in_minus_out_mean_pp": -0.91,
+   "se_pp": 0.57,
+   "sd_pp": 3.61,
+   "n": 40
+  }
+ }
+}

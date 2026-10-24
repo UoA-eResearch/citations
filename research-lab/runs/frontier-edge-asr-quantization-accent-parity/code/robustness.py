@@ -34,6 +34,17 @@ UTT = RUN / "data" / "utt"
 B, SEED = score.B, score.SEED
 
 
+
+def nan_to_none(o):
+    """NaN -> None, recursively, so the tables are strict JSON (D6)."""
+    if isinstance(o, float) and o != o:
+        return None
+    if isinstance(o, dict):
+        return {k: nan_to_none(v) for k, v in o.items()}
+    if isinstance(o, (list, tuple)):
+        return [nan_to_none(v) for v in o]
+    return o
+
 def utt(model, split="test"):
     UTT.mkdir(parents=True, exist_ok=True)
     man = pd.read_csv(score.MAN / {"test": "eval_segments.csv", "cv": "cv_segments.csv"}[split], keep_default_na=False)
@@ -262,7 +273,8 @@ def analyze(model, split="test"):
                                 "fp16_hyp_words": int(X["fp16"].hyp_words[top[0]]), "errors": int(ERR[c][top[0]]),
                                 "fp16_errors": int(ERR["fp16"][top[0]]), "loop": bool(LOOP[c][top[0]])}}
         out["drivers"][c] = rows
-    (score.TAB / (f"robustness_{model}.json" if split == "test" else f"robustness_{model}_{split}.json")).write_text(json.dumps(out, indent=1))
+    (score.TAB / (f"robustness_{model}.json" if split == "test" else f"robustness_{model}_{split}.json")).write_text(
+        json.dumps(nan_to_none(out), indent=1, allow_nan=False))   # D6: strict JSON (null, not NaN)
     pv = out["variants"]
     for name in pv:
         for label, r in pv[name].items():

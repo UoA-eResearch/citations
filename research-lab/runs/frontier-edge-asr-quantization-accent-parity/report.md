@@ -4,7 +4,7 @@
 on three accent mixes of EdAcc validation speakers (three random draws each), and decoded on the EdAcc test set:
 8,537 scored utterances, 60 speakers, 14 named accent groups. A preregistered replication used 4,012 accent-labelled
 Common Voice 17.0 clips (D5). This version incorporates an independent review (`review/review.md`; analyses added
-as D4 and D5).*
+as D4 and D5) and a confirmation pass (`review/confirmation.md`; edits as D6).*
 
 **Verdict: Inconclusive.**
 - **H1:** Inconclusive.
@@ -35,7 +35,8 @@ as D4 and D5).*
   - **Robust scoring:** Inconclusive with errors capped (R 0.19), and Refuted with substitutions and deletions only
     (R 0.02).
   - **Common Voice:** the worst-weighted arm is worse than US-only (difference −2.6, −10.8 to +4.0), and with loops
-    removed both arms are Refuted (R 0.03).
+    removed both arms are Refuted (R 0.03) when the groups are re-fixed on that data. With the preregistered groups
+    held fixed, the control fails and both are Inconclusive. Either way, H2 does not replicate.
 - **H3 (accent-aware mixed precision): Refuted for this rule.**
   - Promoting 5% of weights to 8 bits forces 26% down to 2 bits, and the model breaks (aggregate WER 47–54%).
   - The layer ranking's signal is about 0.2% of the error it ranks.
@@ -150,11 +151,11 @@ Penalty in WER points, three-draw means (95% speaker bootstrap):
   - Validation accent WER does not predict test accent WER (Spearman 0.05 over the 11 shared accents).
   - H1 against H2 is therefore noise, not a composition effect.
 - **What the loops are.**
-  - Looped utterances carry 7.5% of errors in FP16, 11–13% at W4, 21–27% at W3 and 39–54% under 3-bit mixed
+  - Looped utterances carry 7.5% of errors in FP16, 11–13% at W4, 21–27% at W3 and 28–54% under 3-bit mixed
     precision.
   - One to three utterances carry most of each large group swing. Examples include a 439-word repetition on a
     10-word, 3.4-second Scottish clip, and 220 repetitions of "no" on a 3-word Jamaican one.
-  - Loop rates: 0.33–0.43% at W4, 0.44–0.75% at W3, 1.15–2.30% under 3-bit mixed precision.
+  - Loop rates: 0.33–0.46% at W4, 0.44–0.75% at W3, 1.15–2.30% under 3-bit mixed precision.
   - 4 of the 331 FP16 teacher-forcing transcripts used for calibration are themselves loops.
 - **Literal re-ranked gap** (preregistered secondary). It is biased upward by noise, because it takes the maximum
   minus the minimum of noisy groups.
@@ -164,7 +165,10 @@ Penalty in WER points, three-draw means (95% speaker bootstrap):
   - W4 compositions: +1.2 to +3.6.
 - **Group selection.** The groups are chosen on the same FP16 data on which the penalties are measured. A split-half
   check puts that selection bias at −1.3 to +0.6 points on average, with a wide spread. The review's version put it
-  at +0.6 to +1.8. Its direction is not established.
+  at +0.6 to +1.8. Both 20-replicate means have standard errors of 0.5–0.8 points.
+  - **With 300 replicates (confirmation pass) both schemes agree.** In-sample penalties are 0.3–0.7 points below
+    out-of-sample for the W3 compositions, 1.7 below for RTN-W4, and 0.3–0.5 above for the loop-affected GPTQ-W4.
+  - The bias is under one point, and it does not affect the verdicts.
 - **Mixed precision.**
   - At W3 the allocation rule follows the plan, but demoting 25.6% of weights to 2 bits breaks the model. Other
     readings of "the same design" would not have.
@@ -181,7 +185,12 @@ Penalty in WER points, three-draw means (95% speaker bootstrap):
 | GPTQ W3 | 18.7–19.0% | −0.04 (−0.5 to +0.5) | −0.6 | −0.8 |
 
 - Both positive controls fail, so H4 is not testable: there is no penalty to repair.
-- Robust scoring agrees. Its largest penalty is +0.5 (0.0 to 0.9) at W3, with errors capped.
+- **Robust scoring agrees on the verdict.**
+  - A penalty of about half a point is detectable at W3 under loop-robust scoring. The largest is with balanced
+    calibration and errors capped: +0.7 (+0.2 to +1.4).
+  - Neither composition reduces it.
+  - Under capped and substitution-plus-deletion scoring, the W3 US-only control technically holds (+0.47, +0.04 to
+    +0.87), but neither composition repairs it.
 - Loop rates are flat (0.25–0.33%).
 
 ### Common Voice replication (D5; `results/tables/analysis_small_cv.json`, `robustness_small_cv.json`)
@@ -193,8 +202,10 @@ Penalty in WER points, three-draw means (95% speaker bootstrap):
 | H2 (worst-weighted): difference, R | −2.6 (−10.8 to +4.0), −0.54: Inconclusive | +0.2, 0.17: Inconclusive | +0.1, 0.03: Refuted |
 
 - **Groups.** Worst: India and South Asia, Southern Africa, Hong Kong. Best: New Zealand, Australia, Ireland.
+- **Loops removed.** The table's "loops removed" column re-fixes the groups on the loop-removed data. With the
+  preregistered Common Voice groups held fixed, the control fails and both arms are Inconclusive.
 - **The result.** The positive control holds on Common Voice, but no calibration composition repairs the penalty. By
-  D5's rule, **H2 does not replicate**.
+  D5's rule, **H2 does not replicate**: Refuted or Inconclusive depending on how the groups are fixed.
 
 ## What this does and does not show
 

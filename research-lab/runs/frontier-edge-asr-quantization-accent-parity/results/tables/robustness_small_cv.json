@@ -828,46 +828,46 @@
     ],
     "penalties": {
      "gptq_w3_balanced": {
-      "penalty": NaN,
+      "penalty": null,
       "ci": [
-       NaN,
-       NaN
+       null,
+       null
       ]
      },
      "gptq_w3_us": {
-      "penalty": NaN,
+      "penalty": null,
       "ci": [
-       NaN,
-       NaN
+       null,
+       null
       ]
      },
      "gptq_w3_worst": {
-      "penalty": NaN,
+      "penalty": null,
       "ci": [
-       NaN,
-       NaN
+       null,
+       null
       ]
      }
     },
     "tests": {
      "H1_w3": {
       "verdict": "Inconclusive",
-      "ref_penalty": NaN,
+      "ref_penalty": null,
       "ref_penalty_ci": [
-       NaN,
-       NaN
+       null,
+       null
       ],
       "control_holds": false,
-      "arm_penalty": NaN,
+      "arm_penalty": null,
       "arm_penalty_ci": [
-       NaN,
-       NaN
+       null,
+       null
       ],
       "R": null,
-      "difference": NaN,
+      "difference": null,
       "difference_ci": [
-       NaN,
-       NaN
+       null,
+       null
       ],
       "agg_change": -0.68889,
       "seed_R": {
@@ -878,22 +878,22 @@
      },
      "H2_w3": {
       "verdict": "Inconclusive",
-      "ref_penalty": NaN,
+      "ref_penalty": null,
       "ref_penalty_ci": [
-       NaN,
-       NaN
+       null,
+       null
       ],
       "control_holds": false,
-      "arm_penalty": NaN,
+      "arm_penalty": null,
       "arm_penalty_ci": [
-       NaN,
-       NaN
+       null,
+       null
       ],
       "R": null,
-      "difference": NaN,
+      "difference": null,
       "difference_ci": [
-       NaN,
-       NaN
+       null,
+       null
       ],
       "agg_change": -2.26667,
       "seed_R": {
