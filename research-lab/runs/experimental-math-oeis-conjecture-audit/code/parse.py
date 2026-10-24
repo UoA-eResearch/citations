@@ -94,6 +94,7 @@ def parse_rec(text):
     if m0:
         start = int(m0.group(2)) + (1 if m0.group(1) == ">" else 0)
     t = re.split(r",?\s*(for|with|where|if|when)\b", t, flags=re.I)[0]
+    t = t.strip().rstrip(".;,: ").strip()
     if "=" not in t or "a(n" not in t.replace(" ", ""):
         return None
     shifts = [int(s.replace(" ", "")) if s else 0 for s in A_TERM.findall(t)]
@@ -191,8 +192,12 @@ def run_gf(p, terms, offset, upto):
 
 def classify(line):
     body = SIG.sub("", line)
-    m = CAND.search(body)
+    body = re.sub(r"\((conjectured|empirical|conjecture)\)", " CONJ ", body, flags=re.I)
+    m = CAND.search(body) or re.search(r"CONJ", body)
     txt = body[m.end():].lstrip(" :.,") if m else body
+    if m and not re.search(r"=|g\.\s*f\.", txt, re.I):
+        txt = body[:m.start()]                      # formula written before the keyword ("... (conjectured)")
+    txt = txt.replace("CONJ", "")
     if re.search(r"g\.\s*f\.", txt, re.I):
         g = parse_gf(txt)
         return ("G", g) if g else (None, None)
@@ -200,19 +205,25 @@ def classify(line):
     return r if r else (None, None)
 
 
-def run():
-    import pandas as pd
+def _dir(d):
     signal.signal(signal.SIGALRM, _alarm)
     rows = []
-    files = sorted(SEQ.glob("A*/A*.seq"))
-    for k, f in enumerate(files):
+    for f in sorted(Path(d).glob("A*.seq")):
         e = read_entry(f)
+        inblock = False
         for li, line in enumerate(e["F"]):
-            if not CAND.search(line):
+            starts = bool(CAND.search(line)) and "(Start)" in line
+            member = inblock and not starts
+            if "(End)" in line:
+                inblock = False
+            if starts:
+                inblock = True
+                continue                                 # the block header itself holds no formula
+            if not (CAND.search(line) or member):
                 continue
             row = {"anum": f.stem, "line_no": li, "offset": e.get("offset", 0), "nterms": len(e["terms"]),
                    "keywords": e.get("K", ""), "cls": None, "status": "not_parsed", "data_ok": None, "first_mismatch": None,
-                   "pred": None}
+                   "pred": None, "in_block": member}
             signal.alarm(5)
             try:
                 cls, p = classify(line)
@@ -227,8 +238,20 @@ def run():
             finally:
                 signal.alarm(0)
             rows.append(row)
-        if k % 50000 == 0:
-            print(k, "entries", len(rows), "candidate lines", flush=True)
+    return rows
+
+
+def run():
+    import os
+    import pandas as pd
+    from concurrent.futures import ProcessPoolExecutor
+    dirs = sorted(str(d) for d in SEQ.glob("A*") if d.is_dir())
+    rows = []
+    with ProcessPoolExecutor(int(os.environ.get("WORKERS", "16"))) as ex:
+        for k, r in enumerate(ex.map(_dir, dirs), 1):
+            rows += r
+            if k % 50 == 0:
+                print(k, "of", len(dirs), "dirs", len(rows), "candidate lines", flush=True)
     d = pd.DataFrame(rows)
     d.to_parquet(INT / "conjectures.parquet", index=False)
     print(d.groupby(["status", "cls"], dropna=False).size().to_string())
