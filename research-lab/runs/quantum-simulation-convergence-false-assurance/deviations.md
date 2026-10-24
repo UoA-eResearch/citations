@@ -47,3 +47,17 @@
    - No setting reached the 15-minute limit.
    - Pilot observation (not analysed): BP error is far smaller on the kicked-Ising family (Clifford entanglers) than
      on the Floquet family.
+
+## D2 (2026-10-25 11:20 NZDT; after the first main-set results were read)
+
+**Bug fix in code/analyse.py: the "two finest settings" were the two coarsest.**
+- The first run of analyse.py sorted settings in the wrong direction for both methods. It compared χ = 4 with 8
+  (instead of 8 with 16) and ε = 1e-2 with 3e-3 (instead of 3e-4 with 1e-4).
+- The bug showed up because main-set errors were far above pilot errors on comparable instances. Per-instance values
+  were then checked by hand (for example main_K000: BP χ = 16 gives 0.581419 against an exact 0.581357, while the
+  table showed the χ = 4 error).
+- The plan specifies the two finest settings. The sort now uses an explicit fineness key and asserts that the finest
+  available setting is the one used.
+- The buggy output is kept as `results/tables/primary_v1_coarsest_pair_bug.json`: H1 Supported (BP 7.5%, PP 70%),
+  H2 Inconclusive.
+- The corrected run is the primary result. No other analysis choice changed.

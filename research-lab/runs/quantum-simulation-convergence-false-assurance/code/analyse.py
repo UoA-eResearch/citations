@@ -20,7 +20,7 @@ RUN = Path(__file__).resolve().parents[1]
 D, T = RUN / "data", RUN / "results" / "tables"
 T.mkdir(parents=True, exist_ok=True)
 TOL, BAD, SEED, B = 0.01, 0.03, 20261025, 2000
-FINE_FIRST = {"bp": False, "pp": True}           # bp: larger chi is finer; pp: smaller eps is finer
+FINENESS = {"bp": lambda s: s, "pp": lambda s: -s}   # increasing with fineness: bp larger chi, pp smaller eps (D2)
 
 
 def load(name="main"):
@@ -33,11 +33,12 @@ def load(name="main"):
     r["exact"] = r["id"].map(ex)
     out, excluded = [], {}
     for (m, i), g in r.groupby(["method", "id"]):
-        ok = g[g["status"] == "ok"].sort_values("setting", ascending=FINE_FIRST[m])
+        ok = g[g["status"] == "ok"].sort_values("setting", key=FINENESS[m])     # finest last
         if len(ok) < 2:
             excluded[m] = excluded.get(m, 0) + 1
             continue
         f1, f2 = ok.iloc[-1], ok.iloc[-2]
+        assert FINENESS[m](f1["setting"]) == FINENESS[m](ok["setting"]).max() > FINENESS[m](f2["setting"])
         ins = I[i]
         out.append({"method": m, "id": i, "family": ins["family"], "n": ins["n"], "depth": ins["depth"],
                     "compact": ins["compact"], "loops": ins["loops"], "finest": f1["setting"], "second": f2["setting"],
