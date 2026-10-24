@@ -71,3 +71,25 @@ review's (`review/reviewer_checks/c2–c6`) and are cited as such.
    - the metadata-completeness and newcomer-definition notes;
    - "top 20 fields" is 10 fields;
    - the publisher ids.
+
+## D4 — 2026-10-24 18:04 NZDT — edits after the confirmation pass (review/confirmation.md, "publish with edits")
+
+No preregistered result changes.
+1. **PubMed Central's share of the H2 top 1%** is 1.3% (519 of 39,585), not 0.1%. The 0.1% came from an unsupported
+   sentence in the review; the reviewer's check c7 gives the correct figure.
+2. **H3 addendum clarifications**, fixed before any 2028 label exists:
+   - the date cut, 2028-12-31, for Retraction Watch and for Crossref notices with separate notice DOIs;
+   - Crossref-only self-updates count only if the registry is fetched by 2029-01-31;
+   - the bootstrap clusters are the host organisations recorded at sealing. `code/h3_hosts.py` builds
+     `data/forecast/forward_wid_host.csv` (SHA-256 `94f368263f07c9f6db0955003dbcd6053d984b6b4fef839164fc8c47ccd59e0d`) from the cohort files, keyed by `forward_wid_doi.csv`.
+     The score file is not read;
+   - an "otherwise Inconclusive" clause.
+3. **The key file's provenance.** `posthoc_review.py h3` (D3) read the sealed score file's `wid` column, and no other
+   column, to build `forward_wid_doi.csv`. The score file's SHA-256 is unchanged (`973d5968…`).
+4. **Post-hoc labels** on the opening bullets that were added after the results (D2, D3).
+5. **Plan §1's exclusion counts**, now reported. `code/exclusions.py` writes `results/tables/exclusions.json`, and
+   its cohort totals match the built cohorts exactly.
+6. **The notes D3 §7 promised**, now in the report's D2 section: within-publisher completeness and no re-typing. The
+   review said "93–94%" for works retracted in 2023–2026; check c5 gives 78–94% (2025: 78%), and the report uses that.
+7. **The Born Flawed comparison** now notes that it excluded the share of later-retracted cited works, which this
+   study includes on the strength of registry dating.

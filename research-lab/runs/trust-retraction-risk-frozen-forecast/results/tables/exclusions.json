@@ -1,0 +1,32 @@
+{
+ "train": {
+  "in_years": 72358745,
+  "not_article": 33161462,
+  "paratext": 0,
+  "xpac": 7571138,
+  "no_doi": 12302466,
+  "no_primary_topic": 95518,
+  "other_domain": 11470099,
+  "cohort": 7758062
+ },
+ "test": {
+  "in_years": 32177743,
+  "not_article": 17810071,
+  "paratext": 0,
+  "xpac": 2714977,
+  "no_doi": 1213352,
+  "no_primary_topic": 31319,
+  "other_domain": 6449514,
+  "cohort": 3958510
+ },
+ "forward": {
+  "in_years": 77271429,
+  "not_article": 62612417,
+  "paratext": 0,
+  "xpac": 1406236,
+  "no_doi": 668978,
+  "no_primary_topic": 193523,
+  "other_domain": 8014793,
+  "cohort": 4375482
+ }
+}

@@ -7,27 +7,28 @@
 - 4.4 million from 2025–2026 for a sealed forecast, to be scored at the end of 2028.
 
 Only aggregate results are published; no per-paper score is. This version incorporates an independent review
-(`review/review.md`; changes logged as D3).*
+(`review/review.md`; changes logged as D3) and a confirmation pass (D4). Bullets marked "post hoc" were added after
+the results; the verdicts rest only on the preregistered tests.*
 
 **Verdict: Inconclusive on the full model; Supported for the author-and-reference model.**
 
 - **H1 (the full model concentrates 2021–2022 retractions at least 5-fold in its top 1%): Inconclusive.**
   - Enrichment in the top 1% is **3.7× (95% interval 1.4–13.3)**, with intervals from a bootstrap clustered by
     publisher.
-  - **The frozen full model is a failed fit.** It stopped after 10 trees, with validation log-loss worse than
+  - **The frozen full model is a failed fit** (post hoc, D3). It stopped after 10 trees, with validation log-loss worse than
     predicting the base rate. 59% of its top 1% are articles hosted by PubMed Central, a repository whose prior
     retraction rate jumped 30-fold between the training and test windows.
-  - **Without that host,** the same frozen model reaches 6.6× (4.1–11.5).
-  - **The review's refits** (not frozen) give 2.9–6.9× with other seeds and 9.7× (4.6–12.3) with a fixed 100 trees.
+  - **Without that host** (post hoc, D3), the same frozen model reaches 6.6× (4.1–11.5).
+  - **The review's refits** (post hoc, D3; not frozen) give 2.9–6.9× with other seeds and 9.7× (4.6–12.3) with a fixed 100 trees.
   - So H1's verdict reflects the preregistered fitting recipe, not a lack of signal in venue features.
   - One publisher, Hindawi, holds 57% of the test-period retractions, largely from its 2023 mass retraction.
 - **H2 (paper triage, not only publisher triage: the model without venue features reaches at least 3-fold): Supported.**
   - Using only author and reference-list features, enrichment in the top 1% is **11.4× (6.0–14.1)**, and 31× in the
     top 0.1%.
-  - **Without Hindawi,** the frozen model reaches **7.4× (5.4–9.3)**. Refitted without it (the review's refit) it
+  - **Without Hindawi** (post hoc, D3), the frozen model reaches **7.4× (5.4–9.3)**. Refitted without it (the review's refit) it
     reaches 6.7× (5.1–8.4), and other seeds give 8.1–9.9×. "About 7–11×" is the honest range.
-  - It holds at 10.6× (5.8–12.7) among articles with complete metadata (D2).
-  - **Much of it is institution triage.** 90% of the top 1% have an institution with prior retractions (57% of the
+  - It holds at 10.6× (5.8–12.7) among articles with complete metadata (post hoc, D2).
+  - **Much of it is institution triage** (post hoc, D3). 90% of the top 1% have an institution with prior retractions (57% of the
     cohort), and 41% have an author with a prior retraction (10% of the cohort).
 - **H3 (forward forecast): sealed, not yet scorable.** 4,375,482 articles from 2025–2026 are scored by the same
   pipeline refitted on information known by 2024. The score file's and model's SHA-256 are committed; the file stays
@@ -73,13 +74,16 @@ mass-retraction clusters, and a sealed forward forecast.
 - **The closest prior work** is "Born Flawed?" (Research Square, July 2026; read in full before preregistration). It
   reports publication-time reference features raising out-of-time AUC from 0.49 to 0.66. Its sample is a matched
   case-control set of 219 retracted and 184 control papers, which cannot show how a triage list performs at a 0.1–0.2%
-  base rate.
+  base rate. It also excluded the share of cited works that were later retracted, as inadmissible at publication
+  time. This study includes that share, counting a cited work only if the registry dates its retraction before the
+  citing article's publication year. Self-update dates make that dating imperfect (D3).
 - **The plan** (`plan.md`) was committed before any cohort or feature was built.
 
 ## How it was done
 
 1. **Cohort** (`pass2.py`).
-   - **Inclusion:** OpenAlex works of type "article" with a DOI and a Life Sciences or Health Sciences primary topic,
+   - **Inclusion:** OpenAlex works of type "article", not paratext or xpac, with a DOI and a Life Sciences or Health
+     Sciences primary topic,
      from the local snapshot of 22 September 2026 (476 million works).
    - **Windows:**
      - training, 2015–2019: 7,758,062 articles;
@@ -87,6 +91,18 @@ mass-retraction clusters, and a sealed forward forecast.
      - forward, 2025–2026: 4,375,482.
 
      2020 is a gap year: none of its articles is used for fitting or testing.
+   - **Exclusions** (`results/tables/exclusions.json`, D4), applied in order to works published in each window:
+
+     | | training | test | forward |
+     |---|---|---|---|
+     | works in the window | 72,358,745 | 32,177,743 | 77,271,429 |
+     | not type "article" | 33,161,462 | 17,810,071 | 62,612,417 |
+     | paratext | 0 | 0 | 0 |
+     | xpac (OpenAlex's expansion records) | 7,571,138 | 2,714,977 | 1,406,236 |
+     | no DOI | 12,302,466 | 1,213,352 | 668,978 |
+     | no primary topic | 95,518 | 31,319 | 193,523 |
+     | primary topic outside Life and Health Sciences | 11,470,099 | 6,449,514 | 8,014,793 |
+     | **cohort** | **7,758,062** | **3,958,510** | **4,375,482** |
 2. **Labels** (`labels.py`).
    - **Sources:** 78,857 retracted DOIs from Retraction Watch (nature "Retraction"; reinstated papers removed) and
      Crossref retraction notices, fetched 2026-10-21.
@@ -152,7 +168,7 @@ The base rate is 0.19% (7,660 of 3,958,510).
 
   | host | share of cohort | top 1%, full | top 1%, H2 |
   |---|---|---|---|
-  | National Institutes of Health (PubMed Central, a repository) | 0.9% | **59.0%** | 0.1% |
+  | National Institutes of Health (PubMed Central, a repository) | 0.9% | **59.0%** | 1.3% |
   | Elsevier | 16.6% | 7.6% | 21.0% |
   | Frontiers | 3.5% | 5.7% | 8.7% |
   | MDPI | 5.9% | 1.5% | 7.8% |
@@ -186,6 +202,12 @@ The base rate is 0.19% (7,660 of 3,958,510).
 - **The check.** Restricted to the 2,820,712 test articles with at least one reference, one author and a known
   country, which hold 7,061 of the 7,660 retractions, the H2 model still reaches 10.6× (5.8–12.7) and the full model
   4.9× (2.3–11.2).
+- **Within publishers (review).** The gap persists inside a publisher: retracted test articles lack references 3.6% of
+  the time against 23.7% for the rest at Elsevier, and 0.2% against 7.7% at Springer, but 0.4% against 0.5% at
+  Hindawi. It most likely reflects item type (non-research items typed "article"), not metadata edited after
+  retraction.
+- **No re-typing.** Works retracted in 2023–2026 are typed "article" 78–94% of the time, against 65–83% for works
+  retracted in 2015–2022, so retracted works are not being moved out of the "article" type (review check c5).
 
 ### Bias audit (`results/figures/F2_country_audit.png`)
 
@@ -218,6 +240,16 @@ misconduct actually occurs cannot be told from retraction data, because retracti
     4,375,482 works).
   - **Excluded:** the 822 works already retracted at sealing (`forward_retracted_at_seal_wids.csv`, SHA-256
     `9e9a5e62b899829638e63e9fc449925fe7aaaf392bd9ece0daf2ef4d2b685c76`).
+- **Addendum clarifications** (D4, 2026-10-24 18:04 NZDT, after the confirmation pass and before any 2028 label exists):
+  - **Date cut.** A sealed work counts as retracted if a Retraction Watch record ("Retraction") dates its retraction
+    on or before 2028-12-31, or a Crossref retraction notice from a separate notice DOI was issued on or before that
+    date.
+  - **Crossref-only self-updates** count as retracted only if the registry is fetched by 2029-01-31, since their dates
+    cannot be trusted. If the fetch is later, they are left out and their number is reported.
+  - **Clusters.** The publisher-clustered bootstrap uses each work's host organisation as recorded at sealing
+    (`data/forecast/forward_wid_host.csv`, SHA-256 `94f368263f07c9f6db0955003dbcd6053d984b6b4fef839164fc8c47ccd59e0d`; 4,375,482 works, 3,475,473 with a host, 5,990
+    hosts). No later snapshot is used. Works without a host are their own clusters.
+  - **Otherwise Inconclusive:** if the interval's lower bound is below 3 and its upper bound is 3 or more.
 
 ## What this does and does not show
 
@@ -260,10 +292,13 @@ misconduct actually occurs cannot be told from retraction data, because retracti
     - the self-update dates;
     - H2's Hindawi robustness and institution component;
     - notices;
-    - the H3 addendum.
+    - the H3 addendum;
+  - D4: after the confirmation pass: the PubMed Central H2 share, the H3 addendum's date cut, self-update rule, frozen
+    host ids and Inconclusive clause, post-hoc labels, the exclusion counts and the within-publisher notes.
 - **Models frozen** in 660d682 before scoring, and never refitted in place.
 - **Independent review:** Fable, 2026-10-23, "fix first" (`review/review.md`). Both preregistered verdicts stand;
-  the explanation changed. A confirmation pass follows.
+  the explanation changed. Confirmation pass, 2026-10-24: "publish with edits" (`review/confirmation.md`), applied as
+  D4.
 
 ## Reproducing it
 
