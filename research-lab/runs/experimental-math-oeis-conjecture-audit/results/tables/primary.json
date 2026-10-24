@@ -1,0 +1,73 @@
+{
+ "candidate_lines": 38637,
+ "entries_with_candidates": 24168,
+ "status": {
+  "parsed": 22774,
+  "not_parsed": 14322,
+  "parse_error": 1541
+ },
+ "parsed_by_class": {
+  "C": 15306,
+  "G": 6466,
+  "D": 1002
+ },
+ "data_consistent": 21998,
+ "contradicted_by_own_data": 776,
+ "contradicted_by_own_data_by_class": {
+  "C": 597,
+  "D": 141,
+  "G": 38
+ },
+ "in_block_lines": 9577,
+ "screen": {
+  "agree": 14656,
+  "no_program": 7221,
+  "predict_failed": 104,
+  "disagree": 15,
+  "loda_mismatch_or_short": 2
+ },
+ "screened": 14671,
+ "screened_disagree": 15,
+ "screened_disagree_rate": 0.001022,
+ "screened_disagree_rate_wilson": [
+  0.00062,
+  0.001686
+ ],
+ "by_class": {
+  "C": {
+   "screened": 7953,
+   "disagree": 3,
+   "wilson": [
+    0.000128,
+    0.001109
+   ]
+  },
+  "G": {
+   "screened": 5921,
+   "disagree": 10,
+   "wilson": [
+    0.000918,
+    0.003106
+   ]
+  },
+  "D": {
+   "screened": 797,
+   "disagree": 2,
+   "wilson": [
+    0.000688,
+    0.009103
+   ]
+  }
+ },
+ "beyond_data_terms_checked": {
+  "median": 26.0,
+  "p10": 18.0,
+  "p90": 46.0
+ },
+ "confirm": {
+  "bfile_too_short": 13,
+  "confirmed": 2
+ },
+ "confirmed_falsifications": 2,
+ "H1": "Refuted"
+}
