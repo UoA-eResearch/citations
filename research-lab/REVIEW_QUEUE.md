@@ -66,6 +66,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | `llm-ml-science-scaling-fit-seed-uncertainty` | f33d2b6 | H1 Inconclusive (W1 0.123 nats, 0.038-0.160); H2 Inconclusive (shrinkage 0.16); post hoc: two unstable 410M runs drive the width | queued (review/prompt.md) |
 | `metascience-retraction-citer-contagion` | 6ab7aea | H1 Inconclusive (prereg DiD +0.068, pre-trend); H2 not testable; H3 Refuted as prereg; post hoc not-yet-treated: no penalty (+0.003, -0.015 to +0.021) | queued (review/prompt.md) |
 | `experimental-math-oeis-conjecture-audit` | a0127a5 | H1 Refuted (2 confirmed falsifications; 15 of 14,671 screened disagree with LODA) | queued (review/prompt.md) |
+| `health-econ-hub-vintage-rescore` | 53d30c6 | H1 Refuted (6.2% pairwise reversals); H2 Supported narrowly (2024-25 leader changes at h1/h2) | queued (review/prompt.md) |
 
 ## Order to run them in
 
