@@ -76,8 +76,9 @@ def env_yml_to_reqs(p):
 def main():
     c = sqlite3.connect(f"file:{DB}?mode=ro", uri=True)
     q = """select distinct n.id nb_id, n.name nb_path, n.language_version, r.id repo_db_id, r.repository, r."commit" dcommit,
-                  a.published_date from executions e join notebooks n on n.id = e.notebook_id
+                  a.published_date, rd.size gh_kb from executions e join notebooks n on n.id = e.notebook_id
            join repositories r on r.id = n.repository_id join article a on a.id = r.article_id
+           left join repository_data rd on rd.repository_id = r.id
            where e.reason is null and e.diff_count > 0 and n.language = 'python'"""
     E = pd.read_sql(q, c)
     rnd = random.Random(SEED)
@@ -88,17 +89,36 @@ def main():
         pick += ids[:2]
     S = E[E.nb_id.isin(pick)].copy()
     print("sampled", len(S), "notebooks from", S.repository.nunique(), "repos", flush=True)
+    from concurrent.futures import ThreadPoolExecutor
     rows = []
-    for repo, g in S.groupby("repository"):
+    with ThreadPoolExecutor(6) as ex:
+        for r_ in ex.map(lambda kv: prep(*kv), S.groupby("repository")):
+            rows += r_
+    R = pd.DataFrame(rows)
+    R.to_csv(D / "interim" / "sample_all.csv", index=False)
+    R[R.status == "ready"].to_csv(D / "interim" / "sample_ready.csv", index=False)
+    print(R.status.value_counts().to_string())
+
+
+def prep(repo, g):
+    try:
+        return _prep(repo, g)
+    except subprocess.TimeoutExpired:
+        return [{"nbid": f"nb{x.nb_id}", "status": "checkout_timeout"} for x in g.itertuples()]
+
+
+def _prep(repo, g):
+    rows = []
+    if True:
         rid = repo.replace("/", "__")
+        if float(g.gh_kb.fillna(0).iloc[0]) > 500_000:            # GitHub size (KB) before any checkout
+            return [{"nbid": f"nb{x.nb_id}", "repo_id": rid, "status": "too_large"} for x in g.itertuples()]
         path = D / "repos" / rid
         if not path.exists():
             r = subprocess.run(["git", "clone", "-q", "--filter=blob:none", "--no-checkout", f"https://github.com/{repo}", str(path)],
                                capture_output=True, timeout=1800, env={"GIT_TERMINAL_PROMPT": "0", "PATH": "/usr/bin:/bin"})
             if r.returncode != 0:
-                for x in g.itertuples():
-                    rows.append({"nbid": f"nb{x.nb_id}", "status": "clone_failed"})
-                continue
+                return [{"nbid": f"nb{x.nb_id}", "status": "clone_failed"} for x in g.itertuples()]
         pub = str(g.published_date.iloc[0])[:10]
         sha = git(path, "rev-list", "-1", f"--before={pub} 00:00", "HEAD").stdout.decode().strip()
         flagged = False
@@ -107,9 +127,7 @@ def main():
         if git(path, "checkout", "-q", "--force", sha).returncode != 0:
             sha, flagged = g.dcommit.iloc[0], True
             if git(path, "checkout", "-q", "--force", sha).returncode != 0:
-                for x in g.itertuples():
-                    rows.append({"nbid": f"nb{x.nb_id}", "status": "checkout_failed"})
-                continue
+                return [{"nbid": f"nb{x.nb_id}", "status": "checkout_failed"} for x in g.itertuples()]
         cdate = git(path, "log", "-1", "--format=%cs", sha).stdout.decode().strip()
         size = sum(f.stat().st_size for f in path.rglob("*") if f.is_file() and ".git" not in f.parts)
         for x in g.itertuples():
@@ -139,10 +157,7 @@ def main():
                 except Exception:
                     pkgs = ""
             rows.append({**rec, "req_path": req, "pkgs": pkgs, "status": "ready"})
-    R = pd.DataFrame(rows)
-    R.to_csv(D / "interim" / "sample_all.csv", index=False)
-    R[R.status == "ready"].to_csv(D / "interim" / "sample_ready.csv", index=False)
-    print(R.status.value_counts().to_string())
+    return rows
 
 
 if __name__ == "__main__":

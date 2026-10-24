@@ -22,6 +22,7 @@ D = RUN / "data"
 UV = D / "bin" / "uv-x86_64-unknown-linux-musl"
 RUNNERS, ENVS, OUT, CACHE = D / "runners", D / "envs", D / "runs", D / "uvcache"
 VERSIONS = ["3.8", "3.9", "3.10", "3.11", "3.12"]
+FLAVOR = os.environ.get("NB_IMAGE_FLAVOR", "-slim")     # D2: "" = full image with build tools, for failed slim builds
 EXEC = '''
 import sys, json, nbformat, os
 from nbclient import NotebookClient
@@ -69,6 +70,7 @@ def runners():
 def build(nb, arm):
     env = ENVS / f"{nb.nbid}_{arm}"
     log = OUT / nb.nbid / f"build_{arm}.json"
+    image = f"python:{nb.pyver}{FLAVOR if arm == 'asof' else '-slim'}"
     if log.exists():
         return json.loads(log.read_text())
     env.mkdir(parents=True, exist_ok=True)
@@ -83,8 +85,8 @@ def build(nb, arm):
     code, o, e = docker(["--user", f"{os.getuid()}:{os.getgid()}", "-e", "UV_CACHE_DIR=/cache", "-e", "HOME=/tmp",
                          "-v", f"{CACHE}:/cache", "-v", f"{UV}:/opt/uv:ro", "-v", f"{env}:/env",
                          "-v", f"{D / 'repos' / nb.repo_id}:/repo:ro", "--cpus", "2", "--memory", "6g",
-                         f"python:{nb.pyver}-slim", "sh", "-c", cmd], 1800)
-    res = {"code": code, "secs": round(time.time() - t0, 1), "err": e[-1200:] if code else ""}
+                         image, "sh", "-c", cmd], 1800)
+    res = {"code": code, "secs": round(time.time() - t0, 1), "err": e[-1200:] if code else "", "image": image}
     log.parent.mkdir(parents=True, exist_ok=True)
     log.write_text(json.dumps(res))
     return res
@@ -101,11 +103,13 @@ def execute(nb, arm, rep):
     nbdir = str(Path("/work") / Path(nb.nb_path).parent)
     (OUT / nb.nbid / "exec.py").write_text(EXEC)
     t0 = time.time()
+    bj = json.loads((OUT / nb.nbid / f"build_{arm}.json").read_text())
+    image = bj.get("image", f"python:{nb.pyver}-slim")
     code, o, e = docker(["--network", "none", "--user", f"{os.getuid()}:{os.getgid()}", "-e", "HOME=/tmp",
                          "-e", "JUPYTER_PATH=/runner/share/jupyter", "-e", "MPLBACKEND=Agg",
                          "-v", f"{ENVS / (nb.nbid + '_' + arm)}:/env:ro", "-v", f"{RUNNERS / nb.pyver}:/runner:ro",
                          "-v", f"{work}:/work", "-v", f"{OUT / nb.nbid}:/out", "--cpus", "2", "--memory", "6g",
-                         "-w", nbdir, f"python:{nb.pyver}-slim", "/runner/bin/python", "/out/exec.py",
+                         "-w", nbdir, image, "/runner/bin/python", "/out/exec.py",
                          f"/work/{nb.nb_path}", f"/out/{arm}_{rep}.ipynb", nbdir], 1500)
     shutil.rmtree(work, ignore_errors=True)
     j = out.parent / (out.name + ".json")
@@ -134,7 +138,7 @@ def one(nb):
 
 
 def run(n=None):
-    S = pd.read_csv(D / "interim" / "sample_ready.csv", dtype=str)
+    S = pd.read_csv(D / "interim" / os.environ.get("SAMPLE", "sample_ready.csv"), dtype=str)
     if n:
         S = S.head(int(n))
     rows = []
@@ -144,7 +148,7 @@ def run(n=None):
             if k % 10 == 0:
                 print(k, "of", len(S), flush=True)
                 pd.DataFrame(rows).to_csv(D / "interim" / "run_status.csv", index=False)
-    pd.DataFrame(rows).to_csv(D / "interim" / "run_status.csv", index=False)
+    pd.DataFrame(rows).to_csv(D / "interim" / os.environ.get("STATUS", "run_status.csv"), index=False)
     print(pd.DataFrame(rows).drop(columns="nbid").apply(lambda c: c.value_counts(dropna=False).to_dict()).to_string())
 
 
