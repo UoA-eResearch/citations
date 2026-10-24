@@ -25,3 +25,25 @@
      and finer settings for that instance are skipped.
    - Abandoned settings count as unavailable. Section 3 then uses the finest two available settings, and instances
      with fewer than two available settings are excluded and counted.
+4. **Frozen ladders** (2026-10-25 10:31 NZDT; from the 30-instance pilot, by the plan's rule; no main-set
+   instance simulated yet). Median absolute pilot errors:
+
+   | method | setting | median abs error | slowest run |
+   |---|---|---|---|
+   | BP-PEPS | χ = 4 | 0.068 | 85 s (includes compilation) |
+   | BP-PEPS | χ = 8 | 0.017 | 3 s |
+   | BP-PEPS | χ = 16 | 0.0035 | 4 s |
+   | BP-PEPS | χ = 32 | 0.00040 | 13 s |
+   | BP-PEPS | χ = 64 | 0.00027 | 91 s |
+   | Pauli propagation | ε = 1e-2 | 0.25 | 3 s (includes compilation) |
+   | Pauli propagation | ε = 3e-3 | 0.18 | 0.01 s |
+   | Pauli propagation | ε = 1e-3 | 0.11 | 0.1 s |
+   | Pauli propagation | ε = 3e-4 | 0.047 | 0.9 s |
+   | Pauli propagation | ε = 1e-4 | 0.030 | 9 s |
+
+   - **BP-PEPS ladder frozen at χ ∈ {4, 8, 16}.** χ = 32 and 64 are dropped as near-exact (median below 1e-3). The
+     two finest settings are χ = 8 and 16.
+   - **Pauli-propagation ladder frozen at all five settings.** The two finest are ε = 3e-4 and 1e-4.
+   - No setting reached the 15-minute limit.
+   - Pilot observation (not analysed): BP error is far smaller on the kicked-Ising family (Clifford entanglers) than
+     on the Floquet family.
