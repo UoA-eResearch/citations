@@ -27,3 +27,14 @@ regression has been run on it.
    - NBER and CDC total deaths for 1999–2004 agree exactly, and the age-adjusted rates by a median 0.004% (maximum
      1.4%), well inside the 2% trigger.
    - Calibrated weekly totals for 2014–2017 have a median within-state SD of 0.16% around the calibration.
+
+## D2 — 2026-10-24 22:37 NZDT — the plan's specification count was wrong (noticed after the run)
+
+Plan §3 multiplies its dimension table out to "5,184 combinations" and "4,896" after exclusions. The table's product
+is 3 × 2 × 2 × 3 × 2 × 6 × 3 × 2 = 2,592, and 2,304 after the 288 exclusions, which the plan computes correctly. The
+run uses exactly the table's options, so no choice changes, only the stated count.
+
+**Cross-check** (after the run). pyfixest 0.60.0 (`feols`, CRV1 by state) reproduces the canonical coefficients
+exactly for 1976–2017, 1992–2005 and 2006–2017, and one H2 specification. Its standard errors are 1–6% smaller,
+because it does not count fixed effects nested in clusters in the small-sample factor; the study's are the more
+conservative.
