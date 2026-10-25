@@ -1,0 +1,56 @@
+{
+ "random_pick": {
+  "eval_cell": 23845,
+  "species": 5459,
+  "grid_cell": [
+   408,
+   5771
+  ],
+  "core_records": 4,
+  "core_datasets": [
+   "740df67d"
+  ],
+  "core_datasets_all_flagged": true,
+  "recomputed_cells_match": true,
+  "support_counts": [
+   {
+    "n_core": 4,
+    "n_broad": 0,
+    "n_other": 0
+   }
+  ],
+  "h2_colocated": true,
+  "training_cell": [],
+  "sage_training_presence": false,
+  "removed_by_C1": false,
+  "expected_removed": true
+ },
+ "first_colocated_in_same_order": {
+  "eval_cell": 24460,
+  "species": 5063,
+  "grid_cell": [
+   491,
+   5765
+  ],
+  "core_records": 1,
+  "core_datasets": [
+   "740df67d"
+  ],
+  "core_datasets_all_flagged": true,
+  "recomputed_cells_match": true,
+  "support_counts": [
+   {
+    "n_core": 1,
+    "n_broad": 0,
+    "n_other": 0
+   }
+  ],
+  "h2_colocated": true,
+  "training_cell": [
+   1946677
+  ],
+  "sage_training_presence": true,
+  "removed_by_C1": true,
+  "expected_removed": true
+ }
+}

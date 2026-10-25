@@ -1,0 +1,51 @@
+# Overclaim check (G5)
+
+Fill in every row: backing = the table/figure and number that supports the sentence; label = one of Supported, Partially supported, Overstated, Not addressed, Exploratory-labelled. Every Overstated / Not addressed / Partially supported row needs a fix (the rewritten sentence, applied to report.md). Re-run after edits; unchanged sentences keep their labels.
+
+| # | where | sentence | backing | label | fix |
+|---|---|---|---|---|---|
+| 1 | title | Republished vegetation surveys barely lift SAGE's Random Forest scores overall (+0.006 AUROC), but its West African test plots also sit in the training data, and their scores depend on it | primary.json DiD 0.00626; posthoc_same_releve TAVA 87%; TAVA DiD 0.164 | Supported | was 'West African and Ukrainian scores depend on same-survey training records'; Random Forest now named |
+| 2 | standfirst | SAGE trains species distribution models on GBIF presence-only records and tests them on sPlotOpen vegetation plots, treating the two as independent. | arXiv:2609.31082 (ledger A1, A2) | Supported |  |
+| 3 | standfirst | Several of the vegetation-plot databases that supply its test plots are also published in GBIF. | provenance_flags.csv; ledger A3-A7 | Supported |  |
+| 4 | standfirst | We flagged those GBIF datasets from registry metadata, froze the list, measured how often their records share a 1 km test cell with a test presence, and retrained SAGE's Random Forest baseline for 1,745 species without them and, as a control, without matched random records. | audit.py, rf.py, analyse.py | Supported |  |
+| 5 | standfirst | The plan and all analysis code were committed before any overlap or model result. | git order: 3757cd0 plan, 34a3502 flags, 2fac9bb audit before any RF result | Supported |  |
+| 6 | verdict | **Verdict: H1 Refuted; H2 Refuted.** Both leakage measures fall below their preregistered thresholds overall, but the effect is concentrated in two source databases. | primary.json H1 verdict; audit.json H2 verdict; by_source_db | Supported | 'carry most of the effect' replaced by 'exceed 0.02 on their own' |
+| 7 | verdict | **H1 (removing provenance-shared training records lowers AUROC on source plots by at least 0.02 more than matched random removal): Refuted.** | plan.md H1 | Supported |  |
+| 8 | verdict | The difference-in-differences is **+0.006** AUROC (95% species bootstrap +0.005 to +0.008), across 1,745 species. | primary.json H1_source_cells 0.00626 (0.00476-0.00784), 1745 | Supported |  |
+| 9 | verdict | Mean AUROC on source test cells: 0.854 as distributed, 0.849 without provenance-shared records, 0.856 after matched random removal. | primary.json auroc_C0 0.8542, C1 0.8493, random 0.8556 | Supported |  |
+| 10 | verdict | On non-source test cells the same contrast is 0.000 (−0.0005 to +0.0005), as expected if the effect is local. | primary.json other_cells 1e-05 (-0.00047, 0.0005) | Supported |  |
+| 11 | verdict | **H2 (at least 10% of source-plot test presences have a provenance-shared training record in the same 1 km cell): Refuted.** | plan.md H2 | Supported |  |
+| 12 | verdict | The share is **8.3%** (95% cell bootstrap 7.7% to 8.9%) of 165,422 test presences in 7,466 source test cells. | audit.json H2 0.0829 (0.0766-0.0893); 165,422; 7,466 | Supported |  |
+| 13 | verdict | That counts flagged GBIF snapshot records. | audit.py (support.parquet = snapshot records) | Supported |  |
+| 14 | verdict | Counting only those that reached SAGE's training data gives 6.1%, and 3.9% are provenance-only, i.e. have no other record in the cell (post hoc). | posthoc_h2_training.json b 0.0614, d 0.0391 | Exploratory-labelled |  |
+| 15 | verdict | For comparison, 26.6% of these test presences have a training presence of the same species in the same cell from any source, which SAGE accepts by design. | posthoc_h2_training.json c 0.2663; ledger A2 | Exploratory-labelled |  |
+| 16 | verdict | France's SOPHY database supplies 56% of those presences and has no co-located flagged record. | audit.json H2_by_source France_sophy 93,380 of 165,422 (cells can count for two databases; sum 165,658) | Supported |  |
+| 17 | verdict | That is either because none exist or because its relevés reach GBIF through aggregators the metadata do not disclose. | ledger A7 conditions; lead.risks | Supported | stated as two possibilities, not a finding |
+| 18 | verdict | **Two databases exceed 0.02 on their own:** | primary.json by_source_db: TAVA 0.164, Ukraine 0.055; all others < 0.02 | Supported | was 'Two databases carry most of the effect' (not additive) |
+| 19 | verdict | **West Africa (TAVA): 87% of test presences co-located, DiD +0.164** (+0.139 to +0.191, 53 species). | audit.json TAVA 0.874; primary.json TAVA 0.16356 (0.13891-0.19056), 53 | Supported |  |
+| 20 | verdict | AUROC falls from 0.836 to 0.685 without the shared records but is 0.849 after random removal. | primary.json TAVA C0 0.8359, C1 0.6853, random 0.8488 | Supported |  |
+| 21 | verdict | **Ukrainian grasslands: 12% co-located, DiD +0.055** (+0.043 to +0.066, 452 species). | audit.json Ukraine 0.119; primary.json 0.05468 (0.04312-0.06583), 452 | Supported |  |
+| 22 | verdict | **The Netherlands: 88% co-located, but DiD only +0.016** (+0.010 to +0.022, 578 species). | audit.json NL 0.8783; primary.json 0.01599 (0.01007-0.02212), 578 | Supported |  |
+| 23 | verdict | The other eight databases' intervals include zero, except Poland's (+0.006, +0.000 to +0.011). | primary.json by_source_db; Poland 0.00572 (0.0001-0.01112) | Supported |  |
+| 24 | verdict | **The West African test plots themselves are in the training data, and probably the Dutch ones** (post hoc). | posthoc_same_releve.json TAVA 87% exact; NL same-day recall 1.0 | Exploratory-labelled | was 'Not duplicated plots' (draft read the distance test wrongly; D3) |
+| 25 | verdict | The preregistered exact-coordinate test misses this. | audit.json exact_coordinate_share 0.0005 | Supported |  |
+| 26 | verdict | A flagged record lies within 10 m of a source plot for only 0.05% of test presences, because the two copies carry coordinates hundreds of metres apart (TAVA median 375 m). | audit.json 0.0005; posthoc_distance TAVA median 375 m | Exploratory-labelled |  |
+| 27 | verdict | Species lists show it instead, in cells holding a single plot. | posthoc_same_releve.py design | Supported |  |
+| 28 | verdict | In 87% of 107 such TAVA cells, the flagged GBIF records list exactly the plot's species (median 8 species on each side). | posthoc_same_releve.json TAVA 107 cells, 0.869, 8/8 | Exploratory-labelled |  |
+| 29 | verdict | In the median of 464 Dutch cells, every plot species appears among flagged records made the same day (recall 1.0). | posthoc_same_releve.json NL same_day 464 cells, median recall 1.0 | Exploratory-labelled | 'every' qualified to the median cell |
+| 30 | verdict | They sit alongside other relevés recorded that day (median precision 0.42). | NL same_day median precision 0.419 | Exploratory-labelled |  |
+| 31 | verdict | Ukrainian matches are partial: 24 cells, median recall 0.73. | Ukraine same_day 24 cells, recall 0.731 | Exploratory-labelled |  |
+| 32 | verdict | **The random control removed somewhat fewer records**: 24 against 29 per species on average; 13% of C1's total could not be matched. | posthoc_shortfall.json 29.2 vs 24.4; removals.json 145,229 of 1,115,257 | Supported | was 'a 13% shortfall' attached to per-species means (16%) |
+| 33 | verdict | Restricted post hoc to the 1,690 species where it removed at least 90% as many, the DiD is +0.005 (+0.004 to +0.007). | posthoc_shortfall.json 1690, 0.0052 (0.00387-0.00671) | Exploratory-labelled |  |
+| 34 | plain terms | New benchmarks for species distribution models train on millions of crowd-sourced and museum sightings from GBIF. | ledger A1 | Supported |  |
+| 35 | plain terms | They then test the models on expert vegetation surveys, assuming the two sources are independent. | ledger A2 | Supported |  |
+| 36 | plain terms | But some of those expert surveys are also published inside GBIF, so a model might be tested on places it has, in effect, already seen. | ledger A3-A7 | Supported |  |
+| 37 | plain terms | We found every GBIF dataset that republishes one of the survey databases used for testing. | provenance_flags.csv (27 core) | Supported | 'every' = every dataset found by the frozen registry screen; hidden aggregators stated under Not shown |
+| 38 | plain terms | We then retrained the benchmark's Random Forest model for 1,745 plant species twice: once without those datasets, and once without an equal number of other records from the same countries. | population 1,745; C1 and C2-C6 | Supported |  |
+| 39 | plain terms | Overall, the overlap matters little. | primary.json DiD 0.006 | Supported |  |
+| 40 | plain terms | Removing the republished surveys lowers the test score by less than a hundredth more than removing other records. | DiD 0.00626, upper 0.00784 < 0.01 | Supported |  |
+| 41 | plain terms | In West Africa, though, the score for the region's species drops sharply, from 0.84 to 0.69. | primary.json TAVA 0.836 -> 0.685 | Supported |  |
+| 42 | plain terms | There, the republished survey contains the very plots used for testing: the same species lists, filed under coordinates a few hundred metres off. | posthoc_same_releve TAVA; posthoc_distance TAVA 375 m | Exploratory-labelled | was 'does not contain the test plots themselves' (wrong) |
+| 43 | plain terms | The Dutch test plots appear to be republished too, but the same species are also recorded there by many other sources, so removing the survey costs the model little. | NL same-day recall 1.0; removed by C1 41%; primary NL 0.016 | Exploratory-labelled | 'are' softened to 'appear to be' (other-day recall 0.91) |
+| 44 | plain terms | Ukrainian grasslands show a smaller effect. | primary.json Ukraine 0.055 | Supported |  |
+| 45 | plain terms | So the benchmark's overall Random Forest scores hold up, but its scores for West African species partly reward recalling the training data rather than predicting somewhere new. | primary.json overall DiD; TAVA DiD and species-list match | Supported | was 'headline results are safe' (RF only) |

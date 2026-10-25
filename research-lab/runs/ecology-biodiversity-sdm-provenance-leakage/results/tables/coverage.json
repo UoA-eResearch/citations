@@ -1,0 +1,31 @@
+{
+ "rf_auroc_src": {
+  "attempted": 12215,
+  "ok": 12215,
+  "fallback": 0,
+  "dropped": 0,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {}
+ },
+ "rf_auroc_other": {
+  "attempted": 12215,
+  "ok": 11606,
+  "fallback": 0,
+  "dropped": 609,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "AUROC undefined (one class only)": 609
+  }
+ },
+ "rf_auroc_all": {
+  "attempted": 12215,
+  "ok": 12215,
+  "fallback": 0,
+  "dropped": 0,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {}
+ }
+}

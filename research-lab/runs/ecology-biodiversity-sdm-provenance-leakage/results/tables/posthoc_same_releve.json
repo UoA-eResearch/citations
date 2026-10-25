@@ -1,0 +1,70 @@
+{
+ "Netherlands": {
+  "other_days": {
+   "cells": 581,
+   "median_recall": 0.909,
+   "median_precision": 0.126,
+   "share_recall_and_precision_ge_0_8": 0.0,
+   "median_plot_species": 17.0,
+   "median_flagged_species": 107.0
+  },
+  "same_day": {
+   "cells": 464,
+   "median_recall": 1.0,
+   "median_precision": 0.419,
+   "share_recall_and_precision_ge_0_8": 0.175,
+   "median_plot_species": 17.0,
+   "median_flagged_species": 37.0
+  },
+  "single_plot_dated_cells": 629
+ },
+ "Poland": {
+  "other_days": {
+   "cells": 14,
+   "median_recall": 0.22,
+   "median_precision": 0.109,
+   "share_recall_and_precision_ge_0_8": 0.0,
+   "median_plot_species": 20.0,
+   "median_flagged_species": 43.5
+  },
+  "same_day": {
+   "cells": 1,
+   "median_recall": 0.0,
+   "median_precision": 0.0,
+   "share_recall_and_precision_ge_0_8": 0.0,
+   "median_plot_species": 8.0,
+   "median_flagged_species": 12.0
+  },
+  "single_plot_dated_cells": 259
+ },
+ "TAVA West_Africa": {
+  "other_days": {
+   "cells": 107,
+   "median_recall": 1.0,
+   "median_precision": 1.0,
+   "share_recall_and_precision_ge_0_8": 0.869,
+   "median_plot_species": 8.0,
+   "median_flagged_species": 8.0
+  },
+  "single_plot_dated_cells": 119
+ },
+ "Ukraine Grassland Database": {
+  "other_days": {
+   "cells": 17,
+   "median_recall": 0.385,
+   "median_precision": 0.194,
+   "share_recall_and_precision_ge_0_8": 0.059,
+   "median_plot_species": 18.0,
+   "median_flagged_species": 29.0
+  },
+  "same_day": {
+   "cells": 24,
+   "median_recall": 0.731,
+   "median_precision": 0.394,
+   "share_recall_and_precision_ge_0_8": 0.083,
+   "median_plot_species": 21.0,
+   "median_flagged_species": 29.5
+  },
+  "single_plot_dated_cells": 131
+ }
+}

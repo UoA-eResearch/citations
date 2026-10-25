@@ -50,3 +50,43 @@ with an undefined AUROC, which the contrast drops. No statistic changes.
 **Remaining gates.** G3 (`results/plausibility.md`), G5 (overclaim check) and G6 (attribution ledger, starting
 with the lead's claims; its Czech Vegetation Database claim is already known to be false) run before review. G4 and
 G7 do not apply, as there is no labelling or classifier validation.
+
+## D3 (2026-10-26 06:24 NZDT; after the H1 and H2 results)
+
+- **Job order (execution only).** At 2026-10-25 18:42, before the fit run started (18:45), `rf.py fit` was changed to
+  run every species' C0 first, so that unchanged conditions could reuse the seeded C0 fit under parallel workers.
+  Fits are seeded and cached by input hash, so order cannot change any result. The change was not committed before
+  the run; it is committed now.
+- **POST HOC 1, distance to plots** (`code/posthoc_distance.py`, `results/tables/posthoc_distance.json`).
+  - Asked after seeing the TAVA effect: are the co-located flagged records copies of the evaluated plots?
+  - Measures, per source database, the minimum distance from the species' flagged records to the database's plots in
+    the cell, against the same number of records placed at random in the cell (20 draws).
+  - Also measures the share of co-located presences that C1 actually removes.
+  - Result: flagged records are no closer to the plots than random points (TAVA median 375 m against 357 m; plots
+    located to 5 m). Removed by C1: Netherlands 41%, TAVA 91%, Ukraine 82%.
+  - The draft read this as "not duplicated plots". The same script's later date check (same day, any distance:
+    Netherlands 79%, Ukraine 84%; TAVA undated on the GBIF side) and POST HOC 4 showed that reading was wrong. The
+    two copies of a relevé carry different coordinates, so distance cannot detect duplication.
+- **POST HOC 2, removal shortfall** (`code/posthoc_shortfall.py`, `results/tables/posthoc_shortfall.json`).
+  - The random arms removed 24.4 presences per species against C1's 29.2.
+  - Restricted to the 1,690 species where random removal reached 90% of C1's, the DiD is +0.0052 (+0.0039 to
+    +0.0067), against +0.0063 for all species.
+- **POST HOC 3, co-location by SAGE training presence** (`code/posthoc_h2_training.py`,
+  `results/tables/posthoc_h2_training.json`).
+  - Asked after the G3 audit trace (`code/handtrace_audit.py`) found a Dutch test presence with four flagged snapshot
+    records in its cell but no SAGE training cell there.
+  - H2 counts snapshot records, as planned, so it is an upper bound on co-location with SAGE's actual training data.
+  - Split: flagged snapshot record 8.3%; and a SAGE training presence 6.1%; and provenance-only 3.9%. A SAGE training
+    presence from any source: 26.6%. TAVA: 87.4%, 84.0%, 79.9%, 84.5%.
+  - H2's verdict (Refuted) is unchanged; the tighter counts are lower.
+- **POST HOC 4, same relevé by species list** (`code/posthoc_same_releve.py`, `results/tables/posthoc_same_releve.json`).
+  - Single-plot dated source test cells, comparing the plot's species list (the cell's evaluation targets) with the
+    database's flagged GBIF records in the cell.
+  - TAVA: 107 cells, median recall and precision 1.0, 87% with both at least 0.8, 8 species on each side. The test
+    plots are in the training data.
+  - Netherlands, same-day records: 464 cells, recall 1.0, precision 0.42.
+  - Ukraine, same-day records: 24 cells, recall 0.73, precision 0.39.
+- **G3:** `code/handtrace.py` refits two species under C0 and C1 in a fresh process, bypassing the cache; both
+  reproduce the stored AUROC exactly. `results/plausibility.md` records this.
+- **Figure:** `code/figures.py` (F1).
+- No preregistered statistic or verdict changed.

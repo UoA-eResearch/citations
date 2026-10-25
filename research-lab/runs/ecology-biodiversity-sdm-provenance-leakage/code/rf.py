@@ -200,7 +200,7 @@ def fit(workers=12):
     load()
     G["n_jobs"] = 2
     pop = pd.read_csv(T / "population.csv").sp.tolist()
-    jobs = [(int(s), c) for s in pop for c in CONDS]          # C0 first per species, so unchanged conditions reuse it
+    jobs = [(int(s), "C0") for s in pop] + [(int(s), c) for c in CONDS[1:] for s in pop]   # all C0 first, for reuse
     done = 0
     with ProcessPoolExecutor(int(workers)) as ex:          # fork: workers share the loaded arrays copy-on-write
         for r in ex.map(fit_one, jobs, chunksize=1):

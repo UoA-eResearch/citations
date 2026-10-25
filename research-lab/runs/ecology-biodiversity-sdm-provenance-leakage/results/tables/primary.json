@@ -1,0 +1,203 @@
+{
+ "fits": 12215,
+ "reused_fits": 1178,
+ "H1_source_cells": {
+  "species": 1745,
+  "did": 0.00626,
+  "ci": [
+   0.00476,
+   0.00784
+  ],
+  "drop_C0_minus_C1": 0.00491,
+  "drop_C0_minus_random": -0.00135,
+  "auroc_C0": 0.8542,
+  "auroc_C1": 0.8493,
+  "auroc_random": 0.8556,
+  "species_changed_by_C1": 1533,
+  "verdict": "Refuted"
+ },
+ "other_cells": {
+  "species": 1658,
+  "did": 1e-05,
+  "ci": [
+   -0.00047,
+   0.0005
+  ],
+  "drop_C0_minus_C1": -0.00015,
+  "drop_C0_minus_random": -0.00016,
+  "auroc_C0": 0.8452,
+  "auroc_C1": 0.8454,
+  "auroc_random": 0.8454,
+  "species_changed_by_C1": 1462
+ },
+ "all_cells": {
+  "species": 1745,
+  "did": 0.00153,
+  "ci": [
+   0.00108,
+   0.00204
+  ],
+  "drop_C0_minus_C1": 0.00095,
+  "drop_C0_minus_random": -0.00058,
+  "auroc_C0": 0.8528,
+  "auroc_C1": 0.8519,
+  "auroc_random": 0.8534,
+  "species_changed_by_C1": 1533
+ },
+ "by_source_db": {
+  "Balkan Dry Grassland Database": {
+   "species": 490,
+   "did": 0.00097,
+   "ci": [
+    -0.00436,
+    0.00632
+   ],
+   "drop_C0_minus_C1": 0.00095,
+   "drop_C0_minus_random": -2e-05,
+   "auroc_C0": 0.7099,
+   "auroc_C1": 0.7089,
+   "auroc_random": 0.7099,
+   "species_changed_by_C1": 444
+  },
+  "Belgium INBOVEG": {
+   "species": 212,
+   "did": -0.00162,
+   "ci": [
+    -0.01863,
+    0.01562
+   ],
+   "drop_C0_minus_C1": 0.01644,
+   "drop_C0_minus_random": 0.01806,
+   "auroc_C0": 0.6276,
+   "auroc_C1": 0.6112,
+   "auroc_random": 0.6096,
+   "species_changed_by_C1": 209
+  },
+  "France_sophy": {
+   "species": 1504,
+   "did": -9e-05,
+   "ci": [
+    -0.00089,
+    0.00065
+   ],
+   "drop_C0_minus_C1": -0.00029,
+   "drop_C0_minus_random": -0.0002,
+   "auroc_C0": 0.8608,
+   "auroc_C1": 0.8611,
+   "auroc_random": 0.861,
+   "species_changed_by_C1": 1295
+  },
+  "Germany_vegetweb": {
+   "species": 685,
+   "did": 0.0024,
+   "ci": [
+    -0.00205,
+    0.00709
+   ],
+   "drop_C0_minus_C1": -0.00348,
+   "drop_C0_minus_random": -0.00588,
+   "auroc_C0": 0.7699,
+   "auroc_C1": 0.7734,
+   "auroc_random": 0.7758,
+   "species_changed_by_C1": 674
+  },
+  "Netherlands": {
+   "species": 578,
+   "did": 0.01599,
+   "ci": [
+    0.01007,
+    0.02212
+   ],
+   "drop_C0_minus_C1": 0.01086,
+   "drop_C0_minus_random": -0.00513,
+   "auroc_C0": 0.7833,
+   "auroc_C1": 0.7724,
+   "auroc_random": 0.7884,
+   "species_changed_by_C1": 574
+  },
+  "Paramo": {
+   "species": 67,
+   "did": 0.00705,
+   "ci": [
+    -0.00736,
+    0.02478
+   ],
+   "drop_C0_minus_C1": 0.00742,
+   "drop_C0_minus_random": 0.00037,
+   "auroc_C0": 0.6819,
+   "auroc_C1": 0.6744,
+   "auroc_random": 0.6815,
+   "species_changed_by_C1": 67
+  },
+  "Poland": {
+   "species": 822,
+   "did": 0.00572,
+   "ci": [
+    0.0001,
+    0.01112
+   ],
+   "drop_C0_minus_C1": 0.00965,
+   "drop_C0_minus_random": 0.00392,
+   "auroc_C0": 0.6911,
+   "auroc_C1": 0.6815,
+   "auroc_random": 0.6872,
+   "species_changed_by_C1": 799
+  },
+  "Slovakia_nvd": {
+   "species": 1021,
+   "did": 0.00178,
+   "ci": [
+    -0.00042,
+    0.00421
+   ],
+   "drop_C0_minus_C1": 0.0014,
+   "drop_C0_minus_random": -0.00038,
+   "auroc_C0": 0.8017,
+   "auroc_C1": 0.8004,
+   "auroc_random": 0.8021,
+   "species_changed_by_C1": 1016
+  },
+  "Spain_sivim_wetlands": {
+   "species": 470,
+   "did": 0.00284,
+   "ci": [
+    -0.00138,
+    0.00751
+   ],
+   "drop_C0_minus_C1": 0.00173,
+   "drop_C0_minus_random": -0.00111,
+   "auroc_C0": 0.837,
+   "auroc_C1": 0.8353,
+   "auroc_random": 0.8382,
+   "species_changed_by_C1": 415
+  },
+  "TAVA West_Africa": {
+   "species": 53,
+   "did": 0.16356,
+   "ci": [
+    0.13891,
+    0.19056
+   ],
+   "drop_C0_minus_C1": 0.15063,
+   "drop_C0_minus_random": -0.01293,
+   "auroc_C0": 0.8359,
+   "auroc_C1": 0.6853,
+   "auroc_random": 0.8488,
+   "species_changed_by_C1": 53
+  },
+  "Ukraine Grassland Database": {
+   "species": 452,
+   "did": 0.05468,
+   "ci": [
+    0.04312,
+    0.06583
+   ],
+   "drop_C0_minus_C1": 0.0519,
+   "drop_C0_minus_random": -0.00278,
+   "auroc_C0": 0.742,
+   "auroc_C1": 0.6901,
+   "auroc_random": 0.7448,
+   "species_changed_by_C1": 450
+  }
+ }
+}

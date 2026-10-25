@@ -1,0 +1,88 @@
+{
+ "all": {
+  "presences": 165422,
+  "a_flagged_snapshot_record": 0.0829,
+  "b_and_sage_training_presence": 0.0614,
+  "c_sage_training_presence_any_source": 0.2663,
+  "d_b_and_provenance_only": 0.0391
+ },
+ "by_source_db": {
+  "Balkan Dry Grassland Database": {
+   "presences": 4101,
+   "a_flagged_snapshot_record": 0.0,
+   "b_and_sage_training_presence": 0.0,
+   "c_sage_training_presence_any_source": 0.0051,
+   "d_b_and_provenance_only": 0.0
+  },
+  "Belgium INBOVEG": {
+   "presences": 982,
+   "a_flagged_snapshot_record": 0.0387,
+   "b_and_sage_training_presence": 0.0143,
+   "c_sage_training_presence_any_source": 0.2994,
+   "d_b_and_provenance_only": 0.0122
+  },
+  "France_sophy": {
+   "presences": 93380,
+   "a_flagged_snapshot_record": 0.0,
+   "b_and_sage_training_presence": 0.0,
+   "c_sage_training_presence_any_source": 0.2284,
+   "d_b_and_provenance_only": 0.0
+  },
+  "Germany_vegetweb": {
+   "presences": 7586,
+   "a_flagged_snapshot_record": 0.0016,
+   "b_and_sage_training_presence": 0.0016,
+   "c_sage_training_presence_any_source": 0.0671,
+   "d_b_and_provenance_only": 0.0001
+  },
+  "Netherlands": {
+   "presences": 13345,
+   "a_flagged_snapshot_record": 0.8783,
+   "b_and_sage_training_presence": 0.6228,
+   "c_sage_training_presence_any_source": 0.6493,
+   "d_b_and_provenance_only": 0.3601
+  },
+  "Paramo": {
+   "presences": 2497,
+   "a_flagged_snapshot_record": 0.0112,
+   "b_and_sage_training_presence": 0.0112,
+   "c_sage_training_presence_any_source": 0.0893,
+   "d_b_and_provenance_only": 0.0108
+  },
+  "Poland": {
+   "presences": 7750,
+   "a_flagged_snapshot_record": 0.02,
+   "b_and_sage_training_presence": 0.0182,
+   "c_sage_training_presence_any_source": 0.0574,
+   "d_b_and_provenance_only": 0.0102
+  },
+  "Slovakia_nvd": {
+   "presences": 28388,
+   "a_flagged_snapshot_record": 0.0023,
+   "b_and_sage_training_presence": 0.0023,
+   "c_sage_training_presence_any_source": 0.3672,
+   "d_b_and_provenance_only": 0.0011
+  },
+  "Spain_sivim_wetlands": {
+   "presences": 2453,
+   "a_flagged_snapshot_record": 0.0,
+   "b_and_sage_training_presence": 0.0,
+   "c_sage_training_presence_any_source": 0.232,
+   "d_b_and_provenance_only": 0.0
+  },
+  "TAVA West_Africa": {
+   "presences": 1452,
+   "a_flagged_snapshot_record": 0.874,
+   "b_and_sage_training_presence": 0.8395,
+   "c_sage_training_presence_any_source": 0.845,
+   "d_b_and_provenance_only": 0.7989
+  },
+  "Ukraine Grassland Database": {
+   "presences": 3724,
+   "a_flagged_snapshot_record": 0.119,
+   "b_and_sage_training_presence": 0.105,
+   "c_sage_training_presence_any_source": 0.1104,
+   "d_b_and_provenance_only": 0.0969
+  }
+ }
+}
