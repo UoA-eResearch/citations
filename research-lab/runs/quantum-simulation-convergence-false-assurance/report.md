@@ -1,4 +1,4 @@
-# When two truncation settings agree, is the answer right? In 300 exactly solvable circuits, Pauli propagation's agreement misled 31% of the time, BP-PEPS's 2%
+# When two truncation settings agree, is the answer right? In 300 exactly solvable circuits, Pauli propagation's agreement misled 31% of the time, mostly on loop-rich Floquet circuits; BP-PEPS's 2%
 
 *300 heavy-hex patch circuits of 20–26 qubits (Floquet mixed-field Ising after the Quantum Advantage Tracker's model,
 and kicked Ising) were simulated exactly by statevector and approximately by BP-PEPS (TensorNetworkQuantumSimulator.jl)
@@ -46,17 +46,18 @@ modelled on a real tracker challenge, three-quarters were. The reason: as that m
 drift steadily toward zero, and a slightly finer setting drifts the same way, so the two agree while both are wrong.
 
 The other method, a tensor-network approach, was rarely fooled in this way: when its two finest settings agreed, it was
-almost always right. A simple rule of thumb ("the true error is at most about 4 times the gap between the last two
-settings") gave it honest error bars.
+almost always right. A simple rule of thumb ("the true error is usually within about 4 times the gap between the last two settings", which held for about 9 in 10 held-out circuits) gave it honest error bars.
 
 ## What was asked
 
 The lead (`quantum-simulation-convergence-false-assurance`) noted the following:
 
-- Classical submissions to the Quantum Advantage Tracker report point values with empty error fields and are judged by
-  whether truncation ladders agree.
-- The tracker itself shows two PEPS-BP bond dimensions agreeing closely (0.456 and 0.442) while sitting far from the
-  QESEM and SPP values (about 0.39).
+- Almost all classical submissions to the Quantum Advantage Tracker (12 of 13 in its submissions file) report point
+  values without error bounds, and are judged largely by whether truncation ladders agree.
+- For the 51-qubit Floquet magnetization at 16 cycles, the tracker's notes list PEPS-BP (BD=700) at 0.442, two SPP
+  settings at 0.411 and 0.387, and QESEM at 0.390 (0.369–0.412). They say neither classical method converges
+  convincingly beyond about 12 cycles, across bond dimensions or truncation settings. (The lead's description of two
+  PEPS-BP bond dimensions "agreeing closely" is not supported by those notes; G6.)
 - Gharibyan et al. (arXiv:2507.10771) warn that tighter truncation does not always help, but nobody had measured how
   often apparent convergence is wrong over a population of exactly known instances.
 
@@ -121,9 +122,9 @@ The conclusion does not depend on the preregistered thresholds.
 - **Agreement between truncation settings is weak evidence for coefficient-truncated Pauli propagation on Floquet-type
   circuits.**
   - The error is a systematic shrinkage toward zero. Refining ε reduces it slowly and in the same direction, so
-    consecutive settings agree.
-  - This matches the tracker's warning case in spirit, though in that case it is PEPS-BP whose agreeing settings
-    sit away from the other methods (QESEM and sparse Pauli propagation).
+    consecutive settings agree.  - The tracker's notes describe visible non-convergence for both PEPS-BP and SPP at large depth, not apparent
+    convergence. This study's point is complementary: where coefficient-truncated Pauli propagation does look
+    converged on Floquet-type circuits, it can still be biased.
   - A ladder spread says little here unless it is multiplied by a large, circuit-dependent factor.
 - **Loops matter for Pauli propagation too.** Its false-assurance share rises with the number of loops in the patch:
   1 of 25 with none, 14 of 54 with one, 25 of 50 with two. The H1 verdict therefore leans on the loop-rich half of the

@@ -61,3 +61,19 @@
 - The buggy output is kept as `results/tables/primary_v1_coarsest_pair_bug.json`: H1 Supported (BP 7.5%, PP 70%),
   H2 Inconclusive.
 - The corrected run is the primary result. No other analysis choice changed.
+
+## Pre-review gate (G5, G6) — 2026-10-25 23:30 NZDT, after all results (wording and attribution only)
+
+The lab's METHODS.md gates were run before this draft's review. No number changed.
+- **G6 attribution ledger** (`results/attribution_ledger.csv`, 6 claims, passes):
+  - the lead's description of the tracker case was wrong. It had two PEPS-BP bond dimensions "agreeing closely" at
+    0.456 and 0.442, far from QESEM and SPP at about 0.39. The tracker's notes give PEPS-BP (BD=700) 0.442, SPP 0.411
+    and 0.387, and QESEM 0.390 (0.369–0.412) at 16 cycles, and say neither classical method converges convincingly
+    beyond about 12 cycles. The BD=512 value is not tabulated. The report now states the verified figures, and the
+    "matches the tracker's warning case" sentence is rewritten (that case is visible non-convergence);
+  - "empty error fields" is now quantified as 12 of 13 classical submissions;
+  - Gharibyan et al. (arXiv 2507.10771) resolves, and its abstract supports the "reducing δ does not always help"
+    claim.
+- **G5 overclaim check** (`review/overclaim_check.md`, passes):
+  - the title now notes that the 31% sits mostly on loop-rich Floquet circuits;
+  - "at most about 4 times the gap" became "usually within", since it held for about 9 in 10 held-out circuits.
