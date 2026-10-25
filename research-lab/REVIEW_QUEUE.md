@@ -43,7 +43,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 
 **Pre-review gate (from 2026-10-25, METHODS.md):** before launching a draft's Fable review, run G5 (`tools/overclaim_check.py RUN --verify`) and G6 (`tools/attribution.py check RUN`) on it, fix what they find as a D-entry, and add the standard gate-check block to its `review/prompt.md`. New leads apply all of G1–G7.
 
-**The owner's exception ended at 16:00 on 2026-10-23; the 1-per-5 h rule applies again. AVF confirmation started 2026-10-26 03:41; next Fable run not before 08:41.** Order: confirmations of DSI (b0149e2), reef (d7c2ace), estuary (3dd86a7), kauri (920bde5) and retraction risk (6d4c885), one per 5 h slot; then the ASR confirmation (fixes in f8a6d4d); then the EDB ratchet review (fb7efde), then the Public Domain Day review (26ff608), then the AVF dv/v review (35e9d7a).
+**The owner's exception ended at 16:00 on 2026-10-23; the 1-per-5 h rule applies again. AVF confirmation started 2026-10-26 03:41; next Fable run not before 08:41.** Order (from 2026-10-26): reviews in table order - precedent erosion, GloBI, mortality, supply chain, scaling-fit, citer contagion, OEIS, hub vintage, notebook noise, mathlib, quantum, SDM provenance - with each confirmation pass taking the next slot after its review's fixes.
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
@@ -77,6 +77,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | `computational-reproducibility-notebook-noise-aware-verdicts` |  b67028b | H1 Inconclusive (20.6%, 10-37%); H2 Inconclusive (1.26, 1.09-1.58); D3 re-run after backend bug | queued; pre-review gate G5+G6 done 2026-10-25 |
 | `formal-math-mathlib-proof-rot-flexible-linter` |  b62e129 | H1 Inconclusive (OR 1.48, 0.92-2.39); 6-month 1.67 (1.01-2.77); second pair 0.99 | queued; pre-review gate G5+G6 done 2026-10-25 |
 | `quantum-simulation-convergence-false-assurance` |  b7b7321 | H1 Supported (PP 31%, 23-39%; BP 1.9%); H2 Supported pooled; random-patch-only PP 9.5% | queued; pre-review gate G5+G6 done 2026-10-25 (tracker case corrected) |
+| `ecology-biodiversity-sdm-provenance-leakage` |  7f6441f | H1 Refuted (DiD +0.006, +0.005 to +0.008; 1,745 species), H2 Refuted (8.3%); TAVA West Africa DiD +0.164 with its test plots republished in the training data (post hoc) | queued; all applicable gates G1-G3, G5, G6 run before review (first lead started under METHODS.md) |
 
 ## Order to run them in
 
