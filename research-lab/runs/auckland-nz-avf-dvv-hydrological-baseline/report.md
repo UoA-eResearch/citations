@@ -82,13 +82,15 @@ The critic's design fix: the model is trained on 2013–2020 and tested from 202
     stretched trace is evaluated with a cubic spline (D1).
   - The grid runs ±2%, in 0.05% steps refined to 0.005%. (The plan named a 0.01% grid, which was not logged in the
     first version.)
-  - Days whose stack has no coda energy (dead channel) or correlates negatively with the reference are dropped.  - Coverage: 186,439 of 200,667 pair-days were measured. The drops are segments with fewer than 60 training days
+  - Days whose stack has no coda energy (dead channel) or correlates negatively with the reference are dropped.
+  - Coverage: 186,439 of 200,667 pair-days were measured. The drops are segments with fewer than 60 training days
     (9,360), polarity mismatch (2,346), days outside segments (1,232), dead channel (852) and short stacks (438)
     (`results/tables/coverage.json`).
   - 53 pairs give dv/v. The result is smoothed with a 30-day running mean.
 - **The model:** segment constants + a · P_τ (rainfall diffused to depth, erfc kernel, τ from 1 to 500 days) + an
   annual sinusoid + a linear drift. It is ordinary least squares, with τ chosen by training fit.
-  - Training runs 2013–2020. The held-out period runs from 2021 to the end of either station's segment.  - Pairs are scored with mean training coherence of at least 0.5 and at least 180 held-out days: 33 of 53.
+  - Training runs 2013–2020. The held-out period runs from 2021 to the end of either station's segment.
+  - Pairs are scored with mean training coherence of at least 0.5 and at least 180 held-out days: 33 of 53.
 - **Forcing:** ERA5 daily rainfall and temperature at the field's centre, from the Open-Meteo archive (no gaps).
 - **Plausibility (G3):** `results/plausibility.md`, with three pair-days recomputed by hand from the raw
   correlations.

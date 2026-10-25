@@ -80,7 +80,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
   <h1>A rainfall-and-season model does not predict seismic velocity changes under the Auckland Volcanic Field: no hydrological baseline at 0.5–2 Hz, and month-scale wander of about 0.08%</h1>
   <p class="subtitle">Daily ambient-noise cross-correlations for 55 vertical-component pairs of 11 GeoNet stations, 2013 to September 2026. dv/v is measured by stretching the coda at 0.5–2 Hz. A rainfall-diffusion, annual and drift model is fitted on 2013–2020 and tested, unchanged, from 2021. The plan was committed before any waveform was correlated. This version includes fixes made after independent review (D1): a sensor polarity flip and a dead-channel block at KBAZ, and the noise-floor framing.</p>
   <div class="meta">
-    <span>Report · 2026-10-25 · pre-review draft</span>
+    <span>Report · 2026-10-26 · pre-review draft</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-avf-dvv-hydrological-baseline/plan.md">Preregistration</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-avf-dvv-hydrological-baseline/deviations.md">Deviations log</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-avf-dvv-hydrological-baseline/code">Code</a>
@@ -170,13 +170,15 @@ monitoring of the field was found.</p>
     stretched trace is evaluated with a cubic spline (D1).
     - The grid runs ±2%, in 0.05% steps refined to 0.005%. (The plan named a 0.01% grid, which was not logged in the
     first version.)
-    - Days whose stack has no coda energy (dead channel) or correlates negatively with the reference are dropped.  - Coverage: 186,439 of 200,667 pair-days were measured. The drops are segments with fewer than 60 training days
+    - Days whose stack has no coda energy (dead channel) or correlates negatively with the reference are dropped.
+    - Coverage: 186,439 of 200,667 pair-days were measured. The drops are segments with fewer than 60 training days
     (9,360), polarity mismatch (2,346), days outside segments (1,232), dead channel (852) and short stacks (438)
     (<code>results/tables/coverage.json</code>).
     - 53 pairs give dv/v. The result is smoothed with a 30-day running mean.
 - <strong>The model:</strong> segment constants + a · P_τ (rainfall diffused to depth, erfc kernel, τ from 1 to 500 days) + an
   annual sinusoid + a linear drift. It is ordinary least squares, with τ chosen by training fit.
-    - Training runs 2013–2020. The held-out period runs from 2021 to the end of either station's segment.  - Pairs are scored with mean training coherence of at least 0.5 and at least 180 held-out days: 33 of 53.
+    - Training runs 2013–2020. The held-out period runs from 2021 to the end of either station's segment.
+    - Pairs are scored with mean training coherence of at least 0.5 and at least 180 held-out days: 33 of 53.
 - <strong>Forcing:</strong> ERA5 daily rainfall and temperature at the field's centre, from the Open-Meteo archive (no gaps).
 - <strong>Plausibility (G3):</strong> <code>results/plausibility.md</code>, with three pair-days recomputed by hand from the raw
   correlations.</p>
