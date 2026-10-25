@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Public Domain Day Editions</title>
+<meta name="description" content="When renewed 1920s US books entered the public domain in 2019-2025, did new Open Library editions and Gutenberg releases follow?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Legal digital humanities</div>
+  <h1>Does Public Domain Day unlock new editions? The preregistered edition count is too fragile to call; in an exploratory check, newly freed books become about three times as likely to get some new edition, and Project Gutenberg picks them up</h1>
+  <p class="subtitle">US books registered in 1923–1930: renewed books, whose copyright expired on 1 January 2019–2025, against same-vintage never-renewed books, in the public domain since the 1950s. Registrations come from the Catalog of Copyright Entries (NYPL XML) and renewals from the NYPL renewal files. Open Library editions are linked through works (2026-09-30 dumps). The plan was committed before any edition was linked or counted. This version includes fixes made after independent review (D2).</p>
+  <div class="meta">
+    <span>Report · 2026-10-25 · pre-review draft</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/legal-digital-humanities-public-domain-day-renewal-did/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/legal-digital-humanities-public-domain-day-renewal-did/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/legal-digital-humanities-public-domain-day-renewal-did/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: Inconclusive.</strong>
+- <strong>H1, the preregistered count outcome:</strong> it passes the rule only after a post-result fix (D1), and then rests on a
+  single cohort.
+- <strong>Exploratory, after review:</strong> the chance that a book gets <em>any</em> new edition rises robustly.
+- <strong>Project Gutenberg:</strong> a clear expiry response.</p>
+<ul>
+<li><strong>H1 (expiry raises new Open Library editions by at least 50%).</strong><ul>
+<li><strong>The preregistered estimator</strong> as first run returned RR 0.33 (0.19–0.58; original renewal flags). It is
+degenerate: cohort × event-time cells with no editions at all (five of the seven in 2025) push PPML coefficients
+towards −∞.</li>
+<li><strong>After dropping separated cells</strong> (D1, the standard ppmlhdfe convention, decided after the first result was
+seen), RR is <strong>1.86</strong> (1.01–3.43), with a clean pre-trend (Wald p = 0.78). The rule calls it Supported.</li>
+</ul>
+</li>
+<li><strong>That number is fragile</strong> (post hoc checks, D2):<ul>
+<li><strong>The 2024 cohort.</strong> Without it, RR is <strong>1.12</strong> (0.61–2.07). Without any other single cohort it stays 1.65–2.56.</li>
+<li><strong>Thin recent years.</strong> That cohort's post period falls in 2024–2025, when Open Library recorded only 53 and 15
+editions across all linked works. Restricting to calendar years ≤ 2023 gives <strong>0.95</strong> (0.50–1.77); ≤ 2022 gives
+1.02.</li>
+<li><strong>Planned variants,</strong> after correctly dropping cohorts with an empty reference year (D2):<ul>
+<li>excluding print-on-demand publishers: 1.38 (0.53–3.62);</li>
+<li>an ingestion-lag filter: 1.10 (0.55–2.18);</li>
+<li>the placebo (expiry 3 years earlier): 1.06 (0.68–1.66).</li>
+</ul>
+</li>
+<li><strong>The earlier claims were wrong.</strong> The previous version's "RR 794" and "failing pre-trends" were an unhandled
+separation of the reference year, not evidence against H1.</li>
+</ul>
+</li>
+<li><strong>Exploratory: any new edition in the year.</strong> RR <strong>3.53</strong> (2.09–5.99), with a flat pre-trend (p = 0.73).<ul>
+<li><strong>Robust:</strong> without any single cohort, 2.58–4.63; years ≤ 2023, 2.29 (1.32–3.96); lag filter, 3.01; excluding
+reprints, 3.44.</li>
+<li><strong>Weaker or null:</strong> excluding print-on-demand gives 2.26 (0.93–5.51); the placebo is 0.84.</li>
+<li><strong>Capped counts</strong> (at most 5 editions per work-year) give 2.81 (1.60–4.95).</li>
+<li><strong>Why counts are fragile:</strong> single works flood single years with print-on-demand editions.</li>
+</ul>
+</li>
+<li><strong>OLS on log(1 + editions),</strong> relative to the treated pre-period mean (0.0059):<ul>
+<li>Sun–Abraham: +62% (−14% to +137%);</li>
+<li>two-way FE: +91% (+43% to +139%).</li>
+<li>Neither contradicts H1. The previous version wrongly called them "tiny".</li>
+</ul>
+</li>
+<li><strong>Project Gutenberg responds.</strong><ul>
+<li>Renewed works were almost never released before expiry (7 of 3,926), then at 4–14 per 1,000 works per year.</li>
+<li>Never-renewed works over the same years: 0.83 per 1,000 per year.</li>
+<li>Within two years of expiry: 1.81% against 0.25%.</li>
+</ul>
+</li>
+<li><strong>The linkage undercounts treated books.</strong><ul>
+<li>Precision is high: 73 of 74 judgeable links are correct.</li>
+<li>Recall among shown candidates is 0.29 for renewed books and 0.50 for never-renewed ones. Popular books often have
+duplicate Open Library records, and 60% of renewed against 44% of never-renewed registrations with a passing
+candidate are dropped as ambiguous.</li>
+</ul>
+</li>
+</ul>
+<h2>In plain terms</h2>
+<p>Every 1 January, a new year of American books enters the public domain. For books from the 1920s, that only
+happened if the publisher had bothered to renew the copyright. Most never did, so those books have been free for
+decades. That gives a natural comparison: when a renewed book's copyright finally expires, do new editions appear,
+compared with similar old books that were already free?</p>
+<p>We linked about 30,000 registered books from 1923–1930 to Open Library, the largest open book catalogue, and looked
+at new editions each year. The data are thin: only about 1,100 of the books had any new edition in 2008–2025, and the
+catalogue has barely recorded the last two years.</p>
+<p>Counting editions, which is what we planned to measure, gave an 86% rise after a standard fix made once we had seen
+the first answer. But that rise comes almost entirely from the books freed in 2024, and a few cheap print-on-demand
+reprints of single titles. Take those away and the count shows nothing either way.</p>
+<p>A simpler question gives a steadier answer, though we only asked it after an independent reviewer suggested it: does
+a book get any new edition at all in a given year? Newly freed books were about three times as likely to, and that
+held under every check except dropping print-on-demand publishers.</p>
+<p>Project Gutenberg, the volunteer e-book library, almost never released these books while they were in copyright,
+then started releasing them at several times the rate of comparable books that were already free.</p>
+<h2>What was asked</h2>
+<p>The lead (<code>legal-digital-humanities-public-domain-day-renewal-did</code>) asked what the annual US copyright expiries since
+2019 unlock. The design uses renewal status to form the control group.
+- <strong>Prior work is cross-sectional:</strong> Reimers on bestsellers before and after 1923, and Heald on Amazon editions by
+  decade.
+- <strong>No event study</strong> of the annual expiries with a renewal-based control was found.</p>
+<h2>How it was done</h2>
+<ul>
+<li><strong>Registrations and renewal.</strong><ul>
+<li>The data are 94,683 A-class book registrations for 1923–1930.</li>
+<li>A registration is renewed if three conditions hold:<ul>
+<li>its number matches a renewal's original registration number;</li>
+<li>the dates are within a year;</li>
+<li>the titles match, with token-set similarity at least 60 (D2: renewal titles taken from the full entry text when
+  the title field is empty, and author-name prefixes ignored).</li>
+</ul>
+</li>
+<li>Renewed shares are 17–20% per year.</li>
+</ul>
+</li>
+<li><strong>Linkage to Open Library works:</strong><ul>
+<li>blocking on the first two title tokens (the plan said surname plus first token; D2);</li>
+<li>title similarity at least 90, with the author surname present;</li>
+<li>the work's first publish year no later than registration year + 1 (85.5% of linked works have none);</li>
+<li>ambiguous registrations dropped.</li>
+</ul>
+</li>
+</ul>
+<p>30,705 registrations are linked (4,671 of them renewed), of which 30,329 have registration years in range.
+- <strong>Outcome.</strong> Open Library editions per work per publish year, 2008–2025.
+- <strong>Model.</strong> PPML with work and year fixed effects and saturated cohort × event-time dummies (Sun–Abraham):
+    - event time is binned to [−8, +6], with −1 as the reference;
+    - RR is the cohort-weighted average over events 0–2;
+    - the pre-trend is the Wald test on events −5 to −2;
+    - standard errors are clustered by work;
+    - separated cells (D1) and cohorts with an empty reference year (D2) are dropped.
+- <strong>Validation.</strong> 300 registrations (150 renewed, 150 not) were labelled by a separate agent. It saw up to 8
+  lettered candidates and not the matcher's choice.</p>
+<h2>Results</h2>
+<h3>H1 and the exploratory outcome (<code>results/figures/F1_event_study.png</code>)</h3>
+<figure><a href="results/figures/F1_event_study.png"><img src="results/figures/F1_event_study.png" alt="Event study"></a><figcaption>PPML with work and calendar-year fixed effects and saturated cohort x event-time dummies (Sun-Abraham), cohort-size weighted; 95% intervals clustered by work. 191 treated and 922 control works have at least one edition in 2008-2025. Cells with zero outcome are separated and dropped (D1), as are cohorts with a zero reference cell (D2). Orange crosses: the first run&#x27;s estimates for the separated cells (log RR to -12.8). Left: the preregistered count outcome; it depends on the 2024 cohort (without it, RR 1.12). Right: an exploratory binary outcome, any new edition in the year, added after review.</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>outcome and run</th>
+<th>RR (events 0–2)</th>
+<th>95% CI</th>
+<th>pre-trend p</th>
+<th>treated works</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>count, preregistered estimator, first run (original renewal flags)</td>
+<td>0.33</td>
+<td>0.19–0.58</td>
+<td>0.66</td>
+<td>184</td>
+</tr>
+<tr>
+<td><strong>count, D1 (primary as reported)</strong></td>
+<td><strong>1.86</strong></td>
+<td><strong>1.01–3.43</strong></td>
+<td>0.78</td>
+<td>191</td>
+</tr>
+<tr>
+<td>count, without the 2024 cohort (post hoc)</td>
+<td>1.12</td>
+<td>0.61–2.07</td>
+<td>0.33</td>
+<td>163</td>
+</tr>
+<tr>
+<td>count, calendar years ≤ 2023 (post hoc)</td>
+<td>0.95</td>
+<td>0.50–1.77</td>
+<td>0.33</td>
+<td>148</td>
+</tr>
+<tr>
+<td>count, excluding print-on-demand (D1 + D2; cohorts 2022–24 unidentified)</td>
+<td>1.38</td>
+<td>0.53–3.62</td>
+<td>0.42</td>
+<td>85</td>
+</tr>
+<tr>
+<td>count, ingestion lag ≥ 12 months (D1 + D2; cohort 2025 unidentified)</td>
+<td>1.10</td>
+<td>0.55–2.18</td>
+<td>0.35</td>
+<td>133</td>
+</tr>
+<tr>
+<td>count, placebo, expiry 3 years earlier</td>
+<td>1.06</td>
+<td>0.68–1.66</td>
+<td>0.15</td>
+<td>131</td>
+</tr>
+<tr>
+<td>any new edition (exploratory)</td>
+<td>3.53</td>
+<td>2.09–5.99</td>
+<td>0.73</td>
+<td>191</td>
+</tr>
+<tr>
+<td>any new edition, without the 2024 cohort</td>
+<td>2.58</td>
+<td>1.56–4.28</td>
+<td>0.37</td>
+<td>163</td>
+</tr>
+<tr>
+<td>any new edition, calendar years ≤ 2023</td>
+<td>2.29</td>
+<td>1.32–3.96</td>
+<td>0.30</td>
+<td>148</td>
+</tr>
+<tr>
+<td>any new edition, excluding print-on-demand</td>
+<td>2.26</td>
+<td>0.93–5.51</td>
+<td>0.95</td>
+<td>85</td>
+</tr>
+<tr>
+<td>any new edition, placebo</td>
+<td>0.84</td>
+<td>0.56–1.26</td>
+<td>0.07</td>
+<td>131</td>
+</tr>
+</tbody>
+</table></div>
+<p>The full grid (three outcomes × leave-one-cohort-out, year limits, the reprint exclusion, no print-on-demand, lag,
+placebo) is in <code>results/tables/sensitivity.csv</code>.</p>
+<ul>
+<li><strong>Event time</strong> (count, D1): +0.47, +0.71 and +0.80 log points at events 0, 1 and 2. None is individually
+  significant at 5% (event 1: z = 1.95).</li>
+<li><strong>Separated cells dropped by D1:</strong><ul>
+<li>2019 at +6;</li>
+<li>2020 at −7 and +5;</li>
+<li>2021 at +2 and +4;</li>
+<li>2022 at +3;</li>
+<li>2023 at +2.</li>
+</ul>
+</li>
+<li><strong>By cohort</strong> (count, each cohort against all controls; 21–35 treated works each):</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>cohort</th>
+<th>RR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2019</td>
+<td>0.94</td>
+</tr>
+<tr>
+<td>2020</td>
+<td>2.58</td>
+</tr>
+<tr>
+<td>2021</td>
+<td>0.37</td>
+</tr>
+<tr>
+<td>2022</td>
+<td>3.45</td>
+</tr>
+<tr>
+<td>2023</td>
+<td>0.95</td>
+</tr>
+<tr>
+<td>2024</td>
+<td>56</td>
+</tr>
+<tr>
+<td>2025</td>
+<td>0.39</td>
+</tr>
+</tbody>
+</table></div>
+<p>The 2024 cohort's reference year holds 1 edition across its 674 linked works, and its expiry year 19, nine of them
+  from one work.
+- <strong>Reprints.</strong> 17 of the 65 treated works with a known first-publish year were first published before their
+  registration, so their 1920s registration covered a new edition, not the text. Excluding them gives a count RR of
+  1.93 (0.87–4.29). That run also loses the 2024 cohort (its reference year becomes empty), which is what widens the
+  interval.
+- <strong>OLS on log(1 + editions):</strong>
+    - <strong>Sun–Abraham</strong> (as planned): +0.0037 (−0.0008 to +0.0081), which is +62% (−14% to +137%) of the treated
+    pre-period mean.
+    - <strong>Two-way FE</strong> (post 0–2 and later indicators): +0.0054 (SE 0.0015), which is +91% (+43% to +139%).</p>
+<h3>Project Gutenberg and HathiTrust (<code>results/figures/F2_gutenberg.png</code>)</h3>
+<figure><a href="results/figures/F2_gutenberg.png"><img src="results/figures/F2_gutenberg.png" alt="Gutenberg"></a><figcaption>Linked renewed works (registered 1923-1929) released on Project Gutenberg (catalogue of 2026-10-18; normalised title equal and author surname present), per 1,000 works whose lag year falls on or before 2026 (n above each bar). Orange: never-renewed works&#x27; yearly release rate over the same calendar years. Overall, 3.3% of renewed and 0.77% of never-renewed linked works are on Gutenberg; 7 renewed works were released before expiry. Long lags are observed only for the oldest cohorts, so the profile mixes cohorts; 2026 is a partial year.</figcaption></figure>
+<ul>
+<li><strong>Gutenberg.</strong><ul>
+<li>336 linked works are on Gutenberg: 3.3% of renewed 1923–1929 works against 0.77% of never-renewed ones.</li>
+<li><strong>Before expiry,</strong> 7 of 3,926 renewed works had been released.</li>
+<li><strong>After expiry,</strong> releases run at 7.6, 7.1, 4.1, 5.3, 7.1, 7.7, 14 and 12 per 1,000 works at risk in years 0–7.
+Long lags are seen only for the oldest cohorts, and there is no early burst once rates are normalised.</li>
+<li><strong>Never-renewed works</strong> over the same calendar years: 0.83 per 1,000 per year.</li>
+<li><strong>Within 0–2 years of expiry:</strong> 1.81% of renewed works against 0.25% (the comparison sets a more popular group
+against a less popular one).</li>
+<li><strong>By cohort,</strong> the 2-year share is 5.1% for 2019, falling to 0.8% for 2025, whose window is truncated.</li>
+</ul>
+</li>
+<li><strong>HathiTrust</strong> (2026-10-01 snapshot).<ul>
+<li>98.8% of matched volumes of renewed 1923–1929 books are full view, against 99.5% for never-renewed books.</li>
+<li>The 1930 cohort, nine months after its expiry, is at 94.4%, against at least 99.3% for every older cohort.
+HathiTrust opens volumes at expiry and is still catching up on the newest year.</li>
+</ul>
+</li>
+</ul>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>Inconclusive for the preregistered count outcome.</strong><ul>
+<li>The only rule-passing estimate needs a post-result fix (D1) and depends on one cohort.</li>
+<li>The catalogue's coverage of 2023–2025 editions (143, 53 and 15) is too thin for the late cohorts' post periods.</li>
+</ul>
+</li>
+<li><strong>Exploratory evidence of a real but modest response.</strong><ul>
+<li>Whether a freed book gets any new edition in a year roughly triples, across cohorts and restrictions.</li>
+<li>Gutenberg and HathiTrust both act at expiry.</li>
+<li>The binary outcome was chosen after review, so it is a lead for a preregistered follow-up, not a confirmation.</li>
+</ul>
+</li>
+<li><strong>Undercounting.</strong> Linkage misses renewed, more popular books more often, which undercounts the outcome where it
+  matters most.</li>
+<li><strong>Not shown:</strong><ul>
+<li>commercial editions outside Open Library (Amazon or WorldCat);</li>
+<li>readership;</li>
+<li>effects for renewed books not linked at all.</li>
+</ul>
+</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration:</strong> <code>plan.md</code>.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>):<ul>
+<li><strong>D1 (post-result):</strong> PPML separation handling.</li>
+<li><strong>Data fix:</strong> the Gutenberg catalogue had been truncated by the server and was re-fetched to full size.</li>
+<li><strong>D2 (post-result, after independent review):</strong><ul>
+<li>renewal matching (title fallback and author-prefix handling; 1,278 registrations reclassified);</li>
+<li>reference-year separation;</li>
+<li>leave-one-cohort-out, year-limit and reprint sensitivities;</li>
+<li>the exploratory binary and capped outcomes;</li>
+<li>OLS on a relative scale;</li>
+<li>corrected validation scoring;</li>
+<li>Gutenberg rates per work at risk;</li>
+<li>an unlogged blocking deviation.</li>
+</ul>
+</li>
+<li>The first-version tables are in <code>results/tables/v1_pre_review/</code>.</li>
+</ul>
+</li>
+<li><strong>Independent review:</strong> Fable, "fix first" (<code>review/review.md</code>). This version addresses it; a confirmation pass is
+  queued.</li>
+</ul>
+<h2>Reproducing it</h2>
+<ol>
+<li><code>code/registrations.py</code>.</li>
+<li><code>code/pget.py</code>, for the dumps.</li>
+<li><code>code/link.py works</code>, then <code>authors</code>, <code>resolve</code> and <code>editions</code>.</li>
+<li><code>code/validate_links.py sample</code>, labelling, then <code>code/validate_links.py score</code>.</li>
+<li><code>code/did.py primary|nopod|lag|placebo|ols|binary|cells|sensitivity</code>.</li>
+<li><code>code/secondary.py</code>.</li>
+<li><code>code/figures.py</code>.</li>
+</ol>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/legal-digital-humanities-public-domain-day-renewal-did/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

@@ -5039,7 +5039,12 @@
    "risks": "1. Record-linkage errors attenuate effects; mitigated with validation-weighted sensitivity checks. 2. Few renewed titles per vintage cohort (likely hundreds) limits power for cohort-specific effects. 3. Open Library ingestion lag makes the 2025-2026 cohorts (1929-1930) noisy. 4. Prior-work coverage is uncertain because the web-search budget ran out mid-scouting; re-check econ working papers (NBER/SSRN) on Public Domain Day 2019+ before preregistering.",
    "critic_note": "Critic (round 2): Targeted OpenAlex searches (public domain day, copyright renewal natural experiment) returned nothing relevant. Coverage of econ working papers (NBER/SSRN) is still uncertain, so recheck before preregistering. The expected direction is known. Value 5 and cost 3 kept.",
    "plain_summary": "Every January 1st, US books from 95 years earlier become free for anyone to republish. Using copyright records, this study compares books that stayed under copyright until that day with similar books whose copyright lapsed decades ago. The comparison measures how much the expiry itself increases new editions and digital copies.",
-   "scout_round": 2
+   "scout_round": 2,
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass)",
+   "report_url": "runs/legal-digital-humanities-public-domain-day-renewal-did/report.html",
+   "verdict_tag": "Inconclusive",
+   "verdict_note": "H1 Inconclusive. 30,329 US books registered 1923-1930 linked to Open Library works; renewed books (copyright expired 2019-2025) against never-renewed books of the same vintage, PPML Sun-Abraham event study. The preregistered estimator was degenerate (RR 0.33, separated empty cells); with the standard separation rule (post-result D1) editions rose by RR 1.86 (1.01-3.43), but that rests on the 2024 cohort (without it 1.12; years to 2023 only 0.95; no print-on-demand 1.38; lag filter 1.10; placebo 1.06). Exploratory, after review: the chance of any new edition in a year rose by RR 3.53 (2.09-5.99), stable without any single cohort (2.6-4.6) and in years to 2023 (2.29). Project Gutenberg released renewed books almost never before expiry (7 of 3,926) and at 4-14 per 1,000 a year after, against 0.83 for never-renewed books; HathiTrust's newest cohort is still being opened. Review fixed renewal matching (1,278 registrations reclassified), reference-year separation and linkage precision (0.99 of judgeable links), D2.",
+   "headline": "Public Domain Day's effect on new editions is too thin to call in counts, but newly freed books become about three times as likely to get some new edition (exploratory), and Project Gutenberg starts releasing them at expiry."
   },
   {
    "id": "legal-digital-humanities-precedent-erosion-before-overruling",

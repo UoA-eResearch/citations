@@ -37,7 +37,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-25 02:39 | `energy-nz-edb-quality-standard-ratchet` | review (fresh agent) | fix first |
 | 2026-10-25 07:39 | `energy-nz-edb-quality-standard-ratchet` | confirmation pass (original reviewer resumed) | publish with edits -> PUBLISHED |
 | 2026-10-25 12:39 | `legal-digital-humanities-public-domain-day-renewal-did` | review (fresh agent) | fix first |
-| 2026-10-25 17:39 | `legal-digital-humanities-public-domain-day-renewal-did` | confirmation pass (original reviewer resumed) |  |
+| 2026-10-25 17:39 | `legal-digital-humanities-public-domain-day-renewal-did` | confirmation pass (original reviewer resumed) | publish with edits -> PUBLISHED |
 
 **The owner's exception ended at 16:00 on 2026-10-23; the 1-per-5 h rule applies again. Public Domain Day confirmation started 2026-10-25 17:39; next Fable run not before 22:39.** Order: confirmations of DSI (b0149e2), reef (d7c2ace), estuary (3dd86a7), kauri (920bde5) and retraction risk (6d4c885), one per 5 h slot; then the ASR confirmation (fixes in f8a6d4d); then the EDB ratchet review (fb7efde), then the Public Domain Day review (26ff608), then the AVF dv/v review (35e9d7a).
 
@@ -59,7 +59,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | `auckland-nz-2023-storms-estuary-mud-natural-experiment` | fb30a30 | H1/H2 Inconclusive; post hoc region-wide 2023 pulse | **published** 2026-10-24 (Inconclusive; review publish with edits -> D5 3dd86a7; confirmation publish with edits -> D6) |
 | `auckland-nz-kauri-dieback-multitemporal-lidar` | e8a1bff | H1 Refuted, H2 Refuted after D1 | **published** 2026-10-24 (Refuted; review fix first -> D1 920bde5; confirmation publish with edits -> D2) |
 | `energy-nz-edb-quality-standard-ratchet` | fb7efde | H1/H2 Inconclusive, H3 Supported | **published** 2026-10-25 (Inconclusive; review fix first -> D3; confirmation publish with edits -> D4) |
-| `legal-digital-humanities-public-domain-day-renewal-did` | 26ff608 -> fixes 24f715a | Inconclusive (count RR 1.86 rests on 2024 cohort; without 1.12); exploratory any-edition RR 3.53 (2.09-5.99) robust; Gutenberg step at expiry | fixes done (24f715a); confirmation pass queued (review/confirm_prompt.md) |
+| `legal-digital-humanities-public-domain-day-renewal-did` | 26ff608 -> fixes, edits | Inconclusive (count RR 1.86 rests on 2024 cohort); exploratory any-edition RR 3.53 robust | PUBLISHED 2026-10-25 (review fix first; confirmation publish with edits) |
 | `auckland-nz-avf-dvv-hydrological-baseline` | 35e9d7a | H1 Refuted (median held-out R2 -0.12, -0.67 to -0.03; 32 pairs; noise floor 0.136%); robust to segment rule, temperature, frozen drift and draining kernel (post hoc) | queued (review/prompt.md) |
 | `legal-digital-humanities-precedent-erosion-before-overruling` | e09bf03 | H1 not testable (D(+5) 0.27, -0.13 to 0.49); co-cite exclusion pre-share 0.31; D1 post-result 2019 coverage break; post hoc pre-2019: cited 55% MORE before overruling | queued (review/prompt.md) |
 | `frontier-edge-asr-quantization-accent-parity` | (draft 2f02159 review) | H1 Inconclusive; H2 Supported by rule, not robust, not replicated; H3 Refuted; H4 not testable | **published** 2026-10-24 (Inconclusive; review fix first -> D4/D5 f8a6d4d; confirmation publish with edits -> D6) |

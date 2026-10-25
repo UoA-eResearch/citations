@@ -1,4 +1,4 @@
-# Does Public Domain Day unlock new editions? The preregistered edition count is too fragile to call, but newly freed books become about three times as likely to get some new edition, and Project Gutenberg picks them up
+# Does Public Domain Day unlock new editions? The preregistered edition count is too fragile to call; in an exploratory check, newly freed books become about three times as likely to get some new edition, and Project Gutenberg picks them up
 
 *US books registered in 1923–1930: renewed books, whose copyright expired on 1 January 2019–2025, against same-vintage
 never-renewed books, in the public domain since the 1950s. Registrations come from the Catalog of Copyright Entries
@@ -154,7 +154,8 @@ placebo) is in `results/tables/sensitivity.csv`.
   from one work.
 - **Reprints.** 17 of the 65 treated works with a known first-publish year were first published before their
   registration, so their 1920s registration covered a new edition, not the text. Excluding them gives a count RR of
-  1.93 (0.87–4.29).
+  1.93 (0.87–4.29). That run also loses the 2024 cohort (its reference year becomes empty), which is what widens the
+  interval.
 - **OLS on log(1 + editions):**
   - **Sun–Abraham** (as planned): +0.0037 (−0.0008 to +0.0081), which is +62% (−14% to +137%) of the treated
     pre-period mean.

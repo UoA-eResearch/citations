@@ -45,6 +45,8 @@ result had been seen. The first-version tables are kept in `results/tables/v1_pr
      removed (renewal entries are often prefixed "SURNAME, GIVEN.").
    - **Effect:** 1,278 registrations move from never renewed to renewed (144 of them linked). Renewed shares are now
      17–20% per year. A spot check of 12 at random found all 12 genuine. Links are unchanged (identical file hash).
+   - For 902 of the reclassified registrations, the full-text title score is 100 by token subset. There, the title
+     rule adds nothing beyond the number and date match (noted at confirmation).
 2. **Reference-cell separation (did.py).** D1 tested only the estimated dummies. A cohort whose reference cell
    (event −1) has zero editions is unidentified (all its dummies are measured against zero) and is now dropped and
    recorded, iterating with D1's cell rule.

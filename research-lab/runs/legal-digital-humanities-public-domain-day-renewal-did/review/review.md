@@ -190,3 +190,62 @@ count-based post periods for the 2023–2025 cohorts are uninformative, which ma
 5. Rewrite the title, the robustness paragraph, the OLS sentence and the plain-terms section accordingly. The verdict
    can remain Inconclusive by rule, with the honest gloss that the count estimate is fragile while the any-edition
    margin is robustly positive.
+
+## Confirmation pass
+
+Reviewer: Fable 5.1, 2026-10-25. Checked D2 (`deviations.md`), the rewritten `report.md`, the code diffs 26ff608→24f715a,
+`results/tables/` and `sensitivity.csv`; reran the new `did.fit` for primary, nopod and lag; recomputed the Gutenberg
+hazards within cohort (`review/reviewer_checks/confirm_checks.py`, `.json`).
+
+### Verdict: publish with edits
+
+Every major finding is resolved and the fixes replicate. Two sentences should be edited (items 15 and 16); nothing
+blocks publication.
+
+1. **Resolved — 2024-cohort dependence (finding 1).** The report's table and text give leave-one-cohort-out (without
+   2024: 1.12, 0.61–2.07), years ≤ 2023 (0.95) and ≤ 2022 (1.02), and the plain-terms section says the count rise
+   "comes almost entirely from the books freed in 2024". Matches `sensitivity.csv`.
+2. **Resolved — reference-cell separation (finding 2).** `did.py fit()` now iterates D1's cell rule with a cohort-level
+   rule for an all-zero event −1 cell and records `reference_separated_cohorts`. My rerun of the new code gives nopod
+   1.3838 (0.53–3.62, p 0.42; cohorts 2022–24 dropped) and lag 1.1007 (0.55–2.18, p 0.35; cohort 2025 dropped), as
+   reported. The report states that the earlier "RR 794" and failing pre-trends were wrong.
+3. **Resolved — OLS scale (finding 3).** Sun–Abraham +62% (−14% to +137%) and two-way FE +91% (+43% to +139%) of the
+   treated pre-period mean (0.00594); the TWFE is labelled as not Sun–Abraham. Matches `secondary_ols.json` and
+   `secondary.json`.
+4. **Resolved — extensive margin (finding 4).** Binary and capped outcomes are in `sensitivity.csv` and the report,
+   labelled exploratory and post-review, with the weaker no-POD (2.26, 0.93–5.51) and the null placebo stated. The
+   verdict stays Inconclusive for the preregistered count, which is right.
+5. **Resolved — validation precision (finding 5).** `validate_links.py score` excludes the 16 unshown links; precision
+   73/74 = 0.99 (renewed 32/33, never-renewed 41/41); recall is labelled conditional on the shown candidates.
+6. **Resolved, with my mechanism corrected — renewal titles (finding 6).** The agent is right that the `titl` schema
+   cannot be the cause: its original-registration years centre on 1957 (min 1927), and all 1,402 date-matched
+   title-less rows for 1923–1930 registrations are first-schema rows with the title inside `full_text`
+   (`confirm_checks.json: date_matched_missing_title_rows`). The count and the effect in my finding stand; the fix
+   (full-text fallback plus author-token stripping) reclassifies 1,278 registrations (144 linked) and links are
+   unchanged. Residual, low: for 902 of the 1,123 title-less reclassifications the full-text score is 100 because the
+   registration title's tokens are a subset of the entry text, so for those rows the title guard adds nothing beyond
+   number + date. Given the ±1 year window that is acceptable; a one-line note in D2 would be enough.
+7. **Resolved — renewal pre-counts (finding 7).** Renewed shares 17–20% per year, stated in the report.
+8. **Resolved — blocking deviation and date rule (finding 8).** Logged as D2.7 and stated in "How it was done".
+9. **Resolved — ambiguity-drop shares (finding 9).** 60% vs 44% in `linkage_summary.json` and the report.
+10. **Resolved — reprints (finding 10).** "no reprints" sensitivity added (count 1.93, binary 3.44). See item 16.
+11. **Resolved, and my reading withdrawn — Gutenberg timing (finding 11).** I recomputed hazards per 1,000 at risk
+    within each cohort. The 2019 cohort shows 27, 20, 5, 10, 18, 16, 11, 14 per 1,000 at lags 0–7; the 2020 cohort 7,
+    9, 5, 5, 5, 2, 19; later cohorts 2–9 and flat. Cohort-balanced (2019–2020, which observe lags 0–6): 12.1 per 1,000
+    per year at lags 0–2 against 10.6 at lags 3–6. There is no early burst; my raw-count "2.5× burst" was a
+    composition effect of later, lower-rate cohorts entering only the early lags. The report's statement is correct.
+    The pooled per-lag profile it prints still mixes cohorts (lags 6–7 are the 2019 cohort alone), which the caption
+    says; the 7-before-expiry vs 4–14 per 1,000 after comparison is the clean evidence and the report leads with it.
+12. **Resolved — HathiTrust timing (finding 12).** The 1930 cohort (94.4%) against ≥ 99.3% is now used.
+13. **Resolved — provenance (finding 13).** D2.6 records the re-run and the ad hoc cell counts; `did.py cells`
+    generates `cell_counts.csv`.
+14. **Resolved — report numbers (finding 14).** All numbers I checked match the v2 tables, including event-time
+    +0.47/+0.71/+0.80 (event 1 z = 1.95), the by-cohort RRs, the Gutenberg rates and the HathiTrust shares. "Five of the
+    seven in 2025" is now correct. The editions step (finding 15) needed no change.
+15. **Edit — the title leads with an exploratory result.** "newly freed books become about three times as likely to
+    get some new edition" is a post-review, non-preregistered outcome stated as the headline. Add "in an exploratory
+    check" (or similar) to the title so it carries the same label the body gives it.
+16. **Edit — the reprint exclusion also removes the 2024 cohort.** In `sensitivity.csv` the "no reprints" rows have
+    `ref_separated = 2024`: dropping reprints empties the 2024 cohort's reference cell, so the cohort is dropped by
+    the D2 rule. The report's "Excluding them gives a count RR of 1.93 (0.87–4.29)" should say that this estimate is
+    also without the 2024 cohort, since that is what moves the interval.
