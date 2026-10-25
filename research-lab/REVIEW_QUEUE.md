@@ -44,7 +44,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 
 **Pre-review gate (from 2026-10-25, METHODS.md):** before launching a draft's Fable review, run G5 (`tools/overclaim_check.py RUN --verify`) and G6 (`tools/attribution.py check RUN`) on it, fix what they find as a D-entry, and add the standard gate-check block to its `review/prompt.md`. New leads apply all of G1–G7.
 
-**The owner's exception ended at 16:00 on 2026-10-23; the 1-per-5 h rule applies again. Precedent-erosion review started 2026-10-26 08:41; next Fable run not before 13:41.** Order (from 2026-10-26): reviews in table order - precedent erosion, GloBI, mortality, supply chain, scaling-fit, citer contagion, OEIS, hub vintage, notebook noise, mathlib, quantum, SDM provenance - with each confirmation pass taking the next slot after its review's fixes.
+**The owner's exception ended at 16:00 on 2026-10-23; the 1-per-5 h rule applies again. Precedent-erosion review started 2026-10-26 08:41; next Fable run not before 13:41.** Order (from 2026-10-26): reviews in table order - precedent erosion, GloBI, mortality, supply chain, scaling-fit, citer contagion, OEIS, hub vintage, notebook noise, mathlib, quantum, SDM provenance, herbarium velocity - with each confirmation pass taking the next slot after its review's fixes.
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
@@ -79,6 +79,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | `formal-math-mathlib-proof-rot-flexible-linter` |  b62e129 | H1 Inconclusive (OR 1.48, 0.92-2.39); 6-month 1.67 (1.01-2.77); second pair 0.99 | queued; pre-review gate G5+G6 done 2026-10-25 |
 | `quantum-simulation-convergence-false-assurance` |  b7b7321 | H1 Supported (PP 31%, 23-39%; BP 1.9%); H2 Supported pooled; random-patch-only PP 9.5% | queued; pre-review gate G5+G6 done 2026-10-25 (tracker case corrected) |
 | `ecology-biodiversity-sdm-provenance-leakage` |  7f6441f | H1 Refuted (DiD +0.006, +0.005 to +0.008; 1,745 species), H2 Refuted (8.3%); TAVA West Africa DiD +0.164 with its test plots republished in the training data (post hoc) | queued; all applicable gates G1-G3, G5, G6 run before review (first lead started under METHODS.md) |
+| `ecology-biodiversity-herbarium-velocity-effort-null` |  19950a0 | H1 Supported (fixed-range noise+effort null reproduces 67% of the observed median centroid velocity: 4.6 vs 6.9 km/yr; 36% of species exceed their null p95) | queued; gates G1-G3, G5, G6 run before review |
 
 ## Order to run them in
 
