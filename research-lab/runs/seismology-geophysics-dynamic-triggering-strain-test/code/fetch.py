@@ -42,8 +42,15 @@ def listing():
                 break
             except Exception:
                 time.sleep(5 * (k + 1))
-        rows += re.findall(r"<Key>([^<]+)</Key><LastModified>([^<]+)</LastModified><ETag>&quot;([^&]+)&quot;</ETag>"
-                           r"<Size>(\d+)</Size>", s)
+        blocks = re.findall(r"<Contents>(.*?)</Contents>", s, re.S)
+        got = []
+        for c in blocks:                                    # field by field: S3 inserts checksum elements
+            f = {k: re.search(f"<{k}>([^<]*)</{k}>", c) for k in ("Key", "LastModified", "ETag", "Size")}
+            got.append((f["Key"].group(1), f["LastModified"].group(1), f["ETag"].group(1).replace("&quot;", ""),
+                        f["Size"].group(1)))
+        if blocks and not got:
+            raise ValueError("listing page parsed to nothing")
+        rows += got
         m = re.search(r"<NextContinuationToken>([^<]+)</NextContinuationToken>", s)
         if not m:
             break
