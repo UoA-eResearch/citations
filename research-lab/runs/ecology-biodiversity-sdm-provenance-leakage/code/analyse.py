@@ -45,9 +45,32 @@ def contrast(d, col, rng):
             "species_changed_by_C1": int((w["C1"] != w["C0"]).sum())}, did
 
 
+def coverage(d):
+    """G2 (METHODS.md): fits per condition and species with an undefined AUROC (no positives or no negatives among
+    range-masked cells), which the contrast drops."""
+    import sys
+    sys.path.insert(0, str(RUN.parents[1] / "tools"))
+    from coverage import Coverage
+    pop = pd.read_csv(T / "population.csv").sp.tolist()
+    for col in ("auroc_src", "auroc_other", "auroc_all"):
+        cov = Coverage(f"rf_{col}", T / "coverage.json")
+        got = {(r.sp, r.cond): r[col] for _, r in d.iterrows()}
+        for sp in pop:
+            for c in ["C0", "C1"] + RAND:
+                cov.attempt((sp, c))
+                if (sp, c) not in got:
+                    cov.drop((sp, c), "fit missing")
+                elif pd.isna(got[(sp, c)]):
+                    cov.drop((sp, c), "AUROC undefined (one class only)")
+                else:
+                    cov.ok((sp, c))
+        cov.save()
+
+
 def main():
     rng = np.random.default_rng(SEED)
     d = load()
+    coverage(d)
     out = {"fits": int(len(d)), "reused_fits": int(d.get("reused", pd.Series(False)).fillna(False).sum())}
     res, did = contrast(d, "auroc_src", rng)
     res["verdict"] = ("Supported" if res["did"] >= 0.02 and res["ci"][0] > 0 else

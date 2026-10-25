@@ -29,3 +29,24 @@ None yet. Notes before any overlap or model result:
    with the same date for the date share.
 6. **Fit cache.** A condition that leaves a species' presences and background unchanged reuses that species'
    seeded C0 fit (identical inputs give identical fits).
+
+## D2 (2026-10-25 19:11 NZDT; RF retraining running, no RF result read) — lab quality gates adopted today (METHODS.md)
+
+**G1 leakage audit.** Fields that correlate with the outcome, and how the pipeline is kept blind to them:
+- **Evaluation targets and test-cell membership** (SAGE's fixed test_indices.npy) enter only the scoring step.
+  Models see training cells and the target-group background only.
+- **Spatial co-location of training and evaluation records** is the leak under study. It is measured by the audit
+  and removed by C1.
+- **Provenance flags** were decided from GBIF registry metadata alone and frozen (commit before any overlap) without
+  reference to evaluation overlap.
+- **Matched random removal** draws from the same species and countries, so data loss is not confounded with
+  provenance.
+- **Species ordering and fit caching** cannot leak labels: the cache key hashes only the training inputs.
+- No LLM or agent judges any unit, so no order-swap probe is needed.
+
+**G2 coverage.** analyse.py now writes `results/tables/coverage.json`: per AUROC subset, fits completed and species
+with an undefined AUROC, which the contrast drops. No statistic changes.
+
+**Remaining gates.** G3 (`results/plausibility.md`), G5 (overclaim check) and G6 (attribution ledger, starting
+with the lead's claims; its Czech Vegetation Database claim is already known to be false) run before review. G4 and
+G7 do not apply, as there is no labelling or classifier validation.
