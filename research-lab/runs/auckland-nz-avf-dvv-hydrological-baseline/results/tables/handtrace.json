@@ -1,32 +1,32 @@
 [
  {
-  "pair": "ETAZ-HBAZ",
-  "date": "2021-07-08",
+  "pair": "ETAZ-WTAZ",
+  "date": "2013-11-06",
   "table_dvv_pct": -0.035,
-  "trace_dvv_pct": -0.04,
-  "table_cc": 0.694,
-  "trace_cc": 0.6933,
-  "ref_days": 2560,
+  "trace_dvv_pct": -0.035,
+  "table_cc": 0.8965,
+  "trace_cc": 0.8965,
+  "ref_days": 2917,
   "stack_days": 11
  },
  {
-  "pair": "AWAZ-ETAZ",
-  "date": "2014-12-23",
-  "table_dvv_pct": 0.01,
-  "trace_dvv_pct": 0.01,
-  "table_cc": 0.8382,
-  "trace_cc": 0.8382,
-  "ref_days": 889,
+  "pair": "AWAZ-EPAZ",
+  "date": "2023-07-09",
+  "table_dvv_pct": -0.085,
+  "trace_dvv_pct": -0.085,
+  "table_cc": 0.797,
+  "trace_cc": 0.797,
+  "ref_days": 2855,
   "stack_days": 11
  },
  {
-  "pair": "ETAZ-RVAZ",
-  "date": "2019-01-26",
-  "table_dvv_pct": -0.005,
-  "trace_dvv_pct": -0.005,
-  "table_cc": 0.5156,
-  "trace_cc": 0.5152,
-  "ref_days": 659,
+  "pair": "AWAZ-RVAZ",
+  "date": "2015-10-20",
+  "table_dvv_pct": 0.15,
+  "trace_dvv_pct": 0.15,
+  "table_cc": 0.6084,
+  "trace_cc": 0.6084,
+  "ref_days": 2336,
   "stack_days": 11
  }
 ]

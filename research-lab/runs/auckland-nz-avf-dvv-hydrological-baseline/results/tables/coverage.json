@@ -1,5 +1,20 @@
 {
- "dvv_days": {
+ "dvv_days_every_epoch": {
+  "attempted": 200667,
+  "ok": 164985,
+  "fallback": 0,
+  "dropped": 35682,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "outside station segments": 1232,
+   "fewer than 5 valid days in the stack": 424,
+   "negative correlation with the reference at zero stretch": 1161,
+   "segment with < 60 training days": 32013,
+   "zero coda energy (dead channel)": 852
+  }
+ },
+ "dvv_days_gap7": {
   "attempted": 200667,
   "ok": 170723,
   "fallback": 0,
@@ -14,19 +29,19 @@
    "fewer than 5 valid days in the stack": 163
   }
  },
- "dvv_days_every_epoch": {
+ "dvv_days": {
   "attempted": 200667,
-  "ok": 159791,
+  "ok": 186439,
   "fallback": 0,
-  "dropped": 40876,
+  "dropped": 14228,
   "unresolved": 0,
   "fallback_reasons": {},
   "drop_reasons": {
    "outside station segments": 1232,
-   "segment with < 60 training days": 37699,
-   "negative correlation with the reference at zero stretch": 930,
+   "fewer than 5 valid days in the stack": 438,
+   "negative correlation with the reference at zero stretch": 2346,
    "zero coda energy (dead channel)": 852,
-   "fewer than 5 valid days in the stack": 163
+   "segment with < 60 training days": 9360
   }
  }
 }

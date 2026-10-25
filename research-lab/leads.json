@@ -5770,7 +5770,12 @@
    "local_relevance": "GeoNet/ESNZ volcano monitoring, the DEVORA research programme and Auckland Emergency Management could adopt the pipeline as an extra unrest indicator. They would get a published baseline that distinguishes rain-driven changes like January 2023 from anything magmatic.",
    "time_sensitive": "",
    "needs_engagement": "",
-   "scout_round": "auckland-nz"
+   "scout_round": "auckland-nz",
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass)",
+   "report_url": "runs/auckland-nz-avf-dvv-hydrological-baseline/report.html",
+   "verdict_tag": "Refuted",
+   "verdict_note": "H1 Refuted. Daily ambient-noise correlations for 55 vertical pairs of 11 GeoNet stations in the Auckland Volcanic Field, 2013-2026; dv/v by coda stretching at 0.5-2 Hz; a rainfall-diffusion + annual + drift model trained on 2013-2020 and tested unchanged from 2021. Median held-out R2 -0.08 (-0.19 to -0.01) on 33 scored pairs, 24 negative, none reaching 0.5; every variant negative (every-epoch -0.15, temperature -0.07, frozen drift -0.12, draining kernel -0.10, 7-day gap segments -0.27). Month-scale wander (2 SD, 30-day smoothing) 0.077% with no model, 0.075% after a season-only model, of the same order as the 0.05% precursors reported at Piton de la Fournaise. Neither the 2020 lockdown nor the record-wet 2023 summer shows up. Review found a KBAZ polarity flip and dead channel that had entered the first version (fixed, D1); the pre-review attribution check wrongly called Brenguier's 0.05% unsupported from the preprint alone (corrected).",
+   "headline": "Seismic velocities under Auckland's volcanic field follow no simple rain-and-season baseline: a model trained on 2013-2020 predicted the later years worse than their average, and month-scale wander of about 0.08% is the size of eruption precursors elsewhere."
   },
   {
    "id": "auckland-nz-fenz-impact-rainfall-thresholds",

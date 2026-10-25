@@ -176,3 +176,62 @@ held-out R² and τ (`model_checks.log`).
 - Verdict logic: the median is negative under every variant tried here, so "Refuted" is fair; the constant-only
   and season-only baselines (−0.42 and −0.34 on 32 pairs; −0.17 and −0.09 on 26) show the failure is not only the
   cumulative kernel or the drift.
+
+## Confirmation pass
+
+Reviewer: Fable (same reviewer), 2026-10-26, on commit 4f87c4f. Checks: `review/reviewer_checks/confirm_checks.log`
+(v1 vs D1 per pair, segment starts, drop locations, level offsets). G5 (`--verify`, 36 rows) and G6 (12 claims)
+pass. Every report number I checked matches the new tables (median and CI, 26 of 31, training R² 0.17, the four
+variants, the three floors, lockdown with and without guard, 2023, τ counts, pair types, coverage counts, EPAZ-HBAZ
+−5.3, season-only better on 23 of 31).
+
+### Verdict: publish with edits
+
+Findings 1–8 are resolved in substance. The data-gap rule used to fix finding 1 is blunter than it needs to be and
+has side effects the report does not name (item 9); either re-run with a longer gap threshold or state the choice
+and its effect in the verdict block. H1 "Refuted" is unaffected either way.
+
+1. **Finding 1 (KBAZ) — resolved.** Segments break on dip changes and data gaps (`segments.csv`: KBAZ 2008–2014-08-25
+   and 2018-03-21–2023-11-21); dead-channel days (852) leave references and stacks; negative zero-stretch days (959)
+   are dropped; all counted in `coverage.json`. KBAZ pairs now give held-out R² −0.15 to −5.7 instead of −22 to
+   −1499, and AWAZ-KBAZ's training R² falls from 0.93 to 0.45, which confirms the old fit was the polarity step.
+2. **Finding 2 (Brenguier) — resolved.** A2 is "supports" with the published abstract as locator; the verdict and
+   plain-terms sentences now use 0.05% as the precursor size; A5 is background on ocean noise with cultural noise
+   under A6; METHODS.md G6 asks for the version of record.
+3. **Finding 3 (floors) — resolved.** Residual 0.076%, no-model 0.074% and season-only 0.067% stand side by side,
+   and the title now carries the data's month-scale wander (0.07%), not the model residual.
+4. **Finding 4 (interpolation) — resolved.** `dvv.py` evaluates the stretched trace with a cubic spline (vectorised
+   over the grid); the 0.05%/0.005% grid and the plan's 0.01% are stated. Hand traces agree with the table to one
+   fine-grid step.
+5. **Finding 5 (scoring) — resolved as a post hoc breakdown.** The zero-stretch coherence of the 11-day stack is
+   stored (`cc0`), and the 22 pairs with median cc0 ≥ 0.7 give −0.27, the same as all 31. Adequate.
+6. **Finding 6 (secondary 4) — resolved.** `RULE=every_epoch` recomputes references and dv/v
+   (`dvv_daily_every_epoch.parquet`, `segments_every_epoch.csv`); the variant is −0.18 (−0.38 to −0.04) on 32 pairs.
+7. **Finding 7 (gates) — resolved.** `results/plausibility.md` has expected ranges, three hand-traced pair-days
+   (`handtrace.json`) and the invariants; `coverage.json` records every drop with a reason.
+8. **Finding 8 (minor) — resolved.** Coherence 0.54, F1 title, 11-day stack, guarded lockdown windows (both
+   reported), lockdown and 2023 outlier pairs consistent with the tables.
+9. **New problem (medium): the 7-day data-gap rule splits records at routine outages, and the report does not
+   separate its effect from the KBAZ fix.** My review suggested "data gaps > 7 days"; that was too blunt. Applied
+   literally it yields 16 MKAZ segments, 7 for WIAZ and RVAZ, 5 for ABAZ and AWAZ (`segments.csv`), with these
+   effects (`confirm_checks.log`):
+   - held-out windows now end at outages, not sensor changes: MBAZ pairs at 2023-06-29 (an 8-day outage) instead
+     of 2025-03-11 (910 vs 1,524 days), WIAZ pairs at 2023-01-11, MKAZ pairs at 2021-06-20 (157–168 days, so
+     ETAZ-MKAZ is no longer scored);
+   - 15 of the 31 scored pairs rest on a held-out segment with under two years of training (AWAZ from 2019-01-28
+     after 10- and 17-day outages, RVAZ from 2019-07-02, WIAZ from 2020-06-19, MBAZ-WIAZ 196 training days); their
+     median R² is −0.31 against −0.21 for the rest;
+   - the AWAZ pairs acquire a level offset from the short segment's constant plus the extrapolated drift: AWAZ-EPAZ
+     −0.19 → −15.5 and AWAZ-ETAZ −22.6 → −27.0 with mean held-out residuals of 2.9 and 4.4 held-out SDs; six scored
+     pairs are offset-dominated. This is the same failure mode as finding 1 in miniature.
+   - The non-KBAZ median moved from −0.06 (v1) to −0.21, and the report attributes the change to "the review
+     fixes" without saying which. With held-out 2 SD of 0.03–0.07%, a 0.02% level offset moves a pair's R² by
+     about −0.3, so the median's value (not its sign) is fragile to segmentation choices.
+   - **Fix (preferred).** Keep the dip rule and the per-day dead-channel and polarity drops, which are what catch
+     KBAZ, and raise the data-gap threshold to one that signals reinstallation (90 days or more); report both
+     thresholds. **Minimum.** State in the verdict block and in D1 that the 7-day data-gap threshold is a post hoc
+     choice, list the held-out windows it truncates and the pairs it unscores, and give the ablation (KBAZ-only
+     split vs the full rule). Either way the verdict stands.
+10. **Housekeeping (minor).** `results/figures/v1_pre_review/` holds only F1 (D1 says the first-version figures are
+    kept there; add F2 or say so); `results/tables/v1_pre_review/dvv_daily.parquet` is untracked in git while D1
+    says the v1 outputs are kept (commit it or note that the parquet is local only).

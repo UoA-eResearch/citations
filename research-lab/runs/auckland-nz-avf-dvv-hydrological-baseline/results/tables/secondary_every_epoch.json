@@ -1,54 +1,54 @@
 {
  "segment_rule": "every_epoch",
  "pairs_with_dvv": 53,
- "pairs_scored": 32,
- "median_heldout_r2": -0.1775,
+ "pairs_scored": 34,
+ "median_heldout_r2": -0.1451,
  "ci": [
-  -0.383,
-  -0.0389
+  -0.4816,
+  -0.0119
  ],
  "share_pairs_r2_ge_0_5": 0.0,
  "verdict": "Refuted",
- "median_resid_2sd_pct": 0.0705,
+ "median_resid_2sd_pct": 0.0717,
  "noise_floor_le_0_05pct": false,
  "lockdown": {
-  "median_step_pct": 0.0058,
+  "median_step_pct": 0.0021,
   "pairs_step_gt_2sd": 2,
-  "median_step_guarded_pct": 0.0025,
-  "pairs_step_guarded_gt_2sd": 3
+  "median_step_guarded_pct": 0.0021,
+  "pairs_step_guarded_gt_2sd": 4
  },
  "floors_d1": {
-  "median_nomodel_2sd_pct": 0.0719,
-  "median_season_only_2sd_pct": 0.0624,
-  "median_season_only_r2": -0.128
+  "median_nomodel_2sd_pct": 0.0743,
+  "median_season_only_2sd_pct": 0.0651,
+  "median_season_only_r2": -0.1231
  },
- "pairs_negative_r2": 24,
- "median_train_coherence_all": 0.5387,
+ "pairs_negative_r2": 23,
+ "median_train_coherence_all": 0.5338,
  "by_zero_stretch_coherence_posthoc": {
   "cc0>=0.3": {
-   "pairs": 32,
-   "median_heldout_r2": -0.1775,
-   "median_nomodel_2sd_pct": 0.0719
+   "pairs": 34,
+   "median_heldout_r2": -0.1451,
+   "median_nomodel_2sd_pct": 0.0743
   },
   "cc0>=0.5": {
-   "pairs": 31,
-   "median_heldout_r2": -0.1658,
-   "median_nomodel_2sd_pct": 0.0711
+   "pairs": 32,
+   "median_heldout_r2": -0.1206,
+   "median_nomodel_2sd_pct": 0.0719
   },
   "cc0>=0.7": {
    "pairs": 22,
-   "median_heldout_r2": -0.1245,
+   "median_heldout_r2": -0.1278,
    "median_nomodel_2sd_pct": 0.0509
   }
  },
  "tau_counts": {
-  "1": 8,
-  "500": 7,
-  "200": 5,
-  "100": 5,
-  "50": 4,
-  "2": 1,
-  "10": 1,
+  "1": 10,
+  "500": 6,
+  "50": 5,
+  "200": 4,
+  "100": 4,
+  "10": 3,
+  "5": 1,
   "20": 1
  }
 }

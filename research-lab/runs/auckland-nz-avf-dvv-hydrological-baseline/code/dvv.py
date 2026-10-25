@@ -6,8 +6,8 @@ current = centred moving stack of +/-5 days (11 days, at least 5 valid); the cur
 against the reference and dv/v = -e at the best correlation coefficient (grid +/-2%: 0.05% steps, then 0.005%
 around the best; the plan named a 0.01% grid).
 Station segments follow the plan's rule (same location code and sensor description, gaps up to 7 days).
-D1 (after review): segments also break on a change of sensor dip (polarity) and on station data gaps of more than 7
-days; days whose current stack has no energy in the coda window (dead channel) or correlates negatively with the
+D1 (after review): segments also break on a change of sensor dip (polarity) and on station data gaps of more than 90
+days (GAP; a 7-day threshold, the first D1 choice, split records at routine outages and is kept as a sensitivity); days whose current stack has no energy in the coda window (dead channel) or correlates negatively with the
 reference at zero stretch are rejected and counted (G2); the stretched trace is evaluated with a cubic spline instead
 of linear interpolation on the 20 Hz lag grid. RULE=every_epoch makes every FDSN epoch its own segment (secondary 4).
 
@@ -28,7 +28,7 @@ FS, L = 20.0, 2000
 TRAIN_END = pd.Timestamp("2020-12-31")
 
 
-def segments(rule="plan", avail=None):
+def segments(rule="plan", avail=None, gap_days=90):
     """Per station: list of (start, end) of continuous segments, from the FDSN channel epochs (location 10, Z).
     plan: consecutive epochs merge if sensor description and dip (polarity, D1) are unchanged and the gap is <= 7 days;
     every_epoch: each epoch is a segment. D1: segments are also split at station data gaps > 7 days (avail: station ->
@@ -58,7 +58,7 @@ def segments(rule="plan", avail=None):
                 dd = days[(days >= a) & (days <= b)]
                 if len(dd) == 0:
                     continue
-                gaps = np.nonzero(np.diff(dd) > np.timedelta64(7, "D"))[0]
+                gaps = np.nonzero(np.diff(dd) > np.timedelta64(gap_days, "D"))[0]
                 lo = a
                 for gi in gaps:
                     split.append((lo, pd.Timestamp(dd[gi])))
@@ -98,14 +98,14 @@ def load():
     return dates, stations, C, N
 
 
-def main(rule="plan"):
+def main(rule="plan", gap_days=90):
     sys.path.insert(0, str(RUN.parents[1] / "tools"))
     from coverage import Coverage
     from scipy.interpolate import CubicSpline
-    suffix = "" if rule == "plan" else f"_{rule}"
+    suffix = ("" if rule == "plan" else f"_{rule}") + ("" if gap_days == 90 else f"_gap{gap_days}")
     cov = Coverage(f"dvv_days{suffix}", T / "coverage.json")
     dates, stations, C, N = load()
-    segs = segments(rule, station_availability(dates, stations, N))
+    segs = segments(rule, station_availability(dates, stations, N), gap_days)
     pd.DataFrame([{"station": st, "k": k, "start": a.date(), "end": b.date()} for st, sg in segs.items()
                   for k, (a, b) in enumerate(sg)]).to_csv(T / f"segments{suffix}.csv", index=False)
     import pyproj
@@ -203,4 +203,4 @@ def main(rule="plan"):
 
 if __name__ == "__main__":
     import os
-    main(os.environ.get("RULE", "plan"))
+    main(os.environ.get("RULE", "plan"), int(os.environ.get("GAP", "90")))

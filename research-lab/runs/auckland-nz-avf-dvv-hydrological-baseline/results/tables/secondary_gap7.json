@@ -1,0 +1,53 @@
+{
+ "segment_rule": "gap7",
+ "pairs_with_dvv": 53,
+ "pairs_scored": 31,
+ "median_heldout_r2": -0.2651,
+ "ci": [
+  -0.3458,
+  -0.1528
+ ],
+ "share_pairs_r2_ge_0_5": 0.0,
+ "verdict": "Refuted",
+ "median_resid_2sd_pct": 0.0763,
+ "noise_floor_le_0_05pct": false,
+ "lockdown": {
+  "median_step_pct": 0.0053,
+  "pairs_step_gt_2sd": 2,
+  "median_step_guarded_pct": -0.0004,
+  "pairs_step_guarded_gt_2sd": 3
+ },
+ "floors_d1": {
+  "median_nomodel_2sd_pct": 0.0737,
+  "median_season_only_2sd_pct": 0.0671,
+  "median_season_only_r2": -0.083
+ },
+ "pairs_negative_r2": 26,
+ "median_train_coherence_all": 0.537,
+ "by_zero_stretch_coherence_posthoc": {
+  "cc0>=0.3": {
+   "pairs": 31,
+   "median_heldout_r2": -0.2651,
+   "median_nomodel_2sd_pct": 0.0737
+  },
+  "cc0>=0.5": {
+   "pairs": 31,
+   "median_heldout_r2": -0.2651,
+   "median_nomodel_2sd_pct": 0.0737
+  },
+  "cc0>=0.7": {
+   "pairs": 22,
+   "median_heldout_r2": -0.2673,
+   "median_nomodel_2sd_pct": 0.0623
+  }
+ },
+ "tau_counts": {
+  "1": 9,
+  "200": 8,
+  "500": 6,
+  "100": 5,
+  "5": 1,
+  "10": 1,
+  "20": 1
+ }
+}

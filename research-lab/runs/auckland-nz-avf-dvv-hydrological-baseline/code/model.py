@@ -76,6 +76,7 @@ def r2(y, yhat):
 
 
 def load_segments(rule):
+    """rule = 'plan' (primary, segments.csv) or a file suffix such as 'every_epoch' or 'gap7'."""
     sg = pd.read_csv(T / ("segments.csv" if rule == "plan" else f"segments_{rule}.csv"), parse_dates=["start", "end"])
     return {st: list(zip(g.start, g.end)) for st, g in sg.sort_values(["station", "k"]).groupby("station")}
 
@@ -188,7 +189,7 @@ def every_epoch_segments():          # superseded by dvv.py RULE=every_epoch and
 
 if __name__ == "__main__":
     import sys
-    if len(sys.argv) > 1 and sys.argv[1] == "every_epoch":
-        main("every_epoch", "secondary_every_epoch.json")
+    if len(sys.argv) > 1 and sys.argv[1] in ("every_epoch", "gap7"):
+        main(sys.argv[1], f"secondary_{sys.argv[1]}.json")
     else:
         main()

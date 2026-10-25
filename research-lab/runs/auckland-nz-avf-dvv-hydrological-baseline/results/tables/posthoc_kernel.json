@@ -1,19 +1,19 @@
 {
- "pairs_scored": 31,
- "median_heldout_r2": -0.2323,
+ "pairs_scored": 33,
+ "median_heldout_r2": -0.1044,
  "ci": [
-  -0.5532,
-  -0.1284
+  -0.2601,
+  -0.0619
  ],
  "share_pairs_r2_ge_0_5": 0.0,
- "median_resid_2sd_pct": 0.0724,
+ "median_resid_2sd_pct": 0.0771,
  "tau_counts": {
   "500": 11,
-  "20": 4,
-  "200": 4,
-  "100": 4,
+  "200": 7,
+  "100": 5,
   "10": 4,
   "50": 3,
+  "20": 2,
   "5": 1
  }
 }

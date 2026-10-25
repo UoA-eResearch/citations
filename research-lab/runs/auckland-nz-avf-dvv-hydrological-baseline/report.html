@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auckland Volcanic dv/v</title>
+<meta name="description" content="Does a rainfall-and-season model predict seismic velocity changes under the Auckland Volcanic Field, and how much do they wander?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Auckland and New Zealand</div>
+  <h1>A rainfall-and-season model does not predict seismic velocity changes under the Auckland Volcanic Field: no hydrological baseline at 0.5–2 Hz, and month-scale wander of about 0.08%</h1>
+  <p class="subtitle">Daily ambient-noise cross-correlations for 55 vertical-component pairs of 11 GeoNet stations, 2013 to September 2026. dv/v is measured by stretching the coda at 0.5–2 Hz. A rainfall-diffusion, annual and drift model is fitted on 2013–2020 and tested, unchanged, from 2021. The plan was committed before any waveform was correlated. This version includes fixes made after independent review (D1): a sensor polarity flip and a dead-channel block at KBAZ, and the noise-floor framing.</p>
+  <div class="meta">
+    <span>Report · 2026-10-25 · pre-review draft</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-avf-dvv-hydrological-baseline/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-avf-dvv-hydrological-baseline/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-avf-dvv-hydrological-baseline/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: H1 Refuted.</strong></p>
+<ul>
+<li><strong>H1 (the hydrological model explains most of the held-out dv/v): Refuted.</strong><ul>
+<li>The median held-out R² across the 33 scored pairs is <strong>−0.08</strong> (95% pair bootstrap −0.19 to −0.01).</li>
+<li>24 of the 33 are negative, and no pair reaches 0.5.</li>
+<li>The model explains little even in training: median R² 0.19.</li>
+</ul>
+</li>
+<li><strong>It is not one modelling choice.</strong> Every variant of the full model leaves the median negative:<ul>
+<li>every sensor-epoch boundary as a break, with references recomputed (−0.15);</li>
+<li>temperature in place of the annual sinusoid (−0.07);</li>
+<li>the drift held fixed (−0.12, post hoc);</li>
+<li>a draining rainfall kernel (−0.10, post hoc);</li>
+<li>segments split at data gaps of more than 7 days instead of 90 (−0.27).</li>
+</ul>
+</li>
+<li><strong>Even a season-only model,</strong> without rain or drift, is slightly worse than the held-out mean (median −0.02). It
+  beats the full model on 17 of 33 pairs.</li>
+<li><strong>How much dv/v wanders.</strong> At 30-day smoothing, the held-out dv/v varies by <strong>0.077%</strong> (2 SD about its own mean,
+  median across pairs).<ul>
+<li>The preregistered residual floor (2 SD of the model residual) is 0.088%.</li>
+<li>A season-only model leaves 0.075%.</li>
+<li>Pre-eruptive velocity decreases at Piton de la Fournaise were of the order of 0.05% (Brenguier et al. 2008), so a
+precursor of that size would sit inside Auckland's ordinary month-scale wander at these frequencies.</li>
+</ul>
+</li>
+<li><strong>Neither the March 2020 lockdown nor the record-wet January–February 2023 shows up.</strong><ul>
+<li>Lockdown: the median step is +0.001% (−0.002% with a 15-day guard against the smoother), and 2 of 33 pairs lie
+beyond twice their residual SD.</li>
+<li>2023 storms: the median held-out residual is +0.025% in 19 pairs, with none beyond twice its residual SD.</li>
+</ul>
+</li>
+<li><strong>Review fixes (D1).</strong><ul>
+<li>KBAZ flipped polarity across a 2014–2018 data gap and had a 52-day dead-channel block, both of which entered the
+first version's references.</li>
+<li>Segments now break on dip changes and on data gaps of more than 90 days. Dead and polarity-mismatched days are
+dropped and counted, and stretching uses a cubic spline.</li>
+<li>A first fix that split segments at gaps of more than 7 days cut many records at routine outages and gave −0.27.
+It is kept as a sensitivity.</li>
+<li>The first version (median −0.12, floor 0.136%) is kept in <code>results/tables/v1_pre_review/</code>.</li>
+</ul>
+</li>
+</ul>
+<h2>In plain terms</h2>
+<p>Volcanoes can announce themselves by subtly changing how fast seismic waves travel through the ground. Background
+"noise" from ocean waves and city traffic can be used to track those changes day by day. Before such a signal can
+warn of anything under Auckland, we need to know how much it moves for ordinary reasons, mainly rain soaking into
+the ground and the seasons.</p>
+<p>We processed 13 years of continuous recordings from 11 GeoNet seismometers across Auckland's volcanic field. We
+built a model of how rain and the seasons should change the wave speeds, trained it on 2013–2020, and checked
+whether it predicted 2021–2026.</p>
+<p>It did not. On 24 of the 33 station pairs with clean enough signals, the model predicted the later years worse than
+simply guessing their average. Averaged over a month, the wave speeds wander by about 0.08% for reasons the model
+cannot account for, the same order as the changes seen before eruptions at a much-studied French volcano. Even the
+very wet 2023 summer, including Cyclone Gabrielle, left no clear mark. So Auckland's monitoring cannot yet rely on a
+simple rain-and-season baseline at these frequencies.</p>
+<h2>What was asked</h2>
+<p>The lead (<code>auckland-nz-avf-dvv-hydrological-baseline</code>, Auckland and NZ signature area) asked whether ambient-noise
+dv/v across the Auckland Volcanic Field has a predictable hydrological baseline, as at other volcanoes (for example
+Merapi; Sens-Schönfelder &amp; Wegler 2006). Such a baseline would set the noise floor for unrest detection. No dv/v
+monitoring of the field was found.</p>
+<p>The critic's design fix: the model is trained on 2013–2020 and tested from 2021, with nothing refitted.</p>
+<h2>How it was done</h2>
+<ul>
+<li><strong>Correlations.</strong> GeoNet day files are streamed from S3. Each station-day is:<ul>
+<li>decimated to 20 Hz and bandpassed at 0.3–5 Hz;</li>
+<li>spectrally whitened, then normalised with a running absolute mean;</li>
+<li>screened with a transient mask on 30-minute windows.</li>
+</ul>
+</li>
+</ul>
+<p>30-minute cross-correlations (±100 s) are stacked daily for the 55 vertical-component pairs, needing at least 24
+  windows a day.
+- <strong>Segments (D1).</strong> A station segment continues while the sensor description and dip are unchanged and the
+  station's data have no gap of more than 90 days (7 days as a sensitivity).
+- <strong>dv/v.</strong>
+    - Stretching at 0.5–2 Hz on the symmetric coda, from t₁ = max(5 s, 2d / 1.5 km s⁻¹) to t₁ + 20 s.
+    - The current stack is an 11-day centred moving stack, and the reference is the segment's 2013–2020 mean. The
+    stretched trace is evaluated with a cubic spline (D1).
+    - The grid runs ±2%, in 0.05% steps refined to 0.005%. (The plan named a 0.01% grid, which was not logged in the
+    first version.)
+    - Days whose stack has no coda energy (dead channel) or correlates negatively with the reference are dropped.  - Coverage: 186,439 of 200,667 pair-days were measured. The drops are segments with fewer than 60 training days
+    (9,360), polarity mismatch (2,346), days outside segments (1,232), dead channel (852) and short stacks (438)
+    (<code>results/tables/coverage.json</code>).
+    - 53 pairs give dv/v. The result is smoothed with a 30-day running mean.
+- <strong>The model:</strong> segment constants + a · P_τ (rainfall diffused to depth, erfc kernel, τ from 1 to 500 days) + an
+  annual sinusoid + a linear drift. It is ordinary least squares, with τ chosen by training fit.
+    - Training runs 2013–2020. The held-out period runs from 2021 to the end of either station's segment.  - Pairs are scored with mean training coherence of at least 0.5 and at least 180 held-out days: 33 of 53.
+- <strong>Forcing:</strong> ERA5 daily rainfall and temperature at the field's centre, from the Open-Meteo archive (no gaps).
+- <strong>Plausibility (G3):</strong> <code>results/plausibility.md</code>, with three pair-days recomputed by hand from the raw
+  correlations.</p>
+<h2>Results</h2>
+<h3>H1 (<code>results/figures/F1_heldout_r2.png</code>)</h3>
+<figure><a href="results/figures/F1_heldout_r2.png"><img src="results/figures/F1_heldout_r2.png" alt="Held-out R² by pair"></a><figcaption>Held-out R² of the rainfall-diffusion + annual + drift model for the 33 station pairs with mean training coherence of at least 0.5 and at least 180 held-out days. Model trained on 2013-2020 and applied unchanged from 2021. Median -0.08 (95% pair bootstrap -0.19 to -0.01); no pair reaches 0.5. Values below -3 are printed on the bar.</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>analysis</th>
+<th>scored pairs</th>
+<th>median held-out R² (95% CI)</th>
+<th>median 2 SD (30-day smoothing)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>preregistered (D1 segments: dip changes, data gaps &gt; 90 days)</strong></td>
+<td>33</td>
+<td><strong>−0.08 (−0.19 to −0.01)</strong></td>
+<td>residual <strong>0.088%</strong></td>
+</tr>
+<tr>
+<td>held-out dv/v about its own mean (no model, D1)</td>
+<td>33</td>
+<td>—</td>
+<td>0.077%</td>
+</tr>
+<tr>
+<td>season-only model: segment constants + annual sinusoid (D1)</td>
+<td>33</td>
+<td>−0.02</td>
+<td>residual 0.075%</td>
+</tr>
+<tr>
+<td>every epoch boundary a break, references recomputed (secondary 4)</td>
+<td>34</td>
+<td>−0.15 (−0.48 to −0.01)</td>
+<td>residual 0.072%</td>
+</tr>
+<tr>
+<td>data gaps &gt; 7 days as segment breaks (D1 sensitivity)</td>
+<td>31</td>
+<td>−0.27 (−0.35 to −0.15)</td>
+<td>residual 0.076%</td>
+</tr>
+<tr>
+<td>temperature in place of the sinusoid (secondary 5)</td>
+<td>33</td>
+<td>−0.07</td>
+<td>residual 0.086%</td>
+</tr>
+<tr>
+<td>drift held at its end-of-training value (post hoc)</td>
+<td>33</td>
+<td>−0.12</td>
+<td>—</td>
+</tr>
+<tr>
+<td>draining rainfall kernel exp(−lag/τ) (post hoc)</td>
+<td>33</td>
+<td>−0.10 (−0.26 to −0.06)</td>
+<td>residual 0.077%</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>The fitted τ</strong> piles up at the ends of its grid (1 day for 11 pairs, 500 days for 8), as expected when the rain
+  term has no stable relation to dv/v.</li>
+<li><strong>By pair type:</strong><ul>
+<li>borehole–borehole pairs: −0.19 (20 pairs);</li>
+<li>pairs with a surface sensor: −0.02 (13 pairs).</li>
+</ul>
+</li>
+<li><strong>Coherence.</strong> Median training coherence is 0.53 across 53 pairs.<ul>
+<li>Post hoc: the 22 scored pairs whose 11-day stacks correlate with their reference at 0.7 or more at zero stretch
+give a median held-out R² of −0.11 and a no-model wander of 0.066%.</li>
+<li>So the verdict does not come from the noisier pairs.</li>
+</ul>
+</li>
+</ul>
+<h3>What fails (<code>results/figures/F2_example_pair.png</code>)</h3>
+<figure><a href="results/figures/F2_example_pair.png"><img src="results/figures/F2_example_pair.png" alt="Example pair"></a><figcaption>EPAZ-HBAZ (mean training coherence 0.98; tau = 1 days). Black: observed dv/v, stretching at 0.5-2 Hz, 30-day running mean. Blue: the model fitted on 2013-2020. Orange: its prediction from 2021, with nothing refitted. Lower panel: ERA5 monthly rainfall at the field&#x27;s centre.</figcaption></figure>
+<ul>
+<li><strong>In training.</strong> On the most coherent pair (EPAZ–HBAZ), the model captures an annual cycle in 2013–2020.</li>
+<li><strong>From 2021.</strong> The observed dv/v stays high, while the model's rain term, carrying the wet 2022–23 anomaly, pulls
+  its prediction down (held-out R² −5.5). The cycle is real, but neither its level nor its phase in later years is
+  predicted.</li>
+<li><strong>Not just the kernel or the drift.</strong> A draining kernel, which forgets old rain, does no better, and neither does
+  freezing the drift. A season-only model is about as good as the held-out mean (median −0.02).</li>
+</ul>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>No simple rainfall-and-season baseline for Auckland at 0.5–2 Hz.</strong> dv/v wanders about 0.08% at month scale for
+  reasons this model cannot capture. That is comparable to precursory changes reported elsewhere, so a volcanic
+  signal would need to be several times larger to stand out with this processing.</li>
+<li><strong>Not shown:</strong><ul>
+<li><strong>That hydrology does not affect velocities.</strong> ERA5 rain at one point stands in for heterogeneous basalt
+aquifers, and the groundwater bores, which have click-through terms, were not used.</li>
+<li><strong>Other methods:</strong> other frequency bands, cross-components or single-station methods.</li>
+<li><strong>Volcanic hazard.</strong> This is a methods baseline, and says nothing about hazard.</li>
+</ul>
+</li>
+<li><strong>Station problems</strong> cut the usable pairs to 33. Urban noise, sensor changes, a polarity flip and a dead channel at
+  KBAZ all take a toll. Several held-out windows end early at segment ends.</li>
+<li><strong>Care.</strong> The maunga of the Auckland Volcanic Field are taonga of Ngā Mana Whenua o Tāmaki Makaurau, co-governed
+  by the Tūpuna Maunga Authority. These results belong with the Authority, Auckland Emergency Management and GeoNet.</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration:</strong> <code>plan.md</code>. The correlation and model code were committed before any dv/v was computed.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>):<ul>
+<li>technical fixes (a missing package, an import path);</li>
+<li>two post hoc checks;</li>
+<li>the pre-review gate (G5, G6);</li>
+<li><strong>D1, after independent review:</strong><ul>
+<li>KBAZ segmentation (dip change and data gaps &gt; 90 days, with 7 days as a sensitivity);</li>
+<li>dead-channel and polarity checks with coverage accounting;</li>
+<li>cubic-spline stretching;</li>
+<li>recomputed references for the every-epoch variant;</li>
+<li>the no-model and season-only floors;</li>
+<li>the guarded lockdown windows;</li>
+<li>a post hoc coherence breakdown;</li>
+<li>the corrected Brenguier attribution.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Independent review:</strong> Fable, "fix first" (<code>review/review.md</code>). This version addresses it; a confirmation pass is
+  queued.</li>
+</ul>
+<h2>Reproducing it</h2>
+<ol>
+<li><code>code/correlate.py run --workers 8</code>.</li>
+<li><code>code/forcing.py</code>.</li>
+<li><code>code/dvv.py</code>, then <code>RULE=every_epoch code/dvv.py</code> and <code>GAP=7 code/dvv.py</code>.</li>
+<li><code>code/model.py</code>, then <code>code/model.py every_epoch</code> and <code>code/model.py gap7</code>.</li>
+<li><code>code/secondary.py</code>.</li>
+<li><code>code/posthoc_drift.py</code> and <code>code/posthoc_kernel.py</code>.</li>
+<li><code>code/figures.py</code>.</li>
+<li><code>code/handtrace.py</code> (G3).</li>
+</ol>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-avf-dvv-hydrological-baseline/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

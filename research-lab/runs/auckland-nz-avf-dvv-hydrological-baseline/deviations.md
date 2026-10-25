@@ -68,3 +68,16 @@ verdict. All changes were made after every result had been seen. The first-versi
 
 **Result.** The median held-out R² is −0.27 (−0.35 to −0.15) on 31 scored pairs, still Refuted. The floors are
 0.076% (residual), 0.074% (no model) and 0.067% (season-only), against v1's −0.12 and 0.136%.
+
+### D1 addendum — 2026-10-26 03:58 NZDT — after the confirmation pass
+
+- **The confirmation pass found that the 7-day data-gap rule split records at routine outages.** MKAZ had 16
+  segments and WIAZ/RVAZ 7; held-out windows ended at outages, and 15 of 31 scored pairs rested on under two years of
+  training.
+- **The data-gap threshold is now 90 days**, which still separates KBAZ's 3.5-year gap. The dip rule and the
+  per-day drops are unchanged.
+- **The 7-day version is kept as a sensitivity** (`GAP=7`, `secondary_gap7.json`: −0.27, 31 pairs).
+- **Final primary:** median held-out R² −0.08 (−0.19 to −0.01), 33 scored pairs, 24 negative. Still Refuted.
+- **Floors:** residual 0.088%, no model 0.077%, season-only 0.075%.
+- **Coverage:** 186,439 of 200,667 pair-days measured.
+- The v1 `dvv_daily.parquet` is in git history at commit 35e9d7a, not duplicated in `v1_pre_review/`.
