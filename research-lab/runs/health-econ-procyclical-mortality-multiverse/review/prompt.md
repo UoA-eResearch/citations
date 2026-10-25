@@ -52,3 +52,14 @@ Check at least:
 Write review/review.md: a verdict (publish / publish with edits / fix first / do not publish), then numbered findings
 (severity, evidence with file:line or your check's output, the fix). Put supporting scripts in
 review/reviewer_checks/.
+
+**Gate checks (METHODS.md G1–G7; this study predates the gates, so G5 and G6 were run as a pre-review gate).**
+Verify:
+- **G5:** `review/overclaim_check.md` passes and is honest.
+- **G6:** `results/attribution_ledger.csv` passes `python3 -I ../../tools/attribution.py check .`; spot-check claims.
+- **G1:** look for outcome-correlated choices in the multiverse (specifications that are "defensible" only in
+  hindsight).
+- **G2:** look for silent fallbacks in the bootstrap (failed resamples dropped?) and in splice gaps.
+- **G3–G4, where they apply.**
+
+Report any gate that is missing or hollow as a finding.

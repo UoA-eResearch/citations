@@ -38,3 +38,16 @@ run uses exactly the table's options, so no choice changes, only the stated coun
 exactly for 1976–2017, 1992–2005 and 2006–2017, and one H2 specification. Its standard errors are 1–6% smaller,
 because it does not count fixed effects nested in clusters in the small-sample factor; the study's are the more
 conservative.
+
+## Pre-review gate (G5, G6) — 2026-10-25 22:47 NZDT, after all results (wording and attribution only)
+
+The lab's METHODS.md gates were run before this draft's review. No number changed.
+- **G5 overclaim check** (`review/overclaim_check.md`, passes; every figure re-derived from the spec tables):
+  - "window and measure explain most of the variation" was wrong: the main effects of all eight choices explain
+    43%, and the window and measure account for most of that (28 and 11 points). Reworded.
+  - "post-2010 drug deaths do not follow the cycle" became "show no reliable cyclical pattern".
+  - The plain-terms "recessions are good for health" became "deaths fall in recessions", which is what was
+    measured.
+- **G6 attribution ledger** (`results/attribution_ledger.csv`, 7 claims, passes): Ruhm 2000 and 2015,
+  Brüning & Thuilliez 2019 and Stevens et al. 2015 resolve. Ruhm 2015 was confirmed by DOI after an OpenAlex
+  title-match miss.

@@ -1,4 +1,4 @@
-# Do US deaths fall in recessions? Across 2,304 defensible specifications, yes before 1992 and with the unemployment rate; post-2010 drug deaths do not follow the cycle
+# Do US deaths fall in recessions? Across 2,304 defensible specifications, yes before 1992 and with the unemployment rate; post-2010 drug deaths show no reliable cyclical pattern
 
 *US states and DC, 1976–2023. Deaths come from NBER microdata to 1998, then CDC state counts, spliced and validated
 on the overlap years. Economic weakness is the BLS unemployment rate or the negative employment-to-population ratio.
@@ -20,8 +20,9 @@ built.*
     years.
   - **The measure.** With the unemployment rate, the long windows are 83–97% negative and significant. With the
     employment-to-population ratio, 37–44%.
-  - Together these explain most of the variation across specifications: the window 28%, the measure 11%. Weighting,
-    lags, trends, outcome, estimator and controls explain 0.1–2% each.
+  - Together they account for most of what the choices explain. The main effects of all eight choices explain 43%
+    of the variation across specifications; dropping the window loses 28 points and dropping the measure 11.
+    Weighting, lags, trends, outcome, estimator and controls lose 0.1–2 points each.
 - **The canonical Ruhm specification reproduces the classic result.** Log crude mortality falls 0.52% per point of
   unemployment for 1976–2017 (95% CI −0.92% to −0.13%; bootstrap p = 0.018). The sub-periods split: +0.21% in
   1992–2005 (not significant) and −0.57% in 2006–2017.
@@ -46,7 +47,7 @@ About half do, which our preregistered rule calls inconclusive. But the split is
 rate than by the share of people in work. Overdose deaths after 2010 did not reliably rise with unemployment in
 almost any analysis.
 
-So "recessions are good for health" holds for the late 1970s and 1980s, and mostly with one way of measuring the
+So "deaths fall in recessions" holds for the late 1970s and 1980s, and mostly with one way of measuring the
 economy. It is not a stable law.
 
 ## What was asked
