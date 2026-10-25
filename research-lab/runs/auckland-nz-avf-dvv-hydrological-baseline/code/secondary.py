@@ -29,7 +29,7 @@ def temperature_variant():
     temp = era.t2m_c.reindex(days).interpolate().to_numpy()
     temp = temp - temp[(days >= M.T0) & (days <= M.TRAIN_END)].mean()
     feats = M.rain_features(days, rain)
-    segs = D.segments()
+    segs = M.load_segments("plan")
     rows = []
     for pair, g in dv.groupby("pair"):
         a, b = pair.split("-")

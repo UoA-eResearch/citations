@@ -1,46 +1,50 @@
 {
  "jan_feb_2023": {
-  "pairs": 18,
-  "median_mean_resid_pct": 0.0173,
+  "pairs": 17,
+  "median_mean_resid_pct": 0.0265,
   "pairs_beyond_resid_2sd": 1,
-  "median_observed_dvv_minus_heldout_mean_pct": 0.0068
+  "median_observed_dvv_minus_heldout_mean_pct": 0.0027
  },
  "pair_type": {
   "borehole-borehole": {
    "pairs": 20,
-   "median_heldout_r2": -0.2321,
-   "median_train_r2": 0.1972,
-   "median_resid_2sd_pct": 0.1433
+   "median_heldout_r2": -0.3605,
+   "median_train_r2": 0.1699,
+   "median_resid_2sd_pct": 0.0865
   },
   "with surface": {
-   "pairs": 12,
-   "median_heldout_r2": -0.0065,
-   "median_train_r2": 0.1801,
-   "median_resid_2sd_pct": 0.1048
+   "pairs": 11,
+   "median_heldout_r2": -0.0678,
+   "median_train_r2": 0.1683,
+   "median_resid_2sd_pct": 0.0731
   }
  },
  "coherence": {
   "pairs_with_dvv": 53,
-  "train_coherence_ge_0_5": 32,
-  "median_train_coherence": 0.5256,
-  "median_train_r2_scored": 0.1883
+  "train_coherence_ge_0_5": 33,
+  "median_train_coherence": 0.537,
+  "median_train_r2_scored": 0.1683
  },
  "temperature": {
-  "pairs_scored": 32,
-  "median_heldout_r2": -0.1341,
-  "median_train_r2": 0.1907,
-  "median_resid_2sd_pct": 0.1344,
+  "pairs_scored": 31,
+  "median_heldout_r2": -0.2637,
+  "median_train_r2": 0.1681,
+  "median_resid_2sd_pct": 0.082,
   "lag_counts": {
-   "0": 11,
-   "90": 7,
-   "55": 3,
-   "45": 3,
+   "0": 7,
+   "90": 5,
+   "55": 4,
+   "5": 2,
+   "30": 2,
    "10": 2,
-   "20": 2,
-   "65": 1,
-   "30": 1,
+   "40": 2,
    "50": 1,
-   "15": 1
+   "45": 1,
+   "35": 1,
+   "20": 1,
+   "15": 1,
+   "75": 1,
+   "60": 1
   }
  }
 }

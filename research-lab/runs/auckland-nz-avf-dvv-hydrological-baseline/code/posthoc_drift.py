@@ -18,7 +18,7 @@ def main():
     era = pd.read_csv(M.RUN / "data" / "raw" / "era5_daily.csv", parse_dates=["date"]).set_index("date")
     days = pd.date_range(era.index.min(), M.REC_END, freq="D")
     feats = M.rain_features(days, era.precip_mm.reindex(days).fillna(0).to_numpy())
-    segs = D.segments()
+    segs = M.load_segments("plan")
     fit = pd.read_csv(M.T / "fit.csv").set_index("pair")
     rows = []
     for pair, g in dv.groupby("pair"):

@@ -1,0 +1,32 @@
+[
+ {
+  "pair": "ETAZ-HBAZ",
+  "date": "2021-07-08",
+  "table_dvv_pct": -0.035,
+  "trace_dvv_pct": -0.04,
+  "table_cc": 0.694,
+  "trace_cc": 0.6933,
+  "ref_days": 2560,
+  "stack_days": 11
+ },
+ {
+  "pair": "AWAZ-ETAZ",
+  "date": "2014-12-23",
+  "table_dvv_pct": 0.01,
+  "trace_dvv_pct": 0.01,
+  "table_cc": 0.8382,
+  "trace_cc": 0.8382,
+  "ref_days": 889,
+  "stack_days": 11
+ },
+ {
+  "pair": "ETAZ-RVAZ",
+  "date": "2019-01-26",
+  "table_dvv_pct": -0.005,
+  "trace_dvv_pct": -0.005,
+  "table_cc": 0.5156,
+  "trace_cc": 0.5152,
+  "ref_days": 659,
+  "stack_days": 11
+ }
+]

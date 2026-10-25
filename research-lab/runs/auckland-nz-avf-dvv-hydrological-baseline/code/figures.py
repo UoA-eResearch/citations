@@ -45,7 +45,7 @@ def f1(p):
     ax.set_yticks(y); ax.set_yticklabels(sc.pair, fontsize=6.5); ax.set_xlim(-3.05, 1)
     ax.set_xlabel("held-out R² (2021 to each pair's first sensor change), clipped at -3")
     ax.grid(axis="x", color=GRID, lw=0.5); ax.legend(frameon=False, fontsize=8, loc="lower right")
-    fig.suptitle("Rainfall and season do not predict held-out velocity changes under Auckland", x=0.02, ha="left",
+    fig.suptitle("A rainfall-and-season model does not predict held-out velocity changes under Auckland", x=0.02, ha="left",
                  fontsize=10.5, color=INK)
     fig.savefig(F / "F1_heldout_r2.png", dpi=170); plt.close(fig)
     caption("F1_heldout_r2", f"""Held-out R² of the rainfall-diffusion + annual + drift model for the {p['pairs_scored']}
@@ -65,7 +65,7 @@ def f2():
     g = dv[dv.pair == pair]
     sm, seg, ty, ph, ok, tr = M.fit_pair(g, feats, days)
     a, b = pair.split("-")
-    ho_end = M.held_out_end(D.segments(), a, b)
+    ho_end = M.held_out_end(M.load_segments("plan"), a, b)
     ho = ok & (days >= M.HO_START) & (days <= ho_end)
     lv = np.unique(seg[tr])
     row = sc.set_index("pair").loc[pair]
