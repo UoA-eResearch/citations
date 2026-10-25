@@ -52,3 +52,15 @@ Check at least:
 Write review/review.md: a verdict (publish / publish with edits / fix first / do not publish), then numbered findings
 (severity, evidence with file:line or your check's output, the fix). Put supporting scripts in
 review/reviewer_checks/.
+
+**Gate checks (METHODS.md G1–G7; this study predates the gates, so G5 and G6 were run as a pre-review gate).**
+Verify:
+- **G5:** `review/overclaim_check.md` passes (`python3 -I ../../tools/overclaim_check.py . --verify`) and is honest;
+  re-label any sentence you disagree with.
+- **G6:** `results/attribution_ledger.csv` passes `python3 -I ../../tools/attribution.py check .`; spot-check 5 claims
+  against their sources, including the role and conditions.
+- **G1–G4, where they apply:** label-correlated fields or leakage between training and held-out periods; silent
+  fallbacks (for example JSON or forcing gaps filled with defaults); plausibility of the headline numbers; validation
+  metrics without an error audit.
+
+Report any gate that is missing or hollow as a finding.

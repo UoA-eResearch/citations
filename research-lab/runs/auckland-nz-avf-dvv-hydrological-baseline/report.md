@@ -1,4 +1,4 @@
-# Rainfall and season do not predict seismic velocity changes under the Auckland Volcanic Field: no hydrological baseline at 0.5–2 Hz, and a noise floor near 0.14%
+# A rainfall-and-season model does not predict seismic velocity changes under the Auckland Volcanic Field: no hydrological baseline at 0.5–2 Hz, and a noise floor near 0.14%
 
 *Daily ambient-noise cross-correlations for 55 vertical-component pairs of 11 GeoNet stations, 2013 to September
 2026. dv/v is measured by stretching the coda at 0.5–2 Hz. A rainfall-diffusion, annual and drift model is fitted on
@@ -15,8 +15,10 @@
   - every sensor-epoch boundary treated as a break;
   - holding the drift term fixed (post hoc);
   - a draining instead of a cumulative rainfall kernel (post hoc).
-- **The noise floor is 0.14%,** twice the held-out residual SD as a median across pairs. That is nearly three times
-  the 0.05% the lead hoped for, and 0.09% even with every sensor change treated as a break.
+- **The noise floor is 0.14%,** twice the held-out residual SD as a median across pairs, and 0.09% even with every
+  sensor change treated as a break.
+  - That is above the roughly 0.1% velocity resolution reported at Piton de la Fournaise (Brenguier et al. 2008).
+  - The lead's 0.05% target is not supported by that source: the 0.05% figure does not appear in its text (G6).
 - **Neither the March 2020 lockdown nor the record-wet January–February 2023 shows up.**
   - Lockdown: median step +0.007%; 2 of 32 pairs beyond twice their residual SD.
   - 2023 storms: median held-out residual +0.017% in 18 pairs; 1 beyond twice its residual SD.
@@ -32,8 +34,7 @@ We processed 13 years of continuous recordings from 11 GeoNet seismometers acros
 built a model of how rain and the seasons should change the wave speeds, trained it on 2013–2020, and checked
 whether it predicted 2021–2026.
 
-It did not. On the 32 station pairs with clean enough signals, the model predicted the later years worse than
-simply guessing the average. The wave speeds wander by about 0.14% for reasons the model cannot account for. Even
+It did not. On 25 of the 32 station pairs with clean enough signals, the model predicted the later years worse than simply guessing their average. The wave speeds wander by about 0.14% for reasons the model cannot account for. Even
 the very wet 2023 summer, including Cyclone Gabrielle, left no clear mark. A volcanic signal would need to stand out
 above that level to be seen with this method, so Auckland's monitoring cannot yet rely on a simple rain-and-season
 baseline at these frequencies.

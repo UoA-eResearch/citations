@@ -17,6 +17,7 @@ Ledger: RUN_DIR/results/attribution_ledger.csv, one row per claim, columns:
     python3 -I tools/attribution.py check RUN_DIR       validate fields; resolve every DOI (doi.org) and OpenAlex /
                                                         arXiv id (public APIs, no key); flag claims marked refutes /
                                                         not addressed / not found that are still used as support
+                                                        (a debunked claim stays in the ledger with "corrected" in used_in)
 """
 import csv
 import json
@@ -80,7 +81,8 @@ def check(run):
             problems.append((rid, f"support {r['support']!r} not in {sorted(SUPPORT)}"))
         if r.get("source_type") in ("paper", "preprint") and not (r.get("role") or "").strip():
             problems.append((rid, "paper without role (main finding / background / limitation / method)"))
-        if r.get("support") in ("refutes", "not addressed", "not found") and "lit_against" not in r.get("used_in", ""):
+        if r.get("support") in ("refutes", "not addressed", "not found") and not any(
+                k in r.get("used_in", "") for k in ("lit_against", "corrected")):
             problems.append((rid, f"support={r['support']} but used in {r.get('used_in')!r}: fix the text or the ledger"))
         if len(r.get("claim", "")) > 400 or '"' in r.get("claim", ""):
             problems.append((rid, "claim looks like a quotation; paraphrase it (quotes go to data/attribution_quotes/)"))
