@@ -1,0 +1,73 @@
+{
+ "records_clean": {
+  "attempted": 35526014,
+  "ok": 30622400,
+  "fallback": 0,
+  "dropped": 4903614,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "r1 GBIF coordinate issue": 495139,
+   "r2 uncertainty > 10 km": 531658,
+   "r3 equal or near-zero coordinates": 216,
+   "r4 introduced, managed or absent": 139943,
+   "r5 high-density point": 528628,
+   "r6 sea cell": 206740,
+   "r7 no species key": 3001290
+  }
+ },
+ "nulls_primary": {
+  "attempted": 69596,
+  "ok": 69596,
+  "fallback": 0,
+  "dropped": 0,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {}
+ },
+ "nulls_thin30": {
+  "attempted": 58329,
+  "ok": 58329,
+  "fallback": 0,
+  "dropped": 0,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {}
+ },
+ "nulls_eff30": {
+  "attempted": 69596,
+  "ok": 69596,
+  "fallback": 0,
+  "dropped": 0,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {}
+ },
+ "nulls_eff2deg": {
+  "attempted": 69596,
+  "ok": 69596,
+  "fallback": 0,
+  "dropped": 0,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {}
+ },
+ "nulls_no_r5": {
+  "attempted": 69996,
+  "ok": 69996,
+  "fallback": 0,
+  "dropped": 0,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {}
+ },
+ "sdm_variant": {
+  "attempted": 1000,
+  "ok": 1000,
+  "fallback": 0,
+  "dropped": 0,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {}
+ }
+}

@@ -1,0 +1,74 @@
+[
+ {
+  "specieskey": 3157552,
+  "raw_records": 75,
+  "after_rules_1_4": 68,
+  "clean_records": 68,
+  "cells_p1": 10,
+  "cells_p2": 10,
+  "centroid_p1": [
+   -15.2416,
+   -39.3161
+  ],
+  "centroid_p2": [
+   -13.2523,
+   -38.853
+  ],
+  "trace_v_km_yr": 8.0989,
+  "table_v_km_yr": 8.0989,
+  "table_k1_k2": [
+   10,
+   10
+  ],
+  "effort_null_median": 1.8943,
+  "effort_null_p95": 4.0988
+ },
+ {
+  "specieskey": 2927719,
+  "raw_records": 355,
+  "after_rules_1_4": 353,
+  "clean_records": 353,
+  "cells_p1": 149,
+  "cells_p2": 80,
+  "centroid_p1": [
+   42.6232,
+   -112.3338
+  ],
+  "centroid_p2": [
+   40.9451,
+   -111.8457
+  ],
+  "trace_v_km_yr": 6.8191,
+  "table_v_km_yr": 6.8191,
+  "table_k1_k2": [
+   149,
+   80
+  ],
+  "effort_null_median": 2.5056,
+  "effort_null_p95": 4.7171
+ },
+ {
+  "specieskey": 7388346,
+  "raw_records": 40,
+  "after_rules_1_4": 39,
+  "clean_records": 39,
+  "cells_p1": 19,
+  "cells_p2": 13,
+  "centroid_p1": [
+   -19.3129,
+   29.4547
+  ],
+  "centroid_p2": [
+   -20.1233,
+   31.7873
+  ],
+  "trace_v_km_yr": 9.2951,
+  "table_v_km_yr": 9.2951,
+  "table_k1_k2": [
+   19,
+   13
+  ],
+  "effort_null_median": 5.7969,
+  "effort_null_p95": 12.7593
+ }
+]

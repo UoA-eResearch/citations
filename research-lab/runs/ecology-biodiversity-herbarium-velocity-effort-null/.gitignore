@@ -1,3 +1,11 @@
 venv/
 __pycache__/
 data/
+results/tables/observed_thin30.parquet
+results/tables/observed_eff30.parquet
+results/tables/observed_eff2deg.parquet
+results/tables/observed_no_r5.parquet
+results/tables/nulls_thin30.parquet
+results/tables/nulls_eff30.parquet
+results/tables/nulls_eff2deg.parquet
+results/tables/nulls_no_r5.parquet

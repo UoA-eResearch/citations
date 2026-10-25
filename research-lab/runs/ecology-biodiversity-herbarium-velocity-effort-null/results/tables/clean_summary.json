@@ -1,0 +1,26 @@
+{
+ "records_in": 35526014,
+ "records_kept": 30622400,
+ "records_kept_without_r5": 31108182,
+ "drops": {
+  "r1 GBIF coordinate issue": 495139,
+  "r2 uncertainty > 10 km": 531658,
+  "r3 equal or near-zero coordinates": 216,
+  "r4 introduced, managed or absent": 139943,
+  "r5 high-density point": 528628,
+  "r6 sea cell": 206740,
+  "r7 no species key": 3001290
+ },
+ "dense_points": 86,
+ "land_cells": 515923,
+ "sea_cells": 20881,
+ "establishmentmeans_values": {
+  "None": 33221238,
+  "native": 2115082,
+  "introduced": 141791,
+  "uncertain": 47815,
+  "introducedassistedcolonisation": 52,
+  "vagrant": 35,
+  "nativereintroduced": 1
+ }
+}

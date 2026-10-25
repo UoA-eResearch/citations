@@ -1,0 +1,15 @@
+{
+ "species_attempted": 1000,
+ "species_ok": 1000,
+ "median_v_sdm_obs": 8.439,
+ "median_v_sdm_null": 6.233,
+ "ratio": 0.7386,
+ "ci": [
+  0.6764,
+  0.8153
+ ],
+ "same_species_point_median_obs": 6.553,
+ "same_species_point_median_effort_null": 4.398,
+ "share_null_replicate_faster": 0.387,
+ "spearman_sdm_vs_point_obs": 0.484
+}
