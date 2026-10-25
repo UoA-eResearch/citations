@@ -21,3 +21,15 @@ stored. The replays are re-run to recover the messages.
 **H1 is unaffected,** because failure means any error in the declaration's span. **Affected:** the error-class
 composition and the preregistered "excluding unknown-identifier-only failures" sensitivity, which in v1 equalled the
 primary analysis.
+
+## Pre-review gate (G5, G6) — 2026-10-25 23:28 NZDT, after all results (wording and attribution only)
+
+The lab's METHODS.md gates were run before this draft's review. No number changed.
+- **G5 overclaim check** (`review/overclaim_check.md`, passes): error classes are first errors, not causes.
+  - "Removed or renamed lemmas" became "names (usually lemmas)".
+  - "Changed lemma signatures" became "'function expected' errors, typically a changed signature".
+  - "The largest single cause" became "the most common first error".
+- **G6 attribution ledger** (`results/attribution_ledger.csv`, 5 claims, passes):
+  - the Isabelle/AFP study (TOSEM 2025) and Lean Refactor (arXiv 2605.20244) resolve with matching titles;
+  - the latter's "brittle across library versions" is a motivating statement in its abstract, not a measured
+    result, and is recorded as such.

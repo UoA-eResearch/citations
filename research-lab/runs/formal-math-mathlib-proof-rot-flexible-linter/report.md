@@ -14,14 +14,13 @@ analysis code were committed before any replay result.*
   - Population: 2,723 proofs in 1,294 files, of which 110 are flagged.
 - **The direction is consistent, but not across every comparison:**
   - six months later: OR 1.67 (1.01 to 2.77), with 30% against 13% failing;
-  - setting aside failures caused only by removed or renamed lemmas: OR 1.62 (1.01 to 2.59);
+  - setting aside failures whose only error is an unknown identifier (a removed or renamed name): OR 1.62 (1.01 to 2.59);
   - the second pair (September 2025 to September 2026): OR 0.99 (0.55 to 1.78);
   - pooled: 1.29 (0.89 to 1.88).
 - **How proofs rot.**
   - A quarter of proofs fail verbatim a year later. Half of those whose text mathlib itself changed fail; none whose
     text mathlib left alone do.
-  - The largest single cause is a lemma the proof uses being removed or renamed (37% of failures). Then come unsolved
-    goals (25%), type mismatches (12%), changed lemma signatures (4%) and "no goals" (4%).
+  - The most common first error is an unknown identifier, a name the proof uses (usually a lemma) having been removed or renamed (37% of failures). Then come unsolved goals (25%), type mismatches (12%), "function expected" errors (4%, typically a changed signature) and "no goals" (4%).
 - **The pipeline is valid.** In the old snapshot, 99.94% of population proofs compile without error.
 
 ## In plain terms
@@ -38,8 +37,7 @@ against 25%. After allowing for proof length, the odds of breaking were about on
 close to what was predicted, but the uncertainty is wide enough that we can't confirm it, and a second year-long
 comparison showed no difference.
 
-So the style rule points the right way, but its effect is modest next to the main reason proofs break: lemmas being
-renamed or removed.
+So the style rule points the right way, but its effect is modest next to the most common reason proofs break: names, usually lemmas, being renamed or removed.
 
 ## What was asked
 
