@@ -1,6 +1,11 @@
 """Matching, stacked PPML event study, pre-share and bootstrap (plan sections 2-5).
 
   event.py            primary + secondaries -> results/tables/{matching_balance.json, primary.json, event_path.csv}
+
+D2 (after review): controls must have an SCDB id and the treated case's SCDB issue area, as plan.md says (the first
+version admitted orders-list clusters and CAP duplicates without one); per-stack balance is reported; post hoc
+variants (labelled in posthoc_d2.py): "noFD" drops district-court citers, "era*" and "recent" restrict overruling
+years, "appellate" keeps federal courts of appeals only.
 """
 import json
 import sys
@@ -15,6 +20,7 @@ RAW = RUN / "data" / "raw"
 T = RUN / "results" / "tables"
 B, SEED, LASTYEAR = 1000, 20261023, 2025
 PRE, EV = range(-20, -10), range(-10, 11)
+ERAS = {"era1960_89": (1960, 1989), "era1990_2013": (1990, 2013), "recent": (2014, 2024)}
 
 
 def counts_panel(cites, clusters):
@@ -29,6 +35,10 @@ def build(variant="primary"):
         cites = cites[cites.juris.str.startswith("F")]
     elif variant == "state":
         cites = cites[cites.juris.isin(["S", "SA", "ST", "SS"])]
+    elif variant == "appellate":                                    # D2 post hoc: federal courts of appeals only
+        cites = cites[cites.juris == "F"]
+    if "noFD" in variant:                                           # D2 post hoc: drop district-court citers
+        cites = cites[cites.juris != "FD"]
     cl = pd.read_parquet(INT / "clusters.parquet", columns=["id", "date_filed", "scdb_id"])
     cl["id"] = pd.to_numeric(cl.id, errors="coerce")
     cl = cl.dropna(subset=["id"]).astype({"id": "int64"})
@@ -51,11 +61,14 @@ def build(variant="primary"):
         p = p[p.section == "Statutory"]
     elif variant == "post1990":
         p = p[p.overruling_year > 1990]
-    elif variant == "pre2019":                                     # D1 (post hoc): windows before the coverage break
+    if variant.startswith("pre2019"):                              # D1 (post hoc): windows before the coverage break
         p = p[p.overruling_year <= 2013]
+    for k, (lo, hi) in ERAS.items():                                # D2 post hoc: overruling-year eras
+        if k in variant:
+            p = p[p.overruling_year.between(lo, hi)]
     treated, excluded = [], {"too_young": 0, "under_50": 0, "not_in_citation_data": 0}
     for r in p.itertuples():
-        cands = [int(x) for x in str(r.overruled_clusters).split(";") if x and int(x) in wide.index]
+        cands = [int(x) for x in str(r.overruled_clusters).split(";") if x and x != "nan" and int(x) in wide.index]
         if not cands:
             excluded["not_in_citation_data"] += 1
             continue
@@ -68,9 +81,10 @@ def build(variant="primary"):
         if pre_n[c] < 50:
             excluded["under_50"] += 1
             continue
-        ov = [int(x) for x in str(r.overruling_clusters).split(";") if x]
+        ov = [int(x) for x in str(r.overruling_clusters).split(";") if x and x != "nan"]
         treated.append({"cluster": c, "T0": T0, "dyear": int(r.overruled_year), "section": r.section,
-                        "cite": r.overruled_cite, "overruling_clusters": ov})
+                        "cite": r.overruled_cite, "overruling_clusters": ov,
+                        "ia": getattr(r, "overruled_scdb_issueArea", np.nan)})
     return cites, cl, wide, listed, treated, excluded
 
 
@@ -79,10 +93,12 @@ def match(cl, wide, listed, treated):
     stacks, bal = [], []
     for s, t in enumerate(treated):
         T0, dy = t["T0"], t["dyear"]
-        pool = cl[(cl.dyear.between(dy - 2, dy + 2)) & ~cl.index.isin(listed)].index
-        ia = cl.issueArea.get(t["cluster"], np.nan)
-        if pd.notna(ia):
-            pool = [c for c in pool if pd.isna(cl.issueArea.get(c)) or cl.issueArea.get(c) == ia]
+        pool = cl[(cl.dyear.between(dy - 2, dy + 2)) & ~cl.index.isin(listed) & (cl.scdb_id.fillna("") != "")].index
+        ia = t.get("ia", np.nan)
+        if pd.isna(ia):
+            ia = cl.issueArea.get(t["cluster"], np.nan)
+        if pd.notna(ia):                                              # D2: same SCDB issue area, as planned
+            pool = [c for c in pool if cl.issueArea.get(c) == ia]
         pool = [c for c in pool if c in wide.index]
         prey = [T0 + e for e in PRE]
         pre_tot = [y for y in wide.columns if y < T0]
@@ -99,9 +115,11 @@ def match(cl, wide, listed, treated):
         bal.append({"stack": s, "treated_mean": float(x0.mean()), "control_mean": float(X[np.argsort(dd)[:10]].mean()),
                     "pool_sd": float(X.std())})
     b = pd.DataFrame(bal)
-    smd = float(((b.treated_mean - b.control_mean) / b.pool_sd.replace(0, np.nan)).mean())
+    per = (b.treated_mean - b.control_mean) / b.pool_sd.replace(0, np.nan)
     return stacks, {"stacks": len(stacks), "controls_per_stack_mean": float(np.mean([len(s["controls"]) for s in stacks])),
-                    "mean_smd_log_pre": round(smd, 4)}
+                    "mean_smd_log_pre": round(float(per.mean()), 4), "median_smd": round(float(per.median()), 4),
+                    "stacks_abs_smd_gt_0_5": int((per.abs() > 0.5).sum()), "stacks_abs_smd_gt_1": int((per.abs() > 1).sum()),
+                    "per_stack_smd": [round(float(x), 3) for x in per]}
 
 
 def long_panel(stacks, wide, cites=None, excl_overruling=False):
@@ -170,7 +188,7 @@ def run(variant="primary", boot=True):
     cites, cl, wide, listed, treated, excluded = build(variant)
     stacks, bal = match(cl, wide, listed, treated)
     d = long_panel(stacks, wide, cites, excl_overruling=(variant == "excl_cocite"))
-    if variant == "pre2019":
+    if variant.startswith("pre2019"):
         d = d[d.year <= 2018]
     beta = fit(d)
     D, pre, pooled = stats(beta)

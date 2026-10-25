@@ -1,11 +1,15 @@
 {
- "pairs": 132,
- "overruled_linked_to_one_cluster": 125,
- "overruled_unlinked": 0,
+ "pairs": 141,
+ "overruled_linked_to_one_cluster": 133,
+ "overruled_unlinked": 1,
  "overruling_unlinked": 0,
  "overruled_multi_cluster": 7,
- "overruling_1960_2024": 126,
- "overruling_with_scdb_precedentAlteration_1": 107,
+ "overruling_1960_2024": 131,
+ "overruling_with_scdb_precedentAlteration_1": 112,
  "scdb_precedentAlteration_1960_2024": 174,
- "scdb_alterations_not_in_wiki": 88
+ "scdb_alterations_not_in_wiki_by_cite": 83,
+ "scdb_alterations_blank_uscite": 13,
+ "scdb_alterations_on_list": 101,
+ "scdb_alterations_not_on_list": 73,
+ "share_of_scdb_alterations_on_list": 0.58
 }

@@ -43,7 +43,7 @@ def path_with_ci(variant):
     cites, cl, wide, listed, treated, _ = E.build(variant)
     stacks, _ = E.match(cl, wide, listed, treated)
     d = E.long_panel(stacks, wide, cites, excl_overruling=(variant == "excl_cocite"))
-    if variant == "pre2019":                                         # D1 (post hoc)
+    if variant.startswith("pre2019"):                                # D1 (post hoc)
         d = d[d.year <= 2018]
     D, _, _ = E.stats(E.fit(d))
     ids = sorted(d["stack"].unique())
