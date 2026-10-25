@@ -164,8 +164,8 @@ The critic's design fix: the model is trained on 2013–2020 and tested from 202
     - the guarded lockdown windows;
     - a post hoc coherence breakdown;
     - the corrected Brenguier attribution.
-- **Independent review:** Fable, "fix first" (`review/review.md`). This version addresses it; a confirmation pass is
-  queued.
+- **Independent review:** Fable, "fix first" (`review/review.md`). A confirmation pass by the same reviewer found the
+  fixes resolved and asked for one edit, the 90-day data-gap rule, which this version makes ("publish with edits").
 
 ## Reproducing it
 
