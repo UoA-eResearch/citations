@@ -117,7 +117,7 @@ row records:
 - **conditions** (population, years, version, model organism);
 - how and when it was checked.
 
-Quotations go to `data/attribution_quotes/` (not git). `attribution.py check RUN_DIR` validates the rows, resolves
+**Check the version of record.** A preprint, a press summary or a search snippet can differ from the published paper, so a claim marked "not found" or "refutes" must be checked against the published abstract or text first. (AVF, 2026-10-25: the 0.05% that G6 called unsupported after reading only the arXiv preprint is in the published abstract of Brenguier et al. 2008.) Quotations go to `data/attribution_quotes/` (not git). `attribution.py check RUN_DIR` validates the rows, resolves
 every DOI, OpenAlex, arXiv and GBIF id through public APIs, and fails if a claim marked refutes / not addressed / not
 found is still used as support. `--show` prints each resolved identifier's title. Confirm that each one is the work the claim names, because an identifier that exists can still be the wrong paper. Free-text references can also be resolved with the OpenAlex MCP `resolve_references`
 tool. (The SDM lead claimed a Czech Vegetation Database dataset that is not in SAGE's download; under G6 that is
