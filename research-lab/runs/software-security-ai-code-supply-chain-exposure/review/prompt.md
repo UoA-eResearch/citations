@@ -56,3 +56,14 @@ Check at least:
 Write review/review.md: a verdict (publish / publish with edits / fix first / do not publish), then numbered findings
 (severity, evidence with file:line or your check's output, the fix). Put supporting scripts in
 review/reviewer_checks/.
+
+**Gate checks (METHODS.md G1–G7; this study predates the gates, so G5 and G6 were run as a pre-review gate).**
+Verify:
+- **G5:** `review/overclaim_check.md` passes and is honest; check the new monorepo-free monthly shares
+  (`code/monthly_nomono.py`).
+- **G6:** `results/attribution_ledger.csv` passes `python3 -I ../../tools/attribution.py check .`; spot-check claims.
+- **G4/G7:** the precision audit (100/100) has a single auditor and no second labeller. Is its sample representative
+  (identity matches, bots)? Would a second blind audit change anything?
+- **G1–G2:** silent fallbacks in release-range mapping (tag-less releases, failed clones counted how?).
+
+Report any gate that is missing or hollow as a finding.

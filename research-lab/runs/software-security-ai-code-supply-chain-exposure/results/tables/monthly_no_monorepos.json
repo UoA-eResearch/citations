@@ -1,0 +1,36 @@
+{
+ "npm": {
+  "2025-01": {
+   "all": 0.0013,
+   "no_monorepos": 0.0007,
+   "no_monorepo_releases": 1526
+  },
+  "2026-03": {
+   "all": 0.3498,
+   "no_monorepos": 0.1728,
+   "no_monorepo_releases": 1806
+  },
+  "2026-09": {
+   "all": 0.3699,
+   "no_monorepos": 0.2147,
+   "no_monorepo_releases": 1835
+  }
+ },
+ "pypi": {
+  "2025-01": {
+   "all": 0.0096,
+   "no_monorepos": 0.0095,
+   "no_monorepo_releases": 3366
+  },
+  "2026-03": {
+   "all": 0.3216,
+   "no_monorepos": 0.224,
+   "no_monorepo_releases": 4108
+  },
+  "2026-09": {
+   "all": 0.3251,
+   "no_monorepos": 0.2539,
+   "no_monorepo_releases": 4529
+  }
+ }
+}

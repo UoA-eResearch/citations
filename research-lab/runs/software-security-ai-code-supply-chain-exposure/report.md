@@ -1,4 +1,4 @@
-# AI coding agents in the npm and PyPI supply chain: a third of new releases now carry agent-signed commits, but dependency trees do not multiply the exposure, and agent commits ship no faster
+# AI coding agents in the npm and PyPI supply chain: a fifth to a third of new releases now carry agent-signed commits, but dependency trees do not multiply the exposure, and agent commits ship no faster
 
 *The top 10,000 npm and the top 10,000 PyPI packages by downloads were traced to 13,134 GitHub repositories, 10,372
 of them with commits since 2024 (5.3 million commits). Every commit was checked for an AI-agent signature, and every
@@ -31,7 +31,8 @@ plan and all code were committed before any data was downloaded.*
   - Agent-signed commits were 0.1% of non-bot commits in npm repositories in March 2025 and 10.8% in September 2026;
     in PyPI repositories, 1.4% and 13.3%.
   - The share of new releases containing at least one such commit rose from under 1% in January 2025 to 37% (npm)
-    and 33% (PyPI) in September 2026.
+    and 33% (PyPI) in September 2026. Without monorepo packages, whose releases inherit sibling commits, the
+    September 2026 shares are 21% and 25% (`results/tables/monthly_no_monorepos.json`).
   - Claude Code signs 68% of attributed commits, Copilot 13–16% and Cursor 4–10%.
 - **The detector is precise.** All 100 randomly audited matches are genuine agent signatures (95% lower bound
   96%). It is blind to unsigned use, so every share is a lower bound.
@@ -42,9 +43,8 @@ Most software is assembled from thousands of free packages that other people mai
 write and commit code on a developer's behalf, have spread fast. Many leave a signature in the project history, such
 as a "Co-authored-by: Claude" line.
 
-We looked at the 20,000 most-downloaded packages for JavaScript (npm) and Python (PyPI) and read every change made to
-them since 2024. In September 2026, about one in ten changes carried an AI agent's signature, up from almost none two
-years earlier. A third of new versions included at least one such change. These are minimum figures, because
+We looked at the 20,000 most-downloaded packages for JavaScript (npm) and Python (PyPI) and read every change made since 2024 to the nine in ten we could trace to a repository. In September 2026, about one in ten changes carried an AI agent's signature, up from almost none two
+years earlier. Between a fifth and a third of new versions included at least one such change, depending on how packages that share a repository are counted. These are minimum figures, because
 unsigned AI help leaves no trace.
 
 We expected that because packages depend on other packages, the reach would multiply: install one popular package
@@ -61,10 +61,12 @@ The lead (`software-security-ai-code-supply-chain-exposure`) asked how far agent
 releases, and through dependency trees, installations.
 
 Prior work studies agent pull requests on GitHub:
-- AIDev (Li et al., MSR 2026), with 932,791 agent pull requests;
-- fingerprinting of agents (Ghaleb, MSR 2026);
-- adoption (Robbes et al., TOSEM 2026);
-- reverts and follow-up fixes (MSR 2026; arXiv 2609.26847).
+- AIDev (Li, Zhang & Hassan, MSR 2026; arXiv 2602.09185), with 932,791 agent pull requests;
+- fingerprinting of agents (Ghaleb 2026, arXiv 2601.17406);
+- adoption (Robbes et al., TOSEM 2026; arXiv 2601.18341);
+- follow-up fixes on agent pull requests (Takerngsaksiri et al. 2026, arXiv 2609.26847);
+- the closest work, a validated census of agent traces across 180 million repositories (Khosravani & Mockus 2026,
+  arXiv 2606.24429), which measures prevalence in repositories, not in releases or dependency trees.
 
 None was found that maps agent commits to published releases or weights them by dependency trees and downloads.
 
