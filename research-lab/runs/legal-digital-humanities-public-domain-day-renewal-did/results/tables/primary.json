@@ -8,27 +8,37 @@
   "2022:3",
   "2023:2"
  ],
+ "reference_separated_cohorts": [],
+ "cohorts_in_model": [
+  2019,
+  2020,
+  2021,
+  2022,
+  2023,
+  2024,
+  2025
+ ],
  "works_in_model": 1113,
- "treated_works": 184,
- "control_works": 929,
- "obs": 19851,
+ "treated_works": 191,
+ "control_works": 922,
+ "obs": 19844,
  "cohort_sizes": {
-  "2019": 32,
+  "2019": 33,
   "2020": 21,
-  "2021": 32,
+  "2021": 35,
   "2022": 24,
   "2023": 21,
-  "2024": 26,
-  "2025": 28
+  "2024": 28,
+  "2025": 29
  },
- "rr": 1.8617,
+ "rr": 1.8636,
  "rr_ci": [
-  1.0101,
-  3.4313
+  1.0123,
+  3.4307
  ],
- "log_rr": 0.6215,
- "se": 0.312,
- "pretrend_wald_p": 0.6605,
+ "log_rr": 0.6225,
+ "se": 0.3114,
+ "pretrend_wald_p": 0.7819,
  "verdict_rule": "Supported",
  "variant": "primary",
  "panel_summary": {

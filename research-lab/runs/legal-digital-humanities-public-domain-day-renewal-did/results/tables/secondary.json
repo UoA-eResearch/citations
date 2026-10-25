@@ -1,21 +1,21 @@
 {
  "rr_by_cohort": {
   "2019": {
-   "rr": 0.9058,
+   "rr": 0.9379,
    "rr_ci": [
-    0.2731,
-    3.004
+    0.2823,
+    3.116
    ],
-   "treated_works": 32,
+   "treated_works": 33,
    "separated": [
     "2019:6"
    ]
   },
   "2020": {
-   "rr": 2.7187,
+   "rr": 2.5808,
    "rr_ci": [
-    0.5741,
-    12.8743
+    0.5453,
+    12.2134
    ],
    "treated_works": 21,
    "separated": [
@@ -24,22 +24,22 @@
    ]
   },
   "2021": {
-   "rr": 0.386,
+   "rr": 0.3653,
    "rr_ci": [
-    0.1501,
-    0.9927
+    0.142,
+    0.9396
    ],
-   "treated_works": 32,
+   "treated_works": 35,
    "separated": [
     "2021:2",
     "2021:4"
    ]
   },
   "2022": {
-   "rr": 3.3946,
+   "rr": 3.4517,
    "rr_ci": [
-    0.6098,
-    18.8981
+    0.6185,
+    19.2632
    ],
    "treated_works": 24,
    "separated": [
@@ -47,10 +47,10 @@
    ]
   },
   "2023": {
-   "rr": 0.9184,
+   "rr": 0.9546,
    "rr_ci": [
-    0.1714,
-    4.9211
+    0.1778,
+    5.124
    ],
    "treated_works": 21,
    "separated": [
@@ -58,108 +58,168 @@
    ]
   },
   "2024": {
-   "rr": 53.2184,
+   "rr": 56.1202,
    "rr_ci": [
-    5.7676,
-    491.0509
+    6.1147,
+    515.0657
    ],
-   "treated_works": 26,
+   "treated_works": 28,
    "separated": []
   },
   "2025": {
-   "rr": 0.4167,
+   "rr": 0.3889,
    "rr_ci": [
-    0.03,
-    5.7881
+    0.0279,
+    5.4264
    ],
-   "treated_works": 28,
+   "treated_works": 29,
    "separated": []
   }
  },
  "sun_abraham_ols": {
-  "coef_event0_2_log1p": 0.00358,
-  "se": 0.00234,
+  "coef_event0_2_log1p": 0.00365,
+  "se": 0.00228,
   "ci": [
-   -0.001,
-   0.00817
+   -0.00083,
+   0.00813
   ],
-  "works": 30329
+  "works": 30329,
+  "treated_pre_mean_log1p": 0.00594,
+  "relative_to_pre_mean": 0.615,
+  "relative_ci": [
+   -0.139,
+   1.369
+  ]
  },
  "gutenberg": {
   "linked_works": 30329,
   "on_gutenberg": 336,
-  "renewed_released_0_2y_after_expiry": 0.0183,
-  "renewed_n": 3827,
+  "renewed_released_0_2y_after_expiry": 0.0181,
+  "renewed_n": 3926,
   "never_renewed_same_windows": 0.0025,
-  "never_renewed_n": 25806,
+  "never_renewed_n": 25662,
   "by_expiry_year": {
    "2019": {
-    "n": 405,
-    "share": 0.0519
+    "n": 412,
+    "share": 0.051
    },
    "2020": {
-    "n": 424,
-    "share": 0.0212
+    "n": 432,
+    "share": 0.0208
    },
    "2021": {
-    "n": 441,
-    "share": 0.0181
+    "n": 453,
+    "share": 0.0177
    },
    "2022": {
-    "n": 532,
-    "share": 0.0188
+    "n": 541,
+    "share": 0.0185
    },
    "2023": {
-    "n": 617,
-    "share": 0.013
+    "n": 632,
+    "share": 0.0142
    },
    "2024": {
-    "n": 646,
-    "share": 0.0124
+    "n": 674,
+    "share": 0.0119
    },
    "2025": {
-    "n": 762,
-    "share": 0.0079
+    "n": 782,
+    "share": 0.0077
    }
-  }
+  },
+  "ever_on_gutenberg": {
+   "renewed_1923_1929": 0.0334,
+   "never_renewed": 0.0077
+  },
+  "renewed_release_years_since_expiry": {
+   "-16": 2,
+   "-15": 2,
+   "-3": 1,
+   "-1": 2,
+   "0": 30,
+   "1": 28,
+   "2": 13,
+   "3": 13,
+   "4": 13,
+   "5": 10,
+   "6": 12,
+   "7": 5
+  },
+  "renewed_released_before_expiry": 7,
+  "renewed_release_rate_per_1000_by_lag": {
+   "0": {
+    "at_risk": 3926,
+    "rate": 7.64
+   },
+   "1": {
+    "at_risk": 3926,
+    "rate": 7.13
+   },
+   "2": {
+    "at_risk": 3144,
+    "rate": 4.13
+   },
+   "3": {
+    "at_risk": 2470,
+    "rate": 5.26
+   },
+   "4": {
+    "at_risk": 1838,
+    "rate": 7.07
+   },
+   "5": {
+    "at_risk": 1297,
+    "rate": 7.71
+   },
+   "6": {
+    "at_risk": 844,
+    "rate": 14.22
+   },
+   "7": {
+    "at_risk": 412,
+    "rate": 12.14
+   }
+  },
+  "never_renewed_release_rate_per_1000_per_year": 0.83
  },
  "hathitrust": {
   "registrations_matched": 31424,
   "volumes": 79210,
-  "pd_share_renewed": 0.988,
-  "pd_share_never_renewed": 0.9944,
+  "pd_share_renewed": 0.9875,
+  "pd_share_never_renewed": 0.9946,
   "renewed_by_reg_year": {
    "1923": {
-    "n": 666,
-    "pd_share": 0.9954
+    "n": 681,
+    "pd_share": 0.9955
    },
    "1924": {
-    "n": 620,
-    "pd_share": 0.9935
+    "n": 637,
+    "pd_share": 0.9937
    },
    "1925": {
-    "n": 698,
+    "n": 725,
     "pd_share": 0.9979
    },
    "1926": {
-    "n": 700,
-    "pd_share": 0.9975
+    "n": 741,
+    "pd_share": 0.9977
    },
    "1927": {
-    "n": 835,
-    "pd_share": 0.994
+    "n": 891,
+    "pd_share": 0.9944
    },
    "1928": {
-    "n": 754,
-    "pd_share": 0.9948
+    "n": 861,
+    "pd_share": 0.9939
    },
    "1929": {
-    "n": 884,
-    "pd_share": 0.9923
+    "n": 982,
+    "pd_share": 0.9931
    },
    "1930": {
-    "n": 878,
-    "pd_share": 0.9471
+    "n": 960,
+    "pd_share": 0.9443
    }
   }
  }

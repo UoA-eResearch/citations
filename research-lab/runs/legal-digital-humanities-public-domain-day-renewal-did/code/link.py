@@ -113,6 +113,16 @@ def resolve():
     rr = r.loc[links.entry_id]
     summ = {"candidates": int(len(c)), "author_ok": int(c.author_ok.sum()), "linked_registrations": int(len(links)),
             "linked_by_renewal": rr.renewed.value_counts().to_dict(), "dropped_ambiguous": int((nwork > 1).groupby(ok.entry_id).any().sum())}
+    # D2: among registrations with at least one candidate passing the surname and date rules, the share dropped as
+    # equal-best ambiguous and the share linked, by renewal status
+    has_ok = pd.DataFrame({"entry_id": ok.entry_id.unique()})
+    has_ok["renewed"] = has_ok.entry_id.map(r.renewed)
+    amb = set(ok.entry_id[nwork > 1])
+    has_ok["ambiguous"] = has_ok.entry_id.isin(amb)
+    has_ok["linked"] = has_ok.entry_id.isin(set(links.entry_id))
+    summ["among_registrations_with_a_passing_candidate"] = {
+        ("renewed" if k else "never_renewed"): {"n": int(len(g)), "dropped_ambiguous": round(float(g.ambiguous.mean()), 3),
+                                                  "linked": round(float(g.linked.mean()), 3)} for k, g in has_ok.groupby("renewed")}
     json.dump(summ, open(RUN / "results" / "tables" / "linkage_summary.json", "w"), indent=1, default=str)
     print(summ, flush=True)
 

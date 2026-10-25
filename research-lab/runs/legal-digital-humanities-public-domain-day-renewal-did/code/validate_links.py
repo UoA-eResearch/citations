@@ -72,13 +72,20 @@ def score():
         rows.append({**k, "label": "unsure" if unsure else ",".join(letters) or "none",
                      "correct_link": bool(k["linked"] and k["linked_letter"] in letters), "has_true": bool(letters)})
     d = pd.DataFrame(rows)
+    # D2: renewal status from the corrected registrations; a linked item whose linked work was not among the 8 shown
+    # candidates cannot be judged (the label says nothing about it) and is excluded from precision
+    ren = pd.read_parquet(DATA / "registrations.parquet").set_index("entry_id").renewed
+    d["renewed"] = d.entry_id.map(ren).fillna(d.renewed).astype(bool)
+    d["evaluable"] = ~(d.linked & d.linked_letter.isna())
 
     def stats(x):
-        linked = x[x.linked & (x.label != "unsure")]
+        linked = x[x.linked & (x.label != "unsure") & x.evaluable]
         true = x[x.has_true]
-        return {"n": int(len(x)), "linked": int(x.linked.sum()), "unsure": int((x.label == "unsure").sum()),
+        return {"n": int(len(x)), "linked": int(x.linked.sum()), "linked_not_shown": int((x.linked & ~x.evaluable).sum()),
+                "unsure": int((x.label == "unsure").sum()),
                 "precision": round(float(linked.correct_link.mean()), 4) if len(linked) else None, "precision_n": int(len(linked)),
-                "recall": round(float(true.correct_link.mean()), 4) if len(true) else None, "recall_n": int(len(true))}
+                "recall_conditional_on_shown": round(float(true.correct_link.mean()), 4) if len(true) else None,
+                "recall_n": int(len(true))}
 
     out = {"all": stats(d), "renewed": stats(d[d.renewed]), "not_renewed": stats(d[~d.renewed])}
     (T / "linkage_validation.json").write_text(json.dumps(out, indent=1))

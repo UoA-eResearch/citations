@@ -15,27 +15,37 @@
   "2025:-2",
   "2025:0"
  ],
- "works_in_model": 1021,
- "treated_works": 151,
- "control_works": 870,
- "obs": 18094,
+ "reference_separated_cohorts": [
+  2025
+ ],
+ "cohorts_in_model": [
+  2019,
+  2020,
+  2021,
+  2022,
+  2023,
+  2024
+ ],
+ "works_in_model": 997,
+ "treated_works": 133,
+ "control_works": 864,
+ "obs": 17699,
  "cohort_sizes": {
-  "2019": 29,
+  "2019": 30,
   "2020": 17,
-  "2021": 28,
+  "2021": 31,
   "2022": 21,
   "2023": 15,
-  "2024": 18,
-  "2025": 23
+  "2024": 19
  },
- "rr": 1.1461,
+ "rr": 1.1007,
  "rr_ci": [
-  0.5744,
-  2.2867
+  0.5545,
+  2.1849
  ],
- "log_rr": 0.1363,
- "se": 0.3524,
- "pretrend_wald_p": 0.0,
+ "log_rr": 0.096,
+ "se": 0.3498,
+ "pretrend_wald_p": 0.3497,
  "verdict_rule": null,
  "variant": "lag",
  "panel_summary": {

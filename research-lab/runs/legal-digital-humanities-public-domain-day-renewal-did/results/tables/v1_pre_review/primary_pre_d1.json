@@ -1,0 +1,30 @@
+{
+ "works_in_model": 1113,
+ "treated_works": 184,
+ "control_works": 929,
+ "obs": 20034,
+ "cohort_sizes": {
+  "2019": 32,
+  "2020": 21,
+  "2021": 32,
+  "2022": 24,
+  "2023": 21,
+  "2024": 26,
+  "2025": 28
+ },
+ "rr": 0.329,
+ "rr_ci": [
+  0.1868,
+  0.5793
+ ],
+ "log_rr": -1.1118,
+ "se": 0.2887,
+ "pretrend_wald_p": 0.6607,
+ "verdict_rule": "Refuted",
+ "variant": "primary",
+ "panel_summary": {
+  "works": 30329,
+  "editions_in_window": 4164,
+  "share_works_with_any_edition": 0.0367
+ }
+}

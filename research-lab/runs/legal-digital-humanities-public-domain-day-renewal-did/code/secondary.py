@@ -72,8 +72,11 @@ def sa_ols(p):
             w[c] = size[g]
     w /= w.sum()
     est, se = float(w @ b), float(np.sqrt(w @ V @ w))
+    base = float(q.loc[(q.cohort > 0) & (q.year < q.cohort), "ly"].mean())        # D2: treated pre-period mean
     return {"coef_event0_2_log1p": round(est, 5), "se": round(se, 5),
-            "ci": [round(est - 1.96 * se, 5), round(est + 1.96 * se, 5)], "works": int(q.work.nunique())}
+            "ci": [round(est - 1.96 * se, 5), round(est + 1.96 * se, 5)], "works": int(q.work.nunique()),
+            "treated_pre_mean_log1p": round(base, 5), "relative_to_pre_mean": round(est / base, 3),
+            "relative_ci": [round((est - 1.96 * se) / base, 3), round((est + 1.96 * se) / base, 3)]}
 
 
 def gutenberg(p):
@@ -109,6 +112,19 @@ def gutenberg(p):
                 "never_renewed_same_windows": round(nr_share, 4), "never_renewed_n": int(len(nr)),
                 "by_expiry_year": {int(y): {"n": int(len(g)), "share": round(float(((g.pg_year >= y) & (g.pg_year <= y + 2)).mean()), 4)}
                                    for y, g in ren.groupby("exp")}})
+    # D2: overall shares and the within-group timing profile of renewed releases (years since expiry)
+    out["ever_on_gutenberg"] = {"renewed_1923_1929": round(float(ren.pg_year.notna().mean()), 4),
+                                "never_renewed": round(float(nr.pg_year.notna().mean()), 4)}
+    dt = (ren.pg_year - ren.exp).dropna().astype(int)
+    out["renewed_release_years_since_expiry"] = {int(k): int(v) for k, v in dt.value_counts().sort_index().items()}
+    out["renewed_released_before_expiry"] = int((dt < 0).sum())
+    # releases per 1,000 renewed works at each lag, among works whose lag year is observable (catalogue of 2026-10)
+    out["renewed_release_rate_per_1000_by_lag"] = {
+        k: {"at_risk": int((ren.exp + k <= 2026).sum()),
+            "rate": round(1000 * float((ren.pg_year == ren.exp + k).sum()) / max(1, int((ren.exp + k <= 2026).sum())), 2)}
+        for k in range(0, 8)}
+    nr_rate = float(sum(wt * (nr.pg_year == y).mean() for y, wt in wins.items()))
+    out["never_renewed_release_rate_per_1000_per_year"] = round(1000 * nr_rate, 2)
     return out
 
 

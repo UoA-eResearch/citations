@@ -3,8 +3,20 @@
  "author_ok": 343233,
  "linked_registrations": 30705,
  "linked_by_renewal": {
-  "false": 26178,
-  "true": 4527
+  "false": 26034,
+  "true": 4671
  },
- "dropped_ambiguous": 30965
+ "dropped_ambiguous": 30965,
+ "among_registrations_with_a_passing_candidate": {
+  "never_renewed": {
+   "n": 52243,
+   "dropped_ambiguous": 0.437,
+   "linked": 0.498
+  },
+  "renewed": {
+   "n": 13509,
+   "dropped_ambiguous": 0.602,
+   "linked": 0.346
+  }
+ }
 }

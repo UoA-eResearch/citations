@@ -1,4 +1,11 @@
 {
- "coef_post02_log1p": 0.0055,
- "se": 0.0015
+ "model": "two-way FE OLS (post 0-2 and post >2 indicators), not Sun-Abraham",
+ "coef_post02_log1p": 0.0054,
+ "se": 0.0015,
+ "treated_pre_mean_log1p": 0.00594,
+ "relative_to_pre_mean": 0.906,
+ "relative_ci": [
+  0.425,
+  1.386
+ ]
 }
