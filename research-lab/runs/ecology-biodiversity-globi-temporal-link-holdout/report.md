@@ -1,4 +1,4 @@
-# Species-interaction predictors beat "who gets studied" on GloBI's future records too: the taxonomic advantage grows, not shrinks, out of time
+# A taxonomy-aware species-interaction predictor beats "who gets studied" on GloBI's future records too: its advantage grows, not shrinks, out of time
 
 *GloBI's interpreted interaction snapshots: v0.6 (2023-08-25) as the past and v0.11 (2026-09-10) as the future.
 Species-level trophic, pollination and host–parasite pairs. Three predictors: effort only (degree and citation
@@ -14,8 +14,7 @@ was committed before any graph was built.*
   - On the temporal holdout it beats effort by **+0.068** (0.948 against 0.880; +0.053 to +0.075).
   - The ratio is **1.68** (1.10 to 2.30), against the hypothesis of at most 0.5.
 - **What shrinks is effort.** Prior degree and citation counts lose 0.07 AUROC going from a random to a temporal
-  holdout; the taxonomic model loses 0.04. Future records favour neither the most-studied species nor the bare
-  network structure alone. The structural embedding by itself (RDPG) is worse than effort on both holdouts.
+  holdout; the taxonomic model loses 0.04. So most of the out-of-time loss falls on the effort baseline. The structural embedding by itself (RDPG) is worse than effort on both holdouts.
 - **The edge holds where it matters most:**
   - for pairs introduced by datasets indexed after v0.6 (72% of the future pairs): 0.940 against 0.870;
   - for species with a single prior link: 0.882 against 0.718.
@@ -34,20 +33,17 @@ on well-studied species.
 We used two archived snapshots of GloBI, a global database of species interactions, three years apart. We trained
 models on the older snapshot and asked how well they picked out interactions that appeared in the newer one. A simple
 "popularity" guess, based on how many interactions and studies a species already had, did well. A model that also
-uses what related species do did clearly better, and its advantage was bigger on the genuinely new records than on a
-random test drawn from the old snapshot. That held for interactions contributed by newly added studies and for
+uses what related species do did clearly better, and its advantage was bigger on the records first seen in the newer snapshot than on a random test drawn from the old one. That held for interactions contributed by newly added studies and for
 species that had been recorded only once before.
 
 So in this database, taxonomy-aware prediction is not just repeating "who gets studied". The test has a caveat: the
-database also renames species and changes its sources between versions, so some "new" records are old ones under
-new names.
+database also renames species and changes its sources between versions, so some "new" records may be old ones under new names.
 
 ## What was asked
 
 The lead (`ecology-biodiversity-globi-temporal-link-holdout`) asked whether species-interaction link predictors keep
 their skill on genuinely later records, or mostly learn sampling effort. Prior work validates link prediction by
-random edge holdout or single prospective cases, such as Becker et al. 2022 for bat betacoronavirus hosts. GloBI's
-versioned snapshots allow a broad pseudo-prospective test, and none was found.
+random edge holdout or single prospective cases, such as Becker et al. 2022 for bat betacoronavirus hosts. GloBI's versioned snapshots allow a broad pseudo-prospective test. None was found in the lead's search, which could not include a final 2026 check.
 
 ## How it was done
 
