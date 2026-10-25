@@ -1,0 +1,85 @@
+{
+ "train_presences": 57084622,
+ "matched_to_snapshot": 0.9613,
+ "with_core_record": 1513529,
+ "provenance_only": 1115257,
+ "provenance_only_share": 0.01954,
+ "provenance_only_by_country": {
+  "NL": 897332,
+  "PL": 130741,
+  "UA": 78169,
+  "BF": 5157,
+  "BE": 1282,
+  "DE": 482,
+  "CO": 458,
+  "BJ": 442,
+  "NG": 256,
+  "SK": 227,
+  "RU": 212,
+  "CZ": 177,
+  "SN": 147,
+  "ML": 74,
+  "AT": 47
+ },
+ "H2": {
+  "source_test_cells": 7466,
+  "test_presences": 165422,
+  "share_with_core_record_same_cell": 0.0829,
+  "ci": [
+   0.0766,
+   0.0893
+  ],
+  "verdict": "Refuted"
+ },
+ "H2_broad_sensitivity": 0.0829,
+ "H2_by_source": {
+  "Balkan Dry Grassland Database": {
+   "presences": 4101,
+   "share": 0.0
+  },
+  "Belgium INBOVEG": {
+   "presences": 982,
+   "share": 0.0387
+  },
+  "France_sophy": {
+   "presences": 93380,
+   "share": 0.0
+  },
+  "Germany_vegetweb": {
+   "presences": 7586,
+   "share": 0.0016
+  },
+  "Netherlands": {
+   "presences": 13345,
+   "share": 0.8783
+  },
+  "Paramo": {
+   "presences": 2497,
+   "share": 0.0112
+  },
+  "Poland": {
+   "presences": 7750,
+   "share": 0.02
+  },
+  "Slovakia_nvd": {
+   "presences": 28388,
+   "share": 0.0023
+  },
+  "Spain_sivim_wetlands": {
+   "presences": 2453,
+   "share": 0.0
+  },
+  "TAVA West_Africa": {
+   "presences": 1452,
+   "share": 0.874
+  },
+  "Ukraine Grassland Database": {
+   "presences": 3724,
+   "share": 0.119
+  }
+ },
+ "exact_coordinate_share": 0.0005,
+ "exact_coordinate_and_date_share": 0.0001,
+ "population_species": 1745,
+ "population_used": 1745
+}
