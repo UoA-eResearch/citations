@@ -35,3 +35,13 @@ The bf16 table is kept for the record. No fit had been run.
      ladders cut at step 64k.
 
    Neither changes a preregistered verdict, and both are labelled post hoc in the report.
+
+## Pre-review gate (G5, G6) — 2026-10-25 22:53 NZDT, after all results (wording and attribution only)
+
+The lab's METHODS.md gates were run before this draft's review. No number changed.
+- **G5 overclaim check** (`review/overclaim_check.md`, passes):
+  - the title's "three seeds barely help" became "did not clearly help", since H2 is Inconclusive with a shrinkage
+    interval reaching 0.81;
+  - the plain-terms sentence drops the unsourced "a common suggestion" and states the uncertainty.
+- **G6 attribution ledger** (`results/attribution_ledger.csv`, 6 claims, passes): PolyPythias, the Hitchhiker's
+  Guide, the Chinchilla replication and Porian et al. resolve by arXiv id with matching titles.

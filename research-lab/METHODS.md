@@ -119,7 +119,7 @@ row records:
 
 Quotations go to `data/attribution_quotes/` (not git). `attribution.py check RUN_DIR` validates the rows, resolves
 every DOI, OpenAlex, arXiv and GBIF id through public APIs, and fails if a claim marked refutes / not addressed / not
-found is still used as support. Free-text references can also be resolved with the OpenAlex MCP `resolve_references`
+found is still used as support. `--show` prints each resolved identifier's title. Confirm that each one is the work the claim names, because an identifier that exists can still be the wrong paper. Free-text references can also be resolved with the OpenAlex MCP `resolve_references`
 tool. (The SDM lead claimed a Czech Vegetation Database dataset that is not in SAGE's download; under G6 that is
 caught at plan time.)
 

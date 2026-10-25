@@ -14,7 +14,9 @@ Ledger: RUN_DIR/results/attribution_ledger.csv, one row per claim, columns:
   checked_at   NZ date-time of the check
 
     python3 -I tools/attribution.py init RUN_DIR        create an empty ledger with the header
-    python3 -I tools/attribution.py check RUN_DIR       validate fields; resolve every DOI (doi.org) and OpenAlex /
+    python3 -I tools/attribution.py check RUN_DIR [--show]   (--show prints each resolved id's title: confirm it is
+                                                        the work the claim names)
+                                                        validate fields; resolve every DOI (doi.org) and OpenAlex /
                                                         arXiv id (public APIs, no key); flag claims marked refutes /
                                                         not addressed / not found that are still used as support
                                                         (a debunked claim stays in the ledger with "corrected" in used_in)
@@ -23,6 +25,7 @@ import csv
 import json
 import re
 import sys
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -43,30 +46,40 @@ def init(run):
 
 
 def resolve(sid):
-    """True / False / None (not a resolvable id type)."""
+    """(True / False / None, title or ''): resolvable id types return whether they resolve and the source's title,
+    so a reader can confirm the id is the work the claim names (an id that exists can still be the wrong paper)."""
     try:
         if re.match(r"^10\.\d{4,}/", sid):
+            try:                                               # title from OpenAlex (public, no key)
+                d = json.load(urllib.request.urlopen("https://api.openalex.org/works/doi:" + urllib.parse.quote(sid)
+                                                     + "?select=title", timeout=30))
+                return True, d.get("title") or ""
+            except Exception:
+                pass
             req = urllib.request.Request("https://doi.org/" + sid, method="HEAD")
             try:
-                return urllib.request.urlopen(req, timeout=30).status < 400
+                return urllib.request.urlopen(req, timeout=30).status < 400, ""
             except urllib.error.HTTPError as e:
-                return e.code in (403, 405, 429)                # publisher blocks HEAD/robots: the DOI resolved
+                return e.code in (403, 405, 429), ""          # publisher blocks HEAD/robots: the DOI resolved
         if re.match(r"^W\d+$", sid):
-            urllib.request.urlopen(f"https://api.openalex.org/works/{sid}?select=id", timeout=30)
-            return True
+            d = json.load(urllib.request.urlopen(f"https://api.openalex.org/works/{sid}?select=title", timeout=30))
+            return True, d.get("title") or ""
         m = re.match(r"^(arXiv:)?(\d{4}\.\d{4,5})(v\d+)?$", sid)
         if m:
-            s = urllib.request.urlopen(f"http://export.arxiv.org/api/query?id_list={m.group(2)}", timeout=30).read().decode()
-            return "<entry>" in s and "<title>Error</title>" not in s
+            s = urllib.request.urlopen(f"https://export.arxiv.org/api/query?id_list={m.group(2)}", timeout=30).read().decode()
+            e = re.findall(r"<entry>([\s\S]*?)</entry>", s)
+            t = re.search(r"<title>([\s\S]*?)</title>", e[0]) if e else None
+            ok = bool(e) and "<title>Error</title>" not in s
+            return ok, " ".join(t.group(1).split()) if (ok and t) else ""
         if re.match(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", sid):   # GBIF datasetKey
-            json.load(urllib.request.urlopen(f"https://api.gbif.org/v1/dataset/{sid}", timeout=30))
-            return True
+            d = json.load(urllib.request.urlopen(f"https://api.gbif.org/v1/dataset/{sid}", timeout=30))
+            return True, d.get("title") or ""
     except Exception:
-        return False
-    return None
+        return False, ""
+    return None, ""
 
 
-def check(run):
+def check(run, show=False):
     p = Path(run) / "results" / "attribution_ledger.csv"
     rows = list(csv.DictReader(open(p)))
     problems = []
@@ -87,9 +100,11 @@ def check(run):
         if len(r.get("claim", "")) > 400 or '"' in r.get("claim", ""):
             problems.append((rid, "claim looks like a quotation; paraphrase it (quotes go to data/attribution_quotes/)"))
         sid = (r.get("source_id") or "").strip()
-        ok = resolve(sid) if sid else None
+        ok, title = resolve(sid) if sid else (None, "")
         if ok is False:
             problems.append((rid, f"source_id {sid!r} does not resolve"))
+        elif ok and show:
+            print(f"{rid}  {sid}  ->  {title[:110]}")
     for rid, why in problems:
         print(f"{rid}: {why}")
     print("G6", "FAILED" if problems else "passed", f"({len(rows)} claims)")
@@ -97,4 +112,7 @@ def check(run):
 
 
 if __name__ == "__main__":
-    {"init": init, "check": check}[sys.argv[1]](sys.argv[2])
+    if sys.argv[1] == "check":
+        check(sys.argv[2], show="--show" in sys.argv)
+    else:
+        init(sys.argv[2])

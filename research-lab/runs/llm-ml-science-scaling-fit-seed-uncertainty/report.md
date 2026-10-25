@@ -1,4 +1,4 @@
-# Training-seed noise in scaling-law forecasts: one seed per size moves the 2.8B forecast by 0.12 nats, mostly because of two unstable runs, and three seeds barely help
+# Training-seed noise in scaling-law forecasts: one seed per size moves the 2.8B forecast by 0.12 nats, mostly because of two unstable runs, and averaging three seeds did not clearly help
 
 *PolyPythias: ten training seeds at each of five sizes, 14M to 410M, eight checkpoints each, 400 checkpoints in all.
 Each was evaluated in fp32 on 5.0M tokens of Pile validation. The Chinchilla law was fitted to 2,000 random
@@ -39,8 +39,7 @@ Using a public set of models trained ten times each with different seeds, we fit
 one seed per size. Which seeds you happen to get moves the prediction for a model 7 times larger by about 0.12 in
 the loss units used. That is more than the real gap between the 1.4-billion and 2.8-billion-parameter models
 (0.09). Most of that comes
-from just two training runs that went wrong late in training. Averaging three seeds per size, a common suggestion,
-helped little. Every approach also predicted the big model would be worse than it actually was.
+from just two training runs that went wrong late in training. Averaging three seeds per size helped little here, though that estimate is very uncertain. Every approach also predicted the big model would be worse than it actually was.
 
 The practical lesson is to look at the training curves of the small models and drop or rerun unstable ones, rather
 than trusting averaging. Even then, the formula itself, fitted to this narrow range, was biased.
