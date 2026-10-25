@@ -1,4 +1,4 @@
-# Do Supreme Court precedents die before they are overruled? Not in lower-court citations: in clean windows, overruled precedents were cited more, not less, in the years before
+# Do Supreme Court precedents die before they are overruled? Not in lower-court citations: in a post hoc check of clean windows, overruled precedents were cited more, not less, in the years before
 
 *71 explicitly overruled US Supreme Court decisions (overruled 1960–2024), each against 10 matched never-overruled
 Supreme Court decisions. The data are lower-court citations from CourtListener's citation map (2026-09-30 snapshot;
@@ -27,16 +27,15 @@ before a 2019 coverage break, the evidence runs against erosion.
   - they peak at 74% more in the year of overruling;
   - they are back to control levels by five years after (+1%, −34% to +44%).
 
-  That is the opposite of fading: salience rises as a precedent heads for the Court.
+  That is the opposite of fading: citations rise as a precedent heads for the Court.
 
 ## In plain terms
 
-When the US Supreme Court overrules one of its own past decisions, was that decision already dying? A recent
-argument says precedents "die before they are overruled": lower courts stop relying on them years ahead. We tested
+When the US Supreme Court overrules one of its own past decisions, was that decision already dying? A recent essay argues that precedents "die before they are overruled", as the Supreme Court narrows and criticises them while lower courts often keep applying them. We asked the lower-court version: do lower courts stop relying on a precedent years before it is overruled? We tested
 this on the full record of lower-court citations in the open CourtListener database. We compared 71 overruled
 decisions with similar decisions from the same era and subject that were never overruled.
 
-The answer is no, as far as citations can show. In the years before an overruling, the doomed decisions were cited
+The best evidence we have says no, though it comes from a check we added after seeing the first result. In the years before an overruling, the doomed decisions were cited
 more than comparable ones, not less, presumably because they were being fought over. After overruling, citations
 fell back. Lower courts kept citing overruled cases for years, often to explain that they had been overruled.
 
@@ -48,9 +47,13 @@ reach a verdict, and the clearest evidence comes from the cases decided before t
 
 The lead (`legal-digital-humanities-precedent-erosion-before-overruling`) asked whether lower-court reliance on a
 precedent erodes before the Supreme Court overrules it.
-- **Feldman (SCOTUSblog / Legalytics, June 2026)** argues that it does, from six case studies, without a statistical
-  test.
-- **Broughman & Widiss (2017)** found sharp post-overruling drops in Shepard's citations, with a 5-year pre-window.
+- **Feldman (SCOTUSblog, 16 June 2026)** argues from six case studies that the Supreme Court erodes precedents by
+  narrowing, distinguishing and criticising them before it overrules them. In his account lower courts often keep
+  applying the precedent meanwhile. He reports citation and negative-treatment counts but no population estimate.
+  The lead's question, whether *lower-court* reliance erodes first, is a different and testable version of the
+  claim. (The lead attributed the lower-court version to Feldman; G6 corrected this.)
+- **Broughman & Widiss (2017, J. Legal Stud.)** found, in a difference-in-differences design, that citations fall
+  far more after judicial overrulings than after congressional overrides.
 
 This study uses open lower-court citation data, the full list of explicit overrulings, matched controls and a
 20-year pre-window.
@@ -108,8 +111,9 @@ This study uses open lower-court citation data, the full list of explicit overru
 
 ## What this does and does not show
 
-- **No support for "precedents die before they are overruled"** in lower-court citation counts. The preregistered
-  test cannot reach a verdict.
+- **No support for lower-court reliance eroding before overruling.** The preregistered test cannot reach a
+  verdict, and the post hoc evidence runs the other way. This is consistent with Feldman's account, in which erosion
+  happens at the Supreme Court while lower courts keep applying the precedent.
 - **The cleanest comparison** (overrulings up to 2013) shows overruled precedents gaining citations relative to
   similar decisions in the five years before overruling. That is consistent with litigation and salience building
   as a precedent heads for the Court.
