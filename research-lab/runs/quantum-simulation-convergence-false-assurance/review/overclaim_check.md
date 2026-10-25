@@ -19,7 +19,7 @@ Fill in every row: backing = the table/figure and number that supports the sente
 | 13 | verdict | It is concentrated in patches containing loops: 34 of 66 hexagon-based patches, against 6 of 63 random patches. | pp by_compact True 34/66, False 6/63 | Supported |  |
 | 14 | verdict | **The verdict depends on that D1 design change.** On the plan's original random-growth patches alone, the share is 9.5% (3.1–17.4%), which would be Inconclusive. | pp by_compact False 6/63 = 0.095 (0.031-0.174) (post hoc sensitivity) | Supported |  |
 | 15 | verdict | The hexagon-based half was added before any approximate result because random patches are often trees, but readers should weigh it (post hoc sensitivity). | deviations D1 (before approximate results) | Supported |  |
-| 16 | verdict | **The cause is a shared bias.** In 85% of false-assurance cases the estimate is shrunk toward zero. | instances.csv: 85% of pp false-assurance cases with |v1| < |exact| | Supported |  |
+| 16 | verdict | **The cause is a shared bias.** In 85% of false-assurance cases the estimate is shrunk toward zero. | instances.csv: 85% of pp false-assurance cases with abs(v1) < abs(exact) | Supported |  |
 | 17 | verdict | Both thresholds discard weight in the same direction, so they agree with each other while both miss the truth. | instances.csv: pp signed error negative in F (mean -0.114) | Supported |  |
 | 18 | verdict | **H2 (a "k × spread" interval, with k fitted on half the instances, covers 85–95% of the other half, for both methods): Supported on the preregistered pooled test.** | plan.md H2 | Supported |  |
 | 19 | verdict | BP-PEPS: k = 3.8, coverage **93%**. | bp h2 k 3.82, coverage 0.933 | Supported |  |
