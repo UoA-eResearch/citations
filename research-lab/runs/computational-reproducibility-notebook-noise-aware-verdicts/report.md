@@ -1,4 +1,4 @@
-# How much "irreproducibility" in biomedical Jupyter notebooks is run-to-run noise? About a fifth of mismatching notebooks, too few to call exact-match verdicts badly inflated
+# How much "irreproducibility" in biomedical Jupyter notebooks is run-to-run noise? About a fifth of mismatching notebooks, and exact matching overstates irreproducibility about 1.3-fold; neither clears nor clearly misses the preregistered bars
 
 *Python notebooks from PubMed Central-linked GitHub repositories, drawn from those that Samuel and Mietchen's
 large-scale re-execution found to run but not reproduce their stored outputs. Environments were rebuilt with uv,
@@ -39,8 +39,7 @@ We took about 150 notebooks from biomedical papers that an earlier study had fou
 one's software environment as it was around publication, in a sealed container, and ran it three times. About 40%
 of the notebooks that ran turned out to match their published outputs after all, once trivial differences such as
 memory addresses and timestamps were ignored. Of those that still differed, only about one in five differed solely
-because of run-to-run randomness. Most differences had real causes: missing tools, changed software, or analyses
-that aren't seeded.
+because of run-to-run randomness. Most differences had other causes, such as missing command-line tools and changed software or output formats.
 
 So exact-match counts somewhat overstate the problem, by a factor of about 1.3 here, but most mismatches are not just
 noise.
@@ -52,7 +51,7 @@ notebook irreproducibility. Its predictions were that at least 30% of mismatchin
 run-to-run variability, and that the overstatement is at least 1.4×.
 
 Prior work counts identical outputs (Pimentel et al. 2019; Samuel and Mietchen 2024), or scores similarity without
-replicates (arXiv 2509.23645). A 2026 containerisation study did not separate stochasticity with replicates.
+replicates (arXiv 2509.23645). A 2026 containerisation study (Samuel, Mietchen et al., arXiv 2604.01072) did not separate stochasticity with replicates.
 
 ## How it was done
 

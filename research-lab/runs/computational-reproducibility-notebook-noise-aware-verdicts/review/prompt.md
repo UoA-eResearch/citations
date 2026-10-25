@@ -46,3 +46,14 @@ Check at least:
 Write review/review.md: a verdict (publish / publish with edits / fix first / do not publish), then numbered findings
 (severity, evidence with file:line or your check's output, the fix). Put supporting scripts in
 review/reviewer_checks/.
+
+**Gate checks (METHODS.md G1–G7; this study predates the gates, so G5 and G6 were run as a pre-review gate).**
+Verify:
+- **G5:** `review/overclaim_check.md` passes and is honest.
+- **G6:** `results/attribution_ledger.csv` passes `python3 -I ../../tools/attribution.py check . --show`.
+- **G7:** the 94/100 comparator validation had a single labeller. Was the labeller blind to the comparator's verdict
+  (G1)?
+- **G2:** notebooks lost at build or run time are counted in the flow figure; check that no failure was silently
+  scored as a match.
+
+Report any gate that is missing or hollow as a finding.

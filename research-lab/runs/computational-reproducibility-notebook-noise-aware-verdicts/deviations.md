@@ -32,3 +32,17 @@ The setting is removed, and every build and execution is redone with the same pe
 comparison is kept for the record (`results/tables/primary_pass_agg_bug.json`: 57 completed, 41 exact mismatches,
 5 all-intrinsic, H1 and H2 Refuted). The corrected run is primary. The validation sample is redrawn from the corrected
 run.
+
+## Pre-review gate (G5, G6) — 2026-10-25 23:00 NZDT, after all results (wording and attribution only)
+
+The lab's METHODS.md gates were run before this draft's review. No number changed.
+- **G5 overclaim check** (`review/overclaim_check.md`, passes):
+  - the title's "too few to call exact-match verdicts badly inflated" now gives both estimates and says neither
+    clears nor clearly misses its bar (both intervals reach it);
+  - the plain-terms claim that unseeded analyses are a "real cause" was removed, since unseeded run-to-run
+    variation is what the study counts as noise.
+- **G6 attribution ledger** (`results/attribution_ledger.csv`, 5 claims, passes): the unnamed "2026
+  containerisation study" is now cited (Samuel, Mietchen et al., arXiv 2604.01072); Pimentel et al. 2019, Samuel
+  & Mietchen 2024, SRI (arXiv 2509.23645) and the Zenodo dataset resolve.
+- **G7 not applied.** The 100-pair comparator validation had one labeller (left for the reviewer to judge); its six
+  disagreements were audited (G4).

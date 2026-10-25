@@ -73,7 +73,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | `metascience-retraction-citer-contagion` |  6ab7aea | H1 Inconclusive (prereg DiD +0.068, pre-trend); H2 not testable; H3 Refuted as prereg; post hoc not-yet-treated: no penalty (+0.003, -0.015 to +0.021) | queued; pre-review gate G5+G6 done 2026-10-25 (post hoc labelled in title; unfound citation replaced) |
 | `experimental-math-oeis-conjecture-audit` |  a0127a5 | H1 Refuted (2 confirmed falsifications; 15 of 14,671 screened disagree with LODA) | queued; pre-review gate G5+G6 done 2026-10-25 (silent drops stated; citations corrected) |
 | `health-econ-hub-vintage-rescore` |  53d30c6 | H1 Refuted (6.2% pairwise reversals); H2 Supported narrowly (2024-25 leader changes at h1/h2) | queued; pre-review gate G5+G6 done 2026-10-25 |
-| `computational-reproducibility-notebook-noise-aware-verdicts` | b67028b | H1 Inconclusive (20.6%, 10-37%); H2 Inconclusive (1.26, 1.09-1.58); D3 re-run after backend bug | queued (review/prompt.md) |
+| `computational-reproducibility-notebook-noise-aware-verdicts` |  b67028b | H1 Inconclusive (20.6%, 10-37%); H2 Inconclusive (1.26, 1.09-1.58); D3 re-run after backend bug | queued; pre-review gate G5+G6 done 2026-10-25 |
 | `formal-math-mathlib-proof-rot-flexible-linter` | b62e129 | H1 Inconclusive (OR 1.48, 0.92-2.39); 6-month 1.67 (1.01-2.77); second pair 0.99 | queued (review/prompt.md) |
 | `quantum-simulation-convergence-false-assurance` | b7b7321 | H1 Supported (PP 31%, 23-39%; BP 1.9%); H2 Supported pooled; random-patch-only PP 9.5% | queued (review/prompt.md) |
 
