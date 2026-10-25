@@ -39,6 +39,8 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-25 12:39 | `legal-digital-humanities-public-domain-day-renewal-did` | review (fresh agent) | fix first |
 | 2026-10-25 17:39 | `legal-digital-humanities-public-domain-day-renewal-did` | confirmation pass (original reviewer resumed) | publish with edits -> PUBLISHED |
 
+**Pre-review gate (from 2026-10-25, METHODS.md):** before launching a draft's Fable review, run G5 (`tools/overclaim_check.py RUN --verify`) and G6 (`tools/attribution.py check RUN`) on it, fix what they find as a D-entry, and add the standard gate-check block to its `review/prompt.md`. New leads apply all of G1–G7.
+
 **The owner's exception ended at 16:00 on 2026-10-23; the 1-per-5 h rule applies again. Public Domain Day confirmation started 2026-10-25 17:39; next Fable run not before 22:39.** Order: confirmations of DSI (b0149e2), reef (d7c2ace), estuary (3dd86a7), kauri (920bde5) and retraction risk (6d4c885), one per 5 h slot; then the ASR confirmation (fixes in f8a6d4d); then the EDB ratchet review (fb7efde), then the Public Domain Day review (26ff608), then the AVF dv/v review (35e9d7a).
 
 | study | draft commit | verdicts in the draft | review status |

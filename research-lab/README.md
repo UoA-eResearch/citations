@@ -13,6 +13,8 @@ on this machine (32-core Xeon, 94 GB RAM, A100 80 GB, ~600 GB free disk).
 | Energy and Movement gap-fill round (2026-10-20) | Main-loop scouting, at the owner's request, over the calibration critic's two Energy and Movement gaps: no transport lead, and nothing on distribution, the demand side or the gas market, with three of four leads on the same EMI tables. **5 leads added**, none drawing mainly on the EMI wholesale tables: gas production-forecast calibration (MBIE reserves workbooks recovered from the Wayback Machine, since MBIE blocks scripted downloads), a distributor quality-standard ratchet and rooftop-solar displacement (Commerce Commission disclosures, all years in one Parquet), EV policy shocks (NZTA Motor Vehicle Register), and CRL full-timetable reliability (Auckland Transport GTFS-Realtime, time-sensitive, needs a free AT API key). Freight across Cook Strait and EV-charger reliability were scouted but not added (data gaps); see `unscouted_angles_energy_movement`. 119 leads in total. |
 | `run-avenue.js` | The executor workflow. Give it one lead from `leads.json` and it runs the entire research workflow via subagents: scope → build → execute → adversarial review → write-up. |
 | `runs/<lead-id>/` | Working directory created per executed lead: code, data, results, figures, report. |
+| `METHODS.md` | The study protocol every deep dive follows, and quality gates G1–G7 adopted on 2026-10-25 after reviewing SciTrue: leakage audit, coverage accounting with no silent fallbacks, a plausibility gate, error audits of validation metrics, an overclaim check on headlines, an attribution ledger for literature and data claims, and two independent blind labellers. |
+| `tools/` | Standard-library helpers for the gates: `coverage.py`, `overclaim_check.py`, `attribution.py`, `error_audit.py`, `agreement.py`; `templates/plausibility.md`. |
 | `related-efforts.md` | Survey (2026-10-05) of other autonomous AI research efforts (Kosmos, Denario, Agon, data-to-paper, Agents4Science, ...) and the evidence on how AI research goes wrong, with a prioritised list of changes for this lab. |
 
 ## Lifecycle
@@ -30,6 +32,11 @@ scout (done) ──► leads.json ──► human picks leads from the plot
                     (confounds, leakage, multiple comparisons, data errors)
         5. WRITE-UP report.md + figures, honest about what survived review
 ```
+
+Since 2026-10-25 every deep dive also passes the quality gates in `METHODS.md`: a leakage audit in the plan (G1),
+coverage accounting (G2), a plausibility gate before write-up (G3), error audits of validation metrics (G4), an
+overclaim check before review (G5), an attribution ledger for literature and data claims (G6), and two independent
+blind labellers for validation samples (G7).
 
 ## Scoring rubric used in leads.json
 
