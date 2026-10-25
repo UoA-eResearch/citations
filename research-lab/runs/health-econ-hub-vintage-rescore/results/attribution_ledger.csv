@@ -1,0 +1,4 @@
+id,claim,used_in,source_type,source_id,locator,role,support,conditions,checked_how,checked_at
+H1,FluSight's own evaluations score forecasts mostly against finalised data,report.md What was asked,paper,10.1038/s41467-024-50601-9,methods (evaluation target data),method,supports,2021-22 and 2022-23 seasons; sensitivity checks included,OpenAlex resolve (W4401011803),2026-10-25 22:58
+H2,First-reported values reconstructed from the git history of the hub's truth file,"report.md standfirst; plan.md",code,https://github.com/cdcepi/FluSight-forecast-hub,target-data history in the repository,,supports,per location-week first appearance,pipeline (git log of the truth file),2026-10-25 22:58
+H3,No prior study re-scored every hub forecast against reconstructed first reports,report.md What was asked,web,lead search (leads.json gap),search results,,conditional,absence claim from the lead's search,leads.json,2026-10-25 22:58

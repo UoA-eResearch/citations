@@ -1,4 +1,4 @@
-# Re-scoring FluSight forecasts against the data forecasters actually saw barely changes the leaderboard, except in 2024–25, when first reports ran low and the top model changed
+# Re-scoring FluSight forecasts against the data forecasters actually saw barely changes the leaderboard, except in 2024–25, when first reports ran low and the top model changed at two horizons in about half of resamples
 
 *FluSight weekly influenza hospital-admission forecasts, 2022–23 to 2024–25 (33–51 models a season, 563,252 scored
 forecasts), were scored by WIS twice: against each location-week's first-reported value, taken from the git history
@@ -18,7 +18,8 @@ forecast was scored.*
   - These changes appear in 61% and 53% of bootstrap resamples. No other season changes its leader.
 - **Revisions explain where it matters.**
   - In 2024–25, first reports were a median 4.1% below final values, and 36% of location-weeks were revised by more
-    than 10% (2023–24: 10%).
+    than 10%. In 2022–23, 27% were revised by more than 10% but with no net bias (median 0%), and only 0.7% of pairs
+    reversed (2023–24: 10%). So the downward bias of first reports, not the size of revisions, goes with reversals.
   - Mean WIS is 144 against first reports and 156 against final values: forecasts sat closer to what was first
     reported.
 
@@ -31,11 +32,9 @@ first, provisional numbers.
 
 We re-scored three seasons of forecasts against the first-reported numbers. In most seasons, almost nothing changed:
 fewer than 1 in 30 head-to-head comparisons between teams flipped. In 2024–25, when early reports ran several percent
-low and were often revised substantially, about 1 in 10 flipped, and the top-ranked team changed at two of four
-forecast horizons.
+low and were often revised substantially, about 1 in 10 flipped, and the top-ranked model changed at two of four forecast horizons (at one of them, between two variants from the same team).
 
-So hub leaderboards mostly reflect forecasting skill, not luck with data revisions. When the data are revised
-heavily, as in 2024–25, the close calls at the top can depend on which version of the truth is used.
+So hub leaderboards are mostly not an artefact of data revisions. When first reports are biased, as in 2024–25, the close calls at the top can depend on which version of the truth is used.
 
 ## What was asked
 
