@@ -19,6 +19,8 @@ Every per-unit stage that can fail records what happened to each unit, and the c
 
     python3 -I tools/coverage.py RUN_DIR                 # print every stage's counts (for report.md)
 
+For record-level stages too large for per-unit calls, use cov.add_counts(ok=n, drops={"reason": n, ...}).
+
 Fallbacks that change a value fail loudly unless the plan names them: pass allowed=("reason", ...) to Coverage and
 any other fallback reason raises.
 """
@@ -35,6 +37,17 @@ class Coverage:
         self.attempted = 0
         self.status = {}
         self.reasons = {"fallback": Counter(), "drop": Counter()}
+        self.bulk = Counter()
+
+    def add_counts(self, ok=0, drops=None):
+        """Bulk accounting for record-level stages too large for per-unit status: `ok` units passed, `drops` maps
+        reason -> count. Each counted unit is attempted and resolved."""
+        drops = drops or {}
+        self.attempted += ok + sum(drops.values())
+        self.bulk["ok"] += ok
+        for reason, n in drops.items():
+            self.bulk["drop"] += n
+            self.reasons["drop"][reason] += n
 
     def attempt(self, unit):
         self.attempted += 1
@@ -54,7 +67,7 @@ class Coverage:
         self.reasons["drop"][reason] += 1
 
     def summary(self):
-        c = Counter(self.status.values())
+        c = Counter(self.status.values()) + self.bulk
         unresolved = c.get("attempted", 0)
         return {"attempted": self.attempted, "ok": c.get("ok", 0), "fallback": c.get("fallback", 0),
                 "dropped": c.get("drop", 0), "unresolved": unresolved,
