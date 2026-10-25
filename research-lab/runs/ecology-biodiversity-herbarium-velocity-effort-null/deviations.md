@@ -19,3 +19,17 @@
   Cells with no effort in either period after leave-one-species-out get θ = 1 and are counted per species.
 - **Coverage tool:** `tools/coverage.py` gains `add_counts()` for record-level stages (tens of millions of records)
   too large for per-unit calls. The summary format is unchanged.
+
+## D2 (2026-10-26 08:59 NZDT; after cleaning, before any centroid, count by species or null)
+
+- **G2 caught a silent loss in the first cleaning run.** The coverage counts did not reconcile: 35,526,014 records in,
+  but kept plus dropped came to 35,166,346.
+- **An independent recount** by a single SELECT over joins, with rules unchanged, sums exactly to the input.
+  - The first run's in-place DuckDB UPDATEs on the 35-million-row table (which has a list column) had lost about 1%
+    of the records in every class after rule 4.
+  - That included 320,852 records that should have been kept: 30,301,548 kept against 30,622,400.
+- **Fix:** `code/clean.py` now classifies every record once, in one SELECT with LEFT JOINs to the dense-point and
+  land-cell tables, with no UPDATEs. It asserts that kept plus dropped equals the input, and that the joins do not
+  change the row count.
+- The rules, their order and their thresholds are unchanged. The first run's outputs were overwritten; no analysis
+  had read them.
