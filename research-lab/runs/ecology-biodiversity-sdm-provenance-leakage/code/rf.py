@@ -104,9 +104,16 @@ def load():
         eptr, eidx = h["csr"]["indptr"][:], h["csr"]["indices"][:]
     with h5py.File(B / "range_masks_1km" / "eval_range_mask.h5") as h:
         cl, si = h["cumulative_lengths"][:], h["species_index"][:]
-    meta = pd.read_csv(RUN / "data" / "raw" / "eval_plot_metadata.csv", usecols=["cell_row", "GIVD_ID"])
+    meta = pd.read_csv(RUN / "data" / "raw" / "eval_plot_metadata.csv", usecols=["cell_row", "GIVD_ID", "Dataset"])
     flags = pd.read_csv(T / "provenance_flags.csv")
-    src = set(meta[meta.GIVD_ID.isin(set(flags[flags.flag == "core"].givd_source))].cell_row)
+    core = set(flags[flags.flag == "core"].givd_source)
+    src = set(meta[meta.GIVD_ID.isin(core)].cell_row)
+    tpos = {c: i for i, c in enumerate(test)}
+    G["src_db"] = {}
+    for db, g in meta[meta.GIVD_ID.isin(core)].groupby("Dataset"):       # per source database (secondary)
+        v = np.zeros(len(test), bool)
+        v[[tpos[c] for c in set(g.cell_row) if c in tpos]] = True
+        G["src_db"][db] = v
     import scipy.sparse as sp_
     nsp = len(lk) - 1
     rm_rows = np.repeat(np.arange(len(test)), [cl[c + 1] - cl[c] for c in test])
@@ -176,6 +183,10 @@ def fit_one(args):
     p = m.predict_proba(G["Xe"][mask])[:, 1]
     ye, src = ye[mask], G["src"][mask]
     res = {"sp": s, "cond": cond, "n_pres": int(len(pres)), "n_bg": int(len(bg)), "secs": round(time.time() - t0, 1)}
+    res["auroc_db"] = {}
+    for db, v in G["src_db"].items():
+        vv = v[mask]
+        res["auroc_db"][db] = float(roc_auc_score(ye[vv], p[vv])) if 0 < ye[vv].sum() < vv.sum() else None
     for name, sel in (("src", src), ("other", ~src), ("all", np.ones(len(ye), bool))):
         ok = sel & True
         res[f"auroc_{name}"] = float(roc_auc_score(ye[ok], p[ok])) if 0 < ye[ok].sum() < ok.sum() else None
