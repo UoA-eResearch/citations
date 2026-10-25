@@ -1,4 +1,4 @@
-# Machine-guessed OEIS conjectures almost always hold: of 14,671 screened, 15 disagree with an independent program and only 2 are confirmed false
+# Machine-guessed OEIS conjectures almost always agree with independent programs beyond the data: of 14,671 screened, 15 disagree and only 2 are confirmed false
 
 *Every OEIS entry (the OEIS data repository, 2026-10-25) was searched for formula lines marked "conjecture" or
 "empirical": 38,637 lines in 24,168 entries. Linear recurrences, rational generating functions and P-recursive
@@ -28,9 +28,11 @@ parsed.*
   | P-recursive | 2 | 797 |
 
 - **Coverage.**
-  - 22,774 lines parsed; 21,998 consistent with their own data. The 776 that are not are mostly parsing artefacts:
-    conditions such as "for n even", exponential g.f.s, and "if and only if" statements.
-  - 7,221 data-consistent conjectures have no LODA program and were not screened.
+  - 22,774 lines parsed; 21,998 consistent with their own data. Most of the 776 that are not carry a condition the parser
+    ignores: 541 (70%) mention an index restriction such as "for n > k" (385) or a parity or residue condition (167).
+    Exponential g.f.s and "if and only if" statements are rare (2 and 4) (`results/tables/contradicted_audit.json`).
+  - 7,221 data-consistent conjectures have no LODA program and were not screened. A further 104 whose predictor
+    failed to run, and 2 whose LODA output was short or mismatched, were also left out of the 14,671.
 
 ## In plain terms
 
@@ -51,10 +53,9 @@ disagreements are worth an editor's look.
 
 The lead (`experimental-math-oeis-conjecture-audit`) asked whether at least 100 machine-generated OEIS conjectures
 are false. That would be a measurable base rate of error in a class where false positives are known to exist
-(Zeilberger and Ekhad 2016, on Pisot sequences).
+(Ekhad, Sloane and Zeilberger 2016, on Pisot sequences).
 
-Prior work proves subsets: Ekhad and Zeilberger (2017) on Mathar's recurrences; Shallit and colleagues on automatic
-sequences with Walnut. No comprehensive falsification audit was found.
+Prior work proves subsets: Ekhad, Yang and Zeilberger (2017) on Mathar's recurrences; Shallit and colleagues on automatic sequences with Walnut (Shallit 2022). No comprehensive falsification audit was found.
 
 ## How it was done
 
