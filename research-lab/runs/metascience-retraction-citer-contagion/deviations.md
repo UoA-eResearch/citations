@@ -18,3 +18,16 @@
 4. **Post hoc design B** (planned now, before it is run). Not-yet-treated controls: works in the same source and
    year that cite only papers retracted after T+4. They share the "cites retracted work" trait without being
    treated in the window. This separates a retraction effect from membership of the citing network.
+
+## Pre-review gate (G5, G6) — 2026-10-25 22:54 NZDT, after all results (wording and attribution only)
+
+The lab's METHODS.md gates were run before this draft's review. No number changed.
+- **G5 overclaim check** (`review/overclaim_check.md`, passes):
+  - the title and plain terms now say the no-penalty result comes from a post hoc comparison;
+  - "standing" became "citations";
+  - "no one had checked" became "no study we found had estimated".
+- **G6 attribution ledger** (`results/attribution_ledger.csv`, 8 claims, passes):
+  - "Cor and Sood 2022" (continued citation of retracted papers) could not be found in OpenAlex. It is replaced by
+    Hsiao & Schneider (2021, QSS), the lead's verified source for the same point;
+  - Lu et al. 2013, Jin et al., Azoulay et al. (RESTAT 2015, DOI 10.1162/rest_a_00469) and RealSpill (Zenodo
+    23607726) resolve.

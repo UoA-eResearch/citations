@@ -1,4 +1,4 @@
-# Innocent citers of retracted papers suffer no measurable citation penalty: the apparent effects come from comparing them with the wrong controls
+# Innocent citers of retracted papers suffer no measurable citation penalty in a post hoc comparison with not-yet-treated controls: the apparent effects come from comparing them with the wrong controls
 
 *Retraction Watch retractions 2000–2021, matched to 61,527 OpenAlex works. 86,463 works cited a later-retracted
 paper before its retraction and share no author or institution with it (depth 1), and 69,865 cite such a work (depth
@@ -34,17 +34,16 @@ before any citer or citation count was built.*
 
 When a paper is retracted, do the scientists who innocently cited it, people with no connection to the authors,
 pay a price in fewer citations to their own work? Earlier studies found a penalty for the retracted authors' other
-work and for closely related papers, but no one had checked the innocent citers across all of science.
+work and for closely related papers, but no study we found had estimated the effect on innocent citers across all of science.
 
-We followed about 86,000 such papers, and 70,000 papers one step further removed, around about 4,000 retractions
+We followed about 86,000 such papers, and 70,000 papers one step further removed, around 4,000 retractions
 from 2000–2021. A first, preregistered comparison suggested the citers actually *gained* citations. But that
 comparison was flawed: papers that cite soon-to-be-retracted work belong to faster-growing research communities than
 typical papers in the same journal.
 
-When we compared them instead with papers from the same communities, ones that cited work retracted only years
+When we then compared them, in a check added after the first result, with papers from the same communities, ones that cited work retracted only years
 later, the difference vanished. Innocent citers neither lost nor gained citations after the retraction, to within
-about 2%. This held for misconduct retractions too. Citing a paper that is later retracted does not, on this
-evidence, damage your paper's standing.
+about 2%. This held for misconduct retractions too. Citing a paper that is later retracted does not, on this evidence, cost your paper citations.
 
 ## What was asked
 
@@ -52,8 +51,8 @@ The lead (`metascience-retraction-citer-contagion`) asked whether unrelated cite
 damage, whether it is larger for misconduct, and whether it fades by citation depth 2. Prior work:
 - the retracted authors' own work (Lu et al. 2013; Jin et al. 2019);
 - topically related articles (Azoulay et al. 2015; a 5–10% decline);
-- continued citation of retracted papers themselves (Cor and Sood 2022);
-- RealSpill (2026), which builds a retraction-spillover benchmark on pre-event citations, not stratified by reason
+- continued citation of retracted papers themselves (Hsiao and Schneider 2021);
+- RealSpill (Zenodo, 2026), which builds a retraction-spillover benchmark on pre-event citations, not stratified by reason
   or depth.
 
 ## How it was done
