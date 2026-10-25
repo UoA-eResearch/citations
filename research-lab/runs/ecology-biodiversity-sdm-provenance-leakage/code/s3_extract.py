@@ -69,6 +69,7 @@ def one(key, fs):
 def main():
     import urllib.parse  # noqa: F401  (used in list_keys)
     threads = int(sys.argv[1]) if len(sys.argv) > 1 else 96
+    pa.set_io_thread_count(threads * 4)          # pyarrow's own I/O pool (default 8) otherwise caps concurrency
     keys = list_keys()
     print(len(keys), "files", flush=True)
     fs = pafs.S3FileSystem(anonymous=True, region="us-east-1", connect_timeout=60, request_timeout=600)

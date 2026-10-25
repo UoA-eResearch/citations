@@ -40,9 +40,27 @@ def fetch_one(key):
 
 
 def fetch():
-    keys = [r["datasetKey"] for r in json.loads((REG / "download_datasets.json").read_text())]
+    """Page through the dataset search API (title, description, publisher, type, keywords; 1,000 per page) by
+    publishing country, keep datasets in SAGE's download, and fall back to per-dataset fetches for any missing."""
+    keys = {r["datasetKey"] for r in json.loads((REG / "download_datasets.json").read_text())}
+    countries = json.load(urllib.request.urlopen("https://api.gbif.org/v1/enumeration/country", timeout=60))
+    got = 0
+    for c in [x["iso2"] for x in countries] + [None]:
+        off = 0
+        while True:
+            u = f"https://api.gbif.org/v1/dataset/search?limit=1000&offset={off}" + (f"&publishingCountry={c}" if c else "")
+            d = json.load(urllib.request.urlopen(u, timeout=120))
+            for r in d["results"]:
+                if r["key"] in keys and not (DS / f"{r['key']}.json").exists():
+                    r["_publisher_title"] = r.get("publishingOrganizationTitle")
+                    (DS / f"{r['key']}.json").write_text(json.dumps(r)); got += 1
+            off += 1000
+            if d.get("endOfRecords") or off >= d["count"] or not c:
+                break
+    missing = [k for k in keys if not (DS / f"{k}.json").exists()]
+    print("search pages gave", got, "; missing", len(missing), flush=True)
     with ThreadPoolExecutor(8) as ex:
-        list(ex.map(fetch_one, keys))
+        list(ex.map(fetch_one, missing))
     print(len(list(DS.glob("*.json"))), "of", len(keys))
 
 
@@ -56,7 +74,7 @@ def candidates():
     rows = []
     for f in DS.glob("*.json"):
         d = json.loads(f.read_text())
-        text = " ".join(str(d.get(k) or "") for k in ("title", "description", "_publisher_title"))
+        text = " ".join(str(d.get(k) or "") for k in ("title", "description", "_publisher_title", "keywords"))
         text += " " + json.dumps(d.get("citation") or {}) + " " + json.dumps(d.get("bibliographicCitations") or [])
         hit_codes = sorted(c for c in codes if c in text)
         if hit_codes or vocab.search(text) or d.get("type") == "SAMPLING_EVENT" and re.search(r"vegetat|plot", text, re.I):
