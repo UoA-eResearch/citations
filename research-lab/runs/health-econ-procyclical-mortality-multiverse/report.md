@@ -14,12 +14,17 @@ built.*
     restricted bootstrap, inside the preregistered 40–60% band. 79% are negative; 1.7% are positive and significant.
   - **A joint test rules out chance.** Under the null, the median share significant is 1.8% (95th percentile 10%),
     against 49% observed (p < 0.002).
+  - **"Inconclusive" averages two opposite answers.** The three long windows (1,008 specifications, which share 42
+    of their 44–48 years) give 66% negative and significant, in the Refuted band. The three sub-periods (1,296) give
+    33%, in the Supported band. The plan's window list fixes that weighting.
 - **The answer depends on two choices.**
   - **The window.** In 1976–1991, 85% of specifications are negative and significant. In 1992–2005 it is 1.4% (about
     40% negative), and in 2006–2017, 13%. The full-period windows owe their significance largely to the pre-1992
     years.
   - **The measure.** With the unemployment rate, the long windows are 83–97% negative and significant. With the
     employment-to-population ratio, 37–44%.
+  - Much of that gap is an artefact of the ratio's denominator, which ages along with the population (post hoc).
+    With age adjustment or demographic controls, the ratio gives 53–66% in the long windows; with neither, 11–18%.
   - Together they account for most of what the choices explain. The main effects of all eight choices explain 43%
     of the variation across specifications; dropping the window loses 28 points and dropping the measure 11.
     Weighting, lags, trends, outcome, estimator and controls lose 0.1–2 points each.
@@ -38,13 +43,13 @@ rise in booms. Proposed reasons include fewer road crashes, less pollution, and 
 jobs are scarce.
 Later work suggested the pattern had faded, and that deaths from drug overdoses might move the other way.
 
-We rebuilt the state-by-year data from 1976 to 2023. Instead of one analysis, we ran every combination of the
-reasonable choices a researcher could make, 2,304 analyses in all. We then counted how many find the classic
+We rebuilt the state-by-year data from 1976 to 2023. Instead of one analysis, we ran every combination of a fixed set
+of reasonable choices, 2,304 analyses in all. We then counted how many find the classic
 pattern.
 
 About half do, which our preregistered rule calls inconclusive. But the split is not random. The pattern is strong in
-1976–1991 and largely absent in 1992–2005. It is also much stronger when the economy is measured by the unemployment
-rate than by the share of people in work. Overdose deaths after 2010 did not reliably rise with unemployment in
+1976–1991 and largely absent in 1992–2005. It is also stronger when the economy is measured by the unemployment
+rate than by the share of people in work, partly because that share also falls as a state's population ages. Overdose deaths after 2010 did not reliably rise with unemployment in
 almost any analysis.
 
 So "deaths fall in recessions" holds for the late 1970s and 1980s, and mostly with one way of measuring the
@@ -105,7 +110,7 @@ No specification curve with joint inference over this panel was found.
 
 ![Windows and H2](results/figures/F2_windows_h2.png)
 
-| window | specifications | negative and significant: unemployment rate | −employment/population | negative, either |
+| window | specifications | negative and significant: unemployment rate | −employment/population | negative (either measure) |
 |---|---|---|---|---|
 | 1976–1991 | 432 | 96% | 74% | 97% |
 | 1976–2017 | 432 | 93% | 44% | 93% |
@@ -127,8 +132,25 @@ Log crude rate, unemployment rate, population weights, state and year effects, d
 | 1976–2019 | −0.50% | −0.90% to −0.10% | 0.025 |
 | 1976–2023 | −0.64% | −1.05% to −0.24% | 0.003 |
 
-The canonical model finds a significant 2006–2017 effect that only 13% of that window's specifications share. The
-canonical choices (no trends, the unemployment rate, demographic controls) are among the most favourable.
+The canonical model finds a significant 2006–2017 effect that only 13% of that window's specifications share. In
+that window the canonical choices (no trends, the unemployment rate, demographic controls) are among the most
+favourable. Part of the low sub-period shares is mechanical: in 2006–2017, 28% of specifications without state
+trends are negative and significant, 12% with linear trends and none with quadratic trends. 228 specifications
+estimate more than 0.3 parameters per observation (post hoc, `results/tables/posthoc_review.json`).
+
+**Post hoc (after review): the employment-to-population ratio and the population's age.** Long windows, share negative
+and significant:
+
+| measure | controls | crude rate | log age-adjusted | log crude |
+|---|---|---|---|---|
+| −employment/population | none | 18% | 50% | 11% |
+| −employment/population | demographic shares | 66% | 53% | 59% |
+| unemployment rate | none | 93% | 89% | 91% |
+| unemployment rate | demographic shares | 91% | 94% | 91% |
+
+The ratio divides employment by the whole population aged 15+, which includes retirees. A state that ages faster
+sees the ratio fall and crude mortality rise with no cyclical content. That pushes the coefficient towards a positive
+value wherever neither age adjustment nor demographic controls absorb ageing.
 
 ### Drug poisoning (H2; F2, right)
 
@@ -137,6 +159,11 @@ canonical choices (no trends, the unemployment rate, demographic controls) are a
 | positive and significant | 3.1% | 0.0% | 8.3% |
 | positive | 67% | 35% | 79% |
 | negative and significant | 1.4% | 5.6% | 0.0% |
+| canonical-type estimate, % per point (95% CI) | +0.04 (−4.2 to +4.3) | +1.9 (−2.3 to +6.1) | +5.6 (+2.4 to +8.8) |
+
+The canonical-type rows use the log drug rate with the canonical H1 choices (post hoc). The 20 negative and
+significant H2 specifications are all unweighted, and 16 of them use the employment-to-population ratio, so they
+are a corner of the multiverse, not a countervailing pattern.
 
 ## What this does and does not show
 
@@ -144,12 +171,15 @@ canonical choices (no trends, the unemployment rate, demographic controls) are a
   - It is overwhelming in 1976–1991, and in long windows that include those years, when weakness is measured by
     unemployment.
   - It mostly disappears for 1992–2005, and is weak and fragile for 2006–2017.
-  - The employment-to-population ratio, arguably a cleaner measure of activity, gives it far less support.
+  - The employment-to-population ratio gives it less support. Much of the difference comes from ageing in the
+    ratio's denominator; with age adjustment or demographic controls the ratio supports the pattern in 53–66% of
+    long-window specifications.
   - These two choices, not estimator or weighting details, decide the answer.
-- **H2's countercyclical overdose story does not hold in this panel.** After 2010, overdose deaths rose almost
-  everywhere for reasons largely unrelated to the business cycle, above all the spread of
-  illicit fentanyl. Year effects absorb that, and the
-  remaining state variation does not track unemployment.
+- **H2's countercyclical overdose story finds no support in this panel.** After 2010, overdose deaths rose almost
+  everywhere for reasons largely unrelated to the business cycle, and year effects absorb that.
+  - The remaining state variation is not detectably related to unemployment. But the intervals, roughly ±4% per
+    point, include both zero and the 1999–2010 estimate (+5.6%), so a modest countercyclical effect cannot be
+    excluded.
 - **Not shown:**
   - **Causal identification beyond the standard design.** This is the established state-year fixed-effects design,
     with no new source of exogenous variation.
@@ -157,16 +187,24 @@ canonical choices (no trends, the unemployment rate, demographic controls) are a
   - **Cause-specific mechanisms**, apart from drug poisoning.
   - **Data quality after 2017.** 2018–2023 rests on calibrated occurrence-based counts and a provisional 2023 rate.
     Windows ending in 2017 avoid this and give the same picture.
+    - DC's occurrence-to-residence ratio drifts by 2.2% a year, so its calibrated 2018–2022 counts may be off by up
+      to about 10%.
+    - Without the VSRR drug-count calibration, H2's share is 2.3% rather than 1.6% (the review's sensitivity
+      check).
+  - **The employment-to-population measure** uses all residents aged 15+, not BLS's civilian non-institutional
+    population aged 16+. That builds in the ageing confound above.
 
 ## Process and deviations
 
 - **Preregistration:** `plan.md`.
 - **Deviations** (`deviations.md`):
   - D1 (before estimation): 2023 from the CDC quarterly rate, because the weekly file ends in September 2023; VSRR
-    drug counts calibrated to NCHS;
-  - D2: the plan's specification count was arithmetically wrong, with no choice changed; and the pyfixest
-    cross-check.
-- **Independent review:** queued (Fable), per the lab's pacing rule.
+    drug counts calibrated to NCHS;  - D2: the plan's specification count was arithmetically wrong, with no choice changed; and the pyfixest
+    cross-check;
+  - **D3 (after review):** an unstated drop of 1977 in first-difference specifications with the cumulative lag in
+    1976 windows (240 specifications; LAUS starts in 1976); the post hoc summaries above; documentation fixes.
+- **Independent review:** Fable, "publish with edits" (`review/review.md`). This version makes the edits; a
+  confirmation pass is queued.
 
 ## Reproducing it
 

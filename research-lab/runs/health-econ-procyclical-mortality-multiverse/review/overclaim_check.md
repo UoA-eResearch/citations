@@ -12,33 +12,38 @@ Fill in every row: backing = the table/figure and number that supports the sente
 | 6 | standfirst | The plan was committed before any panel was built. | git: plan committed before the panel build | Supported |  |
 | 7 | verdict | **Verdict: H1 Inconclusive; H2 Refuted.** | primary.json H1 Inconclusive, H2 Refuted | Supported |  |
 | 8 | verdict | **H1 (the procyclical coefficient is negative and significant in fewer than half of defensible specifications): Inconclusive.** | plan.md H1 | Supported |  |
-| 9 | verdict | **47.4%** of the 2,304 total-mortality specifications are negative and significant under the wild cluster restricted bootstrap, inside the preregistered 40–60% band. 79% are negative; 1.7% are positive and significant. | primary.json S1_wcr 0.4744; share_negative 0.788; positive-significant 0.017 | Supported |  |
-| 10 | verdict | **A joint test rules out chance.** Under the null, the median share significant is 1.8% (95th percentile 10%), against 49% observed (p < 0.002). | joint_test null median 0.018, p95 0.101, observed 0.492, p 0.000 | Supported |  |
-| 11 | verdict | **The answer depends on two choices.** | decomposition r2_drop window 0.279, treat 0.106 | Supported |  |
-| 12 | verdict | **The window.** In 1976–1991, 85% of specifications are negative and significant. | share_by_option window 1976-1991 0.847 | Supported |  |
-| 13 | verdict | In 1992–2005 it is 1.4% (about 40% negative), and in 2006–2017, 13%. | 1992-2005 0.014 (negative share 0.419); 2006-2017 0.134 | Supported |  |
-| 14 | verdict | The full-period windows owe their significance largely to the pre-1992 years. | 1976-1991 0.847 vs 1992-2005 0.014 and 2006-2017 0.134 within the full windows | Supported |  |
-| 15 | verdict | **The measure.** With the unemployment rate, the long windows are 83–97% negative and significant. | specs_h1 ur x long windows 0.826-0.972 | Supported |  |
-| 16 | verdict | With the employment-to-population ratio, 37–44%. | specs_h1 epop x long windows 0.368-0.444 | Supported |  |
-| 17 | verdict | Together they account for most of what the choices explain. | r2_main_effects 0.43; window+measure drops 0.385 | Supported | was 'explain most of the variation' (main effects explain 43% of it) |
-| 18 | verdict | The main effects of all eight choices explain 43% of the variation across specifications; dropping the window loses 28 points and dropping the measure 11. | decomposition r2_main_effects 0.4305; drops window 0.2786, treat 0.1058 | Supported |  |
-| 19 | verdict | Weighting, lags, trends, outcome, estimator and controls lose 0.1–2 points each. | r2_drop outcome 0.010, weight 0.001, trend 0.009, lag 0.001, estimator 0.010, controls 0.021 | Supported |  |
-| 20 | verdict | **The canonical Ruhm specification reproduces the classic result.** Log crude mortality falls 0.52% per point of unemployment for 1976–2017 (95% CI −0.92% to −0.13%; bootstrap p = 0.018). | canonical_by_window 1976-2017 beta -0.00523 (-0.00921 to -0.00126), p_wcr 0.018 | Supported |  |
-| 21 | verdict | The sub-periods split: +0.21% in 1992–2005 (not significant) and −0.57% in 2006–2017. | 1992-2005 +0.00208 (p 0.30); 2006-2017 -0.00569 | Supported |  |
-| 22 | verdict | **H2 (post-2010 drug-poisoning deaths are significantly countercyclical in most specifications): Refuted.** | plan.md H2; primary.json H2 Refuted | Supported |  |
-| 23 | verdict | Only **1.6%** of 576 specifications are positive and significant; 3.5% are negative and significant. | H2 S2_wcr 0.0156; share_negative_significant 0.0347 | Supported |  |
-| 24 | verdict | Half the estimates are positive, two thirds in 2011–2019 and one third in 2011–2023. | H2 share_positive 0.510; 2011-2019 0.670, 2011-2023 0.351 (specs_h2.csv) | Supported |  |
-| 25 | verdict | For 1999–2010, 79% are positive but only 8% significant. | specs_drug_pre2011.csv: positive 0.788, positive-significant 0.083 (288 specs) | Supported |  |
-| 26 | plain terms | For decades economists have reported a surprising pattern: in the United States, deaths fall during recessions and rise in booms. | ledger M1 (Ruhm 2000) | Supported |  |
-| 27 | plain terms | Proposed reasons include fewer road crashes, less pollution, and better-staffed care homes when jobs are scarce. | ledger M4, M5 | Supported |  |
-| 28 | plain terms | Later work suggested the pattern had faded, and that deaths from drug overdoses might move the other way. | ledger M2 (Ruhm 2015) | Supported |  |
-| 29 | plain terms | We rebuilt the state-by-year data from 1976 to 2023. | panel 1976-2023 | Supported |  |
-| 30 | plain terms | Instead of one analysis, we ran every combination of the reasonable choices a researcher could make, 2,304 analyses in all. | 2,304 specs (primary.json H1 specs) | Supported |  |
-| 31 | plain terms | We then counted how many find the classic pattern. | S1 definition | Supported |  |
-| 32 | plain terms | About half do, which our preregistered rule calls inconclusive. | S1 0.474 within the 40-60% band | Supported |  |
-| 33 | plain terms | But the split is not random. | joint test p < 0.002; window and measure decomposition | Supported |  |
-| 34 | plain terms | The pattern is strong in 1976–1991 and largely absent in 1992–2005. | 1976-1991 0.847; 1992-2005 0.014 | Supported |  |
-| 35 | plain terms | It is also much stronger when the economy is measured by the unemployment rate than by the share of people in work. | ur 0.626 vs epop 0.323 overall; long windows 83-97% vs 37-44% | Supported |  |
-| 36 | plain terms | Overdose deaths after 2010 did not reliably rise with unemployment in almost any analysis. | H2 positive-significant 1.6% | Supported |  |
-| 37 | plain terms | So "deaths fall in recessions" holds for the late 1970s and 1980s, and mostly with one way of measuring the economy. | 1976-1991 0.847; ur vs epop | Supported | was 'recessions are good for health' (the study measures deaths, not health) |
-| 38 | plain terms | It is not a stable law. | window shares 0.85 / 0.01 / 0.13 | Supported |  |
+| 9 | verdict | **47.4%** of the 2,304 total-mortality specifications are negative and significant under the wild cluster restricted bootstrap, inside the preregistered 40–60% band. 79% are negative; 1.7% are positive and significant. | primary.json H1 S1_wcr 0.4744, share_negative 0.7878, pos sig 0.0169 | Supported |  |
+| 10 | verdict | **A joint test rules out chance.** Under the null, the median share significant is 1.8% (95th percentile 10%), against 49% observed (p < 0.002). | primary.json joint_test null_median 0.0178, p95 0.1007, observed 0.4922, p 0 of 500 | Supported |  |
+| 11 | verdict | **"Inconclusive" averages two opposite answers.** The three long windows (1,008 specifications, which share 42 of their 44–48 years) give 66% negative and significant, in the Refuted band. | posthoc_review.json long 0.6577, sub 0.3318 | Exploratory-labelled | added (review 3) |
+| 12 | verdict | The three sub-periods (1,296) give 33%, in the Supported band. | posthoc_review.json sub_periods 1,296 specs 0.3318 | Exploratory-labelled | added (review 3) |
+| 13 | verdict | The plan's window list fixes that weighting. | plan.md window list | Supported | added |
+| 14 | verdict | **The answer depends on two choices.** | decomposition r2_drop window 0.279, treat 0.106 | Supported |  |
+| 15 | verdict | **The window.** In 1976–1991, 85% of specifications are negative and significant. | share_by_option window 1976-1991 0.847 | Supported |  |
+| 16 | verdict | In 1992–2005 it is 1.4% (about 40% negative), and in 2006–2017, 13%. | 1992-2005 0.014 (negative share 0.419); 2006-2017 0.134 | Supported |  |
+| 17 | verdict | The full-period windows owe their significance largely to the pre-1992 years. | primary.json window shares 1976-1991 0.847, 1992-2005 0.014; review 1992-2017 check 22% | Supported |  |
+| 18 | verdict | **The measure.** With the unemployment rate, the long windows are 83–97% negative and significant. | specs_h1.csv window x treat shares | Supported |  |
+| 19 | verdict | With the employment-to-population ratio, 37–44%. | specs_h1 epop x long windows 0.368-0.444 | Supported |  |
+| 20 | verdict | Much of that gap is an artefact of the ratio's denominator, which ages along with the population (post hoc). | posthoc_review.json long_by_measure_controls_outcome | Exploratory-labelled | added (review 1) |
+| 21 | verdict | With age adjustment or demographic controls, the ratio gives 53–66% in the long windows; with neither, 11–18%. | posthoc_review.json epop_neg/demog 0.53-0.66; epop_neg/none crude 0.18, log_crude 0.11 | Exploratory-labelled | added (review 1) |
+| 22 | verdict | Together they account for most of what the choices explain. | r2_main_effects 0.43; window+measure drops 0.385 | Supported | was 'explain most of the variation' (main effects explain 43% of it) |
+| 23 | verdict | The main effects of all eight choices explain 43% of the variation across specifications; dropping the window loses 28 points and dropping the measure 11. | decomposition r2_main_effects 0.4305; drops window 0.2786, treat 0.1058 | Supported |  |
+| 24 | verdict | Weighting, lags, trends, outcome, estimator and controls lose 0.1–2 points each. | r2_drop outcome 0.010, weight 0.001, trend 0.009, lag 0.001, estimator 0.010, controls 0.021 | Supported |  |
+| 25 | verdict | **The canonical Ruhm specification reproduces the classic result.** Log crude mortality falls 0.52% per point of unemployment for 1976–2017 (95% CI −0.92% to −0.13%; bootstrap p = 0.018). | canonical_by_window 1976-2017 beta -0.00523 (-0.00921 to -0.00126), p_wcr 0.018 | Supported |  |
+| 26 | verdict | The sub-periods split: +0.21% in 1992–2005 (not significant) and −0.57% in 2006–2017. | 1992-2005 +0.00208 (p 0.30); 2006-2017 -0.00569 | Supported |  |
+| 27 | verdict | **H2 (post-2010 drug-poisoning deaths are significantly countercyclical in most specifications): Refuted.** | plan.md H2; primary.json H2 Refuted | Supported |  |
+| 28 | verdict | Only **1.6%** of 576 specifications are positive and significant; 3.5% are negative and significant. | H2 S2_wcr 0.0156; share_negative_significant 0.0347 | Supported |  |
+| 29 | verdict | Half the estimates are positive, two thirds in 2011–2019 and one third in 2011–2023. | H2 share_positive 0.510; 2011-2019 0.670, 2011-2023 0.351 (specs_h2.csv) | Supported |  |
+| 30 | verdict | For 1999–2010, 79% are positive but only 8% significant. | specs_drug_pre2011.csv: positive 0.788, positive-significant 0.083 (288 specs) | Supported |  |
+| 31 | plain terms | For decades economists have reported a surprising pattern: in the United States, deaths fall during recessions and rise in booms. | ledger M1 (Ruhm 2000) | Supported |  |
+| 32 | plain terms | Proposed reasons include fewer road crashes, less pollution, and better-staffed care homes when jobs are scarce. | ledger M4, M5 | Supported |  |
+| 33 | plain terms | Later work suggested the pattern had faded, and that deaths from drug overdoses might move the other way. | ledger M2 (Ruhm 2015) | Supported |  |
+| 34 | plain terms | We rebuilt the state-by-year data from 1976 to 2023. | panel 1976-2023 | Supported |  |
+| 35 | plain terms | Instead of one analysis, we ran every combination of a fixed set of reasonable choices, 2,304 analyses in all. | plan.md eight dimensions | Supported | was 'every combination of the reasonable choices' (review 8) |
+| 36 | plain terms | We then counted how many find the classic pattern. | S1 definition | Supported |  |
+| 37 | plain terms | About half do, which our preregistered rule calls inconclusive. | S1 0.474 within the 40-60% band | Supported |  |
+| 38 | plain terms | But the split is not random. | joint test p < 0.002; window and measure decomposition | Supported |  |
+| 39 | plain terms | The pattern is strong in 1976–1991 and largely absent in 1992–2005. | 1976-1991 0.847; 1992-2005 0.014 | Supported |  |
+| 40 | plain terms | It is also stronger when the economy is measured by the unemployment rate than by the share of people in work, partly because that share also falls as a state's population ages. | posthoc_review.json; review finding 1 | Exploratory-labelled | added (review 1) |
+| 41 | plain terms | Overdose deaths after 2010 did not reliably rise with unemployment in almost any analysis. | H2 positive-significant 1.6% | Supported |  |
+| 42 | plain terms | So "deaths fall in recessions" holds for the late 1970s and 1980s, and mostly with one way of measuring the economy. | 1976-1991 0.847; ur vs epop | Supported | was 'recessions are good for health' (the study measures deaths, not health) |
+| 43 | plain terms | It is not a stable law. | window shares 0.85 / 0.01 / 0.13 | Supported |  |

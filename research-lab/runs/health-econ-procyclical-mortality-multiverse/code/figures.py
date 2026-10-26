@@ -114,7 +114,7 @@ def f2(p):
     ax.set_xticks([]); ax.set_xlabel(f"{len(h2)} drug-poisoning specifications\n(windows 2011–2019 and 2011–2023)", fontsize=8)
     ax.set_title(f"H2: positive and significant in {p['H2']['S2_wcr']:.1%}", fontsize=9, color=INK, loc="left")
     ax.set_ylabel("% of outcome SD per +1 pp")
-    fig.suptitle("The procyclical pattern needs the unemployment rate and pre-1992 years; post-2010 drug deaths do not track the cycle",
+    fig.suptitle("The procyclical pattern needs the unemployment rate and pre-1992 years; post-2010 drug deaths show no reliable cyclical pattern",
                  x=0.02, ha="left", fontsize=9.5, color=INK)
     fig.savefig(F / "F2_windows_h2.png", dpi=170); plt.close(fig)
     caption("F2_windows_h2", """Left: share of the H1 total-mortality specifications in each window that are negative and

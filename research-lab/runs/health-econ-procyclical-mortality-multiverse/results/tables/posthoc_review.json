@@ -1,0 +1,88 @@
+{
+ "long_windows": {
+  "specs": 1008,
+  "share_neg_sig": 0.6577
+ },
+ "sub_periods": {
+  "specs": 1296,
+  "share_neg_sig": 0.3318
+ },
+ "long_by_measure_controls_outcome": {
+  "epop_neg|demog": {
+   "crude": 0.6574,
+   "log_aadr": 0.5278,
+   "log_crude": 0.5926
+  },
+  "epop_neg|none": {
+   "crude": 0.1759,
+   "log_aadr": 0.5,
+   "log_crude": 0.1111
+  },
+  "ur|demog": {
+   "crude": 0.9074,
+   "log_aadr": 0.9444,
+   "log_crude": 0.9074
+  },
+  "ur|none": {
+   "crude": 0.9259,
+   "log_aadr": 0.8889,
+   "log_crude": 0.9074
+  }
+ },
+ "h2_canonical": {
+  "2011-2019": {
+   "beta_pct_per_point": 0.04,
+   "ci95": [
+    -4.2,
+    4.28
+   ],
+   "p_wcr": 0.9872
+  },
+  "2011-2023": {
+   "beta_pct_per_point": 1.91,
+   "ci95": [
+    -2.32,
+    6.14
+   ],
+   "p_wcr": 0.522
+  }
+ },
+ "pre2011_canonical": {
+  "1999-2010": {
+   "beta_pct_per_point": 5.6,
+   "ci95": [
+    2.43,
+    8.77
+   ],
+   "p_wcr": 0.0036
+  }
+ },
+ "h2_log_drug_median_ci_halfwidth_pct": 3.89,
+ "h2_negative_significant": {
+  "specs": 20,
+  "unweighted": 20,
+  "crude_level": 13,
+  "epop": 16
+ },
+ "fd_cumulative_1976_windows": {
+  "specs": 240,
+  "n_by_window": {
+   "1976-1991": 714,
+   "1976-2017": 2040,
+   "1976-2019": 2142,
+   "1976-2023": 2346
+  },
+  "n_contemp_by_window": {
+   "1976-1991": 765,
+   "1976-2017": 2091,
+   "1976-2019": 2193,
+   "1976-2023": 2397
+  }
+ },
+ "window_2006_2017_by_trend": {
+  "linear": 0.1181,
+  "none": 0.2847,
+  "quadratic": 0.0
+ },
+ "specs_k_over_n_gt_0_3": 228
+}

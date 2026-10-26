@@ -1,7 +1,7 @@
 #!/bin/bash
 # raw downloads: NBER mortality 1976-2004 (CSV zips), SEER populations, CDC state datasets, FRED LAUS annual series
 set -u
-D=/mnt/data/procyclical/raw
+D="$(cd "$(dirname "$0")/.." && pwd)/data/raw"   # the run's data/raw (was a hard-coded scratch path)
 for y in $(seq 1976 2004); do
   f=$D/nber/mort$y.csv.zip
   [ -s $f ] && unzip -tq $f >/dev/null 2>&1 && continue

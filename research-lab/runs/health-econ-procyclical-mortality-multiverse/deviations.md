@@ -51,3 +51,30 @@ The lab's METHODS.md gates were run before this draft's review. No number change
 - **G6 attribution ledger** (`results/attribution_ledger.csv`, 7 claims, passes): Ruhm 2000 and 2015,
   Brüning & Thuilliez 2019 and Stevens et al. 2015 resolve. Ruhm 2015 was confirmed by DOI after an OpenAlex
   title-match miss.
+
+## D3 — 2026-10-27 05:03 NZDT — after independent review ("publish with edits"); POST-RESULT, no re-estimation
+
+- **Unstated drop (G2).** In windows starting in 1976, first-difference specifications with the cumulative lag need
+  1975 unemployment, and LAUS begins in 1976. So 1977 is dropped as well as 1976, without a message.
+  - 240 specifications are affected: n is 714, 2,040, 2,142 and 2,346 against 765, 2,091, 2,193 and 2,397 for the
+    contemporaneous ones (`results/tables/posthoc_review.json`).
+  - The plan said only the first year is dropped. The review found no effect on conclusions.
+  - No other missing-data drop exists (n is constant within window × estimator × lag). The closed-form bootstrap
+    has no failing resamples.
+- **Post hoc summaries** (`code/posthoc_review.py`, from the existing specification tables):
+  - long windows 66% against sub-periods 33% negative and significant;
+  - the employment-to-population ratio by controls and outcome (an ageing confound in its denominator);
+  - canonical-type H2 and 1999–2010 estimates with CR1 intervals;
+  - the 2006–2017 shares by trend option;
+  - 228 specifications with more than 0.3 parameters per observation.
+- **D1 correction.** DC's VSRR counts are 11.5–16.1% above NCHS in the overlap years (15.2%, 11.5%, 12.3%, 16.1%), not
+  "11–15%".
+- **Documentation:** DC's occurrence/residence drift, and the uncalibrated-VSRR sensitivity (H2 2.3% against 1.6%,
+  the review's check), are in the limits. `code/download.sh` now writes to the run's `data/raw`.
+- **Report wording:**
+  - "arguably a cleaner measure" removed;
+  - H2's "does not track unemployment" replaced by an interval statement;
+  - the fentanyl clause dropped (no source in the ledger);
+  - pollution sourced (ledger M8).
+- **G1 audit.** The review found no outcome-correlated choice: every option is preregistered and crossed
+  symmetrically, and 1976–1991 is Ruhm's own window. **G3:** `results/plausibility.md` added.
