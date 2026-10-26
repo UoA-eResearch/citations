@@ -5,6 +5,9 @@ Written before any window count was computed.
                                      results/tables/null_<variant>.parquet (p0 per station), coverage.json
 VARIANT: primary | base24h (24 h baseline) | post6h (post window from the wave train end + 6 h); proxy variants
 (sp5, conf07) read data/proxy_<variant>/.
+POST HOC (D1, after the primary result): exposure | exposure_post6h — window lengths in beta's f use effective
+exposure: each window minus the union of the +-60 s masks around predicted teleseismic P arrivals (ComCat M >= 4.5
+more than 1,000 km away) that the proxy removed, for real and pseudo triggers alike.
 """
 import sys
 import zlib
@@ -39,7 +42,7 @@ def strain(mw, dist_km):
 
 
 def load(variant):
-    pdir = D / ("proxy" if variant in ("primary", "base24h", "post6h") else f"proxy_{variant}")
+    pdir = D / ("proxy" if variant in ("primary", "base24h", "post6h", "exposure", "exposure_post6h") else f"proxy_{variant}")
     hrs = pd.concat([pd.read_parquet(f) for f in sorted(pdir.glob("????-??.parquet"))], ignore_index=True)
     nbr = pd.concat([pd.read_parquet(f).assign(month=f.stem[4:]) for f in sorted(pdir.glob("nbr_*.parquet"))])
     st = pd.read_parquet(D / "raw" / "stations.parquet", columns=["id", "latitude", "longitude", "state"])
@@ -65,6 +68,13 @@ def load(variant):
     big7 = np.sort(g45[g45.mag >= 7.0].time.astype("int64").to_numpy() // 10**6)
     big65 = np.sort(g45[g45.mag >= 6.5].time.astype("int64").to_numpy() // 10**6)
     loc = pd.read_csv(D / "cat" / "region_m35.csv", usecols=["time", "latitude", "longitude", "mag"], parse_dates=["time"])
+    if variant.startswith("exposure"):
+        sys.path.insert(0, str(RUN / "code"))
+        import proxy as P
+        e = pd.read_csv(D / "cat" / "global_m45.csv", usecols=["time", "latitude", "longitude", "depth"], parse_dates=["time"])
+        e = e.sort_values("time")
+        G.update(ev_t=e.time.astype("int64").to_numpy() // 10**6, ev_lat=e.latitude.to_numpy(), ev_lon=e.longitude.to_numpy(),
+                 ev_dep=np.clip(e.depth.fillna(10).to_numpy(), 0, 700), taup=dict(np.load(D / "taup_p.npz")), ptime=P.ptime)
     G.update(variant=variant, series=series, loaded=loaded, us=us, tr=tr, nb=nb, big7=big7, big65=big65,
              loc_t=loc.time.astype("int64").to_numpy() // 10**6, loc_lat=loc.latitude.to_numpy(), loc_lon=loc.longitude.to_numpy())
 
@@ -80,7 +90,7 @@ def test(tid, origin_ms, dist_km, lat, lon):
     """One station x (pseudo-)trigger: returns (beta, sig, n_post, n_base) or a drop reason string."""
     v = G["variant"]
     wave_end = origin_ms + dist_km / 2.5 * 1000
-    post0 = int(np.ceil((wave_end + (6 if v == "post6h" else 2) * H) / H))
+    post0 = int(np.ceil((wave_end + (6 if v in ("post6h", "exposure_post6h") else 2) * H) / H))
     post1 = post0 + 24
     base1 = int(origin_ms // H)
     base0 = base1 - (24 if v == "base24h" else 168)
@@ -97,9 +107,38 @@ def test(tid, origin_ms, dist_km, lat, lon):
     if i1 > i0 and (gc_km(lat, lon, G["loc_lat"][i0:i1], G["loc_lon"][i0:i1]) <= 100).any():
         return "local M>=3.5 within 100 km in the baseline"
     npost, nbase = count(tid, post0, post1), count(tid, base0, base1)
-    n, f = npost + nbase, (post1 - post0) / ((post1 - post0) + (base1 - base0))
+    tp, tb = float(post1 - post0), float(base1 - base0)
+    if v.startswith("exposure"):
+        tp -= masked(post0 * H, post1 * H, lat, lon) / H
+        tb -= masked(base0 * H, base1 * H, lat, lon) / H
+    n, f = npost + nbase, tp / (tp + tb)
     beta = 0.0 if n == 0 else (npost - n * f) / np.sqrt(n * f * (1 - f))
     return beta, bool(beta >= 2), npost, nbase
+
+
+def masked(t0, t1, lat, lon):
+    """ms of [t0, t1) inside the union of +-60 s masks around predicted P arrivals of far (> 1,000 km) M >= 4.5."""
+    a, b = np.searchsorted(G["ev_t"], t0 - 25 * 60_000), np.searchsorted(G["ev_t"], t1)
+    if b <= a:
+        return 0.0
+    dk = gc_km(lat, lon, G["ev_lat"][a:b], G["ev_lon"][a:b])
+    far = dk > 1000
+    if not far.any():
+        return 0.0
+    arr = G["ev_t"][a:b][far] + 1000 * G["ptime"](dk[far] / (np.pi * R_EARTH / 180), G["ev_dep"][a:b][far], G["taup"])
+    iv = np.c_[np.clip(arr - 60_000, t0, t1), np.clip(arr + 60_000, t0, t1)]
+    iv = iv[np.argsort(iv[:, 0])]
+    tot, cur_s, cur_e = 0.0, None, None
+    for s_, e_ in iv:
+        if cur_e is None or s_ > cur_e:
+            if cur_e is not None:
+                tot += cur_e - cur_s
+            cur_s, cur_e = s_, e_
+        else:
+            cur_e = max(cur_e, e_)
+    if cur_e is not None:
+        tot += cur_e - cur_s
+    return tot
 
 
 def station(tid):
