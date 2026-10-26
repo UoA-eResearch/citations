@@ -41,10 +41,11 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-25 22:40 | `auckland-nz-avf-dvv-hydrological-baseline` | review (fresh agent; pre-review gate G5+G6 done) | fix first |
 | 2026-10-26 03:41 | `auckland-nz-avf-dvv-hydrological-baseline` | confirmation pass (original reviewer resumed) | publish with edits -> PUBLISHED |
 | 2026-10-26 08:41 | `legal-digital-humanities-precedent-erosion-before-overruling` | review (fresh agent; pre-review gate G5+G6 done) | fix first |
+| 2026-10-26 13:41 | `legal-digital-humanities-precedent-erosion-before-overruling` | confirmation pass (original reviewer resumed) |  |
 
 **Pre-review gate (from 2026-10-25, METHODS.md):** before launching a draft's Fable review, run G5 (`tools/overclaim_check.py RUN --verify`) and G6 (`tools/attribution.py check RUN`) on it, fix what they find as a D-entry, and add the standard gate-check block to its `review/prompt.md`. New leads apply all of G1–G7.
 
-**The owner's exception ended at 16:00 on 2026-10-23; the 1-per-5 h rule applies again. Precedent-erosion review started 2026-10-26 08:41; next Fable run not before 13:41.** Order (from 2026-10-26): reviews in table order - precedent erosion, GloBI, mortality, supply chain, scaling-fit, citer contagion, OEIS, hub vintage, notebook noise, mathlib, quantum, SDM provenance, herbarium velocity - with each confirmation pass taking the next slot after its review's fixes.
+**The owner's exception ended at 16:00 on 2026-10-23; the 1-per-5 h rule applies again. Precedent-erosion confirmation started 2026-10-26 13:41; next Fable run not before 18:41.** Order (from 2026-10-26): reviews in table order - precedent erosion, GloBI, mortality, supply chain, scaling-fit, citer contagion, OEIS, hub vintage, notebook noise, mathlib, quantum, SDM provenance, herbarium velocity - with each confirmation pass taking the next slot after its review's fixes.
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
