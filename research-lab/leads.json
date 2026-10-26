@@ -3203,7 +3203,12 @@
    "scout_value_score": 6,
    "scout_cost_score": 3,
    "plain_summary": "Scientists use machine learning to guess which species interact, for example who eats whom or which parasites infect which hosts, without having observed it. Using six years of archived snapshots of a global interaction database, this project checks whether those guesses predict interactions recorded later any better than simply betting on the species scientists already study most.",
-   "scout_round": 2
+   "scout_round": 2,
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass)",
+   "report_url": "runs/ecology-biodiversity-globi-temporal-link-holdout/report.html",
+   "verdict_tag": "Refuted",
+   "verdict_note": "H1 Refuted: on GloBI v0.6 (2023) -> v0.11 (2026), a taxonomy-aware link predictor's advantage over an effort-only baseline (degree, citations) does not halve out of time. Advantage +0.040 AUROC on a random holdout and +0.067 on 411,702 future pairs; ratio 1.68 (1.10-2.31). 45% of the future pairs come from trophiCH, a Swiss metaweb whose species-level links are mostly inferred from genus-level records; without it the ratio is 1.46 (1.05-2.08). With correctly degree-matched negatives effort falls to chance and the advantage shrinks out of time (0.43 -> 0.32, point estimates). The edge holds for new datasets, cold-start species and 24 of 26 large datasets. Review fix first (trophiCH undisclosed; degree-matched sampler broken) then confirmation publish with edits.",
+   "headline": "A taxonomy-aware species-interaction predictor keeps its edge over 'who gets studied' on GloBI records first seen three years later, though nearly half of those records come from one Swiss metaweb of mostly inferred links."
   },
   {
    "id": "ecology-biodiversity-colxr-taxonomy-switch-churn",

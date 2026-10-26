@@ -42,9 +42,9 @@ The first version's tables and figures are kept in `results/tables/v1_pre_review
     2025).
   - Only 30% of its species-level links are empirically documented; the rest are inferred from coarser taxonomic
     records using habitat co-occurrence (paper abstract). GloBI indexes the inferred links unfiltered.
-  - `model.py` now reports the advantage without trophiCH positives, using the same paired cluster bootstrap:
+  - `model.py` now reports the advantage without trophiCH positives, using the same cluster bootstrap (ratio percentiles per replicate, holdouts resampled independently):
     A_temporal 0.0585 (0.050 to 0.068) and ρ 1.46 (1.05 to 2.08).
-  - The review's bound-by-bound combination (0.92 to 2.3) is more conservative than the paired bootstrap.
+  - The review's bound-by-bound combination (0.92 to 2.3) is more conservative than the per-replicate ratio interval.
   - H1 stays Refuted. The title no longer says the advantage "grows": it holds.
 - **Degree-matched sampler (finding 2).** The first version starved the top degree deciles and drew with
   replacement (host negatives 73% of the required count; top deciles at 1–5% instead of 10%).

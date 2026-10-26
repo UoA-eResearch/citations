@@ -1,4 +1,4 @@
-"""G2 coverage for the graph build (added in D1): the build's filter chain re-run as counts only, per snapshot.
+"""G2 coverage for the graph build (added in D2): the build's filter chain re-run as counts only, per snapshot.
 Every record read is kept (class record) or dropped with the first filter it fails.
 -> results/tables/coverage.json stages build_v0.6, build_v0.11"""
 import sys

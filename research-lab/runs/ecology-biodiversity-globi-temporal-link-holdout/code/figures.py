@@ -53,7 +53,7 @@ def f1(p):
 
 def f2(p):
     rows = [("all temporal", p["auroc"]["temporal"])] + [(k.replace("_", " "), v) for k, v in p["temporal_subsets"].items()] + \
-           [("without trophiCH", p["without_trophiCH"]["auroc"]), ("degree-matched\nnegatives (D1)", p["degree_matched"]["temporal"])]
+           [("without trophiCH", p["without_trophiCH"]["auroc"]), ("degree-matched\nnegatives (D2)", p["degree_matched"]["temporal"])]
     fig, ax = plt.subplots(figsize=(8.2, 3.8))
     fig.subplots_adjust(left=0.08, right=0.98, bottom=0.25, top=0.83)
     x = np.arange(len(rows))
@@ -69,7 +69,7 @@ def f2(p):
     caption("F2_subsets", f"""Temporal holdout. New dataset: positives whose introducing source dataset was not in v0.6
     ({s['new_dataset']['pos']:,} of {p['n']['temporal']['pos']:,}). Cold start: an endpoint with a single v0.6 link
     ({s['cold_start']['pos']:,}). Without trophiCH: positives from the Swiss metaweb removed
-    ({p['without_trophiCH']['trophiCH_positives']:,}; most of its species-level links are inferred). Degree-matched (D1):
+    ({p['without_trophiCH']['trophiCH_positives']:,}; most of its species-level links are inferred). Degree-matched (D2):
     negatives drawn without replacement so every decile of the positives' log degree product holds ten negatives per
     positive.""")
 

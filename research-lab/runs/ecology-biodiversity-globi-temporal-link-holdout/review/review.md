@@ -163,3 +163,43 @@ intervals bound-by-bound gives roughly 0.92 to 2.3. So:
   0.054, is 0.92).
 - **"Grows" is not established without trophiCH**: the lower bound falls below 1. The title and verdict should say
   the advantage *holds* out of time, and may grow, with the growth resting on the inferred-link dataset.
+
+---
+
+# Confirmation pass (D2, commit 303167a) — 2026-10-26, same reviewer
+
+**Verdict: publish with edits.** Every finding is resolved or honestly disclosed; the new numbers reproduce or
+check out; what remains is labelling and wording. Checks: `review/reviewer_checks/confirm_sampler.py` (+ `.json`),
+plus the earlier `recheck.json` / `post_scores.json` for the without-trophiCH comparison.
+
+| finding | status | evidence |
+|---|---|---|
+| 1 trophiCH (Major) | **Resolved.** Disclosed in the title, verdict, plain terms, limits, D2 and ledger L9; "grows" dropped. The without-trophiCH block (`model.py` main) is correct: `keep` removes trophiCH positives only, percentile ranks and cluster weights are the study's own, the point estimate uses the unweighted A_random, and the interval is the 2.5–97.5 percentile of per-replicate ratios. A_temporal 0.0585 (0.050–0.068) agrees with my independent re-run (0.0585, 0.050–0.066). | `primary.json` without_trophiCH; `post_scores.json` |
+| 2 degree-matched sampler (Major) | **Resolved.** Re-ran the new `sample_negatives` independently on the host and pollination temporal positives (seed 99): 1,259,760 / 1,259,760 and 721,060 / 721,060 negatives, all distinct, none in the forbidden set, negative decile shares identical to the positives' to three decimals, mean log degree product within 0.01 (host) and 0.05 (pollination); residual within-decile differences only in the open-ended extreme deciles (−0.23 to +0.25). Effort at 0.50 / 0.51 confirms matching. The verdict bullet and F2 now say the advantage shrinks under matched negatives (0.43 → 0.32). | `confirm_sampler.json`; `primary.json` degree_matched, degree_matched_sampler |
+| 3 citation leak (Moderate, G1) | **Disclosed, not re-run** (acceptable: measured effect 0.0002 on A_random). D2 and the limits carry the numbers. | `deviations.md` D2 |
+| 4 re-resolution / turnover (Minor) | **Resolved.** The caveat now states the measured 1.1% and the decomposition of the turnover (removed, refuted, re-typed). | report verdict and Turnover bullet |
+| 5 cluster concentration (Minor) | **Resolved.** 266 clusters, 44.7% / 73.8% stated; `per_dataset.csv` (26 datasets ≥ 1,000 positives; 24 positive) matches my per-dataset values to within 0.003. | `per_dataset.csv`, `eval_sets_summary.json` |
+| 6 small design points (Minor) | **Resolved.** Both in the limits. | report "Not shown" |
+| 7 gates | **Resolved.** G1 audit in D2; G2 `coverage.json` accounts for every record and agrees with my independent counts (v0.6: 17,050,034 study-type rows = 19,981,541 − 2,931,507; v0.11: 15,678,150 = 24,453,954 − 8,775,804; ok totals equal the build logs); `graph_summary.json` and `eval_sets_summary.json` written; G3 `plausibility.md` is substantive; G5 42 rows and G6 9 claims pass on re-run. | `coverage.json`, tools output |
+| 8 report numbers | **Checked.** Every number in the verdict block, both tables, the per-dataset bullet, clusters, coverage and the captions matches `primary.json`, `per_class.csv`, `per_dataset.csv` and `coverage.json`. The 0.9474 vs 0.9476 difference is consistent with multithreaded gradient boosting; ρ 1.677 vs 1.683 does not change anything. F2's legend no longer overlaps. `v1_pre_review/primary.json` is byte-identical to the committed first version. | diff against c003e51 |
+
+## Edits before publishing
+
+1. **D1/D2 label.** The fix is D2 in `deviations.md`, but the code and figure call it D1: `code/model.py:7`, `:51`,
+   `:294`; `code/figures.py:56` (F2 x-label "degree-matched negatives (D1)") and `:72` (caption "Degree-matched
+   (D1)"); `code/coverage_build.py:1`; `results/figures/F2_subsets.txt`. D1 is "secondary 4 not run". Rename to D2 and
+   regenerate F2 and its caption.
+2. **"Paired" bootstrap.** D2 and `model.py:294` call the without-trophiCH interval a paired bootstrap. The random
+   and temporal holdouts have different cluster sets and are resampled independently within each replicate; it is a
+   joint per-replicate ratio bootstrap, the same as the primary one. Say "the same per-replicate ratio bootstrap";
+   the interval itself is right, and it is narrower than my 0.92–2.3 because that was a bound-by-bound ratio, not
+   because of pairing.
+3. **Degree-matched ratio 0.74.** The verdict bullet says it is "still above the hypothesis's 0.5" with no
+   interval (the plan preregistered degree matching as point estimates). Add "(point estimate; no interval)" so it is
+   not read as a second test of H1.
+4. Optional: the degree-matched sampler's self-report could add the within-decile mean differences; the extreme
+   deciles are open-ended and the residual mismatch there is the only one left.
+
+Nothing new is wrong. The preregistered verdict (H1 Refuted) stands under uniform negatives with and without
+trophiCH, and the report now says plainly that it shrinks (0.74) under degree-matched negatives and that nearly half
+of the "future" is inferred.

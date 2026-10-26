@@ -27,7 +27,7 @@ added.*
 - **With degree-matched negatives (corrected in D2), effort falls to chance:**
   - effort scores 0.50 random and 0.51 temporal;
   - the taxonomic model scores 0.93 random and 0.83 temporal;
-  - the advantage still shrinks out of time, from 0.43 to 0.32 (a ratio of 0.74, still above the hypothesis's 0.5).
+  - the advantage still shrinks out of time, from 0.43 to 0.32 (a point estimate of 0.74 with no interval, not a second test of H1).
 - **The edge holds where it matters most:**
   - for pairs introduced by datasets indexed after v0.6 (72% of the future pairs): 0.940 against 0.870;
   - for species with a single prior link: 0.881 against 0.718;
@@ -140,7 +140,7 @@ random edge holdout or single prospective cases, such as Becker et al. 2022 for 
   - That holds for new data sources, for barely studied species, without the dominant dataset, and in 24 of 26
     large datasets.
   - Under uniform negatives the lead is larger out of time than in a random holdout. Under degree-matched negatives
-    it is smaller (0.32 against 0.43), though still far above effort.
+    it is smaller (0.32 against 0.43; point estimates), though still far above effort.
 - **The future records are partly inferred.**
   - 45% of the temporal positives come from trophiCH, most of whose species-level links were inferred from coarser
     taxonomic records with habitat filters. For those records the test partly asks whether one taxonomic model agrees
@@ -168,8 +168,8 @@ random edge holdout or single prospective cases, such as Becker et al. 2022 for 
   - pre-review gate (G5, G6);
   - **D2, after independent review:** trophiCH disclosed and tested; the degree-matched sampler corrected; the
     citation leak disclosed; per-dataset results; coverage accounting, the G1 audit and the G3 plausibility file.
-- **Independent review:** Fable, "fix first" (`review/review.md`). This version addresses it; a confirmation pass is
-  queued.
+- **Independent review:** Fable, "fix first" (`review/review.md`). A confirmation pass by the same reviewer found every
+  finding resolved and asked for three wording edits, made in this version ("publish with edits").
 
 ## Reproducing it
 

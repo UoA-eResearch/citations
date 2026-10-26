@@ -4,7 +4,7 @@
   -> results/tables/primary.json (or secondary_origin_v0.8.json), per_class.csv, eval_sets_summary.json,
      per_dataset.csv, graph_summary.json
 
-D1 (after review): the degree-matched sampler fills every positive decile without replacement (uniform and
+D2 (after review): the degree-matched sampler fills every positive decile without replacement (uniform and
 degree-proportional candidates, accepted by decile until full) and reports the achieved shares; robustness without
 trophiCH (whose species-level links are mostly inferred by taxonomic expansion); per-dataset advantage table.
 """
@@ -48,7 +48,7 @@ def sample_negatives(rng, srcs, tgts, n, forbid, match_to=None, deg=None):
                     if len(out) >= n:
                         break
         return list(out)
-    # degree-matched (D1): fill each positive decile of log(deg_s * deg_t) without replacement, from uniform and
+    # degree-matched (D2): fill each positive decile of log(deg_s * deg_t) without replacement, from uniform and
     # degree-proportional candidate draws, until every decile holds NEG x its positives
     lp = np.log1p([deg[0].get(s, 0) * deg[1].get(t, 0) for s, t in match_to])
     edges = np.quantile(lp, np.linspace(0, 1, 11))
@@ -291,7 +291,7 @@ def main(past="0.6"):
             sub[lab] = {"pos": int((flag & (temp["y"] == 1)).sum()),
                         **{k: round(pooled_auc(temp, k, keep=keep), 4) for k in ("effort", "rdpg", "taxgb")}}
     out["temporal_subsets"] = sub
-    # D1 robustness: without trophiCH positives (inferred links), with the same paired bootstrap
+    # D2 robustness: without trophiCH positives (inferred links); joint per-replicate ratio bootstrap (holdouts resampled independently)
     keep = (temp["y"] == 0) | (temp["cluster"].astype(str) != TROPHICH)
     at_n = pooled_auc(temp, best, keep=keep) - pooled_auc(temp, "effort", keep=keep)
     bs2, rng3 = [], np.random.default_rng(SEED + 3)

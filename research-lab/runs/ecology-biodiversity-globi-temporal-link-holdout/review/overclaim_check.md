@@ -28,7 +28,7 @@ Fill in every row: backing = the table/figure and number that supports the sente
 | 22 | verdict | **With degree-matched negatives (corrected in D2), effort falls to chance:** | primary.json degree_matched; degree_matched_sampler decile_fill 1.0 | Exploratory-labelled | was 'grows with degree-matched negatives' (review 2) |
 | 23 | verdict | effort scores 0.50 random and 0.51 temporal; | primary.json degree_matched effort 0.5009 / 0.514 | Exploratory-labelled | corrected sampler (D2) |
 | 24 | verdict | the taxonomic model scores 0.93 random and 0.83 temporal; | primary.json degree_matched taxgb 0.9301 / 0.8306 | Exploratory-labelled | corrected sampler (D2) |
-| 25 | verdict | the advantage still shrinks out of time, from 0.43 to 0.32 (a ratio of 0.74, still above the hypothesis's 0.5). | primary.json degree_matched: 0.9301-0.5009=0.429; 0.8306-0.514=0.317; ratio 0.74 | Exploratory-labelled | was 'grows' (review 2) |
+| 25 | verdict | the advantage still shrinks out of time, from 0.43 to 0.32 (a point estimate of 0.74 with no interval, not a second test of H1). | primary.json degree_matched: 0.429 and 0.317 (point estimates) | Exploratory-labelled | marked as a point estimate (confirmation) |
 | 26 | verdict | **The edge holds where it matters most:** | primary.json temporal_subsets | Supported |  |
 | 27 | verdict | for pairs introduced by datasets indexed after v0.6 (72% of the future pairs): 0.940 against 0.870; | primary.json new_dataset 298,259; 0.9402 vs 0.8702 | Supported |  |
 | 28 | verdict | for species with a single prior link: 0.881 against 0.718; | primary.json cold_start 0.8812 vs 0.7184 | Supported |  |
