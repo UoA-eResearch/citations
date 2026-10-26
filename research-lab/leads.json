@@ -2478,7 +2478,12 @@
     "Write the manuscript with full reproducibility archive; frame as a methods-audit of a canonical literature."
    ],
    "risks": "Could be judged 'we already knew it was fragile' (Ruhm 2015); mitigated by the estimator-decomposition contribution. CDC WONDER pre-1999 comparability (ICD-9 to ICD-10) requires careful bridging. Continuous-treatment DiD estimators need discretized dose bins - a judgment call reviewers may probe.",
-   "plain_summary": "A famous finding says that death rates in the US fall during recessions. This study would re-analyse state data from 1976 to 2023 in many reasonable ways, using newer statistical methods, to see how often that finding still holds."
+   "plain_summary": "A famous finding says that death rates in the US fall during recessions. This study would re-analyse state data from 1976 to 2023 in many reasonable ways, using newer statistical methods, to see how often that finding still holds.",
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass)",
+   "report_url": "runs/health-econ-procyclical-mortality-multiverse/report.html",
+   "verdict_tag": "Inconclusive",
+   "verdict_note": "H1 Inconclusive: across 2,304 preregistered specifications of US state mortality on economic weakness (1976-2023, wild cluster bootstrap), 47.4% are negative and significant, inside the 40-60% band; a joint test rules out chance (null median 1.8%, p < 0.002). The pooled share averages two opposite answers: long windows 66% (Refuted band), sub-periods 33% (Supported band); 1976-1991 gives 85%, 1992-2005 1.4%. The unemployment rate supports the pattern far more than the employment-to-population ratio, partly because that ratio's denominator ages (53-66% with age adjustment or demographic controls, 11-18% without). Canonical Ruhm model: -0.52% per point for 1976-2017. H2 Refuted: 1.6% of 576 post-2010 drug-poisoning specifications are positive and significant, but the intervals (about +/-4% per point) cannot exclude a modest countercyclical effect. Review publish with edits, then confirmation publish.",
+   "headline": "US deaths fell in recessions in the 1970s and 1980s and when the economy is measured by unemployment; across 2,304 analyses the pattern is real but bound to period and measure, not a stable law."
   },
   {
    "id": "health-econ-hub-vintage-rescore",

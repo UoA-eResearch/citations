@@ -199,12 +199,13 @@ are a corner of the multiverse, not a countervailing pattern.
 - **Preregistration:** `plan.md`.
 - **Deviations** (`deviations.md`):
   - D1 (before estimation): 2023 from the CDC quarterly rate, because the weekly file ends in September 2023; VSRR
-    drug counts calibrated to NCHS;  - D2: the plan's specification count was arithmetically wrong, with no choice changed; and the pyfixest
+    drug counts calibrated to NCHS;
+  - D2: the plan's specification count was arithmetically wrong, with no choice changed; and the pyfixest
     cross-check;
   - **D3 (after review):** an unstated drop of 1977 in first-difference specifications with the cumulative lag in
     1976 windows (240 specifications; LAUS starts in 1976); the post hoc summaries above; documentation fixes.
-- **Independent review:** Fable, "publish with edits" (`review/review.md`). This version makes the edits; a
-  confirmation pass is queued.
+- **Independent review:** Fable, "publish with edits" (`review/review.md`). The edits were made, and the reviewer's
+  confirmation pass found them correct ("publish").
 
 ## Reproducing it
 

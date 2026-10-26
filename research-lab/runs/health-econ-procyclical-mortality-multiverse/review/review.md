@@ -203,3 +203,53 @@ in Results. The "canonical choices are among the most favourable" sentence is tr
 5. Ledger rows for fentanyl and pollution, or drop the words.
 6. Document the DC drift, the VSRR calibration sensitivity (2.3% vs 1.6%), and fix download.sh's path.
 7-8. One-line clarifications.
+
+---
+
+# Confirmation pass (same reviewer), 2026-10-27, commit 74f9df5
+
+## Verdict: publish
+
+Every requested edit is made and correct; the post hoc summaries were recomputed from the existing tables with no
+re-estimation, and every new number in report.md matches `results/tables/posthoc_review.json` and my own checks
+(`review/reviewer_checks/check_specs.out`, `sensitivity.json`). One cosmetic defect to fix on commit, no re-review
+needed.
+
+## Two corrections to my review (the authors' counts are right)
+
+- Finding 4 said 192 affected specifications; it is **240** (72 + 72 in 1976-1991 and 1976-2017, 48 + 48 in
+  1976-2019 and 1976-2023, where log_aadr is excluded). Verified from `specs_h1.csv`: every one has n = (years - 2) x 51.
+- Finding 2 said 17 of the 20 negative-significant H2 specifications use the crude level rate; it is **13** (7 use
+  the log rate). All 20 unweighted, 16 with -emp/pop15 and 19 TWFE/division x year stand.
+
+## Edits checked, by finding
+
+1. Measure x controls x outcome table in Results, post hoc labelled; 18/50/11, 66/53/59, 93/89/91, 91/94/91 match
+   0.1759/0.5/0.1111, 0.6574/0.5278/0.5926, 0.9259/0.8889/0.9074, 0.9074/0.9444/0.9074. "Arguably a cleaner measure"
+   replaced; verdict bullet carries 53-66% / 11-18%; denominator mismatch in the limits; plain terms adjusted. Correct.
+2. H2: absence claim replaced by an interval statement that names +/-4% per point and the 1999-2010 estimate; the
+   canonical-type row (+0.04, -4.2 to +4.3; +1.9, -2.3 to +6.1; +5.6, +2.4 to +8.8) matches `posthoc_review.json`;
+   the 20 negative-significant specs characterised correctly; `figures.py:117` retitled and F2 regenerated
+   (PNG 05:03:36, after the code change). Correct.
+3. 66% / 33% (0.6577 / 0.3318), 1,008 / 1,296, 42 of 44-48 years, plus the weighting caveat, in the verdict block
+   and labelled exploratory in G5. Correct.
+4. D3 states the 1977 drop with the n values (714/2,040/2,142/2,346 vs 765/2,091/2,193/2,397) and the 240 count,
+   notes no other drop and no failing resamples. Correct.
+5. Fentanyl clause dropped. M8 (Heutel and Ruhm, NBER w18959) resolves and carries role, support and conditions;
+   M4 narrowed to motor-vehicle deaths; M6 names the search (OpenAlex and arXiv, round 2). G6 passes (8 claims).
+   Correct.
+6. DC drift (2.2%/yr, up to ~10% by 2022) and the uncalibrated-VSRR share (2.3% vs 1.6%) in the limits; D1's DC
+   range corrected to 11.5-16.1% in D3; `download.sh` now resolves `data/raw` relative to the script. Correct.
+7. 2006-2017 shares by trend (28% / 12% / 0%) and the 228 high-k/n specifications noted; "most favourable" scoped
+   to that window. Correct.
+8. "A fixed set of reasonable choices"; "negative (either measure)". Correct.
+- Gates: G1 note in D3 (no outcome-correlated choice); G3 `results/plausibility.md` with four headline anchors,
+  three traces (drawn from this review's checks) and three invariants, all accurate; G5 regenerated with 43 rows,
+  the five post hoc sentences labelled Exploratory, passes `--verify`.
+
+## Remaining defect (cosmetic, fix on commit)
+
+- `report.md:201-203`: the D1 and D2 bullets in "Process and deviations" were merged onto one line ("...calibrated
+  to NCHS;  - D2: ..."), so D2 no longer renders as its own list item. Split the line.
+
+Nothing else new is wrong.

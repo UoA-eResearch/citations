@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Procyclical Mortality Multiverse</title>
+<meta name="description" content="Do US deaths fall in recessions? A preregistered specification curve over the state panel, 1976-2023.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Health economics</div>
+  <h1>Do US deaths fall in recessions? Across 2,304 defensible specifications, yes before 1992 and with the unemployment rate; post-2010 drug deaths show no reliable cyclical pattern</h1>
+  <p class="subtitle">US states and DC, 1976–2023. Deaths come from NBER microdata to 1998, then CDC state counts, spliced and validated on the overlap years. Economic weakness is the BLS unemployment rate or the negative employment-to-population ratio. A preregistered specification multiverse varies the outcome, measure, weighting, trends, lags, sample window, estimator and controls, with wild cluster bootstrap inference by state. The plan was committed before any panel was built.</p>
+  <div class="meta">
+    <span>Report · 2026-10-27 · pre-review draft</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/health-econ-procyclical-mortality-multiverse/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/health-econ-procyclical-mortality-multiverse/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/health-econ-procyclical-mortality-multiverse/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: H1 Inconclusive; H2 Refuted.</strong></p>
+<ul>
+<li><strong>H1 (the procyclical coefficient is negative and significant in fewer than half of defensible specifications):
+  Inconclusive.</strong><ul>
+<li><strong>47.4%</strong> of the 2,304 total-mortality specifications are negative and significant under the wild cluster
+restricted bootstrap, inside the preregistered 40–60% band. 79% are negative; 1.7% are positive and significant.</li>
+<li><strong>A joint test rules out chance.</strong> Under the null, the median share significant is 1.8% (95th percentile 10%),
+against 49% observed (p &lt; 0.002).</li>
+<li><strong>"Inconclusive" averages two opposite answers.</strong> The three long windows (1,008 specifications, which share 42
+of their 44–48 years) give 66% negative and significant, in the Refuted band. The three sub-periods (1,296) give
+33%, in the Supported band. The plan's window list fixes that weighting.</li>
+</ul>
+</li>
+<li><strong>The answer depends on two choices.</strong><ul>
+<li><strong>The window.</strong> In 1976–1991, 85% of specifications are negative and significant. In 1992–2005 it is 1.4% (about
+40% negative), and in 2006–2017, 13%. The full-period windows owe their significance largely to the pre-1992
+years.</li>
+<li><strong>The measure.</strong> With the unemployment rate, the long windows are 83–97% negative and significant. With the
+employment-to-population ratio, 37–44%.</li>
+<li>Much of that gap is an artefact of the ratio's denominator, which ages along with the population (post hoc).
+With age adjustment or demographic controls, the ratio gives 53–66% in the long windows; with neither, 11–18%.</li>
+<li>Together they account for most of what the choices explain. The main effects of all eight choices explain 43%
+of the variation across specifications; dropping the window loses 28 points and dropping the measure 11.
+Weighting, lags, trends, outcome, estimator and controls lose 0.1–2 points each.</li>
+</ul>
+</li>
+<li><strong>The canonical Ruhm specification reproduces the classic result.</strong> Log crude mortality falls 0.52% per point of
+  unemployment for 1976–2017 (95% CI −0.92% to −0.13%; bootstrap p = 0.018). The sub-periods split: +0.21% in
+  1992–2005 (not significant) and −0.57% in 2006–2017.</li>
+<li><strong>H2 (post-2010 drug-poisoning deaths are significantly countercyclical in most specifications): Refuted.</strong><ul>
+<li>Only <strong>1.6%</strong> of 576 specifications are positive and significant; 3.5% are negative and significant.</li>
+<li>Half the estimates are positive, two thirds in 2011–2019 and one third in 2011–2023.</li>
+<li>For 1999–2010, 79% are positive but only 8% significant.</li>
+</ul>
+</li>
+</ul>
+<h2>In plain terms</h2>
+<p>For decades economists have reported a surprising pattern: in the United States, deaths fall during recessions and
+rise in booms. Proposed reasons include fewer road crashes, less pollution, and better-staffed care homes when
+jobs are scarce.
+Later work suggested the pattern had faded, and that deaths from drug overdoses might move the other way.</p>
+<p>We rebuilt the state-by-year data from 1976 to 2023. Instead of one analysis, we ran every combination of a fixed set
+of reasonable choices, 2,304 analyses in all. We then counted how many find the classic
+pattern.</p>
+<p>About half do, which our preregistered rule calls inconclusive. But the split is not random. The pattern is strong in
+1976–1991 and largely absent in 1992–2005. It is also stronger when the economy is measured by the unemployment
+rate than by the share of people in work, partly because that share also falls as a state's population ages. Overdose deaths after 2010 did not reliably rise with unemployment in
+almost any analysis.</p>
+<p>So "deaths fall in recessions" holds for the late 1970s and 1980s, and mostly with one way of measuring the
+economy. It is not a stable law.</p>
+<h2>What was asked</h2>
+<p>The lead (<code>health-econ-procyclical-mortality-multiverse</code>) asked whether the canonical procyclical result survives a
+systematic specification curve. Prior work:
+- Ruhm (2000) established the pattern for 1972–1991, and Ruhm (2015, <em>Journal of Health Economics</em>) showed it
+  weakening, with drug poisoning countercyclical.
+- Studies elsewhere, such as Brüning and Thuilliez (2019) for France, are mixed.</p>
+<p>No specification curve with joint inference over this panel was found.</p>
+<h2>How it was done</h2>
+<ul>
+<li><strong>Deaths.</strong><ul>
+<li><strong>1976–1998:</strong> NBER Multiple Cause of Death microdata (1.9–2.3 million records a year), counted by state of
+residence, with foreign residents excluded.</li>
+<li><strong>1999–2017:</strong> CDC "Leading Causes of Death", all causes.</li>
+<li><strong>2018–2022:</strong> CDC weekly counts by state of occurrence, apportioned to calendar years and calibrated to
+residence on 2014–2017.</li>
+<li><strong>2023:</strong> CDC's quarterly provisional all-cause rate (D1).</li>
+<li><strong>Validation.</strong> NBER and CDC counts for 1999–2004 agree exactly, and age-adjusted rates by a median 0.004%. The
+calibrated weekly series varies by a median 0.16% around its calibration.</li>
+</ul>
+</li>
+<li><strong>Drug-poisoning deaths:</strong> NCHS 1999–2018, then VSRR provisional counts for 2019–2023, calibrated to NCHS on
+  2015–2018 (D1).</li>
+<li><strong>Economic weakness:</strong> BLS LAUS annual unemployment rate, or −100 × LAUS employment / population aged 15+.
+  Populations and demographic shares come from SEER.</li>
+<li><strong>The multiverse.</strong> It is fully crossed:</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>dimension</th>
+<th>options</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>outcome</td>
+<td>log crude rate, log age-adjusted rate, crude rate</td>
+</tr>
+<tr>
+<td>measure</td>
+<td>unemployment rate, −employment/population</td>
+</tr>
+<tr>
+<td>weights</td>
+<td>population, none</td>
+</tr>
+<tr>
+<td>state trends</td>
+<td>none, linear, quadratic</td>
+</tr>
+<tr>
+<td>lags</td>
+<td>contemporaneous, cumulative with one lag</td>
+</tr>
+<tr>
+<td>window</td>
+<td>six</td>
+</tr>
+<tr>
+<td>estimator</td>
+<td>TWFE, first differences, division × year effects</td>
+</tr>
+<tr>
+<td>controls</td>
+<td>none, shares under 5 / 65+ / 85+ / Black</td>
+</tr>
+</tbody>
+</table></div>
+<p>The age-adjusted rate is undefined after 2017, which removes 288 combinations and leaves 2,304. The plan misstated
+  the total (D2).
+- <strong>Inference.</strong> A wild cluster restricted bootstrap by state (Rademacher, 9,999 draws) is computed in closed form.
+  It was checked against a brute-force bootstrap on synthetic panels, matching exactly, and has 5.0% size under the
+  null.
+- <strong>The joint test</strong> uses 500 null datasets with shared draws across specifications.</p>
+<h2>Results</h2>
+<h3>The H1 specification curve (<code>results/figures/F1_spec_curve_h1.png</code>)</h3>
+<figure><a href="results/figures/F1_spec_curve_h1.png"><img src="results/figures/F1_spec_curve_h1.png" alt="H1 curve"></a><figcaption>US states and DC, total mortality against economic weakness (the unemployment rate, or the negative employment-to-population ratio). Each point is one specification of the preregistered multiverse (outcome, measure, weighting, trends, lags, window, estimator, controls), standardised as the effect of a 1-point rise in weakness in percent of the outcome&#x27;s standard deviation in that window, with 95% CR1 intervals. Colour is significance under the wild cluster restricted bootstrap (9,999 draws). Lower panels mark each specification&#x27;s window and whether it uses the unemployment rate. Joint test: 49% significant negative (CR1) against a null median of 1.8%.</figcaption></figure>
+<h3>By window and measure (<code>results/figures/F2_windows_h2.png</code>, left)</h3>
+<figure><a href="results/figures/F2_windows_h2.png"><img src="results/figures/F2_windows_h2.png" alt="Windows and H2"></a><figcaption>Left: share of the H1 total-mortality specifications in each window that are negative and significant (WCR p &lt; 0.05), by economic-weakness measure; the shaded band is the preregistered Inconclusive zone (0.40 to 0.60) for the pooled share. Right: the H2 specification curve for drug-poisoning mortality in post-2010 windows, standardised as in F1; orange marks positive and significant (countercyclical) estimates.</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>window</th>
+<th>specifications</th>
+<th>negative and significant: unemployment rate</th>
+<th>−employment/population</th>
+<th>negative (either measure)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1976–1991</td>
+<td>432</td>
+<td>96%</td>
+<td>74%</td>
+<td>97%</td>
+</tr>
+<tr>
+<td>1976–2017</td>
+<td>432</td>
+<td>93%</td>
+<td>44%</td>
+<td>93%</td>
+</tr>
+<tr>
+<td>1976–2019</td>
+<td>288</td>
+<td>97%</td>
+<td>38%</td>
+<td>90%</td>
+</tr>
+<tr>
+<td>1976–2023</td>
+<td>288</td>
+<td>83%</td>
+<td>37%</td>
+<td>92%</td>
+</tr>
+<tr>
+<td>1992–2005</td>
+<td>432</td>
+<td>2%</td>
+<td>1%</td>
+<td>42%</td>
+</tr>
+<tr>
+<td>2006–2017</td>
+<td>432</td>
+<td>23%</td>
+<td>4%</td>
+<td>67%</td>
+</tr>
+</tbody>
+</table></div>
+<h3>The canonical specification by window</h3>
+<p>Log crude rate, unemployment rate, population weights, state and year effects, demographic controls:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>window</th>
+<th>effect of +1 point unemployment</th>
+<th>95% CI (CR1)</th>
+<th>WCR p</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1976–2017</td>
+<td>−0.52%</td>
+<td>−0.92% to −0.13%</td>
+<td>0.018</td>
+</tr>
+<tr>
+<td>1976–1991</td>
+<td>−0.41%</td>
+<td>−0.53% to −0.29%</td>
+<td>&lt; 0.001</td>
+</tr>
+<tr>
+<td>1992–2005</td>
+<td>+0.21%</td>
+<td>−0.18% to +0.60%</td>
+<td>0.30</td>
+</tr>
+<tr>
+<td>2006–2017</td>
+<td>−0.57%</td>
+<td>−0.81% to −0.33%</td>
+<td>&lt; 0.001</td>
+</tr>
+<tr>
+<td>1976–2019</td>
+<td>−0.50%</td>
+<td>−0.90% to −0.10%</td>
+<td>0.025</td>
+</tr>
+<tr>
+<td>1976–2023</td>
+<td>−0.64%</td>
+<td>−1.05% to −0.24%</td>
+<td>0.003</td>
+</tr>
+</tbody>
+</table></div>
+<p>The canonical model finds a significant 2006–2017 effect that only 13% of that window's specifications share. In
+that window the canonical choices (no trends, the unemployment rate, demographic controls) are among the most
+favourable. Part of the low sub-period shares is mechanical: in 2006–2017, 28% of specifications without state
+trends are negative and significant, 12% with linear trends and none with quadratic trends. 228 specifications
+estimate more than 0.3 parameters per observation (post hoc, <code>results/tables/posthoc_review.json</code>).</p>
+<p><strong>Post hoc (after review): the employment-to-population ratio and the population's age.</strong> Long windows, share negative
+and significant:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>measure</th>
+<th>controls</th>
+<th>crude rate</th>
+<th>log age-adjusted</th>
+<th>log crude</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>−employment/population</td>
+<td>none</td>
+<td>18%</td>
+<td>50%</td>
+<td>11%</td>
+</tr>
+<tr>
+<td>−employment/population</td>
+<td>demographic shares</td>
+<td>66%</td>
+<td>53%</td>
+<td>59%</td>
+</tr>
+<tr>
+<td>unemployment rate</td>
+<td>none</td>
+<td>93%</td>
+<td>89%</td>
+<td>91%</td>
+</tr>
+<tr>
+<td>unemployment rate</td>
+<td>demographic shares</td>
+<td>91%</td>
+<td>94%</td>
+<td>91%</td>
+</tr>
+</tbody>
+</table></div>
+<p>The ratio divides employment by the whole population aged 15+, which includes retirees. A state that ages faster
+sees the ratio fall and crude mortality rise with no cyclical content. That pushes the coefficient towards a positive
+value wherever neither age adjustment nor demographic controls absorb ageing.</p>
+<h3>Drug poisoning (H2; F2, right)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>2011–2019</th>
+<th>2011–2023</th>
+<th>1999–2010 (contrast)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>positive and significant</td>
+<td>3.1%</td>
+<td>0.0%</td>
+<td>8.3%</td>
+</tr>
+<tr>
+<td>positive</td>
+<td>67%</td>
+<td>35%</td>
+<td>79%</td>
+</tr>
+<tr>
+<td>negative and significant</td>
+<td>1.4%</td>
+<td>5.6%</td>
+<td>0.0%</td>
+</tr>
+<tr>
+<td>canonical-type estimate, % per point (95% CI)</td>
+<td>+0.04 (−4.2 to +4.3)</td>
+<td>+1.9 (−2.3 to +6.1)</td>
+<td>+5.6 (+2.4 to +8.8)</td>
+</tr>
+</tbody>
+</table></div>
+<p>The canonical-type rows use the log drug rate with the canonical H1 choices (post hoc). The 20 negative and
+significant H2 specifications are all unweighted, and 16 of them use the employment-to-population ratio, so they
+are a corner of the multiverse, not a countervailing pattern.</p>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>The procyclical pattern is real but period- and measure-bound.</strong><ul>
+<li>It is overwhelming in 1976–1991, and in long windows that include those years, when weakness is measured by
+unemployment.</li>
+<li>It mostly disappears for 1992–2005, and is weak and fragile for 2006–2017.</li>
+<li>The employment-to-population ratio gives it less support. Much of the difference comes from ageing in the
+ratio's denominator; with age adjustment or demographic controls the ratio supports the pattern in 53–66% of
+long-window specifications.</li>
+<li>These two choices, not estimator or weighting details, decide the answer.</li>
+</ul>
+</li>
+<li><strong>H2's countercyclical overdose story finds no support in this panel.</strong> After 2010, overdose deaths rose almost
+  everywhere for reasons largely unrelated to the business cycle, and year effects absorb that.<ul>
+<li>The remaining state variation is not detectably related to unemployment. But the intervals, roughly ±4% per
+point, include both zero and the 1999–2010 estimate (+5.6%), so a modest countercyclical effect cannot be
+excluded.</li>
+</ul>
+</li>
+<li><strong>Not shown:</strong><ul>
+<li><strong>Causal identification beyond the standard design.</strong> This is the established state-year fixed-effects design,
+with no new source of exogenous variation.</li>
+<li><strong>Heterogeneity-robust continuous-treatment estimators,</strong> which were not in the multiverse.</li>
+<li><strong>Cause-specific mechanisms</strong>, apart from drug poisoning.</li>
+<li><strong>Data quality after 2017.</strong> 2018–2023 rests on calibrated occurrence-based counts and a provisional 2023 rate.
+Windows ending in 2017 avoid this and give the same picture.<ul>
+<li>DC's occurrence-to-residence ratio drifts by 2.2% a year, so its calibrated 2018–2022 counts may be off by up
+  to about 10%.</li>
+<li>Without the VSRR drug-count calibration, H2's share is 2.3% rather than 1.6% (the review's sensitivity
+  check).</li>
+</ul>
+</li>
+<li><strong>The employment-to-population measure</strong> uses all residents aged 15+, not BLS's civilian non-institutional
+population aged 16+. That builds in the ageing confound above.</li>
+</ul>
+</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration:</strong> <code>plan.md</code>.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>):<ul>
+<li>D1 (before estimation): 2023 from the CDC quarterly rate, because the weekly file ends in September 2023; VSRR
+drug counts calibrated to NCHS;</li>
+<li>D2: the plan's specification count was arithmetically wrong, with no choice changed; and the pyfixest
+cross-check;</li>
+<li><strong>D3 (after review):</strong> an unstated drop of 1977 in first-difference specifications with the cumulative lag in
+1976 windows (240 specifications; LAUS starts in 1976); the post hoc summaries above; documentation fixes.</li>
+</ul>
+</li>
+<li><strong>Independent review:</strong> Fable, "publish with edits" (<code>review/review.md</code>). The edits were made, and the reviewer's
+  confirmation pass found them correct ("publish").</li>
+</ul>
+<h2>Reproducing it</h2>
+<ol>
+<li>Run <code>code/download.sh</code> (raw files), fetch the FRED LAUS series (<code>LAUST{fips}0000000000003A</code> and <code>…005A</code>), and fetch <code>489q-934x</code> from data.cdc.gov.</li>
+<li><code>code/build.py nber</code>, then <code>code/build.py panel</code>.</li>
+<li><code>code/multiverse.py test</code>, then <code>code/multiverse.py run</code>.</li>
+<li><code>code/figures.py</code>.</li>
+</ol>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/health-econ-procyclical-mortality-multiverse/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>
