@@ -21,7 +21,7 @@ clear decline in citation counts before overruling in any era.
   - The pre-share is 0.35 (−1.22 to 0.81), Inconclusive by H1's rule.
 - **A coverage break distorts recent windows (D1, D2; found after the primary result).**
   - CourtListener's district-court citations to the Supreme Court jump from 59,504 pairs in 2018 to 319,779 in 2020.
-    Courts of appeals and state courts stay flat.
+    Courts of appeals stay flat, and state courts roughly flat (14% lower in 2020 than in 2018).
   - Stacks whose windows cross 2019 mix that change into the treated–control contrast.
 - **Post hoc: the break removed at its source.** Keeping all overrulings and dropping district-court citations
   (68 stacks): D(−1) −0.27 (−0.74 to −0.01), D(+5) +0.09 (−0.26 to +0.37). Citations were, if anything, slightly
@@ -31,7 +31,8 @@ clear decline in citation counts before overruling in any era.
     overruling. D(−1) is −1.01 (−1.57 to −0.47).
   - **Overrulings of 1990–2013 (17 stacks):** cited about as often as controls until overruling, D(−1) −0.05 (−0.32
     to +0.14), and clearly less five years after, D(+5) +0.41 (+0.21 to +0.65). H1's precondition holds in this
-    group, and its pre-share of −0.13 (−1.22 to +0.31) would read **Refuted** by H1's rule.
+    group, and its pre-share of −0.13 (−1.22 to +0.31) would read narrowly **Refuted** by H1's rule (upper bound 0.31
+    against the 0.33 bar).
   - **Overrulings of 2014–2024, without district-court citations (13 stacks):** D(−1) +0.10 (−0.72 to +0.29), D(+5)
     +0.51 (+0.11 to +0.68).
 - **Post hoc: windows before the break** (59 overrulings up to 2013): cited 52% more than controls the year before
@@ -91,9 +92,9 @@ This study uses open lower-court citation data, a published list of explicit ove
     142 of its 146 table rows parse; the 4 others are counted.
   - A decision qualifies if it was overruled in 1960–2024, is at least 20 years old at overruling and has at least 50
     lower-court citations before it: 73 decisions. 50 were excluded as too young, 6 for too few citations and 1 for
-    having no CourtListener cluster.
+    not linking: Minturn v. Maynard, cited on the list as 58 U.S. 476 but recorded in CourtListener as 58 U.S. 477.
   - 4 of the 73 are partial overrulings.
-  - **Coverage.** SCDB flags 174 precedent alterations in 1960–2024, and 101 of them (58%) are on the list. Wikipedia
+  - **Coverage.** SCDB flags 174 precedent alterations in 1960–2024, and about 102 of them (59%) are on the list. Wikipedia
     tags its page as incomplete, and the list favours famous overrulings.
 - **Controls.** For each treated decision, 10 never-overruled Supreme Court decisions with an SCDB id (D2) and at
   least 50 prior lower-court citations:
@@ -122,7 +123,7 @@ This study uses open lower-court citation data, a published list of explicit ove
 | post hoc (D2): all years, no district-court citations | 68 | −0.27 (−0.74 to −0.01) | 0.09 (−0.26 to 0.37) | not testable |
 | post hoc (D1): overrulings to 2013, citations to 2018 | 59 | **−0.52 (−0.96 to −0.18)** | 0.03 (−0.37 to 0.37) | not testable |
 | post hoc (D2): overrulings 1960–89, citations to 2018 | 42 | −1.01 (−1.57 to −0.47) | −0.38 (−0.82 to 0.19) | not testable |
-| post hoc (D2): overrulings 1990–2013, citations to 2018 | 17 | −0.05 (−0.32 to 0.14) | 0.41 (0.21 to 0.65) | −0.13 (−1.22 to 0.31): Refuted |
+| post hoc (D2): overrulings 1990–2013, citations to 2018 | 17 | −0.05 (−0.32 to 0.14) | 0.41 (0.21 to 0.65) | −0.13 (−1.22 to 0.31): narrowly Refuted |
 | post hoc (D2): 1990–2013, no district-court citations | 17 | −0.17 (−0.51 to 0.03) | 0.33 (0.15 to 0.57) | −0.51 (−2.09 to 0.10): Refuted |
 | post hoc (D2): 2014–2024, no district-court citations | 13 | 0.10 (−0.72 to 0.29) | 0.51 (0.11 to 0.68) | 0.20 (−2.74 to 0.83): Inconclusive |
 
@@ -158,7 +159,7 @@ This study uses open lower-court citation data, a published list of explicit ove
 
 - **No evidence that lower courts cite precedents less before they are overruled.** The preregistered test cannot
   reach a verdict. No post hoc analysis finds a clear decline before overruling: every interval for D(−1) includes
-  zero or lies below it (more citations than controls). The 1990–2013 overrulings, where the test applies, refute the
+  zero or lies below it (more citations than controls). The 1990–2013 overrulings, where the test applies, narrowly refute the
   one-third bar.
   - This is consistent with Feldman's account, in which erosion happens at the Supreme Court while lower courts
     keep applying the precedent.
@@ -176,7 +177,7 @@ This study uses open lower-court citation data, a published list of explicit ove
 - **Not shown:**
   - **Treatment.** Citations count whether a court follows, distinguishes or criticises a precedent; negative
     treatment is not separated.
-  - **The full population of overrulings.** The list covers 58% of SCDB's alterations and favours famous cases, the
+  - **The full population of overrulings.** The list covers about 59% of SCDB's alterations and favours famous cases, the
     group most likely to be contested.
   - **Recent overrulings at full strength.** Recent overrulings are read only without district-court citations.
   - **Balance for the most famous precedents.** Balance is imperfect for the most-cited precedents, whose near
@@ -194,8 +195,8 @@ This study uses open lower-court citation data, a published list of explicit ove
     and Chevron analyses; unrecorded process facts (the Constitution Annotated attempt, the incomplete list, the
     patched event.py, partial overrulings, and a foreseeable break); and the G1 audit.
   - The first version's tables are in `results/tables/v1_pre_review/`.
-- **Independent review:** Fable, "fix first" (`review/review.md`). This version addresses it; a confirmation pass is
-  queued.
+- **Independent review:** Fable, "fix first" (`review/review.md`). A confirmation pass by the same reviewer found every
+  finding resolved and asked for wording edits only, made in this version ("publish with edits").
 
 ## Reproducing it
 

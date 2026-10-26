@@ -167,3 +167,70 @@ case); call 0.65 an upper bound.
   primary's weak D(+5) of 0.27 against it should have prompted the co-citation and break checks before the write-up;
   it did, informally.
 - **G4, G7:** not applicable (no classifier or labelled sample).
+
+---
+
+# Confirmation pass (D2, commit 4770314) — 2026-10-26
+
+Reviewer: independent (Fable). Script: `review/reviewer_checks/check8_confirm.py` (+ `.out`). I read the D2 diff
+(event.py, overruled.py, secondary.py, posthoc_d2.py, deviations.md, report.md, overclaim_check.md, plausibility.md,
+coverage.json), checked every number in report.md against primary.json, posthoc_pre2019.json, posthoc_d2.json,
+posthoc_d2_yearcut.json, posthoc_d2_per_stack.csv, secondary.json and matching_balance.json, and recomputed the four
+new headline estimates with the revised event.py.
+
+## Verdict: publish with edits
+
+Every finding is resolved and nothing new is wrong with the numbers. The edits below are three wording corrections
+and two hedges; none changes a table.
+
+## Status by finding
+
+1. **Era — resolved.** Era splits are in the title, verdict, results table and plain terms. Recomputed with the
+   revised matching: 1960–89 D(−1) −1.014 (42 stacks), 1990–2013 −0.055 with D(+5) +0.410 (17), 2014–2024 without
+   district courts +0.100 with D(+5) +0.515 (13); all match posthoc_d2.json to three decimals. The "Refuted" reading
+   for 1990–2013 is narrow on the pre-2019 counts (pre-share upper bound 0.31 against the 0.33 bar) and clearer
+   without district courts (0.10); say "narrowly" in report.md:34 or lead with the district-court-free version.
+2. **Coverage-break fix — resolved.** D1 is now described as a sample restriction (yearcut −0.522 vs −0.521, same as
+   my check6 on the old matching), the mechanism is district courts, and the direct fix is reported: 68 stacks,
+   D(−1) −0.274 recomputed exactly. Note the bootstrap interval (−0.74 to −0.01) barely excludes zero and my
+   cluster-robust interval (−0.69 to +0.04) does not; the report's "if anything, slightly higher" (report.md:27–28)
+   is the right register. "Courts of appeals and state courts stay flat" (report.md:24): state pairs fall 13% from
+   2018 to 2020; "roughly flat" is safer.
+3. **Weighting — resolved.** Disclosed in Methods and the verdict; per-stack file, top-five share (49%), leave-out
+   range and Fay v. Noia all match the tables.
+4. **Chevron — resolved.** Paths by court type and the three SMDs (1.28; 1.64; 2.15) are reported, and the reading
+   now separates the 2019 step (coverage) from the gradual appellate decline before Loper Bright. The variants
+   re-match Chevron's controls on the restricted counts rather than holding them fixed; both routes give the same
+   picture (my check7 held controls fixed: 36% vs 35% in 2023 without district courts).
+5. **Coverage and parse — resolved, two wording errors.** The regex now accepts old-reporter cites; coverage.json
+   counts 142 of 146 rows parsed and 4 dropped with reasons, all correct (Humphrey's and FEC v. Colorado have
+   "___" pages, Wales v. Whitney has no cite, Brown is written "347 US 483"). Kentucky v. Dennison and The Schooner
+   Catherine enter the treated set; Low v. Austin and Pace v. Alabama fail the 50-citation bar. SCDB coverage: 91
+   matched by cite plus 10 of the 13 blank-usCite terms matched by name = 101 (58%), as reported; Rucho and Shinn are
+   correctly not on the list; Trump v. Hawaii is on the list (it overruled Korematsu) but the SCDB name
+   "TRUMP, PRESIDENT OF U.S. v. HAWAII" defeats the first-party match, so the true figure is 102 (59%). Minor.
+   - **Fix (deviations.md D2, report.md:93–94):** the decision with no link is Minturn v. Maynard (58 U.S. 476),
+     not The Schooner Catherine (58 U.S. 170, which is linked and in the sample, overruled 1975). And Minturn does
+     have a CourtListener cluster (86949, 61 lower-court citations): the link failed because CourtListener records
+     its U.S. cite as 58 U.S. 477. Say "one whose U.S. cite differs by a page in CourtListener", or add it by hand.
+6. **Controls — resolved and verified.** All 730 control slots in stacks.json have an SCDB id and the treated case's
+   issue area. The pipeline after counting was re-run (file times: event.py 09:15, primary.json 09:28, secondary.json
+   09:41, posthoc_d2_variants.json 09:59, posthoc_d2.json 10:00; no stale cache). Primary D(+5) +0.29 (−0.05 to
+   +0.51), still not testable; the pre-2019 D(−1) −0.52 matches my SCDB-only re-run from the first review (−0.52).
+7. **G5 re-labels — resolved.** The seven sentences are rewritten; the regenerated check (48 rows) passes and its
+   labels are fair. The verdict sentence now claims no decline in citation counts, and the plain terms say counts
+   cannot show continued reliance.
+8. **Balance — resolved.** Mean 0.25, median 0.12, 30 of 73 above 0.5, 9 above 1, matching matching_balance.json.
+9. **Process — resolved.** D2 records the patched event.py, the foreseeable break, the four partial overrulings, the
+   plan/code mismatch (now fixed), the Constitution Annotated attempt and the incomplete-list tag.
+
+## Gates
+- **G5** passes (48 rows) and is honest. **G6** passes (10 claims); the ledger is unchanged and my earlier spot
+  checks stand (the lab paraphrased the two essay phrases in my first-pass paragraph; nothing in substance changed).
+- **G1** audit is in D2 and is complete for this design. **G2** coverage.json covers the list parse; the other
+  per-unit stages (cluster linking: 1 unlinked, 7 multi-cluster) remain in overruled_coverage.json, which is
+  adequate. **G3** plausibility.md traces three units and states invariants that hold (I verified the control
+  invariant directly). **G4, G7** not applicable.
+
+## New issues found
+None affecting a number. The two wording errors in finding 5 and the two hedges in findings 1 and 2 are the edits.

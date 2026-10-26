@@ -5119,7 +5119,12 @@
    "scout_value_score": 5,
    "scout_cost_score": 3,
    "plain_summary": "When the Supreme Court overrules one of its old decisions, was that decision already fading, or did the overruling itself kill it? This study tracks how often lower courts cited every overruled Supreme Court case in the years before and after, compared with similar cases that were never overruled, to test the recent claim that precedents 'die before they are overruled'.",
-   "scout_round": 2
+   "scout_round": 2,
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass)",
+   "report_url": "runs/legal-digital-humanities-precedent-erosion-before-overruling/report.html",
+   "verdict_tag": "Inconclusive",
+   "verdict_note": "H1 not testable: 73 US Supreme Court decisions overruled 1960-2024, each against 10 matched never-overruled SCDB decisions, stacked PPML on 10.6M CourtListener lower-court citation pairs; the five-year post-overruling decline (29%, -5% to +51%) is not detectable, so the preregistered pre-share is undefined. Post hoc: no clear decline in citation counts before overruling in any era. Without district-court citations (a 2019 CourtListener coverage break), D(-1) -0.27 (-0.74 to -0.01); overrulings of 1960-89 were cited about twice as often as controls the year before (D(-1) -1.01); those of 1990-2013 about as often (D(-1) -0.05), then less after (D(+5) +0.41), a narrowly Refuted pre-share by H1's rule. Estimates are citation-weighted (top five stacks 49%); Fay v. Noia and Chevron (after 2021) show declines. Review fix first (era split, district-court break, controls restricted to SCDB decisions as planned, parse fix) then confirmation publish with edits.",
+   "headline": "Lower courts did not cite US Supreme Court precedents less before they were overruled: the preregistered test could not reach a verdict, and post hoc the 1960-89 overrulings were cited more in the run-up, those since 1990 about as often."
   },
   {
    "id": "quantum-simulation-peaked-98q-classical-crack",

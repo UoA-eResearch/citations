@@ -52,13 +52,15 @@ The first version's tables are kept in `results/tables/v1_pre_review/`.
 - **Old-reporter cites.** `overruled.py`'s U.S.-cite pattern missed parentheticals such as "80 U.S. (13 Wall.) 29".
   It now accepts them.
   - The list grows from 132 to 141 pairs. Low v. Austin, Kentucky v. Dennison, Pace v. Alabama and Minturn v. Maynard
-    enter the 1960–2024 range. The Schooner Catherine (58 U.S. 476) has no CourtListener cluster.
+    enter the 1960–2024 range. Minturn v. Maynard does not link: the list cites it as 58 U.S. 476, CourtListener
+    as 58 U.S. 477 (corrected at confirmation; an earlier draft named The Schooner Catherine).
   - The treated count is 73 (was 71).
   - Every table row is now counted (G2, `results/tables/coverage.json`): 142 of 146 parsed, 4 dropped with
     reasons.
 - **Coverage of the list.** SCDB leaves usCite blank for the 2016–2021 terms, so 13 recent alterations had been
   counted as missing. Matched by first-party name and year, 101 of SCDB's 174 alterations in 1960–2024 are on the
-  list (58%), not "about half".
+  list (58%), not "about half". The confirmation pass found one more by hand (Trump v. Hawaii,
+  missed by the name match): about 102 (59%).
 - **Unrecorded process facts:**
   - the Constitution Annotated table was attempted first, and `data/raw/conan_overruled.html` is a Cloudflare
     challenge page;
@@ -83,12 +85,12 @@ The first version's tables are kept in `results/tables/v1_pre_review/`.
   `yearcut()` step of posthoc_d2.py, run on its own). The difference from the primary comes from dropping the
   overrulings after 2013.
   - The break is in district-court citations only: 59,504 pairs in 2018 against 319,779 in 2020, with courts of
-    appeals and state courts flat (F2). D1 had said "federal".
+    appeals flat and state courts roughly flat, 14% lower in 2020 (F2). D1 had said "federal".
   - The direct fix keeps every stack and drops district-court citers: D(−1) −0.27 (−0.74 to −0.01), D(+5) +0.09
     (−0.26 to +0.37), 68 stacks.
 - **Era.** The rise before overruling belongs to the 1960–89 overrulings: D(−1) −1.01 (−1.57 to −0.47), 42 stacks.
   - For 1990–2013 (17 stacks), D(−1) is −0.05 (−0.32 to +0.14) and D(+5) is +0.41 (+0.21 to +0.65). H1's
-    precondition holds there, and the pre-share −0.13 (−1.22 to +0.31) is Refuted by H1's rule.
+    precondition holds there, and the pre-share −0.13 (−1.22 to +0.31) is narrowly Refuted by H1's rule (upper bound 0.31 against 0.33).
   - Without district-court citers: 1960–89 gives −1.05; 1990–2013 gives −0.17 (−0.51 to +0.03), with D(+5) +0.33;
     2014–2024 (13 stacks) gives +0.10, with D(+5) +0.51 (+0.11 to +0.68).
 - **Weighting.** Stacked PPML weights stacks by citation volume. In the pre-2019 sample, the five most-cited stacks
