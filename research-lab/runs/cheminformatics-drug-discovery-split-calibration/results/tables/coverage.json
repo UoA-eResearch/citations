@@ -1,0 +1,51 @@
+{
+ "activities_33": {
+  "attempted": 20334684,
+  "ok": 973255,
+  "fallback": 0,
+  "dropped": 19361429,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "no compound structure (biologics etc.)": 216066,
+   "fails: pChEMBL present": 16088095,
+   "fails: standard_relation '='": 196,
+   "fails: assay type B": 2371280,
+   "fails: confidence score 9": 629737,
+   "fails: target type SINGLE PROTEIN": 0,
+   "fails: data_validity_comment null": 2056,
+   "fails: potential_duplicate 0": 53999
+  }
+ },
+ "activities_37": {
+  "attempted": 24527044,
+  "ok": 1357779,
+  "fallback": 0,
+  "dropped": 23169265,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "no compound structure (biologics etc.)": 226535,
+   "fails: pChEMBL present": 19340920,
+   "fails: standard_relation '='": 0,
+   "fails: assay type B": 2521594,
+   "fails: confidence score 9": 907315,
+   "fails: target type SINGLE PROTEIN": 0,
+   "fails: data_validity_comment null": 332,
+   "fails: potential_duplicate 0": 172569
+  }
+ },
+ "targets": {
+  "attempted": 5013,
+  "ok": 250,
+  "fallback": 0,
+  "dropped": 4763,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "fewer than 100 compounds in ChEMBL 33": 3935,
+   "fewer than 50 primary prospective compounds": 783,
+   "eligible but not in the random 250": 45
+  }
+ }
+}
