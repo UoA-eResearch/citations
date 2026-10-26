@@ -1,0 +1,38 @@
+[
+ {
+  "tid": "CI.DRE.",
+  "trigger": "us6000r2xq",
+  "mag": 7.5,
+  "dist_km": 11442.2,
+  "trace_n_post": 0,
+  "table_n_post": 0,
+  "trace_n_base": 10,
+  "table_n_base": 10,
+  "neighbours_within_50km": 199,
+  "note": "trace omits teleseismic masking, so table counts are usually equal or slightly lower"
+ },
+ {
+  "tid": "NC.JBG.",
+  "trigger": "usp000hrw0",
+  "mag": 7.3,
+  "dist_km": 9656.9,
+  "trace_n_post": 0,
+  "table_n_post": 0,
+  "trace_n_base": 1,
+  "table_n_base": 1,
+  "neighbours_within_50km": 925,
+  "note": "trace omits teleseismic masking, so table counts are usually equal or slightly lower"
+ },
+ {
+  "tid": "NC.KHMB.",
+  "trigger": "usp000dhc1",
+  "mag": 7.1,
+  "dist_km": 11853.3,
+  "trace_n_post": 0,
+  "table_n_post": 0,
+  "trace_n_base": 1,
+  "table_n_base": 1,
+  "neighbours_within_50km": 73,
+  "note": "trace omits teleseismic masking, so table counts are usually equal or slightly lower"
+ }
+]

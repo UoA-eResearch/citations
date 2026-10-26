@@ -8,6 +8,8 @@ VARIANT: primary | base24h (24 h baseline) | post6h (post window from the wave t
 POST HOC (D1, after the primary result): exposure | exposure_post6h — window lengths in beta's f use effective
 exposure: each window minus the union of the +-60 s masks around predicted teleseismic P arrivals (ComCat M >= 4.5
 more than 1,000 km away) that the proxy removed, for real and pseudo triggers alike.
+EXPLORATORY (plan section 6): instant — the post window is the hours spanned by the surface-wave train itself
+(origin + D/4.5 km/s to origin + D/2.5 km/s), against the same 7-day baseline.
 """
 import sys
 import zlib
@@ -42,7 +44,7 @@ def strain(mw, dist_km):
 
 
 def load(variant):
-    pdir = D / ("proxy" if variant in ("primary", "base24h", "post6h", "exposure", "exposure_post6h") else f"proxy_{variant}")
+    pdir = D / ("proxy" if variant in ("primary", "base24h", "post6h", "exposure", "exposure_post6h", "instant") else f"proxy_{variant}")
     hrs = pd.concat([pd.read_parquet(f) for f in sorted(pdir.glob("????-??.parquet"))], ignore_index=True)
     nbr = pd.concat([pd.read_parquet(f).assign(month=f.stem[4:]) for f in sorted(pdir.glob("nbr_*.parquet"))])
     st = pd.read_parquet(D / "raw" / "stations.parquet", columns=["id", "latitude", "longitude", "state"])
@@ -92,6 +94,9 @@ def test(tid, origin_ms, dist_km, lat, lon):
     wave_end = origin_ms + dist_km / 2.5 * 1000
     post0 = int(np.ceil((wave_end + (6 if v in ("post6h", "exposure_post6h") else 2) * H) / H))
     post1 = post0 + 24
+    if v == "instant":
+        post0 = int((origin_ms + dist_km / 4.5 * 1000) // H)
+        post1 = int(np.ceil(wave_end / H))
     base1 = int(origin_ms // H)
     base0 = base1 - (24 if v == "base24h" else 168)
     days = set(range(base0 // 24, (post1 - 1) // 24 + 1))

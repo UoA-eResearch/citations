@@ -1,0 +1,23 @@
+{
+ "events_on_days": 9295,
+ "events_within_30km": 7897,
+ "recall": 0.4575,
+ "by_magnitude": {
+  "1.0-1.5": {
+   "events": 4641,
+   "recall": 0.4508
+  },
+  "1.5-2.0": {
+   "events": 2112,
+   "recall": 0.4612
+  },
+  "2.0-3.0": {
+   "events": 1039,
+   "recall": 0.4735
+  },
+  ">=3.0": {
+   "events": 105,
+   "recall": 0.5238
+  }
+ }
+}

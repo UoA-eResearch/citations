@@ -1,3 +1,5 @@
 venv/
 __pycache__/
 data/
+results/tables/pairs_*.parquet
+results/tables/null_*.parquet

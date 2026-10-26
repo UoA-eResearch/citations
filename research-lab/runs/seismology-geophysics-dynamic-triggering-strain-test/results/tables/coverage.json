@@ -1,0 +1,147 @@
+{
+ "picks_fetch": {
+  "attempted": 2088914320,
+  "ok": 531327099,
+  "fallback": 0,
+  "dropped": 1557587221,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "confidence < 0.5 or outside 2002-2025": 1538724761,
+   "exact duplicate (tid, cha, pha, peak)": 18862460
+  }
+ },
+ "picks_proxy": {
+  "attempted": 531327092,
+  "ok": 515102630,
+  "fallback": 0,
+  "dropped": 16224462,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "station not in stations.parquet": 0,
+   "merged with a same-phase pick within 0.5 s at the station": 18069,
+   "within 60 s of a predicted teleseismic P arrival": 16206393
+  }
+ },
+ "pairs_primary": {
+  "attempted": 3276936,
+  "ok": 228963,
+  "fallback": 0,
+  "dropped": 3047973,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "a station-day in the windows not loaded": 2754364,
+   "station has fewer than 100 valid pseudo-triggers": 79969,
+   "no local-event pair in the 30 days before the baseline": 136831,
+   "local M>=3.5 within 100 km in the baseline": 27043,
+   "fewer than 2 neighbours within 50 km with picks": 49766
+  }
+ },
+ "pairs_base24h": {
+  "attempted": 3276936,
+  "ok": 259911,
+  "fallback": 0,
+  "dropped": 3017025,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "a station-day in the windows not loaded": 2736854,
+   "station has fewer than 100 valid pseudo-triggers": 80975,
+   "no local-event pair in the 30 days before the baseline": 142082,
+   "fewer than 2 neighbours within 50 km with picks": 51672,
+   "local M>=3.5 within 100 km in the baseline": 5442
+  }
+ },
+ "pairs_exposure": {
+  "attempted": 3276936,
+  "ok": 228963,
+  "fallback": 0,
+  "dropped": 3047973,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "a station-day in the windows not loaded": 2754364,
+   "station has fewer than 100 valid pseudo-triggers": 79969,
+   "no local-event pair in the 30 days before the baseline": 136831,
+   "local M>=3.5 within 100 km in the baseline": 27043,
+   "fewer than 2 neighbours within 50 km with picks": 49766
+  }
+ },
+ "pairs_post6h": {
+  "attempted": 3276936,
+  "ok": 228587,
+  "fallback": 0,
+  "dropped": 3048349,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "a station-day in the windows not loaded": 2754809,
+   "station has fewer than 100 valid pseudo-triggers": 80094,
+   "no local-event pair in the 30 days before the baseline": 136702,
+   "local M>=3.5 within 100 km in the baseline": 27027,
+   "fewer than 2 neighbours within 50 km with picks": 49717
+  }
+ },
+ "pairs_exposure_post6h": {
+  "attempted": 3276936,
+  "ok": 228587,
+  "fallback": 0,
+  "dropped": 3048349,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "a station-day in the windows not loaded": 2754809,
+   "station has fewer than 100 valid pseudo-triggers": 80094,
+   "no local-event pair in the 30 days before the baseline": 136702,
+   "local M>=3.5 within 100 km in the baseline": 27027,
+   "fewer than 2 neighbours within 50 km with picks": 49717
+  }
+ },
+ "pairs_sp5": {
+  "attempted": 3117933,
+  "ok": 190681,
+  "fallback": 0,
+  "dropped": 2927252,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "a station-day in the windows not loaded": 2595431,
+   "station has fewer than 100 valid pseudo-triggers": 72218,
+   "no local-event pair in the 30 days before the baseline": 184912,
+   "local M>=3.5 within 100 km in the baseline": 24960,
+   "fewer than 2 neighbours within 50 km with picks": 49731
+  }
+ },
+ "pairs_conf07": {
+  "attempted": 2728674,
+  "ok": 165171,
+  "fallback": 0,
+  "dropped": 2563503,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "a station-day in the windows not loaded": 2209526,
+   "station has fewer than 100 valid pseudo-triggers": 71302,
+   "no local-event pair in the 30 days before the baseline": 205538,
+   "local M>=3.5 within 100 km in the baseline": 22382,
+   "fewer than 2 neighbours within 50 km with picks": 54755
+  }
+ },
+ "pairs_instant": {
+  "attempted": 3276936,
+  "ok": 230199,
+  "fallback": 0,
+  "dropped": 3046737,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "a station-day in the windows not loaded": 2751822,
+   "station has fewer than 100 valid pseudo-triggers": 80092,
+   "no local-event pair in the 30 days before the baseline": 137636,
+   "local M>=3.5 within 100 km in the baseline": 27172,
+   "fewer than 2 neighbours within 50 km with picks": 50015
+  }
+ }
+}
