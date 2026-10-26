@@ -1,7 +1,7 @@
 """Parallel, resumable download of the needed Census source H5ADs (D1: this host gets ~120 KB/s per S3 connection,
 scaling with connections, while TileDB's sparse reader stays near one connection).
 
-  fetch_h5ad.py [THREADS] [MAX_PENDING]
+  fetch_h5ad.py [THREADS] [MAX_PENDING] [FILES]
     -> data/h5ad/<dataset_id>.h5ad, then data/h5ad/<dataset_id>.complete once every byte has arrived (size checked).
        pb_h5ad.py consumes complete files and deletes them; at most MAX_PENDING complete-but-unprocessed files wait.
 """
@@ -71,16 +71,24 @@ def fetch(ds, size, pool):
     print(time.strftime("%H:%M:%S"), "complete", ds, round(size / 1e9, 2), "GB", f"{size / (time.time() - t0) / 1e6:.1f} MB/s", flush=True)
 
 
-def main(threads=384, max_pending=2):
+def main(threads=384, max_pending=2, files=4):
+    """Up to `files` H5ADs download at once over one shared pool of range-request threads (a small file alone
+    cannot keep the pool busy)."""
     H5.mkdir(parents=True, exist_ok=True)
     sz = pd.read_csv(META / "h5ad_sizes.csv").sort_values("bytes")
-    with ThreadPoolExecutor(threads) as pool:
-        for ds, size in zip(sz.dataset_id, sz.bytes):
+    gate = threading.Lock()
+
+    def job(ds, size):
+        with gate:                      # admit a new file only while few complete files await processing
             while len(list(H5.glob("*.complete"))) >= max_pending:
                 time.sleep(20)
-            fetch(ds, int(size), pool)
+        fetch(ds, int(size), pool)
+
+    with ThreadPoolExecutor(threads) as pool, ThreadPoolExecutor(files) as outer:
+        for f in [outer.submit(job, d, s) for d, s in zip(sz.dataset_id, sz.bytes)]:
+            f.result()
     print("== done", flush=True)
 
 
 if __name__ == "__main__":
-    main(*(int(a) for a in sys.argv[1:3]))
+    main(*(int(a) for a in sys.argv[1:4]))

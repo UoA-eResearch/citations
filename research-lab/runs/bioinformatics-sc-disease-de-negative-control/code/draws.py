@@ -96,7 +96,7 @@ def write_job(jd, X, donors, draws, gene_ids):
     Xd = X[:, nz].toarray().astype(np.float32)          # donors x genes = column-major genes x donors
     Xd.tofile(jd / "counts.f32")
     pd.DataFrame({"ngenes": [int(nz.sum())], "ndonors": [Xd.shape[0]]}).to_csv(jd / "meta.csv", index=False)
-    donors[["donor_id", "sex", "bin", "n_cells"]].to_csv(jd / "donors.csv", index=False)
+    donors[["donor_id", "sex", "bin", "n_cells", "assay", "suspension_type"]].to_csv(jd / "donors.csv", index=False)
     pd.DataFrame(draws).to_csv(jd / "draws.csv", index=False)
     np.savetxt(jd / "genes.txt", gene_ids[nz], fmt="%d")
 
@@ -124,7 +124,7 @@ def build():
             nD, nH = len(D), len(H)
             pos = {r: i for i, r in enumerate(donors["index"])}
             Di, Hi = [pos[r] for r in D.index], [pos[r] for r in H.index]
-            draws = [{"id": 0, "kind": "full", "a": ";".join(map(str, Di)), "b": ";".join(map(str, Hi))}]
+            draws = [{"id": 0, "kind": "full", "a": ";".join(map(str, Di)), "b": ";".join(map(str, Hi)), "save": 1}]
             fb = {"nearest_bin": 0, "same_sex_any_bin": 0, "any_donor": 0}
             m = min(nD, nH // 2)
             if c.primary and m >= 8:
@@ -133,7 +133,7 @@ def build():
                 for r in range(R_REAL):
                     rng = np.random.default_rng([SEED, ci, r])
                     a, b = rng.choice(Di, m, replace=False), rng.choice(Hi, m, replace=False)
-                    draws.append({"id": 1 + r, "kind": "real", "a": ";".join(map(str, a)), "b": ";".join(map(str, b))})
+                    draws.append({"id": 1 + r, "kind": "real", "a": ";".join(map(str, a)), "b": ";".join(map(str, b)), "save": 0})
                     comp.append((donors.loc[a].groupby(["sex", "bin"]).size(), donors.loc[b].groupby(["sex", "bin"]).size()))
                 Hpool = donors.loc[Hi, ["sex", "bin"]]
                 for bdraw in range(B_NULL):
@@ -141,7 +141,8 @@ def build():
                     ta, tb = comp[bdraw % R_REAL]
                     P = match_draw(Hpool, ta, rng, fb)
                     Q = match_draw(Hpool.drop(P), tb, rng, fb)
-                    draws.append({"id": 1 + R_REAL + bdraw, "kind": "null", "a": ";".join(map(str, P)), "b": ";".join(map(str, Q))})
+                    draws.append({"id": 1 + R_REAL + bdraw, "kind": "null", "a": ";".join(map(str, P)), "b": ";".join(map(str, Q)),
+                                  "save": int(bdraw < 20)})        # t vectors kept for the null-replication baseline
             write_job(JOBS / c.contrast, X[donors["index"].to_numpy()], donors, draws, gene_ids)
             fbrows.append({"contrast": c.contrast, "m": m, **fb, "null_donor_slots": 2 * m * B_NULL if c.primary and m >= 8 else 0})
             idx.append({**c._asdict(), "n_disease_elig": nD, "n_normal_elig": nH, "m": m,

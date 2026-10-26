@@ -3,7 +3,7 @@
 #   counts.f32 (genes x donors, float32, column-major), meta.csv (ngenes, ndonors), donors.csv (sex),
 #   draws.csv (id, kind, a, b: 0-based donor indices joined by ';'; a is the disease or pseudo-disease group)
 # writes stats.csv (one row per draw: id, kind, ok, genes, pi1, n_de, mean_abs_lfc_top100, top100, sex_used, error)
-# and, for kind == "full", t_<id>.f32 (moderated t of the kept genes) with kept_<id>.txt (0-based gene rows).
+# and, for kind == "full" or save == 1, t_<id>.f32 (moderated t of the kept genes) with kept_<id>.txt (0-based gene rows).
 suppressPackageStartupMessages({ library(edgeR); library(limma) })
 args <- commandArgs(trailingOnly = TRUE)
 for (jd in readLines(args[1])) {
@@ -38,7 +38,7 @@ for (jd in readLines(args[1])) {
       p <- fit$p.value[, 2]
       pi1 <- 1 - min(1, mean(p > 0.5) / 0.5)
       o <- order(p)[seq_len(min(100, length(p)))]
-      if (draws$kind[i] == "full") {
+      if (draws$kind[i] == "full" || ("save" %in% names(draws) && draws$save[i] == 1)) {
         tc <- file(file.path(jd, paste0("t_", draws$id[i], ".f32")), "wb")
         writeBin(as.numeric(fit$t[, 2]), tc, size = 4)
         close(tc)
