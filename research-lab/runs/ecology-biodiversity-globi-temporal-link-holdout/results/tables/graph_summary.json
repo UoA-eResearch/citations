@@ -1,0 +1,36 @@
+{
+ "v0.6": {
+  "trophic": {
+   "edges": 427844,
+   "sources": 38084,
+   "targets": 39754
+  },
+  "pollination": {
+   "edges": 78918,
+   "sources": 8359,
+   "targets": 8283
+  },
+  "host": {
+   "edges": 356050,
+   "sources": 104480,
+   "targets": 63180
+  }
+ },
+ "v0.11": {
+  "trophic": {
+   "edges": 1142904,
+   "sources": 43528,
+   "targets": 58681
+  },
+  "pollination": {
+   "edges": 245426,
+   "sources": 15444,
+   "targets": 14088
+  },
+  "host": {
+   "edges": 614252,
+   "sources": 161174,
+   "targets": 89789
+  }
+ }
+}

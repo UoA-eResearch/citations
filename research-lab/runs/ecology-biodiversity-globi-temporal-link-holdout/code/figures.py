@@ -53,22 +53,25 @@ def f1(p):
 
 def f2(p):
     rows = [("all temporal", p["auroc"]["temporal"])] + [(k.replace("_", " "), v) for k, v in p["temporal_subsets"].items()] + \
-           [("degree-matched negatives", p["degree_matched"]["temporal"])]
-    fig, ax = plt.subplots(figsize=(7.4, 3.4))
-    fig.subplots_adjust(left=0.08, right=0.98, bottom=0.2, top=0.84)
+           [("without trophiCH", p["without_trophiCH"]["auroc"]), ("degree-matched\nnegatives (D1)", p["degree_matched"]["temporal"])]
+    fig, ax = plt.subplots(figsize=(8.2, 3.8))
+    fig.subplots_adjust(left=0.08, right=0.98, bottom=0.25, top=0.83)
     x = np.arange(len(rows))
     for k, (key, lab, col) in enumerate(PRED):
         ax.bar(x + (k - 1) * 0.26, [r[1][key] for r in rows], width=0.24, color=col, label=lab)
     ax.set_xticks(x); ax.set_xticklabels([r[0] for r in rows], fontsize=8)
-    ax.set_ylim(0.5, 1.0); ax.set_ylabel("AUROC, temporal holdout"); ax.grid(axis="y", color=GRID, lw=0.5)
-    ax.legend(frameon=False, fontsize=7.5, loc="lower left")
-    fig.suptitle("The edge holds for new datasets and newly studied species, and grows when degree is matched", x=0.02,
-                 ha="left", fontsize=10, color=INK)
+    ax.set_ylim(0.45, 1.0); ax.set_ylabel("AUROC, temporal holdout"); ax.grid(axis="y", color=GRID, lw=0.5)
+    ax.legend(frameon=False, fontsize=7.5, loc="upper center", bbox_to_anchor=(0.5, -0.17), ncol=3)
+    fig.suptitle("The edge holds for new datasets, newly studied species and without trophiCH;\n"
+                 "with degree-matched negatives effort falls to chance", x=0.02, ha="left", fontsize=9.5, color=INK)
     fig.savefig(F / "F2_subsets.png", dpi=170); plt.close(fig)
     s = p["temporal_subsets"]
     caption("F2_subsets", f"""Temporal holdout. New dataset: positives whose introducing source dataset was not in v0.6
     ({s['new_dataset']['pos']:,} of {p['n']['temporal']['pos']:,}). Cold start: an endpoint with a single v0.6 link
-    ({s['cold_start']['pos']:,}). Degree-matched: negatives drawn to match the positives' distribution of log degree product.""")
+    ({s['cold_start']['pos']:,}). Without trophiCH: positives from the Swiss metaweb removed
+    ({p['without_trophiCH']['trophiCH_positives']:,}; most of its species-level links are inferred). Degree-matched (D1):
+    negatives drawn without replacement so every decile of the positives' log degree product holds ten negatives per
+    positive.""")
 
 
 if __name__ == "__main__":

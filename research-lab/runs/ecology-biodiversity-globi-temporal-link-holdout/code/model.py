@@ -1,7 +1,12 @@
 """Evaluation sets, predictors and H1 (plan sections 2-4).
 
   model.py [PAST]     PAST = 0.6 (default; primary) or 0.8 (secondary 4: rolling origin v0.8 -> v0.11)
-  -> results/tables/primary.json (or secondary_origin_v0.8.json), per_class.csv, eval_sets_summary.json
+  -> results/tables/primary.json (or secondary_origin_v0.8.json), per_class.csv, eval_sets_summary.json,
+     per_dataset.csv, graph_summary.json
+
+D1 (after review): the degree-matched sampler fills every positive decile without replacement (uniform and
+degree-proportional candidates, accepted by decile until full) and reports the achieved shares; robustness without
+trophiCH (whose species-level links are mostly inferred by taxonomic expansion); per-dataset advantage table.
 """
 import json
 import sys
@@ -21,6 +26,8 @@ INT = RUN / "data" / "interim"
 T = RUN / "results" / "tables"
 SEED, B, NEG, RANK = 20261024, 1000, 10, 32
 CLASSES = ("trophic", "pollination", "host")
+TROPHICH = "globalbioticinteractions/trophiCH"
+MATCH_REPORT = []
 
 
 def load(v):
@@ -41,20 +48,38 @@ def sample_negatives(rng, srcs, tgts, n, forbid, match_to=None, deg=None):
                     if len(out) >= n:
                         break
         return list(out)
-    # degree-matched: sample many uniform candidates, then match the positives' decile distribution
-    cand = sample_negatives(rng, srcs, tgts, 20 * n, forbid)
+    # degree-matched (D1): fill each positive decile of log(deg_s * deg_t) without replacement, from uniform and
+    # degree-proportional candidate draws, until every decile holds NEG x its positives
     lp = np.log1p([deg[0].get(s, 0) * deg[1].get(t, 0) for s, t in match_to])
-    lc = np.log1p([deg[0].get(s, 0) * deg[1].get(t, 0) for s, t in cand])
     edges = np.quantile(lp, np.linspace(0, 1, 11))
-    bp, bc = np.clip(np.searchsorted(edges, lp, side="right") - 1, 0, 9), np.clip(np.searchsorted(edges, lc, side="right") - 1, 0, 9)
-    res = []
-    for b in range(10):
-        need = int((bp == b).sum()) * NEG
-        pool = [c for c, bb in zip(cand, bc) if bb == b]
-        if pool:
-            idx = rng.choice(len(pool), min(len(pool), need), replace=len(pool) < need)
-            res += [pool[i] for i in idx]
-    return res
+    bp = np.clip(np.searchsorted(edges, lp, side="right") - 1, 0, 9)
+    need = {b: int((bp == b).sum()) * NEG for b in range(10)}
+    got = {b: set() for b in range(10)}
+    ws = np.array([deg[0].get(x, 0) for x in srcs], float); ws /= ws.sum()
+    wt = np.array([deg[1].get(x, 0) for x in tgts], float); wt /= wt.sum()
+    stall = 0
+    for _ in range(3000):
+        if all(len(got[b]) >= need[b] for b in range(10)):
+            break
+        before = sum(len(v) for v in got.values())
+        k = 100_000
+        si = np.r_[rng.integers(0, len(srcs), k), rng.choice(len(srcs), k, p=ws)]
+        ti = np.r_[rng.integers(0, len(tgts), k), rng.choice(len(tgts), k, p=wt)]
+        ss, tt = srcs[si], tgts[ti]
+        lc = np.log1p([deg[0].get(a, 0) * deg[1].get(b, 0) for a, b in zip(ss, tt)])
+        bc = np.clip(np.searchsorted(edges, lc, side="right") - 1, 0, 9)
+        for a, b2, d in zip(ss, tt, bc):
+            if len(got[d]) < need[d] and (a, b2) not in forbid:
+                got[d].add((a, b2))
+        stall = stall + 1 if sum(len(v) for v in got.values()) == before else 0
+        if stall >= 20:                                # a decile has fewer eligible pairs than needed: report it
+            break
+    MATCH_REPORT.append({"needed": int(sum(need.values())), "got": int(sum(len(v) for v in got.values())),
+                         "decile_fill": [round(len(got[b]) / max(1, need[b]), 4) for b in range(10)],
+                         "decile_share_negatives": [round(len(got[b]) / max(1, sum(len(v) for v in got.values())), 4) for b in range(10)],
+                         "mean_log_deg_pos": round(float(lp.mean()), 3),
+                         "mean_log_deg_neg": round(float(np.mean(np.log1p([deg[0].get(a, 0) * deg[1].get(b, 0) for b_ in got.values() for a, b in b_]))), 3)})
+    return [p for b in range(10) for p in got[b]]
 
 
 class Features:
@@ -266,13 +291,47 @@ def main(past="0.6"):
             sub[lab] = {"pos": int((flag & (temp["y"] == 1)).sum()),
                         **{k: round(pooled_auc(temp, k, keep=keep), 4) for k in ("effort", "rdpg", "taxgb")}}
     out["temporal_subsets"] = sub
+    # D1 robustness: without trophiCH positives (inferred links), with the same paired bootstrap
+    keep = (temp["y"] == 0) | (temp["cluster"].astype(str) != TROPHICH)
+    at_n = pooled_auc(temp, best, keep=keep) - pooled_auc(temp, "effort", keep=keep)
+    bs2, rng3 = [], np.random.default_rng(SEED + 3)
+    for _ in range(B):
+        wr, wt = boot_weights(rand, rng3), boot_weights(temp, rng3)
+        ar = pooled_auc(rand, best, wr) - pooled_auc(rand, "effort", wr)
+        at = pooled_auc(temp, best, wt, keep=keep) - pooled_auc(temp, "effort", wt, keep=keep)
+        bs2.append((at, at / ar if ar else np.nan))
+    bs2 = np.array(bs2)
+    tpos = temp["y"] == 1
+    out["without_trophiCH"] = {"positives": int((keep & tpos).sum()), "trophiCH_positives": int((~keep).sum()),
+                               "A_temporal": round(float(at_n), 4), "A_temporal_ci": q(bs2[:, 0]),
+                               "rho": round(float(at_n / A["random"]), 4), "rho_ci": q(bs2[:, 1]),
+                               "auroc": {k: round(pooled_auc(temp, k, keep=keep), 4) for k in ("effort", "rdpg", "taxgb")}}
+    clus = pd.Series(temp["cluster"][tpos].astype(str))
+    out["temporal_clusters"] = {"clusters": int(clus.nunique()), "largest": clus.value_counts().index[0],
+                                "largest_share": round(float(clus.value_counts(normalize=True).iloc[0]), 4),
+                                "top3_share": round(float(clus.value_counts(normalize=True).iloc[:3].sum()), 4)}
+    pdrows = []
+    for ns, cnt in clus.value_counts().items():
+        if cnt < 1000:
+            break
+        kk = (temp["y"] == 0) | (temp["cluster"].astype(str) == ns)
+        e_, t_ = pooled_auc(temp, "effort", keep=kk), pooled_auc(temp, best, keep=kk)
+        pdrows.append({"dataset": ns, "positives": int(cnt), "effort": round(e_, 4), best: round(t_, 4), "A": round(t_ - e_, 4)})
+    pd.DataFrame(pdrows).to_csv(T / "per_dataset.csv", index=False)
     name = "primary.json" if past == "0.6" else f"secondary_origin_v{past}.json"
     (T / name).write_text(json.dumps(out, indent=1, default=str))
     pd.DataFrame(rows).to_csv(T / ("per_class.csv" if name == "primary.json" else f"per_class_origin_v{past}.csv"), index=False)
     # secondary 2: degree-matched negatives (point estimates)
     if name == "primary.json":
+        (T / "eval_sets_summary.json").write_text(json.dumps({"temporal_sets": sets, "n": out["n"],
+                                                             "temporal_clusters": out["temporal_clusters"]}, indent=1))
+        (T / "graph_summary.json").write_text(json.dumps({v: {c: {"edges": int((e.cls == c).sum()), "sources": int(e[e.cls == c].s.nunique()),
+                                                                  "targets": int(e[e.cls == c].t.nunique())} for c in CLASSES}
+                                                         for v, e in (("v" + past, e6), ("v0.11", e11))}, indent=1))
+        MATCH_REPORT.clear()
         resm, _ = evaluate(e6, e11, species, np.random.default_rng(SEED + 2), matched=True)
         out["degree_matched"] = {m["mode"]: {k: round(pooled_auc(m, k), 4) for k in ("effort", "rdpg", "taxgb")} for m in resm}
+        out["degree_matched_sampler"] = [dict(r, mode=md, cls=c) for r, (md, c) in zip(MATCH_REPORT, [(m, c) for m in ("random", "temporal") for c in CLASSES])]
         (T / name).write_text(json.dumps(out, indent=1, default=str))
     print(json.dumps(out, indent=1, default=str))
 

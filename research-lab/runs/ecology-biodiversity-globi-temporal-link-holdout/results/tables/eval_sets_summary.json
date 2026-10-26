@@ -1,0 +1,38 @@
+{
+ "temporal_sets": {
+  "trophic": {
+   "future_new_pairs": 827885,
+   "positives": 213620,
+   "share_new_namespace": 0.8175873045594981,
+   "share_cold": 0.2511937084542646
+  },
+  "pollination": {
+   "future_new_pairs": 199350,
+   "positives": 72106,
+   "share_new_namespace": 0.5368901339694339,
+   "share_cold": 0.1808726042215627
+  },
+  "host": {
+   "future_new_pairs": 386201,
+   "positives": 125976,
+   "share_new_namespace": 0.6738823267924049,
+   "share_cold": 0.2694560868736902
+  }
+ },
+ "n": {
+  "random": {
+   "pos": 72666,
+   "neg": 726660
+  },
+  "temporal": {
+   "pos": 411702,
+   "neg": 4117020
+  }
+ },
+ "temporal_clusters": {
+  "clusters": 266,
+  "largest": "globalbioticinteractions/trophiCH",
+  "largest_share": 0.4467,
+  "top3_share": 0.7384
+ }
+}

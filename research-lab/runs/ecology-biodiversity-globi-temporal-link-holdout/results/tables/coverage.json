@@ -1,0 +1,28 @@
+{
+ "build_v0.6": {
+  "attempted": 19981541,
+  "ok": 13668469,
+  "fallback": 0,
+  "dropped": 6313072,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "interaction type outside the three classes": 2931507,
+   "no species-level name on a side, or a self-loop": 3363236,
+   "pair in the refuted set": 18329
+  }
+ },
+ "build_v0.11": {
+  "attempted": 24453954,
+  "ok": 8142528,
+  "fallback": 0,
+  "dropped": 16311426,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "interaction type outside the three classes": 8775804,
+   "no species-level name on a side, or a self-loop": 6882620,
+   "pair in the refuted set": 653002
+  }
+ }
+}

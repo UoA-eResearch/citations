@@ -4,13 +4,13 @@
  "auroc": {
   "random": {
    "effort": 0.9509,
-   "rdpg": 0.9416,
+   "rdpg": 0.9417,
    "taxgb": 0.991
   },
   "temporal": {
    "effort": 0.8801,
    "rdpg": 0.8054,
-   "taxgb": 0.9476
+   "taxgb": 0.9474
   }
  },
  "best": "taxgb",
@@ -19,15 +19,15 @@
   0.0288,
   0.0542
  ],
- "A_temporal": 0.0675,
+ "A_temporal": 0.0673,
  "A_temporal_ci": [
-  0.0526,
-  0.0753
+  0.0519,
+  0.075
  ],
- "rho": 1.6834,
+ "rho": 1.6767,
  "rho_ci": [
-  1.0986,
-  2.3031
+  1.0953,
+  2.308
  ],
  "n": {
   "random": {
@@ -65,31 +65,250 @@
    "pos": 298259,
    "effort": 0.8702,
    "rdpg": 0.789,
-   "taxgb": 0.9404
+   "taxgb": 0.9402
   },
   "existing_dataset": {
    "pos": 113443,
    "effort": 0.9063,
-   "rdpg": 0.8486,
-   "taxgb": 0.9667
+   "rdpg": 0.8484,
+   "taxgb": 0.9663
   },
   "cold_start": {
    "pos": 100647,
    "effort": 0.7184,
-   "rdpg": 0.7041,
-   "taxgb": 0.8818
+   "rdpg": 0.704,
+   "taxgb": 0.8812
   }
+ },
+ "without_trophiCH": {
+  "positives": 227810,
+  "trophiCH_positives": 183892,
+  "A_temporal": 0.0585,
+  "A_temporal_ci": [
+   0.0502,
+   0.0681
+  ],
+  "rho": 1.4574,
+  "rho_ci": [
+   1.0537,
+   2.0804
+  ],
+  "auroc": {
+   "effort": 0.9071,
+   "rdpg": 0.838,
+   "taxgb": 0.9656
+  }
+ },
+ "temporal_clusters": {
+  "clusters": 266,
+  "largest": "globalbioticinteractions/trophiCH",
+  "largest_share": 0.4467,
+  "top3_share": 0.7384
  },
  "degree_matched": {
   "random": {
-   "effort": 0.6822,
-   "rdpg": 0.8949,
-   "taxgb": 0.9581
+   "effort": 0.5009,
+   "rdpg": 0.8659,
+   "taxgb": 0.9301
   },
   "temporal": {
-   "effort": 0.5681,
-   "rdpg": 0.7476,
-   "taxgb": 0.8501
+   "effort": 0.514,
+   "rdpg": 0.7359,
+   "taxgb": 0.8306
   }
- }
+ },
+ "degree_matched_sampler": [
+  {
+   "needed": 394360,
+   "got": 394360,
+   "decile_fill": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "decile_share_negatives": [
+    0.0991,
+    0.1009,
+    0.0999,
+    0.1001,
+    0.0999,
+    0.1001,
+    0.1,
+    0.1,
+    0.1,
+    0.1
+   ],
+   "mean_log_deg_pos": 7.71,
+   "mean_log_deg_neg": 7.578,
+   "mode": "random",
+   "cls": "trophic"
+  },
+  {
+   "needed": 71680,
+   "got": 71680,
+   "decile_fill": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "decile_share_negatives": [
+    0.0985,
+    0.1013,
+    0.1002,
+    0.0999,
+    0.1002,
+    0.0999,
+    0.0997,
+    0.1003,
+    0.1,
+    0.1
+   ],
+   "mean_log_deg_pos": 6.818,
+   "mean_log_deg_neg": 6.693,
+   "mode": "random",
+   "cls": "pollination"
+  },
+  {
+   "needed": 261420,
+   "got": 261420,
+   "decile_fill": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "decile_share_negatives": [
+    0.0936,
+    0.105,
+    0.1008,
+    0.1004,
+    0.1001,
+    0.0997,
+    0.1001,
+    0.1,
+    0.1002,
+    0.1
+   ],
+   "mean_log_deg_pos": 5.66,
+   "mean_log_deg_neg": 5.623,
+   "mode": "random",
+   "cls": "host"
+  },
+  {
+   "needed": 2136200,
+   "got": 2136200,
+   "decile_fill": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "decile_share_negatives": [
+    0.0973,
+    0.0998,
+    0.102,
+    0.1008,
+    0.0998,
+    0.0988,
+    0.1012,
+    0.1,
+    0.1002,
+    0.1
+   ],
+   "mean_log_deg_pos": 5.389,
+   "mean_log_deg_neg": 5.392,
+   "mode": "temporal",
+   "cls": "trophic"
+  },
+  {
+   "needed": 721060,
+   "got": 721060,
+   "decile_fill": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "decile_share_negatives": [
+    0.0941,
+    0.1059,
+    0.1,
+    0.1,
+    0.0995,
+    0.1003,
+    0.1,
+    0.1001,
+    0.1001,
+    0.1
+   ],
+   "mean_log_deg_pos": 5.807,
+   "mean_log_deg_neg": 5.754,
+   "mode": "temporal",
+   "cls": "pollination"
+  },
+  {
+   "needed": 1259760,
+   "got": 1259760,
+   "decile_fill": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "decile_share_negatives": [
+    0.0961,
+    0.0959,
+    0.1062,
+    0.1011,
+    0.0998,
+    0.1008,
+    0.1001,
+    0.0999,
+    0.1001,
+    0.1
+   ],
+   "mean_log_deg_pos": 5.202,
+   "mean_log_deg_neg": 5.195,
+   "mode": "temporal",
+   "cls": "host"
+  }
+ ]
 }
