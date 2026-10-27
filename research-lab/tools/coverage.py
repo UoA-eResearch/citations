@@ -39,15 +39,21 @@ class Coverage:
         self.reasons = {"fallback": Counter(), "drop": Counter()}
         self.bulk = Counter()
 
-    def add_counts(self, ok=0, drops=None):
-        """Bulk accounting for record-level stages too large for per-unit status: `ok` units passed, `drops` maps
-        reason -> count. Each counted unit is attempted and resolved."""
-        drops = drops or {}
-        self.attempted += ok + sum(drops.values())
+    def add_counts(self, ok=0, drops=None, fallbacks=None):
+        """Bulk accounting for record-level stages too large for per-unit status: `ok` units passed, `drops` and
+        `fallbacks` map reason -> count (fallback reasons are checked against `allowed`). Each counted unit is
+        attempted and resolved."""
+        drops, fallbacks = drops or {}, fallbacks or {}
+        self.attempted += ok + sum(drops.values()) + sum(fallbacks.values())
         self.bulk["ok"] += ok
         for reason, n in drops.items():
             self.bulk["drop"] += n
             self.reasons["drop"][reason] += n
+        for reason, n in fallbacks.items():
+            if self.allowed is not None and reason not in self.allowed:
+                raise RuntimeError(f"[{self.stage}] unplanned bulk fallback: {reason}")
+            self.bulk["fallback"] += n
+            self.reasons["fallback"][reason] += n
 
     def attempt(self, unit):
         self.attempted += 1

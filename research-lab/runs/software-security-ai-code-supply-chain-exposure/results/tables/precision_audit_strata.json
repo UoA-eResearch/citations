@@ -1,0 +1,76 @@
+{
+ "items": 120,
+ "agreement": {
+  "items": 120,
+  "missing_in_one": [],
+  "percent_agreement": 1.0,
+  "cohen_kappa": NaN,
+  "label_counts_a": {
+   "ai_signature": 120
+  },
+  "label_counts_b": {
+   "ai_signature": 120
+  },
+  "disagreements": []
+ },
+ "by_stratum": {
+  "anthropic_address_trailer": {
+   "n": 10,
+   "ai_signature": 10,
+   "not_ai": 0,
+   "uncertain": 0,
+   "precision": 1.0,
+   "ci95_lower_clopper_pearson": 0.692
+  },
+  "claude_trailer_no_anthropic_address": {
+   "n": 25,
+   "ai_signature": 25,
+   "not_ai": 0,
+   "uncertain": 0,
+   "precision": 1.0,
+   "ci95_lower_clopper_pearson": 0.863
+  },
+  "copilot_other_trailer": {
+   "n": 15,
+   "ai_signature": 15,
+   "not_ai": 0,
+   "uncertain": 0,
+   "precision": 1.0,
+   "ci95_lower_clopper_pearson": 0.782
+  },
+  "copilot_suggestion_trailer": {
+   "n": 10,
+   "ai_signature": 10,
+   "not_ai": 0,
+   "uncertain": 0,
+   "precision": 1.0,
+   "ci95_lower_clopper_pearson": 0.692
+  },
+  "generated_line": {
+   "n": 10,
+   "ai_signature": 10,
+   "not_ai": 0,
+   "uncertain": 0,
+   "precision": 1.0,
+   "ci95_lower_clopper_pearson": 0.692
+  },
+  "identity": {
+   "n": 25,
+   "ai_signature": 25,
+   "not_ai": 0,
+   "uncertain": 0,
+   "precision": 1.0,
+   "ci95_lower_clopper_pearson": 0.863
+  },
+  "other_agent_trailer": {
+   "n": 25,
+   "ai_signature": 25,
+   "not_ai": 0,
+   "uncertain": 0,
+   "precision": 1.0,
+   "ci95_lower_clopper_pearson": 0.863
+  }
+ },
+ "labeller_A_ai_share": 1.0,
+ "labeller_B_ai_share": 1.0
+}

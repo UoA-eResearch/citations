@@ -9,6 +9,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+from packaging.utils import canonicalize_version
 
 RUN = Path(__file__).resolve().parents[1]
 INT, TAB, REPOS = RUN / "data" / "interim", RUN / "results" / "tables", RUN / "data" / "repos"
@@ -19,6 +20,18 @@ WINDOW = pd.Timestamp("2024-06-01", tz="UTC")
 
 def norm(eco, name):
     return re.sub(r"[-_.]+", "-", name).lower() if eco == "pypi" else name
+
+
+def vnorm(eco, v):
+    """D2 (after review): PyPI versions compared in canonical PEP 440 form, because deps.dev pads them ("3.20.0" for
+    the registry's "3.20"); npm versions as is."""
+    v = str(v)
+    if eco != "pypi":
+        return v
+    try:
+        return canonicalize_version(v, strip_trailing_zero=True)
+    except Exception:
+        return v
 
 
 def load():
@@ -40,16 +53,16 @@ def flags_for(F, tag_only=False):
     f = F.copy()
     if tag_only:
         f["flagged"] = f.flagged & f.method.isin(["tag", "tag_date"])
-    return {(e, k, str(v)): bool(x) for e, k, v, x in zip(f.eco, f.key, f.version, f.flagged)}
+    return {(e, k, vnorm(e, v)): bool(x) for e, k, v, x in zip(f.eco, f.key, f.version, f.flagged)}
 
 
 def exposure(P, F, G, S, tag_only=False, drop=None):
     fl = flags_for(F, tag_only)
     P = P.copy()
-    P["latest_flag"] = [fl.get((e, k, str(v)), False) for e, k, v in zip(P.eco, P.key, P.latest)]
+    P["latest_flag"] = [fl.get((e, k, vnorm(e, v)), False) for e, k, v in zip(P.eco, P.key, P.latest)]
     ok = set(zip(S[S.ok].eco, S[S.ok].name))
     G = G.copy()
-    G["flag"] = [fl.get((e, k, str(v)), False) for e, k, v in zip(G.eco, G.key, G.node_version)]
+    G["flag"] = [fl.get((e, k, vnorm(e, v)), False) for e, k, v in zip(G.eco, G.key, G.node_version)]
     if drop is not None:
         G.loc[G.key.isin(drop), "flag"] = False
     exp = G.groupby(["eco", "root"]).flag.any()
@@ -168,7 +181,7 @@ def main():
     inset = set(zip(P.eco, P.key))
     out["H1"]["node_coverage"] = {e: round(float(np.mean([(e, k) in inset for k in g.key])), 4) for e, g in nodes.groupby("eco")}
     out["H1"]["release_methods"] = F.method.value_counts().to_dict()
-    out["H1"]["latest_release_in_window"] = {e: round(float(g.flagged.size), 0) for e, g in F.groupby("eco")}
+    out["H1"]["releases_analysed"] = {e: int(g.flagged.size) for e, g in F.groupby("eco")}   # D2: was mislabelled latest_release_in_window
     # secondary 3: monorepos dropped, tag-only
     mono = P.dropna(subset=["repo"]).groupby("repo").name.transform("size") > 1
     mono_keys = set(P.dropna(subset=["repo"])[mono].key)

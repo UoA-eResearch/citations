@@ -66,11 +66,17 @@ def resolve(sid):
             return True, d.get("title") or ""
         m = re.match(r"^(arXiv:)?(\d{4}\.\d{4,5})(v\d+)?$", sid)
         if m:
-            s = urllib.request.urlopen(f"https://export.arxiv.org/api/query?id_list={m.group(2)}", timeout=30).read().decode()
-            e = re.findall(r"<entry>([\s\S]*?)</entry>", s)
-            t = re.search(r"<title>([\s\S]*?)</title>", e[0]) if e else None
-            ok = bool(e) and "<title>Error</title>" not in s
-            return ok, " ".join(t.group(1).split()) if (ok and t) else ""
+            try:
+                s = urllib.request.urlopen(f"https://export.arxiv.org/api/query?id_list={m.group(2)}", timeout=30).read().decode()
+                e = re.findall(r"<entry>([\s\S]*?)</entry>", s)
+                t = re.search(r"<title>([\s\S]*?)</title>", e[0]) if e else None
+                ok = bool(e) and "<title>Error</title>" not in s
+                if ok:
+                    return ok, " ".join(t.group(1).split()) if t else ""
+            except Exception:          # arXiv rate-limits (HTTP 429): fall back to the arXiv DOI in OpenAlex
+                pass
+            d = json.load(urllib.request.urlopen(f"https://api.openalex.org/works/doi:10.48550/arxiv.{m.group(2)}?select=title", timeout=30))
+            return True, d.get("title") or ""
         if re.match(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", sid):   # GBIF datasetKey
             d = json.load(urllib.request.urlopen(f"https://api.gbif.org/v1/dataset/{sid}", timeout=30))
             return True, d.get("title") or ""

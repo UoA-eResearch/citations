@@ -1,0 +1,494 @@
+{
+ "label": "POST HOC (D2, after independent review)",
+ "decomposition": {
+  "npm": {
+   "weighted_root_rate": 0.1382,
+   "weighted_root_rate_ci": [
+    0.1234,
+    0.1543
+   ],
+   "P_w": 0.2228,
+   "tree_adds_points": 0.0846,
+   "tree_multiplier": 1.612,
+   "tree_multiplier_ci": [
+    1.5139,
+    1.7283
+   ],
+   "unweighted_root_rate_with_graph": 0.2036,
+   "unweighted_exposed": 0.3162,
+   "unweighted_multiplier": 1.55
+  },
+  "pypi": {
+   "weighted_root_rate": 0.2283,
+   "weighted_root_rate_ci": [
+    0.185,
+    0.2757
+   ],
+   "P_w": 0.3607,
+   "tree_adds_points": 0.1323,
+   "tree_multiplier": 1.58,
+   "tree_multiplier_ci": [
+    1.4332,
+    1.7825
+   ],
+   "unweighted_root_rate_with_graph": 0.16,
+   "unweighted_exposed": 0.4879,
+   "unweighted_multiplier": 3.05
+  }
+ },
+ "denominators": {
+  "npm": {
+   "cloned": 9757,
+   "p": 0.2164,
+   "p_single_package_repos": 0.0601,
+   "n_single": 5072,
+   "p_multi_package_repos": 0.3855,
+   "n_multi": 4685,
+   "share_of_flagged_latest_from_multi": 0.8555,
+   "no_release_in_window": 2918,
+   "p_among_released_in_window": 0.3087,
+   "p_by_latest_method": {
+    "date": {
+     "mean": 0.3973,
+     "size": 1807
+    },
+    "inactive": {
+     "mean": 0.0,
+     "size": 5
+    },
+    "none": {
+     "mean": 0.0,
+     "size": 2918
+    },
+    "tag": {
+     "mean": 0.2953,
+     "size": 4552
+    },
+    "tag_date": {
+     "mean": 0.1032,
+     "size": 475
+    }
+   },
+   "top5_repos_by_flagged_latest": {
+    "definitelytyped/definitelytyped": 120,
+    "adobe/react-spectrum": 107,
+    "expo/expo": 84,
+    "open-telemetry/opentelemetry-js-contrib": 44,
+    "chakra-ui/zag": 44
+   },
+   "p_excluding_top5_repos": 0.1877
+  },
+  "pypi": {
+   "cloned": 8934,
+   "p": 0.1857,
+   "p_single_package_repos": 0.1439,
+   "n_single": 7111,
+   "p_multi_package_repos": 0.3489,
+   "n_multi": 1823,
+   "share_of_flagged_latest_from_multi": 0.3834,
+   "no_release_in_window": 2019,
+   "p_among_released_in_window": 0.2399,
+   "p_by_latest_method": {
+    "date": {
+     "mean": 0.3121,
+     "size": 1974
+    },
+    "inactive": {
+     "mean": 0.0,
+     "size": 16
+    },
+    "none": {
+     "mean": 0.0,
+     "size": 2019
+    },
+    "tag": {
+     "mean": 0.2273,
+     "size": 4456
+    },
+    "tag_date": {
+     "mean": 0.064,
+     "size": 469
+    }
+   },
+   "top5_repos_by_flagged_latest": {
+    "azure/azure-sdk-for-python": 109,
+    "googleapis/google-cloud-python": 95,
+    "apache/airflow": 56,
+    "dagster-io/dagster": 29,
+    "python/typeshed": 19
+   },
+   "p_excluding_top5_repos": 0.1598
+  },
+  "flag_rate_by_range_size": {
+   "(-1.0, 0.0]": {
+    "flag_rate": 0.0,
+    "releases": 22747
+   },
+   "(0.0, 5.0]": {
+    "flag_rate": 0.0584,
+    "releases": 140064
+   },
+   "(5.0, 20.0]": {
+    "flag_rate": 0.1446,
+    "releases": 131123
+   },
+   "(20.0, 100.0]": {
+    "flag_rate": 0.2722,
+    "releases": 94828
+   },
+   "(100.0, 500.0]": {
+    "flag_rate": 0.4164,
+    "releases": 27956
+   },
+   "(500.0, 2000.0]": {
+    "flag_rate": 0.5405,
+    "releases": 5256
+   },
+   "(2000.0, 1000000000.0]": {
+    "flag_rate": 0.7556,
+    "releases": 1207
+   }
+  },
+  "flag_rate_by_method": {
+   "npm|date": {
+    "mean": 0.2256,
+    "size": 75668
+   },
+   "npm|inactive": {
+    "mean": 0.0,
+    "size": 7
+   },
+   "npm|tag": {
+    "mean": 0.1504,
+    "size": 186287
+   },
+   "npm|tag_date": {
+    "mean": 0.1185,
+    "size": 2717
+   },
+   "pypi|date": {
+    "mean": 0.1671,
+    "size": 58916
+   },
+   "pypi|inactive": {
+    "mean": 0.0,
+    "size": 224
+   },
+   "pypi|tag": {
+    "mean": 0.133,
+    "size": 96735
+   },
+   "pypi|tag_date": {
+    "mean": 0.0849,
+    "size": 2627
+   }
+  }
+ },
+ "node_coverage": {
+  "npm": {
+   "in_set_nodes": 134891,
+   "matched_window_release": 0.5788
+  },
+  "pypi": {
+   "in_set_nodes": 104827,
+   "matched_window_release": 0.859
+  }
+ },
+ "H2_extras": {
+  "as_reported_per_package": {
+   "pairs": 296806,
+   "distinct_agent_commits": 89401,
+   "repos": 2528,
+   "ratio": 1.009,
+   "ratio_ci": [
+    0.9908,
+    1.1096
+   ],
+   "same_release_share": 0.8017,
+   "ratio_different_release_pairs": 0.898,
+   "unmatched_agent": 65399,
+   "median_unmatched_agent_days": 4.84,
+   "median_matched_agent_days": 6.79
+  },
+  "plan_wording_per_repository": {
+   "pairs": 89700,
+   "distinct_agent_commits": 89327,
+   "repos": 2528,
+   "ratio": 1.117,
+   "ratio_ci": [
+    1.0498,
+    1.1861
+   ],
+   "same_release_share": 0.7612,
+   "ratio_different_release_pairs": 1.002,
+   "unmatched_agent": 29935,
+   "median_unmatched_agent_days": 2.08,
+   "median_matched_agent_days": 4.54
+  }
+ },
+ "hubs": {
+  "npm": {
+   "P_w": 0.2228,
+   "leave_one_out": [
+    {
+     "node": "@babel/helper-validator-identifier",
+     "roots_including": 375,
+     "P_w_without": 0.2214
+    },
+    {
+     "node": "@babel/code-frame",
+     "roots_including": 285,
+     "P_w_without": 0.2228
+    },
+    {
+     "node": "@babel/helper-string-parser",
+     "roots_including": 280,
+     "P_w_without": 0.2228
+    },
+    {
+     "node": "@babel/template",
+     "roots_including": 192,
+     "P_w_without": 0.2228
+    },
+    {
+     "node": "@babel/helper-globals",
+     "roots_including": 189,
+     "P_w_without": 0.222
+    },
+    {
+     "node": "use-sync-external-store",
+     "roots_including": 161,
+     "P_w_without": 0.2217
+    },
+    {
+     "node": "@types/estree",
+     "roots_including": 157,
+     "P_w_without": 0.2169
+    },
+    {
+     "node": "@babel/helper-module-imports",
+     "roots_including": 143,
+     "P_w_without": 0.2228
+    },
+    {
+     "node": "@babel/helper-validator-option",
+     "roots_including": 140,
+     "P_w_without": 0.2219
+    },
+    {
+     "node": "@babel/compat-data",
+     "roots_including": 137,
+     "P_w_without": 0.2219
+    }
+   ]
+  },
+  "pypi": {
+   "P_w": 0.3607,
+   "leave_one_out": [
+    {
+     "node": "numpy",
+     "roots_including": 1175,
+     "P_w_without": 0.3479
+    },
+    {
+     "node": "cffi",
+     "roots_including": 1052,
+     "P_w_without": 0.3507
+    },
+    {
+     "node": "annotated-types",
+     "roots_including": 1036,
+     "P_w_without": 0.3437
+    },
+    {
+     "node": "cryptography",
+     "roots_including": 902,
+     "P_w_without": 0.3607
+    },
+    {
+     "node": "opentelemetry-api",
+     "roots_including": 680,
+     "P_w_without": 0.3472
+    },
+    {
+     "node": "tqdm",
+     "roots_including": 483,
+     "P_w_without": 0.357
+    },
+    {
+     "node": "setuptools",
+     "roots_including": 480,
+     "P_w_without": 0.3507
+    },
+    {
+     "node": "aiohappyeyeballs",
+     "roots_including": 400,
+     "P_w_without": 0.3523
+    },
+    {
+     "node": "pillow",
+     "roots_including": 397,
+     "P_w_without": 0.3552
+    },
+    {
+     "node": "sqlparse",
+     "roots_including": 390,
+     "P_w_without": 0.3572
+    }
+   ]
+  }
+ },
+ "trend": {
+  "npm": {
+   "share_of_active_repos_with_agent_commit": {
+    "2024-06": 0.0,
+    "2024-07": 0.0,
+    "2024-08": 0.0,
+    "2024-09": 0.0007,
+    "2024-10": 0.0015,
+    "2024-11": 0.0015,
+    "2024-12": 0.0022,
+    "2025-01": 0.0044,
+    "2025-02": 0.0058,
+    "2025-03": 0.0138,
+    "2025-04": 0.0326,
+    "2025-05": 0.0354,
+    "2025-06": 0.0613,
+    "2025-07": 0.0913,
+    "2025-08": 0.0983,
+    "2025-09": 0.0912,
+    "2025-10": 0.0941,
+    "2025-11": 0.1103,
+    "2025-12": 0.1325,
+    "2026-01": 0.1791,
+    "2026-02": 0.2304,
+    "2026-03": 0.2659,
+    "2026-04": 0.2588,
+    "2026-05": 0.2686,
+    "2026-06": 0.2727,
+    "2026-07": 0.2912,
+    "2026-08": 0.2937,
+    "2026-09": 0.2825,
+    "2026-10": 0.3576
+   },
+   "active_repos": {
+    "2024-06": 1348,
+    "2024-07": 1384,
+    "2024-08": 1335,
+    "2024-09": 1358,
+    "2024-10": 1376,
+    "2024-11": 1324,
+    "2024-12": 1362,
+    "2025-01": 1357,
+    "2025-02": 1386,
+    "2025-03": 1301,
+    "2025-04": 1226,
+    "2025-05": 1299,
+    "2025-06": 1256,
+    "2025-07": 1216,
+    "2025-08": 1241,
+    "2025-09": 1382,
+    "2025-10": 1328,
+    "2025-11": 1333,
+    "2025-12": 1306,
+    "2026-01": 1273,
+    "2026-02": 1393,
+    "2026-03": 1508,
+    "2026-04": 1453,
+    "2026-05": 1482,
+    "2026-06": 1408,
+    "2026-07": 1463,
+    "2026-08": 1413,
+    "2026-09": 1717,
+    "2026-10": 1387
+   }
+  },
+  "pypi": {
+   "share_of_active_repos_with_agent_commit": {
+    "2024-06": 0.0015,
+    "2024-07": 0.0015,
+    "2024-08": 0.0011,
+    "2024-09": 0.0022,
+    "2024-10": 0.001,
+    "2024-11": 0.0029,
+    "2024-12": 0.0072,
+    "2025-01": 0.0074,
+    "2025-02": 0.0077,
+    "2025-03": 0.0152,
+    "2025-04": 0.0264,
+    "2025-05": 0.0403,
+    "2025-06": 0.0544,
+    "2025-07": 0.075,
+    "2025-08": 0.0957,
+    "2025-09": 0.0838,
+    "2025-10": 0.1014,
+    "2025-11": 0.113,
+    "2025-12": 0.119,
+    "2026-01": 0.163,
+    "2026-02": 0.2421,
+    "2026-03": 0.2654,
+    "2026-04": 0.2743,
+    "2026-05": 0.2832,
+    "2026-06": 0.2931,
+    "2026-07": 0.3079,
+    "2026-08": 0.3018,
+    "2026-09": 0.3272,
+    "2026-10": 0.3345
+   },
+   "active_repos": {
+    "2024-06": 2705,
+    "2024-07": 2719,
+    "2024-08": 2718,
+    "2024-09": 2725,
+    "2024-10": 2964,
+    "2024-11": 2746,
+    "2024-12": 2646,
+    "2025-01": 2854,
+    "2025-02": 2719,
+    "2025-03": 2763,
+    "2025-04": 2732,
+    "2025-05": 2755,
+    "2025-06": 2683,
+    "2025-07": 2626,
+    "2025-08": 2655,
+    "2025-09": 2650,
+    "2025-10": 2880,
+    "2025-11": 2760,
+    "2025-12": 2739,
+    "2026-01": 2736,
+    "2026-02": 2672,
+    "2026-03": 2822,
+    "2026-04": 2745,
+    "2026-05": 2737,
+    "2026-06": 2695,
+    "2026-07": 2822,
+    "2026-08": 2780,
+    "2026-09": 2711,
+    "2026-10": 2813
+   }
+  },
+  "agent_commits": 216948,
+  "share_top10_repos": 0.1775,
+  "share_top50_repos": 0.4387,
+  "agent_top_repo_share": {
+   "gemini": 0.136,
+   "copilot": 0.051,
+   "claude": 0.042,
+   "cursor": 0.053,
+   "jules": 0.139,
+   "aider": 0.91,
+   "amp": 0.441,
+   "devin": 0.412,
+   "codex": 0.194,
+   "openhands": 0.564,
+   "junie": 0.892
+  },
+  "copilot_split": {
+   "identity_rule": 4641,
+   "suggestion_trailer_first_line": 14826,
+   "other": 11097,
+   "total": 30564,
+   "note": "the stored line is the first co-author trailer (review finding 6), so the split is approximate"
+  }
+ }
+}

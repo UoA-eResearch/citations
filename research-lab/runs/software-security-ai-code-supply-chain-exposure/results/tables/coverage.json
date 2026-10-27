@@ -1,0 +1,54 @@
+{
+ "release_ranges": {
+  "attempted": 423181,
+  "ok": 287595,
+  "fallback": 112839,
+  "dropped": 22747,
+  "unresolved": 0,
+  "fallback_reasons": {
+   "date window (no matching tag)": 112839
+  },
+  "drop_reasons": {
+   "empty commit range (unflagged)": 22747
+  }
+ },
+ "packages_in_p": {
+  "attempted": 18691,
+  "ok": 13754,
+  "fallback": 4937,
+  "dropped": 0,
+  "unresolved": 0,
+  "fallback_reasons": {
+   "no release since 2024-06-01 -> unflagged": 4937
+  },
+  "drop_reasons": {}
+ },
+ "tree_nodes_npm": {
+  "attempted": 134891,
+  "ok": 78078,
+  "fallback": 0,
+  "dropped": 56813,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "version released before 2024-06-01 (unflagged)": 55759,
+   "pre-release version (excluded by design)": 425,
+   "version in no registry release": 0,
+   "package has no cloned repository (unflagged)": 629
+  }
+ },
+ "tree_nodes_pypi": {
+  "attempted": 104827,
+  "ok": 90044,
+  "fallback": 0,
+  "dropped": 14783,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "version released before 2024-06-01 (unflagged)": 8043,
+   "pre-release version (excluded by design)": 1303,
+   "version in no registry release": 0,
+   "package has no cloned repository (unflagged)": 5437
+  }
+ }
+}

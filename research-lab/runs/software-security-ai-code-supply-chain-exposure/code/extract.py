@@ -18,7 +18,7 @@ import pandas as pd
 
 RUN = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RUN / "code"))
-from attribution import COAUTHOR, GENERATED, classify, is_bot  # noqa: E402
+from attribution import COAUTHOR, GENERATED, TRAILER, classify, is_bot  # noqa: E402
 
 INT, REPOS = RUN / "data" / "interim", RUN / "data" / "repos"
 WINDOW = pd.Timestamp("2024-06-01", tz="UTC")
@@ -43,8 +43,11 @@ def tag_candidates(name, v):
 
 
 def matched_line(msg):
+    # D2 (after review): return the trailer that matched a rule, not the first co-author trailer (the stored line in
+    # this run's ai_matches.parquet predates the fix; the stratified audit re-derives the matching text instead)
     for who in COAUTHOR.findall(msg):
-        return "Co-authored-by: " + who
+        if any(pat.search(who) for _, pat in TRAILER):
+            return "Co-authored-by: " + who
     m = GENERATED.search(msg)
     return m.group(0) if m else ""
 
