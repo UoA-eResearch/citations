@@ -101,28 +101,29 @@ def new():
 
 
 def lit():
-    out = []
-    with tarfile.open(RAW / "LIT-PCBA" / "full_data.tgz") as tf:
-        names = tf.getnames()
-        for n in names:
-            parts = Path(n).parts
-            fn = parts[-1]
-            if not fn.endswith(".smi"):
-                continue
-            target = parts[-2]
-            kind = "active" if fn.startswith("actives") else "inactive" if fn.startswith("inactives") else None
-            split = "training" if "training" in fn.lower() or "train" in fn.lower() else "validation" if ("validation" in fn.lower() or "val" in fn.lower()) else "all"
-            if kind is None:
-                continue
-            txt = tf.extractfile(n).read().decode()
-            for line in txt.splitlines():
-                p = line.split()
-                if p:
-                    out.append((target, split, p[0], 1 if kind == "active" else 0, fn))
-    df = pd.DataFrame(out, columns=["target", "split", "smiles_raw", "label", "file"])
-    print(df.groupby(["target", "split", "label"]).size().unstack(fill_value=0).head(40))
+    # full_data.tgz: every target's complete actives/inactives (the analog-disjoint control, plan section 2)
+    # AVE_unbiased.tgz: the published training (_T) and validation (_V) sets (plan section 3, as corrected in D1)
+    rows = []
+    for arch, kinds in (("full_data.tgz", {"actives.smi": ("all", 1), "inactives.smi": ("all", 0)}),
+                        ("AVE_unbiased.tgz", {"active_T.smi": ("training", 1), "inactive_T.smi": ("training", 0),
+                                              "active_V.smi": ("validation", 1), "inactive_V.smi": ("validation", 0)})):
+        with tarfile.open(RAW / "LIT-PCBA" / arch) as tf:
+            seen = 0
+            for n in tf.getnames():
+                parts = Path(n).parts
+                if len(parts) < 2 or parts[-1] not in kinds:
+                    continue
+                split, label = kinds[parts[-1]]
+                seen += 1
+                for line in tf.extractfile(n).read().decode().splitlines():
+                    f = line.split()
+                    if f:
+                        rows.append((parts[-2], split, f[0], label, arch))
+            assert seen == 15 * len(kinds), f"{arch}: found {seen} split files, expected {15 * len(kinds)}"
+    df = pd.DataFrame(rows, columns=["target", "split", "smiles_raw", "label", "archive"])
+    print(df.groupby(["split", "label"]).agg(rows=("target", "size"), targets=("target", "nunique")).to_string())
     parsed = [canon(s) for s in df.smiles_raw]
-    df["smiles"] = [p[0] for p in parsed]
+    df["smiles"] = [x[0] for x in parsed]
     cov = Coverage("lit_compounds", T / "coverage.json")
     cov.add_counts(ok=int(df.smiles.notna().sum()), drops={"RDKit cannot parse": int(df.smiles.isna().sum())})
     cov.save()

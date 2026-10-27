@@ -1,0 +1,31 @@
+{
+ "assays": {
+  "attempted": 32,
+  "ok": 28,
+  "fallback": 0,
+  "dropped": 4,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "after the funnel: 731 actives, 3499 compounds": 1,
+   "after the funnel: 642 actives, 4291 compounds": 1,
+   "after the funnel: 37 actives, 7496 compounds": 1,
+   "after the funnel: 2396 actives, 4162 compounds": 1
+  }
+ },
+ "substances": {
+  "attempted": 1769491,
+  "ok": 1574697,
+  "fallback": 0,
+  "dropped": 194794,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "inconclusive or unspecified outcome": 180454,
+   "CID both active and inactive": 1424,
+   "connectivity group with conflicting outcomes": 407,
+   "duplicate connectivity (kept one)": 12509,
+   "RDKit cannot parse": 0
+  }
+ }
+}
