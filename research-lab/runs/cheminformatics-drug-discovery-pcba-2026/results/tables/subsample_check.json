@@ -1,0 +1,36 @@
+{
+ "cap": 50000,
+ "seed": 20261027,
+ "targets": [
+  {
+   "target": "ALOX12",
+   "compounds": 474716,
+   "ef1_full": 19.79,
+   "n_eval_full": 94489,
+   "hit_rate_full": 0.013,
+   "ef1_capped": 18.71,
+   "n_eval_capped": 10136,
+   "hit_rate_capped": 0.01164
+  },
+  {
+   "target": "ATXN2",
+   "compounds": 336588,
+   "ef1_full": 27.64,
+   "n_eval_full": 67072,
+   "hit_rate_full": 0.0076,
+   "ef1_capped": 33.88,
+   "n_eval_capped": 10033,
+   "hit_rate_capped": 0.00767
+  },
+  {
+   "target": "IP6K1",
+   "compounds": 142851,
+   "ef1_full": 13.29,
+   "n_eval_full": 28539,
+   "hit_rate_full": 0.00792,
+   "ef1_capped": 17.75,
+   "n_eval_capped": 10017,
+   "hit_rate_capped": 0.00789
+  }
+ ]
+}

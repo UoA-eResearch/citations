@@ -1,0 +1,1 @@
+Per target and embedding, the difference in EF1% against ECFP4 + random forest on the analog-disjoint (0.4) split of PCBA-2026, with 95% paired bootstrap intervals over evaluation compounds (2,000 resamples). Above zero means the embedding is better. The embedding's interval excludes zero on 0 of 56 target-embedding pairs; the random forest's does on 9.

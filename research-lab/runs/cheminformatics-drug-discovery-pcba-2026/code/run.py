@@ -86,14 +86,14 @@ def one(args):
     out_dir.mkdir(parents=True, exist_ok=True)
     done = {p.name.split("__")[1][:-8] for p in out_dir.glob(f"{target}__*.parquet")}
     bench = "new" if ev == "new" else "lit"
-    df = pd.read_parquet(D / f"{bench}.parquet")
+    df = pd.read_parquet(D / f"{bench}_sub.parquet")          # D3: the capped benchmark, which the folds index
     df = df[df.target == target].reset_index(drop=True)
     if ev == "lit_pub":
         df = df[df.split.isin(["training", "validation"])].drop_duplicates(["smiles", "split"]).reset_index(drop=True)
         variants = {"published": (df.split.to_numpy() == "training", df.split.to_numpy() == "validation")}
     else:
-        if bench == "lit":
-            df = df.drop_duplicates("smiles").reset_index(drop=True)
+        if bench == "lit":          # the analog-disjoint control uses the full-data set, as folds.py indexed it
+            df = df[df.split == "all"].drop_duplicates("smiles").reset_index(drop=True)
         z = np.load(D / f"folds_{bench}" / f"{target}.npz")
         variants = {}
         for name, fold, keep in (("audit04", z["fold"], z["eval_04"]), ("audit06", z["fold"], z["eval_06"]),
@@ -127,7 +127,7 @@ def one(args):
 
 def main(ev, workers):
     bench = "new" if ev == "new" else "lit"
-    df = pd.read_parquet(D / f"{bench}.parquet")
+    df = pd.read_parquet(D / f"{bench}_sub.parquet")
     targets = sorted(df.target.unique(), key=lambda t: -int((df.target == t).sum()))
     print(len(targets), "targets", flush=True)
     with ProcessPoolExecutor(workers) as ex:

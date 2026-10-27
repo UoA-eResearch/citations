@@ -121,9 +121,9 @@ def one(bench, target, g):
 
 
 def main(bench):
-    df = pd.read_parquet(D / f"{bench}.parquet")
+    df = pd.read_parquet(D / f"{bench}_sub.parquet")     # D3: the capped benchmark
     if bench == "lit":
-        df = df.drop_duplicates(["target", "smiles"])     # the LIT-PCBA control uses unique compounds per target
+        df = df[df.split == "all"].drop_duplicates(["target", "smiles"])   # the control uses the full-data set
     infos = []
     for t, g in sorted(df.groupby("target"), key=lambda kv: len(kv[1])):
         infos.append(one(bench, t, g.reset_index(drop=True)))

@@ -6,6 +6,7 @@
 import json
 import sys
 import tarfile
+from concurrent.futures import ProcessPoolExecutor
 from collections import Counter
 from pathlib import Path
 
@@ -20,8 +21,16 @@ from coverage import Coverage  # noqa: E402
 MIN_ACTIVE, MIN_TESTED, MIN_TARGETS, FALLBACK_ACTIVE, STOP_TARGETS = 50, 5050, 20, 30, 15
 
 
+def canon_only(smiles):
+    """RDKit parse without the PAINS catalog (LIT needs no PAINS flag; the catalog check dominates the runtime)."""
+    from rdkit import Chem, RDLogger
+    RDLogger.DisableLog("rdApp.*")
+    m = Chem.MolFromSmiles(smiles) if isinstance(smiles, str) and smiles else None
+    return Chem.MolToSmiles(m) if m is not None else None
+
+
 def canon(smiles):
-    """RDKit parse; returns (canonical SMILES, PAINS flag) or (None, None)."""
+    """RDKit parse plus the PAINS flag; returns (canonical SMILES, PAINS flag) or (None, None)."""
     from rdkit import Chem, RDLogger
     from rdkit.Chem.FilterCatalog import FilterCatalog, FilterCatalogParams
     RDLogger.DisableLog("rdApp.*")
@@ -122,8 +131,11 @@ def lit():
             assert seen == 15 * len(kinds), f"{arch}: found {seen} split files, expected {15 * len(kinds)}"
     df = pd.DataFrame(rows, columns=["target", "split", "smiles_raw", "label", "archive"])
     print(df.groupby(["split", "label"]).agg(rows=("target", "size"), targets=("target", "nunique")).to_string())
-    parsed = [canon(s) for s in df.smiles_raw]
-    df["smiles"] = [x[0] for x in parsed]
+    uniq = df.smiles_raw.drop_duplicates().tolist()          # LIT repeats molecules across splits and targets
+    with ProcessPoolExecutor(8) as ex:
+        out = list(ex.map(canon_only, uniq, chunksize=2000))
+    df["smiles"] = df.smiles_raw.map(dict(zip(uniq, out)))
+    print(len(uniq), "unique raw SMILES;", int(df.smiles.isna().sum()), "rows unparsed", flush=True)
     cov = Coverage("lit_compounds", T / "coverage.json")
     cov.add_counts(ok=int(df.smiles.notna().sum()), drops={"RDKit cannot parse": int(df.smiles.isna().sum())})
     cov.save()

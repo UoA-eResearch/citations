@@ -71,8 +71,10 @@ def metrics_table():
             e = ef(y, s)
             rate = float(y.mean())
             rows.append({"eval": ev, "target": target, "variant": variant, "method": method, "n": len(y),
-                         "actives": int(y.sum()), "hit_rate": round(rate, 5), "ef1_ceiling": round(1 / rate, 2) if rate > 0 else np.nan,
-                         "ef1": e, "ef1_normalised": round(e * rate, 4) if rate > 0 and np.isfinite(e) else np.nan,  # D2, post hoc
+                         "actives": int(y.sum()), "hit_rate": round(rate, 5),
+                         "ef1_ceiling": round(min(1 / 0.01, 1 / rate), 2) if rate > 0 else np.nan,   # top 1% holds 0.01n slots
+                         "ef1": e,
+                         "ef1_normalised": round(e / min(1 / 0.01, 1 / rate), 4) if rate > 0 and np.isfinite(e) else np.nan,  # D2, post hoc
                          "bedroc": bedroc(y, s), "auprc": auprc(y, s)})
         for t, g in S[S.variant.isin([PRIMARY, "published"])].groupby("target"):
             cov.attempt((ev, t))
@@ -153,16 +155,20 @@ def noise_ceiling(rng):
     from scipy.stats import kendalltau
     S = load("new")
     S = S[S.variant == PRIMARY]
-    out = []
+    out, skipped = [], []
     for t, g in S.groupby("target"):
         w = g.pivot_table(index="idx", columns="method", values="score")
         y = g.drop_duplicates("idx").set_index("idx").y.reindex(w.index).to_numpy()
         perm = rng.permutation(len(y)); a, b = perm[: len(y) // 2], perm[len(y) // 2:]
         va = [ef(y[a], w[m].to_numpy()[a]) for m in METHODS if m in w]
         vb = [ef(y[b], w[m].to_numpy()[b]) for m in METHODS if m in w]
-        if np.isfinite(va).all() and np.isfinite(vb).all():
+        # kendalltau is undefined when a half ranks every method equally (e.g. all EF1 zero), so those are counted
+        if np.isfinite(va).all() and np.isfinite(vb).all() and len(set(va)) > 1 and len(set(vb)) > 1:
             out.append(float(kendalltau(va, vb).statistic))
-    return {"targets": len(out), "mean_tau_split_half": round(float(np.mean(out)), 3) if out else None}
+        else:
+            skipped.append(t)
+    return {"targets_used": len(out), "targets_skipped_tied_or_missing": len(skipped),
+            "mean_tau_split_half": round(float(np.mean(out)), 3) if out else None}
 
 
 def main():

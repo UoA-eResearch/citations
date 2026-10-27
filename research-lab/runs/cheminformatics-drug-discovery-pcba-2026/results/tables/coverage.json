@@ -27,5 +27,25 @@
    "duplicate connectivity (kept one)": 12509,
    "RDKit cannot parse": 0
   }
+ },
+ "lit_compounds": {
+  "attempted": 5460747,
+  "ok": 5460747,
+  "fallback": 0,
+  "dropped": 0,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "RDKit cannot parse": 0
+  }
+ },
+ "scored_targets": {
+  "attempted": 58,
+  "ok": 58,
+  "fallback": 0,
+  "dropped": 0,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {}
  }
 }
