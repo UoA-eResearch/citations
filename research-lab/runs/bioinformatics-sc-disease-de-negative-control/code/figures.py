@@ -84,12 +84,14 @@ def f2(d):
     ax.set_xlabel("DE genes a practitioner would report (all donors, BH FDR < 0.05)")
     ax.set_ylabel("contrasts"); ax.grid(axis="y", color=GRID, lw=0.5)
     ax.legend(frameon=False, fontsize=8, loc="upper right")
-    fig.suptitle("Finding differentially expressed genes is not evidence of disease signal", x=0.02, ha="left",
+    fig.suptitle("The DE-gene count barely predicts whether a contrast beats its matched null", x=0.02, ha="left",
                  fontsize=10, color=INK)
     fig.savefig(F / "F2_practitioner.png", dpi=170); plt.close(fig)
-    caption("F2_practitioner", """Grey: contrasts by the number of DE genes the full-size comparison reports, as a
-    practitioner would run it. Orange: how many of those also exceed their own matched healthy-vs-healthy null
-    (BH q < 0.05). The percentage above each bar is the share that does.""")
+    caption("F2_practitioner", """Grey: contrasts by the number of DE genes the full-size comparison reports, using
+    every donor, as a practitioner would run it (median 100 donors). Orange: how many of those also exceed their own
+    matched healthy-vs-healthy null (BH q < 0.05). The percentage above each bar is the share that does. The two are
+    not the same comparison: the null test runs at matched group sizes (median 13 against 13), because a null needs
+    two disjoint healthy groups, so part of the gap is donor count rather than signal.""")
 
 
 def f3(pr, p):

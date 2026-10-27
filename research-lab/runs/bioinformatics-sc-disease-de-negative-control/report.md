@@ -1,4 +1,4 @@
-# Three quarters of single-cell disease signatures in a cell atlas cannot be told apart from comparing healthy donors with each other
+# At matched group sizes, three quarters of single-cell disease signatures in a cell atlas cannot be told apart from comparing healthy donors with each other
 
 *799 disease × tissue × cell-type contrasts from 25 datasets in the CZ CELLxGENE Census (42 diseases, 161 cell
 types). Each was compared with 500 matched healthy-donor-only contrasts drawn from the same dataset, tissue and cell
@@ -10,17 +10,24 @@ value was read.*
 - **H1 (more than half of contrasts are indistinguishable from their matched healthy-vs-healthy null): Supported.**
   - On the number of differentially expressed genes, the statistic the power check selects (below), **74%** of the
     799 contrasts do not exceed their own null at BH q < 0.05 (95% CI 57–84%, cluster bootstrap over the 25
-    datasets).
+    datasets). Real and null are compared at the same group sizes, a median of 13 donors against 13.
   - On π1, the preregistered primary statistic, 82% (71–89%). **But π1 detects a real twofold change in 5% of genes
     only 8% of the time**, so that figure is nearly uninformative; the DE-gene count detects it 87% of the time
     (D2, `results/tables/power_check.json`).
   - Weighting every disease equally gives the same answer: 74%.
-- **Finding DE genes is not evidence of disease signal.**
-  - At full size a practitioner would report at least one DE gene in 69% of these contrasts, with a median of 52.
+- **The DE-gene count a practitioner reports barely predicts whether the contrast beats its null.**
+  - At full size, using every donor (median 100 per contrast), a practitioner would report at least one DE gene in
+    69% of these contrasts, with a median of 52.
   - Among contrasts reporting 11–100 DE genes, only **12%** exceed their own matched null. Among those reporting
     101–1,000, only 42%; above 1,000, 64%.
+  - **The two are not the same comparison.** The null test is run at matched group sizes, a median of 13 donors
+    against 13, because a null needs two disjoint healthy groups and no dataset has enough healthy donors to mirror
+    a full-size comparison. So part of this gap is donor count, not signal.
   - Comparing healthy donors with healthy donors is not quiet: in 8.9% of contrasts the null's 95th percentile is
     above 100 DE genes.
+- **A positive control confirms the power problem on real data.** Comparing male with female healthy donors in the
+  largest dataset (115 per group, brain oligodendrocytes) gives 219 DE genes and is detected against permuted nulls
+  at p = 0.005. π1 misses it (p = 0.25).
 - **It varies by disease.** Of the eight most common diseases, 0% of schizophrenia (37 contrasts) and 0% of
   tauopathy (35) contrasts exceed their null, against 62% of interstitial lung disease (32) and 63% of pulmonary
   fibrosis (27). COVID-19 (86) is 45%.
@@ -48,8 +55,12 @@ We took a large public atlas of such data and, for each disease comparison, buil
 donors only: same study, same tissue, same cell type, same numbers, matched for sex and age. Then we ran the
 identical analysis on all of them and asked whether the real comparison stood out from its own fakes.
 
-Three quarters did not. In most of these comparisons, the genes a researcher would report for a disease are no more
-striking than what you get by splitting healthy people into two arbitrary groups and comparing them.
+Three quarters did not. In most of these comparisons, the disease result is no more striking than what you get by
+splitting healthy people into two arbitrary groups of the same size and comparing them.
+
+A caveat we cannot remove: the fake comparisons can only be as large as the healthy donors allow, so the test runs at
+about a dozen donors a side, while a researcher using every donor in the study has about a hundred. Part of what we
+call "indistinguishable" is therefore the smaller comparison, not only the weaker signal.
 
 That is not a claim that the diseases have no effect on these cells. It means these particular datasets, at this
 size, cannot show it. Lung fibrosis comparisons mostly do stand out; schizophrenia and tauopathy comparisons, in
@@ -88,6 +99,8 @@ contrasts exceed them.
   as a covariate where it varies. edgeR 4.8.2 and limma 3.66.0 in Docker, without network access.
 - **Exceedance.** An empirical p from 500 null draws, then BH across contrasts; a contrast is indistinguishable at
   q ≥ 0.05.
+- **Positive control (G3).** Male against female normal donors in the same framework, 25 real draws against 200
+  label-permuted nulls (`results/plausibility.md`).
 - **Coverage (G2).** `results/tables/coverage.json`: 43 of 43 datasets pseudobulked with integer counts and no cell
   shortfall against the Census metadata; contrast donors kept and dropped with reasons; fits failed.
 
@@ -126,6 +139,8 @@ does occur is residual donor confounding rather than disease biology.
 - **Not shown:**
   - **That these diseases have no cell-type-specific effects.** Low power is the more likely explanation for most
     contrasts, and the study does not estimate per-contrast power against a biological effect size.
+  - **That a full-size analysis would also fail.** The matched null is bounded by the healthy donors available, so
+    it tests a smaller comparison than a practitioner runs. The exceedance result is a statement at matched sizes.
   - **Matching beyond sex and age bin.** Ancestry, BMI, post-mortem interval and sampling site are not matched, and
     11.8% of null donor slots used a fallback.
   - **Cell-type label quality.** Census annotations are used as given, at mixed granularity.

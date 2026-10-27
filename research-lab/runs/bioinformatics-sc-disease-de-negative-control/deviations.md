@@ -50,3 +50,7 @@ donors of 100 null draws across 20 primary contrasts, and ran the identical pipe
   No disease contrast's result entered the choice. (For the record: while debugging a CSV-parsing bug I saw one
   contrast's numbers, c0017, before this decision.)
 - The same reporting applies to the disease-gene enrichment secondary, whose power is not measured by this check.
+
+- **G6 note.** The Open Targets ledger row first carried a DOI that resolves to an unrelated crystallography paper.
+  The resolver accepted it because the identifier exists; the title check caught it. It is now
+  10.1093/nar/gkae1128 (Buniello et al., the Open Targets Platform paper).
