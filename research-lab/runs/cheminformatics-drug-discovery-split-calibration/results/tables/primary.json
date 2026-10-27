@@ -1,0 +1,346 @@
+{
+ "primary_set": "primary",
+ "bias_rf": {
+  "random": {
+   "targets": 250,
+   "median_bias": -0.3652,
+   "ci": [
+    -0.4169,
+    -0.3304
+   ],
+   "median_abs_bias": 0.3652,
+   "abs_ci": [
+    0.3313,
+    0.4169
+   ],
+   "share_covering_truth": 0.096
+  },
+  "scaffold": {
+   "targets": 250,
+   "median_bias": -0.2736,
+   "ci": [
+    -0.3249,
+    -0.2243
+   ],
+   "median_abs_bias": 0.2783,
+   "abs_ci": [
+    0.2289,
+    0.3302
+   ],
+   "share_covering_truth": 0.216
+  },
+  "cluster": {
+   "targets": 247,
+   "median_bias": -0.0476,
+   "ci": [
+    -0.0848,
+    -0.0009
+   ],
+   "median_abs_bias": 0.1757,
+   "abs_ci": [
+    0.1486,
+    0.2165
+   ],
+   "share_covering_truth": 0.559
+  },
+  "document": {
+   "targets": 247,
+   "median_bias": -0.0381,
+   "ci": [
+    -0.069,
+    -0.0101
+   ],
+   "median_abs_bias": 0.1667,
+   "abs_ci": [
+    0.138,
+    0.19
+   ],
+   "share_covering_truth": 0.547
+  },
+  "author": {
+   "targets": 212,
+   "median_bias": 0.0312,
+   "ci": [
+    -0.008,
+    0.096
+   ],
+   "median_abs_bias": 0.2157,
+   "abs_ci": [
+    0.1824,
+    0.2339
+   ],
+   "share_covering_truth": 0.401
+  },
+  "assay": {
+   "targets": 248,
+   "median_bias": -0.0364,
+   "ci": [
+    -0.086,
+    0.0019
+   ],
+   "median_abs_bias": 0.1555,
+   "abs_ci": [
+    0.1301,
+    0.181
+   ],
+   "share_covering_truth": 0.565
+  },
+  "time": {
+   "targets": 250,
+   "median_bias": 0.0089,
+   "ci": [
+    -0.0402,
+    0.0368
+   ],
+   "median_abs_bias": 0.1941,
+   "abs_ci": [
+    0.1705,
+    0.221
+   ],
+   "share_covering_truth": 0.0
+  }
+ },
+ "H1": {
+  "by_splitter": {
+   "random": "Supported",
+   "scaffold": "Supported"
+  },
+  "verdict": "Supported"
+ },
+ "H2": {
+  "by_splitter": {
+   "document": "Refuted",
+   "author": "Refuted"
+  },
+  "verdict": "Refuted"
+ },
+ "H3": {
+  "mean_tau": {
+   "random": {
+    "mean": 0.4104,
+    "ci": [
+     0.3648,
+     0.4552
+    ]
+   },
+   "scaffold": {
+    "mean": 0.3872,
+    "ci": [
+     0.3424,
+     0.4312
+    ]
+   },
+   "cluster": {
+    "mean": 0.3733,
+    "ci": [
+     0.3223,
+     0.4203
+    ]
+   },
+   "document": {
+    "mean": 0.3725,
+    "ci": [
+     0.3239,
+     0.4186
+    ]
+   },
+   "author": {
+    "mean": 0.3472,
+    "ci": [
+     0.2925,
+     0.401
+    ]
+   },
+   "assay": {
+    "mean": 0.3919,
+    "ci": [
+     0.3443,
+     0.4403
+    ]
+   },
+   "time": {
+    "mean": 0.372,
+    "ci": [
+     0.3296,
+     0.4144
+    ]
+   }
+  },
+  "document_minus_scaffold": {
+   "mean": -0.0178,
+   "ci": [
+    -0.0575,
+    0.0235
+   ],
+   "targets": 247
+  },
+  "verdict": "Refuted"
+ },
+ "median_bias_all": {
+  "alldelta|knn": {
+   "assay": -0.0066,
+   "author": 0.0829,
+   "cluster": -0.0387,
+   "document": -0.0167,
+   "random": -0.3965,
+   "scaffold": -0.2851,
+   "time": 0.0105
+  },
+  "alldelta|lgbm": {
+   "assay": -0.0235,
+   "author": 0.0482,
+   "cluster": -0.0392,
+   "document": -0.0286,
+   "random": -0.3542,
+   "scaffold": -0.2571,
+   "time": -0.0166
+  },
+  "alldelta|mlp": {
+   "assay": -0.0859,
+   "author": 0.0813,
+   "cluster": -0.0433,
+   "document": -0.0435,
+   "random": -0.5147,
+   "scaffold": -0.3758,
+   "time": 0.0378
+  },
+  "alldelta|rf": {
+   "assay": -0.0329,
+   "author": 0.0466,
+   "cluster": -0.0129,
+   "document": -0.0188,
+   "random": -0.3531,
+   "scaffold": -0.2556,
+   "time": 0.0145
+  },
+  "alldelta|svr": {
+   "assay": -0.0241,
+   "author": 0.0338,
+   "cluster": -0.0123,
+   "document": -0.0396,
+   "random": -0.3074,
+   "scaffold": -0.2193,
+   "time": -0.0104
+  },
+  "lenient|knn": {
+   "assay": -0.1012,
+   "author": -0.0139,
+   "cluster": -0.1396,
+   "document": -0.0811,
+   "random": -0.4582,
+   "scaffold": -0.3747,
+   "time": -0.0612
+  },
+  "lenient|lgbm": {
+   "assay": -0.1085,
+   "author": -0.0687,
+   "cluster": -0.1112,
+   "document": -0.1048,
+   "random": -0.4343,
+   "scaffold": -0.3179,
+   "time": -0.0675
+  },
+  "lenient|mlp": {
+   "assay": -0.3671,
+   "author": -0.2152,
+   "cluster": -0.3122,
+   "document": -0.314,
+   "random": -0.8094,
+   "scaffold": -0.6535,
+   "time": -0.2222
+  },
+  "lenient|rf": {
+   "assay": -0.0762,
+   "author": -0.0441,
+   "cluster": -0.097,
+   "document": -0.1001,
+   "random": -0.4251,
+   "scaffold": -0.3272,
+   "time": -0.0266
+  },
+  "lenient|svr": {
+   "assay": -0.131,
+   "author": -0.0617,
+   "cluster": -0.1081,
+   "document": -0.1114,
+   "random": -0.44,
+   "scaffold": -0.3305,
+   "time": -0.0725
+  },
+  "primary|knn": {
+   "assay": -0.0273,
+   "author": 0.0639,
+   "cluster": -0.0635,
+   "document": -0.0127,
+   "random": -0.3859,
+   "scaffold": -0.2828,
+   "time": 0.0112
+  },
+  "primary|lgbm": {
+   "assay": -0.024,
+   "author": 0.0077,
+   "cluster": -0.0563,
+   "document": -0.0301,
+   "random": -0.3549,
+   "scaffold": -0.2613,
+   "time": -0.0071
+  },
+  "primary|mlp": {
+   "assay": -0.1157,
+   "author": 0.0395,
+   "cluster": -0.0862,
+   "document": -0.0942,
+   "random": -0.5629,
+   "scaffold": -0.4275,
+   "time": -0.0221
+  },
+  "primary|rf": {
+   "assay": -0.0364,
+   "author": 0.0312,
+   "cluster": -0.0476,
+   "document": -0.0381,
+   "random": -0.3652,
+   "scaffold": -0.2736,
+   "time": 0.0089
+  },
+  "primary|svr": {
+   "assay": -0.0529,
+   "author": 0.0251,
+   "cluster": -0.044,
+   "document": -0.0602,
+   "random": -0.34,
+   "scaffold": -0.2456,
+   "time": -0.0064
+  }
+ },
+ "median_prospective_rmse_rf": 1.0674,
+ "bias_by_similarity_rf": {
+  "low": {
+   "assay": -0.0992,
+   "author": 0.0068,
+   "cluster": -0.0741,
+   "document": -0.037,
+   "random": -0.3684,
+   "scaffold": -0.2899,
+   "time": -0.0067
+  },
+  "mid": {
+   "assay": -0.0027,
+   "author": 0.0412,
+   "cluster": -0.0468,
+   "document": -0.0258,
+   "random": -0.3685,
+   "scaffold": -0.272,
+   "time": 0.022
+  },
+  "high": {
+   "assay": -0.0073,
+   "author": 0.0722,
+   "cluster": -0.0008,
+   "document": -0.062,
+   "random": -0.3164,
+   "scaffold": -0.2406,
+   "time": -0.0102
+  }
+ }
+}

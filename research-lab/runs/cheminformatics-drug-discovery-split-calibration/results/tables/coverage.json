@@ -47,5 +47,17 @@
    "fewer than 50 primary prospective compounds": 783,
    "eligible but not in the random 250": 45
   }
+ },
+ "fits": {
+  "attempted": 38170,
+  "ok": 37600,
+  "fallback": 0,
+  "dropped": 570,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "dropped": 425,
+   "infeasible": 145
+  }
  }
 }

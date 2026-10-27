@@ -1,0 +1,69 @@
+[
+ {
+  "target": "CHEMBL2899",
+  "train_compounds": 101,
+  "prospective_compounds": 69,
+  "label_sd_train": 0.546,
+  "label_sd_prospective": 0.367,
+  "rf_prospective_rmse_recomputed": 1.3882,
+  "rf_prospective_rmse_stored": 1.3882,
+  "rf_retro_rmse_by_splitter": {
+   "random": 0.338,
+   "scaffold": 0.4004,
+   "document": NaN,
+   "time": 0.4722
+  },
+  "notes": {
+   "cluster_0": "dropped: no group draw gave a 15-25% test set",
+   "cluster_1": "dropped: no group draw gave a 15-25% test set",
+   "cluster_2": "dropped: no group draw gave a 15-25% test set",
+   "cluster_3": "dropped: no group draw gave a 15-25% test set",
+   "cluster_4": "dropped: no group draw gave a 15-25% test set",
+   "document_0": "dropped: no group draw gave a 15-25% test set",
+   "document_1": "dropped: no group draw gave a 15-25% test set",
+   "document_2": "dropped: no group draw gave a 15-25% test set",
+   "document_3": "dropped: no group draw gave a 15-25% test set",
+   "document_4": "dropped: no group draw gave a 15-25% test set",
+   "author": "infeasible: largest author component holds more than 80% of compounds",
+   "assay_0": "dropped: no group draw gave a 15-25% test set",
+   "assay_1": "dropped: no group draw gave a 15-25% test set",
+   "assay_2": "dropped: no group draw gave a 15-25% test set",
+   "assay_3": "dropped: no group draw gave a 15-25% test set",
+   "assay_4": "dropped: no group draw gave a 15-25% test set"
+  }
+ },
+ {
+  "target": "CHEMBL221",
+  "train_compounds": 746,
+  "prospective_compounds": 61,
+  "label_sd_train": 0.979,
+  "label_sd_prospective": 0.951,
+  "rf_prospective_rmse_recomputed": 1.1132,
+  "rf_prospective_rmse_stored": 1.1132,
+  "rf_retro_rmse_by_splitter": {
+   "random": 0.7494,
+   "scaffold": 0.8577,
+   "document": 1.0393,
+   "time": 1.0573
+  },
+  "notes": {}
+ },
+ {
+  "target": "CHEMBL1163125",
+  "train_compounds": 3295,
+  "prospective_compounds": 768,
+  "label_sd_train": 1.176,
+  "label_sd_prospective": 0.796,
+  "rf_prospective_rmse_recomputed": 0.8228,
+  "rf_prospective_rmse_stored": 0.8228,
+  "rf_retro_rmse_by_splitter": {
+   "random": 0.5627,
+   "scaffold": 0.6564,
+   "document": 0.873,
+   "time": 1.3657
+  },
+  "notes": {
+   "author": "infeasible: largest author component holds more than 80% of compounds"
+  }
+ }
+]

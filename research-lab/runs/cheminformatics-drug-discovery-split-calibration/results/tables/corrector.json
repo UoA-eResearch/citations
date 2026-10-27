@@ -1,0 +1,29 @@
+{
+ "targets": 250,
+ "median_abs_error": 0.1724,
+ "below_0_10_bar": false,
+ "baseline_median_abs_error_best_single_splitter": {
+  "retro_assay": 0.1584,
+  "retro_author": 0.2213,
+  "retro_cluster": 0.176,
+  "retro_document": 0.1667,
+  "retro_random": 0.3652,
+  "retro_scaffold": 0.2783,
+  "retro_time": 0.1941
+ },
+ "importance": {
+  "retro_assay": 0.5151,
+  "retro_cluster": 0.1851,
+  "retro_scaffold": 0.126,
+  "retro_time": 0.1022,
+  "scaffold_nn_sim": 0.0993,
+  "label_var": 0.0769,
+  "cliff_density": 0.0688,
+  "assay_entropy": 0.0552,
+  "retro_document": 0.0538,
+  "retro_author": 0.0475,
+  "doc_entropy": 0.0459,
+  "retro_random": 0.0348,
+  "n_train": 0.0171
+ }
+}
