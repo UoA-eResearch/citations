@@ -54,7 +54,8 @@ No preregistered verdict changes: H1 and H2 stay Refuted. v1 tables and figures 
     PyPI cloned packages have no release in the window and are unflagged by construction.
   - Excluding the five repositories with most flagged latest releases gives 18.8% and 16.0%.
 - **G2 coverage** (`coverage.json`):
-  - 112,839 releases use the date window and 22,747 (5.4%) have an empty range and are unflagged;
+  - 134,584 releases use the date window: 112,839 with commits and 21,745 empty. Across all methods, 22,747
+    releases (5.4%) have an empty range and are unflagged;
   - tree nodes match a window release 57.9% (npm; most of the rest are pre-window versions) and 85.9% (PyPI).
 - **Flag rate rises with range size,** from 5.8% (1–5 commits) to 76% (over 2,000).
 - **H2 extras.**
@@ -81,6 +82,11 @@ No preregistered verdict changes: H1 and H2 stay Refuted. v1 tables and figures 
 - The matched text was re-derived from the clones (`git cat-file`, local objects only).
 - Two fresh labellers, blind to stratum and rule, each with their own shuffled order, labelled all 120 as AI
   signatures: 100% agreement, no adjudication needed.
+  - **Provenance (G7).** The two passes were separate fresh agents (model sonnet, general-purpose, same brief,
+    told not to open the key or each other's files), launched together at 2026-10-27 16:37 NZDT. That is why
+    their label files were written two seconds apart.
+  - The Copilot split in `posthoc_review.json` (about 15% identity, 49% suggestion trailer, 36% other) uses the
+    stored first trailer, so it is approximate.
 - Per-stratum 95% lower bounds are 0.69 (strata of 10) to 0.86 (strata of 25).
 - `extract.py`'s `matched_line` now returns the trailer that matched. The stored lines in this run's
   `ai_matches.parquet` predate the fix; the audit does not use them.

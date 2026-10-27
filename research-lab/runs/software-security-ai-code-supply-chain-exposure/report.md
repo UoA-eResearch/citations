@@ -52,8 +52,8 @@ history, such as a "Co-authored-by: Claude" line.
 
 We looked at the 20,000 most-downloaded packages for JavaScript (npm) and Python (PyPI), and read every change made
 since 2024 to the nine in ten we could trace to a repository.
-- In September 2026, about one in ten changes carried an AI signature, up from almost none two years earlier. About
-  a third of active projects had at least one.
+- In September 2026, about one in ten changes carried an AI signature, up from almost none two years earlier.
+  Between a quarter and a third of active projects had at least one.
 - Between a fifth and a third of new versions included at least one such change, depending on how packages that
   share a repository are counted.
 - These are minimum figures, because unsigned AI help leaves no trace.
@@ -95,8 +95,8 @@ None was found that maps agent commits to published releases or weights them by 
     gone or private, and 1 failed.
 - **Attribution** follows a fixed rule list (`code/attribution.py`, committed before any clone): co-author trailers,
   "Generated with" lines and agent accounts for 11 tools. Dependency and maintenance bots are excluded.
-  - "AI-signed" includes review suggestions committed with a Copilot or gemini-code-assist trailer (about two thirds
-    of Copilot matches, by the review's re-derivation).
+  - "AI-signed" includes review suggestions committed with a Copilot or gemini-code-assist trailer: roughly half to
+    two thirds of Copilot matches (approximate, from the stored first co-author trailer).
   - Comparable review bots (CodeRabbit, Greptile) are not counted.
 - **Releases.**
   - Each release since 2024-06-01 is matched to a git tag (283,022 by tag range, 5,344 by tag and date), or else to
@@ -173,8 +173,8 @@ flagged nodes are Babel helpers, from a monorepo, and `use-sync-external-store` 
   - In late 2026 a fifth to a third of new releases contain at least one AI-signed commit; the third counts monorepo
     siblings.
   - The share of signed commits rose six- to eightfold in a year.
-  - About a third of active repositories had at least one AI-signed commit in September 2026. So the one-in-ten
-    commit share describes the pooled stream, not the typical package.
+  - 28% (npm) to 33% (PyPI) of active repositories had at least one AI-signed commit in September 2026. So the
+    one-in-ten commit share describes the pooled stream, not the typical package.
 - **Dependency trees amplify it modestly.** Like for like (download-weighted on both sides), trees raise exposure
   about 1.6-fold in both ecosystems. R is about 1 for npm because two effects cancel: popular npm packages are less
   often flagged themselves, and their trees add back about as much.
@@ -207,8 +207,8 @@ flagged nodes are Babel helpers, from a monorepo, and `use-sync-external-store` 
 - **Precision audits:**
   - `results/tables/precision_audit.json`: 100 of 100 genuine, single auditor;
   - `results/tables/precision_audit_strata.json`: 120 stratified, two blind labellers, 100% agreement.
-- **Independent review:** Fable, "fix first" (`review/review.md`). This version makes the fixes, and a confirmation
-  pass is queued.
+- **Independent review:** Fable, "fix first" (`review/review.md`). The fixes were made, and the reviewer's
+  confirmation pass found them correct ("publish with edits"); the wording edits it asked for are made.
 
 ## Reproducing it
 

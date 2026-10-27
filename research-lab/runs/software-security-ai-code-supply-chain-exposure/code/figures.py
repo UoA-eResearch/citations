@@ -84,6 +84,8 @@ def f2(p):
             ax.bar(x + (k - 0.5) * 0.38, np.array(vals) * 100, width=0.36, color=col, label=f"{eco} (R = {s['R']:.2f})",
                    yerr=np.array(err) * 100, error_kw={"lw": 0.8, "ecolor": INK2})
         ax.axhline(30, color=INK2, lw=0.6, ls="--")
+        if title != "all top packages":
+            ax.text(2, 1.5, "not computed", ha="center", fontsize=7, color=INK2)
         ax.set_xticks(x); ax.set_xticklabels(labels, fontsize=7.5)
         ax.set_title(title, fontsize=9, color=INK, loc="left"); ax.grid(axis="y", color=GRID, lw=0.5)
         ax.legend(frameon=False, fontsize=7.5, loc="upper left")

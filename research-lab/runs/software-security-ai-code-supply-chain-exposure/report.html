@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Agents in the Supply Chain</title>
+<meta name="description" content="How far do AI coding agents' commits reach npm and PyPI releases and the dependency trees people install?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Software security</div>
+  <h1>AI coding tools in the npm and PyPI supply chain: a fifth to a third of new releases carry AI-signed commits; download-weighted, dependency trees raise exposure about 1.6-fold, far short of the fivefold hypothesised; and AI-signed commits ship no faster</h1>
+  <p class="subtitle">The top 10,000 npm and the top 10,000 PyPI packages by downloads were traced to 13,134 GitHub repositories, 10,372 of them with commits since 2024 (5.3 million commits). Every commit was checked for an AI signature, and every release since June 2024 (423,181) was mapped to its commit range. Resolved dependency graphs come from deps.dev. The plan and the attribution rules were committed before any data was downloaded. Revised after an independent review (D2: one bug fix, post hoc decompositions, a stratified two-labeller audit).</p>
+  <div class="meta">
+    <span>Report · 2026-10-27 · pre-review draft</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/software-security-ai-code-supply-chain-exposure/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/software-security-ai-code-supply-chain-exposure/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/software-security-ai-code-supply-chain-exposure/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: H1 Refuted; H2 Refuted.</strong></p>
+<ul>
+<li><strong>H1 (download-weighted dependency exposure is at least 5× the share of packages that are themselves AI-flagged,
+  and over 30% for npm): Refuted on both parts.</strong><ul>
+<li><strong>npm.</strong><ul>
+<li>p = 21.6% of top packages' latest releases have an AI-signed commit in their release range. This is a
+  repository-level rate: it is 6.0% for packages whose repository hosts no other top package and 38.6% for
+  packages in multi-package repositories.</li>
+<li>The download-weighted probability that a top package's resolved tree contains such a release (P_w) is 22.3%
+  (20.6–24.1%).</li>
+<li>R = P_w / p = 1.03 (0.95–1.11).</li>
+</ul>
+</li>
+<li><strong>PyPI.</strong> p = 18.6%, P_w = 36.1% (31.3–41.5%), R = 1.94 (1.67–2.24).</li>
+<li><strong>R mixes two effects (post hoc).</strong> P_w is download-weighted and p is not.<ul>
+<li>Heavily downloaded packages are less often flagged themselves: 13.8% (npm) and 22.8% (PyPI) download-weighted.</li>
+<li>Trees then raise those rates about 1.6-fold: 1.61 (1.51–1.73) for npm and 1.58 (1.43–1.78) for PyPI.</li>
+<li>The tree effect is real but far below fivefold.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>The caveat is monorepos, and it lowers npm sharply.</strong><ul>
+<li>The clones carry no file paths. So when one repository hosts many packages, a commit to any of them flags every
+sibling's release.</li>
+<li>Without such packages, npm p is 6.0% and P_w 6.1%; PyPI p is 14.4% and P_w 29.4%.</li>
+<li>Tag-only ranges give npm 14.3% / 14.9% and PyPI 11.7% / 25.2%.</li>
+</ul>
+</li>
+<li><strong>H2 (AI-signed commits reach a release at most half as fast as matched human commits): Refuted.</strong><ul>
+<li>The median commit-to-release latency is 6.8 days for AI-signed commits against 6.7 for human commits matched in
+the same package within 14 days. The ratio is 1.01 (0.99–1.11).</li>
+<li><strong>Matching as the plan worded it</strong> (per repository, each commit once, post hoc) gives 1.12 (1.05–1.19).
+AI-signed commits wait slightly longer.</li>
+</ul>
+</li>
+<li><strong>The trend is steep.</strong><ul>
+<li>AI-signed commits were 0.1% of non-bot commits in npm repositories in March 2025 and 10.8% in September 2026; in
+PyPI repositories, 1.4% and 13.3%.</li>
+<li>In September 2026, 28% (npm) and 33% (PyPI) of active repositories had at least one (post hoc).</li>
+<li>The share of new releases containing at least one AI-signed commit rose from under 1% in January 2025 to 37%
+(npm) and 33% (PyPI) in September 2026. Without monorepo packages the September 2026 shares are 21% and 25%.</li>
+<li>Claude-model signatures (mostly Claude Code) are 68% of attributed commits, Copilot 13–16% and Cursor 4–10%.</li>
+</ul>
+</li>
+<li><strong>The detector is precise.</strong><ul>
+<li>A stratified audit of 120 matches, weighted towards the riskier rules, was labelled by two blind labellers.</li>
+<li>Every match was a genuine AI signature, with 100% agreement. Per-stratum 95% lower bounds are 0.69–0.86.</li>
+<li>The detector is blind to unsigned use and misses about 3% of signed commits, so every share is a lower bound.</li>
+</ul>
+</li>
+</ul>
+<h2>In plain terms</h2>
+<p>Most software is assembled from thousands of free packages that other people maintain. AI coding tools, which
+write code and sometimes commit it on a developer's behalf, have spread fast. Many leave a signature in the project
+history, such as a "Co-authored-by: Claude" line.</p>
+<p>We looked at the 20,000 most-downloaded packages for JavaScript (npm) and Python (PyPI), and read every change made
+since 2024 to the nine in ten we could trace to a repository.
+- In September 2026, about one in ten changes carried an AI signature, up from almost none two years earlier.
+  Between a quarter and a third of active projects had at least one.
+- Between a fifth and a third of new versions included at least one such change, depending on how packages that
+  share a repository are counted.
+- These are minimum figures, because unsigned AI help leaves no trace.</p>
+<p>We expected the reach to multiply because packages depend on other packages. Install one popular package and you
+pull in dozens of others, so a few AI-touched packages could end up in most installations. Counted fairly, by
+downloads on both sides, dependencies raised the reach about one and a half times, not the fivefold we expected.</p>
+<p>We also checked whether AI-written changes are rushed out faster than human ones. They are not: both take about a
+week to reach a release.</p>
+<p>Nothing here says AI-written code is less safe. The study measures where it goes, not how good it is.</p>
+<h2>What was asked</h2>
+<p>The lead (<code>software-security-ai-code-supply-chain-exposure</code>) asked how far AI-attributed commits reach registry
+releases, and through dependency trees, installations.</p>
+<p>Prior work studies agent pull requests on GitHub:
+- AIDev (Li, Zhang &amp; Hassan, MSR 2026; arXiv 2602.09185), with 932,791 agent pull requests;
+- fingerprinting of agents (Ghaleb 2026, arXiv 2601.17406);
+- adoption (Robbes et al., TOSEM 2026; arXiv 2601.18341);
+- follow-up fixes on agent pull requests (Takerngsaksiri et al. 2026, arXiv 2609.26847);
+- the closest work, a validated census of agent traces across 180 million repositories (Khosravani &amp; Mockus 2026,
+  arXiv 2606.24429). It measures prevalence in repositories, not in releases or dependency trees, and reports that
+  bot-account lookups recover only a few percent of the Claude Code commits that multi-method detection finds. That
+  supports relying on trailers here, as a lower bound.</p>
+<p>None was found that maps agent commits to published releases or weights them by dependency trees and downloads.</p>
+<h2>How it was done</h2>
+<ul>
+<li><strong>Packages.</strong> The top 10,000 per ecosystem by last-month downloads (ecosyste.ms, fetched 2026-10-24), with
+  registry metadata: release publish times, pre-releases excluded.</li>
+<li><strong>Repositories.</strong><ul>
+<li>GitHub repositories were resolved for 9,810 npm and 9,026 PyPI packages: 13,134 repositories.</li>
+<li>They were cloned bare, treeless and shallow since 2024-01-01.</li>
+<li>10,372 were cloned. 2,626 had no commits since then and count as cloned with unflagged releases (D1). 135 were
+gone or private, and 1 failed.</li>
+</ul>
+</li>
+<li><strong>Attribution</strong> follows a fixed rule list (<code>code/attribution.py</code>, committed before any clone): co-author trailers,
+  "Generated with" lines and agent accounts for 11 tools. Dependency and maintenance bots are excluded.<ul>
+<li>"AI-signed" includes review suggestions committed with a Copilot or gemini-code-assist trailer: roughly half to
+two thirds of Copilot matches (approximate, from the stored first co-author trailer).</li>
+<li>Comparable review bots (CodeRabbit, Greptile) are not counted.</li>
+</ul>
+</li>
+<li><strong>Releases.</strong><ul>
+<li>Each release since 2024-06-01 is matched to a git tag (283,022 by tag range, 5,344 by tag and date), or else to
+a date window on the default branch (134,584).</li>
+<li>A release is flagged if its commit range contains an AI-signed commit.</li>
+<li>22,747 releases (5.4%) have an empty range and are unflagged (<code>results/tables/coverage.json</code>).</li>
+<li>Flag rates rise with range size, from 5.8% for 1–5 commits to 76% for more than 2,000. Large ranges come from
+monorepos and date windows.</li>
+</ul>
+</li>
+<li><strong>Exposure.</strong><ul>
+<li>deps.dev resolved graphs exist for 9,663 npm and 9,649 PyPI latest versions.</li>
+<li>A root is exposed if any node, itself included, is a flagged release.</li>
+<li>Flags exist only for packages in the study set, which covers 97.7% (npm) and 99.4% (PyPI) of non-root node
+names.</li>
+<li>Versions are matched in canonical form (D2: deps.dev pads PyPI versions). In-set nodes match a release since
+June 2024 for 57.9% (npm; most of the rest are older versions) and 85.9% (PyPI).</li>
+<li>P_w weights roots by downloads. Intervals come from 2,000 package bootstrap resamples.</li>
+</ul>
+</li>
+<li><strong>Latency.</strong><ul>
+<li>Each AI-signed commit in a tag-based range is matched to the nearest-in-time human commit in the same package
+(±14 days, without replacement).</li>
+<li>The ratio of medians has a bootstrap interval over repositories.</li>
+<li>The plan said "same repository". That matching is reported as a post hoc check (D2).</li>
+</ul>
+</li>
+</ul>
+<h2>Results</h2>
+<h3>The trend and the tools (<code>results/figures/F1_monthly_agents.png</code>)</h3>
+<figure><a href="results/figures/F1_monthly_agents.png"><img src="results/figures/F1_monthly_agents.png" alt="Monthly"></a><figcaption>Share of commits (excluding dependency and maintenance bots) carrying an AI-agent signature: a co-author trailer, a &quot;Generated with&quot; line, or an agent account as author or committer, in shallow clones (since 2024-01-01) of the GitHub repositories behind the top 10,000 npm and PyPI packages by downloads. A lower bound: unsigned AI-written code is invisible. Dashed (post hoc, D2): share of repositories with any non-bot commit that month that had at least one AI-signed commit. Right: agent mix over June 2024 to October 2026 (claude = any Claude-model signature, mostly Claude Code; copilot includes committed review suggestions).</figcaption></figure>
+<p>The pooled share is concentrated. The top 10 repositories hold 18% of AI-signed commits since June 2024, and the
+top 50 hold 44%. Some tools' series are mostly their own repository: aider 91%, junie 89%, openhands 56%.</p>
+<h3>Exposure (<code>results/figures/F2_exposure.png</code>)</h3>
+<figure><a href="results/figures/F2_exposure.png"><img src="results/figures/F2_exposure.png" alt="Exposure"></a><figcaption>p: share of top packages whose own latest release contains at least one AI-attributed commit in its release range. Exposure: share of top packages whose deps.dev-resolved dependency tree (root included) contains at least one AI-flagged release, unweighted and weighted by last-month downloads. R = P_w / p (preregistered bar: 5); R divides a weighted by an unweighted rate, so the like-for-like tree effect is P_w over the download-weighted own-release rate (third bar; post hoc, D2). Dashed line: H1b&#x27;s 30% bar for npm. 95% intervals from 2,000 package bootstrap resamples. Right: packages whose repository hosts more than one top package removed, and their releases unflagged in trees.</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>npm</th>
+<th>PyPI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>packages with a repository (cloned or inactive)</td>
+<td>9,757</td>
+<td>8,934</td>
+</tr>
+<tr>
+<td>p: own latest release flagged</td>
+<td>21.6% (20.8–22.4)</td>
+<td>18.6% (17.8–19.4)</td>
+</tr>
+<tr>
+<td>p, single-package repositories / multi-package repositories</td>
+<td>6.0% / 38.6%</td>
+<td>14.4% / 34.9%</td>
+</tr>
+<tr>
+<td>p, among packages with a release since June 2024</td>
+<td>30.9%</td>
+<td>24.0%</td>
+</tr>
+<tr>
+<td>own latest release flagged, download-weighted (post hoc)</td>
+<td>13.8%</td>
+<td>22.8%</td>
+</tr>
+<tr>
+<td>tree exposed, unweighted</td>
+<td>31.6%</td>
+<td>48.8%</td>
+</tr>
+<tr>
+<td>P_w: tree exposed, download-weighted</td>
+<td>22.3% (20.6–24.1)</td>
+<td>36.1% (31.3–41.5)</td>
+</tr>
+<tr>
+<td>tree multiplier, P_w / weighted own rate (post hoc)</td>
+<td>1.61 (1.51–1.73)</td>
+<td>1.58 (1.43–1.78)</td>
+</tr>
+<tr>
+<td>R = P_w / p (preregistered)</td>
+<td>1.03 (0.95–1.11)</td>
+<td>1.94 (1.67–2.24)</td>
+</tr>
+<tr>
+<td>R, monorepos removed (a lower bound: siblings unflagged in trees)</td>
+<td>1.03 (0.82–1.27)</td>
+<td>2.05 (1.69–2.45)</td>
+</tr>
+<tr>
+<td>R, tag-based ranges only</td>
+<td>1.05 (0.95–1.15)</td>
+<td>2.16 (1.81–2.55)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>PyPI exposure is diffuse</strong> (post hoc). Leaving out any one of the ten most-included flagged nodes lowers P_w by at
+most 1.7 points: numpy (in 1,175 trees), cffi (1,052), annotated-types (1,036), cryptography (902),
+opentelemetry-api (680), and tqdm, setuptools, aiohappyeyeballs, pillow and sqlparse. In npm the most-included
+flagged nodes are Babel helpers, from a monorepo, and <code>use-sync-external-store</code> (161 trees).</p>
+<h3>Latency (H2)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>pairs</th>
+<th>median AI-signed commit → release</th>
+<th>median matched human commit → release</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>npm</td>
+<td>199,570</td>
+<td>5.4 days</td>
+<td>5.3 days</td>
+</tr>
+<tr>
+<td>PyPI</td>
+<td>97,236</td>
+<td>13.1 days</td>
+<td>12.2 days</td>
+</tr>
+<tr>
+<td>both</td>
+<td>296,806</td>
+<td>6.8 days</td>
+<td>6.7 days</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Pairs.</strong> The pairs contain 89,401 distinct AI-signed commits, because a monorepo commit appears once per sibling
+  package. 80% of pairs are in the same release as their partner, so a ratio near 1 is partly built in. Among
+  different-release pairs it is 0.90.</li>
+<li><strong>Unmatched commits.</strong> 65,399 AI-signed commits had no human commit in the same package within 14 days and are not
+  in the comparison. Their median latency is shorter (4.8 days against 6.8). They come from AI-dominated packages,
+  which the comparison cannot speak to.</li>
+<li><strong>Plan wording (post hoc).</strong> Per repository, one row per commit: 89,700 pairs, ratio 1.12 (1.05–1.19).</li>
+</ul>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>AI-signed code is now routine in the repositories behind the most-downloaded packages.</strong><ul>
+<li>In late 2026 a fifth to a third of new releases contain at least one AI-signed commit; the third counts monorepo
+siblings.</li>
+<li>The share of signed commits rose six- to eightfold in a year.</li>
+<li>28% (npm) to 33% (PyPI) of active repositories had at least one AI-signed commit in September 2026. So the
+one-in-ten commit share describes the pooled stream, not the typical package.</li>
+</ul>
+</li>
+<li><strong>Dependency trees amplify it modestly.</strong> Like for like (download-weighted on both sides), trees raise exposure
+  about 1.6-fold in both ecosystems. R is about 1 for npm because two effects cancel: popular npm packages are less
+  often flagged themselves, and their trees add back about as much.</li>
+<li><strong>AI-signed commits are not fast-tracked.</strong> They wait as long as matched human commits, or slightly longer under
+  the plan's matching.</li>
+<li><strong>Not shown:</strong><ul>
+<li><strong>Quality or security.</strong> Provenance is not risk.</li>
+<li><strong>Unsigned AI use,</strong> so every share is a lower bound. The rules also miss about 3% of signed commits (for
+example "Assisted-by:" trailers).</li>
+<li><strong>Package-level precision in monorepos.</strong> Without file paths, a monorepo flag means the repository had an
+AI-signed commit between the package's releases (6% vs 39% in npm).</li>
+<li><strong>Tag choice in multi-package repositories.</strong> Generic tags are tried before name-specific ones. The review found
+2,207 ambiguous matches, with no sign of extra flagging.</li>
+<li><strong>Exact reach to installs.</strong> The resolved graphs are deps.dev's resolution of the latest version, not real
+lockfiles, and downloads include CI and mirrors.</li>
+</ul>
+</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration.</strong> <code>plan.md</code> and <code>code/attribution.py</code> were committed before any data. The pipeline code was
+  committed one second before the npm top list finished downloading.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>):<ul>
+<li>D1 (before any flag): repositories with no commits since 2024 count as cloned and unflagged rather than excluded,
+because excluding them would inflate p.</li>
+<li>D2 (after review), covering:<ul>
+<li>the PyPI version-matching fix;</li>
+<li>the post hoc decompositions, denominators, coverage, H2 matching and hubs;</li>
+<li>the stratified precision audit with two blind labellers;</li>
+<li>the H2 matching deviation;</li>
+<li>the wording changes.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Precision audits:</strong><ul>
+<li><code>results/tables/precision_audit.json</code>: 100 of 100 genuine, single auditor;</li>
+<li><code>results/tables/precision_audit_strata.json</code>: 120 stratified, two blind labellers, 100% agreement.</li>
+</ul>
+</li>
+<li><strong>Independent review:</strong> Fable, "fix first" (<code>review/review.md</code>). The fixes were made, and the reviewer's
+  confirmation pass found them correct ("publish with edits"); the wording edits it asked for are made.</li>
+</ul>
+<h2>Reproducing it</h2>
+<ol>
+<li><code>code/fetch.py top</code>, then <code>code/fetch.py registry</code>.</li>
+<li><code>code/clone.sh</code> (repository list), then <code>code/classify_failures.sh</code>.</li>
+<li><code>code/extract.py run</code>.</li>
+<li><code>code/deps.py</code>.</li>
+<li><code>code/analyse.py</code>, then <code>code/posthoc_review.py</code>.</li>
+<li><code>code/audit_strata.py build</code>, two blind labelling passes, <code>tools/agreement.py</code>, then <code>code/audit_strata.py report</code>.</li>
+<li><code>code/figures.py</code>.</li>
+</ol>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/software-security-ai-code-supply-chain-exposure/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

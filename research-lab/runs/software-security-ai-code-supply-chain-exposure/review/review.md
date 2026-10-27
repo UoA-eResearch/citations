@@ -271,3 +271,64 @@ mix.
   choice to rely on trailers and its lower-bound framing; worth one sentence.
 - **G7**: not applied; single auditor. My re-audit stands in as a second labeller for the sample (99 genuine, 1
   uncertain) but was not blind to the rule.
+
+---
+
+# Confirmation pass (2026-10-27, after commit 32fc3f7)
+
+## Verdict: publish with edits
+
+Every finding of the first pass is addressed correctly, and the fixes introduce nothing wrong. Checks run: both gate
+tools (`overclaim_check.py --verify`: 51 rows pass; `attribution.py check`: 11 claims pass), every number in the
+rewritten report.md against `primary.json`, `posthoc_review.json`, `coverage.json` and `precision_audit_strata.json`,
+the `analyse.py`/`extract.py` diffs, the two scripts added, both figures, the audit artefacts in `data/interim/`
+(structure and timestamps only), and the repository store (116 object directories were touched by the aborted
+`git show` draft; 0 refs, HEADs, packed-refs or FETCH_HEADs changed, so commit sets are intact as D2 says).
+
+By finding:
+1. **R.** Decomposition and joint bootstrap in `posthoc_review.py:23-41` are right; 13.8%/22.8% weighted own rates,
+   multipliers 1.61 (1.51-1.73) and 1.58 (1.43-1.78); title, verdict, plain terms, "What this does" and F2's third
+   bar all now say "about 1.6-fold, far short of fivefold". R kept as preregistered with the caveat. Done.
+2. **npm p.** 6.0% / 38.6% split, the 86% share, p among packages that released (30.9% / 24.0%), lower-bound label
+   on the no-monorepo R. Done.
+3. **G2.** `coverage.json` reconciles (287,595 + 112,839 + 22,747 = 423,181; 13,754 + 4,937 = 18,691); range-size
+   table; key renamed `releases_analysed`. Done, one wording nit below.
+4. **H2.** Distinct commits (89,401 by sha; my 89,774 counted repo-sha pairs, the difference is forks), 80% same-
+   release, 0.90 among different-release pairs, unmatched 4.8 vs 6.8 days, plan-wording 1.12 (1.05-1.19) reproduced
+   exactly by `latency_extras()`; deviation logged in D2. Done.
+5. **Hubs.** Leave-one-out (at most 1.7 points, annotated-types) and the top-10 list replace the hub sentence. Done.
+6. **Precision.** `matched_line` fixed; 120-item audit stratified as specified (10/25/10/15/25/10/25), matched text
+   re-derived with `git cat-file` (local only), two blind passes in separate shuffled orders, 120/120 each, exact
+   Clopper-Pearson bounds per stratum (0.692 / 0.782 / 0.863 verified). Done, one provenance nit below.
+7. **Review bots.** "AI-signed" throughout, inclusion stated, CodeRabbit/Greptile exclusion stated. Done, one
+   attribution nit below.
+8-10. False negatives (3%), Claude-model wording, "a fifth to a third" everywhere, provenance sentence, monorepo
+   definition in D2. Done.
+11. **PyPI versions.** `canonicalize_version(strip_trailing_zero=True)` on both sides; coverage shows 0 in-set PyPI
+   nodes left unmatched by padding; P_w 36.1% (31.3-41.5), R 1.94 (1.67-2.24), sensitivities moved consistently
+   (no-monorepo PyPI P_w 29.4%, R 2.05; tag-only 25.2%, R 2.16). Matches my own recomputation (36.07% / 1.94). Done.
+12. **Tags.** Acknowledged with my counts as a limit. Done.
+13. **Trend.** Repository-level share (28% / 33%, September 2026) in F1 as dashed lines and in the text;
+   concentration (18% / 44%) and self-hosting agents stated. Done.
+Gates: G3 `plausibility.md` traces three units and its invariants hold; G5 relabelled the sentences I disputed as
+Exploratory-labelled with the replacement text; G6's S11 (bot-lookup recall of a few percent) matches the census
+abstract I read on OpenAlex (28,154 of 850,157 = 3.3%).
+
+## Edits before publication (none changes a number in a table)
+
+1. report.md lines 98-99: the "about two thirds of Copilot matches" split is from the stored first-trailer lines,
+   not a re-derivation; `posthoc_review.json` → `copilot_split` gives 49% suggestion-first-line, 15% identity, 36%
+   other, and its own note says the split is approximate. Say "roughly half to two thirds (approximate; stored
+   lines are first trailers)".
+2. deviations.md D2, coverage bullet: "112,839 releases use the date window" reads as contradicting report.md line
+   103 (134,584). Write "134,584 use the date window, of which 21,745 are empty", matching `coverage.json`'s
+   ok / fallback / dropped split.
+3. Plain terms line 55-56 and the F1 title: "about a third of active projects" is 28% for npm; "between a quarter
+   and a third" is exact.
+4. F2 right panel has an empty "own latest, weighted" slot: add the no-monorepo weighted own rate or drop the slot.
+5. G7 provenance: `audit2_labels_A.json` and `_B.json` hold only labels and were written two seconds apart, so
+   independence of the two passes is not verifiable from the artefacts; record how the two labellers were run
+   (separate sessions or agents, with ids and times) in D2 or in `precision_audit_strata.json`. The labelling brief
+   instructs that committed Copilot or gemini-code-assist suggestions count as AI, so the audit measures "AI
+   identity", which the AI-signed wording now matches; say so in one clause where the audit is reported.
+6. Optional: "about one and a half times" (plain terms) → "about 1.6 times".

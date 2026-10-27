@@ -47,7 +47,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-27 04:41 | `health-econ-procyclical-mortality-multiverse` | review (fresh agent; pre-review gate G5+G6 done) | publish with edits |
 | 2026-10-27 09:41 | `health-econ-procyclical-mortality-multiverse` | confirmation pass (original reviewer resumed) | publish -> PUBLISHED |
 | 2026-10-27 14:41 | `software-security-ai-code-supply-chain-exposure` | review (fresh agent; pre-review gate G5+G6 done) | fix first |
-| 2026-10-27 19:41 | `software-security-ai-code-supply-chain-exposure` | confirmation pass (original reviewer resumed) |  |
+| 2026-10-27 19:41 | `software-security-ai-code-supply-chain-exposure` | confirmation pass (original reviewer resumed) | publish with edits -> PUBLISHED |
 
 **Pre-review gate (from 2026-10-25, METHODS.md):** before launching a draft's Fable review, run G5 (`tools/overclaim_check.py RUN --verify`) and G6 (`tools/attribution.py check RUN`) on it, fix what they find as a D-entry, and add the standard gate-check block to its `review/prompt.md`. New leads apply all of G1–G7.
 
@@ -77,7 +77,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | `frontier-edge-asr-quantization-accent-parity` | (draft 2f02159 review) | H1 Inconclusive; H2 Supported by rule, not robust, not replicated; H3 Refuted; H4 not testable | **published** 2026-10-24 (Inconclusive; review fix first -> D4/D5 f8a6d4d; confirmation publish with edits -> D6) |
 | `ecology-biodiversity-globi-temporal-link-holdout` | bfe2f58 -> D2 303167a, edits | H1 Refuted (rho 1.68; without trophiCH 1.46, 1.05-2.08) | PUBLISHED 2026-10-27 (review fix first; confirmation publish with edits) |
 | `health-econ-procyclical-mortality-multiverse` | ed2f4fc -> D3 74f9df5, edits | H1 Inconclusive (47.4% of 2,304 specs negative-significant; joint test p<0.002; window and measure decide it); H2 Refuted (1.6% of 576 post-2010 drug specs) | PUBLISHED 2026-10-27 (review publish with edits; confirmation publish) |
-| `software-security-ai-code-supply-chain-exposure` |  3cfbf04 | H1 Refuted (npm R 1.03, P_w 22.3% < 30%; PyPI R 1.91); H2 Refuted (latency ratio 1.01); a third of releases flagged by Sep 2026 | queued; pre-review gate G5+G6 done 2026-10-25 (monorepo-qualified headline; prior work verified) |
+| `software-security-ai-code-supply-chain-exposure` | 3cfbf04 -> D2 32fc3f7, edits | H1 Refuted (npm R 1.03, P_w 22.3% < 30%; PyPI R 1.91); H2 Refuted (latency ratio 1.01); a third of releases flagged by Sep 2026 | PUBLISHED 2026-10-27 (review fix first; confirmation publish with edits) |
 | `llm-ml-science-scaling-fit-seed-uncertainty` |  f33d2b6 | H1 Inconclusive (W1 0.123 nats, 0.038-0.160); H2 Inconclusive (shrinkage 0.16); post hoc: two unstable 410M runs drive the width | queued; pre-review gate G5+G6 done 2026-10-25 |
 | `metascience-retraction-citer-contagion` |  6ab7aea | H1 Inconclusive (prereg DiD +0.068, pre-trend); H2 not testable; H3 Refuted as prereg; post hoc not-yet-treated: no penalty (+0.003, -0.015 to +0.021) | queued; pre-review gate G5+G6 done 2026-10-25 (post hoc labelled in title; unfound citation replaced) |
 | `experimental-math-oeis-conjecture-audit` |  a0127a5 | H1 Refuted (2 confirmed falsifications; 15 of 14,671 screened disagree with LODA) | queued; pre-review gate G5+G6 done 2026-10-25 (silent drops stated; citations corrected) |
