@@ -90,6 +90,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | `ecology-biodiversity-herbarium-velocity-effort-null` |  19950a0 | H1 Supported (fixed-range noise+effort null reproduces 67% of the observed median centroid velocity: 4.6 vs 6.9 km/yr; 36% of species exceed their null p95) | queued; gates G1-G3, G5, G6 run before review |
 | `seismology-geophysics-dynamic-triggering-strain-test` |  bee3bcc | H2 Refuted (no excess of significant local-event rises after 350 distant M7+: 15,042 vs 15,742 expected), H1 Inconclusive (no rise with strain); D1 post hoc exposure correction | queued; gates G1-G3, G5, G6 run before review |
 | `cheminformatics-drug-discovery-split-calibration` |  edac660 | H1 Supported (random/scaffold splits understate prospective RMSE: -0.37/-0.27); H2 Refuted (document/author abs bias 0.17/0.22 though signed ~0); H3 Refuted (tau ~0.4 for all splitters); corrector 0.17 vs 0.10 bar | queued; new lead under G1-G7 (G5, G6 done; G7 n/a) |
+| `bioinformatics-sc-disease-de-negative-control` |  ba40c40 | H1 Supported (74% of 799 Census disease contrasts indistinguishable from matched healthy-vs-healthy nulls on the power-selected DE-gene count; 82% on preregistered pi1); H2 Inconclusive | queued; new lead under G1-G7 (G5, G6 done; G7 n/a). D2: pi1 has 8% power vs 87%, both reported |
 
 ## Order to run them in
 
