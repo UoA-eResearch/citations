@@ -1,0 +1,56 @@
+{
+ "pseudobulk": {
+  "attempted": 43,
+  "ok": 43,
+  "fallback": 0,
+  "dropped": 0,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {}
+ },
+ "contrast_donors": {
+  "attempted": 135819,
+  "ok": 114630,
+  "fallback": 0,
+  "dropped": 21189,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "more than one disease label in the dataset": 116,
+   "fewer than 10 cells": 21073
+  }
+ },
+ "primary_contrasts": {
+  "attempted": 799,
+  "ok": 799,
+  "fallback": 0,
+  "dropped": 0,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {}
+ },
+ "de_fits": {
+  "attempted": 420274,
+  "ok": 420274,
+  "fallback": 0,
+  "dropped": 0,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "full fit failed": 0,
+   "real fit failed": 0,
+   "null fit failed": 0
+  }
+ },
+ "replication_pairs": {
+  "attempted": 340,
+  "ok": 335,
+  "fallback": 0,
+  "dropped": 5,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "fewer than 500 shared genes": 5
+  }
+ }
+}

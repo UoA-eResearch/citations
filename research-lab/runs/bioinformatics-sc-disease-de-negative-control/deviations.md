@@ -25,3 +25,28 @@
 
 Recorded 2026-10-27 05:40 NZDT. At that time no DE result existed; pseudobulk sums had been computed for two datasets,
 for coverage only.
+
+## D2 — 2026-10-28 00:58 NZDT — the primary statistic has almost no power (G3); before any H1 result was computed
+
+The plan's G3 power check (plan section 7) injected a twofold change into 5% of expressed genes in the pseudo-disease
+donors of 100 null draws across 20 primary contrasts, and ran the identical pipeline
+(`code/power_check.py`, `results/tables/power_check.json`). Against each contrast's own null distribution:
+
+| statistic | power at p < 0.05 | injected median | null median |
+|---|---|---|---|
+| **π1** (preregistered primary) | **0.08** | 0.110 | 0.038 |
+| **number of DE genes at BH FDR < 0.05** (preregistered secondary) | **0.87** | 217 | 0 |
+| mean abs logFC of the 100 smallest-p genes (secondary) | 0.50 | 1.081 | 0.704 |
+
+- **π1 cannot support the headline.** A real twofold change in one gene in twenty is missed 92% of the time, because
+  π1's null distribution across matched healthy draws is wide (null median 0.038, and far higher in some contrasts).
+  So "indistinguishable from the matched null" under π1 would mean little.
+- **Decision.** The report gives both:
+  - **H1 as preregistered, on π1,** with its 8% power stated beside it, so the preregistered verdict stands on the
+    record;
+  - **H1 on the number of DE genes,** the preregistered secondary that the power check shows is sensitive, with the
+    same bands, bootstrap and BH correction. The interpretation leads with this one.
+- **Why this is not outcome-driven.** The power check uses only healthy-donor null draws and synthetic injections.
+  No disease contrast's result entered the choice. (For the record: while debugging a CSV-parsing bug I saw one
+  contrast's numbers, c0017, before this decision.)
+- The same reporting applies to the disease-gene enrichment secondary, whose power is not measured by this check.

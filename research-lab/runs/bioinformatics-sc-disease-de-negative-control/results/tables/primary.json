@@ -1,0 +1,167 @@
+{
+ "H1": {
+  "contrasts_evaluable": 799,
+  "datasets": 25,
+  "diseases": 42,
+  "S1": 0.8185,
+  "ci95": [
+   0.7149,
+   0.8881
+  ],
+  "verdict": "Supported",
+  "by_n_de_power_selected": {
+   "S1": 0.7384,
+   "ci95": [
+    0.5652,
+    0.8393
+   ],
+   "verdict": "Supported",
+   "S1_equal_weight_per_disease": 0.7397
+  },
+  "S1_equal_weight_per_disease": 0.8166,
+  "share_indistinguishable_by_stat": {
+   "pi1": 0.8185,
+   "n_de": 0.7384,
+   "mean_abs_lfc_top100": 0.8173
+  },
+  "share_real_above_null_q95": {
+   "pi1": 0.3267,
+   "n_de": 0.3805,
+   "mean_abs_lfc_top100": 0.3116
+  },
+  "median_pi1_real": 0.1842,
+  "median_pi1_null_median": 0.0257,
+  "median_n_de_full": 52.0,
+  "share_full_with_any_de": 0.6909,
+  "ot_enrichment": {
+   "contrasts": 575,
+   "share_enriched_q05": 0.0,
+   "release": {
+    "data": {
+     "meta": {
+      "dataVersion": {
+       "year": "26",
+       "month": "09"
+      },
+      "apiVersion": {
+       "x": "26",
+       "y": "9",
+       "z": "0"
+      }
+     }
+    }
+   }
+  },
+  "attribution": {
+   "log2_m": {
+    "beta": 0.159,
+    "ci95": [
+     -0.276,
+     1.18
+    ]
+   },
+   "log2_median_cells": {
+    "beta": 0.134,
+    "ci95": [
+     -0.218,
+     0.41
+    ]
+   },
+   "sex_imbalance": {
+    "beta": 0.746,
+    "ci95": [
+     0.258,
+     1.959
+    ]
+   },
+   "age_imbalance_tv": {
+    "beta": -0.093,
+    "ci95": [
+     -0.568,
+     0.794
+    ]
+   },
+   "nucleus": {
+    "beta": -0.972,
+    "ci95": [
+     -1.873,
+     -0.056
+    ]
+   },
+   "n": 790,
+   "note": "exploratory; excess clipped to +/-50 null IQRs"
+  }
+ },
+ "H2": {
+  "pairs": 335,
+  "groups": 94,
+  "diseases": 9,
+  "median_rho": 0.1922,
+  "beta": {
+   "d": 0.061,
+   "c": 0.0307,
+   "sex_imb": -0.0157,
+   "same_assay": -0.015
+  },
+  "bootstrap": {
+   "group": {
+    "beta_d_ci": [
+     0.0211,
+     0.0952
+    ],
+    "beta_c_ci": [
+     -0.0023,
+     0.0663
+    ],
+    "beta_sex_ci": [
+     -0.0425,
+     0.0032
+    ],
+    "beta_same_assay_ci": [
+     -0.0727,
+     0.0575
+    ],
+    "d_minus_c_ci": [
+     -0.0321,
+     0.0844
+    ],
+    "clusters": 94
+   },
+   "disease": {
+    "beta_d_ci": [
+     -0.2323,
+     0.0827
+    ],
+    "beta_c_ci": [
+     0.0083,
+     0.1333
+    ],
+    "beta_sex_ci": [
+     -0.3415,
+     0.0772
+    ],
+    "beta_same_assay_ci": [
+     -0.1273,
+     0.4383
+    ],
+    "d_minus_c_ci": [
+     -0.3242,
+     0.06
+    ],
+    "clusters": 9
+   }
+  },
+  "verdict": "Inconclusive",
+  "null_baseline": {
+   "pairs": 33,
+   "median_real_rho": 0.2961,
+   "median_null_rho": 0.0299
+  }
+ },
+ "matching_fallbacks": {
+  "nearest_bin": 947169,
+  "same_sex_any_bin": 75913,
+  "any_donor": 903834,
+  "null_donor_slots": 16394000
+ }
+}

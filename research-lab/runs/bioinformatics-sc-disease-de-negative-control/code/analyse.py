@@ -82,7 +82,9 @@ def ot_lookup():
     row = pd.Series(np.arange(len(var)), index=var.feature_id.astype(str))
     ot = pd.read_parquet(META / "ot_assoc.parquet")
     ot = ot[ot.ensembl_id.isin(row.index)]
-    return {d: pd.Series(g.score.to_numpy(), index=row[g.ensembl_id].to_numpy()) for d, g in ot.groupby("disease")}
+    # several Open Targets rows can land on the same Census var row, so keep the strongest score per row
+    return {d: pd.Series(g.score.to_numpy(), index=row[g.ensembl_id].to_numpy()).groupby(level=0).max()
+            for d, g in ot.groupby("disease")}
 
 
 def ot_stat(top100, genes, score):
@@ -138,6 +140,7 @@ def h1(ci):
     for s in STATS:
         df[f"{s}_q"] = bh(df[f"{s}_p"])
     df["indistinguishable"] = df.pi1_q >= 0.05
+    df["indistinguishable_nde"] = df.n_de_q >= 0.05     # D2: the statistic the G3 power check shows is sensitive
     e = df.dropna(subset=["ot_p"]).copy()
     e["ot_q"] = bh(e.ot_p)
     df = df.merge(e[["contrast", "ot_q"]], on="contrast", how="left")
@@ -153,8 +156,18 @@ def h1(ci):
     lo, hi = np.percentile(bs, [2.5, 97.5])
     verdict = "Supported" if lo > 0.5 else "Refuted" if hi < 0.5 else "Inconclusive"
     per_dis = df.groupby("disease").indistinguishable.mean()
+
+    def share_and_verdict(col):
+        by2 = {d: df[col][df.dataset_id == d].to_numpy() for d in dss}
+        r2 = np.random.default_rng(SEED + 5)
+        b2 = [np.concatenate([by2[d] for d in r2.choice(dss, len(dss), replace=True)]).mean() for _ in range(BOOT)]
+        l2, h2 = np.percentile(b2, [2.5, 97.5])
+        return {"S1": round(float(df[col].mean()), 4), "ci95": [round(float(l2), 4), round(float(h2), 4)],
+                "verdict": "Supported" if l2 > 0.5 else "Refuted" if h2 < 0.5 else "Inconclusive",
+                "S1_equal_weight_per_disease": round(float(df.groupby("disease")[col].mean().mean()), 4)}
     out = {"contrasts_evaluable": int(len(df)), "datasets": int(len(dss)), "diseases": int(df.disease.nunique()),
            "S1": round(S1, 4), "ci95": [round(float(lo), 4), round(float(hi), 4)], "verdict": verdict,
+           "by_n_de_power_selected": share_and_verdict("indistinguishable_nde"),   # D2: 87% power vs pi1's 8%
            "S1_equal_weight_per_disease": round(float(per_dis.mean()), 4),
            "share_indistinguishable_by_stat": {s: round(float((df[f"{s}_q"] >= 0.05).mean()), 4) for s in STATS},
            "share_real_above_null_q95": {s: round(float((df[f"{s}_real"] > df[f"{s}_null_q95"]).mean()), 4) for s in STATS},

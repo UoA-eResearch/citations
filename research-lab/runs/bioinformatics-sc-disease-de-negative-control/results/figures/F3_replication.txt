@@ -1,0 +1,1 @@
+Each point is a pair of contrasts for the same disease, tissue and cell type from datasets in different Census collections (335 pairs, 94 groups, 9 diseases): the Spearman correlation of their moderated t statistics over shared genes, against the smallest donor group in the pair. Crosses: the same pairs' matched-null signatures, where both sides have null draws.

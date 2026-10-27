@@ -53,7 +53,7 @@ def run(workers):
     lists = [jobs[k::workers] for k in range(workers)]
     def go(k):
         (PJ / f"_list{k}.txt").write_text("\n".join(f"/jobs/{j}" for j in lists[k]) + "\n")
-        return subprocess.run(["docker", "run", "--rm", "--network", "none", "--user", f"{os.getuid()}:{os.getgid()}", "-e", "HOME=/tmp",
+        return subprocess.run(["docker", "run", "--rm", "--network", "none", "--user", f"{os.getuid()}:{os.getgid()}", "-e", "HOME=/tmp", "-e", "OPENBLAS_NUM_THREADS=1", "-e", "OMP_NUM_THREADS=1",
                                "-v", f"{PJ}:/jobs", "-v", f"{RUN / 'code'}:/code:ro", "sc-negctl-de:1",
                                "Rscript", "/code/de.R", f"/jobs/_list{k}.txt"], stderr=open(RUN / "logs" / f"de_worker{k}.err", "w")).returncode
     with ThreadPoolExecutor(workers) as ex:
