@@ -87,6 +87,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | `ecology-biodiversity-sdm-provenance-leakage` |  7f6441f | H1 Refuted (DiD +0.006, +0.005 to +0.008; 1,745 species), H2 Refuted (8.3%); TAVA West Africa DiD +0.164 with its test plots republished in the training data (post hoc) | queued; all applicable gates G1-G3, G5, G6 run before review (first lead started under METHODS.md) |
 | `ecology-biodiversity-herbarium-velocity-effort-null` |  19950a0 | H1 Supported (fixed-range noise+effort null reproduces 67% of the observed median centroid velocity: 4.6 vs 6.9 km/yr; 36% of species exceed their null p95) | queued; gates G1-G3, G5, G6 run before review |
 | `seismology-geophysics-dynamic-triggering-strain-test` |  bee3bcc | H2 Refuted (no excess of significant local-event rises after 350 distant M7+: 15,042 vs 15,742 expected), H1 Inconclusive (no rise with strain); D1 post hoc exposure correction | queued; gates G1-G3, G5, G6 run before review |
+| `cheminformatics-drug-discovery-split-calibration` |  edac660 | H1 Supported (random/scaffold splits understate prospective RMSE: -0.37/-0.27); H2 Refuted (document/author abs bias 0.17/0.22 though signed ~0); H3 Refuted (tau ~0.4 for all splitters); corrector 0.17 vs 0.10 bar | queued; new lead under G1-G7 (G5, G6 done; G7 n/a) |
 
 ## Order to run them in
 
