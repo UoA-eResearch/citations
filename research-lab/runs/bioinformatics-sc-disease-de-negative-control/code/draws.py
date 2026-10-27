@@ -7,6 +7,7 @@
   draws.py run WORKERS     -> runs code/de.R in the sc-negctl-de:1 image (no network), job lists split across workers
 """
 import json
+import os
 import re
 import subprocess
 import sys
@@ -189,9 +190,9 @@ def run(workers):
     def go(k):
         lf = JOBS / f"_list{k}.txt"
         lf.write_text("\n".join(f"/jobs/{p.name}" for p in lists[k]) + "\n")
-        return subprocess.run(["docker", "run", "--rm", "--network", "none", "--user", "1000:1000", "-e", "HOME=/tmp",
+        return subprocess.run(["docker", "run", "--rm", "--network", "none", "--user", f"{os.getuid()}:{os.getgid()}", "-e", "HOME=/tmp",
                                "-v", f"{JOBS}:/jobs", "-v", f"{RUN / 'code'}:/code:ro", "sc-negctl-de:1",
-                               "Rscript", "/code/de.R", f"/jobs/_list{k}.txt"], capture_output=True, text=True).returncode
+                               "Rscript", "/code/de.R", f"/jobs/_list{k}.txt"], stderr=open(RUN / "logs" / f"de_worker{k}.err", "w")).returncode
     with ThreadPoolExecutor(workers) as ex:
         print(list(ex.map(go, [k for k in range(workers) if lists[k]])), flush=True)
 

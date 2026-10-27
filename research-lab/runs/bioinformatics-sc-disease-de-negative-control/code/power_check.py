@@ -7,6 +7,7 @@ that contrast's own null distribution. A working statistic must call most of the
   power_check.py report  -> results/tables/power_check.json
 """
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -52,9 +53,9 @@ def run(workers):
     lists = [jobs[k::workers] for k in range(workers)]
     def go(k):
         (PJ / f"_list{k}.txt").write_text("\n".join(f"/jobs/{j}" for j in lists[k]) + "\n")
-        return subprocess.run(["docker", "run", "--rm", "--network", "none", "--user", "1000:1000", "-e", "HOME=/tmp",
+        return subprocess.run(["docker", "run", "--rm", "--network", "none", "--user", f"{os.getuid()}:{os.getgid()}", "-e", "HOME=/tmp",
                                "-v", f"{PJ}:/jobs", "-v", f"{RUN / 'code'}:/code:ro", "sc-negctl-de:1",
-                               "Rscript", "/code/de.R", f"/jobs/_list{k}.txt"], capture_output=True, text=True).returncode
+                               "Rscript", "/code/de.R", f"/jobs/_list{k}.txt"], stderr=open(RUN / "logs" / f"de_worker{k}.err", "w")).returncode
     with ThreadPoolExecutor(workers) as ex:
         print(list(ex.map(go, [k for k in range(workers) if lists[k]])))
 
@@ -63,8 +64,8 @@ def report():
     rows = []
     for jd in sorted(PJ.glob("p_*")):
         _, c, k = jd.name.split("_")
-        st = pd.read_csv(jd / "stats.csv").iloc[0]
-        null = pd.read_csv(JOBS / c / "stats.csv")
+        st = pd.read_csv(jd / "stats.csv", keep_default_na=False, na_values=["NA"]).iloc[0]
+        null = pd.read_csv(JOBS / c / "stats.csv", keep_default_na=False, na_values=["NA"])   # "null" is a draw kind
         null = null[(null.kind == "null") & null.ok.astype(bool)]
         p = (1 + int((null.pi1 >= st.pi1).sum())) / (len(null) + 1)
         rows.append({"contrast": c, "k": int(k), "pi1_injected": st.pi1, "pi1_null_median": float(null.pi1.median()), "p": p})

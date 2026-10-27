@@ -51,9 +51,29 @@ def coverage_pb():
     cov.save()
 
 
+def coverage_donors(ci):
+    """Donor-groups considered for each contrast (its disease or normal, its tissue and cell type) and why any were left out."""
+    sys.path.insert(0, str(RUN / "code"))
+    from draws import eligible_donors, MIN_CELLS
+    elig = eligible_donors()
+    cov = Coverage("contrast_donors", T / "coverage.json")
+    ok, drops = 0, {"more than one disease label in the dataset": 0, f"fewer than {MIN_CELLS} cells": 0}
+    for ds, cg in ci.groupby("dataset_id"):
+        g = pd.read_parquet(PB / f"{ds}.groups.parquet")
+        for c in cg.itertuples():
+            sel = g[(g.tissue_general == c.tissue_general) & (g.cell_type == c.cell_type) & g.disease.isin([c.disease, "normal"])]
+            e = np.array([(ds, d) in elig for d in sel.donor_id])
+            enough = (sel.n_cells >= MIN_CELLS).to_numpy()
+            ok += int((e & enough).sum())
+            drops["more than one disease label in the dataset"] += int((~e).sum())
+            drops[f"fewer than {MIN_CELLS} cells"] += int((e & ~enough).sum())
+    cov.add_counts(ok=ok, drops=drops)
+    cov.save()
+
+
 def stats_of(c):
     f = JOBS / c / "stats.csv"
-    return pd.read_csv(f) if f.exists() else None
+    return pd.read_csv(f, keep_default_na=False, na_values=["NA"]) if f.exists() else None   # "null" is a draw kind, not NA
 
 
 def ot_lookup():
@@ -268,6 +288,7 @@ def main():
     T.mkdir(parents=True, exist_ok=True)
     coverage_pb()
     ci = pd.read_csv(META / "contrast_index.csv")
+    coverage_donors(ci)
     out = {}
     out["H1"], _ = h1(ci)
     out["H2"] = h2(ci)
