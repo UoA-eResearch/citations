@@ -1,0 +1,23 @@
+{
+ "suburbs": 9529,
+ "exposure_days": 561577,
+ "by_match": {
+  "ambiguous": {
+   "suburbs": 27,
+   "exposures": 830
+  },
+  "tla_centroid": {
+   "suburbs": 939,
+   "exposures": 67873
+  },
+  "unique": {
+   "suburbs": 6774,
+   "exposures": 446466
+  },
+  "unmatched": {
+   "suburbs": 1789,
+   "exposures": 46408
+  }
+ },
+ "share_exposure_days_geocoded": 0.9159
+}
