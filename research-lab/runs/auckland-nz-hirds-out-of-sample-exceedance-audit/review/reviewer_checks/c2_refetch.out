@@ -1,0 +1,17 @@
+== Northland__Waitangi_at_Ohaeawai 2021/2022: raw 20207 recs, 1923.34 mm | stored 20207 recs, 1923.34 mm | other tags set()
+   identical times: True | identical values: True | identical codes: True
+   first/last raw: 2021-07-01 00:20:00 0.0 500 | 2022-06-30 23:45:00 0.0 500
+   same-minute tip pairs in raw: 0 | exact-duplicate times: 0
+   records exactly at From/To instants (raw): 0 0
+== WestCoast__Haast_Rv_Roaring_Billy_WCRC 2019/2020: raw 16888 recs, 6314.00 mm | stored 16888 recs, 6314.00 mm | other tags set()
+   identical times: True | identical values: True | identical codes: True
+   first/last raw: 2019-07-01 00:15:00 0.0 200 | 2020-06-30 21:05:00 0.0 200
+   same-minute tip pairs in raw: 312 | exact-duplicate times: 0
+   records exactly at From/To instants (raw): 0 0
+== boundary window Wellington__Akatarawa_River_at_Cemetery 2022-06-28..2022-07-04: raw 472 recs 10.60 mm | stored 472 recs 10.60 mm
+   raw has a record exactly at 2022-07-01 00:00: 1 | stored has: 1
+   raw    records within 3 h of the boundary: [('06-30 21:00', 0.0, 400), ('06-30 21:20', 0.0, 400), ('06-30 21:40', 0.0, 400), ('06-30 22:00', 0.0, 400), ('06-30 22:20', 0.0, 400), ('06-30 22:40', 0.0, 400), ('06-30 23:00', 0.0, 400), ('06-30 23:20', 0.0, 400), ('06-30 23:40', 0.0, 400), ('07-01 00:00', 0.0, 400), ('07-01 00:20', 0.0, 400), ('07-01 00:40', 0.0, 400), ('07-01 01:00', 0.0, 400), ('07-01 01:20', 0.0, 400), ('07-01 01:40', 0.0, 400), ('07-01 02:00', 0.0, 400), ('07-01 02:20', 0.0, 400), ('07-01 02:40', 0.0, 400), ('07-01 03:00', 0.0, 400)]
+   stored records within 3 h of the boundary: [('06-30 21:00', 0.0, 400), ('06-30 21:20', 0.0, 400), ('06-30 21:40', 0.0, 400), ('06-30 22:00', 0.0, 400), ('06-30 22:20', 0.0, 400), ('06-30 22:40', 0.0, 400), ('06-30 23:00', 0.0, 400), ('06-30 23:20', 0.0, 400), ('06-30 23:40', 0.0, 400), ('07-01 00:00', 0.0, 400), ('07-01 00:20', 0.0, 400), ('07-01 00:40', 0.0, 400), ('07-01 01:00', 0.0, 400), ('07-01 01:20', 0.0, 400), ('07-01 01:40', 0.0, 400), ('07-01 02:00', 0.0, 400), ('07-01 02:20', 0.0, 400), ('07-01 02:40', 0.0, 400), ('07-01 03:00', 0.0, 400)]
+   raw: rain in records with t <= boundary 9.60; t > boundary 1.00
+   stored: rain in records with t <= boundary 9.60; t > boundary 1.00
+   exact-duplicate times raw: 0 stored: 0

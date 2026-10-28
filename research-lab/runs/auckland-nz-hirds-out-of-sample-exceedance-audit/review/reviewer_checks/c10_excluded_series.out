@@ -1,0 +1,53 @@
+/mnt/citations/research-lab/runs/auckland-nz-hirds-out-of-sample-exceedance-audit/review/reviewer_checks/c10_excluded_series.py:28: Pandas4Warning: The 'lsuffix' and 'rsuffix' keywords in DataFrame.join are deprecated and will be removed in a future version. Use the 'suffixes' keyword instead.
+  j = old.join(new, lsuffix="_old", rsuffix="_new", how="outer")
+                              gauge  records>50mm  their_median_L_min  share_rising_between_nonzero  raw_max_wy_total  post_screen_max_wy_total  post_screen_median_wy_total_2005+  wy_over_12000_post_screen  records_physically_screened
+               Lake_Tutira_NEW_Buoy           103                 5.0                          0.58             20452                      2453                               1317                          0                         4534
+               4248_at_Opunake_WWTP             0                 NaN                          0.95             12695                      8862                               6781                          0                         2135
+         Ahuahu_at_Te_Tuhi_Junction           747                 6.0                          1.00            375541                      1698                                545                          0                            0
+Whangamomona_at_Bridge_to_Somewhere          4907                 6.0                          1.00           1858000                      1872                               1163                          0                            0
+         Whangamomona_at_Marco_Road          5412                10.0                          0.90           2203000                      2202                                  0                          0                            0
+        Whanganui_at_Mataimona_Trig          4684                 6.0                          1.00           1778000                      2056                                546                          0                            0
+              Whanganui_at_Pipiriki          3050                 6.0                          1.00           1160000                      1555                                596                          0                            6
+                 Cropp_Rv_Waterfall           338                 6.0                          0.80            449223                     12822                              10760                          6                          675
+             Haast_Rv_Roaring_Billy            94                15.0                          0.73           1297172                         0                                  0                          0                            0
+            Hokitika_Rv_Colliers_Ck           665                15.0                          0.98             93328                      8775                               6868                          0                          670
+                Ivory_Rv_Ripplerock          1179                10.0                          0.65            231081                    164661                               7369                          4                        10641
+                    Whataroa_Rv_SH6           148                 5.0                          0.85             94015                      5852                               5274                          0                          767
+
+== per-gauge exceedance diff, review-time (v1_before_screen = 1416f02 set) vs now
+                                        years_old  exceed_old  years_new  exceed_new
+file                                                                                
+HawkesBay__Lake_Tutira_NEW_Buoy                 8           3        NaN         NaN
+HawkesBay__Lake_Waikopiro_Buoy                  8           2        8.0         1.0
+Tasman__HY_Motueka_at_Western_Boundary          9           2        9.0         1.0
+Tasman__HY_Wakapuaka_at_Hira_Forest             8           4        8.0         3.0
+WestCoast__Cropp_Rv_Waterfall                   8           0        NaN         NaN
+WestCoast__Wangapeka_Biggs_Top                  8           1        NaN         NaN
+WestCoast__Whataroa_Rv_SH6                      8           0        NaN         NaN
+
+== included gauges touched by the record screens (D6+D7), from screen_counts.csv
+                                             file  records  screened  negatives  max_wy_total
+                     Taranaki__Patea_at_Stratford   680714       130          0   2730.000000
+            Northland__Okoraka_at_Ngatawhiti_Road   474819        75          0   1915.888988
+              Tasman__HY_Wakapuaka_at_Hira_Forest   662750        33          0   3246.500000
+               Tasman__HY_Motueka_at_Big_Pokororo   667890        29          0   1775.200029
+                      WestCoast__Tuke_Rv_Tuke_Hut   866954        23          0  11918.000000
+                   HawkesBay__Lake_Waikopiro_Buoy   284558        15          3   1421.980000
+           Tasman__HY_Motueka_at_Western_Boundary   684382        11          0   2248.200019
+                 Taranaki__Kapoaiaia_at_Kahui_Hut   696025         5          0   7125.500000
+   HawkesBay__Kopuawhara_Stream_at_Railway_Bridge   747319         1          1   2048.500000
+          Marlborough__Flaxbourne_at_Corrie_Downs   327555         1          1    964.000000
+          Wellington__Akatarawa_River_at_Cemetery  1932980         1          1   2298.000034
+Wellington__Ruamahanga_River_at_Wairarapa_College  1226701         1          1   1436.200021
+                      WestCoast__Haast_Rv_Cron_Ck   869903         1          0   8556.500000
+
+== report counts
+Feb 2023: 53 HB: 47 | storms: 69 largest: 51 HB in largest: 46
+6-h exceedances also 24-h exceedances: 177 of 254
+
+== HawkesBay__Lake_Tutira_NEW_Buoy: depth 93.3; 6-h maxima by year (current maxima.parquet, screens applied): {2017: 205.2, 2018: 53.3, 2019: 55.8, 2020: 222.9, 2021: 97.5, 2022: 145.3, 2023: 60.5, 2024: 41.2, 2025: 70.5}
+   physically screened records by water year: {2017: 120, 2020: 4414}
+   2017: max 205.2 ending 2017-12-26 21:45:00; records in window 71, largest 30.7 mm in 5 min, distinct values 27
+   2020: max 222.9 ending 2020-09-07 09:10:00; records in window 45, largest 5.2 mm in 5 min, distinct values 26
+   2021: max 97.5 ending 2022-03-24 03:05:00; records in window 72, largest 3.6 mm in 5 min, distinct values 72
+   2022: max 145.3 ending 2023-02-13 17:50:00; records in window 72, largest 3.1 mm in 5 min, distinct values 72

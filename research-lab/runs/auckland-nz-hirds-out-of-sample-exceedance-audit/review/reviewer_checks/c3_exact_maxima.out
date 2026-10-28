@@ -1,0 +1,15 @@
+primary gauge-years: 1729
+grid/exact: min 0.9808, 1st pct 0.9881, median 1.0000; grid > exact + 1e-6 in 0 gauge-years
+gauge-years where exact > depth but grid <= depth (missed by the grid): 2
+gauge-years where grid > depth but exact <= depth: 0
+exceedances by exact method: 260 vs grid: 258 -> O/E exact 1.504
+window-end time agreement (|t_exact - t_grid| <= 5 min): 0.912
+                                    file   wy  grid  exact    mm
+HawkesBay__Tahekenui_Stream_at_Glenstrae 2020  94.5   95.0  94.7
+        Taranaki__Kapoaiaia_at_Kahui_Hut 2023 127.0  127.5 127.0
+exact-duplicate time stamps across included gauges: 0 of 123321774 records
+np.interp at a triple-duplicate x=10 returns 3.0 (cumulative after all tips = 3.0); at 15: 3.5 (expected 3.5)
+file x ARI rows with a depth decreasing in duration: 0 of 5256 | columns involved: {0.3333333333333333: 0, 0.5: 0, 1.0: 0, 2.0: 0, 6.0: 0, 12.0: 0, 24.0: 0, 48.0: 0, 72.0: 0, 96.0: 0, 120.0: 0}
+Empty DataFrame
+Columns: [0.166667, 0.333333, 0.5, 1.0, 2.0, 6.0, 12.0, 24.0, 48.0, 72.0, 96.0, 120.0]
+Index: []

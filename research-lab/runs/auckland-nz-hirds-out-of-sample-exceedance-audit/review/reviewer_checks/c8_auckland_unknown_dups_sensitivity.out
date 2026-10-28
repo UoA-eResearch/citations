@@ -1,0 +1,40 @@
+== (a) Auckland unknown-time decomposition, water years 2018/19 and 2019/20, 2xx kept (S3 quality rule), 6 h
+wy                                             2018      2019       2022
+bad_quality_share                  median     0.148     0.000      0.000
+                                   mean       0.150     0.090      0.012
+unresolved_wet_share               median     0.043     0.041      0.054
+                                   mean       0.046     0.040      0.046
+dry_outage_share                   median     0.000     0.000      0.005
+                                   mean       0.000     0.002      0.005
+wet_records                        median  2101.500  2328.000   4412.000
+                                   mean    2373.900  2654.214   4462.071
+zero_records                       median  2595.500  8315.500   8477.500
+                                   mean    3137.600  9371.800  18363.214
+median_wet_L_min                   median     5.567     5.858      4.904
+                                   mean       5.494     5.833      5.253
+unresolved_share_from_gaps_over_1d median     0.000     0.000      0.000
+                                   mean       0.003     0.000      0.001
+-> share of Auckland gauge-years (2018/19) whose records contain no logged zeros: 0.0
+Hilltop included gauges, 2019/20: unresolved-wet share of the year, median by server: {'HawkesBay': 0.0, 'Marlborough': 0.03, 'Northland': 0.0, 'Taranaki': 0.0, 'Tasman': 0.029, 'Wellington': 0.042, 'WestCoast': 0.0}
+   zero-record share median by server: {'HawkesBay': 0.89, 'Marlborough': 0.84, 'Northland': 0.95, 'Taranaki': 0.47, 'Tasman': 0.18, 'Wellington': 0.65, 'WestCoast': 0.89}
+
+== (b) cross-server near-duplicates among the 201 included gauges (different server, within 2 km, or sharing a distinctive name token)
+   ('Tasman__HY_Wangapeka_at_Biggs_Tops', 'WestCoast__Wangapeka_Biggs_Top', np.float64(0.26), ['biggs', 'wangapeka'])
+  pairs: 1
+   Tasman__HY_Wangapeka_at_Biggs_Tops vs WestCoast__Wangapeka_Biggs_Top: years in common 8, exceed both 0, a only 0, b only 1; max ratio median 1.02
+
+== (c) O/E sensitivity to removing gauge-years whose maximum exceeds HIRDS's 250-year depth at that duration
+   1 h 10% AEP: O/E 1.516; dropping 11 gauge-years above 1.0x the 250-yr depth -> 110/78.7 = 1.398; expected count above the 250-yr depth if HIRDS held: 3.2
+   1 h 10% AEP: O/E 1.516; dropping 3 gauge-years above 1.5x the 250-yr depth -> 118/79.5 = 1.484; expected count above the 250-yr depth if HIRDS held: 3.2
+   6 h 10% AEP: O/E 1.492; dropping 17 gauge-years above 1.0x the 250-yr depth -> 241/171.2 = 1.408; expected count above the 250-yr depth if HIRDS held: 6.9
+   6 h 10% AEP: O/E 1.492; dropping 5 gauge-years above 1.5x the 250-yr depth -> 253/172.4 = 1.468; expected count above the 250-yr depth if HIRDS held: 6.9
+  24 h 10% AEP: O/E 1.905; dropping 32 gauge-years above 1.0x the 250-yr depth -> 327/185.3 = 1.765; expected count above the 250-yr depth if HIRDS held: 7.5
+  24 h 10% AEP: O/E 1.905; dropping 4 gauge-years above 1.5x the 250-yr depth -> 355/188.1 = 1.887; expected count above the 250-yr depth if HIRDS held: 7.5
+
+== (d) Okoraka at Ngatawhiti Road, 1 Sep 2024 burst: record structure (Northland Hilltop, public)
+  records in the 6-h window: 110 | wet: 67 | quality codes: {np.int64(0): np.int64(110)}
+  interval lengths (min) value counts: {1.0: 80, 15.0: 13, 5.0: 6, 3.0: 3, 9.0: 2}
+  records >= 5 mm: 14 | >= 10 mm: 6 | sum of records >= 5 mm: 136.5 of 194.5
+  largest 10 records (mm) and their minute offsets from window end: [(19.5, 100), (17.0, 98), (16.0, 97), (15.0, 99), (14.5, 102), (10.0, 75), (7.5, 96), (6.0, 95), (6.0, 103), (5.0, 74)]
+  year total 2024/25 (mm): 1565.0 | other years median: 1116.0
+  the gauge's other annual 6-h maxima 2017-2025: {2017: 56.7, 2018: 41.7, 2019: 35.2, 2020: 31.1, 2021: 83.1, 2022: 83.1, 2023: 41.8, 2024: 194.5, 2025: 50.2}

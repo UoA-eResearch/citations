@@ -1,0 +1,76 @@
+== maximum-window structure for the 258 exceedances (records inside the 6-h window ending at t_max)
+D6 screen flagged 4520 out-of-sample records at 6 of 201 included gauges
+exceedance windows with <= 3 wet records: 0
+exceedance windows whose largest single record is >= 20 mm: 3
+                           file   wy  max6h  depth  recs  wet_recs  largest_rec  its_interval_min  longest_identical_run  median_wet_value
+     WestCoast__Haast_Rv_Moa_Ck 2024  180.2  105.0    60        37         28.0               6.0                      3              2.50
+             HawkesBay__Fishers 2017  242.5   79.5    24        21         24.5              15.0                      2             10.50
+Tasman__HY_Roding_at_Caretakers 2023  119.3   88.7    10         5         23.9              19.8                      5             23.86
+exceedance windows with a run of >= 8 identical non-zero values: 181
+                                               file   wy  max6h  depth  recs  wet_recs  largest_rec  its_interval_min  longest_identical_run  median_wet_value
+              Wellington__Waingawa_River_at_Kaituna 2025   88.1   73.8   440       440          0.2               1.6                    440              0.20
+                      Wellington__Taueru_at_Rewanui 2025   86.4   59.7   432       432          0.2               1.3                    432              0.20
+            Wellington__Akatarawa_River_at_Cemetery 2025   83.6   82.0   427       418          0.2               1.8                    418              0.20
+            Wellington__Taupo_Stream_at_Whenua_Tapu 2025   80.1   60.8   402       400          0.2               8.1                    400              0.20
+                  Wellington__Berhampore_at_Nursery 2021   75.3   60.0   377       377          0.2               9.7                    377              0.20
+            Wellington__Taupo_Stream_at_Whenua_Tapu 2022   73.6   60.8   368       368          0.2               1.3                    368              0.20
+            Wellington__Taupo_Stream_at_Whenua_Tapu 2019   72.6   60.8   363       363          0.2              21.1                    363              0.20
+                     Tasman__HY_Anatoki_at_Paradise 2023  185.4  135.0   353       353          0.5               2.3                    353              0.53
+Wellington__Waikanae_River_at_Water_Treatment_Plant 2021   69.6   66.1   352       349          0.2              56.6                    349              0.20
+            Wellington__Taupo_Stream_at_Whenua_Tapu 2021   68.3   60.8   342       342          0.2               1.8                    342              0.20
+         Wellington__Hutt_River_at_Mabey_Road_Depot 2024   67.6   64.5   345       338          0.2               2.6                    338              0.20
+                        Tasman__HY_Takaka_at_Canaan 2024  168.2  162.0   336       336          0.5               1.5                    336              0.50
+                  Wellington__Waikoukou_at_Longbush 2025   65.9   58.8   330       330          0.2               2.1                    330              0.20
+     Wellington__Duck_Creek_at_James_Cook_Reservoir 2019   64.3   62.2   324       322          0.2              12.9                    322              0.20
+                     Tasman__HY_Anatoki_at_Paradise 2017  159.6  135.0   315       315          0.5               1.6                    315              0.51
+exceedance 6-h maxima above 1.0x / 1.5x the gauge's 250-yr 6-h depth: 17 5
+
+== secondaries: included ok gauge-years whose maxima exceed the 250-yr depth at that duration
+  1 h: gauge-years 798, exceed 121, above 250-yr depth 11, above 1.5x 3
+                                  file   wy  max_point   mm  r250
+ Northland__Okoraka_at_Ngatawhiti_Road 2024     184.50 33.0  3.28
+             Northland__Hakaru_at_Tara 2022     131.19 45.1  1.64
+    Northland__Waihoihoi_at_Brynderwyn 2021     113.66 39.9  1.61
+Northland__Hakaru_at_Topuni_Creek_Farm 2021     105.04 43.4  1.38
+Northland__Waiharakeke_at_Okaroro_Road 2021      95.36 45.0  1.25
+                  HawkesBay__Glengarry 2017      63.50 26.7  1.21
+ Northland__Waiwarawara_at_Wilsons_Dam 2021      78.90 40.0  1.13
+    Northland__Waiarohia_at_Kensington 2020      83.21 44.9  1.08
+  6 h: gauge-years 1729, exceed 258, above 250-yr depth 17, above 1.5x 5
+                                 file   wy  max_point    mm  r250
+                 HawkesBay__Glengarry 2022     262.00  76.8  1.83
+            Northland__Hakaru_at_Tara 2022     343.14 108.0  1.79
+                 HawkesBay__Glengarry 2017     255.50  76.8  1.79
+                   HawkesBay__Fishers 2017     242.50  79.5  1.62
+Northland__Okoraka_at_Ngatawhiti_Road 2024     194.50  70.8  1.59
+     HawkesBay__LK4_Ngaroto_Tutaekuri 2022     196.00  72.2  1.44
+    Taranaki__Kapoaiaia_at_Lighthouse 2021     170.00  68.5  1.38
+      HawkesBay__Lake_Tutira_NEW_Buoy 2020     222.87  93.3  1.29
+  24 h: gauge-years 1885, exceed 359, above 250-yr depth 32, above 1.5x 4
+                             file   wy  max_point    mm  r250
+Taranaki__Kapoaiaia_at_Lighthouse 2021     413.00 106.0  2.17
+             HawkesBay__Glengarry 2022     501.00 157.0  1.78
+ HawkesBay__LK4_Ngaroto_Tutaekuri 2022     397.50 130.0  1.71
+   WestCoast__Wangapeka_Biggs_Top 2024     739.61 300.0  1.52
+HawkesBay__Kaiwaka_Tareha_Climate 2022     434.60 188.0  1.29
+               HawkesBay__Kopanga 2022     267.50 121.0  1.27
+        Northland__Hakaru_at_Tara 2022     398.83 178.0  1.25
+        HawkesBay__Waihau_Climate 2022     324.40 143.0  1.25
+
+== remaining report numbers
+Feb 2018 exceedances by council: {'Tasman': 12, 'Marlborough': 4, 'Northland': 2, 'WestCoast': 1}
+2017/18 exceedances by council: {'Tasman': 16, 'HawkesBay': 15, 'Marlborough': 4, 'Northland': 2, 'Taranaki': 1, 'WestCoast': 1}
+largest storm cluster by council: {'HawkesBay': 47, 'Northland': 4, 'Wellington': 1} | dates: 2023-02-13 09:55:00 to 2023-02-14 11:50:00
+2025/26 exceedances by council: {'Wellington': 11, 'HawkesBay': 7, 'Northland': 5, 'Tasman': 5, 'Taranaki': 4, 'Marlborough': 2} | 2021/22: {'HawkesBay': 19, 'Northland': 12, 'Tasman': 5, 'Wellington': 5, 'Taranaki': 4, 'Marlborough': 3, 'WestCoast': 3}
+Traceback (most recent call last):
+  File "/mnt/citations/research-lab/runs/auckland-nz-hirds-out-of-sample-exceedance-audit/review/reviewer_checks/c6_screen_auckland_misc.py", line 65, in <module>
+    r = m6[(m6.file == f) & (m6.wy == wy)].iloc[0]
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/mnt/citations/research-lab/runs/auckland-nz-hirds-out-of-sample-exceedance-audit/venv/lib/python3.12/site-packages/pandas/core/indexing.py", line 1342, in __getitem__
+    return self._getitem_axis(maybe_callable, axis=axis)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/citations/research-lab/runs/auckland-nz-hirds-out-of-sample-exceedance-audit/venv/lib/python3.12/site-packages/pandas/core/indexing.py", line 2432, in _getitem_axis
+    self._validate_integer(key, axis)
+  File "/mnt/citations/research-lab/runs/auckland-nz-hirds-out-of-sample-exceedance-audit/venv/lib/python3.12/site-packages/pandas/core/indexing.py", line 2365, in _validate_integer
+    raise IndexError("single positional indexer is out-of-bounds")
+IndexError: single positional indexer is out-of-bounds

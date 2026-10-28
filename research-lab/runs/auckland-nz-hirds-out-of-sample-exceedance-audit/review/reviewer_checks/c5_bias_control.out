@@ -1,0 +1,57 @@
+primary reproduced: (258, 1729, 1.492)
+
+== dense vs non-dense gauge-years (included, ok):
+  non-dense 1.475 (0.824-2.28), n=983, gauges=173
+  dense 1.515 (0.764-2.343), n=746, gauges=162
+  non-dense gauge-years with a zero-closed silence > 14 d (S2 would drop) -> see S2 in secondary.json
+
+== exceedance rate by known_frac band (included ok gauge-years):
+  [0.9,0.95):  (33, 249, 1.325)
+  [0.95,0.99):  (79, 557, 1.418)
+  [0.99,1.01):  (146, 923, 1.582)
+
+== included gauges' dropped (not ok) out-of-sample years:
+  count: 80 | known_frac quantiles: [0.22 0.73 0.89] | partial max_point > depth in 7 | upper bound > depth in 7
+  by year: {2017: 20, 2018: 8, 2019: 2, 2020: 1, 2021: 3, 2022: 7, 2023: 3, 2024: 3, 2025: 33}
+  dropped years with partial max > depth (would be exceedances if kept):                                           file   wy  known_frac
+               HawkesBay__Lake_Tutira_NEW_Buoy 2017      0.5256
+                          HawkesBay__Maunganui 2022      0.8878
+       Marlborough__Wairau_Valley_at_Southwold 2017      0.3867
+          Tasman__HY_Riwaka_South_at_Moss_Bush 2025      0.8476
+            Tasman__HY_Wangapeka_at_Biggs_Tops 2025      0.6014
+             Wellington__Berhampore_at_Nursery 2025      0.7737
+Wellington__Duck_Creek_at_James_Cook_Reservoir 2025      0.7738
+
+== all ok out-of-sample gauge-years regardless of the 8-year rule (MIN_OOS=1): 1.425 (0.792-2.132), n=2527, gauges=374
+   ok gauge-years at gauges excluded by the 8-year rule: 1.278 (0.698-2.099), n=798, gauges=173
+
+== completeness threshold sensitivity (8-year rule re-applied):
+  known >= 0.8: 1.437 (0.77-2.162), n=2004, gauges=231
+  known >= 0.85: 1.463 (0.791-2.228), n=1859, gauges=215
+  known >= 0.9: 1.492 (0.775-2.325), n=1729, gauges=201
+  known >= 0.95: 1.548 (0.792-2.42), n=1182, gauges=138
+
+== MIN_OOS sensitivity:
+  >= 5 years: 1.434 (0.735-2.222), n=2273, gauges=290
+  >= 6 years: 1.472 (0.773-2.284), n=2153, gauges=266
+  >= 7 years: 1.51 (0.777-2.28), n=1967, gauges=235
+  >= 8 years: 1.492 (0.815-2.286), n=1729, gauges=201
+  >= 9 years: 1.534 (0.826-2.388), n=1089, gauges=121
+
+== in-sample control
+  all 113: 0.894 (0.689-1.124), n=1935, gauges=113
+  the 70 gauges also in the primary, in sample: 0.876 (0.668-1.115), n=1198, gauges=70 | same gauges out of sample: 1.41 (0.673-2.264), n=603, gauges=70
+  in-sample by council: {'Auckland': (0, 10, 0.0), 'HawkesBay': (35, 421, 0.831), 'Marlborough': (13, 250, 0.52), 'Northland': (7, 37, 1.892), 'Taranaki': (13, 160, 0.812), 'Tasman': (38, 403, 0.943), 'Wellington': (67, 654, 1.024)}
+  in-sample by period: {'1995-2004': (83, 904, 0.918), '2005-2014': (90, 1031, 0.873)}
+  in-sample dense vs not: {'non-dense': (130, 1447, 0.898), 'dense': (43, 488, 0.881)}
+  out-of-sample for the 131 primary gauges NOT in the control: 1.536 (0.877-2.35), n=1126, gauges=131
+  in-sample 2015/16-2016/17 (fitted by HIRDS, excluded from both): None -> (39, 317, 1.23)
+
+== multi-duration overlap among the 201 primary gauges' ok gauge-years
+  6-h exceedances that also exceed at 24 h: 181 of 258 (with a 24-h value); at 1 h: 79 of 154
+  24-h exceedances (same gauge-years) that also exceed at 6 h: 181 of 330
+  by year:
+ wy  2017 2018 2019 2020 2021 2022 2023 2024 2025
+e6    39    5    7   18   51   74   10   20   34
+e24   44    8    7   13   66   89   17   50   36
+e1    21    8   14   17   26   31    7    6   20

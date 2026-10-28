@@ -232,3 +232,100 @@ recommended.
 5. Complete the Auckland explanation and add the 2017/18-start S3 row (finding 5).
 6. Correct S3 1.47 → 1.45, 48 → 47, "0.4%" → "2%", and the skipped-coordinates reason (finding 9); list the three
    extra changes in D5 (finding 7).
+
+---
+
+# Confirmation pass (commit da57d4d, D7) — 2026-10-29
+
+Scripts: `review/reviewer_checks/c9_confirmation.py` and `c10_excluded_series.py` (outputs beside them). No Auckland
+raw value appears in them.
+
+## Verdict: publish with edits (six, listed at the end; one of them is a factual correction to D7)
+
+The headline reproduces from the regenerated maxima: 254 against 169.7 over 1,697 gauge-years at 197 gauges, O/E
+1.497, preregistered 0.78–2.36, in-sample 0.889 (ratio 1.68). The 258 → 254 change is exactly Lake Tutira NEW Buoy
+(3 exceedances, excluded by the new gauge rule) and the Wangapeka Biggs Top duplicate (1); the window screen changed
+no other gauge's count. Coverage sums to 443. The verdict is unchanged and would be under every variant below.
+
+## Finding by finding
+
+1. **Interval — fixed.** `ratio_ci` now adds a nested bootstrap-t; my independent bootstrap-t on the new
+   year-by-year counts is 0.71–2.89 and the cluster-robust t(8) 0.55–2.44, consistent with the reported 0.68–2.8x.
+   The storm bootstrap is correctly qualified; the power statement is in the report and attributed. **One
+   inconsistency remains:** `primary.json` gives the H1 studentized interval as 0.678–2.822, `secondary.json`'s
+   duplicate 6-h run (a different random stream) gives 0.692–2.885, and the report quotes a mixture, 0.68–2.88
+   (report.md:15, 94, 117) and "0.7 to 2.9" (report.md:45; G5 row 34 cites 2.822 as its backing). Quote
+   primary.json (0.68–2.82, "0.7 to 2.8") throughout, or run both from one stream.
+2. **Impossible values — fixed for the case found, with a new problem in the gauge rule.**
+   - The window rule removes 75 records and 189.5 mm from Okoraka on 1 September 2024 and nothing else in that
+     gauge; its 2024/25 maximum is 80.0 mm against a 70.8 mm depth (`c9`). The beyond-250-year sensitivities
+     (15 and 4 gauge-years → 1.42 and 1.48) and `screen_counts.csv` are as described. The screens touched 13
+     included gauges (Patea at Stratford 130 records, Okoraka 75, then 33 and fewer); no exceedance count changed.
+   - **The 12-gauge "not incremental" exclusion is mis-specified and mis-described (`code/maxima.py:106–111`,
+     deviations.md D7 item 2).** The test uses raw water-year totals *before* the record screens, so it also catches
+     incremental series whose fault records the screens already remove. Post-screen (`c10`): Lake Tutira NEW Buoy
+     has a maximum water-year total of 2,453 mm (median 1,317), Whataroa Rv SH6 5,852 (5,274), Hokitika Rv
+     Colliers Ck 8,775 (6,868) and Cropp Rv Waterfall 12,822 (10,760); between consecutive non-zero records their
+     values climb only 58–85% of the time, against 100% for the Taranaki SCADA counters. Those four are incremental
+     series carrying 103–665 spike records above 50 mm, not cumulative counters; Opunake WWTP is a scale fault. The
+     remaining seven (Taranaki SCADA, Haast Roaring Billy, Ivory, Whangamomona at Marco Road) are genuinely
+     non-incremental. The stated justification is also wrong on the fact: Cropp River's record year is about
+     18,400 mm, and its ordinary years run 10–12 m, so a 12,000 mm "above New Zealand's wettest year" threshold
+     would exclude a correct Cropp series (the included Tuke Hut series sits at 11,918 mm).
+   - Three previously included gauges fall under this rule: Tutira (8 years, 3 exceedances) and Cropp and Whataroa
+     (16 exceedance-free gauge-years). Keeping all three gives 1.493; keeping Tutira alone 1.507; the headline is
+     1.497, so nothing turns on it. Tutira is nonetheless a fault-prone instrument: two of its surviving maxima
+     (205 mm on 26 December 2017 with a 30.7 mm 5-minute record; 223 mm on 7 September 2020 inside the stuck-sensor
+     period, 45 records of up to 5.2 mm) have no storm behind them, while its 2022 (March) and 2023 (Gabrielle)
+     maxima are real.
+   - Fix: evaluate the gauge test on post-screen totals (or on negatives and the count of climbing records above
+     50 mm), restate D7 item 2 and report.md:70–71 and 160 accordingly, correct the national-record claim, and
+     either keep Cropp, Whataroa and Tutira or exclude the lake buoy on its own stated grounds (recurrent spikes and
+     stuck runs; post hoc). Report the O/E with them kept (1.49–1.51).
+3. **Fitting-site split — relabelled in words, but the new match is nearly inert.** The exact normalised-name rule
+   adds 13 gauges (86 fitting, 111 not). The lab's own `same_site()` token rule, had it been applied here, matches a
+   HIRDS site within 3 km for 39 more of the 111 (Ben Nevis 0.10 km, Otutu Bush 0.10 km, Greenhill Ridge 0.11 km,
+   Mangaorapa 0.11 km, Ngaruroro at Ohiti 0.16 km, ...), all ending by 2016. The report's conclusion (the split is
+   weak; every matched site ends by 2016) is right; the table rows at report.md:130–131 are still labelled as if
+   they separated fitting from non-fitting gauges. Apply `same_site()` to the fitting match or label the rows by the
+   rule used.
+4. **Overstatements — fixed.** Mid-century, cross-duration (177 of 254 verified), "ahead of schedule", plain-terms
+   range; G5 rows rewritten and their fixes recorded. One new sentence overreaches the other way: report.md:67,
+   "each fixed before the results it affects were used", is not true of D6 and D7, which the Limits bullet at
+   report.md:160–163 states correctly. Reword.
+5. **Auckland — partly.** The plain-terms clause was dropped, but report.md:135–136 still presents the 2018/19
+   start as following from HIRDS's use of Auckland data into 2017. The HIRDS report says early 2017, inside water
+   year 2016/17; the shift is the lab's conservative reading of a calendar-year label and should be said to be. The
+   2xx explanation is the main reason under the primary rules; 2018/19 also fails for about 15% of the year coded
+   missing or synthetic. The 2017/18-start S3 variant (27 gauges, 2.14, 0.58–4.04) is optional; one sentence owning
+   the reading is not.
+6. **Duplicates — fixed.** All nine dropped gauges have a kept partner at 0.00–0.26 km, except Mokihinui at Stoney
+   Creek (Tasman copy 1.04 km from the West Coast one), which the identical name supports.
+7. **D5 account — not done.** The message says D7 records the NaN rule, the S1 ceiling and the six recovered
+   series; deviations.md does not mention any of them (grep for NaN, ceiling, recovered, six). Add three lines to
+   D5 or D7.
+8. **Jan–Feb 2023 — fixed** (1.17 and 1.20, both tables).
+9. **Numbers — fixed** (S3 1.46 consistent; February 2023 53/47; largest cluster 51 with 46 in Hawke's Bay, "mostly"
+   is right; 69 storms; drop reason renamed). The "within 0.4%" sentence now says it is the 30-gauge-year check,
+   which is accurate.
+10. **Framing — fixed** (convexity, 1.1, ratio 1.68).
+
+## New, minor
+
+- `physical_bad`'s window rule sums raw values (`maxima.py:85`), so a NaN disables it from that point on: the window
+  total is NaN for more than half the records in 48 of the 67 Auckland series that contain NaN (`c9`). Only the
+  post hoc Auckland look is affected; use the NaN-free values in the cumulative sum.
+- Hakaru at Tara, 24 February 2023 (343 mm in 6 h, 131 mm in 1 h, 91 mm at the nearest gauge 11 km away) is still
+  in and still unexamined; it passes the window rule (largest 1-minute record 4.2 mm). Not required for publication,
+  but worth a line.
+
+## Edits required for publication
+
+1. Fix the 12-gauge rule (post-screen evaluation or a counter-specific test), correct D7 item 2 and the Cropp River
+   claim, and report O/E with the three affected gauges kept (finding 2).
+2. Quote one studentized interval, primary.json's 0.68–2.82, in report.md:15, 45, 94, 117 and G5 row 34
+   (finding 1).
+3. Reword report.md:67 (finding 4).
+4. Own the Auckland start as a conservative reading and add 2018/19's coded gaps (finding 5).
+5. Apply `same_site()` to the fitting match or relabel the two table rows (finding 3).
+6. Record the three extra D5 changes in deviations.md (finding 7); fix the NaN handling in the window rule.

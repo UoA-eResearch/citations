@@ -1,17 +1,6 @@
 {
  "gauges_excluded_not_incremental": [
-  "HawkesBay__Lake_Tutira_NEW_Buoy",
-  "Taranaki__4248_at_Opunake_WWTP",
-  "Taranaki__Ahuahu_at_Te_Tuhi_Junction",
-  "Taranaki__Whangamomona_at_Bridge_to_Somewhere",
-  "Taranaki__Whangamomona_at_Marco_Road",
-  "Taranaki__Whanganui_at_Mataimona_Trig",
-  "Taranaki__Whanganui_at_Pipiriki",
-  "WestCoast__Cropp_Rv_Waterfall",
-  "WestCoast__Haast_Rv_Roaring_Billy",
-  "WestCoast__Hokitika_Rv_Colliers_Ck",
-  "WestCoast__Ivory_Rv_Ripplerock",
-  "WestCoast__Whataroa_Rv_SH6"
+  "WestCoast__Ivory_Rv_Ripplerock"
  ],
  "duplicates_dropped": [
   "Marlborough__Red_Hills",
@@ -257,18 +246,18 @@
   }
  ],
  "H1": {
-  "O": 254,
-  "E": 169.7,
-  "gauge_years": 1697,
-  "gauges": 197,
-  "OE": 1.497,
+  "O": 257,
+  "E": 172.1,
+  "gauge_years": 1721,
+  "gauges": 200,
+  "OE": 1.493,
   "ci": [
-   0.782,
-   2.357
+   0.78,
+   2.35
   ],
   "ci_bootstrap_t": [
-   0.678,
-   2.822
+   0.681,
+   2.795
   ],
   "verdict": "Inconclusive"
  },

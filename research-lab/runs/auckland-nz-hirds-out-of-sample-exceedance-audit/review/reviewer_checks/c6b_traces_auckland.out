@@ -1,0 +1,39 @@
+/mnt/citations/research-lab/runs/auckland-nz-hirds-out-of-sample-exceedance-audit/venv/lib/python3.12/site-packages/numpy/lib/_nanfunctions_impl.py:1396: RuntimeWarning: All-NaN slice encountered
+  return _nanquantile_unchecked(
+trace HawkesBay__Maharakeke_Stream_at_Limeworks_Stn_Rd 2022: max 61.0 at 2023-02-14 07:45:00 | depth 58.2 (SE 5.9) | known 0.9069 | exceeds True
+trace Tasman__HY_Anatoki_at_Paradise 2017: max 159.6 at 2017-07-01 12:40:00 | depth 135.0 (SE 12.0) | known 0.9258 | exceeds True
+trace Wellington__Akatarawa_River_at_Cemetery 2022: max 38.7 at 2022-08-07 01:25:00 | depth 82.0 (SE 7.3) | known 0.9848 | exceeds False
+
+== skipped gauges' raw coordinates (NZTM E 1.0-2.1e6 / N 4.7-6.2e6; NZMG E 2.0-3.0e6 / N 5.3-6.8e6):
+                                              stem  easting  northing
+              Marlborough__Beneagle_at_Farm_Stream      NaN       NaN
+                    Marlborough__Blenheim_Aero_AWS      NaN       NaN
+                    Taranaki__4248_at_Opunake_WWTP      NaN       NaN
+                           Taranaki__Lake_Ratapiko      NaN       NaN
+Taranaki__Mangaotea_Culvert_at_MotukawaPowerScheme      NaN       NaN
+   ok out-of-sample years (6 h primary) of the skipped gauges: {'Marlborough__Beneagle_at_Farm_Stream': 6, 'Taranaki__4248_at_Opunake_WWTP': 9, 'Taranaki__Lake_Ratapiko': 7, 'Taranaki__Mangaotea_Culvert_at_MotukawaPowerScheme': 7}
+
+== Auckland diagnostics (aggregate only)
+Auckland per-year mean shares over gauges:
+         records  nan_share  share_2xx  share_1xx_3xx  share_nocode  share_4xx_6xx
+wy                                                                               
+2017   5981.429      0.000      0.185          0.014           0.0          0.801
+2018   5511.500      0.002      0.183          0.002           0.0          0.815
+2019  12026.014      0.001      0.196          0.001           0.0          0.803
+2020  13247.471      0.001      0.115          0.001           0.0          0.884
+2021  21541.643      0.000      0.249          0.000           0.0          0.751
+2022  22825.286      0.000      0.437          0.000           0.0          0.563
+2023  20155.580      0.000      0.133          0.000           0.0          0.867
+2024  24621.243      0.000      0.117          0.000           0.0          0.883
+2025  30054.600      0.000      0.156          0.003           0.0          0.841
+all Auckland values non-negative: True
+Auckland 2018/19 primary: known_frac q10/50/90 [0.41 0.67 0.78] | dense 0.01 | resolved 0.94 | ok 0.00
+Auckland 2019/20 primary: known_frac q10/50/90 [0.42 0.74 0.96] | dense 0.26 | resolved 0.94 | ok 0.24
+Auckland 2021/22 primary: known_frac q10/50/90 [0.22 0.79 0.96] | dense 0.76 | resolved 0.93 | ok 0.33
+Auckland 2022/23 primary: known_frac q10/50/90 [0.2  0.52 0.86] | dense 0.71 | resolved 0.94 | ok 0.07
+Auckland 2018 S3: known_frac q10/50/90 [0.69 0.8  0.91] | ok 0.16 | wet_median_min q50/90 [5.6 6.8]
+Auckland 2019 S3: known_frac q10/50/90 [0.72 0.94 0.97] | ok 0.56 | wet_median_min q50/90 [5.9 8.2]
+Auckland post hoc with out-of-sample from 2017/18, primary, >= 8 years: {'O': 0, 'E': 0.0, 'gauges': 0, 'OE': nan, 'ci': [nan, nan]}
+Auckland post hoc with out-of-sample from 2017/18, primary, >= 6 years: {'O': 9, 'E': 5.6, 'gauges': 9, 'OE': 1.607, 'ci': [0.545, 3.023]}
+Auckland post hoc with out-of-sample from 2017/18, S3, >= 8 years: {'O': 47, 'E': 22.0, 'gauges': 27, 'OE': 2.136, 'ci': [0.578, 4.039]}
+Auckland post hoc with out-of-sample from 2017/18, S3, >= 6 years: {'O': 105, 'E': 45.0, 'gauges': 62, 'OE': 2.333, 'ci': [0.466, 4.542]}

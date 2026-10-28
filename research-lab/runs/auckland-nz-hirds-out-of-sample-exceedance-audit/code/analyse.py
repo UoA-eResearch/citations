@@ -49,11 +49,12 @@ def gauge_meta(H, S):
     # D7: 100 m alone mislabels most gauges (the review found 75 of 117 "non-fitting" gauges have a same-named HIRDS
     # site 0.1-3 km away). A gauge counts as one of HIRDS's fitting sites if a site is within 100 m, or a site with
     # the same normalised name is within 3 km.
-    snames = S.site_name.map(norm_text).to_numpy()
-    gnames = g.file.map(lambda f: norm_text(f.split("__", 1)[1])).to_numpy()
+    stok = [tokens(x) for x in S.site_name]
+    gtok = [tokens(f.split("__", 1)[1]) for f in g.file]
     same = np.zeros(len(g), bool); jn = j.copy()
     for i in range(len(g)):
-        hit = np.flatnonzero((snames == gnames[i]) & (dist[i] <= 3.0))
+        near = np.flatnonzero(dist[i] <= 3.0)
+        hit = np.array([k for k in near if stok[k] and gtok[i] and (stok[k] <= gtok[i] or gtok[i] <= stok[k])], dtype=int)
         if len(hit):
             same[i] = True; jn[i] = hit[np.argmin(dist[i][hit])]
     g["fitting_site"] = (g.hirds_site_km <= 0.1) | same
@@ -80,9 +81,13 @@ def norm_text(x):
 FILLER = {"hy", "at", "the", "rv", "river", "stream", "ck", "creek", "nrfa", "ews", "aws", "combined"}
 
 
-def site_tokens(f):
-    toks = re.sub(r"[^a-z0-9]+", " ", f.split("__", 1)[1].lower()).split()
+def tokens(x):
+    toks = re.sub(r"[^a-z0-9]+", " ", str(x).lower()).split()
     return {t[:-1] if len(t) > 3 and t.endswith("s") else t for t in toks if t not in FILLER}
+
+
+def site_tokens(f):
+    return tokens(f.split("__", 1)[1])
 
 
 def same_site(a, b):

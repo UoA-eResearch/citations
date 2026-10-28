@@ -1,0 +1,83 @@
+== H1 reproduced: 254 1697 197 1.497
+gauges left since review: ['HawkesBay__Lake_Tutira_NEW_Buoy', 'WestCoast__Cropp_Rv_Waterfall', 'WestCoast__Wangapeka_Biggs_Top', 'WestCoast__Whataroa_Rv_SH6']
+gauges entered: []
+
+== the 12 series excluded as non-incremental
+                                         file    measurement      interp  records  negatives  p50   p99     max  max_wy_total  share_nondecreasing_first50k  old_exceed  old_years
+              HawkesBay__Lake_Tutira_NEW_Buoy       Rainfall Incremental   887884          0  0.0   0.7   312.0       20453.0                          0.96           3          8
+               Taranaki__4248_at_Opunake_WWTP       Rainfall Incremental  1165136          2  0.0   1.6    26.4       12695.0                          0.99          -1         -1
+         Taranaki__Ahuahu_at_Te_Tuhi_Junction SCADA Rainfall Incremental    37734          0  0.5 500.0  1000.0      375542.0                          0.77          -1         -1
+Taranaki__Whangamomona_at_Bridge_to_Somewhere SCADA Rainfall Incremental    37908          0  0.5 500.0  1000.0     1858000.0                          0.77          -1         -1
+         Taranaki__Whangamomona_at_Marco_Road       Rainfall Incremental   113123          0  0.2 600.0  8600.0     2203000.0                          1.00          -1         -1
+        Taranaki__Whanganui_at_Mataimona_Trig SCADA Rainfall Incremental    46082          0  0.5 500.0  1500.0     1778000.0                          0.77          -1         -1
+              Taranaki__Whanganui_at_Pipiriki SCADA Rainfall Incremental    33525          0  0.5 500.0  1500.0     1160000.0                          0.79          -1         -1
+                WestCoast__Cropp_Rv_Waterfall Rainfall (raw) Incremental  1349189          0  0.0   2.0  4500.0      449223.0                          0.94           0          8
+            WestCoast__Haast_Rv_Roaring_Billy Rainfall (raw) Incremental   431949          0  0.0   3.0 28694.0     1297172.0                          0.90          -1         -1
+           WestCoast__Hokitika_Rv_Colliers_Ck Rainfall (raw) Incremental   458072          0  0.5   1.0   142.6       93328.0                          0.96          -1         -1
+               WestCoast__Ivory_Rv_Ripplerock Rainfall (raw) Incremental   461886         61  0.0   3.8   582.0      231082.0                          0.76          -1         -1
+                   WestCoast__Whataroa_Rv_SH6 Rainfall (raw) Incremental  1793898          0  0.0   1.0  4500.0       94015.0                          0.96           0          8
+gauges with isolated negatives (not excluded):                                               file  negatives  screened
+                Auckland__742826_Puni_Hill_Reserve          8         8
+    HawkesBay__Kopuawhara_Stream_at_Railway_Bridge          1         1
+                    HawkesBay__Lake_Waikopiro_Buoy          3        15
+           Marlborough__Flaxbourne_at_Corrie_Downs          1         1
+                           Taranaki__Lake_Ratapiko          1         1
+Taranaki__Mangaotea_Culvert_at_MotukawaPowerScheme          1         3
+           Wellington__Akatarawa_River_at_Cemetery          1         1
+ Wellington__Ruamahanga_River_at_Wairarapa_College          1         1
+                   WestCoast__Grey_Rv_WCRC_Office2          2         2
+
+== Okoraka at Ngatawhiti Road: records removed by the screen, by date
+            size    sum
+2024-09-01    75  189.5
+2024/25 6-h max now: [80.0] | depth 70.8
+screen_counts row: [{'file': 'Northland__Okoraka_at_Ngatawhiti_Road', 'records': 474819, 'screened': 75, 'gauge_fault': 0, 'negatives': 0, 'max_wy_total': 1915.8889879584312}]
+
+== duplicates dropped (9) with their kept partner and distance
+  Marlborough__Red_Hills  <-  Tasman__HY_Motueka_at_Red_Hills  (0.01 km)
+  WestCoast__Wangapeka_Biggs_Top  <-  Tasman__HY_Wangapeka_at_Biggs_Tops  (0.26 km)
+  HawkesBay__Ngahere_HBRC  <-  HawkesBay__Ngahere_Hut  (0.00 km)
+  Marlborough__St_Arnaud_NRFA  <-  Tasman__HY_Lake_Rotoiti_at_DOC_HQ  (0.02 km)
+  Taranaki__North_Taranaki_at_Camphouse  <-  Taranaki__North_Egmont_at_Visitors_Centre  (0.10 km)
+  Auckland__750216_Hunua_East_RAWS_Waharau  <-  Auckland__750213_Waihihi_Waharau_Regional_Park  (0.00 km)
+  Marlborough__Blenheim_Research_EWS_Combined_  <-  Marlborough__Blenheim_Research_EWS  (0.00 km)
+  WestCoast__Haast_Rv_Roaring_Billy_WCRC  <-  WestCoast__Haast_Rv_Roaring_Billy  (0.01 km)
+  WestCoast__Mokihinui_Rv_Stoney_Ck  <-  Tasman__HY_Mokihinui_at_Stoney_Ck  (1.04 km)
+
+== fitting-site match strictness
+fitting_by counts (gauges with depth): {'no': 222, 'within_100m': 203, 'same_name_within_3km': 13}
+included: fitting 86 not 111
+'not fitting' included gauges whose own same_site() rule matches a HIRDS site within 3 km: 39 | any with end >= 2017: 0
+    ('HawkesBay__Aniwaniwa_Park_HQ', np.float64(0.34), 'ANIWANIWA', 1991)
+    ('HawkesBay__Ben_Nevis', np.float64(0.1), 'Huatokitoki at Ben Nevis', 2015)
+    ('HawkesBay__Fairview', np.float64(0.94), 'Mangapoike at Fairview', 2015)
+    ('HawkesBay__Fishers', np.float64(0.4), 'Pakuratahi at Fishers', 2015)
+    ('HawkesBay__Greenhill_Ridge', np.float64(0.11), 'Awanui at Greenhill Ridge', 2015)
+    ('HawkesBay__Hangaroa_River_at_Doneraille_Park', np.float64(0.32), 'Hangaroa at Doneraille Park', 2015)
+    ('HawkesBay__Maharakeke_Stream_at_Limeworks_Stn_Rd', np.float64(1.42), 'MAHARAKEKE', 1993)
+    ('HawkesBay__Mangaorapa', np.float64(0.11), 'Porangahau at Mangaorapa', 2015)
+    ('HawkesBay__Moorcock', np.float64(0.18), 'Moorcock at Moorcock', 2015)
+    ('HawkesBay__Ngaruroro_River_at_Kuripapango', np.float64(2.22), 'KURIPAPANGO', 1974)
+    ('HawkesBay__Ngaruroro_River_at_Ohiti', np.float64(0.16), 'Ngaruroro at Ohiti Pa', 2015)
+    ('HawkesBay__Otutu_Bush', np.float64(0.1), 'Ngaruroro at Otutu Bush', 2015)
+
+== window screen with NaN values (Auckland series; aggregate only)
+Auckland series with NaN: 67; series where the window total is NaN for more than half the records (screen effectively off): 48
+
+== coverage sums
+gauges attempted 443 = ok 197 + drops 246 -> True
+gauge_years_out_of_sample_6h attempted 3714 = ok 2490 + drops 1224 -> True
+
+== independent studentized interval from year_by_year.csv (cluster-robust t and bootstrap-t)
+O/E 1.497 | cluster-robust t(8): [0.551 2.443]
+bootstrap-t: [0.712 2.886] | reported ci_bootstrap_t: [0.678, 2.822]
+
+== beyond-250-year cases now (6 h)
+above 250-yr: 15 | above 1.5x: 4
+                             file   wy  max_point    mm  r250
+             HawkesBay__Glengarry 2022     262.00  76.8  1.83
+        Northland__Hakaru_at_Tara 2022     343.14 108.0  1.79
+             HawkesBay__Glengarry 2017     255.50  76.8  1.79
+               HawkesBay__Fishers 2017     242.50  79.5  1.62
+ HawkesBay__LK4_Ngaroto_Tutaekuri 2022     196.00  72.2  1.44
+Taranaki__Kapoaiaia_at_Lighthouse 2021     170.00  68.5  1.38

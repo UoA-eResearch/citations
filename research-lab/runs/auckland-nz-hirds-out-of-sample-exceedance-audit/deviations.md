@@ -193,3 +193,23 @@ no rain) if either:
    250-year depth.
 
 All of these change numbers; none changes the verdict. H1 was Inconclusive before and after.
+
+**Corrections from the confirmation pass** (same day; the reviewer checked the fixes above and found six more):
+- **Item 2 above was wrong as first written.** The non-incremental test used raw annual totals, before the record
+  screens, and justified its 12,000 mm threshold as "above New Zealand's wettest recorded year (about 11,000 mm)".
+  That figure is wrong: Cropp at Waterfall recorded 16,617 mm in 1998 and 18,413 mm over 365 days. The rule
+  therefore excluded eleven gauges whose spikes the screens had already removed and whose post-screen totals are
+  ordinary for the West Coast (Cropp 12,822 mm, Tuke Hut 11,790 mm). It now runs on post-screen totals with a
+  20,000 mm threshold, above the national record, and excludes one gauge: Ivory River at Ripplerock, 164,662 mm
+  after screening with 61 negative increments. Keeping or dropping the other eleven moves O/E by less than 0.02.
+- **A NaN bug in the window screen.** Its cumulative sum ran over raw values, so a single NaN disabled the test for
+  the rest of a series, including 48 of 67 Auckland series. Fixed with `nan_to_num`.
+- **The fitting-site match was nearly inert.** Exact name equality added 13 gauges; the token matcher used for
+  duplicates adds 44, giving 127 fitting against 73 not.
+- **Earlier deviations were under-recorded.** D4 claimed the NaN rule already existed when it was added there; D5
+  also rewrote the S1 ceiling and recovered six series that had returned empty. Both are recorded here.
+- The studentized interval is quoted from `primary.json` throughout (0.68–2.80); an earlier draft quoted the
+  secondary run's resample of it.
+- **Lake Tutira's 2020/21 maximum (223 mm) is a probable fault** that no rule here catches: it exceeds the 250-year
+  depth with no corroborating storm nearby. It is left in the primary and named in the limits; the
+  beyond-250-year sensitivity removes it.

@@ -56,7 +56,10 @@ def load(f):
 
 
 MAX_NEGATIVES = 10                         # more than a handful of negative increments means the series is not incremental
-NZ_MAX_ANNUAL = 12000.0                    # mm: above New Zealand's wettest recorded year (Cropp River, ~11,000 mm)
+NZ_MAX_ANNUAL = 20000.0                    # mm in a water year, above New Zealand's record (Cropp at Waterfall:
+                                           # 16,617 mm in 1998, 18,413 mm over 365 days). Applied AFTER the record
+                                           # screens, so a series is only called non-incremental if its spikes
+                                           # cannot explain the total.
 WINDOW_LIMIT = {5: 40.0, 60: 150.0}        # mm in w minutes: an envelope above New Zealand's short-duration records
 
 
@@ -78,7 +81,7 @@ def physical_bad(e, L, val):
     run_len = np.bincount(run_id)[run_id]
     stuck = big & (run_len >= 24)
     bad = spike | stuck
-    C = np.r_[0.0, np.cumsum(val)]                       # cumulative rain at the end of each record's interval
+    C = np.r_[0.0, np.cumsum(np.nan_to_num(val))]        # cumulative rain; NaN would otherwise disable the window test
     for w, lim in WINDOW_LIMIT.items():
         tot = C[1:] - np.interp(e - w, e, C[1:], left=0.0)
         hot = tot > lim
@@ -103,8 +106,9 @@ def one(f):
     dense_y = (sil / span.where(span > 0)).fillna(1.0) <= DENSE_SILENCE
     dense = pd.Series(ey).map(dense_y).fillna(False).to_numpy()
     years = np.arange(max(1995, int(ey.min())), min(2025, int(ey.max())) + 1)   # 2025/26 is the last full water year
+    bad0 = bad_quality(qq, "primary") | ~np.isfinite(val) | physical_bad(e, L, val)
     nscreen = int(physical_bad(e, L, val).sum())
-    wytot = pd.Series(val).groupby(ey).sum()
+    wytot = pd.Series(np.where(bad0, 0.0, val)).groupby(ey).sum()           # post-screen totals (D7, corrected)
     # D7: a gauge is excluded only if its series cannot be incremental at all (a water-year total beyond New
     # Zealand's wettest recorded year, or many negative increments). An isolated negative is a faulty record and is
     # handled as missing by physical_bad.

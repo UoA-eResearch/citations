@@ -1,28 +1,28 @@
 {
  "gauges": {
   "attempted": 443,
-  "ok": 197,
+  "ok": 200,
   "fallback": 0,
-  "dropped": 246,
+  "dropped": 243,
   "unresolved": 0,
   "fallback_reasons": {},
   "drop_reasons": {
    "series empty or failed to fetch": 0,
-   "series not incremental (negative increments or an impossible annual total)": 12,
-   "no HIRDS depth (coordinates missing or outside New Zealand)": 4,
+   "series not incremental (negative increments or an impossible annual total)": 1,
+   "no HIRDS depth (coordinates missing or outside New Zealand)": 5,
    "co-located duplicate (plan: keep the longer record)": 9,
-   "fewer than 8 complete, resolved out-of-sample years": 221
+   "fewer than 8 complete, resolved out-of-sample years": 228
   }
  },
  "gauge_years_out_of_sample_6h": {
-  "attempted": 3714,
-  "ok": 2490,
+  "attempted": 3804,
+  "ok": 2514,
   "fallback": 0,
-  "dropped": 1224,
+  "dropped": 1290,
   "unresolved": 0,
   "fallback_reasons": {},
   "drop_reasons": {
-   "incomplete (<90% known time: quality-excluded, outage or unresolved)": 1179,
+   "incomplete (<90% known time: quality-excluded, outage or unresolved)": 1245,
    "complete but too coarse (median wet interval > 15 min)": 45
   }
  }
