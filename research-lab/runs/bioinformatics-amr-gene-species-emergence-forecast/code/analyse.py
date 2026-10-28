@@ -2,7 +2,7 @@
 
 The model is a HistGradientBoostingClassifier trained on the earlier task (cutoff 2019, horizon 2020-2022) and
 applied to the test task (cutoff 2022, horizon 2023-2025). Hyperparameters are chosen inside the training task by
-gene-grouped 2-fold cross-validation (D1). The null ranks candidates by the sampling-effort probability alone.
+gene-grouped 2-fold cross-validation (D2). The null ranks candidates by the sampling-effort probability alone.
 
   analyse.py -> results/tables/primary.json, secondary.json, top100.csv
 """
@@ -27,7 +27,7 @@ GRID = [{"max_leaf_nodes": 31, "learning_rate": 0.1}, {"max_leaf_nodes": 63, "le
 
 
 def fit_predict(tr, te, feats, rng_seed=SEED):
-    """Hyperparameters by gene-grouped 2-fold CV inside the training task, then refit on all of it (D1)."""
+    """Hyperparameters by gene-grouped 2-fold CV inside the training task, then refit on all of it (D2)."""
     g = tr.gene.cat.codes.to_numpy() if hasattr(tr.gene, "cat") else pd.factorize(tr.gene)[0]
     half = (g % 2) == 0
     best, best_ap = None, -1

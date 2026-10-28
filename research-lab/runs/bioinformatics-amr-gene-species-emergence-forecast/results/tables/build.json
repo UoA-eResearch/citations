@@ -1,0 +1,32 @@
+{
+ "files": 106,
+ "rows": 2943808,
+ "unique_biosamples": 2942126,
+ "no_species": 558,
+ "no_year_or_out_of_range": 598704,
+ "no_amr_call_field": 721790,
+ "isolates_dropped_older_db": 15,
+ "isolates_kept": 1621194,
+ "isolates_with_any_gene": 1455342,
+ "species": 264,
+ "versions_top": {
+  "amrfinder_version": {
+   "4.2.7": 2072719,
+   "4.2.5": 870827,
+   "4.0.23": 11,
+   "3.11.26": 76,
+   "4.0.22": 3,
+   "4.0.19": 16,
+   "3.12.8": 2
+  },
+  "refgene_db_version": {
+   "2026-08-07.1": 874369,
+   "2025-12-03.1": 857986,
+   "2026-03-24.1": 794868,
+   "2026-05-15.1": 100991,
+   "2026-01-21.1": 210901
+  }
+ },
+ "genes": 4417,
+ "observed_pairs": 19436
+}

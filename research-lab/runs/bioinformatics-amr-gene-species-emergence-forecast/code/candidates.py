@@ -20,6 +20,8 @@ import pandas as pd
 RUN = Path(__file__).resolve().parents[1]
 D, T = RUN / "data", RUN / "results" / "tables"
 MIN_ISOLATES = 20
+KEEP_ALL_GENES = bool(int(__import__("os").environ.get("KEEP_ALL_GENES", "0")))   # D1 sensitivity
+RULE = __import__("os").environ.get("RULE", "2bp")                               # "2bp" (primary) or "any" (variant)
 
 
 def null_prob(n, f):
@@ -35,8 +37,14 @@ def main(C, H, name):
     tax = pd.read_parquet(D / "taxonomy.parquet").set_index("species")
     emb = pd.read_parquet(D / "gene_embeddings.parquet").set_index("gene") if (D / "gene_embeddings.parquet").exists() else None
 
-    est = pairs[pairs.first_year_2bp <= C]                                  # established by the cutoff
-    new = pairs[(pairs.first_year_2bp > C) & (pairs.first_year_2bp <= H)]   # emerged in the horizon
+    cat = pd.read_csv(D / "raw_ref" / "ReferenceGeneCatalog_2025-12-03.1.txt", sep="\t", dtype=str, low_memory=False)
+    in_catalog = set(cat.allele.dropna()) | set(cat.gene_family.dropna())        # D1
+    if KEEP_ALL_GENES:
+        in_catalog |= set(pairs.gene)
+    pairs = pairs[pairs.gene.isin(in_catalog)]
+    col = "first_year_any" if RULE == "any" else "first_year_2bp"           # plan section 2: outcome variants
+    est = pairs[pairs[col] <= C]                                            # established by the cutoff
+    new = pairs[(pairs[col] > C) & (pairs[col] <= H)]                       # emerged in the horizon
     n_cut = iso[iso.year <= C].species.value_counts()
     n_hor = iso[(iso.year > C) & (iso.year <= H)].species.value_counts()
     species = sorted(n_cut[n_cut >= MIN_ISOLATES].index)
@@ -112,7 +120,7 @@ def main(C, H, name):
         if d[c].dtype == np.float64:
             d[c] = d[c].astype(np.float32)
     d.to_parquet(D / f"task_{name}.parquet")
-    stats = {"cutoff": C, "horizon_end": H, "species": len(species), "genes": len(genes), "candidates": len(d),
+    stats = {"cutoff": C, "horizon_end": H, "rule": RULE, "genes_in_catalog_filter": not KEEP_ALL_GENES, "species": len(species), "genes": len(genes), "candidates": len(d),
              "positives": int(d.y.sum()), "base_rate": round(float(d.y.mean()), 8),
              "emerged_pairs_total": len(new), "emerged_in_candidates": int(d.y.sum()),
              "embedding_feature": E is not None}

@@ -1,0 +1,36 @@
+{
+ "train": {
+  "candidates": 386001,
+  "positives": 1271
+ },
+ "test": {
+  "candidates": 472779,
+  "positives": 847
+ },
+ "hyperparameters": {
+  "max_leaf_nodes": 63,
+  "learning_rate": 0.05
+ },
+ "cv_average_precision": 0.21342,
+ "precision_at_100": {
+  "model": 0.0,
+  "null": 0.08
+ },
+ "ratio": 0.0,
+ "ratio_ci": [
+  0.0,
+  1.2729166666666554
+ ],
+ "ratio_ci_undefined_draws": 210,
+ "H1": "Refuted",
+ "auprc": {
+  "full": 0.076283,
+  "no_embedding": 0.08092,
+  "difference": -0.004637,
+  "difference_ci": [
+   -0.012799099593085344,
+   0.0008632984243963725
+  ]
+ },
+ "H2": "Refuted"
+}

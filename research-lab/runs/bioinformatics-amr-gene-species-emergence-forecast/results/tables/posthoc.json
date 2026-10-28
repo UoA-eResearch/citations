@@ -1,0 +1,46 @@
+{
+ "score_saturation": {
+  "top100_min_score": 0.9999991274444153,
+  "candidates_scored_above_0.999": 118
+ },
+ "no_embedding_vs_null": {
+  "precision_at_100": 0.18,
+  "null_precision_at_100": 0.08,
+  "ratio": 2.25,
+  "ratio_ci": [
+   2.0,
+   23.0
+  ],
+  "would_meet_H1_rule": true
+ },
+ "ties": {
+  "distinct_scores_in_top_1000": 989,
+  "candidates_sharing_the_top_score": 1,
+  "top_score": 0.9999999999999991,
+  "score_at_rank_100": 0.9999991274444153
+ },
+ "carried_over_from_2019": {
+  "candidates": 384730,
+  "positives": 819,
+  "base_rate": 0.002129,
+  "model_precision_at_100": 0.0,
+  "null_precision_at_100": 0.08,
+  "model_auprc": 0.07808457639551236,
+  "null_auprc": 0.015623480290873699
+ },
+ "newly_eligible": {
+  "candidates": 88049,
+  "positives": 28,
+  "base_rate": 0.000318,
+  "model_precision_at_100": 0.07,
+  "null_precision_at_100": 0.0,
+  "model_auprc": 0.04413910913785854,
+  "null_auprc": 0.003766264925401911
+ },
+ "top100_share_carried_over": 0.92,
+ "null_top100_share_carried_over": 1.0,
+ "within_test_period_cv": {
+  "precision_at_100": 0.06,
+  "auprc": 0.08079795898926735
+ }
+}

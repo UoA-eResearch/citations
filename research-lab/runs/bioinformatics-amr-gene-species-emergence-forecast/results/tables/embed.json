@@ -1,0 +1,8 @@
+{
+ "model": "facebook/esm2_t33_650M_UR50D",
+ "device": "cuda",
+ "gpu_free_gb_at_start": 8.4,
+ "genes": 4381,
+ "dim": 1280,
+ "truncated": 32
+}

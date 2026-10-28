@@ -13,6 +13,7 @@ import pandas as pd
 
 RUN = Path(__file__).resolve().parents[1]
 RAW, D, T = RUN / "data" / "raw", RUN / "data", RUN / "results" / "tables"
+OLDEST_DB = "2025-12-03.1"                                          # D1: the oldest reference catalog in the corpus
 COLS = ["biosample_acc", "scientific_name", "collection_date", "geo_loc_name", "bioproject_acc", "AMR_genotypes_core",
         "amrfinder_version", "refgene_db_version"]
 SPECIES = re.compile(r"^([A-Z][a-z]+) ([a-z][a-z-]+)\b")
@@ -63,9 +64,13 @@ def main():
     d = d[d.species.notna() & d.year.between(1990, 2025)]
     stats["no_amr_call_field"] = int(d.AMR_genotypes_core.isna().sum())
     d = d[d.AMR_genotypes_core.notna()]
+    old_db = d.refgene_db_version.fillna("") < OLDEST_DB            # D1: screened with a catalog we cannot audit
+    stats["isolates_dropped_older_db"] = int(old_db.sum())
+    d = d[~old_db]
     d["genes"] = d.AMR_genotypes_core.map(genes_of)
     d["country"] = d.geo_loc_name.fillna("").str.split(":").str[0].str.strip()
-    iso = d[["biosample_acc", "year", "species", "bioproject_acc", "country", "genes", "group"]].rename(columns={"biosample_acc": "biosample"})
+    iso = d[["biosample_acc", "year", "species", "bioproject_acc", "country", "genes", "group", "refgene_db_version",
+             "amrfinder_version"]].rename(columns={"biosample_acc": "biosample"})
     iso["year"] = iso.year.astype(int)
     iso.to_parquet(D / "isolates.parquet")
     stats["isolates_kept"] = len(iso); stats["isolates_with_any_gene"] = int((iso.genes.str.len() > 0).sum())

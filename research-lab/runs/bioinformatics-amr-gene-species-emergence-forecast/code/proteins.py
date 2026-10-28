@@ -36,6 +36,16 @@ def main():
             by_allele[allele] = (acc, seq)
         if family and (family not in by_family or len(seq) > len(by_family[family][1])):
             by_family[family] = (acc, seq)
+    by_acc = {}
+    for h, seq in read_fasta(D / "raw_ref" / "AMRProt.fa"):
+        by_acc[h.split("|")[0]] = seq
+    cat = pd.read_csv(D / "raw_ref" / "ReferenceGeneCatalog.txt", sep="\t", dtype=str, low_memory=False)
+    by_catalog = {}                                        # symbol -> longest catalogued protein present in the FASTA
+    for col in ("allele", "gene_family"):
+        for sym, acc in zip(cat[col], cat.refseq_protein_accession.fillna(cat.genbank_protein_accession)):
+            if isinstance(sym, str) and isinstance(acc, str) and acc in by_acc:
+                if sym not in by_catalog or len(by_acc[acc]) > len(by_catalog[sym][1]):
+                    by_catalog[sym] = (acc, by_acc[acc])
     iso = pd.read_parquet(D / "isolates.parquet", columns=["genes"])
     genes = pd.Series([g for gs in iso.genes for g in gs]).value_counts()
     rows = []
@@ -44,6 +54,8 @@ def main():
             acc, seq, how = *by_allele[g], "allele"
         elif g in by_family:
             acc, seq, how = *by_family[g], "gene_family"
+        elif g in by_catalog:
+            acc, seq, how = *by_catalog[g], "catalog_accession"
         else:
             rows.append((g, int(n), "unmatched", None, None, None)); continue
         rows.append((g, int(n), how, acc, len(seq), seq))

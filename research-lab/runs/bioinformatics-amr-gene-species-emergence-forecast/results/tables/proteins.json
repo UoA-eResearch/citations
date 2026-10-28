@@ -1,0 +1,73 @@
+{
+ "db_version": "2026-08-07.1",
+ "genes_seen": 4417,
+ "by_match": {
+  "allele": 4211,
+  "gene_family": 118,
+  "catalog_accession": 52,
+  "unmatched": 36
+ },
+ "isolate_share_matched": 0.995,
+ "unmatched_top": [
+  {
+   "gene": "vat",
+   "isolates": 10633
+  },
+  {
+   "gene": "vanR",
+   "isolates": 8691
+  },
+  {
+   "gene": "dfrA51",
+   "isolates": 6610
+  },
+  {
+   "gene": "lsa",
+   "isolates": 5453
+  },
+  {
+   "gene": "tet",
+   "isolates": 3292
+  },
+  {
+   "gene": "vga",
+   "isolates": 2110
+  },
+  {
+   "gene": "ant(3'')",
+   "isolates": 1786
+  },
+  {
+   "gene": "aph(2'')-I",
+   "isolates": 1496
+  },
+  {
+   "gene": "aph(3'')",
+   "isolates": 1411
+  },
+  {
+   "gene": "aac(3)",
+   "isolates": 1157
+  },
+  {
+   "gene": "erm",
+   "isolates": 719
+  },
+  {
+   "gene": "ant(6)",
+   "isolates": 716
+  },
+  {
+   "gene": "aph(3')-I",
+   "isolates": 569
+  },
+  {
+   "gene": "mle",
+   "isolates": 489
+  },
+  {
+   "gene": "aac(3)-II",
+   "isolates": 331
+  }
+ ]
+}

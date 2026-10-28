@@ -1,0 +1,50 @@
+{
+ "isolates": {
+  "attempted": 2943943,
+  "ok": 1621194,
+  "fallback": 0,
+  "dropped": 1322749,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "duplicate biosample": 1682,
+   "no collection year, or outside 1990-2025": 598704,
+   "no species binomial": 558,
+   "no AMR call field": 721790,
+   "screened with a reference catalog older than the oldest audited one (D1)": 15
+  }
+ },
+ "gene_symbols_with_a_reference_protein": {
+  "attempted": 4417,
+  "ok": 4381,
+  "fallback": 0,
+  "dropped": 36,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "no protein in the catalog or FASTA": 36
+  }
+ },
+ "candidates_train_2019": {
+  "attempted": 1698,
+  "ok": 1271,
+  "fallback": 0,
+  "dropped": 427,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "emerged but outside the candidate set (species under 20 isolates, or gene not yet established)": 427
+  }
+ },
+ "candidates_test_2022": {
+  "attempted": 1116,
+  "ok": 847,
+  "fallback": 0,
+  "dropped": 269,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "emerged but outside the candidate set (species under 20 isolates, or gene not yet established)": 269
+  }
+ }
+}

@@ -1,0 +1,87 @@
+{
+ "precision_at_k": {
+  "50": {
+   "model": 0.0,
+   "null": 0.08
+  },
+  "100": {
+   "model": 0.0,
+   "null": 0.08
+  },
+  "500": {
+   "model": 0.126,
+   "null": 0.04
+  }
+ },
+ "ablations": {
+  "effort_only": {
+   "precision_at_100": 0.0,
+   "auprc": 0.011652090248436636
+  },
+  "no_taxonomy": {
+   "precision_at_100": 0.16,
+   "auprc": 0.0748833005165091
+  },
+  "no_cooccurrence": {
+   "precision_at_100": 0.0,
+   "auprc": 0.037394721579753806
+  },
+  "no_embedding": {
+   "precision_at_100": 0.18,
+   "auprc": 0.0809196175796563
+  }
+ },
+ "auprc_null": 0.01526642525096628,
+ "calibration_decile": {
+  "0": {
+   "mean_p": 0.0,
+   "observed": 0.0,
+   "n": 47278
+  },
+  "1": {
+   "mean_p": 0.0,
+   "observed": 0.0,
+   "n": 47278
+  },
+  "2": {
+   "mean_p": 0.0,
+   "observed": 2.1e-05,
+   "n": 47278
+  },
+  "3": {
+   "mean_p": 0.0,
+   "observed": 0.0,
+   "n": 47278
+  },
+  "4": {
+   "mean_p": 1e-06,
+   "observed": 0.0,
+   "n": 47278
+  },
+  "5": {
+   "mean_p": 1e-06,
+   "observed": 6.3e-05,
+   "n": 47277
+  },
+  "6": {
+   "mean_p": 3e-06,
+   "observed": 2.1e-05,
+   "n": 47278
+  },
+  "7": {
+   "mean_p": 1.1e-05,
+   "observed": 4.2e-05,
+   "n": 47278
+  },
+  "8": {
+   "mean_p": 0.00011,
+   "observed": 0.000677,
+   "n": 47278
+  },
+  "9": {
+   "mean_p": 0.029839,
+   "observed": 0.01709,
+   "n": 47278
+  }
+ }
+}

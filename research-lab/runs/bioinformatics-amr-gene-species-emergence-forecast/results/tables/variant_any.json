@@ -1,0 +1,23 @@
+{
+ "train_positives": 1866,
+ "test_candidates": 665655,
+ "test_positives": 1307,
+ "full": {
+  "precision_at_100": 0.0,
+  "null_precision_at_100": 0.1,
+  "ratio": 0.0,
+  "ratio_ci": [
+   0.0,
+   0.5
+  ]
+ },
+ "no_embedding": {
+  "precision_at_100": 0.0,
+  "null_precision_at_100": 0.1,
+  "ratio": 0.0,
+  "ratio_ci": [
+   0.0,
+   0.0
+  ]
+ }
+}
