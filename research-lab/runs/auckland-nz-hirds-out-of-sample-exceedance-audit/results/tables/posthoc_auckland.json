@@ -1,0 +1,68 @@
+{
+ "primary_min8": {
+  "O": 0,
+  "E": 0.0,
+  "gauge_years": 0,
+  "gauges": 0,
+  "OE": NaN,
+  "ci": [
+   NaN,
+   NaN
+  ]
+ },
+ "primary_min7": {
+  "O": 0,
+  "E": 0.0,
+  "gauge_years": 0,
+  "gauges": 0,
+  "OE": NaN,
+  "ci": [
+   NaN,
+   NaN
+  ]
+ },
+ "primary_min6": {
+  "O": 6,
+  "E": 3.6,
+  "gauge_years": 36,
+  "gauges": 6,
+  "OE": 1.667,
+  "ci": [
+   0.232,
+   3.714
+  ]
+ },
+ "S3_min8": {
+  "O": 16,
+  "E": 9.7,
+  "gauge_years": 97,
+  "gauges": 12,
+  "OE": 1.649,
+  "ci": [
+   0.49,
+   3.14
+  ]
+ },
+ "S3_min7": {
+  "O": 62,
+  "E": 27.2,
+  "gauge_years": 272,
+  "gauges": 37,
+  "OE": 2.279,
+  "ci": [
+   0.493,
+   4.502
+  ]
+ },
+ "S3_min6": {
+  "O": 88,
+  "E": 37.4,
+  "gauge_years": 374,
+  "gauges": 54,
+  "OE": 2.353,
+  "ci": [
+   0.445,
+   4.602
+  ]
+ }
+}

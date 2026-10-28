@@ -1,0 +1,28 @@
+{
+ "gauges": {
+  "attempted": 443,
+  "ok": 198,
+  "fallback": 0,
+  "dropped": 245,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "series empty or failed to fetch": 6,
+   "no HIRDS depth (coordinates missing or outside NZ)": 5,
+   "co-located duplicate (plan: keep the longer record)": 7,
+   "fewer than 8 complete, resolved out-of-sample years": 227
+  }
+ },
+ "gauge_years_out_of_sample_6h": {
+  "attempted": 3762,
+  "ok": 2480,
+  "fallback": 0,
+  "dropped": 1282,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "incomplete (<90% known time: quality-excluded, outage or unresolved)": 1238,
+   "complete but too coarse (median wet interval > 15 min)": 44
+  }
+ }
+}
