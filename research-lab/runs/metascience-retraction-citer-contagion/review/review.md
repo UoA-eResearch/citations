@@ -198,3 +198,69 @@ finding-1 wording and a note that A/B pre-years are matched by construction.
 4. H2 verdict wording (finding 11); H1/H3 lines (finding 12).
 5. Limits: invisible retractions (5), reason-class gaps (6), undocumented deviations (7), overlap loophole and
    multiple exposure (8), depth-2 asymmetry (9), shared controls (10); G1 result and the Madlock-Brown check (13).
+
+---
+
+# Confirmation pass (commit 9f0cad0), 2026-10-28
+
+Reviewer: Claude (Fable 5.1). Checked: report.md, deviations.md D2, the figure caption, `results/plausibility.md`,
+`results/tables/{posthoc_review.json,gap_profiles.csv,coverage.json,selection.json}`, `code/posthoc_review.py`,
+`code/coverage_report.py`, the re-extracted `review/overclaim_check.md` (`--verify` passes, 40 rows) and
+`results/attribution_ledger.csv` (G6 passes, 8 claims). No estimate in primary.json, posthoc.json or posthoc_b.json
+changed. New script: `reviewer_checks/check_class_sensitivity.py` → `class_sensitivity_log.txt`.
+
+## Verdict: publish
+
+## Finding by finding
+
+1. **Mechanism — resolved.** The report's verdict block, "What the naive designs pick up", "What this does and does
+   not show", D2.1 and the caption now describe regression to the mean under level matching; "pulling ahead",
+   "outgrow", "faster-growing" and "kink" are gone. The study-side numbers (`posthoc_review.json`, computed with the
+   study's own matchers and asserted against the published A and B effects) agree with mine to the fourth decimal:
+   raw gap +0.005 / +0.013 / +0.001 then +0.083; design-A step +0.116 / +0.047 / +0.035 by publication age, +0.005
+   by T+4 for the oldest; design B between −0.026 and +0.017 in every cell; same works +0.085 vs +0.008. The lab's
+   same-works set is the 6,056 depth-1 works (my 12,326 included depth 2; my depth-1 figures were identical). The
+   new pool-level comparison (+0.49 against the clean pool, −0.06 against the not-yet-treated pool) is a fair
+   summary of the level difference.
+2. **±0.015 sentence — resolved.** Replaced by the by-construction statement (report "Pre-period profiles"; caption).
+3. **Coverage and selection — resolved, and one correction to my review accepted.** My finding 3 said 56% of
+   depth-1 exposed works were "dropped at the caliper". That was wrong: my `pairs_pre.parquet` holds 61,493 depth-1
+   matches, of which 23,359 are works published at T−2 that the preregistered DiD then drops for having no
+   pre-period year (`analyse.py` pair_rows). The correct decomposition of the 48,329 dropped is 27,954 published at
+   T−2, 19,135 with candidates but none within the caliper, 1,240 with no candidate (`coverage.json`), and the
+   analysed-vs-not citation means on the works the design could analyse are 2.21 vs 2.73 (within age −0.46), not my
+   1.91 vs 2.66. The direction and the conclusion (the analysed works are the less-cited ones; a penalty confined to
+   prominent citers would not be visible) stand, and the report now says so in the standfirst, plain terms, a
+   coverage table with drop reasons, and the limits.
+4. **Counts — resolved.** The standfirst gives 27,802 → 6,222 → 4,355 / 3,203, and "How it was done" gives the full
+   chain from 61,848 DOIs.
+5–10. **Limits — resolved.** Invisible retractions (7,778), the reason-class gap (184 of 1,427 depth-1 "other"
+   retractions), the overlap loophole (3.9% / 8.5%; 0.7% / 2.3%), multiple exposure with the single-exposure check,
+   the depth-2 asymmetry, thin pools and shared controls, and the G1 result are all stated with the right numbers
+   and attributed to the review. D2.2 records the five undocumented details, D2.3 the class gap (left as
+   preregistered, which is the right call).
+   - The sentence "the review found that the misconduct estimate moves only at the third decimal" described an
+     expectation in my review, not a computation. I have now computed it (`class_sensitivity_log.txt`): with the
+     fuller label list the preregistered depth-1 misconduct estimate goes from +0.0605 (+0.044 to +0.077; 2,867
+     retractions) to +0.0649 (+0.047 to +0.082; 2,977), "other" from +0.079 to +0.066, and under design B
+     misconduct from −0.0004 to +0.0001 (2,224 retractions), "other" from −0.017 to −0.021; honest error is
+     unchanged. The sentence is true as written.
+11–12. **Verdict wording — resolved.** The verdict line carries the rule's outputs; the H2 bullet marks "not
+   testable" as a post hoc reading, states that design B's point estimates run opposite to H2 and that the
+   honest-error gain is the only design-B interval excluding zero; "no penalty" is attributed to design B for H1
+   and H3.
+13. **Gates — resolved.** G5: the 19 rows labelled Supported are counts, preregistered numbers and the question;
+   every mechanism and design-B sentence is Exploratory-labelled. G6: identifiers resolve to the named works; R7's
+   conditions now record Madlock-Brown and Eichmann 2014 as studying citations to the retracted articles themselves,
+   from its PubMed abstract. G1 reported. G2: `coverage.json` with drop reasons per design and depth. G3:
+   `plausibility.md` places the +7% against Azoulay et al.'s 5–10% related-article decline and design B's ±2% below
+   it.
+14. **Caption — resolved.** Rewritten in `figures.py` and the .txt; the PNG did not need to change.
+
+## Optional, not blocking
+
+- "the review found that the misconduct estimate moves only at the third decimal" (report, Limits) could cite the
+  numbers above (+0.060 → +0.065 preregistered; −0.000 → +0.000 under design B).
+- The pool-level gaps (+0.49, −0.06) use cumulative citations to T+4 and two different sets of exposed works
+  (84,837 vs 49,254). A version to T−1 on the 49,254 works that have both pools would make the "difference in
+  level before treatment" statement airtight; the present wording ("in citations to T+4") is accurate.

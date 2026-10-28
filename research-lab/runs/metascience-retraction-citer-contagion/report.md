@@ -179,8 +179,9 @@ damage, whether it is larger for misconduct, and whether it fades by citation de
     retracted are not in the Retraction Watch match. Their citers count as citing no retracted paper, so they can be
     controls in every design, and design B cannot see their retraction dates. The direction of any bias is unknown.
   - **Reason classes.** The plan's label list misses some misconduct labels, so 184 of the 1,427 depth-1 "other"
-    retractions would be misconduct under a fuller list (D2). The honest-error class is unaffected, and the review
-    found that the misconduct estimate moves only at the third decimal.
+    retractions would be misconduct under a fuller list (D2). The honest-error class is unaffected. The independent
+    review's recomputation moves the preregistered misconduct estimate from +0.0605 to +0.0649, and design B's from
+    −0.0004 to +0.0001.
   - **The no-overlap rule has a small loophole.** 3.9% of the retracted works have no OpenAlex author ids and 8.5%
     no institution ids. 0.7% and 2.3% of depth-1 exposed works attach to them, so for those "no overlap" cannot be
     tested.
@@ -220,6 +221,7 @@ damage, whether it is larger for misconduct, and whether it fades by citation de
     - the post-review scripts.
 - **Independent review:** Fable, 2026-10-28 (`review/review.md`), verdict publish with edits. Every design reproduced
   exactly from the interim files. The edits are interpretation, sample reporting and limits; no estimate changed.
+  The confirmation pass (17:45) found every finding resolved: **publish**.
 - **Gates:**
   - G2: `results/tables/coverage.json`, added after the review.
   - G3: `results/plausibility.md`, added after the review.

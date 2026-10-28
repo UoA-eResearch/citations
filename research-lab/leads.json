@@ -345,7 +345,12 @@
    "critic_note": "Critic: partially pre-empted by van der Vet & Nijveen (2018) and Shuai et al. (2017); value holds only if reason- and depth-stratification carries the paper.",
    "scout_value_score": 6,
    "scout_cost_score": 4,
-   "plain_summary": "When a scientific paper is retracted, does it hurt researchers who innocently cited it beforehand? This study would compare how often those citing papers are cited afterwards with similar papers that never cited the retracted work, and check whether the damage is worse when the retraction was for misconduct rather than an honest mistake."
+   "plain_summary": "When a scientific paper is retracted, does it hurt researchers who innocently cited it beforehand? This study would compare how often those citing papers are cited afterwards with similar papers that never cited the retracted work, and check whether the damage is worse when the retraction was for misconduct rather than an honest mistake.",
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass)",
+   "report_url": "runs/metascience-retraction-citer-contagion/report.html",
+   "verdict_tag": "Inconclusive",
+   "verdict_note": "H1 Inconclusive: the preregistered matched DiD (+0.068 log points, 4,355 retractions) is an artefact of matching. Citers of later-retracted papers sit 0.49 log points above same-venue clean controls, and matching on early citations leaves a regression-to-the-mean step at the first unmatched year. Post hoc not-yet-treated controls (works citing papers retracted after the window) give +0.003 (-0.015 to +0.021): no collateral citation penalty larger than about 1.5% for innocent citers, at depth 1 or 2 (+0.010), or for misconduct retractions (-0.000). On the same 6,056 works, clean controls give +0.085 and not-yet-treated +0.008. H2 Supported only vacuously (both groups gain); H3 Refuted as preregistered. The analysed works are the less-cited ones (13% of exposed works in the decisive design). Review publish with edits, then confirmation publish.",
+   "headline": "Innocent citers of retracted papers lose no measurable citations; apparent effects in naive designs are regression to the mean."
   },
   {
    "id": "metascience-review-disagreement-disruption",
