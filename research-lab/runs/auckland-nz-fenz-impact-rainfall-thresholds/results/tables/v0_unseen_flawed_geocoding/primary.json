@@ -1,0 +1,87 @@
+{
+ "LL_base": 0.000633,
+ "LL_D": 0.0004418,
+ "LL_R": 0.0004305,
+ "D_LL": 1.1296391963277926e-05,
+ "skill_D": 0.00019119999999999999,
+ "skill_R": 0.0002025,
+ "S_condition": true,
+ "S": 1.059,
+ "D_LL_ci": [
+  3.1639520293233346e-06,
+  2.0071090478162724e-05
+ ],
+ "test_suburb_days": 931008,
+ "test_floods": 64,
+ "H1": "Supported",
+ "loro": {
+  "regions": {
+   "Auckland Region": {
+    "LL_D": 0.0006187,
+    "LL_R": 0.0006155,
+    "R_wins": true,
+    "test_floods": 21,
+    "floods_all_years": 387
+   },
+   "Hawke's Bay Region": {
+    "LL_D": 0.0001122,
+    "LL_R": 0.0001273,
+    "R_wins": false,
+    "test_floods": 1,
+    "floods_all_years": 67
+   },
+   "Marlborough Region": {
+    "LL_D": 0.001642,
+    "LL_R": 0.0015153,
+    "R_wins": true,
+    "test_floods": 8,
+    "floods_all_years": 35
+   },
+   "Nelson Region": {
+    "LL_D": 0.0012902,
+    "LL_R": 0.0012976,
+    "R_wins": false,
+    "test_floods": 7,
+    "floods_all_years": 42
+   },
+   "Northland Region": {
+    "LL_D": 0.0003417,
+    "LL_R": 0.0002992,
+    "R_wins": true,
+    "test_floods": 4,
+    "floods_all_years": 72
+   },
+   "Taranaki Region": {
+    "LL_D": 0.0001941,
+    "LL_R": 0.0001818,
+    "R_wins": true,
+    "test_floods": 2,
+    "floods_all_years": 41
+   },
+   "Tasman Region": {
+    "LL_D": 0.0011569,
+    "LL_R": 0.0011915,
+    "R_wins": false,
+    "test_floods": 13,
+    "floods_all_years": 62
+   },
+   "Wellington Region": {
+    "LL_D": 0.0002721,
+    "LL_R": 0.0003086,
+    "R_wins": false,
+    "test_floods": 7,
+    "floods_all_years": 142
+   },
+   "West Coast Region": {
+    "LL_D": 8.4e-05,
+    "LL_R": 1.86e-05,
+    "R_wins": true,
+    "test_floods": 0,
+    "floods_all_years": 24
+   }
+  },
+  "wins": 5,
+  "n": 9,
+  "majority": true
+ }
+}

@@ -7,6 +7,8 @@ V2 adds ICAD event types starting "NAT". StartDateTime is NZ civil time, convert
                    results/tables/fenz_rows.json (row counts per file and step)
 """
 import json
+import re
+import unicodedata
 from pathlib import Path
 
 import pandas as pd
@@ -15,6 +17,16 @@ RUN = Path(__file__).resolve().parents[1]
 RAW, D, T = RUN / "data" / "raw", RUN / "data", RUN / "results" / "tables"
 COLS = ["ExposureID", "StartDateTime", "RegionalCouncilName", "Suburb", "TLA", "NaturalDisasterTypeName",
         "ICADEventType", "ActionTakenName"]
+
+
+def norm(x):
+    x = unicodedata.normalize("NFKD", str(x)).encode("ascii", "ignore").decode()
+    return re.sub(r"[^a-z0-9]+", " ", x.lower()).strip()
+
+
+def mode(r):
+    r = r[r != ""]
+    return r.value_counts().index[0] if len(r) else ""
 
 
 def one(f):
@@ -52,9 +64,19 @@ def main():
         print(f.name, s, flush=True)
     x = pd.concat(parts)
     x = x[x.day.notna() & (x.suburb != "")]
-    # a suburb's region is its most frequent non-empty RegionalCouncilName (2018/19 often leaves it blank; D1)
-    reg = x[x.region != ""].groupby(["suburb", "tla"]).region.agg(lambda r: r.value_counts().index[0])
-    x["region"] = pd.MultiIndex.from_frame(x[["suburb", "tla"]]).map(reg).fillna("").to_numpy()
+    # One unit per place (D1, D2): suburb names are normalised (case, macrons, punctuation) because spellings and
+    # TLA strings vary between years; blank regions are filled from the same suburb and TLA, then from the suburb
+    # name if it occurs in a single region.
+    x["skey"], x["tkey"] = x.suburb.map(norm), x.tla.map(norm)
+    r1 = x[x.region != ""].groupby(["skey", "tkey"]).region.agg(mode)
+    fill = pd.MultiIndex.from_frame(x[["skey", "tkey"]]).map(r1).fillna("").to_numpy()
+    x["region"] = x.region.where(x.region != "", fill)
+    one_region = x[x.region != ""].groupby("skey").region.agg(lambda r: r.iloc[0] if r.nunique() == 1 else "")
+    x["region"] = x.region.where(x.region != "", x.skey.map(one_region).fillna(""))
+    key = ["skey", "region"]
+    x["suburb"] = pd.MultiIndex.from_frame(x[key]).map(x.groupby(key).suburb.agg(mode)).to_numpy()
+    x["tla"] = pd.MultiIndex.from_frame(x[key]).map(x.groupby(key).tla.agg(mode)).to_numpy()
+    x = x[x.region != ""]
     x["v1"] = x.flood | x.v1x
     x["v2"] = x.flood | x.v2x
     x["nonflood"] = ~x.v1                                  # activity: exposures that are not flood-related in any variant

@@ -16,6 +16,19 @@ import pandas as pd
 
 RUN = Path(__file__).resolve().parents[1]
 D, T = RUN / "data", RUN / "results" / "tables"
+HL = RUN.parent / "auckland-nz-hirds-out-of-sample-exceedance-audit"
+COUNCIL = {"Northland": "Northland Region", "HawkesBay": "Hawke's Bay Region", "Wellington": "Wellington Region",
+           "Marlborough": "Marlborough Region", "Tasman": "Tasman Region", "Taranaki": "Taranaki Region",
+           "WestCoast": "West Coast Region", "Auckland": "Auckland Region"}
+_NB = {"Tasman Region": {"Nelson Region", "West Coast Region", "Marlborough Region", "Canterbury Region"},
+       "Auckland Region": {"Waikato Region", "Northland Region"}, "Wellington Region": {"Manawatu-Wanganui Region"},
+       "Hawke's Bay Region": {"Gisborne Region", "Manawatu-Wanganui Region", "Bay of Plenty Region", "Waikato Region"},
+       "Taranaki Region": {"Manawatu-Wanganui Region", "Waikato Region"}, "Marlborough Region": {"Canterbury Region", "Nelson Region"},
+       "West Coast Region": {"Canterbury Region", "Otago Region", "Southland Region"}}
+NEIGHBOURS = {}
+for k, vs in _NB.items():
+    for v in vs:
+        NEIGHBOURS.setdefault(k, set()).add(v); NEIGHBOURS.setdefault(v, set()).add(k)
 PLACES = {"Suburb", "Locality", "Town", "City", "Village", "Settlement", "Township", "Hamlet", "Urban Area"}
 
 
@@ -33,15 +46,30 @@ def main():
     s = f.groupby(["suburb", "tla", "region"]).agg(exposures=("nonflood", "size")).reset_index()
     s["key"] = s.suburb.map(norm)
     cand = g.groupby("key")[["crd_latitude", "crd_longitude"]].apply(lambda x: x.to_numpy()).to_dict()
-    s["n_cand"] = s.key.map(lambda k: len(cand.get(k, [])))
+    # D2: a candidate is consistent with the record's regional council unless its nearest gauge within 10 km belongs
+    # to a council that is neither that council nor a neighbour of it (gauge locations only; no outcomes)
+    H = pd.read_parquet(HL / "data" / "hirds_depths.parquet").groupby("file")[["lat", "lon"]].first()
+    glat, glon = H.lat.to_numpy(), H.lon.to_numpy()
+    gcouncil = H.index.str.split("__").str[0].map(COUNCIL).to_numpy()
+
+    def consistent(c, region):
+        dist = np.hypot((glon[None, :] - c[:, 1:2]) * 111.32 * np.cos(np.radians(c[:, 0:1])), (glat[None, :] - c[:, 0:1]) * 110.57)
+        j = dist.argmin(1)
+        near = dist[np.arange(len(c)), j] <= 10
+        ok_council = np.array([gcouncil[k] == region or gcouncil[k] in NEIGHBOURS.get(region, set()) for k in j])
+        return ~near | ok_council
+    s["cands"] = [cand[k][consistent(cand[k], r)] if k in cand else None for k, r in zip(s.key, s.region)]
+    s["n_cand"] = s.cands.map(lambda c: -1 if c is None else len(c))
     uni = s[s.n_cand == 1].copy()
-    uni[["lat", "lon"]] = np.vstack([cand[k][0] for k in uni.key]) if len(uni) else np.empty((0, 2))
+    uni[["lat", "lon"]] = np.vstack([c[0] for c in uni.cands]) if len(uni) else np.empty((0, 2))
     cen = uni.groupby("tla")[["lat", "lon"]].median()
     rows = []
     for r in s.itertuples():
-        c = cand.get(r.key)
+        c = r.cands
         if c is None:
             rows.append((np.nan, np.nan, "unmatched")); continue
+        if len(c) == 0:
+            rows.append((np.nan, np.nan, "council_mismatch")); continue
         if len(c) == 1:
             rows.append((c[0][0], c[0][1], "unique")); continue
         if r.tla in cen.index:
@@ -50,7 +78,7 @@ def main():
             rows.append((c[j][0], c[j][1], "tla_centroid")); continue
         rows.append((np.nan, np.nan, "ambiguous"))
     s[["lat", "lon", "match"]] = pd.DataFrame(rows, index=s.index)
-    s.drop(columns="key").to_parquet(D / "suburbs.parquet")
+    s.drop(columns=["key", "cands"]).to_parquet(D / "suburbs.parquet")
     by = s.groupby("match").agg(suburbs=("suburb", "size"), exposures=("exposures", "sum"))
     out = {"suburbs": len(s), "exposure_days": int(s.exposures.sum()), "by_match": by.to_dict("index"),
            "share_exposure_days_geocoded": round(float(s.exposures[s.match.isin(["unique", "tla_centroid"])].sum() / s.exposures.sum()), 4)}

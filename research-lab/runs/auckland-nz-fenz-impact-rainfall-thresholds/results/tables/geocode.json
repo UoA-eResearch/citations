@@ -1,23 +1,27 @@
 {
- "suburbs": 9529,
- "exposure_days": 561577,
+ "suburbs": 3700,
+ "exposure_days": 544376,
  "by_match": {
   "ambiguous": {
-   "suburbs": 27,
-   "exposures": 830
+   "suburbs": 8,
+   "exposures": 166
+  },
+  "council_mismatch": {
+   "suburbs": 17,
+   "exposures": 1217
   },
   "tla_centroid": {
-   "suburbs": 939,
-   "exposures": 67873
+   "suburbs": 263,
+   "exposures": 56365
   },
   "unique": {
-   "suburbs": 6774,
-   "exposures": 446466
+   "suburbs": 2505,
+   "exposures": 441795
   },
   "unmatched": {
-   "suburbs": 1789,
-   "exposures": 46408
+   "suburbs": 907,
+   "exposures": 44833
   }
  },
- "share_exposure_days_geocoded": 0.9159
+ "share_exposure_days_geocoded": 0.9151
 }
