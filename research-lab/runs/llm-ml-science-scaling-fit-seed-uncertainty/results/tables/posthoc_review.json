@@ -26,12 +26,12 @@
  ],
  "paired_doc_bootstrap_sd": {
   "2.8b_minus_410m_seed0": {
-   "mean_difference": -0.2704,
-   "sd": 0.0076
+   "mean_difference": -0.2762,
+   "sd": 0.0077
   },
   "2.8b_minus_1.4b": {
-   "mean_difference": -0.0842,
-   "sd": 0.0027
+   "mean_difference": -0.09,
+   "sd": 0.0028
   },
   "410m_seed4_minus_seed0": {
    "mean_difference": 0.4268,

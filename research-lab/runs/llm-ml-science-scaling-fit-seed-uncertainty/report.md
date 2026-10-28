@@ -89,7 +89,7 @@ scaling-law extrapolation, and whether three seeds per size fix it.
   - seed 3 at 100k steps (2.17 against 2.00), partly recovering by 143k (2.09);
   - seed 4 at 143k (2.41).
 
-  These are the two runs the PolyPythias authors flag as outliers.
+  These are the two runs the PolyPythias authors flag as outliers, by a downstream-accuracy criterion.
 - **Seed SD of the final loss:** 0.133 (14M), 0.106 (31M), 0.029 (70M), 0.019 (160M), 0.132 (410M). Without the two
   jump runs, the 410M SD is 0.010.
 
@@ -123,11 +123,13 @@ scaling-law extrapolation, and whether three seeds per size fix it.
 
   The 64-start fits are at the optimum: the independent review found that denser grids do not move them. So the
   16-start widening is a sparse grid stopping in worse local optima, not a modelling choice.
+- **Cutting the ladder at step 64k** narrows the spread (W₁ 0.084, and 0.021 with three seeds) but worsens the
+  overshoot to +0.12. A narrower, less converged range looks more consistent and is further from the target.
 - **Final checkpoints only** (N-only law): W₁ 0.607, median error −0.029. Five points cannot pin the law.
 - **Evaluation noise.** The forecast and the target are scored on the same tokens, so the relevant noise is the paired
   document-bootstrap SD of the difference between two models' losses:
-  - 0.0076 nats for 2.8B against 410M seed 0;
-  - 0.0027 for 2.8B against 1.4B.
+  - 0.0077 nats for 2.8B against 410M seed 0;
+  - 0.0028 for 2.8B against 1.4B.
 
   The seed spread and the overshoot are many times larger than evaluation noise.
 
@@ -165,8 +167,10 @@ scaling-law extrapolation, and whether three seeds per size fix it.
 - **Post hoc** (labelled):
   - `code/spike_check.py`, `code/posthoc.py`;
   - `code/sensitivity_total_n.py`, `code/posthoc_review.py`.
-- **Independent review:** Fable, 2026-10-28 (`review/review.md`), verdict fix first. The fixes are above;
-  confirmation pass to follow.
+- **Independent review:** Fable, 2026-10-28 (`review/review.md`), verdict fix first. The fixes are above. The
+  confirmation pass (22:45) verified them and returned **publish with edits**: it found that the paired-noise script
+  had read the pre-D1 bf16 2.8B file (the SDs move from 0.0076/0.0027 to 0.0077/0.0028), and asked for two stale
+  backing cells and this line. All three are done.
 
 ## Reproducing it
 

@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scaling-Law Seed Noise</title>
+<meta name="description" content="How much does the training seed move a scaling-law forecast, and do three seeds per size fix it?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · LLM and ML science</div>
+  <h1>Training-seed noise in scaling-law forecasts: one seed per size moves the 2.8B forecast by 0.10 nats, mostly because of two known outlier runs, and averaging three seeds did not clearly help</h1>
+  <p class="subtitle">PolyPythias: ten training seeds at each of five sizes, 14M to 410M, eight checkpoints each, 400 checkpoints in all. Each was evaluated in fp32 on 5.0M tokens of Pile validation. The Chinchilla law was fitted to 2,000 random single-seed ladders and to 2-, 3- and 5-seed averaged ladders, each extrapolated to Pythia-2.8B. N is the preregistered non-embedding parameter count; a first run counted the output head too and was corrected after review (D3). The plan was committed before any model was evaluated.</p>
+  <div class="meta">
+    <span>Report · 2026-10-28 · pre-review draft</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/llm-ml-science-scaling-fit-seed-uncertainty/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/llm-ml-science-scaling-fit-seed-uncertainty/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/llm-ml-science-scaling-fit-seed-uncertainty/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: H1 Inconclusive; H2 Inconclusive.</strong></p>
+<ul>
+<li><strong>H1 (single-seed ladders are too noisy: the 5th–95th percentile range W₁ of the 2.8B forecast exceeds 0.05
+  nats): Inconclusive.</strong><ul>
+<li>W₁ = <strong>0.103 nats</strong>. The seed bootstrap interval is 0.041–0.119, so its lower end is below the bar.</li>
+<li><strong>The 410M seed explains 77% of the forecast variance.</strong> Ladders using 410M seed 3 or 4 have median forecasts of
+1.844 and 1.831, against 1.757–1.765 for the other eight seeds.</li>
+<li><strong>These two seeds are known outliers.</strong> The PolyPythias authors already identify them as the only outlier runs,
+with loss spikes. Without them, the 1,578 remaining ladders have W₁ = 0.050 (post hoc).</li>
+</ul>
+</li>
+<li><strong>H2 (averaging three seeds per size at least halves the width): Inconclusive.</strong><ul>
+<li>The shrinkage is <strong>0.10</strong>, with an interval from −0.13 to 0.81: W₃ = 0.093 against W₁ = 0.103. Five seeds give
+0.077.</li>
+<li>Averaging dilutes a bad run rather than removing it, so the heavy tail survives. Independent Gaussian noise would
+predict a shrinkage of 0.42.</li>
+</ul>
+</li>
+<li><strong>The forecasts overshoot the real 2.8B loss, but by an amount that depends on how N is counted.</strong><ul>
+<li>With the preregistered non-embedding N, every single-seed forecast lies above the actual 1.704 nats; the median
+error is +0.061.</li>
+<li>With total parameters, the median error is +0.017, and 67% overshoot (post hoc).</li>
+<li>The fitted asymptote E is poorly identified under the preregistered N (5th percentile 0.16 nats), so the
+extrapolation rests on an ill-conditioned parameter.</li>
+<li>The bias is shared across seeds, but its cause is not established (see below).</li>
+</ul>
+</li>
+<li><strong>Seed matters more than fitting choices.</strong> In a seed × procedure decomposition of the forecast, the seed accounts
+  for 85% of the variance, the procedure 4% and their interaction 11%.</li>
+</ul>
+<h2>In plain terms</h2>
+<p>Before training a large AI language model, labs train a ladder of small ones and fit a "scaling law" to predict how
+good the big one will be. Each small model starts from a random seed, and different seeds give slightly different
+models. We asked how much that luck moves the prediction.</p>
+<p>Using a public set of models trained ten times each with different seeds, we fitted thousands of ladders, each using
+one seed per size. Which seeds you happen to get moves the prediction for a model with about 8 times the parameters
+of the largest rung by about 0.10 in the loss units used. That is comparable to the real gap between the 1.4-billion
+and 2.8-billion-parameter models (0.09).</p>
+<p>About three-quarters of that variation comes from which seed is used at the largest rung, and almost all of that
+from two training runs the models' authors had already flagged as unstable. In this data, dropping those two runs would have cut the spread to about 0.05. Whether
+inspecting training curves beats averaging in general was not tested. Averaging three seeds per size helped little
+here, though that estimate is very uncertain.</p>
+<p>The predictions also came out worse than the big model actually was. How much worse depends on a bookkeeping choice,
+whether the model's embedding parameters are counted, so that bias should not be read as a property of the scaling
+formula alone.</p>
+<h2>What was asked</h2>
+<p>The lead (<code>llm-ml-science-scaling-fit-seed-uncertainty</code>) asked how much training-seed variation moves a
+scaling-law extrapolation, and whether three seeds per size fix it.
+- Prior work varies the fitting procedure or the seeds of the fit itself, not training seeds across a ladder.
+- The PolyPythias paper documents seed variation in training dynamics and identifies outlier runs, but not their
+  effect on extrapolation.</p>
+<h2>How it was done</h2>
+<ul>
+<li><strong>Evaluation.</strong><ul>
+<li>5,000,000 tokens of <code>pile-uncopyrighted</code> validation (SHA-256 <code>e276f22a…</code>), in 2,048-token sequences.</li>
+<li>Mean token cross-entropy in fp32. bf16 corrupts late Pythia checkpoints, so D1 replaced it before any fit.</li>
+<li>Pythia-2.8B was evaluated in fp16 beside the shared GPU server. Its fp16–fp32 difference at 1B and 1.4B is at
+most 6×10⁻⁵ nats.</li>
+</ul>
+</li>
+<li><strong>Ladders.</strong> Sizes 14M, 31M, 70M, 160M and 410M; seeds 0–9; steps 2k–143k, so D runs from 4.2B to 300B tokens.</li>
+<li><strong>N.</strong> Non-embedding parameters from each config, L(12d² + 13d) + 2d (D3). Total parameters are a post hoc
+  sensitivity.</li>
+<li><strong>Fits.</strong> Chinchilla L = E + A/N^α + B/D^β, by a Huber loss (δ = 10⁻³) on log L from 64 starting points, as in
+  Hoffmann et al. and Besiroglu et al.</li>
+<li><strong>Ladders sampled.</strong> 2,000 single-seed ladders, and 2,000 n-seed averaged ladders for n = 2, 3, 5.</li>
+<li><strong>Intervals.</strong> A bootstrap over seeds within size (200 × 500 ladders).</li>
+</ul>
+<h2>Results</h2>
+<h3>The ladder (<code>results/figures/F1_ladder.png</code>)</h3>
+<figure><a href="results/figures/F1_ladder.png"><img src="results/figures/F1_ladder.png" alt="Ladder"></a><figcaption>PolyPythias (seeds 0-9) at sizes 14M-410M, eight checkpoints each (steps 2,000-143,000), evaluated in fp32 on 5.0M tokens of Pile validation (D1). Orange diamonds: the final Pythia-1B, 1.4B (fp32) and 2.8B (fp16) losses, the extrapolation targets.</figcaption></figure>
+<ul>
+<li><strong>Small models rise late, except the original runs.</strong><ul>
+<li>At 14M, all nine new seeds end above their minimum loss, by up to 0.43 nats; at 31M, seven of nine do, by up to
+0.28.</li>
+<li>The original seed-0 runs at both sizes fall monotonically.</li>
+<li>Saturation of small language models (Godey et al., 2024) is one possible explanation. It is a hypothesis here,
+and the seed-0 exception is unexplained.</li>
+</ul>
+</li>
+<li><strong>Two 410M runs jump:</strong><ul>
+<li>seed 3 at 100k steps (2.17 against 2.00), partly recovering by 143k (2.09);</li>
+<li>seed 4 at 143k (2.41).</li>
+</ul>
+</li>
+</ul>
+<p>These are the two runs the PolyPythias authors flag as outliers, by a downstream-accuracy criterion.
+- <strong>Seed SD of the final loss:</strong> 0.133 (14M), 0.106 (31M), 0.029 (70M), 0.019 (160M), 0.132 (410M). Without the two
+  jump runs, the 410M SD is 0.010.</p>
+<h3>Forecasts of Pythia-2.8B (<code>results/figures/F2_extrapolation.png</code>)</h3>
+<figure><a href="results/figures/F2_extrapolation.png"><img src="results/figures/F2_extrapolation.png" alt="Extrapolation"></a><figcaption>Extrapolated loss of Pythia-2.8B (non-embedding N from its config, D = 300B) from 2,000 single-seed ladders (one random seed per size, 40 points each), each fitted with the Chinchilla form by Huber loss on log L. Dashed: 5th and 95th percentiles. Orange: the actual 2.8B loss (seed 0, fp16). Three-seed averaging narrows the range only to 0.093.</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>seeds averaged per size</th>
+<th>W (5th–95th, nats)</th>
+<th>median error vs actual 2.8B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0.103 (0.041–0.119)</td>
+<td>+0.061</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.091</td>
+<td>+0.060</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.093 (0.016–0.102)</td>
+<td>+0.059</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0.077</td>
+<td>+0.066</td>
+</tr>
+<tr>
+<td>1, excluding the two 410M outlier runs (post hoc)</td>
+<td>0.050</td>
+<td>+0.058</td>
+</tr>
+<tr>
+<td>1, checkpoints up to step 64k (post hoc)</td>
+<td>0.084</td>
+<td>+0.119</td>
+</tr>
+<tr>
+<td>3, checkpoints up to step 64k (post hoc)</td>
+<td>0.021</td>
+<td>+0.121</td>
+</tr>
+<tr>
+<td>1, N = total parameters (post hoc)</td>
+<td>0.160</td>
+<td>+0.017</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Secondary analyses</h3>
+<ul>
+<li><strong>Accuracy at 1B and 1.4B (single seed):</strong> median errors +0.055 and +0.066, with widths 0.070 and 0.081.</li>
+<li><strong>Fitted exponents (5th, 50th, 95th percentiles):</strong> α 0.086, 0.104, 0.138; β 0.786, 0.881, 1.059.<ul>
+<li>β is far above the Chinchilla paper's 0.28, as expected when the data dimension is a single run's checkpoints.</li>
+<li>Under total N, α is 0.20, 0.25, 0.30, so α depends strongly on the N convention.</li>
+</ul>
+</li>
+<li><strong>Procedure against seed</strong> (300 ladders × 5 procedures): seed 85%, procedure 4%, interaction 11%. The widths are:<ul>
+<li>base 0.101;</li>
+<li>Huber δ 10⁻⁴: 0.106;</li>
+<li>Huber δ 10⁻²: 0.104;</li>
+<li>linear-space fit: 0.106;</li>
+<li>a 16-start grid: 0.114.</li>
+</ul>
+</li>
+</ul>
+<p>The 64-start fits are at the optimum: the independent review found that denser grids do not move them. So the
+  16-start widening is a sparse grid stopping in worse local optima, not a modelling choice.
+- <strong>Cutting the ladder at step 64k</strong> narrows the spread (W₁ 0.084, and 0.021 with three seeds) but worsens the
+  overshoot to +0.12. A narrower, less converged range looks more consistent and is further from the target.
+- <strong>Final checkpoints only</strong> (N-only law): W₁ 0.607, median error −0.029. Five points cannot pin the law.
+- <strong>Evaluation noise.</strong> The forecast and the target are scored on the same tokens, so the relevant noise is the paired
+  document-bootstrap SD of the difference between two models' losses:
+    - 0.0077 nats for 2.8B against 410M seed 0;
+    - 0.0028 for 2.8B against 1.4B.</p>
+<p>The seed spread and the overshoot are many times larger than evaluation noise.</p>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>Seed noise in a small ladder is heavy-tailed.</strong><ul>
+<li>Most seeds agree to about 0.01–0.03 nats at 70M–410M.</li>
+<li>The forecast spread comes mainly from two rare runs that destabilise late, and averaging dilutes but does not
+remove them.</li>
+<li>Here those runs were already known as outliers. Dropping them would have cut the spread to about 0.05, but that
+is a post hoc observation on this data, not a tested rule. Robust aggregation, such as the median across seeds,
+was not tested.</li>
+</ul>
+</li>
+<li><strong>The cause of the overshoot is not established.</strong> It is shared across seeds, but its size depends on how N is
+  counted (+0.061 non-embedding, +0.017 total). Candidate causes:<ul>
+<li>the N convention, and the poorly identified E;</li>
+<li>the data dimension being intermediate checkpoints of one cosine-schedule run, whose losses are not those of runs
+trained to that D;</li>
+<li>possible near-duplicates between Pile training and validation text, which a larger model could exploit more.
+That would lower the 2.8B loss relative to the ladder and look like overshoot. It cannot be quantified without the training
+set, and no leakage audit beyond the held-out split was possible (G1).</li>
+</ul>
+</li>
+<li><strong>Not shown:</strong><ul>
+<li><strong>Other scales.</strong> Ladders far beyond 410M, and seeds at the target scale (only seed 0 exists for 1B–2.8B).</li>
+<li><strong>Data-order versus initialisation effects.</strong> PolyPythias varies both together.</li>
+<li><strong>Whether such outlier runs are typical</strong> of other model families.</li>
+</ul>
+</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration:</strong> <code>plan.md</code>.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>):<ul>
+<li>D1, before any fit: bf16 to fp32 evaluation.</li>
+<li>D2: batch-size changes to avoid out-of-memory (recorded late, after the fits; no effect on any loss), and the
+post hoc checks.</li>
+<li>D3, after the independent review: N corrected to the preregistered non-embedding count and every fit re-run, with
+a total-N sensitivity added.</li>
+</ul>
+</li>
+<li><strong>Post hoc</strong> (labelled):<ul>
+<li><code>code/spike_check.py</code>, <code>code/posthoc.py</code>;</li>
+<li><code>code/sensitivity_total_n.py</code>, <code>code/posthoc_review.py</code>.</li>
+</ul>
+</li>
+<li><strong>Independent review:</strong> Fable, 2026-10-28 (<code>review/review.md</code>), verdict fix first. The fixes are above. The
+  confirmation pass (22:45) verified them and returned <strong>publish with edits</strong>: it found that the paired-noise script
+  had read the pre-D1 bf16 2.8B file (the SDs move from 0.0076/0.0027 to 0.0077/0.0028), and asked for two stale
+  backing cells and this line. All three are done.</li>
+</ul>
+<h2>Reproducing it</h2>
+<ol>
+<li><code>code/evaluate.py corpus</code>, then <code>code/evaluate.py run</code> (about 6 h on one GPU), then
+   <code>code/evaluate.py evalnoise</code>.</li>
+<li><code>code/fix_n.py</code> (non-embedding N from the configs).</li>
+<li><code>code/fit.py</code> (about 10 h on 20 cores).</li>
+<li><code>code/spike_check.py</code>, <code>code/posthoc.py</code> and <code>code/figures.py</code>.</li>
+<li><code>code/sensitivity_total_n.py</code> and <code>code/posthoc_review.py</code>.</li>
+</ol>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/llm-ml-science-scaling-fit-seed-uncertainty/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

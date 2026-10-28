@@ -34,8 +34,8 @@ def main():
     docs = np.load(RUN / "data" / "eval_docs.npy")
     ud, inv = np.unique(docs, return_inverse=True)
     rng = np.random.default_rng(20261028)
-    pairs = {"2.8b_minus_410m_seed0": ("pythia-2.8b_step143000.npy", "pythia-410m_step143000_float32.npy"),
-             "2.8b_minus_1.4b": ("pythia-2.8b_step143000.npy", "pythia-1.4b_step143000_float32.npy"),
+    pairs = {"2.8b_minus_410m_seed0": ("pythia-2.8b_step143000_float16.npy", "pythia-410m_step143000_float32.npy"),
+             "2.8b_minus_1.4b": ("pythia-2.8b_step143000_float16.npy", "pythia-1.4b_step143000_float32.npy"),
              "410m_seed4_minus_seed0": ("pythia-410m-seed4_step143000_float32.npy", "pythia-410m_step143000_float32.npy")}
     out["paired_doc_bootstrap_sd"] = {}
     for name, (a, b) in pairs.items():

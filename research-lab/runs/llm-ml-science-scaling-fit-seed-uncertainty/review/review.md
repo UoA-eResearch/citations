@@ -176,3 +176,75 @@ The fix is mechanical and needs no GPU: correct the N column and re-run `fit.py`
   each); the verdict expectations in Finding 5 are inferred from the point estimates. The 3-seed corrected fit used
   the first 1,000 of the 2,000 draws, and the total-N fit the first 500.
 - The PolyPythias full text was not read; the cross-reference in Finding 6(b) rests on its abstract.
+
+---
+
+# Confirmation pass — 2026-10-28 (commit 0e3b0ab)
+
+## Verdict: PUBLISH WITH EDITS (three small edits, none changes a number in the headline or verdict block)
+
+### Checked against each finding
+
+1. **N (major) — fixed and verified.** `code/fix_n.py` recomputes N from the HF configs as L(12d²+13d)+2d and asserts
+   the old N equals this plus one 50,304×d head before overwriting; `n_params.csv` matches my `check_params.py` for
+   all eight sizes. `evaluate.py:69` now excludes `embed*` and `lm_head`. Only the N columns changed in `losses.csv`
+   (405 rows; losses and D identical to the committed v1; `N_with_head` equals the old N). The re-run
+   `ladders_single.csv` matches my corrected-N refit (`refit_n1_preds.csv`, `pred_nonemb`) to 0.0 on all 2,000
+   ladders; W₁ 0.1025, W₃ 0.0925 (my 1,000-draw estimate 0.092), total-N sensitivity 0.160 / +0.017 / 67% (my
+   500-ladder 0.155 / +0.017 / 67%). Bootstrap and procedure decomposition were re-run (mtimes 06:39–17:04); v1
+   tables kept in `results/tables/v1_pre_review/`; D3 recorded.
+2. **Overshoot attribution (moderate) — fixed.** "Reflects the fitting form" and "the formula itself was biased" are
+   gone (report lines 23–29, 49–51, 143–150). Both conventions are stated, E's 5th percentile 0.16 is stated, and the
+   three candidate causes are listed. G5 rows 19, 23, 36 rewritten.
+3. **Evaluation noise (minor) — fixed in the report, one bug in the script.** Report lines 127–132 quote the paired
+   SDs. But `code/posthoc_review.py:37–38` loads `pythia-2.8b_step143000.npy`, which is the pre-D1 **bf16**
+   per-sequence file (mean 1.7097), not `pythia-2.8b_step143000_float16.npy` (mean 1.7038, the target used
+   everywhere else). Evidence: the stored `mean_difference` values −0.2704 and −0.0842 equal 1.7097 − 1.9800 and
+   1.7097 − 1.7939; with the fp16 file they are −0.276 and −0.090. The SDs are unaffected (my fp16-based values:
+   0.0076 and 0.0026, `table_checks.json`), so no report number changes beyond possibly 0.0027 → 0.0026. **Edit A:**
+   point the script at the `_float16` file, re-run it, and refresh `posthoc_review.json`.
+4. **16-start grid (minor) — fixed** (report lines 117–125; now framed as a sparse grid stopping in worse optima).
+5. **No change needed — confirmed.** Corrected-N verdicts are both Inconclusive, as predicted: W₁ CI 0.041–0.119
+   straddles 0.05; shrinkage CI −0.13 to 0.81 straddles 0.5.
+6. **Two unstable runs (minor) — fixed and corroborated.** (a) Seed-0 exception stated (lines 82–87); the late-rise
+   figures match `posthoc_review.json` (14M: all nine new seeds, up to 0.431; 31M: seven of nine, up to 0.282).
+   (b) I fetched the paper's HTML: §3 identifies 410M seeds 3 and 4 as the only two runs outside its outlier
+   threshold (a downstream-accuracy criterion on final checkpoints; the authors note a formal test would need more
+   tasks), and §5 characterises them by loss spikes and forks in their training maps. Q7 is therefore supported.
+   The paper itself attributes the small models' mid-training downstream drops to saturation, citing Godey et al.,
+   which supports the report's hypothesis framing. (c) Variance share 77% recomputed under the corrected N; the
+   per-seed medians in the report match `posthoc_review.json`.
+7. **Post hoc exclusion (minor) — fixed.** Plain terms now say "In this data ... was not tested"; G5 row 32 is
+   Exploratory-labelled, as are rows 13 and 21.
+8. **Gates.** G5: `overclaim_check.py --verify` passes (36 rows); labels are now honest. **Edit B:** two backing
+   cells still quote first-run numbers — row 17 ("W3 0.103 vs W1 0.123") and row 34 ("shrinkage 0.16 (−0.10 to
+   0.81)"); update to 0.093 / 0.103 and 0.10 (−0.13 to 0.81). G6: `attribution.py check` passes, 8 claims; Q7 and Q8
+   resolve to the right titles, and Q7's content is corroborated above. G1: limitation stated (lines 148–150). G3:
+   `results/plausibility.md` present and consistent with the tables.
+9. **D2 timing — noted** in `deviations.md` (lines 34–35).
+10. **Nits — fixed:** clipping sentence removed from `figures.py` and the F2 caption; "about 8 times the parameters"
+    (8.33× non-embedding); D1 table note added.
+
+### Every number in the revised report checked against the tables
+
+Title/verdict: W₁ 0.103 (0.041–0.119); 77%; medians 1.844/1.831 vs 1.757–1.765; 1,578 and 0.050; shrinkage 0.10
+(−0.13 to 0.81); W₃ 0.093; W₅ 0.077; overshoot 100%, +0.061; total-N +0.017, 67%; E p5 0.16; decomposition 85/4/11.
+Table: 0.091/+0.060; 0.093 (0.016–0.102)/+0.059; 0.077/+0.066; 0.050/+0.058; 0.084/+0.119; 0.021/+0.121;
+0.160/+0.017. Secondaries: 1B +0.055 (0.070), 1.4B +0.066 (0.081); α 0.086/0.104/0.138, β 0.786/0.881/1.059;
+total-N α 0.20/0.25/0.30; procedure widths 0.101/0.106/0.104/0.106/0.114; final-only 0.607/−0.029; paired SDs
+0.0076/0.0027; seed SDs and 0.010 unchanged. All match `primary.json`, `posthoc.json`, `posthoc_review.json`,
+`sensitivity_total_n.json`, `n_params.csv`.
+
+### Edits before publishing
+
+- **A.** `code/posthoc_review.py:37–38`: use `pythia-2.8b_step143000_float16.npy`; re-run; refresh the JSON (and
+  the report's 0.0027 if it becomes 0.0026).
+- **B.** `review/overclaim_check.md` rows 17 and 34: replace the first-run backing numbers.
+- **C.** `report.md:168–169`: replace "confirmation pass to follow" with the confirmation outcome.
+- Optional: the post hoc 64k-cut 3-seed width of 0.021 (shrinkage 0.75, `posthoc.json`) sits in the table without
+  comment; one sentence noting it is post hoc and untested would help, and the Q7 sentence could add that the
+  paper's outlier criterion is downstream accuracy at the final checkpoint.
+
+### Not independently verified
+
+- The paper's appendix (loss-spike steps) was beyond the fetched text; §3 and §5 were read.

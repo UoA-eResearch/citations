@@ -230,7 +230,12 @@
    "critic_note": "Critic: heavily overlaps llm-ml-science-curation-vs-seed-noise (same PolyPythias asset, same seed-noise claim) \u2014 one paper with two sections, not two avenues. Merge candidate.",
    "scout_value_score": 6,
    "scout_cost_score": 3,
-   "plain_summary": "AI labs forecast how well a big model will do by training a ladder of small models and extending the trend. Each small model's result wobbles with random chance. This study would measure how much that wobble distorts the forecasts, and how many repeat runs are needed to make them reliable."
+   "plain_summary": "AI labs forecast how well a big model will do by training a ladder of small models and extending the trend. Each small model's result wobbles with random chance. This study would measure how much that wobble distorts the forecasts, and how many repeat runs are needed to make them reliable.",
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass)",
+   "report_url": "runs/llm-ml-science-scaling-fit-seed-uncertainty/report.html",
+   "verdict_tag": "Inconclusive",
+   "verdict_note": "H1 Inconclusive: across 2,000 ladders drawn from PolyPythias (ten training seeds at each of five sizes, 14M-410M, fitted with the Chinchilla form and extrapolated to Pythia-2.8B), the seed draw moves the forecast by W1 = 0.103 nats (seed bootstrap 0.041-0.119), straddling the 0.05 bar. The 410M seed explains 77% of the forecast variance, and almost all of that comes from seeds 3 and 4, the two runs PolyPythias itself flags as outliers; excluding them gives W1 = 0.050 (post hoc). H2 Inconclusive: three-seed averaging shrinks the width by 0.10 (-0.13 to 0.81), far short of halving, because averaging dilutes a bad run rather than removing it. Every forecast overshoots the actual 2.8B loss by a median +0.061 nats under the preregistered non-embedding N, but only +0.017 with total parameters (67% overshooting), so the bias is not a property of the fitting form alone; the fitted asymptote E is poorly identified (5th percentile 0.16 nats). Seed beats procedure 85% to 4% in a variance decomposition. Review fix first (N had included the output head; every fit re-run), then confirmation publish with edits.",
+   "headline": "Which random seeds a scaling ladder happens to use moves the forecast for a model 8 times larger by about as much as the real gap between two model sizes - and averaging three seeds barely helps."
   },
   {
    "id": "llm-ml-science-semantic-contamination-index",
