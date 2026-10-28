@@ -5721,7 +5721,12 @@
    "local_relevance": "Auckland Council Healthy Waters, Auckland Transport and Watercare designers, ESNZ as HIRDS custodian, and national design guidance (MfE, NZ Transport Agency) would learn whether current design storms and their climate uplifts are already being exceeded too often. They would also get a quantified update to Auckland's 1% AEP depths.",
    "time_sensitive": "",
    "needs_engagement": "",
-   "scout_round": "auckland-nz"
+   "scout_round": "auckland-nz",
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass)",
+   "report_url": "runs/auckland-nz-hirds-out-of-sample-exceedance-audit/report.html",
+   "verdict_tag": "Inconclusive",
+   "verdict_note": "H1 Inconclusive: at 200 council rain gauges in seven regions, annual-maximum 6-hour rainfall exceeded HIRDS v4's 10% AEP depths 257 times against 172.1 expected over 1,721 complete gauge-years out of sample (water years 2017/18-2025/26, after every HIRDS fitting record): O/E 1.49. The preregistered water-year block interval is 0.78-2.35, but with nine blocks it covers 83% rather than 95%, so a studentized interval (0.68-2.80) is reported beside it; neither excludes 1. The in-sample control holds at 0.89, making the out-of-sample ratio 1.68 times the in-sample one. Because HIRDS's own depth standard error is about 10%, a correct HIRDS would itself show O/E near 1.1. 1 h 1.52 and 24 h 1.90 point the same way but share their storms (seven in ten 6-hour exceedances are also 24-hour ones), and the excess sits in four storm seasons: without 2022/23 it is 1.20. Against HIRDS's own RCP4.5/8.5 2031-2050 depths the observed frequency is at the stated rate (1.01 and 0.97). No Auckland gauge met the inclusion rule. Review publish with edits, then confirmation publish with edits; four rounds of data faults were found and fixed along the way.",
+   "headline": "New Zealand's 10-year design rainfalls have been exceeded about 1.5 times as often as stated since they were fitted - but nine years of clustered storms cannot separate that from chance."
   },
   {
    "id": "auckland-nz-avf-dvv-hydrological-baseline",
