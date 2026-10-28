@@ -93,6 +93,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | `cheminformatics-drug-discovery-split-calibration` |  edac660 | H1 Supported (random/scaffold splits understate prospective RMSE: -0.37/-0.27); H2 Refuted (document/author abs bias 0.17/0.22 though signed ~0); H3 Refuted (tau ~0.4 for all splitters); corrector 0.17 vs 0.10 bar | queued; new lead under G1-G7 (G5, G6 done; G7 n/a) |
 | `bioinformatics-sc-disease-de-negative-control` |  ba40c40 | H1 Supported (74% of 799 Census disease contrasts indistinguishable from matched healthy-vs-healthy nulls on the power-selected DE-gene count; 82% on preregistered pi1); H2 Inconclusive | queued; new lead under G1-G7 (G5, G6 done; G7 n/a). D2: pi1 has 8% power vs 87%, both reported |
 | `cheminformatics-drug-discovery-pcba-2026` |  7e21a93 | H1 Inconclusive (Q 0.43, CI spans the bar) but memorization EF1 falls 11.4->2.4 (new) and 27.8->3.5 (LIT) when only the split changes; H2 Supported (0 of 56 embedding-target pairs beat ECFP4+RF); H3 Supported (tau 0.20 vs a 0.29 split-half ceiling) | queued; new lead under G1-G7 (G5, G6 done; G7 n/a). Leakage audit: 89% of LIT vs 62% of new evaluation compounds have a near training neighbour |
+| `auckland-nz-hirds-out-of-sample-exceedance-audit` |  b04ea43 | H1 Inconclusive (6-h 10% AEP O/E 1.51, 0.82-2.35, 201 gauges, 7 regions; in-sample control 0.89 holds); 1 h 1.52, 24 h 1.92; vs HIRDS 2031-2050 depths ~1.0; first run invalid (reader bug, D5) | queued 2026-10-28; pre-review gate G5+G6 done; prompt written |
 
 ## Order to run them in
 
@@ -122,6 +123,5 @@ Follow the lab's usual loop: apply the fixes, send the same agent a confirmation
 
 ## Blocked on an account the lab cannot create
 
-- `auckland-nz-hirds-out-of-sample-exceedance-audit` (value 6, cost 4) needs a free ESNZ DataHub account with a
-  stated purpose, and possibly manual approval, to reach the HIRDS v4 design-depth tables. Everything else in it
-  is open. If the owner creates that account, this is the next lead worth starting on merit.
+- *(Resolved 2026-10-28:* the owner supplied a DataHub account and a HIRDS API key, and agreed to Environment
+  Auckland's terms. `auckland-nz-hirds-out-of-sample-exceedance-audit` was run and is queued above.)
