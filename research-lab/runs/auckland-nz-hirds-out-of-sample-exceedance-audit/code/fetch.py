@@ -6,6 +6,8 @@ out-of-sample water years (2017/18-2025/26). One measurement per site: "Rainfall
 
   fetch.py [PER_SERVER] -> data/series/<server>__<site>.npz  (t: int64 minutes since 1970, v: float32 mm, q: int16)
                            data/fetch_log.csv
+  fetch.py PER_SERVER early -> data/series_early/ : water years 1995/96-2004/05 for the same gauges, where their record
+                           starts before 2005/06 (in-sample years only, for the sanity control; D3)
 """
 import re
 import sys
@@ -36,6 +38,7 @@ def candidates():
     r = r[r.span_ok]
     r["pref"] = (r.measurement == "Rainfall").astype(int)
     r["len"] = (r["to"] - r["from"]).dt.days
+    r["from_wy"] = np.where(r["from"].dt.month >= 7, r["from"].dt.year, r["from"].dt.year - 1)
     return r.sort_values(["pref", "len"], ascending=False).drop_duplicates(["server", "site"])
 
 
@@ -51,11 +54,12 @@ def get(url, tries=5):
 
 def one(row):
     f = OUT / f"{row.server}__{re.sub(r'[^A-Za-z0-9._-]+', '_', row.site)}.npz"
+    first = max(FIRST_WY, int(row.from_wy))
     if f.exists():
         return row.server, row.site, "done", 0
     base = SERVERS[row.server]
     T, V, Q, n_bad = [], [], [], 0
-    for y in range(FIRST_WY, LAST_WY + 1):
+    for y in range(first, LAST_WY + 1):
         url = (f"{base}?Service=Hilltop&Request=GetData&Site={urllib.parse.quote(row.site)}"
                f"&Measurement={urllib.parse.quote(row.measurement)}&From={y}-07-01&To={y + 1}-07-01&ShowQuality=Yes")
         with LIMIT[row.server]:
@@ -100,4 +104,11 @@ def main(per_server=3):
 
 
 if __name__ == "__main__":
+    if len(sys.argv) > 2 and sys.argv[2] == "early":
+        FIRST_WY, LAST_WY, OUT = 1995, 2004, D / "series_early"
+        _cand = candidates
+
+        def candidates():                        # noqa: F811  same gauges, records starting before 2005/06
+            c = _cand()
+            return c[c["from"] < "2005-07-01"]
     main(int(sys.argv[1]) if len(sys.argv) > 1 else 3)

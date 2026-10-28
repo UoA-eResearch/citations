@@ -68,3 +68,29 @@ computed or read for any gauge.
 - **S3:** 2xx (not verified) data are kept. This adds most of the West Coast's record and the provisional recent
   years.
 - **S4:** code 0 and 4xx (poor) are excluded as well.
+
+## D3 — 2026-10-28 13:50 NZDT — a structural resolution test, earlier in-sample years, and coordinates; before any exceedance
+
+Found while testing `code/maxima.py` on four gauges. HIRDS depths for 20 Hawke's Bay gauges had been fetched, to
+test the API client, but no annual maximum had been compared with any depth.
+
+1. **Resolution is tested on the logging, not on wet time alone.**
+   - Under D2 rule 2, only coarse *wet* intervals count as unknown time. An hourly gauge (Leigh 2 EWS, which logs
+     hourly totals after 2019 and daily 9 am totals before) therefore reaches about 90% known time in drier years
+     and fails in wetter ones. That would be a rainfall-dependent filter.
+   - **New rule:** a gauge-year qualifies for duration d only if the median interval of its wet records (its native
+     resolution) is no longer than d's limit: 15 minutes (6 h), 5 minutes (1 h) or 60 minutes (24 h). The plan's
+     resolution limits are unchanged; this is how they are applied.
+   - The median is used, not a share. The first light tip after a dry silence carries a long interval, which a share
+     would count against fine-resolution gauges.
+2. **In-sample years start in 1995/96.**
+   - The plan sets no start for the in-sample control ("water years up to 2014/15") and requires 10 complete
+     in-sample years.
+   - The first fetch began in 2005/06, which allows at most 10. Water years 1995/96–2004/05 are now fetched for the
+     207 candidate gauges whose records start earlier (`code/fetch.py PER_SERVER early`). That gives the control a
+     fair sample.
+   - The out-of-sample test is unaffected.
+3. **Coordinates.** Hawke's Bay's Hilltop server gives NZ Map Grid (EPSG:27200) coordinates; the other six give
+   NZTM2000 (EPSG:2193). This was verified by matching gauge names to HIRDS's own site list (median distance 0.2 km
+   and 0.0–0.1 km). Gauges with missing coordinates, or coordinates outside New Zealand, get no HIRDS depth and are
+   counted (G2).
