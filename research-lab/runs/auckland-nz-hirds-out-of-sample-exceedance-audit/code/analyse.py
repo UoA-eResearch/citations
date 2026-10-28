@@ -46,7 +46,19 @@ def gauge_meta(H, S):
     dist = np.hypot(dx, dy)
     j = dist.argmin(1)
     g["hirds_site_km"] = dist[np.arange(len(g)), j]
-    g["fitting_site"] = g.hirds_site_km <= 0.1
+    # D7: 100 m alone mislabels most gauges (the review found 75 of 117 "non-fitting" gauges have a same-named HIRDS
+    # site 0.1-3 km away). A gauge counts as one of HIRDS's fitting sites if a site is within 100 m, or a site with
+    # the same normalised name is within 3 km.
+    snames = S.site_name.map(norm_text).to_numpy()
+    gnames = g.file.map(lambda f: norm_text(f.split("__", 1)[1])).to_numpy()
+    same = np.zeros(len(g), bool); jn = j.copy()
+    for i in range(len(g)):
+        hit = np.flatnonzero((snames == gnames[i]) & (dist[i] <= 3.0))
+        if len(hit):
+            same[i] = True; jn[i] = hit[np.argmin(dist[i][hit])]
+    g["fitting_site"] = (g.hirds_site_km <= 0.1) | same
+    g["fitting_by"] = np.where(g.hirds_site_km <= 0.1, "within_100m", np.where(same, "same_name_within_3km", "no"))
+    j = np.where(g.hirds_site_km.to_numpy() <= 0.1, j, jn)
     g["hirds_end"] = np.where(g.fitting_site, S.end.to_numpy()[j], np.nan)
     g["oos_first"] = np.where(g.hirds_end >= OOS_FIRST, g.hirds_end + 1, OOS_FIRST).astype(int)
     g["server"] = g.file.str.split("__").str[0]
@@ -61,12 +73,32 @@ def qualify(M, d, variant):
     return m
 
 
+def norm_text(x):
+    return re.sub(r"[^a-z0-9]+", " ", str(x).lower()).strip()
+
+
+FILLER = {"hy", "at", "the", "rv", "river", "stream", "ck", "creek", "nrfa", "ews", "aws", "combined"}
+
+
+def site_tokens(f):
+    toks = re.sub(r"[^a-z0-9]+", " ", f.split("__", 1)[1].lower()).split()
+    return {t[:-1] if len(t) > 3 and t.endswith("s") else t for t in toks if t not in FILLER}
+
+
+def same_site(a, b):
+    """The same gauge served by two councils: one name's tokens contain the other's (D7)."""
+    x, y = site_tokens(a), site_tokens(b)
+    return bool(x) and bool(y) and (x <= y or y <= x)
+
+
 def dedupe(g, years_ok):
-    """Plan section 1: co-located duplicates (within 100 m, overlapping qualified years) keep the longer record."""
+    """Plan section 1: co-located duplicates keep the longer record. A duplicate is a gauge within 100 m, or (D7,
+    after the review found one gauge served by two councils) the same site name within 2 km."""
     g = g.assign(n_ok=g.file.map(years_ok).fillna(0)).sort_values(["n_ok", "file"], ascending=[False, True])
     keep, dropped = [], []
     for r in g.itertuples():
-        close = [k for k in keep if np.hypot((r.lon - k.lon) * 111.32 * np.cos(np.radians(r.lat)), (r.lat - k.lat) * 110.57) <= 0.1]
+        km = [(k, np.hypot((r.lon - k.lon) * 111.32 * np.cos(np.radians(r.lat)), (r.lat - k.lat) * 110.57)) for k in keep]
+        close = [k for k, d in km if d <= 0.1 or (d <= 2.0 and same_site(k.file, r.file))]
         (dropped if close else keep).append(r)
     return pd.DataFrame(keep), [r.file for r in dropped]
 
@@ -86,8 +118,32 @@ def ratio_ci(x, aep, years, rng, col="exceed"):
         k = rng.integers(0, len(years), len(years))
         draws.append(o[k].sum() / e[k].sum() if e[k].sum() else np.nan)
     lo, hi = np.nanpercentile(draws, [2.5, 97.5])
-    return {"O": int(o.sum()), "E": round(float(e.sum()), 2), "gauge_years": int(by.n.sum()), "gauges": int(x.file.nunique()),
-            "OE": round(float(est), 3), "ci": [round(float(lo), 3), round(float(hi), 3)]}
+    out = {"O": int(o.sum()), "E": round(float(e.sum()), 2), "gauge_years": int(by.n.sum()), "gauges": int(x.file.nunique()),
+           "OE": round(float(est), 3), "ci": [round(float(lo), 3), round(float(hi), 3)]}
+    # D7: with nine blocks the percentile interval is too narrow (the review's simulation covers 83%, not 95%), so a
+    # studentized (bootstrap-t) interval is reported beside it and is the one the text leans on.
+    ok = np.isfinite(draws := np.asarray(draws, float))
+    if ok.sum() > 10 and np.isfinite(est):
+        se = np.nanstd(draws)
+        tb = []
+        for _ in range(B):
+            k = rng.integers(0, len(years), len(years))
+            ee = e[k].sum()
+            if ee <= 0:
+                continue
+            r2 = o[k].sum() / ee
+            inner = []
+            for _ in range(50):
+                k2 = k[rng.integers(0, len(k), len(k))]
+                e2 = e[k2].sum()
+                inner.append(o[k2].sum() / e2 if e2 > 0 else np.nan)
+            s2 = np.nanstd(inner)
+            if s2 > 0:
+                tb.append((r2 - est) / s2)
+        if len(tb) > 50:
+            tlo, thi = np.nanpercentile(tb, [97.5, 2.5])
+            out["ci_bootstrap_t"] = [round(float(est - tlo * se), 3), round(float(est - thi * se), 3)]
+    return out
 
 
 def verdict(r):
@@ -136,12 +192,15 @@ def run(M, H, g, d=6, aep=0.1, variant="primary", rng=None, col="max_point", dep
 
 def main():
     M, H, S = load()
+    sc = pd.read_csv(T / "screen_counts.csv")
+    faulty = set(sc.file[sc.gauge_fault == 1])                 # D7: series that are not incremental
+    M = M[~M.file.isin(faulty)]
     rng = np.random.default_rng(SEED)
     g = gauge_meta(H, S)
     m6 = qualify(M, 6, "primary")
     years_ok = m6[m6.ok].groupby("file").size()
     g, dup = dedupe(g, years_ok)
-    out = {"duplicates_dropped": dup, "g1_oos_start_moved": g.loc[g.oos_first > OOS_FIRST, ["file", "hirds_end", "oos_first"]].to_dict("records")}
+    out = {"gauges_excluded_not_incremental": sorted(faulty), "duplicates_dropped": dup, "g1_oos_start_moved": g.loc[g.oos_first > OOS_FIRST, ["file", "hirds_end", "oos_first"]].to_dict("records")}
 
     # primary: 6 h, 10% AEP, out of sample
     r, x = run(M, H, g, rng=rng)
@@ -173,6 +232,24 @@ def main():
         k += 1
         sec[f"council_{sv}"] = run(M, H, g, rng=rs(k), servers=[sv])[0]
     k += 1; sec["without_janfeb2023"] = run(M, H, g, rng=rs(k), col="max_point_no_janfeb2023")[0]
+    # D7: that variant removes two months from the maxima but keeps the whole gauge-year in the denominator; dropping
+    # the 2022/23 water year outright is the like-for-like comparison.
+    k += 1
+    m6b = qualify(M, 6, "primary"); dep6b = depth_of(H, 6, 0.1)
+    yrs = [y for y in range(OOS_FIRST, OOS_LAST + 1) if y != 2022]
+    inc_b = included(m6b, g) & set(dep6b.file)
+    sec["without_wy2022_23"] = ratio_ci(oe_table(oos_rows(m6b, g), dep6b, yrs, inc_b), 0.1, yrs, rs(k))
+    # D7: gauge-years whose maximum is beyond HIRDS's 250-year depth are mostly real storms but include faults the
+    # screen cannot see; these bracket their effect.
+    top250 = depth_of(H, 6, 0.1, "historical").merge(
+        H[(H.table == "historical") & (H.duration_h == 6) & np.isclose(H.ari, 250.0)][["file", "mm"]].rename(columns={"mm": "mm250"}), on="file")
+    xq = x.merge(top250[["file", "mm250"]], on="file")
+    for lab, mult in (("drop_beyond_250yr", 1.0), ("drop_beyond_1p5x_250yr", 1.5)):
+        k += 1
+        bad_gy = set(map(tuple, xq.loc[xq.max_point > mult * xq.mm250, ["file", "wy"]].to_numpy()))
+        keep = xq[[(f, w) not in bad_gy for f, w in zip(xq.file, xq.wy)]]
+        sec[lab] = ratio_ci(keep, 0.1, list(range(OOS_FIRST, OOS_LAST + 1)), rs(k))
+        sec[lab]["gauge_years_dropped"] = len(bad_gy)
     for name, tab in (("rcp45_2031_2050", "rcp45_2031_2050"), ("rcp85_2031_2050", "rcp85_2031_2050")):
         k += 1; sec[f"against_{name}"] = run(M, H, g, rng=rs(k), depth_table=tab)[0]
     for sh in (-1, 1):
@@ -215,7 +292,8 @@ def main():
     inc = included(m6, g) & set(dep6.file)
     c.add_counts(ok=len(inc), drops={
         "series empty or failed to fetch": int((~fl.status.str.match(r"^(ok|done)")).sum()),
-        "no HIRDS depth (coordinates missing or outside NZ)": len(no_depth),
+        "series not incremental (negative increments or an impossible annual total)": len(faulty & set(sc.file)),
+        "no HIRDS depth (coordinates missing or outside New Zealand)": len(no_depth),
         "co-located duplicate (plan: keep the longer record)": len(dup),
         f"fewer than {MIN_OOS} complete, resolved out-of-sample years": len((all_files - no_depth - set(dup)) - inc)})
     c.save()

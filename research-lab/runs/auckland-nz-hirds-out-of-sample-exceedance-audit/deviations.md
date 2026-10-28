@@ -166,3 +166,30 @@ no rain) if either:
 - The tables before the screen are kept in `results/tables/v1_before_screen/`, and the report gives both.
 - This is a correction found after results. The rule is generic and does not depend on any exceedance. It removes
   records, so it can only lower O/E or make gauge-years incomplete.
+
+## D7 — 2026-10-29 04:51 NZDT — after the independent review (publish with edits): screens, duplicates, intervals and the fitting-site split
+
+1. **A window-based fault screen.** D6 tested one record at a time, so it missed Okoraka at Ngatawhiti Road on
+   1 September 2024: five consecutive 1-minute records of 19.5, 17.0, 16.0, 15.0 and 14.5 mm, 82 mm in five minutes,
+   all coded 0, while gauges 11–25 km away recorded 17–20 mm in the same six hours. Any 5-minute total above 40 mm
+   or 60-minute total above 150 mm, both far above New Zealand's records at those durations, now marks every record
+   ending in that window as missing. It removes 189 of that day's 192 mm and nothing else in the gauge's 475,000
+   records. Okoraka's 2024/25 6-hour maximum falls from 194.5 mm to 80.0 mm and still exceeds its 70.8 mm depth.
+2. **Series that are not incremental are excluded.** Twelve gauges have a water-year total above 12,000 mm (New
+   Zealand's wettest recorded year is about 11,000 mm), up to 2.2 million mm, or ten or more negative increments.
+   They are cumulative counters, which the reader cannot interpret. Isolated negative records (ten gauges, one to
+   eight records each) are treated as missing instead, not as grounds to drop the gauge.
+3. **Duplicates across councils.** The 100 m rule missed Wangapeka at Biggs Top, served by both Tasman and the West
+   Coast 0.26 km apart. Gauges within 2 km whose site names reduce to the same tokens now count as duplicates: 9
+   dropped, against 7 before.
+4. **A calibrated interval.** The review simulated the preregistered nine-block percentile bootstrap and found it
+   covers 83%, not 95%. A studentized (bootstrap-t) interval is reported beside it, and the text leans on the wider
+   one. The preregistered verdict rule still uses the preregistered interval; H1 is Inconclusive under both.
+5. **The fitting-site split is relabelled.** Matching HIRDS sites within 100 m called 111 gauges "non-fitting" when
+   most have a same-named HIRDS site 0.1–3 km away. A gauge now counts as one of HIRDS's fitting sites if a site is
+   within 100 m or a same-named site is within 3 km.
+6. **Two sensitivities added:** dropping the whole 2022/23 water year (the Jan–Feb 2023 variant removed two months
+   from the maxima but kept the year in the denominator), and dropping gauge-years whose maximum is beyond HIRDS's
+   250-year depth.
+
+All of these change numbers; none changes the verdict. H1 was Inconclusive before and after.

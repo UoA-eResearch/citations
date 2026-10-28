@@ -1,68 +1,92 @@
 {
  "1h_10pct": {
-  "O": 121,
-  "E": 79.8,
-  "gauge_years": 798,
-  "gauges": 93,
-  "OE": 1.516,
+  "O": 119,
+  "E": 77.4,
+  "gauge_years": 774,
+  "gauges": 90,
+  "OE": 1.537,
   "ci": [
-   1.011,
-   2.056
+   1.02,
+   2.103
+  ],
+  "ci_bootstrap_t": [
+   0.874,
+   2.397
   ]
  },
  "1h_2pct": {
-  "O": 31,
-  "E": 15.96,
-  "gauge_years": 798,
-  "gauges": 93,
-  "OE": 1.942,
+  "O": 29,
+  "E": 15.48,
+  "gauge_years": 774,
+  "gauges": 90,
+  "OE": 1.873,
   "ci": [
-   1.006,
-   2.979
+   0.951,
+   2.99
+  ],
+  "ci_bootstrap_t": [
+   0.821,
+   3.708
   ]
  },
  "6h_10pct": {
-  "O": 258,
-  "E": 172.9,
-  "gauge_years": 1729,
-  "gauges": 201,
-  "OE": 1.492,
+  "O": 254,
+  "E": 169.7,
+  "gauge_years": 1697,
+  "gauges": 197,
+  "OE": 1.497,
   "ci": [
-   0.8,
-   2.298
+   0.797,
+   2.302
+  ],
+  "ci_bootstrap_t": [
+   0.692,
+   2.885
   ]
  },
  "6h_2pct": {
-  "O": 57,
-  "E": 34.58,
-  "gauge_years": 1729,
-  "gauges": 201,
-  "OE": 1.648,
+  "O": 53,
+  "E": 33.94,
+  "gauge_years": 1697,
+  "gauges": 197,
+  "OE": 1.562,
   "ci": [
-   0.704,
-   3.057
+   0.619,
+   2.964
+  ],
+  "ci_bootstrap_t": [
+   0.535,
+   5.822
   ]
  },
  "24h_10pct": {
-  "O": 359,
-  "E": 188.5,
-  "gauge_years": 1885,
-  "gauges": 219,
-  "OE": 1.905,
+  "O": 354,
+  "E": 185.3,
+  "gauge_years": 1853,
+  "gauges": 215,
+  "OE": 1.91,
   "ci": [
-   1.062,
-   2.873
+   1.057,
+   2.896
+  ],
+  "ci_bootstrap_t": [
+   0.817,
+   3.342
   ]
  },
  "24h_2pct": {
-  "O": 94,
-  "E": 37.7,
-  "gauge_years": 1885,
-  "gauges": 219,
-  "OE": 2.493,
+  "O": 91,
+  "E": 37.06,
+  "gauge_years": 1853,
+  "gauges": 215,
+  "OE": 2.455,
   "ci": [
-   0.642,
-   5.214
+   0.615,
+   5.18
+  ],
+  "ci_bootstrap_t": [
+   0.257,
+   11.127
   ]
  },
  "council_Auckland": {
@@ -77,14 +101,18 @@
   ]
  },
  "council_HawkesBay": {
-  "O": 104,
-  "E": 57.5,
-  "gauge_years": 575,
-  "gauges": 66,
-  "OE": 1.809,
+  "O": 101,
+  "E": 56.7,
+  "gauge_years": 567,
+  "gauges": 65,
+  "OE": 1.781,
   "ci": [
-   0.613,
-   3.48
+   0.592,
+   3.434
+  ],
+  "ci_bootstrap_t": [
+   0.423,
+   9.138
   ]
  },
  "council_Marlborough": {
@@ -96,6 +124,10 @@
   "ci": [
    0.565,
    2.066
+  ],
+  "ci_bootstrap_t": [
+   0.359,
+   2.279
   ]
  },
  "council_Northland": {
@@ -107,6 +139,10 @@
   "ci": [
    0.572,
    2.237
+  ],
+  "ci_bootstrap_t": [
+   0.384,
+   2.754
   ]
  },
  "council_Taranaki": {
@@ -118,6 +154,10 @@
   "ci": [
    0.864,
    3.086
+  ],
+  "ci_bootstrap_t": [
+   0.72,
+   4.499
   ]
  },
  "council_Tasman": {
@@ -129,6 +169,10 @@
   "ci": [
    0.794,
    2.232
+  ],
+  "ci_bootstrap_t": [
+   0.691,
+   2.984
   ]
  },
  "council_Wellington": {
@@ -140,94 +184,177 @@
   "ci": [
    0.249,
    2.07
+  ],
+  "ci_bootstrap_t": [
+   0.168,
+   3.441
   ]
  },
  "council_WestCoast": {
-  "O": 8,
-  "E": 6.4,
-  "gauge_years": 64,
-  "gauges": 8,
-  "OE": 1.25,
+  "O": 7,
+  "E": 4.0,
+  "gauge_years": 40,
+  "gauges": 5,
+  "OE": 1.75,
   "ci": [
+   0.571,
+   3.111
+  ],
+  "ci_bootstrap_t": [
    0.469,
-   2.143
+   4.092
   ]
  },
  "without_janfeb2023": {
-  "O": 202,
-  "E": 172.9,
-  "gauge_years": 1729,
-  "gauges": 201,
-  "OE": 1.168,
+  "O": 199,
+  "E": 169.7,
+  "gauge_years": 1697,
+  "gauges": 197,
+  "OE": 1.173,
   "ci": [
-   0.69,
-   1.706
+   0.693,
+   1.712
+  ],
+  "ci_bootstrap_t": [
+   0.605,
+   2.305
   ]
  },
- "against_rcp45_2031_2050": {
-  "O": 174,
-  "E": 172.9,
-  "gauge_years": 1729,
-  "gauges": 201,
-  "OE": 1.006,
+ "without_wy2022_23": {
+  "O": 181,
+  "E": 150.7,
+  "gauge_years": 1507,
+  "gauges": 197,
+  "OE": 1.201,
   "ci": [
-   0.512,
-   1.616
+   0.674,
+   1.813
+  ],
+  "ci_bootstrap_t": [
+   0.543,
+   2.256
+  ]
+ },
+ "drop_beyond_250yr": {
+  "O": 239,
+  "E": 168.2,
+  "gauge_years": 1682,
+  "gauges": 197,
+  "OE": 1.421,
+  "ci": [
+   0.77,
+   2.139
+  ],
+  "ci_bootstrap_t": [
+   0.704,
+   2.573
+  ],
+  "gauge_years_dropped": 15
+ },
+ "drop_beyond_1p5x_250yr": {
+  "O": 250,
+  "E": 169.3,
+  "gauge_years": 1693,
+  "gauges": 197,
+  "OE": 1.477,
+  "ci": [
+   0.774,
+   2.248
+  ],
+  "ci_bootstrap_t": [
+   0.692,
+   2.909
+  ],
+  "gauge_years_dropped": 4
+ },
+ "against_rcp45_2031_2050": {
+  "O": 171,
+  "E": 169.7,
+  "gauge_years": 1697,
+  "gauges": 197,
+  "OE": 1.008,
+  "ci": [
+   0.518,
+   1.642
+  ],
+  "ci_bootstrap_t": [
+   0.412,
+   2.211
   ]
  },
  "against_rcp85_2031_2050": {
-  "O": 168,
-  "E": 172.9,
-  "gauge_years": 1729,
-  "gauges": 201,
+  "O": 165,
+  "E": 169.7,
+  "gauge_years": 1697,
+  "gauges": 197,
   "OE": 0.972,
   "ci": [
-   0.483,
-   1.566
+   0.48,
+   1.548
+  ],
+  "ci_bootstrap_t": [
+   0.424,
+   2.279
   ]
  },
  "depth_minus_1se": {
-  "O": 413,
-  "E": 172.9,
-  "gauge_years": 1729,
-  "gauges": 201,
-  "OE": 2.389,
+  "O": 408,
+  "E": 169.7,
+  "gauge_years": 1697,
+  "gauges": 197,
+  "OE": 2.404,
   "ci": [
-   1.388,
-   3.41
+   1.412,
+   3.459
+  ],
+  "ci_bootstrap_t": [
+   1.16,
+   4.091
   ]
  },
  "depth_plus_1se": {
-  "O": 163,
-  "E": 172.9,
-  "gauge_years": 1729,
-  "gauges": 201,
-  "OE": 0.943,
+  "O": 159,
+  "E": 169.7,
+  "gauge_years": 1697,
+  "gauges": 197,
+  "OE": 0.937,
   "ci": [
-   0.467,
-   1.565
+   0.409,
+   1.564
+  ],
+  "ci_bootstrap_t": [
+   0.392,
+   2.222
   ]
  },
  "S2": {
-  "O": 209,
-  "E": 136.7,
-  "gauge_years": 1367,
-  "gauges": 160,
-  "OE": 1.529,
+  "O": 205,
+  "E": 133.5,
+  "gauge_years": 1335,
+  "gauges": 156,
+  "OE": 1.536,
   "ci": [
-   0.747,
-   2.433
+   0.737,
+   2.506
+  ],
+  "ci_bootstrap_t": [
+   0.686,
+   3.542
   ]
  },
  "S3": {
-  "O": 363,
-  "E": 250.4,
-  "gauge_years": 2504,
-  "gauges": 285,
-  "OE": 1.45,
+  "O": 358,
+  "E": 246.0,
+  "gauge_years": 2460,
+  "gauges": 280,
+  "OE": 1.455,
   "ci": [
-   0.778,
-   2.173
+   0.768,
+   2.198
+  ],
+  "ci_bootstrap_t": [
+   0.657,
+   2.641
   ]
  },
  "S4": {
@@ -237,51 +364,67 @@
   "gauges": 39,
   "OE": 1.371,
   "ci": [
-   0.705,
-   2.048
+   0.76,
+   2.05
+  ],
+  "ci_bootstrap_t": [
+   0.612,
+   2.464
   ]
  },
  "S1_undetermined_as_exceed": {
-  "O": 260,
-  "E": 172.9,
-  "gauge_years": 1729,
-  "gauges": 201,
-  "OE": 1.504,
+  "O": 256,
+  "E": 169.7,
+  "gauge_years": 1697,
+  "gauges": 197,
+  "OE": 1.509,
   "ci": [
-   0.831,
-   2.295
+   0.832,
+   2.302
+  ],
+  "ci_bootstrap_t": [
+   0.679,
+   3.012
   ]
  },
  "S1_undetermined_gauge_years": 2,
  "fitting_sites": {
-  "O": 106,
-  "E": 72.2,
-  "gauge_years": 722,
-  "gauges": 84,
-  "OE": 1.468,
+  "O": 107,
+  "E": 74.2,
+  "gauge_years": 742,
+  "gauges": 86,
+  "OE": 1.442,
   "ci": [
-   0.658,
-   2.331
+   0.642,
+   2.305
+  ],
+  "ci_bootstrap_t": [
+   0.565,
+   2.823
   ]
  },
  "non_fitting_sites": {
-  "O": 152,
-  "E": 100.7,
-  "gauge_years": 1007,
-  "gauges": 117,
-  "OE": 1.509,
+  "O": 147,
+  "E": 95.5,
+  "gauge_years": 955,
+  "gauges": 111,
+  "OE": 1.539,
   "ci": [
-   0.858,
-   2.217
+   0.875,
+   2.254
+  ],
+  "ci_bootstrap_t": [
+   0.789,
+   2.778
   ]
  },
  "storm_cluster_bootstrap": {
-  "storms": 71,
-  "largest_storm_exceedances": 52,
-  "OE": 1.492,
+  "storms": 69,
+  "largest_storm_exceedances": 51,
+  "OE": 1.497,
   "ci": [
    0.937,
-   2.204
+   2.227
   ]
  }
 }

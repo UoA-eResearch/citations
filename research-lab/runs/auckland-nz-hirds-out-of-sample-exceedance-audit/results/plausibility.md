@@ -31,17 +31,17 @@ expected.
 ## Where the exceedances fall
 
 The exceedances cluster in known storms:
-- February 2023: 54, of which 48 are in Hawke's Bay (Cyclone Gabrielle);
+- February 2023: 53, of which 47 are in Hawke's Bay (Cyclone Gabrielle);
 - March 2022: 28, in Hawke's Bay and Northland;
 - February 2018: 19, led by Tasman.
 
-The largest single storm cluster holds 52 of the 258 exceedances. That clustering is why the year-block and
+The largest single storm cluster holds 51 of the 254 exceedances. That clustering is why the year-block and
 storm-cluster intervals are wide.
 
 ## The in-sample control
 
 - Over water years up to 2014/15 (113 gauges with at least 10 complete in-sample years), O/E is 0.89
-  (0.69–1.12). The interval includes 1.0, so the harvest and HIRDS agree where HIRDS was fitted, and the
+  (0.69–1.12; studentized 0.69–1.20). The interval includes 1.0, so the harvest and HIRDS agree where HIRDS was fitted, and the
   out-of-sample comparison is interpretable.
 - The point estimate below 1 is consistent with the known downward biases of the method:
   - hidden outages in gauges that log only around rain;
@@ -57,7 +57,8 @@ storm-cluster intervals are wide.
   fixed depth implies.
 - **The mid-century comparison.** Against HIRDS's RCP4.5 and RCP8.5 2031–2050 depths, the observed frequency is at
   the stated rate: O/E 1.01 and 0.97.
-- **The caution.** Without January–February 2023, O/E falls to 1.17. The excess is concentrated in a few storm
+- **The caution.** Without January–February 2023, O/E falls to 1.17, and without the whole 2022/23 water year to
+  1.20. The excess is concentrated in a few storm
   seasons, as the plan's year-by-year secondary anticipated.
 
 ## A second implausibility check (D6)
@@ -70,3 +71,18 @@ Maxima above twice the HIRDS 250-year depth were traced to raw records:
 
 A generic physical screen now treats such records as missing. Three 6-hour exceedances were false; O/E moves from
 1.51 to 1.49.
+
+## A third round of faults (D7, after the independent review)
+
+The review found two kinds the earlier screens missed.
+- **A fault no single record betrays.** Okoraka at Ngatawhiti Road recorded 82 mm in five consecutive 1-minute
+  records on 1 September 2024, all coded good, while gauges 11–25 km away recorded 17–20 mm over the same six hours.
+  A window rule now removes it: that gauge-year's 6-hour maximum falls from 194.5 mm to 80.0 mm, which still exceeds
+  its 70.8 mm depth, so the exceedance is real even though the value was not.
+- **Series that are not incremental.** Twelve gauges report water-year totals up to 2.2 million mm, or many negative
+  increments. They are cumulative counters that the reader cannot interpret, and they are now excluded. Nine of them
+  are on the West Coast and in Taranaki, where genuine annual totals are the country's highest, so the error was not
+  obvious from the totals alone.
+
+Both were found by comparing gauges with their neighbours and with national records, not by any internal
+consistency check, which is the lesson for the next hydrometric harvest.
