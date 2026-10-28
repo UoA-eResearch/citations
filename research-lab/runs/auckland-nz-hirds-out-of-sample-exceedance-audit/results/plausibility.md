@@ -33,7 +33,7 @@ expected.
 The exceedances cluster in known storms:
 - February 2023: 54, of which 48 are in Hawke's Bay (Cyclone Gabrielle);
 - March 2022: 28, in Hawke's Bay and Northland;
-- February 2018: 19, led by Tasman, the month of ex-cyclones Fehi and Gita.
+- February 2018: 19, led by Tasman.
 
 The largest single storm cluster holds 52 of the 261 exceedances. That clustering is why the year-block and
 storm-cluster intervals are wide.
