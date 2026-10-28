@@ -1,0 +1,76 @@
+{
+ "preregistered_depth1": {
+  "attempted": 86463,
+  "ok": 38134,
+  "fallback": 0,
+  "dropped": 48329,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "no candidate control in the pool": 1240,
+   "candidates, but none within the caliper": 19135,
+   "published at T-2: no pre-period year after publication (T-4..T-2)": 27954
+  }
+ },
+ "preregistered_depth2": {
+  "attempted": 69865,
+  "ok": 22506,
+  "fallback": 0,
+  "dropped": 47359,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "no candidate control in the pool": 562,
+   "candidates, but none within the caliper": 8554,
+   "published at T-2: no pre-period year after publication (T-4..T-2)": 38243
+  }
+ },
+ "design_A_depth1": {
+  "attempted": 86463,
+  "ok": 38536,
+  "fallback": 0,
+  "dropped": 47927,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "no candidate control in the pool": 1626,
+   "candidates, but none within the caliper": 46301
+  }
+ },
+ "design_A_depth2": {
+  "attempted": 69865,
+  "ok": 36779,
+  "fallback": 0,
+  "dropped": 33086,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "no candidate control in the pool": 1097,
+   "candidates, but none within the caliper": 31989
+  }
+ },
+ "design_B_depth1": {
+  "attempted": 86463,
+  "ok": 10955,
+  "fallback": 0,
+  "dropped": 75508,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "no candidate control in the pool": 37209,
+   "candidates, but none within the caliper": 38299
+  }
+ },
+ "design_B_depth2": {
+  "attempted": 69865,
+  "ok": 9798,
+  "fallback": 0,
+  "dropped": 60067,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "no candidate control in the pool": 30479,
+   "candidates, but none within the caliper": 29588
+  }
+ }
+}

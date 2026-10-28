@@ -1,0 +1,133 @@
+{
+ "pool_gap_clean": {
+  "exposed_works": 84837,
+  "retractions": 6194,
+  "gap": 0.4864
+ },
+ "pool_gap_not_yet_treated": {
+  "exposed_works": 49254,
+  "retractions": 5079,
+  "gap": -0.0572
+ },
+ "same_works": {
+  "exposed_works": 6056,
+  "design_A_clean_controls": {
+   "effect": 0.0853,
+   "ci": [
+    0.0634,
+    0.107
+   ],
+   "retractions": 2469
+  },
+  "design_B_not_yet_treated_controls": {
+   "effect": 0.0078,
+   "ci": [
+    -0.0145,
+    0.0293
+   ],
+   "retractions": 2469
+  }
+ },
+ "design_A_change_from_Tm1_by_published": {
+  "T-2": {
+   "pairs": 16666,
+   "T+0": 0.1164,
+   "T+1": 0.1042,
+   "T+2": 0.1062,
+   "T+3": 0.0939,
+   "T+4": 0.0882
+  },
+  "T-3": {
+   "pairs": 9214,
+   "T+0": 0.0473,
+   "T+1": 0.0533,
+   "T+2": 0.0273,
+   "T+3": 0.0332,
+   "T+4": 0.0138
+  },
+  "T-4 or earlier": {
+   "pairs": 12656,
+   "T+0": 0.0348,
+   "T+1": 0.0171,
+   "T+2": 0.0145,
+   "T+3": 0.0051,
+   "T+4": 0.0051
+  }
+ },
+ "design_B_change_from_Tm1_by_published": {
+  "T-2": {
+   "pairs": 4933,
+   "T+0": 0.0086,
+   "T+1": -0.0002,
+   "T+2": -0.0075,
+   "T+3": -0.0264,
+   "T+4": -0.01
+  },
+  "T-3": {
+   "pairs": 2655,
+   "T+0": -0.0029,
+   "T+1": 0.0111,
+   "T+2": -0.0029,
+   "T+3": -0.0157,
+   "T+4": -0.0129
+  },
+  "T-4 or earlier": {
+   "pairs": 3367,
+   "T+0": 0.0032,
+   "T+1": 0.0009,
+   "T+2": 0.0173,
+   "T+3": 0.0123,
+   "T+4": 0.0161
+  }
+ },
+ "preregistered_raw_gap_by_event_year": {
+  "T-4": 0.0045,
+  "T-3": 0.0128,
+  "T-2": 0.0006,
+  "T-1": 0.0833,
+  "T": 0.0872,
+  "T+1": 0.0788,
+  "T+2": 0.0728,
+  "T+3": 0.0757,
+  "T+4": 0.0549
+ },
+ "preregistered_levels_balanced_panel": {
+  "pairs": 12716,
+  "T-4": {
+   "exposed": 1.126,
+   "control": 1.121
+  },
+  "T-3": {
+   "exposed": 1.247,
+   "control": 1.232
+  },
+  "T-2": {
+   "exposed": 1.252,
+   "control": 1.255
+  },
+  "T-1": {
+   "exposed": 1.228,
+   "control": 1.192
+  },
+  "T": {
+   "exposed": 1.197,
+   "control": 1.16
+  },
+  "T+1": {
+   "exposed": 1.159,
+   "control": 1.136
+  },
+  "T+2": {
+   "exposed": 1.106,
+   "control": 1.095
+  },
+  "T+3": {
+   "exposed": 1.07,
+   "control": 1.055
+  },
+  "T+4": {
+   "exposed": 1.009,
+   "control": 1.004
+  }
+ }
+}

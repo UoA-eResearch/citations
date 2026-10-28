@@ -1,0 +1,59 @@
+{
+ "preregistered": {
+  "eligible_depth1": 58509,
+  "analysed": 38134,
+  "mean_log1p_cum_citations_to_Tm1": {
+   "analysed": 2.211,
+   "not_analysed": 2.733
+  },
+  "within_age_difference": -0.461,
+  "share_analysed_by_citation_quartile": {
+   "Q1 least cited": 0.743,
+   "Q2": 0.67,
+   "Q3": 0.682,
+   "Q4 most cited": 0.513
+  },
+  "mean_age_at_T": {
+   "analysed": 4.08,
+   "not_analysed": 4.4
+  }
+ },
+ "design_A": {
+  "eligible_depth1": 86463,
+  "analysed": 38536,
+  "mean_log1p_cum_citations_to_Tm1": {
+   "analysed": 1.651,
+   "not_analysed": 2.507
+  },
+  "within_age_difference": -0.684,
+  "share_analysed_by_citation_quartile": {
+   "Q1 least cited": 0.717,
+   "Q2": 0.432,
+   "Q3": 0.352,
+   "Q4 most cited": 0.283
+  },
+  "mean_age_at_T": {
+   "analysed": 3.15,
+   "not_analysed": 3.75
+  }
+ },
+ "design_B": {
+  "eligible_depth1": 86463,
+  "analysed": 10955,
+  "mean_log1p_cum_citations_to_Tm1": {
+   "analysed": 1.782,
+   "not_analysed": 2.175
+  },
+  "within_age_difference": -0.245,
+  "share_analysed_by_citation_quartile": {
+   "Q1 least cited": 0.178,
+   "Q2": 0.118,
+   "Q3": 0.111,
+   "Q4 most cited": 0.101
+  },
+  "mean_age_at_T": {
+   "analysed": 3.08,
+   "not_analysed": 3.54
+  }
+ }
+}
