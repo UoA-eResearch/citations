@@ -55,6 +55,19 @@ def load(f):
     return t[o], v[o], q[o]
 
 
+def physical_bad(L, val):
+    """D6 screen for physically impossible records (they count as missing): a record over 50 mm in an interval of 15
+    minutes or less, or over 150 mm in an hour or less (beyond New Zealand's short-duration records); and a stuck sensor,
+    24 or more consecutive identical values of at least 2 mm."""
+    spike = ((val > 50) & (L <= 15)) | ((val > 150) & (L <= 60))
+    big = val >= 2
+    same = np.r_[False, (val[1:] == val[:-1]) & big[1:] & big[:-1]]
+    run_id = np.cumsum(~same)
+    run_len = np.bincount(run_id)[run_id]
+    stuck = big & (run_len >= 24)
+    return spike | stuck
+
+
 def one(f):
     t, v, q = load(f)
     server = f.stem.split("__")[0]
@@ -76,7 +89,7 @@ def one(f):
     edges = np.arange(lo, hi + 1, BIN)                            # 5-minute bin edges
     out = []
     for variant in ("primary", "S2", "S3", "S4"):
-        bad = bad_quality(qq, "primary" if variant == "S2" else variant) | ~np.isfinite(val)   # NaN = missing record
+        bad = bad_quality(qq, "primary" if variant == "S2" else variant) | ~np.isfinite(val) | physical_bad(L, val)
         rain = np.where(bad, 0.0, val)
         Crain = np.interp(edges, np.r_[s[0], e], np.r_[0.0, np.cumsum(rain)])
         point_bins = np.diff(Crain)

@@ -9,16 +9,18 @@ output in review/).
 annual-maximum 6-hour rainfalls exceeded its 10% AEP depths at least 1.3 times as often as stated?
 
 **Reported:**
-- **H1 Inconclusive.** O/E is 1.51: 261 against 172.9 expected, over 1,729 gauge-years at 201 gauges in seven
-  regions. The 95% water-year block interval is 0.82–2.35.
+- **H1 Inconclusive.** O/E is 1.49: 258 against 172.9 expected, over 1,729 gauge-years at 201 gauges in seven
+  regions. The 95% water-year block interval is 0.78–2.35.
 - **In-sample control** (years up to 2014/15): 0.89 (0.69–1.12), so it holds.
 - **Secondaries:**
-  - 1 h: 1.52 (1.01–2.06); 24 h: 1.92 (1.09–2.87);
-  - against HIRDS's RCP4.5/8.5 2031–2050 depths: 1.02 / 0.99;
-  - without Jan–Feb 2023: 1.19.
+  - 1 h: 1.52 (1.01–2.06); 24 h: 1.91 (1.06–2.87);
+  - against HIRDS's RCP4.5/8.5 2031–2050 depths: 1.01 / 0.97;
+  - without Jan–Feb 2023: 1.17.
 - **Auckland:** no Auckland gauge meets the inclusion rule; a post hoc relaxed look is reported.
 - **A reader bug.** The first full run used corrupted series: tips sharing a minute were dropped. That run gave O/E
   1.29 and was seen before the bug was found (D5). All series were refetched.
+- **A physical screen came after the corrected results** (D6: spikes over 50 mm in 15 min, stuck sensors). It
+  removed 3 false exceedances (O/E 1.51 → 1.49). Tables from before it are in results/tables/v1_before_screen/.
 
 **What to read:**
 - plan.md and deviations.md:
@@ -26,7 +28,8 @@ annual-maximum 6-hour rainfalls exceeded its 10% AEP depths at least 1.3 times a
   - D2: completeness, resolution and quality rules;
   - D3: the structural resolution test and early years;
   - D4: Auckland;
-  - D5: the reader bug.
+  - D5: the reader bug;
+  - D6: the physical screen (judge whether its thresholds are generic or tuned).
 - report.md and results/plausibility.md.
 - code/: inventory.py, fetch.py, fetch_auckland.py, structure.py, depths.py, maxima.py, g4_check.py, analyse.py,
   posthoc_auckland.py, figures.py.

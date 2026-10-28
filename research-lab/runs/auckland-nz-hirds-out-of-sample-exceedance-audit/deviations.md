@@ -143,3 +143,26 @@ indemnity clause, so the lab asked the owner, who agreed on 2026-10-28 ("Add Auc
 **Why G4 missed it, and the added check.** G4's 30 recomputed maxima read the same stored series, so they could not
 catch a reader bug. G4 now also refetches 10 random gauge-years raw from the servers and compares record counts and
 totals with what is stored.
+
+## D6 — 2026-10-28 16:48 NZDT — a physical-plausibility screen, added after the corrected results (found while building the next lead)
+
+**What was found.** Building the FENZ lead on these series turned up impossible values. Checking this lead's own
+included gauge-years found a few in its primary set too:
+- 998 mm in one 10-minute record (Motueka at Western Boundary, 2019/20; code 0);
+- 730 and 431 mm in 10-minute records (Wakapuaka at Hira Forest, 2019/20);
+- 327.6 mm in one 15-minute record (Lake Waikopiro buoy, 2018/19);
+- a stuck sensor reporting exactly 5.2 mm every 5 minutes for days (Lake Tutira buoy, 2020/21).
+
+At 6 hours, three included gauge-years exceeded twice their HIRDS 250-year depth. These are false exceedances, and
+plan section 1's quality rules (NEMS codes) do not catch values coded 0.
+
+**The screen** (`maxima.py` physical_bad; rule fixed before re-running). A record counts as missing (unknown time,
+no rain) if either:
+- it exceeds 50 mm in an interval of 15 minutes or less, or 150 mm in one of an hour or less (beyond New Zealand's
+  short-duration records); or
+- it belongs to a run of 24 or more consecutive identical values of at least 2 mm (a stuck sensor).
+
+**Handling.**
+- The tables before the screen are kept in `results/tables/v1_before_screen/`, and the report gives both.
+- This is a correction found after results. The rule is generic and does not depend on any exceedance. It removes
+  records, so it can only lower O/E or make gauge-years incomplete.

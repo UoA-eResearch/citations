@@ -35,7 +35,7 @@ The exceedances cluster in known storms:
 - March 2022: 28, in Hawke's Bay and Northland;
 - February 2018: 19, led by Tasman.
 
-The largest single storm cluster holds 52 of the 261 exceedances. That clustering is why the year-block and
+The largest single storm cluster holds 52 of the 258 exceedances. That clustering is why the year-block and
 storm-cluster intervals are wide.
 
 ## The in-sample control
@@ -56,6 +56,17 @@ storm-cluster intervals are wide.
   degree of warming (HIRDS v4 report, Table 6), and a modestly deeper storm is exceeded much more often than a
   fixed depth implies.
 - **The mid-century comparison.** Against HIRDS's RCP4.5 and RCP8.5 2031–2050 depths, the observed frequency is at
-  the stated rate: O/E 1.02 and 0.99.
-- **The caution.** Without January–February 2023, O/E falls to 1.19. The excess is concentrated in a few storm
+  the stated rate: O/E 1.01 and 0.97.
+- **The caution.** Without January–February 2023, O/E falls to 1.17. The excess is concentrated in a few storm
   seasons, as the plan's year-by-year secondary anticipated.
+
+## A second implausibility check (D6)
+
+Maxima above twice the HIRDS 250-year depth were traced to raw records:
+- a 998 mm 10-minute value (code 0);
+- 730 and 431 mm 10-minute values;
+- 327.6 mm in 15 minutes at a lake buoy;
+- a buoy repeating 5.2 mm every 5 minutes for days.
+
+A generic physical screen now treats such records as missing. Three 6-hour exceedances were false; O/E moves from
+1.51 to 1.49.

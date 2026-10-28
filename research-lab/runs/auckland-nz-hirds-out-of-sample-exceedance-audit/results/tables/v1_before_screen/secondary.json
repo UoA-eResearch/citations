@@ -1,0 +1,287 @@
+{
+ "1h_10pct": {
+  "O": 121,
+  "E": 79.8,
+  "gauge_years": 798,
+  "gauges": 93,
+  "OE": 1.516,
+  "ci": [
+   1.011,
+   2.056
+  ]
+ },
+ "1h_2pct": {
+  "O": 31,
+  "E": 15.96,
+  "gauge_years": 798,
+  "gauges": 93,
+  "OE": 1.942,
+  "ci": [
+   1.006,
+   2.979
+  ]
+ },
+ "6h_10pct": {
+  "O": 261,
+  "E": 172.9,
+  "gauge_years": 1729,
+  "gauges": 201,
+  "OE": 1.51,
+  "ci": [
+   0.826,
+   2.309
+  ]
+ },
+ "6h_2pct": {
+  "O": 60,
+  "E": 34.58,
+  "gauge_years": 1729,
+  "gauges": 201,
+  "OE": 1.735,
+  "ci": [
+   0.865,
+   3.102
+  ]
+ },
+ "24h_10pct": {
+  "O": 362,
+  "E": 188.5,
+  "gauge_years": 1885,
+  "gauges": 219,
+  "OE": 1.92,
+  "ci": [
+   1.09,
+   2.873
+  ]
+ },
+ "24h_2pct": {
+  "O": 98,
+  "E": 37.7,
+  "gauge_years": 1885,
+  "gauges": 219,
+  "OE": 2.599,
+  "ci": [
+   0.809,
+   5.28
+  ]
+ },
+ "council_Auckland": {
+  "O": 0,
+  "E": 0.0,
+  "gauge_years": 0,
+  "gauges": 0,
+  "OE": NaN,
+  "ci": [
+   NaN,
+   NaN
+  ]
+ },
+ "council_HawkesBay": {
+  "O": 105,
+  "E": 57.5,
+  "gauge_years": 575,
+  "gauges": 66,
+  "OE": 1.826,
+  "ci": [
+   0.637,
+   3.49
+  ]
+ },
+ "council_Marlborough": {
+  "O": 16,
+  "E": 12.2,
+  "gauge_years": 122,
+  "gauges": 14,
+  "OE": 1.311,
+  "ci": [
+   0.565,
+   2.066
+  ]
+ },
+ "council_Northland": {
+  "O": 41,
+  "E": 30.0,
+  "gauge_years": 300,
+  "gauges": 34,
+  "OE": 1.367,
+  "ci": [
+   0.572,
+   2.237
+  ]
+ },
+ "council_Taranaki": {
+  "O": 15,
+  "E": 7.7,
+  "gauge_years": 77,
+  "gauges": 9,
+  "OE": 1.948,
+  "ci": [
+   0.864,
+   3.086
+  ]
+ },
+ "council_Tasman": {
+  "O": 53,
+  "E": 35.7,
+  "gauge_years": 357,
+  "gauges": 42,
+  "OE": 1.485,
+  "ci": [
+   0.861,
+   2.262
+  ]
+ },
+ "council_Wellington": {
+  "O": 23,
+  "E": 23.4,
+  "gauge_years": 234,
+  "gauges": 28,
+  "OE": 0.983,
+  "ci": [
+   0.249,
+   2.07
+  ]
+ },
+ "council_WestCoast": {
+  "O": 8,
+  "E": 6.4,
+  "gauge_years": 64,
+  "gauges": 8,
+  "OE": 1.25,
+  "ci": [
+   0.469,
+   2.143
+  ]
+ },
+ "without_janfeb2023": {
+  "O": 205,
+  "E": 172.9,
+  "gauge_years": 1729,
+  "gauges": 201,
+  "OE": 1.186,
+  "ci": [
+   0.725,
+   1.72
+  ]
+ },
+ "against_rcp45_2031_2050": {
+  "O": 177,
+  "E": 172.9,
+  "gauge_years": 1729,
+  "gauges": 201,
+  "OE": 1.024,
+  "ci": [
+   0.543,
+   1.626
+  ]
+ },
+ "against_rcp85_2031_2050": {
+  "O": 171,
+  "E": 172.9,
+  "gauge_years": 1729,
+  "gauges": 201,
+  "OE": 0.989,
+  "ci": [
+   0.515,
+   1.574
+  ]
+ },
+ "depth_minus_1se": {
+  "O": 416,
+  "E": 172.9,
+  "gauge_years": 1729,
+  "gauges": 201,
+  "OE": 2.406,
+  "ci": [
+   1.423,
+   3.423
+  ]
+ },
+ "depth_plus_1se": {
+  "O": 166,
+  "E": 172.9,
+  "gauge_years": 1729,
+  "gauges": 201,
+  "OE": 0.96,
+  "ci": [
+   0.495,
+   1.581
+  ]
+ },
+ "S2": {
+  "O": 211,
+  "E": 136.7,
+  "gauge_years": 1367,
+  "gauges": 160,
+  "OE": 1.544,
+  "ci": [
+   0.764,
+   2.44
+  ]
+ },
+ "S3": {
+  "O": 368,
+  "E": 250.4,
+  "gauge_years": 2504,
+  "gauges": 285,
+  "OE": 1.47,
+  "ci": [
+   0.807,
+   2.19
+  ]
+ },
+ "S4": {
+  "O": 44,
+  "E": 32.1,
+  "gauge_years": 321,
+  "gauges": 39,
+  "OE": 1.371,
+  "ci": [
+   0.705,
+   2.048
+  ]
+ },
+ "S1_undetermined_as_exceed": {
+  "O": 263,
+  "E": 172.9,
+  "gauge_years": 1729,
+  "gauges": 201,
+  "OE": 1.521,
+  "ci": [
+   0.867,
+   2.295
+  ]
+ },
+ "S1_undetermined_gauge_years": 2,
+ "fitting_sites": {
+  "O": 106,
+  "E": 72.2,
+  "gauge_years": 722,
+  "gauges": 84,
+  "OE": 1.468,
+  "ci": [
+   0.658,
+   2.331
+  ]
+ },
+ "non_fitting_sites": {
+  "O": 155,
+  "E": 100.7,
+  "gauge_years": 1007,
+  "gauges": 117,
+  "OE": 1.539,
+  "ci": [
+   0.914,
+   2.234
+  ]
+ },
+ "storm_cluster_bootstrap": {
+  "storms": 74,
+  "largest_storm_exceedances": 52,
+  "OE": 1.51,
+  "ci": [
+   0.96,
+   2.227
+  ]
+ }
+}
