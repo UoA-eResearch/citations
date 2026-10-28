@@ -66,7 +66,8 @@ def seq_losses(model_id, revision, toks, bs, dtype="float32"):
     from transformers import AutoModelForCausalLM
     # D1: fp32 (bf16 corrupts late Pythia checkpoints); fp16 only where fp32 does not fit next to the shared server
     m = AutoModelForCausalLM.from_pretrained(model_id, revision=revision, dtype=getattr(torch, dtype)).cuda().eval()
-    n_params = sum(p.numel() for n, p in m.named_parameters() if "embed" not in n)
+    # D3: transformers names the GPT-NeoX output head `lm_head`, so "embed" alone left it in N.
+    n_params = sum(p.numel() for n, p in m.named_parameters() if not ("embed" in n or n.startswith("lm_head")))
     out = []
     with torch.no_grad():
         for i in range(0, len(toks), bs):

@@ -75,10 +75,9 @@ def f2(p):
     fig.suptitle(f"Which seed you train shifts the 2.8B forecast by {p['W']['1']:.2f} nats; {above:.0%} of fits overshoot",
                  x=0.02, ha="left", fontsize=10, color=INK)
     fig.savefig(F / "F2_extrapolation.png", dpi=170); plt.close(fig)
-    caption("F2_extrapolation", f"""Extrapolated loss of Pythia-2.8B (N of its config, D = 300B) from 2,000 single-seed
+    caption("F2_extrapolation", f"""Extrapolated loss of Pythia-2.8B (non-embedding N from its config, D = 300B) from 2,000 single-seed
     ladders (one random seed per size, 40 points each), each fitted with the Chinchilla form by Huber loss on log L.
-    Dashed: 5th and 95th percentiles. Orange: the actual 2.8B loss (seed 0, fp16). Values above 2.3 are clipped into
-    the last bin. Three-seed averaging narrows the range only to {p['W']['3']:.3f}.""")
+    Dashed: 5th and 95th percentiles. Orange: the actual 2.8B loss (seed 0, fp16). Three-seed averaging narrows the range only to {p['W']['3']:.3f}.""")
 
 
 if __name__ == "__main__":

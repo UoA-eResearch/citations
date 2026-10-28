@@ -1,22 +1,22 @@
 {
  "W1_excluding_410m_seeds_3_4": {
   "ladders": 1578,
-  "W1": 0.05144,
-  "median_error": 0.06226
+  "W1": 0.05031,
+  "median_error": 0.05754
  },
  "cut64k_n1": {
-  "W": 0.08614,
-  "median_error": 0.12982,
+  "W": 0.08402,
+  "median_error": 0.11911,
   "share_overshoot": 1.0,
-  "alpha_median": 0.2855,
-  "beta_median": 0.8515
+  "alpha_median": 0.1287,
+  "beta_median": 0.8504
  },
  "cut64k_n3": {
-  "W": 0.07338,
-  "median_error": 0.13484,
+  "W": 0.02113,
+  "median_error": 0.12133,
   "share_overshoot": 1.0,
-  "alpha_median": 0.2837,
-  "beta_median": 0.8876
+  "alpha_median": 0.1266,
+  "beta_median": 0.8805
  },
- "cut64k_shrinkage_1_3": 0.1481
+ "cut64k_shrinkage_1_3": 0.7485
 }
