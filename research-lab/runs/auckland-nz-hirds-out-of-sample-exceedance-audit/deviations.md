@@ -94,3 +94,18 @@ test the API client, but no annual maximum had been compared with any depth.
    NZTM2000 (EPSG:2193). This was verified by matching gauge names to HIRDS's own site list (median distance 0.2 km
    and 0.0–0.1 km). Gauges with missing coordinates, or coordinates outside New Zealand, get no HIRDS depth and are
    counted (G2).
+
+## D4 — 2026-10-28 14:40 NZDT — Auckland Council gauges added; before any exceedance
+
+Plan section 1 names Auckland Council's Environment Auckland portal as a source. Its click-through terms include an
+indemnity clause, so the lab asked the owner, who agreed on 2026-10-28 ("Add Auckland").
+- **What is used.** Rainfall datasets whose record span covers the out-of-sample window (70 candidates of 254
+  listed), from `code/fetch_auckland.py`: points as recorded (tips and logged zeros), NZST, with grade codes.
+- **Grade codes are NEMS.** A long-record gauge (Hoteo at Oldfields) is graded 500 from 2005 to 2026, so D2's
+  quality rule applies unchanged.
+- **Terms.** Auckland Council is acknowledged as the data source in the report. Raw series stay under `data/`
+  (not in git); only derived results are published.
+- **G1.** HIRDS v4 fitted Auckland Council data to early 2017, so matched HIRDS sites listed past 2016 move that
+  gauge's out-of-sample start (analysis rule from D1).
+- **No result had been seen.** The council maxima had been computed, but no annual maximum had been compared with
+  any HIRDS depth, and no exceedance or O/E computed.

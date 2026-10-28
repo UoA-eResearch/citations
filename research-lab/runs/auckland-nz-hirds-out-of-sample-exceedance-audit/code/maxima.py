@@ -47,6 +47,8 @@ def load(f):
     t = np.concatenate([z["t"] for z in parts]).astype(np.int64)
     v = np.concatenate([z["v"] for z in parts]).astype(np.float64)
     q = np.concatenate([z["q"] for z in parts]).astype(np.int64)
+    if len(t) == 0:
+        return t, v, q
     o = np.argsort(t, kind="stable")
     t, v, q = t[o], v[o], q[o]
     keep = np.r_[True, t[1:] != t[:-1]]

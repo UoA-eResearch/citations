@@ -99,7 +99,8 @@ def main(per_server=3):
             log.append(res)
             if (k + 1) % 20 == 0:
                 print(time.strftime("%H:%M:%S"), k + 1, "/", len(c), flush=True)
-    pd.DataFrame(log, columns=["server", "site", "status", "records"]).to_csv(D / "fetch_log.csv", index=False)
+    name = "fetch_log.csv" if OUT.name == "series" else f"fetch_log_{OUT.name}.csv"
+    pd.DataFrame(log, columns=["server", "site", "status", "records"]).to_csv(D / name, index=False)
     print("== done", pd.Series([s.split(":")[0] for _, _, s, _ in log]).value_counts().to_dict(), flush=True)
 
 
@@ -108,7 +109,10 @@ if __name__ == "__main__":
         FIRST_WY, LAST_WY, OUT = 1995, 2004, D / "series_early"
         _cand = candidates
 
+        only = set(sys.argv[3].split(",")) if len(sys.argv) > 3 else None    # optional server list, to spread the load
+
         def candidates():                        # noqa: F811  same gauges, records starting before 2005/06
             c = _cand()
-            return c[c["from"] < "2005-07-01"]
+            c = c[c["from"] < "2005-07-01"]
+            return c[c.server.isin(only)] if only else c
     main(int(sys.argv[1]) if len(sys.argv) > 1 else 3)

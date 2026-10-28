@@ -59,10 +59,13 @@ def points():
             continue
         z = np.load(f, allow_pickle=False)
         try:
-            east, north = float(z["easting"]), float(z["northing"])
+            if "lat" in z.files:                                  # Auckland portal: WGS84 already
+                lat, lon = float(z["lat"]), float(z["lon"])
+            else:
+                east, north = float(z["easting"]), float(z["northing"])
+                lon, lat = tf[GRID.get(f.stem.split("__")[0], 2193)].transform(east, north)
         except (KeyError, ValueError, TypeError):
             skipped.append((f.stem, "no coordinates")); continue
-        lon, lat = tf[GRID.get(f.stem.split("__")[0], 2193)].transform(east, north)
         if not (-47.6 < lat < -34.0 and 166.0 < lon < 179.0):
             skipped.append((f.stem, "coordinates outside New Zealand")); continue
         assets = call("POST", "/report", {"latitude": round(lat, 6), "longitude": round(lon, 6), "site_name": "gauge", "idf": False})
