@@ -1,0 +1,38 @@
+{
+ "D_LL_all": 3.9207804472338164e-05,
+ "D_LL_without_late_june_2025": 9.36016658400731e-06,
+ "ci_without": [
+  -5.295334995413886e-06,
+  2.6031550112705546e-05
+ ],
+ "held_out_floods_without": 40,
+ "events": {
+  "Auckland 2023-01-27": {
+   "panel_suburbs": 174,
+   "with_callout": 55,
+   "observed_rate": 0.316,
+   "median_d6_mm": 134.7,
+   "median_rarity": 2.71,
+   "mean_p_depth_model": 0.331,
+   "mean_p_rarity_model": 0.352
+  },
+  "Hawke's Bay 2023-02-14": {
+   "panel_suburbs": 91,
+   "with_callout": 10,
+   "observed_rate": 0.11,
+   "median_d6_mm": 61.0,
+   "median_rarity": 1.56,
+   "mean_p_depth_model": 0.081,
+   "mean_p_rarity_model": 0.102
+  },
+  "Nelson-Tasman 2025-06-27": {
+   "panel_suburbs": 70,
+   "with_callout": 8,
+   "observed_rate": 0.114,
+   "median_d6_mm": 55.8,
+   "median_rarity": 0.97,
+   "mean_p_depth_model": 0.031,
+   "mean_p_rarity_model": 0.041
+  }
+ }
+}

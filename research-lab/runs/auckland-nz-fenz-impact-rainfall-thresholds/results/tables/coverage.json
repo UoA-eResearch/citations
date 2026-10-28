@@ -1,0 +1,49 @@
+{
+ "fenz_rows": {
+  "attempted": 689801,
+  "ok": 679485,
+  "fallback": 0,
+  "dropped": 10316,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "time unparsed or in the DST gap, or no suburb": 10316
+  }
+ },
+ "suburbs_geocoded": {
+  "attempted": 3700,
+  "ok": 2768,
+  "fallback": 0,
+  "dropped": 932,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "ambiguous": 8,
+   "council_mismatch": 17,
+   "unmatched": 907
+  }
+ },
+ "suburbs_in_panel": {
+  "attempted": 2768,
+  "ok": 954,
+  "fallback": 0,
+  "dropped": 1814,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "no gauge within 10 km": 1805,
+   "a gauge within 10 km but never usable": 9
+  }
+ },
+ "suburb_days": {
+  "attempted": 2813886,
+  "ok": 2654825,
+  "fallback": 0,
+  "dropped": 159061,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "no usable gauge within 10 km that day": 159061
+  }
+ }
+}
