@@ -52,10 +52,11 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-10-28 12:45 | `metascience-retraction-citer-contagion` | review (fresh agent; pre-review gate G5+G6 done) | publish with edits |
 | 2026-10-28 17:45 | `metascience-retraction-citer-contagion` | confirmation pass (original reviewer resumed) | publish -> PUBLISHED |
 | 2026-10-28 22:45 | `llm-ml-science-scaling-fit-seed-uncertainty` | confirmation pass (original reviewer resumed) | publish with edits -> PUBLISHED |
+| 2026-10-29 03:45 | `auckland-nz-hirds-out-of-sample-exceedance-audit` | review (fresh agent; pre-review gate G5+G6 done) |  |
 
 **Pre-review gate (from 2026-10-25, METHODS.md):** before launching a draft's Fable review, run G5 (`tools/overclaim_check.py RUN --verify`) and G6 (`tools/attribution.py check RUN`) on it, fix what they find as a D-entry, and add the standard gate-check block to its `review/prompt.md`. New leads apply all of G1–G7.
 
-**The owner's exception ended at 16:00 on 2026-10-23; the 1-per-5 h rule applies again. Scaling-fit review started 2026-10-28 00:41 (fix first; refit running). Citer-contagion confirmation 17:45: publish -> PUBLISHED 17:55. Scaling-fit confirmation 22:45: publish with edits -> PUBLISHED 23:0x; next Fable run not before 2026-10-29 03:45 (HIRDS, then FENZ).** Order (from 2026-10-26): reviews in table order - precedent erosion, GloBI, mortality, supply chain, scaling-fit, citer contagion, OEIS, hub vintage, notebook noise, mathlib, quantum, SDM provenance, herbarium velocity, dynamic triggering - with each confirmation pass taking the next slot after its review's fixes.
+**The owner's exception ended at 16:00 on 2026-10-23; the 1-per-5 h rule applies again. Scaling-fit review started 2026-10-28 00:41 (fix first; refit running). Citer-contagion confirmation 17:45: publish -> PUBLISHED 17:55. HIRDS review started 2026-10-29 03:45; next Fable run not before 08:45 (its fixes, or the FENZ review).** Order (from 2026-10-26): reviews in table order - precedent erosion, GloBI, mortality, supply chain, scaling-fit, citer contagion, OEIS, hub vintage, notebook noise, mathlib, quantum, SDM provenance, herbarium velocity, dynamic triggering - with each confirmation pass taking the next slot after its review's fixes.
 
 | study | draft commit | verdicts in the draft | review status |
 |---|---|---|---|
