@@ -206,7 +206,7 @@ def main():
     if cov_path.exists():
         cov_path.unlink()
     inv = pd.read_parquet(D / "inventory.parquet")
-    fl = pd.read_csv(D / "fetch_log.csv")
+    fl = pd.concat([pd.read_csv(D / "fetch_log.csv"), pd.read_csv(D / "fetch_log_auckland.csv")])
     skipped = pd.read_csv(D / "hirds_depths_skipped.csv") if (D / "hirds_depths_skipped.csv").exists() else pd.DataFrame(columns=["file", "reason"])
     c = Coverage("gauges", cov_path)
     all_files = set(M.file.unique())
@@ -214,7 +214,7 @@ def main():
     m_oos = oos_rows(m6, g)
     inc = included(m6, g) & set(dep6.file)
     c.add_counts(ok=len(inc), drops={
-        "series empty or failed to fetch": int((~fl.status.isin(["ok", "done"])).sum()),
+        "series empty or failed to fetch": int((~fl.status.str.match(r"^(ok|done)")).sum()),
         "no HIRDS depth (coordinates missing or outside NZ)": len(no_depth),
         "co-located duplicate (plan: keep the longer record)": len(dup),
         f"fewer than {MIN_OOS} complete, resolved out-of-sample years": len((all_files - no_depth - set(dup)) - inc)})

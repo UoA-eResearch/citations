@@ -4,7 +4,8 @@ candidate gauge, water years 2005/06 to 2025/26. Raw values stay under data/ (no
 Candidate: a site's raw (not virtual) rainfall measurement whose record span covers at least 8 of the 9
 out-of-sample water years (2017/18-2025/26). One measurement per site: "Rainfall" if present, else the longest.
 
-  fetch.py [PER_SERVER] -> data/series/<server>__<site>.npz  (t: int64 minutes since 1970, v: float32 mm, q: int16)
+  fetch.py [PER_SERVER] -> data/series/<server>__<site>.npz  (t: float64 minutes since 1970, seconds kept; v: float32 mm;
+                           q: int16)
                            data/fetch_log.csv
   fetch.py PER_SERVER early -> data/series_early/ : water years 1995/96-2004/05 for the same gauges, where their record
                            starts before 2005/06 (in-sample years only, for the sanity control; D3)
@@ -60,11 +61,14 @@ def one(row):
     base = SERVERS[row.server]
     T, V, Q, n_bad = [], [], [], 0
     for y in range(first, LAST_WY + 1):
+        start = f"{y}-07-01T00:00:00"                 # windows share their boundary instant: keep it once (D5)
         url = (f"{base}?Service=Hilltop&Request=GetData&Site={urllib.parse.quote(row.site)}"
                f"&Measurement={urllib.parse.quote(row.measurement)}&From={y}-07-01&To={y + 1}-07-01&ShowQuality=Yes")
         with LIMIT[row.server]:
             x = get(url)
         for t, v, q in REC.findall(x):
+            if y > first and t.startswith(start[:16]) and pd.Timestamp(t) == pd.Timestamp(start):
+                continue
             try:
                 T.append(t); V.append(float(v)); Q.append(int(q) if q else -1)
             except ValueError:
@@ -72,13 +76,12 @@ def one(row):
     if not T:
         np.savez_compressed(f, t=np.array([], np.int64), v=np.array([], np.float32), q=np.array([], np.int16))
         return row.server, row.site, "empty", 0
-    t = pd.to_datetime(pd.Series(T)).to_numpy("datetime64[m]").astype(np.int64)
+    # seconds are kept and nothing else is de-duplicated: several tips can share a minute (D5)
+    t = pd.to_datetime(pd.Series(T)).to_numpy("datetime64[s]").astype(np.int64) / 60.0
     o = np.argsort(t, kind="stable")
     t, v, q = t[o], np.array(V, np.float32)[o], np.array(Q, np.int16)[o]
-    keep = np.r_[True, t[1:] != t[:-1]]                 # the yearly windows share their boundary instant
-    np.savez_compressed(f, t=t[keep], v=v[keep], q=q[keep], measurement=row.measurement,
-                        easting=row.easting, northing=row.northing)
-    return row.server, row.site, "ok", int(keep.sum())
+    np.savez_compressed(f, t=t, v=v, q=q, measurement=row.measurement, easting=row.easting, northing=row.northing)
+    return row.server, row.site, "ok", int(len(t))
 
 
 def main(per_server=3):

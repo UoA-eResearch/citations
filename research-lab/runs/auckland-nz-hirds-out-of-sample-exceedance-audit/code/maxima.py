@@ -43,16 +43,16 @@ def bad_quality(q, variant):
 
 def load(f):
     """The main series, with water years 1995/96-2004/05 from data/series_early/ spliced on where fetched (D3)."""
-    parts = [np.load(g) for g in (S.parent / "series_early" / f.name, f) if g.exists()]
-    t = np.concatenate([z["t"] for z in parts]).astype(np.int64)
-    v = np.concatenate([z["v"] for z in parts]).astype(np.float64)
-    q = np.concatenate([z["q"] for z in parts]).astype(np.int64)
+    parts = [(z["t"].astype(np.float64), z["v"].astype(np.float64), z["q"].astype(np.int64))
+             for z in (np.load(g) for g in (S.parent / "series_early" / f.name, f) if g.exists())]
+    if len(parts) == 2 and len(parts[0][0]) and len(parts[1][0]):
+        keep = parts[1][0] > parts[0][0].max()            # the 2005-07-01 boundary record is in both files (D5)
+        parts[1] = tuple(a[keep] for a in parts[1])
+    t, v, q = (np.concatenate([p[i] for p in parts]) for i in range(3))
     if len(t) == 0:
         return t, v, q
-    o = np.argsort(t, kind="stable")
-    t, v, q = t[o], v[o], q[o]
-    keep = np.r_[True, t[1:] != t[:-1]]
-    return t[keep], v[keep], q[keep]
+    o = np.argsort(t, kind="stable")                      # no de-duplication: several tips can share a minute (D5)
+    return t[o], v[o], q[o]
 
 
 def one(f):
@@ -76,7 +76,7 @@ def one(f):
     edges = np.arange(lo, hi + 1, BIN)                            # 5-minute bin edges
     out = []
     for variant in ("primary", "S2", "S3", "S4"):
-        bad = bad_quality(qq, "primary" if variant == "S2" else variant)
+        bad = bad_quality(qq, "primary" if variant == "S2" else variant) | ~np.isfinite(val)   # NaN = missing record
         rain = np.where(bad, 0.0, val)
         Crain = np.interp(edges, np.r_[s[0], e], np.r_[0.0, np.cumsum(rain)])
         point_bins = np.diff(Crain)
@@ -98,7 +98,7 @@ def one(f):
             over = np.zeros(len(edges) + n + 1)
             if unres.any():
                 a = np.clip(((s[unres] - lo) // BIN).astype(np.int64) + 1, 0, len(over) - 1)
-                b = np.clip(((e[unres] - lo + BIN - 1) // BIN).astype(np.int64) + n, 0, len(over) - 1)
+                b = np.clip(np.ceil((e[unres] - lo) / BIN).astype(np.int64) + n, 0, len(over) - 1)
                 np.add.at(over, a, rain[unres]); np.add.at(over, b, -rain[unres])
             over = np.cumsum(over)[n:len(edges)]
             upper = win_res + over[: len(win_res)]

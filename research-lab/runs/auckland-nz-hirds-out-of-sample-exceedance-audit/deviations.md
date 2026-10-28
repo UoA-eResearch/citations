@@ -103,9 +103,43 @@ indemnity clause, so the lab asked the owner, who agreed on 2026-10-28 ("Add Auc
   listed), from `code/fetch_auckland.py`: points as recorded (tips and logged zeros), NZST, with grade codes.
 - **Grade codes are NEMS.** A long-record gauge (Hoteo at Oldfields) is graded 500 from 2005 to 2026, so D2's
   quality rule applies unchanged.
+- **NaN values.** The portal's export writes "NaN" for some records. These count as missing records: unknown time
+  and no rain, like a 1xx code (`maxima.py`). No Hilltop series has any.
 - **Terms.** Auckland Council is acknowledged as the data source in the report. Raw series stay under `data/`
   (not in git); only derived results are published.
 - **G1.** HIRDS v4 fitted Auckland Council data to early 2017, so matched HIRDS sites listed past 2016 move that
   gauge's out-of-sample start (analysis rule from D1).
 - **No result had been seen.** The council maxima had been computed, but no annual maximum had been compared with
   any HIRDS depth, and no exceedance or O/E computed.
+
+## D5 — 2026-10-28 15:16 NZDT — a data-reader bug found by the G3 checks after the first full run; all series refetched
+
+**What happened.**
+- The first full analysis ran at about 15:15. Its results were seen before the bug was found:
+  - H1: O/E 1.29 (0.65–2.07), Inconclusive;
+  - in-sample control: 0.81 (0.61–1.03);
+  - Wellington: 0.13.
+- Wellington's implausible value prompted a check of its series. Annual totals were steady while 6-hour maxima fell
+  by about a third after 2015, the years when several gauges moved to 0.2 mm buckets.
+- **Cause.** `fetch.py` (and `fetch_auckland.py`) truncated time stamps to the minute, then dropped records sharing a
+  minute. That step was meant only for the one boundary record that consecutive yearly windows share. It also
+  discarded genuine tips in the same minute, i.e. rain in the most intense bursts.
+- **Measured** on Akatarawa River at Cemetery, 2022/23:
+  - 51,396 raw records against 49,612 stored;
+  - 2,227 mm against 1,873 mm (16% of the year's rain lost);
+  - the 6-hour maximum 38.6 against 36.6 mm.
+- The loss grows with tip frequency and bucket resolution, so it biased exceedance counts downward and unevenly
+  across councils and years.
+
+**Fix (mechanical; no analytic rule changed).**
+- Times are kept to the second (stored as fractional minutes).
+- Only the shared boundary record of consecutive windows is dropped, matched by its exact time.
+- Nothing else is de-duplicated, and the early-years splice drops only the 2005-07-01 boundary record.
+- All Hilltop and Auckland series are refetched, and the maxima and analysis re-run with the same code otherwise.
+- The invalid tables are kept in `results/tables/v0_invalid_minute_dedupe/` for the record, and the report states
+  what the first run showed. `series_structure.csv` (the D2 description) came from the truncated series. D2's
+  thresholds were set from its clearly bimodal shape and are kept.
+
+**Why G4 missed it, and the added check.** G4's 30 recomputed maxima read the same stored series, so they could not
+catch a reader bug. G4 now also refetches 10 random gauge-years raw from the servers and compares record counts and
+totals with what is stored.

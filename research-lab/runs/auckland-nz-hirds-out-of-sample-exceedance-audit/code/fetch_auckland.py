@@ -75,8 +75,11 @@ def one(args):
     first = max(FIRST_WY, row["from"].year if row["from"].month >= 7 else row["from"].year - 1)
     for y in range(first, LAST_WY + 1):
         txt = export(op, row.DatasetIdentifier, f"{y}-07-01", f"{y + 1}-07-01")
+        start = pd.Timestamp(f"{y}-07-01")               # windows share their boundary instant: keep it once (D5)
         for rec in csv.reader(io.StringIO(txt)):
             if len(rec) >= 2 and re.match(r"\d{4}-\d\d-\d\d \d\d:\d\d", rec[0]):
+                if y > first and rec[0].startswith(f"{y}-07-01 00:00") and pd.Timestamp(rec[0]) == start:
+                    continue
                 try:
                     V.append(float(rec[1])); T.append(rec[0]); Q.append(int(rec[2]) if len(rec) > 2 and rec[2].strip() else -1)
                 except ValueError:
@@ -84,12 +87,12 @@ def one(args):
     if not T:
         np.savez_compressed(f, t=np.array([], np.int64), v=np.array([], np.float32), q=np.array([], np.int16))
         return row.LocationIdentifier, "empty", 0
-    t = pd.to_datetime(pd.Series(T)).to_numpy("datetime64[m]").astype(np.int64)
+    # seconds are kept and nothing else is de-duplicated: several tips can share a minute (D5)
+    t = pd.to_datetime(pd.Series(T)).to_numpy("datetime64[s]").astype(np.int64) / 60.0
     o = np.argsort(t, kind="stable")
     t, v, q = t[o], np.array(V, np.float32)[o], np.array(Q, np.int16)[o]
-    keep = np.r_[True, t[1:] != t[:-1]]
-    np.savez_compressed(f, t=t[keep], v=v[keep], q=q[keep], measurement=row.DatasetIdentifier, lat=row.LocY, lon=row.LocX)
-    return row.LocationIdentifier, f"ok ({bad} unparsed)" if bad else "ok", int(keep.sum())
+    np.savez_compressed(f, t=t, v=v, q=q, measurement=row.DatasetIdentifier, lat=row.LocY, lon=row.LocX)
+    return row.LocationIdentifier, f"ok ({bad} unparsed)" if bad else "ok", int(len(t))
 
 
 def main():
