@@ -402,7 +402,7 @@ function renderOverview() {
   const topT = Object.entries(tc).sort((a, b) => b[1] - a[1]).slice(0, 15);
   const sdg = {}; ws.forEach(w => w.sdg.forEach(s => sdg[s] = (sdg[s] || 0) + 1));
   el.innerHTML = `<h1>Where the University of Auckland is strong in Pacific research</h1>
-    <p class="lead">Research by UoA authors that is in or about the Pacific, from OpenAlex. Use the lens and strength filters above; every number on every tab follows them.</p>
+    <p class="lead">Research by UoA authors that is in or about the Pacific. The works, researchers, partners and topics come from OpenAlex; works that Scopus indexes are also placed in SciVal, for the SciVal impact figures here and the SRA alignment tab. Use the lens and strength filters above; every number on every tab follows them.</p>
     <div class="tiles">
       <div class="tile"><b>${fmt(ws.length)}</b><span>works, ${fmt(ws.filter(w => w.y <= 2025).length)} in 2020–2025 and ${fmt(ws.filter(w => w.y === 2026).length)} so far in 2026</span></div>
       <div class="tile"><b>${fmt(nA)}</b><span>UoA researchers who authored them</span></div>
@@ -586,7 +586,7 @@ function renderPeople() {
         <th class="num"><button data-ppsort="fwci">FWCI</button></th><th class="num"><button data-ppsort="deg">UoA co-authors</button></th><th class="num"><button data-ppsort="bt">Bridging</button></th>
       </tr></thead><tbody id="ppBody"></tbody></table></div>
       <p class="toolbar"><button class="btn" id="ppMore">Show more</button><span class="note" id="ppCount"></span></p>
-      <p class="note">Works, citations and FWCI follow the filters. Pacific-focused counts every Pacific-focused work by that person in the atlas. Bridging is betweenness centrality in the co-authorship network: how often a researcher sits on the shortest path between two others; high values mark connectors between groups. Author identities come from OpenAlex's automated disambiguation.</p>`;
+      <p class="note">Works, citations and FWCI (OpenAlex's) follow the filters. Pacific-focused counts every Pacific-focused work by that person in the atlas. Bridging is betweenness centrality in the co-authorship network: how often a researcher sits on the shortest path between two others; high values mark connectors between groups. Author identities come from OpenAlex's automated disambiguation.</p>`;
     $("ppQ").oninput = e => { PP.q = e.target.value; PP.limit = 50; peopleTable(); };
     $("ppFacSel").onchange = e => { PP.fac = e.target.value; PP.limit = 50; peopleTable(); };
     $("ppMore").onclick = () => { PP.limit += 50; peopleTable(); };
@@ -904,7 +904,7 @@ function openAuthor(ai) {
   const co = {}; ws.forEach(i => W[i].a.forEach(b => { if (b !== ai) co[b] = (co[b] || 0) + 1; }));
   openDrawer(`<div class="kind">UoA researcher</div><h2>${esc(a.name)}</h2>
     <p class="meta">${esc(a.faculty || "Faculty not recorded")}${a.unit ? "<br>" + esc(a.unit) : ""}${a.orcid ? `<br><a href="${esc(a.orcid)}" target="_blank" rel="noopener">ORCID</a>` : ""}</p>
-    ${facts([[fmt(ws.length), "works under the filters"], [fmt(all.length), "works in the atlas"], [fmt(a.nf), "Pacific-focused"], [a.fwci == null ? "–" : a.fwci.toFixed(2), "mean FWCI (all their works here)"]])}
+    ${facts([[fmt(ws.length), "works under the filters"], [fmt(all.length), "works in the atlas"], [fmt(a.nf), "Pacific-focused"], [a.fwci == null ? "–" : a.fwci.toFixed(2), "mean FWCI, OpenAlex (all their works here)"]])}
     ${a.topics.length ? `<h3>Main topics</h3><p class="meta">${a.topics.map(t => `<button class="linkbtn" data-topic="${t}">${esc(T[t].name)}</button>`).join("<br>")}</p>` : ""}
     <h3>Works</h3><ul class="list">${(ws.length ? ws : all).slice(0, 15).map(workItem).join("")}</ul>
     ${Object.keys(co).length ? `<h3>UoA co-authors here</h3><ul class="list">${Object.entries(co).sort((x, y) => y[1] - x[1]).slice(0, 10).map(([b, n]) => authorItem(+b, `${n} shared work${n > 1 ? "s" : ""}`)).join("")}</ul>` : ""}
