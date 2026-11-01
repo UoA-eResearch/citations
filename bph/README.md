@@ -60,6 +60,35 @@ One filter bar (lenses and strength) drives every tab.
 - **Not included:** non-public data from the University's grant and ethics application systems (managed by
   the Research and Innovation Office; needs their permission).
 
+## Elsevier APIs used
+
+Five Elsevier APIs, all called through `pipeline/els.py`: `GET https://api.elsevier.com/...`, with the key
+in the `X-ELS-APIKey` header and `Accept: application/json`. Requests are counted for a full rebuild from an
+empty cache (replayed from the cache on 2 November 2026); re-runs are served from the cache.
+
+| API | Endpoint | Parameters | What it gives | Step | Requests |
+|---|---|---|---|---|---:|
+| [Scopus Search](https://dev.elsevier.com/documentation/ScopusSearchAPI.wadl) | `/content/search/scopus` | `query=DOI("…") OR …` (25 DOIs a call), `count=25`, `field=dc:identifier,prism:doi` | Scopus ID of each atlas work, by DOI | `fetch_scival.py` | 105 |
+| Scopus Search | `/content/search/scopus` | `query=TITLE("…") AND PUBYEAR > y-2 AND PUBYEAR < y+2`, then the title's words ANDed; `count=25`, `field=dc:identifier,dc:title,prism:coverDate` | Scopus ID by exact normalised title and year ±1 when the DOI fails | `fetch_scival.py` | 1,286 |
+| Scopus Search | `/content/search/scopus` | `query=TITLE-ABS-KEY(terms)` [`AND AF-ID(60005686)`] [`AND TITLE-ABS-KEY(Pacific terms)`] `AND PUBYEAR > 2020 AND PUBYEAR < 2026`; `count=1` or `200`, `sort=relevancy`, `field=dc:identifier` | Keyword-probe counts (UoA, UoA Pacific, world Pacific) and the papers whose Topics are looked up | `probe_keywords.py` | 30 |
+| [SciVal Publication](https://dev.elsevier.com/documentation/SciValPublicationAPI.wadl) | `/analytics/scival/publication/metrics` | `publicationIds` (up to 100 a call), `metricTypes=FieldWeightedCitationImpact,OutputsInTopCitationPercentiles,CitationCount` (probes: `CitationCount`), `byYear=false` | Each paper's SciVal Topic and Topic Cluster (ID and name), FWCI and top-10% flag | `fetch_scival.py`, `probe_keywords.py` | 48 |
+| [SciVal Topic](https://dev.elsevier.com/documentation/SciValTopicAPI.wadl) | `/analytics/scival/topic/institutionId/212005` | `yearRange=5yrs`, `limit=100`, `offset` | UoA's Topic portfolio: each Topic's UoA output, world output and Prominence percentile | `fetch_scival.py` | 100 |
+| SciVal Topic | `/analytics/scival/topic/metrics/institutionId/212005` | `topicId`, `yearRange=5yrs`, `metricTypes=ScholarlyOutput,FieldWeightedCitationImpact,PublicationShare,PublicationShareGrowth,CitationCount` | UoA's metrics in each Topic holding two or more Pacific-focused works; the data-release date | `fetch_scival.py` | 100 |
+| SciVal Topic | `/analytics/scival/topic/countryId/{id}` | `yearRange=5yrs`, `limit=100`, `offset` | Topic portfolios of 22 Pacific Island countries and territories | `fetch_scival.py` | 63 |
+| SciVal Topic | `/analytics/scival/topic/{id}` | none | The Topic Cluster of Topics not seen through a paper (SRA3 Topics, Pacific Island table) | `scival_topics.py` | 303 |
+| SciVal Topic | `/analytics/scival/topic/metrics` | `topicIds` (up to 100), `metricTypes=ScholarlyOutput`, `yearRange=5yrs` | World output and prominence of Topics outside UoA's five-year portfolio | `scival_topics.py` | 1 |
+| [SciVal Topic Cluster](https://dev.elsevier.com/documentation/SciValTopicClusterAPI.wadl) | `/analytics/scival/topicCluster/institutionId/212005` | `yearRange=5yrs`, `limit=100`, `offset` | UoA's Topic Cluster portfolio | `fetch_scival.py` | 15 |
+| [SciVal Country](https://dev.elsevier.com/documentation/SciValCountryAPI.wadl) | `/analytics/scival/country/search` | `query=name(…)`, `limit=10` | SciVal country IDs (kept only on an exact ISO code match) | `fetch_scival.py` | 22 |
+
+Total 2,073 requests: Scopus Search 1,421 (weekly quota 20,000) and SciVal 652 (weekly quota 5,000, shared
+across the SciVal APIs). `212005` is The University of Auckland in SciVal and `60005686` its Scopus
+affiliation ID. Development only, not in the pipeline: a few test calls to the
+[SciVal Institution API](https://dev.elsevier.com/documentation/SciValInstitutionAPI.wadl)
+(`/analytics/scival/institution/search`, to find 212005), the SciVal Publication lookup
+(`/analytics/scival/publication/{id}`) and the
+[Abstract Retrieval API](https://dev.elsevier.com/documentation/AbstractRetrievalAPI.wadl); the Topic API's
+`keyContribOnly` option was tried and dropped because it returned every Topic.
+
 ## Keyword probes (the gap-check automation)
 
 Put one probe per line in `probes.txt` (`Label: term | term`), then run `pipeline/probe_keywords.py` and
@@ -76,7 +105,7 @@ bph/pipeline/run_all.sh "SRA3_Topics & Topic Clusters for approval.xlsx"
 python bph/build_page.py          # app.html -> index.html (standalone)
 ```
 `PY` needs requests, numpy, networkx (>= 3.4), openpyxl. A full rebuild from an empty cache costs about
-US$0.10 of OpenAlex budget and roughly 1,500 Scopus Search and 600 SciVal calls (weekly quotas 20,000 and
+US$0.10 of OpenAlex budget and 1,421 Scopus Search and 652 SciVal requests (weekly quotas 20,000 and
 5,000); re-runs are served from the caches.
 
 `app.html` is the page body (published as a claude.ai artifact with `data/bph.json` and
