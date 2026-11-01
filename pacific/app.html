@@ -1,0 +1,1129 @@
+<title>Vā Atlas of Pacific Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,500;0,700;1,500&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one-screen night-sea chart. Header bar; stage (map / genealogy / text pages) with a detail
+   panel on the right; the "tide" timeline along the foot drives time in the map and genealogy. */
+:root {
+  color-scheme: dark;
+  --sea: #0b1620;      /* ground: night ocean */
+  --sea-1: #10202b;    /* panels */
+  --sea-2: #173341;    /* raised, hover */
+  --rule: #24414e;     /* hairlines */
+  --ink: #f0f4f1;
+  --ink-2: #c6d4d6;   /* 12:1 on --sea */
+  --ink-3: #98aeb3;   /* 7.9:1 on --sea, 7.2:1 on --sea-1 */
+  --land: #1b2e35;
+  --coast: #34535d;
+  --star: #f2d48f;     /* accent: starlight - selection, main path, events */
+  --star-ink: #1c1606;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500;
+  --s5: #d55181; --s6: #008300; --s7: #9085e9; --s8: #e66767;
+  --other: #5d7479;
+  --f-display: "Alegreya", "Iowan Old Style", Georgia, serif;
+  --f-ui: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --f-data: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --step--1: 0.875rem; --step-0: 1rem; --step-1: 1.1875rem; --step-2: 1.5rem; --step-3: 2.25rem;
+  --panel-w: 400px;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0; background: var(--sea); color: var(--ink);
+  font: 400 var(--step-0)/1.45 var(--f-ui);
+  display: grid; grid-template-rows: auto 1fr auto; grid-template-columns: minmax(0, 1fr); overflow: hidden;
+}
+a { color: var(--star); text-underline-offset: 2px; }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--star); outline-offset: 2px; }
+.mono { font-family: var(--f-data); font-variant-numeric: tabular-nums; }
+
+/* ---------- header ---------- */
+header.bar {
+  display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  padding: 10px 16px; border-bottom: 1px solid var(--rule); background: var(--sea);
+  position: relative; z-index: 5;
+}
+.brand { display: flex; flex-direction: column; line-height: 1.1; min-width: 0; }
+.brand b { font: 700 var(--step-2)/1 var(--f-display); letter-spacing: 0.01em; }
+.brand b i { font-style: italic; font-weight: 500; color: var(--star); }
+.brand span { font-size: var(--step--1); color: var(--ink-3); letter-spacing: 0.02em; }
+nav.tabs { display: flex; gap: 2px; background: var(--sea-1); border: 1px solid var(--rule); border-radius: 8px; padding: 3px; overflow-x: auto; max-width: 100%; min-width: 0; }
+nav.tabs button {
+  background: none; border: 0; padding: 5px 12px; border-radius: 6px; color: var(--ink-2); white-space: nowrap;
+  font-weight: 500;
+}
+nav.tabs button[aria-selected="true"] { background: var(--sea-2); color: var(--ink); box-shadow: inset 0 -2px 0 var(--star); }
+.search { position: relative; margin-left: auto; flex: 0 1 300px; min-width: 180px; }
+.search input {
+  width: 100%; background: var(--sea-1); border: 1px solid var(--rule); border-radius: 8px; padding: 6px 10px;
+}
+.search input::placeholder { color: var(--ink-3); }
+.results {
+  position: absolute; right: 0; top: calc(100% + 6px); width: min(440px, 92vw); max-height: 60vh; overflow: auto;
+  background: var(--sea-1); border: 1px solid var(--rule); border-radius: 10px; padding: 6px; z-index: 20;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+}
+.results h4 { margin: 8px 8px 4px; font: 500 var(--step--1)/1 var(--f-ui); color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.08em; }
+.results button { display: block; width: 100%; text-align: left; background: none; border: 0; padding: 6px 8px; border-radius: 6px; }
+.results button:hover, .results button:focus-visible { background: var(--sea-2); }
+.results small { color: var(--ink-3); }
+.tour-btn { background: var(--star); color: var(--star-ink); border: 0; border-radius: 999px; padding: 6px 14px; font-weight: 700; }
+
+/* ---------- stage ---------- */
+main { position: relative; display: grid; grid-template-columns: 1fr var(--panel-w); min-height: 0; }
+main.no-panel { grid-template-columns: 1fr 0; }
+.stage { position: relative; min-width: 0; min-height: 0; overflow: hidden; }
+.view { position: absolute; inset: 0; }
+.view[hidden] { display: none !important; }
+.page { overflow-y: auto; padding-block: 28px 48px; padding-inline: max(16px, 4vw); }
+.loading { position: absolute; inset: 0; display: grid; place-items: center; color: var(--ink-3); font-family: var(--f-display); font-size: var(--step-1); font-style: italic; }
+
+.overlay {
+  position: absolute; z-index: 3; background: color-mix(in oklab, var(--sea-1) 92%, transparent);
+  border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px; backdrop-filter: blur(6px);
+}
+.ctl { top: 14px; left: 14px; width: 292px; max-height: calc(100% - 28px); overflow: auto; }
+.ctl h3, .panel h3 { margin: 0 0 8px; font: 600 0.8125rem/1.2 var(--f-ui); color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.08em; }
+.ctl .row { display: flex; align-items: center; gap: 8px; margin: 5px 0; color: var(--ink-2); }
+.ctl label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.ctl input[type=checkbox] { accent-color: var(--star); }
+.swatch { width: 18px; height: 4px; border-radius: 2px; flex: none; }
+.dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.ring { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--s5); flex: none; }
+.diamond { width: 9px; height: 9px; background: var(--star); transform: rotate(45deg); flex: none; margin-inline: 1px; }
+.seg { display: inline-flex; background: var(--sea); border: 1px solid var(--rule); border-radius: 7px; padding: 2px; }
+.seg button { background: none; border: 0; padding: 3px 10px; border-radius: 5px; color: var(--ink-2); }
+.seg button[aria-pressed="true"] { background: var(--sea-2); color: var(--ink); }
+.note { font-size: var(--step--1); color: var(--ink-3); margin: 8px 0 0; }
+.legend-list { display: grid; gap: 2px; margin-top: 6px; }
+.legend-list button {
+  display: grid; grid-template-columns: 10px 1fr auto; gap: 8px; align-items: center; text-align: left;
+  background: none; border: 0; border-radius: 6px; padding: 3px 4px; color: var(--ink-2); font-size: var(--step--1);
+}
+.legend-list button:hover, .legend-list button[aria-pressed="true"] { background: var(--sea-2); color: var(--ink); }
+.legend-list button span:nth-child(2) { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.chip {
+  border: 1px solid var(--rule); background: none; border-radius: 999px; padding: 1px 9px; font-size: var(--step--1); color: var(--ink-2);
+}
+.chip[aria-pressed="true"] { border-color: var(--star); color: var(--ink); background: color-mix(in oklab, var(--star) 14%, transparent); }
+.caption { left: 14px; bottom: 14px; max-width: 520px; font-size: var(--step--1); color: var(--ink-2); }
+
+/* ---------- detail panel ---------- */
+.panel { border-left: 1px solid var(--rule); background: var(--sea-1); overflow-y: auto; min-width: 0; padding: 18px 18px 40px; position: relative; }
+main.no-panel .panel { display: none; }
+.panel .close { position: absolute; top: 10px; right: 10px; background: none; border: 1px solid var(--rule); border-radius: 6px; color: var(--ink-3); width: 28px; height: 28px; }
+.panel .kind { font-size: var(--step--1); color: var(--star); text-transform: uppercase; letter-spacing: 0.08em; }
+.panel h2 { font: 500 var(--step-2)/1.15 var(--f-display); margin: 4px 30px 6px 0; text-wrap: balance; }
+.panel .meta { color: var(--ink-2); margin: 0 0 12px; }
+.panel section { margin-top: 18px; }
+.facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 14px; margin: 12px 0; }
+.facts div { border-top: 1px solid var(--rule); padding-top: 6px; }
+.facts b { display: block; font: 500 var(--step-1)/1.1 var(--f-ui); }
+.facts span { font-size: var(--step--1); color: var(--ink-3); }
+.list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.list button, .list a.item {
+  display: block; width: 100%; text-align: left; background: none; border: 0; border-radius: 6px; padding: 5px 6px; color: var(--ink);
+  text-decoration: none;
+}
+.list button:hover, .list button:focus-visible { background: var(--sea-2); }
+.list small { color: var(--ink-3); display: block; font-size: var(--step--1); }
+.abstract { color: var(--ink-2); font-size: 0.9375rem; line-height: 1.6; }
+.btnrow { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.btn { background: var(--sea-2); border: 1px solid var(--rule); border-radius: 7px; padding: 5px 10px; color: var(--ink); text-decoration: none; font-size: var(--step--1); }
+.btn.on { background: var(--star); color: var(--star-ink); border-color: var(--star); font-weight: 700; }
+.empty-panel h2 { font-style: italic; }
+.empty-panel p { color: var(--ink-2); }
+
+/* ---------- tide timeline ---------- */
+footer.tide {
+  display: grid; grid-template-columns: auto auto 1fr; align-items: center; gap: 14px;
+  border-top: 1px solid var(--rule); padding: 8px 16px 10px; background: var(--sea);
+}
+footer.tide[hidden] { display: none; }
+.play { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--star); background: none; color: var(--star); font-size: 15px; }
+.yearread { display: flex; flex-direction: column; line-height: 1.05; min-width: 112px; }
+.yearread b { font: 500 var(--step-2)/1 var(--f-data); }
+.yearread span { font-size: var(--step--1); color: var(--ink-3); }
+#tideChart { width: 100%; height: 64px; display: block; cursor: ew-resize; touch-action: none; }
+
+/* ---------- pages (thinkers, coverage, about) ---------- */
+.page h1 { font: 500 var(--step-3)/1.1 var(--f-display); margin: 0 0 8px; text-wrap: balance; max-width: 26ch; }
+.page h2 { font: 500 var(--step-2)/1.2 var(--f-display); margin: 36px 0 8px; text-wrap: balance; }
+.page p.lead { font-size: var(--step-1); color: var(--ink-2); max-width: 68ch; margin: 0 0 18px; }
+.page p { max-width: 68ch; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 18px 0; }
+.tile { border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px; background: var(--sea-1); }
+.tile b { display: block; font: 500 var(--step-3)/1 var(--f-ui); }
+.tile span { color: var(--ink-2); font-size: var(--step--1); }
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 14px 0; }
+.toolbar input, .toolbar select { background: var(--sea-1); border: 1px solid var(--rule); border-radius: 8px; padding: 6px 10px; }
+.tablewrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 10px; }
+table { border-collapse: collapse; width: 100%; font-size: var(--step--1); }
+th, td { padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+th { color: var(--ink-3); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; background: var(--sea-1); position: sticky; top: 0; }
+th button { background: none; border: 0; padding: 0; color: inherit; text-transform: inherit; letter-spacing: inherit; font-weight: inherit; }
+th button[aria-sort] { color: var(--ink); }
+td small, .shortlist small, .results small { font-size: 0.8125rem; }
+td.num { text-align: right; font-family: var(--f-data); font-variant-numeric: tabular-nums; white-space: nowrap; }
+tbody tr:hover { background: var(--sea-1); }
+td .name { background: none; border: 0; padding: 0; color: var(--ink); font-weight: 500; text-align: left; }
+td .name:hover { color: var(--star); }
+.pct { display: grid; grid-template-columns: 54px auto; align-items: center; gap: 6px; }
+.pct i { display: block; height: 6px; border-radius: 3px; background: var(--rule); position: relative; overflow: hidden; }
+.pct i::after { content: ""; position: absolute; inset: 0 auto 0 0; width: var(--w); background: var(--s1); border-radius: 3px; }
+.pct.bt i::after { background: var(--s3); }
+.sl { display: inline-flex; gap: 4px; }
+.sl button { border: 1px solid var(--rule); background: none; border-radius: 6px; padding: 1px 7px; color: var(--ink-3); font-size: 12px; }
+.sl button[aria-pressed="true"] { background: var(--star); border-color: var(--star); color: var(--star-ink); font-weight: 700; }
+.lens { display: flex; gap: 8px; flex-wrap: wrap; }
+.lens button { text-align: left; border: 1px solid var(--rule); background: var(--sea-1); border-radius: 10px; padding: 9px 12px; max-width: 290px; display: flex; flex-direction: column; justify-content: flex-start; gap: 2px; }
+.lens button b { display: block; }
+.lens button span { color: var(--ink-3); font-size: var(--step--1); }
+.lens button[aria-pressed="true"] { border-color: var(--star); box-shadow: inset 0 0 0 1px var(--star); }
+.shortlist { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin: 14px 0; }
+.shortlist > div { border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px; background: var(--sea-1); min-width: 0; }
+.shortlist h3 { margin: 0 0 6px; font: 500 var(--step-1)/1.2 var(--f-display); }
+.shortlist ol { margin: 6px 0 0; padding-left: 20px; color: var(--ink-2); }
+.pill { display: inline-block; border-radius: 999px; padding: 0 8px; font-size: 12px; border: 1px solid var(--rule); white-space: nowrap; }
+.pill.ok { border-color: color-mix(in oklab, var(--s3) 70%, transparent); color: #7fd6b3; }
+.pill.miss { border-color: color-mix(in oklab, var(--s2) 70%, transparent); color: #f0a07e; }
+.bars { display: grid; grid-template-columns: minmax(110px, 180px) 1fr; gap: 6px 10px; align-items: center; max-width: 640px; font-size: var(--step--1); }
+.bars span { color: var(--ink-2); }
+.bars i { display: block; height: 12px; border-radius: 0 4px 4px 0; background: var(--s1); min-width: 2px; }
+.bars em { font-style: normal; font-family: var(--f-data); color: var(--ink-2); margin-left: 6px; }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; }
+.cols > div { min-width: 0; }
+pre.schema { background: var(--sea-1); border: 1px solid var(--rule); border-radius: 10px; padding: 12px 14px; overflow-x: auto; font: 12.5px/1.5 var(--f-data); color: var(--ink-2); }
+.steps { counter-reset: s; list-style: none; padding: 0; display: grid; gap: 12px; max-width: 760px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr; gap: 10px; }
+.steps li::before { content: counter(s); font: 500 var(--step-1)/1 var(--f-data); color: var(--star); border: 1px solid var(--rule); border-radius: 50%; width: 30px; height: 30px; display: grid; place-items: center; }
+.steps b { display: block; }
+.steps span { color: var(--ink-2); }
+
+/* ---------- tour ---------- */
+.tour { right: calc(var(--panel-w) + 14px); bottom: 98px; width: min(360px, calc(100% - 28px)); z-index: 30; position: fixed; }
+main.no-panel ~ .tour { right: 14px; }
+.tour .k { color: var(--star); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.08em; }
+.tour h3 { font: 500 var(--step-1)/1.2 var(--f-display); margin: 4px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.tour p { margin: 0; color: var(--ink-2); font-size: var(--step--1); }
+
+.toast { position: fixed; left: 50%; bottom: 96px; transform: translateX(-50%); background: var(--star); color: var(--star-ink); padding: 8px 14px; border-radius: 8px; font-weight: 500; z-index: 40; }
+
+@media (max-width: 900px) {
+  :root { --panel-w: 100%; }
+  body { overflow: auto; }
+  main, main.no-panel { grid-template-columns: 1fr; grid-template-rows: minmax(420px, 62vh) auto; }
+  .panel { border-left: 0; border-top: 1px solid var(--rule); max-height: none; }
+  .ctl { width: auto; right: 14px; max-height: 44%; }
+  .tour { right: 14px; left: 14px; width: auto; bottom: 14px; }
+  .search { order: 3; flex-basis: 100%; margin-left: 0; min-width: 0; }
+  .brand { flex: 1 1 100%; }
+  .brand span { overflow-wrap: anywhere; }
+  footer.tide { grid-template-columns: auto 1fr; }
+  footer.tide .yearread { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<header class="bar">
+  <div class="brand"><b>V<i>ā</i> Atlas</b><span>Pacific Research Methodologies</span></div>
+  <nav class="tabs" role="tablist" aria-label="Views">
+    <button role="tab" data-view="map" aria-selected="true">Vā map</button>
+    <button role="tab" data-view="gen" aria-selected="false">Genealogy</button>
+    <button role="tab" data-view="people" aria-selected="false">Key thinkers</button>
+    <button role="tab" data-view="gaps" aria-selected="false">What's missing</button>
+    <button role="tab" data-view="about" aria-selected="false">About</button>
+  </nav>
+  <div class="search">
+    <input id="q" type="search" placeholder="Find a scholar, work or institution" autocomplete="off" aria-label="Search">
+    <div class="results" id="results" hidden></div>
+  </div>
+  <button class="tour-btn" id="tourBtn">Guided tour</button>
+</header>
+
+<main id="main">
+  <div class="stage">
+    <div class="loading" id="loading">Gathering the sea of islands…</div>
+
+    <!-- Vā map -->
+    <div class="view" id="v-map">
+      <div id="mapCanvas" style="position:absolute;inset:0"></div>
+      <div class="overlay ctl" id="mapCtl">
+        <h3>Vā relations</h3>
+        <div class="row"><label><input type="checkbox" id="lyInst" checked> <span class="dot" style="background:var(--s3)"></span> Institutions <small class="mono" style="color:var(--ink-3)">size = works</small></label></div>
+        <div class="row"><label><input type="checkbox" id="lyCollab" checked> <span class="swatch" style="background:var(--s1)"></span> Co-authorship ties</label></div>
+        <div class="row"><label><input type="checkbox" id="lyFlow"> <span class="swatch" style="background:linear-gradient(90deg, color-mix(in oklab,var(--s2) 25%,transparent), var(--s2))"></span> Citation flows</label></div>
+        <div class="row"><label><input type="checkbox" id="lyColoc" checked> <span class="ring"></span> Co-locations of key scholars</label></div>
+        <div class="row"><label><input type="checkbox" id="lyEvents" checked> <span class="diamond"></span> Events</label></div>
+        <div class="row" style="margin-top:10px"><span>Ties</span>
+          <div class="seg" role="group" aria-label="Which ties">
+            <button id="tiePac" aria-pressed="true">Pacific-linked</button><button id="tieAll" aria-pressed="false">All</button>
+          </div>
+        </div>
+        <div class="row"><span>View</span>
+          <div class="seg" role="group" aria-label="Map tilt">
+            <button id="tilt3d" aria-pressed="true">Tilted</button><button id="tilt2d" aria-pressed="false">Flat</button>
+          </div>
+        </div>
+        <p class="note" id="mapNote"></p>
+      </div>
+    </div>
+
+    <!-- Genealogy -->
+    <div class="view" id="v-gen" hidden>
+      <div id="genCanvas" style="position:absolute;inset:0"></div>
+      <div class="overlay ctl" id="genCtl">
+        <h3>Citation genealogy</h3>
+        <div class="row"><span>Layout</span>
+          <div class="seg" role="group" aria-label="Layout">
+            <button id="layForce" aria-pressed="false">Network</button><button id="layTime" aria-pressed="true">Timeline</button>
+          </div>
+        </div>
+        <div class="row"><label><input type="checkbox" id="showMain" checked> <span class="swatch" style="background:var(--star)"></span> Main path through the field</label></div>
+        <div class="row"><label><input type="checkbox" id="showEdges" checked> <span class="swatch" style="background:var(--ink-3)"></span> Citation links</label></div>
+        <h3 style="margin-top:12px">Schools of thought</h3>
+        <div class="legend-list" id="commLegend"></div>
+        <h3 style="margin-top:12px">Concept</h3>
+        <div class="chips" id="conceptChips"></div>
+        <p class="note">Dot size: citations from inside this field. Click a dot to trace what it cites and what cites it.</p>
+      </div>
+    </div>
+
+    <!-- Key thinkers -->
+    <div class="view page" id="v-people" hidden></div>
+    <!-- What's missing -->
+    <div class="view page" id="v-gaps" hidden></div>
+    <!-- About -->
+    <div class="view page" id="v-about" hidden></div>
+  </div>
+  <aside class="panel" id="panel" aria-live="polite"></aside>
+</main>
+
+<footer class="tide" id="tide">
+  <button class="play" id="play" aria-label="Play the field's history">▶</button>
+  <div class="yearread"><b id="yearB">2026</b><span id="yearS">all 4,123 works</span></div>
+  <svg id="tideChart" role="slider" tabindex="0" aria-label="Show the field up to year" aria-valuemin="1960" aria-valuemax="2026"></svg>
+</footer>
+
+<div class="overlay tour" id="tour" hidden></div>
+
+<script src="https://unpkg.com/deck.gl@9.3.11/dist.min.js"></script>
+<script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script>
+(async function () {
+"use strict";
+const $ = id => document.getElementById(id);
+const fmt = n => (n ?? 0).toLocaleString("en-NZ");
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+const fold = s => String(s ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[ʻ‘’'`ʹ]/g, "").toLowerCase();
+const css = getComputedStyle(document.documentElement);
+const tok = n => css.getPropertyValue(n).trim();
+const rgb = (hex, a = 255) => { const h = hex.replace("#", ""); return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16), a]; };
+const C = {
+  sea: rgb(tok("--sea")), land: rgb(tok("--land")), coast: rgb(tok("--coast")), rule: rgb(tok("--rule")),
+  ink: rgb(tok("--ink")), ink2: rgb(tok("--ink-2")), ink3: rgb(tok("--ink-3")), star: rgb(tok("--star")),
+  other: rgb(tok("--other")), slots: [1, 2, 3, 4, 5, 6, 7, 8].map(k => rgb(tok("--s" + k))),
+};
+const withA = (c, a) => [c[0], c[1], c[2], a];
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* storage unavailable */ } },
+};
+function toast(msg) {
+  const t = document.createElement("div"); t.className = "toast"; t.textContent = msg; document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2200);
+}
+
+// ---------------- data ----------------
+let D, landTopo;
+try {
+  [D, landTopo] = await Promise.all([
+    fetch("data/corpus.json").then(r => { if (!r.ok) throw new Error("corpus " + r.status); return r.json(); }),
+    fetch("data/land-50m.json").then(r => { if (!r.ok) throw new Error("land " + r.status); return r.json(); }),
+  ]);
+} catch (e) {
+  $("loading").textContent = "Could not load the data files (" + e.message + "). Reload to try again.";
+  return;
+}
+const W = D.works, A = D.authors, I = D.insts, LINKS = D.links;
+const NW = W.length;
+const Y0 = 1960, Y1 = Math.max(...W.map(w => w.y));
+const worksOfAuthor = A.map(() => []), worksOfInst = I.map(() => []);
+W.forEach(w => { w.a.forEach(a => worksOfAuthor[a].push(w.i)); w.n.forEach(n => worksOfInst[n].push(w.i)); });
+const refsOf = W.map(() => []), citedBy = W.map(() => []);
+LINKS.forEach(([i, j]) => { refsOf[i].push(j); citedBy[j].push(i); });
+const byLc = (x, y) => W[y].lc - W[x].lc || W[y].c - W[x].c;
+worksOfAuthor.forEach(l => l.sort(byLc)); worksOfInst.forEach(l => l.sort(byLc));
+const authorName = a => A[a]?.name || "Unknown";
+const surname = a => { const p = authorName(a).split(/\s+/); return p[p.length - 1]; };
+const workShort = i => { const w = W[i]; return (w.a.length ? surname(w.a[0]) + (w.na > 2 ? " et al." : w.na === 2 ? " & " + surname(w.a[1]) : "") : (w.v || "Anon.")) + " " + w.y; };
+const commOf = k => D.communities.find(c => c.k === k);
+const commColor = k => (k >= 0 && k < 8) ? C.slots[k] : C.other;
+const commCss = k => (k >= 0 && k < 8) ? `var(--s${k + 1})` : "var(--other)";
+const WHY = [[1, "a seed text of the field"], [2, "cites a Pacific research methodology text"], [4, "cites a foundational text and is about the Pacific"], [8, "names a Pacific research methodology or concept"]];
+const PAC_REG = new Set(["Pacific Islands", "Aotearoa NZ", "Hawaiʻi"]);
+const yearCounts = new Map(); W.forEach(w => yearCounts.set(w.y, (yearCounts.get(w.y) || 0) + 1));
+
+// ---------------- state ----------------
+const S = {
+  view: "map", year: Y1, playing: false, sel: null, layout: "time", concept: null, comm: null,
+  ly: { inst: true, collab: true, flow: false, coloc: true, events: true }, pacOnly: true, tilt: true,
+  short: store.get("va-atlas-shortlist-v1", { ind: [], grp: [] }),
+};
+const inShort = (list, id) => S.short[list].includes(id);
+
+// ---------------- map ----------------
+const wrap = lng => lng < -30 ? lng + 360 : lng;
+const ipos = n => [wrap(I[n].lng), I[n].lat];
+function arcEnds(a, b) {
+  const pa = ipos(a), pb = ipos(b);
+  if (pb[0] - pa[0] > 180) pb[0] -= 360; else if (pa[0] - pb[0] > 180) pb[0] += 360;
+  return [pa, pb];
+}
+const instCum = I.map(it => { const m = []; let s = 0; for (const [y, c] of it.yr) { s += c; m.push([y, s]); } return m; });
+function instWorksTo(n, Y) { let s = 0; for (const [y, c] of instCum[n]) { if (y <= Y) s = c; else break; } return s; }
+const landGeo = topojson.feature(landTopo, landTopo.objects.countries);
+const graticule = [
+  { name: "Equator", path: [[-30, 0], [330, 0]] },
+  { name: "Tropic of Capricorn", path: [[-30, -23.44], [330, -23.44]] },
+  { name: "Tropic of Cancer", path: [[-30, 23.44], [330, 23.44]] },
+  { name: "180°", path: [[180, -70], [180, 70]] },
+];
+const PLACES = [
+  ["Aotearoa New Zealand", -41.5, 166.5], ["Australia", -25, 134], ["Papua New Guinea", -6.5, 144], ["Solomon Islands", -8.6, 160.5],
+  ["Vanuatu", -15.6, 167.9], ["New Caledonia", -21.3, 165.4], ["Fiji", -17.4, 178.6], ["Tonga", -20.3, -174.8], ["Sāmoa", -13.6, -172.4],
+  ["American Sāmoa", -14.6, -170.2], ["Niue", -19.05, -169.9], ["Cook Islands", -20.0, -159.0], ["Tahiti · French Polynesia", -17.6, -149.4],
+  ["Tokelau", -9.2, -171.8], ["Tuvalu", -8.5, 179.2], ["Kiribati", 1.4, 173.0], ["Nauru", -0.5, 166.9], ["Marshall Islands", 7.1, 171.2],
+  ["Federated States of Micronesia", 6.9, 158.2], ["Palau", 7.5, 134.6], ["Guam", 13.45, 144.8], ["Hawaiʻi", 20.6, -157.2], ["Rapa Nui", -27.1, -109.4],
+  ["Wallis & Futuna", -13.3, -176.2],
+];
+const MINOR = new Set(["Tokelau", "Tuvalu", "Nauru", "Niue", "Wallis & Futuna"]);
+
+const pacInst = n => PAC_REG.has(I[n].region);
+// Screen-space label placement: highest priority first; a label that would overlap one already
+// placed is dropped. Re-run whenever the view moves (see queueRelabel).
+function declutter(vp, cands) {
+  if (!vp) return cands;
+  cands.sort((a, b) => b.pri - a.pri);
+  const boxes = [], keep = [];
+  for (const c of cands) {
+    const [x, y] = vp.project(c.pos);
+    const w = c.text.length * c.size * (c.wf || 0.55) + 8, h = c.size * 1.3;
+    const x0 = x + c.off[0] - (c.anchor === "middle" ? w / 2 : 0);
+    const y0 = y + c.off[1] - (c.base === "bottom" ? h : h / 2);
+    if (!isFinite(x0) || x0 > vp.width || y0 > vp.height || x0 + w < 0 || y0 + h < 0) continue;
+    if (boxes.some(b => x0 < b[2] && x0 + w > b[0] && y0 < b[3] && y0 + h > b[1])) continue;
+    boxes.push([x0, y0, x0 + w, y0 + h]); keep.push(c);
+  }
+  return keep;
+}
+// Labels ignore depth so arcs rising off the tilted map never cut through them.
+const UI_FONT = '"Source Sans 3", "Segoe UI", sans-serif';
+const labelFont = { fontFamily: UI_FONT, characterSet: "auto", fontWeight: 600, fontSettings: { sdf: true, fontSize: 96, buffer: 8, radius: 16 }, outlineWidth: 5, outlineColor: withA(C.sea, 245),
+  parameters: { depthCompare: "always", depthWriteEnabled: false } };
+let relabelQueued = false;
+function queueRelabel() {
+  if (relabelQueued) return; relabelQueued = true;
+  requestAnimationFrame(() => {
+    relabelQueued = false;
+    if (S.view === "map" && mapDeck) mapDeck.setProps({ layers: [...mapBase, ...mapLabels()] });
+    if (S.view === "gen" && genDeck) genDeck.setProps({ layers: [...genBase, genLabels()] });
+  });
+}
+let mapDeck = null, mapBase = [], mapVS = { longitude: 182, latitude: -12, zoom: 2.35, pitch: 38, bearing: 0 };
+function mapViewport() { const el = $("mapCanvas"); return el.clientWidth ? new deck.WebMercatorViewport({ ...mapVS, width: el.clientWidth, height: el.clientHeight }) : null; }
+function mapLabels() {
+  const Y = S.year, c = [];
+  if (S.ly.events) D.events.filter(e => e.year <= Y && (Y - e.year <= 4 || isSel("event", e))).forEach(e => c.push({ kind: "ev", pos: [wrap(e.lng), e.lat],
+    text: e.year + "  " + e.title, size: 14.5, off: [11, 0], anchor: "start", pri: 3000 + e.year + (isSel("event", e) ? 1000 : 0) }));
+  if (S.ly.inst) for (let n = 0; n < I.length; n++) {
+    const w = instWorksTo(n, Y);
+    if (w >= 8 || (w > 0 && hiInstOne(n))) c.push({ kind: "inst", n, pos: ipos(n), text: shortInst(I[n].name), size: 14, off: [0, -(7 + Math.sqrt(w) * 2.2)], anchor: "middle", base: "bottom", pri: (hiInstOne(n) ? 2500 : 0) + w });
+  }
+  PLACES.forEach(p => c.push({ kind: "place", pos: [wrap(p[2]), p[1]], text: p[0].toUpperCase(), size: 12, wf: 0.68, off: [0, 12], anchor: "middle", pri: -1 }));
+  // The viewport normalises its centre to [-180, 180]; bring each label into the same world copy
+  // before projecting (the repeating MapView draws it there just the same).
+  const vp = mapViewport();
+  if (vp) c.forEach(k => { let lng = k.pos[0]; while (lng - vp.longitude > 180) lng -= 360; while (lng - vp.longitude < -180) lng += 360; k.pos = [lng, k.pos[1]]; });
+  const keep = declutter(vp, c);
+  return [
+    new deck.TextLayer({ id: "places", data: keep.filter(k => k.kind === "place"), getPosition: k => k.pos, getText: k => k.text, getSize: 12, getColor: withA(C.ink3, 230), getPixelOffset: [0, 12], ...labelFont }),
+    new deck.TextLayer({ id: "inst-t", data: keep.filter(k => k.kind === "inst"), getPosition: k => k.pos, getText: k => k.text, getSize: 14,
+      getColor: k => hiInstOne(k.n) ? C.star : withA(C.ink, 230), getPixelOffset: k => k.off, getAlignmentBaseline: "bottom", ...labelFont }),
+    new deck.TextLayer({ id: "events-t", data: keep.filter(k => k.kind === "ev"), getPosition: k => k.pos, getText: k => k.text, getSize: 14.5, getColor: C.star,
+      getTextAnchor: "start", getPixelOffset: [11, 0], ...labelFont }),
+  ];
+}
+function mapLayers() {
+  const Y = S.year, sel = S.sel;
+  const L = [];
+  L.push(new deck.GeoJsonLayer({ id: "land", data: landGeo, filled: true, stroked: true, getFillColor: C.land, getLineColor: C.coast, lineWidthMinPixels: 0.6 }));
+  L.push(new deck.PathLayer({ id: "grat", data: graticule, getPath: d => d.path, getColor: withA(C.coast, 120), widthUnits: "pixels", getWidth: 1 }));
+  L.push(new deck.TextLayer({ id: "grat-t", data: graticule, getPosition: d => d.name === "180°" ? [180.6, 36] : [212, d.path[0][1] + 0.9], getText: d => d.name,
+    getSize: 12, getColor: withA(C.ink3, 200), getTextAnchor: "start", getAlignmentBaseline: "bottom", fontFamily: '"IBM Plex Mono", monospace', characterSet: "auto" }));
+  L.push(new deck.TextLayer({ id: "ocean", data: [{ t: "Te Moana-nui-a-Kiwa", p: [196, 2.5] }, { t: "the Pacific Ocean · a sea of islands", p: [196, -1.4] }],
+    getPosition: d => d.p, getText: d => d.t, getSize: (d) => d.t.startsWith("Te") ? 28 : 15, getColor: withA(C.ink2, 150),
+    fontFamily: '"Alegreya", serif', fontSettings: { sdf: false }, characterSet: "auto", getAngle: 0, fontWeight: 500 }));
+  L.push(new deck.ScatterplotLayer({ id: "minor", data: PLACES.filter(p => MINOR.has(p[0])), getPosition: p => [wrap(p[2]), p[1]], radiusUnits: "pixels", getRadius: 2.2, getFillColor: withA(C.coast, 255) }));
+
+  // Ties between institutions up to the selected year.
+  const keep = (a, b) => !S.pacOnly || pacInst(a) || pacInst(b);
+  if (S.ly.collab) {
+    const agg = new Map();
+    for (const [a, b, y, c] of D.collab) if (y <= Y && keep(a, b)) { const k = a + "-" + b; agg.set(k, (agg.get(k) || 0) + c); }
+    const data = [...agg].map(([k, c]) => { const [a, b] = k.split("-").map(Number); const [s, t] = arcEnds(a, b); return { a, b, c, s, t }; });
+    const hi = d => hiInst(d.a, d.b), base = withA(C.slots[0], S.sel ? 28 : 72);
+    L.push(new deck.ArcLayer({ id: "collab", data, getSourcePosition: d => d.s, getTargetPosition: d => d.t, greatCircle: false,
+      getSourceColor: d => hi(d) ? withA(C.star, 235) : base, getTargetColor: d => hi(d) ? withA(C.star, 235) : base,
+      getWidth: d => Math.min(5, 0.6 + Math.sqrt(d.c) * 0.6) * (hi(d) ? 1.6 : 1), widthUnits: "pixels", getHeight: 0.28, pickable: true,
+      updateTriggers: { getSourceColor: selKey(), getTargetColor: selKey(), getWidth: selKey() } }));
+  }
+  if (S.ly.flow) {
+    const agg = new Map();
+    for (const [a, b, y, c] of D.flow) if (y <= Y && keep(a, b)) { const k = a + "-" + b; agg.set(k, (agg.get(k) || 0) + c); }
+    const data = [...agg].filter(([, c]) => c >= 0.5).map(([k, c]) => { const [a, b] = k.split("-").map(Number); const [s, t] = arcEnds(b, a); return { a, b, c, s, t }; });
+    // source = cited institution (where the idea came from), target = citing (where it was taken up)
+    L.push(new deck.ArcLayer({ id: "flow", data, getSourcePosition: d => d.s, getTargetPosition: d => d.t, greatCircle: false,
+      getSourceColor: withA(C.slots[1], 20), getTargetColor: d => hiInst(d.a, d.b) ? C.star : withA(C.slots[1], S.sel ? 60 : 170),
+      getWidth: d => Math.min(5, 0.5 + Math.sqrt(d.c) * 0.6), widthUnits: "pixels", getHeight: 0.5, pickable: true,
+      updateTriggers: { getTargetColor: selKey() } }));
+  }
+  // Co-location hotspots active in the five years up to Y.
+  if (S.ly.coloc) {
+    const data = D.colocations.filter(c => c.y0 <= Y && c.y1 >= Y - 4 && c.y0 <= Y);
+    L.push(new deck.ScatterplotLayer({ id: "coloc", data, getPosition: c => ipos(c.inst), radiusUnits: "pixels",
+      getRadius: c => 9 + Math.sqrt(instWorksTo(c.inst, Y)) * 2.2 + c.key.length * 0.8, stroked: true, filled: false,
+      getLineColor: c => isSel("coloc", c) ? C.star : withA(C.slots[4], 210), lineWidthUnits: "pixels", getLineWidth: 2, pickable: true,
+      updateTriggers: { getLineColor: selKey(), getRadius: Y } }));
+  }
+  if (S.ly.inst) {
+    const data = [];
+    for (let n = 0; n < I.length; n++) { const w = instWorksTo(n, Y); if (w > 0) data.push({ n, w }); }
+    data.sort((x, y) => y.w - x.w);
+    L.push(new deck.ScatterplotLayer({ id: "inst", data, getPosition: d => ipos(d.n), radiusUnits: "pixels",
+      getRadius: d => 2.5 + Math.sqrt(d.w) * 2.2, stroked: true, lineWidthUnits: "pixels", getLineWidth: 1,
+      getFillColor: d => hiInstOne(d.n) ? C.star : (S.sel ? withA(C.slots[2], 90) : withA(C.slots[2], 210)),
+      getLineColor: withA(C.sea, 230), pickable: true, updateTriggers: { getFillColor: selKey(), getRadius: Y } }));
+  }
+  // Selected scholar: their voyage through institutions in time order.
+  if (sel?.type === "author") {
+    const stops = A[sel.i].insts.filter(t => t[1] <= Y);
+    if (stops.length > 1) {
+      const path = [];
+      stops.forEach((t, k) => { const p = ipos(t[0]); if (k && Math.abs(p[0] - path[k - 1][0]) > 180) p[0] += p[0] < path[k - 1][0] ? 360 : -360; path.push(p); });
+      L.push(new deck.PathLayer({ id: "voyage", data: [{ path }], getPath: d => d.path, getColor: C.star, widthUnits: "pixels", getWidth: 2.5, jointRounded: true, capRounded: true }));
+    }
+  }
+  if (S.ly.events) {
+    const data = D.events.filter(e => e.year <= Y);
+    L.push(new deck.ScatterplotLayer({ id: "events", data, getPosition: e => [wrap(e.lng), e.lat], radiusUnits: "pixels", getRadius: e => isSel("event", e) ? 8 : 6,
+      getFillColor: e => (Y - e.year <= 4) ? C.star : withA(C.star, 140), stroked: true, getLineColor: C.sea, lineWidthUnits: "pixels", getLineWidth: 2,
+      pickable: true, updateTriggers: { getFillColor: Y, getRadius: selKey() } }));
+  }
+  return L;
+}
+const shortInst = s => s.replace(/^University of /, "U. ").replace(/ University$/, " U.").replace("Auckland U. of Technology", "AUT").replace("Auckland University of Technology", "AUT");
+function selKey() { return S.sel ? S.sel.type + ":" + (S.sel.i ?? S.sel.key) : ""; }
+function isSel(type, obj) {
+  if (!S.sel || S.sel.type !== type) return false;
+  if (type === "coloc") return S.sel.key === obj.inst + ":" + obj.y0;
+  if (type === "event") return S.sel.key === obj.title;
+  return false;
+}
+let hiInstSet = new Set();
+function computeHighlights() {
+  hiInstSet = new Set(); hiWorkSet = null;
+  const s = S.sel; if (!s) return;
+  if (s.type === "inst") { hiInstSet.add(s.i); hiWorkSet = new Set(worksOfInst[s.i]); }
+  if (s.type === "author") { A[s.i].insts.forEach(t => hiInstSet.add(t[0])); hiWorkSet = new Set(worksOfAuthor[s.i]); }
+  if (s.type === "work") { W[s.i].n.forEach(n => hiInstSet.add(n)); hiWorkSet = new Set([s.i, ...refsOf[s.i], ...citedBy[s.i]]); }
+  if (s.type === "coloc") { const c = D.colocations.find(c => c.inst + ":" + c.y0 === s.key); if (c) { hiInstSet.add(c.inst); hiWorkSet = new Set(c.key.flatMap(a => worksOfAuthor[a])); } }
+  if (s.type === "comm") { hiWorkSet = new Set(W.filter(w => w.com === s.i).map(w => w.i)); }
+}
+const hiInstOne = n => hiInstSet.has(n);
+const hiInst = (a, b) => hiInstSet.has(a) || hiInstSet.has(b);
+
+function mapTooltip({ object, layer }) {
+  if (!object) return null;
+  let html = "";
+  if (layer.id === "inst") { const it = I[object.n]; html = `<b>${esc(it.name)}</b><br>${esc([it.city, it.cc].filter(Boolean).join(", "))}<br>${fmt(object.w)} works in the field to ${S.year} · ${fmt(it.au)} scholars`; }
+  else if (layer.id === "collab") html = `<b>${esc(shortInst(I[object.a].name))}</b> ↔ <b>${esc(shortInst(I[object.b].name))}</b><br>${fmt(object.c)} co-authored work${object.c === 1 ? "" : "s"}`;
+  else if (layer.id === "flow") html = `Ideas from <b>${esc(shortInst(I[object.b].name))}</b><br>taken up at <b>${esc(shortInst(I[object.a].name))}</b><br>${object.c.toFixed(1)} citation-weight`;
+  else if (layer.id === "coloc") html = `<b>${esc(I[object.inst].name)}</b>, ${object.y0}–${object.y1}<br>${object.key.length} key scholars co-located: ${esc(object.key.slice(0, 4).map(authorName).join(", "))}${object.key.length > 4 ? "…" : ""}`;
+  else if (layer.id === "events") html = `<b>${esc(object.title)}</b><br>${esc(object.date)} · ${esc(object.place)}`;
+  else return null;
+  return { html, style: tipStyle };
+}
+const tipStyle = { background: "rgba(16,32,43,0.97)", color: "#f0f4f1", border: "1px solid #24414e", borderRadius: "8px", font: "14px/1.45 'Source Sans 3', sans-serif", padding: "8px 11px", maxWidth: "340px" };
+function mapClick({ object, layer }) {
+  if (!object) return;
+  if (layer.id === "inst") select({ type: "inst", i: object.n });
+  else if (layer.id === "collab" || layer.id === "flow") select({ type: "inst", i: object.a });
+  else if (layer.id === "coloc") select({ type: "coloc", key: object.inst + ":" + object.y0 });
+  else if (layer.id === "events") select({ type: "event", key: object.title });
+}
+function renderMap() {
+  if (!mapDeck) return;
+  mapBase = mapLayers();
+  mapDeck.setProps({ layers: [...mapBase, ...mapLabels()] });
+  const Y = S.year;
+  let nInst = 0; for (let n = 0; n < I.length; n++) if (instWorksTo(n, Y) > 0) nInst++;
+  $("mapNote").textContent = `${fmt(nInst)} institutions to ${Y}. ${S.pacOnly ? "Ties shown touch Aotearoa, Hawaiʻi or the Pacific Islands." : "All ties shown."} ${Math.round(100 * D.coverage.no_inst / D.coverage.works)}% of works carry no affiliation, so this map is a floor, not the whole vā.`;
+}
+
+// ---------------- genealogy ----------------
+const SZ = 520;
+const nLanes = D.communities.length + 1;
+const yBreak = 1995, xAt = y => y < yBreak ? -SZ + (y - Y0) / (yBreak - Y0) * 0.26 * 2 * SZ : -SZ + 0.26 * 2 * SZ + (y - yBreak) / (Y1 + 1 - yBreak) * 0.74 * 2 * SZ;
+const yearW = xAt(2001) - xAt(2000);
+const hash = i => { let h = i * 2654435761 >>> 0; h ^= h >>> 15; return (h % 1000) / 1000; };
+const posTime = W.map(w => [xAt(w.y) + (hash(w.i) - 0.5) * yearW * 0.85, w.ly * SZ * 0.92]);
+const posForce = W.map(w => [w.fx * SZ, w.fy * SZ]);
+const pos = i => (S.layout === "time" ? posTime : posForce)[i];
+const laneY = lane => (-1 + 2 * (lane + 0.5) / nLanes) * SZ * 0.92;
+let genDeck = null, hiWorkSet = null;
+const radius = w => 1.6 + Math.min(18, Math.sqrt(w.lc) * 1.05);
+function workColor(w) {
+  const base = commColor(w.com);
+  const dim = (hiWorkSet && !hiWorkSet.has(w.i)) || (S.concept !== null && !w.k.includes(S.concept)) || (S.comm !== null && w.com !== S.comm);
+  if (S.sel?.type === "work" && S.sel.i === w.i) return C.star;
+  if (dim) return withA(base, 28);
+  return withA(base, w.com < 0 ? 120 : 225);
+}
+// One shared extension instance: a new one per render would recompile shaders on every tick.
+const DFE = [new deck.DataFilterExtension({ filterSize: 1 })];
+function genLayers() {
+  const Y = S.year, L = [], lay = S.layout;
+  const filt = { extensions: DFE, filterRange: [0, Y] };
+  if (lay === "time") {
+    const ticks = [1960, 1970, 1980, 1995, 2000, 2005, 2010, 2015, 2020, 2025];
+    L.push(new deck.LineLayer({ id: "grid", data: ticks, getSourcePosition: y => [xAt(y), -SZ * 0.97], getTargetPosition: y => [xAt(y), SZ * 0.97], getColor: withA(C.rule, 200), getWidth: 1 }));
+    L.push(new deck.TextLayer({ id: "ticks", data: ticks, getPosition: y => [xAt(y), SZ * 0.99], getText: y => String(y), getSize: 12.5, getColor: C.ink3,
+      getAlignmentBaseline: "top", fontFamily: '"IBM Plex Mono", monospace', characterSet: "auto" }));
+    const ev = D.events.filter(e => e.year <= Y && e.year >= 1960);
+    L.push(new deck.LineLayer({ id: "ev-l", data: ev, getSourcePosition: e => [xAt(e.year + 0.5), -SZ * 0.97], getTargetPosition: e => [xAt(e.year + 0.5), SZ * 0.95], getColor: withA(C.star, 55), getWidth: 1 }));
+    // Events as diamonds along the top edge; their titles come up on hover.
+    L.push(new deck.ScatterplotLayer({ id: "ev-t", data: ev, getPosition: e => [xAt(e.year + 0.5), -SZ * 0.975], radiusUnits: "pixels", getRadius: 5,
+      getFillColor: e => isSel("event", e) ? C.star : withA(C.star, 200), stroked: true, getLineColor: C.sea, lineWidthUnits: "pixels", getLineWidth: 2,
+      pickable: true, updateTriggers: { getFillColor: selKey() } }));
+  }
+  if ($("showEdges").checked) {
+    L.push(new deck.LineLayer({ id: "edges", data: LINKS, getSourcePosition: l => pos(l[0]), getTargetPosition: l => pos(l[1]),
+      getColor: l => (hiWorkSet && (hiWorkSet.has(l[0]) && hiWorkSet.has(l[1]))) ? withA(C.star, S.sel?.type === "work" ? 170 : 70) : withA(C.ink3, hiWorkSet ? 6 : 16),
+      getWidth: 0.7, widthUnits: "pixels", getFilterValue: l => W[l[0]].y, ...filt,
+      transitions: { getSourcePosition: 900, getTargetPosition: 900 }, updateTriggers: { getSourcePosition: lay, getTargetPosition: lay, getColor: selKey() } }));
+  }
+  if ($("showMain").checked) {
+    const mp = LINKS.filter(l => l[2]);
+    L.push(new deck.LineLayer({ id: "main", data: mp, getSourcePosition: l => pos(l[0]), getTargetPosition: l => pos(l[1]), getColor: withA(C.star, 230), getWidth: 2.5,
+      widthUnits: "pixels", getFilterValue: l => W[l[0]].y, ...filt, transitions: { getSourcePosition: 900, getTargetPosition: 900 },
+      updateTriggers: { getSourcePosition: lay, getTargetPosition: lay } }));
+  }
+  L.push(new deck.ScatterplotLayer({ id: "works", data: W, getPosition: w => pos(w.i), radiusUnits: "pixels", getRadius: w => radius(w),
+    getFillColor: workColor, stroked: true, getLineColor: w => ($("showMain").checked && w.mp) ? C.star : withA(C.sea, 200), lineWidthUnits: "pixels",
+    getLineWidth: w => ($("showMain").checked && w.mp) ? 2 : 0.6, pickable: true, getFilterValue: w => w.y, ...filt,
+    transitions: { getPosition: { duration: 900, easing: t => 1 - Math.pow(1 - t, 3) } },
+    updateTriggers: { getPosition: lay, getFillColor: [selKey(), S.concept, S.comm], getLineColor: $("showMain").checked, getLineWidth: $("showMain").checked } }));
+  if (lay === "time") {
+    const lanes = D.communities.filter(c => c.lane !== null && c.lane !== undefined);
+    L.push(new deck.TextLayer({ id: "lanes", data: [...lanes, { lane: nLanes - 1, anchor: "Other", label: "unconnected, small groups", k: -1 }],
+      getPosition: c => [xAt(Y0) - 6, laneY(c.lane)], getText: c => c.anchor + " · " + c.label.split(", ").slice(0, 2).join(", "), getSize: 13, getTextAnchor: "end",
+      getColor: c => withA(commColor(c.k), 255), fontFamily: UI_FONT, characterSet: "auto", fontWeight: 600 }));
+  } else {
+    L.push(new deck.TextLayer({ id: "ring-t", data: [{ t: "Outer ring: works with no in-field citation links (often no reference list in OpenAlex)" }], getPosition: () => [0, SZ * 1.42],
+      getText: d => d.t, getSize: 13, getColor: C.ink3, fontFamily: UI_FONT, characterSet: "auto" }));
+  }
+  return L;
+}
+function genTooltip({ object, layer }) {
+  if (!object) return null;
+  if (layer.id === "works") {
+    const w = object;
+    return { html: `<b>${esc(w.t.length > 110 ? w.t.slice(0, 108) + "…" : w.t)}</b><br>${esc(workShort(w.i))}${w.v ? " · " + esc(w.v) : ""}<br>${fmt(w.lc)} citations inside the field · ${fmt(w.c)} overall`, style: tipStyle };
+  }
+  if (layer.id === "ev-t") return { html: `<b>${esc(object.title)}</b><br>${esc(object.date)} · ${esc(object.place)}`, style: tipStyle };
+  return null;
+}
+function genClick({ object, layer }) {
+  if (!object) { return; }
+  if (layer.id === "works") select({ type: "work", i: object.i });
+  if (layer.id === "ev-t") select({ type: "event", key: object.title });
+}
+function fitGen() {
+  // World extents: the timeline spans x in [-SZ, SZ] plus lane labels to its left; the network
+  // spans about +/-1.3 SZ including the outer ring of unconnected works.
+  const el = $("genCanvas"); const w = el.clientWidth || 900, h = el.clientHeight || 600;
+  const ctlW = w > 900 ? 290 : 0; // the control card covers the left edge on wide screens
+  if (S.layout === "time") {
+    // Lane labels are ~250px of text left of 1960; reserve that in screen space, not world space.
+    const labelPx = 250, z = Math.log2(Math.min((w - ctlW - labelPx - 50) / (2 * SZ), (h - 40) / (2 * SZ * 1.02)));
+    return { target: [-(ctlW + labelPx) / 2 / Math.pow(2, z), 0, 0], zoom: z, minZoom: -3, maxZoom: 6 };
+  }
+  const z = Math.log2(Math.min((w - ctlW - 40) / (2.75 * SZ), (h - 40) / (3.0 * SZ)));
+  return { target: [-ctlW / 2 / Math.pow(2, z), 0, 0], zoom: z, minZoom: -3, maxZoom: 6 };
+}
+// Selective direct labels: the most-cited works inside the field, the selection and its neighbours.
+let genBase = [], genVS = null, labelHold = 0;
+function genViewport() { const el = $("genCanvas"); return genVS && el.clientWidth ? new deck.OrthographicViewport({ ...genVS, width: el.clientWidth, height: el.clientHeight }) : null; }
+function genLabels() {
+  const Y = S.year, selW = S.sel?.type === "work" ? S.sel.i : -1;
+  const P = S.layout === "time" ? posTime : posForce;
+  const cands = performance.now() < labelHold ? [] : W.filter(w => w.y <= Y && (w.lc >= 20 || w.i === selW || (hiWorkSet && hiWorkSet.has(w.i) && w.lc >= 5)))
+    .map(w => ({ w, pos: P[w.i], text: workShort(w.i), size: 13.5, off: [radius(w) + 4, 0], anchor: "start",
+      pri: (w.i === selW ? 1e6 : 0) + (hiWorkSet && hiWorkSet.has(w.i) ? 1e4 : 0) + w.lc }));
+  const keep = declutter(genViewport(), cands);
+  return new deck.TextLayer({ id: "labels", data: keep, getPosition: k => k.pos, getText: k => k.text, getSize: 13.5,
+    getColor: k => k.w.i === selW ? C.star : withA(C.ink, 235), getPixelOffset: k => k.off, getTextAnchor: "start", ...labelFont });
+}
+function renderGen() { if (genDeck) { genBase = genLayers(); genDeck.setProps({ layers: [...genBase, genLabels()] }); } }
+
+// ---------------- selection & panel ----------------
+function select(sel, opts = {}) {
+  S.sel = sel; computeHighlights();
+  renderPanel(); renderMap(); renderGen();
+  if (opts.fly && sel) flyTo(sel);
+}
+function flyTo(sel) {
+  if (S.view === "map" && mapDeck) {
+    let p = null;
+    if (sel.type === "inst") p = ipos(sel.i);
+    if (sel.type === "author" && A[sel.i].inst != null) p = ipos(A[sel.i].inst);
+    if (sel.type === "event") { const e = D.events.find(e => e.title === sel.key); if (e) p = [wrap(e.lng), e.lat]; }
+    if (p) { mapVS = { ...mapVS, longitude: p[0], latitude: p[1], zoom: Math.max(mapVS.zoom, 3.6), transitionDuration: 1200, transitionInterpolator: new deck.FlyToInterpolator() }; mapDeck.setProps({ initialViewState: mapVS }); }
+  }
+}
+const instLabel = n => n == null ? "—" : I[n].name;
+function factsHTML(items) { return `<div class="facts">${items.map(([v, l]) => `<div><b class="mono">${v}</b><span>${l}</span></div>`).join("")}</div>`; }
+function workItem(i) { const w = W[i]; return `<li><button data-work="${i}">${esc(w.t.length > 95 ? w.t.slice(0, 93) + "…" : w.t)}<small>${esc(workShort(i))} · ${fmt(w.lc)} in-field citations</small></button></li>`; }
+function authorItem(a, extra = "") { return `<li><button data-author="${a}">${esc(authorName(a))}<small>${esc(extra || instLabel(A[a].inst))}</small></button></li>`; }
+function renderPanel() {
+  const P = $("panel"), s = S.sel;
+  let h = `<button class="close" id="closeSel" aria-label="Clear selection">×</button>`;
+  if (!s) {
+    h = `<div class="empty-panel"><div class="kind">Start here</div><h2>A field told through its relations</h2>
+      <p>${fmt(NW)} works on Pacific research methodologies, ${fmt(A.length)} scholars and ${fmt(I.length)} institutions, drawn from OpenAlex and linked by who cites whom, who writes with whom, and who has worked where.</p>
+      <p>Press <b>▶</b> below to watch the field grow from Wendt’s “Towards a New Oceania” (1976) to today, or open the <b>Guided tour</b>.</p>
+      <section><h3>Most cited inside the field</h3><ul class="list">${W.slice().sort((a, b) => b.lc - a.lc).slice(0, 8).map(w => workItem(w.i)).join("")}</ul></section>
+      <section><h3>Events on the map</h3><ul class="list">${D.events.map(e => `<li><button data-event="${esc(e.title)}">${esc(e.title)}<small>${esc(e.date)} · ${esc(e.place)}</small></button></li>`).join("")}</ul></section></div>`;
+    P.innerHTML = h; wirePanel(); return;
+  }
+  if (s.type === "work") {
+    const w = W[s.i], c = commOf(w.com);
+    const why = WHY.filter(([b]) => w.why & b).map(([, t]) => t);
+    const refs = refsOf[s.i].slice().sort(byLc), cits = citedBy[s.i].slice().sort(byLc);
+    h += `<div class="kind">${w.s ? "Seed text · " + esc(D.strands[w.st] || "") : esc((w.ty || "work").replace(/-/g, " "))}</div>
+      <h2>${esc(w.t)}</h2><p class="meta">${w.y}${w.v ? " · " + esc(w.v) : ""}</p>
+      <ul class="list">${w.a.map(a => authorItem(a)).join("") || "<li><small>No authors recorded</small></li>"}</ul>
+      ${factsHTML([[fmt(w.lc), "citations inside this field"], [fmt(w.c), "citations overall (OpenAlex)"], ["#" + fmt(w.prk), `influence rank of ${fmt(NW)} (PageRank)`], [fmt(w.nr), "references recorded in OpenAlex"]])}
+      ${c ? `<p class="meta">School of thought: <span style="color:${commCss(w.com)}">● ${esc(c.anchor)} · ${esc(c.label)}</span></p>` : `<p class="meta">Not linked to the rest of the field by citations${w.nr ? "" : " (OpenAlex holds no reference list for it)"}.</p>`}
+      ${w.k.length ? `<div class="chips">${w.k.map(k => `<span class="chip">${esc(D.concepts[k])}</span>`).join("")}</div>` : ""}
+      <p class="note">In this corpus because it ${why.join("; ")}.${w.x ? " Found in OpenAlex’s expansion corpus (outside its core index)." : ""}</p>
+      ${w.ab ? `<section><h3>Abstract</h3><p class="abstract">${esc(w.ab)}</p></section>` : ""}
+      <div class="btnrow">${w.doi ? `<a class="btn" href="${esc(w.doi)}" target="_blank" rel="noopener">DOI</a>` : ""}<a class="btn" href="https://openalex.org/${esc(w.id)}" target="_blank" rel="noopener">OpenAlex record</a>${w.oa ? `<a class="btn" href="${esc(w.oa)}" target="_blank" rel="noopener">Open-access copy</a>` : ""}</div>
+      ${cits.length ? `<section><h3>Cited by ${fmt(cits.length)} works in the field</h3><ul class="list">${cits.slice(0, 10).map(workItem).join("")}</ul></section>` : ""}
+      ${refs.length ? `<section><h3>Draws on ${fmt(refs.length)} works in the field</h3><ul class="list">${refs.slice(0, 10).map(workItem).join("")}</ul></section>` : ""}`;
+  } else if (s.type === "author") {
+    const a = A[s.i], ws = worksOfAuthor[s.i];
+    const co = new Map(); ws.forEach(i => W[i].a.forEach(b => { if (b !== s.i) co.set(b, (co.get(b) || 0) + 1); }));
+    const coTop = [...co].sort((x, y) => y[1] - x[1]).slice(0, 8);
+    h += `<div class="kind">Scholar</div><h2>${esc(a.name)}</h2>
+      <p class="meta">${esc(instLabel(a.inst))}${a.region ? " · " + esc(a.region) : ""}<br>Active in this field ${a.y0}–${a.y1}${a.orcid ? ` · <a href="${esc(a.orcid)}" target="_blank" rel="noopener">ORCID</a>` : ""}</p>
+      ${factsHTML([[fmt(a.n), "works in this field"], [fmt(a.lc), "citations from inside the field"], [a.pr_rank ? "#" + fmt(a.pr_rank) : "–", `influence rank of ${fmt(A.length)}`], [a.bt_rank ? "#" + fmt(a.bt_rank) : "–", `bridging rank of ${fmt(A.length)}`]])}
+      <div class="btnrow"><button class="btn ${inShort("ind", a.id) ? "on" : ""}" data-short="ind" data-aid="${s.i}">${inShort("ind", a.id) ? "✓ " : "+ "}Individual talanoa</button>
+      <button class="btn ${inShort("grp", a.id) ? "on" : ""}" data-short="grp" data-aid="${s.i}">${inShort("grp", a.id) ? "✓ " : "+ "}Group talanoa / wānanga</button></div>
+      ${a.insts.length ? `<section><h3>Institutions over time</h3><ul class="list">${a.insts.map(([n, y0, y1]) => `<li><button data-inst="${n}">${esc(I[n].name)}<small>${y0 === y1 ? y0 : y0 + "–" + y1} · ${esc(I[n].city || "")}</small></button></li>`).join("")}</ul><p class="note">On the map, a starlight line follows this scholar between institutions.</p></section>` : ""}
+      <section><h3>Works in this field</h3><ul class="list">${ws.slice(0, 12).map(workItem).join("")}</ul></section>
+      ${coTop.length ? `<section><h3>Writes with</h3><ul class="list">${coTop.map(([b, c]) => authorItem(b, c + " shared work" + (c > 1 ? "s" : ""))).join("")}</ul></section>` : ""}
+      <p class="btnrow"><a class="btn" href="https://openalex.org/${esc(a.id)}" target="_blank" rel="noopener">OpenAlex profile</a></p>`;
+  } else if (s.type === "inst") {
+    const it = I[s.i], ws = worksOfInst[s.i];
+    const people = new Map(); ws.forEach(i => W[i].a.forEach(a => { if (A[a].insts.some(t => t[0] === s.i)) people.set(a, (people.get(a) || 0) + 1); }));
+    const top = [...people.keys()].sort((x, y) => A[y].lc - A[x].lc).slice(0, 12);
+    const col = D.colocations.filter(c => c.inst === s.i);
+    h += `<div class="kind">Institution</div><h2>${esc(it.name)}</h2><p class="meta">${esc([it.city, it.cc].filter(Boolean).join(", "))} · ${esc(it.region)}</p>
+      ${factsHTML([[fmt(it.w), "works in this field"], [fmt(it.au), "scholars"], [it.yr.length ? it.yr[0][0] : "—", "first work in the field"], [col.length, "co-location windows"]])}
+      <section><h3>Works by year</h3>${yearBars(it.yr)}</section>
+      ${col.length ? `<section><h3>Co-locations of key scholars</h3><ul class="list">${col.map(c => `<li><button data-coloc="${c.inst}:${c.y0}">${c.y0}–${c.y1}<small>${esc(c.key.slice(0, 5).map(authorName).join(", "))}${c.key.length > 5 ? "…" : ""}</small></button></li>`).join("")}</ul></section>` : ""}
+      <section><h3>Scholars, most cited inside the field</h3><ul class="list">${top.map(a => authorItem(a, `${fmt(A[a].lc)} in-field citations`)).join("")}</ul></section>
+      <section><h3>Most cited works</h3><ul class="list">${ws.slice(0, 8).map(workItem).join("")}</ul></section>`;
+  } else if (s.type === "coloc") {
+    const c = D.colocations.find(c => c.inst + ":" + c.y0 === s.key);
+    h += `<div class="kind">Co-location</div><h2>${esc(I[c.inst].name)}, ${c.y0}–${c.y1}</h2>
+      <p class="meta">${c.key.length} of the field’s 300 most influential scholars published from here in these five years, among ${fmt(c.n)} scholars in all. Shared places are where vā between scholars is most easily tended.</p>
+      <section><h3>Key scholars here</h3><ul class="list">${c.key.map(a => authorItem(a, `${fmt(A[a].lc)} in-field citations`)).join("")}</ul></section>
+      <p class="btnrow"><button class="btn" data-inst="${c.inst}">Open the institution</button></p>`;
+  } else if (s.type === "event") {
+    const e = D.events.find(e => e.title === s.key);
+    h += `<div class="kind">Event · ${esc(e.kind)}</div><h2>${esc(e.title)}</h2><p class="meta">${esc(e.date)} · ${esc(e.place)}</p><p>${esc(e.note)}</p>
+      <p class="btnrow"><a class="btn" href="${esc(e.source)}" target="_blank" rel="noopener">Source</a></p>
+      <p class="note">A starter set of verified milestones. The situational analysis Lisa Uperesa describes would add the fono, conferences, wānanga and appointments that shaped the field.</p>`;
+  } else if (s.type === "comm") {
+    const c = commOf(s.i); const ws = W.filter(w => w.com === s.i).sort((x, y) => y.lc - x.lc);
+    const auth = new Map(); ws.forEach(w => w.a.forEach(a => auth.set(a, (auth.get(a) || 0) + w.lc)));
+    h += `<div class="kind" style="color:${commCss(s.i)}">School of thought</div><h2>${esc(c.anchor)} · ${esc(c.label)}</h2>
+      <p class="meta">${fmt(c.size)} works, median year ${Math.round(c.year)}. A community found by the Louvain method: works that cite each other more than they cite the rest of the field.</p>
+      ${c.concepts.length ? `<div class="chips">${c.concepts.map(k => `<span class="chip">${esc(k)}</span>`).join("")}</div>` : ""}
+      <section><h3>Anchor works</h3><ul class="list">${ws.slice(0, 10).map(w => workItem(w.i)).join("")}</ul></section>
+      <section><h3>Central scholars</h3><ul class="list">${[...auth].sort((x, y) => y[1] - x[1]).slice(0, 10).map(([a]) => authorItem(a)).join("")}</ul></section>`;
+  }
+  P.innerHTML = h; wirePanel();
+}
+function yearBars(yr) {
+  if (!yr.length) return "";
+  const y0 = Math.min(yr[0][0], 1995), y1 = Y1, max = Math.max(...yr.map(d => d[1]));
+  const w = 320, hgt = 64, bw = w / (y1 - y0 + 1);
+  const m = new Map(yr);
+  let bars = "";
+  for (let y = y0; y <= y1; y++) { const v = m.get(y) || 0; if (!v) continue; const bh = Math.max(2, v / max * (hgt - 16)); bars += `<rect x="${(y - y0) * bw + 0.5}" y="${hgt - 14 - bh}" width="${Math.max(1, bw - 1.5)}" height="${bh}" rx="1" fill="var(--s3)"><title>${y}: ${v}</title></rect>`; }
+  return `<svg viewBox="0 0 ${w} ${hgt}" width="100%" role="img" aria-label="Works per year">${bars}<line x1="0" x2="${w}" y1="${hgt - 14}" y2="${hgt - 14}" stroke="var(--rule)"/><text x="0" y="${hgt - 2}" fill="var(--ink-3)" font-size="11.5" font-family="IBM Plex Mono, monospace">${y0}</text><text x="${w}" y="${hgt - 2}" fill="var(--ink-3)" font-size="11.5" text-anchor="end" font-family="IBM Plex Mono, monospace">${y1}</text><text x="${w}" y="9" fill="var(--ink-3)" font-size="11.5" text-anchor="end" font-family="IBM Plex Mono, monospace">peak ${max}</text></svg>`;
+}
+function wirePanel() {
+  const P = $("panel");
+  P.querySelectorAll("[data-work]").forEach(b => b.onclick = () => { if (S.view !== "gen" && S.view !== "map") setView("gen"); select({ type: "work", i: +b.dataset.work }); });
+  P.querySelectorAll("[data-author]").forEach(b => b.onclick = () => select({ type: "author", i: +b.dataset.author }, { fly: true }));
+  P.querySelectorAll("[data-inst]").forEach(b => b.onclick = () => select({ type: "inst", i: +b.dataset.inst }, { fly: true }));
+  P.querySelectorAll("[data-coloc]").forEach(b => b.onclick = () => select({ type: "coloc", key: b.dataset.coloc }));
+  P.querySelectorAll("[data-event]").forEach(b => b.onclick = () => { if (S.view !== "map") setView("map"); select({ type: "event", key: b.dataset.event }, { fly: true }); });
+  P.querySelectorAll("[data-short]").forEach(b => b.onclick = () => { toggleShort(b.dataset.short, +b.dataset.aid); renderPanel(); });
+  const c = $("closeSel"); if (c) c.onclick = () => select(null);
+}
+function toggleShort(list, ai) {
+  const id = A[ai].id, arr = S.short[list];
+  const k = arr.indexOf(id); if (k >= 0) arr.splice(k, 1); else arr.push(id);
+  store.set("va-atlas-shortlist-v1", S.short);
+  if (S.view === "people") renderPeople(false);
+}
+
+// ---------------- tide timeline ----------------
+const tide = $("tideChart");
+function renderTide() {
+  const w = tide.clientWidth || 800, h = 64, padL = 4, padR = 4, base = h - 16;
+  const n = Y1 - Y0 + 1, bw = (w - padL - padR) / n, max = Math.max(...yearCounts.values());
+  let s = "";
+  for (let y = Y0; y <= Y1; y++) {
+    const v = yearCounts.get(y) || 0; const bh = v ? Math.max(1.5, Math.sqrt(v / max) * (base - 6)) : 0;
+    const x = padL + (y - Y0) * bw;
+    if (bh) s += `<rect x="${x + 0.5}" y="${base - bh}" width="${Math.max(1, bw - 2)}" height="${bh}" rx="1.5" fill="${y <= S.year ? "var(--s1)" : "var(--rule)"}"><title>${y}: ${v} works</title></rect>`;
+    if (y % 10 === 0) s += `<text x="${x}" y="${h - 3}" fill="var(--ink-3)" font-size="12" font-family="IBM Plex Mono, monospace">${y}</text>`;
+  }
+  const hx = padL + (S.year - Y0 + 1) * bw;
+  s += `<line x1="${padL}" x2="${w - padR}" y1="${base}" y2="${base}" stroke="var(--rule)"/>`;
+  s += `<line x1="${hx}" x2="${hx}" y1="2" y2="${base}" stroke="var(--star)" stroke-width="2"/><circle cx="${hx}" cy="5" r="4" fill="var(--star)"/>`;
+  D.events.forEach(e => { const x = padL + (e.year - Y0 + 0.5) * bw; s += `<rect x="${x - 2.5}" y="${base + 1}" width="5" height="5" transform="rotate(45 ${x} ${base + 3.5})" fill="var(--star)" opacity="${e.year <= S.year ? 1 : 0.35}"><title>${esc(e.date + " " + e.title)}</title></rect>`; });
+  tide.setAttribute("viewBox", `0 0 ${w} ${h}`); tide.innerHTML = s; tide.setAttribute("aria-valuenow", S.year);
+  $("yearB").textContent = S.year;
+  const shown = W.filter(w => w.y <= S.year).length;
+  $("yearS").textContent = S.year >= Y1 ? `all ${fmt(NW)} works` : `${fmt(shown)} works so far`;
+}
+function yearFromX(clientX) { const r = tide.getBoundingClientRect(); const bw = (r.width - 8) / (Y1 - Y0 + 1); return Math.max(Y0, Math.min(Y1, Math.floor((clientX - r.left - 4) / bw) + Y0)); }
+function setYear(y) { if (y === S.year) return; S.year = y; renderTide(); renderMap(); renderGen(); }
+let dragging = false;
+tide.addEventListener("pointerdown", e => { dragging = true; tide.setPointerCapture(e.pointerId); stopPlay(); setYear(yearFromX(e.clientX)); });
+tide.addEventListener("pointermove", e => { if (dragging) setYear(yearFromX(e.clientX)); });
+tide.addEventListener("pointerup", () => { dragging = false; });
+tide.addEventListener("keydown", e => { if (e.key === "ArrowLeft") { stopPlay(); setYear(Math.max(Y0, S.year - 1)); e.preventDefault(); } if (e.key === "ArrowRight") { stopPlay(); setYear(Math.min(Y1, S.year + 1)); e.preventDefault(); } });
+let playTimer = null;
+function stopPlay() { if (playTimer) clearInterval(playTimer); playTimer = null; S.playing = false; $("play").textContent = "▶"; $("play").setAttribute("aria-label", "Play the field's history"); }
+function startPlay() {
+  S.playing = true; $("play").textContent = "❚❚"; $("play").setAttribute("aria-label", "Pause");
+  if (S.year >= Y1) setYear(1975);
+  playTimer = setInterval(() => { if (S.year >= Y1) { stopPlay(); return; } setYear(S.year < 1995 ? Math.min(1995, S.year + 3) : S.year + 1); }, 650);
+}
+$("play").onclick = () => S.playing ? stopPlay() : startPlay();
+new ResizeObserver(() => renderTide()).observe(tide);
+
+// ---------------- views ----------------
+function setView(v, push = true) {
+  S.view = v;
+  document.querySelectorAll("nav.tabs button").forEach(b => b.setAttribute("aria-selected", b.dataset.view === v ? "true" : "false"));
+  ["map", "gen", "people", "gaps", "about"].forEach(k => $("v-" + k).hidden = k !== v);
+  $("tide").hidden = !(v === "map" || v === "gen");
+  $("main").classList.toggle("no-panel", !(v === "map" || v === "gen"));
+  if (v === "map") ensureMap();
+  if (v === "gen") ensureGen();
+  if (v === "people") renderPeople(true);
+  if (v === "gaps") renderGaps();
+  if (v === "about") renderAbout();
+  if (push) { try { history.replaceState(null, "", "#" + v); } catch { /* sandboxed */ } }
+  requestAnimationFrame(renderTide);
+}
+document.querySelectorAll("nav.tabs button").forEach(b => b.onclick = () => setView(b.dataset.view));
+function ensureMap() {
+  if (mapDeck) { renderMap(); return; }
+  mapDeck = new deck.Deck({
+    parent: $("mapCanvas"), views: new deck.MapView({ repeat: true }), initialViewState: mapVS, controller: { dragRotate: true },
+    onViewStateChange: ({ viewState }) => { mapVS = viewState; queueRelabel(); }, layers: [], getTooltip: mapTooltip, onClick: mapClick,
+    getCursor: ({ isHovering, isDragging }) => isDragging ? "grabbing" : isHovering ? "pointer" : "grab",
+  });
+  renderMap();
+}
+function ensureGen() {
+  if (genDeck) { renderGen(); return; }
+  genVS = fitGen();
+  genDeck = new deck.Deck({
+    parent: $("genCanvas"), views: new deck.OrthographicView({ id: "o" }), initialViewState: genVS, controller: true,
+    onViewStateChange: ({ viewState }) => { genVS = viewState; queueRelabel(); },
+    layers: [], getTooltip: genTooltip, onClick: genClick,
+    getCursor: ({ isHovering, isDragging }) => isDragging ? "grabbing" : isHovering ? "pointer" : "grab",
+  });
+  renderGen();
+}
+// map controls
+const bindCheck = (id, key) => $(id).onchange = e => { S.ly[key] = e.target.checked; renderMap(); };
+bindCheck("lyInst", "inst"); bindCheck("lyCollab", "collab"); bindCheck("lyFlow", "flow"); bindCheck("lyColoc", "coloc"); bindCheck("lyEvents", "events");
+function seg(a, b, onA, onB) { $(a).onclick = () => { $(a).setAttribute("aria-pressed", "true"); $(b).setAttribute("aria-pressed", "false"); onA(); }; $(b).onclick = () => { $(b).setAttribute("aria-pressed", "true"); $(a).setAttribute("aria-pressed", "false"); onB(); }; }
+seg("tiePac", "tieAll", () => { S.pacOnly = true; renderMap(); }, () => { S.pacOnly = false; renderMap(); });
+seg("tilt3d", "tilt2d", () => { mapVS = { ...mapVS, pitch: 38, transitionDuration: 600 }; mapDeck?.setProps({ initialViewState: mapVS }); },
+  () => { mapVS = { ...mapVS, pitch: 0, bearing: 0, transitionDuration: 600 }; mapDeck?.setProps({ initialViewState: mapVS }); });
+// genealogy controls
+function setLayout(l) {
+  S.layout = l; $("layForce").setAttribute("aria-pressed", l === "force"); $("layTime").setAttribute("aria-pressed", l === "time");
+  // Hide labels while the dots glide to the new layout, then place them at their new positions.
+  if (genDeck) { labelHold = performance.now() + 950; genVS = fitGen(); genDeck.setProps({ initialViewState: { ...genVS, transitionDuration: 900 } }); renderGen(); setTimeout(queueRelabel, 1000); }
+}
+$("layForce").onclick = () => setLayout("force"); $("layTime").onclick = () => setLayout("time");
+$("showMain").onchange = renderGen; $("showEdges").onchange = renderGen;
+$("commLegend").innerHTML = D.communities.slice(0, 8).map(c => `<button data-comm="${c.k}" aria-pressed="false" title="${esc(c.anchor + " · " + c.label)}"><span class="dot" style="background:${commCss(c.k)}"></span><span>${esc(c.anchor)} · ${esc(c.label)}</span><span class="mono">${fmt(c.size)}</span></button>`).join("")
+  + `<button data-comm="-9" aria-pressed="false"><span class="dot" style="background:var(--other)"></span><span>Smaller groups &amp; unconnected</span><span class="mono">${fmt(W.filter(w => w.com < 0 || w.com >= 8).length)}</span></button>`;
+$("commLegend").querySelectorAll("button").forEach(b => b.onclick = () => {
+  const k = +b.dataset.comm;
+  const on = b.getAttribute("aria-pressed") !== "true";
+  $("commLegend").querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", "false"));
+  if (on && k >= 0) { b.setAttribute("aria-pressed", "true"); S.comm = null; select({ type: "comm", i: k }); }
+  else { S.comm = null; select(null); }
+});
+const conceptCounts = D.concepts.map((c, k) => W.filter(w => w.k.includes(k)).length);
+$("conceptChips").innerHTML = D.concepts.map((c, k) => conceptCounts[k] >= 5 ? `<button class="chip" data-k="${k}" aria-pressed="false">${esc(c)} <span class="mono" style="color:var(--ink-3)">${conceptCounts[k]}</span></button>` : "").join("");
+$("conceptChips").querySelectorAll("button").forEach(b => b.onclick = () => {
+  const k = +b.dataset.k; S.concept = S.concept === k ? null : k;
+  $("conceptChips").querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", +x.dataset.k === S.concept ? "true" : "false"));
+  renderGen();
+});
+
+// ---------------- key thinkers ----------------
+const LENSES = {
+  key: { t: "Key thinkers", d: "Most cited from inside the field: candidates for individual talanoa.", sort: (a, b) => b.lc - a.lc || b.pr_bar - a.pr_bar },
+  bridge: { t: "Networked scholars", d: "Bridge otherwise separate groups through co-authorship and citation: candidates for group talanoa and wānanga.", sort: (a, b) => b.bt_bar - a.bt_bar || b.deg - a.deg },
+  emerging: { t: "Emerging voices", d: "First published in the field since 2016, ranked by in-field citations.", filter: a => a.y0 >= 2016, sort: (a, b) => b.lc - a.lc },
+};
+const PT = { lens: "key", region: "", min2: true, q: "", limit: 60, sortKey: null, sortDir: -1 };
+function peopleRows() {
+  const L = LENSES[PT.lens];
+  let rows = A.filter(a => (!PT.min2 || a.n >= 2) && (!PT.region || a.region === PT.region) && (!L.filter || L.filter(a)));
+  if (PT.q) { const q = fold(PT.q); rows = rows.filter(a => fold(a.name).includes(q) || (a.inst != null && fold(I[a.inst].name).includes(q))); }
+  if (PT.sortKey) rows.sort((a, b) => PT.sortDir * ((typeof a[PT.sortKey] === "string") ? a[PT.sortKey].localeCompare(b[PT.sortKey]) : ((a[PT.sortKey] ?? -1) - (b[PT.sortKey] ?? -1))));
+  else rows.sort(L.sort);
+  return rows;
+}
+function renderPeople(full) {
+  const el = $("v-people");
+  if (full || !el.dataset.built) {
+    el.dataset.built = "1";
+    el.innerHTML = `<h1>Key thinkers and networked scholars</h1>
+      <p class="lead">Three ways to read the people of the field, toward the key thinkers Lisa Uperesa’s project would prioritise for individual talanoa and the networked scholars it would invite to group talanoa and wānanga. Each measure counts relations inside this corpus only, so global fame does not crowd out Pacific scholars.</p>
+      <div class="lens" id="lens">${Object.entries(LENSES).map(([k, l]) => `<button data-lens="${k}" aria-pressed="${k === PT.lens}"><b>${l.t}</b><span>${l.d}</span></button>`).join("")}</div>
+      <div class="toolbar">
+        <input id="pq" type="search" placeholder="Filter by name or institution" value="${esc(PT.q)}" aria-label="Filter scholars">
+        <select id="preg" aria-label="Region"><option value="">All regions</option>${["Pacific Islands", "Aotearoa NZ", "Hawaiʻi", "Australia", "Elsewhere"].map(r => `<option ${PT.region === r ? "selected" : ""}>${r}</option>`).join("")}</select>
+        <label><input type="checkbox" id="pmin" ${PT.min2 ? "checked" : ""}> Two or more works in the field</label>
+      </div>
+      <div class="tablewrap"><table><thead><tr>
+        <th>Talanoa</th><th><button data-sort="name">Scholar</button></th><th>Latest institution</th><th><button data-sort="region">Region</button></th>
+        <th><button data-sort="y0">Active</button></th><th><button data-sort="n">Works</button></th><th><button data-sort="lc">In-field citations</button></th>
+        <th><button data-sort="pr_bar">Influence rank</button></th><th><button data-sort="bt_bar">Bridging rank</button></th><th><button data-sort="deg">Co-authors</button></th>
+      </tr></thead><tbody id="ptb"></tbody></table></div>
+      <p class="toolbar"><button class="btn" id="pmore">Show more</button><span class="note" id="pcount"></span></p>
+      <h2>Talanoa shortlist</h2>
+      <p>Saved in this browser only. Copy it as CSV to share with the team.</p>
+      <div class="shortlist" id="slists"></div>
+      <h2>How the measures work</h2>
+      <div class="cols"><div><p><b>In-field citations</b> count citations from other works in this corpus. A text cited 900 times in nursing but rarely by Pacific methodologists scores low here.</p>
+      <p><b>Influence</b> is PageRank over scholar-to-scholar citations: being cited by scholars who are themselves cited counts for more. Shown as a percentile.</p></div>
+      <div><p><b>Bridging</b> is betweenness centrality over co-authorship and citation ties: how often a scholar sits on the shortest path between others. High bridging marks people who connect communities.</p>
+      <p>Ranks run across all ${fmt(A.length)} scholars in the corpus; bars are on a square-root scale relative to the leader.</p>
+      <p>These are prompts for conversation, not rankings of mana. Many Pacific scholars publish in books, reports and community settings the open record does not index; see <a href="#gaps" data-go="gaps">What’s missing</a>.</p></div></div>`;
+    el.querySelectorAll("[data-lens]").forEach(b => b.onclick = () => { PT.lens = b.dataset.lens; PT.sortKey = null; PT.limit = 60; el.querySelectorAll("[data-lens]").forEach(x => x.setAttribute("aria-pressed", x === b)); renderPeople(false); });
+    $("pq").oninput = e => { PT.q = e.target.value; PT.limit = 60; renderPeople(false); };
+    $("preg").onchange = e => { PT.region = e.target.value; PT.limit = 60; renderPeople(false); };
+    $("pmin").onchange = e => { PT.min2 = e.target.checked; PT.limit = 60; renderPeople(false); };
+    $("pmore").onclick = () => { PT.limit += 60; renderPeople(false); };
+    el.querySelectorAll("[data-sort]").forEach(b => b.onclick = () => { const k = b.dataset.sort; PT.sortDir = PT.sortKey === k ? -PT.sortDir : (k === "name" || k === "region" || k === "y0" ? 1 : -1); PT.sortKey = k; renderPeople(false); });
+    el.querySelectorAll("[data-go]").forEach(a => a.onclick = e => { e.preventDefault(); setView(a.dataset.go); });
+  }
+  const rows = peopleRows();
+  const pct = (bar, rank, cls) => `<div class="pct ${cls}"><i style="--w:${bar}%"></i><span class="mono">${rank ? "#" + fmt(rank) : "–"}</span></div>`;
+  $("ptb").innerHTML = rows.slice(0, PT.limit).map(a => `<tr>
+    <td><span class="sl"><button data-sl="ind" data-ai="${a.i}" aria-pressed="${inShort("ind", a.id)}" title="Individual talanoa">I</button><button data-sl="grp" data-ai="${a.i}" aria-pressed="${inShort("grp", a.id)}" title="Group talanoa / wānanga">G</button></span></td>
+    <td><button class="name" data-pa="${a.i}">${esc(a.name)}</button></td><td>${esc(instLabel(a.inst))}</td><td>${esc(a.region || "—")}</td>
+    <td class="num">${a.y0 === a.y1 ? a.y0 : a.y0 + "–" + String(a.y1).slice(2)}</td><td class="num">${a.n}</td><td class="num">${fmt(a.lc)}</td>
+    <td>${pct(a.pr_bar, a.pr_rank, "")}</td><td>${pct(a.bt_bar, a.bt_rank, "bt")}</td><td class="num">${a.deg}</td></tr>`).join("");
+  document.querySelectorAll("#v-people th button").forEach(b => b.toggleAttribute("aria-sort", b.dataset.sort === PT.sortKey));
+  $("pcount").textContent = `Showing ${fmt(Math.min(PT.limit, rows.length))} of ${fmt(rows.length)} scholars`;
+  $("pmore").hidden = PT.limit >= rows.length;
+  $("ptb").querySelectorAll("[data-sl]").forEach(b => b.onclick = () => { toggleShort(b.dataset.sl, +b.dataset.ai); });
+  $("ptb").querySelectorAll("[data-pa]").forEach(b => b.onclick = () => { setView("map"); select({ type: "author", i: +b.dataset.pa }, { fly: true }); });
+  renderShortlists();
+}
+function renderShortlists() {
+  const el = $("slists"); if (!el) return;
+  const byId = new Map(A.map(a => [a.id, a]));
+  const block = (list, title, hint) => {
+    const people = S.short[list].map(id => byId.get(id)).filter(Boolean);
+    return `<div><h3>${title} <span class="mono" style="color:var(--ink-3)">${people.length}</span></h3><p class="note">${hint}</p>
+      ${people.length ? `<ol>${people.map(a => `<li>${esc(a.name)} <small style="color:var(--ink-3)">${esc(instLabel(a.inst))}</small></li>`).join("")}</ol>` : `<p class="note">Empty. Use the I and G buttons in the table, or the buttons on a scholar’s card.</p>`}
+      <div class="btnrow"><button class="btn" data-copy="${list}" ${people.length ? "" : "disabled"}>Copy as CSV</button><button class="btn" data-clear="${list}" ${people.length ? "" : "disabled"}>Clear</button></div></div>`;
+  };
+  el.innerHTML = block("ind", "Individual talanoa", "Key thinkers whose published work the review prioritises.") + block("grp", "Group talanoa and wānanga", "Networked scholars to invite in year two.");
+  el.querySelectorAll("[data-copy]").forEach(b => b.onclick = () => copyCSV(b.dataset.copy));
+  el.querySelectorAll("[data-clear]").forEach(b => b.onclick = () => { S.short[b.dataset.clear] = []; store.set("va-atlas-shortlist-v1", S.short); renderPeople(false); });
+}
+function copyCSV(list) {
+  const byId = new Map(A.map(a => [a.id, a]));
+  const q = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
+  const rows = [["list", "name", "openalex_id", "orcid", "latest_institution", "region", "first_year", "last_year", "works_in_field", "in_field_citations", "influence_rank", "bridging_rank", "co_authors"]];
+  S.short[list].map(id => byId.get(id)).filter(Boolean).forEach(a => rows.push([list === "ind" ? "individual talanoa" : "group talanoa / wananga", a.name, a.id, a.orcid || "", instLabel(a.inst), a.region || "", a.y0, a.y1, a.n, a.lc, a.pr_rank ?? "", a.bt_rank ?? "", a.deg]));
+  const text = rows.map(r => r.map(q).join(",")).join("\n");
+  (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject(new Error("no clipboard"))).then(() => toast("Copied " + (rows.length - 1) + " rows as CSV"), () => {
+    const ta = document.createElement("textarea"); ta.value = text; ta.style.cssText = "width:100%;height:160px;margin-top:8px;background:var(--sea);color:var(--ink);border:1px solid var(--rule);border-radius:8px";
+    $("slists").appendChild(ta); ta.select(); toast("Select-all and copy the text below");
+  });
+}
+
+// ---------------- what's missing ----------------
+function renderGaps() {
+  const el = $("v-gaps"); if (el.dataset.built) return; el.dataset.built = "1";
+  const cv = D.coverage, pc = v => Math.round(100 * v / cv.works) + "%";
+  const types = Object.entries(cv.types).filter(([, v]) => v >= 10); const tmax = Math.max(...types.map(t => t[1]));
+  const byStrand = Object.keys(D.strands).map(k => [k, D.seeds.filter(s => s.strand === k)]);
+  el.innerHTML = `<h1>What the open record misses</h1>
+    <p class="lead">Lisa Uperesa’s point, measured: a portion of Pacific scholarship is not well surfaced through online databases, especially methodological innovations and critical work on epistemologies embedded in larger works. What is surfaced is often missing the links a network analysis depends on. The project’s curated datasets would fill exactly these gaps.</p>
+    <div class="tiles">
+      <div class="tile"><b>${cv.seeds_found} of ${cv.seeds_total}</b><span>starter seed texts found in OpenAlex. The other ${cv.seeds_total - cv.seeds_found} are guidelines, reports, a conference paper and articles in journals the databases do not index.</span></div>
+      <div class="tile"><b>${pc(cv.no_refs)}</b><span>of works have no reference list in OpenAlex (${fmt(cv.no_refs)}), so nothing they cite can be seen.</span></div>
+      <div class="tile"><b>${pc(cv.no_inst)}</b><span>of works carry no institutional affiliation (${fmt(cv.no_inst)}), so they cannot be placed on the map.</span></div>
+      <div class="tile"><b>${pc(cv.unconnected)}</b><span>of works sit unconnected in the genealogy (${fmt(cv.unconnected)}): no citation link to the rest of the field.</span></div>
+      <div class="tile"><b>${fmt(cv.types.dissertation || 0)}</b><span>theses (${pc(cv.types.dissertation || 0)} of the corpus), where many methodological innovations first appear.</span></div>
+    </div>
+    <div class="cols">
+      <div><h2>Seed texts and where they are</h2>
+        <p>A starter list of widely cited PRM texts, resolved against OpenAlex’s core and expansion corpora. A text marked “not indexed” is confirmed to exist (source linked) but has no OpenAlex record.</p>
+        ${byStrand.map(([k, ss]) => `<h3 style="font:500 var(--step-1)/1.2 var(--f-display);margin:18px 0 6px">${esc(D.strands[k])}</h3>
+          <div class="tablewrap"><table><tbody>${ss.map(s => `<tr><td>${s.status === "missing" ? '<span class="pill miss">✕ not indexed</span>' : '<span class="pill ok">✓ in OpenAlex</span>'}</td>
+            <td>${s.work != null ? `<button class="name" data-sw="${s.work}">${esc(s.title)}</button>` : esc(s.title)}<br><small style="color:var(--ink-3)">${esc(s.surnames[0])} ${s.year} · ${esc(s.venue)}</small></td>
+            <td class="num">${s.status === "missing" ? (s.evidence ? `<a href="${esc(s.evidence)}" target="_blank" rel="noopener">source</a>` : "") : fmt(s.cites) + " cites"}</td></tr>`).join("")}</tbody></table></div>`).join("")}
+      </div>
+      <div><h2>What kinds of work make up the field</h2>
+        <div class="bars">${types.map(([t, v]) => `<span>${esc(t.replace(/-/g, " "))}</span><div style="display:flex;align-items:center"><i style="width:${(v / tmax * 100).toFixed(1)}%"></i><em>${fmt(v)}</em></div>`).join("")}</div>
+        <h2>How the corpus was gathered</h2>
+        <div class="bars">${[["seed", "Seed texts"], ["cites", "Cite a PRM text"], ["cites+pac", "Cite a foundational text, about the Pacific"], ["term", "Name a PRM concept"]].map(([k, l]) => `<span>${l}</span><div style="display:flex;align-items:center"><i style="width:${(cv.reasons[k] / cv.works * 100).toFixed(1)}%;background:var(--s3)"></i><em>${fmt(cv.reasons[k])}</em></div>`).join("")}</div>
+        <p class="note">A work can meet more than one rule. ${fmt(cv.xpac)} works came from OpenAlex’s expansion corpus, which sits outside its default index.</p>
+        <h2>How the project’s datasets would plug in</h2>
+        <p>The literature review’s curated records join the same network. Each row needs only what a reference manager already holds, plus the vā fields the situational analysis adds:</p>
+<pre class="schema">title, year, authors, form            # book, chapter, thesis, report, talk…
+doi_or_url                            # optional; matched to OpenAlex when present
+cites                                 # DOIs, OpenAlex IDs or row keys it draws on
+institutions, places                  # where the work was made
+methodology_concepts                  # talanoa, teu le vā, kakala…
+events                                # fono, wānanga, conferences it came from
+notes                                 # epistemological contribution, in the project's words</pre>
+      </div>
+    </div>`;
+  el.querySelectorAll("[data-sw]").forEach(b => b.onclick = () => { setView("gen"); select({ type: "work", i: +b.dataset.sw }); });
+}
+
+// ---------------- about ----------------
+function renderAbout() {
+  const el = $("v-about"); if (el.dataset.built) return; el.dataset.built = "1";
+  const cv = D.coverage;
+  el.innerHTML = `<h1>About this atlas</h1>
+    <p class="lead">A working sketch of the two-fold analysis Lisa Uperesa describes for research on Pacific Research Methodologies: a citation network analysis that maps the unfolding networks of the field over time, including relative influence within the scholarship, and a situational network analysis that maps vā relations over space and time to find important co-locations, key institutions and key events. Built by the Centre for eResearch from open data, to start a conversation.</p>
+    <div class="cols">
+      <div><h2>What it shows</h2>
+        <ol class="steps">
+          <li><div><b>The vā map</b><span>Institutions where the field is written, the co-authorship ties between them, citation flows showing where ideas travel, places where key scholars were co-located, and milestone events. Centred on Te Moana-nui-a-Kiwa.</span></div></li>
+          <li><div><b>The genealogy</b><span>${fmt(cv.works)} works and ${fmt(cv.edges)} citation links, grouped into schools of thought, laid out as a network or along time, with the main path: the chain of works most of the field’s citation paths run through.</span></div></li>
+          <li><div><b>Key thinkers</b><span>Scholars by in-field citations, influence and bridging, with a shortlist for individual and group talanoa.</span></div></li>
+          <li><div><b>What’s missing</b><span>The texts and links the open record does not hold, which the project’s own datasets would supply.</span></div></li>
+        </ol>
+        <h2>How it was built</h2>
+        <p>${fmt(D.seeds.length)} seed texts across five strands were resolved in OpenAlex. The corpus is every work that is a seed, cites a PRM-specific seed, cites a foundational text (Smith, Hauʻofa, Wendt, Bishop and others) while being about the Pacific, or names a Pacific research methodology in its title or abstract. Communities come from the Louvain method; the main path from search path counts (Hummon and Doreian); influence from PageRank; bridging from betweenness centrality. Data as of ${esc(D.meta.built)}; every number can be rebuilt from the pipeline in <span class="mono">pacific/pipeline</span>.</p>
+      </div>
+      <div><h2>Read it with care</h2>
+        <p>Citations measure one kind of relation. They miss oral scholarship, community knowledge, and the obligations of vā that never reach a reference list. Metrics here are prompts for talanoa, not a ranking of mana.</p>
+        <p>Names, affiliations and author identities come from OpenAlex’s automated disambiguation and will contain errors; the seed list is a starter that the project’s literature review should replace.</p>
+        <p>Data about Pacific peoples and their knowledge should be governed by them. A production version would follow the CARE principles for Indigenous data governance, keep curated data on New Zealand infrastructure under the research team’s control, and seek consent before mapping people’s relationships beyond what they have published.</p>
+        <h2>What CeR could offer</h2>
+        <ol class="steps">
+          <li><div><b>Now</b><span>Shape the seed list and corpus rules with the team; load the literature review’s curated records; refine names and affiliations.</span></div></li>
+          <li><div><b>Next</b><span>Read full texts of theses and books to find methodological innovations embedded in larger works, with human review.</span></div></li>
+          <li><div><b>Year two</b><span>Map talanoa and wānanga participation, events and co-locations from the situational analysis, with consent, into the same atlas.</span></div></li>
+          <li><div><b>Ongoing</b><span>Host it, keep it current with new publications, and train researchers to run and extend it.</span></div></li>
+        </ol>
+      </div>
+    </div>`;
+}
+
+// ---------------- search ----------------
+const idxA = A.map(a => fold(a.name)), idxW = W.map(w => fold(w.t)), idxI = I.map(i => fold(i.name));
+$("q").addEventListener("input", e => {
+  const q = fold(e.target.value.trim()); const R = $("results");
+  if (q.length < 2) { R.hidden = true; return; }
+  const ma = []; for (let k = 0; k < A.length && ma.length < 40; k++) if (idxA[k].includes(q)) ma.push(k);
+  ma.sort((x, y) => A[y].lc - A[x].lc);
+  const mw = []; for (let k = 0; k < W.length && mw.length < 60; k++) if (idxW[k].includes(q)) mw.push(k);
+  mw.sort(byLc);
+  const mi = []; for (let k = 0; k < I.length && mi.length < 20; k++) if (idxI[k].includes(q)) mi.push(k);
+  mi.sort((x, y) => I[y].w - I[x].w);
+  let h = "";
+  if (ma.length) h += `<h4>Scholars</h4>` + ma.slice(0, 6).map(a => `<button data-ra="${a}">${esc(A[a].name)} <small>· ${esc(instLabel(A[a].inst))}</small></button>`).join("");
+  if (mi.length) h += `<h4>Institutions</h4>` + mi.slice(0, 4).map(n => `<button data-ri="${n}">${esc(I[n].name)} <small>· ${fmt(I[n].w)} works</small></button>`).join("");
+  if (mw.length) h += `<h4>Works</h4>` + mw.slice(0, 6).map(i => `<button data-rw="${i}">${esc(W[i].t.slice(0, 90))} <small>· ${esc(workShort(i))}</small></button>`).join("");
+  R.innerHTML = h || `<h4>No matches</h4>`; R.hidden = false;
+  R.querySelectorAll("[data-ra]").forEach(b => b.onclick = () => { R.hidden = true; if (S.view !== "map" && S.view !== "gen") setView("map"); select({ type: "author", i: +b.dataset.ra }, { fly: true }); });
+  R.querySelectorAll("[data-ri]").forEach(b => b.onclick = () => { R.hidden = true; if (S.view !== "map") setView("map"); select({ type: "inst", i: +b.dataset.ri }, { fly: true }); });
+  R.querySelectorAll("[data-rw]").forEach(b => b.onclick = () => { R.hidden = true; if (S.view !== "gen") setView("gen"); select({ type: "work", i: +b.dataset.rw }); });
+});
+document.addEventListener("click", e => { if (!e.target.closest(".search")) $("results").hidden = true; });
+
+// ---------------- guided tour ----------------
+const findAuthor = name => A.findIndex(a => fold(a.name) === fold(name));
+const findSeedWork = key => D.seeds.find(s => s.key === key)?.work;
+const TOUR = [
+  { k: "1 · The sea of islands", t: "Where the field is written", p: "Each green dot is an institution, sized by its works in the field. Blue arcs are co-authorship ties: the vā between places. Press play to watch it grow from a handful of early texts to a network spanning the ocean.",
+    go: () => { setView("map"); select(null); S.ly.flow = false; $("lyFlow").checked = false; mapVS = { longitude: 182, latitude: -12, zoom: 2.35, pitch: 38, bearing: 0, transitionDuration: 1200, transitionInterpolator: new deck.FlyToInterpolator() }; mapDeck.setProps({ initialViewState: mapVS }); setYear(Y1); } },
+  { k: "2 · Co-location", t: "Where scholars shared a place", p: "Magenta rings mark institutions where several of the field’s most influential scholars published in the same five years: the co-locations a situational analysis looks for. Here, the University of Auckland, 2015–2019.",
+    go: () => { setView("map"); setYear(2019); const c = D.colocations.find(c => /University of Auckland/.test(I[c.inst].name) && c.y0 === 2015); if (c) { select({ type: "coloc", key: c.inst + ":" + c.y0 }); const p = ipos(c.inst); mapVS = { ...mapVS, longitude: p[0], latitude: p[1], zoom: 4.2, transitionDuration: 1200, transitionInterpolator: new deck.FlyToInterpolator() }; mapDeck.setProps({ initialViewState: mapVS }); } } },
+  { k: "3 · The genealogy", t: "How the field unfolded", p: "Every dot is a work, placed in its year and grouped into schools of thought. The starlight line is the main path, the backbone most citation paths run through, from Decolonizing Methodologies onward. Diamonds along the top are events.",
+    go: () => { setView("gen"); setLayout("time"); setYear(Y1); select(null); } },
+  { k: "4 · One text’s reach", t: "Talanoa, traced", p: "Vaioleti’s 2006 paper is the most cited text inside the field. Selecting it lights up everything it draws on and everything that cites it.",
+    go: () => { setView("gen"); const i = findSeedWork("vaioleti2006"); if (i != null) select({ type: "work", i }); } },
+  { k: "5 · People", t: "Who to talanoa with", p: "Key thinkers rank by citations from inside the field; networked scholars by how they bridge groups. Add people to the individual or group talanoa shortlist and copy it for the team.",
+    go: () => { setView("people"); } },
+  { k: "6 · The gap", t: "What the databases miss", p: "Guidelines, reports and journal articles at the heart of the field have no record, and nearly a quarter of the works found carry no reference list. The project’s curated datasets would fill this.",
+    go: () => { setView("gaps"); } },
+];
+let tourAt = -1;
+function showTour(k) {
+  tourAt = k; const T = $("tour");
+  if (k < 0 || k >= TOUR.length) { T.hidden = true; tourAt = -1; return; }
+  const s = TOUR[k]; s.go();
+  T.innerHTML = `<div class="k">${esc(s.k)}</div><h3>${esc(s.t)}</h3><p>${esc(s.p)}</p>
+    <div class="btnrow"><button class="btn" id="tPrev" ${k === 0 ? "disabled" : ""}>Back</button><button class="btn on" id="tNext">${k === TOUR.length - 1 ? "Finish" : "Next"}</button><button class="btn" id="tEnd">Close</button></div>`;
+  T.hidden = false;
+  $("tPrev").onclick = () => showTour(k - 1); $("tNext").onclick = () => showTour(k + 1); $("tEnd").onclick = () => showTour(-1);
+}
+$("tourBtn").onclick = () => showTour(0);
+
+// ---------------- boot ----------------
+try { await document.fonts.load('600 14px "Source Sans 3"'); await document.fonts.load('400 14px "Source Sans 3"'); await document.fonts.load('500 14px "Alegreya"'); } catch { /* fallback fonts */ }
+$("loading").remove();
+const start = (location.hash || "").replace("#", "");
+renderPanel(); renderTide();
+setView(["map", "gen", "people", "gaps", "about"].includes(start) ? start : "map", false);
+window.addEventListener("resize", () => { renderTide(); queueRelabel(); });
+})();
+</script>

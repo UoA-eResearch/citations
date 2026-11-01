@@ -1,0 +1,17 @@
+# Keyword probes for the gap check: one per line, "Label: term | term | ...".
+# Terms are Scopus title/abstract/keyword searches (quote nothing; each term is searched as a phrase).
+#
+# EXAMPLE PROBES. These are the research themes named on the Blue Pacific Horizons web page
+# (auckland.ac.nz/en/research/signature-research-areas/blue-pacific-horizons.html), used only to
+# show how the probe works. Replace them with BPH's own list of areas missing from the 2025 SRA work,
+# then run: bph/pipeline/probe_keywords.py
+Sustainable fisheries: sustainable fisheries | fisheries management | fisheries
+Aquaculture: aquaculture
+Renewable ocean energy: ocean energy | wave energy | tidal energy | marine renewable energy
+Coastal livelihoods: coastal livelihoods | coastal communities | livelihoods
+Environmental stewardship: environmental stewardship | ocean stewardship | marine stewardship | kaitiakitanga
+Environmental justice: environmental justice | climate justice
+Resilience: resilience
+Healthy oceans: ocean health | marine conservation | marine protected areas
+Cultural identity: cultural identity
+Māori and Pacific knowledge systems: Indigenous knowledge | traditional knowledge | mātauranga | Pacific knowledge

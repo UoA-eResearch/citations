@@ -94,3 +94,20 @@ python3 -m http.server
 - [Decolonizing Methodologies](https://uoa-eresearch.github.io/citations/?data=Decolonizing_Methodologies)
   ([map](https://uoa-eresearch.github.io/citations/Decolonizing_Methodologies/map.html),
   [3D map](https://uoa-eresearch.github.io/citations/Decolonizing_Methodologies/map3D.html))
+
+## Vā Atlas of Pacific Research
+
+[`pacific/`](pacific/) holds a separate prototype: a citation genealogy and Pacific-centred
+situational map of the Pacific Research Methodologies literature (4,123 works from OpenAlex),
+following the two-fold analysis Lisa Uperesa describes, with key-thinker measures and a talanoa
+shortlist. See
+[pacific/README.md](pacific/README.md) for the method and rebuild steps.
+
+## Blue Pacific Research Landscape
+
+[`bph/`](bph/) maps the University of Auckland's research in or about the Pacific for the Blue Pacific
+Horizons Signature Research Area: strengths, a Pacific-centred map, researchers, public grants, and how the
+work lines up with the SRA's SciVal Topics (each work placed in its own SciVal Topic and Topic Cluster through
+the Elsevier APIs), with keyword probes for gap analysis. Only the code is public: the data files hold
+licensed Scopus/SciVal data and an internal University list, so they are rebuilt locally. See
+[bph/README.md](bph/README.md).
