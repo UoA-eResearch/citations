@@ -44,7 +44,7 @@ def geocode_audit(P):
 
 def exact_d6(f, day):
     t, v, q = MX.load(HL / "data" / "series" / f"{f}.npz")
-    bad = MX.bad_quality(q, "S3") | ~np.isfinite(v) | np.r_[False, MX.physical_bad(np.diff(t), v[1:])]
+    bad = MX.bad_quality(q, "S3") | ~np.isfinite(v) | np.r_[False, MX.physical_bad(t[1:], np.diff(t), v[1:])]
     rain = np.where(bad, 0.0, v)
     C = np.r_[0.0, np.cumsum(rain[1:])]
     a = day.value / 6e10; b = a + 1440

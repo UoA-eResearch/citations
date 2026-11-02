@@ -9,18 +9,18 @@ read.*
 **Verdict: H1 Supported (preregistered rule), with a fragile margin.**
 
 - **H1 (rarity predicts flood callouts better than depth): Supported.** All three preregistered conditions hold:
-  - **Held-out log-loss.** The rarity model's is lower: D_LL = 3.9×10⁻⁵ (95% storm-day interval 0.6×10⁻⁵ to
-    8.3×10⁻⁵), 3.4% of the depth model's log-loss.
-  - **Skill.** Rarity's skill over a no-rain baseline is 1.076 times depth's (bar: 1.05).
+  - **Held-out log-loss.** The rarity model's is lower: D_LL = 3.7×10⁻⁵ (95% storm-day interval 0.8×10⁻⁵ to
+    7.6×10⁻⁵), 3.2% of the depth model's log-loss.
+  - **Skill.** Rarity's skill over a no-rain baseline is 1.073 times depth's (bar: 1.05).
   - **Regions.** Leave-one-region-out, rarity predicts better in 7 of 9 regions.
 - **The margin is thin.**
   - **One storm.** The held-out year has 64 flood suburb-days, 24 of them in the Nelson–Tasman floods of 25–30 June
-    2025. Without those six days, D_LL is 0.9×10⁻⁵ and its interval includes zero (post hoc).
+    2025. Without those six days, D_LL is 1.3×10⁻⁵ and its interval just includes zero (post hoc).
   - **The regions.** One of the 7 regional "wins" is the West Coast, which had no held-out flood. Without it rarity
     still wins 6 of 8.
 - **The secondaries are mixed:**
   - **24-hour rain:** rarity is better (S 1.12, interval excluding zero).
-  - **1-hour rain:** depth is marginally better (S 0.99).
+  - **1-hour rain:** no difference (S 1.00).
   - **Broader callout definitions,** adding flood-related water-removal callouts or natural-disaster dispatch codes:
     neither model is clearly better.
   - **Other rain measures:** the AEP form, the 5 km and inverse-distance assignments, and dropping unverified data
@@ -34,7 +34,7 @@ the raw amount.
 
 On the year we held back for testing, the "how unusual" version predicted callouts a little better, and it did so in
 most regions. That is what our preregistered test asked for. But the test year had only 64 suburb-days with flood
-callouts, and about three-quarters of the advantage comes from one event, the Nelson–Tasman floods of late June
+callouts, and about two-thirds of the advantage comes from one event, the Nelson–Tasman floods of late June
 2025.
 
 Across all years, flood callouts become ten times more likely than on a dry day once six-hour rain reaches about a
@@ -82,16 +82,16 @@ maximum in six hours, and about a third of them called out the fire service for 
 
 | analysis | D_LL (×10⁻⁵, 95% CI) | S | held-out floods |
 |---|---|---|---|
-| **primary (6 h)** | **3.9 (0.6 to 8.3)** | **1.076** | **64** |
-| 1 h | −0.8 (−4.4 to 2.5) | 0.986 | 64 |
-| 24 h | 5.1 (1.6 to 9.7) | 1.118 | 64 |
-| AEP form (log ARI above the 1.58-year depth) | 2.7 (−0.9 to 6.8) | 1.053 | 64 |
-| outcome V1 (adds flood water-removal callouts) | 1.4 (−1.7 to 4.7) | 1.022 | 260 |
-| outcome V2 (adds natural-disaster dispatch codes) | −9.5 (−23.6 to 1.8) | 0.953 | 765 |
-| Q: unverified rain data excluded | 3.8 (1.1 to 7.1) | 1.089 | 60 |
-| gauge within 5 km | 2.7 (0.3 to 5.3) | 1.045 | 48 |
-| inverse-distance mean of up to 3 gauges | 3.9 (0.7 to 8.1) | 1.075 | 64 |
-| primary without 25–30 June 2025 (post hoc) | 0.9 (−0.5 to 2.6) | — | 40 |
+| **primary (6 h)** | **3.7 (0.8 to 7.6)** | **1.073** | **64** |
+| 1 h | 0.0 (−2.9 to 3.0) | 1.001 | 64 |
+| 24 h | 5.3 (1.6 to 10.0) | 1.121 | 64 |
+| AEP form (log ARI above the 1.58-year depth) | 2.9 (−0.9 to 7.4) | 1.057 | 64 |
+| outcome V1 (adds flood water-removal callouts) | 1.3 (−1.7 to 4.5) | 1.020 | 260 |
+| outcome V2 (adds natural-disaster dispatch codes) | −0.2 (−6.5 to 5.4) | 0.999 | 765 |
+| Q: unverified rain data excluded | 3.8 (1.2 to 7.0) | 1.089 | 60 |
+| gauge within 5 km | 2.8 (0.3 to 5.5) | 1.046 | 48 |
+| inverse-distance mean of up to 3 gauges | 4.1 (0.7 to 9.0) | 1.081 | 64 |
+| primary without 25–30 June 2025 (post hoc) | 1.3 (−0.1 to 2.9) | — | 40 |
 
 ### Leave-one-region-out (`results/figures/F2_loro.png`)
 
@@ -106,7 +106,7 @@ maximum in six hours, and about a third of them called out the fire service for 
 
 | day | panel suburbs | called out | median 6-h rain | median rarity | depth model | rarity model |
 |---|---|---|---|---|---|---|
-| Auckland, 27 Jan 2023 | 174 | 55 (32%) | 135 mm | 2.71 | 33% | 35% |
+| Auckland, 27 Jan 2023 | 174 | 55 (32%) | 135 mm | 2.71 | 33% | 36% |
 | Hawke's Bay, 14 Feb 2023 (Cyclone Gabrielle) | 91 | 10 (11%) | 61 mm | 1.56 | 8% | 10% |
 | Nelson and Tasman, 27 Jun 2025 | 70 | 8 (11%) | 56 mm | 0.97 | 3% | 4% |
 
@@ -130,8 +130,8 @@ the two.
 ## What this does and does not show
 
 - **Rarity is at least as good a predictor as depth, and slightly better on the preregistered test.** The evidence
-  for "better" rests on one held-out year dominated by one storm. It is not robust to the broader outcome definitions
-  or to the 1-hour duration.
+  for "better" rests on one held-out year dominated by one storm. It does not extend to the broader outcome definitions
+  or to the 1-hour duration, where the two models tie.
 - **The practical difference is small** at the thresholds where most callouts happen. The two models agree within a
   few percentage points on the big storm days. Regional depth thresholds implied by rarity vary by only about ±25%.
 - **Limits.**
@@ -158,6 +158,7 @@ the two.
   - **D1:** a physical screen for rain records (shared with the HIRDS lead's D6); one region per suburb; file
     encoding and date formats.
   - **D2:** geocoding and suburb-key fixes from the G4 audit; the stopped first run.
+  - **D3:** rain rebuilt with the HIRDS lead's corrected screens before review; H1 unchanged (S 1.076 → 1.073).
 - **Post hoc:** `code/posthoc.py`: the result without late June 2025, and the storm-day traces.
 - **Gates:**
   - G1: in the plan (the test year used once; activity from training years only).

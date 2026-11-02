@@ -10,19 +10,21 @@ its 6-hour maximum divided by the local HIRDS v4 median annual maximum, better t
 
 **Reported:**
 - **H1 Supported by the preregistered rule.**
-  - Held-out FY2024/25 log-loss difference 3.9×10⁻⁵, storm-day bootstrap 0.6–8.3×10⁻⁵.
-  - Skill ratio S = 1.076 (bar 1.05).
+  - Held-out FY2024/25 log-loss difference 3.7×10⁻⁵, storm-day bootstrap 0.8–7.6×10⁻⁵.
+  - Skill ratio S = 1.073 (bar 1.05).
   - Leave-one-region-out: 7 of 9 regions.
 - **The margin is fragile.** Only 64 held-out flood suburb-days, 24 of them in the Nelson–Tasman floods of late June
   2025. Without those days the interval includes zero (post hoc).
-- **Secondaries:** 24 h supports, 1 h slightly favours depth, broader outcome definitions are inconclusive.
+- **Secondaries:** 24 h supports, 1 h ties, broader outcome definitions are inconclusive.
 - **Onset thresholds:** common to all regions by construction.
 
 **What to read:**
 - plan.md and deviations.md:
   - D1: a rain-record physical screen, region per suburb, file formats;
   - D2: geocoding and suburb-key fixes from the G4 audit, and a stopped first run quarantined unread, then opened
-    after the final result.
+    after the final result;
+  - D3: rain rebuilt with the HIRDS lead's corrected record and window screens (HIRDS D7) before this review; it
+    records the before-and-after numbers.
 - report.md and results/plausibility.md.
 - code/: build_fenz.py, geocode.py, rain_daily.py, panel.py, analyse.py, posthoc.py, g4_check.py, figures.py.
 - results/tables/: primary.json, secondary.json, posthoc.json, onset.csv, coverage.json, g4_geocode.json,

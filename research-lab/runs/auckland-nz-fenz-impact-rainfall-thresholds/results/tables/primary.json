@@ -1,80 +1,80 @@
 {
- "LL_base": 0.0016647,
- "LL_D": 0.0011515,
- "LL_R": 0.0011123,
- "D_LL": 3.9207804472338164e-05,
- "skill_D": 0.0005132000000000001,
- "skill_R": 0.0005524,
+ "LL_base": 0.0016692,
+ "LL_D": 0.0011547,
+ "LL_R": 0.0011172,
+ "D_LL": 3.748800919164795e-05,
+ "skill_D": 0.0005145,
+ "skill_R": 0.000552,
  "S_condition": true,
- "S": 1.076,
+ "S": 1.073,
  "D_LL_ci": [
-  6.077288421501983e-06,
-  8.27200022265082e-05
+  7.985725335646442e-06,
+  7.555017926014542e-05
  ],
- "test_suburb_days": 336457,
+ "test_suburb_days": 335539,
  "test_floods": 64,
  "H1": "Supported",
  "loro": {
   "regions": {
    "Auckland Region": {
-    "LL_D": 0.0014111,
-    "LL_R": 0.0013743,
+    "LL_D": 0.0014164,
+    "LL_R": 0.0013796,
     "R_wins": true,
     "test_floods": 21,
     "floods_all_years": 377
    },
    "Hawke's Bay Region": {
-    "LL_D": 0.0003497,
-    "LL_R": 0.0003922,
+    "LL_D": 0.0003491,
+    "LL_R": 0.0003926,
     "R_wins": false,
     "test_floods": 1,
     "floods_all_years": 56
    },
    "Marlborough Region": {
-    "LL_D": 0.0042579,
-    "LL_R": 0.0037799,
+    "LL_D": 0.0042572,
+    "LL_R": 0.0037857,
     "R_wins": true,
     "test_floods": 8,
     "floods_all_years": 34
    },
    "Nelson Region": {
-    "LL_D": 0.0034159,
-    "LL_R": 0.0033648,
+    "LL_D": 0.0034152,
+    "LL_R": 0.0033603,
     "R_wins": true,
     "test_floods": 7,
     "floods_all_years": 40
    },
    "Northland Region": {
-    "LL_D": 0.0009449,
-    "LL_R": 0.0008447,
+    "LL_D": 0.0009437,
+    "LL_R": 0.0008382,
     "R_wins": true,
     "test_floods": 4,
     "floods_all_years": 65
    },
    "Taranaki Region": {
-    "LL_D": 0.0005014,
-    "LL_R": 0.0004715,
+    "LL_D": 0.000506,
+    "LL_R": 0.0004727,
     "R_wins": true,
     "test_floods": 2,
     "floods_all_years": 40
    },
    "Tasman Region": {
-    "LL_D": 0.0029808,
-    "LL_R": 0.0028874,
+    "LL_D": 0.002979,
+    "LL_R": 0.002889,
     "R_wins": true,
     "test_floods": 13,
     "floods_all_years": 59
    },
    "Wellington Region": {
-    "LL_D": 0.0007916,
-    "LL_R": 0.0008435,
+    "LL_D": 0.0007919,
+    "LL_R": 0.0008446,
     "R_wins": false,
     "test_floods": 7,
     "floods_all_years": 130
    },
    "West Coast Region": {
-    "LL_D": 0.0002577,
-    "LL_R": 5.72e-05,
+    "LL_D": 0.0002603,
+    "LL_R": 6.37e-05,
     "R_wins": true,
     "test_floods": 0,
     "floods_all_years": 20

@@ -39,3 +39,26 @@ audit result came in.
 - Its `primary.json` had been written at 17:04, but its printed output was buffered and nothing was displayed.
 - The file was moved unread to `results/tables/v0_unseen_flawed_geocoding/` (sha256 begins edd777ce0bc1a276).
 - It will be opened only after the corrected result is final, to report what the fixes changed.
+
+## D3 — 2026-11-03 12:15 NZDT — rain re-screened with the HIRDS lead's corrected screens, before review
+
+**Why.** FENZ's daily rain (`rain_daily.py`) reuses the HIRDS lead's `physical_bad` screen. During the HIRDS
+review and confirmation pass, that screen gained a window test (any 5-minute total above 40 mm or 60-minute total
+above 150 mm drops every record in the window), negative increments became faulty records, and a NaN that silently
+disabled the window test was fixed (HIRDS D7). FENZ's results had been built with the old screen, so they were
+rebuilt, unchanged in every other respect, before the independent review.
+
+**What changed.** 918 more suburb-days lost their last usable gauge within 10 km (159,979 dropped, 2,653,907 kept);
+all 918 fell in the held-out year (335,539 test suburb-days), consistent with the window faults found in the HIRDS review lying in recent records. The held-out flood count is unchanged (64).
+
+| statistic | before | after |
+|---|---|---|
+| H1 | Supported | Supported |
+| D_LL (×10⁻⁵, 95% interval) | 3.9 (0.6 to 8.3) | 3.7 (0.8 to 7.6) |
+| S | 1.076 | 1.073 |
+| regions where rarity wins | 7 of 9 | 7 of 9 |
+| without 25–30 June 2025 (post hoc) | 0.9 (−0.5 to 2.6) | 1.3 (−0.1 to 2.9) |
+| 1 h: S | 0.986 | 1.001 |
+| outcome V2: S | 0.953 | 0.999 |
+
+The other secondaries move by 0.01 or less in S. The report quotes the new numbers throughout.

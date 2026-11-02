@@ -20,7 +20,7 @@
 ## Base rates
 
 - **Training years:** 765 flood suburb-days among 2.32 million (0.033%).
-- **Held-out year:** 64 among 336,457 (0.019%). FY2024/25 had fewer flood callouts than the wet 2021–2023 years.
+- **Held-out year:** 64 among 335,539 (0.019%). FY2024/25 had fewer flood callouts than the wet 2021–2023 years.
   This matches FENZ's own yearly flood counts (152 in 2023/24, 306 in 2024/25, against 904–925 in 2021/22–2022/23).
 - **Log-loss scale.** Both models cut the held-out log-loss of a no-rain baseline by about a third (0.00166 to
   0.00111–0.00115). The difference between them is 3.4% of the depth model's log-loss, or 7.6% of its skill.
@@ -29,6 +29,6 @@
 
 - The daily 6-hour maximum per gauge reproduces the HIRDS lead's annual maxima exactly, for all 3,509 gauge-years
   tested (same rules, same windows).
-- The window audit (G4): 30 random suburb-days recomputed exactly from raw records are within 0.6% of the panel.
+- The window audit (G4): 30 random suburb-days recomputed exactly from raw records match the panel in all 30 (after D3; before D3, a different random 30 were within 0.6%).
 - The geocoding audit (G4): every panel suburb's assigned gauge is in its own council (866) or a neighbouring one
   (88).

@@ -34,7 +34,7 @@ def series_arrays(t, v, q, variant):
     span = pd.Series(np.where(short, L, 0.0)).groupby(ey).sum()
     dense_y = (sil / span.where(span > 0)).fillna(1.0) <= MX.DENSE_SILENCE
     dense = pd.Series(ey).map(dense_y).fillna(False).to_numpy()
-    bad = MX.bad_quality(qq, variant) | ~np.isfinite(val) | MX.physical_bad(L, val)   # spikes and stuck sensors (D1)
+    bad = MX.bad_quality(qq, variant) | ~np.isfinite(val) | MX.physical_bad(e, L, val)   # spikes and stuck sensors (D1)
     rain = np.where(bad, 0.0, val)
     return s, e, L, rain, bad, dense
 
