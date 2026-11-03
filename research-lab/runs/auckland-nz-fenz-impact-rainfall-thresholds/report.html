@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Retraction Citer Contagion</title>
+<meta name="description" content="Do innocent citers of a later-retracted paper lose citations after the retraction?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Metascience</div>
+  <h1>Flood callouts track how rare the rain is for a place slightly better than its depth alone, but no better than depth plus the place&#x27;s climatology: the preregistered test passes on one held-out year whose margin comes from a single storm</h1>
+  <p class="subtitle">FENZ incident records FY2017/18–2024/25 (679,485 exposures), geocoded to 900 places with a council rain gauge within 10 km (gauges from eight councils): 2.51 million place-days. Rain comes from the HIRDS lead&#x27;s gauge series. Rarity is the day&#x27;s maximum 6-hour rain divided by the gauge&#x27;s HIRDS v4 median annual maximum, HIRDS&#x27;s own index. Models were trained on FY2017/18–2023/24 and scored on FY2024/25, once per panel build (four builds; the preregistered rule&#x27;s outcome was the same on all of them). The plan was committed before any FENZ outcome row was read.</p>
+  <div class="meta">
+    <span>Report · 2026-11-03 · pre-review draft</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-fenz-impact-rainfall-thresholds/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-fenz-impact-rainfall-thresholds/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-fenz-impact-rainfall-thresholds/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: H1 Supported (preregistered rule), with a fragile margin.</strong></p>
+<ul>
+<li><strong>H1 (rarity predicts flood callouts better than depth): Supported.</strong> All three preregistered conditions hold:<ul>
+<li><strong>Held-out log-loss.</strong> The rarity model's is lower: D_LL = 4.0×10⁻⁵ (95% storm-day interval 0.9×10⁻⁵ to
+7.8×10⁻⁵), 3.3% of the depth model's log-loss.</li>
+<li><strong>Skill.</strong> Rarity's skill over a no-rain baseline is 1.072 times depth's (bar: 1.05).</li>
+<li><strong>Regions.</strong> Leave-one-region-out, rarity predicts better in 7 of 9 regions.</li>
+</ul>
+</li>
+<li><strong>The margin is thin.</strong><ul>
+<li><strong>One storm.</strong> The held-out year has 64 flood place-days, 24 of them on 25–30 June 2025: 22 in the top-of-the-South
+floods (Tasman 13, Marlborough 8, Nelson 1) and 2 in Auckland. Without those six days, D_LL is 1.3×10⁻⁵ and its
+interval just includes zero (post hoc).</li>
+<li><strong>The regions.</strong> One of the 7 regional "wins" is the West Coast, which had no held-out flood. Without it rarity
+still wins 6 of 8.</li>
+</ul>
+</li>
+<li><strong>But rarity is not distinguishable from depth plus the place's climatology</strong> (post hoc, prompted by the review).
+  Giving the depth model the place's median annual 6-hour maximum (log M) as an extra covariate matches the rarity
+  model: their held-out log-loss differs by 0.4×10⁻⁵ (−0.6 to 1.7×10⁻⁵), and its skill is 1.064 times depth's. The
+  gain comes from knowing a place's typical heavy rain; dividing by it is one way, not the only way, to use that.</li>
+<li><strong>The secondaries are mixed:</strong><ul>
+<li><strong>24-hour rain:</strong> rarity is better (S 1.10, interval excluding zero).</li>
+<li><strong>1-hour rain:</strong> no clear difference (S 1.01, interval spanning zero).</li>
+<li><strong>Broader callout definitions,</strong> adding flood-related water-removal callouts or natural-disaster dispatch codes:
+neither model is clearly better.</li>
+<li><strong>Other rain measures:</strong> the AEP form, the 5 km and inverse-distance assignments, and dropping unverified data
+all favour rarity, though not all meet every bar.</li>
+</ul>
+</li>
+</ul>
+<h2>In plain terms</h2>
+<p>The same downpour can be routine in one place and a disaster in another. Using eight years of Fire and Emergency callout records, we tested whether flood callouts
+follow how unusual the rain is for a place (its depth compared with that place's typical yearly maximum) rather than
+the raw amount.</p>
+<p>On the year we held back for testing, the "how unusual" version predicted callouts a little better, and it did so in
+most regions. That is what our preregistered test asked for. But the test year had only 64 place-days with flood
+callouts, and about two-thirds of the advantage comes from one event, the floods at the top of the South Island in
+late June 2025. And a depth model that is also told each place's typical heavy rain does just as well, so what helps is
+knowing the place, not the ratio itself.</p>
+<p>In the model fitted to 2017–2024, flood callouts become ten times more likely than on a dry day once six-hour rain reaches about a
+quarter of a place's typical yearly maximum. On 27 January 2023, Auckland suburbs had 2.7 times their typical yearly
+maximum in six hours, and about a third of them called out the fire service for flooding.</p>
+<h2>What was asked</h2>
+<ul>
+<li><strong>The question.</strong> The lead (<code>auckland-nz-fenz-impact-rainfall-thresholds</code>) asked whether flood impacts in New
+  Zealand track rain rarity rather than depth, using Fire and Emergency New Zealand's open incident records as an
+  objective, time-stamped impact series.</li>
+<li><strong>Analogues.</strong> Elsewhere, studies use insurance claims (Spekkers et al., 2013) and evaluate rainfall alerts
+  against reported surface-water flooding (Hurford et al., 2012).</li>
+<li><strong>The index.</strong> HIRDS v4 uses the median annual maximum as the index of its regional frequency analysis, which
+  defines rarity here.</li>
+</ul>
+<h2>How it was done</h2>
+<ul>
+<li><strong>Callouts.</strong><ul>
+<li>FENZ exposures with natural-disaster type "Flood", by suburb and NZST day (records are converted from civil
+time).</li>
+<li>Suburbs are geocoded to NZ Gazetteer points by normalised name, rejecting candidates whose nearest gauge belongs
+to an unrelated council (D2).</li>
+<li>The geocoding audit finds no suburb assigned to a gauge in a distant council (G4); against OpenStreetMap, all 100 of a random
+sample of places fall in their recorded region (D4).</li>
+</ul>
+</li>
+<li><strong>Rain.</strong><ul>
+<li>The HIRDS lead's council gauge series (seven Hilltop councils and Auckland Council), with its completeness and
+quality rules.</li>
+<li>Unverified (2xx) data are kept (sensitivity Q drops them), and physically impossible records are screened out
+(D1).</li>
+<li>Each place-day takes the nearest gauge within 10 km that is usable that day.</li>
+</ul>
+</li>
+<li><strong>Models.</strong> Two logistic regressions, identical except for the rain term: a natural spline in log(1 + depth)
+  against one in log(1 + rarity). Shared terms:<ul>
+<li>72-hour antecedent rain;</li>
+<li>month and weekend;</li>
+<li>region;</li>
+<li>each suburb's background (non-flood) callout rate.</li>
+</ul>
+</li>
+<li><strong>Test.</strong><ul>
+<li>Held-out mean log-loss on FY2024/25, with a storm-day block bootstrap (2,000 resamples).</li>
+<li>The skill ratio S.</li>
+<li>Leave-one-region-out.</li>
+</ul>
+</li>
+</ul>
+<h2>Results</h2>
+<h3>Held-out comparison</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>analysis</th>
+<th>D_LL (×10⁻⁵, 95% CI)</th>
+<th>S</th>
+<th>held-out floods</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>primary (6 h)</strong></td>
+<td><strong>4.0 (0.9 to 7.8)</strong></td>
+<td><strong>1.072</strong></td>
+<td><strong>64</strong></td>
+</tr>
+<tr>
+<td>1 h</td>
+<td>0.6 (−2.0 to 3.4)</td>
+<td>1.010</td>
+<td>64</td>
+</tr>
+<tr>
+<td>24 h</td>
+<td>4.9 (1.9 to 8.7)</td>
+<td>1.102</td>
+<td>64</td>
+</tr>
+<tr>
+<td>AEP form (log ARI above the 1.58-year depth)</td>
+<td>3.6 (−0.5 to 8.8)</td>
+<td>1.066</td>
+<td>64</td>
+</tr>
+<tr>
+<td>outcome V1 (adds flood water-removal callouts)</td>
+<td>2.3 (−0.9 to 5.7)</td>
+<td>1.034</td>
+<td>260</td>
+</tr>
+<tr>
+<td>outcome V2 (adds natural-disaster dispatch codes)</td>
+<td>1.1 (−4.9 to 6.4)</td>
+<td>1.005</td>
+<td>765</td>
+</tr>
+<tr>
+<td>Q: unverified rain data excluded</td>
+<td>4.3 (1.5 to 7.7)</td>
+<td>1.094</td>
+<td>60</td>
+</tr>
+<tr>
+<td>gauge within 5 km</td>
+<td>3.0 (0.6 to 5.7)</td>
+<td>1.045</td>
+<td>48</td>
+</tr>
+<tr>
+<td>inverse-distance mean of up to 3 gauges</td>
+<td>4.2 (1.0 to 8.7)</td>
+<td>1.077</td>
+<td>64</td>
+</tr>
+<tr>
+<td>primary without 25–30 June 2025 (post hoc)</td>
+<td>1.3 (−0.2 to 3.0)</td>
+<td>—</td>
+<td>40</td>
+</tr>
+<tr>
+<td>depth + log M against rarity (post hoc, review): D+M minus R</td>
+<td>0.4 (−0.6 to 1.7)</td>
+<td>1.064 for D+M</td>
+<td>64</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Leave-one-region-out (<code>results/figures/F2_loro.png</code>)</h3>
+<figure><a href="results/figures/F2_loro.png"><img src="results/figures/F2_loro.png" alt="LORO"></a><figcaption>Each region is left out of training (FY2017/18-2023/24 in the other regions) and scored on its own FY2024/25 suburb-days. Bars: percentage reduction in mean log-loss of the rarity model against the depth model. In brackets: the region&#x27;s held-out flood suburb-days; regions with few are noisy.</figcaption></figure>
+<ul>
+<li><strong>Rarity wins</strong> in Auckland, Marlborough, Nelson, Northland, Taranaki, Tasman and the West Coast.</li>
+<li><strong>Depth wins</strong> in Wellington and Hawke's Bay.</li>
+<li><strong>Few held-out floods.</strong> Hawke's Bay had 1 and the West Coast none, so those comparisons are mostly about
+  calibration on dry days.</li>
+</ul>
+<h3>Three storm days, observed against fitted (<code>results/tables/posthoc.json</code>)</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>day</th>
+<th>panel places</th>
+<th>called out</th>
+<th>median 6-h rain</th>
+<th>median rarity</th>
+<th>depth model</th>
+<th>rarity model</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Auckland, 27 Jan 2023</td>
+<td>167</td>
+<td>55 (33%)</td>
+<td>135 mm</td>
+<td>2.71</td>
+<td>35%</td>
+<td>37%</td>
+</tr>
+<tr>
+<td>Hawke's Bay, 14 Feb 2023 (Cyclone Gabrielle)</td>
+<td>91</td>
+<td>10 (11%)</td>
+<td>61 mm</td>
+<td>1.56</td>
+<td>8%</td>
+<td>10%</td>
+</tr>
+<tr>
+<td>Nelson and Tasman, 27 Jun 2025</td>
+<td>64</td>
+<td>8 (13%)</td>
+<td>56 mm</td>
+<td>0.97</td>
+<td>3%</td>
+<td>4%</td>
+</tr>
+</tbody>
+</table></div>
+<p>Both models underpredict the Nelson–Tasman day badly. Its 6-hour rain was only moderately rare (median rarity 0.97),
+so whatever drove its callouts, plausibly longer-duration rain, is outside a 6-hour term. Rarity is the less wrong of
+the two.</p>
+<h3>Onset thresholds (<code>results/tables/onset.csv</code>, <code>results/figures/F1_auckland_curve.png</code>)</h3>
+<figure><a href="results/figures/F1_auckland_curve.png"><img src="results/figures/F1_auckland_curve.png" alt="Auckland curve"></a><figcaption>Fitted probability of at least one FENZ flood callout in an Auckland suburb-day, from the rarity model trained on FY2017/18-2023/24, averaged over Auckland&#x27;s training suburb-days with only the rain term changed. Dashed: the median rarity of Auckland panel suburbs on 27 January 2023.</figcaption></figure>
+<ul>
+<li><strong>One curve shape for every region.</strong> The models share one rain curve across regions (regions shift only the
+  baseline), so the rain at which callouts reach 10 times the dry-day rate is the same everywhere by construction:<ul>
+<li>a rarity of 0.25 under the rarity model;</li>
+<li>11 mm in 6 hours under the depth model.</li>
+</ul>
+</li>
+</ul>
+<p>The plan's "region-specific" thresholds are therefore not region-specific in these models.
+- <strong>What the rarity model implies in depth.</strong> The local depth threshold runs from about 9–10 mm (Hawke's Bay,
+  Manawatū-Whanganui, Marlborough, Wellington) to 15–16 mm (Northland, West Coast), against a flat 11 mm.</p>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>Rarity is at least as good a predictor as depth, and slightly better on the preregistered test.</strong> The evidence
+  for "better" rests on one held-out year dominated by one storm. It does not extend to the broader outcome definitions
+  or to the 1-hour duration, where the two models tie.</li>
+<li><strong>What is gained is the place's climatology, not the ratio.</strong> A depth model given log M as an extra covariate
+  is as good as the rarity model (reviewer-prompted post hoc). The preregistered H1 compared rarity with depth alone,
+  and that comparison stands; it does not show that the ratio form is better than other ways of using the same
+  local information.</li>
+<li><strong>The practical difference is small</strong> at the thresholds where most callouts happen. The two models agree within a
+  few percentage points on the big storm days. Regional depth thresholds implied by rarity run from about 15% below to 45% above the flat
+  depth threshold.</li>
+<li><strong>Limits.</strong><ul>
+<li><strong>Callouts are not damage.</strong> They reflect drainage, exposure, reporting and FENZ capacity as well as rain.
+Capacity saturation on extreme days caps counts.</li>
+<li><strong>Coverage.</strong><ul>
+<li>900 places enter the panel: 2,768 geocoded suburb records are 2,609 places once records on the same gazetteer
+  point are merged (D4), and 908 have a gauge within 10 km. They are mainly in Auckland,
+  Wellington, Northland, Hawke's Bay and Taranaki.</li>
+<li>Canterbury, Otago, Southland, Waikato and Bay of Plenty are barely represented.</li>
+</ul>
+</li>
+<li><strong>Points, not polygons.</strong> Suburbs are gazetteer points, because the LINZ suburb polygons need an account the lab
+cannot create. 907 FENZ suburb names did not match the gazetteer (8% of exposure-days).</li>
+<li><strong>Model form.</strong> The models are logistic GLMs with a suburb-background term, not the lead's GLMM.</li>
+<li><strong>Flood days lose their gauge more often than ordinary days.</strong> 17.6% of flood place-days in panel places have no
+usable gauge within 10 km, against 5.5% of all place-days (26% on 27 January 2023), so the panel under-represents
+the heaviest storms, when gauges fail or record unusable data.</li>
+<li><strong>Fitting.</strong> Before D4 the optimiser stopped at scipy's default tolerance, which acted as a slight regulariser;
+with tight tolerances every fit converges (21 fits, largest gradient 9×10⁻⁹). The spline's interior knots fall in
+light rain (they are set on all training days), so the curve is linear above about 75 mm, where a third of flood
+days lie.</li>
+<li><strong>Geocoding.</strong> A random 100 panel places, reverse-geocoded with OpenStreetMap, all fall in their recorded region;
+the 30 whose OSM territorial authority differed were 29 Auckland local-board names and Ōtaki (Kāpiti Coast).</li>
+<li><strong>Rain duration.</strong> The 6-hour term can miss storms whose rain is unusual over longer durations, possibly 27 June
+2025.</li>
+<li><strong>Data assembly.</strong> It needed two rounds of fixes before any result was read (D1, D2). A first analysis on the
+flawed panel was stopped and opened only after the final result: it also met the H1 rule (S 1.059, 5 of 9
+regions).</li>
+<li><strong>Care note.</strong> No ethnicity or iwi data were used, and results are aggregate.</li>
+</ul>
+</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration:</strong> <code>plan.md</code>, committed before any FENZ outcome row was read.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>):<ul>
+<li><strong>D1:</strong> a physical screen for rain records (shared with the HIRDS lead's D6); one region per suburb; file
+encoding and date formats.</li>
+<li><strong>D2:</strong> geocoding and suburb-key fixes from the G4 audit; the stopped first run.</li>
+<li><strong>D3:</strong> rain rebuilt with the HIRDS lead's corrected screens before review; H1 unchanged (S 1.076 → 1.073).</li>
+<li><strong>D4:</strong> fixes from the independent review: one unit per gazetteer point (954 units were 900 places), region from
+the TLA, optimiser tolerances; H1 unchanged (S 1.072). Depth plus climatology added as a reviewer-prompted post hoc.</li>
+</ul>
+</li>
+<li><strong>Post hoc:</strong> <code>code/posthoc.py</code>: the result without late June 2025, and the storm-day traces.</li>
+<li><strong>Gates:</strong><ul>
+<li>G1: in the plan (the test year scored once per panel build; activity from training years only).</li>
+<li>G2: <code>results/tables/coverage.json</code>.</li>
+<li>G3: <code>results/plausibility.md</code>.</li>
+<li>G4: <code>results/tables/g4_geocode.json</code>, <code>g4_osm.json</code> (100 places against OpenStreetMap) and <code>g4_window.csv</code>.</li>
+<li>G5: <code>review/overclaim_check.md</code>.</li>
+<li>G6: <code>results/attribution_ledger.csv</code>.</li>
+<li>G7: does not apply.</li>
+</ul>
+</li>
+<li><strong>Independent review:</strong> queued (Fable), per the lab's pacing rule.</li>
+<li><strong>Data:</strong> Fire and Emergency New Zealand Incident Data (CC BY 4.0, New Zealand Government); the NZ Gazetteer
+  (LINZ, CC BY 4.0); council rain gauges, including Auckland Council's; HIRDS v4 (NIWA / Earth Sciences New Zealand).</li>
+</ul>
+<h2>Reproducing it</h2>
+<ol>
+<li>The HIRDS lead's series and depths (its "Reproducing it").</li>
+<li><code>code/build_fenz.py</code>, <code>code/geocode.py</code>, <code>code/rain_daily.py</code>, <code>code/panel.py</code>.</li>
+<li><code>code/analyse.py</code> (about 20 minutes), <code>code/posthoc.py</code>, <code>code/g4_check.py</code>, <code>code/figures.py</code>.</li>
+</ol>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/auckland-nz-fenz-impact-rainfall-thresholds/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

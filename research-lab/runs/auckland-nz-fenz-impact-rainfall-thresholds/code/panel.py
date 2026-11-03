@@ -30,7 +30,7 @@ def main():
     tla_region = (F0.groupby(["tla", "region"]).size().reset_index(name="n").sort_values("n", ascending=False)
                   .drop_duplicates("tla").set_index("tla").region)
     S["region_fenz"] = S.region
-    S["region"] = S.tla.map(tla_region).fillna(S.region)
+    S["region"] = S.region.where(S.tla == "", S.tla.map(tla_region).fillna(S.region))   # a blank TLA keeps the record's council
     S["pk"] = list(zip(S.lat.round(6), S.lon.round(6)))
     keep = S.sort_values(["exposures", "suburb"], ascending=[False, True]).drop_duplicates("pk")
     rep = keep.set_index("pk")[["suburb", "tla", "region"]]

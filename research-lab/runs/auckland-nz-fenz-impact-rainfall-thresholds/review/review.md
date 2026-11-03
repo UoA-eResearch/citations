@@ -240,3 +240,70 @@ region × rain-slope interaction or per-region fits; worth one line as future wo
   (finding 9).
 - Onset thresholds: adequate (finding 10).
 - Report: numbers match except finding 7.
+
+## Confirmation pass (2026-11-03, after D4)
+
+### Verdict: **publish with edits**
+
+The three substantive fixes are real and verified; what remains is stale text left behind by the D4 re-run (the
+onset numbers and one plausibility sentence), fixable without re-analysis.
+
+### What was checked and holds
+
+- **Finding 1 (duplicate units).** `check_dups.py` on the D4 panel: 0 units share a gazetteer point (was 107 on 53
+  points); 900 units, 2,506,001 place-days, 316,853 held out, 765 + 64 floods, as D4 states. `panel.py` merges on the
+  rounded point and sums callouts per place-day; `coverage.json` carries the merge (2,768 → 2,609) and the five
+  dropped gauges (443 → 438). 0 units now have a region different from their TLA's modal council.
+- **Finding 2 (D+M).** `posthoc.json: depth_plus_logM` matches the coordinator's numbers (D+M − R 0.41×10⁻⁵, −0.60 to
+  1.66×10⁻⁵; S_DM 1.064 against S_R 1.072). Title, verdict block, plain terms and "What this does and does not show"
+  now say the gain is the place's climatology and the ratio is one way to encode it. Independent refit
+  (`confirm.json`, the study's own `analyse.py` at the new tolerances): primary D_LL 3.9537×10⁻⁵ (0.904 to
+  7.789×10⁻⁵), S 1.072, identical to `primary.json` to the last digit; three fits, all converged (max nit 874, max
+  |grad| 1.6×10⁻⁸); D+M − R 4.11×10⁻⁶ (−0.60 to 1.66×10⁻⁵, 25% of resamples ≤ 0), S_DM 1.064, identical to
+  `posthoc.json`. On the D4 panel D+M is a hair worse than R rather than a hair better, as on the D3 panel; either
+  way the two are indistinguishable, so the report's wording ("matches", "not distinguishable") is right. The held-out
+  margin is still entirely from the 64 flood place-days (+4.29×10⁻⁵) with the dry place-days pulling the other way
+  (−0.33×10⁻⁵).
+- **Finding 3 (missingness).** Recomputed on the D4 panel: 1,006 flood place-days in panel places, 829 kept, 17.6%
+  lost; 26.3% lost on 27 January 2023; all place-days lost 147,175 / 2,653,176 = 5.5% (the report's 5.6% is a rounding
+  of 5.55%). Stated in Limits.
+- **Finding 4 (optimiser).** `analyse.fit` now uses ftol 1e-15 / gtol 1e-10 and records every fit; `primary.json: fits`
+  shows 21 fits, all success, max nit 1,277, max |grad| 8.7×10⁻⁹. Primary: D_LL 3.95×10⁻⁵ (0.90 to 7.79×10⁻⁵), S 1.072,
+  LORO 7 of 9, H1 Supported; post hoc without 25–30 June 1.32×10⁻⁵ (−0.15 to 2.95×10⁻⁵).
+- **Finding 5 (geocoding audit).** Region now from the TLA's modal council (101 units changed). `g4_osm.py`
+  reverse-geocodes a seeded random 100 panel places; `g4_osm.csv`: 100 of 100 OSM regions match (the crosstab is
+  diagonal over nine regions), 70 of 100 TLAs match and the 30 mismatches are Auckland local-board names plus Ōtaki.
+  That is a judgeable denominator; the earlier neighbour-rule gap is closed.
+- **Findings 7 and 8.** Late-June split verified on the D4 panel (Tasman 13, Marlborough 8, Auckland 2, Nelson 1);
+  "scored once per panel build (four builds)" and "In the model fitted to 2017–2024" are in; coverage stages added.
+- **G3.** `g3_invariant.py` reproduces my check (3,543 of 3,543 gauge-years exact). The three unit traces in
+  `posthoc.json` have panel d6 equal to the raw recomputation; the Auckland and Tasman ones are the same place-days I
+  traced, with the same rain and near-identical probabilities after the tight refit.
+- **G5 / G6.** `overclaim_check.py --verify` passes (32 rows), `attribution.py check` passes (7 claims).
+- **Report numbers.** Every number in the standfirst, verdict block, results table, storm-day table and plain terms
+  matches `primary.json`, `secondary.json`, `posthoc.json` and `coverage.json`, with the exceptions below.
+
+### Remaining issues (text only)
+
+1. **Onset thresholds are stale (fix before publishing).** The D4 run's `onset.csv` gives a rarity onset of 0.25 in
+   every region and a depth onset of 11 mm (one grid step above the D3 values), but `report.md:132-133` still says
+   0.20 and 10 mm, `report.md:137` still derives the implied depth range from 0.20, the plain-terms sentence still says
+   "about a fifth of a place's typical yearly maximum", and overclaim row 31's backing cites 0.20. With 0.25 the implied
+   local depth runs from about 9–10 mm (Hawke's Bay, Manawatū-Whanganui, Marlborough, Wellington: 0.25 × suburb-median
+   M6 = 9.9, 9.8, 9.4, 10.3) to 15–16 mm (Northland 16.0, West Coast 15.1), against a flat 11 mm. Change "a fifth" to
+   "a quarter" and re-label row 31 until it is.
+2. **Plausibility window-audit sentence is stale.** `plausibility.md:46` says the 30 random place-days match in all 30;
+   the D4 `g4_window.csv` has 29 exact and one at 0.909 (a 5.0 mm grid value against 5.5 mm exact, the 5-minute grid's
+   known under-estimate on a small total). Say "29 of 30 exact, one within 10% on a 5 mm day".
+3. **Overclaim row 9 backing** cites D_LL 3.9488×10⁻⁵ and a lower bound 0.8998×10⁻⁵; `primary.json` has 3.9537×10⁻⁵
+   and 0.9041×10⁻⁵. The rounded sentence (4.0; 0.9 to 7.8) is right; refresh the backing.
+4. **Blank-TLA region fill (minor).** `panel.py` maps a blank TLA to the modal council among blank-TLA rows, so the
+   three blank-TLA units (8,553 place-days, no floods) all become Auckland; one was a Northland-coded record. Skip the
+   fill when the TLA is blank.
+5. **Terminology (cosmetic).** "suburb-day" and "suburb's background" survive in "How it was done" and the G1 gate line
+   still says "the test year used once"; the rest of the report says place-day and "once per panel build".
+
+### Scripts
+
+`review/reviewer_checks/check_confirm.py` → `confirm.json`, `check_confirm.log`; `check_dups.py` re-run on the D4
+panel (output in the transcript); the one-off checks are recorded above.

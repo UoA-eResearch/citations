@@ -4,7 +4,7 @@
 
 | day | panel places | called out | median 6-h rain | median rarity | depth model | rarity model |
 |---|---|---|---|---|---|---|
-| Auckland, 27 Jan 2023 | 168 | 55 (33%) | 135 mm | 2.71 | 35% | 37% |
+| Auckland, 27 Jan 2023 | 167 | 55 (33%) | 135 mm | 2.71 | 35% | 37% |
 | Hawke's Bay, 14 Feb 2023 | 91 | 10 (11%) | 61 mm | 1.56 | 8% | 10% |
 | Nelson and Tasman, 27 Jun 2025 | 64 | 8 (13%) | 56 mm | 0.97 | 3% | 4% |
 
@@ -43,6 +43,7 @@ neither model expects a callout.
 
 - The daily 6-hour maximum per gauge reproduces the HIRDS lead's annual maxima (variant S3) exactly, for all 3,543
   gauge-years present in both (`code/g3_invariant.py`, `results/tables/g3_invariant.json`).
-- The window audit (G4): 30 random suburb-days recomputed exactly from raw records match the panel in all 30 (after D3; before D3, a different random 30 were within 0.6%).
+- The window audit (G4): 30 random place-days recomputed exactly from raw records: 29 match the panel exactly and one is 9% low (5.0 against
+  5.5 mm); the panel's 5-minute grid can only fall short of the exact window maximum, never exceed it.
 - The geocoding audit (G4): a random 100 panel places reverse-geocoded with OpenStreetMap all fall in their recorded
   region (D4). The earlier council-neighbour check could not see wrong points in an adjacent council.

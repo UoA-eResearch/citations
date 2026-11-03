@@ -5888,7 +5888,12 @@
    "local_relevance": "MetService/ESNZ (setting warning criteria), NEMA and Auckland Emergency Management (surge planning) and FENZ (pre-positioning crews) would get region-specific, impact-calibrated rainfall thresholds. Auckland would get its own callout-rainfall curve, with 27 January 2023 placed on it.",
    "time_sensitive": "Freeze before the FY2025/26 FENZ file is released (expected ~Feb-Mar 2027) to gain an unseen test year",
    "needs_engagement": "",
-   "scout_round": "auckland-nz"
+   "scout_round": "auckland-nz",
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass)",
+   "report_url": "runs/auckland-nz-fenz-impact-rainfall-thresholds/report.html",
+   "verdict_tag": "Supported",
+   "verdict_note": "H1 Supported by the preregistered rule, with a fragile margin and a reframed meaning. Across 900 places with a council rain gauge within 10 km (2.51 million place-days, FY2017/18-2024/25), flood callouts in the held-out year were predicted slightly better by rain rarity (6-hour maximum over the HIRDS v4 median annual maximum) than by raw depth: held-out log-loss difference 4.0e-5 (storm-day 95% interval 0.9-7.8e-5), skill ratio 1.072 (bar 1.05), better in 7 of 9 regions. But only 64 held-out flood place-days, 24 of them on 25-30 June 2025; without those days the interval includes zero. And a depth model also given each place's climatology (log median annual maximum) matches rarity (difference 0.4e-5, -0.6 to 1.7e-5): the gain is knowing the place, not the ratio. 24-hour rain favours rarity; 1-hour rain and broader callout definitions do not separate the models. Flood days lose their gauge three times as often as ordinary days (17.6% vs 5.5%). Review fix first (53 places counted twice, now merged; optimiser tolerances; geocoding audit), confirmation publish with edits.",
+   "headline": "Flood callouts follow how unusual the rain is for a place a little better than raw depth - but only because rarity carries the place's climate, which a depth model can use just as well."
   },
   {
    "id": "auckland-nz-crl-structural-uplift-prereg",

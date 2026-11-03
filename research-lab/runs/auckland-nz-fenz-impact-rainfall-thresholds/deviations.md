@@ -74,7 +74,8 @@ places); the panel has 900 places and 2,506,001 place-days (316,853 held out). F
 training and 64 held out.
 
 **2. Region from the TLA** (finding 5). A unit's region is now its TLA's modal council in the FENZ rows, not the
-record's own council, which FENZ sometimes miscodes (101 geocoded units changed). The geocoding audit gained a
+record's own council, which FENZ sometimes miscodes (92 geocoded units changed; a blank TLA keeps the record's council,
+a fix from the confirmation pass). The geocoding audit gained a
 judgeable denominator: a random 100 panel places were reverse-geocoded with OpenStreetMap Nominatim. All 100 fall in
 their recorded region. The 30 whose OSM territorial authority differs are 29 Auckland local-board names and Ōtaki,
 which lies in Kāpiti Coast District (`g4_osm.csv`).
@@ -92,7 +93,7 @@ it.
 merge). G3 gained code for the water-year invariant (`g3_invariant.py`) and three unit traces, from FENZ counts and the
 raw gauge records to both models' fitted probabilities (`posthoc.json: traces`). Report wording was fixed per finding
 7, along with the informative-missingness limit (finding 3: 17.6% of flood place-days have no usable gauge, against
-5.6% of all place-days; 26% on 27 January 2023) and a note on the spline knots (finding 6).
+5.5% of all place-days; 26% on 27 January 2023) and a note on the spline knots (finding 6).
 
 | statistic | after D3 | after D4 |
 |---|---|---|
@@ -102,3 +103,4 @@ raw gauge records to both models' fitted probabilities (`posthoc.json: traces`).
 | regions where rarity wins | 7 of 9 | 7 of 9 |
 | places / held-out place-days | 954 / 335,539 | 900 / 316,853 |
 | without 25–30 June 2025 (post hoc) | 1.3 (−0.1 to 2.9) | 1.3 (−0.2 to 3.0) |
+| onset at 10× the dry-day rate | rarity 0.20; 10 mm | rarity 0.25; 11 mm |

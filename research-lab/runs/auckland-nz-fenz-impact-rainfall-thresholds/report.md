@@ -45,7 +45,7 @@ late June 2025. And a depth model that is also told each place's typical heavy r
 knowing the place, not the ratio itself.
 
 In the model fitted to 2017–2024, flood callouts become ten times more likely than on a dry day once six-hour rain reaches about a
-fifth of a place's typical yearly maximum. On 27 January 2023, Auckland suburbs had 2.7 times their typical yearly
+quarter of a place's typical yearly maximum. On 27 January 2023, Auckland suburbs had 2.7 times their typical yearly
 maximum in six hours, and about a third of them called out the fire service for flooding.
 
 ## What was asked
@@ -72,7 +72,7 @@ maximum in six hours, and about a third of them called out the fire service for 
     quality rules.
   - Unverified (2xx) data are kept (sensitivity Q drops them), and physically impossible records are screened out
     (D1).
-  - Each suburb-day takes the nearest gauge within 10 km that is usable that day.
+  - Each place-day takes the nearest gauge within 10 km that is usable that day.
 - **Models.** Two logistic regressions, identical except for the rain term: a natural spline in log(1 + depth)
   against one in log(1 + rarity). Shared terms:
   - 72-hour antecedent rain;
@@ -115,7 +115,7 @@ maximum in six hours, and about a third of them called out the fire service for 
 
 | day | panel places | called out | median 6-h rain | median rarity | depth model | rarity model |
 |---|---|---|---|---|---|---|
-| Auckland, 27 Jan 2023 | 168 | 55 (33%) | 135 mm | 2.71 | 35% | 37% |
+| Auckland, 27 Jan 2023 | 167 | 55 (33%) | 135 mm | 2.71 | 35% | 37% |
 | Hawke's Bay, 14 Feb 2023 (Cyclone Gabrielle) | 91 | 10 (11%) | 61 mm | 1.56 | 8% | 10% |
 | Nelson and Tasman, 27 Jun 2025 | 64 | 8 (13%) | 56 mm | 0.97 | 3% | 4% |
 
@@ -129,12 +129,12 @@ the two.
 
 - **One curve shape for every region.** The models share one rain curve across regions (regions shift only the
   baseline), so the rain at which callouts reach 10 times the dry-day rate is the same everywhere by construction:
-  - a rarity of 0.20 under the rarity model;
-  - 10 mm in 6 hours under the depth model.
+  - a rarity of 0.25 under the rarity model;
+  - 11 mm in 6 hours under the depth model.
 
   The plan's "region-specific" thresholds are therefore not region-specific in these models.
-- **What the rarity model implies in depth.** The local depth threshold runs from about 8 mm (Hawke's Bay, Manawatū-
-  Whanganui, Marlborough, Wellington) to 12–13 mm (Northland, West Coast), against a flat 10 mm.
+- **What the rarity model implies in depth.** The local depth threshold runs from about 9–10 mm (Hawke's Bay,
+  Manawatū-Whanganui, Marlborough, Wellington) to 15–16 mm (Northland, West Coast), against a flat 11 mm.
 
 ## What this does and does not show
 
@@ -146,7 +146,8 @@ the two.
   and that comparison stands; it does not show that the ratio form is better than other ways of using the same
   local information.
 - **The practical difference is small** at the thresholds where most callouts happen. The two models agree within a
-  few percentage points on the big storm days. Regional depth thresholds implied by rarity vary by only about ±25%.
+  few percentage points on the big storm days. Regional depth thresholds implied by rarity run from about 15% below to 45% above the flat
+  depth threshold.
 - **Limits.**
   - **Callouts are not damage.** They reflect drainage, exposure, reporting and FENZ capacity as well as rain.
     Capacity saturation on extreme days caps counts.
@@ -159,7 +160,7 @@ the two.
     cannot create. 907 FENZ suburb names did not match the gazetteer (8% of exposure-days).
   - **Model form.** The models are logistic GLMs with a suburb-background term, not the lead's GLMM.
   - **Flood days lose their gauge more often than ordinary days.** 17.6% of flood place-days in panel places have no
-    usable gauge within 10 km, against 5.6% of all place-days (26% on 27 January 2023), so the panel under-represents
+    usable gauge within 10 km, against 5.5% of all place-days (26% on 27 January 2023), so the panel under-represents
     the heaviest storms, when gauges fail or record unusable data.
   - **Fitting.** Before D4 the optimiser stopped at scipy's default tolerance, which acted as a slight regulariser;
     with tight tolerances every fit converges (21 fits, largest gradient 9×10⁻⁹). The spline's interior knots fall in
@@ -186,7 +187,7 @@ the two.
     the TLA, optimiser tolerances; H1 unchanged (S 1.072). Depth plus climatology added as a reviewer-prompted post hoc.
 - **Post hoc:** `code/posthoc.py`: the result without late June 2025, and the storm-day traces.
 - **Gates:**
-  - G1: in the plan (the test year used once; activity from training years only).
+  - G1: in the plan (the test year scored once per panel build; activity from training years only).
   - G2: `results/tables/coverage.json`.
   - G3: `results/plausibility.md`.
   - G4: `results/tables/g4_geocode.json`, `g4_osm.json` (100 places against OpenStreetMap) and `g4_window.csv`.
