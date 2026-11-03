@@ -42,7 +42,7 @@ def main(C, H, name):
     if KEEP_ALL_GENES:
         in_catalog |= set(pairs.gene)
     pairs = pairs[pairs.gene.isin(in_catalog)]
-    col = "first_year_any" if RULE == "any" else "first_year_2bp"           # plan section 2: outcome variants
+    col = {"any": "first_year_any", "3": "first_year_3"}.get(RULE, "first_year_2bp")   # plan section 2: outcome variants (D3 adds "3")
     est = pairs[pairs[col] <= C]                                            # established by the cutoff
     new = pairs[(pairs[col] > C) & (pairs[col] <= H)]                       # emerged in the horizon
     n_cut = iso[iso.year <= C].species.value_counts()

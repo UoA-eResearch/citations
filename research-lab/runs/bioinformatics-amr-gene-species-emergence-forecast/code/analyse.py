@@ -98,7 +98,8 @@ def main():
     diffs = np.array(diffs, float)
     out["auprc"]["difference_ci"] = [float(np.nanpercentile(diffs, 2.5)), float(np.nanpercentile(diffs, 97.5))]
     dlo, dhi = out["auprc"]["difference_ci"]
-    out["H2"] = ("Supported" if dlo > 0 else "Refuted" if dhi < 0.005 else "Inconclusive")
+    # D3 (review finding 4): the plan refutes only if the interval lies below 0 or within +-0.005 of it
+    out["H2"] = ("Supported" if dlo > 0 else "Refuted" if (dhi < 0 or (dlo > -0.005 and dhi < 0.005)) else "Inconclusive")
     (T / "primary.json").write_text(json.dumps(out, indent=1, default=float) + "\n")
     print(json.dumps(out, indent=1, default=float))
 

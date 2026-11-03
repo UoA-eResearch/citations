@@ -20,16 +20,25 @@ if path.exists():
     path.unlink()
 
 c = Coverage("isolates", path)
+# D3 (review finding 10): build.json counts rows failing both the year and the species rule in both categories; the
+# overlap is whatever makes kept + drops exceed the rows read, and is removed from the species category.
+both = (b["isolates_kept"] + (b["rows"] - b["unique_biosamples"]) + b["no_year_or_out_of_range"] + b["no_species"]
+        + b["no_amr_call_field"] + b["isolates_dropped_older_db"]) - b["rows"]
 c.add_counts(ok=b["isolates_kept"], drops={
     "duplicate biosample": b["rows"] - b["unique_biosamples"],
     "no collection year, or outside 1990-2025": b["no_year_or_out_of_range"],
-    "no species binomial": b["no_species"],
+    "no species binomial (with a valid year)": b["no_species"] - both,
     "no AMR call field": b["no_amr_call_field"],
     "screened with a reference catalog older than the oldest audited one (D1)": b["isolates_dropped_older_db"]})
 c.save()
 
 c = Coverage("gene_symbols_with_a_reference_protein", path)
 c.add_counts(ok=pr["genes_seen"] - pr["by_match"]["unmatched"], drops={"no protein in the catalog or FASTA": pr["by_match"]["unmatched"]})
+c.save()
+
+c = Coverage("embedding_feature_rows_test", path)
+# D3 (review finding 10): one gene with no embedding gets a zero vector in candidates.py (cosine 0)
+c.add_counts(ok=472779 - 156, fallbacks={"gene without an embedding (dfrA51): zero vector, cosine 0; 2 positives": 156})
 c.save()
 
 for nm, t in (("candidates_train_2019", tr), ("candidates_test_2022", te)):

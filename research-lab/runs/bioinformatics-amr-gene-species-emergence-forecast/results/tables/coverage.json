@@ -1,15 +1,15 @@
 {
  "isolates": {
-  "attempted": 2943943,
+  "attempted": 2943808,
   "ok": 1621194,
   "fallback": 0,
-  "dropped": 1322749,
+  "dropped": 1322614,
   "unresolved": 0,
   "fallback_reasons": {},
   "drop_reasons": {
    "duplicate biosample": 1682,
    "no collection year, or outside 1990-2025": 598704,
-   "no species binomial": 558,
+   "no species binomial (with a valid year)": 423,
    "no AMR call field": 721790,
    "screened with a reference catalog older than the oldest audited one (D1)": 15
   }
@@ -24,6 +24,17 @@
   "drop_reasons": {
    "no protein in the catalog or FASTA": 36
   }
+ },
+ "embedding_feature_rows_test": {
+  "attempted": 472779,
+  "ok": 472623,
+  "fallback": 156,
+  "dropped": 0,
+  "unresolved": 0,
+  "fallback_reasons": {
+   "gene without an embedding (dfrA51): zero vector, cosine 0; 2 positives": 156
+  },
+  "drop_reasons": {}
  },
  "candidates_train_2019": {
   "attempted": 1698,

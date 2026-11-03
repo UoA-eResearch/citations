@@ -33,3 +33,50 @@ is partly an artefact of reprocessing.
    newly-eligible split, within-period cross-validation on the test task, and the H1 statistic for the
    no-embedding model (the H2 comparison model, which is a preregistered ablation). These diagnose why the
    preregistered model loses to the null; none of them changes H1 or H2.
+
+## D3 — 2026-11-04 00:30 NZDT — fixes after the independent review (verdict: fix first)
+
+The review found that four load-bearing numbers were artefacts and two labels did not follow the plan's own rules.
+Everything below was run after the review, so all of it is post hoc except where it implements the preregistered
+quantity exactly (item 1) or a preregistered secondary that had not been run (item 6).
+
+1. **The null, computed exactly** (finding 1). 1 − Binomial(≤1; n, f) saturates at exactly 1.0 in double precision
+   for 4,727 primary-task candidates, and the stable sort then took the first 100 rows of that tie block. All 100 were
+   *A. baumannii*, because candidates are written in alphabetical species order. The null is now computed in log
+   space (`binom.logsf`). Genes with equal counts still tie within a species even in log space, so every
+   precision@k is now the exact expectation under random order within ties (`d3_fixes.topk`). The null's
+   precision@100 is **0.033**, not 0.08. Under random tie order the old saturated score gives 0.028 (row order
+   gave 0.08).
+2. **Seed stability** (finding 2). The preregistered hyperparameters were refitted with ten seeds, the preregistered
+   one first. The model's precision@100 is 0.00 at the preregistered seed and 0.10–0.19 at the other nine. Its
+   average precision is 0.075–0.090 at every seed, against the null's 0.016.
+3. **H1 by the plan's rule** (finding 5), with the exact null at the preregistered seed. The ratio is 0 with an
+   interval of 0 to 0.97, so it is *Refuted* by the rule (upper bound below 2). The exact null is never 0, so no
+   bootstrap draw is undefined. At the other nine seeds the point ratio is 3.0–5.7. The report therefore states the
+   preregistered verdict alongside its fragility.
+4. **H2 by the plan's rule** (finding 4). The interval (−0.0128 to +0.0009) is neither below 0 nor within ±0.005,
+   so H2 is *Inconclusive*. The code had refuted on the upper bound alone; `analyse.py` now applies the plan's rule
+   and `primary.json` is relabelled. Across seeds the embedding's gain in average precision is positive at 7 of 10.
+5. **Withdrawn: "the embedding is what breaks the model"** (finding 3). It described one seed.
+6. **Preregistered secondaries now run** (finding 7):
+   - the at-least-three-isolates variant: model 0.12 against null 0.024;
+   - the D1 sensitivity with all genes (`KEEP_ALL_GENES`): 0.19 against 0.033;
+   - recall at matched list sizes (`d3.json`);
+   - the Europe PMC literature check (`epmc.csv`).
+
+   **Gene × country was not run.** It needs a second candidate construction and feature set at country level, so it
+   is a new study rather than a variant, and is recorded as not done.
+7. **Deposit dates** (finding 6). 45% of isolates collected by 2022 were deposited after 2022, so the 2022 "cutoff"
+   uses data that were not public in 2022. The design is retrospective by collection date, not a real-time
+   forecast. Of the 847 primary-rule emergences, 705 had a carrier collected by 2022 but only 316 (37%) had one
+   deposited by 2022 (`hindsight.json`). The report's "83% already observed" becomes "83% already collected, 37%
+   already public".
+8. **G4** (finding 8). `g4_check.py` recomputes 30 random pairs' first-observation years and two-BioProject years
+   from the raw metadata independently of `build.py`; 30 of 30 match on both.
+9. **G3 and G2** (findings 9, 10, 12):
+   - the null's calibration by decile: its top decile predicts 0.47 against an observed 0.011;
+   - the coverage double count of 135 rows is removed;
+   - the embedding zero-vector fallback is recorded (one gene, 156 test rows, 2 positives);
+   - a plausibility count is corrected.
+10. **D1 was not blind** (finding 11). The catalog restriction was decided after 2023–2025 emergence counts had been
+    seen. Its sensitivity (item 6) shows it does not drive the result.
