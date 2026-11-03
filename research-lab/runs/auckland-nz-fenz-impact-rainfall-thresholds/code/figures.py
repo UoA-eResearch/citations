@@ -46,6 +46,12 @@ def coverage():
     c.add_counts(ok=bm["unique"]["suburbs"] + bm["tla_centroid"]["suburbs"],
                  drops={k: v["suburbs"] for k, v in bm.items() if k not in ("unique", "tla_centroid")})
     c.save()
+    c = Coverage("gauges", path)
+    c.add_counts(ok=pan["gauges_kept"], drops={"no HIRDS depth or location": pan["gauges_attempted"] - pan["gauges_kept"]})
+    c.save()
+    c = Coverage("places", path)
+    c.add_counts(ok=pan["geocoded_suburbs"], drops={"merged onto a unit at the same gazetteer point (D4)": pan["units_merged_onto_shared_point"]})
+    c.save()
     c = Coverage("suburbs_in_panel", path)
     c.add_counts(ok=pan["panel_suburbs"], drops={"no gauge within 10 km": pan["geocoded_suburbs"] - pan["with_gauge_within_10km"],
                                                "a gauge within 10 km but never usable": pan["with_gauge_within_10km"] - pan["panel_suburbs"]})

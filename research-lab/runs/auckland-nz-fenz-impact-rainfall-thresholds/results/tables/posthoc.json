@@ -1,20 +1,20 @@
 {
- "D_LL_all": 3.748800919164795e-05,
- "D_LL_without_late_june_2025": 1.3146845838175563e-05,
+ "D_LL_all": 3.953712003079189e-05,
+ "D_LL_without_late_june_2025": 1.3247196759519485e-05,
  "ci_without": [
-  -6.346858671110959e-07,
-  2.861455348218763e-05
+  -1.5386212520825688e-06,
+  2.9541604856273734e-05
  ],
  "held_out_floods_without": 40,
  "events": {
   "Auckland 2023-01-27": {
-   "panel_suburbs": 174,
+   "panel_suburbs": 168,
    "with_callout": 55,
-   "observed_rate": 0.316,
-   "median_d6_mm": 134.7,
+   "observed_rate": 0.327,
+   "median_d6_mm": 134.8,
    "median_rarity": 2.71,
-   "mean_p_depth_model": 0.332,
-   "mean_p_rarity_model": 0.361
+   "mean_p_depth_model": 0.345,
+   "mean_p_rarity_model": 0.372
   },
   "Hawke's Bay 2023-02-14": {
    "panel_suburbs": 91,
@@ -22,17 +22,72 @@
    "observed_rate": 0.11,
    "median_d6_mm": 61.0,
    "median_rarity": 1.56,
-   "mean_p_depth_model": 0.082,
+   "mean_p_depth_model": 0.081,
    "mean_p_rarity_model": 0.101
   },
   "Nelson-Tasman 2025-06-27": {
-   "panel_suburbs": 70,
+   "panel_suburbs": 64,
    "with_callout": 8,
-   "observed_rate": 0.114,
+   "observed_rate": 0.125,
    "median_d6_mm": 55.8,
    "median_rarity": 0.97,
-   "mean_p_depth_model": 0.031,
-   "mean_p_rarity_model": 0.039
+   "mean_p_depth_model": 0.032,
+   "mean_p_rarity_model": 0.041
+  }
+ },
+ "depth_plus_logM": {
+  "LL_DM": 0.0011764,
+  "LL_R": 0.0011723,
+  "DM_minus_R": 4.109907606266683e-06,
+  "ci": [
+   -6.023510325354404e-06,
+   1.6562470171262e-05
+  ],
+  "S_DM_vs_D": 1.064,
+  "S_R_vs_D": 1.072
+ },
+ "traces": {
+  "Auckland held-out flood place-day (first by date)": {
+   "suburb": "Waiuku",
+   "tla": "Auckland",
+   "day": "2025-03-04",
+   "gauge": "Auckland__742739_Waiuku_Rain_Waiuku-Otaua_Rd",
+   "gauge_km": 1.3,
+   "flood_exposures": 1,
+   "d6_panel_mm": 14.8,
+   "d6_raw_recomputed_mm": 14.8,
+   "M6_mm": 43.3,
+   "rarity": 0.342,
+   "p_depth_model": 0.0009947385161778947,
+   "p_rarity_model": 0.0010910716951632886
+  },
+  "Tasman flood place-day on 27 June 2025 (largest 6-hour rain)": {
+   "suburb": "Wakefield",
+   "tla": "Tasman District",
+   "day": "2025-06-27",
+   "gauge": "Tasman__HY_Motueka_at_Dovedale",
+   "gauge_km": 8.81,
+   "flood_exposures": 6,
+   "d6_panel_mm": 78.4,
+   "d6_raw_recomputed_mm": 78.4,
+   "M6_mm": 49.9,
+   "rarity": 1.571,
+   "p_depth_model": 0.27152773077633147,
+   "p_rarity_model": 0.35995084336566024
+  },
+  "West Coast held-out place-day with no callout and over 20 mm (first by date)": {
+   "suburb": "Birchfield",
+   "tla": "Buller District",
+   "day": "2024-07-01",
+   "gauge": "WestCoast__Stockton_Office_Met_Station",
+   "gauge_km": 6.72,
+   "flood_exposures": 0,
+   "d6_panel_mm": 33.8,
+   "d6_raw_recomputed_mm": 33.8,
+   "M6_mm": 80.4,
+   "rarity": 0.42,
+   "p_depth_model": 0.0006974892631644208,
+   "p_rarity_model": 0.0007039655332332884
   }
  }
 }

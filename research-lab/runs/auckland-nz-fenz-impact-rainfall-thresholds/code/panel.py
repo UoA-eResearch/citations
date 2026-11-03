@@ -23,6 +23,24 @@ def km(lat1, lon1, lat2, lon2):
 def main():
     S = pd.read_parquet(D / "suburbs.parquet")
     S = S[S.match.isin(["unique", "tla_centroid"])].reset_index(drop=True)
+    # D4 (review finding 1 and 5): one unit per place. A unit's region is its TLA's modal council (by FENZ rows), not
+    # the record's; units on the same gazetteer point are merged into the one with more exposures, and their callouts
+    # are summed per day.
+    F0 = pd.read_parquet(D / "fenz_daily.parquet")
+    tla_region = (F0.groupby(["tla", "region"]).size().reset_index(name="n").sort_values("n", ascending=False)
+                  .drop_duplicates("tla").set_index("tla").region)
+    S["region_fenz"] = S.region
+    S["region"] = S.tla.map(tla_region).fillna(S.region)
+    S["pk"] = list(zip(S.lat.round(6), S.lon.round(6)))
+    keep = S.sort_values(["exposures", "suburb"], ascending=[False, True]).drop_duplicates("pk")
+    rep = keep.set_index("pk")[["suburb", "tla", "region"]]
+    m = S[["suburb", "tla", "region_fenz", "pk"]].rename(columns={"region_fenz": "region"})
+    m[["r_suburb", "r_tla", "r_region"]] = rep.loc[m.pk].to_numpy()
+    n_units, n_region_changed = len(S), int((S.region != S.region_fenz).sum())
+    S = keep.reset_index(drop=True)
+    F0 = F0.merge(m.drop(columns="pk"), on=["suburb", "tla", "region"], how="inner")
+    F = F0.groupby(["r_suburb", "r_tla", "r_region", "day"])[["flood", "v1", "v2", "nonflood"]].sum()
+    F.index.names = ["suburb", "tla", "region", "day"]
     H = pd.read_parquet(HL / "data" / "hirds_depths.parquet")
     G = H.groupby("file")[["lat", "lon"]].first()
     idx = lambda d, a: H[(H.table == "historical") & (H.duration_h == d) & np.isclose(H.ari, a)].set_index("file").mm
@@ -32,7 +50,9 @@ def main():
     mx = pd.read_parquet(HL / "data" / "maxima.parquet")
     res = mx[(mx.d == 6) & (mx.variant == "S3")].set_index(["file", "wy"]).wet_median_min
     R["resolved"] = pd.MultiIndex.from_arrays([R.file, R.wy]).map(res).to_numpy() <= 15
+    n_gauges = R.file.nunique()
     R = R[R.file.isin(G.index) & R.file.isin(M6.index)]
+    n_gauges_kept = R.file.nunique()
     days = np.sort(R.day.unique())
     files = sorted(R.file.unique()); fi = {f: i for i, f in enumerate(files)}
     nd, nf = len(days), len(files)
@@ -45,10 +65,10 @@ def main():
     use = np.zeros((nf, nd), bool); use[R.file.map(fi).to_numpy(), di] = ((R.known6 >= 0.9) & R.resolved).to_numpy()
     use_q = np.zeros((nf, nd), bool); use_q[R.file.map(fi).to_numpy(), di] = ((R.known6_q >= 0.9) & R.resolved).to_numpy()
     glat, glon = G.loc[files, "lat"].to_numpy(), G.loc[files, "lon"].to_numpy()
-    F = pd.read_parquet(D / "fenz_daily.parquet")
-    F = F.groupby(["suburb", "tla", "region", "day"])[["flood", "v1", "v2", "nonflood"]].sum()
     train_days = int((days <= np.datetime64(TRAIN_END)).sum())
-    out, cov = [], {"geocoded_suburbs": len(S), "with_gauge_within_10km": 0, "suburb_days_possible": 0, "suburb_days_no_usable_gauge": 0}
+    out, cov = [], {"geocoded_units_before_merge": n_units, "units_merged_onto_shared_point": n_units - len(S),
+                    "units_region_from_tla": n_region_changed, "gauges_attempted": int(n_gauges), "gauges_kept": int(n_gauges_kept),
+                    "geocoded_suburbs": len(S), "with_gauge_within_10km": 0, "suburb_days_possible": 0, "suburb_days_no_usable_gauge": 0}
     for s in S.itertuples():
         dist = km(s.lat, s.lon, glat, glon)
         order = np.argsort(dist); order = order[dist[order] <= 10]

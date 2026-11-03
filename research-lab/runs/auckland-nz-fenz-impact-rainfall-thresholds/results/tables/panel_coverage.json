@@ -1,10 +1,15 @@
 {
- "geocoded_suburbs": 2768,
- "with_gauge_within_10km": 963,
- "suburb_days_possible": 2813886,
- "suburb_days_no_usable_gauge": 159979,
- "panel_suburb_days": 2653907,
- "panel_suburbs": 954,
+ "geocoded_units_before_merge": 2768,
+ "units_merged_onto_shared_point": 159,
+ "units_region_from_tla": 101,
+ "gauges_attempted": 443,
+ "gauges_kept": 438,
+ "geocoded_suburbs": 2609,
+ "with_gauge_within_10km": 908,
+ "suburb_days_possible": 2653176,
+ "suburb_days_no_usable_gauge": 147175,
+ "panel_suburb_days": 2506001,
+ "panel_suburbs": 900,
  "gauges_used": 336,
- "test_suburb_days": 335539
+ "test_suburb_days": 316853
 }

@@ -63,6 +63,9 @@ class Design:
         return np.hstack([np.ones((len(P), 1)), (self.raw(P) - self.mu) / self.sd])
 
 
+FITS = []
+
+
 def fit(X, y):
     def f(b):
         z = X @ b
@@ -70,7 +73,9 @@ def fit(X, y):
         p = 1 / (1 + np.exp(-z))
         return ll.mean() + 1e-8 * (b[1:] @ b[1:]), X.T @ (p - y) / len(y) + np.r_[0, 2e-8 * b[1:]]
     b0 = np.zeros(X.shape[1]); b0[0] = np.log(y.mean() / (1 - y.mean()))
-    r = minimize(f, b0, jac=True, method="L-BFGS-B", options={"maxiter": 2000})
+    # D4 (review finding 4): tolerances set to the scale of a mean log-loss of order 1e-3; every fit is recorded
+    r = minimize(f, b0, jac=True, method="L-BFGS-B", options={"maxiter": 20000, "ftol": 1e-15, "gtol": 1e-10})
+    FITS.append({"success": bool(r.success), "nit": int(r.nit), "max_abs_grad": float(np.abs(r.jac).max())})
     return r.x
 
 
@@ -149,6 +154,8 @@ def main():
     o = compare(P, "ld6", "lr6", rng)
     lo = loro(P, "ld6", "lr6")
     o["H1"] = verdict(o, lo)
+    o["fits"] = {"n": len(FITS), "all_success": all(x["success"] for x in FITS), "max_nit": max(x["nit"] for x in FITS),
+              "max_abs_grad": max(x["max_abs_grad"] for x in FITS)}
     o["loro"] = lo
     (T / "primary.json").write_text(json.dumps(o, indent=1, default=str) + "\n")
     print(json.dumps({k: v for k, v in o.items() if k != "loro"}, indent=1, default=str)); print("LORO wins", lo["wins"], "/", lo["n"])

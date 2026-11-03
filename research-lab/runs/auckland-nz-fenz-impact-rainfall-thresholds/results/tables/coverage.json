@@ -23,27 +23,49 @@
    "unmatched": 907
   }
  },
- "suburbs_in_panel": {
-  "attempted": 2768,
-  "ok": 954,
+ "gauges": {
+  "attempted": 443,
+  "ok": 438,
   "fallback": 0,
-  "dropped": 1814,
+  "dropped": 5,
   "unresolved": 0,
   "fallback_reasons": {},
   "drop_reasons": {
-   "no gauge within 10 km": 1805,
-   "a gauge within 10 km but never usable": 9
+   "no HIRDS depth or location": 5
+  }
+ },
+ "places": {
+  "attempted": 2768,
+  "ok": 2609,
+  "fallback": 0,
+  "dropped": 159,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "merged onto a unit at the same gazetteer point (D4)": 159
+  }
+ },
+ "suburbs_in_panel": {
+  "attempted": 2609,
+  "ok": 900,
+  "fallback": 0,
+  "dropped": 1709,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "no gauge within 10 km": 1701,
+   "a gauge within 10 km but never usable": 8
   }
  },
  "suburb_days": {
-  "attempted": 2813886,
-  "ok": 2653907,
+  "attempted": 2653176,
+  "ok": 2506001,
   "fallback": 0,
-  "dropped": 159979,
+  "dropped": 147175,
   "unresolved": 0,
   "fallback_reasons": {},
   "drop_reasons": {
-   "no usable gauge within 10 km that day": 159979
+   "no usable gauge within 10 km that day": 147175
   }
  }
 }

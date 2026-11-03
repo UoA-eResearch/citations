@@ -62,3 +62,43 @@ all 918 fell in the held-out year (335,539 test suburb-days), consistent with th
 | outcome V2: S | 0.953 | 0.999 |
 
 The other secondaries move by 0.01 or less in S. The report quotes the new numbers throughout.
+
+## D4 — 2026-11-03 13:10 NZDT — fixes from the independent review (verdict: fix first)
+
+**1. One unit per place** (review finding 1). Places were keyed by normalised name plus council, so a place coded under
+two councils (mostly at council boundaries: Auckland and Waikato, Manawatū-Whanganui and Wellington) or under two
+spellings stayed split. 107 of the 954 panel units sat on 53 shared gazetteer points, with identical rain, and the
+twin of every flooded unit recorded no callout. `panel.py` now merges units on the same gazetteer point into the one
+with more exposures and sums their callouts per day. Across all geocoded records, 159 were merged (2,768 → 2,609
+places); the panel has 900 places and 2,506,001 place-days (316,853 held out). Flood counts are unchanged: 765
+training and 64 held out.
+
+**2. Region from the TLA** (finding 5). A unit's region is now its TLA's modal council in the FENZ rows, not the
+record's own council, which FENZ sometimes miscodes (101 geocoded units changed). The geocoding audit gained a
+judgeable denominator: a random 100 panel places were reverse-geocoded with OpenStreetMap Nominatim. All 100 fall in
+their recorded region. The 30 whose OSM territorial authority differs are 29 Auckland local-board names and Ōtaki,
+which lies in Kāpiti Coast District (`g4_osm.csv`).
+
+**3. Optimiser tolerances** (finding 4). L-BFGS-B ran at scipy's default tolerances on a mean log-loss of order 10⁻³
+and stopped after 8–26 iterations. Tolerances are now ftol 1e-15 and gtol 1e-10. All 21 fits report success, with at
+most 1,277 iterations and a largest gradient of 9×10⁻⁹ (`primary.json: fits`).
+
+**4. Reviewer-prompted post hoc: depth plus climatology** (finding 2). The depth model with log M6 as an additional
+covariate matches the rarity model on the held-out year (D+M minus R: 0.4×10⁻⁵, −0.6 to 1.7×10⁻⁵; S for D+M 1.064).
+The report now says that rarity's gain over depth is the place's climatology, and that the ratio is one way to encode
+it.
+
+**5. Gates.** G2 gained two stages, `gauges` (443 attempted, 5 without a HIRDS depth or location) and `places` (the
+merge). G3 gained code for the water-year invariant (`g3_invariant.py`) and three unit traces, from FENZ counts and the
+raw gauge records to both models' fitted probabilities (`posthoc.json: traces`). Report wording was fixed per finding
+7, along with the informative-missingness limit (finding 3: 17.6% of flood place-days have no usable gauge, against
+5.6% of all place-days; 26% on 27 January 2023) and a note on the spline knots (finding 6).
+
+| statistic | after D3 | after D4 |
+|---|---|---|
+| H1 | Supported | Supported |
+| D_LL (×10⁻⁵, 95% interval) | 3.7 (0.8 to 7.6) | 4.0 (0.9 to 7.8) |
+| S | 1.073 | 1.072 |
+| regions where rarity wins | 7 of 9 | 7 of 9 |
+| places / held-out place-days | 954 / 335,539 | 900 / 316,853 |
+| without 25–30 June 2025 (post hoc) | 1.3 (−0.1 to 2.9) | 1.3 (−0.2 to 3.0) |

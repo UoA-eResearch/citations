@@ -43,6 +43,38 @@ def main():
         out["events"][name] = {"panel_suburbs": int(len(e)), "with_callout": int(e.y.sum()), "observed_rate": round(float(e.y.mean()), 3),
                                "median_d6_mm": round(float(e.d6.median()), 1), "median_rarity": round(float((e.d6 / e.M6).median()), 2),
                                "mean_p_depth_model": round(p["D"], 3), "mean_p_rarity_model": round(p["R"], 3)}
+    # Reviewer-prompted (finding 2): the depth model plus the place's climatology, log M6, as an additive covariate.
+    class DesignM(A.Design):
+        def raw(self, P):
+            return np.hstack([super().raw(P), np.log(P.M6.to_numpy())[:, None]])
+    dm = DesignM(tr, "ld6", regions); bm = A.fit(dm.X(tr), tr.y.to_numpy())
+    ll_dm = A.logloss(dm.X(te), bm, te.y.to_numpy())
+    base = A.Design(tr, None, regions); bb = A.fit(base.X(tr), tr.y.to_numpy())
+    ll_b = A.logloss(base.X(te), bb, te.y.to_numpy()).mean()
+    d2 = ll_dm - ll["R"]
+    g2 = pd.DataFrame({"day": te.day.to_numpy(), "d": d2}).groupby("day").d.agg(["sum", "size"])
+    rng = np.random.default_rng(A.SEED + 51); s2, n2 = g2["sum"].to_numpy(), g2["size"].to_numpy()
+    bs2 = [s2[k].sum() / n2[k].sum() for k in (rng.integers(0, len(s2), len(s2)) for _ in range(A.B))]
+    out["depth_plus_logM"] = {"LL_DM": round(float(ll_dm.mean()), 7), "LL_R": round(float(ll["R"].mean()), 7),
+                              "DM_minus_R": float(d2.mean()), "ci": [float(np.percentile(bs2, 2.5)), float(np.percentile(bs2, 97.5))],
+                              "S_DM_vs_D": round(float((ll_b - ll_dm.mean()) / (ll_b - ll["D"].mean())), 3),
+                              "S_R_vs_D": round(float((ll_b - ll["R"].mean()) / (ll_b - ll["D"].mean())), 3)}
+    # G3 unit traces (D4, review G3): three place-days followed from the FENZ daily counts and the raw gauge series
+    # to both models' fitted probabilities; the 6-hour rain is recomputed exactly from the raw records.
+    import g4_check as G4
+    picks = {
+        "Auckland held-out flood place-day (first by date)": te[(te.region == "Auckland Region") & (te.y > 0)].sort_values(["day", "suburb"]),
+        "Tasman flood place-day on 27 June 2025 (largest 6-hour rain)": te[(te.region == "Tasman Region") & (te.day == "2025-06-27") & (te.y > 0)].sort_values("d6", ascending=False),
+        "West Coast held-out place-day with no callout and over 20 mm (first by date)": te[(te.region == "West Coast Region") & (te.y == 0) & (te.d6 > 20)].sort_values(["day", "suburb"]),
+    }
+    out["traces"] = {}
+    for name, cand in picks.items():
+        r = cand.iloc[0]; e = cand.iloc[[0]]
+        p = {k: float(1 / (1 + np.exp(-(d.X(e) @ b)))[0]) for k, (d, b) in models.items()}
+        out["traces"][name] = {"suburb": r.suburb, "tla": r.tla, "day": str(pd.Timestamp(r.day).date()), "gauge": r.gauge,
+                               "gauge_km": round(float(r.gauge_km), 2), "flood_exposures": int(r.flood), "d6_panel_mm": round(float(r.d6), 2),
+                               "d6_raw_recomputed_mm": round(G4.exact_d6(r.gauge, pd.Timestamp(r.day)), 2), "M6_mm": round(float(r.M6), 1),
+                               "rarity": round(float(r.d6 / r.M6), 3), "p_depth_model": p["D"], "p_rarity_model": p["R"]}
     (A.T / "posthoc.json").write_text(json.dumps(out, indent=1) + "\n")
     print(json.dumps(out, indent=1))
 
