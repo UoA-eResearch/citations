@@ -57,7 +57,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-11-03 12:34 | `auckland-nz-fenz-impact-rainfall-thresholds` | review (fresh agent; pre-review gate G5+G6 done; D3 rebuild first) | fix first |
 | 2026-11-03 17:35 | `auckland-nz-fenz-impact-rainfall-thresholds` | confirmation pass (original reviewer resumed) | publish with edits -> PUBLISHED |
 | 2026-11-03 22:37 | `bioinformatics-amr-gene-species-emergence-forecast` | review (fresh agent; pre-review gate G5+G6 done) | fix first |
-| 2026-11-04 07:56 | `bioinformatics-amr-gene-species-emergence-forecast` | confirmation pass (original reviewer resumed) | running |
+| 2026-11-04 07:56 | `bioinformatics-amr-gene-species-emergence-forecast` | confirmation pass (original reviewer resumed) | fix first (C1: the log-space null still saturated; one-line fix) |
 
 **Pre-review gate (from 2026-10-25, METHODS.md):** before launching a draft's Fable review, run G5 (`tools/overclaim_check.py RUN --verify`) and G6 (`tools/attribution.py check RUN`) on it, fix what they find as a D-entry, and add the standard gate-check block to its `review/prompt.md`. New leads apply all of G1–G7.
 
@@ -104,6 +104,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | `auckland-nz-hirds-out-of-sample-exceedance-audit` |  31ccb9d | H1 Inconclusive (6-h 10% AEP O/E 1.49; preregistered CI 0.78-2.35, studentized 0.68-2.80; 200 gauges; in-sample control 0.89, ratio 1.68) | PUBLISHED 2026-10-29 09:09 (review publish with edits; confirmation publish with edits) |
 | `auckland-nz-fenz-impact-rainfall-thresholds` |  61a872d | H1 Supported (S 1.072, D_LL 4.0e-5, 0.9-7.8e-5, 7/9 regions; depth + log M matches rarity, post hoc) | PUBLISHED 2026-11-03 19:33 (review fix first; confirmation publish with edits) |
 | `bioinformatics-amr-gene-species-emergence-forecast` |  62a9a35 | H1 Refuted (model precision@100 0.00 vs a sampling-effort null's 0.08 over 472,779 candidate gene x species pairs); H2 Refuted (ESM-2 embeddings subtract AP; removing them lifts precision@100 to 0.18, but under the first-appearance variant both models score 0.00 vs the null's 0.10) | queued 2026-10-29; pre-review gate G5+G6 done; prompt written |
+| `astronomy-gaia-sb1-tess-synchronization-boundary` |  414c199 | H1 Refuted (f_cool 0.205 vs >0.70; f_hot 0.093; step near 6,300 K); H2 not estimable (e < 0.05 unsuited to Gaia eccentricities); level reads as a measurement floor | queued 2026-11-05; pre-review gate G5+G6 done; prompt written |
 
 ## Order to run them in
 
