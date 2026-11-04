@@ -6,8 +6,9 @@
   training task's rate was 0.33% (1,271 of 386,001). Fewer first appearances in the later window is consistent with
   the corpus: 2023–2025 holds 349,205 kept isolates against 386,839 in 2020–2022 (corrected in D3).
 - **Emergence happens where sequencing happens.** The median emergent pair's species has 414 isolates in the
-  forecast window. The sampling-effort null is built on exactly this and reaches precision@100 of 3.3% when
-  computed exactly (D3; the first draft's 8% was a tie artefact), about 19 times the base rate.
+  forecast window. The sampling-effort null is built on exactly this and reaches precision@100 of 7.3% when
+  ranked without saturation (D3b; the first draft's 8% came from row order within ties, and D3's 3.3% was still
+  saturated), about 40 times the base rate.
 
 ## Three emergent pairs traced, and what the trace revealed
 
@@ -43,13 +44,13 @@ model is withdrawn.*
   are allele variants of each other. The model learns that a near-identical protein already present predicts
   emergence, which nominates β-lactamase variants in species that are barely sequenced, where emergence is
   nearly impossible.
-- **Without it, that seed's precision@100 is 0.18** against the exact null's 0.033; across ten seeds the model without
+- **Without it, that seed's precision@100 is 0.18** against the null's 0.073 (D3b); across ten seeds the model without
   the embedding ranges 0.06–0.23.
 - **It is not survivorship.** Splitting the test candidates into those that were already candidates at the 2019
   cutoff and those newly eligible does not rescue the full model (0.00 and 0.07), so the failure is not that the
   earlier period used up the high-propensity pairs.
 - **The model's ranking has no tie artefact.** The top 1,000 scores hold 989 distinct values. The null's did: it
-  saturated at 1.0 for 4,727 candidates (D3).
+  saturated at 1.0 for 4,727 candidates (D3), and its log P(≥2) form saturated at 0.0 in the same place (D3b).
 
 ## Sanity of the data build
 

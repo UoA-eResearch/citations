@@ -1,6 +1,7 @@
 """D3: fixes after the independent review (verdict: fix first). See deviations.md D3.
 
-1. The preregistered null, 1 - Binomial(<=1; n_s,horizon, f_g), computed in log space (binom.logsf). In double
+1. The preregistered null, 1 - Binomial(<=1; n_s,horizon, f_g), ranked by -log P(<=1) (binom.logcdf; D3b - logsf of
+   P(>=2) still saturated at 0.0). In double
    precision the probability saturates at 1.0 for thousands of candidates, so precision@100 depended on row order.
    The log-space value is the same quantity without saturation. The old null's expectation under random tie order is
    also reported.
@@ -40,9 +41,12 @@ def log_null(te, C, H):
     f = pd.Series([g for gs in pre.genes for g in gs]).value_counts() / len(pre)
     nh = iso[(iso.year > C) & (iso.year <= H)].species.value_counts()
     n = te.species.map(nh).fillna(0).to_numpy(); fg = te.gene.astype(str).map(f).fillna(0).to_numpy()
-    ln = binom.logsf(1, n, fg)
-    fin = np.isfinite(ln)
-    return np.where(fin, ln, ln[fin].min() - 1.0)          # probability exactly 0 (no horizon isolates or f = 0): ranked last
+    # D3b (confirmation finding C1): log P(>=2) = logsf rounds to exactly 0.0 wherever P(>=2) is within 1e-16 of 1,
+    # the same saturation as before. The same order, without saturation, is P(<=1) ascending: score = -log P(<=1),
+    # which binom.logcdf computes accurately deep into the tail.
+    sc = -binom.logcdf(1, n, fg)
+    fin = np.isfinite(sc)
+    return np.where(fin, sc, sc[fin].max() + 1.0)
 
 
 def topk(score, y, k, rng=None):
@@ -118,7 +122,7 @@ def main():
                             "ratio_by_seed": [x / pn0 if pn0 > 0 else None for x in r["full_p@100_by_seed"]]}
             # G3: null calibration by decile
             cal = {}
-            for nm, sc in (("old", old), ("log", np.exp(ln))):
+            for nm, sc in (("old", old), ("exact", -np.expm1(-ln))):
                 q = pd.qcut(pd.Series(sc).rank(method="first"), 10, labels=False)
                 cal[nm] = pd.DataFrame({"q": q, "p": sc, "y": y}).groupby("q").agg(mean_p=("p", "mean"), observed=("y", "mean")).round(5).to_dict("index")
             out["null_calibration"] = cal

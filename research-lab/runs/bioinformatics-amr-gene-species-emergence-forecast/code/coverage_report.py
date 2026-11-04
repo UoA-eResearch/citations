@@ -38,7 +38,7 @@ c.save()
 
 c = Coverage("embedding_feature_rows_test", path)
 # D3 (review finding 10): one gene with no embedding gets a zero vector in candidates.py (cosine 0)
-c.add_counts(ok=472779 - 156, fallbacks={"gene without an embedding (dfrA51): zero vector, cosine 0; 2 positives": 156})
+c.add_counts(ok=472779 - 156, fallbacks={"UNPLANNED (not in the plan): gene without an embedding (dfrA51) given a zero vector, cosine 0; 2 positives": 156})
 c.save()
 
 for nm, t in (("candidates_train_2019", tr), ("candidates_test_2022", te)):

@@ -34,5 +34,6 @@
  },
  "H2": "Inconclusive",
  "H2_as_first_coded": "Refuted",
- "H2_note": "D3: relabelled by the plan's rule (refute only if the interval lies below 0 or within +-0.005); the original code refuted on the upper bound alone"
+ "H2_note": "D3: relabelled by the plan's rule (refute only if the interval lies below 0 or within +-0.005); the original code refuted on the upper bound alone",
+ "H1_note": "Superseded by D3: the null here (precision@100 0.08, ratio CI 0-1.27, 210 undefined draws) was decided by row order within a block of probabilities saturated at 1.0. results/tables/d3.json has the exact null and H1_d3."
 }

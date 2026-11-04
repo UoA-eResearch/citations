@@ -69,7 +69,8 @@ quantity exactly (item 1) or a preregistered secondary that had not been run (it
 7. **Deposit dates** (finding 6). 45% of isolates collected by 2022 were deposited after 2022, so the 2022 "cutoff"
    uses data that were not public in 2022. The design is retrospective by collection date, not a real-time
    forecast. Of the 847 primary-rule emergences, 705 had a carrier collected by 2022 but only 316 (37%) had one
-   deposited by 2022 (`hindsight.json`). The report's "83% already observed" becomes "83% already collected, 37%
+   deposited by 2022 (`hindsight.json`). "Deposited" means a target_creation_date in or before 2022; the reviewer's
+   rule, the earlier of target_creation_date and sra_release_date, gives 39.2% and 341 of 847. The report's "83% already observed" becomes "83% already collected, 37%
    already public".
 8. **G4** (finding 8). `g4_check.py` recomputes 30 random pairs' first-observation years and two-BioProject years
    from the raw metadata independently of `build.py`; 30 of 30 match on both.
@@ -80,3 +81,23 @@ quantity exactly (item 1) or a preregistered secondary that had not been run (it
    - a plausibility count is corrected.
 10. **D1 was not blind** (finding 11). The catalog restriction was decided after 2023–2025 emergence counts had been
     seen. Its sensitivity (item 6) shows it does not drive the result.
+
+## D3b — 2026-11-05 13:00 NZDT — fixes from the confirmation pass (verdict: fix first)
+
+1. **The null still saturated** (C1). log P(≥2) from `binom.logsf` rounds to exactly 0.0 wherever P(≥2) is within
+   about 1e-16 of 1, the same candidates whose probability saturated at 1.0. `d3_fixes.log_null` now ranks by
+   −log P(≤1) (`binom.logcdf`), the same order without saturation: 798 distinct scores in the top 1,000.
+   - **Null precision@100:** 0.073 (primary), 0.152 (first isolate), 0.053 (three isolates), 0.072 (all genes).
+   - **H1 at the preregistered seed:** ratio 0, interval 0–0.46, Refuted.
+   - **Other seeds:** the ratio is 1.4–2.6, with five of nine at 2 or more.
+   - **Average precision:** the model is 4.1–4.9 times the null at every seed.
+2. **Model metrics carried over** (`d3c_null.py`). The model fits are deterministic: the second D3 run reproduced the
+   first run's per-seed values before it was stopped, and the reviewer reproduced them bit for bit. So the model
+   metrics are carried over and only null-dependent quantities are recomputed, plus one model fit for the H1
+   bootstrap.
+3. **Wording** (C2–C5). The ratios, title and plain terms are corrected, and the first-appearance result now leads.
+   The baseline mechanism is described correctly: exact ties plus row order, with 0.08 nearer the truth than 0.033.
+   The "null cannot order large species" claim is withdrawn, the preregistered fit is labelled correctly, and the
+   recall range is corrected.
+4. **Records** (C6–C8). `primary.json` carries a superseded-null note, the report has a Coverage line, the embedding
+   fallback is labelled UNPLANNED, and the deposit-date rule is stated beside the reviewer's.

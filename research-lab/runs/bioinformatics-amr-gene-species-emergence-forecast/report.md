@@ -1,54 +1,54 @@
-# A model ranks where antibiotic-resistance genes will be confirmed in new species about five times better than sampling effort, but cannot pick out first appearances at the top of its list; the preregistered fit was the one seed in ten that failed
+# For first appearances of antibiotic-resistance genes in new species, sampling effort beats a trained model at the top of the list; for confirmations, the model ranks four to five times better overall
 
 *NCBI Pathogen Detection, 106 organism groups: 1.62 million isolates with uniform AMRFinderPlus calls, 264 species,
 4,417 gene symbols. Candidate (gene, species) pairs not yet established by the end of 2022 were ranked for
 appearance in 2023–2025. Two rankings were compared: a gradient-boosted model trained on the same task one period
 earlier, and a sampling-effort null that knows only each gene's frequency and how many isolates of each species were
 sequenced in the forecast window. Isolates are dated by collection, so this is a retrospective test, not a real-time
-forecast. The plan was committed before any data were downloaded. This version follows an independent review that
-returned "fix first" (deviation D3).*
+forecast. The plan was committed before any data were downloaded. This version follows an independent review and a
+confirmation pass that both returned "fix first" (deviations D3 and D3b).*
 
-**Verdict: H1 Refuted by the preregistered rule, but not robustly; H2 Inconclusive.**
+**Verdict: H1 Refuted by the preregistered rule; H2 Inconclusive.**
 
-- **H1 (the model's precision@100 is at least twice the null's): Refuted as preregistered, on a single fit that is an
-  outlier.**
-  - At the preregistered seed the model's precision@100 is **0.00** against the null's **0.033**. The ratio's 95%
-    interval over gene resamples is 0 to 0.97, which meets the plan's refutation rule.
-  - Refitted with nine other seeds and the same hyperparameters, the model scores **0.10 to 0.19**, three to six
-    times the null. Ranked over the whole list, it beats the null at every seed: average precision **0.075 to 0.090**
-    against **0.016**.
-  - The review showed that the null's originally reported 0.08 came from rounding: its probability saturates at 1.0
-    for thousands of candidates, and row order then decided its top 100. Computed exactly, and with ties scored by
-    their expectation, it is 0.033 (D3).
-- **H2 (ESM-2 protein embeddings add signal beyond co-occurrence and taxonomy): Inconclusive.** The paired
-  difference in average precision at the preregistered seed is −0.005 (−0.013 to +0.001). By the plan's rule that is
-  neither below zero nor within ±0.005; the first draft mislabelled it Refuted. Across ten seeds the embedding adds a
-  little average precision at seven, +0.004 on average.
-- **For genuine first appearances the model fails at the top of the list.** Under the preregistered variant, in
-  which one isolate is enough to count as a first appearance, the model's precision@100 is about zero at nine of ten
-  seeds, against the null's 0.044. Its average precision is still two to three times the null's (0.031–0.051 against
-  0.018).
-- **What the primary rule rewards.** It needs two isolates from different BioProjects, to exclude single outbreaks.
-  Of its 847 emergences, 705 (83%) already had a carrier isolate collected before 2023, but only 316 (37%) had one
-  deposited, and so public, by then. The contrast between the two rules suggests that much of the model's skill is in
-  ranking confirmations of pairs that already existed, often unpublished at the cutoff.
+- **For genuine first appearances the effort null wins at the top of the list.** Under the preregistered variant, in
+  which one isolate is enough to count as a first appearance:
+  - the null puts about **15 true first appearances in its top 100** (precision 0.152);
+  - the model puts none at nine of ten seeds;
+  - over the whole list, the model's average precision is 1.4–2.4 times the null's.
+- **H1 (the model's precision@100 is at least twice the null's): Refuted.**
+  - At the preregistered seed the model scores **0.00** against the null's **0.073** (ratio 0, 95% interval 0 to
+    0.46).
+  - That fit is the worst of ten. At the other nine seeds the ratio is 1.4–2.6, and five clear the 2× bar.
+- **For confirmations the model is better overall.** Under the primary two-BioProject rule, its average precision is
+  **4.1–4.9 times** the null's at every seed (0.075–0.090 against 0.018).
+- **H2 (ESM-2 protein embeddings add signal): Inconclusive.**
+  - The paired difference in average precision is −0.005 (−0.013 to +0.001). The first draft mislabelled this
+    Refuted.
+  - Across seeds the embedding adds a little at seven of ten.
+- **What the primary rule rewards.** It needs two isolates from different BioProjects. Of its 847 emergences, 705
+  (83%) already had a carrier collected before 2023, but only 316 (37%) had one deposited, and so public, by then. The
+  contrast between the two rules suggests that much of the model's skill is in ranking confirmations of pairs that
+  already existed, often unpublished at the cutoff.
+- **The scoring of the null was fixed twice.**
+  - Its probability saturates at 1.0 for thousands of candidates, and row order then decided the first draft's 0.08.
+  - The first fix (log P of two or more) saturated at 0.0 in the same place and gave 0.033.
+  - Ranked by log P of at most one, the null has 798 distinct scores in its top 1,000 and scores 0.073, with the
+    remaining ties scored by their expectation (D3, D3b).
 
 ## In plain terms
 
 Genes that make bacteria resistant to antibiotics spread between species. We asked whether it is possible to
 forecast which gene will turn up in which species next, using 1.6 million sequenced isolates that one pipeline has
 annotated the same way. Any forecast has to beat a simple baseline that knows only how common each gene is and how
-many samples of each species are being sequenced, since more sequencing finds more genes.
+many samples of each species are being sequenced.
 
-A machine-learning model beat that baseline clearly when the question was "which gene–species pairs will be
-confirmed by two separate studies". Over the whole ranked list it did about five times better. But the single model
-run we had committed to in advance happened to be the one of ten that did no better at the very top of its list.
-Our first draft took that run at face value, and got the comparison wrong in the other direction too: a rounding
-problem made the baseline look stronger than it is.
+For a gene's very first appearance in a species, it does not: the baseline puts about 15 real first appearances in
+its top 100 guesses, and the trained model almost never puts any. Where the model does better, about four to five
+times better over its whole list, is in predicting which gene–species pairs will be confirmed by a second, separate
+study. Many confirmed pairs had already been sampled before the cutoff, often not yet published.
 
-When the question is the first appearance of a gene in a species, with one isolate enough, the model does better
-than the baseline across the whole list but almost never puts a true first appearance in its top 100. That contrast
-suggests much of the model's skill is in spotting pairs that already existed but were not yet confirmed.
+Our first draft got several things wrong. It relied on the one model run, of ten, that did worst. It also scored the
+baseline in a way that let the order of rows in a file decide its result. An independent review caught both.
 
 ## What was asked
 
@@ -79,37 +79,35 @@ species can be forecast prospectively against an explicit sampling-effort null.
 
 | ranking (primary rule) | precision@100 | average precision | recall in the top 1,000 |
 |---|---|---|---|
-| sampling-effort null (exact) | 0.033 | 0.016 | 0.044 |
+| sampling-effort null | 0.073 | 0.018 | 0.059 |
 | model, preregistered seed | **0.00** | 0.076 | 0.16 |
-| model, nine other seeds | 0.10–0.19 | 0.075–0.090 | 0.15–0.17 |
+| model, nine other seeds | 0.10–0.19 | 0.075–0.090 | 0.146–0.182 |
 | model without the embedding, ten seeds | 0.06–0.23 | — | — |
 
-| outcome rule (preregistered variants) | candidates / emergences | null precision@100 | model precision@100 | null / model average precision |
+| outcome rule (preregistered variants) | candidates / emergences | null precision@100 | model precision@100 | model / null average precision |
 |---|---|---|---|---|
-| two BioProjects (primary) | 472,779 / 847 | 0.033 | 0.00 (seed 1); 0.10–0.19 (others) | 0.016 / 0.075–0.090 |
-| first isolate | 665,655 / 1,307 | 0.044 | ≈0 at 9 of 10 seeds; 0.13 at one | 0.018 / 0.031–0.051 |
-| at least three isolates | 442,342 / 848 | 0.024 | 0.12 | 0.013 / 0.079 |
-| all genes (D1 sensitivity) | 489,561 / 871 | 0.033 | 0.19 | 0.016 / 0.085 |
+| two BioProjects (primary) | 472,779 / 847 | 0.073 | 0.00 (preregistered seed); 0.10–0.19 (others) | 4.1–4.9× |
+| first isolate | 665,655 / 1,307 | **0.152** | ≈0 at 9 of 10 seeds; 0.13 at one | 1.4–2.4× |
+| at least three isolates | 442,342 / 848 | 0.053 | 0.12 | 5.6× |
+| all genes (D1 sensitivity) | 489,561 / 871 | 0.072 | 0.19 | 4.7× |
 
 - **The preregistered fit's top 100 is unusual.** It is saturated (118 scores above 0.999), and 93 of its pairs are in
-  two rarely sequenced species, with a median of 24 isolates in the window against 414 for pairs that emerged. No
-  other seed does this, so it describes that fit, not the model.
-- **The null is flat at the top.** Its precision is 0.033 at both 100 and 500. It cannot order the thousands of
-  candidates in large, well-sequenced species, and its probabilities are badly calibrated: its top decile predicts
-  0.47 against an observed 0.011.
-- **Literature check (the model's 20 highest-ranked true emergences):** 15 of 20 are co-mentioned with their species in at least one Europe PMC
-  record before 2023, but most in only one or two records, and a co-mention does not show the gene was found in that
-  species (`epmc.csv`). By the plan's definition these were foreseeable from the literature; the evidence is thin.
+  two rarely sequenced species. No other seed does this.
+- **The null ranks well but is badly calibrated.** It has 798 distinct scores in its top 1,000: precision 0.073 at k = 100 and 0.060 at
+  k = 500, and recall 0.059 at k = 1,000. But its top decile predicts 0.47 against an observed 0.011.
+- **Literature check (the model's 20 highest-ranked true emergences):** 15 of 20 are co-mentioned with their species
+  in at least one Europe PMC record before 2023. Most appear in only one or two records, and a co-mention does not
+  show the gene was found in that species (`epmc.csv`).
 
 ## What this does and does not show
 
-- **The model beats sampling effort at ranking confirmations.** On average precision and recall it does so at every
-  seed and under every rule except first appearance, by three to six times. That is the robust finding.
+- **The model beats sampling effort at ranking confirmations.** On average precision it does so at every seed and
+  under every rule, by about four to six times except for first appearances (1.4–2.4×). That is the robust finding.
 - **The preregistered H1 is refuted only by a fragile statistic.** Precision@100 on 847 positives among 472,779
   candidates moves from 0.00 to 0.19 between seeds. A single fit should not have been the primary test; the review
   caught this, and the verdict is reported with that caveat rather than changed.
-- **Genuine first appearances are not forecast at the top of the list.** No model put a first appearance in its top
-  100 at nine of ten seeds.
+- **For genuine first appearances, sampling effort is the better forecaster at the top.** The null's top 100 holds
+  about 15; no model put one there at nine of ten seeds.
 - **The embedding's role is unclear.** It neither clearly helps nor clearly hurts. The first draft's claim that it
   "breaks the model" described one seed and is withdrawn.
 - **Limits.**
@@ -140,6 +138,7 @@ species can be forecast prospectively against an explicit sampling-effort null.
   - G5: `review/overclaim_check.md`.
   - G6: `results/attribution_ledger.csv`.
   - G7: does not apply.
+- **Coverage (G2):** Coverage — isolates: 1,621,194/2,943,808 ok; 1322614 dropped (duplicate biosample 1682, no collection year, or outside 1990-2025 598704, no species binomial (with a valid year) 423, no AMR call field 721790, screened with a reference catalog older than the oldest audited one (D1) 15) · gene_symbols_with_a_reference_protein: 4,381/4,417 ok; 36 dropped (no protein in the catalog or FASTA 36) · embedding_feature_rows_test: 472,623/472,779 ok; 156 fallback (UNPLANNED (not in the plan): gene without an embedding (dfrA51) given a zero vector, cosine 0; 2 positives 156) · candidates_train_2019: 1,271/1,698 ok; 427 dropped (emerged but outside the candidate set (species under 20 isolates, or gene not yet established) 427) · candidates_test_2022: 847/1,116 ok; 269 dropped (emerged but outside the candidate set (species under 20 isolates, or gene not yet established) 269)
 - **Independent review:** fix first (12 findings); fixes in D3; confirmation pass pending.
 
 ## Reproducing it

@@ -337,3 +337,206 @@ study downloaded but never used.
 
 So: keep the conclusion, rebuild the scaffolding around it, and lead with the strict definition of "first
 appearance", which is the part that does not wobble.
+
+---
+
+# Confirmation pass
+
+Reviewer: same independent reviewer, 2026-11-04. Checks in `review/reviewer_checks/c2_*`; I re-read every changed
+file, re-ran the study's own `d3_fixes.topk` against my own null implementations, and recomputed H1.
+
+## Verdict: **fix first**
+
+Eleven of my twelve findings are properly addressed, several of them better than I asked. **H1 Refuted and H2
+Inconclusive both survive my recheck**, and H1's interval is now cleaner than D3 reports (0 to 0.50, no undefined
+draws). The seed work, the withdrawal of the embedding claim, the deposit-date measurement, the missing
+secondaries, the independent G4, the null calibration and the coverage arithmetic are all done well, and the
+rewritten report is honest about fragility in a way the first draft was not.
+
+But finding 1 is not fixed. The null's score still collapses at the top of the list, so the comparator is still
+not the preregistered null's precision@100 — and because the new convention reports a tie block's base rate instead
+of a row-order lottery, the comparator is now about half of its true value rather than slightly above it. Every
+model-against-null ratio in the new report, including the title's and the verdict block's, is inflated by two to
+three and a half times, and two sentences about the baseline are now backwards. The hypothesis labels do not change,
+so this is a recomputation and a rewrite of the comparative sentences, not a redesign: one line of
+`d3_fixes.log_null`, one rerun, and about eight sentences plus two tables.
+
+## C1. The null still collapses at the top; `binom.logsf` moved the tie rather than removing it. Severity: major
+
+`d3_fixes.log_null` ranks by `binom.logsf(1, n, f)` = log P(≥2). That saturates at **0.0** exactly where the old
+score saturated at 1.0, because P(≥2) → 1 for well-sequenced species: log space grades the lower tail, and the top
+of this list is the upper tail. Measured (`c2_null_repr.json`):
+
+| | candidates tied at the top score | distinct scores in the top 1,000 | p@50 | p@100 | p@500 | p@1000 |
+|---|---|---|---|---|---|---|
+| D3's `logsf` score | 2,971 | **1** | 0.0333 | 0.0333 | 0.0333 | 0.0333 |
+| the same null, ranked faithfully | 1 | 988 | 0.07 | 0.07 | 0.06 | 0.05 |
+
+The four identical values in D3's row are the giveaway: with one distinct score in the whole top 1,000, "exact
+expectation under random order within ties" returns the tie block's base rate at every depth, which is not
+precision@100 of anything. `d3.json` also records `null_log_p@100_row_order` = 0.08, unchanged from the old score —
+a second signal, already in the output, that the block survived.
+
+The faithful ranking is not a different null. P(≥2) = 1 − P(≤1), so ranking by P(≥2) descending is identical to
+ranking by P(≤1) ascending, and P(≤1) is a sum of two finite logs that never underflows:
+`n·log1p(−f) + log1p(n·f/(1−f))`. Two independent implementations agree — the analytic formula gives 988 distinct
+scores in the top 1,000 and p@100 = 0.07, `scipy.stats.binom.logcdf` gives 798 distinct and 0.073 — and the Spearman
+correlation between D3's score and mine, computed outside the saturated block where D3's score is informative, is
+exactly **1.0**. Same quantity, same order, no collapse. The faithful top 100 is also a sensible set: *C. jejuni*
+41, *E. coli* 22, *C. coli* 13, rather than one tie block in alphabetical order.
+
+**Fix:** in `log_null`, score by log P(≤1) and sort ascending (or negate), then rerun `d3_fixes.py`. Keep `topk`: it
+is a correct estimator and still useful for the genuine (n, f) ties that remain.
+
+## C2. Every model-against-null ratio in the new report is inflated by two to three and a half times. Severity: major
+
+With the null computed faithfully (`c2_null_repr.json`, `c2_h1_faithful.json`):
+
+| claim in report.md | as reported | corrected |
+|---|---|---|
+| null precision@100, primary rule | 0.033 | **0.07** |
+| null precision@100, first appearance | 0.044 | **0.152** |
+| null precision@100, ≥3 isolates | 0.024 | **0.053** |
+| null precision@100, all genes (D1 sensitivity) | 0.033 | **0.072** |
+| null average precision, primary | 0.016 | 0.018 |
+| per-seed ratio, nine other seeds | 3.0–5.7 | **1.4–2.7** (five of nine clear the plan's 2× threshold, not nine) |
+| "three to six times the null" (verdict) | — | one and a half to under three times |
+| "two to three times the null's" AP (first appearance) | — | 1.4–2.4× |
+| title: "about five times better" | — | about four times (AP 0.076–0.090 against 0.018) |
+| plausibility: "about 19 times the base rate" | — | about 41 times |
+
+**H1 is unaffected**, which is the important part: the model scores 0.00 at the preregistered seed, so the ratio is 0
+whatever the denominator, and with the faithful null the interval tightens from 0–0.97 to **0–0.50** with no
+undefined draws at all. Refuted stands, by the plan's rule, on a clean interval. H2 never touched the null.
+
+## C3. Two statements about the baseline are now the wrong way round. Severity: moderate
+
+- Plain terms says a rounding problem made the baseline look stronger than it is. Two errors: the mechanism was
+  exact ties plus row order, not rounding; and the first draft's 0.08 was within noise of the faithful 0.07, so the
+  D3 correction made the baseline look **weaker** than it is, not the first draft stronger. As written, the sentence
+  tells a reader the opposite of what happened.
+- The results section says the null is flat at the top, that its precision is 0.033 at both 100 and 500, and that it
+  cannot order the thousands of candidates in large, well-sequenced species. The preregistered null is strictly
+  increasing in n and in f, so it orders them perfectly well; only the chosen representation cannot. Faithfully
+  ranked it gives a normal decreasing curve (0.07, 0.06, 0.05 at k = 100, 500, 1000).
+
+Both should be replaced with a plain statement that the first draft's figure came from row order among exact ties,
+that the corrected figure is about 0.07, and that the null's probabilities remain badly calibrated (the calibration
+finding stands and is verified).
+
+## C4. The first-appearance result is stronger than D3 reports, and should lead. Severity: moderate (in the study's favour)
+
+Faithfully computed, the effort null puts about **15 of 100** true first appearances at the top of its list, while
+every model puts **none** at nine of ten seeds (0.13 at one). That is a sharper and more interesting negative than
+0.044 against about zero: sampling effort alone identifies first appearances, and the learned models destroy that
+signal rather than merely failing to improve on it. The title's second clause and the verdict's fourth bullet both
+become stronger, and the honest headline is this contrast rather than the primary rule's.
+
+## C5. Table and labelling slips. Severity: minor
+
+- The second results table reports the preregistered fit as "0.00 (seed 1)". The preregistered seed is 20261028 and
+  seed 1 actually gives 0.19 (`d3.json` seeds and `full_p@100_by_seed`), so the label names the wrong seed and
+  contradicts the text two paragraphs above.
+- "recall in the top 1,000 … 0.15–0.17" for the nine other seeds: the range is 0.146–0.182.
+- `epmc.py:23` contains a dead conditional (`"p" if False else "rank"`); harmless, but it reads as leftover.
+
+## C6. `primary.json` still presents the superseded numbers without the note that H2 got. Severity: minor
+
+It carries `precision_at_100.null` 0.08, `ratio_ci` 0–1.27, `ratio_ci_undefined_draws` 210 and `H1` Refuted, all of
+which D3 supersedes, while H2 correctly keeps `H2_as_first_coded` plus `H2_note`. Add the same treatment for the
+null and H1, pointing at `d3.json`, so the primary table cannot be read on its own as current.
+
+## C7. Two parts of findings 10 and 12 are still open. Severity: minor
+
+- report.md still has no **Coverage line**; it names `coverage.json` only. METHODS G2 asks for the line, which
+  `tools/coverage.py` prints.
+- The embedding zero-vector fallback is now disclosed in `coverage.json` and D3 — good — but `coverage_report.py`
+  constructs that stage without `allowed=`, and `tools/coverage.py:53` only checks reasons when `allowed` is set, so
+  the unplanned fallback is recorded rather than flagged. Passing `allowed=()` would make it fail loudly as G2
+  intends, which is the point of the gate.
+
+## C8. One definitional note on the deposit dates. Severity: minor
+
+`hindsight.py` uses `target_creation_date` alone (45.3% deposited after 2022; 316 of 847 positives public at the
+cutoff). I used the earlier of `target_creation_date` and `sra_release_date` (39.2%; 341 of 847). Both are
+defensible and the conclusion is identical; D3 should say which signal it uses, since the metadata carries two.
+
+## What I verified as properly fixed
+
+- **Finding 2 (seeds).** Ten seeds, both arms, both outcome rules, in the verdict block, the tables and the limits.
+  My own eight-seed sweep agrees exactly where they overlap (0.00, 0.19, 0.10, 0.18, 0.19, 0.12, 0.17, 0.12).
+- **Finding 3 (the embedding claim).** Withdrawn in the report; `plausibility.md` keeps the mechanism but marks the
+  diagnosis as describing the preregistered fit only, and gives the seven-of-ten AP direction. Correctly done.
+- **Finding 4 (H2's rule).** `analyse.py:102` now refutes only if the interval lies below zero or wholly within
+  ±0.005 — the plan's rule — and yields Inconclusive on (−0.0128, +0.0009). The old label is kept with a note.
+- **Finding 5 (undefined draws).** The convention is now explicit in code (model-above-zero-over-null-zero counts as
+  infinite, 0/0 dropped), and with the exact-expectation null no draw is undefined. The fix survives C1: with my
+  faithful null there are still no undefined draws.
+- **Finding 6 (deposit dates).** Measured, and carried into the standfirst, the verdict, the limits and
+  `plausibility.md`. The "83% already observed" claim is now stated as 83% collected / 37% public.
+- **Finding 7 (secondaries).** The ≥3-isolate variant (`d3_prep.py` computes the third-isolate year correctly on a
+  biosample-deduplicated explode), the all-genes D1 sensitivity, recall at four depths, and the Europe PMC check are
+  all run and reported; the gene × country variant is declined with a stated reason. The literature check is
+  appropriately hedged — 15 of 20 co-mentions, mostly one or two records, and the write-up says a co-mention is not
+  evidence the gene was found in that species.
+- **Finding 8 (G4).** `g4_check.py` is a genuinely independent recomputation (its own species split, its own symbol
+  regex, its own two-BioProject scan) and matches `pairs.parquet` on 30 of 30 pairs for both the first-any and the
+  two-BioProject year.
+- **Finding 9 (null calibration).** Added, and it reproduces my own numbers (top decile 0.47 predicted against 0.011
+  observed).
+- **Finding 10 (coverage arithmetic).** `attempted` now equals the rows actually read (2,943,808) and the drop
+  categories partition exactly; the 135-row overlap is removed from the species category with an honest comment.
+- **Finding 11 (D1 not blind).** Admitted in D3 and in the report's deviation list, with the sensitivity reported.
+- **Finding 12 (the unreproducible count).** Corrected to 386,839, which matches my recomputation.
+
+## G5 re-labels for the new table
+
+The 32-row table is complete and its backings point to real fields, but every row that divides by the null inherits
+C1:
+
+| row | sentence (abbreviated) | my label |
+|---|---|---|
+| 1 | title: about five times better than sampling effort | Partially supported (about four) |
+| 8 | verdict line, backed by per-seed ratios 3.0–5.7 | Partially supported (1.4–2.7) |
+| 10 | 0.00 against the null's 0.033 | **Overstated** (the null is 0.07) |
+| 11 | interval 0 to 0.97 | Partially supported (0 to 0.50; the verdict is unchanged) |
+| 12 | three to six times the null | **Overstated** (one and a half to under three) |
+| 13 | AP 0.075–0.090 against 0.016 | Partially supported (against 0.018; beats the null at every seed either way) |
+| 14 | the 0.08 came from rounding | **Overstated** (exact ties and row order; and 0.08 was the nearer figure) |
+| 15 | computed exactly, it is 0.033 | **Overstated** (not exact; the representation still collapses) |
+| 19 | first appearance: about zero against the null's 0.044 | **Overstated** (the null is 0.152 — the claim gets stronger) |
+| 20 | AP two to three times the null's | Partially supported (1.4–2.4×) |
+| 27, 28 | the model beat the baseline clearly / about five times | Partially supported |
+| 30 | a rounding problem made the baseline look stronger than it is | **Overstated** (and the direction is reversed) |
+
+Rows 2–7, 9, 16–18, 21–26, 29, 31 and 32 I agree with as labelled; rows 23 and 32 are now correctly hedged as
+suggestions, and row 5 is a good addition.
+
+## What to do
+
+1. Score the null by log P(≤1) and sort ascending; rerun `d3_fixes.py` (C1).
+2. Update the title, the verdict block's two ratio sentences, both results tables, the two plausibility sentences
+   and the plain-terms sentence about rounding (C2, C3). H1 Refuted and H2 Inconclusive do not change.
+3. Lead the first-appearance result with the 0.152-against-zero contrast (C4).
+4. Fix the "(seed 1)" label and the recall range (C5); note the superseded fields in `primary.json` (C6); add the
+   Coverage line and `allowed=()` (C7); say which deposit-date field is used (C8).
+
+With those done this is publishable: the study's conclusion is well supported, its preregistered verdicts are now
+correctly labelled, and its account of its own fragility is better than most of what it is competing with.
+
+## In plain terms
+
+The team fixed almost everything I raised, and fixed it properly: they re-ran the model with ten different random
+starts instead of one, withdrew the claim that the protein language model broke it, measured how much of their data
+was not actually public at the forecast date, ran the analyses the plan had promised, and checked thirty records by
+hand against the raw files. Their two headline verdicts survived my recheck.
+
+One thing went wrong again. The simple baseline they compare against involves a probability that is so close to 1
+for heavily sequenced species that the computer cannot tell those candidates apart. The first draft broke the tie by
+the order rows sat in a file, which flattered the baseline a little. The repair was to compute the number a
+different way — but that way is still blind at exactly the same point, and this time the convention they used
+reports the average of the whole indistinguishable block, which understates the baseline by about half. Computing
+the same probability in a form that does not go blind — a one-line change — gives a baseline about twice as strong
+as the new draft claims, so every "the model is three to six times better" becomes "one and a half to under three
+times". Their main conclusions do not change, and one of them actually gets sharper: for genuine first appearances,
+the simple baseline finds about fifteen in its top hundred and the machine-learning models find none.
