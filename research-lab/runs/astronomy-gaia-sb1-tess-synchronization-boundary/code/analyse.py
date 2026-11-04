@@ -43,18 +43,23 @@ def wshare(y, w):
 
 
 def fit_teff(Tf, y, w):
+    """D2 (review finding 6): Teff in thousands of kelvin and a grid of starts, so L-BFGS-B is not left on a start value
+    by badly scaled parameters; the scale's lower bound (10 K) is reported when the fit reaches it."""
+    x = Tf / 1000.0
     def nll(th):
         lo, hi, T0, lw = th
-        p = np.clip(lo + (hi - lo) / (1 + np.exp((Tf - T0) / np.exp(lw))), 1e-6, 1 - 1e-6)
+        p = np.clip(lo + (hi - lo) / (1 + np.exp((x - T0) / np.exp(lw))), 1e-6, 1 - 1e-6)
         return -np.sum(w * (y * np.log(p) + (1 - y) * np.log(1 - p)))
     best = None
-    for T0 in (5500, 6200, 6800):
-        r = minimize(nll, [0.1, 0.8, T0, np.log(150)], method="L-BFGS-B",
-                     bounds=[(0, 1), (0, 1), (4000, 7500), (np.log(10), np.log(3000))])
-        if best is None or r.fun < best.fun:
-            best = r
+    for T0 in (5.4, 5.8, 6.1, 6.3, 6.5, 6.8, 7.1):
+        for lw0 in (np.log(0.03), np.log(0.15), np.log(0.5)):
+            r = minimize(nll, [0.1, 0.3, T0, lw0], method="L-BFGS-B",
+                         bounds=[(0, 1), (0, 1), (4.0, 7.5), (np.log(0.01), np.log(3.0))])
+            if best is None or r.fun < best.fun:
+                best = r
     lo, hi, T0, lw = best.x
-    return {"floor": lo, "ceiling": hi, "T0": T0, "width_10_90": 4.39 * np.exp(lw)}
+    return {"floor": lo, "ceiling": hi, "T0": T0 * 1000, "width_10_90": 4.39 * np.exp(lw) * 1000,
+            "width_at_lower_bound": bool(lw <= np.log(0.01) + 1e-6)}
 
 
 def fit_mid(logP, y, w):
@@ -69,25 +74,30 @@ def fit_mid(logP, y, w):
 def main():
     st = pd.read_parquet(D / "stars.parquet")
     det = st[st.cls == "detected"].copy()
-    det["C"] = weights(det); det = det[det.C >= 0.1]; det["w"] = 1 / det.C; det["y"] = det.sync.astype(float)
+    det["C"] = weights(det)
+    n_nan, n_low = int(det.C.isna().sum()), int((det.C < 0.1).sum())          # D2: no grid cell vs low completeness
+    det = det[det.C >= 0.1]; det["w"] = 1 / det.C; det["y"] = det.sync.astype(float)
     rng = np.random.default_rng(SEED)
-    out = {"detections_weighted": int(len(det)), "detections_dropped_low_C": int((st.cls == "detected").sum() - len(det))}
+    out = {"detections_weighted": int(len(det)), "detections_dropped_no_completeness_cell": n_nan,
+           "detections_dropped_C_below_0p1": n_low}
 
     # H1
     h = det[(det.period < 10) & det.teff.between(4000, 7500)]
     cool, hot = h.teff.between(4000, 6200, inclusive="left"), h.teff.between(6500, 7500, inclusive="left")
     est = {"f_cool": wshare(h.y[cool], h.w[cool]), "f_hot": wshare(h.y[hot], h.w[hot]), **fit_teff(h.teff.to_numpy(), h.y.to_numpy(), h.w.to_numpy())}
+    lb = est.pop("width_at_lower_bound")
     bs = []
     for _ in range(B):
         k = rng.integers(0, len(h), len(h)); x = h.iloc[k]
         c, ht = x.teff.between(4000, 6200, inclusive="left"), x.teff.between(6500, 7500, inclusive="left")
         bs.append({"f_cool": wshare(x.y[c], x.w[c]), "f_hot": wshare(x.y[ht], x.w[ht]), **fit_teff(x.teff.to_numpy(), x.y.to_numpy(), x.w.to_numpy())})
-    bs = pd.DataFrame(bs)
+    bs = pd.DataFrame(bs); share_lb = float(bs.pop("width_at_lower_bound").mean())
     ci = {k: [float(bs[k].quantile(0.025)), float(bs[k].quantile(0.975))] for k in est}
     sup = ci["f_cool"][0] > 0.70 and ci["f_hot"][1] < 0.30 and est["width_10_90"] < 400
     ref = ci["f_cool"][1] < 0.70 or ci["f_hot"][0] > 0.30 or ci["width_10_90"][0] > 400
     out["H1"] = {"n_cool": int(cool.sum()), "n_hot": int(hot.sum()), "n_fit": int(len(h)),
                  "estimate": {k: float(v) for k, v in est.items()}, "ci": ci,
+                 "width_at_lower_bound": lb, "bootstrap_share_width_at_lower_bound": share_lb,
                  "verdict": "Supported" if sup else "Refuted" if ref else "Inconclusive"}
 
     # H2

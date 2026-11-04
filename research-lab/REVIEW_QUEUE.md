@@ -58,7 +58,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-11-03 17:35 | `auckland-nz-fenz-impact-rainfall-thresholds` | confirmation pass (original reviewer resumed) | publish with edits -> PUBLISHED |
 | 2026-11-03 22:37 | `bioinformatics-amr-gene-species-emergence-forecast` | review (fresh agent; pre-review gate G5+G6 done) | fix first |
 | 2026-11-04 07:56 | `bioinformatics-amr-gene-species-emergence-forecast` | confirmation pass (original reviewer resumed) | fix first (C1: the log-space null still saturated; one-line fix) |
-| 2026-11-05 06:13 | `astronomy-gaia-sb1-tess-synchronization-boundary` | review (fresh agent; pre-review gate G5+G6 done) | running |
+| 2026-11-05 06:13 | `astronomy-gaia-sb1-tess-synchronization-boundary` | review (fresh agent; pre-review gate G5+G6 done) | fix first |
 
 **Pre-review gate (from 2026-10-25, METHODS.md):** before launching a draft's Fable review, run G5 (`tools/overclaim_check.py RUN --verify`) and G6 (`tools/attribution.py check RUN`) on it, fix what they find as a D-entry, and add the standard gate-check block to its `review/prompt.md`. New leads apply all of G1–G7.
 

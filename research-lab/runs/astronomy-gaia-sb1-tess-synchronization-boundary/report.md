@@ -1,152 +1,139 @@
-# TESS finds tidally synchronized rotation in a fifth of Gaia's close binaries, not most, and the share steps down at the Kraft break; but much of the shortfall looks like measurement
+# Tidal synchronization in Gaia's close binaries shows up clearly in TESS light curves, but too diluted by measurement to test where it stops; the apparent step at the Kraft break appears to follow spot detectability
 
 *Gaia DR3 SB1 orbits (181,529) were cut to 49,960 main-sequence binaries. Rotation periods for the 23,577 with
 orbits shorter than 12 days and a TIC match came from 70,531 TESS-SPOC full-frame-image light curves. A rotation
-counts as synchronized if it lies within 10% of the orbital (or pseudo-synchronous) period. Shares are weighted by
-injection-recovery completeness. The plan was committed before any data were downloaded.*
+counts as synchronized if it lies within 10% of the orbital (or pseudo-synchronous) period. The plan was committed
+before any data were downloaded. This version follows an independent review that returned "fix first" (D2).*
 
-**Verdict: H1 Refuted; H2 could not be estimated as planned (Inconclusive by the plan's rule).**
+**Verdict: H1 Refuted; H2 Inconclusive.**
 
 - **H1 (more than 70% synchronized below 6,200 K, under 30% above 6,500 K, a transition under 400 K wide): Refuted.**
   - Among cool binaries (4,000–6,200 K, P_orb < 10 d) with a detected period, **20.5%** are synchronized (95%
-    interval 18.7–22.5%), far below the hypothesised 70%.
-  - Hot binaries (6,500–7,500 K) are at **9.3%** (6.9–12.1%), below 30% as hypothesised.
-  - The step between them is near where theory puts it. A profile likelihood places the transition at about 6,300 K, at
-    the Kraft break, with a 10–90% width of about 300 K. The preregistered fit's midpoint (6,200 K) sat on one of its
-    starting values.
-- **H2 (synchronization extends to longer orbital periods than circularization): not estimable.** Neither share
-  reaches one half at any period, so neither 50% cutoff exists. The synchronized share peaks at 0.34 (3–5 d) and the
-  circular share at 0.38 (5–7 d). The plan's circular criterion, e < 0.05, does not suit Gaia orbits: noise biases
-  their eccentricities upward (median 0.07–0.14 even below 3 d).
-- **The 20% is better read as a floor than as a measurement.**
-  - The share rises steeply with data quality: 0.10 with one detecting sector, 0.27 with two, 0.35 with three, 0.40
-    with four or more; 0.26 for bright stars and 0.12 for faint ones.
-  - In a visual audit of 30 classified light curves, 16 showed no coherent signal at the pipeline's period.
-  - Of the 135 stars that also have a Gaia DR3 rotation period, only 30% agree with it.
-  - Kepler eclipsing binaries with P < 10 d are 79% synchronized (Lurie et al. 2017).
+    interval 18.7–22.5%, completeness-weighted); among hot binaries (6,500–7,500 K), **9.3%** (6.9–12.1%).
+  - These are about 6.5% of all cool binaries with light curves, since only 29% have a usable period.
+- **Synchronization is real, at well above chance.** Pairing each detected period with a random orbital period gives
+  0.09 (cool) and 0.05 (hot), against observed shares of 0.22 and 0.12 (unweighted).
+- **There is no clear step at the Kraft break once the signal is credible.**
+  - The full sample's step from 0.21 to 0.09 appears to track how detectable spots are rather than tides.
+  - Restricted to credible signals (amplitude above 2 ppt, seen in at least two sectors), the shares are **0.42**
+    (0.38–0.46, n 614) for cool and **0.37** (0.27–0.46, n 104) for hot binaries, with overlapping intervals.
+  - These credible-signal results are post hoc (D2).
+- **H2 (synchronization extends to longer orbital periods than circularization): Inconclusive.**
+  - The synchronized share never reaches one half, so P_sync,50 is undefined. This is most likely a symptom of the
+    dilution above rather than a property of the binaries.
+  - The plan's circular criterion, e < 0.05, also fails, because Gaia's eccentricities are biased upward by noise.
+  - With a noise-aware criterion (e consistent with zero; post hoc), the circularization cutoff is 4.1–5.9 days
+    across the three Teff bins.
 
 ## In plain terms
 
 In close pairs of stars, tides are expected to lock each star's spin to its orbit, the way the Moon always shows
-Earth the same face. Theory says this should happen readily for cooler, Sun-like stars, whose outer layers churn, and
-much less for hotter stars above about 6,200 K, where that churning layer thins out. We tested this on about
-17,000 binaries whose orbits Gaia measured, reading each star's spin from the dimming of starspots in TESS
-light curves.
+Earth the same face. Theory says this should happen readily for cooler, Sun-like stars, and much less for hotter
+stars above about 6,200 K. We tested this on about 17,000 binaries whose orbits Gaia measured, reading each star's
+spin from starspot dimming in TESS light curves.
 
-We found the step in the expected place: cool stars are about twice as likely as hot ones to be locked, and the
-change happens near 6,300 K. But only about a fifth of the cool stars looked locked, not the large majority we
-expected. Much of that gap appears to come from the measurement rather than the stars. Many of the "spin periods" our
-automatic method found are probably noise or light from neighbouring stars, and the locked fraction climbs towards
-half among the stars with the best data. A second test, comparing how fast circular orbits and locked spins give way
-at longer orbits, could not be done, because Gaia's orbit shapes are too noisy for the definition we chose in
-advance.
+Locked spins are clearly there, at two to three times the rate chance would give. But our automatic period finder also
+picked up many signals that are not the star's spin: noise and, probably, light from neighbouring stars. These
+dilute the locked fraction to about a fifth. When we keep only clear, repeated signals, about two in five binaries
+look locked, hot or cool alike. The drop we first reported above 6,200 K appears to come from hot stars' spots being
+harder to detect, not from weaker tides.
+
+So the test we planned could not be done cleanly with these data. It needs either vetted light curves, as earlier
+eclipsing-binary studies used, or spin measured from spectral line broadening.
 
 ## What was asked
 
 - **Prior work.** Gaia DR3's SB1 orbits enabled a population study of circularization (Bashi et al. 2023).
-  Synchronization had been measured only in eclipsing samples (Lurie et al. 2017; Hobson-Ritz et al. 2025; Hadad et
-  al. 2025) and single clusters.
-- **The lead** (`astronomy-gaia-sb1-tess-synchronization-boundary`) asked whether the non-eclipsing Gaia SB1 sample,
-  with TESS rotation periods, shows the synchronization boundary tracking the Kraft break, and whether
-  synchronization reaches longer orbital periods than circularization.
+  Synchronization had been measured only in eclipsing samples: in Lurie et al. (2017), 79% of visually vetted Kepler
+  eclipsing binaries with P < 10 d; Hobson-Ritz et al. (2025); Hadad et al. (2025).
+- **The lead** (`astronomy-gaia-sb1-tess-synchronization-boundary`) asked whether the non-eclipsing Gaia sample,
+  with TESS periods, shows the boundary tracking the Kraft break.
 
 ## How it was done
 
-- **Sample.** SB1 and SB1C solutions with parallax_over_error > 10, within −1.0 to +0.75 mag of the Pecaut & Mamajek
-  dwarf sequence, with Teff from dereddened BP−RP. TIC IDs came through Gaia DR2 identifiers, unambiguous matches only.
-- **Light curves.**
-  - **TESS-SPOC** FFI light curves (PDCSAP flux) for every available sector.
-  - **QLP** light curves, where TESS-SPOC had none, were searched too, but excluded from the primary analysis before
-    any classification (D1). On QLP the detection rule fired in 99.5% of sectors, with half the "periods" at
-    instrumental timescales.
-- **Periods.** Lomb–Scargle over 0.2–13 d per sector, a detection meaning FAP < 1e-5. A star's period is the median
-  over detecting sectors; it is *inconsistent* if those disagree by more than 10%. An autocorrelation rule handles
-  double dips.
-- **Ambiguous signals**, excluded from the primary analysis:
-  - ellipsoidal or double-spot: a period at P_orb / 2, tested before any doubling;
-  - possible Doppler beaming;
-  - multi-periodic pulsators.
+- **Sample.** SB1 and SB1C solutions with parallax_over_error > 10, within −1.0 to +0.75 mag of the Pecaut &
+  Mamajek dwarf sequence, with Teff from dereddened BP−RP. TIC IDs came through Gaia DR2 identifiers, unambiguous
+  matches only.
+- **Light curves.** TESS-SPOC (PDCSAP) for every available sector. QLP light curves were excluded from the primary
+  analysis, because the detection rule fired in 99.5% of their sectors (D1). QLP-only stars are fainter, hotter and
+  on shorter orbits.
+- **Periods.** Lomb–Scargle over 0.2–13 d per sector, with FAP < 1e-5 counting as a detection. This rule is not
+  selective: it fires in 84.7% of TESS-SPOC sectors.
+  - A star's period is the median over detecting sectors.
+  - It is *inconsistent* if sectors disagree by more than 10%.
+  - An autocorrelation rule doubles double-dip periods.
+- **Ambiguous signals**, excluded from the primary analysis: ellipsoidal or double-spot (P_orb / 2), possible beaming,
+  and multi-periodic pulsators.
 - **Synchronized** means within 10% of P_orb, or of Hut's (1981) pseudo-synchronous period when e ≥ 0.05. Shares are
   weighted by 1/completeness from 35,840 injected spot signals.
 
 ## Results
 
-| group (P_orb < 10 d) | detections | synchronized share (95% CI) |
+| synchronized share (cool / hot, P_orb < 10 d) | result | status |
 |---|---|---|
-| cool, 4,000–6,200 K | 1,770 | **0.205** (0.187–0.225) |
-| hot, 6,500–7,500 K | 566 | **0.093** (0.069–0.121) |
-
-Of 17,112 binaries with TESS-SPOC light curves, 3,661 had a usable period. The other classes:
-
-| class | binaries |
-|---|---|
-| inconsistent across sectors | 7,267 |
-| pulsator | 2,142 |
-| ellipsoidal or double-spot | 1,893 |
-| no detection | 1,792 |
-| possible beaming | 357 |
-
-| sensitivity (cool / hot share) | result | status |
-|---|---|---|
+| **primary (weighted)** | **0.205 / 0.093** | preregistered |
+| chance (P_orb permuted) | 0.09 / 0.05 | post hoc |
 | unweighted | 0.23 / 0.11 | preregistered secondary |
-| within 300 pc | 0.22 / 0.12 | preregistered secondary |
-| bounds over all stars with light curves | 0.06–0.18 / 0.02–0.09 | preregistered secondary |
+| pulsators and beaming included | 0.29 / 0.25 | preregistered secondary |
 | ellipsoidal-or-double-spot counted as synchronized | 0.26 / 0.66 | preregistered secondary |
-| periods harmonised across sectors (P vs P/2) | 0.22 / 0.12 | post hoc |
-| detrended QLP added (D1) | 0.23 / 0.11 | promised in D1 |
-| synchronized measured against P_orb, not P_ps | 0.26 / 0.09 | post hoc |
+| bounds over all stars with light curves | 0.06–0.18 / 0.02–0.09 | preregistered secondary |
+| within 300 pc | 0.22 / 0.12 | preregistered secondary |
+| **credible signals only** (> 2 ppt, ≥ 2 sectors) | **0.42 / 0.37** | post hoc |
+| majority-cluster rescue of "inconsistent" stars | 0.24 / 0.15 | post hoc |
+| no ACF doubling | 0.25 / 0.14 | post hoc |
+| against P_orb instead of the pseudo-synchronous period | 0.26 / 0.09 | post hoc |
+| with detrended QLP | 0.23 / 0.11 | D1 sensitivity, uninformative |
 
-- **Hot ellipsoidal signals.** 66% of hot detections are signals at half the orbital period. Tidal distortion
-  produces these whether or not the star is synchronized, so they cannot rescue H1.
-- **Gaia line broadening (vbroad)** finds almost no clearly super-synchronous rotation (0.5% cool, 2.8% hot), but it
-  cannot separate synchronized from slower rotation.
-- **The pseudo-synchronous target hurts.** Measuring against P_orb directly moves 262 detections into the
-  synchronized class and 118 out, because Gaia's noise-inflated eccentricities shift the Hut target.
+- **The share tracks data quality.** It is 0.10 with one detecting sector, 0.27 with two, 0.35 with three and 0.40
+  with four or more; 0.26 for bright stars and 0.12 for faint ones. Synchronized stars also have cleaner Gaia
+  astrometry (median RUWE 1.09 against 1.17 for sub-synchronous ones), consistent with light from other stars
+  contaminating the rest.
+- **The Teff logistic's step is not located.** Refitted after review, its width sits at the 10 K lower bound in 82%
+  of bootstrap fits, and its midpoint interval runs from 5,160 to 6,380 K.
+- **Hot ellipsoidal signals.** 62% of hot binaries with a usable signal show one at half the orbital period. Tidal
+  distortion produces that whether or not the star is synchronized.
 
 ## What this does and does not show
 
-- **The location of the transition matches theory.** The synchronized share halves across about 6,300 K, the Kraft
-  break, in every variant.
-- **Its level does not, and the level is not trustworthy.**
-  - **Spurious periods.** A white-noise false-alarm threshold admits many periods with no visible coherent signal
-    (16 of 30 audited).
-  - **Blending.** TESS's 21-arcsecond pixels blend neighbours, and the share rises from 0.10 to 0.40 with the number
-    of detecting sectors.
-  - **Rule choices.** The 10% window misses the slightly sub-synchronous short-period population Lurie et al. found
-    (about 13% slow); the ellipsoidal exclusion removes many short-period synchronized stars; and the Hut target
-    misclassifies stars on noise-inflated eccentricities.
-- **H2 failed on a design flaw.** The circular criterion should have been an eccentricity envelope suited to Gaia's
-  noise, as Bashi et al. used, not e < 0.05.
-- **Not shown:** a reliable absolute synchronized fraction, or the ordering of the synchronization and
-  circularization cutoffs.
+- **Shown: synchronized rotation is common enough to see above chance in non-eclipsing Gaia binaries.** It is
+  strongest at orbital periods of 2–6 d among cool stars.
+- **Not shown: the level, or where it stops.** The automatic TESS periods are too contaminated:
+  - in a visual audit, 16 of 30 periods had no coherent signal;
+  - only 41 of the 135 stars that also have a Gaia DR3 rotation period agree with it.
+
+  Both the step at the Kraft break and the H2 comparison are lost in that dilution.
+- **The rules shape the level** (D2):
+  - Hut's pseudo-synchronous target, applied to noise-inflated Gaia eccentricities, misclassifies stars that rotate
+    at P_orb;
+  - the 10% window misses the slightly sub-synchronous population Lurie et al. found;
+  - the pulsator rule catches spotted synchronized stars (cool "pulsators" are 47.5% synchronized).
 - **Limits.**
-  - **Selection.** The sample is RVS-bright and biased towards large semi-amplitudes.
-  - **Unseen companions.** Some companions are not dark, and some SB1s are inner pairs of triples.
-  - **Period range.** Periods are limited to 13 d.
-  - **QLP.** Stars observed only by QLP are absent from the primary (D1).
-  - **G4 audit.** It was one rater who could see the class labels.
+  - **Sample.** RVS-bright, biased towards large semi-amplitudes; some companions are luminous.
+  - **Periods** are limited to 13 d.
+  - **QLP-only stars** are absent from the primary (D1).
+  - **G7 is not met** for the visual audit: one rater, who could see the class labels.
 
 ## Process and deviations
 
 - **Preregistration:** `plan.md`, committed before any data were downloaded.
-- **Deviations:** D1, covering data-access notes, the ellipsoidal test before doubling, and QLP excluded from the
-  primary (decided before classification).
-- **Post hoc** analyses are labelled in the table (`code/posthoc.py`, `results/tables/posthoc.json`).
+- **Deviations:**
+  - D1: data access, the ellipsoidal test before doubling, and QLP excluded (written before the first
+    classification but committed later);
+  - D2: fixes after review.
+- **Post hoc analyses:** `code/posthoc.py` and `posthoc2.py`, labelled in the table.
 - **Gates:**
-  - G1: in the plan; no visual check changed any label.
-  - G2: `results/tables/coverage.json`, stages from orbits through classification.
-  - G3: `results/plausibility.md`, with three traces, completeness, and why H2 failed.
-  - G4: `results/tables/g4_check.json`. Against Gaia DR3 rotation periods, 135 stars overlap: 41 agree, 15 at a
-    harmonic, 79 at none. The visual audit of 30 folded light curves (`results/figures/g4_folded.png`) found 14 clear
-    and 16 not visibly coherent.
+  - G1: in the plan.
+  - G2: `results/tables/coverage.json`.
+  - G3: `results/plausibility.md`.
+  - G4: `results/tables/g4_check.json`, covering Gaia DR3 rotation periods (135 overlap: 41 agree, 15 at a harmonic,
+    79 at none) and the visual audit (`results/figures/g4_folded.png`).
   - G5: `review/overclaim_check.md`.
   - G6: `results/attribution_ledger.csv`.
-  - G7: does not apply.
-- **Independent review:** queued.
+  - G7: not met for the visual audit (D2).
+- **Independent review:** fix first (12 findings); fixes in D2; confirmation pending.
 
 ## Reproducing it
 
-`code/gaia.py`, `sample.py`, `tic_match.py`, `lc_index.py` (TESS-SPOC), `qlp_index.py`, `download.py`, `periods.py`,
-`classify.py`, `inject.py`, `analyse.py`, `posthoc.py` (needs `QLP_DETREND=1 ONLY_PRODUCT=qlp
-PERIODS_OUT=sector_periods_qlpd.parquet periods.py` first), `g3_traces.py`, `g4_check.py`, `g4_visual.py` and
-`coverage_lc.py`.
+`code/gaia.py`, `sample.py`, `tic_match.py`, `lc_index.py`, `qlp_index.py`, `download.py`, `periods.py`,
+`classify.py`, `inject.py`, `analyse.py`, `posthoc.py`, `posthoc2.py`, `g3_traces.py`, `g4_check.py`, `g4_visual.py`
+and `coverage_lc.py`.

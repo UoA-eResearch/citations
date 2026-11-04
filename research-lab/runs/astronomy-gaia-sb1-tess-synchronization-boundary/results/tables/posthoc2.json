@@ -1,0 +1,184 @@
+{
+ "chance_cool": {
+  "n": 1895,
+  "observed_unweighted": 0.2237467018469657,
+  "chance_mean": 0.09290923482849604,
+  "chance_q975": 0.10660949868073878
+ },
+ "chance_hot": {
+  "n": 675,
+  "observed_unweighted": 0.12296296296296297,
+  "chance_mean": 0.048152592592592594,
+  "chance_q975": 0.0637037037037037
+ },
+ "credible_cool": {
+  "n": 614,
+  "share": 0.4234527687296417,
+  "ci": [
+   0.38436482084690554,
+   0.46254071661237783
+  ],
+  "chance_mean": 0.1462752442996743
+ },
+ "credible_hot": {
+  "n": 104,
+  "share": 0.36538461538461536,
+  "ci": [
+   0.2692307692307692,
+   0.46153846153846156
+  ],
+  "chance_mean": 0.05529807692307692
+ },
+ "majority_cluster": {
+  "classes": {
+   "no_light_curve": 6465,
+   "detected": 5445,
+   "inconsistent": 4152,
+   "pulsator": 2851,
+   "ellipsoidal_or_double_spot": 2267,
+   "no_detection": 1792,
+   "possible_beaming": 605,
+   "no_tic": 468
+  },
+  "cool": {
+   "n": 2932,
+   "share": 0.2407912687585266
+  },
+  "hot": {
+   "n": 923,
+   "share": 0.14517876489707476
+  }
+ },
+ "secondary2_with_pulsators_and_beaming": {
+  "cool": {
+   "n": 2422,
+   "share": 0.2853014037985136,
+   "pulsators_share": 0.4745011086474501
+  },
+  "hot": {
+   "n": 1786,
+   "share": 0.25139977603583424,
+   "pulsators_share": 0.29158316633266534
+  }
+ },
+ "no_doubling": {
+  "cool": 0.2511873350923483,
+  "hot": 0.1362962962962963
+ },
+ "doubled_detections_sync_before_doubling": 102,
+ "qlp_only_vs_spoc": {
+  "spoc": {
+   "n": 17112,
+   "Tmag_med": 11.31785,
+   "teff_med": 6302.180875937143,
+   "porb_med": 4.455405565734892
+  },
+  "qlp_only": {
+   "n": 6100,
+   "Tmag_med": 11.81935,
+   "teff_med": 6470.187871861008,
+   "porb_med": 3.7308692829618884
+  }
+ },
+ "secondary5_states_by_porb": {
+  "cool": {
+   "(0.5, 2.0]": {
+    "sub": 0.9,
+    "super": 0.075,
+    "synchronized": 0.025
+   },
+   "(2.0, 4.0]": {
+    "sub": 0.6,
+    "super": 0.047,
+    "synchronized": 0.354
+   },
+   "(4.0, 6.0]": {
+    "sub": 0.6,
+    "super": 0.082,
+    "synchronized": 0.318
+   },
+   "(6.0, 8.0]": {
+    "sub": 0.601,
+    "super": 0.248,
+    "synchronized": 0.152
+   },
+   "(8.0, 10.0]": {
+    "sub": 0.47,
+    "super": 0.429,
+    "synchronized": 0.101
+   },
+   "(10.0, 12.0]": {
+    "sub": 0.231,
+    "super": 0.623,
+    "synchronized": 0.146
+   }
+  },
+  "hot": {
+   "(0.5, 2.0]": {
+    "sub": 0.584,
+    "super": 0.202,
+    "synchronized": 0.213
+   },
+   "(2.0, 4.0]": {
+    "sub": 0.576,
+    "super": 0.28,
+    "synchronized": 0.144
+   },
+   "(4.0, 6.0]": {
+    "sub": 0.579,
+    "super": 0.355,
+    "synchronized": 0.066
+   },
+   "(6.0, 8.0]": {
+    "sub": 0.367,
+    "super": 0.595,
+    "synchronized": 0.038
+   },
+   "(8.0, 10.0]": {
+    "sub": 0.239,
+    "super": 0.662,
+    "synchronized": 0.099
+   },
+   "(10.0, 12.0]": {
+    "sub": 0.185,
+    "super": 0.759,
+    "synchronized": 0.056
+   }
+  }
+ },
+ "ruwe_median_by_state": {
+  "sub": 1.1660000085830688,
+  "super": 1.125,
+  "synchronized": 1.090000033378601
+ },
+ "panel25_check": [
+  {
+   "tic": "117738228.0",
+   "period": "1.643404777032805",
+   "eccentricity": "0.08344713881779545",
+   "p_ps": "1.5774576540198548",
+   "p_rot": "1.6415815105470513",
+   "p_ls_med": "0.8207907552735256",
+   "doubled": "True",
+   "cls": "pulsator",
+   "sync_state": ""
+  }
+ ],
+ "h2_noise_aware_circularization": {
+  "4000-5500": {
+   "n": 3963,
+   "P_circ50_noise_aware": 4.078485900554753,
+   "circular_share_below_3d": 0.564755838641189
+  },
+  "5500-6200": {
+   "n": 11811,
+   "P_circ50_noise_aware": 5.2937349283897825,
+   "circular_share_below_3d": 0.570281124497992
+  },
+  "6200-7000": {
+   "n": 11315,
+   "P_circ50_noise_aware": 5.938393820163784,
+   "circular_share_below_3d": 0.6456611570247934
+  }
+ }
+}

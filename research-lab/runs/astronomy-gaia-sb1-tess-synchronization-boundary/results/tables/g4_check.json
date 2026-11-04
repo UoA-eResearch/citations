@@ -55,15 +55,16 @@
    29
   ],
   "misclassified_by_pseudo_synchronous_target": [
-   25,
    30
   ],
-  "note_25_30": "P_rot equals P_orb (1.64, 1.23 d) but classed sub-synchronous: Hut target moved by noise-inflated e",
   "possibly_wrong_doubling": [
    22
   ],
   "synchronized_label_but_flat": [
    10
-  ]
+  ],
+  "note_30": "P_rot equals P_orb (1.231 vs 1.232 d) but classed sub-synchronous: e = 0.197 moves the Hut target to 0.998 d",
+  "note_25": "classed pulsator; its undoubled period (0.82 d) is P_orb/2 - the pulsator rule runs before the ellipsoidal rule, so harmonic-rich ellipsoidal signals can be called pulsators (corrected in D2; first draft misread the panel title)",
+  "g7_status": "not met: one rater who could see the class labels; the reviewer's independent read (also unblinded) agreed 14/16; descriptive only"
  }
 }
