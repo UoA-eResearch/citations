@@ -16,8 +16,13 @@ _OKINA = dict.fromkeys(map(ord, "ʻʼ‘’'`´"), None)
 _DASH = dict.fromkeys(map(ord, "‐‑‒–—−"), "-")
 
 
+_POSSESSIVE = re.compile(r"(?<=[A-Za-zāēīōū])[ʼ’'´`]s\b")
+
+
 def fold(s):
-    s = str(s or "").translate(_OKINA).translate(_DASH)
+    # A possessive 's goes first ("Papua New Guinea's" -> "Papua New Guinea"); then apostrophes and the
+    # ʻokina are dropped (Hawaiʻi -> hawaii, Sāmoa -> samoa).
+    s = _POSSESSIVE.sub("", str(s or "")).translate(_OKINA).translate(_DASH)
     s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode()
     return re.sub(r"\s+", " ", s.lower())
 
@@ -39,24 +44,25 @@ PLACES = {
     "WS": ("Sāmoa", r"(?<!american )\bsamoa(?:n|ns)?\b", -13.76, -172.10),
     "TO": ("Tonga", r"\btonga(?:n|ns)?\b", -21.18, -175.20),
     "FJ": ("Fiji", r"\bfiji(?:an|ans)?\b|\bi-?taukei\b", -17.71, 178.07),
-    "CK": ("Cook Islands", r"\bcook islands?\b|\bkuki airani\b|\brarotonga(?:n)?\b|\baitutaki\b", -21.24, -159.78),
+    "CK": ("Cook Islands", r"\bcook islands?\b|\bcook islanders?\b|\bkuki airani\b|\brarotonga(?:n)?\b|\baitutaki\b", -21.24, -159.78),
     "NU": ("Niue", r"\bniue(?:an|ans)?\b", -19.05, -169.87),
     "TK": ("Tokelau", r"\btokelau(?:an|ans)?\b", -9.20, -171.85),
     "TV": ("Tuvalu", r"\btuvalu(?:an|ans)?\b", -8.52, 179.20),
     "KI": ("Kiribati", r"\b(?:i-)?kiribati\b", 1.42, 173.03),
     "VU": ("Vanuatu", r"\b(?:ni-)?vanuatu\b", -15.38, 166.96),
-    "SB": ("Solomon Islands", r"\bsolomon islands?\b", -9.43, 159.95),
+    "SB": ("Solomon Islands", r"\bsolomon islands?\b|\bsolomon islanders?\b", -9.43, 159.95),
     "PG": ("Papua New Guinea", r"\bpapua new guinea(?:n|ns)?\b|\bbougainville\b", -6.31, 143.96),
     "HI": ("Hawaiʻi", r"(?<!canada-france-)\bhawaii(?:an|ans)?\b", 20.80, -156.33),
     "MH": ("Marshall Islands", r"\bmarshall islands?\b|\bmarshallese\b", 7.13, 171.18),
     "PW": ("Palau", r"\bpalau(?:an|ans)?\b", 7.51, 134.58),
     "NR": ("Nauru", r"\bnauru(?:an|ans)?\b", -0.52, 166.93),
-    "GU": ("Guam", r"\bguam\b|\bchamorros?\b|\bchamoru\b", 13.44, 144.79),
-    "FM": ("Federated States of Micronesia", r"\bfederated states of micronesia\b", 6.92, 158.16),
-    "NC": ("New Caledonia", r"\bnew caledonia(?:n|ns)?\b|\bkanaks?\b", -21.26, 165.62),
+    "GU": ("Guam", r"\bguam\b|\bguamanians?\b|\bchamorros?\b|\bchamoru\b", 13.44, 144.79),
+    "MP": ("Northern Mariana Islands", r"\bnorthern mariana islands?\b|\bmariana islands\b|\bsaipan\b|\bcnmi\b|\btinian\b", 15.19, 145.75),
+    "FM": ("Federated States of Micronesia", r"\bfederated states of micronesia\b|\bchuuk(?:ese)?\b|\bpohnpei(?:an)?\b|\bkosrae(?:an)?\b", 6.92, 158.16),
+    "NC": ("New Caledonia", r"\bnew caledonia(?:n|ns)?\b|\bkanaks?\b|\bkanaky\b", -21.26, 165.62),
     "PF": ("French Polynesia", r"\bfrench polynesia(?:n|ns)?\b|\btahiti(?:an|ans)?\b", -17.65, -149.43),
-    "RN": ("Rapa Nui", r"\brapa nui\b|\beaster island\b", -27.11, -109.35),
-    "WF": ("Wallis and Futuna", r"\bwallis and futuna\b", -13.77, -177.16),
+    "RN": ("Rapa Nui", r"\brapa nui\b|\brapanui\b|\beaster island\b", -27.11, -109.35),
+    "WF": ("Wallis and Futuna", r"\bwallis and futuna\b|\bwallisians?\b|\bfutunans?\b", -13.77, -177.16),
     "PN": ("Pitcairn", r"\bpitcairn\b", -25.07, -130.10),
     # regions and peoples, not single places
     "POLY": ("Polynesia (region)", r"\bpolynesia(?:n|ns)?\b", None, None),
@@ -337,14 +343,32 @@ _UNIT = re.compile(
     r"(?=,|;|$| the university| university of auckland| waipapa taumata rau| private bag| auckland)")
 
 
+UOA_RAW = re.compile(r"university of auc?kland|waipapa taumata rau", re.I)   # incl. the misspelling "Aukland"
+_AUT = re.compile(r"university of technology|\baut\b", re.I)
+
+
 def uoa_affiliation_strings(authorship, uoa_id):
-    """Raw affiliation strings that OpenAlex links to UoA (never AUT)."""
+    """Raw affiliation strings for UoA (never AUT): those OpenAlex links to UoA, and those that name the
+    University of Auckland / Waipapa Taumata Rau although OpenAlex linked another institution (seen for
+    social science and humanities authors, e.g. a UoA school credited to a previous employer)."""
     out = []
     for af in authorship.get("affiliations") or []:
-        if any(i.endswith(uoa_id) for i in af.get("institution_ids") or []):
-            s = af.get("raw_affiliation_string") or ""
-            if not re.search(r"university of technology|\baut\b", s, re.I):
-                out.append(s)
+        s = af.get("raw_affiliation_string") or ""
+        linked = any(i.endswith(uoa_id) for i in af.get("institution_ids") or [])
+        if (linked or UOA_RAW.search(s)) and not _AUT.search(s):
+            out.append(s)
+    if not out:
+        out = [s for s in authorship.get("raw_affiliation_strings") or [] if UOA_RAW.search(s) and not _AUT.search(s)]
+    return out
+
+
+def mislinked_institutions(authorship):
+    """Institution IDs OpenAlex attached to an affiliation whose written text names UoA (not real partners)."""
+    out = set()
+    for af in authorship.get("affiliations") or []:
+        s = af.get("raw_affiliation_string") or ""
+        if UOA_RAW.search(s) and not _AUT.search(s):
+            out |= {i.rsplit("/", 1)[-1] for i in af.get("institution_ids") or []}
     return out
 
 

@@ -120,6 +120,11 @@ tbody tr:hover { background: var(--sea-1); }
 .dot { width: 11px; height: 11px; border-radius: 50%; flex: none; display: inline-block; }
 .swatch { width: 18px; height: 4px; border-radius: 2px; flex: none; display: inline-block; }
 .placelist { margin-top: 10px; display: grid; gap: 1px; }
+#mapSvg path, #mapSvg circle { vector-effect: non-scaling-stroke; }
+#mapSvg:active { cursor: grabbing; }
+.ms-label { paint-order: stroke; stroke: var(--sea); stroke-linejoin: round; font-family: var(--f-ui); font-weight: 600; fill: var(--ink); pointer-events: none; }
+.ms-name { fill: var(--ink-3); letter-spacing: .06em; }
+.mlsel { width: 100%; background: var(--sea-1); border: 1px solid var(--rule); border-radius: 8px; padding: 5px 8px; color: var(--ink); }
 .seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; margin: 0 0 8px; }
 .seg button { background: none; border: 0; padding: 4px 12px; color: var(--ink-2); font-weight: 600; }
 .seg button[aria-pressed="true"] { background: var(--sea-2); color: var(--ink); box-shadow: inset 0 -2px 0 var(--star); }
@@ -190,6 +195,8 @@ table.mini { font-size: .8125rem; } table.mini th, table.mini td { padding: 3px 
   <section class="view page" id="v-overview" hidden></section>
   <section class="view" id="v-map" hidden>
     <div id="mapCanvas" style="position:absolute;inset:0"></div>
+    <canvas id="mapBase" style="position:absolute;inset:0;display:none"></canvas>
+    <svg id="mapSvg" style="position:absolute;inset:0;width:100%;height:100%;display:none;cursor:grab" role="img" aria-label="Map of places and partners"></svg>
     <div class="overlay ctl" id="mapCtl"></div>
   </section>
   <section class="view page" id="v-people" hidden></section>
@@ -203,6 +210,7 @@ table.mini { font-size: .8125rem; } table.mini th, table.mini td { padding: 3px 
 
 <script src="https://unpkg.com/deck.gl@9.3.11/dist.min.js"></script>
 <script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <script>
 (async function () {
 "use strict";
@@ -508,7 +516,7 @@ const SDG = { "1": "No poverty", "2": "Zero hunger", "3": "Good health and well-
 // ================================================================== MAP
 const wrap = lng => lng < -30 ? lng + 360 : lng;
 const UOA_POS = [174.7691, -36.8523];
-const ML = { places: true, partners: true, ties: true, piOnly: false, mode: "country" };
+const ML = { places: true, partners: true, ties: true, piOnly: false, mode: "country", style: "web" };
 const PI_CC = "AS CK FJ FM GU KI MH MP NC NR NU PF PG PN PW SB TK TO TV VU WF WS".split(" ");
 const isOceanPlace = c => PLACE[c] && PLACE[c].kind === "ocean";
 const isNZGroup = c => c === "NZA" || c === "NZP";
@@ -517,7 +525,8 @@ const landGeo = topojson.feature(landTopo, landTopo.objects.countries);
 const PLACE_NAMES = [["Aotearoa New Zealand", -41.5, 166.5], ["Australia", -25, 134], ["Papua New Guinea", -6.5, 144], ["Solomon Islands", -8.6, 160.5],
   ["Vanuatu", -15.6, 167.9], ["New Caledonia", -21.3, 165.4], ["Fiji", -17.4, 178.6], ["Tonga", -20.3, -174.8], ["Sāmoa", -13.6, -172.4], ["Niue", -19.05, -169.9],
   ["Cook Islands", -20.0, -159.0], ["French Polynesia", -17.6, -149.4], ["Tokelau", -9.2, -171.8], ["Tuvalu", -8.5, 179.2], ["Kiribati", 1.4, 173.0],
-  ["Nauru", -0.5, 166.9], ["Marshall Islands", 7.1, 171.2], ["Palau", 7.5, 134.6], ["Guam", 13.45, 144.8], ["Hawaiʻi", 20.6, -157.2], ["Rapa Nui", -27.1, -109.4]];
+  ["Nauru", -0.5, 166.9], ["Marshall Islands", 7.1, 171.2], ["Palau", 7.5, 134.6], ["Guam", 13.45, 144.8], ["Northern Mariana Is.", 15.2, 145.75],
+  ["Fed. States of Micronesia", 6.9, 158.2], ["Wallis & Futuna", -13.3, -176.2], ["American Sāmoa", -14.3, -170.7], ["Pitcairn", -25.07, -130.1], ["Hawaiʻi", 20.6, -157.2], ["Rapa Nui", -27.1, -109.4]];
 function mapData() {
   const ws = FW.map(i => W[i]);
   const pc = {}; ws.forEach((w, k) => w.places.forEach(c => { if (PLACE[c] && PLACE[c].lat != null) { (pc[c] || (pc[c] = [])).push(FW[k]); } }));
@@ -608,7 +617,9 @@ let relabelQ = false;
 function relabel() { if (relabelQ) return; relabelQ = true; requestAnimationFrame(() => { relabelQ = false; if (view === "map" && mapDeck) mapDeck.setProps({ layers: mapLayers() }); }); }
 function renderMap() {
   const ctl = $("mapCtl");
-  if (!mapDeck) {
+  const web = ML.style === "web";
+  $("mapCanvas").style.display = web ? "" : "none"; $("mapSvg").style.display = $("mapBase").style.display = web ? "none" : "block";
+  if (web && !mapDeck) {
     mapDeck = new deck.Deck({ parent: $("mapCanvas"), views: new deck.MapView({ repeat: true }), initialViewState: mapVS, controller: true,
       onViewStateChange: ({ viewState }) => { mapVS = viewState; relabel(); }, layers: [],
       getTooltip: ({ object, layer }) => {
@@ -622,7 +633,7 @@ function renderMap() {
         else if (layer.id === "partners" || layer.id === "ties") openInst(object.i); else if (layer.id === "countries" || layer.id === "cties") openCountry(object.key); },
       getCursor: ({ isHovering, isDragging }) => isDragging ? "grabbing" : isHovering ? "pointer" : "grab" });
   }
-  mapDeck.setProps({ layers: mapLayers() });
+  if (web) mapDeck.setProps({ layers: mapLayers() }); else { mapCache = mapData(); renderMapSvg(); }
   const { places, partners, countries } = mapCache;
   const regions = {}; FW.forEach(i => W[i].places.forEach(c => { if (PLACE[c] && PLACE[c].lat == null) regions[c] = (regions[c] || 0) + 1; }));
   const pi = partners.filter(p => p.it.region === "Pacific Islands").sort((a, b) => b.n - a.n);
@@ -632,7 +643,12 @@ function renderMap() {
   const piPresent = new Set(countries.filter(c => PI_CC.includes(c.key)).map(c => c.key));
   const piAbsent = PI_CC.filter(cc => !piPresent.has(cc)).map(cc => (D.countries[cc] || { name: cc }).name).sort();
   const pacificPlaces = places.filter(p => !isNZGroup(p.c) && !isOceanPlace(p.c)), oceanPlaces = places.filter(p => isOceanPlace(p.c));
-  ctl.innerHTML = `<h3>Show partners</h3>
+  const sty = MAP_STYLES.find(x => x[0] === ML.style);
+  ctl.innerHTML = `<h3>Map style</h3>
+    <select id="mlStyle" aria-label="Map style" class="mlsel">${MAP_STYLES.map(([k, l]) => `<option value="${k}" ${ML.style === k ? "selected" : ""}>${esc(l)}</option>`).join("")}</select>
+    <p class="note" style="margin:6px 0 2px">${esc(sty[2])}${ML.style === "bathy" ? " Depth: Natural Earth (public domain)." : ML.style === "los" ? " Zones: Flanders Marine Institute (2023), Marine Regions v12, CC BY 4.0." : ""}${ML.style === "web" ? "" : " Drag to pan, scroll to zoom."}</p>
+    <p class="note" style="margin:0 0 4px">The styles follow the maps used at Workshop 2.</p>
+    <h3 style="margin-top:10px">Show partners</h3>
     <div class="seg"><button data-mode="country" aria-pressed="${ML.mode === "country"}">By country</button><button data-mode="inst" aria-pressed="${ML.mode === "inst"}">By institution</button></div>
     <label><input type="checkbox" id="mlPartners" ${ML.partners ? "checked" : ""}> <span class="dot" style="background:var(--s1)"></span> Partner ${ML.mode === "country" ? "countries" : "institutions"} <span class="dot" style="background:var(--s2);margin-left:6px"></span> Pacific Islands</label>
     <label><input type="checkbox" id="mlTies" ${ML.ties ? "checked" : ""}> <span class="swatch" style="background:var(--s1)"></span> Co-authorship ties from UoA</label>
@@ -658,11 +674,192 @@ function renderMap() {
     <div class="placelist">${pi.slice(0, 30).map(p => `<button data-inst="${p.i}"><span>${esc(p.it.name)}</span><span class="mono">${fmt(p.n)}</span></button>`).join("") || '<span class="muted">None with the current filters.</span>'}</div>
     <p class="note">Place circles sit at the place named in the text, not where the research was done. Country circles sit at the centre of that country's partner institutions; a work with partners in two countries counts for both. Works without a recorded affiliation cannot show as ties.</p>`;
   ctl.querySelectorAll("[data-mode]").forEach(b => b.onclick = () => { ML.mode = b.dataset.mode; renderMap(); });
+  $("mlStyle").onchange = e => { ML.style = e.target.value; renderMap(); };
   ctl.querySelectorAll("[data-country]").forEach(b => b.onclick = () => openCountry(b.dataset.country));
   const bind = (id, k) => { $(id).onchange = e => { ML[k] = e.target.checked; renderMap(); }; };
   bind("mlPlaces", "places"); bind("mlPartners", "partners"); bind("mlTies", "ties"); bind("mlPi", "piOnly");
   wireCommon(ctl);
 }
+
+// ------------------------------------------------------------------ map styles after the Workshop 2 maps
+// "web" is the deck.gl web map; the other styles are drawn in SVG with d3 projections:
+//   spilhaus  Spilhaus World Ocean Map in a Square: Adams World in a Square II in an oblique aspect, ported from
+//             PROJ 9.8 (src/projections/adams.cpp, spilhaus.cpp; sphere) and checked against PROJ to 1e-12.
+//             The oblique step is the d3 rotation below, so d3 cuts the map at the true Spilhaus seams.
+//   bathy     the same with ocean depth (Natural Earth 10m bathymetry)
+//   equal     Equal Earth, centred on the Pacific
+//   los       Large Ocean States: exclusive economic zones (Marine Regions v12, CC BY 4.0)
+//   tupaia    azimuthal equidistant centred on Raʻiātea: true distances and directions from Tupaia's home island
+const MAP_STYLES = [
+  ["web", "Web map (Pacific-centred)", "The interactive web map (Mercator projection), centred on the Pacific."],
+  ["spilhaus", "Spilhaus: the ocean in a square", "Athelstan Spilhaus's world ocean map: the oceans drawn as one connected body, with the continents at the edges (Adams World in a Square II, oblique aspect)."],
+  ["bathy", "Spilhaus with ocean depth", "The Spilhaus ocean map shaded by depth, from the continental shelf (under 200 m) to the trenches (over 10,000 m), after the bathymetric map at the workshop."],
+  ["equal", "Equal Earth (Pacific-centred)", "An equal-area world map centred on the Pacific: every area is true to size, so the ocean is not shrunk and Aotearoa is not dwarfed by the northern continents."],
+  ["los", "Large Ocean States", "The exclusive economic zones (200 nautical miles) of Pacific Island countries and territories, with Aotearoa and Australia for context: large ocean states rather than small island states."],
+  ["tupaia", "Navigator-centred (after Tupaia)", "An azimuthal equidistant map centred on Raʻiātea, Tupaia's home island: every distance and direction from Raʻiātea is true, with rings every 1,000 km. Inspired by Tupaia's chart, which sets the islands he knew around Raʻiātea; it is not a reconstruction of that chart."],
+];
+const RAIATEA = [-151.44, -16.83];
+const mapStyleData = {};
+const loadMapData = name => mapStyleData[name] || (mapStyleData[name] = fetch(`data/${name}.json`).then(r => { if (!r.ok) { delete mapStyleData[name]; throw new Error("map data " + r.status); } return r.json(); }));
+const ADAMS_C = [-8.58691003636495e-07, 2.02692115653689e-07, 3.12960480765314e-05, 5.30394739921063e-05, -0.0012804644680613, -0.00575574836830288, 0.0914203033408211];
+function ellInt5(phi) {   // elliptic integral of the first kind, k^2 = 0.5 (Chebyshev series, as in PROJ)
+  let y = phi * (2 / Math.PI); y = 2 * y * y - 1; const y2 = 2 * y; let d1 = 0, d2 = 0;
+  for (const c of ADAMS_C) { const t = d1; d1 = y2 * d1 - d2 + c; d2 = t; }
+  return phi * (y * d1 - d2 + 0.5 * 2.19174570831038);
+}
+const asinC = v => Math.asin(Math.max(-1, Math.min(1, v))), acosC = v => Math.acos(Math.max(-1, Math.min(1, v)));
+function spilhausRaw(lam, phi) {   // Adams World in a Square II, then Spilhaus's 45-degree turn
+  const spp = Math.tan(0.5 * phi);
+  let a = Math.cos(asinC(spp)) * Math.sin(0.5 * lam);
+  const sm = spp + a < 0, sn = spp - a < 0;
+  const b = acosC(spp); a = acosC(a);
+  let m = asinC(Math.sqrt(1 + Math.min(0, Math.cos(a + b)))); if (sm) m = -m;
+  let n = asinC(Math.sqrt(Math.abs(1 - Math.max(0, Math.cos(a - b))))); if (sn) n = -n;
+  const x0 = ellInt5(m), y0 = ellInt5(n), xa = Math.SQRT1_2 * (x0 - y0), ya = Math.SQRT1_2 * (x0 + y0);
+  return [-(xa + ya) * Math.SQRT1_2, -(ya - xa) * Math.SQRT1_2];
+}
+const SPILHAUS_ROTATE = [-66.94970198, 49.56371678, -139.82176518];   // centre 49.56371678 S 66.94970198 E, azimuth 40.17823482
+const geoSpilhaus = () => d3.geoProjection(spilhausRaw).rotate(SPILHAUS_ROTATE);
+window.__bphProjections = { spilhaus: (lon, lat) => { const p = geoSpilhaus().scale(1).translate([0, 0])([lon, lat]); return p && [p[0], -p[1]]; } };
+function styleProjection(style, W, H) {
+  const left = W > 900 ? 330 : 12, ext = [[left, 14], [W - 14, H - 14]], sphere = { type: "Sphere" };
+  if (style === "spilhaus" || style === "bathy") return geoSpilhaus().fitExtent(ext, sphere);
+  if (style === "equal") return d3.geoEqualEarth().rotate([-165, 0]).fitExtent(ext, sphere);
+  if (style === "tupaia") return d3.geoAzimuthalEquidistant().rotate([-RAIATEA[0], -RAIATEA[1]]).clipAngle(120).fitExtent(ext, sphere);
+  return d3.geoMercator().rotate([-178, 0]).fitExtent(ext, { type: "MultiPoint", coordinates: [[112, 30], [-118, 30], [112, -50], [-118, -50]] });
+}
+const bathyColors = () => d3.quantize(d3.interpolateRgb("#2b6d82", "#06131c"), 11);
+let msState = null, msBusy = false;
+async function renderMapSvg() {
+  const svgEl = $("mapSvg"), W = svgEl.clientWidth, H = svgEl.clientHeight, style = ML.style;
+  if (!W || !H || style === "web") return;
+  if (!msState || msState.style !== style || msState.W !== W || msState.H !== H) {
+    if (msBusy) return; msBusy = true;
+    try {
+      const extra = style === "bathy" ? { bathy: await loadMapData("bathy") } : style === "los" ? { eez: await loadMapData("eez") } : null;
+      buildMapSvgBase(style, W, H, extra);
+    } catch (e) {
+      d3.select("#mapSvg").selectAll("*").remove();
+      d3.select("#mapSvg").append("text").attr("x", 40).attr("y", 60).attr("fill", "currentColor").text("Could not load this map style (" + e.message + ").");
+      msBusy = false; return;
+    }
+    msBusy = false;
+    if (ML.style !== style) return renderMapSvg();
+  }
+  drawMapSvgLayers();
+}
+// The static background (ocean, depth, zones, land, graticule, rings) is drawn on a canvas, which is cheap to
+// redraw while zooming; the interactive layer (circles, ties, labels) stays in SVG for tooltips and clicks.
+function buildMapSvgBase(style, W, H, extra) {
+  const t0 = performance.now();
+  const proj = styleProjection(style, W, H).precision(1.5), path = d3.geoPath(proj);
+  const svg = d3.select("#mapSvg").attr("viewBox", `0 0 ${W} ${H}`);
+  svg.selectAll("*").remove(); svg.on(".zoom", null);
+  const cv = $("mapBase"), dpr = window.devicePixelRatio || 1;
+  cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); cv.style.width = W + "px"; cv.style.height = H + "px";
+  const items = [], add = (d, o) => { if (d) items.push(Object.assign({ p: new Path2D(d) }, o)); };
+  const ocean = style === "bathy" ? "#3a8096" : style === "spilhaus" ? "#18506a" : tok("--sea-1");
+  add(path({ type: "Sphere" }), { fill: ocean });
+  if (style === "bathy" && extra) { const cols = bathyColors(); extra.bathy.features.forEach((f, k) => add(path(f), { fill: cols[k] })); }
+  if (style !== "bathy") add(path(d3.geoGraticule10()), { stroke: tok("--ink-3"), sa: .12, lw: .6 });
+  if (style === "los" && extra) extra.eez.features.forEach(f => { const pi = f.properties.group === "pi", c = pi ? tok("--s2") : tok("--s3");
+    add(path(f), { fill: c, fa: pi ? .22 : .1, stroke: c, sa: .75, lw: 1 }); });
+  add(path(landGeo), { fill: style === "spilhaus" || style === "bathy" ? "#3b5056" : tok("--land"), stroke: style === "spilhaus" || style === "bathy" ? "#62808a" : tok("--coast"), lw: .6 });
+  add(path({ type: "Sphere" }), { stroke: tok("--rule"), lw: 1 });
+  const z = svg.append("g"), base = z.append("g");
+  if (style === "tupaia") {
+    for (let km = 1000; km <= 8000; km += 1000) {
+      add(path(d3.geoCircle().center(RAIATEA).radius(km / 111.195)()), { stroke: tok("--star"), sa: km % 2000 ? .2 : .36, lw: 1, dash: [3, 4] });
+      const lab = proj([RAIATEA[0], RAIATEA[1] + km / 111.195]);
+      if (lab) base.append("text").attr("class", "ms-label ms-name").attr("x", lab[0]).attr("y", lab[1]).attr("data-x", lab[0]).attr("data-y", lab[1]).attr("data-fs", 10.5).attr("data-off", 0).attr("text-anchor", "middle").text(`${fmt(km)} km`);
+    }
+    const r = proj(RAIATEA);
+    base.append("circle").attr("cx", r[0]).attr("cy", r[1]).attr("data-r", 5).attr("r", 5).attr("fill", tok("--star")).attr("data-tip", "<b>Raʻiātea</b><br>Tupaia's home island; the centre of this map");
+    base.append("text").attr("class", "ms-label").attr("x", r[0]).attr("y", r[1] - 9).attr("data-x", r[0]).attr("data-y", r[1]).attr("data-fs", 13).attr("data-off", 9).attr("text-anchor", "middle").text("Raʻiātea");
+  }
+  const dyn = z.append("g");
+  window.__msTiming = { style, build: Math.round(performance.now() - t0) };
+  msState = { style, W, H, proj, path, z, dyn, k: 1, t: d3.zoomIdentity, extra, items, dpr };
+  drawMapBase();
+  const zoom = d3.zoom().scaleExtent([1, 24]).on("zoom", e => { z.attr("transform", e.transform); msState.k = e.transform.k; msState.t = e.transform; msRescale(); drawMapBase(); });
+  svg.call(zoom).on("dblclick.zoom", null);
+  msRescale();
+}
+let msFrame = 0;
+function drawMapBase() {
+  if (msFrame) return;
+  msFrame = requestAnimationFrame(() => {
+    msFrame = 0;
+    const S = msState; if (!S) return;
+    const ctx = $("mapBase").getContext("2d"), t = S.t, d = S.dpr, t1 = performance.now();
+    ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.setTransform(d * t.k, 0, 0, d * t.k, d * t.x, d * t.y);
+    for (const it of S.items) {
+      if (it.fill) { ctx.globalAlpha = it.fa ?? 1; ctx.fillStyle = it.fill; ctx.fill(it.p); }
+      if (it.stroke) { ctx.globalAlpha = it.sa ?? 1; ctx.strokeStyle = it.stroke; ctx.lineWidth = (it.lw || 1) / t.k; ctx.setLineDash((it.dash || []).map(v => v / t.k)); ctx.stroke(it.p); }
+    }
+    ctx.globalAlpha = 1; ctx.setLineDash([]);
+    if (window.__msTiming) window.__msTiming.draw = Math.round(performance.now() - t1);
+  });
+}
+function msRescale() {
+  if (!msState) return;
+  const k = msState.k, z = msState.z;
+  z.selectAll("circle[data-r]").attr("r", function () { return this.dataset.r / k; });
+  z.selectAll("text[data-fs]").attr("font-size", function () { return this.dataset.fs / k; }).attr("stroke-width", 4 / k)
+    .attr("y", function () { return +this.dataset.y - this.dataset.off / k; });
+}
+function drawMapSvgLayers() {
+  const S = msState; if (!S) return;
+  const { places, partners, countries } = mapCache = mapData();
+  const g = S.dyn; g.selectAll("*").remove();
+  const path = S.path, ll = lng => lng > 180 ? lng - 360 : lng;
+  const proj = S.style === "tupaia" ? (pt => d3.geoDistance(pt, RAIATEA) > 120 * Math.PI / 180 ? null : S.proj(pt)) : S.proj;
+  const isPI = r => r === "Pacific Islands", byCountry = ML.mode === "country";
+  const items = byCountry
+    ? (ML.piOnly ? countries.filter(c => isPI(c.region)) : countries).filter(c => c.key !== "NZ").map(c => ({ lng: ll(c.lng), lat: c.lat, n: c.n, pi: isPI(c.region), name: c.name,
+        r: Math.min(42, 4 + Math.sqrt(c.n) * 2.2), attr: ["data-country", c.key], tip: `<b>${esc(c.name)}</b> · ${esc(c.region)}<br>${fmt(c.n)} works co-authored with UoA<br>${fmt(c.ni)} partner institution${c.ni > 1 ? "s" : ""}` }))
+    : partners.map(p => ({ lng: p.it.lng, lat: p.it.lat, n: p.n, pi: p.it.region === "Pacific Islands", name: p.it.name, r: 2 + Math.sqrt(p.n) * 1.6, attr: ["data-inst", p.i],
+        tip: `<b>${esc(p.it.name)}</b><br>${esc([p.it.city, p.it.cc].filter(Boolean).join(", "))}<br>${fmt(p.n)} works co-authored with UoA` }));
+  if (ML.ties) {
+    const tg = g.append("g");
+    items.filter(t => t.pi || t.n >= (byCountry ? 20 : 3)).forEach(t => tg.append("path").attr("d", path({ type: "LineString", coordinates: [UOA_POS, [t.lng, t.lat]] }))
+      .attr("fill", "none").attr("stroke", t.pi ? tok("--s2") : tok("--s1")).attr("stroke-opacity", t.pi ? .8 : .3)
+      .attr("stroke-width", Math.min(byCountry ? 9 : 6, (byCountry ? .8 : .6) + Math.sqrt(t.n) * (byCountry ? .55 : .6))).attr("data-tip", t.tip).attr(t.attr[0], t.attr[1]));
+  }
+  const cand = [];
+  if (ML.partners) {
+    const pg = g.append("g");
+    items.forEach(t => { const p = proj([t.lng, t.lat]); if (!p) return;
+      pg.append("circle").attr("cx", p[0]).attr("cy", p[1]).attr("data-r", t.r).attr("fill", t.pi ? tok("--s2") : tok("--s1")).attr("fill-opacity", t.pi ? .85 : .7)
+        .attr("stroke", tok("--sea")).attr("stroke-width", 1).attr("data-tip", t.tip).attr(t.attr[0], t.attr[1]);
+      if (byCountry && !ML.places && (t.n >= 5 || t.pi)) cand.push({ p, text: `${t.name} ${t.n}`, fs: 12, off: t.r + 4, pri: 500 + t.n, cls: "ms-label" }); });
+  }
+  if (ML.places) {
+    const qg = g.append("g");
+    places.forEach(d => { const p = proj([d.p.lng, d.p.lat]); if (!p) return;
+      const r = Math.min(46, 5 + Math.sqrt(d.n) * 2.6), ring = isNZGroup(d.c) || isOceanPlace(d.c);
+      const col = d.c === "NZA" ? tok("--s4") : d.c === "NZP" ? tok("--s5") : ring ? tok("--s7") : tok("--s3");
+      qg.append("circle").attr("cx", p[0]).attr("cy", p[1]).attr("data-r", r).attr("fill", ring ? "none" : col).attr("fill-opacity", ring ? 0 : .6)
+        .attr("stroke", col).attr("stroke-width", ring ? 2.2 : 1.6).attr("data-place", d.c).attr("data-tip", `<b>${esc(d.p.label)}</b><br>${fmt(d.n)} works${isNZGroup(d.c) ? "" : " name it"}`);
+      cand.push({ p, text: `${d.p.label} ${d.n}`, fs: 12.5, off: r + 4, pri: 1000 + d.n, cls: "ms-label" }); });
+  }
+  const u = proj(UOA_POS);
+  if (u) g.append("circle").attr("cx", u[0]).attr("cy", u[1]).attr("data-r", 6).attr("fill", tok("--star")).attr("stroke", tok("--sea")).attr("stroke-width", 2).attr("data-tip", "<b>Waipapa Taumata Rau, University of Auckland</b>");
+  PLACE_NAMES.forEach(([name, lat, lng]) => { const p = proj([lng, lat]); if (p) cand.push({ p, text: name.toUpperCase(), fs: 10, off: -12, pri: -1, cls: "ms-label ms-name", wf: .68 }); });
+  if (S.style === "los" && S.extra) S.extra.eez.features.filter(f => f.properties.group === "pi").forEach(f => { const c = path.centroid(f); if (isFinite(c[0])) cand.push({ p: c, text: f.properties.name, fs: 10.5, off: 0, pri: -2, cls: "ms-label ms-name", wf: .62 }); });
+  // labels: highest priority first, skipping any that would overlap one already placed (positions at zoom 1)
+  cand.sort((a, b) => b.pri - a.pri);
+  const boxes = [], lg = g.append("g");
+  cand.forEach(c => { const w = c.text.length * c.fs * (c.wf || .55) + 6, h = c.fs * 1.3, x0 = c.p[0] - w / 2, y0 = c.p[1] - c.off - h;
+    if (x0 < 0 || x0 + w > S.W || y0 < 0 || y0 + h > S.H || boxes.some(b => x0 < b[2] && x0 + w > b[0] && y0 < b[3] && y0 + h > b[1])) return;
+    boxes.push([x0, y0, x0 + w, y0 + h]);
+    lg.append("text").attr("class", c.cls).attr("x", c.p[0]).attr("y", c.p[1] - c.off).attr("data-x", c.p[0]).attr("data-y", c.p[1]).attr("data-fs", c.fs).attr("data-off", c.off).attr("text-anchor", "middle").text(c.text); });
+  msRescale();
+  wireCommon(g.node());
+}
+let msResizeT = 0;
+window.addEventListener("resize", () => { clearTimeout(msResizeT); msResizeT = setTimeout(() => { if (view === "map" && ML.style !== "web") renderMapSvg(); }, 200); });
 
 // ================================================================== RESEARCHERS
 const PP = { sort: "n", dir: -1, q: "", fac: "", limit: 50, eng: false };
@@ -1064,6 +1261,9 @@ function renderAbout() {
   const cv = D.coverage;
   const inScopus = W.filter(w => w.sv[0]).length, byTitle = W.filter(w => w.sv[5] === "title").length, inSv = W.filter(w => w.sv[1] >= 0).length;
   const svFound = SVL.sra.filter(r => r.sid != null).length;
+  // social sciences & humanities (society, education, history & languages, arts, law, economy) vs other areas
+  const SSH = new Set(["soc", "edu", "hum", "art", "law", "dev"]), sshW = W.filter(w => SSH.has(w.ra)), othW = W.filter(w => !SSH.has(w.ra));
+  const sshShare = f => pct(sshW.filter(f).length, sshW.length) + "%", othShare = f => pct(othW.filter(f).length, othW.length) + "%";
   el.innerHTML = `<h1>About this landscape</h1>
     <p class="lead">A first pass at mapping the University of Auckland's research in or about the Pacific, and its ocean, Earth and climate research, for Mā Kiwa te moana nui e whakaumu | Blue Pacific Horizons, built by the Centre for eResearch from OpenAlex (open data) and the University's Scopus and SciVal subscription.</p>
     <div class="cols"><div>
@@ -1072,6 +1272,7 @@ function renderAbout() {
       <ul><li><b>Pacific Islands &amp; peoples:</b> ${esc(LENS_HELP.P)}</li><li><b>Pacific Ocean &amp; region:</b> ${esc(LENS_HELP.O)}</li><li><b>Aotearoa environment &amp; hazards:</b> ${esc(LENS_HELP.A)} This follows the SRA's framing of Aotearoa as part of the Pacific region.</li>
         <li><b>Ocean, Earth &amp; climate</b> (added in November 2026 after BPH's review): ${esc(LENS_HELP.M)} Its five themes can be switched on and off in the filter bar.</li></ul>
       <p>Each work also has one plain-language <b>research area</b> (Strengths tab): the five ocean and Earth themes, and ten others from the OpenAlex field and subfield of its main topic.</p>
+      <p>The Pacific search names all 22 Pacific Island countries and territories on the Pacific Community's list (the countries and territories in the Pacific Data Hub's population statistics), with Hawaiʻi and Rapa Nui, in English and common local or people forms (for example Sāmoa and Samoan, iTaukei, I-Kiribati, ni-Vanuatu, Chamorro, Kanak, Chuuk and Pohnpei). Works are also found through a written affiliation that names the University of Auckland or Waipapa Taumata Rau when OpenAlex has credited the author to another institution.</p>
       <p>OpenAlex search finds ${fmt(cv.candidates)} candidates; each is then checked against its title, abstract and keywords. False friends are dropped ("Asia-Pacific", "Indo-Pacific", the WHO Western Pacific Region, "Pacific oyster", the Canada-France-Hawaii Telescope). ${fmt(cv.kept)} pass; ${fmt(cv.dropped)} do not (${fmt(cv.dropped_no_abstract)} of those had no abstract to check, because some publishers withhold them from OpenAlex).</p>
       <h3>Strength</h3>
       <ul><li><b>Pacific-focused</b> (${fmt(cv.tiers.f)}): ${esc(TIER_HELP.f)}</li><li><b>Within wider studies</b> (${fmt(cv.tiers.p)}): ${esc(TIER_HELP.p)}</li><li><b>Single mention</b> (${fmt(cv.tiers.m)}): ${esc(TIER_HELP.m)}</li></ul>
@@ -1082,6 +1283,7 @@ function renderAbout() {
         <li><b>Scopus and SciVal</b> (Elsevier B.V.; ${SCOPUS}, ${SCIVAL}; data retrieved through ${ELSAPI} on ${RETRIEVED}, SciVal data release ${longDate(D.svmeta.release)}; used under the University of Auckland's subscription): each work's Scopus record, SciVal Topic and Topic Cluster, SciVal FWCI; UoA's SciVal output by Topic and Cluster for ${D.svmeta.start}–${D.svmeta.end}; the Topics of ${Object.keys(SVL.pic_countries).length} Pacific Island countries and territories; and the keyword probes. APIs used: Scopus Search; SciVal Publication, Topic, Topic Cluster and Country (every endpoint, parameter and request count is listed in bph/README.md). These data are for University use under the licence: share this page within the University only.</li>
         <li><b>Marsden Fund round lists, 2018–2025</b> (<a href="https://www.royalsociety.org.nz/what-we-do/funds-and-opportunities/marsden/awarded-grants/" target="_blank" rel="noopener">Royal Society Te Apārangi</a>): every funded project with its team and abstract; kept when a UoA researcher is on the team (${fmt(cv.marsden_rounds || 0)} projects).</li>
         <li><b>SRA3 SciVal Topics &amp; Topic Clusters</b>, with the SciVal dataset methodology, prepared by Research Services for the Research and Innovation Office.</li>
+        <li><b>Map styles</b> (Map tab): the Spilhaus projection is Adams World in a Square II in an oblique aspect, ported from PROJ 9.8 and checked against it; ocean depth from Natural Earth (public domain); exclusive economic zones from Flanders Marine Institute (2023), Maritime Boundaries Geodatabase v12, <a href="https://www.marineregions.org" target="_blank" rel="noopener">marineregions.org</a> (CC BY 4.0).</li>
         <li><b>The SRA's stakeholder engagement list</b> and <b>Workshop 2</b> (photos of the map activity and the workshop summary), from the Blue Pacific Horizons convening team: the Researchers tab's engagement check and the Workshop maps tab.</li>
         <li><b>Not included:</b> non-public data from the University's grant and ethics application systems. It is managed by the Research and Innovation Office for consent and privacy reasons and would need their permission.</li></ul>
     </div><div>
@@ -1091,6 +1293,7 @@ function renderAbout() {
       <p>Faculty and unit come from affiliation text (${pct(cv.authors_with_faculty, cv.authors)}% of researchers matched) and author identities from OpenAlex's automated disambiguation; both will contain errors. ${fmt(cv.no_abstract)} works have no abstract in OpenAlex and were judged on title and keywords.</p>
       <p>Award coverage is uneven: Marsden Fund records come from OpenAlex to 2017 (UoA-led only) and from the Royal Society's round lists for 2018–2025 (UoA lead or team member), so UoA team members on Marsden projects led elsewhere before 2018 are missing; MBIE records are UoA-led only, so programmes led by GNS, NIWA or others with UoA partners (for example on the Hikurangi margin) are missing; HRC records carry no end dates, and ${fmt(2074)} HRC awards record no lead institution. Awards are classified from their title and description or abstract.</p>
       <p>People on the engagement list are matched to UoA authors by name; OpenAlex sometimes splits one person into several profiles or merges two people, so check the matches before relying on them.</p>
+      <p>Social sciences and humanities are under-counted. Much of that research is single-authored and appears in books, book chapters, regional journals and reports, which OpenAlex indexes less completely and often without an affiliation, so a UoA author cannot be recognised. Even among the works found here, ${sshShare(w => w.na === 1)} of social science and humanities works are single-authored (${othShare(w => w.na === 1)} elsewhere), ${sshShare(w => w.ty === "book" || w.ty === "book-chapter")} are books or chapters (${othShare(w => w.ty === "book" || w.ty === "book-chapter")}), and ${sshShare(w => w.sv[2] === "x")} are not in SciVal (${othShare(w => w.sv[2] === "x")}). The University's own research outputs system would close much of this gap (with the Research and Innovation Office's agreement).</p>
       <p>Bibliometrics see published, indexed work. They miss community reports, much Pacific-language scholarship, and the relationships behind the research. Use these numbers to prompt conversations, not to rank people.</p>
       <h2>Next steps for the pilot</h2>
       <ol><li>Review the probes for the missing areas, the ocean, Earth &amp; climate lens and the engagement check together: are any areas still missing (for example disaster studies beyond the Pacific, or earthquake engineering), and are the people right?</li>

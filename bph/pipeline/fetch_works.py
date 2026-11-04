@@ -6,6 +6,8 @@ Candidates (UoA lineage, 2020 to date, OpenAlex core corpus) come from five quer
   A  title/abstract names Aotearoa/NZ/Māori AND a theme       (lenses.A_PLACE x A_THEME)
   M  title/abstract names an ocean, Earth or climate term     (lenses.LENS_M)
   X  co-authored with an institution in a Pacific Island country or territory
+and the four lens queries again with a written affiliation naming the University of Auckland / Waipapa
+Taumata Rau instead of the institution link (R*), for UoA authorships that OpenAlex linked elsewhere.
 Each candidate is re-checked locally in analyse.py; this step only gathers records.
 
 Writes <WORK>/works_raw.jsonl (one record per work, with the queries that found it) and
@@ -19,7 +21,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 import oa  # noqa: E402
-from lenses import lens_filters  # noqa: E402
+from lenses import UOA_RAW_SEARCH, lens_filters  # noqa: E402
 
 WORK = Path(os.environ.get("BPH_WORK", "/mnt/data/ubuntu/bph-work"))
 UOA = "I154130895"
@@ -38,6 +40,8 @@ def main():
     base = f"authorships.institutions.lineage:{UOA},publication_year:{YEARS}"
     queries = {k: ",".join([base, *v]) for k, v in lens_filters().items()}
     queries["X"] = base + ",institutions.country_code:" + "|".join(PACIFIC_ISLAND_CC)
+    for k, v in lens_filters().items():
+        queries["R" + k] = ",".join([f"publication_year:{YEARS}", UOA_RAW_SEARCH, *v])
     works, found = {}, {}
     for q, flt in queries.items():
         n = 0

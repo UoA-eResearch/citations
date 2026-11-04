@@ -39,6 +39,14 @@ One filter bar (lenses, ocean themes and strength) drives every tab.
   Search terms: `pipeline/lenses.py`; local checks: `pipeline/tagging.py`.
 - **Research areas.** One plain-language area per work (`tagging.research_area`): the five ocean/Earth themes,
   then ten areas from the OpenAlex field and subfield of the work's primary topic.
+- **Pacific places.** The search names all 22 Pacific Island countries and territories on the Pacific
+  Community's list (as in the Pacific Data Hub's population statistics), with Hawaiʻi and Rapa Nui, in English
+  and common local or people forms (November 2026: the Northern Mariana Islands, the states of the Federated
+  States of Micronesia and adjective forms were added; possessives such as "Papua New Guinea's" now match).
+- **UoA authorship.** An authorship counts as UoA when OpenAlex links it to UoA or when its written affiliation
+  names the University of Auckland / Waipapa Taumata Rau (not AUT); candidates are fetched both ways. This
+  catches UoA authors whom OpenAlex credits to a previous employer; the wrongly linked institution is not
+  counted as a partner.
 - **Strength.** *Pacific-focused*: named in the title, a specific Pacific place/people/concept, a Pacific
   Island co-author, or the Pacific Ocean/climate named repeatedly. *Within wider studies*: generic
   "Pacific"/"Pasifika" only in the abstract (typically NZ health data by ethnicity). *Single mentions*.
@@ -86,6 +94,22 @@ One filter bar (lenses, ocean themes and strength) drives every tab.
   cannot be read precisely from a photo; five photos (no people) are shown on the page.
 - **Not included:** non-public data from the University's grant and ethics application systems (managed by
   the Research and Innovation Office; needs their permission).
+
+## Map styles
+
+The Map tab can be switched from the web map (deck.gl, Mercator) to five styles after the maps used at
+Workshop 2, drawn with d3 (background on a canvas, interactive layer in SVG):
+
+| Style | Projection and data |
+|---|---|
+| Spilhaus: the ocean in a square | Adams World in a Square II in an oblique aspect (centre 49.56371678 S 66.94970198 E, azimuth 40.17823482, as in PROJ's `spilhaus`). Ported from PROJ 9.8 (`adams.cpp`, `spilhaus.cpp`, sphere); the oblique step is the d3 rotation `[-66.94970198, 49.56371678, -139.82176518]`, so d3 cuts the map at the true seams. Checked against PROJ 9.8.1 on 400 points (max difference 1.6e-14, unit sphere). |
+| Spilhaus with ocean depth | The same, shaded by Natural Earth 10m bathymetry (200 m to 10,000 m; public domain), `data/bathy.json`. |
+| Equal Earth | `d3.geoEqualEarth`, centred on 165 E. |
+| Large Ocean States | Mercator on the Pacific with exclusive economic zones: Flanders Marine Institute (2023), Maritime Boundaries Geodatabase: Maritime Boundaries and Exclusive Economic Zones (200NM), version 12, https://doi.org/10.14284/632, CC BY 4.0, via the Marine Regions web feature service; `data/eez.json`. |
+| Navigator-centred (after Tupaia) | Azimuthal equidistant centred on Raʻiātea (16.83 S, 151.44 W), rings every 1,000 km. Inspired by Tupaia's chart; not a reconstruction of it. |
+
+`pipeline/mapstyles.py` builds `data/bathy.json` and `data/eez.json` (needs shapely and pyshp; its outputs are
+committed, so `run_all.sh` does not run it).
 
 ## Elsevier APIs used
 

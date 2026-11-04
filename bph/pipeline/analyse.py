@@ -24,7 +24,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).parent))
 import oa  # noqa: E402,F811  (OpenAlex client: country names and continents for the map's regional summary)
 from tagging import (FACULTIES, M_THEMES, OCEAN_PLACES, PLACES, RESEARCH_AREAS, abstract_text,  # noqa: E402
-                     classify, faculty_of, fold, research_area, uoa_affiliation_strings)
+                     classify, faculty_of, fold, mislinked_institutions, research_area, uoa_affiliation_strings)
 
 ROOT = Path(__file__).resolve().parents[1]
 WORK = Path(os.environ.get("BPH_WORK", "/mnt/data/ubuntu/bph-work"))
@@ -60,10 +60,11 @@ def region_of(cc, lat=None, lng=None):
 
 
 def is_uoa(authorship):
+    """A UoA authorship: linked to UoA by OpenAlex, or its written affiliation names UoA (not AUT)."""
     for i in authorship.get("institutions") or []:
         if short(i.get("id")) == UOA or any(short(x) == UOA for x in i.get("lineage") or []):
             return True
-    return False
+    return bool(uoa_affiliation_strings(authorship, UOA))
 
 
 def main():
@@ -169,9 +170,10 @@ def main():
         uoa_auth, ext = [], set()
         for a in aus:
             au = a.get("author") or {}
+            wrong = mislinked_institutions(a)       # credited to another institution, but the text says UoA
             for i in a.get("institutions") or []:
                 iid = short(i.get("id"))
-                if iid and iid != UOA and not any(short(x) == UOA for x in i.get("lineage") or []):
+                if iid and iid != UOA and iid not in wrong and not any(short(x) == UOA for x in i.get("lineage") or []):
                     ext.add(inst_i(iid))
             if not is_uoa(a) or not au.get("id"):
                 continue

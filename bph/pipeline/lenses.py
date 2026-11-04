@@ -24,6 +24,11 @@ LENS_P = [
     "Bougainville", "Hawaii", "Hawaiian", "Hawaiʻi", '"Marshall Islands"', "Marshallese", "Palau",
     "Nauru", "Guam", "Chamorro", "CHamoru", '"New Caledonia"', "Kanak", "Tahiti", '"French Polynesia"',
     '"Rapa Nui"', '"Easter Island"', '"Wallis and Futuna"', "Pitcairn",
+    # added November 2026 (checked against SPC's 22 Pacific Island countries and territories): the Northern
+    # Mariana Islands, the states of the Federated States of Micronesia, and adjective / people forms
+    '"Northern Mariana Islands"', '"Mariana Islands"', "Saipan", "CNMI", "Chuuk", "Pohnpei", "Kosrae",
+    "Palauan", "Nauruan", "Guamanian", "Tahitian", '"Papua New Guinean"', '"Solomon Islander"', '"Solomon Islanders"',
+    '"Cook Islander"', '"Cook Islanders"', "Kanaky", "Rapanui", "Wallisian", "Futunan",
 ]
 
 LENS_O = [
@@ -78,6 +83,9 @@ LENS_M = [
 
 def ors(terms):
     return " OR ".join(terms)
+
+
+UOA_RAW_SEARCH = 'raw_affiliation_strings.search:"University of Auckland" OR "Waipapa Taumata Rau" OR "University of Aukland"'
 
 
 def lens_filters():
