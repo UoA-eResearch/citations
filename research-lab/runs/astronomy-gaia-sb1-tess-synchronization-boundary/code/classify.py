@@ -14,6 +14,7 @@ Synchronized: |P_rot - P_ps| / P_ps < 0.10, P_ps = P_orb for e < 0.05 or SB1C, e
 
   classify.py -> data/stars.parquet
 """
+import os
 from pathlib import Path
 
 import numpy as np
@@ -46,7 +47,9 @@ def star_periods(sp):
 def main():
     s = pd.read_parquet(D / "sample.parquet")
     s = s[s.period < 12].merge(pd.read_parquet(D / "tic.parquet")[["source_id", "tic", "Tmag"]], on="source_id", how="left")
-    sp = pd.read_parquet(D / "sector_periods.parquet")
+    sp = pd.read_parquet(D / os.environ.get("SECTOR_IN", "sector_periods.parquet"))
+    prods = os.environ.get("LC_PRODUCTS", "tess-spoc").split(",")      # D1: TESS-SPOC only in the primary
+    sp = sp[sp["product"].isin(prods)]
     n_lc = sp[sp.n > 0].groupby("tic").size()
     st = s.merge(star_periods(sp), on="tic", how="left")
     st["n_sectors_lc"] = st.tic.map(n_lc).fillna(0).astype(int)
@@ -64,7 +67,7 @@ def main():
     r = st.p_rot / st.p_ps
     st["sync"] = np.where(st.cls == "detected", np.abs(r - 1) < 0.10, np.nan)
     st["sync_state"] = np.where(st.cls != "detected", "", np.where(np.abs(r - 1) < 0.10, "synchronized", np.where(r > 1, "sub", "super")))
-    st.to_parquet(D / "stars.parquet")
+    st.to_parquet(D / os.environ.get("STARS_OUT", "stars.parquet"))
     print(st.cls.value_counts().to_dict()); print(st[st.cls == "detected"].sync_state.value_counts().to_dict())
 
 

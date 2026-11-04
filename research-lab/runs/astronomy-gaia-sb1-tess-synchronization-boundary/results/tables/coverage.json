@@ -1,0 +1,54 @@
+{
+ "orbits": {
+  "attempted": 181529,
+  "ok": 49960,
+  "fallback": 0,
+  "dropped": 131569,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "parallax_over_error <= 10": 8278,
+   "dereddened colour outside the dwarf table": 97,
+   "outside the main-sequence band": 123194
+  }
+ },
+ "tic_match": {
+  "attempted": 24045,
+  "ok": 23577,
+  "fallback": 0,
+  "dropped": 468,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "no or several DR2 neighbours": 468,
+   "DR2 source without a unique clean TIC row": 0
+  }
+ },
+ "light_curves": {
+  "attempted": 23577,
+  "ok": 17112,
+  "fallback": 0,
+  "dropped": 6465,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "QLP only (excluded from the primary, D1)": 6100,
+   "no FFI light curve": 365
+  }
+ },
+ "classification": {
+  "attempted": 17112,
+  "ok": 3661,
+  "fallback": 0,
+  "dropped": 13451,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "inconsistent": 7267,
+   "pulsator": 2142,
+   "ellipsoidal_or_double_spot": 1893,
+   "no_detection": 1792,
+   "possible_beaming": 357
+  }
+ }
+}

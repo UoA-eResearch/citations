@@ -12,6 +12,7 @@ the number of significant (FAP < 1e-5) peaks in 0.3-3 d that are not within 2% o
 
   periods.py -> data/sector_periods.parquet
 """
+import os
 import sys
 from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
@@ -33,7 +34,21 @@ def load(path, product):
         d = h[1].data
         col = "PDCSAP_FLUX" if product == "tess-spoc" else "SAP_FLUX"
         t, f, q = np.asarray(d["TIME"], float), np.asarray(d[col], float), np.asarray(d["QUALITY"])
-    return prep(t, f, q)
+    t, f = prep(t, f, q)
+    if t is not None and product == "qlp" and os.environ.get("QLP_DETREND") == "1":
+        t, f = detrend(t, f)                       # D1 sensitivity
+    return t, f
+
+
+def detrend(t, f):
+    """D1 sensitivity for QLP: subtract a quadratic from each continuous segment (split at gaps over 1 d)."""
+    cut = np.r_[0, np.flatnonzero(np.diff(t) > 1.0) + 1, len(t)]
+    g = f.copy()
+    for a, b in zip(cut[:-1], cut[1:]):
+        if b - a >= 10:
+            x = t[a:b] - t[a:b].mean()
+            g[a:b] = f[a:b] - np.polyval(np.polyfit(x, f[a:b], 2), x)
+    return t, g
 
 
 def prep(t, f, q=None):
@@ -119,12 +134,14 @@ def one(row):
 
 def main(workers=12):
     ix = pd.read_parquet(D / "lc_index.parquet")
+    if os.environ.get("ONLY_PRODUCT"):
+        ix = ix[ix["product"] == os.environ["ONLY_PRODUCT"]]
     ix = ix[[(D / "lc" / p).exists() for p in ix.path]]
     rows = list(ix[["tic", "sector", "product", "path"]].itertuples(index=False, name=None))
     with ProcessPoolExecutor(workers) as ex:
         res = list(ex.map(one, rows, chunksize=20))
     out = pd.DataFrame(res, columns=["tic", "sector", "product", "n", "p_ls", "p", "power", "fap", "amp", "doubled", "n_pulse", "note"])
-    out.to_parquet(D / "sector_periods.parquet")
+    out.to_parquet(D / os.environ.get("PERIODS_OUT", "sector_periods.parquet"))
     print(len(out), "sector light curves |", int((out.fap < FAP).sum()), "detections")
 
 

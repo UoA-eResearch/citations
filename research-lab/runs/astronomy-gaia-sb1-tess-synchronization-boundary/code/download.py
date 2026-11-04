@@ -1,7 +1,7 @@
 """Download the indexed light curves: one file per star and sector, TESS-SPOC where it exists, otherwise QLP (plan
 section 1). Files go under data/lc/<MAST path>; existing complete files are skipped. Eight parallel connections.
 
-  download.py [limit] -> data/lc/..., results/tables/download.json
+  download.py [limit] [product] -> data/lc/..., results/tables/download_<product>.json
 """
 import json
 import subprocess
@@ -38,9 +38,11 @@ def get(row):
     return "ok", out.stat().st_size
 
 
-def main(limit=None):
+def main(limit=None, product=None):
     c = chosen()
-    if limit:
+    if product:
+        c = c[c["product"] == product]
+    if limit and int(limit) > 0:
         c = c.sample(int(limit), random_state=1)
     rows = list(c.itertuples(index=False))
     stat = {"ok": 0, "skip": 0, "fail": 0}; size = 0
@@ -50,8 +52,8 @@ def main(limit=None):
             if (i + 1) % 2000 == 0:
                 print(i + 1, "of", len(rows), stat, f"{size / 1e9:.1f} GB", flush=True)
     out = {"chosen_files": len(rows), **stat, "gb": round(size / 1e9, 2), "by_product": c["product"].value_counts().to_dict()}
-    if not limit:
-        (T / "download.json").write_text(json.dumps(out, indent=1) + "\n")
+    if not (limit and int(limit) > 0):
+        (T / f"download_{product or 'all'}.json").write_text(json.dumps(out, indent=1) + "\n")
     print(out)
 
 

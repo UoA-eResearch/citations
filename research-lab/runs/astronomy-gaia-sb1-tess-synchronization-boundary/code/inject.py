@@ -48,7 +48,7 @@ def main(workers=12):
     st = pd.read_parquet(D / "stars.parquet")
     quiet = set(st.loc[st.cls == "no_detection", "tic"].dropna().astype("int64"))
     ix = pd.read_parquet(D / "lc_index.parquet")
-    ok = sp[(sp.n > 0) & sp.tic.isin(quiet)][["tic", "sector", "product"]]
+    ok = sp[(sp.n > 0) & sp.tic.isin(quiet) & (sp["product"] == "tess-spoc")][["tic", "sector", "product"]]   # D1: TESS-SPOC only
     hosts = ok.merge(ix, on=["tic", "sector", "product"]).sample(frac=1, random_state=SEED).drop_duplicates("tic")
     hosts = hosts.head(N_HOSTS)
     jobs = [(int(r.tic), int(r.sector), r.product, r.path, SEED + i) for i, r in enumerate(hosts.itertuples())]

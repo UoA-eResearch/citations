@@ -1,0 +1,157 @@
+{
+ "synchronized": {
+  "gaia_source_id": 60071577265374464,
+  "tic": 438260593,
+  "teff": 5718,
+  "Tmag": 11.58,
+  "P_orb_d": 3.6978,
+  "e": 0.085,
+  "K1_kms": 32.7,
+  "P_ps_d": 3.5451,
+  "sectors": [
+   {
+    "sector": 42,
+    "P_ls": 3.76,
+    "P_after_acf": 3.76,
+    "fap": 0.0,
+    "amp_ppt": 5.75,
+    "n_pulse": 2
+   },
+   {
+    "sector": 43,
+    "P_ls": 3.552,
+    "P_after_acf": 3.552,
+    "fap": 0.0,
+    "amp_ppt": 3.62,
+    "n_pulse": 1
+   },
+   {
+    "sector": 44,
+    "P_ls": 3.552,
+    "P_after_acf": 3.552,
+    "fap": 0.0,
+    "amp_ppt": 2.41,
+    "n_pulse": 2
+   },
+   {
+    "sector": 70,
+    "P_ls": 3.805,
+    "P_after_acf": 3.805,
+    "fap": 0.0,
+    "amp_ppt": 2.61,
+    "n_pulse": 2
+   },
+   {
+    "sector": 71,
+    "P_ls": 3.68,
+    "P_after_acf": 3.68,
+    "fap": 0.0,
+    "amp_ppt": 2.34,
+    "n_pulse": 2
+   }
+  ],
+  "star_P_rot_d": 3.68,
+  "amp_ppt": 2.61,
+  "beaming_ppt": 0.436,
+  "class": "detected",
+  "state": "synchronized"
+ },
+ "sub-synchronous": {
+  "gaia_source_id": 12368719835136896,
+  "tic": 400005586,
+  "teff": 5141,
+  "Tmag": 11.93,
+  "P_orb_d": 3.8461,
+  "e": 0.107,
+  "K1_kms": 38.9,
+  "P_ps_d": 3.6003,
+  "sectors": [
+   {
+    "sector": 5,
+    "P_ls": 4.273,
+    "P_after_acf": 4.273,
+    "fap": 0.0,
+    "amp_ppt": 20.73,
+    "n_pulse": 2
+   },
+   {
+    "sector": 42,
+    "P_ls": 4.306,
+    "P_after_acf": 4.306,
+    "fap": 0.0,
+    "amp_ppt": 20.05,
+    "n_pulse": 1
+   },
+   {
+    "sector": 43,
+    "P_ls": 4.148,
+    "P_after_acf": 4.148,
+    "fap": 0.0,
+    "amp_ppt": 10.04,
+    "n_pulse": 3
+   },
+   {
+    "sector": 44,
+    "P_ls": 4.205,
+    "P_after_acf": 4.205,
+    "fap": 0.0,
+    "amp_ppt": 8.96,
+    "n_pulse": 1
+   },
+   {
+    "sector": 70,
+    "P_ls": 4.406,
+    "P_after_acf": 4.406,
+    "fap": 0.0,
+    "amp_ppt": 6.74,
+    "n_pulse": 1
+   },
+   {
+    "sector": 71,
+    "P_ls": 4.167,
+    "P_after_acf": 4.167,
+    "fap": 0.0,
+    "amp_ppt": 8.74,
+    "n_pulse": 2
+   }
+  ],
+  "star_P_rot_d": 4.239,
+  "amp_ppt": 9.5,
+  "beaming_ppt": 0.519,
+  "class": "detected",
+  "state": "sub"
+ },
+ "ellipsoidal_or_double_spot": {
+  "gaia_source_id": 58937469676821120,
+  "tic": 113799193,
+  "teff": 6087,
+  "Tmag": 11.42,
+  "P_orb_d": 4.6164,
+  "e": 0.008,
+  "K1_kms": 75.2,
+  "P_ps_d": 4.6164,
+  "sectors": [
+   {
+    "sector": 70,
+    "P_ls": 2.297,
+    "P_after_acf": 2.297,
+    "fap": 3.1e-283,
+    "amp_ppt": 32.58,
+    "n_pulse": 2
+   },
+   {
+    "sector": 71,
+    "P_ls": 2.305,
+    "P_after_acf": 2.305,
+    "fap": 0.0,
+    "amp_ppt": 37.4,
+    "n_pulse": 1
+   }
+  ],
+  "star_P_rot_d": 2.301,
+  "amp_ppt": 34.99,
+  "beaming_ppt": 1.003,
+  "class": "ellipsoidal_or_double_spot",
+  "state": ""
+ }
+}

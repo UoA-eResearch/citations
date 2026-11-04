@@ -1,0 +1,10 @@
+id,claim,used_in,source_type,source_id,locator,role,support,conditions,checked_how,checked_at
+A1,"Gaia DR3 provides about 181,000 SB1 orbits used for a population-scale circularization study",report.md What was asked,paper,10.1093/mnras/stad999,abstract,prior work,supports,"Bashi, Mazeh & Faigler 2023",OpenAlex resolve (W4362602914),2026-11-05 00:30
+A2,79% of Kepler EBs with P < 10 d are synchronized; some short-period EBs rotate about 13% slower than synchronous,report.md What this does and does not show,paper,10.3847/1538-3881/aa974d,abstract,comparison,supports,"eclipsing, visually inspected sample",OpenAlex get_work abstract,2026-11-05 00:30
+A3,Pseudo-synchronous rotation period for eccentric orbits,report.md How it was done,paper,https://openalex.org/W2995178860,"Hut 1981, A&A 99, 126",method,supports,no DOI,OpenAlex resolve,2026-11-05 00:30
+A4,Dwarf colour-Teff-absolute magnitude sequence used for the main-sequence band and Teff,report.md How it was done,paper,10.1088/0067-0049/208/1/9,Pecaut & Mamajek 2013; table version 2022.04.16,method,supports,,OpenAlex resolve; table downloaded,2026-11-05 00:30
+A5,"Gaia DR3 orbits, photometry, astrophysical parameters and rotation-modulation periods",report.md standfirst; G4,dataset,10.1051/0004-6361/202243940,Gaia DR3 summary paper,data,supports,,OpenAlex resolve; data via the ESA archive,2026-11-05 00:30
+A6,TESS-SPOC FFI light curves,report.md How it was done,paper,10.3847/2515-5172/abc9b3,Caldwell et al. 2020,data,supports,,OpenAlex resolve,2026-11-05 00:30
+A7,QLP FFI light curves,report.md How it was done; D1,paper,10.3847/2515-5172/abca2e,Huang et al. 2020,data,supports,,OpenAlex resolve,2026-11-05 00:30
+A8,Synchronization measured in TESS eclipsing binaries,report.md What was asked,paper,10.3847/1538-4357/adf10d,Hobson-Ritz et al. 2025 abstract,prior work,supports,eclipsing only,OpenAlex,2026-11-05 00:30
+A9,Synchronization of Gaia eclipsing binaries from rotational velocity,report.md What was asked,paper,10.1051/0004-6361/202555567,"Hadad, Mazeh & Faigler 2025 title",prior work,supports,eclipsing; vsini,OpenAlex citing list,2026-11-05 00:30

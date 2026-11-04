@@ -1,0 +1,86 @@
+{
+ "bounds_cool": {
+  "stars_with_lc": 6552,
+  "synchronized": 424,
+  "no_detection": 756,
+  "lower": 0.06471306471306472,
+  "upper": 0.1800976800976801,
+  "classes": {
+   "inconsistent": 3290,
+   "detected": 1895,
+   "no_detection": 756,
+   "pulsator": 451,
+   "ellipsoidal_or_double_spot": 84,
+   "possible_beaming": 76
+  }
+ },
+ "unweighted_cool": 0.23163841807909605,
+ "within_300pc_cool": 0.2235642844346209,
+ "ellipsoidal_as_synchronized_cool": 0.25669530065689744,
+ "vbroad_cool": {
+  "n": 3147,
+  "share_clearly_supersynchronous": 0.004766444232602479
+ },
+ "states_cool": {
+  "sub": 1091,
+  "synchronized": 410,
+  "super": 269
+ },
+ "bounds_hot": {
+  "stars_with_lc": 4700,
+  "synchronized": 83,
+  "no_detection": 352,
+  "lower": 0.017659574468085106,
+  "upper": 0.0925531914893617,
+  "classes": {
+   "inconsistent": 1480,
+   "ellipsoidal_or_double_spot": 1082,
+   "pulsator": 998,
+   "detected": 675,
+   "no_detection": 352,
+   "possible_beaming": 113
+  }
+ },
+ "unweighted_hot": 0.11130742049469965,
+ "within_300pc_hot": 0.1249675361168257,
+ "ellipsoidal_as_synchronized_hot": 0.6630620375640296,
+ "vbroad_hot": {
+  "n": 2935,
+  "share_clearly_supersynchronous": 0.02759795570698467
+ },
+ "states_hot": {
+  "sub": 327,
+  "super": 176,
+  "synchronized": 63
+ },
+ "circularization_cutoff_by_teff": {
+  "4000-4500": {
+   "n": 190,
+   "P_circ50": 0.10000000000000002
+  },
+  "4500-5000": {
+   "n": 374,
+   "P_circ50": 0.10000000000000002
+  },
+  "5000-5500": {
+   "n": 1649,
+   "P_circ50": 0.10000000000000002
+  },
+  "5500-6000": {
+   "n": 4549,
+   "P_circ50": 0.10000000000000002
+  },
+  "6000-6500": {
+   "n": 6962,
+   "P_circ50": 0.10129768678869659
+  },
+  "6500-7000": {
+   "n": 4638,
+   "P_circ50": 0.10000000000000002
+  },
+  "7000-7500": {
+   "n": 2197,
+   "P_circ50": 0.10000000000000002
+  }
+ }
+}
