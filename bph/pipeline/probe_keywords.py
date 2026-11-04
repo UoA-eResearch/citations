@@ -1,13 +1,14 @@
 """Step 6: keyword probes for the gap check: which SciVal Topics do these keywords land in?
 
-For each probe in bph/probes.txt ("Label: term | term"), using Scopus for 2021-2025 (SciVal's
+For each probe in bph/probes.local.txt if present (the SRA's own list; kept out of the repository), else
+bph/probes.txt ("Label: term | term"), using Scopus for 2021-2025 (SciVal's
 current five-year window):
   uoa_all    UoA (Scopus affiliation) publications whose title/abstract/keywords match any term
   uoa_pac    ... that also name the Pacific (the P and O lens terms)
   world_pac  publications anywhere matching the terms AND the Pacific terms
   share      uoa_pac / world_pac
   topics     SciVal Topics of the most relevant world_pac publications (up to SAMPLE) and of UoA's
-             own uoa_pac publications (up to SAMPLE), each with its status against the SRA3 list
+             own publications on the theme (uoa_all, up to SAMPLE), each with its status against the SRA3 list
   in_sra     share of each sample that falls inside the SRA dataset (Topic or Cluster included)
   corpus     works in this atlas's verified corpus matching the terms (all years, any lens)
 Scopus counts are search-level (not re-checked like the atlas), so UoA and world compare like with like.
@@ -70,7 +71,8 @@ def topics_of(ids):
 
 
 def main():
-    probes = read_probes(ROOT / "probes.txt")
+    local = ROOT / "probes.local.txt"
+    probes = read_probes(local if local.exists() else ROOT / "probes.txt")
     land = json.loads((ROOT / "data" / "landscape.json").read_text())
     live = json.loads((ROOT / "data" / "scival_live.json").read_text())
     sra_ids = json.loads((WORK / "els_sra_ids.json").read_text())
@@ -100,8 +102,8 @@ def main():
     out = []
     for p in probes:
         terms = tak(p["terms"])
-        uoa_all, _ = search(f"{uoa} AND {terms} AND {YEARS}", 1)
-        uoa_pac, uoa_ids = search(f"{uoa} AND {terms} AND {pac} AND {YEARS}", SAMPLE)
+        uoa_all, uoa_ids = search(f"{uoa} AND {terms} AND {YEARS}", SAMPLE)
+        uoa_pac, _ = search(f"{uoa} AND {terms} AND {pac} AND {YEARS}", 1)
         world_pac, world_ids = search(f"{terms} AND {pac} AND {YEARS}", SAMPLE)
         tw, tu = topics_of(world_ids), topics_of(uoa_ids)
         agg = {}
@@ -110,7 +112,7 @@ def main():
                 a = agg.setdefault(tid, dict(id=tid, name=tname, cluster=cname, w=0, u=0, st=status(tid, cid),
                                             uoa=uoa_out.get(tid, 0), ix=tix.get(tid, -1)))
                 a[src] += 1
-        top = sorted(agg.values(), key=lambda a: -(a["w"] + a["u"]))[:8]
+        top = sorted(agg.values(), key=lambda a: (-a["u"], -a["w"]))[:10]   # by UoA papers, then world
         in_w = sum(1 for tid, _, cid, _ in tw.values() if status(tid, cid) == "c")
         in_u = sum(1 for tid, _, cid, _ in tu.values() if status(tid, cid) == "c")
         rx = re.compile("|".join(r"\b" + re.escape(fold(t)) + r"(?:s|es)?\b" for t in p["terms"]))
@@ -123,7 +125,7 @@ def main():
             works=sorted(hits, key=lambda i: -land["works"][i]["c"])[:40]))
         print(f"{p['label']:36s} uoa={uoa_all:5d} uoa_pac={uoa_pac:4d} world_pac={world_pac:6d} "
               f"in SRA: world {in_w}/{len(tw)}, UoA {in_u}/{len(tu)} | top: {top[0]['name'][:50] if top else '-'}")
-    (ROOT / "data" / "probes.json").write_text(json.dumps(dict(years=YEARS_LABEL, sample=SAMPLE, probes=out),
+    (ROOT / "data" / "probes.json").write_text(json.dumps(dict(years=YEARS_LABEL, sample=SAMPLE, probes=out, local=local.exists()),
                                                           ensure_ascii=False, separators=(",", ":")))
     print("Elsevier calls:", els.stats())
 

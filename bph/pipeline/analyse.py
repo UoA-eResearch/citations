@@ -1,6 +1,7 @@
 """Step 3: classify, aggregate and lay out the University of Auckland's Pacific research -> data/landscape.json.
 
-Inputs: <WORK>/works_raw.jsonl, institutions.json, awards_raw.jsonl (fetch_works.py, fetch_awards.py).
+Inputs: <WORK>/works_raw.jsonl, institutions.json, awards_raw.jsonl, marsden_awards.jsonl
+(fetch_works.py, fetch_awards.py, fetch_marsden.py).
 Every candidate is re-checked with tagging.classify(); see that docstring for the tiers and lenses.
 Metrics follow SciVal's vocabulary where OpenAlex has an equivalent: scholarly output, growth,
 Field-Weighted Citation Impact (OpenAlex fwci) and share of outputs in the top 10% most cited
@@ -21,8 +22,9 @@ import networkx as nx
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).parent))
-from tagging import (FACULTIES, PLACES, abstract_text, classify, faculty_of, fold,  # noqa: E402
-                     uoa_affiliation_strings)
+import oa  # noqa: E402,F811  (OpenAlex client: country names and continents for the map's regional summary)
+from tagging import (FACULTIES, M_THEMES, OCEAN_PLACES, PLACES, RESEARCH_AREAS, abstract_text,  # noqa: E402
+                     classify, faculty_of, fold, research_area, uoa_affiliation_strings)
 
 ROOT = Path(__file__).resolve().parents[1]
 WORK = Path(os.environ.get("BPH_WORK", "/mnt/data/ubuntu/bph-work"))
@@ -32,7 +34,13 @@ PI_CC = set("AS CK FJ FM GU KI MH MP NC NR NU PF PG PN PW SB TK TO TV VU WF WS".
 TODAY = date.today().isoformat()
 COMPLETE = (2020, 2025)
 TIER_CODE = {"focus": "f", "population": "p", "mention": "m", None: ""}
-LENS_BIT = {"P": 1, "O": 2, "A": 4}
+LENS_BIT = {"P": 1, "O": 2, "A": 4, "M": 8}
+MS_BIT = {"eco": 1, "ocn": 2, "geo": 4, "ant": 8, "gov": 16}
+# Marsden panels -> the OpenAlex field whose checks apply to the project's abstract
+PANEL_FIELD = {"EEB": "Agricultural and Biological Sciences", "ESA": "Earth and Planetary Sciences", "PCB": "Chemistry",
+               "BMS": "Medicine", "CMP": "Biochemistry, Genetics and Molecular Biology", "EIS": "Engineering",
+               "MIS": "Mathematics", "EHB": "Social Sciences", "SOC": "Social Sciences", "HUM": "Arts and Humanities"}
+FUNDER_FIELD = {"Health Research Council of New Zealand": "Medicine"}
 
 
 def short(oid):
@@ -62,6 +70,7 @@ def main():
     raw = [json.loads(l) for l in open(WORK / "works_raw.jsonl")]
     insts_geo = json.loads((WORK / "institutions.json").read_text())
     awards_raw = [json.loads(l) for l in open(WORK / "awards_raw.jsonl")]
+    marsden_raw = [json.loads(l) for l in open(WORK / "marsden_awards.jsonl")] if (WORK / "marsden_awards.jsonl").exists() else []
 
     # ------------------------------------------------------------ classify works
     works, dropped, no_abs_dropped = [], 0, 0
@@ -77,12 +86,14 @@ def main():
         pt = w.get("primary_topic") or {}
         field = (pt.get("field") or {}).get("display_name")
         abstract = abstract_text(w.get("abstract_inverted_index"))
-        c = classify(w.get("display_name"), abstract, kw, field, len(aus), partner)
-        if not c["tier"] and "A" not in c["lenses"]:
+        c = classify(w.get("display_name"), abstract, kw, field, len(aus), partner,
+                     (pt.get("subfield") or {}).get("display_name"))
+        if not c["tier"] and "A" not in c["lenses"] and "M" not in c["lenses"]:
             dropped += 1
             no_abs_dropped += not abstract
             continue
         w["_c"], w["_abstract"], w["_partner"] = c, abstract, partner
+        w["_ra"] = research_area(c["mt"], field, (pt.get("subfield") or {}).get("display_name"))
         works.append(w)
     print(f"{len(works)} works kept, {dropped} candidates dropped ({no_abs_dropped} had no abstract)")
 
@@ -118,7 +129,7 @@ def main():
     award_idx = {}
     for a in awards_raw:
         text_desc = a.get("description") or ""
-        c = classify(a.get("display_name"), text_desc, "", None, 0, False)
+        c = classify(a.get("display_name"), text_desc, "", FUNDER_FIELD.get((a.get("funder") or {}).get("display_name")), 0, False)
         li = a.get("lead_investigator") or {}
         name = " ".join(x for x in [li.get("given_name"), li.get("family_name")] if x) or None
         end = a.get("end_date") or (f"{a['end_year']}-12-31" if a.get("end_year") else None)
@@ -130,7 +141,24 @@ def main():
             cur=a.get("currency"), usd=a.get("amount_usd"), y0=a.get("start_year"), end=end, status=status,
             lead=name, url=a.get("landing_page_url"), fid=a.get("funder_award_id"),
             tier=TIER_CODE[c["tier"]], lens=sum(LENS_BIT[l] for l in c["lenses"]), ev=c["evidence"],
-            places=sorted(c["places"]), outputs=a.get("funded_outputs_count") or 0, route=a.get("_route")))
+            ms=sum(MS_BIT[k] for k in c["mt"]), places=sorted(c["places"]), outputs=a.get("funded_outputs_count") or 0,
+            route=a.get("_route"), role="lead", uoa=[], src="OpenAlex"))
+    cur_year = int(TODAY[:4])
+    for m in marsden_raw:
+        text = " ".join(x for x in (m.get("abstract"), m.get("media_summary")) if x)
+        c = classify(" ".join(x for x in (m["title"], m.get("media_title")) if x), text, "", PANEL_FIELD.get(m.get("panel")), 0, False)
+        # Marsden grants run for three years from the year after the round, so rounds of the last three years
+        # are probably still running (an estimate: the spreadsheets give no end dates).
+        likely_active = m["year"] >= cur_year - 3
+        lead = re.sub(r"^(?:Professor|Associate Professor|Distinguished Professor|Dr|Mr|Ms|Mrs|Miss|Prof\.?)\s+", "", m.get("contact") or "")
+        award_idx["MF-" + m["pid"]] = len(awards)
+        awards.append(dict(
+            id="MF-" + m["pid"], t=m["title"], d=(text[:420] + "…") if len(text) > 420 else text,
+            f="Marsden Fund", scheme=f"Marsden Fund {m.get('category') or ''}".strip(), amt=m.get("amount"), cur="NZD", usd=None,
+            y0=m["year"], end=None, status="active" if likely_active else "ended", est=True, lead=lead or None, url=m.get("url"),
+            fid=m["pid"], tier=TIER_CODE[c["tier"]], lens=sum(LENS_BIT[l] for l in c["lenses"]), ev=c["evidence"],
+            ms=sum(MS_BIT[k] for k in c["mt"]), places=sorted(c["places"]), outputs=0, route="marsden-round",
+            role=m["role"], uoa=m.get("uoa_members") or [], org=m.get("org"), panel=m.get("panel"), src="Royal Society Te Apārangi"))
 
     # ------------------------------------------------------------ works -> records
     out_works = []
@@ -186,6 +214,7 @@ def main():
             places.append("NZP")
         if "A" in c["lenses"]:
             places.append("NZA")
+        places += sorted(c["op"])
         out_works.append(dict(
             id=short(w["id"]), t=w.get("display_name") or "(untitled)", y=w.get("publication_year"),
             ty=w.get("type"), c=w.get("cited_by_count") or 0, fwci=w.get("fwci"),
@@ -193,7 +222,7 @@ def main():
             doi=w.get("doi"), oa=(w.get("open_access") or {}).get("oa_url"),
             ab=(ab[:320].rsplit(" ", 1)[0] + "…") if len(ab) > 320 else ab,
             tier=TIER_CODE[c["tier"]], lens=sum(LENS_BIT[l] for l in c["lenses"]), ev=c["evidence"],
-            places=places, tp=topic_i(w.get("primary_topic")),
+            ms=sum(MS_BIT[k] for k in c["mt"]), ra=w["_ra"], places=places, tp=topic_i(w.get("primary_topic")),
             sdg=[short(s["id"]) for s in w.get("sustainable_development_goals") or []],
             a=uoa_auth, na=len(aus), ext=sorted(ext), pi=w["_partner"], fu=fids, aw=aw))
 
@@ -203,8 +232,9 @@ def main():
         # Pacific-related: the award text is Pacific-focused, or Aotearoa environment & hazards. Awards that only
         # name Pacific peoples within a wider project (tier p) are kept separately: a review of 18 found many were
         # general projects naming Māori and Pacific peoples as groups at risk.
-        a["pacp"] = a["tier"] == "p" and not (a["lens"] & 4)
-        a["pac"] = bool(a["tier"] == "f" or a["lens"] & 4)
+        # Ocean, Earth & climate awards (lens M) count too, read from title and description (November 2026).
+        a["pacp"] = a["tier"] == "p" and not (a["lens"] & 12)
+        a["pac"] = bool(a["tier"] == "f" or a["lens"] & 12)
         a["linked"] = linked.get(i, 0)
     award_stats = defaultdict(lambda: [0, 0])
     for a in awards:
@@ -212,7 +242,7 @@ def main():
                                     "Ministry of Business, Innovation and Employment") else "Other funders", a["y0"])
         award_stats[key][0] += 1
         award_stats[key][1] += a["pac"]
-    keep_aw = [i for i, a in enumerate(awards) if a["pac"] or a["pacp"] or a["linked"]]
+    keep_aw = [i for i, a in enumerate(awards) if a["pac"] or a["pacp"] or a["linked"] or a["src"] != "OpenAlex"]
     remap = {old: new for new, old in enumerate(keep_aw)}
     for w in out_works:
         w["aw"] = [remap[i] for i in w["aw"] if i in remap]
@@ -318,21 +348,38 @@ def main():
     sub_strength = strength(lambda t: t["sub"], lambda k: k)
     topic_strength = strength(lambda t: t["name"], lambda k: k)
 
+    # ------------------------------------------------------------ countries (map: summary by country and region)
+    countries = {}
+    for page in (1, 2):
+        r = oa.get("/countries", {"per_page": 200, "page": page})
+        for c in (r or {}).get("results", []):
+            cc = short(c["id"])
+            cont = (c.get("continent") or {}).get("display_name")
+            region = ("Pacific Islands" if cc in PI_CC else "Aotearoa NZ" if cc == "NZ" else "Australia" if cc == "AU"
+                      else cont or "Other")
+            countries[cc] = dict(name=c["display_name"], region=region)
+    for it in insts:
+        it["creg"] = (countries.get(it["cc"]) or {}).get("region")
+
     # ------------------------------------------------------------ places studied
     place_rows = []
     extra = {"NZP": ("Pasifika communities in Aotearoa", None, -36.85, 174.76),
              "NZA": ("Aotearoa environment & hazards", None, -41.0, 174.0)}
-    for code, (label, _, lat, lng) in list(PLACES.items()) + list(extra.items()):
+    for code, (label, _, lat, lng) in list(PLACES.items()) + list(extra.items()) + list(OCEAN_PLACES.items()):
         ws = [w for w in out_works if code in w["places"]]
         if ws:
             place_rows.append(dict(code=code, label=label, lat=lat, lng=lng, n=len(ws),
-                                   nf=sum(w["tier"] == "f" for w in ws)))
+                                   nf=sum(w["tier"] == "f" for w in ws), kind="ocean" if code in OCEAN_PLACES else "pacific"))
 
     coverage = dict(
         candidates=len({short(w['id']) for w in raw}), kept=len(out_works), dropped=dropped, dropped_no_abstract=no_abs_dropped,
         tiers=dict(Counter(w["tier"] or "-" for w in out_works)),
         lens=dict(P=sum(1 for w in out_works if w["lens"] & 1), O=sum(1 for w in out_works if w["lens"] & 2),
-                  A=sum(1 for w in out_works if w["lens"] & 4)),
+                  A=sum(1 for w in out_works if w["lens"] & 4), M=sum(1 for w in out_works if w["lens"] & 8)),
+        m_themes={k: sum(1 for w in out_works if w["ms"] & b) for k, b in MS_BIT.items()},
+        m_only=sum(1 for w in out_works if w["lens"] == 8 and not w["tier"]),
+        research_areas=dict(Counter(w["ra"] for w in out_works)),
+        marsden_rounds=sum(1 for a in awards if a["src"] != "OpenAlex"),
         no_abstract=sum(1 for w in works if not w["_abstract"]),
         authors=len(out_authors), authors_with_faculty=sum(1 for a in out_authors if a["faculty"]),
         fwci_known=sum(1 for w in out_works if w["fwci"] is not None),
@@ -348,7 +395,8 @@ def main():
         communities=communities, coauth=[[a, b, d["weight"]] for a, b, d in H.edges(data=True)],
         awards=awards, funders=sorted(funders, key=lambda f: -f["n"]),
         places=place_rows, sub_strength=sub_strength, topic_strength=topic_strength,
-        faculties=FACULTIES, coverage=coverage,
+        faculties=FACULTIES, coverage=coverage, research_areas=RESEARCH_AREAS, countries=countries,
+        m_themes={k: M_THEMES[k][0] for k in MS_BIT},
     )
     OUT.write_text(json.dumps(doc, ensure_ascii=False, separators=(",", ":")))
     print(f"wrote {OUT} ({OUT.stat().st_size / 1e6:.1f} MB)")

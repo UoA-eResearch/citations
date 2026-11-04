@@ -1,9 +1,10 @@
 """Step 1: fetch candidate University of Auckland works in or about the Pacific from OpenAlex.
 
-Candidates (UoA lineage, 2020 to date, OpenAlex core corpus) come from four queries:
+Candidates (UoA lineage, 2020 to date, OpenAlex core corpus) come from five queries:
   P  title/abstract names Pacific Islands or peoples        (lenses.LENS_P)
   O  title/abstract names the Pacific Ocean or its climate   (lenses.LENS_O)
   A  title/abstract names Aotearoa/NZ/Māori AND a theme       (lenses.A_PLACE x A_THEME)
+  M  title/abstract names an ocean, Earth or climate term     (lenses.LENS_M)
   X  co-authored with an institution in a Pacific Island country or territory
 Each candidate is re-checked locally in analyse.py; this step only gathers records.
 

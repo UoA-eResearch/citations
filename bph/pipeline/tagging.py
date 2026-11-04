@@ -151,6 +151,149 @@ def aotearoa_theme(title, text, field):
     return bool(_A_PLACE.search(text)) and (field in A_FIELDS or bool(_A_THEME.search(title)))
 
 
+# ---------------------------------------------------------------- M lens (ocean, Earth & climate systems)
+# Sub-theme -> (label, regex on folded text). A sub-theme counts when its terms are in the TITLE, or in the
+# abstract/keywords of a work whose OpenAlex primary field fits it (M_FIELDS). "earthquake" etc. in health
+# or psychology research (e.g. studies of earthquake survivors) never counts.
+M_THEMES = {
+    "eco": ("Marine & coastal ecosystems",
+            r"\bmarine\b|\bplankton(?:ic)?\b|\bphytoplankton\b|\bzooplankton\b|\bwhales?\b|\bdolphins?\b|\bcetaceans?\b|"
+            r"\bseabirds?\b|\bfisher(?:y|ies)\b|\baquaculture\b|\bkelp\b|\bseaweeds?\b|\bseagrass(?:es)?\b|\bmangroves?\b|"
+            r"\bcorals?\b|\breefs?\b|\bestuar(?:y|ies|ine)\b|\bintertidal\b|\bsubtidal\b|\bhauraki gulf\b|\bshellfish\b|"
+            r"\bsnapper\b|\bsharks?\b|\breef fish|\bfish (?:stocks?|populations?|communities)\b|\bkina\b|\bpaua\b"),
+    "ocn": ("Ocean & climate processes",
+            r"\boceans?\b|\boceanic\b|\boceanograph\w*|\bsea[- ]level\b|\bocean currents?\b|\bupwelling\b|"
+            r"\bpal(?:a)?eoceanograph\w*|\bpal(?:a)?eoclimat\w*|\bocean acidification\b|\bmarine heatwaves?\b|"
+            r"\bcoastal\b|\bshorelines?\b|\bsea surface temperatures?\b"),
+    "geo": ("Seafloor, tectonics & hazards",
+            r"\bseafloor\b|\bseabed\b|\bsea floor\b|\bsubmarine\b|\bcontinental (?:shelf|margin|slope)\b|\bcontourites?\b|"
+            r"\bpockmarks?\b|\bsubduction\b|\bhikurangi\b|\bchatham rise\b|\bcampbell plateau\b|\bchallenger plateau\b|"
+            r"\btsunamis?\b"),
+    "ant": ("Antarctica & the Southern Ocean",
+            r"\bantarctica\b|\bantarctic\b|\bsouthern ocean\b|\bross sea\b|\bsea ice\b|\bice shelf\b"),
+    "gov": ("Ocean law, governance & blue economy",
+            r"\blaw of the sea\b|\bunclos\b|\bmaritime (?:boundar\w*|security|zones?|law|domain)\b|\bdeep[- ]sea mining\b|"
+            r"\bseabed mining\b|\bblue economy\b|\bocean governance\b|\bmarine protected areas?\b|\bmarine spatial planning\b|"
+            r"\bexclusive economic zones?\b"),
+}
+_M_RX = {k: re.compile(v[1]) for k, v in M_THEMES.items()}
+_SCI = {"Earth and Planetary Sciences", "Environmental Science", "Agricultural and Biological Sciences"}
+M_FIELDS = {
+    "eco": _SCI | {"Immunology and Microbiology", "Biochemistry, Genetics and Molecular Biology"},
+    "ocn": _SCI | {"Physics and Astronomy"},
+    "geo": _SCI | {"Engineering", "Social Sciences", "Physics and Astronomy"},
+    "ant": None,   # any field
+    "gov": {"Social Sciences", "Economics, Econometrics and Finance", "Business, Management and Accounting",
+            "Arts and Humanities", "Environmental Science", "Decision Sciences"},
+}
+_M_NEVER = {"Medicine", "Psychology", "Nursing", "Health Professions", "Neuroscience", "Dentistry"}
+# Earthquakes join "Seafloor, tectonics & hazards" as Earth science, environmental science or disaster studies.
+# Earthquake engineering of buildings and infrastructure (a large UoA strength) is left out unless the work also
+# concerns tsunami, subduction or the seafloor, so that structural engineering does not swamp the lens.
+_QUAKE = re.compile(r"\bearthquakes?\b|\bseismic hazard|\bpaleoseismolog\w*|\bseismicity\b")
+_QUAKE_FIELDS = {"Earth and Planetary Sciences", "Environmental Science", "Social Sciences"}
+
+
+# Subfields that are marine by definition: one abstract mention is enough there; elsewhere an abstract-only
+# match needs two or more mentions (a single "ocean" or "coastal" in passing is not marine research).
+MARINE_SUBFIELDS = {"Oceanography", "Aquatic Science", "Ocean Engineering"}
+
+
+def marine_themes(title, body, field, subfield=None):
+    """Sub-themes of the M lens for a record (set of codes), from folded title and folded abstract+keywords."""
+    out = set()
+    for k, rx in _M_RX.items():
+        if field in _M_NEVER and k in ("geo", "ocn"):
+            continue          # e.g. mental health after earthquakes; coastal towns in health studies
+        if rx.search(title):
+            out.add(k)
+        elif field is None or M_FIELDS[k] is None or field in M_FIELDS[k]:
+            n = len(rx.findall(body))   # field None = unknown (e.g. most MBIE awards): the description decides
+            if n >= 2 or (n == 1 and subfield in MARINE_SUBFIELDS):
+                out.add(k)
+    if "geo" not in out and field in _QUAKE_FIELDS and _QUAKE.search(title + " " + body):
+        # disaster studies (Social Sciences) only in Aotearoa or the Pacific; Earth science anywhere
+        text = title + " " + body
+        if field != "Social Sciences" or _A_PLACE.search(text) or place_hits(text)[0]:
+            out.add("geo")
+    return out
+
+
+# ---------------------------------------------------------------- research areas (plain-language groups)
+# One area per work, for readers of the investment plan: the five ocean / Earth areas come from the M lens
+# sub-themes; everything else from the OpenAlex primary field and subfield.
+RESEARCH_AREAS = {
+    "eco": "Marine & coastal ecosystems", "ocn": "Ocean & climate processes", "geo": "Seafloor, tectonics & hazards",
+    "ant": "Antarctica & the Southern Ocean", "gov": "Ocean law, governance & blue economy",
+    "env": "Environment, climate & land", "hlt": "Health & wellbeing", "soc": "Society, culture & identity",
+    "edu": "Education", "hum": "History, archaeology & languages", "art": "Arts, architecture & design",
+    "dev": "Economy, business & development", "law": "Law & governance", "eng": "Engineering & technology",
+    "sci": "Life & physical sciences",
+}
+_FIELD_AREA = {
+    "Medicine": "hlt", "Nursing": "hlt", "Health Professions": "hlt", "Dentistry": "hlt", "Neuroscience": "hlt",
+    "Pharmacology, Toxicology and Pharmaceutics": "hlt", "Psychology": "soc",
+    "Environmental Science": "env", "Earth and Planetary Sciences": "env", "Agricultural and Biological Sciences": "env",
+    "Economics, Econometrics and Finance": "dev", "Business, Management and Accounting": "dev", "Decision Sciences": "dev",
+    "Engineering": "eng", "Computer Science": "eng", "Materials Science": "eng", "Chemical Engineering": "eng", "Energy": "eng",
+    "Biochemistry, Genetics and Molecular Biology": "sci", "Chemistry": "sci", "Physics and Astronomy": "sci",
+    "Mathematics": "sci", "Immunology and Microbiology": "sci", "Veterinary": "sci", "Arts and Humanities": "hum",
+    "Social Sciences": "soc",
+}
+_SUBFIELD_AREA = {
+    "Education": "edu", "Law": "law", "Health": "hlt", "Linguistics and Language": "hum", "Language and Linguistics": "hum",
+    "Archeology": "hum", "History": "hum", "Classics": "hum", "Philosophy": "hum", "Religious studies": "hum",
+    "Visual Arts and Performing Arts": "art", "Music": "art", "Literature and Literary Theory": "art", "Architecture": "art",
+    "Conservation": "art", "Geography, Planning and Development": "dev", "Urban Studies": "dev",
+    "Management, Monitoring, Policy and Law": "env", "Political Science and International Relations": "law",
+    "Public Administration": "law", "Developmental and Educational Psychology": "edu", "Clinical Psychology": "hlt",
+}
+
+
+def research_area(mt, field, subfield):
+    if mt:
+        if "ant" in mt:
+            return "ant"
+        if "gov" in mt and field in M_FIELDS["gov"]:
+            return "gov"
+        if "eco" in mt and field in M_FIELDS["eco"] | {"Environmental Science"}:
+            return "eco"
+        if "geo" in mt and field in {"Earth and Planetary Sciences", "Engineering", "Social Sciences"}:
+            return "geo"
+        if "ocn" in mt:
+            return "ocn"
+        for k in ("eco", "geo", "gov"):
+            if k in mt:
+                return k
+    return _SUBFIELD_AREA.get(subfield) or _FIELD_AREA.get(field) or "soc"
+
+
+# Aotearoa, ocean and polar places named as the subject of study (map and places list only; they never put a
+# work in lens P). code -> (label, regex on folded text, lat, lng)
+OCEAN_PLACES = {
+    "HGF": ("Hauraki Gulf / Tīkapa Moana", r"\bhauraki gulf\b|\btikapa moana\b", -36.55, 175.10),
+    "BOP": ("Bay of Plenty & Whakaari", r"\bbay of plenty\b|\bwhakaari\b|\bwhite island\b", -37.55, 176.95),
+    "HIK": ("Hikurangi margin", r"\bhikurangi\b", -40.2, 178.6),
+    "CHR": ("Chatham Rise", r"\bchatham rise\b", -43.6, 179.5),
+    "CHI": ("Chatham Islands / Rēkohu", r"\bchatham islands?\b|\brekohu\b", -44.0, -176.5),
+    "KER": ("Kermadec Islands & Trench", r"\bkermadecs?\b", -30.0, -178.2),
+    "CAM": ("NZ subantarctic & Campbell Plateau", r"\bcampbell plateau\b|\bcampbell island\b|\bauckland islands\b|\bsubantarctic islands\b", -51.0, 169.5),
+    "CPL": ("Challenger Plateau", r"\bchallenger plateau\b", -39.5, 169.5),
+    "FIO": ("Fiordland", r"\bfiordland\b", -45.4, 167.2),
+    "CKS": ("Cook Strait", r"\bcook strait\b", -41.3, 174.5),
+    "TAS": ("Tasman Sea", r"\btasman sea\b", -37.5, 161.0),
+    "ROS": ("Ross Sea & McMurdo", r"\bross sea\b|\bross ice shelf\b|\bmcmurdo\b", -76.0, 175.0),
+    "ANT": ("Antarctica", r"\bantarctica\b|\bantarctic\b", -82.0, 150.0),
+    "SOC": ("Southern Ocean", r"\bsouthern ocean\b", -58.0, 160.0),
+}
+_OCEAN_PLACE_RX = {k: re.compile(v[1]) for k, v in OCEAN_PLACES.items()}
+
+
+def ocean_places(text):
+    """Codes of OCEAN_PLACES named in folded text (Ross Sea also implies Antarctica only if named)."""
+    return {k for k, rx in _OCEAN_PLACE_RX.items() if rx.search(text)}
+
+
 # ---------------------------------------------------------------- UoA units and faculties
 
 FACULTIES = ["Medical and Health Sciences", "Science", "Engineering and Design", "Arts and Education", "Law",
@@ -253,10 +396,10 @@ def unit_of(raw):
 PARTNER_MAX_AUTHORS = 20  # a Pacific Island co-author on a small team = research in the Pacific
 
 
-def classify(title, abstract, keywords="", field=None, n_authors=0, partner=False):
+def classify(title, abstract, keywords="", field=None, n_authors=0, partner=False, subfield=None):
     """Decide whether a record is research in or about the Pacific, and how strongly.
 
-    Returns dict(lenses=set of "P","O","A", tier, places={code: n}, evidence=[...]):
+    Returns dict(lenses=set of "P","O","A","M", tier, places={code: n}, evidence=[...], mt=M sub-themes, op=ocean places):
       tier "focus"       Pacific named in the title; a specific place, people or Pacific concept anywhere;
                          a Pacific Island partner on a team of <= PARTNER_MAX_AUTHORS; or the Pacific Ocean
                          / Pacific climate named repeatedly
@@ -284,6 +427,9 @@ def classify(title, abstract, keywords="", field=None, n_authors=0, partner=Fals
         lenses.add("O")
     if aotearoa_theme(t, t + " " + body, field):
         lenses.add("A")
+    mt = marine_themes(t, body, field, subfield)
+    if mt:
+        lenses.add("M")
     evidence = []
     # A country/territory or Pacific concept is specific on one mention; a region needs two.
     specific = [k for k in places if k not in GENERIC and (k not in REGIONS or places[k] >= 2)]
@@ -305,5 +451,8 @@ def classify(title, abstract, keywords="", field=None, n_authors=0, partner=Fals
         evidence.append("Pacific Island co-author")
     if "A" in lenses:
         evidence.append("Aotearoa environment / hazards")
+    if mt:
+        evidence.append("ocean, Earth & climate: " + ", ".join(M_THEMES[k][0].lower() for k in sorted(mt)))
     nz = bool(_A_PLACE.search(t + " " + body))
-    return dict(lenses=lenses, tier=tier, places=places, evidence=evidence, nz=nz)
+    return dict(lenses=lenses, tier=tier, places=places, evidence=evidence, nz=nz, mt=mt,
+                op=ocean_places(t + " " + body))

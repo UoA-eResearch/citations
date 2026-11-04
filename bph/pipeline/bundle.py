@@ -30,6 +30,21 @@ def main():
                        retrieved=[days[0], days[-1]] if days else None)
     d["probes"] = pr
     d["world"] = wo
+    # Engagement data (internal; git-ignored): people engaged in developing the SRA, and the Workshop 2 maps.
+    eng_f = ROOT / "data" / "engaged.json"
+    d["engaged"] = json.loads(eng_f.read_text()) if eng_f.exists() else []
+    for k, e in enumerate(d["engaged"]):
+        for i in e["atlas"]:
+            d["authors"][i]["eng"] = k
+    ws_f = WORK / "engagement" / "workshop2_maps.json"
+    d["workshop"] = json.loads(ws_f.read_text()) if ws_f.exists() else None
+    if d["workshop"]:
+        import shutil
+        (ROOT / "data" / "ws").mkdir(exist_ok=True)
+        for m in d["workshop"]["maps"]:
+            src = WORK / "engagement" / "photos" / (m["photo"] + ".jpg")
+            if src.exists():
+                shutil.copy(src, ROOT / "data" / "ws" / src.name)
     out = ROOT / "data" / "bph.json"
     out.write_text(json.dumps(d, ensure_ascii=False, separators=(",", ":")))
     print(f"wrote {out} ({out.stat().st_size / 1e6:.1f} MB)")

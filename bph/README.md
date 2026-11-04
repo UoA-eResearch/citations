@@ -1,6 +1,7 @@
 # Blue Pacific Research Landscape
 
-A first pass at mapping the University of Auckland's research **in or about the Pacific**, built by the
+A first pass at mapping the University of Auckland's research **in or about the Pacific**, and its ocean,
+Earth and climate research, built by the
 Centre for eResearch for **Mā Kiwa te moana nui e whakaumu | Blue Pacific Horizons** (BPH), one of the
 University's Signature Research Areas. It responds to BPH's request (October 2026) for a pilot that
 combines publications with grants, projects and researcher networks to show UoA's Pacific research
@@ -11,14 +12,15 @@ Topic Clusters used for the SRA last year.
 
 | Tab | What it shows |
 |---|---|
-| **Strengths** | Output by year; topics; subfields with scholarly output, growth, FWCI, top-10% share and UoA's share of the world's Pacific-named output; SDGs; UoA's rank among universities. |
-| **Map** | Pacific places named as the subject of study, partner institutions and co-authorship ties (Pacific-centred). |
-| **Researchers** | Faculty and unit breakdowns, the UoA co-authorship network, and a sortable researcher table. |
-| **Grants & projects** | Public award records for UoA-led grants (HRC, Marsden, MBIE, overseas funders) and funders acknowledged in the works. |
+| **Strengths** | Output by year; plain-language research areas; topics; subfields with scholarly output, growth, FWCI, top-10% share and UoA's share of the world's Pacific-named output; SDGs; UoA's rank among universities, and why the leaders lead. |
+| **Map** | Partners by country (or institution) with a regional summary and the Pacific Island countries with no joint work; Pacific, Aotearoa, ocean and polar places named as the subject of study; co-authorship ties (Pacific-centred). |
+| **Researchers** | Faculty and unit breakdowns, the UoA co-authorship network, a sortable researcher table, and a check of the SRA's engagement list against the landscape (internal data). |
+| **Grants & projects** | Public award records: UoA-led grants (HRC, Marsden to 2017, MBIE, overseas funders) and Marsden projects from the 2018-2025 rounds with a UoA researcher on the team; funders acknowledged in the works. |
 | **SRA alignment & gaps** | Each work placed in its own SciVal Topic and Topic Cluster and tested against the SRA3 list (in the SRA dataset, screened out, never screened, not in SciVal); the SciVal Topics holding the Pacific research with UoA's SciVal metrics; where Pacific Island countries publish and UoA's output there; keyword probes that report the SciVal Topics new keywords land in. |
+| **Workshop maps** | Where Workshop 2 participants placed their research on five maps, and what they wrote (internal data). |
 | **About** | Definitions, sources and caveats. |
 
-One filter bar (lenses and strength) drives every tab.
+One filter bar (lenses, ocean themes and strength) drives every tab.
 
 ## Definitions
 
@@ -27,14 +29,25 @@ One filter bar (lenses and strength) drives every tab.
   fewer); *Pacific Ocean & region* (the Pacific Ocean, its sub-regions, or ENSO/IPO/PDO); *Aotearoa
   environment & hazards* (Aotearoa / NZ / Māori named, and environment-earth-biodiversity research or an
   ocean, coast, climate or hazard word in the title), following the SRA's framing of Aotearoa as part of the
-  Pacific. Search terms: `pipeline/lenses.py`; local checks: `pipeline/tagging.py`.
+  Pacific; *Ocean, Earth & climate* (added November 2026 after BPH's review): marine & coastal ecosystems;
+  ocean & climate processes (incl. paleoceanography, paleoclimate); seafloor, tectonics & hazards (Hikurangi,
+  Chatham Rise, contourites, pockmarks, earthquakes, tsunami); Antarctica & the Southern Ocean; ocean law,
+  governance & blue economy, whether or not the Pacific is named. A theme counts when its terms are in the
+  title, or mentioned twice in the abstract/keywords of research in a fitting field (once in oceanography,
+  aquatic science or ocean engineering); earthquake engineering of buildings is left out unless it also
+  concerns tsunami, subduction or the seafloor, and disaster studies count only in Aotearoa or the Pacific.
+  Search terms: `pipeline/lenses.py`; local checks: `pipeline/tagging.py`.
+- **Research areas.** One plain-language area per work (`tagging.research_area`): the five ocean/Earth themes,
+  then ten areas from the OpenAlex field and subfield of the work's primary topic.
 - **Strength.** *Pacific-focused*: named in the title, a specific Pacific place/people/concept, a Pacific
   Island co-author, or the Pacific Ocean/climate named repeatedly. *Within wider studies*: generic
   "Pacific"/"Pasifika" only in the abstract (typically NZ health data by ethnicity). *Single mentions*.
-  Default view: Pacific-focused + Aotearoa lens.
+  Default view: Pacific-focused + the Aotearoa and ocean, Earth & climate lenses.
 - **Spot checks** (2026-10-30): 38/40 random Pacific-focused works and 24/25 random Aotearoa-lens works
   were judged correct; of 25 works that a "repeated mentions" rule would have called Pacific-focused,
-  about three in four were NZ studies reporting Pacific results, so that rule was dropped.
+  about three in four were NZ studies reporting Pacific results, so that rule was dropped. (2026-11-04):
+  37/40 random works added by the ocean, Earth & climate lens alone were plainly marine, ocean,
+  Earth-hazard or polar research (after the abstract rule was tightened; an earlier sample found ~35/40).
 
 ## Data and method
 
@@ -57,6 +70,20 @@ One filter bar (lenses and strength) drives every tab.
   Cluster was on the list but marked "n"; *never screened* when neither was on the list; *not in SciVal* when
   it has no Scopus record or no Topic yet. (Before SciVal access, a text-similarity approximation stood in for
   this; it is retired, see Caveats.)
+- **Marsden Fund 2018-2025** (`pipeline/fetch_marsden.py`): OpenAlex's Marsden records stop at the 2017
+  round, so each later round is read from Royal Society Te Apārangi's public announcement workbook (project,
+  contact investigator and institution, panel, category, funding, abstract, full team). Projects are kept when
+  a UoA researcher is on the team, as lead or as a team member on a project led elsewhere; the year is the
+  funding round, and grants from the last three rounds are marked "probably running" (three-year grants).
+  All awards are classified from their title and description or abstract.
+- **Engagement check** (`pipeline/engaged.py`, internal input): the SRA's stakeholder engagement workbook is
+  merged across its sheets and each person matched to UoA authors by name (first name, initial or prefix, and
+  surname incl. hyphenated parts and the surname in their email address). People not found are looked up
+  in OpenAlex (UoA affiliation) to show whether they are at UoA but outside the current scope. Emails are
+  used only for merging and never written out.
+- **Workshop 2 maps** (internal input): dots and post-it notes transcribed from photos of the five maps
+  (`$BPH_WORK/engagement/workshop2_maps.json`), dots counted by region because the Spilhaus projections
+  cannot be read precisely from a photo; five photos (no people) are shown on the page.
 - **Not included:** non-public data from the University's grant and ethics application systems (managed by
   the Research and Innovation Office; needs their permission).
 
@@ -91,12 +118,12 @@ affiliation ID. Development only, not in the pipeline: a few test calls to the
 
 ## Keyword probes (the gap-check automation)
 
-Put one probe per line in `probes.txt` (`Label: term | term`), then run `pipeline/probe_keywords.py` and
-`pipeline/bundle.py`. Each probe searches Scopus (SciVal's five-year window) for the terms with and without
-the Pacific search terms, for UoA and the world, then asks SciVal which Topics the 200 most relevant world
-papers and UoA's own papers (up to 200) belong to, and what share of each sits inside the SRA dataset. That
-is the "keywords to SciVal Topics" step, automated. The probes shipped are **examples only** (themes from
-the BPH web page) until BPH supplies its list of missing areas.
+Put one probe per line in `probes.local.txt` (the SRA's own list, git-ignored) or `probes.txt` (public
+examples) as `Label: term | term`, then run `pipeline/probe_keywords.py` and `pipeline/bundle.py`. Each probe searches Scopus (SciVal's five-year window) for the terms with and without
+the Pacific search terms, for UoA and the world, then asks SciVal which Topics UoA's papers on the theme (the
+200 most relevant) and the 200 most relevant Pacific-named world papers belong to, and what share of each
+sits inside the SRA dataset. That is the "keywords to SciVal Topics" step, automated. `probes.txt` holds the
+public example probes (themes from the BPH web page); the page uses `probes.local.txt` when present.
 
 ## Rebuild
 

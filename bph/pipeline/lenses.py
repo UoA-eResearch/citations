@@ -48,6 +48,34 @@ A_THEME = [
 ]
 
 
+# M  Ocean, Earth & climate systems: Blue Pacific research framed around marine systems, earth science,
+#    climate processes, Antarctica or ocean governance, whether or not it names the Pacific or Aotearoa
+#    (added November 2026 after BPH's review: Hikurangi, Chatham Rise, contourites, plankton, marine
+#    mammals, Hauraki Gulf, Antarctica, ocean law ...). Candidate search only; tagging.marine_themes()
+#    decides membership and sub-theme with field checks.
+LENS_M = [
+    # marine & coastal ecosystems
+    "marine", "plankton", "phytoplankton", "zooplankton", '"marine mammal"', '"marine mammals"', "whale", "whales",
+    "dolphin", "dolphins", "cetacean", "cetaceans", "seabird", "seabirds", "fisheries", "fishery", "aquaculture", "kelp",
+    "seaweed", "seagrass", "mangrove", "mangroves", "coral", "reef", "reefs", "estuary", "estuaries", "estuarine",
+    "intertidal", "subtidal", '"Hauraki Gulf"', "shellfish", "snapper", "shark", "sharks",
+    # ocean & climate processes
+    "ocean", "oceans", "oceanography", "oceanographic", '"sea level"', '"sea-level"', '"ocean current"',
+    '"ocean currents"', "upwelling", "paleoceanography", "palaeoceanography", "paleoclimate", "palaeoclimate",
+    '"ocean acidification"', '"marine heatwave"', '"marine heatwaves"', "coastal", "shoreline", '"sea surface temperature"',
+    # seafloor, tectonics & hazards
+    "seafloor", "seabed", '"sea floor"', "submarine", '"continental shelf"', '"continental margin"',
+    '"continental slope"', "contourite", "contourites", "pockmark", "pockmarks", "subduction", "Hikurangi",
+    '"Chatham Rise"', '"Campbell Plateau"', '"Challenger Plateau"', "earthquake", "earthquakes", "tsunami", "tsunamis",
+    # Antarctica & the Southern Ocean
+    "Antarctica", "Antarctic", '"Southern Ocean"', '"Ross Sea"', '"sea ice"', '"ice shelf"',
+    # ocean law, governance & blue economy
+    '"law of the sea"', "UNCLOS", '"maritime boundaries"', '"maritime security"', '"maritime zones"', '"deep-sea mining"',
+    '"deep sea mining"', '"seabed mining"', '"blue economy"', '"ocean governance"', '"marine protected area"',
+    '"marine protected areas"', '"marine spatial planning"', '"exclusive economic zone"',
+]
+
+
 def ors(terms):
     return " OR ".join(terms)
 
@@ -58,4 +86,5 @@ def lens_filters():
         "P": ["title_and_abstract.search:" + ors(LENS_P)],
         "O": ["title_and_abstract.search:" + ors(LENS_O)],
         "A": ["title_and_abstract.search:" + ors(A_PLACE), "title_and_abstract.search:" + ors(A_THEME)],
+        "M": ["title_and_abstract.search:" + ors(LENS_M)],
     }

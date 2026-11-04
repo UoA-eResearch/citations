@@ -47,10 +47,29 @@ def main():
             types[i["id"].rsplit("/", 1)[-1]] = (i["type"], i["display_name"], i.get("country_code"))
     unis = [(types[g["key"].rsplit("/", 1)[-1]][1], types[g["key"].rsplit("/", 1)[-1]][2], g["count"])
             for g in r["group_by"] if types.get(g["key"].rsplit("/", 1)[-1], ("",))[0] == "education"]
+    uni_ids = [g["key"].rsplit("/", 1)[-1] for g in r["group_by"] if types.get(g["key"].rsplit("/", 1)[-1], ("",))[0] == "education"]
+    # Why the top universities rank where they do: the same ranking without the Hawaiʻi terms (research on
+    # Hawaiʻi itself counts for the University of Hawaiʻi), and each one's main subfields.
+    hawaii = {"Hawaii", "Hawaiian", "Hawaiʻi"}
+    no_hi = "publication_year:2020-2025,title_and_abstract.search:" + ors([t for t in LENS_P if t not in hawaii])
+    r2 = oa.get("/works", {"filter": no_hi, "group_by": "authorships.institutions.lineage", "per_page": 200})
+    missing = [g["key"].rsplit("/", 1)[-1] for g in r2["group_by"] if g["key"].rsplit("/", 1)[-1] not in types]
+    for k in range(0, len(missing), 100):
+        res = oa.get("/institutions", {"filter": "ids.openalex:" + "|".join(missing[k:k + 100]), "per_page": 100,
+                                       "select": "id,display_name,type,country_code"})
+        for i in res["results"]:
+            types[i["id"].rsplit("/", 1)[-1]] = (i["type"], i["display_name"], i.get("country_code"))
+    unis_nohi = [(types[g["key"].rsplit("/", 1)[-1]][1], types[g["key"].rsplit("/", 1)[-1]][2], g["count"])
+                 for g in r2["group_by"] if types.get(g["key"].rsplit("/", 1)[-1], ("",))[0] == "education"]
+    profiles = []
+    for name, iid in zip([u[0] for u in unis[:6]], uni_ids[:6]):
+        subs, _ = groups(f"authorships.institutions.lineage:{iid},{p_only.split(',', 1)[1]},publication_year:2020-2025", "primary_topic.subfield.id")
+        nohi = next((u[2] for u in unis_nohi if u[0] == name), None)
+        profiles.append(dict(name=name, subfields=[k for k, _ in sorted(subs.items(), key=lambda kv: -kv[1])[:3]], no_hawaii=nohi))
     doc = dict(world_total=w_total, uoa_total=u_total, share=round(100 * u_total / w_total, 2),
                by_subfield=by_sub, by_year=sorted([int(y), w_year.get(y, 0), u_year.get(y, 0)] for y in w_year),
                top_insts=sorted(insts.items(), key=lambda kv: -kv[1])[:30],
-               p_world=p_world, p_universities=unis[:25])
+               p_world=p_world, p_universities=unis[:25], p_universities_no_hawaii=unis_nohi[:25], p_profiles=profiles)
     print("Universities, Pacific Islands & peoples:", [(i + 1, n, c, cnt) for i, (n, c, cnt) in enumerate(unis[:12])])
     (ROOT / "data" / "world.json").write_text(json.dumps(doc, ensure_ascii=False, separators=(",", ":")))
     print(f"world {w_total}, UoA {u_total} ({doc['share']}%)")
