@@ -69,8 +69,17 @@ post hoc and is labelled so in the report.
    - The panel-25 note is corrected.
    - Preregistered secondary 5 (states by Teff and P_orb, including 10–12 d) and the RUWE distribution are now
      reported: median RUWE is 1.09 for synchronized stars against 1.17 for sub-synchronous ones.
-   - The G3 single-star comparison was not done: the sample has no single stars.
+   - The G3 single-star comparison (a positive control outside the sample) was not done.
    - The detection rule is stated plainly as non-selective: it fires in 84.7% of TESS-SPOC sectors.
 10. **H2 with a noise-aware circular criterion** (finding 11): e consistent with zero (e < 2σ_e) or SB1C. P_circ,50
     is 4.1 d (4,000–5,500 K), 5.3 d (5,500–6,200 K) and 5.9 d (6,200–7,000 K). P_sync,50 is still undefined, because
     the synchronized share stays below one half, a symptom of the dilution above. H2 stays Inconclusive.
+
+**Confirmation-pass edits** (2026-11-05):
+- **Majority cluster.** It now uses classify.py's own max/min ≤ 1.10 test, giving 6,110 detections and shares of
+  0.25 cool and 0.15 hot.
+- **Hot credible signals.** 38 of the 104 exceed 20 ppt; without them the hot share is 0.42 (n 66).
+- **The post hoc circularization cutoff** runs opposite to Bashi et al. (2023), and the report says so.
+- **Weighting.** The completeness-weighting caveat is added, and the 338 grid-miss drops are recorded in
+  coverage.json.
+- **Gaia comparison.** The disagreement with Gaia's rotation periods is called a joint disagreement.

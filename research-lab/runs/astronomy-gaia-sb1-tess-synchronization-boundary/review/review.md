@@ -201,3 +201,54 @@ a "white-noise threshold admits many periods".
 - G5: passes mechanically; re-label rows 1, 11, 12, 25, 26 (findings 2 and 10).
 - G6: passes (9 claims, titles confirmed); A1 and A2 verified against abstracts; add the condition to A2.
 - G7: declared not applicable but applies to the visual audit (finding 9).
+
+## Confirmation pass (2026-11-05, after D2)
+
+Checked: deviations.md D2, the rewritten report.md, code/posthoc2.py, the analyse.py refit, posthoc2.json,
+primary.json, g4_check.json and the regenerated overclaim table (30 rows, passes). New check:
+`reviewer_checks/checks4_confirmation.py` -> `checks4_confirmation.json`/`.log`.
+
+### Verdict: publish with edits
+
+All twelve findings were addressed and the rewrite is honest: the chance null (0.093 / 0.048 against 0.224 / 0.123)
+reproduces mine; the credible-signal shares (0.42, n 614; 0.37, n 104) match mine within the difference in subset
+definition (the lead keeps the detections that have no completeness cell, which is the right choice for that
+subset); the refitted logistic now reports its width at the bound in 82% of bootstraps and a midpoint interval of
+5,160-6,380 K (wider than my 6,226-6,413 because the lead's start grid reaches 5.4 kK and finds the second mode,
+where the logistic fits the rise through the cool bin instead of the drop); secondary 2 is run in full (0.29 / 0.25);
+the no-doubling variant (0.25 / 0.14; 102 moved) matches; the drops are counted correctly in primary.json; D1's
+audit trail is described as it is; G7 is declared not met; the catalogue swap is in D2; the panel-25 note is right
+(undoubled period 0.82 d = P_orb/2, doubled to 1.64 d, pulsator test first); secondary 5, RUWE and the FAP rate are
+reported; the 62% and 6.5% figures are correct; Lurie's sample is described as vetted; the title no longer claims a
+step. H1 stays Refuted and H2 Inconclusive under every variant, so nothing below changes a verdict or a headline.
+
+### Remaining issues (edits)
+
+1. **The majority-cluster rescue (D2 item 3) is self-inconsistent and understates itself.** posthoc2.py lines 74-83
+   keep sectors within 10% of one member, but classify.py line 62 still calls a star inconsistent when max/min
+   exceeds 1.10, so a kept cluster spanning 1.10-1.22 fails again: 1,983 of the 4,152 stars left inconsistent are
+   exactly that case. Defining the cluster as the largest subset with max/min <= 1.10 (a majority of detecting
+   sectors) rescues 1,878 cool and 910 hot stars with P_orb < 10 d, 35% and 27% within 10% of P_ps before the
+   other rules, against 0.24 / 0.15 reported after them. Fix: build the cluster with the same criterion as the span
+   test, rerun item 3, and update the table row and D2 (the number will rise; the conclusion will not change).
+2. **The post hoc circularization cutoff runs opposite to the prior work it cites.** P_circ,50 of 4.1 / 5.3 / 5.9 d
+   rises with Teff (posthoc2.json); Bashi et al. 2023 (ledger A1), from the same orbits, find it falling from
+   6.5 d at 5,700 K to 2.5 d at 6,800 K (abstract checked). The e < 2 sigma_e indicator is driven by the
+   eccentricity error, which depends on brightness and semi-amplitude, so the trend is probably the indicator's.
+   Fix: say so beside the 4.1-5.9 d sentence (report.md line 25) and re-label G5 row 20 Partially supported.
+3. **"Hot or cool alike" (report.md line 38) and "no clear step" need one caveat.** Of the 104 hot credible signals,
+   38 have semi-amplitudes above 20 ppt (26% synchronized) and the median is 10 ppt against 5 ppt for cool stars;
+   a coherent signal at P_orb in a 6,500-7,500 K star can be an ellipsoidal or reflection signal with unequal
+   maxima rather than its own spots, so the hot credible share is an upper bound on hot synchronization, and the
+   hot interval (0.27-0.46) also allows a drop of a third. Fix: add that sentence to the credible-signal bullet and
+   re-label G5 rows 12 and 27 Partially supported.
+4. **Completeness weights (finding 5) still lack their caveat.** The table shows weighted 0.205 and unweighted 0.23
+   without saying that 1/C up-weights the low-amplitude detections the audit calls noise and assumes every
+   detection is real; coverage.json was not updated with the 338 grid-miss drops (recorded only in primary.json).
+   Fix: one sentence under the table, and a drop entry in coverage.json's classification stage.
+5. **The Gaia DR3 period disagreement (report.md line 102) is still read as the TESS error rate.** Gaia's
+   rotation-modulation periods are sparse-sampling estimates with their own aliasing, so 41 of 135 is a joint
+   disagreement. Fix: "agree with Gaia's own, also noisy, period".
+6. **The G3 single-star comparison** is marked not done because the sample has no single stars, but the plan item
+   meant a positive control on single-star TESS targets outside the sample. Fix: say it was not done, without that
+   reason.

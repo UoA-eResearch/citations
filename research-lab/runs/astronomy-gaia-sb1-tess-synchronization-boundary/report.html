@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Retraction Citer Contagion</title>
+<meta name="description" content="Do innocent citers of a later-retracted paper lose citations after the retraction?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Metascience</div>
+  <h1>Tidal synchronization in Gaia&#x27;s close binaries shows up clearly in TESS light curves, but too diluted by measurement to test where it stops; the apparent step at the Kraft break appears to follow spot detectability</h1>
+  <p class="subtitle">Gaia DR3 SB1 orbits (181,529) were cut to 49,960 main-sequence binaries. Rotation periods for the 23,577 with orbits shorter than 12 days and a TIC match came from 70,531 TESS-SPOC full-frame-image light curves. A rotation counts as synchronized if it lies within 10% of the orbital (or pseudo-synchronous) period. The plan was committed before any data were downloaded. This version follows an independent review that returned &quot;fix first&quot; (D2).</p>
+  <div class="meta">
+    <span>Report · 2026-11-05 · pre-review draft</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/astronomy-gaia-sb1-tess-synchronization-boundary/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/astronomy-gaia-sb1-tess-synchronization-boundary/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/astronomy-gaia-sb1-tess-synchronization-boundary/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: H1 Refuted; H2 Inconclusive.</strong></p>
+<ul>
+<li><strong>H1 (more than 70% synchronized below 6,200 K, under 30% above 6,500 K, a transition under 400 K wide): Refuted.</strong><ul>
+<li>Among cool binaries (4,000–6,200 K, P_orb &lt; 10 d) with a detected period, <strong>20.5%</strong> are synchronized (95%
+interval 18.7–22.5%, completeness-weighted); among hot binaries (6,500–7,500 K), <strong>9.3%</strong> (6.9–12.1%).</li>
+<li>These are about 6.5% of all cool binaries with light curves, since only 29% have a usable period.</li>
+</ul>
+</li>
+<li><strong>Synchronization is real, at well above chance.</strong> Pairing each detected period with a random orbital period gives
+  0.09 (cool) and 0.05 (hot), against observed shares of 0.22 and 0.12 (unweighted).</li>
+<li><strong>There is no clear step at the Kraft break once the signal is credible.</strong><ul>
+<li>The full sample's step from 0.21 to 0.09 appears to track how detectable spots are rather than tides.</li>
+<li>Restricted to credible signals (amplitude above 2 ppt, seen in at least two sectors), the shares are <strong>0.42</strong>
+(0.38–0.46, n 614) for cool and <strong>0.37</strong> (0.27–0.46, n 104) for hot binaries, with overlapping intervals.</li>
+<li>These credible-signal results are post hoc (D2). 38 of the 104 hot signals exceed 20 ppt, the scale of ellipsoidal
+variation in F stars; without them the hot share is 0.42 (n 66). The hot interval still allows a drop of up to a
+third.</li>
+</ul>
+</li>
+<li><strong>H2 (synchronization extends to longer orbital periods than circularization): Inconclusive.</strong><ul>
+<li>The synchronized share never reaches one half, so P_sync,50 is undefined. This is most likely a symptom of the
+dilution above rather than a property of the binaries.</li>
+<li>The plan's circular criterion, e &lt; 0.05, also fails, because Gaia's eccentricities are biased upward by noise.</li>
+<li>With a noise-aware criterion (e consistent with zero; post hoc), the circularization cutoff is 4.1–5.9 days
+across the three Teff bins, rising with Teff. That is the opposite of Bashi et al. (2023), who found 6.5 falling to
+2.5 d on the same orbits, and the indicator depends on Gaia's error estimates, so this cutoff is not reliable.</li>
+</ul>
+</li>
+</ul>
+<h2>In plain terms</h2>
+<p>In close pairs of stars, tides are expected to lock each star's spin to its orbit, the way the Moon always shows
+Earth the same face. Theory says this should happen readily for cooler, Sun-like stars, and much less for hotter
+stars above about 6,200 K. We tested this on about 17,000 binaries whose orbits Gaia measured, reading each star's
+spin from starspot dimming in TESS light curves.</p>
+<p>Locked spins are clearly there, at two to three times the rate chance would give. But our automatic period finder also
+picked up many signals that are not the star's spin: noise and, probably, light from neighbouring stars. These
+dilute the locked fraction to about a fifth. When we keep only clear, repeated signals, about two in five binaries
+look locked, with no clear difference between hot and cool. The drop we first reported above 6,200 K appears to come from hot stars' spots being
+harder to detect, not from weaker tides.</p>
+<p>So the test we planned could not be done cleanly with these data. It needs either vetted light curves, as earlier
+eclipsing-binary studies used, or spin measured from spectral line broadening.</p>
+<h2>What was asked</h2>
+<ul>
+<li><strong>Prior work.</strong> Gaia DR3's SB1 orbits enabled a population study of circularization (Bashi et al. 2023).
+  Synchronization had been measured only in eclipsing samples: in Lurie et al. (2017), 79% of visually vetted Kepler
+  eclipsing binaries with P &lt; 10 d; Hobson-Ritz et al. (2025); Hadad et al. (2025).</li>
+<li><strong>The lead</strong> (<code>astronomy-gaia-sb1-tess-synchronization-boundary</code>) asked whether the non-eclipsing Gaia sample,
+  with TESS periods, shows the boundary tracking the Kraft break.</li>
+</ul>
+<h2>How it was done</h2>
+<ul>
+<li><strong>Sample.</strong> SB1 and SB1C solutions with parallax_over_error &gt; 10, within −1.0 to +0.75 mag of the Pecaut &amp;
+  Mamajek dwarf sequence, with Teff from dereddened BP−RP. TIC IDs came through Gaia DR2 identifiers, unambiguous
+  matches only.</li>
+<li><strong>Light curves.</strong> TESS-SPOC (PDCSAP) for every available sector. QLP light curves were excluded from the primary
+  analysis, because the detection rule fired in 99.5% of their sectors (D1). QLP-only stars are fainter, hotter and
+  on shorter orbits.</li>
+<li><strong>Periods.</strong> Lomb–Scargle over 0.2–13 d per sector, with FAP &lt; 1e-5 counting as a detection. This rule is not
+  selective: it fires in 84.7% of TESS-SPOC sectors.<ul>
+<li>A star's period is the median over detecting sectors.</li>
+<li>It is <em>inconsistent</em> if sectors disagree by more than 10%.</li>
+<li>An autocorrelation rule doubles double-dip periods.</li>
+</ul>
+</li>
+<li><strong>Ambiguous signals</strong>, excluded from the primary analysis: ellipsoidal or double-spot (P_orb / 2), possible beaming,
+  and multi-periodic pulsators.</li>
+<li><strong>Synchronized</strong> means within 10% of P_orb, or of Hut's (1981) pseudo-synchronous period when e ≥ 0.05. Shares are
+  weighted by 1/completeness from 35,840 injected spot signals.</li>
+</ul>
+<h2>Results</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>synchronized share (cool / hot, P_orb &lt; 10 d)</th>
+<th>result</th>
+<th>status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>primary (weighted)</strong></td>
+<td><strong>0.205 / 0.093</strong></td>
+<td>preregistered</td>
+</tr>
+<tr>
+<td>chance (P_orb permuted)</td>
+<td>0.09 / 0.05</td>
+<td>post hoc</td>
+</tr>
+<tr>
+<td>unweighted</td>
+<td>0.23 / 0.11</td>
+<td>preregistered secondary</td>
+</tr>
+<tr>
+<td>pulsators and beaming included</td>
+<td>0.29 / 0.25</td>
+<td>preregistered secondary</td>
+</tr>
+<tr>
+<td>ellipsoidal-or-double-spot counted as synchronized</td>
+<td>0.26 / 0.66</td>
+<td>preregistered secondary</td>
+</tr>
+<tr>
+<td>bounds over all stars with light curves</td>
+<td>0.06–0.18 / 0.02–0.09</td>
+<td>preregistered secondary</td>
+</tr>
+<tr>
+<td>within 300 pc</td>
+<td>0.22 / 0.12</td>
+<td>preregistered secondary</td>
+</tr>
+<tr>
+<td><strong>credible signals only</strong> (&gt; 2 ppt, ≥ 2 sectors)</td>
+<td><strong>0.42 / 0.37</strong></td>
+<td>post hoc</td>
+</tr>
+<tr>
+<td>majority-cluster rescue of "inconsistent" stars</td>
+<td>0.25 / 0.15</td>
+<td>post hoc</td>
+</tr>
+<tr>
+<td>no ACF doubling</td>
+<td>0.25 / 0.14</td>
+<td>post hoc</td>
+</tr>
+<tr>
+<td>against P_orb instead of the pseudo-synchronous period</td>
+<td>0.26 / 0.09</td>
+<td>post hoc</td>
+</tr>
+<tr>
+<td>with detrended QLP</td>
+<td>0.23 / 0.11</td>
+<td>D1 sensitivity, uninformative</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>The share tracks data quality.</strong> It is 0.10 with one detecting sector, 0.27 with two, 0.35 with three and 0.40
+  with four or more; 0.26 for bright stars and 0.12 for faint ones. Synchronized stars also have cleaner Gaia
+  astrometry (median RUWE 1.09 against 1.17 for sub-synchronous ones), consistent with light from other stars
+  contaminating the rest.</li>
+<li><strong>The Teff logistic's step is not located.</strong> Refitted after review, its width sits at the 10 K lower bound in 82%
+  of bootstrap fits, and its midpoint interval runs from 5,160 to 6,380 K.</li>
+<li><strong>Hot ellipsoidal signals.</strong> 62% of hot binaries with a usable signal show one at half the orbital period. Tidal
+  distortion produces that whether or not the star is synchronized.</li>
+</ul>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>Shown: synchronized rotation is common enough to see above chance in non-eclipsing Gaia binaries.</strong> It is
+  strongest at orbital periods of 2–6 d among cool stars.</li>
+<li><strong>Not shown: the level, or where it stops.</strong> The automatic TESS periods are too contaminated:<ul>
+<li>in a visual audit, 16 of 30 periods had no coherent signal;</li>
+<li>only 41 of the 135 stars that also have a Gaia DR3 rotation period agree with it, a joint disagreement, since Gaia's
+sparse-sampled periods are noisy too.</li>
+</ul>
+</li>
+</ul>
+<p>Both the step at the Kraft break and the H2 comparison are lost in that dilution.
+- <strong>The rules shape the level</strong> (D2):
+    - Hut's pseudo-synchronous target, applied to noise-inflated Gaia eccentricities, misclassifies stars that rotate
+    at P_orb;
+    - the 10% window misses the slightly sub-synchronous population Lurie et al. found;
+    - the pulsator rule catches spotted synchronized stars (cool "pulsators" are 47.5% synchronized).
+- <strong>Limits.</strong>
+    - <strong>Sample.</strong> RVS-bright, biased towards large semi-amplitudes; some companions are luminous.
+    - <strong>Periods</strong> are limited to 13 d.
+    - <strong>QLP-only stars</strong> are absent from the primary (D1).
+    - <strong>G7 is not met</strong> for the visual audit: one rater, who could see the class labels.
+    - <strong>Completeness weighting</strong> (1/C) up-weights low-amplitude detections, which the audit suggests are mostly noise.
+    The unweighted shares are similar (0.23 / 0.11).</p>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration:</strong> <code>plan.md</code>, committed before any data were downloaded.</li>
+<li><strong>Deviations:</strong><ul>
+<li>D1: data access, the ellipsoidal test before doubling, and QLP excluded (written before the first
+classification but committed later);</li>
+<li>D2: fixes after review.</li>
+</ul>
+</li>
+<li><strong>Post hoc analyses:</strong> <code>code/posthoc.py</code> and <code>posthoc2.py</code>, labelled in the table.</li>
+<li><strong>Gates:</strong><ul>
+<li>G1: in the plan.</li>
+<li>G2: <code>results/tables/coverage.json</code>.</li>
+<li>G3: <code>results/plausibility.md</code>.</li>
+<li>G4: <code>results/tables/g4_check.json</code>, covering Gaia DR3 rotation periods (135 overlap: 41 agree, 15 at a harmonic,
+79 at none) and the visual audit (<code>results/figures/g4_folded.png</code>).</li>
+<li>G5: <code>review/overclaim_check.md</code>.</li>
+<li>G6: <code>results/attribution_ledger.csv</code>.</li>
+<li>G7: not met for the visual audit (D2).</li>
+</ul>
+</li>
+<li><strong>Independent review:</strong> fix first (12 findings); fixes in D2; confirmation pending.</li>
+</ul>
+<h2>Reproducing it</h2>
+<p><code>code/gaia.py</code>, <code>sample.py</code>, <code>tic_match.py</code>, <code>lc_index.py</code>, <code>qlp_index.py</code>, <code>download.py</code>, <code>periods.py</code>,
+<code>classify.py</code>, <code>inject.py</code>, <code>analyse.py</code>, <code>posthoc.py</code>, <code>posthoc2.py</code>, <code>g3_traces.py</code>, <code>g4_check.py</code>, <code>g4_visual.py</code>
+and <code>coverage_lc.py</code>.</p>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/astronomy-gaia-sb1-tess-synchronization-boundary/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

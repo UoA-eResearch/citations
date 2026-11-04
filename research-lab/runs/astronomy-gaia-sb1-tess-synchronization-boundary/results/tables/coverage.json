@@ -50,5 +50,17 @@
    "no_detection": 1792,
    "possible_beaming": 357
   }
+ },
+ "completeness_weighting": {
+  "attempted": 3661,
+  "ok": 3322,
+  "fallback": 0,
+  "dropped": 339,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "outside the injection grid (amplitude > 2% or P < 0.3 d)": 338,
+   "completeness below 0.1": 1
+  }
  }
 }

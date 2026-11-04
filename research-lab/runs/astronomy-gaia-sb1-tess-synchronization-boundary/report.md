@@ -17,13 +17,16 @@ before any data were downloaded. This version follows an independent review that
   - The full sample's step from 0.21 to 0.09 appears to track how detectable spots are rather than tides.
   - Restricted to credible signals (amplitude above 2 ppt, seen in at least two sectors), the shares are **0.42**
     (0.38–0.46, n 614) for cool and **0.37** (0.27–0.46, n 104) for hot binaries, with overlapping intervals.
-  - These credible-signal results are post hoc (D2).
+  - These credible-signal results are post hoc (D2). 38 of the 104 hot signals exceed 20 ppt, the scale of ellipsoidal
+    variation in F stars; without them the hot share is 0.42 (n 66). The hot interval still allows a drop of up to a
+    third.
 - **H2 (synchronization extends to longer orbital periods than circularization): Inconclusive.**
   - The synchronized share never reaches one half, so P_sync,50 is undefined. This is most likely a symptom of the
     dilution above rather than a property of the binaries.
   - The plan's circular criterion, e < 0.05, also fails, because Gaia's eccentricities are biased upward by noise.
   - With a noise-aware criterion (e consistent with zero; post hoc), the circularization cutoff is 4.1–5.9 days
-    across the three Teff bins.
+    across the three Teff bins, rising with Teff. That is the opposite of Bashi et al. (2023), who found 6.5 falling to
+    2.5 d on the same orbits, and the indicator depends on Gaia's error estimates, so this cutoff is not reliable.
 
 ## In plain terms
 
@@ -35,7 +38,7 @@ spin from starspot dimming in TESS light curves.
 Locked spins are clearly there, at two to three times the rate chance would give. But our automatic period finder also
 picked up many signals that are not the star's spin: noise and, probably, light from neighbouring stars. These
 dilute the locked fraction to about a fifth. When we keep only clear, repeated signals, about two in five binaries
-look locked, hot or cool alike. The drop we first reported above 6,200 K appears to come from hot stars' spots being
+look locked, with no clear difference between hot and cool. The drop we first reported above 6,200 K appears to come from hot stars' spots being
 harder to detect, not from weaker tides.
 
 So the test we planned could not be done cleanly with these data. It needs either vetted light curves, as earlier
@@ -79,7 +82,7 @@ eclipsing-binary studies used, or spin measured from spectral line broadening.
 | bounds over all stars with light curves | 0.06–0.18 / 0.02–0.09 | preregistered secondary |
 | within 300 pc | 0.22 / 0.12 | preregistered secondary |
 | **credible signals only** (> 2 ppt, ≥ 2 sectors) | **0.42 / 0.37** | post hoc |
-| majority-cluster rescue of "inconsistent" stars | 0.24 / 0.15 | post hoc |
+| majority-cluster rescue of "inconsistent" stars | 0.25 / 0.15 | post hoc |
 | no ACF doubling | 0.25 / 0.14 | post hoc |
 | against P_orb instead of the pseudo-synchronous period | 0.26 / 0.09 | post hoc |
 | with detrended QLP | 0.23 / 0.11 | D1 sensitivity, uninformative |
@@ -99,7 +102,8 @@ eclipsing-binary studies used, or spin measured from spectral line broadening.
   strongest at orbital periods of 2–6 d among cool stars.
 - **Not shown: the level, or where it stops.** The automatic TESS periods are too contaminated:
   - in a visual audit, 16 of 30 periods had no coherent signal;
-  - only 41 of the 135 stars that also have a Gaia DR3 rotation period agree with it.
+  - only 41 of the 135 stars that also have a Gaia DR3 rotation period agree with it, a joint disagreement, since Gaia's
+    sparse-sampled periods are noisy too.
 
   Both the step at the Kraft break and the H2 comparison are lost in that dilution.
 - **The rules shape the level** (D2):
@@ -112,6 +116,8 @@ eclipsing-binary studies used, or spin measured from spectral line broadening.
   - **Periods** are limited to 13 d.
   - **QLP-only stars** are absent from the primary (D1).
   - **G7 is not met** for the visual audit: one rater, who could see the class labels.
+  - **Completeness weighting** (1/C) up-weights low-amplitude detections, which the audit suggests are mostly noise.
+    The unweighted shares are similar (0.23 / 0.11).
 
 ## Process and deviations
 

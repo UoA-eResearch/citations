@@ -23,4 +23,10 @@ w = st[st.cls.isin(["detected", "inconsistent", "pulsator", "ellipsoidal_or_doub
 c = Coverage("classification", T / "coverage.json")
 c.add_counts(ok=int((w.cls == "detected").sum()), drops={k: int(v) for k, v in w[w.cls != "detected"].cls.value_counts().items()})
 c.save()
+import json as _j
+pr = _j.loads((T / "primary.json").read_text())
+c = Coverage("completeness_weighting", T / "coverage.json")
+c.add_counts(ok=pr["detections_weighted"], drops={"outside the injection grid (amplitude > 2% or P < 0.3 d)": pr["detections_dropped_no_completeness_cell"],
+                                                   "completeness below 0.1": pr["detections_dropped_C_below_0p1"]})
+c.save()
 print("ok")

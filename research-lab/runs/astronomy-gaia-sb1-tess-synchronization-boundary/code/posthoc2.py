@@ -4,8 +4,9 @@ had not been run; everything else is post hoc and labelled so in the report.
 1. Chance null: P_orb permuted among detected stars within each Teff group, 1,000 times; the synchronized share
    that pure coincidence produces.
 2. Credible signals: detections with semi-amplitude > 2 ppt and >= 2 detecting sectors.
-3. "Inconsistent" stars rescued by a majority cluster: if more than half of a star's detecting sectors agree within
-   10% (after the P/2P harmonisation of posthoc.py), only those sectors are kept and the plan's rules reapplied.
+3. "Inconsistent" stars rescued by a majority cluster: if more than half of a star's detecting sectors span at most
+   10% (max/min <= 1.10, classify.py's own test; after the P/2P harmonisation of posthoc.py), only those sectors are
+   kept and the plan's rules reapplied.
 4. Preregistered secondary 2 in full: pulsators and possible-beaming stars classified by the same synchronization rule
    and added to the detections.
 5. No ACF doubling: the undoubled period used throughout.
@@ -72,11 +73,13 @@ def main():
     incon = set(st.loc[st.cls == "inconsistent", "tic"].dropna().astype("int64"))
     keep = []
     for tic, g in sp[(sp.fap < 1e-5) & sp.tic.isin(incon)].groupby("tic"):
-        p = g.p_ls.to_numpy(); best = None
-        for c in p:
-            m = np.abs(p / c - 1) < 0.10
-            if best is None or m.sum() > best.sum():
-                best = m
+        # confirmation finding 1: the cluster uses classify.py's own consistency test (max/min <= 1.10)
+        p = g.p_ls.to_numpy(); o = np.argsort(p); ps = p[o]; best_n, best_i = 0, 0
+        for i in range(len(ps)):
+            j = np.searchsorted(ps, ps[i] * 1.10, side="right")
+            if j - i > best_n:
+                best_n, best_i = j - i, i
+        best = np.zeros(len(p), bool); best[o[best_i:best_i + best_n]] = True
         if best.sum() > len(p) / 2:
             keep.append(g[best])
         else:

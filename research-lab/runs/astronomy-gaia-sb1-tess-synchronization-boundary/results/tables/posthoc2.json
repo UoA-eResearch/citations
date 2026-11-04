@@ -32,21 +32,21 @@
  "majority_cluster": {
   "classes": {
    "no_light_curve": 6465,
-   "detected": 5445,
-   "inconsistent": 4152,
-   "pulsator": 2851,
-   "ellipsoidal_or_double_spot": 2267,
+   "detected": 6110,
+   "inconsistent": 3174,
+   "pulsator": 3003,
+   "ellipsoidal_or_double_spot": 2332,
    "no_detection": 1792,
-   "possible_beaming": 605,
+   "possible_beaming": 701,
    "no_tic": 468
   },
   "cool": {
-   "n": 2932,
-   "share": 0.2407912687585266
+   "n": 3439,
+   "share": 0.2512358243675487
   },
   "hot": {
-   "n": 923,
-   "share": 0.14517876489707476
+   "n": 947,
+   "share": 0.1457233368532207
   }
  },
  "secondary2_with_pulsators_and_beaming": {
