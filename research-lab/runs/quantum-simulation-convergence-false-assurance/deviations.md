@@ -77,3 +77,23 @@ The lab's METHODS.md gates were run before this draft's review. No number change
 - **G5 overclaim check** (`review/overclaim_check.md`, passes):
   - the title now notes that the 31% sits mostly on loop-rich Floquet circuits;
   - "at most about 4 times the gap" became "usually within", since it held for about 9 in 10 held-out circuits.
+
+**Note added after review (2026-11-06).** The stored `primary_v1_coarsest_pair_bug.json` was produced by re-running
+the old sort after the fix, three seconds before the corrected `primary.json`. It is a reconstruction for the record,
+not the file that was read before the fix.
+
+## D3 — 2026-11-06 — edits after the independent review (verdict: publish with edits)
+
+- **Step-size sensitivity** (finding 1). `code/posthoc_steps.py` recomputes apparent convergence and false
+  assurance for every pair of settings on each frozen ladder, from the same runs. For Pauli propagation the share is
+  31% for ε 3e-4 vs 1e-4 (preregistered) and 4.3% for a 10× step (ε 1e-3 vs 1e-4). Its finest setting's median error
+  is 0.030, equal to the threshold. The title, verdict and limits now say so.
+- **The D2 record** (finding 2) is now described as a reconstruction.
+- **Smaller points** (finding 3):
+  - the zero-spread H2 cases are stated (8 BP-PEPS, 12 Pauli propagation; conservative);
+  - kicked Ising is near-exact for Pauli propagation;
+  - BP-PEPS's loop approximation is described as untested rather than honest;
+  - the plan's ladder rule, which never adds a finer Pauli-propagation setting, is named in Limits.
+
+  The cross-check count is unchanged: the main set has 80 instances with 20 qubits, so `int(80 × 0.05 × 4)` = 16,
+  as the report says. The review assumed 75.

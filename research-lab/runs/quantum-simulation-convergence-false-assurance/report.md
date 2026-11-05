@@ -1,4 +1,4 @@
-# When two truncation settings agree, is the answer right? In 300 exactly solvable circuits, Pauli propagation's agreement misled 31% of the time, mostly on loop-rich Floquet circuits; BP-PEPS's 2%
+# When two truncation settings agree, is the answer right? In 300 exactly solvable circuits, Pauli propagation's agreement misled 31% of the time with 3× steps in its threshold, mostly on loop-rich Floquet circuits; BP-PEPS's 2%
 
 *300 heavy-hex patch circuits of 20–26 qubits (Floquet mixed-field Ising after the Quantum Advantage Tracker's model,
 and kicked Ising) were simulated exactly by statevector and approximately by BP-PEPS (TensorNetworkQuantumSimulator.jl)
@@ -12,6 +12,12 @@ still off by more than 0.03.*
   Supported.**
   - **Pauli propagation (ε 3e-4 vs 1e-4):** 40 of 129 apparently converged estimates are wrong, **31%** (95%
     23–39%).
+  - **This share depends on the ladder's step size** (post hoc, prompted by the review).
+    - The finest Pauli-propagation setting's median error (0.030) equals the 0.03 threshold, and the error falls
+      only 1.5× per step, against 2.5× for BP-PEPS.
+    - With a 10× step (ε 1e-3 vs 1e-4) the share is 4.3% (2 of 46).
+    - The two ladders were frozen by the plan's rule but are not comparable objects. The 31% against 2% is partly a
+      property of the ladders, not only of the methods.
   - **BP-PEPS (χ 8 vs 16):** 2 of 103, **1.9%** (0–5.1%).
 - **Where it happens.**
   - Pauli propagation's false assurance sits almost entirely in the Floquet circuits: **39 of 51 (76%; 64–88%)**,
@@ -31,7 +37,7 @@ still off by more than 0.03.*
   - its gate-truncation error tracks the true error (Spearman 0.72);
   - its ladder spread tracks the true error more tightly than Pauli propagation's does (0.89 against 0.56).
 - **D2:** the first analysis run accidentally compared the two coarsest settings. The fix and the buggy output
-  (H1 Supported, H2 Inconclusive) are recorded.
+  (H1 Supported, H2 Inconclusive) are recorded; the stored buggy output was regenerated after the fix, for the record.
 
 ## In plain terms
 
@@ -117,6 +123,19 @@ at 12, and 22 of 22 at 16.
 
 The conclusion does not depend on the preregistered thresholds.
 
+### Step size (post hoc, prompted by the review; `results/tables/posthoc_steps.json`)
+
+| method | settings compared | apparently converged | wrong by > 0.03 | share |
+|---|---|---|---|---|
+| Pauli propagation | ε 3e-4 vs 1e-4 (preregistered) | 129 | 40 | 31% |
+| Pauli propagation | ε 1e-3 vs 3e-4 | 54 | 7 | 13% |
+| Pauli propagation | ε 1e-3 vs 1e-4 (10× step) | 46 | 2 | 4.3% |
+| BP-PEPS | χ 8 vs 16 (preregistered) | 103 | 2 | 1.9% |
+| BP-PEPS | χ 4 vs 8 | 53 | 4 | 7.5% |
+| BP-PEPS | χ 4 vs 16 | 51 | 1 | 2.0% |
+
+The median error ratio between adjacent settings is 1.5 for Pauli propagation's finest step and 2.5 for BP-PEPS's.
+
 ## What this does and does not show
 
 - **Agreement between truncation settings is weak evidence for coefficient-truncated Pauli propagation on Floquet-type
@@ -129,11 +148,20 @@ The conclusion does not depend on the preregistered thresholds.
 - **Loops matter for Pauli propagation too.** Its false-assurance share rises with the number of loops in the patch:
   1 of 25 with none, 14 of 54 with one, 25 of 50 with two. The H1 verdict therefore leans on the loop-rich half of the
   design (random patches alone: 9.5%, 3.1–17.4%). Tracker-scale lattices have many more loops than either half.
-- **BP-PEPS's ladder was honest at this scale.**
+- **BP-PEPS's bond-truncation ladder was reliable at this scale.**
   - When χ = 8 and 16 agreed, the answer was almost always right, and the gate-truncation error is a useful warning
     light.
   - This is a statement about patches with at most two loops. Tracker lattices have many more loops, which is where
-    BP's own approximation (not bond truncation) bites, and that is untested here.
+    BP's own approximation (not bond truncation) bites. χ-agreement cannot detect that approximation, so it is untested
+    here rather than shown to be safe.
+- **Step size, sample and calibration** (post hoc, prompted by the review).
+  - **Step size.** The plan's ladder rule never adds a finer Pauli-propagation setting, so its finest setting can sit
+    at the error threshold; this is the root of the step-size dependence above.
+  - **Kicked Ising.** Pauli propagation is near-exact there (median error 0.006), so the pooled 31% is effectively a
+    Floquet number (39 of 51).
+  - **Zero spread in H2.** 8 BP-PEPS and 12 Pauli-propagation instances give identical values at the two finest
+    settings. Such an instance counts as covered only if its error is exactly zero, which makes the coverage figures
+    conservative.
 - **Not shown:**
   - **Production scale.** Behaviour at 50–100 qubits and at production truncations (χ in the hundreds; Pauli
     propagation with weight caps) is not tested. Down-scaled ladders were chosen to keep the finest setting
@@ -154,10 +182,12 @@ The conclusion does not depend on the preregistered thresholds.
     - a layer-wise 15-minute guard;
     - ladders frozen from the pilot by the stated rule.
   - D2, after the first results: the analysis code's finest-pair sort was inverted (it compared the coarsest pair).
-    It was fixed, and the buggy output is kept as `results/tables/primary_v1_coarsest_pair_bug.json`.
+    It was fixed, and the buggy output is kept as `results/tables/primary_v1_coarsest_pair_bug.json` (regenerated
+    after the fix, for the record).
+  - D3, after review: the step-size sensitivity (post hoc) and wording edits.
 - **Plan reading:** a method with fewer than 20 apparently converged instances could not decide H1. Both methods
   exceeded 20.
-- **Independent review:** queued (Fable), per the lab's pacing rule.
+- **Independent review:** publish with edits (three findings); the edits are in D3; confirmation pending.
 
 ## Reproducing it
 
