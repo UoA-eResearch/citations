@@ -4,31 +4,66 @@
  "by_splitter": {
   "assay": {
    "observed_median_abs_bias": 0.156,
-   "share_abs_bias_within_2se": 0.427
+   "share_abs_bias_within_2se": 0.427,
+   "median_se_retro": 0.067,
+   "median_se_combined": 0.102,
+   "expected_median_abs_bias_from_noise": 0.069,
+   "share_abs_bias_within_2se_combined": 0.585,
+   "note": ""
   },
   "author": {
    "observed_median_abs_bias": 0.216,
-   "share_abs_bias_within_2se": 0.297
+   "share_abs_bias_within_2se": 0.297,
+   "median_se_retro": 0.052,
+   "median_se_combined": 0.096,
+   "expected_median_abs_bias_from_noise": 0.065,
+   "share_abs_bias_within_2se_combined": 0.458,
+   "note": ""
   },
   "cluster": {
    "observed_median_abs_bias": 0.176,
-   "share_abs_bias_within_2se": 0.381
+   "share_abs_bias_within_2se": 0.381,
+   "median_se_retro": 0.067,
+   "median_se_combined": 0.099,
+   "expected_median_abs_bias_from_noise": 0.067,
+   "share_abs_bias_within_2se_combined": 0.563,
+   "note": ""
   },
   "document": {
    "observed_median_abs_bias": 0.167,
-   "share_abs_bias_within_2se": 0.409
+   "share_abs_bias_within_2se": 0.409,
+   "median_se_retro": 0.068,
+   "median_se_combined": 0.102,
+   "expected_median_abs_bias_from_noise": 0.069,
+   "share_abs_bias_within_2se_combined": 0.591,
+   "note": ""
   },
   "random": {
    "observed_median_abs_bias": 0.365,
-   "share_abs_bias_within_2se": 0.116
+   "share_abs_bias_within_2se": 0.116,
+   "median_se_retro": 0.02,
+   "median_se_combined": 0.072,
+   "expected_median_abs_bias_from_noise": 0.049,
+   "share_abs_bias_within_2se_combined": 0.152,
+   "note": ""
   },
   "scaffold": {
    "observed_median_abs_bias": 0.278,
-   "share_abs_bias_within_2se": 0.208
+   "share_abs_bias_within_2se": 0.208,
+   "median_se_retro": 0.035,
+   "median_se_combined": 0.078,
+   "expected_median_abs_bias_from_noise": 0.053,
+   "share_abs_bias_within_2se_combined": 0.288,
+   "note": ""
   },
   "time": {
    "observed_median_abs_bias": 0.194,
-   "share_abs_bias_within_2se": 0.34
+   "share_abs_bias_within_2se": 0.34,
+   "median_se_retro": null,
+   "median_se_combined": 0.066,
+   "expected_median_abs_bias_from_noise": 0.045,
+   "share_abs_bias_within_2se_combined": 0.34,
+   "note": "one repeat: retrospective SE undefined, prospective term only"
   }
  }
 }

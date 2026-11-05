@@ -1,0 +1,32 @@
+{
+ "model_spread": {
+  "median_per_target_spread_pros_rmse": 0.493,
+  "median_pros_rmse_by_model": {
+   "knn": 1.089,
+   "lgbm": 1.076,
+   "mlp": 1.413,
+   "rf": 1.067,
+   "svr": 1.043
+  }
+ },
+ "test_fraction_median_by_splitter": {
+  "assay": 0.159,
+  "author": 0.171,
+  "cluster": 0.162,
+  "document": 0.16,
+  "random": 0.2,
+  "scaffold": 0.152,
+  "time": 0.2
+ },
+ "dropped_repeats": {
+  "targets_with_drops": 13,
+  "median_n_train_with_drops": 196.0,
+  "median_n_train_without_drops": 789.0
+ },
+ "lenient_set": {
+  "targets": 212,
+  "rows": 2859,
+  "median_compounds_per_target": 8.0,
+  "share_targets_under_20": 0.807
+ }
+}

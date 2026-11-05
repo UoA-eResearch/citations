@@ -18,17 +18,27 @@ training began and committed before any fit had finished.*
     0.22 (0.18–0.23) for author splits.
   - Cluster, assay and within-release time splits behave the same: signed bias −0.05 to +0.01, absolute bias
     0.16–0.19.
-  - **Not just noise (exploratory).** Sampling noise in each target's prospective RMSE would alone give a median
-    absolute bias of about 0.05, so most of the per-target miss is real.
+  - **Not just noise (exploratory).** Sampling noise in both the prospective RMSE and the retrospective repeats
+    would alone give a median absolute bias of about 0.07 for these splitters, and that is still a lower bound. The
+    observed misses are 2.3–3.3 times that, so most of the per-target miss is real.
+  - **The bar was demanding.** With a noise floor near 0.07 and the bound estimated over about 250 targets, only a
+    splitter whose true per-target miss was near zero could pass. The verdict follows the preregistered rule.
 - **H3 (the split changes which model you pick: Kendall τ ≤ 0.6 for scaffold and ≥ 0.8 for document splits):
   Refuted.**
   - No splitter ranks the five model families the way later data do.
   - The mean τ is 0.35–0.41 under every splitter (scaffold 0.39, document 0.37). The paired difference is −0.02
     (−0.06 to +0.02).
+  - **This is real instability, not near-ties.** Per target, the five families' prospective RMSEs span a median of
+    0.49 log units, and the MLP is clearly worse (median 1.41 against 1.04–1.09). Models this different are still
+    ranked only loosely by any retrospective split, which makes H3's conclusion stronger.
+  - **This bar was demanding too.** With five families τ moves in steps of 0.2 per target, and the document
+    splitter's upper bound (0.42) is far below 0.8.
 - **The pattern holds for every model family and prospective definition.**
   - It holds for random forest, LightGBM, Tanimoto SVR, kNN and MLP, and for all new activities from any year.
   - The MLP is the most overconfident under random splits (−0.56).
   - On the lenient set (compounds already in ChEMBL 33 but new to the target), every splitter understates the error.
+    That set is small, though: 2,859 rows over 212 targets, a median of 8 compounds per target, with 81% of targets
+    under 20. Its per-target RMSEs are very noisy.
 
 ## In plain terms
 
@@ -74,6 +84,11 @@ regression error, provenance splitters (document, author, assay), model ranking,
     InChIKey is absent from release 33.
   - **Delta audit (G4).** Of 60 sampled new activities, 16 come from 2023+ publications, 43 are older publications
     newly curated, and 1 is a re-deposited record. That is why the 2023+ restriction is needed.
+    - The audit tabulates each document's recorded year (`code/select.py`). It shows how much of the delta is old
+      work newly curated, but it cannot detect a 2023+ document that republishes older measurements.
+    - The independent review checked the strict set at the InChIKey skeleton level: 0.86% of primary prospective
+      rows share a skeleton block with a ChEMBL 33 compound, with no correlation with error (`review/review.md`,
+      finding 5).
 - **Targets.**
   - Eligible targets have ≥ 100 compounds in release 33 and ≥ 50 primary prospective compounds: 295 of them, of
     which a random 250 are used.
@@ -145,12 +160,16 @@ assay entropy, label variance and size. Its median absolute error under 5-fold c
 
 ### Is the per-target miss just noise? (exploratory, `results/tables/noise_check.json`)
 
-- The prospective RMSE of a target with n compounds has a normal-theory standard error of about RMSE/√(2n). The
-  median is 0.066 here.
-- Noise of that size alone would give a median absolute bias near 0.045, against the observed 0.16–0.22 for the
-  provenance, cluster and time splitters.
-- Between 30% (author) and 43% (assay) of targets fall within two standard errors.
-- This ignores the retrospective repeats' own noise and heavy-tailed errors, so it is a rough lower bound on noise.
+- **Prospective noise.** The prospective RMSE of a target with n compounds has a normal-theory standard error of
+  about RMSE/√(2n). The median is 0.066 here.
+- **Retrospective noise** (added after review). The retrospective estimate is a mean of five repeats. Its standard
+  error, from the stored per-repeat RMSEs, has a median of 0.067 for document, assay and cluster splits and 0.052 for
+  author splits.
+- **Both together.** They would give a median absolute bias of about 0.065–0.069, against the observed 0.16–0.22
+  for the provenance and cluster splitters, between 2.3 and 3.3 times larger. 46% (author) to 59% (document) of
+  targets fall within two combined standard errors.
+- **The time splitter has one repeat,** so only its prospective term is counted.
+- **Heavy-tailed errors are still ignored,** so this remains a lower bound on noise.
 
 ## What this does and does not show
 
@@ -159,6 +178,11 @@ assay entropy, label variance and size. Its median absolute error under 5-fold c
 - **Splits that hold out whole papers, author groups, assays, clusters or the latest compounds are right on average
   but noisy per target.** The typical miss of 0.15–0.22 log units is larger than the H2 bar. This agrees with Sheridan
   (2013) on time splits. Unlike his leave-class-out case, cluster splits here are not pessimistic.
+- **Group splits train on slightly more data.** Their draws accept a 15–25% test set, so the group splitters hold out
+  a median 15–17% of compounds against 20% for random and time splits. This flatters them a little in the comparison
+  H1 rests on, far too little to move H1 (post hoc, `results/tables/posthoc_review.json`).
+- **Dropped repeats fall on small targets.** The 13 targets with dropped repeats or infeasible author graphs have a
+  median of 196 compounds, against 789 for the rest.
 - **Correcting the estimate does not help.** A corrector that sees every splitter's estimate and dataset descriptors
   does no better than the best single provenance split.
 - **Model selection is unreliable whichever split is used.** τ ≈ 0.4 means the retrospective ranking of five model
@@ -174,17 +198,22 @@ assay entropy, label variance and size. Its median absolute error under 5-fold c
 ## Process and deviations
 
 - **Preregistration:** `plan.md`, committed before any ChEMBL table was read.
-- **Deviations:** none. The ChEMBL download needed a resumable fetcher because EBI throttles this host; this changed
-  no analysis choice.
+- **Deviations** (`deviations.md`): D1, after the independent review:
+  - the noise floor gains the retrospective term;
+  - the H2 and H3 bars are stated against what was achievable;
+  - model spread, test fractions, lenient-set sizes and the delta audit's scope are stated (post hoc);
+  - the time splitter's zero-width coverage is noted.
+
+  The ChEMBL download needed a resumable fetcher because EBI throttles this host; this changed no analysis choice.
 - **Gates:**
   - G1 leakage audit: plan §7;
   - G2: `results/tables/coverage.json`;
   - G3: `results/plausibility.md`;
-  - G4: the delta audit;
+  - G4: the delta audit (a document-year tabulation; see Prospective truth);
   - G5: `review/overclaim_check.md`;
   - G6: `results/attribution_ledger.csv`;
   - G7 does not apply (no human labels).
-- **Independent review:** queued (Fable), per the lab's pacing rule.
+- **Independent review:** publish with edits (eight findings); the edits are in D1; confirmation pending.
 
 ## Reproducing it
 
