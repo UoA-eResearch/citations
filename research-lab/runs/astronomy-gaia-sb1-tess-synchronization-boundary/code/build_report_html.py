@@ -28,7 +28,27 @@ def _report_date():
 
 
 DATE = _report_date()
-STATUS = "revised after independent review" if (RUN / "review" / "confirmation.md").exists() else "pre-review draft"
+# Page <title> per run. A missing entry raises KeyError, so a copied builder fails loudly instead of
+# silently carrying another study's title (it did, for three reports, until 2026-11-05).
+PAGE_TITLES = {'astronomy-gaia-sb1-tess-synchronization-boundary': 'Binary Synchronization Boundary'}
+PAGE_TITLE = PAGE_TITLES[RUN.name]
+def _status():
+    """The review status from the lab's record (leads.json), not from a file name: confirmations are now written into
+    review/review.md, so the old confirmation.md test labelled reviewed studies as drafts."""
+    try:
+        L = json.loads((RUN.parents[1] / "leads.json").read_text())
+        L = L if isinstance(L, list) else L.get("leads", L)
+        s = next((x.get("status", "") for x in L if x.get("id") == RUN.name), "")
+    except Exception:
+        s = ""
+    if "revised after review" in s:
+        return "revised after independent review and a confirmation pass"
+    if (RUN / "review" / "review.md").exists():
+        return "under independent review"
+    return "pre-review draft"
+
+
+STATUS = _status()
 
 
 def caption_for(src: str) -> str:
@@ -86,7 +106,7 @@ def main():
     body = "".join(x if x.startswith(("<code>", "<pre>")) else x for x in parts)
     # wide tables scroll inside their own container
     body = body.replace("<table>", '<div class="table-wrap"><table>').replace("</table>", "</table></div>")
-    page = TEMPLATE.replace("__TITLE__", html.escape(title)).replace("__SUBTITLE__", html.escape(subtitle)) \
+    page = TEMPLATE.replace("__PAGETITLE__", html.escape(PAGE_TITLE)).replace("__TITLE__", html.escape(title)).replace("__SUBTITLE__", html.escape(subtitle)) \
                    .replace("__TILES__", tiles()).replace("__BODY__", body).replace("__BLOB__", REPO_BLOB) \
                    .replace("__DATE__", DATE).replace("__STATUS__", STATUS)
     (RUN / "report.html").write_text(page)
@@ -98,7 +118,7 @@ TEMPLATE = """<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Retraction Citer Contagion</title>
+<title>__PAGETITLE__</title>
 <meta name="description" content="Do innocent citers of a later-retracted paper lose citations after the retraction?">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -80,7 +80,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
   <h1>Training-seed noise in scaling-law forecasts: one seed per size moves the 2.8B forecast by 0.10 nats, mostly because of two known outlier runs, and averaging three seeds did not clearly help</h1>
   <p class="subtitle">PolyPythias: ten training seeds at each of five sizes, 14M to 410M, eight checkpoints each, 400 checkpoints in all. Each was evaluated in fp32 on 5.0M tokens of Pile validation. The Chinchilla law was fitted to 2,000 random single-seed ladders and to 2-, 3- and 5-seed averaged ladders, each extrapolated to Pythia-2.8B. N is the preregistered non-embedding parameter count; a first run counted the output head too and was corrected after review (D3). The plan was committed before any model was evaluated.</p>
   <div class="meta">
-    <span>Report · 2026-10-28 · pre-review draft</span>
+    <span>Report · 2026-10-28 · revised after independent review and a confirmation pass</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/llm-ml-science-scaling-fit-seed-uncertainty/plan.md">Preregistration</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/llm-ml-science-scaling-fit-seed-uncertainty/deviations.md">Deviations log</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/llm-ml-science-scaling-fit-seed-uncertainty/code">Code</a>

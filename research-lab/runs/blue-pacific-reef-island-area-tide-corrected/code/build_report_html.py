@@ -28,7 +28,23 @@ def _report_date():
 
 
 DATE = _report_date()
-STATUS = "revised after independent review" if (RUN / "review" / "confirmation.md").exists() else "pre-review draft"
+def _status():
+    """The review status from the lab's record (leads.json), not from a file name: confirmations are now written into
+    review/review.md, so the old confirmation.md test labelled reviewed studies as drafts."""
+    try:
+        L = json.loads((RUN.parents[1] / "leads.json").read_text())
+        L = L if isinstance(L, list) else L.get("leads", L)
+        s = next((x.get("status", "") for x in L if x.get("id") == RUN.name), "")
+    except Exception:
+        s = ""
+    if "revised after review" in s:
+        return "revised after independent review and a confirmation pass"
+    if (RUN / "review" / "review.md").exists():
+        return "under independent review"
+    return "pre-review draft"
+
+
+STATUS = _status()
 
 
 def caption_for(src: str) -> str:
