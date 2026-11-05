@@ -54,3 +54,18 @@ donors of 100 null draws across 20 primary contrasts, and ran the identical pipe
 - **G6 note.** The Open Targets ledger row first carried a DOI that resolves to an unrelated crystallography paper.
   The resolver accepted it because the identifier exists; the title check caught it. It is now
   10.1093/nar/gkae1128 (Buniello et al., the Open Targets Platform paper).
+
+## D3 — 2026-11-06 — edits after the independent review (verdict: publish with edits)
+
+All checks are post hoc and come from `code/posthoc_review.py` and `results/tables/posthoc_review.json`.
+
+1. **The zero-DE share** (finding 1). At the matched size, 424 of 799 contrasts (53.1%) find no DE genes in the real
+   comparison. They make up 71.9% of the 590 indistinguishable contrasts, and the null's median is zero in 96.5% of
+   contrasts. The title, verdict and plain terms now say the headline mainly reflects power.
+   - **One departure from the review's wording.** The review suggested saying that, of the contrasts that find DE
+     genes, most do not exceed the null. The data show 166 of 375 (44%), so the report says that instead.
+2. **The sex-imbalance gradient** (finding 2): exceedance rises from 12% to 47% across quartiles while the null's
+   95th percentile stays flat. The report shows the quartile table.
+3. **The p-value floor** (finding 3): the minimum attainable p is 1/501; 32 ties are needed for BH significance and
+   129 are present. Stated beside the verdict.
+4. **The power caveat** (finding 4) is moved into "What this does and does not show".

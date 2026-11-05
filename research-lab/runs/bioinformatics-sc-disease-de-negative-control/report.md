@@ -1,4 +1,4 @@
-# At matched group sizes, three quarters of single-cell disease signatures in a cell atlas cannot be told apart from comparing healthy donors with each other
+# At matched group sizes, half of single-cell disease contrasts in a cell atlas find no differentially expressed genes at all, and three quarters cannot be told apart from comparing healthy donors with each other
 
 *799 disease × tissue × cell-type contrasts from 25 datasets in the CZ CELLxGENE Census (42 diseases, 161 cell
 types). Each was compared with 500 matched healthy-donor-only contrasts drawn from the same dataset, tissue and cell
@@ -15,6 +15,15 @@ value was read.*
     only 8% of the time**, so that figure is nearly uninformative; the DE-gene count detects it 87% of the time
     (D2, `results/tables/power_check.json`).
   - Weighting every disease equally gives the same answer: 74%.
+  - **Most of the 74% is nothing against nothing** (post hoc, prompted by the review).
+    - At the matched size, 424 of 799 contrasts (53%) find no DE genes at all in the real comparison, and the
+      null's median is also zero in 96.5% of contrasts. Those 424 make up 72% of the indistinguishable group.
+    - Of the 375 contrasts that find at least one DE gene, 166 (44%) still do not exceed their null.
+    - The headline therefore mainly reflects power at about 13 donors a side. It does not show that disease
+      signatures look like donor noise.
+  - **The test is conservative in H1's direction.** With 500 null draws the smallest attainable p is 1/501. Under BH
+    a contrast can be called distinguishable only if at least 32 contrasts reach that minimum; 129 do here, so the
+    constraint does not bind. But the design could never report a small number of distinguishable contrasts.
 - **The DE-gene count a practitioner reports barely predicts whether the contrast beats its null.**
   - At full size, using every donor (median 100 per contrast), a practitioner would report at least one DE gene in
     69% of these contrasts, with a median of 52.
@@ -55,8 +64,9 @@ We took a large public atlas of such data and, for each disease comparison, buil
 donors only: same study, same tissue, same cell type, same numbers, matched for sex and age. Then we ran the
 identical analysis on all of them and asked whether the real comparison stood out from its own fakes.
 
-Three quarters did not. In most of these comparisons, the disease result is no more striking than what you get by
-splitting healthy people into two arbitrary groups of the same size and comparing them.
+Three quarters did not, but mostly because, at a dozen donors a side, neither the disease comparison nor its healthy
+fakes found any differences at all: half of all the disease comparisons found no genes. Of the comparisons that did
+find something, a little over half stood out from their fakes.
 
 A caveat we cannot remove: the fake comparisons can only be as large as the healthy donors allow, so the test runs at
 about a dozen donors a side, while a researcher using every donor in the study has about a hundred. Part of what we
@@ -124,13 +134,29 @@ Regressing each contrast's standardised excess over its null on standardised pre
 datasets): sex imbalance between the disease and normal groups has the clearest association (β = 0.75, 95% CI
 0.26–1.96), and nucleus-based assays exceed less often (β = −0.97, −1.87 to −0.06). Donor count (β = 0.16,
 −0.28 to 1.18) and cells per donor (β = 0.13, −0.22 to 0.41) do not separate from zero. The sex-imbalance
-association, together with the 5.5% of null slots that could not match sex, suggests part of the exceedance that
-does occur is residual donor confounding rather than disease biology.
+association suggests part of the exceedance that does occur is residual donor confounding rather than disease
+biology.
+
+**Sex imbalance by quartile** (post hoc, prompted by the review; `results/tables/posthoc_review.json`):
+
+| quartile of sex imbalance | median imbalance | share exceeding the null | median null 95th percentile (DE genes) |
+|---|---|---|---|
+| lowest | 0.03 | 12% | 1.0 |
+| second | 0.10 | 25% | 1.0 |
+| third | 0.18 | 21% | 1.0 |
+| highest | 0.36 | 47% | 1.05 |
+
+- The null's 95th percentile is flat across quartiles, so the 5.5% of null slots that could not match sex do not
+  inflate the null.
+- The association sits on the real side, so the true share of contrasts carrying disease signal is likely below
+  26%, not above it.
 
 ## What this does and does not show
 
-- **A matched null is a low bar that most atlas contrasts do not clear.** This is a statement about these datasets
-  at these donor counts, not about the diseases.
+- **A matched null is a low bar that most atlas contrasts do not clear,** mostly because at about 13 donors a side
+  they find nothing at all. This is a statement about these datasets at these donor counts, not about the diseases.
+- **Power is the main alternative explanation.** The power check's injection, a twofold change in 5% of genes, is
+  large; power against a disease effect of a few tens of percent in a handful of genes is lower and was not estimated.
 - **The usual evidence does not separate them.** A DE-gene count in the dozens, which is what most of these
   contrasts produce, is almost never distinguishable from healthy-donor variation in the same data.
 - **Exceeding the null is necessary, not sufficient.** A disease cohort processed in its own batch would exceed a
@@ -155,9 +181,11 @@ does occur is residual donor confounding rather than disease biology.
   - **D2 (before any H1 result): the preregistered primary statistic π1 has 8% power against a synthetic twofold
     change in 5% of genes, against 87% for the preregistered secondary DE-gene count.** Both are reported; the
     interpretation leads with the DE-gene count. The choice used only null draws and synthetic injections.
+  - D3 (after review): the zero-DE share, the sex-imbalance quartiles, the p-value floor and the power caveat (post
+    hoc); title and plain terms reframed.
 - **Gates:** G1 (plan §6), G2 (`coverage.json`), G3 (`results/plausibility.md`, including the power check),
   G4 (`results/tables/age_map.csv`), G5 and G6 at write-up. G7 does not apply.
-- **Independent review:** queued (Fable), per the lab's pacing rule.
+- **Independent review:** publish with edits (four findings plus checks); the edits are in D3; confirmation pending.
 
 ## Reproducing it
 

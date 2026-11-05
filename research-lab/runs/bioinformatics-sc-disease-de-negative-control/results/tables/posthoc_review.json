@@ -1,0 +1,36 @@
+{
+ "contrasts": 799,
+ "zero_de_real_at_matched_size": 424,
+ "share_zero_de_real": 0.5307,
+ "indistinguishable_nde": 590,
+ "zero_de_among_indistinguishable": 424,
+ "share_zero_among_indistinguishable": 0.7186,
+ "share_null_median_zero": 0.965,
+ "share_null_q95_zero": 0.2791,
+ "sex_imbalance_quartiles": {
+  "lowest": {
+   "median_sex_imbalance": 0.03,
+   "share_exceeding_null": 0.12,
+   "median_null_q95_nde": 1.0
+  },
+  "second": {
+   "median_sex_imbalance": 0.097,
+   "share_exceeding_null": 0.25,
+   "median_null_q95_nde": 1.0
+  },
+  "third": {
+   "median_sex_imbalance": 0.179,
+   "share_exceeding_null": 0.206,
+   "median_null_q95_nde": 1.0
+  },
+  "highest": {
+   "median_sex_imbalance": 0.355,
+   "share_exceeding_null": 0.47,
+   "median_null_q95_nde": 1.05
+  }
+ },
+ "corr_sex_imbalance_exceed": 0.285,
+ "min_attainable_p": 0.002,
+ "contrasts_at_min_p": 129,
+ "ties_needed_at_min_p_for_q_below_0p05": 32
+}
