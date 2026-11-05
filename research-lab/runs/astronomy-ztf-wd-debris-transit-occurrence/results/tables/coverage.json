@@ -1,0 +1,16 @@
+{
+ "catalogue": {
+  "attempted": 1280266,
+  "ok": 121838,
+  "fallback": 0,
+  "dropped": 1158428,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "P_WD <= 0.75": 921193,
+   "G >= 20": 147283,
+   "dec <= -28": 63535,
+   "parallax <= 2 mas (beyond 500 pc)": 26417
+  }
+ }
+}

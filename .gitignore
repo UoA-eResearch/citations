@@ -152,3 +152,12 @@ research-lab/runs/formal-math-selfplay-vacuity-drift/results/rows/
 research-lab/runs/*/review/reviewer_checks/cache
 research-lab/runs/*/review/reviewer_checks/cache/
 research-lab/runs/*/review/reviewer_checks/blind_*.md
+
+# Local Claude Code state (worktrees etc.)
+.claude/
+# Private researcher-impact explorer: lives on the local impact-explorer branch; it ranks named individuals, so it
+# must never be committed to main (publishing awaits the owner's decision)
+impact/
+# Reviewers' scratch checks stay on the VM (lab policy); some hold quoted source text that must not be committed.
+# Files already tracked under these folders are unaffected.
+research-lab/runs/*/review/reviewer_checks/
