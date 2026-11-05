@@ -75,3 +75,24 @@ computable on this shared machine.
 - **G6 note.** Two ledger DOIs initially resolved to unrelated papers (an Auto3D paper in place of MF-PCBA, and in
   the single-cell lead a crystallography paper in place of Open Targets). Both were caught by the title check, not
   by resolution. MF-PCBA is 10.1021/acs.jcim.2c01569 and is dated 2023, not 2022 as the lead states.
+
+## D4 — 2026-11-06 — edits after the independent review (verdict: publish with edits)
+
+All checks are post hoc and come from `code/posthoc_review.py` and `results/tables/posthoc_review.json`.
+
+1. **A comparable noise ceiling** (finding 1). Over 5 random halvings per target, a half-set ranking agrees with the
+   LIT consensus at τ 0.185, against 0.196 for the full set; two halves agree with each other at 0.315. H3's reading
+   is reversed: rankings replicate within a target better than they transfer between benchmarks. The first draft's
+   0.29 ceiling compared half against half, from one halving.
+2. **Memorization against ECFP4 + RF** (finding 2). The baseline's median EF1% is lower in all seven benchmark ×
+   split arms, by 2.35 to 11.12. "Advantage" now reads "enrichment over random", as the plan's A_B defines it.
+3. **H2's scope** (finding 3): frozen, mean-pooled embeddings with a linear head. 47 of 56 pairs are inconclusive
+   both ways. Fine-tuning is added to "Not shown".
+4. **Audit shares** (finding 4). They are labelled as target medians, and the pooled figures are given (PCBA-2026:
+   40% median, 20% pooled). The higher retention of actives (46% against 40%), the hit-rate rise (2.4% to 3.2%) and
+   the ceiling fall (41 to 32) are stated.
+5. **The D2 subset's numbers** (finding 5): Q = 0.84 (−3.60 to 8.02), τ 0.139 (−0.004 to 0.283).
+6. **A bug found while checking.** `analyse.py`'s post hoc subset reused `h3()`, which always wrote `tau_h3.csv`, so
+   the file held the 19-target subset (mean 0.139) rather than all 28 targets (0.196). `h3()` now takes a file name.
+   `tau_h3.csv` was regenerated for all 28 targets, and the subset's values are in `tau_h3_le5pct.csv`.
+   `primary.json` was always right.

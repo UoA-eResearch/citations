@@ -1,0 +1,75 @@
+{
+ "noise_ceiling_comparable": {
+  "full_set_vs_lit_consensus": 0.196,
+  "half_set_vs_lit_consensus": 0.185,
+  "half_vs_half": 0.315,
+  "halvings_per_target": 5
+ },
+ "memorization_vs_rf_median_ef1": {
+  "lit_cv audit04": {
+   "memorization_nn": 3.46,
+   "ecfp4_rf": 8.04,
+   "difference": -4.58
+  },
+  "lit_cv audit06": {
+   "memorization_nn": 8.34,
+   "ecfp4_rf": 19.47,
+   "difference": -11.12
+  },
+  "lit_cv random": {
+   "memorization_nn": 27.83,
+   "ecfp4_rf": 37.29,
+   "difference": -9.46
+  },
+  "lit_pub published": {
+   "memorization_nn": 4.15,
+   "ecfp4_rf": 6.5,
+   "difference": -2.35
+  },
+  "new audit04": {
+   "memorization_nn": 2.36,
+   "ecfp4_rf": 5.65,
+   "difference": -3.29
+  },
+  "new audit06": {
+   "memorization_nn": 4.83,
+   "ecfp4_rf": 9.0,
+   "difference": -4.17
+  },
+  "new random": {
+   "memorization_nn": 11.43,
+   "ecfp4_rf": 20.27,
+   "difference": -8.84
+  }
+ },
+ "leakage_audit": {
+  "new": {
+   "targets": 28,
+   "retained_share_median": 0.395,
+   "retained_share_pooled": 0.196,
+   "actives_retained_share_median": 0.457,
+   "hit_rate_median_before_after": [
+    0.0242,
+    0.0318
+   ],
+   "ef1_ceiling_median_before_after": [
+    41.4,
+    31.7
+   ]
+  },
+  "lit_cv": {
+   "targets": 15,
+   "retained_share_median": 0.117,
+   "retained_share_pooled": 0.121,
+   "actives_retained_share_median": 0.359,
+   "hit_rate_median_before_after": [
+    0.005,
+    0.0092
+   ],
+   "ef1_ceiling_median_before_after": [
+    100.0,
+    100.0
+   ]
+  }
+ }
+}

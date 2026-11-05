@@ -1,4 +1,4 @@
-# A leakage-audited virtual-screening benchmark from recent PubChem screens: memorization's advantage is a property of the split, pretrained embeddings never beat a fingerprint random forest, and method rankings barely replicate at all
+# A leakage-audited virtual-screening benchmark from recent PubChem screens: memorization's enrichment over random is a property of the split and never beats a fingerprint random forest, frozen pretrained embeddings do not either, and method rankings replicate within a target better than they transfer between benchmarks
 
 *PCBA-2026: 28 single-target confirmatory PubChem assays deposited from 2021 (12 from 2023 or later), 578,057
 compounds, with analog-disjoint folds that remove any evaluation compound within Tanimoto 0.4 of its training set.
@@ -8,10 +8,15 @@ linear head. The plan was committed before any activity outcome was downloaded.*
 
 **Verdict: H1 Inconclusive; H2 Supported; H3 Supported.**
 
-- **The leakage LIT-PCBA was criticised for is real, and larger than in the new benchmark.** Before the audit, a
-  training neighbour above Tanimoto 0.4 exists for **89%** of LIT-PCBA evaluation compounds and **62%** of
-  PCBA-2026's. Removing them leaves 12% of LIT's compounds scorable, against 40% of PCBA-2026's.
-- **H1 (memorization's advantage at least halves on the leakage-controlled benchmark): Inconclusive.**
+- **The leakage LIT-PCBA was criticised for is real, and larger than in the new benchmark.**
+  - **Before the audit,** a training neighbour above Tanimoto 0.4 exists for **89%** of LIT-PCBA evaluation
+    compounds and **62%** of PCBA-2026's (medians over targets).
+  - **Removing them** leaves 12% of LIT's compounds scorable (12% pooled), against 40% of PCBA-2026's by target
+    median but only 20% pooled over all rows.
+  - **The audit keeps actives at a higher rate than other compounds** (46% against 40%, PCBA-2026 medians), so the
+    median hit rate rises from 2.4% to 3.2% and the median EF1% ceiling falls from 41 to 32 (post hoc).
+- **H1 (memorization's enrichment over a random scorer at least halves on the leakage-controlled benchmark):
+  Inconclusive.**
   - Q = A_new / A_lit = 0.43, which meets the preregistered bar as a point estimate, but the interval is useless
     (−1.47 to 3.38): it is a ratio of two medians, one over only 15 LIT targets.
   - **The within-benchmark contrast is the clean evidence, and it is unambiguous.** Holding the data fixed and
@@ -19,17 +24,28 @@ linear head. The plan was committed before any activity outcome was downloaded.*
     disjoint at 0.6) to **2.4** (at 0.4) on PCBA-2026, and from 27.8 to 8.3 to **3.5** on LIT-PCBA.
   - So the memorization result is a property of how the benchmark is split, not of the chemistry, and LIT-PCBA's
     larger collapse matches its larger analog redundancy.
-- **H2 (pretrained molecular embeddings do not beat ECFP4 + random forest): Supported.**
+  - **The memorization baseline never beats ECFP4 + random forest** here, in any of the seven benchmark × split
+    arms; its median EF1% is 2.4 to 11.1 units lower (post hoc, prompted by the review). The audit this study
+    responds to reports that such a baseline matches published state of the art. In this study's hands it does
+    not match even a plain fingerprint random forest, on either benchmark, under any split.
+  - **The restricted subset agrees.** On the 19 targets at or below a 5% hit rate (D2), Q = 0.84 (−3.60 to 8.02),
+    still Inconclusive.
+- **H2 (pretrained molecular embeddings, used frozen and mean-pooled with a linear head, do not beat ECFP4 + random
+  forest): Supported.**
   - On **0 of 56** target-embedding pairs does an embedding's paired bootstrap interval exclude zero in its favour.
-    The random forest's does on 9.
+    The random forest's does on 9, so 47 pairs are inconclusive both ways; the median differences carry the direction.
   - Median ΔEF1% is −1.00 for ChemBERTa and −0.56 for MoLFormer-XL.
   - On the primary split the medians are RF 5.65, LightGBM 5.32, ChemBERTa 4.36, MoLFormer 4.29, memorization 2.36.
-- **H3 (method rankings do not transfer from LIT-PCBA): Supported, but for a duller reason than it sounds.**
+- **H3 (method rankings do not transfer from LIT-PCBA): Supported, and the disagreement is real.**
   - Mean Kendall τ between a PCBA-2026 target's ranking and the LIT consensus is 0.20 (0.085–0.295), under the 0.4
     bar.
-  - **But the split-half noise ceiling is 0.29.** Rankings of five closely matched methods barely replicate between
-    two halves of the *same* target's data, so most of the disagreement is measurement noise rather than a real
-    difference between benchmarks.
+  - **Rankings replicate within a target better than they transfer between benchmarks** (corrected after review).
+    - Halving a target's data barely changes its agreement with the LIT consensus (τ 0.185, against 0.196 with
+      the full set), so that figure is not noise-limited.
+    - Two halves of the same target agree with each other at 0.315.
+    - The first draft compared the full-set statistic with a half-against-half ceiling (0.29 from one random
+      halving) and called the disagreement noise. That comparison was not like for like.
+  - **The restricted subset agrees:** mean τ 0.139 (−0.004 to 0.283) on the 19 low-hit-rate targets.
 
 ## In plain terms
 
@@ -45,9 +61,11 @@ recent public screening experiments and removed the near-twins from scoring.
 Doing that, the pure look-up method's score collapses — from 28 to 3.5 on the old benchmark, and from 11 to 2.4 on
 ours. In other words, much of what the benchmark was measuring was look-up.
 
-Two further results. Large pretrained "foundation" models for chemistry did not beat a plain 1990s-style molecular
-fingerprint with a random forest on a single target. And which method looks best varies so much from target to
-target that the ranking is barely reproducible even when you split one target's own data in half.
+Three further results. The look-up method never beat a plain 1990s-style molecular fingerprint with a random forest,
+on either benchmark. Large pretrained "foundation" models for chemistry, used as fixed feature extractors, did not
+beat that random forest on a single target either. And the ranking of methods on the old benchmark does not carry
+over to the new one: two halves of one target's data agree with each other better than either agrees with the old
+benchmark.
 
 ## What was asked
 
@@ -118,14 +136,16 @@ further (3.46).
   training neighbour), but it is not clean: the audit still removes 60% of its compounds from scoring.
 - **Pretrained chemical embeddings bought nothing here** over a fingerprint random forest, on a benchmark whose
   labels postdate 2021 and, for 12 targets, 2023.
-- **Reported method rankings should be treated as noise** unless they come with a replication estimate: the
-  split-half ceiling of 0.29 is barely above the cross-benchmark 0.20.
+- **Rankings from one benchmark should not be carried to another.** They replicate within a target (0.32 between
+  halves) better than they transfer from LIT-PCBA (0.20), though even within a target five closely matched methods
+  are ranked only loosely.
 - **Not shown:**
   - **That PCBA-2026 is contamination-free.** The assay labels are recent, but the structures are mostly from the
     NCATS and Tox21 libraries and may appear in pretraining corpora.
   - **A representative sample of drug discovery.** Two depositors and their compound libraries dominate; 7 of 28
     targets are counterscreens with hit rates above 20%, where EF1% is capped near 2 to 5 (D2).
-  - **Tuned models or docking.** Hyperparameters were fixed in advance and no structure-based method was run.
+  - **Tuned or fine-tuned models, or docking.** Hyperparameters were fixed in advance, the embeddings were frozen
+    (no fine-tuning, no other pooling or head), and no structure-based method was run.
   - **That analog-disjoint splitting is the right difficulty.** It can over-debias; the 0.6 and random splits show
     how much the answer moves.
 
@@ -140,9 +160,16 @@ further (3.46).
     formula was corrected to min(100, 1/hit-rate), and a wrong BEDROC implementation was fixed, both before any
     score.
   - D3 (before any fit): the 50,000-compound cap and its check.
+  - D4 (after review), all post hoc:
+    - the comparable noise ceiling;
+    - memorization against the random forest;
+    - pooled audit shares and the hit-rate shift;
+    - the restricted subset's numbers;
+    - the H2 scope;
+    - a fix so the subset's τ no longer overwrites `tau_h3.csv`.
 - **Gates:** G1 (plan §5), G2 (`results/tables/coverage.json`), G3 (`results/plausibility.md`), G4 (the leakage
   audit), G5 and G6 at write-up. G7 does not apply.
-- **Independent review:** queued (Fable), per the lab's pacing rule.
+- **Independent review:** publish with edits (five findings plus checks); the edits are in D4; confirmation pending.
 
 ## Reproducing it
 

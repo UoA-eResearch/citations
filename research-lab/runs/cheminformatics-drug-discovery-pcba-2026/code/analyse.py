@@ -130,7 +130,7 @@ def h2(rng):
             "median_delta_ef1": round(float(P.delta.median()), 3), "verdict": v}
 
 
-def h3(M, rng):
+def h3(M, rng, fname="tau_h3.csv"):
     from scipy.stats import kendalltau
     lit = M[(M["eval"] == "lit_pub")].groupby("method").ef1.median()
     consensus = lit.reindex(METHODS).to_numpy()
@@ -141,7 +141,7 @@ def h3(M, rng):
         if np.isfinite(v).all():
             rows.append({"target": t, "tau": float(kendalltau(v, consensus).statistic)})
     Tt = pd.DataFrame(rows)
-    Tt.to_csv(T / "tau_h3.csv", index=False)
+    Tt.to_csv(T / fname, index=False)   # D4: the subset writes its own file (it used to overwrite the full set's)
     taus = Tt.tau.to_numpy()
     bs = np.array([np.mean(taus[rng.integers(len(taus), size=len(taus))]) for _ in range(B)])
     ci = [round(float(np.percentile(bs, 2.5)), 3), round(float(np.percentile(bs, 97.5)), 3)]
@@ -181,7 +181,7 @@ def main():
     low = set(M[(M["eval"] == "new") & (M.hit_rate <= 0.05)].target)
     Ml = M[(M["eval"] != "new") | M.target.isin(low)]
     rng2 = np.random.default_rng(SEED)
-    out["posthoc_hit_rate_le_5pct"] = {"targets": len(low), "H1": h1(Ml, rng2), "H3": h3(Ml, rng2)}
+    out["posthoc_hit_rate_le_5pct"] = {"targets": len(low), "H1": h1(Ml, rng2), "H3": h3(Ml, rng2, "tau_h3_le5pct.csv")}
     for ev in ("new", "lit_cv", "lit_pub"):
         g = M[M["eval"] == ev]
         if g.empty:
