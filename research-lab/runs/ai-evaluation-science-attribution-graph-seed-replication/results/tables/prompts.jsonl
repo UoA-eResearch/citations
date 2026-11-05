@@ -1,0 +1,212 @@
+{"family": "factual", "prompt": "The capital of France is", "target": " Paris", "target_id": 12095, "target_token": " Paris", "margin": 3.125}
+{"family": "factual", "prompt": "The capital of Italy is", "target": " Rome", "target_id": 21718, "target_token": " Rome", "margin": 2.75}
+{"family": "factual", "prompt": "The capital of Spain is", "target": " Madrid", "target_id": 24081, "target_token": " Madrid", "margin": 2.75}
+{"family": "factual", "prompt": "The capital of Egypt is", "target": " Cairo", "target_id": 52550, "target_token": " Cairo", "margin": 4.0}
+{"family": "factual", "prompt": "The capital of Greece is", "target": " Athens", "target_id": 45826, "target_token": " Athens", "margin": 2.5}
+{"family": "factual", "prompt": "The capital of Canada is", "target": " Ottawa", "target_id": 32166, "target_token": " Ottawa", "margin": 2.875}
+{"family": "factual", "prompt": "The capital of Kenya is", "target": " Nairobi", "target_id": 96525, "target_token": " Nairobi", "margin": 2.812}
+{"family": "factual", "prompt": "The capital of Norway is", "target": " Oslo", "target_id": 57858, "target_token": " Oslo", "margin": 3.062}
+{"family": "factual", "prompt": "The capital of Sweden is", "target": " Stockholm", "target_id": 52082, "target_token": " Stockholm", "margin": 2.25}
+{"family": "factual", "prompt": "The capital of Poland is", "target": " Warsaw", "target_id": 72176, "target_token": " Warsaw", "margin": 2.0}
+{"family": "factual", "prompt": "The capital of Austria is", "target": " Vienna", "target_id": 46287, "target_token": " Vienna", "margin": 2.5}
+{"family": "factual", "prompt": "The capital of Portugal is", "target": " Lisbon", "target_id": 80701, "target_token": " Lisbon", "margin": 4.562}
+{"family": "factual", "prompt": "The capital of Ireland is", "target": " Dublin", "target_id": 32877, "target_token": " Dublin", "margin": 2.938}
+{"family": "factual", "prompt": "The capital of Thailand is", "target": " Bangkok", "target_id": 59016, "target_token": " Bangkok", "margin": 3.5}
+{"family": "factual", "prompt": "The capital of Belgium is", "target": " Brussels", "target_id": 37169, "target_token": " Brussels", "margin": 3.125}
+{"family": "factual", "prompt": "The capital of Finland is", "target": " Helsinki", "target_id": 76334, "target_token": " Helsinki", "margin": 2.312}
+{"family": "factual", "prompt": "The capital of Denmark is", "target": " Copenhagen", "target_id": 63061, "target_token": " Copenhagen", "margin": 3.0}
+{"family": "factual", "prompt": "The capital of Iran is", "target": " Tehran", "target_id": 52695, "target_token": " Tehran", "margin": 3.625}
+{"family": "factual", "prompt": "The capital of Iraq is", "target": " Baghdad", "target_id": 55218, "target_token": " Baghdad", "margin": 3.0}
+{"family": "factual", "prompt": "The capital of Indonesia is", "target": " Jakarta", "target_id": 63033, "target_token": " Jakarta", "margin": 3.125}
+{"family": "factual", "prompt": "The chemical symbol for gold is", "target": " Au", "target_id": 32050, "target_token": " Au", "margin": 2.125}
+{"family": "factual", "prompt": "The chemical symbol for sodium is", "target": " Na", "target_id": 12812, "target_token": " Na", "margin": 2.625}
+{"family": "factual", "prompt": "The chemical symbol for potassium is", "target": " K", "target_id": 730, "target_token": " K", "margin": 2.375}
+{"family": "factual", "prompt": "The chemical symbol for copper is", "target": " Cu", "target_id": 26462, "target_token": " Cu", "margin": 3.375}
+{"family": "factual", "prompt": "The chemical symbol for oxygen is", "target": " O", "target_id": 506, "target_token": " O", "margin": 2.25}
+{"family": "antonym", "prompt": "The opposite of \"vrai\" in French is \"", "target": "faux", "target_id": 3632, "target_token": "fa", "margin": 3.625}
+{"family": "ioi", "prompt": "When Alice and Emma went to the school, Emma gave a book to", "target": " Alice", "target_id": 29405, "target_token": " Alice", "margin": 2.438}
+{"family": "ioi", "prompt": "When Alice and Tom went to the store, Tom gave a gift to", "target": " Alice", "target_id": 29405, "target_token": " Alice", "margin": 2.688}
+{"family": "ioi", "prompt": "When Emma and Mary went to the market, Mary gave an apple to", "target": " Emma", "target_id": 34935, "target_token": " Emma", "margin": 2.375}
+{"family": "ioi", "prompt": "When Tom and Michael went to the beach, Michael gave a ticket to", "target": " Tom", "target_id": 8364, "target_token": " Tom", "margin": 2.438}
+{"family": "ioi", "prompt": "When David and Michael went to the market, Michael gave a gift to", "target": " David", "target_id": 6798, "target_token": " David", "margin": 2.375}
+{"family": "ioi", "prompt": "When Emma and Sarah went to the market, Sarah gave a ticket to", "target": " Emma", "target_id": 34935, "target_token": " Emma", "margin": 2.125}
+{"family": "ioi", "prompt": "When Emma and Mary went to the park, Mary gave a book to", "target": " Emma", "target_id": 34935, "target_token": " Emma", "margin": 2.5}
+{"family": "ioi", "prompt": "When David and Alice went to the beach, Alice gave a gift to", "target": " David", "target_id": 6798, "target_token": " David", "margin": 3.25}
+{"family": "ioi", "prompt": "When Mary and John went to the park, John gave a ticket to", "target": " Mary", "target_id": 10244, "target_token": " Mary", "margin": 2.125}
+{"family": "ioi", "prompt": "When Tom and Michael went to the school, Michael gave a drink to", "target": " Tom", "target_id": 8364, "target_token": " Tom", "margin": 2.125}
+{"family": "ioi", "prompt": "When Tom and Anna went to the park, Anna gave a letter to", "target": " Tom", "target_id": 8364, "target_token": " Tom", "margin": 2.125}
+{"family": "ioi", "prompt": "When James and Emma went to the beach, Emma gave a ticket to", "target": " James", "target_id": 7801, "target_token": " James", "margin": 2.25}
+{"family": "ioi", "prompt": "When John and Mary went to the store, Mary gave an apple to", "target": " John", "target_id": 3757, "target_token": " John", "margin": 2.625}
+{"family": "ioi", "prompt": "When David and Mary went to the market, Mary gave a book to", "target": " David", "target_id": 6798, "target_token": " David", "margin": 2.5}
+{"family": "induction", "prompt": "window apple cloud silver lemon table | window apple cloud silver lemon", "target": " table", "target_id": 1965, "target_token": " table", "margin": 3.188}
+{"family": "induction", "prompt": "bottle river planet harbor rocket cloud | bottle river planet harbor rocket", "target": " cloud", "target_id": 9437, "target_token": " cloud", "margin": 3.625}
+{"family": "induction", "prompt": "pencil bottle harbor forest mountain lemon | pencil bottle harbor forest mountain", "target": " lemon", "target_id": 29464, "target_token": " lemon", "margin": 4.25}
+{"family": "induction", "prompt": "violin mountain candle silver rocket river | violin mountain candle silver rocket", "target": " river", "target_id": 14796, "target_token": " river", "margin": 2.125}
+{"family": "induction", "prompt": "dragon rocket garden planet table candle | dragon rocket garden planet table", "target": " candle", "target_id": 37799, "target_token": " candle", "margin": 2.625}
+{"family": "induction", "prompt": "silver basket pencil forest garden planet | silver basket pencil forest garden", "target": " planet", "target_id": 11580, "target_token": " planet", "margin": 4.625}
+{"family": "induction", "prompt": "mountain candle window harbor pencil bottle | mountain candle window harbor pencil", "target": " bottle", "target_id": 16486, "target_token": " bottle", "margin": 2.5}
+{"family": "induction", "prompt": "harbor lemon basket orange planet violin | harbor lemon basket orange planet", "target": " violin", "target_id": 62037, "target_token": " violin", "margin": 4.0}
+{"family": "induction", "prompt": "cloud pencil mountain lemon window harbor | cloud pencil mountain lemon window", "target": " harbor", "target_id": 56411, "target_token": " harbor", "margin": 5.312}
+{"family": "induction", "prompt": "harbor garden rocket forest cloud bottle | harbor garden rocket forest cloud", "target": " bottle", "target_id": 16486, "target_token": " bottle", "margin": 3.25}
+{"family": "induction", "prompt": "basket apple pencil dragon river candle | basket apple pencil dragon river", "target": " candle", "target_id": 37799, "target_token": " candle", "margin": 2.25}
+{"family": "induction", "prompt": "river table candle harbor violin apple | river table candle harbor violin", "target": " apple", "target_id": 23268, "target_token": " apple", "margin": 4.25}
+{"family": "induction", "prompt": "violin river rocket bottle garden forest | violin river rocket bottle garden", "target": " forest", "target_id": 13638, "target_token": " forest", "margin": 2.25}
+{"family": "induction", "prompt": "window rocket silver lemon river garden | window rocket silver lemon river", "target": " garden", "target_id": 13551, "target_token": " garden", "margin": 5.562}
+{"family": "induction", "prompt": "garden harbor basket cloud planet window | garden harbor basket cloud planet", "target": " window", "target_id": 3241, "target_token": " window", "margin": 3.75}
+{"family": "induction", "prompt": "dragon pencil garden orange window mountain | dragon pencil garden orange window", "target": " mountain", "target_id": 16301, "target_token": " mountain", "margin": 4.25}
+{"family": "induction", "prompt": "rocket lemon garden table mountain planet | rocket lemon garden table mountain", "target": " planet", "target_id": 11580, "target_token": " planet", "margin": 4.875}
+{"family": "induction", "prompt": "forest bottle basket apple orange cloud | forest bottle basket apple orange", "target": " cloud", "target_id": 9437, "target_token": " cloud", "margin": 4.312}
+{"family": "induction", "prompt": "dragon planet bottle window basket orange | dragon planet bottle window basket", "target": " orange", "target_id": 18575, "target_token": " orange", "margin": 2.125}
+{"family": "induction", "prompt": "bottle apple dragon basket cloud violin | bottle apple dragon basket cloud", "target": " violin", "target_id": 62037, "target_token": " violin", "margin": 3.25}
+{"family": "induction", "prompt": "planet window lemon violin mountain orange | planet window lemon violin mountain", "target": " orange", "target_id": 18575, "target_token": " orange", "margin": 3.375}
+{"family": "induction", "prompt": "basket harbor garden silver rocket table | basket harbor garden silver rocket", "target": " table", "target_id": 1965, "target_token": " table", "margin": 2.5}
+{"family": "induction", "prompt": "basket table lemon garden cloud candle | basket table lemon garden cloud", "target": " candle", "target_id": 37799, "target_token": " candle", "margin": 3.0}
+{"family": "induction", "prompt": "forest cloud rocket garden table harbor | forest cloud rocket garden table", "target": " harbor", "target_id": 56411, "target_token": " harbor", "margin": 3.0}
+{"family": "induction", "prompt": "violin basket orange harbor window cloud | violin basket orange harbor window", "target": " cloud", "target_id": 9437, "target_token": " cloud", "margin": 2.375}
+{"family": "induction", "prompt": "river rocket bottle harbor orange apple | river rocket bottle harbor orange", "target": " apple", "target_id": 23268, "target_token": " apple", "margin": 3.625}
+{"family": "induction", "prompt": "planet silver garden window lemon table | planet silver garden window lemon", "target": " table", "target_id": 1965, "target_token": " table", "margin": 4.75}
+{"family": "induction", "prompt": "violin garden harbor cloud apple lemon | violin garden harbor cloud apple", "target": " lemon", "target_id": 29464, "target_token": " lemon", "margin": 4.25}
+{"family": "induction", "prompt": "dragon violin pencil orange table harbor | dragon violin pencil orange table", "target": " harbor", "target_id": 56411, "target_token": " harbor", "margin": 3.062}
+{"family": "induction", "prompt": "table candle orange cloud violin planet | table candle orange cloud violin", "target": " planet", "target_id": 11580, "target_token": " planet", "margin": 3.5}
+{"family": "induction", "prompt": "planet violin silver garden apple mountain | planet violin silver garden apple", "target": " mountain", "target_id": 16301, "target_token": " mountain", "margin": 3.125}
+{"family": "induction", "prompt": "forest dragon rocket river window lemon | forest dragon rocket river window", "target": " lemon", "target_id": 29464, "target_token": " lemon", "margin": 6.062}
+{"family": "induction", "prompt": "violin table cloud forest rocket orange | violin table cloud forest rocket", "target": " orange", "target_id": 18575, "target_token": " orange", "margin": 2.125}
+{"family": "induction", "prompt": "apple river rocket planet pencil dragon | apple river rocket planet pencil", "target": " dragon", "target_id": 25105, "target_token": " dragon", "margin": 4.625}
+{"family": "induction", "prompt": "garden planet orange cloud river dragon | garden planet orange cloud river", "target": " dragon", "target_id": 25105, "target_token": " dragon", "margin": 4.5}
+{"family": "arithmetic", "prompt": "1 + 1 =", "target": " 2", "target_id": 220, "target_token": " ", "margin": 5.312}
+{"family": "arithmetic", "prompt": "1 + 2 =", "target": " 3", "target_id": 220, "target_token": " ", "margin": 3.938}
+{"family": "arithmetic", "prompt": "1 + 3 =", "target": " 4", "target_id": 220, "target_token": " ", "margin": 3.25}
+{"family": "arithmetic", "prompt": "1 + 4 =", "target": " 5", "target_id": 220, "target_token": " ", "margin": 3.5}
+{"family": "arithmetic", "prompt": "1 + 5 =", "target": " 6", "target_id": 220, "target_token": " ", "margin": 3.188}
+{"family": "arithmetic", "prompt": "1 + 6 =", "target": " 7", "target_id": 220, "target_token": " ", "margin": 3.062}
+{"family": "arithmetic", "prompt": "1 + 7 =", "target": " 8", "target_id": 220, "target_token": " ", "margin": 2.25}
+{"family": "arithmetic", "prompt": "1 + 8 =", "target": " 9", "target_id": 220, "target_token": " ", "margin": 2.312}
+{"family": "arithmetic", "prompt": "2 + 1 =", "target": " 3", "target_id": 220, "target_token": " ", "margin": 4.812}
+{"family": "arithmetic", "prompt": "2 + 2 =", "target": " 4", "target_id": 220, "target_token": " ", "margin": 4.625}
+{"family": "arithmetic", "prompt": "2 + 3 =", "target": " 5", "target_id": 220, "target_token": " ", "margin": 4.0}
+{"family": "arithmetic", "prompt": "2 + 4 =", "target": " 6", "target_id": 220, "target_token": " ", "margin": 3.75}
+{"family": "arithmetic", "prompt": "2 + 5 =", "target": " 7", "target_id": 220, "target_token": " ", "margin": 3.562}
+{"family": "arithmetic", "prompt": "2 + 6 =", "target": " 8", "target_id": 220, "target_token": " ", "margin": 3.625}
+{"family": "arithmetic", "prompt": "2 + 7 =", "target": " 9", "target_id": 220, "target_token": " ", "margin": 2.688}
+{"family": "arithmetic", "prompt": "3 + 1 =", "target": " 4", "target_id": 220, "target_token": " ", "margin": 5.125}
+{"family": "arithmetic", "prompt": "3 + 2 =", "target": " 5", "target_id": 220, "target_token": " ", "margin": 4.5}
+{"family": "arithmetic", "prompt": "3 + 3 =", "target": " 6", "target_id": 220, "target_token": " ", "margin": 4.438}
+{"family": "arithmetic", "prompt": "3 + 4 =", "target": " 7", "target_id": 220, "target_token": " ", "margin": 4.125}
+{"family": "arithmetic", "prompt": "3 + 5 =", "target": " 8", "target_id": 220, "target_token": " ", "margin": 3.875}
+{"family": "arithmetic", "prompt": "3 + 6 =", "target": " 9", "target_id": 220, "target_token": " ", "margin": 4.125}
+{"family": "arithmetic", "prompt": "4 + 1 =", "target": " 5", "target_id": 220, "target_token": " ", "margin": 4.75}
+{"family": "arithmetic", "prompt": "4 + 2 =", "target": " 6", "target_id": 220, "target_token": " ", "margin": 3.375}
+{"family": "arithmetic", "prompt": "4 + 3 =", "target": " 7", "target_id": 220, "target_token": " ", "margin": 2.812}
+{"family": "arithmetic", "prompt": "4 + 4 =", "target": " 8", "target_id": 220, "target_token": " ", "margin": 3.75}
+{"family": "arithmetic", "prompt": "4 + 5 =", "target": " 9", "target_id": 220, "target_token": " ", "margin": 2.562}
+{"family": "arithmetic", "prompt": "5 + 1 =", "target": " 6", "target_id": 220, "target_token": " ", "margin": 5.062}
+{"family": "arithmetic", "prompt": "5 + 2 =", "target": " 7", "target_id": 220, "target_token": " ", "margin": 3.875}
+{"family": "arithmetic", "prompt": "5 + 3 =", "target": " 8", "target_id": 220, "target_token": " ", "margin": 3.375}
+{"family": "arithmetic", "prompt": "5 + 4 =", "target": " 9", "target_id": 220, "target_token": " ", "margin": 3.312}
+{"family": "arithmetic", "prompt": "6 + 1 =", "target": " 7", "target_id": 220, "target_token": " ", "margin": 4.312}
+{"family": "arithmetic", "prompt": "6 + 2 =", "target": " 8", "target_id": 220, "target_token": " ", "margin": 2.875}
+{"family": "arithmetic", "prompt": "6 + 3 =", "target": " 9", "target_id": 220, "target_token": " ", "margin": 2.25}
+{"family": "arithmetic", "prompt": "7 + 1 =", "target": " 8", "target_id": 220, "target_token": " ", "margin": 5.188}
+{"family": "arithmetic", "prompt": "7 + 2 =", "target": " 9", "target_id": 220, "target_token": " ", "margin": 4.375}
+{"family": "arithmetic", "prompt": "8 + 1 =", "target": " 9", "target_id": 220, "target_token": " ", "margin": 5.0}
+{"family": "two_hop", "prompt": "Q: What is the capital of the country where the Colosseum is located? A: Rome\nQ: What is the capital of the country where the Eiffel Tower is located? A:", "target": " Paris", "target_id": 12095, "target_token": " Paris", "margin": 4.625}
+{"family": "two_hop", "prompt": "Q: What is the capital of the country where the Colosseum is located? A: Rome\nQ: What is the capital of the country where the Kremlin is located? A:", "target": " Moscow", "target_id": 22415, "target_token": " Moscow", "margin": 4.0}
+{"family": "two_hop", "prompt": "Q: What is the capital of the country where the Colosseum is located? A: Rome\nQ: What is the capital of the country where Chichen Itza is located? A:", "target": " Mexico City", "target_id": 12270, "target_token": " Mexico", "margin": 3.25}
+{"family": "antonym", "prompt": "French opposites: \"grand\" -> \"petit\"; \"chaud\" -> \"", "target": "froid", "target_id": 69, "target_token": "f", "margin": 4.875}
+{"family": "antonym", "prompt": "French opposites: \"jour\" -> \"nuit\"; \"grand\" -> \"", "target": "petit", "target_id": 6862, "target_token": "pet", "margin": 2.5}
+{"family": "antonym", "prompt": "French opposites: \"vrai\" -> \"faux\"; \"haut\" -> \"", "target": "bas", "target_id": 17797, "target_token": "bas", "margin": 4.5}
+{"family": "antonym", "prompt": "French opposites: \"noir\" -> \"blanc\"; \"vrai\" -> \"", "target": "faux", "target_id": 3632, "target_token": "fa", "margin": 2.875}
+{"family": "antonym", "prompt": "French opposites: \"riche\" -> \"pauvre\"; \"noir\" -> \"", "target": "blanc", "target_id": 2024, "target_token": "bl", "margin": 2.25}
+{"family": "antonym", "prompt": "French opposites: \"chaud\" -> \"froid\"; \"ouvert\" -> \"", "target": "fermé", "target_id": 802, "target_token": "fer", "margin": 3.75}
+{"family": "antonym", "prompt": "Spanish opposites: \"alto\" -> \"bajo\"; \"día\" -> \"", "target": "noche", "target_id": 2152, "target_token": "no", "margin": 3.5}
+{"family": "antonym", "prompt": "Spanish opposites: \"bueno\" -> \"malo\"; \"alto\" -> \"", "target": "bajo", "target_id": 65, "target_token": "b", "margin": 3.25}
+{"family": "antonym", "prompt": "Spanish opposites: \"abierto\" -> \"cerrado\"; \"lento\" -> \"", "target": "rápido", "target_id": 37368, "target_token": "rá", "margin": 4.125}
+{"family": "ioi", "prompt": "After Tom and Emma arrived at the beach, Emma handed a book to", "target": " Tom", "target_id": 8364, "target_token": " Tom", "margin": 2.188}
+{"family": "ioi", "prompt": "After James and Anna arrived at the beach, Anna handed a letter to", "target": " James", "target_id": 7801, "target_token": " James", "margin": 2.0}
+{"family": "ioi", "prompt": "After Tom and Alice arrived at the park, Alice handed an apple to", "target": " Tom", "target_id": 8364, "target_token": " Tom", "margin": 2.125}
+{"family": "ioi", "prompt": "After Tom and Sarah arrived at the park, Sarah handed a book to", "target": " Tom", "target_id": 8364, "target_token": " Tom", "margin": 2.688}
+{"family": "induction", "prompt": "harbor planet rocket river garden forest | harbor planet rocket river garden", "target": " forest", "target_id": 13638, "target_token": " forest", "margin": 2.0}
+{"family": "induction", "prompt": "lemon candle orange window table mountain | lemon candle orange window table", "target": " mountain", "target_id": 16301, "target_token": " mountain", "margin": 2.125}
+{"family": "induction", "prompt": "candle table garden window planet river | candle table garden window planet", "target": " river", "target_id": 14796, "target_token": " river", "margin": 3.688}
+{"family": "induction", "prompt": "candle pencil bottle harbor orange rocket | candle pencil bottle harbor orange", "target": " rocket", "target_id": 24306, "target_token": " rocket", "margin": 3.0}
+{"family": "induction", "prompt": "candle pencil silver apple table dragon | candle pencil silver apple table", "target": " dragon", "target_id": 25105, "target_token": " dragon", "margin": 3.75}
+{"family": "induction", "prompt": "basket lemon orange dragon river candle | basket lemon orange dragon river", "target": " candle", "target_id": 37799, "target_token": " candle", "margin": 2.438}
+{"family": "induction", "prompt": "silver basket river rocket garden candle | silver basket river rocket garden", "target": " candle", "target_id": 37799, "target_token": " candle", "margin": 2.438}
+{"family": "induction", "prompt": "garden lemon basket table rocket bottle | garden lemon basket table rocket", "target": " bottle", "target_id": 16486, "target_token": " bottle", "margin": 2.75}
+{"family": "induction", "prompt": "silver basket cloud rocket lemon dragon | silver basket cloud rocket lemon", "target": " dragon", "target_id": 25105, "target_token": " dragon", "margin": 7.062}
+{"family": "induction", "prompt": "garden table violin orange cloud apple | garden table violin orange cloud", "target": " apple", "target_id": 23268, "target_token": " apple", "margin": 3.5}
+{"family": "induction", "prompt": "mountain forest bottle harbor rocket violin | mountain forest bottle harbor rocket", "target": " violin", "target_id": 62037, "target_token": " violin", "margin": 2.375}
+{"family": "induction", "prompt": "apple candle forest harbor lemon violin | apple candle forest harbor lemon", "target": " violin", "target_id": 62037, "target_token": " violin", "margin": 4.25}
+{"family": "induction", "prompt": "orange window lemon pencil rocket planet | orange window lemon pencil rocket", "target": " planet", "target_id": 11580, "target_token": " planet", "margin": 3.375}
+{"family": "induction", "prompt": "silver garden mountain orange rocket planet | silver garden mountain orange rocket", "target": " planet", "target_id": 11580, "target_token": " planet", "margin": 4.125}
+{"family": "induction", "prompt": "apple cloud lemon candle bottle silver | apple cloud lemon candle bottle", "target": " silver", "target_id": 14961, "target_token": " silver", "margin": 2.25}
+{"family": "induction", "prompt": "mountain table silver rocket forest cloud | mountain table silver rocket forest", "target": " cloud", "target_id": 9437, "target_token": " cloud", "margin": 3.125}
+{"family": "induction", "prompt": "harbor table apple window silver candle | harbor table apple window silver", "target": " candle", "target_id": 37799, "target_token": " candle", "margin": 4.25}
+{"family": "induction", "prompt": "bottle harbor cloud candle apple garden | bottle harbor cloud candle apple", "target": " garden", "target_id": 13551, "target_token": " garden", "margin": 7.062}
+{"family": "induction", "prompt": "bottle river silver violin mountain planet | bottle river silver violin mountain", "target": " planet", "target_id": 11580, "target_token": " planet", "margin": 5.562}
+{"family": "induction", "prompt": "lemon river apple dragon window mountain | lemon river apple dragon window", "target": " mountain", "target_id": 16301, "target_token": " mountain", "margin": 5.0}
+{"family": "induction", "prompt": "garden dragon cloud planet rocket lemon | garden dragon cloud planet rocket", "target": " lemon", "target_id": 29464, "target_token": " lemon", "margin": 4.375}
+{"family": "induction", "prompt": "candle orange table lemon silver bottle | candle orange table lemon silver", "target": " bottle", "target_id": 16486, "target_token": " bottle", "margin": 3.188}
+{"family": "induction", "prompt": "bottle violin pencil mountain window dragon | bottle violin pencil mountain window", "target": " dragon", "target_id": 25105, "target_token": " dragon", "margin": 4.438}
+{"family": "induction", "prompt": "apple harbor lemon planet pencil garden | apple harbor lemon planet pencil", "target": " garden", "target_id": 13551, "target_token": " garden", "margin": 5.562}
+{"family": "induction", "prompt": "orange basket silver cloud dragon window | orange basket silver cloud dragon", "target": " window", "target_id": 3241, "target_token": " window", "margin": 2.375}
+{"family": "induction", "prompt": "planet basket lemon orange forest garden | planet basket lemon orange forest", "target": " garden", "target_id": 13551, "target_token": " garden", "margin": 5.0}
+{"family": "induction", "prompt": "forest bottle silver violin orange river | forest bottle silver violin orange", "target": " river", "target_id": 14796, "target_token": " river", "margin": 4.875}
+{"family": "induction", "prompt": "mountain garden planet river dragon apple | mountain garden planet river dragon", "target": " apple", "target_id": 23268, "target_token": " apple", "margin": 2.0}
+{"family": "induction", "prompt": "river bottle candle apple pencil cloud | river bottle candle apple pencil", "target": " cloud", "target_id": 9437, "target_token": " cloud", "margin": 3.75}
+{"family": "induction", "prompt": "window violin mountain candle silver garden | window violin mountain candle silver", "target": " garden", "target_id": 13551, "target_token": " garden", "margin": 3.875}
+{"family": "induction", "prompt": "bottle table rocket mountain garden cloud | bottle table rocket mountain garden", "target": " cloud", "target_id": 9437, "target_token": " cloud", "margin": 2.125}
+{"family": "induction", "prompt": "orange cloud silver window river violin | orange cloud silver window river", "target": " violin", "target_id": 62037, "target_token": " violin", "margin": 2.0}
+{"family": "induction", "prompt": "rocket lemon apple table basket river | rocket lemon apple table basket", "target": " river", "target_id": 14796, "target_token": " river", "margin": 3.625}
+{"family": "induction", "prompt": "rocket cloud dragon candle table river | rocket cloud dragon candle table", "target": " river", "target_id": 14796, "target_token": " river", "margin": 2.125}
+{"family": "induction", "prompt": "dragon pencil harbor table window planet | dragon pencil harbor table window", "target": " planet", "target_id": 11580, "target_token": " planet", "margin": 4.375}
+{"family": "induction", "prompt": "planet river dragon forest table bottle | planet river dragon forest table", "target": " bottle", "target_id": 16486, "target_token": " bottle", "margin": 2.375}
+{"family": "induction", "prompt": "dragon pencil lemon violin river rocket | dragon pencil lemon violin river", "target": " rocket", "target_id": 24306, "target_token": " rocket", "margin": 4.375}
+{"family": "induction", "prompt": "basket rocket bottle pencil planet orange | basket rocket bottle pencil planet", "target": " orange", "target_id": 18575, "target_token": " orange", "margin": 2.75}
+{"family": "induction", "prompt": "basket planet bottle lemon river harbor | basket planet bottle lemon river", "target": " harbor", "target_id": 56411, "target_token": " harbor", "margin": 4.312}
+{"family": "induction", "prompt": "cloud orange forest rocket harbor mountain | cloud orange forest rocket harbor", "target": " mountain", "target_id": 16301, "target_token": " mountain", "margin": 3.625}
+{"family": "induction", "prompt": "lemon window violin table river apple | lemon window violin table river", "target": " apple", "target_id": 23268, "target_token": " apple", "margin": 4.0}
+{"family": "induction", "prompt": "apple violin silver planet forest window | apple violin silver planet forest", "target": " window", "target_id": 3241, "target_token": " window", "margin": 2.375}
+{"family": "induction", "prompt": "silver window table cloud harbor dragon | silver window table cloud harbor", "target": " dragon", "target_id": 25105, "target_token": " dragon", "margin": 3.0}
+{"family": "induction", "prompt": "planet mountain lemon forest harbor candle | planet mountain lemon forest harbor", "target": " candle", "target_id": 37799, "target_token": " candle", "margin": 2.25}
+{"family": "induction", "prompt": "table candle garden mountain apple dragon | table candle garden mountain apple", "target": " dragon", "target_id": 25105, "target_token": " dragon", "margin": 4.25}
+{"family": "induction", "prompt": "rocket pencil mountain river forest orange | rocket pencil mountain river forest", "target": " orange", "target_id": 18575, "target_token": " orange", "margin": 3.0}
+{"family": "induction", "prompt": "mountain orange rocket pencil window cloud | mountain orange rocket pencil window", "target": " cloud", "target_id": 9437, "target_token": " cloud", "margin": 3.625}
+{"family": "induction", "prompt": "pencil window rocket garden lemon river | pencil window rocket garden lemon", "target": " river", "target_id": 14796, "target_token": " river", "margin": 5.25}
+{"family": "induction", "prompt": "basket lemon apple forest rocket harbor | basket lemon apple forest rocket", "target": " harbor", "target_id": 56411, "target_token": " harbor", "margin": 4.25}
+{"family": "induction", "prompt": "rocket lemon planet dragon silver apple | rocket lemon planet dragon silver", "target": " apple", "target_id": 23268, "target_token": " apple", "margin": 4.938}
+{"family": "induction", "prompt": "basket orange forest planet violin pencil | basket orange forest planet violin", "target": " pencil", "target_id": 46118, "target_token": " pencil", "margin": 4.375}
+{"family": "induction", "prompt": "basket harbor garden violin orange planet | basket harbor garden violin orange", "target": " planet", "target_id": 11580, "target_token": " planet", "margin": 5.25}
+{"family": "induction", "prompt": "planet silver river lemon window garden | planet silver river lemon window", "target": " garden", "target_id": 13551, "target_token": " garden", "margin": 5.312}
+{"family": "induction", "prompt": "dragon apple violin river candle lemon | dragon apple violin river candle", "target": " lemon", "target_id": 29464, "target_token": " lemon", "margin": 4.125}
+{"family": "induction", "prompt": "apple lemon pencil window harbor river | apple lemon pencil window harbor", "target": " river", "target_id": 14796, "target_token": " river", "margin": 3.375}
+{"family": "induction", "prompt": "orange mountain rocket planet river violin | orange mountain rocket planet river", "target": " violin", "target_id": 62037, "target_token": " violin", "margin": 3.75}
+{"family": "arithmetic", "prompt": "2 - 1 =", "target": " 1", "target_id": 220, "target_token": " ", "margin": 2.0}
+{"family": "arithmetic", "prompt": "3 - 1 =", "target": " 2", "target_id": 220, "target_token": " ", "margin": 2.375}
+{"family": "arithmetic", "prompt": "4 - 1 =", "target": " 3", "target_id": 220, "target_token": " ", "margin": 3.312}
+{"family": "arithmetic", "prompt": "4 - 2 =", "target": " 2", "target_id": 220, "target_token": " ", "margin": 2.0}
+{"family": "arithmetic", "prompt": "4 - 3 =", "target": " 1", "target_id": 220, "target_token": " ", "margin": 2.375}
+{"family": "arithmetic", "prompt": "5 - 1 =", "target": " 4", "target_id": 220, "target_token": " ", "margin": 2.5}
+{"family": "arithmetic", "prompt": "5 - 2 =", "target": " 3", "target_id": 220, "target_token": " ", "margin": 2.125}
+{"family": "arithmetic", "prompt": "5 - 3 =", "target": " 2", "target_id": 220, "target_token": " ", "margin": 2.625}
+{"family": "arithmetic", "prompt": "5 - 4 =", "target": " 1", "target_id": 220, "target_token": " ", "margin": 2.0}
+{"family": "arithmetic", "prompt": "6 - 1 =", "target": " 5", "target_id": 220, "target_token": " ", "margin": 2.625}
+{"family": "arithmetic", "prompt": "6 - 2 =", "target": " 4", "target_id": 220, "target_token": " ", "margin": 2.25}
+{"family": "arithmetic", "prompt": "7 - 1 =", "target": " 6", "target_id": 220, "target_token": " ", "margin": 2.562}
+{"family": "arithmetic", "prompt": "7 - 3 =", "target": " 4", "target_id": 220, "target_token": " ", "margin": 2.125}
+{"family": "arithmetic", "prompt": "7 - 5 =", "target": " 2", "target_id": 220, "target_token": " ", "margin": 2.25}
+{"family": "arithmetic", "prompt": "8 - 1 =", "target": " 7", "target_id": 220, "target_token": " ", "margin": 2.375}
+{"family": "arithmetic", "prompt": "8 - 2 =", "target": " 6", "target_id": 220, "target_token": " ", "margin": 2.0}
+{"family": "arithmetic", "prompt": "8 - 3 =", "target": " 5", "target_id": 220, "target_token": " ", "margin": 2.375}
+{"family": "arithmetic", "prompt": "8 - 4 =", "target": " 4", "target_id": 220, "target_token": " ", "margin": 2.25}
+{"family": "arithmetic", "prompt": "9 - 1 =", "target": " 8", "target_id": 220, "target_token": " ", "margin": 3.125}
+{"family": "arithmetic", "prompt": "9 - 2 =", "target": " 7", "target_id": 220, "target_token": " ", "margin": 2.375}
+{"family": "arithmetic", "prompt": "9 - 3 =", "target": " 6", "target_id": 220, "target_token": " ", "margin": 2.938}
+{"family": "arithmetic", "prompt": "9 - 4 =", "target": " 5", "target_id": 220, "target_token": " ", "margin": 2.688}
+{"family": "arithmetic", "prompt": "9 - 5 =", "target": " 4", "target_id": 220, "target_token": " ", "margin": 2.25}
+{"family": "factual", "prompt": "The capital of Morocco is", "target": " Rabat", "target_id": 35724, "target_token": " Rab", "margin": 2.0}
+{"family": "factual", "prompt": "The capital of Bulgaria is", "target": " Sofia", "target_id": 78563, "target_token": " Sofia", "margin": 2.875}
+{"family": "factual", "prompt": "The capital of Malaysia is", "target": " Kuala Lumpur", "target_id": 86333, "target_token": " Kuala", "margin": 2.125}
+{"family": "factual", "prompt": "The capital of Tunisia is", "target": " Tunis", "target_id": 94677, "target_token": " Tunis", "margin": 2.062}
+{"family": "factual", "prompt": "The capital of Syria is", "target": " Damascus", "target_id": 57023, "target_token": " Damascus", "margin": 2.438}
+{"family": "factual", "prompt": "The capital of Saudi Arabia is", "target": " Riyadh", "target_id": 89790, "target_token": " Riyadh", "margin": 2.5}

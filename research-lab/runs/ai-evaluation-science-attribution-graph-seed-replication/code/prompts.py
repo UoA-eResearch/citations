@@ -61,6 +61,40 @@ def main():
     for a in range(1, 9):
         for b in range(1, 10 - a):
             rows.append(("arithmetic", f"{a} + {b} =", " " + str(a + b)))
+    # D1 (added after the first selection kept 111 of 223, with two-hop 0, antonym 1 and IOI 14; before any graph):
+    # one worked example in the prompt for two-hop and antonyms (the example is never a target), and 90 more IOI prompts.
+    demo_lm, demo_cap = LANDMARKS[1]
+    for lm, cap in LANDMARKS:
+        if lm == demo_lm:
+            continue
+        rows.append(("two_hop", f"Q: What is the capital of the country where {demo_lm} is located? A: {demo_cap}\n"
+                                f"Q: What is the capital of the country where {lm} is located? A:", " " + cap))
+    for lang, pairs in ANTONYMS.items():
+        for i, (a, b) in enumerate(pairs):
+            da, db = pairs[(i + 1) % len(pairs)]
+            rows.append(("antonym", f'{lang} opposites: "{da}" -> "{db}"; "{a}" -> "', b))
+    rng2 = random.Random(20261106)
+    for _ in range(90):
+        a, b = rng2.sample(NAMES, 2); pl = rng2.choice(PLACES); ob = rng2.choice(OBJECTS)
+        rows.append(("ioi", f"After {a} and {b} arrived at the {pl}, {b} handed {ob} to", " " + a))
+    # D1 round 2 (two-hop kept 3 and antonym 10 even with a worked example): more prompts in the families the model
+    # handles - induction (second seed), subtraction, more capitals.
+    rng3 = random.Random(20261107)
+    for _ in range(60):
+        seq = rng3.sample(WORDS, 6)
+        rows.append(("induction", " ".join(seq) + " | " + " ".join(seq[:5]), " " + seq[5]))
+    for a in range(2, 10):
+        for b in range(1, a):
+            rows.append(("arithmetic", f"{a} - {b} =", " " + str(a - b)))
+    for c, cap in [("Morocco", "Rabat"), ("Nigeria", "Abuja"), ("Ukraine", "Kyiv"), ("Romania", "Bucharest"),
+                   ("Bulgaria", "Sofia"), ("Serbia", "Belgrade"), ("Croatia", "Zagreb"), ("Czechia", "Prague"),
+                   ("Switzerland", "Bern"), ("Netherlands", "Amsterdam"), ("Philippines", "Manila"),
+                   ("Malaysia", "Kuala Lumpur"), ("Pakistan", "Islamabad"), ("Bangladesh", "Dhaka"),
+                   ("Nepal", "Kathmandu"), ("Venezuela", "Caracas"), ("Ecuador", "Quito"), ("Uruguay", "Montevideo"),
+                   ("Ethiopia", "Addis Ababa"), ("Ghana", "Accra"), ("Senegal", "Dakar"), ("Algeria", "Algiers"),
+                   ("Tunisia", "Tunis"), ("Lebanon", "Beirut"), ("Syria", "Damascus"), ("Jordan", "Amman"),
+                   ("Saudi Arabia", "Riyadh"), ("Qatar", "Doha"), ("Mongolia", "Ulaanbaatar"), ("Iceland", "Reykjavik")]:
+        rows.append(("factual", f"The capital of {c} is", " " + cap))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with open(OUT, "w") as f:
         for fam, p, t in rows:
