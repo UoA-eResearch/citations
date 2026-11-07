@@ -4409,7 +4409,12 @@
    "scout_value_score": 7,
    "scout_cost_score": 5,
    "plain_summary": "To know whether a drug-activity model works, you hold out some molecules and test on them - but how you choose the held-out set changes the answer a lot, and the field argues about which choice is honest. Because ChEMBL publishes dated snapshots, we can settle it empirically: train on the 2023 snapshot, see what really happened in the 2023-2026 data, and check which held-out-set recipe would have predicted that. The output is a calibration table and a correction for over-optimistic published numbers.",
-   "scout_round": 2
+   "scout_round": 2,
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass)",
+   "report_url": "runs/cheminformatics-drug-discovery-split-calibration/report.html",
+   "verdict_tag": "Supported",
+   "verdict_note": "H1 Supported; H2 Refuted; H3 Refuted. For 250 ChEMBL targets, error on activities new in ChEMBL 37 (2023+ documents, compounds absent from ChEMBL 33) was compared with what seven retrospective splits estimated. Random and scaffold splits understate future error by about a third of a log unit. Document, author, assay, cluster and time splits are unbiased on average but miss by 0.16-0.22 per target, two to three times what sampling noise in both the retrospective and prospective estimates explains (about 0.07). No split recovers the prospective ranking of five model families (mean tau 0.35-0.41): every split correctly ranks the MLP last, and none orders the other four, which sit within a median 0.20 of each other. Review publish with edits; confirmation publish with edits.",
+   "headline": "Random and scaffold splits understate how well a bioactivity model will do on future data by a third of a log unit; smarter splits are right on average but miss by twice the noise per target, and none tells you which model to pick."
   },
   {
    "id": "cheminformatics-drug-discovery-cofold-selectivity",

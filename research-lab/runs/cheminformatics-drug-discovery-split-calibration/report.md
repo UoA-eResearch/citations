@@ -21,18 +21,19 @@ training began and committed before any fit had finished.*
   - **Not just noise (exploratory).** Sampling noise in both the prospective RMSE and the retrospective repeats
     would alone give a median absolute bias of about 0.07 for these splitters, and that is still a lower bound. The
     observed misses are 2.3–3.3 times that, so most of the per-target miss is real.
-  - **The bar was demanding.** With a noise floor near 0.07 and the bound estimated over about 250 targets, only a
-    splitter whose true per-target miss was near zero could pass. The verdict follows the preregistered rule.
+  - **The bar was achievable.** A simulation in the confirmation pass shows a true per-target miss of up to about
+    0.08 would usually pass it, roughly half the observed 0.17–0.22, so the refutation is not an artefact of an
+    impossible bar. The verdict follows the preregistered rule.
 - **H3 (the split changes which model you pick: Kendall τ ≤ 0.6 for scaffold and ≥ 0.8 for document splits):
   Refuted.**
   - No splitter ranks the five model families the way later data do.
   - The mean τ is 0.35–0.41 under every splitter (scaffold 0.39, document 0.37). The paired difference is −0.02
     (−0.06 to +0.02).
-  - **This is real instability, not near-ties.** Per target, the five families' prospective RMSEs span a median of
-    0.49 log units, and the MLP is clearly worse (median 1.41 against 1.04–1.09). Models this different are still
-    ranked only loosely by any retrospective split, which makes H3's conclusion stronger.
-  - **This bar was demanding too.** With five families τ moves in steps of 0.2 per target, and the document
-    splitter's upper bound (0.42) is far below 0.8.
+  - **What τ ≈ 0.4 reflects** (confirmation pass). It mostly reflects every split correctly ranking the MLP last:
+    81–98% of targets retrospectively, with the MLP worst prospectively in 78%. The other four families sit within a
+    median 0.20 of each other, and no split orders them (τ 0.12–0.18 over those four).
+  - **This bar was demanding.** Two single repeats of the same split, within release 33, agree only at τ 0.40–0.55,
+    against 0.30–0.37 for a single repeat against the prospective ranking.
 - **The pattern holds for every model family and prospective definition.**
   - It holds for random forest, LightGBM, Tanimoto SVR, kNN and MLP, and for all new activities from any year.
   - The MLP is the most overconfident under random splits (−0.56).
@@ -163,8 +164,8 @@ assay entropy, label variance and size. Its median absolute error under 5-fold c
 - **Prospective noise.** The prospective RMSE of a target with n compounds has a normal-theory standard error of
   about RMSE/√(2n). The median is 0.066 here.
 - **Retrospective noise** (added after review). The retrospective estimate is a mean of five repeats. Its standard
-  error, from the stored per-repeat RMSEs, has a median of 0.067 for document, assay and cluster splits and 0.052 for
-  author splits.
+  error, from the stored per-repeat RMSEs, has a median of 0.068 for document splits, 0.067 for assay and cluster
+  splits and 0.052 for author splits.
 - **Both together.** They would give a median absolute bias of about 0.065–0.069, against the observed 0.16–0.22
   for the provenance and cluster splitters, between 2.3 and 3.3 times larger. 46% (author) to 59% (document) of
   targets fall within two combined standard errors.
@@ -181,8 +182,10 @@ assay entropy, label variance and size. Its median absolute error under 5-fold c
 - **Group splits train on slightly more data.** Their draws accept a 15–25% test set, so the group splitters hold out
   a median 15–17% of compounds against 20% for random and time splits. This flatters them a little in the comparison
   H1 rests on, far too little to move H1 (post hoc, `results/tables/posthoc_review.json`).
-- **Dropped repeats fall on small targets.** The 13 targets with dropped repeats or infeasible author graphs have a
-  median of 196 compounds, against 789 for the rest.
+- **Dropped repeats fall on small targets, infeasible author splits on large ones.**
+  - The 13 targets with dropped repeats have a median of 196 compounds, against 789 for the rest.
+  - The 29 targets whose author graph was infeasible are larger (median 1,152 against 730; confirmation pass), so
+    author splits miss mostly large targets.
 - **Correcting the estimate does not help.** A corrector that sees every splitter's estimate and dataset descriptors
   does no better than the best single provenance split.
 - **Model selection is unreliable whichever split is used.** τ ≈ 0.4 means the retrospective ranking of five model
@@ -213,7 +216,8 @@ assay entropy, label variance and size. Its median absolute error under 5-fold c
   - G5: `review/overclaim_check.md`;
   - G6: `results/attribution_ledger.csv`;
   - G7 does not apply (no human labels).
-- **Independent review:** publish with edits (eight findings); the edits are in D1; confirmation pending.
+- **Independent review:** publish with edits (eight findings), edits in D1; confirmation pass: publish with edits,
+  made in D2.
 
 ## Reproducing it
 

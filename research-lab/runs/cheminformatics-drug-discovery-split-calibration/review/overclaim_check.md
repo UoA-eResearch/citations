@@ -22,29 +22,30 @@ Fill in every row: backing = the table/figure and number that supports the sente
 | 16 | verdict | Cluster, assay and within-release time splits behave the same: signed bias −0.05 to +0.01, absolute bias 0.16–0.19. | primary.json bias_rf cluster/assay/time signed -0.048..+0.009, abs 0.155-0.194 | Supported |  |
 | 17 | verdict | **Not just noise (exploratory).** Sampling noise in both the prospective RMSE and the retrospective repeats would alone give a median absolute bias of about 0.07 for these splitters, and that is still a lower bound. | noise_check.json expected_median_abs_bias_from_noise 0.065-0.069 (assay/author/cluster/document) | Supported | updated after review (finding 1) |
 | 18 | verdict | The observed misses are 2.3–3.3 times that, so most of the per-target miss is real. | noise_check.json observed 0.156-0.216 / expected 0.065-0.069 = 2.3-3.3x | Supported |  |
-| 19 | verdict | **The bar was demanding.** With a noise floor near 0.07 and the bound estimated over about 250 targets, only a splitter whose true per-target miss was near zero could pass. | noise_check.json floor ~0.07; primary.json H2 bound over 247-250 targets; bar 0.12 | Supported | review finding 2 |
+| 19 | verdict | **The bar was achievable.** A simulation in the confirmation pass shows a true per-target miss of up to about 0.08 would usually pass it, roughly half the observed 0.17–0.22, so the refutation is not an artefact of an impossible bar. | review/review.md confirmation pass: simulated true miss 0.08 passes 98% of the time | Supported | replaces 'near zero' (confirmation) |
 | 20 | verdict | The verdict follows the preregistered rule. | primary.json H2 verdict Refuted by the plan's rule | Supported |  |
 | 21 | verdict | **H3 (the split changes which model you pick: Kendall τ ≤ 0.6 for scaffold and ≥ 0.8 for document splits): Refuted.** | primary.json H3 verdict Refuted (document tau upper 0.42 < 0.8) | Supported |  |
 | 22 | verdict | No splitter ranks the five model families the way later data do. | primary.json H3 mean_tau 0.347-0.410 | Supported |  |
 | 23 | verdict | The mean τ is 0.35–0.41 under every splitter (scaffold 0.39, document 0.37). | primary.json H3 mean_tau scaffold 0.387, document 0.373 | Supported |  |
 | 24 | verdict | The paired difference is −0.02 (−0.06 to +0.02). | primary.json H3 document_minus_scaffold -0.0178 [-0.0575,0.0235] | Supported |  |
-| 25 | verdict | **This is real instability, not near-ties.** Per target, the five families' prospective RMSEs span a median of 0.49 log units, and the MLP is clearly worse (median 1.41 against 1.04–1.09). | posthoc_review.json model_spread median 0.493; mlp 1.413 vs 1.043-1.089 | Supported | review finding 3 |
-| 26 | verdict | Models this different are still ranked only loosely by any retrospective split, which makes H3's conclusion stronger. | posthoc_review.json model spread + primary.json mean tau 0.35-0.41 | Supported | inference, stated as such |
-| 27 | verdict | **This bar was demanding too.** With five families τ moves in steps of 0.2 per target, and the document splitter's upper bound (0.42) is far below 0.8. | primary.json H3 document ci [0.3239, 0.4186]; five families -> tau in steps of 0.2 | Supported | review finding 2 |
-| 28 | verdict | **The pattern holds for every model family and prospective definition.** | primary.json median_bias_all (primary and alldelta, all models) | Supported |  |
-| 29 | verdict | It holds for random forest, LightGBM, Tanimoto SVR, kNN and MLP, and for all new activities from any year. | primary.json median_bias_all primary and alldelta (all models) random -0.31..-0.56, scaffold -0.22..-0.43 | Supported |  |
-| 30 | verdict | The MLP is the most overconfident under random splits (−0.56). | primary.json median_bias_all primary mlp random -0.56 | Supported |  |
-| 31 | verdict | On the lenient set (compounds already in ChEMBL 33 but new to the target), every splitter understates the error. | primary.json median_bias_all lenient (all models) all negative | Supported |  |
-| 32 | verdict | That set is small, though: 2,859 rows over 212 targets, a median of 8 compounds per target, with 81% of targets under 20. | posthoc_review.json lenient_set targets 212, rows 2,859, median 8, share under 20 0.807 | Supported | review finding 7 |
-| 33 | verdict | Its per-target RMSEs are very noisy. | SE of an RMSE from ~8 points ~ RMSE/4 (normal theory) | Supported |  |
-| 34 | plain terms | Chemists train machine-learning models on past experiments to predict how strongly new molecules will bind a drug target. | background (QSAR practice) | Supported |  |
-| 35 | plain terms | Before trusting a model, they test it by hiding part of the past data and checking predictions against it. | background | Supported |  |
-| 36 | plain terms | How that part is chosen matters. | primary.json bias_rf range across splitters | Supported |  |
-| 37 | plain terms | Hide molecules at random, and the test molecules usually have close relatives in the training data. | fits/*.json nn_sim_median: random 0.80 vs prospective 0.43 | Supported |  |
-| 38 | plain terms | That makes the test too easy. | primary.json random bias -0.37 | Supported |  |
-| 39 | plain terms | We checked seven ways of hiding data against what actually happened next. | plan.md section 4 | Supported |  |
-| 40 | plain terms | We trained on the 2023 edition of the public ChEMBL database and tested on molecules first published from 2023 on, which appear only in the 2026 edition. | plan.md sections 1-2 | Supported |  |
-| 41 | plain terms | Random and "scaffold" tests made models look much better than they turned out to be. | primary.json random/scaffold bias | Supported |  |
-| 42 | plain terms | Their typical error on the future molecules was about 1.1 units on a log scale, against 0.7–0.8 in those tests. | median pros RMSE 1.07; retro random 0.68, scaffold 0.78 | Supported |  |
-| 43 | plain terms | Hiding whole papers, author groups, assays or the latest compounds gave about the right error on average, but could still be well off for any one target. | primary.json signed ~0, abs 0.16-0.22 | Supported |  |
-| 44 | plain terms | And no test reliably picked the model that did best on the future data. | primary.json H3 tau ~0.4 | Supported |  |
+| 25 | verdict | **What τ ≈ 0.4 reflects** (confirmation pass). | review/review.md confirmation pass: MLP ranked last in 81-98% of targets retrospectively; worst prospectively in 78% | Supported | replaces the model-spread inference |
+| 26 | verdict | It mostly reflects every split correctly ranking the MLP last: 81–98% of targets retrospectively, with the MLP worst prospectively in 78%. | review/review.md confirmation pass: other four within median 0.20; tau over the four 0.12-0.18 | Supported |  |
+| 27 | verdict | The other four families sit within a median 0.20 of each other, and no split orders them (τ 0.12–0.18 over those four). | review/review.md confirmation pass: within-release single-repeat tau 0.40-0.55 vs 0.30-0.37 against the future | Supported |  |
+| 28 | verdict | **This bar was demanding.** Two single repeats of the same split, within release 33, agree only at τ 0.40–0.55, against 0.30–0.37 for a single repeat against the prospective ranking. | review/review.md confirmation pass: noise-ceiling figures | Supported |  |
+| 29 | verdict | **The pattern holds for every model family and prospective definition.** | primary.json median_bias_all (primary and alldelta, all models) | Supported |  |
+| 30 | verdict | It holds for random forest, LightGBM, Tanimoto SVR, kNN and MLP, and for all new activities from any year. | primary.json median_bias_all primary and alldelta (all models) random -0.31..-0.56, scaffold -0.22..-0.43 | Supported |  |
+| 31 | verdict | The MLP is the most overconfident under random splits (−0.56). | primary.json median_bias_all primary mlp random -0.56 | Supported |  |
+| 32 | verdict | On the lenient set (compounds already in ChEMBL 33 but new to the target), every splitter understates the error. | primary.json median_bias_all lenient (all models) all negative | Supported |  |
+| 33 | verdict | That set is small, though: 2,859 rows over 212 targets, a median of 8 compounds per target, with 81% of targets under 20. | posthoc_review.json lenient_set targets 212, rows 2,859, median 8, share under 20 0.807 | Supported | review finding 7 |
+| 34 | verdict | Its per-target RMSEs are very noisy. | SE of an RMSE from ~8 points ~ RMSE/4 (normal theory) | Supported |  |
+| 35 | plain terms | Chemists train machine-learning models on past experiments to predict how strongly new molecules will bind a drug target. | background (QSAR practice) | Supported |  |
+| 36 | plain terms | Before trusting a model, they test it by hiding part of the past data and checking predictions against it. | background | Supported |  |
+| 37 | plain terms | How that part is chosen matters. | primary.json bias_rf range across splitters | Supported |  |
+| 38 | plain terms | Hide molecules at random, and the test molecules usually have close relatives in the training data. | fits/*.json nn_sim_median: random 0.80 vs prospective 0.43 | Supported |  |
+| 39 | plain terms | That makes the test too easy. | primary.json random bias -0.37 | Supported |  |
+| 40 | plain terms | We checked seven ways of hiding data against what actually happened next. | plan.md section 4 | Supported |  |
+| 41 | plain terms | We trained on the 2023 edition of the public ChEMBL database and tested on molecules first published from 2023 on, which appear only in the 2026 edition. | plan.md sections 1-2 | Supported |  |
+| 42 | plain terms | Random and "scaffold" tests made models look much better than they turned out to be. | primary.json random/scaffold bias | Supported |  |
+| 43 | plain terms | Their typical error on the future molecules was about 1.1 units on a log scale, against 0.7–0.8 in those tests. | median pros RMSE 1.07; retro random 0.68, scaffold 0.78 | Supported |  |
+| 44 | plain terms | Hiding whole papers, author groups, assays or the latest compounds gave about the right error on average, but could still be well off for any one target. | primary.json signed ~0, abs 0.16-0.22 | Supported |  |
+| 45 | plain terms | And no test reliably picked the model that did best on the future data. | primary.json H3 tau ~0.4 | Supported |  |

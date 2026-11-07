@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Split Calibration</title>
+<meta name="description" content="Do innocent citers of a later-retracted paper lose citations after the retraction?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Metascience</div>
+  <h1>Which retrospective split predicts error on future bioactivity data? Random and scaffold splits understate it by about a third of a log unit; provenance and time splits are unbiased on average but miss by 0.15–0.22 per target, and no split recovers the model ranking</h1>
+  <p class="subtitle">250 ChEMBL protein targets. Models were trained on ChEMBL 33 (2023) and tested on compounds first measured in documents from 2023 onward that appear only in ChEMBL 37 (2026). Seven retrospective splitters and five model families. The plan and all analysis code were committed before any ChEMBL table was read. The target list was written before training began and committed before any fit had finished.</p>
+  <div class="meta">
+    <span>Report · 2026-11-05 · revised after independent review and a confirmation pass</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/cheminformatics-drug-discovery-split-calibration/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/cheminformatics-drug-discovery-split-calibration/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/cheminformatics-drug-discovery-split-calibration/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: H1 Supported; H2 Refuted; H3 Refuted.</strong></p>
+<ul>
+<li><strong>H1 (random and scaffold splits understate prospective error by at least 0.25 log units): Supported.</strong><ul>
+<li>The primary model is a random forest on ECFP4. Its median signed bias (retrospective RMSE − prospective RMSE)
+over 250 targets is −0.37 (95% CI −0.42 to −0.33) for random splits and −0.27 (−0.32 to −0.22) for scaffold
+splits.</li>
+<li>The median prospective RMSE is 1.07 pChEMBL units. A random split reports 0.68, and a scaffold split 0.78.</li>
+</ul>
+</li>
+<li><strong>H2 (document- and author-disjoint splits are nearly unbiased: median absolute bias ≤ 0.12): Refuted.</strong><ul>
+<li>On average they are close to unbiased: median signed bias −0.04 (document) and +0.03 (author).</li>
+<li>Per target they miss by more than the bar: the median absolute bias is 0.17 (0.14–0.19) for document splits and
+0.22 (0.18–0.23) for author splits.</li>
+<li>Cluster, assay and within-release time splits behave the same: signed bias −0.05 to +0.01, absolute bias
+0.16–0.19.</li>
+<li><strong>Not just noise (exploratory).</strong> Sampling noise in both the prospective RMSE and the retrospective repeats
+would alone give a median absolute bias of about 0.07 for these splitters, and that is still a lower bound. The
+observed misses are 2.3–3.3 times that, so most of the per-target miss is real.</li>
+<li><strong>The bar was achievable.</strong> A simulation in the confirmation pass shows a true per-target miss of up to about
+0.08 would usually pass it, roughly half the observed 0.17–0.22, so the refutation is not an artefact of an
+impossible bar. The verdict follows the preregistered rule.</li>
+</ul>
+</li>
+<li><strong>H3 (the split changes which model you pick: Kendall τ ≤ 0.6 for scaffold and ≥ 0.8 for document splits):
+  Refuted.</strong><ul>
+<li>No splitter ranks the five model families the way later data do.</li>
+<li>The mean τ is 0.35–0.41 under every splitter (scaffold 0.39, document 0.37). The paired difference is −0.02
+(−0.06 to +0.02).</li>
+<li><strong>What τ ≈ 0.4 reflects</strong> (confirmation pass). It mostly reflects every split correctly ranking the MLP last:
+81–98% of targets retrospectively, with the MLP worst prospectively in 78%. The other four families sit within a
+median 0.20 of each other, and no split orders them (τ 0.12–0.18 over those four).</li>
+<li><strong>This bar was demanding.</strong> Two single repeats of the same split, within release 33, agree only at τ 0.40–0.55,
+against 0.30–0.37 for a single repeat against the prospective ranking.</li>
+</ul>
+</li>
+<li><strong>The pattern holds for every model family and prospective definition.</strong><ul>
+<li>It holds for random forest, LightGBM, Tanimoto SVR, kNN and MLP, and for all new activities from any year.</li>
+<li>The MLP is the most overconfident under random splits (−0.56).</li>
+<li>On the lenient set (compounds already in ChEMBL 33 but new to the target), every splitter understates the error.
+That set is small, though: 2,859 rows over 212 targets, a median of 8 compounds per target, with 81% of targets
+under 20. Its per-target RMSEs are very noisy.</li>
+</ul>
+</li>
+</ul>
+<h2>In plain terms</h2>
+<p>Chemists train machine-learning models on past experiments to predict how strongly new molecules will bind a drug
+target. Before trusting a model, they test it by hiding part of the past data and checking predictions against it.
+How that part is chosen matters. Hide molecules at random, and the test molecules usually have close relatives in
+the training data. That makes the test too easy.</p>
+<p>We checked seven ways of hiding data against what actually happened next. We trained on the 2023 edition of the
+public ChEMBL database and tested on molecules first published from 2023 on, which appear only in the 2026
+edition.</p>
+<p>Random and "scaffold" tests made models look much better than they turned out to be. Their typical error on the
+future molecules was about 1.1 units on a log scale, against 0.7–0.8 in those tests. Hiding whole papers, author
+groups, assays or the latest compounds gave about the right error on average, but could still be well off for any
+one target. And no test reliably picked the model that did best on the future data.</p>
+<h2>What was asked</h2>
+<p>The lead (<code>cheminformatics-drug-discovery-split-calibration</code>) asked which retrospective splitting strategy best
+predicts prospective performance, measured against a real future, not a simulated one.</p>
+<p>Prior work:
+- <strong>Sheridan (2013).</strong> Time splits give prospective-like estimates; random splits are too optimistic and
+  leave-class-out splits too pessimistic, on in-house data.
+- <strong>Almendra and Falcão (2026).</strong> On 14 ChEMBL classification sets, chronological validation shows a gap that random
+  and structure-filtered validation do not reproduce.
+- <strong>Clever Hans in Chemistry (arXiv 2512.20924).</strong> Models can learn chemist style, which motivates author-disjoint
+  splits, but those splits were not validated against future data.</p>
+<p>H1 is therefore partly confirmatory. What is new is a real prospective truth from later database releases,
+regression error, provenance splitters (document, author, assay), model ranking, and 250 targets.</p>
+<h2>How it was done</h2>
+<ul>
+<li><strong>Data</strong> (ChEMBL 33 and 37 SQLite; ledger L4).<ul>
+<li>Activities pass the following filters: pChEMBL present; relation "="; binding assays; confidence 9; single
+protein; no validity flag; not a potential duplicate.</li>
+<li>Compounds are keyed by standard InChIKey. The median pChEMBL per target and compound is used.</li>
+<li>This leaves 973,255 activities in release 33 and 1,357,779 in release 37 (<code>results/tables/coverage.json</code>).</li>
+</ul>
+</li>
+<li><strong>Prospective truth (primary).</strong><ul>
+<li>Activities new in release 37 (387,035), from documents dated 2023 or later (108,593), on compounds whose
+InChIKey is absent from release 33.</li>
+<li><strong>Delta audit (G4).</strong> Of 60 sampled new activities, 16 come from 2023+ publications, 43 are older publications
+newly curated, and 1 is a re-deposited record. That is why the 2023+ restriction is needed.<ul>
+<li>The audit tabulates each document's recorded year (<code>code/select.py</code>). It shows how much of the delta is old
+  work newly curated, but it cannot detect a 2023+ document that republishes older measurements.</li>
+<li>The independent review checked the strict set at the InChIKey skeleton level: 0.86% of primary prospective
+  rows share a skeleton block with a ChEMBL 33 compound, with no correlation with error (<code>review/review.md</code>,
+  finding 5).</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Targets.</strong><ul>
+<li>Eligible targets have ≥ 100 compounds in release 33 and ≥ 50 primary prospective compounds: 295 of them, of
+which a random 250 are used.</li>
+<li>Training sizes run from 101 to 8,290 compounds (median 744). The median prospective set is 127 compounds.</li>
+</ul>
+</li>
+<li><strong>Splitters</strong> (inside release 33, about 20% test, 5 repeats each):<ul>
+<li>random;</li>
+<li>Bemis–Murcko scaffold (L5);</li>
+<li>Butina clusters at Tanimoto distance 0.65 (L6);</li>
+<li>document-disjoint;</li>
+<li>author-disjoint (documents linked by shared author);</li>
+<li>assay-disjoint;</li>
+<li>the latest 20% by document year (1 repeat).</li>
+</ul>
+</li>
+<li><strong>Models</strong> (fixed hyperparameters):<ul>
+<li>RF (500 trees) on ECFP4 (L7);</li>
+<li>LightGBM on RDKit descriptors;</li>
+<li>SVR with a Tanimoto kernel;</li>
+<li>Tanimoto-weighted kNN;</li>
+<li>MLP.</li>
+</ul>
+</li>
+<li><strong>Inference.</strong> 2,000 bootstrap resamples over targets.</li>
+<li><strong>Coverage (G2).</strong><ul>
+<li>37,600 of 38,170 fit units ran.</li>
+<li>The 570 others are planned drops. In 425, no group draw gave a 15–25% test set. In 145, the author graph was
+infeasible (one component holds more than 80% of compounds).</li>
+<li>So author splits cover 212 targets, document and cluster 247, and assay 248.</li>
+</ul>
+</li>
+</ul>
+<h2>Results</h2>
+<h3>Bias by splitter (<code>results/figures/F1_bias_by_splitter.png</code>)</h3>
+<figure><a href="results/figures/F1_bias_by_splitter.png"><img src="results/figures/F1_bias_by_splitter.png" alt="Bias"></a><figcaption>Signed bias of the ECFP4 random forest&#x27;s retrospective RMSE against its prospective RMSE on ChEMBL 37 compounds first measured in 2023+ documents, one dot per target (250 targets). Bars: medians with 95% bootstrap intervals over targets. Negative means the split understated the error. Orange: the H1 splitters; blue: the H2 provenance splitters. The y-axis is clipped to the 1st-99th percentiles.</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>splitter</th>
+<th>targets</th>
+<th>median signed bias (95% CI)</th>
+<th>median absolute bias (95% CI)</th>
+<th>median retrospective RMSE</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>random</td>
+<td>250</td>
+<td>−0.37 (−0.42 to −0.33)</td>
+<td>0.37 (0.33–0.42)</td>
+<td>0.68</td>
+</tr>
+<tr>
+<td>scaffold</td>
+<td>250</td>
+<td>−0.27 (−0.32 to −0.22)</td>
+<td>0.28 (0.23–0.33)</td>
+<td>0.78</td>
+</tr>
+<tr>
+<td>cluster</td>
+<td>247</td>
+<td>−0.05 (−0.08 to −0.00)</td>
+<td>0.18 (0.15–0.22)</td>
+<td>1.01</td>
+</tr>
+<tr>
+<td>document</td>
+<td>247</td>
+<td>−0.04 (−0.07 to −0.01)</td>
+<td>0.17 (0.14–0.19)</td>
+<td>1.03</td>
+</tr>
+<tr>
+<td>author</td>
+<td>212</td>
+<td>+0.03 (−0.01 to +0.10)</td>
+<td>0.22 (0.18–0.23)</td>
+<td>1.09</td>
+</tr>
+<tr>
+<td>assay</td>
+<td>248</td>
+<td>−0.04 (−0.09 to +0.00)</td>
+<td>0.16 (0.13–0.18)</td>
+<td>1.01</td>
+</tr>
+<tr>
+<td>time (within release 33)</td>
+<td>250</td>
+<td>+0.01 (−0.04 to +0.04)</td>
+<td>0.19 (0.17–0.22)</td>
+<td>1.05</td>
+</tr>
+</tbody>
+</table></div>
+<p>The median prospective RMSE is 1.07.
+- <strong>Why.</strong> The median nearest-neighbour Tanimoto similarity of test compounds to their training set is 0.80 for
+  random splits, 0.70 for scaffold, 0.50 for document and 0.46 for time splits. For the real prospective compounds it
+  is 0.43 (from <code>data/fits/</code>).
+- <strong>Ranking quality is overstated too.</strong> The retrospective minus prospective Spearman ρ is +0.45 (random) and +0.34 (scaffold), against +0.06 to +0.11 for
+  the other splitters.</p>
+<h3>Model ranking (<code>results/figures/F2_ranking_tau.png</code>)</h3>
+<figure><a href="results/figures/F2_ranking_tau.png"><img src="results/figures/F2_ranking_tau.png" alt="Tau"></a><figcaption>Per target, Kendall tau between the five model families&#x27; ranking by retrospective RMSE and by prospective RMSE, averaged over targets, with 95% bootstrap intervals. 1 means the split ranks the models exactly as the later data do.</figcaption></figure>
+<h3>By how novel the later chemistry is (<code>results/figures/F3_bias_by_similarity.png</code>)</h3>
+<figure><a href="results/figures/F3_bias_by_similarity.png"><img src="results/figures/F3_bias_by_similarity.png" alt="Similarity"></a><figcaption>Median signed bias of the random forest by tercile of targets ranked by the median Tanimoto similarity of their prospective compounds to the nearest training compound (ECFP4).</figcaption></figure>
+<p>Random and scaffold splits stay optimistic in every tercile of prospective-to-training similarity, from −0.37
+(lowest) to −0.32 (highest) for random splits. The other splitters stay within ±0.1.</p>
+<h3>Bias corrector (secondary)</h3>
+<p>A gradient-boosting corrector was trained to predict each target's prospective RMSE. Its inputs were the
+retrospective RMSEs of all seven splitters plus dataset descriptors: similarity, activity-cliff density, document and
+assay entropy, label variance and size. Its median absolute error under 5-fold cross-validation over targets is 0.17
+(<code>results/tables/corrector.json</code>).
+- That misses the 0.10 bar, and is no better than taking the assay split's estimate as is (0.16) or the document
+  split's (0.17).
+- The most important input was the assay-split RMSE.</p>
+<h3>Is the per-target miss just noise? (exploratory, <code>results/tables/noise_check.json</code>)</h3>
+<ul>
+<li><strong>Prospective noise.</strong> The prospective RMSE of a target with n compounds has a normal-theory standard error of
+  about RMSE/√(2n). The median is 0.066 here.</li>
+<li><strong>Retrospective noise</strong> (added after review). The retrospective estimate is a mean of five repeats. Its standard
+  error, from the stored per-repeat RMSEs, has a median of 0.068 for document splits, 0.067 for assay and cluster
+  splits and 0.052 for author splits.</li>
+<li><strong>Both together.</strong> They would give a median absolute bias of about 0.065–0.069, against the observed 0.16–0.22
+  for the provenance and cluster splitters, between 2.3 and 3.3 times larger. 46% (author) to 59% (document) of
+  targets fall within two combined standard errors.</li>
+<li><strong>The time splitter has one repeat,</strong> so only its prospective term is counted.</li>
+<li><strong>Heavy-tailed errors are still ignored,</strong> so this remains a lower bound on noise.</li>
+</ul>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>Random and scaffold splits overstate performance on future data,</strong> by about a third of a log unit of RMSE and
+  about 0.3–0.45 in Spearman ρ. A scaffold split is only modestly better than random.</li>
+<li><strong>Splits that hold out whole papers, author groups, assays, clusters or the latest compounds are right on average
+  but noisy per target.</strong> The typical miss of 0.15–0.22 log units is larger than the H2 bar. This agrees with Sheridan
+  (2013) on time splits. Unlike his leave-class-out case, cluster splits here are not pessimistic.</li>
+<li><strong>Group splits train on slightly more data.</strong> Their draws accept a 15–25% test set, so the group splitters hold out
+  a median 15–17% of compounds against 20% for random and time splits. This flatters them a little in the comparison
+  H1 rests on, far too little to move H1 (post hoc, <code>results/tables/posthoc_review.json</code>).</li>
+<li><strong>Dropped repeats fall on small targets, infeasible author splits on large ones.</strong><ul>
+<li>The 13 targets with dropped repeats have a median of 196 compounds, against 789 for the rest.</li>
+<li>The 29 targets whose author graph was infeasible are larger (median 1,152 against 730; confirmation pass), so
+author splits miss mostly large targets.</li>
+</ul>
+</li>
+<li><strong>Correcting the estimate does not help.</strong> A corrector that sees every splitter's estimate and dataset descriptors
+  does no better than the best single provenance split.</li>
+<li><strong>Model selection is unreliable whichever split is used.</strong> τ ≈ 0.4 means the retrospective ranking of five model
+  families only loosely predicts the prospective one.</li>
+<li><strong>Not shown:</strong><ul>
+<li><strong>Random future chemistry.</strong> The prospective sets are the series chemists chose to pursue; results are
+stratified by similarity.</li>
+<li><strong>Tuned models.</strong> Hyperparameters were fixed in advance.</li>
+<li><strong>Assays other than binding,</strong> and author disambiguation finer than surname plus first initial.</li>
+<li><strong>Within-release time splits as a true future.</strong> The time splitter uses document years inside release 33. Its
+near-zero bias is a retrospective result.</li>
+</ul>
+</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration:</strong> <code>plan.md</code>, committed before any ChEMBL table was read.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>): D1, after the independent review:<ul>
+<li>the noise floor gains the retrospective term;</li>
+<li>the H2 and H3 bars are stated against what was achievable;</li>
+<li>model spread, test fractions, lenient-set sizes and the delta audit's scope are stated (post hoc);</li>
+<li>the time splitter's zero-width coverage is noted.</li>
+</ul>
+</li>
+</ul>
+<p>The ChEMBL download needed a resumable fetcher because EBI throttles this host; this changed no analysis choice.
+- <strong>Gates:</strong>
+    - G1 leakage audit: plan §7;
+    - G2: <code>results/tables/coverage.json</code>;
+    - G3: <code>results/plausibility.md</code>;
+    - G4: the delta audit (a document-year tabulation; see Prospective truth);
+    - G5: <code>review/overclaim_check.md</code>;
+    - G6: <code>results/attribution_ledger.csv</code>;
+    - G7 does not apply (no human labels).
+- <strong>Independent review:</strong> publish with edits (eight findings), edits in D1; confirmation pass: publish with edits,
+  made in D2.</p>
+<h2>Reproducing it</h2>
+<ol>
+<li><code>code/fetch.py 33</code>, then <code>code/fetch.py 37</code> (resumable).</li>
+<li><code>code/build.py</code> (unpack, extract, filter and coverage), then <code>code/select.py</code>.</li>
+<li><code>code/run.py 16</code>.</li>
+<li><code>code/analyse.py</code>, then <code>code/corrector.py</code>.</li>
+<li><code>code/figures.py</code> and <code>code/plausibility_check.py</code>.</li>
+</ol>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/cheminformatics-drug-discovery-split-calibration/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

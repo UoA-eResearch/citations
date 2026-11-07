@@ -3,7 +3,7 @@
 The study ran as planned; the first draft recorded no deviations. The ChEMBL download needed a resumable fetcher,
 because EBI throttles this host, but that changed no analysis choice.
 
-## D1 — 2026-11-06 — edits after the independent review (verdict: publish with edits)
+## D1 — 2026-11-05 — edits after the independent review (verdict: publish with edits)
 
 All additions are post hoc and labelled so in the report.
 
@@ -28,3 +28,18 @@ All additions are post hoc and labelled so in the report.
    - this file now exists;
    - in `bias_long.csv`, `nn_sim_median` is the prospective set's similarity on every row, retrospective rows
      included. That is by design for stratification, and is noted here rather than renamed.
+
+## D2 — 2026-11-07 — edits after the confirmation pass (verdict: publish with edits)
+
+The numbers below come from the confirming reviewer's checks, recorded in `review/review.md`.
+
+1. **The H3 model-spread inference is replaced.** The 0.49 spread is driven by the MLP. Every split correctly ranks
+   the MLP last (81–98% of targets), and no split orders the other four families, which sit within a median 0.20 of
+   each other (τ 0.12–0.18 over those four).
+2. **H3's bar** is now justified by the within-release noise ceiling: two single repeats agree at τ 0.40–0.55,
+   against 0.30–0.37 for a single repeat against the future. This replaces the "steps of 0.2" remark.
+3. **H2's bar.** A true per-target miss of up to about 0.08 would usually pass (the confirmation pass's
+   simulation), so the bar was achievable. This replaces "near zero".
+4. **Coverage.** Dropped repeats fall on 13 small targets; the 29 infeasible author graphs fall on larger targets
+   (median 1,152 against 730).
+5. **Corrections:** the document splits' retrospective SE is 0.068, and D1's date is fixed.
