@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FluSight Vintage Rescore</title>
+<meta name="description" content="Do FluSight forecast leaderboards change when forecasts are scored against the data available at the time?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Health economics</div>
+  <h1>Re-scoring FluSight forecasts against first-reported data reverses 6% of model pairings; in 2024–25, when first reports ran about 8% low, the top model changed at short horizons, but no more often than it wobbles under a single truth</h1>
+  <p class="subtitle">FluSight weekly influenza hospital-admission forecasts, 2022–23 to 2024–25 (33–51 models a season, 563,252 scored forecasts), were scored by WIS twice: against each location-week&#x27;s first-reported value, taken from the git history of the hub&#x27;s truth file, and against the finalised value. The plan and scoring code were committed before any forecast was scored.</p>
+  <div class="meta">
+    <span>Report · 2026-10-25 · under independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/health-econ-hub-vintage-rescore/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/health-econ-hub-vintage-rescore/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/health-econ-hub-vintage-rescore/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: H1 Refuted; H2 Supported under the preregistered name rule, but not robust to that rule and not
+distinguishable from the leader's sampling instability.</strong></p>
+<ul>
+<li><strong>H1 (first-report scoring reverses at least 20% of within-season pairwise model orderings): Refuted.</strong><ul>
+<li><strong>6.2%</strong> of 8,441 model pairs reverse (95% bootstrap over reference dates 4.9% to 7.4%).</li>
+<li>By season: 0.7% (2022–23), 3.0% (2023–24) and 10.6% (2024–25).</li>
+<li><strong>Late first reports do not change this.</strong> For 8.1% of 2023–24 and 4.6% of 2024–25 scored forecasts, the
+location-week's first hub version came more than 7 days after the week's end. Most of these first appeared a
+month or more later, when the values were largely settled: first and final are identical for 84–98% of such weeks. Dropping them gives 6.4%
+(4.9% to 7.6%), post hoc.</li>
+<li>Rank agreement between the two scorings is high: the Spearman correlation of relative WIS is 0.85–1.00 across
+season × horizons.</li>
+</ul>
+</li>
+<li><strong>H2 (the best non-ensemble model changes in at least one season × horizon): Supported under the name rule.</strong><ul>
+<li><strong>Under the preregistered rule</strong> (ensembles and baselines excluded by name), the 2024–25 leader changes at
+1 week ahead, from PSI-PROF (first report) to PSI-PROF_beta (finalised), two variants from the same team. It
+also changes at 2 weeks ahead, from CEPH-Rtrend_fluH to PSI-PROF_beta. No other season changes its leader.</li>
+<li><strong>The rule excludes the strongest model</strong> (post hoc). NEU_ISI-AdaptiveEnsemble is a single team's submission,
+removed only because its name contains "ensemble". It has the lowest relative WIS in 2024–25 at h1–h3 under
+first-report truth (0.73, 0.65, 0.62), and at h2–h3 under final truth. If only the hub's own models
+(FluSight-*) and baselines are excluded, the leader changes only at h1 (NEU_ISI-AdaptiveEnsemble →
+PSI-PROF_beta). The name rule is also inconsistent: MIGHTE-Nsemble and the hub's FluSight-lop_norm,
+-trained_mean and -trained_med are ensembles that it does not catch.</li>
+<li><strong>The leader is just as unstable under a single truth</strong> (post hoc). In bootstrap resamples, the 2024–25 leader
+at h0–h2 differs from its own point estimate in 55–63% of resamples under first-report truth and 59–65% under
+final truth. The first-report and final leaders differ from each other in 50–77% of resamples. So the change is
+a near-tie at the top, not evidence that revisions pick the winner.</li>
+</ul>
+</li>
+<li><strong>Revisions: bias, not size, goes with reversals</strong> (computed per scoring hub on forecast target weeks; corrected
+  after review).</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>season (hub)</th>
+<th>target weeks</th>
+<th>revised &gt; 10%</th>
+<th>median |revision|</th>
+<th>median signed</th>
+<th>mean signed</th>
+<th>median lag</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2022–23 (old)</td>
+<td>1,841</td>
+<td>47.5%</td>
+<td>9.3%</td>
+<td>0.0%</td>
+<td>+4.3%</td>
+<td>1.5 days</td>
+</tr>
+<tr>
+<td>2023–24 (new)</td>
+<td>1,748</td>
+<td>13.6%</td>
+<td>1.0%</td>
+<td>0.0%</td>
+<td>+0.3%</td>
+<td>4.5 days</td>
+</tr>
+<tr>
+<td>2024–25 (new)</td>
+<td>1,625</td>
+<td>44.1%</td>
+<td>8.6%</td>
+<td>−8.0%</td>
+<td>−10.5%</td>
+<td>4.5 days</td>
+</tr>
+</tbody>
+</table></div>
+<pre><code>- 2022–23 revisions were as large as 2024–25's, without a median bias, and 0.7% of pairs reversed. In 2024–25,
+first reports ran a median 8% below final values and 10.6% reversed. Across three seasons this is an
+observation, not a test.
+- Mean WIS is 144 against first reports and 156 against final values: forecasts sat closer to what was first
+reported.
+</code></pre>
+<h2>In plain terms</h2>
+<p>Each week during flu season, dozens of teams forecast how many people will be admitted to hospital with flu in every
+US state. The CDC's FluSight hub collects the forecasts and ranks the teams. The ranking uses the final hospital
+counts, but those counts are often revised in the weeks after they are first reported. Forecasters only ever saw the
+first, provisional numbers.</p>
+<p>We re-scored three seasons of forecasts against the first-reported numbers. In most seasons, almost nothing changed:
+fewer than 1 in 30 head-to-head comparisons between teams flipped. In 2024–25, when early reports ran several percent
+low and were often revised substantially, about 1 in 10 flipped, and the top-ranked model changed at two of four forecast horizons (at one of them, between two variants from the same team). But the top few models were so close that the leader also changed in more than half of reshuffled versions of the same season scored against a single truth.</p>
+<p>So hub leaderboards are mostly not an artefact of data revisions. When first reports are biased, as in 2024–25, the order of near-tied models can depend on which version of the truth is used, and the rule for which models are eligible matters as much.</p>
+<h2>What was asked</h2>
+<p>The lead (<code>health-econ-hub-vintage-rescore</code>) asked whether published hub leaderboards partly reflect data-revision
+artefacts. It predicted at least 20% of pairwise rankings reversing and at least one change of best model.</p>
+<p>Prior work, including the hubs' own evaluations and Mathis et al.'s sensitivity checks, scores mostly against
+finalised data. This study scores every forecast against reconstructed first reports.</p>
+<h2>How it was done</h2>
+<ul>
+<li><strong>Forecasts.</strong> Quantile forecasts with 23 levels, for 50 states, DC, Puerto Rico and the US:<ul>
+<li>2022–23 from <code>cdcepi/Flusight-forecast-data</code>, horizons 1–4 weeks;</li>
+<li>2023–24 and 2024–25 from <code>cdcepi/FluSight-forecast-hub</code>, horizons 0–3.</li>
+</ul>
+</li>
+<li><strong>Truth vintages.</strong> Every commit of each hub's truth file (531 commits in the 2022–23 repository, 126 in the current
+  hub).<ul>
+<li><strong>First report:</strong> the earliest version containing a location-week. On forecast target weeks its median lag
+after the week's end is 1.5 days in 2022–23, when the old repository regenerated the file from a daily feed, and
+4.5 days later, at the Wednesday NHSN release. None precedes the week's end. In the new hub, 10% of 2023–24 and
+6% of 2024–25 target weeks first appear more than 7 days late (corrected after review). The two seasons' "first
+reports" are therefore different objects: a Sunday aggregate of a backfilled daily feed, and a weekly release.</li>
+<li><strong>Finalised:</strong> the latest version.</li>
+</ul>
+</li>
+<li><strong>Score.</strong> WIS (Bracher et al. 2021), checked against the pinball-loss identity on 200 random cases.</li>
+<li><strong>Pairwise orderings.</strong> Pairs with at least 100 common forecasts within a season × horizon. A reversal is a change
+  in which model has the lower mean WIS on their common set.</li>
+<li><strong>Best model.</strong> Lowest relative WIS (Cramer et al. 2022) among models covering at least 80% of cells, excluding
+  ensembles and baselines by name. The relative WIS itself uses every well-covered model.</li>
+<li><strong>Units.</strong><ul>
+<li>186 forecast units were dropped for missing truth values: 179 in 2023–24 (Minnesota 91, Massachusetts 88) and 7
+in 2022–23.</li>
+<li>Two models submit no quantile forecasts of weekly admissions and are not loaded: SigSci-BECAM (a rate-change
+pmf) and FluSight-base_seasonal (peak targets).</li>
+<li>One Metaculus-cp file (2025-05-03) was not loaded by the build step.</li>
+</ul>
+</li>
+<li><strong>Bootstrap.</strong> Reference dates resampled within season (B = 500).</li>
+</ul>
+<h2>Results (<code>results/figures/F1_reversals.png</code>)</h2>
+<figure><a href="results/figures/F1_reversals.png"><img src="results/figures/F1_reversals.png" alt="Reversals"></a><figcaption>FluSight state and national weekly influenza hospital admission forecasts, 2022-23 to 2024-25, scored by WIS against the first-reported value of each location-week (earliest version of the hub&#x27;s truth file containing it) and against the finalised value. Left: share of model pairs (at least 100 common forecasts, within season and horizon) whose mean-WIS ordering differs between the two scorings. Right: relative WIS (geometric mean of pairwise WIS ratios) of well-covered models in 2024-25 at horizon 1 under both scorings; red, the best non-ensemble model under each.</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>season</th>
+<th>model pairs</th>
+<th>reversed</th>
+<th>share</th>
+<th>share, late first reports dropped (post hoc)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2022–23</td>
+<td>1,708</td>
+<td>12</td>
+<td>0.7%</td>
+<td>0.7%</td>
+</tr>
+<tr>
+<td>2023–24</td>
+<td>2,611</td>
+<td>79</td>
+<td>3.0%</td>
+<td>3.4%</td>
+</tr>
+<tr>
+<td>2024–25</td>
+<td>4,122</td>
+<td>436</td>
+<td>10.6%</td>
+<td>10.7%</td>
+</tr>
+<tr>
+<td>all</td>
+<td>8,441</td>
+<td>527</td>
+<td>6.2% (4.9–7.4)</td>
+<td>6.4% (4.9–7.6)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Revision sizes are in the verdict table above.</p>
+<p><strong>Best non-ensemble model, first report → finalised:</strong>
+- <strong>2022–23:</strong> PSI-DICE (h1), MOBS-GLEAM_FLUH (h2–h4), unchanged.
+- <strong>2023–24:</strong> UMass-flusion at all horizons, unchanged.
+- <strong>2024–25:</strong>
+    - h0: PSI-PROF, unchanged, though the bootstrap differs in 78% of resamples (a close call); with late first reports
+    dropped, it also changes;
+    - h1: PSI-PROF → PSI-PROF_beta;
+    - h2: CEPH-Rtrend_fluH → PSI-PROF_beta;
+    - h3: PSI-PROF_beta, unchanged.
+- <strong>Under one truth</strong> (post hoc, B = 200): how often the 2024–25 leader differs from its own point estimate.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>horizon</th>
+<th>first-report truth</th>
+<th>final truth</th>
+<th>first vs final (the H2 criterion)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>h0</td>
+<td>63%</td>
+<td>59%</td>
+<td>77%</td>
+</tr>
+<tr>
+<td>h1</td>
+<td>61%</td>
+<td>65%</td>
+<td>54%</td>
+</tr>
+<tr>
+<td>h2</td>
+<td>55%</td>
+<td>60%</td>
+<td>50%</td>
+</tr>
+<tr>
+<td>h3</td>
+<td>56%</td>
+<td>38%</td>
+<td>36%</td>
+</tr>
+</tbody>
+</table></div>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>Leaderboards are robust to revision when revisions are modest.</strong> That held in 2022–23 and 2023–24.</li>
+<li><strong>Biased revisions reorder close competitors.</strong> In 2024–25, after national reporting rules changed in late 2024,
+  first reports ran low and 1 in 10 pairs reversed. The leader changes involve near-tied models, including two
+  variants of one team's model, and the leader is as unstable across resamples under one truth.</li>
+<li><strong>2022–23's "final" values are not final.</strong> They are the old repository's last version (November 2023). For the
+  same 2,540 location-weeks, the new hub's latest values are identical for only 23% and differ by more than 10% for
+  40% (median 0, mean +3.5%). Scored against the new hub's latest values instead, 2022–23 reverses 0.5% of pairs
+  (8 of 1,708) and no leader changes (post hoc).</li>
+<li><strong>First-report scoring favours forecasts that track provisional data.</strong> That may be the right target for a
+  real-time decision-support hub, a choice this study informs but does not make.</li>
+<li><strong>Not shown:</strong><ul>
+<li><strong>The COVID-19 Forecast Hub,</strong> not run (D1).</li>
+<li><strong>What forecasters actually saw.</strong> They may have used other data streams.</li>
+<li><strong>A metadata-based eligibility rule.</strong> Ensembles were defined by name, as preregistered. A future study should use
+the hubs' own model metadata.</li>
+</ul>
+</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration:</strong> <code>plan.md</code>.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>): D1, the COVID-19 hub secondary not run (13.8 GB repository); D2, the fixes after
+  review (post hoc).</li>
+<li><strong>Independent review:</strong> fix first (four major or moderate findings); the fixes are in D2.</li>
+</ul>
+<h2>Reproducing it</h2>
+<ol>
+<li>Clone <code>cdcepi/FluSight-forecast-hub</code> and <code>cdcepi/Flusight-forecast-data</code> into <code>data/raw/</code>.</li>
+<li><code>code/build.py vintages</code>, then <code>code/build.py forecasts</code>.</li>
+<li><code>code/score.py test</code>, then <code>code/score.py run</code> and <code>code/score.py late7</code>.</li>
+<li><code>code/posthoc_review.py</code>.</li>
+<li><code>code/figures.py</code>.</li>
+</ol>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/health-econ-hub-vintage-rescore/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

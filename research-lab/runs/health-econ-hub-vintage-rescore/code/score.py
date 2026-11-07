@@ -2,6 +2,11 @@
 
   score.py test   WIS against a hand computation
   score.py run    -> results/tables/primary.json, pairs.csv, relative_wis.csv
+  score.py late7  the same with location-weeks whose first hub version is more than 7 days after the week's end
+                  dropped (D2, review finding 3) -> results/tables/primary_late7.json
+
+D2 (after the independent review): revision statistics are computed per scoring hub (old hub for 2022-23, new hub
+from 2023-24) on forecast target weeks only, with first-report lags (finding 1 and 5).
 """
 import json
 import sys
@@ -125,10 +130,20 @@ def analyse(mat, w_fn):
     return rev, tot, per, best
 
 
-def run():
+def lag_days(T):
+    return (T.first_commit.dt.tz_localize(None) - T.target_end_date).dt.total_seconds() / 86400
+
+
+def run(late_days=None):
     F = pd.read_parquet(INT / "forecasts.parquet")
     T = pd.read_parquet(INT / "truth.parquet")
-    T = T[(T.hub == "old") | (T.hub == "new")]
+    T = T[(T.hub == "old") | (T.hub == "new")].copy()
+    T["lag_days"] = lag_days(T)
+    late_info = None
+    if late_days is not None:
+        n0 = len(T)
+        T = T[T.lag_days <= late_days]
+        late_info = {"late_days": late_days, "truth_rows_dropped_both_hubs": int(n0 - len(T))}
     # the old hub's truth serves 2022-23, the new hub's 2023-24 onward
     F_old, F_new = F[F.hub == "old"], F[F.hub == "new"]
     mat_o, j_o = matrices(F_old, T[T.hub == "old"])
@@ -162,14 +177,26 @@ def run():
            "H1": h1, "per_season_horizon": {f"{k[0]} h{int(k[1])}": {"reversals": v[0], "pairs": v[1]} for k, v in per.items()},
            "best_changed": [f"{k[0]} h{int(k[1])}" for k in changed], "best_changed_bootstrap_share": {f"{k[0]} h{int(k[1])}": round(bchanged[k] / B, 3) for k in bchanged},
            "best": {f"{k[0]} h{int(k[1])}": {"first": v.get("first"), "final": v.get("final")} for k, v in best.items()}, "H2": h2}
-    # secondary: revision size, rank agreement
+    # secondary: revision size and lag, per scoring hub, on forecast target weeks (D2: the first draft pooled both hubs)
     Tt = T.copy()
     Tt["season"] = Tt.target_end_date.map(lambda d: f"{d.year if d.month >= 8 else d.year - 1}-{str((d.year if d.month >= 8 else d.year - 1) + 1)[2:]}")
+    Tt = Tt[((Tt.hub == "old") & (Tt.season == "2022-23")) | ((Tt.hub == "new") & Tt.season.isin(["2023-24", "2024-25"]))]
+    tw = J[["location", "target_end_date"]].drop_duplicates()
+    Tt = Tt.merge(tw, on=["location", "target_end_date"])
     Tt = Tt[Tt.final_value > 0]
     Tt["rev_pct"] = (Tt.first_value - Tt.final_value) / Tt.final_value * 100
-    out["revision"] = {s: {"median_abs_pct": round(float(g.rev_pct.abs().median()), 2), "share_over_10pct": round(float((g.rev_pct.abs() > 10).mean()), 4),
-                           "median_signed_pct": round(float(g.rev_pct.median()), 2), "n": int(len(g))}
-                       for s, g in Tt.groupby("season") if s in ("2022-23", "2023-24", "2024-25")}
+    out["revision"] = {s: {"hub": g.hub.iloc[0], "n": int(len(g)), "share_over_10pct": round(float((g.rev_pct.abs() > 10).mean()), 4),
+                           "median_abs_pct": round(float(g.rev_pct.abs().median()), 2), "median_signed_pct": round(float(g.rev_pct.median()), 2),
+                           "mean_signed_pct": round(float(g.rev_pct.mean()), 2), "median_lag_days": round(float(g.lag_days.median()), 2),
+                           "share_lag_over_7_days": round(float((g.lag_days > 7).mean()), 4)}
+                       for s, g in Tt.groupby("season")}
+    key = ["location", "target_end_date"]
+    J2 = pd.concat([j_o.merge(T[T.hub == "old"][key + ["lag_days"]], on=key, how="left"),
+                    j_n.merge(T[T.hub == "new"][key + ["lag_days"]], on=key, how="left")])
+    out["scored_forecasts_on_late_first_reports"] = {s: round(float((g.lag_days > 7).mean()), 4) for s, g in J2.groupby("season")}
+    out["scored_forecasts_by_season"] = J.season.value_counts().sort_index().to_dict()
+    if late_info:
+        out["late_drop"] = late_info
     from scipy.stats import spearmanr
     out["rank_agreement"] = {}
     for k, v in best.items():
@@ -180,10 +207,11 @@ def run():
     out["mean_wis"] = {"first": round(float(J.wis_first.mean()), 3), "final": round(float(J.wis_final.mean()), 3), "forecasts": int(len(J))}
     rw = [{"season_h": f"{k[0]} h{int(k[1])}", "model": m, "rel_wis_first": v["theta_first"][m], "rel_wis_final": v["theta_final"].get(m)}
           for k, v in best.items() for m in v["theta_first"]]
-    pd.DataFrame(rw).to_csv(TAB / "relative_wis.csv", index=False)
-    (TAB / "primary.json").write_text(json.dumps(out, indent=1, default=str) + "\n")
+    suffix = "" if late_days is None else f"_late{late_days}"
+    pd.DataFrame(rw).to_csv(TAB / f"relative_wis{suffix}.csv", index=False)
+    (TAB / f"primary{suffix}.json").write_text(json.dumps(out, indent=1, default=str) + "\n")
     print(json.dumps({k: out[k] for k in ("pairs_compared", "reversals", "reversal_share", "reversal_share_ci", "H1", "best_changed", "best_changed_bootstrap_share", "H2", "revision", "rank_agreement", "mean_wis")}, indent=1, default=str))
 
 
 if __name__ == "__main__":
-    {"test": test, "run": run}[sys.argv[1]]()
+    {"test": test, "run": run, "late7": lambda: run(late_days=7)}[sys.argv[1]]()

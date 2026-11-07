@@ -128,23 +128,45 @@
  "H2": "Supported",
  "revision": {
   "2022-23": {
-   "median_abs_pct": 1.01,
-   "share_over_10pct": 0.2744,
+   "hub": "old",
+   "n": 1841,
+   "share_over_10pct": 0.4753,
+   "median_abs_pct": 9.26,
    "median_signed_pct": 0.0,
-   "n": 5099
+   "mean_signed_pct": 4.32,
+   "median_lag_days": 1.53,
+   "share_lag_over_7_days": 0.0
   },
   "2023-24": {
-   "median_abs_pct": 0.0,
-   "share_over_10pct": 0.102,
+   "hub": "new",
+   "n": 1748,
+   "share_over_10pct": 0.1356,
+   "median_abs_pct": 1.03,
    "median_signed_pct": 0.0,
-   "n": 3167
+   "mean_signed_pct": 0.29,
+   "median_lag_days": 4.52,
+   "share_lag_over_7_days": 0.1018
   },
   "2024-25": {
-   "median_abs_pct": 5.36,
-   "share_over_10pct": 0.3568,
-   "median_signed_pct": -4.13,
-   "n": 2433
+   "hub": "new",
+   "n": 1625,
+   "share_over_10pct": 0.4406,
+   "median_abs_pct": 8.6,
+   "median_signed_pct": -8.04,
+   "mean_signed_pct": -10.53,
+   "median_lag_days": 4.48,
+   "share_lag_over_7_days": 0.0634
   }
+ },
+ "scored_forecasts_on_late_first_reports": {
+  "2022-23": 0.0,
+  "2023-24": 0.0812,
+  "2024-25": 0.0461
+ },
+ "scored_forecasts_by_season": {
+  "2022-23": 141102,
+  "2023-24": 196638,
+  "2024-25": 225512
  },
  "rank_agreement": {
   "2022-23 h1": 0.9929,

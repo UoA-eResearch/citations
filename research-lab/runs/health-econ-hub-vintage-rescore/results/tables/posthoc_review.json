@@ -1,0 +1,262 @@
+{
+ "eligibility": {
+  "2022-23 h1": {
+   "name_rule": {
+    "first": "PSI-DICE",
+    "final": "PSI-DICE"
+   },
+   "hub_and_baseline_rule": {
+    "first": "PSI-DICE",
+    "final": "PSI-DICE"
+   },
+   "overall_lowest_first": "PSI-DICE",
+   "overall_lowest_final": "PSI-DICE"
+  },
+  "2022-23 h2": {
+   "name_rule": {
+    "first": "MOBS-GLEAM_FLUH",
+    "final": "MOBS-GLEAM_FLUH"
+   },
+   "hub_and_baseline_rule": {
+    "first": "MOBS-GLEAM_FLUH",
+    "final": "MOBS-GLEAM_FLUH"
+   },
+   "overall_lowest_first": "MOBS-GLEAM_FLUH",
+   "overall_lowest_final": "MOBS-GLEAM_FLUH"
+  },
+  "2022-23 h3": {
+   "name_rule": {
+    "first": "MOBS-GLEAM_FLUH",
+    "final": "MOBS-GLEAM_FLUH"
+   },
+   "hub_and_baseline_rule": {
+    "first": "MOBS-GLEAM_FLUH",
+    "final": "MOBS-GLEAM_FLUH"
+   },
+   "overall_lowest_first": "MOBS-GLEAM_FLUH",
+   "overall_lowest_final": "MOBS-GLEAM_FLUH"
+  },
+  "2022-23 h4": {
+   "name_rule": {
+    "first": "MOBS-GLEAM_FLUH",
+    "final": "MOBS-GLEAM_FLUH"
+   },
+   "hub_and_baseline_rule": {
+    "first": "MOBS-GLEAM_FLUH",
+    "final": "MOBS-GLEAM_FLUH"
+   },
+   "overall_lowest_first": "MOBS-GLEAM_FLUH",
+   "overall_lowest_final": "MOBS-GLEAM_FLUH"
+  },
+  "2023-24 h0": {
+   "name_rule": {
+    "first": "UMass-flusion",
+    "final": "UMass-flusion"
+   },
+   "hub_and_baseline_rule": {
+    "first": "UMass-flusion",
+    "final": "UMass-flusion"
+   },
+   "overall_lowest_first": "UMass-flusion",
+   "overall_lowest_final": "UMass-flusion"
+  },
+  "2023-24 h1": {
+   "name_rule": {
+    "first": "UMass-flusion",
+    "final": "UMass-flusion"
+   },
+   "hub_and_baseline_rule": {
+    "first": "UMass-flusion",
+    "final": "UMass-flusion"
+   },
+   "overall_lowest_first": "UMass-flusion",
+   "overall_lowest_final": "UMass-flusion"
+  },
+  "2023-24 h2": {
+   "name_rule": {
+    "first": "UMass-flusion",
+    "final": "UMass-flusion"
+   },
+   "hub_and_baseline_rule": {
+    "first": "UMass-flusion",
+    "final": "UMass-flusion"
+   },
+   "overall_lowest_first": "UMass-flusion",
+   "overall_lowest_final": "UMass-flusion"
+  },
+  "2023-24 h3": {
+   "name_rule": {
+    "first": "UMass-flusion",
+    "final": "UMass-flusion"
+   },
+   "hub_and_baseline_rule": {
+    "first": "UMass-flusion",
+    "final": "UMass-flusion"
+   },
+   "overall_lowest_first": "UMass-flusion",
+   "overall_lowest_final": "UMass-flusion"
+  },
+  "2024-25 h0": {
+   "name_rule": {
+    "first": "PSI-PROF",
+    "final": "PSI-PROF"
+   },
+   "hub_and_baseline_rule": {
+    "first": "PSI-PROF",
+    "final": "PSI-PROF"
+   },
+   "overall_lowest_first": "PSI-PROF",
+   "overall_lowest_final": "PSI-PROF",
+   "NEU_ISI-AdaptiveEnsemble": {
+    "first": 0.94,
+    "final": 1.1
+   }
+  },
+  "2024-25 h1": {
+   "name_rule": {
+    "first": "PSI-PROF",
+    "final": "PSI-PROF_beta"
+   },
+   "hub_and_baseline_rule": {
+    "first": "NEU_ISI-AdaptiveEnsemble",
+    "final": "PSI-PROF_beta"
+   },
+   "overall_lowest_first": "NEU_ISI-AdaptiveEnsemble",
+   "overall_lowest_final": "PSI-PROF_beta",
+   "NEU_ISI-AdaptiveEnsemble": {
+    "first": 0.726,
+    "final": 0.849
+   }
+  },
+  "2024-25 h2": {
+   "name_rule": {
+    "first": "CEPH-Rtrend_fluH",
+    "final": "PSI-PROF_beta"
+   },
+   "hub_and_baseline_rule": {
+    "first": "NEU_ISI-AdaptiveEnsemble",
+    "final": "NEU_ISI-AdaptiveEnsemble"
+   },
+   "overall_lowest_first": "NEU_ISI-AdaptiveEnsemble",
+   "overall_lowest_final": "NEU_ISI-AdaptiveEnsemble",
+   "NEU_ISI-AdaptiveEnsemble": {
+    "first": 0.649,
+    "final": 0.754
+   }
+  },
+  "2024-25 h3": {
+   "name_rule": {
+    "first": "PSI-PROF_beta",
+    "final": "PSI-PROF_beta"
+   },
+   "hub_and_baseline_rule": {
+    "first": "NEU_ISI-AdaptiveEnsemble",
+    "final": "NEU_ISI-AdaptiveEnsemble"
+   },
+   "overall_lowest_first": "NEU_ISI-AdaptiveEnsemble",
+   "overall_lowest_final": "NEU_ISI-AdaptiveEnsemble",
+   "NEU_ISI-AdaptiveEnsemble": {
+    "first": 0.621,
+    "final": 0.712
+   }
+  }
+ },
+ "changed_under_hub_and_baseline_rule": [
+  "2024-25 h1"
+ ],
+ "leader_instability_B": 200,
+ "leader_instability": {
+  "2022-23 h1": {
+   "first_vs_own_point": 0.12,
+   "final_vs_own_point": 0.15,
+   "first_vs_final": 0.05
+  },
+  "2022-23 h2": {
+   "first_vs_own_point": 0.475,
+   "final_vs_own_point": 0.465,
+   "first_vs_final": 0.065
+  },
+  "2022-23 h3": {
+   "first_vs_own_point": 0.325,
+   "final_vs_own_point": 0.31,
+   "first_vs_final": 0.025
+  },
+  "2022-23 h4": {
+   "first_vs_own_point": 0.02,
+   "final_vs_own_point": 0.005,
+   "first_vs_final": 0.015
+  },
+  "2023-24 h0": {
+   "first_vs_own_point": 0.05,
+   "final_vs_own_point": 0.08,
+   "first_vs_final": 0.05
+  },
+  "2023-24 h1": {
+   "first_vs_own_point": 0.03,
+   "final_vs_own_point": 0.01,
+   "first_vs_final": 0.02
+  },
+  "2023-24 h2": {
+   "first_vs_own_point": 0.025,
+   "final_vs_own_point": 0.04,
+   "first_vs_final": 0.025
+  },
+  "2023-24 h3": {
+   "first_vs_own_point": 0.03,
+   "final_vs_own_point": 0.02,
+   "first_vs_final": 0.01
+  },
+  "2024-25 h0": {
+   "first_vs_own_point": 0.625,
+   "final_vs_own_point": 0.59,
+   "first_vs_final": 0.77
+  },
+  "2024-25 h1": {
+   "first_vs_own_point": 0.605,
+   "final_vs_own_point": 0.645,
+   "first_vs_final": 0.535
+  },
+  "2024-25 h2": {
+   "first_vs_own_point": 0.545,
+   "final_vs_own_point": 0.6,
+   "first_vs_final": 0.495
+  },
+  "2024-25 h3": {
+   "first_vs_own_point": 0.555,
+   "final_vs_own_point": 0.375,
+   "first_vs_final": 0.36
+  }
+ },
+ "finality_2022_23": {
+  "location_weeks": 2540,
+  "share_identical": 0.2268,
+  "share_differ_over_10pct": 0.398,
+  "median_pct": 0.0,
+  "mean_pct": 3.52
+ },
+ "sensitivity_2022_23_final_is_new_hub_latest": {
+  "reversals": 8,
+  "pairs": 1708,
+  "share": 0.0047,
+  "best_changed": []
+ },
+ "units_dropped": {
+  "total": 186,
+  "by_season": {
+   "2023-24": 179,
+   "2022-23": 7
+  },
+  "by_location": {
+   "27": 91,
+   "25": 88,
+   "02": 4,
+   "36": 3
+  },
+  "by_model_top": {
+   "MIGHTE-Nsemble": 13,
+   "CEPH-Rtrend_fluH": 6,
+   "CMU-TimeSeries": 6,
+   "CU-ensemble": 6
+  }
+ }
+}

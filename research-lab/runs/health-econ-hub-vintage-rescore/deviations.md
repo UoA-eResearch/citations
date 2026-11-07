@@ -19,3 +19,25 @@ The lab's METHODS.md gates were run before this draft's review. No number change
   the size of revisions, goes with reversals.
 - **G6 attribution ledger** (`results/attribution_ledger.csv`, 3 claims, passes): Mathis et al. 2024 (Nat. Commun.)
   resolves.
+
+## D2 — 2026-11-07 — fixes after the independent review (verdict: fix first)
+
+Everything here follows the first review (`review/review.md`). The preregistered H1 and H2 rules and their verdicts
+are unchanged; the first draft's table is kept as `results/tables/primary_v1.json`.
+
+1. **Revision statistics (finding 1).** These are now computed per scoring hub (old hub for 2022–23, new hub from
+   2023–24) on forecast target weeks only. The first draft pooled both hubs' truth rows for the same weeks. The
+   revisions bullet, results table and title are corrected; the "bias, not size" reading survives with new numbers.
+2. **H2 (finding 2).** The verdict follows the preregistered rule, but `code/posthoc_review.py` adds two checks:
+   - the leader when only the hub's own models (FluSight-*) and baselines are excluded;
+   - how often the leader differs from its own point estimate under a single truth, beside the first-vs-final
+     criterion (B = 200).
+
+   The verdict line now says H2 is not robust to the rule and not distinguishable from that instability.
+3. **Late first reports (finding 3, G1).** `code/score.py late7` drops location-weeks whose first hub version is more
+   than 7 days after the week's end (8.1% of 2023–24 and 4.6% of 2024–25 scored forecasts). H1 gives 6.4%, and the
+   2024–25 leader also changes at h0.
+4. **Finality of 2022–23 (finding 4).** The old repository's last values are compared with the new hub's latest
+   values, and 2022–23 is re-scored against the latter.
+5. **Numbers (finding 5).** Lags are now computed on forecast target weeks: 1.5 and 4.5 days. The dropped units
+   (186) and the models without quantile forecasts are stated.
