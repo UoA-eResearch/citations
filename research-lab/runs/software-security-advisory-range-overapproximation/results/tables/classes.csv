@@ -1,0 +1,801 @@
+id,ecosystem,intro_zero,cls,cls_alt,sig_kind,n_in_range,fp,fp_alt,introduced,fixed,downloads_used,cap_hit,fixed_release_present,gap_releases,gap_years
+GHSA-cmwx-9m2h-x7v4,PyPI,True,undetermined,undetermined,deleted,61.0,,,0,2.2.0.0,62.0,False,False,,
+GHSA-m379-x4xc-38x9,PyPI,True,over-approximated,over-approximated,deleted,74.0,69.0,69.0,0,2.4.1,71.0,False,False,69.0,5.03
+GHSA-rrx3-2x4g-mq2h,PyPI,True,over-approximated,over-approximated,deleted,46.0,45.0,45.0,0,2.0.6,47.0,False,True,45.0,1.71
+GHSA-q326-jhw3-699g,PyPI,False,tight,tight,deleted,2.0,0.0,0.0,3.0.0,3.2.0,2.0,False,False,,
+GHSA-vfrc-ggmc-5jwv,PyPI,True,over-approximated,over-approximated,add_only,48.0,17.0,17.0,0,0.3.2,19.0,False,False,17.0,6.63
+GHSA-p6hp-93wp-fh6p,PyPI,True,over-approximated,over-approximated,deleted,79.0,63.0,61.0,0,0.22.0,65.0,False,False,63.0,1.2
+GHSA-h6m2-r6h9-4c44,PyPI,True,undetermined,undetermined,deleted,625.0,,,0,2.7.0,401.0,True,False,,
+GHSA-w9h2-px87-74vx,PyPI,True,undetermined,undetermined,deleted,200.0,,,0,4.2.0,201.0,False,False,,
+GHSA-rfgq-q3w2-pmv2,PyPI,False,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-grg2-63fw-f2qr,PyPI,False,over-approximated,over-approximated,add_only,27.0,12.0,12.0,0.6.4,0.12.0,14.0,False,False,12.0,0.39
+GHSA-5g4v-2pc6-4hh4,PyPI,True,over-approximated,over-approximated,add_only,22.0,18.0,17.0,0,1.5.5,20.0,False,False,18.0,1.07
+GHSA-vc25-24vv-fxxm,PyPI,True,over-approximated,over-approximated,deleted,79.0,63.0,61.0,0,0.22.0,65.0,False,False,63.0,1.2
+GHSA-q2x6-8gfj-hjxw,PyPI,True,over-approximated,over-approximated,deleted,85.0,72.0,72.0,0,2015.5.5,74.0,False,False,72.0,3.73
+GHSA-856c-92hv-3vxx,PyPI,True,over-approximated,over-approximated,deleted,70.0,63.0,63.0,0,1.11.0,65.0,False,False,63.0,7.68
+GHSA-p43p-whwx-q52h,PyPI,True,over-approximated,over-approximated,deleted,96.0,30.0,30.0,0,5.5.0,32.0,False,False,30.0,4.05
+GHSA-x3rh-gjgm-fmqc,PyPI,True,not classifiable: no fix diff,,,,,,,,,,,,
+GHSA-hqmh-ppp3-xvm7,PyPI,True,over-approximated,over-approximated,deleted,90.0,10.0,10.0,0,6.8.0,12.0,False,False,10.0,8.6
+GHSA-qh6h-p6c9-ff54,PyPI,True,undetermined,tight,deleted,264.0,,0.0,0,1.2.22,127.0,False,False,,
+GHSA-27jx-ffw8-xrqv,PyPI,True,over-approximated,over-approximated,deleted,51.0,13.0,13.0,0,8.5,15.0,False,False,13.0,1.05
+GHSA-pwxh-7358-jq2x,PyPI,False,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-jxw3-mjmx-3pqm,PyPI,True,undetermined,undetermined,deleted,306.0,,,0,1.10.1,307.0,False,False,,
+GHSA-wxr6-29pv-ch68,PyPI,True,tight,tight,deleted,3.0,0.0,0.0,0,0.6.15,2.0,False,False,,
+GHSA-crv4-6mhj-j5jh,PyPI,False,undetermined,tight,deleted,4.0,,0.0,4.1.0,4.2.1,5.0,False,False,,
+GHSA-rxpr-wq63-jr7p,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-qw93-h6pf-226x,PyPI,True,undetermined,over-approximated,deleted,73.0,,16.0,0,1.11.0,18.0,False,False,,
+GHSA-prgp-w7vf-ch62,PyPI,True,over-approximated,over-approximated,deleted,326.0,236.0,159.0,0,0.0.325,238.0,False,False,236.0,0.73
+GHSA-r735-9gc6-2hvq,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-fj5v-w2jp-wqvj,PyPI,True,undetermined,undetermined,deleted,3.0,,,0,0.6.15,3.0,False,True,,
+GHSA-55m3-44xf-hg4h,PyPI,True,over-approximated,over-approximated,deleted,43.0,35.0,35.0,0,16.3.0,37.0,False,False,35.0,7.63
+GHSA-79f6-p65j-3m2m,PyPI,True,undetermined,undetermined,deleted,16.0,,,0,4.3.1,17.0,False,False,,
+GHSA-2fqm-m4r2-fh98,PyPI,True,over-approximated,over-approximated,add_only,48.0,47.0,47.0,0,12.4,49.0,False,False,47.0,4.52
+GHSA-pq67-6m6q-mj2v,PyPI,True,over-approximated,over-approximated,deleted,98.0,50.0,50.0,0,2.5.0,52.0,False,False,50.0,9.77
+GHSA-q45j-58j2-45rg,PyPI,False,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-j8r2-6x86-q33q,PyPI,False,tight,tight,deleted,65.0,0.0,0.0,2.3.0,2.31.0,2.0,False,False,,
+GHSA-wxmr-7xjv-8xqw,PyPI,True,tight,tight,add_only,16.0,0.0,0.0,0,1.3.2,2.0,False,False,,
+GHSA-8q6g-vjhf-jp8m,PyPI,True,undetermined,undetermined,deleted,118.0,,,0,1.17.4,97.0,False,,,
+GHSA-45gq-q4xh-cp53,PyPI,True,over-approximated,over-approximated,deleted,199.0,149.0,149.0,0,4.2.0,151.0,False,False,149.0,2.86
+GHSA-x456-3ccm-m6j4,PyPI,False,over-approximated,over-approximated,deleted,21.0,20.0,20.0,0.2.0,1.3.0,22.0,False,False,20.0,8.22
+GHSA-qr62-r9xc-r2gj,PyPI,True,undetermined,undetermined,deleted,0.0,,,0,12.0.0a0,1.0,False,False,,
+GHSA-mwv2-398h-v489,PyPI,False,undetermined,undetermined,deleted,0.0,,,0.95,1.0,1.0,False,False,,
+GHSA-q5fm-55c2-v6j9,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-83g7-8fch-p37m,PyPI,True,undetermined,undetermined,deleted,1.0,,,0,2.4,0.0,False,,,
+GHSA-6c7f-9265-g8fw,PyPI,True,not classifiable: no fix diff,,,,,,,,,,,,
+GHSA-7f5h-v6xp-fcq8,PyPI,False,undetermined,tight,deleted,24.0,,0.0,0.39.0,0.49.1,3.0,False,False,,
+GHSA-r23q-823p-vmf7,PyPI,True,over-approximated,over-approximated,deleted,169.0,89.0,89.0,0,3.8.1,91.0,False,False,89.0,5.74
+GHSA-4v7v-gqf9-ww2g,PyPI,True,over-approximated,over-approximated,deleted,22.0,17.0,6.0,0,0.2.6,19.0,False,False,17.0,1.86
+GHSA-jq6c-r9xf-qxjm,PyPI,True,over-approximated,over-approximated,add_only,153.0,151.0,151.0,0,3.7.0,153.0,False,False,151.0,4.02
+GHSA-x3qm-p8hr-3c3h,PyPI,True,over-approximated,over-approximated,deleted,149.0,135.0,120.0,0,0.8.11,137.0,False,False,135.0,1.64
+GHSA-ffg3-p8fm-mjx2,PyPI,True,undetermined,undetermined,add_only,44.0,,,0,8.3,45.0,False,False,,
+GHSA-4jcj-7x88-m979,PyPI,True,undetermined,undetermined,deleted,745.0,,,0,1.84.0,401.0,True,False,,
+GHSA-mrmq-3q62-6cc8,PyPI,False,tight,tight,deleted,19.0,0.0,0.0,1.4.0,1.4.19,2.0,False,False,,
+GHSA-6rvg-6v2m-4j46,PyPI,True,over-approximated,over-approximated,deleted,166.0,120.0,120.0,0,4.48.0,122.0,False,False,120.0,7.13
+GHSA-9wgg-m99q-hhfc,PyPI,True,undetermined,undetermined,deleted,4.0,,,0,2023.12.19,5.0,False,False,,
+GHSA-pjx4-3f3p-29v3,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-hff2-x2j9-gxgv,PyPI,True,tight,tight,deleted,7.0,0.0,0.0,0,6.5.1,2.0,False,False,,
+GHSA-m4f6-vcj4-w5mx,PyPI,False,undetermined,undetermined,deleted,39.0,,,2.7.12,3.13.1,7.0,False,False,,
+GHSA-542m-9234-8gvf,PyPI,False,undetermined,tight,deleted,19.0,,0.0,0.19.0,0.32.0,7.0,False,False,,
+GHSA-rwj8-pgh3-r573,PyPI,True,over-approximated,over-approximated,deleted,103.0,94.0,72.0,0,3.1.52,96.0,False,False,94.0,14.03
+GHSA-379c-qx7v-6h59,PyPI,True,over-approximated,over-approximated,add_only,118.0,116.0,94.0,0,5.0.1,118.0,False,False,116.0,10.69
+GHSA-35mr-4567-66vg,PyPI,True,undetermined,tight,add_only,146.0,,0.0,0,1.2.9,68.0,False,False,,
+GHSA-6r3c-8xf3-ggrr,PyPI,True,not classifiable: no fix diff,,,,,,,,,,,,
+GHSA-7gw9-cf7v-778f,PyPI,True,over-approximated,over-approximated,deleted,96.0,43.0,35.0,0,6.10.2,45.0,False,False,43.0,9.39
+GHSA-gc5v-m9x4-r6x2,PyPI,True,over-approximated,over-approximated,deleted,154.0,139.0,139.0,0,2.33.0,141.0,False,False,139.0,10.41
+GHSA-g5pq-48mj-jvw8,PyPI,True,over-approximated,over-approximated,deleted,116.0,107.0,107.0,0,4.5.4,109.0,False,True,107.0,12.5
+GHSA-m68r-v472-jgq9,PyPI,False,over-approximated,over-approximated,deleted,20.0,4.0,4.0,4.1.0,5.4.5,6.0,False,False,4.0,0.02
+GHSA-v9m3-wfh8-5646,PyPI,True,over-approximated,over-approximated,deleted,79.0,63.0,61.0,0,0.22.0,65.0,False,False,63.0,1.2
+GHSA-9j7f-3r4p-pwh6,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-qh9x-mc42-vg4g,PyPI,False,tight,tight,deleted,20.0,0.0,0.0,0.2,1.4,2.0,False,False,,
+GHSA-mm57-4v3p-rchx,PyPI,True,over-approximated,over-approximated,deleted,41.0,37.0,34.0,0,0.6.5,39.0,False,False,37.0,14.8
+GHSA-cfc2-wr2v-gxm5,PyPI,True,undetermined,over-approximated,deleted,78.0,,38.0,0,2.14.1,53.0,False,False,,
+GHSA-jm5j-jfrm-hm23,PyPI,False,tight,tight,deleted,2.0,0.0,0.0,0.8.1,0.9.1,2.0,False,True,,
+GHSA-jmrh-xmgh-x9j4,PyPI,True,over-approximated,over-approximated,deleted,193.0,44.0,44.0,0,0.54.8,46.0,False,True,44.0,1.47
+GHSA-q6mv-284r-mp36,PyPI,True,over-approximated,over-approximated,deleted,75.0,70.0,70.0,0,0.30.0,72.0,False,False,70.0,3.5
+GHSA-pwhh-q4h6-w599,PyPI,True,undetermined,undetermined,add_only,50.0,,,0,2.25.1,50.0,False,False,,
+GHSA-m6hv-x64c-27mm,PyPI,True,over-approximated,over-approximated,deleted,367.0,349.0,265.0,0,1.20.11,351.0,False,False,349.0,5.74
+GHSA-pxh4-856f-4h89,PyPI,True,over-approximated,over-approximated,deleted,55.0,36.0,36.0,0,2.14.0,38.0,False,False,36.0,9.69
+GHSA-5923-r76v-mprm,PyPI,True,over-approximated,over-approximated,deleted,29.0,13.0,3.0,0,1.5.2,15.0,False,False,13.0,0.73
+GHSA-3c5c-7235-994j,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-6qm2-wpxq-7qh2,PyPI,True,undetermined,undetermined,deleted,498.0,,,0,4.11.0,401.0,True,False,,
+GHSA-969w-gqqr-g6j3,PyPI,False,undetermined,undetermined,deleted,11.0,,,2.17.0,2.20.3,12.0,False,False,,
+GHSA-vwr9-9f8v-vp5m,PyPI,True,undetermined,undetermined,deleted,0.0,,,0,11.0.0a0,1.0,False,False,,
+GHSA-4hhp-h66f-j5j7,PyPI,True,over-approximated,over-approximated,deleted,92.0,85.0,85.0,0,0.26.0,82.0,False,False,85.0,2.9
+GHSA-3c93-f73f-qc9h,PyPI,True,undetermined,over-approximated,deleted,50.0,,35.0,0,5.0.0,41.0,False,False,,
+GHSA-4w59-c3gc-rrhp,PyPI,True,undetermined,undetermined,deleted,150.0,,,0,3.8.0,151.0,False,False,,
+GHSA-5cmv-3rc4-7279,PyPI,True,over-approximated,over-approximated,deleted,162.0,127.0,127.0,0,5.17.1,129.0,False,False,127.0,9.68
+GHSA-89c9-3758-737w,PyPI,True,undetermined,undetermined,deleted,0.0,,,0,0.8,1.0,False,False,,
+GHSA-fxgq-9m89-cxj9,PyPI,True,over-approximated,over-approximated,deleted,41.0,31.0,18.0,0,3.0.2,33.0,False,False,31.0,4.88
+GHSA-4wph-9vrm-6v3w,PyPI,True,undetermined,undetermined,deleted,86.0,,,0,2.5.0a6,87.0,False,False,,
+GHSA-vv7q-7jx5-f767,PyPI,True,over-approximated,over-approximated,deleted,91.0,53.0,53.0,0,3.2.0,55.0,False,False,53.0,0.67
+GHSA-x6mc-67gf-chw4,PyPI,False,tight,tight,deleted,8.0,0.0,0.0,0.24.0,0.30.0,2.0,False,False,,
+GHSA-hm8f-75xx-w2vr,PyPI,True,over-approximated,over-approximated,add_only,62.0,15.0,3.0,0,4.2.0,17.0,False,False,15.0,0.26
+GHSA-xpjq-3w4w-w5wr,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-9xq3-3fqg-4vg7,PyPI,True,undetermined,undetermined,deleted,13.0,,,0,5.1.5,10.0,False,False,,
+GHSA-hrv9-4x4c-9jc8,PyPI,True,undetermined,undetermined,deleted,0.0,,,0,12.0.0a0,1.0,False,False,,
+GHSA-rv8h-p43r-4x5r,PyPI,True,tight,tight,deleted,27.0,0.0,0.0,0,1.9rc1,2.0,False,False,,
+GHSA-7r9x-qrpr-3cxw,PyPI,True,undetermined,over-approximated,deleted,5.0,,4.0,0,1.0.1,6.0,False,False,,
+GHSA-4grg-w6v8-c28g,PyPI,False,tight,tight,deleted,1.0,0.0,0.0,3.1.0,3.1.1,2.0,False,False,,
+GHSA-vgrw-7cvw-pwgx,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-j9pp-7wfg-q7fj,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-hpv5-v8g5-c864,PyPI,True,over-approximated,over-approximated,deleted,14.0,13.0,13.0,0,0.8,15.0,False,False,13.0,3.04
+GHSA-vj45-x3pj-f4w4,PyPI,True,over-approximated,over-approximated,deleted,161.0,141.0,130.0,0,5.17,143.0,False,False,141.0,10.34
+GHSA-43fq-w8qq-v88h,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-3crg-w4f6-42mx,PyPI,True,over-approximated,over-approximated,deleted,94.0,17.0,10.0,0,6.10.0,19.0,False,False,17.0,8.8
+GHSA-5qjq-93h5-hrgp,PyPI,True,over-approximated,over-approximated,deleted,105.0,96.0,57.0,0,6.14.0,98.0,False,False,96.0,11.91
+GHSA-qppg-v75c-r5ff,PyPI,True,tight,tight,deleted,2.0,0.0,0.0,0,2.0.2,2.0,False,False,,
+GHSA-j36p-7w88-g82j,PyPI,True,undetermined,undetermined,deleted,664.0,,,0,6.16.0,401.0,True,False,,
+GHSA-h7ww-273w-6cm8,PyPI,True,over-approximated,over-approximated,deleted,51.0,46.0,46.0,0,3.3.0,48.0,False,False,46.0,11.06
+GHSA-mjqp-26hc-grxg,PyPI,True,over-approximated,over-approximated,deleted,30.0,19.0,8.0,0,0.0.31,21.0,False,False,19.0,2.44
+GHSA-v8gr-m533-ghj9,PyPI,False,over-approximated,over-approximated,deleted,49.0,48.0,48.0,2.5,41.0.4,50.0,False,False,48.0,4.52
+GHSA-pg2w-x9wp-vw92,PyPI,False,over-approximated,over-approximated,deleted,12.0,3.0,3.0,2.1.0,2.6.0,5.0,False,False,3.0,0.44
+GHSA-9vg3-cf92-h2h7,PyPI,False,tight,tight,deleted,3.0,0.0,0.0,0.2.3,0.3.0,2.0,False,False,,
+GHSA-8wr4-2wm6-w3pr,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-663j-rjcr-789f,PyPI,False,undetermined,undetermined,deleted,134.0,,,0.4.2,2.11.0,135.0,False,False,,
+GHSA-4rr5-89j8-mwwm,PyPI,False,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-6v92-r5mx-h5fx,PyPI,True,over-approximated,over-approximated,deleted,28.0,21.0,21.0,0,1.17.0,23.0,False,True,21.0,0.21
+GHSA-5836-grcc-8j89,PyPI,True,tight,tight,deleted,39.0,0.0,0.0,0,20.0.0,2.0,False,False,,
+GHSA-rf8c-3f5p-xv45,PyPI,True,undetermined,undetermined,deleted,3.0,,,0,3.1.1,3.0,False,,,
+GHSA-pmww-v6c9-7p83,PyPI,False,tight,tight,deleted,5.0,0.0,0.0,1.2.0,1.3.2,2.0,False,False,,
+GHSA-mxh2-ccgj-8635,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-776q-jw43-fhjx,PyPI,False,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-69qj-pvh9-c5wg,PyPI,False,over-approximated,over-approximated,deleted,574.0,260.0,236.0,2021.4.11,2026.6.9,262.0,False,False,260.0,3.56
+GHSA-5hx5-vpf9-5wcv,PyPI,True,over-approximated,over-approximated,deleted,119.0,28.0,28.0,0,6.21.1,30.0,False,False,28.0,9.11
+GHSA-vcqg-3p29-xw73,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-wfjw-w6pv-8p7f,PyPI,True,over-approximated,over-approximated,deleted,259.0,155.0,84.0,0,3.4.4,157.0,False,False,155.0,4.96
+GHSA-hf94-8mx5-2vvj,PyPI,True,tight,tight,add_only,42.0,0.0,0.0,0,11.6,2.0,False,False,,
+GHSA-h5cg-53g7-gqjw,PyPI,False,undetermined,tight,deleted,17.0,,0.0,4.0.0,6.0.0,18.0,False,False,,
+GHSA-3jhc-wjqf-5f2c,PyPI,True,over-approximated,over-approximated,deleted,27.0,10.0,10.0,0,1.5,12.0,False,False,10.0,0.96
+GHSA-8g6f-qw9x-4q6q,PyPI,False,undetermined,over-approximated,deleted,48.0,,21.0,1.1.6,1.11.0,49.0,False,False,,
+GHSA-5fqv-mpj8-h7gm,PyPI,True,undetermined,undetermined,deleted,8.0,,,0,1.3.2,5.0,False,False,,
+GHSA-jm68-fpmr-8j2g,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-vq8w-x8v7-f88m,PyPI,True,tight,tight,deleted,16.0,0.0,0.0,0,1.0.0,2.0,False,False,,
+GHSA-hvfh-5mj3-5f3j,PyPI,False,over-approximated,over-approximated,deleted,41.0,39.0,14.0,2.4.0rc0,2.12.0,41.0,False,False,39.0,1.08
+GHSA-fqh9-2qgg-h84h,PyPI,True,over-approximated,over-approximated,deleted,19.0,2.0,2.0,0,2.7.2,4.0,False,False,2.0,0.45
+GHSA-gfm2-xm6c-37qc,PyPI,True,over-approximated,over-approximated,deleted,151.0,149.0,149.0,0,0.9.0,151.0,False,False,149.0,1.85
+GHSA-8vh3-g2qg-2h2c,PyPI,True,over-approximated,over-approximated,deleted,118.0,33.0,33.0,0,0.117.2,35.0,False,False,33.0,0.52
+GHSA-h8rc-w822-q8vq,PyPI,True,over-approximated,over-approximated,deleted,48.0,1.0,1.0,0,2.37.2,3.0,False,False,1.0,8.41
+GHSA-8jhr-wpcm-hh4h,PyPI,True,over-approximated,over-approximated,deleted,90.0,45.0,39.0,0,1.18.0,47.0,False,False,45.0,1.23
+GHSA-hfgr-h3vc-p6c2,PyPI,False,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-5639-2j2p-m4mx,PyPI,True,over-approximated,over-approximated,deleted,81.0,27.0,27.0,0,1.4.2,29.0,False,False,27.0,4.74
+GHSA-5r3q-93q3-f978,PyPI,True,undetermined,undetermined,deleted,85.0,,,0,2.9.2,86.0,False,False,,
+GHSA-69w3-r845-3855,PyPI,True,over-approximated,over-approximated,deleted,208.0,47.0,47.0,0,5.0.0rc3,49.0,False,False,47.0,4.73
+GHSA-m8r9-qxx8-mrxp,PyPI,True,over-approximated,over-approximated,deleted,95.0,87.0,84.0,0,2.5.5,89.0,False,False,87.0,6.07
+GHSA-538c-55jv-c5g9,PyPI,True,undetermined,over-approximated,deleted,47.0,,38.0,0,1.21.0,48.0,False,False,,
+GHSA-425g-fjhq-5h92,PyPI,True,over-approximated,over-approximated,deleted,44.0,27.0,27.0,0,1.4.0,29.0,False,False,27.0,0.37
+GHSA-j482-47xf-p25c,PyPI,True,undetermined,undetermined,deleted,196.0,,,0,2.9.3,197.0,False,False,,
+GHSA-xx6g-jj35-pxjv,PyPI,False,tight,tight,deleted,19.0,0.0,0.0,3.0.0a1,4.1.0,2.0,False,False,,
+GHSA-v9v9-xffq-rwr4,PyPI,True,undetermined,undetermined,deleted,14.0,,,0,0.999999999,15.0,False,False,,
+GHSA-7r7m-5h27-29hp,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-j7qq-vr8c-xvw3,PyPI,False,undetermined,over-approximated,deleted,68.0,,29.0,2.19.0,3.17.0,31.0,False,False,,
+GHSA-q47p-v5rw-v574,PyPI,True,tight,tight,deleted,138.0,0.0,0.0,0,24.6,1.0,False,,,
+GHSA-pmqf-x6x8-p7qw,PyPI,False,undetermined,over-approximated,deleted,33.0,,24.0,0.5.5,0.11.1,26.0,False,False,,
+GHSA-hgf8-39gv-g3f2,PyPI,True,over-approximated,over-approximated,deleted,100.0,80.0,80.0,0,3.1.4,82.0,False,False,80.0,15.37
+GHSA-7257-96vg-qf6x,PyPI,True,over-approximated,over-approximated,deleted,40.0,14.0,14.0,0,3.3.12,16.0,False,False,14.0,0.93
+GHSA-xv7j-2v4w-cjvh,PyPI,False,undetermined,undetermined,deleted,0.0,,,2012.1,2012.2.3,0.0,False,,,
+GHSA-579p-qf78-fqm2,PyPI,True,over-approximated,over-approximated,deleted,179.0,95.0,95.0,0,2.0.2,97.0,False,False,95.0,1.85
+GHSA-947x-pv47-pp3q,PyPI,True,over-approximated,over-approximated,deleted,82.0,77.0,77.0,0,2.6.0,79.0,False,False,77.0,7.24
+GHSA-6x26-6r6f-m537,PyPI,True,over-approximated,over-approximated,deleted,117.0,81.0,67.0,0,7.8.0,83.0,False,False,81.0,7.16
+GHSA-93ph-p7v4-hwh4,PyPI,False,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-vcwx-8mqh-2557,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-cr7q-2w66-hjcm,PyPI,True,not classifiable: no fix diff,,,,,,,,,,,,
+GHSA-wm96-9gfh-vvgq,PyPI,True,undetermined,undetermined,deleted,0.0,,,0,0.11.0,1.0,False,False,,
+GHSA-3j8r-jf9w-5cmh,PyPI,True,undetermined,over-approximated,add_only,10.0,,1.0,0,0.5.2,11.0,False,False,,
+GHSA-4m32-cjv7-f425,PyPI,True,undetermined,undetermined,deleted,12.0,,,0,3.5.18,13.0,False,False,,
+GHSA-f2m9-wcf4-cwwx,PyPI,False,undetermined,undetermined,deleted,121.0,,,1.26.0,3.11.0,55.0,False,False,,
+GHSA-fg6f-75jq-6523,PyPI,False,undetermined,tight,deleted,19.0,,0.0,1.0.0,1.6.6,12.0,False,False,,
+GHSA-pxhg-7xr2-w7xg,PyPI,True,tight,tight,deleted,53.0,0.0,0.0,0,1.1.36,2.0,False,False,,
+GHSA-q77w-mwjj-7mqx,PyPI,True,over-approximated,over-approximated,deleted,29.0,27.0,27.0,0,0.0.30,29.0,False,False,27.0,2.96
+GHSA-qh4c-xf7m-gxfc,PyPI,True,over-approximated,over-approximated,deleted,72.0,58.0,47.0,0,0.14.1,57.0,False,False,58.0,1.94
+GHSA-5662-2rj7-f2v6,PyPI,True,over-approximated,over-approximated,deleted,330.0,302.0,302.0,0,1.18.9,304.0,False,False,302.0,4.91
+GHSA-8prr-286p-4w7j,PyPI,True,over-approximated,over-approximated,deleted,250.0,165.0,159.0,0,9.1.0,167.0,False,False,165.0,3.94
+GHSA-g4c2-ghfg-g5rh,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-8wr5-jm2h-8r4f,PyPI,False,tight,tight,add_only,12.0,0.0,0.0,0.17.1,0.24.0,2.0,False,False,,
+GHSA-6vvc-c2m3-cjf3,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-jfgp-674x-6q4p,PyPI,False,tight,tight,deleted,35.0,0.0,0.0,4.14,5.6.2,2.0,False,False,,
+GHSA-q4xr-rc97-m4xx,PyPI,True,over-approximated,over-approximated,deleted,184.0,145.0,144.0,0,5.2.2,147.0,False,False,145.0,10.13
+GHSA-v8wm-g9f2-xjv4,PyPI,True,undetermined,undetermined,add_only,0.0,,,0,0.31.1,1.0,False,True,,
+GHSA-hgg8-fqqc-vfmw,PyPI,True,over-approximated,over-approximated,deleted,89.0,75.0,67.0,0,0.24.0,72.0,False,False,75.0,2.69
+GHSA-w6c7-j32f-rq8j,PyPI,True,over-approximated,over-approximated,deleted,62.0,47.0,46.0,0,4.1.2,49.0,False,False,47.0,4.42
+GHSA-x33v-f3gp-gw2c,PyPI,True,over-approximated,over-approximated,deleted,73.0,57.0,57.0,0,2.5.2,59.0,False,False,57.0,1.68
+GHSA-gw84-84pc-xp82,PyPI,True,over-approximated,over-approximated,deleted,135.0,39.0,39.0,0,3.15.2,41.0,False,False,39.0,2.11
+GHSA-m242-wc86-8768,PyPI,True,undetermined,undetermined,add_only,40.0,,,0,0.9.0,39.0,False,False,,
+GHSA-74vm-8frp-7w68,PyPI,True,tight,tight,deleted,25.0,0.0,0.0,0,0.16.1,2.0,False,False,,
+GHSA-xg8h-j46f-w952,PyPI,False,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-q4c5-2j6f-r476,PyPI,False,tight,tight,deleted,25.0,0.0,0.0,3.0.0,3.1.8,2.0,False,False,,
+GHSA-4w7r-h757-3r74,PyPI,True,undetermined,over-approximated,deleted,184.0,,16.0,0,4.53.0,185.0,False,False,,
+GHSA-p6hw-wm59-3g5g,PyPI,True,tight,tight,deleted,18.0,0.0,0.0,0,2.5.6,2.0,False,False,,
+GHSA-85fp-523q-5xwc,PyPI,True,undetermined,undetermined,add_only,94.0,,,0,2.5.4,95.0,False,False,,
+GHSA-fqpv-mq26-pr4j,PyPI,True,over-approximated,over-approximated,deleted,234.0,230.0,230.0,0,5.0.3,232.0,False,False,230.0,12.51
+GHSA-793v-r35j-9rp9,PyPI,True,undetermined,undetermined,deleted,1.0,,,0,5.0.0,1.0,False,,,
+GHSA-xx4j-w367-7247,PyPI,True,over-approximated,over-approximated,add_only,37.0,25.0,20.0,0,1.0.4,25.0,False,False,25.0,0.28
+GHSA-mrfp-p49p-3hf2,PyPI,False,undetermined,undetermined,deleted,49.0,,,5.1.0,13.0.0,41.0,False,False,,
+GHSA-jjg7-2v4v-x38h,PyPI,True,over-approximated,over-approximated,deleted,28.0,27.0,27.0,0,3.7,29.0,False,False,27.0,10.36
+GHSA-php9-fj8v-98fj,PyPI,True,over-approximated,over-approximated,deleted,115.0,101.0,75.0,0,6.19.0,103.0,False,False,101.0,12.05
+GHSA-xg9f-g7g7-2323,PyPI,True,over-approximated,over-approximated,deleted,79.0,63.0,63.0,0,2.2.3,65.0,False,False,63.0,13.17
+GHSA-xq59-7jf3-rjc6,PyPI,True,over-approximated,over-approximated,deleted,246.0,15.0,15.0,0,1.1.1,17.0,False,False,15.0,0.76
+GHSA-847f-9342-265h,PyPI,True,undetermined,undetermined,deleted,44.0,,,0,4.3.0,45.0,False,False,,
+GHSA-29vq-49wr-vm6x,PyPI,True,over-approximated,over-approximated,deleted,102.0,80.0,56.0,0,3.1.6,82.0,False,False,80.0,15.37
+GHSA-qg3f-8x3j-ggf2,PyPI,True,over-approximated,over-approximated,deleted,158.0,132.0,130.0,0,0.10.0,134.0,False,False,132.0,1.54
+GHSA-3mqq-hv9c-85hc,PyPI,True,over-approximated,over-approximated,deleted,31.0,30.0,30.0,0,2.0.1,32.0,False,False,30.0,10.03
+GHSA-ffw3-6mp6-jmvj,PyPI,False,tight,tight,deleted,1.0,0.0,0.0,2.0.0,2.0.1rc1,2.0,False,True,,
+GHSA-vx6v-xg64-pmr8,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-phhr-52qp-3mj4,PyPI,True,over-approximated,over-approximated,deleted,180.0,154.0,116.0,0,4.52.1,156.0,False,False,154.0,7.97
+GHSA-w392-75q8-vr67,PyPI,False,over-approximated,over-approximated,deleted,35.0,11.0,11.0,0.2.9,0.5.10,13.0,False,False,11.0,0.58
+GHSA-hrw6-wg82-cm62,PyPI,True,over-approximated,over-approximated,deleted,149.0,80.0,80.0,0,2.14.1,82.0,False,False,80.0,3.62
+GHSA-h5c8-rqwp-cp95,PyPI,True,undetermined,undetermined,deleted,48.0,,,0,3.1.3,38.0,False,False,,
+GHSA-55j6-rjhx-hwfh,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-w2pj-9cgh-mq2c,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-h9rh-5ffh-h669,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-58v5-2m8f-94pr,PyPI,False,tight,tight,deleted,9.0,0.0,0.0,0.23.0rc2,0.30.0,2.0,False,False,,
+GHSA-qx2g-xrx7-vfh8,PyPI,True,over-approximated,over-approximated,deleted,56.0,21.0,21.0,0,3.10.1,22.0,False,,21.0,6.14
+GHSA-69f9-5gxw-wvc2,PyPI,True,over-approximated,over-approximated,deleted,303.0,239.0,229.0,0,3.13.3,237.0,False,False,239.0,10.91
+GHSA-6qmf-fj6m-686c,PyPI,True,undetermined,over-approximated,deleted,27.0,,17.0,0,4.1.0,19.0,False,False,,
+GHSA-74h3-cxq7-vc5q,PyPI,True,over-approximated,over-approximated,deleted,158.0,154.0,154.0,0,0.10.0,156.0,False,False,154.0,1.97
+GHSA-479j-jf2p-38pg,PyPI,True,undetermined,undetermined,deleted,0.0,,,0,11.0.0a0,1.0,False,False,,
+GHSA-gg5m-55jj-8m5g,PyPI,True,undetermined,over-approximated,deleted,181.0,,101.0,0,0.28.2,107.0,False,False,,
+GHSA-7x94-6g2m-3hp2,PyPI,True,undetermined,undetermined,deleted,186.0,,,0,4.0.0,187.0,False,False,,
+GHSA-gfq8-hmph-9gjv,PyPI,True,undetermined,undetermined,deleted,748.0,,,0,4.6.58,401.0,True,False,,
+GHSA-w235-7p84-xx57,PyPI,True,over-approximated,over-approximated,deleted,72.0,62.0,52.0,0,6.4.1,64.0,False,False,62.0,12.06
+GHSA-pxvw-4w88-6x95,PyPI,True,undetermined,undetermined,deleted,340.0,,,0,1.19.8,341.0,False,False,,
+GHSA-ffj6-66c4-86gw,PyPI,True,undetermined,undetermined,deleted,55.0,,,0,3.10.0,37.0,False,,,
+GHSA-r9mr-m37c-5fr3,PyPI,True,over-approximated,over-approximated,add_only,105.0,102.0,102.0,0,3.1.54,104.0,False,False,102.0,16.31
+GHSA-5j8p-5rrj-8wjg,PyPI,True,over-approximated,over-approximated,deleted,231.0,226.0,124.0,0,0.5.8,228.0,False,False,226.0,2.57
+GHSA-9794-pc4r-438w,PyPI,True,undetermined,undetermined,deleted,102.0,,,0,1.35.1,103.0,False,False,,
+GHSA-9298-4cf8-g4wj,PyPI,False,undetermined,undetermined,add_only,6.0,,,2.0.0,3.0.1,7.0,False,False,,
+GHSA-329j-jfvr-rhr6,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-5x6q-ffwj-8vcf,PyPI,True,over-approximated,over-approximated,deleted,11.0,7.0,7.0,0,0.15,9.0,False,False,7.0,0.66
+GHSA-h737-q6g6-8wr6,PyPI,True,undetermined,undetermined,deleted,0.0,,,0,11.0.0a0,1.0,False,False,,
+GHSA-2q8v-3gqq-4f8p,PyPI,False,over-approximated,over-approximated,deleted,28.0,2.0,2.0,0.3.0,0.4.0,4.0,False,False,2.0,0.54
+GHSA-qhj7-v7h7-q4c7,PyPI,True,over-approximated,over-approximated,deleted,115.0,81.0,81.0,0,4.5.3,83.0,False,False,81.0,10.75
+GHSA-5x7x-4c3c-qf5w,PyPI,False,undetermined,over-approximated,deleted,6.0,,2.0,0.9.5,0.11.1,7.0,False,False,,
+GHSA-6r8x-57c9-28j4,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-4vcx-3pj3-44m7,PyPI,True,tight,tight,deleted,6.0,0.0,0.0,0,3.2,2.0,False,False,,
+GHSA-jrm6-h9cq-8gqw,PyPI,True,undetermined,tight,deleted,20.0,,0.0,0,1.27.9,5.0,False,False,,
+GHSA-mw35-8rx3-xf9r,PyPI,False,undetermined,undetermined,deleted,13.0,,,2.49.0,2.55.0,0.0,False,,,
+GHSA-xvxq-g8hw-fx4g,PyPI,True,over-approximated,over-approximated,deleted,65.0,35.0,35.0,0,1.10.3,37.0,False,False,35.0,2.52
+GHSA-49jv-37hm-6gfp,PyPI,False,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-mxwc-wh95-pw4g,PyPI,True,tight,tight,deleted,31.0,0.0,0.0,0,1.2.2,2.0,False,False,,
+GHSA-v9gj-5rgp-w33r,PyPI,True,over-approximated,over-approximated,add_only,62.0,34.0,34.0,0,2.0.4,36.0,False,False,34.0,3.11
+GHSA-92pw-mff9-jqgm,PyPI,True,over-approximated,over-approximated,deleted,74.0,60.0,60.0,0,2014.7.4,62.0,False,False,60.0,3.23
+GHSA-c635-393c-hcx2,PyPI,True,undetermined,undetermined,deleted,740.0,,,0,3.6.22.dev7,401.0,True,False,,
+GHSA-pxg5-h34r-7q8p,PyPI,False,undetermined,undetermined,deleted,24.0,,,3.2.0,4.1.3.post1,25.0,False,False,,
+GHSA-v833-3823-cmhp,PyPI,True,over-approximated,over-approximated,deleted,8.0,4.0,2.0,0,2.6.4,6.0,False,False,4.0,0.9
+GHSA-4rj2-9gcx-5qhx,PyPI,True,over-approximated,over-approximated,deleted,121.0,73.0,73.0,0,2.19.0,75.0,False,False,73.0,4.94
+GHSA-qqmf-gpg7-g8gw,PyPI,True,undetermined,over-approximated,add_only,171.0,,46.0,0,2.6.6,48.0,False,False,,
+GHSA-65xw-pcqw-hjrh,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-pg7v-jwj7-p798,PyPI,False,tight,tight,add_only,4.0,0.0,0.0,12.0.0,12.3.0,2.0,False,False,,
+GHSA-768j-98cg-p3fv,PyPI,False,over-approximated,over-approximated,deleted,71.0,19.0,19.0,4.33.0,4.60.2,21.0,False,False,19.0,0.9
+GHSA-hj66-6f7g-4r5v,PyPI,False,over-approximated,over-approximated,deleted,32.0,3.0,3.0,0.6.1,4.0.0,5.0,False,False,3.0,0.77
+GHSA-8fvv-fgr5-f8ch,PyPI,True,over-approximated,over-approximated,deleted,171.0,144.0,144.0,0,4.18.1,146.0,False,False,144.0,15.65
+GHSA-f8xq-q7px-wg8c,PyPI,True,over-approximated,over-approximated,deleted,209.0,177.0,107.0,0,2.8.11,179.0,False,True,177.0,2.92
+GHSA-99r4-cjp4-3hmx,PyPI,True,undetermined,undetermined,add_only,219.0,,,0,4.5.0rc3,220.0,False,False,,
+GHSA-28mg-98xm-q493,PyPI,True,over-approximated,over-approximated,deleted,57.0,49.0,14.0,0,1.7.1,51.0,False,False,49.0,1.1
+GHSA-g84x-mcqj-x9qq,PyPI,True,over-approximated,over-approximated,deleted,303.0,138.0,138.0,0,3.13.3,136.0,False,False,138.0,4.29
+GHSA-cfmv-h8fx-85m7,PyPI,True,over-approximated,over-approximated,deleted,194.0,121.0,121.0,0,3.30.1,123.0,False,False,121.0,8.57
+GHSA-hg6c-qqcm-r79r,PyPI,True,tight,tight,add_only,66.0,0.0,0.0,0,6.1.1,2.0,False,False,,
+GHSA-hf3c-wxg2-49q9,PyPI,False,undetermined,undetermined,deleted,11.0,,,0.6.5,0.8.4,9.0,False,False,,
+GHSA-3r7g-q6cg-q2vx,PyPI,True,over-approximated,over-approximated,deleted,161.0,149.0,138.0,0,0.11.0,151.0,False,True,149.0,1.85
+GHSA-694v-63fq-fmr4,PyPI,True,undetermined,undetermined,deleted,88.0,,,0,4.52,7.0,False,False,,
+GHSA-7p94-766c-hgjp,PyPI,True,over-approximated,over-approximated,deleted,53.0,49.0,36.0,0,3.9.3,50.0,False,,49.0,15.09
+GHSA-wc6j-5g83-xfm6,PyPI,True,over-approximated,over-approximated,deleted,63.0,53.0,53.0,0,2.0.0rc0,55.0,False,False,53.0,3.73
+GHSA-9296-v3fr-j92j,PyPI,True,undetermined,undetermined,deleted,173.0,,,0,2.2.0,174.0,False,False,,
+GHSA-wxx2-gqvv-34hx,PyPI,True,undetermined,tight,deleted,1.0,,0.0,0,1.9.1,2.0,False,False,,
+GHSA-7w6r-748w-mh52,PyPI,True,undetermined,undetermined,add_only,37.0,,,0,7.0,20.0,False,False,,
+GHSA-gq5q-89c7-vhvx,PyPI,False,undetermined,tight,deleted,32.0,,0.0,0.11.1,0.32.0,28.0,False,False,,
+GHSA-w66p-78g4-mr7g,PyPI,True,undetermined,undetermined,add_only,0.0,,,0,8.0.0,1.0,False,False,,
+GHSA-mqqc-3gqh-h2x8,PyPI,True,over-approximated,over-approximated,deleted,303.0,97.0,97.0,0,3.13.3,99.0,False,False,97.0,3.14
+GHSA-9jfm-9rc6-2hfq,PyPI,True,over-approximated,over-approximated,deleted,114.0,88.0,88.0,0,4.5.2,90.0,False,False,88.0,10.83
+GHSA-v936-j8gp-9q3p,PyPI,True,over-approximated,over-approximated,deleted,143.0,110.0,47.0,0,1.25.0,112.0,False,False,110.0,1.84
+GHSA-54jq-c3m8-4m76,PyPI,True,over-approximated,over-approximated,deleted,303.0,207.0,145.0,0,3.13.3,205.0,False,False,207.0,7.0
+GHSA-9fpx-fr6j-2vh6,PyPI,True,over-approximated,over-approximated,deleted,236.0,230.0,230.0,0,5.1.0,232.0,False,False,230.0,12.51
+GHSA-q3m9-9fj2-mfwr,PyPI,True,undetermined,undetermined,add_only,3.0,,,0,1.2.0,4.0,False,False,,
+GHSA-2gr8-3wc7-xhj3,PyPI,True,undetermined,tight,deleted,18.0,,0.0,0,5.4.1,16.0,False,False,,
+GHSA-3x4c-pq33-4w3q,PyPI,True,over-approximated,over-approximated,deleted,197.0,47.0,47.0,0,1.41.1,49.0,False,False,47.0,0.88
+GHSA-8rj5-2857-877j,PyPI,True,over-approximated,over-approximated,deleted,40.0,20.0,20.0,0,3.14.0,19.0,False,False,20.0,6.58
+GHSA-564j-v29w-rqr6,PyPI,True,undetermined,undetermined,deleted,685.0,,,0,1.14.0,401.0,True,False,,
+GHSA-crmg-rp64-5cm3,PyPI,False,tight,tight,deleted,25.0,0.0,0.0,23.11.4.2,24.7.4.1,2.0,False,False,,
+GHSA-w2p4-p4rh-qcm3,PyPI,True,undetermined,over-approximated,add_only,71.0,,63.0,0,9.10,65.0,False,False,,
+GHSA-phj3-59pf-cp83,PyPI,True,undetermined,tight,add_only,117.0,,0.0,0,7.8.0,69.0,False,False,,
+GHSA-59p9-h35m-wg4g,PyPI,True,undetermined,over-approximated,deleted,184.0,,16.0,0,4.53.0,185.0,False,False,,
+GHSA-wwv8-cqpr-vx3m,PyPI,True,over-approximated,over-approximated,deleted,106.0,97.0,97.0,0,2.7.1,99.0,False,False,97.0,10.74
+GHSA-q3qx-c6g2-7pw2,PyPI,True,over-approximated,over-approximated,deleted,224.0,207.0,207.0,0,3.9.0,205.0,False,False,207.0,7.0
+GHSA-4r7w-q3jg-ff43,PyPI,False,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-f964-whrq-44h8,PyPI,True,over-approximated,over-approximated,deleted,90.0,83.0,52.0,0,0.23.1,85.0,False,False,83.0,3.59
+GHSA-43mp-35q3-x3fq,PyPI,True,over-approximated,over-approximated,deleted,304.0,274.0,274.0,0,21.14.9,276.0,False,False,274.0,18.94
+GHSA-33fm-6gp7-4p47,PyPI,True,undetermined,over-approximated,deleted,158.0,,74.0,0,5.16.0,129.0,False,False,,
+GHSA-pp85-5j63-xpq3,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-hw26-mmpg-fqfg,PyPI,True,tight,tight,deleted,11.0,0.0,0.0,0,0.4.4,2.0,False,True,,
+GHSA-5v8v-66v8-mwm7,PyPI,True,over-approximated,over-approximated,add_only,6.0,2.0,2.0,0,1.0.8,4.0,False,False,2.0,1.08
+GHSA-7wxf-r2qv-9xwr,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-9w56-46f6-3qhx,PyPI,True,undetermined,undetermined,deleted,41.0,,,0,1.0.9,40.0,False,False,,
+GHSA-c87f-fq5g-63r2,PyPI,True,over-approximated,over-approximated,deleted,63.0,54.0,54.0,0,0.36.0,56.0,False,False,54.0,0.88
+GHSA-mxxr-jv3v-6pgc,PyPI,True,undetermined,undetermined,deleted,67.0,,,0,2.13.0,68.0,False,False,,
+GHSA-qq99-p57r-g3v7,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-mw3h-qjxj-6xg9,PyPI,True,over-approximated,over-approximated,deleted,117.0,83.0,83.0,0,7.8.0,85.0,False,False,83.0,7.3
+GHSA-83vg-56qc-22m7,PyPI,True,over-approximated,over-approximated,deleted,115.0,114.0,114.0,0,3.2.1,116.0,False,False,114.0,16.53
+GHSA-cxjf-x6jp-p7mc,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-wqvq-5m8c-6g24,PyPI,True,over-approximated,over-approximated,add_only,55.0,50.0,26.0,0,1.25.9,52.0,False,False,50.0,9.77
+GHSA-6mjg-37cp-42x5,PyPI,True,over-approximated,over-approximated,deleted,20.0,17.0,13.0,0,4.1.0,19.0,False,False,17.0,2.44
+GHSA-2wpw-cm9w-v4xm,PyPI,True,over-approximated,over-approximated,add_only,95.0,84.0,84.0,0,2.5.5,86.0,False,False,84.0,6.05
+GHSA-jrcv-3c5h-rh3q,PyPI,True,undetermined,undetermined,deleted,1238.0,,,0,2018.03.09-1,400.0,True,,,
+GHSA-c6ph-m8cw-rfqh,PyPI,True,undetermined,undetermined,add_only,1.0,,,0,2.6.0,0.0,False,,,
+GHSA-h36j-8vv3-cj52,PyPI,True,undetermined,undetermined,deleted,33.0,,,0,1.17.0,34.0,False,False,,
+GHSA-887c-mr87-cxwp,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-6vm5-6jv9-rjpj,PyPI,True,over-approximated,over-approximated,deleted,40.0,37.0,14.0,0,1.5.1,39.0,False,False,37.0,4.71
+GHSA-p75f-g7gx-2r7p,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-ch89-h4r2-c8f8,PyPI,True,undetermined,undetermined,deleted,748.0,,,0,4.6.58,401.0,True,False,,
+GHSA-78m5-jpmf-ch7v,PyPI,True,undetermined,tight,deleted,6.0,,0.0,0,0.1.8,5.0,False,False,,
+GHSA-cpmr-mw4j-99r7,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-qx5f-ghc2-7g5c,PyPI,False,undetermined,tight,deleted,144.0,,0.0,2.75.0,2.83.2,117.0,False,False,,
+GHSA-q93c-p2mw-p23f,PyPI,True,undetermined,undetermined,deleted,567.0,,,0,1.5.11,401.0,True,False,,
+GHSA-8hx6-qv6f-xgcw,PyPI,True,undetermined,undetermined,deleted,432.0,,,0,23.7.4.0,401.0,True,False,,
+GHSA-5xh2-23cc-5jc6,PyPI,False,tight,tight,deleted,225.0,0.0,0.0,0.182.0,0.257.0,2.0,False,False,,
+GHSA-h75v-3vvj-5mfj,PyPI,True,over-approximated,over-approximated,deleted,49.0,48.0,48.0,0,3.1.4,50.0,False,False,48.0,15.59
+GHSA-6757-jp84-gxfx,PyPI,False,undetermined,undetermined,deleted,8.0,,,5.1b7,5.3.1,8.0,False,False,,
+GHSA-hm4w-wwcw-mr6r,PyPI,True,over-approximated,over-approximated,deleted,40.0,5.0,5.0,0,0.6.4,7.0,False,False,5.0,1.3
+GHSA-hgcf-4mq8-5266,PyPI,True,over-approximated,over-approximated,deleted,79.0,63.0,61.0,0,0.22.0,65.0,False,False,63.0,1.2
+GHSA-7hfx-h3j3-rwq4,PyPI,True,over-approximated,over-approximated,deleted,156.0,103.0,58.0,0,3.9.0,105.0,False,False,103.0,1.84
+GHSA-mjff-wv85-hmcj,PyPI,False,tight,tight,deleted,21.0,0.0,0.0,2.5.0,2.6.2rc1,2.0,False,False,,
+GHSA-44wm-f244-xhp3,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-m8j6-rc5x-wv36,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-8pw2-6jv3-mj5j,PyPI,True,over-approximated,over-approximated,deleted,95.0,75.0,75.0,0,0.28.0,72.0,False,True,75.0,2.69
+GHSA-wjpc-4f29-83h3,PyPI,True,over-approximated,over-approximated,deleted,15.0,12.0,12.0,0,0.0.16,14.0,False,False,12.0,3.07
+GHSA-h3h8-3v2v-rg7m,PyPI,False,tight,tight,deleted,149.0,0.0,0.0,4.16.0,6.6.0,2.0,False,False,,
+GHSA-c38f-wx89-p2xg,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-37cf-r3w2-gjfw,PyPI,True,over-approximated,over-approximated,deleted,28.0,25.0,25.0,0,5.0.0,27.0,False,False,25.0,6.01
+GHSA-94jq-q5v2-76wj,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-p44q-vqpr-4xmg,PyPI,True,over-approximated,over-approximated,deleted,34.0,33.0,33.0,0,4.8.1,35.0,False,False,33.0,9.75
+GHSA-p28m-34f6-967q,PyPI,True,over-approximated,over-approximated,deleted,19.0,8.0,8.0,0,17.5.0,10.0,False,False,8.0,5.87
+GHSA-cv84-9p8j-fj68,PyPI,False,tight,tight,deleted,3.0,0.0,0.0,7.1.0,7.1.3,2.0,False,False,,
+GHSA-gqrq-j6pm-98c2,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-fhw8-8v9p-7jp7,PyPI,True,undetermined,undetermined,deleted,625.0,,,0,2.7.0,401.0,True,False,,
+GHSA-h47f-gmjp-m7rr,PyPI,True,over-approximated,over-approximated,deleted,104.0,100.0,100.0,0,4.1.0,102.0,False,False,100.0,5.69
+GHSA-66x7-2r56-fj77,PyPI,False,tight,tight,deleted,31.0,0.0,0.0,0.9.0,1.8.1,1.0,False,,,
+GHSA-mg3v-6m49-jhp3,PyPI,True,undetermined,undetermined,add_only,71.0,,,0,1.8.8,56.0,False,False,,
+GHSA-769v-p64c-89pr,PyPI,True,over-approximated,over-approximated,deleted,21.0,17.0,17.0,0,0.0.22,19.0,False,False,17.0,2.18
+GHSA-hcc4-c3v8-rx92,PyPI,True,over-approximated,over-approximated,deleted,304.0,221.0,173.0,0,3.13.4,219.0,False,False,221.0,9.95
+GHSA-f9hx-c6jf-3qxm,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-m8xw-9x5x-6vh3,PyPI,True,over-approximated,over-approximated,deleted,146.0,129.0,126.0,0,0.20.1,131.0,False,False,129.0,2.76
+GHSA-cv5c-mh6j-wvp9,PyPI,True,tight,tight,deleted,2.0,0.0,0.0,0,0.15.0,2.0,False,False,,
+GHSA-27q4-38qf-m25h,PyPI,True,undetermined,undetermined,add_only,0.0,,,0,12.0.0a0,1.0,False,False,,
+GHSA-3872-f48p-pxqj,PyPI,True,over-approximated,over-approximated,deleted,84.0,51.0,51.0,0,4.11.1,53.0,False,False,51.0,5.34
+GHSA-2gpf-2492-q9jh,PyPI,True,undetermined,undetermined,deleted,763.0,,,0,4.6.78,401.0,True,False,,
+GHSA-9vhv-jxww-xfm5,PyPI,False,over-approximated,over-approximated,deleted,53.0,50.0,49.0,3.20.4,4.2.1,52.0,False,False,50.0,0.66
+GHSA-4vqv-7265-gm2w,PyPI,True,not classifiable: no fix diff,,,,,,,,,,,,
+GHSA-2gh8-gr6x-7q26,PyPI,True,not classifiable: no fix diff,,,,,,,,,,,,
+GHSA-hrmj-7rvj-4hg8,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-grp3-h8m8-45p7,PyPI,True,over-approximated,over-approximated,add_only,116.0,81.0,81.0,0,4.5.4,83.0,False,False,81.0,10.75
+GHSA-mcgw-5fhw-3fq8,PyPI,True,undetermined,undetermined,deleted,1.0,,,0,3.1.2,1.0,False,,,
+GHSA-h8pc-j334-jjhm,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-554w-xh4j-8w64,PyPI,True,undetermined,undetermined,deleted,85.0,,,0,2.9.2,86.0,False,False,,
+GHSA-ph3r-5jfg-f84f,PyPI,True,over-approximated,over-approximated,deleted,95.0,71.0,71.0,0,0.28.0,70.0,False,True,71.0,2.59
+GHSA-35m5-8cvj-8783,PyPI,True,over-approximated,over-approximated,deleted,12.0,6.0,6.0,0,1.1.4,8.0,False,False,6.0,0.1
+GHSA-22hg-r758-rrw9,PyPI,False,undetermined,tight,deleted,34.0,,0.0,7.2.0,13.0.0,26.0,False,False,,
+GHSA-fwfg-vprh-97ph,PyPI,True,over-approximated,over-approximated,deleted,57.0,48.0,48.0,0,1.9.3,50.0,False,False,48.0,3.5
+GHSA-3547-9m27-7rxg,PyPI,False,tight,tight,deleted,42.0,0.0,0.0,3.6.4,3.18.2,2.0,False,True,,
+GHSA-535g-62r7-cx6v,PyPI,True,undetermined,undetermined,deleted,50.0,,,0,3.10.0,32.0,False,False,,
+GHSA-vh75-fwv3-pqrh,PyPI,True,undetermined,undetermined,deleted,10.0,,,0,1.2.1,11.0,False,False,,
+GHSA-h35f-9h28-mq5c,PyPI,True,over-approximated,over-approximated,deleted,622.0,276.0,276.0,0,83.0.0,278.0,False,False,276.0,10.96
+GHSA-92vm-mxjf-jqf3,PyPI,True,over-approximated,over-approximated,deleted,14.0,13.0,13.0,0,2.0.1,15.0,False,False,13.0,3.1
+GHSA-xcw4-53cc-hv32,PyPI,True,over-approximated,over-approximated,deleted,25.0,22.0,22.0,0,3.10.1,24.0,False,False,22.0,0.15
+GHSA-832w-fhmw-w4f4,PyPI,True,over-approximated,over-approximated,add_only,167.0,158.0,158.0,0,3.16.1,160.0,False,False,158.0,4.5
+GHSA-cqxx-66wh-8pjw,PyPI,False,undetermined,undetermined,deleted,3.0,,,4.2.0,4.2.3,4.0,False,False,,
+GHSA-43qf-4rqw-9q2g,PyPI,True,over-approximated,over-approximated,deleted,50.0,34.0,32.0,0,6.0.0,36.0,False,False,34.0,3.11
+GHSA-wfq2-52f7-7qvj,PyPI,True,over-approximated,over-approximated,add_only,13.0,12.0,12.0,0,0.1.7,14.0,False,False,12.0,4.77
+GHSA-45rp-q25w-4426,PyPI,True,over-approximated,over-approximated,deleted,145.0,81.0,56.0,0,2024.7.1,83.0,False,False,81.0,4.48
+GHSA-6xv9-957j-qfhg,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-5hxg-r395-fqxx,PyPI,True,undetermined,undetermined,deleted,1567.0,,,0,2026.6.0,401.0,True,False,,
+GHSA-836c-xg97-8p4h,PyPI,True,over-approximated,over-approximated,deleted,26.0,13.0,13.0,0,1.1.118,15.0,False,False,13.0,1.44
+GHSA-g7p5-89mh-248h,PyPI,True,over-approximated,over-approximated,add_only,19.0,11.0,11.0,0,1.9.3,13.0,False,False,11.0,2.93
+GHSA-6h2f-wjhf-4wjx,PyPI,True,tight,tight,add_only,128.0,0.0,0.0,0,2.3.69,2.0,False,False,,
+GHSA-4v6w-xpmh-gfgp,PyPI,True,over-approximated,over-approximated,deleted,13.0,8.0,8.0,0,0.12.0,10.0,False,False,8.0,1.09
+GHSA-fch4-3c6x-j4gc,PyPI,True,over-approximated,over-approximated,deleted,63.0,58.0,58.0,0,1.9.0,60.0,False,False,58.0,8.41
+GHSA-6j58-grhv-2769,PyPI,True,over-approximated,over-approximated,deleted,40.0,25.0,14.0,0,2.1.0,27.0,False,False,25.0,3.1
+GHSA-chx6-46f5-w4vp,PyPI,True,over-approximated,over-approximated,deleted,84.0,52.0,52.0,0,6.5.9,54.0,False,False,52.0,8.62
+GHSA-m64x-33q8-m5h7,PyPI,True,over-approximated,over-approximated,deleted,114.0,80.0,80.0,0,3.2.0,82.0,False,False,80.0,12.54
+GHSA-rcv6-7hmv-fj7h,PyPI,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-f9j4-qggq-h239,PyPI,False,undetermined,undetermined,deleted,32.0,,,3.1.30,3.2.0,14.0,False,False,,
+GHSA-w6xv-mf6f-r5f6,PyPI,True,over-approximated,over-approximated,deleted,45.0,32.0,32.0,0,2.1.10,34.0,False,False,32.0,5.46
+GHSA-6v38-4h7w-rj9h,PyPI,True,undetermined,undetermined,add_only,63.0,,,0,1.9.0,64.0,False,False,,
+GHSA-85xf-c7hm-whqw,PyPI,True,over-approximated,over-approximated,add_only,97.0,89.0,62.0,0,0.30.0,86.0,False,False,89.0,3.03
+GHSA-8m59-7xv8-735h,PyPI,True,over-approximated,over-approximated,deleted,379.0,252.0,252.0,0,0.23.9,254.0,False,False,252.0,3.05
+GHSA-gh4c-6fx4-qh6g,PyPI,False,tight,tight,deleted,3.0,0.0,0.0,2.6.2,2.8.0,2.0,False,False,,
+GHSA-cj54-hpcc-gj6h,PyPI,True,over-approximated,over-approximated,deleted,117.0,83.0,75.0,0,7.8.0,85.0,False,False,83.0,7.3
+GHSA-2w87-5qcj-j6gx,PyPI,True,undetermined,undetermined,deleted,0.0,,,0,12.0.0a0,1.0,False,False,,
+GHSA-hr8g-f6r6-mr22,PyPI,False,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-hhpg-v63p-wp7w,PyPI,False,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-9w4f-3v37-6f75,PyPI,True,undetermined,undetermined,deleted,35.0,,,0,1.5.23,35.0,False,True,,
+GHSA-gx7p-2j49-hfq4,PyPI,False,undetermined,over-approximated,add_only,48.0,,17.0,0.7.3,0.31.0,32.0,False,False,,
+GHSA-w2cx-738m-mc7w,PyPI,False,undetermined,tight,deleted,1.0,,0.0,2.13.0,2.14.0,2.0,False,False,,
+GHSA-x97m-qp5c-w9xj,PyPI,False,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-8vgw-p6qm-5gr7,PyPI,True,over-approximated,over-approximated,deleted,50.0,40.0,40.0,0,6.0.0,42.0,False,False,40.0,7.09
+GHSA-w8jc-g24h-crhw,PyPI,True,over-approximated,over-approximated,deleted,114.0,94.0,92.0,0,3.2.0,96.0,False,False,94.0,14.03
+GHSA-m9mq-p2f9-cfqv,PyPI,False,tight,tight,deleted,3.0,0.0,0.0,2.1.0,2.1.3,2.0,False,False,,
+GHSA-p3w6-jcg4-52xh,PyPI,False,over-approximated,over-approximated,deleted,20.0,12.0,12.0,0.2.0,0.5.0,14.0,False,False,12.0,2.67
+GHSA-cw2r-4p82-qv79,PyPI,True,over-approximated,over-approximated,add_only,21.0,4.0,4.0,0,1.5.1,6.0,False,False,4.0,1.46
+GHSA-2xj6-xx86-cwwc,PyPI,True,over-approximated,over-approximated,deleted,79.0,63.0,61.0,0,0.22.0,65.0,False,False,63.0,1.2
+GHSA-c5f8-35qr-q4fm,PyPI,True,over-approximated,over-approximated,deleted,149.0,127.0,125.0,0,1.27.0,129.0,False,False,127.0,2.02
+GHSA-2rw7-x74f-jg35,PyPI,True,not classifiable: no fix diff,,,,,,,,,,,,
+GHSA-2hmp-5wqg-f24h,PyPI,True,over-approximated,over-approximated,deleted,7.0,1.0,1.0,0,0.0.7,3.0,False,False,1.0,0.0
+GHSA-488g-hw5f-x29p,PyPI,True,undetermined,over-approximated,deleted,213.0,,160.0,0,0.12.41,162.0,False,False,,
+GHSA-rrj2-ph5q-jxw2,npm,True,tight,tight,deleted,16.0,0.0,0.0,0,1.20.0,2.0,False,False,,
+GHSA-hq75-ggc3-8h3q,npm,True,undetermined,undetermined,deleted,1.0,,,0,2.1.0,1.0,False,,,
+GHSA-p773-8mf4-rjm5,npm,True,undetermined,undetermined,deleted,251.0,,,0,1.7.6,252.0,False,False,,
+GHSA-7cfr-5cjf-32p4,npm,True,over-approximated,over-approximated,deleted,55.0,52.0,52.0,0,5.9.2,54.0,False,False,52.0,4.14
+GHSA-9m6j-fcg5-2442,npm,False,over-approximated,over-approximated,deleted,35.0,18.0,16.0,0.1.0,1.5.0,20.0,False,False,18.0,1.76
+GHSA-wmg3-h8mf-wgvr,npm,True,over-approximated,over-approximated,deleted,76.0,42.0,42.0,0,3.9.0,44.0,False,False,42.0,0.56
+GHSA-5p8w-2mvw-38pv,npm,True,undetermined,undetermined,deleted,12.0,,,0,4.0.0-beta.5,12.0,False,,,
+GHSA-c5xx-h28h-f682,npm,True,undetermined,undetermined,deleted,4.0,,,0,1.3.1,5.0,False,False,,
+GHSA-qxc2-j82w-r537,npm,True,undetermined,undetermined,deleted,86.0,,,0,10.5.0,87.0,False,False,,
+GHSA-7977-c43c-xpwj,npm,True,undetermined,undetermined,deleted,36.0,,,0,2026.2.23,37.0,False,False,,
+GHSA-c6hr-w26q-c636,npm,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-rvvf-6vh3-9j43,npm,True,over-approximated,over-approximated,deleted,66.0,1.0,1.0,0,2026.3.31,3.0,False,False,1.0,0.0
+GHSA-g8xp-qx39-9jq9,npm,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-rhh3-jpg6-66xh,npm,False,undetermined,undetermined,add_only,16.0,,,11.6.0,11.16.1,17.0,False,False,,
+GHSA-pv58-549p-qh99,npm,True,over-approximated,over-approximated,deleted,23.0,1.0,1.0,0,2026.2.14,3.0,False,False,1.0,0.0
+GHSA-662x-fhqg-9p8v,npm,True,over-approximated,over-approximated,deleted,42.0,38.0,38.0,0,0.7.22,40.0,False,False,38.0,5.76
+GHSA-g353-mgv3-8pcj,npm,True,over-approximated,over-approximated,deleted,51.0,26.0,16.0,0,2026.3.12,28.0,False,False,26.0,0.06
+GHSA-943q-mwmv-hhvh,npm,True,undetermined,undetermined,deleted,23.0,,,0,2026.2.14,24.0,False,False,,
+GHSA-g8f2-4f4f-5jqw,npm,True,undetermined,undetermined,deleted,79.0,,,0,0.9.6,80.0,False,False,,
+GHSA-pj96-35fp-cfcc,npm,True,over-approximated,over-approximated,deleted,127.0,84.0,84.0,0,4.41.1,86.0,False,False,84.0,7.27
+GHSA-724g-mxrg-4qvm,npm,False,undetermined,undetermined,deleted,3.0,,,5.0.0,5.2.1,4.0,False,False,,
+GHSA-m272-9rp6-32mc,npm,True,over-approximated,over-approximated,add_only,1080.0,292.0,221.0,0,1.13.6,294.0,False,False,292.0,0.32
+GHSA-438c-3975-5x3f,npm,True,undetermined,undetermined,deleted,172.0,,,0,6.8.1,173.0,False,False,,
+GHSA-6rcp-vxwf-3mfp,npm,True,undetermined,undetermined,deleted,37.0,,,0,2026.2.24,38.0,False,False,,
+GHSA-4vcf-q4xf-f48m,npm,True,undetermined,undetermined,add_only,12.0,,,0,1.4.0,13.0,False,False,,
+GHSA-grv6-m753-3w2g,npm,True,undetermined,undetermined,deleted,144.0,,,0,0.92.0,145.0,False,False,,
+GHSA-vfrf-vcj7-wvr8,npm,True,over-approximated,over-approximated,deleted,172.0,37.0,37.0,0,2.19.0,39.0,False,False,37.0,2.13
+GHSA-56f2-hvwg-5743,npm,True,undetermined,over-approximated,deleted,13.0,,1.0,0,2026.2.2,14.0,False,False,,
+GHSA-6g6m-m6h5-w9gf,npm,True,tight,tight,add_only,37.0,0.0,0.0,0,6.0.0,2.0,False,False,,
+GHSA-vmp7-252j-cwp7,npm,True,over-approximated,over-approximated,add_only,131.0,99.0,99.0,0,2.1.30,101.0,False,False,99.0,1.13
+GHSA-4685-c5cp-vp95,npm,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-g77x-44xx-532m,npm,False,undetermined,undetermined,deleted,1529.0,,,10.0.0,14.2.7,401.0,True,False,,
+GHSA-rxcw-mc6f-6hr3,npm,True,undetermined,undetermined,add_only,744.0,,,0,4.12.28,401.0,True,False,,
+GHSA-3crj-w4f5-gwh4,npm,True,over-approximated,over-approximated,deleted,24.0,15.0,15.0,0,0.10.0,17.0,False,False,15.0,5.11
+GHSA-67rr-84xm-4c7r,npm,False,undetermined,tight,deleted,41.0,,0.0,15.0.4-canary.51,15.1.8,42.0,False,False,,
+GHSA-r666-8gjf-4v5f,npm,True,undetermined,undetermined,deleted,246.0,,,0,1.19.0,247.0,False,False,,
+GHSA-vwp5-f99x-x3rq,npm,True,undetermined,undetermined,deleted,2160.0,,,0,4.1.0,401.0,True,False,,
+GHSA-8864-rhmw-5m6f,npm,True,over-approximated,over-approximated,deleted,84.0,16.0,16.0,0,1.1.82,18.0,False,False,16.0,0.11
+GHSA-w2pf-g6r8-pg22,npm,True,undetermined,undetermined,deleted,277.0,,,0,11.21.0,278.0,False,False,,
+GHSA-cg2g-xh64-v4q7,npm,False,over-approximated,over-approximated,deleted,13.0,10.0,8.0,3.4.4,3.4.17,12.0,False,False,10.0,0.25
+GHSA-7j65-65cr-6644,npm,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-jx6q-fq9h-6g7q,npm,True,undetermined,tight,deleted,1.0,,0.0,0,2.2.0,2.0,False,False,,
+GHSA-2jjq-x548-rhpv,npm,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-7qqq-gh2f-wq76,npm,True,undetermined,undetermined,deleted,12.0,,,0,2.0.2,13.0,False,False,,
+GHSA-vvhj-v88f-5gxr,npm,True,tight,tight,deleted,16.0,0.0,0.0,0,2.0.0,2.0,False,False,,
+GHSA-rwx9-wqj8-vr77,npm,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-3wfp-253j-5jxv,npm,True,over-approximated,over-approximated,deleted,76.0,75.0,75.0,0,0.22.0,77.0,False,False,75.0,1.14
+GHSA-crfx-5phg-hmw9,npm,True,not classifiable: no fix diff,,,,,,,,,,,,
+GHSA-98pq-pmw9-4gpm,npm,True,over-approximated,over-approximated,deleted,148.0,112.0,100.0,0,3.17.0,114.0,False,False,112.0,3.95
+GHSA-gvcj-pfq2-wxj7,npm,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-8j36-q8x7-pm6q,npm,True,undetermined,undetermined,deleted,353.0,,,0,4.30.2,354.0,False,False,,
+GHSA-45hj-9x76-wp9g,npm,True,undetermined,undetermined,deleted,12.0,,,0,0.1.5,13.0,False,False,,
+GHSA-7599-fqgm-v84p,npm,True,over-approximated,over-approximated,deleted,6.0,2.0,2.0,0,0.1.6,4.0,False,False,2.0,4.14
+GHSA-qhv9-728r-6jqg,npm,True,undetermined,over-approximated,deleted,27.0,,6.0,0,2.3.0,8.0,False,False,,
+GHSA-p2hp-3wv3-4w74,npm,True,tight,tight,deleted,3.0,0.0,0.0,0,0.2.0,2.0,False,False,,
+GHSA-26wq-p25c-j6fv,npm,True,over-approximated,over-approximated,deleted,51.0,5.0,5.0,0,6.1.0,7.0,False,True,5.0,0.1
+GHSA-jmhp-5558-qxh5,npm,True,undetermined,undetermined,deleted,863.0,,,0,10.0.7,401.0,True,False,,
+GHSA-c3m8-x3cg-qm2c,npm,False,tight,tight,add_only,13.0,0.0,0.0,1.2.2,2.9.1,2.0,False,True,,
+GHSA-h4mc-r4f4-hcf4,npm,True,over-approximated,over-approximated,deleted,37.0,21.0,21.0,0,0.15.0,23.0,False,False,21.0,2.05
+GHSA-j47w-4g3g-c36v,npm,False,undetermined,undetermined,deleted,14.0,,,20.0.0,21.3.2,15.0,False,False,,
+GHSA-9mrv-456v-pf22,npm,True,tight,tight,deleted,59.0,0.0,0.0,0,7.4.4,2.0,False,False,,
+GHSA-jgpq-g82g-6c39,npm,True,tight,tight,deleted,3.0,0.0,0.0,0,0.4.0,2.0,False,False,,
+GHSA-mgcp-mfp8-3q45,npm,True,over-approximated,over-approximated,deleted,119.0,116.0,63.0,0,9.0.2,118.0,False,False,116.0,9.8
+GHSA-v633-x5vv-hqwc,npm,True,tight,tight,deleted,24.0,0.0,0.0,0,1.6.3,2.0,False,False,,
+GHSA-34q8-jcq6-mc37,npm,True,undetermined,tight,deleted,61.0,,0.0,0,1.6.31,38.0,False,True,,
+GHSA-vr8x-74pm-6vj7,npm,True,undetermined,undetermined,deleted,0.0,,,0,1.22.1,1.0,False,False,,
+GHSA-6mr6-jvcr-2f25,npm,True,undetermined,undetermined,deleted,305.0,,,0,8.21.0,306.0,False,False,,
+GHSA-v8wv-jg3q-qwpq,npm,True,undetermined,undetermined,deleted,62.0,,,0,2026.3.24,63.0,False,False,,
+GHSA-mm4f-47ch-f7hx,npm,True,tight,tight,deleted,1.0,0.0,0.0,0,0.0.2,2.0,False,False,,
+GHSA-j4fx-xxwh-2485,npm,True,undetermined,undetermined,deleted,68.0,,,0,0.7.6,69.0,False,False,,
+GHSA-2m53-83f3-562j,npm,True,over-approximated,over-approximated,add_only,23.0,19.0,19.0,0,3.8.1,21.0,False,False,19.0,3.39
+GHSA-vj3g-5px3-gr46,npm,True,over-approximated,over-approximated,deleted,28.0,16.0,16.0,0,2026.2.19,18.0,False,False,16.0,0.02
+GHSA-44g4-m2mj-wpvx,npm,False,undetermined,undetermined,deleted,9.0,,,1.15.0,1.20.0,9.0,False,False,,
+GHSA-r659-8xfp-j327,npm,True,over-approximated,over-approximated,deleted,176.0,34.0,34.0,0,2.2.16,36.0,False,True,34.0,1.07
+GHSA-6hxr-mr5r-9836,npm,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-54xj-q58h-9x57,npm,True,undetermined,undetermined,deleted,165.0,,,0,3.6.12,166.0,False,False,,
+GHSA-68hw-vfh7-xvg8,npm,True,over-approximated,over-approximated,deleted,47.0,40.0,40.0,0,4.8.3,42.0,False,True,40.0,2.39
+GHSA-952p-6rrq-rcjv,npm,True,over-approximated,over-approximated,deleted,68.0,63.0,63.0,0,4.0.8,65.0,False,False,63.0,6.37
+GHSA-8mhj-rffc-rcvw,npm,True,over-approximated,over-approximated,deleted,254.0,3.0,3.0,0,0.4.11,5.0,False,False,3.0,0.01
+GHSA-vfg3-pqpq-93m4,npm,True,over-approximated,over-approximated,deleted,55.0,43.0,43.0,0,2026.3.22,45.0,False,False,43.0,0.09
+GHSA-4hr4-pjjh-2q2w,npm,True,undetermined,undetermined,deleted,269.0,,,0,2.74.0,270.0,False,False,,
+GHSA-rm97-x556-q36h,npm,True,over-approximated,over-approximated,deleted,111.0,85.0,85.0,0,2.12.1,87.0,False,False,85.0,7.03
+GHSA-826h-28h9-65hg,npm,True,tight,tight,deleted,920.0,0.0,0.0,0,0.4.20,2.0,False,False,,
+GHSA-j3w7-9qc3-g96p,npm,False,undetermined,undetermined,deleted,8.0,,,3.2.0,3.3.2,9.0,False,False,,
+GHSA-jxfw-x594-9x9m,npm,True,over-approximated,over-approximated,deleted,28.0,27.0,27.0,0,1.12.0,29.0,False,False,27.0,12.31
+GHSA-xgp7-7qjq-vg47,npm,True,undetermined,undetermined,add_only,752.0,,,0,1.113.0,401.0,True,False,,
+GHSA-xrpm-hccg-28x7,npm,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-j22f-vq7h-c4qm,npm,False,over-approximated,over-approximated,deleted,23.0,20.0,20.0,5.1.0,5.9.3,22.0,False,False,20.0,1.84
+GHSA-2q7r-29rg-6m5h,npm,True,tight,tight,deleted,37.0,0.0,0.0,0,12.5.0,2.0,False,False,,
+GHSA-h5jc-78hr-3pc9,npm,True,undetermined,undetermined,deleted,577.0,,,0,0.167.3,401.0,True,False,,
+GHSA-2hw3-h8qx-hqqp,npm,True,undetermined,undetermined,deleted,3.0,,,0,4.0.0-rc.4,4.0,False,False,,
+GHSA-pgf8-28gg-vpr6,npm,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-jcw8-r9xm-32c6,npm,True,tight,tight,deleted,1.0,0.0,0.0,0,0.1.1,2.0,False,False,,
+GHSA-hjp8-2cm3-cc45,npm,True,over-approximated,over-approximated,deleted,42.0,1.0,1.0,0,7.0.0,3.0,False,False,1.0,0.01
+GHSA-mpg4-rc92-vx8v,npm,False,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-xc7v-wxcw-j472,npm,True,tight,tight,deleted,7.0,0.0,0.0,0,0.6.0,2.0,False,False,,
+GHSA-85g2-29m8-qf2p,npm,False,over-approximated,over-approximated,deleted,4.0,3.0,3.0,1.0.0,1.0.4,5.0,False,True,3.0,0.0
+GHSA-xxmh-rf63-qwjv,npm,True,undetermined,undetermined,add_only,43.0,,,0,1.19.2,44.0,False,False,,
+GHSA-7x6v-j9x4-qf24,npm,True,over-approximated,over-approximated,deleted,33.0,15.0,15.0,0,4.2.1,17.0,False,False,15.0,5.23
+GHSA-535w-7cp7-47q4,npm,True,over-approximated,over-approximated,deleted,53.0,52.0,52.0,0,2.3.0,54.0,False,False,52.0,12.37
+GHSA-6pw2-5hjv-9pf7,npm,True,over-approximated,over-approximated,deleted,51.0,45.0,45.0,0,3.9.6,47.0,False,False,45.0,6.18
+GHSA-5mx2-w598-339m,npm,True,tight,tight,deleted,5.0,0.0,0.0,0,1.0.2,2.0,False,False,,
+GHSA-qx4v-6gc5-f2vv,npm,True,undetermined,undetermined,deleted,109.0,,,0,3.1.0,110.0,False,False,,
+GHSA-hfpr-jhpq-x4rm,npm,True,undetermined,undetermined,deleted,46.0,,,0,2026.3.7,47.0,False,False,,
+GHSA-p8j8-wxvp-h695,npm,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-jvf5-q4h5-2jmj,npm,True,tight,tight,deleted,5.0,0.0,0.0,0,0.1.7,2.0,False,False,,
+GHSA-6q5m-63h6-5x4v,npm,True,undetermined,undetermined,deleted,220.0,,,0,10.25.1,221.0,False,False,,
+GHSA-j3hm-6rg5-mchv,npm,True,over-approximated,over-approximated,deleted,78.0,11.0,11.0,0,3.11.7,13.0,False,False,11.0,2.43
+GHSA-6xpm-ggf7-wc3p,npm,False,over-approximated,over-approximated,add_only,40.0,39.0,39.0,0.0.5,0.1.16,41.0,False,False,39.0,0.21
+GHSA-hgch-jjmr-gp7w,npm,True,over-approximated,over-approximated,deleted,9.0,2.0,2.0,0,1.3.2,4.0,False,False,2.0,0.04
+GHSA-hxcm-v35h-mg2x,npm,True,undetermined,undetermined,deleted,6.0,,,0,2.0.0,7.0,False,False,,
+GHSA-g57g-f23g-4646,npm,False,tight,tight,deleted,11.0,0.0,0.0,9.1.0,10.0.9,2.0,False,False,,
+GHSA-89vx-jh4q-vg3w,npm,False,tight,tight,add_only,1.0,0.0,0.0,10.1.0,10.1.1,2.0,False,False,,
+GHSA-vfj8-5pj7-2f9g,npm,True,undetermined,undetermined,deleted,47.0,,,0,5.19.0,48.0,False,False,,
+GHSA-897m-rjf5-jp39,npm,True,over-approximated,over-approximated,add_only,16.0,13.0,13.0,0,2.0.5,15.0,False,False,13.0,1.57
+GHSA-r578-pj6f-r4ff,npm,True,undetermined,over-approximated,deleted,316.0,,250.0,0,2.20.0,317.0,False,False,,
+GHSA-x4w5-r546-x9qh,npm,True,over-approximated,over-approximated,deleted,22.0,21.0,21.0,0,3.0.1,23.0,False,False,21.0,7.01
+GHSA-hjxc-462x-x77j,npm,True,undetermined,undetermined,deleted,91.0,,,0,1.19.0,92.0,False,False,,
+GHSA-4ggg-h7ph-26qr,npm,True,undetermined,over-approximated,deleted,187.0,,26.0,0,2.47.4,188.0,False,False,,
+GHSA-v3jv-wrf4-5845,npm,True,over-approximated,over-approximated,deleted,19.0,1.0,1.0,0,1.3.3,3.0,False,False,1.0,0.0
+GHSA-55jh-84jv-8mx8,npm,True,undetermined,undetermined,deleted,38.0,,,0,6.10.6,39.0,False,False,,
+GHSA-f9xv-q969-pqx4,npm,False,tight,tight,deleted,15.0,0.0,0.0,2.0.0-5,2.2.2,2.0,False,False,,
+GHSA-3vjf-82ff-p4r3,npm,True,over-approximated,over-approximated,add_only,27.0,25.0,25.0,0,1.19.11,27.0,False,False,25.0,6.45
+GHSA-6fw5-9hq8-w87g,npm,True,tight,tight,deleted,569.0,0.0,0.0,0,1.1.35,2.0,False,False,,
+GHSA-qgvg-pr8v-6rr3,npm,False,tight,tight,deleted,5.0,0.0,0.0,5.53.0,5.53.5,2.0,False,False,,
+GHSA-7f63-h6g3-7cwm,npm,True,not classifiable: no fix diff,,,,,,,,,,,,
+GHSA-6gp3-h3jj-prx4,npm,True,undetermined,undetermined,add_only,25.0,,,0,0.3.1,26.0,False,False,,
+GHSA-4882-hxpr-hrvm,npm,True,undetermined,undetermined,deleted,104.0,,,0,20.0.0,105.0,False,False,,
+GHSA-8cw6-53m5-4932,npm,True,over-approximated,over-approximated,add_only,29.0,14.0,10.0,0,0.2.0,16.0,False,False,14.0,0.87
+GHSA-f94x-6692-553q,npm,True,undetermined,over-approximated,add_only,312.0,,99.0,0,11.16.0,313.0,False,False,,
+GHSA-rchv-x836-w7xp,npm,True,undetermined,undetermined,deleted,46.0,,,0,2026.3.7,47.0,False,False,,
+GHSA-j47c-j42c-mwqq,npm,True,undetermined,over-approximated,deleted,15.0,,14.0,0,0.2.1,16.0,False,False,,
+GHSA-w45g-5746-x9fp,npm,True,undetermined,over-approximated,deleted,28.0,,24.0,0,2026.2.19,29.0,False,False,,
+GHSA-5h3f-q97h-ccvc,npm,True,over-approximated,over-approximated,deleted,82.0,52.0,52.0,0,3.12.2,54.0,False,False,52.0,8.07
+GHSA-2rwj-7xq8-4gx4,npm,True,undetermined,undetermined,deleted,316.0,,,0,1.7.3,317.0,False,False,,
+GHSA-cg6c-q2hx-69h7,npm,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-mwhf-vhr5-7j23,npm,False,tight,tight,deleted,3.0,0.0,0.0,4.0.0,4.0.3,2.0,False,False,,
+GHSA-f5vj-f2hx-8m93,npm,True,over-approximated,over-approximated,add_only,224.0,221.0,221.0,0,5.2.6,223.0,False,False,221.0,13.32
+GHSA-g6gw-c38x-mqfc,npm,True,undetermined,undetermined,deleted,446.0,,,0,4.13.5,401.0,True,False,,
+GHSA-qm77-8qjp-4vcm,npm,True,undetermined,undetermined,deleted,69.0,,,0,2026.4.2,70.0,False,False,,
+GHSA-p4x4-2r7f-wjxg,npm,True,over-approximated,over-approximated,add_only,64.0,1.0,1.0,0,2026.3.28,3.0,False,True,1.0,0.0
+GHSA-6j36-r6pr-59x4,npm,True,over-approximated,over-approximated,add_only,624.0,83.0,59.0,0,3.7.0,85.0,False,False,83.0,2.15
+GHSA-442j-39wm-28r2,npm,False,undetermined,over-approximated,deleted,48.0,,38.0,4.0.0,4.7.9,40.0,False,False,,
+GHSA-q8mj-m7cp-5q26,npm,False,tight,tight,deleted,22.0,0.0,0.0,6.11.1,6.15.2,2.0,False,False,,
+GHSA-59r9-6jp6-jcm7,npm,True,undetermined,undetermined,deleted,79.0,,,0,1.7.28,80.0,False,False,,
+GHSA-j5qp-p44g-2m49,npm,True,undetermined,undetermined,deleted,96.0,,,0,0.2.136,97.0,False,False,,
+GHSA-f8hv-rx9p-f9r4,npm,True,undetermined,undetermined,add_only,45.0,,,0,0.5.0,46.0,False,False,,
+GHSA-5v25-xr56-phph,npm,True,over-approximated,over-approximated,deleted,39.0,32.0,32.0,0,1.3.0,34.0,False,False,32.0,5.66
+GHSA-7fv9-m79r-j9x8,npm,True,undetermined,undetermined,deleted,48.0,,,0,1.6.8,49.0,False,False,,
+GHSA-gf3v-fwqg-4vh7,npm,True,undetermined,undetermined,add_only,194.0,,,0,1.1.14,195.0,False,False,,
+GHSA-v865-p3gq-hw6m,npm,True,undetermined,undetermined,deleted,44.0,,,0,2026.3.2,45.0,False,False,,
+GHSA-grw5-g9h2-wpg8,npm,True,over-approximated,over-approximated,deleted,34.0,19.0,19.0,0,1.20.2,21.0,False,False,19.0,4.31
+GHSA-j9fq-vwqv-2fm2,npm,True,undetermined,over-approximated,deleted,40.0,,31.0,0,8.1.0,41.0,False,False,,
+GHSA-xw4p-pw82-hqr7,npm,True,over-approximated,over-approximated,deleted,23.0,1.0,1.0,0,2026.2.14,3.0,False,False,1.0,0.0
+GHSA-wqxw-8h5g-hq56,npm,True,over-approximated,over-approximated,deleted,21.0,17.0,16.0,0,3.1.4,19.0,False,False,17.0,1.95
+GHSA-77hf-7fqf-f227,npm,True,undetermined,over-approximated,deleted,44.0,,26.0,0,2026.3.2,45.0,False,False,,
+GHSA-c7hf-c5p5-5g6h,npm,False,undetermined,undetermined,deleted,0.0,,,2.0.0,2.2.0,0.0,False,,,
+GHSA-4h66-vghf-xg5x,npm,True,undetermined,undetermined,add_only,7.0,,,0,1.0.7,8.0,False,False,,
+GHSA-w3w8-37jv-2c58,npm,True,over-approximated,over-approximated,deleted,21.0,16.0,16.0,0,2.2.1,18.0,False,False,16.0,3.4
+GHSA-hmfr-rx46-4jx2,npm,True,over-approximated,over-approximated,deleted,26.0,23.0,23.0,0,2.4.2,25.0,False,False,23.0,1.8
+GHSA-3xr5-8w6c-p5gw,npm,True,undetermined,undetermined,deleted,1531.0,,,0,0.17.8,401.0,True,False,,
+GHSA-wjr4-2jgw-hmv8,npm,True,over-approximated,over-approximated,deleted,6.0,2.0,1.0,0,0.4.1,4.0,False,False,2.0,1.74
+GHSA-w6x9-28jw-hq7j,npm,True,over-approximated,over-approximated,deleted,9.0,6.0,6.0,0,2.37.0,8.0,False,False,6.0,9.76
+GHSA-834v-8h66-3h79,npm,False,over-approximated,over-approximated,deleted,148.0,143.0,143.0,17.0.0,21.0.4,145.0,False,False,143.0,1.67
+GHSA-98xx-8mx4-x7cm,npm,False,tight,tight,deleted,4.0,0.0,0.0,3.11.3,3.11.7,2.0,False,False,,
+GHSA-x965-fc75-jpqh,npm,True,over-approximated,over-approximated,deleted,79.0,77.0,77.0,0,3.11.8,79.0,False,False,77.0,12.58
+GHSA-88f2-fpv8-89q2,npm,True,undetermined,undetermined,deleted,305.0,,,0,8.21.0,306.0,False,False,,
+GHSA-2w79-r9g8-wmcr,npm,True,over-approximated,over-approximated,deleted,66.0,1.0,1.0,0,2026.3.31,3.0,False,False,1.0,0.0
+GHSA-f934-5rqf-xx47,npm,True,undetermined,undetermined,deleted,85.0,,,0,2026.4.15,86.0,False,False,,
+GHSA-c9j3-wqph-5xx9,npm,True,over-approximated,over-approximated,deleted,16.0,5.0,5.0,0,2.8.1,7.0,False,False,5.0,0.2
+GHSA-7gfc-8cq8-jh5f,npm,False,undetermined,undetermined,add_only,1557.0,,,9.5.5,14.2.15,401.0,True,False,,
+GHSA-477h-4r7f-fvrx,npm,True,over-approximated,over-approximated,add_only,26.0,22.0,22.0,0,3.1.7,24.0,False,False,22.0,11.38
+GHSA-4qx8-w7c3-pj3p,npm,True,over-approximated,over-approximated,deleted,40.0,36.0,35.0,0,5.0.1,38.0,False,False,36.0,13.34
+GHSA-rj3r-r7hh-jxfq,npm,False,undetermined,undetermined,deleted,16.0,,,0.3.0-beta.1,0.3.0-beta.17,3.0,False,False,,
+GHSA-gcgf-fh7c-8gf2,npm,True,undetermined,undetermined,deleted,1068.0,,,0,1.14.10,401.0,True,False,,
+GHSA-66pp-5p9w-q87j,npm,False,tight,tight,deleted,11.0,0.0,0.0,1.7.2,2.1.2,2.0,False,False,,
+GHSA-vx58-fwwq-5g8j,npm,True,undetermined,undetermined,deleted,785.0,,,0,2.0.30,401.0,True,False,,
+GHSA-69f9-h8f9-7vjf,npm,True,over-approximated,over-approximated,deleted,26.0,14.0,14.0,0,1.10.0,16.0,False,False,14.0,1.56
+GHSA-f78f-353m-cf4j,npm,False,tight,tight,deleted,9.0,0.0,0.0,3.0.0,5.0.0,2.0,False,False,,
+GHSA-7cvf-pxgp-42fc,npm,True,undetermined,undetermined,deleted,303.0,,,0,11.9.0,304.0,False,False,,
+GHSA-w4v7-hwx7-9929,npm,True,over-approximated,over-approximated,deleted,12.0,6.0,6.0,0,0.4.0,8.0,False,False,6.0,6.01
+GHSA-jgm3-qmp2-c4p7,npm,True,over-approximated,over-approximated,add_only,576.0,68.0,68.0,0,3.6.5,70.0,False,False,68.0,1.77
+GHSA-j827-6rgf-9629,npm,True,over-approximated,over-approximated,deleted,89.0,1.0,1.0,0,2.9.17,3.0,False,False,1.0,4.82
+GHSA-6h7f-qwqm-35pp,npm,True,tight,tight,deleted,32.0,0.0,0.0,0,0.6.2,2.0,False,False,,
+GHSA-r3r9-wp5j-pq5g,npm,True,over-approximated,over-approximated,deleted,15.0,9.0,9.0,0,3.2.1,11.0,False,False,9.0,4.14
+GHSA-2g4c-8fpm-c46v,npm,False,tight,tight,deleted,194.0,0.0,0.0,4.0.1,4.2.1,2.0,False,False,,
+GHSA-f3rg-xqjj-cj9w,npm,True,over-approximated,over-approximated,deleted,212.0,91.0,30.0,0,2.51.3,93.0,False,False,91.0,0.36
+GHSA-49mx-fj45-q3p6,npm,False,undetermined,undetermined,add_only,174.0,,,1.65.0,1.114.3,175.0,False,False,,
+GHSA-8g75-q649-6pv6,npm,True,undetermined,undetermined,deleted,48.0,,,0,2026.3.8,49.0,False,False,,
+GHSA-mq6c-fh97-4gwv,npm,True,undetermined,undetermined,deleted,66.0,,,0,0.38.0,67.0,False,False,,
+GHSA-wf6c-hrhf-86cw,npm,True,undetermined,undetermined,deleted,249.0,,,0,0.258.0,250.0,False,False,,
+GHSA-687g-22h4-j4w4,npm,True,tight,tight,deleted,66.0,0.0,0.0,0,6.3.0,2.0,False,False,,
+GHSA-h6cr-wjv9-3cpp,npm,True,over-approximated,over-approximated,deleted,134.0,133.0,133.0,0,1.4.1,135.0,False,False,133.0,12.76
+GHSA-2w86-xfrc-g85r,npm,True,undetermined,undetermined,deleted,305.0,,,0,8.21.0,306.0,False,False,,
+GHSA-p3vf-v8qc-cwcr,npm,True,over-approximated,over-approximated,deleted,86.0,49.0,49.0,0,2.4.2,51.0,False,False,49.0,5.7
+GHSA-2hw7-mxvj-m455,npm,True,undetermined,over-approximated,deleted,84.0,,65.0,0,2.26.2,85.0,False,True,,
+GHSA-j4r3-hg7j-8chg,npm,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-3fw8-66wf-pr7m,npm,True,over-approximated,over-approximated,deleted,121.0,28.0,28.0,0,2.8.1,30.0,False,True,28.0,0.17
+GHSA-2364-jh4q-m9vm,npm,True,over-approximated,over-approximated,deleted,102.0,87.0,87.0,0,3.1.3,89.0,False,True,87.0,2.13
+GHSA-wppj-c6mr-83jj,npm,True,undetermined,undetermined,deleted,93.0,,,0,2026.4.22,94.0,False,False,,
+GHSA-2h44-8472-frjj,npm,False,undetermined,over-approximated,deleted,128.0,,115.0,0.0.1,2.1.27,129.0,False,True,,
+GHSA-396q-4vc8-28x9,npm,False,over-approximated,over-approximated,deleted,5.0,3.0,3.0,1.0.0-preview.97,1.0.0-preview.102,5.0,False,False,3.0,0.58
+GHSA-68c2-4mpx-qh95,npm,False,undetermined,undetermined,deleted,4.0,,,5.16.0,5.19.1,5.0,False,False,,
+GHSA-rx3g-mvc3-qfjf,npm,True,over-approximated,over-approximated,deleted,34.0,8.0,1.0,0,2026.2.22,10.0,False,False,8.0,0.01
+GHSA-j3rg-3rgm-537h,npm,True,undetermined,undetermined,deleted,219.0,,,0,9.23.0,220.0,False,False,,
+GHSA-hff7-ccv5-52f8,npm,True,undetermined,undetermined,deleted,31.0,,,0,2026.2.21,32.0,False,False,,
+GHSA-p6j9-7xhc-rhwp,npm,True,tight,tight,deleted,22.0,0.0,0.0,0,1.19.6,2.0,False,False,,
+GHSA-77r5-gw3j-2mpf,npm,False,undetermined,undetermined,deleted,181.0,,,13.4.0,13.5.1,182.0,False,False,,
+GHSA-x3vm-88hf-gpxp,npm,False,undetermined,undetermined,deleted,143.0,,,9.0.0,11.9.0,144.0,False,False,,
+GHSA-8ph8-9q2j-c3rq,npm,True,over-approximated,over-approximated,deleted,8.0,4.0,4.0,0,2.2.0,6.0,False,False,4.0,0.37
+GHSA-x5rw-q4pp-hg5g,npm,False,tight,tight,add_only,6.0,0.0,0.0,5.8.0,5.9.3,2.0,False,False,,
+GHSA-2gjg-5x33-mmp2,npm,True,undetermined,undetermined,deleted,10.0,,,0,1.0.2,6.0,False,False,,
+GHSA-2gx6-7gx2-wwcf,npm,False,over-approximated,over-approximated,deleted,386.0,249.0,249.0,5.26.0,6.54.1,251.0,False,False,249.0,2.28
+GHSA-cxpw-2g23-2vgw,npm,True,undetermined,over-approximated,deleted,28.0,,1.0,0,2026.2.19,29.0,False,False,,
+GHSA-64fm-8hw2-v72w,npm,False,tight,tight,deleted,44.0,0.0,0.0,0.12.0,0.16.10,2.0,False,False,,
+GHSA-p9w8-2mpq-49h9,npm,True,undetermined,over-approximated,deleted,8.0,,1.0,0,1.2.3,7.0,False,False,,
+GHSA-464q-cqxq-xhgr,npm,True,undetermined,undetermined,deleted,151.0,,,0,11.1.1,152.0,False,False,,
+GHSA-5cwg-6vw7-rj6p,npm,True,over-approximated,over-approximated,deleted,134.0,56.0,56.0,0,1.4.1,58.0,False,False,56.0,0.92
+GHSA-cwfw-4gq5-mrqx,npm,False,tight,tight,deleted,4.0,0.0,0.0,2.2.0,2.3.1,2.0,False,False,,
+GHSA-3pm9-5j7m-59vc,npm,True,over-approximated,over-approximated,deleted,66.0,43.0,43.0,0,2026.3.31,45.0,False,False,43.0,0.09
+GHSA-j9v4-rhgr-4m5f,npm,True,undetermined,undetermined,deleted,1091.0,,,0,1.14.8,401.0,True,False,,
+GHSA-49wp-qq6x-g2rf,npm,True,undetermined,over-approximated,deleted,6.0,,5.0,0,3.0.0,7.0,False,False,,
+GHSA-gjv4-ghm7-q58q,npm,True,over-approximated,over-approximated,deleted,42.0,26.0,26.0,0,2.5.0,28.0,False,False,26.0,0.44
+GHSA-97v6-998m-fp4g,npm,True,undetermined,undetermined,deleted,1123.0,,,0,4.29.0,401.0,True,False,,
+GHSA-3p3p-cgj7-vgw3,npm,True,undetermined,undetermined,deleted,4126.0,,,0,1.0.0-master.a429472,401.0,True,False,,
+GHSA-hpfq-8wx8-cgqw,npm,True,not classifiable: no fix diff,,,,,,,,,,,,
+GHSA-r4gj-5m52-g5wh,npm,False,undetermined,tight,deleted,4.0,,0.0,1.17.0,1.20.0,4.0,False,False,,
+GHSA-7rcp-mxpq-72pj,npm,True,undetermined,undetermined,deleted,23.0,,,0,2026.2.14,24.0,False,False,,
+GHSA-8575-cr6v-7jh4,npm,False,undetermined,undetermined,deleted,544.0,,,4.22.0,6.65.0,367.0,False,False,,
+GHSA-vghf-hv5q-vc2g,npm,True,undetermined,undetermined,deleted,214.0,,,0,13.15.22,215.0,False,False,,
+GHSA-p36q-q72m-gchr,npm,True,undetermined,undetermined,deleted,68.0,,,0,0.11.13,69.0,False,False,,
+GHSA-x287-wcfc-q46c,npm,False,tight,tight,deleted,3.0,0.0,0.0,4.6.0,4.6.3,2.0,False,False,,
+GHSA-rm5c-4rmf-vvhw,npm,True,undetermined,over-approximated,deleted,66.0,,65.0,0,2026.3.31,67.0,False,False,,
+GHSA-mmj4-777p-fpq9,npm,True,undetermined,undetermined,deleted,21.0,,,0,0.26.0,22.0,False,False,,
+GHSA-cwc9-cp4j-mcvv,npm,True,tight,tight,deleted,115.0,0.0,0.0,0,16.0.0,2.0,False,False,,
+GHSA-39pp-xp36-q6mg,npm,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-2cp6-34r9-54xx,npm,True,tight,tight,deleted,149.0,0.0,0.0,0,0.19.2,2.0,False,False,,
+GHSA-gx6r-qc2v-3p3v,npm,False,over-approximated,over-approximated,deleted,216.0,15.0,15.0,5.0.0,5.21.7,17.0,False,False,15.0,0.04
+GHSA-q3jh-wrc6-jgq8,npm,False,tight,tight,add_only,1.0,0.0,0.0,1.16.0,1.16.1,2.0,False,False,,
+GHSA-7wpw-2hjm-89gp,npm,True,undetermined,undetermined,deleted,8.0,,,0,2.1.1,9.0,False,False,,
+GHSA-wwxh-74fx-33c6,npm,True,undetermined,undetermined,deleted,5.0,,,0,0.6.1,6.0,False,False,,
+GHSA-wm77-q74p-5763,npm,True,over-approximated,over-approximated,deleted,190.0,181.0,181.0,0,5.0.2,183.0,False,False,181.0,2.33
+GHSA-3wgp-x9p5-c7cc,npm,True,undetermined,undetermined,deleted,114.0,,,0,10.7.0,115.0,False,False,,
+GHSA-3wc5-fcw2-2329,npm,False,tight,tight,deleted,46.0,0.0,0.0,0.11.0,0.16.10,2.0,False,False,,
+GHSA-8qwj-4jxw-m8jw,npm,True,undetermined,undetermined,add_only,151.0,,,0,11.1.1,152.0,False,False,,
+GHSA-3c6g-pvg8-gqw2,npm,True,over-approximated,over-approximated,deleted,15.0,9.0,7.0,0,10.0.0,11.0,False,False,9.0,3.25
+GHSA-67gq-6q8c-qqh6,npm,True,undetermined,undetermined,deleted,23.0,,,0,0.15.0,24.0,False,False,,
+GHSA-x3v3-8xg8-8v72,npm,False,undetermined,undetermined,deleted,13.0,,,7.78.0,7.87.0,14.0,False,False,,
+GHSA-fw5f-7c6c-3vmv,npm,True,undetermined,undetermined,deleted,0.0,,,0,8.0,1.0,False,False,,
+GHSA-rx8g-88g5-qh64,npm,True,over-approximated,over-approximated,deleted,38.0,29.0,29.0,0,2.19.1,31.0,False,False,29.0,1.66
+GHSA-4hf8-5mjm-rfgq,npm,True,over-approximated,over-approximated,deleted,23.0,21.0,21.0,0,1.1.2,23.0,False,False,21.0,0.01
+GHSA-62ch-8vmq-8xm7,npm,True,undetermined,undetermined,deleted,47.0,,,0,1.11.3,48.0,False,False,,
+GHSA-95fx-jjr5-f39c,npm,True,over-approximated,over-approximated,deleted,31.0,11.0,11.0,0,4.1.0,13.0,False,True,11.0,3.05
+GHSA-57f3-gghm-9mhc,npm,True,over-approximated,over-approximated,deleted,20.0,15.0,15.0,0,2.3.1,17.0,False,False,15.0,5.23
+GHSA-7ff8-xjh3-mgh6,npm,True,undetermined,undetermined,deleted,36.0,,,0,2026.2.23,37.0,False,False,,
+GHSA-hgjh-723h-mx2j,npm,True,over-approximated,over-approximated,deleted,48.0,47.0,25.0,0,1.5.8,49.0,False,False,47.0,7.36
+GHSA-f86p-h4j2-7qgj,npm,False,undetermined,undetermined,deleted,11.0,,,1.6.0,1.6.11,12.0,False,False,,
+GHSA-j8rh-479h-cp32,npm,False,over-approximated,over-approximated,deleted,73.0,71.0,69.0,1.0.0,1.20.0,73.0,False,False,71.0,3.71
+GHSA-f2rp-38vg-j3gh,npm,True,over-approximated,over-approximated,deleted,11.0,2.0,2.0,0,1.1.3,4.0,False,False,2.0,0.0
+GHSA-694p-3fxc-m92h,npm,True,tight,tight,deleted,4.0,0.0,0.0,0,1.1.0,2.0,False,False,,
+GHSA-wm8r-w8pf-2v6w,npm,True,undetermined,over-approximated,deleted,40.0,,8.0,0,2026.2.26,41.0,False,False,,
+GHSA-6vj9-mwq6-2f5v,npm,False,over-approximated,over-approximated,deleted,100.0,98.0,98.0,5.0.0,10.0.2,100.0,False,False,98.0,7.68
+GHSA-7w5x-hrqm-74c2,npm,True,over-approximated,over-approximated,add_only,25.0,23.0,2.0,0,1.7.1,25.0,False,False,23.0,2.87
+GHSA-rc77-xxq6-4mff,npm,True,tight,tight,deleted,31.0,0.0,0.0,0,3.0.1,2.0,False,False,,
+GHSA-49q7-c7j4-3p7m,npm,False,tight,tight,add_only,27.0,0.0,0.0,5.2.1,6.5.7,2.0,False,False,,
+GHSA-4x48-cgf9-q33f,npm,True,undetermined,undetermined,deleted,141.0,,,0,3.15.0,142.0,False,False,,
+GHSA-8v5f-hp78-jgxq,npm,True,tight,tight,add_only,9.0,0.0,0.0,0,0.5.3,2.0,False,False,,
+GHSA-g7mq-rfj2-25wq,npm,True,over-approximated,over-approximated,deleted,97.0,1.0,1.0,0,0.0.43,3.0,False,False,1.0,0.0
+GHSA-247c-9743-5963,npm,False,undetermined,undetermined,deleted,17.0,,,5.3.2,5.8.5,18.0,False,False,,
+GHSA-4p35-cfcx-8653,npm,True,over-approximated,over-approximated,deleted,31.0,17.0,1.0,0,6.0.1,19.0,False,True,17.0,2.04
+GHSA-hx9m-jf43-8ffr,npm,False,over-approximated,over-approximated,deleted,69.0,68.0,68.0,0.2.0,1.4.1,70.0,False,False,68.0,2.7
+GHSA-m734-r4g6-34f9,npm,True,over-approximated,over-approximated,deleted,60.0,16.0,16.0,0,3.6.0,18.0,False,False,16.0,0.65
+GHSA-hvrm-45r6-mjfj,npm,False,undetermined,undetermined,deleted,30.0,,,4.11.8,4.12.27,31.0,False,False,,
+GHSA-f982-mxwc-3mrx,npm,False,tight,tight,deleted,1.0,0.0,0.0,2.17.1,2.18.0,2.0,False,False,,
+GHSA-hv96-xxx2-5v7w,npm,True,over-approximated,over-approximated,deleted,185.0,3.0,3.0,0,0.23.6-1,5.0,False,False,3.0,0.11
+GHSA-f7wf-v2vw-mpcx,npm,True,undetermined,undetermined,deleted,7.0,,,0,0.13.0,8.0,False,False,,
+GHSA-mphv-75cg-56wg,npm,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-hgp8-w8fj-r4cm,npm,True,undetermined,undetermined,add_only,1.0,,,0,1.27.0,1.0,False,,,
+GHSA-mp66-8ww2-pcwm,npm,True,undetermined,over-approximated,deleted,634.0,,76.0,0,1.1.36,401.0,True,False,,
+GHSA-9xr8-8hmc-389f,npm,True,undetermined,undetermined,deleted,216.0,,,0,2.1.8,217.0,False,False,,
+GHSA-5jg4-p4qw-cgfr,npm,True,tight,tight,deleted,18.0,0.0,0.0,0,2.0.3,2.0,False,False,,
+GHSA-cfjh-p3g4-3q2f,npm,True,over-approximated,over-approximated,deleted,35.0,33.0,33.0,0,0.3.3,35.0,False,False,33.0,2.52
+GHSA-cxm3-v4mv-6mh8,npm,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-cpj6-fhp6-mr6j,npm,False,undetermined,undetermined,deleted,44.0,,,7.0.0-pre.0,7.5.2,45.0,False,False,,
+GHSA-9qj6-qjgg-37qq,npm,True,over-approximated,over-approximated,deleted,73.0,71.0,71.0,0,3.11.2,73.0,False,False,71.0,12.29
+GHSA-r92x-f52r-x54g,npm,True,over-approximated,over-approximated,deleted,31.0,28.0,28.0,0,0.14.2,30.0,False,False,28.0,5.2
+GHSA-qf34-qpr4-5pph,npm,True,tight,tight,deleted,7.0,0.0,0.0,0,4.0.0,2.0,False,False,,
+GHSA-2pr6-76vf-7546,npm,True,over-approximated,over-approximated,add_only,66.0,54.0,54.0,0,3.13.0,56.0,False,False,54.0,5.26
+GHSA-747p-jfqv-f43r,npm,True,tight,tight,deleted,8.0,0.0,0.0,0,1.0.8,2.0,False,False,,
+GHSA-gmq8-994r-jv83,npm,False,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-g336-c7wv-8hp3,npm,True,undetermined,over-approximated,deleted,56.0,,55.0,0,2.2.1,57.0,False,False,,
+GHSA-w8wf-3qvj-6xqf,npm,True,over-approximated,over-approximated,deleted,110.0,22.0,22.0,0,2026.6.9,24.0,False,False,22.0,0.24
+GHSA-5v6x-rfc3-7qfr,npm,True,undetermined,undetermined,deleted,31.0,,,0,2026.2.21,32.0,False,False,,
+GHSA-42xw-2xvc-qx8m,npm,True,over-approximated,over-approximated,add_only,37.0,20.0,20.0,0,0.18.1,22.0,False,False,20.0,1.64
+GHSA-7gfh-x38p-prh3,npm,True,undetermined,undetermined,deleted,83.0,,,0,2.1.7,84.0,False,False,,
+GHSA-5v7r-jg9r-vq44,npm,True,undetermined,undetermined,deleted,10.0,,,0,2.3.0,11.0,False,False,,
+GHSA-8w3j-g983-8jh5,npm,True,undetermined,undetermined,deleted,105.0,,,0,3.6.0,106.0,False,False,,
+GHSA-3xfw-4pmr-4xc5,npm,True,over-approximated,over-approximated,deleted,31.0,26.0,26.0,0,2026.2.21,28.0,False,True,26.0,0.06
+GHSA-79wm-x847-7cvg,npm,True,over-approximated,over-approximated,deleted,155.0,92.0,92.0,0,1.29.4,94.0,False,False,92.0,0.18
+GHSA-5m6h-8g35-p3m7,npm,True,undetermined,over-approximated,deleted,224.0,,163.0,0,3.3.0,168.0,False,False,,
+GHSA-75hx-xj24-mqrw,npm,True,undetermined,over-approximated,deleted,189.0,,13.0,0,2.47.6,184.0,False,False,,
+GHSA-7pvx-4585-hqww,npm,True,over-approximated,over-approximated,deleted,93.0,88.0,88.0,0,2.1.6,90.0,False,False,88.0,4.57
+GHSA-5pxj-mhwj-x5gv,npm,True,tight,tight,deleted,3.0,0.0,0.0,0,1.0.3,2.0,False,False,,
+GHSA-vc2v-76pw-4v95,npm,True,undetermined,over-approximated,add_only,39.0,,9.0,0,1.8.2,27.0,False,False,,
+GHSA-vhv4-fh94-jm5x,npm,True,tight,tight,deleted,5.0,0.0,0.0,0,2.0.3,2.0,False,False,,
+GHSA-3cgg-c5pp-57h6,npm,False,undetermined,over-approximated,deleted,44.0,,41.0,0.6.0,0.14.2,45.0,False,False,,
+GHSA-wqjv-9729-c5q2,npm,True,undetermined,undetermined,deleted,958.0,,,0,2.69.1,401.0,True,False,,
+GHSA-6m8p-4fxj-pgc2,npm,True,over-approximated,over-approximated,deleted,34.0,33.0,33.0,0,2.0.1,35.0,False,False,33.0,7.13
+GHSA-x426-x7cc-3fpc,npm,True,over-approximated,over-approximated,deleted,14.0,8.0,8.0,0,18.1.2,10.0,False,False,8.0,2.99
+GHSA-7w82-6f9j-v9jp,npm,True,tight,tight,deleted,7.0,0.0,0.0,0,1.4.0,2.0,False,False,,
+GHSA-vjf3-2gpj-233v,npm,True,undetermined,undetermined,deleted,946.0,,,0,2.8.0,401.0,True,False,,
+GHSA-qffp-2rhf-9h96,npm,True,undetermined,over-approximated,deleted,140.0,,107.0,0,7.5.10,141.0,False,False,,
+GHSA-3x3x-h76w-hp98,npm,True,undetermined,undetermined,deleted,28.0,,,0,2026.2.19,29.0,False,False,,
+GHSA-xf4j-xp2r-rqqx,npm,False,undetermined,undetermined,deleted,163.0,,,4.0.0,4.12.12,164.0,False,False,,
+GHSA-r7g9-xpmj-5fcq,npm,True,undetermined,undetermined,deleted,227.0,,,0,10.26.0,228.0,False,False,,
+GHSA-5324-3w58-qpp2,npm,True,over-approximated,over-approximated,deleted,120.0,99.0,99.0,0,3.1.6,101.0,False,False,99.0,1.72
+GHSA-4pfg-2mw5-f8jx,npm,True,tight,tight,add_only,698.0,0.0,0.0,0,1.6.0,2.0,False,True,,
+GHSA-27mw-82g8-phjj,npm,True,undetermined,undetermined,deleted,997.0,,,0,3.0.0,401.0,True,False,,
+GHSA-gp3q-wpq4-5c5h,npm,True,undetermined,over-approximated,deleted,40.0,,35.0,0,2026.2.26,41.0,False,False,,
+GHSA-p6gq-j5cr-w38f,npm,True,over-approximated,over-approximated,deleted,300.0,239.0,239.0,0,9.0.1,241.0,False,False,239.0,9.51
+GHSA-7g8c-cfr3-vqqr,npm,True,undetermined,over-approximated,deleted,76.0,,1.0,0,2026.4.10,77.0,False,False,,
+GHSA-75qf-886x-5xf2,npm,True,undetermined,undetermined,deleted,1240.0,,,0,0.3.25,401.0,True,False,,
+GHSA-23fp-fmrv-f5px,npm,True,over-approximated,over-approximated,deleted,121.0,116.0,116.0,0,3.0.0-beta.18.4,118.0,False,False,116.0,2.37
+GHSA-7pr3-p5fm-8r9x,npm,True,over-approximated,over-approximated,add_only,123.0,115.0,115.0,0,4.10.4,117.0,False,True,115.0,7.64
+GHSA-c8p4-j97h-3vg8,npm,True,undetermined,undetermined,deleted,773.0,,,0,21.0.0,401.0,True,False,,
+GHSA-8g7p-74h8-hg48,npm,True,over-approximated,over-approximated,deleted,15.0,13.0,13.0,0,2.2.0,15.0,False,False,13.0,4.08
+GHSA-wpxw-5xfm-x22v,npm,True,undetermined,undetermined,deleted,1809.0,,,0,1.1.17,401.0,True,False,,
+GHSA-3fjq-93xj-3f3f,npm,True,tight,tight,deleted,18.0,0.0,0.0,0,3.0.1,2.0,False,False,,
+GHSA-4jrm-c32x-w4jf,npm,True,over-approximated,over-approximated,deleted,62.0,61.0,61.0,0,6.2.4,63.0,False,False,61.0,10.29
+GHSA-gr7w-hmch-25g7,npm,True,tight,tight,deleted,3.0,0.0,0.0,0,0.3.7,2.0,False,False,,
+GHSA-73rg-x683-m3qw,npm,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-fr76-2wp8-fp92,npm,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-7grx-f945-mj96,npm,True,undetermined,undetermined,deleted,0.0,,,0,1.22.1,1.0,False,False,,
+GHSA-j839-gqq4-gf9j,npm,True,undetermined,undetermined,deleted,747.0,,,0,4.12.31,401.0,True,False,,
+GHSA-p8pf-44ff-93gf,npm,True,over-approximated,over-approximated,deleted,67.0,39.0,39.0,0,2.11.1,41.0,False,False,39.0,0.84
+GHSA-wp3j-gv53-4pg8,npm,True,undetermined,over-approximated,deleted,13.0,,8.0,0,1.0.2,14.0,False,False,,
+GHSA-6x2m-hqfw-hvpj,npm,True,over-approximated,over-approximated,deleted,36.0,1.0,1.0,0,2026.2.23,3.0,False,False,1.0,0.0
+GHSA-5rq4-664w-9x2c,npm,True,undetermined,over-approximated,add_only,113.0,,13.0,0,5.2.0,114.0,False,False,,
+GHSA-q7jf-gf43-6x6p,npm,True,undetermined,undetermined,deleted,389.0,,,0,4.10.3,390.0,False,False,,
+GHSA-q6qf-4p5j-r25g,npm,True,undetermined,undetermined,deleted,36.0,,,0,2026.2.23,37.0,False,False,,
+GHSA-qvqv-mcxr-x8qw,npm,False,over-approximated,over-approximated,deleted,28.0,8.0,8.0,2.0.0,2.9.2,10.0,False,False,8.0,0.03
+GHSA-6wvx-3r32-xmcg,npm,True,tight,tight,deleted,134.0,0.0,0.0,0,1.4.1,2.0,False,False,,
+GHSA-x4vh-j75g-268g,npm,True,over-approximated,over-approximated,add_only,294.0,197.0,197.0,0,0.301.3,199.0,False,False,197.0,2.53
+GHSA-77vg-94rm-hx3p,npm,False,undetermined,tight,deleted,5.0,,0.0,5.6.3,5.8.1,3.0,False,False,,
+GHSA-vj54-72f3-p5jv,npm,True,over-approximated,over-approximated,deleted,31.0,16.0,16.0,0,5.3.2,18.0,False,False,16.0,4.64
+GHSA-h9x2-5rm7-x4gm,npm,True,undetermined,undetermined,deleted,1.0,,,0,3.0.1,2.0,False,False,,
+GHSA-jvcm-f35g-w78p,npm,True,undetermined,undetermined,deleted,155.0,,,0,5.12.2,156.0,False,False,,
+GHSA-257v-vj4p-3w2h,npm,True,over-approximated,over-approximated,deleted,24.0,22.0,22.0,0,1.5.5,24.0,False,False,22.0,7.12
+GHSA-3fm2-xfq7-7778,npm,False,undetermined,over-approximated,add_only,10.0,,2.0,11.0.6,25.0.0,11.0,False,False,,
+GHSA-pvv8-8fx9-h673,npm,False,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-332q-7ff2-57h2,npm,True,undetermined,undetermined,add_only,11.0,,,0,2.0.3,12.0,False,False,,
+GHSA-5h2c-8v84-qpvr,npm,True,undetermined,undetermined,deleted,34.0,,,0,2026.2.22,35.0,False,False,,
+GHSA-mf5g-6r6f-ghhm,npm,True,over-approximated,over-approximated,deleted,64.0,41.0,41.0,0,2026.3.28,43.0,False,False,41.0,0.08
+GHSA-8jx2-rhfh-q928,npm,True,undetermined,undetermined,deleted,0.0,,,0,0.1.1,1.0,False,False,,
+GHSA-c53x-wwx2-pg96,npm,True,undetermined,undetermined,deleted,2.0,,,0,1.0.2,3.0,False,False,,
+GHSA-hh27-ffr2-f2jc,npm,False,over-approximated,over-approximated,deleted,37.0,36.0,35.0,0.1.0,1.5.2,38.0,False,False,36.0,6.28
+GHSA-77w2-crqv-cmv3,npm,True,undetermined,undetermined,add_only,64.0,,,0,2026.3.28,65.0,False,False,,
+GHSA-c9pr-q8gx-3mgp,npm,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-7hmh-pfrp-vcx4,npm,True,undetermined,undetermined,deleted,11.0,,,0,1.1.6,12.0,False,False,,
+GHSA-fr3w-2p22-6w7p,npm,True,undetermined,undetermined,deleted,258.0,,,0,10.10.0,259.0,False,False,,
+GHSA-xr5h-phrj-8vxv,npm,True,undetermined,undetermined,deleted,1318.0,,,0,6.1.10,401.0,True,False,,
+GHSA-vmfm-ch9h-5c7g,npm,True,undetermined,undetermined,deleted,191.0,,,0,2.25.0,192.0,False,False,,
+GHSA-jjhp-8crj-mppq,npm,False,undetermined,tight,deleted,13.0,,0.0,1.6.0,2.0.3,14.0,False,False,,
+GHSA-gcv8-gh4r-25x6,npm,True,over-approximated,over-approximated,deleted,24.0,23.0,23.0,0,1.19.8,25.0,False,False,23.0,5.82
+GHSA-wvqx-v3f6-w8rh,npm,True,undetermined,undetermined,deleted,151.0,,,0,11.1.1,152.0,False,False,,
+GHSA-jrvm-mcxc-mf6m,npm,True,over-approximated,over-approximated,deleted,6.0,1.0,1.0,0,1.0.1,3.0,False,False,1.0,0.01
+GHSA-h6pr-c536-6rjg,npm,True,over-approximated,over-approximated,deleted,4.0,3.0,3.0,0,1.0.2,5.0,False,False,3.0,5.86
+GHSA-v62p-rq8g-8h59,npm,False,undetermined,over-approximated,deleted,17.0,,14.0,1.0.0,3.1.3,18.0,False,False,,
+GHSA-9j5q-479x-43g2,npm,True,over-approximated,over-approximated,deleted,103.0,38.0,23.0,0,8.7.1,40.0,False,True,38.0,1.96
+GHSA-fh32-73r9-rgh5,npm,True,undetermined,undetermined,deleted,69.0,,,0,2026.4.2,70.0,False,False,,
+GHSA-7hfw-grcm-cqm6,npm,True,undetermined,undetermined,deleted,2160.0,,,0,4.1.0,401.0,True,False,,
+GHSA-cfqx-f43m-vfh7,npm,True,over-approximated,over-approximated,add_only,378.0,162.0,162.0,0,1.0.0-beta.14,164.0,False,False,162.0,2.48
+GHSA-jpp7-7chh-cf67,npm,True,over-approximated,over-approximated,deleted,31.0,17.0,1.0,0,6.0.1,19.0,False,True,17.0,2.04
+GHSA-whqg-ppgf-wp8c,npm,True,undetermined,undetermined,deleted,1246.0,,,0,5.15.8,401.0,True,False,,
+GHSA-w8x4-x68c-m6fc,npm,True,tight,tight,deleted,17.0,0.0,0.0,0,0.14.0,2.0,False,False,,
+GHSA-8fmp-37rc-p5g7,npm,True,undetermined,over-approximated,deleted,31.0,,9.0,0,2026.2.21,32.0,False,False,,
+GHSA-vvv8-xw5f-3f88,npm,True,undetermined,tight,deleted,21.0,,0.0,0,1.2.4,22.0,False,False,,
+GHSA-gmpm-xp43-f7g6,npm,True,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-r4hg-4cpq-q57c,npm,True,over-approximated,over-approximated,deleted,189.0,180.0,180.0,0,5.0.1,182.0,False,False,180.0,3.37
+GHSA-9p4w-fq8m-2hp7,npm,True,undetermined,undetermined,deleted,63.0,,,0,0.8.27,64.0,False,False,,
+GHSA-hvq2-wf92-j4f3,npm,True,tight,tight,deleted,16.0,0.0,0.0,0,2.0.1,2.0,False,False,,
+GHSA-q54r-r9pr-w7qv,npm,False,over-approximated,over-approximated,deleted,152.0,103.0,103.0,0.0.1,6.0.0,105.0,False,True,103.0,2.25
+GHSA-3vfr-4gwf-qxfp,npm,True,undetermined,undetermined,deleted,612.0,,,0,2.10.3,401.0,True,False,,
+GHSA-c2jc-4fpr-4vhg,npm,True,tight,tight,deleted,1.0,0.0,0.0,0,3.0.1,2.0,False,False,,
+GHSA-8r9q-7v3j-jr4g,npm,False,not classifiable: no usable signature,,,,,,,,,,,,
+GHSA-2qjp-fg8c-g878,npm,True,undetermined,tight,deleted,1092.0,,0.0,0,3.7.10,401.0,True,False,,
+GHSA-whf9-3hcx-gq54,npm,True,over-approximated,over-approximated,deleted,73.0,43.0,21.0,0,2026.4.8,45.0,False,True,43.0,0.09
+GHSA-86ch-6w7v-v6xf,npm,True,tight,tight,deleted,19.0,0.0,0.0,0,0.24.1,2.0,False,False,,
+GHSA-f8gf-w286-fmq2,npm,True,over-approximated,over-approximated,deleted,79.0,71.0,71.0,0,3.11.8,73.0,False,False,71.0,12.29
+GHSA-cq8c-xv66-36gw,npm,False,undetermined,undetermined,deleted,60.0,,,5.2.0,5.12.8,61.0,False,False,,
+GHSA-hpcf-8vf9-q4gj,npm,True,tight,tight,deleted,5.0,0.0,0.0,0,1.12.0,2.0,False,False,,
+GHSA-vrhw-v2hw-jffx,npm,True,undetermined,undetermined,deleted,178.0,,,0,2.20.3,179.0,False,False,,
+GHSA-8r88-6cj9-9fh5,npm,True,tight,tight,deleted,85.0,0.0,0.0,0,2.70.0,2.0,False,False,,
+GHSA-fm2f-4339-4p2f,npm,True,undetermined,undetermined,deleted,102.0,,,0,3.1.3,103.0,False,False,,
+GHSA-4hqw-qxg8-jxx2,npm,False,undetermined,over-approximated,deleted,20.0,,16.0,1.12.0,1.20.0,20.0,False,False,,
+GHSA-583x-23h9-f5w7,npm,False,tight,tight,deleted,132.0,0.0,0.0,3.2.1,4.6.0,2.0,False,False,,
+GHSA-5fpv-5qvh-7cf3,npm,True,tight,tight,deleted,51.0,0.0,0.0,0,11.0.10,2.0,False,False,,
+GHSA-vjx8-8p7h-82gr,npm,True,undetermined,over-approximated,deleted,66.0,,60.0,0,2026.3.31,67.0,False,False,,
+GHSA-v98g-8rqx-g93g,npm,True,undetermined,undetermined,deleted,43.0,,,0,1.19.2,44.0,False,False,,
+GHSA-2mhw-wcx5-v3xj,npm,True,over-approximated,over-approximated,deleted,47.0,42.0,31.0,0,0.9.2,44.0,False,False,42.0,3.95

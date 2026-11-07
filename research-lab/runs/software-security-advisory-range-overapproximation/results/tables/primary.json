@@ -1,0 +1,92 @@
+{
+ "sampled": 800,
+ "classes": {
+  "over-approximated": 308,
+  "undetermined": 300,
+  "tight": 103,
+  "not classifiable: no usable signature": 79,
+  "not classifiable: no fix diff": 10
+ },
+ "H1": {
+  "over_approximated": 308,
+  "classified": 411,
+  "share": 0.7494,
+  "wilson": [
+   0.7053,
+   0.7888
+  ],
+  "verdict": "Supported",
+  "share_of_all_sampled_lower_bound": 0.385,
+  "undetermined_share": 0.4863
+ },
+ "H2": {
+  "declared_pairs": 35590,
+  "corrected_pairs": 16353,
+  "factor": 2.176,
+  "ci": [
+   1.931,
+   2.497
+  ],
+  "verdict": "Supported"
+ },
+ "by_ecosystem": {
+  "PyPI": {
+   "over": 177,
+   "classified": 220,
+   "wilson": [
+    0.7471,
+    0.8515
+   ]
+  },
+  "npm": {
+   "over": 131,
+   "classified": 191,
+   "wilson": [
+    0.6169,
+    0.7475
+   ]
+  }
+ },
+ "by_lower_bound": {
+  "explicit": {
+   "over": 28,
+   "classified": 73,
+   "wilson": [
+    0.2805,
+    0.4983
+   ]
+  },
+  "introduced: 0": {
+   "over": 280,
+   "classified": 338,
+   "wilson": [
+    0.7846,
+    0.8649
+   ]
+  }
+ },
+ "gap": {
+  "releases_median": 42.5,
+  "years_median": 3.0599999999999996
+ },
+ "upper_bound_check": {
+  "checked": 693,
+  "vulnerable_code_still_present_at_fixed": 35
+ },
+ "threshold_sensitivity_0.6_0.4": {
+  "over": 360,
+  "classified": 487,
+  "share": 0.7392,
+  "wilson": [
+   0.6985,
+   0.7762
+  ]
+ },
+ "cap_hit": 41,
+ "npm_download_weighted": {
+  "advisories": 189,
+  "weekly_downloads_in_declared_ranges": 707152440,
+  "in_corrected_ranges": 454680591,
+  "share_flagged_only_by_lower_bound": 0.357
+ }
+}

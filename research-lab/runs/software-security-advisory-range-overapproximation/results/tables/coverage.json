@@ -18,5 +18,18 @@
    "PyPI: withdrawn": 251,
    "PyPI: not a GHSA record": 19991
   }
+ },
+ "classified": {
+  "attempted": 800,
+  "ok": 411,
+  "fallback": 0,
+  "dropped": 389,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "no usable signature": 79,
+   "no fix diff": 10,
+   "undetermined": 300
+  }
  }
 }
