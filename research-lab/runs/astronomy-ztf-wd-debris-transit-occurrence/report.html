@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>White-Dwarf Debris Transits</title>
+<meta name="description" content="Do innocent citers of a later-retracted paper lose citations after the retraction?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Metascience</div>
+  <h1>How common are debris transits around white dwarfs? Known systems alone give about 1 in 5,000 within 500 pc after correcting for what ZTF can detect, but nearly 900 unvetted candidates leave the rate unbounded above</h1>
+  <p class="subtitle">109,074 Gaia white dwarfs within 500 pc with at least 100 good ZTF epochs were searched blind with two preregistered rules: recurring faint outliers (hour-scale dips) and runs of faint 30-day bins (day- to year-scale dimming). The 20 known debris-transiting white dwarfs were compiled from the discovery papers and committed before detection was run. Completeness comes from 150,000 injected signals. The plan was committed before any light curve was fetched.</p>
+  <div class="meta">
+    <span>Report · 2026-11-07 · pre-review draft</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/astronomy-ztf-wd-debris-transit-occurrence/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/astronomy-ztf-wd-debris-transit-occurrence/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/astronomy-ztf-wd-debris-transit-occurrence/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: H1 Inconclusive.</strong> The rate of ZTF-detectable debris transits lies between 2.1 × 10⁻⁴ (known systems
+alone) and 1.2 × 10⁻² (every unvetted candidate counted). The bar of 5 × 10⁻⁴ falls between those two bounds.</p>
+<ul>
+<li><strong>H1 (the occurrence of ZTF-detectable debris transits, all classes combined, is below 5 × 10⁻⁴):
+  Inconclusive.</strong><ul>
+<li><strong>Lower rate:</strong> 15 recovered known systems over a completeness-weighted sample of 72,748 stars gives
+<strong>2.1 × 10⁻⁴</strong> (95% Poisson 1.2 × 10⁻⁴ to 3.4 × 10⁻⁴). Its lower limit is below 5 × 10⁻⁴, so H1 is not
+Refuted.</li>
+<li><strong>Upper rate:</strong> adding the 878 unexplained candidates gives <strong>1.2 × 10⁻²</strong> (1.15 × 10⁻² to 1.31 × 10⁻²). Its
+upper limit is above 5 × 10⁻⁴, so H1 is not Supported.</li>
+<li>Read on its own, the lower rate says that known systems alone already amount to about 1 in 5,000 white dwarfs
+once detectability is accounted for. A rate below 5 × 10⁻⁴ is plausible, but only vetting the candidates could
+show it.</li>
+</ul>
+</li>
+<li><strong>The positive controls work.</strong> 18 of the 20 known systems are in the sample (one is fainter than G = 20, one
+  beyond 500 pc), and the rules flag 15 of them.<ul>
+<li>The three missed are SDSS J0107+2107 (continuous shallow dips), SBSS 1232+563 (sporadic dimming) and WD 1054−226
+(dips of a few per cent, with only 207 epochs).</li>
+<li>Of the 15 recovered, three are flagged by the short-dip rule alone, six by the long-dip rule alone, and six by
+both.</li>
+</ul>
+</li>
+<li><strong>Completeness.</strong> Injected signals are recovered 66% of the time for WD 1145-like hour-scale dips, 50% for
+  J0139-like day-scale dips and 53% for one-off dimming lasting 30–400 days. Recovery falls for fainter stars (F2).</li>
+<li><strong>The candidates are mostly long-dip flags.</strong><ul>
+<li>914 stars are flagged, and 21 of them are CVs in Gaia DR3's variability classification. That leaves 878
+candidates beside the 15 known systems: 653 flagged by the long-dip rule only, 205 by the short-dip rule only,
+and 20 by both.</li>
+<li>The long-dip rule is sensitive to its threshold. At 3 standard errors instead of 5 it flags 7,130 stars, at 7 it
+flags 138, so most long-dip flags are probably slow photometric trends rather than dimming events.</li>
+<li>The list is not vetted. It is in <code>results/tables/candidates.csv</code> (Gaia DR3 source IDs, public facts).</li>
+</ul>
+</li>
+<li><strong>Implied geometry.</strong> If a quarter to a half of white dwarfs are metal-polluted, the lower rate implies a transit
+  probability × duty cycle of 4 × 10⁻⁴ to 8 × 10⁻⁴ among polluted stars (descriptive).</li>
+</ul>
+<h2>In plain terms</h2>
+<p>When a white dwarf, the dense remnant of a star like the Sun, tears apart an asteroid or small planet, the dusty
+debris can pass in front of it and make it dim. About twenty such stars are known, most found in the last five years
+in data from the Zwicky Transient Facility (ZTF), a telescope that photographs the northern sky every few nights. How
+common are they?</p>
+<p>We took about 110,000 white dwarfs within 500 parsecs (about 1,600 light-years) that ZTF has observed at least 100
+times. We searched each one's brightness record with two simple rules fixed in advance: repeated sudden faint
+measurements, and months-long stretches of dimming. The rules found 15 of the 18 known debris-transit stars in our
+sample. By planting fake dimming events into real light curves, we measured how often the rules would catch such
+a star: about half to two-thirds of the time.</p>
+<p>Counting only the known systems, and correcting for what the search can catch, about 1 in 5,000 of these white
+dwarfs shows detectable debris transits. The rules also flagged nearly 900 other stars. Most are probably slow
+drifts in the measurements rather than debris, but until each is checked, the true rate could be anywhere from
+about 1 in 5,000 to about 1 in 80. So the study cannot say whether the rate is below the 1-in-2,000 bar the lead
+proposed.</p>
+<h2>What was asked</h2>
+<p>The lead (<code>astronomy-ztf-wd-debris-transit-occurrence</code>) asked how common debris transits are among white dwarfs,
+predicting an occurrence below 5 × 10⁻⁴ for ZTF-detectable systems.
+- <strong>Known systems</strong> have come from targeted discoveries: WD 1145+017 (Vanderburg et al. 2015), ZTF J0139+5245
+  (Vanderbosch et al. 2020), ZTF J0328−1219 (Vanderbosch et al. 2021), candidates from a ZTF and Gaia variability
+  survey (Guidry et al. 2021), WD 1054−226 (Farihi et al. 2022), SBSS 1232+563 (Hermes et al. 2025), six ZTF
+  candidates (Bhattacharjee et al. 2025) and six long-lived obscuration events (van Roestel et al. 2026, an
+  unrefereed preprint listing 20 systems in total).
+- <strong>No completeness-corrected occurrence rate</strong> across a volume-limited white-dwarf sample was found. This study
+  provides bounds with an explicit injection-recovery completeness.</p>
+<h2>How it was done</h2>
+<ul>
+<li><strong>Sample</strong> (<code>code/sample.py</code>): Gentile Fusillo et al. (2021) Gaia EDR3 white dwarfs with P_WD &gt; 0.75, G &lt; 20,
+  declination &gt; −28° and parallax &gt; 2 mas: 121,838 stars. Positions were propagated to epoch 2019.0.</li>
+<li><strong>Light curves</strong> (<code>code/fetch_lc.py</code>): the IRSA ZTF light-curve service (DR23) within 2 arcsec, good epochs only
+  (catflags = 0, magerr &lt; 0.25). Per filter, the ZTF object with the most good epochs is kept.<ul>
+<li>117,193 stars returned good epochs (13 queries failed; the rest had no ZTF object or no good epochs).</li>
+<li>109,074 have at least 100 good epochs (median 1,049) and form the eligible sample.</li>
+</ul>
+</li>
+<li><strong>Rules</strong> (<code>code/detect.py</code>, as preregistered):<ul>
+<li><strong>Short dips:</strong> robust σ (1.4826 × MAD) per filter; faint and bright 3σ outliers pooled over g and r. A star is
+flagged if faint − bright ≥ 5, the one-sided binomial p &lt; 10⁻⁶, and the faint epochs fall on at least 3 nights.</li>
+<li><strong>Long dips:</strong> flux relative to each filter's median, pooled into 30-day bins of at least 5 epochs. A star is
+flagged if at least 2 bins sit more than 5 standard errors and at least 5% below the global median.</li>
+</ul>
+</li>
+<li><strong>Known variables removed:</strong> Gaia DR3 <code>vari_classifier_result</code> classes ECL, CV, RS and SOLAR_LIKE (21 CVs among
+  the flagged stars). Name lists of known CVs and AM CVn systems were not obtained.</li>
+<li><strong>Positive controls</strong> (<code>results/tables/known_systems.csv</code>): the 20 known systems, compiled from the papers' tables
+  by a separate agent session that never saw the light curves, and committed before detection.</li>
+<li><strong>Completeness:</strong> 5,000 random eligible stars that were not flagged × 3 signal classes × 10 injections, with
+  parameters drawn as in the plan. Box-shaped dips were applied as flux multipliers, with errors scaled by
+  (flux)^−½; injected epochs fainter than 21.0 mag were dropped as non-detections. These details were fixed in the
+  code before any detection run. Completeness C_k is tabulated by G and number of epochs and assigned to every
+  eligible star.</li>
+<li><strong>Rates:</strong> N / Σ C_k with Poisson (Garwood) intervals; the combined rate takes each star's best class.</li>
+</ul>
+<h2>Results (<code>results/figures/F1_excess.png</code>, <code>F2_completeness.png</code>, <code>F3_cmd.png</code>)</h2>
+<figure><a href="results/figures/F1_excess.png"><img src="results/figures/F1_excess.png" alt="Faint-outlier excess"></a><figcaption>Per-star faint-outlier excess pooled over ZTF g and r (good epochs only), for 109,074 sample white dwarfs with at least 100 good epochs. Vertical lines mark the 18 known debris-transit white dwarfs in the sample (blue: flagged by either preregistered rule; orange: missed). The short-dip rule also needs a binomial p &lt; 1e-6 and faint epochs on at least 3 nights; the long-dip rule uses 30-day bins and is not shown here.</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>class</th>
+<th>Σ completeness</th>
+<th>known recovered</th>
+<th>lower rate (95%)</th>
+<th>upper rate (95%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WD 1145-like (hours)</td>
+<td>72,581</td>
+<td>4</td>
+<td>5.5 × 10⁻⁵ (1.5–14) × 10⁻⁵</td>
+<td>1.2 × 10⁻²</td>
+</tr>
+<tr>
+<td>J0139-like (days)</td>
+<td>54,537</td>
+<td>5</td>
+<td>9.2 × 10⁻⁵ (3.0–21) × 10⁻⁵</td>
+<td>1.6 × 10⁻²</td>
+</tr>
+<tr>
+<td>one-off dimming</td>
+<td>58,201</td>
+<td>6</td>
+<td>1.0 × 10⁻⁴ (3.8–22) × 10⁻⁵</td>
+<td>1.5 × 10⁻²</td>
+</tr>
+<tr>
+<td><strong>combined (best class per star)</strong></td>
+<td><strong>72,748</strong></td>
+<td><strong>15</strong></td>
+<td><strong>2.1 × 10⁻⁴ (1.2–3.4) × 10⁻⁴</strong></td>
+<td><strong>1.2 × 10⁻² (1.15–1.31) × 10⁻²</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Known systems are assigned to a class by the dip type their papers describe; the upper rates add all 878 candidates
+to every class.</p>
+<ul>
+<li><strong>By distance</strong> (known recovered / candidates / Σ completeness): ≤ 100 pc 2 / 101 / 7,857; 100–200 pc
+  7 / 222 / 21,543; 200–500 pc 6 / 555 / 43,348.</li>
+<li><strong>Threshold variants</strong> (secondary): the short-dip rule flags 326 stars at 2.5σ and 158 at 3.5σ; the long-dip rule
+  flags 7,130 at 3 standard errors and 138 at 7.</li>
+<li><strong>Faint-outlier asymmetry.</strong> Most stars (77%) have more bright than faint outliers (median excess −6). Near ZTF's
+  detection limit, faint epochs go missing while bright ones are kept, which works against the short-dip rule for
+  faint stars.</li>
+</ul>
+<figure><a href="results/figures/F2_completeness.png"><img src="results/figures/F2_completeness.png" alt="Completeness"></a><figcaption>Share of injected signals recovered by either preregistered rule, by class and Gaia G, from 5,000 random eligible, unflagged white dwarfs x 3 classes x 10 injections. Signal parameters are drawn as in plan section 0.</figcaption></figure>
+<figure><a href="results/figures/F3_cmd.png"><img src="results/figures/F3_cmd.png" alt="Colour-magnitude diagram"></a><figcaption>Gaia colour-magnitude diagram of the 109,074 eligible white dwarfs, the 878 unexplained candidates (flagged, not known, not a Gaia DR3 CV/ECL/RS/SOLAR_LIKE) and the known debris-transit systems in the sample.</figcaption></figure>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>Known systems alone set a floor of about 2 × 10⁻⁴.</strong> That is a completeness-corrected rate of ZTF-detectable
+  debris transits among white dwarfs within 500 pc. Most known systems (all but WD 1145+017 and WD 1054−226) were
+  themselves found in ZTF data, so the floor reflects what has been found, not what exists.</li>
+<li><strong>The ceiling is set by unvetted flags, not by debris.</strong> Without vetting, the 878 candidates make the upper bound
+  60 times the lower. Most are long-dip flags on faint stars, a pattern that systematics produce as easily as dust.</li>
+<li><strong>Completeness is moderate and falls with magnitude.</strong> Shallow or sporadic dimming, like the three missed known
+  systems, is often missed.</li>
+<li><strong>Not shown:</strong><ul>
+<li><strong>Vetting of the candidates</strong> (follow-up photometry, spectroscopy, or inspection of neighbours and image
+artefacts).</li>
+<li><strong>Systems fainter than G = 20, beyond 500 pc, or south of −28°.</strong></li>
+<li><strong>Transits too shallow or too rare for ZTF's cadence,</strong> which these rates do not count.</li>
+<li><strong>Physical rates.</strong> Geometry and duty cycle are not separated; the polluted-star figure is descriptive.</li>
+</ul>
+</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration:</strong> <code>plan.md</code>, committed before any light curve was fetched. The detection, injection and
+  occurrence rules were committed before detection was run; the positive-control list was committed after the code
+  and before detection.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>): D1, the float-rounded Gaia IDs found after the first detection pass and fixed
+  before any result was written up; implementation details of light-curve selection and injections.</li>
+<li><strong>Quality gates:</strong> G1 (plan section 3), G2 (coverage counts above and in <code>results/tables/coverage.json</code>), G5
+  (<code>review/overclaim_check.md</code>) and G6 (<code>results/attribution_ledger.csv</code>).</li>
+<li><strong>Independent review:</strong> queued (Fable), per the lab's pacing rule.</li>
+</ul>
+<h2>Reproducing it</h2>
+<ol>
+<li>Download the Gentile Fusillo et al. (2021) catalogue FITS into <code>data/raw_cat/</code>.</li>
+<li><code>code/sample.py</code>, then <code>code/fetch_lc.py 16</code> (days; IRSA serves one star per query).</li>
+<li><code>code/fix_ids.py</code> (only needed for light curves fetched before the ID fix).</li>
+<li><code>code/detect.py detect</code>, <code>code/variables.py</code>, <code>code/detect.py inject</code>, <code>code/detect.py occurrence</code>.</li>
+<li><code>code/figures.py</code>.</li>
+</ol>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/astronomy-ztf-wd-debris-transit-occurrence/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

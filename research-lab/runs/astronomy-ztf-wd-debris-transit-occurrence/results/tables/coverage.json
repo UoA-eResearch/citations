@@ -12,5 +12,28 @@
    "dec <= -28": 63535,
    "parallax <= 2 mas (beyond 500 pc)": 26417
   }
+ },
+ "light_curves": {
+  "attempted": 121838,
+  "ok": 117193,
+  "fallback": 0,
+  "dropped": 4645,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "no ZTF object or no good epochs within 2 arcsec": 4632,
+   "query failed": 13
+  }
+ },
+ "eligible": {
+  "attempted": 117193,
+  "ok": 109074,
+  "fallback": 0,
+  "dropped": 8119,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "fewer than 100 good epochs": 8119
+  }
  }
 }

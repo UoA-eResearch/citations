@@ -783,7 +783,12 @@
     "Write up with a ranked public candidate catalog and per-star completeness products."
    ],
    "risks": "An in-house ZTF WD group extension could preempt the search (check ADS first); IRSA rate limits could stretch the download phase; ZTF's sparse cadence gives low completeness to short-duty-cycle transits, so the occurrence bound may be weaker than hoped and depends heavily on the injection model; ZTF reference-image and deblending artifacts near faint WDs can flood the anomaly ranking with false positives.",
-   "plain_summary": "White dwarfs are the dense cores left behind when stars like the Sun die. Many show signs of having swallowed rocky planetary material, but only a handful have been caught with debris actually passing in front of them. Searching seven years of sky-survey data on 250,000 white dwarfs, and testing the search on fake injected signals, this study would measure how rare such debris clouds really are."
+   "plain_summary": "White dwarfs are the dense cores left behind when stars like the Sun die. Many show signs of having swallowed rocky planetary material, but only a handful have been caught with debris actually passing in front of them. Searching seven years of sky-survey data on 250,000 white dwarfs, and testing the search on fake injected signals, this study would measure how rare such debris clouds really are.",
+   "status": "deep dive \u00b7 report (pre-review draft, queued for independent review)",
+   "report_url": "runs/astronomy-ztf-wd-debris-transit-occurrence/report.html",
+   "verdict_tag": "Inconclusive",
+   "verdict_note": "H1 Inconclusive (pre-review). 109,074 Gaia white dwarfs within 500 pc with >= 100 good ZTF epochs were searched blind with two preregistered rules (recurring faint outliers; faint 30-day bins). 15 of the 18 known debris-transit systems in the sample are recovered; injection recovery is 66% (hour-scale), 50% (day-scale) and 53% (one-off dimming). Known systems alone give a completeness-corrected rate of 2.1e-4 (1.2e-4 to 3.4e-4); counting all 878 unvetted candidates (mostly long-dip flags, probably systematics) gives 1.2e-2. The 5e-4 bar lies between.",
+   "headline": "About 1 in 5,000 nearby white dwarfs shows ZTF-detectable debris transits among known systems alone, but nearly 900 unvetted candidates leave the rate unbounded above."
   },
   {
    "id": "bioinformatics-vep-acmg-calibration-drift",
