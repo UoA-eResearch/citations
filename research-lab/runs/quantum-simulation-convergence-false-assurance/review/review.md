@@ -70,3 +70,58 @@ regenerated for the record.
 - **Timeline:** plan 10:05 → D1 10:26 → pilot runs 10:26–10:31 → ladder freeze 10:31:54 → analysis code 10:32:56 →
   main approximations 10:37–10:41 → exact values to 11:17 → analysis 11:19 → draft 11:21. The freeze followed the
   pilot and preceded the main runs.
+
+## Confirmation pass
+
+Reviewer: Fable 5.1, 2026-11-05. Independent of the earlier, uncommitted confirmation section (misdated 2026-11-06,
+no check files; kept verbatim in `reviewer_checks/prior_confirmation_section.md`). Checks and the files that back them
+(all under `review/reviewer_checks/`, run with `venv/bin/python -I` or `python3 -I`, paths passed as arguments; note
+that `reviewer_checks/` is git-ignored by the repository's `.gitignore`):
+
+- `confirm_steps.py` / `confirm_steps.txt`: `posthoc_steps.json` recomputed from the 2,400 stored runs (900 BP, 1,500
+  PP, all ok) without importing the study's code. All 13 setting pairs, the 6 adjacent median error ratios, both
+  finest-setting median errors and both "less than threefold" shares match the stored JSON exactly. Also: the
+  "41% vs 13%" question, the zero-spread H2 counts, and the cross-check arithmetic (80 instances with n = 20).
+- `confirm_text.py` / `confirm_text.txt`: each edit the brief lists is present in `report.md` and `deviations.md`
+  (19 of 19 phrases found); the report's step-size table (6 rows) matches `posthoc_steps.json`; the main table matches
+  `primary.json`; G5 has 41 rows, all with backing, all labelled Supported, row 1 carries the step-size qualifier.
+- `confirm_crosscheck.py` / `confirm_crosscheck.txt`: the numpy statevector re-run on the same 16-instance subset
+  that `instances.py crosscheck` selects (seed 1 over the 80 n = 20 instances) gives max |numpy − aer| = 3.2 × 10⁻¹⁴,
+  as the report says (3 × 10⁻¹⁴ on 16). This closes the count question without a stored log of the original run.
+- `confirm_g6.txt`: `python3 -I tools/attribution.py check . --show` → "G6 passed (6 claims)"; the arXiv id resolves
+  to the Pauli-path guide the claim names.
+- `git status`/`git log`: nothing outside `review/review.md` is uncommitted; D3 was committed 2026-11-05 22:07 +13:00.
+
+### Final verdict: publish
+
+- **Finding 1 (step size): fixed.** Title qualified ("with 3× steps in its threshold"); verdict sub-bullets give the
+  finest PP median error 0.030 (= threshold; recomputed 0.0303), the per-step ratios 1.5× vs 2.5× (recomputed 1.534
+  and 2.489), the 10× step 4.3% (2 of 46, recomputed), and the "not comparable objects" statement; a "Step size"
+  results table with 6 pairs, each matching the JSON; the Limits bullet names the ladder rule that never adds a finer
+  PP setting. The report shows 6 of the 13 pairs; the omitted pairs (coarse pairs up to 68%, pairs spanning ≥ 30×
+  at 0%) are all in the JSON and, if anything, strengthen the stated dependence.
+  - **"41% vs 13%":** reproduced. It is the share of instances whose error ratio second/finest is below 4/3 (PP 0.407,
+    BP 0.133; `confirm_steps.txt`, same as the first review's `checks2.txt`). That is the necessary condition for
+    false assurance when the finest error exceeds 0.03 (spread ≤ 0.01 and err > 0.03 imply err_second < 4/3 · err_finest),
+    so the first review's wording "falls by less than a third" was loose (it means the error falls by less than about a
+    quarter). The study's `share_error_falls_less_than_threefold` (0.83 / 0.57) is a different quantity. The median
+    per-step ratios the report uses make the same point; no further edit is needed.
+- **Finding 2 (D2 reconstruction): fixed.** `deviations.md` has the post-review note ("a reconstruction for the record,
+  not the file that was read before the fix") and the report says "regenerated after the fix, for the record" in both
+  the verdict and the process section.
+- **Finding 3 (text): fixed.** Zero-spread H2 cases stated as 8 BP-PEPS and 12 PP, conservative (recomputed: 8 and 12,
+  5 each in the test half, none with zero error, so each counts as uncovered); kicked Ising near-exact for PP (median
+  error 0.006, recomputed 0.0060); the ladder rule named in Limits; BP's loop approximation now "untested here rather
+  than shown to be safe". Cross-check count: the first review's 15 was wrong; the main set has 80 n = 20 instances,
+  `max(2, int(80 × 0.05 × 4))` = 16, and the 16-instance re-run reproduces the report's figure. Withdrawn.
+- **Gates:** G5 passes (41 rows, all Supported with backing; rows 9–13 and 31 cover the new sentences). G6 passes
+  (6 claims).
+
+Agreement with the prior section: my conclusions agree with it on every point (verdict, the three findings, the
+41%/13% explanation and the count of 16); it was, however, misdated 2026-11-06 and left no check files, and it listed
+no remaining issues where I list two minor ones below.
+
+Remaining issues (minor, not blocking; outside `review/`, so not fixed here):
+- `deviations.md` dates D3 and the post-review D2 note "2026-11-06"; the edits were committed 2026-11-05 22:07 NZDT
+  and the system clock is NZDT, so both should read 2026-11-05.
+- `report.md` "Process and deviations" still says "confirmation pending"; update it to record this pass (publish).

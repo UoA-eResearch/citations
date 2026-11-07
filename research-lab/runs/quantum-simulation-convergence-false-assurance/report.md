@@ -187,7 +187,7 @@ The median error ratio between adjacent settings is 1.5 for Pauli propagation's 
   - D3, after review: the step-size sensitivity (post hoc) and wording edits.
 - **Plan reading:** a method with fewer than 20 apparently converged instances could not decide H1. Both methods
   exceeded 20.
-- **Independent review:** publish with edits (three findings); the edits are in D3; confirmation pending.
+- **Independent review:** publish with edits (three findings), edits in D3; confirmation pass: publish.
 
 ## Reproducing it
 

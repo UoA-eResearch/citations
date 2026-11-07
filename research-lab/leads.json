@@ -5422,7 +5422,12 @@
    "risks": "Down-scaled truncations may produce error modes different from production-scale runs, which limits transfer to the 50-100-qubit claims. Exact references cap out near 33 qubits, so the size trend is only two or three halvings wide. If the false-assurance rate is low (<10%), the headline is a null result, though it would still yield a useful calibration rule. The lead partly overlaps the mitigation-bias lead's infrastructure; the two should share the patch generator but stay separate studies.",
    "critic_note": "Critic (round 2): arXiv showed only the 2023 BP/TN utility rebuttals and Gharibyan 2507.10771; no population-level false-assurance study. Shares its patch generator with the mitigation-bias lead. Down-scaled truncations limit transfer to 50-100-qubit claims. Value 5 and cost 4 kept.",
    "plain_summary": "When classical computers try to check quantum-advantage claims, researchers usually trust a simulation once making it more accurate stops changing the answer. We will test that rule of thumb on hundreds of circuits small enough to know the true answer, measure how often 'stopped changing' still means 'wrong', and build honest error bars that classical challengers can use.",
-   "scout_round": 2
+   "scout_round": 2,
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass)",
+   "report_url": "runs/quantum-simulation-convergence-false-assurance/report.html",
+   "verdict_tag": "Supported",
+   "verdict_note": "H1 Supported; H2 Supported on the pooled test, but Pauli propagation's calibration fails within the Floquet family. In 300 exactly solvable 20-26-qubit heavy-hex circuits, Pauli propagation's two finest truncation settings agreed while the answer was still off by more than 0.03 in 40 of 129 apparently converged cases (31%, 23-39%), mostly on loop-rich Floquet circuits; BP-PEPS did so in 2 of 103 (1.9%). The share depends on the ladder's step size: with 3x steps in the threshold the finest setting's median error sits at the 0.03 bar, and a 10x step gives 4.3% (post hoc). A k x spread interval calibrated on half the circuits covers 87-93% of the rest, but only 79% for Pauli propagation on Floquet circuits. Review publish with edits, confirmation publish.",
+   "headline": "When two truncation settings agree, a quantum simulation can still be wrong: Pauli propagation's agreement misled 31% of the time on small exactly solvable circuits - though how often depends on how far apart the settings are."
   },
   {
    "id": "auckland-nz-wastewater-testing-gap-deprivation",

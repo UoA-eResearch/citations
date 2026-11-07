@@ -72,6 +72,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-11-05 21:54 | `cheminformatics-drug-discovery-split-calibration` | review (fresh agent, the user's own Fable 5.1 reviewer session) | publish with edits |
 | 2026-11-05 21:54 | `bioinformatics-sc-disease-de-negative-control` | review (fresh agent, the user's own Fable 5.1 reviewer session) | publish with edits |
 | 2026-11-05 21:54 | `cheminformatics-drug-discovery-pcba-2026` | review (fresh agent, the user's own Fable 5.1 reviewer session) | publish with edits |
+| 2026-11-05 23:37 | `quantum-simulation-convergence-false-assurance` | confirmation pass (the user's Fable 5.1 reviewer session) | publish -> PUBLISHED |
 
 **Pre-review gate (from 2026-10-25, METHODS.md):** before launching a draft's Fable review, run G5 (`tools/overclaim_check.py RUN --verify`) and G6 (`tools/attribution.py check RUN`) on it, fix what they find as a D-entry, and add the standard gate-check block to its `review/prompt.md`. New leads apply all of G1–G7.
 
@@ -108,7 +109,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | `health-econ-hub-vintage-rescore` |  53d30c6 | H1 Refuted (6.2% pairwise reversals); H2 Supported narrowly (2024-25 leader changes at h1/h2) | reviewed 2026-11-05 (fix first); fixes pending |
 | `computational-reproducibility-notebook-noise-aware-verdicts` |  b67028b | H1 Inconclusive (20.6%, 10-37%); H2 Inconclusive (1.26, 1.09-1.58); D3 re-run after backend bug | reviewed 2026-11-05 (fix first); fixes pending |
 | `formal-math-mathlib-proof-rot-flexible-linter` |  b62e129 | H1 Inconclusive (OR 1.48, 0.92-2.39); 6-month 1.67 (1.01-2.77); second pair 0.99 | reviewed 2026-11-05 (fix first); fixes pending |
-| `quantum-simulation-convergence-false-assurance` |  b7b7321 | H1 Supported (PP 31%, 23-39%; BP 1.9%); H2 Supported pooled; random-patch-only PP 9.5% | reviewed 2026-11-05 (publish with edits); edits made 2026-11-06; confirmation brief at review/confirmation_prompt.md |
+| `quantum-simulation-convergence-false-assurance` |  b7b7321 | H1 Supported (PP 31%, 23-39%; BP 1.9%); H2 Supported pooled; random-patch-only PP 9.5% | PUBLISHED 2026-11-07 (review publish with edits; confirmation publish) |
 | `ecology-biodiversity-sdm-provenance-leakage` |  7f6441f | H1 Refuted (DiD +0.006, +0.005 to +0.008; 1,745 species), H2 Refuted (8.3%); TAVA West Africa DiD +0.164 with its test plots republished in the training data (post hoc) | reviewed 2026-11-05 (do not publish (re-run with corrected provenance flags)); fixes pending |
 | `ecology-biodiversity-herbarium-velocity-effort-null` |  19950a0 | H1 Supported (fixed-range noise+effort null reproduces 67% of the observed median centroid velocity: 4.6 vs 6.9 km/yr; 36% of species exceed their null p95) | reviewed 2026-11-05 (fix first); fixes pending |
 | `seismology-geophysics-dynamic-triggering-strain-test` |  bee3bcc | H2 Refuted (no excess of significant local-event rises after 350 distant M7+: 15,042 vs 15,742 expected), H1 Inconclusive (no rise with strain); D1 post hoc exposure correction | reviewed 2026-11-05 (fix first); fixes pending |
