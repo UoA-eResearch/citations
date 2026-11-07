@@ -1,12 +1,42 @@
 {
- "contradicted_lines": 776,
- "with_condition_keyword": {
-  "parity or residue condition": 167,
-  "index restriction (for n > k, n >= k)": 385,
-  "exponential g.f.": 2,
-  "if and only if / membership statement": 4,
-  "offset or alternative indexing mentioned": 1
+ "contradicted_lines": 747,
+ "by_kind": {
+  "no_simple_fix": 277,
+  "stated_range_too_early": 188,
+  "parity_or_residue": 167,
+  "holds_from_later_index": 107,
+  "gf_offset_slip": 8
  },
- "any_condition_keyword": 541,
- "no_keyword": 235
+ "by_kind_and_class": {
+  "gf_offset_slip": {
+   "G": 8
+  },
+  "holds_from_later_index": {
+   "D": 97,
+   "C": 8,
+   "P": 2
+  },
+  "no_simple_fix": {
+   "P": 209,
+   "G": 30,
+   "D": 20,
+   "C": 18
+  },
+  "parity_or_residue": {
+   "P": 166,
+   "C": 1
+  },
+  "stated_range_too_early": {
+   "C": 188
+  }
+ },
+ "stated_range_too_early_in_block": 183,
+ "stated_range_shift_median": 2.5,
+ "flagged_wrong": 0,
+ "first_draft_contradicted": 776,
+ "first_draft_contradicted_now": {
+  "contradicted": 747,
+  "consistent": 29
+ },
+ "no_simple_fix_listed_in": "results/tables/contradicted_no_simple_fix.csv"
 }

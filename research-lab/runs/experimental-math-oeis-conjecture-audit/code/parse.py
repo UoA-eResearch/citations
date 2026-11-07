@@ -8,6 +8,15 @@ Predictors:
   rec  {"lags": [[k, [poly coeffs in n, low->high]], ...], "lead": [poly coeffs], "const": [poly coeffs], "start": n0}
        meaning lead(n)*a(n) = sum_k c_k(n)*a(n-k) + const(n) for n >= n0
   gf   {"num": [...], "den": [...]} integer coefficients, low -> high power of x, aligned to the entry's offset
+
+D2 (after the independent review, 2026-11-07):
+  - data_status: "consistent" needs at least MIN_CHECKED data terms actually checked; "unchecked" (0 checked) and
+    "few_checked" (1-4) are reported separately instead of counting as data-consistent (finding 1);
+  - class "P" (polynomial closed form, no lag at all) is split from "C" and kept out of the C/G/D population (finding 8);
+  - a(n+k) forms: a stated start is shifted with the re-indexing (finding 7);
+  - a vanishing leading polynomial no longer counts as a data contradiction: at a data index the reduced relation
+    is checked, beyond the data prediction stops (finding 3c);
+  - lines tagged [Wrong]/[Incorrect] (or in a block so tagged) are flagged and parsed with the tag removed (finding 6).
 """
 import json
 import re
@@ -21,6 +30,9 @@ SEQ = RUN / "data" / "raw" / "oeisdata" / "seq"
 INT = RUN / "data" / "interim"
 
 CAND = re.compile(r"\b(conjecture[ds]?|empirical(ly)?)\b", re.I)
+WRONG = re.compile(r"\[\s*(wrong|incorrect)\s*\]|\bincorrect conjecture|\bwrong conjecture", re.I)
+PROOF = re.compile(r"\b(proved|proven|proof|is true|verified|confirmed)\b", re.I)
+MIN_CHECKED = 5
 SIG = re.compile(r"\s+-\s+_[^_]+_.*$")          # trailing " - _Name_, date"
 
 
@@ -101,6 +113,8 @@ def parse_rec(text):
     if not shifts:
         return None
     top = max(shifts)
+    if start is not None and top > 0:
+        start += top                  # D2: the stated n refers to the a(n+k) form; re-indexing below shifts it
     n = sp.Symbol("n")
     names = {}
 
@@ -130,7 +144,10 @@ def parse_rec(text):
         if k == 0:
             continue
         lags.append([k, poly_coeffs(-rel.coeff(names[k]), n)])
-    cls = "C" if all(len(c) == 1 for _, c in lags) and len(poly_coeffs(lead, n)) == 1 else "D"
+    if not lags:
+        cls = "P"                     # D2: a closed form with no lag (polynomial in n), not a recurrence
+    else:
+        cls = "C" if all(len(c) == 1 for _, c in lags) and len(poly_coeffs(lead, n)) == 1 else "D"
     return cls, {"lags": lags, "lead": poly_coeffs(lead, n), "const": poly_coeffs(-const, n), "start": start}
 
 
@@ -141,22 +158,32 @@ def evalp(c, n):
     return s
 
 
-def run_rec(p, terms, offset, upto):
-    """Return (data_ok, predicted list from offset to offset+upto-1, first data mismatch index or None)."""
+def run_rec(p, terms, offset, upto, start_override=None):
+    """Return (data_ok, predicted list from offset to offset+upto-1, first data mismatch index or None,
+    number of data terms actually checked)."""
     order = max([k for k, _ in p["lags"]], default=0)
     start = p["start"] if p["start"] is not None else offset + order
+    if start_override is not None:
+        start = start_override
     start = max(start, offset + order)
     a = {offset + i: Fraction(v) for i, v in enumerate(terms)}
     pred = dict(a)
-    mism = None
+    mism, checked = None, 0
     for nn in range(start, offset + upto):
-        lead = evalp(p["lead"], nn)
-        if lead == 0:
-            return False, None, nn
         if any(nn - k not in pred for k, _ in p["lags"]):
-            return False, None, nn
-        v = (sum(evalp(c, nn) * pred[nn - k] for k, c in p["lags"]) + evalp(p["const"], nn)) / lead
+            break                                    # D2: cannot continue; not a contradiction
+        lead = evalp(p["lead"], nn)
+        rhs = sum(evalp(c, nn) * pred[nn - k] for k, c in p["lags"]) + evalp(p["const"], nn)
+        if lead == 0:
+            if nn in a:                              # D2: the relation reduces to rhs == 0 at this index
+                checked += 1
+                if rhs != 0 and mism is None:
+                    mism = nn
+                continue
+            break                                    # beyond the data a(n) is undetermined: stop predicting
+        v = rhs / lead
         if nn in a:
+            checked += 1
             if v != a[nn] and mism is None:
                 mism = nn
         else:
@@ -165,7 +192,7 @@ def run_rec(p, terms, offset, upto):
                 break
             pred[nn] = v
     out = [pred.get(offset + i) for i in range(upto)]
-    return mism is None, out, mism
+    return mism is None, out, mism, checked
 
 
 def run_gf(p, terms, offset, upto):
@@ -181,17 +208,27 @@ def run_gf(p, terms, offset, upto):
     # align: a(offset + i) = s[offset + i] if the g.f. is in x^n convention
     seq = s[offset:offset + upto] if offset >= 0 else s[:upto]
     mism = next((offset + i for i, v in enumerate(terms) if i < len(seq) and seq[i] != v), None)
+    checked = sum(1 for i in range(len(terms)) if i < len(seq))
     if mism is not None:
         # try the other common convention: series starts at x^0 for a(offset)
         seq2 = s[:upto]
         mism2 = next((offset + i for i, v in enumerate(terms) if seq2[i] != v), None)
         if mism2 is None:
-            return True, seq2, None
-    return mism is None, seq, mism
+            run_gf.shifted = True
+            return True, seq2, None, sum(1 for i in range(len(terms)) if i < len(seq2))
+    return mism is None, seq, mism, checked
+
+
+def data_status(ok, checked):
+    if not ok:
+        return "contradicted"
+    if checked == 0:
+        return "unchecked"
+    return "consistent" if checked >= MIN_CHECKED else "few_checked"
 
 
 def classify(line):
-    body = SIG.sub("", line)
+    body = WRONG.sub(" ", SIG.sub("", line))     # D2: a [Wrong] tag no longer blocks parsing
     body = re.sub(r"\((conjectured|empirical|conjecture)\)", " CONJ ", body, flags=re.I)
     m = CAND.search(body) or re.search(r"CONJ", body)
     txt = body[m.end():].lstrip(" :.,") if m else body
@@ -210,27 +247,33 @@ def _dir(d):
     rows = []
     for f in sorted(Path(d).glob("A*.seq")):
         e = read_entry(f)
-        inblock = False
+        inblock, block_wrong = False, False
         for li, line in enumerate(e["F"]):
             starts = bool(CAND.search(line)) and "(Start)" in line
             member = inblock and not starts
             if "(End)" in line:
                 inblock = False
             if starts:
-                inblock = True
+                inblock, block_wrong = True, bool(WRONG.search(line))
                 continue                                 # the block header itself holds no formula
             if not (CAND.search(line) or member):
                 continue
             row = {"anum": f.stem, "line_no": li, "offset": e.get("offset", 0), "nterms": len(e["terms"]),
                    "keywords": e.get("K", ""), "cls": None, "status": "not_parsed", "data_ok": None, "first_mismatch": None,
-                   "pred": None, "in_block": member}
+                   "pred": None, "in_block": member,
+                   "flagged_wrong": bool(WRONG.search(line)) or (member and block_wrong),
+                   "mentions_proof": bool(PROOF.search(SIG.sub("", line))),
+                   "n_checked": None, "data_status": None, "gf_shifted": False, "explicit_start": None}
             signal.alarm(5)
             try:
                 cls, p = classify(line)
                 if cls:
                     upto = len(e["terms"])
-                    ok, _, mism = (run_gf if cls == "G" else run_rec)(p, e["terms"], row["offset"], upto)
-                    row.update({"cls": cls, "status": "parsed", "data_ok": bool(ok), "first_mismatch": mism, "pred": json.dumps(p)})
+                    run_gf.shifted = False
+                    ok, _, mism, chk = (run_gf if cls == "G" else run_rec)(p, e["terms"], row["offset"], upto)
+                    row.update({"cls": cls, "status": "parsed", "data_ok": bool(ok), "first_mismatch": mism, "pred": json.dumps(p),
+                                "n_checked": int(chk), "data_status": data_status(ok, chk), "gf_shifted": bool(run_gf.shifted),
+                                "explicit_start": p.get("start") if cls != "G" else None})
             except Timeout:
                 row["status"] = "timeout"
             except Exception:
@@ -256,6 +299,7 @@ def run():
     d.to_parquet(INT / "conjectures.parquet", index=False)
     print(d.groupby(["status", "cls"], dropna=False).size().to_string())
     print("data_ok", d.data_ok.value_counts(dropna=False).to_dict())
+    print("data_status", d.data_status.value_counts(dropna=False).to_dict())
 
 
 def test():
@@ -269,11 +313,27 @@ def test():
     c, p = classify("Conjecture: D-finite with recurrence (n+1)*a(n) +2*(-2*n+1)*a(n-1)=0. - _R. J. Mathar_, Jan 01 2020")
     assert c == "D" and run_rec(p, cat, 0, 12)[0] and run_rec(p, cat, 0, 12)[1][9] == 4862, (c, p)
     c, p = classify("Conjecture: a(n) = 2*a(n-1) + 1 for n >= 1.")
-    ok, out, _ = run_rec(p, [0, 1, 3, 7, 15], 0, 8)
+    ok, out, _, _ = run_rec(p, [0, 1, 3, 7, 15], 0, 8)
     assert ok and out[7] == 127, (p, out)
     c, p = classify("Conjecture: a(n) = 3*a(n-1) for n > 0.")
-    ok, out, mism = run_rec(p, [1, 3, 9, 28], 0, 4)
+    ok, out, mism, _ = run_rec(p, [1, 3, 9, 28], 0, 4)
     assert not ok and mism == 3
+    # D2 cases
+    c, p = classify("Conjecture: a(n) = 2*a(n-1) for n > 100.")
+    ok, out, mism, chk = run_rec(p, [1, 2, 4, 8, 16], 0, 5)
+    assert ok and chk == 0 and data_status(ok, chk) == "unchecked", chk
+    c, p = classify("Conjecture: a(n+4) = 4*a(n) for n >= 1.")
+    assert p["start"] == 5, p
+    seq = [9, 9, 9, 9, 1, 2, 3, 4, 4, 8, 12, 16]           # holds from a(8) = 4*a(4) onwards only
+    ok, _, mism, _ = run_rec(p, seq, 0, 12)
+    assert not ok and mism == 5, mism
+    c, p = classify("Conjecture: a(n) = n^2 + 1.")
+    assert c == "P", c
+    c, p = classify("[Wrong] Empirical G.f.: x/(1-x-x^2). - _Somebody_, Jan 01 2020")
+    assert c == "G", c
+    c, p = classify("Conjecture: (n-2)*a(n) = n*a(n-1) for n >= 1.")
+    ok, out, mism, chk = run_rec(p, [5, 0, 0, 7, 21, 56], 0, 6)  # lead vanishes at n = 2 (rhs = 2*a(1) = 0 there)
+    assert mism is None or mism != 2, mism
     print("parse tests pass")
 
 

@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OEIS Conjecture Audit</title>
+<meta name="description" content="How many machine-guessed formula conjectures in the OEIS are false, checked against independent programs and b-files?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Experimental mathematics</div>
+  <h1>Machine-guessed OEIS conjectures that fit their entry&#x27;s terms almost always keep fitting: 3 of 3,114 fail against the b-file up to a median 185 terms further, and every falsification found was already noted in its entry; but hundreds of conjectured formulas are false as written by their entry&#x27;s own terms</h1>
+  <p class="subtitle">Every OEIS entry (the OEIS data repository, 2026-10-25) was searched for formula lines marked &quot;conjecture&quot; or &quot;empirical&quot;: 38,637 lines in 24,168 entries. Linear recurrences, rational generating functions and P-recursive relations were parsed into exact predictors, checked against the entry&#x27;s own terms, then compared beyond the data with the entry&#x27;s LODA program and, for a random sample, directly with the entry&#x27;s b-file. The plan was committed before any entry was parsed. Revised after an independent review (fix first; D2).</p>
+  <div class="meta">
+    <span>Report · 2026-10-25 · under independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/experimental-math-oeis-conjecture-audit/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/experimental-math-oeis-conjecture-audit/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/experimental-math-oeis-conjecture-audit/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: H1 Refuted by the preregistered rule (fewer than 100 confirmed falsifications). The accurate reading is
+"not supported within this pipeline's coverage", not a refutation of the claim.</strong></p>
+<ul>
+<li><strong>H1 (at least 100 conjectured recurrences and g.f.s in OEIS are false, as shown by two independent term
+  sources): fewer than 100 confirmed.</strong><ul>
+<li><strong>3 confirmed lines</strong> on 2 entries: A076217's g.f. (it fails at n = 81) and two lines of A267515. None is new.
+A267515's block is tagged "[Wrong]" by editors, and A076217's entry carries a later note that the conjectured
+recurrence fails at powers of 3.</li>
+<li>The rule was followed, but the count is a lower bound on a partial population (below), and the pipeline itself
+finds hundreds of statements false as written. So "Refuted" means "not supported within this coverage".</li>
+</ul>
+</li>
+<li><strong>Two strata, not one rate</strong> (corrected after review). LODA programs are checked against up to 1,000 known terms,
+  so where an entry has a b-file, LODA is not an independent source.<ul>
+<li><strong>Entries with a b-file:</strong> 1 of 11,778 screened conjectures disagrees with LODA beyond the data (0.008%; Wilson
+0.002% to 0.048%). This is agreement with the b-file in practice.</li>
+<li><strong>Entries without a b-file:</strong> 13 of 1,767 disagree (0.74%; 0.43% to 1.25%). There LODA was mined on the data
+alone, so these disagreements are unresolved extrapolations, not near-zero error. None can be confirmed: the
+b-file holds only the published terms.</li>
+<li>The first draft pooled these into one rate (0.10%) and called LODA independent throughout.</li>
+</ul>
+</li>
+<li><strong>A direct b-file test</strong> (post hoc; finding 5). The plan allowed 2,000 b-file fetches and the confirmation used 13.
+  The rest went to a seeded random sample of 1,987 of the 8,586 entries with a b-file and a consistent conjecture.<ul>
+<li>3,114 conjectures were compared with up to 1,000 b-file terms each, a median of 185 terms beyond the data (10th
+to 90th percentile 105 to 717).</li>
+<li>3 fail, on 2 entries: 0.10% (Wilson 0.03% to 0.28%). Both failures lie beyond the LODA screen's depth (a(62) on
+A267514; 532 terms beyond the data on A210247), and both are noted in later lines of their entries.</li>
+<li>Scaled to the 13,510 consistent conjectures on entries with b-files, that suggests about 13 contradicted by their
+b-file (roughly 4 to 38). This is one source of terms, not the plan's two.</li>
+</ul>
+</li>
+<li><strong>False as written by the entry's own terms.</strong> 747 parsed lines contradict their own entry's data. The first draft
+  set these aside as "mostly conditions the parser ignores", which was wrong (finding 3):<ul>
+<li><strong>188 state a range that starts too early</strong> (183 in "Conjectures from …" blocks), and hold from a median 2.5
+indices later. They are false as written, by a boundary slip.</li>
+<li>107 hold only from a later index with no range stated, and 8 g.f.s match with a shifted offset.</li>
+<li>167 carry a parity or residue condition the parser ignores (all but one polynomial closed forms).</li>
+<li><strong>277 are contradicted with no mechanical explanation</strong> (68 recurrences or g.f.s, 209 polynomial closed forms).
+They are listed by A-number for editors in <code>results/tables/contradicted_no_simple_fix.csv</code>.</li>
+<li>29 of the first draft's 776 were parser artefacts and are now consistent.</li>
+</ul>
+</li>
+</ul>
+<h2>In plain terms</h2>
+<p>The Online Encyclopedia of Integer Sequences (OEIS) is mathematics' great catalogue of number sequences. Thousands of
+its entries carry formulas found by computer: a program looks at the known terms and guesses a rule that fits them,
+recorded as "Conjecture" or "Empirical". A guess that fits 40 terms could fail at the 41st, so how many are wrong?</p>
+<p>We turned about 21,000 of these guessed formulas into code. Where an entry has a longer list of terms on file (a
+"b-file"), we tested a random sample of about 3,100 guesses against it, a median of 185 terms beyond what the
+guesser saw. Only 3 failed, and the encyclopedia had already noted both of the entries involved. Comparing with
+programs from the LODA project found 14 disagreements; the few we could check were also already known.</p>
+<p>But the check turned up a different kind of error. Hundreds of the guessed formulas don't even fit the terms printed
+in their own entry. About 300 hold only from a few terms later than stated, a slip in how the
+range was written, and nearly 300 more fail for no obvious reason. Those are listed for the editors.</p>
+<p>So formulas that fit their entry keep fitting far beyond it, and the editors have caught the failures we could
+confirm. The weaker point seems to be how the formulas are written down.</p>
+<h2>What was asked</h2>
+<p>The lead (<code>experimental-math-oeis-conjecture-audit</code>) asked whether at least 100 machine-generated OEIS conjectures
+are false. That would be a measurable base rate of error in a class where false positives are known to exist
+(Ekhad, Sloane and Zeilberger 2016, on Pisot sequences).</p>
+<p>Prior work proves subsets: Ekhad, Yang and Zeilberger (2017) on Mathar's recurrences; Shallit and colleagues on automatic sequences with Walnut (Shallit 2022). No comprehensive falsification audit was found.</p>
+<h2>How it was done</h2>
+<ul>
+<li><strong>Entries.</strong> The OEIS data repository (shallow clone, 402 directories of <code>.seq</code> files). Data terms come from
+  %S/%T/%U, and the offset from %O.</li>
+<li><strong>Candidates.</strong> %F lines containing "conjecture" or "empirical", plus members of "Conjectures from …: (Start) …
+  (End)" blocks (D1). Lines or blocks tagged "[Wrong]" or "[Incorrect]" are flagged and kept out of the count (D2).
+  Follow-up notes on separate lines are not detected, which is why A076217 counted as new until read.</li>
+<li><strong>Parsing</strong> (<code>code/parse.py</code>, unit-tested) into exact predictors:<ul>
+<li>(C) a(n) = Σ cᵢ a(n−i) (+ constant);</li>
+<li>(G) G.f.: P(x)/Q(x);</li>
+<li>(D) Σ pᵢ(n) a(n−i) = 0 with polynomial coefficients.</li>
+<li>Closed forms with no lag (polynomials in n) are class P. The plan lists them as "not parsed", so they are kept
+out of the C/G/D population and reported separately (1,843 lines; D2).</li>
+<li>"For n &gt; k" sets where a relation starts, shifted correctly for a(n+k) forms (D2).</li>
+</ul>
+</li>
+<li><strong>Data check.</strong> A conjecture is consistent only if at least 5 of its entry's data terms were actually checked and
+  all agree (D2). 4,166 conjectures, mostly high-order empirical recurrences on short entries, reach no data term at
+  all, and 833 reach only 1–4; neither group is screened. The first draft counted them as consistent.</li>
+<li><strong>Screening.</strong> The LODA program (loda-programs repository, interpreter v26.8.1) is evaluated for up to twice as
+  many terms as the data (at most 1,000) and must reproduce the data. A disagreement is the first index beyond the
+  data where the conjecture and LODA differ; "agree" needs at least one term compared. Both values are stored.<ul>
+<li>153 agreements are tautological: the LODA program's own formula comment is the same recurrence.</li>
+<li>The depth is a design cap: 99.9% of comparisons stop at twice the data length (median 26 terms beyond the data).</li>
+</ul>
+</li>
+<li><strong>Confirmation.</strong> The entry's b-file is fetched from oeis.org (13 entries, 1 request per second). A disagreement is
+  confirmed if the b-file agrees with the data and contradicts the conjecture at or before the disagreement.</li>
+<li><strong>Direct b-file test</strong> (<code>code/bdeep.py</code>, post hoc). A seeded random sample (seed 20261107) of 1,987 entries with a
+  real b-file (a Git-LFS pointer in the repository). Each consistent, unflagged C/G/D conjecture is run against up to
+  1,000 b-file terms. oeis.org returned rate-limit responses at one request per second, so fetching ran at one
+  request every 5 seconds with back-off.</li>
+<li><strong>Self-contradicted lines</strong> (<code>code/contradicted_audit.py</code>). Each is put in one class: stated range too early (holds
+  from a start up to 10 indices later), holds from a later index, g.f. offset slip, parity or residue condition, or no
+  simple fix.</li>
+</ul>
+<h2>Results (<code>results/figures/F1_funnel.png</code>)</h2>
+<figure><a href="results/figures/F1_funnel.png"><img src="results/figures/F1_funnel.png" alt="Funnel"></a><figcaption>OEIS formula lines marked &quot;conjecture&quot; or &quot;empirical&quot; (and members of &quot;Conjectures from ...: (Start)...(End)&quot; blocks), parsed into linear recurrences, rational generating functions or P-recursive relations; those consistent with the entry&#x27;s own terms were run beyond the data against the entry&#x27;s LODA program (median 26 further terms) and disagreements checked against the entry&#x27;s b-file. Revised after review (D2): at least 5 data terms checked; lines tagged [Wrong] excluded; polynomial closed forms excluded.</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>stage</th>
+<th>count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>candidate lines (entries)</td>
+<td>38,637 (24,168)</td>
+</tr>
+<tr>
+<td>parsed: C / G / D (P, outside the population)</td>
+<td>13,463 / 6,467 / 1,002 (1,843)</td>
+</tr>
+<tr>
+<td>C/G/D consistent with own data (≥ 5 terms checked)</td>
+<td>15,563</td>
+</tr>
+<tr>
+<td>… unchecked / 1–4 terms / contradicted</td>
+<td>4,166 / 833 / 370</td>
+</tr>
+<tr>
+<td>screened against LODA (unflagged; working program)</td>
+<td>13,545</td>
+</tr>
+<tr>
+<td>LODA disagrees beyond the data (with / without a b-file)</td>
+<td>14 (1 / 13)</td>
+</tr>
+<tr>
+<td>confirmed by the b-file (all already noted in their entries)</td>
+<td>3 lines, 2 entries</td>
+</tr>
+<tr>
+<td>direct b-file test: conjectures (entries)</td>
+<td>3,114 (1,986)</td>
+</tr>
+<tr>
+<td>… contradicted by the b-file (already noted)</td>
+<td>3 (2)</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>class</th>
+<th>screened, with b-file: disagree / n</th>
+<th>screened, without b-file: disagree / n</th>
+<th>direct b-file test: contradicted / n</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>constant-coefficient recurrences (C)</td>
+<td>0 / 6,053</td>
+<td>2 / 751</td>
+<td>2 / 1,723</td>
+</tr>
+<tr>
+<td>rational g.f.s (G)</td>
+<td>1 / 5,222</td>
+<td>9 / 699</td>
+<td>1 / 1,268</td>
+</tr>
+<tr>
+<td>P-recursive (D)</td>
+<td>0 / 503</td>
+<td>2 / 317</td>
+<td>0 / 123</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Disagreements and failures</strong> (<code>results/tables/falsifications.csv</code>, <code>bdeep_contradictions.csv</code>):
+- <strong>Confirmed (two sources):</strong> A076217 (its g.f., at n = 81; noted in the entry) and A267515 (two lines, at n = 62;
+  tagged "[Wrong]").
+- <strong>Unconfirmable</strong> (no b-file beyond the data): A005257, A024389, A024390, A026155, A049609 (two lines), A162764,
+  A243989, A261667, A282044, A301424 and A328987 (two lines). Eight are off by small amounts at large indices (for
+  example LODA 65,287,195,194 against the conjecture's …195). A301424's "(conjectured)" qualifies the denominator's
+  factorisation, not the g.f. (D2).
+- <strong>Direct b-file test:</strong> A267514 (two lines, at n = 62; noted in the entry, the sibling of A267515) and A210247
+  (a(n) = −a(n−28) fails at n = 606; the entry gives the first counterexample).</p>
+<p><strong>Selection into the screen</strong> (<code>results/tables/selection.csv</code>). Among consistent conjectures, the share without a LODA
+program is 4.9% for entries with the keyword "easy" against 14.1% otherwise; 6.7% for A000001–A100000 against 16.1%
+from A300001; 7.7% for block members against 15.2%; and 17.5% for C, 7.9% for G and 7.3% for D. The screened rates
+apply to simpler, older, better-studied entries. The direct b-file test does not depend on LODA coverage.</p>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>Conjectures that fit their data keep fitting.</strong> Against b-files, failures beyond the data are about 1 in 1,000,
+  up to a median of 185 further terms, and both failures found were already noted.</li>
+<li><strong>OEIS's own editing catches the failures that can be confirmed.</strong> All four failing entries found by either method
+  carry an editor's tag or a later note.</li>
+<li><strong>The common error is how the formula is written.</strong> 188 conjectured recurrences start their stated range too early,
+  and 277 lines contradict their own data for no mechanical reason. These are false as written, but the plan set
+  such lines aside as possible typing slips, so they do not count toward H1.</li>
+<li><strong>Without a b-file, nothing beyond the data can be confirmed.</strong> The 0.74% LODA disagreement rate there is a
+  disagreement between two fits, not an error rate.</li>
+<li><strong>Not shown:</strong><ul>
+<li><strong>Unparsed conjectures:</strong> closed forms beyond polynomials, sums, inequalities, congruences and asymptotics
+(14,321 lines), and the 5,000 conjectures that reach fewer than 5 data terms.</li>
+<li><strong>Proofs.</strong> The lead's certification arm was not attempted.</li>
+<li><strong>Independence of b-files.</strong> A b-file computed from the conjecture itself would agree by construction. No b-file
+header in the sample mentions a formula, but a b-file can be computed from one without saying so.</li>
+</ul>
+</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration:</strong> <code>plan.md</code>.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>):<ul>
+<li>D1, the parser scope before any screening (the LODA home directory had been created about 45 s before the D1
+commit; the scope was decided at the earlier parse);</li>
+<li>D2, the fixes after the independent review (post hoc): the data-check minimum, the b-file strata, the
+self-contradiction classes, the direct b-file test, the [Wrong] flag, class P, the a(n+k) start, and reporting
+fixes.</li>
+</ul>
+</li>
+<li><strong>Independent review:</strong> fix first (three major findings); the fixes are in D2.</li>
+</ul>
+<h2>Reproducing it</h2>
+<ol>
+<li>Clone <code>oeis/oeisdata</code> (without LFS) and <code>loda-lang/loda-programs</code> into <code>data/raw/</code>, with the loda-cpp v26.8.1
+   binary.</li>
+<li><code>code/parse.py run</code>.</li>
+<li><code>code/screen.py screen</code>, then <code>code/screen.py confirm</code>.</li>
+<li><code>code/bdeep.py fetch</code> (about 3 hours at 5 s per request), then <code>code/bdeep.py test</code>;
+   <code>code/contradicted_audit.py</code>.</li>
+<li><code>code/analyse.py</code>.</li>
+<li><code>code/figures.py</code>.</li>
+</ol>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/experimental-math-oeis-conjecture-audit/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

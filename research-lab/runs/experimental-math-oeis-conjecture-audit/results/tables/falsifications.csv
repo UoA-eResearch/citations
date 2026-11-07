@@ -1,16 +1,17 @@
-anum,line_no,cls,first_disagree,bfile_error,confirm,bfile_max,bfile_first_fail,nterms,beyond_data_checked
-A005257,0,G,37.0,,bfile_too_short,34,,34.0,34.0
-A024389,0,G,39.0,,bfile_too_short,36,,36.0,36.0
-A024390,0,G,57.0,,bfile_too_short,51,,51.0,51.0
-A026155,1,C,32.0,,bfile_too_short,29,,26.0,26.0
-A049609,0,D,32.0,,bfile_too_short,16,,17.0,17.0
-A049609,1,D,32.0,,bfile_too_short,16,,17.0,17.0
-A076217,1,G,81.0,,confirmed,10000,81.0,78.0,78.0
-A162764,1,G,18.0,,bfile_too_short,15,,15.0,15.0
-A243989,1,G,86.0,,bfile_too_short,66,,66.0,66.0
-A261667,1,G,13.0,,bfile_too_short,12,,11.0,11.0
-A267515,1,C,62.0,,confirmed,1000,62.0,34.0,34.0
-A282044,0,G,14.0,,bfile_too_short,13,,14.0,14.0
-A301424,0,G,27.0,,bfile_too_short,21,,21.0,21.0
-A328987,1,G,61.0,,bfile_too_short,54,,55.0,55.0
-A328987,2,C,61.0,,bfile_too_short,54,,55.0,55.0
+anum,line_no,cls,first_disagree,bfile_error,confirm,bfile_max,bfile_first_fail,flagged_wrong,nterms,beyond_data_checked,loda_value,pred_value,has_bfile,note
+A005257,0,G,37.0,,bfile_too_short,34,,False,34.0,3.0,65287195194,65287195195,False,
+A024389,0,G,39.0,,bfile_too_short,36,,False,36.0,3.0,858179,858180,False,
+A024390,0,G,57.0,,bfile_too_short,51,,False,51.0,6.0,1665,1666,False,
+A026155,1,C,32.0,,bfile_too_short,29,,False,26.0,3.0,62706875413576,62706875413575,False,
+A049609,0,D,32.0,,bfile_too_short,16,,False,17.0,16.0,1731002097505395748215000,418555036293979127193144,False,
+A049609,1,D,32.0,,bfile_too_short,16,,False,17.0,16.0,1731002097505395748215000,418555036293979127193144,False,
+A076217,1,G,81.0,,confirmed,10000,81.0,False,78.0,3.0,81,0,True,
+A162764,1,G,18.0,,bfile_too_short,15,,False,15.0,3.0,56,60,False,
+A243989,1,G,86.0,,bfile_too_short,66,,False,66.0,20.0,134,135,False,
+A261667,1,G,13.0,,bfile_too_short,12,,False,11.0,1.0,160,165,False,
+A267515,1,C,62.0,,confirmed,1000,62.0,True,34.0,29.0,6100498040124418645,6100498040124418644,True,already tagged [Wrong] by OEIS editors
+A267515,2,G,62.0,,confirmed,1000,62.0,True,34.0,29.0,6100498040124418645,6100498040124418644,True,already tagged [Wrong] by OEIS editors
+A282044,0,G,14.0,,bfile_too_short,13,,False,14.0,1.0,122,127,False,
+A301424,0,G,27.0,,bfile_too_short,21,,False,21.0,6.0,24203797992661339086776055,24203797992661339086776056,False,"the line's '(conjectured)' qualifies the denominator's factorisation, not the g.f."
+A328987,1,G,61.0,,bfile_too_short,54,,False,55.0,7.0,358,360,False,
+A328987,2,C,61.0,,bfile_too_short,54,,False,55.0,7.0,358,360,False,

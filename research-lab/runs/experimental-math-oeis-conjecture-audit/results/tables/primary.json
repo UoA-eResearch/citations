@@ -2,72 +2,283 @@
  "candidate_lines": 38637,
  "entries_with_candidates": 24168,
  "status": {
-  "parsed": 22774,
-  "not_parsed": 14322,
+  "parsed": 22775,
+  "not_parsed": 14321,
   "parse_error": 1541
  },
  "parsed_by_class": {
-  "C": 15306,
-  "G": 6466,
+  "C": 13463,
+  "G": 6467,
+  "P": 1843,
   "D": 1002
  },
- "data_consistent": 21998,
- "contradicted_by_own_data": 776,
- "contradicted_by_own_data_by_class": {
-  "C": 597,
-  "D": 141,
-  "G": 38
+ "cgd_data_status": {
+  "consistent": 15563,
+  "unchecked": 4166,
+  "few_checked": 833,
+  "contradicted": 370
  },
+ "cgd_data_status_by_class": {
+  "C": {
+   "consistent": 8249,
+   "unchecked": 4166,
+   "few_checked": 833,
+   "contradicted": 215
+  },
+  "D": {
+   "consistent": 885,
+   "contradicted": 117
+  },
+  "G": {
+   "consistent": 6429,
+   "contradicted": 38
+  }
+ },
+ "P_data_status": {
+  "consistent": 1433,
+  "contradicted": 377,
+  "unchecked": 24,
+  "few_checked": 9
+ },
+ "cgd_consistent_flagged_wrong": 2,
  "in_block_lines": 9577,
- "screen": {
-  "agree": 14656,
-  "no_program": 7221,
-  "predict_failed": 104,
-  "disagree": 15,
+ "screen_cgd_unflagged": {
+  "agree": 13531,
+  "no_program": 2014,
+  "disagree": 14,
   "loda_mismatch_or_short": 2
  },
- "screened": 14671,
- "screened_disagree": 15,
- "screened_disagree_rate": 0.001022,
- "screened_disagree_rate_wilson": [
-  0.00062,
-  0.001686
- ],
+ "screened": {
+  "k": 14,
+  "n": 13545,
+  "rate": 0.001034,
+  "wilson": [
+   0.000616,
+   0.001734
+  ]
+ },
+ "screened_by_bfile_stratum": {
+  "with_bfile (LODA validated against it: not an independent source)": {
+   "k": 1,
+   "n": 11778,
+   "rate": 8.5e-05,
+   "wilson": [
+    1.5e-05,
+    0.000481
+   ]
+  },
+  "without_bfile (LODA mined on the data alone: an unresolved extrapolation)": {
+   "k": 13,
+   "n": 1767,
+   "rate": 0.007357,
+   "wilson": [
+    0.004305,
+    0.012547
+   ]
+  }
+ },
+ "entries_screened_by_bfile_stratum": {
+  "with": 7172,
+  "without": 1414
+ },
  "by_class": {
   "C": {
-   "screened": 7953,
-   "disagree": 3,
+   "k": 2,
+   "n": 6804,
+   "rate": 0.000294,
    "wilson": [
-    0.000128,
-    0.001109
+    8.1e-05,
+    0.001071
    ]
   },
   "G": {
-   "screened": 5921,
-   "disagree": 10,
+   "k": 10,
+   "n": 5921,
+   "rate": 0.001689,
    "wilson": [
     0.000918,
     0.003106
    ]
   },
   "D": {
-   "screened": 797,
-   "disagree": 2,
+   "k": 2,
+   "n": 820,
+   "rate": 0.002439,
    "wilson": [
-    0.000688,
-    0.009103
+    0.000669,
+    0.008849
    ]
   }
  },
+ "by_class_and_stratum": {
+  "C": {
+   "with_bfile": {
+    "k": 0,
+    "n": 6053,
+    "rate": 0.0,
+    "wilson": [
+     -0.0,
+     0.000634
+    ]
+   },
+   "without_bfile": {
+    "k": 2,
+    "n": 751,
+    "rate": 0.002663,
+    "wilson": [
+     0.000731,
+     0.009658
+    ]
+   }
+  },
+  "D": {
+   "with_bfile": {
+    "k": 0,
+    "n": 503,
+    "rate": 0.0,
+    "wilson": [
+     0.0,
+     0.007579
+    ]
+   },
+   "without_bfile": {
+    "k": 2,
+    "n": 317,
+    "rate": 0.006309,
+    "wilson": [
+     0.001732,
+     0.022709
+    ]
+   }
+  },
+  "G": {
+   "with_bfile": {
+    "k": 1,
+    "n": 5222,
+    "rate": 0.000191,
+    "wilson": [
+     3.4e-05,
+     0.001084
+    ]
+   },
+   "without_bfile": {
+    "k": 9,
+    "n": 699,
+    "rate": 0.012876,
+    "wilson": [
+     0.006788,
+     0.024288
+    ]
+   }
+  }
+ },
+ "agree_loda_states_same_recurrence": 153,
+ "screened_mentions_proof": 3,
+ "screened_gf_matched_only_shifted": 41,
  "beyond_data_terms_checked": {
   "median": 26.0,
   "p10": 18.0,
-  "p90": 46.0
+  "p90": 47.0,
+  "share_capped_at_data_length": 0.9988
+ },
+ "flagged_wrong_screen": {
+  "disagree": 2
+ },
+ "P_screen": {
+  "agree": 1032,
+  "no_program": 401
  },
  "confirm": {
   "bfile_too_short": 13,
-  "confirmed": 2
+  "confirmed": 3
  },
- "confirmed_falsifications": 2,
- "H1": "Refuted"
+ "confirmed_falsifications_all": 3,
+ "confirmed_already_flagged_wrong": 2,
+ "confirmed_falsifications_new": 1,
+ "confirmed_new_anums": [
+  "A076217"
+ ],
+ "H1_preregistered_rule": "Refuted",
+ "selection_table": "results/tables/selection.csv",
+ "bdeep": {
+  "status": {
+   "agrees": 3111,
+   "contradicted": 3,
+   "bfile_covers_only_data": 1
+  },
+  "entries_tested": 1986,
+  "lines_tested": 3114,
+  "contradicted": {
+   "k": 3,
+   "n": 3114,
+   "rate": 0.000963,
+   "wilson": [
+    0.000328,
+    0.002829
+   ]
+  },
+  "contradicted_ci_bootstrap_entries": [
+   0.0,
+   0.002571
+  ],
+  "contradicted_entries": 2,
+  "by_class": {
+   "C": {
+    "k": 2,
+    "n": 1723,
+    "rate": 0.001161,
+    "wilson": [
+     0.000318,
+     0.004223
+    ]
+   },
+   "D": {
+    "k": 0,
+    "n": 123,
+    "rate": 0.0,
+    "wilson": [
+     0.0,
+     0.030287
+    ]
+   },
+   "G": {
+    "k": 1,
+    "n": 1268,
+    "rate": 0.000789,
+    "wilson": [
+     0.000139,
+     0.004454
+    ]
+   }
+  },
+  "beyond_data_checked": {
+   "median": 185.0,
+   "p10": 105.0,
+   "p90": 716.700000000003
+  },
+  "fail_beyond_data": {
+   "median": 43.0,
+   "max": 532.0
+  },
+  "with_loda_program": {
+   "k": 3,
+   "n": 2693,
+   "rate": 0.001114,
+   "wilson": [
+    0.000379,
+    0.00327
+   ]
+  },
+  "without_loda_program": {
+   "k": 0,
+   "n": 421,
+   "rate": 0.0,
+   "wilson": [
+    0.0,
+    0.009042
+   ]
+  },
+  "agreeing_bfile_comment_mentions_a_formula": 0.0,
+  "population_entries_with_bfile": 8586
+ }
 }

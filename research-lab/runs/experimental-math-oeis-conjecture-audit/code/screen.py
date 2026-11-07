@@ -2,6 +2,11 @@
 
   screen.py screen    run LODA for every data-consistent parsed conjecture with a program -> data/interim/screen.parquet
   screen.py confirm   fetch b-files for screened disagreements (<= 1 request/s, <= 2,000) -> data/interim/confirm.parquet
+
+D2 (after the independent review): only data_status == "consistent" lines are screened (>= 5 data terms checked);
+"agree" needs at least one term beyond the data; the LODA and predicted values at a disagreement are stored; each
+entry is marked with whether it has a real b-file (Git-LFS pointer in oeisdata/files, which LODA programs are
+validated against); a LODA program whose formula comment is the same recurrence is flagged (tautological agreement).
 """
 import json
 import os
@@ -47,13 +52,55 @@ def loda_terms(anum, n):
 
 def predict(row, terms, upto):
     p = json.loads(row["pred"])
-    return (P.run_gf if row["cls"] == "G" else P.run_rec)(p, terms, row["offset"], upto)
+    return (P.run_gf if row["cls"] == "G" else P.run_rec)(p, terms, row["offset"], upto)[:3]
+
+
+def bfile_pointer(anum):
+    """Size in bytes of the entry's real b-file (Git-LFS pointer), or None if the entry has no b-file."""
+    f = RAW / "oeisdata" / "files" / anum[:4] / f"b{anum[1:]}.txt"
+    if not f.exists():
+        return None
+    for line in f.read_text(errors="replace").splitlines():
+        if line.startswith("size "):
+            return int(line.split()[1])
+    return None
+
+
+def _norm(pred):
+    """Relation normalised by the leading coefficient of lead(n): {lag: coeffs}, const, lead."""
+    lead = [Fraction(x) for x in pred["lead"]]
+    z = lead[-1]
+    f = lambda cs: tuple(Fraction(x) / z for x in cs)  # noqa: E731
+    return (tuple(sorted((k, f(c)) for k, c in pred["lags"])), f(pred["const"]), f(pred["lead"]))
+
+
+def loda_same_recurrence(anum, pred_json):
+    """True if the LODA program's '; Formula:' comment states the conjecture's own recurrence."""
+    try:
+        txt = prog_path(anum).read_text(errors="replace")
+    except OSError:
+        return False
+    line = next((ln for ln in txt.splitlines() if ln.startswith("; Formula:")), None)
+    if not line:
+        return False
+    target = _norm(json.loads(pred_json))
+    for seg in line[len("; Formula:"):].split(", "):
+        if "a(n" not in seg.replace(" ", "") or "=" not in seg:
+            continue
+        try:
+            r = P.parse_rec(seg)
+        except Exception:
+            continue
+        if r and r[0] in ("C", "D") and _norm(r[1]) == target:
+            return True
+    return False
 
 
 def one(row):
     e = P.read_entry(P.SEQ / row["anum"][:4] / f"{row['anum']}.seq")
     terms, off = e["terms"], row["offset"]
-    res = {"anum": row["anum"], "line_no": row["line_no"], "cls": row["cls"], "has_program": prog_path(row["anum"]).exists()}
+    res = {"anum": row["anum"], "line_no": row["line_no"], "cls": row["cls"], "has_program": prog_path(row["anum"]).exists(),
+           "bfile_bytes": bfile_pointer(row["anum"])}
     if not res["has_program"]:
         return {**res, "screen": "no_program"}
     T = min(2 * len(terms), 1000)
@@ -65,17 +112,21 @@ def one(row):
     ok, pred, _ = predict(row, terms, T)
     if not ok or pred is None:
         return {**res, "screen": "predict_failed"}
-    first = None
+    first, lv, pv, checked = None, None, None, 0
     for i in range(len(terms), len(pred)):
         n = off + i
         if n not in lt or pred[i] is None:
             break
+        checked += 1
         if Fraction(lt[n]) != pred[i]:
-            first = n
+            first, lv, pv = n, str(lt[n]), str(pred[i])
             break
-    checked = sum(1 for i in range(len(terms), len(pred)) if off + i in lt and pred[i] is not None)
+    if first is None and checked == 0:
+        return {**res, "screen": "no_term_beyond_data", "nterms": len(terms), "loda_n": len(lt)}
+    taut = row["cls"] in ("C", "D") and loda_same_recurrence(row["anum"], row["pred"])
     return {**res, "screen": "disagree" if first is not None else "agree", "first_disagree": first,
-            "beyond_data_checked": checked, "nterms": len(terms), "loda_n": len(lt)}
+            "loda_value": lv, "pred_value": pv, "beyond_data_checked": checked, "nterms": len(terms),
+            "loda_n": len(lt), "loda_same_recurrence": taut}
 
 
 def screen():
@@ -85,7 +136,7 @@ def screen():
     if not link.exists():
         link.symlink_to(PROGS)
     C = pd.read_parquet(INT / "conjectures.parquet")
-    C = C[(C.status == "parsed") & (C.data_ok == True)]   # noqa: E712
+    C = C[(C.status == "parsed") & (C.data_status == "consistent")]
     rows = C.to_dict("records")
     out = []
     with ThreadPoolExecutor(int(os.environ.get("WORKERS", "12"))) as ex:
@@ -123,7 +174,7 @@ def confirm():
         if r.anum not in cache:
             f = RUN / "data" / "bfiles" / f"b{r.anum[1:]}.json"
             if f.exists():
-                cache[r.anum] = (json.loads(f.read_text()), None)
+                cache[r.anum] = ({int(k): v for k, v in json.loads(f.read_text()).items()}, None)   # D2: JSON keys are strings
             else:
                 b, err = bfile(r.anum)
                 cache[r.anum] = (b, err)
@@ -154,7 +205,7 @@ def confirm():
         if first is None:
             rows.append({**res, "confirm": "bfile_agrees_with_conjecture" if (off + len(pred) - 1) >= r.first_disagree else "bfile_too_short",
                          "bfile_max": max(b)}); continue
-        rows.append({**res, "confirm": "confirmed" if first <= r.first_disagree else "confirmed_earlier_than_screen",
+        rows.append({**res, "confirm": "confirmed" if first <= r.first_disagree else "bfile_fails_later_than_loda",
                      "bfile_first_fail": first, "bfile_max": max(b)})
     d = pd.DataFrame(rows)
     d.to_parquet(INT / "confirm.parquet", index=False)

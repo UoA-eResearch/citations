@@ -18,11 +18,11 @@ plt.rcParams.update({"font.size": 9, "axes.edgecolor": GRID, "axes.labelcolor": 
                      "axes.spines.top": False, "axes.spines.right": False})
 p = json.load(open(T / "primary.json"))
 steps = [("candidate 'conjecture'/'empirical' lines", p["candidate_lines"]),
-         ("parsed (recurrence, g.f., D-finite)", sum(p["parsed_by_class"].values())),
-         ("consistent with their own data", p["data_consistent"]),
-         ("screened against a LODA program", p["screened"]),
-         ("LODA disagrees beyond the data", p["screened_disagree"]),
-         ("confirmed by the b-file", p["confirmed_falsifications"])]
+         ("parsed C/G/D (recurrence, g.f., D-finite)", sum(v for k, v in p["parsed_by_class"].items() if k != "P")),
+         ("consistent with own data (>= 5 terms)", p["cgd_data_status"]["consistent"]),
+         ("screened against a LODA program", p["screened"]["n"]),
+         ("LODA disagrees beyond the data", p["screened"]["k"]),
+         ("confirmed by the b-file (all already noted)", p["confirmed_falsifications_all"])]
 fig, ax = plt.subplots(figsize=(7.6, 3.4))
 fig.subplots_adjust(left=0.38, right=0.95, bottom=0.18, top=0.86)
 y = range(len(steps))[::-1]
@@ -35,11 +35,11 @@ for yy, v in zip(y, vals):
 ax.axvline(100, color=INK2, lw=0.8, ls="--")
 ax.annotate("H1 bar: 100", (100, len(steps) - 0.6), xytext=(4, 0), textcoords="offset points", fontsize=7.5, color=INK2)
 ax.set_xlabel("count (log scale)"); ax.grid(axis="x", color=GRID, lw=0.5)
-fig.suptitle("Of 14,671 screened OEIS conjectures, 15 disagree with an independent program and 2 are confirmed false",
+fig.suptitle(f"Of {p['screened']['n']:,} screened OEIS conjectures, {p['screened']['k']} disagree with LODA; {p['confirmed_falsifications_all']} lines are confirmed false, all already noted",
              x=0.02, ha="left", fontsize=9.5, color=INK)
 fig.savefig(F / "F1_funnel.png", dpi=170)
 (F / "F1_funnel.txt").write_text(" ".join(f"""OEIS formula lines marked "conjecture" or "empirical" (and members of "Conjectures
 from ...: (Start)...(End)" blocks), parsed into linear recurrences, rational generating functions or P-recursive
 relations; those consistent with the entry's own terms were run beyond the data against the entry's LODA program (median
-{p['beyond_data_terms_checked']['median']:.0f} further terms) and disagreements checked against the entry's b-file.""".split()) + "\n")
+{p['beyond_data_terms_checked']['median']:.0f} further terms) and disagreements checked against the entry's b-file. Revised after review (D2): at least 5 data terms checked; lines tagged [Wrong] excluded; polynomial closed forms excluded.""".split()) + "\n")
 print("figure written")
