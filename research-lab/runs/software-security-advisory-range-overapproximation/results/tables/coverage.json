@@ -1,0 +1,22 @@
+{
+ "eligible": {
+  "attempted": 258101,
+  "ok": 6409,
+  "fallback": 0,
+  "dropped": 251692,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "npm: not a GHSA record": 223208,
+   "npm: no fix commit": 1467,
+   "npm: not exactly one affected package": 1461,
+   "npm: no introduced+fixed range": 1497,
+   "npm: withdrawn": 414,
+   "PyPI: no fix commit": 1383,
+   "PyPI: no introduced+fixed range": 679,
+   "PyPI: not exactly one affected package": 1341,
+   "PyPI: withdrawn": 251,
+   "PyPI: not a GHSA record": 19991
+  }
+ }
+}
