@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Herbarium Velocity Null</title>
+<meta name="description" content="Do innocent citers of a later-retracted paper lose citations after the retraction?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Metascience</div>
+  <h1>At least two-fifths of the median herbarium plant range velocity is sampling noise; a collecting-effort null reproduces two-thirds, but that null cannot tell collectors moving from plants moving together</h1>
+  <p class="subtitle">GBIF preserved-specimen records of vascular plants (2026-07-01 snapshot; 30.6 million records after cleaning) were thinned to 5-arcmin cells, and each species&#x27; centroid displacement between 1970–2000 and 2001–2024 was compared with 999 null replicates. The replicates keep the species&#x27; own records and move only which of them fall in which period: at random, or according to where all other species&#x27; records fell in each period. The plan, the cleaning, null and analysis code, and two pre-result fixes (D1, D2) were committed before any velocity was computed.</p>
+  <div class="meta">
+    <span>Report · 2026-10-26 · under independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ecology-biodiversity-herbarium-velocity-effort-null/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ecology-biodiversity-herbarium-velocity-effort-null/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ecology-biodiversity-herbarium-velocity-effort-null/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: H1 Supported under the preregistered rule (ratio 0.67 against a bar of 0.5), but the design does not
+identify what the rule was meant to test.</strong> The effort null's effort surface is built from all other species'
+records, so it moves when ranges move together, as well as when collectors move.</p>
+<ul>
+<li><strong>What the data identify.</strong><ul>
+<li><strong>Sampling noise:</strong> records reassigned between periods at random give <strong>2.8 km/yr</strong> against an observed
+<strong>6.9 km/yr</strong>, for 69,596 species with at least 10 thinned cells in each period. That is a ratio of <strong>0.41</strong>
+(95% species bootstrap 0.40 to 0.41), so at least two-fifths of the median velocity is noise. In synthetic
+worlds this null stays at the noise level whether or not ranges move.</li>
+<li><strong>A poleward excess:</strong> the median species moves 9.4 km poleward over 28 years (0.34 km/yr), against 0.3 km under
+the effort null and −0.6 km under the noise null; 53.6% of species move poleward, against 50.8% under the effort
+null. The effort surface itself drifted only mildly poleward: its mean absolute latitude went from 30.6° to
+31.8°, the tropical share fell from 34.5% to 32.3% and the boreal share rose from 10.9% to 13.2%.</li>
+</ul>
+</li>
+<li><strong>What the effort null reproduces, and why it is not "fixed ranges".</strong><ul>
+<li>The noise-plus-effort null gives 4.6 km/yr: a ratio of <strong>0.67</strong> (0.66 to 0.67). The preregistration and the first
+draft read this as "fixed ranges plus noise and effort reproduce two-thirds of the velocity".</li>
+<li><strong>That reading is not identified</strong> (synthetic test, post hoc; <code>results/tables/absorption_test.json</code>). Run through
+this study's own code with uniform, unchanging collecting effort, a world where every species really moves 1°
+north is scored by the effort null as fully reproduced (ratio 1.03; 5% exceed its 95th percentile). When half the
+species move, the movers' ratio is 0.70; when a fifth move, 0.60. The observed 0.67 is also what a world with
+shared real shifts and no effort change can produce.</li>
+<li>So the 26% between the noise floor and the effort null mixes changing collecting effort with range shifts that
+many species share. The design cannot apportion it.</li>
+<li>The 0.5 bar was not demanding: with a noise floor of 0.41, almost any effort surface pushes the ratio past it.</li>
+</ul>
+</li>
+<li><strong>Movement beyond the nulls.</strong><ul>
+<li>52.8% of species move farther than their noise null's 95th percentile, and 36% farther than their effort null's.
+Under shared real shifts the effort null's exceedance falls towards 5%, so 36% is a lower bound on species with
+real movement, not an estimate.</li>
+<li>Per species: the median of the species' own ratios is 0.68 and the mean 0.97; 25.8% of species move less than
+their effort null's median.</li>
+</ul>
+</li>
+<li><strong>Robust as computed.</strong> The effort-null ratio stays between 0.64 and 0.71 across latitude bands, cell-count classes,
+  thresholds of 20 and 50 cells, 30-arcmin thinning, 30-arcmin and 2° effort grids, arithmetic centroids, and
+  cleaning without the dense-point rule. The same identification caveat applies to every row.</li>
+<li><strong>SDM-centroid variant</strong> (1,000 species): modelled-range centroids move at a median of 8.4 km/yr, and one effort-null
+  replicate per species gives 6.2 km/yr (ratio 0.74, 0.68 to 0.82).</li>
+<li><strong>Reproduction.</strong> Our observed median is 6.5–6.9 km/yr depending on the threshold, against Daru et al.'s 5.6 km/yr.
+  At five cells per period we have 101,328 species, against their 109,242.</li>
+</ul>
+<h2>In plain terms</h2>
+<p>A recent study used millions of museum plant specimens to estimate that over 100,000 plant species have shifted
+their ranges at a median of 5.6 km a year since the 1970s–1990s, faster than models predict for the coming decades.
+But the centre of a range estimated from a few dozen specimens moves around by chance. Botanists also collect in
+different places from decade to decade. Both of these make ranges look as if they are moving even when they are not.</p>
+<p>We rebuilt the measurement from the open GBIF data and found a somewhat higher figure: 6.9 km a year. Then, for each of
+nearly 70,000 species, we reshuffled which of its specimens counted as "early" and which as "late", 999 times. Done
+at random, the reshuffles alone produced 2.8 km a year, about two-fifths of the observed figure: that much is pure
+chance. Done so as to follow where all other plant specimens were collected in each period, they produced 4.6 km a
+year, two-thirds of it. But that second baseline also moves when many species really shift together, so it cannot
+say how much of the gap is collectors and how much is plants.</p>
+<p>So a large share of the headline speed is noise, and an unknown part of the rest may be collecting effort. There is
+a small tilt towards the poles that neither baseline produces. A velocity like 5.6 km a year cannot be read as
+how fast plants are moving until it is compared with a baseline, and a better baseline needs a measure of collecting
+effort that does not move with the plants.</p>
+<h2>What was asked</h2>
+<p>The lead (<code>ecology-biodiversity-herbarium-velocity-effort-null</code>) asked whether global herbarium-based range velocities
+survive a sampling-noise and collecting-effort null.
+- <strong>Daru, Birkeland &amp; Chala</strong> (bioRxiv, December 2025) report that 109,242 vascular plant species shifted their
+  centroids at a median of 5.6 km/yr between 1970–2000 and 2001–2024, using 16.2 million herbarium records. They
+  compare this with projected future velocities of 3.27 km/yr. Their methods give 5-arcmin thinning and
+  native-range filtering, but no noise floor, no effort null and no code.
+- <strong>Centroid displacement is always positive,</strong> so finite samples inflate it. Herbarium collecting is strongly biased
+  in space and time (Daru et al. 2018), and apparent range shifts can be artefacts of detectability and effort
+  (Bates et al. 2015). Methodological attributes explain much of the variation in published range-shift velocities
+  (Lenoir et al. 2020).</p>
+<h2>How it was done</h2>
+<ul>
+<li><strong>Records.</strong> GBIF's monthly Parquet snapshot of 2026-07-01 on AWS (doi:10.15468/dl.teccpa). It was filtered to
+  Tracheophyta, PRESERVED_SPECIMEN, 1970–2024 and records with coordinates: 35,526,014 records.</li>
+<li><strong>Cleaning.</strong> Rules applied in order, each counted (<code>results/tables/clean_summary.json</code>):<ul>
+<li>GBIF coordinate issues (495,139);</li>
+<li>uncertainty over 10 km (531,658);</li>
+<li>equal or near-zero coordinates (216);</li>
+<li>introduced, managed or absent (139,943);</li>
+<li>coordinates shared by more than 1,000 species, a proxy for centroids and institutions (528,628 records at 86
+points);</li>
+<li>sea cells (206,740);</li>
+<li>no species key (3,001,290).</li>
+</ul>
+</li>
+</ul>
+<p>30,622,400 records were kept.
+    - D2: the first cleaning run lost about 1% of records silently through in-place database updates. G2's coverage
+    count caught it before any velocity was computed.
+- <strong>Velocity.</strong> Unique 5-arcmin cells per species per period (1970–2000, 2001–2024). The centroid is the spherical
+  mean of the cell centres, and velocity is the great-circle distance between the two centroids divided by 28 years,
+  as in Daru et al. The primary population is species with at least 10 cells in each period: 69,596.
+- <strong>Nulls.</strong> For each species, its pooled records are reassigned to the two periods at their observed counts, then
+  thinned and measured exactly as observed (999 replicates each).
+    - <strong>Noise only:</strong> a uniformly random reassignment.
+    - <strong>Noise plus effort (primary):</strong> Pareto order sampling (D1). The odds that a record belongs to the early period
+    follow the early period's share of all-tracheophyte collecting effort in its 1° cell, relative to the late
+    period's.
+    - <strong>Leave-one-species-out:</strong> the focal species' own records are removed from the effort surface, so its own shift
+    cannot enter its weights (G1).
+    - A synthetic check (<code>code/test_effort.py</code>) shows this null reproduces 97% of a pure effort shift. The sampler the
+    plan named reproduced 66%, hence D1, made before any real data were touched. The same check cannot distinguish a
+    pure effort shift from every range moving north (see "What this does and does not show").
+    - <strong>The weights are approximate per record.</strong> Pareto order sampling ranks records correctly (correlation of
+    empirical and target inclusion probabilities 0.995–0.999), but for the smallest species (20–22 records) the
+    empirical inclusion probabilities deviate from the stated target by up to 0.04–0.17, and the targets do not sum
+    to the period's count (8.6–13.2 against 10–12). 28% of primary species have fewer than 100 records (post hoc).
+- <strong>Statistic.</strong> Ratio of the median (over species) of each species' null median velocity to the median observed
+  velocity, with a species bootstrap (2,000).
+- <strong>SDM variant.</strong> For 1,000 random species: MaxEnt-type models (elapid, WorldClim 2.1 bioclim at 10 arcmin) per
+  period, with background drawn by that period's effort within 1,000 km of the species' records. Each binary range's
+  centroid is computed, on the observed assignment and on one effort-null replicate.
+- <strong>Coverage (G2):</strong> every species in every variant received both nulls (<code>results/tables/coverage.json</code>).
+- <strong>Plausibility (G3):</strong> <code>results/plausibility.md</code>, including three species recomputed from the raw extract that
+  match exactly.</p>
+<h2>Results (<code>results/figures/F1_velocity_null.png</code>)</h2>
+<figure><a href="results/figures/F1_velocity_null.png"><img src="results/figures/F1_velocity_null.png" alt="Observed and null velocities"></a><figcaption>Left: per-species great-circle displacement of the spherical-mean centroid of thinned 5-arcmin cells between 1970-2000 and 2001-2024, divided by 28 years, for GBIF Tracheophyta preserved specimens (2026-07-01 snapshot, cleaned), against each species&#x27; median under 999 null replicates that keep the range fixed: records reassigned between periods at their observed counts (noise only) or by Pareto order sampling with leave-one-species-out 1-degree effort odds (noise + effort). Right: the ratio of the median null velocity to the median observed velocity with species-bootstrap 95% intervals.</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>analysis</th>
+<th>species</th>
+<th>observed median (km/yr)</th>
+<th>effort-null median (km/yr)</th>
+<th>ratio (95% CI)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>primary</strong></td>
+<td>69,596</td>
+<td><strong>6.91</strong></td>
+<td><strong>4.61</strong></td>
+<td><strong>0.667 (0.661–0.673)</strong></td>
+</tr>
+<tr>
+<td>noise-only null</td>
+<td>69,596</td>
+<td>6.91</td>
+<td>2.80</td>
+<td>0.405 (0.401–0.409)</td>
+</tr>
+<tr>
+<td>tropical (pooled centroid within 23.5°)</td>
+<td>32,134</td>
+<td>9.42</td>
+<td>6.10</td>
+<td>0.647 (0.639–0.655)</td>
+</tr>
+<tr>
+<td>temperate (23.5–50°)</td>
+<td>32,442</td>
+<td>4.41</td>
+<td>3.13</td>
+<td>0.710 (0.700–0.719)</td>
+</tr>
+<tr>
+<td>boreal (above 50°)</td>
+<td>5,020</td>
+<td>15.78</td>
+<td>10.74</td>
+<td>0.680 (0.661–0.706)</td>
+</tr>
+<tr>
+<td>10–19 cells in the smaller period</td>
+<td>25,120</td>
+<td>6.02</td>
+<td></td>
+<td>0.678 (0.668–0.691)</td>
+</tr>
+<tr>
+<td>20–49 cells</td>
+<td>22,323</td>
+<td>6.46</td>
+<td></td>
+<td>0.664 (0.654–0.677)</td>
+</tr>
+<tr>
+<td>at least 50 cells</td>
+<td>22,153</td>
+<td>8.57</td>
+<td>5.63</td>
+<td>0.657 (0.647–0.667)</td>
+</tr>
+<tr>
+<td>at least 20 cells</td>
+<td>44,476</td>
+<td>7.43</td>
+<td>4.90</td>
+<td>0.659 (0.651–0.667)</td>
+</tr>
+<tr>
+<td>30-arcmin thinning</td>
+<td>58,329</td>
+<td>7.60</td>
+<td>4.88</td>
+<td>0.643 (0.636–0.649)</td>
+</tr>
+<tr>
+<td>30-arcmin effort grid</td>
+<td>69,596</td>
+<td>6.91</td>
+<td>4.78</td>
+<td>0.693 (0.687–0.699)</td>
+</tr>
+<tr>
+<td>2° effort grid</td>
+<td>69,596</td>
+<td>6.91</td>
+<td>4.44</td>
+<td>0.642 (0.637–0.648)</td>
+</tr>
+<tr>
+<td>arithmetic-mean centroids</td>
+<td>69,596</td>
+<td></td>
+<td></td>
+<td>0.669 (0.663–0.676)</td>
+</tr>
+<tr>
+<td>cleaning without the dense-point rule</td>
+<td>69,996</td>
+<td>6.94</td>
+<td>4.63</td>
+<td>0.668 (0.662–0.674)</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Exceedance.</strong> 36.0% of species (35.7–36.4%) exceed their effort null's 95th percentile, and 52.8% exceed the
+  noise null's.<ul>
+<li>By band: tropical 40.3%, temperate 30.9%, boreal 42.3%.</li>
+<li>By cells: 30.5% (10–19), 33.4% (20–49) and 45.0% (at least 50). That is as expected if real shifts are easier
+to detect with more cells.</li>
+</ul>
+</li>
+<li><strong>Direction.</strong> 53.6% of species move poleward, against 50.8% under the effort null and 49.0% under the noise null.</li>
+<li><strong>Reproduction</strong> (<code>results/tables/reproduction.csv</code>): the median observed velocity by minimum cells per period.<ul>
+<li>1 cell: 6.51 km/yr (188,600 species);</li>
+<li>3 cells: 6.51 (127,637);</li>
+<li>5 cells: 6.64 (101,328);</li>
+<li>10 cells: 6.91 (69,596);</li>
+<li>20 cells: 7.43 (44,476);</li>
+<li>50 cells: 8.57 (22,153).</li>
+</ul>
+</li>
+</ul>
+<p>The median rises with the threshold, probably because well-collected species tend to have larger ranges, where
+  the same relative wander is more kilometres (not tested here).
+- <strong>SDM variant</strong> (<code>results/tables/sdm_variant.json</code>): 1,000 random species from the primary population, all fitted.
+    - Observed median 8.44 km/yr from modelled ranges. A single noise-plus-effort null replicate per species gives
+    6.23: ratio 0.74 (0.68–0.82).
+    - For the same species, point centroids give 6.55 observed and 4.40 for the null median.
+    - In 39% of species the null replicate's modelled range moves farther than the observed one. Modelled and point
+    velocities correlate only moderately across species (Spearman 0.48).</p>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>A large part of a herbarium centroid velocity is not range movement.</strong> Chance alone produces two-fifths of the
+  observed median, with each species' own records and no movement at all.<ul>
+<li>A figure such as 5.6 km/yr therefore partly measures sampling; how much more than two-fifths cannot be said
+from this design.</li>
+<li>Comparing it with SDM-projected velocities compares quantities with different noise properties, unless both are
+measured against the same baseline.</li>
+</ul>
+</li>
+<li><strong>The effort null cannot separate collectors from plants; this is the main limitation.</strong> Its effort surface is
+  the thinned records of all other species, so it moves with any range shift that many species share. In synthetic
+  worlds with unchanging, uniform effort (<code>code/absorption_test.py</code>, run through <code>velocity.py</code>):</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>world</th>
+<th>species scored</th>
+<th>observed (km/yr)</th>
+<th>noise null</th>
+<th>effort null</th>
+<th>ratio (effort)</th>
+<th>exceed effort p95</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>none move</td>
+<td>all 300</td>
+<td>1.79</td>
+<td>1.89</td>
+<td>1.89</td>
+<td>1.05</td>
+<td>7%</td>
+</tr>
+<tr>
+<td>all move 1° N</td>
+<td>all 300</td>
+<td>4.15</td>
+<td>1.90</td>
+<td>4.26</td>
+<td>1.03</td>
+<td>5%</td>
+</tr>
+<tr>
+<td>half move 1° N</td>
+<td>129 movers</td>
+<td>4.16</td>
+<td>1.91</td>
+<td>2.91</td>
+<td>0.70</td>
+<td>18%</td>
+</tr>
+<tr>
+<td>a fifth move 1° N</td>
+<td>56 movers</td>
+<td>4.35</td>
+<td>1.92</td>
+<td>2.60</td>
+<td>0.60</td>
+<td>23%</td>
+</tr>
+</tbody>
+</table></div>
+<p>The fix is an effort proxy that does not move with plants, such as collecting events from other kingdoms or
+  institution-level digitisation counts. That is out of scope here.
+- <strong>Real shifts are probably present.</strong> 53% of species move beyond their noise null's 95th percentile and 36% beyond
+  their effort null's, more among well-sampled species. The excess over the effort null is about 1.9 km/yr for the
+  typical species, and the poleward excess (0.34 km/yr) is the one directional shift the design identifies. Some of that excess may also come from what the null does not model: taxonomic changes between periods,
+  changing georeferencing practice, or collecting that targets particular groups. This study does not estimate how
+  far any particular species has moved.
+- <strong>Not shown:</strong>
+    - <strong>Daru et al.'s exact pipeline.</strong> No code is available. Names here are GBIF species keys, not WCVP, and there
+    is no native-range filter beyond GBIF's establishment field. The snapshot includes recently digitised specimens.
+    The observed-versus-null comparison uses one set of records, so it does not depend on matching their median,
+    which ours exceeds by about 20%.
+    - <strong>The effort null assumes</strong> collecting within a 1° cell is independent of species identity. Targeted collecting
+    of particular groups breaks that.
+    - <strong>Elevation and other range-shift measures</strong> (leading and trailing edges, occupancy) were not tested.</p>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration:</strong> <code>plan.md</code>, committed with the extractor before any centroid or count.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>):<ul>
+<li><strong>D1, before any real data:</strong> the effort null samples by Pareto order sampling, because the planned sampler
+reproduced only 66% of a synthetic effort shift.</li>
+<li><strong>D2, before any velocity:</strong> cleaning was rewritten as a single query after G2 found that in-place database
+updates had dropped 1% of records.</li>
+</ul>
+</li>
+<li><strong>Quality gates:</strong><ul>
+<li>G1: the leakage audit in plan.md, with leave-one-species-out effort;</li>
+<li>G2: coverage.json;</li>
+<li>G3: plausibility.md;</li>
+<li>G5: review/overclaim_check.md;</li>
+<li>G6: results/attribution_ledger.csv.</li>
+</ul>
+</li>
+</ul>
+<p>The ledger check caught a wrong DOI for Bates et al., now fixed. G4 and G7 do not apply.
+- <strong>D3, after the independent review (post hoc):</strong> the synthetic absorption test, the effort surface's latitude by
+    period, and the Pareto inclusion check; the title, verdict and plain terms rewritten around what the design
+    identifies.
+- <strong>Independent review:</strong> fix first (one major finding: the effort null absorbs shared range shifts); the fixes are in
+  D3.</p>
+<h2>Reproducing it</h2>
+<ol>
+<li><code>code/s3_extract.py</code>: about 2 hours; reads 3.9 billion snapshot rows.</li>
+<li><code>code/clean.py</code>: needs Natural Earth land and minor islands in <code>data/ref/</code>.</li>
+<li><code>code/velocity.py primary</code>, then <code>thin30</code>, <code>eff30</code>, <code>eff2deg</code> and <code>no_r5</code>: about 13 minutes each on 16 cores.</li>
+<li><code>code/analyse.py</code>.</li>
+<li><code>code/sdm_variant.py</code>: needs WorldClim 2.1 10-arcmin bioclim in <code>data/ref/wc/</code>.</li>
+<li><code>code/figures.py</code>, <code>code/handtrace.py</code>, <code>code/test_velocity.py</code> and <code>code/test_effort.py</code>.</li>
+</ol>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ecology-biodiversity-herbarium-velocity-effort-null/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

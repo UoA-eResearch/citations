@@ -33,3 +33,25 @@
   change the row count.
 - The rules, their order and their thresholds are unchanged. The first run's outputs were overwritten; no analysis
   had read them.
+
+## D3 — 2026-11-07 — fixes after the independent review (verdict: fix first)
+
+Everything here follows the first review (`review/review.md`) and is post hoc. No velocity or null was recomputed;
+the preregistered statistic and its verdict (H1 Supported, ratio 0.667) stand.
+
+1. **Identification (finding 1).** New `code/absorption_test.py` runs synthetic worlds through `velocity.py`:
+   300 species, 150 records each, uniform and unchanging effort, with all, half, a fifth or none of the species
+   moving 1° north. The effort null reproduces 103% of the movers' velocity when all move, 70% when half move and
+   60% when a fifth move, so it cannot tell collectors moving from plants moving together. The title, verdict and
+   plain terms are rewritten around what the design identifies: the noise floor (ratio 0.41) and the poleward
+   excess. The absorption table is in the main limitation. New `code/effort_surface.py` gives the effort surface's
+   latitude by period (mean |lat| 30.6° → 31.8°).
+2. **Pareto sampling (finding 2).** For the five smallest primary species (20–22 records), empirical inclusion
+   probabilities over 5,000 draws deviate from the stated target by at most 0.04–0.17. They correlate with it at
+   0.995–0.999, and the targets sum to 8.6–13.2 against counts of 10–12. The report now says the weights are
+   approximate per record. No recalibration was run.
+3. **Statistics (finding 3).**
+   - The per-species ratios are reported (median 0.68, mean 0.97; 25.8% of species below their null median).
+   - The 0.5 bar is described as undemanding.
+   - The 36% exceedance is described as a lower bound.
+   - 28% of primary species have fewer than 100 records; the review's "most" does not hold.

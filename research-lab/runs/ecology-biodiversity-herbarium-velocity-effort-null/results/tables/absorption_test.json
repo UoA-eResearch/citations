@@ -1,0 +1,122 @@
+{
+ "absorption": {
+  "none move": {
+   "all": {
+    "species": 300,
+    "observed_med": 1.79,
+    "noise_null_med": 1.89,
+    "effort_null_med": 1.89,
+    "ratio_effort": 1.05,
+    "ratio_noise": 1.05,
+    "exceed_effort_p95": 0.07,
+    "exceed_noise_p95": 0.08
+   }
+  },
+  "all move 1 deg N": {
+   "all": {
+    "species": 300,
+    "observed_med": 4.15,
+    "noise_null_med": 1.9,
+    "effort_null_med": 4.26,
+    "ratio_effort": 1.03,
+    "ratio_noise": 0.46,
+    "exceed_effort_p95": 0.05,
+    "exceed_noise_p95": 0.52
+   }
+  },
+  "half move 1 deg N": {
+   "movers": {
+    "species": 129,
+    "observed_med": 4.16,
+    "noise_null_med": 1.91,
+    "effort_null_med": 2.91,
+    "ratio_effort": 0.7,
+    "ratio_noise": 0.46,
+    "exceed_effort_p95": 0.18,
+    "exceed_noise_p95": 0.49
+   },
+   "stayers": {
+    "species": 171,
+    "observed_med": 1.7,
+    "noise_null_med": 1.89,
+    "effort_null_med": 2.01,
+    "ratio_effort": 1.18,
+    "ratio_noise": 1.11,
+    "exceed_effort_p95": 0.04,
+    "exceed_noise_p95": 0.06
+   }
+  },
+  "20% move 1 deg N": {
+   "movers": {
+    "species": 56,
+    "observed_med": 4.35,
+    "noise_null_med": 1.92,
+    "effort_null_med": 2.6,
+    "ratio_effort": 0.6,
+    "ratio_noise": 0.44,
+    "exceed_effort_p95": 0.23,
+    "exceed_noise_p95": 0.57
+   },
+   "stayers": {
+    "species": 244,
+    "observed_med": 1.72,
+    "noise_null_med": 1.89,
+    "effort_null_med": 1.9,
+    "ratio_effort": 1.11,
+    "ratio_noise": 1.1,
+    "exceed_effort_p95": 0.05,
+    "exceed_noise_p95": 0.07
+   }
+  }
+ },
+ "pareto_inclusion": {
+  "species": [
+   {
+    "specieskey": 4150184,
+    "records": 20,
+    "n1": 10,
+    "target_sum": 10.4,
+    "max_abs_dev": 0.039,
+    "mean_abs_dev": 0.02,
+    "corr": 0.999
+   },
+   {
+    "specieskey": 7360364,
+    "records": 21,
+    "n1": 11,
+    "target_sum": 12.1,
+    "max_abs_dev": 0.069,
+    "mean_abs_dev": 0.054,
+    "corr": 0.998
+   },
+   {
+    "specieskey": 3755907,
+    "records": 21,
+    "n1": 10,
+    "target_sum": 8.6,
+    "max_abs_dev": 0.089,
+    "mean_abs_dev": 0.067,
+    "corr": 0.995
+   },
+   {
+    "specieskey": 3740689,
+    "records": 22,
+    "n1": 10,
+    "target_sum": 13.2,
+    "max_abs_dev": 0.169,
+    "mean_abs_dev": 0.146,
+    "corr": 0.995
+   },
+   {
+    "specieskey": 3135324,
+    "records": 22,
+    "n1": 12,
+    "target_sum": 11.2,
+    "max_abs_dev": 0.062,
+    "mean_abs_dev": 0.038,
+    "corr": 0.998
+   }
+  ],
+  "share_primary_species_under_100_records": 0.276
+ }
+}

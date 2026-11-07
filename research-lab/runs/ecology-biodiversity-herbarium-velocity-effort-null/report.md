@@ -1,31 +1,46 @@
-# Two-thirds of the median herbarium plant range velocity is reproduced by sampling noise and shifting collecting effort alone: a fixed-range null gives 4.6 km/yr against an observed 6.9
+# At least two-fifths of the median herbarium plant range velocity is sampling noise; a collecting-effort null reproduces two-thirds, but that null cannot tell collectors moving from plants moving together
 
 *GBIF preserved-specimen records of vascular plants (2026-07-01 snapshot; 30.6 million records after cleaning) were
 thinned to 5-arcmin cells, and each species' centroid displacement between 1970–2000 and 2001–2024 was compared with
-999 null replicates. The replicates keep its range fixed and move only which records fall in which period, at random
-or according to where collectors worked in each period. The plan, the cleaning, null and analysis code, and two
+999 null replicates. The replicates keep the species' own records and move only which of them fall in which period: at random, or
+according to where all other species' records fell in each period. The plan, the cleaning, null and analysis code, and two
 pre-result fixes (D1, D2) were committed before any velocity was computed.*
 
-**Verdict: H1 Supported.** A null with fixed ranges reproduces 67% of the observed median velocity.
+**Verdict: H1 Supported under the preregistered rule (ratio 0.67 against a bar of 0.5), but the design does not
+identify what the rule was meant to test.** The effort null's effort surface is built from all other species'
+records, so it moves when ranges move together, as well as when collectors move.
 
-- **H1 (a noise-plus-effort null with fixed ranges reproduces at least half of the observed median velocity):
-  Supported.**
-  - Observed median velocity: **6.9 km/yr** for 69,596 species with at least 10 thinned cells in each period.
-  - Median of the species' null medians: **4.6 km/yr**.
-  - Ratio **0.67** (95% species bootstrap 0.66 to 0.67), against the preregistered bar of 0.5.
-- **Sampling noise alone** (records reassigned between periods at random) gives 2.8 km/yr: a ratio of 0.41 (0.40 to
-  0.41). The rest of the null's velocity comes from the shift in where specimens were collected.
-- **Movement beyond the null, in a minority.**
-  - 36% of species move farther than their own null's 95th percentile (5% would be expected if every range were
-    fixed).
-  - The typical species exceeds its null median by 1.9 km/yr (1.8 to 1.9).
-  - 53.6% of species move poleward, against 50.8% under the null (median poleward shift 9.4 km against 0.3 km).
-- **Robust.** The ratio stays between 0.64 and 0.71 across latitude bands, cell-count classes, thresholds of 20 and 50
-  cells, 30-arcmin thinning, 30-arcmin and 2° effort grids, arithmetic centroids, and cleaning without the
-  dense-point rule. Every interval lies above 0.5.
-- **SDM-centroid variant** (1,000 species): modelling each period's range does not remove the effect.
-  - Modelled-range centroids move at a median of 8.4 km/yr.
-  - One fixed-range null replicate per species gives 6.2 km/yr: a ratio of 0.74 (0.68 to 0.82).
+- **What the data identify.**
+  - **Sampling noise:** records reassigned between periods at random give **2.8 km/yr** against an observed
+    **6.9 km/yr**, for 69,596 species with at least 10 thinned cells in each period. That is a ratio of **0.41**
+    (95% species bootstrap 0.40 to 0.41), so at least two-fifths of the median velocity is noise. In synthetic
+    worlds this null stays at the noise level whether or not ranges move.
+  - **A poleward excess:** the median species moves 9.4 km poleward over 28 years (0.34 km/yr), against 0.3 km under
+    the effort null and −0.6 km under the noise null; 53.6% of species move poleward, against 50.8% under the effort
+    null. The effort surface itself drifted only mildly poleward: its mean absolute latitude went from 30.6° to
+    31.8°, the tropical share fell from 34.5% to 32.3% and the boreal share rose from 10.9% to 13.2%.
+- **What the effort null reproduces, and why it is not "fixed ranges".**
+  - The noise-plus-effort null gives 4.6 km/yr: a ratio of **0.67** (0.66 to 0.67). The preregistration and the first
+    draft read this as "fixed ranges plus noise and effort reproduce two-thirds of the velocity".
+  - **That reading is not identified** (synthetic test, post hoc; `results/tables/absorption_test.json`). Run through
+    this study's own code with uniform, unchanging collecting effort, a world where every species really moves 1°
+    north is scored by the effort null as fully reproduced (ratio 1.03; 5% exceed its 95th percentile). When half the
+    species move, the movers' ratio is 0.70; when a fifth move, 0.60. The observed 0.67 is also what a world with
+    shared real shifts and no effort change can produce.
+  - So the 26% between the noise floor and the effort null mixes changing collecting effort with range shifts that
+    many species share. The design cannot apportion it.
+  - The 0.5 bar was not demanding: with a noise floor of 0.41, almost any effort surface pushes the ratio past it.
+- **Movement beyond the nulls.**
+  - 52.8% of species move farther than their noise null's 95th percentile, and 36% farther than their effort null's.
+    Under shared real shifts the effort null's exceedance falls towards 5%, so 36% is a lower bound on species with
+    real movement, not an estimate.
+  - Per species: the median of the species' own ratios is 0.68 and the mean 0.97; 25.8% of species move less than
+    their effort null's median.
+- **Robust as computed.** The effort-null ratio stays between 0.64 and 0.71 across latitude bands, cell-count classes,
+  thresholds of 20 and 50 cells, 30-arcmin thinning, 30-arcmin and 2° effort grids, arithmetic centroids, and
+  cleaning without the dense-point rule. The same identification caveat applies to every row.
+- **SDM-centroid variant** (1,000 species): modelled-range centroids move at a median of 8.4 km/yr, and one effort-null
+  replicate per species gives 6.2 km/yr (ratio 0.74, 0.68 to 0.82).
 - **Reproduction.** Our observed median is 6.5–6.9 km/yr depending on the threshold, against Daru et al.'s 5.6 km/yr.
   At five cells per period we have 101,328 species, against their 109,242.
 
@@ -37,13 +52,16 @@ But the centre of a range estimated from a few dozen specimens moves around by c
 different places from decade to decade. Both of these make ranges look as if they are moving even when they are not.
 
 We rebuilt the measurement from the open GBIF data and found a somewhat higher figure: 6.9 km a year. Then, for each of
-nearly 70,000 species, we kept its range exactly where it was and reshuffled which specimens counted as "early" and
-which as "late", 999 times. The reshuffles followed where collectors were actually working in each period. With no
-real movement at all, this produced 4.6 km a year: two-thirds of the observed figure.
+nearly 70,000 species, we reshuffled which of its specimens counted as "early" and which as "late", 999 times. Done
+at random, the reshuffles alone produced 2.8 km a year, about two-fifths of the observed figure: that much is pure
+chance. Done so as to follow where all other plant specimens were collected in each period, they produced 4.6 km a
+year, two-thirds of it. But that second baseline also moves when many species really shift together, so it cannot
+say how much of the gap is collectors and how much is plants.
 
-So most of the headline speed is noise and changing collecting effort. Real shifts are probably there: about a third of
-species moved more than chance and our model of effort can explain, with a slight tilt towards the poles. But a velocity like
-5.6 km a year cannot be read as how fast plants are moving until it is compared with this baseline.
+So a large share of the headline speed is noise, and an unknown part of the rest may be collecting effort. There is
+a small tilt towards the poles that neither baseline produces. A velocity like 5.6 km a year cannot be read as
+how fast plants are moving until it is compared with a baseline, and a better baseline needs a measure of collecting
+effort that does not move with the plants.
 
 ## What was asked
 
@@ -87,7 +105,12 @@ survive a sampling-noise and collecting-effort null.
   - **Leave-one-species-out:** the focal species' own records are removed from the effort surface, so its own shift
     cannot enter its weights (G1).
   - A synthetic check (`code/test_effort.py`) shows this null reproduces 97% of a pure effort shift. The sampler the
-    plan named reproduced 66%, hence D1, made before any real data were touched.
+    plan named reproduced 66%, hence D1, made before any real data were touched. The same check cannot distinguish a
+    pure effort shift from every range moving north (see "What this does and does not show").
+  - **The weights are approximate per record.** Pareto order sampling ranks records correctly (correlation of
+    empirical and target inclusion probabilities 0.995–0.999), but for the smallest species (20–22 records) the
+    empirical inclusion probabilities deviate from the stated target by up to 0.04–0.17, and the targets do not sum
+    to the period's count (8.6–13.2 against 10–12). 28% of primary species have fewer than 100 records (post hoc).
 - **Statistic.** Ratio of the median (over species) of each species' null median velocity to the median observed
   velocity, with a species bootstrap (2,000).
 - **SDM variant.** For 1,000 random species: MaxEnt-type models (elapid, WorldClim 2.1 bioclim at 10 arcmin) per
@@ -143,19 +166,30 @@ survive a sampling-noise and collecting-effort null.
 
 ## What this does and does not show
 
-- **Most of a herbarium centroid velocity is not range movement.** Keeping every range fixed, chance and the
-  redistribution of collecting effort produce two-thirds of the observed median.
-  - A figure such as 5.6 km/yr therefore mostly measures sampling.
+- **A large part of a herbarium centroid velocity is not range movement.** Chance alone produces two-fifths of the
+  observed median, with each species' own records and no movement at all.
+  - A figure such as 5.6 km/yr therefore partly measures sampling; how much more than two-fifths cannot be said
+    from this design.
   - Comparing it with SDM-projected velocities compares quantities with different noise properties, unless both are
     measured against the same baseline.
-- **Real shifts are probably present.** About a third of species move beyond their null's 95th percentile, and more among
-  well-sampled species. The excess over the null is about 1.9 km/yr for the typical species, with a small poleward
-  bias. Some of that excess may also come from what the null does not model: taxonomic changes between periods,
+- **The effort null cannot separate collectors from plants; this is the main limitation.** Its effort surface is
+  the thinned records of all other species, so it moves with any range shift that many species share. In synthetic
+  worlds with unchanging, uniform effort (`code/absorption_test.py`, run through `velocity.py`):
+
+  | world | species scored | observed (km/yr) | noise null | effort null | ratio (effort) | exceed effort p95 |
+  |---|---|---|---|---|---|---|
+  | none move | all 300 | 1.79 | 1.89 | 1.89 | 1.05 | 7% |
+  | all move 1° N | all 300 | 4.15 | 1.90 | 4.26 | 1.03 | 5% |
+  | half move 1° N | 129 movers | 4.16 | 1.91 | 2.91 | 0.70 | 18% |
+  | a fifth move 1° N | 56 movers | 4.35 | 1.92 | 2.60 | 0.60 | 23% |
+
+  The fix is an effort proxy that does not move with plants, such as collecting events from other kingdoms or
+  institution-level digitisation counts. That is out of scope here.
+- **Real shifts are probably present.** 53% of species move beyond their noise null's 95th percentile and 36% beyond
+  their effort null's, more among well-sampled species. The excess over the effort null is about 1.9 km/yr for the
+  typical species, and the poleward excess (0.34 km/yr) is the one directional shift the design identifies. Some of that excess may also come from what the null does not model: taxonomic changes between periods,
   changing georeferencing practice, or collecting that targets particular groups. This study does not estimate how
   far any particular species has moved.
-- **The effort null may absorb some real movement.** If collectors followed expanding species into new areas, that
-  movement becomes "effort" and the null overstates noise. Leave-one-species-out removes only the focal species' own
-  records.
 - **Not shown:**
   - **Daru et al.'s exact pipeline.** No code is available. Names here are GBIF species keys, not WCVP, and there
     is no native-range filter beyond GBIF's establishment field. The snapshot includes recently digitised specimens.
@@ -181,7 +215,11 @@ survive a sampling-noise and collecting-effort null.
   - G6: results/attribution_ledger.csv.
 
   The ledger check caught a wrong DOI for Bates et al., now fixed. G4 and G7 do not apply.
-- **Independent review:** queued (Fable), per the lab's pacing rule.
+- **D3, after the independent review (post hoc):** the synthetic absorption test, the effort surface's latitude by
+    period, and the Pareto inclusion check; the title, verdict and plain terms rewritten around what the design
+    identifies.
+- **Independent review:** fix first (one major finding: the effort null absorbs shared range shifts); the fixes are in
+  D3.
 
 ## Reproducing it
 
