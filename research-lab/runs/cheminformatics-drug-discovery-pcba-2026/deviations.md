@@ -76,7 +76,7 @@ computable on this shared machine.
   the single-cell lead a crystallography paper in place of Open Targets). Both were caught by the title check, not
   by resolution. MF-PCBA is 10.1021/acs.jcim.2c01569 and is dated 2023, not 2022 as the lead states.
 
-## D4 — 2026-11-06 — edits after the independent review (verdict: publish with edits)
+## D4 — 2026-11-05 22:17 NZDT — edits after the independent review (verdict: publish with edits)
 
 All checks are post hoc and come from `code/posthoc_review.py` and `results/tables/posthoc_review.json`.
 
@@ -96,3 +96,19 @@ All checks are post hoc and come from `code/posthoc_review.py` and `results/tabl
    the file held the 19-target subset (mean 0.139) rather than all 28 targets (0.196). `h3()` now takes a file name.
    `tau_h3.csv` was regenerated for all 28 targets, and the subset's values are in `tau_h3_le5pct.csv`.
    `primary.json` was always right.
+
+## D5 — 2026-11-07 — edits after the confirmation pass (verdict: publish with edits)
+
+1. **The figures are regenerated.**
+   - F1's title drops "advantage".
+   - F2's title is scoped to frozen embeddings and significance.
+   - F3 now plots the comparable references (half set against LIT 0.185; half against half 0.315) over the
+     regenerated 28-target `tau_h3.csv`, retitled and recaptioned. It had shown the 19-target subset and the old
+     ceiling.
+2. **H3's uncertainty is stated.** The per-target paired gap is 0.139 (−0.023 to 0.303), and the LIT consensus
+   reproduces its order in only 11% of bootstraps; both figures come from the confirmation pass. "The disagreement is
+   real" becomes "points to a real difference". "What this shows" compares 0.315 with 0.185.
+3. **"60% removed"** is labelled as a target median, with 80% pooled.
+4. **Plain-terms absolutes** are reworded: memorization trails RF on the median but wins in 7 of 144 target-arms; the
+   embeddings do not significantly beat RF on any target.
+5. **Corrections:** MF-PCBA is dated 2023 (ledger L3), D4's date is fixed, and the process line is updated.

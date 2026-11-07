@@ -48,7 +48,7 @@ def f1(M, folds):
     axes[0].legend(frameon=False, fontsize=8, loc="upper right")
     nn_new = folds[folds.bench == "new"].nn_sim_sample_share_above_0_4.median()
     nn_lit = folds[folds.bench == "lit"].nn_sim_sample_share_above_0_4.median()
-    fig.suptitle(f"Memorization's advantage is a property of the split\nAnalog leakage reaches {nn_lit * 100:.0f}% of "
+    fig.suptitle(f"Memorization's enrichment over random is a property of the split\nAnalog leakage reaches {nn_lit * 100:.0f}% of "
                  f"LIT-PCBA evaluation compounds and {nn_new * 100:.0f}% of PCBA-2026's",
                  x=0.02, y=0.98, ha="left", va="top", fontsize=9.5, color=INK)
     fig.savefig(F / "F1_splits.png", dpi=170); plt.close(fig)
@@ -71,7 +71,7 @@ def f2(P):
     ax.set_xlabel("targets, sorted by difference (each embedding separately)")
     ax.set_ylabel("ΔEF1% against ECFP4 + RF")
     ax.grid(axis="y", color=GRID, lw=0.5); ax.legend(frameon=False, fontsize=8, loc="upper left")
-    fig.suptitle("Neither pretrained embedding beats a fingerprint random forest on any target",
+    fig.suptitle("Neither frozen pretrained embedding significantly beats a fingerprint random forest on any target",
                  x=0.02, ha="left", fontsize=10, color=INK)
     fig.savefig(F / "F2_embeddings.png", dpi=170); plt.close(fig)
     caption("F2_embeddings", f"""Per target and embedding, the difference in EF1% against ECFP4 + random forest on the
@@ -80,31 +80,33 @@ def f2(P):
     {len(P)} target-embedding pairs; the random forest's does on {int(P.rf_beats_emb.sum())}.""")
 
 
-def f3(tau, p):
+def f3(tau, p, ph):
     fig, ax = plt.subplots(figsize=(6.6, 3.6))
     fig.subplots_adjust(left=0.11, right=0.97, bottom=0.16, top=0.82)
     ax.hist(tau.tau, bins=np.linspace(-1, 1, 21), color=GREY, edgecolor=SURF)
     m, ci = p["H3"]["mean_tau"], p["H3"]["ci"]
     ax.axvline(m, color=BLUE, lw=2, label=f"mean τ = {m:.2f} [{ci[0]:.2f}, {ci[1]:.2f}]")
-    nc = p["noise_ceiling"]["mean_tau_split_half"]
-    ax.axvline(nc, color=ORANGE, lw=2, ls="--", label=f"split-half ceiling = {nc:.2f}")
+    # D4 (confirmation pass): the comparable references from posthoc_review.json, not the half-against-half ceiling
+    nc = ph["noise_ceiling_comparable"]
+    ax.axvline(nc["half_set_vs_lit_consensus"], color=ORANGE, lw=2, ls="--", label=f"half set vs LIT = {nc['half_set_vs_lit_consensus']:.2f}")
+    ax.axvline(nc["half_vs_half"], color=INK, lw=1.5, ls="-.", label=f"half vs half (same target) = {nc['half_vs_half']:.2f}")
     ax.axvline(0.4, color=INK2, lw=0.8, ls=":", label="H3 bar = 0.4")
     ax.set_xlabel("Kendall τ between a target's method ranking and the LIT-PCBA consensus")
     ax.set_ylabel("targets"); ax.grid(axis="y", color=GRID, lw=0.5)
     ax.legend(frameon=False, fontsize=8, loc="upper left")
-    fig.suptitle("Method rankings transfer weakly — but they barely replicate within a target either",
+    fig.suptitle("Rankings replicate within a target better than they transfer from LIT-PCBA",
                  x=0.02, ha="left", fontsize=10, color=INK)
     fig.savefig(F / "F3_ranking.png", dpi=170); plt.close(fig)
     caption("F3_ranking", f"""For each PCBA-2026 target, the Kendall τ between its ranking of the five methods by
-    EF1% and the consensus ranking on LIT-PCBA as published. Orange: the mean τ between rankings computed on two
-    random halves of the same target's evaluation set, which bounds how much agreement is achievable
-    ({p['noise_ceiling']['targets_used']} targets; {p['noise_ceiling']['targets_skipped_tied_or_missing']} skipped
-    for tied rankings).""")
+    EF1% and the consensus ranking on LIT-PCBA as published (all 28 targets). Orange: the mean τ between a ranking
+    computed on half of a target's evaluation set and the LIT consensus; dark: the mean τ between the two halves of the
+    same target (5 random halvings per target; post hoc, results/tables/posthoc_review.json). Halving barely moves the
+    agreement with LIT, while two halves of one target agree with each other far more.""")
 
 
 if __name__ == "__main__":
     p = json.loads((T / "primary.json").read_text())
     M = pd.read_csv(T / "metrics.csv")
     folds = pd.concat([pd.read_csv(T / f"folds_{b}.csv").assign(bench=b) for b in ("new", "lit")])
-    f1(M, folds); f2(pd.read_csv(T / "pairs_h2.csv")); f3(pd.read_csv(T / "tau_h3.csv"), p)
+    f1(M, folds); f2(pd.read_csv(T / "pairs_h2.csv")); f3(pd.read_csv(T / "tau_h3.csv"), p, json.loads((T / "posthoc_review.json").read_text()))
     print("figures written")

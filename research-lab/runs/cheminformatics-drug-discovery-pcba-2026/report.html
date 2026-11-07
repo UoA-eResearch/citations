@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PCBA-2026 Benchmark</title>
+<meta name="description" content="Do innocent citers of a later-retracted paper lose citations after the retraction?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Metascience</div>
+  <h1>A leakage-audited virtual-screening benchmark from recent PubChem screens: memorization&#x27;s enrichment over random is a property of the split and never beats a fingerprint random forest, frozen pretrained embeddings do not either, and method rankings replicate within a target better than they transfer between benchmarks</h1>
+  <p class="subtitle">PCBA-2026: 28 single-target confirmatory PubChem assays deposited from 2021 (12 from 2023 or later), 578,057 compounds, with analog-disjoint folds that remove any evaluation compound within Tanimoto 0.4 of its training set. Compared with LIT-PCBA as published and under the same procedure. Five methods: a parameter-free memorization baseline, ECFP4 + random forest, RDKit descriptors + LightGBM, and ChemBERTa and MoLFormer-XL embeddings with a linear head. The plan was committed before any activity outcome was downloaded.</p>
+  <div class="meta">
+    <span>Report · 2026-11-05 · revised after independent review and a confirmation pass</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/cheminformatics-drug-discovery-pcba-2026/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/cheminformatics-drug-discovery-pcba-2026/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/cheminformatics-drug-discovery-pcba-2026/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: H1 Inconclusive; H2 Supported; H3 Supported.</strong></p>
+<ul>
+<li><strong>The leakage LIT-PCBA was criticised for is real, and larger than in the new benchmark.</strong><ul>
+<li><strong>Before the audit,</strong> a training neighbour above Tanimoto 0.4 exists for <strong>89%</strong> of LIT-PCBA evaluation
+compounds and <strong>62%</strong> of PCBA-2026's (medians over targets).</li>
+<li><strong>Removing them</strong> leaves 12% of LIT's compounds scorable (12% pooled), against 40% of PCBA-2026's by target
+median but only 20% pooled over all rows.</li>
+<li><strong>The audit keeps actives at a higher rate than other compounds</strong> (46% against 40%, PCBA-2026 medians), so the
+median hit rate rises from 2.4% to 3.2% and the median EF1% ceiling falls from 41 to 32 (post hoc).</li>
+</ul>
+</li>
+<li><strong>H1 (memorization's enrichment over a random scorer at least halves on the leakage-controlled benchmark):
+  Inconclusive.</strong><ul>
+<li>Q = A_new / A_lit = 0.43, which meets the preregistered bar as a point estimate, but the interval is useless
+(−1.47 to 3.38): it is a ratio of two medians, one over only 15 LIT targets.</li>
+<li><strong>The within-benchmark contrast is the clean evidence, and it is unambiguous.</strong> Holding the data fixed and
+changing only the split, the memorization baseline's median EF1% falls from 11.4 (random) to 4.8 (analog-
+disjoint at 0.6) to <strong>2.4</strong> (at 0.4) on PCBA-2026, and from 27.8 to 8.3 to <strong>3.5</strong> on LIT-PCBA.</li>
+<li>So the memorization result is a property of how the benchmark is split, not of the chemistry, and LIT-PCBA's
+larger collapse matches its larger analog redundancy.</li>
+<li><strong>The memorization baseline never beats ECFP4 + random forest</strong> here, in any of the seven benchmark × split
+arms; its median EF1% is 2.4 to 11.1 units lower (post hoc, prompted by the review). The audit this study
+responds to reports that such a baseline matches published state of the art. In this study's hands it does
+not match even a plain fingerprint random forest, on either benchmark, under any split.</li>
+<li><strong>The restricted subset agrees.</strong> On the 19 targets at or below a 5% hit rate (D2), Q = 0.84 (−3.60 to 8.02),
+still Inconclusive.</li>
+</ul>
+</li>
+<li><strong>H2 (pretrained molecular embeddings, used frozen and mean-pooled with a linear head, do not beat ECFP4 + random
+  forest): Supported.</strong><ul>
+<li>On <strong>0 of 56</strong> target-embedding pairs does an embedding's paired bootstrap interval exclude zero in its favour.
+The random forest's does on 9, so 47 pairs are inconclusive both ways; the median differences carry the direction.</li>
+<li>Median ΔEF1% is −1.00 for ChemBERTa and −0.56 for MoLFormer-XL.</li>
+<li>On the primary split the medians are RF 5.65, LightGBM 5.32, ChemBERTa 4.36, MoLFormer 4.29, memorization 2.36.</li>
+</ul>
+</li>
+<li><strong>H3 (method rankings do not transfer from LIT-PCBA): Supported, and the evidence points to a real difference
+  between benchmarks.</strong><ul>
+<li>Mean Kendall τ between a PCBA-2026 target's ranking and the LIT consensus is 0.20 (0.085–0.295), under the 0.4
+bar.</li>
+<li><strong>Rankings replicate within a target better than they transfer between benchmarks</strong> (corrected after review).<ul>
+<li>Halving a target's data barely changes its agreement with the LIT consensus (τ 0.185, against 0.196 with
+  the full set), so that figure is not noise-limited.</li>
+<li>Two halves of the same target agree with each other at 0.315.</li>
+<li>The first draft compared the full-set statistic with a half-against-half ceiling (0.29 from one random
+  halving) and called the disagreement noise. That comparison was not like for like.</li>
+<li><strong>The evidence is not conclusive.</strong> Per target, the paired gap between half-against-half and
+  half-against-LIT is 0.139, but its 95% interval over targets (−0.023 to 0.303) crosses zero, and 17 of 27
+  targets show a positive gap.</li>
+<li><strong>The LIT consensus is itself near-tied.</strong> A bootstrap over the 15 LIT targets reproduces its order only 11%
+  of the time (confirmation pass, <code>review/review.md</code>).</li>
+</ul>
+</li>
+<li><strong>The restricted subset agrees:</strong> mean τ 0.139 (−0.004 to 0.283) on the 19 low-hit-rate targets.</li>
+</ul>
+</li>
+</ul>
+<h2>In plain terms</h2>
+<p>To judge a program that picks promising drug molecules, you hide some known answers and see how many it recovers.
+The catch is which molecules you hide. Chemists make families of near-identical molecules, so if a close relative of
+a hidden molecule stays in the training set, a program can win by looking up the relative rather than understanding
+anything.</p>
+<p>A 2025 audit showed the field's standard benchmark, LIT-PCBA, is full of such relatives. We measured it: for about
+nine in ten of its test molecules, a near-twin sits in the training data. We then built a fresh benchmark from
+recent public screening experiments and removed the near-twins from scoring.</p>
+<p>Doing that, the pure look-up method's score collapses — from 28 to 3.5 on the old benchmark, and from 11 to 2.4 on
+ours. In other words, much of what the benchmark was measuring was look-up.</p>
+<p>Three further results. On the median across targets, the look-up method never beat a plain 1990s-style molecular
+fingerprint with a random forest, on either benchmark (it wins on 7 of 144 individual target-and-split cases). Large pretrained "foundation" models for chemistry, used as fixed feature extractors, did not
+significantly beat that random forest on any target either. And the ranking of methods on the old benchmark does not carry
+over to the new one: two halves of one target's data agree with each other better than either agrees with the old
+benchmark.</p>
+<h2>What was asked</h2>
+<p>The lead asked for a leakage-audited, post-cutoff replacement for LIT-PCBA, and for the measurement of whether
+method rankings move when you switch to it.</p>
+<p>Prior work:
+- The LIT-PCBA leakage audit (arXiv 2507.21404) documents duplicated and analog ligands across its splits and shows
+  a parameter-free memorization baseline matching reported state of the art. It released code but no corrected
+  benchmark, and none of its citing works has released one.
+- LIT-PCBA itself (Tran-Nguyen, Jacquemard &amp; Rognan, JCIM 2020), including its AVE-debiased split, which is the
+  "as published" arm here.
+- MF-PCBA (JCIM 2023) is the closest construction recipe. It predates these assay depositions and does not enforce
+  analog-disjoint splits.</p>
+<h2>How it was done</h2>
+<ul>
+<li><strong>Assays.</strong> PubChem confirmatory assays deposited from 2021-01-01, one protein target, at least 50 active and
+  5,050 tested substances: 51 assays, one per gene by most actives, giving 32 candidate targets and 28 after the
+  compound funnel. Depositors are NCATS and Tox21.</li>
+<li><strong>Compounds.</strong> Outcomes as PubChem gives them; deduplicated by InChIKey connectivity block, with conflicting
+  groups dropped; RDKit-parsed. 1,769,491 substance records in, 1,574,697 kept
+  (<code>results/tables/coverage.json</code>).</li>
+<li><strong>Analog-disjoint folds.</strong> Per target, ECFP4 Butina clusters at distance 0.6 assigned to 5 folds balancing
+  actives, then any evaluation compound with a training neighbour above Tanimoto 0.4 removed from scoring. The
+  realised nearest-neighbour similarity is audited per target (0.6 and a random split are the sensitivities).</li>
+<li><strong>Size cap (D3).</strong> At most 50,000 compounds per target, subsampling both classes proportionally so the hit rate,
+  and therefore EF1%'s ceiling of min(100, 1/hit-rate), is preserved. Checked against the uncapped set on the three
+  largest targets.</li>
+<li><strong>Methods,</strong> fixed hyperparameters, no tuning: 1-NN maximum Tanimoto to training actives; ECFP4 + random forest
+  (500 trees, balanced); RDKit descriptors + LightGBM; ChemBERTa-77M-MLM and MoLFormer-XL-both-10pct mean-pooled
+  embeddings with logistic regression. The two pretrained models ran offline in Docker, without credentials.</li>
+<li><strong>Metrics.</strong> EF1% primary; BEDROC (α = 20) and AUPRC secondary; bootstraps over targets, and paired over
+  evaluation compounds for H2.</li>
+</ul>
+<h2>Results</h2>
+<h3>Splits, not chemistry (<code>results/figures/F1_splits.png</code>)</h3>
+<figure><a href="results/figures/F1_splits.png"><img src="results/figures/F1_splits.png" alt="Splits"></a><figcaption>Median enrichment factor in the top 1% across targets, for the parameter-free 1-nearest-neighbour memorization baseline and for ECFP4 + random forest, under three splits of the same data: a random 5-fold split, and analog-disjoint 5-fold splits in which any evaluation compound with a training neighbour above Tanimoto 0.6 or 0.4 is removed from scoring. Both benchmarks are capped at 50,000 compounds per target with the hit rate preserved (D3).</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>benchmark</th>
+<th>split</th>
+<th>memorization</th>
+<th>ECFP4 + RF</th>
+<th>LightGBM</th>
+<th>ChemBERTa</th>
+<th>MoLFormer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PCBA-2026</td>
+<td>random</td>
+<td>11.43</td>
+<td>20.27</td>
+<td>15.88</td>
+<td>7.45</td>
+<td>8.84</td>
+</tr>
+<tr>
+<td>PCBA-2026</td>
+<td>analog-disjoint 0.6</td>
+<td>4.83</td>
+<td>9.00</td>
+<td>8.17</td>
+<td>5.07</td>
+<td>5.49</td>
+</tr>
+<tr>
+<td><strong>PCBA-2026</strong></td>
+<td><strong>analog-disjoint 0.4</strong></td>
+<td><strong>2.36</strong></td>
+<td><strong>5.65</strong></td>
+<td><strong>5.32</strong></td>
+<td><strong>4.36</strong></td>
+<td><strong>4.29</strong></td>
+</tr>
+<tr>
+<td>LIT-PCBA</td>
+<td>random</td>
+<td>27.83</td>
+<td>37.29</td>
+<td>11.33</td>
+<td>11.59</td>
+<td>15.58</td>
+</tr>
+<tr>
+<td>LIT-PCBA</td>
+<td>analog-disjoint 0.4</td>
+<td>3.46</td>
+<td>8.04</td>
+<td>6.35</td>
+<td>4.57</td>
+<td>3.02</td>
+</tr>
+<tr>
+<td>LIT-PCBA</td>
+<td>as published (AVE)</td>
+<td>4.15</td>
+<td>6.50</td>
+<td>5.15</td>
+<td>6.34</td>
+<td>5.20</td>
+</tr>
+</tbody>
+</table></div>
+<p>Median EF1% across targets. The published LIT-PCBA split already suppresses memorization (4.15) relative to a random
+split of the same data (27.83), which is what its AVE debiasing was for; the analog-disjoint procedure suppresses it
+further (3.46).</p>
+<h3>Embeddings against a fingerprint random forest (<code>results/figures/F2_embeddings.png</code>)</h3>
+<figure><a href="results/figures/F2_embeddings.png"><img src="results/figures/F2_embeddings.png" alt="Embeddings"></a><figcaption>Per target and embedding, the difference in EF1% against ECFP4 + random forest on the analog-disjoint (0.4) split of PCBA-2026, with 95% paired bootstrap intervals over evaluation compounds (2,000 resamples). Above zero means the embedding is better. The embedding&#x27;s interval excludes zero on 0 of 56 target-embedding pairs; the random forest&#x27;s does on 9.</figcaption></figure>
+<h3>Ranking agreement and its ceiling (<code>results/figures/F3_ranking.png</code>)</h3>
+<figure><a href="results/figures/F3_ranking.png"><img src="results/figures/F3_ranking.png" alt="Ranking"></a><figcaption>For each PCBA-2026 target, the Kendall τ between its ranking of the five methods by EF1% and the consensus ranking on LIT-PCBA as published (all 28 targets). Orange: the mean τ between a ranking computed on half of a target&#x27;s evaluation set and the LIT consensus; dark: the mean τ between the two halves of the same target (5 random halvings per target; post hoc, results/tables/posthoc_review.json). Halving barely moves the agreement with LIT, while two halves of one target agree with each other far more.</figcaption></figure>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>A benchmark's memorization result is mostly a statement about its split.</strong> The same compounds and labels give a
+  memorization EF1% of 11.4 or 2.4 depending only on whether near-twins are allowed into scoring.</li>
+<li><strong>PCBA-2026 is less analog-redundant than LIT-PCBA</strong> (62% against 89% of evaluation compounds with a close
+  training neighbour), but it is not clean: the audit still removes 60% of its compounds from scoring
+  (target median; 80% pooled over all rows).</li>
+<li><strong>Pretrained chemical embeddings bought nothing here</strong> over a fingerprint random forest, on a benchmark whose
+  labels postdate 2021 and, for 12 targets, 2023.</li>
+<li><strong>Rankings from one benchmark should not be carried to another.</strong> Two halves of a target agree at τ 0.315, while
+  a half set agrees with LIT-PCBA's consensus at 0.185. Even within a target, five closely matched methods are ranked
+  only loosely, and the gap's interval crosses zero.</li>
+<li><strong>Not shown:</strong><ul>
+<li><strong>That PCBA-2026 is contamination-free.</strong> The assay labels are recent, but the structures are mostly from the
+NCATS and Tox21 libraries and may appear in pretraining corpora.</li>
+<li><strong>A representative sample of drug discovery.</strong> Two depositors and their compound libraries dominate; 7 of 28
+targets are counterscreens with hit rates above 20%, where EF1% is capped near 2 to 5 (D2).</li>
+<li><strong>Tuned or fine-tuned models, or docking.</strong> Hyperparameters were fixed in advance, the embeddings were frozen
+(no fine-tuning, no other pooling or head), and no structure-based method was run.</li>
+<li><strong>That analog-disjoint splitting is the right difficulty.</strong> It can over-debias; the 0.6 and random splits show
+how much the answer moves.</li>
+</ul>
+</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration:</strong> <code>plan.md</code>, committed before any activity outcome was downloaded.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>):<ul>
+<li>D1 (before any outcome): the published LIT split lives in the AVE archive, not the full-data one; PUG REST has
+no inconclusive outcome type; the MoLFormer snapshot needs transformers 5.</li>
+<li>D2 (before any fit): hit rates range from 0.18% to 49%, so EF1% ceilings range from 100 to 2; the preregistered
+all-28 analysis is reported beside a post hoc 19-target subset at or below a 5% hit rate. The EF1% ceiling
+formula was corrected to min(100, 1/hit-rate), and a wrong BEDROC implementation was fixed, both before any
+score.</li>
+<li>D3 (before any fit): the 50,000-compound cap and its check.</li>
+<li>D4 (after review), all post hoc:<ul>
+<li>the comparable noise ceiling;</li>
+<li>memorization against the random forest;</li>
+<li>pooled audit shares and the hit-rate shift;</li>
+<li>the restricted subset's numbers;</li>
+<li>the H2 scope;</li>
+<li>a fix so the subset's τ no longer overwrites <code>tau_h3.csv</code>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Gates:</strong> G1 (plan §5), G2 (<code>results/tables/coverage.json</code>), G3 (<code>results/plausibility.md</code>), G4 (the leakage
+  audit), G5 and G6 at write-up. G7 does not apply.</li>
+<li><strong>Independent review:</strong> publish with edits (five findings plus checks), edits in D4; confirmation pass: publish
+  with edits, made in D5.</li>
+</ul>
+<h2>Reproducing it</h2>
+<ol>
+<li><code>code/fetch.py assays</code>, <code>outcomes</code>, <code>smiles</code>, <code>lit</code>.</li>
+<li><code>code/build.py new</code>, then <code>code/build.py lit</code>.</li>
+<li><code>code/subsample.py build</code>, then <code>check</code>.</li>
+<li><code>code/embed.py</code> for both checkpoints, in the <code>pcba-embed:3</code> image (see its docstring).</li>
+<li><code>code/folds.py new</code>, then <code>code/folds.py lit</code>.</li>
+<li><code>code/run.py new</code>, <code>lit_cv</code>, <code>lit_pub</code>.</li>
+<li><code>code/analyse.py</code> and <code>code/figures.py</code>.</li>
+</ol>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/cheminformatics-drug-discovery-pcba-2026/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

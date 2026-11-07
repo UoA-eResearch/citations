@@ -36,7 +36,8 @@ linear head. The plan was committed before any activity outcome was downloaded.*
     The random forest's does on 9, so 47 pairs are inconclusive both ways; the median differences carry the direction.
   - Median ΔEF1% is −1.00 for ChemBERTa and −0.56 for MoLFormer-XL.
   - On the primary split the medians are RF 5.65, LightGBM 5.32, ChemBERTa 4.36, MoLFormer 4.29, memorization 2.36.
-- **H3 (method rankings do not transfer from LIT-PCBA): Supported, and the disagreement is real.**
+- **H3 (method rankings do not transfer from LIT-PCBA): Supported, and the evidence points to a real difference
+  between benchmarks.**
   - Mean Kendall τ between a PCBA-2026 target's ranking and the LIT consensus is 0.20 (0.085–0.295), under the 0.4
     bar.
   - **Rankings replicate within a target better than they transfer between benchmarks** (corrected after review).
@@ -45,6 +46,11 @@ linear head. The plan was committed before any activity outcome was downloaded.*
     - Two halves of the same target agree with each other at 0.315.
     - The first draft compared the full-set statistic with a half-against-half ceiling (0.29 from one random
       halving) and called the disagreement noise. That comparison was not like for like.
+    - **The evidence is not conclusive.** Per target, the paired gap between half-against-half and
+      half-against-LIT is 0.139, but its 95% interval over targets (−0.023 to 0.303) crosses zero, and 17 of 27
+      targets show a positive gap.
+    - **The LIT consensus is itself near-tied.** A bootstrap over the 15 LIT targets reproduces its order only 11%
+      of the time (confirmation pass, `review/review.md`).
   - **The restricted subset agrees:** mean τ 0.139 (−0.004 to 0.283) on the 19 low-hit-rate targets.
 
 ## In plain terms
@@ -61,9 +67,9 @@ recent public screening experiments and removed the near-twins from scoring.
 Doing that, the pure look-up method's score collapses — from 28 to 3.5 on the old benchmark, and from 11 to 2.4 on
 ours. In other words, much of what the benchmark was measuring was look-up.
 
-Three further results. The look-up method never beat a plain 1990s-style molecular fingerprint with a random forest,
-on either benchmark. Large pretrained "foundation" models for chemistry, used as fixed feature extractors, did not
-beat that random forest on a single target either. And the ranking of methods on the old benchmark does not carry
+Three further results. On the median across targets, the look-up method never beat a plain 1990s-style molecular
+fingerprint with a random forest, on either benchmark (it wins on 7 of 144 individual target-and-split cases). Large pretrained "foundation" models for chemistry, used as fixed feature extractors, did not
+significantly beat that random forest on any target either. And the ranking of methods on the old benchmark does not carry
 over to the new one: two halves of one target's data agree with each other better than either agrees with the old
 benchmark.
 
@@ -78,7 +84,7 @@ Prior work:
   benchmark, and none of its citing works has released one.
 - LIT-PCBA itself (Tran-Nguyen, Jacquemard & Rognan, JCIM 2020), including its AVE-debiased split, which is the
   "as published" arm here.
-- MF-PCBA (JCIM 2022) is the closest construction recipe. It predates these assay depositions and does not enforce
+- MF-PCBA (JCIM 2023) is the closest construction recipe. It predates these assay depositions and does not enforce
   analog-disjoint splits.
 
 ## How it was done
@@ -133,12 +139,13 @@ further (3.46).
 - **A benchmark's memorization result is mostly a statement about its split.** The same compounds and labels give a
   memorization EF1% of 11.4 or 2.4 depending only on whether near-twins are allowed into scoring.
 - **PCBA-2026 is less analog-redundant than LIT-PCBA** (62% against 89% of evaluation compounds with a close
-  training neighbour), but it is not clean: the audit still removes 60% of its compounds from scoring.
+  training neighbour), but it is not clean: the audit still removes 60% of its compounds from scoring
+  (target median; 80% pooled over all rows).
 - **Pretrained chemical embeddings bought nothing here** over a fingerprint random forest, on a benchmark whose
   labels postdate 2021 and, for 12 targets, 2023.
-- **Rankings from one benchmark should not be carried to another.** They replicate within a target (0.32 between
-  halves) better than they transfer from LIT-PCBA (0.20), though even within a target five closely matched methods
-  are ranked only loosely.
+- **Rankings from one benchmark should not be carried to another.** Two halves of a target agree at τ 0.315, while
+  a half set agrees with LIT-PCBA's consensus at 0.185. Even within a target, five closely matched methods are ranked
+  only loosely, and the gap's interval crosses zero.
 - **Not shown:**
   - **That PCBA-2026 is contamination-free.** The assay labels are recent, but the structures are mostly from the
     NCATS and Tox21 libraries and may appear in pretraining corpora.
@@ -169,7 +176,8 @@ further (3.46).
     - a fix so the subset's τ no longer overwrites `tau_h3.csv`.
 - **Gates:** G1 (plan §5), G2 (`results/tables/coverage.json`), G3 (`results/plausibility.md`), G4 (the leakage
   audit), G5 and G6 at write-up. G7 does not apply.
-- **Independent review:** publish with edits (five findings plus checks); the edits are in D4; confirmation pending.
+- **Independent review:** publish with edits (five findings plus checks), edits in D4; confirmation pass: publish
+  with edits, made in D5.
 
 ## Reproducing it
 
