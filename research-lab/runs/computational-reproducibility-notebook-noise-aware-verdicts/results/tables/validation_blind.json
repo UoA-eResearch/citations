@@ -1,0 +1,185 @@
+{
+ "pairs": 95,
+ "labelled": 95,
+ "agreement": 0.8,
+ "by_stratum": {
+  "figure_match": {
+   "n": 15,
+   "agree": 14,
+   "share": 0.933
+  },
+  "figure_mismatch": {
+   "n": 30,
+   "agree": 13,
+   "share": 0.433
+  },
+  "text_match": {
+   "n": 20,
+   "agree": 20,
+   "share": 1.0
+  },
+  "text_mismatch": {
+   "n": 30,
+   "agree": 29,
+   "share": 0.967
+  }
+ },
+ "precision_of_flagged_mismatch": {
+  "text": 0.967,
+  "figure": 0.433
+ },
+ "disagreements": [
+  {
+   "pair": "p001",
+   "nbid": "nb21804",
+   "cell": 5,
+   "stratum": "figure_mismatch",
+   "label": "same",
+   "reason": "pie percentages identical; Text repr formatting only"
+  },
+  {
+   "pair": "p029",
+   "nbid": "nb25434",
+   "cell": 6,
+   "stratum": "figure_mismatch",
+   "label": "same",
+   "reason": "same 3D surface; figure size only"
+  },
+  {
+   "pair": "p042",
+   "nbid": "nb23220",
+   "cell": 21,
+   "stratum": "text_mismatch",
+   "label": "same",
+   "reason": "only environment/version/path info differs"
+  },
+  {
+   "pair": "p048",
+   "nbid": "nb18687",
+   "cell": 3,
+   "stratum": "figure_match",
+   "label": "different",
+   "reason": "scatter points and axis ranges differ"
+  },
+  {
+   "pair": "p053",
+   "nbid": "nb21804",
+   "cell": 7,
+   "stratum": "figure_mismatch",
+   "label": "same",
+   "reason": "same histograms"
+  },
+  {
+   "pair": "p054",
+   "nbid": "nb17648",
+   "cell": 28,
+   "stratum": "figure_mismatch",
+   "label": "same",
+   "reason": "same points; styling only"
+  },
+  {
+   "pair": "p057",
+   "nbid": "nb3227",
+   "cell": 2,
+   "stratum": "figure_mismatch",
+   "label": "same",
+   "reason": "same beta pdf curves; styling only"
+  },
+  {
+   "pair": "p060",
+   "nbid": "nb17652",
+   "cell": 9,
+   "stratum": "figure_mismatch",
+   "label": "same",
+   "reason": "same points; legend placement only"
+  },
+  {
+   "pair": "p062",
+   "nbid": "nb17652",
+   "cell": 15,
+   "stratum": "figure_mismatch",
+   "label": "same",
+   "reason": "same points; extra legend only"
+  },
+  {
+   "pair": "p067",
+   "nbid": "nb2176",
+   "cell": 3,
+   "stratum": "figure_mismatch",
+   "label": "same",
+   "reason": "same swarm values; jitter/size only"
+  },
+  {
+   "pair": "p070",
+   "nbid": "nb21804",
+   "cell": 6,
+   "stratum": "figure_mismatch",
+   "label": "same",
+   "reason": "same histograms"
+  },
+  {
+   "pair": "p072",
+   "nbid": "nb17648",
+   "cell": 63,
+   "stratum": "figure_mismatch",
+   "label": "same",
+   "reason": "same points; x tick labels broken"
+  },
+  {
+   "pair": "p073",
+   "nbid": "nb5344",
+   "cell": 19,
+   "stratum": "figure_mismatch",
+   "label": "same",
+   "reason": "same ROC, area 0.927; curve start point only"
+  },
+  {
+   "pair": "p074",
+   "nbid": "nb17652",
+   "cell": 10,
+   "stratum": "figure_mismatch",
+   "label": "same",
+   "reason": "same points; legend placement only"
+  },
+  {
+   "pair": "p077",
+   "nbid": "nb17648",
+   "cell": 68,
+   "stratum": "figure_mismatch",
+   "label": "same",
+   "reason": "same points; bottom tick labels missing"
+  },
+  {
+   "pair": "p079",
+   "nbid": "nb17652",
+   "cell": 13,
+   "stratum": "figure_mismatch",
+   "label": "same",
+   "reason": "same points; legend placement only"
+  },
+  {
+   "pair": "p081",
+   "nbid": "nb17648",
+   "cell": 16,
+   "stratum": "figure_mismatch",
+   "label": "same",
+   "reason": "same points; styling only"
+  },
+  {
+   "pair": "p088",
+   "nbid": "nb17648",
+   "cell": 65,
+   "stratum": "figure_mismatch",
+   "label": "same",
+   "reason": "same points; x tick labels lost"
+  },
+  {
+   "pair": "p090",
+   "nbid": "nb25430",
+   "cell": 7,
+   "stratum": "figure_mismatch",
+   "label": "same",
+   "reason": "same filament/node map and flow"
+  }
+ ]
+}

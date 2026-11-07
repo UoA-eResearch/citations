@@ -1,0 +1,87 @@
+[
+ {
+  "pair": "q000",
+  "label": "different",
+  "reason": "MCMC parameter trace is a different realisation (start 0.07 vs 0.32)"
+ },
+ {
+  "pair": "q001",
+  "label": "different",
+  "reason": "time trace differs; y-range 1e8 vs 1e7"
+ },
+ {
+  "pair": "q002",
+  "label": "same",
+  "reason": "same histograms; Text repr formatting only"
+ },
+ {
+  "pair": "q003",
+  "label": "same",
+  "reason": "same histograms; Text repr formatting only"
+ },
+ {
+  "pair": "q004",
+  "label": "different",
+  "reason": "ROC curves differ; mean AUC 0.943 vs 0.910"
+ },
+ {
+  "pair": "q005",
+  "label": "different",
+  "reason": "PR curves differ; mean area 0.793 vs 0.766"
+ },
+ {
+  "pair": "q006",
+  "label": "same",
+  "reason": "same PR curves, areas 0.756/0.979; end-point drop only"
+ },
+ {
+  "pair": "q007",
+  "label": "different",
+  "reason": "branch coordinates and PCA/branch plots differ"
+ },
+ {
+  "pair": "q008",
+  "label": "different",
+  "reason": "PCA scatter layouts differ in both panels"
+ },
+ {
+  "pair": "q009",
+  "label": "same",
+  "reason": "same points; styling only"
+ },
+ {
+  "pair": "q010",
+  "label": "same",
+  "reason": "same data; legend overlap only"
+ },
+ {
+  "pair": "q011",
+  "label": "same",
+  "reason": "same points; x tick labels broken"
+ },
+ {
+  "pair": "q012",
+  "label": "same",
+  "reason": "same points; styling only"
+ },
+ {
+  "pair": "q013",
+  "label": "same",
+  "reason": "same points; figure size and legend placement only"
+ },
+ {
+  "pair": "q014",
+  "label": "same",
+  "reason": "same points; legend placement only"
+ },
+ {
+  "pair": "q015",
+  "label": "same",
+  "reason": "same points; legend placement only"
+ },
+ {
+  "pair": "q016",
+  "label": "different",
+  "reason": "0.2228/0.3558 vs 0.2273/0.349; bar heights differ"
+ }
+]

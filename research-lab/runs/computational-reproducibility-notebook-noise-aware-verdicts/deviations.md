@@ -46,3 +46,38 @@ The lab's METHODS.md gates were run before this draft's review. No number change
   & Mietchen 2024, SRI (arXiv 2509.23645) and the Zenodo dataset resolve.
 - **G7 not applied.** The 100-pair comparator validation had one labeller (left for the reviewer to judge); its six
   disagreements were audited (G4).
+
+## D4 — 2026-11-07 — fixes after the independent review (verdict: fix first)
+
+Everything here follows the first review (`review/review.md`) and is post hoc. The first draft's tables are kept as
+`results/tables/primary_v1.json` and `notebooks_v1.csv`. H1 and H2 follow the preregistered rules, and both remain
+Inconclusive.
+
+1. **Stream chunking (finding 1).** Consecutive stdout outputs are joined before comparison (`NO_COALESCE=1`
+   reproduces the draft). nb16791 now matches exactly, and nb4750's stored value is compared as one item.
+2. **Validation (finding 2).** The first check was not blind. The labeller saw the comparator's verdicts, and was
+   the same agent that wrote the comparator.
+   - New `code/validate_blind.py` draws a fresh stratified sample (seed 20261107; 30 text mismatches, 20 text
+     matches, 30 figure mismatches, 15 figure matches). The comparator's verdicts go into a key file outside the run
+     directory.
+   - A separate agent session labelled every pair from the outputs alone, then all 17 remaining figure mismatches.
+   - Agreement: text 49 of 50; figures 14 of 15 matches but 13 of 30 sampled flagged mismatches (20 of all 47).
+   - `code/posthoc_figures.py` re-computes H1 and H2 with the human judgement for every flagged figure (19.2%,
+     1.24).
+   - The 6-bit image threshold is preregistered and stays primary. The 12-bit and human-judged readings are
+     sensitivities.
+   - The keys and labels are in `results/tables/validation_blind/`.
+3. **Attribution (finding 3).** The three rungs (byte-exact 48, masked 30, noise-aware 25 of 57) are reported. New
+   `code/posthoc_commit.py` finds that the 31 notebooks read at a commit other than the dataset's have identical
+   notebook files at both commits.
+4. **The disjunction (finding 4).** The varies/envelope split is reported (22 varies-only cells, 3 both, 0
+   envelope-only), with the envelope-only reading as a sensitivity (0 of 30). The plain terms now say randomness is
+   possible, not demonstrated.
+5. **"Exact" (finding 5).** The title and verdict say "masked exact matching", the byte-exact factor (1.92) is given
+   beside it, and the within-sample caveat is repeated in the verdict.
+6. **Precision and masks (finding 6).** Numbers printed to 10 or more significant digits are compared with a
+   relative tolerance of 1e-9 (`NO_FULLPREC_TOL=1` reproduces the draft). Bracketed durations and `ls -l` dates are
+   masked. nb17727, nb19008 and nb19758 now match.
+7. **Environments and coverage (findings 7 and 8).** No notebook with a requirements file completed, and the report
+   now says so. The three drop reasons, the stdout/stderr rule for shell messages, and the late nb19053 run are
+   stated.

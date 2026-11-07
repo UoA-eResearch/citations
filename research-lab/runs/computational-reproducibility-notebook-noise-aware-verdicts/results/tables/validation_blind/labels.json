@@ -1,0 +1,477 @@
+[
+ {
+  "pair": "p000",
+  "label": "different",
+  "reason": "MCMC initial values differ"
+ },
+ {
+  "pair": "p001",
+  "label": "same",
+  "reason": "pie percentages identical; Text repr formatting only"
+ },
+ {
+  "pair": "p002",
+  "label": "different",
+  "reason": "MSE 6.5371 vs 6.3254; importance order AGE/B swaps"
+ },
+ {
+  "pair": "p003",
+  "label": "different",
+  "reason": "0.616936 vs 0.618991"
+ },
+ {
+  "pair": "p004",
+  "label": "same",
+  "reason": "identical table"
+ },
+ {
+  "pair": "p005",
+  "label": "same",
+  "reason": "identical value"
+ },
+ {
+  "pair": "p006",
+  "label": "different",
+  "reason": "stored has no output; rerun prints dataset description"
+ },
+ {
+  "pair": "p007",
+  "label": "different",
+  "reason": "stored ran qiime (warnings, truncated); rerun qiime not found"
+ },
+ {
+  "pair": "p008",
+  "label": "same",
+  "reason": "identical display object reprs"
+ },
+ {
+  "pair": "p009",
+  "label": "same",
+  "reason": "same polar histogram; gridlines missing only"
+ },
+ {
+  "pair": "p010",
+  "label": "same",
+  "reason": "identical value"
+ },
+ {
+  "pair": "p011",
+  "label": "different",
+  "reason": "MCMC initial rate/time/probability differ"
+ },
+ {
+  "pair": "p012",
+  "label": "different",
+  "reason": "posterior/prior density curves and y-range differ"
+ },
+ {
+  "pair": "p013",
+  "label": "same",
+  "reason": "same spikes and traces; resolution only"
+ },
+ {
+  "pair": "p014",
+  "label": "different",
+  "reason": "stored ran qiime (warnings, truncated); rerun qiime not found"
+ },
+ {
+  "pair": "p015",
+  "label": "different",
+  "reason": "PR curves differ; AUCs 0.978/0.976 vs 0.963/0.959"
+ },
+ {
+  "pair": "p016",
+  "label": "same",
+  "reason": "identical table text"
+ },
+ {
+  "pair": "p017",
+  "label": "different",
+  "reason": "stored saved artifacts; rerun qiime not found"
+ },
+ {
+  "pair": "p018",
+  "label": "different",
+  "reason": "stored ran qiime (warnings, truncated); rerun qiime not found"
+ },
+ {
+  "pair": "p019",
+  "label": "same",
+  "reason": "identical value"
+ },
+ {
+  "pair": "p020",
+  "label": "different",
+  "reason": "MCMC trace is a different realisation"
+ },
+ {
+  "pair": "p021",
+  "label": "different",
+  "reason": "stored unzip listing; rerun qiime not found"
+ },
+ {
+  "pair": "p022",
+  "label": "different",
+  "reason": "stored ran qiime (warnings, truncated); rerun qiime not found"
+ },
+ {
+  "pair": "p023",
+  "label": "same",
+  "reason": "identical display object reprs"
+ },
+ {
+  "pair": "p024",
+  "label": "different",
+  "reason": "stored no output; rerun prints file listing"
+ },
+ {
+  "pair": "p025",
+  "label": "different",
+  "reason": "stored counts table; rerun redbiom not found"
+ },
+ {
+  "pair": "p026",
+  "label": "different",
+  "reason": "stored import message; rerun qiime not found"
+ },
+ {
+  "pair": "p027",
+  "label": "different",
+  "reason": "posterior histogram/KDE and y-range differ"
+ },
+ {
+  "pair": "p028",
+  "label": "different",
+  "reason": "stored saved biplots; rerun qiime not found"
+ },
+ {
+  "pair": "p029",
+  "label": "same",
+  "reason": "same 3D surface; figure size only"
+ },
+ {
+  "pair": "p030",
+  "label": "different",
+  "reason": "posterior trace is a different realisation"
+ },
+ {
+  "pair": "p031",
+  "label": "same",
+  "reason": "same density field; resolution only"
+ },
+ {
+  "pair": "p032",
+  "label": "different",
+  "reason": "rerun has no figure, only Figure repr"
+ },
+ {
+  "pair": "p033",
+  "label": "same",
+  "reason": "same points; bottom-panel tick labels differ"
+ },
+ {
+  "pair": "p034",
+  "label": "same",
+  "reason": "identical text"
+ },
+ {
+  "pair": "p035",
+  "label": "different",
+  "reason": "filament network more evolved; ranges differ"
+ },
+ {
+  "pair": "p036",
+  "label": "different",
+  "reason": "stored prints Feng; rerun no output"
+ },
+ {
+  "pair": "p037",
+  "label": "same",
+  "reason": "identical series"
+ },
+ {
+  "pair": "p038",
+  "label": "different",
+  "reason": "stored QUAST help; rerun quast.py not found"
+ },
+ {
+  "pair": "p039",
+  "label": "same",
+  "reason": "identical display object reprs"
+ },
+ {
+  "pair": "p040",
+  "label": "different",
+  "reason": "stored plot replaced by IFrame repr"
+ },
+ {
+  "pair": "p041",
+  "label": "same",
+  "reason": "identical plot"
+ },
+ {
+  "pair": "p042",
+  "label": "same",
+  "reason": "only environment/version/path info differs"
+ },
+ {
+  "pair": "p043",
+  "label": "different",
+  "reason": "stored ran qiime (warnings, truncated); rerun qiime not found"
+ },
+ {
+  "pair": "p044",
+  "label": "same",
+  "reason": "same confusion matrix values"
+ },
+ {
+  "pair": "p045",
+  "label": "different",
+  "reason": "trace starts at -20000 vs -5900; different run"
+ },
+ {
+  "pair": "p046",
+  "label": "same",
+  "reason": "identical value"
+ },
+ {
+  "pair": "p047",
+  "label": "same",
+  "reason": "same points; styling only"
+ },
+ {
+  "pair": "p048",
+  "label": "different",
+  "reason": "scatter points and axis ranges differ"
+ },
+ {
+  "pair": "p049",
+  "label": "different",
+  "reason": "rerun has no figure, only Figure repr"
+ },
+ {
+  "pair": "p050",
+  "label": "same",
+  "reason": "identical display object reprs"
+ },
+ {
+  "pair": "p051",
+  "label": "same",
+  "reason": "identical table text"
+ },
+ {
+  "pair": "p052",
+  "label": "different",
+  "reason": "stored ran qiime (warnings, truncated); rerun qiime not found"
+ },
+ {
+  "pair": "p053",
+  "label": "same",
+  "reason": "same histograms"
+ },
+ {
+  "pair": "p054",
+  "label": "same",
+  "reason": "same points; styling only"
+ },
+ {
+  "pair": "p055",
+  "label": "different",
+  "reason": "stored no output; rerun ls error, files missing"
+ },
+ {
+  "pair": "p056",
+  "label": "different",
+  "reason": "stored no output; rerun activate/qiime not found"
+ },
+ {
+  "pair": "p057",
+  "label": "same",
+  "reason": "same beta pdf curves; styling only"
+ },
+ {
+  "pair": "p058",
+  "label": "different",
+  "reason": "file list content and order differ"
+ },
+ {
+  "pair": "p059",
+  "label": "different",
+  "reason": "stored contexts table; rerun redbiom not found"
+ },
+ {
+  "pair": "p060",
+  "label": "same",
+  "reason": "same points; legend placement only"
+ },
+ {
+  "pair": "p061",
+  "label": "same",
+  "reason": "same polar histogram; gridlines missing only"
+ },
+ {
+  "pair": "p062",
+  "label": "same",
+  "reason": "same points; extra legend only"
+ },
+ {
+  "pair": "p063",
+  "label": "same",
+  "reason": "identical curve"
+ },
+ {
+  "pair": "p064",
+  "label": "same",
+  "reason": "identical value"
+ },
+ {
+  "pair": "p065",
+  "label": "same",
+  "reason": "identical expression"
+ },
+ {
+  "pair": "p066",
+  "label": "different",
+  "reason": "stored ran qiime (warnings, truncated); rerun qiime not found"
+ },
+ {
+  "pair": "p067",
+  "label": "same",
+  "reason": "same swarm values; jitter/size only"
+ },
+ {
+  "pair": "p068",
+  "label": "same",
+  "reason": "identical expression"
+ },
+ {
+  "pair": "p069",
+  "label": "different",
+  "reason": "matrix values 8.0/2.667 vs 7.667/3.0"
+ },
+ {
+  "pair": "p070",
+  "label": "same",
+  "reason": "same histograms"
+ },
+ {
+  "pair": "p071",
+  "label": "different",
+  "reason": "credibility intervals differ"
+ },
+ {
+  "pair": "p072",
+  "label": "same",
+  "reason": "same points; x tick labels broken"
+ },
+ {
+  "pair": "p073",
+  "label": "same",
+  "reason": "same ROC, area 0.927; curve start point only"
+ },
+ {
+  "pair": "p074",
+  "label": "same",
+  "reason": "same points; legend placement only"
+ },
+ {
+  "pair": "p075",
+  "label": "same",
+  "reason": "identical display object reprs"
+ },
+ {
+  "pair": "p076",
+  "label": "different",
+  "reason": "0.9188 vs 0.9145 probabilities"
+ },
+ {
+  "pair": "p077",
+  "label": "same",
+  "reason": "same points; bottom tick labels missing"
+ },
+ {
+  "pair": "p078",
+  "label": "same",
+  "reason": "same data; legend overlap only"
+ },
+ {
+  "pair": "p079",
+  "label": "same",
+  "reason": "same points; legend placement only"
+ },
+ {
+  "pair": "p080",
+  "label": "different",
+  "reason": "stored ran qiime (warnings, truncated); rerun qiime not found"
+ },
+ {
+  "pair": "p081",
+  "label": "same",
+  "reason": "same points; styling only"
+ },
+ {
+  "pair": "p082",
+  "label": "same",
+  "reason": "identical table text"
+ },
+ {
+  "pair": "p083",
+  "label": "different",
+  "reason": "error bar lengths differ"
+ },
+ {
+  "pair": "p084",
+  "label": "same",
+  "reason": "identical text"
+ },
+ {
+  "pair": "p085",
+  "label": "same",
+  "reason": "same triangulation mesh; resolution only"
+ },
+ {
+  "pair": "p086",
+  "label": "same",
+  "reason": "same points; styling only"
+ },
+ {
+  "pair": "p087",
+  "label": "different",
+  "reason": "stored ran qiime (warnings, truncated); rerun qiime not found"
+ },
+ {
+  "pair": "p088",
+  "label": "same",
+  "reason": "same points; x tick labels lost"
+ },
+ {
+  "pair": "p089",
+  "label": "different",
+  "reason": "stored saved core metrics; rerun qiime not found"
+ },
+ {
+  "pair": "p090",
+  "label": "same",
+  "reason": "same filament/node map and flow"
+ },
+ {
+  "pair": "p091",
+  "label": "different",
+  "reason": "fold accuracies differ (avg 0.859 vs 0.851)"
+ },
+ {
+  "pair": "p092",
+  "label": "same",
+  "reason": "identical plot"
+ },
+ {
+  "pair": "p093",
+  "label": "same",
+  "reason": "identical plot"
+ },
+ {
+  "pair": "p094",
+  "label": "same",
+  "reason": "identical table text"
+ }
+]

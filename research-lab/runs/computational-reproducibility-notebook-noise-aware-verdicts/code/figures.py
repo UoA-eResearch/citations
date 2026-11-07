@@ -38,7 +38,7 @@ for lab, v, col in parts:
     left += v
 ax.set_yticks([]); ax.set_xlim(0, n); ax.set_xlabel(f"of {n} completing notebooks")
 ax.legend(frameon=False, fontsize=7.5, loc="upper center", bbox_to_anchor=(0.5, -0.25))
-fig.suptitle(f"Run-to-run noise explains all mismatches in {ai} of {em} irreproducible-looking notebooks ({ai/em:.0%})",
+fig.suptitle(f"Every mismatch varies across re-runs in {ai} of {em} irreproducible-looking notebooks ({ai/em:.0%})",
              x=0.02, ha="left", fontsize=10, color=INK)
 fig.savefig(F / "F1_flow.png", dpi=170)
 (F / "F1_flow.txt").write_text(" ".join(f"""Python notebooks from PubMed Central-linked repositories that Samuel and Mietchen's re-execution found

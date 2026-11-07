@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notebook Noise Verdicts</title>
+<meta name="description" content="How much of measured Jupyter notebook irreproducibility is run-to-run noise rather than real differences?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Computational reproducibility</div>
+  <h1>How much &quot;irreproducibility&quot; in biomedical Jupyter notebooks is run-to-run noise? About a sixth of mismatching notebooks by the preregistered rule, none if the stored value must fall within the replicates&#x27; range; masked exact matching overstates irreproducibility about 1.2-fold, byte-exact matching 1.9-fold</h1>
+  <p class="subtitle">Python notebooks from PubMed Central-linked GitHub repositories, drawn from those that Samuel and Mietchen&#x27;s large-scale re-execution found to run but not reproduce their stored outputs. Environments were rebuilt with uv, pinned to the dependency landscape before publication, inside isolated Docker containers. Each notebook was executed three times without network access, plus once with current packages. The plan was committed before any notebook was executed; an execution bug found during validation forced a full re-run (D3).</p>
+  <div class="meta">
+    <span>Report · 2026-10-25 · under independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/computational-reproducibility-notebook-noise-aware-verdicts/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/computational-reproducibility-notebook-noise-aware-verdicts/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/computational-reproducibility-notebook-noise-aware-verdicts/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: H1 Inconclusive; H2 Inconclusive.</strong> Both were re-computed after review with a corrected comparator (D4);
+neither verdict changed.</p>
+<ul>
+<li><strong>H1 (in at least 30% of completing-but-mismatching notebooks, every mismatch is run-to-run variability):
+  Inconclusive.</strong><ul>
+<li><strong>5 of 30</strong> (16.7%; Wilson 95% 7.3% to 33.6%; repository bootstrap 3.7% to 32.0%).</li>
+<li>The point estimate is below the bar, but the interval includes it.</li>
+<li><strong>The preregistered rule is a disjunction, and only one branch is ever met.</strong> A mismatch counts as noise if
+the three replicates differ among themselves, or if the stored value lies inside their range. In all 5
+notebooks every mismatching cell meets only the first branch: the replicates vary, but the stored value lies
+outside their range or is an image. Read strictly, requiring the stored value inside the replicates' range, H1 is
+0 of 30 (0% to 11.4%). Some cases are convincing, such as Monte-Carlo output, random data, random error bars and
+tie order in <code>value_counts</code>.</li>
+</ul>
+</li>
+<li><strong>H2 (exact-match verdicts overstate irreproducibility by at least 1.4×): Inconclusive.</strong><ul>
+<li>Among the 57 notebooks that ran to completion three times, 52.6% fail <strong>masked</strong> exact matching and 43.9% fail
+noise-aware matching. Masked matching hides volatile tokens and compares numbers at displayed precision.</li>
+<li>The factor is <strong>1.20</strong> (repository bootstrap 1.04 to 1.47).</li>
+<li><strong>Against byte-exact matching</strong> on the same re-runs, 84.2% fail and the factor is <strong>1.92</strong>, which would clear the
+bar. The preregistered comparison is the masked one.</li>
+<li><strong>All 57 were irreproducible in the dataset</strong>, so these rates describe that set, not notebooks in general (D1).</li>
+</ul>
+</li>
+<li><strong>Three rungs, on the study's own re-runs:</strong> 48 of 57 notebooks differ byte for byte, 30 under masked matching, and
+  25 under noise-aware matching. So normalisation recovers 18 notebooks and replicates 5 more.<ul>
+<li>9 notebooks match byte for byte here, although the dataset called them irreproducible. For those, its verdict
+came from its environment or its comparator, not from the notebook.</li>
+<li>31 of the 57 were checked out at a commit other than the dataset's, but the notebook file is identical at both
+commits in all 31. The stored outputs compared are the dataset's own.</li>
+</ul>
+</li>
+<li><strong>The comparator, validated blind</strong> (post hoc; <code>results/tables/validation_blind.json</code>).<ul>
+<li>A separate labelling session judged 95 stratified cell pairs without seeing the comparator's verdicts, plus all
+17 remaining figure mismatches.</li>
+<li>Text: the comparator agrees on 29 of 30 flagged mismatches and 20 of 20 matches.</li>
+<li>Figures: it agrees on 14 of 15 matches, but only 20 of the 47 flagged figure mismatches are judged genuinely
+different. The rest differ in fonts, legend placement, tick labels or figure size.</li>
+<li>With the human judgement in place of the comparator for every flagged figure, H1 is 5 of 26 (19.2%, 8.5% to
+37.9%) and the H2 factor 1.24. Neither verdict changes.</li>
+<li>The first draft's 94/100 agreement came from a check whose labeller saw the comparator's verdicts. It is
+withdrawn.</li>
+</ul>
+</li>
+<li><strong>What drives the real mismatches.</strong><ul>
+<li>Missing command-line tools: shell cells calling <code>qiime</code>, <code>wget</code> or <code>unzip</code> fail silently inside Jupyter, so the
+notebook still "completes".</li>
+<li>Version-dependent output formats, such as pandas <code>value_counts</code> naming.</li>
+<li>Genuinely stochastic analyses (MCMC, cross-validation).</li>
+<li>With current packages, 12% of cells that are stable and matching in the AS-OF environment change.</li>
+</ul>
+</li>
+</ul>
+<h2>In plain terms</h2>
+<p>Scientists increasingly publish the code behind their papers as Jupyter notebooks. Studies that re-run them often
+find the results don't match, and count that as a failure to reproduce. But some analyses involve randomness, and
+would give slightly different numbers even on the original computer. Is much of the measured "irreproducibility"
+just that?</p>
+<p>We took about 150 notebooks from biomedical papers that an earlier study had found didn't reproduce. We rebuilt each
+one's software environment as it was around publication, in a sealed container, and ran it three times. Of the 57
+that ran, 9 matched their published outputs byte for byte, and 27 in all matched once trivial differences were ignored,
+such as memory addresses, timestamps and digits beyond those printed. Of the 30 that still differed, 5 showed
+run-to-run variation in every mismatching cell. But in none of them did the published output fall within the spread
+of our three runs, so randomness is a possible explanation, not a demonstrated one. Most differences had other
+causes, such as missing command-line tools and changed software or output formats.</p>
+<p>So how much exact-match counts overstate the problem depends on what "exact" means: by a factor of about 1.2 once
+trivial differences are masked, and about 1.9 for byte-for-byte comparison. Most mismatches are not just noise.</p>
+<h2>What was asked</h2>
+<p>The lead (<code>computational-reproducibility-notebook-noise-aware-verdicts</code>) asked whether exact-match verdicts overstate
+notebook irreproducibility. Its predictions were that at least 30% of mismatching notebooks are explained by
+run-to-run variability, and that the overstatement is at least 1.4×.</p>
+<p>Prior work counts identical outputs (Pimentel et al. 2019; Samuel and Mietchen 2024), or scores similarity without
+replicates (arXiv 2509.23645). A 2026 containerisation study (Samuel, Mietchen et al., arXiv 2604.01072) did not separate stochasticity with replicates.</p>
+<h2>How it was done</h2>
+<ul>
+<li><strong>Sample.</strong><ul>
+<li>Eligible: notebooks from Samuel and Mietchen's dataset (Zenodo 8226725) whose execution completed with at least
+one differing cell. That is 340 notebooks in 133 repositories (D1).</li>
+<li>Sampled: at most two per repository, 192 notebooks.</li>
+<li>Kept: 149, checked out at their last commit before publication. Dropped: 36 with repositories over 500 MB (25 on
+GitHub's reported size, before cloning), 6 whose notebook was missing at that commit, and 1 whose clone failed.</li>
+</ul>
+</li>
+<li><strong>Environments</strong> (Docker; no host credentials or home directory mounted).<ul>
+<li>uv installs the repository's requirements, or the notebook's imports through a fixed import-to-package table.
+None of the 11 notebooks with a requirements file completed. All 57 completed notebooks ran in environments
+resolved from their imports: 49 through the table and 8 with ipykernel only.</li>
+<li>AS-OF resolution uses <code>--exclude-newer</code> at the checkout's commit date; LATEST has no limit.</li>
+<li>61 AS-OF builds succeeded in <code>-slim</code> images. 10 more succeeded in full images with build tools (D2); the LATEST
+arm stayed in slim images.</li>
+</ul>
+</li>
+<li><strong>Execution.</strong> Network off, 2 CPUs and 6 GB per container, nbclient with a 20-minute limit and a fresh kernel. Three
+  AS-OF runs, one LATEST run. 57 notebooks completed all three runs.</li>
+<li><strong>Comparison</strong> (<code>code/compare.py</code>).<ul>
+<li><strong>Outputs compared:</strong> stdout streams and display outputs. Warnings and errors are excluded (D1). Consecutive
+stdout chunks are joined before comparison, since Jupyter splits one stream at arbitrary points (D4). Shell
+"not found" messages are compared where the shell writes them to stdout (6 notebooks) and ignored where it
+writes them to stderr (2).</li>
+<li><strong>Text:</strong> volatile tokens are masked (addresses, dates, times, durations including "0.05[sec]", paths, and
+<code>ls -l</code> dates; the last two added in D4).</li>
+<li><strong>Numbers:</strong> compared at the stored output's displayed precision. Numbers printed to 10 or more significant
+digits are compared with a relative tolerance of 1e-9 (D4).</li>
+<li><strong>Images:</strong> compared by perceptual hash (at most 6 bits).</li>
+<li><strong>Intrinsic:</strong> a mismatching cell is intrinsic if its output varies across the three runs, or if the stored
+numbers lie within the runs' envelope.</li>
+</ul>
+</li>
+<li><strong>Intervals:</strong> Wilson, and a bootstrap over repositories (2,000 resamples).</li>
+</ul>
+<h2>Results (<code>results/figures/F1_flow.png</code>)</h2>
+<figure><a href="results/figures/F1_flow.png"><img src="results/figures/F1_flow.png" alt="Flow"></a><figcaption>Python notebooks from PubMed Central-linked repositories that Samuel and Mietchen&#x27;s re-execution found to complete but differ from stored outputs. Environments rebuilt with uv in Docker (AS-OF dependency date), executed three times without network. A mismatching cell is intrinsic if its output varies across the three runs or the stored numbers lie within the runs&#x27; envelope. H1 share 17% (Wilson 7%-34%).</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th></th>
+<th>value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>completed with three AS-OF runs</td>
+<td>57 notebooks (453 compared cells)</td>
+</tr>
+<tr>
+<td>byte-exact mismatch</td>
+<td>48</td>
+</tr>
+<tr>
+<td>masked exact match / mismatch</td>
+<td>27 / 30 (173 mismatching cells)</td>
+</tr>
+<tr>
+<td>all mismatches intrinsic (H1)</td>
+<td>5 / 30 = 16.7% (7.3–33.6%)</td>
+</tr>
+<tr>
+<td>the same, stored value inside the replicates' range</td>
+<td>0 / 30 (0–11.4%)</td>
+</tr>
+<tr>
+<td>masked fail rate / noise-aware fail rate (H2)</td>
+<td>52.6% / 43.9% = 1.20 (1.04–1.47)</td>
+</tr>
+<tr>
+<td>byte-exact fail rate / noise-aware fail rate</td>
+<td>84.2% / 43.9% = 1.92</td>
+</tr>
+<tr>
+<td>stable AS-OF cells that change with current packages</td>
+<td>11.8%</td>
+</tr>
+</tbody>
+</table></div>
+<p>The first draft gave 7/34 and 1.26. Four notebooks changed under the corrected comparator. nb16791 was a stream
+chunking artefact, and nb19758 an unmasked timing token; both were all-intrinsic in the draft. nb17727 and nb19008
+differed only in the 17th significant digit. The draft's tables are kept as <code>primary_v1.json</code> and <code>notebooks_v1.csv</code>.</p>
+<p><strong>Post hoc sensitivities</strong> (both labelled; neither changes a verdict):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>sensitivity</th>
+<th>H1 share (95% CI)</th>
+<th>overstatement factor (95% CI)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>human judgement for every flagged figure mismatch (blind)</td>
+<td>5/26 = 19.2% (8.5–37.9%)</td>
+<td>1.24</td>
+</tr>
+<tr>
+<td>looser image tolerance (12 bits)</td>
+<td>5/28 = 17.9% (7.9–35.6%)</td>
+<td>1.22 (1.04–1.52)</td>
+</tr>
+<tr>
+<td>excluding 6 notebooks whose shell commands were not found in the container</td>
+<td>5/24 = 20.8% (9.2–40.5%)</td>
+<td>1.26 (1.05–1.64)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>The flawed first run</strong> (D3) set a non-inline plotting backend, which suppressed every figure. It gave 12.2% for H1
+and a factor of 1.14, so that bug biased both towards Refuted. It is kept for the record only.</p>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>Run-to-run noise is a minority explanation, and only a possible one.</strong> Among notebooks that run but don't
+  match, about a sixth show variation in every mismatching cell. In none is the stored value inside the range of
+  three replicates, and three replicates cannot say whether the stored value was a plausible draw.</li>
+<li><strong>Normalisation does more than replicates.</strong> On the study's own re-runs, masking volatile tokens and respecting
+  displayed precision recovers 18 of the 48 byte-different notebooks. Replicates recover 5 more. A further 9
+  notebooks match byte for byte, so for them the dataset's verdict reflects its environment or comparator.</li>
+<li><strong>Not shown:</strong><ul>
+<li><strong>Notebooks that need network or data downloads.</strong> They fail here by design (no network), so the completing set
+leans toward self-contained analyses.</li>
+<li><strong>Rare variability.</strong> Three replicates can miss it, biasing H1 down. They also cannot place the stored value
+within the distribution, which is why the strict reading gives zero.</li>
+<li><strong>The authors' own environments.</strong> AS-OF resolution approximates them. 78 of 149 AS-OF builds failed even with
+build tools, mostly old pins incompatible with Python 3.8+.</li>
+<li><strong>The full dataset.</strong> The sample is 149 notebooks; the intervals are wide.</li>
+</ul>
+</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration:</strong> <code>plan.md</code>.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>):<ul>
+<li>D1: selection fields, comparator scope and H2's base, all before execution;</li>
+<li>D2: failed AS-OF builds retried in full images, before any comparison;</li>
+<li>D3: the plotting-backend bug found during validation, and the full re-run (post-result; the first result kept);</li>
+<li>D4: the fixes after the independent review (post hoc): stream coalescing, full-precision tolerance and masks, the
+byte-exact and envelope-only readings, the blind validation and the commit check.</li>
+</ul>
+</li>
+<li><strong>Validation:</strong> blind, post hoc (<code>results/tables/validation_blind.json</code>; keys and labels in
+  <code>results/tables/validation_blind/</code>). The first draft's <code>validation.json</code> (94/100) was not blind and is withdrawn.</li>
+<li><strong>Safety:</strong> third-party code ran only in containers without credentials, with network disabled during execution.</li>
+<li><strong>Independent review:</strong> fix first (two major and three moderate findings); the fixes are in D4.</li>
+<li><strong>Timing:</strong> one execution (nb19053, which errored) finished after the first draft's tables were written. The D4
+  tables were computed after every run had finished.</li>
+</ul>
+<h2>Reproducing it</h2>
+<ol>
+<li>Download Zenodo 8226725 into <code>data/raw/</code> and unzip it.</li>
+<li><code>code/clone_all.sh</code>, then <code>code/select_nb.py</code>.</li>
+<li><code>code/runner.py runners</code>.</li>
+<li><code>SAMPLE=sample_slim.csv code/runner.py run</code>, then <code>NB_IMAGE_FLAVOR= SAMPLE=sample_redo.csv code/runner.py run</code>.</li>
+<li><code>code/compare.py run</code>; <code>code/posthoc_commit.py</code>; <code>code/validate_blind.py</code> (sample, labelling in a separate
+   session, score); <code>code/posthoc_figures.py</code>.</li>
+<li><code>code/figures.py</code>.</li>
+</ol>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/computational-reproducibility-notebook-noise-aware-verdicts/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

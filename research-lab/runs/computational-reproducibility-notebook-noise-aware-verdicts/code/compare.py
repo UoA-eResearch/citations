@@ -6,6 +6,13 @@
 
 Compared outputs: stdout streams, execute_result and display_data (text/plain, text/html stripped of tags, image/png).
 stderr streams (warnings) and error outputs are not results and are not compared (D1).
+
+D4 (after the independent review, 2026-11-07):
+  - consecutive stdout stream outputs are concatenated before comparison (nbformat semantics; finding 1);
+  - numbers printed to 10 or more significant digits are compared with a relative tolerance of 1e-9 (finding 6);
+  - bracketed durations ("0.05[sec]") and ls-style dates ("Oct 24 18:11") are masked (finding 6);
+  - per notebook, a byte-exact verdict (no masking, no tolerance, identical PNG bytes) is added beside the masked
+    one, and an envelope-only verdict beside the preregistered disjunction (findings 3-5).
 """
 import base64
 import io
@@ -26,7 +33,9 @@ NUM = re.compile(r"[-+]?(?:\d+\.\d*|\.\d+|\d+)(?:[eE][-+]?\d+)?")
 VOLATILE = [re.compile(p) for p in (
     r"0x[0-9a-fA-F]{4,}", r"\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}(?::\d{2})?(?:\.\d+)?", r"\d{1,2}:\d{2}:\d{2}(?:\.\d+)?",
     r"\b\d+(?:\.\d+)?\s?(?:ms|µs|us|ns|s|sec|secs|seconds|min|mins|minutes)\b", r"(?:/tmp|/home|/Users|/work|/root)[^\s'\"]*",
-    r"[A-Za-z]:\\[^\s'\"]*", r"\bpid[ =:]\d+", r"\bat 0x[0-9a-f]+", r"\b(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)\b[^\n]{0,30}\d{4}")]
+    r"[A-Za-z]:\\[^\s'\"]*", r"\bpid[ =:]\d+", r"\bat 0x[0-9a-f]+", r"\b(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)\b[^\n]{0,30}\d{4}",
+    r"\d+(?:\.\d+)?\s?\[(?:ms|µs|us|ns|s|sec|secs|seconds|min|mins|minutes)\]",                 # D4
+    r"\b(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{1,2}\s+(?:\d{1,2}:\d{2}|\d{4})\b")]   # D4
 TAG = re.compile(r"<[^>]+>")
 import os
 PHASH_TOL = int(os.environ.get("PHASH_TOL", "6"))      # post hoc sensitivity: PHASH_TOL=12
@@ -38,13 +47,26 @@ def mask(s):
     return s
 
 
+COALESCE = os.environ.get("NO_COALESCE") is None     # D4: set NO_COALESCE=1 to reproduce the first draft
+
+
 def items(cell):
     out = []
+    prev_stdout = False
     for o in cell.get("outputs", []):
         t = o.get("output_type")
         if t == "stream" and o.get("name") == "stdout":
-            out.append(("text", "".join(o.get("text", ""))))
-        elif t in ("execute_result", "display_data"):
+            txt = "".join(o.get("text", ""))
+            if COALESCE and prev_stdout:
+                out[-1] = ("text", out[-1][1] + txt)          # D4: one stream, however it was chunked
+            else:
+                out.append(("text", txt))
+            prev_stdout = True
+            continue
+        if t == "stream":
+            continue                                          # stderr is not compared and does not break a stdout run
+        prev_stdout = False
+        if t in ("execute_result", "display_data"):
             d = o.get("data", {})
             if "image/png" in d:
                 out.append(("png", d["image/png"]))
@@ -68,11 +90,21 @@ def decimals(tok):
     return len(t.split(".")[1]) if "." in t else 0
 
 
+def sig_digits(tok):
+    t = tok.lower().split("e")[0].lstrip("+-").replace(".", "").lstrip("0")
+    return len(t)
+
+
+FULL_PREC = os.environ.get("NO_FULLPREC_TOL") is None    # D4
+
+
 def num_equal(stored, new):
     try:
         a, b = float(stored), float(new)
     except ValueError:
         return stored == new
+    if FULL_PREC and sig_digits(stored) >= 10:
+        return math.isclose(a, b, rel_tol=1e-9, abs_tol=0)   # D4: full double precision, last-digit noise
     if "e" in stored.lower():
         return math.isclose(a, b, rel_tol=10 ** -(decimals(stored)), abs_tol=0)
     return round(b, decimals(stored)) == round(a, decimals(stored))
@@ -152,13 +184,17 @@ def analyse_nb(nbid, stored_path):
         varies = len(reps) == 3 and not (cell_equal(reps[0], reps[1]) and cell_equal(reps[0], reps[2]))
         env = in_envelope(st, reps) if len(reps) == 3 else False
         latest = items(rc["latest_1"][i]) if "latest_1" in rc and i < len(rc["latest_1"]) else None
-        cells.append({"nbid": nbid, "cell": i, "mismatch": mism, "varies": varies, "envelope": env,
+        byte_mism = st != r1                                   # D4: raw items, no masking, no tolerance
+        cells.append({"nbid": nbid, "cell": i, "mismatch": mism, "byte_mismatch": byte_mism, "varies": varies, "envelope": env,
                       "intrinsic": mism and (varies or env), "stable_match": (not mism) and not varies,
                       "latest_differs": (latest is not None) and not cell_equal(r1, latest),
                       "has_png": any(t == "png" for t, _ in st)})
     reps_ok = all(k in runs for k in ("asof_1", "asof_2", "asof_3"))
     mm = [x for x in cells if x["mismatch"]]
     return {"nbid": nbid, "reps_ok": reps_ok, "cells": len(cells), "mismatch_cells": len(mm),
+            "byte_exact_mismatch": any(x["byte_mismatch"] for x in cells),
+            "all_intrinsic_envelope_only": bool(mm) and all(x["envelope"] for x in mm),
+            "all_intrinsic_varies_only": bool(mm) and all(x["varies"] and not x["envelope"] for x in mm),
             "exact_mismatch": bool(mm), "all_intrinsic": bool(mm) and all(x["intrinsic"] for x in mm),
             "noise_aware_fail": any(x["mismatch"] and not x["intrinsic"] for x in cells)}, cells
 
@@ -217,6 +253,18 @@ def run():
     out["overstatement_ci"] = [round(float(np.nanpercentile(bs_f, 2.5)), 4), round(float(np.nanpercentile(bs_f, 97.5)), 4)]
     ci = out["overstatement_ci"]
     out["H2"] = "Supported" if ci[0] >= 1.4 else "Refuted" if ci[1] < 1.4 else "Inconclusive"
+    # D4: three rungs and the envelope-only reading (sensitivities; the preregistered rule gives the verdicts)
+    ke = int(ex.all_intrinsic_envelope_only.sum())
+    out["H1_envelope_only"] = {"k": ke, "n": n, "share": round(ke / n, 4) if n else None, "wilson": wilson(ke, n)}
+    out["H1_varies_only_notebooks"] = int(ex.all_intrinsic_varies_only.sum())
+    fb = comp.byte_exact_mismatch.mean()
+    out["rungs"] = {"byte_exact_mismatch": int(comp.byte_exact_mismatch.sum()), "masked_mismatch": int(comp.exact_mismatch.sum()),
+                    "noise_aware_fail": int(comp.noise_aware_fail.sum()), "of": int(len(comp))}
+    out["overstatement_byte_exact"] = round(float(fb / fn), 4) if fn > 0 else None
+    out["overstatement_envelope_only"] = round(float(fe / comp.assign(f=comp.exact_mismatch & ~comp.all_intrinsic_envelope_only).f.mean()), 4)
+    mc = C[C.mismatch]
+    out["intrinsic_cells_split"] = {"varies_only": int((mc.varies & ~mc.envelope).sum()), "varies_and_envelope": int((mc.varies & mc.envelope).sum()),
+                                    "envelope_only": int((~mc.varies & mc.envelope).sum())}
     sm = C[C.stable_match] if len(C) else C
     out["drift_share_of_stable_cells"] = round(float(sm.latest_differs.mean()), 4) if len(sm) else None
     out["cells"] = {"total": int(len(C)), "mismatch": int(C.mismatch.sum()), "intrinsic": int(C.intrinsic.sum()),
@@ -250,6 +298,14 @@ def test():
     assert in_envelope([("text", "mean 5.03")], [[("text", "mean 5.01")], [("text", "mean 5.07")], [("text", "mean 4.99")]])
     assert not in_envelope([("text", "mean 5.30")], [[("text", "mean 5.01")], [("text", "mean 5.07")], [("text", "mean 4.99")]])
     assert cell_equal([("text", "1.5e-03")], [("text", "1.52e-03")]) is False or True
+    # D4
+    chunked = {"outputs": [{"output_type": "stream", "name": "stdout", "text": "1 2 "}, {"output_type": "stream", "name": "stdout", "text": "3\n"}]}
+    whole = {"outputs": [{"output_type": "stream", "name": "stdout", "text": "1 2 3\n"}]}
+    assert cell_equal(items(chunked), items(whole))
+    assert cell_equal([("text", "r=-0.17749533260329886")], [("text", "r=-0.17749533260329892")])
+    assert not cell_equal([("text", "r=-0.1774953326")], [("text", "r=-0.1774953399")])
+    assert cell_equal([("text", "elapsed_time:0.05[sec]")], [("text", "elapsed_time:0.07[sec]")])
+    assert cell_equal([("text", "-rw-r--r-- 1 u u 10 Oct 24 18:11 a.csv")], [("text", "-rw-r--r-- 1 u u 10 Nov  7 09:02 a.csv")])
     print("compare tests pass")
 
 
