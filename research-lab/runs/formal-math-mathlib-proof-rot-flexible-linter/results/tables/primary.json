@@ -1,106 +1,177 @@
 {
  "primary": {
-  "or": 1.4805,
+  "or": 1.5745,
   "ci": [
-   0.9178,
-   2.3881
+   0.9712,
+   2.5524
   ],
-  "p": 0.10774,
-  "n": 2723,
-  "files": 1294,
+  "p": 0.06554,
+  "n": 2488,
+  "files": 1203,
   "fail_flagged": 0.4364,
-  "fail_unflagged": 0.2511,
+  "fail_unflagged": 0.2603,
   "n_flagged": 110
  },
  "H1": "Inconclusive",
  "primary_population": {
-  "declarations": 2723,
+  "declarations": 2488,
   "flagged": 110,
-  "fail_rate": 0.2585,
-  "same_body_fail_rate": 0.0,
-  "changed_body_fail_rate": 0.4961
+  "fail_rate": 0.2681,
+  "body_changed_flagged": [
+   109,
+   110
+  ],
+  "body_changed_unflagged": [
+   1195,
+   2378
+  ]
  },
+ "primary_independence": {
+  "or": 1.7004,
+  "ci": [
+   1.0128,
+   2.8547
+  ],
+  "p": 0.04463,
+  "n": 2488,
+  "files": 1203,
+  "fail_flagged": 0.4364,
+  "fail_unflagged": 0.2603,
+  "n_flagged": 110
+ },
+ "primary_unadjusted_or": 2.2,
  "error_classes": {
-  "unknown_identifier": 258,
-  "unsolved_goals": 179,
-  "other": 122,
-  "type_mismatch": 83,
-  "function_expected": 31,
+  "unknown_identifier": 236,
+  "unsolved_goals": 165,
+  "other": 80,
+  "type_mismatch": 68,
+  "rewrite_failed": 35,
+  "function_expected": 30,
+  "no_goals": 26,
+  "simp_no_progress": 23,
+  "timeout": 4
+ },
+ "error_classes_first": {
+  "other": 246,
+  "unknown_identifier": 216,
+  "type_mismatch": 73,
+  "unsolved_goals": 40,
+  "rewrite_failed": 33,
+  "function_expected": 30,
+  "simp_no_progress": 16,
+  "no_goals": 9,
+  "timeout": 4
+ },
+ "error_classes_v1_patterns": {
+  "unknown_identifier": 238,
+  "unsolved_goals": 169,
+  "other": 120,
+  "type_mismatch": 79,
+  "function_expected": 30,
   "no_goals": 27,
   "timeout": 4
  },
+ "error_classes_by_flag_first": {
+  "0": {
+   "other": 220,
+   "unknown_identifier": 205,
+   "type_mismatch": 70,
+   "unsolved_goals": 39,
+   "rewrite_failed": 32,
+   "function_expected": 27,
+   "simp_no_progress": 15,
+   "no_goals": 7,
+   "timeout": 4
+  },
+  "1": {
+   "other": 26,
+   "unknown_identifier": 11,
+   "function_expected": 3,
+   "type_mismatch": 3,
+   "no_goals": 2,
+   "rewrite_failed": 1,
+   "simp_no_progress": 1,
+   "unsolved_goals": 1
+  }
+ },
  "excluding_unknown_identifier_only": {
-  "or": 1.6186,
+  "or": 1.7261,
   "ci": [
-   1.0102,
-   2.5935
+   1.0748,
+   2.7723
   ],
-  "p": 0.04528,
-  "n": 2723,
-  "files": 1294,
+  "p": 0.02393,
+  "n": 2488,
+  "files": 1203,
   "fail_flagged": 0.4182,
-  "fail_unflagged": 0.225,
+  "fail_unflagged": 0.2334,
   "n_flagged": 110
  },
  "decay": {
   "O+6": {
    "fail_flagged": 0.3,
-   "fail_unflagged": 0.1296,
-   "n": 3115
+   "fail_unflagged": 0.1351,
+   "n": 2854
   },
   "O+12": {
    "fail_flagged": 0.4364,
-   "fail_unflagged": 0.2511,
-   "n": 2723
+   "fail_unflagged": 0.2603,
+   "n": 2488
   },
   "O+6_gee": {
-   "or": 1.6733,
+   "or": 1.7983,
    "ci": [
-    1.0116,
-    2.7678
+    1.1166,
+    2.8962
    ],
-   "p": 0.04496,
-   "n": 3115,
-   "files": 1433,
+   "p": 0.0158,
+   "n": 2854,
+   "files": 1332,
    "fail_flagged": 0.3,
-   "fail_unflagged": 0.1296,
+   "fail_unflagged": 0.1351,
    "n_flagged": 130
   }
  },
  "secondary_pair": {
-  "or": 0.9943,
+  "or": 1.029,
   "ci": [
-   0.5545,
-   1.7829
+   0.5723,
+   1.8501
   ],
-  "p": 0.98459,
-  "n": 3930,
-  "files": 1751,
+  "p": 0.92389,
+  "n": 3566,
+  "files": 1624,
   "fail_flagged": 0.2261,
-  "fail_unflagged": 0.1667,
+  "fail_unflagged": 0.1707,
   "n_flagged": 115
  },
  "pooled": {
-  "or": 1.2946,
+  "or": 1.4508,
   "ci": [
-   0.8923,
-   1.8782
+   1.003,
+   2.0985
   ],
-  "p": 0.17383,
-  "n": 6653,
-  "files": 3045,
+  "p": 0.04818,
+  "n": 6054,
+  "files": 1723,
   "fail_flagged": 0.3289,
-  "fail_unflagged": 0.201,
-  "n_flagged": 225
+  "fail_unflagged": 0.2072,
+  "n_flagged": 225,
+  "note": "2209 (file, name) declarations appear in both pairs; clustered by file across pairs"
+ },
+ "secondary_pair_flagged_post_cleanup": {
+  "O2_flagged": 115,
+  "O2_declarations": 3566
  },
  "secondary_error_classes": {
-  "type_mismatch": 196,
-  "unknown_identifier": 175,
-  "other": 121,
-  "unsolved_goals": 91,
-  "function_expected": 45,
+  "type_mismatch": 175,
+  "unknown_identifier": 156,
+  "other": 74,
+  "unsolved_goals": 66,
+  "rewrite_failed": 42,
+  "function_expected": 36,
+  "simp_no_progress": 33,
   "no_goals": 32,
-  "timeout": 1,
-  "rewrite_failed": 1
+  "timeout": 1
  }
 }

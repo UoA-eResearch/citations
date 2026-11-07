@@ -4,32 +4,44 @@ Fill in every row: backing = the table/figure and number that supports the sente
 
 | # | where | sentence | backing | label | fix |
 |---|---|---|---|---|---|
-| 1 | title | Do "flexible-then-rigid" proofs rot faster in mathlib? Replaying 2,700 old proofs a year later: flagged proofs fail more often, but the effect is not reliably 1.5× | primary OR 1.48 (0.92-2.39); 43.6% vs 25.1% | Supported |  |
+| 1 | title | Do "flexible-then-rigid" proofs rot faster in mathlib? Replaying 2,500 old proofs a year later: flagged proofs fail more often, but the effect is not reliably 1.5×, and few of their failures carry the errors the linter's rationale predicts | primary.json primary or 1.5745 ci [0.97, 2.55]; error_classes_by_flag_first flagged: simp_no_progress 1, rewrite_failed 1 of 48 | Supported | retitled after review |
 | 2 | standfirst | Mathlib proofs containing a non-terminal unrestricted `simp`, from the 31 March 2025 master snapshot, were replayed verbatim into the files of 31 March 2026 wherever the statement text was unchanged, then compiled against that snapshot's prebuilt library. | plan.md; rot.py replay | Supported |  |
 | 3 | standfirst | The flexible linter's warnings in the old snapshot define "flagged". | rot.py label | Supported |  |
 | 4 | standfirst | The plan and all analysis code were committed before any replay result. | git: plan, D1, analyse.py before replays | Supported |  |
 | 5 | verdict | **Verdict: H1 Inconclusive.** | primary H1 Inconclusive | Supported |  |
 | 6 | verdict | **H1 (flagged proofs fail on 12-month replay with odds at least 1.5 times unflagged ones): Inconclusive.** | plan.md H1 | Supported |  |
-| 7 | verdict | Flagged proofs fail **43.6%** of the time against **25.1%** for unflagged ones. | primary fail_flagged 0.4364, fail_unflagged 0.2511 | Supported |  |
-| 8 | verdict | Adjusted for tactic count and simp-call count, with clustering by file, the odds ratio is **1.48** (95% 0.92 to 2.39; p = 0.11). | primary or 1.4805 (0.9178-2.3881), p 0.108 | Supported |  |
-| 9 | verdict | Population: 2,723 proofs in 1,294 files, of which 110 are flagged. | primary n 2,723, files 1,294, n_flagged 110 | Supported |  |
-| 10 | verdict | **The direction is consistent, but not across every comparison:** | decay, excluding-unknown, secondary, pooled ORs | Supported |  |
-| 11 | verdict | six months later: OR 1.67 (1.01 to 2.77), with 30% against 13% failing; | decay O+6_gee 1.673 (1.012-2.768); 30.0% vs 13.0% | Supported |  |
-| 12 | verdict | setting aside failures whose only error is an unknown identifier (a removed or renamed name): OR 1.62 (1.01 to 2.59); | excluding_unknown_identifier_only 1.619 (1.010-2.594) | Supported | was 'removed or renamed lemmas' (unknown identifier covers any removed or renamed name) |
-| 13 | verdict | the second pair (September 2025 to September 2026): OR 0.99 (0.55 to 1.78); | secondary_pair 0.994 (0.555-1.783) | Supported |  |
-| 14 | verdict | pooled: 1.29 (0.89 to 1.88). | pooled 1.295 (0.892-1.878) | Supported |  |
-| 15 | verdict | **How proofs rot.** | heading | Supported |  |
-| 16 | verdict | A quarter of proofs fail verbatim a year later. | primary_population fail_rate 0.2585 | Supported |  |
-| 17 | verdict | Half of those whose text mathlib itself changed fail; none whose text mathlib left alone do. | same_body_fail_rate 0.0; changed_body_fail_rate 0.4961 | Supported |  |
-| 18 | verdict | The most common first error is an unknown identifier, a name the proof uses (usually a lemma) having been removed or renamed (37% of failures). | error_classes unknown_identifier 258 / 704 = 37% | Supported | was 'the largest single cause' (first error class, not a causal attribution) |
-| 19 | verdict | Then come unsolved goals (25%), type mismatches (12%), "function expected" errors (4%, typically a changed signature) and "no goals" (4%). | error_classes: unsolved 179 (25%), type mismatch 83 (12%), function expected 31 (4%), no goals 27 (4%) | Supported | 'changed lemma signatures' -> '"function expected" errors (typically a changed signature)' |
-| 20 | verdict | **The pipeline is valid.** In the old snapshot, 99.94% of population proofs compile without error. | label O-side error-free 99.94% | Supported |  |
-| 21 | plain terms | Mathlib is a huge, shared library of formally verified mathematics written in the Lean proof assistant. | background | Supported |  |
-| 22 | plain terms | Its proofs must keep compiling as the library changes, and when the library changes, some proofs break. | background | Supported |  |
-| 23 | plain terms | Mathlib has a style check, the "flexible linter", based on the belief that a common pattern is fragile: an automatic simplification step (`simp`) followed by a precise step that depends on exactly what `simp` produced. | ledger F1 (linter docstring) | Supported |  |
-| 24 | plain terms | If `simp` changes, the precise step breaks. | linter rationale (ledger F1) | Supported |  |
-| 25 | plain terms | We tested that belief by taking about 2,700 proofs from March 2025 and pasting them, unchanged, into the March 2026 library wherever the theorem itself was unchanged. | 2,723 proofs; statement-unchanged population | Supported |  |
-| 26 | plain terms | Proofs the style check had warned about broke more often: 44% against 25%. | 43.6% vs 25.1% | Supported |  |
-| 27 | plain terms | After allowing for proof length, the odds of breaking were about one and a half times higher. | OR 1.48 adjusted for tactic and simp counts | Supported |  |
-| 28 | plain terms | That is close to what was predicted, but the uncertainty is wide enough that we can't confirm it, and a second year-long comparison showed no difference. | CI 0.92-2.39 includes 1; second pair 0.99 | Supported |  |
-| 29 | plain terms | So the style rule points the right way, but its effect is modest next to the most common reason proofs break: names, usually lemmas, being renamed or removed. | OR 1.48 vs unknown identifier 37% of failures | Supported | 'lemmas being renamed or removed' -> 'names, usually lemmas' |
+| 7 | verdict | Flagged proofs fail **43.6%** of the time against **26.0%** for unflagged ones. | primary.json primary fail_flagged 0.4364, fail_unflagged 0.2603 | Supported |  |
+| 8 | verdict | Adjusted for tactic count and simp-call count, with clustering by file, the odds ratio is **1.57** (95% 0.97 to 2.55; p = 0.07). | primary.json primary or 1.5745 (0.9712-2.5524) p 0.0655 | Supported |  |
+| 9 | verdict | Population: 2,488 proofs in 1,203 files, of which 110 are flagged. | primary.json primary n 2488 files 1203 n_flagged 110 | Supported |  |
+| 10 | verdict | These numbers are corrected after review: the first draft counted 231 terminal `simp` calls with a multi-line argument list as non-terminal (OR 1.48, 0.92 to 2.39 on 2,723 proofs). | D3; primary_v2_pre_d3.json (OR 1.4805); 231 removed | Supported |  |
+| 11 | verdict | The adjustment matters. | primary.json primary_unadjusted_or 2.2 vs 1.57 | Supported |  |
+| 12 | verdict | The unadjusted odds ratio is 2.20, and with an independence working correlation the adjusted ratio is 1.70 (1.01 to 2.85). | primary.json primary_unadjusted_or 2.2; primary_independence 1.7004 (1.0128-2.8547) | Supported |  |
+| 13 | verdict | **The direction is consistent in the first year, not in the second pair:** | primary.json decay O+6_gee, excluding_unknown_identifier_only, secondary_pair | Supported |  |
+| 14 | verdict | six months later: OR 1.80 (1.12 to 2.90), with 30% against 14% failing; | primary.json decay O+6_gee 1.7983 (1.1166-2.8962); 0.30 vs 0.1351 | Supported |  |
+| 15 | verdict | setting aside failures whose only error is an unknown identifier (a removed or renamed name): OR 1.73 (1.07 to 2.77); | primary.json excluding_unknown_identifier_only 1.7261 (1.0748-2.7723) | Supported |  |
+| 16 | verdict | the second pair (September 2025 to September 2026): OR 1.03 (0.57 to 1.85). | primary.json secondary_pair 1.029 (0.5723-1.8501) | Supported |  |
+| 17 | verdict | Its flagged proofs are what was left after mathlib adopted the linter and rewrote nearly every flagged proof (below), so this is not a replication. | primary.json body_changed_flagged 109/110; reviewer finding 1 (linter adopted in Init between O and O2) | Supported |  |
+| 18 | verdict | **Mathlib had already rewritten almost every flagged proof.** | primary.json primary_population body_changed_flagged [109, 110] | Supported |  |
+| 19 | verdict | Between the two snapshots, mathlib changed the body of 109 of 110 flagged proofs (99%), against 1,195 of 2,378 unflagged ones (50%). | primary.json body_changed_flagged [109, 110], body_changed_unflagged [1195, 2378] | Supported |  |
+| 20 | verdict | The linter entered mathlib's defaults during that year. | D1 (linter injected for O, whose Init does not import it); review finding 1 | Supported |  |
+| 21 | verdict | This does not bias H1: failure depends only on the old body and the new library. | design: fail depends on O's body and N's library only (review finding 1) | Supported |  |
+| 22 | verdict | The first draft also reported that "proofs whose text mathlib left alone never fail", which is true by construction (such a body is the new file's own). | review finding 1 (same body = N's own file) | Supported | withdrawn |
+| 23 | verdict | It is withdrawn. | D3 | Supported |  |
+| 24 | verdict | **How proofs rot** (first reported error of the 667 failing proofs; corrected after review): | primary.json error_classes_first (667 failures) | Supported |  |
+| 25 | verdict | unknown identifier, a removed or renamed name (32%); | primary.json error_classes_first unknown_identifier 216/667 | Supported |  |
+| 26 | verdict | type mismatch (11%), unsolved goals (6%), rewrite failed (5%), "function expected" (4%, typically a changed signature), simp made no progress (2%), no goals (1%) and timeouts (4 proofs); | primary.json error_classes_first 73, 40, 33, 30, 16, 9, 4 of 667 | Supported |  |
+| 27 | verdict | other messages (37%). | primary.json error_classes_first other 246/667 | Supported |  |
+| 28 | verdict | **The linter's own failure modes are rare among flagged failures.** The two classes its rationale predicts are simp making no progress and a rewrite pattern no longer found. | primary.json error_classes_by_flag_first | Supported |  |
+| 29 | verdict | They are the first error for 2 of 48 failing flagged proofs (4%), against 47 of 619 unflagged ones (8%). | primary.json error_classes_by_flag_first flagged 1+1 of 48; unflagged 32+15 of 619 | Supported |  |
+| 30 | verdict | The first draft's patterns missed both classes entirely, because newer Lean writes "`simp` made no progress" and "Did not find an occurrence of the pattern". | primary_v2_pre_d3.json error_classes (no simp_no_progress, no rewrite_failed); rot.py ERR | Supported |  |
+| 31 | verdict | **The pipeline is valid.** In the old snapshot, 99.94% of population proofs compile without error. | label O-side error-free 99.94% | Supported |  |
+| 32 | plain terms | Mathlib is a huge, shared library of formally verified mathematics written in the Lean proof assistant. | background | Supported |  |
+| 33 | plain terms | Its proofs must keep compiling as the library changes, and when the library changes, some proofs break. | background | Supported |  |
+| 34 | plain terms | Mathlib has a style check, the "flexible linter", based on the belief that a common pattern is fragile: an automatic simplification step (`simp`) followed by a precise step that depends on exactly what `simp` produced. | ledger F1 (linter docstring) | Supported |  |
+| 35 | plain terms | If `simp` changes, the precise step breaks. | linter rationale (ledger F1) | Supported |  |
+| 36 | plain terms | We tested that belief by taking about 2,500 proofs from March 2025 and pasting them, unchanged, into the March 2026 library wherever the theorem itself was unchanged. | primary.json primary n 2488 | Supported |  |
+| 37 | plain terms | Proofs the style check had warned about broke more often: 44% against 26%. | primary.json primary 0.4364 vs 0.2603 | Supported |  |
+| 38 | plain terms | After allowing for proof length, the odds of breaking were about one and a half times higher. | OR 1.48 adjusted for tactic and simp counts | Supported |  |
+| 39 | plain terms | That is close to what was predicted, but the uncertainty is wide enough that we can't confirm it, and a second year-long comparison showed no difference. | CI 0.92-2.39 includes 1; second pair 0.99 | Supported |  |
+| 40 | plain terms | So the style rule points the right way, but its effect is modest next to the most common reason proofs break: names, usually lemmas, being renamed or removed. | OR 1.48 vs unknown identifier 37% of failures | Supported | 'lemmas being renamed or removed' -> 'names, usually lemmas' |
+| 41 | plain terms | And the flagged proofs that broke rarely did so in the way the rule's rationale describes. | primary.json error_classes_by_flag_first (proxy; caveat in What this shows) | Supported |  |

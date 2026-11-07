@@ -4,6 +4,14 @@
   rot.py decls O N             parse both snapshots; population of matched declarations -> data/work/pop_<O>_<N>.parquet
   rot.py label O               compile population files of O with -Dlinter.flexible=true -> data/work/label_<O>.parquet
   rot.py replay O N            replay O proof bodies into N files and compile -> data/work/replay_<O>_<N>.parquet
+
+D3 (after the independent review, 2026-11-07):
+  - a more-indented line after `simp [...,` is a continuation of the same call, not a following tactic (finding 4);
+  - declarations with a comment between the statement and `:= by` are flagged (`comment_before_by`): the body
+    offset was computed on comment-stripped text, so their replayed bodies are unreliable (finding 5);
+  - `<;>` is no longer counted twice in the tactic count (finding 5);
+  - error classes tolerate newer Lean's backticks and wording, and `eclass_first` gives the class of the first
+    reported error (finding 2).
 """
 import json
 import os
@@ -66,16 +74,17 @@ def parse(text):
         name = m.group(2)
         qual = ".".join([n for t, n in ns if t == "ns"] + [name])
         head = bclean[m.end():pos.start()]
-        body = block[len(block) - len(bclean) + pos.end():] if len(block) == len(bclean) else block[pos.end():]
+        body = block[pos.end():]
+        cbb = bclean[:pos.end()] != block[:pos.end()]           # D3: a comment before ":= by" shifts the offset
         out.append({"name": qual, "statement": " ".join(head.split()), "body": body, "start": i + 1, "end": j,
-                    "body_offset_line": i + 1 + bclean[:pos.end()].count("\n")})
+                    "body_offset_line": i + 1 + bclean[:pos.end()].count("\n"), "comment_before_by": cbb})
     return out
 
 
 def features(body):
     b = strip_comments(body)
     ls = [x for x in b.split("\n") if x.strip()]
-    tactics = len(ls) + b.count(";") + b.count("<;>")
+    tactics = len(ls) + b.count(";")                          # D3: "<;>" contains ";" and was counted twice
     nsimp = len(SIMP_ANY.findall(b))
     nonterm = False
     for idx, ln in enumerate(ls):
@@ -85,7 +94,16 @@ def features(body):
                 nonterm = True
                 break
             ind = len(ln) - len(ln.lstrip())
-            nxt = ls[idx + 1] if idx + 1 < len(ls) else None
+            # D3: follow a multi-line argument list to the end of the simp call
+            j = idx
+            depth = rest.count("[") + rest.count("(") - rest.count("]") - rest.count(")")
+            while (depth > 0 or ls[j].rstrip().endswith(",")) and j + 1 < len(ls):
+                j += 1
+                depth += ls[j].count("[") + ls[j].count("(") - ls[j].count("]") - ls[j].count(")")
+            if j > idx and re.search(r"[\])]\s*(;|<;>)\s*\S", ls[j]):
+                nonterm = True
+                break
+            nxt = ls[j + 1] if j + 1 < len(ls) else None
             if nxt is not None:
                 nind = len(nxt) - len(nxt.lstrip())
                 if nind >= ind and not (nind == ind and nxt.lstrip().startswith(("·", "case ", "next"))):
@@ -116,7 +134,8 @@ def decls(o, n):
             if m is None or m["statement"] != d["statement"]:
                 continue
             rows.append({"file": str(rel), "name": d["name"], "o_start": d["start"], "o_end": d["end"],
-                         "body_o": d["body"], "same_body": d["body"].strip() == m["body"].strip(), **features(d["body"])})
+                         "body_o": d["body"], "same_body": d["body"].strip() == m["body"].strip(),
+                         "comment_before_by": bool(d["comment_before_by"] or m["comment_before_by"]), **features(d["body"])})
     P = pd.DataFrame(rows)
     P.to_parquet(WORK / f"pop_{o}_{n}.parquet", index=False)
     print(len(P), "population declarations in", P.file.nunique() if len(P) else 0, "files;", int(P.same_body.sum()) if len(P) else 0, "with unchanged bodies")
@@ -184,16 +203,23 @@ def label(o):
 
 
 ERR = [("unknown_identifier", r"unknown (identifier|constant)|unknown namespace"), ("function_expected", r"function expected"),
-       ("no_goals", r"no goals( to be (solved|proved))?"), ("simp_no_progress", r"simp made no progress|simp_all made no progress"),
-       ("rewrite_failed", r"did not find instance of the pattern|motive is not type correct|rewrite failed"),
+       ("no_goals", r"no goals( to be (solved|proved))?"),
+       ("simp_no_progress", r"\bsimp(_all)?\b`?\s*made no progress"),                               # D3: "`simp` made no progress"
+       ("rewrite_failed", r"did not find (an occurrence|instance) of the pattern|motive is not type correct|`?rewrite`? failed"),
        ("type_mismatch", r"type mismatch"), ("unsolved_goals", r"unsolved goals"), ("timeout", r"heartbeats|TIMEOUT|deterministic")]
 
 
 def eclass(msgs):
+    """Highest-priority class among all of a declaration's errors (the first draft's definition)."""
     for k, pat in ERR:
         if any(re.search(pat, m, re.I) for m in msgs):          # D2: case-insensitive (newer Lean capitalises)
             return k
     return "other"
+
+
+def eclass_first(msgs):
+    """D3: class of the first reported error only."""
+    return eclass(msgs[:1]) if msgs else ""
 
 
 def replay(o, n):
@@ -274,6 +300,14 @@ end Foo
     assert features("\n  simp; ring_nf")["nonterm_simp"]
     src2 = "namespace A\n\n@[expose] public section\n\ntheorem t : True := by\n  simp\n  trivial\n\nend\n\ntheorem u : True := by\n  simp\n  trivial\n\nend A\n"
     assert [d["name"] for d in parse(src2)] == ["A.t", "A.u"], [d["name"] for d in parse(src2)]
+    # D3
+    assert not features("\n  simp [a, b,\n    c, d]")["nonterm_simp"]
+    assert features("\n  simp [a, b,\n    c, d]\n  ring")["nonterm_simp"]
+    assert features("\n  simp [a,\n    b] <;> ring")["nonterm_simp"]
+    assert eclass(["`simp` made no progress"]) == "simp_no_progress"
+    assert eclass(["Tactic `rewrite` failed: Did not find an occurrence of the pattern"]) == "rewrite_failed"
+    assert eclass_first(["Invalid argument", "maximum recursion depth or heartbeats"]) == "other"
+    assert features("\n  simp <;> ring")["tactics"] == 2
     print("rot tests pass")
 
 

@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mathlib Proof Rot</title>
+<meta name="description" content="Do mathlib proofs flagged by the flexible linter break more often when replayed into a later library?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Formal mathematics</div>
+  <h1>Do &quot;flexible-then-rigid&quot; proofs rot faster in mathlib? Replaying 2,500 old proofs a year later: flagged proofs fail more often, but the effect is not reliably 1.5×, and few of their failures carry the errors the linter&#x27;s rationale predicts</h1>
+  <p class="subtitle">Mathlib proofs containing a non-terminal unrestricted `simp`, from the 31 March 2025 master snapshot, were replayed verbatim into the files of 31 March 2026 wherever the statement text was unchanged, then compiled against that snapshot&#x27;s prebuilt library. The flexible linter&#x27;s warnings in the old snapshot define &quot;flagged&quot;. The plan and all analysis code were committed before any replay result.</p>
+  <div class="meta">
+    <span>Report · 2026-10-25 · under independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/formal-math-mathlib-proof-rot-flexible-linter/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/formal-math-mathlib-proof-rot-flexible-linter/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/formal-math-mathlib-proof-rot-flexible-linter/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: H1 Inconclusive.</strong></p>
+<ul>
+<li><strong>H1 (flagged proofs fail on 12-month replay with odds at least 1.5 times unflagged ones): Inconclusive.</strong><ul>
+<li>Flagged proofs fail <strong>43.6%</strong> of the time against <strong>26.0%</strong> for unflagged ones.</li>
+<li>Adjusted for tactic count and simp-call count, with clustering by file, the odds ratio is <strong>1.57</strong> (95% 0.97 to
+2.55; p = 0.07).</li>
+<li>Population: 2,488 proofs in 1,203 files, of which 110 are flagged. These numbers are corrected after review: the
+first draft counted 231 terminal <code>simp</code> calls with a multi-line argument list as non-terminal (OR 1.48, 0.92 to
+2.39 on 2,723 proofs).</li>
+<li>The adjustment matters. The unadjusted odds ratio is 2.20, and with an independence working correlation the
+adjusted ratio is 1.70 (1.01 to 2.85).</li>
+</ul>
+</li>
+<li><strong>The direction is consistent in the first year, not in the second pair:</strong><ul>
+<li>six months later: OR 1.80 (1.12 to 2.90), with 30% against 14% failing;</li>
+<li>setting aside failures whose only error is an unknown identifier (a removed or renamed name): OR 1.73 (1.07 to 2.77);</li>
+<li>the second pair (September 2025 to September 2026): OR 1.03 (0.57 to 1.85). Its flagged proofs are what was left
+after mathlib adopted the linter and rewrote nearly every flagged proof (below), so this is not a replication.</li>
+</ul>
+</li>
+<li><strong>Mathlib had already rewritten almost every flagged proof.</strong><ul>
+<li>Between the two snapshots, mathlib changed the body of 109 of 110 flagged proofs (99%), against 1,195 of 2,378
+unflagged ones (50%). The linter entered mathlib's defaults during that year.</li>
+<li>This does not bias H1: failure depends only on the old body and the new library.</li>
+<li>The first draft also reported that "proofs whose text mathlib left alone never fail", which is true by
+construction (such a body is the new file's own). It is withdrawn.</li>
+</ul>
+</li>
+<li><strong>How proofs rot</strong> (first reported error of the 667 failing proofs; corrected after review):<ul>
+<li>unknown identifier, a removed or renamed name (32%);</li>
+<li>type mismatch (11%), unsolved goals (6%), rewrite failed (5%), "function expected" (4%, typically a changed
+signature), simp made no progress (2%), no goals (1%) and timeouts (4 proofs);</li>
+<li>other messages (37%).</li>
+<li><strong>The linter's own failure modes are rare among flagged failures.</strong> The two classes its rationale predicts are
+simp making no progress and a rewrite pattern no longer found. They are the first error for 2 of 48 failing
+flagged proofs (4%), against 47 of 619 unflagged ones (8%). The first draft's patterns missed both classes
+entirely, because newer Lean writes "<code>simp</code> made no progress" and "Did not find an occurrence of the pattern".</li>
+</ul>
+</li>
+<li><strong>The pipeline is valid.</strong> In the old snapshot, 99.94% of population proofs compile without error.</li>
+</ul>
+<h2>In plain terms</h2>
+<p>Mathlib is a huge, shared library of formally verified mathematics written in the Lean proof assistant. Its proofs
+must keep compiling as the library changes, and when the library changes, some proofs break. Mathlib has a style
+check, the "flexible linter", based on the belief that a common pattern is fragile: an automatic simplification
+step (<code>simp</code>) followed by a precise step that depends on exactly what <code>simp</code> produced. If <code>simp</code> changes, the
+precise step breaks.</p>
+<p>We tested that belief by taking about 2,500 proofs from March 2025 and pasting them, unchanged, into the March 2026
+library wherever the theorem itself was unchanged. Proofs the style check had warned about broke more often: 44%
+against 26%. After allowing for proof length, the odds of breaking were about one and a half times higher. That is
+close to what was predicted, but the uncertainty is wide enough that we can't confirm it, and a second year-long
+comparison showed no difference.</p>
+<p>So the style rule points the right way, but its effect is modest next to the most common reason proofs break: names, usually lemmas, being renamed or removed. And the flagged proofs that broke rarely did so in the way the rule's rationale describes.</p>
+<h2>What was asked</h2>
+<p>The lead (<code>formal-math-mathlib-proof-rot-flexible-linter</code>) asked whether proofs that mathlib's FlexibleLinter flags
+break more often when replayed in a later library. Its prediction was an odds ratio of at least 1.5.</p>
+<p>The linter's docstring asserts this, and the style guide's "non-terminal simp should be simp only" rule rests on it.
+No replay measurement was found. Related work covers Isabelle/AFP version compatibility (TOSEM 2025) and LLM proofs
+across Lean versions (arXiv 2605.20244).</p>
+<h2>How it was done</h2>
+<ul>
+<li><strong>Snapshots</strong> (depth-1 checkouts with prebuilt olean caches):<ul>
+<li>primary: O = <code>9bed6a56</code> (2025-03-31) and N = <code>08fd1302</code> (2026-03-31);</li>
+<li>secondary: O₂ = <code>bb6ed240</code> (2025-09-30), which is also O + 6 months, and N₂ = <code>2a885768</code> (2026-09-30).</li>
+</ul>
+</li>
+<li><strong>Declarations.</strong> <code>theorem</code> and <code>lemma</code> commands with tactic proofs, from a line-based parser, unit-tested.<ul>
+<li><strong>Features:</strong> tactic count, simp-call count, and non-terminal unrestricted <code>simp</code> (not <code>simp only</code>, not the last
+tactic of its block).</li>
+<li><strong>Population:</strong> proofs with at least one non-terminal unrestricted simp, whose file exists at the same path later
+with a declaration of the same name and identical statement text. A more-indented line after <code>simp [...,</code> is a
+continuation of the same call (corrected after review). Four declarations with a comment before <code>:= by</code> are
+dropped, because their replayed bodies were extracted at a shifted offset.</li>
+</ul>
+</li>
+<li><strong>Flag.</strong> Each population file was compiled in O with the flexible linter enabled (<code>-Dweak.linter.flexible=true</code>).
+  The linter module is injected for O, whose <code>Init</code> does not import it (D1). A declaration is flagged if a warning
+  falls in its span.</li>
+<li><strong>Replay.</strong> O's proof bodies were substituted into N's file and the file compiled with <code>lake env lean</code> (30-minute
+  limit). A proof fails if any error falls in its span. 14 files were compiled in parallel.</li>
+<li><strong>Model.</strong> Logistic GEE, fail ~ flagged + log(tactics) + simp calls, exchangeable correlation within file.</li>
+</ul>
+<h2>Results (<code>results/figures/F1_rot.png</code>)</h2>
+<figure><a href="results/figures/F1_rot.png"><img src="results/figures/F1_rot.png" alt="Rot"></a><figcaption>Mathlib theorem/lemma proofs containing a non-terminal unrestricted simp whose statement text is unchanged later; each old proof body replayed verbatim into the later snapshot&#x27;s file and compiled against its prebuilt cache. Flag: a flexible-linter warning inside the declaration in the old snapshot. Odds ratios from a logistic GEE clustered by file, adjusted for log tactic count and simp-call count. Right: first matching error class of failing proofs in the primary pair (2025-03-31 to 2026-03-31).</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>comparison</th>
+<th>proofs (flagged)</th>
+<th>fail: flagged / unflagged</th>
+<th>odds ratio (95% CI)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>2025-03 → 2026-03 (primary)</strong></td>
+<td>2,488 (110)</td>
+<td>43.6% / 26.0%</td>
+<td><strong>1.57 (0.97–2.55)</strong></td>
+</tr>
+<tr>
+<td>primary, excluding failures whose only error is an unknown identifier</td>
+<td>2,488 (110)</td>
+<td>41.8% / 23.3%</td>
+<td>1.73 (1.07–2.77)</td>
+</tr>
+<tr>
+<td>2025-03 → 2025-09 (6 months)</td>
+<td>2,854 (130)</td>
+<td>30.0% / 13.5%</td>
+<td>1.80 (1.12–2.90)</td>
+</tr>
+<tr>
+<td>2025-09 → 2026-09 (second pair)</td>
+<td>3,566 (115)</td>
+<td>22.6% / 17.1%</td>
+<td>1.03 (0.57–1.85)</td>
+</tr>
+<tr>
+<td>both 12-month pairs, clustered by file across pairs</td>
+<td>6,054 (225)</td>
+<td>32.9% / 20.7%</td>
+<td>1.45 (1.00–2.10)</td>
+</tr>
+</tbody>
+</table></div>
+<p>The two 12-month pairs share 2,209 declarations, so the pooled row clusters by file across pairs. The first draft
+prefixed file names by pair, which counted shared proofs as independent. The second pair's flagged set is
+post-clean-up, so the pooled row mixes two different populations and is descriptive only.</p>
+<p><strong>Error classes of failing primary-pair proofs</strong> (667), by the first reported error: other 246, unknown identifier 216,
+type mismatch 73, unsolved goals 40, rewrite failed 33, function expected 30, simp made no progress 16, no goals 9,
+timeout 4. By the highest-priority class among all of a proof's errors (the first draft's definition, now with the
+corrected patterns): unknown identifier 236, unsolved goals 165, other 80, type mismatch 68, rewrite failed 35,
+function expected 30, no goals 26, simp made no progress 23, timeout 4. The class is read from the first three stored
+error messages of each proof.</p>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>The style rule points the right way in the first year.</strong> The six-month comparison and the primary analysis without
+  renamed-lemma failures clear a 1.0 lower bound, but the preregistered primary does not. The second pair shows
+  nothing, but its flagged proofs are the residue after mathlib's clean-up. Flagged proofs are rare (4% of the
+  population), which limits power.</li>
+<li><strong>The mechanism is not visible in the errors.</strong> If flagged proofs broke because <code>simp</code> changed what it produced,
+  their failures should often be simp making no progress or a rewrite pattern not found. Only 2 of 48 are. Error
+  messages are a coarse proxy, though: a changed simp normal form can also surface as unsolved goals or a type
+  mismatch.</li>
+<li><strong>Proof rot is dominated by library churn, not tactic style.</strong> Removed or renamed lemmas are the most common
+  identifiable cause. Mathlib's maintainers rewrote about half of the unflagged population, and nearly all flagged
+  proofs, within the year.</li>
+<li><strong>Not shown:</strong><ul>
+<li><strong>Causation.</strong> Flagged proofs may differ in other ways, such as the areas they sit in.</li>
+<li><strong>Moved files and changed statements,</strong> which are excluded.</li>
+<li><strong>Linter coverage.</strong> The linter's behaviour and the syntactic feature detection are approximate.</li>
+<li><strong>Comparison with LLM proofs.</strong> The lead's Lean-workbook comparison was not run.</li>
+</ul>
+</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration:</strong> <code>plan.md</code>.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>):<ul>
+<li>D1, before any population or replay: the <code>weak.</code> option prefix, linter injection for O, and section parsing;</li>
+<li>D2, after the first results: case-insensitive error classes, two added classes and stored messages. This affects
+only the error-class composition and the unknown-identifier sensitivity. The first version is
+<code>results/tables/primary_v1.json</code>;</li>
+<li>D3, after the independent review (post hoc): the multi-line <code>simp</code> continuation, comment-offset declarations,
+error-class patterns and first-error classes, cross-pair clustering, and the body-change rates. The draft the
+review saw is <code>results/tables/primary_v2_pre_d3.json</code>.</li>
+</ul>
+</li>
+<li><strong>Independent review:</strong> fix first (four moderate findings); the fixes are in D3.</li>
+</ul>
+<h2>Reproducing it</h2>
+<ol>
+<li><code>code/fetch_snap.sh</code> for each of the four commits. This needs elan, and each cache is about 5 GB.</li>
+<li><code>code/rot.py decls O N</code> for each pair.</li>
+<li><code>code/run_all.sh</code> (labelling, then replays).</li>
+<li><code>code/analyse.py</code>.</li>
+<li><code>code/figures.py</code>.</li>
+</ol>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/formal-math-mathlib-proof-rot-flexible-linter/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>
