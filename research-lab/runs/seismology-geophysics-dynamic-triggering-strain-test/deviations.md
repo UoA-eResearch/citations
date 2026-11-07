@@ -29,3 +29,23 @@
 - **POST HOC check.** `windows.py exposure` (and `exposure_post6h`) recomputes every real and pseudo window with
   effective exposure: window length minus the union of masks. It is reported beside the preregistered result, which
   stands.
+
+## D2 — 2026-11-07 — fixes after the independent review (verdict: fix first)
+
+Everything here follows the first review (`review/review.md`) and is post hoc. No pick, window or null was
+recomputed; the preregistered results stand as computed and are reported beside the corrected ones.
+
+1. **Comparable arms (finding 1, G1).** Pseudo-triggers were rejected near other large earthquakes, and real triggers
+   were not. New `code/comparable.py` classifies the real pairs and re-applies the preregistered H1/H2 rules and
+   bootstrap (`analyse.summarise`) to each class (`results/tables/comparable.json`).
+   - The null's own rule applied to real triggers is the corrected primary: no other M ≥ 7 within 10 days and no
+     other M ≥ 6.5 within 3 days. It keeps 68 of 350 triggers and gives a mean excess of +0.000 (−0.008 to +0.008),
+     so H2 is Inconclusive.
+   - Pairs with no other M ≥ 6.5 in their own windows: +0.004 (−0.002 to +0.011).
+   - Post-window contamination alone: −0.013 (−0.019 to −0.006).
+   - The contaminated share rises from 16% (lowest strain quintile) to 33–36% (top two).
+   - The title and verdict are rewritten. The preregistered "H2 Refuted" stays beside the corrected result.
+2. **Station population (finding 2).** The title and verdict say about 1,500 long-running stations. The station map
+   carries a caveat: per-station nulls rest on a median of 212 random times.
+3. **Detectability (finding 3).** The verdict states the proxy's recall (46%; 52% at M ≥ 3) and the size of rise a
+   significant result needs, and that instantaneous triggering cannot be tested.
