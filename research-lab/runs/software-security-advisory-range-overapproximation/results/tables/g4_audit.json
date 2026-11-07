@@ -1,0 +1,227 @@
+{
+ "packets": 60,
+ "over_approximated": {
+  "n": 30,
+  "auditor_agrees": 10,
+  "auditor_cannot_tell": 12,
+  "auditor_says_present_in_A": 8,
+  "agreement": 0.333
+ },
+ "tight": {
+  "n": 30,
+  "auditor_agrees": 24,
+  "auditor_cannot_tell": 5,
+  "agreement": 0.8
+ },
+ "disagreements": [
+  {
+   "packet": "a08",
+   "id": "GHSA-v936-j8gp-9q3p",
+   "pipeline_class": "over-approximated",
+   "A": "present",
+   "B": "present",
+   "reason": "both use non-blacklisted clients for push and key revocation"
+  },
+  {
+   "packet": "a11",
+   "id": "GHSA-6fw5-9hq8-w87g",
+   "pipeline_class": "tight",
+   "A": "cannot tell",
+   "B": "cannot tell",
+   "reason": "only compiled cjs/esm listed, not provided"
+  },
+  {
+   "packet": "a19",
+   "id": "GHSA-f2rp-38vg-j3gh",
+   "pipeline_class": "over-approximated",
+   "A": "cannot tell",
+   "B": "present",
+   "reason": "A code in unprovided index.js; B escapes without null stripping"
+  },
+  {
+   "packet": "a21",
+   "id": "GHSA-6vj9-mwq6-2f5v",
+   "pipeline_class": "over-approximated",
+   "A": "cannot tell",
+   "B": "cannot tell",
+   "reason": "shared/index.js not provided in either release"
+  },
+  {
+   "packet": "a22",
+   "id": "GHSA-43qf-4rqw-9q2g",
+   "pipeline_class": "over-approximated",
+   "A": "cannot tell",
+   "B": "present",
+   "reason": "A single flask_cors.py not provided; B case-insensitive try_match on paths"
+  },
+  {
+   "packet": "a23",
+   "id": "GHSA-4p35-cfcx-8653",
+   "pipeline_class": "over-approximated",
+   "A": "cannot tell",
+   "B": "present",
+   "reason": "A hand-rolled parser, cannot judge; B returns parsePath result as-is"
+  },
+  {
+   "packet": "a25",
+   "id": "GHSA-jm5j-jfrm-hm23",
+   "pipeline_class": "tight",
+   "A": "absent",
+   "B": "absent",
+   "reason": "both already wrap command calls in try/except"
+  },
+  {
+   "packet": "a31",
+   "id": "GHSA-mjqp-26hc-grxg",
+   "pipeline_class": "over-approximated",
+   "A": "present",
+   "B": "present",
+   "reason": "A exact-module denylist with aiohttp.client; B also returns empty result on bad magic"
+  },
+  {
+   "packet": "a32",
+   "id": "GHSA-86ch-6w7v-v6xf",
+   "pipeline_class": "tight",
+   "A": "cannot tell",
+   "B": "cannot tell",
+   "reason": "dist/http-handler.js not provided"
+  },
+  {
+   "packet": "a34",
+   "id": "GHSA-xg9f-g7g7-2323",
+   "pipeline_class": "over-approximated",
+   "A": "cannot tell",
+   "B": "present",
+   "reason": "A form parsing in unprovided wrappers/utils; B no multipart part limit"
+  },
+  {
+   "packet": "a35",
+   "id": "GHSA-hpv5-v8g5-c864",
+   "pipeline_class": "over-approximated",
+   "A": "present",
+   "B": "present",
+   "reason": "A autolink unfiltered, weak link check; B escape_link prefix check, autolink uses escape"
+  },
+  {
+   "packet": "a37",
+   "id": "GHSA-45gq-q4xh-cp53",
+   "pipeline_class": "over-approximated",
+   "A": "cannot tell",
+   "B": "present",
+   "reason": "A login code in unprovided token.py; B user_login branches on username_exists"
+  },
+  {
+   "packet": "a38",
+   "id": "GHSA-7599-fqgm-v84p",
+   "pipeline_class": "over-approximated",
+   "A": "present",
+   "B": "present",
+   "reason": "both use unbounded ambiguous digit regexes"
+  },
+  {
+   "packet": "a39",
+   "id": "GHSA-95fx-jjr5-f39c",
+   "pipeline_class": "over-approximated",
+   "A": "cannot tell",
+   "B": "cannot tell",
+   "reason": "only dist bundles listed, not provided"
+  },
+  {
+   "packet": "a40",
+   "id": "GHSA-hvq2-wf92-j4f3",
+   "pipeline_class": "tight",
+   "A": "cannot tell",
+   "B": "present",
+   "reason": "A code in unprovided index.js; B recursive sanitize without depth limit"
+  },
+  {
+   "packet": "a41",
+   "id": "GHSA-9vhv-jxww-xfm5",
+   "pipeline_class": "over-approximated",
+   "A": "present",
+   "B": "present",
+   "reason": "A connects SQLite by name; B fd-path/name connect without private-dir check"
+  },
+  {
+   "packet": "a43",
+   "id": "GHSA-hv96-xxx2-5v7w",
+   "pipeline_class": "over-approximated",
+   "A": "present",
+   "B": "present",
+   "reason": "both default download base http://"
+  },
+  {
+   "packet": "a45",
+   "id": "GHSA-x287-wcfc-q46c",
+   "pipeline_class": "tight",
+   "A": "cannot tell",
+   "B": "cannot tell",
+   "reason": "only dist bundles listed, not provided"
+  },
+  {
+   "packet": "a47",
+   "id": "GHSA-h8rc-w822-q8vq",
+   "pipeline_class": "over-approximated",
+   "A": "cannot tell",
+   "B": "present",
+   "reason": "A has no gatekeeper; proxy header path in unprovided proxy/server.py; B lacks update-header exclusions"
+  },
+  {
+   "packet": "a48",
+   "id": "GHSA-98pq-pmw9-4gpm",
+   "pipeline_class": "over-approximated",
+   "A": "cannot tell",
+   "B": "present",
+   "reason": "A query code in unprovided files; B unescaped LIMIT/OFFSET"
+  },
+  {
+   "packet": "a50",
+   "id": "GHSA-6v92-r5mx-h5fx",
+   "pipeline_class": "over-approximated",
+   "A": "present",
+   "B": "present",
+   "reason": "both return static tools unwrapped in evaluate_name"
+  },
+  {
+   "packet": "a53",
+   "id": "GHSA-r659-8xfp-j327",
+   "pipeline_class": "over-approximated",
+   "A": "cannot tell",
+   "B": "cannot tell",
+   "reason": "objectUtils absent; set/zipObject counterpart not provided"
+  },
+  {
+   "packet": "a55",
+   "id": "GHSA-g57g-f23g-4646",
+   "pipeline_class": "tight",
+   "A": "cannot tell",
+   "B": "cannot tell",
+   "reason": "addressparser index.js not provided in either"
+  },
+  {
+   "packet": "a57",
+   "id": "GHSA-wjr4-2jgw-hmv8",
+   "pipeline_class": "over-approximated",
+   "A": "present",
+   "B": "present",
+   "reason": "both build shell commands with exec and name"
+  },
+  {
+   "packet": "a58",
+   "id": "GHSA-vmp7-252j-cwp7",
+   "pipeline_class": "over-approximated",
+   "A": "cannot tell",
+   "B": "cannot tell",
+   "reason": "build/index.js not provided"
+  },
+  {
+   "packet": "a59",
+   "id": "GHSA-f8gf-w286-fmq2",
+   "pipeline_class": "over-approximated",
+   "A": "cannot tell",
+   "B": "present",
+   "reason": "A sandbox code not provided; B Promise statics/resolve unguarded under allowAsync false"
+  }
+ ],
+ "H1_reliable_by_plan_rule": false
+}

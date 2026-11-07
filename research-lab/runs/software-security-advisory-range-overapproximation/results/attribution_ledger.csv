@@ -1,0 +1,6 @@
+id,claim,used_in,source_type,source_id,locator,role,support,conditions,checked_how,checked_at
+S1,"OSV schema: affected ranges encoded by introduced, fixed and last_affected events",report.md How it was done; plan.md,documentation,https://ossf.github.io/osv-schema/,"OSV schema, affected[].ranges[].events",method,supports,,page read,2026-11-08 11:00
+S2,OSV export used as the advisory source (npm and PyPI),report.md How it was done,dataset,https://osv-vulnerabilities.storage.googleapis.com/,"{npm,PyPI}/all.zip, downloaded 2026-11-07T05:49Z",data source,supports,GHSA records only,download,2026-11-08 11:00
+S3,An OSV-derived ground-truth dataset for evaluating detection tools takes the published ranges as truth,report.md What was asked,preprint,2604.21111,"Mandl et al. 2026, abstract",related work,supports,abstract only,arXiv abstract,2026-11-08 11:00
+S4,Affected-version identification tools reach under 45% accuracy on C/C++ vulnerabilities,report.md What was asked,paper,10.1109/ase63991.2025.00244,"Chen et al. 2025, ASE",related work,supports,"C/C++, not npm/PyPI",DOI resolves; abstract,2026-11-08 11:00
+S5,VERJava: vulnerable version identification for Java,report.md What was asked,paper,10.1109/icsme55016.2022.00037,"Sun et al. 2022, ICSME",related work,supports,,DOI resolves,2026-11-08 11:00

@@ -1941,7 +1941,12 @@
     "Write up with released ground-truth dataset of corrected ranges (a contribution in itself) and a PR-ready feed of proposed GHSA range corrections; MSR/FSE format."
    ],
    "risks": "Patch-presence matching fails on refactored code (must report undetermined class, and if undetermined exceeds ~40% the headline claim weakens); vulnerable-code presence is not identical to exploitability (frame strictly as range-accuracy, not exploitability); GitHub's advisory curation team may fix 'introduced: 0' laziness mid-study; disk pressure requires streaming eviction of tarballs.",
-   "plain_summary": "Security advisories list which versions of a software package are vulnerable. If those version ranges are too broad, organisations are flooded with false alarms. This study would check the published ranges against the actual code history to measure how often they overstate the affected versions."
+   "plain_summary": "Security advisories list which versions of a software package are vulnerable. If those version ranges are too broad, organisations are flooded with false alarms. This study would check the published ranges against the actual code history to measure how often they overstate the affected versions.",
+   "status": "deep dive \u00b7 report (pre-review draft, queued for independent review)",
+   "report_url": "runs/software-security-advisory-range-overapproximation/report.html",
+   "verdict_tag": "Inconclusive",
+   "verdict_note": "H1 and H2 Inconclusive (pre-review). For 800 GHSA npm/PyPI advisories with a fix commit, a line-signature code-presence test flags 308 of 411 classified lower bounds as starting before the vulnerable code existed (75%) and a 2.18-fold reduction in affected version pairs. But the preregistered blind audit confirms only 10 of 30 pipeline over-approximations (8 contradicted: the same flaw in differently written code; 12 undecidable), so by the plan's rule the share is unreliable; the audit-calibrated range is 25-55%, and a strict reading (module missing) gives 58% and a factor of 1.35. 'Introduced: 0' ranges (81% of advisories) are flagged far more often than explicit lower bounds.",
+   "headline": "Do security advisories mark too many old versions as vulnerable? A code-presence check says three in four do, but a blind audit shows it over-calls; the defensible share is a quarter to a half."
   },
   {
    "id": "software-security-attestation-phantom-code",

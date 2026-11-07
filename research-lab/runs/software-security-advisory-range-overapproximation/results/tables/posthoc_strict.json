@@ -1,0 +1,32 @@
+{
+ "over_approximated": 308,
+ "strict": 142,
+ "not_strict": 161,
+ "unknown": 5,
+ "strict_share_of_strict_plus_tight": 0.5796,
+ "wilson": [
+  0.517,
+  0.6397
+ ],
+ "audited_strict": {
+  "n": 14,
+  "auditor_absent": 4,
+  "auditor_present": 0,
+  "auditor_cannot_tell": 10
+ },
+ "audited_not_strict": {
+  "n": 15,
+  "auditor_absent": 5,
+  "auditor_present": 8,
+  "auditor_cannot_tell": 2
+ },
+ "H2_strict_factor": 1.345,
+ "H2_strict_ci": [
+  1.266,
+  1.45
+ ],
+ "H1_audit_calibrated_range": [
+  0.25,
+  0.55
+ ]
+}

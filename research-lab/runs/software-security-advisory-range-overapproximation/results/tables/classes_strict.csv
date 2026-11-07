@@ -1,0 +1,801 @@
+id,cls,strict
+GHSA-cmwx-9m2h-x7v4,undetermined,
+GHSA-m379-x4xc-38x9,over-approximated,True
+GHSA-rrx3-2x4g-mq2h,over-approximated,True
+GHSA-q326-jhw3-699g,tight,
+GHSA-vfrc-ggmc-5jwv,over-approximated,False
+GHSA-p6hp-93wp-fh6p,over-approximated,False
+GHSA-h6m2-r6h9-4c44,undetermined,
+GHSA-w9h2-px87-74vx,undetermined,
+GHSA-rfgq-q3w2-pmv2,not classifiable: no usable signature,
+GHSA-grg2-63fw-f2qr,over-approximated,False
+GHSA-5g4v-2pc6-4hh4,over-approximated,True
+GHSA-vc25-24vv-fxxm,over-approximated,False
+GHSA-q2x6-8gfj-hjxw,over-approximated,True
+GHSA-856c-92hv-3vxx,over-approximated,False
+GHSA-p43p-whwx-q52h,over-approximated,False
+GHSA-x3rh-gjgm-fmqc,not classifiable: no fix diff,
+GHSA-hqmh-ppp3-xvm7,over-approximated,False
+GHSA-qh6h-p6c9-ff54,undetermined,
+GHSA-27jx-ffw8-xrqv,over-approximated,False
+GHSA-pwxh-7358-jq2x,not classifiable: no usable signature,
+GHSA-jxw3-mjmx-3pqm,undetermined,
+GHSA-wxr6-29pv-ch68,tight,
+GHSA-crv4-6mhj-j5jh,undetermined,
+GHSA-rxpr-wq63-jr7p,not classifiable: no usable signature,
+GHSA-qw93-h6pf-226x,undetermined,
+GHSA-prgp-w7vf-ch62,over-approximated,False
+GHSA-r735-9gc6-2hvq,not classifiable: no usable signature,
+GHSA-fj5v-w2jp-wqvj,undetermined,
+GHSA-55m3-44xf-hg4h,over-approximated,True
+GHSA-79f6-p65j-3m2m,undetermined,
+GHSA-2fqm-m4r2-fh98,over-approximated,True
+GHSA-pq67-6m6q-mj2v,over-approximated,True
+GHSA-q45j-58j2-45rg,not classifiable: no usable signature,
+GHSA-j8r2-6x86-q33q,tight,
+GHSA-wxmr-7xjv-8xqw,tight,
+GHSA-8q6g-vjhf-jp8m,undetermined,
+GHSA-45gq-q4xh-cp53,over-approximated,False
+GHSA-x456-3ccm-m6j4,over-approximated,False
+GHSA-qr62-r9xc-r2gj,undetermined,
+GHSA-mwv2-398h-v489,undetermined,
+GHSA-q5fm-55c2-v6j9,not classifiable: no usable signature,
+GHSA-83g7-8fch-p37m,undetermined,
+GHSA-6c7f-9265-g8fw,not classifiable: no fix diff,
+GHSA-7f5h-v6xp-fcq8,undetermined,
+GHSA-r23q-823p-vmf7,over-approximated,False
+GHSA-4v7v-gqf9-ww2g,over-approximated,False
+GHSA-jq6c-r9xf-qxjm,over-approximated,False
+GHSA-x3qm-p8hr-3c3h,over-approximated,False
+GHSA-ffg3-p8fm-mjx2,undetermined,
+GHSA-4jcj-7x88-m979,undetermined,
+GHSA-mrmq-3q62-6cc8,tight,
+GHSA-6rvg-6v2m-4j46,over-approximated,True
+GHSA-9wgg-m99q-hhfc,undetermined,
+GHSA-pjx4-3f3p-29v3,not classifiable: no usable signature,
+GHSA-hff2-x2j9-gxgv,tight,
+GHSA-m4f6-vcj4-w5mx,undetermined,
+GHSA-542m-9234-8gvf,undetermined,
+GHSA-rwj8-pgh3-r573,over-approximated,False
+GHSA-379c-qx7v-6h59,over-approximated,True
+GHSA-35mr-4567-66vg,undetermined,
+GHSA-6r3c-8xf3-ggrr,not classifiable: no fix diff,
+GHSA-7gw9-cf7v-778f,over-approximated,False
+GHSA-gc5v-m9x4-r6x2,over-approximated,True
+GHSA-g5pq-48mj-jvw8,over-approximated,False
+GHSA-m68r-v472-jgq9,over-approximated,False
+GHSA-v9m3-wfh8-5646,over-approximated,False
+GHSA-9j7f-3r4p-pwh6,not classifiable: no usable signature,
+GHSA-qh9x-mc42-vg4g,tight,
+GHSA-mm57-4v3p-rchx,over-approximated,False
+GHSA-cfc2-wr2v-gxm5,undetermined,
+GHSA-jm5j-jfrm-hm23,tight,
+GHSA-jmrh-xmgh-x9j4,over-approximated,False
+GHSA-q6mv-284r-mp36,over-approximated,True
+GHSA-pwhh-q4h6-w599,undetermined,
+GHSA-m6hv-x64c-27mm,over-approximated,False
+GHSA-pxh4-856f-4h89,over-approximated,True
+GHSA-5923-r76v-mprm,over-approximated,True
+GHSA-3c5c-7235-994j,not classifiable: no usable signature,
+GHSA-6qm2-wpxq-7qh2,undetermined,
+GHSA-969w-gqqr-g6j3,undetermined,
+GHSA-vwr9-9f8v-vp5m,undetermined,
+GHSA-4hhp-h66f-j5j7,over-approximated,True
+GHSA-3c93-f73f-qc9h,undetermined,
+GHSA-4w59-c3gc-rrhp,undetermined,
+GHSA-5cmv-3rc4-7279,over-approximated,True
+GHSA-89c9-3758-737w,undetermined,
+GHSA-fxgq-9m89-cxj9,over-approximated,True
+GHSA-4wph-9vrm-6v3w,undetermined,
+GHSA-vv7q-7jx5-f767,over-approximated,True
+GHSA-x6mc-67gf-chw4,tight,
+GHSA-hm8f-75xx-w2vr,over-approximated,False
+GHSA-xpjq-3w4w-w5wr,not classifiable: no usable signature,
+GHSA-9xq3-3fqg-4vg7,undetermined,
+GHSA-hrv9-4x4c-9jc8,undetermined,
+GHSA-rv8h-p43r-4x5r,tight,
+GHSA-7r9x-qrpr-3cxw,undetermined,
+GHSA-4grg-w6v8-c28g,tight,
+GHSA-vgrw-7cvw-pwgx,not classifiable: no usable signature,
+GHSA-j9pp-7wfg-q7fj,not classifiable: no usable signature,
+GHSA-hpv5-v8g5-c864,over-approximated,False
+GHSA-vj45-x3pj-f4w4,over-approximated,False
+GHSA-43fq-w8qq-v88h,not classifiable: no usable signature,
+GHSA-3crg-w4f6-42mx,over-approximated,True
+GHSA-5qjq-93h5-hrgp,over-approximated,False
+GHSA-qppg-v75c-r5ff,tight,
+GHSA-j36p-7w88-g82j,undetermined,
+GHSA-h7ww-273w-6cm8,over-approximated,True
+GHSA-mjqp-26hc-grxg,over-approximated,False
+GHSA-v8gr-m533-ghj9,over-approximated,False
+GHSA-pg2w-x9wp-vw92,over-approximated,False
+GHSA-9vg3-cf92-h2h7,tight,
+GHSA-8wr4-2wm6-w3pr,not classifiable: no usable signature,
+GHSA-663j-rjcr-789f,undetermined,
+GHSA-4rr5-89j8-mwwm,not classifiable: no usable signature,
+GHSA-6v92-r5mx-h5fx,over-approximated,False
+GHSA-5836-grcc-8j89,tight,
+GHSA-rf8c-3f5p-xv45,undetermined,
+GHSA-pmww-v6c9-7p83,tight,
+GHSA-mxh2-ccgj-8635,not classifiable: no usable signature,
+GHSA-776q-jw43-fhjx,not classifiable: no usable signature,
+GHSA-69qj-pvh9-c5wg,over-approximated,False
+GHSA-5hx5-vpf9-5wcv,over-approximated,True
+GHSA-vcqg-3p29-xw73,not classifiable: no usable signature,
+GHSA-wfjw-w6pv-8p7f,over-approximated,True
+GHSA-hf94-8mx5-2vvj,tight,
+GHSA-h5cg-53g7-gqjw,undetermined,
+GHSA-3jhc-wjqf-5f2c,over-approximated,False
+GHSA-8g6f-qw9x-4q6q,undetermined,
+GHSA-5fqv-mpj8-h7gm,undetermined,
+GHSA-jm68-fpmr-8j2g,not classifiable: no usable signature,
+GHSA-vq8w-x8v7-f88m,tight,
+GHSA-hvfh-5mj3-5f3j,over-approximated,False
+GHSA-fqh9-2qgg-h84h,over-approximated,True
+GHSA-gfm2-xm6c-37qc,over-approximated,False
+GHSA-8vh3-g2qg-2h2c,over-approximated,False
+GHSA-h8rc-w822-q8vq,over-approximated,True
+GHSA-8jhr-wpcm-hh4h,over-approximated,True
+GHSA-hfgr-h3vc-p6c2,not classifiable: no usable signature,
+GHSA-5639-2j2p-m4mx,over-approximated,False
+GHSA-5r3q-93q3-f978,undetermined,
+GHSA-69w3-r845-3855,over-approximated,True
+GHSA-m8r9-qxx8-mrxp,over-approximated,False
+GHSA-538c-55jv-c5g9,undetermined,
+GHSA-425g-fjhq-5h92,over-approximated,True
+GHSA-j482-47xf-p25c,undetermined,
+GHSA-xx6g-jj35-pxjv,tight,
+GHSA-v9v9-xffq-rwr4,undetermined,
+GHSA-7r7m-5h27-29hp,not classifiable: no usable signature,
+GHSA-j7qq-vr8c-xvw3,undetermined,
+GHSA-q47p-v5rw-v574,tight,
+GHSA-pmqf-x6x8-p7qw,undetermined,
+GHSA-hgf8-39gv-g3f2,over-approximated,False
+GHSA-7257-96vg-qf6x,over-approximated,False
+GHSA-xv7j-2v4w-cjvh,undetermined,
+GHSA-579p-qf78-fqm2,over-approximated,False
+GHSA-947x-pv47-pp3q,over-approximated,False
+GHSA-6x26-6r6f-m537,over-approximated,False
+GHSA-93ph-p7v4-hwh4,not classifiable: no usable signature,
+GHSA-vcwx-8mqh-2557,not classifiable: no usable signature,
+GHSA-cr7q-2w66-hjcm,not classifiable: no fix diff,
+GHSA-wm96-9gfh-vvgq,undetermined,
+GHSA-3j8r-jf9w-5cmh,undetermined,
+GHSA-4m32-cjv7-f425,undetermined,
+GHSA-f2m9-wcf4-cwwx,undetermined,
+GHSA-fg6f-75jq-6523,undetermined,
+GHSA-pxhg-7xr2-w7xg,tight,
+GHSA-q77w-mwjj-7mqx,over-approximated,False
+GHSA-qh4c-xf7m-gxfc,over-approximated,False
+GHSA-5662-2rj7-f2v6,over-approximated,False
+GHSA-8prr-286p-4w7j,over-approximated,False
+GHSA-g4c2-ghfg-g5rh,not classifiable: no usable signature,
+GHSA-8wr5-jm2h-8r4f,tight,
+GHSA-6vvc-c2m3-cjf3,not classifiable: no usable signature,
+GHSA-jfgp-674x-6q4p,tight,
+GHSA-q4xr-rc97-m4xx,over-approximated,True
+GHSA-v8wm-g9f2-xjv4,undetermined,
+GHSA-hgg8-fqqc-vfmw,over-approximated,True
+GHSA-w6c7-j32f-rq8j,over-approximated,False
+GHSA-x33v-f3gp-gw2c,over-approximated,False
+GHSA-gw84-84pc-xp82,over-approximated,True
+GHSA-m242-wc86-8768,undetermined,
+GHSA-74vm-8frp-7w68,tight,
+GHSA-xg8h-j46f-w952,not classifiable: no usable signature,
+GHSA-q4c5-2j6f-r476,tight,
+GHSA-4w7r-h757-3r74,undetermined,
+GHSA-p6hw-wm59-3g5g,tight,
+GHSA-85fp-523q-5xwc,undetermined,
+GHSA-fqpv-mq26-pr4j,over-approximated,False
+GHSA-793v-r35j-9rp9,undetermined,
+GHSA-xx4j-w367-7247,over-approximated,
+GHSA-mrfp-p49p-3hf2,undetermined,
+GHSA-jjg7-2v4v-x38h,over-approximated,True
+GHSA-php9-fj8v-98fj,over-approximated,True
+GHSA-xg9f-g7g7-2323,over-approximated,True
+GHSA-xq59-7jf3-rjc6,over-approximated,False
+GHSA-847f-9342-265h,undetermined,
+GHSA-29vq-49wr-vm6x,over-approximated,True
+GHSA-qg3f-8x3j-ggf2,over-approximated,False
+GHSA-3mqq-hv9c-85hc,over-approximated,False
+GHSA-ffw3-6mp6-jmvj,tight,
+GHSA-vx6v-xg64-pmr8,not classifiable: no usable signature,
+GHSA-phhr-52qp-3mj4,over-approximated,False
+GHSA-w392-75q8-vr67,over-approximated,False
+GHSA-hrw6-wg82-cm62,over-approximated,False
+GHSA-h5c8-rqwp-cp95,undetermined,
+GHSA-55j6-rjhx-hwfh,not classifiable: no usable signature,
+GHSA-w2pj-9cgh-mq2c,not classifiable: no usable signature,
+GHSA-h9rh-5ffh-h669,not classifiable: no usable signature,
+GHSA-58v5-2m8f-94pr,tight,
+GHSA-qx2g-xrx7-vfh8,over-approximated,True
+GHSA-69f9-5gxw-wvc2,over-approximated,True
+GHSA-6qmf-fj6m-686c,undetermined,
+GHSA-74h3-cxq7-vc5q,over-approximated,False
+GHSA-479j-jf2p-38pg,undetermined,
+GHSA-gg5m-55jj-8m5g,undetermined,
+GHSA-7x94-6g2m-3hp2,undetermined,
+GHSA-gfq8-hmph-9gjv,undetermined,
+GHSA-w235-7p84-xx57,over-approximated,True
+GHSA-pxvw-4w88-6x95,undetermined,
+GHSA-ffj6-66c4-86gw,undetermined,
+GHSA-r9mr-m37c-5fr3,over-approximated,False
+GHSA-5j8p-5rrj-8wjg,over-approximated,True
+GHSA-9794-pc4r-438w,undetermined,
+GHSA-9298-4cf8-g4wj,undetermined,
+GHSA-329j-jfvr-rhr6,not classifiable: no usable signature,
+GHSA-5x6q-ffwj-8vcf,over-approximated,False
+GHSA-h737-q6g6-8wr6,undetermined,
+GHSA-2q8v-3gqq-4f8p,over-approximated,False
+GHSA-qhj7-v7h7-q4c7,over-approximated,True
+GHSA-5x7x-4c3c-qf5w,undetermined,
+GHSA-6r8x-57c9-28j4,not classifiable: no usable signature,
+GHSA-4vcx-3pj3-44m7,tight,
+GHSA-jrm6-h9cq-8gqw,undetermined,
+GHSA-mw35-8rx3-xf9r,undetermined,
+GHSA-xvxq-g8hw-fx4g,over-approximated,False
+GHSA-49jv-37hm-6gfp,not classifiable: no usable signature,
+GHSA-mxwc-wh95-pw4g,tight,
+GHSA-v9gj-5rgp-w33r,over-approximated,False
+GHSA-92pw-mff9-jqgm,over-approximated,True
+GHSA-c635-393c-hcx2,undetermined,
+GHSA-pxg5-h34r-7q8p,undetermined,
+GHSA-v833-3823-cmhp,over-approximated,False
+GHSA-4rj2-9gcx-5qhx,over-approximated,False
+GHSA-qqmf-gpg7-g8gw,undetermined,
+GHSA-65xw-pcqw-hjrh,not classifiable: no usable signature,
+GHSA-pg7v-jwj7-p798,tight,
+GHSA-768j-98cg-p3fv,over-approximated,False
+GHSA-hj66-6f7g-4r5v,over-approximated,False
+GHSA-8fvv-fgr5-f8ch,over-approximated,True
+GHSA-f8xq-q7px-wg8c,over-approximated,True
+GHSA-99r4-cjp4-3hmx,undetermined,
+GHSA-28mg-98xm-q493,over-approximated,False
+GHSA-g84x-mcqj-x9qq,over-approximated,True
+GHSA-cfmv-h8fx-85m7,over-approximated,False
+GHSA-hg6c-qqcm-r79r,tight,
+GHSA-hf3c-wxg2-49q9,undetermined,
+GHSA-3r7g-q6cg-q2vx,over-approximated,True
+GHSA-694v-63fq-fmr4,undetermined,
+GHSA-7p94-766c-hgjp,over-approximated,False
+GHSA-wc6j-5g83-xfm6,over-approximated,False
+GHSA-9296-v3fr-j92j,undetermined,
+GHSA-wxx2-gqvv-34hx,undetermined,
+GHSA-7w6r-748w-mh52,undetermined,
+GHSA-gq5q-89c7-vhvx,undetermined,
+GHSA-w66p-78g4-mr7g,undetermined,
+GHSA-mqqc-3gqh-h2x8,over-approximated,True
+GHSA-9jfm-9rc6-2hfq,over-approximated,True
+GHSA-v936-j8gp-9q3p,over-approximated,False
+GHSA-54jq-c3m8-4m76,over-approximated,True
+GHSA-9fpx-fr6j-2vh6,over-approximated,True
+GHSA-q3m9-9fj2-mfwr,undetermined,
+GHSA-2gr8-3wc7-xhj3,undetermined,
+GHSA-3x4c-pq33-4w3q,over-approximated,False
+GHSA-8rj5-2857-877j,over-approximated,True
+GHSA-564j-v29w-rqr6,undetermined,
+GHSA-crmg-rp64-5cm3,tight,
+GHSA-w2p4-p4rh-qcm3,undetermined,
+GHSA-phj3-59pf-cp83,undetermined,
+GHSA-59p9-h35m-wg4g,undetermined,
+GHSA-wwv8-cqpr-vx3m,over-approximated,False
+GHSA-q3qx-c6g2-7pw2,over-approximated,True
+GHSA-4r7w-q3jg-ff43,not classifiable: no usable signature,
+GHSA-f964-whrq-44h8,over-approximated,False
+GHSA-43mp-35q3-x3fq,over-approximated,True
+GHSA-33fm-6gp7-4p47,undetermined,
+GHSA-pp85-5j63-xpq3,not classifiable: no usable signature,
+GHSA-hw26-mmpg-fqfg,tight,
+GHSA-5v8v-66v8-mwm7,over-approximated,False
+GHSA-7wxf-r2qv-9xwr,not classifiable: no usable signature,
+GHSA-9w56-46f6-3qhx,undetermined,
+GHSA-c87f-fq5g-63r2,over-approximated,True
+GHSA-mxxr-jv3v-6pgc,undetermined,
+GHSA-qq99-p57r-g3v7,not classifiable: no usable signature,
+GHSA-mw3h-qjxj-6xg9,over-approximated,False
+GHSA-83vg-56qc-22m7,over-approximated,True
+GHSA-cxjf-x6jp-p7mc,not classifiable: no usable signature,
+GHSA-wqvq-5m8c-6g24,over-approximated,True
+GHSA-6mjg-37cp-42x5,over-approximated,True
+GHSA-2wpw-cm9w-v4xm,over-approximated,True
+GHSA-jrcv-3c5h-rh3q,undetermined,
+GHSA-c6ph-m8cw-rfqh,undetermined,
+GHSA-h36j-8vv3-cj52,undetermined,
+GHSA-887c-mr87-cxwp,not classifiable: no usable signature,
+GHSA-6vm5-6jv9-rjpj,over-approximated,False
+GHSA-p75f-g7gx-2r7p,not classifiable: no usable signature,
+GHSA-ch89-h4r2-c8f8,undetermined,
+GHSA-78m5-jpmf-ch7v,undetermined,
+GHSA-cpmr-mw4j-99r7,not classifiable: no usable signature,
+GHSA-qx5f-ghc2-7g5c,undetermined,
+GHSA-q93c-p2mw-p23f,undetermined,
+GHSA-8hx6-qv6f-xgcw,undetermined,
+GHSA-5xh2-23cc-5jc6,tight,
+GHSA-h75v-3vvj-5mfj,over-approximated,False
+GHSA-6757-jp84-gxfx,undetermined,
+GHSA-hm4w-wwcw-mr6r,over-approximated,False
+GHSA-hgcf-4mq8-5266,over-approximated,False
+GHSA-7hfx-h3j3-rwq4,over-approximated,False
+GHSA-mjff-wv85-hmcj,tight,
+GHSA-44wm-f244-xhp3,not classifiable: no usable signature,
+GHSA-m8j6-rc5x-wv36,not classifiable: no usable signature,
+GHSA-8pw2-6jv3-mj5j,over-approximated,True
+GHSA-wjpc-4f29-83h3,over-approximated,False
+GHSA-h3h8-3v2v-rg7m,tight,
+GHSA-c38f-wx89-p2xg,not classifiable: no usable signature,
+GHSA-37cf-r3w2-gjfw,over-approximated,False
+GHSA-94jq-q5v2-76wj,not classifiable: no usable signature,
+GHSA-p44q-vqpr-4xmg,over-approximated,False
+GHSA-p28m-34f6-967q,over-approximated,False
+GHSA-cv84-9p8j-fj68,tight,
+GHSA-gqrq-j6pm-98c2,not classifiable: no usable signature,
+GHSA-fhw8-8v9p-7jp7,undetermined,
+GHSA-h47f-gmjp-m7rr,over-approximated,True
+GHSA-66x7-2r56-fj77,tight,
+GHSA-mg3v-6m49-jhp3,undetermined,
+GHSA-769v-p64c-89pr,over-approximated,False
+GHSA-hcc4-c3v8-rx92,over-approximated,True
+GHSA-f9hx-c6jf-3qxm,not classifiable: no usable signature,
+GHSA-m8xw-9x5x-6vh3,over-approximated,False
+GHSA-cv5c-mh6j-wvp9,tight,
+GHSA-27q4-38qf-m25h,undetermined,
+GHSA-3872-f48p-pxqj,over-approximated,True
+GHSA-2gpf-2492-q9jh,undetermined,
+GHSA-9vhv-jxww-xfm5,over-approximated,False
+GHSA-4vqv-7265-gm2w,not classifiable: no fix diff,
+GHSA-2gh8-gr6x-7q26,not classifiable: no fix diff,
+GHSA-hrmj-7rvj-4hg8,not classifiable: no usable signature,
+GHSA-grp3-h8m8-45p7,over-approximated,False
+GHSA-mcgw-5fhw-3fq8,undetermined,
+GHSA-h8pc-j334-jjhm,not classifiable: no usable signature,
+GHSA-554w-xh4j-8w64,undetermined,
+GHSA-ph3r-5jfg-f84f,over-approximated,False
+GHSA-35m5-8cvj-8783,over-approximated,False
+GHSA-22hg-r758-rrw9,undetermined,
+GHSA-fwfg-vprh-97ph,over-approximated,False
+GHSA-3547-9m27-7rxg,tight,
+GHSA-535g-62r7-cx6v,undetermined,
+GHSA-vh75-fwv3-pqrh,undetermined,
+GHSA-h35f-9h28-mq5c,over-approximated,False
+GHSA-92vm-mxjf-jqf3,over-approximated,False
+GHSA-xcw4-53cc-hv32,over-approximated,True
+GHSA-832w-fhmw-w4f4,over-approximated,False
+GHSA-cqxx-66wh-8pjw,undetermined,
+GHSA-43qf-4rqw-9q2g,over-approximated,True
+GHSA-wfq2-52f7-7qvj,over-approximated,True
+GHSA-45rp-q25w-4426,over-approximated,False
+GHSA-6xv9-957j-qfhg,not classifiable: no usable signature,
+GHSA-5hxg-r395-fqxx,undetermined,
+GHSA-836c-xg97-8p4h,over-approximated,True
+GHSA-g7p5-89mh-248h,over-approximated,False
+GHSA-6h2f-wjhf-4wjx,tight,
+GHSA-4v6w-xpmh-gfgp,over-approximated,True
+GHSA-fch4-3c6x-j4gc,over-approximated,True
+GHSA-6j58-grhv-2769,over-approximated,False
+GHSA-chx6-46f5-w4vp,over-approximated,True
+GHSA-m64x-33q8-m5h7,over-approximated,True
+GHSA-rcv6-7hmv-fj7h,not classifiable: no usable signature,
+GHSA-f9j4-qggq-h239,undetermined,
+GHSA-w6xv-mf6f-r5f6,over-approximated,False
+GHSA-6v38-4h7w-rj9h,undetermined,
+GHSA-85xf-c7hm-whqw,over-approximated,False
+GHSA-8m59-7xv8-735h,over-approximated,True
+GHSA-gh4c-6fx4-qh6g,tight,
+GHSA-cj54-hpcc-gj6h,over-approximated,False
+GHSA-2w87-5qcj-j6gx,undetermined,
+GHSA-hr8g-f6r6-mr22,not classifiable: no usable signature,
+GHSA-hhpg-v63p-wp7w,not classifiable: no usable signature,
+GHSA-9w4f-3v37-6f75,undetermined,
+GHSA-gx7p-2j49-hfq4,undetermined,
+GHSA-w2cx-738m-mc7w,undetermined,
+GHSA-x97m-qp5c-w9xj,not classifiable: no usable signature,
+GHSA-8vgw-p6qm-5gr7,over-approximated,True
+GHSA-w8jc-g24h-crhw,over-approximated,False
+GHSA-m9mq-p2f9-cfqv,tight,
+GHSA-p3w6-jcg4-52xh,over-approximated,False
+GHSA-cw2r-4p82-qv79,over-approximated,True
+GHSA-2xj6-xx86-cwwc,over-approximated,False
+GHSA-c5f8-35qr-q4fm,over-approximated,False
+GHSA-2rw7-x74f-jg35,not classifiable: no fix diff,
+GHSA-2hmp-5wqg-f24h,over-approximated,True
+GHSA-488g-hw5f-x29p,undetermined,
+GHSA-rrj2-ph5q-jxw2,tight,
+GHSA-hq75-ggc3-8h3q,undetermined,
+GHSA-p773-8mf4-rjm5,undetermined,
+GHSA-7cfr-5cjf-32p4,over-approximated,True
+GHSA-9m6j-fcg5-2442,over-approximated,False
+GHSA-wmg3-h8mf-wgvr,over-approximated,True
+GHSA-5p8w-2mvw-38pv,undetermined,
+GHSA-c5xx-h28h-f682,undetermined,
+GHSA-qxc2-j82w-r537,undetermined,
+GHSA-7977-c43c-xpwj,undetermined,
+GHSA-c6hr-w26q-c636,not classifiable: no usable signature,
+GHSA-rvvf-6vh3-9j43,over-approximated,True
+GHSA-g8xp-qx39-9jq9,not classifiable: no usable signature,
+GHSA-rhh3-jpg6-66xh,undetermined,
+GHSA-pv58-549p-qh99,over-approximated,True
+GHSA-662x-fhqg-9p8v,over-approximated,False
+GHSA-g353-mgv3-8pcj,over-approximated,True
+GHSA-943q-mwmv-hhvh,undetermined,
+GHSA-g8f2-4f4f-5jqw,undetermined,
+GHSA-pj96-35fp-cfcc,over-approximated,True
+GHSA-724g-mxrg-4qvm,undetermined,
+GHSA-m272-9rp6-32mc,over-approximated,True
+GHSA-438c-3975-5x3f,undetermined,
+GHSA-6rcp-vxwf-3mfp,undetermined,
+GHSA-4vcf-q4xf-f48m,undetermined,
+GHSA-grv6-m753-3w2g,undetermined,
+GHSA-vfrf-vcj7-wvr8,over-approximated,True
+GHSA-56f2-hvwg-5743,undetermined,
+GHSA-6g6m-m6h5-w9gf,tight,
+GHSA-vmp7-252j-cwp7,over-approximated,True
+GHSA-4685-c5cp-vp95,not classifiable: no usable signature,
+GHSA-g77x-44xx-532m,undetermined,
+GHSA-rxcw-mc6f-6hr3,undetermined,
+GHSA-3crj-w4f5-gwh4,over-approximated,True
+GHSA-67rr-84xm-4c7r,undetermined,
+GHSA-r666-8gjf-4v5f,undetermined,
+GHSA-vwp5-f99x-x3rq,undetermined,
+GHSA-8864-rhmw-5m6f,over-approximated,True
+GHSA-w2pf-g6r8-pg22,undetermined,
+GHSA-cg2g-xh64-v4q7,over-approximated,False
+GHSA-7j65-65cr-6644,not classifiable: no usable signature,
+GHSA-jx6q-fq9h-6g7q,undetermined,
+GHSA-2jjq-x548-rhpv,not classifiable: no usable signature,
+GHSA-7qqq-gh2f-wq76,undetermined,
+GHSA-vvhj-v88f-5gxr,tight,
+GHSA-rwx9-wqj8-vr77,not classifiable: no usable signature,
+GHSA-3wfp-253j-5jxv,over-approximated,True
+GHSA-crfx-5phg-hmw9,not classifiable: no fix diff,
+GHSA-98pq-pmw9-4gpm,over-approximated,True
+GHSA-gvcj-pfq2-wxj7,not classifiable: no usable signature,
+GHSA-8j36-q8x7-pm6q,undetermined,
+GHSA-45hj-9x76-wp9g,undetermined,
+GHSA-7599-fqgm-v84p,over-approximated,False
+GHSA-qhv9-728r-6jqg,undetermined,
+GHSA-p2hp-3wv3-4w74,tight,
+GHSA-26wq-p25c-j6fv,over-approximated,True
+GHSA-jmhp-5558-qxh5,undetermined,
+GHSA-c3m8-x3cg-qm2c,tight,
+GHSA-h4mc-r4f4-hcf4,over-approximated,True
+GHSA-j47w-4g3g-c36v,undetermined,
+GHSA-9mrv-456v-pf22,tight,
+GHSA-jgpq-g82g-6c39,tight,
+GHSA-mgcp-mfp8-3q45,over-approximated,False
+GHSA-v633-x5vv-hqwc,tight,
+GHSA-34q8-jcq6-mc37,undetermined,
+GHSA-vr8x-74pm-6vj7,undetermined,
+GHSA-6mr6-jvcr-2f25,undetermined,
+GHSA-v8wv-jg3q-qwpq,undetermined,
+GHSA-mm4f-47ch-f7hx,tight,
+GHSA-j4fx-xxwh-2485,undetermined,
+GHSA-2m53-83f3-562j,over-approximated,False
+GHSA-vj3g-5px3-gr46,over-approximated,True
+GHSA-44g4-m2mj-wpvx,undetermined,
+GHSA-r659-8xfp-j327,over-approximated,True
+GHSA-6hxr-mr5r-9836,not classifiable: no usable signature,
+GHSA-54xj-q58h-9x57,undetermined,
+GHSA-68hw-vfh7-xvg8,over-approximated,True
+GHSA-952p-6rrq-rcjv,over-approximated,False
+GHSA-8mhj-rffc-rcvw,over-approximated,
+GHSA-vfg3-pqpq-93m4,over-approximated,True
+GHSA-4hr4-pjjh-2q2w,undetermined,
+GHSA-rm97-x556-q36h,over-approximated,False
+GHSA-826h-28h9-65hg,tight,
+GHSA-j3w7-9qc3-g96p,undetermined,
+GHSA-jxfw-x594-9x9m,over-approximated,False
+GHSA-xgp7-7qjq-vg47,undetermined,
+GHSA-xrpm-hccg-28x7,not classifiable: no usable signature,
+GHSA-j22f-vq7h-c4qm,over-approximated,False
+GHSA-2q7r-29rg-6m5h,tight,
+GHSA-h5jc-78hr-3pc9,undetermined,
+GHSA-2hw3-h8qx-hqqp,undetermined,
+GHSA-pgf8-28gg-vpr6,not classifiable: no usable signature,
+GHSA-jcw8-r9xm-32c6,tight,
+GHSA-hjp8-2cm3-cc45,over-approximated,False
+GHSA-mpg4-rc92-vx8v,not classifiable: no usable signature,
+GHSA-xc7v-wxcw-j472,tight,
+GHSA-85g2-29m8-qf2p,over-approximated,True
+GHSA-xxmh-rf63-qwjv,undetermined,
+GHSA-7x6v-j9x4-qf24,over-approximated,True
+GHSA-535w-7cp7-47q4,over-approximated,True
+GHSA-6pw2-5hjv-9pf7,over-approximated,False
+GHSA-5mx2-w598-339m,tight,
+GHSA-qx4v-6gc5-f2vv,undetermined,
+GHSA-hfpr-jhpq-x4rm,undetermined,
+GHSA-p8j8-wxvp-h695,not classifiable: no usable signature,
+GHSA-jvf5-q4h5-2jmj,tight,
+GHSA-6q5m-63h6-5x4v,undetermined,
+GHSA-j3hm-6rg5-mchv,over-approximated,False
+GHSA-6xpm-ggf7-wc3p,over-approximated,True
+GHSA-hgch-jjmr-gp7w,over-approximated,False
+GHSA-hxcm-v35h-mg2x,undetermined,
+GHSA-g57g-f23g-4646,tight,
+GHSA-89vx-jh4q-vg3w,tight,
+GHSA-vfj8-5pj7-2f9g,undetermined,
+GHSA-897m-rjf5-jp39,over-approximated,False
+GHSA-r578-pj6f-r4ff,undetermined,
+GHSA-x4w5-r546-x9qh,over-approximated,True
+GHSA-hjxc-462x-x77j,undetermined,
+GHSA-4ggg-h7ph-26qr,undetermined,
+GHSA-v3jv-wrf4-5845,over-approximated,False
+GHSA-55jh-84jv-8mx8,undetermined,
+GHSA-f9xv-q969-pqx4,tight,
+GHSA-3vjf-82ff-p4r3,over-approximated,False
+GHSA-6fw5-9hq8-w87g,tight,
+GHSA-qgvg-pr8v-6rr3,tight,
+GHSA-7f63-h6g3-7cwm,not classifiable: no fix diff,
+GHSA-6gp3-h3jj-prx4,undetermined,
+GHSA-4882-hxpr-hrvm,undetermined,
+GHSA-8cw6-53m5-4932,over-approximated,False
+GHSA-f94x-6692-553q,undetermined,
+GHSA-rchv-x836-w7xp,undetermined,
+GHSA-j47c-j42c-mwqq,undetermined,
+GHSA-w45g-5746-x9fp,undetermined,
+GHSA-5h3f-q97h-ccvc,over-approximated,True
+GHSA-2rwj-7xq8-4gx4,undetermined,
+GHSA-cg6c-q2hx-69h7,not classifiable: no usable signature,
+GHSA-mwhf-vhr5-7j23,tight,
+GHSA-f5vj-f2hx-8m93,over-approximated,False
+GHSA-g6gw-c38x-mqfc,undetermined,
+GHSA-qm77-8qjp-4vcm,undetermined,
+GHSA-p4x4-2r7f-wjxg,over-approximated,True
+GHSA-6j36-r6pr-59x4,over-approximated,True
+GHSA-442j-39wm-28r2,undetermined,
+GHSA-q8mj-m7cp-5q26,tight,
+GHSA-59r9-6jp6-jcm7,undetermined,
+GHSA-j5qp-p44g-2m49,undetermined,
+GHSA-f8hv-rx9p-f9r4,undetermined,
+GHSA-5v25-xr56-phph,over-approximated,False
+GHSA-7fv9-m79r-j9x8,undetermined,
+GHSA-gf3v-fwqg-4vh7,undetermined,
+GHSA-v865-p3gq-hw6m,undetermined,
+GHSA-grw5-g9h2-wpg8,over-approximated,False
+GHSA-j9fq-vwqv-2fm2,undetermined,
+GHSA-xw4p-pw82-hqr7,over-approximated,True
+GHSA-wqxw-8h5g-hq56,over-approximated,False
+GHSA-77hf-7fqf-f227,undetermined,
+GHSA-c7hf-c5p5-5g6h,undetermined,
+GHSA-4h66-vghf-xg5x,undetermined,
+GHSA-w3w8-37jv-2c58,over-approximated,False
+GHSA-hmfr-rx46-4jx2,over-approximated,
+GHSA-3xr5-8w6c-p5gw,undetermined,
+GHSA-wjr4-2jgw-hmv8,over-approximated,False
+GHSA-w6x9-28jw-hq7j,over-approximated,False
+GHSA-834v-8h66-3h79,over-approximated,False
+GHSA-98xx-8mx4-x7cm,tight,
+GHSA-x965-fc75-jpqh,over-approximated,True
+GHSA-88f2-fpv8-89q2,undetermined,
+GHSA-2w79-r9g8-wmcr,over-approximated,True
+GHSA-f934-5rqf-xx47,undetermined,
+GHSA-c9j3-wqph-5xx9,over-approximated,False
+GHSA-7gfc-8cq8-jh5f,undetermined,
+GHSA-477h-4r7f-fvrx,over-approximated,True
+GHSA-4qx8-w7c3-pj3p,over-approximated,
+GHSA-rj3r-r7hh-jxfq,undetermined,
+GHSA-gcgf-fh7c-8gf2,undetermined,
+GHSA-66pp-5p9w-q87j,tight,
+GHSA-vx58-fwwq-5g8j,undetermined,
+GHSA-69f9-h8f9-7vjf,over-approximated,True
+GHSA-f78f-353m-cf4j,tight,
+GHSA-7cvf-pxgp-42fc,undetermined,
+GHSA-w4v7-hwx7-9929,over-approximated,True
+GHSA-jgm3-qmp2-c4p7,over-approximated,True
+GHSA-j827-6rgf-9629,over-approximated,False
+GHSA-6h7f-qwqm-35pp,tight,
+GHSA-r3r9-wp5j-pq5g,over-approximated,False
+GHSA-2g4c-8fpm-c46v,tight,
+GHSA-f3rg-xqjj-cj9w,over-approximated,True
+GHSA-49mx-fj45-q3p6,undetermined,
+GHSA-8g75-q649-6pv6,undetermined,
+GHSA-mq6c-fh97-4gwv,undetermined,
+GHSA-wf6c-hrhf-86cw,undetermined,
+GHSA-687g-22h4-j4w4,tight,
+GHSA-h6cr-wjv9-3cpp,over-approximated,False
+GHSA-2w86-xfrc-g85r,undetermined,
+GHSA-p3vf-v8qc-cwcr,over-approximated,True
+GHSA-2hw7-mxvj-m455,undetermined,
+GHSA-j4r3-hg7j-8chg,not classifiable: no usable signature,
+GHSA-3fw8-66wf-pr7m,over-approximated,True
+GHSA-2364-jh4q-m9vm,over-approximated,True
+GHSA-wppj-c6mr-83jj,undetermined,
+GHSA-2h44-8472-frjj,undetermined,
+GHSA-396q-4vc8-28x9,over-approximated,True
+GHSA-68c2-4mpx-qh95,undetermined,
+GHSA-rx3g-mvc3-qfjf,over-approximated,True
+GHSA-j3rg-3rgm-537h,undetermined,
+GHSA-hff7-ccv5-52f8,undetermined,
+GHSA-p6j9-7xhc-rhwp,tight,
+GHSA-77r5-gw3j-2mpf,undetermined,
+GHSA-x3vm-88hf-gpxp,undetermined,
+GHSA-8ph8-9q2j-c3rq,over-approximated,True
+GHSA-x5rw-q4pp-hg5g,tight,
+GHSA-2gjg-5x33-mmp2,undetermined,
+GHSA-2gx6-7gx2-wwcf,over-approximated,False
+GHSA-cxpw-2g23-2vgw,undetermined,
+GHSA-64fm-8hw2-v72w,tight,
+GHSA-p9w8-2mpq-49h9,undetermined,
+GHSA-464q-cqxq-xhgr,undetermined,
+GHSA-5cwg-6vw7-rj6p,over-approximated,True
+GHSA-cwfw-4gq5-mrqx,tight,
+GHSA-3pm9-5j7m-59vc,over-approximated,True
+GHSA-j9v4-rhgr-4m5f,undetermined,
+GHSA-49wp-qq6x-g2rf,undetermined,
+GHSA-gjv4-ghm7-q58q,over-approximated,True
+GHSA-97v6-998m-fp4g,undetermined,
+GHSA-3p3p-cgj7-vgw3,undetermined,
+GHSA-hpfq-8wx8-cgqw,not classifiable: no fix diff,
+GHSA-r4gj-5m52-g5wh,undetermined,
+GHSA-7rcp-mxpq-72pj,undetermined,
+GHSA-8575-cr6v-7jh4,undetermined,
+GHSA-vghf-hv5q-vc2g,undetermined,
+GHSA-p36q-q72m-gchr,undetermined,
+GHSA-x287-wcfc-q46c,tight,
+GHSA-rm5c-4rmf-vvhw,undetermined,
+GHSA-mmj4-777p-fpq9,undetermined,
+GHSA-cwc9-cp4j-mcvv,tight,
+GHSA-39pp-xp36-q6mg,not classifiable: no usable signature,
+GHSA-2cp6-34r9-54xx,tight,
+GHSA-gx6r-qc2v-3p3v,over-approximated,False
+GHSA-q3jh-wrc6-jgq8,tight,
+GHSA-7wpw-2hjm-89gp,undetermined,
+GHSA-wwxh-74fx-33c6,undetermined,
+GHSA-wm77-q74p-5763,over-approximated,True
+GHSA-3wgp-x9p5-c7cc,undetermined,
+GHSA-3wc5-fcw2-2329,tight,
+GHSA-8qwj-4jxw-m8jw,undetermined,
+GHSA-3c6g-pvg8-gqw2,over-approximated,False
+GHSA-67gq-6q8c-qqh6,undetermined,
+GHSA-x3v3-8xg8-8v72,undetermined,
+GHSA-fw5f-7c6c-3vmv,undetermined,
+GHSA-rx8g-88g5-qh64,over-approximated,True
+GHSA-4hf8-5mjm-rfgq,over-approximated,False
+GHSA-62ch-8vmq-8xm7,undetermined,
+GHSA-95fx-jjr5-f39c,over-approximated,True
+GHSA-57f3-gghm-9mhc,over-approximated,True
+GHSA-7ff8-xjh3-mgh6,undetermined,
+GHSA-hgjh-723h-mx2j,over-approximated,False
+GHSA-f86p-h4j2-7qgj,undetermined,
+GHSA-j8rh-479h-cp32,over-approximated,False
+GHSA-f2rp-38vg-j3gh,over-approximated,True
+GHSA-694p-3fxc-m92h,tight,
+GHSA-wm8r-w8pf-2v6w,undetermined,
+GHSA-6vj9-mwq6-2f5v,over-approximated,True
+GHSA-7w5x-hrqm-74c2,over-approximated,True
+GHSA-rc77-xxq6-4mff,tight,
+GHSA-49q7-c7j4-3p7m,tight,
+GHSA-4x48-cgf9-q33f,undetermined,
+GHSA-8v5f-hp78-jgxq,tight,
+GHSA-g7mq-rfj2-25wq,over-approximated,True
+GHSA-247c-9743-5963,undetermined,
+GHSA-4p35-cfcx-8653,over-approximated,False
+GHSA-hx9m-jf43-8ffr,over-approximated,False
+GHSA-m734-r4g6-34f9,over-approximated,False
+GHSA-hvrm-45r6-mjfj,undetermined,
+GHSA-f982-mxwc-3mrx,tight,
+GHSA-hv96-xxx2-5v7w,over-approximated,False
+GHSA-f7wf-v2vw-mpcx,undetermined,
+GHSA-mphv-75cg-56wg,not classifiable: no usable signature,
+GHSA-hgp8-w8fj-r4cm,undetermined,
+GHSA-mp66-8ww2-pcwm,undetermined,
+GHSA-9xr8-8hmc-389f,undetermined,
+GHSA-5jg4-p4qw-cgfr,tight,
+GHSA-cfjh-p3g4-3q2f,over-approximated,False
+GHSA-cxm3-v4mv-6mh8,not classifiable: no usable signature,
+GHSA-cpj6-fhp6-mr6j,undetermined,
+GHSA-9qj6-qjgg-37qq,over-approximated,True
+GHSA-r92x-f52r-x54g,over-approximated,False
+GHSA-qf34-qpr4-5pph,tight,
+GHSA-2pr6-76vf-7546,over-approximated,False
+GHSA-747p-jfqv-f43r,tight,
+GHSA-gmq8-994r-jv83,not classifiable: no usable signature,
+GHSA-g336-c7wv-8hp3,undetermined,
+GHSA-w8wf-3qvj-6xqf,over-approximated,True
+GHSA-5v6x-rfc3-7qfr,undetermined,
+GHSA-42xw-2xvc-qx8m,over-approximated,True
+GHSA-7gfh-x38p-prh3,undetermined,
+GHSA-5v7r-jg9r-vq44,undetermined,
+GHSA-8w3j-g983-8jh5,undetermined,
+GHSA-3xfw-4pmr-4xc5,over-approximated,True
+GHSA-79wm-x847-7cvg,over-approximated,True
+GHSA-5m6h-8g35-p3m7,undetermined,
+GHSA-75hx-xj24-mqrw,undetermined,
+GHSA-7pvx-4585-hqww,over-approximated,False
+GHSA-5pxj-mhwj-x5gv,tight,
+GHSA-vc2v-76pw-4v95,undetermined,
+GHSA-vhv4-fh94-jm5x,tight,
+GHSA-3cgg-c5pp-57h6,undetermined,
+GHSA-wqjv-9729-c5q2,undetermined,
+GHSA-6m8p-4fxj-pgc2,over-approximated,True
+GHSA-x426-x7cc-3fpc,over-approximated,False
+GHSA-7w82-6f9j-v9jp,tight,
+GHSA-vjf3-2gpj-233v,undetermined,
+GHSA-qffp-2rhf-9h96,undetermined,
+GHSA-3x3x-h76w-hp98,undetermined,
+GHSA-xf4j-xp2r-rqqx,undetermined,
+GHSA-r7g9-xpmj-5fcq,undetermined,
+GHSA-5324-3w58-qpp2,over-approximated,True
+GHSA-4pfg-2mw5-f8jx,tight,
+GHSA-27mw-82g8-phjj,undetermined,
+GHSA-gp3q-wpq4-5c5h,undetermined,
+GHSA-p6gq-j5cr-w38f,over-approximated,True
+GHSA-7g8c-cfr3-vqqr,undetermined,
+GHSA-75qf-886x-5xf2,undetermined,
+GHSA-23fp-fmrv-f5px,over-approximated,False
+GHSA-7pr3-p5fm-8r9x,over-approximated,True
+GHSA-c8p4-j97h-3vg8,undetermined,
+GHSA-8g7p-74h8-hg48,over-approximated,True
+GHSA-wpxw-5xfm-x22v,undetermined,
+GHSA-3fjq-93xj-3f3f,tight,
+GHSA-4jrm-c32x-w4jf,over-approximated,True
+GHSA-gr7w-hmch-25g7,tight,
+GHSA-73rg-x683-m3qw,not classifiable: no usable signature,
+GHSA-fr76-2wp8-fp92,not classifiable: no usable signature,
+GHSA-7grx-f945-mj96,undetermined,
+GHSA-j839-gqq4-gf9j,undetermined,
+GHSA-p8pf-44ff-93gf,over-approximated,False
+GHSA-wp3j-gv53-4pg8,undetermined,
+GHSA-6x2m-hqfw-hvpj,over-approximated,True
+GHSA-5rq4-664w-9x2c,undetermined,
+GHSA-q7jf-gf43-6x6p,undetermined,
+GHSA-q6qf-4p5j-r25g,undetermined,
+GHSA-qvqv-mcxr-x8qw,over-approximated,False
+GHSA-6wvx-3r32-xmcg,tight,
+GHSA-x4vh-j75g-268g,over-approximated,
+GHSA-77vg-94rm-hx3p,undetermined,
+GHSA-vj54-72f3-p5jv,over-approximated,True
+GHSA-h9x2-5rm7-x4gm,undetermined,
+GHSA-jvcm-f35g-w78p,undetermined,
+GHSA-257v-vj4p-3w2h,over-approximated,True
+GHSA-3fm2-xfq7-7778,undetermined,
+GHSA-pvv8-8fx9-h673,not classifiable: no usable signature,
+GHSA-332q-7ff2-57h2,undetermined,
+GHSA-5h2c-8v84-qpvr,undetermined,
+GHSA-mf5g-6r6f-ghhm,over-approximated,True
+GHSA-8jx2-rhfh-q928,undetermined,
+GHSA-c53x-wwx2-pg96,undetermined,
+GHSA-hh27-ffr2-f2jc,over-approximated,False
+GHSA-77w2-crqv-cmv3,undetermined,
+GHSA-c9pr-q8gx-3mgp,not classifiable: no usable signature,
+GHSA-7hmh-pfrp-vcx4,undetermined,
+GHSA-fr3w-2p22-6w7p,undetermined,
+GHSA-xr5h-phrj-8vxv,undetermined,
+GHSA-vmfm-ch9h-5c7g,undetermined,
+GHSA-jjhp-8crj-mppq,undetermined,
+GHSA-gcv8-gh4r-25x6,over-approximated,False
+GHSA-wvqx-v3f6-w8rh,undetermined,
+GHSA-jrvm-mcxc-mf6m,over-approximated,False
+GHSA-h6pr-c536-6rjg,over-approximated,False
+GHSA-v62p-rq8g-8h59,undetermined,
+GHSA-9j5q-479x-43g2,over-approximated,True
+GHSA-fh32-73r9-rgh5,undetermined,
+GHSA-7hfw-grcm-cqm6,undetermined,
+GHSA-cfqx-f43m-vfh7,over-approximated,False
+GHSA-jpp7-7chh-cf67,over-approximated,False
+GHSA-whqg-ppgf-wp8c,undetermined,
+GHSA-w8x4-x68c-m6fc,tight,
+GHSA-8fmp-37rc-p5g7,undetermined,
+GHSA-vvv8-xw5f-3f88,undetermined,
+GHSA-gmpm-xp43-f7g6,not classifiable: no usable signature,
+GHSA-r4hg-4cpq-q57c,over-approximated,False
+GHSA-9p4w-fq8m-2hp7,undetermined,
+GHSA-hvq2-wf92-j4f3,tight,
+GHSA-q54r-r9pr-w7qv,over-approximated,True
+GHSA-3vfr-4gwf-qxfp,undetermined,
+GHSA-c2jc-4fpr-4vhg,tight,
+GHSA-8r9q-7v3j-jr4g,not classifiable: no usable signature,
+GHSA-2qjp-fg8c-g878,undetermined,
+GHSA-whf9-3hcx-gq54,over-approximated,True
+GHSA-86ch-6w7v-v6xf,tight,
+GHSA-f8gf-w286-fmq2,over-approximated,True
+GHSA-cq8c-xv66-36gw,undetermined,
+GHSA-hpcf-8vf9-q4gj,tight,
+GHSA-vrhw-v2hw-jffx,undetermined,
+GHSA-8r88-6cj9-9fh5,tight,
+GHSA-fm2f-4339-4p2f,undetermined,
+GHSA-4hqw-qxg8-jxx2,undetermined,
+GHSA-583x-23h9-f5w7,tight,
+GHSA-5fpv-5qvh-7cf3,tight,
+GHSA-vjx8-8p7h-82gr,undetermined,
+GHSA-v98g-8rqx-g93g,undetermined,
+GHSA-2mhw-wcx5-v3xj,over-approximated,False
