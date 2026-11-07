@@ -19,8 +19,8 @@ from coverage import Coverage  # noqa: E402
 COLS = ["WDJ_name", "source_id", "ra", "dec", "pmra", "pmdec", "ref_epoch", "parallax", "phot_g_mean_mag", "bp_rp", "Pwd"]
 with fits.open(D / "raw_cat" / "gaiaedr3_wd_main.fits.gz", memmap=False) as h:
     t = h[1].data
-    d = pd.DataFrame({c: np.asarray(t[c]).astype(np.float64) if c not in ("WDJ_name",) else np.asarray(t[c]).astype(str) for c in COLS})
-d["source_id"] = d.source_id.astype("int64")
+    d = pd.DataFrame({c: np.asarray(t[c]).astype(np.float64) if c not in ("WDJ_name", "source_id") else np.asarray(t[c]).astype(str) for c in COLS})
+    d["source_id"] = np.asarray(t["source_id"]).astype("int64")      # D1: read as int64; the float64 cast rounded 19-digit IDs
 n0 = len(d)
 c = Coverage("catalogue", T / "coverage.json")
 s1 = d[d.Pwd > 0.75]; s2 = s1[s1.phot_g_mean_mag < 20]; s3 = s2[s2.dec > -28]; s4 = s3[s3.parallax > 2]
