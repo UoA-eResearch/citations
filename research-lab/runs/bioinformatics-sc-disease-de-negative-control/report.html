@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Single-Cell Negative Control</title>
+<meta name="description" content="Do innocent citers of a later-retracted paper lose citations after the retraction?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Metascience</div>
+  <h1>At matched group sizes, half of single-cell disease contrasts in a cell atlas find no differentially expressed genes at all, and three quarters cannot be told apart from comparing healthy donors with each other</h1>
+  <p class="subtitle">799 disease × tissue × cell-type contrasts from 25 datasets in the CZ CELLxGENE Census (42 diseases, 161 cell types). Each was compared with 500 matched healthy-donor-only contrasts drawn from the same dataset, tissue and cell type, through an identical limma-voom pipeline on donor pseudobulk. The plan was committed before any expression value was read.</p>
+  <div class="meta">
+    <span>Report · 2026-11-05 · revised after independent review and a confirmation pass</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/bioinformatics-sc-disease-de-negative-control/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/bioinformatics-sc-disease-de-negative-control/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/bioinformatics-sc-disease-de-negative-control/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: H1 Supported; H2 Inconclusive.</strong></p>
+<ul>
+<li><strong>H1 (more than half of contrasts are indistinguishable from their matched healthy-vs-healthy null): Supported.</strong><ul>
+<li>On the number of differentially expressed genes, the statistic the power check selects (below), <strong>74%</strong> of the
+799 contrasts do not exceed their own null at BH q &lt; 0.05 (95% CI 57–84%, cluster bootstrap over the 25
+datasets). Real and null are compared at the same group sizes, a median of 13 donors against 13.</li>
+<li>On π1, the preregistered primary statistic, 82% (71–89%). <strong>But π1 detects a real twofold change in 5% of genes
+only 8% of the time</strong>, so that figure is nearly uninformative; the DE-gene count detects it 87% of the time
+(D2, <code>results/tables/power_check.json</code>).</li>
+<li>Weighting every disease equally gives the same answer: 74%.</li>
+<li><strong>Most of the 74% is nothing against nothing</strong> (post hoc, prompted by the review).<ul>
+<li>At the matched size, 424 of 799 contrasts (53%) find no DE genes at all in the real comparison, and the
+  null's median is also zero in 96.5% of contrasts. Those 424 make up 72% of the indistinguishable group.</li>
+<li>Of the 375 contrasts that find at least one DE gene, 166 (44%) still do not exceed their null.</li>
+<li>The headline therefore mainly reflects power at about 13 donors a side. It does not show that disease
+  signatures look like donor noise.</li>
+</ul>
+</li>
+<li><strong>The test is conservative in H1's direction.</strong> With 500 null draws the smallest attainable p is 1/501. Under BH
+a contrast can be called distinguishable only if at least 32 contrasts are called distinguishable (129 sit at
+the minimum here), so the constraint does not bind. But the design could never report a small number of distinguishable contrasts.</li>
+</ul>
+</li>
+<li><strong>The DE-gene count a practitioner reports barely predicts whether the contrast beats its null.</strong><ul>
+<li>At full size, using every donor (median 100 per contrast), a practitioner would report at least one DE gene in
+69% of these contrasts, with a median of 52.</li>
+<li>Among contrasts reporting 11–100 DE genes, only <strong>12%</strong> exceed their own matched null. Among those reporting
+101–1,000, only 42%; above 1,000, 64%.</li>
+<li><strong>The two are not the same comparison.</strong> The null test is run at matched group sizes, a median of 13 donors
+against 13, because a null needs two disjoint healthy groups and no dataset has enough healthy donors to mirror
+a full-size comparison. So part of this gap is donor count, not signal.</li>
+<li>Comparing healthy donors with healthy donors is not quiet: in 8.9% of contrasts the null's 95th percentile is
+above 100 DE genes.</li>
+</ul>
+</li>
+<li><strong>A positive control confirms the power problem on real data.</strong> Comparing male with female healthy donors in the
+  largest dataset (115 per group, brain oligodendrocytes) gives 219 DE genes and is detected against permuted nulls
+  at p = 0.005. π1 misses it (p = 0.25).</li>
+<li><strong>It varies by disease.</strong> Of the eight most common diseases, 0% of schizophrenia (37 contrasts) and 0% of
+  tauopathy (35) contrasts exceed their null, against 62% of interstitial lung disease (32) and 63% of pulmonary
+  fibrosis (27). COVID-19 (86) is 45%.</li>
+<li><strong>Disease-gene enrichment is weak.</strong> Comparing the Open Targets scores of each contrast's 100 strongest genes
+  with the same statistic on its nulls, 9.9% of 575 contrasts beat their null at raw p &lt; 0.05, against 5% expected
+  by chance. None survives BH correction.</li>
+<li><strong>H2 (cross-study replication follows donor count rather than cell count): Inconclusive.</strong><ul>
+<li>Across 335 cross-collection pairs (94 disease × tissue × cell-type groups, 9 diseases), the median Spearman
+correlation between two studies' t statistics is 0.19.</li>
+<li>More donors does predict better replication: β = 0.061 per doubling (95% CI 0.021–0.095).</li>
+<li>But it is not detectably better than cell count: the paired difference is 0.030 (−0.032 to 0.084), so the
+hypothesis as preregistered is Inconclusive.</li>
+<li>Those pairs span only 9 diseases. Bootstrapping over diseases instead widens every interval to include zero.</li>
+</ul>
+</li>
+<li><strong>The nulls share the real contrasts' confounding.</strong> Where both sides of a pair have null draws, the null
+  signatures correlate across studies at 0.03 against 0.30 for the real ones, so the matched null is not simply
+  reproducing a batch effect common to all data.</li>
+</ul>
+<h2>In plain terms</h2>
+<p>Single-cell studies compare sick and healthy people one cell type at a time, and report the genes that differ. The
+trouble is that people differ from each other anyway. With a dozen donors per group, some genes will always look
+different.</p>
+<p>We took a large public atlas of such data and, for each disease comparison, built 500 fake comparisons from healthy
+donors only: same study, same tissue, same cell type, same numbers, matched for sex and age. Then we ran the
+identical analysis on all of them and asked whether the real comparison stood out from its own fakes.</p>
+<p>Three quarters did not, but mostly because, at a dozen donors a side, neither the disease comparison nor the typical healthy
+fake found any differences at all: half of all the disease comparisons found no genes. Of the comparisons that did
+find something, a little over half stood out from their fakes.</p>
+<p>A caveat we cannot remove: the fake comparisons can only be as large as the healthy donors allow, so the test runs at
+about a dozen donors a side, while a researcher using every donor in the study has about a hundred. Part of what we
+call "indistinguishable" is therefore the smaller comparison, not only the weaker signal.</p>
+<p>That is not a claim that the diseases have no effect on these cells. It means these particular datasets, at this
+size, cannot show it. Lung fibrosis comparisons mostly do stand out; schizophrenia and tauopathy comparisons, in
+these data, never did.</p>
+<h2>What was asked</h2>
+<p>The lead asked how much reported single-cell disease signal survives explicit, matched negative controls at atlas
+scale.</p>
+<p>Prior work:
+- Squair et al. (2021) showed that treating cells as replicates inflates false discoveries and that donor pseudobulk
+  controls them. This study uses pseudobulk throughout, so it asks a different question: whether a correct pipeline
+  still reports signatures a matched null would also produce.
+- Nakatsuka et al. (2025) found that disease DE genes from single neurodegeneration and COVID-19 datasets replicate
+  poorly across datasets, and improved matters with a rank-based meta-analysis. They measure cross-study
+  replication; they do not build within-study negative controls.
+- Dann et al. (2023) showed matched controls reduce false discoveries when identifying disease cell states.</p>
+<p>No study was found that builds matched healthy-vs-healthy nulls across an atlas and reports how many published-style
+contrasts exceed them.</p>
+<h2>How it was done</h2>
+<ul>
+<li><strong>Data.</strong> CZ CELLxGENE Census LTS 2025-11-08, human, primary cells only, raw counts summed per
+  (dataset, tissue, cell type, donor) with at least 10 cells. Donors carrying more than one disease label in a
+  dataset were excluded.</li>
+<li><strong>Contrasts.</strong> 799 primary contrasts: within one dataset, a disease group of at least 8 donors against at least 16
+  normal donors of the same tissue and cell type. Median 13 donors per group after matching, median 106 cells per
+  donor.</li>
+<li><strong>The null.</strong> For each contrast, 500 draws of two disjoint healthy-donor groups from the same dataset, tissue and
+  cell type, reproducing the real draw's counts by sex and age bin.<ul>
+<li>Where a stratum was short, the draw fell back to the nearest age bin, then to any donor of the same sex, then to
+any donor. These fallbacks cover 11.8% of null donor slots, and 5.5% did not match sex.</li>
+</ul>
+</li>
+<li><strong>The pipeline,</strong> identical for real, null and full-size runs: <code>filterByExpr</code>, TMM, voom, lmFit, eBayes, with sex
+  as a covariate where it varies. edgeR 4.8.2 and limma 3.66.0 in Docker, without network access.</li>
+<li><strong>Exceedance.</strong> An empirical p from 500 null draws, then BH across contrasts; a contrast is indistinguishable at
+  q ≥ 0.05.</li>
+<li><strong>Positive control (G3).</strong> Male against female normal donors in the same framework, 25 real draws against 200
+  label-permuted nulls (<code>results/plausibility.md</code>).</li>
+<li><strong>Coverage (G2).</strong> <code>results/tables/coverage.json</code>: 43 of 43 datasets pseudobulked with integer counts and no cell
+  shortfall against the Census metadata; contrast donors kept and dropped with reasons; fits failed.</li>
+</ul>
+<h2>Results</h2>
+<h3>Exceedance (<code>results/figures/F1_exceedance.png</code>)</h3>
+<figure><a href="results/figures/F1_exceedance.png"><img src="results/figures/F1_exceedance.png" alt="Exceedance"></a><figcaption>Left: for each of the 799 primary contrasts (one disease x tissue x cell type within one dataset), the number of differentially expressed genes (BH FDR &lt; 0.05, limma-voom on donor pseudobulk) in the real comparison against the 95th percentile of 500 matched healthy-donor-only comparisons from the same dataset, tissue and cell type, matched on sex and age bin and on group sizes. Orange: exceeds its own null at BH q &lt; 0.05 across contrasts. Right: share indistinguishable under each statistic, with 95% intervals from a cluster bootstrap over the 25 datasets, and each statistic&#x27;s power against a synthetic twofold change in 5% of genes.</figcaption></figure>
+<h3>What a practitioner would report (<code>results/figures/F2_practitioner.png</code>)</h3>
+<figure><a href="results/figures/F2_practitioner.png"><img src="results/figures/F2_practitioner.png" alt="Practitioner"></a><figcaption>Grey: contrasts by the number of DE genes the full-size comparison reports, using every donor, as a practitioner would run it (median 100 donors). Orange: how many of those also exceed their own matched healthy-vs-healthy null (BH q &lt; 0.05). The percentage above each bar is the share that does. The two are not the same comparison: the null test runs at matched group sizes (median 13 against 13), because a null needs two disjoint healthy groups, so part of the gap is donor count rather than signal.</figcaption></figure>
+<h3>Replication across studies (<code>results/figures/F3_replication.png</code>)</h3>
+<figure><a href="results/figures/F3_replication.png"><img src="results/figures/F3_replication.png" alt="Replication"></a><figcaption>Each point is a pair of contrasts for the same disease, tissue and cell type from datasets in different Census collections (335 pairs, 94 groups, 9 diseases): the Spearman correlation of their moderated t statistics over shared genes, against the smallest donor group in the pair. Crosses: the same pairs&#x27; matched-null signatures, where both sides have null draws.</figcaption></figure>
+<h3>What predicts exceeding the null (exploratory)</h3>
+<p>Regressing each contrast's standardised excess over its null on standardised predictors (cluster bootstrap over
+datasets): sex imbalance between the disease and normal groups has the clearest association (β = 0.75, 95% CI
+0.26–1.96), and nucleus-based assays exceed less often (β = −0.97, −1.87 to −0.06). Donor count (β = 0.16,
+−0.28 to 1.18) and cells per donor (β = 0.13, −0.22 to 0.41) do not separate from zero. The sex-imbalance
+association suggests part of the exceedance that does occur is residual donor confounding rather than disease
+biology.</p>
+<p><strong>Sex imbalance by quartile</strong> (post hoc, prompted by the review; <code>results/tables/posthoc_review.json</code>):</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>quartile of sex imbalance</th>
+<th>median imbalance</th>
+<th>share exceeding the null</th>
+<th>median null 95th percentile (DE genes)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lowest</td>
+<td>0.03</td>
+<td>12%</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>second</td>
+<td>0.10</td>
+<td>25%</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>third</td>
+<td>0.18</td>
+<td>21%</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>highest</td>
+<td>0.36</td>
+<td>47%</td>
+<td>1.05</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>The association is between datasets.</strong> Within datasets the correlation is −0.01, against 0.29 overall. It is
+  consistent with cohort-level confounding, but it cannot separate that from differences in signal or power between
+  datasets and diseases. The first review's inference that the true share of signal is below 26% is withdrawn.</li>
+<li><strong>The null's tail rises with imbalance.</strong> The median of the null's 95th percentile is flat across quartiles, but
+  the share of contrasts whose null 95th percentile exceeds 10 DE genes rises from 9.5% to 25%.</li>
+</ul>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>A matched null is a low bar that most atlas contrasts do not clear,</strong> mostly because at about 13 donors a side
+  they find nothing at all. This is a statement about these datasets at these donor counts, not about the diseases.</li>
+<li><strong>Power is the main alternative explanation.</strong> The power check's injection, a twofold change in 5% of genes, is
+  large; power against a disease effect of a few tens of percent in a handful of genes is lower and was not estimated.</li>
+<li><strong>The usual evidence does not separate them.</strong> A DE-gene count in the dozens, which is what most of these
+  contrasts produce, is almost never distinguishable from healthy-donor variation in the same data.</li>
+<li><strong>Exceeding the null is necessary, not sufficient.</strong> A disease cohort processed in its own batch would exceed a
+  null drawn from that dataset's healthy donors. The exploratory sex-imbalance association is consistent with some
+  of the exceedance being confounding.</li>
+<li><strong>Not shown:</strong><ul>
+<li><strong>That these diseases have no cell-type-specific effects.</strong> Low power is the more likely explanation for most
+contrasts, and the study does not estimate per-contrast power against a biological effect size.</li>
+<li><strong>That a full-size analysis would also fail.</strong> The matched null is bounded by the healthy donors available, so
+it tests a smaller comparison than a practitioner runs. The exceedance result is a statement at matched sizes.</li>
+<li><strong>Matching beyond sex and age bin.</strong> Ancestry, BMI, post-mortem interval and sampling site are not matched, and
+11.8% of null donor slots used a fallback.</li>
+<li><strong>Cell-type label quality.</strong> Census annotations are used as given, at mixed granularity.</li>
+<li><strong>H2 beyond 9 diseases.</strong> The replication analysis is observational and thin.</li>
+</ul>
+</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration:</strong> <code>plan.md</code>, committed before any expression value was read.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>):<ul>
+<li>D1 (before any expression value): contrast counts under the plan's own donor rule (799, not 869); the H5AD data
+route; the DE image.</li>
+<li><strong>D2 (before any H1 result): the preregistered primary statistic π1 has 8% power against a synthetic twofold
+change in 5% of genes, against 87% for the preregistered secondary DE-gene count.</strong> Both are reported; the
+interpretation leads with the DE-gene count. The choice used only null draws and synthetic injections.</li>
+<li>D3 (after review): the zero-DE share, the sex-imbalance quartiles, the p-value floor and the power caveat (post
+hoc); title and plain terms reframed.</li>
+<li>D4 (after the confirmation pass): the sex-imbalance inference withdrawn (within-dataset r −0.01), null-tail and
+wording corrections.</li>
+</ul>
+</li>
+<li><strong>Gates:</strong> G1 (plan §6), G2 (<code>coverage.json</code>), G3 (<code>results/plausibility.md</code>, including the power check),
+  G4 (<code>results/tables/age_map.csv</code>), G5 and G6 at write-up. G7 does not apply.</li>
+<li><strong>Independent review:</strong> publish with edits (four findings plus checks), edits in D3; confirmation pass: publish with
+  edits, made in D4.</li>
+</ul>
+<h2>Reproducing it</h2>
+<ol>
+<li><code>code/meta.py</code>, then <code>code/stream.py list</code>.</li>
+<li><code>code/fetch_h5ad.py</code> and <code>code/pb_h5ad.py watch</code> (they run together).</li>
+<li><code>code/draws.py agemap</code>, <code>build</code>, <code>control</code>; <code>code/power_check.py build</code>.</li>
+<li><code>code/draws.py run 22</code> and <code>code/power_check.py run 10</code> (limma-voom in Docker).</li>
+<li><code>code/fetch_ot.py</code>, then <code>code/analyse.py</code> and <code>code/figures.py</code>.</li>
+</ol>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/bioinformatics-sc-disease-de-negative-control/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

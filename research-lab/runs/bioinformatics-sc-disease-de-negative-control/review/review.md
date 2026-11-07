@@ -109,3 +109,70 @@ because it is the main alternative explanation for the headline.
   corrected DOI resolves to the right paper, and the self-reported near-miss (a resolvable but unrelated identifier
   caught by the title check) is the sort of disclosure the gate exists for.
 - **G7:** does not apply; there are no human labels. Confirmed.
+
+## Confirmation pass
+
+Reviewer: Opus 5.5, 2026-11-05 (first review by Fable 5.1). Second-round check of the D3 edits against the four
+findings above. Scripts and outputs in `review/reviewer_checks/`: `confirm_findings.py` -> `confirm_findings.txt`
+(independent recomputation from `results/tables/contrasts.csv`, compared field by field with
+`results/tables/posthoc_review.json`) and `confirm_gates.py` -> `confirm_gates.txt` (report text against each D3 edit,
+the G5 table against the sentences the tool extracts from `report.md`, `tools/overclaim_check.py --verify`, and
+`tools/attribution.py check --show`). All Python ran as `venv/bin/python -I` with paths as arguments; nothing outside
+`review/` was modified. I also read `deviations.md` D3, `code/posthoc_review.py`, `code/analyse.py` (empirical p and
+BH) and `code/draws.py` (null matching).
+
+What I checked:
+- **Zero-DE share.** 424 of 799 (53.07%) have a matched-size median of zero DE genes; all 424 are indistinguishable
+  (empirical p = 1 for every one, by construction), making 71.86% of the 590. Null median zero in 96.5% of contrasts.
+  375 contrasts find at least one DE gene; 166 (44.3%) of them are indistinguishable and 209 (55.7%) exceed, so the
+  report's departure from the first review's suggested wording is correct and the plain-terms "a little over half"
+  is right. All 799 contrasts have 500 null and 25 real fits, so the p denominator is 501 throughout. The power
+  reading is further supported: the zero-DE share falls from 61% at m = 8-10 to 36% at m > 22.
+- **Sex-imbalance quartiles.** The table reproduces exactly (12.0 / 25.0 / 20.6 / 47.0%; median null q95 1.0 / 1.0 /
+  1.0 / 1.05; r = 0.285). But two further cuts change what it can support (`confirm_findings.txt` §2): the association
+  is entirely between datasets (within-dataset r = -0.010; dataset-level r = 0.61 over 25 datasets; 57% of the
+  imbalance variance is between datasets), and only the *median* null q95 is flat: the share of contrasts whose null
+  q95 exceeds 10 DE genes rises 9.5% -> 14.5% -> 25.6% -> 25.0%, and the mean from 12 to 60-173. The gradient also
+  largely tracks the zero-DE share (70% in the lowest quartile, 24% in the highest); among contrasts with any DE genes
+  it is non-monotone (39 / 65 / 49 / 61%).
+- **p floor.** 1/501 = 0.001996; ceil(0.001996 x 799 / 0.05) = 32 (exact 31.9); 129 contrasts sit at the minimum,
+  giving q = 0.0124 there. My BH recomputation matches `n_de_q` exactly and gives 209 distinguishable.
+- **Power caveat.** Now the second bullet of "What this does and does not show" ("Power is the main alternative
+  explanation"), with the injection size stated; the "Not shown" bullet is kept.
+- **Report text.** Title, verdict bullets ("Most of the 74% is nothing against nothing", 424/799, 96.5%, 72%, 166 of
+  375, "mainly reflects power", the 1/501 floor) and the reframed plain terms are all present.
+- **G5.** The tool extracts 51 sentences; the table has the same 51, in order, with correct section labels, none stale
+  or missing, all labelled Supported with backing; `--verify` -> "G5 passed (51 rows)". G5's scope does not include
+  Results, so it does not cover the sex-imbalance conclusion below.
+- **G6.** `attribution.py check --show` -> "G6 passed (7 claims)"; every resolved title is the work its claim names.
+
+### Final verdict: publish with edits
+
+- **Finding 1 (zero-DE share): fixed.** Every number reproduces (`confirm_findings.txt` §1), the title, verdict and
+  plain terms are reframed around power, and the 166-of-375 departure is the correct reading of the data. One small
+  wording point remains (issue 3 below).
+- **Finding 2 (sex-imbalance gradient): partly fixed.** The quartile table is in Results and is correct. The
+  conclusion attached to it, "the true share of contrasts carrying disease signal is likely below 26%", does not
+  follow. The first review proposed it, and this pass withdraws it. With a within-dataset correlation of -0.01, the
+  table cannot tell cohort-level confounding (which would lower the true share) from dataset or disease differences in
+  signal and power (which would not). "Flat" holds only for the median of the null q95; its upper tail rises with
+  imbalance (`confirm_findings.txt` §2).
+- **Finding 3 (p floor): fixed.** The arithmetic is right and it sits beside the verdict. The wording of the
+  condition is slightly off (issue 2 below), but the substance holds: the design cannot report fewer than 32
+  distinguishable contrasts (4% of 799) other than none.
+- **Finding 4 (power caveat): fixed.** It is moved into "What this does and does not show" and says the injection is
+  large and realistic-effect power was not estimated.
+
+Remaining issues:
+1. (Moderate) Results, sex-imbalance bullets: replace "the true share of contrasts carrying disease signal is likely
+   below 26%, not above it" with a statement that the association is between datasets (within-dataset r = -0.01), so
+   it is consistent with cohort-level confounding but cannot establish it. Qualify "the null's 95th percentile is
+   flat" to the median, noting that the share of contrasts with null q95 > 10 DE genes rises from 9.5% to 25%.
+2. (Minor) Verdict, p-floor bullet: "only if at least 32 contrasts reach that minimum" should read "only if at least
+   32 contrasts are called distinguishable". Under BH step-up, 70 contrasts at p = 2/501 with none at the minimum
+   would all pass (`confirm_findings.txt` §3).
+3. (Minor) Plain terms: "neither the disease comparison nor its healthy fakes found any differences at all"
+   overstates the null side. For the 424 zero-DE contrasts the null median is zero in 99.3%, but the null q95 is zero
+   in only 32%. Suggest "nor the typical healthy fake".
+4. (Minor, record) `deviations.md` D3 is dated 2026-11-06, but the file was written 2026-11-05 22:12 NZDT, before this
+   pass (2026-11-05 23:37 NZDT). Correct the date.

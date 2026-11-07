@@ -22,8 +22,8 @@ value was read.*
     - The headline therefore mainly reflects power at about 13 donors a side. It does not show that disease
       signatures look like donor noise.
   - **The test is conservative in H1's direction.** With 500 null draws the smallest attainable p is 1/501. Under BH
-    a contrast can be called distinguishable only if at least 32 contrasts reach that minimum; 129 do here, so the
-    constraint does not bind. But the design could never report a small number of distinguishable contrasts.
+    a contrast can be called distinguishable only if at least 32 contrasts are called distinguishable (129 sit at
+    the minimum here), so the constraint does not bind. But the design could never report a small number of distinguishable contrasts.
 - **The DE-gene count a practitioner reports barely predicts whether the contrast beats its null.**
   - At full size, using every donor (median 100 per contrast), a practitioner would report at least one DE gene in
     69% of these contrasts, with a median of 52.
@@ -64,8 +64,8 @@ We took a large public atlas of such data and, for each disease comparison, buil
 donors only: same study, same tissue, same cell type, same numbers, matched for sex and age. Then we ran the
 identical analysis on all of them and asked whether the real comparison stood out from its own fakes.
 
-Three quarters did not, but mostly because, at a dozen donors a side, neither the disease comparison nor its healthy
-fakes found any differences at all: half of all the disease comparisons found no genes. Of the comparisons that did
+Three quarters did not, but mostly because, at a dozen donors a side, neither the disease comparison nor the typical healthy
+fake found any differences at all: half of all the disease comparisons found no genes. Of the comparisons that did
 find something, a little over half stood out from their fakes.
 
 A caveat we cannot remove: the fake comparisons can only be as large as the healthy donors allow, so the test runs at
@@ -146,10 +146,11 @@ biology.
 | third | 0.18 | 21% | 1.0 |
 | highest | 0.36 | 47% | 1.05 |
 
-- The null's 95th percentile is flat across quartiles, so the 5.5% of null slots that could not match sex do not
-  inflate the null.
-- The association sits on the real side, so the true share of contrasts carrying disease signal is likely below
-  26%, not above it.
+- **The association is between datasets.** Within datasets the correlation is −0.01, against 0.29 overall. It is
+  consistent with cohort-level confounding, but it cannot separate that from differences in signal or power between
+  datasets and diseases. The first review's inference that the true share of signal is below 26% is withdrawn.
+- **The null's tail rises with imbalance.** The median of the null's 95th percentile is flat across quartiles, but
+  the share of contrasts whose null 95th percentile exceeds 10 DE genes rises from 9.5% to 25%.
 
 ## What this does and does not show
 
@@ -183,9 +184,12 @@ biology.
     interpretation leads with the DE-gene count. The choice used only null draws and synthetic injections.
   - D3 (after review): the zero-DE share, the sex-imbalance quartiles, the p-value floor and the power caveat (post
     hoc); title and plain terms reframed.
+  - D4 (after the confirmation pass): the sex-imbalance inference withdrawn (within-dataset r −0.01), null-tail and
+    wording corrections.
 - **Gates:** G1 (plan §6), G2 (`coverage.json`), G3 (`results/plausibility.md`, including the power check),
   G4 (`results/tables/age_map.csv`), G5 and G6 at write-up. G7 does not apply.
-- **Independent review:** publish with edits (four findings plus checks); the edits are in D3; confirmation pending.
+- **Independent review:** publish with edits (four findings plus checks), edits in D3; confirmation pass: publish with
+  edits, made in D4.
 
 ## Reproducing it
 

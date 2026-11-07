@@ -55,7 +55,7 @@ donors of 100 null draws across 20 primary contrasts, and ran the identical pipe
   The resolver accepted it because the identifier exists; the title check caught it. It is now
   10.1093/nar/gkae1128 (Buniello et al., the Open Targets Platform paper).
 
-## D3 — 2026-11-06 — edits after the independent review (verdict: publish with edits)
+## D3 — 2026-11-05 22:12 NZDT — edits after the independent review (verdict: publish with edits)
 
 All checks are post hoc and come from `code/posthoc_review.py` and `results/tables/posthoc_review.json`.
 
@@ -69,3 +69,16 @@ All checks are post hoc and come from `code/posthoc_review.py` and `results/tabl
 3. **The p-value floor** (finding 3): the minimum attainable p is 1/501; 32 ties are needed for BH significance and
    129 are present. Stated beside the verdict.
 4. **The power caveat** (finding 4) is moved into "What this does and does not show".
+
+## D4 — 2026-11-07 — edits after the confirmation pass (verdict: publish with edits)
+
+1. **The sex-imbalance inference is withdrawn.** The confirmation pass found the association is between datasets:
+   the pooled within-dataset correlation is −0.01, against 0.285 overall (recomputed here). The table stays; the
+   inference that the true share of signal is below 26% is withdrawn.
+2. **"Flat" applies only to the median** of the null's 95th percentile. The share of contrasts whose null 95th
+   percentile exceeds 10 DE genes rises from 9.5% to 25% across quartiles (recomputed here).
+3. **Wording:**
+   - the p-floor condition now reads "at least 32 contrasts are called distinguishable";
+   - the plain-terms sentence now says "the typical healthy fake" (for zero-DE contrasts the null median is zero in
+     99.3% but its 95th percentile only in 32%);
+   - D3's date is corrected to when it was written.
