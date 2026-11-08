@@ -2582,7 +2582,12 @@
     "Write up with a public re-scoring dataset as a community resource, framing null and positive results as decision-relevant either way."
    ],
    "risks": "Main risk is a robust null echoing Mathis et al.'s sensitivity check, capping venue tier. Vintage reconstruction for early COVID (mid-2020) is patchy across sources, requiring careful documentation of gaps. The hubverse team is well-positioned to do this themselves and could preempt it.",
-   "plain_summary": "Public forecasting challenges for flu and COVID score each team's predictions against the final, cleaned-up data, which forecasters never had at the time. This study would rescore the forecasts against the data as it looked when they were made, and check how often the ranking of forecasting teams changes."
+   "plain_summary": "Public forecasting challenges for flu and COVID score each team's predictions against the final, cleaned-up data, which forecasters never had at the time. This study would rescore the forecasts against the data as it looked when they were made, and check how often the ranking of forecasting teams changes.",
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass)",
+   "report_url": "runs/health-econ-hub-vintage-rescore/report.html",
+   "verdict_tag": "Refuted",
+   "verdict_note": "H1 Refuted; H2 Supported under the preregistered name rule only. Re-scoring 563,252 FluSight forecasts (2022-23 to 2024-25) against first-reported instead of finalised hospitalisations reverses 6.2% of 8,441 within-season model pairs (4.9-7.4%), against a 20% bar; 0.7%, 3.0% and 10.6% by season. In 2024-25, first reports ran a median 8% low and the leader changed at two horizons, but that rule excludes the strongest model by name and the leader is as unstable across resamples under a single truth (55-65%). Dropping late first reports gives 6.4%. Review fix first; confirmation publish with edits.",
+   "headline": "Scoring flu forecasts against the data forecasters actually saw reverses only 6% of model pairings; even in 2024-25, when first reports ran 8% low, the top-model changes were near-ties."
   },
   {
    "id": "extra-open-neuroimaging-reanalysis-openneuro-multiverse-robustness-atlas",

@@ -12,9 +12,13 @@ distinguishable from the leader's sampling instability.**
   - **6.2%** of 8,441 model pairs reverse (95% bootstrap over reference dates 4.9% to 7.4%).
   - By season: 0.7% (2022–23), 3.0% (2023–24) and 10.6% (2024–25).
   - **Late first reports do not change this.** For 8.1% of 2023–24 and 4.6% of 2024–25 scored forecasts, the
-    location-week's first hub version came more than 7 days after the week's end. Most of these first appeared a
-    month or more later, when the values were largely settled: first and final are identical for 84–98% of such weeks. Dropping them gives 6.4%
-    (4.9% to 7.6%), post hoc.
+    location-week's first hub version came more than 7 days after the week's end. The two seasons differ:
+    - in 2023–24, the last four weeks of the season first appeared a median 194 days later, and 97% of those
+      location-weeks have identical first and final values;
+    - in 2024–25, two weeks were missed by the weekly commit and appeared about 11 days late; 41% are identical.
+
+    Dropping them gives 6.4% (4.9% to 7.6%), post hoc. The 2024–25 h2 first-report leader then becomes
+    FluSight-lop_norm, a hub ensemble that the name rule does not catch.
   - Rank agreement between the two scorings is high: the Spearman correlation of relative WIS is 0.85–1.00 across
     season × horizons.
 - **H2 (the best non-ensemble model changes in at least one season × horizon): Supported under the name rule.**
@@ -86,8 +90,8 @@ finalised data. This study scores every forecast against reconstructed first rep
 - **Best model.** Lowest relative WIS (Cramer et al. 2022) among models covering at least 80% of cells, excluding
   ensembles and baselines by name. The relative WIS itself uses every well-covered model.
 - **Units.**
-  - 186 forecast units were dropped for missing truth values: 179 in 2023–24 (Minnesota 91, Massachusetts 88) and 7
-    in 2022–23.
+  - 186 forecast units were dropped: 179 in 2023–24 for missing truth values (Minnesota 91, Massachusetts 88), and 7
+    MIGHTE-Nsemble units in 2022–23 for a missing quantile.
   - Two models submit no quantile forecasts of weekly admissions and are not loaded: SigSci-BECAM (a rate-change
     pmf) and FluSight-base_seasonal (peak targets).
   - One Metaculus-cp file (2025-05-03) was not loaded by the build step.
@@ -115,9 +119,11 @@ Revision sizes are in the verdict table above.
   - h1: PSI-PROF → PSI-PROF_beta;
   - h2: CEPH-Rtrend_fluH → PSI-PROF_beta;
   - h3: PSI-PROF_beta, unchanged.
-- **Under one truth** (post hoc, B = 200): how often the 2024–25 leader differs from its own point estimate.
+- **Under one truth** (post hoc, B = 200): how often the 2024–25 leader differs from its own point estimate. The
+  last column is the same first-vs-final criterion re-run in these 200 resamples. The preregistered B = 500 shares
+  in the verdict are 78%, 61%, 53% and 36%.
 
-  | horizon | first-report truth | final truth | first vs final (the H2 criterion) |
+  | horizon | first-report truth | final truth | first vs final (post hoc, B = 200) |
   |---|---|---|---|
   | h0 | 63% | 59% | 77% |
   | h1 | 61% | 65% | 54% |
@@ -130,8 +136,8 @@ Revision sizes are in the verdict table above.
 - **Biased revisions reorder close competitors.** In 2024–25, after national reporting rules changed in late 2024,
   first reports ran low and 1 in 10 pairs reversed. The leader changes involve near-tied models, including two
   variants of one team's model, and the leader is as unstable across resamples under one truth.
-- **2022–23's "final" values are not final.** They are the old repository's last version (November 2023). For the
-  same 2,540 location-weeks, the new hub's latest values are identical for only 23% and differ by more than 10% for
+- **2022–23's "final" values are not final.** They are the old repository's last version (November 2023). For all
+  2,540 2022–23 location-weeks present in both hubs, the new hub's latest values are identical for only 23% and differ by more than 10% for
   40% (median 0, mean +3.5%). Scored against the new hub's latest values instead, 2022–23 reverses 0.5% of pairs
   (8 of 1,708) and no leader changes (post hoc).
 - **First-report scoring favours forecasts that track provisional data.** That may be the right target for a

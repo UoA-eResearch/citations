@@ -41,3 +41,13 @@ are unchanged; the first draft's table is kept as `results/tables/primary_v1.jso
    values, and 2022–23 is re-scored against the latter.
 5. **Numbers (finding 5).** Lags are now computed on forecast target weeks: 1.5 and 4.5 days. The dropped units
    (186) and the models without quantile forecasts are stated.
+
+## D3 — 2026-11-09 — edits after the confirmation pass (verdict: publish with edits)
+
+- **Late first reports by season.** In 2023–24, the last four weeks appeared a median 194 days late (97% identical to
+  final). In 2024–25, two weeks were about 11 days late (41% identical).
+- **The late-drop variant.** With late first reports dropped, the 2024–25 h2 first-report leader becomes
+  FluSight-lop_norm, a hub ensemble the name rule misses. This is now stated.
+- **Units.** The 7 dropped 2022–23 units are MIGHTE-Nsemble units with a missing quantile, not missing truth.
+- **The instability table** is labelled B = 200, post hoc, and distinguished from the preregistered B = 500 shares.
+- **Wording:** the finality sentence now says "all 2,540" location-weeks.

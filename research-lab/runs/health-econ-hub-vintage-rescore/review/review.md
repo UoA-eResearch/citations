@@ -116,3 +116,133 @@ scorer (03:13) and all outputs (03:40–03:43); D1 is as allowed by the plan.
 - **G5:** `review/overclaim_check.md` is present and the gate edits were honest, but rows 15–17 rest on the pooled
   revision numbers (finding 1) and rows 1, 9–12, 25, 27 on the name rule and bootstrap criterion (finding 2).
 - **G6:** `python3 -I ../../tools/attribution.py check . --show` → "G6 passed (3 claims)".
+
+## Confirmation pass
+
+Reviewer: Fable 5.1, 2026-11-09.
+
+Scope: deviations.md D2, report.md and report.html (both 2026-11-07), overclaim_check.md, code/score.py,
+code/posthoc_review.py, results/tables/primary.json, primary_late7.json and posthoc_review.json. I recomputed the
+numbers from `data/interim/` myself and did not take them from the brief. The checks in `review/reviewer_checks/`
+were written without importing the study's scoring code. They ran with `venv/bin/python -I` (or `python3 -I`) from
+outside the run directory, with paths passed as arguments.
+
+- `confirm_1.py` / `.txt`: revision statistics per scoring hub on forecast target weeks, lags, the late (> 7 days)
+  first-report cells, 2022–23 finality, and dropped units.
+- `confirm_2.py` / `.txt`: what the 7 dropped 2022–23 units are.
+- `confirm_3.py` / `.txt`: a full independent re-score:
+  - WIS from the pinball-loss form;
+  - pairwise reversals;
+  - relative WIS and leaders under three rules: the name rule, the hub-and-baseline rule, and no exclusion;
+  - the same with late first reports dropped;
+  - 2024–25 leader instability (B = 200, a different seed).
+- `confirm_4.py` / `.txt`: whether the G5 table matches report.md (using the tool's own `extract`, read-only), stale
+  backings, and whether report.html carries the D2 edits.
+- `confirm_5_gates.txt`: `tools/overclaim_check.py --verify` and `tools/attribution.py check --show`.
+
+The headline numbers reproduce exactly from my own implementation:
+- 527 / 8,441 = 6.24% overall (12/1,708; 79/2,611; 436/4,122);
+- late7 541 / 8,439 = 6.41% (12/1,708; 89/2,611; 440/4,120);
+- every leader under every rule.
+
+### Final verdict: publish with edits
+
+The D2 fixes are real. Every corrected number reproduces from the stored data, and the H2 verdict is now worded as
+the evidence allows. What remains is wording. One sentence in the verdict block misdescribes the 2024–25
+late-report cells, and three smaller statements need correcting (below). No result or verdict changes.
+
+**Correction to the first review.** My finding 2 said NEU_ISI-AdaptiveEnsemble was best at h1–h3 "under both
+truths". Under final truth at h1, PSI-PROF_beta is lower (NEU_ISI 0.849; `confirm_3.txt`). The report's "h1–h3
+under first-report truth and h2–h3 under final truth" is correct.
+
+### Original findings
+
+- **1. Pooled revisions: fixed.** `score.py` now restricts to the scoring hub and to forecast target weeks.
+  `confirm_1.txt` reproduces every cell of the report's table:
+  - 2022–23: 1,841 / 47.5% / 9.3% / 0.0% / +4.3%;
+  - 2023–24: 1,748 / 13.6% / 1.0% / 0.0% / +0.3%;
+  - 2024–25: 1,625 / 44.1% / 8.6% / −8.0% / −10.5%;
+  - lags 1.5 / 4.5 / 4.5 days.
+
+  The title ("about 8% low"), the verdict table and the "bias, not size" bullet carry these numbers, and so does
+  report.html (`confirm_4.txt`). One leftover: the backing column of G5 row 36 still cites the pooled
+  "median signed −4.1%; 36% revised >10%". The sentence itself ("several percent low") is acceptable.
+- **2. H2 name rule and bootstrap: fixed.** `confirm_3.txt` reproduces the eligibility results independently:
+  - NEU_ISI-AdaptiveEnsemble has relative WIS 0.726/0.649/0.621 under first-report truth at h1–h3;
+  - it is lowest at h2–h3 under final truth;
+  - under the hub-and-baseline rule, the leader changes only at 2024–25 h1 (NEU_ISI → PSI-PROF_beta).
+
+  The verdict line now reads "Supported under the preregistered name rule, but not robust to that rule and not
+  distinguishable from the leader's sampling instability". The name-rule inconsistency (MIGHTE-Nsemble and the
+  FluSight-lop_norm / trained_* models) is stated, and so is the metadata-based rule as future work.
+
+  The instability percentages match `posthoc_review.json`: 55–63% / 59–65% / 50–77% at h0–h2. My rerun with another
+  seed, B = 200, gives 57–75% / 59–68% / 55–81%, so the qualitative conclusion holds. With B = 200 the Monte Carlo
+  error is about ±3.5 points, and at h0 the two seeds differ by 12 points. Two related wording points:
+  - The table column "first vs final (the H2 criterion)" shows the B = 200 post hoc values (54%, 50% at h1, h2;
+    49.5% at h2 is actually below the 50% threshold). The preregistered B = 500 values that decide H2 are 61% and
+    53% (`primary.json`), and the text gives 78% for h0 from B = 500. The column should say it is B = 200, post hoc,
+    and not the preregistered run.
+- **3. Late first reports (G1): partly fixed.** The analysis is right.
+  - `confirm_1.txt` reproduces the late-report shares: 8.1% of 2023–24 and 4.6% of 2024–25 scored forecasts;
+    10.2% and 6.3% of target weeks.
+  - `confirm_3.txt` reproduces the late7 re-score (6.4%, H1 unchanged) and the h0 leader change.
+
+  Two text problems remain:
+  - **(a) A verdict-block sentence is wrong for 2024–25.** It reads "Most of these first appeared a month or more
+    later, when the values were largely settled: first and final are identical for 84–98% of such weeks". That
+    holds for 2023–24: all 178 late target weeks are > 30 days late and 96% are identical. For 2024–25 it does not.
+    The 103 late target weeks (2025-01-18 and 2025-06-21) first appeared a median 11.5 days after the week ended,
+    none > 30 days, and only 39% are identical (13% for 2025-01-18; 23% of the late scored forecasts). G5 row 9 is
+    labelled Supported, with a backing ("> 30 days for 68–100%, first==final 84–98%") that I cannot reproduce for
+    2024–25.
+  - **(b) One late7 leader change is not reported.** With late cells dropped, the name-rule leader at 2024–25 h2
+    under first-report truth becomes FluSight-lop_norm, a hub ensemble the name rule does not catch
+    (`primary_late7.json`, `confirm_3.txt`). The report mentions only the h0 change. This belongs with the
+    eligibility point.
+- **4. 2022–23 finality: fixed.** `confirm_1.txt` reproduces the finality numbers: 2,540 location-weeks, 22.7%
+  identical, 39.8% differ > 10%, median 0, mean +3.5%. `confirm_3` matches the re-score of 2022–23 against the new
+  hub's latest values (8 of 1,708 reverse, no leader change; posthoc_review.json). These figures are computed over
+  all 2022–23 location-weeks. On the 1,834 forecast target weeks they are 18% identical, 37% > 10% and mean +0.8%.
+  The report's "the same 2,540 location-weeks" is accurate but could say "all".
+- **5. Numbers: partly fixed (one wording error).**
+  - Lags (1.5 / 4.5 days), the 179 dropped 2023–24 units (Minnesota 91, Massachusetts 88), SigSci-BECAM,
+    FluSight-base_seasonal and the 2025-05-03 Metaculus-cp file are all stated and correct.
+  - The report says "186 forecast units were dropped for missing truth values: … 7 in 2022–23". Those 7 are
+    MIGHTE-Nsemble forecasts for reference date 2023-03-06 (Alaska and New York) with a missing quantile value
+    (`confirm_2.txt`). Every 2022–23 unit has old-hub truth. So 179 units were dropped for missing truth, and 7 for
+    incomplete forecasts.
+- **6. Positive notes: still hold.** My own pinball-form WIS gives identical pair counts, reversal counts and
+  leaders, and 563,252 scored forecasts.
+
+### Gates
+
+- **G5:** `--verify` passes (39 rows). The table matches report.md sentence for sentence: no missing or extra rows
+  (`confirm_4.txt`). The pass is not fully honest yet:
+  - row 9 is labelled Supported but its 2024–25 claim fails (3a);
+  - row 36's backing is stale (finding 1).
+- **G6:** passes (3 claims). H1's DOI resolves to Mathis et al., "Evaluation of FluSight influenza forecasting in
+  the 2021–22 and 2022–23 seasons…", which is the right work. The ledger still has no rows for three things the
+  report relies on:
+  - the method citations Bracher et al. 2021 and Cramer et al. 2022;
+  - the external fact "national reporting rules changed in late 2024".
+
+  None of these was added or changed by D2, and the tool cannot catch a missing row.
+- **G1:** now addressed (finding 3).
+
+### Remaining issues (required edits before publishing)
+
+1. Rewrite the verdict-block sentence on late first reports so it is separate by season:
+   - 2023–24: four end-of-season weeks first appeared months later; 96% identical to final.
+   - 2024–25: two missed weekly commits about 11 days late; 39% identical.
+
+   Re-label and re-back G5 row 9.
+2. State that with late first reports dropped, the 2024–25 h2 first-report leader becomes FluSight-lop_norm, a hub
+   ensemble not caught by the name rule.
+3. Correct the units sentence: 179 units dropped for missing truth, and 7 MIGHTE-Nsemble units dropped for a
+   missing quantile.
+4. Label the instability table's last column as B = 200, post hoc, and distinguish it from the preregistered
+   B = 500 shares (78/61/53/36%).
+5. Re-fill the backing of G5 row 36 with the per-hub numbers.
+6. (Optional) Add G6 ledger rows for Bracher 2021, Cramer 2022 and the late-2024 NHSN reporting change. Say "all"
+   2022–23 location-weeks in the finality sentence.

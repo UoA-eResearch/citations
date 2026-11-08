@@ -80,7 +80,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
   <h1>Re-scoring FluSight forecasts against first-reported data reverses 6% of model pairings; in 2024–25, when first reports ran about 8% low, the top model changed at short horizons, but no more often than it wobbles under a single truth</h1>
   <p class="subtitle">FluSight weekly influenza hospital-admission forecasts, 2022–23 to 2024–25 (33–51 models a season, 563,252 scored forecasts), were scored by WIS twice: against each location-week&#x27;s first-reported value, taken from the git history of the hub&#x27;s truth file, and against the finalised value. The plan and scoring code were committed before any forecast was scored.</p>
   <div class="meta">
-    <span>Report · 2026-10-25 · under independent review</span>
+    <span>Report · 2026-11-07 · revised after independent review and a confirmation pass</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/health-econ-hub-vintage-rescore/plan.md">Preregistration</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/health-econ-hub-vintage-rescore/deviations.md">Deviations log</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/health-econ-hub-vintage-rescore/code">Code</a>
@@ -92,35 +92,40 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 <p><strong>Verdict: H1 Refuted; H2 Supported under the preregistered name rule, but not robust to that rule and not
 distinguishable from the leader's sampling instability.</strong></p>
 <ul>
-<li><strong>H1 (first-report scoring reverses at least 20% of within-season pairwise model orderings): Refuted.</strong><ul>
+<li>
+<p><strong>H1 (first-report scoring reverses at least 20% of within-season pairwise model orderings): Refuted.</strong></p>
+<ul>
 <li><strong>6.2%</strong> of 8,441 model pairs reverse (95% bootstrap over reference dates 4.9% to 7.4%).</li>
 <li>By season: 0.7% (2022–23), 3.0% (2023–24) and 10.6% (2024–25).</li>
 <li><strong>Late first reports do not change this.</strong> For 8.1% of 2023–24 and 4.6% of 2024–25 scored forecasts, the
-location-week's first hub version came more than 7 days after the week's end. Most of these first appeared a
-month or more later, when the values were largely settled: first and final are identical for 84–98% of such weeks. Dropping them gives 6.4%
-(4.9% to 7.6%), post hoc.</li>
-<li>Rank agreement between the two scorings is high: the Spearman correlation of relative WIS is 0.85–1.00 across
-season × horizons.</li>
+location-week's first hub version came more than 7 days after the week's end. The two seasons differ:<ul>
+<li>in 2023–24, the last four weeks of the season first appeared a median 194 days later, and 97% of those
+  location-weeks have identical first and final values;</li>
+<li>in 2024–25, two weeks were missed by the weekly commit and appeared about 11 days late; 41% are identical.</li>
 </ul>
 </li>
-<li><strong>H2 (the best non-ensemble model changes in at least one season × horizon): Supported under the name rule.</strong><ul>
-<li><strong>Under the preregistered rule</strong> (ensembles and baselines excluded by name), the 2024–25 leader changes at
+</ul>
+<p>Dropping them gives 6.4% (4.9% to 7.6%), post hoc. The 2024–25 h2 first-report leader then becomes
+FluSight-lop_norm, a hub ensemble that the name rule does not catch.
+- Rank agreement between the two scorings is high: the Spearman correlation of relative WIS is 0.85–1.00 across
+season × horizons.
+- <strong>H2 (the best non-ensemble model changes in at least one season × horizon): Supported under the name rule.</strong>
+- <strong>Under the preregistered rule</strong> (ensembles and baselines excluded by name), the 2024–25 leader changes at
 1 week ahead, from PSI-PROF (first report) to PSI-PROF_beta (finalised), two variants from the same team. It
-also changes at 2 weeks ahead, from CEPH-Rtrend_fluH to PSI-PROF_beta. No other season changes its leader.</li>
-<li><strong>The rule excludes the strongest model</strong> (post hoc). NEU_ISI-AdaptiveEnsemble is a single team's submission,
+also changes at 2 weeks ahead, from CEPH-Rtrend_fluH to PSI-PROF_beta. No other season changes its leader.
+- <strong>The rule excludes the strongest model</strong> (post hoc). NEU_ISI-AdaptiveEnsemble is a single team's submission,
 removed only because its name contains "ensemble". It has the lowest relative WIS in 2024–25 at h1–h3 under
 first-report truth (0.73, 0.65, 0.62), and at h2–h3 under final truth. If only the hub's own models
-(FluSight-*) and baselines are excluded, the leader changes only at h1 (NEU_ISI-AdaptiveEnsemble →
+(FluSight-<em>) and baselines are excluded, the leader changes only at h1 (NEU_ISI-AdaptiveEnsemble →
 PSI-PROF_beta). The name rule is also inconsistent: MIGHTE-Nsemble and the hub's FluSight-lop_norm,
--trained_mean and -trained_med are ensembles that it does not catch.</li>
-<li><strong>The leader is just as unstable under a single truth</strong> (post hoc). In bootstrap resamples, the 2024–25 leader
+-trained_mean and -trained_med are ensembles that it does not catch.
+- </em><em>The leader is just as unstable under a single truth</em><em> (post hoc). In bootstrap resamples, the 2024–25 leader
 at h0–h2 differs from its own point estimate in 55–63% of resamples under first-report truth and 59–65% under
 final truth. The first-report and final leaders differ from each other in 50–77% of resamples. So the change is
-a near-tie at the top, not evidence that revisions pick the winner.</li>
-</ul>
+a near-tie at the top, not evidence that revisions pick the winner.
+- </em><em>Revisions: bias, not size, goes with reversals</em>* (computed per scoring hub on forecast target weeks; corrected
+  after review).</p>
 </li>
-<li><strong>Revisions: bias, not size, goes with reversals</strong> (computed per scoring hub on forecast target weeks; corrected
-  after review).</li>
 </ul>
 <div class="table-wrap"><table>
 <thead>
@@ -207,8 +212,8 @@ reports" are therefore different objects: a Sunday aggregate of a backfilled dai
 <li><strong>Best model.</strong> Lowest relative WIS (Cramer et al. 2022) among models covering at least 80% of cells, excluding
   ensembles and baselines by name. The relative WIS itself uses every well-covered model.</li>
 <li><strong>Units.</strong><ul>
-<li>186 forecast units were dropped for missing truth values: 179 in 2023–24 (Minnesota 91, Massachusetts 88) and 7
-in 2022–23.</li>
+<li>186 forecast units were dropped: 179 in 2023–24 for missing truth values (Minnesota 91, Massachusetts 88), and 7
+MIGHTE-Nsemble units in 2022–23 for a missing quantile.</li>
 <li>Two models submit no quantile forecasts of weekly admissions and are not loaded: SigSci-BECAM (a rate-change
 pmf) and FluSight-base_seasonal (peak targets).</li>
 <li>One Metaculus-cp file (2025-05-03) was not loaded by the build step.</li>
@@ -269,14 +274,16 @@ pmf) and FluSight-base_seasonal (peak targets).</li>
     - h1: PSI-PROF → PSI-PROF_beta;
     - h2: CEPH-Rtrend_fluH → PSI-PROF_beta;
     - h3: PSI-PROF_beta, unchanged.
-- <strong>Under one truth</strong> (post hoc, B = 200): how often the 2024–25 leader differs from its own point estimate.</p>
+- <strong>Under one truth</strong> (post hoc, B = 200): how often the 2024–25 leader differs from its own point estimate. The
+  last column is the same first-vs-final criterion re-run in these 200 resamples. The preregistered B = 500 shares
+  in the verdict are 78%, 61%, 53% and 36%.</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
 <th>horizon</th>
 <th>first-report truth</th>
 <th>final truth</th>
-<th>first vs final (the H2 criterion)</th>
+<th>first vs final (post hoc, B = 200)</th>
 </tr>
 </thead>
 <tbody>
@@ -312,8 +319,8 @@ pmf) and FluSight-base_seasonal (peak targets).</li>
 <li><strong>Biased revisions reorder close competitors.</strong> In 2024–25, after national reporting rules changed in late 2024,
   first reports ran low and 1 in 10 pairs reversed. The leader changes involve near-tied models, including two
   variants of one team's model, and the leader is as unstable across resamples under one truth.</li>
-<li><strong>2022–23's "final" values are not final.</strong> They are the old repository's last version (November 2023). For the
-  same 2,540 location-weeks, the new hub's latest values are identical for only 23% and differ by more than 10% for
+<li><strong>2022–23's "final" values are not final.</strong> They are the old repository's last version (November 2023). For all
+  2,540 2022–23 location-weeks present in both hubs, the new hub's latest values are identical for only 23% and differ by more than 10% for
   40% (median 0, mean +3.5%). Scored against the new hub's latest values instead, 2022–23 reverses 0.5% of pairs
   (8 of 1,708) and no leader changes (post hoc).</li>
 <li><strong>First-report scoring favours forecasts that track provisional data.</strong> That may be the right target for a
