@@ -26,3 +26,16 @@ handles: 60 induction sequences (second seed), 36 subtraction prompts, and 30 mo
 
 **Analysis rule.** Two-hop and antonym prompts that pass selection are kept and reported, but marked as below the
 plan's per-family minimum. The family-level secondary analyses use only families with at least 15 prompts.
+
+## D2 — 2026-11-08 16:45 NZDT — ablation details, before any matching result
+
+1. **Ablation effects in float32.** In bf16, a target logit near 19 moves in steps of 0.125, coarser than many
+   single-feature effects. The counterpart rule compares signs and magnitudes, so ablation effects are measured with
+   the replacement model loaded in float32. Graph construction stays in bf16, with identical settings across sets.
+2. **Ablation setting.** Zero-ablation uses circuit-tracer's `feature_intervention` at the feature's layer and
+   position with `freeze_attention=False`, so effects propagate through the replacement model. The setting is the
+   same for every set. The plan did not specify it.
+3. **Tokens.** Interventions use the same BOS-prefixed token ids as graph construction (`ensure_tokenized`).
+4. **Loading.** circuit-tracer cannot load a local TopK set through `from_pretrained`. Sets are loaded with
+   `load_transcoder_set(activation="topk", k=64)` and `from_pretrained_and_transcoders`; no fallback to ReLU was
+   needed.
