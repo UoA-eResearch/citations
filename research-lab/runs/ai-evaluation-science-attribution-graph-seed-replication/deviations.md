@@ -39,3 +39,14 @@ plan's per-family minimum. The family-level secondary analyses use only families
 4. **Loading.** circuit-tracer cannot load a local TopK set through `from_pretrained`. Sets are loaded with
    `load_transcoder_set(activation="topk", k=64)` and `from_pretrained_and_transcoders`; no fallback to ReLU was
    needed.
+
+## D3 — 2026-11-08 — secondaries not run or reduced (after the primary results)
+
+- **Not run:** claim replication of mediating paths (secondary 2), graph-level weighted Jaccard and layer-profile
+  correlation (secondary 3), activation-correlation matching for all features (secondary 4), and the mixed-effects
+  model (secondary 5; plain tables by family and layer depth are reported instead). Activation-correlation matching
+  was run only for the 30 G4 features.
+- **Seeds needed** (secondary 7) is reported as the share of A's top-10 features with counterparts in both, one or
+  neither of B and C, not as a fitted curve.
+- **Dead fraction.** Fidelity counts a feature as dead if it never fires on the 998,448 held-out tokens (about 24%
+  per set). Training's running dead-feature measure was much lower (0.05%); the two measures differ.

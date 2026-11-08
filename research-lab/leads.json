@@ -4207,7 +4207,12 @@
    "risks": "Small-model mechanisms may be diffuse, giving low replication for reasons unrelated to seeds; mitigate by stratifying by graph sparsity and error-node share. Recipe mismatch with the public set limits that comparison to a secondary role. Intervention effects in small models can be noisy, so average over several ablation scales.",
    "critic_note": "Critic (round 2): arXiv searches for circuit-tracing reproducibility and attribution-graph robustness under seeds returned nothing beyond the cited 2609.18440. It shares its framing with the SAE pretraining-seed lead but answers a separate question (transcoder seed versus circuit claims), so it is not a duplicate. Training 28-layer transcoder sets three to four times on a shared A100 is the main risk. Value 6 and cost 5 kept.",
    "plain_summary": "Researchers draw 'circuit diagrams' of how a language model reaches an answer, but the diagrams depend on helper networks (transcoders) trained with a random starting point. This project retrains those helpers with different random seeds and checks whether the diagrams, and the stories researchers tell from them, stay the same.",
-   "scout_round": 2
+   "scout_round": 2,
+   "status": "deep dive \u00b7 report (pre-review draft, queued for independent review)",
+   "report_url": "runs/ai-evaluation-science-attribution-graph-seed-replication/report.html",
+   "verdict_tag": "Supported",
+   "verdict_note": "H1 Supported narrowly; H2 Supported (pre-review). Four TopK transcoder sets for Qwen3-0.6B (three initialisation seeds, one data-order seed), circuit-tracer graphs for 212 prompts: a median 57% of each graph's top-10 features have a functional counterpart (same layer and position, decoder cosine >= 0.7, same-sign ablation effect >= 50%) in another seed's graph (95% 0.567-0.584), but 90% lie in the span of the other seed's top features. Early layers replicate worst (0.38); data order matters less than initialisation (0.65); fidelity is moderate (top-1 agreement 0.52-0.54).",
+   "headline": "Attribution graphs are only partly reproducible: about four in ten top features change when the transcoder is retrained with a new seed, though the concepts they represent mostly persist."
   },
   {
    "id": "ai-evaluation-science-transcript-auditor-position-framing",

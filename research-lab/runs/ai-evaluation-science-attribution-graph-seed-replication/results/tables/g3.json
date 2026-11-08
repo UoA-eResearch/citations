@@ -1,0 +1,231 @@
+{
+ "capital_prompt_logit_lens": [
+  {
+   "layer": 27,
+   "pos": 5,
+   "idx": 22779,
+   "top_tokens": [
+    " choking",
+    "\u8360",
+    "icer",
+    "idar",
+    "mono"
+   ]
+  },
+  {
+   "layer": 21,
+   "pos": 5,
+   "idx": 19523,
+   "top_tokens": [
+    " French",
+    "\u6cd5\u56fd",
+    " France",
+    "\u00e9n\u00e9",
+    "French"
+   ]
+  },
+  {
+   "layer": 0,
+   "pos": 1,
+   "idx": 25205,
+   "top_tokens": [
+    ".hy",
+    "\u67cf",
+    "EFAULT",
+    "\u094d",
+    "mitt"
+   ]
+  },
+  {
+   "layer": 27,
+   "pos": 5,
+   "idx": 329,
+   "top_tokens": [
+    "\u017ca",
+    "izador",
+    "\u0639\u0628\u0627\u062f",
+    " Hindered",
+    "$GLOBALS"
+   ]
+  },
+  {
+   "layer": 22,
+   "pos": 5,
+   "idx": 14497,
+   "top_tokens": [
+    " city",
+    " City",
+    " CITY",
+    " cities",
+    "\u57ce\u5e02"
+   ]
+  },
+  {
+   "layer": 23,
+   "pos": 5,
+   "idx": 31529,
+   "top_tokens": [
+    " French",
+    "French",
+    " french",
+    " Claude",
+    " jean"
+   ]
+  },
+  {
+   "layer": 0,
+   "pos": 1,
+   "idx": 3874,
+   "top_tokens": [
+    "akens",
+    "\u0441\u0442\u0443\u043f\u0438\u043b",
+    "metic",
+    "ilos",
+    "agos"
+   ]
+  },
+  {
+   "layer": 24,
+   "pos": 5,
+   "idx": 24764,
+   "top_tokens": [
+    "stras",
+    " Br",
+    "istr",
+    " Str",
+    " PAR"
+   ]
+  },
+  {
+   "layer": 0,
+   "pos": 2,
+   "idx": 15002,
+   "top_tokens": [
+    "aurus",
+    "oralType",
+    " rewarded",
+    "datable",
+    "sch\u00fctz"
+   ]
+  },
+  {
+   "layer": 22,
+   "pos": 5,
+   "idx": 16984,
+   "top_tokens": [
+    "ienza",
+    "oulder",
+    "\ufffd\ufffd",
+    "upertino",
+    " function"
+   ]
+  }
+ ],
+ "traced": {
+  "factual": {
+   "prompt": "The capital of France is",
+   "target": " Paris",
+   "n_kept": 2117,
+   "error_share": 0.07641225402770101,
+   "top3": [
+    {
+     "layer": 27,
+     "pos": 5,
+     "idx": 22779,
+     "influence": 0.03741367533802986,
+     "ablation_effect": 3.1636810302734375,
+     "counterpart_B": true,
+     "counterpart_C": true
+    },
+    {
+     "layer": 21,
+     "pos": 5,
+     "idx": 19523,
+     "influence": 0.027151020243763924,
+     "ablation_effect": 0.27633094787597656,
+     "counterpart_B": true,
+     "counterpart_C": true
+    },
+    {
+     "layer": 0,
+     "pos": 1,
+     "idx": 25205,
+     "influence": 0.026597855612635612,
+     "ablation_effect": -0.2374134063720703,
+     "counterpart_B": true,
+     "counterpart_C": true
+    }
+   ]
+  },
+  "ioi": {
+   "prompt": "When Alice and Emma went to the school, Emma gave a book to",
+   "target": " Alice",
+   "n_kept": 2841,
+   "error_share": 0.09459785587450938,
+   "top3": [
+    {
+     "layer": 0,
+     "pos": 1,
+     "idx": 25205,
+     "influence": 0.013197998516261578,
+     "ablation_effect": 0.18706321716308594,
+     "counterpart_B": true,
+     "counterpart_C": true
+    },
+    {
+     "layer": 27,
+     "pos": 14,
+     "idx": 7450,
+     "influence": 0.010227656923234463,
+     "ablation_effect": -1.464895248413086,
+     "counterpart_B": false,
+     "counterpart_C": false
+    },
+    {
+     "layer": 0,
+     "pos": 1,
+     "idx": 20796,
+     "influence": 0.009770017117261887,
+     "ablation_effect": 0.012845993041992188,
+     "counterpart_B": false,
+     "counterpart_C": false
+    }
+   ]
+  },
+  "arithmetic": {
+   "prompt": "1 + 1 =",
+   "target": " ",
+   "n_kept": 2028,
+   "error_share": 0.09151589734840763,
+   "top3": [
+    {
+     "layer": 27,
+     "pos": 5,
+     "idx": 21731,
+     "influence": 0.017375588417053223,
+     "ablation_effect": 1.4373607635498047,
+     "counterpart_B": true,
+     "counterpart_C": true
+    },
+    {
+     "layer": 0,
+     "pos": 1,
+     "idx": 3874,
+     "influence": 0.014289041981101036,
+     "ablation_effect": -0.056774139404296875,
+     "counterpart_B": false,
+     "counterpart_C": false
+    },
+    {
+     "layer": 27,
+     "pos": 5,
+     "idx": 14589,
+     "influence": 0.013997000642120838,
+     "ablation_effect": -0.38872528076171875,
+     "counterpart_B": false,
+     "counterpart_C": false
+    }
+   ]
+  }
+ }
+}

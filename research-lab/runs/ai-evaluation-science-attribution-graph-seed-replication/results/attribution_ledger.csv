@@ -1,0 +1,8 @@
+id,claim,used_in,source_type,source_id,locator,role,support,conditions,checked_how,checked_at
+R1,Transcoders: sparse replacements of MLPs used to build feature circuits,report.md How it was done,preprint,2406.11944,"Dunefsky, Chlenski and Nanda 2024",method,supports,,arXiv abstract,2026-11-08 22:30
+R2,TopK sparse autoencoders and the auxiliary-k dead-feature loss,report.md How it was done; plan.md,preprint,2406.04093,Gao et al. 2024,method,supports,,arXiv abstract,2026-11-08 22:30
+R3,Sparse autoencoders trained with different seeds on the same data learn different features,report.md What was asked,preprint,2501.16615,Paulo and Belrose 2025,related work (SAE seed variance; not attribution graphs),supports,"SAEs, not transcoder attribution graphs",arXiv abstract,2026-11-08 22:30
+R4,circuit-tracer library used to build attribution graphs,report.md How it was done,code,https://github.com/safety-research/circuit-tracer,"repository (pip install from git, 2026-11)",method,supports,,installed and used,2026-11-08 22:30
+R5,Qwen3 model family (Qwen3-0.6B),report.md How it was done,preprint,2505.09388,Qwen3 technical report,model,supports,,arXiv abstract,2026-11-08 22:30
+R6,FineWeb-Edu training text,report.md How it was done,preprint,2406.17557,Penedo et al. 2024 (The FineWeb Datasets),data source,supports,"sample-10BT, one shard",arXiv abstract,2026-11-08 22:30
+R7,Public low-L0 transcoder set for Qwen3-0.6B used as an out-of-recipe comparator,report.md Results,web,https://huggingface.co/mwhanna/qwen3-0.6b-transcoders-lowl0,model repository,comparator,supports,,loaded via circuit-tracer,2026-11-08 22:30

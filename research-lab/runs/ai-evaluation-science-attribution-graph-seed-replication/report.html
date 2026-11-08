@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Attribution Graph Seeds</title>
+<meta name="description" content="Do innocent citers of a later-retracted paper lose citations after the retraction?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Metascience</div>
+  <h1>Do attribution graphs replicate across transcoder seeds? Only about 57% of a graph&#x27;s top features have a functional counterpart in a retrained transcoder, but 90% of them lie in the span of its top features</h1>
+  <p class="subtitle">Four sets of per-layer transcoders were trained on Qwen3-0.6B with one fixed recipe. Three differed only in their initialisation seed and one in data order. Attribution graphs were built with circuit-tracer for 212 prompts in six families under every set. Each graph&#x27;s ten most influential features were then matched across sets by layer, position, decoder direction and ablation effect. The plan was committed before any transcoder was trained.</p>
+  <div class="meta">
+    <span>Report · 2026-11-08 · pre-review draft</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ai-evaluation-science-attribution-graph-seed-replication/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ai-evaluation-science-attribution-graph-seed-replication/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ai-evaluation-science-attribution-graph-seed-replication/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: H1 Supported; H2 Supported.</strong></p>
+<ul>
+<li><strong>H1 (node replication across initialisation seeds is below 0.6): Supported, narrowly.</strong><ul>
+<li>Per prompt, the share of the top-10 features with a counterpart in another seed's graph has a median of
+<strong>0.567</strong> (95% family-stratified bootstrap 0.567 to 0.584) over the 6 ordered pairs of A, B and C. The mean is
+0.591.</li>
+<li>A counterpart must be active at the same layer and position, with decoder cosine ≥ 0.7, and its zero-ablation
+must move the target logit the same way by at least half as much.</li>
+<li>Of set A's top-10 features, 43% have counterparts in both other seeds, 19% in one and 38% in neither.</li>
+</ul>
+</li>
+<li><strong>H2 (concepts replicate better than features): Supported.</strong><ul>
+<li>A top feature is subspace-replicated if its decoder lies mostly (norm ≥ 0.7) in the span of the other set's 30
+most influential same-layer decoders for that prompt. That holds for <strong>90%</strong> of top features, against 59% node
+replication. The paired difference is <strong>+0.31</strong> (0.30 to 0.32).</li>
+</ul>
+</li>
+<li><strong>Where replication fails.</strong><ul>
+<li><strong>Early layers.</strong> Layers 0–6 hold 56% of the top features, and only 38% of those replicate as nodes (84% as
+subspaces). In layers 14–27, node replication is 85–87%.</li>
+<li><strong>Initialisation, more than data order.</strong> Set D shares A's initialisation but sees the data in a different order.
+A against D gives a median of 0.65, above the 0.57 between different initialisations.</li>
+<li><strong>A different recipe.</strong> The public low-L0 transcoders against A: median 0.20.</li>
+</ul>
+</li>
+<li><strong>Matching is sensitive to its thresholds.</strong> On decoder cosine alone, without the ablation condition, the median
+  is 0.80 at a 0.6 cut, 0.68 at 0.7 and 0.58 at 0.8. The G4 audit found that activation correlation over held-out
+  text clears 0.7 for more features (27 of 30) than decoder cosine does (20 of 30). So decoder-based node
+  replication may understate functional replication.</li>
+<li><strong>Fidelity is moderate and reported, not a gate.</strong> Each of our sets explains 76% of MLP-output variance (FVU
+  0.236). With all 28 MLPs replaced, the model's top-1 prediction matches the true model on 52–54% of held-out tokens
+  (KL 1.2–1.4 per token), near the plan's marker of poor fidelity (0.5).</li>
+</ul>
+<h2>In plain terms</h2>
+<p>Attribution graphs are a popular way to explain what a language model is doing on a given input. A smaller,
+interpretable model called a transcoder stands in for parts of the network, and the graph shows which of its
+"features" drive the answer. Researchers read these graphs as evidence for mechanisms, but the transcoder is trained
+with randomness. Would a second transcoder, trained the same way with a different random seed, tell the same story?</p>
+<p>We trained four transcoders for a small open model, Qwen3-0.6B, identically except for the random seed or data order.
+We built graphs for 212 short prompts with each, then checked whether each graph's ten most important features had a
+match in the others: same place, same direction, and the same effect when switched off. Only about 57% did. But
+when we asked the looser question, whether the same concept was represented somewhere among the other transcoder's
+top features, 90% were.</p>
+<p>So individual features in an attribution graph should not be read as stable facts about the model; about four in
+ten would change with a new seed. The broader concepts are much more stable. Claims built on single features,
+especially early in the network, should be checked against retrained transcoders.</p>
+<h2>What was asked</h2>
+<p>The lead (<code>ai-evaluation-science-attribution-graph-seed-replication</code>) asked whether attribution-graph conclusions
+survive retraining the transcoders with a different seed. It predicted node replication below 0.6.
+- <strong>Transcoders</strong> replace MLPs with sparse, interpretable maps (Dunefsky et al. 2024). TopK sparsity and the
+  auxiliary-k loss follow Gao et al. (2024).
+- <strong>Seed variance in sparse autoencoders</strong> is known: different seeds learn different features (Paulo and Belrose
+  2025). It had not been measured for the transcoder attribution graphs used to make mechanistic claims.</p>
+<h2>How it was done</h2>
+<ul>
+<li><strong>Model:</strong> Qwen3-0.6B (28 layers; Qwen3 technical report), bf16.</li>
+<li><strong>Transcoders</strong> (<code>code/train_transcoders.py</code>): width 32,768, TopK k = 64, unit-norm decoders, auxiliary-k loss;
+  300M FineWeb-Edu tokens (Penedo et al. 2024), all 28 layers jointly, about 17 hours per set on an A100. Sets A, B
+  and C use initialisation seeds 0, 1 and 2; D uses seed 0 with data-order seed 1.</li>
+<li><strong>Prompts</strong> (<code>code/prompts.py</code>): 488 generated from fixed templates in six families. 212 were kept (Qwen3-0.6B's
+  top-1 is the target with a margin of at least 2): factual 31, antonym 10, IOI 18, induction 91, arithmetic 59,
+  two-hop 3. Two families fell short of the planned 15 (D1).</li>
+<li><strong>Graphs</strong> (<code>code/graphs.py</code>, circuit-tracer): the target logit is the answer, at most 8,192 feature nodes,
+  pruning at 0.8 (nodes) and 0.98 (edges). The top 10 are the most influential kept features. All 1,060 graphs were
+  built.</li>
+<li><strong>Matching</strong> (<code>code/match.py</code>): counterparts as stated above. Zero-ablation effects come from circuit-tracer's
+  feature intervention, in float32 (D2).</li>
+<li><strong>Statistics</strong> (<code>code/analyse.py</code>): per-prompt shares averaged over directions; the median over prompts, with a
+  bootstrap over prompts stratified by family (2,000).</li>
+</ul>
+<h2>Results</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>comparison</th>
+<th>median node replication</th>
+<th>mean node</th>
+<th>mean subspace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A, B, C (initialisation seeds; H1, H2)</strong></td>
+<td><strong>0.567 (0.567–0.584)</strong></td>
+<td>0.591</td>
+<td>0.903</td>
+</tr>
+<tr>
+<td>A vs D (data order)</td>
+<td>0.650</td>
+<td>0.635</td>
+<td>0.904</td>
+</tr>
+<tr>
+<td>public low-L0 set vs A</td>
+<td>0.200</td>
+<td>0.219</td>
+<td>0.648</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>layers</th>
+<th>top features</th>
+<th>node</th>
+<th>subspace</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0–6</td>
+<td>7,136</td>
+<td>0.38</td>
+<td>0.84</td>
+</tr>
+<tr>
+<td>7–13</td>
+<td>16</td>
+<td>1.00</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>14–20</td>
+<td>1,372</td>
+<td>0.87</td>
+<td>0.99</td>
+</tr>
+<tr>
+<td>21–27</td>
+<td>4,196</td>
+<td>0.85</td>
+<td>0.99</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>By family</strong> (median node replication): factual 0.60, antonym 0.67, IOI 0.63, induction 0.63, arithmetic 0.50,
+  two-hop 0.95 (3 prompts).</li>
+<li><strong>By the graph's error-node share</strong> (terciles): 0.55, 0.58, 0.65. Graphs that lean more on error nodes replicate
+  slightly better.</li>
+<li><strong>Top 5 instead of top 10:</strong> median 0.60.</li>
+<li><strong>Fidelity</strong> (<code>results/tables/fidelity.json</code>):</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>set</th>
+<th>FVU</th>
+<th>dead (never active, held-out)</th>
+<th>KL per token</th>
+<th>top-1 agreement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>0.236</td>
+<td>23.8%</td>
+<td>1.31</td>
+<td>0.529</td>
+</tr>
+<tr>
+<td>B</td>
+<td>0.236</td>
+<td>23.7%</td>
+<td>1.40</td>
+<td>0.522</td>
+</tr>
+<tr>
+<td>C</td>
+<td>0.236</td>
+<td>23.8%</td>
+<td>1.37</td>
+<td>0.526</td>
+</tr>
+<tr>
+<td>D</td>
+<td>0.236</td>
+<td>23.4%</td>
+<td>1.21</td>
+<td>0.538</td>
+</tr>
+<tr>
+<td>public low-L0</td>
+<td>0.389</td>
+<td>17.6%</td>
+<td>8.73</td>
+<td>0.024</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>G4</strong> (<code>results/tables/g4.json</code>): for 30 random top features of A against B, the decoder-cosine and
+  activation-correlation methods pick the same feature in 21 of the 28 that fire on held-out text. All 30 ablation
+  effects reproduce exactly in a fresh process.</li>
+</ul>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>Single features in attribution graphs are seed-dependent.</strong> About four in ten top features have no functional
+  counterpart under a new initialisation. Most of the loss is in early layers, where generic early features, such as one
+  tied to the first token position, are common among the top ten.</li>
+<li><strong>The represented concepts are much more stable.</strong> Nine in ten top features lie in the other seed's span of top
+  features. Mechanistic claims phrased as subspaces or groups replicate; claims about one feature often do not.</li>
+<li><strong>The verdict is narrow.</strong> The median sits just below 0.6, and it depends on the matching rule. A looser cosine
+  cut, or activation-correlation matching, would raise it.</li>
+<li><strong>Fidelity limits the reading.</strong> Our replacement models agree with the true model's top-1 prediction about half
+  the time. Low replication could partly reflect transcoder error rather than seed alone. Sets A–D have equal
+  fidelity, though, so the comparison between them is fair.</li>
+<li><strong>Not shown:</strong><ul>
+<li><strong>Other models or recipes,</strong> or larger transcoders.</li>
+<li><strong>Mediating-path ("claim") replication, graph-level similarity and full activation-correlation matching,</strong> which
+were not run (D3).</li>
+<li><strong>The full seed distribution.</strong> Three seeds bound it; they do not map it.</li>
+</ul>
+</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration:</strong> <code>plan.md</code>, committed before any transcoder was trained. Prompts were frozen, and the graph,
+  matching and analysis code was committed before any matching result.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>): D1, extra prompt templates (two families below the minimum); D2, ablation in
+  float32 with propagation, BOS tokens and TopK loading; D3, secondaries not run or reduced, and the dead-fraction
+  definition.</li>
+<li><strong>Quality gates:</strong> G1 (plan section 2), G2 (<code>results/tables/coverage.json</code>), G3 (<code>results/plausibility.md</code>), G4
+  (<code>results/tables/g4.json</code>), G5 (<code>review/overclaim_check.md</code>) and G6 (<code>results/attribution_ledger.csv</code>).</li>
+<li><strong>Compute:</strong> a colleague's A100 used as a guest (about 70 GPU-hours for training, 6 for graphs, fidelity and matching).</li>
+<li><strong>Independent review:</strong> queued (Fable), per the lab's pacing rule.</li>
+</ul>
+<h2>Reproducing it</h2>
+<ol>
+<li><code>code/prompts.py</code>, <code>code/select_prompts.py</code>, <code>code/data_prep.py</code>, <code>code/act_check.py</code>.</li>
+<li><code>code/run_sets.sh</code> (trains A–D with <code>code/train_transcoders.py</code>).</li>
+<li><code>code/graphs.py build &lt;set&gt;</code> for A, B, C, D and public; <code>code/fidelity.py</code>; <code>code/match.py</code>.</li>
+<li><code>code/analyse.py</code>; <code>code/g3.py</code>, <code>code/g4.py</code>.</li>
+</ol>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ai-evaluation-science-attribution-graph-seed-replication/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>
