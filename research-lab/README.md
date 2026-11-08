@@ -180,6 +180,14 @@ published day-ahead load, wind and solar forecasts are only on the ENTSO-E Trans
 personal security token from a free registration that the lab cannot make itself; Open Power System Data, the open
 mirror, ends in 2020. It can resume if the owner registers and supplies a token (kept out of the repository).
 
+Skipped after a novelty check (8 November 2026): `llm-ml-science-curation-vs-seed-noise`. DataDecide (Magnusson et
+al. 2025, arXiv 2504.11393; Ai2) already trains 25 pretraining corpora, including FineWeb-Edu, at 14 model sizes from
+4M to 1B parameters with 3 random seeds each, evaluates them on the OLMES multiple-choice suite, and reports seed
+variability and decision accuracy, with all checkpoints and evaluations released. The lead's gap, curation
+comparisons without seed replication at matched compute, is largely filled. What remains (a factorial init and
+data-order design and plain FineWeb as the baseline) would be a reanalysis of DataDecide plus a few runs, worth
+about 4, below the next leads.
+
 Skipped after a novelty check (23 October 2026): `chem-materials-conformal-dft-budget`. Fu (2026, Zenodo
 10.5281/zenodo.21130294; submitted to J. Chem. Phys.) already audits chemistry-stratified reliability of confidence-based
 abstention on all 256,963 WBM structures, including leave-one-element-out controls, a 32-model roster and stratified
