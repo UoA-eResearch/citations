@@ -220,8 +220,10 @@ def run():
             rows.append(res); allcells += cells
     N = pd.DataFrame(rows)
     C = pd.DataFrame(allcells)
-    C.to_parquet(D / "interim" / "cells.parquet", index=False)
-    N.to_csv(TAB / "notebooks.csv", index=False)
+    tag = os.environ.get("OUT_JSON", "primary.json").replace(".json", "")
+    sfx = "" if tag == "primary" else f"_{tag}"                 # D5: sensitivity runs no longer overwrite the primary tables
+    C.to_parquet(D / "interim" / f"cells{sfx}.parquet", index=False)
+    N.to_csv(TAB / f"notebooks{sfx}.csv", index=False)
     comp = N[N.reps_ok]
     if os.environ.get("EXCL_SHELL"):                         # post hoc: drop notebooks with "not found" shell output
         bad = set()

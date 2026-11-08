@@ -28,13 +28,16 @@ neither verdict changed.
   - **All 57 were irreproducible in the dataset**, so these rates describe that set, not notebooks in general (D1).
 - **Three rungs, on the study's own re-runs:** 48 of 57 notebooks differ byte for byte, 30 under masked matching, and
   25 under noise-aware matching. So normalisation recovers 18 notebooks and replicates 5 more.
-  - 9 notebooks match byte for byte here, although the dataset called them irreproducible. For those, its verdict
-    came from its environment or its comparator, not from the notebook.
+  - 9 notebooks match byte for byte here, although the dataset called them irreproducible. For 8 of them, its
+    verdict came from its environment or its comparator, not from the notebook. In the ninth (nb14920), a
+    `value_counts` tie order varies across our replicates, so run-to-run noise may explain the dataset's mismatch.
   - 31 of the 57 were checked out at a commit other than the dataset's, but the notebook file is identical at both
     commits in all 31. The stored outputs compared are the dataset's own.
 - **The comparator, validated blind** (post hoc; `results/tables/validation_blind.json`).
   - A separate labelling session judged 95 stratified cell pairs without seeing the comparator's verdicts, plus all
     17 remaining figure mismatches.
+  - One labeller only: there was no second labeller and no agreement statistic (METHODS G7). That the session was
+    separate and the key kept out of its reach is attested by the procedure, not verifiable from the files.
   - Text: the comparator agrees on 29 of 30 flagged mismatches and 20 of 20 matches.
   - Figures: it agrees on 14 of 15 matches, but only 20 of the 47 flagged figure mismatches are judged genuinely
     different. The rest differ in fonts, legend placement, tick labels or figure size.
@@ -130,7 +133,7 @@ differed only in the 17th significant digit. The draft's tables are kept as `pri
 
 | sensitivity | H1 share (95% CI) | overstatement factor (95% CI) |
 |---|---|---|
-| human judgement for every flagged figure mismatch (blind) | 5/26 = 19.2% (8.5–37.9%) | 1.24 |
+| human judgement for every flagged figure mismatch (blind; corrects false mismatches only, not false matches such as the 1 of 15 sampled figure matches judged different) | 5/26 = 19.2% (8.5–37.9%) | 1.24 |
 | looser image tolerance (12 bits) | 5/28 = 17.9% (7.9–35.6%) | 1.22 (1.04–1.52) |
 | excluding 6 notebooks whose shell commands were not found in the container | 5/24 = 20.8% (9.2–40.5%) | 1.26 (1.05–1.64) |
 
@@ -144,7 +147,7 @@ and a factor of 1.14, so that bug biased both towards Refuted. It is kept for th
   three replicates, and three replicates cannot say whether the stored value was a plausible draw.
 - **Normalisation does more than replicates.** On the study's own re-runs, masking volatile tokens and respecting
   displayed precision recovers 18 of the 48 byte-different notebooks. Replicates recover 5 more. A further 9
-  notebooks match byte for byte, so for them the dataset's verdict reflects its environment or comparator.
+  notebooks match byte for byte; for 8 of them the dataset's verdict reflects its environment or comparator.
 - **Not shown:**
   - **Notebooks that need network or data downloads.** They fail here by design (no network), so the completing set
     leans toward self-contained analyses.

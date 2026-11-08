@@ -81,3 +81,15 @@ Inconclusive.
 7. **Environments and coverage (findings 7 and 8).** No notebook with a requirements file completed, and the report
    now says so. The three drop reasons, the stdout/stderr rule for shell messages, and the late nb19053 run are
    stated.
+
+## D5 — 2026-11-09 — edits after the confirmation pass (verdict: publish with edits)
+
+- **Byte-exact notebooks.** One of the 9 byte-exact notebooks (nb14920) has a `value_counts` tie order that varies
+  across our replicates. The statement that the dataset's verdict came from its environment or comparator now covers
+  8 of the 9.
+- **Single labeller.** The validation section states one blind labeller, with no second labeller or agreement
+  statistic (G7). Separate-session blinding is attested by procedure, not by the files.
+- **The human-figure sensitivity** corrects false mismatches only. The 1 of 15 sampled figure matches judged
+  different is not corrected.
+- **Housekeeping.** Sensitivity runs of `compare.py run` (OUT_JSON set) write `cells_<tag>.parquet` and
+  `notebooks_<tag>.csv` instead of overwriting the primary tables. The untracked `notebooks_d4.csv` copy is removed.

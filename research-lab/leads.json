@@ -4803,7 +4803,12 @@
    "scout_value_score": 6,
    "scout_cost_score": 4,
    "plain_summary": "When re-running a scientist's notebook gives slightly different numbers, past studies counted it as a failure. Some of those differences are just randomness that would change even if the original author ran it twice. We run each notebook several times to separate real reproducibility failures from harmless run-to-run noise.",
-   "scout_round": 2
+   "scout_round": 2,
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass)",
+   "report_url": "runs/computational-reproducibility-notebook-noise-aware-verdicts/report.html",
+   "verdict_tag": "Inconclusive",
+   "verdict_note": "H1 Inconclusive; H2 Inconclusive. 57 biomedical Jupyter notebooks that a large re-execution study found irreproducible were re-run three times in rebuilt period environments. Under masked exact matching 30 still mismatch; in 5 of them (16.7%, Wilson 7.3-33.6%) every mismatching cell varies across replicates, but in none does the stored value fall within the replicates' range (0/30). Masked exact matching overstates irreproducibility 1.20-fold (1.04-1.47) against noise-aware matching, byte-exact matching 1.92-fold. A blind re-validation found the comparator reliable for text but only 20 of 47 flagged figure mismatches genuine. Review fix first; confirmation publish with edits.",
+   "headline": "Re-run three times, about a sixth of 'irreproducible' biomedical notebooks vary from run to run, but the published numbers never fall within that variation; how much exact matching overstates the problem depends on what 'exact' means."
   },
   {
    "id": "computational-reproducibility-agent-repair-fidelity",

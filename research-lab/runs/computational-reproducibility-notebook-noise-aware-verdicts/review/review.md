@@ -134,3 +134,133 @@ dropped 36 of 192 (19%), 25 on GitHub size before cloning.
 - **G5:** `review/overclaim_check.md` present; the gate edits were honest, but rows 8, 13, 19, 27, 28 and 30 need
   relabelling after findings 1–5.
 - **G6:** `python3 -I ../../tools/attribution.py check . --show` → "G6 passed (5 claims)".
+
+## Confirmation pass
+Reviewer: Fable 5.1, 2026-11-09.
+
+Scope: the D4 fixes to the eight findings above, checked against the stored outputs rather than the brief. The
+scripts and their outputs are in `review/reviewer_checks/` (`confirm_1`–`confirm_7`, `.py` and `.txt`). Every script
+ran as `venv/bin/python -I -B` (or `python3 -I -B` for the lab tools) with cwd `/tmp`, paths passed as arguments,
+and wrote only to a staging folder. No notebook was executed. Nothing in the repo was written.
+
+- `confirm_1_recompute.txt`: re-runs the comparator in-process over the 57 completed notebooks, with nothing
+  written to the repo, under five settings: draft, coalescing only, coalescing plus tolerance, D4, and D4 with a
+  12-bit image threshold. Compares the results with `primary.json`, `posthoc_phash12.json`, `notebooks.csv`,
+  `notebooks_d4.csv`, `cells.parquet`, `cells_d4.parquet` and `notebooks_v1.csv`. It also recomputes both
+  repository bootstraps with the study's seed.
+- `confirm_2_validation.txt`: re-scores the blind validation from `validation_blind/key*.json` and
+  `labels*.json`, and checks every key against the recomputed comparator. It confirms that the pair files given to
+  the labeller carry no verdict, and re-implements `posthoc_figures.py`.
+- `confirm_3_commit.txt`: re-implements `posthoc_commit.py`. The dataset's `db.sqlite` is opened read-only, and the
+  notebook's blob id is read at both commits with read-only `git rev-parse`. Hooks and fsmonitor were disabled, and
+  the clones' `.git/config` holds only clone defaults.
+- `confirm_4_report_gates.txt`: checks that every fix's wording is in `report.md` and `report.html` and that no
+  draft wording is left. It checks the report's numbers against the tables, matches the G5 table to the current
+  report sentence for sentence, and re-derives the environment, coverage and shell-exclusion counts.
+- `confirm_5_g6.txt`: `tools/attribution.py check . --show` and `tools/overclaim_check.py --verify`.
+- `confirm_6_nb14920.txt`: one byte-exact notebook whose replicates vary.
+- `confirm_7_unit_tests.txt`: `compare.py`'s own unit tests, including the D4 cases ("compare tests pass").
+
+### Final verdict: publish with edits
+
+All the numbers reproduce exactly from the stored outputs. Both majors and all three moderates are fixed. Both
+verdicts stay Inconclusive under every reading I recomputed. What remains is wording and disclosure.
+
+### Original findings
+
+- **1. Stream chunking: fixed.** `compare.py items()` joins consecutive stdout outputs; stderr does not break a
+  stdout run. Under D4 my recomputation gives 30 masked mismatches, 5 all-intrinsic, Wilson 7.34–33.56% and
+  repository bootstrap 3.7–32.0%. The H2 factor is 1.20 (1.0385–1.4707), and the rungs are 48/30/25 of 57. The cell
+  counts are 453/173/25/26/184 and drift is 0.1183. All of these equal `primary.json`. The stepwise path matches the
+  brief:
+
+  | setting | H1 |
+  |---|---|
+  | draft | 7/34 (reproduces `notebooks_v1.csv`) |
+  | coalescing only | 6/33 |
+  | coalescing plus tolerance | 6/31 |
+  | D4 (timing mask added) | 5/30 |
+
+  nb16791 changes at the coalescing step, nb17727 and nb19008 at the tolerance step, and nb19758 at the mask step.
+  The five H1 notebooks are nb18392, nb18515, nb18687, nb4750 and nb7508 (`confirm_1`).
+- **2. Blind validation: fixed, with a G7 caveat (remaining issue 2).**
+  - Re-scoring the keys against the labels reproduces `validation_blind.json` exactly:
+
+    | stratum | agree |
+    |---|---|
+    | text mismatches | 29/30 |
+    | text matches | 20/20 |
+    | figure mismatches | 13/30 |
+    | figure matches | 14/15 |
+
+    Overall agreement is 0.80. The 17 remaining figure mismatches give 7 "different", so 20 of 47 overall.
+  - All 112 keyed comparator verdicts equal my recomputed D4 verdicts. The 47 keyed figure-mismatch cells are
+    exactly the comparator's 47.
+  - `pairs.json` and `pairs2.json` contain only `pair`, `stored` and `rerun`, with no verdict or stratum.
+  - My re-implementation of the human-figure sensitivity gives 5/26 = 19.2% (8.51–37.88%), 21 noise-aware fails
+    and a factor of 1.238, all equal to `posthoc_figures_human.json`.
+  - `validation.json` is marked withdrawn in the report.
+  - The report keeps the 6-bit threshold primary and labels the 12-bit and human readings as sensitivities.
+    `posthoc_phash12.json` reproduces: 5/28, 1.2174 (1.0434–1.5239).
+  - What the files cannot show: that the labeller was a separate session, and that the key sat outside the run
+    directory while labelling. The keys were copied into `results/` at 16:06, after the labels (16:00 and 16:03).
+- **3. Rungs and commits: fixed, one sentence slightly too strong (remaining issue 1).**
+  - The rungs are 48/30/25 of 57. Masked mismatches are a subset of byte mismatches, and noise-aware fails a subset
+    of masked mismatches, so "recovers 18 … and 5 more" is arithmetically sound.
+  - My independent commit check gives 26 notebooks at the dataset's commit and 31 at another. In all 31 the blob ids
+    are identical, and no AS-OF blob is missing, so this is not a None == None artefact. The dataset's notebook path
+    equals the study's in 57 of 57.
+  - However, one of the 9 byte-exact notebooks, nb14920, has a cell (cell 6, a `value_counts` tie order) whose
+    output changes across the three replicates (`confirm_6`). For that notebook, run-to-run noise may explain the
+    dataset's mismatch.
+- **4. The disjunction: fixed.**
+  - The intrinsic cells split 22 varies-only, 3 both and 0 envelope-only.
+  - All 5 H1 notebooks are varies-only, and the envelope-only reading gives 0/30 (Wilson upper bound 11.35%).
+  - The verdict bullet states that only one branch is ever met. The plain terms now say "possible explanation,
+    not a demonstrated one", and the "solely because of" and "every mismatch is explained" wording is gone.
+- **5. "Exact": fixed.** The title and verdict say "masked exact matching". The byte-exact factor 48/25 = 1.92 is
+  given beside it, with "the preregistered comparison is the masked one". The within-sample caveat ("All 57 were
+  irreproducible in the dataset … (D1)") is in the verdict.
+- **6. Tolerance and masks: fixed.**
+  - `num_equal` applies `rel_tol=1e-9` when the stored number has 10 or more significant digits.
+  - The two new masks are in `VOLATILE`, and the D4 unit tests in `compare.py test` cover both.
+  - The tolerance step changes nb17727 and nb19008, and the timing mask changes nb19758, as stated.
+- **7. Environments: fixed.** From `sample_ready.csv`: 11 of 149 notebooks have a requirements file and none of them
+  completed. The completed notebooks split into 49 resolved through the import map and 8 with no mapped imports. The
+  report also states that the LATEST arm stayed in slim images.
+- **8. Process: fixed.**
+  - The drop reasons in `sample_all.csv` are 36 too large, 6 notebook missing and 1 clone failed, as reported.
+  - My re-implementation of the shell exclusion drops 6 notebooks (nb20998, nb23220, nb23409, nb4085, nb4086,
+    nb6965). `posthoc_no_shell.json` (5/24, 1.26) matches the report.
+  - The late nb19053 run is disclosed, and the D4 tables (Nov 7) postdate every run.
+  - "Python 2 reprs" is gone from the report.
+- **Gates.**
+  - **G5:** passes. The report has 52 sentences and the table 52 rows. They match sentence for sentence, with no
+    missing or stale rows, and `--verify` passes. All 52 rows are labelled Supported. I would relabel row 24
+    Partially supported (remaining issue 1). Row 39's backing still cites the draft's "28 of 180" intrinsic cells;
+    the current figure is 25 of 173.
+  - **G6:** passes (`G6 passed (5 claims)`). The five identifiers resolve to the named works.
+  - **G7:** not met. There is a single blind labeller and no agreement statistic. D4 does not claim G7.
+- **`results/tables/notebooks_d4.csv` (untracked).** It is byte-identical to the committed `notebooks.csv`, and
+  both equal my recomputation. Nothing in the report, code or deviations refers to it, so the report does not depend
+  on it. It is a snapshot taken at 15:54, just before the sensitivity runs. Those runs call `compare.py run`, which
+  rewrites `notebooks.csv` and `cells.parquet` every time; `data/interim/cells_d4.parquet` is the matching snapshot.
+  The final files happen to equal the primary D4 state, which I verified. Delete `notebooks_d4.csv` or commit it
+  with a one-line note.
+
+### Remaining issues
+
+1. **Wording on the 9 byte-exact notebooks** (verdict bullet; "What this does and does not show"; G5 row 24).
+   "For those, its verdict came from its environment or its comparator, not from the notebook" holds for 8 of 9.
+   nb14920 has a `value_counts` tie-order cell that varies across the replicates, so run-to-run noise may explain
+   the dataset's mismatch there. Say "for 8 of them …; in one (nb14920), tie order varies across our runs" and
+   relabel row 24.
+2. **Single labeller.** The validation section should say that one blind labeller was used, that there was no
+   second labeller or agreement statistic (METHODS G7), and that separate-session blinding is attested by the
+   procedure but cannot be verified from the files.
+3. **The human-figure sensitivity only corrects false mismatches.** In 1 of 15 sampled figure matches the labeller
+   judged the figures different (nb18687 cell 3). The sensitivity row should note that figure false matches are not
+   corrected.
+4. **Housekeeping.** Update G5 row 39's backing to 25 intrinsic of 173 mismatching cells. Delete or commit the
+   untracked `results/tables/notebooks_d4.csv`. Have sensitivity runs of `compare.py run` write to separate files
+   instead of overwriting `notebooks.csv` and `cells.parquet`.

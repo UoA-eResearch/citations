@@ -27,32 +27,35 @@ Fill in every row: backing = the table/figure and number that supports the sente
 | 21 | verdict | **Three rungs, on the study's own re-runs:** 48 of 57 notebooks differ byte for byte, 30 under masked matching, and 25 under noise-aware matching. | primary.json rungs 48/30/25 of 57 | Supported |  |
 | 22 | verdict | So normalisation recovers 18 notebooks and replicates 5 more. | primary.json rungs 48-30, 30-25 | Supported |  |
 | 23 | verdict | 9 notebooks match byte for byte here, although the dataset called them irreproducible. | primary.json rungs 57-48 | Supported |  |
-| 24 | verdict | For those, its verdict came from its environment or its comparator, not from the notebook. | posthoc_commit.json identical notebook files; byte-exact match | Supported |  |
-| 25 | verdict | 31 of the 57 were checked out at a commit other than the dataset's, but the notebook file is identical at both commits in all 31. | posthoc_commit.json read_at_other_commit 31, identical 31 | Supported |  |
-| 26 | verdict | The stored outputs compared are the dataset's own. | posthoc_commit.json | Supported |  |
-| 27 | verdict | **The comparator, validated blind** (post hoc; `results/tables/validation_blind.json`). | validation_blind.json | Supported |  |
-| 28 | verdict | A separate labelling session judged 95 stratified cell pairs without seeing the comparator's verdicts, plus all 17 remaining figure mismatches. | validation_blind.json pairs 95; validation_blind/labels2.json 17 | Supported |  |
-| 29 | verdict | Text: the comparator agrees on 29 of 30 flagged mismatches and 20 of 20 matches. | validation_blind.json text_mismatch 29/30, text_match 20/20 | Supported |  |
-| 30 | verdict | Figures: it agrees on 14 of 15 matches, but only 20 of the 47 flagged figure mismatches are judged genuinely different. | validation_blind.json figure_match 14/15; posthoc_figures_human.json judged_different 20 of 47 | Supported |  |
-| 31 | verdict | The rest differ in fonts, legend placement, tick labels or figure size. | validation_blind/labels*.json reasons | Supported |  |
-| 32 | verdict | With the human judgement in place of the comparator for every flagged figure, H1 is 5 of 26 (19.2%, 8.5% to 37.9%) and the H2 factor 1.24. | posthoc_figures_human.json 5/26 (0.0851-0.3788), overstatement 1.2381 | Supported |  |
-| 33 | verdict | Neither verdict changes. | posthoc_figures_human.json | Supported |  |
-| 34 | verdict | The first draft's 94/100 agreement came from a check whose labeller saw the comparator's verdicts. | review finding 2 (verdict in the sample file; same agent) | Supported |  |
-| 35 | verdict | It is withdrawn. | D4 | Supported |  |
-| 36 | verdict | **What drives the real mismatches.** | heading | Supported |  |
-| 37 | verdict | Missing command-line tools: shell cells calling `qiime`, `wget` or `unzip` fail silently inside Jupyter, so the notebook still "completes". | cell mismatch audit (notebooks.csv; posthoc_no_shell.json) | Supported |  |
-| 38 | verdict | Version-dependent output formats, such as pandas `value_counts` naming. | cells inspected in the first draft; review finding 8 (Python 2 reprs at most one notebook, dropped) | Supported | Python 2 removed |
-| 39 | verdict | Genuinely stochastic analyses (MCMC, cross-validation). | intrinsic cells 28 of 180 mismatching | Supported |  |
-| 40 | verdict | With current packages, 12% of cells that are stable and matching in the AS-OF environment change. | primary.json drift_share_of_stable_cells 0.1183 | Supported |  |
-| 41 | plain terms | Scientists increasingly publish the code behind their papers as Jupyter notebooks. | background | Supported |  |
-| 42 | plain terms | Studies that re-run them often find the results don't match, and count that as a failure to reproduce. | ledger N1, N2 | Supported |  |
-| 43 | plain terms | But some analyses involve randomness, and would give slightly different numbers even on the original computer. | background | Supported |  |
-| 44 | plain terms | Is much of the measured "irreproducibility" just that? | question | Supported |  |
-| 45 | plain terms | We took about 150 notebooks from biomedical papers that an earlier study had found didn't reproduce. | 149 notebooks kept (How it was done) | Supported |  |
-| 46 | plain terms | We rebuilt each one's software environment as it was around publication, in a sealed container, and ran it three times. | plan.md | Supported |  |
-| 47 | plain terms | Of the 57 that ran, 9 matched their published outputs byte for byte, and 27 in all matched once trivial differences were ignored, such as memory addresses, timestamps and digits beyond those printed. | primary.json rungs: 9 byte-exact matches, 27 masked matches | Supported |  |
-| 48 | plain terms | Of the 30 that still differed, 5 showed run-to-run variation in every mismatching cell. | primary.json all_intrinsic 5 of 30 | Supported |  |
-| 49 | plain terms | But in none of them did the published output fall within the spread of our three runs, so randomness is a possible explanation, not a demonstrated one. | primary.json H1_envelope_only 0 | Supported |  |
-| 50 | plain terms | Most differences had other causes, such as missing command-line tools and changed software or output formats. | cell mismatch audit: missing tools, version-dependent formats | Supported | was '... or analyses that aren't seeded' (unseeded variation is what the study counts as noise) |
-| 51 | plain terms | So how much exact-match counts overstate the problem depends on what "exact" means: by a factor of about 1.2 once trivial differences are masked, and about 1.9 for byte-for-byte comparison. | primary.json overstatement 1.2, overstatement_byte_exact 1.92 | Supported |  |
-| 52 | plain terms | Most mismatches are not just noise. | primary.json 25 of 30 masked mismatches not all-intrinsic | Supported |  |
+| 24 | verdict | For 8 of them, its verdict came from its environment or its comparator, not from the notebook. | posthoc_commit.json identical files; rungs; confirmation pass (nb14920 excepted) | Supported |  |
+| 25 | verdict | In the ninth (nb14920), a `value_counts` tie order varies across our replicates, so run-to-run noise may explain the dataset's mismatch. | review/review.md confirmation pass (nb14920 cell 6 confirm_6) | Supported |  |
+| 26 | verdict | 31 of the 57 were checked out at a commit other than the dataset's, but the notebook file is identical at both commits in all 31. | posthoc_commit.json read_at_other_commit 31, identical 31 | Supported |  |
+| 27 | verdict | The stored outputs compared are the dataset's own. | posthoc_commit.json | Supported |  |
+| 28 | verdict | **The comparator, validated blind** (post hoc; `results/tables/validation_blind.json`). | validation_blind.json | Supported |  |
+| 29 | verdict | A separate labelling session judged 95 stratified cell pairs without seeing the comparator's verdicts, plus all 17 remaining figure mismatches. | validation_blind.json pairs 95; validation_blind/labels2.json 17 | Supported |  |
+| 30 | verdict | One labeller only: there was no second labeller and no agreement statistic (METHODS G7). | D4/D5 procedure (one labeller agent) | Supported |  |
+| 31 | verdict | That the session was separate and the key kept out of its reach is attested by the procedure, not verifiable from the files. | D5 | Supported |  |
+| 32 | verdict | Text: the comparator agrees on 29 of 30 flagged mismatches and 20 of 20 matches. | validation_blind.json text_mismatch 29/30, text_match 20/20 | Supported |  |
+| 33 | verdict | Figures: it agrees on 14 of 15 matches, but only 20 of the 47 flagged figure mismatches are judged genuinely different. | validation_blind.json figure_match 14/15; posthoc_figures_human.json judged_different 20 of 47 | Supported |  |
+| 34 | verdict | The rest differ in fonts, legend placement, tick labels or figure size. | validation_blind/labels*.json reasons | Supported |  |
+| 35 | verdict | With the human judgement in place of the comparator for every flagged figure, H1 is 5 of 26 (19.2%, 8.5% to 37.9%) and the H2 factor 1.24. | posthoc_figures_human.json 5/26 (0.0851-0.3788), overstatement 1.2381 | Supported |  |
+| 36 | verdict | Neither verdict changes. | posthoc_figures_human.json | Supported |  |
+| 37 | verdict | The first draft's 94/100 agreement came from a check whose labeller saw the comparator's verdicts. | review finding 2 (verdict in the sample file; same agent) | Supported |  |
+| 38 | verdict | It is withdrawn. | D4 | Supported |  |
+| 39 | verdict | **What drives the real mismatches.** | primary.json cells: 25 intrinsic of 173 mismatching cells; 25 of 30 masked mismatches not all-intrinsic | Supported |  |
+| 40 | verdict | Missing command-line tools: shell cells calling `qiime`, `wget` or `unzip` fail silently inside Jupyter, so the notebook still "completes". | cell mismatch audit (notebooks.csv; posthoc_no_shell.json) | Supported |  |
+| 41 | verdict | Version-dependent output formats, such as pandas `value_counts` naming. | cells inspected in the first draft; review finding 8 (Python 2 reprs at most one notebook, dropped) | Supported | Python 2 removed |
+| 42 | verdict | Genuinely stochastic analyses (MCMC, cross-validation). | intrinsic cells 28 of 180 mismatching | Supported |  |
+| 43 | verdict | With current packages, 12% of cells that are stable and matching in the AS-OF environment change. | primary.json drift_share_of_stable_cells 0.1183 | Supported |  |
+| 44 | plain terms | Scientists increasingly publish the code behind their papers as Jupyter notebooks. | background | Supported |  |
+| 45 | plain terms | Studies that re-run them often find the results don't match, and count that as a failure to reproduce. | ledger N1, N2 | Supported |  |
+| 46 | plain terms | But some analyses involve randomness, and would give slightly different numbers even on the original computer. | background | Supported |  |
+| 47 | plain terms | Is much of the measured "irreproducibility" just that? | question | Supported |  |
+| 48 | plain terms | We took about 150 notebooks from biomedical papers that an earlier study had found didn't reproduce. | 149 notebooks kept (How it was done) | Supported |  |
+| 49 | plain terms | We rebuilt each one's software environment as it was around publication, in a sealed container, and ran it three times. | plan.md | Supported |  |
+| 50 | plain terms | Of the 57 that ran, 9 matched their published outputs byte for byte, and 27 in all matched once trivial differences were ignored, such as memory addresses, timestamps and digits beyond those printed. | primary.json rungs: 9 byte-exact matches, 27 masked matches | Supported |  |
+| 51 | plain terms | Of the 30 that still differed, 5 showed run-to-run variation in every mismatching cell. | primary.json all_intrinsic 5 of 30 | Supported |  |
+| 52 | plain terms | But in none of them did the published output fall within the spread of our three runs, so randomness is a possible explanation, not a demonstrated one. | primary.json H1_envelope_only 0 | Supported |  |
+| 53 | plain terms | Most differences had other causes, such as missing command-line tools and changed software or output formats. | cell mismatch audit: missing tools, version-dependent formats | Supported | was '... or analyses that aren't seeded' (unseeded variation is what the study counts as noise) |
+| 54 | plain terms | So how much exact-match counts overstate the problem depends on what "exact" means: by a factor of about 1.2 once trivial differences are masked, and about 1.9 for byte-for-byte comparison. | primary.json overstatement 1.2, overstatement_byte_exact 1.92 | Supported |  |
+| 55 | plain terms | Most mismatches are not just noise. | primary.json cells: 25 intrinsic of 173 mismatching cells; 25 of 30 masked mismatches not all-intrinsic | Supported |  |
