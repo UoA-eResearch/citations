@@ -77,8 +77,12 @@ def rules(filt, mag, mjd, ks=3.0, kl=5.0):
     return {**short_rule(filt, mag, mjd, ks), **long_rule(filt, mag, mjd, kl)}
 
 
+FILTERS = tuple(__import__("os").environ.get("FILTERS", "zg,zr").split(","))   # D2: g and r only, as preregistered
+
+
 def load_shard(path):
     t = pq.read_table(path, columns=["source_id", "filt", "mjd", "mag", "magerr"]).to_pandas()
+    t = t[t.filt.isin(FILTERS)]
     return {sid: g for sid, g in t.groupby("source_id")}
 
 

@@ -1,0 +1,96 @@
+{
+ "tiered_lower_rates": {
+  "confirmed_only": {
+   "recovered": 3,
+   "rate": 4.191589157197169e-05,
+   "ci": [
+    8.64406454063119e-06,
+    0.00012249602245772886
+   ]
+  },
+  "confirmed_plus_guidry_candidates": {
+   "recovered": 5,
+   "rate": 6.985981928661947e-05,
+   "ci": [
+    2.2683293165591815e-05,
+    0.00016302951408754933
+   ]
+  },
+  "all_published": {
+   "recovered": 15,
+   "rate": 0.00020957945785985842,
+   "ci": [
+    0.0001173000316155267,
+    0.0003456694438946828
+   ]
+  }
+ },
+ "long_flag_candidates": 769,
+ "low_bins_with_3g_3r": 1836,
+ "low_bins_low_in_both_bands": 1728,
+ "candidates_with_a_low_bin_in_top10_windows": 454,
+ "top10_windows_mjd_start": [
+  58980,
+  59010,
+  59040,
+  59070,
+  59340,
+  59400,
+  59730,
+  59760,
+  60060,
+  60120
+ ],
+ "largest_window_candidates": 140,
+ "largest_window_mjd_start": 59010,
+ "quiet_star_median_depth_in_top10_windows": {
+  "1991": 0.002246536551001599,
+  "1992": 0.0009923643623100942,
+  "1966": 0.007420305630026158,
+  "1967": 0.004341387703561683,
+  "1968": 0.004268407521501039,
+  "1969": 0.003318616604767066,
+  "2002": 0.003150135451358116,
+  "2004": 0.0017308992088277964,
+  "1978": 0.0037247932973122344,
+  "1980": 0.0025720818892647213
+ },
+ "quiet_star_median_depth_overall": -0.0002125511898866117,
+ "sbss": {
+  "objects": 5,
+  "epochs_all": 1997,
+  "by_object": [
+   {
+    "oid": 790111200003542,
+    "filtercode": "zg",
+    "n": 851
+   },
+   {
+    "oid": 790211200005991,
+    "filtercode": "zr",
+    "n": 700
+   },
+   {
+    "oid": 790311200006723,
+    "filtercode": "zi",
+    "n": 187
+   },
+   {
+    "oid": 1824102200002193,
+    "filtercode": "zg",
+    "n": 27
+   },
+   {
+    "oid": 1824202200007321,
+    "filtercode": "zr",
+    "n": 232
+   }
+  ],
+  "epochs_2023_plus_all": 58,
+  "epochs_2023_plus_good": 35,
+  "catflags_2023_plus": {
+   "0": 35,
+   "32768": 23
+  }
+ }
+}

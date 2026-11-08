@@ -77,10 +77,10 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 <div class="page">
 <header class="masthead">
   <div class="eyebrow">Research Lab · Deep dive · Metascience</div>
-  <h1>How common are debris transits around white dwarfs? Known systems alone give about 1 in 5,000 within 500 pc after correcting for what ZTF can detect, but nearly 900 unvetted candidates leave the rate unbounded above</h1>
-  <p class="subtitle">109,074 Gaia white dwarfs within 500 pc with at least 100 good ZTF epochs were searched blind with two preregistered rules: recurring faint outliers (hour-scale dips) and runs of faint 30-day bins (day- to year-scale dimming). The 20 known debris-transiting white dwarfs were compiled from the discovery papers and committed before detection was run. Completeness comes from 150,000 injected signals. The plan was committed before any light curve was fetched.</p>
+  <h1>How common are debris transits around white dwarfs? Published systems and candidates imply about 1 in 5,000 within 500 pc after correcting for what ZTF can detect, confirmed transiters alone about 1 in 24,000, and nearly 1,000 unvetted candidates leave the rate unbounded above</h1>
+  <p class="subtitle">108,493 Gaia white dwarfs within 500 pc with at least 100 good ZTF g and r epochs were searched blind with two preregistered rules: recurring faint outliers (hour-scale dips) and runs of faint 30-day bins (day- to year-scale dimming). The 20 published debris-transiting white dwarfs and candidates were compiled from the discovery papers and committed before detection was run (their Gaia IDs were corrected afterwards; D1). Completeness comes from 150,000 injected signals. The plan was committed before any light curve was fetched. Revised after an independent review (publish with edits; D2).</p>
   <div class="meta">
-    <span>Report · 2026-11-07 · pre-review draft</span>
+    <span>Report · 2026-11-07 · under independent review</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/astronomy-ztf-wd-debris-transit-occurrence/plan.md">Preregistration</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/astronomy-ztf-wd-debris-transit-occurrence/deviations.md">Deviations log</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/astronomy-ztf-wd-debris-transit-occurrence/code">Code</a>
@@ -89,55 +89,87 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 </header>
 <section class="tiles" aria-label="Key results"></section>
 <main>
-<p><strong>Verdict: H1 Inconclusive.</strong> The rate of ZTF-detectable debris transits lies between 2.1 × 10⁻⁴ (known systems
-alone) and 1.2 × 10⁻² (every unvetted candidate counted). The bar of 5 × 10⁻⁴ falls between those two bounds.</p>
+<p><strong>Verdict: H1 Inconclusive.</strong> The rate of ZTF-detectable debris transits lies between the rate implied by published
+systems (2.1 × 10⁻⁴) and the rate with every unvetted candidate counted (1.4 × 10⁻²). The bar of 5 × 10⁻⁴ falls
+between them. The design made this outcome all but certain: Supported needs at most about 25 flags in total, and
+Refuted needs about 50 recovered known systems, against 18 in the sample.</p>
 <ul>
-<li><strong>H1 (the occurrence of ZTF-detectable debris transits, all classes combined, is below 5 × 10⁻⁴):
-  Inconclusive.</strong><ul>
-<li><strong>Lower rate:</strong> 15 recovered known systems over a completeness-weighted sample of 72,748 stars gives
-<strong>2.1 × 10⁻⁴</strong> (95% Poisson 1.2 × 10⁻⁴ to 3.4 × 10⁻⁴). Its lower limit is below 5 × 10⁻⁴, so H1 is not
-Refuted.</li>
-<li><strong>Upper rate:</strong> adding the 878 unexplained candidates gives <strong>1.2 × 10⁻²</strong> (1.15 × 10⁻² to 1.31 × 10⁻²). Its
-upper limit is above 5 × 10⁻⁴, so H1 is not Supported.</li>
-<li>Read on its own, the lower rate says that known systems alone already amount to about 1 in 5,000 white dwarfs
-once detectability is accounted for. A rate below 5 × 10⁻⁴ is plausible, but only vetting the candidates could
-show it.</li>
+<li>
+<p><strong>H1 (the occurrence of ZTF-detectable debris transits, all classes combined, is below 5 × 10⁻⁴):
+  Inconclusive.</strong></p>
+<ul>
+<li><strong>Lower rate</strong>, by how well established the recovered systems are (completeness-weighted sample 71,572):</li>
 </ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>numerator</th>
+<th>recovered</th>
+<th>rate (95% Poisson)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>refereed, confirmed transiters (WD 1145+017, ZTF J0139+5245, ZTF J0328−1219)</td>
+<td>3</td>
+<td>4.2 × 10⁻⁵ (0.9–12 × 10⁻⁵)</td>
+</tr>
+<tr>
+<td>plus the Guidry et al. 2021 candidates</td>
+<td>5</td>
+<td>7.0 × 10⁻⁵ (2.3–16 × 10⁻⁵)</td>
+</tr>
+<tr>
+<td>all published systems and candidates (preregistered "known systems")</td>
+<td>15</td>
+<td><strong>2.1 × 10⁻⁴</strong> (1.2–3.5 × 10⁻⁴)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Ten of the 15 come from a paper titled "Six New Candidates" or from an unrefereed preprint. So 2.1 × 10⁻⁴ is the
+rate implied by published systems and candidates, not a floor of real systems.
+- <strong>Upper rate:</strong> adding the 970 unexplained candidates gives <strong>1.4 × 10⁻²</strong> (1.29–1.46 × 10⁻²).
+- <strong>The i band.</strong> The first draft pooled ZTF i-band epochs into eligibility and both rules, against the plan's g
+and r. This revision uses g and r, as preregistered. With i included: 109,074 eligible, 914 flagged, the same 15
+of 18 known systems, and an upper rate of 1.2 × 10⁻². H1 is Inconclusive either way.
+- <strong>The positive controls.</strong> 18 of the 20 published systems are in the sample (one is fainter than G = 20, one
+  beyond 500 pc), and the rules flag 15 of them.
+- <strong>SDSS J0107+2107</strong> shows continuous shallow dips.
+- <strong>WD 1054−226</strong> has dips of a few per cent and only 207 epochs.
+- <strong>SBSS 1232+563</strong> was missed because ZTF sampled its defining 2023 dimming sparsely: 29 good epochs over 26
+months after April 2023. Few 30-day bins reach the 5-epoch minimum, so only one low bin qualifies, and the rule
+needs two. A fresh query keeping every ZTF object and flag finds only 35 good epochs after April 2023.
+- Of the 15 recovered, three are flagged by the short-dip rule alone, six by the long-dip rule alone, and six by
+both.
+- <strong>Completeness.</strong> Injected signals are recovered 65% of the time for WD 1145-like hour-scale dips, 48% for
+  J0139-like day-scale dips and 53% for one-off dimming lasting 30–400 days. Recovery falls for fainter stars (F2).
+- <strong>The candidates are mostly long-dip flags, and mostly systematics.</strong>
+- 1,006 stars are flagged; 21 are CVs in Gaia DR3's variability classification. That leaves 970 candidates
+besides the 15 known systems.
+- The long-dip rule is sensitive to its threshold: at 3 standard errors it flags 7,598 stars, at 7 it flags 159.
+- <strong>Calendar test</strong> (post hoc). 454 of the 769 long-dip candidates have a low bin in the same ten 30-day windows,
+and 140 in June 2020 alone. In those windows, 2,000 random unflagged stars are also faint, by a median 0.1–0.7%
+against −0.02% overall. So the long-dip flags largely track survey-wide photometric trends.
+- <strong>The g/r coincidence check</strong> promised as a G4 mitigation barely discriminates. 94% of the candidates' low bins
+with at least 3 g and 3 r epochs are low in both bands (by more than 2.5% each).
+- The list is not vetted. It is in <code>results/tables/candidates.csv</code> (Gaia DR3 source IDs, public facts).
+- <strong>Implied geometry.</strong> If a quarter to a half of white dwarfs are metal-polluted, the published-systems rate implies
+  a transit probability × duty cycle of 4 × 10⁻⁴ to 8 × 10⁻⁴ among polluted stars (descriptive).</p>
 </li>
-<li><strong>The positive controls work.</strong> 18 of the 20 known systems are in the sample (one is fainter than G = 20, one
-  beyond 500 pc), and the rules flag 15 of them.<ul>
-<li>The three missed are SDSS J0107+2107 (continuous shallow dips), SBSS 1232+563 (sporadic dimming) and WD 1054−226
-(dips of a few per cent, with only 207 epochs).</li>
-<li>Of the 15 recovered, three are flagged by the short-dip rule alone, six by the long-dip rule alone, and six by
-both.</li>
-</ul>
-</li>
-<li><strong>Completeness.</strong> Injected signals are recovered 66% of the time for WD 1145-like hour-scale dips, 50% for
-  J0139-like day-scale dips and 53% for one-off dimming lasting 30–400 days. Recovery falls for fainter stars (F2).</li>
-<li><strong>The candidates are mostly long-dip flags.</strong><ul>
-<li>914 stars are flagged, and 21 of them are CVs in Gaia DR3's variability classification. That leaves 878
-candidates beside the 15 known systems: 653 flagged by the long-dip rule only, 205 by the short-dip rule only,
-and 20 by both.</li>
-<li>The long-dip rule is sensitive to its threshold. At 3 standard errors instead of 5 it flags 7,130 stars, at 7 it
-flags 138, so most long-dip flags are probably slow photometric trends rather than dimming events.</li>
-<li>The list is not vetted. It is in <code>results/tables/candidates.csv</code> (Gaia DR3 source IDs, public facts).</li>
-</ul>
-</li>
-<li><strong>Implied geometry.</strong> If a quarter to a half of white dwarfs are metal-polluted, the lower rate implies a transit
-  probability × duty cycle of 4 × 10⁻⁴ to 8 × 10⁻⁴ among polluted stars (descriptive).</li>
 </ul>
 <h2>In plain terms</h2>
 <p>When a white dwarf, the dense remnant of a star like the Sun, tears apart an asteroid or small planet, the dusty
 debris can pass in front of it and make it dim. About twenty such stars are known, most found in the last five years
 in data from the Zwicky Transient Facility (ZTF), a telescope that photographs the northern sky every few nights. How
 common are they?</p>
-<p>We took about 110,000 white dwarfs within 500 parsecs (about 1,600 light-years) that ZTF has observed at least 100
+<p>We took about 108,000 white dwarfs within 500 parsecs (about 1,600 light-years) that ZTF has observed at least 100
 times. We searched each one's brightness record with two simple rules fixed in advance: repeated sudden faint
-measurements, and months-long stretches of dimming. The rules found 15 of the 18 known debris-transit stars in our
+measurements, and months-long stretches of dimming. The rules found 15 of the 18 published debris-transit stars and candidates in our
 sample. By planting fake dimming events into real light curves, we measured how often the rules would catch such
 a star: about half to two-thirds of the time.</p>
-<p>Counting only the known systems, and correcting for what the search can catch, about 1 in 5,000 of these white
-dwarfs shows detectable debris transits. The rules also flagged nearly 900 other stars. Most are probably slow
+<p>Counting the published systems and candidates, and correcting for what the search can catch, about 1 in 5,000 of
+these white dwarfs shows detectable debris transits; counting only the three firmly confirmed ones, about 1 in
+24,000. The rules also flagged nearly 1,000 other stars. Most are probably slow
 drifts in the measurements rather than debris, but until each is checked, the true rate could be anywhere from
 about 1 in 5,000 to about 1 in 80. So the study cannot say whether the rate is below the 1-in-2,000 bar the lead
 proposed.</p>
@@ -156,9 +188,10 @@ predicting an occurrence below 5 × 10⁻⁴ for ZTF-detectable systems.
 <li><strong>Sample</strong> (<code>code/sample.py</code>): Gentile Fusillo et al. (2021) Gaia EDR3 white dwarfs with P_WD &gt; 0.75, G &lt; 20,
   declination &gt; −28° and parallax &gt; 2 mas: 121,838 stars. Positions were propagated to epoch 2019.0.</li>
 <li><strong>Light curves</strong> (<code>code/fetch_lc.py</code>): the IRSA ZTF light-curve service (DR23) within 2 arcsec, good epochs only
-  (catflags = 0, magerr &lt; 0.25). Per filter, the ZTF object with the most good epochs is kept.<ul>
-<li>117,193 stars returned good epochs (13 queries failed; the rest had no ZTF object or no good epochs).</li>
-<li>109,074 have at least 100 good epochs (median 1,049) and form the eligible sample.</li>
+  (catflags = 0, magerr &lt; 0.25). Per filter, the ZTF object with the most good epochs is kept, and only g and r
+  epochs are used (D2; the first draft also used i).<ul>
+<li>116,911 stars returned good g or r epochs (13 queries failed; the rest had no ZTF object or no good epochs).</li>
+<li>108,493 have at least 100 good g and r epochs and form the eligible sample.</li>
 </ul>
 </li>
 <li><strong>Rules</strong> (<code>code/detect.py</code>, as preregistered):<ul>
@@ -180,7 +213,7 @@ flagged if at least 2 bins sit more than 5 standard errors and at least 5% below
 <li><strong>Rates:</strong> N / Σ C_k with Poisson (Garwood) intervals; the combined rate takes each star's best class.</li>
 </ul>
 <h2>Results (<code>results/figures/F1_excess.png</code>, <code>F2_completeness.png</code>, <code>F3_cmd.png</code>)</h2>
-<figure><a href="results/figures/F1_excess.png"><img src="results/figures/F1_excess.png" alt="Faint-outlier excess"></a><figcaption>Per-star faint-outlier excess pooled over ZTF g and r (good epochs only), for 109,074 sample white dwarfs with at least 100 good epochs. Vertical lines mark the 18 known debris-transit white dwarfs in the sample (blue: flagged by either preregistered rule; orange: missed). The short-dip rule also needs a binomial p &lt; 1e-6 and faint epochs on at least 3 nights; the long-dip rule uses 30-day bins and is not shown here.</figcaption></figure>
+<figure><a href="results/figures/F1_excess.png"><img src="results/figures/F1_excess.png" alt="Faint-outlier excess"></a><figcaption>Per-star faint-outlier excess pooled over ZTF g and r (good epochs only), for 108,493 sample white dwarfs with at least 100 good epochs. Vertical lines mark the 18 known debris-transit white dwarfs in the sample (blue: flagged by either preregistered rule; orange: missed). The short-dip rule also needs a binomial p &lt; 1e-6 and faint epochs on at least 3 nights; the long-dip rule uses 30-day bins and is not shown here.</figcaption></figure>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -194,54 +227,55 @@ flagged if at least 2 bins sit more than 5 standard errors and at least 5% below
 <tbody>
 <tr>
 <td>WD 1145-like (hours)</td>
-<td>72,581</td>
+<td>71,399</td>
 <td>4</td>
-<td>5.5 × 10⁻⁵ (1.5–14) × 10⁻⁵</td>
-<td>1.2 × 10⁻²</td>
+<td>5.6 × 10⁻⁵ (1.5–14) × 10⁻⁵</td>
+<td>1.4 × 10⁻²</td>
 </tr>
 <tr>
 <td>J0139-like (days)</td>
-<td>54,537</td>
+<td>52,989</td>
 <td>5</td>
-<td>9.2 × 10⁻⁵ (3.0–21) × 10⁻⁵</td>
-<td>1.6 × 10⁻²</td>
+<td>9.4 × 10⁻⁵ (3.1–22) × 10⁻⁵</td>
+<td>1.8 × 10⁻²</td>
 </tr>
 <tr>
 <td>one-off dimming</td>
-<td>58,201</td>
+<td>57,521</td>
 <td>6</td>
-<td>1.0 × 10⁻⁴ (3.8–22) × 10⁻⁵</td>
-<td>1.5 × 10⁻²</td>
+<td>1.0 × 10⁻⁴ (3.8–23) × 10⁻⁵</td>
+<td>1.7 × 10⁻²</td>
 </tr>
 <tr>
 <td><strong>combined (best class per star)</strong></td>
-<td><strong>72,748</strong></td>
+<td><strong>71,572</strong></td>
 <td><strong>15</strong></td>
-<td><strong>2.1 × 10⁻⁴ (1.2–3.4) × 10⁻⁴</strong></td>
-<td><strong>1.2 × 10⁻² (1.15–1.31) × 10⁻²</strong></td>
+<td><strong>2.1 × 10⁻⁴ (1.2–3.5) × 10⁻⁴</strong></td>
+<td><strong>1.4 × 10⁻² (1.29–1.46) × 10⁻²</strong></td>
 </tr>
 </tbody>
 </table></div>
-<p>Known systems are assigned to a class by the dip type their papers describe; the upper rates add all 878 candidates
-to every class.</p>
+<p>Known systems are assigned to a class by the dip type their papers describe; the upper rates add all 970 candidates
+to every class. The first draft's rates with the i band pooled in are kept as <code>results/tables/withzi_*</code>.</p>
 <ul>
-<li><strong>By distance</strong> (known recovered / candidates / Σ completeness): ≤ 100 pc 2 / 101 / 7,857; 100–200 pc
-  7 / 222 / 21,543; 200–500 pc 6 / 555 / 43,348.</li>
-<li><strong>Threshold variants</strong> (secondary): the short-dip rule flags 326 stars at 2.5σ and 158 at 3.5σ; the long-dip rule
-  flags 7,130 at 3 standard errors and 138 at 7.</li>
+<li><strong>By distance</strong> (known recovered / candidates / Σ completeness): ≤ 100 pc 2 / 102 / 7,717; 100–200 pc
+  7 / 231 / 21,188; 200–500 pc 6 / 637 / 42,667.</li>
+<li><strong>Threshold variants</strong> (secondary): the short-dip rule flags 326 stars at 2.5σ and 154 at 3.5σ; the long-dip rule
+  flags 7,598 at 3 standard errors and 159 at 7.</li>
 <li><strong>Faint-outlier asymmetry.</strong> Most stars (77%) have more bright than faint outliers (median excess −6). Near ZTF's
   detection limit, faint epochs go missing while bright ones are kept, which works against the short-dip rule for
   faint stars.</li>
 </ul>
 <figure><a href="results/figures/F2_completeness.png"><img src="results/figures/F2_completeness.png" alt="Completeness"></a><figcaption>Share of injected signals recovered by either preregistered rule, by class and Gaia G, from 5,000 random eligible, unflagged white dwarfs x 3 classes x 10 injections. Signal parameters are drawn as in plan section 0.</figcaption></figure>
-<figure><a href="results/figures/F3_cmd.png"><img src="results/figures/F3_cmd.png" alt="Colour-magnitude diagram"></a><figcaption>Gaia colour-magnitude diagram of the 109,074 eligible white dwarfs, the 878 unexplained candidates (flagged, not known, not a Gaia DR3 CV/ECL/RS/SOLAR_LIKE) and the known debris-transit systems in the sample.</figcaption></figure>
+<figure><a href="results/figures/F3_cmd.png"><img src="results/figures/F3_cmd.png" alt="Colour-magnitude diagram"></a><figcaption>Gaia colour-magnitude diagram of the 108,493 eligible white dwarfs, the 970 unexplained candidates (flagged, not known, not a Gaia DR3 CV/ECL/RS/SOLAR_LIKE) and the known debris-transit systems in the sample.</figcaption></figure>
 <h2>What this does and does not show</h2>
 <ul>
-<li><strong>Known systems alone set a floor of about 2 × 10⁻⁴.</strong> That is a completeness-corrected rate of ZTF-detectable
+<li><strong>Published systems and candidates imply about 2 × 10⁻⁴; confirmed transiters alone about 4 × 10⁻⁵.</strong> That is a completeness-corrected rate of ZTF-detectable
   debris transits among white dwarfs within 500 pc. Most known systems (all but WD 1145+017 and WD 1054−226) were
-  themselves found in ZTF data, so the floor reflects what has been found, not what exists.</li>
-<li><strong>The ceiling is set by unvetted flags, not by debris.</strong> Without vetting, the 878 candidates make the upper bound
-  60 times the lower. Most are long-dip flags on faint stars, a pattern that systematics produce as easily as dust.</li>
+  themselves found in ZTF data, and two-thirds are candidates or preprint systems, so the figure reflects what has
+  been reported, not what is established.</li>
+<li><strong>The ceiling is set by unvetted flags, not by debris.</strong> Without vetting, the 970 candidates make the upper bound
+  66 times the published-systems rate. Most are long-dip flags on faint stars, a pattern that systematics produce as easily as dust.</li>
 <li><strong>Completeness is moderate and falls with magnitude.</strong> Shallow or sporadic dimming, like the three missed known
   systems, is often missed.</li>
 <li><strong>Not shown:</strong><ul>
