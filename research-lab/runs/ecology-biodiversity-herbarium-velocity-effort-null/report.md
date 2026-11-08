@@ -107,10 +107,11 @@ survive a sampling-noise and collecting-effort null.
   - A synthetic check (`code/test_effort.py`) shows this null reproduces 97% of a pure effort shift. The sampler the
     plan named reproduced 66%, hence D1, made before any real data were touched. The same check cannot distinguish a
     pure effort shift from every range moving north (see "What this does and does not show").
-  - **The weights are approximate per record.** Pareto order sampling ranks records correctly (correlation of
-    empirical and target inclusion probabilities 0.995–0.999), but for the smallest species (20–22 records) the
-    empirical inclusion probabilities deviate from the stated target by up to 0.04–0.17, and the targets do not sum
-    to the period's count (8.6–13.2 against 10–12). 28% of primary species have fewer than 100 records (post hoc).
+  - **The weights are approximate per record.** Across a random 150 of the primary species with fewer than 100
+    records, the largest per-record deviation of the empirical inclusion probability from the stated target has a
+    median of 0.10 and reaches 0.46. The cause is that the targets do not sum to the period's count (median 12% off).
+    The ranking is preserved (median correlation 0.996). 28% of primary species have fewer than 100 records
+    (`code/pareto_random.py`, post hoc).
 - **Statistic.** Ratio of the median (over species) of each species' null median velocity to the median observed
   velocity, with a species bootstrap (2,000).
 - **SDM variant.** For 1,000 random species: MaxEnt-type models (elapid, WorldClim 2.1 bioclim at 10 arcmin) per
@@ -229,3 +230,5 @@ survive a sampling-noise and collecting-effort null.
 4. `code/analyse.py`.
 5. `code/sdm_variant.py`: needs WorldClim 2.1 10-arcmin bioclim in `data/ref/wc/`.
 6. `code/figures.py`, `code/handtrace.py`, `code/test_velocity.py` and `code/test_effort.py`.
+7. Post hoc checks after review: `code/absorption_test.py`, `code/effort_surface.py`, `code/pareto_random.py`; the
+   page is built by `code/build_report_html.py`.

@@ -101,3 +101,68 @@ inclusion probabilities sum to n1 (Rosén's own correction).
   condition correctly notes BioShifts). A1, A2 and A10 describe the Daru et al. preprint; I could not read the
   preprint offline, so those rest on the agent's reading; A2's "no minimum record count or code" matches the
   plan's statement of what was seen.
+
+## Confirmation pass
+
+Reviewer: Fable 5.1, 2026-11-09.
+
+What I checked (scripts and outputs in `review/reviewer_checks/confirm_*`; all Python reading data/ or results/ run
+with `-I`, paths passed as arguments, cwd outside data/, nothing written to the repo):
+
+- **Stored numbers** (`confirm_numbers.py/.txt`): recomputed from `nulls_primary.parquet`, `absorption_test.json`
+  and `effort_surface.json`. Observed 6.906, effort 4.608, noise 2.797 km/yr; ratios 0.6671 and 0.4050, gap 0.262;
+  per-species ratio median 0.6778, mean 0.970, 25.83% below their null median; exceedance 36.0% and 52.8%; median
+  poleward displacement 9.42 km (0.336 km/yr) against 0.28 (effort) and -0.59 (noise); poleward shares 53.6 / 50.8
+  / 49.0%; median per-species excess 1.87 km/yr; 27.6% of primary species have < 100 records. All match the report.
+- **Absorption test** (`confirm_absorption.py/.txt`): (a) the study's `velocity.py` on the study's own world
+  generator, seed 7, NREP 199, reproduces `absorption_test.json` exactly (1.05 / 1.03 / 0.70 / 0.60; exceedance
+  7 / 5 / 18 / 23%); (b) seeds 11 and 23 give all-move 1.01-1.02, half 0.74-0.75, a fifth 0.68-0.75, so the
+  finding is stable; (c) my own implementation of thinning, centroids, the noise null and the
+  leave-one-species-out Pareto effort null, with no `velocity.py` code, gives 1.05 / 1.01 / 0.70 / 0.59.
+- **Effort surface and Pareto on the real data** (`confirm_real.py/.txt`): see findings 1 and 2.
+- **Report text** (`confirm_report_text.py/.txt`): each D3 edit is in `report.md` and in the rebuilt `report.html`,
+  and the old "With no real movement at all" sentence is gone from both.
+- **G5** (`confirm_g5_verify.txt`, `confirm_g5_sync.py/.txt`): `overclaim_check.py --verify` gives "G5 passed
+  (43 rows)". Re-extracting the headline sentences with the tool's own `extract()` gives the same 43 sentences as
+  the table, with none missing and none stale. The rows I asked to relabel have been rewritten rather than
+  relabelled; the only "fixed ranges" phrases left are the disclaimers in rows 13 and 15.
+- **G6** (`confirm_g6.txt`): `attribution.py check . --show` gives "G6 passed (10 claims)", and all 10 source IDs
+  resolve.
+
+### Final verdict: publish with edits
+
+- **Finding 1 (major, identification): fixed.** The title, verdict and plain terms are now built around the noise
+  floor (0.41) and the poleward excess. The verdict line keeps the preregistered "Supported" and puts the
+  identification caveat in the same sentence. The absorption table is in the report as the main limitation, and its
+  numbers reproduce exactly and hold under two more seeds and an independent implementation. The 26% gap is
+  described as a mix of effort and shared shifts. On the effort surface, `effort_surface.py` gives 30.56° -> 31.79°.
+  I get the same from my own species x cell x period units, and also from `velocity.load`'s 1° effort dict once its
+  keys are decoded correctly (30.56 / 31.79). D3 says the first review's 30.2° -> 31.6° "used a different unit".
+  The real cause was a decoding error in my first-round `checks1.py`: `k // 100000` misplaces 40% of 1° cells
+  (those with negative longitude) by one degree of latitude. The report's numbers are the right ones. With the
+  correct decoding, the tropical share at 1° is 33.7% -> 31.6%, against the report's 34.5% -> 32.3% at 5 arcmin;
+  both describe the same mild drift.
+- **Finding 2 (moderate, Pareto): partly fixed.** The report now says the weights are approximate per record, and
+  the five-species numbers reproduce: max |dev| 0.04-0.16 against D3's 0.04-0.17, target sums 8.6-13.2,
+  correlations 0.992-0.999. My recomputed odds agree with `velocity.weights` for every species tested. But the five
+  smallest species are not the worst cases. Over a random 150 of the primary species with < 100 records, the
+  median max |dev| is 0.105, the 90th percentile 0.24 and the maximum 0.46. 28% of those species exceed the 0.17
+  the report gives as the upper end, and the mean |dev| median is 0.07. Species with 30-50 and 50-100 records look
+  alike (median 0.10 and 0.11), so the deviation does not come from small samples. It comes from targets that do
+  not sum to n1: median 12% off, up to 75%. Ranking holds (median corr 0.996, min 0.92). The report's sentence,
+  "for the smallest species (20–22 records) ... up to 0.04–0.17", therefore reads as a small-sample effect with a
+  bound that does not hold. The 28% (not "most") correction to my first review is right.
+- **Finding 3 (minor, statistics and wording): fixed.** The per-species ratios (0.68 / 0.97 / 25.8%), the
+  undemanding 0.5 bar and 36% as a lower bound are all in the verdict, and all three recompute.
+- **G5 and G6 claims: confirmed** (43 rows in sync, all Supported; 10 claims resolve).
+
+Remaining issues:
+
+1. **Pareto sentence understates the deviation (edit).** In "How it was done", replace the 20–22-record range with
+   the general picture. Suggested wording: "across a random 150 primary species with fewer than 100 records, the
+   largest per-record deviation has a median of 0.10 and reaches 0.46, because the stated targets do not sum to
+   the period's count (median 12% off); the ranking is preserved (median correlation 0.996)". Alternatively, run
+   the D3 check on a random sample and report that. Add the same correction to D3 item 2.
+2. **Reproducing section (edit).** `code/absorption_test.py`, `code/effort_surface.py` and
+   `code/build_report_html.py` are missing from "Reproducing it". Also correct D3's note on the 30.2° figure: it
+   came from a decoding error in the reviewer's script, not a different unit.

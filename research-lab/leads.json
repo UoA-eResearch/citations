@@ -3113,7 +3113,12 @@
    "scout_value_score": 7,
    "scout_cost_score": 5,
    "plain_summary": "A recent study used millions of museum plant specimens to argue that plant species' ranges are moving about 5.6 km per year. Because collectors visit different places in different decades, and because a species' 'centre' estimated from a few dozen specimens jumps around by chance, much of that movement could be an artefact. This project measures how much of the reported speed appears even when ranges are held fixed.",
-   "scout_round": 2
+   "scout_round": 2,
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass)",
+   "report_url": "runs/ecology-biodiversity-herbarium-velocity-effort-null/report.html",
+   "verdict_tag": "Supported",
+   "verdict_note": "H1 Supported under the preregistered rule (an effort null reproduces 67% of the observed median herbarium range velocity, against a 0.5 bar), but the design does not identify what the rule was meant to test: the effort null is built from all other species' records, so it also absorbs range shifts many species share (a synthetic world where every species moves 1 degree north is scored as fully reproduced). What the data identify: sampling noise alone gives 2.8 of the observed 6.9 km/yr (ratio 0.41) for 69,596 species, and a small poleward excess (9.4 km over 28 years vs 0.3 km under the null). Review fix first; confirmation publish with edits.",
+   "headline": "At least two-fifths of the median herbarium plant range velocity is sampling noise; a collecting-effort null reproduces two-thirds, but cannot tell collectors moving from plants moving together."
   },
   {
    "id": "ecology-biodiversity-sdm-provenance-leakage",

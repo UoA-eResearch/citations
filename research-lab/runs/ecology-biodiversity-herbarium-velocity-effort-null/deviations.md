@@ -55,3 +55,14 @@ the preregistered statistic and its verdict (H1 Supported, ratio 0.667) stand.
    - The 0.5 bar is described as undemanding.
    - The 36% exceedance is described as a lower bound.
    - 28% of primary species have fewer than 100 records; the review's "most" does not hold.
+
+## D4 — 2026-11-09 — edits after the confirmation pass (verdict: publish with edits)
+
+1. **Pareto deviations.** D3's check covered only the five smallest species, which understated the deviations.
+   `code/pareto_random.py` repeats it on a seeded random 150 of the primary species with fewer than 100 records:
+   largest per-record deviation median 0.10, maximum 0.46; targets off from the period count by a median 12%;
+   ranking correlation median 0.996. The report sentence and D3 item 2 are superseded by these figures.
+2. **Reproducing it** now lists the post hoc scripts and the page builder.
+3. **The 30.2° figure.** The confirmation brief attributed the reviewer's 30.2° → 31.6° to a different unit. The
+   confirming reviewer traced it to a decoding error in their own script. The effort-surface figures in the report
+   (30.6° → 31.8°) are unaffected.
