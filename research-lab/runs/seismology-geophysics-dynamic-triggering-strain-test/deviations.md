@@ -49,3 +49,11 @@ recomputed; the preregistered results stand as computed and are reported beside 
    carries a caveat: per-station nulls rest on a median of 212 random times.
 3. **Detectability (finding 3).** The verdict states the proxy's recall (46%; 52% at M ≥ 3) and the size of rise a
    significant result needs, and that instantaneous triggering cannot be tested.
+
+## D3 — 2026-11-09 — edits after the confirmation pass (verdict: publish with edits)
+
+- **The H1 bullet** now says Inconclusive in the corrected primary, the preregistered analysis and every
+  preregistered variant, and notes that the contaminated baseline-only subset gives Refuted.
+- **Quintile uncertainties** are given for both analyses: ±0.015–0.023 on comparable arms, about ±0.008 as
+  preregistered.
+- **The title** says "no rise with strain is seen" instead of "nothing grows with strain".

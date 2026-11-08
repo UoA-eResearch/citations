@@ -103,3 +103,77 @@ western-US stations" or similar.
 - **G6:** `python3 -I ../../tools/attribution.py check . --show` → "G6 passed (8 claims)". S4 (van der Elst &
   Brodsky 2010), S6 (Kennett & Engdahl 1991), S7 (Lay & Wallace) and S8 (ComCat) resolve to the right works with
   sensible roles; S1–S3 summarise abstracts I could not read offline; S5's bucket citation is as the plan states.
+
+## Confirmation pass
+
+Reviewer: Fable 5.1, 2026-11-09.
+
+What I checked (scripts and outputs in `review/reviewer_checks/`, `confirm_*.py` / `confirm_*.txt`):
+
+- `confirm_arms.py` / `confirm_arms.txt` (study venv, `python -I`, paths as arguments, only `analyse.summarise`
+  imported). It reclassifies the real pairs from scratch using the `windows.py` rules: the pseudo-trigger rule
+  (|Δt| < 10 d to another M ≥ 7, < 3 d to another M ≥ 6.5, self excluded within 60 s; each of the 357 triggers
+  self-matches exactly once), and per-pair post and baseline windows rebuilt as in `windows.test`. It then reruns the
+  preregistered H1/H2 rules and the bootstrap with the same seed, in the same order as `code/comparable.py`. All five
+  classes match `comparable.json` exactly: pairs, triggers, every E, every CI, H1 and H2. The script also covers the
+  contamination share by quintile, a decomposition of the preregistered mean, station counts, recall,
+  `primary.json` and `trigger_dispersion.json`.
+- `confirm_gates.py` / `confirm_gates.txt` (`python3 -I`). G5: I re-extracted the headline sentences with the tool's
+  own `extract()`. The 49 rows in `overclaim_check.md` are exactly the current report's 49 sentences (none missing,
+  none stale), and `--verify` passes. G6: `attribution.py check --show` passes (8 claims); S1–S6 resolve to the right
+  titles. The script also checks that each D2 edit is present in both `report.md` and `report.html`; all 15 are.
+- I read `deviations.md` D2, `code/comparable.py`, the report in full, and the git history (read-only). D2's code,
+  table and report were committed together in 31d6ac3. That is acceptable here: the analysis is labelled post hoc,
+  and the corrected primary is the review's own suggestion, with the same 68 triggers and 43,771 pairs the review
+  computed.
+
+### Final verdict: publish with edits
+
+- **Finding 1 (Major, comparable arms): fixed.**
+  - The corrected primary applies the null's exclusion rule to real triggers: 68 triggers, 43,771 pairs, +0.00004
+    (−0.00795 to +0.00847), H1 and H2 Inconclusive. I reproduced it exactly, with 3,014 observed against 3,012.2
+    expected.
+  - Clean windows: 109 triggers, 72,189 pairs, +0.00415 (−0.0024 to +0.01109).
+  - Post-contaminated: 101 triggers, 65,887 pairs, −0.01319 (−0.019 to −0.00641).
+  - Contamination share by quintile: 0.163, 0.278, 0.306, 0.360, 0.332.
+  - 282 of the 350 triggers fail the rule.
+  - The brief's explanation for 109 vs my 105 holds. With per-pair post windows (ending a median 27.6 h after
+    origin), the contaminated class is 101 triggers / 65,887 pairs. With my earlier origin-to-+1.6 d window it is
+    115 / 74,008, which reproduces the first review's numbers.
+  - Decomposition of the preregistered −0.00306: post-contaminated pairs (28.8% of pairs) contribute −0.00380,
+    baseline-only −0.00057 and clean +0.00131. So "the negative excess comes entirely from contaminated windows"
+    holds.
+  - One note, with no action needed. "Post-contaminated" counts an M ≥ 6.5 anywhere from origin to post-window end,
+    including the few hours before the counted window opens. The report states that definition. Counting only
+    events inside the window itself, the share still rises with strain, from 12% to 23–26%.
+  - Title, verdict and plain terms are rewritten, and the preregistered "H2 Refuted" stays beside the correction.
+- **Finding 2 (Moderate, station population): fixed.**
+  - Title and verdict now say about 1,500 long-running stations. The population is 1,496 of 9,336 (16.0%), with a
+    median of 212 valid pseudo-triggers, so the SE of p0 is about 0.017.
+  - The Results section caveats the station map ("should not be read station by station"). The figure's own caption
+    file is unchanged, which is acceptable.
+- **Finding 3 (Moderate, detectability): fixed.**
+  - The verdict states the recall: 0.4575, and 0.5238 at M ≥ 3 (`proxy_validation.json`).
+  - It also states the doubling-in-a-day size of a detectable rise, and that instantaneous triggering is untestable
+    (instant variant −0.01386).
+  - The title is scoped to day-scale rises.
+- **Finding 4 (Minor, things checked): unchanged and still right.**
+  - `primary.json`: 15,042 observed against 15,742.2 expected.
+  - `trigger_dispersion.json`: ratio 10.0, 39 above 3 SE and 55 below.
+  - Every preregistered variant gives H2 Refuted.
+- **Gates:**
+  - G5 passes (49 rows, in sync with the current report). The rows the first review flagged are rewritten and
+    supported.
+  - G6 passes (8 claims).
+
+Remaining issues (text edits only; no reanalysis needed):
+
+1. **H1 "Inconclusive in every analysis"** (verdict bullet) contradicts the report's own results table. The post hoc
+   baseline-only row there is H1 Refuted (E5 − 3E1 upper95 −0.00225). Suggested wording: "Inconclusive in the
+   corrected primary, the preregistered analysis and every preregistered variant; the contaminated baseline-only
+   subset gives Refuted".
+2. **"both are measured with about ±0.008 uncertainty"** ("No strain dependence is visible" bullet) is wrong for
+   comparable arms. ±0.008 is the half-width of the overall mean. On the corrected primary, the quintile half-widths
+   are 0.015–0.023 (E1 ±0.017, E5 ±0.023). Only the preregistered quintiles are about ±0.008. State both.
+3. **(Suggested) "nothing grows with strain" in the title** reads close to a refutation of H1, but H1 is
+   Inconclusive: E5 − 3E1 ranges from −0.066 to +0.048. "No rise with strain is seen" would match the verdict.

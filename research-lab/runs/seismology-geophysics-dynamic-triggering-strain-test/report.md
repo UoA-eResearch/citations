@@ -1,4 +1,4 @@
-# After distant M7+ earthquakes, day-scale rises in local events at about 1,500 long-running western-US stations are about as common as at matched random times; an excess as large as the half-point bar cannot be ruled out, and nothing grows with strain
+# After distant M7+ earthquakes, day-scale rises in local events at about 1,500 long-running western-US stations are about as common as at matched random times; an excess as large as the half-point bar cannot be ruled out, and no rise with strain is seen
 
 *QuakeScope's 2026 PhaseNet picks for western-US stations (2.1 billion picks, 2002–2025) were turned into a
 catalogue-free local-event proxy: P–S pairs confirmed at 3 stations within 50 km. For each global M ≥ 7 earthquake at
@@ -27,7 +27,8 @@ triggers were not. Comparing like with like, there is no excess, but the interva
     expected; mean excess −0.003 (−0.007 to +0.001), Refuted by the preregistered rule. Every preregistered robustness
     variant gives the same verdict, but all share the same mismatch.
 - **H1 (the excess is at least 3 times larger in the top strain quintile, and absent in the bottom): Inconclusive** in
-  every analysis.
+  the corrected primary, the preregistered analysis and every preregistered variant. The contaminated baseline-only
+  subset gives Refuted.
   - Corrected primary: top quintile −0.003 (−0.024 to +0.023), bottom +0.002 (−0.015 to +0.020).
   - Preregistered: top −0.007 (−0.015 to +0.002), bottom +0.002 (−0.006 to +0.009).
   - Nothing rises with strain in either. The intervals are too wide to exclude a 3-times contrast.
@@ -168,7 +169,8 @@ aftershock contamination described in the verdict; on comparable arms the quinti
   random-time null needs the same exclusion on both arms.
 - **No strain dependence is visible.** The excess is near zero in every quintile on comparable arms. The slightly
   negative values at high strain in the preregistered analysis come from aftershock contamination and masking. A strain-scaled effect a few times larger than a tiny bottom-quintile effect
-  cannot be formally excluded, because both are measured with about ±0.008 uncertainty.
+  cannot be formally excluded. On comparable arms the quintile excesses carry uncertainties of ±0.015 to ±0.023 (E1
+  ±0.017, E5 ±0.023); in the preregistered analysis they are about ±0.008.
 - **Single-trigger claims need a shared-time null.** Outcomes at different stations after the same trigger are
   correlated, so per-trigger counts vary far more than independent tests would. Our station-level null calibrates
   the average, not one trigger's spread.

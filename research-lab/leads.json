@@ -3624,7 +3624,12 @@
    "scout_value_score": 7,
    "scout_cost_score": 5,
    "plain_summary": "Big earthquakes send waves around the globe, and some studies claim these waves set off small quakes thousands of kilometres away, while others say most such 'triggering' is coincidence. Using billions of AI-detected wave arrivals at western-US stations, this study checks whether extra small quakes after distant big ones exceed what chance predicts. It also checks whether the effect grows with the strength of the passing waves, as real triggering should.",
-   "scout_round": 2
+   "scout_round": 2,
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass)",
+   "report_url": "runs/seismology-geophysics-dynamic-triggering-strain-test/report.html",
+   "verdict_tag": "Inconclusive",
+   "verdict_note": "H1 Inconclusive; H2 Inconclusive on comparable arms (Refuted as preregistered). After 350 distant M7+ earthquakes, day-scale rises in a catalogue-free local-event proxy at about 1,500 long-running western-US stations were compared with each station's rate at matched random times. The preregistered null avoided times near other large earthquakes while real triggers did not; applying the same exclusion to real triggers (68 triggers) gives a mean excess of +0.000 (-0.008 to +0.008), so an excess up to the half-point bar is not excluded. The preregistered negative excess came from aftershock-contaminated windows. No rise with strain is seen. Review fix first; confirmation publish with edits.",
+   "headline": "Distant M7+ earthquakes are followed by day-scale rises in western-US local events about as often as random times are, once the comparison excludes nearby big quakes on both sides."
   },
   {
    "id": "formal-math-certified-contamination-did",
