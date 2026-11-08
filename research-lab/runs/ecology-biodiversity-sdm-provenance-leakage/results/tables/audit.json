@@ -1,38 +1,51 @@
 {
  "train_presences": 57084622,
  "matched_to_snapshot": 0.9613,
- "with_core_record": 1513529,
- "provenance_only": 1115257,
- "provenance_only_share": 0.01954,
+ "with_core_record": 4955774,
+ "provenance_only": 4302471,
+ "provenance_only_share": 0.07537,
  "provenance_only_by_country": {
-  "NL": 897332,
+  "DK": 1682622,
+  "AU": 1504558,
+  "NL": 897358,
   "PL": 130741,
   "UA": 78169,
   "BF": 5157,
   "BE": 1282,
-  "DE": 482,
+  "DE": 490,
   "CO": 458,
   "BJ": 442,
   "NG": 256,
   "SK": 227,
   "RU": 212,
   "CZ": 177,
-  "SN": 147,
-  "ML": 74,
-  "AT": 47
+  "SN": 147
  },
  "H2": {
-  "source_test_cells": 7466,
-  "test_presences": 165422,
-  "share_with_core_record_same_cell": 0.0829,
+  "source_test_cells": 13622,
+  "test_presences": 268972,
+  "share_with_core_record_same_cell": 0.1656,
   "ci": [
-   0.0766,
-   0.0893
+   0.1595,
+   0.1722
   ],
-  "verdict": "Refuted"
+  "verdict": "Supported"
  },
- "H2_broad_sensitivity": 0.0829,
+ "H2_broad_sensitivity_first_draft": 0.1656,
+ "H2_broad_sensitivity": {
+  "source_test_cells": 14381,
+  "test_presences": 292998,
+  "share_with_core_or_broad_record_same_cell": 0.1565,
+  "ci": [
+   0.1505,
+   0.1624
+  ]
+ },
  "H2_by_source": {
+  "Australia": {
+   "presences": 99615,
+   "share": 0.2707
+  },
   "Balkan Dry Grassland Database": {
    "presences": 4101,
    "share": 0.0
@@ -40,6 +53,10 @@
   "Belgium INBOVEG": {
    "presences": 982,
    "share": 0.0387
+  },
+  "Denmark": {
+   "presences": 3935,
+   "share": 0.986
   },
   "France_sophy": {
    "presences": 93380,
@@ -78,8 +95,8 @@
    "share": 0.119
   }
  },
- "exact_coordinate_share": 0.0005,
+ "exact_coordinate_share": 0.0004,
  "exact_coordinate_and_date_share": 0.0001,
- "population_species": 1745,
- "population_used": 1745
+ "population_species": 2833,
+ "population_used": 2000
 }

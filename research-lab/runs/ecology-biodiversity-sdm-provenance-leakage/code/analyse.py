@@ -21,7 +21,9 @@ RAND = ["C2", "C3", "C4", "C5", "C6"]
 
 def load():
     rows = [json.loads(f.read_text()) for f in (W / "rf").glob("C*.json")]
-    return pd.DataFrame(rows)
+    d = pd.DataFrame(rows)
+    pop = set(pd.read_csv(T / "population.csv").sp)
+    return d[d.cond.isin(["C0", "C1"] + RAND) & d.sp.isin(pop)]   # D4: neutral variants (C1n..C6n) are analysed separately
 
 
 def boot(x, rng):

@@ -1,80 +1,92 @@
 {
- "species": 1745,
- "mean_removed_C1": 29.2,
- "mean_removed_random": 24.4,
- "matched_species": 1690,
- "did_matched": 0.0052,
+ "species": 2000,
+ "mean_removed_C1": 446.1,
+ "mean_removed_random": 220.5,
+ "matched_species": 1656,
+ "did_matched": 0.00094,
  "ci_matched": [
-  0.00387,
-  0.00671
+  -0.00079,
+  0.00263
  ],
- "did_all": 0.00626,
+ "did_all": -0.00645,
  "by_source_db": {
+  "Australia": {
+   "species": 750,
+   "mean_removed_C1": 1109.4,
+   "mean_removed_random": 526.1,
+   "random_to_C1_ratio": 0.47
+  },
   "Balkan Dry Grassland Database": {
-   "species": 490,
-   "mean_removed_C1": 19.0,
-   "mean_removed_random": 18.2,
-   "random_to_C1_ratio": 0.96
+   "species": 365,
+   "mean_removed_C1": 27.8,
+   "mean_removed_random": 26.9,
+   "random_to_C1_ratio": 0.97
   },
   "Belgium INBOVEG": {
-   "species": 212,
-   "mean_removed_C1": 10.4,
-   "mean_removed_random": 6.4,
-   "random_to_C1_ratio": 0.62
+   "species": 143,
+   "mean_removed_C1": 7.1,
+   "mean_removed_random": 7.1,
+   "random_to_C1_ratio": 1.0
+  },
+  "Denmark": {
+   "species": 2,
+   "mean_removed_C1": 0.0,
+   "mean_removed_random": 0.0,
+   "random_to_C1_ratio": 0.0
   },
   "France_sophy": {
-   "species": 1504,
-   "mean_removed_C1": 25.0,
-   "mean_removed_random": 20.6,
-   "random_to_C1_ratio": 0.82
+   "species": 1074,
+   "mean_removed_C1": 45.1,
+   "mean_removed_random": 34.0,
+   "random_to_C1_ratio": 0.75
   },
   "Germany_vegetweb": {
-   "species": 685,
-   "mean_removed_C1": 11.5,
-   "mean_removed_random": 10.8,
+   "species": 484,
+   "mean_removed_C1": 15.5,
+   "mean_removed_random": 14.6,
    "random_to_C1_ratio": 0.94
   },
   "Netherlands": {
-   "species": 578,
-   "mean_removed_C1": 54.1,
-   "mean_removed_random": 43.0,
-   "random_to_C1_ratio": 0.79
+   "species": 418,
+   "mean_removed_C1": 96.5,
+   "mean_removed_random": 68.8,
+   "random_to_C1_ratio": 0.71
   },
   "Paramo": {
-   "species": 67,
-   "mean_removed_C1": 7.0,
-   "mean_removed_random": 7.0,
+   "species": 51,
+   "mean_removed_C1": 7.5,
+   "mean_removed_random": 7.5,
    "random_to_C1_ratio": 1.0
   },
   "Poland": {
-   "species": 822,
-   "mean_removed_C1": 30.4,
-   "mean_removed_random": 24.6,
-   "random_to_C1_ratio": 0.81
+   "species": 597,
+   "mean_removed_C1": 54.6,
+   "mean_removed_random": 37.7,
+   "random_to_C1_ratio": 0.69
   },
   "Slovakia_nvd": {
-   "species": 1021,
-   "mean_removed_C1": 26.2,
-   "mean_removed_random": 22.2,
-   "random_to_C1_ratio": 0.85
+   "species": 728,
+   "mean_removed_C1": 41.8,
+   "mean_removed_random": 33.2,
+   "random_to_C1_ratio": 0.79
   },
   "Spain_sivim_wetlands": {
-   "species": 470,
-   "mean_removed_C1": 29.7,
-   "mean_removed_random": 21.9,
-   "random_to_C1_ratio": 0.74
+   "species": 340,
+   "mean_removed_C1": 52.2,
+   "mean_removed_random": 41.0,
+   "random_to_C1_ratio": 0.78
   },
   "TAVA West_Africa": {
-   "species": 53,
-   "mean_removed_C1": 84.5,
-   "mean_removed_random": 71.5,
-   "random_to_C1_ratio": 0.85
+   "species": 56,
+   "mean_removed_C1": 319.5,
+   "mean_removed_random": 188.3,
+   "random_to_C1_ratio": 0.59
   },
   "Ukraine Grassland Database": {
-   "species": 452,
-   "mean_removed_C1": 31.8,
-   "mean_removed_random": 27.9,
-   "random_to_C1_ratio": 0.88
+   "species": 326,
+   "mean_removed_C1": 49.8,
+   "mean_removed_random": 39.4,
+   "random_to_C1_ratio": 0.79
   }
  }
 }

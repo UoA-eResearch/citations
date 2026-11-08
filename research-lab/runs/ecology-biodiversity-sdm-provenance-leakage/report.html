@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SAGE Provenance Leakage</title>
+<meta name="description" content="Do innocent citers of a later-retracted paper lose citations after the retraction?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Metascience</div>
+  <h1>A sixth of SAGE&#x27;s test presences share a 1 km cell with a republished survey record once two missed Australian republications are flagged, yet removing those records barely changes Random Forest scores; West African and Ukrainian test plots are the exception</h1>
+  <p class="subtitle">SAGE trains species distribution models on GBIF presence-only records and tests them on sPlotOpen vegetation plots, treating the two as independent. Several of the vegetation-plot databases that supply its test plots are also published in GBIF. The first draft flagged those GBIF datasets from registry metadata and froze the list. The review showed that list missed the second-largest source. This revision flags republications from the data instead, with a same-day, same-cell species-list scan of every dataset, and re-runs the audit and the Random Forest retraining for 2,000 species (D4, post hoc). The preregistered frozen-list results are reported beside the corrected ones.</p>
+  <div class="meta">
+    <span>Report · 2026-10-26 · under independent review</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ecology-biodiversity-sdm-provenance-leakage/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ecology-biodiversity-sdm-provenance-leakage/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ecology-biodiversity-sdm-provenance-leakage/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"></section>
+<main>
+<p><strong>Verdict: H1 Refuted; H2 Supported (corrected flag list). As preregistered with the frozen list, both Refuted.</strong></p>
+<ul>
+<li><strong>H2 (at least 10% of source-plot test presences have a provenance-shared record in the same 1 km cell):
+  Supported with the corrected list.</strong><ul>
+<li><strong>16.6%</strong> (95% cell bootstrap 16.0% to 17.2%) of 268,972 test presences in 13,622 source test cells.</li>
+<li>With the frozen list it was 8.3% (7.7% to 8.9%). The list missed NSW BioNet and SA Flora, which republish the
+Australian source (5,383 single-plot dated test cells; 664 and 96 of them reproduced). It also flagged the Danish
+nature-monitoring portal only as "broad", which the analysis never counted.</li>
+<li>Counting only records that reached SAGE's training data: 14.8%. 13.1% of all test presences have
+such a record and no other record of the species in the cell (provenance-only). Any-source same-cell overlap, which SAGE accepts by design, is 29.3%.</li>
+<li>By source: Denmark 98.6%, Netherlands 87.8%, TAVA West Africa 87.4%, Australia 27.1%, Ukraine 11.9%, France's
+SOPHY 0%. The scan finds no dataset that republishes SOPHY relevés.</li>
+<li>The "broad" sensitivity now defines source cells from core and broad sources together: 15.6% (15.1% to 16.2%).
+The first draft's version was vacuous by construction.</li>
+</ul>
+</li>
+<li><strong>H1 (removing provenance-shared training records lowers AUROC on source plots by at least 0.02 more than matched
+  random removal): Refuted.</strong><ul>
+<li>The difference-in-differences is <strong>−0.006</strong> (−0.009 to −0.004) across 2,000 species. Removing the republished
+records hurts the scores slightly less than random removal does.</li>
+<li><strong>The random control falls short.</strong> Many Australian species have too few other records in the country to
+match, so random removal removed only about half as many records (a mean 221 against 446 per species). Restricted to the 1,656
+species where random removal reached at least 90% of C1, the DiD is +0.001 (−0.001 to +0.003).</li>
+<li>With the frozen list it was +0.006 (+0.005 to +0.008), on 1,745 species.</li>
+</ul>
+</li>
+<li><strong>Two databases still exceed 0.02 on their own:</strong><ul>
+<li><strong>TAVA West Africa: DiD +0.128</strong> (+0.097 to +0.163, 56 species). AUROC falls from 0.807 to 0.693 without the
+shared records but is 0.821 after random removal. The West African test plots are themselves in the training data.</li>
+<li><strong>Ukrainian grasslands: DiD +0.050</strong> (+0.037 to +0.064, 326 species).</li>
+<li><strong>Not because removed records turn into pseudo-absences.</strong> In C1 a removed presence can become a background cell
+for that species. A neutral variant keeps those cells out of the background and gives +0.118 (TAVA) and +0.052
+(Ukraine), so the effect is lost information (post hoc).</li>
+<li>The Netherlands: 88% co-located, DiD +0.017 (+0.009 to +0.025). Australia: −0.025, where the random control
+removed half as much.</li>
+</ul>
+</li>
+</ul>
+<h2>In plain terms</h2>
+<p>New benchmarks for species distribution models train on millions of crowd-sourced and museum sightings from GBIF.
+They then test the models on expert vegetation surveys, assuming the two sources are independent. But some of those
+expert surveys are also published inside GBIF, so a model might be tested on places it has, in effect, already seen.</p>
+<p>Our first attempt to find those republished surveys used dataset descriptions and missed the second-largest one:
+Australian state flora databases that carry the same survey plots without saying so. Checking the data directly, by
+looking for the same species list recorded on the same day in the same square kilometre, found them. With them
+counted, about one in six test sightings has a republished survey record next to it.</p>
+<p>We then retrained the benchmark's Random Forest model for 2,000 plant species without the republished records, and
+again without an equal number of other records. Overall, removing the republished surveys makes almost no
+difference. In West Africa, though, the score for the region's species drops sharply, from 0.81 to 0.69, because the
+test plots themselves are in the training data. Ukrainian grasslands show a smaller drop.</p>
+<p>So the benchmark's overall Random Forest scores hold up, but its scores for West African species partly reward
+recalling the training data, and which surveys are republished cannot be read from metadata alone.</p>
+<h2>What was asked</h2>
+<p>The lead (<code>ecology-biodiversity-sdm-provenance-leakage</code>) asked whether provenance leakage inflates SAGE's evaluation.
+SAGE (Arens et al., arXiv 2609.31082) trains on GBIF presence-only records and evaluates on sPlotOpen plots for 5,771
+plant species. It deliberately keeps training records inside evaluation cells, because it treats the two sources as
+independent.</p>
+<p>The lead predicted that removing provenance-shared GBIF datasets would lower source-plot AUROC by at least 0.02 more
+than a matched random removal.</p>
+<p>The lead listed the Czech Vegetation Database among the republications. That GBIF dataset exists but is not in SAGE's
+download, so the 1,143 Czech plots have no provenance-shared training data. Dependence between nearby records is
+known to inflate SDM scores under random cross-validation (Roberts et al. 2017). Cross-source provenance in the
+presence-only-train, presence-absence-test design had not been measured.</p>
+<h2>How it was done</h2>
+<ul>
+<li><strong>Data.</strong><ul>
+<li>SAGE's processed benchmark (Zenodo 21297133): 1 km training targets, predictors, target-group background,
+native-range masks, evaluation targets and plot metadata, with the test split from SAGE's repository.</li>
+<li><strong>GBIF record attributes</strong> come from GBIF's public Parquet snapshot of 2026-02-01, 19 days before SAGE's download.
+SAGE's download itself was served at about 60 KB/s.<ul>
+<li>Filters: the download's taxon keys plus SAGE's basis-of-record and coordinate-uncertainty filters.</li>
+<li>Result: 280.5 million rows. 96.1% of SAGE's 57.1 million training presences (species × 1 km cell) have a
+  matching snapshot record.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Provenance flags</strong> were frozen before any overlap was computed (<code>results/tables/provenance_flags_frozen.csv</code>). The
+  corrected list (<code>provenance_flags.csv</code>) adds every dataset that reproduces at least 20 of a source's single-plot,
+  dated test cells (recall ≥ 0.8, precision ≥ 0.5) in a same-day, same-cell scan (<code>code/republication_scan.py</code>, D4).<ul>
+<li>Registry metadata for all 11,621 datasets in SAGE's download were screened.</li>
+<li>27 core datasets republish 11 sPlotOpen source databases: for example the Dutch Vegetation Database, the West
+African Vegetation Database and the Ukrainian Grassland Database.</li>
+<li>3 broad datasets are aggregators, used as an audit sensitivity only.</li>
+</ul>
+</li>
+<li><strong>Co-location (H2)</strong> is counted from flagged snapshot records in the test cell, as planned; SAGE's own cleaning was
+  not replayed, so this is an upper bound (see the post hoc split under Results).</li>
+<li><strong>Provenance-only presences.</strong> A training presence is provenance-only if every snapshot record of that species in
+  that cell comes from core-flagged datasets.<ul>
+<li>That covers 1,115,257 presences (2.0%): Netherlands 897,332, Poland 130,741, Ukraine 78,169.</li>
+</ul>
+</li>
+<li><strong>Conditions.</strong><ul>
+<li>C0: as distributed.</li>
+<li>C1: provenance-only presences removed.</li>
+<li>C2–C6: five draws removing the same number of other presences of the same species in the same country. 13% of
+the C1 count could not be matched, and the shortfall is reported.</li>
+</ul>
+</li>
+<li><strong>Model.</strong> SAGE's single-species Random Forest baseline, reimplemented from its code:<ul>
+<li>balanced random forest, 1,000 trees, max_features 7, seed 0;</li>
+<li>SAGE's occurrence subsample and 10,000 caps;</li>
+<li>target-group background.</li>
+</ul>
+</li>
+</ul>
+<p>SAGE's per-species tuning and the DeepSDM were not repeated. In the corrected run 14,000 fits were run for 2,000 species: a seeded sample of the 2,833 with at least 10
+  presences and 10 absences on range-masked source test cells, as the plan's 2,000 cap requires. The frozen-list run
+  had 12,215 fits for 1,745 species. Unchanged inputs reuse cached fits (keyed by an input hash), and 2,292 more fits
+  ran for the neutral variant.
+- <strong>Evaluation unit.</strong> The evaluation unit is SAGE's own 1 km evaluation cell. Source cells are test cells with at
+  least one plot from a core-flagged source database (D1).
+- <strong>Coverage (G2):</strong> every fit completed. On non-source cells, 609 fits had an undefined AUROC (one class only) and
+  are dropped from that contrast (<code>results/tables/coverage.json</code>).
+- <strong>Plausibility (G3):</strong> <code>results/plausibility.md</code>, including two species refitted from scratch that reproduce the
+  stored AUROC exactly.</p>
+<h2>Results (<code>results/figures/F1_provenance.png</code>)</h2>
+<figure><a href="results/figures/F1_provenance.png"><img src="results/figures/F1_provenance.png" alt="Provenance"></a><figcaption>Left: SAGE test cells holding plots from sPlotOpen source databases that have a core-flagged GBIF republication; share of their range-masked presences whose species has a core-flagged GBIF record (2026-02-01 snapshot, SAGE&#x27;s basis-of-record and uncertainty filters) in the same EPSG:6933 1 km cell. Right: SAGE&#x27;s Random Forest baseline retrained per species after removing provenance-only training presences (C1) and after five matched random removals (same species and country, C2-C6); mean per-species AUROC difference (random minus provenance) on range-masked source test cells, with species-bootstrap 95% intervals; by source database where at least 50 species qualify, and on non-source test cells as a check.</figcaption></figure>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>analysis</th>
+<th>flag list</th>
+<th>test presences</th>
+<th>H2 share (95%)</th>
+<th>species</th>
+<th>DiD (95%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>corrected (D4)</strong></td>
+<td><strong>frozen + 3 scan-flagged datasets</strong></td>
+<td><strong>268,972</strong></td>
+<td><strong>16.6% (16.0–17.2)</strong></td>
+<td><strong>2,000</strong></td>
+<td><strong>−0.006 (−0.009 to −0.004)</strong></td>
+</tr>
+<tr>
+<td>corrected, random removal ≥ 90% of C1</td>
+<td>same</td>
+<td></td>
+<td></td>
+<td>1,656</td>
+<td>+0.001 (−0.001 to +0.003)</td>
+</tr>
+<tr>
+<td>preregistered</td>
+<td>frozen (registry metadata)</td>
+<td>165,422</td>
+<td>8.3% (7.7–8.9)</td>
+<td>1,745</td>
+<td>+0.006 (+0.005 to +0.008)</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Mean AUROC on source test cells</strong> (corrected): 0.865 as distributed, 0.861 without provenance-shared records,
+  0.855 after matched random removal. On non-source cells the contrast is −0.000 (−0.001 to +0.001).</li>
+<li><strong>Removal counts.</strong> C1 removes 4.3 million training presences (7.5% of all, against 2.0% with the frozen list).
+  The random draws fall 2.0 million short, almost all in Australia.</li>
+<li><strong>Republication signatures</strong> (<code>results/tables/republication_scan.csv</code>, <code>posthoc_same_releve.json</code>). In single-plot
+  cells, same-day records reproduce the plot's species list:<ul>
+<li>NSW BioNet: median recall 0.78, precision 0.59, 664 cells with recall ≥ 0.8 and precision ≥ 0.5.</li>
+<li>SA Flora: median recall 1.00, precision 0.87, 96 cells.</li>
+<li>Denmark: median recall 1.00, precision 0.28, 45 cells.</li>
+<li>Netherlands: median recall 1.00, precision 0.42.</li>
+<li>Coordinates differ: for Australian presences, the nearest flagged record lies a median 370 m from the plot, and
+0.02% lie within 10 m. The preregistered exact-coordinate test cannot see this republication.</li>
+</ul>
+</li>
+<li><strong>By source database</strong> (corrected; DiD with 95% interval, species):</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>source</th>
+<th>H2 share</th>
+<th>DiD</th>
+<th>species</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TAVA West Africa</td>
+<td>87.4%</td>
+<td>+0.128 (+0.097 to +0.163)</td>
+<td>56</td>
+</tr>
+<tr>
+<td>Ukraine</td>
+<td>11.9%</td>
+<td>+0.050 (+0.037 to +0.064)</td>
+<td>326</td>
+</tr>
+<tr>
+<td>Netherlands</td>
+<td>87.8%</td>
+<td>+0.017 (+0.009 to +0.025)</td>
+<td>418</td>
+</tr>
+<tr>
+<td>Australia</td>
+<td>27.1%</td>
+<td>−0.025 (−0.032 to −0.020)</td>
+<td>750</td>
+</tr>
+<tr>
+<td>France (SOPHY)</td>
+<td>0%</td>
+<td>−0.001 (−0.002 to +0.000)</td>
+<td>1,074</td>
+</tr>
+</tbody>
+</table></div>
+<p>The other databases' intervals include zero.</p>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>SAGE's headline Random Forest comparisons are not driven by provenance leakage,</strong> with either flag list.</li>
+<li><strong>The overlap is larger than the metadata showed.</strong> A sixth of test presences share a cell with a republished
+  survey record. A registry-text screen missed the second-largest source, and a data-level scan found it.</li>
+<li><strong>Where the test plots themselves are republished, it is real leakage.</strong> In West Africa the scores depend on it,
+  and the neutral variant shows the cause is the lost information, not induced pseudo-absences.</li>
+<li><strong>Australia's negative DiD is a control artefact.</strong> There the random arm removed half as much, and removing
+  random Australian records hurt more than removing the republished ones. The matched-removal restriction puts the
+  overall DiD at zero.</li>
+<li><strong>Not shown:</strong><ul>
+<li><strong>Other models.</strong> Only SAGE's Random Forest baseline was retrained.</li>
+<li><strong>Republication through datasets the scan cannot see:</strong> relevés filed on another day, in another cell, or with
+changed species names.</li>
+<li><strong>Causation for any single species.</strong></li>
+</ul>
+</li>
+</ul>
+<h2>Process and deviations</h2>
+<ul>
+<li><strong>Preregistration:</strong> <code>plan.md</code>, committed before any overlap or model result. Provenance flags were frozen in a
+  separate commit before the overlap was computed.</li>
+<li><strong>Deviations</strong> (<code>deviations.md</code>):<ul>
+<li>notes: the lead's false Czech claim, and registry pages that returned no metadata;</li>
+<li>D1, before any RF result: cells as the evaluation unit, SAGE's occurrence subsample, background construction,
+random-removal matching with its 13% shortfall, and the exact-coordinate definition;</li>
+<li>D2, before any RF result: the G1 leakage audit and G2 coverage accounting;</li>
+<li>D3, after the results: four labelled post hoc checks (distance to plots, shortfall restriction, co-location
+split by SAGE training presence, same-relevé species lists), the G3 hand traces, and the job-order change in
+<code>rf.py</code>.</li>
+</ul>
+</li>
+<li><strong>Quality gates:</strong> G1–G3, G5 (<code>review/overclaim_check.md</code>) and G6 (<code>results/attribution_ledger.csv</code>). G4 and G7 do
+  not apply, as there is no labelling or classifier validation.</li>
+<li><strong>Independent review:</strong> do not publish in its first form (re-run with corrected provenance flags); the re-run is D4.</li>
+<li><strong>D4, after the review (post hoc):</strong> the republication scan and amended flags, the full re-run (records, audit,
+  removals, 2,000-species retraining), the corrected broad sensitivity, the neutral variant and the refreshed post hoc
+  checks. The frozen-list outputs are kept as <code>results/tables/frozen_flags_*</code>.</li>
+</ul>
+<h2>Reproducing it</h2>
+<ol>
+<li><code>code/registry.py</code>, <code>code/flag_search.py</code> (flags are frozen in <code>results/tables/provenance_flags.csv</code>) and
+   <code>code/species_keys.py</code>.</li>
+<li><code>code/s3_extract.py</code> (GBIF snapshot columns, about 280 million rows) and <code>code/cells.py</code>.</li>
+<li><code>code/audit.py</code> (H2 and the species population).</li>
+<li><code>code/rf.py removals</code>, then <code>code/rf.py fit</code> (12,215 fits, about 11 hours on 24 cores).</li>
+<li><code>code/analyse.py</code> (H1).</li>
+<li><code>code/posthoc_distance.py</code>, <code>code/posthoc_shortfall.py</code>, <code>code/posthoc_h2_training.py</code> and
+   <code>code/posthoc_same_releve.py</code> (post hoc).</li>
+<li><code>code/figures.py</code>, <code>code/handtrace.py</code> and <code>code/handtrace_audit.py</code> (G3).</li>
+</ol>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ecology-biodiversity-sdm-provenance-leakage/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

@@ -1,203 +1,217 @@
 {
- "fits": 12215,
- "reused_fits": 1178,
+ "fits": 14000,
+ "reused_fits": 2086,
  "H1_source_cells": {
-  "species": 1745,
-  "did": 0.00626,
+  "species": 2000,
+  "did": -0.00645,
   "ci": [
-   0.00476,
-   0.00784
+   -0.00903,
+   -0.00402
   ],
-  "drop_C0_minus_C1": 0.00491,
-  "drop_C0_minus_random": -0.00135,
-  "auroc_C0": 0.8542,
-  "auroc_C1": 0.8493,
-  "auroc_random": 0.8556,
-  "species_changed_by_C1": 1533,
+  "drop_C0_minus_C1": 0.00335,
+  "drop_C0_minus_random": 0.0098,
+  "auroc_C0": 0.8645,
+  "auroc_C1": 0.8611,
+  "auroc_random": 0.8546,
+  "species_changed_by_C1": 1997,
   "verdict": "Refuted"
  },
  "other_cells": {
-  "species": 1658,
-  "did": 1e-05,
+  "species": 1230,
+  "did": -0.00013,
   "ci": [
-   -0.00047,
-   0.0005
+   -0.00085,
+   0.00054
   ],
-  "drop_C0_minus_C1": -0.00015,
-  "drop_C0_minus_random": -0.00016,
-  "auroc_C0": 0.8452,
-  "auroc_C1": 0.8454,
-  "auroc_random": 0.8454,
-  "species_changed_by_C1": 1462
+  "drop_C0_minus_C1": -8e-05,
+  "drop_C0_minus_random": 6e-05,
+  "auroc_C0": 0.8466,
+  "auroc_C1": 0.8467,
+  "auroc_random": 0.8466,
+  "species_changed_by_C1": 1225
  },
  "all_cells": {
-  "species": 1745,
-  "did": 0.00153,
+  "species": 2000,
+  "did": -0.00862,
   "ci": [
-   0.00108,
-   0.00204
+   -0.01099,
+   -0.00644
   ],
-  "drop_C0_minus_C1": 0.00095,
-  "drop_C0_minus_random": -0.00058,
-  "auroc_C0": 0.8528,
-  "auroc_C1": 0.8519,
-  "auroc_random": 0.8534,
-  "species_changed_by_C1": 1533
+  "drop_C0_minus_C1": 0.00138,
+  "drop_C0_minus_random": 0.01,
+  "auroc_C0": 0.8651,
+  "auroc_C1": 0.8637,
+  "auroc_random": 0.8551,
+  "species_changed_by_C1": 1997
  },
  "by_source_db": {
-  "Balkan Dry Grassland Database": {
-   "species": 490,
-   "did": 0.00097,
+  "Australia": {
+   "species": 750,
+   "did": -0.02542,
    "ci": [
-    -0.00436,
-    0.00632
+    -0.03166,
+    -0.01968
    ],
-   "drop_C0_minus_C1": 0.00095,
-   "drop_C0_minus_random": -2e-05,
-   "auroc_C0": 0.7099,
-   "auroc_C1": 0.7089,
-   "auroc_random": 0.7099,
-   "species_changed_by_C1": 444
+   "drop_C0_minus_C1": 0.00218,
+   "drop_C0_minus_random": 0.0276,
+   "auroc_C0": 0.884,
+   "auroc_C1": 0.8819,
+   "auroc_random": 0.8564,
+   "species_changed_by_C1": 750
+  },
+  "Balkan Dry Grassland Database": {
+   "species": 365,
+   "did": -0.00458,
+   "ci": [
+    -0.01065,
+    0.00153
+   ],
+   "drop_C0_minus_C1": -0.00313,
+   "drop_C0_minus_random": 0.00145,
+   "auroc_C0": 0.7059,
+   "auroc_C1": 0.709,
+   "auroc_random": 0.7045,
+   "species_changed_by_C1": 352
   },
   "Belgium INBOVEG": {
-   "species": 212,
-   "did": -0.00162,
+   "species": 143,
+   "did": -0.00901,
    "ci": [
-    -0.01863,
-    0.01562
+    -0.02975,
+    0.01176
    ],
-   "drop_C0_minus_C1": 0.01644,
-   "drop_C0_minus_random": 0.01806,
-   "auroc_C0": 0.6276,
-   "auroc_C1": 0.6112,
-   "auroc_random": 0.6096,
-   "species_changed_by_C1": 209
+   "drop_C0_minus_C1": 0.02623,
+   "drop_C0_minus_random": 0.03524,
+   "auroc_C0": 0.6442,
+   "auroc_C1": 0.6179,
+   "auroc_random": 0.6089,
+   "species_changed_by_C1": 142
   },
   "France_sophy": {
-   "species": 1504,
-   "did": -9e-05,
+   "species": 1074,
+   "did": -0.00073,
    "ci": [
-    -0.00089,
-    0.00065
+    -0.00165,
+    0.00021
    ],
-   "drop_C0_minus_C1": -0.00029,
-   "drop_C0_minus_random": -0.0002,
-   "auroc_C0": 0.8608,
-   "auroc_C1": 0.8611,
-   "auroc_random": 0.861,
-   "species_changed_by_C1": 1295
+   "drop_C0_minus_C1": -0.00118,
+   "drop_C0_minus_random": -0.00045,
+   "auroc_C0": 0.8595,
+   "auroc_C1": 0.8607,
+   "auroc_random": 0.8599,
+   "species_changed_by_C1": 1072
   },
   "Germany_vegetweb": {
-   "species": 685,
-   "did": 0.0024,
+   "species": 484,
+   "did": -0.0015,
    "ci": [
-    -0.00205,
-    0.00709
+    -0.00684,
+    0.00389
    ],
-   "drop_C0_minus_C1": -0.00348,
-   "drop_C0_minus_random": -0.00588,
-   "auroc_C0": 0.7699,
-   "auroc_C1": 0.7734,
-   "auroc_random": 0.7758,
-   "species_changed_by_C1": 674
+   "drop_C0_minus_C1": -0.00803,
+   "drop_C0_minus_random": -0.00653,
+   "auroc_C0": 0.7662,
+   "auroc_C1": 0.7743,
+   "auroc_random": 0.7728,
+   "species_changed_by_C1": 476
   },
   "Netherlands": {
-   "species": 578,
-   "did": 0.01599,
+   "species": 418,
+   "did": 0.01662,
    "ci": [
-    0.01007,
-    0.02212
+    0.00881,
+    0.02486
    ],
-   "drop_C0_minus_C1": 0.01086,
-   "drop_C0_minus_random": -0.00513,
-   "auroc_C0": 0.7833,
-   "auroc_C1": 0.7724,
-   "auroc_random": 0.7884,
-   "species_changed_by_C1": 574
+   "drop_C0_minus_C1": 0.0083,
+   "drop_C0_minus_random": -0.00832,
+   "auroc_C0": 0.7836,
+   "auroc_C1": 0.7753,
+   "auroc_random": 0.7919,
+   "species_changed_by_C1": 414
   },
   "Paramo": {
-   "species": 67,
-   "did": 0.00705,
+   "species": 51,
+   "did": 0.00947,
    "ci": [
-    -0.00736,
-    0.02478
+    -0.00358,
+    0.02669
    ],
-   "drop_C0_minus_C1": 0.00742,
-   "drop_C0_minus_random": 0.00037,
-   "auroc_C0": 0.6819,
-   "auroc_C1": 0.6744,
-   "auroc_random": 0.6815,
-   "species_changed_by_C1": 67
+   "drop_C0_minus_C1": 0.00964,
+   "drop_C0_minus_random": 0.00017,
+   "auroc_C0": 0.6868,
+   "auroc_C1": 0.6771,
+   "auroc_random": 0.6866,
+   "species_changed_by_C1": 51
   },
   "Poland": {
-   "species": 822,
-   "did": 0.00572,
+   "species": 597,
+   "did": -0.00373,
    "ci": [
-    0.0001,
-    0.01112
+    -0.01031,
+    0.00307
    ],
-   "drop_C0_minus_C1": 0.00965,
-   "drop_C0_minus_random": 0.00392,
-   "auroc_C0": 0.6911,
-   "auroc_C1": 0.6815,
-   "auroc_random": 0.6872,
-   "species_changed_by_C1": 799
+   "drop_C0_minus_C1": 0.00408,
+   "drop_C0_minus_random": 0.00781,
+   "auroc_C0": 0.6904,
+   "auroc_C1": 0.6863,
+   "auroc_random": 0.6826,
+   "species_changed_by_C1": 586
   },
   "Slovakia_nvd": {
-   "species": 1021,
-   "did": 0.00178,
+   "species": 728,
+   "did": 0.00154,
    "ci": [
-    -0.00042,
-    0.00421
+    -0.0016,
+    0.00503
    ],
-   "drop_C0_minus_C1": 0.0014,
-   "drop_C0_minus_random": -0.00038,
-   "auroc_C0": 0.8017,
-   "auroc_C1": 0.8004,
-   "auroc_random": 0.8021,
-   "species_changed_by_C1": 1016
+   "drop_C0_minus_C1": 0.00144,
+   "drop_C0_minus_random": -0.0001,
+   "auroc_C0": 0.8006,
+   "auroc_C1": 0.7992,
+   "auroc_random": 0.8007,
+   "species_changed_by_C1": 726
   },
   "Spain_sivim_wetlands": {
-   "species": 470,
-   "did": 0.00284,
+   "species": 340,
+   "did": 0.00194,
    "ci": [
-    -0.00138,
-    0.00751
+    -0.00437,
+    0.00854
    ],
-   "drop_C0_minus_C1": 0.00173,
-   "drop_C0_minus_random": -0.00111,
-   "auroc_C0": 0.837,
-   "auroc_C1": 0.8353,
-   "auroc_random": 0.8382,
-   "species_changed_by_C1": 415
+   "drop_C0_minus_C1": 0.0034,
+   "drop_C0_minus_random": 0.00147,
+   "auroc_C0": 0.8364,
+   "auroc_C1": 0.833,
+   "auroc_random": 0.8349,
+   "species_changed_by_C1": 325
   },
   "TAVA West_Africa": {
-   "species": 53,
-   "did": 0.16356,
+   "species": 56,
+   "did": 0.12806,
    "ci": [
-    0.13891,
-    0.19056
+    0.09694,
+    0.16252
    ],
-   "drop_C0_minus_C1": 0.15063,
-   "drop_C0_minus_random": -0.01293,
-   "auroc_C0": 0.8359,
-   "auroc_C1": 0.6853,
-   "auroc_random": 0.8488,
-   "species_changed_by_C1": 53
+   "drop_C0_minus_C1": 0.11397,
+   "drop_C0_minus_random": -0.01409,
+   "auroc_C0": 0.807,
+   "auroc_C1": 0.693,
+   "auroc_random": 0.8211,
+   "species_changed_by_C1": 55
   },
   "Ukraine Grassland Database": {
-   "species": 452,
-   "did": 0.05468,
+   "species": 326,
+   "did": 0.05019,
    "ci": [
-    0.04312,
-    0.06583
+    0.03697,
+    0.0637
    ],
-   "drop_C0_minus_C1": 0.0519,
-   "drop_C0_minus_random": -0.00278,
-   "auroc_C0": 0.742,
-   "auroc_C1": 0.6901,
-   "auroc_random": 0.7448,
-   "species_changed_by_C1": 450
+   "drop_C0_minus_C1": 0.04968,
+   "drop_C0_minus_random": -0.00051,
+   "auroc_C0": 0.7376,
+   "auroc_C1": 0.6879,
+   "auroc_random": 0.7381,
+   "species_changed_by_C1": 323
   }
  }
 }

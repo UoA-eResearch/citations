@@ -1,0 +1,38 @@
+{
+ "TAVA West_Africa": {
+  "standard": {
+   "species": 56,
+   "did": 0.1281,
+   "ci": [
+    0.0945,
+    0.1619
+   ]
+  },
+  "neutral": {
+   "species": 56,
+   "did": 0.1177,
+   "ci": [
+    0.0864,
+    0.15
+   ]
+  }
+ },
+ "Ukraine Grassland Database": {
+  "standard": {
+   "species": 326,
+   "did": 0.0502,
+   "ci": [
+    0.0373,
+    0.0639
+   ]
+  },
+  "neutral": {
+   "species": 326,
+   "did": 0.0518,
+   "ci": [
+    0.0384,
+    0.0661
+   ]
+  }
+ }
+}

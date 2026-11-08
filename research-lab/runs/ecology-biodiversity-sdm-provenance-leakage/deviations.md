@@ -90,3 +90,26 @@ G7 do not apply, as there is no labelling or classifier validation.
   reproduce the stored AUROC exactly. `results/plausibility.md` records this.
 - **Figure:** `code/figures.py` (F1).
 - No preregistered statistic or verdict changed.
+
+## D4 — 2026-11-08 — re-run with corrected provenance flags, after the review (verdict: do not publish; re-run)
+
+Everything here is post hoc. The frozen-list outputs are kept as `results/tables/frozen_flags_*` and
+`provenance_flags_frozen.csv`.
+
+1. **Flags from the data** (review finding 1). New `code/republication_scan.py` is adapted from the reviewer's check.
+   For every single-plot, dated test cell of every source, it compares same-day, same-cell GBIF records with the
+   plot's species list per dataset.
+   - Rule: a dataset republishes a source if at least 20 of that source's cells have recall ≥ 0.8 and
+     precision ≥ 0.5.
+   - It adds NSW BioNet Atlas and SA Flora (core, AU-AU-002) and promotes the Danish Naturdatabase to core. These
+     are exactly the three the reviewer found.
+2. **Re-run.** The steps are cells.py records and support, audit.py, rf.py removals, then fits and analyse.py
+   (`code/run_d4.sh`, `run_d4b.sh`).
+   - The record pass skipped existing outputs, so the stale per-record files were moved aside first.
+   - The per-condition fit results were moved aside too. The input-hash cache stays valid.
+   - `rf.py` now inserts its own directory into the import path, because it runs under `python -I`.
+   - Population: 2,833 eligible species, of which 2,000 were sampled, as the plan caps.
+3. **Broad sensitivity** (review finding 2): source cells from core and broad sources together (15.6%).
+4. **Neutral variant** (review finding 3): `rf.py fit_neutral` (C1n–C6n) for the 382 TAVA and Ukrainian species.
+   Removed presences are also kept out of that species' background. The analysis is in `code/posthoc_neutral.py`.
+5. **Post hoc checks** (shortfall, H2 training, same relevé, distance) were re-run under the corrected flags.

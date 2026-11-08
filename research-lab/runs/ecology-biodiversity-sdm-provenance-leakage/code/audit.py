@@ -109,7 +109,22 @@ def main():
     out["H2"] = {"source_test_cells": len(src_cells), "test_presences": int(len(tp)), "share_with_core_record_same_cell": round(est, 4),
                  "ci": [round(c, 4) for c in ci],
                  "verdict": "Supported" if ci[0] > 0.10 else "Refuted" if ci[1] < 0.10 else "Inconclusive"}
-    out["H2_broad_sensitivity"] = round(float(tp.core_or_broad.mean()), 4)
+    out["H2_broad_sensitivity_first_draft"] = round(float(tp.core_or_broad.mean()), 4)   # same cells: vacuous by construction
+    # D4 (review finding 2): the broad sensitivity defines source cells from core AND broad sources
+    src_b = set(meta[meta.GIVD_ID.isin(core_src | broad_src)].cell_row) & test
+    rows_b = []
+    for c in sorted(src_b):
+        inrange = set(si[cl[c]:cl[c + 1]].tolist())
+        for s_ in eidx[eptr[c]:eptr[c + 1]]:
+            if int(s_) in inrange:
+                rows_b.append((c, int(s_)))
+    tpb = pd.DataFrame(rows_b, columns=["ecell", "sp"]).merge(ec, on="ecell")
+    con.register("tpb", tpb)
+    tpb = con.execute(f"""SELECT tpb.*, coalesce(s.n_core, 0) + coalesce(s.n_broad, 0) AS n_cb
+                          FROM tpb LEFT JOIN read_parquet('{sup}') s ON s.sp = tpb.sp AND s.gx = tpb.gx AND s.gy = tpb.gy""").df()
+    estb, cib = boot_share((tpb.n_cb > 0).astype(int).to_numpy(), np.ones(len(tpb)), tpb.ecell.to_numpy(), rng)
+    out["H2_broad_sensitivity"] = {"source_test_cells": len(src_b), "test_presences": int(len(tpb)),
+                                   "share_with_core_or_broad_record_same_cell": round(estb, 4), "ci": [round(c, 4) for c in cib]}
     # by source database (a cell is assigned to every core source with a plot in it)
     cs = meta[meta.cell_row.isin(src_cells) & meta.GIVD_ID.isin(core_src)][["cell_row", "Dataset"]].drop_duplicates()
     bys = tp.merge(cs, left_on="ecell", right_on="cell_row").groupby("Dataset").agg(presences=("core", "size"), share=("core", "mean"))

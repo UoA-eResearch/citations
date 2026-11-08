@@ -1,4 +1,42 @@
 {
+ "Australia": {
+  "other_days": {
+   "cells": 719,
+   "median_recall": 0.385,
+   "median_precision": 0.206,
+   "share_recall_and_precision_ge_0_8": 0.015,
+   "median_plot_species": 13.0,
+   "median_flagged_species": 20.0
+  },
+  "same_day": {
+   "cells": 2137,
+   "median_recall": 0.789,
+   "median_precision": 0.6,
+   "share_recall_and_precision_ge_0_8": 0.122,
+   "median_plot_species": 11.0,
+   "median_flagged_species": 16.0
+  },
+  "single_plot_dated_cells": 5383
+ },
+ "Denmark": {
+  "other_days": {
+   "cells": 239,
+   "median_recall": 0.882,
+   "median_precision": 0.096,
+   "share_recall_and_precision_ge_0_8": 0.0,
+   "median_plot_species": 14.0,
+   "median_flagged_species": 125.0
+  },
+  "same_day": {
+   "cells": 242,
+   "median_recall": 1.0,
+   "median_precision": 0.281,
+   "share_recall_and_precision_ge_0_8": 0.058,
+   "median_plot_species": 14.0,
+   "median_flagged_species": 49.5
+  },
+  "single_plot_dated_cells": 246
+ },
  "Netherlands": {
   "other_days": {
    "cells": 581,

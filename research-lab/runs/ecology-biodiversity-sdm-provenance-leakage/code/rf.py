@@ -26,6 +26,7 @@ import numpy as np
 import pandas as pd
 
 RUN = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(RUN / "code"))                   # D4: run with python -I, which drops the script's directory
 B, W, T = Path("/mnt/sage/bench"), RUN / "data" / "work", RUN / "results" / "tables"
 (W / "removals").mkdir(parents=True, exist_ok=True)
 (W / "rf").mkdir(parents=True, exist_ok=True)
@@ -151,9 +152,12 @@ def fit_one(args):
     t0 = time.time()
     pres = G["idx"][G["lk"][s]:G["lk"][s + 1]]
     emptied = np.array([], dtype=np.int64)
+    removed = np.array([], dtype=np.int32)
     if cond != "C0":
-        pres = np.setdiff1d(pres, G["rem"][cond].get(s, np.array([], dtype=np.int32)))
-        emptied = G["rem"][cond + "_emptied"]
+        base = cond.rstrip("n")                     # D4: "C1n".."C6n" = neutral variants of C1..C6
+        removed = G["rem"][base].get(s, np.array([], dtype=np.int32))
+        pres = np.setdiff1d(pres, removed)
+        emptied = G["rem"][base + "_emptied"]
     pres = pres[G["sub"][pres]]
     rng = np.random.default_rng(s)
     if len(pres) > CAP:
@@ -165,6 +169,8 @@ def fit_one(args):
     bg = bg[G["sub"][bg]]
     if len(emptied):
         bg = np.setdiff1d(bg, emptied)
+    if cond.endswith("n") and len(removed):
+        bg = np.setdiff1d(bg, removed)              # D4 neutral: a removed presence does not become this species' background
     if len(bg) > BG_CAP:
         bg = np.random.default_rng(1_000_003 + s).choice(bg, BG_CAP, replace=False)
     import hashlib
@@ -212,6 +218,23 @@ def fit(workers=12):
     print("== fit done", len(rows))
 
 
+def fit_neutral(workers=12):
+    """D4: neutral variants C1n..C6n for the species in results/tables/neutral_species.csv."""
+    load()
+    G["n_jobs"] = 2
+    sp = pd.read_csv(T / "neutral_species.csv").sp.tolist()
+    jobs = [(int(s), c + "n") for c in CONDS[1:] for s in sp]
+    done = 0
+    with ProcessPoolExecutor(int(workers)) as ex:
+        for r in ex.map(fit_one, jobs, chunksize=1):
+            done += 1
+            if done % 100 == 0:
+                print(time.strftime("%H:%M:%S"), done, "of", len(jobs), flush=True)
+    rows = [json.loads(f.read_text()) for f in (W / "rf").glob("C*n_*.json")]
+    pd.DataFrame(rows).sort_values(["sp", "cond"]).to_csv(T / "rf_auroc_neutral.csv", index=False)
+    print("== neutral fit done", len(rows))
+
+
 def test(s):
     load()
     G["n_jobs"] = 8
@@ -221,4 +244,4 @@ def test(s):
 
 if __name__ == "__main__":
     a = sys.argv
-    {"removals": removals, "fit": lambda: fit(*(a[2:3] or [12])), "test": lambda: test(a[2])}[a[1]]()
+    {"removals": removals, "fit": lambda: fit(*(a[2:3] or [12])), "fit_neutral": lambda: fit_neutral(*(a[2:3] or [12])), "test": lambda: test(a[2])}[a[1]]()
