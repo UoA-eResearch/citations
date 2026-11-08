@@ -1,4 +1,4 @@
-# Do "flexible-then-rigid" proofs rot faster in mathlib? Replaying 2,500 old proofs a year later: flagged proofs fail more often, but the effect is not reliably 1.5×, and few of their failures carry the errors the linter's rationale predicts
+# Do "flexible-then-rigid" proofs rot faster in mathlib? Replaying 2,500 old proofs a year later: flagged proofs fail more often, mostly because a tactic many of them used lost its default import; the effect is not reliably 1.5×, and few failures carry the errors the linter's rationale predicts
 
 *Mathlib proofs containing a non-terminal unrestricted `simp`, from the 31 March 2025 master snapshot, were replayed
 verbatim into the files of 31 March 2026 wherever the statement text was unchanged, then compiled against that
@@ -16,9 +16,14 @@ analysis code were committed before any replay result.*
     2.39 on 2,723 proofs).
   - The adjustment matters. The unadjusted odds ratio is 2.20, and with an independence working correlation the
     adjusted ratio is 1.70 (1.01 to 2.85).
-- **The direction is consistent in the first year, not in the second pair:**
+- **Two first-year comparisons clear 1.0, but both rest on one import change:**
   - six months later: OR 1.80 (1.12 to 2.90), with 30% against 14% failing;
   - setting aside failures whose only error is an unknown identifier (a removed or renamed name): OR 1.73 (1.07 to 2.77);
+  - **the `induction'` confound** (found at confirmation, post hoc). All 119 population proofs that use `induction'`
+    fail, because Mathlib.Tactic.Common stopped importing it between the snapshots. Flagged proofs use it four times
+    as often (18 of 110 against 101 of 2,378). Excluding them, no comparison clears 1.0: primary 1.43 (0.84 to 2.43),
+    six months 1.57 (0.88 to 2.78), without unknown-identifier failures 1.55 (0.92 to 2.62), pooled 1.27 (0.83 to
+    1.95);
   - the second pair (September 2025 to September 2026): OR 1.03 (0.57 to 1.85). Its flagged proofs are what was left
     after mathlib adopted the linter and rewrote nearly every flagged proof (below), so this is not a replication.
 - **Mathlib had already rewritten almost every flagged proof.**
@@ -30,11 +35,12 @@ analysis code were committed before any replay result.*
 - **How proofs rot** (first reported error of the 667 failing proofs; corrected after review):
   - unknown identifier, a removed or renamed name (32%);
   - type mismatch (11%), unsolved goals (6%), rewrite failed (5%), "function expected" (4%, typically a changed
-    signature), simp made no progress (2%), no goals (1%) and timeouts (4 proofs);
-  - other messages (37%).
+    signature), simp, dsimp or field_simp made no progress (3%), no goals (1%) and timeouts (4 proofs);
+  - other messages (36%). Of these, 118 are "unknown tactic", the `induction'` import change (18 of the 48 flagged
+    failures). Another 47 are "invalid field … environment does not contain", renamed names reached by dot notation.
   - **The linter's own failure modes are rare among flagged failures.** The two classes its rationale predicts are
-    simp making no progress and a rewrite pattern no longer found. They are the first error for 2 of 48 failing
-    flagged proofs (4%), against 47 of 619 unflagged ones (8%). The first draft's patterns missed both classes
+    simp making no progress and a rewrite pattern no longer found. They are the first error for 3 of 48 failing
+    flagged proofs (6%), against 53 of 619 unflagged ones (9%). The first draft's patterns missed both classes
     entirely, because newer Lean writes "`simp` made no progress" and "Did not find an occurrence of the pattern".
 - **The pipeline is valid.** In the old snapshot, 99.94% of population proofs compile without error.
 
@@ -52,7 +58,7 @@ against 26%. After allowing for proof length, the odds of breaking were about on
 close to what was predicted, but the uncertainty is wide enough that we can't confirm it, and a second year-long
 comparison showed no difference.
 
-So the style rule points the right way, but its effect is modest next to the most common reason proofs break: names, usually lemmas, being renamed or removed. And the flagged proofs that broke rarely did so in the way the rule's rationale describes.
+So the extra breakage of flagged proofs is real but mostly comes from one change: a tactic many of them used stopped being imported by default. Without those proofs the difference is small and uncertain, and the flagged proofs that broke rarely did so in the way the rule's rationale describes.
 
 ## What was asked
 
@@ -107,16 +113,17 @@ error messages of each proof.
 
 ## What this does and does not show
 
-- **The style rule points the right way in the first year.** The six-month comparison and the primary analysis without
-  renamed-lemma failures clear a 1.0 lower bound, but the preregistered primary does not. The second pair shows
-  nothing, but its flagged proofs are the residue after mathlib's clean-up. Flagged proofs are rare (4% of the
-  population), which limits power.
+- **The first-year excess is mostly one import change.** The six-month comparison and the primary analysis without
+  renamed-lemma failures clear a 1.0 lower bound only because of the 119 `induction'` proofs, which fail when
+  mathlib stops importing the tactic by default. That is rot under the preregistered definition, but not the simp
+  fragility the linter targets. Without them, no comparison clears 1.0. The second pair has no `induction'` proofs
+  and shows nothing. Flagged proofs are rare (4% of the population), which limits power.
 - **The mechanism is not visible in the errors.** If flagged proofs broke because `simp` changed what it produced,
-  their failures should often be simp making no progress or a rewrite pattern not found. Only 2 of 48 are. Error
+  their failures should often be simp making no progress or a rewrite pattern not found. Only 3 of 48 are. Error
   messages are a coarse proxy, though: a changed simp normal form can also surface as unsolved goals or a type
   mismatch.
-- **Proof rot is dominated by library churn, not tactic style.** Removed or renamed lemmas are the most common
-  identifiable cause. Mathlib's maintainers rewrote about half of the unflagged population, and nearly all flagged
+- **Proof rot is dominated by library churn, not tactic style.** A removed or renamed name is the most
+  common first error. Mathlib's maintainers rewrote about half of the unflagged population, and nearly all flagged
   proofs, within the year.
 - **Not shown:**
   - **Causation.** Flagged proofs may differ in other ways, such as the areas they sit in.

@@ -204,7 +204,7 @@ def label(o):
 
 ERR = [("unknown_identifier", r"unknown (identifier|constant)|unknown namespace"), ("function_expected", r"function expected"),
        ("no_goals", r"no goals( to be (solved|proved))?"),
-       ("simp_no_progress", r"\bsimp(_all)?\b`?\s*made no progress"),                               # D3: "`simp` made no progress"
+       ("simp_no_progress", r"\b(?:dsimp|field_simp|simp_all|simp)\b`?\s*made no progress"),            # D3/D4: incl. dsimp, field_simp
        ("rewrite_failed", r"did not find (an occurrence|instance) of the pattern|motive is not type correct|`?rewrite`? failed"),
        ("type_mismatch", r"type mismatch"), ("unsolved_goals", r"unsolved goals"), ("timeout", r"heartbeats|TIMEOUT|deterministic")]
 

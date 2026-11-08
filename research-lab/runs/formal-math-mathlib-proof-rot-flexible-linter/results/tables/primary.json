@@ -42,23 +42,23 @@
  "primary_unadjusted_or": 2.2,
  "error_classes": {
   "unknown_identifier": 236,
-  "unsolved_goals": 165,
-  "other": 80,
+  "unsolved_goals": 164,
+  "other": 75,
   "type_mismatch": 68,
   "rewrite_failed": 35,
   "function_expected": 30,
+  "simp_no_progress": 29,
   "no_goals": 26,
-  "simp_no_progress": 23,
   "timeout": 4
  },
  "error_classes_first": {
-  "other": 246,
+  "other": 239,
   "unknown_identifier": 216,
   "type_mismatch": 73,
   "unsolved_goals": 40,
   "rewrite_failed": 33,
   "function_expected": 30,
-  "simp_no_progress": 16,
+  "simp_no_progress": 23,
   "no_goals": 9,
   "timeout": 4
  },
@@ -73,24 +73,24 @@
  },
  "error_classes_by_flag_first": {
   "0": {
-   "other": 220,
+   "other": 214,
    "unknown_identifier": 205,
    "type_mismatch": 70,
    "unsolved_goals": 39,
    "rewrite_failed": 32,
    "function_expected": 27,
-   "simp_no_progress": 15,
+   "simp_no_progress": 21,
    "no_goals": 7,
    "timeout": 4
   },
   "1": {
-   "other": 26,
+   "other": 25,
    "unknown_identifier": 11,
    "function_expected": 3,
    "type_mismatch": 3,
    "no_goals": 2,
+   "simp_no_progress": 2,
    "rewrite_failed": 1,
-   "simp_no_progress": 1,
    "unsolved_goals": 1
   }
  },
@@ -164,14 +164,100 @@
   "O2_declarations": 3566
  },
  "secondary_error_classes": {
-  "type_mismatch": 175,
+  "type_mismatch": 173,
   "unknown_identifier": 156,
-  "other": 74,
-  "unsolved_goals": 66,
-  "rewrite_failed": 42,
+  "other": 67,
+  "unsolved_goals": 65,
+  "simp_no_progress": 44,
+  "rewrite_failed": 41,
   "function_expected": 36,
-  "simp_no_progress": 33,
   "no_goals": 32,
   "timeout": 1
- }
+ },
+ "induction_prime": {
+  "primary_proofs": 119,
+  "primary_flagged_using": [
+   18,
+   110
+  ],
+  "primary_unflagged_using": [
+   101,
+   2378
+  ],
+  "fail_rate_among_users": 1.0
+ },
+ "excluding_induction_prime": {
+  "primary": {
+   "or": 1.4291,
+   "ci": [
+    0.8406,
+    2.4297
+   ],
+   "p": 0.18724,
+   "n": 2369,
+   "files": 1171,
+   "fail_flagged": 0.3261,
+   "fail_unflagged": 0.2275,
+   "n_flagged": 92
+  },
+  "six_months": {
+   "or": 1.5669,
+   "ci": [
+    0.884,
+    2.7772
+   ],
+   "p": 0.12407,
+   "n": 2713,
+   "files": 1301,
+   "fail_flagged": 0.1651,
+   "fail_unflagged": 0.0952,
+   "n_flagged": 109
+  },
+  "pooled": {
+   "or": 1.2721,
+   "ci": [
+    0.8282,
+    1.9538
+   ],
+   "p": 0.27165,
+   "n": 5932,
+   "files": 1721,
+   "fail_flagged": 0.2705,
+   "fail_unflagged": 0.193,
+   "n_flagged": 207
+  },
+  "excluding_unknown_identifier_only": {
+   "or": 1.5541,
+   "ci": [
+    0.9214,
+    2.6212
+   ],
+   "p": 0.09829,
+   "n": 2369,
+   "files": 1171,
+   "fail_flagged": 0.3043,
+   "fail_unflagged": 0.1994,
+   "n_flagged": 92
+  },
+  "primary_independence": {
+   "or": 1.4515,
+   "ci": [
+    0.8506,
+    2.4769
+   ],
+   "p": 0.17178,
+   "n": 2369,
+   "files": 1171,
+   "fail_flagged": 0.3261,
+   "fail_unflagged": 0.2275,
+   "n_flagged": 92
+  }
+ },
+ "first_error_unknown_tactic": {
+  "all": 118,
+  "flagged": 18,
+  "failures": 667,
+  "flagged_failures": 48
+ },
+ "first_error_invalid_field_env": 47
 }

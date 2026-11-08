@@ -33,7 +33,7 @@ ax.set_xticks(x); ax.set_xticklabels([g for g, _ in groups], fontsize=8)
 ax.set_ylabel("verbatim replay fails (%)"); ax.set_ylim(0, 60); ax.grid(axis="y", color=GRID, lw=0.5)
 ax.legend(frameon=False, fontsize=7.5, loc="upper left")
 ax = axes[1]
-ec = pd.Series(p["error_classes"]).sort_values()
+ec = pd.Series(p["error_classes_first"]).sort_values()   # D4: first reported error, as labelled
 ax.barh(ec.index.str.replace("_", " "), ec.values, color=GREY)
 ax.set_xlabel("failing primary-pair proofs, by first error class"); ax.grid(axis="x", color=GRID, lw=0.5)
 fig.suptitle("Flagged proofs break more often on replay, but not reliably enough to clear the 1.5× bar", x=0.02, ha="left",

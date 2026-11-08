@@ -56,3 +56,21 @@ are reused.
    post-clean-up.
 6. **Wording (finding 6).** The unadjusted and independence-correlation odds ratios are reported, and the table row
    now reads "whose only error is".
+
+## D4 — 2026-11-09 — fixes after the confirmation pass (verdict: fix first)
+
+1. **The `induction'` confound** (finding N1; post hoc).
+   - All 119 primary-population proofs using `induction'` fail, because Mathlib.Tactic.Common stopped importing
+     Mathlib.Tactic.Cases between the snapshots. This is not simp fragility.
+   - Flagged proofs use it four times as often (18/110 against 101/2,378).
+   - `analyse.py` adds the exclusion as a sensitivity: primary 1.43 (0.84–2.43), six months 1.57 (0.88–2.78), no
+     unknown-identifier-only failures 1.55 (0.92–2.62), independence correlation 1.45 (0.85–2.48), pooled 1.27
+     (0.83–1.95). It also counts the "unknown tactic" first errors (118; 18 flagged) and the "invalid field …
+     environment does not contain" ones (47).
+   - The sentences saying the direction is consistent, or that the rule points the right way, are rewritten.
+2. **The figure's right panel** now plots first-error classes, as its label says.
+3. **dsimp and field_simp.** "dsimp/field_simp made no progress" now count as simp-made-no-progress. The predicted
+   classes are the first error for 3/48 flagged against 53/619 unflagged failures.
+4. **D3's subset statement was not exact.** One primary and two six-month declarations are new under the corrected
+   rule. They have no label or replay and are dropped silently by the inner merge. The numbers are unaffected.
+5. **Wording:** "the most common first error" replaces "the most common identifiable cause".

@@ -93,5 +93,20 @@ if __name__ == "__main__":
         out["pooled"]["note"] = f"{len(shared)} (file, name) declarations appear in both pairs; clustered by file across pairs"
     out["secondary_pair_flagged_post_cleanup"] = {"O2_flagged": int(dS.flag_i.sum()), "O2_declarations": int(len(dS))}
     out["secondary_error_classes"] = dS[dS.fail].eclass.value_counts().to_dict()
+    # D4 (confirmation finding N1, post hoc): proofs using `induction'` all fail because Mathlib.Tactic.Common stopped
+    # importing Mathlib.Tactic.Cases between O and O2 (not simp fragility). Exclusion sensitivity, and the error mix.
+    ind = lambda x: x[~x.body_o.str.contains("induction'", regex=False)]  # noqa: E731
+    out["induction_prime"] = {"primary_proofs": int(d.body_o.str.contains("induction'", regex=False).sum()),
+                              "primary_flagged_using": [int(d[d.flag_i == 1].body_o.str.contains("induction'", regex=False).sum()), int((d.flag_i == 1).sum())],
+                              "primary_unflagged_using": [int(d[d.flag_i == 0].body_o.str.contains("induction'", regex=False).sum()), int((d.flag_i == 0).sum())],
+                              "fail_rate_among_users": round(float(d[d.body_o.str.contains("induction'", regex=False)].fail_i.mean()), 4)}
+    out["excluding_induction_prime"] = {"primary": gee(ind(d)), "six_months": gee(ind(d6)), "pooled": gee(pd.concat([ind(d), ind(dS)])),
+                                        "excluding_unknown_identifier_only": gee(ind(d2), "fail_nounk"),
+                                        "primary_independence": gee(ind(d), cov=sm.cov_struct.Independence())}
+    fm = d[d.fail]
+    out["first_error_unknown_tactic"] = {"all": int(fm.msgs.fillna("").str.split(" \\|\\| ").str[0].str.contains("unknown tactic", case=False).sum()),
+                                         "flagged": int(fm[fm.flag_i == 1].msgs.fillna("").str.split(" \\|\\| ").str[0].str.contains("unknown tactic", case=False).sum()),
+                                         "failures": int(len(fm)), "flagged_failures": int((fm.flag_i == 1).sum())}
+    out["first_error_invalid_field_env"] = int(fm.msgs.fillna("").str.split(" \\|\\| ").str[0].str.contains("environment does not contain", case=False).sum())
     (TAB / "primary.json").write_text(json.dumps(out, indent=1) + "\n")
     print(json.dumps(out, indent=1))

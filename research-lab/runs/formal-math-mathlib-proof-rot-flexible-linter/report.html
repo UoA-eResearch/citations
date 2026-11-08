@@ -77,10 +77,10 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 <div class="page">
 <header class="masthead">
   <div class="eyebrow">Research Lab · Deep dive · Formal mathematics</div>
-  <h1>Do &quot;flexible-then-rigid&quot; proofs rot faster in mathlib? Replaying 2,500 old proofs a year later: flagged proofs fail more often, but the effect is not reliably 1.5×, and few of their failures carry the errors the linter&#x27;s rationale predicts</h1>
+  <h1>Do &quot;flexible-then-rigid&quot; proofs rot faster in mathlib? Replaying 2,500 old proofs a year later: flagged proofs fail more often, mostly because a tactic many of them used lost its default import; the effect is not reliably 1.5×, and few failures carry the errors the linter&#x27;s rationale predicts</h1>
   <p class="subtitle">Mathlib proofs containing a non-terminal unrestricted `simp`, from the 31 March 2025 master snapshot, were replayed verbatim into the files of 31 March 2026 wherever the statement text was unchanged, then compiled against that snapshot&#x27;s prebuilt library. The flexible linter&#x27;s warnings in the old snapshot define &quot;flagged&quot;. The plan and all analysis code were committed before any replay result.</p>
   <div class="meta">
-    <span>Report · 2026-10-25 · under independent review</span>
+    <span>Report · 2026-11-07 · under independent review</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/formal-math-mathlib-proof-rot-flexible-linter/plan.md">Preregistration</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/formal-math-mathlib-proof-rot-flexible-linter/deviations.md">Deviations log</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/formal-math-mathlib-proof-rot-flexible-linter/code">Code</a>
@@ -102,9 +102,14 @@ first draft counted 231 terminal <code>simp</code> calls with a multi-line argum
 adjusted ratio is 1.70 (1.01 to 2.85).</li>
 </ul>
 </li>
-<li><strong>The direction is consistent in the first year, not in the second pair:</strong><ul>
+<li><strong>Two first-year comparisons clear 1.0, but both rest on one import change:</strong><ul>
 <li>six months later: OR 1.80 (1.12 to 2.90), with 30% against 14% failing;</li>
 <li>setting aside failures whose only error is an unknown identifier (a removed or renamed name): OR 1.73 (1.07 to 2.77);</li>
+<li><strong>the <code>induction'</code> confound</strong> (found at confirmation, post hoc). All 119 population proofs that use <code>induction'</code>
+fail, because Mathlib.Tactic.Common stopped importing it between the snapshots. Flagged proofs use it four times
+as often (18 of 110 against 101 of 2,378). Excluding them, no comparison clears 1.0: primary 1.43 (0.84 to 2.43),
+six months 1.57 (0.88 to 2.78), without unknown-identifier failures 1.55 (0.92 to 2.62), pooled 1.27 (0.83 to
+1.95);</li>
 <li>the second pair (September 2025 to September 2026): OR 1.03 (0.57 to 1.85). Its flagged proofs are what was left
 after mathlib adopted the linter and rewrote nearly every flagged proof (below), so this is not a replication.</li>
 </ul>
@@ -120,11 +125,12 @@ construction (such a body is the new file's own). It is withdrawn.</li>
 <li><strong>How proofs rot</strong> (first reported error of the 667 failing proofs; corrected after review):<ul>
 <li>unknown identifier, a removed or renamed name (32%);</li>
 <li>type mismatch (11%), unsolved goals (6%), rewrite failed (5%), "function expected" (4%, typically a changed
-signature), simp made no progress (2%), no goals (1%) and timeouts (4 proofs);</li>
-<li>other messages (37%).</li>
+signature), simp, dsimp or field_simp made no progress (3%), no goals (1%) and timeouts (4 proofs);</li>
+<li>other messages (36%). Of these, 118 are "unknown tactic", the <code>induction'</code> import change (18 of the 48 flagged
+failures). Another 47 are "invalid field … environment does not contain", renamed names reached by dot notation.</li>
 <li><strong>The linter's own failure modes are rare among flagged failures.</strong> The two classes its rationale predicts are
-simp making no progress and a rewrite pattern no longer found. They are the first error for 2 of 48 failing
-flagged proofs (4%), against 47 of 619 unflagged ones (8%). The first draft's patterns missed both classes
+simp making no progress and a rewrite pattern no longer found. They are the first error for 3 of 48 failing
+flagged proofs (6%), against 53 of 619 unflagged ones (9%). The first draft's patterns missed both classes
 entirely, because newer Lean writes "<code>simp</code> made no progress" and "Did not find an occurrence of the pattern".</li>
 </ul>
 </li>
@@ -141,7 +147,7 @@ library wherever the theorem itself was unchanged. Proofs the style check had wa
 against 26%. After allowing for proof length, the odds of breaking were about one and a half times higher. That is
 close to what was predicted, but the uncertainty is wide enough that we can't confirm it, and a second year-long
 comparison showed no difference.</p>
-<p>So the style rule points the right way, but its effect is modest next to the most common reason proofs break: names, usually lemmas, being renamed or removed. And the flagged proofs that broke rarely did so in the way the rule's rationale describes.</p>
+<p>So the extra breakage of flagged proofs is real but mostly comes from one change: a tactic many of them used stopped being imported by default. Without those proofs the difference is small and uncertain, and the flagged proofs that broke rarely did so in the way the rule's rationale describes.</p>
 <h2>What was asked</h2>
 <p>The lead (<code>formal-math-mathlib-proof-rot-flexible-linter</code>) asked whether proofs that mathlib's FlexibleLinter flags
 break more often when replayed in a later library. Its prediction was an odds ratio of at least 1.5.</p>
@@ -226,16 +232,17 @@ function expected 30, no goals 26, simp made no progress 23, timeout 4. The clas
 error messages of each proof.</p>
 <h2>What this does and does not show</h2>
 <ul>
-<li><strong>The style rule points the right way in the first year.</strong> The six-month comparison and the primary analysis without
-  renamed-lemma failures clear a 1.0 lower bound, but the preregistered primary does not. The second pair shows
-  nothing, but its flagged proofs are the residue after mathlib's clean-up. Flagged proofs are rare (4% of the
-  population), which limits power.</li>
+<li><strong>The first-year excess is mostly one import change.</strong> The six-month comparison and the primary analysis without
+  renamed-lemma failures clear a 1.0 lower bound only because of the 119 <code>induction'</code> proofs, which fail when
+  mathlib stops importing the tactic by default. That is rot under the preregistered definition, but not the simp
+  fragility the linter targets. Without them, no comparison clears 1.0. The second pair has no <code>induction'</code> proofs
+  and shows nothing. Flagged proofs are rare (4% of the population), which limits power.</li>
 <li><strong>The mechanism is not visible in the errors.</strong> If flagged proofs broke because <code>simp</code> changed what it produced,
-  their failures should often be simp making no progress or a rewrite pattern not found. Only 2 of 48 are. Error
+  their failures should often be simp making no progress or a rewrite pattern not found. Only 3 of 48 are. Error
   messages are a coarse proxy, though: a changed simp normal form can also surface as unsolved goals or a type
   mismatch.</li>
-<li><strong>Proof rot is dominated by library churn, not tactic style.</strong> Removed or renamed lemmas are the most common
-  identifiable cause. Mathlib's maintainers rewrote about half of the unflagged population, and nearly all flagged
+<li><strong>Proof rot is dominated by library churn, not tactic style.</strong> A removed or renamed name is the most
+  common first error. Mathlib's maintainers rewrote about half of the unflagged population, and nearly all flagged
   proofs, within the year.</li>
 <li><strong>Not shown:</strong><ul>
 <li><strong>Causation.</strong> Flagged proofs may differ in other ways, such as the areas they sit in.</li>
