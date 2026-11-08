@@ -37,8 +37,9 @@ before any entry was parsed. Revised after an independent review (fix first; D2)
   - **188 state a range that starts too early** (183 in "Conjectures from …" blocks), and hold from a median 2.5
     indices later. They are false as written, by a boundary slip.
   - 107 hold only from a later index with no range stated, and 8 g.f.s match with a shifted offset.
-  - 167 carry a parity or residue condition the parser ignores (all but one polynomial closed forms).
-  - **277 are contradicted with no mechanical explanation** (68 recurrences or g.f.s, 209 polynomial closed forms).
+  - 328 carry a parity or residue condition the parser ignores, in the line or in the next formula line. 13 more
+    carry other conditional wording, and 2 are exponential g.f.s (corrected after the confirmation pass).
+  - **101 are contradicted with no mechanical explanation** (61 recurrences or g.f.s, 40 polynomial closed forms).
     They are listed by A-number for editors in `results/tables/contradicted_no_simple_fix.csv`.
   - 29 of the first draft's 776 were parser artefacts and are now consistent.
 
@@ -51,11 +52,11 @@ recorded as "Conjecture" or "Empirical". A guess that fits 40 terms could fail a
 We turned about 21,000 of these guessed formulas into code. Where an entry has a longer list of terms on file (a
 "b-file"), we tested a random sample of about 3,100 guesses against it, a median of 185 terms beyond what the
 guesser saw. Only 3 failed, and the encyclopedia had already noted both of the entries involved. Comparing with
-programs from the LODA project found 14 disagreements; the few we could check were also already known.
+programs from the LODA project found 14 disagreements; the one new to us that we could check (A076217) was also already known.
 
 But the check turned up a different kind of error. Hundreds of the guessed formulas don't even fit the terms printed
-in their own entry. About 300 hold only from a few terms later than stated, a slip in how the
-range was written, and nearly 300 more fail for no obvious reason. Those are listed for the editors.
+in their own entry. 188 state a range that starts a few terms too early and 107 more hold only
+from a later index, slips in how the range was written, and about 100 more fail for no obvious reason. Those are listed for the editors.
 
 So formulas that fit their entry keep fitting far beyond it, and the editors have caught the failures we could
 confirm. The weaker point seems to be how the formulas are written down.
@@ -94,8 +95,9 @@ Prior work proves subsets: Ekhad, Yang and Zeilberger (2017) on Mathar's recurre
   confirmed if the b-file agrees with the data and contradicts the conjecture at or before the disagreement.
 - **Direct b-file test** (`code/bdeep.py`, post hoc). A seeded random sample (seed 20261107) of 1,987 entries with a
   real b-file (a Git-LFS pointer in the repository). Each consistent, unflagged C/G/D conjecture is run against up to
-  1,000 b-file terms. oeis.org returned rate-limit responses at one request per second, so fetching ran at one
-  request every 5 seconds with back-off.
+  1,000 b-file terms. The first ~716 files were fetched at about one request per second until oeis.org returned
+  HTTP 429; fetching then ran at about one request every 3 seconds, and from 16:08 every 5 seconds with back-off.
+  The 164 rate-limited requests were refetched.
 - **Self-contradicted lines** (`code/contradicted_audit.py`). Each is put in one class: stated range too early (holds
   from a start up to 10 indices later), holds from a later index, g.f. offset slip, parity or residue condition, or no
   simple fix.
@@ -112,7 +114,7 @@ Prior work proves subsets: Ekhad, Yang and Zeilberger (2017) on Mathar's recurre
 | … unchecked / 1–4 terms / contradicted | 4,166 / 833 / 370 |
 | screened against LODA (unflagged; working program) | 13,545 |
 | LODA disagrees beyond the data (with / without a b-file) | 14 (1 / 13) |
-| confirmed by the b-file (all already noted in their entries) | 3 lines, 2 entries |
+| confirmed by the b-file (all already noted; 2 of the 3 lines are A267515's [Wrong]-tagged lines, outside the 13,545) | 3 lines, 2 entries |
 | direct b-file test: conjectures (entries) | 3,114 (1,986) |
 | … contradicted by the b-file (already noted) | 3 (2) |
 
@@ -144,13 +146,14 @@ apply to simpler, older, better-studied entries. The direct b-file test does not
 - **OEIS's own editing catches the failures that can be confirmed.** All four failing entries found by either method
   carry an editor's tag or a later note.
 - **The common error is how the formula is written.** 188 conjectured recurrences start their stated range too early,
-  and 277 lines contradict their own data for no mechanical reason. These are false as written, but the plan set
+  and 101 lines contradict their own data for no mechanical reason. These are false as written, but the plan set
   such lines aside as possible typing slips, so they do not count toward H1.
 - **Without a b-file, nothing beyond the data can be confirmed.** The 0.74% LODA disagreement rate there is a
   disagreement between two fits, not an error rate.
 - **Not shown:**
   - **Unparsed conjectures:** closed forms beyond polynomials, sums, inequalities, congruences and asymptotics
-    (14,321 lines), and the 5,000 conjectures that reach fewer than 5 data terms.
+    (14,321 lines), 1,541 lines that raised parse errors, and the 5,000 conjectures that reach fewer than 5 data
+    terms.
   - **Proofs.** The lead's certification arm was not attempted.
   - **Independence of b-files.** A b-file computed from the conjecture itself would agree by construction. No b-file
     header in the sample mentions a formula, but a b-file can be computed from one without saying so.
@@ -164,7 +167,10 @@ apply to simpler, older, better-studied entries. The direct b-file test does not
   - D2, the fixes after the independent review (post hoc): the data-check minimum, the b-file strata, the
     self-contradiction classes, the direct b-file test, the [Wrong] flag, class P, the a(n+k) start, and reporting
     fixes.
-- **Independent review:** fix first (three major findings); the fixes are in D2.
+- **Gate G1 (independence) fails for the b-file stratum:** LODA programs are checked against the b-file, so there
+  they are not a second source. The strata are reported separately for that reason.
+- **Independent review:** fix first (three major findings); fixes in D2; confirmation pass: publish with edits, made
+  in D3.
 
 ## Reproducing it
 

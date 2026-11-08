@@ -5,7 +5,9 @@ finding 3). Each contradicted line is put in one class, tested in this order:
                            indices later (with >= 3 data terms checked): false as written, by a boundary slip
   holds_from_later_index   no start was stated, and the relation holds from a start up to 10 indices later
   gf_offset_slip           a g.f. whose expansion matches the data when shifted by 1-3 places
-  parity_or_residue        the line mentions a parity or residue condition the parser ignores
+  parity_or_residue        the line (or the next %F line) mentions parity or a residue condition the parser ignores
+  egf                      the line (or the next) is about an exponential g.f., which the parser reads as ordinary
+  conditional_wording      the line (or the next) carries conditional wording (if, when, unless, except, for n <)
   no_simple_fix            none of the above: contradicted as written with no mechanical explanation; listed by
                            A-number (public facts, useful to editors) in contradicted_no_simple_fix.csv
 
@@ -25,7 +27,9 @@ sys.path.insert(0, str(RUN / "code"))
 import parse as P  # noqa: E402
 
 TAB, INT = RUN / "results" / "tables", RUN / "data" / "interim"
-PARITY = re.compile(r"\bn (is )?(even|odd)\b|\bfor (even|odd) n\b|\bn ?== ?\d|mod \d", re.I)
+PARITY = re.compile(r"\b(even|odd)\b|\bn ?== ?\d|\bmod\b|\(mod", re.I)          # D3: also "and even", "odd terms" etc.
+CONDITIONAL = re.compile(r"\b(if|when|unless|otherwise|except|provided|whenever)\b|for n ?(<|<=|≤)", re.I)
+EGF = re.compile(r"e\.\s*g\.\s*f|exponential generating", re.I)
 
 
 def later_start(p, terms, off, s0):
@@ -61,7 +65,9 @@ def main():
     for r in bad.itertuples():
         e = P.read_entry(P.SEQ / r.anum[:4] / f"{r.anum}.seq")
         terms, off, p = e["terms"], int(r.offset), json.loads(r.pred)
-        text = e["F"][int(r.line_no)] if int(r.line_no) < len(e["F"]) else ""
+        li = int(r.line_no)
+        text = e["F"][li] if li < len(e["F"]) else ""
+        nxt = e["F"][li + 1] if li + 1 < len(e["F"]) else ""             # D3: conditions often continue on the next %F line
         kind, shift = None, None
         if r.cls != "G":
             order = max([k for k, _ in p["lags"]], default=0)
@@ -74,7 +80,9 @@ def main():
             if shift is not None:
                 kind = "gf_offset_slip"
         if kind is None:
-            kind = "parity_or_residue" if PARITY.search(text) else "no_simple_fix"
+            both = text + " " + nxt
+            kind = ("parity_or_residue" if PARITY.search(both) else "egf" if EGF.search(both)
+                    else "conditional_wording" if CONDITIONAL.search(both) else "no_simple_fix")
         rows.append({"anum": r.anum, "line_no": int(r.line_no), "cls": r.cls, "kind": kind, "shift": shift,
                      "first_mismatch": r.first_mismatch, "nterms": int(r.nterms), "in_block": bool(r.in_block),
                      "flagged_wrong": bool(r.flagged_wrong)})

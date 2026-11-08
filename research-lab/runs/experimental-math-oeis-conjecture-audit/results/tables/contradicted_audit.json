@@ -1,13 +1,22 @@
 {
  "contradicted_lines": 747,
  "by_kind": {
-  "no_simple_fix": 277,
+  "parity_or_residue": 328,
   "stated_range_too_early": 188,
-  "parity_or_residue": 167,
   "holds_from_later_index": 107,
-  "gf_offset_slip": 8
+  "no_simple_fix": 101,
+  "conditional_wording": 13,
+  "gf_offset_slip": 8,
+  "egf": 2
  },
  "by_kind_and_class": {
+  "conditional_wording": {
+   "P": 10,
+   "C": 3
+  },
+  "egf": {
+   "G": 2
+  },
   "gf_offset_slip": {
    "G": 8
   },
@@ -17,14 +26,15 @@
    "P": 2
   },
   "no_simple_fix": {
-   "P": 209,
-   "G": 30,
+   "P": 40,
+   "G": 27,
    "D": 20,
-   "C": 18
+   "C": 14
   },
   "parity_or_residue": {
-   "P": 166,
-   "C": 1
+   "P": 325,
+   "C": 2,
+   "G": 1
   },
   "stated_range_too_early": {
    "C": 188

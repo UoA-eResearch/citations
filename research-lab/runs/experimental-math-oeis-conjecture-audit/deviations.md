@@ -79,3 +79,19 @@ as `data/interim/*_v1.parquet`.
     then backed off and retried, and finally paused 5 s between requests; all 1,987 sampled files were fetched. 3 of
     3,114 conjectures (2 entries, A267514 and A210247) are contradicted by their b-file. Both failures are noted in
     later lines of their entries.
+
+## D3 — 2026-11-09 — edits after the confirmation pass (verdict: publish with edits)
+
+1. **The self-contradiction audit, corrected.** `contradicted_audit.py` now matches parity or residue wording more
+   broadly ("and even", "odd terms", "mod"). It also reads the next %F line, where conditions often continue, and
+   adds classes for conditional wording and exponential g.f.s. New counts: parity or residue 328, conditional 13,
+   e.g.f. 2, no simple fix 101 (61 C/G/D, 40 P), down from 277. `contradicted_no_simple_fix.csv` is regenerated.
+2. **Plain terms:** 188 state a range that starts too early and 107 more hold only from a later index.
+3. **The funnel** notes that 2 of the 3 confirmed lines are A267515's [Wrong]-tagged lines, outside the 13,545
+   screened. "The few we could check" becomes the one, A076217.
+4. **Fetch conduct** is described as it happened: about 1 request per second until HTTP 429, then about 3 s, then
+   5 s with back-off.
+5. **Small items.**
+   - "Not shown" includes the 1,541 parse-error lines.
+   - `primary.json` carries a note on `confirmed_falsifications_new`.
+   - G1 is named as failing for the b-file stratum.

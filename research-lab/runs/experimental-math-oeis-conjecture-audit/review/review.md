@@ -182,3 +182,115 @@ Fix: one sentence and a small table stating these shares; say the rate applies t
 All counts in the report match `primary.json` and `falsifications.csv` (38,637 / 24,168; 22,774 = 15,306 +
 6,466 + 1,002; 21,998 / 776; 14,671 = 7,953 + 5,921 + 797; 15 = 3 + 10 + 2; 13 + 2; 7,221 / 104 / 2; median 26,
 p10 18, p90 46). The numbers are internally consistent; findings 1, 3 and 8 are about what they measure.
+
+
+## Confirmation pass
+
+Reviewer: Fable 5.1, 2026-11-09.
+
+**What I checked.** I read the brief (`review/confirmation_prompt.md`), D2, the revised report and the code
+(`parse.py`, `screen.py`, `bdeep.py`, `contradicted_audit.py`, `analyse.py`). I recomputed the outputs from
+`data/interim/*.parquet`, the cached b-files and the `.seq` files, using `venv/bin/python -I`, read-only, with at most
+4 processes. Check scripts and outputs are in `review/reviewer_checks/`:
+- `confirm_funnel.py/.txt`: the funnel, data-check thresholds, an independent count of terms checked, b-file strata,
+  Wilson intervals, selection shares, a(n+k) starts and flags.
+- `confirm_bdeep.py/.txt`: the sample redrawn from the seed, plus all 3,114 direct b-file comparisons rerun with my
+  own evaluator for C and G.
+- `confirm_contra.py/.txt`: the self-contradicted classes re-derived, with the text of all 277 "no simple fix" lines.
+- `confirm_nsf.py/.txt`: a classification of those 277 by what each line actually says.
+- `confirm_misc.py/.txt`: formulas split across `%F` lines, [Wrong] flags and the first review's hand cases.
+- `confirm_g5sync.py/.txt` and `confirm_gates.txt`: G5 and G6.
+
+The cached b-file timestamps and `meta.jsonl` were used for the fetch-conduct check. oeis.org was not contacted.
+
+**Gates.** G5: `overclaim_check.py --verify` reports "G5 passed (52 rows)". The 52 rows are exactly the sentences of
+the current report.md, and report.html carries the same text. But rows 37 and 49 (and the "What this does and does not
+show" bullet, which G5 does not extract) are Overstated under issue 1 below. G6: `attribution.py check --show` reports
+"G6 passed (7 claims)", and O5's condition is corrected. G1 is not named as failing anywhere, but the report says the
+same thing in substance ("where an entry has a b-file, LODA is not an independent source").
+
+### Final verdict: publish with edits
+
+Every headline number reproduces exactly from the stored outputs:
+- 15,563 consistent conjectures, 4,166 unchecked, 833 with 1–4 terms checked, 370 contradicted;
+- 13,545 screened: 1/11,778 with a b-file and 13/1,767 without, with the same Wilson intervals;
+- 153 tautological agreements;
+- direct b-file test: 3/3,114 on 1,986 entries, median depth 185 terms (p10 105, p90 717), and the scaled estimate of
+  13 (4.4 to 38).
+
+The bdeep sample is the one the seed gives, and my evaluator reproduced all 3,114 comparisons with no difference in
+status or depth. Every confirmed or b-file failure is noted in its entry (I read A076217, A267514, A267515 and
+A210247).
+
+The one substantive problem left is in the self-contradicted section, the area of original finding 3. "277
+contradicted with no mechanical explanation", and the CSV offered to editors, are mostly parser or audit artefacts.
+That needs bounded edits (below). H1, the strata and the b-file test do not change.
+
+**Original findings**
+- **1 (vacuous data checks): fixed.** No line marked "consistent" has fewer than 5 terms checked. "Unchecked" and
+  "few checked" match their definitions, and my independent count of terms checked agrees on all 15,306 C/P lines. No
+  "agree" has 0 terms beyond the data, and only "consistent" lines are screened (16,996 = 16,996).
+- **2 (strata, independence): fixed.** b-file presence recomputed from the LFS pointer paths matches `bfile_bytes`
+  (0 differences). The strata are 1/11,778 and 13/1,767 (7,172 and 1,414 entries), the by-class strata match the
+  table, there are 153 tautological agreements, and O5 is corrected. Minor: G1 is not named, as noted above.
+- **3 (self-contradicted lines): partly fixed.** Fixed:
+  - the one-class-per-line audit (747 = 776 − 29 now consistent);
+  - the vanishing-lead rule;
+  - the 188 boundary slips. All 188 hold from up to 10 indices later with at least 3 terms checked; the first
+    review's 372 index-restricted lines correspond to today's 367 contradicted lines with a stated start: 195 C, of
+    which 188 are slips, plus 172 P lines that fail on a parity condition.
+
+  Not fixed: the "no simple fix" class. Of its 277 lines (`confirm_nsf.txt`):
+  - 158 P lines say "for n>k and even/odd". The audit's PARITY regex (`\bn (is )?(even|odd)\b|...`) misses this
+    wording, so the report's "167 parity or residue" is really about 325.
+  - 29 are Hardin polynomials split over several `%F` lines (for example A184566 "…*n^19" continues "+ (53/…)*n^18");
+    the parser read only the first line.
+  - 22 are conditional or piecewise statements whose condition the parser drops at "if/where/for" (for example
+    A214972 "if n is in A152009", A112283 "if n is 1, a prime …", A345652 "= 0 for only n = 1 and n = 4").
+  - 3 are g.f.s of a subsequence (A052275 "a(2^n) … with g.f.", A391810), and 2 are e.g.f.s read as ordinary g.f.s
+    (A369831 and A369833, "Conjectured e.g.f.").
+
+  That leaves about 63 (14 C, 24 G, 20 D, 5 P) that may be real errors, typos (A110508, A168494, A290443) or offset
+  slips. So about 214 of the 277, and 204 of the 209 polynomial lines, do have a mechanical explanation.
+  `contradicted_no_simple_fix.csv`, offered "for editors", mostly lists statements that are not false.
+- **4 (verdict wording): fixed.** The verdict reads "not supported within this pipeline's coverage", and "highly
+  reliable" is gone.
+- **5 (depth): fixed.** `bdeep.py` used the remaining 1,987 fetches. The sample equals
+  `default_rng(20261107).choice` over the 8,586 entries, all 1,987 files are present, and all results reproduce. On
+  conduct, no two b-file writes were less than 1.2 s apart, so the ≤ 1 request/s limit held. But about 716 files were
+  fetched at about 1 request/s before 164 requests got HTTP 429. Those 429s were logged with no back-off in that
+  version and refetched later. Fetching then ran at about 3.3 s per request, and at 5 s only from 16:08. D2 item 10
+  roughly says this; the report's "fetching ran at one request every 5 seconds with back-off" does not (minor).
+- **6 ([Wrong] tags, A267515): fixed.** Both A267515 lines are flagged, the second one now parses, and both are kept
+  out of H1. A076217's 2025 McEachen note does say Barker's conjectured recurrence fails at powers of 3, so "none is
+  new" holds. Minor: `primary.json` still reports `confirmed_falsifications_new: 1` (A076217) with no note.
+- **7 (a(n+k) start, A301424): fixed.** All 5 parsed a(n+k) lines with a stated start are now consistent (A364470
+  starts at 11), and A301424 is annotated in `falsifications.csv`.
+- **8 (class P): fixed.** There are 1,843 P lines, outside the C/G/D population and reported separately.
+- **9 (selection): fixed.** `selection.csv` reproduces (4.9/14.1%, 6.7/16.1%, 7.7/15.2%, C/G/D 17.5/7.9/7.3%), and
+  the report sentence matches it.
+- **10 (reporting details): fixed.** The LODA and predicted values are stored, the label is renamed, there are 13
+  requests (13 distinct entries in `confirm.parquet`), cached-b-file keys are ints, and the D1 timing is stated.
+
+**Remaining issues (edits required before publishing)**
+1. Rewrite the "277 are contradicted with no mechanical explanation" bullet, the plain-terms "nearly 300 more fail for
+   no obvious reason", and the "What this does and does not show" bullet ("277 lines contradict their own data for no
+   mechanical reason"). Also fix the parity count (167 → about 325). Either:
+   - fix the audit (a PARITY regex that matches "and even/odd", joining continuation `%F` lines, a conditional-word
+     class, e.g.f. exclusion) and regenerate `contradicted_no_simple_fix.csv`; or
+   - state that a text check shows about 214 of the 277 carry parity, conditional, split-line or e.g.f. wording, and
+     restrict the editors' list to the remaining ~63.
+
+   Relabel G5 rows 37 and 49 accordingly.
+2. Plain terms: "About 300 hold only from a few terms later than stated" — 107 of the 295 state no range. Say "188
+   state a range that starts too early and 107 more hold only from a later index".
+3. The funnel row "confirmed by the b-file: 3 lines, 2 entries" sits under the 14 screened disagreements, but 2 of
+   the 3 (A267515) are [Wrong]-flagged lines outside the 13,545. Say so, and say that "the few we could check" is one
+   (A076217).
+4. How it was done: describe the fetch rate as it happened (first about 716 at about 1/s until HTTP 429, then about
+   3 s, then 5 s with back-off).
+5. Small items:
+   - "Not shown" omits the 1,541 lines that raised parse errors;
+   - add a note in `primary.json` (or the report) that `confirmed_falsifications_new: 1` is A076217, which is noted in
+     its entry;
+   - name G1 as failing for the b-file stratum.

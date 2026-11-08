@@ -39,8 +39,8 @@ Fill in every row: backing = the table/figure and number that supports the sente
 | 33 | verdict | **188 state a range that starts too early** (183 in "Conjectures from …" blocks), and hold from a median 2.5 indices later. | contradicted_audit.json stated_range_too_early 188, in_block 183, shift median 2.5 | Supported |  |
 | 34 | verdict | They are false as written, by a boundary slip. | contradicted_audit.json | Supported |  |
 | 35 | verdict | 107 hold only from a later index with no range stated, and 8 g.f.s match with a shifted offset. | contradicted_audit.json holds_from_later_index 107, gf_offset_slip 8 | Supported |  |
-| 36 | verdict | 167 carry a parity or residue condition the parser ignores (all but one polynomial closed forms). | contradicted_audit.json parity_or_residue 167 (P 166) | Supported |  |
-| 37 | verdict | **277 are contradicted with no mechanical explanation** (68 recurrences or g.f.s, 209 polynomial closed forms). | contradicted_audit.json no_simple_fix 277 (P 209) | Supported |  |
+| 36 | verdict | 328 carry a parity or residue condition the parser ignores, in the line or in the next formula line. 13 more carry other conditional wording, and 2 are exponential g.f.s (corrected after the confirmation pass). | contradicted_audit.json (D3) parity_or_residue 328, conditional_wording 13, egf 2 | Supported |  |
+| 37 | verdict | **101 are contradicted with no mechanical explanation** (61 recurrences or g.f.s, 40 polynomial closed forms). | contradicted_audit.json no_simple_fix 101 (P 40, G 27, D 20, C 14) | Supported |  |
 | 38 | verdict | They are listed by A-number for editors in `results/tables/contradicted_no_simple_fix.csv`. | contradicted_no_simple_fix.csv | Supported |  |
 | 39 | verdict | 29 of the first draft's 776 were parser artefacts and are now consistent. | contradicted_audit.json first_draft_contradicted_now consistent 29 | Supported |  |
 | 40 | plain terms | The Online Encyclopedia of Integer Sequences (OEIS) is mathematics' great catalogue of number sequences. | background | Supported |  |
@@ -49,10 +49,9 @@ Fill in every row: backing = the table/figure and number that supports the sente
 | 43 | plain terms | We turned about 21,000 of these guessed formulas into code. | primary.json parsed C/G/D 20,932 | Supported |  |
 | 44 | plain terms | Where an entry has a longer list of terms on file (a "b-file"), we tested a random sample of about 3,100 guesses against it, a median of 185 terms beyond what the guesser saw. | primary.json bdeep | Supported |  |
 | 45 | plain terms | Only 3 failed, and the encyclopedia had already noted both of the entries involved. | bdeep_contradictions.csv; entry text | Supported |  |
-| 46 | plain terms | Comparing with programs from the LODA project found 14 disagreements; the few we could check were also already known. | primary.json screened k 14; confirmed all noted | Supported |  |
+| 46 | plain terms | Comparing with programs from the LODA project found 14 disagreements; the one new to us that we could check (A076217) was also already known. | falsifications.csv A076217 (only untagged confirmed); entry note | Supported |  |
 | 47 | plain terms | But the check turned up a different kind of error. | contradicted_audit.json | Supported |  |
-| 48 | plain terms | Hundreds of the guessed formulas don't even fit the terms printed in their own entry. | contradicted_audit.json 747 | Supported |  |
-| 49 | plain terms | About 300 hold only from a few terms later than stated, a slip in how the range was written, and nearly 300 more fail for no obvious reason. | contradicted_audit.json 188+107; 277 | Supported | softened |
-| 50 | plain terms | Those are listed for the editors. | contradicted_no_simple_fix.csv | Supported |  |
-| 51 | plain terms | So formulas that fit their entry keep fitting far beyond it, and the editors have caught the failures we could confirm. | primary.json bdeep; confirmed all noted | Supported |  |
-| 52 | plain terms | The weaker point seems to be how the formulas are written down. | contradicted_audit.json vs primary.json bdeep (interpretation) | Supported | softened |
+| 48 | plain terms | Hundreds of the guessed formulas don't even fit the terms printed in their own entry. 188 state a range that starts a few terms too early and 107 more hold only from a later index, slips in how the range was written, and about 100 more fail for no obvious reason. | contradicted_audit.json stated_range_too_early 188, holds_from_later_index 107, no_simple_fix 101 | Supported |  |
+| 49 | plain terms | Those are listed for the editors. | contradicted_no_simple_fix.csv | Supported |  |
+| 50 | plain terms | So formulas that fit their entry keep fitting far beyond it, and the editors have caught the failures we could confirm. | primary.json bdeep; confirmed all noted | Supported |  |
+| 51 | plain terms | The weaker point seems to be how the formulas are written down. | contradicted_audit.json vs primary.json bdeep (interpretation) | Supported | softened |

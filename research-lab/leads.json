@@ -1622,7 +1622,12 @@
    ],
    "risks": "The true number of false conjectures may be well under 100 (OEIS editors catch many), turning the headline into a mostly-confirmatory audit - still publishable but lower impact; parsing the free-text Conjecture lines robustly is the main engineering risk; some conjectures reference sequences with no independent program, shrinking the checkable corpus.",
    "requirements_if_out_of_reach": "",
-   "plain_summary": "The Online Encyclopedia of Integer Sequences lists tens of thousands of formulas that computers guessed but nobody proved. This study would automatically check them against many more terms of each sequence, to find which guesses are false and to certify each counterexample."
+   "plain_summary": "The Online Encyclopedia of Integer Sequences lists tens of thousands of formulas that computers guessed but nobody proved. This study would automatically check them against many more terms of each sequence, to find which guesses are false and to certify each counterexample.",
+   "status": "deep dive \u00b7 report (revised after review and confirmation pass)",
+   "report_url": "runs/experimental-math-oeis-conjecture-audit/report.html",
+   "verdict_tag": "Refuted",
+   "verdict_note": "H1 Refuted by the preregistered rule (fewer than 100 confirmed falsifications), read as 'not supported within this pipeline's coverage'. 38,637 OEIS formula lines marked conjecture or empirical were parsed into exact predictors. Against LODA programs, 14 of 13,545 screened conjectures disagree beyond the data (1 of 11,778 on entries with a b-file, 13 of 1,767 without). A direct test on a random 1,987 entries with b-files finds 3 of 3,114 conjectures failing up to a median 185 terms beyond the data, and every confirmed failure was already noted in its entry. But 747 parsed lines contradict their own entry's terms: 188 state a range that starts too early, 328 carry an unparsed parity condition, and 101 fail with no mechanical explanation (listed for editors). Review fix first; confirmation publish with edits.",
+   "headline": "Machine-guessed OEIS formulas that fit their entry keep fitting far beyond it, and the failures were already noted; the common error is how the formulas are written down."
   },
   {
    "id": "experimental-math-txgraffiti-adversarial-audit",

@@ -97,6 +97,8 @@ if __name__ == "__main__":
     out["confirmed_falsifications_new"] = int((~conf.flagged_wrong).sum())
     out["confirmed_new_anums"] = sorted(conf[~conf.flagged_wrong].anum.unique().tolist())
     out["H1_preregistered_rule"] = "Supported" if out["confirmed_falsifications_new"] >= 100 else "Refuted"
+    out["confirmed_falsifications_new_note"] = ("not tagged [Wrong]; A076217's entry carries a later note that the conjectured "
+                                                "recurrence fails at powers of 3, so no confirmed falsification is new")
     fals = F.merge(S[["anum", "line_no", "nterms", "beyond_data_checked", "loda_value", "pred_value", "bfile_bytes"]],
                    on=["anum", "line_no"], how="left")
     fals["has_bfile"] = fals.bfile_bytes.notna()
