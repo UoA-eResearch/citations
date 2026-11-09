@@ -353,3 +353,188 @@ The numbers it offers instead need fixing:
 
 The core conclusion, that this method cannot settle the question, stands. The write-up needs correcting before it
 is published.
+
+## Confirmation pass
+
+Reviewer: Fable 5.1, 2026-11-10.
+
+Scope: the nine items of `review/confirmation_prompt.md` against findings 1–15, D4 (commit 86b244f), the new and
+changed code, the tables, report.md/report.html, the G5 table and the ledger. Everything was recomputed from the
+committed tables and the stored walks (`data/presence`, `data/recheck`, `data/audit`), not taken from D4. Check scripts
+and outputs are in `reviewer_checks/confirm_*` (run as `venv/bin/python -I confirm_N_*.py RUN_DIR`):
+
+| check | what it recomputes |
+|---|---|
+| `confirm_1_strict` | strict H1/H2 under both conventions from `classes.csv` + `classes_strict.csv`; fields of `posthoc_strict.json` |
+| `confirm_2_audit_v1` | first audit re-scored from the seed-rebuilt key, artefact classing, 10/18, 24/25, 14/14 |
+| `confirm_3_audit_d4` | rebuilt audit: draw and order, A/B choice via `classify.in_range_sorted`, final labels, kappa, 19/30, 19/28, 29/30, the 6/3/14/8/13 counts, calibrated shares, extra leak probes |
+| `confirm_4_h2_start` | 2.18 / 1.67 / 1.73 with CIs from the stored walks |
+| `confirm_5_recheck` | `release_recheck.csv` vs `coverage.json`, 217 = 169 + 48, 307/410, 106/193, 25 recheck JSONs vs the stored walks |
+| `confirm_6_small` | fetch.py text, wording, figure titles, html/md consistency, D1/D2, ledger S6–S7, G5 rows, plausibility |
+| `confirm_7_reasons` | L1/L2/adjudicator reasons for 14 packets; quoted fragments found in the fix diffs |
+| `confirm_8_spotfetch` | six registry fetches (b38 A, b30 A, b03 A and B, b43 A, b41 A; saved in `scratch/releases/`) checked against the reasons |
+| `confirm_9_rule` | the two-part scoring rule against "A absent" alone; the three A-absent/B-absent packets |
+
+Limit: the packet directory and key under `/home/ubuntu/.claude/jobs/09561ec0/tmp/` are not readable by this account
+(`/home/ubuntu` is 0750, owner ubuntu). I did not try to get round that. So "the packets carry no pipeline measurement"
+and "a first build was rebuilt before labelling" are checked only at code level (`make_d4` writes `how[f].split("|")[0]`
+to `packet.json`, the counts go to the key; the key published in `g4_audit_d4_labels.json` has no
+`file_selection_detail` or count fields) and from the labellers' reasons, which cite file names, line numbers and code,
+never counts. The labellers' claims about the released code were instead checked against six fresh registry fetches.
+
+### Final verdict: publish with edits
+
+The headline verdicts (H1 and H2 Inconclusive) hold under every reading I tried. All fifteen findings are fixed or
+fixed in substance. Two things need editing before publication: the description of the three "missing from release B"
+cases is wrong (B already contains the fix), and the write-up contradicts itself on the hand-traced advisory.
+
+### Findings 1–15
+
+**Item 1 (finding 1): fixed.** `posthoc_d4.py` computes every strict number. Recomputed independently: convention A
+(non-strict counted as not over-approximated, all 411 in the denominator) gives H1 142/411 = 34.5% (30.1–39.3) and
+H2 1.345 (1.266–1.45); convention B (non-strict and unknown dropped) gives 142/245 = 58.0% (51.7–64.0) and 1.812
+(1.583–2.119). All eight numbers match `posthoc_d4.json` to the last digit. `posthoc_strict.json` now holds only the
+eight fields `posthoc_strict.py` writes; the hand-added fields are gone. report.md pairs 34.5% with 1.35 and gives
+58% / 1.81 as the sensitivity (`confirm_1_strict.txt`).
+
+**Item 2 (finding 2): fixed.** From the seed-rebuilt key and `data/audit`: 10/30 agree, 12 cannot tell, 11 artefacts
+(the same 11 packet ids as `posthoc_d4.json`; 10 with an empty A, a37 by its "unprovided token.py" reason), judgeable
+10/18 (33.7–75.4%), tight 24/25, 1 tight judged absent. The one non-artefact cannot-tell (a23) is a genuine "cannot
+judge" (`confirm_2_audit_v1.txt`). The report states 10/30, 11 of 12, 10/18 and 24/25.
+
+**Item 3 (finding 3): fixed.** All 14 audited strict cases had an empty release A in the first packets (14/14
+recomputed). "No audited strict case was contradicted" is gone; the report calls the strict reading unvalidated.
+
+**Item 4 (finding 4): fixed.** The title carries no number. The calibrated shares recompute: 308/411 × 19/30 = 47.5%
+(34.1–58.5) and × 13/30 = 32.5% (20.5–45.6), reported as 47% (34–59) and 33% (20–46), labelled post hoc, with the two
+assumptions stated. See new finding N1 for a third figure that should sit beside them.
+
+**Item 5 (finding 5, G1, G7): fixed in substance; one edit (N1).**
+- Draw and order: the 60 ids are the first audit's seed-20261107 draw, shuffled with seed 20261110; the key's classes
+  match `classes.csv`.
+- B chosen identically: for all 60 packets A is the first and B the last in-range release by `in_range_sorted`. B
+  coincides with the old first-present release in only 1 of the 30 over-approximated packets, so the B choice no
+  longer encodes the class.
+- Leak probe: the study's two features reproduce (A has no same-name file 68%, A has fewer packet files than B 62%). I
+  added what a labeller can see: A's major version is 0 (57%), A is 0.0.x (50%), B's major is two or more above A's
+  (63%), A has no files at all (53%), A has at most five source files by the recheck's count (60%). Nothing beats the
+  68%, which is legitimate evidence of absence. The medians the labeller cannot see (49 against 14 in-range releases)
+  differ, but version strings carry that weakly. The probe is fair, and the report says blindness was enforced by
+  instruction only.
+- Reasons against labels: I read L1, L2 and the adjudicator for 14 packets (b03, b30, b38, b41, b57, b26, b43, b34,
+  b02, b25, b39, b46, b18, b21). The reasons are specific (file paths, line numbers, the code), the quoted fragments
+  are in the fix diffs, and they support the labels. Six fetches confirm them against the released code: synapse
+  0.33.5 has `self.http_client = hs.get_simple_http_client()` at handlers/federation.py:121,
+  federation_server.py:823 and push/httppusher.py:90 and no blacklisting client (b38, A present); picklescan 0.0.1 has
+  the `"aiohttp.client"` entry and no `InvalidMagicError`, `RelaxedZipFile` or `scan_err=True` (b30, A absent);
+  swift 1.0.2 has no gatekeeper and swift 2.36.4's gatekeeper.py already holds the post-fix
+  `'x-account-(host|device|partition)$'` list (b03); hermes 0.8.1 wraps `load_settings` in `try/except Exception`
+  already (b43, the one tight error); toml 0.0.0 has no source files (b41). The three adjudications read as independent
+  judgements and side once with each labeller and once on B only.
+- Kappa and scoring: raw agreement on A_code 59/60, Cohen's kappa 0.966 (A_code), 0.92 (A_flaw); over the 30
+  over-approximated packets alone 0.915; B_code kappa 0.818 (two disagreements, b03 and b38), which the report does
+  not give. The final labels recompute exactly from L1, L2 and the three adjudications. Rule: confirmed = A absent and
+  B present (or no B); judgeable = neither A nor B "cannot tell". 19/30 (45.5–78.1%), 19/28 (49.3–82.1%), tight 29/30;
+  6 A present, 3 A and B absent, 2 cannot tell (b26: B's dist bundle truncated at 200 KB; b57: A lists build/index.js
+  but the packet carried no A file, so one packet gap remains in the rebuilt audit, correctly excluded), 14 flaw
+  present, 8 code absent with the flaw present, 13 flaw absent, 1 flaw "disagree" (b46) counted as neither
+  (`confirm_3_audit_d4.txt`).
+- The reading of G4: the plan's packet is "the earliest in-range and first-present releases", so agreeing with
+  "over-approximated" means A absent and B present. That is the right reading of the plan. But D4 replaced the
+  first-present release by the last in-range release, and with that B "B present" tests the upper bound, not whether
+  some release has the code. See N1.
+
+**Item 6 (findings 6 and 9): fixed.** "Pipeline-only patterns (not audited)"; "drive the pattern", "regardless of the
+audit", "minority", "defensible", "quarter to a half" and "renamed, rewritten or moved" no longer occur in report.md.
+Figure titles in `figures.py` are "Pipeline flags: ..." and "Pipeline flags (unaudited): ..."; alt texts "Pipeline
+flags" and "Gap". The rendered PNGs clip the titles (N3).
+
+**Item 7 (finding 7): fixed.** From the stored walks: 2.176 (1.931–2.497), 1.670 (1.533–1.843), 1.732 (1.596–1.909),
+identical to `posthoc_d4.json` and the report's 1.67 / 1.73. 141 walks have an s > 0.2 before the cut (140 with
+0.2 < s < 0.8). "Never shown absent" is 4,602 by D4's definition and 4,630 by classify's state (my earlier figure); the
+difference is 28 releases with s ≥ 0.8 but a patch share ≥ 0.5, immaterial (`confirm_4_h2_start.txt`).
+
+**Item 8 (finding 8): fixed.** `release_recheck.csv`: over-approximated deciding release path 106, fallback 153,
+mixed 48, none 1; tight path 87, fallback 16; so 193 path, 169 fallback, 48 mixed, 1 dropped, exactly the new
+`deciding_release_match` stage. Stored s reproduces 307/307 and 411/411; 25 seeded recheck JSONs match the stored walks
+on version and s. Five over-approximations had an empty absent release; GHSA-hvfh-5mj3-5f3j, whose only absent release
+(2.7.1) has no source files, is reclassified; 307/410 = 74.9% (70.5–78.8) and 106/193 = 54.9% (47.9–61.8) recompute.
+In 11 of 308 the deciding absent release is not release A (A undetermined or an empty extraction), which the audit's
+"A absent" construct handles correctly (`confirm_5_recheck.txt`). The reclassification contradicts the hand-trace
+text (N2).
+
+**Item 9 (findings 10–15): fixed, with one wording note.**
+- 10: "51% ... a majority", "selected by packaging", TypeScript sentence present.
+- 11: the restart is in D4 item 8 and in the report's process section.
+- 12: `fetch.py` has no `subprocess` and no `git credential` call; `token()` is
+  `os.environ.get("GITHUB_TOKEN") or None`; the only other D4 change is the docstring. D4 states all 790 diffs came by
+  the public URL. The file was otherwise unchanged since ab54a45.
+- 13: `handtrace.py` picks one seeded-random advisory per class, downloads with plain urllib, matches paths by its
+  own suffix routine, imports neither `presence.py` nor `audit_packets.py` (only `classify.in_range_sorted` for the
+  release order). Hand shares track the pipeline (32/32 vs 1.0; 0.405 vs 0.315; 0.648 vs 0.613). The invariants are
+  asserted in `posthoc_d4.py`. The first, chosen traces are kept. But see N2.
+- 14: the G5 table has 57 rows, all "Supported"; the sentences were rewritten, and the ones I checked are backed
+  (the title, 51–56). It is no longer hollow, though "all Supported" after a rewrite should still be read with that in
+  mind.
+- 15: D1 says committed 18:51, first draft stamped 19:00; D2 says code at 18:54 on 11-07, written up on 11-08. The
+  construct shift is stated in D4 item 7 and the report ("Code versus vulnerability"). "Renamed, rewritten or moved" is
+  gone; the plain-terms "written slightly differently" fits five of the six A-present cases (b38 has the removed line
+  verbatim; the fix touched 43 files, most not yet existing).
+- G6: ledger rows S6 (OpenAlex queries, 2026-11-10) and S7 (Zenodo 10.5281/zenodo.23597710) exist and the report
+  cites S6.
+
+**Title, verdict block, "In plain terms".** The title ("blind audits confirm only part of its flags, so the true share is
+not pinned down") is fair. The verdict block's numbers all reproduce. "Two in three" (19/30), "about half of the rest"
+(6 of 11), "almost every time" (59/60), "about a third of the confirmed cases" (6 of 19 flaw present) are right. "A
+third to a half" is the span of the two calibrated point estimates (33%, 47%) and is fair under the two-part rule; under
+the lower-bound-only reading (N1) it is "a third to three fifths".
+
+### New findings
+
+**N1. Moderate: the three "missing from release B too" cases are releases that already contain the fix, and the report
+describes them wrongly; the lower-bound-only reading should be shown beside the two-part rule.**
+- report.md: "in 3 it is missing from release B too, so the packaged releases never show the code the fix changes",
+  and "a further sixth could not be confirmed (the fixed code missing from release B too, or undecidable)".
+- What the labellers wrote (b03, b25, b39): "B's gatekeeper.py already holds the post-fix inbound_exclusions", "B's
+  auth_helper.py already contains the fixed user_login", "B already escapes limit and offset". Checked for b03: swift
+  2.36.4 has the post-fix list at gatekeeper.py:58 while the advisory's `fixed` is 2.37.2. In all three the pipeline's
+  first-present release exists and shows the code (2.20.0 s = 1.0; 3.8.0 s = 0.867; 2.0.6 s = 1.0), so the packaged
+  releases do show it; the last in-range release is already fixed because the declared upper bound is late.
+- With B switched from the first-present to the last in-range release, "B present" no longer tests "some release has
+  the code" (the plan's second half) but the advisory's upper bound. Counting those three against the pipeline's
+  lower-bound call is therefore a scoring choice, not evidence against the call. On A alone: 23/30 = 76.7%
+  (59.1–88.2), 23/29 judgeable = 79.3% (61.6–90.2); calibrated 57.5% (44–66%). Both are still below the plan's 80%
+  point rule, so H1 stays unreliable and Inconclusive under either reading (`confirm_9_rule.txt`).
+- Fix: correct the two sentences ("in 3 the last in-range release already carries the fix, so the declared upper bound
+  is late; the pipeline's lower-bound call is not contradicted"); give the lower-bound-only figures beside 19/30 and the
+  57% beside 47% and 33%; say that the 80% bar fails under both; adjust "a third to a half" accordingly.
+
+**N2. Minor: the hand-trace write-up says the class of GHSA-hvfh-5mj3-5f3j stands, but it is the one advisory the
+recheck reclassified.** D4 item 10 and `results/plausibility.md` say "A later absent release has files, so the class
+stands (`release_recheck.csv`)". The stored walk has exactly one absent release before the first present one, 2.7.1,
+with zero source files; `release_recheck.csv` gives this id `cls_d4 = undetermined (only empty extractions absent)`,
+and it is the "one" of D4 item 4 and the report's 307 of 410. Fix: correct D4 item 10 and plausibility.md, and say in
+the report that the reclassified advisory is the random hand-trace case.
+
+**N3. Minor: the rendered figure titles are clipped.** F1_share.png ends at "(not confirmed by the" and F2_gap.png at
+"before the tes"; F2's x-axis label is cut at both ends. The "Pipeline flags" qualifier survives, but the audit
+qualifier in F1 does not. Fix: wrap or shorten the suptitles and the F2 x-label.
+
+**N4. Minor: one of the 19 confirmations rests on an empty release.** b41 (toml 0.0.0) has no source files at all; both
+labellers scored "code absent, flaw absent" from the empty listing. By the plan's "absent means source extracted
+successfully", that is unjudgeable; without it 18/27 = 66.7% (the pipeline's class stands via 0.1.0, which has files and
+s = 0.009). Say so, or exclude it; nothing changes.
+
+**N5. Minor: unadjudicated flaw disagreement and an unreported kappa.** The adjudicator was called only for code
+disagreements, so b46's A_flaw disagreement (L1 "cannot tell", L2 "no") is left as "disagree" and counted as neither
+in the 13/30. B_code kappa is 0.818 (two disagreements) and is not reported. State both.
+
+### Remaining issues
+
+- N1: correct the description of the three A-absent/B-absent cases and report the lower-bound-only figures (23/30,
+  23/29; calibrated 57%, 44–66%) beside the two-part rule; both fail the 80% bar.
+- N2: D4 item 10 and plausibility.md contradict release_recheck.csv on GHSA-hvfh-5mj3-5f3j.
+- N3: clipped figure titles and the F2 x-label.
+- N4, N5: one-line disclosures (empty-release confirmation b41; b46 flaw disagreement unadjudicated; B_code kappa).
+- Unverifiable by me: the packet contents themselves (directory unreadable to this account); checked at code level
+  and by six fetches only.

@@ -14,7 +14,7 @@ unreliable.
   Inconclusive.**
   - **Pipeline:** 308 of the 411 classified advisories are over-approximated (75%; Wilson 70.5% to 78.9%), and 103
     are tight. A recheck of the releases each call rests on reclassifies one, whose only absent releases had no
-    source files (307 of 410). Counting every undetermined advisory as not over-approximated gives 38.5% of all 800.
+    source files (307 of 410); it is the advisory drawn at random for the over-approximated hand trace. Counting every undetermined advisory as not over-approximated gives 38.5% of all 800.
   - **The preregistered audit** (one session, 30 over-approximated and 30 tight packets): it confirmed 10 of the 30
     over-approximations, contradicted 8 and could not decide 12. Eleven of those 12 were gaps in the packets, not in
     the pipeline: release A's relevant file had not been included. On the 18 judgeable cases it confirmed 10 (56%;
@@ -23,14 +23,17 @@ unreliable.
     and choose the second release the same way for both groups. Two labellers worked blind in separate sessions and
     agreed with each other on 59 of 60 releases A (kappa 0.97); an adjudicator settled 3 packets. They confirmed 19 of
     the 30 over-approximations (63%; 46% to 78%), or 19 of 28 judgeable (68%; 49% to 82%), and 29 of 30 tight cases.
-    In 6 of the 30 the fixed code is already present in release A; in 3 it is missing from release B too, so the
-    packaged releases never show the code the fix changes.
+    In 6 of the 30 the fixed code is already present in release A. In 3 more, release B already carries the fix (the
+    declared upper bound is late), so the two-part rule cannot confirm them, although nothing contradicts the
+    pipeline's lower-bound call. On release A alone the labellers agree in 23 of 30 (77%; 59% to 88%), or 23 of 29
+    judgeable (79%; 62% to 90%), still below 80%. One confirmation (b41) rests on a release A with no source files at
+    all; without it, 18 of 27 judgeable.
   - **Code versus vulnerability.** In 14 of the 30 over-approximations the labellers found the vulnerability itself
     in release A in some other form. In 8 of those the code the fix changes is absent, so the range is too early
     for the fixed code but not for the flaw.
   - **Audit-calibrated share** (post hoc): applying the rebuilt audit's agreement to all 308 gives 47% of classified
-    advisories (34% to 59%) for the fixed code, and 33% (20% to 46%) if a range only counts as too early when the
-    vulnerability itself was absent. Both assume that the 30 audited cases represent all 308 and that the undetermined
+    advisories (34% to 59%) for the fixed code, 57% (44% to 66%) on release A alone, and 33% (20% to 46%) if a range
+    only counts as too early when the vulnerability itself was absent. Both assume that the 30 audited cases represent all 308 and that the undetermined
     half of the sample behaves like the classified half.
   - **Strict reading** (post hoc): the module the fix touches is missing altogether from release A (no file of the
     same name). That holds for 142 of the 411 (34.5%; 30.1% to 39.3%). It is unvalidated: it cannot see renamed or
@@ -69,12 +72,13 @@ range too early.
 
 We then had the check's calls judged blind, from the code alone. The first audit could confirm only a third of the
 "too early" calls, largely because it had been shown the wrong files. A rebuilt audit, with two independent
-reviewers who agreed with each other almost every time, confirmed about two in three. In about half of the rest the
+reviewers who agreed with each other almost every time, confirmed about two in three, or three in four if only the
+earliest release is judged. In about half of the rest the
 code was already there in the earliest release, written slightly differently, and the check had missed it. That is
 better, but short of the four in five the study required before trusting the check.
 
-So a rough estimate made after the fact puts the share of advisories that start too early at around a third to a
-half of those we could check, with wide uncertainty; the study cannot say more precisely. The answer also depends on what counts: in about a third of the confirmed cases
+So a rough estimate made after the fact puts the share of advisories that start too early at between about a third
+and three fifths of those we could check, with wide uncertainty; the study cannot say more precisely. The answer also depends on what counts: in about a third of the confirmed cases
 the flaw already existed in an older form even though the fixed code did not. A check that follows code through rewrites,
 and a larger audit, are needed before the unnecessary warnings can be counted.
 
@@ -132,12 +136,14 @@ over-approximated lower bounds and a 1.5-fold inflation.
 | pipeline, path-matched deciding releases only (post hoc) | 106 | 193 | 55% (47.9–61.8) | |
 | strict: module missing in release A (post hoc) | 142 | 411 | 34.5% (30.1–39.3) | 1.35 (1.27–1.45) |
 | calibrated by the rebuilt audit, fixed code (post hoc) | | 411 | 47% (34–59) | |
+| calibrated by the rebuilt audit, release A alone (post hoc) | | 411 | 57% (44–66) | |
 | calibrated by the rebuilt audit, vulnerability (post hoc) | | 411 | 33% (20–46) | |
 
 | audit | pipeline over-approximated: confirmed / judgeable / all | tight: confirmed / judgeable |
 |---|---|---|
 | preregistered (one labeller; packets with gaps) | 10 / 18 / 30 | 24 / 25 |
 | rebuilt (two labellers, kappa 0.97, adjudicated; post hoc) | 19 / 28 / 30 | 29 / 30 |
+| rebuilt, release A alone (post hoc) | 23 / 29 / 30 | 29 / 30 |
 
 By ecosystem (pipeline): PyPI 177 of 220 (80%), npm 131 of 191 (69%).
 
@@ -147,8 +153,8 @@ By ecosystem (pipeline): PyPI 177 of 220 (80%), npm 131 of 191 (69%).
 
 - **Line-signature presence is not reliable enough for "absent".** It recognises present code well (29 of 30 tight
   cases confirmed in the rebuilt audit). But in the rebuilt audit a fifth of its over-approximations had the fixed
-  code already in release A, and a further sixth could not be confirmed (the fixed code missing from release B too,
-  or undecidable). Measuring
+  code already in release A. Three more could not be confirmed under the two-part rule because the last release
+  before the fix already carries it (a late upper bound), and two were undecidable. Measuring
   range accuracy at scale needs a matcher that follows code through rewrites and moves.
 - **Two constructs give different answers.** "The code the fix changes was not there" and "the vulnerability was not
   there" disagree in about a quarter of the audited over-approximations. The plan's question is the first; an
@@ -182,9 +188,12 @@ By ecosystem (pipeline): PyPI 177 of 220 (80%), npm 131 of 191 (69%).
   - G4: both audits are reported and both fail the 80% bar; the first audit's "cannot tell" cases are classed.
   - G5: `review/overclaim_check.md`.
   - G6: `results/attribution_ledger.csv`.
-  - G7: the first audit had one labeller. The rebuilt audit has two blind labellers (kappa 0.97 for the fixed code,
-    0.92 for the vulnerability) and an adjudicator. Blindness was enforced by instruction, not by the file system.
-- **Independent review:** fix first; the fixes are in D4.
+  - G7: the first audit had one labeller. The rebuilt audit has two blind labellers (kappa 0.97 for the fixed code in
+    release A, 0.82 in release B, 0.92 for the vulnerability) and an adjudicator, called for disagreements on the code
+    questions only; one vulnerability disagreement (b46) is left unadjudicated and counted as neither. Blindness was
+    enforced by instruction, not by the file system.
+- **Independent review:** fix first; the fixes are in D4. **Confirmation pass:** publish with edits; the edits are in
+  D5.
 
 ## Reproducing it
 

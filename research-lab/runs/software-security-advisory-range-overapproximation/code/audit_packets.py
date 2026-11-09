@@ -281,6 +281,24 @@ def score_d4(outdir, keyfile):
     out["final"]["over"]["flaw_present_in_A"] = int((ovf.A_flaw == "yes").sum())
     out["final"]["over"]["code_absent_but_flaw_present_in_A"] = int(((ovf.A_code == "absent") & (ovf.A_flaw == "yes")).sum())
     out["final"]["H1_reliable_by_plan_rule"] = bool(out["final"]["over"]["share"] >= 0.8)
+    # D5 (confirmation pass N1, N4, N5): with B = the last in-range release, "B present" tests the declared upper bound,
+    # not the plan's "some release has the code", so the lower-bound-only reading (A absent) is reported beside the
+    # two-part rule; packets whose release A has no source files at all; the unadjudicated flaw disagreement; B kappa
+    a_abs = ovf.A_code == "absent"
+    a_jud = ovf.A_code != "cannot tell"
+    nsrc = {r["packet"]: json.loads((Path(outdir) / r["packet"] / "packet.json").read_text())["releases"][0].get("n_source_files")
+            for r in final}
+    empty = [pk for pk in ovf.packet if nsrc.get(pk) == 0]
+    out["final"]["over"]["lower_bound_only"] = {"A_absent": int(a_abs.sum()), "n": int(len(ovf)), "wilson": wil(int(a_abs.sum()), len(ovf)),
+                                                "judgeable": int(a_jud.sum()), "wilson_judgeable": wil(int(a_abs.sum()), int(a_jud.sum())),
+                                                "reliable_by_80pct": bool(a_abs.mean() >= 0.8)}
+    out["final"]["over"]["A_and_B_absent_packets"] = sorted(ovf[(ovf.A_code == "absent") & (ovf.B_code == "absent")].packet)
+    out["final"]["over"]["confirmed_with_empty_release_A"] = sorted(set(empty) & set(ovf[(ovf.A_code == "absent") & (ovf.B_code == "present")].packet))
+    conf_ne = ((ovf.A_code == "absent") & (ovf.B_code == "present") & ~ovf.packet.isin(empty))
+    jud_ne = ((ovf.A_code != "cannot tell") & (ovf.B_code != "cannot tell") & ~ovf.packet.isin(empty))
+    out["final"]["over"]["agree_judgeable_excluding_empty_A"] = f"{int(conf_ne.sum())}/{int(jud_ne.sum())}"
+    out["final"]["over"]["flaw_disagreement_unadjudicated"] = sorted(ovf[ovf.A_flaw == "disagree"].packet)
+    out["kappa_B_code"] = kappa(list(m.B_code_1), list(m.B_code_2))
     # does the packet still encode the class? (G1 probe)
     kk = Kk.copy()
     kk["A_fewer_files_than_B"] = kk.A_files < kk.B_files.fillna(kk.A_files)

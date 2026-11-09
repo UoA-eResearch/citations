@@ -205,6 +205,9 @@ if ga.exists():
                            "range": [round(k / n * w3[0], 3), round(k / n * w3[1], 3)]},
         "flaw_construct_judgeable": {"flaw_absent_in_A": f"{flaw_absent}/{flaw_judge}", "point": round(k / n * flaw_absent / flaw_judge, 3),
                                      "range": [round(k / n * w4[0], 3), round(k / n * w4[1], 3)]},
+        "lower_bound_only": {"A_absent": f"{fo['lower_bound_only']['A_absent']}/{fo['lower_bound_only']['n']}",
+                             "point": round(k / n * fo["lower_bound_only"]["A_absent"] / fo["lower_bound_only"]["n"], 3),
+                             "range": [round(k / n * w, 3) for w in fo["lower_bound_only"]["wilson"]]} if "lower_bound_only" in fo else None,
         "tight_errors": G["final"]["tight"]["says_absent_in_A"], "kappa_A_code": G["kappa_A_code"], "kappa_A_flaw": G["kappa_A_flaw"],
         "assumes": "the audited 30 represent all 308; the undetermined half behaves like the classified half"}
 (T / "posthoc_d4.json").write_text(json.dumps(out, indent=1, default=str) + "\n")

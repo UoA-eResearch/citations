@@ -78,7 +78,33 @@
    "says_present_in_A": 6,
    "cannot_tell": 2,
    "flaw_present_in_A": 14,
-   "code_absent_but_flaw_present_in_A": 8
+   "code_absent_but_flaw_present_in_A": 8,
+   "lower_bound_only": {
+    "A_absent": 23,
+    "n": 30,
+    "wilson": [
+     0.591,
+     0.882
+    ],
+    "judgeable": 29,
+    "wilson_judgeable": [
+     0.616,
+     0.902
+    ],
+    "reliable_by_80pct": false
+   },
+   "A_and_B_absent_packets": [
+    "b03",
+    "b25",
+    "b39"
+   ],
+   "confirmed_with_empty_release_A": [
+    "b41"
+   ],
+   "agree_judgeable_excluding_empty_A": "18/27",
+   "flaw_disagreement_unadjudicated": [
+    "b46"
+   ]
   },
   "tight": {
    "n": 30,
@@ -89,6 +115,7 @@
   },
   "H1_reliable_by_plan_rule": false
  },
+ "kappa_B_code": 0.818,
  "leak_probe": {
   "A_fewer_files_than_B": {
    "over": 0.267,

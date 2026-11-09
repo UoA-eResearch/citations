@@ -9,7 +9,8 @@ whitespace-stripped text:
 - **Over-approximated** (GHSA-hvfh-5mj3-5f3j, chainlit): release A (2.4.0rc0) contains 41% of the lines by hand
   against s = 0.32 (both undetermined); the first absent release (2.7.1) contains none, but its artefact has **no
   source files at all**, the empty-extraction case of the review's finding 8; the first present release (2.11.0)
-  contains 98% (s 0.98). A later absent release with source files exists, so the class stands (`release_recheck.csv`).
+  contains 98% (s 0.98). 2.7.1 is its only absent release, so this is the one advisory the recheck reclassifies
+  undetermined (`release_recheck.csv`).
 - **Undetermined** (GHSA-r4gj-5m52-g5wh, axios): 65% by hand against s = 0.61, between the thresholds.
 
 The first traces (three chosen advisories, using the pipeline's own path matching) are kept as
