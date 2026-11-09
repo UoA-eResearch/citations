@@ -62,7 +62,11 @@ def summarise(graph):
 
 
 def prompts():
-    return [json.loads(l) for l in (RUN / "results" / "tables" / "prompts.jsonl").read_text().splitlines()]
+    """Kept prompts, each with its stable index "i" (D4; the first selection's prompts had none, so i = line number)."""
+    rows = [json.loads(l) for l in (RUN / "results" / "tables" / "prompts.jsonl").read_text().splitlines()]
+    for n, r in enumerate(rows):
+        r.setdefault("i", n)
+    return rows
 
 
 def smoke(set_name):
@@ -85,7 +89,8 @@ def build(set_name, limit=None):
     out.mkdir(parents=True, exist_ok=True)
     m = load(set_name)
     ps = prompts()[: int(limit)] if limit else prompts()
-    for i, p in enumerate(ps):
+    for p in ps:
+        i = p["i"]
         f = out / f"{i:03d}.json"
         if f.exists():
             continue

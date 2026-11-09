@@ -95,6 +95,11 @@ def main():
                    ("Tunisia", "Tunis"), ("Lebanon", "Beirut"), ("Syria", "Damascus"), ("Jordan", "Amman"),
                    ("Saudi Arabia", "Riyadh"), ("Qatar", "Doha"), ("Mongolia", "Ulaanbaatar"), ("Iceland", "Reykjavik")]:
         rows.append(("factual", f"The capital of {c} is", " " + cap))
+    # D4 (bug fix after the independent review, before any result was re-read): Qwen3 tokenises " 7" as " " + "7", so
+    # every arithmetic target's first token was the space (id 220) and the graphs explained predicting a space after
+    # "=". The prompt now ends with that space and the target is the digit, which is exactly the token sequence of the
+    # natural "a + b = c" (digits are always single tokens with no leading space in Qwen3).
+    rows = [(fam, p + " ", t.strip()) if fam == "arithmetic" else (fam, p, t) for fam, p, t in rows]
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with open(OUT, "w") as f:
         for fam, p, t in rows:

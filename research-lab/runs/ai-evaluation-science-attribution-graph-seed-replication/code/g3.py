@@ -1,7 +1,9 @@
 """G3 plausibility (plan section 3). Runs on the guest A100. -> results/tables/g3.json
 (1) For prompt 0 ("The capital of France is" -> " Paris"), set A's top-10 features: the 5 vocabulary tokens their
-decoders promote most (decoder x unembedding). (2) Three prompts from different families traced: top-3 features with
-influence and ablation effect in A, and whether each has a counterpart in B and C."""
+decoders promote most (decoder x unembedding). (2) Three prompts traced: top-3 features with influence and ablation
+effect in A, and whether each has a counterpart in B and C.
+D4 (after the independent review): the three traced prompts are drawn at random (seed 20261110), not the first prompt
+of chosen families; prompts are addressed by their stable index; counterparts come from data/match_d4/."""
 import json
 import sys
 from pathlib import Path
@@ -23,15 +25,15 @@ for f in s["top10"]:
 eff = {tuple(map(int, k.split(","))): v for k, v in json.loads((D / "match" / "effects_A.json").read_text()).items()}
 match = {}
 for Y in ("B", "C"):
-    for line in (D / "match" / f"A_{Y}.jsonl").read_text().splitlines():
+    for line in (D / "match_d4" / f"A_{Y}.jsonl").read_text().splitlines():
         r = json.loads(line)
         match[(Y, r["i"], r["rank"])] = r["counterpart"]
-ps = G.prompts()
+import random
+ps = {p["i"]: p for p in G.prompts()}
 picks = {}
-for fam in ("factual", "ioi", "arithmetic"):
-    i = next(k for k, p in enumerate(ps) if p["family"] == fam)
+for i in sorted(random.Random(20261110).sample(sorted(ps), 3)):
     g = json.loads((D / "graphs" / "A" / f"{i:03d}.json").read_text())
-    picks[fam] = {"prompt": ps[i]["prompt"], "target": ps[i]["target_token"], "n_kept": g["n_kept"], "error_share": g["error_share"],
+    picks[str(i)] = {"family": ps[i]["family"], "prompt": ps[i]["prompt"], "target": ps[i]["target_token"], "n_kept": g["n_kept"], "error_share": g["error_share"],
                   "top3": [{**{k: f[k] for k in ("layer", "pos", "idx", "influence")}, "ablation_effect": eff.get((i, f["layer"], f["pos"], f["idx"])),
                             "counterpart_B": match.get(("B", i, r)), "counterpart_C": match.get(("C", i, r))} for r, f in enumerate(g["top10"][:3])]}
 (RUN / "results" / "tables" / "g3.json").write_text(json.dumps({"capital_prompt_logit_lens": lens, "traced": picks}, indent=1) + "\n")

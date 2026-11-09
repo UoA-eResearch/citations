@@ -1,0 +1,24 @@
+{
+ "candidates": 488,
+ "kept": 212,
+ "drops": {
+  "margin below 2": 140,
+  "top-1 is not the target": 136
+ },
+ "kept_by_family": {
+  "factual": 31,
+  "antonym": 10,
+  "ioi": 18,
+  "induction": 91,
+  "arithmetic": 59,
+  "two_hop": 3
+ },
+ "candidates_by_family": {
+  "factual": 77,
+  "two_hop": 39,
+  "antonym": 60,
+  "ioi": 135,
+  "induction": 105,
+  "arithmetic": 72
+ }
+}

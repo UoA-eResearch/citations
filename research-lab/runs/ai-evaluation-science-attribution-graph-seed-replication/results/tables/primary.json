@@ -1,36 +1,36 @@
 {
- "features_matched": 12720,
- "prompts": 212,
+ "features_matched": 11940,
+ "prompts": 199,
  "H1": {
-  "median_node_replication": 0.5667,
+  "median_node_replication": 0.5833,
   "ci": [
    0.5667,
-   0.5835
+   0.6
   ],
-  "mean": 0.591,
-  "verdict": "Supported"
+  "mean": 0.5874,
+  "verdict": "Inconclusive"
  },
  "H2": {
-  "mean_subspace_replication": 0.9031,
-  "mean_node_replication": 0.591,
-  "mean_paired_difference": 0.312,
+  "mean_subspace_replication": 0.9046,
+  "mean_node_replication": 0.5874,
+  "mean_paired_difference": 0.3172,
   "ci": [
-   0.3025,
-   0.3214
+   0.3077,
+   0.3266
   ],
   "verdict": "Supported"
  },
  "data_order_A_D": {
   "median_node_replication": 0.65,
-  "mean": 0.6349,
-  "mean_subspace": 0.9035,
-  "prompts": 212
+  "mean": 0.5945,
+  "mean_subspace": 0.9048,
+  "prompts": 199
  },
  "public_vs_A": {
-  "median_node_replication": 0.2,
-  "mean": 0.2189,
-  "mean_subspace": 0.6479,
-  "prompts": 212
+  "median_node_replication": 0.3,
+  "mean": 0.2749,
+  "mean_subspace": 0.6508,
+  "prompts": 199
  },
  "by_family": {
   "antonym": {
@@ -38,8 +38,8 @@
    "prompts": 10
   },
   "arithmetic": {
-   "median_node": 0.5,
-   "prompts": 59
+   "median_node": 0.4333,
+   "prompts": 46
   },
   "factual": {
    "median_node": 0.6,
@@ -60,9 +60,9 @@
  },
  "by_layer_depth": {
   "0-6": {
-   "node": 0.3842,
-   "subspace": 0.8367,
-   "features": 7136
+   "node": 0.3812,
+   "subspace": 0.8321,
+   "features": 6374
   },
   "7-13": {
    "node": 1.0,
@@ -71,28 +71,366 @@
   },
   "14-20": {
    "node": 0.8681,
-   "subspace": 0.9876,
+   "subspace": 0.9869,
    "features": 1372
   },
   "21-27": {
-   "node": 0.8506,
+   "node": 0.8083,
    "subspace": 0.9878,
-   "features": 4196
+   "features": 4178
   }
  },
  "by_error_share_tercile": {
-  "low": 0.5509,
-  "mid": 0.575,
-  "high": 0.6472
+  "low": 0.5377,
+  "mid": 0.5779,
+  "high": 0.6467
  },
- "cosine_only_0.6": 0.8,
- "cosine_only_0.7": 0.6833,
- "cosine_only_0.8": 0.5833,
+ "cosine_only_0.6": 0.8167,
+ "cosine_only_0.7": 0.7,
+ "cosine_only_0.8": 0.6,
  "top5_node_replication_median": 0.6,
  "ablation_effect_zero_share": 0.0,
  "A_top10_replicated_in": {
-  "both": 0.4325,
-  "one": 0.192,
-  "none": 0.3755
+  "both": 0.4442,
+  "one": 0.1754,
+  "none": 0.3804
+ },
+ "by_error_share_tercile_note": "row means over top-10 features, not medians per graph",
+ "data_order_paired_A_D_minus_A_BC": {
+  "mean": 0.0334,
+  "ci": [
+   0.0221,
+   0.0455
+  ],
+  "A_D_mean": 0.5653,
+  "A_BC_mean": 0.5319
+ },
+ "posthoc_d4": {
+  "families": {
+   "antonym": 10,
+   "arithmetic": 46,
+   "factual": 31,
+   "induction": 91,
+   "ioi": 18,
+   "two_hop": 3
+  },
+  "H1_without_antonym": {
+   "median": 0.5667,
+   "ci": [
+    0.55,
+    0.6
+   ],
+   "prompts": 189,
+   "verdict": "Inconclusive"
+  },
+  "H1_families_with_ge_15_prompts": {
+   "median": 0.5667,
+   "ci": [
+    0.55,
+    0.5833
+   ],
+   "prompts": 186,
+   "verdict": "Supported",
+   "families": [
+    "arithmetic",
+    "factual",
+    "induction",
+    "ioi"
+   ]
+  },
+  "H1_without_arithmetic": {
+   "median": 0.6333,
+   "ci": [
+    0.6,
+    0.65
+   ],
+   "prompts": 153,
+   "verdict": "Refuted"
+  },
+  "H1_prompts_meeting_margin_with_BOS": {
+   "median": 0.6,
+   "ci": [
+    0.575,
+    0.6333
+   ],
+   "prompts": 142,
+   "verdict": "Inconclusive"
+  },
+  "position_1": {
+   "share_of_top10_rows": 0.4357,
+   "replication_pos1": 0.3695,
+   "replication_other": 0.7557,
+   "H1_without_pos1": {
+    "median": 0.7444,
+    "ci": [
+     0.7242,
+     0.7629
+    ],
+    "prompts": 199,
+    "verdict": "Refuted"
+   },
+   "pos1_layers": {
+    "0": 4510,
+    "1": 260,
+    "2": 432
+   },
+   "share_of_non_replicating_rows_at_pos1": 0.6659,
+   "share_of_top10_by_set": {
+    "A": 0.4693,
+    "B": 0.402,
+    "C": 0.4357,
+    "D": 0.397,
+    "public": 0.0
+   }
+  },
+  "replication_by_layers": {
+   "0-6": 0.3812,
+   "14-27": 0.8231
+  },
+  "recurring_units": {
+   "units_in_ge_20_prompts": 47,
+   "share_of_rows": 0.5508,
+   "distinct_units": 901
+  },
+  "H1_two_way_bootstrap": {
+   "ci": [
+    0.5051,
+    0.6637
+   ],
+   "share_of_replicates_ge_0.6": 0.342,
+   "reps": 1000
+  },
+  "H1_verdict_over_20_bootstrap_seeds": {
+   "Inconclusive": 20
+  },
+  "top_k": {
+   "1": {
+    "median": 0.8333,
+    "ci": [
+     0.6667,
+     0.8333
+    ],
+    "prompts": 199,
+    "verdict": "Refuted"
+   },
+   "3": {
+    "median": 0.6111,
+    "ci": [
+     0.5556,
+     0.6111
+    ],
+    "prompts": 199,
+    "verdict": "Inconclusive"
+   },
+   "5": {
+    "median": 0.6,
+    "ci": [
+     0.5667,
+     0.6
+    ],
+    "prompts": 199,
+    "verdict": "Inconclusive"
+   },
+   "7": {
+    "median": 0.5952,
+    "ci": [
+     0.5714,
+     0.619
+    ],
+    "prompts": 199,
+    "verdict": "Inconclusive"
+   },
+   "10": {
+    "median": 0.5833,
+    "ci": [
+     0.5667,
+     0.6
+    ],
+    "prompts": 199,
+    "verdict": "Inconclusive"
+   }
+  },
+  "threshold_grid": {
+   "cos0.5_mag0.3": {
+    "median": 0.75,
+    "ci": [
+     0.7167,
+     0.75
+    ],
+    "prompts": 199,
+    "verdict": "Refuted"
+   },
+   "cos0.5_mag0.5": {
+    "median": 0.6833,
+    "ci": [
+     0.6667,
+     0.7
+    ],
+    "prompts": 199,
+    "verdict": "Refuted"
+   },
+   "cos0.5_mag0.7": {
+    "median": 0.6167,
+    "ci": [
+     0.6,
+     0.6333
+    ],
+    "prompts": 199,
+    "verdict": "Refuted"
+   },
+   "cos0.6_mag0.3": {
+    "median": 0.6833,
+    "ci": [
+     0.6833,
+     0.7
+    ],
+    "prompts": 199,
+    "verdict": "Refuted"
+   },
+   "cos0.6_mag0.5": {
+    "median": 0.6333,
+    "ci": [
+     0.6167,
+     0.6667
+    ],
+    "prompts": 199,
+    "verdict": "Refuted"
+   },
+   "cos0.6_mag0.7": {
+    "median": 0.5833,
+    "ci": [
+     0.55,
+     0.6
+    ],
+    "prompts": 199,
+    "verdict": "Inconclusive"
+   },
+   "cos0.7_mag0.3": {
+    "median": 0.6167,
+    "ci": [
+     0.6,
+     0.6333
+    ],
+    "prompts": 199,
+    "verdict": "Refuted"
+   },
+   "cos0.7_mag0.5": {
+    "median": 0.5833,
+    "ci": [
+     0.5667,
+     0.6
+    ],
+    "prompts": 199,
+    "verdict": "Inconclusive"
+   },
+   "cos0.7_mag0.7": {
+    "median": 0.5167,
+    "ci": [
+     0.5,
+     0.5333
+    ],
+    "prompts": 199,
+    "verdict": "Supported"
+   },
+   "cos0.8_mag0.3": {
+    "median": 0.55,
+    "ci": [
+     0.5167,
+     0.5833
+    ],
+    "prompts": 199,
+    "verdict": "Supported"
+   },
+   "cos0.8_mag0.5": {
+    "median": 0.5333,
+    "ci": [
+     0.5,
+     0.55
+    ],
+    "prompts": 199,
+    "verdict": "Supported"
+   },
+   "cos0.8_mag0.7": {
+    "median": 0.4833,
+    "ci": [
+     0.4667,
+     0.5
+    ],
+    "prompts": 199,
+    "verdict": "Supported"
+   },
+   "cos0.9_mag0.3": {
+    "median": 0.5,
+    "ci": [
+     0.4833,
+     0.5333
+    ],
+    "prompts": 199,
+    "verdict": "Supported"
+   },
+   "cos0.9_mag0.5": {
+    "median": 0.4833,
+    "ci": [
+     0.4667,
+     0.5167
+    ],
+    "prompts": 199,
+    "verdict": "Supported"
+   },
+   "cos0.9_mag0.7": {
+    "median": 0.45,
+    "ci": [
+     0.4167,
+     0.4833
+    ],
+    "prompts": 199,
+    "verdict": "Supported"
+   }
+  },
+  "invariants_checked": [
+   "counterpart implies active cosine >= 0.7",
+   "subspace norms in [0, 1]",
+   "own effects non-zero",
+   "11940 rows = 199 prompts x 10 x 6"
+  ],
+  "rule_check_cos0.7_mag0.5_equals_stored": true,
+  "by_direction": {
+   "A->B": 0.5,
+   "A->C": 0.6,
+   "B->A": 0.6,
+   "B->C": 0.6,
+   "C->A": 0.7,
+   "C->B": 0.6
+  },
+  "subspace": {
+   "mean_norm": 0.8962,
+   "mean_norm_with_duplicates": 0.8971,
+   "share_ge_0.7": 0.9046,
+   "null_other_family_share_ge_0.7": 0.3729,
+   "null_same_family_share_ge_0.7": 0.6468,
+   "null_other_family_mean_norm": 0.5173,
+   "null_same_family_mean_norm": 0.6955,
+   "paired_minus_other_family_null": {
+    "mean": 0.5317,
+    "ci": [
+     0.5172,
+     0.5466
+    ]
+   },
+   "paired_minus_cosine_only_0.7": {
+    "mean": 0.1861,
+    "ci": [
+     0.1796,
+     0.1936
+    ],
+    "share_of_prompts_positive": 0.995
+   }
+  }
+ },
+ "coverage": {
+  "graphs_ok": 995,
+  "graphs_failed": 0,
+  "match_rows": 19900,
+  "expected_rows": 19900
  }
 }

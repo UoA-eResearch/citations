@@ -4,42 +4,53 @@ Fill in every row: backing = the table/figure and number that supports the sente
 
 | # | where | sentence | backing | label | fix |
 |---|---|---|---|---|---|
-| 1 | title | Do attribution graphs replicate across transcoder seeds? Only about 57% of a graph's top features have a functional counterpart in a retrained transcoder, but 90% of them lie in the span of its top features | primary.json H1 median 0.5667; H2 mean_subspace 0.9031 | Supported |  |
+| 1 | title | Do attribution graphs replicate across transcoder seeds? Close to 60% of a graph's top features have a functional counterpart under a new seed, too close to call; generic first-token features rarely replicate, later-layer features mostly do | primary.json H1 median 0.5833 (0.5667-0.6), Inconclusive; posthoc_d4 position_1 replication_pos1 0.3695; replication_by_layers 14-27 0.8231 | Supported | D4: retitled (was Overstated: 57%/90% mixed median and mean, on the space-token bug) |
 | 2 | standfirst | Four sets of per-layer transcoders were trained on Qwen3-0.6B with one fixed recipe. | train_transcoders.py; plan.md recipe | Supported |  |
 | 3 | standfirst | Three differed only in their initialisation seed and one in data order. | run_sets.sh (A,B,C seeds 0-2; D data-order 1) | Supported |  |
-| 4 | standfirst | Attribution graphs were built with circuit-tracer for 212 prompts in six families under every set. | coverage.json graphs 1060; prompts.jsonl 212 | Supported |  |
+| 4 | standfirst | Attribution graphs were built with circuit-tracer for 199 prompts in six families under every set. | prompts.jsonl 199 rows; coverage.json graphs 995 | Supported | D4 |
 | 5 | standfirst | Each graph's ten most influential features were then matched across sets by layer, position, decoder direction and ablation effect. | match.py | Supported |  |
 | 6 | standfirst | The plan was committed before any transcoder was trained. | git: plan before training | Supported |  |
-| 7 | verdict | **Verdict: H1 Supported; H2 Supported.** | primary.json H1, H2 | Supported |  |
-| 8 | verdict | **H1 (node replication across initialisation seeds is below 0.6): Supported, narrowly.** | primary.json H1 Supported; ci upper 0.5835 | Supported |  |
-| 9 | verdict | Per prompt, the share of the top-10 features with a counterpart in another seed's graph has a median of | primary.json H1 | Supported |  |
-| 10 | verdict | **0.567** (95% family-stratified bootstrap 0.567 to 0.584) over the 6 ordered pairs of A, B and C. | primary.json H1 median 0.5667 ci [0.5667, 0.5835] | Supported |  |
-| 11 | verdict | The mean is 0.591. | primary.json H1 mean 0.591 | Supported |  |
-| 12 | verdict | A counterpart must be active at the same layer and position, with decoder cosine ≥ 0.7, and its zero-ablation must move the target logit the same way by at least half as much. | match.py COS 0.7, FRAC 0.5; D2 | Supported |  |
-| 13 | verdict | Of set A's top-10 features, 43% have counterparts in both other seeds, 19% in one and 38% in neither. | primary.json A_top10_replicated_in | Supported |  |
-| 14 | verdict | **H2 (concepts replicate better than features): Supported.** | primary.json H2 Supported | Supported |  |
-| 15 | verdict | A top feature is subspace-replicated if its decoder lies mostly (norm ≥ 0.7) in the span of the other set's 30 most influential same-layer decoders for that prompt. | match.py SUB 0.7, top30 | Supported |  |
-| 16 | verdict | That holds for **90%** of top features, against 59% node replication. | primary.json H2 mean_subspace 0.9031, node 0.591 | Supported |  |
-| 17 | verdict | The paired difference is **+0.31** (0.30 to 0.32). | primary.json H2 diff 0.312 [0.3025, 0.3214] | Supported |  |
-| 18 | verdict | **Where replication fails.** | section | Supported |  |
-| 19 | verdict | **Early layers.** Layers 0–6 hold 56% of the top features, and only 38% of those replicate as nodes (84% as subspaces). | primary.json by_layer_depth 0-6 7136 of 12720, node 0.3842, subspace 0.8367 | Supported |  |
-| 20 | verdict | In layers 14–27, node replication is 85–87%. | primary.json by_layer_depth 14-20 0.8681, 21-27 0.8506 | Supported |  |
-| 21 | verdict | **Initialisation, more than data order.** Set D shares A's initialisation but sees the data in a different order. | run_sets.sh D | Supported |  |
-| 22 | verdict | A against D gives a median of 0.65, above the 0.57 between different initialisations. | primary.json data_order_A_D 0.65 | Supported |  |
-| 23 | verdict | **A different recipe.** The public low-L0 transcoders against A: median 0.20. | primary.json public_vs_A 0.2 | Supported |  |
-| 24 | verdict | **Matching is sensitive to its thresholds.** On decoder cosine alone, without the ablation condition, the median is 0.80 at a 0.6 cut, 0.68 at 0.7 and 0.58 at 0.8. | primary.json cosine_only_0.6/0.7/0.8 | Supported |  |
-| 25 | verdict | The G4 audit found that activation correlation over held-out text clears 0.7 for more features (27 of 30) than decoder cosine does (20 of 30). | g4.json cosine 20, correlation 27 | Supported |  |
-| 26 | verdict | So decoder-based node replication may understate functional replication. | g4.json (interpretation, hedged) | Supported |  |
-| 27 | verdict | **Fidelity is moderate and reported, not a gate.** Each of our sets explains 76% of MLP-output variance (FVU 0.236). | fidelity.json fvu_mean 0.236 | Supported |  |
-| 28 | verdict | With all 28 MLPs replaced, the model's top-1 prediction matches the true model on 52–54% of held-out tokens (KL 1.2–1.4 per token), near the plan's marker of poor fidelity (0.5). | fidelity.json top1 0.522-0.538, kl 1.21-1.40 | Supported |  |
-| 29 | plain terms | Attribution graphs are a popular way to explain what a language model is doing on a given input. | background (R1, R4) | Supported |  |
-| 30 | plain terms | A smaller, interpretable model called a transcoder stands in for parts of the network, and the graph shows which of its "features" drive the answer. | background (R1) | Supported |  |
-| 31 | plain terms | Researchers read these graphs as evidence for mechanisms, but the transcoder is trained with randomness. | background | Supported |  |
-| 32 | plain terms | Would a second transcoder, trained the same way with a different random seed, tell the same story? | question | Supported |  |
-| 33 | plain terms | We trained four transcoders for a small open model, Qwen3-0.6B, identically except for the random seed or data order. | run_sets.sh | Supported |  |
-| 34 | plain terms | We built graphs for 212 short prompts with each, then checked whether each graph's ten most important features had a match in the others: same place, same direction, and the same effect when switched off. | graphs.py; match.py | Supported |  |
-| 35 | plain terms | Only about 57% did. | primary.json H1 0.567 | Supported |  |
-| 36 | plain terms | But when we asked the looser question, whether the same concept was represented somewhere among the other transcoder's top features, 90% were. | primary.json H2 0.903 | Supported |  |
-| 37 | plain terms | So individual features in an attribution graph should not be read as stable facts about the model; about four in ten would change with a new seed. | primary.json 1 - mean 0.591 | Supported |  |
-| 38 | plain terms | The broader concepts are much more stable. | primary.json H2 | Supported |  |
-| 39 | plain terms | Claims built on single features, especially early in the network, should be checked against retrained transcoders. | primary.json by_layer_depth (recommendation) | Supported |  |
+| 7 | standfirst | Revised after the independent review found that the arithmetic prompts explained the wrong token (D4). | review.md finding 1; deviations D4 item 1 | Supported | D4 |
+| 8 | verdict | **Verdict: H1 Inconclusive; H2 Supported.** | primary.json H1 Inconclusive, H2 Supported | Supported | D4 (was 'H1 Supported', Overstated) |
+| 9 | verdict | **H1 (node replication across initialisation seeds is below 0.6): Inconclusive.** | primary.json H1 | Supported | D4 |
+| 10 | verdict | Per prompt, the share of the top-10 features with a counterpart in another seed's graph has a median of | primary.json H1 | Supported |  |
+| 11 | verdict | **0.583** (95% family-stratified bootstrap 0.567 to 0.600) over the 6 ordered pairs of A, B and C; the mean is 0.587. | primary.json H1 median 0.5833, ci 0.5667-0.6, mean 0.5874 | Supported | D4 |
+| 12 | verdict | The upper bound reaches 0.6, so the rule gives Inconclusive (under 20 other bootstrap seeds as well). | primary.json posthoc_d4 H1_verdict_over_20_bootstrap_seeds Inconclusive 20 | Supported | D4 |
+| 13 | verdict | A counterpart must be active at the same layer and position, with decoder cosine ≥ 0.7, and its zero-ablation must move the target logit the same way by at least half as much. | match.py COS 0.7, FRAC 0.5; D2 | Supported |  |
+| 14 | verdict | **The first draft said Supported (0.567) on a bug.** All 59 arithmetic prompts attributed the space before the answer, because Qwen3 splits " 7" into " " and "7". | primary_v1_pre_d4.json H1 0.5667; prompts_v1.jsonl arithmetic target_id 220 (59/59) | Supported | D4 |
+| 15 | verdict | With the answer digit as target (46 prompts pass selection), arithmetic still replicates least (median 0.43). | prompt_selection.json kept_by_family arithmetic 46; primary.json by_family arithmetic 0.4333 | Supported | D4 |
+| 16 | verdict | **The verdict turns on choices the plan fixed** (post hoc): without arithmetic, Refuted (0.633); families with at least 15 prompts only, Supported (0.567); top-1 features only, Refuted; cosine 0.8 or magnitude 70%, Supported; cosine 0.6 or magnitude 30%, Refuted. | primary.json posthoc_d4 H1_without_arithmetic 0.6333 Refuted; H1_families_with_ge_15_prompts 0.5667 Supported; top_k 1 Refuted; threshold_grid cos0.8_mag0.5 / cos0.7_mag0.7 Supported, cos0.6_mag0.5 / cos0.7_mag0.3 Refuted | Supported | D4 (review findings 1 and 3) |
+| 17 | verdict | A bootstrap that also resamples features, which recur across prompts, gives 0.51 to 0.66. | primary.json posthoc_d4 H1_two_way_bootstrap ci 0.5051-0.6637 | Supported | D4 (review finding 2) |
+| 18 | verdict | **What drives non-replication: generic first-token features** (post hoc). | primary.json posthoc_d4 position_1 | Supported | D4 |
+| 19 | verdict | 44% of all top-10 entries sit at position 1, the first token after the BOS token, all in layers 0–2 (87% in layer 0). | posthoc_d4 position_1 share_of_top10_rows 0.4357; pos1_layers 0: 4510, 1: 260, 2: 432 | Supported | D4 |
+| 20 | verdict | Top features recur across prompts: 47 feature directions (a set's feature) appear in the top ten of at least 20 prompts and make up 55% of the rows. | posthoc_d4 recurring_units units_in_ge_20_prompts 47, share_of_rows 0.5508 | Supported | D4 |
+| 21 | verdict | They replicate at 0.37. | posthoc_d4 position_1 replication_pos1 0.3695 | Supported | D4 |
+| 22 | verdict | All other top features replicate at 0.76, and without position-1 features the median per prompt is 0.74. | posthoc_d4 position_1 replication_other 0.7557; H1_without_pos1 median 0.7444 | Supported | D4 |
+| 23 | verdict | In layers 14–27, node replication is 0.82. | posthoc_d4 replication_by_layers 14-27 0.8231 | Supported | D4 (was 85-87% on the first draft's rows) |
+| 24 | verdict | The public low-L0 transcoders put none of their top features at position 1, against 40–47% for our four sets. | posthoc_d4 position_1 share_of_top10_by_set public 0.0, A-D 0.397-0.469 | Supported | D4 (review finding 2) |
+| 25 | verdict | Our sets reconstruct the first token after BOS about as well as later tokens (normalised error in layers 0–2: 0.33–0.35 against 0.35–0.36), while the public set reconstructs it poorly (0.66 against 0.38), so its first-token signal goes to error nodes rather than features. | fidelity_d4.json prompt_error_layers_0_2 A-D pos1 0.328-0.353 vs pos2plus 0.353-0.359; public 0.664 vs 0.381 | Supported | D4 |
+| 26 | verdict | That is a likely reason for the contrast, not a tested one. | interpretation, stated as untested | Supported | D4 |
+| 27 | verdict | **H2 (top features lie in the span of the other set's top same-layer decoders more often than they have a counterpart): Supported.** | primary.json H2 Supported | Supported | D4: rephrased without 'concepts' (was Partially supported) |
+| 28 | verdict | A top feature is subspace-replicated if its unit decoder has norm ≥ 0.7 in the span of the other set's 30 most influential same-layer decoders for that prompt. | match.py (deduplicated top-30, D4) | Supported | D4 |
+| 29 | verdict | That holds for **90%** of top features, against 59% node replication; the paired difference is **+0.32** (0.31 to 0.33). | primary.json H2 mean_subspace 0.9046, mean_node 0.5874, diff 0.3172 (0.3077-0.3266) | Supported | D4 |
+| 30 | verdict | **The criterion is permissive** (post hoc nulls): the span of another prompt's top-30 catches 37% of features when the prompt is from a different family and 65% when it is from the same family. | posthoc_d4 subspace null_other_family_share_ge_0.7 0.3729, null_same_family 0.6468 | Supported | D4 (review finding 5) |
+| 31 | verdict | Subspace replication exceeds the different-family null by 0.53 (0.52 to 0.55) and cosine-only node replication by 0.19. | posthoc_d4 subspace paired_minus_other_family_null 0.5317 (0.5172-0.5466); paired_minus_cosine_only_0.7 0.1861 | Supported | D4 |
+| 32 | verdict | It shows shared directions, not that the same concept is used. | interpretation of the nulls | Supported | D4 |
+| 33 | verdict | **Initialisation matters a little more than data order.** Set D shares A's initialisation but sees the data in a different order. | primary.json data_order_paired_A_D_minus_A_BC | Supported | D4 |
+| 34 | verdict | On the same set-A top features, D supplies a counterpart 3.3 points more often than B or C (paired +0.033, 0.022 to 0.046). | primary.json data_order_paired_A_D_minus_A_BC mean 0.0334 (0.0221-0.0455) | Supported | D4: paired, like for like (was 0.65 vs 0.57 unpaired, Partially supported) |
+| 35 | verdict | The public low-L0 set against A: median 0.30. | primary.json public_vs_A median 0.3 | Supported | D4 |
+| 36 | verdict | **Fidelity.** Each of our sets explains 76% of MLP-output variance (FVU 0.24). | fidelity_d4.json fvu_mean 0.2386-0.2391 | Supported |  |
+| 37 | verdict | With every MLP output replaced except at position 0, which circuit-tracer also leaves alone, the replacement model's top-1 prediction matches the true model on 58% of held-out tokens (KL 0.83 per token); replacing position 0 as well, as the first draft did, gives 52–54%. | fidelity_d4.json replacement pos0_true top1 0.5796-0.5808, KL 0.8308-0.8391; pos0_replaced 0.5181-0.5372 | Supported | D4 |
+| 38 | verdict | The public set has no skip term, and its encode-decode path equals its full forward, so the first draft's 2% top-1 agreement for it came mostly from replacing position 0. | fidelity_d4.json public has_skip_any_layer false, max_abs_diff 0.0; pos0_replaced top1 0.0227 vs pos0_true 0.2556 | Supported | D4 (review finding 6) |
+| 39 | verdict | Left alone, it is 26%: still poor, chiefly because its layer-2 transcoder explains little (FVU 0.87). | fidelity_d4.json public pos0_true top1 0.2556; fvu_by_layer[2] 0.8722 | Supported | D4 |
+| 40 | plain terms | Attribution graphs are a popular way to explain what a language model is doing on a given input. | background (R1, R4) | Supported |  |
+| 41 | plain terms | A smaller, interpretable model called a transcoder stands in for parts of the network, and the graph shows which of its "features" drive the answer. | background (R1) | Supported |  |
+| 42 | plain terms | Researchers read these graphs as evidence for mechanisms, but the transcoder is trained with randomness. | background | Supported |  |
+| 43 | plain terms | Would a second transcoder, trained the same way with a different random seed, tell the same story? | question | Supported |  |
+| 44 | plain terms | We trained four transcoders for a small open model, Qwen3-0.6B, identically except for the random seed or data order. | run_sets.sh | Supported |  |
+| 45 | plain terms | We built graphs for about 200 short prompts with each, then checked whether each graph's ten most important features had a match in the others: same place, same direction, and the same effect when switched off. | prompts.jsonl 199; match.py rule | Supported |  |
+| 46 | plain terms | About 58% did, which is too close to our 60% threshold to call either way. | primary.json H1 0.5833 (0.5667-0.6) | Supported | D4 (was 'only about 57%', Overstated) |
+| 47 | plain terms | The first version of this study said "fewer than 60%", but one in four of its prompts had been set up to explain the wrong word; fixing that moved the answer to the threshold. | primary_v1_pre_d4.json; prompts_v1.jsonl (59 of 212 arithmetic, 28%) | Supported | D4 |
+| 48 | plain terms | About two-thirds of the features that fail to match are generic features on the first word of the prompt, early in the network, and the same few of them turn up again and again. | posthoc_d4 position_1 share_of_non_replicating_rows_at_pos1 0.6659; recurring_units | Supported | D4 (was 'four in ten would change', Overstated) |
+| 49 | plain terms | Features later in the network, the kind people usually interpret, matched about 80% of the time. | posthoc_d4 replication_by_layers 14-27 0.8231 | Supported | D4 |
+| 50 | plain terms | So a single feature in an attribution graph is fairly stable if it sits in the later layers, and should not be trusted if it is one of these early, generic ones. | posthoc_d4 position_1; replication_by_layers | Supported | D4 |

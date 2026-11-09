@@ -6,6 +6,12 @@ For 30 random top-10 features of set A (seed 20261108, direction A -> B):
   2. decoder-cosine match: the B feature with the highest decoder cosine to f (any, not only active ones);
   3. agreement: do the two methods pick the same B feature, and do both clear 0.7?
   4. an independent re-run of f's ablation effect in a fresh process, against the stored effects_A.json value.
+D4 (after the independent review): the 30 features are drawn from the D4 prompt set (stable indices); each row also
+carries the study's own rule (counterpart in B from data/match_d4/A_B.jsonl, and the best cosine among B features
+active at that position), and every disagreement between the two methods is classed by a rule fixed before the rerun:
+  artefact  f is active on fewer than 10 of the held-out tokens, so its correlation is unreliable;
+  split     the two methods' picks are near-duplicates: each scores >= 0.6 on the other method too;
+  genuine   otherwise.
 """
 import json
 import sys
@@ -39,7 +45,7 @@ def layer_acts(model, toks, l):
 def main():
     rng = np.random.default_rng(20261108)
     feats = []
-    for i in range(212):
+    for i in [p["i"] for p in G.prompts()]:
         s = json.loads((D / "graphs" / "A" / f"{i:03d}.json").read_text())
         for r, f in enumerate(s["top10"]):
             feats.append((i, r, f["layer"], f["pos"], f["idx"]))
@@ -66,7 +72,15 @@ def main():
             corr_best, corr_g = float(c.max()), int(c.argmax())
         cos = decB[l].float() @ decA[l][idx].float()
         cos_best, cos_g = float(cos.max()), int(cos.argmax())
-        rows.append({"i": i, "rank": r, "layer": l, "pos": t, "idx": idx, "corr_best": corr_best, "corr_match": corr_g,
+        n_active = int((a > 0).sum())
+        cls = None
+        if corr_g is not None and corr_g != cos_g:
+            corr_of_cos = float(c[cos_g]) if a.std() != 0 else None
+            cos_of_corr = float(cos[corr_g])
+            cls = ("artefact" if n_active < 10 else
+                   "split" if (corr_of_cos or 0) >= 0.6 and cos_of_corr >= 0.6 else "genuine")
+        rows.append({"i": i, "rank": r, "layer": l, "pos": t, "idx": idx, "n_active_heldout": n_active, "disagreement_class": cls,
+                     "corr_best": corr_best, "corr_match": corr_g,
                      "cos_best": cos_best, "cos_match": cos_g, "same_feature": corr_g == cos_g,
                      "both_clear_0.7": (corr_best or 0) >= 0.7 and cos_best >= 0.7,
                      "active_frac_heldout": float((a > 0).float().mean())})
@@ -77,12 +91,23 @@ def main():
     for row in rows:
         row["effect_rerun"] = e(row["i"], row["layer"], row["pos"], row["idx"])
         row["effect_stored"] = stored.get((row["i"], row["layer"], row["pos"], row["idx"]))
+    rule = {}
+    for line in (D / "match_d4" / "A_B.jsonl").read_text().splitlines():
+        x = json.loads(line)
+        rule[(x["i"], x["rank"])] = (x["counterpart"], x["best_cos_active"])
+    for row in rows:
+        row["study_rule_counterpart"], row["study_rule_best_cos_active"] = rule.get((row["i"], row["rank"]), (None, None))
     ok = [r for r in rows if r["corr_best"] is not None]
     out = {"features": len(rows), "with_heldout_activity": len(ok),
            "same_feature_by_both_methods": sum(r["same_feature"] for r in ok),
            "cosine_match_clears_0.7": sum(r["cos_best"] >= 0.7 for r in rows),
            "correlation_match_clears_0.7": sum((r["corr_best"] or 0) >= 0.7 for r in rows),
            "both_clear_and_same": sum(r["same_feature"] and r["both_clear_0.7"] for r in ok),
+           "study_rule_counterparts": sum(bool(r["study_rule_counterpart"]) for r in rows),
+           "study_rule_best_active_cos_clears_0.7": sum((r["study_rule_best_cos_active"] or 0) >= 0.7 for r in rows),
+           "disagreements": sum(r["disagreement_class"] is not None for r in rows),
+           "disagreement_classes": {k: sum(r["disagreement_class"] == k for r in rows) for k in ("artefact", "split", "genuine")},
+           "position_1_features": sum(r["pos"] == 1 for r in rows),
            "ablation_rerun_identical": sum(abs(r["effect_rerun"] - r["effect_stored"]) < 1e-4 for r in rows if r["effect_stored"] is not None),
            "rows": rows}
     (RUN / "results" / "tables" / "g4.json").write_text(json.dumps(out, indent=1) + "\n")

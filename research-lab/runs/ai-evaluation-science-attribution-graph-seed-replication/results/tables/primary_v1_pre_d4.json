@@ -1,0 +1,98 @@
+{
+ "features_matched": 12720,
+ "prompts": 212,
+ "H1": {
+  "median_node_replication": 0.5667,
+  "ci": [
+   0.5667,
+   0.5835
+  ],
+  "mean": 0.591,
+  "verdict": "Supported"
+ },
+ "H2": {
+  "mean_subspace_replication": 0.9031,
+  "mean_node_replication": 0.591,
+  "mean_paired_difference": 0.312,
+  "ci": [
+   0.3025,
+   0.3214
+  ],
+  "verdict": "Supported"
+ },
+ "data_order_A_D": {
+  "median_node_replication": 0.65,
+  "mean": 0.6349,
+  "mean_subspace": 0.9035,
+  "prompts": 212
+ },
+ "public_vs_A": {
+  "median_node_replication": 0.2,
+  "mean": 0.2189,
+  "mean_subspace": 0.6479,
+  "prompts": 212
+ },
+ "by_family": {
+  "antonym": {
+   "median_node": 0.6667,
+   "prompts": 10
+  },
+  "arithmetic": {
+   "median_node": 0.5,
+   "prompts": 59
+  },
+  "factual": {
+   "median_node": 0.6,
+   "prompts": 31
+  },
+  "induction": {
+   "median_node": 0.6333,
+   "prompts": 91
+  },
+  "ioi": {
+   "median_node": 0.625,
+   "prompts": 18
+  },
+  "two_hop": {
+   "median_node": 0.95,
+   "prompts": 3
+  }
+ },
+ "by_layer_depth": {
+  "0-6": {
+   "node": 0.3842,
+   "subspace": 0.8367,
+   "features": 7136
+  },
+  "7-13": {
+   "node": 1.0,
+   "subspace": 1.0,
+   "features": 16
+  },
+  "14-20": {
+   "node": 0.8681,
+   "subspace": 0.9876,
+   "features": 1372
+  },
+  "21-27": {
+   "node": 0.8506,
+   "subspace": 0.9878,
+   "features": 4196
+  }
+ },
+ "by_error_share_tercile": {
+  "low": 0.5509,
+  "mid": 0.575,
+  "high": 0.6472
+ },
+ "cosine_only_0.6": 0.8,
+ "cosine_only_0.7": 0.6833,
+ "cosine_only_0.8": 0.5833,
+ "top5_node_replication_median": 0.6,
+ "ablation_effect_zero_share": 0.0,
+ "A_top10_replicated_in": {
+  "both": 0.4325,
+  "one": 0.192,
+  "none": 0.3755
+ }
+}

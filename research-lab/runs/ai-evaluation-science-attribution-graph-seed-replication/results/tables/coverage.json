@@ -1,22 +1,24 @@
 {
  "graphs": {
-  "attempted": 1060,
-  "ok": 1060,
+  "attempted": 995,
+  "ok": 995,
   "fallback": 0,
   "dropped": 0,
   "unresolved": 0,
   "fallback_reasons": {},
   "drop_reasons": {
-   "failed": 0
+   "failed or missing": 0
   }
  },
  "matched_features": {
-  "attempted": 21200,
-  "ok": 21200,
+  "attempted": 19900,
+  "ok": 19900,
   "fallback": 0,
   "dropped": 0,
   "unresolved": 0,
   "fallback_reasons": {},
-  "drop_reasons": {}
+  "drop_reasons": {
+   "no row written": 0
+  }
  }
 }
