@@ -95,14 +95,31 @@ if __name__ == "__main__":
     out["secondary_error_classes"] = dS[dS.fail].eclass.value_counts().to_dict()
     # D4 (confirmation finding N1, post hoc): proofs using `induction'` all fail because Mathlib.Tactic.Common stopped
     # importing Mathlib.Tactic.Cases between O and O2 (not simp fragility). Exclusion sensitivity, and the error mix.
-    ind = lambda x: x[~x.body_o.str.contains("induction'", regex=False)]  # noqa: E731
-    out["induction_prime"] = {"primary_proofs": int(d.body_o.str.contains("induction'", regex=False).sum()),
-                              "primary_flagged_using": [int(d[d.flag_i == 1].body_o.str.contains("induction'", regex=False).sum()), int((d.flag_i == 1).sum())],
-                              "primary_unflagged_using": [int(d[d.flag_i == 0].body_o.str.contains("induction'", regex=False).sum()), int((d.flag_i == 0).sum())],
-                              "fail_rate_among_users": round(float(d[d.body_o.str.contains("induction'", regex=False)].fail_i.mean()), 4)}
+    # D5 (second confirmation, item 2): a token match outside comments. The plain substring also hit three proofs that
+    # only name the lemma `LieSubmodule.iSup_induction'` (`induction ... using ...`), which fail for another reason.
+    import re
+    tac = re.compile(r"(?<![\w.'])induction'(?![\w'])")
+    nocomment = lambda b: re.sub(r"--[^\n]*", "", re.sub(r"/-.*?-/", "", b, flags=re.S))  # noqa: E731
+    uses = lambda x: x.body_o.fillna("").map(lambda b: bool(tac.search(nocomment(b))))  # noqa: E731
+    ind = lambda x: x[~uses(x)]  # noqa: E731
+    sub = lambda x: x.body_o.str.contains("induction'", regex=False)  # noqa: E731
+    out["induction_prime"] = {"match": "token outside comments (D5)", "primary_proofs": int(uses(d).sum()),
+                              "primary_flagged_using": [int(uses(d[d.flag_i == 1]).sum()), int((d.flag_i == 1).sum())],
+                              "primary_unflagged_using": [int(uses(d[d.flag_i == 0]).sum()), int((d.flag_i == 0).sum())],
+                              "fail_rate_among_users": round(float(d[uses(d)].fail_i.mean()), 4),
+                              "six_month_proofs": int(uses(d6).sum()), "second_pair_proofs": int(uses(dS).sum()),
+                              "substring_matches_D4": {"primary": int(sub(d).sum()), "six_months": int(sub(d6).sum()), "second_pair": int(sub(dS).sum()),
+                                                       "primary_fail_rate": round(float(d[sub(d)].fail_i.mean()), 4)}}
     out["excluding_induction_prime"] = {"primary": gee(ind(d)), "six_months": gee(ind(d6)), "pooled": gee(pd.concat([ind(d), ind(dS)])),
                                         "excluding_unknown_identifier_only": gee(ind(d2), "fail_nounk"),
                                         "primary_independence": gee(ind(d), cov=sm.cov_struct.Independence())}
+    full = {"primary": out.get("primary"), "six_months": (out.get("decay") or {}).get("O+6_gee"), "pooled": out.get("pooled"),
+            "excluding_unknown_identifier_only": out.get("excluding_unknown_identifier_only"),
+            "primary_independence": out.get("primary_independence")}
+    out["induction_prime_share_of_log_or_removed"] = {k: round(1 - np.log(out["excluding_induction_prime"][k]["or"]) / np.log(v["or"]), 3)
+                                                      for k, v in full.items() if v and v.get("or")}
+    out["induction_prime_raw_gap_points"] = {"all": round(100 * (d[d.flag_i == 1].fail_i.mean() - d[d.flag_i == 0].fail_i.mean()), 1),
+                                             "excluding": round(100 * (ind(d)[ind(d).flag_i == 1].fail_i.mean() - ind(d)[ind(d).flag_i == 0].fail_i.mean()), 1)}
     fm = d[d.fail]
     out["first_error_unknown_tactic"] = {"all": int(fm.msgs.fillna("").str.split(" \\|\\| ").str[0].str.contains("unknown tactic", case=False).sum()),
                                          "flagged": int(fm[fm.flag_i == 1].msgs.fillna("").str.split(" \\|\\| ").str[0].str.contains("unknown tactic", case=False).sum()),

@@ -175,83 +175,103 @@
   "timeout": 1
  },
  "induction_prime": {
-  "primary_proofs": 119,
+  "match": "token outside comments (D5)",
+  "primary_proofs": 116,
   "primary_flagged_using": [
    18,
    110
   ],
   "primary_unflagged_using": [
-   101,
+   98,
    2378
   ],
-  "fail_rate_among_users": 1.0
+  "fail_rate_among_users": 1.0,
+  "six_month_proofs": 138,
+  "second_pair_proofs": 0,
+  "substring_matches_D4": {
+   "primary": 119,
+   "six_months": 141,
+   "second_pair": 3,
+   "primary_fail_rate": 1.0
+  }
  },
  "excluding_induction_prime": {
   "primary": {
-   "or": 1.4291,
+   "or": 1.4145,
    "ci": [
-    0.8406,
-    2.4297
+    0.834,
+    2.399
    ],
-   "p": 0.18724,
-   "n": 2369,
+   "p": 0.19828,
+   "n": 2372,
    "files": 1171,
    "fail_flagged": 0.3261,
-   "fail_unflagged": 0.2275,
+   "fail_unflagged": 0.2285,
    "n_flagged": 92
   },
   "six_months": {
-   "or": 1.5669,
+   "or": 1.5406,
    "ci": [
-    0.884,
-    2.7772
+    0.8731,
+    2.7184
    ],
-   "p": 0.12407,
-   "n": 2713,
+   "p": 0.13581,
+   "n": 2716,
    "files": 1301,
    "fail_flagged": 0.1651,
-   "fail_unflagged": 0.0952,
+   "fail_unflagged": 0.0963,
    "n_flagged": 109
   },
   "pooled": {
-   "or": 1.2721,
+   "or": 1.2651,
    "ci": [
-    0.8282,
-    1.9538
+    0.8243,
+    1.9418
    ],
-   "p": 0.27165,
-   "n": 5932,
+   "p": 0.28195,
+   "n": 5938,
    "files": 1721,
    "fail_flagged": 0.2705,
-   "fail_unflagged": 0.193,
+   "fail_unflagged": 0.1937,
    "n_flagged": 207
   },
   "excluding_unknown_identifier_only": {
-   "or": 1.5541,
+   "or": 1.5365,
    "ci": [
-    0.9214,
-    2.6212
+    0.9133,
+    2.5849
    ],
-   "p": 0.09829,
-   "n": 2369,
+   "p": 0.10562,
+   "n": 2372,
    "files": 1171,
    "fail_flagged": 0.3043,
-   "fail_unflagged": 0.1994,
+   "fail_unflagged": 0.2004,
    "n_flagged": 92
   },
   "primary_independence": {
-   "or": 1.4515,
+   "or": 1.4435,
    "ci": [
-    0.8506,
-    2.4769
+    0.8468,
+    2.4608
    ],
-   "p": 0.17178,
-   "n": 2369,
+   "p": 0.17741,
+   "n": 2372,
    "files": 1171,
    "fail_flagged": 0.3261,
-   "fail_unflagged": 0.2275,
+   "fail_unflagged": 0.2285,
    "n_flagged": 92
   }
+ },
+ "induction_prime_share_of_log_or_removed": {
+  "primary": 0.236,
+  "six_months": 0.264,
+  "pooled": 0.368,
+  "excluding_unknown_identifier_only": 0.213,
+  "primary_independence": 0.309
+ },
+ "induction_prime_raw_gap_points": {
+  "all": 17.6,
+  "excluding": 9.8
  },
  "first_error_unknown_tactic": {
   "all": 118,

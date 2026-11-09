@@ -269,3 +269,153 @@ figure's right panel, and G5 re-run. A further pass can be limited to those.
    label and replay them; the numbers do not move.
 5. (Minor) "dsimp" and "field_simp made no progress" (7 first errors, 1 flagged) fall into "other". Fold them into
    simp-made-no-progress or say they are excluded. The conclusion is unchanged (3/48 against 53/619).
+
+## Second confirmation pass
+
+Reviewer: Fable 5.1, 2026-11-09.
+
+**Scope.** As the brief asked, this pass covers only N1 and minor items 2–5 from the confirmation pass, which D4
+(commit e2bac85) addresses.
+
+**What I checked.**
+- I recomputed every D4 number independently from the stored parquet files under `data/work/`.
+- I checked the D4 diff to `code/analyse.py`, `code/figures.py` and `code/rot.py`, plus `results/tables/primary.json`,
+  `results/figures/F1_rot.png`, `report.md`, `report.html` and `review/overclaim_check.md`.
+- Every Python run that read `data/` or `results/` used `-I -B`, with the working directory in staging `scratch/`.
+- No Lean, lake or build tool was run, and no git write was made.
+
+The check files are in `review/reviewer_checks/` (staged as `confirm2_*`):
+- `confirm2_1_induction.{py,txt}`:
+  - the 119-against-116 reconciliation, for all three pairs;
+  - every `excluding_induction_prime` GEE, refit and compared with `primary.json`;
+  - the "unknown tactic" and "invalid field … environment does not contain" first-error counts;
+  - the first-error classes recomputed with the D4 `rot.ERR`, including the dsimp/field_simp folding and the 3/48
+    against 53/619 split;
+  - a decomposition of how much of the flagged excess the `induction'` proofs carry.
+- `confirm2_2_report_subset.{py,txt}`:
+  - the D4 item 4 subset check (corrected populations against the `*_v1.parquet.bak` backups, and against labels and
+    replays);
+  - D4 phrases present in `report.md` and `report.html`;
+  - the Results paragraph's class counts against `primary.json`;
+  - which comparisons clear 1.0, with and without `induction'` proofs.
+- `confirm2_3_gates_g5_g6.txt`: G5 (`overclaim_check.py RUN --verify`) and G6 (`attribution.py check RUN`), run from
+  `research-lab/`.
+- I also reused the first confirmation pass's `confirm_5_induction_prime` (the token-match exclusion) and
+  `confirm_7_snapshot_grep` (the import change).
+
+**What reproduces.** Every new `primary.json` number reproduces exactly from my own merge and GEE (`confirm2_1` §2–3).
+- Excluding the 119 substring matches gives:
+  - primary 1.4291 (0.8406–2.4297), n 2,369 with 92 flagged;
+  - six months 1.5669 (0.884–2.7772);
+  - without unknown-identifier-only failures 1.5541 (0.9214–2.6212);
+  - independence correlation 1.4515 (0.8506–2.4769);
+  - pooled 1.2721 (0.8282–1.9538).
+- Of the 667 failures, 118 have "unknown tactic" as their first error, 18 of them flagged; 116 of the 118 are
+  `induction'` proofs.
+- 47 failures have "environment does not contain" as their first error, and all 47 are "invalid field" messages.
+- The first-error classes match `error_classes_first` exactly: other 239, simp_no_progress 23.
+
+No comparison clears 1.0 once these proofs are excluded. With them included, four do: independence, six months, the
+unknown-identifier exclusion and pooled. G5 passes (47 rows) and G6 passes (5 claims).
+
+### Final verdict: publish with edits
+
+D4 resolves the substance of N1. The confound is in `analyse.py` as a labelled post hoc sensitivity, every number
+reproduces, the verdict block states it, and H1 stays Inconclusive. The remaining problems are wording and stale text,
+with no reanalysis needed:
+- **The rewrite overcorrects.** The title, "What this does and does not show" and "In plain terms" now say the flagged
+  excess is "mostly" the import change, and that without it "the difference is small". The numbers support "partly":
+  - excluding the proofs removes about 21% of the primary adjusted log-odds ratio (1.57 to 1.43) and 44% of the raw gap
+    (17.6 to 9.9 points);
+  - what the proofs carry is the lower bounds clearing 1.0, not most of the effect.
+- **Three of the 119 proofs do not use the `induction'` tactic.** They cite the lemma `LieSubmodule.iSup_induction'`.
+- **The Results paragraph's error-class counts predate D4.**
+
+**Items**
+
+- **N1 (the `induction'` confound): partly fixed.**
+  - Fixed: the sensitivity is in `analyse.py` (D4.1) and its numbers reproduce (`confirm2_1` §2). The verdict block
+    has a dedicated bullet. The "direction is consistent" and "points the right way" sentences are gone, and "Excluding
+    them, no comparison clears 1.0" is true (`confirm2_2` §4).
+  - Not right, a: **119 against 116.** The brief's plain substring match also hits three proofs that only name the lemma
+    `LieSubmodule.iSup_induction'` (`induction hy using LieSubmodule.iSup_induction' with`). All three are unflagged
+    (`confirm2_1` §1).
+    - They fail with "Invalid alternative name `hN`", not "unknown tactic", so "All 119 population proofs that use
+      `induction'` fail, because Mathlib.Tactic.Common stopped importing it" is false for them.
+    - The correct figures are 116 proofs, and 18 of 110 flagged against 98 of 2,378 unflagged. That is still about four
+      times as often.
+    - My token match, which skips comments, gives primary 1.41 (0.83–2.40) and six months 1.54 (0.87–2.72).
+    - The same three proofs are the second pair's three substring matches, so the pooled exclusion drops second-pair
+      rows that have no `induction'` tactic (substring 3, token 0).
+    - No conclusion changes. Either use a token match, or keep the 119-proof exclusion and describe it as "119 proofs
+      matching `induction'`, 116 of which use the tactic".
+  - Not right, b: **"mostly" overcorrects** (`confirm2_1` §4).
+    - The title says flagged proofs fail more often "mostly because a tactic many of them used lost its default
+      import".
+    - Plain terms says the extra breakage "mostly comes from one change", and that without those proofs "the difference
+      is small and uncertain".
+    - "What this does and does not show" opens with "The first-year excess is mostly one import change".
+    - Against that, excluding the proofs moves the primary adjusted OR only from 1.57 to 1.43. The share of the
+      log-odds ratio removed is 21% for the primary, 23% for six months, 19% for the unknown-identifier exclusion, 30%
+      for independence and 35% for pooled. The raw gap falls from 17.6 to 9.9 points (44%).
+    - What the 116 proofs do carry is every lower bound above 1.0. That is what the first confirmation pass asked to be
+      said ("the flagged excess is partly a correlated import change").
+    - Suggested wording: "partly because …" in the title and in plain terms; in plain terms, "the difference shrinks
+      (odds ratio 1.43) and is no longer distinguishable from none"; and "The first-year comparisons clear 1.0 only
+      because of one import change".
+  - Not right, c: **"Two first-year comparisons clear 1.0"** (verdict block). Four comparisons in the report clear
+    1.0: six months, the unknown-identifier exclusion, independence 1.70 (1.01–2.85) and pooled 1.45 (1.003–2.10).
+    All four drop below 1.0 without the proofs. In the same way, "What this does and does not show" names only two of
+    them, and attributes the six-month result to "the 119 `induction'` proofs". The six-month population has 141
+    substring matches, 138 by token match.
+- **2 (figure right panel): fixed.** `figures.py` plots `error_classes_first`, and the PNG shows other 239, unknown
+  identifier 216, type mismatch 73, unsolved goals 40, rewrite failed 33, function expected 30, simp no progress 23, no
+  goals 9 and timeout 4. That matches `primary.json` and the axis label. The caption's "first matching error class" is
+  slightly loose: the class is that of the first error, which may be "other". This is not material.
+- **3 (G5 rows and "the most common first error"): partly fixed.**
+  - The table is rebuilt (47 rows, `--verify` passes), the stale first-draft backings are gone, and new rows cite D4,
+    `induction_prime` and `excluding_induction_prime`.
+  - "The most common first error" is in `report.md` and `report.html`, and "identifiable cause" is gone (`confirm2_2`
+    §2).
+  - The labels are not honest for these rows, all marked Supported:
+    - row 1 (title) and rows 46–47 (plain terms, "mostly" and "small"): Overstated;
+    - row 13: should name all four comparisons;
+    - rows 17–18: "All 119 … use", "101 of 2,378"; should be Partially supported until corrected.
+  - The new rows are not marked as new in the table itself, but rows 16–19 and 32–33 cite D4 or N1 in their backing,
+    which is enough.
+- **4 (D3's subset statement): partly fixed.** D4.4 correctly says that one primary and two six-month declarations are
+  new under the corrected rule and are dropped by the inner merge. It misses one second-pair declaration,
+  `Affine.Simplex.scalene_reindex_iff` in O₂ → N₂, which also has no label or replay (`confirm2_2` §1). The numbers do
+  not move. Add "and one second-pair".
+- **5 (dsimp and field_simp folded into simp_no_progress): fixed in code and verdict block, stale in Results.**
+  - `rot.ERR` now matches dsimp, field_simp, simp_all and simp. Seven dsimp/field_simp first errors moved into the
+    class (23 in all). The predicted classes are the first error for 3/48 flagged against 53/619 unflagged, and my own
+    regex gives 3/48 against 54/619 (`confirm2_1` §3).
+  - Only one "made no progress" first error remains in "other": "`repeat1'` made no progress", unflagged, which is
+    correct.
+  - The verdict block's "simp, dsimp or field_simp made no progress (3%)" and "other messages (36%)" match the data.
+  - But the Results section's "Error classes of failing primary-pair proofs" paragraph was not regenerated
+    (`confirm2_2` §3):
+    - by first error it still says other 246 and simp made no progress 16; `primary.json` has 239 and 23;
+    - by highest-priority class it says unsolved goals 165, other 80 and simp made no progress 23; `primary.json`
+      has 164, 75 and 29.
+    - The paragraph therefore contradicts the verdict block and the figure. The same text is in `report.html`.
+
+**Also noted (outside the five items, minor).** "Process and deviations" in `report.md` and `report.html` ends at D3.
+Its last line reads "Independent review: fix first … the fixes are in D3". There is no mention of the confirmation
+pass or D4.
+
+**Remaining issues**
+
+1. (Minor–moderate, wording) The title, "What this does and does not show" and "In plain terms" say the flagged excess
+   is "mostly" the `induction'` import change, and that the remaining difference is "small". The exclusion removes
+   about a fifth of the adjusted log-OR (1.57 to 1.43) and 44% of the raw gap. Say "partly", and that the change is
+   what lifts the lower bounds above 1.0. Relabel G5 rows 1, 46 and 47.
+2. (Minor) 3 of the "119 `induction'` proofs" are `LieSubmodule.iSup_induction'` lemma uses that fail for another
+   reason. Use 116 (18/110 against 98/2,378), or describe the 119 as substring matches. Fix G5 rows 17–18.
+3. (Minor) "Two first-year comparisons clear 1.0" should be four (adding independence and pooled), with the same fix in
+   "What this does and does not show". The six-month count there is 141 (138 tactic uses), not 119. Fix G5 row 13.
+4. (Minor) The Results section's error-class paragraph is stale, in `report.md` and `report.html`: other 246 → 239,
+   simp 16 → 23; highest-priority unsolved goals 165 → 164, other 80 → 75, simp 23 → 29.
+5. (Minor) D4.4 omits the one new second-pair declaration. "Process and deviations" does not list the confirmation
+   pass or D4.

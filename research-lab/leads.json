@@ -3918,7 +3918,12 @@
    "scout_value_score": 6,
    "scout_cost_score": 4,
    "plain_summary": "Lean's math library, mathlib, changes daily, and old proofs can stop working. Its maintainers have a style rule claiming that one way of writing proofs, simplifying first and then rewriting precisely, breaks more often. We will test that rule by re-running tens of thousands of year-old proofs against the current library and checking whether that style really breaks more.",
-   "scout_round": 2
+   "scout_round": 2,
+   "status": "deep dive \u00b7 report (revised after review and two confirmation passes)",
+   "report_url": "runs/formal-math-mathlib-proof-rot-flexible-linter/report.html",
+   "verdict_tag": "Inconclusive",
+   "verdict_note": "H1 Inconclusive. 2,488 mathlib proofs from March 2025 containing a non-terminal unrestricted simp were replayed verbatim into the March 2026 library wherever the statement was unchanged. Proofs flagged by mathlib's flexible linter failed 43.6% of the time against 26.0% (adjusted OR 1.57, 0.97-2.55; preregistered bar 1.5). Four secondary comparisons clear 1.0, but only because of 116 proofs using the induction' tactic, which all fail after Mathlib.Tactic.Common stopped importing it; flagged proofs use it four times as often. Excluding them no comparison clears 1.0 (primary 1.41, 0.83-2.40), though the point estimates move only modestly. Only 3 of 48 flagged failures show simp-style errors, and mathlib had already rewritten 109 of 110 flagged proofs. Review fix first; confirmation fix first; second confirmation publish with edits.",
+   "headline": "Do 'flexible-then-rigid' simp proofs rot faster in mathlib? Flagged proofs break more often a year later, partly because of one removed default import; the preregistered 1.5x effect is not confirmed."
   },
   {
    "id": "formal-math-selfplay-vacuity-drift",

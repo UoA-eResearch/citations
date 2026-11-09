@@ -72,5 +72,26 @@ are reused.
 3. **dsimp and field_simp.** "dsimp/field_simp made no progress" now count as simp-made-no-progress. The predicted
    classes are the first error for 3/48 flagged against 53/619 unflagged failures.
 4. **D3's subset statement was not exact.** One primary and two six-month declarations are new under the corrected
-   rule. They have no label or replay and are dropped silently by the inner merge. The numbers are unaffected.
+   rule, and so is one second-pair declaration (`Affine.Simplex.scalene_reindex_iff`, found at the second
+   confirmation pass). They have no label or replay and are dropped silently by the inner merge. The numbers are
+   unaffected.
 5. **Wording:** "the most common first error" replaces "the most common identifiable cause".
+
+## D5 — 2026-11-10 — edits after the second confirmation pass (verdict: publish with edits)
+
+1. **Token match for `induction'`** (item 2). The D4 substring match also hit three proofs that only name the lemma
+   `LieSubmodule.iSup_induction'` (`induction ... using LieSubmodule.iSup_induction'`), which fail with "Invalid
+   alternative name", not "unknown tactic". `analyse.py` now matches the tactic as a token outside comments: 116
+   primary proofs (18/110 flagged against 98/2,378 unflagged), 138 six-month, 0 second-pair. Excluding them: primary
+   1.41 (0.83–2.40), six months 1.54 (0.87–2.72), no unknown-identifier-only failures 1.54 (0.91–2.58), independence
+   1.44 (0.85–2.46), pooled 1.27 (0.82–1.94). The substring counts are kept in `primary.json`
+   (`substring_matches_D4`).
+2. **"Mostly" overcorrected** (item 1). The exclusion removes 21–37% of the adjusted log-odds ratio across the five
+   comparisons (primary 24%) and 44% of the raw gap (17.6 to 9.8 points); `primary.json` now records both. The title,
+   plain terms and "What this does and does not show" say "partly", and that the change is what lifts the lower
+   bounds above 1.0.
+3. **Four comparisons clear 1.0, not two** (item 3): six months, the unknown-identifier exclusion, independence and
+   pooled, all below 1.0 without the `induction'` proofs.
+4. **Stale Results paragraph** (item 4): the error-class counts are regenerated from `primary.json`.
+5. **Process** (item 5): D4, D5 and the confirmation passes are listed; D4.4 now names the second-pair declaration.
+
