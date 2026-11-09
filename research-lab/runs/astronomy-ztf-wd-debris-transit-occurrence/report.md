@@ -1,4 +1,4 @@
-# How common are debris transits around white dwarfs? Published systems and candidates imply about 1 in 5,000 within 500 pc after correcting for what ZTF can detect, confirmed transiters alone about 1 in 24,000, and nearly 1,000 unvetted candidates leave the rate unbounded above
+# How common are debris transits around white dwarfs? Published systems and candidates imply about 1 in 5,000 within 500 pc after correcting for what ZTF can detect, confirmed transiters alone about 1 in 24,000, and nearly 1,000 unvetted candidates leave the rate poorly bounded above
 
 *108,493 Gaia white dwarfs within 500 pc with at least 100 good ZTF g and r epochs were searched blind with two
 preregistered rules: recurring faint outliers (hour-scale dips) and runs of faint 30-day bins (day- to year-scale
@@ -32,22 +32,29 @@ Refuted needs about 50 recovered known systems, against 18 in the sample.
   beyond 500 pc), and the rules flag 15 of them.
   - **SDSS J0107+2107** shows continuous shallow dips.
   - **WD 1054−226** has dips of a few per cent and only 207 epochs.
-  - **SBSS 1232+563** was missed because ZTF sampled its defining 2023 dimming sparsely: 29 good epochs over 26
-    months after April 2023. Few 30-day bins reach the 5-epoch minimum, so only one low bin qualifies, and the rule
-    needs two. A fresh query keeping every ZTF object and flag finds only 35 good epochs after April 2023.
+  - **SBSS 1232+563** was missed because ZTF sampled its defining 2023 dimming sparsely. After April 2023 (MJD
+    60068 on) the stored light curve has 32 good g and r epochs, one or two per 30-day bin, and a fresh query keeping
+    every ZTF object finds 34. The two it adds come from a second field's g object, which loses to the most-epochs
+    object, and would lift one event bin from 2 to 3 epochs. The dimming is visible, but only one bin reaches the
+    5-epoch minimum, so only one low bin qualifies, and the rule needs two.
   - Of the 15 recovered, three are flagged by the short-dip rule alone, six by the long-dip rule alone, and six by
     both.
 - **Completeness.** Injected signals are recovered 65% of the time for WD 1145-like hour-scale dips, 48% for
   J0139-like day-scale dips and 53% for one-off dimming lasting 30–400 days. Recovery falls for fainter stars (F2).
-- **The candidates are mostly long-dip flags, and mostly systematics.**
+- **The candidates are mostly long-dip flags, and many track survey-wide trends.**
   - 1,006 stars are flagged; 21 are CVs in Gaia DR3's variability classification. That leaves 970 candidates
     besides the 15 known systems.
   - The long-dip rule is sensitive to its threshold: at 3 standard errors it flags 7,598 stars, at 7 it flags 159.
   - **Calendar test** (post hoc). 454 of the 769 long-dip candidates have a low bin in the same ten 30-day windows,
     and 140 in June 2020 alone. In those windows, 2,000 random unflagged stars are also faint, by a median 0.1–0.7%
-    against −0.02% overall. So the long-dip flags largely track survey-wide photometric trends.
-  - **The g/r coincidence check** promised as a G4 mitigation barely discriminates. 94% of the candidates' low bins
-    with at least 3 g and 3 r epochs are low in both bands (by more than 2.5% each).
+    against −0.02% overall. If each candidate's low bins fell at random among its own well-sampled bins, about 215
+    (196–238) would land in those windows by coverage alone. So about 240 of the 769 long-dip flags are explained by
+    survey-wide trends beyond what coverage produces: many, not most.
+  - **The g/r coincidence check** promised as a G4 mitigation barely discriminates, however it is read. As
+    preregistered (dip epochs coincide in g and r within a night), 23 of 26 testable random flags pass, as do 81% of
+    all testable flags and all 14 testable known systems. At the bin level, 94% of the candidates' low bins with at
+    least 3 g and 3 r epochs are more than 2.5% low in both bands, and 71% are at least 5% low in both, the rule's
+    depth.
   - The list is not vetted. It is in `results/tables/candidates.csv` (Gaia DR3 source IDs, public facts).
 - **Implied geometry.** If a quarter to a half of white dwarfs are metal-polluted, the published-systems rate implies
   a transit probability × duty cycle of 4 × 10⁻⁴ to 8 × 10⁻⁴ among polluted stars (descriptive).
@@ -67,9 +74,9 @@ a star: about half to two-thirds of the time.
 
 Counting the published systems and candidates, and correcting for what the search can catch, about 1 in 5,000 of
 these white dwarfs shows detectable debris transits; counting only the three firmly confirmed ones, about 1 in
-24,000. The rules also flagged nearly 1,000 other stars. Most are probably slow
+24,000. The rules also flagged nearly 1,000 other stars. Many are probably slow
 drifts in the measurements rather than debris, but until each is checked, the true rate could be anywhere from
-about 1 in 5,000 to about 1 in 80. So the study cannot say whether the rate is below the 1-in-2,000 bar the lead
+about 1 in 5,000 to about 1 in 70. So the study cannot say whether the rate is below the 1-in-2,000 bar the lead
 proposed.
 
 ## What was asked
@@ -101,7 +108,10 @@ predicting an occurrence below 5 × 10⁻⁴ for ZTF-detectable systems.
 - **Known variables removed:** Gaia DR3 `vari_classifier_result` classes ECL, CV, RS and SOLAR_LIKE (21 CVs among
   the flagged stars). Name lists of known CVs and AM CVn systems were not obtained.
 - **Positive controls** (`results/tables/known_systems.csv`): the 20 known systems, compiled from the papers' tables
-  by a separate agent session that never saw the light curves, and committed before detection.
+  by a separate agent session that never saw the light curves, and committed before detection. Their in-sample Gaia
+  IDs were matched from the sample by position (`sep_arcsec`); the "Gaia (e)DR3 id" entries in `source_location` name
+  the paper each ID was checked against. Eight IDs were float-rounded and were corrected after the first detection
+  pass (D1).
 - **Completeness:** 5,000 random eligible stars that were not flagged × 3 signal classes × 10 injections, with
   parameters drawn as in the plan. Box-shaped dips were applied as flux multipliers, with errors scaled by
   (flux)^−½; injected epochs fainter than 21.0 mag were dropped as non-detections. These details were fixed in the
@@ -143,8 +153,21 @@ to every class. The first draft's rates with the i band pooled in are kept as `r
   been reported, not what is established.
 - **The ceiling is set by unvetted flags, not by debris.** Without vetting, the 970 candidates make the upper bound
   66 times the published-systems rate. Most are long-dip flags on faint stars, a pattern that systematics produce as easily as dust.
-- **Completeness is moderate and falls with magnitude.** Shallow or sporadic dimming, like the three missed known
-  systems, is often missed.
+- **Completeness is moderate and falls with magnitude.** Shallow or sporadic dimming, like two of the three missed
+  known systems, is often missed; the third, SBSS 1232+563, was sampled too sparsely during its event. Injected dips
+  keep each epoch's original residual and skip the 0.25-mag error cut the real data passed, so recovery at G 19–20 is
+  somewhat optimistic. In the reviewer's re-scoring with background-limited noise, one-off recovery fell from 53% to
+  45%, and the combined lower rate moved from 2.06 to 2.13 × 10⁻⁴.
+- **The short-dip rule is nearly blind for faint stars.** Near ZTF's limit faint epochs go missing while bright ones
+  are kept. The share of stars with more bright than faint outliers rises from 28% at G < 17 to 92% at G 19.5–20,
+  and the short-rule flag rate falls from 0.85% to 0.016% (`results/tables/posthoc_d3.json`).
+- **Class labels are approximate.** Known systems are assigned a class by keywords in their papers' descriptions.
+  Summing the per-class rates instead of taking each star's best class gives a combined lower rate of 2.5 × 10⁻⁴
+  rather than 2.1 × 10⁻⁴.
+- **Some ZTF matches are probably a brighter neighbour.** 186 eligible stars have a median g or r more than 0.75 mag
+  brighter than their Gaia magnitude and colour predict (scatter 0.03–0.04 mag). They are flagged at 9.1%, against
+  0.9% for the rest. 15 are candidates and none is a known system. They are listed in
+  `results/tables/zg_gaia_mismatch.csv`, not removed.
 - **Not shown:**
   - **Vetting of the candidates** (follow-up photometry, spectroscopy, or inspection of neighbours and image
     artefacts).
@@ -158,10 +181,15 @@ to every class. The first draft's rates with the i band pooled in are kept as `r
   occurrence rules were committed before detection was run; the positive-control list was committed after the code
   and before detection.
 - **Deviations** (`deviations.md`): D1, the float-rounded Gaia IDs found after the first detection pass and fixed
-  before any result was written up; implementation details of light-curve selection and injections.
+  before any result was written up; implementation details of light-curve selection and injections. D2, after the
+  independent review: g and r only as preregistered, tiered lower rates, the SBSS 1232+563 query, the g/r check and
+  the calendar test. D3, after the confirmation pass: the calendar null, the plan's night-level g/r rule, like-for-like
+  SBSS counts, g- and r-only hand traces with a long-rule trace, regenerated coverage counts, and the limits from the
+  first review's minor findings (faint-star asymmetry, class labels, magnitude mismatches, injection noise).
 - **Quality gates:** G1 (plan section 3), G2 (coverage counts above and in `results/tables/coverage.json`), G5
   (`review/overclaim_check.md`) and G6 (`results/attribution_ledger.csv`).
-- **Independent review:** queued (Fable), per the lab's pacing rule.
+- **Independent review:** publish with edits; the edits are in D2. **Confirmation pass:** publish with edits; the
+  edits are in D3.
 
 ## Reproducing it
 

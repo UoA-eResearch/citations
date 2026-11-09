@@ -1,0 +1,59 @@
+{
+ "known: WD 1145+017": {
+  "source_id": "3796414192429498880",
+  "hand": {
+   "epochs": 743,
+   "faint": 32,
+   "bright": 4,
+   "excess": 28,
+   "faint_nights": 27
+  },
+  "pipeline": {
+   "epochs": 743,
+   "faint": 32,
+   "bright": 4,
+   "excess": 28,
+   "faint_nights": 27,
+   "short": true,
+   "long": false
+  }
+ },
+ "candidate (largest excess)": {
+  "source_id": "4611543459874840832",
+  "hand": {
+   "epochs": 2487,
+   "faint": 155,
+   "bright": 21,
+   "excess": 134,
+   "faint_nights": 148
+  },
+  "pipeline": {
+   "epochs": 2487,
+   "faint": 155,
+   "bright": 21,
+   "excess": 134,
+   "faint_nights": 148,
+   "short": true,
+   "long": true
+  }
+ },
+ "random eligible star": {
+  "source_id": "4193792160159363328",
+  "hand": {
+   "epochs": 1104,
+   "faint": 11,
+   "bright": 17,
+   "excess": -6,
+   "faint_nights": 11
+  },
+  "pipeline": {
+   "epochs": 1104,
+   "faint": 11,
+   "bright": 17,
+   "excess": -6,
+   "faint_nights": 11,
+   "short": false,
+   "long": false
+  }
+ }
+}

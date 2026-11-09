@@ -1,0 +1,123 @@
+{
+ "calendar_null": {
+  "long_dip_candidates": 769,
+  "observed_with_low_bin_in_top10": 454,
+  "null_median": 215.0,
+  "null_95": [
+   196.0,
+   238.0
+  ],
+  "excess_over_null": 239.0,
+  "share_of_quiet_star_usable_bins_in_top10": 0.1085,
+  "share_of_candidate_low_bins_in_top10": 0.3911
+ },
+ "g4": {
+  "low_bins_with_3g_3r": 1836,
+  "both_bands_gt_2.5pct_below_pooled_median": 1728,
+  "share_2.5pct": 0.941,
+  "both_bands_ge_5pct_below_own_median": 1296,
+  "share_5pct": 0.706,
+  "plan_rule_night_coincidence": {
+   "random_30_flags": {
+    "stars": 30,
+    "testable": 26,
+    "pass": 23,
+    "share": 0.885
+   },
+   "all_flags": {
+    "stars": 1006,
+    "testable": 946,
+    "pass": 771,
+    "share": 0.815
+   },
+   "all_flags_excluding_known": {
+    "stars": 991,
+    "testable": 932,
+    "pass": 757,
+    "share": 0.812
+   },
+   "recovered_known_systems": {
+    "stars": 15,
+    "testable": 14,
+    "pass": 14,
+    "share": 1.0
+   }
+  }
+ },
+ "sum_of_class_lower_rate": {
+  "sum": 0.0002546930462175559,
+  "by_class": {
+   "wd1145": 5.602306396309403e-05,
+   "j0139": 9.435954504357387e-05,
+   "oneoff": 0.000104310437210888
+  },
+  "preregistered_best_class": 0.00020957937555877223
+ },
+ "asymmetry_by_G": {
+  "<17": {
+   "stars": 4346,
+   "share_negative_excess": 0.28,
+   "median_excess": 2.0,
+   "short_flag_rate": 0.00851
+  },
+  "17-18": {
+   "stars": 9844,
+   "share_negative_excess": 0.461,
+   "median_excess": 0.0,
+   "short_flag_rate": 0.00518
+  },
+  "18-19": {
+   "stars": 28231,
+   "share_negative_excess": 0.68,
+   "median_excess": -4.0,
+   "short_flag_rate": 0.00333
+  },
+  "19-19.5": {
+   "stars": 27650,
+   "share_negative_excess": 0.839,
+   "median_excess": -8.0,
+   "short_flag_rate": 0.00163
+  },
+  "19.5-20": {
+   "stars": 38422,
+   "share_negative_excess": 0.922,
+   "median_excess": -10.0,
+   "short_flag_rate": 0.00016
+  }
+ },
+ "ztf_gaia_mismatch": {
+  "robust_scatter_mag": {
+   "zg": 0.043,
+   "zr": 0.032
+  },
+  "eligible_mismatched": 186,
+  "flag_rate_mismatched": 0.0914,
+  "flag_rate_others": 0.0091,
+  "candidates_mismatched": 15,
+  "known_mismatched": 0
+ },
+ "sbss_like_for_like": {
+  "stored_good_gr_epochs_mjd_ge_60068": 32,
+  "stored_by_filter": {
+   "zg": 25,
+   "zr": 7
+  },
+  "irsa_good_gr_epochs_mjd_ge_60068": 34,
+  "irsa_by_filter": {
+   "zg": 27,
+   "zr": 7
+  },
+  "irsa_not_stored": [
+   {
+    "oid": "1824102200002193",
+    "filtercode": "zg",
+    "mjd": 60092.2932523
+   },
+   {
+    "oid": "1824102200002193",
+    "filtercode": "zg",
+    "mjd": 60423.3719907
+   }
+  ]
+ }
+}

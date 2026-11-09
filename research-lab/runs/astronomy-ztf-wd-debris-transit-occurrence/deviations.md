@@ -47,3 +47,37 @@
 6. **G5** (finding 6). The title and floor rows are rewritten. Row 3 ("committed before detection") is relabelled
    partially supported: `known_systems.csv` was committed before detection, but its Gaia IDs were corrected after
    the first detection pass (D1).
+
+## D3 — 2026-11-10 — edits after the confirmation pass (verdict: publish with edits)
+
+1. **"About 1 in 80"** is the with-zi upper rate; under g and r, 1/1.38e-2 = 73, so "about 1 in 70".
+2. **SBSS 1232+563, like for like** (`code/posthoc_d3_sbss.py`): good g and r epochs at MJD ≥ 60068, 32 stored
+   against 34 in IRSA; the 2 missing come from the second field's g object (1824102200002193), which loses to the
+   most-epochs object. D2's "29 against 35" compared a windowed all-filter count with an unwindowed one. SBSS is no
+   longer listed under "shallow or sporadic dimming".
+3. **"Mostly systematics" softened to "many"** (`code/posthoc_d3.py`): re-drawing each long-dip candidate's low bins
+   among its own bins with at least 5 epochs puts 215 (196–238) in the ten crowded windows by coverage alone, against
+   454 observed.
+4. **G4 under three readings** (`posthoc_d3.py`): the plan's night-level rule (23 of 26 testable random flags pass;
+   81% of all testable flags; 14 of 14 testable known systems), both bands more than 2.5% below the pooled median
+   (94%, D2's reading) and both at least 5% below their own median (71%).
+5. **coverage.json** regenerated for g and r (116,911 with light curves, 108,493 eligible), by re-running
+   `handtrace.py`, which now reads the failed-query count from the fetch logs.
+6. **D2 item 6 misdescribed G5 row 3.** It was not relabelled; with the ID correction disclosed in the sentence,
+   Supported stands.
+7. **The first review's minor findings 7–12**, which D2 did not mention:
+   - 7 (hand traces): four g- and r-only traces, two chosen and two random, including a long-rule trace of a random
+     long-only candidate; all match the pipeline exactly.
+   - 8 (ZTF–Gaia magnitude mismatch): 186 eligible stars more than 0.75 mag brighter in g or r than Gaia predicts,
+     flagged at 9.1% against 0.9%; 15 candidates, no known system. Listed in `zg_gaia_mismatch.csv` and stated as a
+     limit, not vetoed (a veto would be a new post hoc rule). The reviewer's count (257) used a different colour
+     relation.
+   - 9 (combined rate and class labels): the sum-of-class lower rate, 2.5e-4, is reported beside the preregistered
+     best-class 2.1e-4, and class labels are called approximate.
+   - 10 (injection realism): stated as a limit, quoting the reviewer's background-limited re-scoring (one-off recovery
+     53% to 45%; lower rate 2.06 to 2.13e-4). Not re-implemented here.
+   - 11 (asymmetry by G): reported (28% of stars with a negative excess at G < 17, 92% at G 19.5–20; short-rule flag
+     rate 0.85% to 0.016%).
+   - 12 (provenance): the report states that the in-sample Gaia IDs were matched from the sample by position and that
+     `source_location` names the paper each ID was checked against. The committed control list is not rewritten.
+

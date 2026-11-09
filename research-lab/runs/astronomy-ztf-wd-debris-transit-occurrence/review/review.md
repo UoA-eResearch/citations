@@ -372,3 +372,153 @@ Most of the roughly 900 unexplained flags are probably instrumental. Two-thirds 
 same few months, and so, slightly, does the average quiet star.
 
 The test as designed could never have shown the rate is low. Only vetting the candidates can do that.
+
+## Confirmation pass
+
+Reviewer: Fable 5.1, 2026-11-09.
+
+I checked the D2 fixes (commit 8bf5ae5) against the stored outputs and my own re-implementations. I used one IRSA
+query (SBSS 1232+563). The scripts and outputs are in `reviewer_checks/confirm_*`; the IRSA CSV and the per-star
+re-run table are in scratch, not committed.
+
+**What I checked, and where the evidence is**
+
+- **g + r re-run** (`confirm_redetect_gr.py` / `.txt`). I re-implemented both rules and ran them on every
+  `data/lc_v2` light curve, keeping only g and r. Against the new `detect.parquet` (116,911 stars) there are
+  0 mismatches in epochs, faint, bright, low_bins, short or long.
+  - Eligible 108,493; short 233; long 802; flagged 1,006.
+  - Compared with `withzi_detect`: 152 stars are flagged only under g + r and 60 only as first run; 581 stars were
+    eligible only because of zi.
+  - `candidates.csv` has 970 rows, all flagged in my re-run. Flagged minus candidates = 36 (15 known + 21 CVs).
+- **Rates, tiers and design limits** (`confirm_rates.py` / `.txt`).
+  - `inject.parquet` was regenerated for g + r:
+    - the seeded pick equals the 5,000 g + r unflagged eligible stars;
+    - it is not the withzi file (308 of 5,000 stars overlap);
+    - a replay of 200 stars × 30 injections with `detect.inject_one` and my rules gives 0 mismatches in 6,000.
+  - Re-derived from scratch: ΣC_best 71,571.9. Every completeness cell has at least 250 injections, so no fallback
+    was used.
+    - Lower rate 2.096e-4 (1.17–3.46e-4).
+    - Upper rate 1.376e-2 (1.29–1.46e-2).
+    - H1 Inconclusive.
+    - 15 of 18 known recovered (3 short-only, 6 long-only, 6 both).
+  - Tiers: confirmed 3 → 4.19e-5 (0.86–12.2e-5, 1 in 23,857); plus Guidry 5 → 6.99e-5; all published 15 → 2.10e-4.
+    All three match `posthoc_review.json`.
+  - Design limits: Supported needs N_upper ≤ 24, and Refuted needs ≥ 49 recovered known systems. The data have 1,006
+    flags and 18 known systems in the sample.
+  - Asymmetry under g + r: 77.0% of stars have a negative excess, median −6. So the report's "77%" still holds.
+- **SBSS 1232+563** (`confirm_sbss.py` / `.txt`; IRSA CSV in scratch).
+- **G4 and the calendar test** (`confirm_gr_calendar.py` / `.txt`).
+- **Gates** (`confirm_g5_verify.txt`, `confirm_g6_check.txt`): G5 passed (48 rows) and G6 passed (11 claims), both
+  exit code 0. git status shows the run untouched.
+- **report.html** carries the same text as report.md for every phrase I spot-checked.
+
+### Final verdict: publish with edits
+
+Every number D2 reports reproduces exactly, and the verdict (H1 Inconclusive) is right. What remains is wording:
+- a stale "1 in 80";
+- SBSS epoch counts that compare different windows and filter sets;
+- a "mostly systematics" headline that the calendar null only partly supports;
+- the G4 definition;
+- a stale coverage.json;
+- some leftover first-draft sentences.
+
+None of these changes a number in the verdict.
+
+**Findings 1–6**
+
+- **1. Floor overstated: fixed.** The tiered rates re-derive exactly (`confirm_rates.txt`). The title, the verdict
+  table and "What this does and does not show" say "rate implied by published systems and candidates", and no
+  sentence calls 2.1e-4 a floor any more.
+  - My first review's 4.1e-5 and 6.9e-5 were computed on the with-zi ΣC. On the g + r ΣC, 4.2e-5 and 7.0e-5 are
+    correct.
+  - Small wording point: the title's "leave the rate unbounded above" is loose, since there is an upper rate of
+    1.4e-2. "Poorly bounded above" would be accurate.
+- **2. i band: fixed.**
+  - `FILTERS = zg,zr` is in place.
+  - Detection, injections and occurrence were all genuinely re-run, and the figures quoted in D2 and the report
+    reproduce: 108,493 eligible, 1,006 flagged, 970 candidates, 15/18, 2.1e-4, 1.38e-2.
+  - The as-run outputs are kept as `withzi_*`.
+  - The F1 caption ("pooled over ZTF g and r … 108,493") is now true.
+  - Leftover: `results/tables/coverage.json` still carries the with-zi counts (117,193 with light curves, 109,074
+    eligible). The report's G2 line points to that file, but the report's text gives 116,911 and 108,493.
+- **3. SBSS 1232+563: fixed. The study is right and my first review was wrong.**
+  - The star is in `shard_0017.parquet` (1,555 rows). It has 29 stored good epochs in MJD 60068–60849 (24 g, 4 r,
+    1 i), and 33 at MJD ≥ 60068.
+  - My c6 table printed only bins with ≥ 5 epochs. That is why it showed nothing between 60068 and 60848 and why I
+    called it a 26-month gap. The epochs are there, spread one or two per 30-day bin.
+  - The 2023 event is visible in them: g relative flux 0.84, 0.91, 0.85, 0.56, 0.65, 0.73 and 0.82 between MJD 60073
+    and 60250. But it falls in bins of 5 (the one low bin, 13.8% deep, 7.3 standard errors), 2, 2 and 1 epochs.
+    Five bins are ≥ 5% deep but have fewer than 5 epochs.
+  - So "one qualifying low bin, the rule needs two", caused by sparse sampling, is correct.
+  - IRSA: 4 g/r objects across fields 790 and 1824, and 34 good g/r epochs at MJD ≥ 60068 (35 counting the one zi
+    epoch). 32 of the 34 are stored. The 2 that are not come from the second field's g object (1824102200002193),
+    which loses to the most-epochs object under the one-object-per-filter choice. One of them (MJD 60092, rel 0.86)
+    falls in the event, but it would only lift that bin from 2 to 3 epochs, so the conclusion stands.
+  - The other 22 rows have catflags 32768 and are correctly excluded.
+  - Wording fix needed: "29 good epochs … after April 2023" against "only 35 good epochs after April 2023" compares a
+    windowed, all-filter stored count with an unwindowed, all-filter IRSA count. Like for like, in g + r at
+    MJD ≥ 60068, it is 32 stored against 34 in IRSA.
+  - Separately, "What this does and does not show" still lists the three missed systems as "shallow or sporadic
+    dimming". SBSS is neither.
+- **4. G4 and the calendar test: numbers fixed; wording partly fixed.**
+  - The calendar numbers reproduce exactly: 769 long-dip candidates, 454 with a low bin in the ten busiest windows,
+    140 at MJD 59010, quiet-star depths 0.10–0.74% against −0.02%.
+  - I added a null in which each candidate's low bins are re-drawn at random among its own ≥ 5-epoch bins. It gives
+    215 (95%: 194–238) against the observed 454. The ten windows hold 10.9% of quiet stars' usable bins but 39% of
+    candidates' low bins.
+  - So the clustering is real, about twice coverage. But only about 240 of the 769 are in excess of what coverage
+    alone produces. "Many long-dip flags track survey-wide trends" is supported; "mostly systematics" (the bullet
+    heading, G5 row 27) is stronger than this test shows.
+  - g/r coincidence, 94% against 71%: same data and same bins, so the difference is purely the threshold. D2 uses
+    both bands > 2.5% below the pooled median; my first review used both bands ≥ 5% below their own median. The binning
+    scheme hardly matters (93% and 71% with detect.py's bins).
+  - Of the two, the ≥ 5% per-band version is the faithful translation of the rule's 5% depth. D2's 2.5% halves the
+    threshold.
+  - Neither is the plan's G4 rule, which is "dip epochs coincide in g and r within a night", on 30 random flags. Run
+    as written, 25 of 29 testable random flags pass (1 untestable). Over all flags, 88% of the testable flagged stars
+    have a coincident night, exactly as many as the known systems (88%).
+  - The conclusion ("barely discriminates") therefore holds under every definition. The report should say its 94%
+    is a bin-level analogue at a 2.5% threshold, or quote the plan's own rule (25 of 29).
+- **5. "Unreachable by design": fixed.** The verdict paragraph states it plainly, and the numbers check: at most 24
+  flags for Supported, and about 49 recovered known systems for Refuted against 18.
+- **6. G5: partly fixed.**
+  - The title, floor, standfirst (rows 1–3) and i-band rows are rewritten and the tool passes.
+  - Row 3 is still labelled Supported, although D2 item 6 says it was relabelled "partially supported". Because the
+    sentence now discloses the ID correction, Supported is defensible, but D2 misdescribes it.
+  - Row 47 ("about 1 in 80") cites "1/81", which is the with-zi upper rate. Under g + r it is 1 in 73, so the text
+    should say about 1 in 70.
+  - Row 27 ("mostly systematics") should be Partially supported (see 4).
+  - Rows 21 and 23 should carry the like-for-like SBSS counts (see 3).
+
+**Findings 7–12 (not in the brief).** D2 does not mention them: they are neither addressed nor declined.
+- **7 (hand traces).** Open. `plausibility.md` still calls the traces three plain re-fetches and adds no long-rule
+  trace. It does now note that the traces predate the g + r re-run.
+- **8 (ZTF and Gaia magnitude mismatch, about 257 stars).** Open. No veto, list or limitation was added.
+- **9 (sum-of-class variant; approximate class labels).** Open.
+- **10 (injected dips carry no added noise and no magerr cut).** Open. This is not stated in the report's
+  completeness description.
+- **11 (asymmetry by G).** Open. The 77% sentence is still correct under g + r, but the G-binned table is absent.
+- **12 (provenance).** Partly addressed: the standfirst and D2 now say the IDs were corrected after the first pass.
+  Still open: the `source_location` wording and the hard-coded 13 failures in `handtrace.py`.
+
+All six are minor and none changes the verdict. Declining them with one line each in D2 would be acceptable.
+Leaving them unmentioned is not.
+
+**Remaining issues**
+
+1. Report and G5 row 47: "about 1 in 80" should be about 1 in 70 (1/1.38e-2 = 73).
+2. SBSS wording (report and G5 rows 21 and 23): give like-for-like counts (g + r, MJD ≥ 60068: 32 stored, 34 in
+   IRSA, the 2 missing from the second field's g object). Remove SBSS from the "shallow or sporadic dimming"
+   sentence.
+3. "Mostly systematics" (report heading, G5 row 27): soften to "many". The calendar null puts about 215 of the 454
+   in the crowded windows by coverage alone.
+4. G4: state that the 94% is a bin-level analogue at 2.5% (71% at the rule's 5%), or report the plan's own
+   night-level rule (25 of 29 random flags pass; 88% of flags against 88% of known systems).
+5. `results/tables/coverage.json` still holds the with-zi counts (117,193 and 109,074). Regenerate it for g + r
+   (116,911 and 108,493) or note the difference.
+6. Stale text:
+   - "Independent review: queued" should be done (D2).
+   - The Process section lists only D1; add D2.
+   - D2 item 6 says row 3 was relabelled, but it was not.
+   - "Unbounded above" is loose.
+7. Findings 7–12: address them, or decline each in one line in D2.

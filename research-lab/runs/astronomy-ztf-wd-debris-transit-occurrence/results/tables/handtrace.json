@@ -1,59 +1,194 @@
 {
- "known: WD 1145+017": {
+ "chosen - known: WD 1145+017": {
   "source_id": "3796414192429498880",
   "hand": {
-   "epochs": 743,
-   "faint": 32,
-   "bright": 4,
+   "epochs": 665,
+   "faint": 31,
+   "bright": 3,
    "excess": 28,
-   "faint_nights": 27
+   "faint_nights": 26,
+   "low_bins": 0,
+   "low_bin_detail": []
   },
   "pipeline": {
-   "epochs": 743,
-   "faint": 32,
-   "bright": 4,
+   "epochs": 665,
+   "faint": 31,
+   "bright": 3,
    "excess": 28,
-   "faint_nights": 27,
+   "faint_nights": 26,
+   "low_bins": 0,
    "short": true,
    "long": false
   }
  },
- "candidate (largest excess)": {
-  "source_id": "4611543459874840832",
+ "chosen - candidate (largest excess)": {
+  "source_id": "2017484922214792576",
   "hand": {
-   "epochs": 2487,
-   "faint": 155,
-   "bright": 21,
-   "excess": 134,
-   "faint_nights": 148
+   "epochs": 1383,
+   "faint": 161,
+   "bright": 26,
+   "excess": 135,
+   "faint_nights": 133,
+   "low_bins": 15,
+   "low_bin_detail": [
+    {
+     "bin": 50,
+     "epochs": 7,
+     "depth": 0.6295,
+     "z": 85.9
+    },
+    {
+     "bin": 51,
+     "epochs": 12,
+     "depth": 0.7101,
+     "z": 43.4
+    },
+    {
+     "bin": 52,
+     "epochs": 8,
+     "depth": 0.6429,
+     "z": 32.5
+    },
+    {
+     "bin": 53,
+     "epochs": 15,
+     "depth": 0.6525,
+     "z": 47.2
+    },
+    {
+     "bin": 62,
+     "epochs": 5,
+     "depth": 0.6404,
+     "z": 20.6
+    },
+    {
+     "bin": 63,
+     "epochs": 13,
+     "depth": 0.6457,
+     "z": 37.5
+    },
+    {
+     "bin": 64,
+     "epochs": 6,
+     "depth": 0.6362,
+     "z": 33.4
+    },
+    {
+     "bin": 65,
+     "epochs": 8,
+     "depth": 0.6208,
+     "z": 39.7
+    },
+    {
+     "bin": 66,
+     "epochs": 10,
+     "depth": 0.6324,
+     "z": 37.6
+    },
+    {
+     "bin": 75,
+     "epochs": 10,
+     "depth": 0.6195,
+     "z": 42.1
+    },
+    {
+     "bin": 76,
+     "epochs": 7,
+     "depth": 0.6263,
+     "z": 31.3
+    },
+    {
+     "bin": 79,
+     "epochs": 6,
+     "depth": 0.6546,
+     "z": 27.6
+    },
+    {
+     "bin": 80,
+     "epochs": 5,
+     "depth": 0.6431,
+     "z": 37.3
+    },
+    {
+     "bin": 88,
+     "epochs": 6,
+     "depth": 0.6388,
+     "z": 41.1
+    },
+    {
+     "bin": 89,
+     "epochs": 9,
+     "depth": 0.6296,
+     "z": 41.8
+    }
+   ]
   },
   "pipeline": {
-   "epochs": 2487,
-   "faint": 155,
-   "bright": 21,
-   "excess": 134,
-   "faint_nights": 148,
+   "epochs": 1383,
+   "faint": 161,
+   "bright": 26,
+   "excess": 135,
+   "faint_nights": 133,
+   "low_bins": 15,
    "short": true,
    "long": true
   }
  },
  "random eligible star": {
-  "source_id": "4193792160159363328",
+  "source_id": "4192405916516819200",
   "hand": {
-   "epochs": 1104,
-   "faint": 11,
-   "bright": 17,
-   "excess": -6,
-   "faint_nights": 11
+   "epochs": 899,
+   "faint": 9,
+   "bright": 29,
+   "excess": -20,
+   "faint_nights": 7,
+   "low_bins": 0,
+   "low_bin_detail": []
   },
   "pipeline": {
-   "epochs": 1104,
-   "faint": 11,
-   "bright": 17,
-   "excess": -6,
-   "faint_nights": 11,
+   "epochs": 899,
+   "faint": 9,
+   "bright": 29,
+   "excess": -20,
+   "faint_nights": 7,
+   "low_bins": 0,
    "short": false,
    "long": false
+  }
+ },
+ "random long-only candidate": {
+  "source_id": "3143675405065712000",
+  "hand": {
+   "epochs": 851,
+   "faint": 7,
+   "bright": 37,
+   "excess": -30,
+   "faint_nights": 6,
+   "low_bins": 2,
+   "low_bin_detail": [
+    {
+     "bin": 42,
+     "epochs": 12,
+     "depth": 0.0503,
+     "z": 5.8
+    },
+    {
+     "bin": 78,
+     "epochs": 7,
+     "depth": 0.0939,
+     "z": 9.3
+    }
+   ]
+  },
+  "pipeline": {
+   "epochs": 851,
+   "faint": 7,
+   "bright": 37,
+   "excess": -30,
+   "faint_nights": 6,
+   "low_bins": 2,
+   "short": false,
+   "long": true
   }
  }
 }
