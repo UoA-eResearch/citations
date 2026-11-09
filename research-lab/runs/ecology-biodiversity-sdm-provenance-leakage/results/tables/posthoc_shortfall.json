@@ -88,5 +88,102 @@
    "mean_removed_random": 39.4,
    "random_to_C1_ratio": 0.79
   }
+ },
+ "after_cap_note": "mean_removed_*, matched_species and did_matched above use n_pres after the 10,000 cap",
+ "pre_cap": {
+  "capped_species": 662,
+  "uncapped_species_where_counts_agree": "1338/1338",
+  "mean_removed_C1": 1501.2,
+  "mean_removed_random": 808.4,
+  "pooled_random_to_C1": 0.538,
+  "matched_species": 1381,
+  "matched_with_C1_removal_zero": 603,
+  "did_matched": 0.00054,
+  "ci_matched": [
+   -0.0014,
+   0.00252
+  ],
+  "by_source_db": {
+   "Australia": {
+    "species": 766,
+    "pooled_random_to_C1": 0.538,
+    "per_species_median_ratio": 0.811,
+    "did": -0.02537,
+    "ci": [
+     -0.03103,
+     -0.02003
+    ],
+    "matched_species": 256,
+    "did_matched": -0.01224,
+    "ci_matched": [
+     -0.0208,
+     -0.00471
+    ]
+   },
+   "Denmark": {
+    "species": 249,
+    "pooled_random_to_C1": 0.493,
+    "per_species_median_ratio": 0.564,
+    "did": 0.0309,
+    "ci": [
+     0.01469,
+     0.04866
+    ],
+    "matched_species": 45,
+    "did_matched": 0.06405,
+    "ci_matched": [
+     0.02071,
+     0.10793
+    ]
+   },
+   "TAVA West_Africa": {
+    "species": 56,
+    "pooled_random_to_C1": 0.596,
+    "per_species_median_ratio": 1.0,
+    "did": 0.12806,
+    "ci": [
+     0.09394,
+     0.16316
+    ],
+    "matched_species": 41,
+    "did_matched": 0.12623,
+    "ci_matched": [
+     0.08711,
+     0.16415
+    ]
+   },
+   "Ukraine Grassland Database": {
+    "species": 326,
+    "pooled_random_to_C1": 0.5,
+    "per_species_median_ratio": 0.838,
+    "did": 0.05019,
+    "ci": [
+     0.03714,
+     0.06441
+    ],
+    "matched_species": 144,
+    "did_matched": 0.04821,
+    "ci_matched": [
+     0.02869,
+     0.06945
+    ]
+   },
+   "Netherlands": {
+    "species": 418,
+    "pooled_random_to_C1": 0.532,
+    "per_species_median_ratio": 0.802,
+    "did": 0.01662,
+    "ci": [
+     0.00863,
+     0.02531
+    ],
+    "matched_species": 156,
+    "did_matched": 0.02059,
+    "ci_matched": [
+     0.00596,
+     0.03662
+    ]
+   }
+  }
  }
 }

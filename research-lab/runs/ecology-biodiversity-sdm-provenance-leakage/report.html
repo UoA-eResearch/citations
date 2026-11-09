@@ -77,10 +77,10 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 <div class="page">
 <header class="masthead">
   <div class="eyebrow">Research Lab · Deep dive · Metascience</div>
-  <h1>A sixth of SAGE&#x27;s test presences share a 1 km cell with a republished survey record once two missed Australian republications are flagged, yet removing those records barely changes Random Forest scores; West African and Ukrainian test plots are the exception</h1>
+  <h1>A sixth of SAGE&#x27;s test presences share a 1 km cell with a republished survey record once two missed Australian republications are flagged, yet removing those records barely changes Random Forest scores; West African, Ukrainian and Danish test plots are the exceptions</h1>
   <p class="subtitle">SAGE trains species distribution models on GBIF presence-only records and tests them on sPlotOpen vegetation plots, treating the two as independent. Several of the vegetation-plot databases that supply its test plots are also published in GBIF. The first draft flagged those GBIF datasets from registry metadata and froze the list. The review showed that list missed the second-largest source. This revision flags republications from the data instead, with a same-day, same-cell species-list scan of every dataset, and re-runs the audit and the Random Forest retraining for 2,000 species (D4, post hoc). The preregistered frozen-list results are reported beside the corrected ones.</p>
   <div class="meta">
-    <span>Report · 2026-11-08 · under independent review</span>
+    <span>Report · 2026-11-09 · revised after independent review and a confirmation pass</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ecology-biodiversity-sdm-provenance-leakage/plan.md">Preregistration</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ecology-biodiversity-sdm-provenance-leakage/deviations.md">Deviations log</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ecology-biodiversity-sdm-provenance-leakage/code">Code</a>
@@ -110,9 +110,10 @@ The first draft's version was vacuous by construction.</li>
   random removal): Refuted.</strong><ul>
 <li>The difference-in-differences is <strong>−0.006</strong> (−0.009 to −0.004) across 2,000 species. Removing the republished
 records hurts the scores slightly less than random removal does.</li>
-<li><strong>The random control falls short.</strong> Many Australian species have too few other records in the country to
-match, so random removal removed only about half as many records (a mean 221 against 446 per species). Restricted to the 1,656
-species where random removal reached at least 90% of C1, the DiD is +0.001 (−0.001 to +0.003).</li>
+<li><strong>The random control falls short.</strong> Random removal could not match 46% of C1's count. Denmark accounts for 58%
+of the shortfall and Australia for 35%. Counted before SAGE's 10,000-presence cap, C1 removes a mean 1,501
+presences per species and random removal 808 (pooled ratio 0.54). Restricted to the 1,381 species where random
+removal reached at least 90% of C1 (603 of which had nothing to remove), the DiD is +0.001 (−0.001 to +0.003).</li>
 <li>With the frozen list it was +0.006 (+0.005 to +0.008), on 1,745 species.</li>
 </ul>
 </li>
@@ -121,14 +122,16 @@ species where random removal reached at least 90% of C1, the DiD is +0.001 (−0
 shared records but is 0.821 after random removal. The West African test plots are themselves in the training data.</li>
 <li><strong>Ukrainian grasslands: DiD +0.050</strong> (+0.037 to +0.064, 326 species).</li>
 <li><strong>Denmark: DiD +0.031</strong> (+0.014 to +0.048, 249 species), with 98.6% of test presences co-located. It was missing
-from the first D4 draft because stale cached fits lacked its source cells (D5).</li>
+from the first D4 draft because stale cached fits lacked its source cells (D5). It is not an artefact of the
+shortfall: among the 45 Danish species where random removal reached at least 90% of C1, the DiD is +0.064
+(+0.021 to +0.108).</li>
 <li><strong>Not because removed records turn into pseudo-absences.</strong> In C1 a removed presence can become a background cell
 for that species. A neutral variant keeps those cells out of the background and gives +0.118 (TAVA) and +0.052
 (Ukraine), post hoc. That was expected: all 382 species sit at the 10,000-cell background cap, and their removed
 cells are a median 0.07% of the pool, so induced pseudo-absences were too few to matter.</li>
 <li>The Netherlands: 88% co-located, DiD +0.017 (+0.009 to +0.025).</li>
 <li><strong>Australia: −0.025</strong>, unexplained. It persists among Australian species where random removal reached at least
-90% of C1 (−0.013, −0.021 to −0.005; confirmation pass), so it is not an artefact of the control's shortfall,
+90% of C1 (−0.012, −0.021 to −0.005; 256 species, counts before the cap), so it is not an artefact of the control's shortfall,
 which would bias the DiD upward.</li>
 </ul>
 </li>
@@ -206,7 +209,7 @@ the C1 count could not be matched (13% with the frozen list), and the shortfall 
 </ul>
 <p>SAGE's per-species tuning and the DeepSDM were not repeated. In the corrected run 14,000 fits were run for 2,000 species: a seeded sample of the 2,833 with at least 10
   presences and 10 absences on range-masked source test cells, as the plan's 2,000 cap requires. The frozen-list run
-  had 12,215 fits for 1,745 species. Unchanged inputs reuse cached fits (keyed by an input hash), and 2,292 more fits
+  had 12,215 fits for 1,745 species. Unchanged inputs reuse cached fits (keyed by an input hash and the evaluation version), and 2,292 more fits
   ran for the neutral variant.
 - <strong>Evaluation unit.</strong> The evaluation unit is SAGE's own 1 km evaluation cell. Source cells are test cells with at
   least one plot from a core-flagged source database (D1).
@@ -237,11 +240,11 @@ the C1 count could not be matched (13% with the frozen list), and the shortfall 
 <td><strong>−0.006 (−0.009 to −0.004)</strong></td>
 </tr>
 <tr>
-<td>corrected, random removal ≥ 90% of C1</td>
+<td>corrected, random removal ≥ 90% of C1 (counts before the cap)</td>
 <td>same</td>
 <td></td>
 <td></td>
-<td>1,656</td>
+<td>1,381</td>
 <td>+0.001 (−0.001 to +0.003)</td>
 </tr>
 <tr>
@@ -329,8 +332,8 @@ the C1 count could not be matched (13% with the frozen list), and the shortfall 
 <li><strong>Where the test plots themselves are republished, it is real leakage.</strong> In West Africa the scores depend on it.
   The neutral variant changes little, because induced pseudo-absences were too few to matter.</li>
 <li><strong>Australia's negative DiD is unexplained.</strong> Removing the republished Australian records hurts less than removing
-  random ones, even where the random arm matched the removal count. The pooled random-to-C1 removal ratio in
-  Australia is 0.47, but the per-species median is 0.80. Without Australian-source species the overall DiD is
+  random ones, even where the random arm matched the removal count. Counted before the cap, the pooled random-to-C1
+  removal ratio in Australia is 0.54, but the per-species median is 0.81. Without Australian-source species the overall DiD is
   +0.005 (+0.003 to +0.007; confirmation pass).</li>
 <li><strong>Not shown:</strong><ul>
 <li><strong>Other models.</strong> Only SAGE's Random Forest baseline was retrained.</li>
@@ -360,6 +363,14 @@ split by SAGE training presence, same-relevé species lists), the G3 hand traces
 <li><strong>D4, after the review (post hoc):</strong> the republication scan and amended flags, the full re-run (records, audit,
   removals, 2,000-species retraining), the corrected broad sensitivity, the neutral variant and the refreshed post hoc
   checks. The frozen-list outputs are kept as <code>results/tables/frozen_flags_*</code>.</li>
+<li><strong>Confirmation pass:</strong> fix first (stale cached fits; Denmark missing from the by-source H1).</li>
+<li><strong>D5, after the confirmation pass (post hoc):</strong> the fit cache keyed on the evaluation version and 2,086 stale results
+  refit (only the C0 rows of 553 species changed), Denmark in the by-source H1, Australia described as unexplained,
+  and the shortfall split by country.</li>
+<li><strong>Second confirmation pass:</strong> publish with edits.</li>
+<li><strong>D6, after the second confirmation pass (post hoc):</strong> removal counted before the 10,000-presence cap in
+  <code>posthoc_shortfall.py</code> (the matched restriction is now 1,381 species), the shortfall bullet, Australia's ratios,
+  Denmark's matched DiD, the title, and bare GBIF dataset keys in ledger rows R13–R15.</li>
 </ul>
 <h2>Reproducing it</h2>
 <ol>

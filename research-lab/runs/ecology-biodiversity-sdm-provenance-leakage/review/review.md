@@ -233,3 +233,152 @@ Several report passages are also stale or wrong, and fixing both needs refits (a
    - Add the PLADIAS.SK line (finding 4).
    - The G6 ledger has no rows for the three scan-added registry datasets.
    - The scan has no run log.
+
+## Second confirmation pass
+
+Reviewer: Fable 5.1, 2026-11-09.
+
+Scope: the D5 fixes (commit 82deef8) against the 8 remaining issues of the confirmation pass, following
+`review/confirmation_prompt.md`. I made no refits and wrote nothing into the run. Every script that reads `data/` or
+`results/` ran with `venv/bin/python -I` (or `python3 -I`), from a scratch directory outside `data/`, with paths passed
+as arguments and at most 4 threads. Pre-D5 versions of the changed outputs were taken with read-only `git show 82deef8^:…`.
+Scripts and outputs are in `review/reviewer_checks/confirm2_*`.
+
+What was checked, and which file backs it:
+
+- **Cache refit and masks** (`confirm2_cache_masks.py/.txt`). I diffed the pre-D5 and D5 `rf_auroc.csv` row by row,
+  and checked n_src / pos_src within each species, for all seven conditions and for C1–C6 alone.
+- **H1 and by-source reproduction** (`confirm2_h1.py/.txt`). I re-ran the `analyse.py` procedure (same seed, same
+  order of rng use) on `rf_auroc.csv`. All 16 stored contrasts in `primary.json` match exactly, Denmark included. I
+  also recomputed the Australia, no-Australia and matched figures on the refit table instead of citing them.
+- **Removal before the cap** (`confirm2_true_removal.py/.txt`; new). `posthoc_shortfall.py` measures removal as the
+  difference in `n_pres`. That count is taken after rf.py's 10,000-presence cap, so I recounted removal from
+  `data/work/removals/C*.parquet` within SAGE's occurrence subsample. For all 1,338 uncapped species this count equals
+  the `n_pres` difference exactly.
+- **Neutral variant** (`confirm2_neutral.py/.txt`) and the **shortfall JSON** before and after D5
+  (`confirm2_shortfall_json.txt`). The country split of the shortfall uses `data/work/removals`, which D5 did not
+  touch (file dates 2026-11-07), so I reused `confirm_shortfall_neutral.txt` for it.
+- **Text, flags, scan log and HTML** (`confirm2_text.py/.txt`). This covers stale strings, flag counts,
+  `removals.json`, `coverage.json`, the scan log against `republication_scan.csv`, and every number in `report.md`
+  against `report.html`.
+- **G5 and G6** (`confirm2_gates.txt`, `confirm2_g6_ids.py/.txt`).
+  - `python3 -I tools/overclaim_check.py RUN --verify` passes (51 rows). Re-extracting into a copy gives the same
+    sentences.
+  - `python3 -I tools/attribution.py check RUN --show` passes (15 claims).
+  - R13–R15 were resolved separately with the tool's own `resolve()`.
+
+### Final verdict: publish with edits
+
+Both verdicts follow from the stored numbers. H1 is Refuted at −0.006 (−0.009 to −0.004; 2,000 species), and H2 is
+Supported at 16.6%. The D5 refit did what D5 says. Denmark's +0.031 reproduces exactly. It is not caused by the
+control's shortfall: among the 45 Danish species where random removal reached at least 90% of C1 (counted before the
+cap), the DiD is +0.064 (+0.019 to +0.111).
+
+The edits left are text changes plus one small post hoc recount, and none needs a refit:
+
+- the shortfall bullet in the verdict block still blames Australia;
+- the "per-species" removal counts and the 1,656 "matched" species are measured after the cap;
+- the Australia ratio of 0.47 is stale;
+- the title leaves out Denmark;
+- a few process lines are stale;
+- G6 does not actually check the new ledger rows.
+
+### Remaining issues from the confirmation pass
+
+- **1. Stale cache: fixed.**
+  - The rf.py cache key now carries `EVAL_VERSION`, and `data/work/rf_stale_d4/` holds 2,086 files.
+  - After the refit, n_src and pos_src are constant across all conditions for all 2,000 species, and no row lacks the
+    Denmark key.
+  - Pre-D5 → D5, numeric values changed only in 553 C0 rows, and only C0 changed for any species. None of the 832
+    formerly stale C1–C6 rows changed. The DiD is −0.00645 before and after (`confirm2_cache_masks.txt`).
+  - `coverage.json` reports 5,390 undefined non-source AUROCs (= 770 species × 7), and `primary.json` reports 751
+    reused fits; both match the table.
+  - **The "207 species" claim, re-checked.** The first confirmation pass's statement that 207 species had their C1
+    and random arms scored on different masks was **wrong before the refit, and it does not hold now**.
+    - Before the refit, n_src and pos_src were already identical across C1–C6 for every species (0 of 2,000 differ).
+    - The 207 species differed only in whether a row's `auroc_db` dict carried the Denmark and Australia keys. The
+      stale rows came from species whose source cells did not change, so their values were the same; the refit
+      changed none of them.
+    - The real mask mismatch (553 species) was between C0 and the other conditions. C0 does not enter the DiD.
+    - The pass's "excluding the 207 species, −0.0076" sensitivity was therefore unnecessary. The stored −0.0065
+      was always computed on consistent masks.
+    - What the pass got right: 2,080 rows carried frozen-run `auroc_db` dicts; C0 mixed two masks (mean C0 0.8645
+      before, 0.8641 now); and Denmark was missing from the by-source H1.
+- **2. Denmark: fixed.**
+  - +0.0309 (+0.0137 to +0.0479) on 249 species reproduces exactly (`confirm2_h1.txt`).
+  - "Three databases exceed 0.02" is true of the point estimates (TAVA, Ukraine, Denmark). Only TAVA and Ukraine
+    have lower bounds above 0.02, and Denmark's (0.014) is above 0. Australia is the only interval wholly below zero,
+    so "the other databases' intervals include zero" is now correct.
+  - Denmark is robust to the shortfall (see the verdict). The report could say so in one clause; this is optional.
+  - **The title has not caught up.** It still names only "West African and Ukrainian test plots" as the exception.
+    See remaining issue 3.
+- **3. Australia: fixed, with a stale number.**
+  - "Control artefact" is gone, the DiD is called unexplained, and the bias direction is stated correctly.
+  - Recomputed on the refit table (766 Australian species, up from 750):
+    - matched (random ≥ 90% of C1, on the earlier `n_pres` definition): −0.0125 (−0.0207 to −0.0048), n = 248;
+    - the same, counted before the cap: −0.0122 (−0.021 to −0.005), n = 256;
+    - per-species median ratio 0.805 (0.811 before the cap);
+    - no-Australia DiD +0.0049 (+0.003 to +0.007), n = 1,234.
+  - So the cited −0.013 and 0.80 hold to rounding. The figure is −0.012 on the current species set.
+  - **The pooled ratio is stale.** The report gives "0.47" for Australia, which is the pre-D5 value. The refreshed
+    `posthoc_shortfall.json` gives 0.48; 0.47 is now Denmark's figure (`confirm2_shortfall_json.txt`).
+- **4. Shortfall split: partly fixed.**
+  - The Results bullet now gives 46% short, Denmark 58% (1.15M) and Australia 35% (0.70M), which matches
+    `confirm_shortfall_neutral.txt` and `removals.json` (1,994,746 / 4,302,471).
+  - **The verdict block still says the opposite:** "Many Australian species have too few other records in the
+    country to match".
+  - Its "mean 221 against 446 per species" and the 1,656 "matched" species come from `n_pres` after the 10,000 cap.
+    In 1,148 of those 1,656 species the C1 removal reads as zero (662 population species hit the cap), so they count as matched by
+    construction.
+  - Counted before the cap (`confirm2_true_removal.txt`): C1 removes a mean of 1,501 presences per species against
+    808 for random removal (pooled 0.54). 1,381 species are matched, and their DiD is +0.0005 (−0.002 to +0.003).
+    The conclusion is unchanged; the numbers and the wording are not right.
+- **5. Stale text: mostly fixed.**
+  - Correct now (`confirm2_text.txt`): 30 core datasets for 13 sources and 2 broad (matches `provenance_flags.csv`);
+    4,302,471 (7.5%) with the per-country counts; 46%; 5,390; 1,230; and reproduction steps that list
+    `republication_scan.py`, `rf.py fit_neutral` and `posthoc_neutral.py`.
+  - Still stale:
+    - "Unchanged inputs reuse cached fits (keyed by an input hash)": the key now also includes the evaluation
+      version.
+    - "Process and deviations" lists D1–D4 and the first review only. D5 and the two confirmation passes are not
+      mentioned.
+  - `report.html` contains every number in `report.md`, and it is newer than the Markdown.
+- **6. plausibility.md: fixed.**
+  - Section 4 gives the corrected run's figures. Each matches the stored outputs.
+  - The invariant ("n_src constant across C0–C6 for all 2,000 species") is true of `rf_auroc.csv`.
+  - So is the D5 statement that only 553 C0 results changed.
+  - A note marks sections 1–3 as frozen-run values.
+- **7. Neutral variant: fixed.**
+  - The report states the background cap and the 0.07% share.
+  - The neutral rows now in `rf_auroc.csv` (C1n–C6n, 2,292) are identical to `rf_auroc_neutral.csv`. `analyse.py`
+    filters them out. All are at the 10,000 cap, and n_bg equals the standard fit's in every case.
+  - TAVA +0.118 and Ukraine +0.052 reproduce (`confirm2_neutral.txt`).
+- **8. Minor items: fixed, with one ledger edit.**
+  - The PLADIAS.SK line ("6 of 628 single-plot test cells, below the flag rule") is in the report and matches the
+    scan.
+  - `results/republication_scan_log.txt` agrees with `republication_scan.csv`: NSW BioNet 664, SA Flora 96, Danish
+    portal 45, PLADIAS.SK 6.
+  - **Ledger rows R13–R15 exist, but G6 does not check them.** Their `source_id` is a gbif.org URL, which
+    `attribution.py`'s `resolve()` does not recognise, so it returns "unchecked" and the row passes silently.
+    - Resolved as bare datasetKeys, they give NSW BioNet Atlas, SA Flora and "Danmarks Miljøportals Naturdatabase"
+      (`confirm2_g6_ids.txt`), so the claims are right.
+    - The ids should be the bare keys, as in A3–A8.
+
+### Remaining issues
+
+1. **Verdict-block shortfall bullet** (report.md H1 bullets; G5 row 25):
+   - Replace "Many Australian species have too few other records" with the actual split (Denmark 58%, Australia
+     35%).
+   - Either give the removal counts before the cap (mean 1,501 vs 808 per species; pooled 0.54), or label 221/446
+     as counted after SAGE's 10,000 cap.
+   - Do the same for the matched restriction. Recount it before the cap in `posthoc_shortfall.py` (1,381 species,
+     +0.0005, −0.002 to +0.003), or state that capped species count as matched. Update the table row too.
+2. **Australia figures:** the pooled ratio is 0.48 in the refreshed `posthoc_shortfall.json`, not 0.47. The matched
+   Australian DiD on the refit species set is −0.012 (−0.021 to −0.005), not −0.013.
+3. **Title:** add Denmark (for example, "West African, Ukrainian and Danish test plots are the exceptions"). It is
+   the third database above 0.02, and the verdict block and plain terms already include it.
+4. **Stale process text:**
+   - The cache key now includes the evaluation version.
+   - Add D5 and the confirmation passes to "Process and deviations".
+5. **G6:** write R13–R15's `source_id` as bare GBIF datasetKeys so `attribution.py` resolves them. They resolve to
+   the named datasets.

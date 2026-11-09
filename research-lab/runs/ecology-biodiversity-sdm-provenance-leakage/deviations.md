@@ -144,3 +144,20 @@ Everything here is post hoc. The frozen-list outputs are kept as `results/tables
 
 Figures from the confirmation pass that are cited, not recomputed: the matched-Australia DiD (−0.013), the
 per-species removal ratio (0.80), the shortfall split, the no-Australia DiD (+0.005) and the 0.07% background share.
+
+## D6 — 2026-11-10 — edits after the second confirmation pass (verdict: publish with edits)
+
+1. **Removal counted before the cap** (item 1). `posthoc_shortfall.py` measured removal as the `n_pres` difference,
+   which is recorded after rf.py's 10,000-presence cap, so the 662 capped species read as removing nothing and counted
+   as matched. A `pre_cap` block now counts the removed presences that lie in SAGE's occurrence subsample (equal to the
+   `n_pres` difference for all 1,338 uncapped species): C1 a mean 1,501 per species against 808 for random removal
+   (pooled 0.54); 1,381 species matched (603 with nothing to remove), DiD +0.0005 (−0.0014 to +0.0025). The
+   after-cap figures stay in the file, labelled. The verdict-block bullet now gives the actual split (Denmark 58%,
+   Australia 35%) instead of blaming Australia.
+2. **Australia** (item 2): before the cap, pooled ratio 0.54 and per-species median 0.81; matched DiD −0.012 (−0.021
+   to −0.005, 256 species). **Denmark**: matched DiD +0.064 (+0.021 to +0.108, 45 species), so its +0.031 is not a
+   shortfall artefact.
+3. **Title** (item 3) names the Danish test plots.
+4. **Process** (item 4): the cache key description and D5, D6 and the confirmation passes.
+5. **G6** (item 5): R13–R15 carry bare GBIF datasetKeys, which `attribution.py` resolves.
+

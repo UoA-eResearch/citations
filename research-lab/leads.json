@@ -3204,7 +3204,12 @@
    "risks": "Matching GBIF datasets to sPlotOpen sources is partly manual and may miss republished data, for example SOPHY relev\u00e9s reaching GBIF via the French national INPN/OpenObs aggregators. A null result could reflect incomplete flagging. Retraining DeepSDM depends on GPU availability. Random-removal controls cannot perfectly match spatial structure.",
    "critic_note": "Critic (round 2): Confirmed that SAGE (arXiv 2609.31082, 25 Sep 2026) exists and that its abstract matches: GBIF training and sPlotOpen presence-absence evaluation for 5,771 species. Searches found no provenance-leakage audit of SAGE or GeoPlant. The benchmark is a week old, so the work is timely, but the effect may be tiny after 1 km aggregation; the matched-removal control is the right design. Value 6 and cost 5 unchanged.",
    "plain_summary": "New benchmarks for species-distribution models train on crowd-sourced sightings from GBIF and test on 'independent' expert vegetation surveys. Some of those same expert surveys are also published inside GBIF, so the test answers may leak into the training data. This project measures how much that inflates the reported scores.",
-   "scout_round": 2
+   "scout_round": 2,
+   "status": "deep dive \u00b7 report (revised after review and two confirmation passes)",
+   "report_url": "runs/ecology-biodiversity-sdm-provenance-leakage/report.html",
+   "verdict_tag": "Refuted",
+   "verdict_note": "H1 Refuted; H2 Supported with the corrected flag list (both Refuted with the preregistered frozen list). SAGE trains species distribution models on GBIF presence-only records and tests them on sPlotOpen vegetation plots. A same-day, same-cell scan of every GBIF dataset found republications the registry metadata missed (NSW BioNet, SA Flora): 16.6% (16.0-17.2) of source-plot test presences share a 1 km cell with a republished record. Removing those 4.3M training records and retraining SAGE's Random Forest for 2,000 species changes source-plot AUROC by -0.006 (-0.009 to -0.004) relative to matched random removal, against a preregistered +0.02. Three databases exceed 0.02: TAVA West Africa +0.128, Ukrainian grasslands +0.050 and Denmark +0.031; Australia's -0.025 is unexplained. Review: do not publish in its first form; confirmation fix first; second confirmation publish with edits.",
+   "headline": "Is SAGE's species-distribution benchmark leaking its test plots into training? A sixth of test presences sit beside a republished survey record, but removing them barely moves Random Forest scores, except in West Africa, Ukraine and Denmark."
   },
   {
    "id": "ecology-biodiversity-globi-temporal-link-holdout",

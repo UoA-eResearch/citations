@@ -1,4 +1,4 @@
-# A sixth of SAGE's test presences share a 1 km cell with a republished survey record once two missed Australian republications are flagged, yet removing those records barely changes Random Forest scores; West African and Ukrainian test plots are the exception
+# A sixth of SAGE's test presences share a 1 km cell with a republished survey record once two missed Australian republications are flagged, yet removing those records barely changes Random Forest scores; West African, Ukrainian and Danish test plots are the exceptions
 
 *SAGE trains species distribution models on GBIF presence-only records and tests them on sPlotOpen vegetation plots,
 treating the two as independent. Several of the vegetation-plot databases that supply its test plots are also
@@ -26,23 +26,26 @@ same-day, same-cell species-list scan of every dataset, and re-runs the audit an
   random removal): Refuted.**
   - The difference-in-differences is **−0.006** (−0.009 to −0.004) across 2,000 species. Removing the republished
     records hurts the scores slightly less than random removal does.
-  - **The random control falls short.** Many Australian species have too few other records in the country to
-    match, so random removal removed only about half as many records (a mean 221 against 446 per species). Restricted to the 1,656
-    species where random removal reached at least 90% of C1, the DiD is +0.001 (−0.001 to +0.003).
+  - **The random control falls short.** Random removal could not match 46% of C1's count. Denmark accounts for 58%
+    of the shortfall and Australia for 35%. Counted before SAGE's 10,000-presence cap, C1 removes a mean 1,501
+    presences per species and random removal 808 (pooled ratio 0.54). Restricted to the 1,381 species where random
+    removal reached at least 90% of C1 (603 of which had nothing to remove), the DiD is +0.001 (−0.001 to +0.003).
   - With the frozen list it was +0.006 (+0.005 to +0.008), on 1,745 species.
 - **Three databases exceed 0.02 on their own:**
   - **TAVA West Africa: DiD +0.128** (+0.097 to +0.163, 56 species). AUROC falls from 0.807 to 0.693 without the
     shared records but is 0.821 after random removal. The West African test plots are themselves in the training data.
   - **Ukrainian grasslands: DiD +0.050** (+0.037 to +0.064, 326 species).
   - **Denmark: DiD +0.031** (+0.014 to +0.048, 249 species), with 98.6% of test presences co-located. It was missing
-    from the first D4 draft because stale cached fits lacked its source cells (D5).
+    from the first D4 draft because stale cached fits lacked its source cells (D5). It is not an artefact of the
+    shortfall: among the 45 Danish species where random removal reached at least 90% of C1, the DiD is +0.064
+    (+0.021 to +0.108).
   - **Not because removed records turn into pseudo-absences.** In C1 a removed presence can become a background cell
     for that species. A neutral variant keeps those cells out of the background and gives +0.118 (TAVA) and +0.052
     (Ukraine), post hoc. That was expected: all 382 species sit at the 10,000-cell background cap, and their removed
     cells are a median 0.07% of the pool, so induced pseudo-absences were too few to matter.
   - The Netherlands: 88% co-located, DiD +0.017 (+0.009 to +0.025).
   - **Australia: −0.025**, unexplained. It persists among Australian species where random removal reached at least
-    90% of C1 (−0.013, −0.021 to −0.005; confirmation pass), so it is not an artefact of the control's shortfall,
+    90% of C1 (−0.012, −0.021 to −0.005; 256 species, counts before the cap), so it is not an artefact of the control's shortfall,
     which would bias the DiD upward.
 
 ## In plain terms
@@ -115,7 +118,7 @@ presence-only-train, presence-absence-test design had not been measured.
 
   SAGE's per-species tuning and the DeepSDM were not repeated. In the corrected run 14,000 fits were run for 2,000 species: a seeded sample of the 2,833 with at least 10
   presences and 10 absences on range-masked source test cells, as the plan's 2,000 cap requires. The frozen-list run
-  had 12,215 fits for 1,745 species. Unchanged inputs reuse cached fits (keyed by an input hash), and 2,292 more fits
+  had 12,215 fits for 1,745 species. Unchanged inputs reuse cached fits (keyed by an input hash and the evaluation version), and 2,292 more fits
   ran for the neutral variant.
 - **Evaluation unit.** The evaluation unit is SAGE's own 1 km evaluation cell. Source cells are test cells with at
   least one plot from a core-flagged source database (D1).
@@ -131,7 +134,7 @@ presence-only-train, presence-absence-test design had not been measured.
 | analysis | flag list | test presences | H2 share (95%) | species | DiD (95%) |
 |---|---|---|---|---|---|
 | **corrected (D4)** | **frozen + 3 scan-flagged datasets** | **268,972** | **16.6% (16.0–17.2)** | **2,000** | **−0.006 (−0.009 to −0.004)** |
-| corrected, random removal ≥ 90% of C1 | same | | | 1,656 | +0.001 (−0.001 to +0.003) |
+| corrected, random removal ≥ 90% of C1 (counts before the cap) | same | | | 1,381 | +0.001 (−0.001 to +0.003) |
 | preregistered | frozen (registry metadata) | 165,422 | 8.3% (7.7–8.9) | 1,745 | +0.006 (+0.005 to +0.008) |
 
 - **Mean AUROC on source test cells** (corrected): 0.864 as distributed, 0.861 without provenance-shared records,
@@ -168,8 +171,8 @@ presence-only-train, presence-absence-test design had not been measured.
 - **Where the test plots themselves are republished, it is real leakage.** In West Africa the scores depend on it.
   The neutral variant changes little, because induced pseudo-absences were too few to matter.
 - **Australia's negative DiD is unexplained.** Removing the republished Australian records hurts less than removing
-  random ones, even where the random arm matched the removal count. The pooled random-to-C1 removal ratio in
-  Australia is 0.47, but the per-species median is 0.80. Without Australian-source species the overall DiD is
+  random ones, even where the random arm matched the removal count. Counted before the cap, the pooled random-to-C1
+  removal ratio in Australia is 0.54, but the per-species median is 0.81. Without Australian-source species the overall DiD is
   +0.005 (+0.003 to +0.007; confirmation pass).
 - **Not shown:**
   - **Other models.** Only SAGE's Random Forest baseline was retrained.
@@ -195,6 +198,14 @@ presence-only-train, presence-absence-test design had not been measured.
 - **D4, after the review (post hoc):** the republication scan and amended flags, the full re-run (records, audit,
   removals, 2,000-species retraining), the corrected broad sensitivity, the neutral variant and the refreshed post hoc
   checks. The frozen-list outputs are kept as `results/tables/frozen_flags_*`.
+- **Confirmation pass:** fix first (stale cached fits; Denmark missing from the by-source H1).
+- **D5, after the confirmation pass (post hoc):** the fit cache keyed on the evaluation version and 2,086 stale results
+  refit (only the C0 rows of 553 species changed), Denmark in the by-source H1, Australia described as unexplained,
+  and the shortfall split by country.
+- **Second confirmation pass:** publish with edits.
+- **D6, after the second confirmation pass (post hoc):** removal counted before the 10,000-presence cap in
+  `posthoc_shortfall.py` (the matched restriction is now 1,381 species), the shortfall bullet, Australia's ratios,
+  Denmark's matched DiD, the title, and bare GBIF dataset keys in ledger rows R13–R15.
 
 ## Reproducing it
 
