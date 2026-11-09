@@ -1,0 +1,650 @@
+{
+ "packets": 60,
+ "labeller_1": {
+  "over": {
+   "n": 30,
+   "agree": 18,
+   "share": 0.6,
+   "wilson": [
+    0.423,
+    0.754
+   ],
+   "judgeable": 28,
+   "agree_judgeable": 18,
+   "share_judgeable": 0.643,
+   "wilson_judgeable": [
+    0.458,
+    0.793
+   ],
+   "says_present_in_A": 7,
+   "cannot_tell": 2
+  },
+  "tight": {
+   "n": 30,
+   "agree": 29,
+   "judgeable": 30,
+   "says_absent_in_A": 1,
+   "cannot_tell": 0
+  }
+ },
+ "labeller_2": {
+  "over": {
+   "n": 30,
+   "agree": 20,
+   "share": 0.667,
+   "wilson": [
+    0.488,
+    0.808
+   ],
+   "judgeable": 28,
+   "agree_judgeable": 20,
+   "share_judgeable": 0.714,
+   "wilson_judgeable": [
+    0.529,
+    0.847
+   ],
+   "says_present_in_A": 6,
+   "cannot_tell": 2
+  },
+  "tight": {
+   "n": 30,
+   "agree": 29,
+   "judgeable": 30,
+   "says_absent_in_A": 1,
+   "cannot_tell": 0
+  }
+ },
+ "kappa_A_code": 0.966,
+ "kappa_A_flaw": 0.92,
+ "raw_agreement_A_code": 0.983,
+ "adjudicated_packets": 3,
+ "pending": 0,
+ "final": {
+  "over": {
+   "n": 30,
+   "agree": 19,
+   "share": 0.633,
+   "wilson": [
+    0.455,
+    0.781
+   ],
+   "judgeable": 28,
+   "agree_judgeable": 19,
+   "share_judgeable": 0.679,
+   "wilson_judgeable": [
+    0.493,
+    0.821
+   ],
+   "says_present_in_A": 6,
+   "cannot_tell": 2,
+   "flaw_present_in_A": 14,
+   "code_absent_but_flaw_present_in_A": 8
+  },
+  "tight": {
+   "n": 30,
+   "agree": 29,
+   "judgeable": 30,
+   "says_absent_in_A": 1,
+   "cannot_tell": 0
+  },
+  "H1_reliable_by_plan_rule": false
+ },
+ "leak_probe": {
+  "A_fewer_files_than_B": {
+   "over": 0.267,
+   "tight": 0.033,
+   "accuracy_as_predictor": 0.617
+  },
+  "A_no_path_match": {
+   "over": 0.533,
+   "tight": 0.167,
+   "accuracy_as_predictor": 0.683
+  },
+  "n_in_range_median": {
+   "over": 49.0,
+   "tight": 14.0
+  }
+ },
+ "rows": [
+  {
+   "packet": "b00",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-crmg-rp64-5cm3"
+  },
+  {
+   "packet": "b01",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-3fjq-93xj-3f3f"
+  },
+  {
+   "packet": "b02",
+   "pipeline_class": "over-approximated",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-f2rp-38vg-j3gh"
+  },
+  {
+   "packet": "b03",
+   "pipeline_class": "over-approximated",
+   "A_code": "absent",
+   "B_code": "absent",
+   "A_flaw": "cannot tell",
+   "source": "adjudicated",
+   "id": "GHSA-h8rc-w822-q8vq"
+  },
+  {
+   "packet": "b04",
+   "pipeline_class": "over-approximated",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "source": "agreed",
+   "id": "GHSA-r659-8xfp-j327"
+  },
+  {
+   "packet": "b05",
+   "pipeline_class": "over-approximated",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "source": "agreed",
+   "id": "GHSA-5g4v-2pc6-4hh4"
+  },
+  {
+   "packet": "b06",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-p2hp-3wv3-4w74"
+  },
+  {
+   "packet": "b07",
+   "pipeline_class": "over-approximated",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-6v92-r5mx-h5fx"
+  },
+  {
+   "packet": "b08",
+   "pipeline_class": "over-approximated",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "source": "agreed",
+   "id": "GHSA-8cw6-53m5-4932"
+  },
+  {
+   "packet": "b09",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-g57g-f23g-4646"
+  },
+  {
+   "packet": "b10",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-hw26-mmpg-fqfg"
+  },
+  {
+   "packet": "b11",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-pg7v-jwj7-p798"
+  },
+  {
+   "packet": "b12",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-hvq2-wf92-j4f3"
+  },
+  {
+   "packet": "b13",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-5fpv-5qvh-7cf3"
+  },
+  {
+   "packet": "b14",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-74vm-8frp-7w68"
+  },
+  {
+   "packet": "b15",
+   "pipeline_class": "over-approximated",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "source": "agreed",
+   "id": "GHSA-f8gf-w286-fmq2"
+  },
+  {
+   "packet": "b16",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-x287-wcfc-q46c"
+  },
+  {
+   "packet": "b17",
+   "pipeline_class": "over-approximated",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-hpv5-v8g5-c864"
+  },
+  {
+   "packet": "b18",
+   "pipeline_class": "over-approximated",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-6vj9-mwq6-2f5v"
+  },
+  {
+   "packet": "b19",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-gh4c-6fx4-qh6g"
+  },
+  {
+   "packet": "b20",
+   "pipeline_class": "over-approximated",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "source": "agreed",
+   "id": "GHSA-vj45-x3pj-f4w4"
+  },
+  {
+   "packet": "b21",
+   "pipeline_class": "over-approximated",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-hv96-xxx2-5v7w"
+  },
+  {
+   "packet": "b22",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-qgvg-pr8v-6rr3"
+  },
+  {
+   "packet": "b23",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-qf34-qpr4-5pph"
+  },
+  {
+   "packet": "b24",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-8wr5-jm2h-8r4f"
+  },
+  {
+   "packet": "b25",
+   "pipeline_class": "over-approximated",
+   "A_code": "absent",
+   "B_code": "absent",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-45gq-q4xh-cp53"
+  },
+  {
+   "packet": "b26",
+   "pipeline_class": "over-approximated",
+   "A_code": "absent",
+   "B_code": "cannot tell",
+   "A_flaw": "no",
+   "source": "agreed",
+   "id": "GHSA-95fx-jjr5-f39c"
+  },
+  {
+   "packet": "b27",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-wxr6-29pv-ch68"
+  },
+  {
+   "packet": "b28",
+   "pipeline_class": "over-approximated",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "source": "agreed",
+   "id": "GHSA-gc5v-m9x4-r6x2"
+  },
+  {
+   "packet": "b29",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-6fw5-9hq8-w87g"
+  },
+  {
+   "packet": "b30",
+   "pipeline_class": "over-approximated",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "source": "adjudicated",
+   "id": "GHSA-mjqp-26hc-grxg"
+  },
+  {
+   "packet": "b31",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-x5rw-q4pp-hg5g"
+  },
+  {
+   "packet": "b32",
+   "pipeline_class": "over-approximated",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-cfjh-p3g4-3q2f"
+  },
+  {
+   "packet": "b33",
+   "pipeline_class": "over-approximated",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "source": "agreed",
+   "id": "GHSA-43qf-4rqw-9q2g"
+  },
+  {
+   "packet": "b34",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "absent",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-2g4c-8fpm-c46v"
+  },
+  {
+   "packet": "b35",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-mxwc-wh95-pw4g"
+  },
+  {
+   "packet": "b36",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-vhv4-fh94-jm5x"
+  },
+  {
+   "packet": "b37",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-p6hw-wm59-3g5g"
+  },
+  {
+   "packet": "b38",
+   "pipeline_class": "over-approximated",
+   "A_code": "present",
+   "B_code": "absent",
+   "A_flaw": "yes",
+   "source": "adjudicated",
+   "id": "GHSA-v936-j8gp-9q3p"
+  },
+  {
+   "packet": "b39",
+   "pipeline_class": "over-approximated",
+   "A_code": "absent",
+   "B_code": "absent",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-98pq-pmw9-4gpm"
+  },
+  {
+   "packet": "b40",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-jfgp-674x-6q4p"
+  },
+  {
+   "packet": "b41",
+   "pipeline_class": "over-approximated",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "source": "agreed",
+   "id": "GHSA-4qx8-w7c3-pj3p"
+  },
+  {
+   "packet": "b42",
+   "pipeline_class": "over-approximated",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-wjr4-2jgw-hmv8"
+  },
+  {
+   "packet": "b43",
+   "pipeline_class": "tight",
+   "A_code": "absent",
+   "B_code": "absent",
+   "A_flaw": "no",
+   "source": "agreed",
+   "id": "GHSA-jm5j-jfrm-hm23"
+  },
+  {
+   "packet": "b44",
+   "pipeline_class": "over-approximated",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-7599-fqgm-v84p"
+  },
+  {
+   "packet": "b45",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-86ch-6w7v-v6xf"
+  },
+  {
+   "packet": "b46",
+   "pipeline_class": "over-approximated",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "disagree",
+   "source": "agreed",
+   "id": "GHSA-4hf8-5mjm-rfgq"
+  },
+  {
+   "packet": "b47",
+   "pipeline_class": "over-approximated",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "source": "agreed",
+   "id": "GHSA-8vh3-g2qg-2h2c"
+  },
+  {
+   "packet": "b48",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-64fm-8hw2-v72w"
+  },
+  {
+   "packet": "b49",
+   "pipeline_class": "over-approximated",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-4p35-cfcx-8653"
+  },
+  {
+   "packet": "b50",
+   "pipeline_class": "over-approximated",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-9vhv-jxww-xfm5"
+  },
+  {
+   "packet": "b51",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-cv5c-mh6j-wvp9"
+  },
+  {
+   "packet": "b52",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-687g-22h4-j4w4"
+  },
+  {
+   "packet": "b53",
+   "pipeline_class": "over-approximated",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-xg9f-g7g7-2323"
+  },
+  {
+   "packet": "b54",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-mjff-wv85-hmcj"
+  },
+  {
+   "packet": "b55",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-jgpq-g82g-6c39"
+  },
+  {
+   "packet": "b56",
+   "pipeline_class": "tight",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "source": "agreed",
+   "id": "GHSA-3wc5-fcw2-2329"
+  },
+  {
+   "packet": "b57",
+   "pipeline_class": "over-approximated",
+   "A_code": "cannot tell",
+   "B_code": "present",
+   "A_flaw": "cannot tell",
+   "source": "agreed",
+   "id": "GHSA-vmp7-252j-cwp7"
+  },
+  {
+   "packet": "b58",
+   "pipeline_class": "over-approximated",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "source": "agreed",
+   "id": "GHSA-pq67-6m6q-mj2v"
+  },
+  {
+   "packet": "b59",
+   "pipeline_class": "over-approximated",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "source": "agreed",
+   "id": "GHSA-42xw-2xvc-qx8m"
+  }
+ ]
+}

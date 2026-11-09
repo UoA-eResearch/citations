@@ -3,11 +3,12 @@
   fetch.py commits    GitHub REST API unified diff per advisory (<= 1 request/s) -> data/commits/<id>.diff
   fetch.py versions   registry release list with publish dates -> data/versions/<id>.json
 
-Diffs come from the public github.com/{owner}/{repo}/commit/{sha}.diff URL. If git's credential helper holds a GitHub
-token, the REST API is the fallback; the token is read at run time and never written anywhere.
+Diffs come from the public github.com/{owner}/{repo}/commit/{sha}.diff URL. The REST API is a fallback only when a token
+is passed explicitly in the GITHUB_TOKEN environment variable (D4: the first version queried git's credential store
+implicitly; no GitHub token was present on this host, so all 790 diffs came from the public URLs).
 """
 import json
-import subprocess
+import os
 import sys
 import time
 import urllib.error
@@ -24,11 +25,7 @@ UA = "research-lab advisory-range study (open-data research; github.com/UoA-eRes
 
 
 def token():
-    r = subprocess.run(["git", "credential", "fill"], input="protocol=https\nhost=github.com\n\n", capture_output=True, text=True, timeout=30)
-    for line in r.stdout.splitlines():
-        if line.startswith("password="):
-            return line.split("=", 1)[1]
-    return None
+    return os.environ.get("GITHUB_TOKEN") or None          # explicit opt-in only
 
 
 def get(url, headers=None, timeout=120):

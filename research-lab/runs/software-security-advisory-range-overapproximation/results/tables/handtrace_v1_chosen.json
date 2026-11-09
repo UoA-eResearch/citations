@@ -1,0 +1,70 @@
+{
+ "tight": {
+  "id": "GHSA-h3h8-3v2v-rg7m",
+  "pipeline_class": "tight",
+  "n_in_range": 149,
+  "releases": [
+   {
+    "index": 0,
+    "version": "4.16.0",
+    "matched_files": [
+     "gradio/oauth.py"
+    ],
+    "deleted_lines_found_by_substring": 2,
+    "deleted_lines": 2,
+    "source_files": 163
+   }
+  ]
+ },
+ "over-approximated": {
+  "id": "GHSA-m6hv-x64c-27mm",
+  "pipeline_class": "over-approximated",
+  "n_in_range": 367,
+  "releases": [
+   {
+    "index": 0,
+    "version": "0.2.3",
+    "matched_files": [
+     "copyparty/authsrv.py",
+     "copyparty/httpcli.py",
+     "copyparty/up2k.py",
+     "copyparty/util.py"
+    ],
+    "deleted_lines_found_by_substring": 0,
+    "deleted_lines": 32,
+    "source_files": 19
+   },
+   {
+    "index": 349,
+    "version": "1.19.17",
+    "matched_files": [
+     "copyparty/authsrv.py",
+     "copyparty/cfg.py",
+     "copyparty/httpcli.py",
+     "copyparty/up2k.py",
+     "copyparty/util.py"
+    ],
+    "deleted_lines_found_by_substring": 26,
+    "deleted_lines": 32,
+    "source_files": 60
+   }
+  ]
+ },
+ "undetermined": {
+  "id": "GHSA-2qjp-fg8c-g878",
+  "pipeline_class": "undetermined",
+  "n_in_range": 1092,
+  "releases": [
+   {
+    "index": 0,
+    "version": "0.0.1-beta.1",
+    "matched_files": [
+     "src/table/body.js"
+    ],
+    "deleted_lines_found_by_substring": 2,
+    "deleted_lines": 3,
+    "source_files": 11
+   }
+  ]
+ }
+}

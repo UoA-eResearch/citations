@@ -36,7 +36,7 @@ ax.annotate("H1 bar 25%", (0.25, -0.45), xytext=(4, 0), textcoords="offset point
 ax.set_yticks(y); ax.set_yticklabels([g[0] for g in groups])
 ax.set_xlim(0, 1); ax.set_xlabel("share over-approximated among classified advisories (95% Wilson)")
 ax.grid(axis="x", color=GRID, lw=0.5)
-fig.suptitle("Most advisory lower bounds start before the vulnerable code existed", x=0.02, ha="left", fontsize=10, color=INK)
+fig.suptitle("Pipeline flags: lower bounds the code-presence test calls too early (not confirmed by the audit)", x=0.02, ha="left", fontsize=10, color=INK)
 fig.savefig(F / "F1_share.png", dpi=170); plt.close(fig)
 (F / "F1_share.txt").write_text("Share of classified (tight or over-approximated) GHSA advisories for npm and PyPI whose declared lower bound "
                                 "starts before the first release containing the code the fix removes or guards, with Wilson 95% intervals; "
@@ -47,7 +47,7 @@ fig.subplots_adjust(left=0.11, right=0.97, bottom=0.17, top=0.85)
 ax.hist(ov.gap_years.clip(upper=15), bins=np.arange(0, 15.5, 0.5), color=BLUE, edgecolor=SURF)
 ax.set_xlabel("years from the declared lower bound's first release to the first release with the vulnerable code (clipped at 15)")
 ax.set_ylabel("advisories"); ax.grid(axis="y", color=GRID, lw=0.5)
-fig.suptitle(f"Over-approximated lower bounds sit a median {ov.gap_years.median():.1f} years before the code appeared", x=0.02, ha="left", fontsize=10, color=INK)
+fig.suptitle(f"Pipeline flags (unaudited): flagged lower bounds sit a median {ov.gap_years.median():.1f} years before the test finds the code", x=0.02, ha="left", fontsize=10, color=INK)
 fig.savefig(F / "F2_gap.png", dpi=170); plt.close(fig)
 (F / "F2_gap.txt").write_text(f"For the {len(ov)} over-approximated advisories with publish dates, the time between the earliest release inside "
                               "the declared range and the first release containing the vulnerable code.\n")

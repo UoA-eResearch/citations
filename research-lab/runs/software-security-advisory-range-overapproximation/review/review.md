@@ -1,0 +1,355 @@
+# Review: software-security-advisory-range-overapproximation
+
+Reviewer: Fable 5.1 (fresh independent reviewer), 2026-11-09.
+
+## Verdict: **fix first**
+
+The headline verdicts (H1 Inconclusive, H2 Inconclusive) follow from the preregistered G4 rule, and they survive
+everything I checked. The pipeline numbers reproduce exactly from the stored release walks. The plan and the
+deciding code were committed before any data or presence result.
+
+The post hoc layer the report leans on is not sound:
+- The "strict" H1 share (58%) and the strict H2 factor (1.35) use incompatible denominators. The H2 factor and the
+  "audit-calibrated" 25–55% range come from code that is not committed.
+- The audit's "a third" counts packet-construction artefacts as failures.
+- The strict reading's apparent audit support is an artefact of how the packets were built.
+- The title states a post hoc range, without its sampling uncertainty, as "the defensible share".
+- G7 is missing, and G1 and G4 are partly hollow.
+
+All of this is fixable without new data collection, and none of it changes the headline verdicts. Fix it before
+publication.
+
+Check scripts and outputs are in `reviewer_checks/` (each `cN_*.py` writes `cN_*.txt`; run as
+`venv/bin/python -I reviewer_checks/cN_*.py RUN_DIR`).
+
+## What I verified and found sound
+
+- **Headline numbers reproduce exactly** (`c1_rederive.txt`). Re-classifying all 800 stored walks independently
+  gives 0 mismatches with `classes.csv`. The following all match `primary.json`:
+  - H1 308/411 = 0.749 (Wilson 0.705–0.789); 38.5% of 800;
+  - H2 35,590/16,353 = 2.176 (1.931–2.497);
+  - by ecosystem 177/220 and 131/191; `introduced: 0` 280/338 against explicit 28/73;
+  - 81.4% of the sample is `introduced: 0`;
+  - gap median 42.5 releases and 3.06 years; upper bound 35/693; cap hit 41 (all 41 undetermined).
+- **Order of work.**
+  - Plan commit 0d6dda5 at 18:48:09; `data/raw` written at 18:49:34.
+  - eligible.py and the sample at 18:51; fetch.py and presence.py at 18:54; classify.py at 18:55.
+  - First presence file at 19:30 on 11-07.
+  - None of these code files has changed since its commit (`git diff` clean; no later commit touches them).
+- **Short signatures are not driving the result** (`c9_sigsize.txt`). The over-approximated share is flat in
+  signature size: 0.74 for 1 line, 0.75 for 2, 0.70 for 3–5, 0.76 for 6–10 and 0.80 for more than 10.
+- **The publish-order walk is not mis-ordering branches** (`c7_order.txt`). No PyPI over-approximated case has an
+  "absent" release that precedes the first present one in publish order but carries a higher version (0/177).
+- **The lower-bound choice is safe in this sample** (`c8_eligibility.txt`). The string sort in presence.py is
+  latent: it never picks a different lower bound here (0 cases).
+- **G5 and G6 pass mechanically** (`g5_verify.txt`, `g6_check.txt`). Three spot checks against OpenAlex abstracts
+  hold (`g6_spotcheck.txt`):
+  - Chen et al. 2025: "no tool exceeds 45.0% accuracy", C/C++;
+  - VERJava: Sun et al. 2022, Java;
+  - Mandl et al. 2026: an OSV-derived ground truth.
+
+## Findings
+
+**1. Major: the strict reading uses two incompatible conventions, and two of its numbers come from uncommitted code.**
+- **The conventions differ.**
+  - Strict H1 = 142/(142+103) = 58%. This drops the 161 non-strict over-approximations and the 5 unknowns from
+    the denominator.
+  - Strict H2 = 1.345 (1.266–1.45) is reproduced only by keeping all 411 and treating non-strict cases as tight
+    (`c3_strict_h2.txt`, V1).
+- **Either convention applied consistently gives a different picture.**
+  - Under the H2 convention, strict H1 is 142/411 = **34.5% (30.1–39.3%)**.
+  - Under the H1 convention, strict H2 is **1.81 (1.58–2.12)**, which would clear the 1.5 bar.
+  - The report pairs the convention that gives the higher H1 with the one that gives the lower H2.
+- **Two numbers have no committed code.** `code/posthoc_strict.py` does not compute `H2_strict_factor`,
+  `H2_strict_ci` or `H1_audit_calibrated_range`, yet all three appear in `results/tables/posthoc_strict.json`
+  (grep finds them in no code file). The JSON was either hand-edited or written by code that was never committed.
+- **Fix.**
+  - Commit the code that produces every number in `posthoc_strict.json`.
+  - Pick one convention and report both quantities under it. Treating non-strict as "not over-approximated" is the
+    natural reading: 34.5% and 1.35.
+  - Show the other convention as a sensitivity.
+
+**2. Major: "right only a third of the time" counts packet artefacts as pipeline failures (G4 hollow).**
+- **Most undecidable cases are packet gaps.** Of the 12 "cannot tell" over-approximations, 11 cite a file "not
+  provided" or "unprovided", and in 10 the packet gave release A no file at all (`c4_audit.txt`).
+- **Why.** `audit_packets.files_for` copies only files that suffix-match the diff paths. The pipeline, in contrast,
+  searched the whole release when no path matched (the "any source file" fallback). The auditor therefore often did
+  not see what the pipeline judged.
+- **What G4 requires.** METHODS G4 requires classing each error as artefact, label noise or genuine, and reporting
+  the metric on the judgeable denominator. That was not done.
+- **Judgeable agreement.**
+  - Over-approximated: **10/18 = 56% (Wilson 34–75%)**.
+  - Tight: **24/25 = 96%**.
+- The bar still fails, so H1 stays "unreliable" and Inconclusive. But "a third" overstates the error rate.
+- **Fix.**
+  - Report 10/30 as measured and 10/18 on judgeable items, with the 11 artefacts named.
+  - Rebuild the packets for the 12 undecidable cases with the files the pipeline actually searched, and re-label
+    them in two fresh blind sessions (see finding 5).
+
+**3. Major: the strict reading's audit support is an artefact of how the packets were built.**
+- **By construction the auditor sees nothing in A.** "Strict" means release A has no file with the same name as a
+  fix file, and packets include only same-name files. So every audited strict case shows the auditor an empty A:
+  all 14 had zero matched files.
+- **The outcome is therefore predetermined.** The auditor either inferred "absent" from the file list (4) or could
+  not tell (10).
+- **The reasons show module moves, the very case "strict" is meant to exclude.**
+  - a22: "A single flask_cors.py not provided". The code lived in a single module that was later split.
+  - a47: "proxy header path in unprovided proxy/server.py".
+- "No audited strict case was contradicted" (D3, report) is therefore not evidence for the strict reading.
+- **Fix.**
+  - Drop the claim.
+  - Describe the strict reading as unvalidated, since it cannot detect renamed or merged modules.
+  - Or audit it with packets that include the files where the deleted lines' identifiers occur.
+
+**4. Major: the "audit-calibrated" 25–55% ignores n=30 and is put in the title as "the defensible share".**
+- **The arithmetic reproduces:** 308×10/30/411 = 0.250 and 308×22/30/411 = 0.550.
+- **It treats the 30-case fractions as exact.** With Wilson limits on 10/30 and 22/30, the range is **14% to 64%**.
+- **On judgeable items alone** it is 42% (25–57%) (`c3_strict_h2.txt`).
+- **Two further gaps.**
+  - It ignores errors on the tight side (1 of 30 tight cases was judged absent in A).
+  - It assumes the undetermined half of the sample behaves like the classified half.
+- **The title breaks the G5 rule.** "The defensible share is a quarter to a half" states a post hoc number as
+  settled and does not label it post hoc, which G5 requires for headlines.
+- **Fix.**
+  - Retitle, for example: "…a code-presence test flags three in four, but a blind audit could confirm only about
+    half of its judgeable calls; the true share is not pinned down".
+  - Report the calibrated range with its uncertainty and label it post hoc.
+
+**5. Major: the G4 audit's blindness was not enforced, the G1 leakage audit is missing, and G7 is missing and not
+declared.**
+- **The key was not secret.**
+  - The "secret" key can be rebuilt from committed `classes.csv` and the seed in `audit_packets.py`. My rebuild
+    matches all 26 disagreement IDs in `g4_audit.json`.
+  - `results/tables/classes.csv` and `data/presence/` (per-release labels) sat in the same run directory as the
+    packets.
+  - Nothing shows the labelling session lacked file access. "The pipeline's labels stayed outside its view" cannot
+    be verified.
+- **The packet structure leaks the class.**
+  - B is the first present release for over-approximated cases but a mid-range release for tight ones.
+  - The median A→B gap is 2.48 years against 0.39.
+  - A has fewer matched files than B in 16/30 against 1/30.
+  - A two-feature rule predicts the pipeline class with **80%** accuracy, and the A–B gap alone with 75%
+    (`c4_audit.txt`).
+- **Missing gates.**
+  - plan.md has no G1 "Leakage audit" section: no list of label-correlated fields, no shuffling, no order-swap probe.
+  - G7 (two independent blind labellers, kappa, adjudication) was not run, and the report's gate list silently
+    omits it.
+  - The 60 labels were written within about 14 minutes of the packets (10:28 to 10:42).
+- **The leak cuts towards agreement.** So the failure to reach 80% is, if anything, conservative, and the
+  Inconclusive verdict survives.
+- **Fix.**
+  - Declare G1 and G7 as missing in the report.
+  - Re-run the audit with two fresh labellers in a sandbox without the run directory.
+  - Choose B the same way for both strata, for example a fixed-quantile in-range release.
+  - Report kappa.
+
+**6. Moderate: "What holds regardless of the audit" does not hold regardless of it.**
+- **Every number in that block rests on pipeline classes:**
+  - the `introduced: 0` contrast (83% against 38%);
+  - the gap (42 releases, 3.1 years);
+  - the 5% upper-bound result.
+- **The `introduced: 0` contrast is confounded with walk length.**
+  - Those walks start at a package's first releases: 58 of the 308 release A versions are 0.0.0 or 0.0.1, and 28
+    are pre-releases (`c7_order.txt`).
+  - Long histories accumulate exactly the "same flaw, different code" drift that the audit found the matcher
+    mistakes for absence.
+- **The upper-bound check is unaudited.** "Present at the fixed version" can arise when a deleted line still occurs
+  elsewhere in the file, or through the any-file fallback.
+- **Fix.**
+  - Retitle the block "Pipeline-only patterns (not audited)".
+  - Drop "drive the pattern".
+  - Audit a sample of the 35 upper-bound cases before citing 5%.
+
+**7. Moderate: the pipeline H2 factor counts unexamined releases as unaffected.**
+- **The cut sits at the first release that is at least 80% present.** That removes every release before it,
+  including releases never shown absent: 4,630 of 19,237 removed releases (24%) were undetermined.
+- **There is earlier partial evidence.** 141/308 walks show partial presence (0.2 < s < 0.8) before the cut
+  (`c2_walk_structure.txt`).
+- **Moving the cut changes the factor** (`c10_h2_partial.txt`):
+
+| corrected range starts at | factor (95% CI) |
+|---|---|
+| first ≥80% present release (as reported) | 2.18 |
+| first release with s > 0.2 | **1.67 (1.53–1.84)** |
+| just after the last absent release | **1.73 (1.60–1.91)** |
+
+- **Fix.** Report this sensitivity beside 2.18, and call 2.18 the upper end even under the pipeline's own calls.
+
+**8. Moderate: two fallbacks in the presence step change values silently (G2).**
+- **(a) The "any source file" fallback is never counted.** `coverage.json` reports 0 fallbacks, and the presence
+  JSON does not record per release whether the path matched or the fallback was used. The plan names the fallback,
+  but G2 still requires it to be counted.
+- **(b) An empty artefact counts as absent.** An artefact with zero source files yields s = 0, so "absent". The plan
+  requires absent to mean "source extracted successfully".
+  - Packet a56: release A is 0.0.0, its source listing is empty, and the case is counted over-approximated.
+- **Fix.**
+  - Record the match type and the source-file count per release.
+  - Treat empty extractions as undetermined, recompute, and add both counts to `coverage.json`.
+
+**9. Moderate: the figure titles state the claim the verdict withdraws.**
+- F1: "Most advisory lower bounds start before the vulnerable code existed".
+- F2: "Over-approximated lower bounds sit a median 3.1 years before the code appeared".
+- Both are embedded in report.md.
+- **Fix.** Retitle both as unaudited pipeline output, for example "Pipeline flags (audit could not confirm)".
+
+**10. Minor: "rests on a minority" is wrong, and the classified subset is selected.**
+- 411/800 = 51% were classified, which is a majority. The 40% warning applies; the wording does not.
+- **Who gets classified is not random.** npm fixes that touch only TypeScript are 64% of undetermined npm cases but
+  34% of over-approximated ones (`c5_paths.txt`): transpiled packages fall out of the classified set.
+- **Fix.** Correct the wording, and state that the classified half is selected by packaging.
+
+**11. Minor: an undisclosed restart of the presence run.**
+- 170 presence files were written between 19:30 on 11-07 and midnight.
+- `logs/presence.log` starts at about 00:00 and completes the first 100 advisories in 15 s (99/100 already existed;
+  `c7_order.txt`).
+- The first segment's log was overwritten.
+- The code is unchanged in git, so the restart is probably benign.
+- **Fix.** Disclose the restart in D2 and keep both logs in future.
+
+**12. Minor: fetch.py silently queries the host's credential store.**
+- `fetch.py` runs `git credential fill` for github.com and would send any token it finds to api.github.com.
+- This sits awkwardly with D2's "this host has no GitHub token".
+- Study code should not query credential stores implicitly.
+- **Fix.** Remove the call or make it an explicit opt-in, and state in D2 which route the 790 diffs came by.
+
+**13. Minor: the G3 traces are hand-picked and not independent of the path matching.**
+- The three units are fixed IDs. METHODS asks for random units.
+- `handtrace.py` reuses `audit_packets.files_for` and `presence.match_file`, so it is not independent of the path
+  matching.
+- The invariants are stated in plausibility.md, but no code asserts them. I confirmed 800 = 411 + 300 + 79 + 10,
+  and corrected pairs ≤ declared pairs holds by construction.
+- **Fix.** Trace three seeded-random units, with path matching done by hand.
+
+**14. Minor: the G5 table is hollow.**
+- All 44 sentences are labelled "Supported", including the post hoc title and "regardless of the audit".
+- See the re-labels below.
+
+**15. Minor: deviation records and wording.**
+- **D1 timestamp.** D1's timestamp (19:00 NZDT) is later than its commit (0be72b1, 18:51).
+- **D2 timing claim.** D2 says it was written "before any presence result", but it first appears in the report
+  commit (0efa9c8). Its substance (public diff URLs, the walk and the cap) is in code committed at 18:54, so this is
+  a provenance-wording issue only.
+- **"Renamed, rewritten or moved."** The report says the contradicted cases are "renamed, rewritten or moved", but
+  the auditor's reasons describe the flaw being present ("both default download base http://", "both use unbounded
+  ambiguous digit regexes"). They do not show renames or moves.
+- **Construct shift.** The audit also judged a different construct: whether the flaw is present, against whether the
+  fix's lines are present. Say so.
+
+## Answers to the brief's specific questions
+
+1. **Eligibility and sampling.**
+   - GHSA-only and withdrawn-exclusion are implemented as planned (coverage drops 414 npm and 251 PyPI withdrawn).
+   - SEMVER/ECOSYSTEM is handled correctly (D1).
+   - The fix commit is the package-repo match, else the first listed. The picked commit is from another repository
+     in 10% of over-approximated, 16% of tight and 6% of undetermined cases, and multi-commit fixes are 7–15%
+     (`c8_eligibility.txt`).
+   - `pull/N/commits/sha` URLs can be partial fixes; this is acknowledged in the limits.
+   - The lower bound is chosen by string sort: latent, no effect.
+2. **Signatures and normalisation.**
+   - Deleted lines capture the removed code; the add-only rule uses 3 context lines.
+   - The test-file exclusion is a substring filter (`test`, `doc`, …), so a path like `docker/` or `latest.py` is
+     dropped too. This is minor.
+   - Signature size does not drive the result (c9).
+   - The real failure is semantic drift of the vulnerable code over long histories, which the audit exposes.
+3. **Presence and path matching.**
+   - The longest-suffix match is sound. The any-file fallback and empty-artefact absences are silent (finding 8).
+   - Transpiled npm packages mostly end up undetermined, not falsely over-approximated: TypeScript-only fixes have a
+     73% over-approximated rate among classified, against 67% for JS.
+   - A packaging change (starting to ship `src/*.ts`) could still create false absences. Record the match type to
+     test this.
+4. **Classification and walk.**
+   - Publish order is implemented as stated, and it causes no branch interleaving (c7).
+   - Pre-releases are included. 28 over-approximated cases have a pre-release as release A, and 58 have 0.0.0 or
+     0.0.1 as release A.
+   - All 41 cap hits are undetermined, consistent with D2.
+   - The corrected start ignores partial evidence (finding 7).
+5. **The G4 audit.**
+   - Packet position leaks the class: B is chosen differently per stratum (80% predictable).
+   - The key is reconstructible.
+   - Scoring is as coded. "Cannot tell" is mostly a packet artefact; judgeable agreement is 56%.
+   - "Inconclusive" does follow: even 56% (upper limit 75%) fails 80%.
+   - The 25–55% range is not a fair use of 30 cases without its uncertainty (14–64%).
+6. **Strict reading and H2 1.35.**
+   - 1.35 is computed correctly only under "non-strict = tight", which contradicts the 58% denominator.
+   - The code that computes it is uncommitted.
+   - It is labelled post hoc in D3 and in the table, but not in the title.
+   - Its audit support is an artefact (findings 1 and 3).
+7. **Report.**
+   - All pipeline numbers match the tables.
+   - The issues are the title (finding 4), the "minority" wording, the "regardless of the audit" block, the figure
+     titles and "a third" (findings 2, 6, 9 and 10).
+
+## Gate checks (G1–G7)
+
+| gate | status |
+|---|---|
+| G1 | **Missing.** No leakage-audit section; the audit leaks (finding 5). |
+| G2 | Present, but the fallbacks are uncounted (finding 8). |
+| G3 | Present, with weaknesses (finding 13). |
+| G4 | Run and honestly reported as failed, but the error classification and judgeable denominator are missing (finding 2). |
+| G5 | Passes mechanically but is hollow (finding 14; re-labels below). |
+| G6 | Passes; spot checks hold. The novelty claim ("no measurement … was found") has no ledger row: add one with the searches made. |
+| G7 | **Missing** and undeclared (finding 5). |
+
+## G5 re-labels (row numbers from review/overclaim_check.md)
+
+| row | sentence | re-label | reason |
+|---|---|---|---|
+| 1 | title | **Overstated** | Post hoc range, no uncertainty, not labelled (finding 4). |
+| 7 | "right only a third of the time" | **Partially supported** | 56% on judgeable items (finding 2). |
+| 10 | "38.5% of all 800" | **Partially supported** | Presented as a robust lower bound but uses pipeline classes. |
+| 11 | "without the labels" | **Partially supported** | Blindness not enforced; packet leak (finding 5). |
+| 15–16 | "renamed, rewritten or moved" | **Partially supported** | Finding 15. |
+| 17 | audit-calibrated 25–55% | **Overstated** | Finding 4. |
+| 18 | "the bar is the bottom of that range" | **Overstated** | It sits inside the uncertainty-aware range. |
+| 20 | strict 58% | **Overstated** | Denominator inconsistent with H2 strict (finding 1). |
+| 21 | "contradicted none of the 14 strict" | **Overstated** | Artefact by construction (finding 3). |
+| 23 | "rests on a minority" | **Overstated** | Wrong: 51% (finding 10). |
+| 26 | strict H2 1.35 "below the bar" | **Partially supported** | Convention-dependent; 1.81 under the H1 convention. |
+| 29–33 | "What holds regardless of the audit" block | **Overstated** | Pipeline-only (finding 6). |
+| 40 | plain terms, "only a third" | **Partially supported** | Finding 2. |
+| 42 | "true share is roughly a quarter to a half" | **Overstated** | Finding 4. |
+| 43 | "those are the ones most often too broad" | **Partially supported** | Pipeline-only, confounded (finding 6). |
+
+## What to do
+
+1. Commit code that produces every number in `posthoc_strict.json`. Use one convention for the strict H1 and H2;
+   report 34.5% and 1.35, or state both conventions.
+2. Report G4 properly: 10/30 as measured, 10/18 judgeable with the artefacts listed, tight 24/25, and the strict
+   cases' audit as uninformative.
+3. Retitle the report and rewrite "In plain terms" without "a quarter to a half". Give the calibrated range with its
+   uncertainty (about 14–64%) and label it post hoc.
+4. Declare G1 and G7 missing. Ideally, re-audit with rebuilt packets (all searched files, B chosen identically
+   across strata) and two blind labellers without run-directory access.
+5. Move the `introduced: 0`, gap and upper-bound results under "pipeline-only, unaudited". Retitle F1 and F2.
+6. Add the H2 corrected-start sensitivity (1.67–1.73).
+7. Record the match type and source-file count per release. Treat empty extractions as undetermined, and count both
+   in `coverage.json`.
+8. Fix the small items:
+   - "minority";
+   - disclose the presence-run restart;
+   - the D1 and D2 provenance wording;
+   - remove `git credential fill` or make it opt-in;
+   - make the G3 traces random;
+   - add a G6 row for the novelty claim;
+   - redo the G5 table with the re-labels above.
+
+## In plain terms
+
+The study asked whether npm and PyPI security advisories claim that older versions are affected when the flawed
+code was not yet there. Its automatic check said this is true for three in four advisories, but a blind spot check
+could not confirm most of those calls. So the study rightly concludes it cannot say whether the true share is above
+the 25% target.
+
+The numbers it offers instead need fixing:
+- **The audit packets.** Many cases the auditor "could not decide" were left out of the packets by mistake, which
+  makes the check look worse than it was: about half of the judgeable cases were confirmed, not a third.
+- **The "strict" figures.** They mix two ways of counting, and part of them was computed by code that was never
+  saved.
+- **The headline.** "A quarter to a half" leaves out how little 30 audited cases can tell you; the honest range is
+  wider, roughly 15% to 65%.
+- **The "regardless of the audit" patterns.** Several patterns presented as holding "regardless of the audit" rest
+  on the same unreliable check.
+
+The core conclusion, that this method cannot settle the question, stands. The write-up needs correcting before it
+is published.

@@ -4,47 +4,60 @@ Fill in every row: backing = the table/figure and number that supports the sente
 
 | # | where | sentence | backing | label | fix |
 |---|---|---|---|---|---|
-| 1 | title | Do npm and PyPI security advisories declare affected ranges that start too early? A code-presence test says three in four do, but a blind audit shows the test over-calls it; the defensible share is a quarter to a half | g4_audit.json | Supported |  |
+| 1 | title | Do npm and PyPI security advisories declare affected ranges that start too early? A code-presence test flags three in four, but blind audits confirm only part of its flags, so the true share is not pinned down | primary.json H1 308/411; g4_audit.json 10/30; g4_audit_d4.json final over 19/30; posthoc_d4.json calibrated_H1_d4_audit | Supported | D4: retitled without the post hoc range (was Overstated) |
 | 2 | standfirst | 800 GitHub-reviewed npm and PyPI advisories with a fix commit (a seeded random sample of the 6,409 eligible) were checked release by release. | classes.csv; primary.json | Supported |  |
 | 3 | standfirst | The test asked whether the code the fix removes or guards existed in each release inside the declared affected range, from the earliest onward. | classes.csv; primary.json | Supported |  |
-| 4 | standfirst | A separate session then re-judged 60 of them from the code alone. | classes.csv; primary.json | Supported |  |
+| 4 | standfirst | The preregistered blind audit judged 60 of them from the code alone; after the independent review, the audit was rebuilt and rerun with two blind labellers (D4, post hoc). | g4_audit.json; g4_audit_d4.json; deviations D4 | Supported | D4 |
 | 5 | standfirst | The plan was committed before any advisory, commit or package file was downloaded. | plan.md / git | Supported |  |
 | 6 | verdict | **Verdict: H1 Inconclusive; H2 Inconclusive.** The pipeline's counts would give Supported for both. | classes.csv; primary.json | Supported |  |
-| 7 | verdict | The preregistered audit found that the pipeline's "over-approximated" label is right only a third of the time, so by the plan's rule its share is reported as unreliable. | g4_audit.json | Supported |  |
+| 7 | verdict | Neither audit reaches the plan's 80% agreement on "over-approximated", so by the plan's rule the pipeline's share is reported as unreliable. | g4_audit.json over agreement 0.333; g4_audit_d4.json final over share 0.633 (H1_reliable_by_plan_rule false) | Supported | D4 |
 | 8 | verdict | **H1 (at least 25% of advisories declare a lower bound that starts before the vulnerable code existed): Inconclusive.** | classes.csv; primary.json | Supported |  |
 | 9 | verdict | **Pipeline:** 308 of the 411 classified advisories are over-approximated (75%; Wilson 70.5% to 78.9%), and 103 are tight. | classes.csv; primary.json | Supported |  |
-| 10 | verdict | Even counting every undetermined advisory as not over-approximated, that is 38.5% of all 800. | classes.csv; primary.json | Supported |  |
-| 11 | verdict | **The audit:** a separate session judged 30 pipeline over-approximations and 30 tight cases from the fix diff and two releases, without the labels. | g4_audit.json | Supported |  |
-| 12 | verdict | Of the 30 over-approximations, it confirmed 10 (33%), contradicted 8 and could not decide 12. | g4_audit.json | Supported |  |
-| 13 | verdict | The plan requires 80%. | classes.csv; primary.json | Supported |  |
-| 14 | verdict | Of the 30 tight cases, it confirmed 24. | g4_audit.json | Supported |  |
-| 15 | verdict | The contradicted cases are the same flaw in code written differently in the earlier release: renamed, rewritten or moved. | g4_audit.json | Supported |  |
-| 16 | verdict | Exact line signatures miss it, and the pipeline calls it absent. | classes.csv; primary.json | Supported |  |
-| 17 | verdict | **Audit-calibrated range:** applying the audited fractions to all 308 gives 25% to 55% of classified advisories. | g4_audit.json | Supported |  |
-| 18 | verdict | The bar of 25% is the bottom of that range. | classes.csv; primary.json | Supported |  |
-| 19 | verdict | **Strict reading** (post hoc): the module the fix touches is missing altogether from the earliest in-range release (no file of the same name). | posthoc_strict.json | Supported |  |
-| 20 | verdict | That holds for 142 of the 308, or 58% (52% to 64%) of strict plus tight. | posthoc_strict.json | Supported |  |
-| 21 | verdict | The auditor contradicted none of the 14 audited strict cases, but could decide only 4 of them. | g4_audit.json | Supported |  |
-| 22 | verdict | 49% of the sample is undetermined: no usable signature (79), no diff (10), or no release in which the signature matches (300). | classes.csv; primary.json | Supported |  |
-| 23 | verdict | That is above the plan's 40% warning line, so any share rests on a minority of the sample. | classes.csv; primary.json | Supported |  |
-| 24 | verdict | **H2 (correcting the lower bounds removes at least a third of affected version pairs, a factor of 1.5): Inconclusive.** | classes.csv; primary.json | Supported |  |
-| 25 | verdict | **Pipeline:** 35,590 declared (version, advisory) pairs fall to 16,353, a factor of **2.18** (1.93 to 2.50). | classes.csv; primary.json | Supported |  |
-| 26 | verdict | **Strict reading:** the factor is **1.35** (1.27 to 1.45), below the bar. | posthoc_strict.json | Supported |  |
-| 27 | verdict | The pipeline figure rests on the classification the audit found unreliable. | g4_audit.json | Supported |  |
-| 28 | verdict | **npm installs** (pipeline classes): 36% of current weekly downloads of versions inside declared ranges fall outside the corrected ranges. | classes.csv; primary.json | Supported |  |
-| 29 | verdict | **What holds regardless of the audit.** | g4_audit.json | Supported |  |
-| 30 | verdict | **"Introduced: 0" ranges drive the pattern.** 81% of sampled advisories declare every release affected. | classes.csv; primary.json | Supported |  |
-| 31 | verdict | Of those classified, the pipeline flags 83% (280 of 338), against 38% (28 of 73) of explicit lower bounds. | classes.csv; primary.json | Supported |  |
-| 32 | verdict | Where a lower bound starts too early, the gap is long: a median of 42 releases, or 3.1 years (pipeline classes). | classes.csv; primary.json | Supported |  |
-| 33 | verdict | **Upper bounds:** in 35 of 693 checked advisories (5%), the vulnerable code is still present in the first release at or after the declared fixed version. | classes.csv; primary.json | Supported |  |
-| 34 | verdict | "Present" calls are the reliable direction in the audit. | g4_audit.json | Supported |  |
-| 35 | plain terms | When a security flaw is found in an open-source package, an advisory records which versions are affected. | classes.csv; primary.json | Supported |  |
-| 36 | plain terms | Tools such as Dependabot then warn everyone who uses those versions. | classes.csv; primary.json | Supported |  |
-| 37 | plain terms | If the advisory says "every version before the fix" when the flaw only arrived recently, users of old, safe versions get warnings they do not need. | classes.csv; primary.json | Supported |  |
-| 38 | plain terms | We took 800 advisories for JavaScript (npm) and Python (PyPI) packages and checked, release by release, whether the code that the fix changed was actually there. | classes.csv; primary.json | Supported |  |
-| 39 | plain terms | A simple automatic check said three in four advisories start their range too early. | classes.csv; primary.json | Supported |  |
-| 40 | plain terms | But when a separate reviewer looked at a sample by hand, the automatic check's "too early" could be confirmed only a third of the time; in a quarter of cases the flaw was already there. | g4_audit.json | Supported |  |
-| 41 | plain terms | Code that existed in an older form, renamed or moved, fooled it. | g4_audit.json | Supported |  |
-| 42 | plain terms | So the true share is roughly a quarter to a half of the advisories we could check. | classes.csv; primary.json | Supported |  |
-| 43 | plain terms | The clearest pattern is the default: four in five advisories say every version is affected, and those are the ones most often too broad. | classes.csv; primary.json | Supported |  |
-| 44 | plain terms | A better check, one that recognises older forms of the same code, is needed before the extra warnings can be counted. | classes.csv; primary.json | Supported |  |
+| 10 | verdict | A recheck of the releases each call rests on reclassifies one, whose only absent releases had no source files (307 of 410). | posthoc_d4.json recheck cls_d4 (1 undetermined); H1_empty_extractions_undetermined 307/410 | Supported | D4 |
+| 11 | verdict | Counting every undetermined advisory as not over-approximated gives 38.5% of all 800. | primary.json H1 share_of_all_sampled_lower_bound 0.385 | Supported | D4: no longer called robust |
+| 12 | verdict | **The preregistered audit** (one session, 30 over-approximated and 30 tight packets): it confirmed 10 of the 30 over-approximations, contradicted 8 and could not decide 12. | posthoc_d4.json audit_v1 over agree 10, cannot_tell 12, says_present_in_A 8 | Supported |  |
+| 13 | verdict | Eleven of those 12 were gaps in the packets, not in the pipeline: release A's relevant file had not been included. | posthoc_d4.json audit_v1 cannot_tell_packet_artefact 11 (A had no file 10) | Supported | D4 (review finding 2) |
+| 14 | verdict | On the 18 judgeable cases it confirmed 10 (56%; 34% to 75%). | posthoc_d4.json audit_v1 agree_judgeable 10/18, wilson 0.337-0.754 | Supported | D4 |
+| 15 | verdict | It confirmed 24 of 25 judgeable tight cases. | posthoc_d4.json audit_v1 tight agree 24, judgeable 25 | Supported |  |
+| 16 | verdict | **The rebuilt audit** (post hoc, D4): the same 60 advisories, with packets that show what the pipeline searched and choose the second release the same way for both groups. | audit_packets.py make_d4; g4_audit_d4.json | Supported | D4 (post hoc, labelled) |
+| 17 | verdict | Two labellers worked blind in separate sessions and agreed with each other on 59 of 60 releases A (kappa 0.97); an adjudicator settled 3 packets. | g4_audit_d4.json raw_agreement_A_code 0.983, kappa_A_code 0.966, adjudicated_packets 3 | Supported | D4 |
+| 18 | verdict | They confirmed 19 of the 30 over-approximations (63%; 46% to 78%), or 19 of 28 judgeable (68%; 49% to 82%), and 29 of 30 tight cases. | g4_audit_d4.json final over 19/30 (0.455-0.781), judgeable 19/28 (0.493-0.821); tight 29/30 | Supported | D4 |
+| 19 | verdict | In 6 of the 30 the fixed code is already present in release A; in 3 it is missing from release B too, so the packaged releases never show the code the fix changes. | g4_audit_d4.json rows: A present 6; A absent and B absent 3 | Supported | D4 |
+| 20 | verdict | **Code versus vulnerability.** In 14 of the 30 over-approximations the labellers found the vulnerability itself in release A in some other form. | g4_audit_d4.json final over flaw_present_in_A 14 | Supported | D4 |
+| 21 | verdict | In 8 of those the code the fix changes is absent, so the range is too early for the fixed code but not for the flaw. | g4_audit_d4.json final over code_absent_but_flaw_present_in_A 8 | Supported | D4 |
+| 22 | verdict | **Audit-calibrated share** (post hoc): applying the rebuilt audit's agreement to all 308 gives 47% of classified advisories (34% to 59%) for the fixed code, and 33% (20% to 46%) if a range only counts as too early when the vulnerability itself was absent. | posthoc_d4.json calibrated_H1_d4_audit code 0.475 (0.341-0.585), flaw 0.325 (0.205-0.456) | Supported | D4: uncertainty carried; labelled post hoc (was Overstated as 25-55%) |
+| 23 | verdict | Both assume that the 30 audited cases represent all 308 and that the undetermined half of the sample behaves like the classified half. | posthoc_d4.json calibrated_H1_d4_audit assumes | Supported | D4 |
+| 24 | verdict | **Strict reading** (post hoc): the module the fix touches is missing altogether from release A (no file of the same name). | posthoc_strict.json strict 142; classes_strict.csv | Supported |  |
+| 25 | verdict | That holds for 142 of the 411 (34.5%; 30.1% to 39.3%). | posthoc_d4.json strict H1_main 0.3455 (0.3011-0.3927) | Supported | D4: one convention (was 58%, Overstated) |
+| 26 | verdict | It is unvalidated: it cannot see renamed or merged modules, and the first audit could not test it. | posthoc_d4.json audit_v1 strict_cases_audited A_had_no_file_in_packet 14/14 | Supported | D4: 'no audited strict case was contradicted' withdrawn |
+| 27 | verdict | 49% of the sample is undetermined: no usable signature (79), no diff (10), or no release in which the signature matches (300). | classes.csv; primary.json | Supported |  |
+| 28 | verdict | That is above the plan's 40% warning line. | primary.json undetermined_share 0.4863; plan section 4 | Supported |  |
+| 29 | verdict | The classified half is a majority, but it is selected by packaging: npm fixes that touch only TypeScript mostly end up undetermined. | classes.csv 411/800; review c5_paths (TypeScript-only npm fixes 64% of undetermined npm vs 34% of over-approximated) | Supported | D4: 'minority' corrected (was Overstated) |
+| 30 | verdict | **H2 (correcting the lower bounds removes at least a third of affected version pairs, a factor of 1.5): Inconclusive.** | classes.csv; primary.json | Supported |  |
+| 31 | verdict | **Pipeline:** 35,590 declared (version, advisory) pairs fall to 16,353, a factor of **2.18** (1.93 to 2.50). | classes.csv; primary.json | Supported |  |
+| 32 | verdict | That is the upper end even under the pipeline's own calls. | posthoc_d4.json H2_start_sensitivity | Supported | D4 |
+| 33 | verdict | The corrected range starts at the first release that is at least 80% present, and 141 of the 308 walks show partial presence earlier. | posthoc_d4.json H2_start_sensitivity over_approximated_with_partial_presence_before_the_cut 141 | Supported | D4 |
+| 34 | verdict | Starting it at the first partial presence gives 1.67 (1.53 to 1.84), and just after the last absent release 1.73 (1.60 to 1.91). | posthoc_d4.json H2_start_sensitivity first_s_gt_0.2 1.67 (1.533-1.843), after_last_absent 1.732 (1.596-1.909) | Supported | D4 |
+| 35 | verdict | **Strict reading:** 1.35 (1.27 to 1.45), below the bar, on the same convention as the strict 34.5%. | posthoc_d4.json strict H2_main 1.345 (1.266-1.45) | Supported | D4: same convention as strict H1 |
+| 36 | verdict | Dropping the non-strict cases from the denominator instead gives 1.81 (1.58 to 2.12). | posthoc_d4.json strict H2_sensitivity 1.812 (1.583-2.119) | Supported | D4 |
+| 37 | verdict | **npm installs** (pipeline classes): 36% of current weekly downloads of versions inside declared ranges fall outside the corrected ranges. | classes.csv; primary.json | Supported |  |
+| 38 | verdict | **Pipeline-only patterns (not audited).** | deviations D4 item 6 | Supported | D4: was 'What holds regardless of the audit' (Overstated) |
+| 39 | verdict | 81% of sampled advisories declare every release affected (`introduced: 0`). | primary.json by_lower_bound; sample.csv intro_zero 0.814 | Supported |  |
+| 40 | verdict | Of those classified, the pipeline flags 83% (280 of 338), against 38% (28 of 73) of explicit lower bounds. | classes.csv; primary.json | Supported |  |
+| 41 | verdict | This is confounded with history length: those walks start at a package's first releases (58 of the 308 releases A are 0.0.0 or 0.0.1), where older forms of the code are most likely. | review c7_order (58 of 308 releases A are 0.0.0/0.0.1; 28 pre-releases) | Supported | D4 (review finding 6) |
+| 42 | verdict | Where the pipeline flags a lower bound, the gap is a median of 42 releases, or 3.1 years. | primary.json gap releases_median 42.5, years_median 3.06 | Supported | D4: labelled pipeline-only |
+| 43 | verdict | **Upper bounds:** in 35 of 693 checked advisories (5%), the fix's deleted lines are still found in the first release at or after the declared fixed version. | primary.json upper_bound_check 35/693 | Supported | D4: labelled unaudited |
+| 44 | verdict | This was not audited. | design (no audit sample drawn from the upper-bound cases) | Supported | D4 |
+| 45 | plain terms | When a security flaw is found in an open-source package, an advisory records which versions are affected. | classes.csv; primary.json | Supported |  |
+| 46 | plain terms | Tools such as Dependabot then warn everyone who uses those versions. | classes.csv; primary.json | Supported |  |
+| 47 | plain terms | If the advisory says "every version before the fix" when the flaw only arrived recently, users of old, safe versions get warnings they do not need. | classes.csv; primary.json | Supported |  |
+| 48 | plain terms | We took 800 advisories for JavaScript (npm) and Python (PyPI) packages and checked, release by release, whether the code that the fix changed was actually there. | classes.csv; primary.json | Supported |  |
+| 49 | plain terms | A simple automatic check said three in four advisories start their range too early. | classes.csv; primary.json | Supported |  |
+| 50 | plain terms | We then had the check's calls judged blind, from the code alone. | g4_audit.json; g4_audit_d4.json | Supported |  |
+| 51 | plain terms | The first audit could confirm only a third of the "too early" calls, largely because it had been shown the wrong files. | posthoc_d4.json audit_v1 agree 10/30; packet artefacts 11 of 20 not confirmed | Supported | D4 (was 'only a third', Partially supported) |
+| 52 | plain terms | A rebuilt audit, with two independent reviewers who agreed with each other almost every time, confirmed about two in three. | g4_audit_d4.json final over 19/30; kappa 0.966 | Supported | D4 |
+| 53 | plain terms | In about half of the rest the code was already there in the earliest release, written slightly differently, and the check had missed it. | g4_audit_d4.json rows: 6 of the 11 not confirmed have A present | Supported | D4 |
+| 54 | plain terms | That is better, but short of the four in five the study required before trusting the check. | g4_audit_d4.json H1_reliable_by_plan_rule false; plan G4 rule 80% | Supported |  |
+| 55 | plain terms | So a rough estimate made after the fact puts the share of advisories that start too early at around a third to a half of those we could check, with wide uncertainty; the study cannot say more precisely. | posthoc_d4.json calibrated_H1_d4_audit 0.325-0.475 (0.205-0.585) | Supported | D4: labelled post hoc and uncertain (was 'roughly a quarter to a half', Overstated) |
+| 56 | plain terms | The answer also depends on what counts: in about a third of the confirmed cases the flaw already existed in an older form even though the fixed code did not. | g4_audit_d4.json rows: confirmed 19, flaw yes 6 | Supported | D4 |
+| 57 | plain terms | A check that follows code through rewrites, and a larger audit, are needed before the unnecessary warnings can be counted. | interpretation (recommendation) | Supported |  |

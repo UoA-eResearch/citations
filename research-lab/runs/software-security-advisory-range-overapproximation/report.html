@@ -77,10 +77,10 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 <div class="page">
 <header class="masthead">
   <div class="eyebrow">Research Lab · Deep dive · Metascience</div>
-  <h1>Do npm and PyPI security advisories declare affected ranges that start too early? A code-presence test says three in four do, but a blind audit shows the test over-calls it; the defensible share is a quarter to a half</h1>
-  <p class="subtitle">800 GitHub-reviewed npm and PyPI advisories with a fix commit (a seeded random sample of the 6,409 eligible) were checked release by release. The test asked whether the code the fix removes or guards existed in each release inside the declared affected range, from the earliest onward. A separate session then re-judged 60 of them from the code alone. The plan was committed before any advisory, commit or package file was downloaded.</p>
+  <h1>Do npm and PyPI security advisories declare affected ranges that start too early? A code-presence test flags three in four, but blind audits confirm only part of its flags, so the true share is not pinned down</h1>
+  <p class="subtitle">800 GitHub-reviewed npm and PyPI advisories with a fix commit (a seeded random sample of the 6,409 eligible) were checked release by release. The test asked whether the code the fix removes or guards existed in each release inside the declared affected range, from the earliest onward. The preregistered blind audit judged 60 of them from the code alone; after the independent review, the audit was rebuilt and rerun with two blind labellers (D4, post hoc). The plan was committed before any advisory, commit or package file was downloaded.</p>
   <div class="meta">
-    <span>Report · 2026-11-08 · pre-review draft</span>
+    <span>Report · 2026-11-08 · under independent review</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/software-security-advisory-range-overapproximation/plan.md">Preregistration</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/software-security-advisory-range-overapproximation/deviations.md">Deviations log</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/software-security-advisory-range-overapproximation/code">Code</a>
@@ -89,48 +89,60 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
 </header>
 <section class="tiles" aria-label="Key results"></section>
 <main>
-<p><strong>Verdict: H1 Inconclusive; H2 Inconclusive.</strong> The pipeline's counts would give Supported for both. The
-preregistered audit found that the pipeline's "over-approximated" label is right only a third of the time, so by the
-plan's rule its share is reported as unreliable.</p>
+<p><strong>Verdict: H1 Inconclusive; H2 Inconclusive.</strong> The pipeline's counts would give Supported for both. Neither audit
+reaches the plan's 80% agreement on "over-approximated", so by the plan's rule the pipeline's share is reported as
+unreliable.</p>
 <ul>
 <li><strong>H1 (at least 25% of advisories declare a lower bound that starts before the vulnerable code existed):
   Inconclusive.</strong><ul>
 <li><strong>Pipeline:</strong> 308 of the 411 classified advisories are over-approximated (75%; Wilson 70.5% to 78.9%), and 103
-are tight. Even counting every undetermined advisory as not over-approximated, that is 38.5% of all 800.</li>
-<li><strong>The audit:</strong> a separate session judged 30 pipeline over-approximations and 30 tight cases from the fix diff and
-two releases, without the labels.<ul>
-<li>Of the 30 over-approximations, it confirmed 10 (33%), contradicted 8 and could not decide 12. The plan
-  requires 80%.</li>
-<li>Of the 30 tight cases, it confirmed 24.</li>
-<li>The contradicted cases are the same flaw in code written differently in the earlier release:
-  renamed, rewritten or moved.
-  Exact line signatures miss it, and the pipeline calls it absent.</li>
-</ul>
-</li>
-<li><strong>Audit-calibrated range:</strong> applying the audited fractions to all 308 gives 25% to 55% of classified
-advisories. The bar of 25% is the bottom of that range.</li>
-<li><strong>Strict reading</strong> (post hoc): the module the fix touches is missing altogether from the earliest in-range
-release (no file of the same name). That holds for 142 of the 308, or 58% (52% to 64%) of strict plus tight.
-The auditor contradicted none of the 14 audited strict cases, but could decide only 4 of them.</li>
+are tight. A recheck of the releases each call rests on reclassifies one, whose only absent releases had no
+source files (307 of 410). Counting every undetermined advisory as not over-approximated gives 38.5% of all 800.</li>
+<li><strong>The preregistered audit</strong> (one session, 30 over-approximated and 30 tight packets): it confirmed 10 of the 30
+over-approximations, contradicted 8 and could not decide 12. Eleven of those 12 were gaps in the packets, not in
+the pipeline: release A's relevant file had not been included. On the 18 judgeable cases it confirmed 10 (56%;
+34% to 75%). It confirmed 24 of 25 judgeable tight cases.</li>
+<li><strong>The rebuilt audit</strong> (post hoc, D4): the same 60 advisories, with packets that show what the pipeline searched
+and choose the second release the same way for both groups. Two labellers worked blind in separate sessions and
+agreed with each other on 59 of 60 releases A (kappa 0.97); an adjudicator settled 3 packets. They confirmed 19 of
+the 30 over-approximations (63%; 46% to 78%), or 19 of 28 judgeable (68%; 49% to 82%), and 29 of 30 tight cases.
+In 6 of the 30 the fixed code is already present in release A; in 3 it is missing from release B too, so the
+packaged releases never show the code the fix changes.</li>
+<li><strong>Code versus vulnerability.</strong> In 14 of the 30 over-approximations the labellers found the vulnerability itself
+in release A in some other form. In 8 of those the code the fix changes is absent, so the range is too early
+for the fixed code but not for the flaw.</li>
+<li><strong>Audit-calibrated share</strong> (post hoc): applying the rebuilt audit's agreement to all 308 gives 47% of classified
+advisories (34% to 59%) for the fixed code, and 33% (20% to 46%) if a range only counts as too early when the
+vulnerability itself was absent. Both assume that the 30 audited cases represent all 308 and that the undetermined
+half of the sample behaves like the classified half.</li>
+<li><strong>Strict reading</strong> (post hoc): the module the fix touches is missing altogether from release A (no file of the
+same name). That holds for 142 of the 411 (34.5%; 30.1% to 39.3%). It is unvalidated: it cannot see renamed or
+merged modules, and the first audit could not test it.</li>
 <li>49% of the sample is undetermined: no usable signature (79), no diff (10), or no release in which the signature
-matches (300). That is above the plan's 40% warning line, so any share rests on a minority of the sample.</li>
+matches (300). That is above the plan's 40% warning line. The classified half is a majority, but it is selected
+by packaging: npm fixes that touch only TypeScript mostly end up undetermined.</li>
 </ul>
 </li>
 <li><strong>H2 (correcting the lower bounds removes at least a third of affected version pairs, a factor of 1.5):
   Inconclusive.</strong><ul>
-<li><strong>Pipeline:</strong> 35,590 declared (version, advisory) pairs fall to 16,353, a factor of <strong>2.18</strong> (1.93 to 2.50).</li>
-<li><strong>Strict reading:</strong> the factor is <strong>1.35</strong> (1.27 to 1.45), below the bar. The pipeline figure rests on the
-classification the audit found unreliable.</li>
+<li><strong>Pipeline:</strong> 35,590 declared (version, advisory) pairs fall to 16,353, a factor of <strong>2.18</strong> (1.93 to 2.50).
+That is the upper end even under the pipeline's own calls. The corrected range starts at the first release that is
+at least 80% present, and 141 of the 308 walks show partial presence earlier. Starting it at the first partial
+presence gives 1.67 (1.53 to 1.84), and just after the last absent release 1.73 (1.60 to 1.91).</li>
+<li><strong>Strict reading:</strong> 1.35 (1.27 to 1.45), below the bar, on the same convention as the strict 34.5%. Dropping the
+non-strict cases from the denominator instead gives 1.81 (1.58 to 2.12).</li>
 <li><strong>npm installs</strong> (pipeline classes): 36% of current weekly downloads of versions inside declared ranges fall
 outside the corrected ranges.</li>
 </ul>
 </li>
-<li><strong>What holds regardless of the audit.</strong><ul>
-<li><strong>"Introduced: 0" ranges drive the pattern.</strong> 81% of sampled advisories declare every release affected. Of
-those classified, the pipeline flags 83% (280 of 338), against 38% (28 of 73) of explicit lower bounds.</li>
-<li>Where a lower bound starts too early, the gap is long: a median of 42 releases, or 3.1 years (pipeline classes).</li>
-<li><strong>Upper bounds:</strong> in 35 of 693 checked advisories (5%), the vulnerable code is still present in the first
-release at or after the declared fixed version. "Present" calls are the reliable direction in the audit.</li>
+<li><strong>Pipeline-only patterns (not audited).</strong><ul>
+<li>81% of sampled advisories declare every release affected (<code>introduced: 0</code>). Of those classified, the pipeline
+flags 83% (280 of 338), against 38% (28 of 73) of explicit lower bounds. This is confounded with history length:
+those walks start at a package's first releases (58 of the 308 releases A are 0.0.0 or 0.0.1), where older forms
+of the code are most likely.</li>
+<li>Where the pipeline flags a lower bound, the gap is a median of 42 releases, or 3.1 years.</li>
+<li><strong>Upper bounds:</strong> in 35 of 693 checked advisories (5%), the fix's deleted lines are still found in the first
+release at or after the declared fixed version. This was not audited.</li>
 </ul>
 </li>
 </ul>
@@ -140,32 +152,41 @@ as Dependabot then warn everyone who uses those versions. If the advisory says "
 flaw only arrived recently, users of old, safe versions get warnings they do not need.</p>
 <p>We took 800 advisories for JavaScript (npm) and Python (PyPI) packages and checked, release by release, whether the
 code that the fix changed was actually there. A simple automatic check said three in four advisories start their
-range too early. But when a separate reviewer looked at a sample by hand, the automatic check's "too early" could be
-confirmed only a third of the time; in a quarter of cases the flaw was already there. Code that existed in an older form, renamed or moved, fooled it.</p>
-<p>So the true share is roughly a quarter to a half of the advisories we could check. The clearest pattern is
-the default: four in five advisories say every version is affected, and those are the ones most often too broad. A
-better check, one that recognises older forms of the same code, is needed before the extra warnings can be counted.</p>
+range too early.</p>
+<p>We then had the check's calls judged blind, from the code alone. The first audit could confirm only a third of the
+"too early" calls, largely because it had been shown the wrong files. A rebuilt audit, with two independent
+reviewers who agreed with each other almost every time, confirmed about two in three. In about half of the rest the
+code was already there in the earliest release, written slightly differently, and the check had missed it. That is
+better, but short of the four in five the study required before trusting the check.</p>
+<p>So a rough estimate made after the fact puts the share of advisories that start too early at around a third to a
+half of those we could check, with wide uncertainty; the study cannot say more precisely. The answer also depends on what counts: in about a third of the confirmed cases
+the flaw already existed in an older form even though the fixed code did not. A check that follows code through rewrites,
+and a larger audit, are needed before the unnecessary warnings can be counted.</p>
 <h2>What was asked</h2>
 <p>The lead (<code>software-security-advisory-range-overapproximation</code>) asked whether published advisory ranges for npm and
 PyPI over-approximate the affected versions, and how many dependency alerts that inflates. It predicted at least 25%
 over-approximated lower bounds and a 1.5-fold inflation.
 - <strong>Affected-version identification has been studied as a tool problem</strong> for C/C++ (no tool above 45% accuracy; Chen
-  et al. 2025) and Java (VERJava, Sun et al. 2022).
+  et al. 2025) and Java (VERJava, Sun et al. 2022). A 2026 submission studies how the functions named in CVE
+  descriptions differ from those a fix changes, and how that shifts inferred ranges; its data are not yet released.
 - <strong>An OSV-derived dataset for evaluating detection tools takes the published ranges as ground truth</strong> (Mandl et al.
   2026).
-- No measurement of the published npm and PyPI ranges against code presence was found.</p>
+- No measurement of the published npm and PyPI ranges against code presence was found (OpenAlex searches,
+  2026-11-07 and 2026-11-10; ledger S6).</p>
 <h2>How it was done</h2>
 <ul>
 <li><strong>Advisories</strong> (<code>code/eligible.py</code>): the OSV export for npm and PyPI (2026-11-07). GHSA records, not withdrawn, one
   affected package, a range with <code>introduced</code> and <code>fixed</code> events (OSV encodes npm ranges as SEMVER; D1), and a fix
   commit. 6,409 are eligible; 400 npm and 400 PyPI were sampled.</li>
-<li><strong>Fix diffs</strong> from github.com (790 of 800; D2) and <strong>release lists</strong> with publish dates from the npm registry and
-  PyPI.</li>
+<li><strong>Fix diffs</strong> from github.com's public diff URLs (790 of 800; D2) and <strong>release lists</strong> with publish dates from the
+  npm registry and PyPI.</li>
 <li><strong>Signatures</strong> (<code>code/presence.py</code>, unit-tested): the normalised lines the fix deletes in non-test source files.
   For fixes that only add a check, the signature is the context lines before the added code, and the added lines are
   a patch signature.</li>
-<li><strong>Presence:</strong> the share of signature lines found in the matching file of a release. "Present" needs at least 80%,
-  "absent" at most 20%, and anything between is undetermined.</li>
+<li><strong>Presence:</strong> the share of signature lines found in the release file with the same path, or anywhere in the release
+  when no file shares the name (the plan's fallback). "Present" needs at least 80%, "absent" at most 20%, and
+  anything between is undetermined. The recheck counts the fallback: 217 of the 411 deciding judgements used it,
+  wholly (169) or for some fix files (48) (<code>results/tables/coverage.json</code>).</li>
 <li><strong>Classification:</strong> releases inside the declared range are walked in publish order, stopping at the first present
   one.<ul>
 <li><strong>Tight:</strong> the earliest in-range release is present.</li>
@@ -174,13 +195,17 @@ over-approximated lower bounds and a 1.5-fold inflation.
 <li>A cap of 400 downloads per advisory was reached by 41 advisories (D2).</li>
 </ul>
 </li>
-<li><strong>G4 audit</strong> (<code>code/audit_packets.py</code>): a stratified sample of 30 over-approximated and 30 tight advisories. Each
-  packet holds the fix diff and the matching source files of two in-range releases (A, the earliest; B, the first
-  present or a mid-range release). A separate session labelled each release present, absent or cannot tell; the
-  pipeline's labels stayed outside its view.</li>
+<li><strong>Preregistered G4 audit</strong> (<code>code/audit_packets.py make</code>/<code>score</code>): a stratified sample of 30 over-approximated and
+  30 tight advisories. Each packet held the fix diff and the same-name source files of two in-range releases (A, the
+  earliest; B, the first present release or a mid-range one). One separate session labelled each release.</li>
+<li><strong>Rebuilt audit</strong> (<code>make_d4</code>/<code>score_d4</code>, D4, post hoc): the same 60 advisories in a new order. Release B is the last
+  in-range release for both groups. Where no release file shares a fix file's name, the packet carries the files the
+  pipeline's search would hit. Packets carry no dates and nothing of the pipeline's measurement. Two labellers in
+  separate sessions, with access only to the packets, answered for A and B whether the code the fix changes is
+  present, and for A whether the vulnerability is present in any form; an adjudicator settled their 3 disagreements.</li>
 </ul>
 <h2>Results (<code>results/figures/F1_share.png</code>, <code>F2_gap.png</code>)</h2>
-<figure><a href="results/figures/F1_share.png"><img src="results/figures/F1_share.png" alt="Share over-approximated"></a><figcaption>Share of classified (tight or over-approximated) GHSA advisories for npm and PyPI whose declared lower bound starts before the first release containing the code the fix removes or guards, with Wilson 95% intervals; 49% of the 800 sampled advisories are undetermined and excluded.</figcaption></figure>
+<figure><a href="results/figures/F1_share.png"><img src="results/figures/F1_share.png" alt="Pipeline flags"></a><figcaption>Share of classified (tight or over-approximated) GHSA advisories for npm and PyPI whose declared lower bound starts before the first release containing the code the fix removes or guards, with Wilson 95% intervals; 49% of the 800 sampled advisories are undetermined and excluded.</figcaption></figure>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -200,6 +225,13 @@ over-approximated lower bounds and a 1.5-fold inflation.
 <td>2.18 (1.93–2.50)</td>
 </tr>
 <tr>
+<td>pipeline, corrected start at first partial presence (post hoc)</td>
+<td></td>
+<td></td>
+<td></td>
+<td>1.67 (1.53–1.84)</td>
+</tr>
+<tr>
 <td>pipeline, thresholds 0.6 / 0.4</td>
 <td>360</td>
 <td>487</td>
@@ -207,17 +239,31 @@ over-approximated lower bounds and a 1.5-fold inflation.
 <td></td>
 </tr>
 <tr>
+<td>pipeline, path-matched deciding releases only (post hoc)</td>
+<td>106</td>
+<td>193</td>
+<td>55% (47.9–61.8)</td>
+<td></td>
+</tr>
+<tr>
 <td>strict: module missing in release A (post hoc)</td>
 <td>142</td>
-<td>245</td>
-<td>58% (51.7–64.0)</td>
+<td>411</td>
+<td>34.5% (30.1–39.3)</td>
 <td>1.35 (1.27–1.45)</td>
 </tr>
 <tr>
-<td>audit-calibrated range (post hoc)</td>
+<td>calibrated by the rebuilt audit, fixed code (post hoc)</td>
 <td></td>
 <td>411</td>
-<td>25%–55%</td>
+<td>47% (34–59)</td>
+<td></td>
+</tr>
+<tr>
+<td>calibrated by the rebuilt audit, vulnerability (post hoc)</td>
+<td></td>
+<td>411</td>
+<td>33% (20–46)</td>
 <td></td>
 </tr>
 </tbody>
@@ -225,24 +271,21 @@ over-approximated lower bounds and a 1.5-fold inflation.
 <div class="table-wrap"><table>
 <thead>
 <tr>
-<th>G4 audit</th>
-<th>auditor: absent in A</th>
-<th>auditor: present in A</th>
-<th>auditor: cannot tell</th>
+<th>audit</th>
+<th>pipeline over-approximated: confirmed / judgeable / all</th>
+<th>tight: confirmed / judgeable</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>pipeline over-approximated (30)</td>
-<td>10</td>
-<td>8</td>
-<td>12</td>
+<td>preregistered (one labeller; packets with gaps)</td>
+<td>10 / 18 / 30</td>
+<td>24 / 25</td>
 </tr>
 <tr>
-<td>pipeline tight (30)</td>
-<td>1</td>
-<td>24</td>
-<td>5</td>
+<td>rebuilt (two labellers, kappa 0.97, adjudicated; post hoc)</td>
+<td>19 / 28 / 30</td>
+<td>29 / 30</td>
 </tr>
 </tbody>
 </table></div>
@@ -250,17 +293,20 @@ over-approximated lower bounds and a 1.5-fold inflation.
 <figure><a href="results/figures/F2_gap.png"><img src="results/figures/F2_gap.png" alt="Gap"></a><figcaption>For the 308 over-approximated advisories with publish dates, the time between the earliest release inside the declared range and the first release containing the vulnerable code.</figcaption></figure>
 <h2>What this does and does not show</h2>
 <ul>
-<li><strong>Line-signature patch presence is not reliable for "absent".</strong> It recognises present code well (24 of 30 tight
-  cases confirmed). But it calls code absent when the same flaw existed in another form, and that is exactly the
-  judgement over-approximation turns on. Measuring range accuracy at scale needs a matcher that follows code through
-  renames and moves.</li>
-<li><strong>"Introduced: 0" is the weak spot.</strong> Whatever the exact share, the default "all earlier versions" range is flagged
-  far more often than an explicit lower bound.</li>
-<li><strong>The alert inflation is not established.</strong> Under the strict reading it is well below the pipeline figure (1.35
-  against 2.18) and below the bar.</li>
+<li><strong>Line-signature presence is not reliable enough for "absent".</strong> It recognises present code well (29 of 30 tight
+  cases confirmed in the rebuilt audit). But in the rebuilt audit a fifth of its over-approximations had the fixed
+  code already in release A, and a further sixth could not be confirmed (the fixed code missing from release B too,
+  or undecidable). Measuring
+  range accuracy at scale needs a matcher that follows code through rewrites and moves.</li>
+<li><strong>Two constructs give different answers.</strong> "The code the fix changes was not there" and "the vulnerability was not
+  there" disagree in about a quarter of the audited over-approximations. The plan's question is the first; an
+  advisory reader cares about the second.</li>
+<li><strong>The alert inflation is not established.</strong> Even under the pipeline's own calls the factor is 1.7 to 2.2 depending
+  on where the corrected range starts, and the calls themselves are only partly confirmed.</li>
+<li><strong>The calibrated shares are rough.</strong> They rest on 30 audited cases and assume the undetermined half behaves like
+  the classified half, which packaging makes doubtful.</li>
 <li><strong>Not shown:</strong><ul>
-<li><strong>Exploitability.</strong> Presence of the code is not proof that a release was exploitable, and absence was hard to
-establish.</li>
+<li><strong>Exploitability.</strong> Presence of the code is not proof that a release was exploitable.</li>
 <li><strong>Dependency-graph alert counts</strong> (deps.dev). Version pairs and npm downloads stand in for them.</li>
 <li><strong>Advisories without a fix commit</strong>, which are 2,850 of the 9,259 GHSA records with a range in these ecosystems.</li>
 </ul>
@@ -269,14 +315,28 @@ establish.</li>
 <h2>Process and deviations</h2>
 <ul>
 <li><strong>Preregistration:</strong> <code>plan.md</code>, committed before any data. Eligibility and the sample, then the fetch, presence and
-  classification code, were committed before any presence result.</li>
+  classification code, were committed before any presence result. The presence run was restarted once around
+  midnight on 7 November and resumed from its existing files (D4).</li>
 <li><strong>Deviations</strong> (<code>deviations.md</code>): D1, the SEMVER range type (before any commit or release was fetched); D2, public
-  diff URLs, the release walk and the cap; D3, after the G4 audit, the strict reading and the audit-calibrated range
-  (post hoc).</li>
-<li><strong>Quality gates:</strong> G1 (plan section 5), G2 (<code>results/tables/coverage.json</code>), G3 (<code>results/plausibility.md</code>), G4
-  (<code>results/tables/g4_audit.json</code>; failed its bar, reported as such), G5 (<code>review/overclaim_check.md</code>) and G6
-  (<code>results/attribution_ledger.csv</code>).</li>
-<li><strong>Independent review:</strong> queued (Fable), per the lab's pacing rule.</li>
+  diff URLs, the release walk and the cap; D3, after the first audit, the strict reading (post hoc); D4, after the
+  independent review: one convention for the strict reading with every number from committed code, the first audit's
+  packet artefacts, the calibrated range's uncertainty, the G2 recheck, the H2 start sensitivity, the rebuilt
+  two-labeller audit, random hand traces, and the removal of an implicit credential lookup from <code>fetch.py</code>.</li>
+<li><strong>Quality gates:</strong><ul>
+<li>G1: the plan had no leakage-audit section. The first audit's packets encoded the pipeline's class (second release
+chosen differently per group; about 80% predictable, per the review). The rebuilt packets choose it identically and carry no
+pipeline measurement. Whether release A has a same-name file still predicts the class 68% of the time, but that
+is evidence the labeller legitimately needs.</li>
+<li>G2: <code>results/tables/coverage.json</code>, now with the fallback counts.</li>
+<li>G3: <code>results/plausibility.md</code>.</li>
+<li>G4: both audits are reported and both fail the 80% bar; the first audit's "cannot tell" cases are classed.</li>
+<li>G5: <code>review/overclaim_check.md</code>.</li>
+<li>G6: <code>results/attribution_ledger.csv</code>.</li>
+<li>G7: the first audit had one labeller. The rebuilt audit has two blind labellers (kappa 0.97 for the fixed code,
+0.92 for the vulnerability) and an adjudicator. Blindness was enforced by instruction, not by the file system.</li>
+</ul>
+</li>
+<li><strong>Independent review:</strong> fix first; the fixes are in D4.</li>
 </ul>
 <h2>Reproducing it</h2>
 <ol>
@@ -285,7 +345,8 @@ establish.</li>
 <li><code>code/presence.py run</code>.</li>
 <li><code>code/classify.py run</code>, <code>code/classify.py downloads</code>, <code>code/classify.py run</code>.</li>
 <li><code>code/audit_packets.py make</code> (key outside the run directory), labelling in a separate session, <code>code/audit_packets.py score</code>.</li>
-<li><code>code/posthoc_strict.py</code>, <code>code/figures.py</code>.</li>
+<li><code>code/posthoc_strict.py KEY</code>, <code>code/recheck_d4.py run</code>, <code>code/audit_packets.py make_d4</code> and <code>score_d4</code> (two
+   labellers and an adjudicator in separate sessions), <code>code/posthoc_d4.py KEY</code>, <code>code/handtrace.py</code>, <code>code/figures.py</code>.</li>
 </ol>
 </main>
 <footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one

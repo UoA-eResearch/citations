@@ -31,5 +31,19 @@
    "no fix diff": 10,
    "undetermined": 300
   }
+ },
+ "deciding_release_match": {
+  "attempted": 411,
+  "ok": 193,
+  "fallback": 217,
+  "dropped": 1,
+  "unresolved": 0,
+  "fallback_reasons": {
+   "any source file searched (no release file shares the fix file's name)": 169,
+   "mixed: some fix files by path, some by any-file search": 48
+  },
+  "drop_reasons": {
+   "absent releases were all empty extractions (reclassified undetermined)": 1
+  }
  }
 }

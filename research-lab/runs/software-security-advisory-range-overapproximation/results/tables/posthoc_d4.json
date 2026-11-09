@@ -1,0 +1,240 @@
+{
+ "strict": {
+  "over_approximated": 308,
+  "strict": 142,
+  "not_strict": 161,
+  "unknown": 5,
+  "convention_main": "non-strict counts as not over-approximated; all classified advisories in the denominator",
+  "H1_main": {
+   "share": 0.3455,
+   "k": 142,
+   "n": 411,
+   "wilson": [
+    0.3011,
+    0.3927
+   ]
+  },
+  "H2_main": {
+   "factor": 1.345,
+   "ci": [
+    1.266,
+    1.45
+   ],
+   "verdict_vs_1.5": "below"
+  },
+  "convention_sensitivity": "non-strict and unknown over-approximations dropped from the denominator",
+  "H1_sensitivity": {
+   "share": 0.5796,
+   "k": 142,
+   "n": 245,
+   "wilson": [
+    0.517,
+    0.6397
+   ]
+  },
+  "H2_sensitivity": {
+   "factor": 1.812,
+   "ci": [
+    1.583,
+    2.119
+   ],
+   "verdict_vs_1.5": "above"
+  }
+ },
+ "audit_v1": {
+  "over": {
+   "n": 30,
+   "agree": 10,
+   "wilson": [
+    0.1923,
+    0.5122
+   ],
+   "cannot_tell": 12,
+   "cannot_tell_packet_artefact": 11,
+   "cannot_tell_A_had_no_file": 10,
+   "artefact_packets": [
+    "a19",
+    "a21",
+    "a22",
+    "a34",
+    "a37",
+    "a39",
+    "a47",
+    "a48",
+    "a53",
+    "a58",
+    "a59"
+   ],
+   "judgeable": 18,
+   "agree_judgeable": 10,
+   "wilson_judgeable": [
+    0.3372,
+    0.7544
+   ],
+   "says_present_in_A": 8
+  },
+  "tight": {
+   "n": 30,
+   "agree": 24,
+   "judgeable": 25,
+   "says_absent_in_A": 1
+  },
+  "strict_cases_audited": {
+   "n": 14,
+   "A_had_no_file_in_packet": 14,
+   "note": "packets carried only same-name files, and strict means release A has none, so the auditor saw an empty A in every strict case"
+  }
+ },
+ "calibrated_H1": {
+  "pipeline_share": 0.7494,
+  "measured": {
+   "point": 0.25,
+   "range": [
+    0.144,
+    0.384
+   ]
+  },
+  "most_generous": {
+   "point": 0.55,
+   "range": [
+    0.416,
+    0.643
+   ]
+  },
+  "judgeable_only": {
+   "point": 0.416,
+   "range": [
+    0.253,
+    0.565
+   ]
+  },
+  "first_draft_range_without_uncertainty": [
+   0.25,
+   0.55
+  ],
+  "assumes": "the audited 30 represent all 308; tight-side errors ignored; the undetermined half behaves like the classified half"
+ },
+ "H2_start_sensitivity": {
+  "first_s_ge_0.8 (reported)": {
+   "factor": 2.176,
+   "ci": [
+    1.931,
+    2.497
+   ],
+   "verdict_vs_1.5": "above"
+  },
+  "first_s_gt_0.2": {
+   "factor": 1.67,
+   "ci": [
+    1.533,
+    1.843
+   ],
+   "verdict_vs_1.5": "above"
+  },
+  "after_last_absent": {
+   "factor": 1.732,
+   "ci": [
+    1.596,
+    1.909
+   ],
+   "verdict_vs_1.5": "above"
+  },
+  "over_approximated_with_partial_presence_before_the_cut": 141,
+  "removed_releases": 19237,
+  "removed_releases_not_shown_absent": 4602
+ },
+ "recheck": {
+  "advisories": 411,
+  "s_reproduces": {
+   "absent": 307,
+   "absent_checked": 307,
+   "present": 411,
+   "present_checked": 411
+  },
+  "over_absent_release_match": {
+   "fallback": 153,
+   "path": 106,
+   "mixed": 48,
+   "NaN": 1
+  },
+  "over_present_release_match": {
+   "path": 254,
+   "fallback": 36,
+   "mixed": 18
+  },
+  "tight_release_match": {
+   "path": 87,
+   "fallback": 16
+  },
+  "over_with_an_empty_absent_release": 5,
+  "over_absent_release_has_few_files_le_2": 55,
+  "cls_d4": {
+   "over-approximated": 307,
+   "tight": 103,
+   "undetermined (only empty extractions absent)": 1
+  },
+  "H1_empty_extractions_undetermined": {
+   "share": 0.7488,
+   "k": 307,
+   "n": 410,
+   "wilson": [
+    0.7046,
+    0.7883
+   ]
+  },
+  "H1_path_matched_absences_only": {
+   "share": 0.5492,
+   "k": 106,
+   "n": 193,
+   "wilson": [
+    0.4787,
+    0.6178
+   ],
+   "note": "only advisories whose deciding release was judged by a same-path file for every fix file (absent release for over-approximated, release A for tight)"
+  }
+ },
+ "invariants_checked": [
+  "800 sampled = 800 rows in classes.csv",
+  "411 classified",
+  "tight at index 0",
+  "corrected pairs <= declared pairs (all readings)"
+ ],
+ "calibrated_H1_d4_audit": {
+  "code_construct": {
+   "agree": "19/30",
+   "point": 0.475,
+   "range": [
+    0.341,
+    0.585
+   ]
+  },
+  "code_construct_judgeable": {
+   "agree": "19/28",
+   "point": 0.509,
+   "range": [
+    0.37,
+    0.615
+   ]
+  },
+  "flaw_construct": {
+   "flaw_absent_in_A": "13/30",
+   "point": 0.325,
+   "range": [
+    0.205,
+    0.456
+   ]
+  },
+  "flaw_construct_judgeable": {
+   "flaw_absent_in_A": "13/27",
+   "point": 0.361,
+   "range": [
+    0.23,
+    0.495
+   ]
+  },
+  "tight_errors": 1,
+  "kappa_A_code": 0.966,
+  "kappa_A_flaw": 0.92,
+  "assumes": "the audited 30 represent all 308; the undetermined half behaves like the classified half"
+ }
+}

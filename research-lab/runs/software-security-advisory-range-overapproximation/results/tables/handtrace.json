@@ -1,69 +1,124 @@
 {
  "tight": {
-  "id": "GHSA-h3h8-3v2v-rg7m",
+  "id": "GHSA-q326-jhw3-699g",
   "pipeline_class": "tight",
-  "n_in_range": 149,
+  "n_in_range": 2,
+  "fix_files": 9,
   "releases": [
    {
     "index": 0,
-    "version": "4.16.0",
-    "matched_files": [
-     "gradio/oauth.py"
-    ],
-    "deleted_lines_found_by_substring": 2,
-    "deleted_lines": 2,
-    "source_files": 163
+    "version": "3.0.0",
+    "source_files": 767,
+    "matched": {
+     "IPython/html/base/handlers.py": "IPython/html/base/handlers.py",
+     "IPython/html/services/clusters/handlers.py": "IPython/html/services/clusters/handlers.py",
+     "IPython/html/services/config/handlers.py": "IPython/html/services/config/handlers.py",
+     "IPython/html/services/contents/handlers.py": "IPython/html/services/contents/handlers.py",
+     "IPython/html/services/kernels/handlers.py": "IPython/html/services/kernels/handlers.py",
+     "IPython/html/services/nbconvert/handlers.py": "IPython/html/services/nbconvert/handlers.py",
+     "IPython/html/services/security/handlers.py": "IPython/html/services/security/handlers.py",
+     "IPython/html/services/sessions/handlers.py": "IPython/html/services/sessions/handlers.py",
+     "IPython/html/terminal/api_handlers.py": "IPython/html/terminal/api_handlers.py"
+    },
+    "deleted_lines_found": 32,
+    "deleted_lines": 32,
+    "share_by_hand": 1.0,
+    "pipeline_s": 1.0,
+    "pipeline_state": "present"
    }
   ]
  },
  "over-approximated": {
-  "id": "GHSA-m6hv-x64c-27mm",
+  "id": "GHSA-hvfh-5mj3-5f3j",
   "pipeline_class": "over-approximated",
-  "n_in_range": 367,
+  "n_in_range": 41,
+  "fix_files": 7,
   "releases": [
    {
     "index": 0,
-    "version": "0.2.3",
-    "matched_files": [
-     "copyparty/authsrv.py",
-     "copyparty/httpcli.py",
-     "copyparty/up2k.py",
-     "copyparty/util.py"
-    ],
-    "deleted_lines_found_by_substring": 0,
-    "deleted_lines": 32,
-    "source_files": 19
+    "version": "2.4.0rc0",
+    "source_files": 64,
+    "matched": {
+     "backend/chainlit/config.py": "chainlit/config.py",
+     "backend/chainlit/mcp.py": "chainlit/mcp.py",
+     "backend/chainlit/server.py": "chainlit/server.py",
+     "backend/chainlit/session.py": "chainlit/session.py",
+     "backend/chainlit/types.py": "chainlit/types.py",
+     "backend/chainlit/version.py": "chainlit/version.py",
+     "cypress/e2e/config_overrides/main.py": null
+    },
+    "deleted_lines_found": 90,
+    "deleted_lines": 222,
+    "share_by_hand": 0.405,
+    "pipeline_s": 0.315,
+    "pipeline_state": "undetermined"
    },
    {
-    "index": 349,
-    "version": "1.19.17",
-    "matched_files": [
-     "copyparty/authsrv.py",
-     "copyparty/cfg.py",
-     "copyparty/httpcli.py",
-     "copyparty/up2k.py",
-     "copyparty/util.py"
-    ],
-    "deleted_lines_found_by_substring": 26,
-    "deleted_lines": 32,
-    "source_files": 60
+    "index": 21,
+    "version": "2.7.1",
+    "source_files": 0,
+    "matched": {
+     "backend/chainlit/config.py": null,
+     "backend/chainlit/mcp.py": null,
+     "backend/chainlit/server.py": null,
+     "backend/chainlit/session.py": null,
+     "backend/chainlit/types.py": null,
+     "backend/chainlit/version.py": null,
+     "cypress/e2e/config_overrides/main.py": null
+    },
+    "deleted_lines_found": 0,
+    "deleted_lines": 222,
+    "share_by_hand": 0.0,
+    "pipeline_s": 0.0,
+    "pipeline_state": "absent"
+   },
+   {
+    "index": 39,
+    "version": "2.11.0",
+    "source_files": 107,
+    "matched": {
+     "backend/chainlit/config.py": "chainlit/config.py",
+     "backend/chainlit/mcp.py": "chainlit/mcp.py",
+     "backend/chainlit/server.py": "chainlit/server.py",
+     "backend/chainlit/session.py": "chainlit/session.py",
+     "backend/chainlit/types.py": "chainlit/types.py",
+     "backend/chainlit/version.py": "chainlit/version.py",
+     "cypress/e2e/config_overrides/main.py": null
+    },
+    "deleted_lines_found": 218,
+    "deleted_lines": 222,
+    "share_by_hand": 0.982,
+    "pipeline_s": 0.976,
+    "pipeline_state": "present"
    }
   ]
  },
  "undetermined": {
-  "id": "GHSA-2qjp-fg8c-g878",
+  "id": "GHSA-r4gj-5m52-g5wh",
   "pipeline_class": "undetermined",
-  "n_in_range": 1092,
+  "n_in_range": 4,
+  "fix_files": 9,
   "releases": [
    {
     "index": 0,
-    "version": "0.0.1-beta.1",
-    "matched_files": [
-     "src/table/body.js"
-    ],
-    "deleted_lines_found_by_substring": 2,
-    "deleted_lines": 3,
-    "source_files": 11
+    "version": "1.17.0",
+    "source_files": 73,
+    "matched": {
+     "lib/adapters/fetch.js": "lib/adapters/fetch.js",
+     "lib/adapters/http.js": "lib/adapters/http.js",
+     "lib/core/Axios.js": "lib/core/Axios.js",
+     "lib/core/dispatchRequest.js": "lib/core/dispatchRequest.js",
+     "lib/helpers/fromDataURI.js": "lib/helpers/fromDataURI.js",
+     "lib/helpers/resolveConfig.js": "lib/helpers/resolveConfig.js",
+     "lib/helpers/shouldBypassProxy.js": "lib/helpers/shouldBypassProxy.js",
+     "lib/helpers/toFormData.js": "lib/helpers/toFormData.js",
+     "lib/utils.js": "lib/utils.js"
+    },
+    "deleted_lines_found": 59,
+    "deleted_lines": 91,
+    "share_by_hand": 0.648,
+    "pipeline_s": 0.613,
+    "pipeline_state": "undetermined"
    }
   ]
  }

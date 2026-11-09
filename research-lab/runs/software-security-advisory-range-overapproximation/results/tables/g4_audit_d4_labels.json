@@ -1,0 +1,1532 @@
+{
+ "note": "D4 re-audit labels: two blind labellers (separate sessions, packets only) and an adjudicator for 3 disagreements; key joined after labelling",
+ "labeller_1": [
+  {
+   "packet": "b00",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Release A has eval() on user-supplied strings in sharepoint_api.py (create_a_list, create_a_site_column, create_an_item), weaviate_handler.py (vector filter) and vectordatabase_handler.py _dispatch_update. B has these plus the chromadb_handler metadata eval."
+  },
+  {
+   "packet": "b01",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Both A's index.js and B's lib/index.js serialize RegExp with source.toString() inside serialize(), the unescaped output the fix replaces with new RegExp(...)."
+  },
+  {
+   "packet": "b02",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "A's single index.js has the same escapeShellArg body as B's src/unix.js (arg.replace(/'/g, ...)) and does not strip null characters. B's src/unix.js and src/win.js both have the unfixed lines."
+  },
+  {
+   "packet": "b03",
+   "A_code": "absent",
+   "B_code": "absent",
+   "A_flaw": "cannot tell",
+   "reason": "Swift 1.0.2 has no gatekeeper middleware or any header-exclusion list. Whether client update headers reach the backend depends on proxy/server.py and obj/server.py, which are listed but not included. B's gatekeeper.py already contains the fixed inbound_exclusions with the x-account/x-container/x-delete-at patterns."
+  },
+  {
+   "packet": "b04",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "Objection 0.1.6 has no lib/utils/objectUtils.js and uses lodash. The included Model/QueryBuilder/Relation have no path-based set or zipObject, only single-level key assignments. B's objectUtils.js set() and zipObject() lack the __proto__ guard."
+  },
+  {
+   "packet": "b05",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "Ansible 1.0 has no vault module (no utils/vault.py in the file list, and no vault or editor code in the included files). B's vault.py create_file/edit_file run the editor and write the tmp file without setting the umask."
+  },
+  {
+   "packet": "b06",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "In both index.js files, deriveSharedSecret only checks that publicKey and publicKey.Q exist, with no on-curve check before Q.multiply(d). A and B differ only in the jsbn require."
+  },
+  {
+   "packet": "b07",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Both local_python_executor.py evaluate_name return static_tools[name.id] unwrapped. A has no safer_eval at all and exposes raw getattr, so indirect module access is open. B has the old safer_eval and the unwrapped return."
+  },
+  {
+   "packet": "b08",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "Studiocms 0.1.0-beta.5 is a 4-file wrapper (src/blog/index.ts re-exports @studiocms/blog) with no frontend middleware or dashboard routes. B's frontend/middleware/index.ts dashboard handler only checks isLoggedIn, with no per-route permission check."
+  },
+  {
+   "packet": "b09",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Both A's lib/addressparser/index.js and B's dist addressparser have textWasQuoted.push(insideQuotes). Both apply _quoteLocalPart to address.address after _recoverAddrSpec when addressFromQuotedText is set, which is the removed logic."
+  },
+  {
+   "packet": "b10",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "In both clean.py files, _has_sneaky_javascript does style.replace('\\\\', '') instead of decoding CSS unicode escapes."
+  },
+  {
+   "packet": "b11",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "In both EpsImagePlugin.py files, the %%BeginBinary: branch does bytecount = int(...) then fp.seek(bytecount, SEEK_CUR) with no negative check."
+  },
+  {
+   "packet": "b12",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "A's index.js has the same recursive sanitize(options, data) as B's lib/sanitize.js, with no depth limit, recursing into nested arrays and objects."
+  },
+  {
+   "packet": "b13",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Both dist/lib/HAXCMS.js files have hardcoded superUser/user admin/admin with no .user config loading. Both have res.send(401) in the refresh-token check and usr.password = pass in testLogin."
+  },
+  {
+   "packet": "b14",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "In both serialization.py files, my_load_from_json's __object_hook does getattr(importlib.import_module(module_name), class_name) on an arbitrary __type__ from JSON."
+  },
+  {
+   "packet": "b15",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "Vm2 0.1.0 has no setup-sandbox.js, no localPromise class and no allowAsync option (main.js options are only timeout and sandbox), so the allowAsync:false boundary does not exist. B's setup-sandbox.js localPromise passes the raw resolve to the executor."
+  },
+  {
+   "packet": "b16",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "In both dist/index.mjs files, the runtime client-error createReport call uses loaders: [viteLoader(server)] with filesystem access and no kind:'error'."
+  },
+  {
+   "packet": "b17",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Mistune 0.1.0 has no escape_link or _scheme_blacklist. link() uses a weaker case-sensitive 'javascript:' in link check (bypassable by case or a newline), and autolink does text = link with no scheme filtering. B has the unnormalized startswith check and autolink using escape()."
+  },
+  {
+   "packet": "b18",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "A's lib/shared/index.js resolveHostname stores servername: options.servername || options.host in the host-keyed dnsCache and returns cached.value.servername. B's dist shared index does the same via formatDNSValue."
+  },
+  {
+   "packet": "b19",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "In both response.py files, DeflateDecoder.decompress has no early return when _obj.eof is set, and has_unconsumed_tail lacks the 'not self._obj.eof' condition."
+  },
+  {
+   "packet": "b20",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "Weblate 2.1 has no REST API (no weblate/api/), no celery and no task endpoint in its file list or included files. B's api/views.py get_task skips the access check when the task is PENDING (component=None)."
+  },
+  {
+   "packet": "b21",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Both scripts/install.js files use the plain-HTTP default urlBase 'http://dl.nwjs.io/v' for the binary download. B additionally allows an env override."
+  },
+  {
+   "packet": "b22",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Both renderer.js files push `<!--${HYDRATION_START_FAILED}${JSON.stringify(...)}-->` unescaped at all three sites (two in boundary, one in async collect)."
+  },
+  {
+   "packet": "b23",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "A and B are identical here: personalAccessToken is a required plugin option in validateOptions.ts and destructured from options in src/index.ts, so the token rides in plugin options."
+  },
+  {
+   "packet": "b24",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "In both rejection_sampler.py files, sample_recovered_tokens_kernel computes score = prob * inv_q and takes tl.max without masking out-of-vocab entries to -inf or clamping recovered_id."
+  },
+  {
+   "packet": "b25",
+   "A_code": "absent",
+   "B_code": "absent",
+   "A_flaw": "yes",
+   "reason": "B's auth_helper.py already contains the fixed user_login (random first user, threaded failed-login handling, last_email_failed_login_sent). A has no auth_helper, but resource/token.py user_login branches on username_exists before bcrypt and even returns 'username does not exist', so the same enumeration weakness is present."
+  },
+  {
+   "packet": "b26",
+   "A_code": "absent",
+   "B_code": "cannot tell",
+   "A_flaw": "no",
+   "reason": "A's jspdf.min.js (1.1.135, truncated at 200KB) lists addImage types as ['jpeg','jpg','png'] with only JPEG/PNG processors, so it has no BMP decoder. B's dist bundles are truncated before any BmpDecoder/parseBGR code."
+  },
+  {
+   "packet": "b27",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Both releases register state-changing routes as GET-only: /shutdown, /admin/resetpassword, /import_ldap_users, /ajax/delete, /delete, /deleteauthtoken, /shelf/add|massadd|remove|delete and /send in admin.py, editbooks.py, kobo_auth.py, shelf.py and web.py. /upload accepts GET as well as POST."
+  },
+  {
+   "packet": "b28",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "Requests 0.2.0 has only core.py and __init__.py, with no utils.py, extract_zipped_paths, zipfile or tempfile use. B's utils.py extract_zipped_paths writes to a predictable gettempdir()/member path."
+  },
+  {
+   "packet": "b29",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Both cjs/esm index.js files hardcode rejectUnauthorized: false in the WebSocketImpl constructor of buildWSLegacyExecutor."
+  },
+  {
+   "packet": "b30",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "src/picklescan/scanner.py in 0.0.1 already has the denylist entry \"aiohttp.client\": \"*\" that the fix widens to \"aiohttp\", and the same exact-module lookup (_suspicious_globals.get(g[0])) with no parent-module fallback, so submodules slip past. The relaxed_zipfile CRC change and the invalid-magic handling are not in A, which uses plain zipfile and has no PyTorch path. B has all the pre-fix lines."
+  },
+  {
+   "packet": "b31",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "src/stringify.js in both: run() builds str = Promise.resolve(thing).then(...) in A (ops.toPromise in B) with no .catch, and stringifyAsync awaits the promises one after another, so an early rejection goes unhandled. The fix adds str.catch(() => {})."
+  },
+  {
+   "packet": "b32",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "B lib/marked.js Renderer.prototype.link blocks only 'javascript:' (the line the fix extends to vbscript:). A 0.0.1 marked.js has no Renderer, sanitize option or protocol check at all; it writes link hrefs straight into <a href>, so vbscript: URLs pass through."
+  },
+  {
+   "packet": "b33",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "B flask_cors/core.py try_match uses re.IGNORECASE and extension.py calls try_match on request paths (case-insensitive path matching). A 1.0 is a 40-line flask_cors.py decorator that sets fixed CORS headers, with no resource/path or origin pattern matching."
+  },
+  {
+   "packet": "b34",
+   "A_code": "present",
+   "B_code": "absent",
+   "A_flaw": "yes",
+   "reason": "A src/objects.ts mergeDeep has 'const result = destination;' and merges into the destination in place (a __proto__ key recurses into Object.prototype). B (4.2.1-dev) already has 'const result = { ...destination }' and result[key] = mergeDeep(...), so the line the fix replaces is gone."
+  },
+  {
+   "packet": "b35",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "decode_labels has the same recursive, unbounded compression-pointer following (return labels + decode_labels(message, pointer & 0x3FFF)) in A trapster/modules/libs/dns.py and B trapster/libs/dns.py. modules/dns.py datagram_received calls decode_dns_message with no try/except in both."
+  },
+  {
+   "packet": "b36",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "HtmlSanitizer.js in both returns resultElement.innerHTML.replace(/<br[^>]*>(\\S)/g, \"<br>\\n$1\"), the post-sanitization rewrite the fix removes."
+  },
+  {
+   "packet": "b37",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "sydent/util/emailutils.py in both calls smtplib.SMTP_SSL(mailServer, mailPort, myHostname) and smtp.starttls() with no SSL context, so the server certificate is not verified."
+  },
+  {
+   "packet": "b38",
+   "A_code": "present",
+   "B_code": "absent",
+   "A_flaw": "yes",
+   "reason": "A 0.33.5 synapse/handlers/federation.py has self.http_client = hs.get_simple_http_client(), used by _check_key_revocation, and push/httppusher.py uses an unrestricted simple client, so push and key-revocation URLs have no IP blacklist (A has no federation blacklist at all). B 1.25.0rc1 already has get_proxied_blacklisted_http_client in httppusher and handlers/federation, get_federation_http_client, BlacklistingReactorWrapper, and BlacklistingAgentWrapper on the well-known agent. Only an unused generic_worker http_client line remains."
+  },
+  {
+   "packet": "b39",
+   "A_code": "absent",
+   "B_code": "absent",
+   "A_flaw": "yes",
+   "reason": "A 0.2.2 has no dialects/query-generator. src/Sequelize.js sqlQueryFor builds ' LIMIT %{offset}, %{limit}' by plain template substitution, an older implementation with the same unescaped limit/offset. B (0.0.0-development) addLimitAndOffset in abstract, postgres and mssql already wraps the values in this.escape()."
+  },
+  {
+   "packet": "b40",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "weblate/trans/backups.py restore() in both joins project.full_path with name[self.VCS_PREFIX_LEN:] from the zip with no normpath/traversal check before writing the file."
+  },
+  {
+   "packet": "b41",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "Release A (0.0.0) lists no source files, so no compiler exists. B lib/compiler.js has the assignedPaths/valueAssignments/explicitTablePaths/ownedContainers logic, setNestedKey and deepRef that the fix rewrites."
+  },
+  {
+   "packet": "b42",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "index.js in both builds shell commands by concatenation: exec('which ' + name) and exec('whereis ' + name) in A, with 'where ' added in B. The fix switches these to execFile."
+  },
+  {
+   "packet": "b43",
+   "A_code": "absent",
+   "B_code": "absent",
+   "A_flaw": "no",
+   "reason": "The fix wraps the bare load_settings/patch_settings/command calls in try/except and logs the exception only at debug level. src/hermes/commands/cli.py in both 0.8.1 and 0.9.0 already has those calls inside try/except Exception, logging the error generically and the exception at debug, so the unwrapped code is gone."
+  },
+  {
+   "packet": "b44",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "B index.js/rgb2hex.js has the regex the fix replaces, /rgba?\\((\\d+),(\\d+),(\\d+)(,(\\d+)?\\.?(\\d+))?\\);?/. A has a different regex at the same spot, /(.*?)rgb(a)*\\((\\d+),(\\d+),(\\d+)(,[0-9]*\\.*[0-9]+)*\\)/, which is also unbounded with ambiguous nested quantifiers (backtracking ReDoS)."
+  },
+  {
+   "packet": "b45",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "dist/http-handler.js readJson in both calls res.close(); return; in the JSON.parse catch blocks and leaves json/raw undefined, exactly as the src/http-handler.ts lines the fix changes."
+  },
+  {
+   "packet": "b46",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "cannot tell",
+   "reason": "B src/server.js run(useSSE, port) does app.listen(port, '0.0.0.0') with no auth. A src/server.js run() is stdio-only (StdioServerTransport). A also lists src/http-server.js, which is not in the packet and could hold an exposed HTTP server. (A does share the non-security @mention split code.)"
+  },
+  {
+   "packet": "b47",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "A 0.17.1 has no webhook, vector or Qdrant code: no api/webhooks.py, auth/webhook_routes.py or vector/webhook_receiver.py in its file list, and no webhook route in the included files. B mounts /webhooks/nextcloud unconditionally, the receiver skips auth when no secret is set, and webhook_auth_pair returns ('none', None)."
+  },
+  {
+   "packet": "b48",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "src/MacroExpander.js in both has the inline expansionCount++ / maxExpand check in expandOnce that the fix moves into countExpansion, and expandTokens returns its output without counting it toward maxExpand (the \\edef blow-up)."
+  },
+  {
+   "packet": "b49",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "B lib/index.js returns parsePath(url) directly with no git-ssh correction. A 0.2.0 lib/index.js is a different hand-rolled parser (protocols only from '://', naive '@'/':' splitting) with no git@host:path recognition, so it also misparses such URLs. Low confidence on the flaw."
+  },
+  {
+   "packet": "b50",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "B src/filelock/_read_write.py has the descriptor-path (/dev/fd) and _link_beside connect logic and the Windows sqlite3.connect(database) that the fix reworks. A 3.20.4 has none of it: ReadWriteLock.__init__ just runs sqlite3.connect(self.lock_file) by name, an older implementation open to -journal/-wal files planted beside the database."
+  },
+  {
+   "packet": "b51",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "hermes_cli/web_server.py _discover_dashboard_plugins in both uses if os.environ.get(\"HERMES_ENABLE_PROJECT_PLUGINS\"):, so any non-empty value such as '0' or 'false' enables project plugins."
+  },
+  {
+   "packet": "b52",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "src/verifier.js in both validates with if (clockTimestamp && ...), if (clockTolerance && ...) and if (cacheTTL && ...), using falsy checks with no Number.isFinite, so NaN/Infinity pass."
+  },
+  {
+   "packet": "b53",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "B src/werkzeug/formparser.py calls MultipartDecoder(boundary, self.max_form_memory_size) with no part limit. A 0.1 has no formparser/sansio. werkzeug/wrappers.py parses forms through cgi.FieldStorage (_StorageHelper, a temp file per file part) with no cap on the number of parts."
+  },
+  {
+   "packet": "b54",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "airflow/configuration.py in both has a hard-coded SENSITIVE_CONFIG_VALUES set (A's is even shorter), and www/views.py conf() masks only those keys, so other sensitive options are exposed."
+  },
+  {
+   "packet": "b55",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "index.js/index.ts in both has setDeepProperty assigning obj[k] down a path split from command-line keys with no own-property or __proto__ check, and applyCommandArgs passes every parsed argv key to it (prototype pollution)."
+  },
+  {
+   "packet": "b56",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "src/utils.js protocolFromUrl uses the same regex in both (/^\\s*([^\\\\/#]*?)(?::|&#0*58|&#x0*3a)/i) with no scheme validation, and Settings.isTrusted assigns its result unchecked."
+  },
+  {
+   "packet": "b57",
+   "A_code": "cannot tell",
+   "B_code": "present",
+   "A_flaw": "cannot tell",
+   "reason": "A 1.0.0 lists build/index.js, but the packet includes no A files, so its code cannot be checked. B build/index.js imports StreamableHTTPServerTransport and goes straight from isLoopbackBindHost to validateConfiguration with no Host/Origin (DNS-rebinding) check. B's file is cut off before the server setup."
+  },
+  {
+   "packet": "b58",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "B src/urllib3/poolmanager.py urlopen uses retries = kw.get(\"retries\") and ignores pool-level retries for redirects. A 0.2 has no PoolManager. Its connectionpool.urlopen counts each redirect against retries (retries-1)."
+  },
+  {
+   "packet": "b59",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "B lib/adapters/http.js rejects on maxContentLength without stream.destroy(). A 0.1.0 is browser-only (lib/axios.js uses XMLHttpRequest) with no Node http adapter and no maxContentLength."
+  }
+ ],
+ "labeller_2": [
+  {
+   "packet": "b00",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Release A has the eval() calls in sharepoint_api.py (column/list_template/text/fields), weaviate_handler.py (eval(vector_filter.value)) and vectordatabase_handler.py (v = eval(v)); A's chromadb_handler lacks the metadata eval. Release B has all of them including chromadb's eval(x)."
+  },
+  {
+   "packet": "b01",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Release A index.js and release B lib/index.js both serialize regexes with out += source.toString() inside serialize(), the line the fix replaces with a new RegExp(...) construction."
+  },
+  {
+   "packet": "b02",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Release A has only index.js, whose escapeShellArg is the same arg.replace(/'/g, ...) line as src/unix.js, with no null-character stripping (there is no Windows variant). Release B src/unix.js and src/win.js have the unpatched replace lines."
+  },
+  {
+   "packet": "b03",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "cannot tell",
+   "reason": "Release A (1.0.2) has no gatekeeper middleware and no inbound_exclusions list anywhere in its file list. B's gatekeeper.py has the header exclusion list. Whether A's proxy passes client-supplied X-Container-Host-style headers to the backend depends on swift/proxy/server.py, which is listed but not included."
+  },
+  {
+   "packet": "b04",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "Release A (0.1.6) has no lib/utils/objectUtils.js and no path-based set()/zipObject helper. The included Model.js, QueryBuilder.js and Relation.js use only basic lodash calls and do no path assignment from keys. B's objectUtils.js has set() and zipObject() with no __proto__ guard."
+  },
+  {
+   "packet": "b05",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "Ansible 1.0 has no vault module (no utils/vault.py in its file list) and no vault create/edit or EDITOR temp-file code in the included files. B's vault.py create_file/edit_file run the editor without setting the umask."
+  },
+  {
+   "packet": "b06",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "In both releases, index.js deriveSharedSecret only checks !publicKey || !publicKey.Q and has no onCurve validation; the two files differ only in the jsbn require line."
+  },
+  {
+   "packet": "b07",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Release A local_python_executor.py evaluate_name returns static_tools[name.id] unwrapped (the line the fix changes). A has no safer_eval and evaluates attributes with a plain getattr, with map/filter/getattr exposed as tools, so modules reachable through indirect access are unrestricted. B has the old safer_eval and the unwrapped return."
+  },
+  {
+   "packet": "b08",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "Release A (0.1.0-beta.5) has only 4 files: src/blog/index.ts just re-exports @studiocms/blog, and there is no dashboard middleware. B's frontend/middleware/index.ts dashboard handler checks only isLoggedIn, with no permission-level check."
+  },
+  {
+   "packet": "b09",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Release A lib/addressparser/index.js and B's dist addressparser both have textWasQuoted.push(insideQuotes) and apply _quoteLocalPart(address.address) after _recoverAddrSpec. That post-recovery quoting is what the fix moves before recovery."
+  },
+  {
+   "packet": "b10",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Both releases' clean.py _has_sneaky_javascript does style = style.replace('\\\\', '') rather than decoding CSS unicode escapes."
+  },
+  {
+   "packet": "b11",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Both releases' EpsImagePlugin.py parse %%BeginBinary: into bytecount and call self.fp.seek(bytecount, os.SEEK_CUR) with no negative check."
+  },
+  {
+   "packet": "b12",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Release A index.js has the same recursive sanitize(options, data) function, with the same structure but in another file, and no depth limit. Release B lib/sanitize.js has sanitize() recursing with no maxDepth."
+  },
+  {
+   "packet": "b13",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Both releases' dist/lib/HAXCMS.js hardcode superUser/user as admin/admin with no .user config loading, and have the res.send(401), the undeclared usr = {} and usr.password = pass lines the fix changes."
+  },
+  {
+   "packet": "b14",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Both releases' serialization.py my_load_from_json __object_hook import any module/class named by __type__ via importlib.import_module and instantiate it, with no allowlist."
+  },
+  {
+   "packet": "b15",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "Release A (vm2 0.1.0) has no setup-sandbox.js, no allowAsync option and no localPromise wrapper (no async/Promise handling in main.js or sandbox.js), so the allowAsync:false thenable bypass cannot exist. B's setup-sandbox.js has the unguarded resolve and static methods."
+  },
+  {
+   "packet": "b16",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Both releases' dist/index.mjs reportRuntimeError call createReport on the client-supplied error with loaders: [viteLoader(server)]. That default loader still reads the filesystem; the fix changes it to fs:false with kind 'error'."
+  },
+  {
+   "packet": "b17",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Release A mistune.py has no escape_link and its autolink is text = link with no escaping, a different older implementation. Its link() uses a case-sensitive \"'javascript:' in link\" check that a newline or case variation bypasses, so dangerous schemes still get through. B has escape_link with the plain startswith check and autolink using escape()."
+  },
+  {
+   "packet": "b18",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Release A lib/shared/index.js resolveHostname stores servername: options.servername || options.host in the host-keyed dnsCache value and returns cached.value.servername on a hit. B's dist shared/index.js does the same via DnsCacheValue.servername and formatDNSValue."
+  },
+  {
+   "packet": "b19",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Both releases' response.py DeflateDecoder.decompress have no self._obj.eof early return, and has_unconsumed_tail lacks the 'not self._obj.eof' condition."
+  },
+  {
+   "packet": "b20",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "Release A (Weblate 2.1) has no weblate/api/ REST API, no celery tasks and no task view; no included file references AsyncResult or tasks. B's api/views.py get_task skips the permission check when the task is PENDING or its result is an Exception."
+  },
+  {
+   "packet": "b21",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Release A scripts/install.js has var urlBase = 'http://dl.nwjs.io/v' (no env override) and downloads the binary over plain HTTP. B has the same http:// default."
+  },
+  {
+   "packet": "b22",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Both releases' src/internal/server/renderer.js push `<!--${HYDRATION_START_FAILED}${JSON.stringify(...)}-->` at three sites without escaping < or >."
+  },
+  {
+   "packet": "b23",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Release A's src/index.ts, validateOptions.ts and services/GitHub.ts are identical to B's: personalAccessToken is a required plugin option, taken from the options and passed through."
+  },
+  {
+   "packet": "b24",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Both releases' rejection_sampler.py sample_recovered_tokens_kernel compute score = prob * inv_q and take tl.max, with no -inf masking of out-of-vocab lanes and no clamp of recovered_id before tl.store."
+  },
+  {
+   "packet": "b25",
+   "A_code": "absent",
+   "B_code": "absent",
+   "A_flaw": "yes",
+   "reason": "Release B's resource/common/auth_helper.py already has the fixed code (get_first_user, threaded __handle_failed_login, last_email_failed_login_sent). Release A has no auth_helper; its older user_login in resource/token.py returns distinct 'username does not exist' and 'password invalid' messages, so usernames can be enumerated."
+  },
+  {
+   "packet": "b26",
+   "A_code": "absent",
+   "B_code": "cannot tell",
+   "A_flaw": "no",
+   "reason": "Release A's jspdf.min.js (1.1.x build) supports only addImage types ['jpeg','jpg','png'] and contains no BmpDecoder/parseBGR. B's dist bundles are truncated at about 200 KB, before the addimage/BMPDecoder code, so B cannot be judged."
+  },
+  {
+   "packet": "b27",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Both releases' cps/admin.py, editbooks.py, kobo_auth.py, shelf.py and web.py register state-changing routes (/shutdown, /delete, /shelf/delete, /deleteauthtoken, /send, etc.) without methods=['POST']."
+  },
+  {
+   "packet": "b28",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "Release A (requests 0.2.0) has only core.py/__init__.py/setup.py, with no utils.py, extract_zipped_paths or zip/tempfile handling. B's utils.py extracts zip members to a predictable gettempdir() path."
+  },
+  {
+   "packet": "b29",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Both releases' cjs/esm index.js create the legacy WebSocket with a hardcoded rejectUnauthorized: false."
+  },
+  {
+   "packet": "b30",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "In release A, src/picklescan/scanner.py is a minimal scanner. It has no PyTorch-extension path, no InvalidMagicError handling that returns an empty result, and no RelaxedZipFile. A .bin plain pickle goes to scan_pickle_bytes, and a CRC error raises instead of being skipped. Release B has the 'return ScanResult([], scan_err=True)' path and the CRC-checking ZipExtFile. The only fix-touched line in A is the 'aiohttp.client' blocklist entry."
+  },
+  {
+   "packet": "b31",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "In src/stringify.js run(), both releases create the thenable's promise (Promise.resolve(thing).then in A, ops.toPromise(thing).then in B) with no rejection handler, while stringifyAsync awaits the promises one after another. So a later rejection goes unhandled."
+  },
+  {
+   "packet": "b32",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Release B's lib/marked.js Renderer.prototype.link checks only 'javascript:' under sanitize. Release A (0.0.1) has no sanitize option or protocol check: links are emitted raw as '<a href=\"$2\">', so vbscript: URLs go through."
+  },
+  {
+   "packet": "b33",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "Release A is a 40-line flask_cors.py decorator that sets fixed headers. It has no resource or path regex matching and no try_match. Release B's core.py try_match uses re.IGNORECASE for regex patterns, which extension.py also uses for path matching."
+  },
+  {
+   "packet": "b34",
+   "A_code": "present",
+   "B_code": "absent",
+   "A_flaw": "yes",
+   "reason": "Release A's src/objects.ts mergeDeep has 'const result = destination;' and mutates the destination recursively, so a __proto__ key can reach Object.prototype. Release B (4.2.1-dev) already has 'const result = { ...destination };' after the isIterable check, i.e. the fixed form."
+  },
+  {
+   "packet": "b35",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "decode_labels has the same unbounded recursive compression-pointer handling and the raise of a string in both releases (A: trapster/modules/libs/dns.py, B: trapster/libs/dns.py). modules/dns.py datagram_received calls decode_dns_message without a try."
+  },
+  {
+   "packet": "b36",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "HtmlSanitizer.js in both releases ends with .replace(/<br[^>]*>(\\S)/g, \"<br>\\n$1\") on the sanitized innerHTML, which is the line the fix removes."
+  },
+  {
+   "packet": "b37",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "sydent/util/emailutils.py sendEmail in both releases calls smtplib.SMTP_SSL(...) and smtp.starttls() with no SSL context, so the SMTP server certificate is not verified."
+  },
+  {
+   "packet": "b38",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "In release A (0.33.5), handlers/federation.py has 'self.http_client = hs.get_simple_http_client()' (the line the fix removes), and push/httppusher.py uses get_simple_http_client, the same job as B's get_proxied_http_client. So push and third-party-invite key checks go out with no IP blacklist; only url_preview has one."
+  },
+  {
+   "packet": "b39",
+   "A_code": "absent",
+   "B_code": "absent",
+   "A_flaw": "yes",
+   "reason": "Release B (0.0.0-development) already escapes limit and offset (this.escape) in the abstract, mssql, postgres and sqlite query generators. Release A (0.2.2) has no query-generator module, but src/Sequelize.js sqlQueryFor puts limit and offset raw into ' LIMIT %{offset}, %{limit}', a different implementation with the same injection weakness."
+  },
+  {
+   "packet": "b40",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "weblate/trans/backups.py restore() in both releases builds targetpath = os.path.join(project.full_path, name[self.VCS_PREFIX_LEN:]) for zip entries with no path normalisation check (zip slip)."
+  },
+  {
+   "packet": "b41",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "Release A (0.0.0) has no source files at all (empty file list), so there is no compiler. Release B's lib/compiler.js has the old assignedPaths/valueAssignments/ownedContainers/deepRef logic that the fix replaces."
+  },
+  {
+   "packet": "b42",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "index.js in both releases runs exec('which ' + name) and exec('whereis ' + name) with unescaped input (B adds 'where'). A uses a bare exec, B uses cp.exec, a cosmetic difference."
+  },
+  {
+   "packet": "b43",
+   "A_code": "absent",
+   "B_code": "absent",
+   "A_flaw": "no",
+   "reason": "The fix removes bare load_settings/patch_settings/command calls and wraps them in try/except. In src/hermes/commands/cli.py main(), both A and B already wrap these calls in try/except Exception that logs only at debug and exits, so the removed form is not present."
+  },
+  {
+   "packet": "b44",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Release B's index.js and rgb2hex.js use the removed regex /rgba?\\((\\d+),(\\d+),(\\d+)(,(\\d+)?\\.?(\\d+))?\\);?/. Release A uses a different regex, /(.*?)rgb(a)*\\((\\d+),(\\d+),(\\d+)(,[0-9]*\\.*[0-9]+)*\\)/, with the same unbounded, ambiguous quantifiers (backtracking ReDoS)."
+  },
+  {
+   "packet": "b45",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "dist/http-handler.js readJson in both releases has the same onData isLast block with 'let json; let raw;' and catch { res.close(); return; } on JSON.parse failure, which the fix replaces."
+  },
+  {
+   "packet": "b46",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "Release A's src/server.js run() only connects a StdioServerTransport: no express or HTTP mode. Release B has run(useSSE, port) with app.listen(port, '0.0.0.0') and no token authentication."
+  },
+  {
+   "packet": "b47",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "Release A (0.17.1) has no webhook, vector or Qdrant code (no api/, vector/ or webhook_routes modules; grep finds nothing). Release B's app.py mounts /webhooks/nextcloud unconditionally, webhook_receiver accepts requests when no secret is set, and webhook_auth_pair returns ('none', None)."
+  },
+  {
+   "packet": "b48",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "src/MacroExpander.js in both releases has the inline expansionCount++ / maxExpand check that the fix moves into countExpansion. expandTokens (used by \\edef; functions/def.js exists in A) does not count its output tokens."
+  },
+  {
+   "packet": "b49",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Release B's lib/index.js parseUrl just returns parsePath(url) (the old parse-path), the code the fix replaces. Release A (0.2.0) has a hand-rolled ParseUrl that splits on '://', '/', '@' and ':'. That is a different implementation with the same weakness: resource and user misparsed for crafted URLs."
+  },
+  {
+   "packet": "b50",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Release B's _read_write.py has the _FD_DIR descriptor-path connect, _link_beside/_sweep_links_of_the_dead with shutil.rmtree, and the by-name connect on Windows, all of which the fix rewrites. Release A has none of this machinery: __init__ calls sqlite3.connect(self.lock_file) by name in any directory, so planted -journal/-wal/-shm or swapped files are exposed too."
+  },
+  {
+   "packet": "b51",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "hermes_cli/web_server.py is identical in A and B and has 'if os.environ.get(\"HERMES_ENABLE_PROJECT_PLUGINS\"):' in _discover_dashboard_plugins, so values like 0 or false still enable project plugins."
+  },
+  {
+   "packet": "b52",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "src/verifier.js createVerifier in both releases validates clockTimestamp, clockTolerance and cacheTTL with 'if (x && (typeof x !== \"number\" || x < 0))', which accepts Infinity and lets NaN through as falsy."
+  },
+  {
+   "packet": "b53",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "Release B's formparser.py and sansio/multipart.py MultipartDecoder have no max_parts limit. Release A (0.1) has no formparser or MultipartDecoder, but wrappers.py _StorageHelper parses multipart bodies with cgi.FieldStorage, also with no limit on the number of parts (temp file per file part)."
+  },
+  {
+   "packet": "b54",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "airflow/configuration.py in both releases has the hard-coded SENSITIVE_CONFIG_VALUES set used by sensitive_config_values, and www/views.py conf() imports and iterates it to mask values, so options missing from the list are exposed."
+  },
+  {
+   "packet": "b55",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "index.js and index.ts are identical in A and B. setDeepProperty walks the path with 'if (!(k in obj)) obj[k] = {}; obj = obj[k];' and no own-property check (prototype pollution via __proto__), and applyCommandArgs does not filter keys."
+  },
+  {
+   "packet": "b56",
+   "A_code": "present",
+   "B_code": "present",
+   "A_flaw": "yes",
+   "reason": "src/utils.js protocolFromUrl in both releases uses /^\\s*([^\\\\/#]*?)(?::|&#0*58|&#x0*3a)/i with no scheme validation or lowercasing, and Settings.isTrusted assigns its result directly."
+  },
+  {
+   "packet": "b57",
+   "A_code": "cannot tell",
+   "B_code": "present",
+   "A_flaw": "cannot tell",
+   "reason": "Release A (1.0.0) lists build/index.js, but no file from it is in the packet. Release B's build/index.js imports StreamableHTTPServerTransport and express and has /mcp handler code with no Host/Origin (DNS-rebinding) middleware. The included copy is truncated before startStreamableHTTPServer."
+  },
+  {
+   "packet": "b58",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "Release B's src/urllib3/poolmanager.py has 'retries = kw.get(\"retries\")' and no Retry normalisation of connection_pool_kw. Release A (0.2) has no PoolManager at all: connectionpool.urlopen counts each redirect against the retries argument."
+  },
+  {
+   "packet": "b59",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "Release B's lib/adapters/http.js rejects on maxContentLength without destroying the stream. Release A (0.1.0) is browser-only (XMLHttpRequest in lib/axios.js), with no Node http adapter and no maxContentLength handling."
+  }
+ ],
+ "adjudicated": [
+  {
+   "packet": "b03",
+   "A_code": "absent",
+   "B_code": "absent",
+   "A_flaw": "cannot tell",
+   "reason": "Release A (1.0.2) has no swift/common/middleware/ directory and no gatekeeper or other inbound header filter in its file list, and the included utils.py does nothing of that kind, so A_code is absent. Release B's gatekeeper.py already holds the post-fix inbound_exclusions, including the 'x-account-(host|device|partition)$', 'x-container-(...)$' and 'x-delete-at-(...)$' patterns, so the 5-item pre-fix list is absent. Labeller 2 counted the fixed list as present; I side with labeller 1. Whether A's backends act on client-supplied update headers depends on proxy/server.py and obj/server.py, which are listed but not included, so A_flaw cannot be told."
+  },
+  {
+   "packet": "b30",
+   "A_code": "absent",
+   "B_code": "present",
+   "A_flaw": "no",
+   "reason": "The only GHSA-named test the fix adds is GHSA-jgw4-cr84-mqxg.bin, a plain pickle with a PyTorch extension. That ties this advisory to the scan_bytes path where InvalidMagicError returns ScanResult([], scan_err=True). B has that path, while A's scan_bytes has no extension dispatch and sends any non-zip file, .bin included, to scan_pickle_bytes. A shares only incidental fix lines, such as the 'aiohttp.client' entry and the exact-module lookup, which belong to the denylist/submodule change rather than this bypass. A not flagging asyncio at all is the older denylist gap, not this flaw. I side with labeller 2."
+  },
+  {
+   "packet": "b38",
+   "A_code": "present",
+   "B_code": "absent",
+   "A_flaw": "yes",
+   "reason": "A (0.33.5) handlers/federation.py:121 and federation_server.py:823 contain the exact removed line 'self.http_client = hs.get_simple_http_client()'. A's push/httppusher.py:90 uses an unrestricted simple client, the same job as the pre-fix proxied client. A has no IP blacklist outside url_preview, so push and key-revocation requests are unrestricted. B (1.25.0rc1) already has the fix throughout: get_proxied_blacklisted_http_client in httppusher and handlers/federation, get_federation_http_client, BlacklistingReactorWrapper, and BlacklistingAgentWrapper on the well-known agent. Its remaining get_simple_http_client line sits in KeyUploadServlet, not the hunk the fix edits. So B_code is absent and I side with labeller 1."
+  }
+ ],
+ "key": [
+  {
+   "packet": "b00",
+   "id": "GHSA-crmg-rp64-5cm3",
+   "pipeline_class": "tight",
+   "A_version": "23.11.4.4a6",
+   "B_version": "24.7.4.0",
+   "n_in_range": 25,
+   "A_files": 4,
+   "B_files": 4,
+   "A_path_matched": 4
+  },
+  {
+   "packet": "b01",
+   "id": "GHSA-3fjq-93xj-3f3f",
+   "pipeline_class": "tight",
+   "A_version": "0.1.0",
+   "B_version": "3.0.0",
+   "n_in_range": 18,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b02",
+   "id": "GHSA-f2rp-38vg-j3gh",
+   "pipeline_class": "over-approximated",
+   "A_version": "0.1.0",
+   "B_version": "1.1.2",
+   "n_in_range": 11,
+   "A_files": 1,
+   "B_files": 2,
+   "A_path_matched": 0
+  },
+  {
+   "packet": "b03",
+   "id": "GHSA-h8rc-w822-q8vq",
+   "pipeline_class": "over-approximated",
+   "A_version": "1.0.2",
+   "B_version": "2.36.4",
+   "n_in_range": 48,
+   "A_files": 3,
+   "B_files": 1,
+   "A_path_matched": 0
+  },
+  {
+   "packet": "b04",
+   "id": "GHSA-r659-8xfp-j327",
+   "pipeline_class": "over-approximated",
+   "A_version": "0.1.6",
+   "B_version": "2.2.15",
+   "n_in_range": 176,
+   "A_files": 3,
+   "B_files": 1,
+   "A_path_matched": 0
+  },
+  {
+   "packet": "b05",
+   "id": "GHSA-5g4v-2pc6-4hh4",
+   "pipeline_class": "over-approximated",
+   "A_version": "1.0",
+   "B_version": "1.5.4",
+   "n_in_range": 22,
+   "A_files": 3,
+   "B_files": 1,
+   "A_path_matched": 0
+  },
+  {
+   "packet": "b06",
+   "id": "GHSA-p2hp-3wv3-4w74",
+   "pipeline_class": "tight",
+   "A_version": "0.0.0",
+   "B_version": "0.1.1",
+   "n_in_range": 3,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b07",
+   "id": "GHSA-6v92-r5mx-h5fx",
+   "pipeline_class": "over-approximated",
+   "A_version": "0.1.0",
+   "B_version": "1.16.1",
+   "n_in_range": 28,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b08",
+   "id": "GHSA-8cw6-53m5-4932",
+   "pipeline_class": "over-approximated",
+   "A_version": "0.1.0-beta.5",
+   "B_version": "0.1.1",
+   "n_in_range": 29,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b09",
+   "id": "GHSA-g57g-f23g-4646",
+   "pipeline_class": "tight",
+   "A_version": "9.1.0",
+   "B_version": "10.0.8",
+   "n_in_range": 11,
+   "A_files": 1,
+   "B_files": 2,
+   "A_path_matched": 0
+  },
+  {
+   "packet": "b10",
+   "id": "GHSA-hw26-mmpg-fqfg",
+   "pipeline_class": "tight",
+   "A_version": "0.1.0",
+   "B_version": "0.4.3",
+   "n_in_range": 11,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b11",
+   "id": "GHSA-pg7v-jwj7-p798",
+   "pipeline_class": "tight",
+   "A_version": "12.0.0",
+   "B_version": "12.2.0",
+   "n_in_range": 4,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b12",
+   "id": "GHSA-hvq2-wf92-j4f3",
+   "pipeline_class": "tight",
+   "A_version": "1.0.0",
+   "B_version": "2.0.0",
+   "n_in_range": 16,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 0
+  },
+  {
+   "packet": "b13",
+   "id": "GHSA-5fpv-5qvh-7cf3",
+   "pipeline_class": "tight",
+   "A_version": "0.0.2",
+   "B_version": "11.0.9",
+   "n_in_range": 51,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b14",
+   "id": "GHSA-74vm-8frp-7w68",
+   "pipeline_class": "tight",
+   "A_version": "0.1.0",
+   "B_version": "0.16.0",
+   "n_in_range": 25,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b15",
+   "id": "GHSA-f8gf-w286-fmq2",
+   "pipeline_class": "over-approximated",
+   "A_version": "0.1.0",
+   "B_version": "3.11.7",
+   "n_in_range": 79,
+   "A_files": 3,
+   "B_files": 1,
+   "A_path_matched": 0
+  },
+  {
+   "packet": "b16",
+   "id": "GHSA-x287-wcfc-q46c",
+   "pipeline_class": "tight",
+   "A_version": "4.6.0",
+   "B_version": "4.6.2",
+   "n_in_range": 3,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 0
+  },
+  {
+   "packet": "b17",
+   "id": "GHSA-hpv5-v8g5-c864",
+   "pipeline_class": "over-approximated",
+   "A_version": "0.1.0",
+   "B_version": "0.7.4",
+   "n_in_range": 14,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b18",
+   "id": "GHSA-6vj9-mwq6-2f5v",
+   "pipeline_class": "over-approximated",
+   "A_version": "5.0.0",
+   "B_version": "10.0.1",
+   "n_in_range": 100,
+   "A_files": 1,
+   "B_files": 5,
+   "A_path_matched": 0
+  },
+  {
+   "packet": "b19",
+   "id": "GHSA-gh4c-6fx4-qh6g",
+   "pipeline_class": "tight",
+   "A_version": "2.6.2",
+   "B_version": "2.7.0",
+   "n_in_range": 3,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b20",
+   "id": "GHSA-vj45-x3pj-f4w4",
+   "pipeline_class": "over-approximated",
+   "A_version": "2.1",
+   "B_version": "5.16.2",
+   "n_in_range": 161,
+   "A_files": 7,
+   "B_files": 3,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b21",
+   "id": "GHSA-hv96-xxx2-5v7w",
+   "pipeline_class": "over-approximated",
+   "A_version": "0.12.0-alpha1",
+   "B_version": "0.23.5-sdk",
+   "n_in_range": 185,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b22",
+   "id": "GHSA-qgvg-pr8v-6rr3",
+   "pipeline_class": "tight",
+   "A_version": "5.53.0",
+   "B_version": "5.53.4",
+   "n_in_range": 5,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b23",
+   "id": "GHSA-qf34-qpr4-5pph",
+   "pipeline_class": "tight",
+   "A_version": "0.0.1",
+   "B_version": "3.1.0",
+   "n_in_range": 7,
+   "A_files": 4,
+   "B_files": 4,
+   "A_path_matched": 4
+  },
+  {
+   "packet": "b24",
+   "id": "GHSA-8wr5-jm2h-8r4f",
+   "pipeline_class": "tight",
+   "A_version": "0.17.1",
+   "B_version": "0.23.0",
+   "n_in_range": 12,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b25",
+   "id": "GHSA-45gq-q4xh-cp53",
+   "pipeline_class": "over-approximated",
+   "A_version": "1.0.0b2",
+   "B_version": "4.2.0rc2",
+   "n_in_range": 199,
+   "A_files": 7,
+   "B_files": 3,
+   "A_path_matched": 2
+  },
+  {
+   "packet": "b26",
+   "id": "GHSA-95fx-jjr5-f39c",
+   "pipeline_class": "over-approximated",
+   "A_version": "1.0.272",
+   "B_version": "4.0.0",
+   "n_in_range": 31,
+   "A_files": 1,
+   "B_files": 3,
+   "A_path_matched": 0
+  },
+  {
+   "packet": "b27",
+   "id": "GHSA-wxr6-29pv-ch68",
+   "pipeline_class": "tight",
+   "A_version": "0.6.12",
+   "B_version": "0.6.14",
+   "n_in_range": 3,
+   "A_files": 5,
+   "B_files": 5,
+   "A_path_matched": 5
+  },
+  {
+   "packet": "b28",
+   "id": "GHSA-gc5v-m9x4-r6x2",
+   "pipeline_class": "over-approximated",
+   "A_version": "0.2.0",
+   "B_version": "2.32.5",
+   "n_in_range": 154,
+   "A_files": 2,
+   "B_files": 1,
+   "A_path_matched": 0
+  },
+  {
+   "packet": "b29",
+   "id": "GHSA-6fw5-9hq8-w87g",
+   "pipeline_class": "tight",
+   "A_version": "0.0.1-alpha-20221108142800-3beb5fe2",
+   "B_version": "1.1.34-alpha-20260908131015-b2dfc3e4ee71c6ef42759b0256a502f523eabc05",
+   "n_in_range": 569,
+   "A_files": 3,
+   "B_files": 3,
+   "A_path_matched": 0
+  },
+  {
+   "packet": "b30",
+   "id": "GHSA-mjqp-26hc-grxg",
+   "pipeline_class": "over-approximated",
+   "A_version": "0.0.1",
+   "B_version": "0.0.30",
+   "n_in_range": 30,
+   "A_files": 1,
+   "B_files": 2,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b31",
+   "id": "GHSA-x5rw-q4pp-hg5g",
+   "pipeline_class": "tight",
+   "A_version": "5.8.0",
+   "B_version": "5.9.2",
+   "n_in_range": 6,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b32",
+   "id": "GHSA-cfjh-p3g4-3q2f",
+   "pipeline_class": "over-approximated",
+   "A_version": "0.0.1",
+   "B_version": "0.3.2",
+   "n_in_range": 35,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b33",
+   "id": "GHSA-43qf-4rqw-9q2g",
+   "pipeline_class": "over-approximated",
+   "A_version": "1.0",
+   "B_version": "5.0.1",
+   "n_in_range": 50,
+   "A_files": 1,
+   "B_files": 2,
+   "A_path_matched": 0
+  },
+  {
+   "packet": "b34",
+   "id": "GHSA-2g4c-8fpm-c46v",
+   "pipeline_class": "tight",
+   "A_version": "4.0.1",
+   "B_version": "4.2.1-dev.cf60f71.0",
+   "n_in_range": 194,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b35",
+   "id": "GHSA-mxwc-wh95-pw4g",
+   "pipeline_class": "tight",
+   "A_version": "1.0.4",
+   "B_version": "1.2.0",
+   "n_in_range": 31,
+   "A_files": 2,
+   "B_files": 2,
+   "A_path_matched": 2
+  },
+  {
+   "packet": "b36",
+   "id": "GHSA-vhv4-fh94-jm5x",
+   "pipeline_class": "tight",
+   "A_version": "1.0.0",
+   "B_version": "2.0.2",
+   "n_in_range": 5,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b37",
+   "id": "GHSA-p6hw-wm59-3g5g",
+   "pipeline_class": "tight",
+   "A_version": "2.0.0",
+   "B_version": "2.5.5",
+   "n_in_range": 18,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b38",
+   "id": "GHSA-v936-j8gp-9q3p",
+   "pipeline_class": "over-approximated",
+   "A_version": "0.33.5",
+   "B_version": "1.25.0rc1",
+   "n_in_range": 143,
+   "A_files": 13,
+   "B_files": 13,
+   "A_path_matched": 10
+  },
+  {
+   "packet": "b39",
+   "id": "GHSA-98pq-pmw9-4gpm",
+   "pipeline_class": "over-approximated",
+   "A_version": "0.2.2",
+   "B_version": "0.0.0-development",
+   "n_in_range": 148,
+   "A_files": 3,
+   "B_files": 4,
+   "A_path_matched": 0
+  },
+  {
+   "packet": "b40",
+   "id": "GHSA-jfgp-674x-6q4p",
+   "pipeline_class": "tight",
+   "A_version": "4.14",
+   "B_version": "5.6.1",
+   "n_in_range": 35,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b41",
+   "id": "GHSA-4qx8-w7c3-pj3p",
+   "pipeline_class": "over-approximated",
+   "A_version": "0.0.0",
+   "B_version": "5.0.0",
+   "n_in_range": 40,
+   "A_files": 0,
+   "B_files": 1,
+   "A_path_matched": 0
+  },
+  {
+   "packet": "b42",
+   "id": "GHSA-wjr4-2jgw-hmv8",
+   "pipeline_class": "over-approximated",
+   "A_version": "0.0.1",
+   "B_version": "0.4.0",
+   "n_in_range": 6,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b43",
+   "id": "GHSA-jm5j-jfrm-hm23",
+   "pipeline_class": "tight",
+   "A_version": "0.8.1",
+   "B_version": "0.9.0",
+   "n_in_range": 2,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b44",
+   "id": "GHSA-7599-fqgm-v84p",
+   "pipeline_class": "over-approximated",
+   "A_version": "0.1.0",
+   "B_version": "0.1.5",
+   "n_in_range": 6,
+   "A_files": 2,
+   "B_files": 2,
+   "A_path_matched": 2
+  },
+  {
+   "packet": "b45",
+   "id": "GHSA-86ch-6w7v-v6xf",
+   "pipeline_class": "tight",
+   "A_version": "0.13.0",
+   "B_version": "0.24.0",
+   "n_in_range": 19,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 0
+  },
+  {
+   "packet": "b46",
+   "id": "GHSA-4hf8-5mjm-rfgq",
+   "pipeline_class": "over-approximated",
+   "A_version": "1.0.0",
+   "B_version": "1.1.1",
+   "n_in_range": 23,
+   "A_files": 3,
+   "B_files": 3,
+   "A_path_matched": 3
+  },
+  {
+   "packet": "b47",
+   "id": "GHSA-8vh3-g2qg-2h2c",
+   "pipeline_class": "over-approximated",
+   "A_version": "0.17.1",
+   "B_version": "0.117.1",
+   "n_in_range": 118,
+   "A_files": 8,
+   "B_files": 5,
+   "A_path_matched": 0
+  },
+  {
+   "packet": "b48",
+   "id": "GHSA-64fm-8hw2-v72w",
+   "pipeline_class": "tight",
+   "A_version": "0.12.0",
+   "B_version": "0.16.9",
+   "n_in_range": 44,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b49",
+   "id": "GHSA-4p35-cfcx-8653",
+   "pipeline_class": "over-approximated",
+   "A_version": "0.2.0",
+   "B_version": "5.0.8",
+   "n_in_range": 31,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b50",
+   "id": "GHSA-9vhv-jxww-xfm5",
+   "pipeline_class": "over-approximated",
+   "A_version": "3.20.4",
+   "B_version": "4.2.0",
+   "n_in_range": 53,
+   "A_files": 6,
+   "B_files": 5,
+   "A_path_matched": 2
+  },
+  {
+   "packet": "b51",
+   "id": "GHSA-cv5c-mh6j-wvp9",
+   "pipeline_class": "tight",
+   "A_version": "0.13.0",
+   "B_version": "0.14.0",
+   "n_in_range": 2,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b52",
+   "id": "GHSA-687g-22h4-j4w4",
+   "pipeline_class": "tight",
+   "A_version": "0.1.0",
+   "B_version": "6.2.4",
+   "n_in_range": 66,
+   "A_files": 1,
+   "B_files": 1,
+   "A_path_matched": 1
+  },
+  {
+   "packet": "b53",
+   "id": "GHSA-xg9f-g7g7-2323",
+   "pipeline_class": "over-approximated",
+   "A_version": "0.1",
+   "B_version": "2.2.2",
+   "n_in_range": 79,
+   "A_files": 4,
+   "B_files": 3,
+   "A_path_matched": 0
+  },
+  {
+   "packet": "b54",
+   "id": "GHSA-mjff-wv85-hmcj",
+   "pipeline_class": "tight",
+   "A_version": "2.5.0",
+   "B_version": "2.6.1",
+   "n_in_range": 21,
+   "A_files": 2,
+   "B_files": 2,
+   "A_path_matched": 2
+  },
+  {
+   "packet": "b55",
+   "id": "GHSA-jgpq-g82g-6c39",
+   "pipeline_class": "tight",
+   "A_version": "0.1.0",
+   "B_version": "0.3.0",
+   "n_in_range": 3,
+   "A_files": 3,
+   "B_files": 3,
+   "A_path_matched": 3
+  },
+  {
+   "packet": "b56",
+   "id": "GHSA-3wc5-fcw2-2329",
+   "pipeline_class": "tight",
+   "A_version": "0.11.0",
+   "B_version": "0.16.9",
+   "n_in_range": 46,
+   "A_files": 2,
+   "B_files": 2,
+   "A_path_matched": 2
+  },
+  {
+   "packet": "b57",
+   "id": "GHSA-vmp7-252j-cwp7",
+   "pipeline_class": "over-approximated",
+   "A_version": "1.0.0",
+   "B_version": "2.1.29",
+   "n_in_range": 131,
+   "A_files": 0,
+   "B_files": 1,
+   "A_path_matched": 0
+  },
+  {
+   "packet": "b58",
+   "id": "GHSA-pq67-6m6q-mj2v",
+   "pipeline_class": "over-approximated",
+   "A_version": "0.2",
+   "B_version": "2.4.0",
+   "n_in_range": 98,
+   "A_files": 4,
+   "B_files": 2,
+   "A_path_matched": 0
+  },
+  {
+   "packet": "b59",
+   "id": "GHSA-42xw-2xvc-qx8m",
+   "pipeline_class": "over-approximated",
+   "A_version": "0.1.0",
+   "B_version": "0.18.0",
+   "n_in_range": 37,
+   "A_files": 3,
+   "B_files": 1,
+   "A_path_matched": 0
+  }
+ ]
+}
