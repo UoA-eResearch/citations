@@ -113,3 +113,34 @@ Everything here is post hoc. The frozen-list outputs are kept as `results/tables
 4. **Neutral variant** (review finding 3): `rf.py fit_neutral` (C1n–C6n) for the 382 TAVA and Ukrainian species.
    Removed presences are also kept out of that species' background. The analysis is in `code/posthoc_neutral.py`.
 5. **Post hoc checks** (shortfall, H2 training, same relevé, distance) were re-run under the corrected flags.
+
+## D5 — 2026-11-09 — fixes after the confirmation pass (verdict: fix first)
+
+1. **Stale cached fits** (remaining issue 1).
+   - `rf.py` keyed its cache on training inputs only, but each cached result carries evaluation AUROCs, so 2,086
+     reused results came from the frozen-list run.
+   - The key now includes `EVAL_VERSION`. The reused results were moved aside (`data/work/rf_stale_d4/`) and refit,
+     and `analyse.py` and `posthoc_shortfall.py` were re-run.
+   - Only the C0 results of 553 species changed: those whose source cells gained Danish or Australian plots. The DiD,
+     which uses C1–C6, is unchanged (−0.006).
+   - `n_src` is now constant across conditions within every species (a G3 invariant).
+2. **Denmark** enters the by-source H1 (remaining issue 2): DiD +0.031 (+0.014 to +0.048), 249 species. It is the
+   third database above 0.02.
+3. **Australia** (remaining issue 3). The "control artefact" claim is withdrawn: the negative DiD persists in
+   matched species (−0.013). It is described as unexplained, and the removal ratio is given as pooled (0.47) and
+   per-species median (0.80).
+4. **The shortfall attribution** is corrected: Denmark 58%, Australia 35%.
+5. **Stale text** is corrected:
+   - 30 core datasets for 13 sources, and 2 broad datasets;
+   - 4,302,471 provenance-only presences (7.5%);
+   - a 46% shortfall;
+   - 5,390 undefined AUROCs and 1,230 non-source species;
+   - the reproduction steps.
+6. **plausibility.md** gains a section for the corrected run.
+7. **The neutral variant.** The reason it changed little is now stated: the background cap, and removed cells
+   being 0.07% of the pool.
+8. **Minor:** the PLADIAS.SK line, ledger rows for the three scan-added datasets, and the scan's run log
+   (`results/republication_scan_log.txt`).
+
+Figures from the confirmation pass that are cited, not recomputed: the matched-Australia DiD (−0.013), the
+per-species removal ratio (0.80), the shortfall split, the no-Australia DiD (+0.005) and the 0.07% background share.

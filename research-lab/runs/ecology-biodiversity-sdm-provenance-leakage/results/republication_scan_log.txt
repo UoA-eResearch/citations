@@ -1,0 +1,26 @@
+single-plot dated test cells: 30681 | by source (top): {'USA_VegBank': 9931, 'Australia': 5383, 'France_sophy': 3098, 'USA_CVS': 1114, 'Switzerland_forests': 840, 'Basque Country Database': 679, 'Netherlands': 629, 'Slovakia_nvd': 628, 'Siberia': 596, 'Czechia_nvd': 541, 'Taiwan': 422, 'Italy_uniroma': 414}
+candidate same-day nearby records: 472161
+same-cell same-day records with a SAGE species: 150567
+
+### meeting the flag rule but not core in the frozen list
+  Dataset                           datasetkey  flag  cells  hi_cells  med_recall  med_precision  single_plot_dated_cells                                                                  title
+Australia 0645ccdb-e001-4ab0-9729-51f1755e007e  none   2011       664    0.777778       0.590909                     5383                                                       NSW BioNet Atlas
+Australia 2a513d16-f4ce-4252-974f-2486ce70b788  none    126        96    1.000000       0.869318                     5383                                                               SA Flora
+  Denmark 67fabcac-a638-40a6-9bea-aeca8aced9f1 broad    242        45    1.000000       0.281196                      246 Danish government nature monitoring portal "Danmarks Miljøportals Natu
+
+### datasets with >= 5 single-plot cells where same-day same-cell records reproduce the plot (recall>=0.8, precision>=0.5)
+            Dataset                           datasetkey  flag  cells  hi_cells  med_recall  med_precision  single_plot_dated_cells                                                                  title
+          Australia 0645ccdb-e001-4ab0-9729-51f1755e007e  none   2011       664    0.777778       0.590909                     5383                                                       NSW BioNet Atlas
+        Netherlands 740df67d-5663-41a2-9d12-33ec33876c47  core    464       196    1.000000       0.418980                      629                                              Dutch Vegetation Database
+          Australia 2a513d16-f4ce-4252-974f-2486ce70b788  none    126        96    1.000000       0.869318                     5383                                                               SA Flora
+            Denmark 67fabcac-a638-40a6-9bea-aeca8aced9f1 broad    242        45    1.000000       0.281196                      246 Danish government nature monitoring portal "Danmarks Miljøportals Natu
+       Slovakia_nvd a7bdcc19-4550-4596-aa85-a9a46a77ae45  none     14         6    0.885776       0.428070                      628 PLADIAS.SK dataset: Complex information and monitoring system of the S
+Ukraine_onyshchenko 07a5ec6c-e271-4d6a-865c-7f9a6b484514  core      9         6    0.928571       0.764706                       40 Records of vascular plants, bryophytes and lichens from Ukrainian Gras
+
+### by source database: cells covered by an UNFLAGGED dataset at high recall/precision
+               cells_unflagged_hi  single_plot_dated_cells  share
+Dataset                                                          
+Australia                     766                     5383  0.142
+Slovakia_nvd                    6                      628  0.010
+Netherlands                     2                      629  0.003
+Austria_VINCA                   1                       91  0.011

@@ -10,13 +10,13 @@
  },
  "rf_auroc_other": {
   "attempted": 14000,
-  "ok": 8611,
+  "ok": 8610,
   "fallback": 0,
-  "dropped": 5389,
+  "dropped": 5390,
   "unresolved": 0,
   "fallback_reasons": {},
   "drop_reasons": {
-   "AUROC undefined (one class only)": 5389
+   "AUROC undefined (one class only)": 5390
   }
  },
  "rf_auroc_all": {

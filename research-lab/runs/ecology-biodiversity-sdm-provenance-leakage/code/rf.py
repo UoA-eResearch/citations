@@ -32,6 +32,7 @@ B, W, T = Path("/mnt/sage/bench"), RUN / "data" / "work", RUN / "results" / "tab
 (W / "rf").mkdir(parents=True, exist_ok=True)
 GROUPS = ["chelsa", "soilgrids", "topography", "human_footprint"]
 CONDS = ["C0", "C1", "C2", "C3", "C4", "C5", "C6"]
+EVAL_VERSION = "evald4"     # D5: bump when source cells or evaluation change
 CAP, BG_CAP = 10_000, 10_000
 G = {}                                   # globals shared with forked workers
 
@@ -175,7 +176,9 @@ def fit_one(args):
         bg = np.random.default_rng(1_000_003 + s).choice(bg, BG_CAP, replace=False)
     import hashlib
     key = hashlib.sha1(np.sort(pres).astype(np.int64).tobytes() + b"|" + np.sort(bg).astype(np.int64).tobytes()).hexdigest()[:20]
-    cache = W / "rf" / f"hash_{s}_{key}.json"          # identical inputs give identical fits (seeded): reuse
+    # D5: the cached result includes evaluation AUROCs, so the key must cover the evaluation too; the source cells
+    # changed with the D4 flag list. EVAL_VERSION invalidates caches from before it.
+    cache = W / "rf" / f"hash_{s}_{key}_{EVAL_VERSION}.json"
     if cache.exists():
         res = dict(json.loads(cache.read_text()), cond=cond, reused=True)
         out.write_text(json.dumps(res))

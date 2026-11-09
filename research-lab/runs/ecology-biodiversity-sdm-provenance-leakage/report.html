@@ -80,7 +80,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
   <h1>A sixth of SAGE&#x27;s test presences share a 1 km cell with a republished survey record once two missed Australian republications are flagged, yet removing those records barely changes Random Forest scores; West African and Ukrainian test plots are the exception</h1>
   <p class="subtitle">SAGE trains species distribution models on GBIF presence-only records and tests them on sPlotOpen vegetation plots, treating the two as independent. Several of the vegetation-plot databases that supply its test plots are also published in GBIF. The first draft flagged those GBIF datasets from registry metadata and froze the list. The review showed that list missed the second-largest source. This revision flags republications from the data instead, with a same-day, same-cell species-list scan of every dataset, and re-runs the audit and the Random Forest retraining for 2,000 species (D4, post hoc). The preregistered frozen-list results are reported beside the corrected ones.</p>
   <div class="meta">
-    <span>Report · 2026-10-26 · under independent review</span>
+    <span>Report · 2026-11-08 · under independent review</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ecology-biodiversity-sdm-provenance-leakage/plan.md">Preregistration</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ecology-biodiversity-sdm-provenance-leakage/deviations.md">Deviations log</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/ecology-biodiversity-sdm-provenance-leakage/code">Code</a>
@@ -100,7 +100,8 @@ nature-monitoring portal only as "broad", which the analysis never counted.</li>
 <li>Counting only records that reached SAGE's training data: 14.8%. 13.1% of all test presences have
 such a record and no other record of the species in the cell (provenance-only). Any-source same-cell overlap, which SAGE accepts by design, is 29.3%.</li>
 <li>By source: Denmark 98.6%, Netherlands 87.8%, TAVA West Africa 87.4%, Australia 27.1%, Ukraine 11.9%, France's
-SOPHY 0%. The scan finds no dataset that republishes SOPHY relevés.</li>
+SOPHY 0%. The scan finds no dataset that republishes SOPHY relevés. In Slovakia, PLADIAS.SK reproduces 6 of 628
+single-plot test cells, below the flag rule.</li>
 <li>The "broad" sensitivity now defines source cells from core and broad sources together: 15.6% (15.1% to 16.2%).
 The first draft's version was vacuous by construction.</li>
 </ul>
@@ -115,15 +116,20 @@ species where random removal reached at least 90% of C1, the DiD is +0.001 (−0
 <li>With the frozen list it was +0.006 (+0.005 to +0.008), on 1,745 species.</li>
 </ul>
 </li>
-<li><strong>Two databases still exceed 0.02 on their own:</strong><ul>
+<li><strong>Three databases exceed 0.02 on their own:</strong><ul>
 <li><strong>TAVA West Africa: DiD +0.128</strong> (+0.097 to +0.163, 56 species). AUROC falls from 0.807 to 0.693 without the
 shared records but is 0.821 after random removal. The West African test plots are themselves in the training data.</li>
 <li><strong>Ukrainian grasslands: DiD +0.050</strong> (+0.037 to +0.064, 326 species).</li>
+<li><strong>Denmark: DiD +0.031</strong> (+0.014 to +0.048, 249 species), with 98.6% of test presences co-located. It was missing
+from the first D4 draft because stale cached fits lacked its source cells (D5).</li>
 <li><strong>Not because removed records turn into pseudo-absences.</strong> In C1 a removed presence can become a background cell
 for that species. A neutral variant keeps those cells out of the background and gives +0.118 (TAVA) and +0.052
-(Ukraine), so the effect is lost information (post hoc).</li>
-<li>The Netherlands: 88% co-located, DiD +0.017 (+0.009 to +0.025). Australia: −0.025, where the random control
-removed half as much.</li>
+(Ukraine), post hoc. That was expected: all 382 species sit at the 10,000-cell background cap, and their removed
+cells are a median 0.07% of the pool, so induced pseudo-absences were too few to matter.</li>
+<li>The Netherlands: 88% co-located, DiD +0.017 (+0.009 to +0.025).</li>
+<li><strong>Australia: −0.025</strong>, unexplained. It persists among Australian species where random removal reached at least
+90% of C1 (−0.013, −0.021 to −0.005; confirmation pass), so it is not an artefact of the control's shortfall,
+which would bias the DiD upward.</li>
 </ul>
 </li>
 </ul>
@@ -138,7 +144,7 @@ counted, about one in six test sightings has a republished survey record next to
 <p>We then retrained the benchmark's Random Forest model for 2,000 plant species without the republished records, and
 again without an equal number of other records. Overall, removing the republished surveys makes almost no
 difference. In West Africa, though, the score for the region's species drops sharply, from 0.81 to 0.69, because the
-test plots themselves are in the training data. Ukrainian grasslands show a smaller drop.</p>
+test plots themselves are in the training data. Ukrainian grasslands and Denmark show smaller drops.</p>
 <p>So the benchmark's overall Random Forest scores hold up, but its scores for West African species partly reward
 recalling the training data, and which surveys are republished cannot be read from metadata alone.</p>
 <h2>What was asked</h2>
@@ -170,23 +176,25 @@ SAGE's download itself was served at about 60 KB/s.<ul>
   corrected list (<code>provenance_flags.csv</code>) adds every dataset that reproduces at least 20 of a source's single-plot,
   dated test cells (recall ≥ 0.8, precision ≥ 0.5) in a same-day, same-cell scan (<code>code/republication_scan.py</code>, D4).<ul>
 <li>Registry metadata for all 11,621 datasets in SAGE's download were screened.</li>
-<li>27 core datasets republish 11 sPlotOpen source databases: for example the Dutch Vegetation Database, the West
-African Vegetation Database and the Ukrainian Grassland Database.</li>
-<li>3 broad datasets are aggregators, used as an audit sensitivity only.</li>
+<li>In the corrected list, 30 core datasets republish 13 sPlotOpen source databases: for example the Dutch Vegetation
+Database, the West African Vegetation Database, NSW BioNet, SA Flora and the Danish Naturdatabase. The frozen
+list had 27 core datasets for 11 sources.</li>
+<li>2 broad datasets are aggregators, used as an audit sensitivity only.</li>
 </ul>
 </li>
 <li><strong>Co-location (H2)</strong> is counted from flagged snapshot records in the test cell, as planned; SAGE's own cleaning was
   not replayed, so this is an upper bound (see the post hoc split under Results).</li>
 <li><strong>Provenance-only presences.</strong> A training presence is provenance-only if every snapshot record of that species in
   that cell comes from core-flagged datasets.<ul>
-<li>That covers 1,115,257 presences (2.0%): Netherlands 897,332, Poland 130,741, Ukraine 78,169.</li>
+<li>That covers 4,302,471 training presences (7.5%): Denmark 1,682,622, Australia 1,504,558, Netherlands 897,358.
+The frozen list gave 1,115,257 (2.0%).</li>
 </ul>
 </li>
 <li><strong>Conditions.</strong><ul>
 <li>C0: as distributed.</li>
 <li>C1: provenance-only presences removed.</li>
-<li>C2–C6: five draws removing the same number of other presences of the same species in the same country. 13% of
-the C1 count could not be matched, and the shortfall is reported.</li>
+<li>C2–C6: five draws removing the same number of other presences of the same species in the same country. 46% of
+the C1 count could not be matched (13% with the frozen list), and the shortfall is reported.</li>
 </ul>
 </li>
 <li><strong>Model.</strong> SAGE's single-species Random Forest baseline, reimplemented from its code:<ul>
@@ -202,7 +210,7 @@ the C1 count could not be matched, and the shortfall is reported.</li>
   ran for the neutral variant.
 - <strong>Evaluation unit.</strong> The evaluation unit is SAGE's own 1 km evaluation cell. Source cells are test cells with at
   least one plot from a core-flagged source database (D1).
-- <strong>Coverage (G2):</strong> every fit completed. On non-source cells, 609 fits had an undefined AUROC (one class only) and
+- <strong>Coverage (G2):</strong> every fit completed. On non-source cells, 5,390 fits had an undefined AUROC (one class only) and
   are dropped from that contrast (<code>results/tables/coverage.json</code>).
 - <strong>Plausibility (G3):</strong> <code>results/plausibility.md</code>, including two species refitted from scratch that reproduce the
   stored AUROC exactly.</p>
@@ -247,10 +255,11 @@ the C1 count could not be matched, and the shortfall is reported.</li>
 </tbody>
 </table></div>
 <ul>
-<li><strong>Mean AUROC on source test cells</strong> (corrected): 0.865 as distributed, 0.861 without provenance-shared records,
-  0.855 after matched random removal. On non-source cells the contrast is −0.000 (−0.001 to +0.001).</li>
+<li><strong>Mean AUROC on source test cells</strong> (corrected): 0.864 as distributed, 0.861 without provenance-shared records,
+  0.855 after matched random removal. On non-source cells the contrast is −0.000 (−0.001 to +0.001; 1,230 species).</li>
 <li><strong>Removal counts.</strong> C1 removes 4.3 million training presences (7.5% of all, against 2.0% with the frozen list).
-  The random draws fall 2.0 million short, almost all in Australia.</li>
+  The random draws fall 2.0 million short: Denmark accounts for 58% (1.15 million) and Australia for 35% (0.70
+  million; confirmation pass).</li>
 <li><strong>Republication signatures</strong> (<code>results/tables/republication_scan.csv</code>, <code>posthoc_same_releve.json</code>). In single-plot
   cells, same-day records reproduce the plot's species list:<ul>
 <li>NSW BioNet: median recall 0.78, precision 0.59, 664 cells with recall ≥ 0.8 and precision ≥ 0.5.</li>
@@ -292,10 +301,16 @@ the C1 count could not be matched, and the shortfall is reported.</li>
 <td>418</td>
 </tr>
 <tr>
+<td>Denmark</td>
+<td>98.6%</td>
+<td>+0.031 (+0.014 to +0.048)</td>
+<td>249</td>
+</tr>
+<tr>
 <td>Australia</td>
 <td>27.1%</td>
-<td>−0.025 (−0.032 to −0.020)</td>
-<td>750</td>
+<td>−0.025 (−0.031 to −0.020)</td>
+<td>766</td>
 </tr>
 <tr>
 <td>France (SOPHY)</td>
@@ -311,11 +326,12 @@ the C1 count could not be matched, and the shortfall is reported.</li>
 <li><strong>SAGE's headline Random Forest comparisons are not driven by provenance leakage,</strong> with either flag list.</li>
 <li><strong>The overlap is larger than the metadata showed.</strong> A sixth of test presences share a cell with a republished
   survey record. A registry-text screen missed the second-largest source, and a data-level scan found it.</li>
-<li><strong>Where the test plots themselves are republished, it is real leakage.</strong> In West Africa the scores depend on it,
-  and the neutral variant shows the cause is the lost information, not induced pseudo-absences.</li>
-<li><strong>Australia's negative DiD is a control artefact.</strong> There the random arm removed half as much, and removing
-  random Australian records hurt more than removing the republished ones. The matched-removal restriction puts the
-  overall DiD at zero.</li>
+<li><strong>Where the test plots themselves are republished, it is real leakage.</strong> In West Africa the scores depend on it.
+  The neutral variant changes little, because induced pseudo-absences were too few to matter.</li>
+<li><strong>Australia's negative DiD is unexplained.</strong> Removing the republished Australian records hurts less than removing
+  random ones, even where the random arm matched the removal count. The pooled random-to-C1 removal ratio in
+  Australia is 0.47, but the per-species median is 0.80. Without Australian-source species the overall DiD is
+  +0.005 (+0.003 to +0.007; confirmation pass).</li>
 <li><strong>Not shown:</strong><ul>
 <li><strong>Other models.</strong> Only SAGE's Random Forest baseline was retrained.</li>
 <li><strong>Republication through datasets the scan cannot see:</strong> relevés filed on another day, in another cell, or with
@@ -347,11 +363,12 @@ split by SAGE training presence, same-relevé species lists), the G3 hand traces
 </ul>
 <h2>Reproducing it</h2>
 <ol>
-<li><code>code/registry.py</code>, <code>code/flag_search.py</code> (flags are frozen in <code>results/tables/provenance_flags.csv</code>) and
-   <code>code/species_keys.py</code>.</li>
+<li><code>code/registry.py</code>, <code>code/flag_search.py</code> (the frozen flags are <code>results/tables/provenance_flags_frozen.csv</code>),
+   <code>code/republication_scan.py</code> (the corrected <code>provenance_flags.csv</code>) and <code>code/species_keys.py</code>.</li>
 <li><code>code/s3_extract.py</code> (GBIF snapshot columns, about 280 million rows) and <code>code/cells.py</code>.</li>
 <li><code>code/audit.py</code> (H2 and the species population).</li>
-<li><code>code/rf.py removals</code>, then <code>code/rf.py fit</code> (12,215 fits, about 11 hours on 24 cores).</li>
+<li><code>code/rf.py removals</code>, then <code>code/rf.py fit</code> (14,000 fits for 2,000 species, about 11 hours on 24 cores without
+   cached fits), and <code>code/rf.py fit_neutral</code> with <code>code/posthoc_neutral.py</code>.</li>
 <li><code>code/analyse.py</code> (H1).</li>
 <li><code>code/posthoc_distance.py</code>, <code>code/posthoc_shortfall.py</code>, <code>code/posthoc_h2_training.py</code> and
    <code>code/posthoc_same_releve.py</code> (post hoc).</li>

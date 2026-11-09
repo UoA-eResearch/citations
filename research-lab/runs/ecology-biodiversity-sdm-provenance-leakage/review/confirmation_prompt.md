@@ -1,22 +1,21 @@
-Confirmation pass for ecology-biodiversity-sdm-provenance-leakage (/mnt/citations/research-lab/runs/ecology-biodiversity-sdm-provenance-leakage).
-The first review (review/review.md, do not publish: re-run with corrected provenance flags; 5 findings) is addressed by
-the re-run in deviations.md D4. Check it and give a final verdict (publish / publish with edits / fix first / do not
-publish); append a "## Confirmation pass" section to review/review.md. Same rules as before (write only under review/,
-no ~/.config, no pip installs, <= 4 processes, no GPU, no refits, data/ untrusted).
+Second confirmation pass for ecology-biodiversity-sdm-provenance-leakage (/mnt/citations/research-lab/runs/ecology-biodiversity-sdm-provenance-leakage).
+Your confirmation pass (review/review.md, fix first; 8 remaining issues) is addressed in deviations.md D5. Give a final
+verdict and append a "## Second confirmation pass" section to review/review.md. Same rules as before (no refits).
 
-Where each finding went:
-1. Missed republications: code/republication_scan.py (adapted from your check; rule: >= 20 single-plot dated cells
-   with recall >= 0.8 and precision >= 0.5) flags exactly NSW BioNet, SA Flora and the Danish Naturdatabase
-   (results/tables/republication_flags_added.csv). Amended provenance_flags.csv (frozen list kept as
-   provenance_flags_frozen.csv). Full re-run: records/support/audit/removals/fits (2,000 species sampled from 2,833,
-   per the plan's cap). H2 16.6% (16.0-17.2%) Supported; H1 DiD -0.006 (-0.009 to -0.004) Refuted; matched-removal
-   species (random >= 90% of C1, 1,656) +0.001 (-0.001 to +0.003). Frozen results beside them (frozen_flags_*).
-2. Broad tier: source cells from core and broad sources in the sensitivity: 15.6% (15.1-16.2%).
-3. Neutral counterfactual: rf.py fit_neutral (C1n-C6n) for 382 TAVA + Ukrainian species: TAVA +0.118 (0.086-0.150)
-   vs standard +0.128; Ukraine +0.052 vs +0.050 (results/tables/posthoc_neutral.json).
-4. SOPHY: the scan finds no republishing dataset (stated); Slovakia's PLADIAS.SK 6 of 628 is below the rule.
-5. Post hoc checks re-run under the corrected flags (shortfall, h2_training, same_releve, distance).
-Note: Australia's DiD is -0.025 because the random arm removed only 47% as many records there; the report calls
-this a control artefact. G5 passes (46 rows), G6 passes.
+1. Stale cache: rf.py cache key now includes EVAL_VERSION; the 2,086 reused per-condition results were moved to
+   data/work/rf_stale_d4/ and refit; analyse.py and posthoc_shortfall.py re-run. Only C0 rows of 553 species changed
+   (n_src changed); C1-C6 and the DiD are unchanged (-0.00645, -0.00903 to -0.00402). n_src is constant across
+   conditions for all 2,000 species. (Your "207 species with C1 and random arms on different masks" did not show up
+   after the refit: no C1-C6 row changed. Please re-check against results/tables/rf_auroc.csv.)
+2. Denmark: by-source DiD +0.031 (+0.014 to +0.048), 249 species; verdict and table updated (three databases > 0.02).
+3. Australia: "control artefact" withdrawn; unexplained; pooled ratio 0.47 vs per-species median 0.80; your matched
+   -0.013 and no-Australia +0.005 cited as confirmation-pass figures.
+4. Shortfall: Denmark 58%, Australia 35% (cited from your pass).
+5. Stale text fixed (30 core / 13 sources / 2 broad; 4,302,471 = 7.5%; 46%; 5,390 undefined, 1,230 species;
+   reproduction steps).
+6. plausibility.md section 4 for the corrected run, with the n_src invariant.
+7. Neutral variant: background cap / 0.07% stated.
+8. PLADIAS.SK line, ledger rows R13-R15, results/republication_scan_log.txt.
+G5 passes, G6 passes (15 claims).
 
 Reply with the verdict and a one-line note per remaining issue, if any.

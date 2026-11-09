@@ -1,5 +1,7 @@
 # Plausibility gate (G3)
 
+*Sections 1–3 describe the frozen-list run. The corrected run (D4, D5) is summarised in section 4.*
+
 ## 1. Headline numbers against expectation
 
 | quantity | value | expected range and source | plausible? | notes |
@@ -28,3 +30,20 @@
 | random draws never remove more than C1 per species and country | `code/rf.py` removals (shortfall recorded) | yes: 145,229 presences short in every draw, none over |
 | identical training inputs give identical fits | cache keyed on a hash of the inputs, seed 0 | yes: 1,178 reused fits; refits in the hand trace match exactly |
 | test-cell labels enter only scoring | `code/rf.py` (G1 audit, D2) | yes |
+
+## 4. The corrected run (D4, D5)
+
+| quantity | value |
+|---|---|
+| species in the H1 population | 2,000 (sampled from 2,833) |
+| provenance-only training presences | 4,302,471 (7.5%) |
+| fits | 14,000 completed; 5,390 undefined AUROCs on non-source cells |
+| H2 co-location | 16.6% (Denmark 98.6%, Netherlands 87.8%, TAVA 87.4%, Australia 27.1%) |
+| H1 DiD on source cells | −0.006 (−0.009 to −0.004); on non-source cells −0.000 (placebo) |
+
+Invariants added in D5:
+- **Each species is evaluated on the same source cells in every condition.** `n_src` is constant across C0–C6 for
+  all 2,000 species.
+- **Every cached fit's key includes the evaluation version** (`EVAL_VERSION`), so a change of source cells
+  invalidates it. After the D5 refit only the C0 results of 553 species changed. These are the species whose
+  source cells changed. C1–C6, and so the DiD, were unaffected.

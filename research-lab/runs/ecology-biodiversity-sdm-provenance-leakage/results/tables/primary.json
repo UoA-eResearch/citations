@@ -1,6 +1,6 @@
 {
  "fits": 14000,
- "reused_fits": 2086,
+ "reused_fits": 751,
  "H1_source_cells": {
   "species": 2000,
   "did": -0.00645,
@@ -8,9 +8,9 @@
    -0.00903,
    -0.00402
   ],
-  "drop_C0_minus_C1": 0.00335,
-  "drop_C0_minus_random": 0.0098,
-  "auroc_C0": 0.8645,
+  "drop_C0_minus_C1": 0.003,
+  "drop_C0_minus_random": 0.00946,
+  "auroc_C0": 0.8641,
   "auroc_C1": 0.8611,
   "auroc_random": 0.8546,
   "species_changed_by_C1": 1997,
@@ -23,9 +23,9 @@
    -0.00085,
    0.00054
   ],
-  "drop_C0_minus_C1": -8e-05,
-  "drop_C0_minus_random": 6e-05,
-  "auroc_C0": 0.8466,
+  "drop_C0_minus_C1": -0.00018,
+  "drop_C0_minus_random": -5e-05,
+  "auroc_C0": 0.8465,
   "auroc_C1": 0.8467,
   "auroc_random": 0.8466,
   "species_changed_by_C1": 1225
@@ -46,25 +46,25 @@
  },
  "by_source_db": {
   "Australia": {
-   "species": 750,
-   "did": -0.02542,
+   "species": 766,
+   "did": -0.02537,
    "ci": [
-    -0.03166,
-    -0.01968
+    -0.03136,
+    -0.01986
    ],
-   "drop_C0_minus_C1": 0.00218,
-   "drop_C0_minus_random": 0.0276,
-   "auroc_C0": 0.884,
-   "auroc_C1": 0.8819,
-   "auroc_random": 0.8564,
-   "species_changed_by_C1": 750
+   "drop_C0_minus_C1": 0.00211,
+   "drop_C0_minus_random": 0.02747,
+   "auroc_C0": 0.8832,
+   "auroc_C1": 0.8811,
+   "auroc_random": 0.8558,
+   "species_changed_by_C1": 766
   },
   "Balkan Dry Grassland Database": {
    "species": 365,
    "did": -0.00458,
    "ci": [
-    -0.01065,
-    0.00153
+    -0.01072,
+    0.00145
    ],
    "drop_C0_minus_C1": -0.00313,
    "drop_C0_minus_random": 0.00145,
@@ -77,8 +77,8 @@
    "species": 143,
    "did": -0.00901,
    "ci": [
-    -0.02975,
-    0.01176
+    -0.0299,
+    0.01074
    ],
    "drop_C0_minus_C1": 0.02623,
    "drop_C0_minus_random": 0.03524,
@@ -87,12 +87,26 @@
    "auroc_random": 0.6089,
    "species_changed_by_C1": 142
   },
+  "Denmark": {
+   "species": 249,
+   "did": 0.0309,
+   "ci": [
+    0.0137,
+    0.0479
+   ],
+   "drop_C0_minus_C1": 0.03039,
+   "drop_C0_minus_random": -0.00051,
+   "auroc_C0": 0.6838,
+   "auroc_C1": 0.6534,
+   "auroc_random": 0.6843,
+   "species_changed_by_C1": 249
+  },
   "France_sophy": {
    "species": 1074,
    "did": -0.00073,
    "ci": [
-    -0.00165,
-    0.00021
+    -0.00169,
+    0.00019
    ],
    "drop_C0_minus_C1": -0.00118,
    "drop_C0_minus_random": -0.00045,
@@ -105,8 +119,8 @@
    "species": 484,
    "did": -0.0015,
    "ci": [
-    -0.00684,
-    0.00389
+    -0.00721,
+    0.00415
    ],
    "drop_C0_minus_C1": -0.00803,
    "drop_C0_minus_random": -0.00653,
@@ -119,8 +133,8 @@
    "species": 418,
    "did": 0.01662,
    "ci": [
-    0.00881,
-    0.02486
+    0.00886,
+    0.02505
    ],
    "drop_C0_minus_C1": 0.0083,
    "drop_C0_minus_random": -0.00832,
@@ -133,8 +147,8 @@
    "species": 51,
    "did": 0.00947,
    "ci": [
-    -0.00358,
-    0.02669
+    -0.00315,
+    0.02486
    ],
    "drop_C0_minus_C1": 0.00964,
    "drop_C0_minus_random": 0.00017,
@@ -147,8 +161,8 @@
    "species": 597,
    "did": -0.00373,
    "ci": [
-    -0.01031,
-    0.00307
+    -0.01034,
+    0.00297
    ],
    "drop_C0_minus_C1": 0.00408,
    "drop_C0_minus_random": 0.00781,
@@ -161,8 +175,8 @@
    "species": 728,
    "did": 0.00154,
    "ci": [
-    -0.0016,
-    0.00503
+    -0.00166,
+    0.00512
    ],
    "drop_C0_minus_C1": 0.00144,
    "drop_C0_minus_random": -0.0001,
@@ -175,8 +189,8 @@
    "species": 340,
    "did": 0.00194,
    "ci": [
-    -0.00437,
-    0.00854
+    -0.00449,
+    0.0083
    ],
    "drop_C0_minus_C1": 0.0034,
    "drop_C0_minus_random": 0.00147,
@@ -189,8 +203,8 @@
    "species": 56,
    "did": 0.12806,
    "ci": [
-    0.09694,
-    0.16252
+    0.09543,
+    0.16224
    ],
    "drop_C0_minus_C1": 0.11397,
    "drop_C0_minus_random": -0.01409,
@@ -203,8 +217,8 @@
    "species": 326,
    "did": 0.05019,
    "ci": [
-    0.03697,
-    0.0637
+    0.03715,
+    0.06357
    ],
    "drop_C0_minus_C1": 0.04968,
    "drop_C0_minus_random": -0.00051,
