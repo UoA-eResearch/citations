@@ -961,7 +961,12 @@
    ],
    "risks": "Highest risk is that all apparent skill collapses into sampling effort and database growth once the null is done honestly - a legitimate but less exciting negative result. Second, the prior art (Ellabaan 2021; Science Advances 2021) may be judged to cover the question, so framing must lead with the prospective, null-controlled evaluation. Third, metadata quality (host and country fields are sparse and inconsistent) may force coarse contexts that weaken the signal. Fourth, allele-level definitions change with catalog versions, so a stale-catalog choice may make some 'emergences' pure annotation artifacts.",
    "requirements_if_out_of_reach": "",
-   "plain_summary": "Genes that make bacteria resistant to antibiotics spread between species and countries. This study would test whether a model trained on past spread can predict where such genes will appear next, scored honestly by training only on data before a cut-off date and checking against what appeared afterwards."
+   "plain_summary": "Genes that make bacteria resistant to antibiotics spread between species and countries. This study would test whether a model trained on past spread can predict where such genes will appear next, scored honestly by training only on data before a cut-off date and checking against what appeared afterwards.",
+   "status": "deep dive \u00b7 report (revised after review and two confirmation passes)",
+   "report_url": "runs/bioinformatics-amr-gene-species-emergence-forecast/report.html",
+   "verdict_tag": "Refuted",
+   "verdict_note": "H1 Refuted by the preregistered rule; H2 Inconclusive. Candidate (gene, species) pairs from NCBI Pathogen Detection (1.62M isolates, uniform AMRFinderPlus calls) not established by 2022 were ranked for appearance in 2023-2025 by a gradient-boosted model and by a sampling-effort null. At the preregistered seed the model's precision@100 is 0.00 against the null's 0.070 (ratio 0, 0-0.50); that fit is the worst of ten. For genuine first appearances the null puts about 15 true pairs in its top 100 and the model almost none; for confirmations by a second BioProject the model's average precision is 3.7-4.4 times the null's, largely by ranking pairs already sampled but unpublished at the cutoff. ESM-2 embeddings add no clear signal. Review fix first; confirmations fix first, then publish with edits.",
+   "headline": "Forecasting where antibiotic-resistance genes turn up next: a simple sampling-effort baseline beats a trained model on genuine first appearances; the model wins only on confirmations of pairs already sampled."
   },
   {
    "id": "bioinformatics-sc-disease-de-negative-control",

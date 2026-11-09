@@ -1,5 +1,5 @@
-"""D3b (confirmation finding C1): the null re-ranked by -log P(<=1) (d3_fixes.log_null, binom.logcdf), which does not
-saturate; log P(>=2) (logsf) had saturated at exactly 0.0 for the same candidates the probability saturated at 1.0.
+"""D3b/D3c (confirmation findings C1): the null re-ranked by -log P(<=1) (d3_fixes.log_null). log P(>=2) (logsf) had
+saturated at 0.0; binom.logcdf then underflowed for about 200 candidates (D3b); D3c uses the closed form.
 
 Only null-dependent quantities are recomputed here. The model fits are deterministic (fixed hyperparameters and
 seeds; the reviewer reproduced them bit for bit), so the model metrics are carried over from the first D3 run, and one
@@ -19,7 +19,7 @@ import analyse as A  # noqa: E402
 import d3_fixes as F  # noqa: E402
 
 d = json.loads((A.T / "d3.json").read_text())
-d["null_version"] = "logcdf (D3b); model metrics carried over from the first D3 run (deterministic fits)"
+d["null_version"] = "closed-form log P(<=1) (D3c); model metrics carried over from the first D3 run (deterministic fits)"
 for task, (trn, ten) in {"primary": ("train", "test"), "first_appearance": ("train_any", "test_any"),
                          "three_isolates": ("train_3", "test_3"), "all_genes": ("train_allgenes", "test_allgenes")}.items():
     te = pd.read_parquet(A.D / f"task_{ten}.parquet"); y = te.y.to_numpy(); ln = F.log_null(te, 2022, 2025)

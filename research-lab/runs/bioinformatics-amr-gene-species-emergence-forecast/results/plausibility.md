@@ -6,9 +6,9 @@
   training task's rate was 0.33% (1,271 of 386,001). Fewer first appearances in the later window is consistent with
   the corpus: 2023–2025 holds 349,205 kept isolates against 386,839 in 2020–2022 (corrected in D3).
 - **Emergence happens where sequencing happens.** The median emergent pair's species has 414 isolates in the
-  forecast window. The sampling-effort null is built on exactly this and reaches precision@100 of 7.3% when
-  ranked without saturation (D3b; the first draft's 8% came from row order within ties, and D3's 3.3% was still
-  saturated), about 40 times the base rate.
+  forecast window. The sampling-effort null is built on exactly this and reaches precision@100 of 7.0% with the
+  closed-form score (D3c; the first draft's 8% came from row order within ties, D3's 3.3% was still saturated, and
+  D3b's 7.3% still had about 200 underflowed ties), about 39 times the base rate.
 
 ## Three emergent pairs traced, and what the trace revealed
 

@@ -540,3 +540,181 @@ the same probability in a form that does not go blind — a one-line change — 
 as the new draft claims, so every "the model is three to six times better" becomes "one and a half to under three
 times". Their main conclusions do not change, and one of them actually gets sharper: for genuine first appearances,
 the simple baseline finds about fifteen in its top hundred and the machine-learning models find none.
+
+## Second confirmation pass
+
+Reviewer: Opus 5.5, 2026-11-09. Model note: this pass was run on Opus 5.5 instead of Fable 5.1 because Fable 5.1's safeguards stopped the earlier attempt at this second confirmation pass on 2026-11-05 (biology flag, request req_011Cgj48hHxtV8ZNFm36Thoc) before it reached a verdict. The first review and first confirmation pass were by Fable 5.1.
+
+Scope: whether D3b (deviations.md, 2026-11-05, commit c437c7f) fixes C1-C8 without introducing new problems. I
+re-read plan.md, review/prompt.md, the whole of this file, deviations.md D3 and D3b, report.md, results/plausibility.md,
+review/overclaim_check.md, the earlier reviewer's checks (`c2_*`, `seed_sweep*`, `refit*`), `code/d3_fixes.py`,
+`code/d3c_null.py` and the D3/D3b logs. My scripts and outputs are in `review/reviewer_checks/c3_*`. None imports the
+study's code; data and results files are passed as arguments and read with `-I`.
+
+### What I checked, and where
+
+| check | files |
+|---|---|
+| C1: the null recomputed from `isolates.parquet` three ways (the study's D3b `-binom.logcdf` with its non-finite fallback; the exact analytic log P(<=1); a hybrid), with tie blocks, distinct scores, precision@k as the expectation under random tie order, and AP, for all four variants | `c3_null.py`, `c3_null.json`, `c3_null.txt` |
+| D3b item 2: model metrics carried over unchanged from the first D3 run (git 2c6450b vs c437c7f); agreement with the first reviewer's seed sweep and with the stopped second D3 run's log | `c3_carryover.py`, `c3_carryover.txt` |
+| D3b item 2: one refit of the preregistered model (seed 20261028) compared with `d3.json` and with the first reviewer's stored predictions; H1 bootstrap (2,000 gene resamples, seed 20261028, same scheme as `analyse.boot_indices`, reimplemented) against the study's null and the analytic null | `c3_refit_h1.py`, `c3_refit_h1.json`, `c3_refit_h1.txt` |
+| Every report quantity that divides by the null, under the stored and the analytic null | `c3_derived.py`, `c3_derived.txt` |
+| G5 `--verify` and G6 `check --show` | `c3_gates.txt` |
+| G5 table in sync with the current report.md (the tool's own `extract`, write path never called) | `c3_g5_sync.py`, `c3_g5_sync.txt` |
+
+### Final verdict: publish with edits
+
+The study's conclusions survive this pass intact, and I reproduced each of them independently. H1 is Refuted at the
+preregistered seed: the model scores 0.00, the ratio is 0, and the interval is 0 to 0.46 against the study's null
+or 0 to 0.50 against the exact null. Either way there are no undefined draws and the upper bound is below 2. H2 is
+Inconclusive. The first-appearance contrast holds: the effort null puts 15 of 100 in its top 100, and the model puts
+none at nine of ten seeds. The model fits are deterministic. My refit reproduces the stored predictions bit for
+bit, so carrying the model metrics over was safe.
+
+C1 is only partly fixed, for the third time in a row. `binom.logcdf` itself underflows to -inf for the
+best-sequenced candidates: 192 in the primary task, 145 for first isolate, 207 for three isolates and 195 for all
+genes. `d3_fixes.log_null` then maps all of them to a single value (max + 1). That leaves one tie block covering the
+whole top 100 in every variant, and every reported null precision@100 is that block's base rate. The numerical
+damage is small, the labels do not move, and I have computed every corrected number below. So this needs a one-line
+fix, a rerun of `d3c_null.py` (minutes; one deterministic fit) and about a dozen number substitutions, not another
+review. In fairness to the study, the previous pass recommended `binom.logcdf` as equivalent to the analytic form.
+Its own `c2_null_repr.json` shows the same 192-candidate tie at the top.
+
+### C1-C8
+
+- **C1 (null saturation): partly fixed.**
+  - The ranking direction is now correct: P(<=1) ascending, the same order as P(>=2) descending.
+  - The representation still saturates. `binom.logcdf(1, n, f)` is -inf for 192 primary candidates (14 positives),
+    and the fallback gives them all one score. So the top tie block is 192, and the tie at rank 100 is 192
+    (`c3_null.txt`).
+  - D3b's p@50 equals its p@100 in every variant (0.0729, 0.1517, 0.0531, 0.0718). These are the block base rates
+    14/192, 22/145, 11/207 and 14/195, not precision@100 of a ranking.
+  - The exact analytic log P(<=1) = n·log1p(−f) + log1p(n·f/(1−f)) is finite everywhere. Where logcdf is finite, the
+    two agree to a relative error of 7e-6. The analytic form gives 988 distinct scores in the top 1,000 and no tie at
+    rank 100.
+  - Recomputed null precision@100, D3b value then exact value:
+
+    | variant | D3b | exact | top tie block |
+    |---|---|---|---|
+    | primary | 0.073 | **0.070** | 192 |
+    | first isolate | 0.152 | **0.150** | 145 |
+    | three isolates | 0.053 | **0.040** | 207 |
+    | all genes | 0.072 | **0.070** | 195 |
+
+  - Null AP, D3b then exact: 0.0184 to **0.0206**, 0.0214 to 0.0211, 0.0141 to 0.0144, 0.0180 to **0.0201**.
+  - My own recomputation of the study's logcdf score reproduces all four D3b values exactly, so the inputs are right
+    and only the representation is at fault.
+  - **Fix:** in `log_null`, replace the non-finite fallback with the analytic expression (or score with the analytic
+    form throughout), rerun `d3c_null.py`, and correct the wording claiming no saturation. That wording appears in the
+    D3b text, the docstrings of `d3_fixes.py` and `d3c_null.py`, report.md's "How it was done" (the null is called
+    computed in log space so that it does not saturate), and plausibility.md (ranked without saturation).
+- **C2 (model-against-null ratios): mostly fixed; residual inflation from C1.** Checked against the study's own stored
+  null, every report number reproduces (`c3_derived.txt`):
+  - H1: ratio 0, interval 0 to 0.4594, Refuted (my bootstrap reproduces it exactly);
+  - per-seed ratios 1.37–2.61, with five of nine at or above 2;
+  - AP ratios 4.08–4.88;
+  - first-appearance AP ratios 1.43–2.37.
+
+  Against the exact null:
+  - H1: ratio 0, interval **0 to 0.50**, 0 undefined draws, Refuted (unchanged);
+  - per-seed ratios **1.4–2.7**, still five of nine at or above 2;
+  - primary AP ratio **3.7–4.4×**, not 4.1–4.9×. The title, the verdict bullet, plain terms and the variants table
+    say four to five times;
+  - three isolates: null 0.040, model 0.12 = **3.0×**, AP **5.5×** (not 0.053 and 5.6×);
+  - all genes: AP **4.2×** (not 4.7×);
+  - first appearance: AP 1.45–2.40×, unchanged at 1.4–2.4×;
+  - the "about four to six times" in What this does and does not show becomes about four to five and a half.
+- **C3 (two baseline statements backwards): fixed.**
+  - The rounding sentence is gone. Plain terms now says row order decided the baseline's result, and the verdict
+    block attributes the first draft's 0.08 to exact ties at 1.0 plus row order.
+  - The claim that the null cannot order large species is withdrawn. Results now says the null ranks well but is
+    badly calibrated, and the calibration numbers (top decile 0.47 predicted against 0.011 observed) match `d3.json`.
+  - One residue from C1: the 798 distinct scores in the results bullet and the verdict bullet should be 988.
+- **C4 (first appearances should lead): fixed.**
+  - The title and the first verdict bullet now lead with the first-appearance contrast.
+  - The exact null gives 0.150, still about 15 of 100. The model's p@100 is at most 0.005 at nine of ten seeds and
+    0.13 at seed 8 (`d3.json`, carried-over runs verified in `c3_carryover.txt`).
+  - The title restricts the claim to the top of the list, which matches the AP evidence: over the whole list the
+    model is 1.4–2.4× the null.
+- **C5 (labels): fixed except one trivial item.**
+  - The first results table now labels the row "model, preregistered seed", at 0.00.
+  - The recall range now reads 0.146–0.182, matching `d3.json`.
+  - The dead conditional at `epmc.py:23` is still there (harmless).
+- **C6 (`primary.json` superseded fields): fixed.** `H1_note` flags the 0.08, the 0–1.27 interval and the 210
+  undefined draws as superseded, and points to `d3.json`. Its phrase "the exact null" will need the same correction
+  as C1.
+- **C7 (Coverage line; `allowed=()`): fixed in substance.**
+  - report.md now carries the Coverage line, and it matches `coverage.json`.
+  - `coverage_report.py` still constructs the stage without `allowed=()`. Instead, the reason is relabelled
+    UNPLANNED, and the fallback is declared in D3 item 9 and in the Coverage line.
+  - The fallback is therefore no longer silent, which is what G2 is for. I accept this alternative: with
+    `allowed=()` the gate would simply refuse to write the record.
+- **C8 (deposit-date rule): fixed.**
+  - D3 item 7 states that "deposited" means `target_creation_date` and gives the alternative rule's 39.2% and
+    341/847 alongside.
+  - The report's 316 (37%) and 45% match `hindsight.json`.
+
+### D3b item 2: deterministic fits, carried-over metrics
+
+Verified. Carrying the model metrics over was safe.
+- Between the first D3 run (2c6450b) and D3b's `d3.json` (c437c7f), every model field is byte-identical in all four
+  variants: `runs`, the per-seed p@100 of both arms, and the AP differences. Only null-dependent fields changed
+  (`c3_carryover.txt`).
+- The stopped second D3 run's 19 log lines are identical to the first run's 19.
+- The first reviewer's independent sweep matches p@100, p@500 and AP at all eight overlapping seeds.
+- My refit at seed 20261028 (one fit, 4 threads) reproduces the stored p@50, p@100, p@500, AP and recall@1000 exactly.
+  It is bitwise equal to the first reviewer's stored predictions (`p_model.npy`; max |diff| 0.0), so the fit is
+  deterministic across sessions and thread counts (`c3_refit_h1.txt`).
+- One caveat on D3b's wording: "bit for bit" was established for predictions at the preregistered seed (the first
+  reviewer's and mine). For the other seeds it was established for metrics to the printed precision.
+
+### Gates
+
+- **G5:** `overclaim_check.py --verify` passes (39 rows). The table is in sync with the current report: 39 of 39
+  sentences, same order (`c3_g5_sync.txt`). Labels I disagree with, all following from C1:
+  - row 1 (four to five times): Partially supported (3.7–4.4×);
+  - row 14 (null 0.073, interval 0 to 0.46): Partially supported (0.070; 0 to 0.50);
+  - row 16 (1.4–2.6): Partially supported (1.4–2.7);
+  - rows 17–18 (4.1–4.9, against 0.018): Partially supported (3.7–4.4, against 0.021);
+  - row 29 (798 distinct scores, remaining ties by expectation): **Overstated**. The remaining tie is a 192-way
+    underflow block spanning the entire top 100, not genuine (n, f) ties;
+  - row 34 (four to five times better): Partially supported.
+
+  All others I agree with as labelled.
+- **G6:** `attribution.py check --show` passes (5 claims). A1 and A2 resolve to the AMRFinderPlus / Reference Gene
+  Catalog paper and the Ellabaan et al. forecasting paper, the titles the claims name (`c3_gates.txt`). The NCBI
+  taxonomy dump still has no ledger row. The first review noted this; it is minor and not gating.
+
+### Remaining issues (edits required before publication)
+
+1. Replace the non-finite fallback in `d3_fixes.log_null` with the analytic log P(<=1), and rerun `d3c_null.py`. Then
+   update the null numbers to 0.070 / 0.150 / 0.040 / 0.070, with null AP 0.021 (primary), and 988 distinct scores
+   (C1).
+2. Update the derived numbers:
+   - the title, verdict, plain terms and variants table: AP ratio 3.7–4.4× ("about four times");
+   - per-seed ratios 1.4–2.7;
+   - H1 interval 0 to 0.50;
+   - three isolates: null 0.040, 3.0×, AP 5.5×;
+   - all genes: AP 4.2×;
+   - "about four to six times" becomes about four to five and a half;
+   - plausibility: 7.0%, about 39 times the base rate (C2).
+3. Remove every claim that the null now has no saturation: D3b item 1, the `d3_fixes.py` and `d3c_null.py`
+   docstrings, report "How it was done", plausibility.md, and `primary.json` `H1_note` ("exact null"). Add a D3b note
+   that logcdf underflowed for the top ~200 candidates (C1).
+4. report.md "Process and deviations" is stale. It still says the confirmation pass is pending, and it lists D1–D3
+   without D3b (new; minor).
+5. Optional:
+   - remove the dead conditional at `epmc.py:23`;
+   - add a ledger row for the NCBI taxonomy dump.
+
+### In plain terms
+
+The team fixed nearly everything from the last round, and the main findings stand. I re-derived them from the stored
+data. The planned model fit really does score zero, and that fit really is the worst of ten. For genuine first
+appearances, the simple baseline really does find about 15 in its top 100 where the model finds none. The model
+re-runs give exactly the same answer every time, so reusing their earlier results was fine.
+
+The baseline's scoring is still not quite right. The new formula still runs out of numerical range for about 200 of
+the most heavily sequenced candidates and gives them all the same score. Computed in a form that never runs out of
+range, the baseline is a little stronger: 0.070 instead of 0.073, and "four to five times better" becomes about
+four. No verdict changes. The fix is one line plus a list of number edits that this section spells out.

@@ -101,3 +101,18 @@ quantity exactly (item 1) or a preregistered secondary that had not been run (it
    recall range is corrected.
 4. **Records** (C6–C8). `primary.json` carries a superseded-null note, the report has a Coverage line, the embedding
    fallback is labelled UNPLANNED, and the deposit-date rule is stated beside the reviewer's.
+
+## D3c — 2026-11-09 — edits after the second confirmation pass (verdict: publish with edits)
+
+1. **The null in closed form** (finding C1). `binom.logcdf(1, n, f)` underflowed for about the top 200 candidates
+   and returned a non-finite value that the fallback tied. `d3_fixes.log_null` now computes
+   log P(≤1) = (n−1)·log1p(−f) + log1p((n−1)·f), which is exact and finite (0 when n is 0 or 1), and `d3c_null.py`
+   was re-run.
+   - Null precision@100: 0.070 (primary), 0.150 (first appearances), 0.040 (three isolates), 0.070 (all genes).
+   - Primary null AP 0.021, and 988 distinct scores in the top 1,000.
+   - H1 at the preregistered seed: ratio 0, interval 0 to 0.50 (Refuted). Per-seed ratios 1.4–2.7.
+   - AP ratios: 3.7–4.4× (primary), 1.4–2.4× (first appearances), 5.5× (three isolates), 4.2× (all genes).
+2. **The no-saturation claim is withdrawn.** D3b said the logcdf ranking did not saturate, which was wrong for the top
+   ~200 candidates. The statement is withdrawn here and corrected in the code docstrings, the report, plausibility.md
+   (7.0%, about 39 times the base rate) and `primary.json`'s H1_note.
+3. **The process section** lists D3b and D3c and the confirmation verdicts.

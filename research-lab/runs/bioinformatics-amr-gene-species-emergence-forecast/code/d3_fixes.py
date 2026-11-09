@@ -1,10 +1,10 @@
 """D3: fixes after the independent review (verdict: fix first). See deviations.md D3.
 
-1. The preregistered null, 1 - Binomial(<=1; n_s,horizon, f_g), ranked by -log P(<=1) (binom.logcdf; D3b - logsf of
-   P(>=2) still saturated at 0.0). In double
-   precision the probability saturates at 1.0 for thousands of candidates, so precision@100 depended on row order.
-   The log-space value is the same quantity without saturation. The old null's expectation under random tie order is
-   also reported.
+1. The preregistered null, 1 - Binomial(<=1; n_s,horizon, f_g), ranked by -log P(<=1). In double precision the
+   probability saturates at 1.0 for thousands of candidates, so precision@100 depended on row order (D3). logsf of
+   P(>=2) still saturated at 0.0, and binom.logcdf underflowed for about 200 candidates (D3b), so D3c uses the closed
+   form log P(<=1) = (n-1) log1p(-f) + log1p((n-1) f). The old null's expectation under random tie order is also
+   reported.
 2. Seed stability: the preregistered hyperparameters (primary.json) refitted with ten seeds (the preregistered seed
    first), full model and without the embedding, on the primary and first-appearance tasks.
    Even in log space, genes with equal counts tie within a species, so every precision@k here is the exact
@@ -23,7 +23,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-from scipy.stats import binom
+from scipy.stats import binom  # noqa: F401
 from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.metrics import average_precision_score
 
@@ -41,12 +41,12 @@ def log_null(te, C, H):
     f = pd.Series([g for gs in pre.genes for g in gs]).value_counts() / len(pre)
     nh = iso[(iso.year > C) & (iso.year <= H)].species.value_counts()
     n = te.species.map(nh).fillna(0).to_numpy(); fg = te.gene.astype(str).map(f).fillna(0).to_numpy()
-    # D3b (confirmation finding C1): log P(>=2) = logsf rounds to exactly 0.0 wherever P(>=2) is within 1e-16 of 1,
-    # the same saturation as before. The same order, without saturation, is P(<=1) ascending: score = -log P(<=1),
-    # which binom.logcdf computes accurately deep into the tail.
-    sc = -binom.logcdf(1, n, fg)
-    fin = np.isfinite(sc)
-    return np.where(fin, sc, sc[fin].max() + 1.0)
+    # D3b/D3c (confirmation findings C1): score = -log P(<=1) under Binomial(n, f). binom.logcdf underflowed for the top
+    # ~200 candidates (D3b), so D3c uses the closed form P(<=1) = (1-f)^(n-1) (1 + (n-1) f), i.e.
+    # log P(<=1) = (n-1) log1p(-f) + log1p((n-1) f), which stays finite and exact (0 at n = 0 or 1).
+    fg = np.clip(fg, 0.0, 1.0 - 1e-15)
+    m = np.maximum(n - 1.0, -1.0)
+    return -(m * np.log1p(-fg) + np.log1p(m * fg))
 
 
 def topk(score, y, k, rng=None):
