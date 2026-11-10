@@ -106,3 +106,19 @@ commit records the code after the build had begun; no later commit changes the g
     Prompt-level reconstruction error is no worse at position 1 than later in our sets (0.33–0.35 against 0.35–0.36 in
     layers 0–2), but much worse in the public set (0.66 against 0.38).
 
+## D5 — 2026-11-10 — edits after the confirmation pass (verdict: publish with edits)
+
+1. **Data order in both directions** (N1). The paired +0.033 used A's lists matched into D against B and C. The
+   reverse, D's lists matched into A against B's and C's, is −0.021 (−0.036 to −0.005); both together +0.006 (−0.005
+   to +0.016). `analyse.py` now computes all three, and the report says there is no consistent difference.
+2. **Targets that are not top-1 under BOS** (N2): 28 of 199 (26 arithmetic). H1 on the 171 top-1 prompts: 0.600
+   (0.567–0.633), Inconclusive; arithmetic among them 0.48 (20 prompts). Stated in the verdict block and in "How it
+   was done", with the cause (the trailing space the natural tokenisation needs).
+3. **Same-family null as a paired gap** (N3): +0.26 (0.24–0.28), positive for 83% of prompts; by family and for
+   position-1 rows, with the families where the null nearly equals the statistic named.
+4. **G4 cross scores stored** (N5): `g4.py` now stores, for each disagreement, the correlation of the cosine pick and the
+   cosine of the correlation pick; G4 was rerun on the A100 (same seeded draws, identical summary) so the classes can
+   be checked. The thin rows (6 and 10 active tokens) and the 23 distinct features among 30 draws are stated.
+5. **Wording** (N4, N6, N7): fewer than 0.05% of top-k values are negative (layer 0); antonym and two-hop are marked in
+   the by-family line; "rarely" replaced by "less than half the time".
+

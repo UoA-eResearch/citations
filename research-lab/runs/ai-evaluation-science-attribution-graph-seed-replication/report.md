@@ -1,4 +1,4 @@
-# Do attribution graphs replicate across transcoder seeds? Close to 60% of a graph's top features have a functional counterpart under a new seed, too close to call; generic first-token features rarely replicate, later-layer features mostly do
+# Do attribution graphs replicate across transcoder seeds? Close to 60% of a graph's top features have a functional counterpart under a new seed, too close to call; generic first-token features replicate less than half the time, later-layer features mostly do
 
 *Four sets of per-layer transcoders were trained on Qwen3-0.6B with one fixed recipe. Three differed only in their
 initialisation seed and one in data order. Attribution graphs were built with circuit-tracer for 199 prompts in six
@@ -17,6 +17,11 @@ after the independent review found that the arithmetic prompts explained the wro
   - **The first draft said Supported (0.567) on a bug.** All 59 arithmetic prompts attributed the space before the
     answer, because Qwen3 splits " 7" into " " and "7". With the answer digit as target (46 prompts pass selection),
     arithmetic still replicates least (median 0.43).
+  - **Some targets are not what the model predicts in the graphs.** Under the BOS-prefixed tokens circuit-tracer
+    uses, 28 of the 199 targets (26 of them arithmetic) are not the model's top-1 token, so for those the graph
+    explains a logit the model does not predict. The arithmetic prompts, which end with a space as the natural
+    "a + b = c" tokenisation needs, are the ones most affected. Restricted to the 171 prompts whose target is top-1, H1 is
+    0.600 (0.567 to 0.633), Inconclusive, and arithmetic 0.48 (20 prompts).
   - **The verdict turns on choices the plan fixed** (post hoc): without arithmetic, Refuted (0.633); families with at
     least 15 prompts only, Supported (0.567); top-1 features only, Refuted; cosine 0.8 or magnitude 70%, Supported;
     cosine 0.6 or magnitude 30%, Refuted. A bootstrap that also resamples features, which recur across prompts, gives
@@ -39,11 +44,14 @@ after the independent review found that the arithmetic prompts explained the wro
     replication; the paired difference is **+0.32** (0.31 to 0.33).
   - **The criterion is permissive** (post hoc nulls): the span of another prompt's top-30 catches 37% of features
     when the prompt is from a different family and 65% when it is from the same family. Subspace replication exceeds
-    the different-family null by 0.53 (0.52 to 0.55) and cosine-only node replication by 0.19. It shows shared
-    directions, not that the same concept is used.
-- **Initialisation matters a little more than data order.** Set D shares A's initialisation but sees the data in a
-  different order. On the same set-A top features, D supplies a counterpart 3.3 points more often than B or C (paired
-  +0.033, 0.022 to 0.046). The public low-L0 set against A: median 0.30.
+    the different-family null by 0.53 (0.52 to 0.55), the same-family null by 0.26 (0.24 to 0.28; positive for 83% of
+    prompts), and cosine-only node replication by 0.19. For arithmetic and position-1 features the same-family null
+    nearly equals the statistic (0.91 against 0.92; 0.84 against 0.86), and for IOI it is close (0.87 against 0.97), so
+    there the criterion barely discriminates. It shows shared directions, not that the same concept is used.
+- **Data order and initialisation make no consistent difference.** Set D shares A's initialisation but sees the data
+  in a different order. A's top features find a counterpart in D 3.3 points more often than in B or C (paired +0.033,
+  0.022 to 0.046), but D's top features find one in A 2.1 points less often than B's and C's do (−0.021, −0.036 to
+  −0.005). Both directions together: +0.006 (−0.005 to +0.016). The public low-L0 set against A: median 0.30.
 - **Fidelity.** Each of our sets explains 76% of MLP-output variance (FVU 0.24). With every MLP output replaced
   except at position 0, which circuit-tracer also leaves alone, the replacement model's top-1 prediction matches the
   true model on 58% of held-out tokens (KL 0.83 per token); replacing position 0 as well, as the first draft did,
@@ -91,7 +99,8 @@ survive retraining the transcoders with a different seed. It predicted node repl
   kept if Qwen3-0.6B's top-1 next token is the target with a margin of at least 2. 199 were kept: factual 31, antonym
   10, IOI 18, induction 91, arithmetic 46, two-hop 3. Two families fell short of the planned 15 (D1). Every target is
   the answer or a stated prefix of it (D4); nine antonym targets are first-token prefixes such as "f" for "froid".
-  With the BOS token the graphs use, 142 of the 199 still clear the margin.
+  With the BOS token the graphs use, 171 of the 199 targets are still top-1 (28 are not, 26 of them arithmetic), and
+  142 clear the margin.
 - **Graphs** (`code/graphs.py`, circuit-tracer): the target logit is the answer, at most 8,192 feature nodes,
   pruning at 0.8 (nodes) and 0.98 (edges). The top 10 are the most influential kept features.
 - **Coverage (G2):** all 995 graphs were built (199 prompts × 5 sets), and all 19,900 match rows were written
@@ -123,14 +132,15 @@ survive retraining the transcoders with a different seed. It predicted node repl
 | families with ≥ 15 prompts | 0.567 | 0.550–0.583 | Supported |
 | without antonym (prefix targets) | 0.567 | 0.550–0.600 | Inconclusive |
 | prompts clearing the margin with BOS (142) | 0.600 | 0.575–0.633 | Inconclusive |
+| prompts whose target is top-1 with BOS (171) | 0.600 | 0.567–0.633 | Inconclusive |
 | without position-1 features | 0.744 | 0.724–0.763 | Refuted |
 | top-1 / top-3 / top-5 features | 0.83 / 0.61 / 0.60 | | Refuted / Inconclusive / Inconclusive |
 | cosine ≥ 0.6 / 0.8 (magnitude 50%) | 0.633 / 0.533 | | Refuted / Supported |
 | magnitude ≥ 30% / 70% (cosine 0.7) | 0.617 / 0.517 | | Refuted / Supported |
 | two-way bootstrap (prompts and features) | 0.583 | 0.505–0.664 | (34% of replicates ≥ 0.6) |
 
-- **By family** (median node replication): factual 0.60, antonym 0.67, IOI 0.63, induction 0.63, arithmetic 0.43,
-  two-hop 0.95 (3 prompts).
+- **By family** (median node replication): factual 0.60, IOI 0.63, induction 0.63, arithmetic 0.43; antonym 0.67
+  (prefix targets) and two-hop 0.95 (3 prompts) are too thin or too compromised to read.
 - **By direction:** from 0.50 (A→B) to 0.70 (C→A).
 - **By the graph's error-node share** (terciles; mean over top-10 features): 0.54, 0.58, 0.65.
 - **Of set A's top-10 features,** 44% have counterparts in both other seeds, 18% in one and 38% in neither.
@@ -144,22 +154,25 @@ survive retraining the transcoders with a different seed. It predicted node repl
   | D | 0.239 | 0.581 (0.84) | 0.537 | 0.33 / 0.35 |
   | public low-L0 | 0.387 | 0.256 (3.52) | 0.023 | 0.66 / 0.38 |
 
-  On 249,612 held-out tokens (D4). No top-k value is ever negative, so counting a feature as fired when it is in the
-  top k (as training did) or when it is positive (as the first draft did) gives the same dead fraction: 38% never fire
+  On 249,612 held-out tokens (D4). Fewer than 0.05% of top-k values are negative, all in layer 0, so counting a
+  feature as fired when it is in the top k (as training did) or when it is positive (as the first draft did) gives the
+  same dead fraction to the fourth decimal: 38% never fire
   on these tokens, against 24% on the first draft's 998,448. Training's 0.05% used a 10M-token window; the fall with
   window length is consistent with many features firing less than once per million tokens.
 
 - **G4** (`results/tables/g4.json`, rerun in D4): for 30 random top features of A against B (12 at position 1),
   decoder cosine and activation correlation over held-out text pick the same B feature in 25 of the 29 that fire on
   that text. The study's own rule finds a counterpart for 18 of the 30; the best active-feature cosine clears 0.7 for
-  22 and the best correlation for 27. The 4 disagreements are all classed genuine by the rule fixed beforehand, but
-  three are the same layer-0, position-1 feature drawn on three prompts, an instance of the recurrence above. All 30
-  ablation effects reproduce exactly in a fresh process.
+  22 and the best correlation for 27. The 4 disagreements are all classed genuine by the rule fixed beforehand (the
+  cross scores, now stored, are 0.81 and 0.14, and 0.53 and 0.10), but three are the same layer-0, position-1 feature
+  drawn on three prompts, an instance of the recurrence above; the 30 draws cover 23 distinct features, and two
+  agreeing rows rest on 6 and 10 active held-out tokens. All 30 ablation effects reproduce exactly in a fresh
+  process.
 
 ## What this does and does not show
 
 - **Whether a top feature survives a new seed depends mostly on what kind of feature it is.** Generic first-token
-  features in the first layers rarely do (0.37), and they make up almost half of the top tens. Other top features
+  features in the first layers do so less than half the time (0.37), and they make up almost half of the top tens. Other top features
   mostly do (0.76; 0.82 in layers 14–27). The headline median mixes the two, which is why it sits near the threshold
   and moves with every analysis choice.
 - **The shared-span result is weaker than it looks.** Nine in ten top features lie in the span of the other set's
@@ -191,7 +204,8 @@ survive retraining the transcoders with a different seed. It predicted node repl
   apply (no labelling).
 - **Compute:** a colleague's A100 used as a guest (about 70 GPU-hours for training, 6 for the first graphs, fidelity
   and matching, and about 1.5 for the D4 rebuild).
-- **Independent review:** fix first; the fixes are in D4.
+- **Independent review:** fix first; the fixes are in D4. **Confirmation pass:** publish with edits; the edits are in
+  D5.
 
 ## Reproducing it
 

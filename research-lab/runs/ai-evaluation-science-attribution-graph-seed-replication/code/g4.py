@@ -74,12 +74,14 @@ def main():
         cos_best, cos_g = float(cos.max()), int(cos.argmax())
         n_active = int((a > 0).sum())
         cls = None
+        corr_of_cos = cos_of_corr = None
         if corr_g is not None and corr_g != cos_g:
             corr_of_cos = float(c[cos_g]) if a.std() != 0 else None
             cos_of_corr = float(cos[corr_g])
             cls = ("artefact" if n_active < 10 else
                    "split" if (corr_of_cos or 0) >= 0.6 and cos_of_corr >= 0.6 else "genuine")
         rows.append({"i": i, "rank": r, "layer": l, "pos": t, "idx": idx, "n_active_heldout": n_active, "disagreement_class": cls,
+                     "corr_of_cosine_pick": corr_of_cos, "cosine_of_correlation_pick": cos_of_corr,   # D5: stored so the classes can be checked
                      "corr_best": corr_best, "corr_match": corr_g,
                      "cos_best": cos_best, "cos_match": cos_g, "same_feature": corr_g == cos_g,
                      "both_clear_0.7": (corr_best or 0) >= 0.7 and cos_best >= 0.7,

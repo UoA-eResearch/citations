@@ -277,3 +277,115 @@ The arithmetic prompts need to be rebuilt on the GPU, and the verdict re-read, b
 - graph active-feature files and counterpart effects (full-rule threshold sensitivity, the subspace null);
 - the public-set fidelity path;
 - whether the BOS-prefixed prompts still meet the selection margin. Selection tokenised without a prefix.
+
+## Confirmation pass
+
+Reviewer: Fable 5.1, 2026-11-10.
+
+Checked against the D4 brief (`review/confirmation_prompt.md`), item by item, from the stored outputs only: `results/match_d4/*.jsonl`
+(byte-identical to `data/match_d4/`, checked with cmp), `results/match/`, `data/graphs/<set>/<i>.json` (the `_active.pt`
+files were not loaded), `results/tables/*`, the code, `report.md`, `report.html`, `review/overclaim_check.md` and the ledger.
+Scripts and outputs are in `reviewer_checks/confirm_*.py` / `confirm_*.txt`:
+
+- `confirm_1_targets_h1`: targets, the stable index, the unchanged non-arithmetic selection, reuse of the 153 prompts'
+  graphs and effects, and H1/H2 and every secondary re-derived with an independent loader (same RNG stream as `analyse.py`).
+- `confirm_2_pos1_twoway`: position-1 shares per set from the graph summaries, replication by position and layer, the
+  recurring units, and the two-way bootstrap re-implemented (plus Poisson-weight and units-only variants).
+- `confirm_3_thresholds_topk`: the stored `candidates` lists, the stored-rule check, the full threshold grid and top-k, with
+  my own bootstrap.
+- `confirm_4_antonym_bos_subspace`: antonym targets, the BOS-prefixed selection, dedup of the top-30, the two nulls and H2.
+- `confirm_5_fidelity`: `fidelity_d4.json` re-read against `fidelity.json` and the report's table.
+- `confirm_6_g3_g4_provenance`: the G3 and G4 random draws reproduced, their rows against graphs/effects/match rows, the
+  summary counts and error classes, coverage, ledger R8, deviation stamps against git, the D4 file timeline.
+- `confirm_7_comparisons_report`: the paired A-vs-D difference, terciles, the title, 27 verdict-block and plain-terms numbers
+  against `primary.json`, the G5 table against the current text, and `report.html` against `report.md`.
+  `scratch/direction_means.txt` has the per-direction means behind new finding N1.
+
+**Reproduced exactly:** H1 median 0.5833, CI [0.5667, 0.6000], Inconclusive (and under 20 other seeds); H2 +0.3172
+[0.3077, 0.3266], Supported; every family, direction, depth, tercile, both/one/none, cosine-only, top-k and
+threshold-grid figure; the two-way bootstrap [0.5051, 0.6637] (34.2% of replicates ≥ 0.6; alternative constructions give
+[0.50, 0.67]); the subspace nulls 0.3729 / 0.6468 and both paired gaps; the paired A→D difference +0.0334 [0.0216, 0.0450];
+all 94 distinct numbers in `report.md` appear in `report.html`; the 50 G5 sentences are verbatim in the current report.
+
+### Final verdict: publish with edits
+
+**Original findings:**
+
+1. **Fixed.** All 46 arithmetic targets are single digit tokens (ids 16–24) equal to the answer; prompts end with the space;
+   the 59 v1 graphs (target " ") are in `data/graphs_v1_arith/`. The 153 non-arithmetic prompts keep their v1 index and
+   content; their match_d4 rows equal the v1 rows in layer, pos, idx, effect_x, candidates count, best cosine, counterpart
+   and error share (15,300 of 15,300; `subspace_norm_dup` equals the v1 norm exactly), and the v1 effects files are subsets
+   of the D4 ones. H1 reproduces from the rows. Rebuilt arithmetic: median 0.433 (0.50 before), 58% of its rows at position 1.
+2. **Fixed.** Position-1 shares from the graph summaries: A 0.469, B 0.402, C 0.436, D 0.397, public 0.000; rows 0.4357;
+   replication 0.3695 vs 0.7557; 66.6% of non-replicating rows; 47 units in ≥ 20 prompts hold 55.1% of rows (replicating at
+   0.42; other rows 0.79). The two-way construction (multinomial unit weights → weighted per-direction shares → prompts
+   within family) is sound and reproduces; units-only resampling alone gives [0.505, 0.663], so nearly all the width is the
+   feature side, which the report's "which recur across prompts" conveys.
+3. **Fixed.** `candidates` is consistent (n_candidates_cos, best_cos_active, no stored candidate below 0.5); the rule
+   re-read at (0.7, 50%) equals the stored flag in all 11,940 rows; the 15 grid verdicts and 5 top-k verdicts reproduce.
+   The verdict block states that the verdict turns on these choices.
+4. **Fixed** (disclosed, not changed): 9 of 10 antonym targets are prefixes, listed in the report and `prompt_selection.json`;
+   see N6 on the "By family" line.
+5. **Fixed.** 75.6% of top-30 lists have duplicates (mean 25.9 unique); dedup changes 18 of 11,940 flags; both nulls use a
+   different prompt of the stated family for every row; H2 is rephrased as a span statement. See N3.
+6. **Fixed in substance.** No skip term, forward equals encode–decode (max diff 0.0), position-0 handling explains the
+   public set's collapse (0.023 → 0.256), the two dead counts agree, negative share ≤ 0.04% (layer 0 only), and the
+   report's fidelity table matches the JSON. Training-time FVU was not compared (log not stored); the dead-fraction
+   explanation is a hypothesis labelled "consistent with". "Likely, not tested" for the public position-1 contrast is fair:
+   the evidence is correlational (public position-1 error 0.66 vs 0.38 in layers 0–2, and 1.5× later ones too; ours 1.2×).
+7. **Fixed.** G3 draw (seed 20261110 → 44, 112, 224) and G4 draw (seed 20261108) reproduce; every trace agrees with the
+   graph summaries, `effects_A.json` and the match rows; the G4 study-rule column equals `A_B.jsonl`; all summary counts
+   re-derive from the rows. See N5.
+8. **Fixed as stated, but see N1.** Paired A→D +0.0334 reproduces; terciles are labelled as row means; the title's figures
+   are a median and two row means with qualitative words.
+9. **Fixed.** D1 and D2 stamps match the commits (19:02, 16:26); R8 is in the ledger and `attribution.py check` style
+   fields are filled; the report has a Coverage (G2) line and `coverage.json` (995/995, 19,900/19,900) agrees with the files;
+   the G3 sentence now says 3 of the top-10 promote related tokens.
+
+**New findings:**
+
+- **N1 (moderate). "Initialisation matters a little more than data order" holds in one direction only.** The paired
+  +0.033 uses A's lists matched into D versus B and C. The reverse comparison, D's lists matched into A against B's and
+  C's into A, gives −0.021 (−0.038 to −0.005): D→A 0.624 against B→A 0.619 and C→A 0.670. Both directions together give
+  +0.006 (−0.004 to 0.017). Fix: report both directions and replace the bold sentence with "no consistent difference
+  between data order and initialisation" (`scratch/direction_means.txt`, `confirm_7`).
+- **N2 (moderate). 28 of the 199 targets are not the model's top-1 token under the BOS-prefixed tokens the graphs use,
+  26 of them arithmetic** (`prompt_selection.json` `bos_prefixed.top1_is_target` 171; `confirm_4`). The report says only
+  that 142 clear the margin. For 26 of the 46 rebuilt arithmetic prompts the graph therefore explains a logit the model does
+  not predict, and this is the family the report singles out ("arithmetic still replicates least, 0.43"). The family
+  result survives (arithmetic prompts whose digit is top-1 with BOS: median 0.48, n = 20; restricted to the 171 prompts:
+  H1 0.600, 0.567–0.633, Inconclusive), but the count must be stated beside the 142, in the verdict block and in "How it
+  was done". Ending arithmetic prompts with a space, which the plan's natural "a + b = c" tokenisation requires, is what
+  weakens the prediction; the report should say so.
+- **N3 (minor). The same-family null is not reported as a paired difference and is family-dependent.** Subspace minus the
+  same-family null is +0.26 (0.24–0.28), positive for 83% of prompts; the report gives only the different-family gap
+  (+0.53). By family the same-family null catches 0.91 of arithmetic rows (subspace 0.92), 0.87 of IOI (0.97) and 0.84 of
+  position-1 rows (0.86), so for those the span criterion is almost non-specific. Fix: add the +0.26 figure and one
+  sentence on the families where the null nearly equals the statistic.
+- **N4 (minor). "No top-k value is ever negative" is not exact:** 0.03–0.04% of layer-0 top-k values are negative in A–D
+  (D's two dead counts differ in the fifth decimal). Fix: "fewer than 0.05%, all in layer 0".
+- **N5 (minor). G4's "split" class cannot be re-derived:** the cross scores (correlation of the cosine pick, cosine of the
+  correlation pick) are not stored in `g4.json`; only the artefact rule (n_active < 10) is checkable, and it holds. One
+  agreeing row rests on 6 active held-out tokens (prompt 40) and one on 10; the 30 draws cover 23 distinct features
+  (0/30916 five times, 0/3874 three times). Fix: store the cross scores; note the thin rows.
+- **N6 (minor). "By family" lists antonym 0.67** although D4 item 2 says the family is left out of family-level statements;
+  two-hop (3 prompts) is marked, antonym is not. Fix: mark or drop it.
+- **N7 (minor, wording). "rarely replicate" in the title for 0.37.** Thirty-seven per cent is "less than half the time",
+  not "rarely". "Later-layer features mostly do" (0.82 in layers 14–27) is fair; layers 0–6 without position-1 rows are at
+  0.43, so "later-layer" is the right qualifier.
+- **N8 (note, no action).** `report.md` was last written at 12:55:55 and `primary.json`/`coverage.json` at 12:56:20; every
+  number agrees, so the final `analyse.py` run changed nothing. D4 timeline is consistent with "fix before any rebuilt
+  result was read": prompts 09:59, new graphs 10:00–10:29, v1 tables copied 10:16, matching 10:42–11:14, fidelity/G3/G4
+  12:52–12:54, analysis 12:56.
+
+**Not checkable here (needs the A100 files):** the candidate ablation effects themselves (only their internal consistency
+and G4's 30-of-30 rerun, in the same code); the G4 split-versus-genuine classes; the fidelity measurements (taken from the
+JSON); the active-feature files (`_active.pt`, not loaded); transcoder weights and the training log (dead-fraction cause,
+training FVU, the claim that circuit-tracer keeps top-k signs).
+
+**Remaining issues** (all text edits; none needs the GPU):
+1. N1: report both directions of the data-order comparison and drop or reverse the bold claim.
+2. N2: state that 28 targets (26 arithmetic) are not top-1 under the graphs' BOS tokenisation, beside the 142 figure.
+3. N3: add the paired same-family null (+0.26) and the families where the null nearly equals the statistic.
+4. N4, N6, N7: wording fixes ("fewer than 0.05%"; mark antonym; "rarely" → "less than half the time").
+5. N5: store G4's cross scores (or label the split/genuine classes as not independently checkable).

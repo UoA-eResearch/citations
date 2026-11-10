@@ -105,6 +105,22 @@
   "A_D_mean": 0.5653,
   "A_BC_mean": 0.5319
  },
+ "data_order_paired_D_A_minus_BC_A": {
+  "mean": -0.0209,
+  "ci": [
+   -0.0359,
+   -0.0048
+  ],
+  "D_A_mean": 0.6236,
+  "BC_A_mean": 0.6445
+ },
+ "data_order_paired_both_directions": {
+  "mean": 0.0063,
+  "ci": [
+   -0.0045,
+   0.0163
+  ]
+ },
  "posthoc_d4": {
   "families": {
    "antonym": 10,
@@ -155,6 +171,21 @@
    ],
    "prompts": 142,
    "verdict": "Inconclusive"
+  },
+  "BOS_target_not_top1": {
+   "prompts": 28,
+   "arithmetic": 26,
+   "H1_top1_prompts_only": {
+    "median": 0.6,
+    "ci": [
+     0.5667,
+     0.6333
+    ],
+    "prompts": 171,
+    "verdict": "Inconclusive"
+   },
+   "arithmetic_top1_median": 0.4833,
+   "arithmetic_top1_prompts": 20
   },
   "position_1": {
    "share_of_top10_rows": 0.4357,
@@ -417,11 +448,49 @@
      0.5466
     ]
    },
+   "paired_minus_same_family_null": {
+    "mean": 0.2578,
+    "ci": [
+     0.2364,
+     0.2781
+    ],
+    "share_of_prompts_positive": 0.8291
+   },
+   "by_family": {
+    "antonym": {
+     "subspace": 0.915,
+     "null_same_family": 0.705
+    },
+    "arithmetic": {
+     "subspace": 0.922,
+     "null_same_family": 0.912
+    },
+    "factual": {
+     "subspace": 0.917,
+     "null_same_family": 0.576
+    },
+    "induction": {
+     "subspace": 0.874,
+     "null_same_family": 0.493
+    },
+    "ioi": {
+     "subspace": 0.974,
+     "null_same_family": 0.865
+    },
+    "two_hop": {
+     "subspace": 1.0,
+     "null_same_family": 0.467
+    }
+   },
+   "position_1_rows": {
+    "subspace": 0.855,
+    "null_same_family": 0.844
+   },
    "paired_minus_cosine_only_0.7": {
     "mean": 0.1861,
     "ci": [
      0.1796,
-     0.1936
+     0.1928
     ],
     "share_of_prompts_positive": 0.995
    }

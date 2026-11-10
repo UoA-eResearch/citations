@@ -107,6 +107,13 @@ def posthoc(d, rng):
     out["H1_without_arithmetic"] = h1(d[d.family != "arithmetic"])
     ok_bos = {i for i, p in prompts.items() if (p.get("bos_margin") or 0) >= 2}
     out["H1_prompts_meeting_margin_with_BOS"] = h1(d[d.i.isin(ok_bos)])
+    # D5 (N2): targets that are not the model's top-1 under the BOS-prefixed tokens the graphs use
+    top1 = {i for i, p in prompts.items() if p.get("bos_top1_is_target")}
+    not1 = [i for i in prompts if i not in top1]
+    out["BOS_target_not_top1"] = {"prompts": len(not1), "arithmetic": sum(prompts[i]["family"] == "arithmetic" for i in not1),
+                                  "H1_top1_prompts_only": h1(d[d.i.isin(top1)]),
+                                  "arithmetic_top1_median": round(float(per_prompt(d[d.i.isin(top1) & (d.family == "arithmetic")], "counterpart").median()), 4),
+                                  "arithmetic_top1_prompts": sum(prompts[i]["family"] == "arithmetic" for i in top1)}
     # position 1 (first token after BOS)
     p1 = d.pos == 1
     out["position_1"] = {"share_of_top10_rows": round(float(p1.mean()), 4),
@@ -169,6 +176,15 @@ def posthoc(d, rng):
     d["null_o"] = d.null_other_family >= 0.7
     diff = per_prompt(d, "subspace") - per_prompt(d, "null_o")
     out["subspace"]["paired_minus_other_family_null"] = {"mean": round(float(diff.mean()), 4), "ci": boot(diff, np.mean, rng)}
+    # D5 (N3): the paired gap to the same-family null, and the null by family and for position-1 rows
+    d["null_s"] = d.null_same_family >= 0.7
+    sdiff = per_prompt(d, "subspace") - per_prompt(d, "null_s")
+    out["subspace"]["paired_minus_same_family_null"] = {"mean": round(float(sdiff.mean()), 4), "ci": boot(sdiff, np.mean, rng),
+                                                        "share_of_prompts_positive": round(float((sdiff > 0).mean()), 4)}
+    out["subspace"]["by_family"] = {f: {"subspace": round(float(g.subspace.mean()), 3), "null_same_family": round(float(g.null_s.mean()), 3)}
+                                    for f, g in d.groupby("family")}
+    out["subspace"]["position_1_rows"] = {"subspace": round(float(d[d.pos == 1].subspace.mean()), 3),
+                                          "null_same_family": round(float(d[d.pos == 1].null_s.mean()), 3)}
     d["cos07"] = d.best_cos_active.fillna(0) >= 0.7
     gap = per_prompt(d, "subspace") - per_prompt(d, "cos07")
     out["subspace"]["paired_minus_cosine_only_0.7"] = {"mean": round(float(gap.mean()), 4), "ci": boot(gap, np.mean, rng),
@@ -229,6 +245,16 @@ def main():
         pdiff = (pa - pbc).dropna()
         out["data_order_paired_A_D_minus_A_BC"] = {"mean": round(float(pdiff.mean()), 4), "ci": boot(pdiff, np.mean, rng),
                                                    "A_D_mean": round(float(pa.mean()), 4), "A_BC_mean": round(float(pbc.mean()), 4)}
+    # D5 (confirmation pass N1): the reverse direction (D's lists into A against B's and C's into A) and both together
+    da = load([("D", "A")])
+    if len(da):
+        pd_ = da.groupby(["i", "family"]).counterpart.mean()
+        pbca = d[(d.Y == "A") & d.X.isin(["B", "C"])].groupby(["i", "family"]).counterpart.mean()
+        rdiff = (pd_ - pbca).dropna()
+        both = ((pa - pbc) + (pd_ - pbca)).dropna() / 2
+        out["data_order_paired_D_A_minus_BC_A"] = {"mean": round(float(rdiff.mean()), 4), "ci": boot(rdiff, np.mean, rng),
+                                                   "D_A_mean": round(float(pd_.mean()), 4), "BC_A_mean": round(float(pbca.mean()), 4)}
+        out["data_order_paired_both_directions"] = {"mean": round(float(both.mean()), 4), "ci": boot(both, np.mean, rng)}
     out["posthoc_d4"] = posthoc(d, np.random.default_rng(SEED + 4))
     # G2 coverage (D4: written here; the first draft's coverage.json was written outside committed code)
     import sys as _s
