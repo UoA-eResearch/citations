@@ -1,7 +1,7 @@
 """Step 3: classify, aggregate and lay out the University of Auckland's Pacific research -> data/landscape.json.
 
-Inputs: <WORK>/works_raw.jsonl, institutions.json, awards_raw.jsonl, marsden_awards.jsonl
-(fetch_works.py, fetch_awards.py, fetch_marsden.py).
+Inputs: <WORK>/works_raw.jsonl, institutions.json, awards_raw.jsonl, marsden_awards.jsonl, mfat_activities.jsonl
+(fetch_works.py, fetch_awards.py, fetch_marsden.py, fetch_mfat.py).
 Every candidate is re-checked with tagging.classify(); see that docstring for the tiers and lenses.
 Metrics follow SciVal's vocabulary where OpenAlex has an equivalent: scholarly output, growth,
 Field-Weighted Citation Impact (OpenAlex fwci) and share of outputs in the top 10% most cited
@@ -41,6 +41,19 @@ PANEL_FIELD = {"EEB": "Agricultural and Biological Sciences", "ESA": "Earth and 
                "BMS": "Medicine", "CMP": "Biochemistry, Genetics and Molecular Biology", "EIS": "Engineering",
                "MIS": "Mathematics", "EHB": "Social Sciences", "SOC": "Social Sciences", "HUM": "Arts and Humanities"}
 FUNDER_FIELD = {"Health Research Council of New Zealand": "Medicine"}
+RS, MFAT = "Royal Society Te Apārangi", "MFAT (IATI)"     # award sources besides OpenAlex
+
+
+def mfat_kind(title):
+    """What an MFAT aid activity delivered by UoA is, from its title."""
+    t = (title or "").lower()
+    if "scholarship" in t:
+        return "scholarships"
+    if re.search(r"\bcourse\b|in-country|online|training", t):
+        return "short course"
+    if "research" in t:
+        return "research"
+    return "development programme"
 
 
 def short(oid):
@@ -72,6 +85,7 @@ def main():
     insts_geo = json.loads((WORK / "institutions.json").read_text())
     awards_raw = [json.loads(l) for l in open(WORK / "awards_raw.jsonl")]
     marsden_raw = [json.loads(l) for l in open(WORK / "marsden_awards.jsonl")] if (WORK / "marsden_awards.jsonl").exists() else []
+    mfat_raw = [json.loads(l) for l in open(WORK / "mfat_activities.jsonl")] if (WORK / "mfat_activities.jsonl").exists() else []
 
     # ------------------------------------------------------------ classify works
     works, dropped, no_abs_dropped = [], 0, 0
@@ -159,7 +173,34 @@ def main():
             y0=m["year"], end=None, status="active" if likely_active else "ended", est=True, lead=lead or None, url=m.get("url"),
             fid=m["pid"], tier=TIER_CODE[c["tier"]], lens=sum(LENS_BIT[l] for l in c["lenses"]), ev=c["evidence"],
             ms=sum(MS_BIT[k] for k in c["mt"]), places=sorted(c["places"]), outputs=0, route="marsden-round",
-            role=m["role"], uoa=m.get("uoa_members") or [], org=m.get("org"), panel=m.get("panel"), src="Royal Society Te Apārangi"))
+            role=m["role"], uoa=m.get("uoa_members") or [], org=m.get("org"), panel=m.get("panel"), src=RS))
+    # MFAT aid activities (IATI) with UoA as an implementing partner or named as the deliverer, running in 2020 or
+    # later. The amount is the whole activity's spend (scholarships and courses include participants' costs).
+    # A Pacific Island recipient country makes the activity Pacific-focused even when its text does not name one.
+    for m in mfat_raw:
+        if m.get("end") and m["end"] < "2020-01-01":
+            continue
+        text = m.get("description") or ""
+        c = classify(m["title"], text, "", None, 0, False)
+        tier, ev, places = TIER_CODE[c["tier"]], list(c["evidence"]), set(c["places"])
+        pic = [x for x in m.get("countries") or [] if x in PLACES]
+        places |= set(pic)
+        if pic and tier != "f":
+            tier = "f"
+            ev.append("MFAT recipient country: " + ", ".join(PLACES[x][0] for x in pic))
+        end = m.get("end")
+        others = [o for o in m.get("partners") or [] if not re.search(r"auckland|uniservices", o, re.I)]
+        award_idx["MFAT-" + m["aid"]] = len(awards)
+        awards.append(dict(
+            id="MFAT-" + m["aid"], t=m["title"], d=(text[:420] + "…") if len(text) > 420 else text,
+            f="Ministry of Foreign Affairs and Trade", scheme="New Zealand aid programme: " + mfat_kind(m["title"]),
+            amt=m.get("spend") or None, cur=m.get("currency") or "NZD", usd=None,
+            y0=int(m["start"][:4]) if m.get("start") else None, end=end,
+            status="active" if end and end >= TODAY else ("ended" if end else "unknown"), lead=None, url=m.get("url"),
+            fid=m["aid"], tier=tier, lens=sum(LENS_BIT[l] for l in c["lenses"]) | (1 if pic else 0), ev=ev,
+            ms=sum(MS_BIT[k] for k in c["mt"]), places=sorted(places), outputs=0, route="mfat-iati",
+            role="team" if others else "lead", uoa=[], org=", ".join(others) or None, mfat=m.get("uoa"),
+            ctry=m.get("countries") or [], src=MFAT))
 
     # ------------------------------------------------------------ works -> records
     out_works = []
@@ -381,7 +422,9 @@ def main():
         m_themes={k: sum(1 for w in out_works if w["ms"] & b) for k, b in MS_BIT.items()},
         m_only=sum(1 for w in out_works if w["lens"] == 8 and not w["tier"]),
         research_areas=dict(Counter(w["ra"] for w in out_works)),
-        marsden_rounds=sum(1 for a in awards if a["src"] != "OpenAlex"),
+        marsden_rounds=sum(1 for a in awards if a["src"] == RS),
+        mfat=dict(n=sum(1 for a in awards if a["src"] == MFAT), pac=sum(1 for a in awards if a["src"] == MFAT and a["pac"]),
+                  retrieved=max((m.get("retrieved") or "" for m in mfat_raw), default=None)),
         no_abstract=sum(1 for w in works if not w["_abstract"]),
         authors=len(out_authors), authors_with_faculty=sum(1 for a in out_authors if a["faculty"]),
         fwci_known=sum(1 for w in out_works if w["fwci"] is not None),

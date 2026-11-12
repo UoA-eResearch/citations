@@ -12,6 +12,7 @@ PY="${PY:-/mnt/citations/impact/.venv/bin/python}"
 "$PY" "$here/fetch_works.py"
 "$PY" "$here/fetch_awards.py"
 "$PY" "$here/fetch_marsden.py"
+"$PY" "$here/fetch_mfat.py"
 "$PY" "$here/analyse.py"
 "$PY" "$here/engaged.py" ${2:+"$2"}
 "$PY" "$here/fetch_scival.py"

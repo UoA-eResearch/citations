@@ -995,6 +995,8 @@ function renderNet() {
 const GR = { status: "", funder: "", q: "", pacOnly: true, peoples: false, role: "" };
 // An award follows the lens filters like the works: Pacific-focused text (Pacific lenses), Aotearoa environment &
 // hazards, or ocean, Earth & climate (with its themes).
+const RS = "Royal Society Te Apārangi", MFAT = "MFAT (IATI)";
+const MFAT_ROLE = a => a.mfat === "partner" ? (a.org ? `UoA an implementing partner, with ${a.org}` : "UoA (or UniServices) the implementing partner") : "UoA named as the deliverer";
 const awardPac = a => (a.tier === "f" && (F.lens.P || F.lens.O)) || ((a.lens & 4) && F.lens.A) || ((a.lens & 8) && F.lens.M && (a.ms & msMask()));
 function renderGrants() {
   const el = $("v-grants");
@@ -1006,31 +1008,34 @@ function renderGrants() {
   const rows = years.map(y => { const v = {}; groups.forEach(g => { const s = stat[g + "|" + y]; if (s && s[1]) v[g] = s[1]; });
     return { label: String(y).slice(2), values: v, tip: (k, n) => `<b>${y}</b><br>${short[k]}: ${fmt(n)} Blue Pacific-related of ${fmt((stat[k + "|" + y] || [0])[0])} UoA awards` }; });
   const pac = AW.filter(a => a.pac && awardPac(a));
-  const mars = AW.filter(a => a.src !== "OpenAlex");
-  const nzd = pac.filter(a => a.cur === "NZD" && a.amt);
+  const mars = AW.filter(a => a.src === RS);
+  const mf = AW.filter(a => a.src === MFAT), mfPac = mf.filter(a => a.pac && awardPac(a));
+  const mfSpend = mfPac.reduce((s, a) => s + (a.amt || 0), 0);
+  const nzd = pac.filter(a => a.cur === "NZD" && a.amt && a.src !== MFAT);
   const total = nzd.reduce((s, a) => s + a.amt, 0);
   const funders = {}; FW.forEach(i => W[i].fu.forEach(f => funders[f] = (funders[f] || 0) + 1));
   el.innerHTML = `<h1>Grants and funded projects</h1>
-    <p class="lead">Public award records: UoA-led grants from funders' own published data as collected by OpenAlex, and every Marsden Fund project from the 2018–2025 rounds with a UoA researcher on the team (from Royal Society Te Apārangi's round lists, which include abstracts). An award counts when its title or description falls in the lenses chosen above. University systems data on applications and active projects is not included: it is held by the Research and Innovation Office and needs their permission.</p>
+    <p class="lead">Public award records: UoA-led grants from funders' own published data as collected by OpenAlex; every Marsden Fund project from the 2018–2025 rounds with a UoA researcher on the team (from Royal Society Te Apārangi's round lists, which include abstracts); and the Ministry of Foreign Affairs and Trade's aid programme activities that UoA delivers, from MFAT's open reporting to the International Aid Transparency Initiative (IATI). An award counts when its title or description falls in the lenses chosen above. University systems data on applications and active projects is not included: it is held by the Research and Innovation Office and needs their permission.</p>
     <div class="tiles">
       <div class="tile"><b>${fmt(pac.length)}</b><span>Blue Pacific-related awards of ${fmt(cov.awards)} on record (title or description Pacific-focused, Aotearoa environment & hazards, or ocean, Earth & climate). A further ${fmt(AW.filter(a => a.pacp).length)} name Pacific peoples within a wider project.</span></div>
-      <div class="tile"><b>NZ$${(total / 1e6).toFixed(1)}m</b><span>total of the ${fmt(nzd.length)} Blue Pacific-related awards with a published NZD amount (whole grant, including any share held elsewhere)</span></div>
+      <div class="tile"><b>NZ$${(total / 1e6).toFixed(1)}m</b><span>total of the ${fmt(nzd.length)} Blue Pacific-related research awards with a published NZD amount (whole grant, including any share held elsewhere; MFAT aid activities are counted separately)</span></div>
       <div class="tile"><b>${fmt(pac.filter(a => a.status === "active").length)}</b><span>Blue Pacific-related awards probably still running: a published end date still to come, or a Marsden grant from the last three rounds (they run three years)</span></div>
-      <div class="tile"><b>${fmt(pac.filter(a => a.src !== "OpenAlex").length)}</b><span>of them Marsden projects from the 2018–2025 rounds (${fmt(pac.filter(a => a.src !== "OpenAlex" && a.role === "team").length)} led elsewhere with UoA researchers on the team)</span></div>
+      <div class="tile"><b>${fmt(pac.filter(a => a.src === RS).length)}</b><span>of them Marsden projects from the 2018–2025 rounds (${fmt(pac.filter(a => a.src === RS && a.role === "team").length)} led elsewhere with UoA researchers on the team)</span></div>
+      <div class="tile"><b>${fmt(mfPac.length)}</b><span>Blue Pacific-related MFAT aid activities that UoA delivers, running in 2020 or later (of ${fmt(mf.length)} in all): NZ$${(mfSpend / 1e6).toFixed(1)}m of activity spend, which for scholarships and short courses includes participants' costs</span></div>
     </div>
     <h2>Blue Pacific-related awards by start year</h2>
     <div class="legend">${groups.map((g, k) => `<span><i style="background:var(--s${k + 1})"></i>${short[g]}</span>`).join("")}</div>
     ${stackedBars(rows, groups, groups.map((g, k) => `var(--s${k + 1})`), { aria: "Pacific-related awards by start year and funder", width: 900, height: 220 })}
-    <p class="note">What the records cover: HRC research repository from 2016 (lead investigator and amount, no end dates); Marsden Fund to 2017 from OpenAlex (UoA-led only) and 2018–2025 from the Royal Society Te Apārangi round lists (UoA lead or team member; the year is the funding round); MBIE "who got funded" with start and end dates (UoA-led only, so MBIE programmes led by GNS, NIWA or others with UoA partners are missing); plus overseas funders that name UoA. The chart follows the lens filters; years run 2008–2026.</p>
+    <p class="note">What the records cover: HRC research repository from 2016 (lead investigator and amount, no end dates); Marsden Fund to 2017 from OpenAlex (UoA-led only) and 2018–2025 from the Royal Society Te Apārangi round lists (UoA lead or team member; the year is the funding round); MBIE "who got funded" with start and end dates (UoA-led only, so MBIE programmes led by GNS, NIWA or others with UoA partners are missing); plus overseas funders that name UoA. MFAT: aid activities from MFAT's IATI reporting (via d-portal.org, retrieved ${esc(longDate(cov.mfat ? cov.mfat.retrieved : ""))}) that list UoA or UniServices as an implementing partner or name UoA as the deliverer, running in 2020 or later; MFAT lists few university partners and reports the whole activity's spend, not UoA's share. Other MFAT funding (for example contracts outside the aid programme) is not published there. The chart follows the lens filters; years run 2008–2026.</p>
     <h2>Awards</h2>
     <div class="toolbar"><input id="grQ" type="search" placeholder="Filter by title, lead or scheme" aria-label="Filter awards" value="${esc(GR.q)}">
       <select id="grStatus" aria-label="Status"><option value="">Any status</option><option value="active" ${GR.status === "active" ? "selected" : ""}>Active (end date to come)</option><option value="ended" ${GR.status === "ended" ? "selected" : ""}>Ended</option><option value="unknown" ${GR.status === "unknown" ? "selected" : ""}>No end date published</option></select>
       <select id="grFunder" aria-label="Funder"><option value="">All funders</option>${[...new Set(AW.map(a => a.f))].sort().map(f => `<option ${GR.funder === f ? "selected" : ""}>${esc(f)}</option>`).join("")}</select>
-      <select id="grRole" aria-label="UoA role"><option value="">UoA lead or team member</option><option value="lead" ${GR.role === "lead" ? "selected" : ""}>UoA-led</option><option value="team" ${GR.role === "team" ? "selected" : ""}>Led elsewhere, UoA on the team</option></select>
+      <select id="grRole" aria-label="UoA role"><option value="">UoA lead or team member</option><option value="lead" ${GR.role === "lead" ? "selected" : ""}>UoA-led or sole deliverer</option><option value="team" ${GR.role === "team" ? "selected" : ""}>Led elsewhere, or UoA one of several partners</option></select>
       <label><input type="checkbox" id="grPeople" ${GR.peoples ? "checked" : ""}> Also those naming Pacific peoples within a wider project</label>
       <label><input type="checkbox" id="grPac" ${GR.pacOnly ? "checked" : ""}> Blue Pacific-related only</label></div>
     <div class="tablewrap"><table><thead><tr><th>Award</th><th>Funder · scheme</th><th class="num">Start</th><th>Status</th><th class="num">Amount</th><th>Lead</th></tr></thead><tbody id="grBody"></tbody></table></div>
-    <p class="note">Unticking "Blue Pacific-related only" also lists ${fmt(AW.filter(a => !a.pac && !a.pacp).length)} awards whose own text is outside the lenses: ${fmt(AW.filter(a => !a.pac && !a.pacp && a.src !== "OpenAlex").length)} other Marsden projects with UoA researchers, and awards that funded works in this atlas. ${fmt(mars.length)} Marsden projects from the 2018–2025 rounds have a UoA researcher on the team.</p>
+    <p class="note">Unticking "Blue Pacific-related only" also lists ${fmt(AW.filter(a => !a.pac && !a.pacp).length)} awards whose own text is outside the lenses: ${fmt(AW.filter(a => !a.pac && !a.pacp && a.src === RS).length)} other Marsden projects with UoA researchers, ${fmt(AW.filter(a => !a.pac && !a.pacp && a.src === MFAT).length)} other MFAT aid activities (Asia, Africa and general), and awards that funded works in this atlas. ${fmt(mars.length)} Marsden projects from the 2018–2025 rounds have a UoA researcher on the team.</p>
     <h2>Funders acknowledged in the works</h2>
     ${hbars(Object.entries(funders).sort((a, b) => b[1] - a[1]).slice(0, 15).map(([f, n]) => ({ label: D.funders[f].name, n })), { labelW: "320px" })}
     <p class="note">Funders named in the works' acknowledgements (OpenAlex), under the current filters.</p>`;
@@ -1039,12 +1044,12 @@ function renderGrants() {
     const list = AW.map((a, i) => ({ a, i })).filter(({ a }) => (!GR.pacOnly || (a.pac && awardPac(a)) || (GR.peoples && a.pacp)) && (!GR.status || a.status === GR.status) && (!GR.funder || a.f === GR.funder) &&
       (!GR.role || a.role === GR.role) && (!q || fold(a.t + " " + (a.lead || "") + " " + (a.scheme || "") + " " + (a.uoa || []).join(" ")).includes(q))).sort((x, y) => (y.a.y0 || 0) - (x.a.y0 || 0));
     const why = a => a.pac ? (a.tier === "f" ? "Pacific-focused" : (a.lens & 4) ? "Aotearoa environment & hazards"
-      : "Ocean, Earth & climate: " + MS_KEYS.filter(k => a.ms & MS_BIT[k]).map(k => D.m_themes[k].toLowerCase()).join(", ")) : a.pacp ? "names Pacific peoples within a wider project" : a.src !== "OpenAlex" ? "Marsden project with UoA researchers" : "linked via funded works";
+      : "Ocean, Earth & climate: " + MS_KEYS.filter(k => a.ms & MS_BIT[k]).map(k => D.m_themes[k].toLowerCase()).join(", ")) : a.pacp ? "names Pacific peoples within a wider project" : a.src === RS ? "Marsden project with UoA researchers" : a.src === MFAT ? "MFAT aid activity delivered by UoA" : "linked via funded works";
     $("grBody").innerHTML = list.map(({ a, i }) => `<tr><td><button class="linkbtn" data-award="${i}">${esc(a.t)}</button><br><small>${why(a)}</small></td>
       <td>${esc(short[a.f] || a.f)}${a.scheme ? `<br><small>${esc(a.scheme)}</small>` : ""}</td><td class="num">${a.y0 || "–"}</td>
       <td>${a.status === "active" ? `<span class="pill y">${a.est ? "probably active" : "active"}</span>` : a.status === "ended" ? `<span class="pill q">${a.est ? "probably ended" : "ended"}</span>` : '<span class="pill q">no end date</span>'}</td>
-      <td class="num">${a.amt ? (a.cur === "NZD" ? "NZ$" : (a.cur || "") + " ") + fmt(Math.round(a.amt)) : "–"}</td>
-      <td>${esc(a.lead || "–")}${a.role === "team" ? `<br><small>Led by ${esc(a.org || "another institution")}; UoA: ${esc((a.uoa || []).join(", "))}</small>` : a.uoa && a.uoa.length > 1 ? `<br><small>UoA: ${esc(a.uoa.join(", "))}</small>` : ""}</td></tr>`).join("") || `<tr><td colspan="6" class="muted">No awards match.</td></tr>`;
+      <td class="num">${a.amt ? (a.cur === "NZD" ? "NZ$" : (a.cur || "") + " ") + fmt(Math.round(a.amt)) : "–"}${a.src === MFAT && a.amt ? "<br><small>activity spend</small>" : ""}</td>
+      <td>${a.src === MFAT ? `<small>${esc(MFAT_ROLE(a))}</small>` : esc(a.lead || "–")}${a.src === MFAT ? "" : a.role === "team" ? `<br><small>Led by ${esc(a.org || "another institution")}; UoA: ${esc((a.uoa || []).join(", "))}</small>` : a.uoa && a.uoa.length > 1 ? `<br><small>UoA: ${esc(a.uoa.join(", "))}</small>` : ""}</td></tr>`).join("") || `<tr><td colspan="6" class="muted">No awards match.</td></tr>`;
     wireCommon($("grBody"));
   };
   $("grQ").oninput = e => { GR.q = e.target.value; tb(); };
@@ -1287,6 +1292,7 @@ function renderAbout() {
       <h2>Sources</h2>
       <ul><li><b>OpenAlex</b> (CC0): works, authorships and affiliations, topics, citations, FWCI and top-10% flags, funders, SDGs, institutions and their locations; and public award records (HRC research repository, Marsden Fund lists, MBIE "who got funded", and overseas funders).</li>
         <li><b>Scopus and SciVal</b> (Elsevier B.V.; ${SCOPUS}, ${SCIVAL}; data retrieved through ${ELSAPI} on ${RETRIEVED}, SciVal data release ${longDate(D.svmeta.release)}; used under the University of Auckland's subscription): each work's Scopus record, SciVal Topic and Topic Cluster, SciVal FWCI; UoA's SciVal output by Topic and Cluster for ${D.svmeta.start}–${D.svmeta.end}; the Topics of ${Object.keys(SVL.pic_countries).length} Pacific Island countries and territories; and the keyword probes. APIs used: Scopus Search; SciVal Publication, Topic, Topic Cluster and Country (every endpoint, parameter and request count is listed in bph/README.md). These data are for University use under the licence: share this page within the University only.</li>
+        <li><b>Ministry of Foreign Affairs and Trade aid activities</b> (MFAT's open reporting to the <a href="https://iatistandard.org" target="_blank" rel="noopener">IATI Standard</a>, reporting organisation NZ-1, read through <a href="https://d-portal.org" target="_blank" rel="noopener">d-portal.org</a>${cv.mfat && cv.mfat.retrieved ? " on " + esc(longDate(cv.mfat.retrieved)) : ""}): activities that list UoA or Auckland UniServices as an implementing partner or name UoA as the deliverer, running in 2020 or later (${fmt(cv.mfat ? cv.mfat.n : 0)} activities). A Pacific Island recipient country counts as naming that place.</li>
         <li><b>Marsden Fund round lists, 2018–2025</b> (<a href="https://www.royalsociety.org.nz/what-we-do/funds-and-opportunities/marsden/awarded-grants/" target="_blank" rel="noopener">Royal Society Te Apārangi</a>): every funded project with its team and abstract; kept when a UoA researcher is on the team (${fmt(cv.marsden_rounds || 0)} projects).</li>
         <li><b>SRA3 SciVal Topics &amp; Topic Clusters</b>, with the SciVal dataset methodology, prepared by Research Services for the Research and Innovation Office.</li>
         <li><b>Map styles</b> (Map tab): the Spilhaus projection is Adams World in a Square II in an oblique aspect, ported from PROJ 9.8 and checked against it; ocean depth from Natural Earth (public domain); exclusive economic zones from Flanders Marine Institute (2023), Maritime Boundaries Geodatabase v12, <a href="https://www.marineregions.org" target="_blank" rel="noopener">marineregions.org</a> (CC BY 4.0).</li>
@@ -1410,7 +1416,17 @@ function openSVT(t) {
     ${elsSrc("scival")}`);
 }
 function openAward(k) {
-  const a = AW[k], ws = W.map((w, i) => w.aw.includes(k) ? i : -1).filter(i => i >= 0), rs = a.src === "Royal Society Te Apārangi";
+  const a = AW[k], ws = W.map((w, i) => w.aw.includes(k) ? i : -1).filter(i => i >= 0), rs = a.src === RS;
+  if (a.src === MFAT) {
+    const ctry = (a.ctry || []).map(c => (D.places.find(p => p.code === c) || {}).label || c);
+    return openDrawer(`<div class="kind">Aid activity · Ministry of Foreign Affairs and Trade</div><h2>${esc(a.t)}</h2><p class="meta">${esc(a.scheme)} · ${esc(a.fid)}</p>
+    ${facts([[a.y0 || "–", "start year"], [a.end || "not published", "end"], [a.amt ? "NZ$" + fmt(Math.round(a.amt)) : "–", "activity spend to date (whole activity)"], [a.status === "active" ? "running" : a.status === "ended" ? "ended" : "–", "status"]])}
+    <p class="meta">${esc(MFAT_ROLE(a))}.${ctry.length ? ` Recipient countries: ${esc(ctry.join(", "))}.` : ""}</p>
+    <p class="meta">${a.pac || a.pacp ? esc(a.ev.join("; ")) : "Its title, description and recipient countries fall outside the lenses."}</p>
+    ${a.d ? `<h3>Description (MFAT)</h3><p class="abstract">${esc(a.d)}</p>` : ""}
+    <p class="note">The spend is MFAT's figure for the whole activity: for scholarships and short courses it includes participants' travel and living costs, and where there are several partners it is not UoA's share. Source: MFAT's IATI reporting, via d-portal.org.</p>
+    <div class="btnrow">${a.url ? `<a class="btn" href="${esc(a.url)}" target="_blank" rel="noopener">IATI record (d-portal)</a>` : ""}</div>`);
+  }
   openDrawer(`<div class="kind">Award · ${esc(a.f)}</div><h2>${esc(a.t)}</h2><p class="meta">${esc(a.scheme || "")}${a.fid ? " · " + esc(a.fid) : ""}${a.panel ? " · panel " + esc(a.panel) : ""}</p>
     ${facts([[a.y0 || "–", rs ? "funding round" : "start year"], [rs ? (a.status === "active" ? "probably running" : "probably ended") : (a.end || "not published"), rs ? "status (3-year grant)" : "end"],
       [a.amt ? (a.cur === "NZD" ? "NZ$" : (a.cur || "") + " ") + fmt(Math.round(a.amt)) : "–", rs ? "funding, excl. GST (whole grant)" : "amount"], [esc(a.lead || "–"), rs ? "contact investigator" : "lead investigator"]])}

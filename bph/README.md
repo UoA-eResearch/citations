@@ -84,6 +84,19 @@ One filter bar (lenses, ocean themes and strength) drives every tab.
   a UoA researcher is on the team, as lead or as a team member on a project led elsewhere; the year is the
   funding round, and grants from the last three rounds are marked "probably running" (three-year grants).
   All awards are classified from their title and description or abstract.
+- **MFAT aid activities** (`pipeline/fetch_mfat.py`): the Ministry of Foreign Affairs and Trade publishes every
+  New Zealand aid programme activity to the IATI Standard (reporting organisation NZ-1); they are read through
+  d-portal.org's public read-only query service. An activity is kept when a participating organisation is the
+  University of Auckland, Auckland UniServices or Waipapa Taumata Rau, or its title or description names UoA,
+  UniServices or a UoA institute as the deliverer (MFAT lists university partners on only ~46 of its ~3,000
+  activities, so most UoA-delivered short courses are found by their description), and it ran in 2020 or later.
+  A Pacific Island recipient country counts as naming that place. The amount is MFAT's spend for the whole
+  activity: scholarships and short courses include participants' costs, and multi-partner activities are not
+  UoA's share (MFAT reports every transaction receiver as "Pending Approval"), so the page keeps MFAT spend out
+  of the research-grant total and shows it separately. OpenAlex's MFAT award records have no titles or
+  recipients, and MFAT funding outside the aid programme is not published there. November 2026: 25 activities,
+  12 Blue Pacific-related (Pacific short courses, Cook Islands health literacy, Solomon Islands basic education,
+  Pacific literacy and school leadership, the NZ Institute for Pacific Research, Samoa and Kiribati scholarships).
 - **Engagement check** (`pipeline/engaged.py`, internal input): the SRA's stakeholder engagement workbook is
   merged across its sheets and each person matched to UoA authors by name (first name, initial or prefix, and
   surname incl. hyphenated parts and the surname in their email address). People not found are looked up
@@ -181,6 +194,10 @@ errors. Award coverage is uneven (Marsden records in OpenAlex stop at 2017; HRC 
 scholarship and the relationships behind the research.
 
 ## Data, licence and attribution
+
+MFAT's aid activity data is published openly to the IATI Standard by the Ministry of Foreign Affairs and Trade
+(reporting organisation NZ-1) and read through d-portal.org; the page cites it on the Grants view, in each
+activity's panel and in About.
 
 The built data files (`data/scival_sra3.json`, `data/bph.json`, `data/probes.json` and the intermediates) hold
 the SRA's internal SciVal list and Scopus/SciVal data obtained under the University's licence, so they are
