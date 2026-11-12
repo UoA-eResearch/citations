@@ -1,0 +1,14 @@
+{
+ "datasets": {
+  "attempted": 57,
+  "ok": 24,
+  "fallback": 0,
+  "dropped": 33,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "missing: MNI res-2 BOLD, confounds, mask": 30,
+   "fewer than 10 spec subjects": 3
+  }
+ }
+}

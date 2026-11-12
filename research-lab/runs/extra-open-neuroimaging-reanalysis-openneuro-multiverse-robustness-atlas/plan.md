@@ -110,7 +110,8 @@ There are no labels. The things that could bias the result are choices made afte
 
 ## 5. Compute and data
 
-The guest A100 machine's CPUs (28 cores), under `/mnt/claude-lab/omv/`: one dataset at a time is streamed from the
+(Changed before any data by D1: the lab's own VM, at most 14 workers, data under `/mnt/data/omv/`.) Originally: the
+guest A100 machine's CPUs (28 cores), under `/mnt/claude-lab/omv/`: one dataset at a time is streamed from the
 public buckets, processed, and its BOLD images deleted; group maps, run-level effect and variance maps for two
 configurations (for audits) and all summary tables are kept. No GPU is needed. Everything must finish, and the guest
 workspace be cleaned up, before the end of November 2026.
