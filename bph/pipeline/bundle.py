@@ -36,6 +36,9 @@ def main():
     for k, e in enumerate(d["engaged"]):
         for i in e["atlas"]:
             d["authors"][i]["eng"] = k
+    # Links to the shared pages (internal; the public code never names them): <WORK>/links.json {"page", "va"}
+    links_f = WORK / "links.json"
+    d["links"] = json.loads(links_f.read_text()) if links_f.exists() else {}
     ws_f = WORK / "engagement" / "workshop2_maps.json"
     d["workshop"] = json.loads(ws_f.read_text()) if ws_f.exists() else None
     if d["workshop"]:

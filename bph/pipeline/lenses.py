@@ -30,6 +30,14 @@ LENS_P = [
     "Palauan", "Nauruan", "Guamanian", "Tahitian", '"Papua New Guinean"', '"Solomon Islander"', '"Solomon Islanders"',
     '"Cook Islander"', '"Cook Islanders"', "Kanaky", "Rapanui", "Wallisian", "Futunan",
 ]
+# Search-only additions for gathering candidates (12 November 2026, after BPH's meeting): the bare word "Pacific"
+# (titles such as "Pacific mothers" or "Pacific early career academics" named no listed phrase; local
+# classification rejects Asia-Pacific, Pacific Northwest and the like) and Pacific research concepts. Not used
+# for the world comparison (world.py), which counts raw OpenAlex search hits with no local check.
+LENS_P_EXTRA = [
+    "Pacific", "talanoa", '"teu le va"', '"tauhi va"', "kakala", "fonofale", "faafaletui", '"fa\'afaletui"',
+    '"tok stori"', "tivaevae", "vanua", "fonua",
+]
 
 LENS_O = [
     '"Pacific Ocean"', '"South Pacific"', '"Southwest Pacific"', '"South-west Pacific"',
@@ -78,6 +86,11 @@ LENS_M = [
     '"law of the sea"', "UNCLOS", '"maritime boundaries"', '"maritime security"', '"maritime zones"', '"deep-sea mining"',
     '"deep sea mining"', '"seabed mining"', '"blue economy"', '"ocean governance"', '"marine protected area"',
     '"marine protected areas"', '"marine spatial planning"', '"exclusive economic zone"',
+    # added 12 November 2026 (law colleagues' work: high seas, tribunals, Antarctic Treaty, climate law)
+    '"high seas"', "BBNJ", '"biodiversity beyond national jurisdiction"', "ITLOS",
+    '"International Tribunal for the Law of the Sea"', '"Antarctic Treaty"', '"fisheries management"',
+    '"fisheries governance"', '"loss and damage"', '"climate mobility"', '"climate displacement"',
+    '"climate-induced displacement"', '"climate migration"', '"climate change litigation"', '"climate litigation"',
 ]
 
 
@@ -91,7 +104,7 @@ UOA_RAW_SEARCH = 'raw_affiliation_strings.search:"University of Auckland" OR "Wa
 def lens_filters():
     """OpenAlex filter fragments (title_and_abstract.search) per lens; A is two ANDed filters."""
     return {
-        "P": ["title_and_abstract.search:" + ors(LENS_P)],
+        "P": ["title_and_abstract.search:" + ors(LENS_P + LENS_P_EXTRA)],
         "O": ["title_and_abstract.search:" + ors(LENS_O)],
         "A": ["title_and_abstract.search:" + ors(A_PLACE), "title_and_abstract.search:" + ors(A_THEME)],
         "M": ["title_and_abstract.search:" + ors(LENS_M)],

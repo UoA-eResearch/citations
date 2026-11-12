@@ -177,10 +177,18 @@ M_THEMES = {
             r"\btsunamis?\b"),
     "ant": ("Antarctica & the Southern Ocean",
             r"\bantarctica\b|\bantarctic\b|\bsouthern ocean\b|\bross sea\b|\bsea ice\b|\bice shelf\b"),
-    "gov": ("Ocean law, governance & blue economy",
+    "gov": ("Ocean & climate law, governance & blue economy",
             r"\blaw of the sea\b|\bunclos\b|\bmaritime (?:boundar\w*|security|zones?|law|domain)\b|\bdeep[- ]sea mining\b|"
             r"\bseabed mining\b|\bblue economy\b|\bocean governance\b|\bmarine protected areas?\b|\bmarine spatial planning\b|"
-            r"\bexclusive economic zones?\b"),
+            r"\bexclusive economic zones?\b|"
+            # November 2026: high seas and tribunals, Antarctic Treaty, fisheries law, and climate law and mobility
+            r"\bhigh seas\b|\bbbnj\b|\bbiodiversity beyond national jurisdiction\b|\bitlos\b|"
+            r"\binternational tribunal for the law of the sea\b|\bantarctic treaty\b|\bfisheries (?:management|law|governance|agreements?)\b|"
+            r"\bmarine (?:environmental )?(?:law|governance)\b|\bocean (?:law|policy)\b|"
+            r"\bloss and damage (?:funds?|finance|financing|mechanisms?|negotiations)\b|\bclimate (?:\w+ ){0,4}loss and damage\b|"
+            r"\bloss and damage (?:\w+ ){0,4}climate\b|"
+            r"\bclimate[- ](?:induced )?(?:mobility|displacement|migration)\b|\bclimate (?:change )?litigation\b|"
+            r"\badvisory opinions? (?:\w+ ){0,6}climate\b|\bclimate (?:\w+ ){0,4}advisory opinions?\b"),
 }
 _M_RX = {k: re.compile(v[1]) for k, v in M_THEMES.items()}
 _SCI = {"Earth and Planetary Sciences", "Environmental Science", "Agricultural and Biological Sciences"}
@@ -230,7 +238,7 @@ def marine_themes(title, body, field, subfield=None):
 # sub-themes; everything else from the OpenAlex primary field and subfield.
 RESEARCH_AREAS = {
     "eco": "Marine & coastal ecosystems", "ocn": "Ocean & climate processes", "geo": "Seafloor, tectonics & hazards",
-    "ant": "Antarctica & the Southern Ocean", "gov": "Ocean law, governance & blue economy",
+    "ant": "Antarctica & the Southern Ocean", "gov": "Ocean & climate law, governance & blue economy",
     "env": "Environment, climate & land", "hlt": "Health & wellbeing", "soc": "Society, culture & identity",
     "edu": "Education", "hum": "History, archaeology & languages", "art": "Arts, architecture & design",
     "dev": "Economy, business & development", "law": "Law & governance", "eng": "Engineering & technology",

@@ -106,6 +106,12 @@ tbody tr:hover { background: var(--sea-1); }
 .pill.n { border-color: color-mix(in oklab, var(--s2) 70%, transparent); color: #f0a07e; }
 .pill.q { color: var(--ink-2); }
 .pill.eng { border-color: color-mix(in oklab, var(--star) 70%, transparent); color: var(--star); font-size: .7rem; padding: 0 6px; }
+.no-dl .dlbtn { display: none; }
+.btn.mini { font-size: .75rem; padding: 2px 8px; margin-left: 10px; vertical-align: middle; font-weight: 500; }
+.guide { border: 1px solid var(--rule); border-radius: 10px; padding: 10px 14px; background: var(--sea-1); margin: 10px 0 14px; }
+.guide p { margin: 4px 0; font-size: var(--step--1); color: var(--ink-2); }
+.guide .sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: baseline; }
+.toast { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); background: var(--sea-2); border: 1px solid var(--rule); border-radius: 8px; padding: 8px 14px; z-index: 50; font-size: var(--step--1); }
 .btn { background: var(--sea-2); border: 1px solid var(--rule); border-radius: 7px; padding: 5px 10px; color: var(--ink); text-decoration: none; font-size: var(--step--1); }
 .more { margin-top: 10px; }
 
@@ -177,7 +183,7 @@ table.mini { font-size: .8125rem; } table.mini th, table.mini td { padding: 3px 
 </style>
 
 <header class="bar">
-  <div class="brand"><b>Blue Pacific Research Landscape</b><span>University of Auckland research in or about the Pacific · 2020–2026</span></div>
+  <div class="brand"><b>Blue Pacific Research Landscape</b><span id="brandSub">University of Auckland research in or about the Pacific · 2020–2026</span></div>
   <nav class="tabs" role="tablist" aria-label="Views">
     <button role="tab" data-view="overview" aria-selected="true">Strengths</button>
     <button role="tab" data-view="map" aria-selected="false">Map</button>
@@ -249,10 +255,12 @@ const PLACE = Object.fromEntries(D.places.map(p => [p.code, p]));
 const placeLabel = c => (PLACE[c] && PLACE[c].label) || c;
 // SciVal placement of each work (w.sv = [Scopus ID, SciVal Topic index, status, SciVal FWCI, top-10% flag, match]).
 const SVL = D.svlive, ST_T = SVL.topics, ST_C = SVL.clusters;
-const ST = { c: "In the SRA dataset", s: "Screened out", n: "Never screened", x: "Not in SciVal" };
-const ST_LONG = { c: "Its SciVal Topic or Topic Cluster is in the SRA dataset", s: "Its Topic or Cluster was screened for this SRA and marked “n”",
-  n: "Neither its Topic nor its Cluster was on the screened list", x: "No Scopus record (or no SciVal Topic yet), so SciVal cannot see it" };
-const ST_LOW = { c: "in the SRA dataset", s: "screened out", n: "never screened", x: "not in SciVal" };
+const ST = { c: "In the SRA dataset", s: "Screened out in 2025", n: "Never screened", x: "Not in SciVal" };
+const ST_LONG = { c: "Its SciVal Topic or Topic Cluster is in the dataset the SRA proposal used (RIO's 2025 list)",
+  s: "Its Topic or Cluster is on RIO's 2025 list marked “n”, so it was left out: mostly by Research Services' screening, with no call from the SRA proposal team, and sometimes by the proposal team's own review (some were left to other SRAs). This tool screened nothing.",
+  n: "Neither its Topic nor its Cluster was on RIO's 2025 list, which held only UoA's highest-performing areas, so nobody decided on it",
+  x: "Found in OpenAlex but with no Scopus record or SciVal Topic: books, chapters, reports, regional journals, arts and humanities venues" };
+const ST_LOW = { c: "in the SRA dataset", s: "screened out in 2025", n: "never screened", x: "not in SciVal" };
 const ST_COLOR = { c: "var(--s3)", s: "var(--s2)", n: "var(--s5)", x: "var(--other)" };
 function stWhy(t) {
   const x = ST_T[t], cl = x.cl >= 0 ? ST_C[x.cl] : null;
@@ -330,7 +338,7 @@ const MS_HELP = { eco: "Marine life and coastal ecosystems: plankton, marine mam
   ocn: "Physical and chemical ocean and climate: oceanography, currents, upwelling, sea level, ocean acidification, marine heatwaves, paleoceanography and paleoclimate, coastal processes.",
   geo: "Marine geology and hazards: seafloor and continental margins, contourites, pockmarks, subduction (Hikurangi), Chatham Rise, earthquakes and tsunami. Earthquake engineering of buildings is left out unless it also concerns tsunami, subduction or the seafloor.",
   ant: "Antarctica, the Ross Sea, sea ice, ice shelves and the Southern Ocean.",
-  gov: "The law of the sea and UNCLOS, maritime boundaries and security, deep-sea mining, marine protected areas and spatial planning, ocean governance and the blue economy." };
+  gov: "The law of the sea and UNCLOS, the high seas and BBNJ, ITLOS and climate advisory opinions, the Antarctic Treaty, maritime boundaries and security, fisheries law and governance, deep-sea mining, marine protected areas and spatial planning, the blue economy, and climate law: litigation, loss and damage, and climate mobility and displacement." };
 const TIER_HELP = { f: "Pacific named in the title; a specific Pacific place, people or concept anywhere; a Pacific Island co-author on a team of 20 or fewer; or the Pacific Ocean or Pacific climate named repeatedly.",
   p: "Generic “Pacific” or “Pasifika” only in the abstract, repeated or beside other groups (Māori, Asian, European): Pacific peoples as one group within a wider study, typically NZ health data reported by ethnicity.",
   m: "A single passing mention of the Pacific or the Pacific Ocean." };
@@ -390,12 +398,102 @@ function niceTicks(max, n) {
   const out = []; for (let t = 0; t <= max + 1e-9; t += step) out.push(Math.round(t)); return out;
 }
 function hbars(rows, opts) {
-  // rows: [{label, n, tip, attr}] -> horizontal bar list
+  // rows: [{label, n, tip, attr}] -> horizontal bar list; opts.id keeps the rows for "Save image"
+  if (opts.id) CHARTS[opts.id] = { rows, legend: opts.legend };
   const max = Math.max(1, ...rows.map(r => r.n));
   return `<div style="display:grid;grid-template-columns:minmax(120px,${opts.labelW || "260px"}) 1fr auto;gap:6px 10px;align-items:center;font-size:var(--step--1)">` +
     rows.map(r => `<span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(r.label)}">${r.attr ? `<button class="linkbtn" ${r.attr}>${esc(r.label)}</button>` : esc(r.label)}</span>
       <span data-tip="${esc(r.tip || r.label + ": " + fmt(r.n))}"><i class="hbar" style="width:${(100 * r.n / max).toFixed(1)}%;background:${r.color || "var(--s1)"}"></i></span><span class="mono" style="color:var(--ink-2)">${fmt(r.n)}</span>`).join("") + `</div>`;
 }
+
+// ------------------------------------------------------------------ saving tables and images
+// In claude.ai the page offers files through the "downloads" capability: the viewer confirms each save. Opened
+// anywhere else (a saved copy, GitHub Pages, a local server) it falls back to an ordinary browser download.
+const DL = window.claude && window.claude.use ? window.claude.use("downloads").catch(() => null) : null;
+if (DL) DL.then(d => { if (!d) document.body.classList.add("no-dl"); });
+function toast(msg) { const t = document.createElement("div"); t.className = "toast"; t.textContent = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 3500); }
+async function saveFile(filename, data) {
+  if (DL) {
+    const d = await DL; if (!d) { toast("This view cannot save files."); return; }
+    try { await d.save({ filename, data }); } catch (e) { if (e && e.code !== "declined") toast(e && e.code === "rate_limited" ? "Another save is waiting for your answer." : "This view cannot save files."); }
+    return;
+  }
+  const blob = data instanceof Blob ? data : new Blob([data], { type: /\.csv$/.test(filename) ? "text/csv;charset=utf-8" : "application/octet-stream" });
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = filename; document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+}
+const csvCell = v => { const x = v == null ? "" : String(v); return /[",\r\n]/.test(x) ? `"${x.replace(/"/g, '""')}"` : x; };
+const saveCSV = (name, rows) => saveFile(name, "﻿" + rows.map(r => r.map(csvCell).join(",")).join("\r\n"));
+const stamp = () => BUILT.replace(/-/g, "");
+const cssVar = x => String(x).replace(/var\((--[\w-]+)\)/g, (m, v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim() || m);
+const PNG = {}, CSV = {}, CHARTS = {};
+document.addEventListener("click", e => {
+  const b = e.target.closest && e.target.closest("[data-png],[data-csv]"); if (!b) return;
+  const f = b.dataset.png ? PNG[b.dataset.png] : CSV[b.dataset.csv];
+  if (f) Promise.resolve().then(f).catch(err => { console.error(err); toast("Could not make the file."); });
+});
+const SVG_PROPS = ["display", "visibility", "fill", "fill-opacity", "stroke", "stroke-width", "stroke-opacity", "stroke-dasharray", "opacity",
+  "font-size", "font-family", "font-weight", "text-anchor", "dominant-baseline", "paint-order", "stroke-linejoin"];
+function svgToImage(svg, w, h) {   // an on-page <svg> -> Image, with computed styles inlined so CSS variables and classes survive
+  const clone = svg.cloneNode(true), src = [svg, ...svg.querySelectorAll("*")], dst = [clone, ...clone.querySelectorAll("*")];
+  src.forEach((el, k) => { const cs = getComputedStyle(el); dst[k].setAttribute("style", SVG_PROPS.map(q => `${q}:${cs.getPropertyValue(q)}`).join(";")); });
+  clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+  if (!clone.getAttribute("viewBox")) clone.setAttribute("viewBox", `0 0 ${svg.clientWidth} ${svg.clientHeight}`);
+  clone.setAttribute("width", w); clone.setAttribute("height", h); clone.style.display = "block";
+  return stringToImage(new XMLSerializer().serializeToString(clone));
+}
+function stringToImage(svgText) {
+  const url = URL.createObjectURL(new Blob([svgText], { type: "image/svg+xml" }));
+  return new Promise((res, rej) => { const img = new Image(); img.onload = () => { URL.revokeObjectURL(url); res(img); }; img.onerror = rej; img.src = url; });
+}
+function captureDeck(dk) {   // a deck.gl canvas copied inside its own render pass (no preserveDrawingBuffer needed)
+  return new Promise(res => {
+    let done = false;
+    const finish = () => { if (done) return; done = true; const src = dk.getCanvas ? dk.getCanvas() : dk.canvas;
+      const c = document.createElement("canvas"); c.width = src.width; c.height = src.height; c.getContext("2d").drawImage(src, 0, 0);
+      dk.setProps({ onAfterRender: () => {} }); res(c); };
+    dk.setProps({ onAfterRender: finish }); dk.redraw("export"); setTimeout(finish, 1500);
+  });
+}
+async function saveFigure({ title, file, w, h, draw, source, legend }) {
+  // one PNG for slides: title, the figure, an optional legend, then the source and data date
+  const sc = 2, padX = 28, top = 60, legH = legend && legend.length ? 26 : 0, bottom = 44 + legH, W2 = Math.round(w + padX * 2), H2 = Math.round(h + top + bottom);
+  const c = document.createElement("canvas"); c.width = W2 * sc; c.height = H2 * sc;
+  const ctx = c.getContext("2d"); ctx.scale(sc, sc);
+  ctx.fillStyle = cssVar("var(--sea)"); ctx.fillRect(0, 0, W2, H2);
+  const font = "'Source Sans 3', system-ui, -apple-system, 'Segoe UI', sans-serif";
+  ctx.fillStyle = cssVar("var(--ink)"); ctx.font = `600 20px ${font}`; ctx.fillText(title, padX, 36);
+  await draw(ctx, padX, top, w, h);
+  let y = top + h + 22;
+  if (legH) { let x = padX; ctx.font = `13px ${font}`;
+    legend.forEach(([col, label, ring]) => { ctx.beginPath(); ctx.arc(x + 6, y - 4, 5.5, 0, 2 * Math.PI);
+      if (ring) { ctx.strokeStyle = cssVar(col); ctx.lineWidth = 2; ctx.stroke(); } else { ctx.fillStyle = cssVar(col); ctx.fill(); }
+      ctx.fillStyle = cssVar("var(--ink-2)"); ctx.fillText(label, x + 16, y); x += 28 + ctx.measureText(label).width; });
+    y += legH; }
+  ctx.fillStyle = cssVar("var(--ink-3)"); ctx.font = `12px ${font}`;
+  ctx.fillText(`Blue Pacific Research Landscape, University of Auckland (Centre for eResearch for Blue Pacific Horizons) · works 2020–2026 · data as of ${longDate(BUILT)}`, padX, y);
+  if (source) ctx.fillText(`Source: ${source}`, padX, y + 16);
+  await new Promise(res => c.toBlob(b => { saveFile(file, b).then(res); }, "image/png"));
+}
+async function figSvg(svg, title, file, source, legend) {
+  if (!svg) return;
+  const vb = (svg.getAttribute("viewBox") || "").split(/\s+/).map(Number), w0 = vb[2] || svg.clientWidth, h0 = vb[3] || svg.clientHeight;
+  const w = Math.max(760, Math.min(1100, w0)), h = h0 * w / w0, img = await svgToImage(svg, w, h);
+  return saveFigure({ title, file, w, h, source, legend, draw: (ctx, x, y) => ctx.drawImage(img, x, y, w, h) });
+}
+async function figHbars(id, title, file, source) {
+  const ch = CHARTS[id]; if (!ch) return;
+  const rows = ch.rows, lw = 330, bw = 470, rh = 25, w = lw + bw + 80, h = rows.length * rh + 6, max = Math.max(1, ...rows.map(r => r.n));
+  const ink = cssVar("var(--ink)"), ink2 = cssVar("var(--ink-2)"), f = "system-ui, -apple-system, 'Segoe UI', sans-serif";
+  const body = rows.map((r, k) => { const y = 3 + k * rh, bl = Math.max(1, bw * r.n / max), lab = r.label.length > 48 ? r.label.slice(0, 46) + "…" : r.label;
+    return `<text x="${lw - 10}" y="${y + 17}" text-anchor="end" fill="${ink}" font-size="13.5" font-family="${f}">${esc(lab)}</text>` +
+      `<rect x="${lw}" y="${y + 5}" width="${bl}" height="${rh - 10}" rx="3" fill="${cssVar(r.color || "var(--s1)")}"/>` +
+      `<text x="${lw + bl + 7}" y="${y + 17}" fill="${ink2}" font-size="12.5" font-family="${f}">${fmt(r.n)}</text>`; }).join("");
+  const img = await stringToImage(`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">${body}</svg>`);
+  return saveFigure({ title, file, w, h, source, legend: ch.legend, draw: (ctx, x, y) => ctx.drawImage(img, x, y, w, h) });
+}
+const saveBtn = (key, label = "Save image") => `<button class="btn mini dlbtn" data-png="${key}" title="Save as a PNG image for slides and reports">${label}</button>`;
+const SRC_OA = "OpenAlex (CC0)";
 
 // ------------------------------------------------------------------ views
 const VIEWS = ["overview", "map", "people", "grants", "gaps", "workshop", "about"];
@@ -409,6 +507,7 @@ function setView(v) {
 }
 document.querySelectorAll("nav.tabs button").forEach(b => b.onclick = () => setView(b.dataset.view));
 function renderView() {
+  if (!renderView.sub) { renderView.sub = 1; $("brandSub").textContent = `University of Auckland research in or about the Pacific · works 2020–2026 · data as of ${longDate(BUILT)}`; }
   if (view === "overview") renderOverview();
   else if (view === "map") renderMap();
   else if (view === "people") renderPeople();
@@ -420,6 +519,32 @@ function renderView() {
 
 // ================================================================== STRENGTHS
 const OV = { sort: "n", dir: -1, all: false };
+function reliabilitySection(ws) {
+  // Yvonne's question: how reliable is this for showing where expertise lies, and what does the method cover poorly?
+  const by = {}; ws.forEach(w => { const r = by[w.ra] || (by[w.ra] = { n: 0, art: 0, book: 0, solo: 0, sv: 0, ab: 0, up: 0 });
+    r.n++; r.art += w.ty === "article" || w.ty === "review"; r.book += w.ty === "book" || w.ty === "book-chapter"; r.solo += w.na === 1;
+    r.sv += w.sv[2] !== "x"; r.ab += !!w.ab; r.up += !!w.up; });
+  const rows = Object.entries(by).map(([k, r]) => {
+    const notSv = 100 - pct(r.sv, r.n), book = pct(r.book, r.n), solo = pct(r.solo, r.n);
+    const grade = notSv < 25 && book < 6 && solo < 12 ? ["Good", "y"] : notSv < 40 && book < 15 && solo < 25 ? ["Partial", "q"] : ["Thin", "n"];
+    return { k, r, notSv, book, solo, grade };
+  }).sort((a, b) => b.r.n - a.r.n);
+  return `<h2>How reliable is this picture?</h2>
+    <p class="note">The landscape finds research through the open record (OpenAlex) and what the works' titles and abstracts say. That suits some kinds of research much better than others.</p>
+    <div class="cols"><div class="guide"><p><b>Reliable for</b></p>
+      <p>Finding who works on what, and where, when the work names the Pacific, a Pacific place or people, Aotearoa's environment, or an ocean, Earth or climate theme.</p>
+      <p>Partners and co-authorship networks (records with affiliations), and the places named.</p>
+      <p>Journal research with abstracts: the sciences, health and much of the social sciences. The table shows which areas these are.</p></div>
+    <div class="guide"><p><b>Less reliable for</b></p>
+      <p>Research that does not name the Pacific or a place in its title or abstract, even when it is Pacific work: most work is specific to a smaller place or theme.</p>
+      <p>Social sciences, humanities, law and the arts: more single-authored work, books, chapters, reports and regional venues, often without abstracts or affiliations.</p>
+      <p>Creative works, community reports, theses, Māori and Pacific-language outputs, and anything not indexed in OpenAlex. The newest work (2026 is partial).</p></div></div>
+    <div class="tablewrap"><table><thead><tr><th>Research area</th><th class="num">Works</th><th>Coverage</th><th class="num">Journal articles</th><th class="num">Books &amp; chapters</th><th class="num">Single-authored</th><th class="num">With abstract</th><th class="num">Not in SciVal</th><th class="num">UoA from profile</th></tr></thead><tbody>
+      ${rows.map(({ k, r, notSv, book, solo, grade }) => `<tr><td><button class="linkbtn" data-ra="${k}">${esc(D.research_areas[k] || k)}</button></td><td class="num">${fmt(r.n)}</td>
+        <td><span class="pill ${grade[1]}">${grade[0]}</span></td><td class="num">${pct(r.art, r.n)}%</td><td class="num">${book}%</td><td class="num">${solo}%</td>
+        <td class="num">${pct(r.ab, r.n)}%</td><td class="num">${notSv}%</td><td class="num">${fmt(r.up)}</td></tr>`).join("")}</tbody></table></div>
+    <p class="note">Coverage is a rule of thumb from the works found: <b>Good</b> when under a quarter are outside SciVal, under 6% are books or chapters and under 12% are single-authored; <b>Thin</b> when over 40% are outside SciVal, over 15% are books or chapters, or over 25% are single-authored; otherwise <b>Partial</b>. Where coverage is thin, the true amount of research is likely larger than shown, so compare areas with care. "UoA from profile" counts works whose record carries no affiliation, credited to UoA because the author's OpenAlex profile places them at UoA that year (common for book chapters and law and humanities preprints).</p>`;
+}
 function renderOverview() {
   const el = $("v-overview");
   const ws = FW.map(i => W[i]);
@@ -465,21 +590,23 @@ function renderOverview() {
       <div class="tile"><b>${fw.length ? median(fw).toFixed(2) : "–"}</b><span>median Field-Weighted Citation Impact, 2020–2025 (OpenAlex; world = 1.00). The mean is ${fw.length ? mean(fw).toFixed(2) : "–"}, pulled up by a few very highly cited papers; ${fmt(fw.length)} works have a value. SciVal, the measure the SRA datasets use, scores ${fmt(fwS.length)} of these lower: median ${fwS.length ? median(fwS).toFixed(2) : "–"}, mean ${fwS.length ? mean(fwS).toFixed(2) : "–"}.</span></div>
       <div class="tile"><b>${rank ? "#" + rank : "–"}</b><span>among universities worldwide for research naming Pacific Islands or peoples, 2020–2025 (${fmt(uni[rank - 1] ? uni[rank - 1][2] : 0)} works), behind ${esc(uni[0][0])} and ${esc(uni[1][0])}. Leaving out research that names Hawaiʻi, UoA ranks #${rankNoHi || "–"} (see note).</span></div>
     </div>
+    <p class="toolbar"><button class="btn dlbtn" data-csv="keyfigs">Download key figures (CSV)</button><span class="note">The headline numbers under the current filters, dated: for reports and as a baseline for the investment plan.</span></p>
     <p class="note src">Works, researchers, partners and topics come from OpenAlex. The SciVal FWCI figures in the impact tile come from ${SCIVAL} (Elsevier B.V.), via ${ELSAPI}, retrieved ${RETRIEVED}; SciVal data release ${longDate(D.svmeta.release)}. Used under the University of Auckland's subscription.</p>
     <div class="cols"><div>
-      <h2>Output by year</h2>
+      <h2>Output by year ${saveBtn("years")}</h2>
       <div class="legend">${usedCats.map(k => `<span><i style="background:${catColor[cats.indexOf(k)]}"></i>${catLabel[k]}</span>`).join("")}</div>
       ${stackedBars(rows, usedCats, usedCats.map(k => catColor[cats.indexOf(k)]), { aria: "Works per year by category", width: 640, height: 230 })}
       <p class="note">* 2026 is a partial year (data to ${esc(BUILT)}). Strength metrics below use the complete years 2020–2025.</p>
     </div><div>
-      <h2>Research areas</h2>
+      <h2>Research areas ${saveBtn("areas")}</h2>
       <div class="legend"><span><i style="background:var(--s1)"></i>Ocean &amp; Earth areas</span><span><i style="background:var(--s4)"></i>Other areas</span></div>
       ${hbars(Object.entries(ra).sort((a, b) => b[1] - a[1]).map(([k, n]) => ({ label: D.research_areas[k] || k, n, attr: `data-ra="${k}"`, color: MS_KEYS.includes(k) ? "var(--s1)" : "var(--s4)",
-        tip: `<b>${esc(D.research_areas[k] || k)}</b><br>${fmt(n)} works (${pct(n, ws.length)}%)` })), { labelW: "260px" })}
-      <p class="note">Each work in one plain-language area: the five ocean and Earth areas follow the ocean, Earth &amp; climate themes; the rest follow the OpenAlex field and subfield of the work's main topic. Click an area for its works and people.</p>
+        tip: `<b>${esc(D.research_areas[k] || k)}</b><br>${fmt(n)} works (${pct(n, ws.length)}%)` })), { labelW: "260px", id: "areas", legend: [["var(--s1)", "Ocean & Earth areas"], ["var(--s4)", "Other areas"]] })}
+      <p class="note">Each work in one plain-language area: the five ocean and Earth areas follow the ocean, Earth &amp; climate themes; the rest follow the OpenAlex field and subfield of the work's main topic. A large area can hide smaller strands: click an area to see every topic inside it, with its researchers and works.</p>
     </div></div>
-    <h2>Most common detailed topics</h2>
-    ${hbars(topT.map(([t, n]) => ({ label: T[t].name, n: +n, attr: `data-topic="${t}"`, tip: `<b>${esc(T[t].name)}</b><br>${esc(T[t].sub)} · ${esc(T[t].field)}<br>${fmt(n)} works` })), { labelW: "340px" })}
+    ${reliabilitySection(ws)}
+    <h2>Most common detailed topics ${saveBtn("topics")}</h2>
+    ${hbars(topT.map(([t, n]) => ({ label: T[t].name, n: +n, attr: `data-topic="${t}"`, tip: `<b>${esc(T[t].name)}</b><br>${esc(T[t].sub)} · ${esc(T[t].field)}<br>${fmt(n)} works` })), { labelW: "340px", id: "topics" })}
     <p class="note">OpenAlex topics (each work's primary topic).</p>
     <h2>Strengths by subfield, 2020–2025</h2>
     <p class="note">The same measures SciVal uses where OpenAlex has an equivalent: scholarly output, growth (2023–25 against 2020–22), Field-Weighted Citation Impact (mean), share of outputs in the world's top 10% most cited, and UoA's share of the world's output in that subfield that names the Pacific or Pacific Ocean (OpenAlex search, lenses P and O, before this atlas's own checks). Click a column to sort.</p>
@@ -494,8 +621,8 @@ function renderOverview() {
       <td class="num" ${r.share != null ? `data-tip="${fmt(Math.round(r.share * r.world / 100))} of ${fmt(r.world)} Pacific-named works in this subfield worldwide"` : ""}>${r.share == null ? "–" : r.share.toFixed(1) + "%"}</td></tr>`).join("")}</tbody></table></div>
     ${subRows.length > 18 ? `<button class="btn more" id="ovAll">${OV.all ? "Show the top 18" : `Show all ${subRows.length} subfields`}</button>` : ""}
     <p class="note">Growth needs at least one work in 2020–22. FWCI is OpenAlex's (citations received ÷ citations expected for works of the same field, type and year); recent works have had little time to be cited. A small subfield can show a large FWCI from a few highly cited papers.</p>
-    <h2>Sustainable Development Goals</h2>
-    ${hbars(Object.entries(sdg).sort((a, b) => b[1] - a[1]).slice(0, 10).map(([s, n]) => ({ label: SDG[s] || s, n })), { labelW: "300px" })}
+    <h2>Sustainable Development Goals ${saveBtn("sdg")}</h2>
+    ${hbars(Object.entries(sdg).sort((a, b) => b[1] - a[1]).slice(0, 10).map(([s, n]) => ({ label: SDG[s] || s, n })), { labelW: "300px", id: "sdg" })}
     <p class="note">OpenAlex's own SDG classifier (a goal is listed when its score is 0.4 or above).</p>
     <h2>Who ranks first, and why</h2>
     <p class="note">Universities ranked by works (2020–2025) whose title or abstract names a Pacific Island country, territory or people, by OpenAlex search for every institution alike, so incidental mentions count for all. Hawaiʻi is one of the places searched, so research on Hawaiʻi itself counts.</p>
@@ -504,6 +631,28 @@ function renderOverview() {
     </tbody></table></div>
     <p class="note">The University of Hawaiʻi at Mānoa leads because research on Hawaiʻi counts; without it, it has ${fmt(((D.world.p_profiles || [])[0] || {}).no_hawaii || 0)} works. Many of the University of Sydney's works are Earth science that names Hawaiʻi (for example the Hawaiian hotspot) or Pacific plates. Leaving Hawaiʻi out, the order is ${unh.slice(0, 3).map((u, k) => `${k + 1}. ${esc(u[0])} (${fmt(u[2])})`).join("; ")}.</p>`;
   el.querySelectorAll("[data-ra]").forEach(b => b.onclick = () => openArea(b.dataset.ra));
+  const legYears = usedCats.map(k => [catColor[cats.indexOf(k)], catLabel[k]]);
+  PNG.years = () => figSvg(el.querySelector("svg.chart"), "Works per year", `bph-works-per-year-${stamp()}.png`, SRC_OA + ". 2026 is a partial year.", legYears);
+  PNG.areas = () => figHbars("areas", "Research areas", `bph-research-areas-${stamp()}.png`, SRC_OA + "; each work in one area.");
+  PNG.topics = () => figHbars("topics", "Most common detailed topics", `bph-topics-${stamp()}.png`, SRC_OA + " topics (each work's primary topic).");
+  PNG.sdg = () => figHbars("sdg", "Sustainable Development Goals", `bph-sdgs-${stamp()}.png`, SRC_OA + " SDG classifier (score 0.4 or above).");
+  CSV.keyfigs = () => {
+    const sv = { c: 0, s: 0, n: 0, x: 0 }; ws.forEach(w => sv[w.sv[2]]++);
+    const pacAw = AW.filter(a => a.pac && awardPac(a)), mfAw = pacAw.filter(a => a.src === MFAT);
+    const ctry = new Set(ws.flatMap(w => w.ext).map(i => I[i].cc).filter(Boolean));
+    const rowsK = [["Figure", "Value", "Notes"], ["Data as of", BUILT, "OpenAlex retrieved on this date; Scopus/SciVal " + RETRIEVED],
+      ["Filters", `lenses ${LENS_KEYS.filter(k => F.lens[k]).join("+")}; strength ${Object.keys(F.tier).filter(k => F.tier[k]).join("+") || "none"}`, "P Pacific Islands & peoples, O Pacific Ocean & region, A Aotearoa environment & hazards, M Ocean, Earth & climate; f Pacific-focused, p within wider studies, m single mention"],
+      ["Works", ws.length, "2020 to the data date, at least one UoA author"], ["Works 2020–2025", ws.filter(w => w.y <= 2025).length, "complete years"],
+      ["UoA researchers", nA, ""], ["Partner institutions", ext.size, ""], ["Partner institutions in Pacific Island countries and territories", piPartners.length, ""],
+      ["Partner countries", ctry.size, ""], ["Pacific places named as the subject of study", places.size, ""],
+      ["Median FWCI 2020–2025 (OpenAlex)", fw.length ? median(fw).toFixed(2) : "", "world = 1.00"],
+      ["World rank among universities, research naming Pacific Islands or peoples 2020–2025", rank || "", "OpenAlex search, all institutions alike"],
+      ["Works in the 2025 SRA SciVal dataset", sv.c, ""], ["Works screened out in 2025", sv.s, "Topic or Cluster marked n on the 2025 list (mostly by Research Services screening)"],
+      ["Works in Topics never screened", sv.n, "not on the 2025 list"], ["Works not in SciVal", sv.x, "OpenAlex only"],
+      ["Blue Pacific-related awards", pacAw.length, "public award records, title or description in the lenses"], ["of which MFAT aid activities", mfAw.length, "activity spend NZ$" + Math.round(mfAw.reduce((t, a) => t + (a.amt || 0), 0)).toLocaleString("en-NZ")],
+      ...Object.entries(ra).sort((a, b) => b[1] - a[1]).map(([k, n]) => [`Research area: ${D.research_areas[k] || k}`, n, ""])];
+    return saveCSV(`bph-key-figures-${stamp()}.csv`, rowsK);
+  };
   el.querySelectorAll("[data-ovsort]").forEach(b => { b.toggleAttribute("aria-sort", b.dataset.ovsort === OV.sort); b.onclick = () => { const k = b.dataset.ovsort; OV.dir = OV.sort === k ? -OV.dir : (k === "k" ? 1 : -1); OV.sort = k; renderOverview(); }; });
   const all = $("ovAll"); if (all) all.onclick = () => { OV.all = !OV.all; renderOverview(); };
   wireCommon(el);
@@ -557,16 +706,20 @@ function mapLayers() {
   const byCountry = ML.mode === "country";
   const isPI = r => r === "Pacific Islands";
   L.push(new deck.GeoJsonLayer({ id: "land", data: landGeo, filled: true, stroked: true, getFillColor: C.land, getLineColor: C.coast, lineWidthMinPixels: 0.6 }));
-  if (byCountry) {
-    const cs = (ML.piOnly ? countries.filter(c => isPI(c.region)) : countries).filter(c => c.key !== "NZ");
-    if (ML.ties) L.push(new deck.ArcLayer({ id: "cties", data: cs.filter(c => isPI(c.region) || c.n >= 20),
-      getSourcePosition: c => arcEnds([c.lng, c.lat])[0], getTargetPosition: c => arcEnds([c.lng, c.lat])[1],
-      getSourceColor: c => isPI(c.region) ? withA(C.s[1], 210) : withA(C.s[0], 70), getTargetColor: c => isPI(c.region) ? withA(C.s[1], 210) : withA(C.s[0], 70),
-      getWidth: c => Math.min(9, 0.8 + Math.sqrt(c.n) * 0.55), widthUnits: "pixels", getHeight: 0.3, greatCircle: false, pickable: true }));
-    if (ML.partners) L.push(new deck.ScatterplotLayer({ id: "countries", data: cs, getPosition: c => [c.lng, c.lat], radiusUnits: "pixels",
-      getRadius: c => Math.min(42, 4 + Math.sqrt(c.n) * 2.2), getFillColor: c => isPI(c.region) ? withA(C.s[1], 215) : withA(C.s[0], 185),
-      stroked: true, getLineColor: withA(C.sea, 230), lineWidthUnits: "pixels", getLineWidth: 1.2, pickable: true }));
-  }
+  // Draw order (BPH's meeting: Pacific Island partners were hidden under the places studied): other partners, then the
+  // places studied, then Pacific Island partners on top; within each layer large circles first, so small ones show.
+  const desc = arr => arr.slice().sort((a, b) => b.n - a.n);
+  const cs = byCountry ? (ML.piOnly ? countries.filter(c => isPI(c.region)) : countries).filter(c => c.key !== "NZ") : [];
+  const countryLayer = (id, data) => new deck.ScatterplotLayer({ id, data: desc(data), getPosition: c => [c.lng, c.lat], radiusUnits: "pixels",
+    getRadius: c => Math.min(42, 4 + Math.sqrt(c.n) * 2.2), getFillColor: c => isPI(c.region) ? withA(C.s[1], 240) : withA(C.s[0], 185),
+    stroked: true, getLineColor: c => isPI(c.region) ? withA(C.ink, 235) : withA(C.sea, 230), lineWidthUnits: "pixels", getLineWidth: c => isPI(c.region) ? 1.6 : 1.2, pickable: true });
+  const instLayer = (id, data) => new deck.ScatterplotLayer({ id, data: desc(data), getPosition: p => [wrap(p.it.lng), p.it.lat], radiusUnits: "pixels", getRadius: p => 2 + Math.sqrt(p.n) * 1.6,
+    getFillColor: p => p.it.region === "Pacific Islands" ? C.s[1] : withA(C.s[0], 200), stroked: true,
+    getLineColor: p => p.it.region === "Pacific Islands" ? withA(C.ink, 235) : withA(C.sea, 230), lineWidthUnits: "pixels", getLineWidth: p => p.it.region === "Pacific Islands" ? 1.4 : 1, pickable: true });
+  if (byCountry && ML.ties) L.push(new deck.ArcLayer({ id: "cties", data: cs.filter(c => isPI(c.region) || c.n >= 20),
+    getSourcePosition: c => arcEnds([c.lng, c.lat])[0], getTargetPosition: c => arcEnds([c.lng, c.lat])[1],
+    getSourceColor: c => isPI(c.region) ? withA(C.s[1], 210) : withA(C.s[0], 70), getTargetColor: c => isPI(c.region) ? withA(C.s[1], 210) : withA(C.s[0], 70),
+    getWidth: c => Math.min(9, 0.8 + Math.sqrt(c.n) * 0.55), widthUnits: "pixels", getHeight: 0.3, greatCircle: false, pickable: true }));
   if (!byCountry && ML.ties) {
     // Every tie to a Pacific Island partner; elsewhere only partners with 3+ joint works, faint, so the islands stay readable.
     const tieData = partners.filter(p => p.it.region === "Pacific Islands" || p.n >= 3);
@@ -574,18 +727,16 @@ function mapLayers() {
       getSourceColor: p => p.it.region === "Pacific Islands" ? withA(C.s[1], 210) : withA(C.s[0], 40), getTargetColor: p => p.it.region === "Pacific Islands" ? withA(C.s[1], 210) : withA(C.s[0], 40),
       getWidth: p => Math.min(6, 0.6 + Math.sqrt(p.n) * 0.6), widthUnits: "pixels", getHeight: 0.3, greatCircle: false, pickable: true }));
   }
-  if (!byCountry && ML.partners) {
-    L.push(new deck.ScatterplotLayer({ id: "partners", data: partners, getPosition: p => [wrap(p.it.lng), p.it.lat], radiusUnits: "pixels", getRadius: p => 2 + Math.sqrt(p.n) * 1.6,
-      getFillColor: p => p.it.region === "Pacific Islands" ? C.s[1] : withA(C.s[0], 200), stroked: true, getLineColor: withA(C.sea, 230), lineWidthUnits: "pixels", getLineWidth: 1, pickable: true }));
-  }
+  if (ML.partners) L.push(byCountry ? countryLayer("countries", cs.filter(c => !isPI(c.region))) : instLayer("partners", partners.filter(p => p.it.region !== "Pacific Islands")));
   if (ML.places) {
     // Pacific places as filled circles; the two Aotearoa groups as open rings so they never hide the islands nearby.
     const rad = d => Math.min(46, 5 + Math.sqrt(d.n) * 2.6);
-    L.push(new deck.ScatterplotLayer({ id: "places-nz", data: places.filter(d => isNZGroup(d.c) || isOceanPlace(d.c)), getPosition: d => [wrap(d.p.lng), d.p.lat], radiusUnits: "pixels", getRadius: rad,
+    L.push(new deck.ScatterplotLayer({ id: "places-nz", data: desc(places.filter(d => isNZGroup(d.c) || isOceanPlace(d.c))), getPosition: d => [wrap(d.p.lng), d.p.lat], radiusUnits: "pixels", getRadius: rad,
       filled: false, stroked: true, getLineColor: d => d.c === "NZA" ? C.s[3] : d.c === "NZP" ? C.s[4] : C.s[6], lineWidthUnits: "pixels", getLineWidth: 2.5, pickable: true }));
-    L.push(new deck.ScatterplotLayer({ id: "places", data: places.filter(d => !isNZGroup(d.c) && !isOceanPlace(d.c)), getPosition: d => [wrap(d.p.lng), d.p.lat], radiusUnits: "pixels", getRadius: rad,
-      getFillColor: withA(C.s[2], 170), stroked: true, getLineColor: C.s[2], lineWidthUnits: "pixels", getLineWidth: 2, pickable: true }));
+    L.push(new deck.ScatterplotLayer({ id: "places", data: desc(places.filter(d => !isNZGroup(d.c) && !isOceanPlace(d.c))), getPosition: d => [wrap(d.p.lng), d.p.lat], radiusUnits: "pixels", getRadius: rad,
+      getFillColor: withA(C.s[2], 125), stroked: true, getLineColor: C.s[2], lineWidthUnits: "pixels", getLineWidth: 2, pickable: true }));
   }
+  if (ML.partners) L.push(byCountry ? countryLayer("countries-pi", cs.filter(c => isPI(c.region))) : instLayer("partners-pi", partners.filter(p => p.it.region === "Pacific Islands")));
   L.push(new deck.ScatterplotLayer({ id: "uoa", data: [{}], getPosition: () => [wrap(UOA_POS[0]), UOA_POS[1]], radiusUnits: "pixels", getRadius: 6, getFillColor: C.star, stroked: true, getLineColor: C.sea, lineWidthUnits: "pixels", getLineWidth: 2 }));
   // labels: places studied, then Pacific place names
   const vp = mapViewport(); const cand = [];
@@ -625,12 +776,12 @@ function renderMap() {
       getTooltip: ({ object, layer }) => {
         if (!object || !layer) return null;
         if (layer.id === "places" || layer.id === "places-nz") return { html: `<b>${esc(object.p.label)}</b><br>${fmt(object.n)} works${isNZGroup(object.c) ? "" : " name it"}`, style: tipStyle };
-        if (layer.id === "countries" || layer.id === "cties") return { html: `<b>${esc(object.name)}</b> · ${esc(object.region)}<br>${fmt(object.n)} works co-authored with UoA<br>${fmt(object.ni)} partner institution${object.ni > 1 ? "s" : ""}`, style: tipStyle };
-        if (layer.id === "partners" || layer.id === "ties") return { html: `<b>${esc(object.it.name)}</b><br>${esc([object.it.city, object.it.cc].filter(Boolean).join(", "))}<br>${fmt(object.n)} works co-authored with UoA`, style: tipStyle };
+        if (/^(countries|cties)/.test(layer.id)) return { html: `<b>${esc(object.name)}</b> · ${esc(object.region)}<br>${fmt(object.n)} works co-authored with UoA<br>${fmt(object.ni)} partner institution${object.ni > 1 ? "s" : ""}`, style: tipStyle };
+        if (/^(partners|ties)/.test(layer.id)) return { html: `<b>${esc(object.it.name)}</b><br>${esc([object.it.city, object.it.cc].filter(Boolean).join(", "))}<br>${fmt(object.n)} works co-authored with UoA`, style: tipStyle };
         return null;
       },
       onClick: ({ object, layer }) => { if (!object || !layer) return; if (layer.id === "places" || layer.id === "places-nz") openPlace(object.c);
-        else if (layer.id === "partners" || layer.id === "ties") openInst(object.i); else if (layer.id === "countries" || layer.id === "cties") openCountry(object.key); },
+        else if (/^(partners|ties)/.test(layer.id)) openInst(object.i); else if (/^(countries|cties)/.test(layer.id)) openCountry(object.key); },
       getCursor: ({ isHovering, isDragging }) => isDragging ? "grabbing" : isHovering ? "pointer" : "grab" });
   }
   if (web) mapDeck.setProps({ layers: mapLayers() }); else { mapCache = mapData(); renderMapSvg(); }
@@ -648,16 +799,19 @@ function renderMap() {
     <select id="mlStyle" aria-label="Map style" class="mlsel">${MAP_STYLES.map(([k, l]) => `<option value="${k}" ${ML.style === k ? "selected" : ""}>${esc(l)}</option>`).join("")}</select>
     <p class="note" style="margin:6px 0 2px">${esc(sty[2])}${ML.style === "bathy" ? " Depth: Natural Earth (public domain)." : ML.style === "los" ? " Zones: Flanders Marine Institute (2023), Marine Regions v12, CC BY 4.0." : ""}${ML.style === "web" ? "" : " Drag to pan, scroll to zoom."}</p>
     <p class="note" style="margin:0 0 4px">The styles follow the maps used at Workshop 2.</p>
+    ${saveBtn("map", "Save map image")}
     <h3 style="margin-top:10px">Show partners</h3>
     <div class="seg"><button data-mode="country" aria-pressed="${ML.mode === "country"}">By country</button><button data-mode="inst" aria-pressed="${ML.mode === "inst"}">By institution</button></div>
-    <label><input type="checkbox" id="mlPartners" ${ML.partners ? "checked" : ""}> <span class="dot" style="background:var(--s1)"></span> Partner ${ML.mode === "country" ? "countries" : "institutions"} <span class="dot" style="background:var(--s2);margin-left:6px"></span> Pacific Islands</label>
+    <label><input type="checkbox" id="mlPartners" ${ML.partners ? "checked" : ""}> <span class="dot" style="background:var(--s1)"></span> Partner ${ML.mode === "country" ? "countries" : "institutions"}: where UoA's co-authors are based</label>
+    <label style="padding-left:22px"><span class="dot" style="background:var(--s2);box-shadow:0 0 0 1.5px var(--ink)"></span> Pacific Island partners (drawn on top)</label>
     <label><input type="checkbox" id="mlTies" ${ML.ties ? "checked" : ""}> <span class="swatch" style="background:var(--s1)"></span> Co-authorship ties from UoA</label>
     <p class="note" style="margin:0 0 4px 26px">Every tie to the Pacific Islands; elsewhere, ${ML.mode === "country" ? "countries with 20+ joint works. Partners in Aotearoa are listed below, not drawn" : "partners with 3+ joint works"}.</p>
     <label><input type="checkbox" id="mlPi" ${ML.piOnly ? "checked" : ""}> Pacific Island partners only</label>
-    <label><input type="checkbox" id="mlPlaces" ${ML.places ? "checked" : ""}> <span class="dot" style="background:var(--s3)"></span> Places studied</label>
+    <label><input type="checkbox" id="mlPlaces" ${ML.places ? "checked" : ""}> <span class="dot" style="background:var(--s3)"></span> Places studied: named in the works' titles or abstracts</label>
     <label style="padding-left:22px"><span class="dot" style="border:2px solid var(--s7);background:none"></span> Aotearoa, ocean &amp; polar places</label>
     <label style="padding-left:22px"><span class="dot" style="border:2px solid var(--s4);background:none"></span> Aotearoa environment &amp; hazards</label>
     <label style="padding-left:22px"><span class="dot" style="border:2px solid var(--s5);background:none"></span> Pasifika communities in Aotearoa</label>
+    <p class="note" style="margin:4px 0 2px">Circle size follows the number of works. Small circles are drawn over large ones, and Pacific Island partners over the places studied, so a big circle does not hide them. A place studied and a partner country are different things: Fiji can be both.</p>
     <h3 style="margin-top:12px">Where the joint work is</h3>
     <table class="mini"><thead><tr><th>Region</th><th class="num">Works</th><th class="num">Countries</th></tr></thead><tbody>
       ${regRows.map(r => `<tr><td>${esc(r.r)}</td><td class="num">${fmt(r.works)}</td><td class="num">${fmt(r.countries)}</td></tr>`).join("")}</tbody></table>
@@ -678,6 +832,15 @@ function renderMap() {
   ctl.querySelectorAll("[data-country]").forEach(b => b.onclick = () => openCountry(b.dataset.country));
   const bind = (id, k) => { $(id).onchange = e => { ML[k] = e.target.checked; renderMap(); }; };
   bind("mlPlaces", "places"); bind("mlPartners", "partners"); bind("mlTies", "ties"); bind("mlPi", "piOnly");
+  PNG.map = async () => {
+    const legend = [...(ML.partners ? [["var(--s1)", ML.mode === "country" ? "Partner countries" : "Partner institutions"], ["var(--s2)", "Pacific Island partners"]] : []),
+      ...(ML.places ? [["var(--s3)", "Places studied"], ["var(--s7)", "Aotearoa, ocean & polar places", true]] : [])];
+    const title = `Map: ${sty[1]}`, file = `bph-map-${ML.style}-${stamp()}.png`, src = SRC_OA + (ML.style === "los" ? "; zones: Marine Regions v12 (CC BY 4.0)" : ML.style === "bathy" ? "; depth: Natural Earth" : "") + ". Circle size = works.";
+    if (ML.style === "web") { const c = await captureDeck(mapDeck), dpr = c.width / $("mapCanvas").clientWidth, w = c.width / dpr, h = c.height / dpr;
+      return saveFigure({ title, file, w, h, source: src, legend, draw: (ctx, x, y) => ctx.drawImage(c, x, y, w, h) }); }
+    const base = $("mapBase"), svg = $("mapSvg"), w = svg.clientWidth, h = svg.clientHeight, img = await svgToImage(svg, w, h);
+    return saveFigure({ title, file, w, h, source: src, legend, draw: (ctx, x, y) => { ctx.drawImage(base, x, y, w, h); ctx.drawImage(img, x, y, w, h); } });
+  };
   wireCommon(ctl);
 }
 
@@ -828,22 +991,23 @@ function drawMapSvgLayers() {
       .attr("stroke-width", Math.min(byCountry ? 9 : 6, (byCountry ? .8 : .6) + Math.sqrt(t.n) * (byCountry ? .55 : .6))).attr("data-tip", t.tip).attr(t.attr[0], t.attr[1]));
   }
   const cand = [];
-  if (ML.partners) {
-    const pg = g.append("g");
-    items.forEach(t => { const p = proj([t.lng, t.lat]); if (!p) return;
-      pg.append("circle").attr("cx", p[0]).attr("cy", p[1]).attr("data-r", t.r).attr("fill", t.pi ? tok("--s2") : tok("--s1")).attr("fill-opacity", t.pi ? .85 : .7)
-        .attr("stroke", tok("--sea")).attr("stroke-width", 1).attr("data-tip", t.tip).attr(t.attr[0], t.attr[1]);
-      if (byCountry && !ML.places && (t.n >= 5 || t.pi)) cand.push({ p, text: `${t.name} ${t.n}`, fs: 12, off: t.r + 4, pri: 500 + t.n, cls: "ms-label" }); });
-  }
+  // Draw order as on the web map: other partners, places studied, then Pacific Island partners; large circles first.
+  const drawPartners = list => { const pg = g.append("g");
+    list.slice().sort((a, b) => b.n - a.n).forEach(t => { const p = proj([t.lng, t.lat]); if (!p) return;
+      pg.append("circle").attr("cx", p[0]).attr("cy", p[1]).attr("data-r", t.r).attr("fill", t.pi ? tok("--s2") : tok("--s1")).attr("fill-opacity", t.pi ? .92 : .7)
+        .attr("stroke", t.pi ? tok("--ink") : tok("--sea")).attr("stroke-width", t.pi ? 1.4 : 1).attr("data-tip", t.tip).attr(t.attr[0], t.attr[1]);
+      if (byCountry && !ML.places && (t.n >= 5 || t.pi)) cand.push({ p, text: `${t.name} ${t.n}`, fs: 12, off: t.r + 4, pri: 500 + t.n, cls: "ms-label" }); }); };
+  if (ML.partners) drawPartners(items.filter(t => !t.pi));
   if (ML.places) {
     const qg = g.append("g");
-    places.forEach(d => { const p = proj([d.p.lng, d.p.lat]); if (!p) return;
+    places.slice().sort((a, b) => b.n - a.n).forEach(d => { const p = proj([d.p.lng, d.p.lat]); if (!p) return;
       const r = Math.min(46, 5 + Math.sqrt(d.n) * 2.6), ring = isNZGroup(d.c) || isOceanPlace(d.c);
       const col = d.c === "NZA" ? tok("--s4") : d.c === "NZP" ? tok("--s5") : ring ? tok("--s7") : tok("--s3");
-      qg.append("circle").attr("cx", p[0]).attr("cy", p[1]).attr("data-r", r).attr("fill", ring ? "none" : col).attr("fill-opacity", ring ? 0 : .6)
+      qg.append("circle").attr("cx", p[0]).attr("cy", p[1]).attr("data-r", r).attr("fill", ring ? "none" : col).attr("fill-opacity", ring ? 0 : .45)
         .attr("stroke", col).attr("stroke-width", ring ? 2.2 : 1.6).attr("data-place", d.c).attr("data-tip", `<b>${esc(d.p.label)}</b><br>${fmt(d.n)} works${isNZGroup(d.c) ? "" : " name it"}`);
       cand.push({ p, text: `${d.p.label} ${d.n}`, fs: 12.5, off: r + 4, pri: 1000 + d.n, cls: "ms-label" }); });
   }
+  if (ML.partners) drawPartners(items.filter(t => t.pi));
   const u = proj(UOA_POS);
   if (u) g.append("circle").attr("cx", u[0]).attr("cy", u[1]).attr("data-r", 6).attr("fill", tok("--star")).attr("stroke", tok("--sea")).attr("stroke-width", 2).attr("data-tip", "<b>Waipapa Taumata Rau, University of Auckland</b>");
   PLACE_NAMES.forEach(([name, lat, lng]) => { const p = proj([lng, lat]); if (p) cand.push({ p, text: name.toUpperCase(), fs: 10, off: -12, pri: -1, cls: "ms-label ms-name", wf: .68 }); });
@@ -882,6 +1046,7 @@ function renderPeople() {
       <h2>Co-authorship network</h2>
       <p class="note">Each dot is a UoA researcher with two or more works here and at least one UoA co-author on them; size is works under the current filters, colour is faculty. Click a dot for their profile. Drag to pan, scroll to zoom.</p>
       <div class="legend" id="ppLegend"></div>
+      <p class="toolbar">${saveBtn("net", "Save network image")}</p>
       <div class="netwrap"><div id="netCanvas" style="position:absolute;inset:0"></div></div>
       <h2>Researchers</h2>
       <div class="toolbar"><input id="ppQ" type="search" placeholder="Filter by name, unit or topic" aria-label="Filter researchers">
@@ -983,6 +1148,8 @@ function renderNet() {
       getCursor: ({ isHovering, isDragging }) => isDragging ? "grabbing" : isHovering ? "pointer" : "grab", layers: [] });
   }
   netDeck.setProps({ layers: netLayers() });
+  PNG.net = async () => { const c = await captureDeck(netDeck), dpr = c.width / el.clientWidth, w = c.width / dpr, h = c.height / dpr;
+    return saveFigure({ title: "Co-authorship network of UoA researchers", file: `bph-network-${stamp()}.png`, w, h, source: SRC_OA + " co-authorship; node size = works, colour = community.", draw: (ctx, x, y) => ctx.drawImage(c, x, y, w, h) }); };
 }
 
 // ================================================================== GRANTS
@@ -1017,7 +1184,7 @@ function renderGrants() {
       <div class="tile"><b>${fmt(pac.filter(a => a.src === RS).length)}</b><span>of them Marsden projects from the 2018–2025 rounds (${fmt(pac.filter(a => a.src === RS && a.role === "team").length)} led elsewhere with UoA researchers on the team)</span></div>
       <div class="tile"><b>${fmt(mfPac.length)}</b><span>Blue Pacific-related MFAT aid activities that UoA delivers, running in 2020 or later (of ${fmt(mf.length)} in all): NZ$${(mfSpend / 1e6).toFixed(1)}m of activity spend, which for scholarships and short courses includes participants' costs</span></div>
     </div>
-    <h2>Blue Pacific-related awards by start year</h2>
+    <h2>Blue Pacific-related awards by start year ${saveBtn("grants")}</h2>
     <div class="legend">${groups.map((g, k) => `<span><i style="background:var(--s${k + 1})"></i>${short[g]}</span>`).join("")}</div>
     ${stackedBars(rows, groups, groups.map((g, k) => `var(--s${k + 1})`), { aria: "Pacific-related awards by start year and funder", width: 900, height: 220 })}
     <p class="note">What the records cover: HRC research repository from 2016 (lead investigator and amount, no end dates); Marsden Fund to 2017 from OpenAlex (UoA-led only) and 2018–2025 from the Royal Society Te Apārangi round lists (UoA lead or team member; the year is the funding round); MBIE "who got funded" with start and end dates (UoA-led only, so MBIE programmes led by GNS, NIWA or others with UoA partners are missing); plus overseas funders that name UoA. MFAT: aid activities from MFAT's IATI reporting (via d-portal.org, retrieved ${esc(longDate(cov.mfat ? cov.mfat.retrieved : ""))}) that list UoA or UniServices as an implementing partner or name UoA as the deliverer, running in 2020 or later; MFAT lists few university partners and reports the whole activity's spend, not UoA's share. Other MFAT funding (for example contracts outside the aid programme) is not published there. The chart follows the lens filters; years run 2008–2026.</p>
@@ -1046,6 +1213,8 @@ function renderGrants() {
       <td>${a.src === MFAT ? `<small>${esc(MFAT_ROLE(a))}</small>` : esc(a.lead || "–")}${a.src === MFAT ? "" : a.role === "team" ? `<br><small>Led by ${esc(a.org || "another institution")}; UoA: ${esc((a.uoa || []).join(", "))}</small>` : a.uoa && a.uoa.length > 1 ? `<br><small>UoA: ${esc(a.uoa.join(", "))}</small>` : ""}</td></tr>`).join("") || `<tr><td colspan="6" class="muted">No awards match.</td></tr>`;
     wireCommon($("grBody"));
   };
+  PNG.grants = () => figSvg(el.querySelector("svg.chart"), "Blue Pacific-related awards by start year", `bph-awards-by-year-${stamp()}.png`,
+    "public award records (OpenAlex; Royal Society Te Apārangi Marsden round lists; MFAT IATI reporting)", groups.map((g, k) => [`var(--s${k + 1})`, short[g]]));
   $("grQ").oninput = e => { GR.q = e.target.value; tb(); };
   $("grStatus").onchange = e => { GR.status = e.target.value; tb(); };
   $("grFunder").onchange = e => { GR.funder = e.target.value; tb(); };
@@ -1056,7 +1225,7 @@ function renderGrants() {
 }
 
 // ================================================================== GAPS
-const GP = { q: "", kind: "", status: "", tq: "", tst: "", tAll: false, pic: "", picSort: "pic", picAll: false };
+const GP = { q: "", kind: "", status: "", tq: "", tst: "", tra: "", tAll: false, pic: "", picSort: "pic", picAll: false };
 function renderGaps() {
   const el = $("v-gaps");
   const focus = FW.filter(i => isPacific(W[i])), aot = FW.filter(i => category(W[i]) === "a"), oce = FW.filter(i => category(W[i]) === "e");
@@ -1079,20 +1248,29 @@ function renderGaps() {
   el.innerHTML = `<h1>How this research lines up with the SRA's SciVal topics</h1>
     <p class="lead">In 2025 Research Services built the SRA datasets in SciVal: of all ${fmt(1423)} Topic Clusters and the ${fmt(452)} key Topics at UoA for 2020–2024, they kept the highest-performing on five measures (output, share, growth, FWCI, world prominence), hand-screened those for each SRA, and the narrative team corrected the lists. Here each work is looked up in Scopus and placed in its own SciVal Topic and Topic Cluster, then checked against that list.</p>
     ${elsSrc()}
+    <div class="guide"><p><b>How to read the colours</b></p>
+      <p><span class="sw" style="background:${ST_COLOR.c}"></span><b>In the SRA dataset:</b> the work's SciVal Topic or Topic Cluster is in the dataset the SRA proposal used.</p>
+      <p><span class="sw" style="background:${ST_COLOR.s}"></span><b>Screened out in 2025:</b> its Topic or Cluster is on RIO's list marked “n”. For most, Research Services' screening marked it “n” and the SRA proposal team gave no call; the proposal team marked the rest. These were decisions made last year, not by this tool, and they can be reversed (see the review list below).</p>
+      <p><span class="sw" style="background:${ST_COLOR.n}"></span><b>Never screened:</b> its Topic was not on RIO's list at all, because the list held only UoA's highest-performing areas. Nobody decided on these; smaller and newer Pacific strands land here, and so does much of what BPH's keywords turned up.</p>
+      <p><span class="sw" style="background:${ST_COLOR.x}"></span><b>Not in SciVal:</b> found in OpenAlex only (books, chapters, reports, regional journals, arts and humanities). No SciVal dataset can include it, which widens what counts as research beyond SciVal's journals.</p></div>
     <div class="tiles">
+      <div class="tile"><b>+${fmt(Math.round(100 * (nf - cf.c) / Math.max(1, cf.c)))}%</b><span>more Pacific works than the SRA dataset holds: for every 100 inside it, this landscape finds ${fmt(Math.round(100 * cf.n / Math.max(1, cf.c)))} never screened, ${fmt(Math.round(100 * cf.x / Math.max(1, cf.c)))} not in SciVal and ${fmt(Math.round(100 * cf.s / Math.max(1, cf.c)))} screened out in 2025 (under the current filters)</span></div>
       <div class="tile"><b>${pct(cf.c, nf)}%</b><span>of the Pacific works shown are in the SRA dataset: their SciVal Topic or Topic Cluster was included</span></div>
-      <div class="tile"><b>${pct(cf.s, nf)}%</b><span>sit in a Topic or Cluster that was screened and marked “n” (some were left to other SRAs)</span></div>
+      <div class="tile"><b>${pct(cf.s, nf)}%</b><span>sit in a Topic or Cluster screened out in 2025: on RIO's list but marked “n”, mostly by Research Services' screening with no call from the SRA proposal team (some were left to other SRAs)</span></div>
       <div class="tile"><b>${pct(cf.n, nf)}%</b><span>sit in Topics and Clusters never screened: outside UoA's highest-performing areas, so the screening never saw them</span></div>
       <div class="tile"><b>${pct(cf.x, nf)}%</b><span>have no Scopus record (or no SciVal Topic yet), so no dataset built in SciVal can include them</span></div>
     </div>
-    <h2>Where the works shown sit</h2>
+    <h2>Where the works shown sit ${saveBtn("sra")}</h2>
     ${bar(cf, "Pacific Islands, peoples and ocean (lenses P and O, at the chosen strength)")}${bar(ca, "Aotearoa environment & hazards (not otherwise Pacific)")}${bar(ce, "Ocean, Earth & climate (not otherwise Pacific or Aotearoa)")}
     <p class="note">How this is worked out: each work's DOI (or, failing that, its exact title and year) is looked up in Scopus, and SciVal returns the Topic and Topic Cluster it belongs to. A SciVal research area built from Topics and Topic Clusters holds every paper in them, so a work is in the SRA dataset when its Topic or its Cluster was included. ${fmt(SVL.sra.filter(r => r.sid != null).length)} of the ${fmt(SV.length)} names on the SRA3 list were found in SciVal today${SVL.unmatched.length ? ` (${SVL.unmatched.length} not found: SciVal has since renamed or merged them)` : ""}.</p>
 
     <h2>SciVal Topics holding the Pacific works shown</h2>
+    <div class="guide"><p><b>Reviewing what was screened out.</b> To put Topics back into the dataset, download the review list (every screened-out or never-screened Topic holding works shown here, with its Cluster, research areas and example works), write <b>yes</b> in its first column for the Topics to add, and send it to the Centre for eResearch, or mark them on RIO's sheet. The page is then rebuilt with those Topics included. Including a Cluster includes every Topic in it.</p>
+      <p><button class="btn dlbtn" data-csv="review">Download the review list (CSV)</button></p></div>
     <p class="note">UoA and world output are SciVal's counts for ${yrs} across all research in the Topic, not only Pacific research. UoA FWCI in the Topic (from SciVal) is shown where the Topic holds at least two Pacific-focused works. Prominence percentile ranks the Topic's worldwide momentum.</p>
     <div class="toolbar"><input id="gtQ" type="search" placeholder="Filter Topic names" aria-label="Filter Topics" value="${esc(GP.tq)}">
-      <select id="gtSt" aria-label="Status"><option value="">Any status</option>${["c", "s", "n"].map(k => `<option value="${k}" ${GP.tst === k ? "selected" : ""}>${ST[k]}</option>`).join("")}</select></div>
+      <select id="gtSt" aria-label="Status"><option value="">Any status</option>${["c", "s", "n"].map(k => `<option value="${k}" ${GP.tst === k ? "selected" : ""}>${ST[k]}</option>`).join("")}</select>
+      <select id="gtRa" aria-label="Research area"><option value="">Any research area</option>${Object.entries(D.research_areas).map(([k, l]) => `<option value="${k}" ${GP.tra === k ? "selected" : ""}>${esc(l)}</option>`).join("")}</select></div>
     <div class="tablewrap"><table><thead><tr><th>SciVal Topic · Cluster</th><th class="num">Works here</th><th class="num">UoA ${yrs}</th><th class="num">World ${yrs}</th><th class="num">UoA share</th><th class="num">UoA FWCI</th><th class="num">Prominence</th><th>SRA status</th></tr></thead><tbody id="gtBody"></tbody></table></div>
     <p class="toolbar"><button class="btn" id="gtMore"></button><span class="note" id="gtCount"></span></p>
 
@@ -1135,7 +1313,7 @@ function renderGaps() {
 
   const tb1 = () => {
     const q = fold(GP.tq);
-    const rows = tRows.filter(r => (!GP.tst || ST_T[r.t].st === GP.tst) && (!q || fold(ST_T[r.t].name).includes(q) || (ST_T[r.t].cl >= 0 && fold(ST_C[ST_T[r.t].cl].name).includes(q))));
+    const rows = tRows.map(r => GP.tra ? { t: r.t, idx: r.idx.filter(i => W[i].ra === GP.tra) } : r).filter(r => r.idx.length).filter(r => (!GP.tst || ST_T[r.t].st === GP.tst) && (!q || fold(ST_T[r.t].name).includes(q) || (ST_T[r.t].cl >= 0 && fold(ST_C[ST_T[r.t].cl].name).includes(q))));
     const shown = GP.tAll ? rows : rows.slice(0, 25);
     $("gtBody").innerHTML = shown.map(r => { const x = ST_T[r.t], cl = x.cl >= 0 ? ST_C[x.cl] : null;
       return `<tr><td><button class="linkbtn" data-svt="${r.t}">${esc(x.name)}</button>${cl ? `<br><small>${esc(cl.name)}</small>` : ""}</td><td class="num">${fmt(r.idx.length)}</td>
@@ -1170,6 +1348,33 @@ function renderGaps() {
   };
   $("gtQ").oninput = e => { GP.tq = e.target.value; tb1(); };
   $("gtSt").onchange = e => { GP.tst = e.target.value; tb1(); };
+  $("gtRa").onchange = e => { GP.tra = e.target.value; tb1(); };
+  CSV.review = () => {
+    const byAll = {}; FW.forEach(i => { const w = W[i], t = w.sv[1]; if (t >= 0 && (w.sv[2] === "s" || w.sv[2] === "n")) (byAll[t] || (byAll[t] = [])).push(i); });
+    const out = [["Reinstate? (yes/no)", "Status on the 2025 list", "SciVal Topic ID", "SciVal Topic", "Topic Cluster ID", "Topic Cluster", "Pacific-focused works here", "All works shown here",
+      "Main research areas", `UoA output ${yrs} (all research in the Topic)`, "Why this status", "Example works (most cited)"]];
+    Object.entries(byAll).map(([t, idx]) => ({ t: +t, idx })).sort((a, b) => (ST_T[a.t].st === "s" ? 0 : 1) - (ST_T[b.t].st === "s" ? 0 : 1) || b.idx.length - a.idx.length).forEach(({ t, idx }) => {
+      const x = ST_T[t], cl = x.cl >= 0 ? ST_C[x.cl] : null, ras = {}; idx.forEach(i => ras[W[i].ra] = (ras[W[i].ra] || 0) + 1);
+      out.push(["", ST[x.st], x.id, x.name, cl ? cl.id : "", cl ? cl.name : "", idx.filter(i => W[i].tier === "f").length, idx.length,
+        Object.entries(ras).sort((a, b) => b[1] - a[1]).slice(0, 2).map(([k, n]) => `${D.research_areas[k] || k} (${n})`).join("; "), x.uoa, stWhy(t),
+        idx.slice().sort((a, b) => W[b].c - W[a].c).slice(0, 3).map(i => `${W[i].t} (${W[i].y})`).join(" | ")]);
+    });
+    return saveCSV(`bph-sra-topics-to-review-${stamp()}.csv`, out);
+  };
+  PNG.sra = async () => {
+    const data = [[cf, "Pacific Islands, peoples and ocean"], [ca, "Aotearoa environment & hazards"], [ce, "Ocean, Earth & climate"]].filter(([c]) => c.c + c.s + c.n + c.x);
+    const w = 900, rh = 58, h = data.length * rh + 30, ink = cssVar("var(--ink)"), ink2 = cssVar("var(--ink-2)"), f = "system-ui, -apple-system, 'Segoe UI', sans-serif";
+    let body = "";
+    data.forEach(([c, label], r) => { const n = c.c + c.s + c.n + c.x, y = r * rh; let x = 0;
+      body += `<text x="0" y="${y + 14}" fill="${ink}" font-size="14" font-family="${f}">${esc(label)}</text><text x="${w}" y="${y + 14}" text-anchor="end" fill="${ink2}" font-size="13" font-family="${f}">${fmt(n)} works</text>`;
+      ["c", "s", "n", "x"].forEach(k => { if (!c[k]) return; const bw = (w - 6) * c[k] / n;
+        body += `<rect x="${x}" y="${y + 22}" width="${Math.max(1, bw - 2)}" height="22" rx="3" fill="${cssVar(ST_COLOR[k])}"/>`;
+        if (bw > 46) body += `<text x="${x + bw / 2}" y="${y + 37}" text-anchor="middle" fill="#0b1620" font-size="12" font-weight="600" font-family="${f}">${pct(c[k], n)}%</text>`; x += bw; }); });
+    const img = await stringToImage(`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">${body}</svg>`);
+    return saveFigure({ title: "Where the works sit against the SRA's SciVal dataset", file: `bph-sra-alignment-${stamp()}.png`, w, h,
+      source: "Scopus and SciVal (Elsevier B.V.) via api.elsevier.com, under the University of Auckland's subscription; OpenAlex. For University use.",
+      legend: ["c", "s", "n", "x"].map(k => [ST_COLOR[k], ST[k]]), draw: (ctx, x0, y0) => ctx.drawImage(img, x0, y0, w, h) });
+  };
   $("gtMore").onclick = () => { GP.tAll = !GP.tAll; tb1(); };
   $("gpPic").onchange = e => { GP.pic = e.target.value; tb2(); };
   $("gpPicSort").onchange = e => { GP.picSort = e.target.value; tb2(); };
@@ -1270,6 +1475,9 @@ function renderAbout() {
   const SSH = new Set(["soc", "edu", "hum", "art", "law", "dev"]), sshW = W.filter(w => SSH.has(w.ra)), othW = W.filter(w => !SSH.has(w.ra));
   const sshShare = f => pct(sshW.filter(f).length, sshW.length) + "%", othShare = f => pct(othW.filter(f).length, othW.length) + "%";
   el.innerHTML = `<h1>About this landscape</h1>
+    <div class="guide"><p><b>Data period and date.</b> Works from 2020 to ${esc(longDate(BUILT))} with at least one University of Auckland author; award records back to ${Math.min(...AW.map(a => a.y0 || 9999))} (the grants chart shows 2008 onwards); OpenAlex retrieved ${esc(longDate(BUILT))}, Scopus and SciVal ${esc(RETRIEVED)}. The page is a fixed snapshot: nothing changes until the Centre for eResearch rebuilds it, and every rebuild carries its date.</p>
+      <p><b>As a baseline.</b> For the investment plan, cite the data date above and keep the key figures file (Strengths tab, "Download key figures"): it records the headline numbers under the filters you chose. A later rebuild with the same filters gives a like-for-like comparison, though the open record grows and is corrected over time, so earlier years can change slightly too.</p>
+      <p><b>How to cite.</b> Blue Pacific Horizons and the Centre for eResearch, University of Auckland (2026). <i>Blue Pacific Research Landscape</i> [interactive analysis], data as of ${esc(longDate(BUILT))}. Built from OpenAlex and the University's Scopus and SciVal subscription.${D.links && D.links.page ? " " + esc(D.links.page) : ""}</p></div>
     <p class="lead">A first pass at mapping the University of Auckland's research in or about the Pacific, and its ocean, Earth and climate research, for Mā Kiwa te moana nui e whakaumu | Blue Pacific Horizons, built by the Centre for eResearch from OpenAlex (open data) and the University's Scopus and SciVal subscription.</p>
     <div class="cols"><div>
       <h2>What counts as Pacific research here</h2>
@@ -1283,6 +1491,8 @@ function renderAbout() {
       <ul><li><b>Pacific-focused</b> (${fmt(cv.tiers.f)}): ${esc(TIER_HELP.f)}</li><li><b>Within wider studies</b> (${fmt(cv.tiers.p)}): ${esc(TIER_HELP.p)}</li><li><b>Single mention</b> (${fmt(cv.tiers.m)}): ${esc(TIER_HELP.m)}</li></ul>
       <p>The default view shows Pacific-focused works plus the Aotearoa and ocean, Earth &amp; climate lenses. Works within wider studies and single mentions are off by default; switch them on above. With every lens on, clicking one shows only that lens; "All" brings them back.</p>
       <p>Spot checks: in a random sample of 40 Pacific-focused works, 38 were plainly research in or about the Pacific; the other two named Pacific climate modes or Pacific athletes in passing. In a random sample of 25 works from the Aotearoa lens alone, 24 were environment, ocean or hazards research; the other studied sustainability attitudes. In a random sample of 40 works added by the ocean, Earth &amp; climate lens alone, 37 were plainly marine, ocean, Earth-hazard or polar research; the other three were a coastal-tourism study, an atmospheric aerosol study and an urban-greening study after the Christchurch earthquakes. Earthquake engineering of buildings is left out of that lens unless it also concerns tsunami, subduction or the seafloor; disaster studies count only in Aotearoa or the Pacific.</p>
+      <h3>Finding UoA's works when the record is incomplete</h3>
+      <p>A work counts as UoA's when OpenAlex links an author to the University, when the written affiliation names the University of Auckland or Waipapa Taumata Rau, or (added after BPH's November meeting) when the record carries no affiliation for an author at all but that author's OpenAlex profile places them at UoA in the publication year or the year before. The last route matters for book chapters and for law and humanities preprints and reports, which often carry no affiliation: ${fmt(cv.by_profile || 0)} works are in only through it. The search also takes the bare word "Pacific" and Pacific research concepts (talanoa, vā, fonua and others), and the UoA works in the Vā Atlas corpus of Pacific research methodologies (${fmt(cv.va_corpus || 0)} works here). Peer reviews, supplementary files and errata are not counted.</p>
       <h2>Sources</h2>
       <ul><li><b>OpenAlex</b> (CC0): works, authorships and affiliations, topics, citations, FWCI and top-10% flags, funders, SDGs, institutions and their locations; and public award records (HRC research repository, Marsden Fund lists, MBIE "who got funded", and overseas funders).</li>
         <li><b>Scopus and SciVal</b> (Elsevier B.V.; ${SCOPUS}, ${SCIVAL}; data retrieved through ${ELSAPI} on ${RETRIEVED}, SciVal data release ${longDate(D.svmeta.release)}; used under the University of Auckland's subscription): each work's Scopus record, SciVal Topic and Topic Cluster, SciVal FWCI; UoA's SciVal output by Topic and Cluster for ${D.svmeta.start}–${D.svmeta.end}; the Topics of ${Object.keys(SVL.pic_countries).length} Pacific Island countries and territories; and the keyword probes. APIs used: Scopus Search; SciVal Publication, Topic, Topic Cluster and Country (every endpoint, parameter and request count is listed in bph/README.md). These data are for University use under the licence: share this page within the University only.</li>
@@ -1291,6 +1501,8 @@ function renderAbout() {
         <li><b>SRA3 SciVal Topics &amp; Topic Clusters</b>, with the SciVal dataset methodology, prepared by Research Services for the Research and Innovation Office.</li>
         <li><b>Map styles</b> (Map tab): the Spilhaus projection is Adams World in a Square II in an oblique aspect, ported from PROJ 9.8 and checked against it; ocean depth from Natural Earth (public domain); exclusive economic zones from Flanders Marine Institute (2023), Maritime Boundaries Geodatabase v12, <a href="https://www.marineregions.org" target="_blank" rel="noopener">marineregions.org</a> (CC BY 4.0).</li>
         <li><b>The SRA's stakeholder engagement list</b> and <b>Workshop 2</b> (photos of the map activity and the workshop summary), from the Blue Pacific Horizons convening team: the Researchers tab's engagement check and the Workshop maps tab.</li>
+        <li><b>Vā Atlas of Pacific Research</b> (Centre for eResearch, October 2026): a citation map of Pacific research methodologies scholarship, sketching the analysis Lisa Uperesa describes; its UoA works since 2020 are among this landscape's candidates.${D.links && D.links.va ? ` <a href="${esc(D.links.va)}" target="_blank" rel="noopener">Open the Vā Atlas</a>.` : ""}</li>
+        <li><b>Not included:</b> library collections and databases outside OpenAlex (for example humanities and language materials the University Library holds), which could be added with the Library's help.</li>
         <li><b>Not included:</b> non-public data from the University's grant and ethics application systems. It is managed by the Research and Innovation Office for consent and privacy reasons and would need their permission.</li></ul>
     </div><div>
       <h2>Read it with care</h2>
@@ -1320,6 +1532,8 @@ function openWork(i) {
     <p class="meta">${w.y} · ${esc(w.v || w.ty || "")}<br><span class="muted">Research area: <button class="linkbtn" data-ra="${esc(w.ra)}">${esc(D.research_areas[w.ra] || w.ra)}</button></span></p>
     ${facts([[fmt(w.c), "citations (OpenAlex)"], [w.fwci == null ? "–" : w.fwci.toFixed(2), "FWCI (OpenAlex)"], [w.top10 ? "yes" : "no", "top 10% most cited (OpenAlex)"], [fmt(w.na), "authors"]])}
     <h3>Why it is here</h3><p class="meta">${esc(w.ev.join("; "))}</p>
+    ${w.up ? `<p class="meta">The record carries no affiliation for its UoA author${w.a.length > 1 ? "s" : ""}; ${w.a.length > 1 ? "they are" : "they are"} credited to UoA because their OpenAlex profile places them at UoA in ${w.y} or the year before.</p>` : ""}
+    ${w.va ? `<p class="meta">Also in the Vā Atlas corpus of Pacific research methodologies.</p>` : ""}
     ${w.places.length ? `<p class="meta">Places and peoples named: ${esc(w.places.map(placeLabel).join(", "))}</p>` : ""}
     ${t ? `<h3>Topic</h3><p class="meta"><button class="linkbtn" data-topic="${w.tp}">${esc(t.name)}</button><br><span class="muted">${esc(t.sub)} · ${esc(t.field)}</span></p>` : ""}
     <h3>In SciVal</h3>${st ? `<p class="meta">Topic: <button class="linkbtn" data-svt="${sv[1]}">${esc(st.name)}</button>${st.cl >= 0 ? `<br>Topic Cluster: ${esc(ST_C[st.cl].name)}` : ""}</p>
@@ -1439,7 +1653,11 @@ function openArea(k) {
     ${facts([[fmt(ws.length), "works under the filters"], [fmt(Object.keys(people).length), "UoA researchers"]])}
     ${MS_KEYS.includes(k) ? `<p class="meta">${esc(MS_HELP[k])}</p>` : ""}
     <h3>Faculties</h3><p class="meta">${Object.entries(fac).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([f, n]) => `${esc(f)} <span class="mono muted">${n}</span>`).join("<br>")}</p>
-    <h3>Topics</h3><p class="meta">${Object.entries(tp).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([t, n]) => `<button class="linkbtn" data-topic="${t}">${esc(T[t].name)}</button> <span class="mono muted">${n}</span>`).join("<br>")}</p>
+    <h3>Topics inside this area (${fmt(Object.keys(tp).length)})</h3>
+    <p class="meta">Each work's main OpenAlex topic. The bar shows works; the tooltip gives how many are Pacific-focused.</p>
+    ${hbars(Object.entries(tp).sort((a, b) => b[1] - a[1]).slice(0, 40).map(([t, n]) => { const nf = ws.filter(i => W[i].tp === +t && W[i].tier === "f").length;
+      return { label: T[t].name, n, attr: `data-topic="${t}"`, tip: `<b>${esc(T[t].name)}</b><br>${esc(T[t].sub || "")}<br>${fmt(n)} works, ${fmt(nf)} Pacific-focused` }; }), { labelW: "220px" })}
+    ${Object.keys(tp).length > 40 ? `<p class="meta">and ${fmt(Object.keys(tp).length - 40)} smaller topics.</p>` : ""}
     <h3>Researchers</h3><ul class="list">${Object.entries(people).sort((a, b) => b[1] - a[1]).slice(0, 12).map(([a, n]) => authorItem(+a, `${n} work${n > 1 ? "s" : ""}`)).join("")}</ul>
     <h3>Most cited works</h3><ul class="list">${ws.slice(0, 15).map(workItem).join("")}</ul>`);
 }

@@ -72,12 +72,30 @@ def region_of(cc, lat=None, lng=None):
     return "Elsewhere"
 
 
-def is_uoa(authorship):
-    """A UoA authorship: linked to UoA by OpenAlex, or its written affiliation names UoA (not AUT)."""
+UOA_YEARS = {}      # author id -> years their OpenAlex profile places them at UoA (fetch_works.py)
+SKIP_TYPES = {"peer-review", "supplementary-materials", "erratum", "paratext", "retraction"}
+
+
+def uoa_by_record(authorship):
+    """Linked to UoA by OpenAlex, or the written affiliation names UoA (not AUT)."""
     for i in authorship.get("institutions") or []:
         if short(i.get("id")) == UOA or any(short(x) == UOA for x in i.get("lineage") or []):
             return True
     return bool(uoa_affiliation_strings(authorship, UOA))
+
+
+def uoa_by_profile(authorship, year):
+    """No affiliation on the record, but the author's profile places them at UoA that year (or the year before)."""
+    if authorship.get("institutions") or authorship.get("raw_affiliation_strings"):
+        return False
+    ys = UOA_YEARS.get(short((authorship.get("author") or {}).get("id")))
+    return bool(ys and year and (year in ys or year - 1 in ys))
+
+
+def is_uoa(authorship, year=None):
+    """A UoA authorship: by the record (link or written affiliation), or by the author's profile when the
+    record carries no affiliation at all."""
+    return uoa_by_record(authorship) or uoa_by_profile(authorship, year)
 
 
 def main():
@@ -86,6 +104,9 @@ def main():
     awards_raw = [json.loads(l) for l in open(WORK / "awards_raw.jsonl")]
     marsden_raw = [json.loads(l) for l in open(WORK / "marsden_awards.jsonl")] if (WORK / "marsden_awards.jsonl").exists() else []
     mfat_raw = [json.loads(l) for l in open(WORK / "mfat_activities.jsonl")] if (WORK / "mfat_activities.jsonl").exists() else []
+    if (WORK / "uoa_author_years.json").exists():
+        UOA_YEARS.update({k: set(v) for k, v in json.loads((WORK / "uoa_author_years.json").read_text()).items()})
+    skipped_types = Counter()
 
     # ------------------------------------------------------------ classify works
     works, dropped, no_abs_dropped = [], 0, 0
@@ -95,7 +116,13 @@ def main():
         if wid in seen:
             continue
         seen.add(wid)
+        if w.get("type") in SKIP_TYPES:          # peer reviews, supplements, errata: not research outputs
+            skipped_types[w["type"]] += 1
+            continue
         aus = w.get("authorships") or []
+        if not any(is_uoa(a, w.get("publication_year")) for a in aus):
+            dropped += 1
+            continue
         partner = any(i.get("country_code") in PI_CC for a in aus for i in a.get("institutions") or [])
         kw = " ; ".join(k.get("display_name") or "" for k in w.get("keywords") or [])
         pt = w.get("primary_topic") or {}
@@ -216,7 +243,7 @@ def main():
                 iid = short(i.get("id"))
                 if iid and iid != UOA and iid not in wrong and not any(short(x) == UOA for x in i.get("lineage") or []):
                     ext.add(inst_i(iid))
-            if not is_uoa(a) or not au.get("id"):
+            if not is_uoa(a, w.get("publication_year")) or not au.get("id"):
                 continue
             aid = short(au["id"])
             if aid not in auth_idx:
@@ -267,7 +294,8 @@ def main():
             tier=TIER_CODE[c["tier"]], lens=sum(LENS_BIT[l] for l in c["lenses"]), ev=c["evidence"],
             ms=sum(MS_BIT[k] for k in c["mt"]), ra=w["_ra"], places=places, tp=topic_i(w.get("primary_topic")),
             sdg=[short(s["id"]) for s in w.get("sustainable_development_goals") or []],
-            a=uoa_auth, na=len(aus), ext=sorted(ext), pi=w["_partner"], fu=fids, aw=aw))
+            a=uoa_auth, na=len(aus), ext=sorted(ext), pi=w["_partner"], fu=fids, aw=aw,
+            up=int(not any(uoa_by_record(x) for x in aus)), va=int("V" in (w.get("_found_by") or []))))
 
     # ------------------------------------------------------------ awards: keep Pacific-related + linked
     linked = Counter(i for w in out_works for i in w["aw"])
@@ -423,6 +451,8 @@ def main():
         m_only=sum(1 for w in out_works if w["lens"] == 8 and not w["tier"]),
         research_areas=dict(Counter(w["ra"] for w in out_works)),
         marsden_rounds=sum(1 for a in awards if a["src"] == RS),
+        by_profile=sum(w["up"] for w in out_works), va_corpus=sum(w["va"] for w in out_works),
+        skipped_types=dict(skipped_types),
         mfat=dict(n=sum(1 for a in awards if a["src"] == MFAT), pac=sum(1 for a in awards if a["src"] == MFAT and a["pac"]),
                   retrieved=max((m.get("retrieved") or "" for m in mfat_raw), default=None)),
         no_abstract=sum(1 for w in works if not w["_abstract"]),

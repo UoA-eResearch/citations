@@ -18,9 +18,17 @@ Topic Clusters used for the SRA last year.
 | **Grants & projects** | Public award records: UoA-led grants (HRC, Marsden to 2017, MBIE, overseas funders) and Marsden projects from the 2018-2025 rounds with a UoA researcher on the team; funders acknowledged in the works. |
 | **SRA alignment & gaps** | Each work placed in its own SciVal Topic and Topic Cluster and tested against the SRA3 list (in the SRA dataset, screened out, never screened, not in SciVal); the SciVal Topics holding the Pacific research with UoA's SciVal metrics; where Pacific Island countries publish and UoA's output there; keyword probes that report the SciVal Topics new keywords land in. |
 | **Workshop maps** | Where Workshop 2 participants placed their research on five maps, and what they wrote (internal data). |
-| **About** | Definitions, sources and caveats. |
+| **About** | Data period and date, how to cite, using it as a baseline, definitions, sources and caveats. |
 
-One filter bar (lenses, ocean themes and strength) drives every tab.
+One filter bar (lenses, ocean themes and strength) drives every tab. After BPH's November meeting the page also
+has: the data date under the title; a *How reliable is this picture?* table (coverage by research area: books and
+chapters, single-authored, abstracts, SciVal coverage, works credited by author profile); every topic inside a
+research area; a plain-language colour guide and an "extra works" figure on the SRA tab; a downloadable review
+list of screened-out and never-screened SciVal Topics (CSV, with a column to mark reinstatements); a key-figures
+CSV for baselines; and "Save image" buttons that export charts, maps and the network as PNGs with a title, legend,
+source and data date. In claude.ai the downloads go through the artifact `downloads` capability (the viewer
+confirms each save); elsewhere they are ordinary browser downloads. On the maps, small circles are drawn over large
+ones and Pacific Island partners over the places studied.
 
 ## Definitions
 
@@ -46,7 +54,18 @@ One filter bar (lenses, ocean themes and strength) drives every tab.
 - **UoA authorship.** An authorship counts as UoA when OpenAlex links it to UoA or when its written affiliation
   names the University of Auckland / Waipapa Taumata Rau (not AUT); candidates are fetched both ways. This
   catches UoA authors whom OpenAlex credits to a previous employer; the wrongly linked institution is not
-  counted as a partner.
+  counted as a partner. Since 12 November 2026 (after BPH's meeting) an authorship with **no affiliation at all**
+  on the record also counts when the author's OpenAlex profile places them at UoA in the publication year or the
+  year before (`uoa_author_years.json`, built by `fetch_works.py` for every UoA author it sees); the four lens
+  queries are rerun by author for these (routes `U*`). This recovers book chapters and law and humanities
+  preprints and reports, which often carry no affiliation. Works found only this way are flagged (`up`).
+- **More candidate routes (12 November 2026).** The search also uses the bare word "Pacific" and Pacific
+  research concepts (talanoa, teu le vā, kakala, fonofale, fa'afaletui, tok stori, tivaevae, vanua, fonua;
+  `lenses.LENS_P_EXTRA`, search only, so the world comparison is unchanged), and takes the UoA works of 2020
+  onwards in the Vā Atlas corpus (`pacific/`, route `V`). The ocean governance theme became *Ocean & climate
+  law, governance & blue economy*: high seas and BBNJ, ITLOS and climate advisory opinions, the Antarctic
+  Treaty, fisheries law and governance, loss and damage, climate mobility and displacement, climate litigation.
+  Peer reviews, supplementary files, errata, paratext and retractions are no longer counted.
 - **Strength.** *Pacific-focused*: named in the title, a specific Pacific place/people/concept, a Pacific
   Island co-author, or the Pacific Ocean/climate named repeatedly. *Within wider studies*: generic
   "Pacific"/"Pasifika" only in the abstract (typically NZ health data by ethnicity). *Single mentions*.
