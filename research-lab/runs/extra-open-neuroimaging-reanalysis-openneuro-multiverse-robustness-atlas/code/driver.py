@@ -55,6 +55,7 @@ def work(args):
     try:
         return F.run_subject(ds, sub, arms=("nilearn", "FSL") if fsl else ("nilearn",))
     except Exception as e:
+        fetch.drop_subject(ds, sub)               # a failed subject must not keep its BOLD on disk
         return {"ds": ds, "sub": sub, "status": "failed", "error": f"{type(e).__name__}: {e}"[:400],
                 "trace": traceback.format_exc()[-1500:]}
 

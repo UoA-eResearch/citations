@@ -122,7 +122,7 @@ def ds000002(eventspath: str, task: str):
             # A nuisance regressor was added, which consisted of trials on which no response was made 
             # setting as trial_type == 'missed'. Will convolve and include as nuisance
             eventsdat.loc[eventsdat['response_time'].isna(), 'trial_type'] = 'missed'
-            return eventsdat_cpy
+            return eventsdat  # research-lab patch (D5): upstream returned an undefined name, eventsdat_cpy
 
         else:
             print(f"Trial type value 'missed' already contained in events file. Skipping modification for {os.path.basename(eventspath)}")

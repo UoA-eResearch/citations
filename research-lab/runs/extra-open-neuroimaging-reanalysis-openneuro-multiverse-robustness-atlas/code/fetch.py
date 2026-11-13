@@ -134,6 +134,12 @@ def fetch_subject(ds, sub, task):
     dk = [k for k in keys(DERIV, f"fmriprep/{ds}-fmriprep/sub-{sub}/") if f"_task-{task}_" in k and "/func/" in k]
     rk = [k for k in keys(RAW, f"{ds}/sub-{sub}/") if f"_task-{task}_" in k and "/func/" in k]
     top = {n: f"{ds}/{n}" for n in (f"task-{task}_events.tsv", f"task-{task}_bold.json")}
+    for name in (f"task-{task}_bold.json", f"task-{task}_events.json"):   # dataset-level sidecars (BIDS inheritance)
+        dest = raw / name
+        if not dest.exists():
+            b = get(f"{RAW}/{ds}/{name}")
+            if b:
+                dest.write_bytes(b)
     runs = []
     for k in sorted(x for x in dk if x.endswith(f"_{SPACE}_desc-preproc_bold.nii.gz")):
         stem = k.split("/")[-1].split(f"_{SPACE}")[0]                    # sub-X[_ses-Y]_task-T[_run-R]
