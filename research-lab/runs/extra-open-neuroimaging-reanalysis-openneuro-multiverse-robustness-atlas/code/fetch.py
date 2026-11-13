@@ -191,11 +191,9 @@ def subject_bytes(ds, sub, task):
     """Bytes of the subject's MNI res-2 BOLD files for the task (from the bucket listing), for disk budgeting."""
     q = {"list-type": "2", "prefix": f"fmriprep/{ds}-fmriprep/sub-{sub}/", "max-keys": "1000"}
     t = (get(f"{DERIV}/?{urllib.parse.urlencode(q)}") or b"").decode()
-    tot = 0
-    for k, z in zip(re.findall(r"<Key>([^<]+)</Key>", t), re.findall(r"<Size>(\d+)</Size>", t)):
-        if f"_task-{task}_" in k and k.endswith(f"_{SPACE}_desc-preproc_bold.nii.gz"):
-            tot += int(z)
-    return tot
+    sizes = [int(z) for k, z in zip(re.findall(r"<Key>([^<]+)</Key>", t), re.findall(r"<Size>(\d+)</Size>", t))
+             if f"_task-{task}_" in k and k.endswith(f"_{SPACE}_desc-preproc_bold.nii.gz")]
+    return sum(sizes), (max(sizes) if sizes else 0)
 
 
 def drop_subject(ds, sub):

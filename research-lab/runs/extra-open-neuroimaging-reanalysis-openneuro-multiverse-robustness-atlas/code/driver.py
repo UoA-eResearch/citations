@@ -22,6 +22,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import psutil
 
 RUN = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RUN / "code"))
@@ -29,6 +30,7 @@ import fetch  # noqa: E402
 import firstlevel as F  # noqa: E402
 
 SEED, CAP, FSL_N, BUDGET, MIN_FREE = 20261110, 100, 20, 25e9, 8e9
+MEM_BUDGET, MEM_FLOOR, MEM_PER_BYTE = 40e9, 20e9, 6   # peak memory ~ 6 x the largest compressed run
 NIL = [k for k in range(48)]
 FSLK = [F.cfg_index(1, 1, 0, c, 1) for c in range(4)]
 
@@ -62,7 +64,7 @@ def work(args):
 
 def main():
     a = sys.argv[1:]
-    workers = int(a[0]) if a and a[0].isdigit() else 12
+    workers = int(a[0]) if a and a[0].isdigit() else 8
     only = [x for x in a if x.startswith("ds")]
     E = pd.read_csv(RUN / "results" / "tables" / "eligible.csv")
     E = E[E.status == "eligible"]
@@ -78,7 +80,7 @@ def main():
     print(f"{len(queue)} subjects to run on {workers} workers", flush=True)
     fetched, lock = {}, threading.Lock()          # (ds, sub) -> bytes, for fetched-but-unfinished subjects
 
-    todo, size, reserved = list(queue), {}, {}
+    todo, size, maxrun, reserved = list(queue), {}, {}, {}
 
     def prefetch():
         while True:
@@ -90,7 +92,7 @@ def main():
                 pick = None
                 for q in todo:
                     if q not in size:
-                        size[q] = fetch.subject_bytes(q[0], q[1], q[3])
+                        size[q], maxrun[q] = fetch.subject_bytes(q[0], q[1], q[3])
                     if inflight + size[q] <= BUDGET and free - size[q] >= MIN_FREE:
                         pick = q
                         break
@@ -119,6 +121,10 @@ def main():
             while pending and len(futs) < workers:
                 with lock:
                     ready = [q for q in pending if (q[0], q[1]) in fetched]
+                    est = {q: MEM_PER_BYTE * maxrun.get(q, 0) for q in ready}
+                running = sum(MEM_PER_BYTE * maxrun.get(v, 0) for v in futs.values())
+                avail = psutil.virtual_memory().available
+                ready = [q for q in ready if running + est[q] <= MEM_BUDGET and avail - est[q] >= MEM_FLOOR]
                 if not ready:
                     break
                 q = ready[0]
