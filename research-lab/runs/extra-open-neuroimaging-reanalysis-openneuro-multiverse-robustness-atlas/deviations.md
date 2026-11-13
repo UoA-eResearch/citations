@@ -101,3 +101,14 @@ FSL arm is therefore cut to a focused software comparison:
 
 The timing subject's other 44 FSL maps exist but are not used.
 
+## D4 — 2026-11-13 — the secondary contrast is added to the first level (before any group result)
+
+The plan's secondary contrast (every condition in the primary contrast's condition list against the implicit
+baseline) was missing from the first-level code. The first launch of the full run was stopped after about a minute,
+before any subject finished, and the code now computes both contrasts in one fit: equal weights (1/k over the k
+conditions) in the nilearn arm, and a second FSL contrast in the same design. Where the primary contrast names a
+single regressor (10 of the 24 datasets) the secondary contrast is not computed, as D1 said. Subject files hold
+`eff` (primary) and `eff2` (secondary). The same launch check also caught that pybids reports the Convolve step's
+inputs with wildcards unexpanded (`trial_type.*`), which had sent those regressors to FSL already convolved; they are
+now expanded, so every convolved task regressor reaches FSL as a three-column EV. The timing subject was rerun.
+

@@ -116,6 +116,11 @@ def designs(ds, sub, spec, derivative):
         w = pd.Series(0.0, index=X.columns)
         for c, wt in zip(con.conditions, con.weights):
             w[c] = wt
+        w2 = None                                # secondary: the contrast's conditions against baseline, equal weights
+        if len(con.conditions) > 1:
+            w2 = pd.Series(0.0, index=X.columns)
+            for c in con.conditions:
+                w2[c] = 1.0 / len(con.conditions)
         hist = o.trans_hist
         ci = max(i for i, h in enumerate(hist) if h.transformation_name == "Convolve")
         pre = hist[ci - 1].output.variables
@@ -129,7 +134,7 @@ def designs(ds, sub, spec, derivative):
                 evs.append((name, np.asarray(v.onset, float), np.asarray(v.duration, float), np.asarray(vals, float)))
         other = [c for c in X.columns if c not in convolved and c != "intercept" and not c.startswith("cosine")
                  and not c.endswith("_derivative")]
-        out[int(o.entities.get("run", 1))] = {"X": X, "con": w, "evs": evs, "dense_other": other,
+        out[int(o.entities.get("run", 1))] = {"X": X, "con": w, "con2": w2, "evs": evs, "dense_other": other,
                                              "contrast": con.name}
     return out
 
@@ -178,14 +183,16 @@ def nilearn_arm(bold, affine, rmask, D, confs, tmask):
             d = D[hrf]
             for ci, cname in enumerate(CONFS):
                 X = pd.concat([d["X"].reset_index(drop=True), confs[cname].add_prefix("conf_")], axis=1)
-                cv = np.r_[d["con"].to_numpy(), np.zeros(confs[cname].shape[1])]
+                pad = np.zeros(confs[cname].shape[1])
+                cvs = [np.r_[d["con"].to_numpy(), pad]] + ([np.r_[d["con2"].to_numpy(), pad]] if d["con2"] is not None else [])
                 for ni, noise in enumerate(("ar1", "ols")):
                     labels, results = run_glm(Y, X.to_numpy(), noise_model=noise, n_jobs=1)
-                    c = compute_contrast(labels, results, cv, stat_type="t")
-                    eff = np.full(tmask.sum(), np.nan, np.float32)
-                    var = np.full(tmask.sum(), np.nan, np.float32)
-                    eff[keep], var[keep] = c.effect_size().ravel(), c.effect_variance().ravel()
-                    res[cfg_index(0, si, hi, ci, ni)] = (eff, var)
+                    for j, cv in enumerate(cvs):
+                        c = compute_contrast(labels, results, cv, stat_type="t")
+                        eff = np.full(tmask.sum(), np.nan, np.float32)
+                        var = np.full(tmask.sum(), np.nan, np.float32)
+                        eff[keep], var[keep] = c.effect_size().ravel(), c.effect_variance().ravel()
+                        res[cfg_index(0, si, hi, ci, ni) + 96 * j] = (eff, var)
     return res
 
 
@@ -250,7 +257,7 @@ set confoundev_files(1) "{confounds}"
 """
 
 
-def write_fsf(path, tr, npts, evs, ev_dir, deriv, confounds_file, con_weights, prewhiten):
+def write_fsf(path, tr, npts, evs, ev_dir, deriv, confounds_file, con_weights, prewhiten, con2_weights=None):
     """evs: [(name, kind, file)] kind 3 = three-column (convolved, double gamma), 2 = one value per volume (not
     convolved). con_weights: weight per original EV."""
     n = len(evs)
@@ -262,17 +269,21 @@ def write_fsf(path, tr, npts, evs, ev_dir, deriv, confounds_file, con_weights, p
               f'set fmri(custom{i}) "{f}"\n')
         for j in range(n + 1):
             s += f"set fmri(ortho{i}.{j}) 0\n"
-    s += 'set fmri(con_mode_old) real\nset fmri(con_mode) real\nset fmri(conpic_real.1) 1\nset fmri(conname_real.1) "c1"\n'
-    k = 1
-    for i, (_, kind, _) in enumerate(evs):
-        s += f"set fmri(con_real1.{k}) {con_weights[i]}\n"
-        k += 1
-        if deriv and kind == 3:
-            s += f"set fmri(con_real1.{k}) 0\n"
+    cons = [con_weights] + ([con2_weights] if con2_weights is not None else [])
+    s = s.replace("set fmri(ncon_orig) 1\nset fmri(ncon_real) 1", f"set fmri(ncon_orig) {len(cons)}\nset fmri(ncon_real) {len(cons)}")
+    s += 'set fmri(con_mode_old) real\nset fmri(con_mode) real\n'
+    for c, cw in enumerate(cons, 1):
+        s += f'set fmri(conpic_real.{c}) 1\nset fmri(conname_real.{c}) "c{c}"\n'
+        k = 1
+        for i, (_, kind, _) in enumerate(evs):
+            s += f"set fmri(con_real{c}.{k}) {cw[i]}\n"
             k += 1
-    s += 'set fmri(conpic_orig.1) 1\nset fmri(conname_orig.1) "c1"\n'
-    for i in range(n):
-        s += f"set fmri(con_orig1.{i + 1}) {con_weights[i]}\n"
+            if deriv and kind == 3:
+                s += f"set fmri(con_real{c}.{k}) 0\n"
+                k += 1
+        s += f'set fmri(conpic_orig.{c}) 1\nset fmri(conname_orig.{c}) "c{c}"\n'
+        for i in range(n):
+            s += f"set fmri(con_orig{c}.{i + 1}) {cw[i]}\n"
     Path(path).write_text(s)
 
 
@@ -285,17 +296,20 @@ def fsl_arm(run, D, confs, tmask, work, timing, reduced=True):
     jobs = []
     for hi, hrf in enumerate(HRFS):
         d = D[hrf]
-        evs, weights = [], []
+        evs, weights, weights2 = [], [], []
         for name, on, du, va in D["canonical"]["evs"]:
             f = work / f"ev_{len(evs):02d}.txt"
-            np.savetxt(f, np.c_[on, du, va], fmt="%.6f")
+            np.savetxt(f, np.c_[on, du, va] if len(on) else [[0.0, 0.0, 0.0]], fmt="%.6f")   # no events: one zero-height event
             evs.append((name, 3, f"/work/{f.name}"))
             weights.append(float(d["con"].get(name, 0.0)))
+            weights2.append(float(d["con2"].get(name, 0.0)) if d["con2"] is not None else 0.0)
         for name in D["canonical"]["dense_other"]:
             f = work / f"evd_{len(evs):02d}.txt"
             np.savetxt(f, d["X"][name].to_numpy(), fmt="%.6f")
             evs.append((name, 2, f"/work/{f.name}"))
             weights.append(float(d["con"].get(name, 0.0)))
+            weights2.append(float(d["con2"].get(name, 0.0)) if d["con2"] is not None else 0.0)
+        two = d["con2"] is not None
         for ci, cname in enumerate(CONFS):
             cf = work / f"conf_{ci}.txt"
             np.savetxt(cf, confs[cname].to_numpy(), fmt="%.6f")
@@ -303,7 +317,8 @@ def fsl_arm(run, D, confs, tmask, work, timing, reduced=True):
                 if reduced and (hi != 0 or ni != 1):
                     continue
                 tag = f"h{hi}c{ci}n{ni}"
-                write_fsf(work / f"{tag}.fsf", tr, npts, evs, work, hrf == "derivative", f"/work/{cf.name}", weights, pw)
+                write_fsf(work / f"{tag}.fsf", tr, npts, evs, work, hrf == "derivative", f"/work/{cf.name}", weights, pw,
+                          weights2 if two else None)
                 jobs.append((tag, hi, ci, ni, pw))
     lines = ["set -e", "cd /work",
              "fslmaths /in/bold -mas /in/mask prefiltered", "fslmaths prefiltered -Tmean mean_func",
@@ -323,7 +338,9 @@ def fsl_arm(run, D, confs, tmask, work, timing, reduced=True):
             lines += [f"cp {tag}.fsf {out}.fsf", f"feat_model {out} conf_{ci}.txt > /dev/null",
                       f"film_gls --in=ff{si} --rn={out}_stats --pd={out}.mat --thr=1000 --con={out}.con "
                       + ("--sa --ms=5" if pw else "--noest") + " > /dev/null",
-                      f"mv {out}_stats/cope1.nii.gz {out}_cope.nii.gz; mv {out}_stats/varcope1.nii.gz {out}_varcope.nii.gz; rm -rf {out}_stats"]
+                      f"mv {out}_stats/cope1.nii.gz {out}_cope.nii.gz; mv {out}_stats/varcope1.nii.gz {out}_varcope.nii.gz; "
+                      f"if [ -f {out}_stats/cope2.nii.gz ]; then mv {out}_stats/cope2.nii.gz {out}_cope2.nii.gz; "
+                      f"mv {out}_stats/varcope2.nii.gz {out}_varcope2.nii.gz; fi; rm -rf {out}_stats"]
         lines += [f"rm -f ff{si}.nii.gz"]
         if timing:
             lines += [f"echo smoothing {si} done $(date +%s)"]
@@ -349,6 +366,11 @@ def fsl_arm(run, D, confs, tmask, work, timing, reduced=True):
             v = nb.load(work / f"{out}_varcope.nii.gz").get_fdata(dtype=np.float32)[tmask]
             e[~keep], v[~keep] = np.nan, np.nan
             res[cfg_index(1, si, hi, ci, ni)] = (e, v)
+            if (work / f"{out}_cope2.nii.gz").exists():
+                e2 = nb.load(work / f"{out}_cope2.nii.gz").get_fdata(dtype=np.float32)[tmask]
+                v2 = nb.load(work / f"{out}_varcope2.nii.gz").get_fdata(dtype=np.float32)[tmask]
+                e2[~keep], v2[~keep] = np.nan, np.nan
+                res[cfg_index(1, si, hi, ci, ni) + 96] = (e2, v2)
     for f in work.glob("*.nii.gz"):
         f.unlink()
     return res
@@ -357,7 +379,7 @@ def fsl_arm(run, D, confs, tmask, work, timing, reduced=True):
 def fixed_effects(per_run):
     """per_run: list of {cfg: (eff, var)} -> {cfg: eff}"""
     out = {}
-    for k in per_run[0]:
+    for k in sorted(set.intersection(*[set(r) for r in per_run])):
         E = np.stack([r[k][0] for r in per_run])
         V = np.stack([r[k][1] for r in per_run])
         W = np.where(np.isfinite(V) & (V > 0), 1.0 / np.where(V > 0, V, 1), np.nan)
@@ -407,12 +429,10 @@ def run_subject(ds, sub, arms=("nilearn", "FSL"), timing=False, keep_bold=False,
     if not per_run:
         return {"ds": ds, "sub": sub, "status": "no run with a design"}
     ff = fixed_effects(per_run)
-    eff = np.full((96, tmask.sum()), np.nan, np.float16)
-    if dest.exists():                                   # keep maps already computed (e.g. the timing run's)
-        eff = np.load(dest)["eff"]
+    eff = np.full((192, tmask.sum()), np.nan, np.float16)     # 0-95 primary contrast, 96-191 secondary (D4)
     for k, v in ff.items():
         eff[k] = v.astype(np.float16)
-    np.savez_compressed(dest, eff=eff, meta=json.dumps(meta))
+    np.savez_compressed(dest, eff=eff[:96], eff2=eff[96:], meta=json.dumps(meta))
     if not keep_bold:
         fetch.drop_subject(ds, sub)
     out = {"ds": ds, "sub": sub, "status": "ok", "runs": len(per_run), "t_fetch": round(t_fetch), "t_nilearn": round(t_nil),
