@@ -49,3 +49,55 @@ transforms, no resampled BOLD and no confounds), so they fail the plan's require
 parametric modulator), so the secondary task-positive map equals the primary map there; the secondary contrast is
 reported for the other 14.
 
+## D2 — 2026-11-12 — implementation details (before any first-level result)
+
+Settled while building and timing the pipeline on one subject of ds000001. No contrast map, group map or robustness
+value had been computed.
+
+1. **Applying the specs as their authors did.** The specs are written for openneuro_glmfitlins' own event files: its
+   `modify_events.<ds>` functions fill `n/a` modulators with 0, rename trial types pybids cannot parse and add
+   response-time regressors, and its pybids is pinned to a development commit. Without them, ds000001's spec fails in
+   pybids. So the project's `modify_events.py` is vendored at the spec commit (`code/vendor_glmfitlins/`, MIT licence)
+   and applied to each dataset whose basic details set `preproc_events` (12 of the 24), and pybids is pinned to the
+   project's commit (26b3f7e). None of the 24 datasets trims dummy volumes.
+2. **The spec's own confounds are 24P, not 6P.** Every spec lists `trans_*` and `rot_*`, which match fMRIPrep's
+   derivative and squared columns too. The configuration closest to the spec (secondary 3) is therefore 6 mm, SPM
+   canonical, 24P, AR(1) (FitLins used 5 mm, between our 4 and 6 mm levels), not 6P as the plan said.
+3. **Raw and derivative files are matched by entities** (subject, session, task, acquisition, run as an integer,
+   echo): raw files say `run-01` where fMRIPrep says `run-1`.
+4. **Downloads.** The VM's link to AWS reaches about 85 KB/s per connection, so files are fetched as parallel byte
+   ranges (32 connections per file). The eligible data total 1,068 GB (2,098 runs), 570 GB of it in ds001734.
+5. **Storage.** Subject-level fixed-effects contrast maps are stored per configuration as float16 within the
+   MNI152NLin2009cAsym res-2 template brain mask (235,840 voxels; the mask file from openneuro_glmfitlins), NaN outside
+   the subject's own brain mask; the group analysis uses voxels inside every subject's mask.
+6. **Scaling.** nilearn arm: percent signal change per voxel before the GLM (nilearn's `signal_scaling=0`); FSL arm:
+   FEAT's grand-mean scaling to 10,000. Effects are compared only within a configuration, so the scale difference does
+   not enter R; across software it enters only through thresholded overlap and correlation, which are scale-free.
+7. **FSL EVs** are the same pybids variables taken just before the spec's Convolve step (onset, duration, amplitude),
+   written as three-column files and convolved by FSL; task columns the spec does not convolve enter as one value per
+   volume, unconvolved. FILM uses FEAT's settings (`--sa --ms=5`, threshold 1000).
+
+## D3 — 2026-11-13 — the FSL arm is reduced after the timing run (before any group result)
+
+The timing run (ds000001 sub-01, 3 runs of 300 volumes; first level only, no group map) took 24 minutes per run for
+the 48 nilearn configurations and 8.9 hours per run for the 48 FSL ones, on this VM while another job held 8–20 of
+its 28 cores. Per step, for one run: SUSAN 12 minutes per smoothing level, scaling and high-pass 3½ minutes,
+`film_gls` without prewhitening 3 minutes, with FILM prewhitening about 17 minutes. Projected over the 2,098 runs on
+14 workers: about 60 hours for the nilearn arm and about 55 days for the FSL arm.
+
+D1's reduction rule does not make this fit. Its first step (prewhitening on only) assumed the two noise settings cost
+about the same, when prewhitening is most of the cost; its second (60 subjects per dataset) still leaves weeks. The
+FSL arm is therefore cut to a focused software comparison:
+- **FSL configurations:** 6 mm, FSL's double-gamma HRF without derivative, each of the four confound sets, no
+  prewhitening (OLS): 4 configurations (indices 1·48 + 1·16 + 0·8 + c·2 + 1);
+- **FSL subjects:** at most 20 per dataset (the first 20 of the dataset's seeded order), about 1,244 runs, about 29
+  minutes per run;
+- **R96 and the R96 re-reading of H1 and H2 are dropped.** The software axis in secondary 2 becomes the Dice (and the
+  correlation) between each FSL group map and the nilearn group map that differs only in software (6 mm, canonical,
+  the same confounds, OLS), computed on the same subject subset, beside the Dice between nilearn maps that differ
+  only in confounds on that subset;
+- the external check (secondary 3) for FSL uses the 24P configuration;
+- the nilearn arm runs on all subjects as preregistered, and H1 and H2 never wait for the FSL arm.
+
+The timing subject's other 44 FSL maps exist but are not used.
+
