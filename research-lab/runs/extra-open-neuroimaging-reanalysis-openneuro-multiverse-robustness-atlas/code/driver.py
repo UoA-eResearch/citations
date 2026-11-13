@@ -2,8 +2,10 @@
 
 Subject order per dataset: one seeded permutation of the spec's subject list (seed 20261110). The first 100 are
 analysed (all, if fewer); the first 20 also get the reduced FSL arm (D3). A prefetch thread downloads subjects ahead
-of the workers while free space on /mnt stays above 40 GB and at most PREFETCH subjects are waiting; a process pool
-of WORKERS runs firstlevel.run_subject. Completed subjects (an existing .npz with the needed maps) are skipped, so the
+of the workers within a disk budget: a subject is fetched only if the BOLD of all fetched-but-unfinished subjects
+stays within BUDGET and at least MIN_FREE remains free on /mnt; it takes the first queued subject that fits, so large
+subjects (ds001734, about 5.7 GB each) never crowd out the small ones. ds001734 is queued first, while the disk is
+emptiest. A process pool of WORKERS runs firstlevel.run_subject. Completed subjects (an existing .npz with the needed maps) are skipped, so the
 driver can be restarted.
 
   driver.py [WORKERS] [DS ...]   -> /mnt/data/omv/out/<ds>/sub-*.npz, results/tables/firstlevel_log.csv
@@ -26,7 +28,7 @@ sys.path.insert(0, str(RUN / "code"))
 import fetch  # noqa: E402
 import firstlevel as F  # noqa: E402
 
-SEED, CAP, FSL_N, PREFETCH, MIN_FREE = 20261110, 100, 20, 6, 40e9
+SEED, CAP, FSL_N, BUDGET, MIN_FREE = 20261110, 100, 20, 25e9, 8e9
 NIL = [k for k in range(48)]
 FSLK = [F.cfg_index(1, 1, 0, c, 1) for c in range(4)]
 
@@ -62,6 +64,7 @@ def main():
     E = pd.read_csv(RUN / "results" / "tables" / "eligible.csv")
     E = E[E.status == "eligible"]
     queue = []
+    E = pd.concat([E[E.ds == "ds001734"], E[E.ds != "ds001734"]])
     for r in E.itertuples():
         if only and r.ds not in only:
             continue
@@ -70,23 +73,40 @@ def main():
             if not done(r.ds, sub, fsl):
                 queue.append((r.ds, sub, fsl, r.task))
     print(f"{len(queue)} subjects to run on {workers} workers", flush=True)
-    fetched, lock = set(), threading.Lock()
+    fetched, lock = {}, threading.Lock()          # (ds, sub) -> bytes, for fetched-but-unfinished subjects
+
+    todo, size, reserved = list(queue), {}, {}
 
     def prefetch():
-        for ds, sub, fsl, task in queue:
-            while True:
-                with lock:
-                    waiting = len(fetched)
-                if waiting < PREFETCH and shutil.disk_usage("/mnt").free > MIN_FREE:
-                    break
-                time.sleep(20)
+        while True:
+            with lock:
+                if not todo:
+                    return
+                inflight = sum(fetched.values()) + sum(reserved.values())
+                free = shutil.disk_usage("/mnt").free - sum(reserved.values())
+                pick = None
+                for q in todo:
+                    if q not in size:
+                        size[q] = fetch.subject_bytes(q[0], q[1], q[3])
+                    if inflight + size[q] <= BUDGET and free - size[q] >= MIN_FREE:
+                        pick = q
+                        break
+                if pick is not None:
+                    todo.remove(pick)
+                    reserved[pick] = size[pick]
+            if pick is None:
+                time.sleep(30)
+                continue
             try:
-                fetch.fetch_subject(ds, sub, task)
+                fetch.fetch_subject(pick[0], pick[1], pick[3])
             except Exception:
                 pass
             with lock:
-                fetched.add((ds, sub))
-    threading.Thread(target=prefetch, daemon=True).start()
+                reserved.pop(pick, None)
+                fetched[(pick[0], pick[1])] = size[pick]
+
+    for _ in range(4):                            # 4 subjects downloading at once, ~128 connections
+        threading.Thread(target=prefetch, daemon=True).start()
     log = RUN / "results" / "tables" / "firstlevel_log.csv"
     rows = pd.read_csv(log).to_dict("records") if log.exists() else []
     pending = list(queue)
@@ -112,7 +132,7 @@ def main():
                 r["finished"] = time.strftime("%Y-%m-%d %H:%M:%S")
                 rows.append({k: v for k, v in r.items() if k != "trace"})
                 with lock:
-                    fetched.discard((q[0], q[1]))
+                    fetched.pop((q[0], q[1]), None)
                 pd.DataFrame(rows).to_csv(log, index=False)
                 print(json.dumps({k: v for k, v in r.items() if k != "trace"}), flush=True)
                 if r["status"] == "failed":
