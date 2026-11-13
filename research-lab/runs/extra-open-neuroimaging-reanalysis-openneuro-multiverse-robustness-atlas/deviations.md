@@ -112,3 +112,17 @@ single regressor (10 of the 24 datasets) the secondary contrast is not computed,
 inputs with wildcards unexpanded (`trial_type.*`), which had sent those regressors to FSL already convolved; they are
 now expanded, so every convolved task regressor reaches FSL as a three-column EV. The timing subject was rerun.
 
+## D5 — 2026-11-14 — first-level fixes during the run (before any group result)
+
+1. **An upstream bug in the vendored events preparation.** `modify_events.ds000002` returns an undefined name
+   (`eventsdat_cpy`) on the branch that relabels trials without a response as "missed"; it now returns the frame it
+   has just modified (`eventsdat`), which is the evident intent. Marked in the vendored file.
+2. **Dataset-level sidecars.** Some datasets keep the repetition time only in the dataset-level
+   `task-<task>_bold.json` (BIDS inheritance); the local mirror now copies those files, so pybids finds the TR
+   (ds000009 failed without it).
+3. **Subjects in a spec without derivatives** (for example ds000008 sub-09 and ds002422 sub-20 have no fMRIPrep output
+   for the task) are dropped as "no usable run" and counted in coverage, as the plan says.
+4. **Housekeeping:** each worker uses one BLAS thread, and a failed subject's images are deleted at once so failures
+   cannot fill the disk. The driver was restarted three times for these changes; subjects already finished were kept,
+   and interrupted ones were rerun from the start.
+
