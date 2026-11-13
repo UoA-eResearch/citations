@@ -128,20 +128,25 @@ def run_dataset(ds):
     tm = nb.load(F.TEMPLATE)
     tmask = tm.get_fdata() > 0
     vox_all = np.argwhere(tmask)
-    E, E2, meta, fsl_ok = [], [], [], []
+    E, E2, meta, fsl_ok, incomplete = [], [], [], [], []
     for j, (s, f) in enumerate(files):
         z = np.load(f)
+        if not all(np.isfinite(z["eff"][k].astype(np.float32)).any() for k in NIL):   # D6: complete subjects only
+            incomplete.append(s)
+            continue
         E.append(z["eff"])
         E2.append(z["eff2"] if "eff2" in z else None)
         meta.append(json.loads(str(z["meta"])))
         fsl_ok.append(subs.index(s) < driver.FSL_N and np.isfinite(z["eff"][FSLK[0]].astype(np.float32)).any())
+    if len(E) < 10:
+        return {"ds": ds, "status": f"only {len(E)} complete subjects", "incomplete": incomplete}
     E = np.stack(E)
-    mask = np.isfinite(E[:, 0].astype(np.float32)).all(0)
+    mask = np.isfinite(E[:, NIL].astype(np.float32)).all((0, 1))
     vox = vox_all[mask]
-    out = {"ds": ds, "status": "ok", "N": len(files), "voxels": int(mask.sum())}
+    out = {"ds": ds, "status": "ok", "N": len(E), "incomplete_subjects": incomplete, "voxels": int(mask.sum())}
     runs = [m for mm in meta for m in mm if m.get("status") == "ok"]
     out["tsnr"] = float(np.median([m["tsnr"] for m in runs]))
-    out["runs_per_subject"] = len(runs) / len(files)
+    out["runs_per_subject"] = len(runs) / len(E)
     out["volumes_per_subject"] = float(np.mean([sum(m["n_volumes"] for m in mm if m.get("status") == "ok") for mm in meta]))
     out["fd_median"] = float(np.median([m["fd_median"] for m in runs]))
     Z, S1, S2 = maps(E, NIL, mask, vox, tmask.shape)

@@ -411,6 +411,15 @@ def run_subject(ds, sub, arms=("nilearn", "FSL"), timing=False, keep_bold=False,
             meta.append({"run": rn, "status": "no design"}); continue
         Dr = {h: D[h][rn] for h in HRFS}
         confs, fd_med, n_spk = confound_sets(r["confounds"])
+        # D6: a run is usable only if the scan covers its events and has more volumes than the largest design
+        nvol = len(confs["6P"])
+        ev = pd.read_csv(r["events"], sep="\t", na_values="n/a")
+        last = float((ev["onset"] + ev["duration"].fillna(0)).max()) if len(ev) else 0.0
+        if last > (nvol + 1) * float(r["tr"]):
+            meta.append({"run": rn, "status": "events beyond the end of the scan", "n_volumes": nvol}); continue
+        kmax = Dr["derivative"]["X"].shape[1] + max(v.shape[1] for v in confs.values())
+        if nvol < kmax + 10:
+            meta.append({"run": rn, "status": "too few volumes for the design", "n_volumes": nvol}); continue
         img = nb.load(r["bold"])
         bold = img.get_fdata(dtype=np.float32)
         rmask = nb.load(r["mask"]).get_fdata() > 0
@@ -427,7 +436,10 @@ def run_subject(ds, sub, arms=("nilearn", "FSL"), timing=False, keep_bold=False,
                      "n_volumes": int(len(confs["6P"])), "n_evs": len(Dr["canonical"]["evs"]),
                      "contrast": Dr["canonical"]["contrast"]})
     if not per_run:
-        return {"ds": ds, "sub": sub, "status": "no run with a design"}
+        dest.unlink(missing_ok=True)                    # no stale partial maps from an earlier pass
+        if not keep_bold:
+            fetch.drop_subject(ds, sub)
+        return {"ds": ds, "sub": sub, "status": "no usable run", "runs_dropped": [m.get("status") for m in meta]}
     ff = fixed_effects(per_run)
     eff = np.full((192, tmask.sum()), np.nan, np.float16)     # 0-95 primary contrast, 96-191 secondary (D4)
     for k, v in ff.items():

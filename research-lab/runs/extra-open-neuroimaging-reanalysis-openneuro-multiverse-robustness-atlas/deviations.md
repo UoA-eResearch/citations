@@ -126,3 +126,15 @@ now expanded, so every convolved task regressor reaches FSL as a three-column EV
    cannot fill the disk. The driver was restarted three times for these changes; subjects already finished were kept,
    and interrupted ones were rerun from the start.
 
+## D6 — 2026-11-14 — a run-usability rule (before any group result)
+
+ds000115 sub-29's fMRIPrep output for the task holds 21 volumes, while its events run to 310 s: the derivative is
+truncated. In such a run the larger confound sets (24P and 24P + aCompCor have 24 and 29 columns) exceed the number of
+volumes, so half the configurations cannot be estimated. Rule, fixed now:
+- a run is used only if the scan covers its events (the last onset plus duration is within the run's volumes plus one
+  TR) and it has at least 10 more volumes than the largest design (task and drift columns with the derivative HRF,
+  plus the largest confound set); other runs are dropped with the reason recorded;
+- a subject with no usable run is dropped ("no usable run");
+- the group stage uses only subjects whose 48 nilearn maps are all present, and lists any others.
+Subjects processed before the rule that it would change are rerun in a second pass after the main run.
+
