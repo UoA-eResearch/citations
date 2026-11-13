@@ -176,9 +176,14 @@ def fetch_subject(ds, sub, task):
             bold_link.symlink_to(files[k])
         if not ev_dest.exists() or not js_dest.exists() or not files[k].exists():
             continue
-        meta = json.loads(js_dest.read_text())
+        tr = json.loads(js_dest.read_text()).get("RepetitionTime")
+        for side in (files.get(k[:-7] + ".json"), raw / f"task-{task}_bold.json"):   # inherited or derivative TR
+            if tr is None and side is not None and Path(side).exists():
+                tr = json.loads(Path(side).read_text()).get("RepetitionTime")
+        if tr is None:
+            continue
         runs.append({"stem": stem, "bold": files[k], "mask": files[mask], "confounds": files[conf], "events": ev_dest,
-                     "tr": meta.get("RepetitionTime")})
+                     "tr": float(tr)})
     return runs
 
 
