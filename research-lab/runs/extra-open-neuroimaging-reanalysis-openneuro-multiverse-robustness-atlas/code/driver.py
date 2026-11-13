@@ -50,6 +50,8 @@ def done(ds, sub, fsl):
 
 def work(args):
     ds, sub, fsl = args
+    from threadpoolctl import threadpool_limits   # one BLAS thread per worker: 12 workers x 28 OpenBLAS threads would
+    threadpool_limits(1)                          # oversubscribe the cores
     try:
         return F.run_subject(ds, sub, arms=("nilearn", "FSL") if fsl else ("nilearn",))
     except Exception as e:
