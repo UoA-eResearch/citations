@@ -404,7 +404,7 @@ _CUT = re.compile(r"\s+(?:the )?university of auckland.*$|\s+waipapa taumata rau
 _UNIT_WORD = re.compile(r"\b(?:school|department|dept|institute|centre|center|section|unit|programme|laboratory)\b")
 _TE_REO_UNITS = re.compile(r"^(?:te kupenga hauora maori|te wananga o waipapa|te puna wananga|te kura matauranga koiora|"
                            r"te punaha matatini|te pare school of architecture and planning)$")
-_NOT_UNIT = re.compile(r"universit|faculty|hospital|te whatu ora|health new zealand|te toka tumai|district|"
+_NOT_UNIT = re.compile(r"universit|faculty|hospital|te whatu ora|health new zealand|te toka tumai|district|mail centre|private bag|"
                        r"^(?:school|department|dept|section|centre|center|institute|unit)\.?$")
 
 

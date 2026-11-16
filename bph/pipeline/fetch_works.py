@@ -143,7 +143,10 @@ def main():
             insts[oa.short(i["id"])] = dict(name=i["display_name"], country=i.get("country_code"), type=i.get("type"),
                                             city=g.get("city"), lat=g.get("latitude"), lng=g.get("longitude"))
     (WORK / "institutions.json").write_text(json.dumps(insts, ensure_ascii=False))
-    print(f"{len(works)} works, {len(insts)} institutions; spent {oa.spent()}")
+    import datetime
+    today = datetime.date.today().isoformat()
+    (WORK / "fetch_meta.json").write_text(json.dumps(dict(run=today, oldest=oa.oldest() or today)))
+    print(f"{len(works)} works, {len(insts)} institutions; oldest cached response {oa.oldest() or 'none'}; spent {oa.spent()}")
 
 
 if __name__ == "__main__":

@@ -103,6 +103,13 @@ ones and Pacific Island partners over the places studied.
   a UoA researcher is on the team, as lead or as a team member on a project led elsewhere; the year is the
   funding round, and grants from the last three rounds are marked "probably running" (three-year grants).
   All awards are classified from their title and description or abstract.
+- **Researcher-nominated works** (`pipeline/fetch_nominated.py`, internal input `<WORK>/nominated/nominated.json`):
+  lists of relevant work that researchers send to BPH (their names stay out of the public code). Each item is
+  matched to OpenAlex among the researcher's profiles, then by title and surname (year within one, or two for a
+  near-exact title); other copies of a matched record are dropped so it counts once; items OpenAlex lacks (blog
+  posts, submissions, forthcoming work, some chapters) are entered from the citation (no citation or SciVal data).
+  Nominated works are kept on the researcher's judgement even outside the lenses (a filter-bar switch turns them
+  off) and the researcher's split OpenAlex profiles are merged into the main one.
 - **MFAT aid activities** (`pipeline/fetch_mfat.py`): the Ministry of Foreign Affairs and Trade publishes every
   New Zealand aid programme activity to the IATI Standard (reporting organisation NZ-1); they are read through
   d-portal.org's public read-only query service. An activity is kept when a participating organisation is the

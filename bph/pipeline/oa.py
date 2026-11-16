@@ -16,7 +16,7 @@ import requests
 
 BASE = "https://api.openalex.org"
 CACHE = Path(os.environ.get("BPH_CACHE", "/mnt/data/ubuntu/bph-cache"))
-MAILTO = "nick.young@auckland.ac.nz"
+MAILTO = os.environ.get("OPENALEX_MAILTO")   # optional: only sent when there is no API key
 
 
 def _key():
@@ -28,8 +28,18 @@ def _key():
 
 
 _session = requests.Session()
-_session.headers["User-Agent"] = f"bph-pacific-landscape (mailto:{MAILTO})"
+_session.headers["User-Agent"] = "uoa-cer-openalex-client (+https://github.com/UoA-eResearch/citations)"
 _spent = {"usd": 0.0, "calls": 0}
+# Cached responses expire after BPH_CACHE_DAYS (default 30), and each run records the oldest one it used, so the
+# page can say when its OpenAlex data was fetched.
+MAX_AGE = float(os.environ.get("BPH_CACHE_DAYS", "30")) * 86400
+_oldest = [None]
+
+
+def oldest():
+    """Date (ISO) of the oldest cached response used in this run, or None if everything was fetched fresh."""
+    import datetime
+    return datetime.date.fromtimestamp(_oldest[0]).isoformat() if _oldest[0] else None
 
 
 def get(path, params=None, *, use_cache=True):
@@ -39,11 +49,14 @@ def get(path, params=None, *, use_cache=True):
     h = hashlib.sha1(public.encode()).hexdigest()
     f = CACHE / h[:2] / (h + ".json")
     if use_cache and f.exists():
-        return json.loads(f.read_text())
+        mt = f.stat().st_mtime
+        if time.time() - mt < MAX_AGE:
+            _oldest[0] = mt if _oldest[0] is None else min(_oldest[0], mt)
+            return json.loads(f.read_text())
     key = _key()
     if key:
         params["api_key"] = key
-    else:
+    elif MAILTO:
         params["mailto"] = MAILTO
     for attempt in range(7):
         try:

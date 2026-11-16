@@ -1,7 +1,8 @@
 """Step 3: classify, aggregate and lay out the University of Auckland's Pacific research -> data/landscape.json.
 
-Inputs: <WORK>/works_raw.jsonl, institutions.json, awards_raw.jsonl, marsden_awards.jsonl, mfat_activities.jsonl
-(fetch_works.py, fetch_awards.py, fetch_marsden.py, fetch_mfat.py).
+Inputs: <WORK>/works_raw.jsonl, institutions.json, awards_raw.jsonl, marsden_awards.jsonl, mfat_activities.jsonl,
+nominated_works.jsonl, nominated_extra.jsonl (fetch_works.py, fetch_awards.py, fetch_marsden.py, fetch_mfat.py,
+fetch_nominated.py).
 Every candidate is re-checked with tagging.classify(); see that docstring for the tiers and lenses.
 Metrics follow SciVal's vocabulary where OpenAlex has an equivalent: scholarly output, growth,
 Field-Weighted Citation Impact (OpenAlex fwci) and share of outputs in the top 10% most cited
@@ -73,6 +74,7 @@ def region_of(cc, lat=None, lng=None):
 
 
 UOA_YEARS = {}      # author id -> years their OpenAlex profile places them at UoA (fetch_works.py)
+ALIAS = {}          # split OpenAlex profile -> the researcher's main profile (researcher-nominated lists)
 SKIP_TYPES = {"peer-review", "supplementary-materials", "erratum", "paratext", "retraction"}
 
 
@@ -107,6 +109,29 @@ def main():
     if (WORK / "uoa_author_years.json").exists():
         UOA_YEARS.update({k: set(v) for k, v in json.loads((WORK / "uoa_author_years.json").read_text()).items()})
     skipped_types = Counter()
+    # Researcher-nominated works (fetch_nominated.py): the OpenAlex records join the candidates and are kept on the
+    # researcher's judgement even outside the lenses; the researcher's split profiles merge into the main one;
+    # other copies of a nominated record (a preprint, a split profile's copy) are dropped so it counts once.
+    nom_raw = [json.loads(l) for l in open(WORK / "nominated_works.jsonl")] if (WORK / "nominated_works.jsonl").exists() else []
+    nom_extra = [json.loads(l) for l in open(WORK / "nominated_extra.jsonl")] if (WORK / "nominated_extra.jsonl").exists() else []
+    by_id = {short(w["id"]): w for w in raw}
+    nom_drop = set()
+    for w in nom_raw:
+        wid = short(w["id"])
+        if wid in by_id:
+            by_id[wid]["_nom"] = w["_nom"]
+        else:
+            raw.append(w); by_id[wid] = w
+        nom_drop |= set(w["_nom"].get("dupes") or [])
+    for x in [w["_nom"] for w in nom_raw] + nom_extra:
+        for a in x["author_ids"][1:]:
+            ALIAS[a] = x["author_ids"][0]
+    nom_drop -= {short(w["id"]) for w in nom_raw}
+    nom_dupes = 0
+
+    def uoa_in(a, w):
+        """UoA authorship on this work: by record or profile, or the nominating researcher on a nominated work."""
+        return is_uoa(a, w.get("publication_year")) or short((a.get("author") or {}).get("id")) in set((w.get("_nom") or {}).get("author_ids") or [])
 
     # ------------------------------------------------------------ classify works
     works, dropped, no_abs_dropped = [], 0, 0
@@ -119,8 +144,11 @@ def main():
         if w.get("type") in SKIP_TYPES:          # peer reviews, supplements, errata: not research outputs
             skipped_types[w["type"]] += 1
             continue
+        if wid in nom_drop:
+            nom_dupes += 1
+            continue
         aus = w.get("authorships") or []
-        if not any(is_uoa(a, w.get("publication_year")) for a in aus):
+        if not any(uoa_in(a, w) for a in aus):
             dropped += 1
             continue
         partner = any(i.get("country_code") in PI_CC for a in aus for i in a.get("institutions") or [])
@@ -130,7 +158,7 @@ def main():
         abstract = abstract_text(w.get("abstract_inverted_index"))
         c = classify(w.get("display_name"), abstract, kw, field, len(aus), partner,
                      (pt.get("subfield") or {}).get("display_name"))
-        if not c["tier"] and "A" not in c["lenses"] and "M" not in c["lenses"]:
+        if not c["tier"] and "A" not in c["lenses"] and "M" not in c["lenses"] and not w.get("_nom"):
             dropped += 1
             no_abs_dropped += not abstract
             continue
@@ -243,9 +271,9 @@ def main():
                 iid = short(i.get("id"))
                 if iid and iid != UOA and iid not in wrong and not any(short(x) == UOA for x in i.get("lineage") or []):
                     ext.add(inst_i(iid))
-            if not is_uoa(a, w.get("publication_year")) or not au.get("id"):
+            if not uoa_in(a, w) or not au.get("id"):
                 continue
-            aid = short(au["id"])
+            aid = ALIAS.get(short(au["id"]), short(au["id"]))
             if aid not in auth_idx:
                 auth_idx[aid] = len(authors)
                 authors.append(dict(id=aid, name=au.get("display_name") or a.get("raw_author_name") or aid,
@@ -291,11 +319,33 @@ def main():
             top10=bool(cnp.get("is_in_top_10_percent")), v=((w.get("primary_location") or {}).get("source") or {}).get("display_name"),
             doi=w.get("doi"), oa=(w.get("open_access") or {}).get("oa_url"),
             ab=(ab[:320].rsplit(" ", 1)[0] + "…") if len(ab) > 320 else ab,
-            tier=TIER_CODE[c["tier"]], lens=sum(LENS_BIT[l] for l in c["lenses"]), ev=c["evidence"],
+            tier=TIER_CODE[c["tier"]], lens=sum(LENS_BIT[l] for l in c["lenses"]),
+            ev=c["evidence"] + (["nominated by the researcher as relevant to the SRA"] if w.get("_nom") else []),
             ms=sum(MS_BIT[k] for k in c["mt"]), ra=w["_ra"], places=places, tp=topic_i(w.get("primary_topic")),
             sdg=[short(s["id"]) for s in w.get("sustainable_development_goals") or []],
             a=uoa_auth, na=len(aus), ext=sorted(ext), pi=w["_partner"], fu=fids, aw=aw,
-            up=int(not any(uoa_by_record(x) for x in aus)), va=int("V" in (w.get("_found_by") or []))))
+            up=int(not w.get("_nom") and not any(uoa_by_record(x) for x in aus)), va=int("V" in (w.get("_found_by") or [])),
+            nom=int(bool(w.get("_nom"))), fc=int(bool((w.get("_nom") or {}).get("forthcoming")))))
+
+    # Nominated works OpenAlex does not hold (blog posts, submissions, forthcoming work, some chapters), entered
+    # from the citation the researcher gave: title, year, type, venue and number of authors only.
+    for e in nom_extra:
+        if not 2020 <= e["year"] <= int(TODAY[:4]):
+            continue
+        c = classify(e["title"], "", "", e.get("field"), e.get("authors", 1), False, e.get("subfield"))
+        aid = e["author_ids"][0]
+        if aid not in auth_idx:
+            auth_idx[aid] = len(authors)
+            authors.append(dict(id=aid, name=e["researcher"], orcid=None, works=[], fac=Counter(), unit=Counter()))
+        ai = auth_idx[aid]
+        authors[ai]["works"].append(len(out_works))
+        out_works.append(dict(
+            id=e["id"], t=e["title"], y=e["year"], ty=e.get("type") or "other", c=0, fwci=None, top10=False, v=e.get("venue"),
+            doi=None, oa=None, ab="", tier=TIER_CODE[c["tier"]], lens=sum(LENS_BIT[l] for l in c["lenses"]),
+            ev=c["evidence"] + ["nominated by the researcher as relevant to the SRA (not in OpenAlex: entered from the citation)"],
+            ms=sum(MS_BIT[k] for k in c["mt"]), ra=research_area(c["mt"], e.get("field"), e.get("subfield")), places=sorted(c["places"]),
+            tp=-1, sdg=[], a=[ai], na=e.get("authors", 1), ext=[], pi=False, fu=[], aw=[], up=0, va=0, nom=1,
+            fc=int(bool(e.get("forthcoming"))), xn=1))
 
     # ------------------------------------------------------------ awards: keep Pacific-related + linked
     linked = Counter(i for w in out_works for i in w["aw"])
@@ -453,6 +503,9 @@ def main():
         marsden_rounds=sum(1 for a in awards if a["src"] == RS),
         by_profile=sum(w["up"] for w in out_works), va_corpus=sum(w["va"] for w in out_works),
         skipped_types=dict(skipped_types),
+        nominated=dict(works=sum(w.get("nom", 0) for w in out_works), openalex=sum(1 for w in out_works if w.get("nom") and not w.get("xn")),
+                       citation=sum(1 for w in out_works if w.get("xn")), duplicates_dropped=nom_dupes,
+                       researchers=sorted({x["researcher"] for x in [w["_nom"] for w in nom_raw] + nom_extra})),
         mfat=dict(n=sum(1 for a in awards if a["src"] == MFAT), pac=sum(1 for a in awards if a["src"] == MFAT and a["pac"]),
                   retrieved=max((m.get("retrieved") or "" for m in mfat_raw), default=None)),
         no_abstract=sum(1 for w in works if not w["_abstract"]),
@@ -465,6 +518,7 @@ def main():
     )
     doc = dict(
         meta=dict(built=TODAY, uoa=UOA, years=[2020, 2026], complete=list(COMPLETE),
+                  fetched=json.loads((WORK / "fetch_meta.json").read_text()) if (WORK / "fetch_meta.json").exists() else None,
                   source="OpenAlex API (works, institutions, awards)"),
         works=out_works, authors=out_authors, insts=insts, uoa_inst=uoa_i, topics=topics,
         communities=communities, coauth=[[a, b, d["weight"]] for a, b, d in H.edges(data=True)],

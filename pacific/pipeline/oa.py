@@ -16,7 +16,7 @@ import requests
 
 BASE = "https://api.openalex.org"
 CACHE = Path(os.environ.get("PACIFIC_CACHE", "/mnt/data/ubuntu/pacific-cache"))
-MAILTO = "nick.young@auckland.ac.nz"
+MAILTO = os.environ.get("OPENALEX_MAILTO")   # optional: only sent when there is no API key
 
 
 def _key():
@@ -28,7 +28,7 @@ def _key():
 
 
 _session = requests.Session()
-_session.headers["User-Agent"] = f"va-atlas (mailto:{MAILTO})"
+_session.headers["User-Agent"] = "uoa-cer-openalex-client (+https://github.com/UoA-eResearch/citations)"
 _spent = {"usd": 0.0, "calls": 0}
 
 
@@ -43,7 +43,7 @@ def get(path, params=None, *, use_cache=True):
     key = _key()
     if key:
         params["api_key"] = key
-    else:
+    elif MAILTO:
         params["mailto"] = MAILTO
     for attempt in range(7):
         try:
