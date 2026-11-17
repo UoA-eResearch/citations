@@ -371,8 +371,9 @@ def main():
     awards = [awards[i] for i in keep_aw]
 
     # ------------------------------------------------------------ authors: faculty, unit, metrics
+    nom_fac = {x["author_ids"][0]: x.get("faculty") for x in [w["_nom"] for w in nom_raw] + nom_extra if x.get("faculty")}
     for a in authors:
-        a["faculty"] = a["fac"].most_common(1)[0][0] if a["fac"] else None
+        a["faculty"] = a["fac"].most_common(1)[0][0] if a["fac"] else nom_fac.get(a["id"])
         a["unit_name"] = a["unit"].most_common(1)[0][0] if a["unit"] else None
         ws = [out_works[i] for i in a["works"]]
         a["n"] = len(ws)

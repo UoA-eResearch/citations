@@ -4,7 +4,7 @@ Blue Pacific Horizons collects lists of relevant work from researchers whose out
 under-counts (law and the humanities especially). Input, internal and not in the public repository:
 <WORK>/nominated/nominated.json, a list of
   {researcher, author_ids: [OpenAlex author IDs; the first is the main profile, the rest are split profiles],
-   field, subfield, source,
+   field, subfield, faculty (used only when OpenAlex records give none), source,
    items: [{title, year, type, venue, authors (count), forthcoming?, match? (title to match on, e.g. the
             reviewed book), also_match? [other titles OpenAlex may use]}]}
 
@@ -93,7 +93,7 @@ def main():
             scored = sorted(((score(item, w.get("display_name")), w) for k, w in cands.items() if k not in used and good(item, w)),
                             key=lambda x: (-round(x[0], 2), TYPE_RANK.get(x[1].get("type"), 0)))
             nom = dict(researcher=L["researcher"], author_ids=ids, item=item["title"], forthcoming=bool(item.get("forthcoming")),
-                       source=L.get("source"), field=L.get("field"), subfield=L.get("subfield"))
+                       source=L.get("source"), field=L.get("field"), subfield=L.get("subfield"), faculty=L.get("faculty"))
             if scored and scored[0][0] >= 0.82:
                 s, w = scored[0]
                 wid = oa.short(w["id"])
@@ -116,6 +116,12 @@ def main():
     with open(WORK / "nominated_extra.jsonl", "w") as f:
         for e in extra:
             f.write(json.dumps(e, ensure_ascii=False) + "\n")
+    meta = WORK / "fetch_meta.json"                  # the page reports when its OpenAlex data was fetched
+    if meta.exists() and oa.spent()["calls"]:
+        import datetime
+        m = json.loads(meta.read_text())
+        m["run"] = max(m.get("run") or "", datetime.date.today().isoformat())
+        meta.write_text(json.dumps(m))
     print(f"{len(works)} nominated works in OpenAlex, {len(extra)} from citations; spent {oa.spent()}")
 
 

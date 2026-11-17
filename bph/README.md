@@ -126,7 +126,7 @@ ones and Pacific Island partners over the places studied.
 - **Engagement check** (`pipeline/engaged.py`, internal input): the SRA's stakeholder engagement workbook is
   merged across its sheets and each person matched to UoA authors by name (first name, initial or prefix, and
   surname incl. hyphenated parts and the surname in their email address). People not found are looked up
-  in OpenAlex (UoA affiliation) to show whether they are at UoA but outside the current scope. Emails are
+  in OpenAlex (UoA affiliation) to show whether they are at UoA with none of their works found yet (a statement about the search, not their research). Emails are
   used only for merging and never written out.
 - **Workshop 2 maps** (internal input): dots and post-it notes transcribed from photos of the five maps
   (`$BPH_WORK/engagement/workshop2_maps.json`), dots counted by region because the Spilhaus projections

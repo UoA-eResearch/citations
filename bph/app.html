@@ -1031,8 +1031,8 @@ window.addEventListener("resize", () => { clearTimeout(msResizeT); msResizeT = s
 // ================================================================== RESEARCHERS
 const PP = { sort: "n", dir: -1, q: "", fac: "", limit: 50, eng: false };
 const ENG = D.engaged || [];
-const ENG_STATUS = { in: "In the landscape", outside: "At UoA, outside the current scope", notfound: "No UoA profile found in OpenAlex", staff: "Professional staff" };
-const ENG_TILE = { in: "are in this landscape", outside: "are at UoA (OpenAlex) but have no works in the current scope", notfound: "have no UoA author profile in OpenAlex", staff: "are professional staff" };
+const ENG_STATUS = { in: "In the landscape", outside: "At UoA; no works found yet", notfound: "No UoA profile found in OpenAlex", staff: "Professional staff" };
+const ENG_TILE = { in: "are in this landscape", outside: "are at UoA, but the search has not found their relevant works yet (often law, humanities or arts work that the open record misses or that does not name the Pacific or an ocean theme); a list of their work can be added", notfound: "have no UoA author profile in OpenAlex", staff: "are professional staff" };
 let netDeck = null, netVS = null;
 function renderPeople() {
   const el = $("v-people");
@@ -1082,6 +1082,7 @@ function engagedSection() {
   const order = { in: 0, outside: 1, notfound: 2, staff: 3 };
   const rows = ENG.map((e, k) => ({ e, k, n: shown(e) })).sort((a, b) => order[a.e.status] - order[b.e.status] || b.n - a.n || a.e.name.localeCompare(b.e.name));
   box.innerHTML = `<h2>People engaged in developing the SRA</h2>
+    <p class="note"><b>These statuses describe what the open-data search found, not anyone's research or their part in the SRA.</b> Researchers whose relevant work is missing can send a list of it to be added (see "Researcher-nominated" in the filter bar).</p>
     <p class="note">Everyone on the SRA's stakeholder engagement list (conveners, workshop and hui participants, people met in conversation, and staff who nominated themselves in the questionnaire), checked against this landscape by name. OpenAlex sometimes splits one person into several profiles, and two people can share a name, so treat matches as a starting point.</p>
     <div class="tiles">${["in", "outside", "notfound", "staff"].filter(k => st[k]).map(k => `<div class="tile"><b>${fmt(st[k])}</b><span>${ENG_TILE[k]}</span></div>`).join("")}</div>
     <div class="tablewrap" style="max-height:560px;overflow:auto"><table><thead><tr><th>Person</th><th>Faculty · expertise</th><th>How engaged</th><th>In this landscape</th></tr></thead><tbody>
