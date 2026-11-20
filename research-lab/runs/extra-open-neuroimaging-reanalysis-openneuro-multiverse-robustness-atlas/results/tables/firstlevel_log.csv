@@ -752,3 +752,73 @@ ds001734,019,ok,False,2026-11-17 13:49:15,,4.0,156.0,2516.0,0.0,
 ds001734,085,ok,False,2026-11-17 13:59:50,,4.0,155.0,2400.0,0.0,
 ds001734,124,ok,False,2026-11-17 14:41:12,,4.0,160.0,2509.0,0.0,
 ds001734,057,ok,False,2026-11-17 14:50:09,,4.0,155.0,2429.0,0.0,
+ds000008,09,no usable run,True,2026-11-20 14:30:19,,,,,,
+ds000115,29,no usable run,True,2026-11-20 14:41:24,,,,,,['events beyond the end of the scan']
+ds000001,06,no usable run,True,2026-11-20 14:41:28,,,,,,"['events beyond the end of the scan', 'events beyond the end of the scan', 'events beyond the end of the scan']"
+ds000001,04,no usable run,True,2026-11-20 14:41:37,,,,,,"['events beyond the end of the scan', 'events beyond the end of the scan', 'events beyond the end of the scan']"
+ds000115,60,ok,False,2026-11-20 14:46:20,,1.0,155.0,227.0,0.0,
+ds000115,95,ok,False,2026-11-20 14:49:03,,1.0,154.0,184.0,0.0,
+ds000109,05,ok,False,2026-11-20 14:53:08,,2.0,155.0,890.0,0.0,
+ds000109,39,ok,True,2026-11-20 15:48:12,,2.0,154.0,961.0,3246.0,
+ds000117,11,ok,True,2026-11-20 18:45:45,,9.0,155.0,3332.0,9714.0,
+ds000117,10,ok,True,2026-11-20 18:47:42,,9.0,155.0,2873.0,9912.0,
+ds000117,16,ok,True,2026-11-20 18:49:30,,9.0,155.0,3040.0,10204.0,
+ds000117,03,ok,True,2026-11-20 18:52:46,,9.0,155.0,2881.0,10146.0,
+ds000144,04,ok,False,2026-11-20 18:59:53,,1.0,154.0,246.0,0.0,
+ds000117,13,ok,True,2026-11-20 19:01:49,,9.0,155.0,2525.0,9854.0,
+ds000144,03,ok,False,2026-11-20 19:06:25,,1.0,155.0,214.0,0.0,
+ds000144,44,ok,True,2026-11-20 19:09:31,,1.0,154.0,263.0,845.0,
+ds000144,28,ok,True,2026-11-20 19:10:30,,1.0,155.0,248.0,832.0,
+ds000117,08,ok,True,2026-11-20 19:13:49,,9.0,155.0,2998.0,9991.0,
+ds000117,12,ok,True,2026-11-20 19:15:23,,9.0,155.0,2869.0,10201.0,
+ds000170,1708,ok,True,2026-11-20 19:22:33,,3.0,155.0,317.0,747.0,
+ds000117,06,ok,True,2026-11-20 19:24:52,,9.0,155.0,2634.0,9937.0,
+ds000170,1715,ok,True,2026-11-20 19:27:22,,3.0,156.0,332.0,746.0,
+ds000170,1702,ok,True,2026-11-20 19:36:18,,3.0,155.0,323.0,757.0,
+ds000170,1714,ok,True,2026-11-20 19:43:39,,3.0,155.0,344.0,748.0,
+ds000170,1712,ok,True,2026-11-20 19:46:32,,3.0,156.0,361.0,759.0,
+ds000170,1709,ok,True,2026-11-20 19:49:25,,3.0,155.0,373.0,773.0,
+ds000117,14,ok,True,2026-11-20 22:24:00,,9.0,157.0,2812.0,9852.0,
+ds000170,1716,ok,True,2026-11-20 22:44:39,,3.0,155.0,328.0,732.0,
+ds000117,05,ok,True,2026-11-20 22:48:02,,9.0,155.0,2786.0,9880.0,
+ds000117,02,ok,True,2026-11-20 22:53:25,,9.0,155.0,2907.0,10123.0,
+ds000117,09,ok,True,2026-11-20 22:56:41,,9.0,155.0,2821.0,10126.0,
+ds000170,1717,ok,True,2026-11-20 23:05:26,,3.0,155.0,315.0,757.0,
+ds000170,1719,ok,True,2026-11-20 23:08:15,,3.0,155.0,302.0,735.0,
+ds000170,1718,ok,True,2026-11-20 23:15:04,,3.0,156.0,350.0,774.0,
+ds000170,1701,ok,True,2026-11-20 23:18:03,,3.0,155.0,319.0,787.0,
+ds000117,15,ok,True,2026-11-20 23:22:03,,9.0,156.0,2533.0,10133.0,
+ds000117,07,ok,True,2026-11-20 23:24:38,,9.0,155.0,2459.0,10198.0,
+ds000170,1713,ok,True,2026-11-20 23:26:38,,3.0,156.0,322.0,771.0,
+ds000117,01,ok,True,2026-11-20 23:26:44,,9.0,155.0,2575.0,9974.0,
+ds000213,10,no usable run,True,2026-11-20 23:27:30,,,,,,['events beyond the end of the scan']
+ds000170,1707,ok,True,2026-11-20 23:28:44,,3.0,155.0,301.0,758.0,
+ds000213,23,no usable run,True,2026-11-20 23:29:21,,,,,,['events beyond the end of the scan']
+ds000213,06,no usable run,True,2026-11-20 23:29:27,,,,,,['events beyond the end of the scan']
+ds000213,21,no usable run,True,2026-11-20 23:30:13,,,,,,['events beyond the end of the scan']
+ds000213,16,no usable run,True,2026-11-20 23:31:26,,,,,,['events beyond the end of the scan']
+ds000117,04,ok,True,2026-11-20 23:31:53,,9.0,155.0,2995.0,10700.0,
+ds000213,12,no usable run,True,2026-11-20 23:32:02,,,,,,['events beyond the end of the scan']
+ds000213,11,no usable run,True,2026-11-20 23:32:08,,,,,,['events beyond the end of the scan']
+ds000213,26,no usable run,True,2026-11-20 23:32:53,,,,,,['events beyond the end of the scan']
+ds000213,20,no usable run,True,2026-11-20 23:34:08,,,,,,['events beyond the end of the scan']
+ds000213,22,no usable run,True,2026-11-20 23:34:35,,,,,,['events beyond the end of the scan']
+ds000213,08,no usable run,True,2026-11-20 23:34:43,,,,,,['events beyond the end of the scan']
+ds000213,13,no usable run,True,2026-11-20 23:34:48,,,,,,['events beyond the end of the scan']
+ds000213,25,no usable run,True,2026-11-20 23:35:34,,,,,,['events beyond the end of the scan']
+ds000170,1710,ok,True,2026-11-20 23:36:41,,3.0,156.0,336.0,782.0,
+ds000213,09,no usable run,True,2026-11-20 23:36:49,,,,,,['events beyond the end of the scan']
+ds000213,15,no usable run,True,2026-11-20 23:37:17,,,,,,['events beyond the end of the scan']
+ds000213,07,no usable run,True,2026-11-20 23:37:24,,,,,,['events beyond the end of the scan']
+ds000213,27,no usable run,True,2026-11-20 23:37:30,,,,,,['events beyond the end of the scan']
+ds000213,03,no usable run,True,2026-11-20 23:38:18,,,,,,['events beyond the end of the scan']
+ds000213,14,no usable run,True,2026-11-20 23:39:22,,,,,,['events beyond the end of the scan']
+ds000213,24,no usable run,True,2026-11-20 23:39:30,,,,,,['events beyond the end of the scan']
+ds000170,1700,ok,True,2026-11-20 23:39:40,,3.0,155.0,340.0,771.0,
+ds000213,05,no usable run,False,2026-11-20 23:40:06,,,,,,['events beyond the end of the scan']
+ds000213,19,no usable run,False,2026-11-20 23:40:43,,,,,,['events beyond the end of the scan']
+ds000213,04,no usable run,False,2026-11-20 23:41:00,,,,,,['events beyond the end of the scan']
+ds002422,20,no usable run,True,2026-11-20 23:42:24,,,,,,
+ds000213,28,no usable run,False,2026-11-20 23:46:36,,,,,,['events beyond the end of the scan']
+ds000213,01,no usable run,False,2026-11-20 23:47:36,,,,,,['events beyond the end of the scan']
+ds000213,02,no usable run,False,2026-11-20 23:48:05,,,,,,['events beyond the end of the scan']

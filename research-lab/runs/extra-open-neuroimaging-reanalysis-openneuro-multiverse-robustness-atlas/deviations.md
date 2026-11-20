@@ -156,3 +156,18 @@ a result:
 Each change is applied once per events file and written to a `.d7` note beside it (`code/firstlevel.py`
 `normalise_events`). The 55 subjects, and any subject left incomplete under D6, are rerun.
 
+## D8 — 2026-11-21 — D6's coverage test revised, and memory (before any group result)
+
+1. **D6's coverage test was too strict.** It dropped a run whenever its events ended more than one TR after the last
+   volume. That is common and harmless: in ds000213 every scan is 558 s and the last event ends at 580 s, and in
+   ds000001 the last events end 2–12 s after 600-s scans. It dropped all 26 ds000213 subjects and 2 in ds000001, none
+   of them truncated. The test now drops a run only if the scan covers less than 90% of the event span (last onset
+   plus duration). ds000115 sub-29, the truncated case D6 was written for (22 volumes, 55 s, against events to 311 s;
+   17%), is still dropped. The 28 subjects are rerun. The volume rule (at least 10 more volumes than the largest
+   design) is unchanged.
+2. **Memory.** At 00:05 on 21 November the kernel's out-of-memory killer stopped one worker at 23 GB, which broke the
+   process pool. Smoothing held a full smoothed copy of the 4D image beside the original, and the scheduler's estimate
+   (six times the compressed file size) badly undercounted large runs. The nilearn arm now smooths 64 volumes at a
+   time (identical results, since the smoothing is spatial within each volume), and the scheduler estimates each
+   subject's peak as 2.5 times its largest run's uncompressed size from the NIfTI header, plus 2 GB.
+

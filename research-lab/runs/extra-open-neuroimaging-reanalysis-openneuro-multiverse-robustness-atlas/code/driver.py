@@ -30,7 +30,8 @@ import fetch  # noqa: E402
 import firstlevel as F  # noqa: E402
 
 SEED, CAP, FSL_N, BUDGET, MIN_FREE = 20261110, 100, 20, 25e9, 8e9
-MEM_BUDGET, MEM_FLOOR, MEM_PER_BYTE = 40e9, 20e9, 6   # peak memory ~ 6 x the largest compressed run
+MEM_BUDGET, MEM_FLOOR = 40e9, 20e9
+# D8: peak memory ~ 2.5 x the largest run's uncompressed float32 size (from its NIfTI header) + 2 GB
 NIL = [k for k in range(48)]
 FSLK = [F.cfg_index(1, 1, 0, c, 1) for c in range(4)]
 
@@ -78,7 +79,7 @@ def main():
             if not done(r.ds, sub, fsl):
                 queue.append((r.ds, sub, fsl, r.task))
     print(f"{len(queue)} subjects to run on {workers} workers", flush=True)
-    fetched, lock = {}, threading.Lock()          # (ds, sub) -> bytes, for fetched-but-unfinished subjects
+    fetched, lock, memest = {}, threading.Lock(), {}          # (ds, sub) -> bytes, for fetched-but-unfinished subjects
 
     todo, size, maxrun, reserved = list(queue), {}, {}, {}
 
@@ -102,12 +103,17 @@ def main():
             if pick is None:
                 time.sleep(30)
                 continue
+            est = 8e9
             try:
-                fetch.fetch_subject(pick[0], pick[1], pick[3])
+                runs = fetch.fetch_subject(pick[0], pick[1], pick[3])
+                import nibabel as nb
+                big = max((int(np.prod(nb.load(r["bold"]).shape)) * 4 for r in runs), default=0)
+                est = 2.5 * big + 2e9
             except Exception:
                 pass
             with lock:
                 reserved.pop(pick, None)
+                memest[(pick[0], pick[1])] = est
                 fetched[(pick[0], pick[1])] = size[pick]
 
     for _ in range(4):                            # 4 subjects downloading at once, ~128 connections
@@ -121,8 +127,8 @@ def main():
             while pending and len(futs) < workers:
                 with lock:
                     ready = [q for q in pending if (q[0], q[1]) in fetched]
-                    est = {q: MEM_PER_BYTE * maxrun.get(q, 0) for q in ready}
-                running = sum(MEM_PER_BYTE * maxrun.get(v, 0) for v in futs.values())
+                    est = {q: memest.get((q[0], q[1]), 8e9) for q in ready}
+                running = sum(memest.get((v[0], v[1]), 8e9) for v in futs.values())
                 avail = psutil.virtual_memory().available
                 ready = [q for q in ready if running + est[q] <= MEM_BUDGET and avail - est[q] >= MEM_FLOOR]
                 if not ready:

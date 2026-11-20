@@ -221,13 +221,16 @@ def nilearn_arm(bold, affine, rmask, D, confs, tmask):
     from nilearn.image.image import smooth_array
     keep = rmask[tmask]                                                  # template voxels inside this run's mask
     res = {}
+    T = bold.shape[3]
     for si, fwhm in enumerate(SMOOTH):
-        data = smooth_array(bold, affine, fwhm=fwhm, ensure_finite=True, copy=True)   # float32 kept
-        Y = data[tmask][keep].T                                          # T x V(run)
+        Y = np.empty((T, int(keep.sum())), np.float32)                   # D8: smooth in chunks of volumes, so no full
+        for t0 in range(0, T, 64):                                       # smoothed copy of the 4D image is held
+            sm = smooth_array(bold[..., t0:t0 + 64], affine, fwhm=fwhm, ensure_finite=True, copy=True)
+            Y[t0:t0 + sm.shape[3]] = sm[tmask][keep].T
+            del sm
         m = Y.mean(0)
         ok = m > 0
         Y = np.where(ok, (Y / np.where(ok, m, 1) - 1) * 100, 0).astype(np.float32)
-        del data
         for hi, hrf in enumerate(HRFS):
             d = D[hrf]
             for ci, cname in enumerate(CONFS):
@@ -465,8 +468,8 @@ def run_subject(ds, sub, arms=("nilearn", "FSL"), timing=False, keep_bold=False,
         nvol = len(confs["6P"])
         ev = pd.read_csv(r["events"], sep="\t", na_values="n/a")
         last = float((ev["onset"] + ev["duration"].fillna(0)).max()) if len(ev) else 0.0
-        if last > (nvol + 1) * float(r["tr"]):
-            meta.append({"run": rn, "status": "events beyond the end of the scan", "n_volumes": nvol}); continue
+        if last > 0 and nvol * float(r["tr"]) < 0.9 * last:      # D6 as revised in D8: truncated scans only
+            meta.append({"run": rn, "status": "scan covers less than 90% of the events", "n_volumes": nvol}); continue
         kmax = Dr["derivative"]["X"].shape[1] + max(v.shape[1] for v in confs.values())
         if nvol < kmax + 10:
             meta.append({"run": rn, "status": "too few volumes for the design", "n_volumes": nvol}); continue
