@@ -138,3 +138,21 @@ volumes, so half the configurations cannot be estimated. Rule, fixed now:
 - the group stage uses only subjects whose 48 nilearn maps are all present, and lists any others.
 Subjects processed before the rule that it would change are rerun in a second pass after the main run.
 
+## D7 — 2026-11-20 — mechanical event fixes for three datasets and short aCompCor sets (before any group result)
+
+After the first pass (642 subjects done, 31 dropped by rule, 55 failed), the failures had four causes, none involving
+a result:
+- **ds003397 (15 subjects):** the events say `flashing checkerboard`; the spec refers to `flashing_checkerboard`, so
+  pybids dropped the contrast. Spaces and dashes in condition names are replaced by underscores when that is what the
+  spec refers to, as openneuro_glmfitlins itself does for ds000008.
+- **ds000170 (15):** the events' condition column is `name`, not `trial_type`. Where there is no `trial_type`
+  column, the column whose values include the spec's conditions is used as `trial_type`.
+- **ds000117 (16):** the spec assigns `response_time` as the duration of an RT regressor, and `response_time` is
+  `n/a` on every stimulus row, which pybids cannot convolve. Where a spec assigns `response_time` as a duration,
+  `n/a` response times are set to 0, as the project's own `add_reactiontime_regressor` does.
+- **9 subjects in 5 datasets:** fMRIPrep kept fewer than 5 aCompCor components. The 24P + aCompCor set now uses the
+  first five components, or all of them where fewer exist.
+
+Each change is applied once per events file and written to a `.d7` note beside it (`code/firstlevel.py`
+`normalise_events`). The 55 subjects, and any subject left incomplete under D6, are rerun.
+

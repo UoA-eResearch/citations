@@ -64,6 +64,55 @@ def spec_for(ds):
     return spec, details
 
 
+def spec_conditions(spec):
+    """Condition levels the spec's run node refers to as trial_type.<level>, and whether it assigns response_time
+    as a duration."""
+    import re as _re
+    node = next(n for n in spec["Nodes"] if n["Level"].lower() == "run")
+    txt = json.dumps(node)
+    levels = set(_re.findall(r"trial_type\.([A-Za-z0-9_]+)", txt))
+    assigns_rt = any(i["Name"] == "Assign" and "response_time" in (i.get("Input") or [])
+                     for i in node.get("Transformations", {}).get("Instructions", []))
+    return levels, assigns_rt
+
+
+def normalise_events(spec, runs):
+    """D7: mechanical fixes so the spec can be applied, following openneuro_glmfitlins' own conventions.
+    (1) condition names with spaces or dashes become underscores when that is what the spec refers to;
+    (2) with no trial_type column, the column whose values include the spec's conditions is used as trial_type;
+    (3) where the spec assigns response_time as a duration, n/a response times become 0 (as the project's
+        add_reactiontime_regressor does). Applied once per events file; changes are listed in a .d7 file."""
+    levels, assigns_rt = spec_conditions(spec)
+    for r in runs:
+        flag = Path(str(r["events"]) + ".d7")
+        if flag.exists():
+            continue
+        ev = pd.read_csv(r["events"], sep="\t", keep_default_na=False, na_values=["n/a", ""])
+        notes = []
+        if "trial_type" not in ev.columns and levels:
+            for c in ev.columns:
+                if c in ("onset", "duration"):
+                    continue
+                vals = set(ev[c].dropna().astype(str))
+                if levels & vals or levels & {v.replace(" ", "_").replace("-", "_") for v in vals}:
+                    ev = ev.rename(columns={c: "trial_type"})
+                    notes.append(f"condition column '{c}' used as trial_type")
+                    break
+        if "trial_type" in ev.columns and levels:
+            tt = ev["trial_type"].astype("string")
+            fixed = tt.str.replace(" ", "_", regex=False).str.replace("-", "_", regex=False)
+            if not (levels & set(tt.dropna())) and (levels & set(fixed.dropna())):
+                ev["trial_type"] = fixed
+                notes.append("spaces and dashes in condition names replaced by underscores")
+        if assigns_rt and "response_time" in ev.columns and ev["response_time"].isna().any():
+            n = int(ev["response_time"].isna().sum())
+            ev["response_time"] = ev["response_time"].fillna(0)
+            notes.append(f"{n} n/a response times set to 0")
+        if notes:
+            ev.to_csv(r["events"], sep="\t", index=False, na_rep="n/a")
+        flag.write_text("; ".join(notes) or "unchanged")
+
+
 def prepare_events(ds, task, runs, details):
     """openneuro_glmfitlins' per-dataset events preparation, applied once per events file."""
     if not details.get("Tasks", {}).get(task, {}).get("preproc_events"):
@@ -146,7 +195,7 @@ def confound_sets(conf_path):
     p2 = C[[m + "_power2" for m in MOTION]]
     d1p2 = C[[m + "_derivative1_power2" for m in MOTION]]
     p24 = pd.concat([six, d1, p2, d1p2], axis=1)
-    acc = C[[f"a_comp_cor_{k:02d}" for k in range(5)]]
+    acc = C[[c for c in (f"a_comp_cor_{k:02d}" for k in range(5)) if c in C.columns]]   # D7: up to 5, as available
     fd = C["framewise_displacement"].fillna(0).to_numpy()
     spikes = pd.DataFrame({f"spike{j:03d}": (np.arange(len(C)) == j).astype(float) for j in np.where(fd > 0.5)[0]})
     sets = {"6P": six, "24P": p24, "24P+aCompCor": pd.concat([p24, acc], axis=1),
@@ -401,6 +450,7 @@ def run_subject(ds, sub, arms=("nilearn", "FSL"), timing=False, keep_bold=False,
     if not runs:
         return {"ds": ds, "sub": sub, "status": "no usable run"}
     prepare_events(ds, task, runs, details)
+    normalise_events(spec, runs)
     D = {"canonical": designs(ds, sub, spec, False), "derivative": designs(ds, sub, spec, True)}
     tmask = nb.load(TEMPLATE).get_fdata() > 0
     per_run, meta = [], []
