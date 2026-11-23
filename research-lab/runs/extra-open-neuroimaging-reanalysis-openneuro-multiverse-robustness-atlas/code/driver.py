@@ -30,8 +30,9 @@ import fetch  # noqa: E402
 import firstlevel as F  # noqa: E402
 
 SEED, CAP, FSL_N, BUDGET, MIN_FREE = 20261110, 100, 20, 25e9, 8e9
+FSL_SKIP = {"ds003397"}   # D9: FSL arm infeasible (1,360-volume runs: ~12 h and >19 GB per subject)
 MEM_BUDGET, MEM_FLOOR = 40e9, 20e9
-# D8: peak memory ~ 2.5 x the largest run's uncompressed float32 size (from its NIfTI header) + 2 GB
+# D8/D9: peak memory ~ 4.6 x the largest run's uncompressed float32 size (from its NIfTI header) + 2 GB
 NIL = [k for k in range(48)]
 FSLK = [F.cfg_index(1, 1, 0, c, 1) for c in range(4)]
 
@@ -75,7 +76,7 @@ def main():
         if only and r.ds not in only:
             continue
         for j, sub in enumerate(order(r.ds)[:CAP]):
-            fsl = j < FSL_N
+            fsl = j < FSL_N and r.ds not in FSL_SKIP
             if not done(r.ds, sub, fsl):
                 queue.append((r.ds, sub, fsl, r.task))
     print(f"{len(queue)} subjects to run on {workers} workers", flush=True)
@@ -108,7 +109,7 @@ def main():
                 runs = fetch.fetch_subject(pick[0], pick[1], pick[3])
                 import nibabel as nb
                 big = max((int(np.prod(nb.load(r["bold"]).shape)) * 4 for r in runs), default=0)
-                est = 2.5 * big + 2e9
+                est = 4.6 * big + 2e9   # D9: measured peak (27 GB for a 5.9 GB run)
             except Exception:
                 pass
             with lock:

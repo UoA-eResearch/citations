@@ -171,3 +171,18 @@ Each change is applied once per events file and written to a `.d7` note beside i
    time (identical results, since the smoothing is spatial within each volume), and the scheduler estimates each
    subject's peak as 2.5 times its largest run's uncompressed size from the NIfTI header, plus 2 GB.
 
+
+## D9 — 2026-11-24 — ds003397 without the FSL arm, and memory again (before any group result)
+
+1. **ds003397 is too large for the FSL arm.** Its runs have 1,360 volumes (97 x 115 x 97 voxels, TR 4 s), 5.9 GB
+   uncompressed each. Subject 05's FSL arm alone took 12.2 hours, and the FSL arm of subjects 08 and 10 was stopped by
+   the kernel's out-of-memory killer (`fslstats` at 19 GB inside the container, 21 November at 16:55 and 18:17). The
+   remaining 13 subjects would need about a week of FSL time on this machine. The FSL arm (D3) is the secondary
+   software comparison; it is skipped for ds003397, which keeps the full 48-configuration nilearn arm for all its
+   subjects. The software comparison already requires at least 10 FSL subjects per dataset, so ds003397 drops out of
+   it (2 subjects have FSL maps). The other 23 datasets are unchanged.
+2. **Memory.** At 20:26 on 21 November a ds003397 worker reached 27 GB (D8's estimate: 2.5 x 5.9 + 2 = 17 GB), the
+   machine ran out of memory, and the killed worker broke the process pool; the driver stopped with 16 subjects left
+   (13 in ds003397, 3 that have no usable run). The estimate is now 4.6 times the largest run's uncompressed size plus
+   2 GB, the measured ratio, and the remaining subjects run on at most 2 workers. Memory used by the FSL container is
+   not part of the estimate; skipping the FSL arm for ds003397 removes the largest case.
