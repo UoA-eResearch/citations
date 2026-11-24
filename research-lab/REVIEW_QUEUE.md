@@ -92,6 +92,7 @@ log below). A reviewer cut off by a limit is resumed, not relaunched, and the re
 | 2026-11-09 (returned 2026-11-10) | `ai-evaluation-science-attribution-graph-seed-replication` | review (fresh agent, the user's Fable 5.1 reviewer session) | fix first (all 59 arithmetic prompts targeted the space token; H1 Refuted without them) -> fixes in D4 (arithmetic rebuilt with digit targets; graphs, effects and matching rebuilt on the guest A100; H1 now Inconclusive 0.583) -> confirmation brief |
 | 2026-11-10 13:30 | `software-security-advisory-range-overapproximation` | confirmation pass (the user's Fable 5.1 reviewer session) | publish with edits -> edits in D5 -> PUBLISHED |
 | 2026-11-10 (returned by the hourly reviewer) | `ai-evaluation-science-attribution-graph-seed-replication` | confirmation pass (the user's Fable 5.1 reviewer session) | publish with edits -> edits in D5 -> PUBLISHED |
+| 2026-11-25 01:08 | `extra-open-neuroimaging-reanalysis-openneuro-multiverse-robustness-atlas` | review (Fable 5.2, launched by me) |
 
 **Pre-review gate (from 2026-10-25, METHODS.md):** before launching a draft's Fable review, run G5 (`tools/overclaim_check.py RUN --verify`) and G6 (`tools/attribution.py check RUN`) on it, fix what they find as a D-entry, and add the standard gate-check block to its `review/prompt.md`. New leads apply all of G1–G7.
 
