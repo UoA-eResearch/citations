@@ -1,0 +1,86 @@
+{
+ "datasets": 24,
+ "H1": {
+  "R2": 0.1405,
+  "ci": [
+   0.0207,
+   0.4776
+  ],
+  "datasets": 22,
+  "coef_log10N": 0.4387,
+  "coef_tsnr": -0.00071,
+  "verdict": "Inconclusive"
+ },
+ "H2": {
+  "median": 0.4344,
+  "ci": [
+   0.0498,
+   0.7193
+  ],
+  "datasets": 11,
+  "verdict": "Inconclusive"
+ },
+ "secondary": {
+  "H1_secondary_threshold": {
+   "R2": 0.0438,
+   "ci": [
+    0.0029,
+    0.3423
+   ],
+   "datasets": 24,
+   "coef_log10N": 0.1806,
+   "coef_tsnr": -0.00044,
+   "verdict": "Refuted"
+  },
+  "H2_secondary_threshold": {
+   "median": 0.5516,
+   "ci": [
+    0.3992,
+    0.6883
+   ],
+   "datasets": 12,
+   "verdict": "Inconclusive"
+  },
+  "H1_correlation_index": {
+   "R2": 0.022,
+   "ci": [
+    0.0027,
+    0.2586
+   ],
+   "datasets": 24,
+   "coef_log10N": -0.0558,
+   "coef_tsnr": 0.00043,
+   "verdict": "Refuted"
+  },
+  "H1_task_positive": {
+   "R2": 0.1228,
+   "ci": [
+    0.0082,
+    0.7865
+   ],
+   "datasets": 14,
+   "coef_log10N": 0.3123,
+   "coef_tsnr": 0.00371,
+   "verdict": "Inconclusive"
+  },
+  "axis_dice_mean": {
+   "smoothing": 0.5681,
+   "hrf": 0.7142,
+   "confounds": 0.584,
+   "noise": 0.784
+  },
+  "software": {
+   "datasets": 20,
+   "dice_mean": 0.6909,
+   "corr_mean": 0.9622,
+   "confound_dice_on_same_subjects": 0.6526
+  },
+  "R_vs_descriptives_spearman": {
+   "runs_per_subject": -0.132,
+   "volumes_per_subject": 0.085,
+   "fd_median": -0.109,
+   "supra_median": 0.892
+  },
+  "R_median_all": 0.6516
+ }
+}

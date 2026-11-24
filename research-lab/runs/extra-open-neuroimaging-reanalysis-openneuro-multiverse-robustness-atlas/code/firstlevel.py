@@ -147,13 +147,20 @@ def designs(ds, sub, spec, derivative):
     for ins in node.get("Transformations", {}).get("Instructions", []):
         if ins["Name"] == "Convolve":
             ins["Model"] = "spm"
-            if derivative:
-                ins["Derivative"] = True
+            # D11: set at both levels; some specs switch the derivative on themselves (ds000002, ds003397), which
+            # made the "canonical" level identical to the derivative level
+            ins["Derivative"] = bool(derivative)
+    # D11: fMRIPrep's cosine drift regressors in every configuration (plan), also when the spec lists none (ds000148)
+    if not any(isinstance(x, str) and x.startswith("cosine") for x in node["Model"]["X"]):
+        node["Model"]["X"] = list(node["Model"]["X"]) + ["cosine*"]
     if derivative:                       # wildcard entries (e.g. trial_type.*) already pick up the derivative columns
-        conv = {c for ins in node.get("Transformations", {}).get("Instructions", []) if ins["Name"] == "Convolve"
-                for c in ins.get("Input", [])}
+        import fnmatch
+        conv = [c for ins in node.get("Transformations", {}).get("Instructions", []) if ins["Name"] == "Convolve"
+                for c in ins.get("Input", [])]
+        # D11: a regressor named in X counts as convolved if it matches a Convolve input, wildcards included
+        # (ds000213 convolves trial_type.* but names its regressors in X, so no derivative was added)
         node["Model"]["X"] += [x + "_derivative" for x in list(node["Model"]["X"])
-                               if isinstance(x, str) and "*" not in x and x in conv]
+                               if isinstance(x, str) and "*" not in x and any(fnmatch.fnmatchcase(x, c) for c in conv)]
     node["Contrasts"] = node["Contrasts"][:1]
     lay = BIDSLayout(fetch.ROOT / ds / "raw", derivatives=[fetch.ROOT / ds / "deriv" / "fmriprep"], validate=False)
     g = BIDSStatsModelsGraph(lay, s)

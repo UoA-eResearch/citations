@@ -1,0 +1,23 @@
+{
+ "datasets_compared": 23,
+ "not_compared": {
+  "ds003397": "no FitLins map for the contrast"
+ },
+ "corr_median": 0.9798,
+ "corr_at_least_0.7": 23,
+ "below_0.7": [],
+ "dice_median": 0.8196,
+ "fsl_datasets": 23,
+ "fsl_corr_median": 0.9061,
+ "fsl_corr_at_least_0.7": 21,
+ "fsl_below_0.7": [
+  [
+   "ds000144",
+   0.6806
+  ],
+  [
+   "ds000212",
+   0.5619
+  ]
+ ]
+}

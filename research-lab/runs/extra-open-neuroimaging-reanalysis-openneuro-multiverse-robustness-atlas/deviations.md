@@ -205,3 +205,38 @@ skipped it as done, so it was never logged. It is rerun with the final code like
 `out_superseded_D10/`), and ds000102 is rebuilt. Separately, the first log rows of 14 November wrote some subject
 labels without their leading zero ("9" for "09"); the coverage count now maps labels to the spec's spelling, which
 removes a double count (3 subjects without a usable run, not 4).
+
+## D11 — 2026-11-25 — fixes after the independent review (after the first group results)
+
+The Fable review of the draft (`review/review.md`, verdict "fix first") found two defects in the first level and
+several undocumented departures from the plan.
+
+1. **The HRF axis was not varied in three datasets.** In ds000002 and ds003397 the spec's own Convolve step sets
+   `Derivative: true`, and `designs()` never switched it off for the canonical level, so both levels had the
+   derivative. In ds000213 the spec convolves `trial_type.*` but names its regressors in `Model.X`; derivative columns
+   were added only for X entries that appear literally among the Convolve inputs, so none was added. In all three the
+   "canonical" and "+ derivative" maps were identical (24 distinct configurations, not 48). `designs()` now sets the
+   derivative at both levels and matches named regressors against the Convolve inputs with wildcards.
+2. **ds000148 had no drift regressors.** Its spec's X is `[1, "trial_type.*"]`, and the nilearn arm took the cosine
+   regressors only from the spec's X, so all 48 configurations ran without a high-pass filter, against the plan
+   ("cosine drift regressors are kept in every configuration"), and its tSNR was computed without drift removal.
+   `designs()` now adds fMRIPrep's cosine regressors when a spec lists none. No other eligible spec lacks them.
+3. **Rerun** (`code/rerun_d11.py`): the nilearn arm of every analysed subject in these four datasets (ds000002,
+   ds000213, ds000148, ds003397) with the fixed code; the FSL maps, which neither defect touches, are kept; the old
+   maps move to `/mnt/data/omv/out_superseded_D11/`. Group maps and every downstream table are rebuilt, and the
+   results before D11 are kept (`results/tables/primary_before_D11.json`, `results/tables/before_D11/`).
+4. **Departures from the plan, now recorded:**
+   - **Group test:** a voxelwise one-sample t-test written directly (scipy), equivalent to nilearn's
+     `SecondLevelModel` with an intercept only, which the plan names.
+   - **Smoothing** is applied to the whole volume and the result masked (nilearn's `smooth_img`), not "within the
+     brain mask" as the plan says, so signal from outside the brain can blur into edge voxels. All configurations are
+     treated alike; not rerun.
+   - **Undefined R:** two datasets have no suprathreshold voxel in any configuration, so every pair is empty and R
+     is undefined; they were left out of H1 and H2, which the plan does not cover. The report gives the sensitivity
+     with R := 0 for them.
+   - **"No design" runs** are runs outside the spec's `Input.run` list (ds000051 runs 7–8, ds000144 run 2), not runs
+     whose design failed.
+   - **Latent:** `designs()` keys runs by run number only; ds000114 has two sessions without a run entity, whose
+     events files are identical, so nothing changes here. Not fixed.
+5. **Software against confounds** is compared on the datasets where both are defined (18), as the review showed the
+   draft's comparison mixed 20 and 18 datasets.

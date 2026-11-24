@@ -96,6 +96,29 @@ def main():
         "R_vs_descriptives_spearman": {c: round(float(df[["R", c]].corr("spearman").iloc[0, 1]), 3)
                                        for c in ("runs_per_subject", "volumes_per_subject", "fd_median", "supra_median")},
         "R_median_all": round(float(df.R.median()), 4)}
+    # D11 additions (after the review): like-for-like software comparison, adjusted R2, undefined R set to 0,
+    # the extent association within datasets whose 48 maps are all non-empty, and axis summaries as medians too
+    if "software_dice" in df:
+        both = df.dropna(subset=["software_dice", "confound_dice_subset"])
+        out["secondary"]["software_paired"] = {
+            "datasets": int(len(both)),
+            "software_dice_mean": round(float(both.software_dice.mean()), 4),
+            "confound_dice_mean": round(float(both.confound_dice_subset.mean()), 4),
+            "software_dice_median": round(float(both.software_dice.median()), 4),
+            "confound_dice_median": round(float(both.confound_dice_subset.median()), 4),
+            "software_higher_in": int((both.software_dice > both.confound_dice_subset).sum()),
+            "not_paired": sorted(set(df.dropna(subset=["software_dice"]).ds) - set(both.ds))}
+    h = out["H1"]
+    n, k = h["datasets"], 2
+    h["R2_adjusted"] = round(1 - (1 - h["R2"]) * (n - 1) / (n - k - 1), 4)
+    d0 = df.copy()
+    d0.loc[d0.R.isna() & (d0["any"] == 0), "R"] = 0.0
+    out["secondary"]["undefined_R_as_0"] = {"H1": h1(d0, "R"), "H2": h2(d0, "R")}
+    full = df[df["any"] == 1].dropna(subset=["R"])
+    out["secondary"]["R_vs_supra_spearman_all_48_nonempty"] = {
+        "rho": round(float(full[["R", "supra_median"]].corr("spearman").iloc[0, 1]), 3), "datasets": int(len(full))}
+    out["secondary"]["axis_dice_median"] = {ax: round(float(df[f"axis_{ax}"].median()), 4)
+                                           for ax in ("smoothing", "hrf", "confounds", "noise")}
     df.sort_values("ds").to_csv(T / "atlas.csv", index=False)
     (T / "primary.json").write_text(json.dumps(out, indent=1, default=float) + "\n")
     print(json.dumps(out, indent=1, default=float))
