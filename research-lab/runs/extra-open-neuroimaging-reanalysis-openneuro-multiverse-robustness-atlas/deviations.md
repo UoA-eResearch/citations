@@ -186,3 +186,15 @@ Each change is applied once per events file and written to a `.d7` note beside i
    (13 in ds003397, 3 that have no usable run). The estimate is now 4.6 times the largest run's uncompressed size plus
    2 GB, the measured ratio, and the remaining subjects run on at most 2 workers. Memory used by the FSL container is
    not part of the estimate; skipping the FSL arm for ds003397 removes the largest case.
+
+## D10 — 2026-11-24 — D8's coverage rule applied to every subject (found after the first group results)
+
+The G2 coverage reconciliation, run after the first group results and H1/H2 (24 November, 17:40), showed 21 runs in
+19 subjects still dropped as "events beyond the end of the scan", D6's original rule: 12 subjects in ds000001 (the
+case D8 describes: events ending 2–12 s after 600-s scans), 3 in ds000108, 2 in ds000148 and 2 in ds000212. D8
+replaced that rule with "the scan covers less than 90% of the event span" and reran the 28 subjects who had lost
+every run, but not subjects who had lost only some runs; those kept maps from fewer runs than the agreed rule allows.
+No new rule is introduced: D8's rule is applied to these 19 subjects too. Their maps are moved to
+`/mnt/data/omv/out_superseded_D10/` and recomputed, the four datasets' group maps and every downstream table are
+rebuilt, and the report shows the results before (`results/tables/primary_before_D10.json`) and after. ds000212's
+two runs (22 and 67 volumes) are short and may be dropped again under D8.

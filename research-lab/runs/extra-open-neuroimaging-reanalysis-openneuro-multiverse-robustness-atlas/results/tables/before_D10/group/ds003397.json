@@ -1,0 +1,42 @@
+{
+ "ds": "ds003397",
+ "status": "ok",
+ "N": 15,
+ "incomplete_subjects": [],
+ "voxels": 198472,
+ "tsnr": 47.34215127268415,
+ "runs_per_subject": 1.0,
+ "volumes_per_subject": 1360.0,
+ "fd_median": 0.11678042500000045,
+ "primary": {
+  "R": 0.7193012187752066,
+  "pairs": 1128,
+  "pairs_both_empty": 0,
+  "corr": 0.9267066242520738,
+  "medoid": 18,
+  "peak": 1.0,
+  "any": 1.0
+ },
+ "secondary_threshold": {
+  "R": 0.7323138247409946,
+  "pairs": 1128,
+  "pairs_both_empty": 0,
+  "corr": 0.9267066242520738,
+  "medoid": 18,
+  "peak": 0.7916666666666666,
+  "any": 1.0
+ },
+ "axis_dice": {
+  "smoothing": 0.7216423677271034,
+  "hrf": 1.0,
+  "confounds": 0.7998577526683364,
+  "noise": 0.9597853605615206
+ },
+ "axis_dice_secondary_threshold": {
+  "smoothing": 0.7380791154741283,
+  "hrf": 1.0,
+  "confounds": 0.8095503846137705,
+  "noise": 0.9548284533648287
+ },
+ "suprathreshold_voxels_median": 26541.0
+}

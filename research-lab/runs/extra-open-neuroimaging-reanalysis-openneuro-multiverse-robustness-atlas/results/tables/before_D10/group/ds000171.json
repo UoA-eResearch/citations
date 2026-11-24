@@ -1,0 +1,74 @@
+{
+ "ds": "ds000171",
+ "status": "ok",
+ "N": 39,
+ "incomplete_subjects": [],
+ "voxels": 215184,
+ "tsnr": 74.56584019077414,
+ "runs_per_subject": 3.0,
+ "volumes_per_subject": 315.0,
+ "fd_median": 0.0687533999999999,
+ "primary": {
+  "R": 0.689090050616874,
+  "pairs": 1128,
+  "pairs_both_empty": 0,
+  "corr": 0.9269395002719404,
+  "medoid": 19,
+  "peak": 1.0,
+  "any": 1.0
+ },
+ "secondary_threshold": {
+  "R": 0.7276667776477839,
+  "pairs": 1128,
+  "pairs_both_empty": 0,
+  "corr": 0.9269395002719404,
+  "medoid": 19,
+  "peak": 1.0,
+  "any": 1.0
+ },
+ "axis_dice": {
+  "smoothing": 0.6556579531150687,
+  "hrf": 0.9414415611223118,
+  "confounds": 0.8076311912432759,
+  "noise": 0.953156251508681
+ },
+ "axis_dice_secondary_threshold": {
+  "smoothing": 0.705570619718102,
+  "hrf": 0.947662636043557,
+  "confounds": 0.8277900702229397,
+  "noise": 0.9561798563837517
+ },
+ "suprathreshold_voxels_median": 28215.0,
+ "task_positive": {
+  "R": 0.5819299817363356,
+  "pairs": 1128,
+  "pairs_both_empty": 0,
+  "corr": 0.91596750864257,
+  "medoid": 31,
+  "peak": 1.0,
+  "any": 1.0
+ },
+ "software": {
+  "subjects": 20,
+  "dice_fsl_vs_nilearn": [
+   0.925701964093189,
+   0.8941105284388867,
+   0.8888770167752965,
+   0.9264554714512663
+  ],
+  "corr_fsl_vs_nilearn": [
+   0.9900088768743441,
+   0.9748500869442572,
+   0.9716879510980568,
+   0.9902173873589257
+  ],
+  "dice_nilearn_confound_pairs": [
+   0.8226992061158483,
+   0.7449594264947478,
+   0.961513672774146,
+   0.808161525757818,
+   0.8265216112907968,
+   0.7493403693931399
+  ]
+ }
+}

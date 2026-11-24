@@ -1,0 +1,25 @@
+ds,contrast,status,corr,dice,shared_voxels,ours_supra,fitlins_supra,resampled,key
+ds000001,pumpsvcontrol,ok,0.9467,0.7589,202279,54871,42729,False,fitlins/ds000001-fitlins/task-balloonanalogrisktask/node-dataLevel/contrast-pumpsvcontrol_stat-z_statmap.nii.gz
+ds000002,feedback,ok,0.9848,0.8777,202330,93051,75997,False,fitlins/ds000002-fitlins/task-deterministicclassification/node-dataLevel/contrast-feedback_stat-z_statmap.nii.gz
+ds000005,paragain,ok,0.9033,0.0,206756,1,2,False,fitlins/ds000005-fitlins/task-mixedgamblestask/node-dataLevel/contrast-paragain_stat-z_statmap.nii.gz
+ds000008,failstopcritvnoncrit,ok,0.8965,0.0,208108,0,2,False,fitlins/ds000008-fitlins/task-conditionalstopsignal/node-dataLevel/contrast-failstopcritvnoncrit_stat-z_statmap.nii.gz
+ds000009,explodevcash,ok,0.971,0.8149,188552,28446,24382,False,fitlins/ds000009-fitlins/task-balloonanalogrisktask/node-dataLevel/contrast-explodevcash_stat-z_statmap.nii.gz
+ds000051,presentspanish,ok,0.9826,0.8561,197713,68150,54848,False,fitlins/ds000051-fitlins/task-abstractconcretejudgment/node-dataLevel/contrast-presentspanish_stat-z_statmap.nii.gz
+ds000052,neg,ok,0.97,,192666,0,0,False,fitlins/ds000052-fitlins/task-reversalweatherprediction/node-dataLevel/contrast-neg_stat-z_statmap.nii.gz
+ds000102,inVcon,ok,0.9129,0.2656,208724,3576,671,False,fitlins/ds000102-fitlins/task-flanker/node-dataLevel/contrast-inVcon_stat-z_statmap.nii.gz
+ds000108,StimReappNegvLookNeg,ok,0.8992,0.6559,166989,7795,8655,False,fitlins/ds000108-fitlins/task-Emotionregulation/node-dataLevel/contrast-StimReappNegvLookNeg_stat-z_statmap.nii.gz
+ds000109,storybelief,ok,0.9775,0.857,193966,73642,60141,False,fitlins/ds000109-fitlins/task-theoryofmindwithmanualresponse/node-dataLevel/contrast-storybelief_stat-z_statmap.nii.gz
+ds000114,task,ok,0.7655,,179028,0,0,False,fitlins/ds000114-fitlins/task-covertverbgeneration/node-dataLevel/ses-retest/ses-retest_contrast-task_stat-z_statmap.nii.gz
+ds000115,zeroback,ok,0.8756,0.5969,182718,91130,39579,False,fitlins/ds000115-fitlins/task-letter0backtask/node-dataLevel/contrast-zeroback_stat-z_statmap.nii.gz
+ds000117,allfacesvscrambled,ok,0.9046,0.5025,219018,1972,1013,False,fitlins/ds000117-fitlins/task-facerecognition/node-dataLevel/ses-mri/ses-mri_contrast-allfacesvscrambled_stat-z_statmap.nii.gz
+ds000120,allphaserewardvneutral,ok,0.8742,,194002,0,0,False,fitlins/ds000120-fitlins/task-antisaccadetaskwithfixedorder/node-dataLevel/contrast-allphaserewardvneutral_stat-z_statmap.nii.gz
+ds000144,angryvfearful,ok,0.833,,168253,0,0,False,fitlins/ds000144-fitlins/task-emotionalfaces/node-dataLevel/contrast-angryvfearful_stat-z_statmap.nii.gz
+ds000148,distractcorr,ok,0.9027,0.4228,184483,100340,78359,False,fitlins/ds000148-fitlins/task-figure2backwith1backlures/node-dataLevel/contrast-distractcorr_stat-z_statmap.nii.gz
+ds000157,foodvnonfood,ok,0.9684,0.7603,181230,18228,12619,False,fitlins/ds000157-fitlins/task-passiveimageviewing/node-dataLevel/contrast-foodvnonfood_stat-z_statmap.nii.gz
+ds000170,perf1,ok,0.7417,0.1726,185288,24565,2730,False,fitlins/ds000170-fitlins/task-TrainedHandTrainedSequence/node-dataLevel/contrast-perf1_stat-z_statmap.nii.gz
+ds000171,musicvsounds,ok,0.932,0.7257,215184,29894,20523,False,fitlins/ds000171-fitlins/task-music/node-dataLevel/contrast-musicvsounds_stat-z_statmap.nii.gz
+ds000212,harmvpurity,ok,0.7141,,181242,0,0,False,fitlins/ds000212-fitlins/task-dis/node-dataLevel/contrast-harmvpurity_stat-z_statmap.nii.gz
+ds000213,fatvscramble,ok,0.9626,0.6011,187255,23758,10842,False,fitlins/ds000213-fitlins/task-socialcomparison/node-dataLevel/contrast-fatvscramble_stat-z_statmap.nii.gz
+ds001734,alltrials,ok,0.9852,0.9024,216087,137772,126533,False,fitlins/ds001734-fitlins/task-MGT/node-dataLevel/contrast-alltrials_stat-z_statmap.nii.gz
+ds002422,arithmeticvcontrol,ok,0.9873,0.913,103461,59058,51711,False,fitlins/ds002422-fitlins/task-arithm/node-dataLevel/contrast-arithmeticvcontrol_stat-z_statmap.nii.gz
+ds003397,checkerboard,no FitLins map for the contrast,,,,,,,
