@@ -1,0 +1,127 @@
+{
+ "seed": 20261110,
+ "datasets": [
+  {
+   "dataset": "ds000144",
+   "subjects_npz_complete": 38,
+   "subjects_ok_in_log": 38,
+   "N_in_atlas": 38,
+   "reconciles": true,
+   "group_z_max_abs_diff": 0.0019,
+   "fdr_voxels": 0,
+   "stored_fdr_voxels": 0,
+   "peak_z": -4.69,
+   "peak_mni": [
+    -14.5,
+    -28.5,
+    41.5
+   ]
+  },
+  {
+   "dataset": "ds000212",
+   "subjects_npz_complete": 39,
+   "subjects_ok_in_log": 39,
+   "N_in_atlas": 39,
+   "reconciles": true,
+   "group_z_max_abs_diff": 0.0018,
+   "fdr_voxels": 0,
+   "stored_fdr_voxels": 0,
+   "peak_z": -4.09,
+   "peak_mni": [
+    -16.5,
+    -48.5,
+    13.5
+   ]
+  },
+  {
+   "dataset": "ds000157",
+   "subjects_npz_complete": 30,
+   "subjects_ok_in_log": 30,
+   "N_in_atlas": 30,
+   "reconciles": true,
+   "group_z_max_abs_diff": 0.002,
+   "fdr_voxels": 18228,
+   "stored_fdr_voxels": 18228,
+   "peak_z": 7.21,
+   "peak_mni": [
+    -18.5,
+    -96.5,
+    -2.5
+   ]
+  }
+ ],
+ "subject": {
+  "dataset": "ds000170",
+  "subject": "1717",
+  "configuration": 3,
+  "label": {
+   "software": "nilearn",
+   "smoothing": 4,
+   "hrf": "canonical",
+   "confounds": "24P",
+   "noise": "OLS"
+  },
+  "design_first_run": {
+   "run": 1,
+   "n_volumes": 45,
+   "tr": 3.0,
+   "task_columns": [
+    "intercept",
+    "trial_type.Perf_1",
+    "trial_type.Perf_2"
+   ],
+   "cosine_columns": 1,
+   "contrast": {
+    "trial_type.Perf_1": 1.0
+   },
+   "events_per_trial_type": {
+    "Start_1": 1,
+    "Perf_1": 1,
+    "Stop_1": 1,
+    "Start_2": 1,
+    "Perf_2": 1,
+    "Stop_2": 1
+   },
+   "confound_columns": [
+    "trans_x",
+    "trans_y",
+    "trans_z",
+    "rot_x",
+    "rot_y",
+    "rot_z",
+    "trans_x_derivative1",
+    "trans_y_derivative1",
+    "trans_z_derivative1",
+    "rot_x_derivative1",
+    "rot_y_derivative1",
+    "rot_z_derivative1",
+    "trans_x_power2",
+    "trans_y_power2",
+    "trans_z_power2",
+    "rot_x_power2",
+    "rot_y_power2",
+    "rot_z_power2",
+    "trans_x_derivative1_power2",
+    "trans_y_derivative1_power2",
+    "trans_z_derivative1_power2",
+    "rot_x_derivative1_power2",
+    "rot_y_derivative1_power2",
+    "rot_z_derivative1_power2"
+   ],
+   "fd_median": 0.0346,
+   "spikes": 0
+  },
+  "rerun_status": "ok",
+  "rerun_max_abs_diff_48_configs": 0.0107421875,
+  "stored_map": {
+   "finite_voxels": 214707,
+   "peak_value": -23.078,
+   "peak_mni": [
+    -2.5,
+    -34.5,
+    -46.5
+   ],
+   "abs_95th_percentile": 1.131
+  }
+ }
+}

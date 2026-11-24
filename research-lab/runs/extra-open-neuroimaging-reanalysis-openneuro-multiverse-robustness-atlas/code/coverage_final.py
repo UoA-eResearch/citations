@@ -21,6 +21,12 @@ from coverage import Coverage  # noqa: E402
 import driver  # noqa: E402
 
 log = pd.read_csv(RUN / "results" / "tables" / "firstlevel_log.csv", dtype=str, keep_default_na=False)
+# the first log rows (14 November) wrote some subject labels without their leading zero ("6" for "06"):
+# map every label to the spec's spelling before taking the last entry per subject
+from firstlevel import spec_for  # noqa: E402
+_spec = {ds: [str(x) for x in spec_for(ds)[0]["Input"]["subject"]] for ds in log.ds.unique()}
+log["sub"] = [s if s in _spec[d] else next((x for x in _spec[d] if x.lstrip("0") == s.lstrip("0")), s)
+              for d, s in zip(log.ds, log["sub"])]
 last = log.drop_duplicates(["ds", "sub"], keep="last")
 
 # subjects: the seeded first 100 of each eligible dataset's spec list
@@ -55,7 +61,7 @@ for r in last[last.status == "ok"].itertuples():
     from firstlevel import spec_for
     import random
     subs = list(spec_for(r.ds)[0]["Input"]["subject"])
-    order = [str(s) for s in random.Random(driver.SEED).sample(subs, len(subs))]   # some specs list numbers
+    order = [str(s) for s in random.Random(driver.SEED).sample(subs, len(subs))]
     if order.index(str(r.sub)) >= driver.FSL_N:
         continue
     if r.ds in driver.FSL_SKIP and r.fsl in ("False", "false"):

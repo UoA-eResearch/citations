@@ -10,5 +10,52 @@
    "missing: MNI res-2 BOLD, confounds, mask": 30,
    "fewer than 10 spec subjects": 3
   }
+ },
+ "subjects": {
+  "attempted": 739,
+  "ok": 736,
+  "fallback": 0,
+  "dropped": 3,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "no usable run: no run with BOLD, confounds and events": 2,
+   "no usable run: scan covers less than 90% of the events": 1
+  }
+ },
+ "runs": {
+  "attempted": 2097,
+  "ok": 2038,
+  "fallback": 0,
+  "dropped": 59,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "no design": 45,
+   "scan covers less than 90% of the events": 4,
+   "too few volumes for the design": 10
+  }
+ },
+ "fsl_arm_subjects": {
+  "attempted": 422,
+  "ok": 409,
+  "fallback": 0,
+  "dropped": 13,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "skipped for ds003397 (D9)": 13
+  }
+ },
+ "robustness_index": {
+  "attempted": 24,
+  "ok": 22,
+  "fallback": 0,
+  "dropped": 2,
+  "unresolved": 0,
+  "fallback_reasons": {},
+  "drop_reasons": {
+   "R undefined: no suprathreshold voxel in any configuration (all pairs empty)": 2
+  }
  }
 }

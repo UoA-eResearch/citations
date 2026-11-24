@@ -198,3 +198,10 @@ No new rule is introduced: D8's rule is applied to these 19 subjects too. Their 
 `/mnt/data/omv/out_superseded_D10/` and recomputed, the four datasets' group maps and every downstream table are
 rebuilt, and the report shows the results before (`results/tables/primary_before_D10.json`) and after. ds000212's
 two runs (22 and 67 volumes) are short and may be dropped again under D8.
+
+**Addendum (same reconciliation, 25 November).** The atlas counted 736 subjects against 735 analysed in the log. The
+extra one is ds000102 sub-10, whose maps came from the timing run (13 November, 23:05), before D5–D8. The driver
+skipped it as done, so it was never logged. It is rerun with the final code like the 19 above (its old maps moved to
+`out_superseded_D10/`), and ds000102 is rebuilt. Separately, the first log rows of 14 November wrote some subject
+labels without their leading zero ("9" for "09"); the coverage count now maps labels to the spec's spelling, which
+removes a double count (3 subjects without a usable run, not 4).

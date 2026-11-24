@@ -1,0 +1,65 @@
+{
+ "ds": "ds000052",
+ "status": "ok",
+ "N": 13,
+ "incomplete_subjects": [],
+ "voxels": 192666,
+ "tsnr": 76.26199940429419,
+ "runs_per_subject": 2.0,
+ "volumes_per_subject": 450.0,
+ "fd_median": 0.10675612500000001,
+ "primary": {
+  "R": null,
+  "pairs": 1128,
+  "pairs_both_empty": 1128,
+  "corr": 0.9453444593912146,
+  "medoid": 27,
+  "peak": 0.0,
+  "any": 0.0
+ },
+ "secondary_threshold": {
+  "R": 0.38955145199380936,
+  "pairs": 1128,
+  "pairs_both_empty": 0,
+  "corr": 0.9453444593912146,
+  "medoid": 27,
+  "peak": 0.3125,
+  "any": 1.0
+ },
+ "axis_dice": {
+  "smoothing": null,
+  "hrf": null,
+  "confounds": null,
+  "noise": null
+ },
+ "axis_dice_secondary_threshold": {
+  "smoothing": 0.518266794282484,
+  "hrf": 0.9211697304113459,
+  "confounds": 0.47118936113371773,
+  "noise": 0.6336385924265141
+ },
+ "suprathreshold_voxels_median": 0.0,
+ "software": {
+  "subjects": 13,
+  "dice_fsl_vs_nilearn": [
+   null,
+   null,
+   null,
+   null
+  ],
+  "corr_fsl_vs_nilearn": [
+   0.9880847866371372,
+   0.9804292278021383,
+   0.9857035176635148,
+   0.9878812251489232
+  ],
+  "dice_nilearn_confound_pairs": [
+   null,
+   null,
+   null,
+   null,
+   null,
+   null
+  ]
+ }
+}
