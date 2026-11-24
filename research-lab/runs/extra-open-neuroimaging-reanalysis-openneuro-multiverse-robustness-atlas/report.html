@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OpenNeuro Multiverse Atlas</title>
+<meta name="description" content="Do innocent citers of a later-retracted paper lose citations after the retraction?">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%E2%97%8E</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --ground: #fbfbf9; --surface: #ffffff; --ink: #141413; --ink-2: #4f4e4a; --muted: #85847e;
+  --rule: #e4e3dd; --accent: #2a78d6; --accent-ink: #1c5cab; --observed: #d95926; --tile: #f3f2ee;
+  --code-bg: #f1f0eb; --shadow: 0 1px 2px rgba(20,20,19,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+    --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+    --code-bg: #232422; --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #121312; --surface: #1a1b1a; --ink: #ecebe6; --ink-2: #bcbbb3; --muted: #8a8983;
+  --rule: #2c2d2b; --accent: #5598e7; --accent-ink: #86b6ef; --observed: #eb6834; --tile: #1f201f;
+  --code-bg: #232422; --shadow: none;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink);
+  font: 17px/1.62 "IBM Plex Serif", Georgia, "Times New Roman", serif; }
+.page { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+header.masthead { max-width: 760px; margin: 0 auto 28px; }
+.eyebrow { font: 600 12px/1.4 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent-ink); margin-bottom: 10px; }
+h1 { font: 700 38px/1.15 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.02em; margin: 0 0 10px; text-wrap: balance; }
+.subtitle { font-style: italic; color: var(--ink-2); margin: 0 0 16px; font-size: 18px; }
+.meta { font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.meta a { color: var(--accent-ink); text-decoration: none; } .meta a:hover { text-decoration: underline; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 26px auto 34px; max-width: 880px; }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 440px) { .tiles { grid-template-columns: 1fr; } }
+.tile { background: var(--tile); border-radius: 10px; padding: 14px 16px; }
+.tile-label { font: 600 12.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: .01em; color: var(--muted); }
+.tile-value { font: 600 26px/1.25 "IBM Plex Sans", system-ui, sans-serif; margin: 6px 0 4px; letter-spacing: -.01em; }
+.tile-value.text { font-size: 20px; line-height: 1.3; padding-top: 3px; }
+.tile-note { font: 12.5px/1.4 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+main > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+main h2 { font: 650 24px/1.25 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: -.01em; margin: 44px auto 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); text-wrap: balance; }
+main h3 { font: 600 18.5px/1.3 "IBM Plex Sans", system-ui, sans-serif; margin: 30px auto 6px; text-wrap: balance; }
+main p, main li { color: var(--ink); }
+main p { margin-top: 0; margin-bottom: 14px; }
+main strong { font-weight: 600; }
+main a { color: var(--accent-ink); }
+main code { font: 14px "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+main pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; }
+main pre code { background: none; padding: 0; font-size: 13.5px; }
+.table-wrap { max-width: 860px; margin: 8px auto 20px; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font: 14.5px/1.45 "IBM Plex Sans", system-ui, sans-serif; }
+th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: 13.5px; color: var(--ink-2); border-bottom: 1.5px solid var(--rule); }
+td { font-variant-numeric: tabular-nums; }
+figure { max-width: 1000px !important; margin: 22px auto 30px; }
+figure img { display: block; max-width: 100%; width: auto; height: auto; margin: 0 auto; border-radius: 6px; background: #ffffff; box-shadow: var(--shadow); }
+figure a { display: block; }
+figcaption { max-width: 760px; margin: 10px auto 0; font: 13.5px/1.55 "IBM Plex Sans", system-ui, sans-serif; color: var(--ink-2); }
+footer { max-width: 760px; margin: 60px auto 0; padding-top: 16px; border-top: 1px solid var(--rule);
+  font: 13px/1.6 "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+footer a { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 640px) { body { font-size: 16px; } h1 { font-size: 30px; } .tile-value { font-size: 22px; } }
+</style>
+</head>
+<body>
+<div class="page">
+<header class="masthead">
+  <div class="eyebrow">Research Lab · Deep dive · Metascience</div>
+  <h1>How robust are OpenNeuro task-fMRI group maps to routine first-level choices? Median robustness is 0.65 over 22 datasets; sample size and tSNR explain only 14% of the variation, too uncertain to rule out more, while (post hoc) robustness tracks how much of the brain an effect reaches</h1>
+  <p class="subtitle">Each of 24 public OpenNeuro datasets with a published BIDS Stats Model and fMRIPrep derivatives (736 subjects) was reanalysed 48 ways: smoothing (4, 6, 8 mm) × HRF (canonical, + derivative) × motion confounds (6P, 24P, 24P + aCompCor, 6P + spikes) × noise model (AR(1), OLS), keeping the spec&#x27;s own contrast. Robustness is the mean pairwise signed Dice of the 48 FDR-thresholded group maps. A reduced FSL arm compared software on up to 20 subjects per dataset. The plan was committed before any image was read; ten deviations are listed below, one of which (D10, two consistency fixes) was made after the first group results.</p>
+  <div class="meta">
+    <span>Report · 2026-11-25 · pre-review draft</span>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/extra-open-neuroimaging-reanalysis-openneuro-multiverse-robustness-atlas/plan.md">Preregistration</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/extra-open-neuroimaging-reanalysis-openneuro-multiverse-robustness-atlas/deviations.md">Deviations log</a>
+    <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/extra-open-neuroimaging-reanalysis-openneuro-multiverse-robustness-atlas/code">Code</a>
+    <a href="../../index.html">All research leads</a>
+  </div>
+</header>
+<section class="tiles" aria-label="Key results"><div class="tile"><div class="tile-label">H1: N and tSNR explain R</div><div class="tile-value text">R² 0.14</div><div class="tile-note">95% CI 0.02–0.48 · Inconclusive</div></div><div class="tile"><div class="tile-label">H2: small datasets fragile</div><div class="tile-value text">median 0.43</div><div class="tile-note">95% CI 0.05–0.72 · Inconclusive</div></div><div class="tile"><div class="tile-label">Median robustness</div><div class="tile-value">0.65</div><div class="tile-note">22 datasets, 736 subjects</div></div><div class="tile"><div class="tile-label">R vs suprathreshold extent</div><div class="tile-value text">ρ 0.89</div><div class="tile-note">post hoc; N 0.37, tSNR −0.01</div></div><div class="tile"><div class="tile-label">External check (G4)</div><div class="tile-value">23/23</div><div class="tile-note">FitLins r ≥ 0.7, median 0.98</div></div></section>
+<main>
+<p><strong>Verdict: H1 Inconclusive; H2 Inconclusive.</strong></p>
+<ul>
+<li><strong>H1 (log10 N and tSNR together explain robustness, R² &gt; 0.4): Inconclusive.</strong><ul>
+<li>Across the 22 datasets where robustness is defined, R² = <strong>0.14</strong> (95% bootstrap interval 0.02 to 0.48). The upper
+bound passes 0.4, so the rule gives Inconclusive, but the estimate is low.</li>
+<li>With the secondary threshold (|z| &gt; 3.1, clusters ≥ 20 voxels) R² = 0.04 (0.003 to 0.34), and with the
+unthresholded correlation index in place of R, 0.02 (0.003 to 0.26): <strong>both Refuted</strong>.</li>
+<li>On their own, robustness relates moderately to N (Spearman 0.37, p = 0.09, not significant) and not at all to
+tSNR (−0.01).</li>
+</ul>
+</li>
+<li><strong>H2 (datasets with fewer than 25 subjects are majority-fragile, median R &lt; 0.5): Inconclusive.</strong><ul>
+<li>The 11 small datasets have median R <strong>0.43</strong> (0.05 to 0.72). They split into two groups: six from 0.00 to 0.43 and
+five from 0.62 to 0.84 (ds000051, 13 subjects: 0.82; ds000002, 17: 0.84). The 11 larger datasets have median 0.70.</li>
+</ul>
+</li>
+<li><strong>Robustness goes with how much of the brain passes the threshold</strong> (post hoc; not one of the plan's predictors).<ul>
+<li>Robustness follows the median number of suprathreshold voxels across the 48 configurations (Spearman <strong>0.89</strong>).
+Part of that is built into Dice, which is unstable for small maps, but the unthresholded correlation index shows
+it too (0.62).</li>
+<li>Six datasets have R below 0.2, all with weak effects: in four of them most configurations find no
+suprathreshold voxel at all, and two datasets (ds000052, ds000212) have none in any configuration. Thirteen
+datasets have R of 0.6 or more, and every one of those finds suprathreshold voxels in all 48 configurations.</li>
+<li>In those 13, the strongest voxel of the most typical configuration (the one that correlates best with the rest)
+is suprathreshold with the same sign in all 48 configurations: what varies is the map's extent and its weaker
+regions.</li>
+</ul>
+</li>
+<li><strong>Which choice matters:</strong> pooled over datasets, the mean signed Dice between maps that differ only in that choice
+  is 0.57 for smoothing, 0.58 for confounds, 0.71 for the HRF and 0.78 for the noise model. The means are pulled
+  down by the weak-effect datasets, where any change can empty or flip a map; the per-dataset medians are 0.67,
+  0.77, 0.89 and 0.92. Smoothing is the most influential choice in 11 of 22 datasets, confounds in 6, the HRF in 5,
+  the noise model in none.</li>
+<li><strong>Software:</strong> FSL and nilearn maps that differ only in software agree with signed Dice 0.69 (correlation 0.96) over
+  20 datasets, against 0.65 for nilearn maps on the same subjects that differ only in confounds. Switching software
+  moves a thresholded map about as much as switching motion confounds. (Bowring et al. 2019 found Dice of 0.00 to
+  0.68 between whole AFNI, FSL and SPM pipelines; here only the first-level software differs, from 0.00 to 0.96.)</li>
+<li><strong>External check (G4):</strong> the configuration closest to each spec (6 mm, canonical, 24P, AR(1)) correlates with the
+  group map published by the spec's authors (FitLins, 5 mm by its workflow's default) at r ≥ 0.7 in <strong>23 of 23</strong> datasets (median <strong>0.98</strong>,
+  thresholded Dice 0.82; ds003397 has no published map). Where that configuration finds nothing, the published map
+  has at most 2 suprathreshold voxels. The matching FSL configuration, on up to 20 subjects, reaches r ≥ 0.7 in 21
+  of 23 (median 0.91); the two below are null datasets (ds000144, 0.68; ds000212, 0.56), where half the sample gives
+  a noise-dominated map.</li>
+</ul>
+<figure><a href="results/figures/robustness_vs_n.png"><img src="results/figures/robustness_vs_n.png" alt="Robustness against the number of subjects"></a><figcaption>Robustness R against the number of analysed subjects for the 22 datasets where R is defined (labels: dataset number). Colour: the median number of suprathreshold voxels over the 48 configurations. Robustness tracks how much of the brain passes the threshold (Spearman 0.89, post hoc) far more than it tracks N (0.37) or tSNR (−0.01).</figcaption></figure>
+<h2>In plain terms</h2>
+<p>Brain-imaging studies make many small analysis choices before they show a map of "where the brain responded": how
+much to blur the images, how to correct for head movement, how to model the slow blood-flow response, and how to
+handle noise. Each choice is defensible, and published studies make them differently. We asked how much the final
+group map depends on them.</p>
+<p>We took 24 public experiments (736 people in total) for which a standard analysis had already been published (by
+the openneuro_glmfitlins project, which wrote model specifications for many OpenNeuro datasets), and re-ran each one 48
+ways, combining three amounts of blurring, two blood-flow models, four kinds of motion
+correction and two noise models. For each experiment we then measured how much the 48 maps overlap, from 0 (no
+agreement) to 1 (identical). The typical experiment scored 0.65: its strongest spot is found whichever way you
+analyse it, but how far the map extends, and its weaker regions, change.</p>
+<p>We expected bigger and cleaner datasets to be more robust, and small ones mostly fragile. The data do not settle
+either expectation: in these 22 experiments, size and image quality account for only about 14% of the differences,
+though with so few experiments we cannot rule out more. What goes with robustness, in a check we had not planned, is
+how strong and widespread the effect is. Experiments with a strong, widespread response give largely the same map
+every time, even with only 13 participants. Experiments with a weak response give maps that change a lot, or
+vanish, depending on the choices. Overall, blurring and motion correction are the choices that move maps most. Switching to a different analysis
+package changes a map about as much as switching motion correction. The version closest to the published standard analysis matched its
+maps almost exactly (a typical correlation of 0.98), which suggests the pipeline itself is sound.</p>
+<h2>What was asked</h2>
+<p>The lead (<code>extra-open-neuroimaging-reanalysis-openneuro-multiverse-robustness-atlas</code>) asked for a per-dataset
+robustness score for OpenNeuro task-fMRI group maps under defensible first-level choices, and predicted that dataset
+size and data quality would explain it (H1) and that small datasets would mostly be fragile (H2).
+- <strong>Analytic variability</strong> in fMRI is well documented for single datasets: 70 teams analysing one dataset used 70
+  different workflows, and their hypothesis tests varied sizeably even where their maps correlated highly
+  (Botvinik-Nezer et al. 2020, NARPS); AFNI, FSL and SPM gave thresholded maps with Dice from 0.00 to 0.68 on three
+  published datasets (Bowring et al. 2019). Multi-pipeline resources exist for one dataset at a time (Germani et al. 2025).
+- <strong>What was missing</strong> (novelty search, 2026-11-10, in <code>plan.md</code>): a robustness score per dataset across many
+  datasets, which this study provides for the 24 OpenNeuro datasets with published BIDS Stats Models
+  (<code>demidenm/openneuro_glmfitlins</code>) and fMRIPrep derivatives.</p>
+<h2>How it was done</h2>
+<ul>
+<li><strong>Datasets</strong> (<code>code/eligible.py</code>): the 57 BIDS Stats Model specs in <code>openneuro_glmfitlins</code> (commit <code>e624fec</code>); 24
+  had MNI 2 mm fMRIPrep BOLD, confounds and brain masks in <code>s3://openneuro-derivatives</code> and at least 10 spec
+  subjects (30 lacked derivatives, 3 had fewer than 10 subjects). One task per dataset, the spec's first contrast,
+  at most 100 subjects (a seeded subset; only ds001734 has more).</li>
+<li><strong>First level</strong> (<code>code/firstlevel.py</code>): pybids (pinned to the spec repository's commit) applies the spec's
+  transformations to the events, after the spec authors' own events preparation (vendored, MIT). nilearn's
+  <code>run_glm</code> fits each run; runs are combined by fixed effects. Confounds replace the spec's motion terms; fMRIPrep's
+  cosine regressors stay in every configuration. Maps are stored per subject on the template's 235,840 brain voxels.</li>
+<li><strong>Software arm</strong> (D3): FSL 6.0.7 (<code>film_gls</code>) on the first 20 subjects of each dataset's seeded order, at 6 mm,
+  canonical HRF, each of the four confound sets, prewhitening off, matched against nilearn's OLS maps. ds003397 is
+  excluded (D9).</li>
+<li><strong>Group level</strong> (<code>code/grouplevel.py</code>): per configuration, a one-sample t-test across subjects within the voxels
+  every subject covers; voxelwise FDR q &lt; 0.05 two-sided (primary), |z| &gt; 3.1 with ≥ 20-voxel clusters (secondary).
+  R is the mean signed Dice over the 1,128 configuration pairs; pairs where both maps are empty are excluded and
+  counted, and a pair with one empty map scores 0.</li>
+<li><strong>Predictors:</strong> N, and tSNR (median over brain voxels of the temporal mean over standard deviation of the
+  unsmoothed BOLD after the cosine regressors, median over runs).</li>
+<li><strong>Statistics</strong> (<code>code/analyse.py</code>): OLS of R on log10 N and tSNR, 2,000 bootstrap resamples of datasets (seed
+  20261110); for H2, 2,000 resamples of the datasets with N &lt; 25.</li>
+<li><strong>Gates:</strong> G2 coverage (<code>results/tables/coverage.json</code>): 736 of 739 subjects analysed (3 had no usable run), 2,038 of
+  2,097 runs (45 without a design for the spec's contrast, 10 too short for the design, 4 covering less than 90% of
+  their events), 409 FSL-arm subjects (13 skipped, D9). G3 (<code>results/plausibility.md</code>): three datasets and one
+  subject traced and recomputed. G4: the FitLins check above (<code>code/external_check.py</code>); a first run compared the 6P
+  configuration by mistake (the specs' motion terms are 24P, D2) and gave median r 0.91.</li>
+</ul>
+<h2>Results</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Dataset</th>
+<th>Task: contrast</th>
+<th>N</th>
+<th>tSNR</th>
+<th>R</th>
+<th>Correlation index</th>
+<th>Configurations with any voxel</th>
+<th>Most influential choice</th>
+<th>FSL vs nilearn Dice</th>
+<th>FitLins r</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ds002422</td>
+<td>arithm: arithmeticvcontrol</td>
+<td>45</td>
+<td>39</td>
+<td>0.89</td>
+<td>0.98</td>
+<td>48/48</td>
+<td>smoothing</td>
+<td>0.96</td>
+<td>0.99</td>
+</tr>
+<tr>
+<td>ds000002</td>
+<td>deterministicclassification: feedback</td>
+<td>17</td>
+<td>76</td>
+<td>0.84</td>
+<td>0.97</td>
+<td>48/48</td>
+<td>smoothing</td>
+<td>0.96</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>ds000051</td>
+<td>abstractconcretejudgment: presentspanish</td>
+<td>13</td>
+<td>87</td>
+<td>0.82</td>
+<td>0.97</td>
+<td>48/48</td>
+<td>smoothing</td>
+<td>0.91</td>
+<td>0.99</td>
+</tr>
+<tr>
+<td>ds000115</td>
+<td>letter0backtask: zeroback</td>
+<td>90</td>
+<td>122</td>
+<td>0.79</td>
+<td>0.95</td>
+<td>48/48</td>
+<td>confounds</td>
+<td>0.79</td>
+<td>0.89</td>
+</tr>
+<tr>
+<td>ds000109</td>
+<td>theoryofmindwithmanualresponse: storybelief</td>
+<td>33</td>
+<td>56</td>
+<td>0.79</td>
+<td>0.95</td>
+<td>48/48</td>
+<td>smoothing</td>
+<td>0.93</td>
+<td>0.99</td>
+</tr>
+<tr>
+<td>ds000148</td>
+<td>figure2backwith1backlures: distractcorr</td>
+<td>49</td>
+<td>81</td>
+<td>0.79</td>
+<td>0.96</td>
+<td>48/48</td>
+<td>confounds</td>
+<td>0.68</td>
+<td>0.90</td>
+</tr>
+<tr>
+<td>ds000157</td>
+<td>passiveimageviewing: foodvnonfood</td>
+<td>30</td>
+<td>143</td>
+<td>0.73</td>
+<td>0.96</td>
+<td>48/48</td>
+<td>smoothing</td>
+<td>0.86</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>ds003397</td>
+<td>checkerboard: checkerboard</td>
+<td>15</td>
+<td>47</td>
+<td>0.72</td>
+<td>0.93</td>
+<td>48/48</td>
+<td>smoothing</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr>
+<td>ds001734</td>
+<td>MGT: alltrials</td>
+<td>100</td>
+<td>32</td>
+<td>0.70</td>
+<td>0.77</td>
+<td>48/48</td>
+<td>hrf</td>
+<td>0.90</td>
+<td>0.99</td>
+</tr>
+<tr>
+<td>ds000171</td>
+<td>music: musicvsounds</td>
+<td>39</td>
+<td>75</td>
+<td>0.69</td>
+<td>0.93</td>
+<td>48/48</td>
+<td>smoothing</td>
+<td>0.91</td>
+<td>0.98</td>
+</tr>
+<tr>
+<td>ds000213</td>
+<td>socialcomparison: fatvscramble</td>
+<td>26</td>
+<td>80</td>
+<td>0.68</td>
+<td>0.94</td>
+<td>48/48</td>
+<td>smoothing</td>
+<td>0.73</td>
+<td>0.99</td>
+</tr>
+<tr>
+<td>ds000001</td>
+<td>balloonanalogrisktask: pumpsvcontrol</td>
+<td>16</td>
+<td>75</td>
+<td>0.63</td>
+<td>0.92</td>
+<td>48/48</td>
+<td>hrf</td>
+<td>0.83</td>
+<td>0.99</td>
+</tr>
+<tr>
+<td>ds000009</td>
+<td>balloonanalogrisktask: explodevcash</td>
+<td>24</td>
+<td>88</td>
+<td>0.62</td>
+<td>0.94</td>
+<td>48/48</td>
+<td>smoothing</td>
+<td>0.82</td>
+<td>0.99</td>
+</tr>
+<tr>
+<td>ds000108</td>
+<td>Emotionregulation: StimReappNegvLookNeg</td>
+<td>30</td>
+<td>93</td>
+<td>0.47</td>
+<td>0.88</td>
+<td>48/48</td>
+<td>hrf</td>
+<td>0.77</td>
+<td>0.96</td>
+</tr>
+<tr>
+<td>ds000170</td>
+<td>TrainedHandTrainedSequence: perf1</td>
+<td>15</td>
+<td>128</td>
+<td>0.43</td>
+<td>0.84</td>
+<td>48/48</td>
+<td>confounds</td>
+<td>0.69</td>
+<td>0.93</td>
+</tr>
+<tr>
+<td>ds000117</td>
+<td>facerecognition: allfacesvscrambled</td>
+<td>16</td>
+<td>74</td>
+<td>0.36</td>
+<td>0.91</td>
+<td>48/48</td>
+<td>smoothing</td>
+<td>0.76</td>
+<td>0.94</td>
+</tr>
+<tr>
+<td>ds000114</td>
+<td>covertverbgeneration: task</td>
+<td>10</td>
+<td>55</td>
+<td>0.19</td>
+<td>0.88</td>
+<td>24/48</td>
+<td>confounds</td>
+<td>0.80</td>
+<td>0.86</td>
+</tr>
+<tr>
+<td>ds000102</td>
+<td>flanker: inVcon</td>
+<td>26</td>
+<td>62</td>
+<td>0.07</td>
+<td>0.65</td>
+<td>32/48</td>
+<td>hrf</td>
+<td>0.44</td>
+<td>0.98</td>
+</tr>
+<tr>
+<td>ds000005</td>
+<td>mixedgamblestask: paragain</td>
+<td>16</td>
+<td>74</td>
+<td>0.05</td>
+<td>0.88</td>
+<td>16/48</td>
+<td>confounds</td>
+<td>0.11</td>
+<td>0.97</td>
+</tr>
+<tr>
+<td>ds000144</td>
+<td>emotionalfaces: angryvfearful</td>
+<td>38</td>
+<td>117</td>
+<td>0.02</td>
+<td>0.82</td>
+<td>5/48</td>
+<td>confounds</td>
+<td>–</td>
+<td>0.99</td>
+</tr>
+<tr>
+<td>ds000008</td>
+<td>conditionalstopsignal: failstopcritvnoncrit</td>
+<td>13</td>
+<td>78</td>
+<td>0.01</td>
+<td>0.87</td>
+<td>6/48</td>
+<td>smoothing</td>
+<td>0.00</td>
+<td>0.96</td>
+</tr>
+<tr>
+<td>ds000120</td>
+<td>antisaccadetaskwithfixedorder: allphaserewardvneutral</td>
+<td>23</td>
+<td>74</td>
+<td>0.00</td>
+<td>0.53</td>
+<td>3/48</td>
+<td>hrf</td>
+<td>0.00</td>
+<td>0.96</td>
+</tr>
+<tr>
+<td>ds000052</td>
+<td>reversalweatherprediction: neg</td>
+<td>13</td>
+<td>76</td>
+<td>–</td>
+<td>0.95</td>
+<td>0/48</td>
+<td>–</td>
+<td>–</td>
+<td>0.99</td>
+</tr>
+<tr>
+<td>ds000212</td>
+<td>dis: harmvpurity</td>
+<td>39</td>
+<td>84</td>
+<td>–</td>
+<td>0.56</td>
+<td>0/48</td>
+<td>–</td>
+<td>–</td>
+<td>0.82</td>
+</tr>
+</tbody>
+</table></div>
+<p><em>R: mean pairwise signed Dice of the FDR-thresholded maps; undefined where no configuration has a suprathreshold
+voxel. Most influential choice: the axis with the lowest mean Dice between configurations that differ only on it.
+FSL: on up to 20 subjects, where both packages found suprathreshold voxels in at least one matched pair; "–" where
+not run (ds003397) or both maps were empty. FitLins r: correlation of the spec-closest configuration (6 mm,
+canonical, 24P, AR(1)) with the published group map. Full table: <code>results/tables/atlas.csv</code>.</em></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Hypothesis or analysis</th>
+<th>Estimate</th>
+<th>95% interval</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>H1:</strong> R² of R on log10 N + tSNR (22 datasets)</td>
+<td><strong>0.14</strong></td>
+<td>0.02–0.48</td>
+<td><strong>Inconclusive</strong></td>
+</tr>
+<tr>
+<td>H1 with the secondary threshold (24 datasets)</td>
+<td>0.04</td>
+<td>0.003–0.34</td>
+<td>Refuted</td>
+</tr>
+<tr>
+<td>H1 with the correlation index (24)</td>
+<td>0.02</td>
+<td>0.003–0.26</td>
+<td>Refuted</td>
+</tr>
+<tr>
+<td>H1 with the task-positive contrast (14)</td>
+<td>0.12</td>
+<td>0.01–0.79</td>
+<td>Inconclusive</td>
+</tr>
+<tr>
+<td><strong>H2:</strong> median R, N &lt; 25 (11 datasets)</td>
+<td><strong>0.43</strong></td>
+<td>0.05–0.72</td>
+<td><strong>Inconclusive</strong></td>
+</tr>
+<tr>
+<td>H2 with the secondary threshold (12)</td>
+<td>0.55</td>
+<td>0.40–0.69</td>
+<td>Inconclusive</td>
+</tr>
+</tbody>
+</table></div>
+<figure><a href="results/figures/which_choice.png"><img src="results/figures/which_choice.png" alt="Which choice matters"></a><figcaption>How much each choice moves the thresholded map. For each dataset, the mean signed Dice between configurations that differ only in that choice (the first four), and between FSL and nilearn maps that differ only in software (20 datasets, on up to 20 subjects each). Lower means the choice matters more. Smoothing and confounds move the maps most; switching software moves them about as much as switching confounds.</figcaption></figure>
+<ul>
+<li><strong>The task-positive contrast</strong> (every condition of the primary contrast against baseline, equal weights) was
+  expected to be more robust than the primary contrast in most datasets (G3). It is in 7 of 14. The four sharpest
+  drops are designs with little separable baseline: modelled events cover 97% of the run in ds000213 (fixation is
+  modelled), 99% in ds000171 and 88% in ds002422, and in ds000117 stimuli come every 3.2 s, so the summed regressor is
+  nearly flat after convolution. The contrast code was checked; the expectation did not allow for such designs.</li>
+<li><strong>Effect of the deviations found after the first results (D10):</strong> H1 moved from R² 0.145 (0.02 to 0.49) to 0.141
+  (0.02 to 0.48), H2 not at all; ds000001's R rose from 0.56 to 0.63 with its restored runs, ds000108's from 0.43 to
+  0.47 (<code>results/tables/primary_before_D10.json</code>).</li>
+</ul>
+<h2>What this does and does not show</h2>
+<ul>
+<li><strong>First-level choices only.</strong> Preprocessing (fMRIPrep 21.0.1 to 23.0.2 as published by the OpenNeuro
+  Preprocessing Team; the plan said 20.2, wrongly) and the group model (one-sample t-test, parametric FDR) are fixed; both are known to matter, so R is an upper bound on robustness to everything a lab
+  might change.</li>
+<li><strong>One contrast per dataset</strong>, the spec authors' first, which is not always the dataset's headline effect; a weak
+  contrast in a dataset with strong effects elsewhere scores low here.</li>
+<li><strong>Dice depends on map size.</strong> A small suprathreshold set gives an unstable Dice even when the unthresholded maps
+  agree (ds000052: correlation index 0.95 and no suprathreshold voxel in any configuration). Part of the link between
+  effect size and R is therefore built into the measure; the correlation index shows a weaker form of it (0.62).</li>
+<li><strong>Few datasets.</strong> With 22 to 24 datasets, the H1 interval is wide (0.02 to 0.48), and H2 rests on 11 datasets; the
+  data cannot rule out a moderate role for N.</li>
+<li><strong>Not a random sample of OpenNeuro:</strong> datasets with published specs and fMRIPrep derivatives, mostly older and
+  smaller studies.</li>
+<li><strong>The software comparison is partial:</strong> FSL on up to 20 subjects, one smoothing level and HRF, prewhitening off,
+  and not for ds003397.</li>
+</ul>
+<h2>Process and deviations</h2>
+<p>All deviations are in <code>deviations.md</code>; D1–D9 were made before any group result.
+- <strong>D1:</strong> the FSL software axis restored (FSL in a container), and compute moved from a borrowed machine to the lab's
+  VM, before any data.
+- <strong>D2:</strong> implementation details settled on one timing subject, among them that the specs' motion terms are 24P, so
+  the spec-closest configuration is 24P, not 6P.
+- <strong>D3:</strong> after the timing run (FSL: about 55 days projected), the FSL arm cut to 4 configurations on at most 20
+  subjects per dataset; the planned 96-configuration index dropped.
+- <strong>D4:</strong> the task-positive contrast added to the first level.
+- <strong>D5:</strong> fixes during the run: an upstream bug in the vendored events preparation (ds000002), dataset-level JSON
+  sidecars for the TR, and spec subjects without derivatives counted as dropped.
+- <strong>D6/D8:</strong> a run-usability rule (scan must cover 90% of the events and have more volumes than the design), first
+  too strict (D6), then revised (D8).
+- <strong>D7:</strong> mechanical event fixes for three datasets (condition-name characters, a condition column, response times
+  given as "n/a").
+- <strong>D9:</strong> ds003397 (1,360-volume runs: 12 h and over 19 GB per subject in FSL) without the FSL arm; a memory
+  estimate fixed after an out-of-memory crash that stopped the run for three days.
+- <strong>D10 (after the first group results):</strong> the G2 reconciliation found 19 subjects whose partial runs were still
+  dropped under D6's superseded rule, and one subject whose maps came from the timing run before D5–D8. D8's rule was
+  applied to them, they were recomputed, and the affected datasets were rebuilt. The earlier results are kept.</p>
+<h2>Reproducing it</h2>
+<pre><code class="language-bash">python -m venv venv &amp;&amp; venv/bin/pip install -r code/requirements.txt   # nilearn 0.11, pybids at the spec repo's commit
+venv/bin/python -I code/eligible.py            # datasets and contrasts
+docker build -t omv-fsl:6.0.7-slim code/docker   # FSL 6.0.7 first-level tools (FSL arm)
+venv/bin/python -I code/driver.py 8            # first level, all subjects (streams from the public buckets)
+venv/bin/python -I code/grouplevel.py ds000001 ...   # group maps per dataset
+venv/bin/python -I code/analyse.py             # H1, H2, secondary analyses
+venv/bin/python -I code/external_check.py      # FitLins comparison (G4)
+venv/bin/python -I code/figures.py             # figures and tiles
+</code></pre>
+</main>
+<footer>Produced by an AI-agent research workflow (scouting, preregistration, pipeline, calibration, independent review) on one
+A100 machine. Data: the open public sources named in the preregistration. Every departure from the preregistration is recorded in the
+<a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/extra-open-neuroimaging-reanalysis-openneuro-multiverse-robustness-atlas/deviations.md">deviations log</a>.</footer>
+</div>
+</body>
+</html>

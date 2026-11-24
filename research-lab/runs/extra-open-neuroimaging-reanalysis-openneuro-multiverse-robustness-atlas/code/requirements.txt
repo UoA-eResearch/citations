@@ -1,0 +1,10 @@
+nilearn==0.11.1
+nibabel==5.3.2
+numpy==2.1.3
+scipy==1.14.1
+pandas==2.2.3
+scikit-learn==1.5.2
+threadpoolctl==3.8.0
+psutil==7.2.2
+matplotlib==3.9.2
+pybids @ git+https://github.com/bids-standard/pybids.git@26b3f7e0bd4c5bc7d30dca52555ec6002e5313a1

@@ -4,7 +4,7 @@
    design matrix of its first run is dumped (columns, events per condition in the events file, contrast weights,
    confound columns of the configuration), the subject's first level is rerun into a temporary folder and compared
    with the stored maps (all 48 nilearn configurations), and the stored map's peak is reported in MNI coordinates.
-2. Three random datasets: the group map of the spec-closest configuration (16) is recomputed from the stored
+2. Three random datasets: the group map of configuration 16 (6 mm, canonical, 6P, AR(1)) is recomputed from the stored
    subject maps and compared with group.npz; the number of subjects is reconciled with the first-level log and
    the atlas; the group peak is reported in MNI coordinates.
 

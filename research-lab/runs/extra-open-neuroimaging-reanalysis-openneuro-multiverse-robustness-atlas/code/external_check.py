@@ -2,7 +2,9 @@
 
 For every dataset with a FitLins output in s3://openneuro-derivatives/fitlins/<ds>-fitlins/, the dataset-level z map
 of the spec's contrast (the same contrast name; found by listing the task's node folders) is compared with this
-study's configuration closest to the spec: nilearn, 6 mm, SPM canonical, 6P, AR(1) (configuration 16).
+study's configuration closest to the spec: nilearn, 6 mm, SPM canonical, 24P, AR(1) (configuration 18; the specs'
+motion terms match fMRIPrep's 24P columns, D2; FitLins smoothed at 5 mm), and with the FSL configuration closest to
+it (6 mm, double gamma, 24P, no prewhitening; configuration 67, D3) on the dataset's FSL subjects.
   corr   Pearson correlation of the two z maps over the voxels both cover (this study's group mask, and FitLins
          voxels that are finite and non-zero)
   dice   signed Dice of the two maps thresholded identically: voxelwise FDR q < 0.05, two-sided, Benjamini-Hochberg
@@ -31,7 +33,8 @@ import grouplevel as G  # noqa: E402
 
 DERIV = "https://openneuro-derivatives.s3.amazonaws.com"
 CACHE = Path("/mnt/data/omv/fitlins")
-CFG = F.cfg_index(0, 1, 0, 0, 0)          # nilearn, 6 mm, canonical, 6P, AR(1)
+CFG = F.cfg_index(0, 1, 0, 1, 0)          # nilearn, 6 mm, canonical, 24P, AR(1)   (D2)
+CFG_FSL = F.cfg_index(1, 1, 0, 1, 1)      # FSL, 6 mm, double gamma, 24P, no prewhitening   (D3)
 
 
 def listing(prefix, delimiter=None):
@@ -98,9 +101,26 @@ def compare(ds, task, contrast, tmask, tvox):
     p = 2 * stats.norm.sf(np.abs(fz_m[shared]))
     fs = (np.sign(fz_m[shared]) * G.fdr(p)).astype(np.int8)
     dice = G.signed_dice(os1[shared], fs)
-    return {"ds": ds, "status": "ok", "corr": round(corr, 4), "dice": None if dice is None else round(float(dice), 4),
-            "shared_voxels": int(shared.sum()), "ours_supra": int((os1[shared] != 0).sum()),
-            "fitlins_supra": int((fs != 0).sum()), "resampled": resampled, "key": key}
+    out = {"ds": ds, "status": "ok", "corr": round(corr, 4), "dice": None if dice is None else round(float(dice), 4),
+           "shared_voxels": int(shared.sum()), "ours_supra": int((os1[shared] != 0).sum()),
+           "fitlins_supra": int((fs != 0).sum()), "resampled": resampled, "key": key}
+    # FSL: group map of configuration 67 over the subjects with FSL maps, within the voxels they all cover
+    E = []
+    for f in sorted((F.OUT / ds).glob("sub-*.npz")):
+        e = np.load(f)["eff"][CFG_FSL].astype(np.float32)
+        if np.isfinite(e).any():
+            E.append(e)
+    if len(E) >= 10:
+        E = np.stack(E)
+        fm = np.isfinite(E).all(0) & np.isfinite(fz) & (fz != 0)
+        zf, pf = G.onesample(E[:, fm])
+        sf = (np.sign(zf) * G.fdr(pf)).astype(np.int8)
+        pfl = 2 * stats.norm.sf(np.abs(fz[fm]))
+        ffl = (np.sign(fz[fm]) * G.fdr(pfl)).astype(np.int8)
+        d2 = G.signed_dice(sf, ffl)
+        out.update({"fsl_subjects": len(E), "fsl_corr": round(float(np.corrcoef(zf, fz[fm])[0, 1]), 4),
+                    "fsl_dice": None if d2 is None else round(float(d2), 4)})
+    return out
 
 
 def main():
@@ -111,7 +131,8 @@ def main():
         out = list(ex.map(lambda r: compare(r["ds"], r["task"], r["contrast"], tmask, tvox), rows))
     for o, r in zip(out, rows):
         o["contrast"] = r["contrast"]
-    fields = ["ds", "contrast", "status", "corr", "dice", "shared_voxels", "ours_supra", "fitlins_supra", "resampled", "key"]
+    fields = ["ds", "contrast", "status", "corr", "dice", "shared_voxels", "ours_supra", "fitlins_supra",
+              "fsl_subjects", "fsl_corr", "fsl_dice", "resampled", "key"]
     with open(RUN / "results" / "tables" / "external_fitlins.csv", "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
         w.writeheader()
@@ -122,7 +143,11 @@ def main():
                "corr_median": round(float(np.median(corrs)), 4) if corrs else None,
                "corr_at_least_0.7": sum(c >= 0.7 for c in corrs),
                "below_0.7": sorted((o["ds"], o["corr"]) for o in ok if o["corr"] < 0.7),
-               "dice_median": round(float(np.median([o["dice"] for o in ok if o["dice"] is not None])), 4) if ok else None}
+               "dice_median": round(float(np.median([o["dice"] for o in ok if o["dice"] is not None])), 4) if ok else None,
+               "fsl_datasets": sum(1 for o in ok if "fsl_corr" in o),
+               "fsl_corr_median": round(float(np.median([o["fsl_corr"] for o in ok if "fsl_corr" in o])), 4),
+               "fsl_corr_at_least_0.7": sum(1 for o in ok if o.get("fsl_corr", 0) >= 0.7),
+               "fsl_below_0.7": sorted((o["ds"], o["fsl_corr"]) for o in ok if "fsl_corr" in o and o["fsl_corr"] < 0.7)}
     (RUN / "results" / "tables" / "external_fitlins.json").write_text(json.dumps(summary, indent=1) + "\n")
     print(json.dumps(summary, indent=1))
 
