@@ -80,7 +80,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-
   <h1>How robust are OpenNeuro task-fMRI group maps to routine first-level choices? Median robustness is 0.65 over 22 datasets; sample size and tSNR explain only 14% of the variation, too uncertain to rule out more</h1>
   <p class="subtitle">Each of 24 public OpenNeuro datasets with a published BIDS Stats Model and fMRIPrep derivatives (736 subjects) was reanalysed 48 ways: smoothing (4, 6, 8 mm) × HRF (canonical, + derivative) × motion confounds (6P, 24P, 24P + aCompCor, 6P + spikes) × noise model (AR(1), OLS), keeping the spec&#x27;s own contrast. Robustness R is the mean pairwise signed Dice of the 48 FDR-thresholded group maps. A reduced FSL arm compared software on up to 20 subjects per dataset. The plan was committed before any image was read; eleven deviations are listed below. Two were made after the first group results: D10 (two consistency fixes) and D11 (fixes after the independent review: in three datasets the HRF choice had not actually been varied, and one dataset had no drift regressors; all four were rerun).</p>
   <div class="meta">
-    <span>Report · 2026-11-25 · under independent review</span>
+    <span>Report · 2026-11-26 · under independent review</span>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/extra-open-neuroimaging-reanalysis-openneuro-multiverse-robustness-atlas/plan.md">Preregistration</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/extra-open-neuroimaging-reanalysis-openneuro-multiverse-robustness-atlas/deviations.md">Deviations log</a>
     <a href="https://github.com/UoA-eResearch/citations/blob/main/research-lab/runs/extra-open-neuroimaging-reanalysis-openneuro-multiverse-robustness-atlas/code">Code</a>
@@ -139,7 +139,9 @@ rises with signal strength in the same way (0.63 against extent), so it is not a
   preprocessing and the group model shared, 0.00 to 0.96.)</li>
 <li><strong>External check (G4):</strong> the configuration closest to each spec (6 mm, canonical, 24P, AR(1)) correlates with the
   group map published by the openneuro_glmfitlins project (FitLins, 5 mm by its workflow's default) at r ≥ 0.7 in
-  <strong>23 of 23</strong> datasets (median <strong>0.98</strong>, thresholded Dice 0.82; ds003397 has no published map).<ul>
+  <strong>23 of 23</strong> datasets (median <strong>0.98</strong>, thresholded Dice 0.82; ds003397 has no published map). For ds000148, whose
+  spec has no motion or drift terms, the 24P configuration with cosine regressors is not close to the spec; its r
+  (0.91) and Dice (0.71) are among the lowest of the strong-effect datasets.<ul>
 <li>Where that configuration finds nothing, the published map has at most 2 suprathreshold voxels. The other way
 round, in ds000114 ours has 11,342 and the published map none (r 0.86): the published maps are per session (the
 check uses the retest session), and ours pools both sessions' runs.</li>
@@ -223,12 +225,13 @@ as the plan says (D11).</li>
 <li><strong>Gates:</strong><ul>
 <li>G2 coverage (<code>results/tables/coverage.json</code>): 736 of 739 subjects analysed (3 had no usable run); 2,038 of
 2,097 runs (45 outside the spec's run list, 10 too short for the design, 4 covering less than 90% of their
-events); 409 FSL-arm subjects (13 skipped, D9).</li>
+events); 407 FSL-arm subjects used (ds003397's 15 excluded, D9; 2 of them have FSL maps from before D9,
+unused).</li>
 <li>G3 (<code>results/plausibility.md</code>): three datasets and one subject traced and recomputed, and, added after the
 review, a check that configurations differing on an axis give different maps (<code>code/axis_check.py</code>; it flags
 exactly the three datasets the review found before D11, and none after).</li>
 <li>G4: the FitLins check above (<code>code/external_check.py</code>); a first run compared the 6P configuration by mistake
-(the specs' motion terms are 24P, D2) and gave median r 0.91.</li>
+(the specs' motion terms are 24P, D2; ds000148's spec has none) and gave median r 0.91.</li>
 </ul>
 </li>
 </ul>
@@ -637,10 +640,14 @@ pair; "–" where not run (ds003397) or both maps were empty. FitLins r: correla
   expected to be more robust than the primary contrast in most datasets (G3). It is in 7 of 14 (6 where both are
   defined, plus ds000212, whose primary contrast finds no voxel), identical in ds000051 (its contrast already weights
   its conditions equally) and less robust in 6.<ul>
-<li>The draft explained the drops by designs with little rest. Tested across the 13 datasets with both defined
-(post hoc, <code>code/g3_baseline.py</code>), the gap between the two contrasts goes with how much the summed, convolved
-event train varies over the run (Spearman 0.66, p = 0.01; flat means little rest), less clearly with the share
-of the run covered by events (−0.40, p = 0.17).</li>
+<li>The draft explained the drops by designs with little rest. A post hoc look across the 13 datasets with both
+defined (<code>code/g3_baseline.py</code>) is consistent with that, but weak. The gap between the two contrasts goes with
+how much the summed, convolved event train varies over the run (Spearman 0.66, p = 0.01 uncorrected, the better
+of two measures tried; flat means little rest), less clearly with the share of the run covered by events (−0.40,
+p = 0.17). But the task-positive R itself does not go with flatness (−0.03); part of the gap's association comes
+from the primary R, which tends to be higher in the flatter designs (−0.48), and the gap is bounded near 0 and 1
+(holding the primary R fixed, the gap's association is 0.55). Both measures are approximate: they use every row
+of the events files, not the spec's modelled subset, and the first 10 subjects of each dataset.</li>
 <li>ds000171, ds000213 and ds002422 fit: events cover 88% to 99% of the run, and their summed regressors are among
 the four flattest of the 13 (the fourth is ds000008, where both contrasts score near 0). ds000117, the fourth
 sharp drop, does not: its stimuli are brief and leave rest by both measures,

@@ -38,13 +38,13 @@
  },
  "fsl_arm_subjects": {
   "attempted": 422,
-  "ok": 409,
+  "ok": 407,
   "fallback": 0,
-  "dropped": 13,
+  "dropped": 15,
   "unresolved": 0,
   "fallback_reasons": {},
   "drop_reasons": {
-   "skipped for ds003397 (D9)": 13
+   "ds003397 excluded (D9; 2 of them have unused FSL maps from before D9)": 15
   }
  },
  "robustness_index": {

@@ -57,7 +57,7 @@ cov.save()
 
 # FSL arm (D3): the first 20 subjects of each dataset's seeded order; ds003397 skipped (D9)
 cov = Coverage("fsl_arm_subjects", RUN / "results" / "tables" / "coverage.json")
-ok = skipped = missing = 0
+ok = skipped = missing = stale = 0
 for r in last[last.status == "ok"].itertuples():
     from firstlevel import spec_for
     import random
@@ -67,14 +67,16 @@ for r in last[last.status == "ok"].itertuples():
         continue
     e = np.load(driver.F.OUT / r.ds / f"sub-{r.sub}.npz")["eff"]
     has = all(np.isfinite(e[k].astype(np.float32)).any() for k in driver.FSLK)
-    if r.ds in driver.FSL_SKIP and not has:     # D11: by the maps, not the log flag (the D11 rerun logs fsl=False;
-        skipped += 1                            # ds003397 sub-05 and sub-11 kept their FSL maps from before D9)
+    if r.ds in driver.FSL_SKIP:                 # D9: no software comparison for ds003397, so none of its subjects is
+        skipped += 1                            # used; 2 (sub-05, sub-11) have FSL maps from before D9, unused
+        stale += int(has)
         continue
     if has:
         ok += 1
     else:
         missing += 1
-cov.add_counts(ok=ok, drops={"skipped for ds003397 (D9)": skipped, **({"no FSL maps": missing} if missing else {})})
+cov.add_counts(ok=ok, drops={f"ds003397 excluded (D9; {stale} of them have unused FSL maps from before D9)": skipped,
+                               **({"no FSL maps": missing} if missing else {})})
 cov.save()
 
 # robustness index per dataset: defined unless no configuration has a suprathreshold voxel

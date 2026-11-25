@@ -244,3 +244,9 @@ several undocumented departures from the plan.
      events files are identical, so nothing changes here. Not fixed.
 5. **Software against confounds** is compared on the datasets where both are defined (18), as the review showed the
    draft's comparison mixed 20 and 18 datasets.
+
+**D11 addendum — 2026-11-26, after the confirmation pass** (`review/confirmation.md`, "publish with edits"): the
+FSL-arm count is the 407 subjects used (ds003397's 15 excluded; 2 of them have FSL maps from before D9, unused), not
+409; the task-positive check is reported as consistent with the explanation but weak (the task-positive R itself does
+not go with design flatness); ds000148's spec-closest configuration is noted as not close to its spec (no motion or
+drift terms). No result changed.

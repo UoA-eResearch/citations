@@ -52,7 +52,9 @@ the HRF choice had not actually been varied, and one dataset had no drift regres
   preprocessing and the group model shared, 0.00 to 0.96.)
 - **External check (G4):** the configuration closest to each spec (6 mm, canonical, 24P, AR(1)) correlates with the
   group map published by the openneuro_glmfitlins project (FitLins, 5 mm by its workflow's default) at r ≥ 0.7 in
-  **23 of 23** datasets (median **0.98**, thresholded Dice 0.82; ds003397 has no published map).
+  **23 of 23** datasets (median **0.98**, thresholded Dice 0.82; ds003397 has no published map). For ds000148, whose
+  spec has no motion or drift terms, the 24P configuration with cosine regressors is not close to the spec; its r
+  (0.91) and Dice (0.71) are among the lowest of the strong-effect datasets.
   - Where that configuration finds nothing, the published map has at most 2 suprathreshold voxels. The other way
     round, in ds000114 ours has 11,342 and the published map none (r 0.86): the published maps are per session (the
     check uses the retest session), and ours pools both sessions' runs.
@@ -140,12 +142,13 @@ size and data quality would explain it (H1) and that small datasets would mostly
 - **Gates:**
   - G2 coverage (`results/tables/coverage.json`): 736 of 739 subjects analysed (3 had no usable run); 2,038 of
     2,097 runs (45 outside the spec's run list, 10 too short for the design, 4 covering less than 90% of their
-    events); 409 FSL-arm subjects (13 skipped, D9).
+    events); 407 FSL-arm subjects used (ds003397's 15 excluded, D9; 2 of them have FSL maps from before D9,
+    unused).
   - G3 (`results/plausibility.md`): three datasets and one subject traced and recomputed, and, added after the
     review, a check that configurations differing on an axis give different maps (`code/axis_check.py`; it flags
     exactly the three datasets the review found before D11, and none after).
   - G4: the FitLins check above (`code/external_check.py`); a first run compared the 6P configuration by mistake
-    (the specs' motion terms are 24P, D2) and gave median r 0.91.
+    (the specs' motion terms are 24P, D2; ds000148's spec has none) and gave median r 0.91.
 
 ## Results
 
@@ -201,10 +204,14 @@ pair; "–" where not run (ds003397) or both maps were empty. FitLins r: correla
   expected to be more robust than the primary contrast in most datasets (G3). It is in 7 of 14 (6 where both are
   defined, plus ds000212, whose primary contrast finds no voxel), identical in ds000051 (its contrast already weights
   its conditions equally) and less robust in 6.
-  - The draft explained the drops by designs with little rest. Tested across the 13 datasets with both defined
-    (post hoc, `code/g3_baseline.py`), the gap between the two contrasts goes with how much the summed, convolved
-    event train varies over the run (Spearman 0.66, p = 0.01; flat means little rest), less clearly with the share
-    of the run covered by events (−0.40, p = 0.17).
+  - The draft explained the drops by designs with little rest. A post hoc look across the 13 datasets with both
+    defined (`code/g3_baseline.py`) is consistent with that, but weak. The gap between the two contrasts goes with
+    how much the summed, convolved event train varies over the run (Spearman 0.66, p = 0.01 uncorrected, the better
+    of two measures tried; flat means little rest), less clearly with the share of the run covered by events (−0.40,
+    p = 0.17). But the task-positive R itself does not go with flatness (−0.03); part of the gap's association comes
+    from the primary R, which tends to be higher in the flatter designs (−0.48), and the gap is bounded near 0 and 1
+    (holding the primary R fixed, the gap's association is 0.55). Both measures are approximate: they use every row
+    of the events files, not the spec's modelled subset, and the first 10 subjects of each dataset.
   - ds000171, ds000213 and ds002422 fit: events cover 88% to 99% of the run, and their summed regressors are among
     the four flattest of the 13 (the fourth is ds000008, where both contrasts score near 0). ds000117, the fourth
     sharp drop, does not: its stimuli are brief and leave rest by both measures,
