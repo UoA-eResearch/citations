@@ -1,6 +1,6 @@
 ds,contrast,status,corr,dice,shared_voxels,ours_supra,fitlins_supra,fsl_subjects,fsl_corr,fsl_dice,resampled,key
 ds000001,pumpsvcontrol,ok,0.9887,0.8383,204599,57496,42946,16,0.9648,0.7387,False,fitlins/ds000001-fitlins/task-balloonanalogrisktask/node-dataLevel/contrast-pumpsvcontrol_stat-z_statmap.nii.gz
-ds000002,feedback,ok,0.9951,0.9138,202330,88839,75997,17,0.99,0.8987,False,fitlins/ds000002-fitlins/task-deterministicclassification/node-dataLevel/contrast-feedback_stat-z_statmap.nii.gz
+ds000002,feedback,ok,0.9948,0.9131,202330,88635,75997,17,0.99,0.8987,False,fitlins/ds000002-fitlins/task-deterministicclassification/node-dataLevel/contrast-feedback_stat-z_statmap.nii.gz
 ds000005,paragain,ok,0.9656,0.5,206756,6,2,16,0.921,0.1818,False,fitlins/ds000005-fitlins/task-mixedgamblestask/node-dataLevel/contrast-paragain_stat-z_statmap.nii.gz
 ds000008,failstopcritvnoncrit,ok,0.9646,0.0,208108,0,2,13,0.9277,0.0,False,fitlins/ds000008-fitlins/task-conditionalstopsignal/node-dataLevel/contrast-failstopcritvnoncrit_stat-z_statmap.nii.gz
 ds000009,explodevcash,ok,0.9931,0.8388,188552,33343,24382,20,0.9513,0.774,False,fitlins/ds000009-fitlins/task-balloonanalogrisktask/node-dataLevel/contrast-explodevcash_stat-z_statmap.nii.gz
@@ -14,7 +14,7 @@ ds000115,zeroback,ok,0.8931,0.6519,182718,81450,39579,19,0.7193,0.5119,False,fit
 ds000117,allfacesvscrambled,ok,0.9417,0.6188,219018,1618,1013,16,0.9172,0.6116,False,fitlins/ds000117-fitlins/task-facerecognition/node-dataLevel/ses-mri/ses-mri_contrast-allfacesvscrambled_stat-z_statmap.nii.gz
 ds000120,allphaserewardvneutral,ok,0.9572,,194002,0,0,20,0.8517,,False,fitlins/ds000120-fitlins/task-antisaccadetaskwithfixedorder/node-dataLevel/contrast-allphaserewardvneutral_stat-z_statmap.nii.gz
 ds000144,angryvfearful,ok,0.9921,,168253,0,0,20,0.6806,,False,fitlins/ds000144-fitlins/task-emotionalfaces/node-dataLevel/contrast-angryvfearful_stat-z_statmap.nii.gz
-ds000148,distractcorr,ok,0.8962,0.6609,184483,75098,78359,20,0.8292,0.4876,False,fitlins/ds000148-fitlins/task-figure2backwith1backlures/node-dataLevel/contrast-distractcorr_stat-z_statmap.nii.gz
+ds000148,distractcorr,ok,0.9073,0.7111,184483,64294,78359,20,0.8292,0.4876,False,fitlins/ds000148-fitlins/task-figure2backwith1backlures/node-dataLevel/contrast-distractcorr_stat-z_statmap.nii.gz
 ds000157,foodvnonfood,ok,0.9958,0.8834,181230,15723,12619,20,0.9117,0.4653,False,fitlins/ds000157-fitlins/task-passiveimageviewing/node-dataLevel/contrast-foodvnonfood_stat-z_statmap.nii.gz
 ds000170,perf1,ok,0.9278,0.4951,185288,6303,2730,15,0.8663,0.2799,False,fitlins/ds000170-fitlins/task-TrainedHandTrainedSequence/node-dataLevel/contrast-perf1_stat-z_statmap.nii.gz
 ds000171,musicvsounds,ok,0.9794,0.8196,215184,28123,20523,20,0.8753,0.6162,False,fitlins/ds000171-fitlins/task-music/node-dataLevel/contrast-musicvsounds_stat-z_statmap.nii.gz

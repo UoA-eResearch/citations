@@ -9,34 +9,34 @@
  "volumes_per_subject": 1360.0,
  "fd_median": 0.11678042500000045,
  "primary": {
-  "R": 0.7193012187752066,
+  "R": 0.7191916345343052,
   "pairs": 1128,
   "pairs_both_empty": 0,
-  "corr": 0.9267066242520738,
-  "medoid": 18,
+  "corr": 0.9267221613043266,
+  "medoid": 26,
   "peak": 1.0,
   "any": 1.0
  },
  "secondary_threshold": {
-  "R": 0.7323138247409946,
+  "R": 0.7321928951565179,
   "pairs": 1128,
   "pairs_both_empty": 0,
-  "corr": 0.9267066242520738,
-  "medoid": 18,
-  "peak": 0.7916666666666666,
+  "corr": 0.9267221613043266,
+  "medoid": 26,
+  "peak": 0.7708333333333334,
   "any": 1.0
  },
  "axis_dice": {
-  "smoothing": 0.7216423677271034,
-  "hrf": 1.0,
-  "confounds": 0.7998577526683364,
-  "noise": 0.9597853605615206
+  "smoothing": 0.721913235302703,
+  "hrf": 0.9963251814401911,
+  "confounds": 0.7996766054894046,
+  "noise": 0.959291890899784
  },
  "axis_dice_secondary_threshold": {
-  "smoothing": 0.7380791154741283,
-  "hrf": 1.0,
-  "confounds": 0.8095503846137705,
-  "noise": 0.9548284533648287
+  "smoothing": 0.7384946102256343,
+  "hrf": 0.9955887229938325,
+  "confounds": 0.8092706825529898,
+  "noise": 0.9539795635644532
  },
- "suprathreshold_voxels_median": 26541.0
+ "suprathreshold_voxels_median": 26539.5
 }

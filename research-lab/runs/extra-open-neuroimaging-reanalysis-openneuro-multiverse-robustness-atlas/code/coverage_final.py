@@ -49,8 +49,9 @@ for f in sorted((driver.F.OUT).glob("ds*/sub-*.npz")):
     for m in meta:
         if m.get("status") == "ok":
             used += 1
-        else:
-            rdrops[m.get("status", "unknown")] += 1
+        else:   # "no design" = a run outside the spec's Input.run list (D11 wording), not a failed design
+            st = m.get("status", "unknown")
+            rdrops["outside the spec's run list" if st == "no design" else st] += 1
 cov.add_counts(ok=used, drops=dict(rdrops))
 cov.save()
 
@@ -64,11 +65,12 @@ for r in last[last.status == "ok"].itertuples():
     order = [str(s) for s in random.Random(driver.SEED).sample(subs, len(subs))]
     if order.index(str(r.sub)) >= driver.FSL_N:
         continue
-    if r.ds in driver.FSL_SKIP and r.fsl in ("False", "false"):
-        skipped += 1
-        continue
     e = np.load(driver.F.OUT / r.ds / f"sub-{r.sub}.npz")["eff"]
-    if all(np.isfinite(e[k].astype(np.float32)).any() for k in driver.FSLK):
+    has = all(np.isfinite(e[k].astype(np.float32)).any() for k in driver.FSLK)
+    if r.ds in driver.FSL_SKIP and not has:     # D11: by the maps, not the log flag (the D11 rerun logs fsl=False;
+        skipped += 1                            # ds003397 sub-05 and sub-11 kept their FSL maps from before D9)
+        continue
+    if has:
         ok += 1
     else:
         missing += 1

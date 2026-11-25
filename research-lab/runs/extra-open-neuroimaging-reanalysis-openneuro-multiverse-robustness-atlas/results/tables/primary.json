@@ -1,86 +1,131 @@
 {
  "datasets": 24,
  "H1": {
-  "R2": 0.1405,
+  "R2": 0.1408,
   "ci": [
    0.0207,
-   0.4776
+   0.4835
   ],
   "datasets": 22,
-  "coef_log10N": 0.4387,
-  "coef_tsnr": -0.00071,
-  "verdict": "Inconclusive"
+  "coef_log10N": 0.4454,
+  "coef_tsnr": -0.0005,
+  "verdict": "Inconclusive",
+  "R2_adjusted": 0.0504
  },
  "H2": {
   "median": 0.4344,
   "ci": [
    0.0498,
-   0.7193
+   0.7192
   ],
   "datasets": 11,
   "verdict": "Inconclusive"
  },
  "secondary": {
   "H1_secondary_threshold": {
-   "R2": 0.0438,
+   "R2": 0.0464,
    "ci": [
-    0.0029,
-    0.3423
+    0.0035,
+    0.3441
    ],
    "datasets": 24,
-   "coef_log10N": 0.1806,
-   "coef_tsnr": -0.00044,
+   "coef_log10N": 0.1924,
+   "coef_tsnr": -0.00024,
    "verdict": "Refuted"
   },
   "H2_secondary_threshold": {
    "median": 0.5516,
    "ci": [
     0.3992,
-    0.6883
+    0.6882
    ],
    "datasets": 12,
    "verdict": "Inconclusive"
   },
   "H1_correlation_index": {
-   "R2": 0.022,
+   "R2": 0.0267,
    "ci": [
-    0.0027,
-    0.2586
+    0.0028,
+    0.2736
    ],
    "datasets": 24,
-   "coef_log10N": -0.0558,
-   "coef_tsnr": 0.00043,
+   "coef_log10N": -0.0575,
+   "coef_tsnr": 0.00054,
    "verdict": "Refuted"
   },
   "H1_task_positive": {
-   "R2": 0.1228,
+   "R2": 0.1225,
    "ci": [
-    0.0082,
-    0.7865
+    0.0081,
+    0.7861
    ],
    "datasets": 14,
-   "coef_log10N": 0.3123,
+   "coef_log10N": 0.312,
    "coef_tsnr": 0.00371,
    "verdict": "Inconclusive"
   },
   "axis_dice_mean": {
-   "smoothing": 0.5681,
-   "hrf": 0.7142,
-   "confounds": 0.584,
+   "smoothing": 0.5668,
+   "hrf": 0.7124,
+   "confounds": 0.5867,
    "noise": 0.784
   },
   "software": {
    "datasets": 20,
-   "dice_mean": 0.6909,
-   "corr_mean": 0.9622,
-   "confound_dice_on_same_subjects": 0.6526
+   "dice_mean": 0.6955,
+   "corr_mean": 0.9635,
+   "confound_dice_on_same_subjects": 0.6535
   },
   "R_vs_descriptives_spearman": {
-   "runs_per_subject": -0.132,
-   "volumes_per_subject": 0.085,
-   "fd_median": -0.109,
+   "runs_per_subject": -0.114,
+   "volumes_per_subject": 0.109,
+   "fd_median": -0.141,
    "supra_median": 0.892
   },
-  "R_median_all": 0.6516
+  "R_median_all": 0.6518,
+  "software_paired": {
+   "datasets": 18,
+   "software_dice_mean": 0.7728,
+   "confound_dice_mean": 0.6535,
+   "software_dice_median": 0.8061,
+   "confound_dice_median": 0.7401,
+   "software_higher_in": 16,
+   "not_paired": [
+    "ds000008",
+    "ds000120"
+   ]
+  },
+  "undefined_R_as_0": {
+   "H1": {
+    "R2": 0.1228,
+    "ci": [
+     0.0121,
+     0.4534
+    ],
+    "datasets": 24,
+    "coef_log10N": 0.4446,
+    "coef_tsnr": -0.00052,
+    "verdict": "Inconclusive"
+   },
+   "H2": {
+    "median": 0.399,
+    "ci": [
+     0.0275,
+     0.6736
+    ],
+    "datasets": 12,
+    "verdict": "Inconclusive"
+   }
+  },
+  "R_vs_supra_spearman_all_48_nonempty": {
+   "rho": 0.729,
+   "datasets": 16
+  },
+  "axis_dice_median": {
+   "smoothing": 0.6696,
+   "hrf": 0.8874,
+   "confounds": 0.7777,
+   "noise": 0.9211
+  }
  }
 }

@@ -1,0 +1,533 @@
+{
+ "void_axes": {},
+ "per_dataset": {
+  "ds000001": {
+   "smoothing": {
+    "identical_pairs": 0,
+    "pairs": 96,
+    "void": false
+   },
+   "hrf": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   },
+   "confounds": {
+    "identical_pairs": 24,
+    "pairs": 108,
+    "void": false
+   },
+   "noise": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   }
+  },
+  "ds000002": {
+   "smoothing": {
+    "identical_pairs": 0,
+    "pairs": 96,
+    "void": false
+   },
+   "hrf": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   },
+   "confounds": {
+    "identical_pairs": 12,
+    "pairs": 108,
+    "void": false
+   },
+   "noise": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   }
+  },
+  "ds000005": {
+   "smoothing": {
+    "identical_pairs": 0,
+    "pairs": 96,
+    "void": false
+   },
+   "hrf": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   },
+   "confounds": {
+    "identical_pairs": 24,
+    "pairs": 108,
+    "void": false
+   },
+   "noise": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   }
+  },
+  "ds000008": {
+   "smoothing": {
+    "identical_pairs": 0,
+    "pairs": 96,
+    "void": false
+   },
+   "hrf": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   },
+   "confounds": {
+    "identical_pairs": 24,
+    "pairs": 108,
+    "void": false
+   },
+   "noise": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   }
+  },
+  "ds000009": {
+   "smoothing": {
+    "identical_pairs": 0,
+    "pairs": 96,
+    "void": false
+   },
+   "hrf": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   },
+   "confounds": {
+    "identical_pairs": 24,
+    "pairs": 108,
+    "void": false
+   },
+   "noise": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   }
+  },
+  "ds000051": {
+   "smoothing": {
+    "identical_pairs": 0,
+    "pairs": 96,
+    "void": false
+   },
+   "hrf": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   },
+   "confounds": {
+    "identical_pairs": 0,
+    "pairs": 108,
+    "void": false
+   },
+   "noise": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   }
+  },
+  "ds000052": {
+   "smoothing": {
+    "identical_pairs": 0,
+    "pairs": 96,
+    "void": false
+   },
+   "hrf": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   },
+   "confounds": {
+    "identical_pairs": 12,
+    "pairs": 108,
+    "void": false
+   },
+   "noise": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   }
+  },
+  "ds000102": {
+   "smoothing": {
+    "identical_pairs": 0,
+    "pairs": 96,
+    "void": false
+   },
+   "hrf": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   },
+   "confounds": {
+    "identical_pairs": 12,
+    "pairs": 108,
+    "void": false
+   },
+   "noise": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   }
+  },
+  "ds000108": {
+   "smoothing": {
+    "identical_pairs": 0,
+    "pairs": 96,
+    "void": false
+   },
+   "hrf": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   },
+   "confounds": {
+    "identical_pairs": 12,
+    "pairs": 108,
+    "void": false
+   },
+   "noise": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   }
+  },
+  "ds000109": {
+   "smoothing": {
+    "identical_pairs": 0,
+    "pairs": 96,
+    "void": false
+   },
+   "hrf": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   },
+   "confounds": {
+    "identical_pairs": 0,
+    "pairs": 108,
+    "void": false
+   },
+   "noise": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   }
+  },
+  "ds000114": {
+   "smoothing": {
+    "identical_pairs": 0,
+    "pairs": 96,
+    "void": false
+   },
+   "hrf": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   },
+   "confounds": {
+    "identical_pairs": 0,
+    "pairs": 108,
+    "void": false
+   },
+   "noise": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   }
+  },
+  "ds000115": {
+   "smoothing": {
+    "identical_pairs": 0,
+    "pairs": 96,
+    "void": false
+   },
+   "hrf": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   },
+   "confounds": {
+    "identical_pairs": 36,
+    "pairs": 108,
+    "void": false
+   },
+   "noise": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   }
+  },
+  "ds000117": {
+   "smoothing": {
+    "identical_pairs": 0,
+    "pairs": 96,
+    "void": false
+   },
+   "hrf": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   },
+   "confounds": {
+    "identical_pairs": 0,
+    "pairs": 108,
+    "void": false
+   },
+   "noise": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   }
+  },
+  "ds000120": {
+   "smoothing": {
+    "identical_pairs": 0,
+    "pairs": 96,
+    "void": false
+   },
+   "hrf": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   },
+   "confounds": {
+    "identical_pairs": 0,
+    "pairs": 108,
+    "void": false
+   },
+   "noise": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   }
+  },
+  "ds000144": {
+   "smoothing": {
+    "identical_pairs": 0,
+    "pairs": 96,
+    "void": false
+   },
+   "hrf": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   },
+   "confounds": {
+    "identical_pairs": 0,
+    "pairs": 108,
+    "void": false
+   },
+   "noise": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   }
+  },
+  "ds000148": {
+   "smoothing": {
+    "identical_pairs": 0,
+    "pairs": 96,
+    "void": false
+   },
+   "hrf": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   },
+   "confounds": {
+    "identical_pairs": 12,
+    "pairs": 108,
+    "void": false
+   },
+   "noise": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   }
+  },
+  "ds000157": {
+   "smoothing": {
+    "identical_pairs": 0,
+    "pairs": 96,
+    "void": false
+   },
+   "hrf": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   },
+   "confounds": {
+    "identical_pairs": 12,
+    "pairs": 108,
+    "void": false
+   },
+   "noise": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   }
+  },
+  "ds000170": {
+   "smoothing": {
+    "identical_pairs": 0,
+    "pairs": 96,
+    "void": false
+   },
+   "hrf": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   },
+   "confounds": {
+    "identical_pairs": 12,
+    "pairs": 108,
+    "void": false
+   },
+   "noise": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   }
+  },
+  "ds000171": {
+   "smoothing": {
+    "identical_pairs": 0,
+    "pairs": 96,
+    "void": false
+   },
+   "hrf": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   },
+   "confounds": {
+    "identical_pairs": 12,
+    "pairs": 108,
+    "void": false
+   },
+   "noise": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   }
+  },
+  "ds000212": {
+   "smoothing": {
+    "identical_pairs": 0,
+    "pairs": 96,
+    "void": false
+   },
+   "hrf": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   },
+   "confounds": {
+    "identical_pairs": 0,
+    "pairs": 108,
+    "void": false
+   },
+   "noise": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   }
+  },
+  "ds000213": {
+   "smoothing": {
+    "identical_pairs": 0,
+    "pairs": 96,
+    "void": false
+   },
+   "hrf": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   },
+   "confounds": {
+    "identical_pairs": 0,
+    "pairs": 108,
+    "void": false
+   },
+   "noise": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   }
+  },
+  "ds001734": {
+   "smoothing": {
+    "identical_pairs": 0,
+    "pairs": 96,
+    "void": false
+   },
+   "hrf": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   },
+   "confounds": {
+    "identical_pairs": 12,
+    "pairs": 108,
+    "void": false
+   },
+   "noise": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   }
+  },
+  "ds002422": {
+   "smoothing": {
+    "identical_pairs": 0,
+    "pairs": 96,
+    "void": false
+   },
+   "hrf": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   },
+   "confounds": {
+    "identical_pairs": 24,
+    "pairs": 108,
+    "void": false
+   },
+   "noise": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   }
+  },
+  "ds003397": {
+   "smoothing": {
+    "identical_pairs": 0,
+    "pairs": 96,
+    "void": false
+   },
+   "hrf": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   },
+   "confounds": {
+    "identical_pairs": 0,
+    "pairs": 108,
+    "void": false
+   },
+   "noise": {
+    "identical_pairs": 0,
+    "pairs": 72,
+    "void": false
+   }
+  }
+ }
+}

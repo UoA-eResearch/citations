@@ -1,0 +1,155 @@
+{
+ "datasets": [
+  {
+   "ds": "ds000001",
+   "R": 0.6281020349960034,
+   "R_task_positive": 0.5954475195314161,
+   "gap": -0.03265451546458731,
+   "subjects": 10,
+   "runs": 30,
+   "coverage": 0.213,
+   "flatness_cv": 0.553
+  },
+  {
+   "ds": "ds000008",
+   "R": 0.0052278401997503,
+   "R_task_positive": 0.0506358378352957,
+   "gap": 0.0454079976355454,
+   "subjects": 10,
+   "runs": 29,
+   "coverage": 0.545,
+   "flatness_cv": 0.233
+  },
+  {
+   "ds": "ds000009",
+   "R": 0.6249462370020653,
+   "R_task_positive": 0.5932268413206347,
+   "gap": -0.03171939568143056,
+   "subjects": 10,
+   "runs": 10,
+   "coverage": 0.762,
+   "flatness_cv": 0.326
+  },
+  {
+   "ds": "ds000051",
+   "R": 0.8164255870867152,
+   "R_task_positive": 0.8164255870867152,
+   "gap": 0.0,
+   "subjects": 10,
+   "runs": 78,
+   "coverage": 0.48,
+   "flatness_cv": 0.455
+  },
+  {
+   "ds": "ds000102",
+   "R": 0.0734299231279504,
+   "R_task_positive": 0.2130297313674584,
+   "gap": 0.13959980823950802,
+   "subjects": 10,
+   "runs": 20,
+   "coverage": 0.164,
+   "flatness_cv": 0.827
+  },
+  {
+   "ds": "ds000108",
+   "R": 0.4685612380410142,
+   "R_task_positive": 0.8496443110762767,
+   "gap": 0.3810830730352625,
+   "subjects": 10,
+   "runs": 60,
+   "coverage": 0.567,
+   "flatness_cv": 0.655
+  },
+  {
+   "ds": "ds000117",
+   "R": 0.3635379553889812,
+   "R_task_positive": 0.0086021505376344,
+   "gap": -0.3549358048513468,
+   "subjects": 10,
+   "runs": 90,
+   "coverage": 0.214,
+   "flatness_cv": 0.661
+  },
+  {
+   "ds": "ds000120",
+   "R": 0.0028143756404625,
+   "R_task_positive": 0.3636757092405057,
+   "gap": 0.3608613336000432,
+   "subjects": 10,
+   "runs": 27,
+   "coverage": 0.426,
+   "flatness_cv": 0.793
+  },
+  {
+   "ds": "ds000144",
+   "R": 0.0225439717947457,
+   "R_task_positive": 0.092334919151149,
+   "gap": 0.0697909473564033,
+   "subjects": 10,
+   "runs": 15,
+   "coverage": 0.262,
+   "flatness_cv": 1.71
+  },
+  {
+   "ds": "ds000157",
+   "R": 0.7251449928259881,
+   "R_task_positive": 0.8559935817305208,
+   "gap": 0.13084858890453266,
+   "subjects": 10,
+   "runs": 10,
+   "coverage": 0.657,
+   "flatness_cv": 0.728
+  },
+  {
+   "ds": "ds000171",
+   "R": 0.689090050616874,
+   "R_task_positive": 0.5819299817363356,
+   "gap": -0.10716006888053842,
+   "subjects": 10,
+   "runs": 30,
+   "coverage": 0.99,
+   "flatness_cv": 0.138
+  },
+  {
+   "ds": "ds000212",
+   "R": NaN,
+   "R_task_positive": 0.7562094497183056,
+   "gap": null,
+   "subjects": 10,
+   "runs": 60,
+   "coverage": 0.663,
+   "flatness_cv": 0.7
+  },
+  {
+   "ds": "ds000213",
+   "R": 0.6754855756955327,
+   "R_task_positive": 0.1652427040611376,
+   "gap": -0.5102428716343951,
+   "subjects": 10,
+   "runs": 10,
+   "coverage": 0.971,
+   "flatness_cv": 0.168
+  },
+  {
+   "ds": "ds002422",
+   "R": 0.8863841969614836,
+   "R_task_positive": 0.447860817373387,
+   "gap": -0.4385233795880966,
+   "subjects": 10,
+   "runs": 20,
+   "coverage": 0.881,
+   "flatness_cv": 0.241
+  }
+ ],
+ "spearman_gap_vs_coverage": {
+  "rho": -0.401,
+  "p": 0.174,
+  "n": 13
+ },
+ "spearman_gap_vs_flatness_cv": {
+  "rho": 0.659,
+  "p": 0.014,
+  "n": 13
+ },
+ "note": "exploratory, after the review; events from the events files, not the specs' modelled subset"
+}
