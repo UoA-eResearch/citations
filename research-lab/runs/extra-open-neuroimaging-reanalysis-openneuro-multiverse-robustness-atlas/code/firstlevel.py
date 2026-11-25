@@ -150,9 +150,10 @@ def designs(ds, sub, spec, derivative):
             # D11: set at both levels; some specs switch the derivative on themselves (ds000002, ds003397), which
             # made the "canonical" level identical to the derivative level
             ins["Derivative"] = bool(derivative)
-    # D11: fMRIPrep's cosine drift regressors in every configuration (plan), also when the spec lists none (ds000148)
-    if not any(isinstance(x, str) and x.startswith("cosine") for x in node["Model"]["X"]):
-        node["Model"]["X"] = list(node["Model"]["X"]) + ["cosine*"]
+    # D11: fMRIPrep's cosine drift regressors in every configuration (plan), also when the spec lists none (ds000148).
+    # They are appended from the confounds file in run_subject (add_tsv_cosines), not through pybids: with a dense
+    # variable in the model pybids recomputes the run length and gives 264 rows for 263 volumes at TR 1.8 s
+    needs_cosine = not any(isinstance(x, str) and x.startswith("cosine") for x in node["Model"]["X"])
     if derivative:                       # wildcard entries (e.g. trial_type.*) already pick up the derivative columns
         import fnmatch
         conv = [c for ins in node.get("Transformations", {}).get("Instructions", []) if ins["Name"] == "Convolve"
@@ -191,8 +192,25 @@ def designs(ds, sub, spec, derivative):
         other = [c for c in X.columns if c not in convolved and c != "intercept" and not c.startswith("cosine")
                  and not c.endswith("_derivative")]
         out[int(o.entities.get("run", 1))] = {"X": X, "con": w, "con2": w2, "evs": evs, "dense_other": other,
-                                             "contrast": con.name}
+                                             "contrast": con.name, "needs_cosine": needs_cosine}
     return out
+
+
+def add_tsv_cosines(d, conf_path):
+    """D11: append fMRIPrep's cosine columns (one row per volume) to a design whose spec lists none; zero weights."""
+    if not d.get("needs_cosine"):
+        return d
+    C = pd.read_csv(conf_path, sep="\t")
+    cos = C[[c for c in C.columns if c.startswith("cosine")]].reset_index(drop=True)
+    X = d["X"].reset_index(drop=True)
+    if len(X) != len(cos):
+        raise ValueError(f"design has {len(X)} rows, confounds {len(cos)}")
+    d = dict(d)
+    d["X"] = pd.concat([X, cos], axis=1)
+    d["con"] = pd.concat([d["con"], pd.Series(0.0, index=cos.columns)])
+    if d["con2"] is not None:
+        d["con2"] = pd.concat([d["con2"], pd.Series(0.0, index=cos.columns)])
+    return d
 
 
 def confound_sets(conf_path):
@@ -469,7 +487,7 @@ def run_subject(ds, sub, arms=("nilearn", "FSL"), timing=False, keep_bold=False,
         rn = int(dict(fetch.ents(r["stem"])).get("run", 1))
         if rn not in D["canonical"]:
             meta.append({"run": rn, "status": "no design"}); continue
-        Dr = {h: D[h][rn] for h in HRFS}
+        Dr = {h: add_tsv_cosines(D[h][rn], r["confounds"]) for h in HRFS}
         confs, fd_med, n_spk = confound_sets(r["confounds"])
         # D6: a run is usable only if the scan covers its events and has more volumes than the largest design
         nvol = len(confs["6P"])

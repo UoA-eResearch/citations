@@ -220,7 +220,11 @@ several undocumented departures from the plan.
 2. **ds000148 had no drift regressors.** Its spec's X is `[1, "trial_type.*"]`, and the nilearn arm took the cosine
    regressors only from the spec's X, so all 48 configurations ran without a high-pass filter, against the plan
    ("cosine drift regressors are kept in every configuration"), and its tSNR was computed without drift removal.
-   `designs()` now adds fMRIPrep's cosine regressors when a spec lists none. No other eligible spec lacks them.
+   fMRIPrep's cosine regressors are now appended from the confounds file (one row per volume, zero contrast weight)
+   when a spec lists none (`add_tsv_cosines`). No other eligible spec lacks them. A first attempt added `cosine*` to
+   the spec instead; with a dense variable in the model pybids recomputes the run length and returned 264 design rows
+   for 263 volumes at TR 1.8 s (263 × 1.8 is just above 473.4 in floating point), so 45 of 49 subjects failed and the
+   4 that ran were redone with the final code.
 3. **Rerun** (`code/rerun_d11.py`): the nilearn arm of every analysed subject in these four datasets (ds000002,
    ds000213, ds000148, ds003397) with the fixed code; the FSL maps, which neither defect touches, are kept; the old
    maps move to `/mnt/data/omv/out_superseded_D11/`. Group maps and every downstream table are rebuilt, and the

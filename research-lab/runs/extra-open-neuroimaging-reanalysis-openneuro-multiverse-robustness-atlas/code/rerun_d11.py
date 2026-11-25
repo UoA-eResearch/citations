@@ -25,6 +25,9 @@ import firstlevel as F  # noqa: E402
 STAGE = Path("/mnt/data/omv/out_d11_stage")
 OLD = Path("/mnt/data/omv/out_superseded_D11")
 DONE_LOG = RUN / "logs" / "rerun_d11.jsonl"
+# ds000148's first D11 attempt took the cosines through pybids (45 of 49 subjects failed on a 264-row design for 263
+# volumes; 4 ran); version 2 appends them from the confounds file, so all 49 are redone
+VERSION = {"ds000148": 2}
 
 
 def init_worker():
@@ -46,13 +49,16 @@ def rerun(ds, sub):
         eff[48:], eff2[48:] = old["eff"][48:], old["eff2"][48:]      # FSL configurations, unchanged
         meta = str(new["meta"])
         (OLD / ds).mkdir(parents=True, exist_ok=True)
-        shutil.move(str(old_path), str(OLD / ds / old_path.name))
+        if (OLD / ds / old_path.name).exists():      # keep the original pre-D11 maps; drop the intermediate version
+            old_path.unlink()
+        else:
+            shutil.move(str(old_path), str(OLD / ds / old_path.name))
         tmp = old_path.with_suffix(".tmp.npz")
         np.savez_compressed(tmp, eff=eff, eff2=eff2, meta=meta)
         tmp.rename(old_path)
         (STAGE / ds / f"sub-{sub}.npz").unlink()
         return {"ds": ds, "sub": sub, "status": "ok", "runs": res.get("runs"), "t_nilearn": res.get("t_nilearn"),
-                "t_total": round(time.time() - t0)}
+                "t_total": round(time.time() - t0), "version": VERSION.get(ds, 1)}
     except Exception as e:
         return {"ds": ds, "sub": sub, "status": "failed", "error": f"{type(e).__name__}: {e}",
                 "trace": traceback.format_exc()[-1500:]}
@@ -65,7 +71,7 @@ def main():
     if DONE_LOG.exists():
         for line in DONE_LOG.read_text().splitlines():
             r = json.loads(line)
-            if r.get("status") == "ok":
+            if r.get("status") == "ok" and r.get("version", 1) >= VERSION.get(r["ds"], 1):
                 done.add((r["ds"], r["sub"]))
     todo = [(ds, f.stem[4:]) for ds in datasets for f in sorted((Path("/mnt/data/omv/out") / ds).glob("sub-*.npz"))
             if (ds, f.stem[4:]) not in done]
